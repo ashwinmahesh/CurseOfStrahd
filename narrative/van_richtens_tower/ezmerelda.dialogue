@@ -211,6 +211,8 @@ Ezmerelda: Here. You've earned better than thanks. Silver-headed bolts, holy wat
 give holy_water 2
 give potion_of_healing 1
 give crossbow_bolt 10
+Ezmerelda: And this. My second-best armour. It can look like a ball gown or a beggar's coat when you need it to, and it has turned more claws than I can count.
+give glamoured_studded_leather__studded_leather_armor
 endif
 if flag.ezmerelda_left_tower
 Ezmerelda: Now go away. I have a wagon to hitch and an old man to shout at.

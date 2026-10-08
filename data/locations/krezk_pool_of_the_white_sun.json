@@ -168,6 +168,19 @@
       "kind": "examine",
       "label": "A box of candle stubs",
       "model": "shelf"
+    },
+    {
+      "id": "candle_box_scroll",
+      "cell": [
+        18,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "skill": "investigation",
+      "label": "a scroll under the candle stubs",
+      "model": "scattered_notes",
+      "item": "scroll_of_protection_undead"
     }
   ],
   "lights": [

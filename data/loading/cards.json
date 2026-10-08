@@ -1,0 +1,41 @@
+{
+  "id": "cards",
+  "summary": "Loading cards (Improvement Ideas G5; docs/ui/loading_cards.md): arriving in a new region shows an establishing picture from the cutscenes (art/cutscenes), the place's name and a tip. Pictures are scenes the party sees on arrival anyway, so nothing is spoiled.",
+  "default": "castle_glimpse",
+  "regions": {
+    "into_the_mists": "mists_arrival",
+    "death_house": "castle_glimpse",
+    "village_of_barovia": "village_rain",
+    "svalich_road": "tser_falls",
+    "old_bonegrinder": "bonegrinder_view",
+    "vallaki": "vallaki_palisade",
+    "wizard_of_wines": "castle_glimpse",
+    "yester_hill": "yester_effigy",
+    "krezk": "krezk_wall",
+    "abbey_of_st_markovia": "abbey_shelf",
+    "argynvostholt": "godfrey_steps",
+    "van_richtens_tower": "vr_tower",
+    "lake_zarovich": "vr_tower",
+    "werewolf_den": "castle_glimpse",
+    "berez": "castle_glimpse",
+    "mount_baratok": "lightning_ridge",
+    "tsolenka_pass": "roc_shadow",
+    "amber_temple": "amber_sentinels",
+    "castle_ravenloft": "castle_chasm"
+  },
+  "tips": [
+    "Q and E turn the camera.",
+    "Tab changes who leads the party. In a conversation, it changes who speaks for you.",
+    "1 to 4 pick a party member.",
+    "F5 makes a quick save, and F9 loads it.",
+    "Right-click anything in the world to see everything you can do with it.",
+    "In a conversation, H shows everything that has been said so far.",
+    "A failed check can sometimes be saved: Heroic Inspiration rerolls the d20.",
+    "A failed Persuasion, Intimidation, Deception, Performance or Insight attempt can't be tried twice. Choose who speaks with care.",
+    "In a fight, Space ends your turn and T picks the next target.",
+    "Barovia keeps no secrets from its lord. Strahd may visit when you least expect him.",
+    "Esc opens the menu, with Settings and your saves.",
+    "F1 shows every control.",
+    "M opens the travel map."
+  ]
+}

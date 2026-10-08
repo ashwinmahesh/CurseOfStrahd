@@ -380,3 +380,71 @@ cooldown 10
 | [at:tsolenka_pass_guard_tower] The grey shapes go out like lamps. One of them, before it goes, salutes.
 | [at:berez and flag.berez_scarecrows_burned and not flag.lysaga_dead] Straw and sacking smoulder in the reeds. On the stump, a shutter bangs open.
 cooldown 10
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:cradle_lining_wand
+| Sewn into the cradle's lining, where a baby's head would rest, a wand of twisted black wood. It is warm, and the cradle rocks once on its own when you take it.
+once
+
+~ check:investigation:cradle_lining_wand:failure
+| A cradle, a blanket and a smell of milk gone strange. You don't want to search it any closer than that.
+
+~ search:silent_jar
+| Every jar on the shelf hums, except one. Inside the silent jar, a potion that fizzes like shaken wine and makes your heartbeat hurry just looking at it.
+once
+
+~ search:drowned_house_mantle
+| In the drowned house, on a peg above the waterline, hangs a heavy mantle that the flood never touched. Spells would slide off it like rain.
+once
+
+~ check:perception:drowned_house_mantle:failure
+| Black water, rotten beams and the furniture of people who left in a hurry and never came back.
+
+~ search:scarecrow_staff
+| The scarecrow's left arm isn't a branch. It's a staff of dark oak, humming faintly, as if a hive were asleep inside it.
+once
+
+# --- Hidden finds on Mount Baratok ---
+
+~ search:glass_ring_wand
+| Fused into the ring of glass where the lightning lands, a wand of dark iron, still crackling faintly at the tip.
+once
+
+~ check:perception:glass_ring_wand:failure
+| Glass, scorch marks and the smell of a storm that hasn't come yet.
+
+~ search:summit_ioun
+| One stone at the foot of the cairn isn't part of it. It is smooth and marbled red and blue, and when you pick it up it leaves your hand to circle your head.
+once
+
+~ search:chess_owl
+| One of the frosted chess pieces isn't a piece. It's a little owl of green serpentine, and it turns its head to look at you.
+once
+
+~ check:investigation:chess_owl:failure
+| Kings, queens and a game half finished. Whoever plays it is losing, slowly.
+
+~ search:blank_books_tome
+| Every book on the shelf is blank, except one. That one is full, in a small, careful hand, and reading the first page makes the room feel clearer.
+once
+
+# --- Hidden finds in the Tsolenka Pass ---
+
+~ search:roc_dropped_wings
+| Among the bones the roc dropped on the shelf lies a traveller who almost got away: on his back, a folded cloak of black feathers that stirs in the wind as if it wants to open.
+once
+
+~ check:perception:roc_dropped_wings:failure
+| Bones, and the long white streaks of something enormous. You don't stay to look harder.
+
+~ search:unrusted_hauberk
+| One hauberk on the rack hasn't rusted in four hundred years. Its rings are bright and fine, and it weighs half what it should.
+once
+
+~ check:investigation:unrusted_hauberk:failure
+| Old mail, red with rust, every set the same. The dead men here keep their kit in order and nothing else.
+
+~ search:watch_horn
+| Behind the winch, on its hook, the watch horn. Its mouth is cracked from the last time someone blew it too hard.
+once

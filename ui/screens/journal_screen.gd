@@ -1,12 +1,17 @@
 class_name JournalScreen
 extends CanvasLayer
-## The quest journal and the codex (plan §5.5, §5.6): each quest as a card with the journal text of every stage
-## reached and its current objectives (open quests first, finished ones tagged and greyed below), and the books,
-## letters and notes the party has read.
+## The quest journal, the codex and the bestiary (plan §5.5, §5.6): each quest as a card with the journal text of
+## every stage reached and its current objectives (open quests first, finished ones tagged and greyed below), the
+## books, letters and notes the party has read, and what it has learned of the creatures it fought (BestiaryPage, U8).
+## The reading text follows the player's text size (UiScale.text).
+
+const TABS: Array[String] = ["Quests", "Codex", "Bestiary"]
 
 var root: Node
 var st: StoryState
 var tab := "Quests"
+## The creature the Bestiary shows ("" for the first).
+var beast := ""
 var _frame: VBoxContainer
 
 
@@ -27,14 +32,19 @@ func _draw() -> void:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
 		c.queue_free()
-	_frame.add_child(UiParts.tab_strip(["Quests", "Codex"], tab, func(t: String) -> void:
-		var forward := t == "Codex"
+	_frame.add_child(UiParts.tab_strip(TABS, tab, func(t: String) -> void:
+		var forward := TABS.find(t) > TABS.find(tab)
 		tab = t
 		_draw()
-		UiMotion.turn_page(_frame.get_child(1) as Control, forward), {"Quests": "journal", "Codex": "search"}))
+		UiMotion.turn_page(_frame.get_child(1) as Control, forward), {"Quests": "journal", "Codex": "search", "Bestiary": "attack"}))
 	var pane := UiParts.pane(14)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(pane)
+	if tab == "Bestiary":
+		pane.add_child(BestiaryPage.build(st, beast, func(id: String) -> void:
+			beast = id
+			_draw()))
+		return
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 10)
 	pane.add_child(UiParts.fill_scroll(box))
@@ -75,12 +85,12 @@ func _quests(box: VBoxContainer) -> void:
 				head.add_child(UiParts.pill("Failed", "rose", 13))
 		col.add_child(head)
 		for text: String in q["entries"]:
-			col.add_child(UiKit.label(text, 15, "vellum" if status == "active" else "parchment", 1060))
+			col.add_child(UiKit.label(text, UiScale.text(15), "vellum" if status == "active" else "parchment", 1060))
 		for o: String in q["objectives"]:
 			var orow := HBoxContainer.new()
 			orow.add_theme_constant_override("separation", 8)
 			orow.add_child(UiParts.mark(1))
-			orow.add_child(UiKit.label(o, 15, "gilt_light", 1020))
+			orow.add_child(UiKit.label(o, UiScale.text(15), "gilt_light", 1020))
 			col.add_child(orow)
 		box.add_child(UiParts.row(col, Callable(), false, 12))
 
@@ -93,7 +103,7 @@ func _codex(box: VBoxContainer) -> void:
 		var col := VBoxContainer.new()
 		col.add_theme_constant_override("separation", 6)
 		col.add_child(UiKit.header(str(entry["title"])))
-		col.add_child(UiKit.label(str(entry["text"]), 15, "vellum", 1060))
+		col.add_child(UiKit.label(str(entry["text"]), UiScale.text(15), "vellum", 1060))
 		box.add_child(UiParts.row(col, Callable(), false, 12))
 
 

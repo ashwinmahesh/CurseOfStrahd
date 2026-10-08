@@ -78,7 +78,13 @@ Every effect sounds the way it looks (world/combat/fx/combat_sfx.gd, `combat` in
 sounds of its moments: `cast` (the effect begins), `launch` (a missile leaves the hand), `impact` (it lands or bursts),
 `arrive` (a jump's far end). An entry starting with `@` is the flavour's own sound for that moment, so Fire Bolt and a
 flameskull's Fire Ray share fire's launch and burst, and Fireball layers a rumble under the same burst. `keys` gives a
-spell or ability its own sounds (Hold Person's chains); a family with no entry plays the plain spell sound.
+spell or ability its own sounds (Hold Person's chains); a family with no entry plays the plain spell sound. The
+sustained class abilities sound as a hero switches them on, through `keys` too (Rage, Bladesong, Wild Shape, Vow of
+Enmity, Sacred Weapon, Innate Sorcery, Hunter's Mark, Hex, Divine Favor; owner, 2026-10-07): a feature with no effect
+of its own still plays its key's sound, a key with a choice in it ("wild_shape:wolf") plays its kind's, and an entry
+written `<id>@<seconds>` comes in that long after the others. `concentration` holds the soft cue when a hero starts
+concentrating on a spell and the sharp one when a blow breaks it (the combat view watches each caster's
+Concentration).
 
 A blow (a weapon, claw or bite) sounds by what struck and how hard it landed: `hits` has blade (slashing), blunt
 (bludgeoning, cracking bone on heavy and critical hits), point (a melee pierce) and shot (an arrow, bolt or throw),

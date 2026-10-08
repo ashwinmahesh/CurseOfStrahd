@@ -166,6 +166,18 @@
       "label": "Soot on the plinth",
       "model": "scorch",
       "when": "not flag.argynvost_beacon_lit"
+    },
+    {
+      "id": "lampkeeper_niche",
+      "cell": [
+        11,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "the lamp-keeper's niche",
+      "model": "soot_patch",
+      "item": "lantern_of_revealing"
     }
   ],
   "containers": [

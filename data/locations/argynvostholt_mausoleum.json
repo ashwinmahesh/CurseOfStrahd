@@ -190,6 +190,22 @@
         }
       ],
       "gold": 30
+    },
+    {
+      "id": "dragon_gift_niche",
+      "cell": [
+        13,
+        7
+      ],
+      "label": "the dragon's gift",
+      "model": "reliquary_sealed",
+      "when": "flag.argynvost_beacon_lit",
+      "items": [
+        {
+          "id": "shield_plus_2__shield",
+          "qty": 1
+        }
+      ]
     }
   ],
   "lights": [

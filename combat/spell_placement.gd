@@ -81,6 +81,7 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 		o.cell = oc
 	# Wall of Fire: the side that burns, 10 ft deep along the wall (the side `direction` points to).
 	if z.has("side_ft") and str(area_d.get("shape", "")) == "wall":
+		var drawn := SpellTargeting.path_of(ctx.get("opts", {}) as Dictionary)
 		if str(ctx.get("choice", "")) == "ring":
 			# A ring burns on its inside.
 			var inside: Array = []
@@ -91,6 +92,11 @@ func _place_zone(ctx: Dictionary, cells: Array[Vector2i], r: CombatResult) -> vo
 					if (Vector2(cc) + Vector2(0.5, 0.5)).distance_to(pt2) < 10 / float(CombatGrid.FEET) - 0.5 and not cc in cells:
 						inside.append([x, y])
 			z["side_cells"] = inside
+		elif not drawn.is_empty() and SpellTargeting.drawn_wall(s, str(ctx.get("choice", ""))):
+			# A wall drawn square by square burns on the side its caster picked (opts.side).
+			var dir0: Vector2 = ctx.get("direction", Vector2.ZERO)
+			var side := chosen_side(drawn, ctx.get("opts", {}) as Dictionary, dir0)
+			z["side_cells"] = path_side(drawn, side if side != "" else "left", int(z["side_ft"]), dir0)
 		else:
 			z["side_cells"] = _wall_side(ctx, cells, int(z["side_ft"]))
 	o.rules = z
@@ -154,6 +160,95 @@ func _wall_side(ctx: Dictionary, wall: Array[Vector2i], feet: int) -> Array:
 			var sc := Vector2i(floori(p.x), floori(p.y))
 			if e.grid.in_bounds(sc) and not sc in wall and not [sc.x, sc.y] in out and (p - origin).dot(normal) > 0:
 				out.append([sc.x, sc.y])
+	return out
+
+
+# --- The burning side of a drawn wall ---------------------------------------------------------------
+# A wall drawn square by square (opts.path) burns on one side, the caster's pick: "left" or "right" of the way it was
+# drawn, looking down on the map (x east, y south: drawn eastward, left is north). Along a bent wall each square takes
+# the side of the stretch of wall nearest it, so the burning side follows the bends.
+
+## The side a cast picked for its drawn wall (opts.side: "left", "right", or a square on that side), or "".
+func chosen_side(path: Array[Vector2i], opts: Dictionary, direction: Vector2 = Vector2.ZERO) -> String:
+	var v: Variant = opts.get("side", "")
+	if v is Vector2i:
+		return side_of(path, v as Vector2i, direction)
+	if v is Array and (v as Array).size() >= 2:
+		return side_of(path, Vector2i(int((v as Array)[0]), int((v as Array)[1])), direction)
+	var named := str(v)
+	return named if named in ["left", "right"] else ""
+
+
+## Which side of the drawn wall `path` the square `cell` is on: "left", "right", or "" for a square of the wall, one in
+## line past an end, or one two stretches of the wall are equally near from opposite sides.
+func side_of(path: Array[Vector2i], cell: Vector2i, direction: Vector2 = Vector2.ZERO) -> String:
+	if path.is_empty() or cell in path:
+		return ""
+	var signs := _nearest_sides(path, cell, direction)
+	if signs.has(-1) and not signs.has(1):
+		return "left"
+	if signs.has(1) and not signs.has(-1):
+		return "right"
+	return ""
+
+
+## The squares within `feet` of the drawn wall `path` (counted as on the grid) on its `side`: a square counts when the
+## stretch of the wall nearest it has that side toward it (either of two equally near stretches will do). Squares in
+## line past an end are on neither side. As [x, y] pairs, the way a zone keeps them.
+func path_side(path: Array[Vector2i], side: String, feet: int, direction: Vector2 = Vector2.ZERO) -> Array:
+	var e := enc()
+	var out: Array = []
+	if path.is_empty():
+		return out
+	var depth := feet / CombatGrid.FEET
+	var want := -1 if side == "left" else 1
+	var lo := path[0]
+	var hi := path[0]
+	for p in path:
+		lo = Vector2i(mini(lo.x, p.x), mini(lo.y, p.y))
+		hi = Vector2i(maxi(hi.x, p.x), maxi(hi.y, p.y))
+	for x in range(lo.x - depth, hi.x + depth + 1):
+		for y in range(lo.y - depth, hi.y + depth + 1):
+			var cell := Vector2i(x, y)
+			if not e.grid.in_bounds(cell) or cell in path:
+				continue
+			var near := false
+			for p in path:
+				if maxi(absi(p.x - x), absi(p.y - y)) <= depth:
+					near = true
+					break
+			if near and _nearest_sides(path, cell, direction).has(want):
+				out.append([x, y])
+	return out
+
+
+## The sides (-1 left, 1 right) the stretches of the wall nearest `cell` turn toward it; a stretch it lies in line with
+## gives none. A one-square wall is a stretch along `direction` (east-west without one).
+func _nearest_sides(path: Array[Vector2i], cell: Vector2i, direction: Vector2) -> Array[int]:
+	var stretches: Array[PackedVector2Array] = []
+	for i in range(1, path.size()):
+		stretches.append(PackedVector2Array([Vector2(path[i - 1]) + Vector2(0.5, 0.5), Vector2(path[i]) + Vector2(0.5, 0.5)]))
+	if stretches.is_empty():
+		var along := direction.normalized() if direction.length() > 0.01 else Vector2.RIGHT
+		var mid := Vector2(path[0]) + Vector2(0.5, 0.5)
+		stretches.append(PackedVector2Array([mid - along * 0.5, mid + along * 0.5]))
+	var q := Vector2(cell) + Vector2(0.5, 0.5)
+	var best := INF
+	var out: Array[int] = []
+	for st in stretches:
+		var a := st[0]
+		var d := st[1] - a
+		var t := clampf((q - a).dot(d) / d.length_squared(), 0.0, 1.0)
+		var dist := q.distance_to(a + d * t)
+		if dist > best + 0.001:
+			continue
+		if dist < best - 0.001:
+			best = dist
+			out.clear()
+		# Looking down on the map with y south, a positive cross product is to the right of the drawing direction.
+		var cross := d.x * (q - a).y - d.y * (q - a).x
+		if absf(cross) > 0.001:
+			out.append(1 if cross > 0.0 else -1)
 	return out
 
 

@@ -283,6 +283,31 @@
       "label": "Figures in the frost",
       "model": "statue_head",
       "when": "not flag.frozen_watch_cleared"
+    },
+    {
+      "id": "frozen_hand_sword",
+      "cell": [
+        17,
+        6
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "something clutched in a frozen hand",
+      "model": "sword_leaning",
+      "item": "frost_brand__longsword"
+    },
+    {
+      "id": "rack_halberd",
+      "cell": [
+        5,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 16,
+      "skill": "investigation",
+      "label": "one halberd on the rack that isn't frosted",
+      "model": "sword_leaning",
+      "item": "weapon_plus_3__halberd"
     }
   ],
   "containers": [

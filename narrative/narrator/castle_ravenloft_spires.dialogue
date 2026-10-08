@@ -233,3 +233,16 @@ once
 
 ~ trap:spires_rotten_beam:triggered
 | The board snaps and you drop to the waist, legs kicking in the air of the room below.
+
+# --- Hidden finds (docs/story/found_magic_items.md) ---
+
+~ search:cauldron_wand
+| In the ashes under the witches' cauldron, a wand of blackened bone. Holding it, you feel your own heartbeat quicken, as if something behind you just breathed.
+once
+
+~ search:nest_ring
+| In one of the ravens' nests, among buttons and broken glass, a plain gold ring. When you take it, the ravens all look away, which is somehow worse.
+once
+
+~ check:perception:nest_ring:failure
+| Nests, feathers and droppings. A hundred ravens watch you look, and none of them helps.

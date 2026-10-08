@@ -24,7 +24,22 @@ Sorvia: Your boots have walked farther than boots should, in this valley. Sorry.
 * How does anyone get out of this valley? -> leave_valley
 * [Insight DC 14] Watch how they watch you. -> insight_ok | insight_fail
 * Read my palm. -> palm
+* [if flag.vistani_wine_bought and not flag.vistani_deck_tried] [Performance DC 13] Earn the next round: give them a song. -> perform_ok | perform_fail
 * Goodbye. -> END
+
+~ perform_ok
+set vistani_deck_tried
+Narrator: The song is old, the voice is willing, and by the second verse all three women are singing the parts you don't know.
+Sorvia [smile]: You'll do. Here, take this. Our uncle won it, and lost it, and won it again. The pictures lie better than Mirabel.
+Mirabel [sly]: Nobody lies better than Mirabel.
+give deck_of_illusions
+-> menu
+
+~ perform_fail
+set vistani_deck_tried
+Narrator: The song falls flat somewhere around the chorus. Arik stops polishing a glass to watch it die.
+Alenka: Brave. Very brave. Sit down before you hurt someone.
+-> menu
 
 ~ who
 set madam_eva_rumor

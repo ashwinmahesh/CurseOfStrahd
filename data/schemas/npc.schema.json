@@ -94,6 +94,11 @@
               "counts": {
                 "$ref": "common.schema.json#/$defs/id",
                 "description": "An int flag that counts the pieces bought (Morgantha's pastries)."
+              },
+              "markup": {
+                "type": "number",
+                "minimum": 0,
+                "description": "This line's markup instead of the shop's."
               }
             }
           }
@@ -161,11 +166,8 @@
         },
         "rotating": {
           "type": "object",
-          "required": [
-            "pool"
-          ],
           "additionalProperties": false,
-          "description": "F14: stock that changes: count things from pool, one of each, picked again every days days.",
+          "description": "F14: stock that changes: count things from pool (or from each of groups), one of each, picked again every days days.",
           "properties": {
             "pool": {
               "type": "array",
@@ -181,8 +183,36 @@
             "days": {
               "type": "integer",
               "minimum": 1
+            },
+            "groups": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "pool"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "pool": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "common.schema.json#/$defs/id"
+                    },
+                    "minItems": 1
+                  },
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              }
             }
           }
+        },
+        "hide_closed": {
+          "type": "boolean",
+          "description": "While closed, the right-click menu shows no Trade (a merchant the story unlocks)."
         }
       }
     },

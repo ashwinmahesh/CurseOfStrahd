@@ -21,7 +21,8 @@
     "shape": "wall",
     "size": 100,
     "width": 5,
-    "height": 20
+    "height": 20,
+    "ring": 30
   },
   "components": {
     "v": true,
@@ -34,7 +35,7 @@
   },
   "targets": {
     "kind": "area",
-    "description": "a straight wall up to 100 feet long or a ring up to 60 feet across"
+    "description": "a straight wall up to 100 feet long or a ring 60 feet across"
   },
   "save": "dex",
   "save_success": "half",
@@ -51,6 +52,14 @@
       "end_turn"
     ],
     "terrain": "difficult"
+  },
+  "choice": {
+    "kind": "option",
+    "label": "Shape",
+    "from": [
+      "line",
+      "ring"
+    ]
   },
   "tags": [
     "damage",

@@ -287,6 +287,31 @@
       "model": "oil_lamp"
     },
     {
+      "id": "hall_chandelier_hung",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "label": "the chandelier",
+      "model": "candelabra",
+      "text": "An iron wheel of candles hangs on a chain over the hall, swaying a little in a draught nobody feels.",
+      "hangs": {
+        "cells": [
+          [
+            13,
+            7
+          ],
+          [
+            14,
+            7
+          ]
+        ],
+        "trap": "hall_chandelier",
+        "lit": true
+      }
+    },
+    {
       "id": "den_stag_head",
       "cell": [
         5,
@@ -450,6 +475,31 @@
       "model": "window_tall",
       "when": "flag.death_house_refused and not flag.death_house_completed",
       "dialogue": "death_house/escape:window"
+    },
+    {
+      "id": "den_cabinet_board",
+      "cell": [
+        7,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "skill": "investigation",
+      "label": "a loose board under the card cabinet",
+      "model": "broken_boards",
+      "item": "medallion_of_thoughts"
+    },
+    {
+      "id": "dumbwaiter_soot",
+      "cell": [
+        22,
+        1
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "something in the soot under the dumbwaiter",
+      "model": "soot_patch",
+      "item": "driftglobe"
     }
   ],
   "containers": [

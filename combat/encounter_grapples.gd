@@ -142,7 +142,7 @@ func _drag_spot(c: Combatant, t: Combatant, from: Vector2i) -> Vector2i:
 	for dz in range(-r, r + 1):
 		for dx in range(-r, r + 1):
 			var cell := c.cell + Vector2i(dx, dz)
-			if e.grid.distance_ft(c.cell, c.size_cells, cell, t.size_cells) > grapple_range(c) or not e.space_available(cell, t.size_cells, [t]):
+			if e.grid.distance_ft(c.cell, c.size_cells, cell, t.size_cells, c.altitude, t.altitude) > grapple_range(c) or not e.space_available(cell, t.size_cells, [t]):
 				continue
 			# The square the grappler left first, then the one nearest where it was held.
 			var d := 0.0 if cell == from else 1.0 + Vector2(cell - t.cell).length()

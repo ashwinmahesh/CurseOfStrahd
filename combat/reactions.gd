@@ -26,8 +26,8 @@ func feats() -> CombatFeatures:
 
 ## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about. An offer may
 ## also be `forced` (no choice: it happens when reached), say `ask: false` (never asked: its rule settles it, as
-## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text` and `cost` as
-## Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
+## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text`, `cost` and
+## `target_choices` as Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
 ## change the outcome, the player isn't asked (a reroll that can't reach the DC).
 func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 	var e := enc()
@@ -37,12 +37,8 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		if o.has("still") and not (o["still"] as Callable).call():
 			continue
 		var kind := str(o["kind"])
-		var decision := e._reaction_decision(reactor, kind, str(o.get("default", "")))
-		if bool(o.get("forced", false)):
-			decision = "auto"
-		elif decision == "ask" and not bool(o.get("ask", true)):
-			decision = "auto" if e.d20.sync_allows(o) else "never"
-		if decision == "never" or (decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call()):
+		var decision := decide(o)
+		if decision == "never":
 			continue
 		if decision == "auto":
 			(o["use"] as Callable).call()
@@ -55,7 +51,8 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		var cost: Variant = o.get("cost", "Reaction")
 		req.cost = str((cost as Callable).call()) if cost is Callable else str(cost)
 		req.spends_reaction = bool(o.get("spends_reaction", true))
-		req.target_choices.assign(o.get("target_choices", []))
+		var choices: Variant = o.get("target_choices", [])
+		req.target_choices.assign((choices as Callable).call() if choices is Callable else choices)
 		req.selected_ids.assign(o.get("selected_ids", []))
 		req.min_targets = int(o.get("min_targets", 0))
 		req.max_targets = int(o.get("max_targets", 0))
@@ -75,6 +72,21 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		r.pending = req
 		return r
 	return done.call() as CombatResult
+
+
+## What happens to an offer that's still open: "auto" (its creature's rule or the AI takes it, or it's `forced`),
+## "never", or "ask" (the player is asked). An offer the creature's rule would ask about but that can't change the
+## result (`helps`) is "never"; one that answers a roll about to be made (`ask: false`) follows D20Responses.sync_allows.
+func decide(o: Dictionary) -> String:
+	var e := enc()
+	if bool(o.get("forced", false)):
+		return "auto"
+	var decision := e._reaction_decision(o["reactor"] as Combatant, str(o["kind"]), str(o.get("default", "")))
+	if decision == "ask" and not bool(o.get("ask", true)):
+		decision = "auto" if e.d20.sync_allows(o) else "never"
+	if decision == "ask" and o.has("helps") and not (o["helps"] as Callable).call():
+		decision = "never"
+	return decision
 
 
 func _react_ok(c: Combatant) -> bool:
@@ -465,6 +477,10 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
+	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
+		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
+	seen["knock_out"] = true
 	# The choices after a D20 Test this creature can make (Indomitable, Heroic Inspiration, Bend Luck...).
 	for policy in enc().d20.policies(c):
 		if not seen.has(str(policy["id"])):

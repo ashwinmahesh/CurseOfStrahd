@@ -143,6 +143,18 @@
       "model": "letter",
       "codex": "ruxandra_letter",
       "text": "Kostin. The last stone is in that house. Pull up every board, empty every cask. The Lord-in-the-Land has been patient with the bird-people long enough. When the effigy wakes it will walk east to the vines and finish what you could not. Be gone from there by then. R."
+    },
+    {
+      "id": "wizard_cask_decanter",
+      "cell": [
+        19,
+        14
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "something behind the wizard's casks",
+      "model": "broken_boards",
+      "item": "decanter_of_endless_water"
     }
   ],
   "containers": [

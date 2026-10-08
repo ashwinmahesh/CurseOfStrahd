@@ -25,7 +25,7 @@ func test_every_item_has_an_icon() -> void:
 
 func test_every_catalog_key_is_built() -> void:
 	var cat := _catalog()
-	for kind: String in ["spells", "items"]:
+	for kind: String in ["spells", "items", "features"]:
 		for key: String in cat[kind] as Dictionary:
 			assert_true(ResourceLoader.exists("res://art/icons/%s/%s.png" % [kind, key]), "%s/%s isn't built: run make icons" % [kind, key])
 	for key: String in cat["ui"] as Dictionary:
@@ -45,7 +45,7 @@ func test_every_tint_is_defined_in_palette_colours() -> void:
 		var names: Array = (spec["face"] as Array) + (spec.get("bg", []) as Array) + ([spec["glow"]] if spec.has("glow") else [])
 		for n: Variant in names:
 			assert_true(palette.has(str(n)), "tint %s uses %s, which isn't a palette colour" % [t, n])
-	for kind: String in ["spells", "items"]:
+	for kind: String in ["spells", "items", "features"]:
 		for key: String in cat[kind] as Dictionary:
 			var entry := str((cat[kind] as Dictionary)[key])
 			if entry.contains("@"):

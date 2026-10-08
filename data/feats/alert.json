@@ -29,7 +29,10 @@
       "summary": "Right after rolling Initiative, trade Initiative results with one willing ally in the same combat.",
       "text": "Immediately after you roll Initiative, you may trade your Initiative with that of one willing ally taking part in the same combat. The swap isn't possible if you or that ally has the Incapacitated condition.",
       "action": "special",
-      "implemented": "text"
+      "policy": "never",
+      "policy_modes": ["ask", "never"],
+      "policy_cost": "Nothing",
+      "implemented": "engine"
     }
   ]
 }

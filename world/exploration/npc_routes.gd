@@ -73,8 +73,9 @@ func _walk(shown: Dictionary, delta: float) -> void:
 	var tok := shown["token"] as CombatToken
 	if not is_instance_valid(tok) or not tok.visible:
 		return
-	if tok.combatant.creature.has_condition(&"unconscious") or tok.combatant.creature.has_condition(&"prone"):
-		return
+	var cr := tok.combatant.creature
+	if cr.has_condition(&"incapacitated") or cr.has_condition(&"prone") or cr.has_condition(&"restrained"):
+		return   # asleep, held, laughing on the ground: they go nowhere
 	shown["wait"] = float(shown.get("wait", 0.0)) - delta
 	if float(shown["wait"]) > 0.0:
 		return

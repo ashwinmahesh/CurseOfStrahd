@@ -254,6 +254,18 @@
       "model": "woodpile",
       "dialogue": "old_bonegrinder/mill:burn",
       "when": "flag.morgantha_slain and flag.children_rescued and not flag.bonegrinder_burned and flag.bonegrinder_fate != \"bella\""
+    },
+    {
+      "id": "oak_raven_hoard",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a raven's hoard in the dead oak",
+      "model": "gold_spill",
+      "item": "figurine_of_wondrous_power_silver_raven"
     }
   ],
   "containers": [
