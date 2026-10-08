@@ -1,0 +1,18 @@
+{
+  "id": "mother_ecaterina",
+  "name": "Mother Ecaterina",
+  "title": "Pilgrim of Vallaki",
+  "summary": "A Vallaki woman who led eight pilgrims up the Tsolenka Pass forty years ago, after a winter that killed their children, to ask the Amber Temple never to be cold again. The amber said yes. She has been frozen in the gorge wall since, with a lamp in her hands, alive.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "vallaki",
+    "tsolenka_pass"
+  ],
+  "region": "tsolenka_pass",
+  "pronouns": "she/her"
+}

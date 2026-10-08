@@ -230,6 +230,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Baba Lysaga's hut, the bundles in the beams | Potion of Speed (very rare) | Search (Investigation DC 16): the one jar that doesn't hum |
 | ✅ | Berez, a drowned house | Mantle of Spell Resistance (rare) | Search (Perception DC 15) |
 | ✅ | Berez, the Rag Queen in the scarecrow field | Dancing Sword (very rare) | Gift: Dragos, in Krezk, once she's burned (The One-Horned Billy, docs/story/side_quests.md) |
+| ✅ | The Tsolenka Pass, the gorge wall | Staff of Frost (very rare) | Gift: Mother Ecaterina's lamp-pole, once the Penitent is down (The Frozen Pilgrims, docs/story/side_quests.md) |
 | ✅ | Berez, the scarecrow | Staff of Swarming Insects (rare) | Search (Perception DC 15): its arm is a staff |
 | ✅ | Berez, under a fallen beam | Immovable Rod (uncommon) | Search (Perception DC 14): a drowned tinker's roll (lane 28's spot) |
 | ✅ | Marina's monument, the dowry chest | Robe of Scintillating Colors (very rare) | Hoard: Strahd's gift to her |

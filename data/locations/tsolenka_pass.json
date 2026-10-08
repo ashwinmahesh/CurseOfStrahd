@@ -391,6 +391,17 @@
       "model": "leaves",
       "search_dc": 12,
       "item": "feather_token_bird"
+    },
+    {
+      "id": "pilgrims_ice",
+      "cell": [
+        7,
+        16
+      ],
+      "kind": "examine",
+      "label": "Shapes in the ice",
+      "model": "ice_patch",
+      "dialogue": "tsolenka_pass/the_frozen_pilgrims:ice"
     }
   ],
   "containers": [
@@ -491,6 +502,234 @@
       ],
       "surprise": "",
       "flag": "roc_driven_off"
+    },
+    {
+      "id": "the_penitent",
+      "trigger": "dialogue",
+      "when": "level >= 11",
+      "text": "The Penitent stands up out of the gorge wall, nine pilgrims fused in grey ice, and turns all its heads toward you.",
+      "monsters": [
+        {
+          "monster": "the_penitent",
+          "cell": [
+            9,
+            18
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            6,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            5,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            12,
+            16
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            7,
+            21
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            22
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            6,
+            23
+          ],
+          "name": "A Pilgrim's Shadow"
+        }
+      ],
+      "surprise": "",
+      "flag": "penitent_slain"
+    },
+    {
+      "id": "the_penitent",
+      "trigger": "dialogue",
+      "when": "level >= 10",
+      "text": "The Penitent stands up out of the gorge wall, nine pilgrims fused in grey ice, and turns all its heads toward you.",
+      "monsters": [
+        {
+          "monster": "the_penitent",
+          "cell": [
+            9,
+            18
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            6,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            5,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            12,
+            16
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        }
+      ],
+      "surprise": "",
+      "flag": "penitent_slain"
+    },
+    {
+      "id": "the_penitent",
+      "trigger": "dialogue",
+      "when": "level >= 9",
+      "text": "The Penitent stands up out of the gorge wall, nine pilgrims fused in grey ice, and turns all its heads toward you.",
+      "monsters": [
+        {
+          "monster": "the_penitent",
+          "cell": [
+            9,
+            18
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            6,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            5,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            12,
+            16
+          ],
+          "name": "A Pilgrim's Shadow"
+        }
+      ],
+      "surprise": "",
+      "flag": "penitent_slain"
+    },
+    {
+      "id": "the_penitent",
+      "trigger": "dialogue",
+      "text": "The Penitent stands up out of the gorge wall, nine pilgrims fused in grey ice, and turns all its heads toward you.",
+      "monsters": [
+        {
+          "monster": "the_penitent",
+          "cell": [
+            9,
+            18
+          ],
+          "hp": 170
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            6,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            11,
+            19
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            5,
+            17
+          ],
+          "name": "A Pilgrim's Shadow"
+        }
+      ],
+      "surprise": "",
+      "flag": "penitent_slain"
     }
   ],
   "narration": {

@@ -99,3 +99,7 @@ func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
 
 func test_the_squires_vigil_at_level_8() -> void:
 	await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4], ["godfrey_met", "courtyard_phantoms_defeated"])
+
+
+func test_the_penitent_at_level_10() -> void:
+	await _series("tsolenka_pass", 20, 10, "the_penitent", [1, 2, 3, 4])

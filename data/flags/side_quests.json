@@ -680,6 +680,26 @@
       "id": "squires_vigil_won",
       "type": "bool",
       "summary": "The party stood the squire's vigil with Cosmin against the men-at-arms (The Squire)."
+    },
+    {
+      "id": "pilgrims_found",
+      "type": "bool",
+      "summary": "The party found the nine pilgrims frozen in the gorge wall at the Tsolenka landing (The Frozen Pilgrims)."
+    },
+    {
+      "id": "pilgrims_read",
+      "type": "bool",
+      "summary": "The party tried to work out what holds the frozen pilgrims (The Frozen Pilgrims)."
+    },
+    {
+      "id": "pilgrims_spoke",
+      "type": "bool",
+      "summary": "Mother Ecaterina spoke to the party through the ice (The Frozen Pilgrims)."
+    },
+    {
+      "id": "penitent_slain",
+      "type": "bool",
+      "summary": "The Penitent, the eight pilgrims fused in ice, is meltwater at the Tsolenka landing (The Frozen Pilgrims)."
     }
   ]
 }
