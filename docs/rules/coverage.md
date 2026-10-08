@@ -200,8 +200,8 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 
 | Rule | Code | Status | Test |
 |---|---|---|---|
-| Passive Perception notices traps (within 10 ft) | location_view.gd _check_traps | tested | test_exploration |
-| Search (Wisdom (Perception)) finds traps, hidden objects and secret doors | location_view.gd search | tested | test_exploration |
+| Traps are found only by a Search, Find Traps or a Wand of Secrets, never by passive Perception (owner, deviations); a found trap isn't walked round, still springs when stepped on, and can be set off on purpose from within 5 ft | location_traps.gd _check_traps, activate; trap_sight.gd; location_walk.gd _path | tested | test_traps_seen |
+| Search (Wisdom (Perception)) finds traps, hidden objects and secret doors within 15 ft, its reach shown on the ground for a moment | location_traps.gd search, show_reach | tested | test_exploration, test_traps_seen |
 | Thieves' Tools (2024): Dexterity check + Proficiency Bonus with the tools, Advantage with Sleight of Hand too; pick a lock or disarm a trap | location_view.gd _unlock, _disarm | implemented | test_exploration |
 | Forcing a lock: Strength (Athletics) | location_view.gd _unlock | deviated (DC + 2, see deviations) | test_exploration |
 | Traps: save, damage (half on a success), condition | location_view.gd _spring_trap | implemented | — |
