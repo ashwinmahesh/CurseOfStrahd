@@ -73,6 +73,9 @@ func test_a_search_finds_traps_within_15_ft_and_shows_its_reach() -> void:
 	assert_eq(_state("plain_wolf_trap"), "", "40 ft off: past the Search's reach")
 	assert_eq(_state("subtle_tripwire"), "", "no roll finds a DC 40 tripwire")
 	assert_true(view.has_node("SearchReach"), "the squares it reached show on the ground for a moment")
+	var tint := (view.get_node("SearchReach/Layer_area") as MultiMeshInstance3D).material_override as StandardMaterial3D
+	assert_between(tint.albedo_color.a, LocationTraps.REACH_ALPHA - 0.01, LocationTraps.REACH_ALPHA + 0.01,
+		"a light tint, the ground showing through (owner: about 25%)")
 	await get_tree().create_timer(LocationTraps.REACH_SHOWN + 0.5).timeout
 	await get_tree().process_frame
 	assert_false(view.has_node("SearchReach"), "and fade")
