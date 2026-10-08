@@ -103,9 +103,9 @@ set strahd_met
 appear strahd at lych_gate
 cutscene burial_strahd
 Narrator: The air turns cold enough to fog your breath. At the lych-gate, where nobody stood a moment ago, a tall man in a fine black coat waits, hat in hand, like a mourner who came late.
-Strahd: Do not stop on my account. It is so rare that I attend a funeral I did not arrange. Well. Not directly.
+Strahd: Do not stop on my account. Kolyan shouted at my wolves from his doorway every night for a month. Let him have a little quiet now. He had none at the end.
 Ireena [angry]: Get out of here.
-Strahd [smile]: I am not in, my dear. Observe: the gate. I keep my manners even where others have forgotten theirs. Ireena. You look tired. You need not be.
+Strahd [smile]: I am at the gate, my dear, as a guest should be. Everything past it is mine: the yard, the grave, the man in it. And you. Keep the scarf on. I know what is under it. I put it there.
 if flag.ireena_bite_seen
 Narrator: Ireena's hand goes to the scarf at her throat before she can stop it. He sees, and his smile widens.
 endif
@@ -117,25 +117,25 @@ quest kestrel_company the_host
 endif
 endif
 if flag.tamsin_locket_recognized
-Strahd [sly]: The little thief carries her portrait. Keep it close. It cost more than you can imagine.
+Strahd [sly]: The little thief carries her portrait. Keep it close, child. When I want it back, I will come for it, and for the hand that holds it.
 endif
 if name:liriel_dawnsong
 Strahd: A priestess of the dawn, in my valley. How brave. How very late.
 endif
 if name:wren_featherfoot
-Strahd: And a little monk who stands like a dusk elf. I knew a whole people who stood like that. I wonder who taught you.
+Strahd: And a little monk who stands like a dusk elf. I knew a whole people who stood like that. There are very few of them left. I saw to it.
 endif
 if name:kip_smudgewick
-Strahd [smile]: And you, merchant. You smell of brimstone and apricots. Someone holds your paper. How interesting.
+Strahd [smile]: And you, merchant. You smell of brimstone and apricots. Someone already holds your paper. I wonder what they would take for it.
 interject name:kip_smudgewick: It's, er. It's a small business matter. Lovely to meet you, sir.
 endif
 if class:wizard
-Strahd: And a scholar. My library would delight you. You must come up and see it. Everyone does, eventually.
+Strahd: And a scholar. My library would delight you. You must come up and see it. The last scholar who came is up there still. He has stopped asking to leave.
 endif
 if flag.vistani_spies_suspected
 interject tag:curious: So that's who the Vistani tell their stories to.
 endif
-Strahd: I came to welcome you to my land, all of you. You have been so busy since you arrived. I do hope you will stay. I have arranged for it to be a long visit.
+Strahd: I came to welcome you to my land, all of you. You have been busy since you came, and I know every door you have knocked on. Stay as long as you like. The mists will see that you do.
 -> strahd_menu
 
 ~ strahd_menu
@@ -147,13 +147,13 @@ Strahd: I came to welcome you to my land, all of you. You have been so busy sinc
 * Say nothing. -> silent
 
 ~ what_want
-Strahd: What every man wants, in the end. To be welcomed home. Ireena knows the way. She has always known it; she has only forgotten.
+Strahd: What is mine. Ireena knows the way home. She has always known it; she has only forgotten. I will remind her, one night at a time.
 Ireena [afraid]: I don't know what he means. I don't. Don't look at me like that.
 -> strahd_menu
 
 ~ defiant
 set strahd_first_impression = "defiant"
-Strahd [smile]: Under your protection. How splendid. Then let us see what your protection is worth. Do try to keep her alive. I should hate for this to be short.
+Strahd [smile]: Under your protection. Kolyan said the same, from his doorway, with a lamp. It held for a month. Let us see whether yours does better.
 Narrator: He lifts one gloved hand, as if to summon a waiter. All around the churchyard, the earth begins to split.
 approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +1 kip_smudgewick -1: You told Strahd to his face that Ireena was under your protection
 -> rise
@@ -172,14 +172,14 @@ approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across
 
 ~ threat_fail
 set strahd_first_impression = "defiant"
-Strahd [smile]: Oh, well said. Truly. I have been threatened by better, but rarely with such conviction. Allow me to return the courtesy.
+Strahd [smile]: Well said. The last man who shouted at me is in that grave. Allow me to return the courtesy.
 Narrator: He lifts one hand, and the churchyard earth begins to split.
 approve thistle +2 kip_smudgewick -2 ratatoille -1: You threatened Strahd across a grave
 -> rise
 
 ~ courteous
 set strahd_first_impression = "courteous"
-Strahd [smile]: Manners. In Barovia. You have made an old man very happy. We will speak again, my guests, at my table, I hope. Ireena. Sleep well.
+Strahd [smile]: Manners. Good. You will need them at my table, and my guests do not always leave it. We will speak again. Ireena. Leave the window unlatched tonight. I should hate to break the glass.
 Narrator: The mist thickens at the gate, and then he isn't there.
 vanish strahd
 Ireena [angry]: Courtesy. To him.
@@ -189,14 +189,14 @@ approve liriel_dawnsong +1 kip_smudgewick +1 ratatoille +1 thistle -2 wren_feath
 ~ violent
 set strahd_first_impression = "violent"
 Narrator: Steel and spell reach the lych-gate together and pass through cold mist. His laughter comes from everywhere at once.
-Strahd: Rude. But spirited. Here, then: something you are allowed to kill.
+Strahd: Steel, at a funeral. Here, then: something you are allowed to kill. They were this village's grandmothers once. Do be gentle.
 Narrator: All around the churchyard, the earth begins to split.
 approve thistle +1 kip_smudgewick -3 ratatoille -2: You attacked Strahd at the lych-gate
 -> rise
 
 ~ silent
 set strahd_first_impression = "silent"
-Strahd: Silence. The wise answer, and the dull one. We will speak again when you have found your tongues. Ireena. Do keep the window latched. Or don't.
+Strahd: Silence. Wise. Keep it; I will learn what you love without asking. Ireena. Latch the window, if it helps you sleep. It will not stop me.
 Narrator: The mist thickens at the gate, and he is gone.
 vanish strahd
 -> after_strahd
@@ -227,7 +227,7 @@ Ireena [afraid]: Doru? Oh, Doru. No.
 
 ~ doru_defy
 set strahd_first_impression = "defiant"
-Doru [sly]: I'll tell him. He'll be delighted; he loves being told no. He sent a gift, in case you said it.
+Doru [sly]: I'll tell him. He'll smile. He smiled at us too, all through dinner. He sent a gift, in case you said it.
 Narrator: Doru drops backward off the wall and is gone. Behind you, the old graves begin to split.
 -> rise
 

@@ -9,12 +9,12 @@ set strahd_letter_read
 Narrator: A rider in Vistani colours reins in beside you, holds out a letter sealed in black wax, and is gone back up the road before anyone can ask who sent it.
 Narrator: The seal is one letter, a Z, pressed deep.
 cutscene strahd_letter
-Strahd: My dear guests. Forgive a host for writing when he might call. The daylight is so inconvenient for me.
+Strahd: My dear guests. Forgive a host for writing when he might call. My nights are spoken for, and my days are not my own.
 if flag.strahd_watcher_seen
-Strahd: You saw me on the ridge. You looked well. A little thin. Do eat.
+Strahd: You saw me on the ridge. You looked thin. Do eat. I prefer my guests well fed.
 endif
 if flag.death_house_completed
-Strahd: You found your way out of the house on the hill. Most do not. I have the house to thank for introducing us.
+Strahd: You found your way out of the house on the hill. Most do not. I listened for your screams. There were fewer than I had hoped.
 endif
 if guest:ireena
 Strahd: You have Ireena with you. Keep her warm and keep her close. I should be desolate if anything happened to her that I had not arranged.
@@ -26,7 +26,7 @@ endif
 if tarokka.drawn
 Strahd: The old woman at the pool has told you a story about me. She tells it to everyone. It always ends the same way.
 endif
-Strahd: Go where you like. See what my land has to show you. When you are ready, we will dine. Until then I remain your host, Strahd von Zarovich.
+Strahd: Go where you like. Every road is mine, and every door you knock on opens on a house that pays me rent. When you are ready, we will dine. Until then I remain your host, and your landlord, Strahd von Zarovich.
 if name:kip_smudgewick
 -> companions/fine_print:letter
 endif

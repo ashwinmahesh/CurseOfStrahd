@@ -63,7 +63,7 @@ approve liriel_dawnsong +1 godrick_pendlebrook +1: You stood in Ireena's window 
 ~ ward
 set strahd_window = "ward"
 Narrator: The old words come right, every one, and on the last the sill seems to harden like ice on a pond. His hand stops a finger's width from it.
-Strahd: Well said. I shall have to find a less learned house.
+Strahd: Well said. There are other windows in this town, and other people asleep behind them. I wonder which I will visit instead.
 -> saved
 
 ~ ward_failed
@@ -75,7 +75,9 @@ Narrator: The words tangle and the prayer comes apart in your mouth. Strahd smil
 set strahd_window = "woke"
 Ireena: I'm... Ireena. Ireena Kolyana. My father was the burgomaster. I buried him myself.
 Ireena [angry]: And I am not going anywhere with you.
-Strahd [smile]: Not tonight. I can wait. I am very good at it.
+Strahd [angry]: You do not say no to me. Not you. Not again.
+Narrator: For one breath the courtesy is gone from his face, and what is under it has teeth. Then it is back, as if it had never left.
+Strahd [smile]: Not tonight, then. I can wait. I have had a great deal of practice.
 -> saved
 
 ~ woke_failed
@@ -163,7 +165,7 @@ Strahd: Holy ground. Bones in a box. You will not stay inside a church forever, 
 * Stand beside Ireena and say nothing. -> church_end
 
 ~ church_go
-Strahd [smile]: As my guests wish. I was leaving in any case. I only wanted her to hear the bell.
+Strahd [smile]: As my guests wish. I only wanted her to hear the bell. Bells are for funerals, Ireena. Listen to it, and wonder whose is next.
 approve thistle +1 godrick_pendlebrook +1: You told Strahd to leave the churchyard
 -> church_end
 

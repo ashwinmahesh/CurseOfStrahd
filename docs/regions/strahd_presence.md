@@ -3,7 +3,7 @@
 ADR 0014 "Strahd's presence" and "The parley". Strahd is the campaign's villain long before the party reaches his
 castle: he watches, writes, visits at night, tests the party in a fight he leaves, comes for Ireena where she
 shelters, and finally sends his black carriage with an invitation to dinner. Few visits, each one memorable, each
-reacting to what the party has done. Voice: docs/voice/strahd.md (courteous, patient, amused, menacing). All text is
+reacting to what the party has done. Voice: docs/voice/strahd.md (courteous, patient, possessive, menacing). All text is
 our own words.
 
 ## Files
