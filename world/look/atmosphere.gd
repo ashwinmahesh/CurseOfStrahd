@@ -377,9 +377,9 @@ const DOF_STRENGTHS := {
 	"tilt_strong": {"amount": 0.3, "start": 0.5, "per_zoom": 0.03, "transition": 2.5, "transition_per_zoom": 0.1, "near": true,
 		"near_at": 0.92, "near_gap": 0.0, "near_transition": 1.2},
 }
-## Light unless the owner picks another (2026-10-07: "old" read as a smear at the top of the screen). Its blur went up
-## 15% (0.08 to 0.092) and then 40% more (0.129), owner requests 2026-10-08; where the blur starts is unchanged.
-static var dof_strength := "light"
+## Tilt-shift (owner pick 2026-10-08, of soft, tilt-shift and strong): before it, "light" (2026-10-07: "old" read as a
+## smear at the top of the screen), whose blur went up 15% and then 40% more the same morning.
+static var dof_strength := "tilt"
 var _dof: CameraAttributesPractical = null
 
 
