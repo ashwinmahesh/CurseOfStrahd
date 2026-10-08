@@ -58,6 +58,8 @@ tarokka draw                       Draws Madam Eva's reading (once per playthrou
 tarokka read tome [speaker]        Turns the card for a slot (tome, symbol, sword, ally, enemy): a notice with
                                    the card, then the verse spoken by `speaker` (default madam_eva).
 shop                               Opens the shop of the NPC being spoken to; the conversation resumes after.
+services                           Opens the services of the NPC being spoken to (a temple's spells, an inn's
+                                   rooms; story/services.gd); the conversation resumes after.
 join ireena / leave ireena         A story ally joins or leaves the party as a guest (ADR 0010).
 time +60 / time until 12           Time passes in the scene (minutes), or until the given hour comes round.
 respec                             The player picks a party member to rebuild from level 1 in the creator (they

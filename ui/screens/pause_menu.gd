@@ -379,11 +379,17 @@ func _show_saves() -> void:
 	lost.position = _u(24, 126)
 	lost.size = _u(W_U - 48.0, 20)
 	_place(lost)
-	# The last autosave, said where it was made; the buttons sit at the foot of the arch.
-	var s := SaveSystem.describe(SaveSystem.AUTOSAVE)
+	# The last autosave, said where it was made; the buttons sit at the foot of the arch. An Honour run ends here: its
+	# one save carries on in Tactician (SaveSystem.end_honour), and that is the way back.
+	var honour := SaveSystem.honour()
+	if honour:
+		SaveSystem.end_honour()
+	var back_to := SaveSystem.current_slot if honour else SaveSystem.AUTOSAVE
+	var s := SaveSystem.describe(back_to) if back_to != "" else {}
 	var auto := not s.is_empty()
 	if auto:
-		var at := _text("The last autosave\n%s\nDay %d · %s" % [s["location"], int(s["day"]), SavesScreen.when(s)], 11.0, _c("arch_gold_light"))
+		var head := "The Honour run ends here.\nIts save carries on in Tactician:" if honour else "The last autosave"
+		var at := _text("%s\n%s\nDay %d · %s" % [head, s["location"], int(s["day"]), SavesScreen.when(s)], 11.0, _c("arch_gold_light"))
 		at.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		at.clip_text = true
 		at.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -391,7 +397,10 @@ func _show_saves() -> void:
 		at.size = _u(W_U - 60.0, 70)
 		_place(at)
 	_button(2 if auto else 3, "Load a Save", func() -> void: _open_saves(SavesScreen.Mode.LOAD))
-	if auto:
+	if auto and honour:
+		_button(3, "Carry On", func() -> void: _load(back_to)).tooltip_text = \
+			"Back to the run's save, now in Tactician: the game saves as ever, and Honour is over for good."
+	elif auto:
 		_button(3, "Last Autosave", func() -> void: _load(SaveSystem.AUTOSAVE)).tooltip_text = \
 			"Back to where the game last saved itself: arriving somewhere, a rest or a won fight."
 	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))

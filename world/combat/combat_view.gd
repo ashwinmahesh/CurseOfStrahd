@@ -32,6 +32,8 @@ var catalog: ActionCatalog
 var board: ArenaBoard
 var overlay: GridOverlay
 var field: FieldView
+## What lies on the ground (world/combat/ground_view.gd).
+var ground_view: GroundView
 ## Spell and ability effects (world/combat/fx/spell_fx.gd).
 var fx: SpellFx
 ## What enemies shout and creatures sound like (world/combat/combat_barks.gd).
@@ -90,6 +92,8 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	add_child(overlay)
 	field = FieldView.create(board)
 	add_child(field)
+	ground_view = GroundView.create(board)
+	add_child(ground_view)
 	fx = SpellFx.new()
 	add_child(fx)
 	barks = CombatBarks.new()
@@ -101,6 +105,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.build(e, catalog)
 	hud.action_chosen.connect(_choose)
 	hud.end_turn_pressed.connect(_end_turn)
+	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
 	hud.death_save_pressed.connect(_death_save)
@@ -323,6 +328,7 @@ func _refresh_all() -> void:
 ## Spell objects and lingering areas on the field (Spiritual Weapon, Flaming Sphere, Spirit Guardians, Web...).
 func _show_weapons() -> void:
 	field.sync(e.spells.zones.objects)
+	ground_view.sync(e.ground.items)
 
 
 func _player() -> Combatant:
@@ -352,6 +358,22 @@ func _end_turn() -> void:
 
 
 var _confirmed_end := false
+
+
+## Takes back the current creature's last move (the HUD's Undo move, or Ctrl+Z): it goes back with its movement.
+func _undo_move() -> void:
+	var c := _player()
+	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
+		return
+	var r := e.undo_move(c)
+	if not r.ok:
+		hud.banner(r.reason, 1.6)
+		return
+	_cancel_targeting()
+	mode = Mode.BUSY
+	overlay.clear_all()
+	await _play_events()
+	_advance()
 
 
 func _death_save() -> void:
@@ -576,8 +598,9 @@ func _square_picked(id: String) -> void:
 			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
 		return
 	for it in _menu_items:
-		if str(it["id"]) == id and it.has("action") and o != null:
-			_perform(it["action"] as Dictionary, [o], Vector2.INF, Vector2.ZERO)
+		# Picking something up needs no one standing there.
+		if str(it["id"]) == id and it.has("action") and (o != null or str((it["action"] as Dictionary)["targeting"]) == "none"):
+			_perform(it["action"] as Dictionary, [o] if o != null else [], Vector2.INF, Vector2.ZERO)
 			return
 
 
@@ -781,6 +804,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			menu_requested.emit()
 	elif event.is_action_pressed(&"combat_end_turn"):
 		_end_turn()
+	elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+			and (event as InputEventKey).physical_keycode == KEY_Z \
+			and ((event as InputEventKey).ctrl_pressed or (event as InputEventKey).meta_pressed):
+		_undo_move()   # Ctrl+Z (Cmd+Z on a Mac), ahead of plain Z, which changes the tab
 	elif event.is_action_pressed(&"combat_tab_prev"):
 		hud.cycle_tab(-1)
 	elif event.is_action_pressed(&"combat_tab_next"):
@@ -975,10 +1002,19 @@ func _update_hover() -> void:
 				var pv := catalog.attack_preview(c, a, o)
 				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at)
 		else:
-			hud.show_tooltip(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)], [], at)
+			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
+			about.append_array(e.ground.describe_at(o.cell))
+			hud.show_tooltip(o.name(), about, [], at)
 		return
+	# What lies on the square (GroundItems) is named under whatever else the tooltip says.
+	var lying: Array = []
+	if hover_cell.x >= 0:
+		lying.append_array(e.ground.describe_at(hover_cell))
 	if hover_cell.x < 0 or hover_cell == c.cell:
-		hud.hide_tooltip()
+		if lying.is_empty():
+			hud.hide_tooltip()
+		else:
+			hud.show_tooltip("Here", lying, [], at)
 		return
 	var mp := catalog.move_preview(c, hover_cell, _reach)
 	if bool(mp["ok"]):
@@ -989,9 +1025,9 @@ func _update_hover() -> void:
 			provokes = provokes or w.contains("Opportunity")
 		overlay.clear("cursor")
 		overlay.show_cells("danger" if provokes else "goal", [hover_cell])
-		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], [], mp["warnings"] as Array, at)
+		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], lying, mp["warnings"] as Array, at)
 	else:
-		hud.show_tooltip(str(mp["reason"]), [], [], at)
+		hud.show_tooltip(str(mp["reason"]), lying, [], at)
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
@@ -1046,8 +1082,11 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
 			var sit := e.attack_situation(c, o, opt)
 			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var needs := clampi(ac - (prev["attack"] as Breakdown).total(), 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [(prev["attack"] as Breakdown).total(), ac, needs])
+			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
+			var needs := clampi(ac - to_hit, 2, 20)
+			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
+			if int(sit.get("height_bonus", 0)) != 0:
+				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
 			var sa := sit["advantage"] as Array
 			var sd := sit["disadvantage"] as Array
 			if not sa.is_empty() and sd.is_empty():
@@ -1125,12 +1164,14 @@ func _play_events() -> void:
 				var from: Vector2i = ev["from"]
 				var to: Vector2i = ev["to"]
 				var step := STEP_TIME * GameSettings.combat_pace()   # the fast combat speed (Settings)
-				tok.face(Vector2(to - from), not bool(ev.get("forced", false)), step)
+				# A move taken back (undo) glides home like a rewind: no walking, no turning round.
+				var back := bool(ev.get("undo", false))
+				tok.face(Vector2.ZERO if back else Vector2(to - from), not bool(ev.get("forced", false)) and not back, step)
 				walking[tok] = true
 				var tw := create_tween()
 				tw.tween_property(tok, "position", _token_spot(tok.combatant, to), step)
-				if bool(ev.get("mounted", false)):
-					continue
+				if bool(ev.get("mounted", false)) or bool(ev.get("dragged", false)):
+					continue   # carried along: it moves with the step after it
 				await tw.finished
 			"attack":
 				_stop_walking(walking)
@@ -1351,10 +1392,20 @@ func _play_events() -> void:
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
 					_narrate(str(ev["narration"]), null, vt.combatant)
-				if vt != null:
+				if vt != null and str(ev.get("left", "")) == "fell":
+					# Over the edge: it drops out of sight.
+					var drop := create_tween()
+					drop.tween_property(vt, "position", vt.position + Vector3(0, -6, 0), 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+					drop.tween_callback(vt.hide)
+					await drop.finished
+				elif vt != null:
 					var tw3 := create_tween()
 					tw3.tween_property(vt, "scale", Vector3(0.01, 0.01, 0.01), 0.3)
 					tw3.tween_callback(vt.hide)
+			"fall":
+				var ft := _tok(str(ev["id"]))
+				if ft != null:
+					_float(ft, "FALLS %d FT" % int(ev["feet"]), "bone", 34)
 			"resize":
 				var rt := _tok(str(ev["id"]))
 				if rt != null:
@@ -1482,6 +1533,15 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()
+		# A story cutscene for this moment (story/cutscenes.gd): its picture over the fight, the line as its caption.
+		var cut := Cutscenes.for_trigger(key, story)
+		if cut != "":
+			var player := CutscenePlayer.new()
+			add_child(player)
+			if player.play(cut, [text] as Array[String], story):
+				Cutscenes.mark_played(cut, story)
+				return
+			player.queue_free()
 		if VoiceOver.say(VoiceOver.NARRATOR, text) > 0.0:
 			barks.hush()   # the Narrator speaks over no one
 

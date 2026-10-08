@@ -1,0 +1,19 @@
+{
+  "id": "strahd_rides",
+  "title": "The Rider Out of the Fog",
+  "summary": "Strahd rides out of the fog on his black horse and passes through the party at a walk.",
+  "images": [
+    {
+      "image": "strahd_rides",
+      "when": "guest:ireena"
+    },
+    {
+      "image": "strahd_rides_alone",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

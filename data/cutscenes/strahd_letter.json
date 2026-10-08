@@ -1,0 +1,15 @@
+{
+  "id": "strahd_letter",
+  "title": "A Letter in His Own Hand",
+  "summary": "Strahd writes his first letter to his guests.",
+  "images": [
+    {
+      "image": "strahd_letter",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}

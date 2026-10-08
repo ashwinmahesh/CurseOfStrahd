@@ -1,0 +1,15 @@
+{
+  "id": "bonegrinder_hag",
+  "title": "Morgantha Stands",
+  "summary": "Morgantha rises out of her chair and keeps rising, a hag under the rafters.",
+  "images": [
+    {
+      "image": "bonegrinder_hag",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

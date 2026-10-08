@@ -1,0 +1,11 @@
+{
+  "id": "attic_flash",
+  "title": "The Attic Window Flashes",
+  "summary": "As the coup ends, an attic window in the Baron's mansion flashes white.",
+  "images": [
+    {
+      "image": "attic_flash",
+      "when": ""
+    }
+  ]
+}

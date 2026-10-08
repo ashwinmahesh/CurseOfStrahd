@@ -6122,14 +6122,14 @@
       "kind": "cutscene",
       "status": "generated",
       "source": "art/generated/cutscenes/strahd_watcher_a.png",
-      "sprites": "art/cutscenes/strahd_watcher.png",
+      "sprites": "art/cutscenes/strahd_watcher.jpg",
       "model": "gemini-3.1-flash-image",
       "prompt": "The first time the party leaves the village of Barovia escorting Ireena Kolyana west along the Old Svalich Road, Strahd von Zarovich watches them from a ridge. Low camera on the road looking up past the travellers toward the ridge. Foreground, seen from behind and a little to one side: four small travellers walking the muddy road between dead, twisted trees, cloaked and hooded adventurers whose faces we cannot see (one in plate armour with a sword on the back, one holding up a lantern that throws warm orange light across the mud and the trunks, one hooded with a staff). With them walks Ireena, drawn exactly as the second reference image shows her: long wavy auburn hair, a cream scarf, a dark plum cloak over a blue-grey laced dress, brown boots. She has stopped and turned her head to look up at the ridge, afraid. Above them, high on a bare rocky ridge against a cold, moonlit, cloud-torn sky, Strahd sits perfectly still on a huge, powerful black warhorse whose eyes glow like banked coals. Strahd is drawn exactly as the first reference image shows him: pale gaunt face, slicked black hair, a black high-collared coat with silver frogging, a long black cape lined in blood red, its high red collar standing up; one gloved hand rests on the reins and he looks down at the road, patient and amused. He and his horse are a sharp, clearly readable silhouette rimmed by cold moonlight, the cape stirring in the wind. Far behind him, tiny and faint on a distant cliff in the mist, the spires of Castle Ravenloft with one red-lit window. Grey-green mist pools in the hollows along the road. 16:9 widescreen.",
       "reference": [
         "art/generated/characters/strahd_turnaround.png",
         "art/generated/characters/ireena_turnaround.png"
       ],
-      "notes": "Story cutscene (docs/ui/cutscenes.md), 16:9 at 2K with art/prompts/cutscene_preamble.txt. Two takes (2026-10-07); take a is used: Strahd small and clear on the ridge with the castle behind, the party hooded from behind so any heroes fit. Take b put him beside the road rather than on the ridge. The owner approved the style on take a."
+      "notes": "Story cutscene (docs/ui/cutscenes.md), 16:9 at 2K with art/prompts/cutscene_preamble.txt. Two takes (2026-10-07); take a is used: Strahd small and clear on the ridge with the castle behind, the party hooded from behind so any heroes fit. Take b put him beside the road rather than on the ridge. The owner approved the style on take a. Every other cutscene picture's prompt, references and chosen take are in tools/art/cutscene_recipes.json (tools/art/build_cutscenes.py); the game's copies are quality-92 JPEGs in art/cutscenes."
     }
   ],
   "image_provider": "gemini"

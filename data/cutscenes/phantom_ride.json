@@ -1,0 +1,11 @@
+{
+  "id": "phantom_ride",
+  "title": "The Phantom Ride",
+  "summary": "Twenty ghost knights ride past in column, lances up.",
+  "images": [
+    {
+      "image": "phantom_ride",
+      "when": ""
+    }
+  ]
+}

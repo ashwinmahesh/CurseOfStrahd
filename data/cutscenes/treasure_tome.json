@@ -1,0 +1,17 @@
+{
+  "id": "treasure_tome",
+  "title": "The Tome of Strahd",
+  "summary": "The vampire's own book, in the party's hands at last.",
+  "images": [
+    {
+      "image": "treasure_tome",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "trigger": "find:tome_of_strahd",
+  "once": true
+}

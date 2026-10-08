@@ -25,6 +25,7 @@ if flag.strahd_in_coffin or flag.strahd_destroyed
 interject name:tamsin_tealeaf: He's not coming, is he. Not tonight. Well, I'm not handing her to a painting. He can ask me himself.
 -> END
 endif
+cutscene locket_chair
 Narrator: The chair by the fire is not empty. You would swear it was a moment ago.
 Strahd: You carried her home, thief. All that way, and you never once dropped her. Now give her to me.
 if name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page)

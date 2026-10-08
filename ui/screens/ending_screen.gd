@@ -42,6 +42,8 @@ var saved := false
 var tally: CanvasLayer = null
 
 var _tone: Array = []
+var _art: TextureRect
+var _shade: TextureRect
 var _card: VBoxContainer
 var _footer: HBoxContainer
 var _count: Label
@@ -126,9 +128,22 @@ func _next_beat() -> void:
 				b = runner.choose(0)   # a narration offers no choices; a stray menu takes its first option
 			"check":
 				b = runner.next()
+			"cutscene":
+				_cutscene(str(b.get("image", "")))
+				b = runner.next()
 			_:
 				break   # the end of the narration (or something a narration shouldn't hold)
 	_to_slides()
+
+
+## A `cutscene` in the ending's narration (docs/ui/cutscenes.md): its picture replaces the castle behind the words, in
+## full colour under a lighter shade, and stays for the slides.
+func _cutscene(path: String) -> void:
+	if _art == null or path == "" or not ResourceLoader.exists(path):
+		return
+	_art.texture = load(path) as Texture2D
+	_art.modulate = Color.WHITE
+	_shade.modulate.a = 0.75
 
 
 func _to_slides() -> void:
@@ -165,14 +180,14 @@ func _build() -> void:
 	add_child(back)
 	# The castle under its moon, dim and tinted by the ending's light.
 	if ResourceLoader.exists(BACKDROP):
-		var art := TextureRect.new()
-		art.texture = load(BACKDROP) as Texture2D
-		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-		art.set_anchors_preset(Control.PRESET_FULL_RECT)
-		art.modulate = Color(Look.color(str(_tone[1])), 0.4)
-		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(art)
+		_art = TextureRect.new()
+		_art.texture = load(BACKDROP) as Texture2D
+		_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		_art.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_art.modulate = Color(Look.color(str(_tone[1])), 0.4)
+		_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_art)
 	# Dark above, the tone's glow rising from below (a pale dawn, the valley's night, the castle's red).
 	var grad := Gradient.new()
 	grad.set_color(0, Color(Look.color("void"), 0.75))
@@ -182,13 +197,13 @@ func _build() -> void:
 	gt.gradient = grad
 	gt.fill_from = Vector2(0, 0)
 	gt.fill_to = Vector2(0, 1)
-	var shade := TextureRect.new()
-	shade.texture = gt
-	shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	shade.stretch_mode = TextureRect.STRETCH_SCALE
-	shade.set_anchors_preset(Control.PRESET_FULL_RECT)
-	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(shade)
+	_shade = TextureRect.new()
+	_shade.texture = gt
+	_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_shade.stretch_mode = TextureRect.STRETCH_SCALE
+	_shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_shade)
 	_card = VBoxContainer.new()
 	_card.alignment = BoxContainer.ALIGNMENT_CENTER
 	_card.add_theme_constant_override("separation", 14)

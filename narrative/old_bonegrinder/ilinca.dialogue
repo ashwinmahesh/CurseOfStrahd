@@ -10,6 +10,7 @@ set ilinca_met
 if not quest.children_of_the_mill
 quest children_of_the_mill heard
 endif
+cutscene ilinca_raven
 Narrator: A raven drops out of the dead oak and lands badly, the way old birds do. By the time it has straightened up, it is an old woman in a black shawl, brushing feathers off her sleeves like crumbs.
 if flag.raven_harmed
 Ilinca [angry]: You. One of you broke my nephew's wing on the Svalich road. He's mending. I'm told I should be gracious about it. I'm not, much.

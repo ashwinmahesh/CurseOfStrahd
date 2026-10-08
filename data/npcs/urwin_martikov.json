@@ -78,5 +78,15 @@
     "markup": 1.5,
     "sell_rate": 0.4,
     "closed": "flag.vallaki_backed == \"wachter\""
-  }
+  },
+  "services": [
+    {
+      "id": "room_modest",
+      "if": "flag.vallaki_backed != \"wachter\""
+    },
+    {
+      "id": "room_wealthy",
+      "if": "flag.vallaki_backed != \"wachter\""
+    }
+  ]
 }

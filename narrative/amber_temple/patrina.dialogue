@@ -18,6 +18,7 @@ endif
 ~ first
 set patrina_met
 quest patrinas_wail heard
+cutscene patrina
 Narrator: At the one desk not furred with frost sits a dusk elf woman, as translucent as breath on glass, her white hair floating as if she were under water. Her face is beautiful and ruined, scored with the marks of stones.
 Narrator: She turns a page. It crumbles. She turns it again.
 Patrina: Living people. In my library. Do you know how long it's been since anyone in this valley had the nerve to climb up here and read?
@@ -116,6 +117,7 @@ combat patrina_wails
 ~ kasimir_meets
 set patrina_named
 quest patrinas_wail named
+cutscene patrina_kasimir
 Narrator: Kasimir has stopped walking. He stands in the archway with his hands at his sides, as if he has forgotten what they are for.
 Kasimir: Patrina.
 Patrina: ...Kasimir. You climbed a mountain. You. I'd have bet my bones against it, if I still had the use of them.

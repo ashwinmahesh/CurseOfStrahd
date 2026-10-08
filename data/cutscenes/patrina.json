@@ -1,0 +1,11 @@
+{
+  "id": "patrina",
+  "title": "Patrina",
+  "summary": "Patrina's ghost at the one desk not furred with frost.",
+  "images": [
+    {
+      "image": "patrina_alone",
+      "when": ""
+    }
+  ]
+}

@@ -29,6 +29,7 @@ FOLDERS = {
     "cutscenes": "cutscene",
     "strahd": {"visits": "strahd_visits", "attention": "strahd_attention"},
     "schedule": "schedule",
+    "weather": "weather",
 }
 
 TYPES = {
@@ -368,6 +369,9 @@ def campaign_checks(data, errors, pending):
         for e in n.get("shop", {}).get("sells", []):
             if e["id"] not in items and e["id"] not in data.get("magic_items", {}):
                 errors.append(f"npcs/{nid}: shop sells unknown item '{e['id']}'")
+        for iid in n.get("shop", {}).get("rotating", {}).get("pool", []):
+            if iid not in items and iid not in data.get("magic_items", {}):
+                errors.append(f"npcs/{nid}: shop's rotating pool has unknown item '{iid}'")
         gb = n.get("guest_build", {})
         if gb.get("monster") and gb["monster"] not in monsters:
             errors.append(f"npcs/{nid}: guest_build monster '{gb['monster']}' unknown")
@@ -552,10 +556,14 @@ def cutscene_checks(data, parsed, errors):
     for cid, c in data.get("cutscenes", {}).items():
         w = f"data/cutscenes/{cid}.json"
         for take in c["images"]:
-            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.png").exists():
-                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.png")
-        if c.get("trigger") and c["trigger"] not in narrator_keys:
-            errors.append(f"{w}: trigger '{c['trigger']}' isn't a node in any narrative/narrator file")
+            if not (ROOT / "art" / "cutscenes" / f"{take['image']}.jpg").exists():
+                errors.append(f"{w}: no picture art/cutscenes/{take['image']}.jpg")
+        trig = c.get("trigger", "")
+        if trig.startswith("find:"):
+            if trig[5:] not in data.get("magic_items", {}):
+                errors.append(f"{w}: trigger '{trig}' names no magic item")
+        elif trig and trig not in narrator_keys:
+            errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
     for key, p in parsed.items():
         for cid, where in p["cutscenes"]:
             if cid != "end" and cid not in data.get("cutscenes", {}):
@@ -770,6 +778,22 @@ def story_checks(data, errors, need):
         if re.search(r"\battention\b", m["when"]):
             errors.append(f"strahd/attention.json {m['id']}: a mark can't read attention itself")
     tier_ids = [t["id"] for t in attention.get("tiers", [])]
+    for wid, w in data.get("weather", {}).items():
+        where = f"weather/{wid}.json"
+        for cid, weights in w["climates"].items():
+            for k in weights:
+                if k not in w["kinds"]:
+                    errors.append(f"{where}: climate {cid} weighs unknown kind '{k}'")
+        if w["default_climate"] not in w["climates"]:
+            errors.append(f"{where}: default_climate '{w['default_climate']}' isn't a climate")
+        for region, cid in w["regions"].items():
+            if cid not in w["climates"]:
+                errors.append(f"{where}: region {region} has unknown climate '{cid}'")
+            if region not in {l.get("region") for l in data["locations"].values()}:
+                errors.append(f"{where}: no location is in region '{region}'")
+        for tier in w.get("storm_by_attention", {}):
+            if tier not in tier_ids:
+                errors.append(f"{where}: storm_by_attention names '{tier}', which isn't an attention tier")
     if attention and sorted(t["min"] for t in attention["tiers"]) != [t["min"] for t in attention["tiers"]]:
         errors.append("strahd/attention.json: tiers go from the lowest min to the highest")
     for ref, w in dialogue_refs:
