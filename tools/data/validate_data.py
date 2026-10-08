@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dialogue_lint  # noqa: E402
+import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMAS = ROOT / "data" / "schemas"
@@ -925,6 +926,10 @@ def main():
             checked += 1
     sem_errors, pending = semantic_checks(load_all()) if not errors else ([], [])
     errors.extend(sem_errors)
+    # Whether a playthrough can reach it all: quest stages, conversations, props and containers, the flags conditions
+    # read, and quest content only a random road encounter opens (tools/data/story_reach.py, Storyline QA).
+    if not errors:
+        errors.extend(story_reach.findings(ROOT))
     for e in errors:
         print("  FAIL ", e)
     if pending and "--pending" in sys.argv:

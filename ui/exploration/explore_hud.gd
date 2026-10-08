@@ -34,6 +34,10 @@ var _saved_time := 0.0
 var _hint_panel: PanelContainer
 var _toast_panel: PanelContainer
 var _roll_panel: PanelContainer
+var _bar_plate: PanelContainer
+## Where the last roll sits on its own: at the bottom left, above the "F1: controls" line.
+const ROLL_LEFT := 14.0
+const ROLL_BOTTOM := -78.0
 ## The current location at the top right, north up, following the party (ui/exploration/minimap.gd).
 var minimap: Minimap
 ## Ways out to other regions marked over the world (ui/exploration/exit_signs.gd).
@@ -183,8 +187,8 @@ func build(state: StoryState) -> void:
 	_roll_panel.anchor_top = 1.0
 	_roll_panel.anchor_bottom = 1.0
 	_roll_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	_roll_panel.offset_left = 14
-	_roll_panel.offset_bottom = -78
+	_roll_panel.offset_left = ROLL_LEFT
+	_roll_panel.offset_bottom = ROLL_BOTTOM
 	_roll_panel.visible = false
 	add_child(_roll_panel)
 	_controls = UiKit.panel("ui_black", "gilt_dark")
@@ -212,7 +216,8 @@ func build(state: StoryState) -> void:
 		_control_lines.append(l)
 	_controls.add_child(cbox)
 	add_child(_controls)
-	var f1 := _label("F1: controls", 12, "gilt_dark")
+	# Light on its dark outline, so it reads on snow and in the dark alike (UI QA: dark gilt vanished on both).
+	var f1 := _label("F1: controls", 13, "parchment")
 	PadGlyphs.hint(f1, "F1: controls", "{@show_controls}: controls")
 	f1.anchor_top = 1.0
 	f1.anchor_bottom = 1.0
@@ -284,6 +289,7 @@ func build(state: StoryState) -> void:
 		_bar_keys[cmd] = [key, b]
 		bar.add_child(btn)
 	add_child(plate)
+	_bar_plate = plate
 	refresh()
 
 
@@ -700,6 +706,30 @@ func _process(delta: float) -> void:
 		_roll_time -= delta
 		_roll_panel.modulate.a = clampf(_roll_time, 0.0, 1.0)
 		_roll_panel.visible = _roll_time > 0.0
+	_keep_panels_apart()
+
+
+## The HUD's see-through panels never sit on each other (UI QA, 2026-10-08): while the Narrator's box is up, the last
+## roll waits just above its left edge (at the bottom left it ran under the box's portrait and first words), and the
+## exit plaques are lifted clear of the box, the roll and the command bar.
+func _keep_panels_apart() -> void:
+	if exit_signs == null:
+		return   # not built yet
+	var narr := get_node("NarratorBox") as PanelContainer
+	var left := ROLL_LEFT
+	var bottom := ROLL_BOTTOM
+	if narr.visible:
+		var box := narr.get_rect()
+		left = box.position.x
+		bottom = box.position.y - 8.0 - get_viewport().get_visible_rect().size.y
+	if not is_equal_approx(_roll_panel.offset_left, left) or not is_equal_approx(_roll_panel.offset_bottom, bottom):
+		_roll_panel.offset_left = left
+		_roll_panel.offset_bottom = bottom
+	var clear: Array[Rect2] = []
+	for p: Control in [narr, _roll_panel, _bar_plate]:
+		if p.visible:
+			clear.append(p.get_rect())
+	exit_signs.keep_clear = clear
 
 
 func _label(text: String, size: int, colour: String) -> Label:

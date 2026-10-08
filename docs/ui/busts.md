@@ -40,11 +40,12 @@ force-add the `.import`).
   (`DialogueRunner.portrait_of(runner.speaker)`) for the left side.
 
 ## Facing each other
-`data/busts/facing.json` records which way each person's bust was drawn (`left` or `right`, judged from the art on
-2026-10-08; a mood's bust faces as its person's unless listed by its own file name). `DialogueBusts.mirrored` flips a
+`data/busts/facing.json` records which way each person's bust was drawn (`left` or `right`, judged by where the face
+looks, not the body, on 2026-10-08; a mood's bust faces as its person's unless listed by its own file name). `DialogueBusts.mirrored` flips a
 bust (`flip_h`) when its side wants the other way: the left side faces right, the right side faces left. As drawn, the
 NPCs face right (the prompt's `{SIDE}` asked for it) and eight of the ten heroes face left, so nearly every bust is
-mirrored; Godrick, Hedda and Argynvost face their side's way as drawn. A new bust needs its facing in the file
+mirrored; Godrick, Hedda, Ireena (her body turns right but her face looks left; UI QA ART-02) and Argynvost face their
+side's way as drawn. A new bust needs its facing in the file
 (tests/integration/test_bust_facing.gd checks every one). Mirroring puts Izek's fiendish right arm on his left; a
 redraw facing left would fix it.
 

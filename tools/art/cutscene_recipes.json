@@ -1036,6 +1036,13 @@
       ],
       "prompt": "A vast cavern deep inside a mountain, lit dull red from below by glowing cracks in the rock floor. A long slope of gold coins, cups and crowns fills the far end, and lying across it is a huge red dragon, drawn after the reference's red dragon but far bigger and starved thin: ribs showing under dull, soot-stained red scales, a collar of black iron round the base of its neck with a great chain running from it across the floor and into the rock, and its wings folded tight against its back, pinned there with riveted iron bands. It has lifted its head off the gold and looks down at {party}, who stand small at the mouth of the cavern, seen from behind, one holding up a lantern. Smoke curls from its nostrils. Red glow, deep shadow, no panels, one single picture.",
       "use": "a"
+    },
+    "sq_khazan": {
+      "refs": [
+        "exethanter"
+      ],
+      "prompt": "A candlelit study deep under a tower, below the level of a lake, its stone walls lined floor to ceiling with books and sweating cold water. On a stone step at the far end, in a high-backed chair of black wood, sits a lich, drawn after the reference: a dead archmage in an old scholar's robe, parchment skin drawn tight over the bone, two small cold lights for eyes, his hands folded on a great open book on his knees. Every candle in the room leans toward him. {party} stand among the reading tables, seen from behind, one holding up a lantern. Cold blue candlelight, deep shadow, one single picture, no panels.",
+      "use": "a"
     }
   }
 }

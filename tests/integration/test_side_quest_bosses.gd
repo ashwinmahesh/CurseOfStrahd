@@ -45,6 +45,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	await _frames(2)
 	var e := v.combat_view.e
 	var res := PartyAutopilot.new(e).run(30)
+	res["story_flags"] = e.legendary.story_flags.duplicate()   # what the fight hands back (a withdrawal's flag)
+	res["departed"] = e.legendary.departed.values()
 	for c in e.combatants:
 		assert_true(c.creature.hp >= 0 and c.creature.hp <= c.creature.max_hp(), "%s HP in range" % c.name())
 	root.queue_free()
@@ -175,3 +177,32 @@ func test_sarkhaza_with_the_keepers_tricks_at_level_10() -> void:
 ## Let off her chain she's at her strongest, even a level later.
 func test_sarkhaza_unchained_at_level_11() -> void:
 	await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_unchained"], [], [], HOARD_MOUTH)
+
+
+## Khazan's study, the four just inside its door; the hall of names, the four at the stair foot.
+const KHAZAN_STUDY: Array[Vector2i] = [Vector2i(8, 6), Vector2i(9, 6), Vector2i(10, 6), Vector2i(11, 6)]
+const KHAZAN_STAIR: Array[Vector2i] = [Vector2i(14, 17), Vector2i(15, 17), Vector2i(14, 18), Vector2i(15, 18)]
+const KHAZAN_DOORS: Array[String] = ["khazan_study_door_w", "khazan_study_door_e"]
+
+
+func test_the_remembered_at_level_10() -> void:
+	await _series("khazan_undercroft", 12, 10, "remembered", [1, 2, 3, 4], [], [], [], KHAZAN_STAIR)
+
+
+## While his name stands over the door he's at his strongest, and the best the party can do is drive him back into it.
+func test_khazan_with_his_name_at_level_10() -> void:
+	await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+
+
+## Driven off, not destroyed: he leaves the fight below 60 Hit Points and goes back into his name.
+func test_khazan_withdraws_into_his_name() -> void:
+	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 2, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_eq(str(res["outcome"]), "victory", "seed 2 drives him off")
+	assert_true((res["story_flags"] as Dictionary).has("khazan_withdrawn"), "back into his name")
+	assert_true((res["departed"] as Array).has("withdraw"), "he left the fight, he didn't die in it")
+
+
+## With the name unmade, the next body is the last.
+func test_khazan_unmade_at_level_10() -> void:
+	await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
+

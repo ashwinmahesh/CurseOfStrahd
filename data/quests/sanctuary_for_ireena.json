@@ -25,7 +25,9 @@
     {
       "id": "at_inn",
       "journal": "Ireena has taken a room at the Blue Water Inn while we deal with Vallaki's troubles. The Martikovs keep a close watch on their door.",
-      "objectives": [],
+      "objectives": [
+        "Find Ireena true sanctuary, or take her with us again"
+      ],
       "ends": ""
     },
     {
@@ -38,13 +40,13 @@
       "id": "travels_on",
       "journal": "Ireena chose to keep travelling with us. Walls didn't save her father, she says; we might do better.",
       "objectives": [],
-      "ends": ""
+      "ends": "success"
     },
     {
       "id": "leaving_vallaki",
       "journal": "Ireena won't stay in a town ruled by the devil's friends. She means to go on toward Krezk, with us.",
       "objectives": [],
-      "ends": ""
+      "ends": "success"
     }
   ]
 }

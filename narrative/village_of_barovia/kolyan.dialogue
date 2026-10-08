@@ -2,6 +2,10 @@
 # commands the magic for it (Raise Dead, level 9) and 500 gp of diamonds for the rite.
 
 ~ grave
+# Raised, then told "Rest a while": he waits on his own grave until the party comes back for him.
+if flag.kolyan_raised and not guest:kolyan_indirovich
+-> visit
+endif
 Narrator: Fresh earth, a board with his name burned into it, and someone's wildflowers already gone brown.
 if tarokka.ally.npc == kolyan_indirovich and not guest:kolyan_indirovich and not flag.kolyan_raised
 interject guest:ismark: Madam Eva said Father would ride with us. I thought she meant his memory. She didn't, did she.
@@ -35,6 +39,7 @@ Kolyan Indirovich: Then I'll sit on my own grave and frighten the gravedigger. D
 -> END
 
 ~ visit
+Narrator: Kolyan sits on his own grave with the board across his knees. The gravedigger is working at the far end of the churchyard today.
 Kolyan Indirovich: Back, are you? I'm ready when you are.
 * Ride with us. -> join
 * Not yet. -> END

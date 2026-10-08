@@ -41,6 +41,19 @@
       "region": "van_richtens_tower",
       "when": "flag.tower_rumor or flag.khazan_known or tarokka.tome.region == van_richtens_tower or tarokka.symbol.region == van_richtens_tower or tarokka.sword.region == van_richtens_tower",
       "summary": "A dead archmage's black tower on an island in Lake Baratok, a cold tarn under Mount Baratok. Rudolph van Richten keeps it now; a Vistani wagon is parked on the shore."
+    },
+    {
+      "id": "lake_hill_trail",
+      "name": "The Hill Trail",
+      "location": "lake_zarovich_trail",
+      "spawn": "default",
+      "pos": [
+        0.25,
+        0.42
+      ],
+      "region": "lake_zarovich",
+      "when": "visited:vallaki and (quest.the_ravens_ransom or quest.fens_trail >= the_blazes)",
+      "summary": "A trappers' trail through the pines on the hills above Lake Zarovich, where the hunters set their snares."
     }
   ],
   "roads": [
@@ -95,6 +108,13 @@
       "hours": 4,
       "table": "zarovich_hills",
       "name": "The Baratok track, down to Krezk"
+    },
+    {
+      "id": "lake_zarovich_to_hill_trail",
+      "from": "lake_zarovich",
+      "to": "lake_hill_trail",
+      "hours": 0.5,
+      "name": "Up the hill trail"
     }
   ]
 }
