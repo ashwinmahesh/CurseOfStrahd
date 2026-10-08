@@ -1,6 +1,6 @@
 extends Node
 ## The saves' own page (ui/screens/saves_screen.gd, lane 16) from a late party, with the golden saves as the list:
-## the recap on loading (Q3), Save Game, the question before writing over a save, Load a Save with its Backups and
+## the recap on loading (Q3), Save Game, the questions before writing over or deleting a save, Load a Save with its Backups and
 ## Chapters tabs, the game-over screen and the title's Load. Saves of the capture's own only, so the owner's never show
 ## or change.
 ## make capture SCENE=res://tools/capture/saves_capture.tscn NAME=saves FRAMES=30
@@ -75,6 +75,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await _shoot(tool, out + "_1_save_page.png")
 	page.call("_confirm", page.slots()[0])
 	await _shoot(tool, out + "_2_overwrite.png")
+	page.call("_confirm_delete", page.slots()[1])
+	await _shoot(tool, out + "_2b_delete.png")
 	root.call("close_screen")
 	SaveSystem.back_up_for_build("capture_build")
 	root.call("open_screen", "menu", 0)
