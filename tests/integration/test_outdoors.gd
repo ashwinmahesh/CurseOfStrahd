@@ -332,3 +332,28 @@ func test_the_vistani_camps_are_lived_in() -> void:
 	assert_true(c.grid.height(Vector2i(15, 6)) < c.grid.height(Vector2i(15, 12)), "the camp a step above the shore")
 	assert_true(c.grid.height(Vector2i(26, 12)) > c.grid.height(Vector2i(15, 12)), "Arrigal's wagons on the higher ground")
 	c.queue_free()
+
+
+## Houses stand on the town's ground (lane 28, 2026-10-08: on natural ground Vallaki's houses and St. Andral's were
+## buried to the eaves): each building's base is within a step of the open ground at its walls.
+func test_houses_stand_on_raised_ground() -> void:
+	var v := _view("vallaki")
+	await _frames(1)
+	var checked := 0
+	for b: Dictionary in v.board.buildings:
+		if b.has("interior") or b.has("castle") or not b.has("rect"):
+			continue
+		var r := b["rect"] as Rect2i
+		var base := (b["root"] as Node3D).position.y
+		var out := Vector2i(-1, -1)
+		for i in r.size.x:
+			for c: Vector2i in [Vector2i(r.position.x + i, r.position.y - 1), Vector2i(r.position.x + i, r.end.y)]:
+				if v.grid.in_bounds(c) and not v.grid.has_flag(c, CombatGrid.WALL) and out == Vector2i(-1, -1):
+					out = c
+		if out == Vector2i(-1, -1):
+			continue
+		checked += 1
+		var ground := v.grid.height(out) / float(CombatGrid.FEET)
+		assert_true(absf(base - ground) <= 1.01, "the house at %s stands at %.1f, the ground beside it at %.1f" % [r.position, base, ground])
+	assert_true(checked >= 10, "Vallaki's houses checked (%d)" % checked)
+	v.queue_free()
