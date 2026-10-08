@@ -121,6 +121,15 @@ uniform vec2 sky_wind = vec2(0.6, 0.25);
 // The screen's edges sink towards this colour.
 uniform float vignette : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 vignette_color : source_color = vec3(0.051, 0.039, 0.071);
+// The Modern finish's depth blur (Atmosphere.EDGE_BLURS): the world softens toward the screen's edges, most in the
+// corners, while the middle stays sharp. Read from the screen copy's mipmaps, so only the world blurs: the names,
+// rings, markers and characters draw after this pass. How strong (0 = off), how far out from the middle it starts
+// (1 = the middle of each side, the corners are 1.41), and the mip level in the corners at 1080 lines (one more for
+// each doubling of the screen's height, so it looks the same at any size).
+uniform sampler2D blur_tex : hint_screen_texture, filter_linear_mipmap, repeat_disable;
+uniform float edge_blur : hint_range(0.0, 1.0) = 0.0;
+uniform float edge_blur_start = 0.7;
+uniform float edge_blur_lod = 2.5;
 
 const float BAYER[16] = float[](0.0, 8.0, 2.0, 10.0, 12.0, 4.0, 14.0, 6.0, 3.0, 11.0, 1.0, 9.0, 15.0, 7.0, 13.0, 5.0);
 
@@ -258,6 +267,18 @@ void fragment() {
 	vec2 cell = floor(FRAGCOORD.xy / pixel_size);
 	vec2 uv = (cell + 0.5) * pixel_size / vp;
 	vec3 lin_in = texture(screen_tex, uv).rgb;
+	if (edge_blur > 0.0) {
+		float w = smoothstep(edge_blur_start, 1.4142, length(uv * 2.0 - 1.0)) * edge_blur;
+		if (w > 0.0) {
+			// Four taps half a texel of that mip apart smooth over the mips' square texels.
+			float lod = w * max(edge_blur_lod + log2(vp.y / 1080.0), 0.0);
+			vec2 t = exp2(lod) * 0.5 / vp;
+			lin_in = (textureLod(blur_tex, uv + vec2(t.x, t.y * 0.5), lod).rgb
+				+ textureLod(blur_tex, uv + vec2(-t.x * 0.5, t.y), lod).rgb
+				+ textureLod(blur_tex, uv + vec2(-t.x, -t.y * 0.5), lod).rgb
+				+ textureLod(blur_tex, uv + vec2(t.x * 0.5, -t.y), lod).rgb) * 0.25;
+		}
+	}
 	vec3 col = to_srgb(lin_in);
 	vec3 excess = max(lin_in - vec3(1.0), vec3(0.0));
 	float raw_depth = texture(depth_tex, uv).r;

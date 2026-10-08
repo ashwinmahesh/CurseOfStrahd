@@ -1,6 +1,8 @@
 extends Node
-## The Modern look's depth of field at each strength (Atmosphere.DOF_STRENGTHS), the same views, for the owner to pick.
-## make capture SCENE=res://tools/capture/dof_capture.tscn NAME=dof FRAMES=30 (DOF_ONLY=light,tilt: only these)
+## The Modern look's edge blur at each setting (Atmosphere.EDGE_BLURS) and with it off, the same views with the HUD
+## showing, for the owner to pick.
+## make capture SCENE=res://tools/capture/dof_capture.tscn NAME=blur/edge FRAMES=30 ARGS=--size=1920x1080
+## (BLUR_ONLY=off,edges: only these; BLUR_AT=vallaki,krezk: these places instead of the Village of Barovia's)
 
 var root: Node
 
@@ -18,7 +20,7 @@ func _ready() -> void:
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
 	GameState.story.location = "village_of_barovia"
-	GameState.story.minute_of_day = 14 * 60
+	GameState.story.minute_of_day = 12 * 60 + 15
 	for c: Dictionary in Cutscenes.all():
 		Cutscenes.mark_played(str(c["id"]), GameState.story)   # an arrival's picture would cover the shot
 	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
@@ -27,14 +29,20 @@ func _ready() -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	var hud := root.get("hud") as ExploreHud
-	var only := OS.get_environment("DOF_ONLY").split(",", false)   # e.g. DOF_ONLY=light,tilt
-	for strength: String in Atmosphere.DOF_STRENGTHS:
-		if not only.is_empty() and not strength in only:
-			continue
-		Atmosphere.dof_strength = strength
-		for where: String in ["village_of_barovia", "tser_pool", "death_house_ground"]:
-			root.call("enter_location", where, "default")
-			await tool.call("wait_frames", 45)
-			hud.close_narration()
+	var only := OS.get_environment("BLUR_ONLY").split(",", false)   # e.g. BLUR_ONLY=off,edges
+	var places := OS.get_environment("BLUR_AT").split(",", false)
+	if places.is_empty():
+		places = PackedStringArray(["village_of_barovia"])
+	var settings: Array = ["off"]
+	settings.append_array(Atmosphere.EDGE_BLURS.keys())
+	for where: String in places:
+		root.call("enter_location", where, "default")
+		await tool.call("wait_frames", 45)
+		hud.close_narration()
+		for setting: String in settings:
+			if not only.is_empty() and not setting in only:
+				continue
+			GameSettings.set_value("depth_blur", setting != "off", false)   # cache only, as above
+			GameSettings.set_value("blur_reach", "" if setting == "off" else setting, false)
 			await tool.call("wait_frames", 10)
-			tool.call("_shot", "%s_%s_%s.png" % [out, strength, where])
+			tool.call("_shot", "%s_%s_%s.png" % [out, where, setting])
