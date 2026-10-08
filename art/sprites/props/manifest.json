@@ -5909,6 +5909,28 @@
       "source": "art/generated/props/model_cloak_pegs.png",
       "mount": "wall",
       "world_width": 0.61
+    },
+    "hunters_tree_stand": {
+      "file": "art/sprites/props/hunters_tree_stand.png",
+      "width_px": 240,
+      "height_px": 516,
+      "world_height": 4.08,
+      "pixel_size": 0.00797,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_hunters_tree_stand.png",
+      "mount": "stand",
+      "world_width": 1.898
+    },
+    "broad_oak_bough": {
+      "file": "art/sprites/props/broad_oak_bough.png",
+      "width_px": 340,
+      "height_px": 516,
+      "world_height": 4.74,
+      "pixel_size": 0.00926,
+      "anchor": "bottom_center",
+      "source": "art/generated/props/model_broad_oak_bough.png",
+      "mount": "stand",
+      "world_width": 3.123
     }
   }
 }

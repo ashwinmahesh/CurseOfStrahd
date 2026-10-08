@@ -7911,6 +7911,49 @@
         "pal_walnut"
       ],
       "triangles": 132
+    },
+    "hunters_tree_stand": {
+      "file": "art/models/hunters_tree_stand.glb",
+      "mount": "free",
+      "stands_for": [
+        "hunters_tree_stand"
+      ],
+      "size": [
+        1.598,
+        4.079,
+        1.615
+      ],
+      "materials": [
+        "pal_bog",
+        "pal_bog_deep",
+        "pal_ink",
+        "pal_peat",
+        "pal_umber",
+        "pal_void",
+        "tex_interior__wood_planks"
+      ],
+      "triangles": 726,
+      "turns": true
+    },
+    "broad_oak_bough": {
+      "file": "art/models/broad_oak_bough.glb",
+      "mount": "free",
+      "stands_for": [
+        "broad_oak_bough"
+      ],
+      "size": [
+        3.66,
+        4.742,
+        3.114
+      ],
+      "materials": [
+        "pal_bog",
+        "pal_bog_deep",
+        "pal_moss",
+        "pal_umber"
+      ],
+      "triangles": 1026,
+      "nature": true
     }
   }
 }

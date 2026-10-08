@@ -173,6 +173,8 @@ static func stand(board: ArenaBoard, parent: Node3D, id: String, art: String, ce
 	var model := instance(id)
 	model.scale = Vector3.ONE * scale_
 	holder.add_child(model)
+	if bool(info.get("nature", false)):
+		holder.set_meta("nature", true)   # a tree that keeps its heading (its walkable bough lies along its squares)
 	if bool(info.get("turns", false)):
 		# Nature has no front: each copy gets its own heading, the same every time the place is built.
 		holder.rotation.y = float(hash_cell(cell) % 360) * PI / 180.0

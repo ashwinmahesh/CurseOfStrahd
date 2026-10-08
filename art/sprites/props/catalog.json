@@ -1269,7 +1269,9 @@
     "stake_bundle": 3.5,
     "map_table": 4.0,
     "charred_furniture": 2.2,
-    "slate_stack": 1.5
+    "slate_stack": 1.5,
+    "hunters_tree_stand": 20.4,
+    "broad_oak_bough": 23.7
   },
   "big_width": 1.6,
   "models3d": {
@@ -1664,7 +1666,9 @@
       "charred_furniture": "charred_furniture",
       "ash_heap": "ash_heap",
       "slate_stack": "slate_stack",
-      "cloak_pegs": "cloak_pegs"
+      "cloak_pegs": "cloak_pegs",
+      "hunters_tree_stand": "hunters_tree_stand",
+      "broad_oak_bough": "broad_oak_bough"
     },
     "walls": {
       "interior/wainscot_wall": "wainscot",

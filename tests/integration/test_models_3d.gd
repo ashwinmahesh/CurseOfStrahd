@@ -388,3 +388,22 @@ func test_a_fire_burns_once() -> void:
 				flames += 1
 	assert_eq(flames, 1, "Krezk's brazier burns with one flame")
 	v.queue_free()
+
+
+## Lane 28's climbable trees (a prop's `stand_ft` 10): the platform and the bough the party stands on are exactly 10 ft
+## (2 units) above the tree's foot, so the board's raised squares meet them.
+func test_climbable_trees_are_stood_on_at_ten_feet() -> void:
+	# [model, the stood-on part's footprint in model space (x, z: Godot's z is toward the front)]
+	for spec: Array in [["hunters_tree_stand", Rect2(-0.47, -0.47, 0.94, 0.94)], ["broad_oak_bough", Rect2(-1.0, -0.2, 2.0, 0.4)]]:
+		var m := ModelPiece.instance(str(spec[0]))
+		add_child(m)
+		var top := -1.0
+		for c in m.find_children("*", "MeshInstance3D", true, false):
+			var mi := c as MeshInstance3D
+			for s in mi.mesh.get_surface_count():
+				for v: Vector3 in mi.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX] as PackedVector3Array:
+					var w := m.global_transform.affine_inverse() * mi.global_transform * v
+					if (spec[1] as Rect2).has_point(Vector2(w.x, w.z)) and w.y > 1.5 and w.y < 2.3:
+						top = maxf(top, w.y)
+		assert_between(top, 1.97, 2.03, "%s is stood on at 10 ft (%.3f)" % [spec[0], top])
+		m.queue_free()

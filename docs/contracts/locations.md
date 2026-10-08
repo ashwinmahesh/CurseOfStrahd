@@ -79,6 +79,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   for ranged attacks, and it hides what is behind it like a wall that high. Put it on `.` squares, not `=`. Its model
   is the raised thing (a platform, a gallows, a great tree with a perch) and is drawn from the ground up, so its top
   should sit about `stand_ft` high; the board draws only the ground under it. It is always there (no `when`).
+  Climbable trees built for it (stood on at exactly 10 ft): `hunters_tree_stand`, a pine with a plank platform over
+  its one square; `broad_oak_bough`, an oak whose level bough runs over two squares (give it `span: [2, 1]`, or
+  `[1, 2]` with a `facing` that turns it) with its trunk on the square west of them (before turning).
   A search prop's `skill` is the check that finds it: `perception` (default) or `investigation` (a compartment you
   work out; Search rolls it as well when one is within 15 ft). A search prop with an `item` is a hidden find
   (docs/story/found_magic_items.md): each character gets one look, and one who misses it can't find it later; the
