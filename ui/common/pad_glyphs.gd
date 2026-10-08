@@ -177,19 +177,39 @@ static func words(keys: String, pad: String) -> String:
 	return names(pad) if PadNav.active() else keys
 
 
-## `text` with {a}, {b} ... as the pad family's names for those buttons, whatever the device (a controls card's
-## controller line).
+## `text` with {a}, {b} ... as the pad family's names for those buttons, and {@action} as the name of the button
+## the player has on that action (Settings, Keys, Controller), whatever the device (a controls card's controller line).
 static func names(text: String) -> String:
 	var out := text
 	for place: String in ["a", "b", "x", "y", "lb", "rb", "lt", "rt", "ls", "rs", "start", "back"]:
 		out = out.replace("{%s}" % place, name_of(place))
+	var re := RegEx.create_from_string("\\{@([a-z_0-9]+)\\}")
+	for m in re.search_all(text):
+		var place := place_for(StringName(m.get_string(1)))
+		out = out.replace(m.get_string(), name_of(place) if place != "" else "(no button)")
 	return out
 
 
-## Shows words(keys, pad) on `o` now and whenever the device changes, for as long as `o` lives.
+## The places of the buttons on `actions`, joined for the prompt bar ("lb+rb").
+static func places(actions: Array) -> String:
+	var out := PackedStringArray()
+	for a: Variant in actions:
+		var p := place_for(a as StringName)
+		if p != "":
+			out.append(p)
+	return "+".join(out)
+
+
+## Shows words(keys, pad) on `o` now and whenever the device changes, for as long as `o` lives (called again for the
+## same `o`, it takes the new words).
 static func hint(o: Object, keys: String, pad: String, property: StringName = &"text") -> void:
-	_hints.append([weakref(o), keys, pad, property])
 	o.set(property, words(keys, pad))
+	for h: Array in _hints:
+		if (h[0] as WeakRef).get_ref() == o and h[3] == property:
+			h[1] = keys
+			h[2] = pad
+			return
+	_hints.append([weakref(o), keys, pad, property])
 
 
 static func refresh_hints() -> void:

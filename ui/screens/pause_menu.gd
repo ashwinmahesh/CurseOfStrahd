@@ -288,10 +288,8 @@ func _show_settings(page: String = "Game") -> void:
 			_place(keys)
 			_note.position = _u(24, 381)
 			_note.size = _u(W_U - 48.0, 22)
-			var reset := _link("Every key back to the start", func() -> void:
-				InputActions.reset()
-				_show_settings("Keys")
-				_note.text = "Every key is back where it started.")
+			var reset := _link("All back to the start", func() -> void:
+				_note.text = keys.reset_view())   # the keys, or the controller's buttons (whichever the page shows)
 			reset.position = Vector2((_u(W_U, 0).x - reset.size.x) / 2.0, _u(0, 409).y - reset.size.y / 2.0)
 		_:
 			_game_rows()

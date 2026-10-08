@@ -4,7 +4,8 @@ extends RefCounted
 ## over the defaults (Settings, Keys: Improvement Ideas U5; kept in user://settings.cfg as "keys", action -> keys, only
 ## where they differ). Keyboard and mouse everywhere, and the controller too (U6, docs/ui/controller.md): combat's
 ## buttons here, the screens' (pad_*) read by PadNav.
-## Escape (menus, back, cancel) and F1 (the controls card) can't be changed, so there's always a way back.
+## Escape (menus, back, cancel) and F1 (the controls card) can't be changed, so there's always a way back. The pad's
+## buttons are the player's to move too (PAD_COMMANDS, kept as "pad", action -> button code, only where they differ).
 
 ## The default keys: the first is an action's key, the second its alternate.
 const BINDINGS := {
@@ -220,6 +221,7 @@ static func ensure() -> void:
 		jm.axis_value = float(spec[1])
 		if not InputMap.action_has_event(action, jm):
 			InputMap.action_add_event(action, jm)
+	apply_pad()   # the player's own buttons over the defaults (Settings, Keys, Controller)
 
 
 ## Puts each action's current keys in the InputMap (the controller's buttons and sticks stay).
@@ -406,3 +408,160 @@ static func as_default(ev: InputEventKey, lists: Array[String] = ["both", "explo
 		if defaults.has(int(k)):
 			moved = true
 	return KEY_NONE if moved else k
+
+
+# --- The player's controller buttons (U6) ---------------------------------------------------------
+
+## The controller's commands the player can move (Settings, Keys, Controller): [action, what it does, list]. One button
+## each (or a trigger). A and B on the screens, Start, the sticks and the D-pad's moving stay put, so there's always a
+## way round and back. Two commands of one list can't share a button; the lists are never used at once.
+const PAD_COMMANDS := [
+	[&"use_marked", "Use the marked thing", "explore"],
+	[&"marked_menu", "Everything you can do with it", "explore"],
+	[&"mark_prev", "Mark the thing before", "explore"],
+	[&"mark_next", "Mark the next thing", "explore"],
+	[&"search", "Search", "explore"],
+	[&"leader_prev", "Lead: the one before", "explore"],
+	[&"leader_next", "Lead: the next", "explore"],
+	[&"sneak", "Sneak", "explore"],
+	[&"plan_mode", "Turn-based exploring", "explore"],
+	[&"plan_round", "End the round (turn-based)", "explore"],
+	[&"show_names", "Names and what foes see (hold)", "explore"],
+	[&"hud_bar", "The bar's buttons", "explore"],
+	[&"show_controls", "The controls", "explore"],
+	[&"open_map", "Map", "explore"],
+	[&"combat_next_target", "Next target", "fight"],
+	[&"combat_end_turn", "End the turn", "fight"],
+	[&"combat_radial", "Radial menu (hold)", "fight"],
+	[&"combat_use_slot", "Use the hotbar slot", "fight"],
+	[&"combat_slot_prev", "Previous hotbar slot", "fight"],
+	[&"combat_slot_next", "Next hotbar slot", "fight"],
+	[&"combat_tab_prev", "Previous hotbar tab", "fight"],
+	[&"combat_tab_next", "Next hotbar tab", "fight"],
+	[&"combat_slot_level_down", "Lower spell slot", "fight"],
+	[&"combat_slot_level_up", "Higher spell slot", "fight"],
+	[&"combat_undo", "Take back a move", "fight"],
+	[&"combat_square_menu", "The square's menu", "fight"],
+	[&"combat_controls", "The controls", "fight"],
+	[&"pad_context", "Item menu", "screens"],
+	[&"pad_explain", "Explain", "screens"],
+	[&"pad_tab_prev", "Previous tab", "screens"],
+	[&"pad_tab_next", "Next tab", "screens"],
+	[&"pad_char_prev", "Previous character", "screens"],
+	[&"pad_char_next", "Next character", "screens"],
+	[&"pad_confirm", "Confirm a step", "screens"],
+]
+const PAD_LISTS := {"explore": "Exploring", "fight": "Fights", "screens": "Menus and screens"}
+## Buttons that keep their jobs: B always goes back and Start always opens the menu (A chooses on screens, so the
+## screens' list can't have it either).
+const PAD_FIXED: Array[int] = [JOY_BUTTON_B, JOY_BUTTON_START]
+## A trigger's code: PAD_TRIGGER + its axis (a button's code is its index).
+const PAD_TRIGGER := 100
+## Commands that move with another (what foes see is shown with the names).
+const PAD_FOLLOWS := {&"show_sight": &"show_names"}
+
+
+## `action`'s default button code, or -1.
+static func pad_default(action: StringName) -> int:
+	if PAD_BUTTONS.has(action):
+		return int((PAD_BUTTONS[action] as Array)[0])
+	if PAD_AXES.has(action):
+		var axis := int((PAD_AXES[action] as Array)[0])
+		if axis == JOY_AXIS_TRIGGER_LEFT or axis == JOY_AXIS_TRIGGER_RIGHT:
+			return PAD_TRIGGER + axis
+	return -1
+
+
+## `action`'s button code now: the player's, else the default.
+static func pad_code(action: StringName) -> int:
+	var saved := GameSettings.value("pad", {}) as Dictionary
+	return int(saved.get(str(action), pad_default(action)))
+
+
+## A code's place on the pad for PadGlyphs ("a", "lt" ...), or "".
+static func pad_place(code: int) -> String:
+	if code == PAD_TRIGGER + JOY_AXIS_TRIGGER_LEFT:
+		return "lt"
+	if code == PAD_TRIGGER + JOY_AXIS_TRIGGER_RIGHT:
+		return "rt"
+	return str(PadGlyphs.BUTTONS.get(code, "")) if code >= 0 else ""
+
+
+static func pad_name_of(action: StringName) -> String:
+	for c: Array in PAD_COMMANDS:
+		if c[0] == action:
+			return str(c[1])
+	return str(action).capitalize()
+
+
+static func pad_list_of(action: StringName) -> String:
+	for c: Array in PAD_COMMANDS:
+		if c[0] == action:
+			return str(c[2])
+	return ""
+
+
+## Puts button `code` on `action`. The command of its list that had it takes this one's old button in exchange (a swap,
+## so nothing is lost). Returns a note of what moved, or why not.
+static func pad_bind(action: StringName, code: int) -> String:
+	if code in PAD_FIXED or code == JOY_BUTTON_A and pad_list_of(action) == "screens":
+		return "%s keeps its job." % PadGlyphs.name_of(pad_place(code))
+	var old := pad_code(action)
+	if old == code:
+		return ""
+	var note := ""
+	var list := pad_list_of(action)
+	for c: Array in PAD_COMMANDS:
+		var other := c[0] as StringName
+		if other != action and str(c[2]) == list and pad_code(other) == code:
+			_store_pad(other, old)
+			note = "%s was %s's; %s is now on %s." % [PadGlyphs.name_of(pad_place(code)), pad_name_of(other),
+				pad_name_of(other), PadGlyphs.name_of(pad_place(old))]
+	_store_pad(action, code)
+	apply_pad()
+	return note
+
+
+## Every button back to the game's own.
+static func pad_reset() -> void:
+	GameSettings.set_value("pad", {})
+	apply_pad()
+
+
+static func pad_changed() -> bool:
+	return not (GameSettings.value("pad", {}) as Dictionary).is_empty()
+
+
+static func _store_pad(action: StringName, code: int) -> void:
+	var saved := (GameSettings.value("pad", {}) as Dictionary).duplicate()
+	if code == pad_default(action):
+		saved.erase(str(action))
+	else:
+		saved[str(action)] = code
+	GameSettings.set_value("pad", saved)
+
+
+## Puts each command's button now in the InputMap in place of its default (the sticks and the rest stay).
+static func apply_pad() -> void:
+	for c: Array in PAD_COMMANDS:
+		_set_pad(c[0] as StringName, pad_code(c[0] as StringName))
+	for follower: StringName in PAD_FOLLOWS:
+		_set_pad(follower, pad_code(PAD_FOLLOWS[follower] as StringName))
+
+
+static func _set_pad(action: StringName, code: int) -> void:
+	if not InputMap.has_action(action):
+		InputMap.add_action(action, 0.5)
+	for ev in InputMap.action_get_events(action):
+		var jm := ev as InputEventJoypadMotion
+		if ev is InputEventJoypadButton or jm != null and (jm.axis == JOY_AXIS_TRIGGER_LEFT or jm.axis == JOY_AXIS_TRIGGER_RIGHT):
+			InputMap.action_erase_event(action, ev)
+	if code >= PAD_TRIGGER:
+		var m := InputEventJoypadMotion.new()
+		m.axis = (code - PAD_TRIGGER) as JoyAxis
+		m.axis_value = 1.0
+		InputMap.action_add_event(action, m)
+	elif code >= 0:
+		var b := InputEventJoypadButton.new()
+		b.button_index = code as JoyButton
+		InputMap.action_add_event(action, b)

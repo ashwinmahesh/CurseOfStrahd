@@ -73,13 +73,15 @@ func tick(delta: float) -> void:
 		return
 	match _mode():
 		CombatView.Mode.TARGET:
-			PadPrompts.set_world(self, [["a", "Pick"], ["b", "Back"], ["x", "Next target"], ["y", "Done picking"]],
-				PROMPTS_RAISE)
+			PadPrompts.set_world(self, [["a", "Pick"], ["b", "Back"], [PadGlyphs.place_for(&"combat_next_target"), "Next target"],
+				[PadGlyphs.place_for(&"combat_end_turn"), "Done picking"]], PROMPTS_RAISE)
 		CombatView.Mode.IDLE:
 			if hud.death_save_shown():
 				PadPrompts.set_world(self, [["a", "Death saving throw"], ["start", "Menu"]], PROMPTS_RAISE)
 			else:
-				PadPrompts.set_world(self, [["a", "Move or attack"], ["x", "Next target"], ["y", "End turn"],
-					["lb", "Actions (hold)"], ["rs", "Options"], ["back", "Controls"]], PROMPTS_RAISE)
+				PadPrompts.set_world(self, [["a", "Move or attack"], [PadGlyphs.place_for(&"combat_next_target"), "Next target"],
+					[PadGlyphs.place_for(&"combat_end_turn"), "End turn"], [PadGlyphs.place_for(&"combat_radial"), "Actions (hold)"],
+					[PadGlyphs.place_for(&"combat_square_menu"), "Options"], [PadGlyphs.place_for(&"combat_controls"), "Controls"]],
+					PROMPTS_RAISE)
 		_:
 			PadPrompts.clear_world(self)
