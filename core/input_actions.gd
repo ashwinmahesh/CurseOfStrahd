@@ -123,9 +123,13 @@ const PAD_BUTTONS := {
 	&"combat_use_slot": [JOY_BUTTON_RIGHT_SHOULDER],
 	&"combat_slot_level_down": [JOY_BUTTON_DPAD_LEFT],
 	&"combat_slot_level_up": [JOY_BUTTON_DPAD_RIGHT],
-	&"camera_rotate_left": [JOY_BUTTON_LEFT_STICK],
-	&"camera_rotate_right": [JOY_BUTTON_RIGHT_STICK],
-	&"cycle_leader": [JOY_BUTTON_BACK],
+	# Fights: D-pad up and down change the hotbar's tab, L3 takes back a move, R3 opens the square's menu, View the
+	# controls card (the right stick turns the camera, CameraRig.pad_look).
+	&"combat_tab_prev": [JOY_BUTTON_DPAD_UP],
+	&"combat_tab_next": [JOY_BUTTON_DPAD_DOWN],
+	&"combat_undo": [JOY_BUTTON_LEFT_STICK],
+	&"combat_square_menu": [JOY_BUTTON_RIGHT_STICK],
+	&"combat_controls": [JOY_BUTTON_BACK],
 	# Every screen (ui/common/pad_nav.gd): A chooses and B goes back (the engine gives its menu actions only keys),
 	# X the item's menu, Y explain, LB/RB tabs.
 	&"ui_accept": [JOY_BUTTON_A],

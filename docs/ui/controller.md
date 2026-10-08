@@ -111,10 +111,28 @@ The prompt bar shows the world's buttons too (`PadPrompts.world`). Each is an In
 pad events on `search`, `sneak`, `plan_mode`, `plan_round`, `open_map`, `show_names`, `show_sight`, `look_*`), so
 Settings can rebind them.
 
-## Fights
+## Fights (`world/combat/combat_view.gd`, `world/combat/pad_combat.gd`)
 
-Fights read the pad themselves (`world/combat/combat_view.gd`); see `combat_view.md` for the fight's map. Their full
-pass is the next step of the plan.
+| Button | Does |
+|---|---|
+| Left stick | Move the square cursor (the camera follows it) |
+| Right stick | Turn and zoom the camera (while the radial is closed) |
+| A | Confirm at the cursor: move, attack, pick a target; a dying hero's Death Saving Throw |
+| B | Cancel, or take back a pick |
+| X | The next target |
+| Y | End the turn (asks if there's something left to do); while picking targets, cast with those picked |
+| LB (hold) | The radial menu: the right stick picks, release to choose |
+| LT / RT, RB | Step through the hotbar's slots, use the one lit |
+| D-pad up / down | The hotbar's tab |
+| D-pad left / right | The spell slot's level |
+| L3 | Take back the last move |
+| R3 | The square's menu at the cursor (Move here, everything that can be done there, Info) |
+| View | The controls card |
+| Start | The menu |
+
+The reaction prompt and the end-turn check have the `pad_modal` meta: while one shows, PadNav moves over it alone
+(its "Next time" rule and targets too), A presses what has focus and B answers no. The prompt bar shows the fight's
+buttons for the moment (`PadPrompts.set_world`).
 
 ## Tests
 

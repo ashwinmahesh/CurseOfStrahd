@@ -166,14 +166,14 @@ func show_mark() -> void:
 	if marked.x < 0:
 		glow.clear()
 		_hud().hint("", Vector2.ZERO)
-		PadPrompts.world = [["dpad_horizontal", "Mark"], ["x", "Search"], ["dpad_up", "Menu bar"]]
+		PadPrompts.set_world(self, [["dpad_horizontal", "Mark"], ["x", "Search"], ["dpad_up", "Menu bar"]])
 		return
 	var thing := view.thing_at(marked)
 	glow.show(view, marked, thing)
 	var at := view.rig.camera.unproject_position(view.board.cell_center(marked) + Vector3(0, 0.6, 0))
 	_hud().hint(str(thing.get("label", "")), at)
-	PadPrompts.world = [["a", "Use"], ["y", "Options"], ["dpad_horizontal", "Mark"], ["x", "Search"],
-		["dpad_up", "Menu bar"]]
+	PadPrompts.set_world(self, [["a", "Use"], ["y", "Options"], ["dpad_horizontal", "Mark"], ["x", "Search"],
+		["dpad_up", "Menu bar"]])
 
 
 ## A: use the marked thing, walking there first as a click does.
@@ -197,4 +197,4 @@ func menu() -> void:
 func clear() -> void:
 	marked = Vector2i(-1, -1)
 	chosen = false
-	PadPrompts.world = []
+	PadPrompts.clear_world(self)

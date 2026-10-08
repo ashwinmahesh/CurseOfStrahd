@@ -85,6 +85,7 @@ func _ready() -> void:
 	_text.add_theme_constant_override("outline_size", 7)
 	_caption.add_child(_text)
 	_hint = UiKit.label("Click, Space or Enter to go on · Esc pauses", 13, "parchment")
+	PadGlyphs.hint(_hint, _hint.text, "{a} goes on · {b} pauses")
 	_hint.name = "Hint"
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_place(_hint, Vector2(0.5, 1.0), Rect2(-400, -44, 800, 24))
@@ -92,6 +93,7 @@ func _ready() -> void:
 	_skip = UiParts.small_button("Skip  ▸▸", func() -> void: skip_requested.emit())
 	_skip.name = "Skip"
 	_skip.focus_mode = Control.FOCUS_NONE
+	_skip.set_meta(&"pad_skip", true)   # a pad's A goes on and B pauses; Skip is on the pause card (PadNav)
 	_skip.modulate = Color(1, 1, 1, 0.85)
 	_place(_skip, Vector2(1.0, 0.0), Rect2(-150, 28, 118, 32))
 	add_child(_skip)
@@ -114,6 +116,7 @@ func _build_pause() -> void:
 	col.add_child(head)
 	var resume := UiKit.button("Resume", func() -> void: set_paused(false))
 	resume.name = "Resume"
+	resume.set_meta(&"pad_first", true)
 	col.add_child(resume)
 	var skip := UiKit.button("Skip the scene", func() -> void:
 		set_paused(false)

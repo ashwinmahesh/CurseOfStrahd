@@ -136,9 +136,14 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 - **Ready** holds an attack for an enemy coming into reach; readied spells come later (deviations.md).
   **Influence** is greyed with the reason ("Wolves and the walking dead can't be reasoned with").
 - **Level-up badge**: no experience is earned in the arena, so it never shows.
-- **Controller**: the radial menu (hold LB, aim with the right stick) is in; inside a tab, LT/RT step through the
-  slots and RB uses one, and the left stick moves a square cursor that A confirms. Controls are listed on F1 / Start
-  instead of a permanent bottom panel, to keep the field clear.
+- **Controller** (docs/ui/controller.md, world/combat/pad_combat.gd): the radial menu (hold LB, aim with the right
+  stick) is in; inside a tab, LT/RT step through the slots and RB uses one, D-pad up/down change the tab and
+  left/right the spell slot, and the left stick moves a square cursor that A confirms, with the camera following it.
+  The right stick turns and zooms the camera when the radial isn't open. X jumps to the next target, Y ends the turn
+  (while picking targets, it casts with those picked), L3 takes back the last move, R3 opens the square's menu at the
+  cursor, A rolls a dying hero's Death Saving Throw, Start opens the menu and View the controls card (F1 on the
+  keyboard), shown instead of a permanent bottom panel to keep the field clear. The reaction prompt and the end-turn
+  check take the pad alone while they show, so their choices (the "Next time" rule, the targets) can be reached.
 - **Names on the field** show for the active creature and the one under the cursor only, so a crowded fight stays
   readable; conditions and the health bar always show.
 - **Heroic Inspiration** uses the reaction prompt after a missed attack roll ("Spend Heroic Inspiration to reroll?").

@@ -11,8 +11,29 @@ extends CanvasLayer
 const ICON := 26
 const LAYER := 118
 
-## What the pad does in the world when no screen is in front (exploring: PadExplore; fights): [place, text] pairs.
+## What the pad does in the world when no screen is in front (exploring: PadExplore; fights: PadCombat): [place,
+## text] pairs, and who set them (set_world, clear_world), so one never clears the other's.
 static var world: Array = []
+static var _world_owner: WeakRef = null
+## How far above the bottom edge the world's bar stands (clear of the exploring command bar, or a fight's hotbar).
+static var world_raise := WORLD_RAISE
+
+
+static func set_world(owner: Object, list: Array, raise: float = WORLD_RAISE) -> void:
+	world = list
+	world_raise = raise
+	_world_owner = weakref(owner)
+
+
+## Clears the world's prompts if `owner` set them.
+static func clear_world(owner: Object) -> void:
+	if owns(owner):
+		world = []
+		_world_owner = null
+
+
+static func owns(owner: Object) -> bool:
+	return _world_owner != null and _world_owner.get_ref() == owner
 
 var _bar: HBoxContainer
 var _plate: PanelContainer
@@ -94,8 +115,11 @@ func _process(_delta: float) -> void:
 	var scope := nav.scope if nav != null and nav.pad else null
 	# Over the world (or a HUD's own buttons) the bar stands above the command bar; over a screen, in the corner.
 	var raised := scope == null or scope is CanvasLayer and (scope as CanvasLayer).layer < PadNav.LAYER_MIN
-	_plate.offset_bottom = -12.0 - (WORLD_RAISE if raised else 0.0)
+	_plate.offset_bottom = -12.0 - ((world_raise if scope == null else WORLD_RAISE) if raised else 0.0)
 	_plate.offset_top = _plate.offset_bottom - _plate.get_combined_minimum_size().y
+	if _world_owner != null and _world_owner.get_ref() == null:
+		world = []   # whoever set them is gone (a fight that ended)
+		_world_owner = null
 	if scope == null:
 		var shown := nav != null and nav.pad and not world.is_empty() and nav.popup_open() == null
 		visible = shown

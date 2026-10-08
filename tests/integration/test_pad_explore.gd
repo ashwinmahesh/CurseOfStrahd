@@ -180,4 +180,4 @@ func test_the_mark_goes_when_the_mouse_comes_back() -> void:
 	get_viewport().push_input(move, true)
 	await _frames(2)
 	assert_eq(_pad().marked, Vector2i(-1, -1), "no mark for the mouse")
-	assert_true(PadPrompts.world.is_empty(), "nor pad prompts")
+	assert_false(PadPrompts.owns(_pad()), "nor pad prompts")
