@@ -444,6 +444,7 @@
       "description": "A dead soldier's voice, hollow, rasping and dutiful, with a strong, clearly audible Eastern European (Romanian) accent: clipped military speech, endlessly keeping a watch that ended long ago.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "kxXQw0P125LSped4budN",
       "released": true
     },
     "mad_mary": {
@@ -2053,6 +2054,36 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "SRrttc9MKhkw7HcNbu4r",
+      "released": true
+    },
+    "argynvostholt_cosmin": {
+      "voice_id": "kl4JkAUOEHGE7EwZDFXE",
+      "name": "Barovia Cosmin",
+      "description": "A Barovian youth of eighteen from Vallaki, a cooper's son, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A light, boyish, earnest young voice, a little hoarse from the cold, stubborn and proud, trying hard to sound braver than he is.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "kl4JkAUOEHGE7EwZDFXE",
+      "released": true
+    },
+    "tinker_iosif": {
+      "voice_id": "SthCcYZgZgbOtrqN9H8e",
+      "name": "Barovia Iosif the Tinker",
+      "description": "A thin Vistani tinker in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A quick, bright, patter-merchant's voice, cheerful and wheedling at top speed, with frantic fear just under the smile.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "SthCcYZgZgbOtrqN9H8e",
+      "released": true
+    },
+    "mother_ecaterina": {
+      "voice_id": "uJxx86hCsTD1uvkpNR4B",
+      "name": "Barovia Mother Ecaterina",
+      "description": "A Barovian woman in her forties from Vallaki, frozen alive in ice for forty years, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A small, faint, slow, breathy voice, numb with cold and grief, gentle and very tired, every word an effort.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "uJxx86hCsTD1uvkpNR4B",
       "released": true
     }
   },
