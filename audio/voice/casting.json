@@ -110,8 +110,28 @@
       "name": "Barovia rictavio",
       "description": "An old man performing a showman: a big, booming carnival barker's voice with a clear, noticeable Dutch accent, theatrical and florid, rolling his words, laughing too loudly. Under the bluster, flashes of a tired, precise, sombre scholar.",
       "settings": {},
-      "model": "eleven_v4",
-      "keep_original": "owner 2026-10-08: \"I like Rictavio's voice, whatever the original was\"; stays on eleven_v4 without tags"
+      "model": "eleven_v3",
+      "accent_tag": "[Dutch accent]",
+      "keep_keys": [
+        "647e2132f89bfcd3",
+        "5ad08290d8b1fc54",
+        "87f684ff6f7259c2",
+        "07ca385a6f16d9a4",
+        "467601bb062c58f9",
+        "85efc5a375448c06",
+        "96c86bc7a8a3ef69",
+        "67c8323142be15b9",
+        "e62b6f69eea2ff48",
+        "209aeacce5720468",
+        "1470fc1d27cecffe",
+        "d8846064ac542919",
+        "834e14eb4f41ca75",
+        "262852986a2603e9",
+        "f3c170910a886053",
+        "e4e11422151775ac",
+        "95ea5aff4073a43b"
+      ],
+      "keep_note": "owner 2026-10-08: the showman keeps his original eleven_v4 clips (keep_keys, never re-recorded); the unmasked Van Richten speaks on eleven_v3"
     },
     "dmitri_krezkov": {
       "voice_id": "hmltLA3C24WM4meHdxdu",
