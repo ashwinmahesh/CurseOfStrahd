@@ -79,3 +79,7 @@ func test_the_bone_marshal_duel_at_level_8() -> void:
 
 func test_the_rag_queen_at_level_9() -> void:
 	await _series("berez", 14, 9, "rag_queen", [1, 2, 3], ["lysaga_guests"])
+
+
+func test_the_vine_mother_at_level_6() -> void:
+	await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4], ["winery_reclaimed"])

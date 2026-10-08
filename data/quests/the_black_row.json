@@ -1,0 +1,47 @@
+{
+  "id": "the_black_row",
+  "name": "The Black Row",
+  "summary": "Once the Martikovs are home, the Seventh Row of their vineyard comes up black every night, and every morning it has been picked bare.",
+  "giver": "davian_martikov",
+  "region": "wizard_of_wines",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Andrei the picker won't touch the Seventh Row at the Wizard of Wines: it comes up black in the night and is gone by morning.",
+      "objectives": [
+        "Ask Davian Martikov about the Seventh Row"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Davian's Seventh Row, the one his grandfather planted and Elvir pruned, grows black grapes every night, and somebody picks it bare in the dark. Davian wants to know who, or what, before he burns it.",
+      "objectives": [
+        "Look at the Seventh Row, and watch it after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "the_picker",
+      "journal": "The one picking the Seventh Row is Adrian Martikov. The black grapes make him dream of Elvir alive and forgiving him, and the veins on his hands are going dark like the leaves.",
+      "objectives": [
+        "Deal with the Seventh Row"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "cut_out",
+      "journal": "The Seventh Row was a cutting of the Gulthias tree, planted under the Martikovs' vines by the druids. It stood up as the Vine Mother, and it's dead.",
+      "objectives": [
+        "Tell Davian"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The Black Row is cut out of the Martikovs' vineyard, and young vines are going in. Davian gave us a wand the Wizard of Wines left in the press-house rack a hundred years ago, against the day something in the vines needed burning.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -103,6 +103,8 @@ approve ratatoille +1 godrick_pendlebrook +1 kip_smudgewick +1: You promised Dav
 * [name:hedda_ironvow] [if quest.cold_prayers and flag.keepers_of_the_feather_met and not flag.hedda_keepers_told] Ask about a silver raven with a sunburst in its claws. -> companions/prayers:davian
 * [name:ratatoille] [if quest.a_seat_at_the_table and not (quest.a_seat_at_the_table >= a_winery)] Ask about the Wizard of Wines. -> companions/table:winery
 * [name:ratatoille] [if flag.winery_reclaimed and not flag.ratatoille_supper_cooked] Ask for the use of the kitchen tonight. -> companions/table:supper
+* [if flag.winery_reclaimed] Heard anything interesting? -> wizard_of_wines/the_black_row:davian_news
+* [if quest.the_black_row == cut_out and not flag.black_row_paid] Your Seventh Row is cut out, root and all. -> wizard_of_wines/the_black_row:report
 * [if flag.winery_wine_flows] We'd like to buy some of your wine. -> buy_wine
 * Tell us about the winery. -> lore
 * Goodbye. -> bye
