@@ -64,3 +64,61 @@ Anton the Cooper: Don't look at me like that. I smiled. I smiled the whole festi
 Anton the Cooper: I stand here till the evening bell, then I go home and practise in the mirror. Third time this month. My wife says I've a face built for coopering, not for joy.
 interject tag:kind: For what it's worth, it seems a perfectly good face.
 -> END
+
+# --- Lane 28 (2026-10-08): the town at work - the market row, the inn's porter, the square and the watch ---
+
+~ herbwife
+if flag.festival_over
+Old Smaranda: Sage, garlic, wolfsbane. Same as always. The festival's done, so I can stop selling yellow ribbons too. Never liked yellow.
+-> END
+endif
+Old Smaranda [smile]: Sage for sleep, garlic for the door, wolfsbane for the window. And a ribbon, dear, yellow, for your coat. They're watching who wears one.
+* Why garlic for the door? -> herbwife_garlic
+* Just looking. -> END
+
+~ herbwife_garlic
+Old Smaranda: Because the Baron says there's nothing to fear, and the Baron is always right. Garlic is two coppers a braid.
+-> END
+
+~ cloth_merchant
+Master Costel [smile]: Bunting! Festival bunting, by the yard or the bolt! I have sold yellow to every house in Vallaki and three of them twice. Business has never been better, which worries me more than you'd think.
+-> END
+
+~ porter
+Matei: Mind your feet! Sacks for Urwin, wine for the square, wicker for the sun. Everything in this town goes on my back sooner or later.
+Matei: Heavy days are good days. You don't have time to think.
+-> END
+
+~ ribbon_girl
+if flag.festival_over
+Daciana: No more ribbons. Nobody's counting any more. I don't know what to do with my hands.
+-> END
+endif
+Daciana [smile]: A ribbon for the festival! It's free. It's for the sun. Everybody wears one.
+* Take a ribbon. -> ribbon_take
+* No, thank you. -> ribbon_refuse
+
+~ ribbon_take
+Narrator: She ties a yellow ribbon to your sleeve with quick, cold fingers, and the smile goes out of her eyes for a moment, with relief.
+-> END
+
+~ ribbon_refuse
+Daciana: Oh. That's... I have to write that down. I'm sorry. It's not me who wants to know.
+-> END
+
+~ sun_painter
+Tudor: Third coat. The Baron says the sun must be brighter than the last one. The last one was very bright, and look where that got us.
+-> END
+
+~ patrol
+Watchman Dobre: Keep moving, strangers. And smile. It's not a request. It's a festival.
+-> END
+
+~ raker
+Gheorghe: Every morning I rake it smooth. Every afternoon the carts churn it up. Every morning I rake it smooth again. The Baron says this is what order looks like.
+-> END
+
+~ dog
+Narrator: The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun.
+-> END
+

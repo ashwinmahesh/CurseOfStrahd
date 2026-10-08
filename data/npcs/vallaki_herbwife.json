@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_herbwife",
+  "name": "Old Smaranda",
+  "title": "Herb Seller of the Market Row",
+  "summary": "A bent old herbwife who sells dried sage, garlic and wolfsbane from a market stall, and smiles at the watch hard enough for two.",
+  "portrait": "druid",
+  "sprite": "druid",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "she/her"
+}

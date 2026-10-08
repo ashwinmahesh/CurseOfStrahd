@@ -85,7 +85,9 @@ anyone touching this file.
   `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap. The crossroads'
   Ivlis is the colour of strong tea, Lake Zarovich behind the Vistani camp black.
 - **Washing lines.** A mood's `lines` (world/look/washing_line.gd) strings a line between two posts with the week's
-  wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village").
+  wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
+  `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.
+  Lines are built outdoors only.
 - **Smoke at a point.** Weather `{"kind": "smoke", "at": [[x, y, z]]}` puts a chimney plume anywhere: Old
   Bonegrinder's pipe.
 - **Waterfalls.** A mood's `falls` (world/look/waterfall.gd) pours a river over an edge: a curved sheet of falling

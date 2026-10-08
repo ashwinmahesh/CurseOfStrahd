@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_cloth_merchant",
+  "name": "Master Costel",
+  "title": "Cloth Merchant",
+  "summary": "A plump cloth merchant who has sold more yellow bunting this year than in the rest of his life together, and has stopped asking himself why.",
+  "portrait": "noble",
+  "sprite": "noble",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

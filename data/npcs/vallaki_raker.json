@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_raker",
+  "name": "Gheorghe",
+  "title": "Street Raker",
+  "summary": "A hooded man who rakes the mud of main street smooth every morning, by the Baron's order, so that it looks cheerful.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

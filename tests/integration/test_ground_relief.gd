@@ -36,7 +36,20 @@ func test_the_walked_ground_is_shaped_but_stays_on_the_grid() -> void:
 	for z in v.grid.depth:
 		for x in v.grid.width:
 			var c := Vector2i(x, z)
-			assert_eq(v.board.floor_y(c), v.grid.height(c) / float(CombatGrid.FEET), "%s's floor level is the rules'" % c)
+			var rules := v.grid.height(c) / float(CombatGrid.FEET)
+			if v.grid.has_flag(c, CombatGrid.NATURAL):
+				# Natural ground (lane 3) draws its slope smoothed: its middle lies between the heights round it.
+				var lo := rules
+				var hi := rules
+				for dz in range(-1, 2):
+					for dx in range(-1, 2):
+						var o := c + Vector2i(dx, dz)
+						if v.grid.in_bounds(o):
+							lo = minf(lo, v.grid.height(o) / float(CombatGrid.FEET))
+							hi = maxf(hi, v.grid.height(o) / float(CombatGrid.FEET))
+				assert_between(v.board.floor_y(c), lo - 0.001, hi + 0.001, "%s's floor lies within the slope round it" % c)
+			else:
+				assert_eq(v.board.floor_y(c), rules, "%s's floor level is the rules'" % c)
 			if not relief.skinned(c):
 				continue
 			skinned += 1
@@ -44,8 +57,10 @@ func test_the_walked_ground_is_shaped_but_stays_on_the_grid() -> void:
 			assert_eq(box.layers, 0, "%s's flat box no longer draws itself: the skin draws its ground" % c)
 			for k in 9:
 				var p := Vector2(x + (k % 3) * 0.5, z + (k / 3) * 0.5)
-				var h := relief.height(p)
+				# The skin's own shape, over the ground's (natural elevation, lane 3: the crossroads has hills).
+				var h := relief.shape(p)
 				assert_true(h <= 0.0 and h >= -GroundRelief.DEEPEST - 0.001, "the ground at %s stays at or just under floor level (%.3f)" % [p, h])
+				assert_true(absf(relief.height(p) - h - v.board.ground_y(p)) < 0.2, "on the ground's own height at %s" % p)
 	assert_true(skinned > 100, "the walked ground is drawn by the skin (%d squares)" % skinned)
 	assert_true(relief.roads().size() >= 2, "roads run between the ways out (%d)" % relief.roads().size())
 	assert_true(v.atmosphere.land.root.find_child("Walked0", true, false) != null, "the walked ground is drawn")
@@ -64,11 +79,12 @@ func test_the_woods_rise_into_banks() -> void:
 	for z in v.grid.depth:
 		for x in v.grid.width:
 			var c := Vector2i(x, z)
+			# Measured from the ground's own height (natural elevation, lane 3: the road has banks and a knoll).
 			if v.board.is_tree(c):
-				highest = maxf(highest, relief.height(Vector2(x + 0.5, z + 0.5)))
+				highest = maxf(highest, relief.shape(Vector2(x + 0.5, z + 0.5)))
 			elif relief.skinned(c) or relief.is_flat(c):
 				# Its corners, shared with any tree square beside it, are at floor level or a hollow below it.
-				assert_true(relief.height(Vector2(x, z)) <= 0.0, "a flat square's corner %s stays at floor level" % c)
+				assert_true(relief.shape(Vector2(x, z)) <= 0.0, "a flat square's corner %s stays at floor level" % c)
 	assert_true(highest > 0.2, "the woods' ground rises (%.2f)" % highest)
 	# The land's first corner past a wooded edge starts on the bank.
 	var p := Vector2(0.0, 3.0)

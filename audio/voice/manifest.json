@@ -3384,6 +3384,34 @@
   "recipe": "e490455599",
   "text": "Now listen. The sun must burn. Somebody always tries to spoil it. Keep an eye on it the night before, and catch whoever comes with a bucket. And stand by me when the torches go in."
  },
+ "barovia_acolyte/1670ca61dada8b29": {
+  "chars": 114,
+  "direction": "[frightened, hushed]",
+  "model": "eleven_v3",
+  "recipe": "0406f3ad6a",
+  "text": "Nothing. The cellar. Father says it's the wind in the cellar. The wind says his name, sometimes, and asks for him."
+ },
+ "barovia_acolyte/22d858d0a57d9092": {
+  "chars": 78,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "0406f3ad6a",
+  "text": "It's quieter under the floor since the burial. I sleep better. Father doesn't."
+ },
+ "barovia_acolyte/d6d2f8df24f62fc3": {
+  "chars": 34,
+  "direction": "[small, nervous]",
+  "model": "eleven_v3",
+  "recipe": "0406f3ad6a",
+  "text": "I sweep a bit louder when it does."
+ },
+ "barovia_acolyte/da0deec65ba9cbae": {
+  "chars": 106,
+  "direction": "[shy, earnest, polite]",
+  "model": "eleven_v3",
+  "recipe": "0406f3ad6a",
+  "text": "Good morning. Father Donavich says a swept path is a prayer you can walk on. I sweep it twice, to be sure."
+ },
  "barovia_goodwife/592a69d7d86813c8": {
   "chars": 144,
   "model": "eleven_v3",
@@ -3401,6 +3429,118 @@
   "model": "eleven_v3",
   "recipe": "16aa257fe7",
   "text": "Strangers. Don't stand so close to the well. Folk will think you've come to poison it, and then they'll think it's my fault for talking to you."
+ },
+ "barovia_gravedigger/78c01b99a1f0e116": {
+  "chars": 111,
+  "direction": "[slow, courteous, eerie]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "Nobody yet. There's always somebody by the end of the week. I like to be ready. It's rude to keep them waiting."
+ },
+ "barovia_gravedigger/dbcd9b605fa9b11f": {
+  "chars": 118,
+  "direction": "[slow, gravelly, ominous]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "Mind the edge. It's deeper than it looks. They all are, now. Six feet was enough once. Six feet isn't enough any more."
+ },
+ "barovia_gravedigger/ef5ac4a817716257": {
+  "chars": 120,
+  "direction": "[slow, confiding, grim]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "So they stay down. Some of them try to come home, see. Not the ones I've buried. Not yet. I dig deep and I pack it hard."
+ },
+ "barovia_petre/5f70de2189a9467f": {
+  "chars": 24,
+  "direction": "[gloomy, flat]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "In the mist. Every time."
+ },
+ "barovia_petre/96df1323fa3c93a6": {
+  "chars": 112,
+  "direction": "[gloomy, dry]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "Strangers. Haven't had strangers since the last strangers. They didn't stay long either. Nobody does, except us."
+ },
+ "barovia_petre/e2d3e4c43b218984": {
+  "chars": 20,
+  "direction": "[contrary, gloomy]",
+  "model": "eleven_v3",
+  "recipe": "d8c0f4a9b0",
+  "text": "It wasn't his heart."
+ },
+ "barovia_vasile/136218eb148bd01a": {
+  "chars": 74,
+  "direction": "[resigned, wry]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "We'd leave if we could. Road's open. You just come back round to the gate."
+ },
+ "barovia_vasile/c24c122d584b18eb": {
+  "chars": 43,
+  "direction": "[insistent, spooked]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "It was his heart, Petre. Something took it."
+ },
+ "barovia_vasile/e75ae0d1cd352ebc": {
+  "chars": 112,
+  "direction": "[gossiping, hushed, relishing]",
+  "model": "eleven_v3",
+  "recipe": "8aaaddd24b",
+  "text": "You heard about the burgomaster? Dead. Heart gave out. The wolves stood round the house all night like mourners."
+ },
+ "barovia_widow/8473ae7efeab9a55": {
+  "chars": 41,
+  "direction": "[quiet, unsure, grieving]",
+  "model": "eleven_v3",
+  "recipe": "e92715c8e5",
+  "text": "I did. I still don't know if I was right."
+ },
+ "barovia_widow/90cf1001a3ce9852": {
+  "chars": 124,
+  "direction": "[soft, wry, tender]",
+  "model": "eleven_v3",
+  "recipe": "e92715c8e5",
+  "text": "I'm telling him the news. There's never any news. He doesn't mind; he was always a good listener, and now he's a better one."
+ },
+ "barovia_widow/95c6dd305c210ac6": {
+  "chars": 116,
+  "direction": "[wry, gentle, a little tart]",
+  "model": "eleven_v3",
+  "recipe": "e92715c8e5",
+  "text": "The burgomaster has a proper grave now, over there. My Teodor will be glad of the company. He never liked him, mind."
+ },
+ "barovia_widow/c03c835d8ea5d727": {
+  "chars": 197,
+  "direction": "[quiet, matter-of-fact, then shaken]",
+  "model": "eleven_v3",
+  "recipe": "e92715c8e5",
+  "text": "Teodor. A cooper. He went to fetch a barrel from the crossroads one evening and came back the next morning, quite well, only very pale and very polite. Father Donavich made me shut the door on him."
+ },
+ "barovia_woodcutter/6093f97558774c60": {
+  "chars": 96,
+  "direction": "[gruff, hurried, breathless]",
+  "model": "eleven_v3",
+  "recipe": "a103c32407",
+  "text": "Out of the road, out of the road. This load won't carry itself, and the light won't wait for it."
+ },
+ "barovia_woodcutter/cb22bd6f885bcfbe": {
+  "chars": 149,
+  "direction": "[low, superstitious, urgent]",
+  "model": "eleven_v3",
+  "recipe": "a103c32407",
+  "text": "The trees by the west road, you cut what you need by noon and you go. After noon they're not the same trees. Ask anyone who stayed to cut a bit more."
+ },
+ "barovia_woodcutter/db4f0c25a5388647": {
+  "chars": 28,
+  "direction": "[grim, flat]",
+  "model": "eleven_v3",
+  "recipe": "a103c32407",
+  "text": "Nobody? No. That's my point."
  },
  "bella_sunbane/098ef8a373570503": {
   "chars": 40,
@@ -31772,6 +31912,13 @@
   "recipe": "dd92281f92",
   "text": "The black horse lifts its head from the manger, and the man beside it turns around."
  },
+ "narrator/1e9f4f34422fb23d": {
+  "chars": 156,
+  "direction": "[quiet, rueful, faintly ominous]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "At the bottom of the ditch, a small knife with a bone handle and an edge that looks hungry, dropped in a hurry by someone who needed it more than they knew."
+ },
  "narrator/1eb5d98871661a48": {
   "chars": 101,
   "model": "eleven_v4",
@@ -32358,6 +32505,13 @@
   "recipe": "dd92281f92",
   "text": "Izek vaults off the dais with his strange arm already smoking. The Baron's watch closes ranks behind him."
  },
+ "narrator/2489d2d934a48930": {
+  "chars": 111,
+  "direction": "[low, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A rag doll face down in the mud of the ruts. Its stitched smile has been unpicked and sewn back on upside down."
+ },
  "narrator/2499e9473e8318b9": {
   "chars": 56,
   "model": "eleven_v4",
@@ -32792,6 +32946,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The door gives. Inside, a young woman crouches on the bed with her knees drawn up and looks at you with enormous, unblinking eyes. Then she hisses."
+ },
+ "narrator/284154353a2f6d35": {
+  "chars": 172,
+  "direction": "[hushed, gentle]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In a crack of the lych-gate post, a stoppered vial of holy water, the wax on its stopper stamped with the morninglord's sun. Someone left it here for whoever needs it most."
  },
  "narrator/284a75ae03743f02": {
   "chars": 154,
@@ -33428,6 +33589,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "An entry hall of cold marble. Ahead, through an archway, the dark opens out into something much bigger."
+ },
+ "narrator/2f10f8abba0448f5": {
+  "chars": 113,
+  "direction": "[dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A coil of good rope on a peg, labelled ROPE. Whoever lives here labels everything, and takes nothing for granted."
  },
  "narrator/2f356f29a59b64e8": {
   "chars": 74,
@@ -35239,6 +35407,13 @@
   "recipe": "dd92281f92",
   "text": "A narrow court in the lee of the church, sheltered from the wind. The snow here is untrodden, except for one line of bare footprints that walks to the wall and stops."
  },
+ "narrator/420628c9bd2f54c7": {
+  "chars": 153,
+  "direction": "[dry, then chilling]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Sacks stacked by size, each labelled in a careful, loopy hand: FLOUR, MORE FLOUR, DREAMS (BEST), DREAMS (SECONDS). The last sack is labelled with a name."
+ },
  "narrator/421a5f6f2d7e76a1": {
   "chars": 90,
   "model": "eleven_v4",
@@ -36481,6 +36656,13 @@
   "recipe": "dd92281f92",
   "text": "Godrick sits down on the floor beside the old knight, and for a while neither of them says anything, and it is the most natural thing in the world."
  },
+ "narrator/4f10069cc727e07a": {
+  "chars": 126,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "In the scree at the crag's edge, a little brass bell on a broken strap, the kind tied round a goat's neck, or a child's wrist."
+ },
  "narrator/4f1a295094c67b75": {
   "chars": 172,
   "model": "eleven_v3",
@@ -37671,6 +37853,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You dream of brick, climbing over your mouth course by course, and wake swallowing."
+ },
+ "narrator/5b674ca282aaf537": {
+  "chars": 184,
+  "direction": "[quiet, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Garlic braided with wolfsbane, nailed over a door, and a little mirror hung under it facing the street. Every door on this lane has the same, as if they all agreed on it one bad night."
  },
  "narrator/5b6a044a4bb35e9b": {
   "chars": 109,
@@ -39132,6 +39321,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Grey shapes keep pace with you along the ridge above the road, and then, all at once, they don't."
+ },
+ "narrator/69dee761fa04e605": {
+  "chars": 123,
+  "direction": "[grim, quiet]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A handcart tipped in the ruts with one wheel cracked through. The load is gone. Drag marks go off into the trees, and stop."
  },
  "narrator/69e1e18655f40c72": {
   "chars": 173,
@@ -47118,6 +47314,13 @@
   "recipe": "dd92281f92",
   "text": "The amber in front of Ratatoille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him."
  },
+ "narrator/bf0de607af3eb924": {
+  "chars": 147,
+  "direction": "[low, ominous, dry]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A fresh grave, half dug, the earth heaped neatly on a sack so the grass isn't spoiled. Nobody has died yet that you know of. The sexton digs ahead."
+ },
  "narrator/bf0ee40164f4e6f6": {
   "chars": 144,
   "model": "eleven_v4",
@@ -49560,6 +49763,13 @@
   "recipe": "dd92281f92",
   "text": "Thigh-deep in the cold, your boots find the bell where it fell: on its side in the silt, green with weed, its clapper still swinging. Wedged in the mouth of it, somebody's offerings from a long time ago, coins gone black."
  },
+ "narrator/d7e85e58499d577a": {
+  "chars": 203,
+  "direction": "[warm, observant]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The barn's roof came down in one piece and lies in the lane like a ramp, beams and rotten thatch packed hard. Children have worn a path up it. From the top you can see over the back fences to the square."
+ },
  "narrator/d7f1875badabcede": {
   "chars": 152,
   "model": "eleven_v4",
@@ -50332,6 +50542,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "When it is over, the den is very quiet. Kiril, Emil, Zuleika and the last of the pack lie where they fell, and in death every one of them is only a man or a woman, and older than you thought."
+ },
+ "narrator/e0ea0505fbc21ba6": {
+  "chars": 188,
+  "direction": "[soft, melancholy]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A wooden shrine to the Morninglord at the crossing of two lanes: a carved sun, worn smooth by hands, and a ring of candle stubs that someone keeps lighting though they never burn for long."
  },
  "narrator/e0f18967be6b0a1d": {
   "chars": 103,
@@ -51150,6 +51367,13 @@
   "recipe": "dd92281f92",
   "text": "He's asleep again before you can answer, mid-thought, the way children and the very sick do."
  },
+ "narrator/ea3e59bb33b7aea8": {
+  "chars": 200,
+  "direction": "[wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "Wedged behind the barrel where the rain can't reach it: a flask wrapped in a rag. The oil inside is so slick the flask nearly slides out of your hand twice. Someone was saving it for a very bad night."
+ },
  "narrator/ea50e04c06e3cf5b": {
   "chars": 92,
   "model": "eleven_v4",
@@ -51339,6 +51563,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Vines, flowers, satyrs chasing nymphs. Very fine work, and very ordinary. Probably."
+ },
+ "narrator/ebf817515d36e16c": {
+  "chars": 149,
+  "direction": "[dry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "The goat looks up from the fence it is eating, considers you, and goes back to the fence. It has seen worse than you, and it has eaten better fences."
  },
  "narrator/ebf9a2578fc78d6c": {
   "chars": 169,
@@ -52074,6 +52305,13 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "At the back of the cellar, a dark gap in the brickwork where a wine merchant sits among his bottles."
+ },
+ "narrator/f3e3090fa8f9f6bc": {
+  "chars": 97,
+  "direction": "[dry, unsettled]",
+  "model": "eleven_v3",
+  "recipe": "f60908d226",
+  "text": "A rain barrel brimming with black water. Something has been drinking from it, and not with a cup."
  },
  "narrator/f3e4bd25a620bed6": {
   "chars": 204,

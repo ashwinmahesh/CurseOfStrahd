@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_patrol",
+  "name": "Watchman Dobre",
+  "title": "Of the Vallaki Watch",
+  "summary": "A watchman walking main street from gate to gate, looking for anyone not smiling.",
+  "portrait": "vallaki_guard",
+  "sprite": "vallaki_guard",
+  "attitude": "indifferent",
+  "monster": "vallaki_guard",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

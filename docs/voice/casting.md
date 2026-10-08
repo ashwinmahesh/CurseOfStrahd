@@ -12,7 +12,7 @@ a speaker who moved keeps their older clips, and the Model column names the mode
 
 | Speaker | Lines | Characters | Voice | Model | Description |
 |---|---:|---:|---|---|---|
-| `narrator` | 4,032 | 510,607 | Barovia Narrator | `eleven_v3` (older lines `eleven_v4`) | A mature English woman with a rich, low alto voice, a refined received pronunciation accent and precise, elegant diction. An unseen storyteller narrating a gothic role-playing game: intimate and confiding, dryly witty, ominous but warm, savouring each word with a hint of a smile. Slow, deliberate rhythm with dramatic pauses. Clean, close studio recording. |
+| `narrator` | 4,046 | 512,729 | Barovia Narrator | `eleven_v3` (older lines `eleven_v4`) | A mature English woman with a rich, low alto voice, a refined received pronunciation accent and precise, elegant diction. An unseen storyteller narrating a gothic role-playing game: intimate and confiding, dryly witty, ominous but warm, savouring each word with a hint of a smile. Slow, deliberate rhythm with dramatic pauses. Clean, close studio recording. |
 | `hero_female` | 645 | 41,204 | Lucie - Clear and Professional Actress | `eleven_v3` | A warm adult woman's voice with a neutral English accent for a custom player hero: clear, grounded and expressive, able to carry any class or temperament. |
 | `hero_male` | 645 | 41,204 | Julian Vale - Resonant and Optimistic | `eleven_v3` | A warm adult man's voice with a neutral English accent for a custom player hero: resonant, grounded and expressive, able to carry any class or temperament. |
 | `liriel_dawnsong` | 355 | 28,987 | Barovia Liriel Dawnsong | `eleven_v3` (older lines `eleven_v4`) | A slight elven woman, ageless but young, with a soft, clear, bell-like soprano and a gentle Welsh lilt. Serene, musical and formal, unhurried and kind; a quiet steel underneath, and rare moments of dry wit. Becomes very still and precise when her faith is tested. |
@@ -141,6 +141,7 @@ a speaker who moved keeps their older clips, and the Model column names the mode
 | `bark_bandit_captain` | 10 | 501 | Roderich - Crude & Ruthless | `eleven_v3` | A bandit captain: an older, crude, ruthless man who barks orders and enjoys it. |
 | `bark_hag` | 10 | 492 | Nadine – Whispering Witch of the Black Forest | `eleven_v3` | A night hag: a whispering, sinister old woman, sweet and poisonous. |
 | `bark_cultist` | 10 | 478 | Valerian | The Nihilist Evil | `eleven_v3` | A cultist of the night: intense, fervent and unhinged. |
+| `barovia_widow` | 4 | 478 | Barovia barovia_widow (2026-10-08) | `eleven_v3` | An old Barovian widow in her sixties speaking English with a very strong, thick Romanian accent. A soft, dry, wry voice with a tremor of grief, gentle and plain-spoken. |
 | `bark_druid` | 10 | 475 | Elinor | The Gruff Aunt | `eleven_v3` | A Yester Hill druid: a gruff, old woman, fierce and earthy. |
 | `bark_arcanaloth` | 10 | 474 | Malyx - Echoey, Menacing and Deep Demon | `eleven_v3` | An arcanaloth: an echoing, menacing, deep fiend with a lawyer's patience. |
 | `durst_nursemaid` | 5 | 464 | Barovia durst_nursemaid | `eleven_v3` | A woman's ghostly, whispering, grief-hollowed voice, crooning and lost, asking for her baby, with an eerie echo. |
@@ -166,11 +167,13 @@ a speaker who moved keeps their older clips, and the Model column names the mode
 | `noise_skeleton` | 8 | 363 | Sound effects: skeleton | `eleven_v3` | Noises for skeleton in fights. |
 | `vestige_yog` | 9 | 362 | Library voice: K. V. Hagen - Exceptionally Deep Bass | `eleven_v3` | Library voice chosen for vestige_yog (2026-10-08, v3 re-record). Was: An enormous, slow, monosyllabic voice through the floor, with long pauses; immovable. Inhuman resonance. |
 | `vallaki_carter` | 4 | 353 | Barovia vallaki_carter | `eleven_v3` | A burly carter in his forties with a loud, rough, good-natured voice and a strong, clearly audible Eastern European (Romanian) accent. Grumbles about hauling for the Baron's festivals. |
+| `barovia_gravedigger` | 3 | 349 | Barovia barovia_gravedigger (2026-10-08) | `eleven_v3` | A big, slow Barovian sexton in his sixties speaking English with a very strong, thick Romanian accent. A deep, gravelly, unhurried voice, matter-of-fact about the dead, oddly courteous. |
 | `bark_ogre` | 10 | 348 | Azgar - Indimidating Orc Troll | `eleven_v3` | An ogre: a huge, deep, slow and stupid brute. |
 | `noise_rats` | 8 | 348 | Sound effects: rats | `eleven_v3` | Noises for swarm_of_rats in fights. |
 | `noise_stone` | 8 | 343 | Sound effects: stone | `eleven_v3` | Noises for gargoyle in fights. |
 | `noise_ravens` | 8 | 342 | Sound effects: ravens | `eleven_v3` | Noises for swarm_of_ravens in fights. |
 | `noise_roc` | 8 | 338 | Sound effects: roc | `eleven_v3` | Noises for roc in fights. |
+| `barovia_acolyte` | 4 | 332 | Library voice: Maria - Calm & Friendly | `eleven_v3` | Anca, the church's girl (15): a young adult library voice, the owner's pick (2026-10-08). |
 | `tser_petru` | 4 | 331 | Library voice: Paul - Engaging, Friendly and Mysterious | `eleven_v3` | A terse Vistani knife-sharpener and camp guard; a low, mysterious Transylvanian voice. |
 | `noise_ghoul` | 8 | 328 | Sound effects: ghoul | `eleven_v3` | Noises for ghoul, ghast in fights. |
 | `noise_nightmare` | 8 | 328 | Sound effects: nightmare | `eleven_v3` | Noises for nightmare in fights. |
@@ -180,9 +183,12 @@ a speaker who moved keeps their older clips, and the Model column names the mode
 | `noise_claw` | 8 | 318 | Sound effects: claw | `eleven_v3` | Noises for crawling_claw in fights. |
 | `arik` | 11 | 316 | Library voice: MRV - Conversational | `eleven_v3` | Library voice chosen for arik (2026-10-08, recast on v3). Was: A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes. |
 | `noise_flame` | 8 | 298 | Sound effects: flame | `eleven_v3` | Noises for flameskull, fire_elemental in fights. |
+| `barovia_woodcutter` | 3 | 273 | Barovia barovia_woodcutter (2026-10-08) | `eleven_v3` | A weathered Barovian woodcutter in his fifties speaking English with a very strong, thick Romanian accent. A gruff, rough, breathy working man's voice, hurried and superstitious. |
 | `elisabeth_durst` | 5 | 267 | Barovia elisabeth_durst | `eleven_v3` | A woman with a sharp, cold, aristocratic voice turned rasping and hungry, a ghoul and a true believer: righteous, contemptuous and impatient. Strong, clearly audible Eastern European (Romanian) accent. |
 | `vallaki_grumbler` | 2 | 262 | Barovia vallaki_grumbler | `eleven_v3` | A sour man in his fifties locked in the stocks for insufficient cheer, with a sardonic, grumbling, nasal voice and a strong, clearly audible Eastern European (Romanian) accent. |
+| `barovia_vasile` | 3 | 229 | Barovia barovia_vasile (2026-10-08) | `eleven_v3` | A thin, hooded Barovian villager in his forties speaking English with a very strong, thick Romanian accent. A reedy, hushed gossip's voice, eager to tell the worst news. |
 | `krezk_woodcutter` | 2 | 209 | Barovia krezk_woodcutter | `eleven_v3` | A middle-aged Krezk woodcutter with a gruff, plain, weathered voice and a strong, clearly audible Eastern European (Romanian) accent. Few words, wary and tired. |
+| `barovia_petre` | 3 | 156 | Barovia barovia_petre (2026-10-08) | `eleven_v3` | A threadbare Barovian man in his fifties speaking English with a very strong, thick Romanian accent. A low, gloomy, dry voice, contrary and fatalistic. |
 | `toma_sarnov` | 2 | 86 | Teddy Twinkle - Cute Cartoon | `eleven_v3` | A small boy of about five with a frightened, whispery child's voice and a strong, clearly audible Eastern European (Romanian) accent. |
 | `amber_sentinel` | 3 | 57 | Library voice: Dante - Growly and Menacing Monster | `eleven_v3` | Library voice chosen for amber_sentinel (2026-10-08, v3 re-record). Was: A vast, booming, inhuman voice speaking in short commands, like stone grinding under a mountain; slow, absolute, echoing. |
 | `tsolenka_watchman` | 1 | 21 | Barovia tsolenka_watchman | `eleven_v3` | A dead watchman's hollow, rasping, distant voice, strong, clearly audible Eastern European (Romanian) accent. |
