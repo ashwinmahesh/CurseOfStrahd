@@ -32,7 +32,7 @@ const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
 	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
-	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {x} next target · {y} ends the turn ({y} while picking targets casts with those picked) · hold {lb} for the radial menu (right stick picks, release to choose) · {lt} / {rt} pick a hotbar slot · {rb} uses it · D-pad up / down change tab · D-pad left / right change the spell slot · {ls} takes back the last move · {rs} the square's menu at the cursor · {back} these controls · {start} menu.",
+	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
 	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
 ]
 
@@ -146,7 +146,7 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	var cbox := VBoxContainer.new()
 	_controls.add_child(cbox)
 	var head := _label("", 20, "gilt_light")
-	PadGlyphs.hint(head, "Controls (F1 to close)", "Controls ({back} to close)")
+	PadGlyphs.hint(head, "Controls (F1 to close)", "Controls ({@combat_controls} to close)")
 	cbox.add_child(head)
 	for line: String in CONTROLS:
 		var l := _label(PadGlyphs.names(InputActions.fill(line)), 15, "vellum")
@@ -184,7 +184,7 @@ func _build_strip() -> void:
 	head.add_child(_label("turn order", 14, "parchment"))
 	# The controls card's key sits here, out of the way of the party frames (a guest's frame used to cover it).
 	var f1 := _label("F1: controls", 12, "gilt_dark")
-	PadGlyphs.hint(f1, "F1: controls", "{back}: controls")
+	PadGlyphs.hint(f1, "F1: controls", "{@combat_controls}: controls")
 	head.add_child(f1)
 	row.add_child(head)
 	_strip = HBoxContainer.new()

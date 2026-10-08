@@ -1,6 +1,6 @@
 # Controller
 
-Status: building (Improvement Ideas U6, owner ask 2026-10-08) · Plan: vault note "Controller Support - Audit and Plan"
+Status: built (Improvement Ideas U6, owner ask 2026-10-08) · Plan: vault note "Controller Support - Audit and Plan"
 
 Every screen, exploring and fights work on a pad as well as on the mouse and keyboard. Buttons are named by the
 Xbox layout's positions (Godot's names); a PlayStation or Nintendo pad has the same buttons in the same places.
@@ -138,3 +138,15 @@ buttons for the moment (`PadPrompts.set_world`).
 
 `tests/integration/test_pad_nav.gd` drives screens with synthetic `InputEventJoypadButton` and
 `InputEventJoypadMotion` events, never a real pad.
+
+## Moving the buttons (Settings > Keys > Controller)
+
+The Keys page has a Keyboard and a Controller view (it opens on the controller while a pad is in use). The
+controller's commands are `InputActions.PAD_COMMANDS`, in three lists: Exploring, Fights, and Menus and screens. Press
+a command's cap, then the new button (a trigger too); a command of the same list that had it takes the old one in
+exchange, and the note says so. B keeps the old one. B (back) and Start (the menu) keep their jobs, and so do A on
+screens, the sticks and the D-pad's moving on screens, so there's always a way round and back. "All back to the start"
+resets the list shown. The buttons are kept in `user://settings.cfg` as "pad" (action -> button code, a trigger as
+`InputActions.PAD_TRIGGER` + its axis), only where they differ; `InputActions.apply_pad` puts them in the InputMap.
+The prompt bar and the controls cards name each command's button as it is now (`PadGlyphs.place_for`, and
+`{@action}` in `PadGlyphs.names`).
