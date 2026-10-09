@@ -1,0 +1,377 @@
+{
+  "id": "tser_woods_den",
+  "name": "The Old Den",
+  "region": "svalich_road",
+  "summary": "A clearing up the deer path from the Tser Pool camp, where the stream comes down out of the Svalich Woods: pines, a jumble of rocks with an old bear den under them, and hunters' traps in the leaves (The Dancing Bear, docs/story/side_quests.md).",
+  "text": "A clearing in the pines where the stream comes down over stones. Under a heap of mossy rocks on the far side there's a dark hollow that smells of animal, and the leaves round it have been scraped up into a bed.",
+  "map": {
+    "rows": [
+      "########################",
+      "#######.~.........######",
+      "#######.~......#######.#",
+      "####....~...#..#######.#",
+      "####....~......#######.#",
+      "#.......~......##..###.#",
+      "#.......~..............#",
+      "#....#..~..............#",
+      "#.......~..............#",
+      "#........~.............#",
+      "#........~..........#..#",
+      "#........~.............#",
+      "#...#....~.............#",
+      "#........~.............#",
+      "#........~....#.....####",
+      "####.....~..........####",
+      "####.....~..........####",
+      "#####..#################"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "den_deer_path",
+      "name": "The deer path",
+      "cells": [
+        [
+          4,
+          13
+        ],
+        [
+          13,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "den_clearing",
+      "name": "The clearing",
+      "cells": [
+        [
+          10,
+          6
+        ],
+        [
+          22,
+          13
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      5,
+      15
+    ],
+    "from_camp": [
+      5,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "den_path_down",
+      "cell": [
+        5,
+        17
+      ],
+      "to": "tser_pool",
+      "spawn": "from_den",
+      "label": "Down the deer path to the camp"
+    },
+    {
+      "id": "den_path_down_2",
+      "cell": [
+        6,
+        17
+      ],
+      "to": "tser_pool",
+      "spawn": "from_den",
+      "label": "Down the deer path to the camp"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "den_mouth",
+      "cell": [
+        17,
+        6
+      ],
+      "kind": "examine",
+      "label": "A den under the rocks",
+      "model": "boulder_b"
+    },
+    {
+      "id": "cub_trap",
+      "cell": [
+        14,
+        10
+      ],
+      "kind": "examine",
+      "label": "An iron trap",
+      "model": "rubble",
+      "dialogue": "svalich_road/the_dancing_bear:trap_prop"
+    },
+    {
+      "id": "den_bed_leaves",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "decor",
+      "label": "Leaves",
+      "model": "leaves"
+    },
+    {
+      "id": "den_stream_stones",
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "decor",
+      "label": "Stones",
+      "model": "boulder_a"
+    },
+    {
+      "id": "den_claw_pine",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "examine",
+      "label": "A clawed pine",
+      "model": "pine_clawed"
+    },
+    {
+      "id": "den_second_trap",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "examine",
+      "label": "Another trap",
+      "model": "rubble"
+    },
+    {
+      "id": "den_leaves_2",
+      "cell": [
+        7,
+        12
+      ],
+      "kind": "decor",
+      "label": "Leaves",
+      "model": "leaves"
+    }
+  ],
+  "containers": [],
+  "lights": [],
+  "npcs": [
+    {
+      "npc": "bujor",
+      "cell": [
+        15,
+        10
+      ],
+      "dialogue": "svalich_road/the_dancing_bear:den",
+      "when": "quest.the_dancing_bear == asked or quest.the_dancing_bear == defended",
+      "facing": "south",
+      "approach": 4
+    }
+  ],
+  "encounters": [
+    {
+      "id": "den_blights",
+      "trigger": "dialogue",
+      "when": "level >= 4",
+      "text": "Out of the trees all round the clearing come things that aren't trees, toward the sound of the cub crying.",
+      "surprise": "",
+      "flag": "den_blights_beaten",
+      "quest": {
+        "id": "the_dancing_bear",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            3,
+            8
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            21,
+            12
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            19,
+            7
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            11,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            15
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            2,
+            11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            22,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "id": "den_blights",
+      "trigger": "dialogue",
+      "text": "Out of the trees all round the clearing come things that aren't trees, toward the sound of the cub crying.",
+      "surprise": "",
+      "flag": "den_blights_beaten",
+      "quest": {
+        "id": "the_dancing_bear",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "vine_blight",
+          "cell": [
+            3,
+            8
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            21,
+            12
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            11,
+            2
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            15
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            2,
+            11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            22,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            9
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            13
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            4,
+            5
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:tser_woods_den"
+  },
+  "rest": "risky"
+}

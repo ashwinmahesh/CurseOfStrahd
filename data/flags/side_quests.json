@@ -1205,6 +1205,41 @@
       "id": "escher_waits",
       "type": "bool",
       "summary": "Escher's Petition: the party talked Escher into waiting for a dawn the count isn't in; he's back in his suite."
+    },
+    {
+      "id": "bear_path_known",
+      "type": "bool",
+      "summary": "The Dancing Bear: Lavinia told the party Bujor went up the deer path; the path up the stream from the Tser Pool camp opens."
+    },
+    {
+      "id": "lavinia_whistle",
+      "type": "bool",
+      "summary": "The Dancing Bear: Lavinia gave the party her tin whistle; blown at the den, it calms Bujor without a check."
+    },
+    {
+      "id": "bear_trap_marked",
+      "type": "bool",
+      "summary": "The Dancing Bear: the party saw Old Marin's mark on the trap at the old den."
+    },
+    {
+      "id": "marin_traps_pulled",
+      "type": "bool",
+      "summary": "The Dancing Bear: Old Marin admitted the black carriage pays for live cubs and pulled his traps."
+    },
+    {
+      "id": "bujor_home",
+      "type": "bool",
+      "summary": "The Dancing Bear: the party led Bujor home to Lavinia's stage, with the cub."
+    },
+    {
+      "id": "bujor_free",
+      "type": "bool",
+      "summary": "The Dancing Bear: the party let Bujor go into the den with the cub."
+    },
+    {
+      "id": "den_blights_beaten",
+      "type": "bool",
+      "summary": "The Dancing Bear: the party beat the blights at the old den (encounter den_blights)."
     }
   ]
 }

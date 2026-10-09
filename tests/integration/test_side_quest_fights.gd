@@ -438,3 +438,13 @@ func test_querreth_comes_for_escher() -> void:
 			assert_eq(CombatToken.height_of(c), 2.6)
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("escher_petition"), "held")
+
+
+## The blights come out of the trees at the old den, toward the cub crying in the trap.
+func test_the_blights_come_for_the_cub() -> void:
+	var v := await _boot("tser_woods_den", 14, 3, ["bear_path_known"])
+	GameState.story.set_quest_stage("the_dancing_bear", "asked")
+	LocationNpcs.hide_npcs_of(v, "svalich_road/the_dancing_bear:den")
+	await _fight(v, "den_blights", ["Vine Blight 1", "Needle Blight 1", "Twig Blight 1"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_dancing_bear"), "defended")

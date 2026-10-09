@@ -1,0 +1,17 @@
+# Narrator: the old den up the deer path from the Tser Pool camp (The Dancing Bear, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:tser_woods_den
+| A clearing in the pines where the stream comes down over stones. Under a heap of mossy rocks on the far side there's a dark hollow that smells of animal.
+| [flag.den_blights_beaten] The clearing is quiet. Broken twigs and torn vines lie where the blights fell, already greying.
+| [flag.bujor_free] The leaves at the mouth of the den are freshly scraped, and in the mud by the stream there are two sets of tracks, one very big and one very small.
+cooldown 30
+
+~ examine:den_mouth
+| A hollow under the rocks, deep enough for something big to turn round in. The leaves inside have been made into a bed, recently.
+
+~ examine:den_claw_pine
+| A pine with its bark clawed off in long strips, higher than a man can reach. Old marks, and new ones over them.
+
+~ examine:den_second_trap
+| Another iron trap, sprung on nothing, half hidden in the leaves. The same mark on its spring plate: an M with a notch through it.

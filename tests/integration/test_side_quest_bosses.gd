@@ -298,3 +298,12 @@ const SOUTH_TOWER: Array[Vector2i] = [Vector2i(7, 20), Vector2i(8, 20), Vector2i
 ## Querreth and two of the ones who asked before, catching the party unawares.
 func test_querreth_at_level_10() -> void:
 	await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
+
+
+## The clearing at the old den, where the party stands over the trapped cub.
+const OLD_DEN: Array[Vector2i] = [Vector2i(12, 12), Vector2i(13, 13), Vector2i(11, 12), Vector2i(12, 13)]
+
+
+## Two vine blights, five needle blights and four twig blights come for the cub's crying.
+func test_the_den_blights_at_level_3() -> void:
+	await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)

@@ -139,6 +139,10 @@
     "from_tent": [
       32,
       9
+    ],
+    "from_den": [
+      3,
+      3
     ]
   },
   "exits": [
@@ -169,6 +173,18 @@
       "to": "tser_pool_eva_tent",
       "spawn": "default",
       "label": "Madam Eva's tent"
+    },
+    {
+      "id": "deer_path_up",
+      "cell": [
+        3,
+        2
+      ],
+      "to": "tser_woods_den",
+      "spawn": "from_camp",
+      "label": "Up the deer path beside the stream",
+      "when": "flag.bear_path_known",
+      "locked_text": "A deer path up the stream into the pines. Nothing up there you need, yet."
     }
   ],
   "props": [
@@ -984,6 +1000,16 @@
       ],
       "dialogue": "svalich_road/the_tinkers_wagon:at_camp",
       "when": "quest.the_tinkers_wagon == done",
+      "facing": "south"
+    },
+    {
+      "npc": "bujor",
+      "cell": [
+        30,
+        17
+      ],
+      "dialogue": "svalich_road/the_dancing_bear:stage",
+      "when": "flag.bujor_home and not flag.tser_pool_brawl_won and not flag.vistani_turned_hostile",
       "facing": "south"
     }
   ],

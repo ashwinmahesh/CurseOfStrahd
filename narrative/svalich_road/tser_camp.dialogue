@@ -128,6 +128,9 @@ endif
 # throwing knives at a stump, Old Marin skinning a deer by the trees, and the camp dog. Unvoiced for now.
 
 ~ lavinia
+if level >= 3 or quest.the_dancing_bear
+-> svalich_road/the_dancing_bear:lavinia
+endif
 Lavinia [smile]: Clap or don't, the steps are the same. My grandmother danced this for a prince once. He was dead by morning, but she said he'd enjoyed it.
 -> END
 
@@ -136,6 +139,9 @@ Iancu: Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one
 -> END
 
 ~ marin
+if quest.the_dancing_bear and quest.the_dancing_bear != done or flag.bear_trap_marked
+-> svalich_road/the_dancing_bear:marin
+endif
 Old Marin: One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?
 -> END
 

@@ -1094,6 +1094,11 @@
       ],
       "prompt": "The flat stone roof of a tall Gothic castle tower at the moment of dawn, high above a valley full of mist. A pale young vampire nobleman in a wine-red velvet coat worked with silver down the front and lace at the cuffs, his face and dark swept-back hair exactly as the reference shows, stands at the low stone parapet, three-quarters turned from the viewer, his face lifted to the east, where a thin line of gold sunlight is breaking over a black mountain ridge. The first light lies across his face and his open hands, and thin pale smoke rises from his skin where it touches; he is smiling. Broken hooked chains lie across the flagstones behind him. {party} sit on the battlements a little way back, watching him. Cold blue-grey sky overhead, warm gold only at the horizon, one single picture, no panels.",
       "use": "a"
+    },
+    "sq_bujor_cub": {
+      "refs": [],
+      "prompt": "A small clearing in a dark pine forest at dusk, a stream running over stones, a heap of mossy boulders with a dark den mouth beneath them. In the middle of the clearing a big brown bear stands up on its hind legs, a heavy iron collar on its neck with a length of broken chain swinging from it, not attacking, its body planted protectively over a small bear cub lying in the fallen leaves; the small cub's own back leg, and only the cub's, is clamped in a rusty iron jaw trap chained to a stake, and the cub is crying; the big bear's feet are free. The bear's eyes are on the viewer, wary rather than savage. {party} stand at the edge of the clearing in the foreground, seen from behind, one with a hand raised slowly, one holding a little tin whistle on a red cord. Among the pine trunks at the very edge of the picture, barely visible, knotted shapes of twigs and creeping vines are starting to move toward the clearing. No campfire and no candles anywhere. Cold blue dusk light with a warm last glow through the trees, one single picture, no panels.",
+      "use": "b"
     }
   }
 }

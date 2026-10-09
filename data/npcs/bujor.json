@@ -1,0 +1,17 @@
+{
+  "id": "bujor",
+  "name": "Bujor",
+  "title": "Lavinia's Dancing Bear",
+  "summary": "A big, soft brown bear who has danced on the Tser Pool camp's plank stage with Lavinia for nine years and never once pulled on his chain, until the night he heard a cub crying in the woods.",
+  "portrait": "brown_bear",
+  "sprite": "brown_bear",
+  "attitude": "indifferent",
+  "monster": "brown_bear",
+  "guest": false,
+  "tags": [
+    "beast",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}
