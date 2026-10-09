@@ -5673,6 +5673,13 @@
   "recipe": "efd7d52c86",
   "text": "This? Found it under a loose board in the saint's old room, when I was a lad. Pretty writing. Nobody's ever read it to me. The Abbot says it's nothing. He said it very quickly."
  },
+ "clovin_belview/336a799e259a0994": {
+  "chars": 218,
+  "direction": "[nervous, self-deprecating]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Down the Krezk road, she goes, toward the old stone with the sun on it. Nobody's supposed to leave. If the Abbot finds out, he'll improve her. I followed her once as far as the gate, and then I remembered I'm a coward."
+ },
  "clovin_belview/34d21c9fba730902": {
   "chars": 154,
   "direction": "[quiet, sad, hopeful]",
@@ -5723,6 +5730,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "He walked up the mountain at dawn and didn't stop at the top. We all watched. Mother came out to watch. Nobody's going to improve us any more. I keep waiting to be sad."
+ },
+ "clovin_belview/524c7c137f24490f": {
+  "chars": 213,
+  "direction": "[gossiping, fond, worried]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "And Lark. Little Lark, my cousin's girl, the one with the voice. Every night after the last bell she goes over the wall like a cat, and every morning before the first she's back in her bed with wax on her fingers."
  },
  "clovin_belview/5b483eb02625e2c4": {
   "chars": 107,
@@ -5845,6 +5859,13 @@
   "recipe": "efd7d52c86",
   "text": "Don't. Don't say it. I know what I look like. I look like a man who walked two days to a winery and found nobody to sell him wine. That's what I look like."
  },
+ "clovin_belview/9b44d9c01c4bcea2": {
+  "chars": 143,
+  "direction": "[quiet, moved, wondering]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Lark still goes over the wall at night. I don't stop her now. Something grey walks her home along the road and waits at the gate till she's in."
+ },
  "clovin_belview/a8ebca793fbb8242": {
   "chars": 157,
   "model": "eleven_v3",
@@ -5876,6 +5897,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "Maybe keep your hood up, miss. In the chapel. He likes red. He likes it too much."
+ },
+ "clovin_belview/c7157b9c28585709": {
+  "chars": 165,
+  "direction": "[warm, fond, wry]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "Lark and her brother are down in Krezk at Great-uncle Pavel's. He's put them in the loft. The boy howls in his sleep, Pavel says, and then says sorry in the morning."
  },
  "clovin_belview/c839ffaf37cee36d": {
   "chars": 126,
@@ -15542,6 +15570,12 @@
   "recipe": "956cd23797",
   "text": "\"Not yet.\""
  },
+ "hero_female/9c89683f7e3a986c": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Behind us, Lark. Keep the candle lit."
+ },
  "hero_female/9cf72c580ee51e0a": {
   "chars": 35,
   "model": "eleven_v4",
@@ -19831,6 +19865,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "\"Not yet.\""
+ },
+ "hero_male/9c89683f7e3a986c": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Behind us, Lark. Keep the candle lit."
  },
  "hero_male/9cf72c580ee51e0a": {
   "chars": 35,
@@ -36542,6 +36582,12 @@
   "recipe": "dd92281f92",
   "text": "Izek comes down off the dais. His arm catches fire to the elbow, a real fire, and the crowd falls back from him. He walks straight at Father Lucian."
  },
+ "narrator/1917af8b7c401a3d": {
+  "chars": 162,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Yanko noses something out of the ditch and drops it at your feet: a traveller's purse, old and stiff, that the pack took off somebody once. He doesn't look at it."
+ },
  "narrator/1939568a30c4eb7e": {
   "chars": 105,
   "model": "eleven_v4",
@@ -36781,6 +36827,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Shackles bolted into the rock at the height of a man's wrists. Some new moons, the keepers didn't throw the meat in. They chained it here and left."
+ },
+ "narrator/1adbbc843b5b802b": {
+  "chars": 230,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A waist-high stone with a sunburst cut into it, so old the rays are only dents. In the niche at its foot, a candle burnt down to nothing. Somebody has scraped dozens of old stubs out of the niche and stacked them neatly beside it."
  },
  "narrator/1aec4aa2d04cd564": {
   "chars": 86,
@@ -38474,6 +38526,12 @@
   "recipe": "dd92281f92",
   "text": "An iron-bound sea chest with three locks, scratched all over as if something has tried to open it from outside, more than once, with claws."
  },
+ "narrator/2912d571bd790ea8": {
+  "chars": 105,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "When she hears you she goes still, and then sings, very softly, in a grown woman's voice that isn't hers."
+ },
  "narrator/291b3b17037c2bac": {
   "chars": 76,
   "model": "eleven_v4",
@@ -39302,6 +39360,12 @@
   "recipe": "dd92281f92",
   "text": "A basin, a cloth, and a row of needles laid out in order of size. The thread on the smallest one is so fine you can only see it when it catches the candle."
  },
+ "narrator/304c076bcd9b4159": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Her eyes keep going to the trees past the bend, to a place where the dark is a little darker. Two eyes catch the candlelight there, low down, and don't blink."
+ },
  "narrator/3070ba56b77453da": {
   "chars": 151,
   "model": "eleven_v4",
@@ -39763,6 +39827,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A black carriage waits on the road ahead, drawn by two black horses with embers for eyes. It has no driver. Its door stands open."
+ },
+ "narrator/343c07da27c00bf0": {
+  "chars": 131,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The road bends between pines and rock. At the bend stands a waist-high stone with a sunburst cut into it, and a candle at its foot."
  },
  "narrator/343f398c63608c3a": {
   "chars": 28,
@@ -41858,6 +41928,12 @@
   "recipe": "dd92281f92",
   "text": "A long nave under a sunburst window, every candle lit, the altar dressed in white. The air in here is warmer than outside, and it isn't the candles."
  },
+ "narrator/46acd3d1ba2c1e0d": {
+  "chars": 85,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "These aren't Emil's. They're Kiril's old hunters, the ones who never stopped hunting."
+ },
  "narrator/46b9cf6c53210b6e": {
   "chars": 102,
   "model": "eleven_v4",
@@ -41887,6 +41963,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The vault ceiling is cracked amber, hanging in shards as long as knives. One good shake would bring it down."
+ },
+ "narrator/4710f1846770fae4": {
+  "chars": 219,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The wolf shudders, and shrinks, and folds in on itself, and there's a boy of fifteen lying in the leaves, shaking, with a hound's ear and a wolf's bite in his shoulder. Lark throws her habit over him and doesn't let go."
  },
  "narrator/472e2569e8422e96": {
   "chars": 197,
@@ -42926,6 +43008,12 @@
   "recipe": "dd92281f92",
   "text": "A spinning wheel, turning. The thread's coming on again, fine and even."
  },
+ "narrator/4fd14317c5a2f513": {
+  "chars": 114,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The candle at the foot of the waystone has been lit tonight, from the stub of last night's. The wax is still soft."
+ },
  "narrator/4fdd50d69a7af1b5": {
   "chars": 67,
   "model": "eleven_v4",
@@ -43406,6 +43494,12 @@
   "recipe": "dd92281f92",
   "text": "The druids pried up half the floor looking for something. Under the last board they didn't lift lies an emerald with a little green storm turning inside it."
  },
+ "narrator/547705dc5503269b": {
+  "chars": 94,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the bend, a candle burns at the foot of an old stone, the only light on the road for miles."
+ },
  "narrator/547fa6d0291629bf": {
   "chars": 74,
   "model": "eleven_v4",
@@ -43573,6 +43667,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She comes out of the trees: twice a man's height, blue-grey and bent, with iron teeth and iron nails and a basket on her arm the size of a cradle. Grey dogs as big as ponies come with her."
+ },
+ "narrator/562f9844e28fec88": {
+  "chars": 209,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The road bends between pines and rock. At the bend stands a waist-high stone with a sunburst cut into it, so old the rays are only dents, and in a niche at its foot a candle stub, burnt down almost to nothing."
  },
  "narrator/563345b36109f9e7": {
   "chars": 167,
@@ -47684,6 +47784,12 @@
   "recipe": "dd92281f92",
   "text": "You lay the bundle in the bottom, and Mihail takes the board with his sister's name on it and turns it over, and on the back, with his knife, he cuts ZINAIDA."
  },
+ "narrator/779977098975389a": {
+  "chars": 201,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "They come down the road and out of the pines: three big shapes that walk on two legs some of the time, and wolves at their heels. One of them snarls at the dark past the bend, and the dark snarls back."
+ },
  "narrator/77a64cacdd25822e": {
   "chars": 183,
   "model": "eleven_v4",
@@ -50768,6 +50874,12 @@
   "recipe": "dd92281f92",
   "text": "The broken cart's floor is a hand's width too high. Under the false boards, wrapped in sacking, lies a plain cloth bag that is much bigger on the inside than the out."
  },
+ "narrator/91ea575dfa67b14e": {
+  "chars": 240,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Lark stands at the stone holding the candle in both hands. At the edge of the light, for the first time, a young grey wolf with one ear like a hound's lies with his head on his paws, bleeding from a bite on his shoulder. He fought them too."
+ },
  "narrator/91f922aebdd4b850": {
   "chars": 209,
   "model": "eleven_v4",
@@ -51284,6 +51396,12 @@
   "recipe": "dd92281f92",
   "text": "He believes every word. As for the fish: a shoal like this comes in when the water turns cold all at once. It could be the season. It could be anything. The lake isn't telling."
  },
+ "narrator/96901a5f622a38b7": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The candle at the foot of the stone is new, and lit, and there's a grey hair caught on the rough edge of the sunburst, about the height of a big dog's shoulder."
+ },
  "narrator/96ba85b50764fa03": {
   "chars": 153,
   "model": "eleven_v4",
@@ -51319,6 +51437,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under the thyme, faint and bitter: almonds. Ireena sets her spoon down without a sound."
+ },
+ "narrator/96fc6e6587eff74c": {
+  "chars": 33,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Whoever lights it comes by night."
  },
  "narrator/971ac669689f218a": {
   "chars": 118,
@@ -52370,6 +52494,12 @@
   "recipe": "dd92281f92",
   "text": "He leads you round to the study window, and sits, and looks at the wall, and then at you, as if he has been waiting a long time for somebody to understand something simple."
  },
+ "narrator/a05be806d084b3f5": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kiril's hunters come down the road and out of the pines, and the wolves with them, for the girl at the stone and the one that's gone soft."
+ },
  "narrator/a0653a2d4ffbc7f0": {
   "chars": 79,
   "model": "eleven_v4",
@@ -52826,6 +52956,12 @@
   "recipe": "dd92281f92",
   "text": "The words are still there. They'll be there a long while."
  },
+ "narrator/a3b29584f846325c": {
+  "chars": 215,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A small figure in a cut-down habit kneels at the stone, coaxing a new candle alight from the stub of the old one. There are a lark's speckled feathers down the back of her neck, and a lark's thin legs under the hem."
+ },
  "narrator/a3d436967593e3de": {
   "chars": 117,
   "model": "eleven_v4",
@@ -52993,6 +53129,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The inscription, in plain words: \"Dahlver-Nar, the mouth of borrowed teeth. It cannot make anything. It only keeps.\""
+ },
+ "narrator/a54572abc7d1c654": {
+  "chars": 120,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Up the road, a howl, and then another answering it, closer. At the edge of the trees the two eyes turn toward the sound."
  },
  "narrator/a55f728ef170a759": {
   "chars": 111,
@@ -54392,6 +54534,12 @@
   "recipe": "dd92281f92",
   "text": "The lever shrieks as it moves. The flue clangs shut, the fire chokes and dies, and every face along the hall turns to look at you."
  },
+ "narrator/b18be600a3604fc3": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The candle at the foot of the stone is new, and lit. In the mud beside it, two sets of bare footprints, one with a lark's long toes."
+ },
  "narrator/b194ce1214e47791": {
   "chars": 97,
   "model": "eleven_v4",
@@ -55105,6 +55253,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The ward is still there, coiled in its ring of frost, but now you know where its edges are, and so does it."
+ },
+ "narrator/b82678f536ea821a": {
+  "chars": 169,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "KREZK, says the signpost, pointing west, and under it, in a smaller and much older hand: THE SUN IS NOT GONE. Somebody has gone over the letters with charcoal, recently."
  },
  "narrator/b86c130fa12021e9": {
   "chars": 86,
@@ -58214,6 +58368,12 @@
   "recipe": "dd92281f92",
   "text": "Across the lane, something big moves in the trees and doesn't bother to be quiet about it."
  },
+ "narrator/d2ef5db0c64b0dee": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Tracks in the mud by the ditch: a big dog's, or a wolf's, coming to the edge of the light and stopping there, again and again, night after night."
+ },
  "narrator/d30468df2ba6ad70": {
   "chars": 102,
   "model": "eleven_v4",
@@ -60463,6 +60623,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Beside Tamsin's reflection there is a second one, though nobody stands beside him: a young man in an old coat with a sunburst at the breast, looking at the locket with an expression nobody should have to wear for three hundred years."
+ },
+ "narrator/e71556da18bc8c50": {
+  "chars": 194,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He watches you with yellow eyes and doesn't change. But he doesn't go back into the trees, either. He gets up, stiff, and walks into the light, and lies down at Lark's feet like a dog at a fire."
  },
  "narrator/e75b8fa013c990c1": {
   "chars": 114,
@@ -78252,6 +78418,83 @@
   "model": "eleven_v3",
   "recipe": "ffe2f7008c",
   "text": "Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed."
+ },
+ "waystone_lark/08efdc6d98ad146e": {
+  "chars": 83,
+  "direction": "[earnest, hopeful, determined]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "Great-uncle Pavel. In Krezk. He took Mother in. He'll take us. (To Yanko.) He will."
+ },
+ "waystone_lark/1eab6c51ffed94c1": {
+  "chars": 70,
+  "direction": "[hushed, protective]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "(Quietly.) That's him. Don't look straight at him. He doesn't like it."
+ },
+ "waystone_lark/1ff6596a08e6b51f": {
+  "chars": 39,
+  "direction": "[soft, grateful, content]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "That's enough. That's more than enough."
+ },
+ "waystone_lark/34fd3b8f73354c55": {
+  "chars": 60,
+  "direction": "[breathless, joyful, near tears]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "He came into the light. Did you see? He came into the light."
+ },
+ "waystone_lark/3f4535aa8d7781f4": {
+  "chars": 124,
+  "direction": "[eerie, grown-up, then small, pleading]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "(In the woman's voice.) Go on by, travellers. Nothing here for you. (Then in her own, small and scratchy.) Please. Go on by."
+ },
+ "waystone_lark/5870a750db920b84": {
+  "chars": 107,
+  "direction": "[frightened, low, certain]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "They've come closer every night. They've noticed him coming here. They don't like it. Wolves don't go soft."
+ },
+ "waystone_lark/6a9b76c38ca3b868": {
+  "chars": 191,
+  "direction": "[quiet, firm, bitter]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "Here. (A short black wand, wrapped in a strip of habit.) The Abbot's. He used it on us when we cried. I took it out of his room the first night I went over the wall. I don't want it any more."
+ },
+ "waystone_lark/7424744a2acae3ca": {
+  "chars": 112,
+  "direction": "[quiet, focused, protective]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "(Without looking up from the candle.) He's there. Past the bend. Don't look straight at him; he doesn't like it."
+ },
+ "waystone_lark/9700c8235cc9c290": {
+  "chars": 132,
+  "direction": "[quiet, earnest, sad]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "My brother. Yanko. Two winters ago he went over the wall and down this road, and the wolves got him. Not ate him. Got him. Took him."
+ },
+ "waystone_lark/ecf23aa3bc95c4e2": {
+  "chars": 247,
+  "direction": "[soft, devoted, wistful]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "He comes to the stone every night. He sits at the edge of the trees where the light stops, and I sing him Mama's songs in Mama's voice, and he listens. He never comes any closer. I keep the candle so he can find the road home, if he ever wants it."
+ },
+ "waystone_yanko/428b2fb5576f7472": {
+  "chars": 119,
+  "direction": "[hoarse, halting, emotional]",
+  "model": "eleven_v3",
+  "recipe": "20e21ee0ca",
+  "text": "(Hoarse, as if he hasn't used it in two winters.) I heard you. Every night. I couldn't remember how to come any closer."
  },
  "wine_cooper/bfbea76f42269f23": {
   "chars": 120,

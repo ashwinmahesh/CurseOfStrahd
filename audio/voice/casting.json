@@ -2329,6 +2329,24 @@
       "library": true,
       "shared_with": "vestige_zhudun",
       "sentence_case": true
+    },
+    "waystone_lark": {
+      "voice_id": "ocZQ262SsZb9RIxcQBOj",
+      "name": "Library voice: Lulu Lolipop - High-Pitched and Bubbly",
+      "description": "Lark, a small Belview girl who sings in her dead mother's voice at the Krezk road waystone: chosen by Claude on the owner's go-ahead (2026-10-09), the library girl's voice Lulu over Mini and Candy (the clearest 'Yanko', and the gentlest).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "waystone_yanko": {
+      "voice_id": "UI9arZeSp7bIUhGbx36K",
+      "name": "Library voice: Don Kim - Calm Boy",
+      "description": "Yanko, Lark's brother, fifteen, a young werewolf who turns back into a boy; one hoarse line: the library voice Don Kim (a calm, slightly raspy young male), chosen by Claude (2026-10-09).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     }
   },
   "sfx": {
