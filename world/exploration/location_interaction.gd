@@ -267,7 +267,7 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		var prop := p as Dictionary
 		if LocationView._cell(prop["cell"]) == cell and view.prop_nodes.has(str(prop["id"])):
 			var verb := {"examine": "Examine", "book": "Read", "search": "Search", "lever": "Pull", "decor": "Look at"}.get(str(prop["kind"]), "Examine") as String
-			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s" % [verb, prop.get("label", "it")], "spec": prop}
+			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s" % [verb, prop_name(prop)], "spec": prop}
 	for t: Variant in view.loc.get("traps", []):
 		var trap := t as Dictionary
 		if str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
@@ -279,6 +279,26 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		if LocationView._cell(exit["cell"]) == cell:
 			return {"kind": "exit", "id": str(exit["id"]), "label": str(exit.get("label", "Leave")), "spec": exit}
 	return {}
+
+
+## Models whose id doesn't read as a name.
+const MODEL_NAMES := {"grave_open": "the open grave", "bone_scatter": "the scattered bones", "candle_cluster": "the candles",
+	"pine_clawed": "the clawed pine", "tub_wooden": "the wooden tub", "dead_tree": "the dead tree"}
+
+
+## A prop's name in its menu and name plate: its own label, else what its model is ("the fishing nets"); a decor prop
+## with neither said "Look at it" (Storyline QA via UI QA, 2026-10-08: the garden bed, the stacked casks).
+static func prop_name(prop: Dictionary) -> String:
+	if str(prop.get("label", "")) != "":
+		return str(prop["label"])
+	var model := str(prop.get("model", ""))
+	if model == "":
+		return "it"
+	if MODEL_NAMES.has(model):
+		return str(MODEL_NAMES[model])
+	if model.length() > 2 and model[-2] == "_":
+		model = model.left(-2)   # a variant: bramble_a, bramble_b
+	return "the " + model.replace("_", " ")
 
 
 ## Clicking a square: walk there, or walk next to the thing there and use it.
