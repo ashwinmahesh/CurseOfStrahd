@@ -1,0 +1,306 @@
+{
+  "id": "barovia_high_pasture",
+  "name": "The High Pasture",
+  "region": "village_of_barovia",
+  "summary": "The goats' pasture on the slope above the Old Svalich Road, east of the village, with a dry-stone fold, and at the top of it the white wall of the mists (The Goatherd's Count, docs/story/side_quests.md).",
+  "text": "A long slope of thin grass above the road, a dry-stone fold with a gate, and at the top of the slope, close enough to throw a stone into, the white wall of the mists.",
+  "map": {
+    "rows": [
+      "##########################",
+      "#........................#",
+      "#........................#",
+      "#........................#",
+      "#..........=.............#",
+      "#........................#",
+      "#....===========.........#",
+      "#....=.........=.........#",
+      "#....=.........=....=....#",
+      "#....=.........=.........#",
+      "#....====...====.........#",
+      "#........................#",
+      "#..=.....................#",
+      "#.................=......#",
+      "#........................#",
+      "##.......................#",
+      "####......................",
+      "##########################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "pasture_fold",
+      "name": "The fold",
+      "cells": [
+        [
+          6,
+          7
+        ],
+        [
+          14,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "pasture_top",
+      "name": "The top of the pasture",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          24,
+          4
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      24,
+      16
+    ],
+    "from_road": [
+      24,
+      16
+    ]
+  },
+  "exits": [
+    {
+      "id": "pasture_down",
+      "cell": [
+        25,
+        16
+      ],
+      "to": "travel",
+      "label": "Down to the road"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "pasture_gate",
+      "cell": [
+        9,
+        10
+      ],
+      "kind": "decor",
+      "label": "The fold gate",
+      "model": "fence"
+    },
+    {
+      "id": "pasture_hut",
+      "cell": [
+        20,
+        12
+      ],
+      "kind": "examine",
+      "label": "A herder's lean-to",
+      "model": "woodpile"
+    },
+    {
+      "id": "pasture_mist_edge",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "examine",
+      "label": "The edge of the mists",
+      "model": "boulder"
+    }
+  ],
+  "containers": [],
+  "lights": [],
+  "npcs": [
+    {
+      "npc": "pasture_erno",
+      "cell": [
+        9,
+        11
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:erno",
+      "when": "quest.the_goatherds_count and hour >= 16",
+      "facing": "north",
+      "approach": 4
+    },
+    {
+      "npc": "pasture_snowdrop",
+      "cell": [
+        12,
+        11
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:bell",
+      "when": "quest.the_goatherds_count and not flag.snowdrop_back and not flag.snowdrop_home",
+      "facing": "north"
+    },
+    {
+      "npc": "pasture_goat",
+      "cell": [
+        8,
+        8
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:goat",
+      "facing": "south"
+    },
+    {
+      "npc": "pasture_goat",
+      "cell": [
+        11,
+        9
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:goat",
+      "facing": "south"
+    },
+    {
+      "npc": "pasture_goat",
+      "cell": [
+        13,
+        8
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:goat",
+      "facing": "south"
+    },
+    {
+      "npc": "pasture_goat",
+      "cell": [
+        7,
+        9
+      ],
+      "dialogue": "village_of_barovia/the_goatherds_count:goat",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "pasture_wolves",
+      "trigger": "dialogue",
+      "text": "Out of the mists at the top of the pasture come wolves, white and wet with fog, low and fast, for the old nanny goat.",
+      "surprise": "",
+      "flag": "pasture_wolves_beaten",
+      "quest": {
+        "id": "the_goatherds_count",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            12,
+            2
+          ],
+          "name": "The Mist's Old Wolf"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            3
+          ],
+          "name": "The Mist's Old Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            4,
+            1
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            23,
+            5
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            2,
+            4
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            2
+          ],
+          "name": "A Mist Wolf"
+        }
+      ],
+      "when": "level >= 2"
+    },
+    {
+      "id": "pasture_wolves",
+      "trigger": "dialogue",
+      "text": "Out of the mists at the top of the pasture come wolves, white and wet with fog, low and fast, for the old nanny goat.",
+      "surprise": "",
+      "flag": "pasture_wolves_beaten",
+      "quest": {
+        "id": "the_goatherds_count",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "wolf",
+          "cell": [
+            4,
+            1
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            1
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            2
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            23,
+            5
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            2,
+            4
+          ],
+          "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            2
+          ],
+          "name": "A Mist Wolf"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:barovia_high_pasture"
+  },
+  "rest": "risky"
+}

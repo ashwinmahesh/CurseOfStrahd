@@ -165,6 +165,23 @@ and in a child's hand, "Mama made a stew"; Insight DC 12 sees him watching a tra
 - By night afterwards Wenzel tells it, puts the lantern down on the hearth, and goes out with it. Under the
   hearthstone: 50 gp and his youngest's Pipes of the Sewers (uncommon).
 
+### The Goatherd's Count (`the_goatherds_count`, narrative/village_of_barovia/the_goatherds_count.dialogue; batch 9, level 1)
+
+Goodwife Petra at the well has a new answer: the goats on the hill are minded by her grandson Erno (new NPC), and
+every evening for a week he's counted twenty-four of them when he only has twenty-three. A new travel place, the High
+Pasture (data/locations/barovia_high_pasture.json, a new outdoor map with a vistas.json place; a road from the
+village), has a dry-stone fold, goats (new NPC, the goat sprite), and at the top of the slope the white wall of the
+mists. In the evening Erno counts them in, and the last through the gate is an old nanny goat with a cracked bell.
+**Twist:** the collar says SNOWDROP: the nanny Petra's father Ilarion was leading the night he went into the mists
+for a doctor, fifty years ago (The Last Traveller; with `ilarion_met` the party knows the boot mark scratched by her
+name). The mists are giving back what they took. **Escalation:** they don't give anything back for nothing, and
+wolves come out of the fog after her.
+
+- Fight `pasture_wolves` on the pasture, in the evening: level 1 six mist wolves (the autopilot wins 3 of 8, losing
+  three party members a fight); level 2 and up two dire wolves and four wolves (3 of 8).
+- Snowdrop goes down to Petra's kitchen (with `ilarion_home`, to her father by the fire), or back into the mists. A
+  Potion of Animal Friendship (uncommon) and 25 gp either way.
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -1087,6 +1104,8 @@ interject) and narrator/zarovich_reed_island.dialogue. Batch 9,
 the Old Svalich Road: the_roadhouse_lantern.dialogue in full (new speaker Wenzel, the innkeeper's ghost; also Arik,
 the Narrator and a blunt interject) and narrator/svalich_roadhouse.dialogue. Batch 9,
 the Tser Falls path: the_spiders_gully.dialogue in full (new speaker Tsura; also Iancu, the Narrator and a blunt
-interject) and narrator/ivlis_spider_gully.dialogue. Batch 10,
+interject) and narrator/ivlis_spider_gully.dialogue. Batch 9,
+the Village of Barovia: the_goatherds_count.dialogue in full (new speaker Erno; also Goodwife Petra, the Narrator
+and a kind interject) and narrator/barovia_high_pasture.dialogue. Batch 10,
 Van Richten's Tower and Lake Baratok: the_drowned_library.dialogue in full (new speaker Xaver; also Mordenkainen,
 the Narrator and a blunt interject) and narrator/drowned_library.dialogue.

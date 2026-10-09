@@ -538,6 +538,17 @@ func test_the_spiders_of_the_webbed_gully() -> void:
 	assert_true(GameState.story.get_flag("gully_spiders_beaten", false))
 
 
+## Wolves come out of the mists at the top of the high pasture for the old nanny goat.
+func test_the_mist_wolves_come_for_snowdrop() -> void:
+	var v := await _boot("barovia_high_pasture", 18, 1, ["pasture_erno_met"])
+	GameState.story.set_quest_stage("the_goatherds_count", "asked")
+	LocationNpcs.hide_npcs_of(v, "village_of_barovia/the_goatherds_count:erno")
+	await _fight(v, "pasture_wolves", ["A Mist Wolf"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_goatherds_count"), "defended")
+	assert_true(GameState.story.get_flag("pasture_wolves_beaten", false))
+
+
 ## The catalogue desk of Khazan's drowned library opens every drawer at once, Huge, with two reading chairs.
 func test_the_index_opens_its_drawers() -> void:
 	var v := await _boot("drowned_library", 14, 9, ["xaver_met"])

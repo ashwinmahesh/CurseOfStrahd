@@ -381,6 +381,15 @@ func test_the_webbed_gully_at_level_3() -> void:
 	await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
 
 
+## By the fold on the high pasture, below the mists.
+const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector2i(9, 12), Vector2i(12, 12)]
+
+
+## Six wolves out of the mists at level 1.
+func test_the_mist_wolves_at_level_1() -> void:
+	await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)
+
+
 ## By the catalogue desk in the middle of the Drowned Library.
 const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 12)]
 

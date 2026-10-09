@@ -1,0 +1,17 @@
+{
+  "id": "pasture_erno",
+  "name": "Erno",
+  "title": "Goatherd of the High Pasture",
+  "summary": "Goodwife Petra's grandson, ten or so, in a coat too big for him, who minds the village's goats on the high pasture for a copper a head and can count, whatever the goats say.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "he/him"
+}

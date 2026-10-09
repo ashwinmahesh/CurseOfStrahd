@@ -17,6 +17,7 @@ Goodwife Petra [afraid]: Strangers. Don't stand so close to the well. Folk will 
 ~ goodwife_menu
 * [if quest.six_feet and not flag.bride_story_known] Your brother Mihail is worried about you. -> village_of_barovia/six_feet:petra
 * [if not flag.burgomaster_buried] Who would poison a well? -> poison
+* [if not quest.the_goatherds_count] Whose goats are those, up on the hill? -> village_of_barovia/the_goatherds_count:petra
 * We'll leave you be. -> END
 
 ~ poison
