@@ -264,10 +264,19 @@ func test_shoulders_and_triggers_step_tabs_and_characters() -> void:
 	assert_eq(sheet.index, 0, "LT: back")
 	root.call("close_screen")
 	await _frames(2)
+	GameState.story.set_quest_stage("escort_ireena", "asked")   # this save's journal is empty
+	GameState.story.set_quest_stage("the_oat_thief", "rumored")
 	root.call("open_screen", "journal", 0)
 	await _frames(2)
-	await _press(JOY_BUTTON_DPAD_DOWN)
 	var journal := root.get("screen") as JournalScreen
+	var landed := nav.focus_in(nav.scope_now())
+	assert_true(landed != null and landed.has_meta(&"pad_first"), "the pad starts on the picked quest")
+	var quest_tab := journal.quest_tab
+	await _trigger(JOY_AXIS_TRIGGER_RIGHT)
+	assert_ne(journal.quest_tab, quest_tab, "RT: the journal's other quests (Main / Other)")
+	await _trigger(JOY_AXIS_TRIGGER_LEFT)
+	assert_eq(journal.quest_tab, quest_tab, "LT: back")
+	await _press(JOY_BUTTON_DPAD_DOWN)
 	await _press(JOY_BUTTON_RIGHT_SHOULDER)
 	assert_eq(journal.tab, JournalScreen.TABS[1], "RB: the journal's Codex")
 	root.call("close_screen")

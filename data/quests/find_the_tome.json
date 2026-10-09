@@ -4,6 +4,7 @@
   "summary": "A history of the devil, written in his own hand. Madam Eva says it holds the knowledge of his past.",
   "giver": "madam_eva",
   "region": "svalich_road",
+  "kind": "main",
   "stages": [
     {
       "id": "foretold",
