@@ -160,6 +160,24 @@ func _refresh() -> void:
 	if not view.in_combat:
 		view.refresh_party()   # healed outside a fight: back on their feet, chips up to date
 	hud.refresh(str(view.loc.get("name", "")), view.sneaking, view.solo and not view.planning, view.planning)
+	if not view.in_combat:
+		_check_fallen()
+
+
+## Everyone down outside a fight (the last one standing caught by a trap while the rest lie where a fight left them):
+## nobody can walk, stabilize or act, and no Death Saving Throws run outside fights, so it ends as a lost fight does,
+## with "The party has fallen" (QA FN-17: nothing came up, and nothing could change).
+func _check_fallen() -> void:
+	if _fallen or screen != null or dialogue != null or ending != null or moving or st.party.is_empty():
+		return
+	for ch in st.party:
+		if not ch.dead and ch.hp > 0:
+			return
+	_fallen = true
+	open_screen.call_deferred("game_over", 0)   # not from inside close_screen's own refresh
+
+
+var _fallen := false
 
 
 # --- Input ----------------------------------------------------------------------------------------

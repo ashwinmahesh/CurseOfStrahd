@@ -116,6 +116,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		view.st.set_flag(str(trap["flag"]))
 	view.check_rolled.emit(" · ".join(lines))
 	view._say("trap:%s:triggered" % id, victim.creature as Character, str(trap.get("text", "A trap springs!")))
+	view.party_tended.emit()   # the party has changed: a last one standing who dropped ends the game (game_root)
 
 
 ## Searching (out of combat): a Wisdom (Perception) check by the leader finds traps and hidden things within 15 ft

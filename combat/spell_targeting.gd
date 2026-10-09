@@ -263,6 +263,10 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if (id in ["misty_step", "dimension_door", "flaming_sphere"] or id in SpellCaster.SUMMON_SPELLS) and e.occupant_at(cell) != null:
 			out["why"] = "That square is occupied"
 			return out
+		# A caster bigger than a square (Enlarge, a goliath's Large Form) needs room for all of it where it lands.
+		if id in ["misty_step", "dimension_door"] and c.size_cells > 1 and not e.feature_actions.room_at(c, cell):
+			out["why"] = "There isn't room for you there"
+			return out
 		if spells.specials.high.antimagic_at(cell) and (id in ["misty_step", "dimension_door"] or id in SpellCaster.SUMMON_SPELLS):
 			out["why"] = "Magic can't reach into the Antimagic Field"
 			return out

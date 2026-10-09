@@ -277,7 +277,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 				var idx := i
 				var resume := func() -> CombatResult:
 					if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-						return r
+						return _halt(c, path, idx, r)
 					return _walk(c, path, idx, r, handled)
 				if decision == "ask":
 					var req := ReactionRequest.new("opportunity_attack", p.id, c.id)
@@ -309,7 +309,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					if e.pending != null:
 						return e.then(sub, resume)
 					if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-						return r
+						return _halt(c, path, i, r)
 		var occ := _occupancy_for(c)
 		var step := e.grid.step_cost(c.cell, to, c.size_cells, _has_fn(occ["blocked"] as Dictionary), _value_fn(occ["slowed"] as Dictionary), move_mode(c))
 		if step > 0:
@@ -340,7 +340,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		if handled.has("willing"):
 			e.spells.booming_moved(c)
 		if c.is_down() or e.state != Encounter.State.ACTIVE:
-			return r
+			return _halt(c, path, i + 1, r)
 		i += 1
 		# Polearm Master's Reactive Strike: entering the reach of a polearm-wielder.
 		for pm in e.hostiles_of(c):
@@ -362,10 +362,10 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 						var ii := i
 						return e.then(psub, func() -> CombatResult:
 							if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-								return r
+								return _halt(c, path, ii, r)
 							return _walk(c, path, ii, r, handled))
 					if c.is_down() or e.state != Encounter.State.ACTIVE:
-						return r
+						return _halt(c, path, i, r)
 				elif pdec == "ask":
 					var preq := ReactionRequest.new("reactive_strike", pm.id, c.id)
 					preq.title = "Reaction: Reactive Strike?"
@@ -374,7 +374,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					preq.continuation = func(use: bool) -> CombatResult:
 						var cont := func() -> CombatResult:
 							if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-								return r
+								return _halt(c, path, jj, r)
 							return _walk(c, path, jj, r, handled)
 						if use:
 							pm.reaction_available = false
@@ -393,7 +393,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 			var next_i := i
 			var resume2 := func() -> CombatResult:
 				if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-					return r
+					return _halt(c, path, next_i, r)
 				return _walk(c, path, next_i, r, handled)
 			if rdecision == "ask":
 				var rreq := ReactionRequest.new("readied_attack", p.id, c.id)
@@ -412,10 +412,42 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 				if e.pending != null:
 					return e.then(sub2, resume2)
 				if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-					return r
+					return _halt(c, path, i, r)
+	_halt(c, path, i, r)   # cut short (Speed 0, a step it couldn't take) where it can't stop
 	if c.hidden:
 		e._check_still_hidden(c)
 	settle_all()
+	return r
+
+
+## A move cut short (a grapple's Speed 0 from an Opportunity Attack, a Web, the mover dropped by a blow) where the mover
+## can't end it: in an ally's space it was passing through. It goes back along its path to the last square it could
+## stop in, as the rules have a creature that ends up in another's space moved to the nearest free one (QA FN-18: it
+## stayed there, two creatures on one square). `next_i`: the step it was about to take (it stands on path[next_i - 1]).
+## Returns `r`, so a stopping branch can `return _halt(...)`.
+func _halt(c: Combatant, path: Array[Vector2i], next_i: int, r: CombatResult) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE or c.has_meta("left_fight") or c.has_meta("mounted_on") or c.has_meta("engulfed_by"):
+		return r
+	var occupied := _occupancy_for(c)["occupied"] as Dictionary
+	var clash := func(cell: Vector2i) -> bool:
+		for f in CombatGrid.footprint(cell, c.size_cells):
+			if occupied.has(f):
+				return true
+		return false
+	if not clash.call(c.cell):
+		return r
+	var back := c.cell
+	for j in range(mini(next_i, path.size()) - 1, -1, -1):
+		if not clash.call(path[j]) and path[j] != c.cell:
+			back = path[j]
+			break
+	if back == c.cell:
+		return r
+	var from := c.cell
+	c.cell = back
+	e.events.append({"type": "move", "id": c.id, "from": from, "to": back, "forced": true})
+	e.log.add("move", "%s can't stop in an ally's space and is back at %s" % [c.name(), back], c.id)
 	return r
 
 

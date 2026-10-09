@@ -100,6 +100,7 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 	else:
 		view.call("_say", "trap:%s:triggered" % id, victim.creature as Character, str(trap.get("text", "The floor gives way!")))
 		view.toast.emit("%s is in the pit. Right-click %s to climb out." % [first, first])
+	view.party_tended.emit()   # the party has changed: a last one standing who dropped ends the game (game_root)
 
 
 ## The menu entries for a party member at the bottom of a pit.

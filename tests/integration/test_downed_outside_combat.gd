@@ -209,3 +209,19 @@ func test_lay_on_hands_spends_only_what_the_wound_needs() -> void:
 	assert_eq(paladin.resource_left("lay_on_hands"), pool - 4, "only the 4 points the wound needed")
 	LocationCare._lay_on_hands_out(_view(), cell, "3")
 	assert_eq(paladin.resource_left("lay_on_hands"), pool - 4, "nothing spent on someone at full Hit Points")
+
+
+## Everyone down outside a fight ends the game as a lost fight does (QA FN-17): the last one standing dropped by a trap
+## while the others lay where a fight left them, and nothing came up and nothing could change.
+func test_the_last_one_standing_falling_ends_the_game() -> void:
+	var st := GameState.story
+	for i in range(1, st.party.size()):
+		_down(i)
+	_view().party_tended.emit()
+	await _frames(2)
+	assert_true(root.get("screen") == null, "with someone on their feet, nothing comes up")
+	var last := st.party[0]
+	last.take_damage(last.hp, &"piercing")
+	_view().party_tended.emit()   # as a trap's blow does
+	await _frames(2)
+	assert_true(root.get("screen") is PauseMenu and (root.get("screen") as PauseMenu).game_over, "The party has fallen")
