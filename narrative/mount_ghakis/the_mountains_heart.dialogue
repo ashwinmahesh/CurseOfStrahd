@@ -92,7 +92,7 @@ approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1
 set grandfather_heart_kept
 quest the_mountains_heart done
 Narrator: The heart cools as you lift it, and shrinks, and by the time it's out of the crate it's a dull red stone the size of a fist that hums when you hold it near the ground. Somewhere under the mountain, very far down, something turns over in its sleep and doesn't wake.
-Mountain Captive: (She doesn't say anything. She takes her people out of the quarry without looking back.)
+Narrator: The captive doesn't say anything. She leads her people down out of the quarry, and doesn't look back.
 give stone_of_controlling_earth_elementals
 gold +400
 approve liriel_dawnsong -2 thistle -2 godrick_pendlebrook -1 kip_smudgewick +1: You kept the mountain's heart
