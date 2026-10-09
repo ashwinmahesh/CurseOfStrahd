@@ -42,7 +42,8 @@
       "spell": "catnap",
       "dc": 15,
       "charges": 3,
-      "text": "3 charges: Catnap."
+      "text": "3 charges: Catnap. Outside a fight you and up to two companions sleep ten minutes and wake with a Short Rest's benefits.",
+      "field": true
     }
   ],
   "playable": true

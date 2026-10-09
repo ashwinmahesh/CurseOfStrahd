@@ -134,6 +134,19 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		return fres
 	var spell_id := CombatItems.power_spell(item_id, power)
 	var spell := Compendium.shared().spell_data(spell_id) if spell_id != "" else {}
+	# Catnap from an item (the Wand of Slumber): outside a fight its user and up to two companions sleep ten minutes and
+	# wake with a Short Rest's benefits.
+	if spell_id == "catnap" and not bool(power.get("scroll", false)):
+		var slept: Array[String] = []
+		for m: Character in [ch] + st.party.filter(func(o: Character) -> bool: return o != ch):
+			if slept.size() >= 3 or m.hp <= 0 or m.dead:
+				continue
+			m.finish_short_rest()
+			slept.append(m.name.get_slice(" ", 0))
+		e.items._after_use(c, p, spell, int(spell.get("level", 3)))
+		st.advance_minutes(10)
+		return {"ok": true, "lines": [], "text": "%s: %s sleep ten minutes and wake rested, as after a Short Rest." % [spell.get("name", "Catnap"),
+			", ".join(slept)]}
 	# A Spell Scroll of an exploring spell (Find Familiar, Detect Magic, Light) is cast as when exploring, in the spell's
 	# own time; one above the reader's levels needs its check first (2024 DMG), and the scroll is used up either way.
 	if bool(power.get("scroll", false)) and not spell.is_empty() \
