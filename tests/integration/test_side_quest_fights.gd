@@ -459,3 +459,12 @@ func test_the_blights_come_for_the_cub() -> void:
 	await _fight(v, "den_blights", ["Vine Blight 1", "Needle Blight 1", "Twig Blight 1"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_dancing_bear"), "defended")
+
+
+## The hill's watch gets up out of the druids' cairn on Yester Hill's barrow slope, Silverjaw at its head.
+func test_the_hills_watch_gets_up() -> void:
+	var v := await _boot("yester_hill", 22, 7, ["yester_hill_resolved"])
+	GameState.story.set_quest_stage("the_barrow_on_yester_hill", "asked")
+	await _fight(v, "hill_watch", ["Silverjaw", "A Barrow-Warden", "The Hill's Watch"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_barrow_on_yester_hill"), "fought")

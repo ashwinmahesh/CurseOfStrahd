@@ -1,0 +1,17 @@
+{
+  "id": "freydis",
+  "name": "Freydis",
+  "title": "Of the Mountain Folk",
+  "summary": "A big, angry, grieving woman of the mountain folk from the Balinoks, come down to Yester Hill with a spade and two sacks for her grandmother's bones, which the druids dug out of the old mounds.",
+  "portrait": "berserker",
+  "sprite": "berserker",
+  "attitude": "indifferent",
+  "monster": "berserker",
+  "guest": false,
+  "tags": [
+    "mountain_folk",
+    "yester_hill"
+  ],
+  "region": "yester_hill",
+  "pronouns": "she/her"
+}

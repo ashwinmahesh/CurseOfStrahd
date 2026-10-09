@@ -1265,6 +1265,16 @@
       "id": "den_blights_beaten",
       "type": "bool",
       "summary": "The Dancing Bear: the party beat the blights at the old den (encounter den_blights)."
+    },
+    {
+      "id": "barrow_watch_known",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: History told the party that bones bound into a cairn are set to watch; the watch doesn't catch them unawares."
+    },
+    {
+      "id": "hill_watch_beaten",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: the party put down the hill's watch and Silverjaw (encounter hill_watch)."
     }
   ]
 }

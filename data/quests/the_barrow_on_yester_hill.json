@@ -1,0 +1,34 @@
+{
+  "id": "the_barrow_on_yester_hill",
+  "name": "The Barrow on Yester Hill",
+  "summary": "The druids dug the mountain folk's dead out of the mounds at the foot of Yester Hill and stacked their skulls up the slope. Freydis has come for her grandmother.",
+  "giver": "freydis",
+  "region": "yester_hill",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Freydis of the mountain folk is sitting at the foot of Yester Hill with a spade and two sacks. The druids dug her people's dead out of the old mounds and stacked their skulls in heaps up the slope. Her grandmother, Silverjaw, is in the big heap halfway up: the skull with a silver wire through its jaw.",
+      "objectives": [
+        "Find the big cairn of skulls halfway up the barrow slope",
+        "Bring down the skull with the silver wire"
+      ],
+      "hint": "Climb the barrow slope on Yester Hill to the big cairn of skulls halfway up, and lift the skull with the silver wire in its jaw.",
+      "ends": ""
+    },
+    {
+      "id": "fought",
+      "journal": "The druids had bound the dead in the cairn to watch the hill, and Silverjaw was the first of them, at their head. We put the watch down. Her bones are ours to carry.",
+      "objectives": [
+        "Carry Silverjaw's bones down to Freydis"
+      ],
+      "hint": "Take Silverjaw's bones down to Freydis at the foot of Yester Hill.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Freydis laid her grandmother in the oldest mound with her face to the mountains, and sang her in. She gave us Silverjaw's amulet, which drinks when you strike.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
