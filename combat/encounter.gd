@@ -514,6 +514,11 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 	return movement.jump(c, dest)
 
 
+## Long Jump (2024): over creatures and rough ground, a foot of movement a foot (EncounterMovement.long_jump).
+func long_jump(c: Combatant, dest: Vector2i) -> CombatResult:
+	return movement.long_jump(c, dest)
+
+
 func drop_prone(c: Combatant) -> CombatResult:
 	return movement.drop_prone(c)
 

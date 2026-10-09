@@ -148,7 +148,7 @@ func slots(c: Combatant, tab: String, all: Array[Dictionary] = []) -> Array[Dict
 		if _stays_out(a):
 			continue
 		var key := _group_key(a)
-		if key == "" or (int(counts.get(key, 0)) < 2 and not a.has("policy")):
+		if key == "" or (int(counts.get(key, 0)) < 2 and not a.has("policy") and not a.has("group")):
 			out.append(a)
 			continue
 		if not groups.has(key):
@@ -165,6 +165,8 @@ func slots(c: Combatant, tab: String, all: Array[Dictionary] = []) -> Array[Dict
 func _group_key(a: Dictionary) -> String:
 	if a.has("policy"):
 		return "policy:" + str(a["policy"])
+	if a.has("group"):
+		return "label:" + str(a["group"])
 	if str(a.get("spell_id", "")) != "" and str(a["kind"]) == "spell" and str(a.get("tab", "")) == SPELLS:
 		return "spell:" + str(a["spell_id"])
 	var label := str(a["label"])
@@ -228,6 +230,8 @@ func _finish_group(g: Dictionary, key: String) -> void:
 ## other casting as its label says.
 func variant_name(a: Dictionary, key: String) -> String:
 	var label := str(a["label"])
+	if a.has("group"):
+		return label.replace(" (thrown)", "")
 	if label.contains(": "):
 		return label.substr(label.find(": ") + 2)
 	if key.begins_with("spell:") and str(a["id"]) == "spell:" + str(a["spell_id"]):
@@ -307,6 +311,9 @@ func _attacks(c: Combatant, out: Array[Dictionary]) -> void:
 				" From your other weapon set: attacking with it takes that set in hand (free)." if other_set else ""])
 		a["option_id"] = str(o["id"])
 		a["range"] = p.reach if bool(o["melee"]) else (p.long_range if p.long_range > 0 else p.normal_range)
+		# Everything thrown shares one Throw slot (Baldur's Gate 3's Throw): a thrown weapon, a chair, a crate.
+		if str(o["kind"]) == "thrown" or o.has("improvised"):
+			a["group"] = "Throw"
 		out.append(a)
 		# The Light property's extra attack, with a Light weapon in hand.
 		if "light" in p.properties and not other_set and c.light_attack_weapon != "" and p.item_id != c.light_attack_weapon:
@@ -383,6 +390,12 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 	for held in e.grappling.held_by(c):
 		out.append(_entry("let_go:" + held.id, COMMON, "Let go of %s" % held.name(), "free", "free", e._turn_check(c), "none",
 			"End the grapple. While you hold it, %s comes along when you move%s." % [held.name(), ", each foot costing 1 extra" if e.grappling.drag_extra(c) > 0 else ""]))
+	# Long Jump (2024; Combat HUD plan, owner pick 2026-10-09: Jump with an arc): over creatures and rough ground.
+	var lj_ft := e.movement.long_jump_ft(c)
+	var lj := _entry("long_jump", COMMON, "Long Jump", "up to %d ft" % lj_ft, "movement", e.movement.long_jump_why(c), "point",
+		"Leap over creatures and rough ground, not walls: up to your Strength score in feet after moving 10 ft this turn, half from standing; each foot costs a foot of movement. Leaving a foe's reach still draws its Opportunity Attack.")
+	lj["range"] = lj_ft
+	out.append(lj)
 	if c.creature.has_condition(&"prone"):
 		var stand_why := e._turn_check(c)
 		if stand_why == "" and c.movement_left < c.speed() / 2:
@@ -1289,6 +1302,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.wake(c, t)
 		"jump":
 			return e.jump(c, Vector2i(floori(point.x), floori(point.y)))
+		"long_jump":
+			return e.long_jump(c, Vector2i(floori(point.x), floori(point.y)))
 	return CombatResult.fail(str(action.get("reason", "Not available")))
 
 
