@@ -227,3 +227,9 @@ arc from the hero to the square pointed at, a ring where it lands (red beads and
 gives the feet it costs and what's left. Everything thrown shares one **Throw** container (a thrown weapon in hand or
 set II, a chair or crate within reach); aimed at a creature, the throw's arc runs from the thrower to it beside the odds
 over its head. The Jump spell's leap shows the same arc.
+
+## Tactical camera (owner pick 2026-10-09, after Baldur's Gate 3)
+
+**O** (Settings, Keys: "Tactical camera (from above)") eases the camera to a steeper view from further back
+(CameraRig.tactical: 66 degrees down instead of 40, 1.45 times as far), to plan a fight from above; O again eases it
+back. It works exploring too. Rotation, zoom and the combat moments' shots work as before on top of it.

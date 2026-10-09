@@ -142,3 +142,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_13_throw.png" % out)
 	view._cancel_targeting()
+	# The tactical view from above (O), eased all the way in.
+	view.rig.tactical = true
+	await tool.call("wait_frames", 40)
+	tool.call("_shot", "%s_14_tactical.png" % out)
+	view.rig.tactical = false

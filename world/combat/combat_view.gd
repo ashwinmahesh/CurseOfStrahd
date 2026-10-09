@@ -565,6 +565,8 @@ func _cancel_targeting() -> void:
 	overlay.clear("target")
 	overlay.clear("friendly")
 	overlay.clear("area")
+	overlay.clear("arc")   # a leap's or a throw's flight
+	overlay.clear("arc_bad")
 	if mode == Mode.TARGET:
 		mode = Mode.IDLE
 
