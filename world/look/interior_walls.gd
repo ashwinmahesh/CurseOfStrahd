@@ -165,7 +165,8 @@ static func _open(board: ArenaBoard, c: Vector2i) -> bool:
 
 
 ## The wall over a doorway, from the cut-away height (an interior door's top) to the storey's; it stands while either
-## wall beside it stands.
+## wall beside it stands. A doorway into a room is framed in the place's style (W7): the jambs stay, and the head over
+## them (a lintel, an arch, a cornice) goes with the wall over the doorway.
 static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: Material, st: Dictionary) -> void:
 	var h := float(st["height"])
 	var node := Node3D.new()
@@ -182,9 +183,147 @@ static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: M
 	low.name = "Cut"
 	low.visible = false
 	node.add_child(low)
+	# The frame stands on the faces of the walls beside the doorway, the wall over it set back behind its head.
+	var sides := _framed_sides(board, n, along, str(st["style"]))
+	if not sides.is_empty():
+		_frame(node, full, sides, str(st["style"]), st, n)
 	(st["headers"] as Dictionary)[n] = true
 	(st["walls"] as Array).append({"node": node, "full": full, "low": low, "cell": n, "cut": false, "h": h,
 		"flanks": [n - along, n + along]})
+
+
+## The sides of doorway `n` (one open square between two walls along `along`) that open into a room, each framed in
+## `style` when the kit has its doorway: a side whose square runs on between walls the same way is a passage (a
+## corridor, a tunnel under the wall over it), not framed.
+static func _framed_sides(board: ArenaBoard, n: Vector2i, along: Vector2i, style: String) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if not BuildingKit.has("kit_%s_doorway" % style) or CastleBuilder.claims(board, n - along) \
+			or CastleBuilder.claims(board, n + along):
+		return out   # the castle's roofs: a passage through its own walls (W19)
+	# A gap between free-standing walls (the Amber Temple's book stacks) is an aisle, unless a door hangs in it.
+	if not (_anchored(board, n - along) and _anchored(board, n + along)) and not _door_at(board, n):
+		return out
+	var perp := Vector2i(along.y, along.x)
+	for p: Vector2i in [perp, -perp]:
+		var m := n + p
+		if _open(board, m) and (_open(board, m - along) or _open(board, m + along)):
+			out.append(p)
+	return out
+
+
+## Whether wall square `c` is part of the building's walls: joined, wall to wall, to a wall at the map's edge. A
+## free-standing wall inside a room (a screen, a stack of shelves) isn't.
+static func _anchored(board: ArenaBoard, c: Vector2i) -> bool:
+	if not board.has_meta("anchored_walls"):
+		var g := board.grid
+		var out := {}
+		var open: Array[Vector2i] = []
+		for z in g.depth:
+			for x in g.width:
+				var e := Vector2i(x, z)
+				if (x == 0 or z == 0 or x == g.width - 1 or z == g.depth - 1) and g.has_flag(e, CombatGrid.WALL):
+					out[e] = true
+					open.append(e)
+		while not open.is_empty():
+			var w: Vector2i = open.pop_back()
+			for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				if _wall(board, w + d) and not out.has(w + d):
+					out[w + d] = true
+					open.append(w + d)
+		board.set_meta("anchored_walls", out)
+	return (board.get_meta("anchored_walls") as Dictionary).has(c)
+
+
+## Whether the place hangs a door on square `c` (its location's doors).
+static func _door_at(board: ArenaBoard, c: Vector2i) -> bool:
+	if board.place == "" or not (Compendium.shared().tables.get("locations", {}) as Dictionary).has(board.place):
+		return false
+	for door: Variant in Compendium.shared().get_entry("locations", board.place).get("doors", []):
+		var cell := (door as Dictionary).get("cell", []) as Array
+		if cell.size() == 2 and Vector2i(int(cell[0]), int(cell[1])) == c:
+			return true
+	return false
+
+
+## The doorway's frame on each of its room sides: the jambs on the doorway's own node (they stay as the walls cut
+## away), the head in the wall over it (`full`).
+static func _frame(node: Node3D, full: Node3D, sides: Array[Vector2i], style: String, st: Dictionary, n: Vector2i) -> void:
+	var jambs: Array = []
+	var heads: Array = []
+	for p in sides:
+		var dir := Vector3(p.x, 0, p.y)
+		var xf := Transform3D(Basis(Vector3.UP, atan2(dir.x, dir.z)), dir * (0.5 + ModelPiece.GAP))
+		jambs.append(["kit_%s_doorway" % style, xf])
+		heads.append(["kit_%s_doorway_head" % style, xf])
+	var parts: Array[Node3D] = []
+	var jm := BuildingKit.merge(jambs)
+	if jm != null:
+		jm.name = "DoorwayJambs"
+		node.add_child(jm)
+		parts.append(jm)
+	var hm := BuildingKit.merge(heads)
+	if hm != null:
+		hm.name = "DoorwayHead"
+		full.add_child(hm)
+		parts.append(hm)
+	if not st.has("frames"):
+		st["frames"] = {}
+	(st["frames"] as Dictionary)[n] = parts
+	if (st.get("hidden_frames", {}) as Dictionary).has(n):
+		for part in parts:
+			part.visible = false
+
+
+## Whether doorway `c` is framed in the place's style (W7), so a door hung there needs no frame of its own: a board
+## with full walls, one open square between two walls, opening into a room on at least one side.
+static func frames(board: ArenaBoard, c: Vector2i) -> bool:
+	var st := _state(board)
+	if st.is_empty():
+		return false
+	# Once the walls are built, what they framed (a closed door has made its square wall in the grid since).
+	if not (st["walls"] as Array).is_empty():
+		return (st.get("frames", {}) as Dictionary).has(c)
+	if not _open(board, c):
+		return false
+	for along: Vector2i in [Vector2i(1, 0), Vector2i(0, 1)]:
+		var a := c - along
+		var b := c + along
+		# Two lone pillars (BuildingKit.pillar) put no wall over the gap between them.
+		if not (_wall(board, a) and _wall(board, b)) or (_lone(board, a) and _lone(board, b)):
+			continue
+		if not _framed_sides(board, c, along, str(st["style"])).is_empty():
+			return true
+	return false
+
+
+## A wall square with no wall beside it (a pillar, where the style has one).
+static func _lone(board: ArenaBoard, c: Vector2i) -> bool:
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		if _wall(board, c + d) or (board.grid.in_bounds(c + d) and board.grid.has_flag(c + d, CombatGrid.VOID)):
+			return false
+	return true
+
+
+## Shows or hides doorway `c`'s frame: a secret door nobody has found shows no doorway (SetDressing.door), until it is
+## found (SetDressing.reveal_door).
+static func show_frame(board: ArenaBoard, c: Vector2i, on: bool) -> void:
+	var st := _state(board)
+	if st.is_empty():
+		return
+	for part: Variant in (st.get("frames", {}) as Dictionary).get(c, []):
+		if is_instance_valid(part):
+			(part as Node3D).visible = on
+	# Remembered for a doorway whose walls aren't built yet.
+	if not st.has("hidden_frames"):
+		st["hidden_frames"] = {}
+	if on:
+		(st["hidden_frames"] as Dictionary).erase(c)
+	else:
+		(st["hidden_frames"] as Dictionary)[c] = true
+
+
+static func _wall(board: ArenaBoard, c: Vector2i) -> bool:
+	return board.grid.in_bounds(c) and board.grid.has_flag(c, CombatGrid.WALL)
 
 
 ## Solid wall inside the building (a thick wall's middle): a block at the cut-away height, its top the dark of a cut wall.
