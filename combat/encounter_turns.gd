@@ -94,6 +94,7 @@ func start(surprised_ids: Array = []) -> void:
 ## 17) adds a second turn in the first round at Initiative − 10.
 func _order_by_initiative() -> void:
 	var e := enc()
+	_clear_shared()   # a new order: the next turn to begin makes its own group
 	e.order = e.combatants.duplicate()
 	e.order.sort_custom(func(a: Combatant, b: Combatant) -> bool:
 		if a.initiative != b.initiative:
@@ -259,6 +260,7 @@ func _next_turn(c: Combatant) -> CombatResult:
 		return _begin_turn()
 	c.remove_meta("time_stop")
 	# A shared party turn goes on while any of its heroes hasn't taken theirs: control passes to the next of them.
+	_check_shared()
 	if c.id in e.shared:
 		if not c.id in e.shared_ended:
 			e.shared_ended.append(c.id)
@@ -321,6 +323,29 @@ func _shares(o: Combatant) -> bool:
 	return o.is_player_controlled() and o.side in [&"party", &"guest"] and not compelled(o) and not EchoKnight.is_echo(o)
 
 
+## Drops a shared turn that no longer matches the order (a feature or a test that re-sorts it, an Initiative swap):
+## its heroes must still stand in a row from the first (passing over the fallen and the gone), with the one in control
+## among them. Called wherever the group is used, so a stale one never hands a turn to the wrong creature.
+func _check_shared() -> void:
+	var e := enc()
+	if e.shared.is_empty():
+		return
+	var cur := e.current()
+	var ok := cur != null and cur.id in e.shared
+	var start := e.order.find(e.get_c(e.shared[0])) if ok else -1
+	var k := 0
+	var i := start
+	while ok and i >= 0 and i < e.order.size() and k < e.shared.size():
+		var o := e.order[i]
+		if o.id == e.shared[k]:
+			k += 1
+		elif o.is_alive() and not o.has_meta("left_fight"):
+			ok = false
+		i += 1
+	if not ok or k < e.shared.size():
+		_clear_shared()
+
+
 func _clear_shared() -> void:
 	var e := enc()
 	e.shared.clear()
@@ -365,6 +390,7 @@ func switch_to(c: Combatant) -> CombatResult:
 		return CombatResult.fail("Combat is over")
 	if e.pending != null:
 		return CombatResult.fail("Answer the reaction prompt first")
+	_check_shared()
 	if c == null or not c.id in e.shared or c.id in e.shared_ended or not c.is_alive():
 		return CombatResult.fail("%s isn't sharing this turn" % (c.name() if c != null else "No one"))
 	if c == e.current():
@@ -376,6 +402,7 @@ func switch_to(c: Combatant) -> CombatResult:
 func shared_heroes() -> Array[Combatant]:
 	var e := enc()
 	var out: Array[Combatant] = []
+	_check_shared()
 	if e.shared.is_empty():
 		return out
 	var cur := e.current()
