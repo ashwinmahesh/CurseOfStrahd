@@ -194,6 +194,7 @@ static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
+	e.keep_round_snapshots = true   # the round-start save, taken as each round begins (_save_round)
 	Bestiary.before_fight(view.st, e)   # creatures met, and those already studied show their defenses (U8)
 	view.combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(view, encounter_id, spec, e, ctokens, outcome))
 	view.combat_view.round_started.connect(func(_r: int) -> void: _save_round(view, encounter_id, e))
@@ -206,7 +207,9 @@ static func _save_round(view: LocationView, encounter_id: String, e: Encounter) 
 	if e.state != Encounter.State.ACTIVE:
 		return
 	view._save_positions()
-	GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id, "data": EncounterSnapshot.capture(e)}
+	# The fight as its round began, before the lair or the first turn acted (the view hears of the round after).
+	var data := e.round_snapshot if int(e.round_snapshot.get("round", -1)) == e.round_no else EncounterSnapshot.capture(e)
+	GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id, "data": data}
 	SaveSystem.save_round()
 
 
