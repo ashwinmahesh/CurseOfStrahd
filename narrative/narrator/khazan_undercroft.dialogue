@@ -43,6 +43,9 @@ once
 ~ examine:crypt_drip
 | The lake comes through the ceiling in a slow drip, and the drip has worn a hole in the floor as round as a bowl. The water is so cold it smokes.
 
+~ search:crypt_bracers
+| In the silt at the water's edge, a forearm of bone still wearing a pair of bracers, the leather gone to nothing and the plates still bright. An apprentice's, from the cut of them, who came down to read and stayed.
+
 ~ check:investigation:crypt_bracers:failure
 | Silt, and bones, and the cold.
 
