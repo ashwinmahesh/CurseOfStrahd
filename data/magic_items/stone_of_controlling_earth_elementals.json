@@ -23,18 +23,24 @@
       "params": {
         "monster": "earth_elemental",
         "count": 1,
-        "hours": 1,
-        "concentration": true
+        "hours": 1
       },
-      "targeting": "place",
-      "range": 60,
-      "text": "Magic action (once per dawn): summon an Earth Elemental, as if by Conjure Elemental; it obeys you while you concentrate, up to an hour.",
+      "targeting": "none",
+      "text": "Magic action (once per dawn): An Earth Elemental appears in the space nearest the stone. It obeys you and takes its turn right after yours, and it's gone after 1 hour, at 0 Hit Points, or when you dismiss it.",
       "uses": {
         "count": 1,
         "per": "dawn"
       }
+    },
+    {
+      "id": "dismiss",
+      "name": "Dismiss the elemental",
+      "cost": "bonus",
+      "custom": "dismiss_summon",
+      "targeting": "none",
+      "text": "Bonus Action: send back the Earth Elemental you called with the stone."
     }
   ],
-  "summary": "Once a day, summon an Earth Elemental that obeys you (Concentration, up to 1 hour).",
-  "text": "Hold the stone and take a Magic action to call up an Earth Elemental in the unoccupied space nearest the stone. It is friendly toward you and your allies and follows your orders. It stays for up to 1 hour, as long as you keep up Concentration on it the way you would on a spell. After that the stone is spent until the next dawn."
+  "summary": "Once a day, call an Earth Elemental that obeys you for up to 1 hour.",
+  "text": "Take a Magic action with the stone to call an Earth Elemental into the unoccupied space nearest it. The elemental understands your languages, does as you command, and takes its turn immediately after yours. It's gone after 1 hour, when it drops to 0 Hit Points, or when you dismiss it as a Bonus Action. The stone can't call another until the next dawn."
 }
