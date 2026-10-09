@@ -253,6 +253,75 @@ func _open(board: ArenaBoard, c: Vector2i) -> bool:
 	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)
 
 
+## W7: a doorway inside is framed in the place's style on each side that opens into a room: jambs that stay as the
+## walls cut away, and a head (lintel, arch, cornice) that goes with the wall over the doorway. A door hung there has
+## no plain frame of its own; a secret door shows no doorway until it's found. A corridor under the wall over it and
+## the aisles between the Amber Temple's book stacks aren't doorways.
+func test_doorways_inside_are_framed_in_the_place_style() -> void:
+	for spec: Array in [["death_house_ground", Vector2i(21, 6), "manor"], ["castle_ravenloft_main_floor", Vector2i(11, 3), "castle"],
+			["village_church", Vector2i(18, 4), "church"], ["vallaki_blue_water_inn", Vector2i(16, 5), "timber"],
+			["death_house_dungeon_1", Vector2i(2, 5), "dungeon"], ["amber_temple_library", Vector2i(5, 8), "amber"]]:
+		var v := _view(str(spec[0]))
+		await _frames(2)
+		var board := v.board
+		var cell := spec[1] as Vector2i
+		var st := board.get_meta("interior_walls", {}) as Dictionary
+		assert_eq(str(st.get("style", "")), str(spec[2]), "%s is built in its style" % spec[0])
+		var parts := _frame_parts(board, cell)
+		assert_eq(parts.size(), 2, "%s's doorway at %s is framed" % [spec[0], cell])
+		assert_true(InteriorWalls.frames(board, cell), "and says so")
+		if parts.size() == 2:
+			var jambs := parts[0] as MeshInstance3D
+			var head := parts[1] as MeshInstance3D
+			assert_eq(str(jambs.name), "DoorwayJambs")
+			assert_true(jambs.get_aabb().size.y > InteriorWalls.CUT - 0.05, "jambs the opening's height")
+			assert_true(head.get_aabb().position.y >= InteriorWalls.CUT - 0.15, "the head over the opening")
+			for n: Node in board.get_children():
+				if str(n.name).begins_with("DoorFrame") and board.grid.cell_at((n as Node3D).global_position) == cell:
+					fail("%s's door at %s still has a plain frame" % [spec[0], cell])
+					break
+			# The camera across the doorway: the wall over it cuts away with its head, the jambs stay.
+			var at := board.cell_center(cell)
+			for i in 2:
+				board.cut_buildings(at + Vector3(0, 8, -10), at + Vector3(0, 0, 2), 1.0)
+			assert_false(head.is_visible_in_tree(), "%s: the head goes with the wall over the doorway" % spec[0])
+			assert_true(jambs.is_visible_in_tree(), "%s: the jambs stay" % spec[0])
+		v.queue_free()
+		await _frames(1)
+	# A secret door: no doorway until it's found.
+	var c := _view("castle_ravenloft_main_floor")
+	await _frames(2)
+	var secret := Vector2i(47, 5)
+	var hidden := _frame_parts(c.board, secret)
+	assert_false(hidden.is_empty(), "the hearth's secret door is in a framed doorway")
+	for part in hidden:
+		assert_false(part.visible, "hidden while nobody has found it")
+	InteriorWalls.show_frame(c.board, secret, true)
+	for part in hidden:
+		assert_true(part.visible, "shown once it's found")
+	c.queue_free()
+	await _frames(1)
+	# Not doorways: a corridor between walls, and the aisle between a book stack and the wall.
+	var d := _view("death_house_dungeon_1")
+	await _frames(2)
+	assert_false(InteriorWalls.frames(d.board, Vector2i(13, 6)), "a corridor under the wall over it")
+	d.queue_free()
+	await _frames(1)
+	var a := _view("amber_temple_library")
+	await _frames(2)
+	assert_false(InteriorWalls.frames(a.board, Vector2i(28, 10)), "an aisle between the stacks")
+	a.queue_free()
+
+
+## A framed doorway's jambs and head (InteriorWalls' state), or none.
+func _frame_parts(board: ArenaBoard, cell: Vector2i) -> Array[Node3D]:
+	var out: Array[Node3D] = []
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	for part: Variant in (st.get("frames", {}) as Dictionary).get(cell, []):
+		out.append(part as Node3D)
+	return out
+
+
 ## W19: Castle Ravenloft from outside. The gates' walls are the castle's: curtain walls six high with their
 ## battlements, the keep taller, round towers under spires, an arch over the gatehouse with the portcullis in it and
 ## no frame of its own, cliffs falling into the chasm, and timbers under the drawbridge. A wall in the way of the party
