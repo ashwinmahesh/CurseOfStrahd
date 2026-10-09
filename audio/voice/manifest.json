@@ -10075,6 +10075,13 @@
   "recipe": "aa33e74c9d",
   "text": "(Very still.) Then the first they took would be the one in charge of the rest. She'd like that. She always did like being in charge."
  },
+ "freydis/25804495b76f5b9d": {
+  "chars": 128,
+  "direction": "[angry, low]",
+  "model": "eleven_v3",
+  "recipe": "083b5bbe83",
+  "text": "The count's men cut a quarry in his south face last spring, and dug out something that shone, and since then the mountain moves."
+ },
  "freydis/410bcbbca77fc886": {
   "chars": 153,
   "direction": "[proud, grieving, gruff]",
@@ -10131,6 +10138,13 @@
   "recipe": "aa33e74c9d",
   "text": "Skulls on heaps, for their tree. That's what I know, and it's enough."
  },
+ "freydis/bf6e926979a2fb04": {
+  "chars": 237,
+  "direction": "[furious, grieving, blunt]",
+  "model": "eleven_v3",
+  "recipe": "083b5bbe83",
+  "text": "My cousins are up there in chains, cutting stone, and the rockfalls take one a week. Go up past the Tsolenka landing, and round the mountain. I can't go. I'd kill count's men until they killed me, and my cousins would still be in chains."
+ },
  "freydis/ed1b4d34907185f7": {
   "chars": 278,
   "direction": "[angry, grieving, fond]",
@@ -10144,6 +10158,13 @@
   "model": "eleven_v3",
   "recipe": "aa33e74c9d",
   "text": "I can't go up. If I go up, I'll kill painted men until they kill me, and then who carries her home? You go. Bring me her bones, and I'll pay what the mountain pays."
+ },
+ "freydis/fa1803e7c439f0fe": {
+  "chars": 232,
+  "direction": "[gruff, nearly warm, urgent]",
+  "model": "eleven_v3",
+  "recipe": "083b5bbe83",
+  "text": "You again. Good. (She doesn't smile, but nearly.) Grandfather's walking. On Ghakis. The stone in the mountain. Every child up there knows him; he sleeps, and the passes stay open, and we leave him a stone on the cairn when we go by."
  },
  "freydis/faa735c505311b71": {
   "chars": 153,
@@ -15034,6 +15055,12 @@
   "recipe": "956cd23797",
   "text": "And the one man who most needs to hear it is the one who did the drowning."
  },
+ "hero_female/72a33ba1e819bb68": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Get them behind the wagon."
+ },
  "hero_female/72ca88733c185e95": {
   "chars": 40,
   "model": "eleven_v4",
@@ -19365,6 +19392,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "And the one man who most needs to hear it is the one who did the drowning."
+ },
+ "hero_male/72a33ba1e819bb68": {
+  "chars": 26,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Get them behind the wagon."
  },
  "hero_male/72ca88733c185e95": {
   "chars": 40,
@@ -35768,6 +35801,12 @@
   "recipe": "dd92281f92",
   "text": "Green fire with no fuel under it and no smoke over it. It gives heat like any fire. It gives light like nothing natural."
  },
+ "narrator/0fe95a45f6d2cb18": {
+  "chars": 239,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A raw bite out of the mountain's south face, cut in terraces. The stone is fresh and pale where it was cut and the dust hasn't settled, because the ground keeps moving. A wagon stands in the middle with a crate on it, glowing at the seams."
+ },
  "narrator/0fef437bd5f5d09e": {
   "chars": 148,
   "model": "eleven_v4",
@@ -36559,6 +36598,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once."
+ },
+ "narrator/1595bcb03c740e36": {
+  "chars": 257,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn of fist-sized stones by the road, the mountain folk's, each one left by someone going over the pass. The newest at the top have been knocked off, and lie scattered, and the cairn itself has cracked down the middle as if the ground under it shrugged."
  },
  "narrator/159adeba6cde4fa2": {
   "chars": 191,
@@ -38059,6 +38104,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The steps are worn into hollows in the middle. On the open side there is nothing but the well."
+ },
+ "narrator/21ec426445921f2e": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The crate is warm through the wood. Inside, packed in straw, a stone as big as a barrel, red and dark and veined like meat, beating very slowly."
  },
  "narrator/21f721d9232e6bc6": {
   "chars": 84,
@@ -41444,6 +41495,12 @@
   "recipe": "dd92281f92",
   "text": "A narrow closet that smells of lamp oil. Lamps hang in rows on hooks, every one of them cold."
  },
+ "narrator/3dd7bc2271b34846": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The chain's ring is sunk deep in the rock. As you work it loose, the floor of the quarry shivers, like a horse's skin under a fly."
+ },
  "narrator/3de0b65b7eaa5fe2": {
   "chars": 106,
   "model": "eleven_v4",
@@ -42320,6 +42377,12 @@
   "recipe": "dd92281f92",
   "text": "Dolls, puppets, tops and music boxes, every one of them carved with care and every one of them faintly wrong: a smile too wide, a bear with too many teeth."
  },
+ "narrator/45b5ea4753c98121": {
+  "chars": 264,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The heart cools as you lift it, and shrinks, and by the time it's out of the crate it's a dull red stone the size of a fist that hums when you hold it near the ground. Somewhere under the mountain, very far down, something turns over in its sleep and doesn't wake."
+ },
  "narrator/45c5224db63f4edd": {
   "chars": 93,
   "model": "eleven_v4",
@@ -43195,6 +43258,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bottom drops away under you and you go in over your head. You come up spluttering, with the bow rope somehow in your fist, and tow her in while she watches with polite interest."
+ },
+ "narrator/4cdac42d050299d0": {
+  "chars": 101,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The quarry is still, and cold, and the ground doesn't move any more. It doesn't do anything any more."
  },
  "narrator/4ce548441a6a09f6": {
   "chars": 162,
@@ -46430,6 +46499,12 @@
   "recipe": "dd92281f92",
   "text": "The ritual fire goes into the roots by the armful. For a long moment the tree won't catch. Then it does, all at once, and it makes a sound as it burns, high and thin, like a kettle, or like something that isn't one."
  },
+ "narrator/67d879b5e2c19dc6": {
+  "chars": 141,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The quarry is still. The raw hole in the wall has closed, and the pale cut stone is already greying, as if the mountain were healing over it."
+ },
  "narrator/67e9dce92859daac": {
   "chars": 125,
   "model": "eleven_v4",
@@ -49256,6 +49331,12 @@
   "recipe": "dd92281f92",
   "text": "Smoke rises from the Martikov chimney again. The vines are still brown, but somebody has swept the yard, which in Barovia is a declaration of war."
  },
+ "narrator/7f707a1f5e678039": {
+  "chars": 61,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under your feet, the quarry floor sits up. Then it stands up."
+ },
  "narrator/7f7249c752b2c107": {
   "chars": 172,
   "model": "eleven_v4",
@@ -50600,6 +50681,12 @@
   "recipe": "dd92281f92",
   "text": "The bookcase swings out on silent hinges, books and all, onto a hidden room."
  },
+ "narrator/8a636361cfea3371": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A raw bite out of the mountain's south face, cut in terraces. The dust hasn't settled, because the ground keeps moving under it."
+ },
  "narrator/8a66a3f407ae3d7c": {
   "chars": 124,
   "model": "eleven_v4",
@@ -51523,6 +51610,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A line of glyphs crosses the gallery floor, set by the wardens to keep the curious from the amber. They're still awake."
+ },
+ "narrator/90f6dacef2d21193": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Before you let go you put a small stone on top of it and say his name, the way she told you. The rock stays warm under your hand a long time after."
  },
  "narrator/90fbe718e7aa1a42": {
   "chars": 170,
@@ -54548,6 +54641,12 @@
   "recipe": "dd92281f92",
   "text": "A wine press as old as the winery, oak and iron, worked by a bar that takes four men to turn. The wood is stained purple to the grain, and smooth wherever a hand has pushed it for a hundred years."
  },
+ "narrator/aa944104df31b17c": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Picks, wedges and a broken sledge, dropped where they were being used. On a stone beside them, a tally of names scratched by the overseer, a line through one a week."
+ },
  "narrator/aab04efc0d99d9a3": {
   "chars": 121,
   "model": "eleven_v4",
@@ -55513,6 +55612,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The mouth cave is full of straw and the smell of animals, and every heap of straw could be a wolf, or a sleeping man, or both."
+ },
+ "narrator/b2fa77eb056615d5": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Scratched on a flat stone at its foot, in the mountain folk's blunt letters: GRANDFATHER WALKS. THE COUNT'S QUARRY. SOUTH FACE."
  },
  "narrator/b30d709561e3cb87": {
   "chars": 106,
@@ -57938,6 +58043,12 @@
   "recipe": "dd92281f92",
   "text": "Beneath it, in Vell's capitals, cut deeper, as if the knife had been angry: NIGHT 2. NINE GONE IN THE NIGHT. GUIDES SAY WOLVES. THERE WERE NO WOLVES."
  },
+ "narrator/c8a9a5164413489f": {
+  "chars": 86,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The mountain folk's cairn by the road, with a new stone on top, and the stone is warm."
+ },
  "narrator/c8aca53eb1663b08": {
   "chars": 102,
   "model": "eleven_v4",
@@ -58579,6 +58690,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Two tiers of bunks, blankets folded square. One has a name scratched into the frame and, under it, a tally of days that stops at a number nobody should have to count to."
+ },
+ "narrator/cdcbf23e582e6988": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A raw hole in the quarry wall, round as a barrel, where something was cut out of the rock with great care. The edges are still warm."
  },
  "narrator/cdda905316a4c022": {
   "chars": 157,
@@ -60830,6 +60947,12 @@
   "recipe": "dd92281f92",
   "text": "For a heartbeat the hunger leaves his face, and a scared boy looks down at you. Then it comes back."
  },
+ "narrator/e13d0e406fe90cf9": {
+  "chars": 248,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It takes all of you to carry it. When you set it back into the raw hole in the quarry wall, the rock closes over it like water, and the whole mountain lets out a breath you feel in your teeth. Far off, something in the pass that was closing, opens."
+ },
  "narrator/e169749b94989958": {
   "chars": 118,
   "model": "eleven_v4",
@@ -60913,6 +61036,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Patrina screams, and the frozen students at their desks lift their heads to scream with her."
+ },
+ "narrator/e1e6907dbb1524df": {
+  "chars": 189,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Six men and women of the mountain folk sit chained to a ring in the quarry floor, beside a wagon with a crate roped onto it. The crate glows at the seams, a slow red, like a coal breathing."
  },
  "narrator/e1e77789ec75a7bd": {
   "chars": 110,
@@ -61549,6 +61678,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He watches you with yellow eyes and doesn't change. But he doesn't go back into the trees, either. He gets up, stiff, and walks into the light, and lies down at Lark's feet like a dog at a fire."
+ },
+ "narrator/e75268ed842f3366": {
+  "chars": 193,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Grandfather Stone has sunk back into the quarry floor, cracked across, a heap of rock with the shape of a sleeping man in it if you look at it sideways. The crate on the wagon is still glowing."
  },
  "narrator/e75b8fa013c990c1": {
   "chars": 114,
@@ -63830,6 +63965,12 @@
   "recipe": "dd92281f92",
   "text": "By the next nightfall there are new faces in the castle's halls. They are pale, and they do not remember the sun."
  },
+ "narrator/fc1396c70c9489bd": {
+  "chars": 99,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The quarry floor sits up, and then stands up, three times a man's height, with a hole in its chest."
+ },
  "narrator/fc19b9b6b8247df8": {
   "chars": 138,
   "model": "eleven_v4",
@@ -66054,6 +66195,48 @@
   "model": "eleven_v3",
   "recipe": "c1f71546fb",
   "text": "Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears."
+ },
+ "quarry_captive/00ca62b845475cb3": {
+  "chars": 182,
+  "direction": "[quiet, solemn, generous]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "(She puts a stone on the floor of the quarry and says a word you don't catch.) The overseer's pay chest is under the wagon. And this. My father's. It knows stone, and stone knows it."
+ },
+ "quarry_captive/0e303b42ae890d40": {
+  "chars": 41,
+  "direction": "[flat, hopeless, bitter]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "You run. That's what we do. We can't run."
+ },
+ "quarry_captive/3d09d5fced2d0490": {
+  "chars": 184,
+  "direction": "[very quiet, steady, bitter]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "(Very quiet.) Don't touch the crate. The overseer ran when the floor started walking. He chained us next to it so whatever comes for it eats us first and he can come back for it after."
+ },
+ "quarry_captive/43395372c9c08635": {
+  "chars": 163,
+  "direction": "[hushed, reverent, pleading]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "That's Grandfather's. His heart. Every time anybody goes near it, he comes up out of the floor looking for it, and he doesn't see small things. He doesn't mean to."
+ },
+ "quarry_captive/520006545dccccd5": {
+  "chars": 124,
+  "direction": "[tired, gentle, grateful]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "He's not dead. You can't kill a mountain. He's tired. (She looks at the crate.) It's yours to say. You stood in front of us."
+ },
+ "quarry_captive/7cbd977d70ec6ed4": {
+  "chars": 173,
+  "direction": "[low, plain, then afraid]",
+  "model": "eleven_v3",
+  "recipe": "46753446ef",
+  "text": "You put a stone on the cairn and you say his name and you wait. He's slow. He's very, very slow. (She looks at the crate.) But he's not slow now. He's had his heart dug out."
  },
  "querreth/20f67572374a0551": {
   "chars": 151,
