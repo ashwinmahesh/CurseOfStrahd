@@ -786,10 +786,19 @@
   "864d00200f524aa5": "[low, uneasy, grim]",
   "d852e0aec3ceec30": "[dry, low, wry]"
  },
+ "gilded_knight": {
+  "1138f808971ddec7": "[hollow, ashamed, broken]",
+  "2401bc9a304ebcd4": "[desperate, pleading, strained]",
+  "4b1047950902f5e2": "[murmuring, obsessive, cold]",
+  "66a3b22e5f81cbc6": "[bitter laugh, anguished, rising]",
+  "a7d17ce597fc4b9b": "[murmuring, then sharp, possessive]",
+  "cc35c7fdb3143524": "[possessive, defiant, cracked]"
+ },
  "godrick_pendlebrook": {
   "495c0e9d613c19d1": "[grim, protective, firm]",
   "749ad33145e91a88": "[ashamed, breaking]",
   "861377174da00d79": "[sheepish, then grim resolve]",
+  "9e411cebf9f6d329": "[gentle, solemn, firm]",
   "ad6fb43460ac6bd1": "[sheepish, warm]",
   "e8132e0bd3f69c72": "[shaken, ashamed]",
   "ef44b2d45b858fc8": "[stubborn, earnest]",
@@ -2435,6 +2444,9 @@
   "f5774c19aa276361": "[slow, purring, weary amusement]"
  },
  "sir_godfrey_gwilym": {
+  "1b2f9b4669f2935d": "[sad, grave, remembering]",
+  "2777b49865131d6c": "[quiet, hopeful, resolute]",
+  "2a971f30ac9a7a72": "[fond, wry, remembering]",
   "64b6962d94bd738d": "[earnest, urgent, grave]",
   "65e468d579b3b605": "[warm, amused, proud]",
   "680211b15b8b5493": "[slow, remembering, fond]",
@@ -2443,10 +2455,12 @@
   "b8dfbcc5bd698daa": "[solemn, hollow, gentle]",
   "bc547a14b75e2348": "[ashamed, heavy, quiet]",
   "c553ecd0a172c9cc": "[uncertain, rueful, weary]",
+  "c90385206cc578de": "[wistful, warm, sad]",
   "cd15f7bf23fd175f": "[grave, remembering, heavy]",
   "d5498737744e9e15": "[moved, proud, warm]",
   "f12b0ac7fe20f875": "[warm, solemn, proud]",
   "f1e0a7cf699b8485": "[sad, fond, quiet]",
+  "f887559025a27f92": "[groping, frustrated, gentle]",
   "f9a8192c10360585": "[dry, mildly amused]"
  },
  "sorin_krezkov": {
