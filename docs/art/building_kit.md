@@ -48,6 +48,16 @@ every wall square of an interior or dungeon to `BuildingKit.interior_wall`, whic
   the village cobbles, a storey lower per floor: `below`); the outer walls of an upper floor run down to it. A
   dungeon's outside stays rock.
 - **A doorway's header**: the wall over a doorway between two wall squares, from the door's height to the storey's.
+- **A doorway's frame** (W7): on each side of a doorway that opens into a room, the style's doorway on the face of
+  the walls beside it: `kit_<style>_doorway`, the jambs (oak posts with knee braces; a manor's moulded architrave on
+  plinth blocks; the castle's dressed jambs with colonnettes; a church's two recessed orders; a dungeon's rough
+  blocks; the Amber Temple's black jambs veined with amber), and `kit_<style>_doorway_head` over them (a pegged oak
+  lintel; an architrave head, frieze and cornice; a pointed arch under a hood mould; a lancet of two orders; a cracked
+  lintel slab; a black lintel lit along its length). The jambs stay as the walls cut away; the head goes with the wall
+  over the doorway, which stands set back behind it. A door hung there has no plain frame (`InteriorWalls.frames`), and
+  a secret door nobody has found shows no doorway until it's found (`InteriorWalls.show_frame`). Not framed: a side
+  that runs on between walls the same way (a corridor under the wall over it), and a gap between free-standing walls
+  (the Amber Temple's book stacks) unless a door hangs in it.
 
 Each frame the board's cut-away (`TownBuilder.cut_away`, through a building entry `{"interior": true}`) asks each
 room wall whether there's floor just past it, looking away from the camera, within 7 squares of the party
@@ -140,7 +150,6 @@ camera turns). Captures, before and after:
 
 ## Not done yet
 
-- Interior door surrounds per style.
 - The castle's walls have no wall walk you can stand on, and the chasm's depth is drawn, not fallen into (lane 3's
   `drop_ft`). The keep has no roof of its own past its battlements.
 - Full walls have no ceilings or upper floors over them; a room's walls are full height whatever the room's size.

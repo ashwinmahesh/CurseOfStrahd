@@ -283,7 +283,10 @@ static func door(board: ArenaBoard, spec: Dictionary, secret: bool) -> Node3D:
 	elif not secret:
 		_frame(board, base, along_x, h, 2.0 if pair != Vector2i.ZERO else 1.0)
 	if secret:
-		# Hidden: a block of wall (the bookcase door shows its shelves on the wall faces) until it is found.
+		# Hidden: a block of wall (the bookcase door shows its shelves on the wall faces) until it is found, with no
+		# doorway framed round it (W7).
+		InteriorWalls.show_frame(board, cell, false)
+		leaf.set_meta("doorway", cell)
 		if sp != null:
 			sp.visible = false
 		if model_leaf != null:
@@ -326,6 +329,8 @@ static func reveal_door(leaf: Node3D) -> void:
 	var disguise := leaf.get_node_or_null("Disguise")
 	if disguise != null:
 		disguise.queue_free()
+	if leaf.has_meta("doorway") and leaf.get_parent() is ArenaBoard:
+		InteriorWalls.show_frame(leaf.get_parent() as ArenaBoard, leaf.get_meta("doorway") as Vector2i, true)
 	var sp := leaf.get_node_or_null("Leaf") as Node3D
 	if sp != null:
 		sp.visible = true
@@ -353,6 +358,8 @@ static func _pillar(board: ArenaBoard, cell: Vector2i, h: float, statue: String)
 static func _frame(board: ArenaBoard, base: Vector3, along_x: bool, h: float, span: float = 1.0) -> void:
 	if CastleBuilder.frames(board, board.grid.cell_at(base)):
 		return   # a gate in a passage through the castle's walls stands in the passage's arch (W19)
+	if span <= 1.0 and InteriorWalls.frames(board, board.grid.cell_at(base)):
+		return   # a doorway inside, framed in the place's style (W7)
 	if board.theme in ArenaBoard.TOWNS and BuildingKit.style_for(board) != "" and span <= 1.0:
 		# A gate in a kit town's yard wall hangs between the piers the wall puts at its ends (TownBuilder._kit_yard).
 		var c := board.grid.cell_at(base)
