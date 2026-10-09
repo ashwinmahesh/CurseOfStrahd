@@ -3,7 +3,7 @@
 
   python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N]
                                  [--only title,newgame,places,saveload,combat,transitions,fights] [--places id,id]
-                                 [--encounters id,id] [--profile]
+                                 [--encounters id,id] [--settle S] [--profile]
                                  [--headless] [--cover] [--timeout S]
 
 --headless runs without a window or GPU: script and loading costs only (no shader compiles or texture uploads), for
@@ -296,6 +296,7 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--places", default="")
     ap.add_argument("--encounters", default="")
+    ap.add_argument("--settle", default="")
     ap.add_argument("--size", default="1920x1080")
     ap.add_argument("--profile", action="store_true")
     ap.add_argument("--preload", default="")
@@ -317,6 +318,8 @@ def main():
         user.append("--places=" + args.places)
     if args.encounters:
         user.append("--encounters=" + args.encounters)
+    if args.settle:
+        user.append("--settle=" + args.settle)
     if args.preload:
         user.append("--preload=" + args.preload)
     if args.pairs:
