@@ -116,31 +116,6 @@
       "model": "tree_marked"
     },
     {
-      "id": "pine_satchel",
-      "cell": [
-        22,
-        11
-      ],
-      "kind": "search",
-      "search_dc": 14,
-      "label": "a satchel snagged high in the pine",
-      "model": "satchel",
-      "item": "goggles_of_night"
-    },
-    {
-      "id": "trunk_hollow",
-      "cell": [
-        16,
-        8
-      ],
-      "kind": "search",
-      "search_dc": 12,
-      "skill": "investigation",
-      "label": "a hollow in the fallen trunk",
-      "model": "leaves",
-      "item": "bag_of_tricks_rust"
-    },
-    {
       "id": "forest_log_2",
       "cell": [
         22,
@@ -149,18 +124,6 @@
       "kind": "examine",
       "label": "A fallen pine across the clearing",
       "model": "log"
-    },
-    {
-      "id": "forest_cutter_stump",
-      "cell": [
-        26,
-        8
-      ],
-      "kind": "search",
-      "label": "an axe left in a woodcutter's stump",
-      "model": "stump",
-      "search_dc": 12,
-      "item": "weapon_plus_1__handaxe"
     },
     {
       "id": "forest_cutter_wood",
@@ -208,6 +171,43 @@
       "label": "A clawed pine with low branches",
       "model": "pine_clawed",
       "stand_ft": 10
+    },
+    {
+      "id": "pine_ring",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "something glinting high in the pine",
+      "model": "satchel",
+      "item": "ring_of_jumping"
+    },
+    {
+      "id": "trunk_wand",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a split in the fallen trunk",
+      "model": "leaves",
+      "item": "wand_of_magic_detection"
+    },
+    {
+      "id": "cutter_flask",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "label": "a woodcutter's stump",
+      "model": "stump",
+      "item": "potion_of_resistance_cold"
     }
   ],
   "encounters": [

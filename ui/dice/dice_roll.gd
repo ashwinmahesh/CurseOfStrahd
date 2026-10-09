@@ -165,6 +165,13 @@ static func show_roll(host: Node, roll_: Dictionary) -> Signal:
 	return panel.finished
 
 
+## show_roll's panel up now (or waiting its turn), or null: something that should come after the roll can await its
+## `finished` (the party falling to a trap's save).
+static func showing() -> DiceRoll:
+	var p := _showing.get_ref() as DiceRoll if _showing != null else null
+	return p if p != null and not p._closing else null
+
+
 ## Whether a big roll shows anything at all (no in headless runs).
 static func wanted() -> bool:
 	return DisplayServer.get_name() != "headless"

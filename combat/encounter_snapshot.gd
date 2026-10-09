@@ -165,6 +165,10 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 	e.round_no = int(d["round"])
 	e.log.round_no = e.round_no
 	e.turn_index = 0
+	# A round starts with no turn shared yet (EncounterTurns: the first hero's turn makes the group).
+	e.shared.clear()
+	e.shared_started.clear()
+	e.shared_ended.clear()
 	while e.turn_index < e.order.size() and not e.order[e.turn_index].is_alive():
 		e.turn_index += 1
 	e._lair_then_begin()

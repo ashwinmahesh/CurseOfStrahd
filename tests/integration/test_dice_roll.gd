@@ -1,8 +1,8 @@
 extends TestCase
 ## The emerald d20 (docs/ui/d20_roll.md): a real d20's numbering, a throw that always comes to rest square to the camera
 ## on the true number (whatever way it tumbles, the other die too under Advantage), show_roll's panel for a fight or the
-## overworld (it reads the roll, never hangs an await, and lines up rolls asked for at once), and the overworld's
-## checks that roll it: forcing a lock among them.
+## overworld (it reads the roll and never hangs an await), and the overworld's
+## checks and saves that roll it: forcing a lock, and a trap that drops the last hero standing.
 
 const LOC := {
 	"id": "test_dice_vault", "name": "Test Dice Vault", "region": "test", "summary": "A fixture.",
@@ -15,6 +15,9 @@ const LOC := {
 		"#########"], "light": "dim"},
 	"spawns": {"default": [2, 2]},
 	"doors": [{"id": "grate", "cell": [4, 3], "locked": true, "lock_dc": 5, "label": "the grate"}],
+	# Across the whole upper room, so a walk east has to cross it.
+	"traps": [{"id": "blade", "cells": [[6, 1], [6, 2]], "label": "a scything blade", "save": {"ability": "dex", "dc": 30},
+		"damage": "1d4+12", "damage_type": "slashing", "text": "A blade sweeps out of the wall!"}],
 }
 
 var root: Node
@@ -119,7 +122,8 @@ func test_show_roll_comes_and_goes_and_never_hangs_an_await() -> void:
 	assert_true(root.find_child("BigRoll", true, false) == null, "and gone once it's done")
 
 
-func test_forcing_a_lock_rolls_the_big_d20() -> void:
+## The vault with two heroes in it.
+func _vault() -> LocationView:
 	Compendium.shared().tables["locations"]["test_dice_vault"] = LOC.duplicate(true)
 	GameState.reset()
 	for id: String in ["tamsin_tealeaf", "hedda_ironvow"]:
@@ -132,7 +136,11 @@ func test_forcing_a_lock_rolls_the_big_d20() -> void:
 	add_child(root)
 	for i in 3:
 		await get_tree().process_frame
-	var v := root.get("view") as LocationView
+	return root.get("view") as LocationView
+
+
+func test_forcing_a_lock_rolls_the_big_d20() -> void:
+	var v := await _vault()
 	var rolled: Array[Array] = []
 	v.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: rolled.append([t, who, label]))
 	v.act(Vector2i(4, 3), "force")
@@ -143,3 +151,26 @@ func test_forcing_a_lock_rolls_the_big_d20() -> void:
 	assert_eq(rolled.size(), 1, "forcing it rolls the big d20")
 	assert_eq(str(rolled[0][2]), "Athletics")
 	assert_true((rolled[0][0] as D20Test).target > 0, "against the lock's DC")
+
+
+## A trap that drops the last hero standing (the other already down) rolls their save on the big d20, still sends the
+## HUD its line, and the party falls once the die is done (QA FN-17's game over).
+func test_a_trap_dropping_the_last_hero_rolls_the_save_and_the_party_falls() -> void:
+	var v := await _vault()
+	var st := GameState.story
+	var down := st.party[1]
+	down.take_damage(down.hp, &"slashing")
+	st.party[0].hp = 3
+	var rolled: Array[String] = []
+	var lines: Array[String] = []
+	v.big_roll.connect(func(_t: D20Test, who: String, label: String) -> void: rolled.append("%s: %s" % [who, label]))
+	v.check_rolled.connect(func(t: String) -> void: lines.append(t))
+	v.walk_to(Vector2i(7, 1))
+	for i in 400:
+		if root.get("screen") != null:
+			break
+		await get_tree().process_frame
+	assert_eq(rolled, ["%s: Dexterity saving throw" % st.party[0].name] as Array[String], "the save rolls the big d20")
+	assert_false(lines.is_empty(), "and the HUD still gets the trap's line")
+	assert_eq(st.party[0].hp, 0, "the blade drops the last one standing")
+	assert_true(root.get("screen") is PauseMenu and (root.get("screen") as PauseMenu).game_over, "The party has fallen")

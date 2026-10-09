@@ -67,6 +67,16 @@ static func set_fast_combat(on: bool) -> void:
 	set_value("fast_combat", on)
 
 
+## Shared party turns (owner 2026-10-09): heroes next to each other in a fight's order act together, the player
+## switching between them; off, one creature at a time as in the rules.
+static func shared_turns() -> bool:
+	return bool(value("shared_turns", true))
+
+
+static func set_shared_turns(on: bool) -> void:
+	set_value("shared_turns", on)
+
+
 ## Seconds in a fight's moves and pauses are multiplied by this.
 static func combat_pace() -> float:
 	return FAST_PACE if fast_combat() else 1.0

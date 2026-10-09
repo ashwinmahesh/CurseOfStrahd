@@ -99,6 +99,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	board = board_
 	rig = rig_
 	tokens = tokens_
+	e.shared_turns = GameSettings.shared_turns()
 	catalog = ActionCatalog.new(e)
 	picker = TargetPicker.new(e)
 	overlay = GridOverlay.create(board)
@@ -285,6 +286,7 @@ func close_softly() -> void:
 func _advance() -> void:
 	if _closed:
 		return   # the story took the fight back (close_softly); a turn still in flight stops here
+	e.shared_turns = GameSettings.shared_turns()   # the Settings choice, read again in case it changed mid-fight
 	_refresh_all()
 	if e.state == Encounter.State.OVER:
 		mode = Mode.OVER
@@ -454,9 +456,32 @@ func _inspect(id: String) -> void:
 			(tokens[k] as CombatToken).set_highlight(tokens[k] == t)
 		return
 	var c := e.get_c(id)
+	# A hero sharing the turn: a click takes control of them (shared party turns).
+	if c != null and c in e.shared_heroes() and c != e.current() and mode in [Mode.IDLE, Mode.TARGET]:
+		_switch(c)
+		return
 	if c != null and c.is_player_controlled():
 		hud.shown = c
 		hud.refresh()
+
+
+## Takes control of another hero sharing the turn (EncounterTurns.switch_to): a click on their frame or portrait, Tab,
+## or the radial's Inspect. The camera goes to them; the one left keeps what it hasn't used.
+func _switch(c: Combatant) -> void:
+	_cancel_targeting()
+	var r := e.switch_to(c)
+	if not r.ok:
+		hud.banner(r.reason, 1.4)
+		return
+	hud.shown = c
+	mode = Mode.BUSY
+	await _play_events()
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		_refresh_all()
+		hud.show_prompt(e.pending)
+		return
+	_advance()
 
 
 func _sheet(id: String) -> void:
@@ -872,6 +897,11 @@ func _radial(choice: String) -> void:
 
 
 func _cycle_inspect() -> void:
+	# A shared turn: the next hero who can still take theirs.
+	var sharing := e.shared_heroes()
+	if sharing.size() > 1 and mode in [Mode.IDLE, Mode.TARGET]:
+		_switch(sharing[1])
+		return
 	var party: Array[Combatant] = []
 	for c in e.combatants:
 		if c.is_player_controlled():
@@ -1684,6 +1714,9 @@ func _play_events() -> void:
 					var cc := e.get_c(str(cid))
 					if cc == null or cc.creature.concentration == null or cc.creature.concentration.ended:
 						_concentrating.erase(cid)   # it ran out or was let go: nothing breaks
+			"switch":
+				_stop_walking(walking)
+				_refresh_all()   # control passed to another hero of a shared turn
 			"round":
 				if not _opening:   # the opening beat shows "Roll Initiative", then round 1
 					hud.banner("Round %d" % int(ev["round"]), 1.0)
