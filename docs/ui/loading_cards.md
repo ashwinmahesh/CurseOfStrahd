@@ -8,6 +8,13 @@ place's name over it and one tip, while the place settles in behind. It fades af
 once on a click or any key. Walking between places in the same region shows nothing. With motion off (headless tests,
 still captures) no card is shown, so tests and screenshots see the place itself.
 
+Every change of place, card or not, comes in out of a soft blur as the black lifts (Visual Polish Plan 10,
+`world/look/place_dissolve.gd`, `PlaceDissolve`, started by `GameRoot._fade_in_place`): the world is read back from the
+screen's mipmaps, softest as the black starts to go and sharp a second later, a touch lighter while soft so it reads as
+a haze clearing. It's under the HUD (layer 5), which stays crisp, shown only while a place comes in, and off without
+motion. `make capture SCENE=res://tools/capture/dissolve_capture.tscn NAME=dissolve FRAMES=10 ARGS="--motion"` shoots
+the tavern coming in a few frames apart.
+
 ## Data
 `data/loading/cards.json`: `regions` maps a region to a picture id in `art/cutscenes/` (the cutscene stills, chosen
 from scenes the party sees on arrival anyway, so nothing is spoiled), `default` covers regions with no picture of their
