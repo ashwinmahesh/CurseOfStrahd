@@ -15413,6 +15413,12 @@
   "recipe": "956cd23797",
   "text": "\"Some sicknesses are cured by tenderness. Others only grow fat on it. Keep this house open to the hurt and shut to him. If I do not come back, don't come looking. Light a candle and go on.\""
  },
+ "hero_female/8b4d10b9f9cc63e5": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Fourteen people, and they've brought clubs."
+ },
  "hero_female/8b9e0817b1931a15": {
   "chars": 31,
   "model": "eleven_v4",
@@ -19714,6 +19720,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "\"Some sicknesses are cured by tenderness. Others only grow fat on it. Keep this house open to the hurt and shut to him. If I do not come back, don't come looking. Light a candle and go on.\""
+ },
+ "hero_male/8b4d10b9f9cc63e5": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Fourteen people, and they've brought clubs."
  },
  "hero_male/8b9e0817b1931a15": {
   "chars": 31,
@@ -31033,6 +31045,13 @@
   "recipe": "57e379445e",
   "text": "And Victor's gone. There was a light in the attic, and then there wasn't any Victor. I keep laying a place for him."
  },
+ "lz_old_fisher/28677f9afdbcc870": {
+  "chars": 91,
+  "direction": "[dry, wry, weary]",
+  "model": "eleven_v3",
+  "recipe": "9121724bb6",
+  "text": "Take my boat if you want to look. It leaks on the left. Everything I own leaks on the left."
+ },
  "lz_old_fisher/2e1aa45ebdd58527": {
   "chars": 150,
   "direction": "[weary, gruff, wistful]",
@@ -31082,6 +31101,13 @@
   "recipe": "9121724bb6",
   "text": "After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided."
  },
+ "lz_old_fisher/63d947f7662a176f": {
+  "chars": 193,
+  "direction": "[low, uneasy, grim]",
+  "model": "eleven_v3",
+  "recipe": "9121724bb6",
+  "text": "The Reed Isle. (He doesn't look at it.) Nobody fishes near it. Some nights the Baron's boat rows out there from the town end of the lake, with somebody in the bottom of it tied up like washing."
+ },
  "lz_old_fisher/6baca514721b5024": {
   "chars": 169,
   "direction": "[low, uneasy, storytelling]",
@@ -31095,6 +31121,13 @@
   "model": "eleven_v3",
   "recipe": "9121724bb6",
   "text": "Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch."
+ },
+ "lz_old_fisher/cdb634f5b4996a6e": {
+  "chars": 168,
+  "direction": "[bitter, quiet, wry]",
+  "model": "eleven_v3",
+  "recipe": "9121724bb6",
+  "text": "Somebody who said the festival was a waste of good wicker, maybe. Or laughed at the wrong moment. The boat comes back with nobody in it. We don't ask. Asking's unhappy."
  },
  "lz_old_fisher/d87b59855e04a239": {
   "chars": 125,
@@ -36137,6 +36170,12 @@
   "recipe": "dd92281f92",
   "text": "It watches you go back through the doors. It will be here when you come out. It has nowhere else to be."
  },
+ "narrator/146f082961e16e3e": {
+  "chars": 232,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Thin faces, sunburnt and windburnt, and every one of them easy in a way nobody in Vallaki is. A woman is mending a net and humming. Two men are arguing about fish, cheerfully, and losing their tempers, and nobody is watching to see."
+ },
  "narrator/147e71ec46fa03c0": {
   "chars": 115,
   "model": "eleven_v4",
@@ -36965,6 +37004,12 @@
   "recipe": "dd92281f92",
   "text": "Wren is very calm tonight. No jokes, no handstands, no last word. He sits by the fire and speaks quietly, and that's how you know."
  },
+ "narrator/1afddd429afbd97e": {
+  "chars": 287,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the middle of the island, among the reeds, there are huts: little bent-over things of reed and driftwood, a dozen of them, and cookfires banked low, and fish drying on lines. A big bald man with a beard like a bird's nest stands up from the nearest fire with a fish-spear in his hand."
+ },
  "narrator/1b004c6a5f93cbf4": {
   "chars": 129,
   "model": "eleven_v4",
@@ -37624,6 +37669,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Alenka's eyes keep returning to your weapons, your faces, the order you sit in. She isn't curious; she's taking inventory, for someone."
+ },
+ "narrator/20bb23e9b4bd06ca": {
+  "chars": 157,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A low island of reeds and shingle in the black water, a long row from the landing. Smoke, very faint, from somewhere in the middle, and fish drying on lines."
  },
  "narrator/20bf5135124795bf": {
   "chars": 95,
@@ -39101,6 +39152,12 @@
   "recipe": "dd92281f92",
   "text": "The square goes quiet. Somewhere at the back of the crowd, very hesitantly, somebody claps."
  },
+ "narrator/2cba383312c2986b": {
+  "chars": 137,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The boat grounds on shingle. Reeds higher than your heads, and somewhere in the middle of them, smoke, and somebody singing very quietly."
+ },
  "narrator/2cbedc91c519d7f7": {
   "chars": 126,
   "model": "eleven_v4",
@@ -39311,6 +39368,12 @@
   "recipe": "dd92281f92",
   "text": "Kip is carving tonight: an apricot-pit charm, turning it under his thumb as the little knife goes round. There's a row of them on the log beside him, each face slightly different."
  },
+ "narrator/2ea7965a324ed5e4": {
+  "chars": 214,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Huts of bent reed and driftwood, a dozen of them, patched with sailcloth that was once somebody's washing. On one door, a child's drawing of the Baron's wicker sun, with a face drawn on it, sticking its tongue out."
+ },
  "narrator/2eade02578965635": {
   "chars": 105,
   "model": "eleven_v4",
@@ -39460,6 +39523,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The founder's cask is older than the house: black oak, bound in iron gone brown, so big a man could stand up inside it. The druids have chopped at every cask in the cellar except this one, because it was too much trouble."
+ },
+ "narrator/3021789bb13bcd26": {
+  "chars": 265,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "After dark a boat comes out of the mist from the town end of the lake, rowing hard, with something tied up in the bottom of it. It doesn't stop in the shallows. It runs up onto the shingle, and the men in it jump out with clubs and a lantern, looking for the smoke."
  },
  "narrator/30218d5241bf3202": {
   "chars": 79,
@@ -45017,6 +45086,12 @@
   "recipe": "dd92281f92",
   "text": "Sunk in the glass where the storm stood is a little brass censer, half melted, the kind a wizard swings to call weather. Forty years ago it must have rolled out of a pocket on the road. When you lift it out, it's still warm, and the smoke inside it moves on its own."
  },
+ "narrator/5ee9d2fbb65adf3f": {
+  "chars": 68,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Fourteen castaways round three small fires. That's all you can tell."
+ },
  "narrator/5eeba1e1a21056d6": {
   "chars": 105,
   "model": "eleven_v4",
@@ -45730,6 +45805,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The last letter comes away in your hand as dust. From under the island, through the stone and the water, comes a sound like a very long breath let out."
+ },
+ "narrator/65944358153f1244": {
+  "chars": 99,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The boatmen's boat is hidden in the reeds under cut stems. Somebody is singing, not quietly at all."
  },
  "narrator/65961825719890fb": {
   "chars": 129,
@@ -46876,6 +46957,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The watch closes in, spears levelled."
+ },
+ "narrator/6e72c0feb148cc90": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "They're wearing Lady Wachter's grey now, not the Baron's colours. The island changed hands with the town, that's all."
  },
  "narrator/6e7b5c9492742bbf": {
   "chars": 185,
@@ -48232,6 +48319,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They go one at a time, the youngest first, like candles at the end of a long night. The sergeant goes last. He looks at the gate, and then at you, and nods once, as if signing something over."
+ },
+ "narrator/7a589747c0058c8f": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The Baron's boatmen come up the shingle with clubs and a lantern, looking for the smoke, and the reeds behind them move with something that isn't the wind."
  },
  "narrator/7a59a9ddf5286151": {
   "chars": 117,
@@ -49690,6 +49783,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The beacon burns silver in its cradle. Standing in its light is like standing in the first sun of spring: not warm yet, but promising to be."
+ },
+ "narrator/86e80e2ab2df89e3": {
+  "chars": 133,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Fish split and drying on lines between the reeds, more than fourteen people could eat in a week. They've been doing this a long time."
  },
  "narrator/871ea0768032e4c6": {
   "chars": 173,
@@ -56104,6 +56203,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Mouse stops in the middle of the lane. Then she comes back, slowly, and stands behind you, and holds on to your belt with both hands."
+ },
+ "narrator/bf46854c3baf63ba": {
+  "chars": 212,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The castaways have pulled the newest of them out of the boat and cut her hands free: a young woman who laughed at the Baron's sun, she says, and isn't laughing now. The boatmen's boat is pulled up into the reeds."
  },
  "narrator/bf4ae9c5caf5947b": {
   "chars": 163,
@@ -67258,6 +67363,83 @@
   "model": "eleven_v4",
   "recipe": "eaa6a8f9c8",
   "text": "I was sixteen once. Nobody sat with me either. Nowhere is not better, I promise you."
+ },
+ "reed_isle_ostap/01c32ebcdfd8af93": {
+  "chars": 138,
+  "direction": "[wondering, then defiant, rousing]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Home. (He says it like a word in a language he used to speak.) Then we'll row in by daylight, all fourteen, singing, and see who stops us."
+ },
+ "reed_isle_ostap/084bdd035ba0324a": {
+  "chars": 200,
+  "direction": "[grim, bitter, wry]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "The boatmen brought these for her. (A pair of heavy black shackles, cold and too smooth, with no keyhole you can see.) The Baron keeps a box of them. I'd rather they were on the right wrists, one day."
+ },
+ "reed_isle_ostap/1a9806afa195eeb9": {
+  "chars": 214,
+  "direction": "[wary, rough, bitter]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "You're not the Baron's. The Baron's don't land. (He looks you over.) Ostap. Cooper, once. I said at the Blue Water that the festival was a waste of good wicker, and the Baron's men took me out of my bed that night."
+ },
+ "reed_isle_ostap/3a199e4a45eb5346": {
+  "chars": 119,
+  "direction": "[content, gruff, warm]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Fourteen, and the girl makes fifteen. We row out for salt at night. Nobody has to be happy. Come and eat fish sometime."
+ },
+ "reed_isle_ostap/3c6b117bf242a1b9": {
+  "chars": 170,
+  "direction": "[awkward, gentle, respectful]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "(He sees Ireena, and goes quiet, and then bows, badly, the way a man does who hasn't bowed in years.) Lady. They said in town you were safe at the church. I'm glad of it."
+ },
+ "reed_isle_ostap/6070f545ee0f9d00": {
+  "chars": 107,
+  "direction": "[hushed, wary, gruff]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Keep your voice down when the moon's up. Sound carries on the water. That's how they'll find us, one night."
+ },
+ "reed_isle_ostap/86ffd683805ad5f1": {
+  "chars": 206,
+  "direction": "[laughing, bitter, then earnest]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Home? (He laughs.) To be happy on Thursdays? No. But if you mean to help, there's a thing. The Baron's boat comes tonight. Another one for us. We pull them out of the shallows before they drown, every time."
+ },
+ "reed_isle_ostap/9d108202fcb378e8": {
+  "chars": 126,
+  "direction": "[stunned, wondering, unsure]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Now there's a boat on our island. (He looks at it as if it might bite.) We could go home. We could go anywhere. We could stay."
+ },
+ "reed_isle_ostap/a452fe451a3534e6": {
+  "chars": 136,
+  "direction": "[low, worried, grim]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Only the last time, a boatman saw the smoke. If they see it again they'll tell the Baron, and the Baron doesn't leave a thing half done."
+ },
+ "reed_isle_ostap/d6bd1e152174a404": {
+  "chars": 209,
+  "direction": "[rough, wry, proud]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "They rowed me out here and tipped me in the shallows with my hands tied, and rowed home. There were six of us here already, then. Now there are fourteen. We fish. We sing. Nobody has to be happy on a Thursday."
+ },
+ "reed_isle_ostap/e09610f4729ccdf5": {
+  "chars": 217,
+  "direction": "[decided, joyful, defiant]",
+  "model": "eleven_v3",
+  "recipe": "ce10ce9cf6",
+  "text": "Stay. Yes. (A woman at the fire cheers, and then puts her hand over her mouth, and then laughs because she doesn't have to.) We'll row out at night for salt and come back before light. The Baron can count his drowned."
  },
  "rictavio/06a35e1fc8575f1f": {
   "chars": 47,
