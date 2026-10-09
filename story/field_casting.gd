@@ -12,7 +12,8 @@ const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flam
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
-## legal, reason}], helpful spells only.
+## others_only, legal, reason}], helpful spells only. `others_only`: a spell for another creature, never its caster
+## (Warding Bond).
 static func options(party: Array[Character], caster: Character, dice: DiceRoller) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var e := _board(party, caster, dice)
@@ -26,6 +27,7 @@ static func options(party: Array[Character], caster: Character, dice: DiceRoller
 		var entry := {"id": str(s["id"]), "name": str(s["name"]), "level": int(s["level"]), "free": bool(s["free"]),
 			"count": int((data.get("targets", {}) as Dictionary).get("count", 1)),
 			"self_only": str((data.get("targets", {}) as Dictionary).get("kind", "")) == "self",
+			"others_only": bool((data.get("targets", {}) as Dictionary).get("other", false)),
 			"legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight"),
 			"slots": _slots(caster, int(s["level"]))}
 		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(s["free"]) and (entry["slots"] as Array).is_empty():
@@ -38,14 +40,18 @@ static func options(party: Array[Character], caster: Character, dice: DiceRoller
 	return out
 
 
-## Healing and help: spells that target creatures or the caster and neither deal damage, force a save, make an attack
-## nor fill an area.
+## Healing and help: spells that target creatures, allies or the caster and neither deal damage, force a save, make an
+## attack nor fill an area. An ally spell may go on its caster too (Protection from Evil and Good, Lesser Restoration,
+## Invisibility; owner report 2026-10-09: they had no Cast button outside fights). Light and Continual Flame are cast
+## from the exploring list instead (utility_options).
 static func helpful(data: Dictionary) -> bool:
 	for k: String in ["damage", "save", "attack", "area", "summon"]:
 		if data.has(k):
 			return false
+	if str(data.get("id", "")) in EXPLORING_TOO:
+		return false
 	var kind := str((data.get("targets", {}) as Dictionary).get("kind", ""))
-	return kind in ["creature", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
+	return kind in ["creature", "ally", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
 
 
 ## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}.
@@ -67,6 +73,8 @@ static func cast(party: Array[Character], caster: Character, spell_id: String, s
 		tgt.append(c)
 	else:
 		for t in targets:
+			if t == caster and bool((data.get("targets", {}) as Dictionary).get("other", false)):
+				return {"ok": false, "text": "%s goes on another creature" % data.get("name", spell_id), "lines": []}
 			var tc := e.get_c(t.id)
 			if tc != null:
 				tgt.append(tc)

@@ -255,6 +255,10 @@
         "within": {
           "type": "integer",
           "description": "A Self-range spell's target distance (Eyebite: 60)."
+        },
+        "other": {
+          "type": "boolean",
+          "description": "Another creature, never the caster (Warding Bond)."
         }
       }
     },

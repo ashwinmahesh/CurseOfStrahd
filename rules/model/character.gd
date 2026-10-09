@@ -1759,11 +1759,13 @@ func _take_option(options: Array, pick: String) -> void:
 
 ## The costly material component `spell` asks for: {material, cost_gp, consumed}, or {} when it has none the game tracks
 ## (spells' components.m_material names the item kind; costly foci without one count as part of the caster's focus).
+## Only one the spell uses up is asked for (owner, 2026-10-09): Identify's pearl, Chromatic Orb's diamond and the other
+## costly components a spell keeps aren't needed.
 static func costly_component(spell: Dictionary) -> Dictionary:
 	var comp := spell.get("components", {}) as Dictionary
-	if str(comp.get("m_material", "")) == "":
+	if str(comp.get("m_material", "")) == "" or not bool(comp.get("m_consumed", false)):
 		return {}
-	return {"material": str(comp["m_material"]), "cost_gp": float(comp.get("m_cost_gp", 0.0)), "consumed": bool(comp.get("m_consumed", false))}
+	return {"material": str(comp["m_material"]), "cost_gp": float(comp.get("m_cost_gp", 0.0)), "consumed": true}
 
 
 ## What this character's items of `material` are worth together (stacks of Diamonds, pinches of Diamond Dust...).
