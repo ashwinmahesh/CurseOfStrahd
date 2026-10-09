@@ -190,6 +190,14 @@
             8
           ],
           "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            7,
+            6
+          ],
+          "name": "A Swarm of Spiderlings"
         }
       ],
       "when": "flag.gully_web_read",
@@ -231,6 +239,14 @@
           "cell": [
             17,
             8
+          ],
+          "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            7,
+            6
           ],
           "name": "A Swarm of Spiderlings"
         }

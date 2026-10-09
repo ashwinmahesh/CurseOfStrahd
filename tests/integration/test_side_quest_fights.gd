@@ -515,3 +515,13 @@ func test_the_boatmen_come_for_the_smoke() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_barons_island"), "defended")
 	assert_true(GameState.story.get_flag("reed_isle_boatmen_beaten", false))
+
+
+## The spiders come down their threads when Tsura is cut out of the web in the gully off the falls path.
+func test_the_spiders_of_the_webbed_gully() -> void:
+	var v := await _boot("ivlis_spider_gully", 12, 3, [])
+	GameState.story.set_quest_stage("the_spiders_gully", "asked")
+	await _fight(v, "gully_spiders", ["Giant Spider 1", "A Swarm of Spiderlings"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_spiders_gully"), "cut_down")
+	assert_true(GameState.story.get_flag("gully_spiders_beaten", false))

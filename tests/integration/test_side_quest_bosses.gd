@@ -361,3 +361,12 @@ const ON_THE_SHINGLE: Array[Vector2i] = [Vector2i(11, 11), Vector2i(12, 12), Vec
 ## The Boatmaster, two veteran boatmen, four toughs and something in the reeds.
 func test_the_reed_isle_boatmen_at_level_5() -> void:
 	await _series("zarovich_reed_island", 22, 5, "reed_isle_boatmen", [1, 2, 3, 4, 5, 6, 7, 8], ["reed_isle_met"], [], [], ON_THE_SHINGLE)
+
+
+## Under the ledge in the Webbed Gully, where Tsura hangs in the web.
+const UNDER_THE_LEDGE: Array[Vector2i] = [Vector2i(12, 4), Vector2i(13, 5), Vector2i(14, 4), Vector2i(12, 5)]
+
+
+## Three giant spiders and two swarms of spiderlings, catching the party unawares.
+func test_the_webbed_gully_at_level_3() -> void:
+	await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
