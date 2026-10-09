@@ -644,3 +644,18 @@ func test_the_depth_blur_is_the_screen_pass_edge_blur() -> void:
 	GameSettings.set_value("blur_reach", "", false)
 	v.queue_free()
 	Look.set_style(was, false)
+
+
+## Visual Polish Plan 5: the Modern finish's glow spreads wide as well as close, so what burns wears a broad soft halo.
+func test_the_modern_glow_spreads_wide() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var v := _view("village_of_barovia")
+	var env := v.atmosphere.env
+	assert_true(env.glow_enabled, "glow on in Modern")
+	for level: int in Atmosphere.GLOW_LEVELS:
+		assert_true(is_equal_approx(env.get_glow_level(level), float(Atmosphere.GLOW_LEVELS[level])), "glow level %d" % level)
+	assert_true(env.get_glow_level(4) > 0.0 and env.get_glow_level(5) > 0.0, "the wide levels are on")
+	assert_true(env.get_glow_level(5) < env.get_glow_level(4), "fainter as it widens")
+	v.queue_free()
+	Look.set_style(was, false)
