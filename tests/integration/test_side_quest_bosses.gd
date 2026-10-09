@@ -397,3 +397,12 @@ const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector
 ## The Index and two reading chairs, with the shelves coming down and the lake coming in.
 func test_the_index_at_level_9() -> void:
 	await _series("drowned_library", 14, 9, "the_index", [1, 2, 3, 4, 5, 6, 7, 8], ["xaver_met"], [], [], AT_THE_DESK)
+
+
+## By the captives' ring in the Ghakis Quarry, between the wagon and the way down.
+const BY_THE_WAGON: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vector2i(11, 10), Vector2i(12, 11)]
+
+
+## Grandfather Stone alone, with the quarry's faces coming down.
+func test_grandfather_stone_at_level_10() -> void:
+	await _series("ghakis_quarry", 12, 10, "grandfather_stone", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], BY_THE_WAGON)

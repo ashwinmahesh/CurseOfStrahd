@@ -356,3 +356,5 @@ leaves a smaller purse and one find.
 | ✅ | The Village of Barovia, the high pasture | Potion of Animal Friendship (uncommon) | Gift: from Goodwife Petra or Erno, once Snowdrop's fate is settled (The Goatherd's Count, docs/story/side_quests.md) |
 | ✅ | The Tser Pool camp, the plank stage | Wind Fan (uncommon) | Gift: from Lavinia, once she knows where Bujor is (The Dancing Bear, docs/story/side_quests.md) |
 | ✅ | Yester Hill, the foot of the hill | Blood Amulet (rare) | Gift: from Freydis, once Silverjaw is back in her mound (The Barrow on Yester Hill, docs/story/side_quests.md) |
+| ✅ | Mount Ghakis, the count's quarry | Belt of Giant Strength (Stone Giant) (very rare) | Gift: from the mountain captive, once Grandfather's heart is back in the mountain (The Mountain's Heart, docs/story/side_quests.md) |
+| ✅ | Mount Ghakis, the count's quarry | Stone of Controlling Earth Elementals (rare) | Hoard: Grandfather's heart, kept, cooled to a fist of red stone (The Mountain's Heart, docs/story/side_quests.md) |

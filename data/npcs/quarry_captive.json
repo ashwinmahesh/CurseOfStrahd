@@ -1,0 +1,17 @@
+{
+  "id": "quarry_captive",
+  "name": "Mountain Captive",
+  "title": "Chained in the Count's Quarry",
+  "summary": "One of six mountain folk chained in the count's quarry on Mount Ghakis, taken to cut stone and left beside the crate as bait when the ground started walking.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "mountain_folk",
+    "mount_ghakis"
+  ],
+  "region": "mount_ghakis",
+  "pronouns": "she/her"
+}

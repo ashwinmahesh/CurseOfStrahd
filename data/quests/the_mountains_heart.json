@@ -1,0 +1,33 @@
+{
+  "id": "the_mountains_heart",
+  "name": "The Mountain's Heart",
+  "summary": "The mountain folk say Grandfather Stone, asleep in Mount Ghakis, is walking, since the count's men cut a quarry in the mountain's south face.",
+  "giver": "freydis",
+  "region": "mount_ghakis",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "The mountain folk's Grandfather Stone, the spirit asleep in Mount Ghakis, is walking. The count's men cut a quarry in the mountain's south face last spring and dug out something that shone, and since then the passes close and the ground moves. Mountain folk are chained in the quarry, cutting stone.",
+      "objectives": [
+        "Find the count's quarry on the south face of Mount Ghakis"
+      ],
+      "hint": "Go up past the Tsolenka landing to the Ghakis Quarry on the mountain's south face, and find the captives.",
+      "ends": ""
+    },
+    {
+      "id": "stilled",
+      "journal": "The overseer crated Grandfather's heart for the castle and chained the captives beside it as bait. When we touched the crate, the quarry floor stood up. Grandfather is lying still now, tired, and the heart is still glowing on the wagon.",
+      "objectives": [
+        "Decide what becomes of the heart"
+      ],
+      "hint": "Talk to the captives by the wagon in the Ghakis Quarry.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The mountain folk are out of the count's quarry, and the matter of Grandfather's heart is settled.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

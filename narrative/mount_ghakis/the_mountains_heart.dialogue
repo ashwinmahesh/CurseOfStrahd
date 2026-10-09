@@ -1,0 +1,99 @@
+# The Mountain's Heart (side quest, docs/story/side_quests.md): the mountain folk call the spirit asleep in Mount Ghakis
+# Grandfather Stone, and he's walking. The count's men opened a quarry on the mountain's south face and dug out
+# something that glowed; since then the passes close, the ground moves, and the quarry's captives, mountain folk taken
+# to cut stone, are dying in the rockfalls (data/locations/ghakis_quarry.json). **Twist:** Grandfather isn't raging,
+# he's looking for his heart: the overseer crated the glowing stone for the castle and fled the walking ground, and left
+# the captives chained beside the crate, because whatever comes for the heart will have to come through them first.
+# **Escalation:** touch the crate and the quarry floor stands up (data/monsters/grandfather_stone.json). Then: the heart
+# back in the mountain, or kept. Reached from Freydis at Yester Hill once her grandmother is laid, from level 10
+# (yester_hill/the_barrow:freydis), and the mountain folk's cairn at the Tsolenka landing. Every line here is unvoiced
+# for now.
+
+# --- Freydis at the foot of Yester Hill (yester_hill/the_barrow:freydis jumps here) ---
+
+~ freydis
+quest the_mountains_heart asked
+Freydis: You again. Good. (She doesn't smile, but nearly.) Grandfather's walking. On Ghakis. The stone in the mountain. Every child up there knows him; he sleeps, and the passes stay open, and we leave him a stone on the cairn when we go by.
+Freydis: The count's men cut a quarry in his south face last spring, and dug out something that shone, and since then the mountain moves.
+Freydis: My cousins are up there in chains, cutting stone, and the rockfalls take one a week. Go up past the Tsolenka landing, and round the mountain. I can't go. I'd kill count's men until they killed me, and my cousins would still be in chains.
+-> END
+
+# --- The mountain folk's cairn at the Tsolenka landing (prop tsolenka_folk_cairn) ---
+
+~ cairn
+if quest.the_mountains_heart == done
+Narrator: The mountain folk's cairn by the road, with a new stone on top, and the stone is warm.
+-> END
+endif
+Narrator: A cairn of fist-sized stones by the road, the mountain folk's, each one left by someone going over the pass. The newest at the top have been knocked off, and lie scattered, and the cairn itself has cracked down the middle as if the ground under it shrugged.
+Narrator: Scratched on a flat stone at its foot, in the mountain folk's blunt letters: GRANDFATHER WALKS. THE COUNT'S QUARRY. SOUTH FACE.
+if not quest.the_mountains_heart
+quest the_mountains_heart asked
+endif
+-> END
+
+# --- The captives at the quarry (npc quarry_captive) ---
+
+~ captive
+if quest.the_mountains_heart == done
+-> END
+endif
+if flag.grandfather_stilled
+-> after
+endif
+Narrator: Six men and women of the mountain folk sit chained to a ring in the quarry floor, beside a wagon with a crate roped onto it. The crate glows at the seams, a slow red, like a coal breathing.
+Mountain Captive: (Very quiet.) Don't touch the crate. The overseer ran when the floor started walking. He chained us next to it so whatever comes for it eats us first and he can come back for it after.
+Mountain Captive: That's Grandfather's. His heart. Every time anybody goes near it, he comes up out of the floor looking for it, and he doesn't see small things. He doesn't mean to.
+* [Religion DC 14] (Ask what the mountain folk do when Grandfather walks.) -> custom | custom_missed
+* (Break their chain first.) -> chain
+* (Go to the crate.) -> crate
+
+~ custom
+set grandfather_custom_known
+Mountain Captive: You put a stone on the cairn and you say his name and you wait. He's slow. He's very, very slow. (She looks at the crate.) But he's not slow now. He's had his heart dug out.
+-> chain
+
+~ custom_missed
+Mountain Captive: You run. That's what we do. We can't run.
+-> chain
+
+~ chain
+Narrator: The chain's ring is sunk deep in the rock. As you work it loose, the floor of the quarry shivers, like a horse's skin under a fly.
+-> crate
+
+~ crate
+Narrator: The crate is warm through the wood. Inside, packed in straw, a stone as big as a barrel, red and dark and veined like meat, beating very slowly.
+Narrator: Under your feet, the quarry floor sits up. Then it stands up.
+interject tag:blunt: Get them behind the wagon.
+combat grandfather_stone
+
+# --- After Grandfather (npc quarry_captive, once he's stilled) ---
+
+~ after
+Narrator: Grandfather Stone has sunk back into the quarry floor, cracked across, a heap of rock with the shape of a sleeping man in it if you look at it sideways. The crate on the wagon is still glowing.
+Mountain Captive: He's not dead. You can't kill a mountain. He's tired. (She looks at the crate.) It's yours to say. You stood in front of us.
+* (Carry the heart back into the quarry wall where they dug it out.) -> home
+* (Keep the heart. The count only wanted it to build with.) -> keep
+
+~ home
+set grandfather_heart_home
+quest the_mountains_heart done
+Narrator: It takes all of you to carry it. When you set it back into the raw hole in the quarry wall, the rock closes over it like water, and the whole mountain lets out a breath you feel in your teeth. Far off, something in the pass that was closing, opens.
+if flag.grandfather_custom_known
+Narrator: Before you let go you put a small stone on top of it and say his name, the way she told you. The rock stays warm under your hand a long time after.
+endif
+Mountain Captive: (She puts a stone on the floor of the quarry and says a word you don't catch.) The overseer's pay chest is under the wagon. And this. My father's. It knows stone, and stone knows it.
+give belt_of_giant_strength_stone
+gold +400
+approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You gave the mountain back its heart
+-> END
+
+~ keep
+set grandfather_heart_kept
+quest the_mountains_heart done
+Narrator: The heart cools as you lift it, and shrinks, and by the time it's out of the crate it's a dull red stone the size of a fist that hums when you hold it near the ground. Somewhere under the mountain, very far down, something turns over in its sleep and doesn't wake.
+Mountain Captive: (She doesn't say anything. She takes her people out of the quarry without looking back.)
+give stone_of_controlling_earth_elementals
+gold +400
+approve liriel_dawnsong -2 thistle -2 godrick_pendlebrook -1 kip_smudgewick +1: You kept the mountain's heart
+-> END

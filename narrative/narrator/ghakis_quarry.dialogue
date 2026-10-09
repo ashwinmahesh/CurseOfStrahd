@@ -1,0 +1,14 @@
+# Narrator: the count's quarry on the south face of Mount Ghakis (The Mountain's Heart, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:ghakis_quarry
+| A raw bite out of the mountain's south face, cut in terraces. The dust hasn't settled, because the ground keeps moving under it.
+| [flag.grandfather_heart_home] The quarry is still. The raw hole in the wall has closed, and the pale cut stone is already greying, as if the mountain were healing over it.
+| [flag.grandfather_heart_kept] The quarry is still, and cold, and the ground doesn't move any more. It doesn't do anything any more.
+cooldown 30
+
+~ examine:quarry_wall_hole
+| A raw hole in the quarry wall, round as a barrel, where something was cut out of the rock with great care. The edges are still warm.
+
+~ examine:quarry_tools
+| Picks, wedges and a broken sledge, dropped where they were being used. On a stone beside them, a tally of names scratched by the overseer, a line through one a week.

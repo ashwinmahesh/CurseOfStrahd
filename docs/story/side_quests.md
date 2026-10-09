@@ -902,6 +902,29 @@ keepers had three ways of going down to her safely, and each one is a lair trick
   (rare); her hoard, 900 gp of real coin from forty years of tithes in among the lead, and the silver's Dragon Scale
   Mail (very rare). Stills: `ghakis_shoulder` (the loading card) and `sq_sarkhaza` (her first meeting).
 
+### The Mountain's Heart (`the_mountains_heart`, narrative/mount_ghakis/the_mountains_heart.dialogue; batch 10, level 10)
+
+Once her grandmother is back in her mound (The Barrow on Yester Hill), Freydis has news from home, from level 10: the
+mountain folk's Grandfather Stone, the spirit asleep in Mount Ghakis who keeps the passes open, is walking. The count's
+men cut a quarry in the mountain's south face last spring and dug out something that shone, and her cousins are up
+there in chains cutting stone, one a week lost to the rockfalls. From level 10 the mountain folk's cairn at the
+Tsolenka landing (a new examine prop) is cracked down the middle, with GRANDFATHER WALKS scratched at its foot. Either
+puts the Ghakis Quarry on the travel map (data/locations/ghakis_quarry.json), two hours round the mountain from the
+pass. **Twist:** Grandfather isn't raging; he's looking for his heart. The overseer crated it for the castle, ran when
+the floor started walking, and chained the captives beside the crate as bait, so whatever came for the heart would eat
+them first. **Escalation:** touch the crate and the quarry floor stands up. Then the heart goes back into the quarry
+wall, or the party keeps it.
+
+- **Boss: Grandfather Stone** (data/monsters/grandfather_stone.json, `source.book: custom`, built up from the 2025
+  Monster Manual's earth elemental and drawn with its sprite at Huge, `art_height` 3.4): Huge elemental, AC 18, 207 HP
+  (185 in this fight), vulnerable to thunder, two Slams (reach 10, 3d10+6), the Ground Shrugs (recharge 5-6, four
+  creatures within 30 ft, DC 17 Dex, 4d10 and prone), Legendary Resistance (2/day), a Slam or a burrow between turns,
+  and lair actions as the quarry's faces come down and the floor opens round someone's legs. CR 11. He comes alone.
+- Fight `grandfather_stone` in the quarry: the autopilot wins 3 of 8 at level 10, losing three party members a fight.
+- Rewards: the overseer's pay chest under the wagon, 400 gp, either way. The heart carried home: the captive's
+  father's Belt of Giant Strength (Stone Giant) (very rare). The heart kept: it cools into a Stone of Controlling Earth
+  Elementals (rare), and the mountain folk leave without a word.
+
 ## Van Richten's Tower (level 10)
 
 ### The Name Over the Door (`the_name_over_the_door`, narrative/van_richtens_tower/the_name_over_the_door.dialogue; batch 5, an owner-asked boss)
@@ -1108,4 +1131,6 @@ interject) and narrator/ivlis_spider_gully.dialogue. Batch 9,
 the Village of Barovia: the_goatherds_count.dialogue in full (new speaker Erno; also Goodwife Petra, the Narrator
 and a kind interject) and narrator/barovia_high_pasture.dialogue. Batch 10,
 Van Richten's Tower and Lake Baratok: the_drowned_library.dialogue in full (new speaker Xaver; also Mordenkainen,
-the Narrator and a blunt interject) and narrator/drowned_library.dialogue.
+the Narrator and a blunt interject) and narrator/drowned_library.dialogue. Batch 10,
+Mount Ghakis and Yester Hill: the_mountains_heart.dialogue in full (new speaker the Mountain Captive; also Freydis,
+the Narrator and a blunt interject) and narrator/ghakis_quarry.dialogue.
