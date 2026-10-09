@@ -447,6 +447,18 @@
       "model": "roc_nest",
       "when": "quest.the_last_egg",
       "dialogue": "tsolenka_pass/the_last_egg:egg"
+    },
+    {
+      "id": "tsolenka_folk_cairn",
+      "cell": [
+        6,
+        31
+      ],
+      "kind": "examine",
+      "label": "A mountain folk cairn",
+      "model": "cairn",
+      "dialogue": "mount_ghakis/the_mountains_heart:cairn",
+      "when": "level >= 10"
     }
   ],
   "containers": [

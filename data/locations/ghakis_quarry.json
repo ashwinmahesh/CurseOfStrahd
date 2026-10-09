@@ -1,0 +1,184 @@
+{
+  "id": "ghakis_quarry",
+  "name": "The Ghakis Quarry",
+  "region": "mount_ghakis",
+  "summary": "The count's quarry on the south face of Mount Ghakis, cut last spring: raw stone terraces, abandoned tools, a wagon with a glowing crate, and mountain folk chained to a ring in the floor (The Mountain's Heart, docs/story/side_quests.md).",
+  "text": "A raw bite out of the mountain's south face, cut in terraces. The stone is fresh and pale where it was cut and the dust hasn't settled, because the ground keeps moving. A wagon stands in the middle with a crate on it, glowing at the seams.",
+  "map": {
+    "rows": [
+      "############################",
+      "####.........###############",
+      "###.............#####.....##",
+      "##..................#.....##",
+      "##...=...................###",
+      "##........................##",
+      "#.........................##",
+      "#....=..................=..#",
+      "#..........................#",
+      "#..........................#",
+      "##.........................#",
+      "###..........=.............#",
+      "####.......................#",
+      "#####......................#",
+      "######.....................#",
+      "#######..............#######",
+      "##########.....#############",
+      "############################"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "quarry_floor",
+      "name": "The quarry floor",
+      "cells": [
+        [
+          2,
+          4
+        ],
+        [
+          26,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      11,
+      15
+    ],
+    "from_road": [
+      11,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "quarry_down",
+      "cell": [
+        11,
+        16
+      ],
+      "to": "travel",
+      "label": "Down off the mountain"
+    },
+    {
+      "id": "quarry_down_2",
+      "cell": [
+        12,
+        16
+      ],
+      "to": "travel",
+      "label": "Down off the mountain"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "heartstone_crate",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "decor",
+      "label": "A glowing crate on a wagon",
+      "model": "crate"
+    },
+    {
+      "id": "quarry_wagon",
+      "cell": [
+        15,
+        8
+      ],
+      "kind": "decor",
+      "label": "The overseer's wagon",
+      "model": "cart"
+    },
+    {
+      "id": "quarry_wall_hole",
+      "cell": [
+        21,
+        3
+      ],
+      "kind": "examine",
+      "label": "A raw hole in the quarry wall",
+      "model": "rubble"
+    },
+    {
+      "id": "quarry_blocks",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "decor",
+      "label": "Cut stone",
+      "model": "boulder"
+    },
+    {
+      "id": "quarry_tools",
+      "cell": [
+        9,
+        13
+      ],
+      "kind": "examine",
+      "label": "Abandoned tools",
+      "model": "workbench"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "lamp",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "quarry_captive",
+      "cell": [
+        12,
+        9
+      ],
+      "dialogue": "mount_ghakis/the_mountains_heart:captive",
+      "when": "quest.the_mountains_heart and quest.the_mountains_heart != done",
+      "facing": "south",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "grandfather_stone",
+      "trigger": "dialogue",
+      "lair": true,
+      "text": "The quarry floor sits up, and then stands up, three times a man's height, with a hole in its chest.",
+      "surprise": "",
+      "flag": "grandfather_stilled",
+      "quest": {
+        "id": "the_mountains_heart",
+        "stage": "stilled"
+      },
+      "monsters": [
+        {
+          "monster": "grandfather_stone",
+          "cell": [
+            18,
+            6
+          ],
+          "hp": 185
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:ghakis_quarry"
+  },
+  "rest": "risky"
+}

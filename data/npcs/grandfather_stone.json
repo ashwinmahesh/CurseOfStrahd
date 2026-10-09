@@ -1,0 +1,17 @@
+{
+  "id": "grandfather_stone",
+  "name": "Grandfather Stone",
+  "title": "The Sleeper in Ghakis",
+  "summary": "The spirit asleep in Mount Ghakis, as the mountain folk tell it, walking since the count's quarry dug out his heart.",
+  "portrait": "earth_elemental",
+  "sprite": "earth_elemental",
+  "attitude": "hostile",
+  "monster": "grandfather_stone",
+  "guest": false,
+  "tags": [
+    "elemental",
+    "mount_ghakis"
+  ],
+  "region": "mount_ghakis",
+  "pronouns": "he/him"
+}

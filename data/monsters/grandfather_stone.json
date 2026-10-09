@@ -1,0 +1,233 @@
+{
+  "id": "grandfather_stone",
+  "name": "Grandfather Stone",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Mountain's Heart, docs/story/side_quests.md): the spirit asleep in Mount Ghakis, as the mountain folk tell it, walking because the count's quarry dug out his heart. Built up from the 2025 Monster Manual's earth elemental to CR 11 at Huge: two great slams, a tremor that throws everyone near him down, Legendary Resistance, a slam or a burrow between turns, and lair actions as the quarry comes apart. Drawn with the earth elemental's sprite, made Huge."
+  },
+  "size": "huge",
+  "type": "elemental",
+  "tags": [
+    "boss",
+    "elemental"
+  ],
+  "alignment": "neutral",
+  "art": "earth_elemental",
+  "art_height": 3.4,
+  "ac": 18,
+  "ac_note": "the mountain's own stone",
+  "initiative": -1,
+  "hp": {
+    "average": 207,
+    "dice": "18d12+90"
+  },
+  "speed": {
+    "walk": 30,
+    "burrow": 30
+  },
+  "abilities": {
+    "str": 24,
+    "dex": 8,
+    "con": 20,
+    "int": 6,
+    "wis": 14,
+    "cha": 8
+  },
+  "saves": {
+    "str": 12,
+    "con": 10,
+    "wis": 7
+  },
+  "immunities": [
+    "poison"
+  ],
+  "vulnerabilities": [
+    "thunder"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60,
+    "tremorsense": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Terran"
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When Grandfather Stone fails a saving throw, he can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "earth_glide",
+      "name": "Earth Glide",
+      "action": "passive",
+      "summary": "Moves through earth and stone without disturbing it.",
+      "text": "Grandfather Stone can burrow through nonmagical, unworked earth and stone without disturbing the material he moves through.",
+      "implemented": "text"
+    },
+    {
+      "id": "looking_for_his_heart",
+      "name": "Looking for His Heart",
+      "action": "passive",
+      "summary": "He isn't angry. He's looking for something the count's men dug out of him, and he doesn't see small things.",
+      "text": "The mountain folk say Grandfather sleeps in Ghakis and keeps the passes open. Since the count's quarry dug out his heart he walks, and he doesn't see what's in his way.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "slam",
+          "count": 2
+        }
+      ],
+      "summary": "Two Slams.",
+      "text": "Grandfather Stone makes two Slam attacks."
+    },
+    {
+      "id": "slam",
+      "name": "Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 11,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "3d10+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A fist of the mountain.",
+      "text": "Melee Attack Roll: +11, reach 10 ft. Hit: 22 (3d10 + 6) Bludgeoning damage."
+    },
+    {
+      "id": "tremor",
+      "name": "The Ground Shrugs",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 17,
+        "success": "half"
+      },
+      "targets": {
+        "range": 30,
+        "count": 4
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "4d10",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Recharge 5-6: the quarry floor heaves under four creatures within 30 ft; DC 17 Dex save, 4d10 Bludgeoning and Prone, half on a success.",
+      "text": "Dexterity Saving Throw: DC 17, up to four creatures within 30 feet. Failure: 22 (4d10) Bludgeoning damage and the Prone condition. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "slam",
+        "name": "Slam",
+        "cost": 1,
+        "action": "slam",
+        "summary": "Makes one Slam attack."
+      },
+      {
+        "id": "sink",
+        "name": "Sink and Rise",
+        "cost": 1,
+        "move": true,
+        "summary": "Burrows up to half his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "lair_actions": [
+    {
+      "id": "rockfall",
+      "name": "Rockfall",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d10",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Two creatures: the quarry's cut faces come down on them; DC 15 Dex save, 2d10 Bludgeoning and Prone, half on a success.",
+      "text": "The quarry's cut faces give way over two creatures: each makes a DC 15 Dexterity saving throw, taking 11 (2d10) Bludgeoning damage and falling Prone on a failure, or half the damage only on a success."
+    },
+    {
+      "id": "the_floor_opens",
+      "name": "The Floor Opens",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "One creature: the floor opens round its legs and closes; DC 15 Str save or Restrained until the end of his next turn.",
+      "text": "The quarry floor opens round one creature's legs and closes again: it makes a DC 15 Strength saving throw or has the Restrained condition until the end of Grandfather Stone's next turn."
+    }
+  ],
+  "regions": [
+    "mount_ghakis"
+  ],
+  "ai_profile": "brute",
+  "summary": "The spirit asleep in Mount Ghakis, walking: a heap of the mountain's own stone in the shape of an old man, three times a man's height, with a hole in his chest where something used to be. He isn't angry. He's looking for his heart."
+}

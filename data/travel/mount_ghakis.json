@@ -14,6 +14,19 @@
       "region": "mount_ghakis",
       "when": "quest.the_warm_snow",
       "summary": "A shelf of black rock high on the mountain above the Tsolenka gorge, where the snow melts in midwinter and the count's carts go up at the new moon."
+    },
+    {
+      "id": "ghakis_quarry",
+      "name": "The Ghakis Quarry",
+      "location": "ghakis_quarry",
+      "spawn": "from_road",
+      "pos": [
+        0.322,
+        0.142
+      ],
+      "region": "mount_ghakis",
+      "when": "quest.the_mountains_heart",
+      "summary": "The count's quarry on the south face of Mount Ghakis, where the ground has started walking."
     }
   ],
   "roads": [
@@ -25,6 +38,15 @@
       "table": "amber_temple_road",
       "name": "The goat path round the gorge",
       "when": "quest.the_warm_snow"
+    },
+    {
+      "id": "tsolenka_pass_to_ghakis_quarry",
+      "from": "tsolenka_pass",
+      "to": "ghakis_quarry",
+      "hours": 2,
+      "table": "amber_temple_road",
+      "name": "Round the mountain to the south face",
+      "when": "quest.the_mountains_heart"
     }
   ]
 }

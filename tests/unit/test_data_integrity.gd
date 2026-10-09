@@ -19,7 +19,7 @@ func test_phase_1_content_counts() -> void:
 	assert_eq(c.all("feats").filter(func(f: Dictionary) -> bool: return str(f["category"]) == "dark_gift").size(), 9, "nine Ravenloft Dark Gifts")
 	assert_eq((phb_only.call(c.all("backgrounds")) as Array).size(), 16)
 	assert_eq((rthw_only.call(c.all("backgrounds")) as Array).size(), 4, "Haunted One, Investigator, Mist Wanderer, Spirit Medium")
-	assert_eq(c.table("monsters").size(), 146, "76 from Phase 1, 36 that magic items summon or become, Death House's mimic, Castle Ravenloft's 12 (P6-02), the side quests' twenty bosses (Old Greytooth, the Bone Marshal, the Rag Queen, Granny Ash, the Vine Mother, the Count's Huntsman, the Penitent, the Tinker's Wagon, the Grandsire, Corvina, Sarkhaza, Khazan, the Eye Below, the Ash Effigy, the Lantern Girl, the Count's Likeness, Querreth, the Gilded Knight, the Forgotten Storm and the Guide) and the Eye's dream-gazer")
+	assert_eq(c.table("monsters").size(), 147, "76 from Phase 1, 36 that magic items summon or become, Death House's mimic, Castle Ravenloft's 12 (P6-02), the side quests' twenty-one bosses (Old Greytooth, the Bone Marshal, the Rag Queen, Granny Ash, the Vine Mother, the Count's Huntsman, the Penitent, the Tinker's Wagon, the Grandsire, Corvina, Sarkhaza, Khazan, the Eye Below, the Ash Effigy, the Lantern Girl, the Count's Likeness, Querreth, the Gilded Knight, the Forgotten Storm, the Guide and Grandfather Stone) and the Eye's dream-gazer")
 	assert_eq(c.table("pregens").size(), 10, "the six on the roster and the first four, kept for older saves and tests")
 	assert_true(c.table("feats").size() >= 70)
 	assert_true(c.table("spells").size() >= 170)

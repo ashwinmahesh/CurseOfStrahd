@@ -388,3 +388,12 @@ const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector
 ## Six wolves out of the mists at level 1.
 func test_the_mist_wolves_at_level_1() -> void:
 	await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)
+
+
+## By the captives' ring in the Ghakis Quarry, between the wagon and the way down.
+const BY_THE_WAGON: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vector2i(11, 10), Vector2i(12, 11)]
+
+
+## Grandfather Stone alone, with the quarry's faces coming down.
+func test_grandfather_stone_at_level_10() -> void:
+	await _series("ghakis_quarry", 12, 10, "grandfather_stone", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], BY_THE_WAGON)

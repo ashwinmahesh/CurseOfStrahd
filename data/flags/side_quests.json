@@ -1410,6 +1410,26 @@
       "id": "snowdrop_back",
       "type": "bool",
       "summary": "The Goatherd's Count: the party walked Snowdrop back into the mists."
+    },
+    {
+      "id": "grandfather_custom_known",
+      "type": "bool",
+      "summary": "The Mountain's Heart: Religion learned what the mountain folk do when Grandfather walks (one line)."
+    },
+    {
+      "id": "grandfather_stilled",
+      "type": "bool",
+      "summary": "The Mountain's Heart: the party stood in front of the captives until Grandfather Stone lay still (encounter grandfather_stone)."
+    },
+    {
+      "id": "grandfather_heart_home",
+      "type": "bool",
+      "summary": "The Mountain's Heart: the party carried the heart back into the quarry wall."
+    },
+    {
+      "id": "grandfather_heart_kept",
+      "type": "bool",
+      "summary": "The Mountain's Heart: the party kept the mountain's heart."
     }
   ]
 }

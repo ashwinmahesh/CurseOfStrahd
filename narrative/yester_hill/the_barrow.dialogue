@@ -10,6 +10,9 @@
 # --- Freydis at the foot of the hill (npc freydis) ---
 
 ~ freydis
+if quest.the_barrow_on_yester_hill == done and level >= 10 and not quest.the_mountains_heart
+-> mount_ghakis/the_mountains_heart:freydis
+endif
 if quest.the_barrow_on_yester_hill == done
 Freydis: She's in the mound, with her face to the mountains. When the snow comes I'll walk home. I'll tell them the lowlanders carried her. They won't believe me.
 -> END

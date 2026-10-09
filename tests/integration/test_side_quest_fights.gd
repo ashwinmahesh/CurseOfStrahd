@@ -547,3 +547,17 @@ func test_the_mist_wolves_come_for_snowdrop() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_goatherds_count"), "defended")
 	assert_true(GameState.story.get_flag("pasture_wolves_beaten", false))
+
+
+func test_grandfather_stone_stands_up_out_of_the_quarry() -> void:
+	var v := await _boot("ghakis_quarry", 12, 10)
+	GameState.story.set_quest_stage("the_mountains_heart", "asked")
+	LocationNpcs.hide_npcs_of(v, "mount_ghakis/the_mountains_heart:captive")
+	var e := await _fight(v, "grandfather_stone", ["Grandfather Stone"])
+	for c in e.combatants:
+		if c.name() == "Grandfather Stone":
+			assert_eq(c.size_cells, 3, "Huge")
+			assert_eq(CombatToken.height_of(c), 3.4)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_mountains_heart"), "stilled")
+	assert_true(GameState.story.get_flag("grandfather_stilled", false))
