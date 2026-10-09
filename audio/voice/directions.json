@@ -550,9 +550,11 @@
   "1f60daef828efe21": "[panicky, nervous, comic]",
   "2b3631f392cdc037": "[nervous, polite, comic]",
   "2fd819bc408a8355": "[nervous, deadpan, comic]",
+  "336a799e259a0994": "[nervous, self-deprecating]",
   "34d21c9fba730902": "[quiet, sad, hopeful]",
   "4ae5d321e8dc7c52": "[grateful, wry, warm]",
   "4e5faa7f2751b229": "[warm, comic, grateful]",
+  "524c7c137f24490f": "[gossiping, fond, worried]",
   "6c5e062754e1ec05": "[whispered, nervous]",
   "76a89fd5977a8189": "[cheerful, wry]",
   "773e7c937d224d89": "[overjoyed, amazed, emotional]",
@@ -560,8 +562,10 @@
   "7f1bc4a01bcec43c": "[sheepish, earnest, comic]",
   "8731475a223d44c6": "[earnest, hopeful, quiet]",
   "9354c21a27e41118": "[hopeful, then wry]",
+  "9b44d9c01c4bcea2": "[quiet, moved, wondering]",
   "b86b499f834f9a1e": "[stunned, delighted, emotional]",
   "b9d2b2764186ef8d": "[deflated, wry]",
+  "c7157b9c28585709": "[warm, fond, wry]",
   "c9c8c270ab155600": "[deadpan, punchline]",
   "cab451551e305eeb": "[comic timing, nervous]",
   "cb825d340665a1db": "[wry, resigned]",
@@ -3432,6 +3436,21 @@
   "fbc7bea8f00b1653": "[precise, lecturing]",
   "fe57306a6a880fe2": "[amused, smug]",
   "fec6f1d9fce07f21": "[displeased, clipped, then formal]"
+ },
+ "waystone_lark": {
+  "08efdc6d98ad146e": "[earnest, hopeful, determined]",
+  "1eab6c51ffed94c1": "[hushed, protective]",
+  "1ff6596a08e6b51f": "[soft, grateful, content]",
+  "34fd3b8f73354c55": "[breathless, joyful, near tears]",
+  "3f4535aa8d7781f4": "[eerie, grown-up, then small, pleading]",
+  "5870a750db920b84": "[frightened, low, certain]",
+  "6a9b76c38ca3b868": "[quiet, firm, bitter]",
+  "7424744a2acae3ca": "[quiet, focused, protective]",
+  "9700c8235cc9c290": "[quiet, earnest, sad]",
+  "ecf23aa3bc95c4e2": "[soft, devoted, wistful]"
+ },
+ "waystone_yanko": {
+  "428b2fb5576f7472": "[hoarse, halting, emotional]"
  },
  "wine_cooper": {
   "bfbea76f42269f23": "[grumbling, sad]",
