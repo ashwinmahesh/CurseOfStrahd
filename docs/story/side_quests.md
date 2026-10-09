@@ -543,6 +543,22 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
 
+### The Last Egg (`the_last_egg`, narrative/tsolenka_pass/the_last_egg.dialogue; batch 6)
+
+Vasko (new speaker), a Vistani egg-hunter camped at the Tsolenka landing from level 9: the roc of Mount Ghakis lays once
+in eleven years, this is the year, and his buyer pays 400 gp, split with whoever carries the sack. Insight DC 15: two
+neat marks on his wrist; he's been told to fetch. **Escalation:** the nest on the roc's shelf (a new prop, shown once
+the quest is known) holds an egg as tall as a child, hatching as the party arrives. **Twist:** the buyer doesn't wait
+for deliveries: the stone birds on the tower drop off it, and the count's falconer (new speaker) lands among them to
+take the chick. Step back and let him (400 gp from Vasko, the quest fails, and a mark on Strahd's attention,
+`roc_egg`), or stand between him and the nest.
+
+- Fight `last_egg` on the shelf (my entries on data/locations/tsolenka_pass.json): the Falconer (a vampire spawn at
+  150 HP), two of his hands (vampire spawn) and four stone birds (gargoyles). The autopilot wins 5 of 8 at level 9,
+  losing about two party members a fight.
+- Defended: the mother roc comes back to her chick and lets the party be, on the bridge or anywhere
+  (`roc_driven_off`); in the bones under the nest, 300 gp and a Staff of the Woodlands (rare). Still: `sq_last_egg`.
+
 ### The Pack's Runt (`the_packs_runt`, narrative/krezk/the_packs_runt.dialogue; batch 4, level 8)
 
 Once the den's children are home (`den_children_freed`), the Krezk watchman's news says Petru (new NPC, speaking as
@@ -782,4 +798,5 @@ Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also 
 blunt interject). Batch 5,
 the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail). Batch 5,
 Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers Old Sabin, Sandu and the Lantern Girl;
-also the town guard) and gate.dialogue's news jump.
+also the town guard) and gate.dialogue's news jump. Batch 6,
+the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Vasko and the Falconer; a blunt interject).

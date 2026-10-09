@@ -258,3 +258,13 @@ const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2
 ## The Lantern Girl and two drowned lights, when nobody turned back for her lantern.
 func test_the_lantern_girl_at_level_5() -> void:
 	await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4], [], [], [], JETTY_FOOT)
+
+
+## The roc's nest on the Tsolenka shelf.
+const ROC_NEST: Array[Vector2i] = [Vector2i(33, 15), Vector2i(34, 16), Vector2i(33, 16), Vector2i(34, 17)]
+
+
+## The count's falconer, two of his hands and four stone birds come for the roc's chick.
+func test_the_falconer_at_level_9() -> void:
+	await _series("tsolenka_pass", 12, 9, "last_egg", [1, 2, 3, 4], ["roc_driven_off"], [], [], ROC_NEST)
+
