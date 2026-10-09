@@ -140,19 +140,14 @@ static func show_roll(host: Node, roll_: Dictionary) -> Signal:
 	if str(roll_.get("kind", "check")) in ["save", "death_save", "attack"]:
 		panel.pace = GameSettings.combat_pace()
 	layer.add_child(panel)
-	catcher.gui_input.connect(func(ev: InputEvent) -> void:
-		var mb := ev as InputEventMouseButton
-		if mb != null and mb.pressed and mb.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:
-			panel.skip())
+	# Bound methods, never lambdas holding the panel: a connection to a freed node simply goes with it.
+	catcher.gui_input.connect(panel._clicked)
 	host.add_child(layer)
 	panel.place_for_screen()
 	var before := _showing.get_ref() as DiceRoll if _showing != null else null
 	if UiMotion.on() and before != null and not before._closing:
 		layer.visible = false
-		before.finished.connect(func() -> void:
-			if is_instance_valid(panel):
-				layer.visible = true
-				panel.roll(roll_), CONNECT_ONE_SHOT)
+		before.finished.connect(panel._take_turn.bind(roll_), CONNECT_ONE_SHOT)
 	else:
 		panel.roll(roll_)
 	_showing = weakref(panel)
@@ -172,8 +167,8 @@ static func show_roll(host: Node, roll_: Dictionary) -> Signal:
 	return panel.finished
 
 
-## show_roll's panel up now (or waiting its turn), or null: something that should come after the roll can await its
-## `finished` (the party falling to a trap's save).
+## show_roll's panel up now (or waiting its turn), or null: something that should come after the roll waits while it
+## isn't null (the party falling to a trap's save). It goes null on its own if the panel's scene is freed first.
 static func showing() -> DiceRoll:
 	var p := _showing.get_ref() as DiceRoll if _showing != null else null
 	return p if p != null and not p._closing else null
@@ -286,12 +281,26 @@ func close() -> void:
 		return
 	_closing = true
 	set_process(false)
-	var layer := get_parent()
 	var tw := UiMotion.tween_for(self)
 	tw.tween_property(self, "modulate:a", 0.0, 0.18)
-	tw.tween_callback(func() -> void:
-		finished.emit()
-		layer.queue_free())
+	tw.tween_callback(_gone)
+
+
+func _gone() -> void:
+	finished.emit()
+	get_parent().queue_free()
+
+
+## A roll that waited for the one before it: now it comes up.
+func _take_turn(roll_: Dictionary) -> void:
+	(get_parent() as CanvasLayer).visible = true
+	roll(roll_)
+
+
+func _clicked(ev: InputEvent) -> void:
+	var mb := ev as InputEventMouseButton
+	if mb != null and mb.pressed and mb.button_index in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:
+		skip()
 
 
 ## For captures that step time by hand: the die and the words at `t` seconds since the throw.
