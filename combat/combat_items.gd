@@ -488,9 +488,11 @@ func _grant(c: Combatant, who: Combatant, p: Dictionary) -> void:
 	who.creature.add_effect(fx)
 
 
-## Charges, daily uses and consumption after a power was used; an item whose last charge is spent may crumble.
+## Charges, daily uses and consumption after a power was used; an item whose last charge is spent may crumble. A power
+## that changed its user's shape (a Polymorph scroll or wand read on yourself) is paid from the hero under the beast
+## (QA FN-08: the user was a Monster by then, so the scroll was never used up and a SCRIPT ERROR followed).
 func _after_use(c: Combatant, p: Dictionary, spell: Dictionary, level: int) -> void:
-	var ch := ch_of(c)
+	var ch := _owner(c)
 	var data := p["data"] as Dictionary
 	var power := p["power"] as Dictionary
 	var iid := str(p["item_id"])
@@ -511,11 +513,19 @@ func _after_use(c: Combatant, p: Dictionary, spell: Dictionary, level: int) -> v
 		# A granted power used up ends what granted it (the potion's breath is spent).
 		if p.has("effect") and bool(power.get("ends_effect", false)) and uses_spent(p) >= int((power["uses"] as Dictionary).get("count", 1)):
 			c.creature.remove_effect(p["effect"] as Effect)
-	if p.has("effect"):
+	if p.has("effect") or ch == null:
 		return
 	if bool(power.get("consume", false)) or (MagicItems.is_consumable(data) and not MagicItems.has_charges(data) and not power.has("uses")):
 		ch.remove_one(iid)
 	ch.items_changed()
+
+
+## The hero whose pack an item power came from: `c`'s character, or the one under a shape the power just gave it.
+func _owner(c: Combatant) -> Character:
+	var ch := ch_of(c)
+	if ch == null and enc().shapes.original(c) is Character:
+		ch = enc().shapes.original(c) as Character
+	return ch
 
 
 ## The last charge is gone: some items crumble (2024 DMG: roll a d20, on a 1 it's destroyed), others lose their magic.
@@ -526,8 +536,8 @@ func last_charge(c: Combatant, item_id: String, data: Dictionary) -> void:
 		return
 	var e := enc()
 	var roll := e.dice.roll_one(int(rule.get("die", 20)), "%s: last charge" % data.get("name", ""))
-	if roll <= int(rule.get("on", 1)):
-		var ch := ch_of(c)
+	var ch := _owner(c)
+	if roll <= int(rule.get("on", 1)) and ch != null:
 		ch.unequip_item(item_id)
 		ch.remove_one(item_id)
 		var outcome := str(rule.get("result", "destroyed"))
