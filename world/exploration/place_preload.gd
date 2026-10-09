@@ -20,17 +20,43 @@ static var headless_too := false
 ## them, "when" only those whose condition holds as the party arrives, or "off". The perf probe switches it to measure
 ## what holding them costs.
 static var foes_mode := "possible"
+## The interface's first-time reads are done once a session, under the first loading cover (FN-23): the first inventory
+## opened in 130 to 185 ms, most of it reading the party's item icons (98 ms) and the figures' font (27 ms), and a
+## fight's hotbar read the common actions' tiles (35 ms).
+static var _ui_warm := false
 ## A party-level test in a condition ("level >= 7"): the level doesn't change while the party is in one place.
 static var _level_test := RegEx.create_from_string("level\\s*(>=|<=|==|!=|>|<)\\s*\\d+")
 
 ## The sheets asked for (res:// paths), each a threaded load to collect.
 var paths: Array[String] = []
 var _held: Array[Resource] = []
+## Icons read for Icons' cache this time: [kind, key].
+var _icons: Array[Array] = []
 
 
-## Starts reading the sheets for location entry `loc` with the party of `st`.
+## Starts reading the sheets for location entry `loc` with the party of `st` (and, the first time, the icons).
 static func start(loc: Dictionary, st: StoryState) -> PlacePreload:
-	return _reading(art_ids(loc, st), false)
+	var p := _reading(art_ids(loc, st), false)
+	if not _ui_warm and (DisplayServer.get_name() != "headless" or headless_too):
+		p._read_icons(st)
+	return p
+
+
+## Reads the icons of everything the party and bench carry, and the common actions' tiles, for Icons' cache.
+func _read_icons(st: StoryState) -> void:
+	var wanted := {}
+	for ch: Character in st.party + st.bench:
+		for e: Dictionary in ch.inventory:
+			wanted["items/" + Icons.item_key(str(e["id"]))] = true
+	for a: String in Icons.ACTION_ICONS:
+		wanted["features/" + a] = true
+	for k: String in wanted:
+		var path := Icons.DIR + k + ".png"
+		if not ResourceLoader.exists(path):
+			continue
+		_icons.append([k.get_slice("/", 0), k.get_slice("/", 1)])
+		if not ResourceLoader.has_cached(path) and ResourceLoader.load_threaded_request(path) == OK:
+			paths.append(path)
 
 
 ## Starts reading the sheets and portraits of the foes still to be fought at location `loc_id` (entry `loc`).
@@ -120,6 +146,18 @@ func wait(node: Node) -> void:
 	while _busy() and Time.get_ticks_msec() < until and node.is_inside_tree():
 		await node.get_tree().process_frame
 	collect()
+	if not _icons.is_empty():
+		_warm_ui()
+
+
+## Fills Icons' cache from the icons just read, and reads the figures' font and the glossary, once a session.
+func _warm_ui() -> void:
+	for icon: Array in _icons:
+		Icons._load(str(icon[0]), str(icon[1]))
+	_icons.clear()
+	UiParts.figure_font()
+	Glossary._ensure()
+	_ui_warm = true
 
 
 ## Holds every load that has finished.
