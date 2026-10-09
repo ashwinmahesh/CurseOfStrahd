@@ -131,6 +131,9 @@ func has_kit(c: Combatant) -> bool:
 
 func _check_still_hidden(c: Combatant) -> void:
 	var e := enc()
+	if e.items.alertness_light_on(c) != "":
+		reveal(c, "the Rod of Alertness's light shows where they are")
+		return
 	for foe in e.hostiles_of(c):
 		if not foe.can_act():
 			continue
@@ -382,9 +385,13 @@ func hide(c: Combatant, use_bonus: bool = false) -> CombatResult:
 
 
 ## Why `c` can't hide here ("" if it can): every enemy that can act must have no clear view of it (Three-Quarters
-## or Total Cover). Naturally Stealthy (halfling): a creature at least one size larger is enough cover.
+## or Total Cover). Naturally Stealthy (halfling): a creature at least one size larger is enough cover. Nobody hides in
+## the light of a foe's Rod of Alertness.
 func hide_blocker(c: Combatant) -> String:
 	var e := enc()
+	var lit := e.items.alertness_light_on(c)
+	if lit != "":
+		return "%s's Rod of Alertness lights you up: its light shows where you are" % lit
 	var larger := {}
 	if c.creature.has_flag("naturally_stealthy"):
 		for o in e.living():
