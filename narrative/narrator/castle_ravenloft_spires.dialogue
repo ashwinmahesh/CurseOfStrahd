@@ -135,6 +135,7 @@ cooldown 20
 ~ enter:spires_escher_suite
 | Velvet, dust, a canopied bed nobody sleeps in, and a mirror that shows the room without anyone in it.
 | [flag.escher_fight_won] Escher's coats hang in the open wardrobe, beautiful and empty.
+| [flag.escher_saw_dawn] Escher's coats hang in the open wardrobe, beautiful and empty. The red velvet one isn't among them.
 cooldown 20
 
 ~ enter:spires_tower_vestibule
@@ -153,7 +154,7 @@ once
 
 ~ examine:spires_escher_mirror
 | The mirror shows the room behind you, perfectly: the bed, the chair, the dust. It doesn't show you.
-| [flag.escher_met and not flag.escher_fight_won] It doesn't show Escher either, though he is sitting right in front of it, watching you look.
+| [flag.escher_met and not flag.escher_fight_won and not flag.escher_saw_dawn] It doesn't show Escher either, though he is sitting right in front of it, watching you look.
 
 ~ examine:spires_escher_wardrobe
 | A wardrobe full of coats, each one beautiful and a lifetime out of fashion.

@@ -1080,6 +1080,13 @@
       ],
       "prompt": "A rock shelf high on a mountain above a gorge of cloud, cold wind and snow streaming off it. On the shelf, a nest as big as a cottage roof woven from whole pine trunks and lined with bones and old harness, and in it a huge grey freckled egg as tall as a child, cracked open, a wet grey baby bird's beak as long as an arm screaming out of it. On a tower parapet above the shelf, stone gargoyles drawn after the second reference are spreading their wings to drop off the stone, and among them a pale man in a falconer's leather glove. Far out over the gorge, tiny against the sky, the enormous shape of the mother roc drawn after the first reference, turning back. {party} stand at the edge of the nest, seen from behind. Cold thin daylight, one single picture, no panels.",
       "use": "a"
+    },
+    "sq_escher_dawn": {
+      "refs": [
+        "escher"
+      ],
+      "prompt": "The flat stone roof of a tall Gothic castle tower at the moment of dawn, high above a valley full of mist. A pale young vampire nobleman in a wine-red velvet coat worked with silver down the front and lace at the cuffs, his face and dark swept-back hair exactly as the reference shows, stands at the low stone parapet, three-quarters turned from the viewer, his face lifted to the east, where a thin line of gold sunlight is breaking over a black mountain ridge. The first light lies across his face and his open hands, and thin pale smoke rises from his skin where it touches; he is smiling. Broken hooked chains lie across the flagstones behind him. {party} sit on the battlements a little way back, watching him. Cold blue-grey sky overhead, warm gold only at the horizon, one single picture, no panels.",
+      "use": "a"
     }
   }
 }

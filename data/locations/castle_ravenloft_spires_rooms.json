@@ -563,7 +563,7 @@
         14
       ],
       "dialogue": "castle_ravenloft/spires_escher:start",
-      "when": "not flag.escher_fight_won",
+      "when": "not flag.escher_fight_won and not flag.escher_saw_dawn and not (night and (quest.escher_petition == asked or quest.escher_petition == held))",
       "facing": "north",
       "approach": 4
     }

@@ -1,0 +1,39 @@
+{
+  "id": "escher_petition",
+  "name": "Escher's Petition",
+  "summary": "Every night for nine years Escher has slid the same petition under the count's door: let me see the sun. Now an answer has come back.",
+  "giver": "escher",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Every night for nine years Escher has written the count the same line, Let me see the sun, and slid it under his door. Last night an answer came back under Escher's: Yes. He wants us with him on the south tower roof before dawn, and he'll pay with the one present the count gave him that he could never use.",
+      "objectives": [
+        "Meet Escher at the south tower parapet on the castle roofs, before dawn"
+      ],
+      "hint": "Go up to Castle Ravenloft's roofs from the gallery outside Escher's suite at night, and find Escher at the south tower parapet.",
+      "ends": ""
+    },
+    {
+      "id": "held",
+      "journal": "The rest of the count's answer was Querreth, the devil that keeps his roofs, come to chain Escher to the sunrise and take the rest of us to the larder. Everyone who ever asked to go up was hanging in its chains. We beat it. The sky is still dark.",
+      "objectives": [
+        "Wait with Escher for the dawn"
+      ],
+      "hint": "Talk to Escher at the south tower parapet on Castle Ravenloft's roofs, at night.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Escher watched the sun come up over the mountains, and burned in it, and didn't step back. He said to tell the count it was worth it. He left a good red velvet coat on the stones, and in its pocket the count's present: a helm full of captured daylight.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "waited",
+      "journal": "With the light coming, we talked Escher into waiting for a dawn the count isn't in. He backed into the shadow of the stair laughing, and gave us the count's present anyway: a helm full of captured daylight, to wear at the count's funeral.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
