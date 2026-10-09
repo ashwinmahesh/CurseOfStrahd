@@ -9935,6 +9935,27 @@
   "recipe": "7eeb7eca65",
   "text": "And on the full moon I'm the best tracker in two worlds with teeth. No."
  },
+ "forgotten_storm/052cb35be10b4fcb": {
+  "chars": 8,
+  "direction": "[roaring, furious, echoing]",
+  "model": "eleven_v3",
+  "recipe": "c56b29d702",
+  "text": "AND HIM."
+ },
+ "forgotten_storm/4917ebd917cfea1a": {
+  "chars": 71,
+  "direction": "[thunderous, then quieter, searching]",
+  "model": "eleven_v3",
+  "recipe": "c56b29d702",
+  "text": "CORVINA. (The wind drops, a little, the way a dog's hackles do.) WHERE."
+ },
+ "forgotten_storm/8c77fb85f96e4609": {
+  "chars": 13,
+  "direction": "[roaring, thunderous, echoing]",
+  "model": "eleven_v3",
+  "recipe": "c56b29d702",
+  "text": "WHERE IS SHE."
+ },
  "freydis/0e9784be3c5506d5": {
   "chars": 132,
   "direction": "[still, grim, fond]",
@@ -14734,6 +14755,12 @@
   "recipe": "956cd23797",
   "text": "Pidlwick. Look at me. Not the stair."
  },
+ "hero_female/6e4e942fb532abe8": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "The count's written himself into it."
+ },
  "hero_female/6e64621c455cbf45": {
   "chars": 45,
   "model": "eleven_v4",
@@ -19017,6 +19044,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Pidlwick. Look at me. Not the stair."
+ },
+ "hero_male/6e4e942fb532abe8": {
+  "chars": 36,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "The count's written himself into it."
  },
  "hero_male/6e64621c455cbf45": {
   "chars": 45,
@@ -30983,6 +31016,20 @@
   "recipe": "b6ee845820",
   "text": "This rock is an excellent listener. Better than you, I expect."
  },
+ "mad_mage/1706a5d654093bc7": {
+  "chars": 87,
+  "direction": "[cheerful, scattered, generous]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Take these. They're chess pieces. No, they're coins. One of them is a goat. You choose."
+ },
+ "mad_mage/1f13e7dc15e0f282": {
+  "chars": 246,
+  "direction": "[fretful, rambling, pleading]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "It's getting angrier. Last week it took the roof off the woodshed. It looked in at the window, and the knights on the board fell over. Will you go down to the glass at dusk and ask it what it wants? I'd go myself, but I'm fairly sure it wants me."
+ },
  "mad_mage/20f5a4e36bace942": {
   "chars": 80,
   "direction": "[quiet wonder]",
@@ -31081,12 +31128,26 @@
   "recipe": "b6ee845820",
   "text": "I am... Osric. No. Osric was a goat. I am Marvellous Something. I had a name like a staircase, long, with a landing in the middle. I have looked for it under every stone on this mountain."
  },
+ "mad_mage/d0a515b18a054747": {
+  "chars": 244,
+  "direction": "[distracted, rambling, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "The lightning? (He looks at the window as if it might be listening.) I told it something. A long time ago. It's still doing it, whatever it is. It comes every evening to tell me, and I can't remember what I asked it, so I can't tell it to stop."
+ },
  "mad_mage/d63fb7d5f1748a2e": {
   "chars": 123,
   "direction": "[proud, then puzzled]",
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "Did you see my storm on the ridge? I made it to tell me something every evening. I can't remember what. It's very punctual."
+ },
+ "mad_mage/d76ddc547aa92c02": {
+  "chars": 164,
+  "direction": "[hushed, wondering, relieved]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "It's quiet. (He sets the black king upright on the board, very carefully.) I'd forgotten quiet. I don't know what you did, but the pieces have stopped falling over."
  },
  "mad_mage/d843c40716433037": {
   "chars": 111,
@@ -32602,6 +32663,13 @@
   "recipe": "b6ee845820",
   "text": "I paid that family three stones for a winter's lodging and some decent food, forty years ago. Is that what I'm famous for now? Gods help us all."
  },
+ "mordenkainen/2cf159e1bed29011": {
+  "chars": 99,
+  "direction": "[dry, warm, wry]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Here. The last of what I came over the mountains with. Spend it on something I would disapprove of."
+ },
  "mordenkainen/30e3fb667d218623": {
   "chars": 121,
   "direction": "[dry, troubled]",
@@ -32630,6 +32698,13 @@
   "recipe": "b6ee845820",
   "text": "No. You're right. I'd go up there as exactly the man who ran. I need to be someone else first, and that takes longer than a night."
  },
+ "mordenkainen/45aef2a8cbb423e1": {
+  "chars": 97,
+  "direction": "[quiet, wondering, relieved]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Quiet. (He listens to it.) I'd forgotten what the mountain sounds like when nobody's angry on it."
+ },
  "mordenkainen/493f773ae43fc076": {
   "chars": 210,
   "direction": "[quiet, grieving, tender, then gruff]",
@@ -32657,6 +32732,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "A hand I know better than my own. Small, slanted, impatient, always running out of margin. Letters, written to me. I can see the handwriting when I close my eyes, and I can't see the name."
+ },
+ "mordenkainen/57473900a964bc97": {
+  "chars": 234,
+  "direction": "[quiet, ashamed, remembering]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "That's mine. (He doesn't look at the window.) The night I ran from the castle I called a storm down behind me to cover the road, and I gave it one order: bring her after me. Corvina. I was already halfway down the hill when I said it."
  },
  "mordenkainen/5935756e75c9946a": {
   "chars": 60,
@@ -32756,6 +32838,13 @@
   "recipe": "b6ee845820",
   "text": "Then try to keep up."
  },
+ "mordenkainen/8c168b606e4a1649": {
+  "chars": 162,
+  "direction": "[grave, rueful]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "It never found her. It comes back every evening to say so, and strikes the place I stood when I gave the order. A spell doesn't forget, even when its wizard does."
+ },
  "mordenkainen/8cf20a6650bf9565": {
   "chars": 112,
   "direction": "[gruff, dry humour]",
@@ -32804,6 +32893,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "I came to this valley to kill him, and he beat me, and then he had his witch take everything I was and put it on her shelf, so I would live up here forever and not even know enough to be ashamed. He thought that was funny. He was right."
+ },
+ "mordenkainen/a63f1d89c10c2274": {
+  "chars": 110,
+  "direction": "[dry laugh, bitter, wry]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "And him. (A dry laugh.) Of course he wrote himself into my spell. He could never leave anything of mine alone."
  },
  "mordenkainen/a831a3edb6634711": {
   "chars": 182,
@@ -32860,6 +32956,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "Here. I've been wearing this for forty years without knowing what it was for. It holds a spell or two for whoever wears it. Put something nasty in it before you meet him."
+ },
+ "mordenkainen/ff36452ae4f0f615": {
+  "chars": 188,
+  "direction": "[weary, grave, earnest]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "I can't dismiss it. It answers to the man who gave the order, and I'm not that man any more. Go down to the glass at dusk. Tell it what it needs to hear, or break it. I'd rather the first."
  },
  "morgantha/0a20853a07dc0937": {
   "chars": 54,
@@ -33552,6 +33655,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A reading hall: rows of desks, books open on every one, everything furred with frost. One desk is clear, and someone is weeping at it in a voice that doesn't stop for breath."
+ },
+ "narrator/012595df9dc24125": {
+  "chars": 113,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A ring of black glass in the rock, where something very hot has struck the same place again and again, for years."
  },
  "narrator/0128d1bf8b2cee6c": {
   "chars": 81,
@@ -38935,6 +39044,12 @@
   "recipe": "dd92281f92",
   "text": "The boards are nailed three deep, and the outermost layer is splintered by claws. Light comes through the gaps in thin grey blades."
  },
+ "narrator/2dedf5109245bd62": {
+  "chars": 235,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The storm tears itself off the glass and goes east, toward the castle, howling, and the pines lie down flat as it passes. A minute later it comes back, ragged, smaller, as if it hit a wall in the sky. It can't go there. It never could."
+ },
  "narrator/2df2ccaf33203108": {
   "chars": 119,
   "model": "eleven_v4",
@@ -40212,6 +40327,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The screaming around the chamberlain rises, all at once, as if every voice in it has turned to look. One of them, very clearly, is a woman calling a name. It is Sorrel's name."
+ },
+ "narrator/392ac73d36670432": {
+  "chars": 98,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the middle of the ring, where the storm stood, the glass is warm. Something is half sunk in it."
  },
  "narrator/392fd42860d5f1b2": {
   "chars": 115,
@@ -41910,6 +42031,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A long low hall with shelves floor to ceiling, and every shelf full. The books have no titles on their spines. There's a smell of old paper and cold water, and under it, something like breath."
+ },
+ "narrator/4848ec3b0f84fce3": {
+  "chars": 221,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The spell is one order, written over and over in the mage's hand until it has worn a groove in the sky: bring her after me. Under it, smaller, in a different hand, cold and very neat, someone has added two words: and him."
  },
  "narrator/484d64d3368a8760": {
   "chars": 156,
@@ -44653,6 +44780,12 @@
   "recipe": "dd92281f92",
   "text": "A dragon's skull, silver-grey and longer than a man is tall, mounted on the wall among the stags. A brass plate under it gives a date and no name."
  },
+ "narrator/5eddcc3b4cb21b8e": {
+  "chars": 266,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sunk in the glass where the storm stood is a little brass censer, half melted, the kind a wizard swings to call weather. Forty years ago it must have rolled out of a pocket on the road. When you lift it out, it's still warm, and the smoke inside it moves on its own."
+ },
  "narrator/5eeba1e1a21056d6": {
   "chars": 105,
   "model": "eleven_v4",
@@ -46369,6 +46502,12 @@
   "recipe": "dd92281f92",
   "text": "Far below, something chokes, and roars, and chokes again, and the floor under your feet shudders, and is still."
  },
+ "narrator/6d6d6a58317f23fd": {
+  "chars": 251,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At dusk the clouds come down off the summit one after another, as if they'd been called, and a column of grey wind settles onto the ring of glass, flickering with lightning inside like a lantern full of moths. Near the top of it there's almost a face."
+ },
  "narrator/6d6dc949951a3a12": {
   "chars": 172,
   "model": "eleven_v4",
@@ -48043,6 +48182,12 @@
   "recipe": "dd92281f92",
   "text": "The burgomaster's mansion takes up the whole north side of the square: three storeys of timber and plaster with a portrait of the Baron painted over the door, smiling down at everyone who knocks."
  },
+ "narrator/7c33b3f91ff361e9": {
+  "chars": 81,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The wind comes down off the glass at you, and the lightning comes down out of it."
+ },
  "narrator/7c3c89556971c474": {
   "chars": 144,
   "model": "eleven_v4",
@@ -48595,6 +48740,12 @@
   "recipe": "dd92281f92",
   "text": "Thorn hears the word and doesn't understand it. Then he does."
  },
+ "narrator/8124460e99f07b5e": {
+  "chars": 86,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It isn't wrecking the mage's yard by accident. Somebody taught it to come for him too."
+ },
  "narrator/813da5f4a7ff7c96": {
   "chars": 80,
   "model": "eleven_v4",
@@ -48654,6 +48805,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He weeps and guts, weeps and guts. Mad, right, or both: his face won't say, and neither will the lake."
+ },
+ "narrator/81cd4e576dc96b9c": {
+  "chars": 78,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wind, and lightning in it, and a great deal of grief. That's all you can tell."
  },
  "narrator/81d87efd534c4f1d": {
   "chars": 137,
@@ -49128,6 +49285,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A balcony of closed doors around the stairwell, the oak paneling carved with trees and falling leaves, and the faint sweet smell of a nursery."
+ },
+ "narrator/852cbba50f15279d": {
+  "chars": 72,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The ring of glass is cold and still. In the evenings now, nothing comes."
  },
  "narrator/85451e149c40cc0f": {
   "chars": 183,
@@ -52453,6 +52616,12 @@
   "recipe": "dd92281f92",
   "text": "A block of grey stone, stained dark down every side, with a shallow groove cut round the top to carry something away."
  },
+ "narrator/a216ee374bdad5b0": {
+  "chars": 215,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The column of wind stands very still on the glass for a long moment. Then it lets go of itself, not all at once, but from the top down, like a held breath, and the last of it goes out over the lake as a little rain."
+ },
  "narrator/a22a0c520dfba27d": {
   "chars": 153,
   "model": "eleven_v4",
@@ -55267,6 +55436,12 @@
   "recipe": "dd92281f92",
   "text": "A courtyard of worn flags round a well and a statue. Footprints in the snow go in every direction, and some of them aren't any shape that has a name."
  },
+ "narrator/bb5239ececefd616": {
+  "chars": 90,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The storm comes down off the ring of glass at you, and the lightning comes down out of it."
+ },
  "narrator/bb7f0786d91e2488": {
   "chars": 153,
   "model": "eleven_v4",
@@ -56166,6 +56341,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "For the first time since the stair, you sleep. The temple is cold and silent and, for one night, only a building."
+ },
+ "narrator/c2c7c7c21eac37a9": {
+  "chars": 71,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The glass is cold under your hand. Whatever strikes here comes at dusk."
  },
  "narrator/c2d5398e8c4d39ad": {
   "chars": 115,
