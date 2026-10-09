@@ -24,6 +24,14 @@ var combatants: Array[Combatant] = []
 var order: Array[Combatant] = []
 var turn_index: int = -1
 var round_no: int = 0
+## Shared party turns (owner 2026-10-09, after Baldur's Gate 3; deviations.md): heroes next to each other in the order
+## take their turns together, the player switching between them freely (switch_to). Off: one creature at a time.
+var shared_turns := true
+## The heroes sharing the turn now (ids, in order; empty when it isn't shared), and those whose turns have started and
+## ended (EncounterTurns).
+var shared: Array[String] = []
+var shared_started: Array[String] = []
+var shared_ended: Array[String] = []
 var state: State = State.SETUP
 ## A story fight keeps each round as it begins, before the lair or the first turn acts (EncounterSnapshot): the
 ## round-start save, so reloading it plays the start of that turn once (QA FN-11: captured after it, Regeneration,
@@ -331,6 +339,16 @@ func start(surprised_ids: Array = []) -> void:
 
 func _begin_turn() -> CombatResult:
 	return turns._begin_turn()
+
+
+## Takes control of another hero sharing the turn: their turn starts the first time, then goes on where it was left.
+func switch_to(c: Combatant) -> CombatResult:
+	return turns.switch_to(c)
+
+
+## The heroes sharing the turn who can still take theirs, the one in control first.
+func shared_heroes() -> Array[Combatant]:
+	return turns.shared_heroes()
 
 
 func end_turn() -> CombatResult:

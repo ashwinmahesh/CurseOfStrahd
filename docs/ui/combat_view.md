@@ -192,3 +192,10 @@ Readable at a glance (branch `hud-look`):
 - **The reaction prompt** opens bottom right, above the hotbar, growing upward, so who's hitting whom stays in view
   (UI QA, 2026-10-09).
 
+## Shared party turns (owner 2026-10-09, after Baldur's Gate 3)
+
+Heroes next to each other in the turn order act together (deviations.md). In the turn order the heroes who can still
+take theirs are edged green and the ones done dimmed; their party frames say **Ready**; the hotbar's note names them
+("Shared turn · Godrick and Thistle ready (Tab or a portrait)"). A click on a ready hero's frame or portrait, Tab or the
+radial's Inspect takes control of them; End Turn ends only the hero in control, and the next ready one takes over.
+Settings, Game, **Party turns**: Shared (the default) or One at a time.

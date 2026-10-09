@@ -3,12 +3,17 @@ extends CanvasLayer
 ## Short and Long Rests (plan §5.2, docs/ui/party_management.md pm_03). Short Rest: one hour; each character spends
 ## Hit Point Dice one at a time (roll + Con, minimum 1) and short-rest features come back. Long Rest: eight hours;
 ## everything comes back, with the location's interruption risk. A location can forbid resting ("rest": no) or make
-## it risky. Rests need nobody hostile around (the screen can't open in combat).
+## it risky. Rests need nobody hostile around (the screen can't open in combat). A Long Rest also waits 16 hours after
+## the last one and isn't taken in a dungeon or building while enemies remain in it (RestRules): its card says why, in
+## words, for the mouse and the pad alike, and the Short Rest stays open.
 
 var root: Node
 var st: StoryState
 var _box: VBoxContainer
 var _log: Label
+## Holds the Long Rest's card, built again when time passes (_refresh_long).
+var _long_slot: VBoxContainer
+var _rule := "risky"   ## the place's rest rule: safe or risky
 ## The log's card, hidden until there's something in it (an empty bordered box sat under the party; UI QA UI-16).
 var _log_card: PanelContainer
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
@@ -38,9 +43,11 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	kinds.add_theme_constant_override("separation", 12)
 	kinds.add_child(_rest_card("Short Rest", "1 hour", "Spend Hit Point Dice to heal; some features come back.",
 		UiKit.button("Finish the Short Rest (1 hour)", _finish_short, 16, "rest"), ""))
-	kinds.add_child(_rest_card("Long Rest", "8 hours", "All Hit Points, Hit Point Dice, spell slots and features come back.",
-		UiKit.button("Take a Long Rest (8 hours)", _long_rest.bind(rule), 16, "rest"),
-		"Dangerous here: it may be interrupted" if rule == "risky" else "Safe here"))
+	_rule = rule
+	_long_slot = VBoxContainer.new()
+	_long_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	kinds.add_child(_long_slot)
+	_refresh_long()
 	frame.add_child(kinds)
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 6)
@@ -54,7 +61,9 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_draw()
 
 
-func _rest_card(title: String, length: String, text: String, button: Button, risk: String) -> Control:
+## A rest's card: its name, how long it takes and how risky, what it gives, why it can't start now (each reason a line
+## in words, read with the pad as with the mouse) and its button.
+func _rest_card(title: String, length: String, text: String, button: Button, risk: String, why: Array[String] = []) -> Control:
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 6)
 	col.add_child(UiParts.section(title))
@@ -62,15 +71,33 @@ func _rest_card(title: String, length: String, text: String, button: Button, ris
 	facts.add_theme_constant_override("separation", 8)
 	facts.add_child(UiParts.pill(length, "moonlight", 13))
 	if risk != "":
-		facts.add_child(UiParts.pill(risk, "rose" if risk.begins_with("Dangerous") else "bile", 13))
+		facts.add_child(UiParts.pill(risk, "rose" if risk.begins_with("Dangerous") or not why.is_empty() else "bile", 13))
 	col.add_child(facts)
 	col.add_child(UiKit.label(text, 14, "vellum", 480))
+	for line in why:
+		col.add_child(UiKit.label(line, 14, "rose", 480))
 	button.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	col.add_child(button)
 	var card := UiParts.card("ui_oxblood", "gilt_dark", 0.55, 12)
 	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.add_child(col)
 	return card
+
+
+## The Long Rest's card, built again when the clock moves (a Short Rest, a Long Rest): its button is off while
+## RestRules refuses one here, and the card says why.
+func _refresh_long() -> void:
+	if _long_slot == null:
+		return
+	for c in _long_slot.get_children():
+		c.queue_free()
+	var why := RestRules.long_rest_refusals(st)
+	var button := UiKit.button("Take a Long Rest (8 hours)", _long_rest.bind(_rule), 16, "rest")
+	button.disabled = not why.is_empty()
+	button.tooltip_text = "\n".join(why)
+	var risk := "Not now" if not why.is_empty() else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here")
+	_long_slot.add_child(_rest_card("Long Rest", "8 hours", "All Hit Points, Hit Point Dice, spell slots and features come back.",
+		button, risk, why))
 
 
 func _draw() -> void:
@@ -277,9 +304,16 @@ func _finish_short() -> void:
 	_narrate("rest:short")
 	_short_done = true
 	_draw()
+	_refresh_long()
 
 
 func _long_rest(rule: String) -> void:
+	# The card's button is off while one is refused; this keeps anything else that starts one to the same rules.
+	var why := RestRules.long_rest_refusals(st)
+	if not why.is_empty():
+		_log.text = "No Long Rest now. " + " ".join(why)
+		_draw()
+		return
 	Audio.sfx("rest")
 	var interrupted := false
 	if rule == "risky":
@@ -293,6 +327,7 @@ func _long_rest(rule: String) -> void:
 	else:
 		st.advance_minutes(8 * 60)
 		st.miles_since_long_rest = 0.0
+		RestRules.note_long_rest(st)
 		for ch in st.party:
 			if not ch.dead:
 				ch.finish_long_rest()
@@ -313,6 +348,7 @@ func _long_rest(rule: String) -> void:
 		if root.has_method("strahd_after_rest"):
 			root.call_deferred("strahd_after_rest", 8 * 60)   # Strahd may come in the night (ADR 0014)
 	_draw()
+	_refresh_long()
 	root.call("_refresh")
 
 

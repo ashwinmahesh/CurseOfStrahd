@@ -758,7 +758,7 @@ func _ac_until_turn(owner: Combatant, who: Combatant, amount: int, label: String
 
 func _teleport(c: Combatant, cell: Vector2i, feet: int) -> CombatResult:
 	var e := enc()
-	if cell.x < 0 or not e.grid.in_bounds(cell) or e.grid.is_solid(cell) or e.occupant_at(cell) != null:
+	if cell.x < 0 or not room_at(c, cell):
 		return CombatResult.fail("Choose an unoccupied square")
 	if e.grid.distance_ft(c.cell, c.size_cells, cell, c.size_cells) > feet:
 		return CombatResult.fail("At most %d ft" % feet)
@@ -767,9 +767,20 @@ func _teleport(c: Combatant, cell: Vector2i, feet: int) -> CombatResult:
 	return r
 
 
+## Whether `c` fits with its corner at `cell`: every square of its footprint on the map, open and free of others (QA
+## FN-19: only the corner was checked, so a Large Otherworldly Steed's Fey Step put half of it in a wall).
+func room_at(c: Combatant, cell: Vector2i) -> bool:
+	var e := enc()
+	for f in CombatGrid.footprint(cell, c.size_cells):
+		var o := e.occupant_at(f)
+		if not e.grid.in_bounds(f) or e.grid.is_solid(f) or (o != null and o != c):
+			return false
+	return true
+
+
 func _move_to(t: Combatant, cell: Vector2i, feet: int) -> CombatResult:
 	var e := enc()
-	if cell.x < 0 or e.occupant_at(cell) != null or e.grid.is_solid(cell):
+	if cell.x < 0 or not room_at(t, cell):
 		return CombatResult.fail("Choose an unoccupied square")
 	if e.grid.distance_ft(t.cell, t.size_cells, cell, t.size_cells) > feet:
 		return CombatResult.fail("At most %d ft" % feet)

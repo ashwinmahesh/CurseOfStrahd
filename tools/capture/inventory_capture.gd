@@ -1,7 +1,7 @@
 extends Node
 ## Inventory and level up for captures (lane 14: U3 search and junk, Q7 the stash from anywhere, Q10 recommended picks,
-## U11 the paper doll, grid, weapon sets and quick slots): the party at level 5 with finds in the pack, some marked as
-## junk, then the screens one shot each. LANE_ONLY=inventory,search,junk,road,shop,loot,level_up limits the shots.
+## U11 the paper doll, the bag's list, weapon sets, the quiver and quick slots): the party at level 5 with finds in the pack, some marked as
+## junk, then the screens one shot each. LANE_ONLY=inventory,search,junk,road,shop,loot,doll,level_up limits the shots.
 ## make capture SCENE=res://tools/capture/inventory_capture.tscn NAME=lane14/after FRAMES=10
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -119,13 +119,14 @@ func capture_shots(tool: Node, out: String) -> void:
 		g.quick_slots.assign(["potion_of_healing", "candle"])
 		var inv := _inventory(func(i: InventoryScreen) -> void: i.selected = "longbow")
 		await _shoot(tool, "%s_doll.png" % out)
-		var wand: ItemTile = null
-		for n in inv.find_children("*", "ItemTile", true, false):
-			if str((n as ItemTile).payload.get("id", "")) == "wand_of_secrets":
-				wand = n as ItemTile
+		var wand: Control = null
+		for n in inv.find_children("*", "", true, false):
+			if n is ItemTile.Row and str((n as ItemTile.Row).payload.get("id", "")) == "wand_of_secrets":
+				wand = n as Control
 		if wand != null:
-			inv.call("_pick", wand.payload["entry"])
-			inv.call("_open_menu", inv.actions_for(wand.payload["entry"] as Dictionary), wand.get_global_rect().get_center())
+			var entry := (wand.get("payload") as Dictionary)["entry"] as Dictionary
+			inv.call("_pick", entry)
+			inv.call("_open_menu", inv.actions_for(entry), wand.get_global_rect().get_center())
 			await _shoot(tool, "%s_menu.png" % out)
 			for m in inv.find_children("*", "PopupMenu", true, false):
 				(m as PopupMenu).hide()
@@ -137,19 +138,9 @@ func capture_shots(tool: Node, out: String) -> void:
 					break
 			await _shoot(tool, "%s_drag.png" % out)
 		root.call("close_screen")
-	if _wants("list"):
-		# The list view (owner, 2026-10-07): the same character and pack as rows, with a drag over the Worn section.
-		var inv2 := _inventory(func(i: InventoryScreen) -> void:
-			i.view = "list"
-			i.selected = "longbow")
-		await _shoot(tool, "%s_list.png" % out)
-		var worn := inv2.find_child("WornZone", true, false) as Control
-		if worn != null:
-			worn.modulate = Color(1.12, 1.12, 1.0)
-		inv2.call("_open_menu", inv2.actions_for(GameState.story.party[0].entry_of("potion_of_healing")), Vector2(900, 330))
-		await _shoot(tool, "%s_list_menu.png" % out)
-		for m in inv2.find_children("*", "PopupMenu", true, false):
-			(m as PopupMenu).hide()
+		# Thistle: her bow in hand and her arrows in the quiver.
+		root.call("open_screen", "inventory", 2)
+		await _shoot(tool, "%s_doll_thistle.png" % out)
 		root.call("close_screen")
 	if _wants("level_up"):
 		# Q10: a companion at an Ability Score Improvement (filled from their own level plan), and a new hero choosing a

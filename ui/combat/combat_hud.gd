@@ -379,6 +379,10 @@ func _build_hotbar() -> void:
 	_pips = HBoxContainer.new()
 	top.add_child(_pips)
 	_turn_note = _label("", 16, "gilt_light")
+	# It takes the row's spare width and cuts a long note with an ellipsis, so the bar never grows past End Turn.
+	_turn_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_turn_note.clip_text = true
+	_turn_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	top.add_child(_turn_note)
 	_tabs = HBoxContainer.new()
 	_tabs.add_theme_constant_override("separation", 6)
@@ -606,6 +610,8 @@ func _refresh_strip() -> void:
 	var cur := e.current()
 	# The lair's turn sits at initiative count 20 (ADR 0014); legendary creatures show the actions they have left.
 	var lair_at := e.legendary.lair_slot()
+	# A shared party turn (EncounterTurns): the heroes who can still take theirs edged green, the ones done dimmed.
+	var sharing := e.shared_heroes()
 	for i in e.order.size():
 		var c := e.order[i]
 		if i == lair_at:
@@ -615,7 +621,12 @@ func _refresh_strip() -> void:
 		var active := c == cur
 		var card := PanelContainer.new()
 		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
-		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else 2))
+		var ready := not active and c in sharing
+		if ready:
+			frame = "bile"
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else (3 if ready else 2)))
+		if c.id in e.shared_ended:
+			card.modulate = Color(1, 1, 1, 0.55)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
@@ -632,6 +643,11 @@ func _refresh_strip() -> void:
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
+		if ready:
+			card.tooltip_text = "%s shares this turn: click to take it" % c.name()
+			card.gui_input.connect(func(ev: InputEvent) -> void:
+				if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+					inspect_requested.emit(c.id))
 		_strip.add_child(card)
 	if lair_at == e.order.size():
 		_strip.add_child(_lair_card())
@@ -653,6 +669,7 @@ func _lair_card() -> PanelContainer:
 func _refresh_party() -> void:
 	for ch in _party_box.get_children():
 		ch.queue_free()
+	var sharing := e.shared_heroes()
 	for c in e.combatants:
 		# An Echo Knight's echo is an image on the board, not a member of the party.
 		if c.side not in [&"party", &"guest"] or EchoKnight.is_echo(c):
@@ -689,6 +706,10 @@ func _refresh_party() -> void:
 			head.add_child(UiParts.pill("Guest", "moonlight", 11))
 		if c.is_down() and not c.creature.dead:
 			head.add_child(UiParts.pill("DOWN", "vampire_red", 11))
+		# Sharing the turn and still to take theirs: a click on the frame takes control of them.
+		var ready := c in sharing and c != e.current()
+		if ready:
+			head.add_child(UiParts.pill("Ready", "bile", 11))
 		v.add_child(head)
 		v.add_child(_hp_bar(c, 170, 10.0))
 		var cr := c.creature
@@ -715,7 +736,7 @@ func _refresh_party() -> void:
 		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
-		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
+		btn.tooltip_text = "%s · %s\n%s" % [c.name(), status, "They share this turn: click to take it now" if ready else "Click to see their actions"]
 		if c.creature is Character:
 			card.add_child(_sheet_button(c))
 		_party_box.add_child(card)
@@ -797,6 +818,7 @@ func _refresh_hotbar() -> void:
 	_move_bar.max_value = maxf(spd, c.movement_left)
 	_move_bar.value = c.movement_left if mine else spd
 	_move_label.text = "%d / %d ft" % [c.movement_left if mine else spd, spd]
+	_turn_note.tooltip_text = ""
 	if e.state == Encounter.State.OVER:
 		_turn_note.text = "Victory!" if e.outcome == "victory" else "The party has fallen"
 	elif cur != null and not cur.is_player_controlled():
@@ -805,6 +827,15 @@ func _refresh_hotbar() -> void:
 		_turn_note.text = "Inspecting %s (not their turn)" % c.name()
 	else:
 		_turn_note.text = ""   # the attacks left show as pips beside the Action
+		# A shared party turn: who else can act now, and how to switch to them.
+		var sharing := e.shared_heroes()
+		if sharing.size() > 1:
+			var names: Array[String] = []
+			for o: Combatant in sharing.slice(1):
+				names.append(o.name().get_slice(" ", 0))
+			_turn_note.text = "Shared turn · %d more ready (%s)" % [names.size(), InputActions.key_text(&"cycle_leader")]
+			_turn_note.tooltip_text = "%s can act now too: press %s or click their portrait to take their turn." % [", ".join(names), InputActions.key_text(&"cycle_leader")]
+			_turn_note.mouse_filter = Control.MOUSE_FILTER_PASS
 	_refresh_slot_pips(c)
 	_refresh_weapons(c, mine)
 	_end_turn.disabled = not mine or e.pending != null

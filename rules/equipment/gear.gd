@@ -30,6 +30,18 @@ static func is_shield(item: Dictionary) -> bool:
 	return item.has("armor") and str((item["armor"] as Dictionary).get("kind", "")) == "shield"
 
 
+## Where a hero keeps an item to hand on the paper doll (U11): "ammo" for ammunition (the quiver), "focus" for a
+## spellcasting focus or a component pouch, else "". Neither changes the rules: ammunition is drawn by its kind, and a
+## focus is assumed carried (docs/rules/deviations.md, Material components and focuses).
+static func carry_slot(item: Dictionary) -> String:
+	match str(item.get("category", "")):
+		"ammunition":
+			return "ammo"
+		"focus":
+			return "focus"
+	return "focus" if str(item.get("id", "")) == "component_pouch" else ""
+
+
 static func weapon_props(item: Dictionary) -> Array:
 	if not is_weapon(item):
 		return []

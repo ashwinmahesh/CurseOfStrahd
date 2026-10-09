@@ -163,16 +163,16 @@
       "model": "frozen_traveller"
     },
     {
-      "id": "frozen_traveller_rope",
+      "id": "frozen_traveller_flask",
       "cell": [
         19,
         10
       ],
       "kind": "search",
+      "search_dc": 12,
       "label": "something in the frozen traveller's pack",
       "model": "satchel",
-      "search_dc": 12,
-      "item": "rope_of_climbing"
+      "item": "potion_of_giant_strength_frost"
     }
   ],
   "encounters": [],
