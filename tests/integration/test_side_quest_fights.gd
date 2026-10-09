@@ -414,9 +414,9 @@ func test_the_falconer_comes_for_the_last_egg() -> void:
 	assert_eq(GameState.story.quest_stage("the_last_egg"), "defended")
 
 
-## The count's canvas leans out of its frame in Tudor's studio, Large, with its copies.
+## The count's canvas leans out of its frame in Haralamb's studio, Large, with its copies.
 func test_the_counts_likeness_comes_off_the_wall() -> void:
-	var v := await _boot("vallaki_tudor_studio", 20, 9, ["tudor_studio_open"])
+	var v := await _boot("vallaki_painters_studio", 20, 9, ["painter_studio_open"])
 	GameState.story.set_quest_stage("the_counts_portraitist", "asked")
 	var e := await _fight(v, "counts_likeness", ["The Count's Likeness", "A Copy"])
 	for c in e.combatants:

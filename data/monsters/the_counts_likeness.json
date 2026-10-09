@@ -75,7 +75,7 @@
       "name": "The Count's Eye",
       "action": "passive",
       "summary": "Whatever the painted woman looks at, the castle sees. The count speaks through it.",
-      "text": "The Likeness is an eye of Castle Ravenloft: what the woman in it looks at, the count sees, and he can speak through her mouth. Every portrait Tudor painted from it does the same, until it burns.",
+      "text": "The Likeness is an eye of Castle Ravenloft: what the woman in it looks at, the count sees, and he can speak through her mouth. Every portrait Haralamb painted from it does the same, until it burns.",
       "implemented": "text"
     }
   ],

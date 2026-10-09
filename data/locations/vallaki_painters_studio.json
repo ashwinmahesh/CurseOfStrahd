@@ -1,8 +1,8 @@
 {
-  "id": "vallaki_tudor_studio",
-  "name": "Tudor's Studio",
+  "id": "vallaki_painters_studio",
+  "name": "Haralamb's Studio",
   "region": "vallaki",
-  "summary": "Tudor the painter's house on Vallaki's east row: a front room of pots and rags, and up the back a long studio full of portraits of one woman, and the great canvas the count gave him to copy from (The Count's Portraitist, docs/story/side_quests.md).",
+  "summary": "Haralamb the painter's house on Vallaki's east row: a front room of pots and rags, and up the back a long studio full of portraits of one woman, and the great canvas the count gave him to copy from (The Count's Portraitist, docs/story/side_quests.md).",
   "text": "A painter's house that smells of linseed and something under it, like old flowers. Every canvas in it is turned to the wall, except the ones that aren't, and those all have the same face.",
   "map": {
     "rows": [
@@ -24,7 +24,7 @@
   },
   "areas": [
     {
-      "id": "tudor_front_room",
+      "id": "painter_front_room",
       "name": "The front room",
       "cells": [
         [
@@ -38,7 +38,7 @@
       ]
     },
     {
-      "id": "tudor_studio",
+      "id": "painter_studio",
       "name": "The studio",
       "cells": [
         [
@@ -64,13 +64,13 @@
   },
   "exits": [
     {
-      "id": "tudor_out",
+      "id": "painter_out",
       "cell": [
         7,
         11
       ],
       "to": "vallaki",
-      "spawn": "from_tudor",
+      "spawn": "from_painter",
       "label": "Out to the east row"
     }
   ],
@@ -87,7 +87,7 @@
       "dialogue": "vallaki/the_counts_portraitist:canvas"
     },
     {
-      "id": "tudor_copy_1",
+      "id": "painter_copy_1",
       "cell": [
         2,
         1
@@ -97,7 +97,7 @@
       "model": "portrait_tatyana"
     },
     {
-      "id": "tudor_copy_2",
+      "id": "painter_copy_2",
       "cell": [
         12,
         1
@@ -107,7 +107,7 @@
       "model": "portrait_tatyana"
     },
     {
-      "id": "tudor_copy_3",
+      "id": "painter_copy_3",
       "cell": [
         14,
         2
@@ -117,7 +117,7 @@
       "model": "portrait_turned"
     },
     {
-      "id": "tudor_copies_stacked",
+      "id": "painter_copies_stacked",
       "cell": [
         1,
         5
@@ -127,7 +127,7 @@
       "model": "painting_row"
     },
     {
-      "id": "tudor_easel_table",
+      "id": "painter_easel_table",
       "cell": [
         3,
         3
@@ -137,7 +137,7 @@
       "model": "table"
     },
     {
-      "id": "tudor_easel_table_2",
+      "id": "painter_easel_table_2",
       "cell": [
         12,
         3
@@ -147,7 +147,7 @@
       "model": "table"
     },
     {
-      "id": "tudor_pots",
+      "id": "painter_pots",
       "cell": [
         5,
         4
@@ -157,7 +157,7 @@
       "model": "jars"
     },
     {
-      "id": "tudor_sketches",
+      "id": "painter_sketches",
       "cell": [
         10,
         4
@@ -167,7 +167,7 @@
       "model": "drawings"
     },
     {
-      "id": "tudor_candles",
+      "id": "painter_candles",
       "cell": [
         9,
         1
@@ -177,7 +177,7 @@
       "model": "candelabra"
     },
     {
-      "id": "tudor_sheet",
+      "id": "painter_sheet",
       "cell": [
         13,
         5
@@ -187,7 +187,7 @@
       "model": "sheeted_furniture"
     },
     {
-      "id": "tudor_workbench",
+      "id": "painter_workbench",
       "cell": [
         2,
         8
@@ -197,7 +197,7 @@
       "model": "workbench"
     },
     {
-      "id": "tudor_rags",
+      "id": "painter_rags",
       "cell": [
         13,
         8
@@ -207,7 +207,7 @@
       "model": "rags"
     },
     {
-      "id": "tudor_sun_pots",
+      "id": "painter_sun_pots",
       "cell": [
         4,
         10
@@ -217,7 +217,7 @@
       "model": "glass_vessels"
     },
     {
-      "id": "tudor_bed",
+      "id": "painter_bed",
       "cell": [
         12,
         10
@@ -227,7 +227,7 @@
       "model": "bed_small"
     },
     {
-      "id": "tudor_stove",
+      "id": "painter_stove",
       "cell": [
         1,
         9
@@ -237,7 +237,7 @@
       "model": "stove"
     },
     {
-      "id": "tudor_coats",
+      "id": "painter_coats",
       "cell": [
         10,
         7
@@ -345,7 +345,7 @@
     }
   ],
   "narration": {
-    "enter": "enter:vallaki_tudor_studio"
+    "enter": "enter:vallaki_painters_studio"
   },
   "rest": "risky"
 }

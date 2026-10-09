@@ -292,7 +292,7 @@
       7,
       18
     ],
-    "from_tudor": [
+    "from_painter": [
       43,
       18
     ]
@@ -382,15 +382,15 @@
       "label": "The Blue Water Inn"
     },
     {
-      "id": "tudor_door",
+      "id": "painter_door",
       "cell": [
         43,
         17
       ],
-      "to": "vallaki_tudor_studio",
+      "to": "vallaki_painters_studio",
       "spawn": "from_street",
-      "label": "Tudor's door",
-      "when": "flag.tudor_studio_open"
+      "label": "Haralamb's door",
+      "when": "flag.painter_studio_open"
     }
   ],
   "props": [
@@ -1584,7 +1584,7 @@
         44,
         18
       ],
-      "dialogue": "vallaki/the_counts_portraitist:tudor",
+      "dialogue": "vallaki/the_counts_portraitist:painter",
       "when": "level >= 9",
       "hours": [
         17,

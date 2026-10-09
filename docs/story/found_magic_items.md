@@ -151,7 +151,7 @@ leaves a smaller purse and one find.
 | ✅ | Yevgeni | Horn of Valhalla, Silver (rare) | Gift: his father's horn, with the bounty on Old Greytooth (The Hunters at the Inn) |
 | ✅ | Urwin Martikov | Elven Chain (rare) | Gift: his grandfather's mail, once Bray is home and himself (The Ravens' Ransom, docs/story/side_quests.md) |
 | ✅ | Old Sabin, the lantern stall | Dream Weaver (rare) | Gift: Liliana's dream-catcher, once Sandu's home from the lake (One Lantern Too Many, docs/story/side_quests.md) |
-| ✅ | Tudor the painter, the east row | Nolzur's Marvelous Pigments (very rare) | Gift: the count's paints, made clean, once his canvas is burned (The Count's Portraitist, docs/story/side_quests.md) |
+| ✅ | Haralamb the painter, the east row | Nolzur's Marvelous Pigments (very rare) | Gift: the count's paints, made clean, once his canvas is burned (The Count's Portraitist, docs/story/side_quests.md) |
 
 ## Lake Zarovich (level 8)
 

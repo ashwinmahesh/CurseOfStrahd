@@ -266,13 +266,13 @@ the cellar door until it's done); Urwin won't pay until he's himself.
 
 ### The Count's Portraitist (`the_counts_portraitist`, narrative/vallaki/the_counts_portraitist.dialogue; batch 6, level 9)
 
-Tudor, who paints the Baron's wicker sun, sits on his doorstep on the east row in the evenings from level 9 (a new
+Haralamb, who paints the Baron's wicker sun, sits on his doorstep on the east row in the evenings from level 9 (a new
 entry for the sun painter), with red-gold paint on his hands. **Escalation:** a carriage with no driver took him to
 the castle for eleven nights to paint a woman in white from the count's memory, with the count's own paints; now
 every face he paints is hers, and he has sold three, to the Baron, to Lady Wachter and to Urwin at the inn. With
 Ireena along, he knows her at once. **Twist:** (Arcana DC 14) the paint makes eyes of the castle, like the portraits on
 its walls: the castle sees every room a copy hangs in, and the great canvas he was given to copy from is the eye they
-all see through. His door (a new gated exit) opens on his studio (data/locations/vallaki_tudor_studio.json), where the
+all see through. His door (a new gated exit) opens on his studio (data/locations/vallaki_painters_studio.json), where the
 count speaks to the party out of the painted woman's mouth.
 
 - **Boss: the Count's Likeness** (data/monsters/the_counts_likeness.json, `source.book: custom`, built up from the
@@ -281,7 +281,7 @@ count speaks to the party out of the painted woman's mouth.
   and Hold Person once a day, Legendary Resistance (2/day), and a look between turns. CR 8. Six copies come off the
   walls with it (guardian portraits at 30 HP).
 - Fight `counts_likeness`. The autopilot wins 3 of 6 at level 9, losing three party members a fight.
-- Burned, every copy in Vallaki goes blank. Tudor scrapes the count's paints into clean pots and prays over them:
+- Burned, every copy in Vallaki goes blank. Haralamb scrapes the count's paints into clean pots and prays over them:
   Nolzur's Marvelous Pigments (very rare) and 150 gp. Still: `sq_counts_likeness` (the canvas, first seen).
 
 ### One Lantern Too Many (`one_lantern_too_many`, narrative/vallaki/one_lantern_too_many.dialogue; batch 5, festival week)
@@ -838,5 +838,5 @@ also the town guard) and gate.dialogue's news jump. Batch 6,
 the Village of Barovia: the_oat_thief.dialogue in full (new speaker Agafia; also Bildrath and Parriwimple, and a kind
 interject) and narrator/woodcutters_hollow.dialogue. Batch 6,
 the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Tibor and the Falconer; a blunt interject). Batch 6,
-Vallaki: the_counts_portraitist.dialogue in full (Tudor and the Count's Likeness, new speaker; a blunt interject) and
-narrator/vallaki_tudor_studio.dialogue.
+Vallaki: the_counts_portraitist.dialogue in full (Haralamb and the Count's Likeness, new speaker; a blunt interject) and
+narrator/vallaki_painters_studio.dialogue.
