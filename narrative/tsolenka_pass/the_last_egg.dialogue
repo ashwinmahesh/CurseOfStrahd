@@ -1,0 +1,108 @@
+# The Last Egg (side quest, docs/story/side_quests.md): the roc of Mount Ghakis lays once in eleven years, and this is
+# the year. Tibor, a Vistani egg-hunter camped at the landing below the roc's shelf, has a buyer in the castle and
+# wants a climber. **Twist:** the egg is hatching, and the buyer doesn't wait for deliveries: the count's falconer and
+# his stone birds come down off the tower for it, and Tibor has two neat marks on his wrist. **Escalation:** hand it over
+# for Tibor's purse, or stand on the shelf between the count's falconer and a chick still wet from the shell. Reached
+# from Tibor at the landing (npc tsolenka_tibor). Every line here is unvoiced for now.
+
+# --- Tibor at the landing (npc tsolenka_tibor) ---
+
+~ tibor
+if quest.the_last_egg == done or quest.the_last_egg == sold
+tsolenka_tibor: (He isn't here. His fire is cold, and somebody has kicked snow over it.)
+-> END
+endif
+if flag.tibor_met
+tsolenka_tibor: The shelf, friends. While she's out. Eleven years I've waited for this, and she won't hunt all day.
+-> END
+endif
+set tibor_met
+quest the_last_egg asked
+Narrator: A Vistana in a sheepskin coat sits at a small fire on the landing, with a coil of rope, a sack lined with straw, and a long hooked pole. He waves you over as if you were late.
+tsolenka_tibor: Climbers! Or at least people with arms. Tibor. I collect eggs. Hawks, eagles, the odd wyvern once, never again.
+tsolenka_tibor: The roc up there lays once in eleven years. This is the year. I have a buyer who pays four hundred gold for the egg, and I'll split it with whoever carries the sack, because my knees are not what they were.
+* Who's the buyer? -> tibor_buyer
+* [Insight DC 15] (Watch him while he talks about the buyer.) -> tibor_seen | tibor_unseen
+* We'll think about it. -> END
+
+~ tibor_buyer
+tsolenka_tibor: Someone with a great deal of money and a long view. Does it matter? An egg's an egg.
+-> END
+
+~ tibor_seen
+set tibor_marked
+Narrator: When he says "buyer", he rubs his left wrist without knowing he's doing it. Under the cuff there are two small marks, neat as a sewing needle's. He isn't selling to anyone. He's been told to fetch.
+interject tag:blunt: The castle wants a roc.
+-> END
+
+~ tibor_unseen
+Narrator: A Vistana who likes money and doesn't like heights. That's all you can tell.
+-> END
+
+# --- The roc's nest (prop roc_egg, on the shelf) ---
+
+~ egg
+if quest.the_last_egg == done
+Narrator: The nest is empty and the shelf is quiet. High over the gorge, two shapes circle, one enormous and one small, the small one flying very badly.
+-> END
+endif
+if quest.the_last_egg == sold
+Narrator: An empty nest, and a long scrape where something heavy was dragged off the shelf.
+-> END
+endif
+if flag.last_egg_defended
+-> after
+endif
+cutscene sq_last_egg
+Narrator: The nest is the size of a cottage roof, woven of whole pines and lined with bones and the things the roc carried off with them: harness, a saddle, a rusted helmet.
+Narrator: In the middle sits one egg, as tall as a child, grey and freckled. It's cracked. As you watch, a piece the size of a plate falls in, and a wet grey beak as long as your arm comes out, and opens, and screams for its mother.
+* (Wrap the egg in Tibor's straw and take it.) -> take
+* (Stand between the chick and the tower.) -> falconer
+* (Leave it.) -> END
+
+~ take
+set roc_egg_taken
+Narrator: It's heavy, and it screams the whole way down, and somewhere out over the gorge something enormous answers.
+if flag.tibor_marked
+interject tag:blunt: We're carrying a roc to the count.
+endif
+-> falconer
+
+~ falconer
+Narrator: Up on the tower, the stone birds on the parapet lift their heads. They aren't carvings. They drop off the stone one after another and come down the wind on wide grey wings, and with them a man in a falconer's leather glove, falling slowly, the way a leaf falls.
+if flag.roc_egg_taken
+tsolenka_falconer: The master's egg. Thank you for carrying it so far. You may put it down now, and step back, and live.
+else
+tsolenka_falconer: The master's egg. Thank you for finding it for us. You may step back now, and live.
+endif
+if flag.tibor_met
+Narrator: Below on the landing, Tibor has stood up from his fire and is not looking at you.
+endif
+* (Step back and let him take it.) -> sold
+* No. -> fight
+
+~ sold
+quest the_last_egg sold
+set roc_egg_sold
+Narrator: The falconer lifts the chick, shell and all, as if it weighed nothing, and the stone birds take it between them, and they go up the wind toward the castle with it screaming all the way.
+tsolenka_tibor: (From the landing, not loudly.) Four hundred. As promised. I'm sorry. I was told what to say.
+gold +400
+approve godrick_pendlebrook -2 liriel_dawnsong -2 thistle -3 wren_featherfoot -1: You handed the count a roc chick
+-> END
+
+~ fight
+tsolenka_falconer: (He sighs.) The master does so hate to wait.
+combat last_egg
+
+# --- After the falconer (prop roc_egg, once he's beaten) ---
+
+~ after
+quest the_last_egg done
+Narrator: Out over the gorge the roc comes back, enormous, and hangs on the wind beside the shelf looking at you with one gold eye, at the chick, and at you again. Then she settles over the nest, and the chick stops screaming.
+Narrator: She doesn't come for you. She never comes for you again, on the bridge or anywhere.
+set roc_driven_off
+Narrator: In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a staff carved with leaves, its wood still alive.
+gold +300
+give staff_of_the_woodlands
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +3 wren_featherfoot +2 ratatoille +1: You kept the count's falconer off a roc's nest
+-> END

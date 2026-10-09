@@ -173,3 +173,33 @@ func test_a_rolls_a_dying_heros_death_save() -> void:
 	await _frames(10)
 	var rolled := not cv.hud.death_save_shown() or (log_before >= 0 and cv.e.log.entries.size() > log_before)
 	assert_true(rolled, "A rolled it")
+
+
+## Controller fights: Wheels (owner pick 2026-10-09, after Baldur's Gate 3 on console): holding LB opens a wheel of the
+## hotbar filter's actions themselves, the last wedge the tactical view; the D-pad changes the filter.
+func test_the_wheels_hold_the_actions_and_the_tactical_view() -> void:
+	if not _ready_for_input():
+		return
+	GameSettings.set_value("pad_wheels", true, false)
+	var hold := InputEventJoypadButton.new()
+	hold.button_index = JOY_BUTTON_LEFT_SHOULDER
+	hold.pressed = true
+	get_viewport().push_input(hold)
+	await _frames(2)
+	var radial := cv.hud.radial
+	assert_true(radial.visible and not radial.items.is_empty(), "LB opens a wheel of actions")
+	assert_eq(str(radial.items.back()["label"]), "Tactical view", "the last wedge looks from above")
+	assert_eq(radial.items.size(), mini(cv.hud.slot_count(), RadialMenu.PAGE - 1) + 1)
+	var filter := cv.hud.tab
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	assert_ne(cv.hud.tab, filter, "the D-pad changes the wheel's filter")
+	assert_true(radial.visible, "and the wheel stays open")
+	radial.selected = radial.items.size() - 1
+	var release := InputEventJoypadButton.new()
+	release.button_index = JOY_BUTTON_LEFT_SHOULDER
+	release.pressed = false
+	get_viewport().push_input(release)
+	await _frames(2)
+	assert_true(cv.rig.tactical, "releasing on Tactical view switches the camera")
+	cv.rig.tactical = false
+	GameSettings.set_value("pad_wheels", false, false)

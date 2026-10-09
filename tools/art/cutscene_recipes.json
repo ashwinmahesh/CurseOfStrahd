@@ -222,7 +222,14 @@
       "prompt": "Inside a dark bedroom at night, camera behind Ireena at the open casement: she stands at the window in a long cream nightgown and a shawl, auburn hair loose, one hand lifted as if to someone helping her down from a carriage. Outside, against a cold moon and steep snowy rooftops, Strahd stands upright on empty air level with the sill, cape stirring, holding out a gloved hand, smiling. The candles are snuffed; her brother is slumped asleep in a chair by the door with a sword across his knees. Cold moonlight pouring in, mist curling over the sill.",
       "use": "a"
     },
-    "ireena_window_alone": {"refs": ["strahd", "ireena"], "use": "a", "prompt": "Inside a dark bedroom at night, camera behind Ireena at the open casement: she stands at the window in a long cream nightgown and a shawl, auburn hair loose, one hand lifted as if to someone helping her down from a carriage. Outside, against a cold moon and steep snowy rooftops, Strahd stands upright on empty air level with the sill, cape stirring, holding out a gloved hand, smiling. The candles are snuffed and the room behind her is empty: a plain bed, a chair, a closed door, nobody else there. Cold moonlight pouring in, mist curling over the sill."},
+    "ireena_window_alone": {
+      "refs": [
+        "strahd",
+        "ireena"
+      ],
+      "use": "a",
+      "prompt": "Inside a dark bedroom at night, camera behind Ireena at the open casement: she stands at the window in a long cream nightgown and a shawl, auburn hair loose, one hand lifted as if to someone helping her down from a carriage. Outside, against a cold moon and steep snowy rooftops, Strahd stands upright on empty air level with the sill, cape stirring, holding out a gloved hand, smiling. The candles are snuffed and the room behind her is empty: a plain bed, a chair, a closed door, nobody else there. Cold moonlight pouring in, mist curling over the sill."
+    },
     "ireena_window_empty": {
       "refs": [],
       "prompt": "A dark bedroom at night seen from the doorway: the window stands wide on an empty night, curtains lifting, mist pouring in over the sill, and a woman's shawl lies on the floorboards in a pool of cold moonlight. A sword lies dropped beside an empty chair. No figures anywhere. Grief and silence.",
@@ -1064,6 +1071,14 @@
         "toma_sarnov"
       ],
       "prompt": "A long wooden fishing jetty running out into a black lake at night under a thin moon, mist lying on the water. At its very end, over the dark water, stands a little girl of about nine made entirely of pale glowing light, in a wet old-fashioned festival dress with ribbons, holding up a paper lantern, her glow the colour of a candle seen through paper. She holds the hand of a real little boy in a white nightshirt, barefoot and blue with cold, smiling at nothing, drawn exactly as the reference shows the boy's face and hair. Under the water round the jetty, a few faint lights glimmer like drowned lanterns. {party} come down the jetty toward them, seen from behind, one with a lantern. The girl's glow is the brightest thing in the picture, one single picture, no panels.",
+      "use": "a"
+    },
+    "sq_last_egg": {
+      "refs": [
+        "roc",
+        "gargoyle"
+      ],
+      "prompt": "A rock shelf high on a mountain above a gorge of cloud, cold wind and snow streaming off it. On the shelf, a nest as big as a cottage roof woven from whole pine trunks and lined with bones and old harness, and in it a huge grey freckled egg as tall as a child, cracked open, a wet grey baby bird's beak as long as an arm screaming out of it. On a tower parapet above the shelf, stone gargoyles drawn after the second reference are spreading their wings to drop off the stone, and among them a pale man in a falconer's leather glove. Far out over the gorge, tiny against the sky, the enormous shape of the mother roc drawn after the first reference, turning back. {party} stand at the edge of the nest, seen from behind. Cold thin daylight, one single picture, no panels.",
       "use": "a"
     }
   }

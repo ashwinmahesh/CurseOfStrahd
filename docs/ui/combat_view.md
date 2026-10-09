@@ -233,3 +233,17 @@ over its head. The Jump spell's leap shows the same arc.
 **O** (Settings, Keys: "Tactical camera (from above)") eases the camera to a steeper view from further back
 (CameraRig.tactical: 66 degrees down instead of 40, 1.45 times as far), to plan a fight from above; O again eases it
 back. It works exploring too. Rotation, zoom and the combat moments' shots work as before on top of it.
+
+## Controller fights: Bar or Wheels (owner pick 2026-10-09, after Baldur's Gate 3 on console)
+
+Settings, Game, **Controller fights**: Bar (today's: hold LB for a wheel of tabs, LT/RT/RB step and use the hotbar) or
+Wheels (hold LB for a wheel of the actions themselves: the hotbar filter's slots, icon and name, ten to a page, the last
+wedge Tactical view; the D-pad's up and down change the filter and left and right the page; release on a wedge to use
+it, a container opening its choices, a rule stepping on). Both wheels carry the tactical camera, the pad's way to it.
+
+## Dice moments (owner 2026-10-09)
+
+When a hero makes a saving throw in a fight (a death save included), the dice lane's big emerald d20 (`DiceRoll`,
+ui/dice/dice_roll.gd) rolls it before the action's effects play: `CombatView._dice_moments` at the start of
+`_play_events`, one roll after another, from the heroes' d20 events (`Creature.roll_d20` logs each roll's kind and
+test). Foes' saves and attack rolls don't get it (owner, 01:27). Any press skips a roll; fast combat plays it quicker.

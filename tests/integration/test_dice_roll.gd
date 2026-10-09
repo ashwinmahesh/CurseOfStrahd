@@ -122,6 +122,37 @@ func test_show_roll_comes_and_goes_and_never_hangs_an_await() -> void:
 	assert_true(root.find_child("BigRoll", true, false) == null, "and gone once it's done")
 
 
+## A scene freed while its big roll is up, or while a roll waits its turn behind another, takes the roll with it and
+## nothing errors (build's ci, 2026-10-09: a pickpocket test's scene freed before the no-motion panel's next frame).
+func test_a_roll_goes_quietly_with_its_scene() -> void:
+	var roll := {"kind": "check", "natural": 9, "rolls": [9], "total": 12, "target": 15, "success": false,
+		"who": "Thistle", "label": "Sleight of Hand"}
+	var gone := Node.new()
+	add_child(gone)
+	DiceRoll.show_roll(gone, roll)
+	gone.free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	# With motion: one roll up, a second waiting behind it whose scene goes; the first finishing calls nobody.
+	UiMotion._checked = true
+	UiMotion.reduced = false
+	root = Node.new()
+	add_child(root)
+	var first_done := DiceRoll.show_roll(root, roll)
+	var first := DiceRoll.showing()
+	var waiting := Node.new()
+	add_child(waiting)
+	DiceRoll.show_roll(waiting, roll)
+	assert_true(DiceRoll.showing() != first, "the second waits its turn")
+	waiting.free()
+	assert_true(DiceRoll.showing() == null or DiceRoll.showing() == first, "the freed one is no longer showing")
+	first.close()
+	await first_done
+	await get_tree().process_frame
+	UiMotion.reduced = true
+	assert_true(root.find_child("BigRoll", true, false) == null, "the first went once closed")
+
+
 ## The vault with two heroes in it.
 func _vault() -> LocationView:
 	Compendium.shared().tables["locations"]["test_dice_vault"] = LOC.duplicate(true)
