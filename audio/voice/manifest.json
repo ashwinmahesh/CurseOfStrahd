@@ -33235,6 +33235,12 @@
   "recipe": "dd92281f92",
   "text": "Soup: barley, onions, carrots, and something that might have been mutton once. It smells better than anything in Barovia has a right to."
  },
+ "narrator/01536c53e1052df8": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Strahd is at the foot of the statue again, a fresh black rose in his gloved hand. He lays it down with the others before he turns."
+ },
  "narrator/0155d14725280ac7": {
   "chars": 36,
   "model": "eleven_v4",
