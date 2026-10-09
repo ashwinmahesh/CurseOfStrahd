@@ -490,7 +490,8 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 		# Ammunition comes by its bundle (20 Arrows for 1 gp, as the PHB prices them), not a piece at a time.
 		var lot := StoryState.shop_lot(data)
 		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * float(w.get("markup", shop.get("markup", 1.0)))
-		out.append({"id": id, "name": str(data.get("name", id)) + (" ×%d" % lot if lot > 1 else ""), "lot": lot,
+		# A pair (Sending Stones) sells whole, both pieces for the item's price.
+		out.append({"id": id, "name": str(data.get("name", id)) + (" ×%d" % lot if lot > 1 else ""), "lot": 2 if bool(data.get("pair", false)) else lot,
 			"price": Trade.buy_price(self, npc_id, base), "qty": qty,
 			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
 	return out
@@ -502,8 +503,8 @@ static func shop_lot(data: Dictionary) -> int:
 	return maxi(1, int(data.get("bundle", 1))) if bool(data.get("stackable", false)) else 1
 
 
-## What `npc_id` pays for one `item_id`, or one bundle of it (shop_lot), after their attitude and a haggle; or -1 if
-## they don't buy that kind of thing.
+## What `npc_id` pays for one `item_id`, or one bundle of it (shop_lot), or one piece of a pair, after their attitude
+## and a haggle; or -1 if they don't buy that kind of thing.
 func shop_offer(npc_id: String, item_id: String) -> float:
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var data := Compendium.shared().item_data(item_id)
@@ -513,7 +514,9 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	# No `buys`: anything; an empty list: nothing (the Order of the Silver Dragon has no use for coin).
 	if (shop.has("buys") and buys.is_empty()) or (not buys.is_empty() and not str(data.get("category", "")) in buys):
 		return -1.0
-	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * StoryState.shop_lot(data) * float(shop.get("sell_rate", 0.5)), 0.01))
+	# One piece of a pair is half the pair's price.
+	var pieces := 0.5 if bool(data.get("pair", false)) else float(StoryState.shop_lot(data))
+	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * pieces * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
 ## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`. Returns "" or why not.
