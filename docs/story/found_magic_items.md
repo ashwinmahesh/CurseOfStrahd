@@ -17,7 +17,8 @@ Rules for this list:
 - **Gift**: an NPC hands it over in conversation (a favour, a quest's end, a check). **Tip**: an NPC tells you
   where something is hidden, and the spot shows up once you know. **Hoard**: a lair's container.
 - Random treasure (story/treasure.gd) still rolls on top of this: one location in five now rolls nothing, down
-  from about one in three, and nearly a third roll two items.
+  from about one in three, and nearly a third roll two items. Random rolls (chests and the road's spoils) never give a common item either: the
+  DMG's common share goes to uncommon (data/treasure/levels.json).
 
 Status: ✅ built · ○ planned
 

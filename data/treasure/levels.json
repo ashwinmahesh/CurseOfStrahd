@@ -1,5 +1,5 @@
 {
-  "_note": "Random magic item placement (story/treasure.gd, ADR 0012). The party's level in each region (from the region design docs) decides the rarities, following the 2024 DMG's treasure guidance: tier 1 (levels 1-4) mostly common and uncommon items, tier 2 (levels 5-10) mostly uncommon and rare with the odd very rare one. A location can name its own level with \"treasure_level\".",
+  "_note": "Random magic item placement (story/treasure.gd, ADR 0012). The party's level in each region (from the region design docs) decides the rarities, following the 2024 DMG's treasure guidance: tier 1 (levels 1-4) mostly common and uncommon items, tier 2 (levels 5-10) mostly uncommon and rare with the odd very rare one. A location can name its own level with \"treasure_level\". No common items (owner, 2026-10-08: early commons become uncommon, later ones rarer): the DMG's common share goes to uncommon.",
   "region_levels": {
     "into_the_mists": 1,
     "death_house": 2,
@@ -23,10 +23,10 @@
     "castle_ravenloft": 10
   },
   "rarity_by_level": [
-    {"max_level": 2, "weights": {"common": 70, "uncommon": 30}},
-    {"max_level": 4, "weights": {"common": 50, "uncommon": 45, "rare": 5}},
-    {"max_level": 7, "weights": {"common": 25, "uncommon": 50, "rare": 25}},
-    {"max_level": 10, "weights": {"common": 15, "uncommon": 40, "rare": 38, "very_rare": 7}},
+    {"max_level": 2, "weights": {"uncommon": 100}},
+    {"max_level": 4, "weights": {"uncommon": 95, "rare": 5}},
+    {"max_level": 7, "weights": {"uncommon": 75, "rare": 25}},
+    {"max_level": 10, "weights": {"uncommon": 55, "rare": 38, "very_rare": 7}},
     {"max_level": 20, "weights": {"uncommon": 25, "rare": 45, "very_rare": 25, "legendary": 5}}
   ],
   "items_per_location": {"none": 20, "one": 50, "two": 30, "extra_if_containers": 4, "extra_chance": 30},
