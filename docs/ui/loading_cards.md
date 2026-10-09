@@ -30,3 +30,17 @@ controls (core/input_actions.gd, world/game_root.gd).
   (the whole-map search per leg was 0.85 s of Vallaki's build).
 - `tools/perf/perf_run.py --only transitions [--cover] [--headless]` times each change of place on a route through
   the village, the Death House, Vallaki and the castle.
+
+## The place's name on arriving
+
+Visual Polish Plan 6 (the vault's "Visual Polish Plan.md", 2026-10-09, after Octopath Traveler 2's area names): when no
+loading card is up, `enter_location` shows the place's name near the top of the screen as it fades in from black
+(`ui/hud/place_title.gd`, `PlaceTitle`): the display face over a gilt rule, rising a little into view, holding, then
+fading away. A card names the place itself, so a new region or a slow change of place shows the card and never the
+title over it (`show_for` checks for a `LoadingCard` under the game root). A journey's arrival (`_arrive`) puts the hour
+beneath the name instead of the old toast (the toast still says both when a card was shown). It sits over the HUD
+(layer 20) and under the menus, the fade from black and the card; it never takes a click, makes way at once for a
+conversation or an arrival picture, shows one name at a time, and like the card never shows in headless runs or still
+captures without `--motion`.
+
+    make capture SCENE=res://tools/capture/title_capture.tscn NAME=title FRAMES=10 ARGS="--motion"
