@@ -238,7 +238,7 @@ func _build() -> void:
 
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
 var occluders: Array[Sprite3D] = []
-## 3D trees (ModelPiece) that fade the same way.
+## 3D trees (ModelPiece) and rock columns (place_looks "rock_walls") that fade the same way.
 var mesh_occluders: Array[Node3D] = []
 var _faded_for: Array = []           ## fade_occluders' camera, focus and counts once every tree had settled
 ## The scenery the board put on each square (a tree, a wall block, furniture on a '=' square, brambles), so a
@@ -466,6 +466,9 @@ func _rock(c: Vector2i) -> void:
 	var w := _rng.randf_range(0.95, 1.08)
 	var rock := _box("Rock", Vector3(w, h, w), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _rock_tex)
 	rock.rotation.y = _rng.randf_range(-0.12, 0.12)
+	# It fades like a tree when it stands between the camera and the party: on Mount Baratok, the Tsolenka Pass and at
+	# the Werewolf Den the party arrived hidden behind a wall of these (UI QA W-01).
+	mesh_occluders.append(rock)
 	_dress(c, first)
 
 
