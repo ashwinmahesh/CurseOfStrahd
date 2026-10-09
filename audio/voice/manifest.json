@@ -6450,6 +6450,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "He's home. That's the thing. Whatever else is true, he's home."
  },
+ "davian_martikov/1b08ef440bb2f70d": {
+  "chars": 190,
+  "direction": "[gruff, uneasy, low]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "Interesting. There's a lantern on Yester Hill at night. Up on the crown, where you burned it. My pickers watch it from the rows. It goes round and round the top, slow, like somebody digging."
+ },
  "davian_martikov/1d9ae58e27c2b7dd": {
   "chars": 89,
   "model": "eleven_v3",
@@ -6628,6 +6635,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "Somebody picks it in the dark. My pickers won't go near it. Find out who. If it's druids, I want them. If it isn't, I want to know what it is before I burn my grandfather's vines."
  },
+ "davian_martikov/71240a536a501054": {
+  "chars": 214,
+  "direction": "[gruff, wry, grateful]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "This came with the house, from my grandfather's time, and nobody here has ever needed a tower. You lot need little else. And the money's from the barrel I was saving for my own funeral. I've decided to postpone it."
+ },
  "davian_martikov/72c8f059be314d06": {
   "chars": 59,
   "model": "eleven_v3",
@@ -6695,6 +6709,13 @@
   "recipe": "6eeb2cd7e9",
   "text": "Hm. They've scratched the paint."
  },
+ "davian_martikov/8da3aa0050b64a48": {
+  "chars": 96,
+  "direction": "[gruff, relieved, wry]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "The lantern's out. The pickers say the hill looked grey this morning, not black. Grey's a start."
+ },
  "davian_martikov/8f615f8ae8811e4d": {
   "chars": 80,
   "model": "eleven_v3",
@@ -6756,6 +6777,13 @@
   "model": "eleven_v3",
   "recipe": "6eeb2cd7e9",
   "text": "\"I sent him.\" ...Elvir. You stubborn, stupid boy. You always did think you were the eldest."
+ },
+ "davian_martikov/ac5267e14875a621": {
+  "chars": 76,
+  "direction": "[stern, weary, firm]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "I don't care who. I want it stopped. That hill has had enough planted in it."
  },
  "davian_martikov/ac6554596f34ce2d": {
   "chars": 197,
@@ -6949,6 +6977,13 @@
   "model": "eleven_v3",
   "recipe": "6eeb2cd7e9",
   "text": "Two. Two in the ground. My grandfather had only two for a while, when he was a boy, and he swore the wine was better for having to try."
+ },
+ "davian_martikov/fed678b5a082c9d4": {
+  "chars": 81,
+  "direction": "[gruff, curt]",
+  "model": "eleven_v3",
+  "recipe": "6eeb2cd7e9",
+  "text": "The lantern on the hill. Every night now. Go up after dark; that's when it's lit."
  },
  "davian_martikov/ffb205836f61f052": {
   "chars": 227,
@@ -13406,6 +13441,12 @@
   "recipe": "956cd23797",
   "text": "I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere."
  },
+ "hero_female/3a70545fff2d3315": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "We burned it. It's still ash. Fire's no use on ash."
+ },
  "hero_female/3ab62a26dc3ced10": {
   "chars": 30,
   "model": "eleven_v4",
@@ -17629,6 +17670,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere."
+ },
+ "hero_male/3a70545fff2d3315": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "We burned it. It's still ash. Fire's no use on ash."
  },
  "hero_male/3ab62a26dc3ced10": {
   "chars": 30,
@@ -26315,6 +26362,13 @@
   "recipe": "ef36332f2b",
   "text": "Home. I'll have to find out where that is. Somewhere the trees only drink rain."
  },
+ "kostin/3fd909b62e2ef1ce": {
+  "chars": 67,
+  "direction": "[pleading, earnest, desperate]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "It's the first green thing on this hill in a hundred years. Please."
+ },
  "kostin/6150adc6af25b0ff": {
   "chars": 216,
   "model": "eleven_v3",
@@ -26326,6 +26380,20 @@
   "model": "eleven_v3",
   "recipe": "ef36332f2b",
   "text": "Because you said the land was older than him, and I can't stop hearing it. I'd like to be wrong about everything. It would be restful."
+ },
+ "kostin/9346b7cd366af533": {
+  "chars": 95,
+  "direction": "[anguished, broken, apologetic]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "No... no. I'm sorry. I'm so sorry. (He doesn't know whether he's saying it to you or the tree.)"
+ },
+ "kostin/9f25292d0db1e2f9": {
+  "chars": 128,
+  "direction": "[earnest, proud, pleading]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "The hill can't stay a grave. Something has to grow here that isn't hers. A month ago it was a switch you could snap. Look at it."
  },
  "kostin/b6091269a0fbfafb": {
   "chars": 18,
@@ -26345,11 +26413,25 @@
   "recipe": "ef36332f2b",
   "text": "Mother will know you're coming! She'll be ready for you!"
  },
+ "kostin/bfa2b26335de9804": {
+  "chars": 188,
+  "direction": "[quiet, resolute, sad]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "I'll stay. Someone has to watch this hill, and I'm the only one who knows what it does to a tree. When it's a hill again, I'll plant something. Something small. A long way from the middle."
+ },
  "kostin/c3ac174a55041d83": {
   "chars": 125,
   "model": "eleven_v3",
   "recipe": "ef36332f2b",
   "text": "This house belongs to the land, and the land belongs to its lord. You are standing in his press house with mud on your boots."
+ },
+ "kostin/cd0dd8f8163d4fa6": {
+  "chars": 139,
+  "direction": "[earnest, hopeful, tired]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "You. I hoped it would be you, if anyone came. I found where the trees only drink rain, three weeks past the Krezk road. I brought one back."
  },
  "kostin/cfd5544d53910886": {
   "chars": 100,
@@ -26363,6 +26445,13 @@
   "recipe": "ef36332f2b",
   "text": "It doesn't know me anymore. It's yours."
  },
+ "kostin/d5b70921acc0a1b5": {
+  "chars": 54,
+  "direction": "[hollow, bitter, quiet]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "Go home, he said. I'll have to find out where that is."
+ },
  "kostin/d710155d3de9cc23": {
   "chars": 156,
   "model": "eleven_v3",
@@ -26374,6 +26463,20 @@
   "model": "eleven_v3",
   "recipe": "ef36332f2b",
   "text": "I've stood on that hill at midnight with the tree singing. You don't frighten me. You don't even interest me."
+ },
+ "kostin/dc1bff84c3259a2d": {
+  "chars": 128,
+  "direction": "[stricken, quiet, ashamed]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "(He sees you see it. He sits back on his heels.) It's drinking from her. Isn't it. I brought it all this way and gave it to her."
+ },
+ "kostin/ecf2be8ba93656e8": {
+  "chars": 42,
+  "direction": "[quiet, stubborn, sad]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "I'll stay with it tonight. Someone should."
  },
  "kostin/ff9bed8136867fbc": {
   "chars": 146,
@@ -32958,6 +33061,12 @@
   "recipe": "dd92281f92",
   "text": "The slate roof of the keep, with chimneys like broken teeth. Ravens watch you from the ridge."
  },
+ "narrator/022db7ded1ef0502": {
+  "chars": 229,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It's shoulder high after a month, and its leaves are veined red, and the water from his flask doesn't soak into the ground round it; the ground takes it. Under the crown the old tree's roots still run, and they've found his tree."
+ },
  "narrator/0241b2b1ee4cf15d": {
   "chars": 195,
   "model": "eleven_v4",
@@ -35309,6 +35418,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A ring of black glass, wide as a cart wheel, fused out of the rock. The stone in the middle is scorched and fresh."
+ },
+ "narrator/171093dfd75629ea": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She drops the spade. Too late: the cutting has drunk enough. The ash on the crown is already moving toward it."
  },
  "narrator/171765c6a915cca9": {
   "chars": 113,
@@ -40632,6 +40747,12 @@
   "recipe": "dd92281f92",
   "text": "The eating contest was Thistle's idea. Most things involving shouting are. It has been going on for some time, and Ratatoille has stopped cooking in protest."
  },
+ "narrator/4643b2536bf81e52": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A girl of about sixteen in a druid's grey robe much too big for her is planting something on the burned crown by lantern light, and singing to it under her breath."
+ },
  "narrator/4655b89bcb3c43ff": {
   "chars": 140,
   "model": "eleven_v4",
@@ -40931,6 +41052,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Behind the study desk, a panel lifts away. In the hollow sits a velvet box, and in the box a silver brooch, polished recently and never worn."
+ },
+ "narrator/49417cd969f95769": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old woman kneels on the burned crown in the lantern light, where the black tree stood, pressing earth down round something with both hands."
  },
  "narrator/494206348ff9152f": {
   "chars": 114,
@@ -47268,6 +47395,12 @@
   "recipe": "dd92281f92",
   "text": "The burgomaster's house, held for a month against the night. The front door has been mended so many times it is more patch than door."
  },
+ "narrator/80f82342c6cdfce1": {
+  "chars": 217,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The ash of the burned crown lifts. Not blown: drawn, from every side, toward the thing in the turned earth, and it stands up round it into a shape twice a man's height, grey and smoking, with a young tree for a spine."
+ },
  "narrator/81034479365d0b2e": {
   "chars": 165,
   "model": "eleven_v4",
@@ -47471,6 +47604,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Cold, still water; a half-drowned stone causeway out to the island; a round tower with one lit window and no handle on its door. On the shore, a painted wagon and a campfire."
+ },
+ "narrator/82d5a2c948510971": {
+  "chars": 178,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs."
  },
  "narrator/82e444e08e5afbfd": {
   "chars": 76,
@@ -50754,6 +50893,12 @@
   "recipe": "dd92281f92",
   "text": "The tree stands over the broken effigy as if nothing happened. Its roots have moved since the fight. You're nearly sure of that."
  },
+ "narrator/9fe8a780c7a091cf": {
+  "chars": 176,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On the burned crown a young man with a lantern kneels by a sapling, watering it from his own flask. It's Kostin. His feet are wrapped in strips of his robe again, worn through."
+ },
  "narrator/a005ed8a0c7e3a0e": {
   "chars": 120,
   "model": "eleven_v4",
@@ -50765,6 +50910,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The house on the ridge is black against a blacker sky, and in the courtyard something grey moves in ranks, back and forth, the way a tide does."
+ },
+ "narrator/a0177514d0cce4b6": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "As you turn to go, the ash on the crown moves behind you, all of it, the way water moves toward a drain."
  },
  "narrator/a01a57abc5d228ca": {
   "chars": 167,
@@ -55812,6 +55963,12 @@
   "recipe": "dd92281f92",
   "text": "Split logs, frost and a great deal of bark. The watch keeps a tidy woodpile, and nothing else under it."
  },
+ "narrator/cda5cf221dce8f91": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It doesn't want to come. When it does, it comes screaming, a long red root dragging out of the hill like a vein out of an arm."
+ },
  "narrator/cdb28b754823036e": {
   "chars": 169,
   "model": "eleven_v4",
@@ -58566,6 +58723,12 @@
   "recipe": "dd92281f92",
   "text": "Bundles of herbs hang drying from the roof: yarrow, valerian, and a great deal of wolfsbane. Each bundle is tied with a different coloured thread, in an order only one person understands."
  },
+ "narrator/e70714c72acaf3d6": {
+  "chars": 166,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the turned earth beside her stands a thin black shoot as high as her shoulder, with leaves like little hands. The ash round it is moving, very slightly, toward it."
+ },
  "narrator/e71200bf6712b051": {
   "chars": 233,
   "model": "eleven_v4",
@@ -58595,6 +58758,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The trail is a pale scratch between black pines. Every so often, from the hills above, something howls, and something else answers."
+ },
+ "narrator/e77d3743607f9b1d": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He takes hold of it low down, with both hands, and pulls. It comes up screaming, a long thin red root after it like a vein out of an arm, and he throws it down and stands on it."
  },
  "narrator/e798047231f14332": {
   "chars": 183,
@@ -60132,6 +60301,12 @@
   "recipe": "dd92281f92",
   "text": "He listens. Halfway through, he lets go of Vasilka's hand."
  },
+ "narrator/f5e4e1e453835f86": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "As you turn to go, she starts to sing louder, and the ash on the crown moves behind you, all of it, toward her."
+ },
  "narrator/f5f4481dd529a6ac": {
   "chars": 76,
   "model": "eleven_v4",
@@ -60623,6 +60798,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A great sun woven of willow and straw, taller than a house, lashed to a pole in the middle of the square and ringed with paper rays. Somebody has painted it a very hopeful yellow."
+ },
+ "narrator/fae4694254482137": {
+  "chars": 102,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A young tree, growing fast in burned ground, the way things do after a fire. That's all it looks like."
  },
  "narrator/fae80196c31b4d0e": {
   "chars": 106,
@@ -65537,6 +65718,13 @@
   "recipe": "03f2698e6f",
   "text": "Mercy. How like strangers. ...I'll go. The tree will call me back. It always calls us back."
  },
+ "ruxandra/683af5b4249d2166": {
+  "chars": 38,
+  "direction": "[cold, venomous, final]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "You spared me. I'll spare you nothing."
+ },
  "ruxandra/7334cdec8e9cc2e5": {
   "chars": 215,
   "model": "eleven_v3",
@@ -65548,6 +65736,13 @@
   "model": "eleven_v3",
   "recipe": "03f2698e6f",
   "text": "The black-eyed boy. Yes. He told his brother to fly, and the brother flew, and the boy laughed at us all the way up the hill. He stopped laughing, in the end. The tree is very thorough."
+ },
+ "ruxandra/9ccc7996dda1b48a": {
+  "chars": 187,
+  "direction": "[triumphant, fanatical, rasping]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "I told you. The tree calls us back. It always does. I carried a cutting in my sleeve the night you burned it, against my skin, and it drank from me all the way to the Krezk road and back."
  },
  "ruxandra/aba2cf9921f8dd05": {
   "chars": 81,
@@ -77374,6 +77569,34 @@
   "model": "eleven_v4",
   "recipe": "a9f72efbd3",
   "text": "Lovely. We've upset the one bird that holds a grudge."
+ },
+ "yester_zorica/34563429556bba65": {
+  "chars": 152,
+  "direction": "[quiet, horrified, small]",
+  "model": "eleven_v3",
+  "recipe": "20fdc7ff9c",
+  "text": "(She looks at her own hands. The skin of her wrist is threaded with fine red lines, where the twig lay.) It never died. It just... went into me instead."
+ },
+ "yester_zorica/b92943959268ea97": {
+  "chars": 141,
+  "direction": "[stubborn, proud, trembling]",
+  "model": "eleven_v3",
+  "recipe": "20fdc7ff9c",
+  "text": "She taught us. Cut a twig from the tree and keep it against your skin, and it will never die. I kept it. I'm planting it. It's mine to plant."
+ },
+ "yester_zorica/c43f5336a1545391": {
+  "chars": 130,
+  "direction": "[fierce, grieving, accusing]",
+  "model": "eleven_v3",
+  "recipe": "20fdc7ff9c",
+  "text": "You burned it. You burned Mother's tree and Mother with it. I was on the Krezk road for herbs. I came back and the hill was black."
+ },
+ "yester_zorica/d55b01402dbf29c9": {
+  "chars": 22,
+  "direction": "[defiant, cold, shaking]",
+  "model": "eleven_v3",
+  "recipe": "20fdc7ff9c",
+  "text": "Then come and take it."
  },
  "yevgeni/3951b1f08fc043db": {
   "chars": 111,
