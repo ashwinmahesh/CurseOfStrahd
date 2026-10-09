@@ -110,6 +110,8 @@ func enter_location(location_id: String, spawn: String) -> void:
 	if not moving and str(view.loc.get("region", "")) != _card_region:
 		_card_region = str(view.loc.get("region", ""))
 		LoadingCard.show_for(self, view.loc)
+	# The place's name as it fades in (Visual Polish Plan 6), unless a loading card is up and names it already.
+	_title = PlaceTitle.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
 	view.banter_player = banter
 	view.banter.connect(func(lines: Array) -> void:
@@ -654,7 +656,11 @@ func _arrive(place_id: String) -> void:
 	var pl := Travel.place(place_id)
 	var loc_ref := str(pl.get("location", ""))
 	enter_location(loc_ref.get_slice(":", 0), str(pl.get("spawn", "default")))
-	hud.toast("%s · %02d:%02d" % [pl.get("name", place_id), st.minute_of_day / 60, st.minute_of_day % 60])
+	var hour := "%02d:%02d" % [st.minute_of_day / 60, st.minute_of_day % 60]
+	if is_instance_valid(_title):
+		_title.set_subtitle(hour)   # the place's title names it; the hour goes beneath
+	else:
+		hud.toast("%s · %s" % [pl.get("name", place_id), hour])
 
 
 ## A fight with a foe that has legendary actions (Strahd, ADR 0014) plays the boss music.
@@ -727,6 +733,8 @@ func _strahd_step(step: Dictionary) -> void:
 var _fade: ColorRect = null
 var _fade_label: Label = null
 var _place_fade: ColorRect = null
+## The place's name shown on arriving (PlaceTitle), while it's up.
+var _title: PlaceTitle = null
 var _card_region := ""   ## the region whose loading card was shown last
 
 
