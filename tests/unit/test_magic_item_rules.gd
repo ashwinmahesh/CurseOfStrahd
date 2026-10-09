@@ -479,3 +479,30 @@ func test_the_wand_of_slumber_sleeps_foes_and_rests_friends() -> void:
 	assert_true(ch.resource_left("second_wind") > left, "the user woke with a Short Rest's benefits")
 	assert_true(str(res["text"]).contains("Ilse, Silvain, Hedda") and not str(res["text"]).contains("Tamsin"),
 		"the user and two companions: %s" % res["text"])
+
+
+## The Rod of Alertness (The Guide to the Temple): held and attuned, Advantage on Initiative and Perception; its aura
+## gives allies in the light +1 AC and saves, once a dawn, and no foe stays hidden there.
+func test_the_rod_of_alertness_keeps_watch() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 10)
+	var ally := TestCombat.hero(e, "tamsin_tealeaf", Vector2i(3, 2), 10)
+	var ch := c.creature as Character
+	ch.add_item("rod_of_alertness")
+	assert_true(ch.attune("rod_of_alertness"))
+	assert_false("Rod of Alertness" in ch.d20_sources(ch.initiative_keys())["advantage"], "only while held")
+	assert_true(ch.equip("rod_of_alertness", "main_hand"))
+	assert_true("Rod of Alertness" in ch.d20_sources(ch.initiative_keys())["advantage"])
+	assert_true("Rod of Alertness" in ch.d20_sources(ch.check_keys(&"perception"))["advantage"])
+	var foe := TestCombat.foe(e, "bandit", Vector2i(9, 2))
+	TestCombat.start_with(e, c)
+	foe.hidden = true
+	foe.creature.add_condition(&"invisible", "Hidden")
+	var ac := ally.creature.ac_value()
+	assert_true(e.items.use(c, "rod_of_alertness", "aura", [], Vector2(2, 2)).ok)
+	assert_eq(ally.creature.ac_value(), ac + 1)
+	assert_false(foe.hidden, "the light shows where the hidden bandit is")
+	assert_true("Rod of Alertness" in e.hide_blocker(foe), e.hide_blocker(foe))
+	TestCombat.start_with(e, c)
+	assert_false(e.items.use(c, "rod_of_alertness", "aura", [], Vector2(2, 2)).ok, "once per dawn")
+

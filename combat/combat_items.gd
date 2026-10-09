@@ -1098,6 +1098,19 @@ func d20_offers(c: Combatant, t: D20Test, keys: Array[String], out: Array) -> vo
 
 # --- Turns and the start of a fight --------------------------------------------------------------
 
+## Rod of Alertness's aura (item_specials.gd): the planter's allies can tell where any Invisible creature in its Bright
+## Light is, so a foe there can't stay hidden from them. The planter's name if `c` stands in such a light, else "".
+func alertness_light_on(c: Combatant) -> String:
+	var e := enc()
+	for o in e.spells.zones.live():
+		if str(o.rules.get("item_light", "")) != "alertness_aura":
+			continue
+		var holder := e.get_c(o.caster_id)
+		if holder != null and holder != c and not c.allied_with(holder) and e.distance(holder, c) <= 60:
+			return holder.name()
+	return ""
+
+
 ## Lantern of Revealing (Invisible creatures in its Bright Light can be seen), Robe of Eyes (its wearer sees them).
 func reveals_invisible(a: Combatant, b: Combatant) -> bool:
 	var e := enc()

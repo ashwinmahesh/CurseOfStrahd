@@ -941,7 +941,7 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 			return CombatResult.new()
 		"rod_of_alertness_aura":
 			_pay_cost(c, cost)
-			items().attach_light(c, "alertness_aura", 60, 60)
+			items().attach_light(c, "alertness_aura", 60, 60).rounds_left = 100   # the glow lasts 10 minutes
 			for a in e.combatants:
 				if (a == c or a.allied_with(c)) and e.distance(a, c) <= 60:
 					var fx := Effect.new("Protective Aura (Rod of Alertness)", &"item", iid)
@@ -949,9 +949,11 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 					fx.turn_owner_id = c.id
 					fx.modifiers.append(Modifier.of("ac", {"value": 1}, "Rod of Alertness", &"item"))
 					fx.modifiers.append(Modifier.of("save", {"ability": "all", "value": 1}, "Rod of Alertness", &"item"))
-					fx.modifiers.append(Modifier.of("flag", {"value": "senses_invisible"}, "Rod of Alertness", &"item"))
 					a.creature.add_effect(fx)
 			e.log.add("spell", "%s plants the Rod of Alertness: a protective light spreads 60 ft" % c.name(), c.id)
+			for h in e.hostiles_of(c):
+				if h.hidden and e.distance(h, c) <= 60:
+					e.reveal(h, "the Rod of Alertness's light shows where they are")
 			return CombatResult.new()
 		"lordly_might_form":
 			_pay_cost(c, cost)
