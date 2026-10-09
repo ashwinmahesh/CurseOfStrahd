@@ -2,7 +2,9 @@ extends Node3D
 ## Before/after of the fuller animation set (docs/art/animation.md): the old sheets of one character on the left
 ## (art/sprites/<id>_before, a copy of the earlier sheets made for the comparison) and the new ones on the right, under
 ## the game's camera and screen pass, through idle, walk, attack, a hit and a fall; then the new poses alone (riding a
-## mount, sneaking, casting). Recorded with Godot's movie writer:
+## mount, sneaking, casting). --villain (Strahd, owner 2026-10-09) plays his set instead: standing while his cape stirs,
+## walking, attacking, casting and taking a hit, with his dark aura (AuraFx) under the new figure. Recorded with Godot's
+## movie writer:
 ##   tools/godot --path . --write-movie out.avi --fixed-fps 30 --resolution 1280x720 \
 ##     res://tools/art/preview/anim_showcase.tscn -- --id=godrick_pendlebrook --mount=otherworldly_steed
 
@@ -20,6 +22,8 @@ var _mount_id := "otherworldly_steed"
 ## --labels=Before,After names the two figures; --short stops after walking and attacking (a frames comparison).
 var _labels: Array[String] = ["Before", "After"]
 var _short := false
+var _villain := false
+var _aura: AuraFx
 
 
 func _ready() -> void:
@@ -32,16 +36,28 @@ func _ready() -> void:
 			_labels.assign(a.substr(9).split(","))
 		elif a == "--short":
 			_short = true
+		elif a == "--villain":
+			_villain = true
 	var env := WorldEnvironment.new()
 	env.environment = Environment.new()
 	env.environment.background_mode = Environment.BG_COLOR
 	env.environment.background_color = Look.color("void")
 	add_child(env)
+	if _villain:
+		# The modern finish lights figures by the scene: give them the lit lab's daylight so both read clearly.
+		env.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
+		env.environment.ambient_light_color = Look.color("vellum")
+		env.environment.ambient_light_energy = 0.7
+		var sun := DirectionalLight3D.new()
+		sun.rotation_degrees = Vector3(-50, 35, 0)
+		sun.light_color = Look.color("vellum")
+		sun.light_energy = 1.1
+		add_child(sun)
 	var ground := MeshInstance3D.new()
 	var pm := PlaneMesh.new()
 	pm.size = Vector2(40, 40)
 	ground.mesh = pm
-	ground.material_override = Look.cel("grave")
+	ground.material_override = Look.cel("stone" if _villain else "grave")
 	add_child(ground)
 	var line := Node3D.new()
 	line.rotation.y = deg_to_rad(45.0)
@@ -56,6 +72,10 @@ func _ready() -> void:
 	_lying.position = before.position + Vector3(0, 0.03, 0)
 	_lying.visible = false
 	line.add_child(_lying)
+	if _villain:
+		_aura = AuraFx.create(AuraFx.Style.DARK, HEIGHT, 1)
+		_aura.position = after.position
+		line.add_child(_aura)
 	tags.append(_tag(_labels[0], before.position, line))
 	tags.append(_tag(_labels[1], after.position, line))
 	rig = CameraRig.new()
@@ -117,6 +137,10 @@ func _wait(seconds: float) -> void:
 
 func _run() -> void:
 	await _wait(0.3)
+	if _villain:
+		await _villain_run()
+		get_tree().quit()
+		return
 	title.text = "Standing: the new set breathes"
 	_face(1)
 	await _wait(3.0)
@@ -175,6 +199,51 @@ func _run() -> void:
 	after.visible = true
 	await _poses()
 	get_tree().quit()
+
+
+## Strahd's set beside his old sheets: the drawn idle, the walk, the clawed strike, the shadow spell (his old sheet had
+## only the strike, which plays for it), a hit; his aura surges with each.
+func _villain_run() -> void:
+	title.text = "Standing: his cape billows"
+	_face(1)
+	await _wait(4.0)
+	_face(0)
+	await _wait(3.0)
+	title.text = "Walking"
+	for steps: int in [1, 2, 3]:
+		_face(steps)
+		before.moving = true
+		after.moving = true
+		await _wait(1.8)
+	before.moving = false
+	after.moving = false
+	await _wait(0.5)
+	title.text = "Clawed strike"
+	for steps: int in [1, 2, 7]:
+		_face(steps)
+		await _wait(0.4)
+		before.attack()
+		after.attack()
+		_aura.surge(1.0)
+		await _wait(1.6)
+	title.text = "Casting"
+	for steps: int in [1, 2]:
+		_face(steps)
+		await _wait(0.4)
+		before.attack()
+		after.cast()
+		_aura.surge(1.0)
+		await _wait(1.8)
+	title.text = "Taking a hit"
+	_face(1)
+	for i in 2:
+		await _wait(0.5)
+		_flash(before)
+		_flash(after)
+		after.hurt()
+		_aura.surge(0.6)
+		await _wait(1.0)
+	await _wait(1.0)
 
 
 ## The old fall: the figure crumples and the front view drops flat (CombatToken.fall without drawn frames).

@@ -11,8 +11,8 @@ the frames into animations:
   walk4    walk.png/.tres     walk_<dir> (four drawn steps, eight frames with the body's rise and fall), idle_<dir>
                               (breathing, from the standing view). Cells keep the walk cell's height: the game sizes a
                               sprite by its standing frame.
-  walk8i   walk.png/.tres     as walk8, but idle_<dir> is drawn (strip idle4: the cape stirring while he stands, eight
-                              frames at 6 fps) instead of breathing (Strahd)
+  walk8i   walk.png/.tres     as walk8, but idle_<dir> is drawn (strip idle4: the cape billowing while he stands, six
+                              frames at 6 fps, never back to the hanging cape) instead of breathing (Strahd)
   attack5  attack.png/.tres   attack_<dir>: ready, anticipation, wind-up, strike with a smear (the hit), follow-through
   hurt     hurt.png/.tres     hurt_<dir> (flinch and back), die_<dir> (flinch, stagger, fall, lying), down_<dir> (lying)
   ride     ride.png/.tres     ride_idle_<dir> (seated astride, breathing; drawn with the seat at the sprite's feet so it
@@ -80,8 +80,8 @@ PLANS = {
            ("base", 0.995, 1.012, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0)],
         "anims": [("walk", list(range(16)), [1] * 16, 20.0, True), ("idle", list(range(16, 22)), [1] * 6, 6.0, True)],
     },
-    # walk8 with a drawn idle (Strahd, owner 2026-10-09): the third strip (idle4, poses c1..c3) has the cape stirring
-    # while he stands, looped slowly in place of the breathing.
+    # walk8 with a drawn idle (Strahd, owner 2026-10-09): the third strip (idle4, poses c1..c3) has the cape billowing
+    # while he stands, looped in place of the breathing.
     "walk8i": {
         "file": "walk", "fixed_height": True, "strips": ["walk8a", "walk8b", "idle4"],
         "frames": [("a1", 1.0, 1.0, 1, 0, 0), ("a1", 1.01, 0.99, 1, 0, -0.004), ("a2", 1.015, 0.98, 1, 0, -0.012),
@@ -90,11 +90,12 @@ PLANS = {
                    ("b1", 1.0, 1.0, 1, 0, 0), ("b1", 1.01, 0.99, 1, 0, -0.004), ("b2", 1.015, 0.98, 1, 0, -0.012),
                    ("b2", 1.01, 0.99, 1, 0, -0.008), ("b3", 1.0, 1.0, 1, 0, 0.004), ("b3", 0.995, 1.006, 1, 0, 0.008),
                    ("b4", 0.99, 1.012, 1, 0, 0.012), ("b4", 0.995, 1.006, 1, 0, 0.006)]
-        + [("base", 1.0, 1.0, 0, 0, 0), ("base", 0.997, 1.006, 0, 0, 0), ("c1", 0.997, 1.008, 0, 0, 0),
-           ("c2", 0.996, 1.01, 0, 0, 0), ("c3", 0.997, 1.008, 0, 0, 0), ("c3", 0.998, 1.004, 0, 0, 0),
-           ("c2", 0.999, 1.002, 0, 0, 0), ("c1", 1.0, 1.0, 0, 0, 0)],
+        # Owner 2026-10-09: "I want the cape to billow in his standing pose": the loop never drops back to the hanging
+        # cape of the turnaround; it lifts (c1), billows out (c2, held while he breathes), sways (c3) and lifts again.
+        + [("c1", 1.0, 1.0, 0, 0, 0), ("c2", 0.997, 1.006, 0, 0, 0), ("c2", 0.995, 1.012, 0, 0, 0),
+           ("c2", 0.997, 1.006, 0, 0, 0), ("c1", 1.0, 1.0, 0, 0, 0), ("c3", 0.998, 1.004, 0, 0, 0)],
         "anims": [("walk", list(range(16)), [1] * 16, 20.0, True),
-                  ("idle", list(range(16, 24)), [1.5, 1, 1, 1.25, 1, 1, 1, 1], 6.0, True)],
+                  ("idle", list(range(16, 22)), [1, 1.25, 1.5, 1.25, 1, 1], 6.0, True)],
     },
     "attack10": {
         "file": "attack", "strips": ["attack10a", "attack10b"],

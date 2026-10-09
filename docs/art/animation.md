@@ -77,7 +77,7 @@ turns the strips into sheets, adding in-between frames (squash, stretch, lean, a
 | `ride` | seated astride (the horse drawn flat magenta and keyed out), weapon raised, striking down | `ride`: ride_idle_, ride_attack_ |
 | `sneak` | crouched, two crouched steps | `sneak`: sneak_idle_, sneak_walk_ |
 | `cast` | gathering, releasing | `cast`: cast_ (the release lands on frame 3) |
-| `idle4` (with `walk8a`, `walk8b`: plan `walk8i`) | the cape stirring, billowing and settling while he stands | `walk`: as `walk8`, but idle_ is the drawn loop (8 frames at 6 fps) instead of breathing |
+| `idle4` (with `walk8a`, `walk8b`: plan `walk8i`) | the cape lifting, billowing and swaying while he stands | `walk`: as `walk8`, but idle_ is the drawn loop (6 frames at 6 fps; the cape never hangs still, owner 2026-10-09) instead of breathing |
 
 (Doubled frames, owner 2026-10-07: `walk4` and `attack5`, one strip of four or five poses, came first and still
 render.) About 40 strips a hero (8 strips for 6 kinds, 5 views; the other 3 directions are mirrors), plus redraws;
@@ -90,10 +90,10 @@ attacks) flags merged, clipped or mis-scaled strips, and panel borders Gemini so
 **Strahd (owner 2026-10-09: "give Strahd's sprite better animation treatment than the rest of the monsters since he
 is the main villain").** The main villain has the fuller set too, from a menacing turnaround (fangs, claws, a torn
 cape; `strahd_turnaround.png` and its `_hd`): `walk8i` (the walk plus a drawn idle, `idle4`, where his cape stirs and
-billows while he stands), `attack10`, `hurt` and `cast`, no riding or sneaking (`tools/art/build_keys.py` KEYED). His
-animations.json entry has `flow`, a sentence added to every strip's prompt so the cape moves in every pose, and
-`cast_gather` / `cast_release` for his shadow spell. `make keys ONLY=strahd` renders them; `make anims` leaves him
-alone. His dark aura (below) is drawn at run time, not in the sheets.
+billows while he stands, never hanging still), `attack10`, `hurt` and `cast`, no riding or sneaking
+(`tools/art/build_keys.py` KEYED). His animations.json entry has `flow`, a sentence added to every strip's prompt so
+the cape moves in every pose, and `cast_gather` / `cast_release` for his shadow spell. `make keys ONLY=strahd`
+renders them; `make anims` leaves him alone. His dark aura (below) is drawn at run time, not in the sheets.
 
 **HD sheets (owner 2026-10-07: "crystal clear, and higher-res when zoomed in").** The heroes' cells are 768 px
 (twice the earlier 384). Each hero's turnaround is redrawn at 2K, faithful to the original with sharper line art
