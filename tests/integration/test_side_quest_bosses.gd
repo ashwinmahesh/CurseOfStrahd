@@ -370,3 +370,12 @@ const BEHIND_THE_COUNTER: Array[Vector2i] = [Vector2i(14, 8), Vector2i(15, 8), V
 ## The innkeeper's wife and son, and the cellar's rats, at level 2.
 func test_the_grey_goose_cellar_at_level_2() -> void:
 	await _series("svalich_roadhouse", 23, 2, "roadhouse_cellar", [1, 2, 3, 4, 5, 6, 7, 8], ["roadhouse_innkeeper_met"], [], [], BEHIND_THE_COUNTER)
+
+
+## By the fold on the high pasture, below the mists.
+const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector2i(9, 12), Vector2i(12, 12)]
+
+
+## Six wolves out of the mists at level 1.
+func test_the_mist_wolves_at_level_1() -> void:
+	await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)

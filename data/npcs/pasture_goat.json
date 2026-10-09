@@ -1,0 +1,17 @@
+{
+  "id": "pasture_goat",
+  "name": "A Goat",
+  "title": "Of the Village Herd",
+  "summary": "One of the village of Barovia's goats, minded on the high pasture by Erno.",
+  "portrait": "goat",
+  "sprite": "goat",
+  "attitude": "indifferent",
+  "monster": "goat",
+  "guest": false,
+  "tags": [
+    "beast",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "it/its"
+}

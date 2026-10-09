@@ -1,0 +1,17 @@
+{
+  "id": "pasture_snowdrop",
+  "name": "Snowdrop",
+  "title": "An Old Nanny Goat",
+  "summary": "An old nanny goat, white going yellow, with a cracked bell on a collar scratched SNOWDROP, who walked out of the mists onto the high pasture fifty years after she walked into them.",
+  "portrait": "goat",
+  "sprite": "goat",
+  "attitude": "indifferent",
+  "monster": "goat",
+  "guest": false,
+  "tags": [
+    "beast",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her"
+}
