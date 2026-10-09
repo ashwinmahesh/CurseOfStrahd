@@ -158,6 +158,29 @@ func test_a_manual_raises_a_score_and_its_maximum_for_good() -> void:
 	assert_eq(copy.ability_score(&"str"), ch.ability_score(&"str"), "kept in the build")
 
 
+## The Manual of Quickness of Action (The Drowned Library): 48 hours of study, +2 Dexterity past 20, the manual left a
+## plain book, the gain kept through a save; a second copy of a manual works again.
+func test_the_manual_of_quickness_raises_dexterity_past_twenty() -> void:
+	var st := StoryState.new()
+	var ch := TestChars.pregen("tamsin_tealeaf", 9)
+	(ch.build["base_scores"] as Dictionary)["dex"] = 20
+	ch.refresh()
+	st.party.append(ch)
+	assert_eq(ch.ability_score(&"dex"), 20)
+	ch.add_item("manual_of_quickness_of_action")
+	var t0 := st.total_minutes()
+	assert_true(bool(FieldItems.use(st, ch, "manual_of_quickness_of_action", "study", ch, DiceRoller.new(4))["ok"]))
+	assert_eq(st.total_minutes() - t0, 48 * 60, "48 hours of study")
+	assert_eq(ch.ability_score(&"dex"), 22, "its maximum rises with it")
+	assert_false(ch.carries("manual_of_quickness_of_action"), "the magic is spent")
+	assert_true(ch.carries("book"), "a plain book is left")
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(back.party[0].ability_score(&"dex"), 22, "kept through a save")
+	ch.add_item("manual_of_quickness_of_action")
+	assert_true(bool(FieldItems.use(st, ch, "manual_of_quickness_of_action", "study", ch, DiceRoller.new(4))["ok"]), "a second copy")
+	assert_eq(ch.ability_score(&"dex"), 24)
+
+
 func test_figurine_becomes_its_creature_and_rests_for_days() -> void:
 	var e := TestCombat.open_field()
 	var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 5)
