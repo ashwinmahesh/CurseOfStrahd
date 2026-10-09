@@ -300,8 +300,10 @@ static func _study(st: StoryState, ch: Character, p: Dictionary, opts: Dictionar
 	if not ch.build.has("item_boons"):
 		ch.build["item_boons"] = []
 	var boons := ch.build["item_boons"] as Array
+	# A tome that stays (Exalted Deeds, Vile Darkness) gives its gift once; a manual is used up, and another copy of it
+	# works again (the 2024 DMG doesn't stop anyone studying a second one).
 	for b: Variant in boons:
-		if str((b as Dictionary).get("source", "")) == str(data.get("name", "")):
+		if custom != "manual_study" and str((b as Dictionary).get("source", "")) == str(data.get("name", "")):
 			return {"ok": false, "text": "%s has already taken what this book can give" % ch.name}
 	boons.append({"ability": ab, "value": 2, "max_raise": 2 if custom != "exalted_deeds" else 4, "source": str(data.get("name", ""))})
 	if custom == "vile_darkness":
