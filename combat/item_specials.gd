@@ -589,6 +589,7 @@ func surprise_filter(ids: Array) -> Array:
 func turn_start(c: Combatant) -> void:
 	fr.turn_start(c)
 	var e := enc()
+	_pipes_turn(c)
 	for o in e.combatants:
 		if o.has_meta("vanish_round") and str(o.get_meta("summoner", "")) == c.id and int(o.get_meta("vanish_round")) <= e.round_no and o.is_alive():
 			e.spells._dismiss(o.id)
@@ -790,6 +791,11 @@ func _arcana_why(c: Combatant, p: Dictionary) -> String:
 			var mid := str((power.get("params", {}) as Dictionary).get("monster", ""))
 			if items().comp().monster_data(mid).is_empty():
 				return "Not available yet (no stat block for %s)" % mid.replace("_", " ")
+		"pipes_of_the_sewers", "pipes_keep_playing":
+			if not plays_wind(c):
+				return "Needs proficiency with a wind instrument"
+			if str(power["custom"]) == "pipes_keep_playing" and (e == null or not e.living().any(func(o: Combatant) -> bool: return _rat_kind(o) == "swarm_of_rats")):
+				return "No swarm of rats here to play to"
 		"end_effect":
 			if not _has_item_effect(c, str(p["item_id"])):
 				return "Not active"
@@ -850,6 +856,19 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 		"summon_monster":
 			_pay_cost(c, cost)
 			return summon(c, str(params.get("monster", "")), int(params.get("count", 1)), point, params, label)
+		"pipes_of_the_sewers":
+			var n := int({"one": 1, "two": 2, "three": 3}.get(str(opts.get("choice", "one")), 1))
+			var ch_p := ch_of(c)
+			if ch_p == null or ch_p.charges_left(iid) < n:
+				return CombatResult.fail("Not enough charges for %d swarm%s" % [n, "" if n == 1 else "s"])
+			_pay_cost(c, cost)
+			ch_p.spend_charges(iid, n - 1)   # the power's own charge is paid after use
+			return _call_rats(c, n, label)
+		"pipes_keep_playing":
+			_pay_cost(c, cost)
+			e.log.add("info", "%s keeps playing the %s" % [c.name(), label], c.id)
+			_play_pipes(c, label)
+			return CombatResult.new()
 		"ring_invisibility":
 			_pay_cost(c, cost)
 			var fx := Effect.new(label, &"item", iid)
@@ -1174,6 +1193,100 @@ func summon(c: Combatant, monster_id: String, count: int, point: Vector2, params
 		e.events.append({"type": "summon_creature", "id": sc.id, "cell": at, "caster": c.id})
 		r.lines.append(e.log.add("spell", "%s appears beside %s (%s)" % [m.name, c.name(), label], c.id))
 	return r
+
+
+# --- Pipes of the Sewers -------------------------------------------------------------------------------
+
+const WIND_INSTRUMENTS := ["bagpipes", "flute", "horn", "pan_flute", "shawm"]
+
+
+## Whether `c` can use the Pipes of the Sewers: proficiency with a wind instrument.
+func plays_wind(c: Combatant) -> bool:
+	var ch := ch_of(c)
+	return ch != null and WIND_INSTRUMENTS.any(func(t: String) -> bool: return ch.has_proficiency("tools", t))
+
+
+## "rat", "giant_rat" or "swarm_of_rats" for those creatures; "" for anything else.
+func _rat_kind(o: Combatant) -> String:
+	if not o.creature is Monster:
+		return ""
+	var mid := str((o.creature as Monster).data.get("id", ""))
+	return mid if mid in ["rat", "giant_rat", "swarm_of_rats"] else ""
+
+
+## Pipes of the Sewers (2024 DMG): a Magic action and 1 to 3 charges call a Swarm of Rats each. They come running to the
+## music (here: they arrive beside the piper within the action) and answer to no one until the tune sways them.
+func _call_rats(c: Combatant, n: int, label: String) -> CombatResult:
+	var e := enc()
+	var data := items().comp().monster_data("swarm_of_rats")
+	var r := CombatResult.new()
+	for i in n:
+		var m := Monster.from_data(data, e.dice)
+		var at := e.spells._free_cell_near(c.cell, CombatGrid.size_cells_for(m.size))
+		var sc := e.add(m, &"neutral", at)
+		sc.set_meta("vanishes", true)
+		sc.set_meta("pipes_called", c.id)
+		if e.state == Encounter.State.ACTIVE:
+			e.insert_after(c, sc)
+		e.events.append({"type": "summon_creature", "id": sc.id, "cell": at, "caster": c.id})
+	r.lines.append(e.log.add("spell", "%s plays the %s: %d swarm%s of rats come%s running" % [c.name(), label, n, "" if n == 1 else "s", "s" if n == 1 else ""], c.id))
+	_play_pipes(c, label)
+	return r
+
+
+## Playing the pipes (calling, or keeping on as a Magic action each round): each Swarm of Rats within 30 ft that no
+## other creature controls and the tune hasn't already failed to sway makes the contest, the piper's Charisma check
+## against its Wisdom check. A win sways it: it's Friendly and obeys the piper for as long as the piping goes on. A loss
+## leaves it to behave as a swarm does, and the music can't sway it again (for 24 hours, so for this fight). A tie
+## changes nothing; the next round's playing can try it again.
+func _play_pipes(c: Combatant, label: String) -> void:
+	var e := enc()
+	var stamp := int(e.get_meta("pipes_clock", 0)) + 1
+	e.set_meta("pipes_clock", stamp)
+	c.set_meta("pipes_play", stamp)
+	for o in e.living():
+		if _rat_kind(o) != "swarm_of_rats" or e.distance(c, o) > 30 or o.has_meta("pipes_refused"):
+			continue
+		if str(o.get_meta("pipes_piper", "")) == c.id:
+			continue
+		if o.has_meta("pipes_piper") or (o.has_meta("summoner") and str(o.get_meta("summoner")) != c.id):
+			continue   # another creature's to command
+		var mine := c.creature.roll_check(e.dice, &"cha", 0, [], [], "Cha check (%s)" % label)
+		var theirs := o.creature.roll_check(e.dice, &"wis", 0, [], [], "Wis check (%s)" % o.name())
+		var rolls: Array[String] = [mine.describe(), theirs.describe()]
+		if mine.total > theirs.total:
+			o.side = &"guest" if c.side == &"party" else c.side
+			o.controller = c.controller
+			o.set_meta("pipes_piper", c.id)
+			o.set_meta("pipes_heard", stamp - 1)
+			e.log.add("info", "The music sways %s: it obeys %s while the piping lasts" % [o.name(), c.name()], o.id, rolls)
+		else:
+			if mine.total < theirs.total:
+				o.set_meta("pipes_refused", true)
+			if o.side == &"neutral" and o.has_meta("pipes_called"):
+				o.side = &"enemy" if c.side in [&"party", &"guest"] else &"party"
+				o.controller = &"ai"
+			e.log.add("info", "%s %s" % [o.name(), "won't be swayed by the music" if mine.total < theirs.total else "hesitates: the music hasn't swayed it yet"], o.id, rolls)
+		e.events.append({"type": "condition", "id": o.id})
+
+
+## A swayed swarm's turn: if its piper hasn't played since its last turn (or can't), the piper's hold ends and it
+## behaves as a swarm does, against the piper's side, and the music can't sway it again.
+func _pipes_turn(c: Combatant) -> void:
+	if not c.has_meta("pipes_piper"):
+		return
+	var e := enc()
+	var piper := e.get_c(str(c.get_meta("pipes_piper")))
+	var played := int(piper.get_meta("pipes_play", 0)) if piper != null and piper.is_alive() and not piper.is_down() else 0
+	if played > int(c.get_meta("pipes_heard", 0)):
+		c.set_meta("pipes_heard", played)
+		return
+	c.remove_meta("pipes_piper")
+	c.set_meta("pipes_refused", true)
+	c.side = &"enemy" if piper == null or piper.side in [&"party", &"guest"] else &"party"
+	c.controller = &"ai"
+	e.log.add("info", "The piping has stopped: %s turns on whoever is near" % c.name(), c.id)
+	e.events.append({"type": "condition", "id": c.id})
 
 
 ## Ring of Spell Storing: casts a stored spell at its stored level with the storer's numbers.
