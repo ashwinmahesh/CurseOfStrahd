@@ -147,8 +147,11 @@ func gear_d20_sources(_keys: Array[String]) -> Dictionary:
 ## asks the same unchanged creatures thousands of questions. While one is open each creature gathers its modifiers
 ## once and answers every question from them. Nothing may change a creature (gear, conditions, effects, level)
 ## inside a read; keep it around pure lookups, and end it in the same function that began it.
+## A read belongs to the thread that opened it (the combat view's enemy plans run on a worker thread, FN-14): the
+## other thread's questions meanwhile are answered afresh and leave its read alone.
 static var _reading := 0
 static var _read_serial := 0
+static var _read_on_main := true
 var _read_at := -1
 var _read_all: Array[Modifier] = []
 var _read_by_stat: Dictionary = {}
@@ -156,22 +159,29 @@ var _read_ctx: Dictionary = {}
 
 
 static func begin_read() -> void:
+	var main := Thread.is_main_thread()
+	if _reading > 0 and main != _read_on_main:
+		return
 	if _reading == 0:
 		_read_serial += 1
+		_read_on_main = main
 	_reading += 1
 
 
 static func end_read() -> void:
+	if _reading > 0 and Thread.is_main_thread() != _read_on_main:
+		return
 	_reading = maxi(0, _reading - 1)
 	if _reading == 0:
 		_read_serial += 1   # what this read gathered is never used again
 
 
 func all_modifiers() -> Array[Modifier]:
-	if _reading > 0 and _read_at == _read_serial:
+	var here := _reading > 0 and Thread.is_main_thread() == _read_on_main
+	if here and _read_at == _read_serial:
 		return _read_all
 	var out := _gather_modifiers()
-	if _reading > 0:
+	if here:
 		_read_at = _read_serial
 		_read_all = out
 		_read_by_stat = {}
@@ -205,13 +215,14 @@ func _gather_modifiers() -> Array[Modifier]:
 
 func modifiers_for(stat: StringName) -> Array[Modifier]:
 	var all := all_modifiers()
-	if _reading > 0 and _read_by_stat.has(stat):
+	var here := _reading > 0 and Thread.is_main_thread() == _read_on_main
+	if here and _read_by_stat.has(stat):
 		return _read_by_stat[stat] as Array[Modifier]
 	var out: Array[Modifier] = []
 	for m in all:
 		if m.stat == stat:
 			out.append(m)
-	if _reading > 0:
+	if here:
 		_read_by_stat[stat] = out
 	return out
 
@@ -230,7 +241,7 @@ func _base_ctx() -> Dictionary:
 
 
 func formula_context(slot_level: int = 0) -> Dictionary:
-	if _reading > 0:
+	if _reading > 0 and Thread.is_main_thread() == _read_on_main:
 		all_modifiers()   # starts this creature's read if it hasn't yet (which empties what it held)
 		var held: Variant = _read_ctx.get(slot_level)
 		if held != null:

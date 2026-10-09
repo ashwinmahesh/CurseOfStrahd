@@ -88,6 +88,10 @@ var _zoom_before := 13.0
 var _closed := false
 ## A boss's entrance is showing (a click, Space or Escape cuts it short).
 var _entrance_tw: Tween
+## Enemy plans are made on a worker thread so the screen keeps moving while a foe in a big fight thinks (FN-14);
+## headless runs (tests, the balance sims) plan in line as before.
+var think_aside := DisplayServer.get_name() != "headless"
+var _thinker: Thread = null
 
 
 ## Starts showing `encounter` on `board_` with `rig_` and the creatures' `tokens_` (id -> CombatToken). Starts the
@@ -314,7 +318,15 @@ func _advance() -> void:
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
-		var r := e.run_ai_turn()
+		var r := e.begin_ai_turn()
+		if r == null:
+			var thought: Dictionary = await _think(c)
+			if thought.is_empty():
+				return
+			if _closed or e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
+				_advance()
+				return
+			r = e.finish_ai_turn(thought)
 		await _play_events()
 		if r.is_paused():
 			mode = Mode.PROMPT
@@ -335,6 +347,35 @@ func _advance() -> void:
 		selected = picker.action
 		mode = Mode.TARGET
 	_update_hover()
+
+
+## `c`'s plan (AiBrain.think) made on a worker thread while the frames go on (FN-14: a foe in a big fight took half a
+## second to plan, and the screen froze). Nothing changes the fight meanwhile: it's an enemy's turn, the plan only
+## reads it, and so does the screen (a Creature read belongs to the thread that opened it).
+func _think(c: Combatant) -> Dictionary:
+	if not think_aside:
+		return e.ai.think(c)
+	# What a creature's conditions and gear grant is worked out on first use and kept: settle it for everyone first,
+	# so the two threads never fill it at once.
+	for x in e.combatants:
+		if x.creature != null:
+			x.creature.all_modifiers()
+	var th := Thread.new()
+	_thinker = th
+	th.start(e.ai.think.bind(c))
+	while _thinker == th and th.is_alive():
+		await get_tree().process_frame
+	if _thinker != th:
+		return {}   # the view went away meanwhile (_exit_tree waited for the plan)
+	_thinker = null
+	var thought: Variant = th.wait_to_finish()
+	return thought as Dictionary if thought is Dictionary else e.ai.think(c)
+
+
+func _exit_tree() -> void:
+	if _thinker != null:
+		_thinker.wait_to_finish()   # a plan still being made as the view goes (a load from the menu)
+		_thinker = null
 
 
 func _refresh_all() -> void:
