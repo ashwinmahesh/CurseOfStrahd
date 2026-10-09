@@ -205,8 +205,9 @@ Settings, Game, **Party turns**: Shared (the default) or One at a time.
 Asked to choose between the tabs and Baldur's Gate 3's PC bar (a mock-up, tools/capture/hotbar_mockup_capture.tscn),
 the owner picked a mix: BG3's sidebar of filters, our icon-and-name slots. The filters run down the left of the slots
 (All, then the hero's tabs: Common, the class's, Spells, Items, Reactions, Passives, and Favourites and Hidden when
-used); **All** is the default and lists the starred actions, Common, the class's, Spells (cantrips first, by level)
-and Items one section after another, each section's name on a gilt rule above its rows. Six slots to a row; the
+used); **All** is the default and lists the starred actions, Common, the class's, Spells (a section a level: Cantrips,
+Level 1, Level 2..., as on the Spells filter) and Items one section after another, each section's name on a gilt rule
+above its rows. Six slots to a row; the
 list scrolls past two and a half rows. D-pad up and down (or the tab keys) step through the filters. A long name over
 the portrait is cut with an ellipsis so the bar never reaches End Turn.
 
@@ -218,3 +219,11 @@ Condition (a foe shows only whether it's Bloodied, as its bar does; a friend its
 (conditions, Concentration, spells), its Defenses and Abilities once the party has studied its kind (else "Unknown:
 Study it"), legendary actions left, and the odds of the hero's best attack on it. `ActionCatalog.examine` builds it;
 `CombatHud.show_examine` draws it where the roll details open; a click, Esc or B closes it.
+
+## Jump and Throw with arcs (owner pick 2026-10-09, after Baldur's Gate 3)
+
+**Long Jump** sits on Common (its distance in the slot: "up to 15 ft"); aimed, it draws its flight as gilt beads in an
+arc from the hero to the square pointed at, a ring where it lands (red beads and ring where it can't), and the tooltip
+gives the feet it costs and what's left. Everything thrown shares one **Throw** container (a thrown weapon in hand or
+set II, a chair or crate within reach); aimed at a creature, the throw's arc runs from the thrower to it beside the odds
+over its head. The Jump spell's leap shows the same arc.

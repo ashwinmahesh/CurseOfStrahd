@@ -1442,8 +1442,8 @@ func filters(c: Combatant) -> Array[String]:
 	return out
 
 
-## The All filter's sections: the starred actions, Common, the class's, Spells (by level, cantrips first) and Items, each
-## with its name at the left; Reactions and Passives keep their own filters, as in Baldur's Gate 3.
+## The All filter's sections: the starred actions, Common, the class's, Spells (a section a level, cantrips first) and
+## Items, each with its name on a rule above it; Reactions and Passives keep their own filters, as in Baldur's Gate 3.
 func _all_sections(c: Combatant, all: Array[Dictionary]) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var tabs := catalog.tabs_for(c)
@@ -1451,12 +1451,17 @@ func _all_sections(c: Combatant, all: Array[Dictionary]) -> Array[Dictionary]:
 		if not t in tabs:
 			continue
 		var items: Array = catalog.slots(c, t, all)
-		if t == ActionCatalog.SPELLS and not (ActionCatalog.layout(c).get("order", {}) as Dictionary).has(t):
-			var flat: Array = []
+		if t == ActionCatalog.SPELLS:
+			# By level, as on the Spells filter: Cantrips, Level 1, Level 2..., each on its own rule (the player's order
+			# within a level when they arranged the tab).
+			var arranged_tab := (ActionCatalog.layout(c).get("order", {}) as Dictionary).has(t)
 			for g in SpellGroups.groups(items, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
 					func(a: Dictionary) -> int: return int(a.get("slot", 0))):
-				flat.append_array(g["items"] as Array)
-			items = flat
+				var level_items := g["items"] as Array
+				if arranged_tab:
+					level_items.sort_custom(func(x: Variant, y: Variant) -> bool: return items.find(x) < items.find(y))
+				out.append({"heading": "Spells · %s" % g["heading"], "items": level_items})
+			continue
 		if not items.is_empty():
 			out.append({"heading": t, "items": items})
 	return out

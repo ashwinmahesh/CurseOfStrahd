@@ -48,7 +48,7 @@ static func item_key(id: String) -> String:
 ## (Combat HUD plan, 2026-10-09: an icon on every slot).
 const ACTION_ICONS: Array[String] = ["dash", "disengage", "dodge", "help", "hide", "search", "study", "ready", "grapple",
 	"swap_weapons", "stabilize", "drop_prone", "stand", "influence", "utilize", "second_wind", "action_surge", "steady_aim",
-	"turn_undead", "preserve_life", "escape"]
+	"turn_undead", "preserve_life", "escape", "long_jump"]
 ## Hotbar ids whose tile has another key.
 const ACTION_ALIASES := {"shove_prone": "shove", "shove_push": "shove", "cunning_dash": "cunning", "cunning_disengage": "cunning",
 	"cunning_hide": "cunning", "divine_spark_heal": "divine_spark", "divine_spark_harm": "divine_spark", "fly:up": "fly",

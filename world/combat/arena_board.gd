@@ -207,6 +207,8 @@ func _build() -> void:
 					if h > 0.0 and (f & CombatGrid.NATURAL) != 0 and not house_cells.has(c):
 						_floors[c] = _terrain_column("Ground", c, _floor_mat)   # a wall on a hill stands on the hill
 				continue
+			if CastleBuilder.walk_at(self, c):
+				continue   # Castle Ravenloft's wall walk and its stairs: the castle's stone (CastleBuilder, W7)
 			var mat: Material = grass
 			if (f & CombatGrid.DIFFICULT) != 0:
 				mat = mud
