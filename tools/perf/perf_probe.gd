@@ -34,6 +34,9 @@ var warm := 90                       ## frames let pass before measuring (shader
 var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
 var cycles := 10                     ## off/on switches per effect in the effects_fast phase
+## The effects phases' list (--effects=a,b; default EFFECTS). A name that isn't one of EFFECTS is a class with a
+## `static func set_enabled(on: bool)` (SpriteReflection), switched off through it: a new effect needs no line here.
+var effects: Array = EFFECTS
 var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
 var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "foe_memory": [], "screens": [],
 	"meta": {}}
@@ -56,6 +59,8 @@ func _ready() -> void:
 	passes = int(args.get("passes", passes))
 	pairs = int(args.get("pairs", pairs))
 	cycles = int(args.get("cycles", cycles))
+	if str(args.get("effects", "")) != "":
+		effects = Array(str(args["effects"]).split(","))
 	cover = str(args.get("cover", "")) == "1"
 	fight_settle_s = float(args.get("settle", fight_settle_s))
 	if cover:
@@ -567,7 +572,7 @@ func _effects(p: int) -> void:
 		root.call("_refresh")
 		await _wait(warm * 2)
 		var view := root.get("view") as Node
-		for fx: String in EFFECTS:
+		for fx: String in effects:
 			for k in pairs:
 				await _sample("effects", "%s all on|%s" % [spec, fx], p)
 				var undo := _effect_off(view, fx)
@@ -593,7 +598,7 @@ func _effects_fast(p: int) -> void:
 		root.call("_refresh")
 		await _wait(warm * 2)
 		var view := root.get("view") as Node
-		for fx: String in EFFECTS:
+		for fx: String in effects:
 			_phase("effects: %s %s" % [spec, fx])
 			var on_ms: Array[float] = []
 			var off_ms: Array[float] = []
@@ -721,6 +726,20 @@ func _effect_off(view: Node, fx: String) -> Callable:
 			return func() -> void:
 				for u in undos:
 					u.call()
+	return _class_off(fx)
+
+
+## An effect named by its class (`class_name` with a `static func set_enabled(on: bool)`, as SpriteReflection has):
+## switched off through it, and back on.
+func _class_off(cls: String) -> Callable:
+	for c: Dictionary in ProjectSettings.get_global_class_list():
+		if str(c["class"]) == cls:
+			var script := load(str(c["path"])) as Script
+			if not script.get_script_method_list().any(func(m: Dictionary) -> bool: return m["name"] == "set_enabled"):
+				break
+			script.call("set_enabled", false)
+			return func() -> void: script.call("set_enabled", true)
+	push_warning("perf: no effect or class with a static set_enabled called %s" % cls)
 	return func() -> void: pass
 
 
