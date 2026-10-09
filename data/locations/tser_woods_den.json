@@ -101,7 +101,7 @@
       ],
       "kind": "examine",
       "label": "A den under the rocks",
-      "model": "boulder_b"
+      "model": "boulder"
     },
     {
       "id": "cub_trap",
@@ -132,7 +132,7 @@
       ],
       "kind": "decor",
       "label": "Stones",
-      "model": "boulder_a"
+      "model": "rocks"
     },
     {
       "id": "den_claw_pine",
