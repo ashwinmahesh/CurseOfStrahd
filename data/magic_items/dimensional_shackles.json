@@ -22,9 +22,9 @@
       "custom": "dimensional_shackles",
       "targeting": "enemy",
       "range": 5,
-      "text": "Utilize action: shackle an Incapacitated creature within 5 ft: it's Restrained and can't teleport or travel between planes (DC 30 Strength to break free)."
+      "text": "Utilize action: shackle an Incapacitated creature within 5 ft: it has Disadvantage on attack rolls and can't teleport or travel between planes (one DC 30 Strength (Athletics) try to break free)."
     }
   ],
-  "summary": "Shackle an Incapacitated creature: it's held and can't teleport or slip to another plane.",
+  "summary": "Shackle an Incapacitated creature: it attacks at Disadvantage and can't teleport or slip to another plane.",
   "text": "Clapping these shackles onto a creature with the Incapacitated condition takes a Utilize action, and they resize to fit anything from Small to Large. Beyond working as ordinary manacles, they block every form of extradimensional travel for the bound creature, teleportation and plane-hopping included, though it can still pass through an interdimensional portal. You, plus anyone you name when you apply them, can remove them with a Utilize action. The prisoner can attempt a Strength (Athletics) check against DC 30 once every 30 days; success means it breaks loose and destroys the shackles."
 }
