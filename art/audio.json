@@ -869,16 +869,17 @@
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
     ],
     "die_bounce": [
-      "res://art/sourced/elevenlabs_dice/die_bounce_2.wav",
-      "res://art/sourced/elevenlabs_dice/die_bounce_3.wav",
-      "res://art/sourced/elevenlabs_dice/die_bounce_6.wav",
-      "res://art/sourced/elevenlabs_dice/die_bounce_7.wav"
+      "res://art/sourced/elevenlabs_dice/resin_bounce_1.wav",
+      "res://art/sourced/elevenlabs_dice/resin_bounce_3.wav",
+      "res://art/sourced/elevenlabs_dice/resin_bounce_4.wav",
+      "res://art/sourced/elevenlabs_dice/resin_bounce_5.wav",
+      "res://art/sourced/elevenlabs_dice/resin_bounce_6.wav"
     ],
     "die_land": [
-      "res://art/sourced/elevenlabs_dice/die_land_2.wav"
+      "res://art/sourced/elevenlabs_dice/resin_land_3.wav"
     ],
     "die_throw": [
-      "res://art/sourced/elevenlabs_dice/die_throw_2.wav"
+      "res://art/sourced/elevenlabs_dice/resin_throw_2.wav"
     ],
     "die_success": [
       "res://art/sourced/elevenlabs_dice/die_success_3.wav"
