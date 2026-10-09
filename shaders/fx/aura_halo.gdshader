@@ -1,8 +1,10 @@
 // An aura round a figure (world/look/aura_fx.gd): a quad standing behind the sprite, turned to the camera round the
 // up axis like the sprite (billboard fixed Y), drawn just before it so the figure covers its middle and only the edge
-// shows. `style` 0: Strahd's dark aura, smoke and shadow curling up round him with a crimson edge, mixed over the scene.
-// `style` 1: a paladin's faint warm glow, added. `surge` (0..1) swells it when he acts. Premultiplied blending carries
-// both: the dark smoke covers (alpha), the glow adds (no alpha).
+// shows. Both burn like fire (owner 2026-10-09: "Does the aura flicker? Like a fire almost. I want that", for Godrick and
+// Strahd): flame tongues lick upward round the figure and the whole flame flickers. `style` 0: Strahd's black fire with
+// crimson at its tips, mixed over the scene. `style` 1: a paladin's warm flame, added, faint enough that the figure
+// still reads. `surge` (0..1) swells it when he acts. Premultiplied blending carries both: the dark fire covers
+// (alpha), the warm one adds (no alpha).
 shader_type spatial;
 render_mode unshaded, blend_premul_alpha, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
 
@@ -13,6 +15,7 @@ uniform float fade = 1.0;
 uniform vec3 shadow_col : source_color = vec3(0.05, 0.02, 0.08);
 uniform vec3 edge_col : source_color = vec3(0.6, 0.05, 0.1);
 uniform vec3 glow_col : source_color = vec3(1.0, 0.75, 0.35);
+uniform vec3 fire_col : source_color = vec3(0.95, 0.66, 0.23);
 uniform sampler2D noise_tex : repeat_enable, filter_linear;
 uniform float seed = 0.0;
 
@@ -29,36 +32,61 @@ void vertex() {
 	MODELVIEW_MATRIX = VIEW_MATRIX * world;
 }
 
+// Flame tongues: noise stretched upward and pulled up fast, warped sideways by slower noise so the tongues sway and
+// split; 0..1, higher in the body of a flame.
+float flames(vec2 uv, float t, float sd) {
+	float sway = texture(noise_tex, vec2(uv.x * 1.6 + sd, uv.y * 0.8 + t * 0.35)).r - 0.5;
+	float a = texture(noise_tex, vec2(uv.x * 3.4 + sway * 0.45 + sd, uv.y * 1.1 + t * 1.25)).r;
+	float b = texture(noise_tex, vec2(uv.x * 6.5 - sway * 0.6 - sd, uv.y * 1.9 + t * 1.9)).r;
+	return a * 0.68 + b * 0.42;
+}
+
+// The whole flame's flicker: a quick unsteady brightness, never quite still (several rates beating together).
+float flicker(float t, float sd) {
+	float n = texture(noise_tex, vec2(sd * 3.1, t * 0.9)).r;
+	return 0.82 + 0.1 * sin(t * 11.3 + sd * 6.0) + 0.06 * sin(t * 23.9 + sd * 2.0) + (n - 0.5) * 0.35;
+}
+
 void fragment() {
 	float x = UV.x - 0.5;
 	float v = 1.0 - UV.y;            // 0 at the feet, 1 at the top
 	float t = TIME + seed * 17.0;
+	float flick = flicker(t, seed);
+	float f = flames(UV, t, seed);
 	if (style == 0) {
-		// Dark flames of smoke licking up round him: soft noise stretched upward and warped sideways, thickest just
-		// outside his outline at the hem and thinning to nothing at the quad's edges and toward the top, so it reads as
-		// wisps rather than a box behind him. The quad is wide (AuraFx.HALO_SIZE) so the smoke can fade out inside it.
+		// Black fire round him: thickest just outside his outline at the hem, its tongues reaching past his shoulders
+		// and thinning to nothing at the quad's edges and the top. The quad is wide (AuraFx.HALO_SIZE) so it fades out
+		// inside it.
 		float half_w = mix(0.3, 0.15, smoothstep(0.0, 0.9, v)) * (1.0 + surge * 0.25);
-		float warp = texture(noise_tex, vec2(UV.x * 1.3 + seed, UV.y * 0.7 + t * 0.12)).r - 0.5;
-		float n1 = texture(noise_tex, vec2(UV.x * 2.0 + warp * 0.4 + seed, UV.y * 0.6 + t * 0.32)).r;
-		float n2 = texture(noise_tex, vec2(UV.x * 3.6 - warp * 0.3 - seed, UV.y * 1.0 + t * 0.55)).r;
-		float flame = n1 * 0.75 + n2 * 0.4;
-		float edge = abs(x) + warp * 0.06;
+		float edge = abs(x) + (f - 0.55) * 0.05;
 		float env = smoothstep(half_w + 0.17, half_w - 0.05, edge);
 		float rise = pow(clamp(1.0 - v * 0.95, 0.0, 1.0), 0.7) * smoothstep(0.0, 0.08, v);
-		float body = env * rise * (1.0 + surge * 0.7);
-		float a = smoothstep(0.38, 0.85, body * flame * 1.55);
-		// A smoky crimson glow inside the wisps (not at their edge, which glitters), stronger in a surge.
-		float ember = smoothstep(0.2, 0.5, a) * smoothstep(0.85, 0.5, a) * (0.3 + surge * 1.1);
-		float alpha = clamp(a * 0.72 * strength * fade, 0.0, 0.78);
-		ALBEDO = shadow_col * alpha + edge_col * ember * fade * strength * 0.55;
+		// The flame's edge climbs with height, so tongues taper to points as they rise.
+		float body = env * rise * (1.0 + surge * 0.7) * (0.9 + flick * 0.2);
+		float a = smoothstep(0.36 + v * 0.12, 0.8 + v * 0.1, body * f * 1.6);
+		// Crimson in the thin parts of the flame, the tips and edges, flickering hotter in a surge.
+		float tip = smoothstep(0.05, 0.3, a) * smoothstep(0.75, 0.35, a);
+		float ember = tip * (0.45 + surge * 1.2) * flick;
+		float alpha = clamp(a * 0.74 * strength * fade, 0.0, 0.8);
+		ALBEDO = shadow_col * alpha + edge_col * ember * fade * strength * 0.6;
 		ALPHA = alpha;
 	} else {
-		// A soft oval of warm light round the figure, breathing slowly, with a few motes drifting up through it.
-		float d = length(vec2(x / 0.36, (v - 0.46) / 0.56));
-		float glow = smoothstep(1.0, 0.15, d) * (0.85 + 0.15 * sin(t * 1.3));
-		float m = texture(noise_tex, vec2(UV.x * 4.0 + seed, UV.y * 3.0 + t * 0.12)).r;
-		float motes = smoothstep(0.78, 0.86, m) * smoothstep(1.0, 0.5, d);
-		ALBEDO = glow_col * (glow * 0.5 + motes * 0.45) * (1.0 + surge * 1.5) * strength * fade;
-		ALPHA = 0.0;
+		// A warm flame licking up round the paladin's outline, brightest low and fading by the head, with a soft glow
+		// under it; it flickers like a candle in a draught.
+		float half_w = mix(0.36, 0.22, smoothstep(0.0, 0.9, v));
+		float edge = abs(x) + (f - 0.55) * 0.05;
+		float env = smoothstep(half_w + 0.12, half_w - 0.08, edge);
+		float rise = pow(clamp(1.0 - v * 0.92, 0.0, 1.0), 0.6) * smoothstep(0.0, 0.06, v);
+		float fire = smoothstep(0.42 + v * 0.1, 0.85 + v * 0.08, env * rise * f * 1.7);
+		float core = smoothstep(0.55, 1.0, fire);
+		float d = length(vec2(x / 0.36, (v - 0.42) / 0.56));
+		float glow = smoothstep(1.0, 0.2, d) * 0.2;
+		// Orange at the edges, golden in the middle of a tongue; partly laid over the scene (alpha) so it stays warm
+		// over cold stone instead of washing pale, partly added so it glows.
+		vec3 hot = mix(glow_col, fire_col, core);
+		float lit = flick * (1.0 + surge * 1.5) * strength * fade;
+		float cover = clamp(fire * 0.32 * lit, 0.0, 0.5);
+		ALBEDO = hot * cover + (glow_col * glow + hot * fire * 0.22) * lit;
+		ALPHA = cover;
 	}
 }

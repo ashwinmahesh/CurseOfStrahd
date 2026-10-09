@@ -3,7 +3,7 @@ extends Node
 ## make capture SCENE=res://tools/capture/aura_capture.tscn NAME=aura/after FRAMES=10 [ARGS="--day"]
 ## Godrick (level 6, so he has Aura of Protection) leads the party in the village at night with Strahd beside them:
 ## exploring (<out>_explore.png), as in a fight with the paladin's area on the floor (<out>_fight.png), Strahd mid-surge
-## (<out>_surge.png), and close on the two of them (<out>_close.png).
+## (<out>_surge.png), close on the two of them (<out>_close.png), and three seconds of them filmed (<out>_film_NNN.jpg).
 
 var root: Node
 
@@ -49,3 +49,14 @@ func capture_shots(tool: Node, out: String) -> void:
 	view.rig.distance = 6.5
 	await tool.call("wait_frames", 70)
 	tool.call("_shot", out + "_close.png")
+	# Three seconds of the two of them at 12 frames a second (<out>_film_NNN.jpg), to see the auras move.
+	var start := Time.get_ticks_msec()
+	var next := 0.0
+	var n := 0
+	while next < 3.0:
+		await get_tree().process_frame
+		if (Time.get_ticks_msec() - start) / 1000.0 < next:
+			continue
+		get_viewport().get_texture().get_image().save_jpg("%s_film_%03d.jpg" % [out, n], 0.9)
+		n += 1
+		next += 1.0 / 12.0

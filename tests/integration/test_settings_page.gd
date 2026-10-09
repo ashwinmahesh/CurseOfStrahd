@@ -131,27 +131,27 @@ func test_the_left_arrow_steps_back() -> void:
 
 
 ## Depth blur (owner request 2026-10-08): off, or how far in from the screen's edges it reaches (Atmosphere.EDGE_BLURS),
-## kept in the settings file; a file without the reach reads as the default, Edges.
+## kept in the settings file; a file without the reach reads as the default, Wide.
 func test_depth_blur_steps_through_its_reaches() -> void:
 	var menu := await _menu("Display")
 	var b := _choice(menu, "Depth blur")
 	assert_eq(GameSettings.blur_reach(), "", "no reach saved")
-	assert_eq(Atmosphere.edge_blur(), "edges", "reads as Edges")
-	assert_true(b.text.contains("Edges"), "on by default, at Edges")
-	b.pressed.emit()
-	assert_eq(Atmosphere.edge_blur(), "wide", "Edges steps to Wide")
+	assert_eq(Atmosphere.edge_blur(), "wide", "reads as Wide")
+	assert_true(b.text.contains("Wide"), "on by default, at Wide")
 	b.pressed.emit()
 	assert_false(GameSettings.depth_blur(), "Wide steps round to Off")
 	assert_true(b.text.contains("Off"))
 	b.pressed.emit()
 	assert_true(GameSettings.depth_blur(), "Off steps to Corners")
 	assert_eq(Atmosphere.edge_blur(), "corners")
+	b.pressed.emit()
+	assert_eq(Atmosphere.edge_blur(), "edges", "Corners steps to Edges")
 	var cfg := ConfigFile.new()
 	assert_eq(cfg.load(GameSettings.path), OK)
-	assert_eq(str(cfg.get_value(GameSettings.SECTION, "blur_reach", "")), "corners")
+	assert_eq(str(cfg.get_value(GameSettings.SECTION, "blur_reach", "")), "edges")
 	assert_true(bool(cfg.get_value(GameSettings.SECTION, "depth_blur", false)))
 	GameSettings.set_blur_reach("sideways")
-	assert_eq(Atmosphere.edge_blur(), "edges", "a reach the game doesn't know reads as Edges")
+	assert_eq(Atmosphere.edge_blur(), "wide", "a reach the game doesn't know reads as Wide")
 
 
 func test_the_interface_size_applies_only_to_the_play_screen() -> void:

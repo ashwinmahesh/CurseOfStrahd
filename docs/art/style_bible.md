@@ -44,7 +44,7 @@ Settings (`Look.style`, kept in user://settings.cfg by `GameSettings`). The art 
   anything brighter than white (flames, lanterns), deeper contact shadows with bounced light, a thin volumetric
   haze, smooth mist and cloud shadows, a lighter colour grade, and a depth blur toward the screen's edges, most in the
   corners, with the middle sharp (the screen pass's edge blur, `Atmosphere._focus_blur`; Settings > Display > Depth
-  blur picks Off or its reach from `Atmosphere.EDGE_BLURS`, Edges by default; owner, 2026-10-08). Classic is frozen as it was (owner, 2026-10-07): new work needn't
+  blur picks Off or its reach from `Atmosphere.EDGE_BLURS`, Wide by default; owner, 2026-10-08 and 10-09). Classic is frozen as it was (owner, 2026-10-07): new work needn't
   keep it up to date, only keep it working.
 - Anything new must read in both: check a place with `make capture SCENE=res://tools/capture/polish_capture.tscn`
   and `POLISH_LOOK=classic|modern POLISH_ONLY=look`.
