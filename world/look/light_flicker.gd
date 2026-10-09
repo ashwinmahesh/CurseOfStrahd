@@ -106,6 +106,18 @@ func set_style(s: Dictionary) -> void:
 
 func _init() -> void:
 	_rng.randomize()
+	_start()
+
+
+## Starts the waver over from seed `n` instead of at random, so it runs the same every time (tests).
+func set_seed(n: int) -> void:
+	_rng.seed = n
+	_dip = 0.0
+	_gutter_left = 0.0
+	_start()
+
+
+func _start() -> void:
 	for i in 3:
 		_from[i] = _rng.randf_range(-1.0, 1.0)
 		_to[i] = _rng.randf_range(-1.0, 1.0)

@@ -293,10 +293,11 @@ func test_a_swaying_flame_comes_back_to_rest() -> void:
 
 
 ## How far a flicker of `kind` strays from the light's own energy over ten seconds (its standard deviation), and the
-## lowest and highest it went.
+## lowest and highest it went. Seeded, so every run sees the same flicker.
 func _flicker_spread(kind: String) -> Array[float]:
 	var f := LightFlicker.new()
 	f.set_style(LightFlicker.STYLES[kind] as Dictionary)
+	f.set_seed(7)
 	var sum := 0.0
 	var sq := 0.0
 	var lo := 9.0
@@ -337,6 +338,8 @@ func test_a_light_carries_its_flicker() -> void:
 		l.omni_range = 5.0
 		add_child(l)
 		LightFlicker.give(l, "fire")
+		# Seeded (each its own), so every run sees the same dips.
+		LightFlicker.of(l).set_seed(i + 1)
 		lights.append(l)
 	assert_false(lights[0].is_processing(), "the candle's own jitter stops")
 	var seen: Array[PackedFloat32Array] = [PackedFloat32Array(), PackedFloat32Array()]
