@@ -77,6 +77,8 @@ var art_override := ""
 var mounted := false
 var sneaking := false
 var sprite: DirectionalSprite
+## Strahd's dark aura or a paladin's glow (AuraFx), or null.
+var aura: AuraFx
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
 var _lying: Sprite3D
 var body: Node3D
@@ -211,6 +213,10 @@ func _build() -> void:
 		_lying.position = Vector3(0, 0.03, 0)
 		_lying.visible = false
 		add_child(_lying)
+		var aura_style := AuraFx.style_for(c, aid)
+		if aura_style >= 0:
+			aura = AuraFx.create(aura_style, _height(aid), c.size_cells, AuraFx.reach_of(c) if aura_style == AuraFx.Style.HOLY else 0)
+			add_child(aura)
 	else:
 		var mi := MeshInstance3D.new()
 		var cm := CapsuleMesh.new()
@@ -384,6 +390,8 @@ func fall_if_drawn() -> void:
 func hurt() -> void:
 	if sprite != null and combatant.is_alive() and combatant.creature.hp > 0:
 		sprite.hurt()
+		if aura != null:
+			aura.surge(0.6)
 
 
 ## The fall to the ground at 0 Hit Points or death: the drawn fall when the sprite has one; otherwise the standing
@@ -479,6 +487,17 @@ func _show_fade() -> void:
 		_lying.modulate = _faded(Color(0.6, 0.55, 0.65) if cr.hp <= 0 else Color.WHITE)
 	if sprite == null and body != null:
 		body.visible = there and _fade >= 0.5
+	_aura_state()
+
+
+## The aura shows while its owner stands and is conscious (a paladin's also needs them not Incapacitated, as the rule
+## does), fades with the figure, and a paladin's area shows on the floor in fights only.
+func _aura_state() -> void:
+	if aura == null:
+		return
+	var cr := combatant.creature
+	var up := not cr.dead and cr.hp > 0 and not (aura.style == AuraFx.Style.HOLY and cr.has_condition(&"incapacitated"))
+	aura.set_state(up, _fade, ModeController.mode == ModeController.Mode.COMBAT)
 
 
 ## Faces a ground direction (x, z) and plays walking or idle. `step_time` (seconds per square) paces the walk cycle.
@@ -495,6 +514,8 @@ func face(dir: Vector2, walking: bool, step_time: float = 0.0) -> void:
 ## Turns toward `dir` (x, z) and starts the sprite's attack. False when there is no attack to play (no attack
 ## sheet, a placeholder body, or lying down), so the caller can fall back to a plain lunge.
 func start_attack(dir: Vector2) -> bool:
+	if aura != null:
+		aura.surge(1.0)
 	if sprite == null or not sprite.visible:
 		return false
 	face(dir, false)
@@ -503,6 +524,8 @@ func start_attack(dir: Vector2) -> bool:
 
 ## Turns toward `dir` (x, z) and starts the drawn spell gesture. False when the sprite has none.
 func start_cast(dir: Vector2) -> bool:
+	if aura != null:
+		aura.surge(1.0)
 	if sprite == null or not sprite.visible:
 		return false
 	face(dir, false)
@@ -549,7 +572,7 @@ func _lie_on_ground() -> void:
 	_ground_cell = cell
 	var up := _ground.ground_normal(cell)
 	var tilt := Basis.IDENTITY if up.y > 0.9999 else Basis(Vector3.UP.cross(up).normalized(), Vector3.UP.angle_to(up))
-	for n: MeshInstance3D in [_ring, _active_ring, _bar_back, _bar_fill]:
+	for n: MeshInstance3D in [_ring, _active_ring, _bar_back, _bar_fill, aura.floor_area if aura != null else null]:
 		if n == null:
 			continue
 		if not _built_at.has(n):
@@ -565,6 +588,7 @@ func _bar_wanted() -> bool:
 func _process(delta: float) -> void:
 	if _bar_back != null and _bar_back.visible != _bar_wanted():
 		_show_fade()
+	_aura_state()
 	_lie_on_ground()
 	if sprite == null:
 		return

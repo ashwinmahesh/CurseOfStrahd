@@ -1,6 +1,6 @@
 """Animation set v2 (docs/art/animation.md): drawn keyframe strips -> 8-direction sheets with several animations each.
 
-blender -b --python blender/render_keys.py -- --id <asset_id> --kind walk8|attack10|hurt|ride|sneak|cast [--cell 768]
+blender -b --python blender/render_keys.py -- --id <asset_id> --kind walk8|walk8i|attack10|hurt|ride|sneak|cast [--cell 768]
     [--ss 2] [--grid] [--check]
 
 Each kind reads one strip per view, art/generated/anim/<id>/<kind>_<view>.png (tools/art/anim_keyframes.py --kind <kind>):
@@ -11,6 +11,8 @@ the frames into animations:
   walk4    walk.png/.tres     walk_<dir> (four drawn steps, eight frames with the body's rise and fall), idle_<dir>
                               (breathing, from the standing view). Cells keep the walk cell's height: the game sizes a
                               sprite by its standing frame.
+  walk8i   walk.png/.tres     as walk8, but idle_<dir> is drawn (strip idle4: the cape stirring while he stands, eight
+                              frames at 6 fps) instead of breathing (Strahd)
   attack5  attack.png/.tres   attack_<dir>: ready, anticipation, wind-up, strike with a smear (the hit), follow-through
   hurt     hurt.png/.tres     hurt_<dir> (flinch and back), die_<dir> (flinch, stagger, fall, lying), down_<dir> (lying)
   ride     ride.png/.tres     ride_idle_<dir> (seated astride, breathing; drawn with the seat at the sprite's feet so it
@@ -77,6 +79,22 @@ PLANS = {
         + [("base", 1.0, 1.0, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0),
            ("base", 0.995, 1.012, 0, 0, 0), ("base", 0.997, 1.007, 0, 0, 0), ("base", 0.998, 1.004, 0, 0, 0)],
         "anims": [("walk", list(range(16)), [1] * 16, 20.0, True), ("idle", list(range(16, 22)), [1] * 6, 6.0, True)],
+    },
+    # walk8 with a drawn idle (Strahd, owner 2026-10-09): the third strip (idle4, poses c1..c3) has the cape stirring
+    # while he stands, looped slowly in place of the breathing.
+    "walk8i": {
+        "file": "walk", "fixed_height": True, "strips": ["walk8a", "walk8b", "idle4"],
+        "frames": [("a1", 1.0, 1.0, 1, 0, 0), ("a1", 1.01, 0.99, 1, 0, -0.004), ("a2", 1.015, 0.98, 1, 0, -0.012),
+                   ("a2", 1.01, 0.99, 1, 0, -0.008), ("a3", 1.0, 1.0, 1, 0, 0.004), ("a3", 0.995, 1.006, 1, 0, 0.008),
+                   ("a4", 0.99, 1.012, 1, 0, 0.012), ("a4", 0.995, 1.006, 1, 0, 0.006),
+                   ("b1", 1.0, 1.0, 1, 0, 0), ("b1", 1.01, 0.99, 1, 0, -0.004), ("b2", 1.015, 0.98, 1, 0, -0.012),
+                   ("b2", 1.01, 0.99, 1, 0, -0.008), ("b3", 1.0, 1.0, 1, 0, 0.004), ("b3", 0.995, 1.006, 1, 0, 0.008),
+                   ("b4", 0.99, 1.012, 1, 0, 0.012), ("b4", 0.995, 1.006, 1, 0, 0.006)]
+        + [("base", 1.0, 1.0, 0, 0, 0), ("base", 0.997, 1.006, 0, 0, 0), ("c1", 0.997, 1.008, 0, 0, 0),
+           ("c2", 0.996, 1.01, 0, 0, 0), ("c3", 0.997, 1.008, 0, 0, 0), ("c3", 0.998, 1.004, 0, 0, 0),
+           ("c2", 0.999, 1.002, 0, 0, 0), ("c1", 1.0, 1.0, 0, 0, 0)],
+        "anims": [("walk", list(range(16)), [1] * 16, 20.0, True),
+                  ("idle", list(range(16, 24)), [1.5, 1, 1, 1.25, 1, 1, 1, 1], 6.0, True)],
     },
     "attack10": {
         "file": "attack", "strips": ["attack10a", "attack10b"],
@@ -147,7 +165,7 @@ def strip_count(kind, strip=None):
     """Figures on one strip of `kind` (the reference redraw included); `strip` picks one of a multi-strip kind."""
     plan = PLANS[kind]
     if "strips" in plan:
-        letter = "ab"[plan["strips"].index(strip)]
+        letter = "abc"[plan["strips"].index(strip)]
         return 1 + max(int(p[1:]) for p, *_ in plan["frames"] if isinstance(p, str) and p[0] == letter and p != "base")
     return 1 + max(p for p, *_ in plan["frames"] if isinstance(p, int))
 
@@ -190,7 +208,7 @@ def main():
             if kfs is not None:
                 k, more = anim.strip_scale(fig.shape[0], fig.shape[1], kfs[0])
                 found += more + anim.colour_drift(kfs, skip=(count,) if a.kind == "hurt" else ())
-                letter = "ab"[plan["strips"].index(sk)] if "strips" in plan else ""
+                letter = "abc"[plan["strips"].index(sk)] if "strips" in plan else ""
                 got.append((letter, kfs, k))
             if found:
                 problems.setdefault(name, []).extend(f"{sk}: {w}" if len(strip_kinds) > 1 else w for w in found)

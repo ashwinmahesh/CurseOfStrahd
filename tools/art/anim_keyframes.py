@@ -145,6 +145,15 @@ V2_KINDS = {
     "cast": ("spell", [
         "gathering a spell: {CAST_GATHER}",
         "releasing the spell: {CAST_RELEASE}"]),
+    # A drawn idle (Strahd, owner 2026-10-09: the main villain gets the nicer animation): the figure stands where the
+    # reference stands while loose cloth stirs, so the standing loop moves more than a breath. render_keys.py's walk8i.
+    "idle4": ("menacing idle, standing still while a cold draught stirs the cape", [
+        "standing exactly as in the reference with the feet planted, the cape's hem lifting and stirring a little as "
+        "if in a cold draught, one hand slowly flexing its fingers",
+        "standing exactly as in the reference with the feet planted, the cape billowing out wider and higher behind "
+        "and to the sides, the head turned a fraction with a cold stare",
+        "standing exactly as in the reference with the feet planted, the cape falling back and swaying as it "
+        "settles, the hands still"]),
 }
 CAST_DEFAULTS = ("one hand raised before the chest with a small glowing light gathering in the palm, the other arm "
                  "drawn back, eyes intent",
@@ -166,7 +175,7 @@ def prompt(kind, spec, view):
                       .replace("weapon held close", "hands held close") for f in frames]
         lines = " ".join(f"Frame {i + 2}: {f}." for i, f in enumerate(frames))
         text = (ROOT / "art" / "prompts" / "keyframes_v2.txt").read_text().strip()
-        if kind.startswith("walk") or kind in ("sneak", "hurt"):
+        if kind.startswith("walk") or kind in ("sneak", "hurt", "idle4"):
             text += (" Weapons and gear stay carried exactly as in the reference (a sheathed sword stays in its sheath,"
                      " a shield stays on the arm). No magic: no glow, sparks, flames or spell effects.")
         if spec.get("unarmed"):
@@ -174,6 +183,9 @@ def prompt(kind, spec, view):
         if spec.get("gear") and (kind.startswith("walk") or kind == "sneak"):
             # What Gemini tends to drop from a pose or two (a staff), named for every frame.
             text += f" In every frame {spec['gear']}."
+        if spec.get("flow"):
+            # Cloth that should move in every animation, not only the walk (Strahd's cape).
+            text += f" {spec['flow']}"
         if kind == "ride":
             # A rider can't be drawn seated on nothing: the horse is drawn as a flat magenta silhouette that
             # blender/render_keys.py keys out, leaving the rider astride (the far leg hidden, as on any mount).
