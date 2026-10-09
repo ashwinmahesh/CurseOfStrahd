@@ -1412,6 +1412,10 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	if hc.has("from"):
 		lines.append("From %s's space" % str(hc["from"]))
 	var bonus := p.damage_bonus.total() if str(action["kind"]) == "attack" else mini(0, p.damage_bonus.total())
+	# The range a hit can do, for the odds shown over the target (the HUD): the dice at their least and most.
+	var dice := DiceRoller.parse_expr(p.damage_dice)
+	out["damage"] = "%d–%d" % [maxi(1, int(dice["count"]) + int(dice["modifier"]) + bonus),
+		maxi(1, int(dice["count"]) * int(dice["sides"]) + int(dice["modifier"]) + bonus)]
 	lines.append("Damage %s%s %s (avg %.0f)%s" % [p.damage_dice, ("%+d" % bonus) if bonus != 0 else "", str(p.damage_type).capitalize(),
 		p.average_damage() - (p.damage_bonus.total() - bonus), (" · %s" % p.mastery.capitalize()) if p.mastery != "" else ""])
 	if p.mastery == "graze":
