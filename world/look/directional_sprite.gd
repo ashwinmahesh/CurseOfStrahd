@@ -63,6 +63,8 @@ var _push_v := 0.0
 var _last_pos := Vector3.INF
 var _face_x := 0.0
 var _was_moving := false
+## The figure's reflection (SpriteReflection), made with it.
+var reflection: SpriteReflection = null
 
 ## The sheets a sprite folder may hold, merged in this order (a later sheet's animation replaces an earlier one).
 const SHEETS: Array[String] = ["walk", "attack", "hurt", "ride", "sneak", "cast"]
@@ -100,6 +102,9 @@ static func create(frames: SpriteFrames, height_units: float, cell_px: int = -1)
 	# The figure fills about 89% of its cell (render_walk.py frames it at 1.12x figure height).
 	s.pixel_size = height_units / (cell_px / 1.12)
 	s.offset = Vector2(0, cell_px * 0.5 - cell_px * 0.04)
+	# Mirrored under its feet where it stands by water, in a puddle or on polished stone (Visual Polish Plan 1).
+	s.reflection = SpriteReflection.create(s, height_units)
+	s.add_child(s.reflection)
 	return s
 
 
@@ -451,3 +456,5 @@ func _move_between_frames(delta: float, cam: Camera3D) -> void:
 	m.set_shader_parameter("lean", _lean)
 	m.set_shader_parameter("lift", lift_by)
 	m.set_shader_parameter("push", _push)
+	if reflection != null:
+		reflection.mirror(sq, _lean, lift_by, _push, face.normalized() if Look.modern() else Vector3.ZERO)

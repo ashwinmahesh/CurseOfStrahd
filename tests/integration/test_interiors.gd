@@ -558,7 +558,12 @@ func test_baba_lysagas_fire_is_green() -> void:
 	var lit := false
 	for n in v.find_children("*", "CandleFlicker", true, false):
 		var l := n as OmniLight3D
-		if v.board.grid.cell_at(l.global_position) == Vector2i(11, 1) and l.light_color.is_equal_approx(green):
+		# The flame's own colour: its LightFlicker reddens what it writes as it dips, once it has run a frame.
+		var c := l.light_color
+		var fl := LightFlicker.of(l)
+		if fl != null and fl._wrote_colour.r >= 0.0:
+			c = fl._colour
+		if v.board.grid.cell_at(l.global_position) == Vector2i(11, 1) and c.is_equal_approx(green):
 			lit = true
 	assert_true(lit, "the hearth's light is green")
 	var hearth := v.prop_nodes.get("lysaga_hearth") as Node
