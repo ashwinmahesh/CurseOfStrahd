@@ -31,8 +31,10 @@ var two_hands: bool = false
 var notes: Array[String] = []
 
 
+## `off_hand`: the item in the other hand when it isn't the one held now (a character's second weapon set, read before
+## it's taken in hand); null reads the off hand.
 static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_main_hand: bool = true,
-		ammo: Dictionary = {}) -> WeaponProfile:
+		ammo: Dictionary = {}, off_hand: Variant = null) -> WeaponProfile:
 	var p := WeaponProfile.new()
 	item = reshaped(c, item)
 	var either := bool(item.get("_either_ability", false))
@@ -56,7 +58,9 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	# Grip: two-handed weapons always; versatile ones when the other hand is free.
 	var off := {}
 	var ch := c as Character
-	if ch != null:
+	if off_hand is Dictionary:
+		off = off_hand as Dictionary
+	elif ch != null:
 		off = ch.equipped("off_hand")
 	var off_free := off.is_empty()
 	if "two_handed" in p.properties:

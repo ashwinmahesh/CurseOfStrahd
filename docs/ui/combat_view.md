@@ -158,3 +158,20 @@ template), `_5_end.png` (the end of a fight). Where the build differs from the w
 
 Owner sign-off on the built screen: **approved 2026-10-06** with the changes above (P2-09).
 
+## One slot per idea (Combat HUD plan, owner 2026-10-09)
+
+The owner found the weapon attacks and the class tabs cluttered and pointed at Baldur's Gate 3. The audit and the
+rest of the plan: the vault note Combat HUD Plan.md.
+
+- **Weapons in hand** (deviations.md, Weapon sets): only the weapons in hand and the second set attack; the second
+  set's say "set II", and **Swap weapons** on Common takes that set in hand (free). The pack's spares aren't listed.
+- **Rules as toggles**: each Ask / Automatic / Off rule (Divine Smite, Knock Out, Heroic Inspiration, Shadow Martyr,
+  Song of Defense's slot levels...) is one slot on the **Reactions** tab, its mode in colour (Ask gilt, Automatic green,
+  Off grey) with a pip per mode; a click steps to the next mode, a right-click picks one, on any turn (nothing is
+  spent). `ActionCatalog.slots` folds the modes; `CombatView._choose` sets them for whoever the hotbar shows.
+- **Containers**: variants of one action share a slot with a gilt corner (Shove, Cunning, Divine Spark, Haste, Open
+  Hand, Cunning Strike, Portent, a spell's other castings, Command's words); a click, its number key or RB opens the
+  choices at the slot, each greyed with its reason; a right-click adds the Hotbar choices for the whole slot.
+- **Armed riders and smites** glow (a bright edge on a warmer face) instead of a ✓ in the name.
+- **Out of the way**: Influence and Utilize show only when they can be used, Stabilize only while someone is dying.
+

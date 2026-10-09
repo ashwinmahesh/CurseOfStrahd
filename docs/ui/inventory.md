@@ -24,8 +24,8 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
   Built (U11, 2026-10-07): every worn slot of the 2024 DMG (head, eyes, neck, cloak, armor, robe down the left;
   wrists, hands, belt, two rings, feet down the right; Ioun Stones in a row when worn) as gothic-arch tiles round
   the portrait, with the Armor Class shield and three attunement lozenges beneath it; weapon set I (in hand) and set
-  II (stowed in the pack, `Character.weapon_set_2`) with ↻ Swap outside fights (in one, a character attacks with any
-  weapon they carry: the weapon-juggling deviation); four **quick slots** (`Character.quick_slots`) whose items the
+  II (stowed in the pack, `Character.weapon_set_2`) with ↻ Swap outside fights (in one, a character attacks only with
+  sets I and II, and Swap weapons or an attack with set II's weapon takes that set in hand: deviations.md, Weapon sets); four **quick slots** (`Character.quick_slots`) whose items the
   fight's hotbar also shows on its Common tab. A slot takes only what fits (armor, a weapon or a held wand, rod or
   staff, a Shield or Light weapon in the off hand, a worn item in its own slot) and lights green while a drag it takes
   hovers over it. Ammunition and focus slots aren't built.

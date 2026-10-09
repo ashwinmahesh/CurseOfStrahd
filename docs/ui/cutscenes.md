@@ -159,7 +159,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ilinca_raven | The Raven Who Is a Woman | `old_bonegrinder/ilinca` | 1 |
 | ireena_door | Three Bolts Slide Back | `village_of_barovia/ireena` | 1 |
 | ireena_looks_back | Ireena Looks Back | `village_of_barovia/road_west` | 2 |
-| ireena_window | At Ireena's Window | `strahd/ireena` (at the inn, only while Ismark guards her: he is in the picture) | 1 |
+| ireena_window | At Ireena's Window | `strahd/ireena` (Ismark asleep by the door while he guards her at the inn; otherwise the take with the room empty) | 2 |
 | ireena_window_empty | The Empty Window | `strahd/ireena` | 1 |
 | izek_doll | Izek and the Doll | `vallaki/izek` | 1 |
 | keepers_ravens | Ravens on Every Beam | `vallaki/martikovs` | 1 |

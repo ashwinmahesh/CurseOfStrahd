@@ -46,8 +46,8 @@ bust (`flip_h`) when its side wants the other way: the left side faces right, th
 NPCs face right (the prompt's `{SIDE}` asked for it) and eight of the ten heroes face left, so nearly every bust is
 mirrored; Godrick, Hedda, Ireena (her body turns right but her face looks left; UI QA ART-02) and Argynvost face their
 side's way as drawn. A new bust needs its facing in the file
-(tests/integration/test_bust_facing.gd checks every one). Mirroring puts Izek's fiendish right arm on his left; a
-redraw facing left would fix it.
+(tests/integration/test_bust_facing.gd checks every one). Izek is drawn facing left (redrawn 2026-10-09 with Ashwin's
+yes), so he isn't mirrored and his fiendish arm stays his right one.
 
 ## Turning away
 A line's bracket can hold a turn cue beside its mood (docs/contracts/dialogue.md): `Ireena [sad, away]: ...` turns the
