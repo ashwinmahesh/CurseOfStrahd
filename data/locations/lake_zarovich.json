@@ -569,6 +569,31 @@
         17
       ],
       "when": "not weather == storm"
+    },
+    {
+      "npc": "lantern_girl",
+      "cell": [
+        18,
+        3
+      ],
+      "dialogue": "vallaki/one_lantern_too_many:girl",
+      "when": "(quest.one_lantern_too_many == asked or quest.one_lantern_too_many == rumored) and not flag.lantern_girl_rested",
+      "hours": [
+        20,
+        5
+      ],
+      "facing": "south",
+      "approach": 6
+    },
+    {
+      "npc": "vallaki_sandu",
+      "cell": [
+        18,
+        5
+      ],
+      "dialogue": "vallaki/one_lantern_too_many:sandu",
+      "when": "quest.one_lantern_too_many == fought",
+      "facing": "south"
     }
   ],
   "narration": {
@@ -1219,6 +1244,42 @@
       "quest": {
         "id": "bell_under_the_lake",
         "stage": "risen"
+      }
+    },
+    {
+      "id": "lantern_girl",
+      "trigger": "dialogue",
+      "text": "The girl's light goes hard and white. The water round the jetty lights up from underneath, here and there, as if more lanterns were coming up from the bottom.",
+      "monsters": [
+        {
+          "monster": "lantern_girl",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            21,
+            9
+          ],
+          "name": "A Drowned Light"
+        }
+      ],
+      "surprise": "",
+      "flag": "lantern_girl_slain",
+      "quest": {
+        "id": "one_lantern_too_many",
+        "stage": "fought"
       }
     }
   ]

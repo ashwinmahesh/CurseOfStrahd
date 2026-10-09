@@ -1075,6 +1075,36 @@
       "id": "ash_effigy_slain",
       "type": "bool",
       "summary": "The Ash Effigy on the crown of Yester Hill is destroyed (The Druid Who Came Back)."
+    },
+    {
+      "id": "sabin_asked",
+      "type": "bool",
+      "summary": "Old Sabin told the party about the extra lantern and Sandu (One Lantern Too Many)."
+    },
+    {
+      "id": "sabin_remembered",
+      "type": "bool",
+      "summary": "Old Sabin remembered who the extra lantern is for: his daughter Liliana (One Lantern Too Many)."
+    },
+    {
+      "id": "lantern_girl_met",
+      "type": "bool",
+      "summary": "The party has met the Lantern Girl at the end of the fishers' jetty (One Lantern Too Many)."
+    },
+    {
+      "id": "lantern_girl_heard",
+      "type": "bool",
+      "summary": "The party told the Lantern Girl her father remembers (One Lantern Too Many)."
+    },
+    {
+      "id": "lantern_girl_rested",
+      "type": "bool",
+      "summary": "The party brought up the Lantern Girl's lantern and she went out of her own accord (One Lantern Too Many)."
+    },
+    {
+      "id": "lantern_girl_slain",
+      "type": "bool",
+      "summary": "The Lantern Girl was put out in a fight on the fishers' jetty (One Lantern Too Many)."
     }
   ]
 }

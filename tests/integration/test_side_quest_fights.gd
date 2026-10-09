@@ -375,3 +375,17 @@ func test_the_ash_effigy_stands_up_with_ruxandra() -> void:
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("ash_effigy_slain", false)))
 	assert_eq(GameState.story.quest_stage("the_druid_who_came_back"), "burned")
+
+
+## The Lantern Girl at the end of the fishers' jetty, the size of a child, with the drowned lights.
+func test_the_lantern_girl_on_the_jetty() -> void:
+	var v := await _boot("lake_zarovich", 22, 5, [])
+	GameState.story.set_quest_stage("one_lantern_too_many", "asked")
+	LocationNpcs.hide_npcs_of(v, "vallaki/one_lantern_too_many:girl")
+	var e := await _fight(v, "lantern_girl", ["The Lantern Girl", "A Drowned Light"])
+	for c in e.combatants:
+		if c.name() == "The Lantern Girl":
+			assert_eq(CombatToken.height_of(c), 0.9, "child-sized, on the wisp's sprite")
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("one_lantern_too_many"), "fought")
+

@@ -1,0 +1,218 @@
+{
+  "id": "lantern_girl",
+  "name": "The Lantern Girl",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (One Lantern Too Many, docs/story/side_quests.md), built from the will-o'-wisp and the ghost: a drowned child's spirit made of the light she held up, with a cold touch, a drowning light and a lure. Drawn with the will-o'-wisp's sprite, child-sized (art_height)."
+  },
+  "size": "small",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "ghost"
+  ],
+  "alignment": "neutral",
+  "art": "will_o_wisp",
+  "art_height": 0.9,
+  "ac": 15,
+  "ac_note": "nothing to hit but light",
+  "initiative": 3,
+  "hp": {
+    "average": 90,
+    "dice": "20d6+20"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 40,
+    "hover": true
+  },
+  "abilities": {
+    "str": 3,
+    "dex": 16,
+    "con": 12,
+    "int": 10,
+    "wis": 14,
+    "cha": 16
+  },
+  "saves": {
+    "wis": 5,
+    "cha": 6
+  },
+  "resistances": [
+    "acid",
+    "fire",
+    "necrotic",
+    "thunder"
+  ],
+  "immunities": [
+    "cold",
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "grappled",
+    "paralyzed",
+    "poisoned",
+    "prone",
+    "restrained"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 5,
+  "xp": 1800,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (1/Day)",
+      "action": "special",
+      "summary": "Once a day, a failed saving throw becomes a success.",
+      "text": "When the Lantern Girl fails a saving throw, she can choose to succeed instead, once a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "incorporeal_movement",
+      "name": "Incorporeal Movement",
+      "action": "passive",
+      "summary": "Moves through creatures and objects as Difficult Terrain; 5 (1d10) Force if she ends a turn inside one.",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "incorporeal_movement"
+        }
+      ],
+      "text": "The Lantern Girl can move through other creatures and objects as if they were Difficult Terrain. She takes 5 (1d10) Force damage if she ends her turn inside an object.",
+      "implemented": "engine"
+    },
+    {
+      "id": "held_up",
+      "name": "Held Up",
+      "action": "passive",
+      "summary": "She's the light of the lantern she held up as she went down. Turn back for it, and she goes out.",
+      "text": "Thirty years ago she drowned holding her lantern up so the other boats would see her and turn back. None did. Bring the lantern up from where she went down, and she goes out of her own accord.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "cold_hand",
+          "count": 1,
+          "or": [
+            "lure"
+          ]
+        },
+        {
+          "action": "cold_hand",
+          "count": 1
+        }
+      ],
+      "summary": "Two Cold Hands, or a Lure and a Cold Hand.",
+      "text": "The Lantern Girl makes two Cold Hand attacks, or uses Lure and makes one Cold Hand attack."
+    },
+    {
+      "id": "cold_hand",
+      "name": "Cold Hand",
+      "kind": "melee",
+      "attack": {
+        "bonus": 6,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "3d8",
+          "type": "cold"
+        }
+      ],
+      "summary": "A small hand as cold as the bottom of the lake.",
+      "text": "Melee Attack Roll: +6, reach 5 ft. Hit: 13 (3d8) Cold damage."
+    },
+    {
+      "id": "lure",
+      "name": "Lure",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 14,
+        "success": "none"
+      },
+      "targets": {
+        "range": 60,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "pull",
+          "feet": 20
+        }
+      ],
+      "summary": "One creature within 60 ft: DC 14 Wis save or it walks 20 ft toward her, following the light.",
+      "text": "Wisdom Saving Throw: DC 14, one creature the Lantern Girl can see within 60 feet. Failure: the target moves up to 20 feet straight toward her, following her light."
+    },
+    {
+      "id": "drowning_light",
+      "name": "Drowning Light",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 14,
+        "success": "half"
+      },
+      "area": {
+        "shape": "emanation",
+        "size": 20
+      },
+      "targets": {
+        "range": 20
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "cold"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: everything within 20 ft feels the lake close over it; DC 14 Con save, 4d8 Cold and Restrained until the end of her next turn, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 14, each creature within 20 feet of the Lantern Girl. Failure: 18 (4d8) Cold damage, and the target has the Restrained condition until the end of her next turn, as if the lake had closed over it. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 1,
+    "options": [
+      {
+        "id": "flicker",
+        "name": "Flicker",
+        "cost": 1,
+        "move": true,
+        "summary": "Drifts up to her Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 1,
+  "regions": [
+    "lake_zarovich",
+    "vallaki"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A girl of about nine made of pale light, in a wet festival dress, holding a paper lantern: Liliana, who went down in Lake Zarovich at the Baron's first festival with her lantern held up so the other boats would see her. None turned back. Her hands are as cold as the bottom of the lake, and her light pulls."
+}

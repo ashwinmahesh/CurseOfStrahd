@@ -237,3 +237,13 @@ func test_the_ash_effigy_and_zorica_at_level_7() -> void:
 ## Kostin's tree, and he stands aside: the effigy and its embers.
 func test_the_ash_effigy_at_level_8() -> void:
 	await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+
+
+## The shore of Lake Zarovich at the foot of the fishers' jetty.
+const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2i(17, 11), Vector2i(18, 11)]
+
+
+## The Lantern Girl and two drowned lights, when nobody turned back for her lantern.
+func test_the_lantern_girl_at_level_5() -> void:
+	await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4], [], [], [], JETTY_FOOT)
+
