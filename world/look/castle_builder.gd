@@ -78,12 +78,22 @@ static func plan(board: ArenaBoard) -> bool:
 					cells[c] = float(a[4])
 	if cells.is_empty():
 		return false
-	var st := {"cells": cells, "gates": {}, "keep": keep_h, "wall": wall_h, "below": float(cfg.get("below", 0.0))}
+	# The wall walk (W7, catalog `walks`): built squares raised inside the castle (the map's raised floor digits, with
+	# elevation stacked on them) are the walk along the top of a wall and the stairs up to it, in the castle's stone.
+	var walks := {}
+	if bool(cfg.get("walks", false)):
+		for z in range(rect.position.y, rect.end.y):
+			for x in range(rect.position.x, rect.end.x):
+				var c := Vector2i(x, z)
+				if g.in_bounds(c) and g.height(c) > 0 and not g.has_flag(c, CombatGrid.WALL) and not g.has_flag(c, CombatGrid.VOID) \
+						and not g.has_flag(c, CombatGrid.NATURAL):
+					walks[c] = g.height(c) / float(CombatGrid.FEET)
+	var st := {"cells": cells, "walks": walks, "gates": {}, "keep": keep_h, "wall": wall_h, "below": float(cfg.get("below", 0.0))}
 	board.set_meta("castle", st)
 	var gates := _gates(board, cells)
-	# The walls in pieces of CHUNK x CHUNK squares, each cut away on its own.
+	# The walls in pieces of CHUNK x CHUNK squares, each cut away on its own (the walk with the walls it runs along).
 	var chunks := {}
-	for c: Vector2i in cells:
+	for c: Vector2i in cells.keys() + walks.keys():
 		var key := Vector2i(floori(c.x / float(CHUNK)), floori(c.y / float(CHUNK)))
 		if not chunks.has(key):
 			chunks[key] = []
@@ -97,6 +107,9 @@ static func plan(board: ArenaBoard) -> bool:
 		group += 1
 	for t: Variant in cfg.get("towers", []):
 		_tower(board, t as Dictionary, group)
+		group += 1
+	for k in keeps:
+		_keep_roof(board, k, keep_h, group)
 		group += 1
 	_chasm(board, cfg)
 	return true
@@ -170,7 +183,8 @@ static func _open(st: Dictionary, n: Vector2i) -> bool:
 ## the chasm), the parapet on its machicolations, and by the face's hash a crossbow loop, a buttress, or on the keep
 ## its lancet windows.
 static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) -> void:
-	var heights := st["cells"] as Dictionary
+	var walks := st["walks"] as Dictionary
+	var heights := (st["cells"] as Dictionary).merged(walks)
 	var hmax := 0.0
 	var box := AABB()
 	var first := true
@@ -189,6 +203,9 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 	for c: Vector2i in cells:
 		var h := float(heights[c])
 		var centre := Vector3(c.x + 0.5, 0, c.y + 0.5)
+		if walks.has(c):
+			_walk(board, st, c, h, parts, stub)
+			continue
 		parts.append(_box(Vector3(1, h, 1), centre + Vector3(0, h / 2.0, 0), CORE))
 		stub.append(_box(Vector3(1, CUT, 1), centre + Vector3(0, CUT / 2.0, 0), CORE))
 		stub.append(_box(Vector3(1.04, 0.08, 1.04), centre + Vector3(0, CUT + 0.04, 0), COPING))
@@ -198,8 +215,8 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 			continue
 		for d in SetDressing.FACES:
 			var n := c + d
-			if not _open(st, n):
-				continue
+			if not _open(st, n) or float(walks.get(n, -1.0)) >= h - 0.01:
+				continue   # (the wall walk runs on level with this wall's top: one paved way, no face between)
 			var nv := Vector3(d.x, 0, d.y)
 			var base := centre + nv * 0.5
 			var yaw := atan2(nv.x, nv.z)
@@ -233,6 +250,83 @@ static func _walls(board: ArenaBoard, st: Dictionary, cells: Array, group: int) 
 			elif pick % 3 == 2 and h >= 4.0:
 				parts.append(["kit_castle_slit", BuildingKit.face_xf(base + Vector3(0, h * 0.55, 0), yaw)])
 	_finish(b, parts, stub)
+
+
+## A square of the wall walk or a step of its stairs, `h` high: the castle's ashlar to a paved top, a dressed coping
+## along each edge that drops to lower ground, and the battered foot on a face tall enough to have one. Cut away, its
+## foot, like the walls'.
+static func _walk(board: ArenaBoard, st: Dictionary, c: Vector2i, h: float, parts: Array, stub: Array) -> void:
+	var centre := Vector3(c.x + 0.5, 0, c.y + 0.5)
+	var walks := st["walks"] as Dictionary
+	var cells := st["cells"] as Dictionary
+	parts.append(_box(Vector3(1, h, 1), centre + Vector3(0, h / 2.0, 0), CORE))
+	parts.append(_box(Vector3(1.0, 0.05, 1.0), centre + Vector3(0, h + 0.025, 0), COPING))
+	var low := minf(h, CUT)
+	stub.append(_box(Vector3(1, low, 1), centre + Vector3(0, low / 2.0, 0), CORE))
+	stub.append(_box(Vector3(1.04, 0.08, 1.04), centre + Vector3(0, low + 0.04, 0), COPING))
+	for d in SetDressing.FACES:
+		var n := c + d
+		var nh := float(walks.get(n, cells.get(n, 0.0)))
+		if nh >= h - 0.01:
+			continue   # the walk, a step as high, or a wall's top runs on
+		var nv := Vector3(d.x, 0, d.y)
+		var edge := Vector3(1.0 if d.x == 0 else 0.14, 0.09, 0.14 if d.x == 0 else 1.0)
+		parts.append(_box(edge, centre + nv * 0.46 + Vector3(0, h + 0.045, 0), COPING))
+		if h >= LOW and nh <= 0.0 and board.grid.in_bounds(n) and not board.grid.has_flag(n, CombatGrid.VOID):
+			parts.append(["kit_castle_wall_foot", BuildingKit.face_xf(centre + nv * 0.5, atan2(nv.x, nv.z))])
+
+
+## Over keep rectangle `k` (its walls `h` high), a steep slated roof inside the battlements (W7): the kit's stone roof
+## along the keep's long side, half a square in from its faces, made steeper for the castle's gothic, with a gable
+## at each end in the keep's ashlar. It hides when the keep would be in the way of the party, like a wall piece.
+static func _keep_roof(board: ArenaBoard, k: Rect2i, h: float, group: int) -> void:
+	var along_x := k.size.x >= k.size.y
+	var span := (k.size.y if along_x else k.size.x) - 1
+	var length := (k.size.x if along_x else k.size.y) - 1
+	var slice := BuildingKit.roof_id("stone", "slate", span, false)
+	if span < 1 or length < 1 or slice == "":
+		return
+	var steep := 1.55
+	var rise := BuildingKit.rise("stone", "slate", span) * steep
+	var cx := k.position.x + k.size.x / 2.0
+	var cz := k.position.y + k.size.y / 2.0
+	var tall := Basis.from_scale(Vector3(1, steep, 1))
+	var turn := Basis(Vector3.UP, 0.0 if along_x else PI / 2.0)
+	var parts: Array = []
+	for i in length:
+		var at := Vector3(k.position.x + 1.0 + i, h, cz) if along_x else Vector3(cx, h, k.position.y + 1.0 + i)
+		parts.append([slice, Transform3D(turn * tall, at)])
+	var lo := Vector3(k.position.x + 0.5, h, cz) if along_x else Vector3(cx, h, k.position.y + 0.5)
+	var hi := Vector3(k.end.x - 0.5, h, cz) if along_x else Vector3(cx, h, k.end.y - 0.5)
+	var end := BuildingKit.roof_id("stone", "slate", span, true)
+	var gable := "kit_stone_gable_w%d" % span
+	# [where the gable is, the roof end's heading (its +x outward), the gable framing's heading (facing out)]
+	var ends: Array = [[hi, 0.0, PI / 2.0], [lo, PI, -PI / 2.0]] if along_x else [[hi, -PI / 2.0, 0.0], [lo, PI / 2.0, PI]]
+	var gs := SurfaceTool.new()
+	gs.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var half := span / 2.0
+	for e: Array in ends:
+		var at := e[0] as Vector3
+		if end != "":
+			parts.append([end, Transform3D(Basis(Vector3.UP, float(e[1])) * tall, at)])
+		if BuildingKit.has(gable):
+			parts.append([gable, Transform3D(Basis(Vector3.UP, float(e[2])) * tall, at)])
+		var out := (at - Vector3(cx, h, cz)).normalized()
+		var side := Vector3(-out.z, 0, out.x) * half
+		TownBuilder._tri(gs, at - side, at + side, at + Vector3(0, rise, 0), out)
+	parts.append([gs.commit(), Transform3D.IDENTITY, CORE])
+	var aabb := AABB(Vector3(k.position.x, 0, k.position.y), Vector3(k.size.x, h + rise + 0.5, k.size.y))
+	var b := _piece(board, "CastleKeepRoof", [], group, h + rise, aabb)
+	_finish(b, [], [])
+	var roof := BuildingKit.merge(parts)
+	if roof != null:
+		roof.name = "Roof"
+		(b["upper"] as Node3D).add_child(roof)
+
+
+## Whether square `c` is the castle's wall walk or a step up to it (CastleBuilder draws it; the board draws no floor).
+static func walk_at(board: ArenaBoard, c: Vector2i) -> bool:
+	return board.has_meta("castle") and ((board.get_meta("castle") as Dictionary).get("walks", {}) as Dictionary).has(c)
 
 
 ## Does the face of wall square `c` looking along `d` look into the castle (a yard closed in by its walls) rather than
