@@ -9,7 +9,7 @@ extends Node
 ## - LOOK_SHOTS=village_dusk,castle_hall: which shots (default every one).
 ## - LOOK_STYLE=classic|modern, LOOK_GRAPHICS=low|medium|high: the finish and the graphics preset.
 ## - LOOK_METER=1: the F3 frame meter shown.
-## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr: turn things off to see what they cost.
+## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr,sunbeams: turn things off to see what they cost.
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
@@ -60,6 +60,8 @@ func _ready() -> void:
 	var style := OS.get_environment("LOOK_STYLE")
 	if style != "":
 		Look.set_style(style, false)
+	# Without the sunbeams, for a before shot (Visual Polish Plan 2).
+	SunShafts.enabled = not "sunbeams" in OS.get_environment("LOOK_OFF").split(",", false)
 	if OS.get_environment("LOOK_METER") != "":
 		GameSettings.set_value("frame_meter", true, false)
 	var graphics := OS.get_environment("LOOK_GRAPHICS")
