@@ -114,7 +114,7 @@ static func _weighted(rng: DiceRoller, choices: Array, label: String) -> Diction
 	return choices.back() as Dictionary
 
 
-## One random magic item for a party of `level`: {id, qty, ...its own state}.
+## One random magic item for a party of `level`: {id, qty, ...its own state}; both of a pair.
 static func roll_item(rng: DiceRoller, level: int) -> Dictionary:
 	var weights := rarity_weights(level)
 	var rchoices: Array = []
@@ -140,7 +140,7 @@ static func roll_item(rng: DiceRoller, level: int) -> Dictionary:
 			return {}
 		id = "%s%s%s" % [pick, MagicItems.SEP, bases[rng.roll_one(bases.size(), "Treasure base") - 1]]
 		data = Compendium.shared().item_data(id)
-	var out := {"id": id, "qty": 1}
+	var out := {"id": id, "qty": 2 if bool(data.get("pair", false)) else 1}   # a pair comes whole (Boon Companions' Bands)
 	if bool(data.get("stackable", false)):
 		if str(data.get("category", "")) == "ammunition":
 			out["qty"] = rng.roll_one(10, "Ammunition") + 2

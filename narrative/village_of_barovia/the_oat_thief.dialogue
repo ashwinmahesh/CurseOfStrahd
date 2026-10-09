@@ -110,7 +110,7 @@ set agafia_thanked
 quest the_oat_thief done
 Agafia: They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes two smooth river stones from her apron, a pair, with the same mark scratched on each.)
 Agafia: My grandmother's. Speak into one, and whoever holds the other hears you. Keep one. Leave the other with Parriwimple. If they come again, you'll know.
-give sending_stones
+give sending_stones 2
 Agafia: Tell Bildrath. Tell him the truth or tell him wolves. Either way, tell him thank you.
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You stood at a hiding mother's door
 -> END

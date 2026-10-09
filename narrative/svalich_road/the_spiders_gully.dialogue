@@ -77,7 +77,7 @@ Tsura: (She looks up the path toward the falls, and the far side.) Tell Iancu I 
 
 ~ rings
 Tsura: Here. (Two silver rings on a thread round her neck.) They were for the wedding. They're old Vistani work: whoever wears the other, your magic won't touch them. I don't need them now.
-give boon_companions_bands
+give boon_companions_bands 2
 gold +40
 approve thistle +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You cut Tsura out of the spiders' web
 -> END
