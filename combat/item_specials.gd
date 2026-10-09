@@ -1348,7 +1348,8 @@ func _hammer_hurl(c: Combatant, p: Dictionary, t: Combatant) -> CombatResult:
 	var prof := WeaponProfile.build(ch, p["data"] as Dictionary, true, false)
 	prof.normal_range = 20
 	prof.long_range = 60
-	var option := {"id": "thrown:" + iid, "label": prof.name, "kind": "thrown", "profile": prof, "melee": false, "range": [20, 60], "reach": 5}
+	var option := {"id": "thrown:" + iid, "label": prof.name, "kind": "thrown", "profile": prof, "melee": false, "range": [20, 60], "reach": 5,
+		"set": ch.weapon_set_of(iid)}
 	var why := e.attack_legal(c, t, option)
 	if why != "":
 		return CombatResult.fail(why)
