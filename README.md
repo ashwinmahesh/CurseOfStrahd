@@ -73,10 +73,12 @@ Every published version is tagged in this repo on the commit it was built from (
 
 | | |
 |---|---|
-| ![Arriving in Vallaki: the town's name, then the scene](docs/screenshots/loop_arrival.gif) | ![Lightning over Vallaki in the rain](docs/screenshots/loop_lightning.gif) |
-| Arriving in a place: its name, then the scene. | Lightning and rain over Vallaki at night. |
-| ![The party walking single file through falling snow](docs/screenshots/loop_snow.gif) | ![Footsteps splashing through puddles in the rain](docs/screenshots/loop_rain_steps.gif) |
-| The party walks single file through falling snow. | Footsteps splash through the puddles. |
+| ![The fight's camera pushing in on a critical hit, then turning with a Fireball](docs/screenshots/loop_combat_camera.gif) | ![Strahd von Zarovich's entrance](docs/screenshots/loop_strahd.gif) |
+| The fight's camera: a critical hit pushes in, then it turns with the Fireball to where it lands. | Strahd von Zarovich makes his entrance. |
+| ![Spirit Guardians and Hunger of Hadar taking the field](docs/screenshots/loop_spells.gif) | ![A conversation opening as the camera eases in](docs/screenshots/loop_talk.gif) |
+| Spirit Guardians and Hunger of Hadar take the field. | A conversation opens, and the camera eases in on the speakers. |
+| ![Sunbeams through the trees on the misty road](docs/screenshots/loop_sunbeams.gif) | ![Arriving in Vallaki: the town's name, then the scene](docs/screenshots/loop_arrival.gif) |
+| Sunbeams slant through the trees on the misty road. | Arriving in a place: its name, then the scene. |
 
 ## Running from source
 
