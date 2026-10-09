@@ -470,6 +470,20 @@ func test_the_hills_watch_gets_up() -> void:
 	assert_eq(GameState.story.quest_stage("the_barrow_on_yester_hill"), "fought")
 
 
+## The mage's forgotten storm comes down off the ring of glass on Mount Baratok, Huge, with a squall.
+func test_the_forgotten_storm_comes_down() -> void:
+	var v := await _boot("mount_baratok", 19, 8, [])
+	GameState.story.set_quest_stage("the_forgotten_storm", "asked")
+	var e := await _fight(v, "forgotten_storm", ["The Forgotten Storm", "A Squall"])
+	for c in e.combatants:
+		if c.name() == "The Forgotten Storm":
+			assert_eq(c.size_cells, 3, "Huge")
+			assert_eq(CombatToken.height_of(c), 3.2)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_forgotten_storm"), "broken")
+	assert_true(GameState.story.get_flag("storm_dispersed", false))
+
+
 ## Kiril's hunters come down the Krezk road for Lark at the waystone, and her brother who's gone soft.
 func test_the_pack_comes_for_the_waystone() -> void:
 	var v := await _boot("krezk_road_waystone", 23, 6, ["waystone_lark_met"])

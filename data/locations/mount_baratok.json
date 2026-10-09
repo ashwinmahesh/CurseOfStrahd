@@ -379,6 +379,17 @@
       "model": "snowdrift",
       "dialogue": "mount_baratok/the_mages_lost_pages:letter_overlook",
       "when": "quest.the_mages_lost_pages"
+    },
+    {
+      "id": "storm_glass",
+      "cell": [
+        14,
+        17
+      ],
+      "kind": "examine",
+      "label": "The heart of the ring of glass",
+      "model": "glass_ring",
+      "dialogue": "mount_baratok/the_forgotten_storm:glass"
     }
   ],
   "containers": [
@@ -451,5 +462,70 @@
   "narration": {
     "enter": "enter:mount_baratok"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "encounters": [
+    {
+      "trigger": "dialogue",
+      "lair": true,
+      "text": "The storm comes down off the ring of glass at you, and the lightning comes down out of it.",
+      "surprise": "",
+      "flag": "storm_dispersed",
+      "quest": {
+        "id": "the_forgotten_storm",
+        "stage": "broken"
+      },
+      "id": "forgotten_storm",
+      "when": "flag.storm_sent_east",
+      "monsters": [
+        {
+          "monster": "forgotten_storm",
+          "cell": [
+            11,
+            16
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "air_elemental",
+          "cell": [
+            20,
+            12
+          ],
+          "name": "A Squall",
+          "hp": 60
+        }
+      ]
+    },
+    {
+      "trigger": "dialogue",
+      "lair": true,
+      "text": "The storm comes down off the ring of glass at you, and the lightning comes down out of it.",
+      "surprise": "",
+      "flag": "storm_dispersed",
+      "quest": {
+        "id": "the_forgotten_storm",
+        "stage": "broken"
+      },
+      "id": "forgotten_storm",
+      "monsters": [
+        {
+          "monster": "forgotten_storm",
+          "cell": [
+            11,
+            16
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "air_elemental",
+          "cell": [
+            20,
+            12
+          ],
+          "name": "A Squall",
+          "hp": 60
+        }
+      ]
+    }
+  ]
 }

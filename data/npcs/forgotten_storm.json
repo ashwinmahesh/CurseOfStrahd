@@ -1,0 +1,17 @@
+{
+  "id": "forgotten_storm",
+  "name": "The Forgotten Storm",
+  "title": "An Order Never Kept",
+  "summary": "The storm the Mad Mage called down to cover his flight from the castle forty years ago, told to bring his apprentice after him. It never found her, and comes back to Mount Baratok every evening to say so.",
+  "portrait": "air_elemental",
+  "sprite": "air_elemental",
+  "attitude": "hostile",
+  "monster": "forgotten_storm",
+  "guest": false,
+  "tags": [
+    "elemental",
+    "mount_baratok"
+  ],
+  "region": "mount_baratok",
+  "pronouns": "it/its"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "the_forgotten_storm",
+  "name": "The Forgotten Storm",
+  "summary": "Every evening lightning lands on the ring of glass on Mount Baratok. The mage told it something once, and it's still doing it.",
+  "giver": "mad_mage",
+  "region": "mount_baratok",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Every evening a storm comes down onto the ring of glass below the summit of Mount Baratok, and strikes the same place. The mage on the mountain called it down forty years ago and gave it an order. It's still trying to keep it, and it's getting angrier.",
+      "objectives": [
+        "Go to the ring of glass on Mount Baratok at dusk"
+      ],
+      "hint": "Go to the ring of glass below the summit of Mount Baratok, and wait there for dusk.",
+      "ends": ""
+    },
+    {
+      "id": "broken",
+      "journal": "The mage's storm is gone from the ring of glass. Where it stood, a little brass censer was sunk in the glass, still warm.",
+      "objectives": [
+        "Tell the mage at his hut on Mount Baratok"
+      ],
+      "hint": "Tell the mage in his hut on Mount Baratok that the storm is gone.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Evenings on Mount Baratok are quiet now. The mage had forgotten what that sounded like.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

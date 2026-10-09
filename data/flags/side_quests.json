@@ -1277,6 +1277,26 @@
       "summary": "The Barrow on Yester Hill: the party put down the hill's watch and Silverjaw (encounter hill_watch)."
     },
     {
+      "id": "storm_spell_read",
+      "type": "bool",
+      "summary": "The Forgotten Storm: Arcana read the count's two words, and him, under the mage's order in the storm's spell."
+    },
+    {
+      "id": "storm_sent_east",
+      "type": "bool",
+      "summary": "The Forgotten Storm: the party told the storm Corvina is in the castle; it broke itself against the sky going there and fights weaker."
+    },
+    {
+      "id": "storm_dispersed",
+      "type": "bool",
+      "summary": "The Forgotten Storm: the storm on the ring of glass is gone (told Corvina is at rest, or beaten in encounter forgotten_storm)."
+    },
+    {
+      "id": "storm_censer_found",
+      "type": "bool",
+      "summary": "The Forgotten Storm: the party took the brass censer out of the glass where the storm stood."
+    },
+    {
       "id": "waystone_lark_met",
       "type": "bool",
       "summary": "The Waystone: the party met Lark lighting the candle at the waystone."

@@ -64,7 +64,7 @@ party member, as before.
 - `shaders/ui/emerald_die.gdshader` (the emerald, its back facets, the landing's light), `shaders/ui/die_feather.gdshader`
   (the die's picture fades out at its edges). Colours: `emerald_*` in the UI palette (tools/art/build_palette.py).
 - Sounds (art/audio.json, generated with ElevenLabs for the die, art/sourced/elevenlabs_dice): `die_throw` as it flies
-  in, `die_bounce` at each bounce (several takes, picked at random, each bounce 4 dB softer), `die_land` as it rests,
+  in, `die_bounce` at each bounce (resin on wood, owner's ask) (several takes, picked at random, each bounce 4 dB softer), `die_land` as it rests,
   then a beat later `die_success` or `die_fail`, or `die_crit` and `die_fumble` for a natural 20 and 1. The owner picks
   takes on the Emerald Die Sounds listening page (https://claude.ai/artifact/AWFxBbEEhN3RfRg3Vc82mJ).
 - `ui/dialogue/dialogue_ui.gd`: shows the d20 on a check beat; the Speaker button, Tab and `cycle_speaker`.

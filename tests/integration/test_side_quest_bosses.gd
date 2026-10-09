@@ -327,6 +327,15 @@ func test_the_hills_watch_at_level_7() -> void:
 	await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)
 
 
+## The ring of glass on Mount Baratok, where the party waits for dusk.
+const GLASS_RING: Array[Vector2i] = [Vector2i(16, 18), Vector2i(17, 18), Vector2i(16, 19), Vector2i(17, 19)]
+
+
+## The Forgotten Storm and a squall, with the evening's lightning landing on the ring.
+func test_the_forgotten_storm_at_level_8() -> void:
+	await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
+
+
 ## The bend in the Krezk road, by the waystone and its candle.
 const AT_THE_STONE: Array[Vector2i] = [Vector2i(12, 7), Vector2i(14, 7), Vector2i(13, 8), Vector2i(15, 8)]
 

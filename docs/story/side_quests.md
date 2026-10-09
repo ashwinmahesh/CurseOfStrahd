@@ -693,6 +693,29 @@ inside.
 - No fight. It leads to The Unnamed Crypt (batch 4, the castle).
 - Corvina's first ring, which he took off her desk the night they went up: a Ring of Telekinesis (very rare).
 
+### The Forgotten Storm (`the_forgotten_storm`, narrative/mount_baratok/the_forgotten_storm.dialogue; batch 7, level 8)
+
+From level 8, the mage on the mountain, mad or himself again, has an answer about the lightning that lands on the ring
+of glass every evening. Mad, he told it something once and can't remember what, it's getting angrier, and he's fairly
+sure it wants him. Restored, he knows: the night he ran from the castle he called a storm down behind him to cover the
+road and told it to bring Corvina after him (The Mage's Lost Pages). It never found her, and it comes back every
+evening to say so. At the ring of glass (a new examine prop at its heart) the party waits for dusk, and the storm comes
+down and asks where she is. **Twist:** (Arcana DC 15) under the mage's order, in another hand, the count has written
+two more words into the spell: and him. **Escalation:** it doesn't wait long for an answer. With her name (her letter
+from the ring, or Mordenkainen), the party can tell it she's at rest (The Unnamed Crypt), and it lets go without a
+fight; or that she's in the castle, and it breaks itself against the sky going there and comes back weaker. The mage
+stays where he is and as he is; nothing here touches find_the_ally or his ally flags.
+
+- **Boss: the Forgotten Storm** (data/monsters/forgotten_storm.json, `source.book: custom`, built up from the 2025
+  Monster Manual's air elemental and drawn with its sprite at Huge, `art_height` 3.2): Huge elemental, AC 15, 152 HP
+  (140 in this fight), two Thunderous Slams with 15-ft reach, Lightning on two creatures (recharge 5-6, DC 16 Dex) and a
+  Whirlwind (recharge 4-6), a lair action as the evening's lightning lands, Legendary Resistance (1/day), and a gust
+  or a slam between turns. CR 9. A squall comes with it (an air elemental at 60 HP).
+- Fight `forgotten_storm` on the mountain: the autopilot wins 2 of 8 at level 8, losing three party members a fight;
+  sent east first, at 110 HP, 5 of 8.
+- In the glass where it stood: the brass censer the mage dropped on the road forty years ago, a Censer of Controlling
+  Air Elementals (rare). The mage's thanks: 250 gp.
+
 ## Castle Ravenloft (level 10)
 
 ### The Unnamed Crypt (`the_unnamed_crypt`, narrative/castle_ravenloft/the_unnamed_crypt.dialogue; batch 4)
@@ -951,6 +974,12 @@ Argynvostholt: the_silver_hoard.dialogue in full (new speaker the Gilded Knight;
 blunt interject and Godrick's) and narrator/argynvostholt_undercroft.dialogue, and Godfrey's new menu option. Batch 7,
 the Tser Pool camp: the_dancing_bear.dialogue in full (Lavinia and Old Marin; a new NPC, Bujor, with no lines of his
 own; Thistle's interject) and narrator/tser_woods_den.dialogue. Batch 7,
+<<<<<<< HEAD
 Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 8,
 the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
 interject) and narrator/krezk_road_waystone.dialogue.
+=======
+Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 7,
+Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
+the Narrator and a blunt interject), and the mage's two new menu options.
+>>>>>>> origin/main
