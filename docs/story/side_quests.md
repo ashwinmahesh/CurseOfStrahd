@@ -974,12 +974,8 @@ Argynvostholt: the_silver_hoard.dialogue in full (new speaker the Gilded Knight;
 blunt interject and Godrick's) and narrator/argynvostholt_undercroft.dialogue, and Godfrey's new menu option. Batch 7,
 the Tser Pool camp: the_dancing_bear.dialogue in full (Lavinia and Old Marin; a new NPC, Bujor, with no lines of his
 own; Thistle's interject) and narrator/tser_woods_den.dialogue. Batch 7,
-<<<<<<< HEAD
-Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 8,
-the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
-interject) and narrator/krezk_road_waystone.dialogue.
-=======
 Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 7,
 Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
-the Narrator and a blunt interject), and the mage's two new menu options.
->>>>>>> origin/main
+the Narrator and a blunt interject), and the mage's two new menu options. Batch 8,
+the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
+interject) and narrator/krezk_road_waystone.dialogue.
