@@ -47,6 +47,11 @@ var _lights: Array[OmniLight3D] = []
 var _light_scan := 0.0
 var _flash := 0.0
 var _next_flash := 0.0
+var _flicker_at := 0.0
+var _flicker := 0.0
+var _strikes_paced := false
+## Lightning strikes so far here (strike()).
+var strikes := 0
 var _rng := RandomNumberGenerator.new()
 
 
@@ -323,13 +328,14 @@ func _update_lamp_shadows() -> void:
 	var keep := {}
 	for i in mini(budget, ranked.size()):
 		keep[ranked[i][1]] = true
-	# The nearest few flames that cast shadows sway with their flicker, so their shadows stir (W5; CandleFlicker).
+	# Flames sway with their flicker (W5; LightFlicker), so the light they throw stirs: every one casting no shadow
+	# (nothing to redraw), and of those that cast one, the nearest few, so their shadows stir too.
 	var sway := Graphics.swaying_flames()
 	for i in ranked.size():
 		var l := ranked[i][1] as OmniLight3D
-		var swaying := i < budget and sway > 0 and l is CandleFlicker \
-			and str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"]
-		if swaying:
+		var swaying := str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"] \
+			and (not keep.has(l) or sway > 0)
+		if swaying and keep.has(l):
 			sway -= 1
 		l.set_meta("sway", swaying)
 	var fade := _rig.distance + 12.0
@@ -885,8 +891,13 @@ func set_phase(p: String) -> void:
 	_show_night_pieces()
 
 
-## Lit windows and wisps only after dark (and always indoors, where "any" is the only time).
+## Lit windows and wisps only after dark (and always indoors, where "any" is the only time), and outdoor flames
+## brighter.
 func _show_night_pieces() -> void:
+	# Outdoor flames brighten as night falls (LIGHT_KINDS dark_out); at once when the place opens.
+	for l in _lights:
+		if is_instance_valid(l) and LightFlicker.of(l) != null:
+			LightFlicker.of(l).set_boost(_dark_boost(str(l.get_meta("light_kind", "lamp"))), _blend >= 1.0)
 	if weather == null:
 		return
 	var dark := phase != "day"
@@ -989,7 +1000,7 @@ func _apply(k: float) -> void:
 	sun.light_color = (v["key"] as Color).lerp(Look.color("frost"), _flash)
 	sun.light_energy = float(v["key_energy"]) * (float(v["tone_key"]) if modern else 1.0) * (1.0 + _flash * 3.0)
 	sun.rotation_degrees = v["key_angle"] as Vector3
-	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5)
+	var sky_light := (v["sky"] as Color).lerp(Look.color("moon_blue"), 0.5).lerp(Look.color("frost"), _flash * 0.6)
 	RenderingServer.global_shader_parameter_set(&"world_sky", sky_light)
 	if water != null:
 		water.set_shader_parameter("reflection", sky_light * _water_reflect)
@@ -1025,7 +1036,7 @@ func _process(delta: float) -> void:
 	if _blend < 1.0:
 		_blend = minf(1.0, _blend + delta / TRANSITION)
 		dirty = true
-	if bool(mood.get("lightning", false)):
+	if bool(mood.get("lightning", false)) or mood.has("strikes"):
 		dirty = _lightning(delta) or dirty
 	if dirty:
 		_apply(smoothstep(0.0, 1.0, _blend))
@@ -1060,17 +1071,45 @@ func _process(delta: float) -> void:
 	_update_glows()
 
 
-## A storm's lightning: now and then the sky flashes, once or twice, lighting everything cold for an instant (indoors,
-## through the windows).
+## Lightning: now and then a strike lights everything cold for an instant (indoors, through the windows), flickers
+## once half the time and fades; outdoors a bolt comes down beyond the map's edge and thunder follows, soon and loud
+## when it's close, late and low when it's far (LightningStrike; lane 28, owner 2026-10-09: "in rain, we can also have
+## lightning effects happen sometimes (with a lighting change) and associated thunder"). A mood's `lightning` strikes
+## every 7-16 s (the storm over the castle); the weather's `strikes` {"every": [min, max]} sets its own pace (rain now
+## and then, a storm often; Weather.dress_mood). Never while a cutscene plays.
 func _lightning(delta: float) -> bool:
 	var was := _flash
+	var every := (mood.get("strikes", {}) as Dictionary).get("every", [7.0, 16.0]) as Array
+	if not _strikes_paced:
+		_strikes_paced = true
+		_next_flash = minf(_next_flash, _rng.randf_range(float(every[0]) * 0.3, float(every[1])))
 	_next_flash -= delta
 	if _next_flash <= 0.0:
-		_flash = 1.0
-		# A second, weaker flicker follows half the time.
-		_next_flash = _rng.randf_range(0.12, 0.2) if _rng.randf() < 0.5 and was < 0.5 else _rng.randf_range(7.0, 16.0)
-	_flash = maxf(0.0, _flash - delta * 6.0)
+		_next_flash = _rng.randf_range(float(every[0]), float(every[1]))
+		if ModeController.mode != ModeController.Mode.CUTSCENE:
+			strike()
+	# A long frame (a hitch) doesn't swallow the flash: it fades at most a twentieth of a second's worth a frame.
+	var step := minf(delta, 0.05)
+	if _flicker_at > 0.0:
+		_flicker_at -= step
+		if _flicker_at <= 0.0:
+			_flash = maxf(_flash, _flicker)
+	_flash = maxf(0.0, _flash - step * 6.0)
 	return _flash > 0.0 or was > 0.0
+
+
+## One strike now (`near`: a close one, or left to chance). The flash is full for a close one and weaker for a far one.
+func strike(near: Variant = null) -> void:
+	var close := _rng.randf() < LightningStrike.NEAR_CHANCE if near == null else bool(near)
+	var strength := 1.0 if close else _rng.randf_range(0.45, 0.7)
+	_flash = maxf(_flash, strength)
+	if _rng.randf() < 0.5:
+		_flicker_at = _rng.randf_range(0.08, 0.16)
+		_flicker = strength * 0.65
+	if outdoors and board != null:
+		LightningStrike.bolt(get_parent() if get_parent() != null else self, board, close, _rng)
+	LightningStrike.thunder(self, close, _rng)
+	strikes += 1
 
 
 ## Candles and flames modelled into the building kit's pieces (lane 7's castle piers carry an iron sconce of candles on
@@ -1247,13 +1286,15 @@ func _scan_lights() -> void:
 ## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
 ## through the haze (_window_shaft).
 ## `energy` and `reach` scale its strength and range in the Modern finish (the target frames: hearths and candelabras
-## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead).
+## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead). `dark_out` scales it
+## further outdoors after dark, where the moon, the sky's fill and the lit mist would otherwise drown a campfire.
+## Each kind that isn't steady flickers in its own way (LightFlicker.STYLES).
 const LIGHT_KINDS := {
-	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15},
-	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15},
+	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15, "dark_out": 1.5},
+	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15, "dark_out": 1.5},
 	"lantern": {"size": 0.08, "fog": 1.2, "energy": 0.85, "reach": 0.9},
-	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2},
-	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4},
+	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2, "dark_out": 2.5},
+	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4, "dark_out": 3.5},
 	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
 	"window": {"size": 0.4, "fog": 0.5, "steady": true},
 	"lit_window": {"size": 0.3, "fog": 1.0},
@@ -1286,6 +1327,13 @@ func _light_kind(l: OmniLight3D) -> String:
 	return "spell"
 
 
+## How much brighter a light of `kind` burns now than its own energy: outdoors after dark, its kind's `dark_out`.
+func _dark_boost(kind: String) -> float:
+	if not outdoors or phase == "" or phase == "day":
+		return 1.0
+	return float((LIGHT_KINDS[kind] as Dictionary).get("dark_out", 1.0))
+
+
 func _dress_light(light: Variant) -> void:
 	# Called deferred: the light may have gone with its place by now (a typed parameter would refuse the freed one).
 	if not is_instance_valid(light):
@@ -1304,6 +1352,8 @@ func _dress_light(light: Variant) -> void:
 		l.light_energy *= gain
 	if bool(spec.get("steady", false)) and l is CandleFlicker:
 		(l as CandleFlicker).flicker = 0.0
+	if not bool(spec.get("steady", false)):
+		LightFlicker.give(l, kind, _dark_boost(kind))
 	if kind == "window" and not outdoors:
 		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
 		l.light_color = sun.light_color

@@ -104,6 +104,15 @@ anyone touching this file.
   in a blizzard; will-o'-wisps and fireflies after dark; dust hanging in shut-up rooms; crows circling overhead;
   chimney smoke bent by the wind; sparks over open fires; candlelight spilling from lit windows after dark;
   lightning flashes in a storm (and through the castle's spire windows).
+- **Lightning in the rain** (lane 28, owner 2026-10-09: "in rain, we can also have lightning effects happen sometimes
+  (with a lighting change) and associated thunder"). A weather kind's `look.strikes` {"every": [min, max]} seconds
+  reaches an outdoor place's mood (Weather.dress_mood): rain strikes every 40-100 s, a storm every 9-22 s; a mood's own
+  `lightning` (the storm over the castle) strikes every 7-16 s. A strike (Atmosphere.strike) lights the scene and the
+  figures cold for an instant, sky included, flickers once half the time and fades within a fraction of a second; a
+  long frame doesn't swallow it. Outdoors a bolt comes down beyond the map's edge in front of the camera
+  (LightningStrike, FxKit's jagged beam), and thunder follows: a crack and a roll a fraction of a second after a close
+  strike, a lower, softer roll seconds after a far one (art/audio.json `thunder_near`, `thunder_far`, `thunder_crack`:
+  the CC0 thunder roll and the CC-BY boom pack). Nothing strikes while a cutscene plays.
 - **The world's weather** (lane 4's F12, `story/weather.gd`): outdoors, a place's mood is dressed for the weather
   the world has now (`Weather.dress_mood`: its own rain and snow give way to the weather's, fog thickens its mist), and
   when the weather turns during a stay, `Atmosphere.refresh_weather()` (LocationClock calls it) rebuilds the rain and
@@ -261,10 +270,20 @@ it on the window).
 - **Each light by its kind** (W5, `Atmosphere.LIGHT_KINDS`): a location's lights by their `kind` in its data, lit
   windows from the weather, the party's lantern, flames and spell lights by what they are. Their size sets how soft
   their shadows are (a candle's crisp, a hearth's soft) and how strongly they light the haze; magic lights and windows
-  hold steady. The nearest few flames that cast shadows sway a little with their flicker, so their shadows stir
-  (`CandleFlicker`, meta `sway`; 2 on High and Medium).
+  hold steady.
+- **Flicker by kind** (Modern; `LightFlicker`, owner's ask 2026-10-09): hearths, campfires and braziers flicker
+  hardest, torches nearly as hard, candles gently, lamps, lit windows and the party's lantern barely. Each light
+  wavers on its own (a slow swell, a flutter and a fast shiver of smooth noise, each from its own random start, so a
+  room never pulses in step) and now and then gutters, dipping fast and reddening as if a draught caught it. Only
+  its energy and colour change, never its range, so no shadow map is redrawn for it; and everything it lights flickers
+  with it: floors, walls and figures, the light bounced off them, the haze and its glow in the screen pass. Flames
+  sway with their flicker too, so the pool of light they throw stirs: every one that casts no shadow (moving it costs
+  nothing), and of those that cast one, the nearest few, so their shadows stir (meta `sway`; 2 on High and Medium).
+  `LightFlicker.STYLES` holds each kind's numbers. Classic keeps `CandleFlicker`'s old even jitter.
 - **Strength by kind** (Modern): hearths throw half again as much light and reach further, candles, lamps and
-  torches a little more, and the party's lantern less, so a room's own lights lead (the target frames).
+  torches a little more, and the party's lantern less, so a room's own lights lead (the target frames). Outdoors
+  after dark flames burn brighter still (`dark_out`: a fire three and a half times, a torch two and a half, lamps and
+  candles half again), or the moon, the sky's fill and the lit mist drown a campfire; they brighten as night falls.
 - **Kit and prop flames**: candles and flames modelled into the building kit's pieces (the castle piers' sconces)
   light the room around them; the flames are found in the piece's own mesh (`Atmosphere._light_kit_flames`), and
   floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and

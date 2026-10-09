@@ -16,7 +16,10 @@ extends Node
 ## - LOOK_TILT=1: the camera looking out to the horizon (the sky and what lies past the map).
 ## - LOOK_BENCH=1 times each part of the renderer in turn instead of shooting (_bench), LOOK_BENCH=presets the graphics
 ##   presets, several rounds over, since other work on the machine makes one reading noisy; LOOK_BENCH=pairs what one
-##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load.
+##   change saves, switching it on and off in quick turns (_bench_pairs), the steadiest under load; LOOK_PAIRS=<words>
+##   only the changes whose name holds them (LOOK_PAIRS=flames: what the flicker costs).
+## - LOOK_CLIP=48: after each shot, that many frames in a row as a clip (_clip), to show what moves (the flames' flicker);
+##   tools/capture/clip_gif.py joins them into a GIF.
 
 ## Each shot: the place, the hour, where the party stands (empty: the place's own spawn) and, optionally, a square
 ## it walks to before the shot.
@@ -43,6 +46,9 @@ const SHOTS := {
 	"village_mud_walk": {"loc": "village_of_barovia", "hour": 18, "cells": [[14, 27], [15, 27], [14, 28], [15, 28]],
 		"walk": [14, 22], "zoom": 8},
 	"castle_dining": {"loc": "castle_ravenloft_main_floor", "cells": [[7, 10], [8, 10], [7, 11], [8, 11]]},
+	"inn_hearth": {"loc": "vallaki_blue_water_inn", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]], "zoom": 9},
+	"camp_fire": {"loc": "vallaki_vistani_camp", "hour": 22, "cells": [[14, 14], [16, 14], [13, 13], [17, 11]],
+		"zoom": 9},
 	# The party at the water's edge, the pool in front of them (Visual Polish Plan 1: reflections), and the village
 	# square after rain.
 	"pool_shore_dusk": {"loc": "tser_pool", "hour": 18, "cells": [[9, 4], [10, 4], [11, 4], [10, 3]]},
@@ -110,6 +116,8 @@ func capture_shots(tool: Node, out: String) -> void:
 			int(1000.0 / ms), calls, view.find_children("*", "OmniLight3D", true, false).size()])
 		await tool.call("wait_frames", 10)
 		tool.call("_shot", "%s_%s.png" % [out, id])
+		if OS.get_environment("LOOK_CLIP") != "":
+			await _clip(tool, "%s_%s" % [out, id], int(OS.get_environment("LOOK_CLIP")))
 
 
 func _build(shot: Dictionary) -> void:
@@ -210,6 +218,33 @@ func _build(shot: Dictionary) -> void:
 		for l in view.find_children("*", "OmniLight3D", true, false):
 			l.set_meta("no_shadow", true)
 			(l as OmniLight3D).shadow_enabled = false
+
+
+## Every light's flicker (LightFlicker) running or held.
+func _flicker(on: bool) -> void:
+	for n in view.find_children("Flicker", "LightFlicker", true, false):
+		n.set_process(on)
+
+
+## A clip of the place (LOOK_CLIP): `frames` frames in a row, <out>_clip_000.png on. Time runs at CLIP_PACE of its
+## speed meanwhile, so saving each frame leaves little of the motion out; <out>_clip.txt has each frame's time in the
+## game, which clip_gif.py turns into the GIF's frame lengths.
+const CLIP_PACE := 0.25
+
+
+func _clip(tool: Node, out: String, frames: int) -> void:
+	Engine.time_scale = CLIP_PACE
+	var at := 0.0
+	var times := PackedStringArray()
+	for i in frames:
+		await tool.call("wait_frames", 1)
+		at += get_process_delta_time()
+		times.append("%.4f" % at)
+		tool.call("_shot", "%s_clip_%03d.png" % [out, i])
+	Engine.time_scale = 1.0
+	var f := FileAccess.open(out + "_clip.txt", FileAccess.WRITE)
+	f.store_string("\n".join(times) + "\n")
+	f.close()
 
 
 ## Times the place with each part of the renderer on its own over a bare base (no anti-aliasing, no lamp shadows, the
@@ -356,8 +391,12 @@ func _bench_pairs(tool: Node, id: String) -> void:
 		["no MSAA (vs 4x)", func() -> void: vp.msaa_3d = Viewport.MSAA_DISABLED,
 			func() -> void: vp.msaa_3d = Viewport.MSAA_4X],
 		["no sun shadows", func() -> void: sun.shadow_enabled = false, func() -> void: sun.shadow_enabled = true],
+		["flames held steady (vs flickering)", func() -> void: _flicker(false), func() -> void: _flicker(true)],
 	]
+	var only := OS.get_environment("LOOK_PAIRS")
 	for c: Array in changes:
+		if only != "" and not str(c[0]).contains(only):
+			continue
 		var on := c[1] as Callable
 		var off := c[2] as Callable
 		var savings: Array[float] = []
