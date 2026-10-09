@@ -564,3 +564,49 @@ func test_the_rod_of_alertness_keeps_watch() -> void:
 	TestCombat.start_with(e, c)
 	assert_false(e.items.use(c, "rod_of_alertness", "aura", [], Vector2(2, 2)).ok, "once per dawn")
 
+
+## The Mountain's Heart rewards. Belt of Giant Strength (Stone Giant): worn and attuned, Strength is 23, whatever the
+## score was below that; a higher score stays.
+func test_the_stone_giant_belt_sets_strength_to_23() -> void:
+	var ch := TestChars.pregen("silvain_aster", 9)
+	var low := ch.ability_score(&"str")
+	ch.add_item("belt_of_giant_strength_stone")
+	assert_true(ch.equip("belt_of_giant_strength_stone", "belt"))
+	assert_eq(ch.ability_score(&"str"), low, "not until attuned")
+	assert_true(ch.attune("belt_of_giant_strength_stone"))
+	assert_eq(ch.ability_score(&"str"), 23)
+	assert_eq(ch.skill_bonus(&"athletics").total() - ch.proficiency_bonus() * int(ch.has_proficiency("skills", "athletics")), 6)
+	var strong := TestChars.pregen("ilse_varga", 9)
+	(strong.build["base_scores"] as Dictionary)["str"] = 20
+	strong.build["item_boons"] = [{"ability": "str", "value": 2, "max_raise": 2, "source": "Manual A"},
+		{"ability": "str", "value": 2, "max_raise": 2, "source": "Manual B"}]
+	strong.refresh()
+	strong.add_item("belt_of_giant_strength_stone")
+	strong.equip("belt_of_giant_strength_stone", "belt")
+	strong.attune("belt_of_giant_strength_stone")
+	assert_eq(strong.ability_score(&"str"), 24, "a higher Strength stays")
+
+
+## Stone of Controlling Earth Elementals: once a dawn an Earth Elemental appears beside the user, takes its turn right
+## after them under their orders, and stays while they concentrate.
+func test_the_stone_calls_an_earth_elemental_beside_you() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 9)
+	var ch := c.creature as Character
+	ch.add_item("stone_of_controlling_earth_elementals")
+	TestCombat.foe(e, "bandit", Vector2i(9, 2))
+	TestCombat.start_with(e, c)
+	assert_true(e.items.use(c, "stone_of_controlling_earth_elementals", "summon", [], Vector2.INF).ok)
+	var el: Combatant = null
+	for o in e.combatants:
+		if o.creature is Monster and str((o.creature as Monster).data.get("id", "")) == "earth_elemental":
+			el = o
+	assert_true(el != null, "an Earth Elemental joins")
+	assert_eq(e.distance(c, el), 5, "in the space nearest the stone")
+	assert_eq(el.side, &"guest")
+	assert_eq(el.controller, c.controller, "it takes the user's orders")
+	assert_eq(e.order.find(el), e.order.find(c) + 1, "its turn comes right after the user's")
+	assert_false(e.items.use(c, "stone_of_controlling_earth_elementals", "summon", [], Vector2.INF).ok, "once a dawn")
+	ch.concentration.end("test")
+	assert_false(el.is_alive(), "gone when the Concentration ends")
+

@@ -17,7 +17,7 @@
   "powers": [
     {
       "id": "summon",
-      "name": "Summon an Water Elemental",
+      "name": "Summon a Water Elemental",
       "cost": "magic",
       "custom": "summon_monster",
       "params": {
@@ -26,9 +26,8 @@
         "hours": 1,
         "concentration": true
       },
-      "targeting": "place",
-      "range": 60,
-      "text": "Magic action (once per dawn): summon an Water Elemental, as if by Conjure Elemental; it obeys you while you concentrate, up to an hour.",
+      "targeting": "none",
+      "text": "Magic action (once per dawn): A Water Elemental appears in the space nearest you; it obeys you while you concentrate, up to an hour.",
       "uses": {
         "count": 1,
         "per": "dawn"
