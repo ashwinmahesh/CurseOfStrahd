@@ -150,7 +150,8 @@ static func area(poly: PackedVector2Array) -> float:
 
 func _chevron(cam: Camera3D, centre: Vector2, dir: Vector2, y: float, colour: Color) -> void:
 	var pts := _ground_poly(cam, chevron_points(centre, dir), y)
-	if pts.size() == 6:
+	# A chevron seen nearly edge-on can project to a shape that crosses itself, which the canvas can't triangulate.
+	if pts.size() == 6 and not Geometry2D.triangulate_polygon(pts).is_empty():
 		draw_colored_polygon(pts, colour)
 
 
