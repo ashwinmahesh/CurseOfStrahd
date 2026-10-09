@@ -222,6 +222,6 @@ func test_the_last_one_standing_falling_ends_the_game() -> void:
 	assert_true(root.get("screen") == null, "with someone on their feet, nothing comes up")
 	var last := st.party[0]
 	last.take_damage(last.hp, &"piercing")
-	_view().party_tended.emit()   # as a trap's blow does
+	_view().check_rolled.emit("Trap: 9 piercing")   # as a trap's or a pit's blow does
 	await _frames(2)
 	assert_true(root.get("screen") is PauseMenu and (root.get("screen") as PauseMenu).game_over, "The party has fallen")

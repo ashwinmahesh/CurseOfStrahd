@@ -128,7 +128,12 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.narration.connect(func(t: String) -> void: hud.narrate(t))
 	view.cutscene_requested.connect(play_cutscene)
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
-	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
+	view.check_rolled.connect(func(t: String) -> void:
+		hud.roll(t)
+		# A trap's or a pit's roll may have dropped the last one standing (QA FN-17). Not a refresh: that stands the
+		# conscious back up, and a pit leaves its victim Prone.
+		if not view.in_combat:
+			_check_fallen())
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
@@ -173,13 +178,28 @@ func _refresh() -> void:
 ## nobody can walk, stabilize or act, and no Death Saving Throws run outside fights, so it ends as a lost fight does,
 ## with "The party has fallen" (QA FN-17: nothing came up, and nothing could change).
 func _check_fallen() -> void:
-	if _fallen or screen != null or dialogue != null or ending != null or moving or st.party.is_empty():
+	if _fallen or screen != null or dialogue != null or ending != null or moving or not _party_down():
 		return
+	_fallen = true
+	_fall.call_deferred()   # not from inside close_screen's own refresh, and after whatever ended a fight has its say
+
+
+## The game over, if the party is still all down once the moment has passed. A fight's own end goes first: its own
+## game over, or the final battle's wipe that is an ending (test_ending_screen).
+func _fall() -> void:
+	if screen != null or dialogue != null or ending != null or moving or view == null or view.in_combat or not _party_down():
+		_fallen = false
+		return
+	open_screen("game_over", 0)
+
+
+func _party_down() -> bool:
+	if st.party.is_empty():
+		return false
 	for ch in st.party:
 		if not ch.dead and ch.hp > 0:
-			return
-	_fallen = true
-	open_screen.call_deferred("game_over", 0)   # not from inside close_screen's own refresh
+			return false
+	return true
 
 
 var _fallen := false
