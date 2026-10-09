@@ -37,12 +37,17 @@
       "id": "coin",
       "name": "Coin from Trade Goods",
       "cost": "magic",
-      "custom": "flavour",
+      "custom": "trade_to_coin",
       "field": true,
       "params": {
-        "text": "turns a trade bar or gemstone you touch into coins of the same worth (the game counts your gems as coin already)"
+        "from": [
+          "onyx",
+          "pearl",
+          "diamond"
+        ]
       },
-      "combat": false
+      "combat": false,
+      "text": "Magic action: a gemstone you carry (an onyx, a pearl or a diamond) turns into its full worth in coin."
     },
     {
       "id": "globe",
