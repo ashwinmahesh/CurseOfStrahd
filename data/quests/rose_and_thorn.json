@@ -11,6 +11,7 @@
       "objectives": [
         "Decide what to do for the children"
       ],
+      "hint": "The children's room is in Death House's attic. Their bones are in the toy chest there; their crypts are in the dungeon below the house.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Lay the children's remains in their crypts"
       ],
+      "hint": "Take the children's bones down to the family crypts in Death House's dungeon and lay them in Rosavalda's and Thornboldt's crypts.",
       "ends": ""
     },
     {

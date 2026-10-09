@@ -11,6 +11,7 @@
       "objectives": [
         "Find a way to give him back his memory"
       ],
+      "hint": "Look for what was taken from the old man: a warded cairn on Mount Baratok's summit, and Baba Lysaga's jars in Berez.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Show the spellbook to the old man in the hut"
       ],
+      "hint": "Show the spellbook to the old man in the hut on Mount Baratok. Baba Lysaga's jars in Berez hold the rest.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Take the jar to the hut on Mount Baratok"
       ],
+      "hint": "Take the jar to the old man in the hut on Mount Baratok.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Ask him what he knows"
       ],
+      "hint": "Ask Mordenkainen in his hut what he knows.",
       "ends": ""
     },
     {

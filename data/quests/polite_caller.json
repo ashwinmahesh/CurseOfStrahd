@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Widow Ileana about her husband; she tends his grave in the churchyard by day"
       ],
+      "hint": "Talk to Widow Ileana in the village churchyard by day; she tends her husband's grave there.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Sit up with Ileana after dark at her cottage by the churchyard gate"
       ],
+      "hint": "Go to Ileana's cottage by the churchyard gate after dark and sit up with her.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Hear Teodor out"
       ],
+      "hint": "Talk to Teodor at Ileana's shutter, after dark.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Hold Ileana's door until dawn"
       ],
+      "hint": "Stay at Ileana's cottage and hold her door until dawn.",
       "ends": ""
     },
     {
@@ -43,6 +47,7 @@
       "objectives": [
         "Decide, with Ileana, what becomes of Teodor at sunrise"
       ],
+      "hint": "Talk to Ileana at sunrise and decide with her what becomes of Teodor.",
       "ends": ""
     },
     {

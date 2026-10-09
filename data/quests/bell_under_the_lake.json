@@ -11,6 +11,7 @@
       "objectives": [
         "Wait on the landing after moonrise"
       ],
+      "hint": "Go to the fishers' landing on Lake Zarovich after moonrise and walk to the end of the jetty, over the deep water.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Deal with the drowned"
       ],
+      "hint": "Stand with Old Nistor on the landing and drive the drowned back into the lake.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Cut the bell loose, or ring it once for the dead"
       ],
+      "hint": "Go back to the end of the jetty: cut the bell loose (a strong swimmer, Water Breathing) or ring it once for the dead (Religion).",
       "ends": ""
     },
     {

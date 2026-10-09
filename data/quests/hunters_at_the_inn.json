@@ -11,6 +11,7 @@
       "objectives": [
         "Talk to Szoldar at the Blue Water Inn"
       ],
+      "hint": "Talk to Szoldar, the hunter in the corner of the Blue Water Inn's taproom in Vallaki.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Hunt Old Greytooth at the Lake Zarovich landing at dusk"
       ],
+      "hint": "Go to the fishers' landing on Lake Zarovich at dusk to hunt Old Greytooth. Szoldar and his son may know more than they've said.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Hunt Old Greytooth at the Lake Zarovich landing at dusk, on ground of our choosing"
       ],
+      "hint": "Go to the fishers' landing on Lake Zarovich at dusk, ready for Greytooth and whatever comes with him.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Find Yevgeni at the Blue Water Inn for the bounty"
       ],
+      "hint": "Go back to the Blue Water Inn in Vallaki and find Yevgeni for the bounty.",
       "ends": ""
     },
     {

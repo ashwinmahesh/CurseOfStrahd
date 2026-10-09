@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Daciana who reads her lists; she works the square by day"
       ],
+      "hint": "Talk to Daciana, who hands out festival ribbons in Vallaki's square by day.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Watch the lamp on Main Street after dusk"
       ],
+      "hint": "Watch the lamp on Vallaki's Main Street after dusk and see who takes the list; check the loose stone at the lamp post.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Deal with Watchman Dobre"
       ],
+      "hint": "Find Watchman Dobre in Vallaki and deal with him.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Decide what becomes of the lists"
       ],
+      "hint": "Talk to Daciana in the square and decide what becomes of the lists.",
       "ends": ""
     },
     {

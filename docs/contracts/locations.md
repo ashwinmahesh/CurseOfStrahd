@@ -108,8 +108,10 @@ or false for a pocket nobody can pick).
 
 ## data/quests/<id>.json (schema: quest.schema.json)
 
-`id`, `name`, `summary`, `giver`, `stages: [{id, journal, objectives: [text], ends: false|"success"|"failure"}]`.
-The journal shows each reached stage's text in order.
+`id`, `name`, `summary`, `giver`, `stages: [{id, journal, objectives: [text], hint, ends: false|"success"|"failure"}]`.
+The journal shows each reached stage's text in order. `hint` says what to do next at that stage, behind the journal's
+Hint button: the place and the person or action, never the twist (`{tarokka.<slot>.hint}` fills in the party's
+reading). Every stage that doesn't end its quest has one; `make validate` fails without it.
 
 ## data/flags/<region>.json (the flag registry, one file per region so writers don't collide)
 

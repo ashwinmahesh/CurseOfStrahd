@@ -11,6 +11,7 @@
       "objectives": [
         "Find a way to cure Ilya"
       ],
+      "hint": "The Abbot at the abbey above Krezk might cure Ilya, for a price; water from Krezk's Pool of the White Sun might help too.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Bring the Abbot a wedding dress",
         "Or find another cure"
       ],
+      "hint": "Find the Abbot a wedding dress (ask in Krezk), or try water from the Pool of the White Sun, or a healer's prayer.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "A healer's prayer, or the Abbot's hands, could finish what the water began"
       ],
+      "hint": "A healer's prayer, or the Abbot's hands, could finish it. Talk to Anna Krezkova or the Abbot.",
       "ends": ""
     },
     {

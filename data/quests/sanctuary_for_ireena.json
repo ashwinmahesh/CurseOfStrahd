@@ -11,6 +11,7 @@
       "objectives": [
         "Take Ireena to Father Lucian at St. Andral's"
       ],
+      "hint": "Take Ireena to Father Lucian at St. Andral's Church in Vallaki.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Recover the bones of St. Andral",
         "Find Ireena somewhere to stay meanwhile"
       ],
+      "hint": "Get St. Andral's bones back for Father Lucian; meanwhile Urwin Martikov at the Blue Water Inn can give Ireena a room.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Find Ireena true sanctuary, or take her with us again"
       ],
+      "hint": "Once St. Andral's bones are back, take Ireena to the church; or ask her to travel with you again. She's at the Blue Water Inn.",
       "ends": ""
     },
     {

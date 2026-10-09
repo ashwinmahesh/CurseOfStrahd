@@ -11,6 +11,7 @@
       "objectives": [
         "Attend the festival in the town square"
       ],
+      "hint": "Meet the town's powers in Vallaki: the Baron at his mansion, Lady Wachter at Wachterhaus, Father Lucian at St. Andral's. Pick a side, then ask the herald in the square to start the festival.",
       "ends": ""
     },
     {
@@ -21,6 +22,7 @@
         "Find proof against Lady Wachter (optional)",
         "Stand by the Baron at the festival"
       ],
+      "hint": "Optionally guard the wicker sun the night before; then ask the festival herald in the town square to begin, at noon.",
       "ends": ""
     },
     {
@@ -30,6 +32,7 @@
         "Make sure the wicker sun won't burn (optional)",
         "Stand with Lady Wachter at the festival"
       ],
+      "hint": "Optionally soak the wicker sun the night before; then ask the festival herald in the town square to begin, at noon.",
       "ends": ""
     },
     {
@@ -40,6 +43,7 @@
         "Return St. Andral's bones (optional)",
         "Protect the townsfolk at the festival"
       ],
+      "hint": "Optionally return St. Andral's bones first; then ask the festival herald in the town square to begin, at noon.",
       "ends": ""
     },
     {
@@ -48,6 +52,7 @@
       "objectives": [
         "See the festival through"
       ],
+      "hint": "Stay in Vallaki's square and see the festival through: talk to whoever speaks next.",
       "ends": ""
     },
     {

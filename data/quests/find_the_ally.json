@@ -11,6 +11,7 @@
       "objectives": [
         "Find the ally the cards named"
       ],
+      "hint": "Find the ally Madam Eva's card named and win them over: {tarokka.ally.hint}",
       "ends": ""
     },
     {

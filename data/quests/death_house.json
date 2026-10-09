@@ -12,6 +12,7 @@
         "Enter the Durst house",
         "Find the basement and Walter"
       ],
+      "hint": "Go into the tall house at the village's edge and work your way up through it; the way down starts at the top.",
       "ends": ""
     },
     {
@@ -21,6 +22,7 @@
         "Follow the hidden stair down",
         "Find out what happened to Walter"
       ],
+      "hint": "Take the hidden stair from the attic all the way down, below the house.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
       "objectives": [
         "Get out of the house alive"
       ],
+      "hint": "Answer the shades at the altar, then get back up through the house and out. If the doors are gone, try the dining room's tall window on the ground floor.",
       "ends": ""
     },
     {

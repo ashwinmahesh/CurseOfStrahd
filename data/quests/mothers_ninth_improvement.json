@@ -11,6 +11,7 @@
       "objectives": [
         "Talk to Mother, in the wards kitchen of the Abbey of St. Markovia, once the Abbot is done improving"
       ],
+      "hint": "Once the Abbot is done improving, talk to Mother in the wards kitchen at the Abbey of St. Markovia.",
       "ends": ""
     },
     {
@@ -21,6 +22,7 @@
         "Take the wire out of her wings",
         "Help her up to the courtyard wall"
       ],
+      "hint": "See to Mother's boys in the abbey's cells, take the wire out of her wings, then help her up to the courtyard wall.",
       "ends": ""
     },
     {

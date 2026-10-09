@@ -10,6 +10,7 @@
       "objectives": [
         "Find the Wizard of Wines"
       ],
+      "hint": "With Ratatoille in the party, go to the Wizard of Wines winery south-west of Vallaki and talk to Davian Martikov or his daughter Stefania.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Find the wizard who paid with the stones"
       ],
+      "hint": "The wizard who paid with the stones lives alone on Mount Baratok, north of Lake Zarovich. Ratatoille will know him; talk to the old man in the hut.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Find the wizard who paid with the stones"
       ],
+      "hint": "The wizard who paid with the stones lives alone on Mount Baratok, north of Lake Zarovich. Bring Ratatoille to the old man in the hut.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Help the wizard on the mountain remember"
       ],
+      "hint": "Help the old wizard on Mount Baratok get his memory back, then talk to him with Ratatoille in the party.",
       "ends": ""
     },
     {
@@ -42,6 +46,7 @@
       "objectives": [
         "Decide what kind of wizard to be"
       ],
+      "hint": "Take a Long Rest with Ratatoille in the party; he'll want a word at the fire.",
       "ends": ""
     },
     {

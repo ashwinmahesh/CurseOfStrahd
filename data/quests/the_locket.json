@@ -10,6 +10,7 @@
       "objectives": [
         "Find out who the woman in the locket is"
       ],
+      "hint": "With Tamsin in the party, show the locket to Ireena at the burgomaster's mansion, or ask Madam Eva at Tser Pool.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Find out who she was"
       ],
+      "hint": "Ask Madam Eva at Tser Pool about the locket, or rest with Tamsin and let him look at it again.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Find out who put the locket where Tamsin's hand would find it"
       ],
+      "hint": "Take a Long Rest with Tamsin in the party, or ask Arrigal at the Vistani camp outside Vallaki about a carriage that drives itself.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Find the water Sergei meant"
       ],
+      "hint": "The water is the Pool of the White Sun in Krezk. Take Tamsin there, and ask Arrigal about the coach.",
       "ends": ""
     },
     {
@@ -42,6 +46,7 @@
       "objectives": [
         "Decide what becomes of the locket"
       ],
+      "hint": "Take Tamsin to the Pool of the White Sun in Krezk and decide what becomes of the locket.",
       "ends": ""
     },
     {
@@ -62,6 +67,7 @@
       "objectives": [
         "Decide what becomes of the locket before the castle decides for you"
       ],
+      "hint": "Decide what becomes of the locket before the castle does; in Castle Ravenloft, look for the candles under her portrait.",
       "ends": ""
     },
     {

@@ -11,12 +11,14 @@
       "objectives": [
         "Find the treasures and the ally before facing Strahd"
       ],
+      "hint": "Gather the Tome, the Holy Symbol, the Sunsword and the ally, then go to Castle Ravenloft. {tarokka.enemy.hint}",
       "ends": ""
     },
     {
       "id": "confronted",
       "journal": "We came for Strahd in his castle, where the cards said he would be.",
       "objectives": [],
+      "hint": "Finish Strahd for good: he goes back to his coffin in his tomb under the castle.",
       "ends": ""
     },
     {

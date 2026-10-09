@@ -11,6 +11,7 @@
       "objectives": [
         "Go to the churchyard wall after dark"
       ],
+      "hint": "Go to the village churchyard wall, by the gate, after dark and speak to the girl standing there.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Fetch Veta's bones from the trunk in Death House's attic",
         "Take her down to Walter's crypt"
       ],
+      "hint": "Her trunk is under a sheet in Death House's attic. Walter's crypt is the very small one in the dungeon below the house.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Take her down to Walter's crypt under the house"
       ],
+      "hint": "Take Veta's bones down to the very small crypt in Death House's dungeon and lay her in it.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Look at Walter's crypt once more"
       ],
+      "hint": "Look at the small crypt in Death House's dungeon once more.",
       "ends": ""
     },
     {

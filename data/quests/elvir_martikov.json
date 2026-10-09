@@ -11,6 +11,7 @@
       "objectives": [
         "Find out what happened to Elvir on Yester Hill"
       ],
+      "hint": "Go to Yester Hill, west of the winery: look at the post of the druids' last cage, or ask Kostin there what happened to Elvir.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Tell Davian the truth"
       ],
+      "hint": "Go back to the Wizard of Wines and tell Davian Martikov what happened on Yester Hill.",
       "ends": ""
     },
     {

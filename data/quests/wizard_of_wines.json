@@ -11,6 +11,7 @@
       "objectives": [
         "Find out what has happened at the Wizard of Wines"
       ],
+      "hint": "Go to the Wizard of Wines vineyard and find Davian Martikov camped under the trees.",
       "ends": ""
     },
     {
@@ -21,6 +22,7 @@
         "Bring up the stone from the founder's cask in the cellar (third hoop, pull)",
         "Stop whatever the druids are building on Yester Hill"
       ],
+      "hint": "Drive the druids out of the winery and press house, fetch the stone from the founder's cask in the cellar, and break the druids' work on Yester Hill.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
       "objectives": [
         "Break the druids' ritual on Yester Hill and bring back the stone they took"
       ],
+      "hint": "Go to Yester Hill, west of the winery, break the druids' ritual and bring their stone back to Davian.",
       "ends": ""
     },
     {
@@ -37,6 +40,7 @@
       "objectives": [
         "Drive the druids out of the winery and the press house"
       ],
+      "hint": "Drive the druids out of the Wizard of Wines' winery and press house, then talk to Davian.",
       "ends": ""
     },
     {

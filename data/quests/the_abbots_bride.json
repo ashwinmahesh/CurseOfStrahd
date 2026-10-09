@@ -11,6 +11,7 @@
       "objectives": [
         "Learn what the Abbot is working on"
       ],
+      "hint": "Keep talking to the Abbot in the abbey church above Krezk and ask what he's working on.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Find a wedding dress, perhaps in Krezk",
         "Or decide not to help him"
       ],
+      "hint": "Ask in Krezk for a wedding dress: Anna Krezkova kept hers. Or decide not to help the Abbot.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Take the dress to the Abbot in the abbey church"
       ],
+      "hint": "Take the dress to the Abbot in the church of the Abbey of St. Markovia.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Decide what becomes of the Abbot's work"
       ],
+      "hint": "Talk to the Abbot in the abbey church and decide what becomes of his work.",
       "ends": ""
     },
     {

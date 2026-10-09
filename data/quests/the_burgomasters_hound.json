@@ -11,6 +11,7 @@
       "objectives": [
         "Find Lupu by the burgomaster's mansion"
       ],
+      "hint": "Find Lupu the wolfhound by the burgomaster's mansion and follow him.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Look at the cold corner of the burgomaster's study"
       ],
+      "hint": "Look at the cold corner of the study in the burgomaster's mansion.",
       "ends": ""
     },
     {

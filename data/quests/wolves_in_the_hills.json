@@ -11,6 +11,7 @@
       "objectives": [
         "Find the den in the hills above the lake"
       ],
+      "hint": "Find the werewolves' den in the hills above Lake Zarovich's north shore; someone waits at its mouth.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Free Emil from his chains in the den"
       ],
+      "hint": "Find Emil in the den and free him from his silver chains.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Decide who leads the pack when Kiril comes"
       ],
+      "hint": "Stay in the den until Kiril comes home, and decide who leads the pack.",
       "ends": ""
     },
     {

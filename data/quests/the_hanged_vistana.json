@@ -12,6 +12,7 @@
         "Cut the hanged man down",
         "Find out who he was"
       ],
+      "hint": "Cut the hanged man down at the crossroads gallows before dark, and ask at the Tser Pool camp who he was.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Look for Nicu on the road"
       ],
+      "hint": "Look for Nicu on the road: the gallows at the River Ivlis crossroads.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Tell his people at Tser Pool"
       ],
+      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Tell his people at Tser Pool"
       ],
+      "hint": "Go back to the Tser Pool camp and tell Luminita, or Stanimir.",
       "ends": ""
     },
     {

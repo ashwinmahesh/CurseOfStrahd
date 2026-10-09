@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Clovin Belview about it, at the Abbey of St. Markovia"
       ],
+      "hint": "Find Clovin Belview at the Abbey of St. Markovia, above Krezk, and ask about the joke.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Ask Dmitri Krezkov to let Clovin into Krezk for one evening"
       ],
+      "hint": "Go down to Krezk and ask Burgomaster Dmitri Krezkov, at the Krezkovs' house, to let Clovin in for one evening.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Tell Clovin, at the abbey"
       ],
+      "hint": "Go back up to the abbey and tell Clovin what Dmitri said; he may have another idea.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Be in the square by Krezk's shrine at dusk, and see Clovin through it"
       ],
+      "hint": "Be in Krezk's square by the wayside shrine at dusk on the day Clovin comes down, and see his show through.",
       "ends": ""
     },
     {

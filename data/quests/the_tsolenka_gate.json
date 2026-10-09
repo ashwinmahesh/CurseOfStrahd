@@ -12,6 +12,7 @@
         "Get past the watch",
         "Raise the gate from the winch room"
       ],
+      "hint": "Talk to Sergeant Valcu in the Tsolenka guard tower: give the watch's word (the old man on Mount Baratok knows it), talk his watch into resting, or fight. Then haul the gate winch.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Raise the gate from the winch room"
       ],
+      "hint": "Haul the gate winch in the gatehouse, west of the guardroom in the Tsolenka tower.",
       "ends": ""
     },
     {

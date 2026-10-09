@@ -12,6 +12,7 @@
         "Be at the River Ivlis crossroads after dark, and stand",
         "Optional: read the names on the quarry stones"
       ],
+      "hint": "Be at the River Ivlis crossroads after dark and stand your ground. The quarry stones by the road hold names worth reading.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "See what he left in the road"
       ],
+      "hint": "Look in the Huntsman's saddlebag, left in the road at the crossroads.",
       "ends": ""
     },
     {

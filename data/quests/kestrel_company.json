@@ -10,6 +10,7 @@
       "objectives": [
         "Learn what became of Kestrel Company"
       ],
+      "hint": "With Ilse in the party, ask about the letter's S in the village: Ismark at the Blood of the Vine knows the hand.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Find the road Kestrel Company took"
       ],
+      "hint": "With Ilse in the party, look for the company's tally marks along the Old Svalich Road, starting at the River Ivlis crossroads.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Look for the company's next night's tally"
       ],
+      "hint": "Look for the next night's tally near Tser Pool, on a marked tree in the Vistani camp.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Find out who J.F. was, and where he went"
       ],
+      "hint": "Look for J.F. in Vallaki: a young watchman who keeps to the town wall.",
       "ends": ""
     },
     {
@@ -42,6 +46,7 @@
       "objectives": [
         "Find the rest of Kestrel Company"
       ],
+      "hint": "Walk the castle road at the crossroads by night with Ilse, or look for the company in Castle Ravenloft.",
       "ends": ""
     },
     {
@@ -50,6 +55,7 @@
       "objectives": [
         "Give Corporal Vell his rest"
       ],
+      "hint": "Give Corporal Vell his rest on the crossroads road at night, or find the rest of the company on the castle's main floor.",
       "ends": ""
     },
     {
@@ -58,6 +64,7 @@
       "objectives": [
         "Find the rest of Kestrel Company in Castle Ravenloft"
       ],
+      "hint": "Find the rest of Kestrel Company on Castle Ravenloft's main floor, with Ilse in the party.",
       "ends": ""
     },
     {
