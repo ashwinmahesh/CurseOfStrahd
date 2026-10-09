@@ -104,6 +104,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	rig = rig_
 	tokens = tokens_
 	e.shared_turns = GameSettings.shared_turns()
+	_hero_saves()   # what was rolled before the fight showed isn't news
 	catalog = ActionCatalog.new(e)
 	picker = TargetPicker.new(e)
 	overlay = GridOverlay.create(board)
@@ -1550,6 +1551,7 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 
 
 func _play_events() -> void:
+	await _dice_moments()
 	var events := e.drain_events()
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
@@ -1870,6 +1872,34 @@ func _play_events() -> void:
 	impact.spell_landed()
 	_stop_walking(walking)
 	_refresh_all()
+
+
+# --- Dice moments (owner 2026-10-09: the big d20 only for the heroes' saving throws) -----------------------------
+
+## The saving throws the party's heroes rolled since the last look (their creatures' d20 events, Creature.roll_d20),
+## each marked so it shows once: [{who: Combatant, test: D20Test}].
+func _hero_saves() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for c in e.combatants:
+		if not c.is_player_controlled() or not c.side in [&"party", &"guest"]:
+			continue
+		for ev in c.creature.events:
+			if str(ev.get("type", "")) != "d20" or bool(ev.get("shown", false)):
+				continue
+			ev["shown"] = true
+			if int(ev.get("kind", -1)) == D20Test.Kind.SAVING_THROW and ev.get("test") is D20Test:
+				out.append({"who": c, "test": ev["test"]})
+	return out
+
+
+## Before an action's events play: the dice lane's big emerald d20 (DiceRoll) for each saving throw a hero just made, a
+## death save included, one after another; it returns once the roll has gone (any press skips it; fast combat plays it
+## quicker; headless runs and captures go straight on).
+func _dice_moments() -> void:
+	for s in _hero_saves():
+		var t := s["test"] as D20Test
+		var kind := "death_save" if t.label.begins_with("Death save") else "save"
+		await DiceRoll.show_roll(self, DiceRoll.from_test(t, (s["who"] as Combatant).name(), t.label, kind))
 
 
 ## The token shown for a creature, or null (none, or freed once the story took the fight back).
