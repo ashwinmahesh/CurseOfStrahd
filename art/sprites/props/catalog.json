@@ -1841,9 +1841,10 @@
       }
     },
     "castle": {
-      "about": "Castle Ravenloft from outside (W19, CastleBuilder, Modern look only), by place: rect is the castle's part of the map [x, z, w, d] (its wall squares are the castle; walls outside it stay as they were); wall and keep are the curtain walls' and the keep's heights; keeps are rects of keep squares; blocks are more of the castle past the map's edge [x, z, w, d, height]; towers are round towers {at: [x, z] in squares, r, h, from (above 0 a turret rising out of the keep, below 0 a tower rising out of the drop), spire: cone, needle or none}; parapets are rects whose wall squares are a low wall (the cliff road's edge); heights are rects [x, z, w, d, height] of walls of their own height (a raised roof's parapet); cliffs false makes the void a drop off the castle's roofs, its masonry going down `below` under every square beside it instead of rock; bridges are rects of the squares that span the chasm (timbers under them, no cliffs).",
+      "about": "Castle Ravenloft from outside (W19, CastleBuilder, Modern look only), by place: rect is the castle's part of the map [x, z, w, d] (its wall squares are the castle; walls outside it stay as they were); wall and keep are the curtain walls' and the keep's heights; keeps are rects of keep squares; blocks are more of the castle past the map's edge [x, z, w, d, height]; towers are round towers {at: [x, z] in squares, r, h, from (above 0 a turret rising out of the keep, below 0 a tower rising out of the drop), spire: cone, needle or none}; parapets are rects whose wall squares are a low wall (the cliff road's edge); heights are rects [x, z, w, d, height] of walls of their own height (a raised roof's parapet); cliffs false makes the void a drop off the castle's roofs, its masonry going down `below` under every square beside it instead of rock; bridges are rects of the squares that span the chasm (timbers under them, no cliffs); walks true makes the place's built raised squares (raised floor digits with elevation stacked on them) the wall walk and its stairs, in the castle's stone (W7).",
       "places": {
         "castle_ravenloft_gates": {
+          "walks": true,
           "rect": [
             0,
             0,

@@ -1,7 +1,8 @@
 # The Mac disk image (owner, 2026-10-08): opening the download shows a window to drag the game into Applications.
 # It wraps a published release's Mac app (downloads.curseofstrahd.app/<version>/CurseOfStrahd-<version>-macos.zip) in
 # a DMG laid out by tools/release/dmg_settings.py, signs it and has Apple notarize it when the Apple secrets exist,
-# and uploads it beside the zip as CurseOfStrahd-<version>-macos.dmg. The release workflow runs it after publishing;
+# and uploads it beside the zip as CurseOfStrahd-<version>-macos.dmg. Once Apple has notarized it, the app inside
+# the zip is stapled too and the zip uploaded again, so it opens offline as well. The release workflow runs it after publishing;
 # run it by hand for a version that's already out: gh workflow run mac-dmg.yml -f version=1.0.1 -f upload=true
 # It runs on macOS for hdiutil, codesign and notarytool; nothing is built, so it takes minutes.
 name: Mac disk image
@@ -76,6 +77,7 @@ jobs:
 
       # Off until the Apple secrets exist: the DMG then stays unsigned, which is fine for an unnotarized app inside.
       - name: Sign and notarize the disk image
+        id: notarize
         env:
           P12: ${{ secrets.APPLE_DEVELOPER_ID_P12 }}
           P12_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_P12_PASSWORD }}
@@ -113,8 +115,21 @@ jobs:
           spctl --assess --type open --context context:primary-signature -vv "$dmg"
           security delete-keychain "$kc"
           rm -rf "$d"
+          echo "done=true" >> "$GITHUB_OUTPUT"
 
-      - name: Upload beside the zip
+      # Apple's ticket covers the app inside the disk image, so the zip's copy can carry it too. Without it, a Mac that's
+      # offline the first time can't confirm the zip's app was notarized.
+      - name: Staple the zip's app
+        if: steps.notarize.outputs.done == 'true'
+        run: |
+          app="$RUNNER_TEMP/app/Curse of Strahd.app"
+          xcrun stapler staple "$app"
+          xcrun stapler validate "$app"
+          spctl --assess --type execute -vv "$app"
+          ditto -c -k --sequesterRsrc --keepParent "$app" "$RUNNER_TEMP/CurseOfStrahd-macos.zip"
+          ls -la "$RUNNER_TEMP/CurseOfStrahd-macos.zip"
+
+      - name: Upload the disk image (and the stapled zip)
         if: inputs.upload
         env:
           COS_CLOUDFLARE_R2_API_TOKEN: ${{ secrets.COS_CLOUDFLARE_R2_API_TOKEN }}
@@ -134,3 +149,9 @@ jobs:
             --s3-chunk-size 64M --s3-upload-concurrency 8
           curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.dmg?check=${GITHUB_RUN_ID}" | head -1
           echo "Published ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.dmg" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$RUNNER_TEMP/CurseOfStrahd-macos.zip" ]; then   # the stapled zip replaces the release job's
+            rclone copyto "$RUNNER_TEMP/CurseOfStrahd-macos.zip" "r2:${BUCKET}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip" \
+              --s3-chunk-size 64M --s3-upload-concurrency 8
+            curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip?check=${GITHUB_RUN_ID}" | head -1
+            echo "Replaced ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip with a stapled copy" >> "$GITHUB_STEP_SUMMARY"
+          fi

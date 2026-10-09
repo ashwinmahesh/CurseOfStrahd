@@ -140,6 +140,7 @@ static func _tend(view: LocationView, cell: Vector2i, action_id: String) -> void
 			return
 		var t := medic.roll_check(view.dice, &"medicine", 10, CheckAids.before_check(medic, &"medicine"))
 		view.check_rolled.emit(t.describe())
+		view.big_roll.emit(t, medic.name, "Medicine")
 		if t.success:
 			target.stabilize()
 			view.toast.emit("%s stops %s's bleeding: Stable" % [medic.name.get_slice(" ", 0), who])
