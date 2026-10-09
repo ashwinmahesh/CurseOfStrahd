@@ -377,6 +377,24 @@ func end_attunement(item_id: String) -> bool:
 	return true
 
 
+## "" if `item_id` can leave this character (given, stashed, dropped or sold); a cursed item they're attuned to stays
+## with them until the curse is lifted (Remove Curse), as ending the attunement does (QA FN-05: those were the way out).
+func part_blocker(item_id: String) -> String:
+	if not item_id in attuned or not MagicItems.is_cursed(compendium.item_data(item_id)):
+		return ""
+	if bool(entry_of(item_id).get("curse_lifted", false)):
+		return ""
+	return "Cursed: %s won't part with it until the curse is lifted (Remove Curse)" % name.get_slice(" ", 0)
+
+
+## "" if `item_id` can be taken off now; cursed armor its wearer is attuned to stays on until the curse is lifted
+## (Armor of Vulnerability, Demon Armor: "you can't remove the armor").
+func take_off_blocker(item_id: String) -> String:
+	if part_blocker(item_id) == "" or not Gear.is_armor(compendium.item_data(item_id)):
+		return ""
+	return "Cursed: the armor can't be taken off until the curse is lifted (Remove Curse)"
+
+
 ## The first carried inventory entry for `item_id` ({} if none).
 func entry_of(item_id: String) -> Dictionary:
 	for e in inventory:

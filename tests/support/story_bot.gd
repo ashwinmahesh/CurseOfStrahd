@@ -25,8 +25,12 @@ func _init(test_: Node, root_: Node) -> void:
 	root = root_
 
 
+## The game's place view, or null while there's none (the scene is changing, or the old one was freed under the bot).
 func view() -> LocationView:
-	return root.get("view") as LocationView
+	if not is_instance_valid(root):
+		return null
+	var v: Variant = root.get("view")
+	return v as LocationView if is_instance_valid(v) else null
 
 
 func st() -> StoryState:
@@ -295,32 +299,50 @@ func _avoided(t: String) -> bool:
 ## (ADR 0010) when no walking route leads there. True when there.
 func go_to(location_id: String) -> bool:
 	for hop in 30:
-		var v := view()
+		var v := await _place()
+		if v == null:
+			note("no place to stand in on the way to %s" % location_id)
+			return false
 		if v.loc_id == location_id:
 			return true
-		var route := _route(v.loc_id, location_id)
+		var here := v.loc_id
+		var route := _route(here, location_id)
 		if route.is_empty():
 			if await _go_by_map(location_id):
 				continue
-			note("no way from %s to %s" % [v.loc_id, location_id])
+			note("no way from %s to %s" % [here, location_id])
 			return false
 		var exit := route[0]
 		note("heading for %s via %s" % [location_id, exit["id"]])
+		var left := v.get_instance_id()
 		if not await walk_to(_cell(exit["cell"])):
 			return false
 		await frames(4)
-		if view() == v:
+		if view() != null and view().get_instance_id() == left:
 			note("didn't leave by %s" % exit["id"])
 			return false
 		# Like a careful player: patch up on arriving somewhere you can rest.
 		await recover()
-	return view().loc_id == location_id
+	var last := await _place()
+	return last != null and last.loc_id == location_id
+
+
+## The place the party stands in, waiting out a scene change (a journey, a load) for up to a second; null if none.
+func _place() -> LocationView:
+	for i in 60:
+		if view() != null:
+			return view()
+		await frames(1)
+	return view()
 
 
 ## Walks the leader to `cell`, opening doors on the way. True if the leader got there (or left the location).
 func walk_to(cell: Vector2i) -> bool:
 	for attempt in 8:
 		var v := view()
+		if v == null:
+			return true   # the place was left (a journey under way)
+		var vid := v.get_instance_id()
 		if v.leader().cell == cell and attempt > 0:
 			return true
 		if not v.walk_to(cell):
@@ -332,9 +354,9 @@ func walk_to(cell: Vector2i) -> bool:
 		if not await settle():
 			return false
 		await frames(2)
-		if view() != v:
+		if view() == null or view().get_instance_id() != vid:
 			return true
-	return view().leader().cell == cell
+	return view() != null and view().leader().cell == cell
 
 
 func _open_blocking_door(goal: Vector2i) -> bool:
@@ -511,17 +533,11 @@ func _go_by_map_once(location_id: String) -> bool:
 	if target == "":
 		return false
 	# Find a way to a location with a road out, then the road out itself.
-	var out_exit := {}
-	var out_loc := ""
-	for lid: String in Compendium.shared().table("locations"):
-		var loc := Compendium.shared().get_entry("locations", lid)
-		for ex: Variant in loc.get("exits", []):
-			if str((ex as Dictionary)["to"]) == "travel" and (lid == view().loc_id or not _route(view().loc_id, lid).is_empty()):
-				if out_loc == "" or lid == view().loc_id:
-					out_loc = lid
-					out_exit = ex as Dictionary
-	if out_loc == "":
+	var road := road_out(view().loc_id)
+	if road.is_empty():
 		return false
+	var out_loc := str(road["location"])
+	var out_exit := road["exit"] as Dictionary
 	if view().loc_id != out_loc and not await go_to(out_loc):
 		return false
 	# Rested before the road, where the place allows it: a journey can meet a fight with no rest before it.
@@ -549,6 +565,24 @@ func _go_by_map_once(location_id: String) -> bool:
 	map.queue_free()
 	await frames(4)
 	return await settle()
+
+
+## The road out to the travel map from `from`: {location, exit}, the place's own when it has one, else the first place
+## the bot can walk to that has one; {} for none. Only an exit whose `when` holds counts (the crossroads' castle road
+## is shut until the castle calls: Storyline QA, 2026-10-08).
+func road_out(from: String) -> Dictionary:
+	var out := {}
+	for lid: String in Compendium.shared().table("locations"):
+		var loc := Compendium.shared().get_entry("locations", lid)
+		for ex: Variant in loc.get("exits", []):
+			var exit := ex as Dictionary
+			if str(exit["to"]) != "travel" or not StoryConditions.check(str(exit.get("when", "")), st()):
+				continue
+			if lid == from:
+				return {"location": lid, "exit": exit}
+			if out.is_empty() and not _route(from, lid).is_empty():
+				out = {"location": lid, "exit": exit}
+	return out
 
 
 func _route(from: String, to: String) -> Array[Dictionary]:

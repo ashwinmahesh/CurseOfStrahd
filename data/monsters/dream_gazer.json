@@ -1,0 +1,120 @@
+{
+  "id": "dream_gazer",
+  "name": "Dream-Gazer",
+  "source": {
+    "book": "custom",
+    "note": "A side quest creature of our own (The Amber Debt, docs/story/side_quests.md), from the gazer of the beholder's lore: a tiny eye the Eye Below dreams up. Drawn with the beholder's sprite, small."
+  },
+  "size": "tiny",
+  "type": "aberration",
+  "tags": [
+    "beholder"
+  ],
+  "alignment": "neutral evil",
+  "art": "beholder",
+  "art_height": 0.55,
+  "ac": 13,
+  "initiative": 3,
+  "hp": {
+    "average": 13,
+    "dice": "3d4+6"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 30,
+    "hover": true
+  },
+  "abilities": {
+    "str": 3,
+    "dex": 17,
+    "con": 14,
+    "int": 3,
+    "wis": 10,
+    "cha": 7
+  },
+  "skills": {
+    "perception": 4,
+    "stealth": 5
+  },
+  "condition_immunities": [
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 14,
+  "languages": [],
+  "cr": 0.5,
+  "xp": 100,
+  "proficiency_bonus": 2,
+  "traits": [],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "frost_ray",
+          "count": 1,
+          "or": [
+            "bite"
+          ]
+        },
+        {
+          "action": "frost_ray",
+          "count": 1,
+          "or": [
+            "bite"
+          ]
+        }
+      ],
+      "summary": "Two Frost Rays or Bites.",
+      "text": "The dream-gazer makes two attacks, using Frost Ray or Bite in any combination."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 5,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 4,
+          "dice": "1d2+3",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A tiny mouth of needles.",
+      "text": "Melee Attack Roll: +5, reach 5 ft. Hit: 4 (1d2 + 3) Piercing damage."
+    },
+    {
+      "id": "frost_ray",
+      "name": "Frost Ray",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 5,
+        "range": [
+          60,
+          60
+        ]
+      },
+      "damage": [
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "cold"
+        }
+      ],
+      "summary": "A thin ray of cold at a foe up to 60 ft away.",
+      "text": "Ranged Attack Roll: +5, range 60 ft. Hit: 7 (2d6) Cold damage."
+    }
+  ],
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "skirmisher",
+  "summary": "A floating eye the size of a fist, with a mouth full of needles and four little eyestalks: something a sleeping beholder dreamed, which didn't stop when it woke."
+}

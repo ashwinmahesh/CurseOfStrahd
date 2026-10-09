@@ -634,6 +634,36 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
   800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
 
+## The Amber Temple (level 10)
+
+### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
+
+Exethanter, from level 10: under all the notes pinned to his sleeve is an old one in his own hand, "DO NOT GO BELOW THE
+VAULT. YOU SEALED IT. YOU DO NOT REMEMBER WHY. THAT IS WHY." (an option added to his menu). In the vault a crack across
+the floor weeps warm amber, and something deep in it blinks (prop `vault_weeping_crack`, shown from level 10 or once
+the quest is known); under the slab (Athletics DC 15, or half an hour) a stair goes down to a lair the wardens sealed
+under their own vaults (data/locations/amber_deep.json): the weeping stair, the hall of sleepers (travellers and
+wardens in amber, one of them a month old), the wardens' archive and the chamber of the Eye. **Escalation:** the hall's
+amber blinks back and the dreamed eyes come out of it. **Twist:** the wardens couldn't kill the thing that came up from
+under the mountain, only sing it to sleep, and when the song stopped holding, Exethanter gave it his memory: while he
+forgets it, it can't remember itself. Everyone who has helped him remember anything has been waking it.
+
+- **Boss: the Eye Below** (data/monsters/the_eye_below.json, `source.book: custom`, from the 2025 Monster Manual's
+  beholder, with its own sprite from the beholder's turnaround): Large aberration, AC 18, 180 HP, flies, a Bite and
+  two eye rays a turn from six (Paralyzing, Fear and Amber, which Restrains; Enervation, Disintegration and
+  Telekinetic), Legendary Resistance (3/day), a glare or a drift between turns, and a lair on initiative 20 that
+  dreams up eyes (dream-gazers, at most two at once) or sets the amber round a foe's feet. Its great eye is still
+  clouded with amber, so no antimagic cone. CR 13. New creature: the dream-gazer (data/monsters/dream_gazer.json,
+  from the gazer, the beholder's sprite small with `art_height`).
+- **Lair tricks** from the wardens' book: **the mirrors** in the hall turned toward its chamber, and its dreamed eyes
+  fight their reflections (no lair, no gazer beside it); **the lullaby** sung to the end (Performance DC 15, one try),
+  and it starts the fight half back in its amber (surprised, 135 HP). The autopilot wins 2 of 4 against it as it is
+  at level 10 (about three down, 10 rounds), and 3 of 4 with both (about two down).
+- The hall of sleepers (`dreamed_eyes`): a woken amber golem at 130 HP and four dream-gazers. The autopilot wins all
+  four at level 10, losing about one.
+- Rewards: its hoard, 700 gp and a Spellguard Shield (very rare), the wardens' shield made against it. Telling
+  Exethanter it's dead lets him burn the old note. Still: `sq_eye_below` (its first meeting).
+
 ## Yester Hill (level 7)
 
 ### The Druid Who Came Back (`the_druid_who_came_back`, narrative/yester_hill/the_druid_who_came_back.dialogue; batch 5)
@@ -706,5 +736,8 @@ gravedigger line in the village townsfolk.dialogue. Batch 5, Mount Ghakis: the_w
 Sarkhaza, Doina and Petrache; also Sergeant Valcu's new log lines and the companions' interjects) and
 narrator/mount_ghakis.dialogue. Batch 5, Van Richten's Tower: the_name_over_the_door.dialogue in full (new speaker
 Khazan; also Mordenkainen's news and the companions' interjects) and narrator/khazan_undercroft.dialogue. Batch 5,
+the Amber Temple: the_amber_debt.dialogue in full (new speaker the Eye Below; also Exethanter's old note and his
+thanks, and the companions' interjects), narrator/amber_deep.dialogue, and Mordenkainen's new line in
+the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party). Batch 5,
 Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also Davian, Ruxandra and Kostin, and a
 blunt interject).
