@@ -1,7 +1,8 @@
 extends TestCase
-## The inventory's paper doll, item grid and drags (U11, plan §5.6 "Inventory"): every worn slot takes what fits and
-## nothing else, a drag onto a chip gives the whole stack (that very item, with its own state), stacks split, the two
-## weapon sets swap, quick slots reach the fight's hotbar, and set II and the quick slots are saved.
+## The inventory's paper doll, bag and drags (U11, plan §5.6 "Inventory"): every slot sits on the doll where it's worn,
+## in the shape of a person, and takes what fits and nothing else (the quiver and the focus too); the bag is a list; a
+## drag onto a chip gives the whole stack (that very item, with its own state), stacks split, the two weapon sets swap,
+## quick slots reach the fight's hotbar, and set II and the quick slots are saved.
 
 var root: Node
 
@@ -23,7 +24,6 @@ func before_each() -> void:
 
 
 func after_each() -> void:
-	GameSettings.set_value("inventory_view", "doll")
 	# The fixture places leave the shared Compendium with the test (Skirmish lists every location as a map).
 	for id: String in ["doll_inn", "doll_road"]:
 		Compendium.shared().tables["locations"].erase(id)
@@ -63,10 +63,19 @@ func _empty_slot(inv: InventoryScreen, caption: String) -> ItemTile:
 	return null
 
 
-func _pack_tile(inv: InventoryScreen, id: String) -> ItemTile:
-	for t in _tiles(inv, "pack"):
-		if str(t.payload["id"]) == id:
-			return t
+## The bag's rows (the bag is a list).
+func _rows(inv: InventoryScreen, from: String) -> Array[ItemTile.Row]:
+	var out: Array[ItemTile.Row] = []
+	for n in inv.find_children("*", "", true, false):
+		if n is ItemTile.Row and not n.is_queued_for_deletion() and str((n as ItemTile.Row).payload.get("from", "")) == from:
+			out.append(n as ItemTile.Row)
+	return out
+
+
+func _pack_tile(inv: InventoryScreen, id: String) -> ItemTile.Row:
+	for r in _rows(inv, "pack"):
+		if str(r.payload["id"]) == id:
+			return r
 	return null
 
 
@@ -106,11 +115,11 @@ func test_dragging_onto_a_chip_gives_that_very_item() -> void:
 	a.inventory[a.inventory.size() - 1]["charges"] = 1
 	a.add_item("javelin", 6)
 	var inv := await _open(0)
-	var spent: ItemTile = null
-	for t in _tiles(inv, "pack"):
-		if str(t.payload["id"]) == "wand_of_secrets" and int((t.payload["entry"] as Dictionary).get("charges", -1)) == 1:
-			spent = t
-	assert_true(spent != null, "the spent wand has its own tile")
+	var spent: ItemTile.Row = null
+	for r in _rows(inv, "pack"):
+		if str(r.payload["id"]) == "wand_of_secrets" and int((r.payload["entry"] as Dictionary).get("charges", -1)) == 1:
+			spent = r
+	assert_true(spent != null, "the spent wand has its own row")
 	var chip: ItemTile.DropButton = null
 	for n in inv.find_children("*", "Button", true, false):
 		if n is ItemTile.DropButton and (n as Button).text == b.name.get_slice(" ", 0):
@@ -151,7 +160,7 @@ func test_weapon_sets_swap_and_are_saved() -> void:
 	var set2 := _tiles(inv, "", "")
 	var main2: ItemTile = null
 	for t in set2:
-		if t.payload.is_empty() and t.caption == "Main hand" and inv.fits_set2(bow.payload, "main_hand") and t._can_drop_data(Vector2.ZERO, bow.payload):
+		if t.payload.is_empty() and t.caption == "II main" and inv.fits_set2(bow.payload, "main_hand") and t._can_drop_data(Vector2.ZERO, bow.payload):
 			main2 = t
 	assert_true(main2 != null, "set II's main hand takes the bow")
 	main2._drop_data(Vector2.ZERO, bow.payload)
@@ -203,54 +212,107 @@ func test_stash_by_drag_from_anywhere_out_only_at_a_safe_place() -> void:
 	assert_true(ch.entry_of("rope").is_empty() and GameState.story.party_has_item("rope"), "in the stash from the road")
 	inv.call("_draw")
 	await _frames(1)
-	assert_true(_tiles(inv, "stash").is_empty(), "nothing in the stash can be dragged out on the road")
+	assert_true(_rows(inv, "stash").is_empty(), "nothing in the stash can be dragged out on the road")
 	root.call("close_screen")
 	GameState.story.location = "doll_inn"
 	inv = await _open(0)
-	var out := _tiles(inv, "stash")
+	var out := _rows(inv, "stash")
 	assert_eq(out.size(), 1, "at the inn it can")
 	inv.call("_drop_on_pack", out[0].payload)
 	assert_false(ch.entry_of("rope").is_empty(), "back in the pack")
 
 
-## The list view (owner, 2026-10-07): the old rows beside the portrait, with the same drags, menus, weapon sets and quick
-## slots, and the screen remembers which view was chosen.
-func test_the_list_view_drags_and_menus_too() -> void:
+## The doll is a person (owner 2026-10-09): the head over the neck over the armor over the belt over the boots, a
+## weapon in each hand at either side, the rings by the hands; and the bag is a list, its rows dragged onto the doll.
+func test_the_doll_is_shaped_like_a_person_and_the_bag_is_a_list() -> void:
 	var ch := GameState.story.party[0]
 	ch.add_item("cloak_of_protection")
 	ch.add_item("potion_of_healing", 2)
 	var inv := await _open(0)
-	inv.set_view("list")
-	await _frames(1)
-	root.call("close_screen")
-	inv = await _open(0)
-	assert_eq(inv.view, "list", "it opens in the view last chosen")
-	var rows: Array[ItemTile.Row] = []
-	for n in inv.find_children("*", "", true, false):
-		if n is ItemTile.Row and not n.is_queued_for_deletion():
-			rows.append(n as ItemTile.Row)
-	var cloak: ItemTile.Row = null
-	var potion: ItemTile.Row = null
-	for r in rows:
-		if str(r.payload.get("from", "")) == "pack" and str(r.payload.get("id", "")) == "cloak_of_protection":
-			cloak = r
-		if str(r.payload.get("from", "")) == "pack" and str(r.payload.get("id", "")) == "potion_of_healing":
-			potion = r
-	assert_true(cloak != null and potion != null, "the pack is rows")
+	var at := {}
+	for t in _tiles(inv, ""):
+		if t.get_parent() != null and t.get_parent().name == "PaperDoll":
+			at[t.caption if not at.has(t.caption) else t.caption + "2"] = t.position + t.size / 2.0
+	for cap: String in ["Head", "Neck", "Armor", "Belt", "Feet", "Main hand", "Off hand", "Ring", "Ring2", "Ammo", "Focus",
+			"Cloak", "Hands", "Wrists", "Eyes", "Robe", "II main", "II off"]:
+		assert_true(at.has(cap), "the doll has a %s slot" % cap)
+	if at.size() < 18:
+		return
+	assert_true((at["Head"] as Vector2).y < (at["Neck"] as Vector2).y and (at["Neck"] as Vector2).y < (at["Armor"] as Vector2).y
+		and (at["Armor"] as Vector2).y < (at["Belt"] as Vector2).y and (at["Belt"] as Vector2).y < (at["Feet"] as Vector2).y,
+		"head, neck, chest, waist and feet from top to bottom")
+	assert_true((at["Main hand"] as Vector2).x < (at["Armor"] as Vector2).x and (at["Armor"] as Vector2).x < (at["Off hand"] as Vector2).x,
+		"a hand either side of the body")
+	assert_true(absf((at["Head"] as Vector2).x - (at["Feet"] as Vector2).x) < 1.0, "the head over the feet")
+	var doll := inv.find_child("PaperDoll", true, false) as Control
+	for t in _tiles(inv, ""):
+		if t.get_parent() == doll:
+			assert_true(Rect2(Vector2.ZERO, doll.size).encloses(Rect2(t.position, t.size)), "%s is on the doll" % t.caption)
+	assert_eq(inv.find_children("*", "GridContainer", true, false).size(), 0, "no icon grid: the bag is a list")
+	var cloak := _pack_tile(inv, "cloak_of_protection")
+	var potion := _pack_tile(inv, "potion_of_healing")
+	assert_true(cloak != null and potion != null, "the bag is rows")
 	assert_true(inv.shown_ids().has("cloak_of_protection"))
-	# The Worn section takes the cloak into its own slot.
-	var worn := inv.find_child("WornZone", true, false) as ItemTile.Zone
-	assert_true(worn != null and worn._can_drop_data(Vector2.ZERO, cloak.payload), "the Worn section takes the cloak")
-	worn._drop_data(Vector2.ZERO, cloak.payload)
+	var cloak_slot := _empty_slot(inv, "Cloak")
+	assert_true(cloak_slot != null and cloak_slot._can_drop_data(Vector2.ZERO, cloak.payload), "a cloak's row drops on the doll's cloak")
+	cloak_slot._drop_data(Vector2.ZERO, cloak.payload)
 	await _frames(1)
 	assert_eq(str(ch.entry_of("cloak_of_protection").get("slot", "")), "cloak", "worn from the list")
-	# Right-click and quick slots work on rows as on tiles.
 	var acts := inv.actions_for(ch.entry_of("potion_of_healing"))
 	var keep := acts.filter(func(a: Dictionary) -> bool: return str(a["label"]).begins_with("Keep to hand"))
 	assert_eq(keep.size(), 1, "a potion's menu offers a quick slot")
-	(keep[0]["call"] as Callable).call()
-	assert_true("potion_of_healing" in ch.quick_slots)
-	# The equipped rows still say Take off.
-	var offs := inv.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
-		return not b.is_queued_for_deletion() and (b as Button).text == "Take off")
-	assert_true(offs.size() >= 1, "Take off on the equipped rows")
+
+
+## The quiver and the focus (U11): a new hero starts with the ammunition their weapons shoot in the quiver and a focus
+## in the focus slot; each takes only its own kind; dropping another stack swaps it; Take off empties it; arrows shot
+## come out of the quivered stack; and an old save fills them once.
+func test_the_quiver_and_the_focus() -> void:
+	var ranger := Pregens.build("thistle", 3)
+	assert_eq(ranger.held_id("ammo"), "arrow", "Thistle starts with her arrows in the quiver")
+	var caster: Character = null
+	for m in GameState.story.party:
+		if m.held_id("focus") != "" and caster == null:
+			caster = m
+	assert_true(caster != null, "a caster starts with a focus")
+	var ch := GameState.story.party[0]
+	for e in ch.inventory:
+		if str(e.get("slot", "")) in InventoryScreen.CARRY_SLOTS:
+			e["slot"] = ""   # start with both empty
+	ch.add_item("crossbow_bolt", 10)
+	ch.add_item("holy_symbol_amulet")
+	var inv := await _open(0)
+	var ammo := _empty_slot(inv, "Ammo")
+	var focus := _empty_slot(inv, "Focus")
+	var bolts := _pack_tile(inv, "crossbow_bolt")
+	var symbol := _pack_tile(inv, "holy_symbol_amulet")
+	assert_true(ammo != null and focus != null, "the quiver and the focus are on the doll, empty")
+	assert_true(bolts != null and symbol != null, "the bolts and the symbol are in the bag")
+	if ammo == null or focus == null or bolts == null or symbol == null:
+		return
+	assert_true(ammo._can_drop_data(Vector2.ZERO, bolts.payload), "bolts go in the quiver")
+	assert_false(focus._can_drop_data(Vector2.ZERO, bolts.payload), "but not in the focus slot")
+	assert_true(focus._can_drop_data(Vector2.ZERO, symbol.payload), "a holy symbol is a focus")
+	assert_false(ammo._can_drop_data(Vector2.ZERO, symbol.payload), "and no ammunition")
+	ammo._drop_data(Vector2.ZERO, bolts.payload)
+	focus._drop_data(Vector2.ZERO, symbol.payload)
+	await _frames(1)
+	assert_eq(str(ch.entry_of("crossbow_bolt").get("slot", "")), "ammo", "the bolts are in the quiver")
+	assert_eq(str(ch.entry_of("holy_symbol_amulet").get("slot", "")), "focus", "the symbol is the focus")
+	var held := 0
+	for e in ch.inventory:
+		if str(e.get("slot", "")) == "ammo":
+			held += 1
+	assert_eq(held, 1, "one stack in the quiver")
+	var labels := inv.actions_for(ch.entry_of("crossbow_bolt")).map(func(a: Dictionary) -> String: return str(a["label"]))
+	assert_eq(str(labels[0]), "Take off")
+	ch.unequip_item("crossbow_bolt")
+	assert_eq(str(ch.entry_of("crossbow_bolt").get("slot", "")), "", "taken off")
+	# An old save (before the quiver) fills the quiver and the focus once as it loads.
+	var d := ranger.to_dict()
+	d.erase("doll_seeded")
+	for e: Dictionary in d["inventory"]:
+		if str(e.get("slot", "")) in ["ammo", "focus"]:
+			e["slot"] = ""
+	var old := Character.from_dict(d)
+	assert_ne(old.held_id("ammo"), "", "an old save's quiver is filled")
+	assert_true(Gear.carry_slot(Compendium.shared().item_data(old.held_id("ammo"))) == "ammo", "with ammunition")

@@ -22,6 +22,9 @@ var image_path := ""
 var captioning := false
 var paused := false
 var _focus := Vector2(0.5, 0.5)
+## A still being read on a worker thread (ResourceLoader.load_threaded_request), so opening a cutscene never waits on
+## the disk (Functional QA FN-20, 2026-10-09: a cold read froze the first frame for up to 2.3 s). "" when none.
+var _loading := ""
 var _fade: Tween
 var _caption: VBoxContainer
 var _name: Label
@@ -127,13 +130,49 @@ func _build_pause() -> void:
 
 
 ## Shows `path` (a res:// picture), fading up from black or from the picture before. `focus` (the picture's point of
-## interest, data `focus`) is kept as the pivot.
+## interest, data `focus`) is kept as the pivot. A still not in memory yet is read on a worker thread: the caption
+## and the black (or the picture before) show meanwhile, and the still fades up the frame it arrives.
 func show_image(path: String, focus: Vector2 = Vector2(0.5, 0.5)) -> void:
 	if path == image_path:
 		return
 	image_path = path
 	_focus = focus
-	art.texture = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	if path == "" or not ResourceLoader.exists(path):
+		_loading = ""
+		_put(null)
+		return
+	if ResourceLoader.has_cached(path):
+		_loading = ""
+		_put(load(path) as Texture2D)
+		return
+	_loading = path
+	ResourceLoader.load_threaded_request(path, "Texture2D", false, ResourceLoader.CACHE_MODE_REUSE)
+	set_process(true)
+
+
+## Whether a still is still on its way from the disk.
+func loading() -> bool:
+	return _loading != ""
+
+
+func _process(_delta: float) -> void:
+	if _loading == "":
+		set_process(false)
+		return
+	var status := ResourceLoader.load_threaded_get_status(_loading)
+	if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		return
+	var path := _loading
+	_loading = ""
+	set_process(false)
+	var tex := ResourceLoader.load_threaded_get(path) as Texture2D if status == ResourceLoader.THREAD_LOAD_LOADED else null
+	if path == image_path:   # not superseded by another still meanwhile
+		_put(tex)
+
+
+## The still on screen, fading up out of black.
+func _put(tex: Texture2D) -> void:
+	art.texture = tex
 	art.pivot_offset = art.size * _focus
 	art.scale = Vector2.ONE
 	if _fade != null:

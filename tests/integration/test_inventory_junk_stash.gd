@@ -188,12 +188,12 @@ func test_stash_from_anywhere_take_out_only_at_a_safe_place() -> void:
 	assert_eq(int(ch.entry_of("wand_of_secrets").get("charges", -1)), 1, "with the charges it had, not a fresh wand's")
 
 
-## The stash's tiles that can be dragged out (only at a safe place).
-func _stash_tiles(inv: InventoryScreen) -> Array[ItemTile]:
-	var out: Array[ItemTile] = []
-	for n in inv.find_children("*", "ItemTile", true, false):
-		if not (n as Node).is_queued_for_deletion() and str((n as ItemTile).payload.get("from", "")) == "stash":
-			out.append(n as ItemTile)
+## The stash's rows that can be dragged out (only at a safe place).
+func _stash_tiles(inv: InventoryScreen) -> Array[ItemTile.Row]:
+	var out: Array[ItemTile.Row] = []
+	for n in inv.find_children("*", "", true, false):
+		if n is ItemTile.Row and not (n as Node).is_queued_for_deletion() and str((n as ItemTile.Row).payload.get("from", "")) == "stash":
+			out.append(n as ItemTile.Row)
 	return out
 
 

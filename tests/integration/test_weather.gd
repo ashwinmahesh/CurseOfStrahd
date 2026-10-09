@@ -91,7 +91,10 @@ func test_a_place_looks_like_its_weather() -> void:
 	var wet := Weather.dress_mood(st, "vallaki", mood, true)
 	assert_true((wet["weather"] as Array).has({"kind": "rain", "amount": 460}), str(wet["weather"]))
 	_only({"*": "fog"})
-	assert_eq(float((Weather.dress_mood(st, "vallaki", mood, true)["mist"] as Dictionary)["cover"]), 0.75)
+	# Fog lays its own cover over the place's mist (data/weather: thinned on 2026-10-08, UI QA W-06), thicker than it.
+	var fog_cover := float((((Weather.kind("fog")["look"] as Dictionary)["mist"]) as Dictionary)["cover"])
+	assert_eq(float((Weather.dress_mood(st, "vallaki", mood, true)["mist"] as Dictionary)["cover"]), fog_cover)
+	assert_true(fog_cover > 0.4, "fog is thicker than the place's own mist")
 	assert_eq(Weather.dress_mood(st, "vallaki", mood, false), mood, "indoors, nothing changes")
 
 
