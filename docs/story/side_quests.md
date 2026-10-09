@@ -664,6 +664,29 @@ forgets it, it can't remember itself. Everyone who has helped him remember anyth
 - Rewards: its hoard, 700 gp and a Spellguard Shield (very rare), the wardens' shield made against it. Telling
   Exethanter it's dead lets him burn the old note. Still: `sq_eye_below` (its first meeting).
 
+## Yester Hill (level 7)
+
+### The Druid Who Came Back (`the_druid_who_came_back`, narrative/yester_hill/the_druid_who_came_back.dialogue; batch 5)
+
+Davian's "Heard anything interesting?", once the Black Row is under way and the Gulthias tree has burned (level 7): a
+lantern goes round and round the burned crown of Yester Hill at night, like somebody digging. **Escalation:** someone
+came back to plant on it, by night only (`hours`): Mother Ruxandra, if the party spared her ("the tree will call me
+back"), with a cutting she carried against her skin; else Kostin, if he walked away from the hill doubting, with a
+clean young tree from a valley where the trees only drink rain; else Zorica (new speaker), the circle's youngest, who
+was on the Krezk road the night it burned. **Twist:** whatever is planted, the old tree's roots under the hill take
+it, and Wintersplinter's ash stands up round it as the Ash Effigy, which fire can't hurt now: it has burned once.
+Kostin stands aside (and stays to keep the hill afterwards); Ruxandra fights beside it; Zorica fights unless talked
+down (Persuasion DC 15, one try).
+
+- **Boss: the Ash Effigy** (data/monsters/ash_effigy.json, `source.book: custom`, built up from the tree blight, drawn
+  with its sprite at Huge): Huge plant, AC 15, 175 HP (150 below level 8), two Ash Fists (reach 15), Choking Ash
+  (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and Blinded), Regeneration 10 that cold stops, immune to fire and
+  vulnerable to cold, Legendary Resistance (2/day), and a fist or a step between turns. CR 8. Embers (twig blights)
+  crawl after it.
+- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 4
+  of 8 at level 7 with Zorica beside it and 3 of 8 at level 8 against it alone, losing two or three a fight.
+- Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -715,4 +738,6 @@ narrator/mount_ghakis.dialogue. Batch 5, Van Richten's Tower: the_name_over_the_
 Khazan; also Mordenkainen's news and the companions' interjects) and narrator/khazan_undercroft.dialogue. Batch 5,
 the Amber Temple: the_amber_debt.dialogue in full (new speaker the Eye Below; also Exethanter's old note and his
 thanks, and the companions' interjects), narrator/amber_deep.dialogue, and Mordenkainen's new line in
-the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party).
+the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party). Batch 5,
+Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also Davian, Ruxandra and Kostin, and a
+blunt interject).

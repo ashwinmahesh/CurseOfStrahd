@@ -1,0 +1,15 @@
+{
+  "id": "sq_ash_effigy",
+  "title": "The Druid Who Came Back",
+  "summary": "The ash of Yester Hill's burned crown stands up round a young tree.",
+  "images": [
+    {
+      "image": "sq_ash_effigy",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.45,
+    0.35
+  ]
+}

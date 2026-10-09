@@ -1,0 +1,39 @@
+{
+  "id": "the_druid_who_came_back",
+  "name": "The Druid Who Came Back",
+  "summary": "Davian's pickers watch a lantern go round and round the crown of Yester Hill at night, where the Gulthias tree burned, like somebody digging.",
+  "giver": "davian_martikov",
+  "region": "yester_hill",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "There's a lantern on the crown of Yester Hill at night, where the Gulthias tree burned. Davian's pickers say it goes round and round, slow, like somebody digging. He wants it stopped.",
+      "objectives": [
+        "Go up Yester Hill after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "Someone came back to the burned crown of Yester Hill with something to plant, and the old tree's roots under the hill have taken it.",
+      "objectives": [
+        "Deal with what's growing on the crown"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "burned",
+      "journal": "The ash of Wintersplinter stood up round the new planting on Yester Hill, and we put it down again. Fire was no use; it had burned once already.",
+      "objectives": [
+        "Tell Davian the lantern's out"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The lantern on Yester Hill is out. Davian says the hill looked grey this morning, not black, and paid us from the barrel he was saving for his funeral.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

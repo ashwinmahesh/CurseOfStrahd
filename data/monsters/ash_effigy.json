@@ -1,0 +1,178 @@
+{
+  "id": "ash_effigy",
+  "name": "The Ash Effigy",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Druid Who Came Back, docs/story/side_quests.md), built up from the tree blight that Wintersplinter is: the burnt effigy's ash gathered round a new tree on Yester Hill's crown, with reach, a choking ash, Regeneration that cold stops, legendary actions and Legendary Resistance. It has burned once already, and fire does nothing to it now. Drawn with the tree blight's sprite at Huge."
+  },
+  "size": "huge",
+  "type": "plant",
+  "tags": [
+    "boss",
+    "blight"
+  ],
+  "alignment": "neutral evil",
+  "art": "tree_blight",
+  "ac": 15,
+  "initiative": 0,
+  "hp": {
+    "average": 175,
+    "dice": "14d12+84"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 23,
+    "dex": 10,
+    "con": 22,
+    "int": 5,
+    "wis": 12,
+    "cha": 8
+  },
+  "saves": {
+    "con": 9
+  },
+  "immunities": [
+    "fire"
+  ],
+  "vulnerabilities": [
+    "cold"
+  ],
+  "condition_immunities": [
+    "blinded",
+    "deafened"
+  ],
+  "senses": {
+    "blindsight": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Ash Effigy fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "action": "passive",
+      "summary": "Regains 10 HP at the start of its turn unless it took Cold damage since its last turn.",
+      "text": "The Ash Effigy regains 10 Hit Points at the start of each of its turns. If it takes Cold damage, this trait doesn't function at the start of its next turn. The ash only gathers again where it's warm.",
+      "implemented": "engine"
+    },
+    {
+      "id": "burned_once",
+      "name": "Burned Once",
+      "action": "passive",
+      "summary": "It's made of what the fire left. Fire can't hurt it again.",
+      "text": "The Ash Effigy is the ash of Wintersplinter gathered round a new heart. It has Immunity to Fire damage, and cold makes the ash clot and fall.",
+      "implemented": "text"
+    }
+  ],
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "cold"
+    ]
+  },
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "ash_fist",
+          "count": 2
+        }
+      ],
+      "summary": "Two Ash Fists.",
+      "text": "The Ash Effigy makes two Ash Fist attacks."
+    },
+    {
+      "id": "ash_fist",
+      "name": "Ash Fist",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 17,
+          "dice": "2d10+6",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "A blow from a fist of packed ash and charcoal, from 15 ft away.",
+      "text": "Melee Attack Roll: +9, reach 15 ft. Hit: 17 (2d10 + 6) Bludgeoning damage."
+    },
+    {
+      "id": "choking_ash",
+      "name": "Choking Ash",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "half"
+      },
+      "area": {
+        "shape": "cone",
+        "size": 30
+      },
+      "targets": {
+        "range": 30
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "5d8",
+          "type": "necrotic"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "blinded",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: a 30-ft cone of hot ash; DC 16 Con save, 5d8 Necrotic and Blinded until the end of its next turn, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 16, each creature in a 30-foot Cone. Failure: 22 (5d8) Necrotic damage, and the target has the Blinded condition until the end of the Ash Effigy's next turn. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "fist",
+        "name": "Fist",
+        "cost": 2,
+        "action": "ash_fist",
+        "summary": "Makes one Ash Fist."
+      },
+      {
+        "id": "shamble",
+        "name": "Shamble",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "yester_hill"
+  ],
+  "ai_profile": "brute",
+  "summary": "The ash of Wintersplinter, gathered back up round a new tree on the burned crown of Yester Hill: a shape twice a man's height of packed grey ash and charcoal, with a young green tree for a spine. Fire did its work on this once; now it does nothing. Its fists reach, its ash chokes and blinds, and it gathers itself again unless the cold gets at it."
+}

@@ -1,0 +1,129 @@
+# The Druid Who Came Back (side quest, docs/story/side_quests.md): after the Gulthias tree burned, someone comes back
+# to the crown of Yester Hill by night with a spade and something to plant. Mother Ruxandra if the party spared her
+# ("the tree will call me back"); else Kostin, if he walked away from the hill doubting, with a clean young tree from a
+# valley where the trees only drink rain; else Zorica, the youngest of the circle, who was on the Krezk road that night.
+# Whatever is planted, the old tree's roots under the hill take it, and Wintersplinter's ash gathers round it as the
+# Ash Effigy (data/monsters/ash_effigy.json), which fire can't hurt now. Reached from Davian's "Heard anything
+# interesting?" (wizard_of_wines/the_black_row:davian_news). Every line here is unvoiced for now.
+
+# --- Davian (the_black_row:davian_news jumps here) ---
+
+~ davian_news
+if quest.the_druid_who_came_back == burned
+-> davian_pays
+endif
+if quest.the_druid_who_came_back
+Davian: The lantern on the hill. Every night now. Go up after dark; that's when it's lit.
+-> wizard_of_wines/davian:menu
+endif
+quest the_druid_who_came_back rumored
+Davian: Interesting. There's a lantern on Yester Hill at night. Up on the crown, where you burned it. My pickers watch it from the rows. It goes round and round the top, slow, like somebody digging.
+Davian: I don't care who. I want it stopped. That hill has had enough planted in it.
+-> wizard_of_wines/davian:menu
+
+~ davian_pays
+quest the_druid_who_came_back done
+Davian: The lantern's out. The pickers say the hill looked grey this morning, not black. Grey's a start.
+Davian: This came with the house, from my grandfather's time, and nobody here has ever needed a tower. You lot need little else. And the money's from the barrel I was saving for my own funeral. I've decided to postpone it.
+give daerns_instant_fortress
+gold +300
+approve godrick_pendlebrook +1 liriel_dawnsong +1 thistle +2 wren_featherfoot +1: You put out the lantern on Yester Hill
+-> wizard_of_wines/davian:menu
+
+# --- On the crown at night: Mother Ruxandra (spared) ---
+
+~ ruxandra
+quest the_druid_who_came_back found
+Narrator: An old woman kneels on the burned crown in the lantern light, where the black tree stood, pressing earth down round something with both hands.
+Ruxandra: I told you. The tree calls us back. It always does. I carried a cutting in my sleeve the night you burned it, against my skin, and it drank from me all the way to the Krezk road and back.
+Narrator: In the turned earth beside her stands a thin black shoot as high as her shoulder, with leaves like little hands. The ash round it is moving, very slightly, toward it.
+Ruxandra: You spared me. I'll spare you nothing.
+-> wake
+
+# --- On the crown at night: Kostin (who walked away from the hill doubting) ---
+
+~ kostin
+if not flag.kostin_planting_seen
+set kostin_planting_seen
+quest the_druid_who_came_back found
+Narrator: On the burned crown a young man with a lantern kneels by a sapling, watering it from his own flask. It's Kostin. His feet are wrapped in strips of his robe again, worn through.
+Kostin: You. I hoped it would be you, if anyone came. I found where the trees only drink rain, three weeks past the Krezk road. I brought one back.
+Kostin: The hill can't stay a grave. Something has to grow here that isn't hers. A month ago it was a switch you could snap. Look at it.
+endif
+* [Nature DC 13] (Look at the sapling.) -> kostin_seen | kostin_unseen
+* (Pull the sapling up.) -> kostin_pull
+* Leave it, Kostin. -> kostin_leave
+
+~ kostin_seen
+Narrator: It's shoulder high after a month, and its leaves are veined red, and the water from his flask doesn't soak into the ground round it; the ground takes it. Under the crown the old tree's roots still run, and they've found his tree.
+Kostin: (He sees you see it. He sits back on his heels.) It's drinking from her. Isn't it. I brought it all this way and gave it to her.
+* Let us pull it. -> kostin_pull
+* You can be the one to pull it. -> kostin_pulls
+
+~ kostin_unseen
+Narrator: A young tree, growing fast in burned ground, the way things do after a fire. That's all it looks like.
+Kostin: It's the first green thing on this hill in a hundred years. Please.
+-> kostin_menu
+
+~ kostin_menu
+* (Pull the sapling up.) -> kostin_pull
+* Leave it, Kostin. -> kostin_leave
+
+~ kostin_leave
+Kostin: I'll stay with it tonight. Someone should.
+Narrator: As you turn to go, the ash on the crown moves behind you, all of it, the way water moves toward a drain.
+-> wake
+
+~ kostin_pulls
+Narrator: He takes hold of it low down, with both hands, and pulls. It comes up screaming, a long thin red root after it like a vein out of an arm, and he throws it down and stands on it.
+Kostin: Go home, he said. I'll have to find out where that is.
+-> wake
+
+~ kostin_pull
+Narrator: It doesn't want to come. When it does, it comes screaming, a long red root dragging out of the hill like a vein out of an arm.
+Kostin: No... no. I'm sorry. I'm so sorry. (He doesn't know whether he's saying it to you or the tree.)
+-> wake
+
+# --- On the crown at night: Zorica (the youngest of the circle) ---
+
+~ zorica
+if not flag.zorica_met
+set zorica_met
+quest the_druid_who_came_back found
+Narrator: A girl of about sixteen in a druid's grey robe much too big for her is planting something on the burned crown by lantern light, and singing to it under her breath.
+Zorica: You burned it. You burned Mother's tree and Mother with it. I was on the Krezk road for herbs. I came back and the hill was black.
+Zorica: She taught us. Cut a twig from the tree and keep it against your skin, and it will never die. I kept it. I'm planting it. It's mine to plant.
+endif
+* [if not flag.zorica_asked] [Persuasion DC 15] It drank your teacher. It will drink you. Put the spade down. -> zorica_stops | zorica_fights
+* (Pull the cutting up.) -> zorica_fights
+* (Leave her to it.) -> zorica_left
+
+~ zorica_stops
+set zorica_asked
+set zorica_stood_down
+Zorica: (She looks at her own hands. The skin of her wrist is threaded with fine red lines, where the twig lay.) It never died. It just... went into me instead.
+Narrator: She drops the spade. Too late: the cutting has drunk enough. The ash on the crown is already moving toward it.
+-> wake
+
+~ zorica_fights
+set zorica_asked
+Zorica: Then come and take it.
+-> wake
+
+~ zorica_left
+Narrator: As you turn to go, she starts to sing louder, and the ash on the crown moves behind you, all of it, toward her.
+-> wake
+
+# --- The hill wakes ---
+
+~ wake
+cutscene sq_ash_effigy
+Narrator: The ash of the burned crown lifts. Not blown: drawn, from every side, toward the thing in the turned earth, and it stands up round it into a shape twice a man's height, grey and smoking, with a young tree for a spine.
+interject tag:blunt: We burned it. It's still ash. Fire's no use on ash.
+combat ash_effigy
+
+# --- After (Kostin stays, if it was his tree) ---
+
+~ kostin_after
+Kostin: I'll stay. Someone has to watch this hill, and I'm the only one who knows what it does to a tree. When it's a hill again, I'll plant something. Something small. A long way from the middle.
+-> END
