@@ -88,3 +88,17 @@ func test_a_plaque_on_a_panel_is_lifted_above_it() -> void:
 	signs.keep_clear = [Rect2(0, 0, 1600, 30)]
 	assert_true((signs.call("_clear_of_panels", Rect2(100, 10, 200, 40)) as Rect2).position.y >= 12.0, "stays on screen")
 	signs.free()
+
+
+## The pad's prompt bar over the world is kept clear too (UI QA UI-12): a plaque at the edge sat half under it.
+func test_the_pad_bar_is_kept_clear() -> void:
+	var hud: ExploreHud = await _hud()
+	var was := PadPrompts.world_rect
+	# Set and read in one go: with no pad in use the bar's own _process clears it again next frame.
+	PadPrompts.world_rect = Rect2(1200, 740, 380, 40)
+	hud.call("_keep_panels_apart")
+	assert_true(_has(hud.exit_signs.keep_clear, Rect2(1200, 740, 380, 40)), "the bar's rect is kept clear")
+	PadPrompts.world_rect = Rect2()
+	hud.call("_keep_panels_apart")
+	assert_false(_has(hud.exit_signs.keep_clear, Rect2(1200, 740, 380, 40)), "not once it goes")
+	PadPrompts.world_rect = was

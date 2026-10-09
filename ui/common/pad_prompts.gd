@@ -17,6 +17,9 @@ static var world: Array = []
 static var _world_owner: WeakRef = null
 ## How far above the bottom edge the world's bar stands (clear of the exploring command bar, or a fight's hotbar).
 static var world_raise := WORLD_RAISE
+## Where the bar is over the world while it shows (empty when it doesn't), for the HUD to keep its exit plaques clear
+## of it (ExploreHud; UI QA UI-12: a plaque at the screen's edge sat half under the bar).
+static var world_rect := Rect2()
 
 
 static func set_world(owner: Object, list: Array, raise: float = WORLD_RAISE) -> void:
@@ -123,6 +126,7 @@ func _process(_delta: float) -> void:
 	if scope == null:
 		var shown := nav != null and nav.pad and not world.is_empty() and nav.popup_open() == null
 		visible = shown
+		world_rect = _plate.get_rect() if shown else Rect2()
 		var wkey := "world:%s:%s" % [str(world), PadGlyphs.family()]
 		if shown and wkey != _key:
 			_key = wkey
@@ -130,6 +134,7 @@ func _process(_delta: float) -> void:
 		elif not shown:
 			_key = ""
 		return
+	world_rect = Rect2()
 	var focus := get_viewport().gui_get_focus_owner()
 	var key := "%d:%d:%s" % [scope.get_instance_id(), focus.get_instance_id() if focus != null else 0, PadGlyphs.family()]
 	visible = true
