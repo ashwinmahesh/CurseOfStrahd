@@ -43,4 +43,4 @@ beneath the name instead of the old toast (the toast still says both when a card
 conversation or an arrival picture, shows one name at a time, and like the card never shows in headless runs or still
 captures without `--motion`.
 
-    make capture SCENE=res://tools/capture/title_capture.tscn NAME=title FRAMES=10 ARGS="--motion"
+    make capture SCENE=res://tools/capture/place_title_capture.tscn NAME=place_title FRAMES=10 ARGS="--motion"
