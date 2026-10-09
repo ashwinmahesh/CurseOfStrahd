@@ -142,3 +142,22 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_13_throw.png" % out)
 	view._cancel_targeting()
+	# The tactical view from above (O), eased all the way in.
+	view.rig.tactical = true
+	await tool.call("wait_frames", 40)
+	tool.call("_shot", "%s_14_tactical.png" % out)
+	view.rig.tactical = false
+	# The controller's wheels: the bar scheme's (Tactical in Move's place), then Wheels' actions (Tamsin's All filter).
+	view.hud.set_tab(CombatHud.ALL)
+	view.hud.radial.open()
+	view.hud.radial.selected = RadialMenu.CHOICES.find("Tactical")
+	await tool.call("wait_frames", 4)
+	tool.call("_shot", "%s_15_bar_radial.png" % out)
+	GameSettings.set_value("pad_wheels", true, false)
+	view.set("_wheel_page", 0)
+	view.call("_open_wheel")
+	view.hud.radial.selected = 0
+	await tool.call("wait_frames", 4)
+	tool.call("_shot", "%s_16_wheel.png" % out)
+	view.hud.radial.visible = false
+	GameSettings.set_value("pad_wheels", false, false)

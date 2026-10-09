@@ -424,6 +424,29 @@
       "model": "satchel",
       "search_dc": 12,
       "item": "rope_of_climbing"
+    },
+    {
+      "id": "tibor_fire",
+      "cell": [
+        10,
+        16
+      ],
+      "kind": "decor",
+      "label": "A small fire",
+      "model": "campfire",
+      "when": "level >= 9 and quest.the_last_egg != done and quest.the_last_egg != sold"
+    },
+    {
+      "id": "roc_egg",
+      "cell": [
+        34,
+        14
+      ],
+      "kind": "examine",
+      "label": "The roc's egg",
+      "model": "roc_nest",
+      "when": "quest.the_last_egg",
+      "dialogue": "tsolenka_pass/the_last_egg:egg"
     }
   ],
   "containers": [
@@ -752,10 +775,93 @@
       ],
       "surprise": "",
       "flag": "penitent_slain"
+    },
+    {
+      "id": "last_egg",
+      "trigger": "dialogue",
+      "text": "The stone birds come down on the shelf with a sound like a quarry falling, and the falconer lands among them, soft as a leaf, with two of his hands behind him, pulling off his glove.",
+      "monsters": [
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            13
+          ],
+          "name": "The Falconer",
+          "hp": 150
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
+            18
+          ],
+          "name": "The Falconer's Hand"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "A Stone Bird"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            32,
+            18
+          ],
+          "name": "A Stone Bird"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "A Stone Bird"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "A Stone Bird"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "The Falconer's Hand"
+        }
+      ],
+      "surprise": "",
+      "flag": "last_egg_defended",
+      "quest": {
+        "id": "the_last_egg",
+        "stage": "defended"
+      }
     }
   ],
   "narration": {
     "enter": "enter:tsolenka_pass"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "npcs": [
+    {
+      "npc": "tsolenka_tibor",
+      "cell": [
+        9,
+        16
+      ],
+      "dialogue": "tsolenka_pass/the_last_egg:tibor",
+      "when": "level >= 9 and quest.the_last_egg != done and quest.the_last_egg != sold",
+      "facing": "east",
+      "approach": 4
+    }
+  ]
 }

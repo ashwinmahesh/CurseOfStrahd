@@ -89,6 +89,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `features.second_wind / action_surge / steady_aim / turn_undead / divine_spark / preserve_life` | |
 | `end_turn()` | Rolls a pending Death Saving Throw, end-of-turn effects and repeated saves, next creature |
 | `run_ai_turn()` | Plays the current AI creature's turn (may pause for player reactions) |
+| `begin_ai_turn()`, `ai.think(c)`, `finish_ai_turn(thought)` | `run_ai_turn` in steps: `begin_ai_turn` plays the turn up to its plan (null when the plan comes next), `ai.think` makes the plan and only reads the fight (one `Creature` read, which belongs to the thread that opened it), `finish_ai_turn` plays the rest. The combat view runs `think` on a worker thread so the screen keeps moving (FN-14); nothing may change the fight meanwhile |
 | `answer_reaction(use)` | Resumes a paused command |
 
 Queries: `current()`, `order`, `living()`, `hostiles_of(c)`, `distance(a, b)`, `cover(a, b)`, `can_see(a, b)`,

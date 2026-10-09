@@ -1,0 +1,15 @@
+{
+  "id": "sq_last_egg",
+  "title": "The Last Egg",
+  "summary": "A roc's egg hatches in its nest as the count's stone birds drop off the tower.",
+  "images": [
+    {
+      "image": "sq_last_egg",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.6,
+    0.4
+  ]
+}

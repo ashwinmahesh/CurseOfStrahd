@@ -45,6 +45,8 @@ var tactics: AiTactics
 var spells: AiSpells
 ## The fallen hero this turn's plan strikes (Honour), whom the attack steps keep at although they're down.
 var _finishing: Combatant = null
+## Walking-cost maps by start square and map shape (_walk_from), shared by every foe closing on that square.
+var _walks: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -71,7 +73,17 @@ func wants_reaction(reactor: Combatant, kind: String) -> bool:
 
 # --- The turn -------------------------------------------------------------------------------------
 
+## A whole turn: begin_turn, then (when that leaves the plan to make) think and finish_turn.
 func play_turn(c: Combatant) -> CombatResult:
+	var r := begin_turn(c)
+	if r != null:
+		return r
+	return finish_turn(c, think(c))
+
+
+## The turn up to its plan: Fear, Commands, potions, morale, a boss's own moves, bonus actions and stat-block spells.
+## Null when the plan comes next (think, then finish_turn); the combat view thinks on a worker thread (FN-14).
+func begin_turn(c: Combatant) -> CombatResult:
 	var e := enc()
 	var fear := e.features.fleeing_from(c)
 	if fear != null:
@@ -195,14 +207,32 @@ func play_turn(c: Combatant) -> CombatResult:
 		if near != null:
 			last_plan = {"kind": "flee", "why": "Bloodied coward"}
 			return _flee(c, near, true)
+	return null
+
+
+## The turn's plan: {plan: plan_turn's, cast: on Tactician and Honour the best spell of a caster's whole list, or its
+## scroll, when it beats the weapon plan, else {}}. It only reads the fight, so it may run on a worker thread while
+## nothing else changes the fight (the combat view's enemy turns, FN-14).
+func think(c: Combatant) -> Dictionary:
+	var e := enc()
 	# Weighing every square and target asks the same creatures thousands of questions: one read (Creature.begin_read).
 	Creature.begin_read()
 	var plan := plan_turn(c)
-	# Tactician and Honour: the best spell of a caster's whole list, or its scroll, when it beats the weapon plan.
 	var cast_plan := {}
 	if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
 		cast_plan = spells.plan(c, action_worth(c, plan))
+	# Closing in: the square too (finish_turn drops it if a bonus Dash changes what's in reach).
+	if str(plan["kind"]) == "approach" and cast_plan.is_empty():
+		plan["square"] = _approach_square(c, plan)
 	Creature.end_read()
+	return {"plan": plan, "cast": cast_plan}
+
+
+## The turn after its plan (think): the spell, the attack, the approach, a search, or waiting.
+func finish_turn(c: Combatant, thought: Dictionary) -> CombatResult:
+	var e := enc()
+	var plan := thought["plan"] as Dictionary
+	var cast_plan := thought["cast"] as Dictionary
 	if not cast_plan.is_empty():
 		last_plan = cast_plan
 		var cr := spells.cast(c, cast_plan)
@@ -215,8 +245,11 @@ func play_turn(c: Combatant) -> CombatResult:
 				_finishing = plan["target"] as Combatant
 			return e.then(_move_then_attack(c, plan), func() -> CombatResult: return _after_main(c))
 		"approach":
+			var had_bonus := c.bonus_available
 			if c.creature is Monster:
 				e.monster_actions.bonus_action(c, "dash")
+			if c.bonus_available != had_bonus:
+				plan.erase("square")   # a bonus Dash: farther squares are in reach than when it thought
 			return _approach(c, plan)
 		"search":
 			return e.search(c)
@@ -474,9 +507,13 @@ func plan_turn(c: Combatant) -> Dictionary:
 	if str(best["kind"]) == "attack":
 		return best
 	if not visible.is_empty():
-		return _approach_plan(c, visible, prof)
+		var go := _approach_plan(c, visible, prof)
+		go["threats"] = threats
+		return go
 	if not heard.is_empty():
-		return _approach_plan(c, heard, prof)
+		var go2 := _approach_plan(c, heard, prof)
+		go2["threats"] = threats
+		return go2
 	if hidden_any and c.action_available:
 		return {"kind": "search", "score": 0.0, "why": "enemies are hidden"}
 	return best
@@ -643,14 +680,27 @@ func _approach_plan(c: Combatant, visible: Array[Combatant], prof: Dictionary) -
 
 func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var e := enc()
+	var sq := (plan["square"] if plan.has("square") else _approach_square(c, plan)) as Dictionary
+	var best_cell: Vector2i = sq["cell"]
+	if best_cell == c.cell:
+		return CombatResult.new()
+	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
+		e.dash(c)
+	return e.move(c, best_cell)
+
+
+## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it}. It only
+## looks (one Creature read), so think works it out with the plan.
+func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
+	var e := enc()
 	var target := plan["target"] as Combatant
 	# Dash only when the best square needs it: no wasted action when nothing gets closer (a shut door between them).
 	var dash_ok := bool(plan.get("dash", false)) and c.action_available and c.speed() > 0
+	Creature.begin_read()
 	var reach := e.reachable_for(c, c.movement_left + (c.speed() if dash_ok else 0))
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
 	# heads for the door rather than pressing its face to the stones.
-	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
-		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
+	var walk := _walk_from(target.cell)
 	var dist := func(cell: Vector2i) -> int:
 		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
@@ -660,12 +710,21 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var best_d := int(dist.call(c.cell))
 	var best_cost := 0
 	var prof := profile(c)
-	var threats := _threats(c) if float(prof["oa_fear"]) > 0.0 else ([] as Array[Dictionary])
+	var threats: Array[Dictionary] = []
+	if float(prof["oa_fear"]) > 0.0:
+		# The plan's own threats when it brought them (nothing has moved since), else worked out now.
+		if plan.has("threats"):
+			threats.assign(plan["threats"] as Array)
+		else:
+			threats = _threats(c)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
 		var d := int(dist.call(cell))
+		# A square already farther than the best one can't win, whatever its Opportunity Attacks (they only add).
+		if d > best_d:
+			continue
 		var cost := int(info["cost"])
 		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(reach, cell), threats) > 0.0:
 			d += 15
@@ -673,11 +732,23 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 			best_d = d
 			best_cell = cell
 			best_cost = cost
-	if best_cell == c.cell:
-		return CombatResult.new()
-	if dash_ok and best_cost > c.movement_left:
-		e.dash(c)
-	return e.move(c, best_cell)
+	Creature.end_read()
+	return {"cell": best_cell, "cost": best_cost, "dash": dash_ok}
+
+
+## Walking costs from `cell` to every square of the map (no creature in the way: the shape of the walls, doors and
+## ground), kept while the map is unchanged: several foes closing on the same hero share one search (FN-14).
+func _walk_from(cell: Vector2i) -> Dictionary:
+	var g := enc().grid
+	var key := "%d|%d|%s" % [hash([g.width, g.depth, g._flags, g._height]), g.raised.size(), cell]
+	if _walks.has(key):
+		return _walks[key] as Dictionary
+	if _walks.size() > 32:
+		_walks.clear()
+	var walk := g.reachable(cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
+		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
+	_walks[key] = walk
+	return walk
 
 
 func _move_then_attack(c: Combatant, plan: Dictionary) -> CombatResult:

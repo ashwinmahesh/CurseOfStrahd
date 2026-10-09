@@ -190,9 +190,11 @@ func _check_fallen() -> void:
 ## game over, or the final battle's wipe that is an ending (test_ending_screen). So does the big d20 for the save that
 ## dropped them: the player sees it fail before the party falls.
 func _fall() -> void:
-	var rolling := DiceRoll.showing()
-	if rolling != null:
-		await rolling.finished
+	if DiceRoll.showing() != null:
+		# Asked again shortly (a bound method, so it goes with this root), never awaiting the panel: a panel freed
+		# with its scene never says it finished.
+		get_tree().create_timer(0.1, true).timeout.connect(_fall)
+		return
 	if screen != null or dialogue != null or ending != null or moving or view == null or view.in_combat or not _party_down():
 		_fallen = false
 		return
