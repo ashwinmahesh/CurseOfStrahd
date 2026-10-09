@@ -33,7 +33,7 @@ const CONTROLS: Array[String] = [
 	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms.",
 	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
-	"Reactions always ask unless you set a rule in the prompt (Next time: Ask me / Always use it / Never).",
+	"Reactions always ask unless you set a rule: in the prompt (Next time: Ask me / Always use it / Never), or on the Reactions tab, where a click on a rule steps it through Ask, Automatic and Off on any turn. A slot with a gilt corner holds choices: click it to pick one.",
 ]
 
 var e: Encounter
@@ -793,8 +793,9 @@ func _refresh_hotbar() -> void:
 		ch.queue_free()
 	_slot_buttons.clear()
 	_slot_actions.clear()
-	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged).
-	var acts: Array = catalog.arranged(c, tab)
+	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged), with
+	# one slot per idea: a rule's modes as one toggle, an action's variants as one container (ActionCatalog.slots).
+	var acts: Array = catalog.slots(c, tab)
 	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
 	if tab == ActionCatalog.SPELLS:
 		# By spell level, alphabetical within, like every other spell list (SpellGroups), unless the player arranged the
@@ -831,13 +832,18 @@ func _refresh_hotbar() -> void:
 
 ## One hotbar slot for action `a` in `grid`, numbered `i`; returns the next number.
 func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: bool) -> int:
-	var usable := bool(a["legal"]) and mine
+	# A standing rule (a toggle) changes on any turn; everything else waits for this character's turn.
+	var anytime := bool(a.get("toggle", false)) or bool(a.get("anytime", false))
+	var usable := bool(a["legal"]) and (mine or anytime)
 	var b := Button.new()
 	b.custom_minimum_size = SLOT_SIZE
 	# A dark face like every other button, its cost told by the colour of its top edge (and the word in the tooltip).
 	var colour := str(COST_COLOURS.get(str(a["cost"]), "slate"))
 	var focused := i == focus_slot
-	b.add_theme_stylebox_override("normal", _slot_style("ui_oxblood", "gilt_light" if focused else "gilt_dark", focused))
+	# An armed rider or smite glows: a bright edge on a warmer face until the hit spends it.
+	if bool(a.get("armed", false)):
+		focused = true
+	b.add_theme_stylebox_override("normal", _slot_style("ui_wine" if bool(a.get("armed", false)) else "ui_oxblood", "gilt_light" if focused else "gilt_dark", focused))
 	b.add_theme_stylebox_override("hover", _slot_style("ui_wine", "gilt_light", true))
 	b.add_theme_stylebox_override("pressed", _slot_style("blood", "gilt_light", true))
 	b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
@@ -854,28 +860,37 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	_slot_face(b, a, i, usable)
 	b.disabled = not usable
 	var reason := str(a["reason"]) if not bool(a["legal"]) else ""
-	if not mine and reason == "":
+	if not mine and not anytime and reason == "":
 		reason = "Not %s's turn" % c.name()
-	b.tooltip_text = "%s (%s)%s%s\nRight-click for more%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
+	var more := "Right-click for more"
+	if bool(a.get("toggle", false)):
+		more = "Click to change it, right-click to pick"
+	elif bool(a.get("group", false)):
+		more = "Click to choose"
+	b.tooltip_text = "%s (%s)%s%s\n%s%s" % [a["label"], _cost_word(str(a["cost"])), ("\n" + str(a["help"])) if str(a["help"]) != "" else "", ("\nCan't: " + reason) if reason != "" else "", more, (" (choose the %s)" % str(a.get("choice_label", "")).to_lower()) if a.has("choices") else ""]
 	var act := a
-	b.pressed.connect(func() -> void: action_chosen.emit(act))
-	# Drag a slot onto another on the same tab to put it there (U2).
+	b.pressed.connect(func() -> void: use_action(act, b))
+	# Drag a slot onto another on the same tab to put it there (U2); a group moves by its first action.
 	var here_tab := tab
 	b.set_drag_forwarding(func(_at: Vector2) -> Variant:
 			if not c.creature is Character:
 				return null
 			var ghost := _label(str(act["label"]), 13, "gilt_light")
 			b.set_drag_preview(ghost)
-			return {"hotbar_action": str(act["id"]), "tab": here_tab},
+			return {"hotbar_action": _arrange_id(act), "tab": here_tab},
 		func(_at: Vector2, data: Variant) -> bool:
 			return data is Dictionary and (data as Dictionary).has("hotbar_action") and str((data as Dictionary)["tab"]) == here_tab,
 		func(_at: Vector2, data: Variant) -> void:
-			var to := catalog.arranged(c, here_tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(str(act["id"]))
+			var to := catalog.arranged(c, here_tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(_arrange_id(act))
 			catalog.move_action(c, here_tab, str((data as Dictionary)["hotbar_action"]), to)
 			_refresh_hotbar())
 	b.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_RIGHT:
-			open_slot_menu(act, b.get_screen_position() + (ev as InputEventMouseButton).position))
+			var at := b.get_screen_position() + (ev as InputEventMouseButton).position
+			if bool(act.get("group", false)):
+				open_group(act, at)
+			else:
+				open_slot_menu(act, at))
 	grid.add_child(b)
 	_slot_buttons.append(b)
 	_slot_actions.append(a)
@@ -910,8 +925,32 @@ func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
 	b.add_child(col)
 	var name_ := _fitted(str(a["label"]), width, 13, 10, "ivory" if usable else "bone")
 	col.add_child(name_)
-	if str(a["sub"]) != "":
-		col.add_child(_fitted(str(a["sub"]), width, 12, 9, "parchment" if usable else "bone"))
+	if bool(a.get("toggle", false)):
+		# A rule: the mode in force in its own colour, and a pip per mode along the bottom with that one lit.
+		var items := a["items"] as Array
+		var current := int(a["current"])
+		col.add_child(_fitted(str(a["sub"]), width, 12, 9, _mode_colour(str((items[current] as Dictionary)["mode"])) if usable else "bone"))
+		var n := items.size()
+		var pips := UiParts.drawn(SLOT_SIZE, func(cv: Control) -> void:
+			var w := 10.0
+			var gap := 4.0
+			var x0 := cv.size.x - 16.0 - n * w - (n - 1) * gap
+			for k in n:
+				var r := Rect2(x0 + k * (w + gap), cv.size.y - 9.0, w, 3.0)
+				var colour := Look.color(_mode_colour(str((items[k] as Dictionary)["mode"]))) if k == current else Color(Look.color("gilt_dark"), 0.6)
+				cv.draw_rect(r, colour if usable else Color(colour, 0.4)))
+		pips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(pips)
+	elif str(a["sub"]) != "":
+		col.add_child(_fitted(str(a["sub"]), width, 12, 9, ("gilt_light" if bool(a.get("armed", false)) else "parchment") if usable else "bone"))
+	if bool(a.get("group", false)) and not bool(a.get("toggle", false)):
+		# A container: a small gilt corner says a click opens its choices (Baldur's Gate 3's fly-out mark).
+		var corner := UiParts.drawn(SLOT_SIZE, func(cv: Control) -> void:
+			var tip := Vector2(cv.size.x - 13.0, 9.0)
+			cv.draw_colored_polygon(PackedVector2Array([tip, tip + Vector2(-7, 0), tip + Vector2(0, 7)]),
+				Look.color("gilt_light") if usable else Color(Look.color("gilt_dark"), 0.6)))
+		corner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(corner)
 	if usable:
 		b.mouse_entered.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("gilt_light")))
 		b.mouse_exited.connect(func() -> void: name_.add_theme_color_override("font_color", Look.color("ivory")))
@@ -954,6 +993,74 @@ func _refresh_slot_pips(c: Combatant) -> void:
 		chip.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
 		chip.mouse_filter = Control.MOUSE_FILTER_PASS
 		_slot_row.add_child(chip)
+
+
+## A slot used (a click, its hotkey, the pad's RB): a toggle steps to its next mode, a container opens its choices at the
+## slot, anything else goes to the fight.
+func use_action(a: Dictionary, from: Control = null) -> void:
+	if bool(a.get("toggle", false)):
+		var items := a["items"] as Array
+		action_chosen.emit(items[(int(a["current"]) + 1) % items.size()] as Dictionary)
+	elif bool(a.get("group", false)):
+		var at := from.get_screen_position() + Vector2(0, -8) if from != null else get_viewport().get_visible_rect().size / 2.0
+		open_group(a, at, false)
+	else:
+		action_chosen.emit(a)
+
+
+## The visible slot at `index` used, as its hotkey does (the view's number keys and RB).
+func use_slot(index: int) -> void:
+	var a := slot_action(index)
+	if not a.is_empty():
+		use_action(a, _slot_buttons[index] if index < _slot_buttons.size() else null)
+
+
+## A container's or a rule's choices at its slot: each action (or mode), greyed with why when it can't be used now, and
+## with `arrange` (a right-click) the Hotbar choices for the whole slot.
+func open_group(a: Dictionary, at: Vector2, arrange: bool = true) -> void:
+	_menu_action = a
+	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
+	var toggle := bool(a.get("toggle", false))
+	var key := str(a["id"]).substr(6)
+	var members := a["items"] as Array
+	var items: Array[Dictionary] = []
+	for k in members.size():
+		var m := members[k] as Dictionary
+		var now := mine or bool(m.get("anytime", false))
+		var ok := bool(m["legal"]) and now
+		var why := "" if ok else (str(m.get("reason", "")) if now else "Not this character's turn")
+		var label := str(m["mode_label"]) if toggle else catalog.variant_name(m, key)
+		if toggle and k == int(a["current"]):
+			label = "✓ " + label
+		if bool(m.get("armed", false)):
+			label += " (armed)"
+		items.append({"id": "pick:%d" % k, "label": label, "enabled": ok, "why": why})
+	if arrange and shown != null and shown.creature is Character:
+		var first := str((members[0] as Dictionary)["id"])
+		items.append({"separator": "Hotbar"})
+		items.append({"id": "bar:fav" if not catalog.is_favourite(shown, first) else "bar:unfav",
+			"label": "Add to Favourites" if not catalog.is_favourite(shown, first) else "Remove from Favourites"})
+		items.append({"id": "bar:hide" if not catalog.is_hidden(shown, first) else "bar:show",
+			"label": "Hide it (on the Hidden tab)" if not catalog.is_hidden(shown, first) else "Show it on its tab again"})
+		items.append({"id": "bar:earlier", "label": "Move earlier"})
+		items.append({"id": "bar:later", "label": "Move later"})
+	_menu.show_actions(str(a["label"]), items, at)
+
+
+## The action id a slot is arranged by (U2): its own, or a group's first action's.
+static func _arrange_id(a: Dictionary) -> String:
+	if bool(a.get("group", false)):
+		return str(((a["items"] as Array)[0] as Dictionary)["id"])
+	return str(a["id"])
+
+
+## A rule's mode in its colour: Ask gilt, Automatic green, Off grey.
+static func _mode_colour(mode: String) -> String:
+	if mode == "ask":
+		return "gilt_light"
+	if mode.begins_with("auto"):
+		return "bile"
+	return "bone"
 
 
 ## The right-click menu on a hotbar slot: Info, Use, and for spells each slot level it can be cast with.
@@ -1019,6 +1126,9 @@ func _on_menu(id: String) -> void:
 		return
 	if action.is_empty() or shown == null:
 		return
+	if id.begins_with("pick:") and action.has("items"):
+		action_chosen.emit((action["items"] as Array)[int(id.substr(5))] as Dictionary)
+		return
 	if id == "info":
 		var d := catalog.details(shown, action)
 		show_details(str(d["title"]), d["lines"] as Array)
@@ -1057,12 +1167,18 @@ func _on_menu(id: String) -> void:
 
 ## A hotbar slot's "Hotbar" menu choices (U2): star it, hide it, or move it one place.
 func _arrange(action: Dictionary, what: String) -> void:
-	var aid := str(action["id"])
+	var aid := _arrange_id(action)
+	# A group is starred or hidden as a whole.
+	var ids: Array[String] = [aid]
+	if bool(action.get("group", false)):
+		ids.assign((action["items"] as Array).map(func(m: Dictionary) -> String: return str(m["id"])))
 	match what:
 		"fav", "unfav":
-			catalog.set_favourite(shown, aid, what == "fav")
+			for one in ids:
+				catalog.set_favourite(shown, one, what == "fav")
 		"hide", "show":
-			catalog.set_hidden(shown, aid, what == "hide")
+			for one in ids:
+				catalog.set_hidden(shown, one, what == "hide")
 		"earlier", "later":
 			var at := catalog.arranged(shown, tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
 			if at >= 0:

@@ -232,6 +232,7 @@ func test_a_chandelier_drops_on_whoever_is_below() -> void:
 	var chandelier := _place(e, "chandelier", [Vector2i(6, 3), Vector2i(7, 3)])
 	TestCombat.start_with(e, ilse)
 	assert_true(e.objects.attack_why(ilse, chandelier, e.option_by_id(ilse, "weapon:greatsword")).contains("out of reach"), "a blade can't reach its chain")
+	(ilse.creature as Character).equip("javelin", "main_hand")   # only a weapon in hand is thrown
 	assert_eq(e.objects.attack_why(ilse, chandelier, e.option_by_id(ilse, "thrown:javelin")), "", "a thrown javelin can")
 	bag.creature.add_condition(&"stunned", "test")   # fails Dexterity saves
 	e.objects.damage(chandelier, [{"amount": 5, "type": "piercing"}], ilse, "a javelin")
@@ -249,6 +250,9 @@ func test_adamantine_crits_objects_and_sharpness_maximizes_its_dice() -> void:
 	ch.add_item("adamantine_weapon__greatsword")
 	ch.add_item("sword_of_sharpness__longsword")
 	ch.attuned.append("sword_of_sharpness__longsword")
+	# Only equipped weapons attack: the greatsword in hand, the Sword of Sharpness in the other set.
+	ch.equip("adamantine_weapon__greatsword", "main_hand")
+	ch.weapon_set_2 = {"main_hand": "sword_of_sharpness__longsword"}
 	var barrel := _place(e, "barrel", [Vector2i(3, 3)])
 	var cart := _place(e, "cart", [Vector2i(3, 2)])
 	TestCombat.start_with(e, ilse)

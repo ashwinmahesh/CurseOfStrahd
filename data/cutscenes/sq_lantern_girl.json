@@ -1,0 +1,15 @@
+{
+  "id": "sq_lantern_girl",
+  "title": "One Lantern Too Many",
+  "summary": "A girl made of lantern light holds a cold boy's hand at the end of the fishers' jetty.",
+  "images": [
+    {
+      "image": "sq_lantern_girl",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.35
+  ]
+}

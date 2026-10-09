@@ -558,7 +558,7 @@ func _show_info() -> void:
 				var rn := str((l["road"] as Dictionary).get("name", "a road"))
 				if names.is_empty() or names.back() != rn:
 					names.append(rn)
-			_info.add_child(UiKit.label("By %s" % ", then ".join(names), 14, "parchment", 290))
+			_info.add_child(UiKit.label(route_line(names), 14, "parchment", 290))
 			_info.add_child(UiKit.label("%s hours on the road, arriving about %02d:%02d" % [_hours_text(h), arrive / 60, arrive % 60],
 				16, "gilt_light", 290))
 			if night:
@@ -606,6 +606,22 @@ func _legend() -> Control:
 		c.draw_string(font, Vector2(164, 71), "Your way there", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
 	return c
 
+
+## The roads a journey takes, as a line: "By the lake road west, then the castle road". A road's name is written to
+## stand alone ("The lake road west", "By boat to the north shore", "Down the miller's lane"), so a leading The, By,
+## Down or Up drops to lower case inside the line, and a name that already says how you go isn't given another "By"
+## (UI QA: the map read "By The lake road west").
+static func route_line(names: Array[String]) -> String:
+	var parts: Array[String] = []
+	for n in names:
+		var first := n.get_slice(" ", 0)
+		parts.append(first.to_lower() + n.substr(first.length()) if first in ["The", "By", "Down", "Up"] else n)
+	var text := ", then ".join(parts)
+	if names.is_empty():
+		return ""
+	if names[0].get_slice(" ", 0) in ["By", "Down", "Up"]:
+		return text.left(1).to_upper() + text.substr(1)
+	return "By " + text
 
 static func _hours_text(h: float) -> String:
 	return str(int(h)) if is_equal_approx(h, roundf(h)) else "%.1f" % h

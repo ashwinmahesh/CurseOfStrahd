@@ -1,0 +1,19 @@
+{
+  "id": "vallaki_sandu",
+  "name": "Sandu",
+  "title": "Old Sabin's Grandson",
+  "summary": "Old Sabin's grandson, nine, who followed the extra lantern out of the west gate in his nightshirt one festival night.",
+  "portrait": "toma_sarnov",
+  "sprite": "toma_sarnov",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him",
+  "pockets": false
+}

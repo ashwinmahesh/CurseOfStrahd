@@ -1,0 +1,47 @@
+{
+  "id": "one_lantern_too_many",
+  "name": "One Lantern Too Many",
+  "summary": "Every festival week the children of Vallaki carry paper lanterns round the square for the Baron. Thirty-one children. Thirty-two lanterns.",
+  "giver": "vallaki_sabin",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "The town guard says the children carry thirty-two lanterns round the square at the Baron's festivals, and there are only thirty-one children. Old Sabin makes them, at the market.",
+      "objectives": [
+        "Ask Old Sabin about the lanterns"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Old Sabin's hands make one lantern too many every week, and he doesn't know who for. Last night his grandson Sandu followed the extra one out of the west gate, toward the lake.",
+      "objectives": [
+        "Go to the fishers' jetty on Lake Zarovich after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "fought",
+      "journal": "At the end of the fishers' jetty was a drowned girl made of lantern light, with Sandu by the hand. She's gone out now.",
+      "objectives": [
+        "See to Sandu"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "home",
+      "journal": "Sandu is coming home to his grandfather, cold and alive.",
+      "objectives": [
+        "Take Sandu back to Old Sabin in Vallaki"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Sandu is home. Sabin's hands made thirty-one lanterns this week, and he gave us the dream-catcher his daughter made the week before she drowned.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

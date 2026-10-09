@@ -162,6 +162,9 @@ func test_a_returning_weapon_flies_back_and_the_hammer_of_thunderbolts_stays_whe
 	for id: String in [thrower, hammer]:
 		ch.add_item(id)
 		ch.attuned.append(id)
+	# Only equipped weapons are thrown or hurled: the Thrower in hand, the Hammer in the other set (taken up to hurl it).
+	ch.equip(thrower, "main_hand")
+	ch.weapon_set_2 = {"main_hand": hammer}
 	var c := e.add(ch, &"party", Vector2i(2, 2))
 	var w := TestCombat.foe(e, "dire_wolf", Vector2i(5, 2))
 	w.creature.hp = 300
