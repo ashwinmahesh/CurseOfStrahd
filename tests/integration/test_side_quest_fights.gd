@@ -459,3 +459,17 @@ func test_the_blights_come_for_the_cub() -> void:
 	await _fight(v, "den_blights", ["Vine Blight 1", "Needle Blight 1", "Twig Blight 1"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_dancing_bear"), "defended")
+
+
+## The mage's forgotten storm comes down off the ring of glass on Mount Baratok, Huge, with a squall.
+func test_the_forgotten_storm_comes_down() -> void:
+	var v := await _boot("mount_baratok", 19, 8, [])
+	GameState.story.set_quest_stage("the_forgotten_storm", "asked")
+	var e := await _fight(v, "forgotten_storm", ["The Forgotten Storm", "A Squall"])
+	for c in e.combatants:
+		if c.name() == "The Forgotten Storm":
+			assert_eq(c.size_cells, 3, "Huge")
+			assert_eq(CombatToken.height_of(c), 3.2)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_forgotten_storm"), "broken")
+	assert_true(GameState.story.get_flag("storm_dispersed", false))

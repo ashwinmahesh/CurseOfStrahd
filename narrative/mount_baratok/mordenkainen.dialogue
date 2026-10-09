@@ -2,6 +2,9 @@
 # memory comes back; `mordenkainen` speaks after, and is the one who can join as the Tarokka ally (the broken one).
 
 ~ start
+if quest.the_forgotten_storm == broken
+-> mount_baratok/the_forgotten_storm:thanks
+endif
 if flag.mordenkainen_restored
 -> restored_greeting
 endif
@@ -43,6 +46,7 @@ endif
 * [if not flag.mordenkainen_name_back and not flag.mordenkainen_talked_back] [Arcana DC 16] Talk him back to himself, one spell at a time. -> talk_back | talk_back_fail
 * [if flag.lysaga_jar_heard and not flag.mordenkainen_memory_jar_taken] The witch of Berez says she keeps your memory in a jar. -> jar_rumor
 * [if tarokka.ally.npc == mordenkainen] Madam Eva's cards named you. -> mad_ally
+* [if level >= 8 and not quest.the_forgotten_storm] The lightning that lands on the glass every evening. What is it? -> mount_baratok/the_forgotten_storm:mad
 * Play him at dragonchess. -> chess
 * Goodbye. -> mad_bye
 
@@ -161,6 +165,7 @@ Mordenkainen: You again. Good. I've been rebuilding my spells from the bottom up
 * [if tarokka.ally.npc == mordenkainen and not guest:mordenkainen] Madam Eva's cards named you. Will you come? -> ally
 * [if tarokka.ally.npc != mordenkainen and not flag.mordenkainen_promised_aid] Will you help us against him? -> promise
 * What do you know about Strahd? -> about_strahd
+* [if level >= 8 and not quest.the_forgotten_storm] The lightning that lands on the glass every evening. What is it? -> mount_baratok/the_forgotten_storm:restored
 * [if not flag.tsolenka_watchword_known] The gate in the Tsolenka Pass is held by dead men. -> watchword
 * What waits at the Amber Temple? -> temple
 * Heard anything interesting? -> mount_baratok/the_mages_lost_pages:news

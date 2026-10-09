@@ -316,3 +316,12 @@ const OLD_DEN: Array[Vector2i] = [Vector2i(12, 12), Vector2i(13, 13), Vector2i(1
 ## Two vine blights, five needle blights and four twig blights come for the cub's crying.
 func test_the_den_blights_at_level_3() -> void:
 	await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)
+
+
+## The ring of glass on Mount Baratok, where the party waits for dusk.
+const GLASS_RING: Array[Vector2i] = [Vector2i(16, 18), Vector2i(17, 18), Vector2i(16, 19), Vector2i(17, 19)]
+
+
+## The Forgotten Storm and a squall, with the evening's lightning landing on the ring.
+func test_the_forgotten_storm_at_level_8() -> void:
+	await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
