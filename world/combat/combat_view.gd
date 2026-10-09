@@ -493,6 +493,14 @@ func _answer(use: bool, rule: String) -> void:
 
 ## Starts an action from the hotbar; `level` picks the spell slot (0 = the lowest available).
 func _choose(action: Dictionary, level: int = 0) -> void:
+	# A standing rule (Ask / Automatic / Off) changes on any turn for whoever the hotbar shows: nothing is spent.
+	if action.has("policy"):
+		if hud.shown != null:
+			var rr := catalog.set_rule(hud.shown, action)
+			if not rr.ok:
+				hud.banner(rr.reason, 1.4)
+			hud.refresh()
+		return
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
@@ -971,9 +979,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed(&"combat_slot_next"):
 		hud.move_focus(1)
 	elif event.is_action_pressed(&"combat_use_slot"):
-		var a := hud.slot_action(hud.focus_slot)
-		if not a.is_empty():
-			_choose(a)
+		hud.use_slot(hud.focus_slot)   # a container opens its choices, a toggle steps on
 	elif event.is_action_pressed(&"combat_next_target"):
 		_next_target()
 	elif event.is_action_pressed(&"combat_slot_level_down") or event.is_action_pressed(&"combat_slot_level_up"):
@@ -985,9 +991,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	else:
 		for i in 10:
 			if event.is_action_pressed(StringName("combat_slot_%d" % (i + 1))):
-				var a2 := hud.slot_action(i)
-				if not a2.is_empty():
-					_choose(a2)
+				hud.use_slot(i)
 				return
 
 
