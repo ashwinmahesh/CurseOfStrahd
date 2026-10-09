@@ -13732,6 +13732,12 @@
   "recipe": "956cd23797",
   "text": "Three of those statues were simply statues. I checked. Twice."
  },
+ "hero_female/45932a2ad089a1fc": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "He's put the count's eyes in the Baron's hall. And over the Martikovs' bar."
+ },
  "hero_female/45cdb9bd736a264f": {
   "chars": 259,
   "model": "eleven_v4",
@@ -17991,6 +17997,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Three of those statues were simply statues. I checked. Twice."
+ },
+ "hero_male/45932a2ad089a1fc": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "He's put the count's eyes in the Baron's hall. And over the Martikovs' bar."
  },
  "hero_male/45cdb9bd736a264f": {
   "chars": 259,
@@ -34555,6 +34567,12 @@
   "recipe": "dd92281f92",
   "text": "The roots of the ribbon tree have been dug under and packed back. In the hollow, wrapped in a Vistani shawl, a pair of boots with springs worked into the heels."
  },
+ "narrator/0cb271c8e12eaf16": {
+  "chars": 187,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A painter's house that smells of linseed and something under it, like old flowers. Every canvas in it is turned to the wall, except the ones that aren't, and those all have the same face."
+ },
  "narrator/0cba25c11446e9d7": {
   "chars": 128,
   "model": "eleven_v4",
@@ -38083,6 +38101,12 @@
   "recipe": "dd92281f92",
   "text": "The flagstone tips, and the dark under it is ten feet deep, bristling with spikes and floored with older bones."
  },
+ "narrator/2a671612eddffea1": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You know what it is now. Not a picture of a woman. A window, and someone on the other side of it, looking out."
+ },
  "narrator/2a6d54085c700c80": {
   "chars": 184,
   "model": "eleven_v4",
@@ -38437,6 +38461,12 @@
   "recipe": "dd92281f92",
   "text": "Powder, combs and a mirror that shows you looking tired. Nothing else worth the trouble."
  },
+ "narrator/2d66f072b986443b": {
+  "chars": 200,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A long room under the roof, full of easels. On every easel, and leaning on every wall, the same young woman in white looks back at you. Not one of them is the same size. All of them are the same face."
+ },
  "narrator/2d859df2a0a9e96f": {
   "chars": 59,
   "model": "eleven_v4",
@@ -38718,6 +38748,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The founder's cask is older than the house: black oak, bound in iron gone brown, so big a man could stand up inside it. The druids have chopped at every cask in the cellar except this one, because it was too much trouble."
+ },
+ "narrator/30218d5241bf3202": {
+  "chars": 79,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Paint, very good paint, in a colour you've never seen. That's all you can tell."
  },
  "narrator/3039fc2197c4472d": {
   "chars": 119,
@@ -40945,6 +40981,12 @@
   "recipe": "dd92281f92",
   "text": "Someone has come halfway down the stair to see what the noise was: a lovely young woman with flour-white hands and a red ribbon in her hair, who looks over the wreck of the bakery with mild interest."
  },
+ "narrator/43eadaeef07b3ff8": {
+  "chars": 224,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the red-gold there's a faint grain, like the grain of an eye. The castle's portraits watch its halls for their master. These were painted with the same paint. Wherever one hangs in Vallaki, the castle can see the room."
+ },
  "narrator/43fc3cf5404f8961": {
   "chars": 137,
   "model": "eleven_v4",
@@ -41172,6 +41214,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Five gouges in the bark, higher than a man can reach, deep enough to lay a finger in. The pine is still alive. It does not look happy about it."
+ },
+ "narrator/462415e4296e7fed": {
+  "chars": 223,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Against the far wall, in a gilt frame taller than a door, a young woman in white looks out of the canvas with her hands folded. She is painted as no living painter could paint her. Her eyes are dark, and wet, and they move."
  },
  "narrator/462c370a7308968e": {
   "chars": 157,
@@ -42096,6 +42144,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Four roads meet here, and none of them looks as if it wants you on it."
+ },
+ "narrator/4e5d5aa75273476a": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A stack of canvases turned to the wall. On the back of each, in charcoal, a date, one a day for a month. On the last one, in a shakier hand: STOP."
  },
  "narrator/4e5f0f679c238537": {
   "chars": 30,
@@ -45691,6 +45745,12 @@
   "recipe": "dd92281f92",
   "text": "He stands up, and up, and follows you down the lane to the burgomaster's house, stepping very carefully in your footprints so as not to wake anybody."
  },
+ "narrator/6cd2342eb431a475": {
+  "chars": 100,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Pots of plain yellow, for the Baron's sun, with the lids on. Haralamb hasn't opened them in a month."
+ },
  "narrator/6cd5402746887f1a": {
   "chars": 100,
   "model": "eleven_v4",
@@ -47851,6 +47911,12 @@
   "recipe": "dd92281f92",
   "text": "Zinaida is beside him, waiting. He can see her. He has always been able to see her."
  },
+ "narrator/8060df90255623e6": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A painter's house that smells of linseed, and under it something like flowers left too long in a vase. Every canvas in the front room is turned to the wall."
+ },
  "narrator/80792de0cfa76d7a": {
   "chars": 121,
   "model": "eleven_v4",
@@ -47874,6 +47940,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Rose and Thorn stand beside their crypts, clearer than you have ever seen them, and very calm."
+ },
+ "narrator/809485063172e4d1": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The great canvas leans out of its frame on its own, and the portraits round the walls come with it, frames and all, their painted eyes all on you."
  },
  "narrator/8099c18ba1830127": {
   "chars": 113,
@@ -48762,6 +48834,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Granny's basket lies in the lane where she dropped it. Under a cloth that smells of kettle there is a sack of old coins and a robe folded small, sewn all over with eyes. Some of them blink."
+ },
+ "narrator/8842a43520907d17": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The house smells of linseed and smoke. The canvases are turned the right way round again, and they're all blank."
  },
  "narrator/8848c210e7760b45": {
   "chars": 133,
@@ -50592,6 +50670,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She is. And she's also counting, the way frightened people do: the names on her lists, and the faces in the stocks the next morning. They're the same faces."
+ },
+ "narrator/982196e935cb69c4": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A blackened frame on the wall and nothing in it. The copies round the room are blank canvas now, every one, as if they'd never been painted."
  },
  "narrator/98278af8c16c6836": {
   "chars": 135,
@@ -54625,6 +54709,12 @@
   "recipe": "dd92281f92",
   "text": "The mist lets you in, holds you a moment like a host taking your coat, and hands you back to the road, facing west."
  },
+ "narrator/bce1e963bd5de586": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He sees Ireena, and goes white, and stands up so fast his stool falls over."
+ },
  "narrator/bced191433223d9f": {
   "chars": 62,
   "model": "eleven_v4",
@@ -55140,6 +55230,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The water goes into the flasks bright and stays bright, faintly, like the last of a sunset in a window."
+ },
+ "narrator/c0ed2b9bbca9d34f": {
+  "chars": 184,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sketches pinned to a board, a hundred hands and mouths and the turn of a neck. In the margins, notes in Haralamb's hand: \"Higher at the brow, he says.\" \"Kinder, he says.\" \"No. Kinder.\""
  },
  "narrator/c0ee2fd1150447c3": {
   "chars": 25,
@@ -56989,6 +57085,12 @@
   "recipe": "dd92281f92",
   "text": "A plinth with no sarcophagus on it. Scrapes on the floor lead away toward the stair, as though something very heavy was carried off by people who were in a great hurry."
  },
+ "narrator/d176f40696588379": {
+  "chars": 73,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Then the mouth moves, and the voice that comes out of it isn't a woman's."
+ },
  "narrator/d1834f6ae13c0046": {
   "chars": 155,
   "model": "eleven_v4",
@@ -58189,6 +58291,12 @@
   "recipe": "dd92281f92",
   "text": "She is not afraid, and she is not resigned. She is waiting for nightfall, and for a visitor, with the calm of someone who has never once been let down by him."
  },
+ "narrator/dca3acde1b4fb492": {
+  "chars": 139,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Haralamb is sitting on his step with a blank canvas across his knees, turning it to the light as if he can't believe there's nothing on it."
+ },
  "narrator/dca6c9c517274a2e": {
   "chars": 174,
   "model": "eleven_v4",
@@ -58242,6 +58350,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The crypt is low and cold, lined with burial niches. In the middle, on a stone plinth, stands the sarcophagus of St. Andral, its lid pushed a hand's breadth crooked."
+ },
+ "narrator/dd35236934f8b2bc": {
+  "chars": 109,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She has Ireena's face exactly. Ireena takes a step back, and the painted woman's eyes follow her, and soften."
  },
  "narrator/dd7ac4652c347e78": {
   "chars": 118,
@@ -60409,6 +60523,12 @@
   "recipe": "dd92281f92",
   "text": "The box says nothing at all, which somehow feels like the last word."
  },
+ "narrator/f05d886b6db4ee1f": {
+  "chars": 137,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A portrait of a young woman in white, very finely done. Her eyes are on you when you look at her, and on you when you look away and back."
+ },
  "narrator/f05f422496228ca7": {
   "chars": 215,
   "model": "eleven_v4",
@@ -61129,6 +61249,12 @@
   "recipe": "dd92281f92",
   "text": "You look for whatever looks back out of a man's eyes, and there is nothing there. Not cruelty, not grief, not boredom: a clean, empty room with the lamp left on."
  },
+ "narrator/f6dfa7dd7a1c906d": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Paint pots, and in them a red-gold paint that catches the candlelight like wet amber. It hasn't dried in any of them, though some are weeks old."
+ },
  "narrator/f6e4a422d58cf978": {
   "chars": 174,
   "model": "eleven_v4",
@@ -61362,6 +61488,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under the step of Arrigal's wagon, a drawer that only opens if you lift it first. Inside, a black dagger in an oiled sheath, and the sheath smells of something bitter."
+ },
+ "narrator/f972aeb755b6b163": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every portrait in the studio turns its painted head toward you at once, with a sound like pages turning. The great canvas leans out of its frame."
  },
  "narrator/f979986e711f65cf": {
   "chars": 157,
@@ -61764,6 +61896,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Inside, the tower is warm and dry and tidy in the way of a man who expects to leave in a hurry. Stone stairs wind up through the wall toward lamplight."
+ },
+ "narrator/fd09b6eacccccfec": {
+  "chars": 176,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A thin man in a painter's smock sits on his own doorstep in the last of the light, with his hands in his lap. They're stained, but not yellow. A red-gold that doesn't come off."
  },
  "narrator/fd120435fe23b191": {
   "chars": 83,
@@ -70674,6 +70812,20 @@
   "recipe": "4d71c8957c",
   "text": "He gave me three winters to get Ileana to ask. Tonight he sent word that he's done waiting. If I don't bring him a door by morning, he'll send someone who doesn't knock."
  },
+ "the_counts_likeness/58be70a805351dab": {
+  "chars": 104,
+  "direction": "[silky, amused, possessive]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Tell Haralamb his work pleases me. I like to see Vallaki. I like to see who comes and goes from the inn."
+ },
+ "the_counts_likeness/9270d45392965a00": {
+  "chars": 166,
+  "direction": "[intimate, menacing, tender]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You know who. You hear me in the dark with your eyes shut. I see you with mine open. Isn't she lovely? I had to describe her for eleven nights. I'd forgotten nothing."
+ },
  "the_eye_below/1252da199b51cf91": {
   "chars": 81,
   "direction": "[sudden, cold, waking]",
@@ -74638,6 +74790,69 @@
   "model": "eleven_v3",
   "recipe": "c67bd6139d",
   "text": "(His teeth are going like a sewing machine.) She was nice. She just didn't want to be on her own. Can we go home? I'm very cold."
+ },
+ "vallaki_sun_painter/06dc4b8a8d319e5d": {
+  "chars": 67,
+  "direction": "[low, frightened, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "The door's open. I don't go in after dark any more. They watch you."
+ },
+ "vallaki_sun_painter/1f84fc52105213da": {
+  "chars": 211,
+  "direction": "[earnest, grateful, wry]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "Take these. His paints. I've scraped them out of the pots into clean ones and said a prayer over them, which I've never done for paint. They're only paint now. Very, very good paint. Paint what you need with it."
+ },
+ "vallaki_sun_painter/488130931ea76d0b": {
+  "chars": 199,
+  "direction": "[haunted, low, remembering]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "Last month a carriage came for me. Black horses, and nobody holding the reins. He wanted a portrait. Not of himself. He has no face to sit for, he said. He wanted me to paint someone from his memory."
+ },
+ "vallaki_sun_painter/51e76355c64b3ed3": {
+  "chars": 224,
+  "direction": "[weary, low, warning]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "Go in, if you're going. Upstairs and to the back. The big one's against the far wall, the one he gave me to copy from. Burn the copies if you like; I've tried. They don't burn. Only the big one's ever looked as if it minded."
+ },
+ "vallaki_sun_painter/7de9420ec75f754a": {
+  "chars": 159,
+  "direction": "[dry, wry, relieved]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "They went blank. All of them. The Baron's man came running to ask why the lady in the hall had gone and left only canvas. I told him it was a very bad varnish."
+ },
+ "vallaki_sun_painter/972284d95ee8aa2d": {
+  "chars": 77,
+  "direction": "[stunned, terrified, hushed]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "It's you. It's you. I've painted you forty times. I never saw you in my life."
+ },
+ "vallaki_sun_painter/a0757852bf852496": {
+  "chars": 104,
+  "direction": "[wry, relieved, near tears]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "I painted the Baron's dog today. It came out looking like a dog. I wept, a little. Don't tell the Baron."
+ },
+ "vallaki_sun_painter/b5d4b6132f1109c2": {
+  "chars": 170,
+  "direction": "[frightened, ashamed, rambling]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "I came home and I can't stop. Every face I paint is hers. I've sold three. The Baron has one in his hall. Lady Wachter bought one. And Urwin at the inn, for over the bar."
+ },
+ "vallaki_sun_painter/ea7492832b45e283": {
+  "chars": 193,
+  "direction": "[haunted, slow, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "e7502a06a3",
+  "text": "Eleven nights. He talked and I painted. A woman in white. He gave me his own paints for it; he said mine weren't good enough for her. When it was done he said keep it. Copy it. Sell the copies."
  },
  "vallaki_sun_painter/fd4c4a2771f63ac2": {
   "chars": 128,

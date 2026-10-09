@@ -1852,7 +1852,7 @@
     },
     "vallaki_sun_painter": {
       "voice_id": "LBibs9hR5kJOpqiehPAJ",
-      "name": "Barovia Tudor",
+      "name": "Barovia Haralamb",
       "description": "A hooded Vallaki painter in his forties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A dry, sardonic, tired craftsman's voice.",
       "settings": {},
       "model": "eleven_v3",
@@ -2274,6 +2274,14 @@
       "accent_tag": "[strong Eastern European accent]",
       "generated_voice_id": "FUdTJzyLOvyinV2ccg72",
       "released": true
+    },
+    "the_counts_likeness": {
+      "voice_id": "qCQXkOQiy0oQ0aNl6v7k",
+      "name": "Barovia Strahd (accent)",
+      "description": "The Count's Likeness, the canvas of a woman in white through whose mouth the count speaks ('the voice that comes out of it isn't a woman's'): Strahd's own voice, chosen by Claude (2026-10-09).",
+      "settings": {},
+      "model": "eleven_v3",
+      "shared_with": "strahd"
     }
   },
   "sfx": {
