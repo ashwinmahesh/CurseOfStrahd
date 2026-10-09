@@ -2387,6 +2387,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "UkjgztV4ROOQ6jIHzKAv",
       "released": true
+    },
+    "roadhouse_innkeeper": {
+      "voice_id": "ifwCoYZkGW1Y2fUgJf3y",
+      "name": "Barovia Wenzel",
+      "description": "The ghost of a Barovian roadside innkeeper in his fifties, burned in his own inn twenty winters ago, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tired, hollow, gentle man's voice with a faint ghostly echo, polite and weary like a host at closing time, grief and guilt underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "ifwCoYZkGW1Y2fUgJf3y",
+      "released": true
     }
   },
   "sfx": {
