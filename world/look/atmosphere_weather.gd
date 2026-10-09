@@ -58,6 +58,9 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 				w._window_light()
 			"embers":
 				w._embers(view)
+	# Sunbeams and moonbeams through the gaps in the trees and between the houses (Visual Polish Plan 2).
+	if outdoors and parent is Atmosphere:
+		SunShafts.build(parent as Atmosphere, board, view)
 	return w
 
 

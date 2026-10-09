@@ -312,6 +312,22 @@ the village at night, Vallaki and the castle's main floor (`python3 tools/perf/p
 
     make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/refl FRAMES=10 \
       LOOK_SHOTS=pool_shore_dusk,village_wet_dusk,castle_hall   # LOOK_OFF=reflections for without
+## Sunbeams and moonbeams in the Modern finish
+
+Visual Polish Plan 2 (the vault's "Visual Polish Plan.md", 2026-10-09). Out of doors a few beams of light slant down
+where it breaks through gaps in the trees and between the houses (`SunShafts`, built with the place's weather in
+`AtmosphereWeather.build`; `shaders/world/sun_shaft.gdshader`): open cones along the key light, soft at the edges, thin
+rays drifting across them and motes turning in them, with a soft patch of light where each lands. They fall on open
+squares (or water) with 3 to 15 squares of shade in the 5 x 5 round them, at least 5 squares apart, one for every 45
+open squares (3 to 9), the same ones every visit. They follow `Atmosphere.sun` as it turns with the time of day (never
+leaning flatter than `LOWEST`, so they stand in the air rather than lying across the ground under the play camera),
+take its colour, and are brightest at dusk and dawn, fainter through the overcast by day and under the moon
+(`PHASE_STRENGTH`); rain leaves a fifth of that and snow half. Like the window shafts they're added over the scene after
+the screen pass, so they fade out toward the screen's blurred edges instead of standing sharp there. Hidden squares
+(HiddenAreas) get none. Cost at 3440 x 1440: 0.0 to 0.1 ms (`perf_run.py --only effects_fast --effects SunShafts`).
+
+    make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/beams FRAMES=10 \
+      LOOK_SHOTS=road_dusk,village_dusk,lake_dusk   # LOOK_OFF=sunbeams for without
 
 ## Rules for new places
 
