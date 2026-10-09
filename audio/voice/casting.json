@@ -2397,6 +2397,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "ifwCoYZkGW1Y2fUgJf3y",
       "released": true
+    },
+    "gully_tsura": {
+      "voice_id": "ZS1dLosEdBKX5U75Hkzp",
+      "name": "Barovia Tsura",
+      "description": "A young Vistani woman of about eighteen from the Tser Pool camp, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, quick, stubborn young voice, shaken and hoarse after days wrapped in web, laughing shakily at her own fear, proud and determined to choose her own life.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "ZS1dLosEdBKX5U75Hkzp",
+      "released": true
     }
   },
   "sfx": {

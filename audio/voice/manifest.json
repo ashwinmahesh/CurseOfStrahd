@@ -12169,6 +12169,41 @@
   "recipe": "8513f6b19b",
   "text": "Two things, for free. There's an old windmill on a crag on the way to Vallaki. Don't knock. Crows on the sails, and some nights a child crying inside, and nobody in this valley has a child to spare."
  },
+ "gully_tsura/019efba27889f77a": {
+  "chars": 110,
+  "direction": "[shaky laugh, hoarse, wry]",
+  "model": "eleven_v3",
+  "recipe": "826dfc3acc",
+  "text": "I'd have been in Krezk by now. (She laughs, badly.) Spiders. All the things I was afraid of, and it's spiders."
+ },
+ "gully_tsura/1313f160686b4bfc": {
+  "chars": 199,
+  "direction": "[shaky, defiant, guilty]",
+  "model": "eleven_v3",
+  "recipe": "826dfc3acc",
+  "text": "The letter. Still there. (She doesn't give it to you.) It isn't for Luvash. It's for my mother. It says I'm sorry, and I'm not coming back, and she's to tell the man in Vallaki to find another bride."
+ },
+ "gully_tsura/6ac2b5bce7952604": {
+  "chars": 85,
+  "direction": "[resigned, brave, wry]",
+  "model": "eleven_v3",
+  "recipe": "826dfc3acc",
+  "text": "(A long breath.) Yes. All right. I'll say it to her face. It'll be worse, and better."
+ },
+ "gully_tsura/7daa2a56c8d67e2f": {
+  "chars": 141,
+  "direction": "[fond, firm, wistful]",
+  "model": "eleven_v3",
+  "recipe": "826dfc3acc",
+  "text": "(She looks up the path toward the falls, and the far side.) Tell Iancu I said nine out of ten is very good. Tell my mother the letter's true."
+ },
+ "gully_tsura/a8ba16ebfe3549a9": {
+  "chars": 182,
+  "direction": "[quiet, generous, rueful]",
+  "model": "eleven_v3",
+  "recipe": "826dfc3acc",
+  "text": "Here. (Two silver rings on a thread round her neck.) They were for the wedding. They're old Vistani work: whoever wears the other, your magic won't touch them. I don't need them now."
+ },
  "gunther_arasek/04368764494c3045": {
   "chars": 81,
   "model": "eleven_v3",
@@ -15143,6 +15178,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Someone who wants them sleepy, not dead. That's a different thing, and I'd like to meet her."
+ },
+ "hero_female/7ccc9abb7d81c22e": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Get her down. I'll hold them."
  },
  "hero_female/7d0e43087aefc21a": {
   "chars": 23,
@@ -19457,6 +19498,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Someone who wants them sleepy, not dead. That's a different thing, and I'd like to meet her."
+ },
+ "hero_male/7ccc9abb7d81c22e": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Get her down. I'll hold them."
  },
  "hero_male/7d0e43087aefc21a": {
   "chars": 23,
@@ -34881,6 +34928,12 @@
   "recipe": "dd92281f92",
   "text": "A little roadside shrine, its sun-disk chipped away to bare stone. Someone still leaves candle stubs here, though none of them are lit."
  },
+ "narrator/099d0ea867cfd9cf": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The first strand parts with a sound like a plucked string, and the whole gully answers. Things come out of the cracks in the walls on long legs, very quickly."
+ },
  "narrator/09a7ccfd65b7644a": {
   "chars": 92,
   "model": "eleven_v4",
@@ -43257,6 +43310,12 @@
   "recipe": "dd92281f92",
   "text": "The candle at the foot of the waystone has been lit tonight, from the stub of last night's. The wax is still soft."
  },
+ "narrator/4fdd2c4a177eda86": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Tsura sits on the rocks with web in her hair, shaking, sipping from your flask. A Vistana of seventeen or so, with a rider's hands. When she can talk, she checks her coat before anything else."
+ },
  "narrator/4fdd50d69a7af1b5": {
   "chars": 67,
   "model": "eleven_v4",
@@ -43370,6 +43429,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Rings, pins and a lady's hair comb, every one of them old-fashioned and every one of them small."
+ },
+ "narrator/515e5e31e20afab7": {
+  "chars": 195,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A gully off the falls path, where a stream comes down over black rock. Web hangs across it in sheets, grey with dust and old rain, and in the cracks high in the walls something shifts its weight."
  },
  "narrator/516aee12be1811ac": {
   "chars": 83,
@@ -44229,6 +44294,12 @@
   "recipe": "dd92281f92",
   "text": "In the mud, the marks of a man's boots going down to the water, and between them a long smear where something was dragged, small and kicking."
  },
+ "narrator/58a1aa1fc5fc9061": {
+  "chars": 45,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A great deal of web. That's all you can tell."
+ },
  "narrator/58d29b4629e21110": {
   "chars": 157,
   "model": "eleven_v4",
@@ -44954,6 +45025,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A black iron pot sits in the coals, and has sat there long enough to have a ring of soot like a tree has rings. It smells of plums and pepper."
+ },
+ "narrator/5de04d93c0aa4d54": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Webs run from the bundle to every wall of the gully, tight as harp strings. Some of the bundles further up don't have eyes any more."
  },
  "narrator/5df51a7534f4f284": {
   "chars": 246,
@@ -47379,6 +47456,12 @@
   "recipe": "dd92281f92",
   "text": "At the bottom of the ditch, a stoppered vial of grey smoke that never settles, dropped by someone who meant to be gone before the hags looked up."
  },
+ "narrator/70fa5f2ee9dde8e0": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A gully off the falls path, where the stream comes down over black rock. Web hangs across it in grey sheets, and something high in the cracks shifts its weight."
+ },
  "narrator/7106e2e8dea13951": {
   "chars": 138,
   "model": "eleven_v4",
@@ -47420,6 +47503,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A doll with red hair, a green dress and a painted face carved with unusual care. A card reads NOT FOR SALE in a gloomy hand."
+ },
+ "narrator/715cdad6fa0d53fd": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Older bundles of web, fallen from the ledges, dry as paper. A boot sticks out of one. A deer's antler out of another. You don't open any of them."
  },
  "narrator/715ed8873a74482a": {
   "chars": 129,
@@ -50169,6 +50258,12 @@
   "recipe": "dd92281f92",
   "text": "Black roses on the floor around the bier, dozens of them, the oldest crumbled to dust, the newest still wet. He comes often."
  },
+ "narrator/8a27c2278d9b739e": {
+  "chars": 100,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Things come out of the cracks in the gully walls on long legs, very quickly, down their own threads."
+ },
  "narrator/8a2ceac85eead348": {
   "chars": 131,
   "model": "eleven_v4",
@@ -50444,6 +50539,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Pines crowd the road, black against a sky the color of old pewter. Somewhere off to the left, a wolf howls, and somewhere to the right, another answers."
+ },
+ "narrator/8c25b82e0889c012": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A saddlebag torn off on the rocks at the gully mouth, Vistani work, embroidered with a swallow. Empty but for oats and a spare bridle."
  },
  "narrator/8c2bfe651c74e1bf": {
   "chars": 174,
@@ -52179,6 +52280,12 @@
   "recipe": "dd92281f92",
   "text": "His face gives you nothing at all. It has had centuries of practice."
  },
+ "narrator/9a9f90fd028e5133": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every strand runs back to the dark cracks high in the gully walls. Anything that touches the bundle tells everything in the cracks. Cut fast, and be ready."
+ },
  "narrator/9ab03418d7b227cd": {
   "chars": 81,
   "model": "eleven_v4",
@@ -53264,6 +53371,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The sigil on the bottom step wakes in white fire, and the stairwell fills with lightning."
+ },
+ "narrator/a37a59257b86be75": {
+  "chars": 67,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The gully's web hangs in rags now, and nothing moves in the cracks."
  },
  "narrator/a37c4e26032f121f": {
   "chars": 130,
@@ -57117,6 +57230,12 @@
   "recipe": "dd92281f92",
   "text": "Splintered wood, sap like old blood. If the heartwood hides anything, the tree is keeping it."
  },
+ "narrator/c4f70950cdf3cde3": {
+  "chars": 168,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On a ledge at the back of the gully, a long bundle of web hangs from a spur of rock, turning slowly. Inside it, through a gap, an eye is open, and moves to look at you."
+ },
  "narrator/c5117b9c648c7956": {
   "chars": 160,
   "model": "eleven_v4",
@@ -57530,6 +57649,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A wayside shrine with a sun carved on it, and offerings frozen to its shelf: a loaf like stone, a wooden horse, a lock of hair. Nobody has left anything new in a very long time."
+ },
+ "narrator/c925dd619d2b7ed1": {
+  "chars": 66,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Shreds of web on the ledge, stirring in the draught. Nothing else."
  },
  "narrator/c93bff3a22a0ea61": {
   "chars": 150,
@@ -74518,6 +74643,41 @@
   "model": "eleven_v3",
   "recipe": "4e283164ff",
   "text": "Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one is the one that kills you. So I keep throwing."
+ },
+ "tser_iancu/6447f508289af065": {
+  "chars": 70,
+  "direction": "[impatient, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "Stanimir says wait. I've waited. I'm bad at it. You're going that way?"
+ },
+ "tser_iancu/6f18131f22551d9d": {
+  "chars": 142,
+  "direction": "[quiet, happy, proud]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "Tsura's back by the fire. Nobody's said the word wedding where she can hear it. I throw better with her watching. Nine out of ten. Still nine."
+ },
+ "tser_iancu/89eedbae3ee8b084": {
+  "chars": 207,
+  "direction": "[worried, tight, low]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "(He doesn't throw.) Tsura's late. My cousin. She rode for the Vallaki camp three days ago by the falls path, with a letter in her coat. Her horse came home yesterday with web on its saddle, as thick as rope."
+ },
+ "tser_iancu/c1dcb506592d9b9c": {
+  "chars": 137,
+  "direction": "[tense, certain, low]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "The falls path. There's a gully off it, on the left, where the stream cuts down. That's where the web on her saddle came from. Has to be."
+ },
+ "tser_iancu/ed57b99f6a978a89": {
+  "chars": 153,
+  "direction": "[relieved, fond, wry]",
+  "model": "eleven_v3",
+  "recipe": "4e283164ff",
+  "text": "Tsura sent word from Krezk. She's mending nets for an old man who doesn't ask her anything. Her mother cried for a day and then started packing to visit."
  },
  "tser_lavinia/043dbec55bf1bf87": {
   "chars": 185,

@@ -865,6 +865,13 @@
   "9f63707f341749bc": "[sweet, crooning, menacing]",
   "a32454bce3c7b124": "[low, disappointed, menacing]"
  },
+ "gully_tsura": {
+  "019efba27889f77a": "[shaky laugh, hoarse, wry]",
+  "1313f160686b4bfc": "[shaky, defiant, guilty]",
+  "6ac2b5bce7952604": "[resigned, brave, wry]",
+  "7daa2a56c8d67e2f": "[fond, firm, wistful]",
+  "a8ba16ebfe3549a9": "[quiet, generous, rueful]"
+ },
  "gunther_arasek": {
   "c991f2adc54ba877": "[blunt, low warning]"
  },
@@ -2809,7 +2816,12 @@
   "bfd42d61db631dff": "[elderly, dry, wry]"
  },
  "tser_iancu": {
-  "173f511537681926": "[cool, intense]"
+  "173f511537681926": "[cool, intense]",
+  "6447f508289af065": "[impatient, hopeful]",
+  "6f18131f22551d9d": "[quiet, happy, proud]",
+  "89eedbae3ee8b084": "[worried, tight, low]",
+  "c1dcb506592d9b9c": "[tense, certain, low]",
+  "ed57b99f6a978a89": "[relieved, fond, wry]"
  },
  "tser_lavinia": {
   "043dbec55bf1bf87": "[worried, tender, urgent]",
