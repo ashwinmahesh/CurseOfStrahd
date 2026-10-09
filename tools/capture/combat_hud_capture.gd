@@ -1,8 +1,8 @@
 extends Node3D
 ## make capture SCENE=res://tools/capture/combat_hud_capture.tscn NAME=combat_hud FRAMES=10
 ## The combat HUD's hotbar for four level 5 heroes on an open field (Combat HUD Plan, the owner's BG3 audit, 2026-10-09):
-## Ilse's Common and Fighter tabs, Godrick's Paladin and Spells tabs, Thistle's Common and Tamsin's Rogue tab, so a
-## change to the hotbar can be shown before and after.
+## Ilse's Common and Fighter tabs, Godrick's Paladin, Spells and Reactions tabs, Thistle's Common and Tamsin's Rogue tab,
+## and Command's choices open at its slot, so a change to the hotbar can be shown before and after.
 
 var e: Encounter
 var view: CombatView
@@ -45,7 +45,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 150)
 	var shots: Array = [["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
 		["godrick_pendlebrook", "", "3_godrick_class"], ["godrick_pendlebrook", ActionCatalog.SPELLS, "4_godrick_spells"],
-		["thistle", ActionCatalog.COMMON, "5_thistle_common"], ["tamsin_tealeaf", "", "6_tamsin_class"]]
+		["thistle", ActionCatalog.COMMON, "5_thistle_common"], ["tamsin_tealeaf", "", "6_tamsin_class"],
+		["godrick_pendlebrook", ActionCatalog.REACTIONS, "7_godrick_reactions"]]
 	for shot: Variant in shots:
 		var s := shot as Array
 		var c := heroes[str(s[0])] as Combatant
@@ -57,3 +58,14 @@ func capture_shots(tool: Node, out: String) -> void:
 		view.hud.refresh()
 		await tool.call("wait_frames", 8)
 		tool.call("_shot", "%s_%s.png" % [out, str(s[2])])
+	# A container open at its slot: Command's words.
+	var god := heroes["godrick_pendlebrook"] as Combatant
+	view.hud.shown = god
+	view.hud.set_tab(ActionCatalog.SPELLS)
+	view.hud.refresh()
+	await tool.call("wait_frames", 4)
+	for i in view.hud.slot_count():
+		if str(view.hud.slot_action(i).get("label", "")) == "Command":
+			view.hud.use_slot(i)
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_8_command_open.png" % out)

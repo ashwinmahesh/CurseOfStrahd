@@ -115,18 +115,26 @@ func list(c: Combatant, out: Array[Dictionary]) -> void:
 		var id := str(f["id"])
 		var name := str(f["name"])
 		var mode := str(c.reaction_rules.get(id, "ask"))
-		var why := enc()._turn_check(c)
-		for pick: String in ["ask", "never"]:
-			out.append({"id": "feat:damage_policy:%s:%s" % [id, pick], "label": "%s: %s" % [name, "Ask" if pick == "ask" else "Off"],
-				"sub": ("Ask" if pick == "ask" else "Off") + (" · selected" if mode == pick else ""), "cost": "free", "why": why, "targeting": "none", "range": 0,
-				"help": "Ask before reducing weapon-attack damage; spell and hazard damage currently require Automatic mode. Off never spends a slot."})
+		var why := ""   # a standing rule changes on any turn (`anytime`): nothing is spent
+		var level_now := int(c.reaction_rules.get(id + ":slot", 0))
+		# Ask, Auto at each slot level, Off: the order the hotbar's toggle cycles through (ActionCatalog.slots).
+		out.append({"id": "feat:damage_policy:%s:ask" % id, "label": "%s: Ask" % name,
+			"sub": "Ask" + (" · selected" if mode == "ask" else ""), "cost": "free", "why": why, "targeting": "none", "range": 0,
+			"policy": id, "policy_name": name, "mode": "ask", "mode_label": "Ask", "selected": mode == "ask", "anytime": true,
+			"help": "Ask before reducing weapon-attack damage; spell and hazard damage currently require Automatic mode. Off never spends a slot."})
 		for level in slots(c):
+			var on := mode == "auto" and level_now == level
 			out.append({"id": "feat:damage_policy:%s:%d" % [id, level], "label": "%s: Auto, level %d" % [name, level],
-				"sub": "Auto · level %d%s" % [level, " ✓" if mode == "auto" and int(c.reaction_rules.get(id + ":slot", 0)) == level else ""], "cost": "free", "why": why, "targeting": "none", "range": 0,
+				"sub": "Auto · level %d%s" % [level, " ✓" if on else ""], "cost": "free", "why": why, "targeting": "none", "range": 0,
+				"policy": id, "policy_name": name, "mode": "auto:%d" % level, "mode_label": "Auto, level %d" % level, "selected": on, "anytime": true,
 				"help": "Automatically spend your Reaction and one slot of this exact level against the next damage while the feature is active. Applies to weapon attacks, spells and hazards; never substitutes a different slot level."})
+		out.append({"id": "feat:damage_policy:%s:never" % id, "label": "%s: Off" % name,
+			"sub": "Off" + (" · selected" if mode == "never" else ""), "cost": "free", "why": why, "targeting": "none", "range": 0,
+			"policy": id, "policy_name": name, "mode": "never", "mode_label": "Off", "selected": mode == "never", "anytime": true,
+			"help": "Ask before reducing weapon-attack damage; spell and hazard damage currently require Automatic mode. Off never spends a slot."})
 
 func set_policy(c: Combatant, id: String, pick: String) -> CombatResult:
-	if enc()._turn_check(c) != "" or not features(c).any(func(f: Dictionary) -> bool: return str(f["id"]) == id):
+	if not features(c).any(func(f: Dictionary) -> bool: return str(f["id"]) == id):
 		return CombatResult.fail("Not available")
 	if pick in ["ask", "never"]:
 		c.reaction_rules[id] = pick
