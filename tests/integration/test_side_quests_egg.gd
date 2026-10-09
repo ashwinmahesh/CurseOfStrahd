@@ -52,7 +52,7 @@ func test_the_falconer_and_the_rocs_thanks() -> void:
 	assert_true(SideQuestPlay.text(beats).contains("She doesn't come for you"))
 	assert_eq(st.quest_stage("the_last_egg"), "done")
 	assert_true(st.get_flag("roc_driven_off", false), "the roc lets the party cross the bridge")
-	assert_true(st.party_has_item("staff_of_the_woodlands"))
+	assert_true(st.party_has_item("belt_of_giant_strength_hill"), "a reward the party can use (no Druid among the six)")
 	assert_eq(roundi(st.gold), 300)
 	beats = SideQuestPlay.play(st, "tsolenka_pass/the_last_egg:egg")
 	assert_eq(roundi(st.gold), 300, "once")

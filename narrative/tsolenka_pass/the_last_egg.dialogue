@@ -9,7 +9,7 @@
 
 ~ tibor
 if quest.the_last_egg == done or quest.the_last_egg == sold
-tsolenka_tibor: (He isn't here. His fire is cold, and somebody has kicked snow over it.)
+Narrator: He isn't here. His fire is cold, and somebody has kicked snow over it.
 -> END
 endif
 if flag.tibor_met
@@ -101,8 +101,8 @@ quest the_last_egg done
 Narrator: Out over the gorge the roc comes back, enormous, and hangs on the wind beside the shelf looking at you with one gold eye, at the chick, and at you again. Then she settles over the nest, and the chick stops screaming.
 Narrator: She doesn't come for you. She never comes for you again, on the bridge or anywhere.
 set roc_driven_off
-Narrator: In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a staff carved with leaves, its wood still alive.
+Narrator: In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a wide leather belt with a buckle like a giant's fist, still strong enough to lift a cart.
 gold +300
-give staff_of_the_woodlands
+give belt_of_giant_strength_hill
 approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +3 wren_featherfoot +2 ratatoille +1: You kept the count's falconer off a roc's nest
 -> END
