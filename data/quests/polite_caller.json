@@ -29,7 +29,7 @@
       "objectives": [
         "Hear Teodor out"
       ],
-      "hint": "Talk to Teodor at Ileana's shutter, after dark.",
+      "hint": "Talk to Teodor at Ileana's shutter in the Village of Barovia, after dark.",
       "ends": ""
     },
     {
@@ -38,7 +38,7 @@
       "objectives": [
         "Hold Ileana's door until dawn"
       ],
-      "hint": "Stay at Ileana's cottage and hold her door until dawn.",
+      "hint": "Stay at Ileana's cottage by the village churchyard and hold her door until dawn.",
       "ends": ""
     },
     {
@@ -47,7 +47,7 @@
       "objectives": [
         "Decide, with Ileana, what becomes of Teodor at sunrise"
       ],
-      "hint": "Talk to Ileana at sunrise and decide with her what becomes of Teodor.",
+      "hint": "Talk to Ileana at her cottage by the village churchyard at sunrise, and decide with her what becomes of Teodor.",
       "ends": ""
     },
     {
