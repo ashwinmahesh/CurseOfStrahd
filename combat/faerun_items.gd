@@ -502,12 +502,14 @@ func use_wondrous(c: Combatant, p: Dictionary, targets: Array, point: Vector2, o
 			e.events.append({"type": "condition", "id": t.id})
 			return CombatResult.new()
 		"fr_manacle_release":
+			var freed := false
 			for t2 in e.combatants:
 				for fx2: Effect in t2.creature.effects.duplicate():
 					if fx2.source_id == iid and fx2.caster_id == c.id:
 						t2.creature.remove_effect(fx2)
+						freed = true
 						_log("info", "%s releases %s from the chain" % [c.name(), t2.name()], c)
-			return CombatResult.new()
+			return CombatResult.new() if freed else CombatResult.fail("Nobody is chained")
 		"fr_puppet":
 			var to := Vector2i(floori(point.x), floori(point.y)) if point != Vector2.INF else Vector2i(-1, -1)
 			if to.x < 0 or e.grid.distance_ft(c.cell, c.size_cells, to, 1) > 30 or not e.can_see_space(c, to):
