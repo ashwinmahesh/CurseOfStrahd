@@ -89,8 +89,10 @@ Settings (`Look.style`, kept in user://settings.cfg by `GameSettings`). The art 
   drawn by Gemini as black silhouettes and turned into white shapes with alpha (`make ui_art`, `blender/ui_art.py`), so
   the game tints them with palette colours. Screens get the corners, an inner gilt rule and a title plaque on the top
   border; buttons are crimson-black with gilt edges and gilt icons.
-- Type: titles, headers and buttons use a medieval book hand the system already has (Luminari on macOS, with
-  fallbacks); body text stays in the plain, highly legible default font. No font files are downloaded or shipped.
+- Type: three faces ship with the game (SIL OFL, art/sourced/google_fonts), so every platform looks the same (owner,
+  2026-10-08): MedievalSharp, a medieval book hand, for titles, headers and buttons; Cinzel for the small engraved
+  captions; EB Garamond, bold with lining figures, for the big numbers. Body text stays in the plain, highly legible
+  default font.
 - Every stock control (tabs, scroll bars, tooltips, text fields, check boxes, pop-ups) falls back to the same look
   (`UiKit.install_theme`).
 
