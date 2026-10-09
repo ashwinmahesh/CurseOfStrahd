@@ -41,6 +41,7 @@ func _ready() -> void:
 	hud = ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
+	D20Die.warm.call_deferred(hud)   # the big d20's shader and numerals, ready before its first roll
 	hud.leader_picked.connect(func(i: int) -> void:
 		if view != null:
 			view.set_leader(i)
@@ -124,6 +125,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 	view.cutscene_requested.connect(play_cutscene)
 	view.toast.connect(func(t: String) -> void: hud.toast(t))
 	view.check_rolled.connect(func(t: String) -> void: hud.roll(t))
+	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:

@@ -1,6 +1,6 @@
 extends TestCase
-## The big d20 (G11) and choosing who speaks (Q13), in a conversation (docs/ui/d20_roll.md): a check rolls a large d20
-## that lands on the kept die, with the DC, each part of the bonus, both dice under Advantage, the total and the result,
+## The big d20 (G11) and choosing who speaks (Q13), in a conversation (docs/ui/d20_roll.md): a check rolls the emerald
+## d20 (DiceRoll), which lands on the kept die, with the DC, each part of the bonus, both dice under Advantage, the total and the result,
 ## and goes away with the next beat; the player can hand the party's voice to another living member, whose bonus and
 ## chance the options then show, whose checks they roll, and whose bust stands on the left.
 
@@ -47,11 +47,11 @@ func _talk() -> DialogueUI:
 
 
 func test_the_roll_in_words() -> void:
-	var text := D20Roll.parts_text({"rolls": [14, 7], "kept": 14, "advantage": true,
+	var text := DiceRoll.parts_text({"rolls": [14, 7], "natural": 14, "advantage": true,
 		"parts": [{"label": "Charisma", "value": 3}, {"label": "Proficiency", "value": 2}], "extra": 0})
 	assert_eq(text, "d20 Advantage: 14 and 7, the higher kept · Charisma +3 · Proficiency +2")
-	assert_eq(D20Roll.parts_text({"rolls": [9], "kept": 9, "modifier": -1, "parts": []}), "d20: 9 · Bonus -1")
-	assert_eq(D20Roll.parts_text({"auto_failed": true}), "An automatic failure")
+	assert_eq(DiceRoll.parts_text({"rolls": [9], "natural": 9, "modifier": -1, "parts": []}), "d20: 9 · Bonus -1")
+	assert_eq(DiceRoll.parts_text({"auto_failed": true}), "An automatic failure")
 
 
 func test_a_check_rolls_the_big_d20_and_it_goes_with_the_next_beat() -> void:
@@ -59,11 +59,11 @@ func test_a_check_rolls_the_big_d20_and_it_goes_with_the_next_beat() -> void:
 	assert_eq(d.options_shown.size(), 2)
 	d.call("_choose", 0)
 	assert_true(d.d20 != null, "the big d20 is up")
-	var beat := d.d20.beat
-	assert_eq(d.d20.die.number, int(beat["kept"]), "it lands on the die that counts")
-	assert_eq(str(beat["skill"]), "Persuasion")
-	assert_true((beat["parts"] as Array).size() > 0, "every part of the bonus")
-	assert_eq(int(beat["total"]), int(beat["kept"]) + int(beat["modifier"]) + int(beat["extra"]))
+	var roll := d.d20.result
+	assert_eq(d.d20.die.number, int(roll["natural"]), "it lands on the die that counts")
+	assert_eq(str(roll["label"]), "Persuasion")
+	assert_true((roll["parts"] as Array).size() > 0, "every part of the bonus")
+	assert_eq(int(roll["total"]), int(roll["natural"]) + int(roll["modifier"]) + int(roll["extra"]))
 	d.call("_advance")
 	await get_tree().process_frame
 	assert_true(d.d20 == null, "gone with the next beat")
@@ -83,4 +83,4 @@ func test_the_player_picks_who_speaks_and_their_chances_show() -> void:
 	assert_true(speaker_button.text.begins_with("Speaks: %s" % other.name.get_slice(" ", 0)))
 	assert_eq(d.busts.left_id, DialogueBusts.path_for(DialogueRunner.portrait_of(other)), "their bust on the left")
 	d.call("_choose", 0)
-	assert_eq(str(d.d20.beat["who"]), other.name, "and they roll it")
+	assert_eq(str(d.d20.result["who"]), other.name, "and they roll it")

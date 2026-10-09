@@ -100,6 +100,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 		var t := victim.creature.roll_save(view.dice, StringName(str(save["ability"])), int(save["dc"]))
 		success = t.success
 		lines.append(t.describe())
+		view.big_roll.emit(t, victim.name(), "%s saving throw" % Creature.ABILITY_NAMES.get(StringName(str(save["ability"])), "A"))
 	if str(trap.get("damage", "")) != "":
 		var rolled := view.dice.roll_expr(str(trap["damage"]), "Trap: %s" % trap.get("label", id))
 		var amount := int(rolled["total"])
@@ -236,6 +237,7 @@ static func _disarm(view: LocationView, trap: Dictionary) -> void:
 		bonus.add("Thieves' Tools proficiency", who.proficiency_bonus())
 	var t := who.roll_d20(view.dice, D20Test.Kind.ABILITY_CHECK, bonus, int(trap.get("disarm_dc", 15)), who.check_keys(&"dex"), [], [], "%s disarms %s" % [who.name, trap.get("label", "the trap")])
 	view.check_rolled.emit(t.describe())
+	view.big_roll.emit(t, who.name, "Thieves' Tools")
 	if t.success:
 		(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[str(trap["id"])] = "disarmed"
 		_clear_marks(view, str(trap["id"]))

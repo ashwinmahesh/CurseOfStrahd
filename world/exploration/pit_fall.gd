@@ -72,6 +72,7 @@ static func spring(view: LocationView, trap: Dictionary, victim: Combatant) -> v
 		var t := victim.creature.roll_save(view.dice, StringName(str(save["ability"])), int(save["dc"]))
 		caught = t.success
 		lines.append(t.describe())
+		view.big_roll.emit(t, victim.name(), "%s saving throw" % Creature.ABILITY_NAMES.get(StringName(str(save["ability"])), "A"))
 	var label := str(trap.get("label", "a pit"))
 	if not caught:
 		var feet := int(trap["pit_ft"])
@@ -136,6 +137,7 @@ static func climb_out(view: LocationView, cell: Vector2i) -> bool:
 		var ch := m.creature as Character
 		var t := ch.roll_check(view.dice, &"athletics", CLIMB_DC, CheckAids.before_check(ch, &"athletics"), [], "%s climbs the pit wall" % first)
 		view.check_rolled.emit(t.describe())
+		view.big_roll.emit(t, ch.name, "Athletics")
 		if not t.success:
 			view.narration.emit("%s gets halfway up the slick stone and slides back down. (A rope would help.)" % first)
 			return false

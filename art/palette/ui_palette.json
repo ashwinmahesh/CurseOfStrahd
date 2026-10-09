@@ -13,5 +13,10 @@
   "arch_track": "#160407",
   "arch_gold": "#b8913f",
   "arch_gold_light": "#e3c47c",
-  "arch_text": "#f0e2c0"
+  "arch_text": "#f0e2c0",
+  "emerald_deep": "#03251a",
+  "emerald": "#0b6a42",
+  "emerald_bright": "#1fa86a",
+  "emerald_light": "#62e3a6",
+  "emerald_glint": "#d2fbe6"
 }

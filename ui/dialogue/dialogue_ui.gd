@@ -45,8 +45,8 @@ const OPTIONS_SHARE := 0.45
 var cutscene: CutsceneView = null
 ## The big busts either side of the box (G1): the party's speaker on the left, the one they're talking to on the right.
 var busts: DialogueBusts
-## The big d20 at the top of the screen while a check's result is up (G11).
-var d20: D20Roll = null
+## The big d20 at the top of the screen while a check's result is up (G11: the emerald die, DiceRoll).
+var d20: DiceRoll = null
 ## Q13: who speaks for the party, shown while there's a choice to make; it (or Tab) cycles the living party.
 var _speaker_button: Button
 
@@ -328,9 +328,9 @@ func _show(beat: Dictionary) -> void:
 		cutscene.show_caption(captioned)
 	if str(beat["kind"]) == "check":
 		if d20 == null:
-			d20 = D20Roll.new()
+			d20 = DiceRoll.new()
 			add_child(d20)
-		d20.show_check(beat)
+		d20.roll(DiceRoll.from_beat(beat))
 	elif d20 != null and str(beat["kind"]) not in ["stage", "cutscene"]:
 		d20.queue_free()
 		d20 = null

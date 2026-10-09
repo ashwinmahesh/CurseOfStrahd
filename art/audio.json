@@ -152,7 +152,9 @@
     "concentration_break_2": -10.0,
     "vow_of_enmity_1": -2.0,
     "vow_of_enmity_2": -6.1,
-    "vow_of_enmity_3": 1.9
+    "vow_of_enmity_3": 1.9,
+    "die_bounce": -8.0,
+    "die_land": -6.0
   },
   "music": {
     "title": [
@@ -860,6 +862,17 @@
     "vow_of_enmity_3": [
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_01.wav",
       "res://art/sourced/oga_jc_fantasy_sfx_vol1/Single_Fantasy SFX Pack Vol 1_Healing Chime_02.wav"
+    ],
+    "die_bounce": [
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_000.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_001.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_002.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_003.ogg",
+      "res://art/sourced/kenney_impact_sounds/Audio/impactGlass_light_004.ogg"
+    ],
+    "die_land": [
+      "res://art/sourced/kenney_interface_sounds/Audio/glass_004.ogg",
+      "res://art/sourced/kenney_interface_sounds/Audio/glass_001.ogg"
     ]
   },
   "ambient": {
