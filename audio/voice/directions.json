@@ -96,6 +96,13 @@
   "cf31fc830a59b33f": "[bright, playful, laughing]",
   "d9df2229ca21e003": "[sobering, quiet]"
  },
+ "amber_guide": {
+  "0f0a1bc91582a801": "[smiling, calm, chilling]",
+  "41f118f132a0cb2b": "[smiling, quiet, menacing]",
+  "47fe3148728ab74d": "[warm, easy, knowing]",
+  "4ff1c2a620e3f5e3": "[warm, hospitable, smiling]",
+  "ff1f418cdc446eee": "[smiling, cold, matter-of-fact]"
+ },
  "amber_sentinel": {
   "0a25b9ddcc138304": "[booming, slow, grinding stone]",
   "6d6ce17f1403d9d2": "[booming, slow, grinding stone]",
@@ -816,6 +823,16 @@
   "66a3b22e5f81cbc6": "[bitter laugh, anguished, rising]",
   "a7d17ce597fc4b9b": "[murmuring, then sharp, possessive]",
   "cc35c7fdb3143524": "[possessive, defiant, cracked]"
+ },
+ "goat_path_floarea": {
+  "6dbe1d660b521acb": "[shaking, guilty, bitter]",
+  "7417897ab056ef33": "[soft, relieved, exhausted]",
+  "91aadfad1cc0d5ea": "[very quiet, frightened, accusing]"
+ },
+ "goat_path_remus": {
+  "5b1168548d421bd8": "[torn, desperate, quiet]",
+  "bc2661378c045b2c": "[tired, desperate, hopeful]",
+  "e6a689bcda79da73": "[relieved, tired, hopeful]"
  },
  "godrick_pendlebrook": {
   "495c0e9d613c19d1": "[grim, protective, firm]",
@@ -2875,11 +2892,13 @@
  },
  "tsolenka_sergeant": {
   "23937c47bc593b87": "[clipped, grim, ashamed]",
+  "45cc81e50e54f7c9": "[clipped, formal, uneasy]",
   "4b72ba82022591ba": "[clipped, formal, reporting]",
   "5400786770dc2d89": "[clipped, formal, uneasy]",
   "81c8ff71ea90ec3e": "[clipped, formal, quietly kind]",
   "8de287f6a56807c2": "[clipped, grim, formal]",
   "9510af16b7dc095a": "[clipped, formal, faintly amazed]",
+  "9a32199f3c6a18b3": "[clipped, grim, ashamed]",
   "b29f479eac7e6ff7": "[clipped, formal, faintly bewildered]",
   "c68446e15b7fd138": "[clipped, formal, flat]",
   "cfa6e8b17ac90026": "[clipped, grim, reporting]"

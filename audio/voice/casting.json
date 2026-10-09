@@ -2347,6 +2347,36 @@
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]"
+    },
+    "amber_guide": {
+      "voice_id": "i1NDMKsH7D9XyZX5zlNZ",
+      "name": "Barovia The Guide",
+      "description": "A lean, smiling Barovian mountain guide in furs, centuries old under a young face, speaking English with a strong Romanian accent. A warm, easy, friendly, hospitable voice with a constant smile in it, and something cold and inhuman just under the warmth; never raised, even when threatening.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "i1NDMKsH7D9XyZX5zlNZ",
+      "released": true
+    },
+    "goat_path_remus": {
+      "voice_id": "GBmgUgSZzwaVQ9iHmoO5",
+      "name": "Barovia Remus",
+      "description": "A Vallaki carter in his thirties, a desperate father, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A plain, tired, rough working man's voice, worn thin with worry and hope.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "GBmgUgSZzwaVQ9iHmoO5",
+      "released": true
+    },
+    "goat_path_floarea": {
+      "voice_id": "3f6uL9MdG9kO3wEExsPZ",
+      "name": "Barovia Floarea",
+      "description": "A Vallaki herb-wife in her thirties, a frightened mother, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, quiet, practical woman's voice, careful and observant, shaking with guilt and dread under the calm.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "3f6uL9MdG9kO3wEExsPZ",
+      "released": true
     }
   },
   "sfx": {
