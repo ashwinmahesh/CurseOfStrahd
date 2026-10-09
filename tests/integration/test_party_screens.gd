@@ -19,9 +19,57 @@ func before_each() -> void:
 	await get_tree().process_frame
 
 
+func after_each() -> void:
+	# A fixture, not real content (test_set_dressing checks every location).
+	(Compendium.shared().tables["locations"] as Dictionary).erase("test_crypt")
+
+
 func _frames(n: int) -> void:
 	for i in n:
 		await get_tree().process_frame
+
+
+## The button with `text` on `screen` (not one on its way out), or null.
+func _button(screen: Node, text: String) -> Button:
+	for b in screen.find_children("*", "Button", true, false):
+		if (b as Button).text == text and not b.is_queued_for_deletion():
+			return b as Button
+	return null
+
+
+## Whether a label on `screen` says `text`.
+func _says(screen: Node, text: String) -> bool:
+	return screen.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text.contains(text) and not l.is_queued_for_deletion())
+
+
+## A Long Rest waits until no enemies remain in the building, on any floor, and 16 hours after the last one (owner rules,
+## 2026-10-09): its card says why in words, read the same with the pad as with the mouse, and the Short Rest stays open.
+func test_a_long_rest_waits_for_a_clear_building_and_sixteen_hours() -> void:
+	(Compendium.shared().tables["locations"] as Dictionary)["test_crypt"] = {"id": "test_crypt", "name": "Test Crypt",
+		"region": "test", "summary": "", "map": {"rows": ["#####", "#...#", "#####"]}, "spawns": {"default": [1, 1]},
+		"rest": "safe", "encounters": [{"id": "ghouls", "trigger": "enter_area:crypt", "monsters": [{"monster": "ghoul", "cell": [2, 1]}]}]}
+	GameState.story.location = "test_crypt"
+	var ilse := GameState.story.party[0]
+	ilse.hp = 1
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	assert_true(_button(rest, "Take a Long Rest (8 hours)").disabled, "no Long Rest with ghouls in the crypt")
+	assert_false(_button(rest, "Finish the Short Rest (1 hour)").disabled, "the Short Rest is still on")
+	assert_true(_says(rest, "Enemies still prowl this place"), "the card says why")
+	rest.call("_long_rest", "safe")
+	assert_eq(ilse.hp, 1, "nothing slept away")
+	(GameState.story.loc_state("test_crypt")["encounters"] as Dictionary)["ghouls"] = true
+	rest.call("_refresh_long")
+	await _frames(1)
+	var take := _button(rest, "Take a Long Rest (8 hours)")
+	assert_false(take.disabled, "the crypt is clear")
+	take.pressed.emit()
+	await _frames(1)
+	assert_eq(ilse.hp, ilse.max_hp(), "rested")
+	assert_true(_button(rest, "Take a Long Rest (8 hours)").disabled, "not again so soon")
+	assert_true(_says(rest, "the next can start in 16 hours"), "and how long until the next")
 
 
 func test_every_screen_opens() -> void:
