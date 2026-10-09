@@ -1,0 +1,118 @@
+# The Oat Thief (side quest, docs/story/side_quests.md): Bildrath is short four sacks of oats a week and the lock is
+# never touched. By night Parriwimple carries them up the north path into the woods, to a charcoal-burners' hollow
+# (data/locations/woodcutters_hollow.json) where Domnica hides with her three children. **Twist:** she ran from the
+# werewolf den when Kiril started taking children for the count's army, and her own three were born to it: they turn at
+# the full moon, and she keeps them on oats so they never learn the taste of meat. **Escalation:** the oats left a
+# trail, and the pack's hunters come up it. Reached from Bildrath's news (bildrath:news) and Parriwimple on the north
+# path by night. Every line here is unvoiced for now.
+
+# --- Bildrath's news (village_of_barovia/bildrath:news jumps here) ---
+
+~ bildrath_news
+if quest.the_oat_thief == done
+Bildrath: Four sacks a week, written off to wolves. I've decided it's charity. Don't repeat that; it's bad for business.
+-> village_of_barovia/bildrath:news
+endif
+if not quest.the_oat_thief
+quest the_oat_thief rumored
+endif
+Bildrath: My stock. Somebody is robbing me. Four sacks of oats a week, gone out of the back, and the lock never touched. Oats. Who steals oats in a village where nobody keeps a horse?
+Bildrath: Parriwimple says he hasn't seen anything. Parriwimple is a very poor liar. That's the one thing I like about him.
+-> village_of_barovia/bildrath:news
+
+# --- Parriwimple on the north path, by night (npc parriwimple) ---
+
+~ path
+if flag.hollow_known
+Parriwimple: Up the path and through the pines. Mind the stream. They're waiting. I said I'd bring more.
+-> END
+endif
+Narrator: A very large young man is creeping up the north path in the dark, which he does badly, with a sack of oats on each shoulder and a third in his arms. He freezes when he sees you, as if that might make him smaller.
+Parriwimple: I'm not here. I'm in bed.
+* [if flag.parriwimple_befriended] It's all right. You can tell us. -> path_told
+* [Persuasion DC 10] We won't tell your uncle. Who are they for? -> path_told | path_scared
+* Those are Bildrath's oats. -> path_scared
+
+~ path_scared
+Parriwimple: (He looks at the oats, and at you, and at the dark up the path.) They're hungry. You'd do it too. You'd have to come and see.
+-> path_told
+
+~ path_told
+set hollow_known
+if quest.the_oat_thief == rumored or not quest.the_oat_thief
+quest the_oat_thief asked
+endif
+Parriwimple: It's for the lady. Domnica. She's got three, and they're very small, and up in the woods there's nothing to eat that isn't meat.
+Parriwimple: She says they mustn't have meat. Not ever. Only oats. She says I'm a good man. Nobody's ever said that. I counted.
+Parriwimple: Come up. You'll see. Up the path, past the last house. Don't tell Uncle.
+-> END
+
+# --- Domnica at the hollow (npc hollow_domnica) ---
+
+~ domnica
+if quest.the_oat_thief == done
+Domnica: Oats, and a door that shuts, and three children asleep. It's more than the den ever gave us.
+-> END
+endif
+if flag.oat_hunters_beaten
+-> after
+endif
+if flag.domnica_met
+Domnica: Keep your voices down. They're asleep. They sleep like other children when the moon's thin.
+-> domnica_menu
+endif
+set domnica_met
+Narrator: A thin woman with her sleeves rolled up stands in the door of a charcoal-burners' hut, a long knife in her hand, held low and steady. Behind her in the dark, three small faces.
+Domnica: Parriwimple's friends. He talks about you. He talks about everybody, the way some people talk about the weather.
+-> domnica_menu
+
+~ domnica_menu
+* Who are you hiding from? -> domnica_who
+* Why only oats? -> domnica_oats
+* Goodbye. -> END
+
+~ domnica_who
+Domnica: The den. Up the lake. I was one of them; I won't pretend I wasn't. Then Kiril came back from the castle with the master's orders, and he started taking children from the farms. For the army.
+Domnica: Mine were born to it. They turn when the moon's full. He wanted them most of all. So I took them in the night and walked until I found a hut nobody wanted.
+if flag.wolf_pack_leader == "emil"
+Domnica: I hear Emil leads now. Good. Kiril's old hunters don't listen to Emil. They're still looking.
+endif
+-> howl
+
+~ domnica_oats
+Domnica: Meat teaches them. One taste and the wolf knows what it's for. Oats don't teach anything. If they never learn, maybe they'll grow up to be people who change, not wolves who pretend.
+interject tag:kind: That's the bravest thing I've heard in this valley.
+-> howl
+
+~ howl
+Narrator: From down the path, a long howl that isn't any dog's. Domnica's knife comes up.
+* [Survival DC 12] (Look at the ground round the hut.) -> trail_seen | trail_missed
+* (Stand in front of the door.) -> hunters
+
+~ trail_seen
+set oat_trail_seen
+Narrator: Spilled oats, every few yards, all the way back down the path toward the village: a sack with a hole in it. A trail any hunter could follow. And over the oats, here and there, the print of a very large paw.
+Domnica: (She sees it too. Her face goes still.) He's been carrying it with the hole at the bottom. Every week.
+-> hunters
+
+~ trail_missed
+Narrator: Pine needles, mud and the dark, and the howl again, nearer.
+-> hunters
+
+~ hunters
+Narrator: Shapes come out of the pines at the edge of the hollow: wolves, low and silent, and behind them something that walks on two legs some of the time.
+Domnica: Inside. Bar the door. (To you, without turning round.) I can't change in front of them. If I change, I won't stop.
+combat oat_hunters
+
+~ after
+if not flag.domnica_thanked
+set domnica_thanked
+quest the_oat_thief done
+Domnica: They came up the oats. Of course they did. And you were here. (She puts the knife away at last.) My grandmother made this, against fevers and bites. It works on most things. Not on what we are.
+give restorative_ointment
+Domnica: Tell Bildrath. Tell him the truth or tell him wolves. Either way, tell him thank you.
+approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +2 wren_featherfoot +1: You stood at a hiding mother's door
+-> END
+endif
+Domnica: They'll send others, one day. One day the children will be bigger than the others. Go on. We'll manage.
+-> END

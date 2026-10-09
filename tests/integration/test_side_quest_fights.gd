@@ -383,3 +383,13 @@ func test_the_dursts_come_for_veta() -> void:
 	await _fight(v, "nursemaid_keepers", ["Gustav Durst", "Elisabeth Durst", "A Robed One"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_nursemaids_grave"), "laid")
+
+
+## The pack's hunters come out of the pines at Domnica's door.
+func test_the_pack_hunters_come_up_the_oats() -> void:
+	var v := await _boot("woodcutters_hollow", 23, 3, [])
+	GameState.story.set_quest_stage("the_oat_thief", "asked")
+	await _fight(v, "oat_hunters", ["A Pack Hunter", "Wolf 1"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_oat_thief"), "defended")
+

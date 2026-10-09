@@ -1090,6 +1090,31 @@
       "id": "nursemaid_keepers_beaten",
       "type": "bool",
       "summary": "The house's keepers who came for Veta in Walter's crypt are put down (The Nursemaid's Grave)."
+    },
+    {
+      "id": "hollow_known",
+      "type": "bool",
+      "summary": "Parriwimple showed the party the north path to the hollow where Domnica hides (The Oat Thief)."
+    },
+    {
+      "id": "domnica_met",
+      "type": "bool",
+      "summary": "The party met Domnica at the charcoal-burners' hollow (The Oat Thief)."
+    },
+    {
+      "id": "oat_trail_seen",
+      "type": "bool",
+      "summary": "The party saw the hunters' trail of spilled oats: the pack's hunters are caught unawares (The Oat Thief)."
+    },
+    {
+      "id": "oat_hunters_beaten",
+      "type": "bool",
+      "summary": "The pack's hunters who followed the oats to Domnica's door are beaten (The Oat Thief)."
+    },
+    {
+      "id": "domnica_thanked",
+      "type": "bool",
+      "summary": "Domnica thanked the party with her grandmother's ointment (The Oat Thief)."
     }
   ]
 }

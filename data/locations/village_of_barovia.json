@@ -251,6 +251,10 @@
     "from_west_road": [
       2,
       12
+    ],
+    "from_hollow": [
+      38,
+      2
     ]
   },
   "exits": [
@@ -338,6 +342,17 @@
       "label": "The Old Svalich Road, west",
       "when": "flag.village_departed",
       "locked_text": "Two leaning posts mark where the village ends and the road west begins. Stop at them before you go."
+    },
+    {
+      "id": "north_path_hollow",
+      "cell": [
+        38,
+        1
+      ],
+      "to": "woodcutters_hollow",
+      "spawn": "from_village",
+      "label": "Up the north path into the pines",
+      "when": "flag.hollow_known"
     }
   ],
   "doors": [
@@ -1355,6 +1370,20 @@
       "hours": [
         20,
         5
+      ],
+      "facing": "north"
+    },
+    {
+      "npc": "parriwimple",
+      "cell": [
+        38,
+        4
+      ],
+      "dialogue": "village_of_barovia/the_oat_thief:path",
+      "when": "(quest.the_oat_thief == rumored or quest.the_oat_thief == asked) and not guest:parriwimple",
+      "hours": [
+        22,
+        4
       ],
       "facing": "north"
     }

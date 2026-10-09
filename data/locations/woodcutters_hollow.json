@@ -1,0 +1,498 @@
+{
+  "id": "woodcutters_hollow",
+  "name": "The Charcoal-Burners' Hollow",
+  "region": "village_of_barovia",
+  "summary": "A hollow in the pines above the Village of Barovia where charcoal was burned once, with a ruined hut nobody wanted, until Domnica and her children came (The Oat Thief, docs/story/side_quests.md).",
+  "text": "A clearing in the pines, black underfoot with old charcoal, a stream at the edge, and a little hut of logs and turf with its door patched shut from the inside.",
+  "map": {
+    "rows": [
+      "########################",
+      "#####..............#####",
+      "###...........~.......##",
+      "##.......######..~.....#",
+      "#........#....#...~....#",
+      "#...=....#....#....~...#",
+      "#........#....#.....~..#",
+      "#........###..#.....~..#",
+      "#.....................~#",
+      "#..=..............=...~#",
+      "#.....................~#",
+      "##..........=.........~#",
+      "#.....=...............~#",
+      "#.....................##",
+      "##...........=.......###",
+      "###..................###",
+      "#####....######.....####",
+      "######..################"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true,
+    "elevation": [
+      "333333333333333333333333",
+      "333333333333333333333333",
+      "333333333333333333333333",
+      "333333333333333333333333",
+      "333333333333333333333333",
+      "222222222222222222222222",
+      "222222222222222222222222",
+      "222222222222222222222222",
+      "222222222222222222222222",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "111111111111111111111111",
+      "000000000000000000000000",
+      "000000000000000000000000",
+      "000000000000000000000000",
+      "000000000000000000000000",
+      "000000000000000000000000"
+    ]
+  },
+  "areas": [
+    {
+      "id": "hollow_path",
+      "name": "The path up",
+      "cells": [
+        [
+          4,
+          13
+        ],
+        [
+          20,
+          17
+        ]
+      ]
+    },
+    {
+      "id": "hollow_clearing",
+      "name": "The clearing",
+      "cells": [
+        [
+          1,
+          8
+        ],
+        [
+          22,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "hollow_hut",
+      "name": "The hut",
+      "cells": [
+        [
+          9,
+          3
+        ],
+        [
+          14,
+          7
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      16
+    ],
+    "from_village": [
+      6,
+      16
+    ]
+  },
+  "exits": [
+    {
+      "id": "hollow_down",
+      "cell": [
+        6,
+        17
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_hollow",
+      "label": "Down the path to the village"
+    },
+    {
+      "id": "hollow_down_2",
+      "cell": [
+        7,
+        17
+      ],
+      "to": "village_of_barovia",
+      "spawn": "from_hollow",
+      "label": "Down the path to the village"
+    }
+  ],
+  "props": [
+    {
+      "id": "hollow_oat_sacks",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "examine",
+      "label": "Sacks of oats",
+      "model": "sack_pile"
+    },
+    {
+      "id": "hollow_cookpot",
+      "cell": [
+        10,
+        9
+      ],
+      "kind": "decor",
+      "label": "A cookpot",
+      "model": "cookpot"
+    },
+    {
+      "id": "hollow_fire",
+      "cell": [
+        11,
+        10
+      ],
+      "kind": "decor",
+      "label": "A cold fire",
+      "model": "campfire"
+    },
+    {
+      "id": "hollow_charcoal",
+      "cell": [
+        3,
+        6
+      ],
+      "kind": "examine",
+      "label": "An old charcoal mound",
+      "model": "ash_heap"
+    },
+    {
+      "id": "hollow_charcoal_2",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "decor",
+      "label": "An old charcoal mound",
+      "model": "ash_heap"
+    },
+    {
+      "id": "hollow_woodpile",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "decor",
+      "label": "A woodpile",
+      "model": "woodpile"
+    },
+    {
+      "id": "hollow_drying",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "examine",
+      "label": "Herbs drying",
+      "model": "drying_herbs"
+    },
+    {
+      "id": "hollow_toys",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "examine",
+      "label": "Things on the step",
+      "model": "doll"
+    },
+    {
+      "id": "hollow_stump",
+      "cell": [
+        4,
+        11
+      ],
+      "kind": "decor",
+      "label": "A stump",
+      "model": "stump"
+    },
+    {
+      "id": "hollow_stump_2",
+      "cell": [
+        17,
+        10
+      ],
+      "kind": "decor",
+      "label": "A stump",
+      "model": "stump"
+    },
+    {
+      "id": "hollow_pine",
+      "cell": [
+        2,
+        3
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "hollow_pine_2",
+      "cell": [
+        6,
+        2
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "hollow_pine_3",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "hollow_pine_4",
+      "cell": [
+        2,
+        14
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine_clawed"
+    },
+    {
+      "id": "hollow_pine_5",
+      "cell": [
+        20,
+        15
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "hollow_pine_6",
+      "cell": [
+        21,
+        9
+      ],
+      "kind": "decor",
+      "label": "A pine",
+      "model": "pine"
+    },
+    {
+      "id": "hollow_bones",
+      "cell": [
+        8,
+        13
+      ],
+      "kind": "examine",
+      "label": "Bones in the needles",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "hollow_tracks",
+      "cell": [
+        10,
+        15
+      ],
+      "kind": "examine",
+      "label": "Spilled oats",
+      "model": "leaves"
+    },
+    {
+      "id": "hollow_basket",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "decor",
+      "label": "A basket",
+      "model": "basket"
+    },
+    {
+      "id": "hollow_bedrolls",
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "decor",
+      "label": "Bedding",
+      "model": "straw_pallet"
+    },
+    {
+      "id": "hollow_crib",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "label": "A box of straw",
+      "model": "straw"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        11,
+        10
+      ],
+      "kind": "fire",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "hollow_domnica",
+      "cell": [
+        11,
+        8
+      ],
+      "dialogue": "village_of_barovia/the_oat_thief:domnica",
+      "facing": "south",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "oat_hunters",
+      "trigger": "dialogue",
+      "when": "flag.oat_trail_seen and level >= 3",
+      "text": "You saw them coming up the oats, and where they'd come from. They didn't see you seeing, and one of the wolves is still down the path, sniffing at a spilled sack.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            7,
+            14
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            10,
+            14
+          ]
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "oat_hunters_beaten",
+      "quest": {
+        "id": "the_oat_thief",
+        "stage": "defended"
+      }
+    },
+    {
+      "id": "oat_hunters",
+      "trigger": "dialogue",
+      "when": "flag.oat_trail_seen",
+      "text": "You saw them coming up the oats, and where they'd come from. They didn't see you seeing, and the wolf is still down the path, sniffing at a spilled sack.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            7,
+            14
+          ],
+          "name": "A Pack Hunter"
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "oat_hunters_beaten",
+      "quest": {
+        "id": "the_oat_thief",
+        "stage": "defended"
+      }
+    },
+    {
+      "id": "oat_hunters",
+      "trigger": "dialogue",
+      "when": "level >= 3",
+      "text": "The wolves come out of the pines low and fast, and the thing behind them stands up on its hind legs and grins.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            7,
+            14
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            13,
+            15
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "oat_hunters_beaten",
+      "quest": {
+        "id": "the_oat_thief",
+        "stage": "defended"
+      }
+    },
+    {
+      "id": "oat_hunters",
+      "trigger": "dialogue",
+      "text": "The wolves come out of the pines low and fast, and the thing behind them stands up on its hind legs and grins.",
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            7,
+            14
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            5,
+            13
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "oat_hunters_beaten",
+      "quest": {
+        "id": "the_oat_thief",
+        "stage": "defended"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:woodcutters_hollow"
+  },
+  "rest": "risky"
+}

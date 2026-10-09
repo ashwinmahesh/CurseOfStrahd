@@ -1,0 +1,33 @@
+# Narrator: the charcoal-burners' hollow above the Village of Barovia, where Domnica hides (The Oat Thief,
+# docs/story/side_quests.md; docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:woodcutters_hollow
+| The north path climbs through the pines and comes out in a hollow that's black underfoot with old charcoal. A stream talks to itself at the edge of it. There's a hut, and its door is patched shut from the inside.
+| [flag.oat_hunters_beaten] The hollow is quiet. Somebody has raked the needles over the place where the hunters fell, and planted oats in a little square of turned earth by the door.
+cooldown 30
+
+~ enter:hollow_path
+| Every few yards on the path there's a little spill of oats, as if something leaks.
+once
+
+~ enter:hollow_clearing
+| The charcoal-burners left a long time ago. The mounds they left are grown over with moss on one side and nothing on the other.
+once
+
+~ examine:hollow_oat_sacks
+| Three sacks of oats with BILDRATH stencilled on them, very neatly, by someone who does inventory for pleasure. One of them has a hole in the bottom corner.
+
+~ examine:hollow_charcoal
+| A charcoal mound, long cold, a hump of black under the moss. Small footprints go up one side of it and slide down the other. Somebody has been playing here.
+
+~ examine:hollow_drying
+| Bunches of herbs hung to dry on a string: feverfew, sorrel, something purple and hooded you'd rather not name. Someone here knows what they're doing with plants.
+
+~ examine:hollow_toys
+| On the step, three little figures carved from pine: a horse, a man, and a wolf. The wolf has been carved with more care than the others, and then had its teeth filed smooth.
+
+~ examine:hollow_bones
+| Bones in the needles, rabbits and a deer, cracked and old. Something has been eating well up here. Not the people in the hut.
+
+~ examine:hollow_tracks
+| Spilled oats on the path, and in the soft ground beside them, the print of a paw as wide as your hand.
