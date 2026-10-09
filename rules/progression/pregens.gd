@@ -37,28 +37,16 @@ static func build(id: String, level: int = 1, errors: Array[String] = []) -> Cha
 	return ch
 
 
-## A pregen's starter kit of costly components (2026-10-08): what the spells it knows or has in its spellbook keep
-## (Chromatic Orb's diamond, Identify's pearl), enough for the dearest spell of each kind, and two blocks of incense for
-## Find Familiar. What a spell uses up (Revivify's diamonds) is bought.
+## A pregen's starter kit of costly components (2026-10-08): two blocks of incense for Find Familiar, in its spells or its
+## spellbook. What a spell uses up (Revivify's diamonds) is bought, and what a spell keeps (Chromatic Orb's diamond,
+## Identify's pearl) isn't needed at all (owner, 2026-10-09).
 static func give_component_kit(ch: Character) -> void:
-	var comp := Compendium.shared()
 	var ids: Array[String] = []
 	for k in ch.known_spells():
 		ids.append(str(k["id"]))
 	for sc: Variant in ch.spellcasting:
 		for sid: Variant in (sc as Dictionary).get("spellbook", []):
 			ids.append(str(sid))
-	var need := {}
-	for sid in ids:
-		var cc := Character.costly_component(comp.spell_data(sid))
-		if cc.is_empty() or bool(cc["consumed"]):
-			continue
-		need[str(cc["material"])] = maxf(float(need.get(str(cc["material"]), 0.0)), float(cc["cost_gp"]))
-	for material: String in need:
-		var unit := maxf(0.01, float(comp.item_data(material).get("cost_gp", 1.0)))
-		var have := ch.material_worth(material)
-		if have < float(need[material]):
-			ch.add_item(material, ceili((float(need[material]) - have) / unit))
 	if "find_familiar" in ids:
 		ch.add_item("incense", 2)
 
