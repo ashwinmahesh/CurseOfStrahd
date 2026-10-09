@@ -289,6 +289,13 @@ it on the window).
   floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and
   candles (hearths, braziers, campfires, torches, candelabras: their `flame` and `candle` sockets in
   art/models/manifest.json; `_light_model_flames`), unless the location's own light stands within a square.
+- **Heat shimmer** (Modern, out of doors; Visual Polish Plan 8): the air wavers above open fires and torches
+  (`HeatShimmer`, which `_dress_light` hands each light of kind `fire` or `torch`): a patch of the finished picture
+  above the flame is read back and nudged by rising waves (`shaders/post/heat_shimmer.gdshader`), strongest just over
+  it and fading out up and to the sides, on a canvas layer over the world and under the HUD. The nearest six fires in
+  view shimmer; indoors a hearth's heat goes up its chimney (and the patch bent the wall above it), so rooms get none.
+  About 0.03 to 0.12 ms at 3440 x 1440 with a fire in view, nothing otherwise
+  (`make capture SCENE=res://tools/capture/shimmer_capture.tscn NAME=shimmer FRAMES=10` prints it and shoots frames).
 - **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
   black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
