@@ -1050,6 +1050,21 @@
       "id": "corvina_thanks_given",
       "type": "bool",
       "summary": "Mordenkainen has thanked the party for finding Corvina (The Unnamed Crypt); his next news is Khazan (The Name Over the Door)."
+    },
+    {
+      "id": "nursemaid_named",
+      "type": "bool",
+      "summary": "Veta the nursemaid told the party her name and where her bones are (The Nursemaid's Grave)."
+    },
+    {
+      "id": "nursemaid_bones_taken",
+      "type": "bool",
+      "summary": "The party took Veta's bones from the attic trunk to carry them down to Walter (The Nursemaid's Grave)."
+    },
+    {
+      "id": "nursemaid_keepers_beaten",
+      "type": "bool",
+      "summary": "The house's keepers who came for Veta in Walter's crypt are put down (The Nursemaid's Grave)."
     }
   ]
 }

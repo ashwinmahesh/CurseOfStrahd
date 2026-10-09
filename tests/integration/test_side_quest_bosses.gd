@@ -225,3 +225,17 @@ func test_the_eye_below_at_level_10() -> void:
 func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
 	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], ["deep_mirrors_turned", "deep_lullaby_sung"], [], [], EYE_CHAMBER)
 
+
+## The family crypts under Death House, the four at Walter's crypt.
+const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]
+
+
+## The Dursts come for Veta in her son's crypt, with two of their robed ones.
+func test_the_dursts_come_for_veta_at_level_3() -> void:
+	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], [], [], [], WALTERS_CRYPT)
+
+
+## With the Dursts already gone, the robed ones come instead, led by the one who carried Walter down.
+func test_the_robed_ones_come_for_veta_at_level_3() -> void:
+	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)
+

@@ -367,3 +367,12 @@ func test_the_eye_below_rises_out_of_the_amber() -> void:
 	assert_true(bool(GameState.story.get_flag("eye_below_slain", false)))
 	assert_eq(GameState.story.quest_stage("the_amber_debt"), "slain")
 
+
+## The Dursts climb out of the family crypts for Veta, with their robed ones.
+func test_the_dursts_come_for_veta() -> void:
+	var v := await _boot("death_house_dungeon_1", 22, 3, ["nursemaid_bones_taken"])
+	GameState.story.set_quest_stage("the_nursemaids_grave", "carried")
+	await _fight(v, "nursemaid_keepers", ["Gustav Durst", "Elisabeth Durst", "A Robed One"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_nursemaids_grave"), "laid")
+
