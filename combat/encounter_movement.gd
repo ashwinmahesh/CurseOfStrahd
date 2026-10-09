@@ -611,9 +611,81 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 		return CombatResult.fail("Can't leap while dragging someone: let go first")
 	if e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells) > 30:
 		return CombatResult.fail("At most 30 ft")
+	var path := leap_path(c, dest)
+	if path.is_empty():
+		return CombatResult.fail(leap_why(c, dest))
+	var undo := e.undo.before_move(c)
+	c.movement_left -= 10
+	c.set_meta("jumped_round", e.round_no)
+	return _leap(c, path, undo, "%s leaps %d ft (Jump)" % [c.name(), e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)])
+
+
+## Long Jump (2024 Rules Glossary; Combat HUD plan, owner pick 2026-10-09): up to the Strength score in feet after moving
+## 10 ft or more this turn (a run-up), half that from standing, in whole squares and never more than the movement left.
+func long_jump_ft(c: Combatant) -> int:
+	var feet := c.creature.ability_score(&"str")
+	if c.turn_speed - c.movement_left < 10:
+		feet /= 2
+	return mini(feet / CombatGrid.FEET * CombatGrid.FEET, c.movement_left / CombatGrid.FEET * CombatGrid.FEET)
+
+
+## "" if `c` can make a Long Jump now, else why not.
+func long_jump_why(c: Combatant) -> String:
+	var e := enc()
+	var why := e._turn_check(c)
+	if why != "":
+		return why
+	if c.speed() <= 0:
+		return "Speed 0"
+	if c.creature.has_condition(&"prone"):
+		return "Stand up first"
+	if e.grappling.drag_extra(c) > 0:
+		return "Can't leap while dragging someone: let go first"
+	if e.rider_of(c) != null or e.mount_of(c) != null:
+		return "Not while riding"
+	if long_jump_ft(c) < CombatGrid.FEET:
+		return "Not enough movement left to jump"
+	return ""
+
+
+## Leaps to `dest` (Long Jump): over creatures and rough ground, not walls, each foot costing a foot of movement; leaving
+## a foe's reach on the way still draws its Opportunity Attack, as any movement does.
+func long_jump(c: Combatant, dest: Vector2i) -> CombatResult:
+	var e := enc()
+	var why := long_jump_why(c)
+	if why != "":
+		return CombatResult.fail(why)
+	var feet := e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)
+	if feet > long_jump_ft(c):
+		return CombatResult.fail("Too far: %d ft at most" % long_jump_ft(c))
+	var path := leap_path(c, dest)
+	if path.is_empty():
+		return CombatResult.fail(leap_why(c, dest))
+	var undo := e.undo.before_move(c)
+	c.movement_left -= feet
+	return _leap(c, path, undo, "%s leaps %d ft (Long Jump)" % [c.name(), feet])
+
+
+## The squares a leap from where `c` stands to `dest` passes over, or [] when it can't land there or a wall is in the way.
+func leap_path(c: Combatant, dest: Vector2i) -> Array[Vector2i]:
+	return [] as Array[Vector2i] if leap_why(c, dest) != "" else _leap_cells(c, dest)
+
+
+## "" if a leap from where `c` stands can land on `dest`, else why not.
+func leap_why(c: Combatant, dest: Vector2i) -> String:
+	var e := enc()
+	if dest == c.cell:
+		return "Already there"
 	for cell in CombatGrid.footprint(dest, c.size_cells):
 		if e.grid.is_solid(cell) or (e.occupant_at(cell) != null and e.occupant_at(cell) != c):
-			return CombatResult.fail("Can't land there")
+			return "Can't land there"
+	for cell in _leap_cells(c, dest):
+		if e.grid.has_flag(cell, CombatGrid.WALL):
+			return "A wall is in the way"
+	return ""
+
+
+func _leap_cells(c: Combatant, dest: Vector2i) -> Array[Vector2i]:
 	var path: Array[Vector2i] = [c.cell]
 	var from := center_of(c)
 	var to := Vector2(dest.x + c.size_cells / 2.0, dest.y + c.size_cells / 2.0)
@@ -621,17 +693,18 @@ func jump(c: Combatant, dest: Vector2i) -> CombatResult:
 	for i in range(1, steps + 1):
 		var p := from.lerp(to, float(i) / steps)
 		var cell := Vector2i(floori(p.x - c.size_cells / 2.0 + 0.5), floori(p.y - c.size_cells / 2.0 + 0.5))
-		if e.grid.has_flag(cell, CombatGrid.WALL):
-			return CombatResult.fail("A wall is in the way")
 		if cell != path[path.size() - 1]:
 			path.append(cell)
 	if path[path.size() - 1] != dest:
 		path.append(dest)
-	var undo := e.undo.before_move(c)
-	c.movement_left -= 10
-	c.set_meta("jumped_round", e.round_no)
+	return path
+
+
+## The leap itself along `path` (its squares cost nothing more: the jump paid for them), logged as `line`.
+func _leap(c: Combatant, path: Array[Vector2i], undo: EncounterUndo.Record, line: String) -> CombatResult:
+	var e := enc()
 	c.set_meta("jumping", true)
-	e.log.add("move", "%s leaps %d ft (Jump)" % [c.name(), e.grid.distance_ft(c.cell, c.size_cells, dest, c.size_cells)], c.id)
+	e.log.add("move", line, c.id)
 	var r := _walk(c, path, 1, CombatResult.new(), undo.handled)
 	c.remove_meta("jumping")
 	return e.undo.after_move(undo, r)

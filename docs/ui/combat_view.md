@@ -218,3 +218,11 @@ Condition (a foe shows only whether it's Bloodied, as its bar does; a friend its
 (conditions, Concentration, spells), its Defenses and Abilities once the party has studied its kind (else "Unknown:
 Study it"), legendary actions left, and the odds of the hero's best attack on it. `ActionCatalog.examine` builds it;
 `CombatHud.show_examine` draws it where the roll details open; a click, Esc or B closes it.
+
+## Jump and Throw with arcs (owner pick 2026-10-09, after Baldur's Gate 3)
+
+**Long Jump** sits on Common (its distance in the slot: "up to 15 ft"); aimed, it draws its flight as gilt beads in an
+arc from the hero to the square pointed at, a ring where it lands (red beads and ring where it can't), and the tooltip
+gives the feet it costs and what's left. Everything thrown shares one **Throw** container (a thrown weapon in hand or
+set II, a chair or crate within reach); aimed at a creature, the throw's arc runs from the thrower to it beside the odds
+over its head. The Jump spell's leap shows the same arc.
