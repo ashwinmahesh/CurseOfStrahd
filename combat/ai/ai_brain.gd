@@ -45,6 +45,8 @@ var tactics: AiTactics
 var spells: AiSpells
 ## The fallen hero this turn's plan strikes (Honour), whom the attack steps keep at although they're down.
 var _finishing: Combatant = null
+## Walking-cost maps by start square and map shape (_walk_from), shared by every foe closing on that square.
+var _walks: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -474,9 +476,13 @@ func plan_turn(c: Combatant) -> Dictionary:
 	if str(best["kind"]) == "attack":
 		return best
 	if not visible.is_empty():
-		return _approach_plan(c, visible, prof)
+		var go := _approach_plan(c, visible, prof)
+		go["threats"] = threats
+		return go
 	if not heard.is_empty():
-		return _approach_plan(c, heard, prof)
+		var go2 := _approach_plan(c, heard, prof)
+		go2["threats"] = threats
+		return go2
 	if hidden_any and c.action_available:
 		return {"kind": "search", "score": 0.0, "why": "enemies are hidden"}
 	return best
@@ -646,11 +652,12 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var target := plan["target"] as Combatant
 	# Dash only when the best square needs it: no wasted action when nothing gets closer (a shut door between them).
 	var dash_ok := bool(plan.get("dash", false)) and c.action_available and c.speed() > 0
+	# Choosing the square only looks (one read: Creature.begin_read); the Dash and the move come after.
+	Creature.begin_read()
 	var reach := e.reachable_for(c, c.movement_left + (c.speed() if dash_ok else 0))
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
 	# heads for the door rather than pressing its face to the stones.
-	var walk := e.grid.reachable(target.cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
-		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
+	var walk := _walk_from(target.cell)
 	var dist := func(cell: Vector2i) -> int:
 		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
@@ -660,12 +667,21 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var best_d := int(dist.call(c.cell))
 	var best_cost := 0
 	var prof := profile(c)
-	var threats := _threats(c) if float(prof["oa_fear"]) > 0.0 else ([] as Array[Dictionary])
+	var threats: Array[Dictionary] = []
+	if float(prof["oa_fear"]) > 0.0:
+		# The plan's own threats when it brought them (nothing has moved since), else worked out now.
+		if plan.has("threats"):
+			threats.assign(plan["threats"] as Array)
+		else:
+			threats = _threats(c)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
 		var d := int(dist.call(cell))
+		# A square already farther than the best one can't win, whatever its Opportunity Attacks (they only add).
+		if d > best_d:
+			continue
 		var cost := int(info["cost"])
 		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(reach, cell), threats) > 0.0:
 			d += 15
@@ -673,11 +689,27 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 			best_d = d
 			best_cell = cell
 			best_cost = cost
+	Creature.end_read()
 	if best_cell == c.cell:
 		return CombatResult.new()
 	if dash_ok and best_cost > c.movement_left:
 		e.dash(c)
 	return e.move(c, best_cell)
+
+
+## Walking costs from `cell` to every square of the map (no creature in the way: the shape of the walls, doors and
+## ground), kept while the map is unchanged: several foes closing on the same hero share one search (FN-14).
+func _walk_from(cell: Vector2i) -> Dictionary:
+	var g := enc().grid
+	var key := "%d|%d|%s" % [hash([g.width, g.depth, g._flags, g._height]), g.raised.size(), cell]
+	if _walks.has(key):
+		return _walks[key] as Dictionary
+	if _walks.size() > 32:
+		_walks.clear()
+	var walk := g.reachable(cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
+		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
+	_walks[key] = walk
+	return walk
 
 
 func _move_then_attack(c: Combatant, plan: Dictionary) -> CombatResult:
