@@ -2682,6 +2682,7 @@
   "57bdf3f694e3fa8d": "[fierce, vicious]",
   "63c822b0b5216765": "[soothing, low, gentle]",
   "731a4630da257603": "[angry, ashamed]",
+  "7770126f56ae31df": "[fierce, protective, urgent]",
   "b6aa49cc3103b452": "[uneasy, blunt]",
   "e86f523213b4db35": "[disgusted, wary]",
   "eb5360cad6a22504": "[quiet, protective]"
@@ -2730,10 +2731,27 @@
   "173f511537681926": "[cool, intense]"
  },
  "tser_lavinia": {
-  "43e590bcd021318e": "[teasing, breathless]"
+  "043dbec55bf1bf87": "[worried, tender, urgent]",
+  "14157cea3d8f7a12": "[overjoyed, laughing, breathless]",
+  "209c7e0001064712": "[quiet, uneasy, certain]",
+  "2b80610ec435e316": "[cold, furious, controlled]",
+  "43e590bcd021318e": "[teasing, breathless]",
+  "65ffdaca13d762e7": "[warm, grateful, proud]",
+  "69dfc9163cabfe5d": "[wistful, fond, sad]",
+  "793a3eb8e9de008a": "[laughing and crying, grieving, proud]",
+  "aef84947018a8f2b": "[hopeful, earnest, urgent]",
+  "e36b3b6b38c4248f": "[stunned, then furious]",
+  "e80afc56133aa0a9": "[distraught, bewildered, sad]",
+  "eb6a83834f8db465": "[teasing, warm, proud]",
+  "fc84bddf67f14978": "[pleading, worried]"
  },
  "tser_marin": {
-  "6806d8661786bcc2": "[gruff, grumbling, kindly]"
+  "0ad3e9f8d9975226": "[gruff, then caught, resigned]",
+  "6806d8661786bcc2": "[gruff, grumbling, kindly]",
+  "861325289bb515ab": "[gruff, ashamed, resolute]",
+  "ad9dd5c9d76e7ab9": "[gruff, evasive, low]",
+  "f126cd61d390ff91": "[low, ashamed, confessing]",
+  "fb893023683f6efa": "[bitter, ashamed, resolute]"
  },
  "tser_nelu": {
   "1853e21ba7a09605": "[shaky, tearful]",

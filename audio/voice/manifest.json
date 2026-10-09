@@ -33943,6 +33943,12 @@
   "recipe": "dd92281f92",
   "text": "The frost scar in the courtyard has gone. There is only a long, clean stretch of flagstones, as if someone had swept it."
  },
+ "narrator/04fdcf326f62b68c": {
+  "chars": 131,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He listens. Slowly he drops onto all fours and lets you come close, and then closer, though he never takes his eyes off your hands."
+ },
  "narrator/0505378ef79cbee9": {
   "chars": 186,
   "model": "eleven_v4",
@@ -35827,6 +35833,12 @@
   "recipe": "dd92281f92",
   "text": "A long table is laid for twenty, plates and cups and folded napkins, all under the same soft fur of dust."
  },
+ "narrator/1528ae51f0151fc5": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The leaves at the mouth of the den are freshly scraped, and in the mud by the stream there are two sets of tracks, one very big and one very small."
+ },
  "narrator/154f545be7214b5a": {
   "chars": 72,
   "model": "eleven_v4",
@@ -36547,6 +36559,12 @@
   "recipe": "dd92281f92",
   "text": "Wren is very calm tonight. No jokes, no handstands, no last word. He sits by the fire and speaks quietly, and that's how you know."
  },
+ "narrator/1b004c6a5f93cbf4": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Another iron trap, sprung on nothing, half hidden in the leaves. The same mark on its spring plate: an M with a notch through it."
+ },
  "narrator/1b0079fdb2ee960a": {
   "chars": 95,
   "model": "eleven_v4",
@@ -36594,6 +36612,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The carcass lands on the gold. She lowers her head to it, sniffs once, and laughs, and breathes on it until there's nothing left on the gold but the smell."
+ },
+ "narrator/1b6bfde7c98c4b35": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bujor sways on the plank stage beside Lavinia, slow and heavy and pleased with himself. Under the planks, a bear cub is chewing a boot."
  },
  "narrator/1b7a2da3e77e6468": {
   "chars": 113,
@@ -37428,6 +37452,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She steps into the pool, and the water takes the light and her with it. When the ripples settle, the surface shows only sky."
+ },
+ "narrator/22dce99373f87841": {
+  "chars": 231,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bujor's ears come up. He drops onto all fours and, after a moment, turns three slow circles in the leaves, the way he does on the plank stage. Then he sits down beside the cub and looks at you, as if to say: there, now you know me."
  },
  "narrator/231546dc31c04ba0": {
   "chars": 129,
@@ -41053,6 +41083,12 @@
   "recipe": "dd92281f92",
   "text": "A narrow court in the lee of the church, sheltered from the wind. The snow here is untrodden, except for one line of bare footprints that walks to the wall and stops."
  },
+ "narrator/41fd3fbac18fb39b": {
+  "chars": 57,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old chain, and a broken link. That's all you can tell."
+ },
  "narrator/420628c9bd2f54c7": {
   "chars": 153,
   "model": "eleven_v4",
@@ -41310,6 +41346,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road comes out onto a landing at the head of the bridge. Above the far crag something huge breathes in its sleep, slow as surf."
+ },
+ "narrator/445cb321ea09d740": {
+  "chars": 218,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the clearing below the rocks, a big brown bear rears up on its hind legs at the sight of you, a broken chain swinging from its collar. It doesn't come at you. It stands between you and something small that's crying."
  },
  "narrator/44618babf92e0649": {
   "chars": 84,
@@ -42192,6 +42234,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "That night every window in the castle is lit, and music drifts down into the valley. Nobody in Barovia sleeps."
+ },
+ "narrator/4c3ab31d4c125b76": {
+  "chars": 79,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An iron trap in the leaves, with a bear cub in it, and a bear standing over it."
  },
  "narrator/4c485228df6b74c1": {
   "chars": 132,
@@ -43171,6 +43219,12 @@
   "recipe": "dd92281f92",
   "text": "You read him Markovia's letter, kneeling there, every word. He listens with his eyes shut."
  },
+ "narrator/553c534ac82538a4": {
+  "chars": 139,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You walk down the deer path, and he follows you like a very large dog, with the cub trotting in his shadow and stopping to bite every leaf."
+ },
  "narrator/554b1181672e9437": {
   "chars": 107,
   "model": "eleven_v4",
@@ -43903,6 +43957,12 @@
   "recipe": "dd92281f92",
   "text": "He murmurs along with you, eyes closed. If he stumbles, you can't hear it."
  },
+ "narrator/5b522c2ea61f1c2a": {
+  "chars": 218,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's trap, well kept and oiled. On the spring plate someone has stamped a mark: an M, with a notch through it. You've seen that mark before, burned into the handle of Old Marin's skinning knife, back at the camp."
+ },
  "narrator/5b557329a9fe51e4": {
   "chars": 156,
   "model": "eleven_v4",
@@ -44089,6 +44149,12 @@
   "recipe": "dd92281f92",
   "text": "He takes the dress the way a priest takes a relic, in both hands, and holds it up to the candles. For a moment his face is so happy that it's hard to look at."
  },
+ "narrator/5c7642c439270e4f": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The trap lies open in the leaves where you left it, its jaws wet. The mark on the spring plate is an M with a notch through it."
+ },
  "narrator/5c7fdcfe1f6b85c6": {
   "chars": 190,
   "model": "eleven_v4",
@@ -44238,6 +44304,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Piccolo applauds, slowly, then reaches into the nearest purse and takes a coin. Admission, apparently."
+ },
+ "narrator/5dd7190dd2d468bf": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bujor is already on the stage when you come into the camp, and under the planks a bear cub is asleep with its bad leg bound in a rag. Lavinia has both arms round Bujor's neck and won't let go."
  },
  "narrator/5dd7cf28c2f5e7b5": {
   "chars": 142,
@@ -44760,6 +44832,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The ash in the cradle stirs with no wind to stir it. The dark that settled into the dead lamp gathers itself into shapes, and the shapes have been waiting a long time for someone to bring a light up here."
+ },
+ "narrator/6231c6d973ff49c2": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Lavinia is sitting on the edge of the plank stage, not dancing, with a length of broken chain across her knees."
  },
  "narrator/625cb86ba1eae7f7": {
   "chars": 104,
@@ -46387,6 +46465,12 @@
   "recipe": "dd92281f92",
   "text": "A foyer with a boot scraper, a coat stand and a sign in a round, hopeful hand: SMILE, YOU ARE A GUEST."
  },
+ "narrator/6f4143f742978fae": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The cub is out of the trap, limping, pressed hard against Bujor's side. Bujor looks at you, and down the deer path toward the camp, and up at the dark of the den in the rocks."
+ },
  "narrator/6f716294eb209f91": {
   "chars": 108,
   "model": "eleven_v4",
@@ -46830,6 +46914,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The hut has been waiting for her. When you come instead, it stands up on its roots and screams through its door."
+ },
+ "narrator/73cbc7e4dab5ef22": {
+  "chars": 86,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Lavinia listens to the end without a word, turning the broken chain over in her hands."
  },
  "narrator/73eb641e4b0e6cdd": {
   "chars": 109,
@@ -49201,6 +49291,12 @@
   "recipe": "dd92281f92",
   "text": "The master of horse. His crypt is the only one with a fresh flower on it, black, and still soft."
  },
+ "narrator/88c043bc176d0fd2": {
+  "chars": 93,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At its feet, in the leaves, a bear cub no bigger than a dog has its back leg in an iron trap."
+ },
  "narrator/88da48ec033f7036": {
   "chars": 229,
   "model": "eleven_v4",
@@ -50197,6 +50293,12 @@
   "recipe": "dd92281f92",
   "text": "A crypt with Gustav Durst's name over it."
  },
+ "narrator/906070e0ed3fd575": {
+  "chars": 219,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You get your fingers under the jaws. The cub screams. In the trees all round the clearing, things that aren't trees start toward the sound: knots of twigs, a scuttle of needles, vines dragging themselves over the roots."
+ },
  "narrator/907de6813a663410": {
   "chars": 97,
   "model": "eleven_v4",
@@ -50310,6 +50412,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The antechamber stinks of the heap. It is coming."
+ },
+ "narrator/916b17420d960a0f": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He roars, a sound that shakes the needles off the pines, and doesn't move from the cub. You'll have to work round him, and he'll have to let you."
  },
  "narrator/9171d90f028e8418": {
   "chars": 75,
@@ -52194,6 +52302,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A block of grey stone, stained dark down every side, with a shallow groove cut round the top to carry something away."
+ },
+ "narrator/a22a0c520dfba27d": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A clearing in the pines where the stream comes down over stones. Under a heap of mossy rocks on the far side there's a dark hollow that smells of animal."
  },
  "narrator/a22b4f9a8e6957bd": {
   "chars": 136,
@@ -55177,6 +55291,12 @@
   "recipe": "dd92281f92",
   "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper."
  },
+ "narrator/bdf4a6df00bd7249": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A pine with its bark clawed off in long strips, higher than a man can reach. Old marks, and new ones over them."
+ },
  "narrator/bdf7b1a5182c0c0f": {
   "chars": 207,
   "model": "eleven_v4",
@@ -55506,6 +55626,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A tall, handsome house behind a rusted fence, its windows dark, its porch swept. It is the best-kept house in the village, and nobody will walk past it."
+ },
+ "narrator/c0456f8a1ffa2e6a": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The link isn't cut or rusted through. It's pulled open, the iron bent like wet wood. Whatever he heard, he went to it hard enough to straighten a ring of iron."
  },
  "narrator/c046c19fc6de4226": {
   "chars": 156,
@@ -55926,6 +56052,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The candle you lit is still burning, though there's no wind-shield on it and the snow comes in sideways."
+ },
+ "narrator/c30aced99c9133f5": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Out of the trees all round the clearing come things that aren't trees, toward the sound of the cub crying."
  },
  "narrator/c312e46d76df78ce": {
   "chars": 135,
@@ -57463,6 +57595,12 @@
   "recipe": "dd92281f92",
   "text": "She doesn't say anything else. She doesn't need to."
  },
+ "narrator/d0f7ef820a80cac7": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hollow under the rocks, deep enough for something big to turn round in. The leaves inside have been made into a bed, recently."
+ },
  "narrator/d0fe78bf713f68ff": {
   "chars": 123,
   "model": "eleven_v4",
@@ -58903,6 +59041,12 @@
   "recipe": "dd92281f92",
   "text": "The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun."
  },
+ "narrator/dec014653f3320b8": {
+  "chars": 73,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A deer path up the stream into the pines. Nothing up there you need, yet."
+ },
  "narrator/ded75e3b016f9aa2": {
   "chars": 174,
   "model": "eleven_v4",
@@ -60138,6 +60282,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The cave goes down into the hill, warm, close and dark. Straw rustles in the side chambers. Somewhere deeper, small voices are whispering, and stop."
+ },
+ "narrator/e91e64cdca8c2ee4": {
+  "chars": 72,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's iron trap, well kept and oiled. Somebody comes up here often."
  },
  "narrator/e923db339109b6ca": {
   "chars": 202,
@@ -61435,6 +61585,12 @@
   "recipe": "dd92281f92",
   "text": "Lake Zarovich, black and flat to the far shore. Fishermen's boats lie hauled up on the bank, all of them dry, all of them for a long time."
  },
+ "narrator/f4a0265dd88441ef": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You unbuckle the collar. He doesn't wait to be told. He noses the cub up over the stones and into the dark under the rocks, and he doesn't look back, not once."
+ },
  "narrator/f4a048c4399fb391": {
   "chars": 121,
   "model": "eleven_v4",
@@ -62179,6 +62335,12 @@
   "recipe": "dd92281f92",
   "text": "It's Thistle who does it in the end, because Godrick never would have. She walks straight up to him in front of everyone, takes him by the collar of his mail, and pulls until he bends down, which takes some pulling."
  },
+ "narrator/fb9bb5b64dcdf399": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A clearing in the pines where the stream comes down over stones. Under a heap of mossy rocks on the far side there's a dark hollow that smells of animal, and the leaves round it have been scraped up into a bed."
+ },
  "narrator/fb9c662ec82dd11b": {
   "chars": 187,
   "model": "eleven_v4",
@@ -62346,6 +62508,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The upper floor creaks under every step, a long drawn-out complaint passed from board to board ahead of you like a rumour."
+ },
+ "narrator/fcd31275b4c1e024": {
+  "chars": 95,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The clearing is quiet. Broken twigs and torn vines lie where the blights fell, already greying."
  },
  "narrator/fcec98be0ad56121": {
   "chars": 145,
@@ -72125,6 +72293,13 @@
   "recipe": "fa2dc97c56",
   "text": "The Pack. ...It's a rubbish name. It's the best name. It's all of you."
  },
+ "thistle/7770126f56ae31df": {
+  "chars": 68,
+  "direction": "[fierce, protective, urgent]",
+  "model": "eleven_v3",
+  "recipe": "fa2dc97c56",
+  "text": "They come for whatever's crying. Not this one. Stand in front of it."
+ },
  "thistle/77a6ba9673b1f5d7": {
   "chars": 62,
   "model": "eleven_v4",
@@ -73247,6 +73422,34 @@
   "recipe": "4e283164ff",
   "text": "Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one is the one that kills you. So I keep throwing."
  },
+ "tser_lavinia/043dbec55bf1bf87": {
+  "chars": 185,
+  "direction": "[worried, tender, urgent]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "He's soft as bread. He'll walk up to the first hunter he meets to have his ears scratched. The tracks go up the stream, where the deer path is. Bring him home before the woods have him."
+ },
+ "tser_lavinia/14157cea3d8f7a12": {
+  "chars": 137,
+  "direction": "[overjoyed, laughing, breathless]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "You brought me two. Two! I'll teach the little one the slow steps first. Then the turns. Then I'll teach her to break chains, apparently."
+ },
+ "tser_lavinia/209c7e0001064712": {
+  "chars": 61,
+  "direction": "[quiet, uneasy, certain]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "(Quietly.) He's never pulled. Not once. Something called him."
+ },
+ "tser_lavinia/2b80610ec435e316": {
+  "chars": 62,
+  "direction": "[cold, furious, controlled]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Go and ask him. I'll stay here. If I go, I'll take his knives."
+ },
  "tser_lavinia/43e590bcd021318e": {
   "chars": 138,
   "direction": "[teasing, breathless]",
@@ -73254,12 +73457,103 @@
   "recipe": "39247df308",
   "text": "Clap or don't, the steps are the same. My grandmother danced this for a prince once. He was dead by morning, but she said he'd enjoyed it."
  },
+ "tser_lavinia/65ffdaca13d762e7": {
+  "chars": 190,
+  "direction": "[warm, grateful, proud]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Here. My grandmother's fan. She danced for a prince with it, the night before he died, and she said it was the best thing she ever did with her hands. It throws a wind, if you snap it right."
+ },
+ "tser_lavinia/69dfc9163cabfe5d": {
+  "chars": 128,
+  "direction": "[wistful, fond, sad]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "I still dance the bear's part. Somebody has to. (She looks up the stream, toward the woods.) He was always better at it than me."
+ },
+ "tser_lavinia/793a3eb8e9de008a": {
+  "chars": 138,
+  "direction": "[laughing and crying, grieving, proud]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "He went into the den with it. (She laughs and cries at once.) Then he was always a better dancer than me. He knew when the dance was over."
+ },
+ "tser_lavinia/aef84947018a8f2b": {
+  "chars": 152,
+  "direction": "[hopeful, earnest, urgent]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Take this. (A tin whistle on a red cord.) Two notes, high then low. When I blow it he dances. Maybe it'll bring him back to himself, if he's frightened."
+ },
+ "tser_lavinia/e36b3b6b38c4248f": {
+  "chars": 171,
+  "direction": "[stunned, then furious]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Marin's? (Her face goes still, and then very angry.) The carriage. The black carriage pays for live young. He told me once, years ago, laughing. I thought he was laughing."
+ },
+ "tser_lavinia/e80afc56133aa0a9": {
+  "chars": 163,
+  "direction": "[distraught, bewildered, sad]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "No dancing today. Bujor's gone. My bear. He broke his chain last night, and in nine years he never once pulled on it, not even when the wolves came round the fire."
+ },
+ "tser_lavinia/eb6a83834f8db465": {
+  "chars": 156,
+  "direction": "[teasing, warm, proud]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Clap or don't, the steps are the same. (Bujor turns beside her, slow and heavy, and under the planks a small bear is trying the same turn and falling over.)"
+ },
+ "tser_lavinia/fc84bddf67f14978": {
+  "chars": 75,
+  "direction": "[pleading, worried]",
+  "model": "eleven_v3",
+  "recipe": "39247df308",
+  "text": "Up the stream, where the deer path goes. Please. Before the woods have him."
+ },
+ "tser_marin/0ad3e9f8d9975226": {
+  "chars": 169,
+  "direction": "[gruff, then caught, resigned]",
+  "model": "eleven_v3",
+  "recipe": "596447fedd",
+  "text": "One deer, and I walked half the night for it. (He looks at your faces, then at his own knife, the M and the notch burned into the handle.) Ah. You've been up to the den."
+ },
  "tser_marin/6806d8661786bcc2": {
   "chars": 140,
   "direction": "[gruff, grumbling, kindly]",
   "model": "eleven_v3",
-  "recipe": "1d8817fed7",
+  "recipe": "596447fedd",
   "text": "One deer, and I walked half the night for it. The wolves had the rest. They don't share, and nor do I, unless you're hungry. Are you hungry?"
+ },
+ "tser_marin/861325289bb515ab": {
+  "chars": 102,
+  "direction": "[gruff, ashamed, resolute]",
+  "model": "eleven_v3",
+  "recipe": "596447fedd",
+  "text": "I pulled every trap I had up there. All eleven. The woods can feed themselves. They did before I came."
+ },
+ "tser_marin/ad9dd5c9d76e7ab9": {
+  "chars": 159,
+  "direction": "[gruff, evasive, low]",
+  "model": "eleven_v3",
+  "recipe": "596447fedd",
+  "text": "The bear? Up the stream, to the old den under the rocks. (He doesn't look up from the deer.) Mind where you put your feet up there. There's iron in the leaves."
+ },
+ "tser_marin/f126cd61d390ff91": {
+  "chars": 177,
+  "direction": "[low, ashamed, confessing]",
+  "model": "eleven_v3",
+  "recipe": "596447fedd",
+  "text": "The black carriage stops on the road sometimes, at night, and a voice in it says what it wants. Last spring it wanted young things, alive. Wolf pups. Cubs. A gold piece a pound."
+ },
+ "tser_marin/fb893023683f6efa": {
+  "chars": 121,
+  "direction": "[bitter, ashamed, resolute]",
+  "model": "eleven_v3",
+  "recipe": "596447fedd",
+  "text": "The woods have fewer deer every year. I told myself that. (He puts the knife down.) I'll pull them. All of them. Tonight."
  },
  "tser_nelu/1853e21ba7a09605": {
   "chars": 51,
