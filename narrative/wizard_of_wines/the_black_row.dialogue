@@ -3,11 +3,15 @@
 # make him dream of Elvir alive and not angry. The row is a cutting of the Gulthias tree that Kostin planted under it
 # on Ruxandra's last order, and it has its own roots now, whatever happened on Yester Hill. Cutting into it wakes the
 # Vine Mother (data/monsters/vine_mother.json). Reached from Andrei the picker (hands:picker), Davian's "Heard anything
-# interesting?" (davian:menu) and the row itself (prop seventh_row). Every line here is unvoiced for now.
+# interesting?" (davian:menu) and the row itself (prop seventh_row). Once the Black Row is under way and the Gulthias
+# tree has burned, his news is the lantern on Yester Hill (The Druid Who Came Back). Every line here is unvoiced for now.
 
 # --- Davian's news (davian:menu jumps here) ---
 
 ~ davian_news
+if quest.the_black_row and flag.gulthias_tree_burned and level >= 7 and quest.the_druid_who_came_back != done
+-> yester_hill/the_druid_who_came_back:davian_news
+endif
 if quest.the_black_row == done
 Davian: The Seventh Row's in again. Young vines. Adrian waters them himself and won't let anyone else hold the can. It's a family failing.
 elif quest.the_black_row and quest.the_black_row != rumored
