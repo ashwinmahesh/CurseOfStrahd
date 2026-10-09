@@ -234,6 +234,7 @@ func converse() -> void:
 	for i in 400:
 		if root.get("dialogue") == null:
 			return
+		d = root.get("dialogue") as DialogueUI   # one conversation can hand straight on to the next (QA travel sweep)
 		# A merchant's shop or someone's services opened from the talk: look, buy nothing, close it (the talk resumes).
 		for n in root.get_children():
 			if n is ShopScreen:
