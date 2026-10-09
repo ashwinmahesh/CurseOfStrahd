@@ -13,15 +13,19 @@ static var _display_font: Font
 static var _themed := false
 
 
-## The display face for titles, headers and buttons: a medieval book hand the system already has (Luminari on macOS),
-## falling back to the default font. Nothing is downloaded or shipped with the game.
+## The display face for titles, headers and buttons: a medieval book hand shipped with the game, MedievalSharp (OFL,
+## art/sourced/google_fonts), the same on every platform (owner, 2026-10-08: macOS's Luminari, which Windows lacks).
+const DISPLAY_FACE := "res://art/sourced/google_fonts/medievalsharp/MedievalSharp.ttf"
+
+
 static func display_font() -> Font:
 	if _display_font == null:
-		var f := SystemFont.new()
-		f.font_names = PackedStringArray(["Luminari", "Trattatello", "Apple Chancery", "Palatino", "Georgia"])
+		var f := FontVariation.new()
+		f.base_font = load(DISPLAY_FACE) as FontFile
+		f.variation_embolden = 0.5   # nearer Luminari's weight: MedievalSharp's own strokes are finer
 		# Symbols the book hand lacks (arrows, marks) come from the default font, then the system symbol fonts.
 		var symbols := SystemFont.new()
-		symbols.font_names = PackedStringArray(["Apple Symbols", "Menlo", "Arial Unicode MS", "DejaVu Sans"])
+		symbols.font_names = PackedStringArray(["Apple Symbols", "Segoe UI Symbol", "Menlo", "Arial Unicode MS", "DejaVu Sans"])
 		f.fallbacks = [ThemeDB.fallback_font, symbols]
 		_display_font = f
 	return _display_font

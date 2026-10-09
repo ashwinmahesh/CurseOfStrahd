@@ -315,7 +315,9 @@
   "c8bb448db7473da5": "[weary, fond]"
  },
  "barovia_gravedigger": {
+  "125bfed2d9b0c257": "[gruff, proud, dry]",
   "189174c69301b144": "[slow, low, discreet]",
+  "29d1abb359bffd36": "[low, knowing, grim]",
   "493100e31a309f96": "[slow, gentle, courteous]",
   "5fa869f518ff62c6": "[slow, low, haunted]",
   "631b3a70be1e801e": "[slow, bewildered, relieved]",
@@ -324,6 +326,7 @@
   "78c01b99a1f0e116": "[slow, courteous, eerie]",
   "9d550fcd53c5fafd": "[slow, tender, grieving]",
   "c20c657ad9b3cf26": "[slow, gravelly, matter-of-fact]",
+  "d2bdc63e8142e311": "[low, uneasy, gentle]",
   "d461c61a417a517e": "[slow, courteous, odd]",
   "dbcd9b605fa9b11f": "[slow, gravelly, ominous]",
   "dd77a13ac686f2b5": "[slow, haunted]",
@@ -601,14 +604,19 @@
   "d140abc1e42d6fc6": "[worried, brisk]"
  },
  "davian_martikov": {
+  "1b08ef440bb2f70d": "[gruff, uneasy, low]",
   "3e6d620a0659bde1": "[sad, gruff, tender]",
   "5d3a4576e5431408": "[gruff, fond, dry]",
   "6a2161fca8ab3566": "[grim, approving]",
   "6c86fde58ecaf410": "[stern, grim, determined]",
+  "71240a536a501054": "[gruff, wry, grateful]",
   "888f0f7d82eafac7": "[gruff, grudging]",
+  "8da3aa0050b64a48": "[gruff, relieved, wry]",
   "9663837b68445e83": "[gruff, troubled, low]",
   "a9021a11974952e4": "[gruff, curt]",
+  "ac5267e14875a621": "[stern, weary, firm]",
   "b153146082bb74f8": "[gruff, weary, gentle]",
+  "fed678b5a082c9d4": "[gruff, curt]",
   "ffb205836f61f052": "[gruff, wry, grateful]"
  },
  "dmitri_krezkov": {
@@ -632,6 +640,17 @@
  "doru": {
   "186b2e0d5dcaaabb": "[sly, hungry, hissing]",
   "734c769a8a1b7a88": "[eerie, childlike, chilling]"
+ },
+ "durst_nursemaid": {
+  "174ceaa98bd28678": "[quiet, firm, sad]",
+  "266fab1faa818469": "[sad, quiet, bitter]",
+  "3092f01a07519558": "[quiet, wistful, hurt]",
+  "68e90991551f202d": "[gentle, soothing, sad]",
+  "aef88731a12285df": "[wondering, moved, whispered]",
+  "b340c514432d4484": "[gentle, sad, calm]",
+  "f0c17d34572d585c": "[soft, grateful, urgent]",
+  "f39b54569f3b51da": "[soft, yearning, hushed]",
+  "fbd4f05d644ed476": "[aching, pleading, breaking]"
  },
  "exethanter": {
   "055dd0501cc44a2f": "[alarmed whisper]",
@@ -973,6 +992,16 @@
   "c5d1f53fad2faedd": "[flustered, grateful]",
   "f14d331047bb4e4b": "[hurt, quiet]"
  },
+ "kostin": {
+  "3fd909b62e2ef1ce": "[pleading, earnest, desperate]",
+  "9346b7cd366af533": "[anguished, broken, apologetic]",
+  "9f25292d0db1e2f9": "[earnest, proud, pleading]",
+  "bfa2b26335de9804": "[quiet, resolute, sad]",
+  "cd0dd8f8163d4fa6": "[earnest, hopeful, tired]",
+  "d5b70921acc0a1b5": "[hollow, bitter, quiet]",
+  "dc1bff84c3259a2d": "[stricken, quiet, ashamed]",
+  "ecf2be8ba93656e8": "[quiet, stubborn, sad]"
+ },
  "krezk_bucket_wife": {
   "cb9f4b0d23280019": "[brisk, wry]"
  },
@@ -1105,6 +1134,7 @@
   "da65623ed9274e63": "[panicked whisper]"
  },
  "liriel_dawnsong": {
+  "1813b7e53eabb415": "[gentle, certain, compassionate]",
   "27dc277991695aa4": "[quiet, certain, compassionate]",
   "2cf8f1542384a932": "[shaken, hushed, sorrowful]",
   "4503a76638b93b89": "[shaken, quiet]",
@@ -2319,6 +2349,10 @@
   "fcc9d4870ef4d655": "[bossy, gentle]",
   "fdbae4415f24bdd8": "[anxious, hopeful]"
  },
+ "ruxandra": {
+  "683af5b4249d2166": "[cold, venomous, final]",
+  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]"
+ },
  "sarkhaza": {
   "01a1e5761bb42aa5": "[low, hungry, menacing]",
   "0d27ccfc06a9c6d2": "[bitter, scornful]",
@@ -3260,6 +3294,12 @@
   "ca7e7b7b783bfcca": "[quiet, haunted]",
   "df89359d75d931da": "[shaky, wry, fond, near tears]",
   "f28c02cbcf8e77a6": "[weak attempt at humour]"
+ },
+ "yester_zorica": {
+  "34563429556bba65": "[quiet, horrified, small]",
+  "b92943959268ea97": "[stubborn, proud, trembling]",
+  "c43f5336a1545391": "[fierce, grieving, accusing]",
+  "d55b01402dbf29c9": "[defiant, cold, shaking]"
  },
  "yevgeni": {
   "3951b1f08fc043db": "[sad, quiet]",

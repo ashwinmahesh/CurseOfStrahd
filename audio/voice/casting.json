@@ -437,6 +437,7 @@
       "description": "A gaunt young man with an earnest, sincere, slightly breathless voice and a strong, clearly audible Eastern European (Romanian) accent. A devout druid, eager to be faithful, easily shaken.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "SbUFoR2zKmtEJ1Tg7fW5",
       "released": true
     },
     "tsolenka_sergeant": {
@@ -521,6 +522,7 @@
       "description": "An old woman with a warm, kindly, grandmotherly voice and a strong, clearly audible Eastern European (Romanian) accent, gentle and serene while saying monstrous things. Devout, soft, utterly certain.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "IDdxXROhQY3P3BnY9QEi",
       "released": true
     },
     "vallaki_herald": {
@@ -771,6 +773,7 @@
       "description": "A woman's ghostly, whispering, grief-hollowed voice, crooning and lost, asking for her baby, with an eerie echo.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "TR7JvJ0sju6b7g0Aw317",
       "released": true
     },
     "phantom_warden": {
@@ -2200,6 +2203,16 @@
       "settings": {},
       "model": "eleven_v3",
       "generated_voice_id": "c2e2Qacn3oMFw74cBWbC",
+      "released": true
+    },
+    "yester_zorica": {
+      "voice_id": "sWGyL0SesRcEgBs4mt9L",
+      "name": "Barovia Zorica",
+      "description": "A Barovian young woman of about eighteen, the youngest druid of a hill circle, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A light, raw, girlish voice, fierce with grief and accusation, stubborn and proud, trembling underneath, a little wild.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "sWGyL0SesRcEgBs4mt9L",
       "released": true
     }
   },

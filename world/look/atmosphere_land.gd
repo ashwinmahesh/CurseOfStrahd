@@ -50,7 +50,7 @@ var _edge: Dictionary = {}      ## border cell -> Edge
 var _w := 0
 var _d := 0
 ## Empty squares on the map (' ') are hillside like the land around it, unless the mood says they're a drop (a
-## chasm, a cliff).
+## chasm, a cliff) or the map has a fall off its edge (`drop_ft`).
 var _void_land := true
 ## Over the whole area the land covers, one cell per square from (-REACH, -REACH): how far each is from the map's own
 ## squares (`_dist`) and from the squares people walk on (`_walk`), in squares.
@@ -63,6 +63,14 @@ var _nx := 0
 var _nz := 0
 ## The land mesh's corner heights ((_nx + 1) x (_nz + 1), from (-REACH, -REACH)), so plants stand on it exactly.
 var _corner_h := PackedFloat32Array()
+
+
+## Whether a place's map falls away past its empty squares (its `drop_ft`, the fall the rules use): those squares
+## are then a drop, never hillside. At the Amber Temple's doors (a land mood) the hillside rose 12 squares high over
+## the empty squares between the camera and the arrival, and the party was drawn under it (UI QA W-07).
+static func has_drop(place: String) -> bool:
+	var loc := Compendium.shared().get_entry("locations", place) if place != "" else {}
+	return float((loc.get("map", {}) as Dictionary).get("drop_ft", 0.0)) > 0.0
 
 
 ## Builds the land for `board` from a mood's `surround` (ground, road, trees, dead, rise, hills, void) and its
@@ -78,7 +86,7 @@ static func build(board_: ArenaBoard, mood: Dictionary, rng_: RandomNumberGenera
 	l.root.name = "Surround"
 	l._w = board_.grid.width
 	l._d = board_.grid.depth
-	l._void_land = str(l.spec.get("void", "land")) == "land"
+	l._void_land = str(l.spec.get("void", "land")) == "land" and not has_drop(board_.place)
 	var t := Time.get_ticks_usec()
 	l._key = "%s|%s|%dx%d|%d|%d" % [board_.place, Look.style(), l._w, l._d, board_.occupied.size(),
 		board_.house_cells.size()]

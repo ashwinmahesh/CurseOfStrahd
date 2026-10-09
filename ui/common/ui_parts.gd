@@ -14,17 +14,23 @@ static var _figure_font: Font
 static var _caps_font: Font
 
 
-## A book serif for the big numbers (Hoefler Text or Baskerville on macOS), with lining figures so "14" doesn't
-## dip below the line.
+## The faces shipped with the game (OFL, art/sourced/google_fonts), the same on every platform (owner, 2026-10-08):
+## EB Garamond for the numbers and Cinzel for the captions, in place of macOS's Hoefler Text and Copperplate.
+const FIGURE_FACE := "res://art/sourced/google_fonts/ebgaramond/EBGaramond[wght].ttf"
+const CAPS_FACE := "res://art/sourced/google_fonts/cinzel/Cinzel[wght].ttf"
+
+
+## A book serif for the big numbers (EB Garamond at its boldest, near Hoefler Text Black; its file imports with light
+## hinting, as full hinting dropped the plus sign's crossbar at 1280x720), with lining figures so
+## "14" doesn't dip below the line.
 static func figure_font() -> Font:
 	if _figure_font == null:
-		var f := SystemFont.new()
-		f.font_names = PackedStringArray(["Hoefler Text", "Baskerville", "Palatino", "Georgia"])
-		f.font_weight = 700
-		f.fallbacks = [ThemeDB.fallback_font]
+		var ts := TextServerManager.get_primary_interface()
 		var v := FontVariation.new()
-		v.base_font = f
-		v.opentype_features = {TextServerManager.get_primary_interface().name_to_tag("lnum"): 1}
+		v.base_font = load(FIGURE_FACE) as FontFile
+		v.variation_opentype = {ts.name_to_tag("wght"): 800}
+		v.opentype_features = {ts.name_to_tag("lnum"): 1}
+		v.fallbacks = [ThemeDB.fallback_font]
 		_figure_font = v
 	return _figure_font
 
@@ -34,17 +40,15 @@ static func figures(text: String) -> String:
 	return text.replace("-", "−")
 
 
-## Engraved capitals for captions ("ARMOR CLASS"): Copperplate on macOS.
+## Engraved capitals for captions ("ARMOR CLASS"): Cinzel, bold. Its file imports as a distance field (its .import),
+## since these captions are 9 to 12 px and rasterised at a 1280x720 window's 0.8 scale they garbled (UI QA UI-05).
 static func caps_font() -> Font:
 	if _caps_font == null:
-		var f := SystemFont.new()
-		f.font_names = PackedStringArray(["Copperplate", "Palatino", "Georgia"])
-		# Drawn from a distance field, a size heavier: these captions are 9 to 12 px, and rasterised at a 1280x720
-		# window's 0.8 scale Copperplate's hinting garbled them ("HIT PCINTS", "STR ENGTH"; UI QA UI-05).
-		f.font_weight = 700
-		f.multichannel_signed_distance_field = true
-		f.fallbacks = [ThemeDB.fallback_font]
-		_caps_font = f
+		var v := FontVariation.new()
+		v.base_font = load(CAPS_FACE) as FontFile
+		v.variation_opentype = {TextServerManager.get_primary_interface().name_to_tag("wght"): 700}
+		v.fallbacks = [ThemeDB.fallback_font]
+		_caps_font = v
 	return _caps_font
 
 

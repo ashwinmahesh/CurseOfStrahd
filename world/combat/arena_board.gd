@@ -960,11 +960,12 @@ func _ground_box(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	return _box(n, Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), mat)
 
 
-## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be.
+## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be, and
+## anything built once for the whole map while that square was built (InteriorWalls' outside ground, "whole_map").
 func _lift(from: int, dy: float) -> void:
 	for i in range(from, get_child_count()):
 		var n := get_child(i) as Node3D
-		if n != null and not n.has_meta("terrain"):
+		if n != null and not n.has_meta("terrain") and not n.has_meta("whole_map"):
 			n.position.y += dy
 
 

@@ -1067,6 +1067,105 @@
         }
       ],
       "text": "For one moment they are only parents, and grieving."
+    },
+    {
+      "id": "nursemaid_keepers",
+      "when": "not flag.death_house_dursts_destroyed and not flag.death_house_dursts_confessed",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "Gustav Durst"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            19,
+            4
+          ],
+          "name": "Elisabeth Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            7,
+            2
+          ],
+          "name": "A Robed One"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            18,
+            2
+          ],
+          "name": "A Robed One"
+        }
+      ],
+      "trigger": "dialogue",
+      "surprise": "",
+      "flag": "nursemaid_keepers_beaten",
+      "quest": {
+        "id": "the_nursemaids_grave",
+        "stage": "laid"
+      },
+      "text": "The lids along the row slide back, one after another, and what the house kept down here climbs out to take back what was taken."
+    },
+    {
+      "id": "nursemaid_keepers",
+      "monsters": [
+        {
+          "monster": "ghast",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "The Robed One Who Carried Him"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            7,
+            2
+          ],
+          "name": "A Robed One"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            4
+          ],
+          "name": "A Robed One"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            19,
+            3
+          ],
+          "name": "A Robed One"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            18,
+            2
+          ],
+          "name": "A Robed One"
+        }
+      ],
+      "trigger": "dialogue",
+      "surprise": "",
+      "flag": "nursemaid_keepers_beaten",
+      "quest": {
+        "id": "the_nursemaids_grave",
+        "stage": "laid"
+      },
+      "text": "The lids along the row slide back, one after another, and what the house kept down here climbs out to take back what was taken."
     }
   ],
   "narration": {
