@@ -20,15 +20,15 @@ const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armo
 	"Consumables": ["potion", "consumable", "scroll"]}
 ## The paper doll: where each slot's tile sits on the figure (its middle, in the doll's own pixels), every worn slot of
 ## the 2024 DMG (one of each, two rings: "ring2" is the second), the hands, the quiver ("ammo") and the focus.
-const DOLL_SIZE := Vector2(388, 432)
-const DOLL_AT := {"head": Vector2(194, 40), "eyes": Vector2(120, 40), "neck": Vector2(194, 106), "cloak": Vector2(110, 122),
-	"robe": Vector2(278, 122), "armor": Vector2(194, 178), "wrists": Vector2(110, 188), "hands": Vector2(278, 188),
-	"main_hand": Vector2(42, 250), "belt": Vector2(194, 252), "off_hand": Vector2(346, 250), "ring": Vector2(110, 262),
-	"ring2": Vector2(278, 262), "ammo": Vector2(110, 332), "focus": Vector2(278, 332), "feet": Vector2(194, 398)}
+const DOLL_SIZE := Vector2(372, 432)
+const DOLL_AT := {"head": Vector2(186, 40), "eyes": Vector2(112, 40), "neck": Vector2(186, 106), "cloak": Vector2(102, 122),
+	"robe": Vector2(270, 122), "armor": Vector2(186, 178), "wrists": Vector2(102, 188), "hands": Vector2(270, 188),
+	"main_hand": Vector2(34, 250), "belt": Vector2(186, 252), "off_hand": Vector2(338, 250), "ring": Vector2(102, 262),
+	"ring2": Vector2(270, 262), "ammo": Vector2(102, 332), "focus": Vector2(270, 332), "feet": Vector2(186, 398)}
 ## Ioun Stones orbit beside the head; weapon set II hangs under the hands, with the swap under it.
-const IOUN_AT := Vector2(268, 40)
-const SET2_AT := {"main_hand": Vector2(42, 318), "off_hand": Vector2(346, 318)}
-const SWAP_AT := Vector2(42, 392)
+const IOUN_AT := Vector2(260, 40)
+const SET2_AT := {"main_hand": Vector2(34, 318), "off_hand": Vector2(338, 318)}
+const SWAP_AT := Vector2(34, 392)
 ## Slots kept to hand that aren't worn or wielded (Gear.carry_slot).
 const CARRY_SLOTS: Array[String] = ["ammo", "focus"]
 ## Consumables kept to hand for fights (plan §5.6 "Quick slots").
@@ -258,6 +258,7 @@ func _place(doll: Control, t: Control, at: Vector2) -> void:
 ## The figure behind the doll's tiles: a dark silhouette rimmed in old gold, head, shoulders, arms reaching down to
 ## the hands' tiles, and legs down to the boots'.
 static func _paint_figure(c: Control) -> void:
+	c.draw_set_transform(Vector2(-8, 0))   # drawn for a doll 388 wide, centred on the 372 it is
 	var rim := Look.color("gilt_dark")
 	var ink := Look.color("ui_oxblood").darkened(0.12)   # solid: see-through limbs would darken where they overlap
 	c.draw_circle(Vector2(194, 196), 160.0, Color(Look.color("gilt"), 0.05))
@@ -515,7 +516,7 @@ func _stash_row(se: Dictionary, i: int, at_safe: bool, tip: Callable) -> Control
 
 func _pack(ch: Character) -> Control:
 	var pack := VBoxContainer.new()
-	pack.custom_minimum_size = Vector2(590, 0)
+	pack.custom_minimum_size = Vector2(550, 0)   # the doll beside it is 372 wide
 	pack.add_theme_constant_override("separation", 0)
 	pack.add_child(UiParts.tab_strip(Array(FILTERS, TYPE_STRING, "", null), filter, func(f: String) -> void:
 		filter = f
