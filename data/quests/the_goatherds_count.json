@@ -1,0 +1,33 @@
+{
+  "id": "the_goatherds_count",
+  "name": "The Goatherd's Count",
+  "summary": "Goodwife Petra's grandson Erno counts one more goat every evening on the high pasture than he owns.",
+  "giver": "barovia_goodwife",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Goodwife Petra's grandson Erno minds the village's goats on the high pasture above the road. Every evening for a week he's counted twenty-four of them, and he only has twenty-three, and the dog won't go near the extra one.",
+      "objectives": [
+        "Go up to the high pasture in the evening and count the goats with Erno"
+      ],
+      "hint": "Go up to the High Pasture above the road, east of the village, in the evening, and find Erno at the fold.",
+      "ends": ""
+    },
+    {
+      "id": "defended",
+      "journal": "The extra goat is Snowdrop, the nanny Goodwife Petra's father led into the mists fifty years ago. The mists gave her back, and sent wolves out after her. We kept them off.",
+      "objectives": [
+        "Decide what becomes of Snowdrop"
+      ],
+      "hint": "Talk to Erno at the fold on the High Pasture, in the evening.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Erno counts twenty-three goats every evening now, which Goodwife Petra says is the most beautiful number there is.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -536,3 +536,14 @@ func test_the_spiders_of_the_webbed_gully() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_spiders_gully"), "cut_down")
 	assert_true(GameState.story.get_flag("gully_spiders_beaten", false))
+
+
+## Wolves come out of the mists at the top of the high pasture for the old nanny goat.
+func test_the_mist_wolves_come_for_snowdrop() -> void:
+	var v := await _boot("barovia_high_pasture", 18, 1, ["pasture_erno_met"])
+	GameState.story.set_quest_stage("the_goatherds_count", "asked")
+	LocationNpcs.hide_npcs_of(v, "village_of_barovia/the_goatherds_count:erno")
+	await _fight(v, "pasture_wolves", ["A Mist Wolf"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_goatherds_count"), "defended")
+	assert_true(GameState.story.get_flag("pasture_wolves_beaten", false))

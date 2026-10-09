@@ -1,0 +1,13 @@
+# Narrator: the high pasture above the road east of the village (The Goatherd's Count, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:barovia_high_pasture
+| A long slope of thin grass above the road, a dry-stone fold, goats, and at the top of the slope the white wall of the mists, close enough to throw a stone into.
+| [flag.pasture_wolves_beaten] The high pasture, quiet. Up at the top, the mists lie flat and white, the way they're supposed to.
+cooldown 30
+
+~ examine:pasture_mist_edge
+| The edge of the mists, like a wall of wet wool. When you stand close, you can hear, very far off inside it, a bell.
+
+~ examine:pasture_hut
+| A lean-to of stacked wood and a hide, where Erno keeps his crook, his bread and a slate with tally marks on it: twenty-three, twenty-three, twenty-three, then a week of twenty-fours, each one gone over twice.

@@ -1,0 +1,108 @@
+# The Goatherd's Count (side quest, docs/story/side_quests.md): Goodwife Petra's grandson Erno keeps the village's goats
+# on the high pasture above the road, and every evening for a week he has counted one more goat than he owns
+# (data/locations/barovia_high_pasture.json). The extra one is an old nanny goat with a bell, and the dog won't go
+# near her. **Twist:** she's Snowdrop, the nanny Petra's father Ilarion was leading the night he walked into the mists
+# for a doctor, fifty years ago (The Last Traveller): the mists are giving back what they took. **Escalation:** the
+# mists don't give anything back for nothing, and the wolves come out of them after her. Reached from Goodwife Petra at
+# the well (village_of_barovia/townsfolk:goodwife_menu) and Erno on the pasture by evening. Every line here is unvoiced
+# for now.
+
+# --- Goodwife Petra at the well (village_of_barovia/townsfolk:goodwife_menu jumps here) ---
+
+~ petra
+Goodwife Petra: The goats? My grandson Erno's, or the village's; he minds them all for a copper a head. Up on the high pasture above the road.
+Goodwife Petra: He came down last night white as milk. Says he counts one more every evening than he has. Twenty-three goats, and he counts twenty-four, and the dog won't go near the extra one. He's a good boy. He can count.
+quest the_goatherds_count asked
+-> END
+
+# --- Erno at the fold, evenings (npc pasture_erno) ---
+
+~ erno
+if quest.the_goatherds_count == done
+if flag.snowdrop_home
+Erno: Twenty-three. (He beams.) And Snowdrop sleeps in Gran's kitchen, so she doesn't count. Gran says that's the most beautiful number there is.
+elif flag.snowdrop_back
+Erno: Twenty-three. Every night. (He looks up at the fog, and then doesn't.) I can still hear the bell, sometimes. Gran says that's all right.
+endif
+-> END
+endif
+if flag.pasture_wolves_beaten
+-> after
+endif
+if flag.pasture_erno_met
+Erno: (Counting under his breath.) Twenty-two, twenty-three. Twenty-four. (He stops.) There. Her again. By the wall.
+-> erno_menu
+endif
+set pasture_erno_met
+Narrator: A boy of ten or so in a coat too big for him stands at the gate of a dry-stone fold, touching each goat on the back as it goes past him, with a big grey dog pressed against his legs.
+Erno: Twenty-one, twenty-two, twenty-three. (A long pause.) Twenty-four.
+Narrator: The last one through the gate is an old nanny goat, white going yellow, with a cracked bell on a leather collar. The dog whines and won't look at her.
+-> erno_menu
+
+~ erno_menu
+* [Animal Handling DC 10] (Go and look at the old nanny goat.) -> nanny | nanny_shy
+* (Look at the bell on her collar.) -> bell
+* (Leave him to his counting.) -> END
+
+~ nanny
+Narrator: She lets you close. Her coat is damp, and cold, the way mist is cold, though the evening's dry. Burrs in her coat from bushes that don't grow on this side of the valley. Her eyes are very old and very calm.
+-> bell
+
+~ nanny_shy
+Narrator: She walks off along the wall, unhurried, and the bell on her collar clanks once. It's a sound the whole pasture seems to stop and listen to.
+-> bell
+
+~ bell
+Narrator: The bell is cracked and green, and scratched into the collar's leather, in letters fifty years old: SNOWDROP. And a little mark like a boot.
+if flag.ilarion_met
+Narrator: You've seen that mark before: on a pair of good grey boots, on a young man by the edge of the fog who asked you what day it was.
+endif
+Erno: Gran had a nanny called Snowdrop, when she was little. Great-grandad took her with him the night he went into the fog. Gran says she still hears the bell sometimes, at the edge of the mists. (He swallows.) Gran says a lot of things.
+-> wolves_come
+
+~ wolves_come
+Narrator: Up at the top of the pasture, where the grass stops and the fog starts, the white wall of the mists bulges, the way a sheet does when someone pushes on it from the other side.
+Narrator: Out of it, low and fast, come wolves. Not the valley's grey wolves; these are white with the mist, and wet, as if they'd come a very long way through it. They're coming for the old nanny.
+Erno: The fold! Get them in the fold!
+interject tag:kind: Behind the wall, Erno. We've got her.
+combat pasture_wolves
+
+# --- After the wolves ---
+
+~ after
+Narrator: The goats are all in the fold, crowded together, and the old nanny stands by the gate, quite calm, with mist still beading on her coat. Up at the top of the pasture the fog has gone flat again.
+* (Take her down to Goodwife Petra.) -> home
+* (Walk her back up to the mists. They'll only send more.) -> back
+
+~ home
+set snowdrop_home
+quest the_goatherds_count done
+Narrator: Goodwife Petra comes up the pasture track with her skirts in her fists, and stops, and puts her hand on the old nanny's head, and the bell clanks once.
+Goodwife Petra: Snowdrop. You stupid old thing. Fifty years. (She doesn't cry, quite.)
+if flag.ilarion_home
+Goodwife Petra: Father's by the fire. He'll cry when he sees you. He cries at everything now; he says he's fifty years behind on it.
+else
+Goodwife Petra: Where's my father, then? Hm? You left him behind.
+endif
+Goodwife Petra: (To you.) This was my mother's. Smell it, and the dogs love you, and the goats follow you anywhere. I never had the heart to use it. Use it.
+give potion_of_animal_friendship
+gold +25
+approve liriel_dawnsong +2 kip_smudgewick +2 wren_featherfoot +1: You brought Snowdrop home to Goodwife Petra
+-> END
+
+~ back
+set snowdrop_back
+quest the_goatherds_count done
+Narrator: You walk her up to the edge of the fog. She looks back once, at the fold, at the village roofs below, and then walks into the white without hurrying, and the bell goes on for a long time after you can't see her.
+Erno: (Very quietly.) Twenty-three.
+Narrator: At the gate of the fold, Erno's left something for you: a little stoppered bottle Goodwife Petra gave him for the goats, wrapped in a note that says THANK YOU in big letters.
+give potion_of_animal_friendship
+gold +25
+approve thistle +1 godrick_pendlebrook +1: You gave Snowdrop back to the mists so they'd send nothing after her
+-> END
+
+# --- A goat (npc pasture_goat) ---
+
+~ goat
+Narrator: A goat. It chews something that isn't grass, and looks at you as if you might be next.
+-> END

@@ -1390,6 +1390,26 @@
       "id": "tsura_went_on",
       "type": "bool",
       "summary": "The Spiders' Gully: Tsura went on to Krezk and sent her letter."
+    },
+    {
+      "id": "pasture_erno_met",
+      "type": "bool",
+      "summary": "The Goatherd's Count: the party met Erno counting the goats into the fold."
+    },
+    {
+      "id": "pasture_wolves_beaten",
+      "type": "bool",
+      "summary": "The Goatherd's Count: the party kept the mist wolves off the old nanny (encounter pasture_wolves)."
+    },
+    {
+      "id": "snowdrop_home",
+      "type": "bool",
+      "summary": "The Goatherd's Count: Snowdrop went down to Goodwife Petra's kitchen."
+    },
+    {
+      "id": "snowdrop_back",
+      "type": "bool",
+      "summary": "The Goatherd's Count: the party walked Snowdrop back into the mists."
     }
   ]
 }

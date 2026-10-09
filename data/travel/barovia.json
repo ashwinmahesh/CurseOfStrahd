@@ -100,6 +100,19 @@
       "region": "svalich_road",
       "when": "quest.the_spiders_gully",
       "summary": "A gully off the falls path where the stream cuts down and giant spiders have strung the walls with web."
+    },
+    {
+      "id": "high_pasture",
+      "name": "The High Pasture",
+      "location": "barovia_high_pasture",
+      "spawn": "from_road",
+      "pos": [
+        0.8,
+        0.47
+      ],
+      "region": "village_of_barovia",
+      "when": "quest.the_goatherds_count",
+      "summary": "The goats' pasture on the slope above the road east of the village, with the mists at the top of it."
     }
   ],
   "roads": [
@@ -186,6 +199,14 @@
       "table": "svalich_woods",
       "name": "Up out of the gully to the falls",
       "when": "quest.the_spiders_gully"
+    },
+    {
+      "id": "village_to_high_pasture",
+      "from": "village_of_barovia",
+      "to": "high_pasture",
+      "hours": 0.5,
+      "name": "The pasture track up from the road",
+      "when": "quest.the_goatherds_count"
     }
   ]
 }
