@@ -30,3 +30,34 @@ func test_a_creature_restrained_by_a_web_on_its_way_stops_there() -> void:
 	assert_true(bag.creature.has_condition(&"restrained"), "it failed its save")
 	assert_true(bag.cell in web.cells and bag.cell != inside, "it stops in the first webbed square it entered")
 	assert_true(bag.movement_left > 0, "with movement it can't use")
+
+
+## A move stopped in an ally's space it was passing through goes back to the last square it could stop in (QA FN-18:
+## a griffon's Opportunity Attack grabbed the mover as it stepped out of an ally's square, and the two shared it).
+func test_a_mover_stopped_in_an_allys_space_steps_back() -> void:
+	var e := TestCombat.encounter(["##########", "#####.####", "#####.####", "#####.####", "#####.####", "#####..###",
+		"#####.####", "#####.####", "##########"], 1)
+	var mover := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 6), 5)
+	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(5, 4), 5)
+	var griffon := TestCombat.foe(e, "griffon", Vector2i(6, 5))
+	TestCombat.start_with(e, mover)
+	griffon.reaction_rules["opportunity_attack"] = "auto"
+	mover.creature.hp = 200
+	TestCombat.next_d20(e, 20)
+	e.move(mover, Vector2i(5, 2))
+	while e.pending != null:
+		e.answer_reaction(true)
+	assert_true(mover.creature.has_condition(&"grappled"), "grabbed on the way")
+	assert_ne(mover.cell, ally.cell, "not left in the ally's square")
+	assert_eq(mover.cell, Vector2i(5, 5), "back where it could stop")
+
+
+## A teleport needs room for the whole creature (QA FN-19): a Large creature's corner square was all that was checked.
+func test_a_large_creature_teleports_only_where_it_fits() -> void:
+	var e := TestCombat.encounter(["........", "........", "....#...", "........", "........"], 1)
+	var steed := TestCombat.foe(e, "giant_elk", Vector2i(1, 1))
+	steed.side = &"party"
+	TestCombat.start_with(e, steed)
+	assert_false(e.feature_actions.room_at(steed, Vector2i(3, 1)), "a 2 x 2 at (3, 1) would cover the wall at (4, 2)")
+	assert_false(e.feature_actions._teleport(steed, Vector2i(3, 1), 30).ok, "so it can't land there")
+	assert_true(e.feature_actions._teleport(steed, Vector2i(5, 0), 30).ok, "where it fits, it lands")
