@@ -1,0 +1,15 @@
+{
+  "id": "sq_bujor_cub",
+  "title": "The Dancing Bear",
+  "summary": "Bujor standing over a cub caught in a trap at the old den.",
+  "images": [
+    {
+      "image": "sq_bujor_cub",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.45
+  ]
+}
