@@ -135,9 +135,11 @@ func use(c: Combatant, p: Dictionary, targets: Array, point: Vector2, opts: Dict
 			_pay(c, p)
 			var fs := Effect.new(label, &"item", str(p["item_id"]))
 			fs.caster_id = c.id
-			fs.conditions.append(&"restrained")
+			# Manacles (2024): Disadvantage on attack rolls; Restrained only when chained to something fixed, which a
+			# fight has nothing for. One try to break free (the book allows one every 30 days).
+			fs.modifiers.append(Modifier.of("disadvantage", {"on": "attack"}, label, &"item"))
 			fs.modifiers.append(Modifier.of("flag", {"value": "no_teleport"}, label, &"item"))
-			fs.escape = {"skill": "athletics", "dc": 30}
+			fs.escape = {"skill": "athletics", "dc": 30, "once": true}
 			t.creature.add_effect(fs)
 			e.log.add("condition", "%s is bound in Dimensional Shackles" % t.name(), t.id)
 			e.events.append({"type": "condition", "id": t.id})

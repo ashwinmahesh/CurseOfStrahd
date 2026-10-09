@@ -446,8 +446,8 @@ func test_the_golden_idol_works_in_and_out_of_fights() -> void:
 	assert_false(e.items.use(c, "golden_idol_of_good_fortunes", "globe", [c]).ok, "once a day")
 
 
-## Dimensional Shackles (The Baron's Island): a Utilize action binds an Incapacitated foe within 5 ft, who then can't
-## teleport; one pair holds one creature at a time.
+## Dimensional Shackles (The Baron's Island): a Utilize action binds an Incapacitated foe within 5 ft, who then has
+## Disadvantage on attack rolls and can't teleport; one pair holds one creature at a time.
 func test_dimensional_shackles_bind_one_foe_who_cannot_teleport() -> void:
 	var e := TestCombat.open_field()
 	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 5)
@@ -459,7 +459,9 @@ func test_dimensional_shackles_bind_one_foe_who_cannot_teleport() -> void:
 	foe.creature.add_condition(&"incapacitated", "test")
 	other.creature.add_condition(&"incapacitated", "test")
 	assert_true(e.items.use(c, "dimensional_shackles", "shackle", [foe], Vector2(3, 2)).ok)
-	assert_true(foe.creature.has_condition(&"restrained"))
+	assert_false(foe.creature.has_condition(&"restrained"), "Restrained only when chained to something fixed")
+	var attack: Array[String] = ["attack"]
+	assert_true(foe.creature.d20_sources(attack)["disadvantage"].size() > 0, "Disadvantage on attack rolls")
 	TestCombat.start_with(e, c)
 	var again := e.items.use(c, "dimensional_shackles", "shackle", [other], Vector2(2, 3))
 	assert_false(again.ok, "one pair, one prisoner")
@@ -468,6 +470,15 @@ func test_dimensional_shackles_bind_one_foe_who_cannot_teleport() -> void:
 	var at := foe.cell
 	e.spells._teleport(foe, Vector2i(6, 6), CombatResult.new())
 	assert_eq(foe.cell, at, "the shackles stop a teleport")
+	var bonds: Effect = null
+	for fx: Effect in foe.creature.effects:
+		if fx.source_id == "dimensional_shackles":
+			bonds = fx
+	TestCombat.start_with(e, foe)
+	assert_true(e.escape_effect(foe, bonds.id).ok, "one try at DC 30")
+	assert_true(foe.creature.effects.has(bonds), "a bandit can't make DC 30")
+	TestCombat.start_with(e, foe)
+	assert_false(e.escape_effect(foe, bonds.id).ok, "and only one")
 
 
 ## The Wand of Slumber (The Waystone's reward): any hero can attune and put a foe to sleep with it in a fight, and its
