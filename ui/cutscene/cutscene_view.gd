@@ -13,6 +13,11 @@ signal skip_requested
 signal clicked
 
 const FADE_SECONDS := 0.8
+## Headless runs read the still on the main thread, as PlacePreload reads nothing ahead there: the stand-in renderer's
+## texture store isn't made for textures made on several threads at once. A still read on a worker while the main
+## thread made the Narrator's portrait lost a texture in a full test run ('Parameter "t" is null' in
+## texture_2d_initialize, test_npc_routes, 2026-10-09). Tests of the worker thread itself turn this on.
+static var headless_too := false
 ## The caption's width at most, centred on the screen.
 const CAPTION_WIDTH := 1240.0
 
@@ -141,7 +146,7 @@ func show_image(path: String, focus: Vector2 = Vector2(0.5, 0.5)) -> void:
 		_loading = ""
 		_put(null)
 		return
-	if ResourceLoader.has_cached(path):
+	if ResourceLoader.has_cached(path) or DisplayServer.get_name() == "headless" and not headless_too:
 		_loading = ""
 		_put(load(path) as Texture2D)
 		return

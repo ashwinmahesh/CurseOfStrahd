@@ -69,6 +69,7 @@ func before_each() -> void:
 
 func after_each() -> void:
 	get_tree().paused = false
+	CutsceneView.headless_too = false   # even when a test stopped early
 	if is_instance_valid(root):
 		root.queue_free()
 		root = null
@@ -249,8 +250,10 @@ func test_stills_have_no_black_bands_and_pausing_holds_the_voice() -> void:
 
 
 ## Functional QA (FN-20): a still not in memory is read on a worker thread, so opening a cutscene never waits on the
-## disk; the caption shows at once and the picture arrives a few frames later.
+## disk; the caption shows at once and the picture arrives a few frames later. (Headless runs read it on the main
+## thread unless CutsceneView.headless_too: nothing else here makes a texture while it's read.)
 func test_a_still_loads_off_the_main_thread() -> void:
+	CutsceneView.headless_too = true
 	var path := "res://art/cutscenes/castle_glimpse.jpg"
 	var view := CutsceneView.new()
 	add_child(view)
@@ -272,6 +275,28 @@ func test_a_still_loads_off_the_main_thread() -> void:
 			break
 		await get_tree().process_frame
 	assert_true(view.art.texture == held, "the last still asked for is the one shown")
+	view.queue_free()
+	CutsceneView.headless_too = false
+
+
+## Headless (tests, the story bot, tools) a still is read on the main thread, never on a worker beside textures the
+## main thread is making: the stand-in renderer's texture store lost one that way ('Parameter "t" is null' in
+## texture_2d_initialize, test_npc_routes, 2026-10-09).
+func test_headless_reads_a_still_on_the_main_thread() -> void:
+	assert_false(CutsceneView.headless_too, "off unless a test asks")
+	var path := ""
+	for f in DirAccess.get_files_at("res://art/cutscenes"):
+		var p := "res://art/cutscenes/" + f.trim_suffix(".import").trim_suffix(".remap")
+		if p.ends_with(".jpg") and not ResourceLoader.has_cached(p):
+			path = p
+			break
+	assert_ne(path, "", "a still nobody has read yet")
+	var view := CutsceneView.new()
+	add_child(view)
+	view.show_image(path)
+	assert_false(view.loading(), "nothing left reading on a worker")
+	assert_true(view.art.texture != null, "the still shows at once")
+	assert_eq(ResourceLoader.load_threaded_get_status(path), ResourceLoader.THREAD_LOAD_INVALID_RESOURCE, "never asked of a worker")
 	view.queue_free()
 
 
