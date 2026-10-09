@@ -137,6 +137,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		slot_level = l
 		_update_hover())
 	hud.radial_picked.connect(_radial)
+	hud.radial.picked_item.connect(_wheel_picked)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	hud.square_picked.connect(_square_picked)
 	var fresh := e.state == Encounter.State.SETUP
@@ -945,12 +946,42 @@ func _radial(choice: String) -> void:
 				hud.set_tab(catalog.class_tab(_player()))
 		"Items":
 			hud.set_tab(ActionCatalog.ITEMS)
-		"Move":
-			_cancel_targeting()
+		"Tactical":
+			rig.tactical = not rig.tactical
 		"End Turn":
 			_end_turn()
 		"Inspect":
 			_cycle_inspect()
+
+
+# --- The controller's wheels (owner pick 2026-10-09, after Baldur's Gate 3 on console) ------------------------------
+
+## The page of the hotbar filter a wheel of actions shows.
+var _wheel_page := 0
+
+
+## Fills the wheel (LB held, Controller fights: Wheels) with the hotbar filter's slots, a page at a time, the last wedge
+## always the tactical view.
+func _open_wheel() -> void:
+	var per := RadialMenu.PAGE - 1
+	var first := _wheel_page * per
+	var items: Array[Dictionary] = []
+	for i in range(first, mini(first + per, hud.slot_count())):
+		var a := hud.slot_action(i)
+		var usable := bool(a.get("legal", false)) and (e.current() == hud.shown or bool(a.get("toggle", false)))
+		items.append({"label": str(a["label"]), "icon": UiParts.action_icon(a), "enabled": usable})
+	items.append({"label": "Tactical view", "icon": Icons.feature("the_third_eye"), "enabled": true, "tactical": true})
+	var pages := maxi(1, ceili(hud.slot_count() / float(per)))
+	hud.radial.open_items(items, "%s %d/%d" % [hud.tab, _wheel_page + 1, pages] if pages > 1 else hud.tab)
+
+
+## A wedge of the wheel chosen: the tactical view, or the slot it holds used as its hotkey would.
+func _wheel_picked(index: int) -> void:
+	var item := hud.radial.items[index] if index < hud.radial.items.size() else {}
+	if bool(item.get("tactical", false)):
+		rig.tactical = not rig.tactical
+		return
+	hud.use_slot(_wheel_page * (RadialMenu.PAGE - 1) + index)
 
 
 func _cycle_inspect() -> void:
@@ -1016,8 +1047,27 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and hud.hide_details():
 		return
 	if event.is_action_pressed(&"combat_radial"):
-		hud.radial.open()
+		if GameSettings.pad_wheels():
+			_wheel_page = 0
+			_open_wheel()
+		else:
+			hud.radial.open()
 		return
+	# While a wheel of actions is open the D-pad changes its filter (up and down) and its page (left and right).
+	if hud.radial.visible and not hud.radial.items.is_empty() and event is InputEventJoypadButton and event.is_pressed():
+		var jb := event as InputEventJoypadButton
+		if jb.button_index in [JOY_BUTTON_DPAD_UP, JOY_BUTTON_DPAD_DOWN]:
+			hud.cycle_tab(-1 if jb.button_index == JOY_BUTTON_DPAD_UP else 1)
+			_wheel_page = 0
+			_open_wheel()
+			get_viewport().set_input_as_handled()
+			return
+		if jb.button_index in [JOY_BUTTON_DPAD_LEFT, JOY_BUTTON_DPAD_RIGHT]:
+			var pages := maxi(1, ceili(hud.slot_count() / float(RadialMenu.PAGE - 1)))
+			_wheel_page = posmod(_wheel_page + (-1 if jb.button_index == JOY_BUTTON_DPAD_LEFT else 1), pages)
+			_open_wheel()
+			get_viewport().set_input_as_handled()
+			return
 	if event.is_action_released(&"combat_radial"):
 		hud.radial.confirm()
 		return

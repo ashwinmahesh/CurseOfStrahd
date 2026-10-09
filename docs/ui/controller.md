@@ -121,7 +121,7 @@ Settings can rebind them.
 | B | Cancel, or take back a pick |
 | X | The next target |
 | Y | End the turn (asks if there's something left to do); while picking targets, cast with those picked |
-| LB (hold) | The radial menu: the right stick picks, release to choose |
+| LB (hold) | The radial menu: the right stick picks, release to choose. Bar (the default): Attacks, Spells, Class, Items, Common, Tactical (the camera from above), End Turn, Inspect. Wheels (Settings, Game, Controller fights): the hotbar filter's actions themselves, ten to a page with Tactical view last; the D-pad's up and down change the filter, left and right the page |
 | LT / RT, RB | Step through the hotbar's slots, use the one lit |
 | D-pad up / down | The hotbar's tab |
 | D-pad left / right | The spell slot's level |

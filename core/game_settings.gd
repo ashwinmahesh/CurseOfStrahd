@@ -77,6 +77,16 @@ static func set_shared_turns(on: bool) -> void:
 	set_value("shared_turns", on)
 
 
+## Controller fights (owner pick 2026-10-09): false the bar (LB's radial picks a tab, LT/RT/RB the slots), true the
+## wheels, Baldur's Gate 3's console way (LB's radial holds the actions themselves).
+static func pad_wheels() -> bool:
+	return bool(value("pad_wheels", false))
+
+
+static func set_pad_wheels(on: bool) -> void:
+	set_value("pad_wheels", on)
+
+
 ## Seconds in a fight's moves and pauses are multiplied by this.
 static func combat_pace() -> float:
 	return FAST_PACE if fast_combat() else 1.0
