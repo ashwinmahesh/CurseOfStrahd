@@ -8217,11 +8217,25 @@
   "recipe": "0f42f182b3",
   "text": "He'll feel it the moment it breaks, of course. I'd be somewhere else when it does, if I were you."
  },
+ "escher/0bc56e7a52cae751": {
+  "chars": 186,
+  "direction": "[sly, coaxing, vulnerable]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "And now I find I don't want to go up alone. I'd like it seen by somebody who isn't him. Come up to the south tower roof with me before dawn, and stay until the sun is over the mountains."
+ },
  "escher/0e9f9579c66c69b7": {
   "chars": 74,
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "He collects people, you see. He just doesn't play with them for very long."
+ },
+ "escher/175e807819dd7463": {
+  "chars": 88,
+  "direction": "[afraid, hushed, bitter]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "That's Querreth. It keeps the roofs. Everyone who ever asked to go up is hanging off it."
  },
  "escher/187322801dc3143b": {
   "chars": 55,
@@ -8229,11 +8243,25 @@
   "recipe": "0f42f182b3",
   "text": "He got bored of everyone. I was simply the most recent."
  },
+ "escher/19671321824de0d6": {
+  "chars": 127,
+  "direction": "[airy, theatrical, generous]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "There's a price, naturally, and I'm the one paying it. He gave me one present I could never use. It's yours once the sun is up."
+ },
  "escher/20c1d240913cacc1": {
   "chars": 47,
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "Get out. Go and threaten somebody with a pulse."
+ },
+ "escher/27b24b89744f0b49": {
+  "chars": 163,
+  "direction": "[wry, theatrical, resigned]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Of course it's a trap, darling. Everything up here is. The question is only whether it's worth walking into, and I've decided it is. You can decide for yourselves."
  },
  "escher/291d7cb6ced3172f": {
   "chars": 114,
@@ -8241,11 +8269,25 @@
   "recipe": "0f42f182b3",
   "text": "Well. Visitors. Has our host sent you up to look at me? I'm not on display today. Come back when I've been dusted."
  },
+ "escher/35dd2f4251af1345": {
+  "chars": 70,
+  "direction": "[dying, whispered, at peace]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "(At the very end, hardly a sound.) Worth it. Tell him it was worth it."
+ },
  "escher/3d7589d6bfa75d00": {
   "chars": 125,
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "I was a guest here, once. Then a favourite. Then this. Then the favourite part ended, and here I am, locked in with my coats."
+ },
+ "escher/4119e19e1bd9c6e9": {
+  "chars": 160,
+  "direction": "[laughing, wry, then sincere]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "A dawn he isn't in. You do know how to sell a thing. Very well, I'll wait. Don't be too long about killing him; I'm not good at waiting, whatever I've told you."
  },
  "escher/41255941b6654ddd": {
   "chars": 86,
@@ -8259,11 +8301,39 @@
   "recipe": "0f42f182b3",
   "text": "Back again. I'm flattered. I'd offer you a chair, but you'd only sit in it."
  },
+ "escher/482ad33f47e41728": {
+  "chars": 148,
+  "direction": "[wry, bitter, theatrical]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Take the present anyway. It's a helm full of captured daylight; he thought that was funny. If I'm ever to wear it, I'd like it to be at his funeral."
+ },
+ "escher/4be4111cfe34ca43": {
+  "chars": 47,
+  "direction": "[desperate, pleading, tender]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "No. Don't, darling. Nine years. Let me have it."
+ },
+ "escher/4e5f27378e77f1a6": {
+  "chars": 142,
+  "direction": "[quiet, ashamed, honest]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "I didn't show you that part. I wanted the sun more than I wanted you to come back down again. I'm not proud of it. I'm not proud of very much."
+ },
  "escher/4ec2781955f71a6b": {
   "chars": 84,
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "Oh, don't. Flattery from the living. It smells of soup. Now it will cost you double."
+ },
+ "escher/596089c78c900bfd": {
+  "chars": 163,
+  "direction": "[eager, giddy, nervous]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Before dawn, then. Up the stair from the gallery to the roofs, and along to the south tower. I'll be at the parapet. I'll be early. I've been early for nine years."
  },
  "escher/62dbbd471317efe3": {
   "chars": 80,
@@ -8283,6 +8353,27 @@
   "recipe": "0f42f182b3",
   "text": "With you? Into a fight with him? I've seen what he does to people who leave. I've seen what he does to people who stay, which is worse, only slower."
  },
+ "escher/8d367c247158cf49": {
+  "chars": 99,
+  "direction": "[quiet, ashamed, bitter]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "(A long pause. Then he opens it all the way.) Yes. Bring your friends. I should like them to watch."
+ },
+ "escher/8e996b7dd219abec": {
+  "chars": 168,
+  "direction": "[wistful, regretful, soft]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "When I was alive I slept through dawns. Hundreds of them. I'd come home at four from somebody's ball and draw the curtains, and I thought there'd always be another one."
+ },
+ "escher/936edfae12444885": {
+  "chars": 91,
+  "direction": "[wry, wistful, theatrical]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "My dawn-sellers. I'm still waiting, you see. I've put the good coat away, but not very far."
+ },
  "escher/95629e86dd782e55": {
   "chars": 122,
   "model": "eleven_v3",
@@ -8301,11 +8392,25 @@
   "recipe": "0f42f182b3",
   "text": "Customers. Come for something else? Everything here has a price, darlings, including the conversation."
  },
+ "escher/9bdf9a6b892b936a": {
+  "chars": 139,
+  "direction": "[giddy, relieved, impatient]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "You saw that thing off my roof. I heard it go, all the way down here. Tonight, then. I've waited nine years; I can wait one more day. Just."
+ },
  "escher/9d6b2a9232e7c943": {
   "chars": 83,
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "...Yes. Yes, I do. Oh, very well. It's been so long since anyone asked me anything."
+ },
+ "escher/ae4c09f6a25093b1": {
+  "chars": 101,
+  "direction": "[nervous, vain, delighted]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "You came. I wasn't sure you would. I put on the good coat anyway; one likes to be dressed for things."
  },
  "escher/b2fa1857ffe452c2": {
   "chars": 80,
@@ -8331,6 +8436,13 @@
   "recipe": "0f42f182b3",
   "text": "Coin. Vulgar, and so reliable."
  },
+ "escher/bf655307631fcd97": {
+  "chars": 126,
+  "direction": "[hushed, trembling, thrilled]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Last night something came back under mine. (He unfolds it just far enough to show one word, in a hand like black thorns.) Yes."
+ },
  "escher/c205e84d297cf50e": {
   "chars": 144,
   "model": "eleven_v3",
@@ -8342,6 +8454,34 @@
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "You wouldn't. ...You would. Fine. Fine!"
+ },
+ "escher/c90e7f815d24248c": {
+  "chars": 41,
+  "direction": "[awed, whispered, overwhelmed]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Oh. Oh, I'd forgotten it was that colour."
+ },
+ "escher/cbd58866ece9eca2": {
+  "chars": 72,
+  "direction": "[brittle, wounded, airy]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "No. Of course not. It's only been nine years. I'll keep it in my pocket."
+ },
+ "escher/ec2a407009a11359": {
+  "chars": 73,
+  "direction": "[eager, vain, warm]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Before dawn. The south tower. I'll be there before you, in the good coat."
+ },
+ "escher/f3f41c4f902e07a2": {
+  "chars": 185,
+  "direction": "[light, theatrical, wistful]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "Oh, this? My petition. Every night for nine years I've written him the same line in my best hand, Let me see the sun, and slid it under his door. He never answers. He likes to be asked."
  },
  "escher/fc1f685c4e71a752": {
   "chars": 71,
@@ -8360,6 +8500,13 @@
   "model": "eleven_v3",
   "recipe": "0f42f182b3",
   "text": "Then one night the real one went down the high tower stair the quick way, and the toy was standing at the top. Draw your own conclusions."
+ },
+ "escher/fec69f050b4eae6b": {
+  "chars": 69,
+  "direction": "[quiet, cold, resigned]",
+  "model": "eleven_v3",
+  "recipe": "0f42f182b3",
+  "text": "(Quietly, without turning round.) There it is. The rest of my answer."
  },
  "escher/fef8563d0b1940f2": {
   "chars": 126,
@@ -10454,6 +10601,13 @@
   "model": "eleven_v4",
   "recipe": "ef2f9464fb",
   "text": "Evening, my lady. ...I've just bowed to a painting. But that's Ireena's face. That's her exactly."
+ },
+ "godrick_pendlebrook/495c0e9d613c19d1": {
+  "chars": 66,
+  "direction": "[grim, protective, firm]",
+  "model": "eleven_v3",
+  "recipe": "52840be837",
+  "text": "A bound devil, keeping a dead man from the sun. Behind me, Escher."
  },
  "godrick_pendlebrook/49d7efffdcad47af": {
   "chars": 132,
@@ -13364,6 +13518,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "A shrine to a lord, not a god. They knelt to the wrong one."
+ },
+ "hero_female/31d707da05d552d5": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "It's a trap, and he knew it was."
  },
  "hero_female/31e9f6b78a688dc4": {
   "chars": 33,
@@ -17630,6 +17790,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "A shrine to a lord, not a god. They knelt to the wrong one."
+ },
+ "hero_male/31d707da05d552d5": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "It's a trap, and he knew it was."
  },
  "hero_male/31e9f6b78a688dc4": {
   "chars": 33,
@@ -28461,6 +28627,13 @@
   "recipe": "a968987b3b",
   "text": "He's lovely when he's flustered, isn't he? Oh. Did I say that aloud?"
  },
+ "liriel_dawnsong/3bb8a2d6d931bfef": {
+  "chars": 52,
+  "direction": "[soft, prayerful, tender]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "Let it be kind to him. He walked up here to meet it."
+ },
  "liriel_dawnsong/3c25ba91e37d73df": {
   "chars": 67,
   "model": "eleven_v4",
@@ -37897,6 +38070,12 @@
   "recipe": "dd92281f92",
   "text": "Past the gate the road goes on, steep and narrow, into cloud so thick you can hear it. Somewhere up there, something golden is catching a light that isn't the sun's."
  },
+ "narrator/28870cf45bf2c855": {
+  "chars": 181,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He doesn't step back. The light comes over the mountains and finds him, and he smokes, and then he burns, quietly, the way paper burns, with his face turned up to it the whole time."
+ },
  "narrator/289f31af11610ad8": {
   "chars": 124,
   "model": "eleven_v4",
@@ -38425,6 +38604,12 @@
   "recipe": "dd92281f92",
   "text": "That evening the festival bunting comes down all over Vallaki, and nothing goes up in its place. The town is quieter than it has been in years. It is not the same thing as peace."
  },
+ "narrator/2d0a83fd61503ba7": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He has folded it so that the one word shows and nothing else, and his thumb is pressed down on the fold, hard, the way you'd hold a door shut against a draught."
+ },
  "narrator/2d1e0da22ab2cbed": {
   "chars": 141,
   "model": "eleven_v4",
@@ -38850,6 +39035,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He breaks against a will that won't let him in and falls back, sobbing, into his sister's arms."
+ },
+ "narrator/314b84c8c95ba90c": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Querreth comes down onto the tower roof on red wings, and its chains come with it, full of grey shapes that reach for you with both hands."
  },
  "narrator/314ba7b3405807d4": {
   "chars": 125,
@@ -40117,6 +40308,12 @@
   "recipe": "dd92281f92",
   "text": "Each time a word slips away from him, his eyes go up and to the left, out of the window, to the summit where a cairn of stones stands against the sky. As if he left something there and can't remember why he keeps checking on it."
  },
+ "narrator/3be84014d4db816e": {
+  "chars": 178,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Escher stands at the south parapet in his best coat, the wine-red velvet with silver worked down the front, with his back to you. He's looking east, at a sky that is still black."
+ },
  "narrator/3c1a9b1f8aa3f43e": {
   "chars": 182,
   "model": "eleven_v4",
@@ -41382,6 +41579,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The rocking slows. For the first time since you came in, she looks at you and not past you."
+ },
+ "narrator/47d211d22ec639f7": {
+  "chars": 76,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Above you on the keep roof, something heavy drags a chain across the slates."
  },
  "narrator/47d53f9ee2357a3b": {
   "chars": 84,
@@ -47227,6 +47430,12 @@
   "recipe": "dd92281f92",
   "text": "You hold out the brass key. He goes perfectly still, then turns his back to you and waits."
  },
+ "narrator/79c9f34025f0c0cd": {
+  "chars": 231,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It drops off the keep roof onto the battlements on wide red wings: tall, horned, with hooked chains hanging from both arms. In the chains, like washing on a line, hang grey shapes that were people once, and their mouths are moving."
+ },
  "narrator/79cf02edcce70502": {
   "chars": 147,
   "model": "eleven_v4",
@@ -48738,6 +48947,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Its dreams come out of the walls as small eyes. They hate their own kind. We turned the great mirrors in the hall to face its chamber, and the little eyes go mad at their reflections and fight the glass and not us. Turn them back to the wall after, or the hall is no good for sleeping."
+ },
+ "narrator/87478d87b07eab80": {
+  "chars": 99,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Escher's coats hang in the open wardrobe, beautiful and empty. The red velvet one isn't among them."
  },
  "narrator/875547104d179510": {
   "chars": 83,
@@ -51055,6 +51270,12 @@
   "recipe": "dd92281f92",
   "text": "Polished floors, good candles, and the hush of a house where servants are trained not to hear things."
  },
+ "narrator/9b6b01ae5839610e": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He looks at the line of light for a long moment. Then he laughs, and backs away from it into the shadow of the stair."
+ },
  "narrator/9b78326e627c2b2d": {
   "chars": 140,
   "model": "eleven_v4",
@@ -52543,6 +52764,12 @@
   "recipe": "dd92281f92",
   "text": "He finishes the song. Then, very carefully, in Anna's voice, he says the line that ends it every night through the shutters:"
  },
+ "narrator/a8419f4c62c8d351": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He has a folded paper in his long fingers. He's been turning it over the whole time you've been talking, and he doesn't seem to know it."
+ },
  "narrator/a843ea8b72857cda": {
   "chars": 65,
   "model": "eleven_v4",
@@ -53016,6 +53243,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road west runs out between the last houses, toward the crossroads. High to the south-west, on a cliff of black rock, a castle sits against the clouds and does not need to be introduced."
+ },
+ "narrator/ac7520b1fc0894f5": {
+  "chars": 204,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You sit with him on the parapet for what's left of the night. He talks the whole time: about balls, and coats, and a dog he had as a boy that would only come for cheese. He doesn't mention the count once."
  },
  "narrator/ac8140c67136588c": {
   "chars": 101,
@@ -54186,6 +54419,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Whatever you carry out of Berez, you carry it on your backs for a long time. You find you are stronger for the weight."
+ },
+ "narrator/b737056f23732beb": {
+  "chars": 284,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "When it's over there is a good red velvet coat on the stones and a little ash, and the wind takes the ash. In the coat's pocket is a purse, and a helm of dark steel set with gems that each hold a little captured light: a crown full of daylight, given to a man who could never wear it."
  },
  "narrator/b73d6af97ec9f6c8": {
   "chars": 57,
@@ -58519,6 +58758,12 @@
   "recipe": "dd92281f92",
   "text": "A long low kitchen gone feral: straw beds, a hearth with a black pot, bones in a pile, and a dozen Belviews of all sizes who stop what they're doing and repeat your footsteps back to you on the flagstones."
  },
+ "narrator/df01a519bec66f06": {
+  "chars": 84,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A vain man holding a letter he wants very badly to believe. That's all you can tell."
+ },
  "narrator/df03e3ca9647281a": {
   "chars": 211,
   "model": "eleven_v4",
@@ -59280,6 +59525,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road climbs the last steep stretch to the tower. Faces are carved into the tower's stones, soldiers' faces, all looking down the road toward the valley."
+ },
+ "narrator/e4fc0effa50977f1": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the east the mountains turn grey, and then the colour of pewter, and then along the top of them comes a line of something that isn't grey at all."
  },
  "narrator/e5017a8751e1fae8": {
   "chars": 134,
@@ -63916,6 +64167,13 @@
   "model": "eleven_v3",
   "recipe": "c1f71546fb",
   "text": "Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears."
+ },
+ "querreth/20f67572374a0551": {
+  "chars": 151,
+  "direction": "[deep, gravelly, mocking, menacing]",
+  "model": "eleven_v3",
+  "recipe": "d490ed9e7c",
+  "text": "The master grants the petition. All of it. The sun for the pretty one, at the end of my chain, so he can't run from it. And for the guests, the larder."
  },
  "rahadin/03f9451a0bdddf90": {
   "chars": 108,

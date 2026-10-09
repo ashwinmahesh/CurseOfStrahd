@@ -2282,6 +2282,15 @@
       "settings": {},
       "model": "eleven_v3",
       "shared_with": "strahd"
+    },
+    "querreth": {
+      "voice_id": "ysswSXp8U9dFpzPJqFje",
+      "name": "Library voice: Azazel - Menacing and Gravelly Demon",
+      "description": "Querreth, the devil the count bound to Castle Ravenloft's roofs, one line: a shared library voice (also the vestige Taar-Haak's, in the Amber Temple), chosen by Claude (2026-10-09).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "shared_with": "vestige_taar_haak"
     }
   },
   "sfx": {

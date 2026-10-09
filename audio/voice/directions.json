@@ -655,6 +655,29 @@
   "f39b54569f3b51da": "[soft, yearning, hushed]",
   "fbd4f05d644ed476": "[aching, pleading, breaking]"
  },
+ "escher": {
+  "0bc56e7a52cae751": "[sly, coaxing, vulnerable]",
+  "175e807819dd7463": "[afraid, hushed, bitter]",
+  "19671321824de0d6": "[airy, theatrical, generous]",
+  "27b24b89744f0b49": "[wry, theatrical, resigned]",
+  "35dd2f4251af1345": "[dying, whispered, at peace]",
+  "4119e19e1bd9c6e9": "[laughing, wry, then sincere]",
+  "482ad33f47e41728": "[wry, bitter, theatrical]",
+  "4be4111cfe34ca43": "[desperate, pleading, tender]",
+  "4e5f27378e77f1a6": "[quiet, ashamed, honest]",
+  "596089c78c900bfd": "[eager, giddy, nervous]",
+  "8d367c247158cf49": "[quiet, ashamed, bitter]",
+  "8e996b7dd219abec": "[wistful, regretful, soft]",
+  "936edfae12444885": "[wry, wistful, theatrical]",
+  "9bdf9a6b892b936a": "[giddy, relieved, impatient]",
+  "ae4c09f6a25093b1": "[nervous, vain, delighted]",
+  "bf655307631fcd97": "[hushed, trembling, thrilled]",
+  "c90e7f815d24248c": "[awed, whispered, overwhelmed]",
+  "cbd58866ece9eca2": "[brittle, wounded, airy]",
+  "ec2a407009a11359": "[eager, vain, warm]",
+  "f3f41c4f902e07a2": "[light, theatrical, wistful]",
+  "fec69f050b4eae6b": "[quiet, cold, resigned]"
+ },
  "exethanter": {
   "055dd0501cc44a2f": "[alarmed whisper]",
   "0888e9573f2ddcc4": "[pleading, fragile]",
@@ -764,6 +787,7 @@
   "d852e0aec3ceec30": "[dry, low, wry]"
  },
  "godrick_pendlebrook": {
+  "495c0e9d613c19d1": "[grim, protective, firm]",
   "749ad33145e91a88": "[ashamed, breaking]",
   "861377174da00d79": "[sheepish, then grim resolve]",
   "ad6fb43460ac6bd1": "[sheepish, warm]",
@@ -1164,6 +1188,7 @@
   "1813b7e53eabb415": "[gentle, certain, compassionate]",
   "27dc277991695aa4": "[quiet, certain, compassionate]",
   "2cf8f1542384a932": "[shaken, hushed, sorrowful]",
+  "3bb8a2d6d931bfef": "[soft, prayerful, tender]",
   "4503a76638b93b89": "[shaken, quiet]",
   "4d8455c78fc689a3": "[firm, reassuring]",
   "6243477b5611229c": "[shaken, hurt]",
@@ -2292,6 +2317,9 @@
  },
  "pool_mourner": {
   "b67838152353c70e": "[soft, grieving, devout]"
+ },
+ "querreth": {
+  "20f67572374a0551": "[deep, gravelly, mocking, menacing]"
  },
  "ratatoille": {
   "1912e5e2be2788e5": "[humiliated, indignant]",
