@@ -523,14 +523,6 @@
             17
           ],
           "name": "One Who Asked"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            3,
-            23
-          ],
-          "name": "One Who Asked"
         }
       ]
     },
@@ -564,14 +556,6 @@
           "cell": [
             10,
             17
-          ],
-          "name": "One Who Asked"
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            3,
-            23
           ],
           "name": "One Who Asked"
         }

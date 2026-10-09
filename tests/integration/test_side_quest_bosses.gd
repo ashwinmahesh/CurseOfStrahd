@@ -279,3 +279,12 @@ const ROC_NEST: Array[Vector2i] = [Vector2i(33, 15), Vector2i(34, 16), Vector2i(
 ## The count's falconer, two of his hands and four stone birds come for the roc's chick.
 func test_the_falconer_at_level_9() -> void:
 	await _series("tsolenka_pass", 12, 9, "last_egg", [1, 2, 3, 4], ["roc_driven_off"], [], [], ROC_NEST)
+
+
+## The south tower roof of Castle Ravenloft, by the stair up from the rooms, where Escher waits at the parapet.
+const SOUTH_TOWER: Array[Vector2i] = [Vector2i(7, 20), Vector2i(8, 20), Vector2i(7, 21), Vector2i(8, 21)]
+
+
+## Querreth and two of the ones who asked before, catching the party unawares.
+func test_querreth_at_level_10() -> void:
+	await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
