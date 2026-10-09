@@ -82,6 +82,8 @@ elif not quest.six_feet
 set sixfeet_rumor
 quest six_feet rumored
 Arik: Mihail. Digs early.
+elif level >= 2 and not quest.the_roadhouse_lantern
+-> svalich_road/the_roadhouse_lantern:arik
 else
 Arik: No.
 endif

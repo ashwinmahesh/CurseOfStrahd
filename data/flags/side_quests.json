@@ -1355,6 +1355,21 @@
       "id": "reed_isle_home",
       "type": "bool",
       "summary": "The Baron's Island: the castaways rowed home to Vallaki in daylight, singing."
+    },
+    {
+      "id": "roadhouse_innkeeper_met",
+      "type": "bool",
+      "summary": "The Lantern in the Roadhouse: the party met the innkeeper's ghost at the Grey Goose."
+    },
+    {
+      "id": "roadhouse_ledger_read",
+      "type": "bool",
+      "summary": "The Lantern in the Roadhouse: the party read the Grey Goose's last guest book (Mama made a stew)."
+    },
+    {
+      "id": "roadhouse_cellar_beaten",
+      "type": "bool",
+      "summary": "The Lantern in the Roadhouse: the party put down the innkeeper's wife and sons from the cellar (encounter roadhouse_cellar)."
     }
   ]
 }
