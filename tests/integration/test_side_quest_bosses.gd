@@ -325,3 +325,12 @@ const BARROW_SLOPE: Array[Vector2i] = [Vector2i(28, 16), Vector2i(29, 16), Vecto
 ## Silverjaw, three barrow-wardens and four of the hill's watch, catching the party unawares.
 func test_the_hills_watch_at_level_7() -> void:
 	await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)
+
+
+## The bend in the Krezk road, by the waystone and its candle.
+const AT_THE_STONE: Array[Vector2i] = [Vector2i(12, 7), Vector2i(14, 7), Vector2i(13, 8), Vector2i(15, 8)]
+
+
+## Four of Kiril's hunters and a wolf come down the road for Lark and Yanko.
+func test_the_waystone_pack_at_level_6() -> void:
+	await _series("krezk_road_waystone", 23, 6, "waystone_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["waystone_lark_met"], [], [], AT_THE_STONE)

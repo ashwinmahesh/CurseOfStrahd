@@ -1275,6 +1275,26 @@
       "id": "hill_watch_beaten",
       "type": "bool",
       "summary": "The Barrow on Yester Hill: the party put down the hill's watch and Silverjaw (encounter hill_watch)."
+    },
+    {
+      "id": "waystone_lark_met",
+      "type": "bool",
+      "summary": "The Waystone: the party met Lark lighting the candle at the waystone."
+    },
+    {
+      "id": "waystone_wolves_beaten",
+      "type": "bool",
+      "summary": "The Waystone: the party stood at the stone against Kiril's hunters (encounter waystone_wolves)."
+    },
+    {
+      "id": "yanko_turned",
+      "type": "bool",
+      "summary": "The Waystone: talked down, Yanko came back to a boy's shape for the first time in two winters."
+    },
+    {
+      "id": "yanko_to_krezk",
+      "type": "bool",
+      "summary": "The Waystone: Lark and Yanko went to Great-uncle Pavel in Krezk (needs clovin_family_found)."
     }
   ]
 }

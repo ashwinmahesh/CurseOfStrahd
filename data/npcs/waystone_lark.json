@@ -1,0 +1,19 @@
+{
+  "id": "waystone_lark",
+  "name": "Lark",
+  "title": "A Belview of the Abbey",
+  "summary": "A small Belview girl with a lark's feathers down her neck and a lark's thin legs, who can sing in her dead mother's voice, and goes over the Abbey wall every night to light the candle at the waystone on the Krezk road.",
+  "portrait": "belview_sly",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

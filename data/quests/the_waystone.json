@@ -1,0 +1,42 @@
+{
+  "id": "the_waystone",
+  "name": "The Waystone",
+  "summary": "Every night somebody goes over the Abbey wall and down the Krezk road to light the candle at the old sunburst waystone.",
+  "giver": "clovin_belview",
+  "region": "krezk",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Clovin Belview says his cousin's girl, Lark, goes over the Abbey wall every night after the last bell, down the Krezk road toward the old stone with the sun cut into it, and comes back before morning with wax on her fingers.",
+      "objectives": [
+        "Go to the waystone on the Krezk road at night"
+      ],
+      "hint": "Go to the Waystone on the road to Krezk at night.",
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Lark lights the candle at the waystone every night for her brother Yanko, whom the wolves took two winters ago. He comes to the edge of the light to hear her sing. The pack has noticed.",
+      "objectives": [
+        "Stand by the waystone with Lark at night"
+      ],
+      "hint": "Stay by the Waystone on the road to Krezk with Lark, at night.",
+      "ends": ""
+    },
+    {
+      "id": "defended",
+      "journal": "The pack came down the road for Lark and her brother, and we stood at the stone with them. Yanko fought them too.",
+      "objectives": [
+        "Talk to Lark at the waystone"
+      ],
+      "hint": "Talk to Lark at the Waystone on the road to Krezk, at night.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Yanko came into the light. Lark gave us the Abbot's wand; she doesn't want it any more.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
