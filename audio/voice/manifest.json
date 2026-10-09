@@ -1709,6 +1709,13 @@
   "recipe": "94a1815f36",
   "text": "Bottles. While they last."
  },
+ "arik/dcb07533da177296": {
+  "chars": 33,
+  "direction": "[flat, terse]",
+  "model": "eleven_v3",
+  "recipe": "94a1815f36",
+  "text": "Grey Goose. Lantern. No upstairs."
+ },
  "arik/fa796a2f1fd6c62b": {
   "chars": 69,
   "direction": "[flat, toneless]",
@@ -17281,6 +17288,12 @@
   "recipe": "956cd23797",
   "text": "You bottled a mind."
  },
+ "hero_female/f79d49ff88a1608b": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Mama made a stew."
+ },
  "hero_female/f7ba33eb36dfde21": {
   "chars": 96,
   "model": "eleven_v4",
@@ -21588,6 +21601,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "You bottled a mind."
+ },
+ "hero_male/f79d49ff88a1608b": {
+  "chars": 17,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Mama made a stew."
  },
  "hero_male/f7ba33eb36dfde21": {
   "chars": 96,
@@ -35744,6 +35763,12 @@
   "recipe": "dd92281f92",
   "text": "Sarkhaza comes up off the gold all at once, faster than anything that size should, and the chain goes taut across the cavern with a crack like a bell."
  },
+ "narrator/117f4ea91207e603": {
+  "chars": 170,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Then, in Wenzel the innkeeper's careful hand: \"Two guests. A tinker and his boy, from the Gates.\" And in another hand, round and childish, underneath: \"Mama made a stew.\""
+ },
  "narrator/119240a2464cfde5": {
   "chars": 69,
   "model": "eleven_v4",
@@ -36241,6 +36266,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A guardroom with a table, a rack of mail and a roster on the wall, and soldiers at their posts in every corner who are no colour at all."
+ },
+ "narrator/15246005528a4f90": {
+  "chars": 77,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The Grey Goose is only a ruin now, and the road goes past it without looking."
  },
  "narrator/15287a1ba474869e": {
   "chars": 105,
@@ -37916,6 +37947,12 @@
   "recipe": "dd92281f92",
   "text": "Bujor's ears come up. He drops onto all fours and, after a moment, turns three slow circles in the leaves, the way he does on the plank stage. Then he sits down beside the cub and looks at you, as if to say: there, now you know me."
  },
+ "narrator/22f06db737935b0d": {
+  "chars": 59,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He sets the lantern on the hearth. It goes out. So does he."
+ },
  "narrator/231546dc31c04ba0": {
   "chars": 129,
   "model": "eleven_v4",
@@ -38899,6 +38936,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Coins, ribbons, buttons and a child's tooth. Every token here was somebody's whole heart, and none of them is yours."
+ },
+ "narrator/2ac9639f0b175005": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Under the lantern, in what's left of the taproom, a man in an apron stands behind a counter that's mostly charcoal. You can see the hearth through him."
  },
  "narrator/2ad4f1a9c5dd3dea": {
   "chars": 125,
@@ -42062,6 +42105,12 @@
   "recipe": "dd92281f92",
   "text": "Against the far wall, in a gilt frame taller than a door, a young woman in white looks out of the canvas with her hands folded. She is painted as no living painter could paint her. Her eyes are dark, and wet, and they move."
  },
+ "narrator/46250d785a1bc474": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The nails squeal out of the trapdoor on their own, and what's been living in the cellar for twenty winters comes up into the lamplight, hungry."
+ },
  "narrator/462c370a7308968e": {
   "chars": 157,
   "model": "eleven_v4",
@@ -43436,6 +43485,12 @@
   "recipe": "dd92281f92",
   "text": "Iron gates on both sides, two rows of them. Behind some, nothing. Behind others, something breathing."
  },
+ "narrator/526f37c5cc097613": {
+  "chars": 122,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The hearth stands on its own among the weeds like a tombstone. Its stone is cracked across, and under the crack, a hollow."
+ },
  "narrator/5277973ef0bbbc9a": {
   "chars": 119,
   "model": "eleven_v4",
@@ -43471,6 +43526,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The altar is dressed in white again, and candles burn along its step in a row as neat as teeth."
+ },
+ "narrator/52e4b33f67a63fce": {
+  "chars": 185,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In daylight there's nothing in the air where the upstairs window was. On the hearth below, a lantern with its glass blacked by twenty years of smoke, cold to the touch, and full of oil."
  },
  "narrator/52f6009ba3911963": {
   "chars": 150,
@@ -47462,6 +47523,12 @@
   "recipe": "dd92281f92",
   "text": "One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why."
  },
+ "narrator/7315ccd69a15e9ad": {
+  "chars": 205,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A roadhouse by the road, burned down to its walls a long time ago. A painted goose still hangs from the sign-iron, grey with soot. Weeds in the taproom, and the hearth standing on its own like a tombstone."
+ },
  "narrator/7317ffc976fb4faa": {
   "chars": 147,
   "model": "eleven_v4",
@@ -47533,6 +47600,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Lavinia listens to the end without a word, turning the broken chain over in her hands."
+ },
+ "narrator/73e069d6cae3b223": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every few words his eyes drop to the floor behind the counter, to a trapdoor nailed shut with more nails than it needs. Under it, faintly, something is scratching."
  },
  "narrator/73eb641e4b0e6cdd": {
   "chars": 109,
@@ -48860,6 +48933,12 @@
   "recipe": "dd92281f92",
   "text": "For a long moment the only sound is the screaming. Then Rahadin steps aside, exactly one pace."
  },
+ "narrator/7fbe07d15a28f2db": {
+  "chars": 64,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A trapdoor nailed shut, with more nails than any trapdoor needs."
+ },
  "narrator/7fbf88f4f075aa5a": {
   "chars": 93,
   "model": "eleven_v4",
@@ -49945,6 +50024,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "For one moment they are only parents, and grieving."
+ },
+ "narrator/88a362d2247feb46": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A trapdoor behind the counter, nailed shut with three times the nails it needs. Something under it is scratching. When you crouch, it stops, and listens."
  },
  "narrator/88ba52cb1872fec4": {
   "chars": 96,
@@ -51098,11 +51183,23 @@
   "recipe": "dd92281f92",
   "text": "Doru still clings to the ceiling above the cells, exactly where you left him. Only his eyes have moved."
  },
+ "narrator/9189c908f166397d": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The nails come out easily. Too easily: half of them were already loose, pushed up from below. The trapdoor lifts by itself before you've touched it."
+ },
  "narrator/91b163cf069677f1": {
   "chars": 180,
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Hedda stops at the foot of the altar and looks at the dust on it for a long moment. Then she kneels on the cold step, the way her chapel taught her, and takes out the silver raven."
+ },
+ "narrator/91d8adae5833fd25": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A roadhouse by the road, burned to its walls a long time ago. A painted goose still hangs from the sign-iron, grey with soot."
  },
  "narrator/91dd38e2925cdcc2": {
   "chars": 205,
@@ -53942,6 +54039,12 @@
   "recipe": "dd92281f92",
   "text": "A throne room built for crowds and kept for one. The throne stands on a dais at the far end, and the floor between is worn smooth by people who were made to walk it slowly."
  },
+ "narrator/aa131cc9e5371be8": {
+  "chars": 103,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old lantern lies in the weeds of the taproom, cold, its glass cracked. Nothing holds it up any more."
+ },
  "narrator/aa22710562bf9a49": {
   "chars": 65,
   "model": "eleven_v4",
@@ -55945,6 +56048,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lake comes through the ceiling in a slow drip, and the drip has worn a hole in the floor as round as a bowl. The water is so cold it smokes."
+ },
+ "narrator/bcc441acf0d62444": {
+  "chars": 121,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "THE GREY GOOSE, says the sign, over a painted goose with a hat on. Under it, in fresher paint, somebody has added: GO ON."
  },
  "narrator/bcdb12ffeb1d6c3c": {
   "chars": 115,
@@ -57968,6 +58077,12 @@
   "recipe": "dd92281f92",
   "text": "Gears as tall as a man turn by themselves, driving chains up into the castle. Some go toward the lamps. You can't tell where the rest go."
  },
+ "narrator/cd7c6a66b06dc9fe": {
+  "chars": 162,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A guest book, swollen with damp, the last pages still legible. The snow shut the road early that year. No guests for nine days. The oats gone. The salt pork gone."
+ },
  "narrator/cd7e6af729aabece": {
   "chars": 126,
   "model": "eleven_v4",
@@ -58351,6 +58466,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She doesn't say anything else. She doesn't need to."
+ },
+ "narrator/d0f1dee90ca47ccc": {
+  "chars": 109,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The innkeeper stands by the trapdoor with his hands in his apron, looking down into the dark for a long time."
  },
  "narrator/d0f7ef820a80cac7": {
   "chars": 128,
@@ -58879,6 +59000,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The foot of the tower is a bare round room with a door back to the main floor and a stair going up the wall into the dark."
+ },
+ "narrator/d5616548a8d98a69": {
+  "chars": 137,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lantern hangs in the empty air where an upstairs window used to be, burning steadily, with nothing holding it up and no wall around it."
  },
  "narrator/d56182e79384b9fb": {
   "chars": 30,
@@ -59690,6 +59817,12 @@
   "recipe": "dd92281f92",
   "text": "She has Ireena's face exactly. Ireena takes a step back, and the painted woman's eyes follow her, and soften."
  },
+ "narrator/dd5f16d416550742": {
+  "chars": 53,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A dead man, keeping a light. That's all you can tell."
+ },
  "narrator/dd7ac4652c347e78": {
   "chars": 118,
   "model": "eleven_v4",
@@ -60145,6 +60278,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Bluto stands among his drying racks up to the elbows in a net so full it has split, and silver fish flap all round his feet on the shingle. He is gutting them as fast as he can, and weeping while he does it."
+ },
+ "narrator/e0e041f9d7f95ed0": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A burned-out roadhouse, and high in its front, where an upstairs window used to be, a lantern burning steadily in the empty air."
  },
  "narrator/e0e0c36914b1aa43": {
   "chars": 191,
@@ -61820,6 +61959,12 @@
   "recipe": "dd92281f92",
   "text": "His hands are steady, but he hasn't blinked in a while. Three young men in the trees, all his kin by their noses. They are more afraid of you than you are of them, which makes them dangerous."
  },
+ "narrator/ef71c278666a7957": {
+  "chars": 61,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "After that, a few more names, a few days apart. Then nothing."
+ },
  "narrator/ef7ee00339ce2a8b": {
   "chars": 240,
   "model": "eleven_v4",
@@ -62389,6 +62534,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A throne of bones at the head of the table, taller than the rest. The skulls on its back face outward, toward the guests."
+ },
+ "narrator/f4c4a56d9edfeb7f": {
+  "chars": 94,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The trapdoor hangs open on one hinge. The cellar below is quiet, and smells only of old smoke."
  },
  "narrator/f4ccf5207e3f5852": {
   "chars": 97,
@@ -67864,6 +68015,69 @@
   "model": "eleven_v3",
   "recipe": "d445951711",
   "text": "And you put it down. Good. Every one of them was somebody. That's the part the books don't prepare you for."
+ },
+ "roadhouse_innkeeper/01e3679a986233e9": {
+  "chars": 58,
+  "direction": "[hushed, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "(Quietly.) They're hungrier this month. The nails are old."
+ },
+ "roadhouse_innkeeper/3b8fbb73181a6ad9": {
+  "chars": 112,
+  "direction": "[quiet, knowing, sad]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "People stop for an empty house in the dark. They don't stop for a lit one. A lit one has somebody in it already."
+ },
+ "roadhouse_innkeeper/3b92d2e0f7541f97": {
+  "chars": 164,
+  "direction": "[quiet, grateful, at peace]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "Under the hearthstone. Everything we had. And my youngest's pipes; he played them to keep the rats out of the oats. Take them. I'd like to put the lantern down now."
+ },
+ "roadhouse_innkeeper/64c888ba1ec0b1a7": {
+  "chars": 62,
+  "direction": "[weary, curt, polite]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "Still here. Go on. The crossroads is an hour. There's no room."
+ },
+ "roadhouse_innkeeper/9ecda8d1a5065203": {
+  "chars": 142,
+  "direction": "[weary, hollow, polite]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "Travellers. Wenzel, I kept the Goose. Turn round. Go on to the crossroads. There's no room at the Goose. There hasn't been for twenty winters."
+ },
+ "roadhouse_innkeeper/a07643663a1b2d88": {
+  "chars": 132,
+  "direction": "[pleading, hushed, anguished]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "(From behind you, very quietly.) Don't. Please. That's my wife. Those are my boys. I burned the house over them and they didn't die."
+ },
+ "roadhouse_innkeeper/a0879c9ca89f88df": {
+  "chars": 199,
+  "direction": "[hollow, flat, confessing]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "The winter the snow shut the road, she fed the boys. That's all she did. Fed the boys. I found out on the tenth day, and I nailed the door, and I lit the thatch, and I sat down by the hearth to wait."
+ },
+ "roadhouse_innkeeper/b0c2c5cb09e21d7c": {
+  "chars": 94,
+  "direction": "[weary, wry, exhausted]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "I kept the light so no one else would stop. Twenty winters. It's very tiring, being a warning."
+ },
+ "roadhouse_innkeeper/d888e09c36e09c4c": {
+  "chars": 134,
+  "direction": "[patient, weary, earnest]",
+  "model": "eleven_v3",
+  "recipe": "fc3dca4f3b",
+  "text": "For you. For anybody on the road. So you see the light, and see the walls, and see there's nothing here worth stopping for, and go on."
  },
  "rose/0852c0344261550c": {
   "chars": 61,
