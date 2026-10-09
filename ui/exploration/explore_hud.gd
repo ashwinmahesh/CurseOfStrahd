@@ -711,7 +711,7 @@ func _process(delta: float) -> void:
 
 ## The HUD's see-through panels never sit on each other (UI QA, 2026-10-08): while the Narrator's box is up, the last
 ## roll waits just above its left edge (at the bottom left it ran under the box's portrait and first words), and the
-## exit plaques are lifted clear of the box, the roll and the command bar.
+## exit plaques are lifted clear of the box, the roll, the command bar and the pad's prompt bar.
 func _keep_panels_apart() -> void:
 	if exit_signs == null:
 		return   # not built yet
@@ -729,6 +729,8 @@ func _keep_panels_apart() -> void:
 	for p: Control in [narr, _roll_panel, _bar_plate]:
 		if p.visible:
 			clear.append(p.get_rect())
+	if PadPrompts.world_rect.has_area():
+		clear.append(PadPrompts.world_rect)   # the pad's prompt bar over the world
 	exit_signs.keep_clear = clear
 
 

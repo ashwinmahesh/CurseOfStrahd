@@ -154,17 +154,15 @@ jobs:
           echo "GODOT=$HOME/bin/Godot_v${GODOT_VERSION}-stable_linux.x86_64" >> "$GITHUB_ENV"
 
       # Off until the Apple secrets exist (an Apple Developer account, owner's call): without them the Mac app is signed
-      # ad hoc, as before. With them, mac_app.py signs it with the Developer ID and has Apple notarize it.
-      - name: Set up Apple signing and notarization
+      # ad hoc, as before. With them, mac_app.py signs it with the Developer ID; Apple notarizes it inside the disk image
+      # (the dmg job below), since the notary service can't take the 8.5 GB pack in a zip.
+      - name: Set up Apple signing
         env:
           P12: ${{ secrets.APPLE_DEVELOPER_ID_P12 }}
           P12_PASSWORD: ${{ secrets.APPLE_DEVELOPER_ID_P12_PASSWORD }}
-          KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
-          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
-          KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
         run: |
           if [ -z "$P12" ]; then
-            echo "No Apple Developer ID secrets: the Mac app is signed ad hoc and isn't notarized"
+            echo "No Apple Developer ID secrets: the Mac app is signed ad hoc"
             exit 0
           fi
           d="$RUNNER_TEMP/apple"
@@ -173,15 +171,7 @@ jobs:
           printf '%s' "$P12_PASSWORD" > "$d/p12_password"
           echo "MAC_SIGN_P12=$d/developer_id.p12" >> "$GITHUB_ENV"
           echo "MAC_SIGN_P12_PASSWORD_FILE=$d/p12_password" >> "$GITHUB_ENV"
-          if [ -n "$KEY_P8" ] && [ -n "$KEY_ID" ] && [ -n "$ISSUER_ID" ]; then
-            printf '%s\n' "$KEY_P8" > "$d/key.p8"
-            rcodesign encode-app-store-connect-api-key -o "$d/notary.json" "$ISSUER_ID" "$KEY_ID" "$d/key.p8"
-            rm "$d/key.p8"
-            echo "MAC_NOTARY_KEY=$d/notary.json" >> "$GITHUB_ENV"
-            echo "The Mac app will be signed with the Developer ID and notarized"
-          else
-            echo "::warning::A Developer ID but no App Store Connect API key: the Mac app is signed but not notarized"
-          fi
+          echo "The Mac app will be signed with the Developer ID"
 
       - name: Restore the import cache
         id: import-cache

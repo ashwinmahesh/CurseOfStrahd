@@ -186,3 +186,22 @@ func test_the_map_shows_the_next_stop_and_mist_over_the_rest() -> void:
 	assert_true(t.clear_at(Vector2(0.411, 0.139)) < 0.05, "and the Amber Temple")
 	assert_true(t.clear_at(Vector2(0.695, 0.73)) > 0.9, "the castle on its cliff is seen from everywhere")
 	t.queue_free()
+
+
+## The roads a journey takes read as one line (UI QA, 2026-10-08: "By The lake road west").
+func test_the_route_line_reads_as_a_sentence() -> void:
+	assert_eq(TravelScreen.route_line(["The lake road west, and the lane up through the vines"] as Array[String]),
+		"By the lake road west, and the lane up through the vines")
+	assert_eq(TravelScreen.route_line(["Old Svalich Road", "The castle road, climbing south through the dead pines"] as Array[String]),
+		"By Old Svalich Road, then the castle road, climbing south through the dead pines")
+	assert_eq(TravelScreen.route_line(["By boat to the north shore, then the wolf trail"] as Array[String]),
+		"By boat to the north shore, then the wolf trail", "no second By")
+	assert_eq(TravelScreen.route_line(["Down the miller's lane", "The river track"] as Array[String]),
+		"Down the miller's lane, then the river track")
+	for f in DirAccess.get_files_at("res://data/travel"):
+		if not f.ends_with(".json"):
+			continue
+		var text := FileAccess.get_file_as_string("res://data/travel/" + f)
+		for m in RegEx.create_from_string("\"name\": \"((?:The|By|Down|Up) [^\"]+)\"").search_all(text):
+			var line := TravelScreen.route_line([m.get_string(1)] as Array[String])
+			assert_false(line.contains("By The") or line.contains("By By") or line.contains("By Down"), line)

@@ -143,6 +143,7 @@ func test_dragging_onto_a_chip_gives_that_very_item() -> void:
 
 func test_weapon_sets_swap_and_are_saved() -> void:
 	var ch := GameState.story.party[0]
+	ch.weapon_set_2 = {}   # a new hero's set II comes seeded with a spare weapon (seed_weapon_sets); start it empty
 	ch.add_item("longbow")
 	var held := str(ch.equipped("main_hand").get("id", ""))
 	var inv := await _open(0)
