@@ -138,6 +138,10 @@
     "from_stairs": [
       14,
       15
+    ],
+    "from_undercroft": [
+      27,
+      21
     ]
   },
   "exits": [
@@ -170,6 +174,18 @@
       "to": "argynvostholt_upper",
       "spawn": "from_stairs",
       "label": "Up the great stair"
+    },
+    {
+      "id": "stair_to_undercroft",
+      "cell": [
+        26,
+        22
+      ],
+      "to": "argynvostholt_undercroft",
+      "spawn": "from_hall",
+      "label": "A stair down to the undercroft",
+      "when": "flag.tithe_told",
+      "locked_text": "Flagstones under the servants' table, and a cold draught between them."
     }
   ],
   "doors": [
@@ -535,6 +551,18 @@
       "label": "A portrait turned to face the wall",
       "model": "portrait_turned",
       "kind": "decor"
+    },
+    {
+      "id": "holt_tithe_draught",
+      "cell": [
+        27,
+        22
+      ],
+      "kind": "examine",
+      "label": "A draught under the floor",
+      "model": "rubble",
+      "dialogue": "argynvostholt/the_silver_hoard:draught",
+      "when": "level >= 9 and not flag.tithe_told"
     }
   ],
   "containers": [
