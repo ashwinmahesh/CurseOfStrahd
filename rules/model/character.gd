@@ -1458,6 +1458,16 @@ func knows_spell(spell_id: String) -> bool:
 	return false
 
 
+## Whether something drunk or used a while ago still lets this character cast `spell_id` from it (a Potion of Animal
+## Friendship's hour): an Effect carrying a granted power that casts it.
+func granted_spell(spell_id: String) -> bool:
+	for fx in effects:
+		for p: Variant in fx.data.get("powers", []):
+			if str((p as Dictionary).get("spell", "")) == spell_id:
+				return true
+	return false
+
+
 # --- Resources -----------------------------------------------------------------------------------
 
 func _apply_resources() -> void:

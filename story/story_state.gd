@@ -150,8 +150,9 @@ static func member_matches(ch: Character, selector: String) -> bool:
 			if ch.carries(value):
 				return true
 		"knows":
-			# A spell the character can cast now (prepared, always prepared, or granted): a story beat that needs one.
-			return ch.knows_spell(value)
+			# A spell the character can cast now (prepared, always prepared, or granted, by a feature or by a potion still
+			# working): a story beat that needs one.
+			return ch.knows_spell(value) or ch.granted_spell(value)
 	return false
 
 
