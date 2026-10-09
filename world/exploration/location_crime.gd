@@ -124,6 +124,7 @@ static func pickpocket(view: LocationView, npc_id: String) -> void:
 	var t := thief.creature.roll_check(view.dice, &"sleight_of_hand", dc, CheckAids.before_check(thief.creature, &"sleight_of_hand"),
 		[], "Sleight of Hand (%s) vs %s's passive Perception" % [thief.name(), _name(npc_id)])
 	view.check_rolled.emit(t.describe())
+	view.big_roll.emit(t, thief.name(), "Sleight of Hand")
 	(view.st.loc_state(view.loc_id)["props"] as Dictionary)["pocket:" + npc_id] = true
 	if not t.success:
 		view.toast.emit("%s catches %s's hand in the pocket!" % [_name(npc_id), thief.name().get_slice(" ", 0)])

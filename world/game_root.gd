@@ -46,6 +46,7 @@ func _ready() -> void:
 	hud = ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
+	D20Die.warm.call_deferred(hud)   # the big d20's shader and numerals, ready before its first roll
 	hud.leader_picked.connect(func(i: int) -> void:
 		if view != null:
 			view.set_leader(i)
@@ -134,6 +135,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		# conscious back up, and a pit leaves its victim Prone.
 		if not view.in_combat:
 			_check_fallen())
+	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
@@ -185,8 +187,12 @@ func _check_fallen() -> void:
 
 
 ## The game over, if the party is still all down once the moment has passed. A fight's own end goes first: its own
-## game over, or the final battle's wipe that is an ending (test_ending_screen).
+## game over, or the final battle's wipe that is an ending (test_ending_screen). So does the big d20 for the save that
+## dropped them: the player sees it fail before the party falls.
 func _fall() -> void:
+	var rolling := DiceRoll.showing()
+	if rolling != null:
+		await rolling.finished
 	if screen != null or dialogue != null or ending != null or moving or view == null or view.in_combat or not _party_down():
 		_fallen = false
 		return

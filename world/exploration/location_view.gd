@@ -27,6 +27,10 @@ signal loot_opened(container_id: String, items: Array, gold: float)
 signal combat_started(view: CombatView)
 signal combat_ended(outcome: String)
 signal check_rolled(text: String)
+## A check or save the player made on purpose or can't miss (a lock picked or forced, a pocket, a trap disarmed or
+## sprung on them, a climb out of a pit, tending the dying): the big d20 rolls it (DiceRoll). `label` is what was
+## rolled ("Athletics", "Dexterity saving throw").
+signal big_roll(test: D20Test, who: String, label: String)
 signal hover_changed(text: String)
 signal banter(lines: Array)
 ## The party reached a road out of here (an exit to "travel"): the game opens the map.

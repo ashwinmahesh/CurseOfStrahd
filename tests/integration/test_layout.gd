@@ -706,6 +706,31 @@ func test_a_conversation_check_with_the_big_d20() -> void:
 				d.queue_free())
 
 
+## The big d20 that show_roll puts up for a hero's save in a fight or an overworld check (DiceRoll), with Advantage,
+## a long name and every part of the bonus, at rest.
+func test_the_big_d20_for_a_save() -> void:
+	if not await _game(LATE):
+		return
+	var roll := {"kind": "save", "natural": 14, "rolls": [14, 3], "total": 22, "target": 17, "success": true,
+		"critical": false, "fumble": false, "who": "Godrick Pendlebrook", "label": "Constitution saving throw", "advantage": true,
+		"parts": [{"label": "Con modifier", "value": 3}, {"label": "Proficiency", "value": 3}, {"label": "Aura of Protection", "value": 1},
+			{"label": "Cloak of Protection", "value": 1}], "extra": 2, "extra_label": "Bless 2"}
+	await _check("the big d20 for a save", func() -> Variant:
+		var layer := CanvasLayer.new()
+		layer.name = "BigRoll"
+		layer.layer = DiceRoll.LAYER
+		root.add_child(layer)
+		var p := DiceRoll.new()
+		layer.add_child(p)
+		p.place_for_screen()
+		p.roll(roll)
+		await _frames(2)
+		return layer,
+		func() -> void:
+			for l in root.find_children("BigRoll*", "CanvasLayer", false, false):
+				l.queue_free())
+
+
 ## A story cutscene (docs/ui/cutscenes.md) with the longest caption a line may have (60 words), and its pause card.
 func test_a_cutscene_with_the_longest_caption() -> void:
 	if not await _game(LATE):
