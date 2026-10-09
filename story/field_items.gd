@@ -95,7 +95,7 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 
 const FIELD_CUSTOM: Array[String] = ["read_tome", "alchemy_jug", "bag_of_beans", "deck_of_many_things", "exalted_deeds", "vile_darkness",
 	"manual_study", "instant_fortress", "rod_of_security", "oil_of_sharpness", "ring_store", "sense_dragons", "useful_items",
-	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token"]
+	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object"]
 
 
 ## Uses a power outside a fight. `target` is the character it's used on (yourself if null). Returns {ok, text, lines,
@@ -195,6 +195,13 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			e.items.specials.use(c, p, [e.get_c(who.id)], Vector2.INF, Vector2.ZERO, 0, opts)
 			return {"ok": true, "text": "%s: %s for %d minutes." % [label, str(params.get("spell", "")).replace("_", " ").capitalize(), mins],
 				"effect": str(params.get("spell", ""))}
+		"paint_object":
+			# Nolzur's Marvelous Pigments: a pot paints an object worth up to 25 GP, and it's real (one of the power's list).
+			var object := str(opts.get("choice", ""))
+			if not object in ((power.get("choice", {}) as Dictionary).get("from", []) as Array):
+				return {"ok": false, "text": "Choose what to paint"}
+			who.add_item(object)
+			return {"ok": true, "text": "%s paints %s, and it's real." % [nm, Compendium.shared().display_name("items", object).to_lower()]}
 		"alchemy_jug":
 			var liquid := str(opts.get("choice", "fresh_water"))
 			if liquid in ["acid", "basic_poison", "oil"]:

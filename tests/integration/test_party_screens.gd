@@ -230,6 +230,43 @@ func test_healing_and_mage_armor_outside_combat() -> void:
 	sheet.call("_draw")
 
 
+## Ally spells outside fights (owner report 2026-10-09: Protection from Evil and Good had no Cast button there): they go
+## on anyone in the party, the caster too. Its Holy Water is still needed, with the reason a fight gives, and used up;
+## Lesser Restoration ends a poison; Warding Bond goes only on another; Light stays on the exploring list.
+func test_ally_spells_outside_combat() -> void:
+	var cleric := Pregens.build("hedda_ironvow", 3)
+	cleric.finish_long_rest()
+	var ilse := GameState.story.party[0]
+	var party: Array[Character] = [cleric, ilse]
+	((cleric.spellcasting[0] as Dictionary)["prepared"] as Array).append_array(["protection_from_evil_and_good",
+		"lesser_restoration", "warding_bond"])
+	for e: Dictionary in cleric.inventory.duplicate():
+		if str(e["id"]) == "holy_water":
+			while int(e.get("qty", 0)) > 0:
+				cleric.remove_one("holy_water", e)
+	var opts := {}
+	for o in FieldCasting.options(party, cleric, DiceRoller.new(3)):
+		opts[str(o["id"])] = o
+	assert_true(opts.has("protection_from_evil_and_good") and opts.has("lesser_restoration"), str(opts.keys()))
+	assert_false(bool((opts["protection_from_evil_and_good"] as Dictionary)["legal"]))
+	assert_eq(str((opts["protection_from_evil_and_good"] as Dictionary)["reason"]), "Needs Holy Water worth 25 gp", "as in a fight")
+	cleric.add_item("holy_water")
+	var me: Array[Character] = [cleric]
+	var res := FieldCasting.cast(party, cleric, "protection_from_evil_and_good", 1, me, DiceRoller.new(3))
+	assert_true(bool(res["ok"]), str(res))
+	assert_true(cleric.effects.any(func(fx: Effect) -> bool: return fx.source_id == "protection_from_evil_and_good"), "on the caster")
+	assert_eq(cleric.material_worth("holy_water"), 0.0, "the flask is used up")
+	ilse.add_condition(&"poisoned", "Test")
+	var her: Array[Character] = [ilse]
+	res = FieldCasting.cast(party, cleric, "lesser_restoration", 2, her, DiceRoller.new(3))
+	assert_true(bool(res["ok"]), str(res))
+	assert_false(ilse.has_condition(&"poisoned"), "Lesser Restoration ends the poison")
+	assert_true(bool((opts["warding_bond"] as Dictionary)["others_only"]))
+	res = FieldCasting.cast(party, cleric, "warding_bond", 2, me, DiceRoller.new(3))
+	assert_false(bool(res["ok"]), "Warding Bond goes on another creature")
+	assert_false(opts.has("light"), "Light is cast from the exploring list")
+
+
 func test_the_stash_at_a_safe_place() -> void:
 	var ilse := GameState.story.party[0]
 	assert_true(GameState.story.stash_put("javelin", ilse))

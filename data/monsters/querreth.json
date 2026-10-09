@@ -1,0 +1,222 @@
+{
+  "id": "querreth",
+  "name": "Querreth",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (Escher's Petition, docs/story/side_quests.md): a devil the count bound to his roofs long ago as their gaoler, to bring back whatever of his tries to leave. Built on the 2025 Monster Manual's devils (a chain devil's reach and grip, a horned devil's wings and size) at CR 11, with Magic Resistance, Legendary Resistance and two Legendary Actions. Drawn with the fiendish spirit's sprite, made Large."
+  },
+  "size": "large",
+  "type": "fiend",
+  "tags": [
+    "boss",
+    "devil"
+  ],
+  "alignment": "lawful evil",
+  "art": "fiendish_spirit",
+  "art_height": 2.6,
+  "ac": 17,
+  "ac_note": "natural armor",
+  "initiative": 3,
+  "hp": {
+    "average": 180,
+    "dice": "19d10+76"
+  },
+  "speed": {
+    "walk": 30,
+    "fly": 60
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 16,
+    "con": 18,
+    "int": 13,
+    "wis": 14,
+    "cha": 17
+  },
+  "saves": {
+    "str": 9,
+    "con": 8,
+    "wis": 6
+  },
+  "skills": {
+    "perception": 6,
+    "intimidation": 7
+  },
+  "resistances": [
+    "cold"
+  ],
+  "immunities": [
+    "fire",
+    "poison"
+  ],
+  "condition_immunities": [
+    "poisoned"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 16,
+  "languages": [
+    "Infernal",
+    "Common",
+    "telepathy 120 ft."
+  ],
+  "cr": 11,
+  "xp": 7200,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "magic_resistance",
+      "name": "Magic Resistance",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "advantage",
+          "on": "save_vs:spell"
+        }
+      ],
+      "summary": "Advantage on saving throws against spells and other magical effects.",
+      "implemented": "engine"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When Querreth fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_roofs_gaoler",
+      "name": "Gaoler of the Roofs",
+      "action": "passive",
+      "summary": "Bound to the castle's roofs by the count to bring back whatever of his tries to leave. It keeps what it brings back, in its chains.",
+      "text": "The count bound Querreth to the roofs of Castle Ravenloft long ago. It can't leave them, and it brings back anything of the count's that tries to: the spawn, the servants and the guests who went up to look at the sky. The ones it caught hang in its chains still.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "chain",
+          "count": 2
+        },
+        {
+          "action": "claw",
+          "count": 1
+        }
+      ],
+      "summary": "Two Chain attacks and a Claw.",
+      "text": "Querreth makes two Chain attacks and one Claw attack."
+    },
+    {
+      "id": "chain",
+      "name": "Chain",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 12,
+          "dice": "2d6+5",
+          "type": "slashing"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 16,
+          "max_size": "large",
+          "limit": 2
+        }
+      ],
+      "summary": "A hooked chain off its arm; a Large or smaller target is Grappled (escape DC 16).",
+      "text": "Melee Attack Roll: +9, reach 10 ft. Hit: 12 (2d6 + 5) Slashing damage. If the target is Large or smaller, it has the Grappled condition (escape DC 16), held by one of Querreth's two chains."
+    },
+    {
+      "id": "claw",
+      "name": "Claw",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "1d10+5",
+          "type": "slashing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "fire"
+        }
+      ],
+      "summary": "Talons hot from the pit.",
+      "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 10 (1d10 + 5) Slashing damage plus 10 (3d6) Fire damage."
+    },
+    {
+      "id": "the_chains_answer",
+      "name": "The Chains Answer",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "str",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 30,
+        "count": 3
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "4d10",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: chains come up out of the stones round up to three creatures within 30 ft; DC 16 Str save, 4d10 Bludgeoning and Restrained until the end of its next turn, half damage on a success.",
+      "text": "Strength Saving Throw: DC 16, up to three creatures Querreth can see within 30 feet. Chains come up out of the stones of the roof and wrap them. Failure: 22 (4d10) Bludgeoning damage, and the target has the Restrained condition until the end of Querreth's next turn. Success: Half damage only."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "lash",
+        "name": "Lash",
+        "cost": 1,
+        "action": "chain",
+        "summary": "Makes one Chain attack."
+      },
+      {
+        "id": "wings",
+        "name": "Wings",
+        "cost": 1,
+        "move": true,
+        "summary": "Flies up to half its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "castle_ravenloft"
+  ],
+  "ai_profile": "brute",
+  "summary": "A devil the count bound to his roofs, long ago, to bring back whatever of his tries to leave. It is tall and red and winged, and drags hooked chains from its arms; hanging in them are the dead it brought back, still asking to go."
+}

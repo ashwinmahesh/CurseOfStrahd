@@ -4,6 +4,7 @@
   "summary": "Madam Eva's fourth card named the one who will stand with us against the devil.",
   "giver": "madam_eva",
   "region": "svalich_road",
+  "kind": "main",
   "stages": [
     {
       "id": "foretold",

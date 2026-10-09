@@ -15,7 +15,7 @@ var _where: Label
 ## The width of the top-right block the location's name has to fit.
 const WHERE_WIDTH := 346.0
 var _mode: Label
-## The current objective under the time (the newest open quest's), a click opens the journal.
+## The current objective under the time (the tracked quest's, else the newest open quest's), a click opens the journal.
 var _goal: Label
 ## Toasts that came while another was up, shown one after another.
 var _toast_queue: Array[String] = []
@@ -499,13 +499,16 @@ func _pip_group(name_text: String, total: int, left: int, colour: String) -> Con
 	return box
 
 
-## The newest open quest's first objective ("◆ Follow the hidden stair down"), or "".
+## The tracked quest's first objective (the journal's Track), else the newest open quest's ("◆ Follow the hidden stair
+## down"), or "".
 func _objective() -> String:
 	var newest := ""
 	for q in QuestLog.journal(st):
 		if str(q["status"]) == "active" and not (q["objectives"] as Array).is_empty():
 			newest = str((q["objectives"] as Array)[0])
 			_goal_tip = "%s · click for the journal (J)" % q["name"]
+			if bool(q["tracked"]):
+				break
 	if _goal != null:
 		_goal.tooltip_text = _goal_tip
 	return ("◆ " + newest) if newest != "" else ""

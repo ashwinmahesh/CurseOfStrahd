@@ -655,6 +655,29 @@
   "f39b54569f3b51da": "[soft, yearning, hushed]",
   "fbd4f05d644ed476": "[aching, pleading, breaking]"
  },
+ "escher": {
+  "0bc56e7a52cae751": "[sly, coaxing, vulnerable]",
+  "175e807819dd7463": "[afraid, hushed, bitter]",
+  "19671321824de0d6": "[airy, theatrical, generous]",
+  "27b24b89744f0b49": "[wry, theatrical, resigned]",
+  "35dd2f4251af1345": "[dying, whispered, at peace]",
+  "4119e19e1bd9c6e9": "[laughing, wry, then sincere]",
+  "482ad33f47e41728": "[wry, bitter, theatrical]",
+  "4be4111cfe34ca43": "[desperate, pleading, tender]",
+  "4e5f27378e77f1a6": "[quiet, ashamed, honest]",
+  "596089c78c900bfd": "[eager, giddy, nervous]",
+  "8d367c247158cf49": "[quiet, ashamed, bitter]",
+  "8e996b7dd219abec": "[wistful, regretful, soft]",
+  "936edfae12444885": "[wry, wistful, theatrical]",
+  "9bdf9a6b892b936a": "[giddy, relieved, impatient]",
+  "ae4c09f6a25093b1": "[nervous, vain, delighted]",
+  "bf655307631fcd97": "[hushed, trembling, thrilled]",
+  "c90e7f815d24248c": "[awed, whispered, overwhelmed]",
+  "cbd58866ece9eca2": "[brittle, wounded, airy]",
+  "ec2a407009a11359": "[eager, vain, warm]",
+  "f3f41c4f902e07a2": "[light, theatrical, wistful]",
+  "fec69f050b4eae6b": "[quiet, cold, resigned]"
+ },
  "exethanter": {
   "055dd0501cc44a2f": "[alarmed whisper]",
   "0888e9573f2ddcc4": "[pleading, fragile]",
@@ -764,6 +787,7 @@
   "d852e0aec3ceec30": "[dry, low, wry]"
  },
  "godrick_pendlebrook": {
+  "495c0e9d613c19d1": "[grim, protective, firm]",
   "749ad33145e91a88": "[ashamed, breaking]",
   "861377174da00d79": "[sheepish, then grim resolve]",
   "ad6fb43460ac6bd1": "[sheepish, warm]",
@@ -1164,6 +1188,7 @@
   "1813b7e53eabb415": "[gentle, certain, compassionate]",
   "27dc277991695aa4": "[quiet, certain, compassionate]",
   "2cf8f1542384a932": "[shaken, hushed, sorrowful]",
+  "3bb8a2d6d931bfef": "[soft, prayerful, tender]",
   "4503a76638b93b89": "[shaken, quiet]",
   "4d8455c78fc689a3": "[firm, reassuring]",
   "6243477b5611229c": "[shaken, hurt]",
@@ -2293,6 +2318,9 @@
  "pool_mourner": {
   "b67838152353c70e": "[soft, grieving, devout]"
  },
+ "querreth": {
+  "20f67572374a0551": "[deep, gravelly, mocking, menacing]"
+ },
  "ratatoille": {
   "1912e5e2be2788e5": "[humiliated, indignant]",
   "21b0ea0aa5a8c387": "[dry, prim, faintly embarrassed]",
@@ -2615,6 +2643,10 @@
   "f6abc76ed358dcda": "[quiet, courteous, urgent]",
   "fee1c59e0538c0fe": "[wry, light, sad]",
   "ff83ef19908b28ec": "[low, grim]"
+ },
+ "the_counts_likeness": {
+  "58be70a805351dab": "[silky, amused, possessive]",
+  "9270d45392965a00": "[intimate, menacing, tender]"
  },
  "the_eye_below": {
   "1252da199b51cf91": "[sudden, cold, waking]",
@@ -2988,6 +3020,15 @@
   "ee0eca3a962a1c15": "[shivering, small, sad]"
  },
  "vallaki_sun_painter": {
+  "06dc4b8a8d319e5d": "[low, frightened, uneasy]",
+  "1f84fc52105213da": "[earnest, grateful, wry]",
+  "488130931ea76d0b": "[haunted, low, remembering]",
+  "51e76355c64b3ed3": "[weary, low, warning]",
+  "7de9420ec75f754a": "[dry, wry, relieved]",
+  "972284d95ee8aa2d": "[stunned, terrified, hushed]",
+  "a0757852bf852496": "[wry, relieved, near tears]",
+  "b5d4b6132f1109c2": "[frightened, ashamed, rambling]",
+  "ea7492832b45e283": "[haunted, slow, uneasy]",
   "fd4c4a2771f63ac2": "[dry, sardonic, tired]"
  },
  "vestige_dahlver_nar": {

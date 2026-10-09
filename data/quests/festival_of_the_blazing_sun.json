@@ -4,6 +4,7 @@
   "summary": "Baron Vallakovich holds a festival every week to prove Vallaki is happy. This one, with its great wicker sun, will decide who rules the town.",
   "giver": "baron_vargas",
   "region": "vallaki",
+  "kind": "main",
   "stages": [
     {
       "id": "announced",

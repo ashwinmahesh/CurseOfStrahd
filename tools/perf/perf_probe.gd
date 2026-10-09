@@ -3,7 +3,7 @@ extends Node
 ## loading) and measures frame time, draw calls and memory in the heavy places, at 1080p in a window that never shows.
 ## Writes one JSON report; tools/perf/perf_run.py launches it and prints the summary.
 ## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N]
-## [--only=title,newgame,places,saveload,combat,transitions,fights,foemem] [--places=id,id] [--encounters=id,id]
+## [--only=title,newgame,places,saveload,combat,transitions,fights,foemem,screens] [--screen=inventory] [--places=id,id] [--encounters=id,id]
 ## [--size=1920x1080] [--cover=1]
 
 const PLACES := ["village_of_barovia", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
@@ -35,7 +35,8 @@ var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
 var cycles := 10                     ## off/on switches per effect in the effects_fast phase
 var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
-var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "foe_memory": [], "meta": {}}
+var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "foe_memory": [], "screens": [],
+	"meta": {}}
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
@@ -107,6 +108,8 @@ func _ready() -> void:
 			await _presets(p)
 		if "transitions" in only:
 			await _transitions(p)
+		if "screens" in only:
+			await _screens(p, SCREEN_PLACES if str(args.get("places", "")) == "" else places, str(args.get("screen", "inventory")))
 		if "foemem" in only:
 			await _foe_memory(p, FOE_MEM_PLACES if str(args.get("places", "")) == "" else places)
 		if "fights" in only:
@@ -289,6 +292,9 @@ func _transitions(p: int) -> void:
 ## encounter in the data (or `only`), each in its own place entered fresh and left a second (--settle) to settle, as a
 ## party walks up to a fight. `call` is the start of the fight (the foes' figures built, CombatView begun), `first` the next frame
 ## drawn, `worst` the worst frame in the second after, with how many were over STUCK_MS.
+## The screens phase (Functional QA's FN-23): places where the first inventory opened with a stutter, and two without.
+const SCREEN_PLACES := ["into_the_mists_road", "death_house_third", "old_bonegrinder_loft", "village_of_barovia",
+	"amber_temple_faceless_god", "castle_ravenloft_catacombs_strahd", "castle_ravenloft_chapel", "vallaki"]
 ## The foemem phase: the places holding the most foes to come, and a small room holding none to stop in between.
 const FOE_MEM_PLACES := ["village_of_barovia", "lake_zarovich", "vallaki", "castle_ravenloft_larders_dungeon",
 	"castle_ravenloft_court", "castle_ravenloft_main_floor", "castle_ravenloft_catacombs"]
@@ -338,6 +344,69 @@ func _fights(p: int, only: Array) -> void:
 				str(loc_id), eid, "     " if started else "(not started)", call, first, worst, slow])
 	root.queue_free()
 	await _wait(2)
+
+
+## How a full-screen panel opens (the loading lane, FN-23): in each place (with --cover=1 reached through the loading
+## cover, motion on, as in play), the
+## panel (--screen=inventory by default) is opened three times; for each, the call that builds it and the next eight
+## frames, each with its time spent drawing.
+func _screens(p: int, places: Array, kind: String) -> void:
+	var root := await _story_root(7)
+	for id: Variant in places:
+		GameState.story.minute_of_day = DAY
+		if cover:
+			root.call("_covered", str(id), Callable(root, "enter_location").bind(str(id), "default"))
+			var t := Time.get_ticks_msec()
+			while (bool(root.get("moving")) or root.get("view") == null) and Time.get_ticks_msec() - t < 30000:
+				await get_tree().process_frame
+		else:
+			root.call("enter_location", str(id), "default")
+		_close_popups(root)
+		await get_tree().create_timer(2.0).timeout
+		_close_popups(root)
+		root.call("close_screen")
+		get_tree().paused = false
+		await _wait(30)
+		for n in 3:
+			_phase("screen %s %d: %s" % [kind, n + 1, id])
+			var t0 := Time.get_ticks_usec()
+			root.call("open_screen", kind, 0)
+			var call_ms := (Time.get_ticks_usec() - t0) / 1000.0
+			var frames_: Array = []
+			var last := Time.get_ticks_usec()
+			var compiled := _pipelines()
+			for i in 8:
+				await get_tree().process_frame
+				var now := Time.get_ticks_usec()
+				var c := _pipelines()
+				var new_ones: Array = []
+				for k in c.size():
+					new_ones.append(c[k] - compiled[k])
+				compiled = c
+				frames_.append([snappedf((now - last) / 1000.0, 0.1), snappedf(_frame_draw_ms, 0.1), new_ones])
+				last = now
+			var worst := 0.0
+			for f: Array in frames_:
+				worst = maxf(worst, float(f[0]))
+			report["screens"].append({"pass": p, "place": str(id), "screen": kind, "open": n + 1, "call_ms": call_ms,
+				"worst_ms": worst, "frames": frames_})
+			print("PERF screen %d %-34s %s %d call %6.1f | worst frame %6.1f | frames (ms, draw) %s" % [p, str(id), kind, n + 1,
+				call_ms, worst, str(frames_)])
+			_phase("screen closed: %s" % id)
+			await get_tree().create_timer(0.4).timeout
+			root.call("close_screen")
+			await get_tree().create_timer(0.4).timeout
+	root.queue_free()
+	await _wait(2)
+
+
+## Pipelines the renderer has compiled so far, by what asked: [canvas, mesh, surface, draw, specialization].
+static func _pipelines() -> Array[int]:
+	return [RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_PIPELINE_COMPILATIONS_CANVAS),
+		RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_PIPELINE_COMPILATIONS_MESH),
+		RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_PIPELINE_COMPILATIONS_SURFACE),
+		RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_PIPELINE_COMPILATIONS_DRAW),
+		RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_PIPELINE_COMPILATIONS_SPECIALIZATION)]
 
 
 ## What holding a place's foes costs (the loading lane): in each place, the video and texture memory once the foes of

@@ -385,3 +385,28 @@ func test_an_item_that_polymorphs_its_user_is_still_used_up() -> void:
 	var r2 := e2.items.use(c2, "wand_of_polymorph", "polymorph", [c2])
 	assert_true(r2.ok, r2.reason)
 	assert_eq(int(ch2.entry_of("wand_of_polymorph").get("charges", 0)), charges - 1, "a charge spent")
+
+
+## Nolzur's Marvelous Pigments (The Count's Portraitist's reward): each of the case's 1d4 pots paints a real object worth
+## up to 25 GP into the painter's hands, and the case is gone with its last pot.
+func test_the_pigments_paint_real_objects_until_the_pots_run_out() -> void:
+	var st := StoryState.new()
+	var ch := TestChars.pregen("ilse_varga", 9)
+	st.party.append(ch)
+	ch.add_item("marvelous_pigments")
+	var pots := ch.charges_left("marvelous_pigments")
+	assert_true(pots >= 1 and pots <= 4, "1d4 pots: %d" % pots)
+	var paint: Dictionary = {}
+	for o in FieldItems.options(st.party, ch, "marvelous_pigments", DiceRoller.new(1)):
+		if str(o["power_id"]) == "paint":
+			paint = o
+	assert_true(bool(paint.get("legal", false)), str(paint.get("reason", "")))
+	assert_true("ladder" in (paint["choices"] as Array))
+	var res := FieldItems.use(st, ch, "marvelous_pigments", "paint", ch, DiceRoller.new(2), {"choice": "ladder"})
+	assert_true(bool(res["ok"]), str(res.get("text", "")))
+	assert_true(ch.carries("ladder"), "the painted ladder is real")
+	assert_false(bool(FieldItems.use(st, ch, "marvelous_pigments", "paint", ch, DiceRoller.new(2), {"choice": "plate_armor"})["ok"]),
+		"nothing off the list (worth more than 25 GP)")
+	for i in pots - 1:
+		assert_true(bool(FieldItems.use(st, ch, "marvelous_pigments", "paint", ch, DiceRoller.new(3 + i), {"choice": "rope"})["ok"]))
+	assert_false(ch.carries("marvelous_pigments"), "the last pot used, the case is gone")

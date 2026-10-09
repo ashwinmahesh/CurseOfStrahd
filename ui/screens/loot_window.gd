@@ -1,7 +1,8 @@
 class_name LootWindow
 extends CanvasLayer
 ## The loot window (docs/ui/inventory.md, inv_02): what a container holds, with Take all, Take one, Take gold, or Send
-## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse. Anything
+## to whoever can carry it (overloaded characters are skipped, and it says so). Coins go to the party purse, by Take
+## gold or with everything (Take all, Send, All to the stash), never on their own when the last item is taken. Anything
 ## can go straight to the party stash instead (Q7, owner 2026-10-07): it's taken out again at a safe place.
 
 signal closed
@@ -115,7 +116,6 @@ func _take(i: int, n: int) -> void:
 	else:
 		it["qty"] = qty - n
 	_redraw()
-	_maybe_done()
 
 
 func _take_all() -> void:
@@ -157,7 +157,6 @@ func _stash(i: int) -> void:
 	st.stash_add(str(it["id"]), int(it.get("qty", 1)), it)
 	items.remove_at(i)
 	_redraw()
-	_maybe_done()
 
 
 ## Everything into the party stash (quest items to the chosen character, since they can't be stashed), the coins to
@@ -174,7 +173,9 @@ func stash_all() -> void:
 	_close()
 
 
-## The coins alone into the party purse; the items stay to be taken or left.
+## The coins alone into the party purse; the items stay to be taken or left. Taking the items one by one leaves the
+## coins for this button (Ashwin, 2026-10-09: it did nothing once the last item was taken, because that had already
+## put the coins in the purse without a word while their row and button stayed on show).
 func take_coins() -> void:
 	if gold <= 0.0:
 		return
@@ -186,11 +187,6 @@ func take_coins() -> void:
 func _take_gold() -> void:
 	st.gold += gold
 	gold = 0.0
-
-
-func _maybe_done() -> void:
-	if items.is_empty():
-		_take_gold()
 
 
 func _close() -> void:

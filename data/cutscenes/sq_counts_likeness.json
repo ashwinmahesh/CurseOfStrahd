@@ -1,0 +1,15 @@
+{
+  "id": "sq_counts_likeness",
+  "title": "The Count's Portraitist",
+  "summary": "A studio full of one woman's portraits, and the great canvas they were copied from.",
+  "images": [
+    {
+      "image": "sq_counts_likeness",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.3
+  ]
+}

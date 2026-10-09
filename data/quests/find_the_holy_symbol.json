@@ -4,6 +4,7 @@
   "summary": "A holy symbol of great power against the undead, lost long ago in the valley.",
   "giver": "madam_eva",
   "region": "svalich_road",
+  "kind": "main",
   "stages": [
     {
       "id": "foretold",

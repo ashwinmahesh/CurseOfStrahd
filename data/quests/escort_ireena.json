@@ -4,6 +4,7 @@
   "summary": "Strahd has fed on Ireena Kolyana twice. Her brother Ismark believes she'll be safer behind the walls of Vallaki, to the west.",
   "giver": "ismark",
   "region": "village_of_barovia",
+  "kind": "main",
   "stages": [
     {
       "id": "asked",

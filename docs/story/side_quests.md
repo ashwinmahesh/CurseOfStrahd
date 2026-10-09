@@ -264,6 +264,26 @@ the cellar door until it's done); Urwin won't pay until he's himself.
   (`fowlers`, 1 point).
 - Urwin's thanks, once: 200 gp and the mail his grandfather flew in, Elven Chain (rare).
 
+### The Count's Portraitist (`the_counts_portraitist`, narrative/vallaki/the_counts_portraitist.dialogue; batch 6, level 9)
+
+Haralamb, who paints the Baron's wicker sun, sits on his doorstep on the east row in the evenings from level 9 (a new
+entry for the sun painter), with red-gold paint on his hands. **Escalation:** a carriage with no driver took him to
+the castle for eleven nights to paint a woman in white from the count's memory, with the count's own paints; now
+every face he paints is hers, and he has sold three, to the Baron, to Lady Wachter and to Urwin at the inn. With
+Ireena along, he knows her at once. **Twist:** (Arcana DC 14) the paint makes eyes of the castle, like the portraits on
+its walls: the castle sees every room a copy hangs in, and the great canvas he was given to copy from is the eye they
+all see through. His door (a new gated exit) opens on his studio (data/locations/vallaki_painters_studio.json), where the
+count speaks to the party out of the painted woman's mouth.
+
+- **Boss: the Count's Likeness** (data/monsters/the_counts_likeness.json, `source.book: custom`, built up from the
+  guardian portrait and drawn with its sprite at Large, `art_height` 2.2): Large construct, AC 13, 181 HP (230 in this
+  fight), a Frame Strike with reach and The Count's Regard (DC 16 Wis, 5d10 Psychic and Frightened), Hypnotic Pattern
+  and Hold Person once a day, Legendary Resistance (2/day), and a look between turns. CR 8. Six copies come off the
+  walls with it (guardian portraits at 30 HP).
+- Fight `counts_likeness`. The autopilot wins 3 of 6 at level 9, losing three party members a fight.
+- Burned, every copy in Vallaki goes blank. Haralamb scrapes the count's paints into clean pots and prays over them:
+  Nolzur's Marvelous Pigments (very rare) and 150 gp. Still: `sq_counts_likeness` (the canvas, first seen).
+
 ### One Lantern Too Many (`one_lantern_too_many`, narrative/vallaki/one_lantern_too_many.dialogue; batch 5, festival week)
 
 The town guard's news (a last line before "Always the festival", from level 5): festival nights the children carry
@@ -633,6 +653,33 @@ Lost Pages), made one of the count's spawn for holding the door while her master
 - In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
   crypt, and Mordenkainen has a line for it.
 
+### Escher's Petition (`escher_petition`, narrative/castle_ravenloft/escher_petition.dialogue; batch 6)
+
+From level 10, Escher's menu has a new question: what's the paper he keeps turning over? Every night for nine years
+he has slid the same petition under the count's door, one line, Let me see the sun, and last night an answer came back
+under his: Yes. He wants company on the south tower roof before dawn, and he'll pay with the one present the count gave
+him that he could never use. **Twist:** (Insight DC 15) he has folded the paper so only the one word shows. The rest
+is Bring your friends: I should like them to watch. He wanted the sun more than he wanted the party to come back down,
+and says so. **Escalation:** by night Escher waits at the south tower parapet (a new entry on the roofs; his chair in
+the suite is empty by night while the petition stands). Querreth, the devil the count bound to his roofs to bring back
+whatever of his tries to leave, comes down off the keep to chain Escher to the sunrise and take the guests to the
+larder. Everyone who ever asked to go up hangs in its chains. Without the rest of the note, the party is caught
+unawares.
+
+- **Boss: Querreth** (data/monsters/querreth.json, `source.book: custom`, built on the 2025 Monster Manual's devils and
+  drawn with the fiendish spirit's sprite at Large, `art_height` 2.6): Large fiend, AC 17, 180 HP, flies, two hooked
+  Chains with 10-ft reach that grapple and a burning Claw, The Chains Answer (recharge 5-6, three creatures within
+  30 ft, DC 16 Str, 4d10 and Restrained), Magic Resistance, Legendary Resistance (2/day), and a lash or a wingbeat
+  between turns. CR 11. Two of the ones who asked before come with it (wraiths, "One Who Asked").
+- Fight `querreth` on the south tower roof. The autopilot wins 3 of 8 at level 10 caught unawares and 4 of 8
+  forewarned, losing about three party members a fight.
+- Then the party sits out the night with him and the sun comes up (`sq_escher_dawn`, a new still). Either he watches it
+  and burns, and leaves a red velvet coat on the stones with the count's present in the pocket, or (Persuasion DC 15)
+  the party talks him into waiting for a dawn the count isn't in, and he goes back down to his chair. Either way: a
+  Helm of Brilliance (very rare, a crown full of captured daylight for a man who could never wear it) and 250 gp.
+- Escher's suite, banter and narration follow him: once he's seen the dawn his chair is empty and his coats hang in
+  the wardrobe without the red velvet one.
+
 ## Mount Ghakis (level 10)
 
 ### The Warm Snow (`the_warm_snow`, narrative/mount_ghakis/the_warm_snow.dialogue; batch 5, an owner-asked boss)
@@ -817,4 +864,9 @@ Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers O
 also the town guard) and gate.dialogue's news jump. Batch 6,
 the Village of Barovia: the_oat_thief.dialogue in full (new speaker Agafia; also Bildrath and Parriwimple, and a kind
 interject) and narrator/woodcutters_hollow.dialogue. Batch 6,
-the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Tibor and the Falconer; a blunt interject).
+the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Tibor and the Falconer; a blunt interject). Batch 6,
+Vallaki: the_counts_portraitist.dialogue in full (Haralamb and the Count's Likeness, new speaker; a blunt interject) and
+narrator/vallaki_painters_studio.dialogue. Batch 6,
+Castle Ravenloft: escher_petition.dialogue in full (new speaker Querreth; also Escher, a blunt interject and
+Godrick's and Liriel's) and Escher's two new greetings in spires_escher.dialogue ("My dawn-sellers..." and the
+petition option).

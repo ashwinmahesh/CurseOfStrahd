@@ -9,6 +9,13 @@ endif
 if not flag.escher_met
 -> first
 endif
+if quest.escher_petition == asked or quest.escher_petition == held
+-> castle_ravenloft/escher_petition:waiting
+endif
+if flag.escher_waits
+Escher: My dawn-sellers. I'm still waiting, you see. I've put the good coat away, but not very far.
+-> menu
+endif
 if flag.escher_bargain
 Escher: My jailbreakers. Is he dust yet? No? Then I can't think why you're bothering me.
 elif flag.escher_paid
@@ -31,6 +38,7 @@ Escher: One of Strahd's former. Do keep up.
 * [if not flag.escher_heart_told] There must be something that keeps Strahd standing. What is it? -> heart_ask
 * [if flag.escher_heart_told and not flag.spires_back_stair_told] Is there a quieter way around this castle? -> stair
 * [if not flag.escher_told_jester and (flag.pidlwick_met or tarokka.ally.npc == pidlwick_ii)] What do you know about the clockwork jester on the stair? -> jester
+* [if level >= 10 and not quest.escher_petition] What's that paper you keep turning over? -> castle_ravenloft/escher_petition:ask
 * Come with us. Help us end him. -> come
 * You're one of his. This ends now. -> attack
 * Goodbye, Escher. -> bye

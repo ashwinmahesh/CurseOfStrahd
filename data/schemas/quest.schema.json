@@ -25,6 +25,13 @@
     "region": {
       "type": "string"
     },
+    "kind": {
+      "enum": [
+        "main",
+        "side"
+      ],
+      "description": "main: the story's spine, under the journal's Main tab. Anything else (side and companion quests) is under Other."
+    },
     "stages": {
       "type": "array",
       "minItems": 1,

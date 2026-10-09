@@ -151,6 +151,7 @@ leaves a smaller purse and one find.
 | ✅ | Yevgeni | Horn of Valhalla, Silver (rare) | Gift: his father's horn, with the bounty on Old Greytooth (The Hunters at the Inn) |
 | ✅ | Urwin Martikov | Elven Chain (rare) | Gift: his grandfather's mail, once Bray is home and himself (The Ravens' Ransom, docs/story/side_quests.md) |
 | ✅ | Old Sabin, the lantern stall | Dream Weaver (rare) | Gift: Liliana's dream-catcher, once Sandu's home from the lake (One Lantern Too Many, docs/story/side_quests.md) |
+| ✅ | Haralamb the painter, the east row | Nolzur's Marvelous Pigments (very rare) | Gift: the count's paints, made clean, once his canvas is burned (The Count's Portraitist, docs/story/side_quests.md) |
 
 ## Lake Zarovich (level 8)
 
@@ -343,3 +344,4 @@ leaves a smaller purse and one find.
 | ✅ | Cyrus Belview | Ioun Stone of Sustenance (rare) | Gift: when you bring news of his family |
 | ✅ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: when you bring back his key |
 | ✅ | The catacombs, the crypt with no name | Rod of Absorption (very rare) | Hoard: in Corvina's crypt, once she's at rest (The Unnamed Crypt, docs/story/side_quests.md) |
+| ✅ | The castle roofs, the south tower | Helm of Brilliance (very rare) | Gift: from Escher at dawn, whether he watches the sun come up or waits for one the count isn't in (Escher's Petition, docs/story/side_quests.md) |
