@@ -289,6 +289,10 @@ it on the window).
   floor-level stubs and flames beside the location's own lights are left alone. Likewise the 3D props' fires and
   candles (hearths, braziers, campfires, torches, candelabras: their `flame` and `candle` sockets in
   art/models/manifest.json; `_light_model_flames`), unless the location's own light stands within a square.
+- **Soft halos** (Modern, Visual Polish Plan 5): the glow on what burns spreads wide as well as close
+  (`Atmosphere.GLOW_LEVELS`: Godot's near level, then two wider and fainter ones), so candles, hearths, lit windows
+  and the moon on water wear Octopath's broad soft halo rather than a tight one. About 0.1 ms more than the old glow
+  at 3440 x 1440 (`perf_run.py --only effects_fast --effects glow`: 0.8 to 1.2 ms against 0.7 to 1.0).
 - **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
   black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the
