@@ -3654,12 +3654,26 @@
   "recipe": "2fe94cdeab",
   "text": "Mihail sent you? He worries. He digs when he worries. He's always digging."
  },
+ "barovia_gravedigger/125bfed2d9b0c257": {
+  "chars": 90,
+  "direction": "[gruff, proud, dry]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "Couldn't bury? Everyone gets buried in the end, I see to it. Everyone who's brought to me."
+ },
  "barovia_gravedigger/189174c69301b144": {
   "chars": 96,
   "direction": "[slow, low, discreet]",
   "model": "eleven_v3",
   "recipe": "33c3142235",
   "text": "Somebody's been putting things in it, mind. Of a night. I don't look. A grave's a private place."
+ },
+ "barovia_gravedigger/29d1abb359bffd36": {
+  "chars": 121,
+  "direction": "[low, knowing, grim]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "She's from the tall house at the top of the street, by her cap. That house had a nursemaid once. Nobody saw her leave it."
  },
  "barovia_gravedigger/493100e31a309f96": {
   "chars": 264,
@@ -3716,6 +3730,13 @@
   "model": "eleven_v3",
   "recipe": "33c3142235",
   "text": "Teodor Cozma. I dug for him three winters back, the week he went to the crossroads. Good and deep. Nobody ever came to fill it."
+ },
+ "barovia_gravedigger/d2bdc63e8142e311": {
+  "chars": 176,
+  "direction": "[low, uneasy, gentle]",
+  "model": "eleven_v3",
+  "recipe": "33c3142235",
+  "text": "There's one nobody brought. A girl in a nursemaid's cap. She stands at the churchyard wall of a night, by the gate, and looks in. She won't come through. I don't think she can."
  },
  "barovia_gravedigger/d461c61a417a517e": {
   "chars": 84,
@@ -7812,6 +7833,27 @@
   "recipe": "aefb995146",
   "text": "I went home to him, to the castle. I thought he'd give me a seat at the table. He gave me this, for coming back with nothing."
  },
+ "durst_nursemaid/174ceaa98bd28678": {
+  "chars": 111,
+  "direction": "[quiet, firm, sad]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "My bones are in the trunk under the roof of the tall house. Don't bring them here. I don't want the churchyard."
+ },
+ "durst_nursemaid/266fab1faa818469": {
+  "chars": 168,
+  "direction": "[sad, quiet, bitter]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "Veta. My name's Veta. Nobody in that house ever said it. The children called me Nurse, and the master called me other things, and the mistress called me nothing at all."
+ },
+ "durst_nursemaid/3092f01a07519558": {
+  "chars": 160,
+  "direction": "[quiet, wistful, hurt]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "You have to be brought. Somebody has to carry you, and say a word, and put the earth back. Nobody carried me anywhere. They folded me up and put me in the roof."
+ },
  "durst_nursemaid/3f688642df16de11": {
   "chars": 52,
   "model": "eleven_v3",
@@ -7823,6 +7865,13 @@
   "model": "eleven_v3",
   "recipe": "b6e0e45760",
   "text": "He's under the house. He's been under the house so long. If you go down, sing it to him. Someone should."
+ },
+ "durst_nursemaid/68e90991551f202d": {
+  "chars": 67,
+  "direction": "[gentle, soothing, sad]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "Don't be frightened. I only stand here. It's the nearest I can get."
  },
  "durst_nursemaid/6f63aaf020b50c00": {
   "chars": 105,
@@ -7836,11 +7885,46 @@
   "recipe": "b6e0e45760",
   "text": "He was mine. The master's and mine. The mistress gave him to the robed ones the night he was born, and they carried him down, and I followed them."
  },
+ "durst_nursemaid/aef88731a12285df": {
+  "chars": 46,
+  "direction": "[wondering, moved, whispered]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "You. You sang it. Nobody had sung it since me."
+ },
+ "durst_nursemaid/b340c514432d4484": {
+  "chars": 121,
+  "direction": "[gentle, sad, calm]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "You broke me in the nursery. That's all right. That was only the part of me that was angry. This is the part that's left."
+ },
  "durst_nursemaid/f06fdd0abb77cc7c": {
   "chars": 57,
   "model": "eleven_v3",
   "recipe": "b6e0e45760",
   "text": "Have you brought him? Have you brought my Walter back up?"
+ },
+ "durst_nursemaid/f0c17d34572d585c": {
+  "chars": 125,
+  "direction": "[soft, grateful, urgent]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "You've got me. I can feel it, like a hand on my shoulder. Take me down to him. The smallest door in the row, under the house."
+ },
+ "durst_nursemaid/f39b54569f3b51da": {
+  "chars": 73,
+  "direction": "[soft, yearning, hushed]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "In the roof of the tall house, in the trunk. And then down, to my Walter."
+ },
+ "durst_nursemaid/fbd4f05d644ed476": {
+  "chars": 150,
+  "direction": "[aching, pleading, breaking]",
+  "model": "eleven_v3",
+  "recipe": "b6e0e45760",
+  "text": "I want my Walter. They took him down under the house the night he was born. There's a door down there with his name on it. Put me in with him. Please."
  },
  "elisabeth_durst/114280b8a69c12e9": {
   "chars": 78,
@@ -12894,6 +12978,12 @@
   "recipe": "956cd23797",
   "text": "He's asleep. We won't get a better chance than this."
  },
+ "hero_female/1813b7e53eabb415": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "We'll carry her. It's what the rite is for."
+ },
  "hero_female/194cfc61fa813820": {
   "chars": 42,
   "model": "eleven_v4",
@@ -16479,6 +16569,12 @@
   "recipe": "956cd23797",
   "text": "An old trick. Effective, apparently. We're inside."
  },
+ "hero_female/eb36deff5e8424ff": {
+  "chars": 54,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Then what we killed down there is all there is of him."
+ },
  "hero_female/eb84751db71ac6e6": {
   "chars": 17,
   "model": "eleven_v4",
@@ -17123,6 +17219,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "He's asleep. We won't get a better chance than this."
+ },
+ "hero_male/1813b7e53eabb415": {
+  "chars": 43,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "We'll carry her. It's what the rite is for."
  },
  "hero_male/194cfc61fa813820": {
   "chars": 42,
@@ -20708,6 +20810,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "An old trick. Effective, apparently. We're inside."
+ },
+ "hero_male/eb36deff5e8424ff": {
+  "chars": 54,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Then what we killed down there is all there is of him."
  },
  "hero_male/eb84751db71ac6e6": {
   "chars": 17,
@@ -27804,6 +27912,13 @@
   "model": "eleven_v3",
   "recipe": "a968987b3b",
   "text": "I've never done that. It feels terribly vain. ...It feels rather nice. Don't tell the Morninglord."
+ },
+ "liriel_dawnsong/1813b7e53eabb415": {
+  "chars": 43,
+  "direction": "[gentle, certain, compassionate]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "We'll carry her. It's what the rite is for."
  },
  "liriel_dawnsong/18c6bdaa91827140": {
   "chars": 56,
@@ -35431,6 +35546,12 @@
   "recipe": "dd92281f92",
   "text": "For a long moment he looks east, toward the stump, as if he could kill her again from here and is considering it."
  },
+ "narrator/172397239295d7ab": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The little crypt is closed again. On the lid, where nobody put it, lies the smooth grey stone with the hole through it, warm as a hand."
+ },
  "narrator/1727e68fd41b77ef": {
   "chars": 145,
   "model": "eleven_v4",
@@ -38106,6 +38227,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The tall black door swings open without a sound, the way a good servant opens a door for a guest."
+ },
+ "narrator/2e182b4cb3563284": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The lids along the row slide back, one after another, and what the house kept down here climbs out to take back what was taken."
  },
  "narrator/2e25a81c01209d19": {
   "chars": 110,
@@ -45025,6 +45152,12 @@
   "recipe": "dd92281f92",
   "text": "The dust on the altar lies thick and even, except in one place, where it has been heaped over something."
  },
+ "narrator/6b86c7b0937404ef": {
+  "chars": 91,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She turns, and knows you. You hummed her a lullaby once, in a nursery that smelled of dust."
+ },
  "narrator/6b8a8a59479c3547": {
   "chars": 172,
   "model": "eleven_v4",
@@ -46230,6 +46363,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road ends at the edge of a chasm, and the castle stands on the far side as if it grew there. The drawbridge is already down."
+ },
+ "narrator/76718fc023c1eb45": {
+  "chars": 119,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the pocket of the apron, under the sheet, there's a smooth grey stone with a hole through it, worn shiny by a thumb."
  },
  "narrator/767288426831a5ef": {
   "chars": 90,
@@ -47652,6 +47791,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Vosk's shape slips like a badly hung coat. Under it: a jackal's head, a scholar's robe, and claws that shake."
+ },
+ "narrator/8317c6d5f82a742a": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It's empty. Not a bone, not a scrap of cloth. There was never a baby in it. The robed ones cut his name over a box and gave him to the thing in the pit instead."
  },
  "narrator/8324d6f888810830": {
   "chars": 104,
@@ -50574,6 +50719,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The pin is as long as your arm, through a collar rivet the size of a fist. It would take two of you to work it loose."
+ },
+ "narrator/9d02c4438c551888": {
+  "chars": 157,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You lay her in the little crypt, sheet and ribbon and all, though she hardly fits. Now there's somebody in it who loved him. That has to count for something."
  },
  "narrator/9d0b8d277e43cbe9": {
   "chars": 87,
@@ -54457,6 +54608,12 @@
   "recipe": "dd92281f92",
   "text": "At the statue's feet, among the offerings, something catches your light and holds it a moment longer than the rest."
  },
+ "narrator/c090e108e050a1c5": {
+  "chars": 173,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The smallest crypt in the row. Walter, and nothing else. You get your fingers round the edge of the slab, and it comes away easier than it should, as if it was never sealed."
+ },
  "narrator/c0910b759093a59c": {
   "chars": 108,
   "model": "eleven_v4",
@@ -54618,6 +54775,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Beams, nests, droppings, and eyes. A lot of eyes."
+ },
+ "narrator/c1aa7f9828354d9d": {
+  "chars": 122,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "For a moment, somewhere in the stone of the house, someone hums the first bar of a lullaby, off key, and stops, satisfied."
  },
  "narrator/c1adebd9597606a6": {
   "chars": 54,
@@ -54816,6 +54979,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The candle you lit is still burning, though there's no wind-shield on it and the snow comes in sideways."
+ },
+ "narrator/c312e46d76df78ce": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind you, along the row of crypts, stone grinds on stone. The house has noticed someone has taken something out of it without asking."
  },
  "narrator/c34045c46ce33b8e": {
   "chars": 84,
@@ -57055,6 +57224,12 @@
   "recipe": "dd92281f92",
   "text": "Thigh-deep in the cold, your boots find the bell where it fell: on its side in the silt, green with weed, its clapper still swinging. Wedged in the mouth of it, somebody's offerings from a long time ago, coins gone black."
  },
+ "narrator/d7c78eb430273340": {
+  "chars": 189,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You fold the stiff sheet back over her and lift her out together, all of her, which is not much. Someone ties the blue ribbon back in what's left of her hair. It seems the least you can do."
+ },
  "narrator/d7e85e58499d577a": {
   "chars": 203,
   "model": "eleven_v4",
@@ -57294,6 +57469,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Two burned-out candles and two empty trestles. The room still feels like it's holding its breath."
+ },
+ "narrator/daa87ebf4d7f7a69": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A young woman in a nursemaid's cap and apron stands at the churchyard wall in the dark, her hands folded, looking in through the gate at the graves. She's grey all through, and you can see the wall through her."
  },
  "narrator/dadb80929a8918f2": {
   "chars": 56,
