@@ -219,15 +219,16 @@ func test_doru_meets_you_once_then_picks_up_where_you_left_him() -> void:
 	assert_true(again.any(func(x: String) -> bool: return x.contains("Doru still clings")), "he's where you left him: %s" % [again])
 
 
-## Storyline QA (SL-11): Ireena's window picture shows Ismark asleep by the door, so it shows only where he is: the inn,
-## with him guarding her. In Krezk, or at the inn without him, the scene plays without the picture.
+## Storyline QA (SL-11): Ireena's window picture shows Ismark asleep by the door, so that take shows only where he is: the
+## inn, with him guarding her. In Krezk, or at the inn without him, the room behind her is empty (Ashwin's yes,
+## 2026-10-09: a take without him).
 func test_ireenas_window_shows_ismark_only_when_he_is_there() -> void:
 	var st := _story(false)
-	assert_eq(Cutscenes.image("ireena_window", st), "", "at the inn without Ismark: no picture of him")
+	assert_eq(Cutscenes.image("ireena_window", st), "res://art/cutscenes/ireena_window_alone.jpg", "at the inn without Ismark: an empty room")
 	st.set_flag("ismark_guards_ireena", true)
 	assert_eq(Cutscenes.image("ireena_window", st), "res://art/cutscenes/ireena_window.jpg", "with him guarding her")
 	st.set_flag("ireena_in_krezk", true)
-	assert_eq(Cutscenes.image("ireena_window", st), "", "in Krezk the room and the guard don't match the picture")
+	assert_eq(Cutscenes.image("ireena_window", st), "res://art/cutscenes/ireena_window_alone.jpg", "in Krezk the room doesn't match his picture")
 
 
 ## UI QA (ART-07, SND-03): no still carries a black band along an edge (vosk_unmasked had one across its top), and the

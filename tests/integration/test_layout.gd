@@ -517,6 +517,20 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 	await _frames(3)
 	var cv := view.combat_view
 	await _check("the combat HUD", func() -> Variant: return cv.hud)
+	# One slot per idea (Combat HUD plan): the Reactions tab's toggles, and a container's pick list open at its slot.
+	await _check("the combat HUD's Reactions tab", func() -> Variant:
+		cv.hud.set_tab(ActionCatalog.REACTIONS)
+		await _frames(1)
+		return cv.hud)
+	cv.hud.set_tab(ActionCatalog.COMMON)
+	for i in cv.hud.slot_count():
+		if bool(cv.hud.slot_action(i).get("group", false)):
+			await _check("a container's pick list", func() -> Variant:
+				cv.hud.use_slot(i)
+				await _frames(1)
+				return cv.hud,
+				func() -> void: cv.hud._menu.hide())
+			break
 	for i in 10:
 		if cv.e.current().side == &"party":
 			break

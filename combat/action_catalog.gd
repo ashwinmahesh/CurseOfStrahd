@@ -14,6 +14,8 @@ const COMMON := "Common"
 const SPELLS := "Spells"
 const ITEMS := "Items"
 const PASSIVES := "Passives"
+## The standing rules (Ask / Automatic / Off), one toggle slot each, like Baldur's Gate 3's Reactions panel.
+const REACTIONS := "Reactions"
 ## The player's own tabs (U2): the actions they starred, gathered from every tab, and the ones they put away.
 const FAVOURITES := "Favourites"
 const HIDDEN := "Hidden"
@@ -33,6 +35,8 @@ func tabs_for(c: Combatant) -> Array[String]:
 	if c.creature is Character and not (c.creature as Character).spellcasting.is_empty():
 		out.append(SPELLS)
 	out.append(ITEMS)
+	if c.creature is Character:
+		out.append(REACTIONS)
 	out.append(PASSIVES)
 	var lay := layout(c)
 	if not (lay.get("favourites", []) as Array).is_empty():
@@ -121,6 +125,121 @@ func move_action(c: Combatant, tab: String, action_id: String, index: int) -> vo
 	var order := (lay.get("order", {}) as Dictionary).duplicate()
 	order[tab] = ids
 	lay["order"] = order
+
+
+# --- One slot per idea (Combat HUD plan, 2026-10-09) -------------------------------------------------
+
+## The hotbar's slots on `tab`: the arranged actions (arranged()) with each Ask / Automatic / Off rule folded into one
+## toggle slot, the variants of one action into one container slot ("Shove: Prone" and "Shove: Push" become "Shove"; a
+## spell's other castings and Command's words sit under the spell), like Baldur's Gate 3's containers, and the common
+## actions that can't apply in this fight (Influence and Utilize with nothing to use them on, Stabilize with nobody
+## dying) left out. A slot is an action, or a group: {id: "group:<key>", group: true, toggle, label, sub, cost, legal,
+## reason, help, armed, items: [actions], current: the index in force (a toggle's), spell_id, slot}.
+func slots(c: Combatant, tab: String, all: Array[Dictionary] = []) -> Array[Dictionary]:
+	var acts := arranged(c, tab, all)
+	var counts := {}
+	for a in acts:
+		var key := _group_key(a)
+		if key != "":
+			counts[key] = int(counts.get(key, 0)) + 1
+	var out: Array[Dictionary] = []
+	var groups := {}
+	for a in acts:
+		if _stays_out(a):
+			continue
+		var key := _group_key(a)
+		if key == "" or (int(counts.get(key, 0)) < 2 and not a.has("policy")):
+			out.append(a)
+			continue
+		if not groups.has(key):
+			groups[key] = {"id": "group:" + key, "group": true, "toggle": a.has("policy"), "items": [] as Array[Dictionary], "tab": tab}
+			out.append(groups[key])
+		((groups[key] as Dictionary)["items"] as Array[Dictionary]).append(a)
+	for g: Dictionary in groups.values():
+		_finish_group(g, str(g["id"]).substr(6))
+	return out
+
+
+## What folds an action into a group: its rule, its spell (a spell with other castings), or the name before ": " in its
+## label ("Shove: Prone"); "" for none.
+func _group_key(a: Dictionary) -> String:
+	if a.has("policy"):
+		return "policy:" + str(a["policy"])
+	if str(a.get("spell_id", "")) != "" and str(a["kind"]) == "spell" and str(a.get("tab", "")) == SPELLS:
+		return "spell:" + str(a["spell_id"])
+	var label := str(a["label"])
+	if label.contains(": "):
+		return "label:" + label.get_slice(": ", 0)
+	return ""
+
+
+## A common action that can't apply in this fight stays off the hotbar until it can.
+func _stays_out(a: Dictionary) -> bool:
+	match str(a["id"]):
+		"influence", "utilize":
+			return not bool(a["legal"])
+		"stabilize":
+			return not e.combatants.any(func(x: Combatant) -> bool:
+				return x.creature.hp <= 0 and not x.creature.dead and not x.creature.stable)
+	return false
+
+
+func _finish_group(g: Dictionary, key: String) -> void:
+	var items := g["items"] as Array[Dictionary]
+	var first := items[0]
+	var legal := items.any(func(a: Dictionary) -> bool: return bool(a["legal"]))
+	g["legal"] = legal
+	g["reason"] = "" if legal else str(first["reason"])
+	g["kind"] = "group"
+	g["targeting"] = "none"
+	g["slot"] = int(first.get("slot", 0))
+	g["spell_id"] = str(first.get("spell_id", ""))
+	g["armed"] = items.any(func(a: Dictionary) -> bool: return bool(a.get("armed", false)))
+	var same_cost := items.all(func(a: Dictionary) -> bool: return str(a["cost"]) == str(first["cost"]))
+	g["cost"] = str(first["cost"]) if same_cost else "free"
+	if bool(g["toggle"]):
+		var current := 0
+		for i in items.size():
+			if bool(items[i].get("selected", false)):
+				current = i
+		g["current"] = current
+		g["label"] = str(first["policy_name"])
+		g["sub"] = str(items[current]["mode_label"])
+		g["help"] = "%s\nClick to change it (%s); right-click to pick. It holds from fight to fight." % [str(first["help"]),
+			" → ".join(items.map(func(a: Dictionary) -> String: return str(a["mode_label"])))]
+		return
+	var names: Array[String] = []
+	for a in items:
+		names.append(variant_name(a, key))
+	if key.begins_with("spell:"):
+		var data := Compendium.shared().spell_data(str(first["spell_id"]))
+		g["label"] = str(data.get("name", first["label"]))
+		g["sub"] = str(first["sub"]).get_slice(" · ", 0) + " · %d choices" % items.size()
+	else:
+		g["label"] = key.substr(6)
+		g["sub"] = " · ".join(names)
+	var armed := items.filter(func(a: Dictionary) -> bool: return bool(a.get("armed", false)))
+	if not armed.is_empty():
+		g["sub"] = "armed: " + variant_name(armed[0] as Dictionary, key)
+	g["help"] = "Choose one: %s." % ", ".join(names)
+
+
+## A group member's name in its pick list: what follows the group's name ("Prone" for "Shove: Prone"), or a spell's
+## other casting as its label says.
+func variant_name(a: Dictionary, key: String) -> String:
+	var label := str(a["label"])
+	if label.contains(": "):
+		return label.substr(label.find(": ") + 2)
+	if key.begins_with("spell:") and str(a["id"]) == "spell:" + str(a["spell_id"]):
+		return "Cast it"
+	return label
+
+
+## Changes a standing rule (a toggle slot's mode) for `c`, on any turn: nothing is spent and nothing is shown on the field.
+func set_rule(c: Combatant, mode_action: Dictionary) -> CombatResult:
+	if not mode_action.has("policy"):
+		return CombatResult.fail("Not a rule")
+	return e.feature_actions.perform(c, str(mode_action["id"]).substr(5), null, Vector2.INF)
 
 
 func class_tab(c: Combatant) -> String:
@@ -291,8 +410,13 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 ## FeatureActions' entries as hotbar actions.
 func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]), str(fa["targeting"]), str(fa["help"]))
+		var en := _entry(str(fa["id"]), REACTIONS if fa.has("policy") else tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
+			str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
+		# A standing rule's mode (Reactions.list_policies, DamageResponses.list): folded into one toggle slot (slots()).
+		for k: String in ["policy", "policy_name", "mode", "mode_label", "selected", "anytime"]:
+			if fa.has(k):
+				en[k] = fa[k]
 		en["range"] = int(fa["range"])
 		# Some features take a choice from the right-click menu (Lay On Hands: how many points).
 		if fa.has("choices"):
@@ -370,9 +494,10 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		var rw := e._turn_check(c)
 		if rw == "" and not armed:
 			rw = str(ro["why"])
-		var re := _entry("rider:" + str(ro["id"]), tab, ("✓ " if armed else "") + str(ro["label"]), ("armed · " if armed else "") + str(ro["sub"]), "free", rw, "none",
+		var re := _entry("rider:" + str(ro["id"]), tab, str(ro["label"]), ("armed · " if armed else "") + str(ro["sub"]), "free", rw, "none",
 			"Arm it for your next hit this turn (click again to disarm). %s" % ro["sub"])
 		re["kind"] = "rider"
+		re["armed"] = armed   # the slot glows while it's armed
 		out.append(re)
 	# War Magic (Eldritch Knight 7): a cantrip in place of one attack of the Attack action.
 	if (CombatFeatures.has_feature(c, "war_magic") or not e.triggered_features.recipes(c, "attack_cantrip").is_empty()) and (c.attacks_left > 0 or c.action_available):
@@ -494,6 +619,7 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 			a["targeting"] = "none"
 			a["sub"] = sub + " · arms your next hit"
 			a["help"] = "Arms it: it's cast on your next hit with a weapon, spending its slot (or free use) only then. Choose it again to disarm."
+			a["armed"] = ("smite:" + str(s["id"])) in c.armed
 			# Divine Smite, the 2014 way: no Bonus Action, and armed it smites every melee hit this turn while slots last.
 			if str(s["id"]) == CombatFeatures.DIVINE_SMITE:
 				var smite_why := e._turn_check(c)
@@ -1031,6 +1157,8 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 static func ability_key(action: Dictionary) -> String:
 	var id := str(action.get("id", ""))
 	if str(action.get("kind", "")) == "feat":
+		if action.has("policy"):
+			return ""   # a standing rule changing shows nothing
 		var key := id.substr(5)
 		for pre: String in ["cf:", "rh:", "fr:", "ek:"]:
 			if key.begins_with(pre):
