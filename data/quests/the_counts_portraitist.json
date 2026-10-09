@@ -1,0 +1,34 @@
+{
+  "id": "the_counts_portraitist",
+  "name": "The Count's Portraitist",
+  "summary": "Haralamb, who paints the Baron's wicker sun, was fetched to the castle and kept eleven nights painting a woman from the count's memory. He can't stop painting her.",
+  "giver": "vallaki_sun_painter",
+  "region": "vallaki",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "A driverless carriage took Haralamb the painter to the castle for eleven nights to paint a woman in white from the count's memory, with the count's own paints. Now every face he paints is hers, and he has sold three: to the Baron, to Lady Wachter, and to Urwin at the inn.",
+      "objectives": [
+        "Go into Haralamb's studio on the east row",
+        "Deal with the great canvas the count gave him to copy from"
+      ],
+      "hint": "Go into Haralamb's studio on Vallaki's east row and look at the great canvas against the far wall.",
+      "ends": ""
+    },
+    {
+      "id": "burned",
+      "journal": "The count spoke to us out of the painted woman's mouth. Then the canvas and its copies came off the walls, and we burned it.",
+      "objectives": [
+        "Speak to Haralamb at his door in the evening"
+      ],
+      "hint": "Find Haralamb at his door on Vallaki's east row in the evening.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Every copy in Vallaki went blank when the great canvas burned, the Baron's included. Haralamb scraped the count's paints into clean pots and said a prayer over them, and gave them to us.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

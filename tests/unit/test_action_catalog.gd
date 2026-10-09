@@ -184,6 +184,24 @@ func test_attacks_cant_target_their_own_user_but_self_spells_can() -> void:
 	assert_eq(cat.target_why(hedda, heal, hedda), "", "a spell for a creature you can see can still be cast on yourself")
 
 
+func test_warding_bond_goes_on_another_creature_and_an_ally_spell_on_yourself() -> void:
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))
+	var hedda := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 2))
+	TestCombat.foe(e, "zombie", Vector2i(9, 2))
+	(((hedda.creature as Character).spellcasting[0] as Dictionary)["prepared"] as Array).append_array(["warding_bond",
+		"protection_from_evil_and_good"])
+	TestCombat.start_with(e, hedda)
+	var cat := ActionCatalog.new(e)
+	var spells := {}
+	for a in cat.actions_for(hedda):
+		spells[str(a.get("spell_id", ""))] = a
+	assert_true(spells.has("warding_bond") and spells.has("protection_from_evil_and_good"), str(spells.keys()))
+	assert_eq(cat.target_why(hedda, spells["warding_bond"], hedda), "Choose another creature", "the 2024 spell bonds another")
+	assert_eq(cat.target_why(hedda, spells["warding_bond"], ilse), "")
+	assert_eq(cat.target_why(hedda, spells["protection_from_evil_and_good"], hedda), "", "a willing creature you touch: you too")
+
+
 func test_advantage_and_disadvantage_are_flagged_in_the_preview_and_the_roll() -> void:
 	var e := TestCombat.open_field()
 	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2))

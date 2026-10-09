@@ -1081,6 +1081,13 @@
       "prompt": "A rock shelf high on a mountain above a gorge of cloud, cold wind and snow streaming off it. On the shelf, a nest as big as a cottage roof woven from whole pine trunks and lined with bones and old harness, and in it a huge grey freckled egg as tall as a child, cracked open, a wet grey baby bird's beak as long as an arm screaming out of it. On a tower parapet above the shelf, stone gargoyles drawn after the second reference are spreading their wings to drop off the stone, and among them a pale man in a falconer's leather glove. Far out over the gorge, tiny against the sky, the enormous shape of the mother roc drawn after the first reference, turning back. {party} stand at the edge of the nest, seen from behind. Cold thin daylight, one single picture, no panels.",
       "use": "a"
     },
+    "sq_counts_likeness": {
+      "refs": [
+        "ireena"
+      ],
+      "prompt": "A painter's studio at night in an old timber house, lit by a few candles, smelling of linseed. Against the far wall stands a great canvas in a heavy gilt frame taller than a door: a portrait of a young woman in a white gown with long auburn hair, her hands folded, her face drawn exactly as the reference shows the young woman's face, painted with impossible life, her dark wet eyes looking straight out of the canvas and following the viewer. All around the studio, leaning on easels and stacked against the walls, dozens of smaller canvases of the same woman, some turned to the wall. Paint pots of a strange red-gold on a table. {party} stand before the great canvas, seen from behind, one holding up a lantern. Candlelight and deep shadow, one single picture, no panels.",
+      "use": "a"
+    },
     "sq_escher_dawn": {
       "refs": [
         "escher"

@@ -1,0 +1,351 @@
+{
+  "id": "vallaki_painters_studio",
+  "name": "Haralamb's Studio",
+  "region": "vallaki",
+  "summary": "Haralamb the painter's house on Vallaki's east row: a front room of pots and rags, and up the back a long studio full of portraits of one woman, and the great canvas the count gave him to copy from (The Count's Portraitist, docs/story/side_quests.md).",
+  "text": "A painter's house that smells of linseed and something under it, like old flowers. Every canvas in it is turned to the wall, except the ones that aren't, and those all have the same face.",
+  "map": {
+    "rows": [
+      "################",
+      "#..............#",
+      "#..............#",
+      "#..=........=..#",
+      "#..............#",
+      "#..............#",
+      "######..########",
+      "#..............#",
+      "#.=..........=.#",
+      "#..............#",
+      "#..............#",
+      "#######.########"
+    ],
+    "theme": "manor",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "painter_front_room",
+      "name": "The front room",
+      "cells": [
+        [
+          1,
+          7
+        ],
+        [
+          14,
+          10
+        ]
+      ]
+    },
+    {
+      "id": "painter_studio",
+      "name": "The studio",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          14,
+          5
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      10
+    ],
+    "from_street": [
+      7,
+      10
+    ]
+  },
+  "exits": [
+    {
+      "id": "painter_out",
+      "cell": [
+        7,
+        11
+      ],
+      "to": "vallaki",
+      "spawn": "from_painter",
+      "label": "Out to the east row"
+    }
+  ],
+  "props": [
+    {
+      "id": "likeness_canvas",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "examine",
+      "label": "A great canvas in a gilt frame",
+      "model": "portrait_tatyana",
+      "dialogue": "vallaki/the_counts_portraitist:canvas"
+    },
+    {
+      "id": "painter_copy_1",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "examine",
+      "label": "A portrait",
+      "model": "portrait_tatyana"
+    },
+    {
+      "id": "painter_copy_2",
+      "cell": [
+        12,
+        1
+      ],
+      "kind": "decor",
+      "label": "A portrait",
+      "model": "portrait_tatyana"
+    },
+    {
+      "id": "painter_copy_3",
+      "cell": [
+        14,
+        2
+      ],
+      "kind": "decor",
+      "label": "A portrait",
+      "model": "portrait_turned"
+    },
+    {
+      "id": "painter_copies_stacked",
+      "cell": [
+        1,
+        5
+      ],
+      "kind": "examine",
+      "label": "Canvases turned to the wall",
+      "model": "painting_row"
+    },
+    {
+      "id": "painter_easel_table",
+      "cell": [
+        3,
+        3
+      ],
+      "kind": "decor",
+      "label": "A paint table",
+      "model": "table"
+    },
+    {
+      "id": "painter_easel_table_2",
+      "cell": [
+        12,
+        3
+      ],
+      "kind": "decor",
+      "label": "A paint table",
+      "model": "table"
+    },
+    {
+      "id": "painter_pots",
+      "cell": [
+        5,
+        4
+      ],
+      "kind": "examine",
+      "label": "Pots of paint",
+      "model": "jars"
+    },
+    {
+      "id": "painter_sketches",
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "examine",
+      "label": "Sketches",
+      "model": "drawings"
+    },
+    {
+      "id": "painter_candles",
+      "cell": [
+        9,
+        1
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candelabra"
+    },
+    {
+      "id": "painter_sheet",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "decor",
+      "label": "A dust sheet",
+      "model": "sheeted_furniture"
+    },
+    {
+      "id": "painter_workbench",
+      "cell": [
+        2,
+        8
+      ],
+      "kind": "decor",
+      "label": "A workbench",
+      "model": "workbench"
+    },
+    {
+      "id": "painter_rags",
+      "cell": [
+        13,
+        8
+      ],
+      "kind": "decor",
+      "label": "Rags",
+      "model": "rags"
+    },
+    {
+      "id": "painter_sun_pots",
+      "cell": [
+        4,
+        10
+      ],
+      "kind": "examine",
+      "label": "Pots of yellow",
+      "model": "glass_vessels"
+    },
+    {
+      "id": "painter_bed",
+      "cell": [
+        12,
+        10
+      ],
+      "kind": "decor",
+      "label": "A cot",
+      "model": "bed_small"
+    },
+    {
+      "id": "painter_stove",
+      "cell": [
+        1,
+        9
+      ],
+      "kind": "decor",
+      "label": "A stove",
+      "model": "stove"
+    },
+    {
+      "id": "painter_coats",
+      "cell": [
+        10,
+        7
+      ],
+      "kind": "decor",
+      "label": "Smocks on pegs",
+      "model": "cloak_pegs"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        9,
+        1
+      ],
+      "kind": "candle",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        7,
+        9
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "encounters": [
+    {
+      "id": "counts_likeness",
+      "trigger": "dialogue",
+      "text": "The great canvas leans out of its frame on its own, and the portraits round the walls come with it, frames and all, their painted eyes all on you.",
+      "monsters": [
+        {
+          "monster": "the_counts_likeness",
+          "cell": [
+            7,
+            2
+          ],
+          "hp": 230
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            2,
+            2
+          ],
+          "name": "A Copy",
+          "hp": 30
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            12,
+            2
+          ],
+          "name": "A Copy",
+          "hp": 30
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            2,
+            5
+          ],
+          "name": "A Copy",
+          "hp": 30
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            13,
+            4
+          ],
+          "name": "A Copy",
+          "hp": 30
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            4,
+            1
+          ],
+          "name": "A Copy",
+          "hp": 30
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            11,
+            5
+          ],
+          "name": "A Copy",
+          "hp": 30
+        }
+      ],
+      "surprise": "",
+      "flag": "likeness_burned",
+      "quest": {
+        "id": "the_counts_portraitist",
+        "stage": "burned"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:vallaki_painters_studio"
+  },
+  "rest": "risky"
+}

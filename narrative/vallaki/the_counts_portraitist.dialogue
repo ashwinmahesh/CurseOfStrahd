@@ -1,0 +1,95 @@
+# The Count's Portraitist (side quest, docs/story/side_quests.md): Haralamb, who paints the Baron's wicker sun, was fetched
+# to the castle by a carriage with no driver and kept eleven nights painting a woman from the count's memory. He came
+# home with the count's paints and can't stop: every face he paints is hers, and he has sold three. **Twist:** what
+# he paints from those paints is an eye of the castle, like the portraits on its walls, and the great canvas the count
+# gave him to copy from (data/monsters/the_counts_likeness.json) is the eye they all see through. Burn it and the rest
+# go blank. Reached from Haralamb at his door on the east row in the evening (npc vallaki_sun_painter). Every line here
+# is unvoiced for now.
+
+# --- Haralamb at his door, evenings (npc vallaki_sun_painter, the east row) ---
+
+~ painter
+if quest.the_counts_portraitist == done
+Haralamb: I painted the Baron's dog today. It came out looking like a dog. I wept, a little. Don't tell the Baron.
+-> END
+endif
+if flag.likeness_burned
+-> painter_after
+endif
+if flag.painter_told
+Haralamb: The door's open. I don't go in after dark any more. They watch you.
+-> END
+endif
+Narrator: A thin man in a painter's smock sits on his own doorstep in the last of the light, with his hands in his lap. They're stained, but not yellow. A red-gold that doesn't come off.
+if guest:ireena
+Narrator: He sees Ireena, and goes white, and stands up so fast his stool falls over.
+Haralamb: It's you. It's you. I've painted you forty times. I never saw you in my life.
+endif
+* Your hands. That isn't sun paint. -> painter_hands
+* Goodbye. -> END
+
+~ painter_hands
+set painter_told
+if not quest.the_counts_portraitist
+quest the_counts_portraitist asked
+endif
+Haralamb: Last month a carriage came for me. Black horses, and nobody holding the reins. He wanted a portrait. Not of himself. He has no face to sit for, he said. He wanted me to paint someone from his memory.
+Haralamb: Eleven nights. He talked and I painted. A woman in white. He gave me his own paints for it; he said mine weren't good enough for her. When it was done he said keep it. Copy it. Sell the copies.
+Haralamb: I came home and I can't stop. Every face I paint is hers. I've sold three. The Baron has one in his hall. Lady Wachter bought one. And Urwin at the inn, for over the bar.
+* [Arcana DC 14] (Look at the paint on his hands.) -> painter_arcana | painter_no_arcana
+* Show us the studio. -> painter_studio
+
+~ painter_arcana
+set likeness_known
+Narrator: Under the red-gold there's a faint grain, like the grain of an eye. The castle's portraits watch its halls for their master. These were painted with the same paint. Wherever one hangs in Vallaki, the castle can see the room.
+interject tag:blunt: He's put the count's eyes in the Baron's hall. And over the Martikovs' bar.
+-> painter_studio
+
+~ painter_no_arcana
+Narrator: Paint, very good paint, in a colour you've never seen. That's all you can tell.
+-> painter_studio
+
+~ painter_studio
+set painter_studio_open
+Haralamb: Go in, if you're going. Upstairs and to the back. The big one's against the far wall, the one he gave me to copy from. Burn the copies if you like; I've tried. They don't burn. Only the big one's ever looked as if it minded.
+-> END
+
+# --- The studio: the great canvas (prop likeness_canvas) ---
+
+~ canvas
+if flag.likeness_burned
+Narrator: A blackened frame on the wall and nothing in it. The copies round the room are blank canvas now, every one, as if they'd never been painted.
+-> END
+endif
+cutscene sq_counts_likeness
+Narrator: Against the far wall, in a gilt frame taller than a door, a young woman in white looks out of the canvas with her hands folded. She is painted as no living painter could paint her. Her eyes are dark, and wet, and they move.
+if guest:ireena
+Narrator: She has Ireena's face exactly. Ireena takes a step back, and the painted woman's eyes follow her, and soften.
+endif
+if flag.likeness_known
+Narrator: You know what it is now. Not a picture of a woman. A window, and someone on the other side of it, looking out.
+endif
+Narrator: Then the mouth moves, and the voice that comes out of it isn't a woman's.
+the_counts_likeness: Tell Haralamb his work pleases me. I like to see Vallaki. I like to see who comes and goes from the inn.
+* (Put a light to the canvas.) -> burn
+* Who are you talking to, out of her? -> voice
+
+~ voice
+the_counts_likeness: You know who. You hear me in the dark with your eyes shut. I see you with mine open. Isn't she lovely? I had to describe her for eleven nights. I'd forgotten nothing.
+-> burn
+
+~ burn
+Narrator: Every portrait in the studio turns its painted head toward you at once, with a sound like pages turning. The great canvas leans out of its frame.
+combat counts_likeness
+
+# --- Haralamb, once the canvas has burned ---
+
+~ painter_after
+quest the_counts_portraitist done
+Narrator: Haralamb is sitting on his step with a blank canvas across his knees, turning it to the light as if he can't believe there's nothing on it.
+Haralamb: They went blank. All of them. The Baron's man came running to ask why the lady in the hall had gone and left only canvas. I told him it was a very bad varnish.
+Haralamb: Take these. His paints. I've scraped them out of the pots into clean ones and said a prayer over them, which I've never done for paint. They're only paint now. Very, very good paint. Paint what you need with it.
+give marvelous_pigments
+gold +150
+approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +1 wren_featherfoot +2 ratatoille +2: You burned the count's eye out of Haralamb's studio
+-> END

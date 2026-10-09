@@ -1,0 +1,188 @@
+{
+  "id": "the_counts_likeness",
+  "name": "The Count's Likeness",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Count's Portraitist, docs/story/side_quests.md), built up from the guardian portrait: the great canvas the count gave his painter to copy from, an eye of the castle in a gilt frame, with a regard that frightens and burns the mind, a short list of the guardian's spells, and Legendary Resistance. Drawn with the guardian portrait's sprite, made Large."
+  },
+  "size": "large",
+  "type": "construct",
+  "tags": [
+    "boss",
+    "portrait"
+  ],
+  "alignment": "lawful evil",
+  "art": "guardian_portrait",
+  "art_height": 2.2,
+  "ac": 13,
+  "ac_note": "varnish and gilt",
+  "initiative": 2,
+  "hp": {
+    "average": 181,
+    "dice": "22d10+60"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 10,
+    "hover": true
+  },
+  "abilities": {
+    "str": 8,
+    "dex": 10,
+    "con": 14,
+    "int": 18,
+    "wis": 16,
+    "cha": 20
+  },
+  "saves": {
+    "wis": 7,
+    "cha": 9
+  },
+  "immunities": [
+    "poison",
+    "psychic"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone"
+  ],
+  "senses": {
+    "truesight": 60
+  },
+  "passive_perception": 13,
+  "languages": [
+    "Common"
+  ],
+  "cr": 8,
+  "xp": 3900,
+  "proficiency_bonus": 3,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Likeness fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_counts_eye",
+      "name": "The Count's Eye",
+      "action": "passive",
+      "summary": "Whatever the painted woman looks at, the castle sees. The count speaks through it.",
+      "text": "The Likeness is an eye of Castle Ravenloft: what the woman in it looks at, the count sees, and he can speak through her mouth. Every portrait Haralamb painted from it does the same, until it burns.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "regard",
+          "count": 1,
+          "or": [
+            "spellcasting"
+          ]
+        },
+        {
+          "action": "frame_strike",
+          "count": 1
+        }
+      ],
+      "summary": "The Count's Regard or a spell, and a Frame Strike.",
+      "text": "The Likeness uses The Count's Regard or casts a spell, and makes one Frame Strike."
+    },
+    {
+      "id": "frame_strike",
+      "name": "Frame Strike",
+      "kind": "melee",
+      "attack": {
+        "bonus": 7,
+        "reach": 10
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d8+3",
+          "type": "bludgeoning"
+        }
+      ],
+      "summary": "The heavy gilt frame swings like a door.",
+      "text": "Melee Attack Roll: +7, reach 10 ft. Hit: 16 (3d8 + 3) Bludgeoning damage."
+    },
+    {
+      "id": "regard",
+      "name": "The Count's Regard",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 60,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 27,
+          "dice": "5d10",
+          "type": "psychic"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "One creature within 60 ft meets his eyes; DC 16 Wis save, 5d10 Psychic and Frightened until the end of its next turn, half on a success.",
+      "text": "Wisdom Saving Throw: DC 16, one creature the Likeness can see within 60 feet. Failure: 27 (5d10) Psychic damage, and the target has the Frightened condition until the end of the Likeness's next turn. Success: Half damage only."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Casts the guardian's spells (Cha, DC 16).",
+      "text": "The Likeness casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 16): once a day each, Hypnotic Pattern and Hold Person."
+    }
+  ],
+  "spellcasting": {
+    "ability": "cha",
+    "dc": 16,
+    "attack": 8,
+    "per_day": {
+      "1": [
+        "hypnotic_pattern",
+        "hold_person"
+      ]
+    }
+  },
+  "legendary_actions": {
+    "per_round": 1,
+    "options": [
+      {
+        "id": "regard",
+        "name": "A Look",
+        "cost": 1,
+        "action": "regard",
+        "summary": "Uses The Count's Regard."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "vallaki"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A great canvas in a gilt frame: a young woman in a white gown, painted as no living painter could paint her, from a dead man's memory. It's an eye of the castle. Her look burns, her frame swings like a door, and the count speaks through her mouth."
+}
