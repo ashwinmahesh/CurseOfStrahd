@@ -2415,6 +2415,16 @@
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]"
+    },
+    "library_xaver": {
+      "voice_id": "k9cNSnSlnKt7gF6cuhQm",
+      "name": "Barovia Xaver",
+      "description": "A young man's voice worn strange by three hundred years hiding in the dark, speaking English with a strong Eastern European accent. Once a careful scholar's apprentice, now a nothic: a thin, dry, raspy, breathy voice, hushed and quick with fear, cracking and whispering, with a hollow, papery edge. Nervous, pleading, shaky laughter, and a terrible longing for company.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Eastern European accent]",
+      "generated_voice_id": "k9cNSnSlnKt7gF6cuhQm",
+      "released": true
     }
   },
   "sfx": {
