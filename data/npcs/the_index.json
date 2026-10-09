@@ -1,0 +1,17 @@
+{
+  "id": "the_index",
+  "name": "The Index",
+  "title": "The Catalogue Desk",
+  "summary": "The great catalogue desk of Khazan's drowned library, which was never a desk.",
+  "portrait": "mimic",
+  "sprite": "mimic",
+  "attitude": "hostile",
+  "monster": "the_index",
+  "guest": false,
+  "tags": [
+    "mimic",
+    "van_richtens_tower"
+  ],
+  "region": "van_richtens_tower",
+  "pronouns": "it/its"
+}

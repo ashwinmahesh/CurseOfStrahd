@@ -547,3 +547,18 @@ func test_the_mist_wolves_come_for_snowdrop() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_goatherds_count"), "defended")
 	assert_true(GameState.story.get_flag("pasture_wolves_beaten", false))
+
+
+## The catalogue desk of Khazan's drowned library opens every drawer at once, Huge, with two reading chairs.
+func test_the_index_opens_its_drawers() -> void:
+	var v := await _boot("drowned_library", 14, 9, ["xaver_met"])
+	GameState.story.set_quest_stage("the_drowned_library", "asked")
+	LocationNpcs.hide_npcs_of(v, "van_richtens_tower/the_drowned_library:xaver")
+	var e := await _fight(v, "the_index", ["The Index", "A Reading Chair"])
+	for c in e.combatants:
+		if c.name() == "The Index":
+			assert_eq(c.size_cells, 3, "Huge")
+			assert_eq(CombatToken.height_of(c), 2.4)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_drowned_library"), "unfiled")
+	assert_true(GameState.story.get_flag("index_destroyed", false))

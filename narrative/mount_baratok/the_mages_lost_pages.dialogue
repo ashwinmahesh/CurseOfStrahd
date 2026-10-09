@@ -18,6 +18,9 @@ endif
 if flag.corvina_name_known and level >= 10 and not quest.the_name_over_the_door
 -> van_richtens_tower/the_name_over_the_door:mordenkainen_news
 endif
+if quest.the_name_over_the_door == unmade and not quest.the_drowned_library
+-> van_richtens_tower/the_drowned_library:mordenkainen_news
+endif
 if quest.the_unnamed_crypt == done
 Mordenkainen: Corvina. I still say it every morning. I find I don't need to any more, and I say it anyway.
 -> mount_baratok/mordenkainen:restored_menu
