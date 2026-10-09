@@ -1,0 +1,42 @@
+{
+  "id": "the_drowned_library",
+  "name": "The Drowned Library",
+  "summary": "Something whispers up the old well on the shore of Lake Baratok, from the archmage Khazan's library under the lake: don't come down.",
+  "giver": "mordenkainen",
+  "region": "van_richtens_tower",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Mordenkainen says Khazan kept a library cut into the rock under Lake Baratok, and some of his apprentices went down to read and stayed. Since Khazan was unmade, he's dreamed of a small voice coming up a well, asking him not to come down. There's an old well-head on the shore by the tower.",
+      "objectives": [
+        "Find the old well-head on the shore of Lake Baratok"
+      ],
+      "hint": "Find the old well-head on the shore of Lake Baratok, by Van Richten's Tower, and listen at it.",
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Something whispers up the old well-head on the shore of Lake Baratok: don't come down, don't read anything, don't touch the desk.",
+      "objectives": [
+        "Go down the well-shaft into the library under the lake"
+      ],
+      "hint": "Climb down the old well-head on the shore by Van Richten's Tower into the Drowned Library, and find who's whispering.",
+      "ends": ""
+    },
+    {
+      "id": "unfiled",
+      "journal": "The thing whispering up the well was Xaver, Khazan's last apprentice, gone to a nothic in three hundred years of hiding on top of a bookcase. What he was hiding from was the catalogue desk. It's firewood now.",
+      "objectives": [
+        "Talk to Xaver in the library"
+      ],
+      "hint": "Talk to Xaver in the Drowned Library under the lake.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Xaver came down off his bookcase for the first time in three hundred years. He gave us the one book he saved, and the desk's drawers gave up eleven readers' purses.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

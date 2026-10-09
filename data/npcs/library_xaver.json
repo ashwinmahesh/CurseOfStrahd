@@ -1,0 +1,17 @@
+{
+  "id": "library_xaver",
+  "name": "Xaver",
+  "title": "Khazan's Last Apprentice",
+  "summary": "The last of the archmage Khazan's apprentices, who came down to the library under Lake Baratok to read three hundred years ago and has been hiding from the furniture ever since. Hunger for what he couldn't read has made him a nothic: one great eye, long claws, and a whisper that comes up the old well.",
+  "portrait": "nothic",
+  "sprite": "nothic",
+  "attitude": "friendly",
+  "monster": "nothic",
+  "guest": false,
+  "tags": [
+    "nothic",
+    "van_richtens_tower"
+  ],
+  "region": "van_richtens_tower",
+  "pronouns": "he/him"
+}

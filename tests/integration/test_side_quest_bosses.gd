@@ -388,3 +388,12 @@ const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector
 ## Six wolves out of the mists at level 1.
 func test_the_mist_wolves_at_level_1() -> void:
 	await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)
+
+
+## By the catalogue desk in the middle of the Drowned Library.
+const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 12)]
+
+
+## The Index and two reading chairs, with the shelves coming down and the lake coming in.
+func test_the_index_at_level_9() -> void:
+	await _series("drowned_library", 14, 9, "the_index", [1, 2, 3, 4, 5, 6, 7, 8], ["xaver_met"], [], [], AT_THE_DESK)

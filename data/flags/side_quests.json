@@ -1410,6 +1410,21 @@
       "id": "snowdrop_back",
       "type": "bool",
       "summary": "The Goatherd's Count: the party walked Snowdrop back into the mists."
+    },
+    {
+      "id": "xaver_met",
+      "type": "bool",
+      "summary": "The Drowned Library: the party met Xaver, Khazan's last apprentice, on top of a bookcase."
+    },
+    {
+      "id": "xaver_eye_followed",
+      "type": "bool",
+      "summary": "The Drowned Library: Insight saw Xaver's eye never leave the catalogue desk."
+    },
+    {
+      "id": "index_destroyed",
+      "type": "bool",
+      "summary": "The Drowned Library: the party destroyed the Index and its furniture (encounter the_index)."
     }
   ]
 }

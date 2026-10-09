@@ -1,0 +1,220 @@
+{
+  "id": "drowned_library",
+  "name": "The Drowned Library",
+  "region": "van_richtens_tower",
+  "summary": "Khazan's library, cut into the rock under Lake Baratok and reached by an old well-shaft on the shore: rows of shelves gone soft with damp, half of it flooded black, and the great catalogue desk that was never a desk (The Drowned Library, docs/story/side_quests.md).",
+  "text": "A long low hall under the lake, shelf after shelf of swollen books, the far half standing in still black water. The air is wet paper and cold stone, and in the middle of it all, a great catalogue desk of lacquered oak with a hundred little drawers.",
+  "map": {
+    "rows": [
+      "########################",
+      "#......................#",
+      "#.###.###.###.###.###..#",
+      "#......................#",
+      "#.###.###.###.###.###..#",
+      "#......................#",
+      "#......................#",
+      "#..........~~~~~~~~~~..#",
+      "#.........~~~~~~~~~~~~.#",
+      "#.###.###.~~~~~~~~~~~~.#",
+      "#.........~~~~~~~~~~~..#",
+      "#......................#",
+      "#.###.###..............#",
+      "#......................#",
+      "#......................#",
+      "#..#####################",
+      "#..#####################",
+      "########################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "library_stacks",
+      "name": "The stacks",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          22,
+          6
+        ]
+      ]
+    },
+    {
+      "id": "library_flood",
+      "name": "The flooded end",
+      "cells": [
+        [
+          9,
+          7
+        ],
+        [
+          22,
+          11
+        ]
+      ]
+    },
+    {
+      "id": "library_foot",
+      "name": "The foot of the shaft",
+      "cells": [
+        [
+          1,
+          12
+        ],
+        [
+          22,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      1,
+      15
+    ],
+    "from_shore": [
+      1,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "library_up",
+      "cell": [
+        1,
+        16
+      ],
+      "to": "van_richtens_tower",
+      "spawn": "from_library",
+      "label": "Up the well-shaft to the shore"
+    },
+    {
+      "id": "library_up_2",
+      "cell": [
+        2,
+        16
+      ],
+      "to": "van_richtens_tower",
+      "spawn": "from_library",
+      "label": "Up the well-shaft to the shore"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "library_desk",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "examine",
+      "label": "The great catalogue desk",
+      "model": "desk",
+      "dialogue": "van_richtens_tower/the_drowned_library:desk"
+    },
+    {
+      "id": "library_lectern",
+      "cell": [
+        6,
+        6
+      ],
+      "kind": "examine",
+      "label": "A lectern with a book still open on it",
+      "model": "lectern"
+    },
+    {
+      "id": "library_books",
+      "cell": [
+        20,
+        13
+      ],
+      "kind": "decor",
+      "label": "Books",
+      "model": "floor_books"
+    },
+    {
+      "id": "library_books_2",
+      "cell": [
+        3,
+        11
+      ],
+      "kind": "decor",
+      "label": "Books",
+      "model": "book_stack"
+    },
+    {
+      "id": "library_chained",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "examine",
+      "label": "A chained bookcase",
+      "model": "chained_bookcase"
+    }
+  ],
+  "containers": [],
+  "lights": [],
+  "npcs": [
+    {
+      "npc": "library_xaver",
+      "cell": [
+        21,
+        1
+      ],
+      "dialogue": "van_richtens_tower/the_drowned_library:xaver",
+      "when": "quest.the_drowned_library",
+      "facing": "southwest",
+      "approach": 6
+    }
+  ],
+  "encounters": [
+    {
+      "id": "the_index",
+      "trigger": "dialogue",
+      "lair": true,
+      "text": "The catalogue desk opens all its drawers at once, and every one of them has teeth. Round the room, two reading chairs stand up.",
+      "surprise": "",
+      "flag": "index_destroyed",
+      "quest": {
+        "id": "the_drowned_library",
+        "stage": "unfiled"
+      },
+      "monsters": [
+        {
+          "monster": "the_index",
+          "cell": [
+            16,
+            12
+          ],
+          "hp": 135
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            7,
+            13
+          ],
+          "name": "A Reading Chair"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            9,
+            14
+          ],
+          "name": "A Reading Chair"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:drowned_library"
+  },
+  "rest": "risky"
+}

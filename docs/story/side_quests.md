@@ -933,6 +933,27 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
   800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
 
+### The Drowned Library (`the_drowned_library`, narrative/van_richtens_tower/the_drowned_library.dialogue; batch 10, level 9)
+
+Once Khazan is unmade (The Name Over the Door), Mordenkainen's news is a dream of a small voice coming up a well,
+asking him not to come down; and from level 9 an old well-head on the shore of Lake Baratok (a new examine prop by
+the tower) whispers the same: don't come down, don't read anything, don't touch the desk. A gated exit down the
+well-shaft opens on the Drowned Library (data/locations/drowned_library.json), Khazan's library cut into the rock
+under the lake, half flooded. On top of the furthest bookcase, Xaver (new NPC, the nothic's sprite): Khazan's last
+apprentice, three hundred years down there and gone to a nothic from hunger for what he couldn't read. **Twist:** the
+whispering thing in the dark is the frightened one. The predator is the great catalogue desk, which has eaten eleven
+readers and filed their things (Insight DC 13: his eye never leaves it). **Escalation:** open one drawer and every
+drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the tower's own plot are never read or set.
+
+- **Boss: the Index** (data/monsters/the_index.json, `source.book: custom`, built up from the 2025 Monster Manual's
+  mimic and drawn with its sprite at Huge, `art_height` 2.4): Huge monstrosity, AC 14, 157 HP (135 in this fight), a
+  Bite and two long Pseudopods that grapple, a Spray of Pages (recharge 5-6, three creatures, DC 15 Dex, acid),
+  Legendary Resistance (2/day), a reach or a shift between turns, and lair actions as the shelves come down and the
+  lake comes in. CR 9. Two reading chairs come with it (mimics).
+- Fight `the_index` in the library: the autopilot wins 3 of 8 at level 9, losing three party members a fight.
+- Xaver comes down off his bookcase for the first time in three hundred years and gives the party the one book he
+  saved: a Manual of Quickness of Action (very rare). The desk's drawers give up eleven readers' purses, 350 gp.
+
 ## The Amber Temple (level 10)
 
 ### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
@@ -1085,4 +1106,6 @@ the Narrator and a blunt interject) and narrator/svalich_roadhouse.dialogue. Bat
 the Tser Falls path: the_spiders_gully.dialogue in full (new speaker Tsura; also Iancu, the Narrator and a blunt
 interject) and narrator/ivlis_spider_gully.dialogue. Batch 9,
 the Village of Barovia: the_goatherds_count.dialogue in full (new speaker Erno; also Goodwife Petra, the Narrator
-and a kind interject) and narrator/barovia_high_pasture.dialogue.
+and a kind interject) and narrator/barovia_high_pasture.dialogue. Batch 10,
+Van Richten's Tower and Lake Baratok: the_drowned_library.dialogue in full (new speaker Xaver; also Mordenkainen,
+the Narrator and a blunt interject) and narrator/drowned_library.dialogue.

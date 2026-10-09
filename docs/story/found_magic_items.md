@@ -350,6 +350,7 @@ leaves a smaller purse and one find.
 | ✅ | The Krezk road, the waystone | Wand of Slumber (rare) | Gift: from Lark, once Yanko has come into the light (The Waystone, docs/story/side_quests.md) |
 | ✅ | The goat path above the Tsolenka Pass | Rod of Alertness (very rare) | Hoard: in the guide's pack, once he's beaten (The Guide to the Temple, docs/story/side_quests.md) |
 | ✅ | The Webbed Gully off the falls path | Boon Companion's Bands (uncommon) | Gift: from Tsura, once she's cut down (The Spiders' Gully, docs/story/side_quests.md) |
+| ✅ | Under Lake Baratok, the Drowned Library | Manual of Quickness of Action (very rare) | Gift: from Xaver, once the Index is destroyed (The Drowned Library, docs/story/side_quests.md) |
 | ✅ | Lake Zarovich, the Reed Isle | Dimensional Shackles (rare) | Gift: from Ostap, once the Baron's boatmen are beaten (The Baron's Island, docs/story/side_quests.md) |
 | ✅ | The Old Svalich Road, the Grey Goose | Pipes of the Sewers (uncommon) | Hoard: under the hearthstone, once the innkeeper puts his lantern down (The Lantern in the Roadhouse, docs/story/side_quests.md) |
 | ✅ | The Village of Barovia, the high pasture | Potion of Animal Friendship (uncommon) | Gift: from Goodwife Petra or Erno, once Snowdrop's fate is settled (The Goatherd's Count, docs/story/side_quests.md) |
