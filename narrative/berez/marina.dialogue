@@ -114,6 +114,12 @@ Strahd: You did once. You will again.
 endif
 -> strahd_menu
 
+# He comes back by night while the party knows the truth about Marina and hasn't told him (Storyline QA SL-17): the
+# first meeting is once only, and a party that met him before it learned the truth could never tell him.
+~ strahd_again
+Narrator: Strahd is at the foot of the statue again, a fresh black rose in his gloved hand. He lays it down with the others before he turns.
+-> strahd_menu
+
 ~ strahd_menu
 * Who was she? -> strahd_who
 * [Insight DC 15] Watch his face while he looks at her. -> strahd_insight | strahd_insight_fail
