@@ -2,7 +2,7 @@
   "id": "woodcutters_hollow",
   "name": "The Charcoal-Burners' Hollow",
   "region": "village_of_barovia",
-  "summary": "A hollow in the pines above the Village of Barovia where charcoal was burned once, with a ruined hut nobody wanted, until Domnica and her children came (The Oat Thief, docs/story/side_quests.md).",
+  "summary": "A hollow in the pines above the Village of Barovia where charcoal was burned once, with a ruined hut nobody wanted, until Agafia and her children came (The Oat Thief, docs/story/side_quests.md).",
   "text": "A clearing in the pines, black underfoot with old charcoal, a stream at the edge, and a little hut of logs and turf with its door patched shut from the inside.",
   "map": {
     "rows": [
@@ -350,12 +350,12 @@
   ],
   "npcs": [
     {
-      "npc": "hollow_domnica",
+      "npc": "hollow_agafia",
       "cell": [
         11,
         8
       ],
-      "dialogue": "village_of_barovia/the_oat_thief:domnica",
+      "dialogue": "village_of_barovia/the_oat_thief:agafia",
       "facing": "south",
       "approach": 5
     }

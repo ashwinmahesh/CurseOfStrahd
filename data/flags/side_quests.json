@@ -1124,12 +1124,12 @@
     {
       "id": "hollow_known",
       "type": "bool",
-      "summary": "Parriwimple showed the party the north path to the hollow where Domnica hides (The Oat Thief)."
+      "summary": "Parriwimple showed the party the north path to the hollow where Agafia hides (The Oat Thief)."
     },
     {
-      "id": "domnica_met",
+      "id": "agafia_met",
       "type": "bool",
-      "summary": "The party met Domnica at the charcoal-burners' hollow (The Oat Thief)."
+      "summary": "The party met Agafia at the charcoal-burners' hollow (The Oat Thief)."
     },
     {
       "id": "oat_trail_seen",
@@ -1139,12 +1139,12 @@
     {
       "id": "oat_hunters_beaten",
       "type": "bool",
-      "summary": "The pack's hunters who followed the oats to Domnica's door are beaten (The Oat Thief)."
+      "summary": "The pack's hunters who followed the oats to Agafia's door are beaten (The Oat Thief)."
     },
     {
-      "id": "domnica_thanked",
+      "id": "agafia_thanked",
       "type": "bool",
-      "summary": "Domnica thanked the party with her grandmother's ointment (The Oat Thief)."
+      "summary": "Agafia thanked the party with her grandmother's speaking stones (The Oat Thief)."
     }
   ]
 }

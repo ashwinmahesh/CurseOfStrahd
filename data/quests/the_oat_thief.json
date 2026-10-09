@@ -15,7 +15,7 @@
     },
     {
       "id": "asked",
-      "journal": "Parriwimple carries the oats up the north path at night, to a woman called Domnica who is hiding in the woods with three small children. They mustn't ever have meat, she says.",
+      "journal": "Parriwimple carries the oats up the north path at night, to a woman called Agafia who is hiding in the woods with three small children. They mustn't ever have meat, she says.",
       "objectives": [
         "Go up the north path to the hollow in the pines"
       ],
@@ -23,15 +23,15 @@
     },
     {
       "id": "defended",
-      "journal": "Domnica ran from the werewolf den with her children, who were born to the wolf. The pack's hunters followed the oats up the path to her door, and we stood in it.",
+      "journal": "Agafia ran from the werewolf den with her children, who were born to the wolf. The pack's hunters followed the oats up the path to her door, and we stood in it.",
       "objectives": [
-        "Speak to Domnica"
+        "Speak to Agafia"
       ],
       "ends": ""
     },
     {
       "id": "done",
-      "journal": "Domnica and her children are safe in the hollow, for now, on oats, and Parriwimple still carries them up. Bildrath has decided it's charity. Don't repeat that.",
+      "journal": "Agafia and her children are safe in the hollow, for now, on oats, and Parriwimple still carries them up. Bildrath has decided it's charity. Don't repeat that.",
       "objectives": [],
       "ends": "success"
     }

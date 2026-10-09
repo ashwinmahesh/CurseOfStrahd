@@ -396,7 +396,7 @@ func test_the_lantern_girl_on_the_jetty() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("one_lantern_too_many"), "fought")
 
-## The pack's hunters come out of the pines at Domnica's door.
+## The pack's hunters come out of the pines at Agafia's door.
 func test_the_pack_hunters_come_up_the_oats() -> void:
 	var v := await _boot("woodcutters_hollow", 23, 3, [])
 	GameState.story.set_quest_stage("the_oat_thief", "asked")

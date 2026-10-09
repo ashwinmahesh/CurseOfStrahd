@@ -259,7 +259,7 @@ const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2
 func test_the_lantern_girl_at_level_5() -> void:
 	await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4], [], [], [], JETTY_FOOT)
 
-## Domnica's door in the charcoal-burners' hollow.
+## Agafia's door in the charcoal-burners' hollow.
 const HOLLOW_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(13, 10)]
 
 
