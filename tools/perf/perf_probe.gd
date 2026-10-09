@@ -3,7 +3,8 @@ extends Node
 ## loading) and measures frame time, draw calls and memory in the heavy places, at 1080p in a window that never shows.
 ## Writes one JSON report; tools/perf/perf_run.py launches it and prints the summary.
 ## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N]
-## [--only=title,newgame,places,saveload,combat,transitions] [--places=id,id] [--size=1920x1080] [--cover=1]
+## [--only=title,newgame,places,saveload,combat,transitions,fights] [--places=id,id] [--encounters=id,id]
+## [--size=1920x1080] [--cover=1]
 
 const PLACES := ["village_of_barovia", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
 	"castle_ravenloft_court", "castle_ravenloft_catacombs", "wizard_of_wines", "krezk", "argynvostholt", "berez",
@@ -34,7 +35,7 @@ var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
 var cycles := 10                     ## off/on switches per effect in the effects_fast phase
 var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
-var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "meta": {}}
+var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "meta": {}}
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
@@ -105,6 +106,8 @@ func _ready() -> void:
 			await _presets(p)
 		if "transitions" in only:
 			await _transitions(p)
+		if "fights" in only:
+			await _fights(p, [] if str(args.get("encounters", "")) == "" else Array(str(args["encounters"]).split(",")))
 	if "memory" in only:
 		await _memory(places)
 	var f := FileAccess.open(out, FileAccess.WRITE)
@@ -275,6 +278,56 @@ func _transitions(p: int) -> void:
 		await _timed_move(p, root, from, id, not visited.has(id), change)
 		visited[id] = true
 		from = id
+	root.queue_free()
+	await _wait(2)
+
+
+## How each fight's first moments go (the loading lane, after Functional QA's hitch tour of 2026-10-09): every
+## encounter in the data (or `only`), each in its own place entered fresh and left a second to settle, as a party walks
+## up to a fight. `call` is the start of the fight (the foes' figures built, CombatView begun), `first` the next frame
+## drawn, `worst` the worst frame in the second after, with how many were over STUCK_MS.
+const FIGHT_SETTLE_S := 1.0
+
+
+func _fights(p: int, only: Array) -> void:
+	var root := await _story_root(5)
+	var ids: Array = Compendium.shared().table("locations").keys()
+	ids.sort()
+	for loc_id: Variant in ids:
+		var seen := {}
+		for en: Variant in Compendium.shared().get_entry("locations", str(loc_id)).get("encounters", []):
+			var eid := str((en as Dictionary)["id"])
+			if seen.has(eid) or (not only.is_empty() and not eid in only):
+				continue
+			seen[eid] = true
+			GameState.story.minute_of_day = DAY
+			root.call("enter_location", str(loc_id), "default")
+			_close_popups(root)
+			await get_tree().create_timer(FIGHT_SETTLE_S).timeout
+			_close_popups(root)
+			var view := root.get("view") as LocationView
+			_phase("fight: " + eid)
+			var t0 := Time.get_ticks_usec()
+			var started := view.start_encounter(eid)
+			var call := (Time.get_ticks_usec() - t0) / 1000.0
+			await get_tree().process_frame
+			var first := (Time.get_ticks_usec() - t0) / 1000.0
+			var last := Time.get_ticks_usec()
+			var worst := 0.0
+			var slow := 0
+			while Time.get_ticks_usec() - t0 < 1000000:
+				await get_tree().process_frame
+				var now := Time.get_ticks_usec()
+				var ms := (now - last) / 1000.0
+				worst = maxf(worst, ms)
+				if ms > STUCK_MS:
+					slow += 1
+				last = now
+			var row := {"pass": p, "location": str(loc_id), "encounter": eid, "started": started, "call_ms": call,
+				"first_frame_ms": first, "worst_after_ms": worst, "slow_after": slow, "load": _loadavg()}
+			report["fights"].append(row)
+			print("PERF fight %d %-30s %-34s %s call %5.0f | first frame %5.0f | worst after %5.0f (%d slow)" % [p,
+				str(loc_id), eid, "     " if started else "(not started)", call, first, worst, slow])
 	root.queue_free()
 	await _wait(2)
 

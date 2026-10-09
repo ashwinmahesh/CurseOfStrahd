@@ -380,6 +380,9 @@ func attack(c: Combatant, oid: String, option_id: String) -> CombatResult:
 		e.spend_action(c)
 		c.took_attack_action = true
 		c.attacks_left = e.attacks_per_action(c) - 1 if c.creature is Character else 0
+	# A weapon of the second set: that set is taken in hand first.
+	option = e.weapons.take_in_hand(c, option)
+	p = option["profile"] as WeaponProfile
 	if "light" in p.properties and c.light_attack_weapon == "":
 		c.light_attack_weapon = p.item_id
 	if "loading" in p.properties and not e.features.has_feat(c, "crossbow_expert"):

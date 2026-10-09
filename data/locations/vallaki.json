@@ -790,6 +790,16 @@
       "model": "rubble",
       "dialogue": "vallaki/ribbons:lamp",
       "when": "quest.ribbons"
+    },
+    {
+      "id": "sabin_lanterns",
+      "cell": [
+        9,
+        18
+      ],
+      "kind": "examine",
+      "label": "Strings of paper lanterns",
+      "model": "lantern_stand"
     }
   ],
   "lights": [
@@ -1525,6 +1535,33 @@
         18
       ],
       "when": "quest.black_roses and not weather == storm"
+    },
+    {
+      "npc": "vallaki_sabin",
+      "cell": [
+        10,
+        18
+      ],
+      "dialogue": "vallaki/one_lantern_too_many:sabin",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "south"
+    },
+    {
+      "npc": "vallaki_sandu",
+      "cell": [
+        11,
+        19
+      ],
+      "dialogue": "vallaki/one_lantern_too_many:sandu",
+      "when": "quest.one_lantern_too_many == home or quest.one_lantern_too_many == done",
+      "hours": [
+        8,
+        18
+      ],
+      "facing": "south"
     }
   ],
   "encounters": [

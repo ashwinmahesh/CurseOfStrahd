@@ -508,3 +508,19 @@ func test_the_title_redraws_after_a_delete() -> void:
 	assert_true(cont != null and cont.disabled, "nothing left to continue")
 	assert_true(_button(title, "Load").disabled, "nor to load")
 	title.queue_free()
+
+
+## A save a newer build wrote (playing the working copy, then the stable one) can't be loaded here, so it lists last and
+## Continue, which takes the first, lands on one this build can load (QA FN-16: Continue did nothing).
+func test_continue_skips_a_save_from_a_newer_build() -> void:
+	assert_eq(SaveSystem.save("mine"), OK)
+	var data := JSON.parse_string(FileAccess.get_file_as_string(SaveSystem.slot_path("mine"))) as Dictionary
+	data["version"] = GameState.SAVE_VERSION + 1
+	data["saved_at"] = "2099-01-01T00:00:00"
+	var f := FileAccess.open(SaveSystem.slot_path("from_later"), FileAccess.WRITE)
+	f.store_string(JSON.stringify(data))
+	f.close()
+	var listed: Array = SaveSystem.list_slots().map(func(s: Dictionary) -> String: return str(s["slot"]))
+	assert_eq(listed, ["mine", "from_later"], "the newer build's save, though newest, lists last")
+	assert_true(bool(SaveSystem.describe("from_later")["newer"]))
+	assert_eq(SaveSystem.load_slot(str(listed[0])), OK, "Continue's pick loads")

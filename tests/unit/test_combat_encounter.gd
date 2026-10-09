@@ -158,7 +158,7 @@ func test_out_of_reach_and_range() -> void:
 	var z := TestCombat.foe(e, "zombie", Vector2i(5, 0))
 	TestCombat.start_with(e, ilse)
 	assert_false(e.attack(ilse, z, "weapon:greatsword").ok)
-	assert_true(e.attack_legal(ilse, z, e.option_by_id(ilse, "thrown:javelin")) == "")
+	assert_true(e.attack_legal(ilse, z, e.option_by_id(ilse, "weapon:shortbow")) == "")
 
 
 func test_prone_targets_and_ranged_attacks_in_melee() -> void:
@@ -398,7 +398,7 @@ func test_thrown_weapons_leave_the_hand() -> void:
 	for c in (t.creature as Character).inventory:
 		if str(c["id"]) == "dagger":
 			c["qty"] = 0
-	assert_eq(e.attack_legal(t, w, e.option_by_id(t, "thrown:dagger")), "No Dagger left")
+	assert_true(e.option_by_id(t, "thrown:dagger").is_empty(), "no Dagger left in hand to throw")
 
 
 func test_heroic_inspiration_offers_a_reroll_on_a_miss() -> void:

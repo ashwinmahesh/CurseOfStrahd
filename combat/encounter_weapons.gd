@@ -40,15 +40,17 @@ func _polearm_option(p: Combatant) -> Dictionary:
 
 
 ## Every attack `c` can make: {id, label, kind: weapon|thrown|unarmed|monster, profile: WeaponProfile,
-## action_id, melee: bool, range: [normal, long], reach}.
+## action_id, melee: bool, range: [normal, long], reach, set}. A character attacks only with the weapons it has equipped
+## (owner 2026-10-09): those in hand, and its second set's (`set` 2), which an attack takes in hand (take_in_hand).
 func attack_options(c: Combatant) -> Array[Dictionary]:
 	var e := enc()
 	var out: Array[Dictionary] = []
 	if c.creature is Character:
-		for p in (c.creature as Character).attacks():
+		for w in (c.creature as Character).wielded_attacks():
+			var p := w["profile"] as WeaponProfile
 			out.append({"id": ("thrown:" if p.thrown else "weapon:") + p.item_id + ("@" + p.ammo_id if p.ammo_id != "" else ""), "label": p.name,
 				"kind": "thrown" if p.thrown else ("unarmed" if p.item_id == "unarmed_strike" else "weapon"),
-				"profile": p, "melee": p.melee, "range": [p.normal_range, p.long_range], "reach": p.reach})
+				"profile": p, "melee": p.melee, "range": [p.normal_range, p.long_range], "reach": p.reach, "set": int(w["set"])})
 		if CombatFeatures.has_feature(c, "psychic_blades"):
 			for thrown: bool in [false, true]:
 				var pb := _psychic_blade(c, thrown, c.light_attack_weapon == "psychic_blade")
@@ -79,6 +81,38 @@ func _psychic_blade(c: Combatant, thrown: bool, second: bool) -> WeaponProfile:
 	p.proficient = true
 	p._compute(c.creature)
 	return p
+
+
+## An attack with a weapon of the second set takes that set in hand first (free, like Baldur's Gate 3's switch;
+## deviations.md, Weapon sets), and returns the option as it is once held, its grip and so its numbers read again, with
+## anything the caller added kept (an Opportunity Attack's flag). Any other option comes back unchanged.
+func take_in_hand(c: Combatant, option: Dictionary) -> Dictionary:
+	if int(option.get("set", 1)) != 2 or not c.creature is Character:
+		return option
+	swap_sets(c)
+	var held := option_by_id(c, str(option["id"]))
+	if held.is_empty():
+		return option
+	var out := option.duplicate()
+	out.merge(held, true)
+	return out
+
+
+## Swaps a character's weapon sets (Swap weapons on the hotbar, or an attack with the other set): free, as often as it
+## likes. The log says what it now holds.
+func swap_sets(c: Combatant) -> CombatResult:
+	var ch := c.creature as Character if c.creature is Character else null
+	if ch == null or not ch.has_weapon_set_2():
+		return CombatResult.fail("No second weapon set (set one in the inventory)")
+	ch.swap_weapon_sets()
+	var names: Array[String] = []
+	for slot: String in ["main_hand", "off_hand"]:
+		var held := ch.equipped(slot)
+		if not held.is_empty():
+			names.append(str(held.get("name", "")))
+	var r := CombatResult.new()
+	r.lines.append(enc().log.add("info", "%s takes up %s" % [c.name(), " and ".join(names) if not names.is_empty() else "nothing"], c.id))
+	return r
 
 
 func option_by_id(c: Combatant, option_id: String) -> Dictionary:

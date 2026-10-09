@@ -135,6 +135,9 @@ endif
 if not quest.the_squire and flag.order_fate != "rest"
 Town Guard: The cooper's boy, Cosmin, ran off north a week back with his father's old blanket and a wooden sword. Says he's gone to the dragon's house to join the dead knights. His mother's at the north gate every night with a lamp.
 endif
+if not quest.one_lantern_too_many and level >= 5
+-> vallaki/one_lantern_too_many:guard_news
+endif
 Town Guard: And the festival, of course. Always the festival.
 -> END
 

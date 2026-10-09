@@ -1057,6 +1057,13 @@
       ],
       "prompt": "The burned crown of a bald hill at night, black with old fire, a lantern lying on its side in turned earth. The grey ash of the whole hilltop is lifting off the ground and streaming inward from every side toward a thin young tree planted in the middle, building up round it into a towering shape twice a man's height, made of packed grey ash and charcoal with the young tree for its spine, its outline drawn after the reference's tree blight, smoking, with two embers for eyes. Small lumps of charcoal crawl toward it on twig legs. {party} stand at the edge of the crown, seen from behind, one holding up a lantern. Cold moonlight, the ash glowing faintly orange at its heart, one single picture, no panels.",
       "use": "a"
+    },
+    "sq_lantern_girl": {
+      "refs": [
+        "toma_sarnov"
+      ],
+      "prompt": "A long wooden fishing jetty running out into a black lake at night under a thin moon, mist lying on the water. At its very end, over the dark water, stands a little girl of about nine made entirely of pale glowing light, in a wet old-fashioned festival dress with ribbons, holding up a paper lantern, her glow the colour of a candle seen through paper. She holds the hand of a real little boy in a white nightshirt, barefoot and blue with cold, smiling at nothing, drawn exactly as the reference shows the boy's face and hair. Under the water round the jetty, a few faint lights glimmer like drowned lanterns. {party} come down the jetty toward them, seen from behind, one with a lantern. The girl's glow is the brightest thing in the picture, one single picture, no panels.",
+      "use": "a"
     }
   }
 }
