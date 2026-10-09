@@ -162,14 +162,13 @@ dark. The ink outline and the crisp sampling are unchanged. Classic draws figure
 `--flash`, `--classic`).
 
 **Auras (owner 2026-10-09).** `AuraFx` (world/look/aura_fx.gd), built by `CombatToken` for whoever has one, so it
-shows in fights and while exploring alike. Both burn like fire, flame tongues licking up round the figure and the whole
-flame flickering (owner: "Does the aura flicker? Like a fire almost. I want that", for Godrick and Strahd). Strahd's is
-black fire with crimson at its tips (a quad behind the figure, `shaders/fx/aura_halo.gdshader`) over a pool of creeping
-shadow (`aura_floor.gdshader`), and it surges when he attacks, casts or is struck (`AuraFx.surge`). A paladin with Aura
-of Protection burns with a warm flame, faint enough that the figure reads, and in a fight the floor shows the area the
-aura covers, 10 ft (two squares every way from their space, as `ClassFeatures._in_aura` measures it) or 30 ft with
-Aura Expansion. Both draw after the palette pass just before the sprites (render priority 5), so the figure covers the
-middle. `tools/capture/aura_capture.tscn` shoots them and films three seconds.
+shows in fights and while exploring alike: Strahd's dark aura (smoke curling up round him with a crimson edge, a quad
+behind the figure, `shaders/fx/aura_halo.gdshader`, and a pool of creeping shadow under him, `aura_floor.gdshader`)
+surges when he attacks, casts or is struck (`AuraFx.surge`); a paladin with Aura of Protection glows faintly warm, and
+in a fight the floor shows the area the aura covers, 10 ft (two squares every way from their space, as
+`ClassFeatures._in_aura` measures it) or 30 ft with Aura Expansion. Both draw after the palette pass just before the
+sprites (render priority 5), so the figure covers the middle. A fire-like flicker for both was tried and the
+owner preferred these (2026-10-09). `tools/capture/aura_capture.tscn` shoots them and films three seconds.
 
 **Motion between frames (G12).** Every DirectionalSprite, drawn frames or not, moves between them: it breathes while
 standing on a single frame (each figure in its own rhythm), leans into the way it travels across the screen and into a
