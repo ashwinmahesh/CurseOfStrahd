@@ -11,6 +11,7 @@
       "objectives": [
         "Climb to the roc's nest on the shelf past the bridge"
       ],
+      "hint": "Cross the bridge on the Tsolenka Pass and climb to the roc's nest on the shelf beyond it. Watch Tibor while he talks about his buyer (Insight).",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go back to the nest"
       ],
+      "hint": "Go back to the roc's nest on the shelf past the bridge on the Tsolenka Pass.",
       "ends": ""
     },
     {
