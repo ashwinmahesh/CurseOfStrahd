@@ -1,6 +1,6 @@
 # The Lantern in the Roadhouse (side quest, docs/story/side_quests.md): the Grey Goose roadhouse on the Old Svalich Road
 # burned twenty winters ago, and every night since a lantern has hung in its upstairs window, though there's no upstairs
-# any more (data/locations/svalich_roadhouse.json). The innkeeper's ghost keeps it lit. **Twist:** the light isn't a
+# any more (data/locations/svalich_roadhouse.json). The innkeeper's ghost, Wenzel, keeps it lit. **Twist:** the light isn't a
 # welcome, it's a warning: the winter the snow shut the road, his wife and sons ate the guests, and he nailed them in
 # the cellar and burned the house over them, and they didn't die. **Escalation:** they've been scratching at the
 # trapdoor every night this month, and tonight the nails give. Reached from Arik's one-word rumours from level 2
@@ -34,12 +34,12 @@ if not quest.the_roadhouse_lantern or quest.the_roadhouse_lantern == rumored
 quest the_roadhouse_lantern asked
 endif
 if flag.roadhouse_innkeeper_met
-The Innkeeper: Still here. Go on. The crossroads is an hour. There's no room.
+Wenzel: Still here. Go on. The crossroads is an hour. There's no room.
 -> innkeeper_menu
 endif
 set roadhouse_innkeeper_met
 Narrator: Under the lantern, in what's left of the taproom, a man in an apron stands behind a counter that's mostly charcoal. You can see the hearth through him.
-The Innkeeper: Travellers. Turn round. Go on to the crossroads. There's no room at the Goose. There hasn't been for twenty winters.
+Wenzel: Travellers. Wenzel, I kept the Goose. Turn round. Go on to the crossroads. There's no room at the Goose. There hasn't been for twenty winters.
 -> innkeeper_menu
 
 ~ innkeeper_menu
@@ -48,13 +48,13 @@ The Innkeeper: Travellers. Turn round. Go on to the crossroads. There's no room 
 * (Leave him to his lantern.) -> END
 
 ~ for_whom
-The Innkeeper: For you. For anybody on the road. So you see the light, and see the walls, and see there's nothing here worth stopping for, and go on.
-The Innkeeper: People stop for an empty house in the dark. They don't stop for a lit one. A lit one has somebody in it already.
+Wenzel: For you. For anybody on the road. So you see the light, and see the walls, and see there's nothing here worth stopping for, and go on.
+Wenzel: People stop for an empty house in the dark. They don't stop for a lit one. A lit one has somebody in it already.
 -> innkeeper_menu
 
 ~ looking
 Narrator: Every few words his eyes drop to the floor behind the counter, to a trapdoor nailed shut with more nails than it needs. Under it, faintly, something is scratching.
-The Innkeeper: (Quietly.) They're hungrier this month. The nails are old.
+Wenzel: (Quietly.) They're hungrier this month. The nails are old.
 -> innkeeper_menu
 
 ~ not_looking
@@ -66,7 +66,7 @@ Narrator: A dead man, keeping a light. That's all you can tell.
 ~ ledger
 set roadhouse_ledger_read
 Narrator: A guest book, swollen with damp, the last pages still legible. The snow shut the road early that year. No guests for nine days. The oats gone. The salt pork gone.
-Narrator: Then, in the innkeeper's careful hand: "Two guests. A tinker and his boy, from the Gates." And in another hand, round and childish, underneath: "Mama made a stew."
+Narrator: Then, in Wenzel the innkeeper's careful hand: "Two guests. A tinker and his boy, from the Gates." And in another hand, round and childish, underneath: "Mama made a stew."
 Narrator: After that, a few more names, a few days apart. Then nothing.
 -> END
 
@@ -90,7 +90,7 @@ endif
 
 ~ open
 if night
-The Innkeeper: (From behind you, very quietly.) Don't. Please. That's my wife. Those are my boys. I burned the house over them and they didn't die.
+Wenzel: (From behind you, very quietly.) Don't. Please. That's my wife. Those are my boys. I burned the house over them and they didn't die.
 endif
 Narrator: The nails come out easily. Too easily: half of them were already loose, pushed up from below. The trapdoor lifts by itself before you've touched it.
 combat roadhouse_cellar
@@ -100,9 +100,9 @@ combat roadhouse_cellar
 ~ after
 quest the_roadhouse_lantern done
 Narrator: The innkeeper stands by the trapdoor with his hands in his apron, looking down into the dark for a long time.
-The Innkeeper: The winter the snow shut the road, she fed the boys. That's all she did. Fed the boys. I found out on the tenth day, and I nailed the door, and I lit the thatch, and I sat down by the hearth to wait.
-The Innkeeper: I kept the light so no one else would stop. Twenty winters. It's very tiring, being a warning.
-The Innkeeper: Under the hearthstone. Everything we had. And my youngest's pipes; he played them to keep the rats out of the oats. Take them. I'd like to put the lantern down now.
+Wenzel: The winter the snow shut the road, she fed the boys. That's all she did. Fed the boys. I found out on the tenth day, and I nailed the door, and I lit the thatch, and I sat down by the hearth to wait.
+Wenzel: I kept the light so no one else would stop. Twenty winters. It's very tiring, being a warning.
+Wenzel: Under the hearthstone. Everything we had. And my youngest's pipes; he played them to keep the rats out of the oats. Take them. I'd like to put the lantern down now.
 Narrator: He sets the lantern on the hearth. It goes out. So does he.
 give pipes_of_the_sewers
 gold +50

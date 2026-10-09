@@ -1,8 +1,8 @@
 {
   "id": "roadhouse_innkeeper",
-  "name": "The Innkeeper",
-  "title": "Of the Grey Goose",
-  "summary": "The ghost of the Grey Goose roadhouse's innkeeper, in his apron behind a counter that's mostly charcoal, who keeps a lantern burning in the window that isn't there any more.",
+  "name": "Wenzel",
+  "title": "Innkeeper of the Grey Goose",
+  "summary": "The ghost of Wenzel, who kept the Grey Goose roadhouse, in his apron behind a counter that's mostly charcoal, keeping a lantern burning in the window that isn't there any more.",
   "portrait": "ghost",
   "sprite": "ghost",
   "attitude": "indifferent",

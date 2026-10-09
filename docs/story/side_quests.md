@@ -154,15 +154,15 @@ house's keepers.
 Arik's one-word rumours get a fourth, from level 2, once the other three are out: "Grey Goose. Lantern. No upstairs."
 A new travel place, the Grey Goose (data/locations/svalich_roadhouse.json, a new outdoor map with a vistas.json place;
 roads from the village and the crossroads), is a roadhouse on the Old Svalich Road that burned twenty winters ago. By
-night a lantern hangs in the empty air where its upstairs window was, and the innkeeper's ghost (new NPC) stands
-behind the charcoal counter telling travellers there's no room. **Twist:** the light isn't a welcome, it's a warning.
-The guest book's last pages (an examine prop) show the winter the snow shut the road, a tinker and his boy, and in a
-child's hand, "Mama made a stew"; Insight DC 12 sees him watching a trapdoor nailed shut with too many nails.
+night a lantern hangs in the empty air where its upstairs window was, and the innkeeper's ghost, Wenzel (new NPC),
+stands behind the charcoal counter telling travellers there's no room. **Twist:** the light isn't a welcome, it's a
+warning. The guest book's last pages (an examine prop) show the winter the snow shut the road, a tinker and his boy,
+and in a child's hand, "Mama made a stew"; Insight DC 12 sees him watching a trapdoor nailed shut with too many nails.
 **Escalation:** his wife and sons, who fed on the guests, have been pushing the nails up from below all month.
 
 - Fight `roadhouse_cellar` in the taproom: level 2 the innkeeper's wife and a son (ghouls) and four giant rats (the
   autopilot wins 4 of 8, losing two party members a fight); level 3 and up a second son (5 of 8).
-- By night afterwards the innkeeper tells it, puts the lantern down on the hearth, and goes out with it. Under the
+- By night afterwards Wenzel tells it, puts the lantern down on the hearth, and goes out with it. Under the
   hearthstone: 50 gp and his youngest's Pipes of the Sewers (uncommon).
 
 ## The Tser Pool camp (level 4)
@@ -1047,5 +1047,5 @@ the Amber Temple road: the_guide.dialogue in full (new speakers the Guide, Remus
 sergeant, the Narrator and a blunt interject) and narrator/amber_road_camp.dialogue. Batch 8,
 Lake Zarovich: the_barons_island.dialogue in full (new speaker Ostap; also Old Nistor, the Narrator and a blunt
 interject) and narrator/zarovich_reed_island.dialogue. Batch 9,
-the Old Svalich Road: the_roadhouse_lantern.dialogue in full (new speaker the Innkeeper; also Arik, the Narrator and a
-blunt interject) and narrator/svalich_roadhouse.dialogue.
+the Old Svalich Road: the_roadhouse_lantern.dialogue in full (new speaker Wenzel, the innkeeper's ghost; also Arik,
+the Narrator and a blunt interject) and narrator/svalich_roadhouse.dialogue.
