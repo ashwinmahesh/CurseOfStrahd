@@ -4,6 +4,7 @@
   "summary": "The Vistani say an old seer at Tser Pool reads the Tarokka for strangers, and that she has been expecting us.",
   "giver": "stanimir",
   "region": "svalich_road",
+  "kind": "main",
   "stages": [
     {
       "id": "invited",

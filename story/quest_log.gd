@@ -4,10 +4,12 @@ extends RefCounted
 ## in order, its current objectives, and whether it ended.
 
 
-## [{id, name, summary, entries: [text], objectives: [text], hint, status: active|success|failure}]: active first,
-## each part in the order the quests last moved (oldest first, so the HUD's newest objective is the last open one),
-## never the dictionary's order: a save writes its keys sorted, so after a load that was alphabetical (Storyline QA,
-## 2026-10-08). `hint` is the current stage's what-to-do-next, for an open quest only.
+## [{id, name, summary, entries: [text], objectives: [text], hint, status: active|success|failure, kind: main|other,
+## tracked, at}]: active first, each part in the order the quests last moved (oldest first, so the HUD's newest
+## objective is the last open one), never the dictionary's order: a save writes its keys sorted, so after a load that
+## was alphabetical (Storyline QA, 2026-10-08). `hint` is the current stage's what-to-do-next, for an open quest only.
+## `kind` is the journal tab it's under; `tracked` is true for the open quest the party follows (track); `at` is when
+## it last moved.
 static func journal(st: StoryState) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for qid: String in st.quests:
@@ -32,14 +34,36 @@ static func journal(st: StoryState) -> Array[Dictionary]:
 					status = str(stage["ends"])
 		out.append({"id": qid, "name": str(q["name"]), "summary": str(q.get("summary", "")), "entries": entries,
 			"objectives": objectives, "hint": hint if status == "active" else "", "status": status,
-			"_at": float(entry.get("at", 0))})
+			"kind": kind(qid), "tracked": status == "active" and bool(entry.get("tracked", false)),
+			"at": float(entry.get("at", 0))})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var a_open := str(a["status"]) == "active"
 		if a_open != (str(b["status"]) == "active"):
 			return a_open
-		if float(a["_at"]) != float(b["_at"]):
-			return float(a["_at"]) < float(b["_at"])
+		if float(a["at"]) != float(b["at"]):
+			return float(a["at"]) < float(b["at"])
 		return str(a["id"]) < str(b["id"]))
-	for q in out:
-		q.erase("_at")
 	return out
+
+
+## The journal tab a quest is under: "main" for the story's spine (the quest's `kind`), "other" for side quests and
+## the companions' own.
+static func kind(quest_id: String) -> String:
+	return "main" if str(Compendium.shared().get_entry("quests", quest_id).get("kind", "")) == "main" else "other"
+
+
+## The quest the party follows (the journal's Track): the HUD shows its objective. "" when none is, or it's over.
+static func tracked(st: StoryState) -> String:
+	for q in journal(st):
+		if bool(q["tracked"]):
+			return str(q["id"])
+	return ""
+
+
+## Follows `quest_id` (only one at a time; "" follows none, and the HUD goes back to the newest open quest). The mark
+## lives in the quest's own entry, so it's saved with the story.
+static func track(st: StoryState, quest_id: String) -> void:
+	for qid: String in st.quests:
+		(st.quests[qid] as Dictionary).erase("tracked")
+	if st.quests.has(quest_id):
+		(st.quests[quest_id] as Dictionary)["tracked"] = true

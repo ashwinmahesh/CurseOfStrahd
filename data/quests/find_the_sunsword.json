@@ -4,6 +4,7 @@
   "summary": "A blade of sunlight that once belonged to the devil's brother, broken from its hilt and lost.",
   "giver": "madam_eva",
   "region": "svalich_road",
+  "kind": "main",
   "stages": [
     {
       "id": "foretold",

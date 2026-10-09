@@ -271,16 +271,45 @@ func test_the_settings_pages() -> void:
 	GameSettings.set_blur_reach("")
 
 
-## The journal with every open quest's hint showing (Storyline QA, 2026-10-09): the hints wrap inside their cards.
-func test_the_journal_hints() -> void:
+## The journal's quests (Storyline QA, 2026-10-09): every quest in the game taken, under Main and under Other, each
+## with the quest whose hint is longest picked, its hint showing and tracked (Other at the biggest interface and text
+## too), and a search with nothing found. The list, the long names in it and the hints wrap or trim inside the frame.
+func test_the_journal_quests() -> void:
 	if not await _game(LATE):
 		return
-	await _check("the journal with its hints showing", func() -> Variant:
+	var st := GameState.story
+	var longest := {"main": "", "other": ""}
+	var size := {"main": 0, "other": 0}
+	for q: Dictionary in Compendium.shared().all("quests"):
+		var stage := ((q["stages"] as Array)[0] as Dictionary)
+		st.set_quest_stage(str(q["id"]), str(stage["id"]))
+		var kind := QuestLog.kind(str(q["id"]))
+		if str(stage.get("hint", "")).length() > int(size[kind]):
+			size[kind] = str(stage.get("hint", "")).length()
+			longest[kind] = str(q["id"])
+	for kind: String in ["main", "other", "other at the largest sizes"]:
+		var largest := kind.ends_with("sizes")
+		if largest:
+			GameSettings.set_ui_scale(GameSettings.UI_SCALES.back())
+			GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+		var picked := str(longest[kind.get_slice(" ", 0)])
+		QuestLog.track(st, picked)
+		await _check("the journal's %s quests, a long hint showing" % kind, func() -> Variant:
+			root.call("open_screen", "journal", 0)
+			await _frames(1)
+			var j := root.get("screen") as JournalScreen
+			j.hints_shown[picked] = true
+			j.call("_draw")
+			await _frames(2)
+			return j, _close_screen)
+		if largest:
+			GameSettings.set_ui_scale(1.0)
+			GameSettings.set_text_scale(1.0)
+	await _check("the journal's quests, searched for nothing", func() -> Variant:
 		root.call("open_screen", "journal", 0)
 		await _frames(1)
 		var j := root.get("screen") as JournalScreen
-		for q in QuestLog.journal(GameState.story):
-			j.hints_shown[str(q["id"])] = true
+		j.search = "nothing at all like this"
 		j.call("_draw")
 		await _frames(2)
 		return j, _close_screen)

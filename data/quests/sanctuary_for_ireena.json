@@ -4,6 +4,7 @@
   "summary": "Ismark wanted Ireena behind walls. Vallaki has walls. Whether it has anywhere safe inside them is another question.",
   "giver": "ireena",
   "region": "vallaki",
+  "kind": "main",
   "stages": [
     {
       "id": "arrived",

@@ -4,6 +4,7 @@
   "summary": "Two children begged us to save their baby brother from a monster in the basement of their house. The house had other plans.",
   "giver": "rose",
   "region": "death_house",
+  "kind": "main",
   "stages": [
     {
       "id": "plea",

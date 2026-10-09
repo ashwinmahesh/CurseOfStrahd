@@ -5,7 +5,7 @@ extends Node
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
 ## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
-## screen (UI_ONLY=wait) and the journal with two quests' hints showing (UI_ONLY=journal_hints).
+## screen (UI_ONLY=wait) and the journal's quests: Other, Main and a search (UI_ONLY=journal_quests).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -83,15 +83,24 @@ func capture_shots(tool: Node, out: String) -> void:
 				root.get("screen").call("_draw")
 			await _shoot(tool, "%s_%s.png" % [out, kind])
 			root.call("close_screen")
-	if _wants("journal_hints"):
-		# The journal's Hint buttons (Storyline QA): two quests' hints asked for, the others not.
-		st.set_quest_stage("the_oat_thief", "rumored")
-		st.set_quest_stage("the_nursemaids_grave", "asked")
+	if _wants("journal_quests"):
+		# The journal's quests (Storyline QA): Other with a tracked quest and its hint showing, Main, and a search.
+		for pair: Array in [["into_the_mists", "the_pack"], ["madam_evas_reading", "invited"], ["the_last_traveller", "met"],
+				["the_oat_thief", "rumored"], ["the_priests_son", "doru_destroyed"], ["the_nursemaids_grave", "asked"]]:
+			st.advance_minutes(5)
+			st.set_quest_stage(str(pair[0]), str(pair[1]))
+		QuestLog.track(st, "the_nursemaids_grave")
 		root.call("open_screen", "journal", 0)
 		var js := root.get("screen") as JournalScreen
-		js.hints_shown = {"death_house": true, "the_nursemaids_grave": true}
+		js.hints_shown = {"the_nursemaids_grave": true}
 		js.call("_draw")
-		await _shoot(tool, "%s_journal_hints.png" % out)
+		await _shoot(tool, "%s_journal_other.png" % out)
+		js.pad_trigger(1)
+		await _shoot(tool, "%s_journal_main.png" % out)
+		var box := js.find_child("QuestSearch", true, false) as LineEdit
+		box.text = "burgomaster"
+		box.text_changed.emit(box.text)
+		await _shoot(tool, "%s_journal_search.png" % out)
 		root.call("close_screen")
 	if _wants("spellbook"):
 		# A found spellbook (the Dursts'): its spells, and the party's Wizard copying them.

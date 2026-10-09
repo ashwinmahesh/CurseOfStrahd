@@ -4,6 +4,7 @@
   "summary": "Strahd sent his carriage with an invitation to dine. He kept his word: the table was laid, and he was waiting.",
   "giver": "strahd",
   "region": "castle_ravenloft",
+  "kind": "main",
   "stages": [
     {
       "id": "seated",

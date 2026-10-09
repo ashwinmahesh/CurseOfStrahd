@@ -4,6 +4,7 @@
   "summary": "Kolyan Indirovich, burgomaster of the village of Barovia, died three nights ago. His children want him buried in the churchyard, and no villager will help carry the coffin.",
   "giver": "ismark",
   "region": "village_of_barovia",
+  "kind": "main",
   "stages": [
     {
       "id": "asked",
