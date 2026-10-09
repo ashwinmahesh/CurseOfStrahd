@@ -775,6 +775,20 @@
   "d4a9068611182184": "[gentle, firm, sad]",
   "f571e83ef2b5d369": "[grim, firm]"
  },
+ "freydis": {
+  "0e9784be3c5506d5": "[still, grim, fond]",
+  "410bcbbca77fc886": "[proud, grieving, gruff]",
+  "4b566044961baa47": "[dry, wary, gruff humour]",
+  "4ffeddd19c4f4fa1": "[laughing through grief, proud]",
+  "61b798f94e412df9": "[blunt, practical, gruff]",
+  "6493a5e9a8589566": "[quiet, moved, gruff]",
+  "73038bd6b69af7e4": "[proud, low, bitter]",
+  "99a14e57bb6678fc": "[blunt, gruff, resolute]",
+  "9ac2d95b16e5a1e2": "[grim, dismissive, blunt]",
+  "ed1b4d34907185f7": "[angry, grieving, fond]",
+  "f8c99c4b1c741c5a": "[fierce, restrained, pleading]",
+  "faa735c505311b71": "[quiet, at peace, wry]"
+ },
  "ghakis_doina": {
   "7c1e34d3214e3722": "[stunned, relieved, breathless]",
   "a037e5c52c16e846": "[steady, grateful, worried]",
@@ -2442,6 +2456,9 @@
   "be2f2712d44c6f8c": "[cold, resolute, rising]",
   "ec7e22c882f9d006": "[sly, imperious, warning]",
   "f5774c19aa276361": "[slow, purring, weary amusement]"
+ },
+ "silverjaw": {
+  "ba9264a63bd86961": "[hollow, commanding, cold]"
  },
  "sir_godfrey_gwilym": {
   "1b2f9b4669f2935d": "[sad, grave, remembering]",
