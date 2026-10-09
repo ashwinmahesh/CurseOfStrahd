@@ -1,0 +1,18 @@
+{
+  "id": "querreth",
+  "name": "Querreth",
+  "title": "Gaoler of the Roofs",
+  "summary": "A devil the count bound to the roofs of Castle Ravenloft long ago, to bring back whatever of his tries to leave. The ones it brought back still hang in its chains.",
+  "portrait": "fiendish_spirit",
+  "sprite": "fiendish_spirit",
+  "attitude": "hostile",
+  "monster": "querreth",
+  "guest": false,
+  "tags": [
+    "fiend",
+    "devil",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "it/its"
+}

@@ -1087,6 +1087,13 @@
       ],
       "prompt": "A painter's studio at night in an old timber house, lit by a few candles, smelling of linseed. Against the far wall stands a great canvas in a heavy gilt frame taller than a door: a portrait of a young woman in a white gown with long auburn hair, her hands folded, her face drawn exactly as the reference shows the young woman's face, painted with impossible life, her dark wet eyes looking straight out of the canvas and following the viewer. All around the studio, leaning on easels and stacked against the walls, dozens of smaller canvases of the same woman, some turned to the wall. Paint pots of a strange red-gold on a table. {party} stand before the great canvas, seen from behind, one holding up a lantern. Candlelight and deep shadow, one single picture, no panels.",
       "use": "a"
+    },
+    "sq_escher_dawn": {
+      "refs": [
+        "escher"
+      ],
+      "prompt": "The flat stone roof of a tall Gothic castle tower at the moment of dawn, high above a valley full of mist. A pale young vampire nobleman in a wine-red velvet coat worked with silver down the front and lace at the cuffs, his face and dark swept-back hair exactly as the reference shows, stands at the low stone parapet, three-quarters turned from the viewer, his face lifted to the east, where a thin line of gold sunlight is breaking over a black mountain ridge. The first light lies across his face and his open hands, and thin pale smoke rises from his skin where it touches; he is smiling. Broken hooked chains lie across the flagstones behind him. {party} sit on the battlements a little way back, watching him. Cold blue-grey sky overhead, warm gold only at the horizon, one single picture, no panels.",
+      "use": "a"
     }
   }
 }

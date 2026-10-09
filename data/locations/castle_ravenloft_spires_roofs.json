@@ -302,7 +302,19 @@
       "text": "Wet slates slide out from under you and you go skidding down the roof toward the parapet."
     }
   ],
-  "npcs": [],
+  "npcs": [
+    {
+      "npc": "escher",
+      "cell": [
+        11,
+        20
+      ],
+      "dialogue": "castle_ravenloft/escher_petition:roof",
+      "when": "night and (quest.escher_petition == asked or quest.escher_petition == held)",
+      "facing": "east",
+      "approach": 4
+    }
+  ],
   "encounters": [
     {
       "id": "peak_guardians",
@@ -475,6 +487,77 @@
             7
           ],
           "name": "Stone Guardian"
+        }
+      ]
+    },
+    {
+      "id": "querreth",
+      "trigger": "dialogue",
+      "when": "not flag.escher_note_read",
+      "text": "Querreth comes down onto the tower roof on red wings, and its chains come with it, full of grey shapes that reach for you with both hands.",
+      "surprise": "party",
+      "quest": {
+        "id": "escher_petition",
+        "stage": "held"
+      },
+      "monsters": [
+        {
+          "monster": "querreth",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            3,
+            17
+          ],
+          "name": "One Who Asked"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            10,
+            17
+          ],
+          "name": "One Who Asked"
+        }
+      ]
+    },
+    {
+      "id": "querreth",
+      "trigger": "dialogue",
+      "text": "Querreth comes down onto the tower roof on red wings, and its chains come with it, full of grey shapes that reach for you with both hands.",
+      "surprise": "",
+      "quest": {
+        "id": "escher_petition",
+        "stage": "held"
+      },
+      "monsters": [
+        {
+          "monster": "querreth",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            3,
+            17
+          ],
+          "name": "One Who Asked"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            10,
+            17
+          ],
+          "name": "One Who Asked"
         }
       ]
     }

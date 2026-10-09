@@ -47,14 +47,14 @@ endif
 -> END
 
 ~ banter_escher
-if flag.escher_met and not flag.escher_fight_won and name:wren_featherfoot and name:godrick_pendlebrook
+if flag.escher_met and not flag.escher_fight_won and not flag.escher_saw_dawn and name:wren_featherfoot and name:godrick_pendlebrook
 interject name:wren_featherfoot: A hundred years locked in with all those coats. I'd have tried every one on by the first Tuesday.
 interject name:godrick_pendlebrook: That's a long time to be dressed for nowhere.
 endif
 -> END
 
 ~ banter_escher_bargain
-if flag.escher_bargain and name:liriel_dawnsong and name:kip_smudgewick
+if flag.escher_bargain and not flag.escher_saw_dawn and name:liriel_dawnsong and name:kip_smudgewick
 interject name:liriel_dawnsong: We promised that poor creature his door, and I mean to keep it. I want it said that I noticed, all the same.
 interject name:kip_smudgewick: Next time, could we get it in writing? For my nerves, Miss Liriel. Not for his.
 endif

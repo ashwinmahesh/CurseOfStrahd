@@ -1,0 +1,115 @@
+# Escher's Petition (side quest, docs/story/side_quests.md): every night for nine years Escher has slid the same
+# petition under the count's door, one line, Let me see the sun. Now an answer has come back under his: Yes. He wants
+# company on the south tower roof before dawn, and he's paying with the one present the count gave him that he could
+# never use. **Twist:** the rest of the answer, which Escher folds out of sight (Insight shows it), is Bring your
+# friends: Querreth, the devil the count bound to his roofs to bring back whatever of his tries to leave, comes to
+# chain Escher to the sun and take his guests to the larder (data/monsters/querreth.json). **Escalation:** in its
+# chains hang everyone who ever asked before. Then the dawn, and Escher's choice. Reached from Escher's menu from
+# level 10 (spires_escher:menu) and from Escher at the south tower parapet by night (npc entry on
+# castle_ravenloft_spires_roofs). Every line here is unvoiced for now.
+
+# --- In his suite: the petition (castle_ravenloft/spires_escher:menu jumps here) ---
+
+~ ask
+Narrator: He has a folded paper in his long fingers. He's been turning it over the whole time you've been talking, and he doesn't seem to know it.
+Escher: Oh, this? My petition. Every night for nine years I've written him the same line in my best hand, Let me see the sun, and slid it under his door. He never answers. He likes to be asked.
+Escher: Last night something came back under mine. (He unfolds it just far enough to show one word, in a hand like black thorns.) Yes.
+Escher [sly]: And now I find I don't want to go up alone. I'd like it seen by somebody who isn't him. Come up to the south tower roof with me before dawn, and stay until the sun is over the mountains.
+Escher: There's a price, naturally, and I'm the one paying it. He gave me one present I could never use. It's yours once the sun is up.
+-> ask_choice
+
+~ ask_choice
+* We'll come. -> agree
+* [Insight DC 15] (Watch how he holds the paper.) -> note | no_note
+* Not tonight. -> not_now
+
+~ not_now
+Escher: No. Of course not. It's only been nine years. I'll keep it in my pocket.
+-> END
+
+~ note
+set escher_note_read
+Narrator: He has folded it so that the one word shows and nothing else, and his thumb is pressed down on the fold, hard, the way you'd hold a door shut against a draught.
+Escher: (A long pause. Then he opens it all the way.) Yes. Bring your friends. I should like them to watch.
+Escher: I didn't show you that part. I wanted the sun more than I wanted you to come back down again. I'm not proud of it. I'm not proud of very much.
+interject tag:blunt: It's a trap, and he knew it was.
+Escher: Of course it's a trap, darling. Everything up here is. The question is only whether it's worth walking into, and I've decided it is. You can decide for yourselves.
+* We'll come anyway. -> agree
+* Not like this. -> not_now
+
+~ no_note
+Narrator: A vain man holding a letter he wants very badly to believe. That's all you can tell.
+-> ask_choice
+
+~ agree
+quest escher_petition asked
+Escher: Before dawn, then. Up the stair from the gallery to the roofs, and along to the south tower. I'll be at the parapet. I'll be early. I've been early for nine years.
+approve thistle +1 wren_featherfoot +1: You agreed to see Escher out onto the roof
+-> END
+
+# --- Escher in his suite by day while the petition stands (castle_ravenloft/spires_escher:start jumps here) ---
+
+~ waiting
+if quest.escher_petition == held
+Escher: You saw that thing off my roof. I heard it go, all the way down here. Tonight, then. I've waited nine years; I can wait one more day. Just.
+else
+Escher: Before dawn. The south tower. I'll be there before you, in the good coat.
+endif
+-> castle_ravenloft/spires_escher:menu
+
+# --- At the south tower parapet by night (npc escher on castle_ravenloft_spires_roofs) ---
+
+~ roof
+if quest.escher_petition == held
+-> dawn
+endif
+Narrator: Escher stands at the south parapet in his best coat, the wine-red velvet with silver worked down the front, with his back to you. He's looking east, at a sky that is still black.
+Escher: You came. I wasn't sure you would. I put on the good coat anyway; one likes to be dressed for things.
+Escher: When I was alive I slept through dawns. Hundreds of them. I'd come home at four from somebody's ball and draw the curtains, and I thought there'd always be another one.
+Narrator: Above you on the keep roof, something heavy drags a chain across the slates.
+if flag.escher_note_read
+Escher: (Quietly, without turning round.) There it is. The rest of my answer.
+endif
+Narrator: It drops off the keep roof onto the battlements on wide red wings: tall, horned, with hooked chains hanging from both arms. In the chains, like washing on a line, hang grey shapes that were people once, and their mouths are moving.
+Querreth: The master grants the petition. All of it. The sun for the pretty one, at the end of my chain, so he can't run from it. And for the guests, the larder.
+Escher [afraid]: That's Querreth. It keeps the roofs. Everyone who ever asked to go up is hanging off it.
+interject name:godrick_pendlebrook: A bound devil, keeping a dead man from the sun. Behind me, Escher.
+combat querreth
+
+# --- After Querreth: the dawn (npc escher on the roof, stage held) ---
+
+~ dawn
+Narrator: You sit with him on the parapet for what's left of the night. He talks the whole time: about balls, and coats, and a dog he had as a boy that would only come for cheese. He doesn't mention the count once.
+time until 6
+cutscene sq_escher_dawn
+Narrator: In the east the mountains turn grey, and then the colour of pewter, and then along the top of them comes a line of something that isn't grey at all.
+Escher: Oh. Oh, I'd forgotten it was that colour.
+interject name:liriel_dawnsong: Let it be kind to him. He walked up here to meet it.
+* (Stand with him while it comes up.) -> sun
+* [Persuasion DC 15] Not this one. Wait for a dawn he isn't in. -> wait | wait_fail
+
+~ wait_fail
+Escher: No. Don't, darling. Nine years. Let me have it.
+-> sun
+
+~ sun
+set escher_saw_dawn
+quest escher_petition done
+Narrator: He doesn't step back. The light comes over the mountains and finds him, and he smokes, and then he burns, quietly, the way paper burns, with his face turned up to it the whole time.
+Escher: (At the very end, hardly a sound.) Worth it. Tell him it was worth it.
+Narrator: When it's over there is a good red velvet coat on the stones and a little ash, and the wind takes the ash. In the coat's pocket is a purse, and a helm of dark steel set with gems that each hold a little captured light: a crown full of daylight, given to a man who could never wear it.
+give helm_of_brilliance
+gold +250
+approve liriel_dawnsong +3 thistle +3 wren_featherfoot +2 godrick_pendlebrook +1: You stood with Escher while he watched the sun come up
+-> END
+
+~ wait
+set escher_waits
+quest escher_petition waited
+Narrator: He looks at the line of light for a long moment. Then he laughs, and backs away from it into the shadow of the stair.
+Escher: A dawn he isn't in. You do know how to sell a thing. Very well, I'll wait. Don't be too long about killing him; I'm not good at waiting, whatever I've told you.
+Escher: Take the present anyway. It's a helm full of captured daylight; he thought that was funny. If I'm ever to wear it, I'd like it to be at his funeral.
+give helm_of_brilliance
+gold +250
+approve wren_featherfoot +2 godrick_pendlebrook +1 liriel_dawnsong +1 ratatoille +1: You talked Escher into waiting for a dawn the count isn't in
+-> END

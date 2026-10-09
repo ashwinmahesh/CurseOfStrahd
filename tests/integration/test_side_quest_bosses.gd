@@ -289,3 +289,12 @@ const PAINTERS_STUDIO: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 5), Vector
 ## The count's great canvas and six copies come off the walls.
 func test_the_counts_likeness_at_level_9() -> void:
 	await _series("vallaki_painters_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6], [], [], [], PAINTERS_STUDIO)
+
+
+## The south tower roof of Castle Ravenloft, by the stair up from the rooms, where Escher waits at the parapet.
+const SOUTH_TOWER: Array[Vector2i] = [Vector2i(7, 20), Vector2i(8, 20), Vector2i(7, 21), Vector2i(8, 21)]
+
+
+## Querreth and two of the ones who asked before, catching the party unawares.
+func test_querreth_at_level_10() -> void:
+	await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)

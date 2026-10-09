@@ -1190,6 +1190,21 @@
       "id": "likeness_burned",
       "type": "bool",
       "summary": "The count's great canvas in Haralamb's studio is burned, and every copy in Vallaki is blank (The Count's Portraitist)."
+    },
+    {
+      "id": "escher_note_read",
+      "type": "bool",
+      "summary": "Escher's Petition: Insight on Escher showed the rest of the count's answer, Bring your friends; Querreth doesn't catch the party unawares on the roof."
+    },
+    {
+      "id": "escher_saw_dawn",
+      "type": "bool",
+      "summary": "Escher's Petition: Escher watched the sun come up from the south tower roof and burned in it. He's gone from his suite."
+    },
+    {
+      "id": "escher_waits",
+      "type": "bool",
+      "summary": "Escher's Petition: the party talked Escher into waiting for a dawn the count isn't in; he's back in his suite."
     }
   ]
 }

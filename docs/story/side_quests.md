@@ -653,6 +653,33 @@ Lost Pages), made one of the count's spawn for holding the door while her master
 - In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
   crypt, and Mordenkainen has a line for it.
 
+### Escher's Petition (`escher_petition`, narrative/castle_ravenloft/escher_petition.dialogue; batch 6)
+
+From level 10, Escher's menu has a new question: what's the paper he keeps turning over? Every night for nine years
+he has slid the same petition under the count's door, one line, Let me see the sun, and last night an answer came back
+under his: Yes. He wants company on the south tower roof before dawn, and he'll pay with the one present the count gave
+him that he could never use. **Twist:** (Insight DC 15) he has folded the paper so only the one word shows. The rest
+is Bring your friends: I should like them to watch. He wanted the sun more than he wanted the party to come back down,
+and says so. **Escalation:** by night Escher waits at the south tower parapet (a new entry on the roofs; his chair in
+the suite is empty by night while the petition stands). Querreth, the devil the count bound to his roofs to bring back
+whatever of his tries to leave, comes down off the keep to chain Escher to the sunrise and take the guests to the
+larder. Everyone who ever asked to go up hangs in its chains. Without the rest of the note, the party is caught
+unawares.
+
+- **Boss: Querreth** (data/monsters/querreth.json, `source.book: custom`, built on the 2025 Monster Manual's devils and
+  drawn with the fiendish spirit's sprite at Large, `art_height` 2.6): Large fiend, AC 17, 180 HP, flies, two hooked
+  Chains with 10-ft reach that grapple and a burning Claw, The Chains Answer (recharge 5-6, three creatures within
+  30 ft, DC 16 Str, 4d10 and Restrained), Magic Resistance, Legendary Resistance (2/day), and a lash or a wingbeat
+  between turns. CR 11. Two of the ones who asked before come with it (wraiths, "One Who Asked").
+- Fight `querreth` on the south tower roof. The autopilot wins 3 of 8 at level 10 caught unawares and 4 of 8
+  forewarned, losing about three party members a fight.
+- Then the party sits out the night with him and the sun comes up (`sq_escher_dawn`, a new still). Either he watches it
+  and burns, and leaves a red velvet coat on the stones with the count's present in the pocket, or (Persuasion DC 15)
+  the party talks him into waiting for a dawn the count isn't in, and he goes back down to his chair. Either way: a
+  Helm of Brilliance (very rare, a crown full of captured daylight for a man who could never wear it) and 250 gp.
+- Escher's suite, banter and narration follow him: once he's seen the dawn his chair is empty and his coats hang in
+  the wardrobe without the red velvet one.
+
 ## Mount Ghakis (level 10)
 
 ### The Warm Snow (`the_warm_snow`, narrative/mount_ghakis/the_warm_snow.dialogue; batch 5, an owner-asked boss)
@@ -839,4 +866,7 @@ the Village of Barovia: the_oat_thief.dialogue in full (new speaker Agafia; also
 interject) and narrator/woodcutters_hollow.dialogue. Batch 6,
 the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Tibor and the Falconer; a blunt interject). Batch 6,
 Vallaki: the_counts_portraitist.dialogue in full (Haralamb and the Count's Likeness, new speaker; a blunt interject) and
-narrator/vallaki_painters_studio.dialogue.
+narrator/vallaki_painters_studio.dialogue. Batch 6,
+Castle Ravenloft: escher_petition.dialogue in full (new speaker Querreth; also Escher, a blunt interject and
+Godrick's and Liriel's) and Escher's two new greetings in spires_escher.dialogue ("My dawn-sellers..." and the
+petition option).

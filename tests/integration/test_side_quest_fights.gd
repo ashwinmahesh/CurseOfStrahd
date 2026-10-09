@@ -425,3 +425,16 @@ func test_the_counts_likeness_comes_off_the_wall() -> void:
 			assert_eq(CombatToken.height_of(c), 2.2)
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_counts_portraitist"), "burned")
+
+
+## Querreth comes down off the keep onto the south tower roof, Large, with the ones who asked before.
+func test_querreth_comes_for_escher() -> void:
+	var v := await _boot("castle_ravenloft_spires_roofs", 22, 10, ["escher_met"])
+	GameState.story.set_quest_stage("escher_petition", "asked")
+	var e := await _fight(v, "querreth", ["Querreth", "One Who Asked"])
+	for c in e.combatants:
+		if c.name() == "Querreth":
+			assert_eq(c.size_cells, 2, "Large")
+			assert_eq(CombatToken.height_of(c), 2.6)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("escher_petition"), "held")
