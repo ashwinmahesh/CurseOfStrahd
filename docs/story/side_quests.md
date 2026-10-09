@@ -107,6 +107,23 @@ break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the p
   party members a fight. It's the only side quest below level 3.
 - Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
 
+### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
+
+Old Mihail the gravedigger, asked whether there's anyone he couldn't bury (a new option in his menu, from level 3): a
+girl in a nursemaid's cap stands at the churchyard wall by night and won't come through the gate. By night she's there
+(`hours`, the Durst nursemaid's NPC on the village map). She knows the party if they hummed her the lullaby in Death
+House. Her name is Veta, which nobody in that house ever said; her bones are folded in the attic trunk, and she wants
+to lie with her son, Walter, not in the churchyard. **Escalation:** her bones from the trunk (a new option at the
+trunk) down to the smallest crypt in the family row (a new option at Walter's crypt). **Twist:** his crypt is empty;
+the robed ones cut his name over a box and gave him to the thing in the pit. Laying her in it anyway rouses the
+house's keepers.
+
+- Fight `nursemaid_keepers` in the family crypts (my entries on data/locations/death_house_dungeon_1.json): Gustav and
+  Elisabeth Durst (ghasts) and two robed ones (ghouls), unless the Dursts are already gone; then the robed one who
+  carried Walter down (a ghast) and four more. The autopilot wins 4 of 4 against the Dursts and 3 of 4 against the
+  robed ones at level 3, losing one or two party members a fight.
+- Reward: her lucky stone, left on the lid, a Stone of Good Luck (uncommon). No still.
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -634,6 +651,59 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
   800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
 
+## The Amber Temple (level 10)
+
+### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
+
+Exethanter, from level 10: under all the notes pinned to his sleeve is an old one in his own hand, "DO NOT GO BELOW THE
+VAULT. YOU SEALED IT. YOU DO NOT REMEMBER WHY. THAT IS WHY." (an option added to his menu). In the vault a crack across
+the floor weeps warm amber, and something deep in it blinks (prop `vault_weeping_crack`, shown from level 10 or once
+the quest is known); under the slab (Athletics DC 15, or half an hour) a stair goes down to a lair the wardens sealed
+under their own vaults (data/locations/amber_deep.json): the weeping stair, the hall of sleepers (travellers and
+wardens in amber, one of them a month old), the wardens' archive and the chamber of the Eye. **Escalation:** the hall's
+amber blinks back and the dreamed eyes come out of it. **Twist:** the wardens couldn't kill the thing that came up from
+under the mountain, only sing it to sleep, and when the song stopped holding, Exethanter gave it his memory: while he
+forgets it, it can't remember itself. Everyone who has helped him remember anything has been waking it.
+
+- **Boss: the Eye Below** (data/monsters/the_eye_below.json, `source.book: custom`, from the 2025 Monster Manual's
+  beholder, with its own sprite from the beholder's turnaround): Large aberration, AC 18, 180 HP, flies, a Bite and
+  two eye rays a turn from six (Paralyzing, Fear and Amber, which Restrains; Enervation, Disintegration and
+  Telekinetic), Legendary Resistance (3/day), a glare or a drift between turns, and a lair on initiative 20 that
+  dreams up eyes (dream-gazers, at most two at once) or sets the amber round a foe's feet. Its great eye is still
+  clouded with amber, so no antimagic cone. CR 13. New creature: the dream-gazer (data/monsters/dream_gazer.json,
+  from the gazer, the beholder's sprite small with `art_height`).
+- **Lair tricks** from the wardens' book: **the mirrors** in the hall turned toward its chamber, and its dreamed eyes
+  fight their reflections (no lair, no gazer beside it); **the lullaby** sung to the end (Performance DC 15, one try),
+  and it starts the fight half back in its amber (surprised, 135 HP). The autopilot wins 2 of 4 against it as it is
+  at level 10 (about three down, 10 rounds), and 3 of 4 with both (about two down).
+- The hall of sleepers (`dreamed_eyes`): a woken amber golem at 130 HP and four dream-gazers. The autopilot wins all
+  four at level 10, losing about one.
+- Rewards: its hoard, 700 gp and a Spellguard Shield (very rare), the wardens' shield made against it. Telling
+  Exethanter it's dead lets him burn the old note. Still: `sq_eye_below` (its first meeting).
+
+## Yester Hill (level 7)
+
+### The Druid Who Came Back (`the_druid_who_came_back`, narrative/yester_hill/the_druid_who_came_back.dialogue; batch 5)
+
+Davian's "Heard anything interesting?", once the Black Row is under way and the Gulthias tree has burned (level 7): a
+lantern goes round and round the burned crown of Yester Hill at night, like somebody digging. **Escalation:** someone
+came back to plant on it, by night only (`hours`): Mother Ruxandra, if the party spared her ("the tree will call me
+back"), with a cutting she carried against her skin; else Kostin, if he walked away from the hill doubting, with a
+clean young tree from a valley where the trees only drink rain; else Zorica (new speaker), the circle's youngest, who
+was on the Krezk road the night it burned. **Twist:** whatever is planted, the old tree's roots under the hill take
+it, and Wintersplinter's ash stands up round it as the Ash Effigy, which fire can't hurt now: it has burned once.
+Kostin stands aside (and stays to keep the hill afterwards); Ruxandra fights beside it; Zorica fights unless talked
+down (Persuasion DC 15, one try).
+
+- **Boss: the Ash Effigy** (data/monsters/ash_effigy.json, `source.book: custom`, built up from the tree blight, drawn
+  with its sprite at Huge): Huge plant, AC 15, 175 HP (150 below level 8), two Ash Fists (reach 15), Choking Ash
+  (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and Blinded), Regeneration 10 that cold stops, immune to fire and
+  vulnerable to cold, Legendary Resistance (2/day), and a fist or a step between turns. CR 8. Embers (twig blights)
+  crawl after it.
+- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 4
+  of 8 at level 7 with Zorica beside it and 3 of 8 at level 8 against it alone, losing two or three a fight.
+- Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -682,4 +752,10 @@ Into the Mists: the_last_traveller.dialogue in full (new speaker Ilarion; also G
 gravedigger line in the village townsfolk.dialogue. Batch 5, Mount Ghakis: the_warm_snow.dialogue in full (new speakers
 Sarkhaza, Doina and Petrache; also Sergeant Valcu's new log lines and the companions' interjects) and
 narrator/mount_ghakis.dialogue. Batch 5, Van Richten's Tower: the_name_over_the_door.dialogue in full (new speaker
-Khazan; also Mordenkainen's news and the companions' interjects) and narrator/khazan_undercroft.dialogue.
+Khazan; also Mordenkainen's news and the companions' interjects) and narrator/khazan_undercroft.dialogue. Batch 5,
+the Amber Temple: the_amber_debt.dialogue in full (new speaker the Eye Below; also Exethanter's old note and his
+thanks, and the companions' interjects), narrator/amber_deep.dialogue, and Mordenkainen's new line in
+the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party). Batch 5,
+Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also Davian, Ruxandra and Kostin, and a
+blunt interject). Batch 5,
+the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail).

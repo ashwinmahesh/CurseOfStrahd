@@ -206,3 +206,47 @@ func test_khazan_withdraws_into_his_name() -> void:
 func test_khazan_unmade_at_level_10() -> void:
 	await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
 
+
+## The chamber of the Eye, the four at the top of its throat; the hall of sleepers, the four at the stair foot.
+const EYE_CHAMBER: Array[Vector2i] = [Vector2i(17, 11), Vector2i(18, 11), Vector2i(17, 12), Vector2i(18, 12)]
+const EYE_STAIR: Array[Vector2i] = [Vector2i(25, 21), Vector2i(26, 21), Vector2i(25, 22), Vector2i(26, 22)]
+
+
+func test_the_hall_of_sleepers_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "dreamed_eyes", [1, 2, 3, 4], [], [], [], EYE_STAIR)
+
+
+## The Eye Below as it wakes, its dreams coming out of the walls: the hardest way in.
+func test_the_eye_below_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], [], [], [], EYE_CHAMBER)
+
+
+## Both the wardens' ways: the mirrors turned on it and the lullaby sung.
+func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], ["deep_mirrors_turned", "deep_lullaby_sung"], [], [], EYE_CHAMBER)
+
+## The burned crown of Yester Hill, the four at its edge.
+const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
+
+
+## Zorica fights beside the Ash Effigy (nobody talked her down).
+func test_the_ash_effigy_and_zorica_at_level_7() -> void:
+	await _series("yester_hill_gulthias_tree", 22, 7, "ash_effigy", [1, 2, 3, 4, 5, 6], ["yester_hill_resolved", "gulthias_tree_burned"], [], [], YESTER_CROWN)
+
+
+## Kostin's tree, and he stands aside: the effigy and its embers.
+func test_the_ash_effigy_at_level_8() -> void:
+	await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+
+## The family crypts under Death House, the four at Walter's crypt.
+const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]
+
+
+## The Dursts come for Veta in her son's crypt, with two of their robed ones.
+func test_the_dursts_come_for_veta_at_level_3() -> void:
+	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], [], [], [], WALTERS_CRYPT)
+
+
+## With the Dursts already gone, the robed ones come instead, led by the one who carried Walter down.
+func test_the_robed_ones_come_for_veta_at_level_3() -> void:
+	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)

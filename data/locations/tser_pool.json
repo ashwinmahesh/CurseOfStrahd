@@ -807,12 +807,12 @@
     {
       "npc": "luminita",
       "cell": [
-        11,
-        19
+        15,
+        20
       ],
       "dialogue": "svalich_road/luminita:start",
       "when": "not flag.tser_pool_brawl_won",
-      "facing": "east"
+      "facing": "west"
     },
     {
       "npc": "tser_dorina",

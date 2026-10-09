@@ -21,6 +21,10 @@ func test_catalog_has_every_category_and_sensible_counts() -> void:
 			assert_true(str(d.get(key, "")) != "", "%s default has %s" % [gender, key])
 		assert_true(bool(d["custom"]), "defaults are custom")
 		assert_eq(str(d["art"]), str(d["portrait"]), "the art id is the portrait")
+		assert_eq(str(HeroLook.option("portraits", str(d["portrait"])).get("gender", "")), gender, "%s default wears a %s face" % [gender, gender])
+	# Each portrait says whose face it is, so a taken one is replaced by one of the same gender (UI QA UI-01).
+	for p: Variant in HeroLook.options("portraits"):
+		assert_true(str((p as Dictionary).get("gender", "")) in ["female", "male"], "%s has a gender" % (p as Dictionary)["id"])
 
 
 func test_ramps_are_palette_colours() -> void:

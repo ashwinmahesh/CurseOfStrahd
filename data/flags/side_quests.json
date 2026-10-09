@@ -995,6 +995,101 @@
       "id": "khazan_destroyed",
       "type": "bool",
       "summary": "Khazan is destroyed for good (The Name Over the Door)."
+    },
+    {
+      "id": "deep_stair_open",
+      "type": "bool",
+      "summary": "The slab over the weeping crack in the Amber Temple's vault is up, and the stair under it is open (The Amber Debt)."
+    },
+    {
+      "id": "deep_mirrors_known",
+      "type": "bool",
+      "summary": "The party read in the wardens' book why they turned the hall's mirrors on the Eye Below (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_known",
+      "type": "bool",
+      "summary": "The party has the wardens' lullaby from their book (The Amber Debt)."
+    },
+    {
+      "id": "deep_mirrors_turned",
+      "type": "bool",
+      "summary": "The party turned the hall's mirrors toward the Eye's chamber: its dreamed eyes fight the glass, and its lair can't act (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_tried",
+      "type": "bool",
+      "summary": "The party sang the wardens' lullaby to the Eye Below, well or badly (The Amber Debt)."
+    },
+    {
+      "id": "deep_lullaby_sung",
+      "type": "bool",
+      "summary": "The party sang the Eye Below half back into its amber: it starts the fight surprised and hurt (The Amber Debt)."
+    },
+    {
+      "id": "dreamed_eyes_beaten",
+      "type": "bool",
+      "summary": "The dreamed eyes and the sleeper in the hall of sleepers are destroyed (The Amber Debt)."
+    },
+    {
+      "id": "eye_met",
+      "type": "bool",
+      "summary": "The party has spoken with the Eye Below (The Amber Debt)."
+    },
+    {
+      "id": "eye_below_slain",
+      "type": "bool",
+      "summary": "The Eye Below is dead (The Amber Debt)."
+    },
+    {
+      "id": "exethanter_eye_told",
+      "type": "bool",
+      "summary": "The party told Exethanter the thing he sealed is dead (The Amber Debt)."
+    },
+    {
+      "id": "corvina_thanks_given",
+      "type": "bool",
+      "summary": "Mordenkainen has thanked the party for finding Corvina (The Unnamed Crypt); his next news is Khazan (The Name Over the Door)."
+    },
+    {
+      "id": "kostin_planting_seen",
+      "type": "bool",
+      "summary": "The party found Kostin planting his clean tree on the burned crown of Yester Hill (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_met",
+      "type": "bool",
+      "summary": "The party met Zorica planting her cutting on the crown of Yester Hill (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_asked",
+      "type": "bool",
+      "summary": "The party tried to talk Zorica down from her planting, or she chose to fight (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_stood_down",
+      "type": "bool",
+      "summary": "Zorica put her spade down: she doesn't fight beside the Ash Effigy (The Druid Who Came Back)."
+    },
+    {
+      "id": "ash_effigy_slain",
+      "type": "bool",
+      "summary": "The Ash Effigy on the crown of Yester Hill is destroyed (The Druid Who Came Back)."
+    },
+    {
+      "id": "nursemaid_named",
+      "type": "bool",
+      "summary": "Veta the nursemaid told the party her name and where her bones are (The Nursemaid's Grave)."
+    },
+    {
+      "id": "nursemaid_bones_taken",
+      "type": "bool",
+      "summary": "The party took Veta's bones from the attic trunk to carry them down to Walter (The Nursemaid's Grave)."
+    },
+    {
+      "id": "nursemaid_keepers_beaten",
+      "type": "bool",
+      "summary": "The house's keepers who came for Veta in Walter's crypt are put down (The Nursemaid's Grave)."
     }
   ]
 }

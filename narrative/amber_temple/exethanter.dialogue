@@ -44,6 +44,8 @@ Exethanter: Ask away! I'll answer the ones I recall. It won't take long.
 * [if flag.visitors_ledger_read and not flag.exethanter_strahd_told] Your name is in the visitors' ledger, beside a prince's. -> strahd
 * [if flag.exethanter_bargain_known] Norganas says you made a bargain with it. -> norganas
 * [if flag.dark_gifts_taken >= 1] One of us took a gift from the amber. -> gift_taken
+* [if level >= 10 and not quest.the_amber_debt] There's an older note pinned under the others. -> amber_temple/the_amber_debt:old_note
+* [if quest.the_amber_debt == done and not flag.exethanter_eye_told] The thing under the vault is dead. -> amber_temple/the_amber_debt:eye_told
 * [if not flag.exethanter_note_given] (Pin a note to his sleeve: "These are friends.") -> note
 * (Attack the lich.) -> attack
 * Goodbye, warden. -> bye

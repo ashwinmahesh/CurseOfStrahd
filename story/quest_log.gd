@@ -4,7 +4,9 @@ extends RefCounted
 ## in order, its current objectives, and whether it ended.
 
 
-## [{id, name, summary, entries: [text], objectives: [text], status: active|success|failure}], active first.
+## [{id, name, summary, entries: [text], objectives: [text], status: active|success|failure}]: active first, each part
+## in the order the quests last moved (oldest first, so the HUD's newest objective is the last open one), never the
+## dictionary's order: a save writes its keys sorted, so after a load that was alphabetical (Storyline QA, 2026-10-08).
 static func journal(st: StoryState) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for qid: String in st.quests:
@@ -26,7 +28,14 @@ static func journal(st: StoryState) -> Array[Dictionary]:
 				if str(stage.get("ends", "")) != "":
 					status = str(stage["ends"])
 		out.append({"id": qid, "name": str(q["name"]), "summary": str(q.get("summary", "")), "entries": entries,
-			"objectives": objectives, "status": status})
+			"objectives": objectives, "status": status, "_at": float(entry.get("at", 0))})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
-		return (str(a["status"]) == "active") and (str(b["status"]) != "active"))
+		var a_open := str(a["status"]) == "active"
+		if a_open != (str(b["status"]) == "active"):
+			return a_open
+		if float(a["_at"]) != float(b["_at"]):
+			return float(a["_at"]) < float(b["_at"])
+		return str(a["id"]) < str(b["id"]))
+	for q in out:
+		q.erase("_at")
 	return out

@@ -601,14 +601,19 @@
   "d140abc1e42d6fc6": "[worried, brisk]"
  },
  "davian_martikov": {
+  "1b08ef440bb2f70d": "[gruff, uneasy, low]",
   "3e6d620a0659bde1": "[sad, gruff, tender]",
   "5d3a4576e5431408": "[gruff, fond, dry]",
   "6a2161fca8ab3566": "[grim, approving]",
   "6c86fde58ecaf410": "[stern, grim, determined]",
+  "71240a536a501054": "[gruff, wry, grateful]",
   "888f0f7d82eafac7": "[gruff, grudging]",
+  "8da3aa0050b64a48": "[gruff, relieved, wry]",
   "9663837b68445e83": "[gruff, troubled, low]",
   "a9021a11974952e4": "[gruff, curt]",
+  "ac5267e14875a621": "[stern, weary, firm]",
   "b153146082bb74f8": "[gruff, weary, gentle]",
+  "fed678b5a082c9d4": "[gruff, curt]",
   "ffb205836f61f052": "[gruff, wry, grateful]"
  },
  "dmitri_krezkov": {
@@ -642,6 +647,7 @@
   "1c0f95cc87825869": "[earnest, proud]",
   "22995ceb480c89a5": "[chatty, wry]",
   "23f4f75b52175424": "[vague, searching]",
+  "2cac8aa6eb26530d": "[mildly surprised, bemused]",
   "31a02403206ecb05": "[wistful, rambling]",
   "3ad1ca803d5fd080": "[bright, befuddled]",
   "3b39ae87a28c1a61": "[sad, ashamed]",
@@ -655,6 +661,7 @@
   "68c8f97a27da9a67": "[calm, content]",
   "68ff43e4dbf5d0f5": "[startled shout, then delighted]",
   "69925a40f1ff48a2": "[steeling himself, quiet]",
+  "6b7ea705445f9c18": "[wistful, groping, grateful]",
   "6c6cc6df2404d99e": "[distracted, fretful]",
   "7662d589362f0a67": "[relieved, lucid, brisk]",
   "7665abf90a0ef477": "[relieved, then vague]",
@@ -667,6 +674,7 @@
   "8f18deb53f8d23f5": "[cheerfully baffled]",
   "90b83d16aa182f82": "[stunned, tiny]",
   "950bb7e23fe540f5": "[shaken, whispering]",
+  "9766d09d3c9f77fc": "[absent-minded, mild, dawning]",
   "98aeb1df5b6e94ba": "[mild, matter-of-fact]",
   "9cff5c27cc6f3052": "[exhausted, relieved]",
   "9db7cea31bb56661": "[slow, dawning horror]",
@@ -678,6 +686,7 @@
   "bc2240267692d782": "[uneasy, suspicious]",
   "bdbbfd8f331f1e0c": "[delighted, rambling, papery]",
   "bed5895133e2c113": "[sad, gentle warning]",
+  "c0b967a96bd8a183": "[mild, puzzled, wry]",
   "c22bd5cefc9216d7": "[grave, sorrowful]",
   "c477725ab8bb2a66": "[quiet, at peace]",
   "c5b8598334b79841": "[sorrowful, remembering]",
@@ -968,6 +977,16 @@
   "7659324dae0f54ff": "[shaken, quiet]",
   "c5d1f53fad2faedd": "[flustered, grateful]",
   "f14d331047bb4e4b": "[hurt, quiet]"
+ },
+ "kostin": {
+  "3fd909b62e2ef1ce": "[pleading, earnest, desperate]",
+  "9346b7cd366af533": "[anguished, broken, apologetic]",
+  "9f25292d0db1e2f9": "[earnest, proud, pleading]",
+  "bfa2b26335de9804": "[quiet, resolute, sad]",
+  "cd0dd8f8163d4fa6": "[earnest, hopeful, tired]",
+  "d5b70921acc0a1b5": "[hollow, bitter, quiet]",
+  "dc1bff84c3259a2d": "[stricken, quiet, ashamed]",
+  "ecf2be8ba93656e8": "[quiet, stubborn, sad]"
  },
  "krezk_bucket_wife": {
   "cb9f4b0d23280019": "[brisk, wry]"
@@ -1311,6 +1330,7 @@
   "a1212da00ddc2d25": "[bitter, ashamed, rising anger]",
   "a831a3edb6634711": "[low, uneasy, warning]",
   "aadfb61cb42cdd6a": "[gruff kindness]",
+  "ca3cb782e1c07a87": "[quiet, tender, wry]",
   "dffb877c0f19c47c": "[low, bitter warning]",
   "ea4f69a7cc8b911d": "[brisk, wry]",
   "f249036fae21249c": "[grave, measured, expert]",
@@ -2314,6 +2334,10 @@
   "fcc9d4870ef4d655": "[bossy, gentle]",
   "fdbae4415f24bdd8": "[anxious, hopeful]"
  },
+ "ruxandra": {
+  "683af5b4249d2166": "[cold, venomous, final]",
+  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]"
+ },
  "sarkhaza": {
   "01a1e5761bb42aa5": "[low, hungry, menacing]",
   "0d27ccfc06a9c6d2": "[bitter, scornful]",
@@ -2541,6 +2565,13 @@
   "f6abc76ed358dcda": "[quiet, courteous, urgent]",
   "fee1c59e0538c0fe": "[wry, light, sad]",
   "ff83ef19908b28ec": "[low, grim]"
+ },
+ "the_eye_below": {
+  "1252da199b51cf91": "[sudden, cold, waking]",
+  "2396587dd19e9daa": "[contemptuous, imperious, slow]",
+  "2ba7323c25cdaacf": "[gleeful, hungry, silky]",
+  "68681dc5b23bd636": "[dreamy, slow, eerie, curious]",
+  "a597e5ff79da254f": "[drowsy, soothing, menacing]"
  },
  "the_grandsire": {
   "49a6d5ba29486433": "[deep, growling, possessive]",
@@ -3248,6 +3279,12 @@
   "ca7e7b7b783bfcca": "[quiet, haunted]",
   "df89359d75d931da": "[shaky, wry, fond, near tears]",
   "f28c02cbcf8e77a6": "[weak attempt at humour]"
+ },
+ "yester_zorica": {
+  "34563429556bba65": "[quiet, horrified, small]",
+  "b92943959268ea97": "[stubborn, proud, trembling]",
+  "c43f5336a1545391": "[fierce, grieving, accusing]",
+  "d55b01402dbf29c9": "[defiant, cold, shaking]"
  },
  "yevgeni": {
   "3951b1f08fc043db": "[sad, quiet]",

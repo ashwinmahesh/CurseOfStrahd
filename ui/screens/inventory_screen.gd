@@ -580,6 +580,9 @@ func _slot_line(ch: Character, slot: String) -> Control:
 			ch.unequip(slot)
 			_draw())
 		off.tooltip_text = "Unequip it: back to the pack"
+		if ch.take_off_blocker(str(e["id"])) != "":
+			off.disabled = true
+			off.tooltip_text = ch.take_off_blocker(str(e["id"]))
 		line.add_child(off)
 		r = _row(ch, e, {"from": "slot", "slot": slot}, line)
 		off.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -701,7 +704,10 @@ func _pack(ch: Character) -> Control:
 	inner.add_child(_search_row(ch))
 	var sorts := HBoxContainer.new()
 	sorts.add_theme_constant_override("separation", 4)
-	sorts.add_child(UiParts.caption("Sort", 11))
+	var sort_cap := UiParts.caption("Sort", 11)
+	# Room for the lit chip's glow, which covered the caption's last letter (UI QA UI-13).
+	sort_cap.custom_minimum_size.x = sort_cap.get_minimum_size().x + 6.0
+	sorts.add_child(sort_cap)
 	for s: String in SORTS:
 		var sb := UiParts.small_button(s.capitalize(), func() -> void:
 			sort_by = s
@@ -847,6 +853,10 @@ func fits_quick(d: Dictionary) -> bool:
 ## Puts `item_id` in hand (`slot`), taking off what was there; a two-handed weapon empties the other hand.
 func _equip(ch: Character, item_id: String, slot: String) -> bool:
 	var data := Compendium.shared().item_data(item_id)
+	var held := ch.equipped(slot)
+	if not held.is_empty() and str(held["id"]) != item_id and ch.take_off_blocker(str(held["id"])) != "":
+		_say(ch.take_off_blocker(str(held["id"])), "flame")
+		return false
 	if slot == "main_hand" and "two_handed" in Gear.weapon_props(data):
 		ch.unequip("off_hand")
 	if slot == "off_hand" and "two_handed" in Gear.weapon_props(ch.equipped("main_hand")):
@@ -880,8 +890,11 @@ func _drop_on_pack(d: Dictionary) -> void:
 	var ch := _ch()
 	match str(d["from"]):
 		"slot":
-			ch.unequip_item(str(d["id"]))
-			_say("Took off the %s." % Compendium.shared().display_name("items", str(d["id"])))
+			if ch.take_off_blocker(str(d["id"])) != "":
+				_say(ch.take_off_blocker(str(d["id"])), "flame")
+			else:
+				ch.unequip_item(str(d["id"]))
+				_say("Took off the %s." % Compendium.shared().display_name("items", str(d["id"])))
 		"set2":
 			ch.weapon_set_2.erase(str(d["slot"]))
 		"quick":
@@ -896,6 +909,8 @@ func _drop_on_member(d: Dictionary, to: int) -> void:
 	var other := st.party[to]
 	if str(d["from"]) == "stash":
 		_take_from_stash(d["entry"] as Dictionary, other)
+	elif _ch().part_blocker(str(d["id"])) != "":
+		_say(_ch().part_blocker(str(d["id"])), "flame")
 	else:
 		var e := d["entry"] as Dictionary
 		_move(_ch(), e, other, int(e.get("qty", 1)))
@@ -904,7 +919,10 @@ func _drop_on_member(d: Dictionary, to: int) -> void:
 
 func _drop_on_stash(d: Dictionary) -> void:
 	var e := d["entry"] as Dictionary
-	_to_stash(_ch(), e, int(e.get("qty", 1)))
+	if _ch().part_blocker(str(e["id"])) != "":
+		_say(_ch().part_blocker(str(e["id"])), "flame")
+	else:
+		_to_stash(_ch(), e, int(e.get("qty", 1)))
 	_draw()
 
 
@@ -1037,8 +1055,12 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 			_pick(e)
 			f.call()
 			_draw()
+	# A cursed item its holder is attuned to stays with them, and cursed armor stays on (Character.part_blocker).
+	var stuck := ch.part_blocker(id)
 	if slot != "":
-		out.append({"label": "Take off", "call": redraw.call(func() -> void: ch.unequip_item(id))})
+		var stays_on := ch.take_off_blocker(id)
+		out.append({"label": "Take off", "disabled": stays_on != "", "tooltip": stays_on,
+			"call": redraw.call(func() -> void: ch.unequip_item(id))})
 	else:
 		for s: String in ["armor", "main_hand", "off_hand"] + MagicItems.WORN_SLOTS:
 			if InventoryScreen.slot_takes(s, data):
@@ -1068,9 +1090,10 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 		if i != index:
 			var other := st.party[i]
 			out.append({"label": "Give to %s%s" % [other.name.get_slice(" ", 0), " (all %d)" % n if n > 1 else ""],
-				"call": redraw.call(func() -> void: _move(ch, e, other, n))})
+				"disabled": stuck != "", "tooltip": stuck, "call": redraw.call(func() -> void: _move(ch, e, other, n))})
 	if not quest:
-		out.append({"label": "Send to the stash%s" % (" (all %d)" % n if n > 1 else ""), "call": redraw.call(func() -> void: _to_stash(ch, e, n))})
+		out.append({"label": "Send to the stash%s" % (" (all %d)" % n if n > 1 else ""), "disabled": stuck != "", "tooltip": stuck,
+			"call": redraw.call(func() -> void: _to_stash(ch, e, n))})
 		var junk := InventoryScreen.is_junk(e)
 		out.append({"label": "Not junk" if junk else "Mark as junk", "call": redraw.call(func() -> void: InventoryScreen.set_junk(ch, id, not junk))})
 	if n > 1:
@@ -1081,7 +1104,7 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 				ch.unequip_item(id)
 			ch.remove_one(id, e)
 			_forget_gone(ch, id)
-		out.append({"label": "Drop one", "call": redraw.call(drop)})
+		out.append({"label": "Drop one", "disabled": stuck != "", "tooltip": stuck, "call": redraw.call(drop)})
 	return out
 
 
@@ -1407,9 +1430,13 @@ func _draw_card() -> void:
 	var entry := _entry(selected)
 	var slot := str(entry.get("slot", ""))
 	if slot != "":
-		acts.add_child(UiKit.button("Unequip", func() -> void:
+		var unequip := UiKit.button("Unequip", func() -> void:
 			ch.unequip_item(selected)
-			_draw(), 14))
+			_draw(), 14)
+		if ch.take_off_blocker(selected) != "":
+			unequip.disabled = true
+			unequip.tooltip_text = ch.take_off_blocker(selected)
+		acts.add_child(unequip)
 	elif Gear.is_weapon(data):
 		acts.add_child(UiKit.button("Equip (main hand)", func() -> void:
 			_equip(ch, selected, "main_hand")
@@ -1524,9 +1551,13 @@ func _draw_card() -> void:
 		if i == index:
 			continue
 		var other := st.party[i]
-		give.add_child(UiParts.small_button(other.name.get_slice(" ", 0), func() -> void: _give(other)))
+		var to := UiParts.small_button(other.name.get_slice(" ", 0), func() -> void: _give(other))
+		to.disabled = ch.part_blocker(selected) != ""
+		to.tooltip_text = ch.part_blocker(selected)
+		give.add_child(to)
 	_card.add_child(give)
 	var quest := InventoryScreen.is_quest(data)
+	var stuck := ch.part_blocker(selected)
 	var drop := UiParts.small_button("Drop one", func() -> void:
 		if slot != "" and n <= 1:
 			ch.unequip_item(selected)
@@ -1536,9 +1567,11 @@ func _draw_card() -> void:
 			selected = ""
 			_picked = {}
 		_draw())
-	drop.disabled = quest
+	drop.disabled = quest or stuck != ""
 	if quest:
 		drop.tooltip_text = "Can't drop: needed for a quest"
+	elif stuck != "":
+		drop.tooltip_text = stuck
 	var bottom := HBoxContainer.new()
 	bottom.add_theme_constant_override("separation", 6)
 	bottom.add_child(drop)
@@ -1546,8 +1579,8 @@ func _draw_card() -> void:
 	var stash := UiParts.small_button("Send to the stash", func() -> void:
 		_to_stash(ch, entry, _amount if n > 1 else 1)
 		_draw())
-	stash.disabled = quest
-	stash.tooltip_text = "Can't: needed for a quest" if quest else ("Into the party stash; take it out here or at any safe place" if _stash_open()
+	stash.disabled = quest or stuck != ""
+	stash.tooltip_text = "Can't: needed for a quest" if quest else stuck if stuck != "" else ("Into the party stash; take it out here or at any safe place" if _stash_open()
 		else "Into the party stash; take it out at an inn or a home")
 	bottom.add_child(stash)
 	var junk := InventoryScreen.is_junk(entry)
@@ -1642,7 +1675,7 @@ func _remove_one(ch: Character, item_id: String) -> void:
 ## Gives the picked item to `other` (as many as the card's How many says, for a stack).
 func _give(other: Character) -> void:
 	var e := _entry(selected)
-	if e.is_empty():
+	if e.is_empty() or _ch().part_blocker(selected) != "":
 		return
 	_move(_ch(), e, other, clampi(_amount, 1, int(e.get("qty", 1))))
 	_draw()

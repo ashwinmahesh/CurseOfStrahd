@@ -73,6 +73,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Bildrath | Wraps of Unarmed Power, +1 (uncommon) | Gift: his hush money after the walking firewood (Cut After Noon) |
 | ✅ | Old Mihail | Amulet of Proof against Detection and Location (uncommon) | Gift: the bride's charm, once she's buried (Six Feet) |
 | ✅ | The burgomaster's study, behind the bricks | Mithral Armor (uncommon) | Hoard: Sergiu's shirt, once the Tenant is dead (The Burgomaster's Hound, docs/story/side_quests.md) |
+| ✅ | Death House, Walter's crypt | Stone of Good Luck (uncommon) | Gift: Veta's lucky stone, left on the lid once she's laid with her son (The Nursemaid's Grave, docs/story/side_quests.md) |
 
 ## Svalich Road (level 4)
 
@@ -175,6 +176,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | The hill, a barrow mound | Amulet of the Devout +2 (rare) | Search (Perception DC 14): buried with a believer (lane 28's spot) |
 | ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
 | ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
+
+## Yester Hill (side quest, level 7)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | Davian Martikov, the winery | Daern's Instant Fortress (rare) | Gift: once the lantern on Yester Hill is out (The Druid Who Came Back, docs/story/side_quests.md) |
 
 ## Krezk (level 7)
 
@@ -284,6 +291,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Library, the books in chains | Tome of Clear Thought (very rare) | Search (Investigation DC 18): a book chained shut that isn't what its spine says |
 | ✅ | Vault, the heap of offerings | Staff of Power (very rare) | Search (Perception DC 16) |
 | ✅ | Exethanter | Robe of Stars (very rare) | Gift: if you help him remember |
+
+## Under the Amber Temple's vaults (side quest, level 10)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The chamber of the Eye, its hoard | Spellguard Shield (very rare) | Hoard: once the Eye Below is dead (The Amber Debt, docs/story/side_quests.md) |
 
 ## Castle Ravenloft (level 10)
 

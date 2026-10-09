@@ -1,0 +1,51 @@
+{
+  "id": "the_amber_debt",
+  "name": "The Amber Debt",
+  "summary": "Exethanter has an old note pinned under all the others, in his own hand: DO NOT GO BELOW THE VAULT. YOU SEALED IT. YOU DO NOT REMEMBER WHY. THAT IS WHY.",
+  "giver": "exethanter",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Under all the notes on Exethanter's sleeve there's an old one in his own hand: DO NOT GO BELOW THE VAULT. YOU SEALED IT. YOU DO NOT REMEMBER WHY. THAT IS WHY. He says the vault floor has been warm lately.",
+      "objectives": [
+        "Look at the vault floor"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "A crack in the vault floor weeps warm amber, and something deep in it blinked. Under the slab a stair goes down.",
+      "objectives": [
+        "Go down under the vaults"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "read",
+      "journal": "The wardens' day-book: a thing all eyes came up from under the mountain while they built the temple. They couldn't kill it; they sang it to sleep in amber, and when the song stopped holding it Exethanter gave it his memory. Every time he remembers anything, it wakes a little more.",
+      "objectives": [
+        "Optional: turn the hall's mirrors toward its chamber",
+        "Optional: learn the wardens' lullaby",
+        "Put out the Eye Below"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "slain",
+      "journal": "The Eye Below is dead in its broken amber.",
+      "objectives": [
+        "Look through what it collected"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The Eye Below is dead, and the things its dreams fetched it for a thousand years are ours, among them a shield the wardens made against it. Exethanter can forget it in peace now, or remember. Either way it won't matter.",
+      "objectives": [
+        "Optional: tell Exethanter"
+      ],
+      "ends": "success"
+    }
+  ]
+}

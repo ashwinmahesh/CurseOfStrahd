@@ -74,6 +74,7 @@ Old Mihail: Mind the edge. It's deeper than it looks. They all are, now. Six fee
 * Why so deep? -> gravedigger_deep
 * [if flag.sixfeet_rumor and (not quest.six_feet or quest.six_feet == rumored)] Arik says you dig your graves early. -> village_of_barovia/six_feet:asks
 * [if (flag.teodor_rumor or quest.polite_caller) and not flag.teodor_grave_known] Did you ever dig a grave for Teodor the cooper? -> gravedigger_teodor
+* [if level >= 3 and not quest.the_nursemaids_grave] Anyone you couldn't bury? -> village_of_barovia/the_nursemaids_grave:mihail
 * Goodbye. -> END
 
 ~ gravedigger_who

@@ -19,6 +19,9 @@ func _ready() -> void:
 	var out := str(args.get("out", "user://capture"))
 	var frames := int(args.get("frames", "90"))
 	DirAccess.make_dir_recursive_absolute(out.get_base_dir())
+	# Settings too: a capture that flips one (a pad press on a settings row, a toggle that saves) changes this file,
+	# never the owner's settings.cfg, and every capture starts from the defaults.
+	GameSettings.path = (SAVES % OS.get_process_id()).path_join("settings.cfg")
 	_own_saves(str(args.get("load", "")))
 	# make capture opens the window small in a corner; off screen it can take the capture size unseen.
 	var win := get_window()

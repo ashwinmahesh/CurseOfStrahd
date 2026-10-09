@@ -196,6 +196,17 @@
       "label": "a staff grown into the heartwood",
       "model": "leaves",
       "item": "staff_of_withering__quarterstaff"
+    },
+    {
+      "id": "the_new_planting",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "decor",
+      "label": "Something planted",
+      "model": "garden_bed",
+      "when": "quest.the_druid_who_came_back and not flag.ash_effigy_slain"
     }
   ],
   "containers": [
@@ -286,6 +297,61 @@
       "when": "flag.yester_hill_resolved and not flag.yester_druids_fate",
       "facing": "south",
       "approach": 12
+    },
+    {
+      "npc": "ruxandra",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "yester_hill/the_druid_who_came_back:ruxandra",
+      "when": "quest.the_druid_who_came_back and not flag.ash_effigy_slain and flag.yester_druids_fate == \"spared\"",
+      "hours": [
+        19,
+        6
+      ],
+      "facing": "south",
+      "approach": 8
+    },
+    {
+      "npc": "kostin",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "yester_hill/the_druid_who_came_back:kostin",
+      "when": "quest.the_druid_who_came_back and not flag.ash_effigy_slain and flag.kostin_doubts and not flag.yester_druids_fate == \"spared\"",
+      "hours": [
+        19,
+        6
+      ],
+      "facing": "south",
+      "approach": 8
+    },
+    {
+      "npc": "yester_zorica",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "yester_hill/the_druid_who_came_back:zorica",
+      "when": "quest.the_druid_who_came_back and not flag.ash_effigy_slain and not flag.kostin_doubts and not flag.yester_druids_fate == \"spared\"",
+      "hours": [
+        19,
+        6
+      ],
+      "facing": "south",
+      "approach": 8
+    },
+    {
+      "npc": "kostin",
+      "cell": [
+        16,
+        13
+      ],
+      "dialogue": "yester_hill/the_druid_who_came_back:kostin_after",
+      "when": "flag.ash_effigy_slain and flag.kostin_doubts and not flag.yester_druids_fate == \"spared\"",
+      "facing": "south"
     }
   ],
   "encounters": [
@@ -798,6 +864,334 @@
       ],
       "surprise": "",
       "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "when": "flag.yester_druids_fate == \"spared\" and level >= 8",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Mother Ruxandra"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "when": "flag.yester_druids_fate == \"spared\"",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Mother Ruxandra"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "when": "not flag.kostin_doubts and not flag.zorica_stood_down and level >= 8",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Zorica"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "when": "not flag.kostin_doubts and not flag.zorica_stood_down",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            13
+          ],
+          "name": "Zorica"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "when": "level >= 8",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
+    },
+    {
+      "id": "ash_effigy",
+      "trigger": "dialogue",
+      "text": "The ash of the whole crown stands up round the thing in the turned earth, grey and smoking, twice a man's height, and the old charcoal on the hill crawls after it on little legs.",
+      "monsters": [
+        {
+          "monster": "ash_effigy",
+          "cell": [
+            18,
+            12
+          ],
+          "hp": 150
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            22,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            23,
+            10
+          ],
+          "name": "An Ember"
+        }
+      ],
+      "surprise": "",
+      "flag": "ash_effigy_slain",
+      "quest": {
+        "id": "the_druid_who_came_back",
+        "stage": "burned"
+      }
     }
   ],
   "narration": {

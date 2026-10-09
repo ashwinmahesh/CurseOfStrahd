@@ -1,0 +1,357 @@
+{
+  "id": "the_eye_below",
+  "name": "The Eye Below",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Amber Debt, docs/story/side_quests.md), built from the 2025 Monster Manual's beholder (CR 13): a bite and eye rays, our own six in place of the book's ten (one of them sets you in amber), legendary rays, and a lair that dreams up eyes and hardens round you. Drawn with its own sprite (art/sprites/beholder)."
+  },
+  "size": "large",
+  "type": "aberration",
+  "tags": [
+    "boss",
+    "beholder"
+  ],
+  "alignment": "lawful evil",
+  "art": "beholder",
+  "ac": 18,
+  "ac_note": "natural armor",
+  "initiative": 6,
+  "hp": {
+    "average": 180,
+    "dice": "19d10+76"
+  },
+  "speed": {
+    "walk": 0,
+    "fly": 20,
+    "hover": true
+  },
+  "abilities": {
+    "str": 10,
+    "dex": 14,
+    "con": 18,
+    "int": 17,
+    "wis": 15,
+    "cha": 17
+  },
+  "saves": {
+    "int": 8,
+    "wis": 7,
+    "cha": 8
+  },
+  "skills": {
+    "perception": 12
+  },
+  "condition_immunities": [
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 120
+  },
+  "passive_perception": 22,
+  "languages": [
+    "Common",
+    "Deep Speech"
+  ],
+  "cr": 13,
+  "xp": 10000,
+  "proficiency_bonus": 5,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (3/Day)",
+      "action": "special",
+      "summary": "Three times a day, a failed saving throw becomes a success.",
+      "text": "When the Eye Below fails a saving throw, it can choose to succeed instead, three times a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "half_awake",
+      "name": "Half Awake",
+      "action": "passive",
+      "summary": "A thousand years asleep in amber, and not all of it has woken. Its great central eye is still clouded; the small ones do the work.",
+      "text": "The wardens of the Amber Temple sealed the Eye Below in amber and put it to sleep. Its great central eye is still filmed with amber and can't yet do what a beholder's central eye does; its ten small eyes, and its dreams, do the rest.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "paralyzing_ray",
+          "count": 1,
+          "or": [
+            "fear_ray",
+            "amber_ray"
+          ]
+        },
+        {
+          "action": "enervation_ray",
+          "count": 1,
+          "or": [
+            "disintegration_ray",
+            "telekinetic_ray"
+          ]
+        }
+      ],
+      "summary": "A Bite and two Eye Rays: one of Paralyzing, Fear or Amber, and one of Enervation, Disintegration or Telekinetic.",
+      "text": "The Eye Below makes one Bite attack and uses two different Eye Rays: one of Paralyzing Ray, Fear Ray or Amber Ray, and one of Enervation Ray, Disintegration Ray or Telekinetic Ray."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "4d6",
+          "type": "piercing"
+        }
+      ],
+      "summary": "A mouth like a sack of knives.",
+      "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 14 (4d6) Piercing damage."
+    },
+    {
+      "id": "paralyzing_ray",
+      "name": "Paralyzing Ray",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "until": "minute",
+          "repeat_save": {
+            "ability": "con",
+            "dc": 16,
+            "when": "end"
+          }
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Con save or Paralyzed (saving again at the end of each of its turns).",
+      "text": "Constitution Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: the target has the Paralyzed condition for 1 minute. It repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    },
+    {
+      "id": "fear_ray",
+      "name": "Fear Ray",
+      "kind": "save",
+      "save": {
+        "ability": "wis",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "frightened",
+          "until": "minute",
+          "repeat_save": {
+            "ability": "wis",
+            "dc": 16,
+            "when": "end"
+          }
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Wis save or Frightened (saving again at the end of each of its turns).",
+      "text": "Wisdom Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: the target has the Frightened condition for 1 minute. It repeats the save at the end of each of its turns, ending the effect on itself on a success."
+    },
+    {
+      "id": "amber_ray",
+      "name": "Amber Ray",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "minute",
+          "repeat_save": {
+            "ability": "str",
+            "dc": 16,
+            "when": "end"
+          }
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Dex save or Restrained in hardening amber (a Str save at the end of each of its turns breaks free).",
+      "text": "Dexterity Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: amber pours over the target and hardens, and it has the Restrained condition for 1 minute. It makes a DC 16 Strength saving throw at the end of each of its turns, breaking free on a success."
+    },
+    {
+      "id": "enervation_ray",
+      "name": "Enervation Ray",
+      "kind": "save",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 27,
+          "dice": "6d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Con save, 6d8 Necrotic, half on a success.",
+      "text": "Constitution Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: 27 (6d8) Necrotic damage. Success: Half damage."
+    },
+    {
+      "id": "disintegration_ray",
+      "name": "Disintegration Ray",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 31,
+          "dice": "7d8",
+          "type": "force"
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Dex save or 7d8 Force.",
+      "text": "Dexterity Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: 31 (7d8) Force damage. Success: no damage."
+    },
+    {
+      "id": "telekinetic_ray",
+      "name": "Telekinetic Ray",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "force"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "push",
+          "feet": 30
+        },
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "One creature within 120 ft: DC 16 Str save, 3d6 Force, and flung 30 ft and knocked Prone.",
+      "text": "Strength Saving Throw: DC 16, one creature the Eye Below can see within 120 feet. Failure: 10 (3d6) Force damage, and the target is pushed 30 feet away from the Eye Below and has the Prone condition."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 3,
+    "options": [
+      {
+        "id": "glare",
+        "name": "Glare",
+        "cost": 1,
+        "action": "fear_ray",
+        "summary": "Uses its Fear Ray."
+      },
+      {
+        "id": "glare_hard",
+        "name": "Hard Glare",
+        "cost": 2,
+        "action": "enervation_ray",
+        "summary": "Uses its Enervation Ray."
+      },
+      {
+        "id": "drift",
+        "name": "Drift",
+        "cost": 1,
+        "move": true,
+        "summary": "Floats up to its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "lair_actions": [
+    {
+      "id": "dreamed_eyes",
+      "name": "Dreamed Eyes",
+      "kind": "summon",
+      "summon": {
+        "monster": "dream_gazer",
+        "count": 1,
+        "max": 2
+      },
+      "summary": "It dreams, and a small eye comes out of the amber walls to fight for it (no more than two at once).",
+      "text": "The Eye Below dreams, and its dream takes shape: a dream-gazer buds out of the amber wall beside it and acts on initiative count 20. No more than two of its summoned gazers are ever in the fight at once."
+    },
+    {
+      "id": "amber_hardens",
+      "name": "The Amber Hardens",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "none"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "restrained",
+          "until": "source_turn_start"
+        }
+      ],
+      "summary": "One foe it can see: the amber underfoot runs and sets round its feet; DC 15 Dex save or Restrained until its next turn.",
+      "text": "The amber floor runs like warm honey round the feet of a creature the Eye Below can see, and sets. It makes a DC 15 Dexterity saving throw or has the Restrained condition until the start of the Eye Below's next turn."
+    }
+  ],
+  "legendary_resistance": 3,
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A beholder the Amber Temple's wardens sealed in amber under their vaults, and put to sleep with the warden's own memory. A floating orb of mottled hide as wide as a cart, one great clouded eye, a mouth like a sack of knives, and ten small eyes on stalks, each of which does something terrible. It dreams, and its dreams come out of the walls."
+}

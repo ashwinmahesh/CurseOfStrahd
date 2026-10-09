@@ -311,6 +311,53 @@ func test_any_party_member_can_cast_a_spell_into_a_ring_of_spell_storing() -> vo
 			assert_false(bool(o2["legal"]), "a full ring takes nothing more")
 
 
+## Selling an attuned item ends the attunement, as giving it away does (QA FN-04: a sold item's attunement stayed,
+## filling a slot for good with no item left to end it on).
+func test_selling_an_attuned_item_frees_its_attunement() -> void:
+	var npcs := _comp().tables["npcs"] as Dictionary
+	npcs["test_fence"] = {"id": "test_fence", "name": "Test Fence", "summary": "", "shop": {"sells": [], "sell_rate": 0.5}}
+	var st := StoryState.new()
+	var ch := TestChars.pregen("ilse_varga", 5)
+	st.party.append(ch)
+	ch.add_item("cloak_of_protection")
+	assert_true(ch.wear("cloak_of_protection"))
+	assert_true(ch.attune("cloak_of_protection"))
+	assert_eq(st.shop_sell("test_fence", "cloak_of_protection", ch), "")
+	assert_true(ch.entry_of("cloak_of_protection").is_empty(), "sold")
+	assert_false("cloak_of_protection" in ch.attuned, "and the attunement with it")
+	npcs.erase("test_fence")
+
+
+## A cursed item its holder is attuned to stays with them until the curse is lifted (QA FN-05: giving, stashing,
+## dropping or selling it was the way out, and cursed armor came off with a click): nothing lets it go, and the armor
+## stays on; once Remove Curse lifts it, it can go.
+func test_a_cursed_item_stays_with_its_bearer_until_the_curse_is_lifted() -> void:
+	var npcs := _comp().tables["npcs"] as Dictionary
+	npcs["test_fence"] = {"id": "test_fence", "name": "Test Fence", "summary": "", "shop": {"sells": [], "sell_rate": 0.5}}
+	var st := StoryState.new()
+	var ch := TestChars.pregen("ilse_varga", 5)
+	st.party.append(ch)
+	var armor := "demon_armor__plate_armor"
+	ch.add_item(armor)
+	assert_true(ch.equip(armor, "armor"))
+	assert_eq(ch.part_blocker(armor), "", "not attuned yet: the curse hasn't taken hold")
+	assert_true(ch.attune(armor))
+	assert_ne(ch.part_blocker(armor), "", "attuned: it won't leave")
+	assert_ne(ch.take_off_blocker(armor), "", "and the armor won't come off")
+	assert_ne(st.shop_sell("test_fence", armor, ch), "", "no merchant takes it")
+	assert_false(st.stash_put(armor, ch), "nor the stash")
+	assert_false(ch.entry_of(armor).is_empty(), "still carried")
+	assert_eq(ch.part_blocker("cloak_of_protection"), "", "anything else goes as ever")
+	ch.add_item("berserker_axe__greataxe")
+	assert_true(ch.attune("berserker_axe__greataxe"))
+	assert_ne(ch.part_blocker("berserker_axe__greataxe"), "", "a cursed weapon stays with its bearer")
+	assert_eq(ch.take_off_blocker("berserker_axe__greataxe"), "", "though it can be put down, unlike the armor")
+	ch.entry_of(armor)["curse_lifted"] = true
+	assert_eq(ch.part_blocker(armor), "", "lifted: it can go")
+	assert_eq(st.shop_sell("test_fence", armor, ch), "")
+	npcs.erase("test_fence")
+
+
 ## An item power that changes its user's shape is still paid for (QA FN-08): a wizard who reads a Spell Scroll of
 ## Polymorph on herself is a beast by the time the scroll is used up, and the scroll stayed (with a SCRIPT ERROR); a
 ## Wand of Polymorph's charge comes off the same way.

@@ -142,6 +142,16 @@ func _screen(kind: String, index: int) -> Callable:
 		return root.get("screen")
 
 
+## A hero's sheet open at `tab`.
+func _sheet_tab(index: int, tab: String) -> Callable:
+	return func() -> Variant:
+		root.call("open_screen", "sheet", index)
+		await _frames(1)
+		(root.get("screen") as CharacterSheetScreen).show_tab(tab)
+		await _frames(2)
+		return root.get("screen")
+
+
 ## The inventory in `view` ("doll" or "list"; it opens in the view last chosen).
 func _inventory(index: int, view: String) -> Callable:
 	return func() -> Variant:
@@ -191,6 +201,15 @@ func test_what_counts_as_spilling() -> void:
 		var row := Label.new()
 		row.text = "Row %d" % i
 		rows.add_child(row)
+	# A screen frame whose content is wider than it was designed for (it grows over its own corners).
+	var frame := PanelContainer.new()
+	frame.set_meta(&"design_size", Vector2(400, 200))
+	frame.position = Vector2(600, 300)
+	frame.size = Vector2(400, 200)
+	var wide := Control.new()
+	wide.custom_minimum_size = Vector2(520, 100)
+	frame.add_child(wide)
+	box.add_child(frame)
 	await _frames(2)
 	cut.size = Vector2(80, cut.size.y)
 	said.size = Vector2(80, said.size.y)
@@ -201,6 +220,7 @@ func test_what_counts_as_spilling() -> void:
 	assert_true(text.contains("Below the window"), "a label past the bottom")
 	assert_false(text.contains("TextureRect"), "an ornament may hang over the edge")
 	assert_false(text.contains("Row"), "rows scrolled out of a list's view are fine")
+	assert_true(text.contains("grew past its design size") and text.contains("not 400x200"), "a frame its content widened: %s" % text)
 	box.queue_free()
 
 
@@ -228,6 +248,8 @@ func test_the_party_screens() -> void:
 	var st := GameState.story
 	for i in st.party.size():
 		await _check("%s's sheet" % st.party[i].name, _screen("sheet", i), _close_screen)
+		# Spells too: a spell with many tags beside its slot picker widened the tab past the frame (UI QA UI-02).
+		await _check("%s's sheet (Spells)" % st.party[i].name, _sheet_tab(i, "Spells"), _close_screen)
 		await _check("%s's inventory" % st.party[i].name, _inventory(i, "doll"), _close_screen)
 		# The inventory's list view too (owner, 2026-10-07: a switch between it and the paper doll).
 		await _check("%s's inventory (list)" % st.party[i].name, _inventory(i, "list"), _close_screen)

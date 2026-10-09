@@ -278,6 +278,8 @@ static func fade_with_trees(board: ArenaBoard, piece: Node3D) -> void:
 
 ## Fades a 3D piece standing between the camera and the party (0 drawn solid, 1 gone), as the trees' billboards fade.
 static func set_fade(node: Node3D, amount: float) -> void:
+	if node is GeometryInstance3D:
+		(node as GeometryInstance3D).transparency = amount   # a bare mesh (a rock column) fades itself
 	for n in node.find_children("*", "GeometryInstance3D", true, false):
 		(n as GeometryInstance3D).transparency = amount
 
