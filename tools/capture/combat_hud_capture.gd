@@ -60,6 +60,16 @@ func capture_shots(tool: Node, out: String) -> void:
 		view.hud.refresh()
 		await tool.call("wait_frames", 8)
 		tool.call("_shot", "%s_%s.png" % [out, str(s[2])])
+		# Godrick's All list scrolled to its spells: a section a level.
+		if str(s[2]) == "0_godrick_all":
+			var scroll := view.hud.get("_slot_scroll") as ScrollContainer
+			for row: Node in (view.hud.get("_slots") as Node).get_children():
+				if row is HBoxContainer and (row.get_child(0) as Label).text.begins_with("SPELLS"):
+					scroll.scroll_vertical = int((row as Control).position.y)
+					break
+			await tool.call("wait_frames", 4)
+			tool.call("_shot", "%s_0_godrick_all_spells.png" % out)
+			scroll.scroll_vertical = 0
 	# A container open at its slot: Command's words.
 	var god := heroes["godrick_pendlebrook"] as Combatant
 	view.hud.shown = god

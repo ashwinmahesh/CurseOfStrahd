@@ -205,8 +205,9 @@ Settings, Game, **Party turns**: Shared (the default) or One at a time.
 Asked to choose between the tabs and Baldur's Gate 3's PC bar (a mock-up, tools/capture/hotbar_mockup_capture.tscn),
 the owner picked a mix: BG3's sidebar of filters, our icon-and-name slots. The filters run down the left of the slots
 (All, then the hero's tabs: Common, the class's, Spells, Items, Reactions, Passives, and Favourites and Hidden when
-used); **All** is the default and lists the starred actions, Common, the class's, Spells (cantrips first, by level)
-and Items one section after another, each section's name on a gilt rule above its rows. Six slots to a row; the
+used); **All** is the default and lists the starred actions, Common, the class's, Spells (a section a level: Cantrips,
+Level 1, Level 2..., as on the Spells filter) and Items one section after another, each section's name on a gilt rule
+above its rows. Six slots to a row; the
 list scrolls past two and a half rows. D-pad up and down (or the tab keys) step through the filters. A long name over
 the portrait is cut with an ellipsis so the bar never reaches End Turn.
 
