@@ -517,6 +517,17 @@ func test_the_boatmen_come_for_the_smoke() -> void:
 	assert_true(GameState.story.get_flag("reed_isle_boatmen_beaten", false))
 
 
+## What's lived under the Grey Goose's trapdoor for twenty winters comes up into the lamplight.
+func test_the_cellar_of_the_grey_goose() -> void:
+	var v := await _boot("svalich_roadhouse", 23, 2, ["roadhouse_innkeeper_met"])
+	GameState.story.set_quest_stage("the_roadhouse_lantern", "asked")
+	LocationNpcs.hide_npcs_of(v, "svalich_road/the_roadhouse_lantern:innkeeper")
+	await _fight(v, "roadhouse_cellar", ["The Innkeeper's Wife", "A Son of the House", "Giant Rat 1"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_roadhouse_lantern"), "opened")
+	assert_true(GameState.story.get_flag("roadhouse_cellar_beaten", false))
+
+
 ## The spiders come down their threads when Tsura is cut out of the web in the gully off the falls path.
 func test_the_spiders_of_the_webbed_gully() -> void:
 	var v := await _boot("ivlis_spider_gully", 12, 3, [])

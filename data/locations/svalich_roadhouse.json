@@ -1,0 +1,332 @@
+{
+  "id": "svalich_roadhouse",
+  "name": "The Grey Goose",
+  "region": "svalich_road",
+  "summary": "A roadhouse on the Old Svalich Road between the Village of Barovia and the crossroads, burned out twenty winters ago, with a lantern in its upstairs window every night though it has no upstairs any more (The Lantern in the Roadhouse, docs/story/side_quests.md).",
+  "text": "A roadhouse by the road, burned down to its walls a long time ago. A painted goose still hangs from the sign-iron, grey with soot. Weeds in the taproom, and the hearth standing on its own like a tombstone.",
+  "map": {
+    "rows": [
+      "############################",
+      "#####..........#############",
+      "###......................###",
+      "##...################.....##",
+      "#....#..............#......#",
+      "#....#..............#......#",
+      "#....#..............#..=...#",
+      "#....#..............#......#",
+      "#....#..............#......#",
+      "#....###.....##..####......#",
+      "#..........................#",
+      "#...=.......................",
+      "#...........................",
+      "#.....................=....#",
+      "##.........................#",
+      "###.......####.........#####",
+      "#####......................#",
+      "############################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "roadhouse_taproom",
+      "name": "The taproom",
+      "cells": [
+        [
+          6,
+          4
+        ],
+        [
+          19,
+          8
+        ]
+      ]
+    },
+    {
+      "id": "roadhouse_yard",
+      "name": "The yard",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          27,
+          16
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      26,
+      11
+    ],
+    "from_road": [
+      26,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "roadhouse_road",
+      "cell": [
+        27,
+        11
+      ],
+      "to": "travel",
+      "label": "Back to the road"
+    },
+    {
+      "id": "roadhouse_road_2",
+      "cell": [
+        27,
+        12
+      ],
+      "to": "travel",
+      "label": "Back to the road"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "roadhouse_lantern",
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "examine",
+      "label": "A lantern hanging in the air",
+      "model": "lantern_post",
+      "dialogue": "svalich_road/the_roadhouse_lantern:lantern"
+    },
+    {
+      "id": "roadhouse_hearth",
+      "cell": [
+        8,
+        4
+      ],
+      "kind": "examine",
+      "label": "The hearth",
+      "model": "fireplace"
+    },
+    {
+      "id": "roadhouse_ledger",
+      "cell": [
+        17,
+        5
+      ],
+      "kind": "examine",
+      "label": "A ledger on the counter",
+      "model": "ledger",
+      "dialogue": "svalich_road/the_roadhouse_lantern:ledger"
+    },
+    {
+      "id": "roadhouse_trapdoor",
+      "cell": [
+        12,
+        7
+      ],
+      "kind": "examine",
+      "label": "A trapdoor, nailed shut",
+      "model": "broken_boards",
+      "dialogue": "svalich_road/the_roadhouse_lantern:trapdoor"
+    },
+    {
+      "id": "roadhouse_sign",
+      "cell": [
+        24,
+        10
+      ],
+      "kind": "examine",
+      "label": "The sign of the Grey Goose",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "roadhouse_beams",
+      "cell": [
+        10,
+        8
+      ],
+      "kind": "decor",
+      "label": "Fallen beams",
+      "model": "rubble"
+    },
+    {
+      "id": "roadhouse_barrels",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "decor",
+      "label": "Burst barrels",
+      "model": "barrel"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        14,
+        4
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 25
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "roadhouse_innkeeper",
+      "cell": [
+        13,
+        5
+      ],
+      "dialogue": "svalich_road/the_roadhouse_lantern:innkeeper",
+      "when": "night and quest.the_roadhouse_lantern and not flag.roadhouse_cellar_beaten",
+      "facing": "south",
+      "approach": 4
+    },
+    {
+      "npc": "roadhouse_innkeeper",
+      "cell": [
+        13,
+        5
+      ],
+      "dialogue": "svalich_road/the_roadhouse_lantern:after",
+      "when": "night and flag.roadhouse_cellar_beaten and quest.the_roadhouse_lantern != done",
+      "facing": "south"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "roadhouse_cellar",
+      "trigger": "dialogue",
+      "text": "The nails squeal out of the trapdoor on their own, and what's been living in the cellar for twenty winters comes up into the lamplight, hungry.",
+      "surprise": "",
+      "flag": "roadhouse_cellar_beaten",
+      "quest": {
+        "id": "the_roadhouse_lantern",
+        "stage": "opened"
+      },
+      "monsters": [
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            6
+          ],
+          "name": "The Innkeeper's Wife"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            7
+          ],
+          "name": "A Son of the House"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "A Son of the House"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            9,
+            7
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            15,
+            7
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            8,
+            5
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            16,
+            6
+          ]
+        }
+      ],
+      "when": "level >= 3"
+    },
+    {
+      "id": "roadhouse_cellar",
+      "trigger": "dialogue",
+      "text": "The nails squeal out of the trapdoor on their own, and what's been living in the cellar for twenty winters comes up into the lamplight, hungry.",
+      "surprise": "",
+      "flag": "roadhouse_cellar_beaten",
+      "quest": {
+        "id": "the_roadhouse_lantern",
+        "stage": "opened"
+      },
+      "monsters": [
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            6
+          ],
+          "name": "The Innkeeper's Wife"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            7
+          ],
+          "name": "A Son of the House"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            9,
+            7
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            15,
+            7
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            8,
+            5
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            16,
+            6
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:svalich_roadhouse"
+  },
+  "rest": "risky"
+}

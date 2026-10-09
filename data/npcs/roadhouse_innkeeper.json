@@ -1,0 +1,17 @@
+{
+  "id": "roadhouse_innkeeper",
+  "name": "Wenzel",
+  "title": "Innkeeper of the Grey Goose",
+  "summary": "The ghost of Wenzel, who kept the Grey Goose roadhouse, in his apron behind a counter that's mostly charcoal, keeping a lantern burning in the window that isn't there any more.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "indifferent",
+  "monster": "ghost",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

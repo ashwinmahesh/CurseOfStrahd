@@ -76,6 +76,19 @@
       "summary": "A walled town on the shore of Lake Zarovich, with bells, banners and a festival every week."
     },
     {
+      "id": "grey_goose",
+      "name": "The Grey Goose",
+      "location": "svalich_roadhouse",
+      "spawn": "from_road",
+      "pos": [
+        0.71,
+        0.52
+      ],
+      "region": "svalich_road",
+      "when": "quest.the_roadhouse_lantern",
+      "summary": "A burned-out roadhouse on the Old Svalich Road between the village and the crossroads, with a lantern in its window every night."
+    },
+    {
       "id": "webbed_gully",
       "name": "The Webbed Gully",
       "location": "ivlis_spider_gully",
@@ -137,6 +150,24 @@
       "hours": 4,
       "table": "svalich_woods",
       "name": "Old Svalich Road, through the Svalich Woods"
+    },
+    {
+      "id": "village_to_grey_goose",
+      "from": "village_of_barovia",
+      "to": "grey_goose",
+      "hours": 0.75,
+      "table": "svalich_road",
+      "name": "The Old Svalich Road, west of the village",
+      "when": "quest.the_roadhouse_lantern"
+    },
+    {
+      "id": "grey_goose_to_crossroads",
+      "from": "grey_goose",
+      "to": "svalich_crossroads",
+      "hours": 0.75,
+      "table": "svalich_road",
+      "name": "The Old Svalich Road, east of the crossroads",
+      "when": "quest.the_roadhouse_lantern"
     },
     {
       "id": "crossroads_to_webbed_gully",

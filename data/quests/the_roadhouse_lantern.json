@@ -1,0 +1,42 @@
+{
+  "id": "the_roadhouse_lantern",
+  "name": "The Lantern in the Roadhouse",
+  "summary": "The Grey Goose roadhouse burned twenty winters ago, and every night a lantern burns in its upstairs window, though there's no upstairs any more.",
+  "giver": "arik",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Arik, in his one-word way: the Grey Goose roadhouse on the road to the crossroads. A lantern. No upstairs. It burned twenty winters ago, and something still lights a lamp in its window every night.",
+      "objectives": [
+        "Go to the Grey Goose by night"
+      ],
+      "hint": "Go to the Grey Goose roadhouse on the Old Svalich Road, between the village and the crossroads, by night.",
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "The innkeeper of the Grey Goose is dead, and still behind his counter. He keeps the lantern lit so travellers see the walls and go on. Something under the floor is scratching.",
+      "objectives": [
+        "Find out what the lantern is warning people away from"
+      ],
+      "hint": "Look behind the counter of the Grey Goose roadhouse, and read its guest book.",
+      "ends": ""
+    },
+    {
+      "id": "opened",
+      "journal": "Under the trapdoor were the innkeeper's wife and sons, who fed on their guests the winter the snow shut the road. He burned the house over them, and they didn't die. They have now.",
+      "objectives": [
+        "Talk to the innkeeper at the Grey Goose by night"
+      ],
+      "hint": "Go back to the Grey Goose roadhouse by night and talk to the innkeeper.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The innkeeper of the Grey Goose put his lantern down. It went out, and so did he. He left us his savings and his youngest's pipes.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
