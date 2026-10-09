@@ -1,0 +1,43 @@
+{
+  "id": "the_dancing_bear",
+  "name": "The Dancing Bear",
+  "summary": "Lavinia's bear Bujor, who has danced on the Tser Pool camp's stage for nine years, broke his chain in the night and went up into the woods.",
+  "giver": "tser_lavinia",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Bujor, the bear who dances with Lavinia on the plank stage at the Tser Pool camp, broke his chain in the night and went up the deer path into the woods. In nine years he never once pulled on it. Lavinia gave us her whistle: two notes, high then low.",
+      "objectives": [
+        "Follow the deer path up the stream from the Tser Pool camp",
+        "Find Bujor"
+      ],
+      "hint": "Take the deer path up the stream from the north-west corner of the Tser Pool camp, and find Bujor at the old den.",
+      "ends": ""
+    },
+    {
+      "id": "defended",
+      "journal": "Bujor didn't run away. A bear cub was crying in a hunter's trap at the old den, and he went to it. The blights came for the crying, and we stood in front of it.",
+      "objectives": [
+        "Talk to Bujor in the clearing"
+      ],
+      "hint": "Go to Bujor in the clearing at the old den, up the deer path from the Tser Pool camp.",
+      "ends": ""
+    },
+    {
+      "id": "found",
+      "journal": "The cub is out of the trap. Lavinia will want to know where her bear is.",
+      "objectives": [
+        "Tell Lavinia at the Tser Pool camp"
+      ],
+      "hint": "Find Lavinia on the plank stage at the Tser Pool camp, in the daytime or the evening.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Lavinia has her answer about Bujor, and we have her grandmother's fan, the one she danced for a prince with.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

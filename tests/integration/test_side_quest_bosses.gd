@@ -309,6 +309,15 @@ func test_the_gilded_knight_at_level_9() -> void:
 	await _series("argynvostholt_undercroft", 20, 9, "gilded_knight", [1, 2, 3, 4, 5, 6, 7, 8], ["tithe_told"], [], [], TITHE_VAULT)
 
 
+## The clearing at the old den, where the party stands over the trapped cub.
+const OLD_DEN: Array[Vector2i] = [Vector2i(12, 12), Vector2i(13, 13), Vector2i(11, 12), Vector2i(12, 13)]
+
+
+## Two vine blights, five needle blights and four twig blights come for the cub's crying.
+func test_the_den_blights_at_level_3() -> void:
+	await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)
+
+
 ## The barrow slope on Yester Hill, below the druids' cairn of skulls.
 const BARROW_SLOPE: Array[Vector2i] = [Vector2i(28, 16), Vector2i(29, 16), Vector2i(27, 17), Vector2i(28, 17)]
 

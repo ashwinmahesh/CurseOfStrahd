@@ -1,0 +1,175 @@
+# The Dancing Bear (side quest, docs/story/side_quests.md): Lavinia's bear Bujor, who has danced on the plank stage at
+# the Tser Pool camp for nine years and never once pulled on his chain, broke it in the night and went up the deer path
+# into the woods. **Twist:** he didn't run: he heard a cub crying in a hunter's trap at the old den, and the trap is
+# Old Marin's (Investigation shows his mark; the black carriage pays for live cubs). **Escalation:** the blights come
+# out of the trees toward the crying. Then Bujor chooses, with the party's help: the stage, or the den. Reached from
+# Lavinia on the stage from level 3 (svalich_road/tser_camp:lavinia) and the deer path up the stream
+# (data/locations/tser_woods_den.json). Every line here is unvoiced for now.
+
+# --- Lavinia on the plank stage (svalich_road/tser_camp:lavinia jumps here) ---
+
+~ lavinia
+if quest.the_dancing_bear == done
+if flag.bujor_home
+Lavinia [smile]: Clap or don't, the steps are the same. (Bujor turns beside her, slow and heavy, and under the planks a small bear is trying the same turn and falling over.)
+else
+Lavinia: I still dance the bear's part. Somebody has to. (She looks up the stream, toward the woods.) He was always better at it than me.
+endif
+-> END
+endif
+if quest.the_dancing_bear == found
+-> thanks
+endif
+if quest.the_dancing_bear
+Lavinia: Up the stream, where the deer path goes. Please. Before the woods have him.
+-> END
+endif
+Narrator: Lavinia is sitting on the edge of the plank stage, not dancing, with a length of broken chain across her knees.
+Lavinia: No dancing today. Bujor's gone. My bear. He broke his chain last night, and in nine years he never once pulled on it, not even when the wolves came round the fire.
+Lavinia: He's soft as bread. He'll walk up to the first hunter he meets to have his ears scratched. The tracks go up the stream, where the deer path is. Bring him home before the woods have him.
+* [Investigation DC 10] (Look at the broken chain.) -> chain | chain_missed
+* We'll find him. -> agree
+* Not now. -> END
+
+~ chain
+Narrator: The link isn't cut or rusted through. It's pulled open, the iron bent like wet wood. Whatever he heard, he went to it hard enough to straighten a ring of iron.
+Lavinia: (Quietly.) He's never pulled. Not once. Something called him.
+-> agree
+
+~ chain_missed
+Narrator: An old chain, and a broken link. That's all you can tell.
+-> agree
+
+~ agree
+set bear_path_known
+set lavinia_whistle
+quest the_dancing_bear asked
+Lavinia: Take this. (A tin whistle on a red cord.) Two notes, high then low. When I blow it he dances. Maybe it'll bring him back to himself, if he's frightened.
+-> END
+
+~ thanks
+quest the_dancing_bear done
+if flag.bujor_home
+Narrator: Bujor is already on the stage when you come into the camp, and under the planks a bear cub is asleep with its bad leg bound in a rag. Lavinia has both arms round Bujor's neck and won't let go.
+Lavinia: You brought me two. Two! I'll teach the little one the slow steps first. Then the turns. Then I'll teach her to break chains, apparently.
+approve wren_featherfoot +2 ratatoille +1 godrick_pendlebrook +1: You brought Lavinia's bear home, and the cub with him
+else
+Narrator: Lavinia listens to the end without a word, turning the broken chain over in her hands.
+Lavinia: He went into the den with it. (She laughs and cries at once.) Then he was always a better dancer than me. He knew when the dance was over.
+approve thistle +3 liriel_dawnsong +1 wren_featherfoot +1: You let Lavinia's bear go back to the woods with the cub
+endif
+Lavinia: Here. My grandmother's fan. She danced for a prince with it, the night before he died, and she said it was the best thing she ever did with her hands. It throws a wind, if you snap it right.
+give wind_fan
+gold +60
+if flag.bear_trap_marked
+* (Tell her whose trap it was.) -> told
+* Goodbye, Lavinia. -> END
+endif
+-> END
+
+~ told
+Lavinia: Marin's? (Her face goes still, and then very angry.) The carriage. The black carriage pays for live young. He told me once, years ago, laughing. I thought he was laughing.
+Lavinia: Go and ask him. I'll stay here. If I go, I'll take his knives.
+-> END
+
+# --- Old Marin by the trees (svalich_road/tser_camp:marin jumps here) ---
+
+~ marin
+if flag.marin_traps_pulled
+Old Marin: I pulled every trap I had up there. All eleven. The woods can feed themselves. They did before I came.
+-> END
+endif
+if flag.bear_trap_marked
+-> marin_mark
+endif
+Old Marin: The bear? Up the stream, to the old den under the rocks. (He doesn't look up from the deer.) Mind where you put your feet up there. There's iron in the leaves.
+-> END
+
+~ marin_mark
+Old Marin: One deer, and I walked half the night for it. (He looks at your faces, then at his own knife, the M and the notch burned into the handle.) Ah. You've been up to the den.
+* Your mark was on the trap. -> marin_confess
+* (Leave him to his deer.) -> END
+
+~ marin_confess
+Old Marin: The black carriage stops on the road sometimes, at night, and a voice in it says what it wants. Last spring it wanted young things, alive. Wolf pups. Cubs. A gold piece a pound.
+Old Marin: The woods have fewer deer every year. I told myself that. (He puts the knife down.) I'll pull them. All of them. Tonight.
+set marin_traps_pulled
+approve thistle +2 kip_smudgewick +1 godrick_pendlebrook +1: You made Old Marin pull his traps
+-> END
+
+# --- Bujor in the clearing (npc bujor, the old den) ---
+
+~ den
+if quest.the_dancing_bear == defended
+-> choose
+endif
+cutscene sq_bujor_cub
+Narrator: In the clearing below the rocks, a big brown bear rears up on its hind legs at the sight of you, a broken chain swinging from its collar. It doesn't come at you. It stands between you and something small that's crying.
+Narrator: At its feet, in the leaves, a bear cub no bigger than a dog has its back leg in an iron trap.
+* [if flag.lavinia_whistle] (Blow Lavinia's whistle: two notes, high then low.) -> whistle
+* [Animal Handling DC 13] (Talk him down, slow and low.) -> calmed | not_calmed
+* (Back away for now.) -> END
+
+~ whistle
+Narrator: Bujor's ears come up. He drops onto all fours and, after a moment, turns three slow circles in the leaves, the way he does on the plank stage. Then he sits down beside the cub and looks at you, as if to say: there, now you know me.
+-> free
+
+~ calmed
+Narrator: He listens. Slowly he drops onto all fours and lets you come close, and then closer, though he never takes his eyes off your hands.
+-> free
+
+~ not_calmed
+Narrator: He roars, a sound that shakes the needles off the pines, and doesn't move from the cub. You'll have to work round him, and he'll have to let you.
+-> free
+
+~ free
+* [Investigation DC 12] (Look at the trap before you touch it.) -> trap | trap_missed
+* (Open the trap.) -> blights
+
+~ trap
+set bear_trap_marked
+Narrator: A hunter's trap, well kept and oiled. On the spring plate someone has stamped a mark: an M, with a notch through it. You've seen that mark before, burned into the handle of Old Marin's skinning knife, back at the camp.
+-> blights
+
+~ trap_missed
+Narrator: A hunter's iron trap, well kept and oiled. Somebody comes up here often.
+-> blights
+
+~ blights
+Narrator: You get your fingers under the jaws. The cub screams. In the trees all round the clearing, things that aren't trees start toward the sound: knots of twigs, a scuttle of needles, vines dragging themselves over the roots.
+interject name:thistle: They come for whatever's crying. Not this one. Stand in front of it.
+combat den_blights
+
+~ choose
+Narrator: The cub is out of the trap, limping, pressed hard against Bujor's side. Bujor looks at you, and down the deer path toward the camp, and up at the dark of the den in the rocks.
+* (Lead him home to Lavinia, and the cub with him.) -> home
+* (Let them go into the den together.) -> let_go
+
+~ home
+set bujor_home
+quest the_dancing_bear found
+Narrator: You walk down the deer path, and he follows you like a very large dog, with the cub trotting in his shadow and stopping to bite every leaf.
+-> END
+
+~ let_go
+set bujor_free
+quest the_dancing_bear found
+Narrator: You unbuckle the collar. He doesn't wait to be told. He noses the cub up over the stones and into the dark under the rocks, and he doesn't look back, not once.
+-> END
+
+# --- The iron trap (prop cub_trap) ---
+
+~ trap_prop
+if quest.the_dancing_bear == defended or quest.the_dancing_bear == found or quest.the_dancing_bear == done
+Narrator: The trap lies open in the leaves where you left it, its jaws wet. The mark on the spring plate is an M with a notch through it.
+set bear_trap_marked
+-> END
+endif
+Narrator: An iron trap in the leaves, with a bear cub in it, and a bear standing over it.
+-> END
+
+# --- Bujor on the plank stage at the camp, once he's home (npc bujor, tser_pool) ---
+
+~ stage
+Narrator: Bujor sways on the plank stage beside Lavinia, slow and heavy and pleased with himself. Under the planks, a bear cub is chewing a boot.
+-> END

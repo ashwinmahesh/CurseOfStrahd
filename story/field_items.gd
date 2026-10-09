@@ -35,6 +35,12 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 		# Universal Pantograph: what it could copy.
 		if str(power.get("custom", "")) == "fr_duplicate":
 			o["choices"] = FaerunItems.duplicable(ch)
+		# The Golden Idol: the gemstones the holder carries, to turn into coin.
+		if str(power.get("custom", "")) == "trade_to_coin":
+			o["choices"] = ((power.get("params", {}) as Dictionary).get("from", []) as Array).filter(func(g: Variant) -> bool: return ch.carries(str(g)))
+			if why == "" and (o["choices"] as Array).is_empty():
+				o["legal"] = false
+				o["reason"] = "No gemstones to change"
 		if str(power.get("custom", "")) == "ring_store":
 			o["store"] = store_options(party, p)
 			if why == "" and (o["store"] as Array).is_empty():
@@ -95,7 +101,7 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 
 const FIELD_CUSTOM: Array[String] = ["read_tome", "alchemy_jug", "bag_of_beans", "deck_of_many_things", "exalted_deeds", "vile_darkness",
 	"manual_study", "instant_fortress", "rod_of_security", "oil_of_sharpness", "ring_store", "sense_dragons", "useful_items",
-	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object"]
+	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object", "trade_to_coin"]
 
 
 ## Uses a power outside a fight. `target` is the character it's used on (yourself if null). Returns {ok, text, lines,
@@ -195,6 +201,16 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			e.items.specials.use(c, p, [e.get_c(who.id)], Vector2.INF, Vector2.ZERO, 0, opts)
 			return {"ok": true, "text": "%s: %s for %d minutes." % [label, str(params.get("spell", "")).replace("_", " ").capitalize(), mins],
 				"effect": str(params.get("spell", ""))}
+		"trade_to_coin":
+			# Golden Idol of Good Fortunes: a gemstone the holder touches becomes coins of the same worth (full value, where
+			# a shop pays half).
+			var gem := str(opts.get("choice", ""))
+			if not gem in (params.get("from", []) as Array) or not ch.carries(gem):
+				return {"ok": false, "text": "No such gemstone to change"}
+			ch.remove_one(gem)
+			var worth := float(Compendium.shared().item_data(gem).get("cost_gp", 0))
+			st.gold += worth
+			return {"ok": true, "text": "%s's idol turns the %s to coin: %d gp." % [nm, Compendium.shared().display_name("items", gem).to_lower(), roundi(worth)]}
 		"paint_object":
 			# Nolzur's Marvelous Pigments: a pot paints an object worth up to 25 GP, and it's real (one of the power's list).
 			var object := str(opts.get("choice", ""))

@@ -176,6 +176,24 @@ decides whether someone is lured toward the edge, which starts the fight with th
 - Then Nelu comes up (Athletics DC 13 on a rope, Misty Step or Spider Climb), and Tobar pays at the camp: 100 gp and an
   Efficient Quiver (uncommon). Nelu stays by the fire afterwards (`tser_nelu`).
 
+### The Dancing Bear (`the_dancing_bear`, narrative/svalich_road/the_dancing_bear.dialogue; batch 7, level 3)
+
+From level 3, Lavinia sits on the edge of the plank stage instead of dancing, with a broken chain across her knees:
+Bujor (new NPC), the bear who has danced with her for nine years and never once pulled on his chain, broke it last
+night and went up the deer path into the woods (Investigation DC 10: the link was pulled open, not cut). She gives the
+party her tin whistle. The deer path (a new gated exit in the camp's north-west corner) leads to the old den
+(data/locations/tser_woods_den.json, a new outdoor map with a vistas.json place). **Twist:** Bujor didn't run. He's
+standing over a cub with its leg in a hunter's trap (the whistle calms him without a check, or Animal Handling DC 13),
+and the trap has Old Marin's mark on it (Investigation DC 12): the black carriage pays a gold piece a pound for live
+young. **Escalation:** opening the trap makes the cub scream, and the blights come out of the trees for the crying.
+
+- Fight `den_blights` at the den: level 3 two vine blights, five needle blights and four twig blights (the autopilot
+  wins 3 of 8, losing about three party members a fight); level 4 and up four vine blights, five needle blights and
+  three twig blights (5 of 8).
+- Then Bujor goes home to Lavinia's stage with the cub (he stands on the stage from then on), or into the den with it.
+  Lavinia gives her grandmother's fan either way: a Wind Fan (uncommon) and 60 gp. Told whose trap it was, she sends
+  the party to Old Marin, who confesses and pulls all eleven of his traps.
+
 ## Vallaki (level 5)
 
 Talkers: the gate watch (gate:news, renamed) and Urwin (martikovs:rumors, renamed) wire into quests already built: the
@@ -913,4 +931,6 @@ Godrick's and Liriel's) and Escher's two new greetings in spires_escher.dialogue
 petition option). Batch 7,
 Argynvostholt: the_silver_hoard.dialogue in full (new speaker the Gilded Knight; also Sir Godfrey, the Narrator, a
 blunt interject and Godrick's) and narrator/argynvostholt_undercroft.dialogue, and Godfrey's new menu option. Batch 7,
+the Tser Pool camp: the_dancing_bear.dialogue in full (Lavinia and Old Marin; a new NPC, Bujor, with no lines of his
+own; Thistle's interject) and narrator/tser_woods_den.dialogue. Batch 7,
 Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject).
