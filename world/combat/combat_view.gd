@@ -1224,6 +1224,7 @@ func _update_hover() -> void:
 			else:
 				var pv := catalog.attack_preview(c, a, o)
 				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at, str(pv.get("edge", "")))
+				_show_odds(pv, o)
 		else:
 			var about: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)]
 			about.append_array(e.ground.describe_at(o.cell))
@@ -1257,6 +1258,15 @@ func _update_hover() -> void:
 		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], lying, mp["warnings"] as Array, at)
 	else:
 		hud.show_tooltip(str(mp["reason"]), lying, [], at)
+
+
+## The odds of an attack over its target's head (CombatHud.show_odds), when the attack can be made.
+func _show_odds(pv: Dictionary, o: Combatant) -> void:
+	var tok := tokens.get(o.id) as CombatToken
+	if tok == null or not bool(pv.get("legal", false)):
+		return
+	var head := tok.global_position + Vector3(0, CombatToken.height_of(o) + 0.45, 0)
+	hud.show_odds(float(pv.get("chance", 0.0)), str(pv.get("damage", "")), str(pv.get("edge", "")), rig.camera.unproject_position(head))
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
@@ -1313,6 +1323,7 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	if str(selected["kind"]) in ["attack", "offhand"]:
 		var pv2 := catalog.attack_preview(c, selected, o)
 		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at, str(pv2.get("edge", "")))
+		_show_odds(pv2, o)
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]

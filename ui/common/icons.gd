@@ -44,9 +44,23 @@ static func item_key(id: String) -> String:
 	return id
 
 
-## The icon for a hotbar entry (combat/action_catalog.gd): its spell, the weapon it attacks with, or the item it
-## uses. null for plain actions (Dash, Grapple, class features).
+## Common actions and class abilities with a tile of their own in art/icons.json "features", keyed by their hotbar id
+## (Combat HUD plan, 2026-10-09: an icon on every slot).
+const ACTION_ICONS: Array[String] = ["dash", "disengage", "dodge", "help", "hide", "search", "study", "ready", "grapple",
+	"swap_weapons", "stabilize", "drop_prone", "stand", "influence", "utilize", "second_wind", "action_surge", "steady_aim",
+	"turn_undead", "preserve_life", "escape"]
+## Hotbar ids whose tile has another key.
+const ACTION_ALIASES := {"shove_prone": "shove", "shove_push": "shove", "cunning_dash": "cunning", "cunning_disengage": "cunning",
+	"cunning_hide": "cunning", "divine_spark_heal": "divine_spark", "divine_spark_harm": "divine_spark", "fly:up": "fly",
+	"fly:down": "fly"}
+
+
+## The icon for a hotbar entry (combat/action_catalog.gd): its spell, the weapon it attacks with, the item it uses, the
+## tile of a common action or class ability (the plain rune for an ability without its own), or a container's (its
+## name's tile, else its first choice's). null for a rule (a toggle shows its mode instead).
 static func for_action(action: Dictionary) -> Texture2D:
+	if action.has("policy") or bool(action.get("toggle", false)):
+		return null
 	# A magic item's power (a wand's Fireball): the item's own icon.
 	if str(action.get("item_id", "")) != "":
 		return item(str(action["item_id"]))
@@ -63,6 +77,23 @@ static func for_action(action: Dictionary) -> Texture2D:
 				return item(option.get_slice(":", 1).get_slice("@", 0))
 		"healers_kit":
 			return item("healers_kit")
+		"haste", "jump":
+			return spell(id.get_slice(":", 0))
+		"escape_effect":
+			return _load("features", "escape")
+		"feat", "rider":
+			var key := ActionCatalog.ability_key(action) if id.begins_with("feat:") else id.substr(6)
+			return feature(ACTION_ALIASES.get(key, key) as String)
+	if bool(action.get("group", false)):
+		var own := _load("features", str(action["label"]).to_lower().replace(" ", "_"))
+		if own != null:
+			return own
+		var items := action.get("items", []) as Array
+		return for_action(items[0] as Dictionary) if not items.is_empty() else null
+	if ACTION_ALIASES.has(id):
+		return _load("features", str(ACTION_ALIASES[id]))
+	if id in ACTION_ICONS:
+		return _load("features", id)
 	return null
 
 
