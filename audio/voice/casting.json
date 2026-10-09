@@ -2254,6 +2254,26 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "9qBU8mZvPtQvuku5HHoD",
       "released": true
+    },
+    "tsolenka_tibor": {
+      "voice_id": "EfHNEdpDBLzntWMQJYyv",
+      "name": "Barovia Tibor",
+      "description": "A wiry Vistani egg-hunter in his fifties in a sheepskin coat, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A quick, cheerful, wheedling scout's voice, friendly on the surface and greedy and evasive underneath, a little hoarse from the mountain cold.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "EfHNEdpDBLzntWMQJYyv",
+      "released": true
+    },
+    "tsolenka_falconer": {
+      "voice_id": "FUdTJzyLOvyinV2ccg72",
+      "name": "Barovia The Falconer",
+      "description": "One of Count Strahd's vampire spawn, the castle's falconer, speaking English with a strong, refined Eastern European accent. A cold, smooth, courtly man's voice, quiet and unhurried, every courtesy a threat, with a faint predatory hiss at the edges.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Eastern European accent]",
+      "generated_voice_id": "FUdTJzyLOvyinV2ccg72",
+      "released": true
     }
   },
   "sfx": {
