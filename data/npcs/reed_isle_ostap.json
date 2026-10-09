@@ -1,0 +1,18 @@
+{
+  "id": "reed_isle_ostap",
+  "name": "Ostap",
+  "title": "Castaway of the Reed Isle",
+  "summary": "A big bald Vallaki cooper with a beard like a bird's nest, who said at the Blue Water that the festival was a waste of good wicker and was rowed out to the Reed Isle that night with his hands tied.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "vallaki",
+    "lake_zarovich"
+  ],
+  "region": "lake_zarovich",
+  "pronouns": "he/him"
+}

@@ -1,0 +1,273 @@
+{
+  "id": "zarovich_reed_island",
+  "name": "The Reed Isle",
+  "region": "lake_zarovich",
+  "summary": "A low island of reeds and shingle out on Lake Zarovich that nobody fishes near, where the Baron's boat leaves people who were unhappy too loudly (The Baron's Island, docs/story/side_quests.md).",
+  "text": "A low island of reeds and shingle in the black water, a long row from the landing. Smoke, very faint, from somewhere in the middle, and fish drying on lines.",
+  "map": {
+    "rows": [
+      "wwwwwwwwwwwwwwwwwwwwwwww",
+      "wwwwwww~~~~~~~~~wwwwwwww",
+      "wwww~~~~......~~~~~wwwww",
+      "www~~.......=.....~~wwww",
+      "ww~~..................~w",
+      "ww~.....=............~ww",
+      "w~~.................~~ww",
+      "w~.....=......=.......~w",
+      "w~...................~~w",
+      "w~~..........=........~w",
+      "ww~~.................~~w",
+      "ww~~~.......=......~~www",
+      "www~~~.............~~www",
+      "wwwww~~...........~~wwww",
+      "wwwwww~~~~.....~~~wwwwww",
+      "wwwwwwwww~~...~~wwwwwwww",
+      "wwwwwwwwwww~.~wwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwwwwwwww"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "reed_isle_landing",
+      "name": "The landing",
+      "cells": [
+        [
+          9,
+          12
+        ],
+        [
+          16,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "reed_isle_camp",
+      "name": "The castaways' camp",
+      "cells": [
+        [
+          4,
+          3
+        ],
+        [
+          20,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      12,
+      15
+    ],
+    "from_boat": [
+      12,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "reed_isle_row_back",
+      "cell": [
+        12,
+        16
+      ],
+      "to": "travel",
+      "label": "Row back to the landing"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "reed_isle_huts",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "examine",
+      "label": "Reed huts",
+      "model": "reeds"
+    },
+    {
+      "id": "reed_isle_huts_2",
+      "cell": [
+        15,
+        4
+      ],
+      "kind": "decor",
+      "label": "Reed huts",
+      "model": "reeds"
+    },
+    {
+      "id": "reed_isle_fire",
+      "cell": [
+        11,
+        7
+      ],
+      "kind": "decor",
+      "label": "A cookfire",
+      "model": "campfire"
+    },
+    {
+      "id": "reed_isle_fire_2",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "decor",
+      "label": "A cookfire",
+      "model": "campfire"
+    },
+    {
+      "id": "reed_isle_fish",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "examine",
+      "label": "Fish drying on lines",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "reed_isle_boat",
+      "cell": [
+        14,
+        15
+      ],
+      "kind": "decor",
+      "label": "Old Nistor's boat",
+      "model": "rowboat"
+    },
+    {
+      "id": "reed_isle_beds",
+      "cell": [
+        18,
+        6
+      ],
+      "kind": "decor",
+      "label": "Bedding",
+      "model": "bedroll"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        11,
+        7
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "fire",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "reed_isle_ostap",
+      "cell": [
+        12,
+        8
+      ],
+      "dialogue": "lake_zarovich/the_barons_island:ostap",
+      "when": "quest.the_barons_island and not flag.reed_isle_home",
+      "facing": "south",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "reed_isle_boatmen",
+      "trigger": "dialogue",
+      "text": "The Baron's boatmen come up the shingle with clubs and a lantern, looking for the smoke, and the reeds behind them move with something that isn't the wind.",
+      "surprise": "",
+      "flag": "reed_isle_boatmen_beaten",
+      "quest": {
+        "id": "the_barons_island",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            12,
+            13
+          ],
+          "name": "The Boatmaster"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            14,
+            14
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            10,
+            13
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            14,
+            13
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            11,
+            14
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            13,
+            14
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            13
+          ],
+          "name": "A Boatman"
+        },
+        {
+          "monster": "giant_constrictor_snake",
+          "cell": [
+            19,
+            10
+          ],
+          "name": "Something in the Reeds"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:zarovich_reed_island"
+  },
+  "rest": "risky"
+}

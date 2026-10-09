@@ -1,0 +1,33 @@
+{
+  "id": "the_barons_island",
+  "name": "The Baron's Island",
+  "summary": "Some nights the Baron's boat rows out to the Reed Isle on Lake Zarovich with somebody tied up in it, and rows back with nobody.",
+  "giver": "lz_old_fisher",
+  "region": "lake_zarovich",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Old Nistor at the Lake Zarovich landing says the Baron's boat rows out to the Reed Isle some nights with somebody tied up in the bottom of it, somebody who was unhappy too loudly, and rows back with nobody. He's lent us his boat. It leaks on the left.",
+      "objectives": [
+        "Row out to the Reed Isle"
+      ],
+      "hint": "Take Old Nistor's boat from the Lake Zarovich landing out to the Reed Isle, and find who's living there.",
+      "ends": ""
+    },
+    {
+      "id": "defended",
+      "journal": "The castaways on the Reed Isle didn't drown. Fourteen of Vallaki's unhappy are living there on reeds and fish. The Baron's boatmen came for the smoke, and we met them on the shingle.",
+      "objectives": [
+        "Talk to Ostap on the Reed Isle"
+      ],
+      "hint": "Talk to Ostap by the cookfires on the Reed Isle.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "The castaways of the Reed Isle have a boat now, and the choice of what to do with it.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
