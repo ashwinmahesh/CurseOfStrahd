@@ -1,0 +1,96 @@
+# The Barrow on Yester Hill (side quest, docs/story/side_quests.md): the mountain folk of the Balinoks buried their
+# dead in the mounds at the foot of Yester Hill for longer than the count has had teeth. The druids dug them up and
+# stacked their skulls in cairns up the slope. Freydis has come down from the mountains for her grandmother's bones.
+# **Twist:** (History DC 13 warns of it) the druids bound the dead in the cairns to watch the hill, and the first
+# they bound, the one leading the watch, is her grandmother, Silverjaw. **Escalation:** lifting her skull wakes the
+# whole watch. The druids' own flags and Wintersplinter are never touched; only their being on the hill is read.
+# Reached from Freydis at the foot of the hill from level 7 (npc freydis, yester_hill). Every line here is unvoiced
+# for now.
+
+# --- Freydis at the foot of the hill (npc freydis) ---
+
+~ freydis
+if quest.the_barrow_on_yester_hill == done
+Freydis: She's in the mound, with her face to the mountains. When the snow comes I'll walk home. I'll tell them the lowlanders carried her. They won't believe me.
+-> END
+endif
+if quest.the_barrow_on_yester_hill == fought
+-> home
+endif
+if quest.the_barrow_on_yester_hill
+Freydis: Halfway up the slope, the big heap. The skull with the silver wire in its jaw. I'll be here.
+-> END
+endif
+Narrator: At the foot of the hill, by the oldest of the stoneless mounds, a big woman in furs sits with an axe across her knees and a spade and two empty sacks beside her. She has been crying, and stopped, and is angry about both.
+Freydis: You're not painted men. Good. If you were painted men I'd be busy.
+Freydis: I'm Freydis, of the mountain folk, up in the Balinoks. For longer than the count has had teeth we've brought our dead down to this hill and put them in the mounds and sung them in. Then the painted men came, and dug.
+Freydis: They've pulled our dead out of the mounds and stacked the skulls in heaps up the slope, for their tree. My grandmother's in the big heap halfway up. We called her Silverjaw. A horse kicked her at nine and broke her jaw, and they wired it with silver, and she bit the horse back.
+Freydis: I can't go up. If I go up, I'll kill painted men until they kill me, and then who carries her home? You go. Bring me her bones, and I'll pay what the mountain pays.
+* [History DC 13] What do the druids do with the dead they dig up? -> warned | not_warned
+* We'll bring her down. -> agree
+* Not now. -> END
+
+~ warned
+set barrow_watch_known
+Narrator: You remember the old songs about this hill: the people who held it before the druids did the same, and worse. Bones taken from a barrow and bound into a cairn are set to watch. Disturb the cairn and the watch gets up.
+Freydis: (Very still.) Then the first they took would be the one in charge of the rest. She'd like that. She always did like being in charge.
+-> agree
+
+~ not_warned
+Freydis: Skulls on heaps, for their tree. That's what I know, and it's enough.
+-> agree
+
+~ agree
+quest the_barrow_on_yester_hill asked
+Freydis: Halfway up the slope. The big heap. The skull with the silver wire in its jaw. Mind the painted men's camp on the shoulder; they don't like visitors.
+-> END
+
+# --- Silverjaw's cairn (prop barrow_watch_cairn, on the barrow slope) ---
+
+~ cairn
+if flag.hill_watch_beaten
+Narrator: The cairn has come down into a spill of bones on the slope. Every painted eye on the skulls is just paint now.
+-> END
+endif
+Narrator: Halfway up the slope stands a heap of skulls taller than a man, laid in rings like a beehive, every one facing out down the hill. The druids have painted a green eye on each forehead.
+if not quest.the_barrow_on_yester_hill
+Narrator: Somebody's grandparents, stacked like turnips. You leave them be.
+-> END
+endif
+Narrator: Near the bottom of the heap there's a skull with a twist of silver wire through its jaw.
+* (Lift her out.) -> lift
+* (Leave it for now.) -> END
+
+~ lift
+Narrator: You lift the skull with the silver wire, and every painted eye on the heap turns to look at you at once.
+Narrator: The heap comes apart. Out of it, and up out of the mounds round it, come the dead the druids bound to watch the hill. At their head, taller than the rest, in rotted furs with a bear-claw necklace, walks a woman with a silver wire through her jaw.
+Silverjaw: Who lifts my bones? This hill is watched.
+interject tag:blunt: That's Freydis's grandmother. Or what they made of her.
+if flag.yester_hill_resolved
+Narrator: The painted men are gone from the hill, but what they bound is still bound.
+endif
+combat hill_watch
+
+# --- Freydis, once the watch is down (npc freydis, stage fought) ---
+
+~ home
+quest the_barrow_on_yester_hill done
+Narrator: You carry the bones down in Freydis's sacks. She takes the one with the silver wire in her own hands and doesn't speak for a while.
+* (Tell her what got up out of the cairn.) -> told
+* (Tell her it was quiet.) -> spared
+
+~ told
+Freydis: She got up? (Something that is almost a laugh.) Of course she got up. She never once in her life let anybody take anything of hers without a fight. Not even herself.
+-> sing
+
+~ spared
+Freydis: (She looks at your faces, and at the cuts on you, and at the skull.) Quiet. Yes. Thank you for saying so.
+-> sing
+
+~ sing
+Narrator: She opens the oldest mound with her spade, and lays the bones in it with the skull facing north toward the mountains, and sings over it in a language you don't know, low and long. The hill is very quiet while she does it.
+Freydis: This was hers. It drinks when you strike, and it was always thirsty. She'd want it to drink painted men, but she'll settle for anything that's earned it.
+give blood_amulet
+gold +150
+approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +1 kip_smudgewick +1: You carried Silverjaw's bones back to the mountain folk's mound
+-> END

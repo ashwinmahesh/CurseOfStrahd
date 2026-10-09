@@ -1267,6 +1267,16 @@
       "summary": "The Dancing Bear: the party beat the blights at the old den (encounter den_blights)."
     },
     {
+      "id": "barrow_watch_known",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: History told the party that bones bound into a cairn are set to watch; the watch doesn't catch them unawares."
+    },
+    {
+      "id": "hill_watch_beaten",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: the party put down the hill's watch and Silverjaw (encounter hill_watch)."
+    },
+    {
       "id": "storm_spell_read",
       "type": "bool",
       "summary": "The Forgotten Storm: Arcana read the count's two words, and him, under the mage's order in the storm's spell."

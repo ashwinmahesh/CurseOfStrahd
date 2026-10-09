@@ -318,6 +318,15 @@ func test_the_den_blights_at_level_3() -> void:
 	await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)
 
 
+## The barrow slope on Yester Hill, below the druids' cairn of skulls.
+const BARROW_SLOPE: Array[Vector2i] = [Vector2i(28, 16), Vector2i(29, 16), Vector2i(27, 17), Vector2i(28, 17)]
+
+
+## Silverjaw, three barrow-wardens and four of the hill's watch, catching the party unawares.
+func test_the_hills_watch_at_level_7() -> void:
+	await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)
+
+
 ## The ring of glass on Mount Baratok, where the party waits for dusk.
 const GLASS_RING: Array[Vector2i] = [Vector2i(16, 18), Vector2i(17, 18), Vector2i(16, 19), Vector2i(17, 19)]
 

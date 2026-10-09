@@ -871,6 +871,22 @@ down (Persuasion DC 15, one try).
   of 8 at level 7 with Zorica beside it and 3 of 8 at level 8 against it alone, losing two or three a fight.
 - Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
 
+### The Barrow on Yester Hill (`the_barrow_on_yester_hill`, narrative/yester_hill/the_barrow.dialogue; batch 7)
+
+From level 7, Freydis of the mountain folk (new NPC) sits at the foot of the hill with a spade and two sacks. Her
+people from the Balinoks buried their dead in the stoneless mounds there for longer than the count has had teeth; the
+druids dug them up and stacked the skulls in cairns up the barrow slope. She wants her grandmother, Silverjaw, the
+skull with the silver wire through its jaw, and can't go up herself without killing druids. History DC 13 warns that
+bones bound into a cairn are set to watch. **Twist:** the first the druids bound, the one at the head of the watch, is
+Silverjaw. **Escalation:** lifting her skull from the cairn (a new examine prop on the slope) wakes the whole watch.
+The quest never sets or changes a druid, Wintersplinter or gem flag; it reads `yester_hill_resolved` for one line.
+
+- Fight `hill_watch` on the slope: Silverjaw (a wight at 140 HP) with barrow-wardens (wights) and the hill's watch
+  (ghouls). Unwarned, the party is surprised, against three wardens and four ghouls: the autopilot wins 2 of 8 at
+  level 7, losing three party members a fight. Warned, four wardens and three ghouls and no surprise: 3 of 8.
+- Freydis lays her grandmother in the oldest mound facing the mountains and sings her in (tell her what got up, or
+  spare her). Silverjaw's Blood Amulet (rare) and 150 gp.
+
 ## Spoken lines
 
 New lines are unvoiced until the voice thread records them: polite_caller.dialogue and cut_after_noon.dialogue in full
@@ -940,5 +956,6 @@ Argynvostholt: the_silver_hoard.dialogue in full (new speaker the Gilded Knight;
 blunt interject and Godrick's) and narrator/argynvostholt_undercroft.dialogue, and Godfrey's new menu option. Batch 7,
 the Tser Pool camp: the_dancing_bear.dialogue in full (Lavinia and Old Marin; a new NPC, Bujor, with no lines of his
 own; Thistle's interject) and narrator/tser_woods_den.dialogue. Batch 7,
+Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 7,
 Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
 the Narrator and a blunt interject), and the mage's two new menu options.

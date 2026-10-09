@@ -461,6 +461,15 @@ func test_the_blights_come_for_the_cub() -> void:
 	assert_eq(GameState.story.quest_stage("the_dancing_bear"), "defended")
 
 
+## The hill's watch gets up out of the druids' cairn on Yester Hill's barrow slope, Silverjaw at its head.
+func test_the_hills_watch_gets_up() -> void:
+	var v := await _boot("yester_hill", 22, 7, ["yester_hill_resolved"])
+	GameState.story.set_quest_stage("the_barrow_on_yester_hill", "asked")
+	await _fight(v, "hill_watch", ["Silverjaw", "A Barrow-Warden", "The Hill's Watch"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_barrow_on_yester_hill"), "fought")
+
+
 ## The mage's forgotten storm comes down off the ring of glass on Mount Baratok, Huge, with a squall.
 func test_the_forgotten_storm_comes_down() -> void:
 	var v := await _boot("mount_baratok", 19, 8, [])

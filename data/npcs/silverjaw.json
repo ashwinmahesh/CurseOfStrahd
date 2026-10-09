@@ -1,0 +1,18 @@
+{
+  "id": "silverjaw",
+  "name": "Silverjaw",
+  "title": "Captain of the Hill's Watch",
+  "summary": "Freydis's grandmother, a chief of the mountain folk with a silver wire through her jaw, dug out of her mound by the druids and bound first and foremost into the watch of Yester Hill.",
+  "portrait": "wight",
+  "sprite": "wight",
+  "attitude": "hostile",
+  "monster": "wight",
+  "guest": false,
+  "tags": [
+    "undead",
+    "mountain_folk",
+    "yester_hill"
+  ],
+  "region": "yester_hill",
+  "pronouns": "she/her"
+}
