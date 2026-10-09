@@ -336,6 +336,15 @@ func test_the_forgotten_storm_at_level_8() -> void:
 	await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
 
 
+## The bend in the Krezk road, by the waystone and its candle.
+const AT_THE_STONE: Array[Vector2i] = [Vector2i(12, 7), Vector2i(14, 7), Vector2i(13, 8), Vector2i(15, 8)]
+
+
+## Four of Kiril's hunters and a wolf come down the road for Lark and Yanko.
+func test_the_waystone_pack_at_level_6() -> void:
+	await _series("krezk_road_waystone", 23, 6, "waystone_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["waystone_lark_met"], [], [], AT_THE_STONE)
+
+
 ## By the fire at the goat path camp, where the guide pours the tea.
 const BY_THE_FIRE: Array[Vector2i] = [Vector2i(11, 10), Vector2i(13, 10), Vector2i(12, 11), Vector2i(14, 11)]
 

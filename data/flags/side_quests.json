@@ -1297,6 +1297,26 @@
       "summary": "The Forgotten Storm: the party took the brass censer out of the glass where the storm stood."
     },
     {
+      "id": "waystone_lark_met",
+      "type": "bool",
+      "summary": "The Waystone: the party met Lark lighting the candle at the waystone."
+    },
+    {
+      "id": "waystone_wolves_beaten",
+      "type": "bool",
+      "summary": "The Waystone: the party stood at the stone against Kiril's hunters (encounter waystone_wolves)."
+    },
+    {
+      "id": "yanko_turned",
+      "type": "bool",
+      "summary": "The Waystone: talked down, Yanko came back to a boy's shape for the first time in two winters."
+    },
+    {
+      "id": "yanko_to_krezk",
+      "type": "bool",
+      "summary": "The Waystone: Lark and Yanko went to Great-uncle Pavel in Krezk (needs clovin_family_found)."
+    },
+    {
       "id": "amber_camp_met",
       "type": "bool",
       "summary": "The Guide to the Temple: the party sat down at the guide's fire on the goat path."

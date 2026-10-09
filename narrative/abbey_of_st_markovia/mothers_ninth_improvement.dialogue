@@ -11,7 +11,7 @@
 ~ clovin_news
 if quest.mothers_ninth_improvement == done
 Clovin Belview: Mother comes down to Krezk on Sundays now. Lands on Great-uncle Pavel's roof. He's had it mended twice and he says he's never been happier. The roof says otherwise.
--> END
+-> krezk/the_waystone:clovin_news
 endif
 if not quest.mothers_ninth_improvement
 quest mothers_ninth_improvement rumored
@@ -24,7 +24,7 @@ endif
 else
 Clovin Belview: Interesting? Mother's talking about Krezk again. She doesn't talk about Krezk while he's improving. She thinks he listens at the walls. He does.
 endif
--> END
+-> krezk/the_waystone:clovin_news
 
 # --- Mother, in the corner of the wards kitchen ---
 

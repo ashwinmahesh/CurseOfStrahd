@@ -1,0 +1,13 @@
+# Narrator: the waystone at a bend of the Krezk road (The Waystone, docs/story/side_quests.md; docs/voice/narrator.md).
+# Every line here is unvoiced for now.
+
+~ enter:krezk_road_waystone
+| The road bends between pines and rock. At the bend stands a waist-high stone with a sunburst cut into it, and a candle at its foot.
+| [night] At the bend, a candle burns at the foot of an old stone, the only light on the road for miles.
+cooldown 30
+
+~ examine:waystone_signpost
+| KREZK, says the signpost, pointing west, and under it, in a smaller and much older hand: THE SUN IS NOT GONE. Somebody has gone over the letters with charcoal, recently.
+
+~ examine:waystone_tracks
+| Tracks in the mud by the ditch: a big dog's, or a wolf's, coming to the edge of the light and stopping there, again and again, night after night.

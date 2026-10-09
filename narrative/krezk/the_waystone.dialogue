@@ -1,0 +1,120 @@
+# The Waystone (side quest, docs/story/side_quests.md): every night somebody lights the candle at the old sunburst
+# waystone on the Krezk road (data/locations/krezk_road_waystone.json). It's Lark, a Belview girl who goes over the
+# Abbey wall after the last bell. **Twist:** the candle is for her brother Yanko, who ran two winters ago and was taken
+# by the wolves, not eaten: he comes to the edge of the light every night as a young werewolf and listens to her sing
+# their mother's songs in their mother's voice. **Escalation:** the pack has noticed him going soft, and comes down the
+# road for both of them. The pack's own flags are only read. Reached from Clovin's "Heard anything interesting?" from
+# level 6 (abbey_of_st_markovia/mothers_ninth_improvement:clovin_news) and the waystone by night. Every line here is
+# unvoiced for now.
+
+# --- Clovin's news, after his own (mothers_ninth_improvement:clovin_news jumps here) ---
+
+~ clovin_news
+if quest.the_waystone == done
+if flag.yanko_to_krezk
+Clovin Belview: Lark and her brother are down in Krezk at Great-uncle Pavel's. He's put them in the loft. The boy howls in his sleep, Pavel says, and then says sorry in the morning.
+else
+Clovin Belview: Lark still goes over the wall at night. I don't stop her now. Something grey walks her home along the road and waits at the gate till she's in.
+endif
+-> END
+endif
+if level >= 6 and not quest.the_waystone
+quest the_waystone rumored
+Clovin Belview: And Lark. Little Lark, my cousin's girl, the one with the voice. Every night after the last bell she goes over the wall like a cat, and every morning before the first she's back in her bed with wax on her fingers.
+Clovin Belview: Down the Krezk road, she goes, toward the old stone with the sun on it. Nobody's supposed to leave. If the Abbot finds out, he'll improve her. I followed her once as far as the gate, and then I remembered I'm a coward.
+endif
+-> END
+
+# --- The waystone (prop waystone) ---
+
+~ stone
+if quest.the_waystone == done
+if flag.yanko_turned
+Narrator: The candle at the foot of the stone is new, and lit. In the mud beside it, two sets of bare footprints, one with a lark's long toes.
+else
+Narrator: The candle at the foot of the stone is new, and lit, and there's a grey hair caught on the rough edge of the sunburst, about the height of a big dog's shoulder.
+endif
+-> END
+endif
+if night
+Narrator: The candle at the foot of the waystone has been lit tonight, from the stub of last night's. The wax is still soft.
+-> END
+endif
+Narrator: A waist-high stone with a sunburst cut into it, so old the rays are only dents. In the niche at its foot, a candle burnt down to nothing. Somebody has scraped dozens of old stubs out of the niche and stacked them neatly beside it.
+if quest.the_waystone
+Narrator: Whoever lights it comes by night.
+endif
+-> END
+
+# --- Lark at the stone, by night (npc waystone_lark) ---
+
+~ lark
+if flag.waystone_lark_met
+Lark: (Without looking up from the candle.) He's there. Past the bend. Don't look straight at him; he doesn't like it.
+-> wolves_come
+endif
+set waystone_lark_met
+if not quest.the_waystone or quest.the_waystone == rumored
+quest the_waystone asked
+endif
+Narrator: A small figure in a cut-down habit kneels at the stone, coaxing a new candle alight from the stub of the old one. There are a lark's speckled feathers down the back of her neck, and a lark's thin legs under the hem.
+Narrator: When she hears you she goes still, and then sings, very softly, in a grown woman's voice that isn't hers.
+Lark: (In the woman's voice.) Go on by, travellers. Nothing here for you. (Then in her own, small and scratchy.) Please. Go on by.
+* We're not from the Abbey. Who's the candle for? -> who
+* [Insight DC 12] (Watch where she keeps looking.) -> looking | who
+
+~ looking
+Narrator: Her eyes keep going to the trees past the bend, to a place where the dark is a little darker. Two eyes catch the candlelight there, low down, and don't blink.
+Lark: (Quietly.) That's him. Don't look straight at him. He doesn't like it.
+-> who
+
+~ who
+Lark: My brother. Yanko. Two winters ago he went over the wall and down this road, and the wolves got him. Not ate him. Got him. Took him.
+Lark: He comes to the stone every night. He sits at the edge of the trees where the light stops, and I sing him Mama's songs in Mama's voice, and he listens. He never comes any closer. I keep the candle so he can find the road home, if he ever wants it.
+-> wolves_come
+
+~ wolves_come
+Narrator: Up the road, a howl, and then another answering it, closer. At the edge of the trees the two eyes turn toward the sound.
+Lark: They've come closer every night. They've noticed him coming here. They don't like it. Wolves don't go soft.
+* (Stand by the stone with her.) -> wolves
+* (Leave her to it, for now.) -> END
+
+~ wolves
+Narrator: They come down the road and out of the pines: three big shapes that walk on two legs some of the time, and wolves at their heels. One of them snarls at the dark past the bend, and the dark snarls back.
+if flag.wolf_pack_leader == "emil"
+Narrator: These aren't Emil's. They're Kiril's old hunters, the ones who never stopped hunting.
+endif
+interject tag:kind: Behind us, Lark. Keep the candle lit.
+combat waystone_wolves
+
+# --- After the pack, by night (npc waystone_lark and waystone_yanko) ---
+
+~ after
+Narrator: Lark stands at the stone holding the candle in both hands. At the edge of the light, for the first time, a young grey wolf with one ear like a hound's lies with his head on his paws, bleeding from a bite on his shoulder. He fought them too.
+Lark: He came into the light. Did you see? He came into the light.
+* [Persuasion DC 13] (Talk to him, low and slow, the way she sings.) -> turns | stays
+* (Let her sing to him.) -> stays
+
+~ turns
+set yanko_turned
+Narrator: The wolf shudders, and shrinks, and folds in on itself, and there's a boy of fifteen lying in the leaves, shaking, with a hound's ear and a wolf's bite in his shoulder. Lark throws her habit over him and doesn't let go.
+Yanko: (Hoarse, as if he hasn't used it in two winters.) I heard you. Every night. I couldn't remember how to come any closer.
+if flag.clovin_family_found
+Lark: Great-uncle Pavel. In Krezk. He took Mother in. He'll take us. (To Yanko.) He will.
+set yanko_to_krezk
+endif
+-> reward
+
+~ stays
+Narrator: He watches you with yellow eyes and doesn't change. But he doesn't go back into the trees, either. He gets up, stiff, and walks into the light, and lies down at Lark's feet like a dog at a fire.
+Lark: That's enough. That's more than enough.
+-> reward
+
+~ reward
+quest the_waystone done
+Lark: Here. (A short black wand, wrapped in a strip of habit.) The Abbot's. He used it on us when we cried. I took it out of his room the first night I went over the wall. I don't want it any more.
+give wand_of_slumber
+Narrator: Yanko noses something out of the ditch and drops it at your feet: a traveller's purse, old and stiff, that the pack took off somebody once. He doesn't look at it.
+gold +120
+approve thistle +3 wren_featherfoot +2 godrick_pendlebrook +2 liriel_dawnsong +1: You stood by Lark at the waystone, and her brother came into the light
+-> END

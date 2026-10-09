@@ -484,6 +484,17 @@ func test_the_forgotten_storm_comes_down() -> void:
 	assert_true(GameState.story.get_flag("storm_dispersed", false))
 
 
+## Kiril's hunters come down the Krezk road for Lark at the waystone, and her brother who's gone soft.
+func test_the_pack_comes_for_the_waystone() -> void:
+	var v := await _boot("krezk_road_waystone", 23, 6, ["waystone_lark_met"])
+	GameState.story.set_quest_stage("the_waystone", "asked")
+	LocationNpcs.hide_npcs_of(v, "krezk/the_waystone:lark")
+	await _fight(v, "waystone_wolves", ["A Pack Hunter", "Wolf"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_waystone"), "defended")
+	assert_true(GameState.story.get_flag("waystone_wolves_beaten", false))
+
+
 ## The guide gets up at his camp on the goat path, with his shadows and the ones he led up before.
 func test_the_guide_gets_up_from_his_fire() -> void:
 	var v := await _boot("amber_road_camp", 20, 10, ["amber_camp_met"])
