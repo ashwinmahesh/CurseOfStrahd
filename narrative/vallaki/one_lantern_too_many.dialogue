@@ -1,0 +1,123 @@
+# One Lantern Too Many (side quest, docs/story/side_quests.md): every festival week the children of Vallaki carry
+# paper lanterns round the square for the Baron, and every week there's one lantern more than there are children. Old
+# Sabin makes them, and his hands make one extra without his knowing why. Last night his grandson Sandu followed it
+# out of the west gate. **Twist:** thirty years ago the Baron's first festival was a procession of boats on Lake
+# Zarovich; one turned over, and the Baron wouldn't let the rest turn back, and Sabin's daughter Liliana went down
+# holding her lantern up. She holds Sandu at the end of the fishers' jetty now (data/monsters/lantern_girl.json),
+# waiting for someone to turn back. Reached from the town guard's news (vallaki/gate:news) and Sabin at his stall.
+# Every line here is unvoiced for now.
+
+# --- The town guard's news (vallaki/gate:news jumps here) ---
+
+~ guard_news
+quest one_lantern_too_many rumored
+Town Guard: And festival nights the children carry paper lanterns round the square for the Baron. Somebody counted. Thirty-one children. Thirty-two lanterns. Every week.
+Town Guard: The Baron says count again. Old Sabin makes them, at the market. Ask him; he won't know either.
+-> END
+
+# --- Old Sabin at his lantern stall (npc vallaki_sabin, the market, by day) ---
+
+~ sabin
+if quest.one_lantern_too_many == done
+vallaki_sabin: Thirty-one this week. My hands made thirty-one. (He holds them up, as if they belonged to someone else.) Sandu's helping. He folds them crooked. I don't mind.
+-> END
+endif
+if quest.one_lantern_too_many == home
+-> sabin_home
+endif
+if flag.sabin_asked
+vallaki_sabin: The lake road. Please. He's only nine.
+-> END
+endif
+set sabin_asked
+quest one_lantern_too_many asked
+Narrator: An old man sits on a stool among strings of paper lanterns, folding another with fingers that know the work better than he does. He doesn't look up.
+vallaki_sabin: Thirty-two. I know. Everyone tells me. I sit down to make thirty-one and my hands make thirty-two, and I don't know who it's for.
+vallaki_sabin: My grandson Sandu does. He said it was the one that floats. Last night he got up and went after it, out of the west gate, in his nightshirt. The guards let him by because he was laughing.
+* [Insight DC 12] (Watch his hands while he folds the extra one.) -> sabin_seen | sabin_unseen
+* Where would it go? -> sabin_where
+
+~ sabin_seen
+set sabin_remembered
+Narrator: He folds the thirty-second lantern differently. Smaller. A child's size. His hands slow on it, and on the last fold he stops, and looks at it.
+vallaki_sabin: Liliana. Oh. Oh, no. (He puts it down very carefully.) The Baron's first festival. Boats on the lake, with lanterns, all the way out and back. Hers turned over, and he wouldn't let us turn back. All will be well, he said. We sang.
+-> sabin_where
+
+~ sabin_unseen
+Narrator: An old man folding lanterns. He's very tired, and very frightened for the boy.
+-> sabin_where
+
+~ sabin_where
+vallaki_sabin: Out the west gate it goes. Down to the lake. To the fishers' jetty, I'd think. Everything in Vallaki goes down to the lake in the end.
+-> END
+
+# --- The end of the fishers' jetty, at night (npc lantern_girl) ---
+
+~ girl
+if not flag.lantern_girl_met
+set lantern_girl_met
+cutscene sq_lantern_girl
+Narrator: At the end of the jetty, over the black water, a small light bobs. It's a paper lantern, and the one holding it is a girl of about nine made of the same pale light, in a festival dress, wet through.
+Narrator: She has a boy by the hand, a real one, in a nightshirt, blue with cold, standing at the very edge of the boards and smiling at nothing.
+endif
+lantern_girl: You came back. Nobody came back. They sang and rowed on, and I held my lantern up so they'd see me, all the way down.
+lantern_girl: He came. He saw the lantern. He's going to come in with me so I won't be by myself any more.
+* Let him go. He's cold. -> girl_plead
+* [if flag.sabin_remembered and not flag.lantern_girl_heard] Liliana. Your father remembers. -> girl_father
+* [Athletics DC 13] (Take Bluto's old boat out to where she went down, and dive for her lantern.) -> girl_lantern | girl_lantern_lost
+* (Draw your weapons.) -> fight
+
+~ girl_plead
+lantern_girl: He isn't cold. He's with me. You're going to row away. Everybody rows away.
+-> fight
+
+~ girl_father
+set lantern_girl_heard
+lantern_girl: Papa? (The light of her flickers.) He makes the lanterns. He made me one every week. I counted.
+lantern_girl: He didn't turn back either.
+* [Athletics DC 13] (Then we will. Take the boat out to where she went down, and dive for her lantern.) -> girl_lantern | girl_lantern_lost
+* (Draw your weapons.) -> fight
+
+~ girl_lantern
+set lantern_girl_rested
+quest one_lantern_too_many home
+Narrator: The water out there is black and so cold it stops your breath. On the bottom, in the weed, a little tin lantern frame, the paper long gone, still holding the stub of a candle.
+Narrator: You bring it up. In the boat, it lights by itself. On the jetty, the girl lets go of the boy's hand to hold her hands out for it.
+lantern_girl: Somebody turned back.
+Narrator: She takes the light from you, and she goes out with it, like a candle at a window when someone finally comes home. Sandu sits down on the boards and starts to cry, which is the first sensible thing he's done all night.
+approve liriel_dawnsong +3 godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 ratatoille +1: You turned back for a drowned girl's lantern
+-> END
+
+~ girl_lantern_lost
+Narrator: The cold drives you back up before you reach the bottom, gasping. Up on the jetty the girl watches you climb back into the boat, and her light goes hard and white.
+lantern_girl: You're rowing away.
+-> fight
+
+~ fight
+combat lantern_girl
+
+# --- Bringing Sandu home (the jetty after the fight, npc vallaki_sandu) ---
+
+~ sandu
+if quest.one_lantern_too_many == home or quest.one_lantern_too_many == done
+vallaki_sandu: I fold them crooked. Grandpa says that's how you can tell they're mine.
+-> END
+endif
+quest one_lantern_too_many home
+vallaki_sandu: (His teeth are going like a sewing machine.) She was nice. She just didn't want to be on her own. Can we go home? I'm very cold.
+-> END
+
+# --- Sabin, when Sandu's home (sabin jumps here) ---
+
+~ sabin_home
+quest one_lantern_too_many done
+Narrator: Sabin doesn't say anything at first. He holds the boy and rocks him on the stool, among the strings of paper lanterns, the way you'd rock a much smaller child.
+if flag.lantern_girl_rested and not flag.lantern_girl_slain
+vallaki_sabin: You turned back for her. Somebody turned back. (He takes a little woven ring of willow and thread from a hook over the stall.) She made this the week before. For catching the bad dreams, she said. It caught some. Take it.
+else
+vallaki_sabin: She's gone, then. Thirty years in the cold, and gone. (He takes a little woven ring of willow and thread from a hook over the stall.) She made this the week before. For catching the bad dreams, she said. Take it. I've had enough dreams.
+endif
+give dream_weaver
+gold +40
+approve godrick_pendlebrook +1 liriel_dawnsong +1 wren_featherfoot +2: You brought Sabin's grandson home from the lake
+-> END

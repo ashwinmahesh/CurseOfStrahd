@@ -41216,6 +41216,12 @@
   "recipe": "dd92281f92",
   "text": "Each place has a name card in faded ink. Some names are crossed out and others written in, over and over, on the same cards."
  },
+ "narrator/498d7bd226c112e1": {
+  "chars": 216,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice, and among them a yellow gem as big as a knucklebone, heavy as a fist of earth. Somebody staked it on a game here, and lost more than the game."
+ },
  "narrator/49965c1b53ed0334": {
   "chars": 101,
   "model": "eleven_v4",
@@ -41983,12 +41989,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You break a seal stamped with a pointed hat. Somewhere, you hope, a wizard is not keeping count."
- },
- "narrator/5074d421f1ba5009": {
-  "chars": 189,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Among the reeds, half sunk in the mud: a little leather bag of bone dice, and among them a smooth grey stone that is always warm. Somebody lost a game here, which is strange, carrying that."
  },
  "narrator/507aa298f8797dc5": {
   "chars": 129,

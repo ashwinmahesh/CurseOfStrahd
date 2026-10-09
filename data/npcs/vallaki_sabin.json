@@ -1,0 +1,18 @@
+{
+  "id": "vallaki_sabin",
+  "name": "Old Sabin",
+  "title": "Lantern-Maker of Vallaki",
+  "summary": "An old man who makes the paper lanterns the children of Vallaki carry round the square every festival week: thirty-one children, and his hands make thirty-two.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "he/him"
+}

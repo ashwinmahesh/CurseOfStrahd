@@ -167,10 +167,22 @@ static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = 
 	box.add_theme_constant_override("separation", 10)
 	p.add_child(box)
 	# The way out is noted just under the bottom border, clear of the corners.
-	var esc := label("Esc: close", 13, "parchment")
-	PadGlyphs.hint(esc, "Esc: close", "{b}: close")
-	esc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_centre(esc, Vector2(-100, size.y / 2.0 + 4.0), Vector2(100, size.y / 2.0 + 24.0))
+	# On a dark plate of its own: under a shorter screen it sits over the dimmed command bar, whose icons showed
+	# through the words (UI QA UI-18).
+	var esc_text := label("Esc: close", 13, "parchment")
+	PadGlyphs.hint(esc_text, "Esc: close", "{b}: close")
+	esc_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var esc := PanelContainer.new()
+	var es := StyleBoxFlat.new()
+	es.bg_color = Color(Look.color("ui_black"), 0.92)
+	es.set_corner_radius_all(6)
+	es.content_margin_left = 10
+	es.content_margin_right = 10
+	esc.add_theme_stylebox_override("panel", es)
+	esc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	esc.add_child(esc_text)
+	_centre(esc, Vector2(-70, size.y / 2.0 + 4.0), Vector2(70, size.y / 2.0 + 24.0))
+	esc.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	root.add_child(esc)
 	# The screen rises into place, and UiMotion.dismiss sinks it again (G9).
 	root.set_meta(&"frame_panel", p)

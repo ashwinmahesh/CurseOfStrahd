@@ -98,20 +98,55 @@ func test_a_fight_on_the_road_then_the_journey_goes_on() -> void:
 	cv.finished.emit("victory")
 	await _frames(6)
 	# Every random encounter pays (RoadSpoils): the road waits while the spoils are taken.
-	var lw := root.get("loot") as LootWindow
-	assert_true(lw != null, "the wolves' spoils")
-	if lw == null:
-		return
-	assert_true(lw.gold > 0.0 and not lw.items.is_empty(), "coins and a find: %d gp, %s" % [int(lw.gold), lw.items])
-	await _frames(4)
-	assert_eq(_view().loc_id, "test_ambush", "still on the road while the spoils are open")
-	lw.call("_take_all")
-	if root.get("loot") != null:
-		lw.call("_close")
+	assert_true(await _take_spoils(), "the wolves' spoils: coins and a find")
 	await _frames(6)
 	assert_eq(_view().loc_id, "test_town", "and on to town")
 	assert_eq(st.total_minutes() - start, 120 + 1 + 180, "the fight's minute and the second road")
 	assert_true(st.travel_resume.is_empty())
+
+
+## A fight on the road, saved at its round start and loaded again (Continue after quitting mid-fight), comes back (QA
+## FN-13: the fight was only in that visit's copy of the place, so the load found nothing and the party stood on the
+## road with no fight and its journey stalled); won, the journey goes on.
+func test_a_road_fight_comes_back_after_a_load() -> void:
+	var st := GameState.story
+	st.visited["test_ambush"] = true
+	st.set_flag("heard_of_town", true)
+	_view().walk_to(Vector2i(6, 2))
+	for i in 200:
+		if root.get("screen") is TravelScreen:
+			break
+		await get_tree().process_frame
+	var map := root.get("screen") as TravelScreen
+	map.travel_chosen.emit("town")
+	map.queue_free()
+	await _frames(5)
+	assert_true(_view().in_combat, "wolves on the road")
+	for i in 60:
+		if not GameState.combat_snapshot.is_empty():
+			break
+		await get_tree().process_frame
+	assert_eq(SaveSystem.save_round(), OK)
+	root.queue_free()
+	await _frames(2)
+	GameState.reset()
+	assert_eq(SaveSystem.load_slot(SaveSystem.ROUND_START), OK)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(8)
+	assert_eq(_view().loc_id, "test_ambush")
+	assert_true(_view().in_combat, "the road fight is back after the load")
+	var cv := _view().combat_view
+	for c in cv.e.combatants:
+		if c.side == &"enemy":
+			cv.e.deal_damage(null, c, [{"amount": 100, "type": "slashing"}], false, "test")
+	cv.finished.emit("victory")
+	await _frames(6)
+	assert_true(await _take_spoils(), "the road fight's reward came back with it")
+	await _frames(6)
+	assert_eq(_view().loc_id, "test_town", "won, and on to town")
+	assert_true((GameState.story.loc_state("test_ambush").get("custom_fights", {}) as Dictionary).is_empty(), "nothing left waiting")
+	SaveSystem.delete_slot(SaveSystem.ROUND_START)
 
 
 ## A meeting on the road pays too (RoadSpoils): its reward opens when the conversation ends, and the journey waits.
@@ -139,18 +174,25 @@ func test_a_meeting_on_the_road_leaves_a_reward_then_the_journey_goes_on() -> vo
 		d.call("_advance")
 		await _frames(1)
 	await _frames(4)
-	var lw := root.get("loot") as LootWindow
-	assert_true(lw != null, "the meeting leaves something")
-	if lw == null:
-		return
-	assert_true(lw.gold > 0.0 and not lw.items.is_empty(), "coins and a find: %d gp, %s" % [int(lw.gold), lw.items])
-	assert_eq(_view().loc_id, "test_ambush", "still on the road while it's open")
-	lw.call("_take_all")
-	if root.get("loot") != null:
-		lw.call("_close")
+	assert_true(await _take_spoils(), "the meeting leaves coins and a find")
 	await _frames(6)
 	assert_true(st.gold > gold_before, "the coins are in the purse")
 	assert_eq(_view().loc_id, "test_town", "and on to town")
+
+
+## The loot window that's open now: checks it holds coins and a find, that the party is still on the road while it's
+## open, then takes everything. False if there was none.
+func _take_spoils() -> bool:
+	var lw := root.get("loot") as LootWindow
+	if lw == null:
+		return false
+	var ok := lw.gold > 0.0 and not lw.items.is_empty()
+	await _frames(4)
+	assert_eq(_view().loc_id, "test_ambush", "still on the road while the spoils are open")
+	lw.call("_take_all")
+	if root.get("loot") != null:
+		lw.call("_close")
+	return ok
 
 
 func test_day_and_night_outdoors() -> void:

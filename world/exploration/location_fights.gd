@@ -69,7 +69,14 @@ static func start_custom_encounter(view: LocationView, spec: Dictionary) -> bool
 	if not view.loc.has("encounters"):
 		view.loc["encounters"] = []
 	(view.loc["encounters"] as Array).append(s)
+	remember_custom(view, s)
 	return start_encounter(view, str(s["id"]))
+
+
+## A fight that isn't in the place's data (a road encounter, Strahd's visit, the watch's arrest) is kept in the place's
+## saved state until it ends, so its round-start save can pick it up again after a load (QA FN-13: it vanished).
+static func remember_custom(view: LocationView, spec: Dictionary) -> void:
+	(view.st.loc_state(view.loc_id).get_or_add("custom_fights", {}) as Dictionary)[str(spec["id"])] = spec.duplicate(true)
 
 
 ## A monster's ward in a fight at `location` (ADR 0014): its `ward.hp` taken before its Hit Points (the Heart of
@@ -194,6 +201,7 @@ static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
+	e.keep_round_snapshots = true   # the round-start save, taken as each round begins (_save_round)
 	Bestiary.before_fight(view.st, e)   # creatures met, and those already studied show their defenses (U8)
 	view.combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(view, encounter_id, spec, e, ctokens, outcome))
 	view.combat_view.round_started.connect(func(_r: int) -> void: _save_round(view, encounter_id, e))
@@ -206,7 +214,9 @@ static func _save_round(view: LocationView, encounter_id: String, e: Encounter) 
 	if e.state != Encounter.State.ACTIVE:
 		return
 	view._save_positions()
-	GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id, "data": EncounterSnapshot.capture(e)}
+	# The fight as its round began, before the lair or the first turn acted (the view hears of the round after).
+	var data := e.round_snapshot if int(e.round_snapshot.get("round", -1)) == e.round_no else EncounterSnapshot.capture(e)
+	GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id, "data": data}
 	SaveSystem.save_round()
 
 
@@ -217,6 +227,11 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 	for en: Variant in view.loc.get("encounters", []):
 		if str((en as Dictionary)["id"]) == encounter_id:
 			spec = en as Dictionary
+	# A fight the place's data doesn't have comes back from the place's saved state (remember_custom).
+	var kept := view.st.loc_state(view.loc_id).get("custom_fights", {}) as Dictionary
+	if spec.is_empty() and kept.has(encounter_id):
+		spec = (kept[encounter_id] as Dictionary).duplicate(true)
+		(view.loc.get_or_add("encounters", []) as Array).append(spec)
 	if spec.is_empty() or view.in_combat:
 		return false
 	view.in_combat = true
@@ -377,6 +392,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		view.combat_view = null
 	view.in_combat = false
 	GameState.combat_snapshot = {}
+	(view.st.loc_state(view.loc_id).get("custom_fights", {}) as Dictionary).erase(encounter_id)
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.rig.follow = view.tokens[view.leader().id] as Node3D
 	view.st.advance_minutes(1)

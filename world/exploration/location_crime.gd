@@ -231,3 +231,4 @@ static func _ready_the_arrest(view: LocationView, guard: String) -> void:
 			list.remove_at(i)
 	list.insert(0, {"id": "watch_arrest", "trigger": "dialogue", "arrest": true, "monsters": monsters,
 		"text": "The watch closes in, spears levelled."})
+	LocationFights.remember_custom(view, list[0] as Dictionary)

@@ -115,6 +115,15 @@ static func portrait_id(c: Combatant) -> String:
 	return art_id(c)
 
 
+## The sprite and portrait id for a monster's stat block `data`: a hero's look it borrows (`look_of`), its own `art`,
+## else its id.
+static func monster_art(data: Dictionary) -> String:
+	var id := str(data.get("id", ""))
+	if _looks.has(str(data.get("look_of", ""))):
+		return str(_looks[str(data["look_of"])])
+	return str(data.get("art", ART_ALIASES.get(id, id)))
+
+
 ## The sprite and portrait id for a creature: a story ally's own look, a monster's stat block id, a character's chosen
 ## look (creation's Appearance step), or its name.
 static func art_for(cr: Creature) -> String:
@@ -124,11 +133,7 @@ static func art_for(cr: Creature) -> String:
 		if str(npc.get("sprite", "")) != "":
 			return str(npc["sprite"])
 	if cr is Monster:
-		var data := (cr as Monster).data
-		var id := str(data.get("id", ""))
-		if _looks.has(str(data.get("look_of", ""))):
-			return str(_looks[str(data["look_of"])])
-		return str(data.get("art", ART_ALIASES.get(id, id)))
+		return monster_art((cr as Monster).data)
 	if cr is Character:
 		if HeroLook.is_custom(cr as Character):
 			return HeroLook.register(cr as Character)

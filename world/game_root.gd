@@ -149,6 +149,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 				open_screen("sheet", st.party.find(who))))
 	view.combat_ended.connect(_after_combat)
 	add_child(view)
+	PlacePreload.keep_foes(view)   # the foes of its fights read on worker threads while the party is here
 	plan_bar.view = view
 	hud.show_location(view)
 	_refresh()

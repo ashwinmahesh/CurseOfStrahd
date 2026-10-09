@@ -177,3 +177,17 @@ func test_effects_show_on_a_foe_and_a_spell_at_it_opens_the_fight() -> void:
 	await _frames(3)
 	assert_true(v.in_combat, "a spell at a foe opens the fight")
 	Compendium.shared().tables["locations"].erase("test_field")
+
+
+## A spell with an area cast at someone on the map lands on them, whatever its data calls its targets (QA, 2026-10-08:
+## Calm Emotions, "each Humanoid in the Sphere", was on the menu and always refused with "Choose a point").
+func test_an_area_spell_cast_at_someone_lands_on_them() -> void:
+	var cleric := TestChars.custom("cleric", "human", 5)
+	var prepared := (cleric.spellcasting[0] as Dictionary)["prepared"] as Array
+	if not "calm_emotions" in prepared:
+		prepared.append("calm_emotions")
+	var party: Array[Character] = [cleric]
+	var target := Monster.from_data(Compendium.shared().monster_data("commoner"))
+	var r := FieldCasting.cast_at(party, cleric, "calm_emotions", 0, target, DiceRoller.new(2))
+	assert_true(bool(r["ok"]), "Calm Emotions at someone: %s" % r["text"])
+
