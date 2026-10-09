@@ -1228,6 +1228,18 @@
   "d484c6fe211e9cab": "[stubborn, sad, eerie]",
   "f3f53dcbe83764f7": "[ghostly, wistful, wounded]"
  },
+ "library_xaver": {
+  "09087a391170582b": "[screaming in terror]",
+  "0dd1350813abd3fd": "[whispering, frightened, urgent]",
+  "31a2c63159760acb": "[quiet, insistent, haunted]",
+  "52b195706b7262d1": "[hollow, bitter, trembling]",
+  "59bf5c0b84c3b92c": "[gentle, rueful, grateful]",
+  "7107ffbf702caec4": "[soft, hopeful, lonely]",
+  "7b52ab3ab8e593d1": "[shaky laugh, wondering, giddy]",
+  "dfb93fa43de866b0": "[nervous, hushed, desperate]",
+  "e1b7d818d91d4112": "[whispering, absorbed, reverent]",
+  "edd9511234a1767d": "[dismayed, pleading, voice cracking]"
+ },
  "lief_lipsiege": {
   "02933f601699be1e": "[prim, formal]",
   "087422d10073ad27": "[dry, fussy, precise]",
@@ -1457,6 +1469,7 @@
   "67fea953e056f8f3": "[stern warning]",
   "6851466c491e9043": "[angry, bitter, cold]",
   "6a285a0085625cd2": "[sharp, impatient]",
+  "6d3ab40cb6962b02": "[uneasy, prickly, then sharply decisive]",
   "6fa1a4ba6a60db7a": "[dry, conspiratorial]",
   "79aa4bba7ad413d1": "[testy, imperious]",
   "7acf851bea72f67c": "[grave, ominous]",
@@ -1475,6 +1488,7 @@
   "ca3cb782e1c07a87": "[quiet, tender, wry]",
   "dffb877c0f19c47c": "[low, bitter warning]",
   "ea4f69a7cc8b911d": "[brisk, wry]",
+  "ee74ae81dd95c5b8": "[brusque, then troubled, musing]",
   "f249036fae21249c": "[grave, measured, expert]",
   "fcfea92e84679f35": "[solemn promise]",
   "fd148b18de8835b2": "[brisk, wry, imperious]",

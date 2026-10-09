@@ -14061,6 +14061,12 @@
   "recipe": "956cd23797",
   "text": "I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere."
  },
+ "hero_female/3a18c9ad53c0c4b0": {
+  "chars": 46,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "It's the only thing he won't take his eye off."
+ },
  "hero_female/3a70545fff2d3315": {
   "chars": 51,
   "model": "eleven_v4",
@@ -18386,6 +18392,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "I like towns. Bit. Beds. The little cakes. People singing in the big room at the inn. And I don't fit in them, and I don't fit in the woods any more either. I don't fit anywhere."
+ },
+ "hero_male/3a18c9ad53c0c4b0": {
+  "chars": 46,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "It's the only thing he won't take his eye off."
  },
  "hero_male/3a70545fff2d3315": {
   "chars": 51,
@@ -28428,6 +28440,76 @@
   "recipe": "a16cb1e8a3",
   "text": "You came back. Nobody came back. They sang and rowed on, and I held my lantern up so they'd see me, all the way down."
  },
+ "library_xaver/09087a391170582b": {
+  "chars": 44,
+  "direction": "[screaming in terror]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "(From the top of the shelves, a scream.) NO."
+ },
+ "library_xaver/0dd1350813abd3fd": {
+  "chars": 118,
+  "direction": "[whispering, frightened, urgent]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "(From the top of the shelves.) Don't touch it. I mean it. I've watched it eat eleven people. I count them in the dark."
+ },
+ "library_xaver/31a2c63159760acb": {
+  "chars": 60,
+  "direction": "[quiet, insistent, haunted]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "It's not me you should be frightened of. It's never been me."
+ },
+ "library_xaver/52b195706b7262d1": {
+  "chars": 270,
+  "direction": "[hollow, bitter, trembling]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "I read. That's what happened. Down here, hungry, three hundred years, reading the same books over and over in the dark until they were all I was. It does this to you. (He gestures at himself, all of himself.) I'm not dangerous. I'm just very, very hungry to know things."
+ },
+ "library_xaver/59bf5c0b84c3b92c": {
+  "chars": 199,
+  "direction": "[gentle, rueful, grateful]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "Take this. The one book I saved, the first week, before I knew. I've read it nine thousand times; I don't need it any more. It teaches the body to be quick. I never studied it. I was too busy hiding."
+ },
+ "library_xaver/7107ffbf702caec4": {
+  "chars": 127,
+  "direction": "[soft, hopeful, lonely]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "And tell the old man up the mountain he can come down now. I'll stop whispering. I'd like somebody to talk to who isn't a book."
+ },
+ "library_xaver/7b52ab3ab8e593d1": {
+  "chars": 198,
+  "direction": "[shaky laugh, wondering, giddy]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "Eleven. And me. It would have been me, the first winter, except it doesn't climb. (He laughs, and it doesn't sound like a laugh.) I can go anywhere in the room now. Do you know how big this room is?"
+ },
+ "library_xaver/dfb93fa43de866b0": {
+  "chars": 166,
+  "direction": "[nervous, hushed, desperate]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "Xaver. I was Khazan's. I came down to read three hundred years ago, and I've been up here ever since, because it doesn't climb. Whatever you do, don't touch the desk."
+ },
+ "library_xaver/e1b7d818d91d4112": {
+  "chars": 170,
+  "direction": "[whispering, absorbed, reverent]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "(He's sitting on the floor for the first time, reading, very slowly, with his eye an inch from the page.) Shh. I've never read this one. I didn't dare go near that shelf."
+ },
+ "library_xaver/edd9511234a1767d": {
+  "chars": 105,
+  "direction": "[dismayed, pleading, voice cracking]",
+  "model": "eleven_v3",
+  "recipe": "6644d2a824",
+  "text": "Oh no. Oh no. I said don't come down. Did you not hear me? I said it up the well every night for a month."
+ },
  "lief_lipsiege/02933f601699be1e": {
   "chars": 139,
   "direction": "[prim, formal]",
@@ -33092,6 +33174,13 @@
   "recipe": "b6ee845820",
   "text": "If I knew that, they wouldn't be missing, would they?"
  },
+ "mordenkainen/6d3ab40cb6962b02": {
+  "chars": 202,
+  "direction": "[uneasy, prickly, then sharply decisive]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Since you unmade him I've been dreaming of a voice coming up a well, very small, asking me not to come down. I don't like being told not to come down. There's an old well-head on the shore by his tower."
+ },
  "mordenkainen/6fa1a4ba6a60db7a": {
   "chars": 165,
   "direction": "[dry, conspiratorial]",
@@ -33217,6 +33306,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "You again. Good. I've been rebuilding my spells from the bottom up; it's like learning to walk after a fall, if walking could set things on fire. What do you need?"
+ },
+ "mordenkainen/ee74ae81dd95c5b8": {
+  "chars": 203,
+  "direction": "[brusque, then troubled, musing]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Khazan's gone, then. Properly. Good. (He doesn't look as pleased as he says.) He kept a library under that lake, you know. Cut into the rock. He sent his apprentices down to read and some of them stayed."
  },
  "mordenkainen/f249036fae21249c": {
   "chars": 213,
@@ -36104,6 +36200,12 @@
   "recipe": "dd92281f92",
   "text": "She lies in the mud beside the wreck of her house, which is very small now, and so is she."
  },
+ "narrator/131f29c45b58d794": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The catalogue desk opens all its drawers at once, and every one of them has teeth. Round the room, two reading chairs stand up."
+ },
  "narrator/1325c7987f6588e1": {
   "chars": 163,
   "model": "eleven_v4",
@@ -36841,6 +36943,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Bottles racked from floor to vault, furred grey with dust. One rack at the back holds bricks instead of bottles."
+ },
+ "narrator/18b0d74ce72efa36": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A frightened thing on top of a bookcase. That's all you can tell."
  },
  "narrator/18bec7c9aed23ba6": {
   "chars": 125,
@@ -40550,6 +40658,12 @@
   "recipe": "dd92281f92",
   "text": "A grand hall paneled in dark carved wood, a red marble staircase sweeping up its far side, a longsword hung over a cold marble hearth, and a lamp burning low on a side table. Nobody here lit that lamp, and it burns anyway."
  },
+ "narrator/37b6d6e54409834f": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Xaver comes down off the bookcase one long limb at a time, as if the floor might change its mind, and stands among the splinters of the desk for a long while."
+ },
  "narrator/37b8f78f51085d89": {
   "chars": 132,
   "model": "eleven_v4",
@@ -42842,6 +42956,12 @@
   "recipe": "dd92281f92",
   "text": "The man behind the bar has black hair, black eyes and the stillness of somebody who has been listening to the room since before you came into it."
  },
+ "narrator/4b47bbbe4151adf6": {
+  "chars": 137,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The old well-head on the shore. A rope ladder goes down it now, and from far below comes the sound of pages being turned, very carefully."
+ },
  "narrator/4b4c0723dad6ad7c": {
   "chars": 66,
   "model": "eleven_v4",
@@ -43574,6 +43694,12 @@
   "recipe": "dd92281f92",
   "text": "The drawer is shallower than the table. Under its false bottom lies a slim gold circlet set with a red stone, warm as a coal and twice as dangerous."
  },
+ "narrator/51e862b5ffbe0385": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A bookcase with its books chained to the shelves, iron through every spine. Khazan didn't want these read. Or didn't want them leaving."
+ },
  "narrator/51fc34064ab97077": {
   "chars": 99,
   "model": "eleven_v4",
@@ -44216,6 +44342,12 @@
   "recipe": "dd92281f92",
   "text": "They are quiet. They sit at opposite ends of the log for the rest of the night and don't look at each other once, which is somehow worse."
  },
+ "narrator/57221562b0fdb677": {
+  "chars": 201,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A great catalogue desk of lacquered oak in the middle of the room, with a hundred little drawers, each labelled in a small brown hand. The brass handles shine. It's the only clean thing in the library."
+ },
  "narrator/5726bebe272e5ddf": {
   "chars": 170,
   "model": "eleven_v4",
@@ -44431,6 +44563,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Scorched at the corners. The same small hand."
+ },
+ "narrator/58fcef3d12fa5120": {
+  "chars": 92,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The black water is perfectly still and very cold. Books float in it, face down, like people."
  },
  "narrator/58fd132c86d97ed4": {
   "chars": 179,
@@ -45470,6 +45608,12 @@
   "recipe": "dd92281f92",
   "text": "He looks past you at the rooftops, as if Izek might be standing on one of them, and says nothing."
  },
+ "narrator/6035d1b946362f5b": {
+  "chars": 73,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The drawer doesn't open. Every drawer opens. Every one of them has teeth."
+ },
  "narrator/6039647de1409dfe": {
   "chars": 77,
   "model": "eleven_v4",
@@ -46442,6 +46586,12 @@
   "recipe": "dd92281f92",
   "text": "Somewhere past midnight the one on watch hears a soft knock at the shutters. Just one, polite as a guest."
  },
+ "narrator/68d9cb5b8c70191e": {
+  "chars": 225,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On top of the furthest bookcase, flattened against the ceiling, something grey and thin with arms too long for it and one great eye where a face should be. It's holding its claws over its eye as if that might make it smaller."
+ },
  "narrator/68f1d3429159816e": {
   "chars": 89,
   "model": "eleven_v4",
@@ -47342,6 +47492,12 @@
   "recipe": "dd92281f92",
   "text": "You pull the blanket off his knees. The chain runs from his ankle into the wagon's board, grey and wet, and where it goes into his skin, it has grown there."
  },
+ "narrator/6f866218038e1aa5": {
+  "chars": 198,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "His great eye never leaves the catalogue desk in the middle of the room. Not for a moment. Its brass handles are bright, as if they were polished every day, and nothing else in the library is clean."
+ },
  "narrator/6fab45aa2accfb0d": {
   "chars": 118,
   "model": "eleven_v4",
@@ -47419,6 +47575,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The shutter stops swinging. The old woman goes so still that the hut, beneath her, goes still too."
+ },
+ "narrator/6ff7d386ab248c79": {
+  "chars": 154,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old well-head of mossy stone on the shore, choked with reeds. When you lean over it, the air coming up is colder than the lake and smells of wet paper."
  },
  "narrator/6ffb0d833f9fcb6d": {
   "chars": 148,
@@ -47653,6 +47815,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A low vestibule, its floor worn by kneeling. One narrow doorway leads on into a long vault where a skeleton far too big for any tomb lies along a raised stone bier, wings folded, neck ending in nothing."
+ },
+ "narrator/71e53c8c98c3d0ed": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "What's left of the catalogue desk: splintered oak, brass handles, and a hundred little drawers, each with a reader's things filed in it, neat as a tax roll."
  },
  "narrator/71ff3c5a76532a57": {
   "chars": 60,
@@ -48331,6 +48499,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You tell him: the kingdom his count came from has no name any more, the war that brought him here is four centuries done, and there's nobody left on either side of it but the count, and the valley, and the dead."
+ },
+ "narrator/789a792d1f93b70f": {
+  "chars": 248,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A long low hall under the lake, shelf after shelf of swollen books, the far half standing in still black water. The air is wet paper and cold stone, and in the middle of it all, a great catalogue desk of lacquered oak with a hundred little drawers."
  },
  "narrator/78a0f152d283b54d": {
   "chars": 80,
@@ -50203,6 +50377,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Granny's basket lies in the lane where she dropped it. Under a cloth that smells of kettle there is a sack of old coins and a robe folded small, sewn all over with eyes. Some of them blink."
+ },
+ "narrator/883fb6459fb84b7a": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "From very far down, a whisper, as if someone had their mouth right up against the stone: \"Don't come down. Don't read anything. Please. Don't touch the desk.\""
  },
  "narrator/8842a43520907d17": {
   "chars": 112,
@@ -53029,6 +53209,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "On the burned crown a young man with a lantern kneels by a sapling, watering it from his own flask. It's Kostin. His feet are wrapped in strips of his robe again, worn through."
+ },
+ "narrator/9ff9fa9f1408fcf0": {
+  "chars": 85,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old well-head on the shore, choked with reeds. Something down there is whispering."
  },
  "narrator/a005ed8a0c7e3a0e": {
   "chars": 120,
@@ -58958,6 +59144,12 @@
   "recipe": "dd92281f92",
   "text": "Pidlwick II won't come past the door. He stands on the step outside, his cap held on with both hands, staring at the jester's cap on the tall man behind the counter."
  },
+ "narrator/d27274ab7c50c15f": {
+  "chars": 89,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The library under the lake, quiet but for pages turning. The catalogue desk is splinters."
+ },
  "narrator/d2735179f4d11f9d": {
   "chars": 219,
   "model": "eleven_v4",
@@ -59023,6 +59215,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A boy in the woods by the lake. Wolves. A little sister who was never found, and an arm that was never found either. Izek's story fits Ireena's like a key in a lock."
+ },
+ "narrator/d2d1f43308465d72": {
+  "chars": 206,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The well-shaft opens into a long low hall under the lake: shelf after shelf of swollen books, the far half standing in still black water, and in the middle, a great catalogue desk with bright brass handles."
  },
  "narrator/d2dfe050464cd07a": {
   "chars": 116,
@@ -59155,6 +59353,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Three women in old-fashioned gowns sit in a lounge of faded velvet. One reads. One plays patience with a deck that has no queens in it. One looks out of a window that has been bricked up from outside."
+ },
+ "narrator/d3f4b684dc6ed847": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lectern with a book open on it, the pages fused into one grey block by the damp. Somebody stopped reading here in the middle of a sentence and never came back to it."
  },
  "narrator/d40489b157536455": {
   "chars": 93,
@@ -63547,6 +63751,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A woman in a black shawl rocks in a chair by a cold stove, a girl's dress folded in her lap. She looks up at you with sudden, terrible hope."
+ },
+ "narrator/fb5f65153d9ce2cb": {
+  "chars": 82,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the desk's drawers, filed, eleven readers' purses and a great deal of old gold."
  },
  "narrator/fb773c6377e0f0cb": {
   "chars": 226,
