@@ -230,6 +230,7 @@
   "b8b9f1367ad62698": "[flat, final]",
   "d0905c601a72bf1e": "[flat, curt]",
   "d73b4301a66ff7a9": "[flat, toneless]",
+  "dcb07533da177296": "[flat, terse]",
   "fa796a2f1fd6c62b": "[flat, toneless]"
  },
  "baron_vargas": {
@@ -2452,6 +2453,17 @@
   "e8b09842c300913f": "[dry, rueful]",
   "ec1e7fd812ba1882": "[guarded, stern]",
   "f87e25a2c5cba2b3": "[grave, approving]"
+ },
+ "roadhouse_innkeeper": {
+  "01e3679a986233e9": "[hushed, uneasy]",
+  "3b8fbb73181a6ad9": "[quiet, knowing, sad]",
+  "3b92d2e0f7541f97": "[quiet, grateful, at peace]",
+  "64c888ba1ec0b1a7": "[weary, curt, polite]",
+  "9ecda8d1a5065203": "[weary, hollow, polite]",
+  "a07643663a1b2d88": "[pleading, hushed, anguished]",
+  "a0879c9ca89f88df": "[hollow, flat, confessing]",
+  "b0c2c5cb09e21d7c": "[weary, wry, exhausted]",
+  "d888e09c36e09c4c": "[patient, weary, earnest]"
  },
  "rose": {
   "0852c0344261550c": "[earnest, faintly bossy]",
