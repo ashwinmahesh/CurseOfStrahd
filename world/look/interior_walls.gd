@@ -218,6 +218,10 @@ static func _outside(board: ArenaBoard, c: Vector2i, st: Dictionary) -> void:
 	var slab := _box(board, Vector3(w, 0.2, d), Vector3(board.grid.width / 2.0, y - 0.1, board.grid.depth / 2.0),
 		mat if mat != null else Look.cel("stone_deep"))
 	slab.name = "OutsideGround"
+	# One slab for the whole map: on natural ground the board lifts what a wall square built to that square's height
+	# (ArenaBoard._lift), which raised the slab to the first outside square's (5 at the Amber Temple's doors) and drew it
+	# over the lower ground where the party arrives (UI QA W-07). It stays at the map's ground level.
+	slab.set_meta("whole_map", true)
 
 
 static func _beside_outside(c: Vector2i, st: Dictionary) -> bool:

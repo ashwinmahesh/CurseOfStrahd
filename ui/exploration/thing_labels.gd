@@ -95,6 +95,8 @@ func _name(thing: Dictionary) -> Array:
 			return [_first_up(str(spec.get("label", "Leave"))), not open]
 		"trap":
 			return [str(spec.get("label", "Trap")), false]
+	if str(thing["kind"]) == "prop":
+		return [_first_up(LocationInteraction.prop_name(spec).trim_prefix("the ")), false]
 	return [_first_up(str(spec.get("label", thing.get("label", ""))).trim_prefix("the ")), false]
 
 
