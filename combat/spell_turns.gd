@@ -133,7 +133,7 @@ func _after_repeat_saves(c: Combatant) -> void:
 	var spells := sp()
 	var e := enc()
 	spells.sustain._sustained_turn_end(c)
-	if c.creature.has_flag("blink") and c.can_act():
+	if c.creature.has_flag("blink") and c.can_act() and not c.creature.has_flag("no_teleport"):
 		var roll := int(e.dice.roll(6, 1, "Blink")[0])
 		if roll >= 4:
 			c.set_meta("ethereal", true)

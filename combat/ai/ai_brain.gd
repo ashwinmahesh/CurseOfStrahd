@@ -304,7 +304,7 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 	for h in e.hostiles_of(c):
 		if not h.is_down() and e.can_see(c, h):
 			foes.append(h)
-	if c.creature.hp * 4 < c.creature.max_hp() and (known.has("etherealness") or known.has("plane_shift")):
+	if c.creature.hp * 4 < c.creature.max_hp() and (known.has("etherealness") or known.has("plane_shift")) and not c.creature.has_flag("no_teleport"):
 		return {"kind": "cast", "spell": "etherealness" if known.has("etherealness") else "plane_shift", "targets": [c], "why": "escape"}
 	if foes.is_empty():
 		return {}

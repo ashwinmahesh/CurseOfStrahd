@@ -126,6 +126,12 @@ func use(c: Combatant, p: Dictionary, targets: Array, point: Vector2, opts: Dict
 		"dimensional_shackles":
 			if t == null or e.distance(c, t) > 5 or not t.creature.has_condition(&"incapacitated"):
 				return CombatResult.fail("Choose an Incapacitated creature within 5 ft")
+			# One pair binds one creature at a time.
+			var bound := e.combatants.filter(func(o: Combatant) -> bool:
+				return not o.creature.dead and o.creature.effects.any(func(fx: Effect) -> bool: return fx.source_id == str(p["item_id"])))
+			var pairs := int((c.creature as Character).entry_of(str(p["item_id"])).get("qty", 1)) if c.creature is Character else 1
+			if bound.size() >= pairs:
+				return CombatResult.fail("The shackles are already on %s" % (bound[0] as Combatant).name())
 			_pay(c, p)
 			var fs := Effect.new(label, &"item", str(p["item_id"]))
 			fs.caster_id = c.id

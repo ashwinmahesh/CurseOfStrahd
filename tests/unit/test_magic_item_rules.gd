@@ -479,3 +479,28 @@ func test_the_wand_of_slumber_sleeps_foes_and_rests_friends() -> void:
 	assert_true(ch.resource_left("second_wind") > left, "the user woke with a Short Rest's benefits")
 	assert_true(str(res["text"]).contains("Ilse, Silvain, Hedda") and not str(res["text"]).contains("Tamsin"),
 		"the user and two companions: %s" % res["text"])
+
+
+## Dimensional Shackles (The Baron's Island): a Utilize action binds an Incapacitated foe within 5 ft, who then can't
+## teleport; one pair holds one creature at a time.
+func test_dimensional_shackles_bind_one_foe_who_cannot_teleport() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 5)
+	(c.creature as Character).add_item("dimensional_shackles")
+	var foe := TestCombat.foe(e, "bandit", Vector2i(3, 2))
+	var other := TestCombat.foe(e, "bandit", Vector2i(2, 3))
+	TestCombat.start_with(e, c)
+	assert_false(e.items.use(c, "dimensional_shackles", "shackle", [foe], Vector2(3, 2)).ok, "only an Incapacitated creature")
+	foe.creature.add_condition(&"incapacitated", "test")
+	other.creature.add_condition(&"incapacitated", "test")
+	assert_true(e.items.use(c, "dimensional_shackles", "shackle", [foe], Vector2(3, 2)).ok)
+	assert_true(foe.creature.has_condition(&"restrained"))
+	TestCombat.start_with(e, c)
+	var again := e.items.use(c, "dimensional_shackles", "shackle", [other], Vector2(2, 3))
+	assert_false(again.ok, "one pair, one prisoner")
+	assert_true("already on" in again.reason, again.reason)
+	foe.creature.remove_condition(&"incapacitated", "test")
+	var at := foe.cell
+	e.spells._teleport(foe, Vector2i(6, 6), CombatResult.new())
+	assert_eq(foe.cell, at, "the shackles stop a teleport")
+
