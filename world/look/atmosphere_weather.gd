@@ -61,6 +61,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 	# Sunbeams and moonbeams through the gaps in the trees and between the houses (Visual Polish Plan 2).
 	if outdoors and parent is Atmosphere:
 		SunShafts.build(parent as Atmosphere, board, view)
+		# Dust, snow or a splash where the party's feet land (Visual Polish Plan 4).
+		StepPuffs.build(parent as Atmosphere, view)
 	return w
 
 

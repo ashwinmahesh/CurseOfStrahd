@@ -66,6 +66,8 @@ func _ready() -> void:
 		Look.set_style(style, false)
 	# Without the sunbeams, for a before shot (Visual Polish Plan 2).
 	SunShafts.enabled = not "sunbeams" in OS.get_environment("LOOK_OFF").split(",", false)
+	# Without the footstep puffs (Visual Polish Plan 4; LOOK_OFF=puffs).
+	StepPuffs.enabled = not "puffs" in OS.get_environment("LOOK_OFF").split(",", false)
 	if OS.get_environment("LOOK_METER") != "":
 		GameSettings.set_value("frame_meter", true, false)
 	var graphics := OS.get_environment("LOOK_GRAPHICS")
