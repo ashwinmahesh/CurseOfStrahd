@@ -587,8 +587,9 @@ func test_the_stone_giant_belt_sets_strength_to_23() -> void:
 	assert_eq(strong.ability_score(&"str"), 24, "a higher Strength stays")
 
 
-## Stone of Controlling Earth Elementals: once a dawn an Earth Elemental appears beside the user, takes its turn right
-## after them under their orders, and stays while they concentrate.
+## Stone of Controlling Earth Elementals (and the bowl, brazier and censer, 2024 DMG): once a dawn an Earth Elemental
+## appears beside the user, takes its turn right after them under their orders, with no Concentration, until it's
+## dismissed as a Bonus Action (or an hour passes, or it drops).
 func test_the_stone_calls_an_earth_elemental_beside_you() -> void:
 	var e := TestCombat.open_field()
 	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 9)
@@ -606,7 +607,11 @@ func test_the_stone_calls_an_earth_elemental_beside_you() -> void:
 	assert_eq(el.side, &"guest")
 	assert_eq(el.controller, c.controller, "it takes the user's orders")
 	assert_eq(e.order.find(el), e.order.find(c) + 1, "its turn comes right after the user's")
+	assert_true(ch.concentration == null, "no Concentration")
 	assert_false(e.items.use(c, "stone_of_controlling_earth_elementals", "summon", [], Vector2.INF).ok, "once a dawn")
-	ch.concentration.end("test")
-	assert_false(el.is_alive(), "gone when the Concentration ends")
+	assert_true(e.items.use(c, "stone_of_controlling_earth_elementals", "dismiss", [], Vector2.INF).ok)
+	assert_false(c.bonus_available, "a Bonus Action")
+	assert_false(el.is_alive(), "dismissed")
+	TestCombat.start_with(e, c)
+	assert_false(e.items.use(c, "stone_of_controlling_earth_elementals", "dismiss", [], Vector2.INF).ok, "nothing left to dismiss")
 

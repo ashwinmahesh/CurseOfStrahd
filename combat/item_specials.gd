@@ -791,6 +791,10 @@ func _arcana_why(c: Combatant, p: Dictionary) -> String:
 			var mid := str((power.get("params", {}) as Dictionary).get("monster", ""))
 			if items().comp().monster_data(mid).is_empty():
 				return "Not available yet (no stat block for %s)" % mid.replace("_", " ")
+		"dismiss_summon":
+			if e == null or not e.combatants.any(func(o: Combatant) -> bool:
+					return o.is_alive() and str(o.get_meta("summon_item", "")) == str(p["item_id"]) and str(o.get_meta("summoner", "")) == c.id):
+				return "Nothing of yours to dismiss"
 		"pipes_of_the_sewers", "pipes_keep_playing":
 			if not plays_wind(c):
 				return "Needs proficiency with a wind instrument"
@@ -855,7 +859,15 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 			return CombatResult.new()
 		"summon_monster":
 			_pay_cost(c, cost)
-			return summon(c, str(params.get("monster", "")), int(params.get("count", 1)), point, params, label)
+			return summon(c, str(params.get("monster", "")), int(params.get("count", 1)), point, params, label, iid)
+		"dismiss_summon":
+			# The elemental-controlling items (2024): the creature called goes when its caller dismisses it.
+			_pay_cost(c, cost)
+			for o in e.combatants:
+				if o.is_alive() and str(o.get_meta("summon_item", "")) == iid and str(o.get_meta("summoner", "")) == c.id:
+					e.log.add("info", "%s dismisses %s (%s)" % [c.name(), o.name(), label], c.id)
+					e.spells._dismiss(o.id)
+			return CombatResult.new()
 		"pipes_of_the_sewers":
 			var n := int({"one": 1, "two": 2, "three": 3}.get(str(opts.get("choice", "one")), 1))
 			var ch_p := ch_of(c)
@@ -1153,7 +1165,7 @@ func _x_ray(c: Combatant, p: Dictionary, label: String) -> void:
 ## Summons creatures from an item (a Figurine of Wondrous Power, Bag of Tricks, Horn of Valhalla, an elemental's
 ## brazier): they join the summoner's side under the player's control, and leave when the time is up (or the
 ## Concentration ends).
-func summon(c: Combatant, monster_id: String, count: int, point: Vector2, params: Dictionary, label: String) -> CombatResult:
+func summon(c: Combatant, monster_id: String, count: int, point: Vector2, params: Dictionary, label: String, item_id: String = "") -> CombatResult:
 	var e := enc()
 	var r := CombatResult.new()
 	var data := items().comp().monster_data(monster_id)
@@ -1175,6 +1187,8 @@ func summon(c: Combatant, monster_id: String, count: int, point: Vector2, params
 		sc.controller = c.controller
 		sc.set_meta("summoner", c.id)
 		sc.set_meta("vanishes", true)
+		if item_id != "":
+			sc.set_meta("summon_item", item_id)   # what a dismiss_summon power sends back
 		if params.has("rounds") or params.has("minutes") or params.has("hours"):
 			var rounds := int(params.get("rounds", int(params.get("minutes", 0)) * 10 + int(params.get("hours", 0)) * 600))
 			sc.set_meta("vanish_round", e.round_no + rounds)

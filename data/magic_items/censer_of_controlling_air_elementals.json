@@ -23,17 +23,24 @@
       "params": {
         "monster": "air_elemental",
         "count": 1,
-        "hours": 1,
-        "concentration": true
+        "hours": 1
       },
       "targeting": "none",
-      "text": "Magic action (once per dawn): An Air Elemental appears in the space nearest you; it obeys you while you concentrate, up to an hour.",
+      "text": "Magic action (once per dawn): An Air Elemental appears in the space nearest the censer. It obeys you and takes its turn right after yours, and it's gone after 1 hour, at 0 Hit Points, or when you dismiss it.",
       "uses": {
         "count": 1,
         "per": "dawn"
       }
+    },
+    {
+      "id": "dismiss",
+      "name": "Dismiss the elemental",
+      "cost": "bonus",
+      "custom": "dismiss_summon",
+      "targeting": "none",
+      "text": "Bonus Action: send back the Air Elemental you called with the censer."
     }
   ],
-  "summary": "Once a day, summon an Air Elemental that obeys you (Concentration, up to 1 hour).",
-  "text": "With the censer in hand, take a Magic action to call forth an Air Elemental into the unoccupied space nearest the censer. The elemental regards you and your companions as allies and carries out your orders. It remains for up to 1 hour, provided you hold Concentration on it just as you would for a spell. After that the censer is spent until the next dawn."
+  "summary": "Once a day, call an Air Elemental that obeys you for up to 1 hour.",
+  "text": "Take a Magic action with the censer to call an Air Elemental into the unoccupied space nearest it. The elemental understands your languages, does as you command, and takes its turn immediately after yours. It's gone after 1 hour, when it drops to 0 Hit Points, or when you dismiss it as a Bonus Action. The censer can't call another until the next dawn."
 }
