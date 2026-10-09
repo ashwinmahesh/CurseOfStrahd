@@ -22,20 +22,27 @@ static func refresh_npcs(view: LocationView) -> void:
 		(view.container_nodes[id] as Node).queue_free()
 	view.container_nodes.clear()
 	LocationBuilder._build_props(view)
+	# Where each person stands and how far along their route they are, so the rebuild leaves them there (owner report
+	# 2026-10-09: people in Vallaki snapped back to their starting square as every conversation ended).
+	var places := {}
+	for shown in view._npc_shown:
+		places[str((shown["spec"] as Dictionary)["npc"])] = shown
 	for shown in view._npc_shown:
 		(shown["token"] as Node).queue_free()
 		if not bool(shown["low_before"]):
 			view.grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
 	view._npc_shown.clear()
 	view.npc_tokens.clear()
-	_build_npcs(view)
+	_build_npcs(view, places)
 	# Rebuilt pieces in rooms nobody has found yet stay hidden (HiddenAreas only looks again when a secret door is found).
 	var hidden_areas := HiddenAreas.of(view)
 	if hidden_areas != null:
 		hidden_areas.call("_hide_nodes")
 
 
-static func _build_npcs(view: LocationView) -> void:
+## `places`: the people shown before a rebuild (npc id -> its _npc_shown entry); one still under the same entry keeps its
+## square and its place on its route.
+static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 	for n: Variant in view.loc.get("npcs", []):
 		var spec := n as Dictionary
 		if not StoryConditions.check(str(spec.get("when", "")), view.st) or not Schedule.in_hours(spec, view.st):
@@ -58,7 +65,10 @@ static func _build_npcs(view: LocationView) -> void:
 		_wake_from_story(m)
 		if bool(spec.get("asleep", false)):
 			put_to_sleep(m)
-		var cb := Combatant.new(m, &"neutral", LocationView._cell(spec["cell"]))
+		var was := places.get(str(spec["npc"]), {}) as Dictionary
+		if not was.is_empty() and not is_same(was["spec"], spec):
+			was = {}   # another entry of theirs now (a new hour, a new chapter): they start at its cell
+		var cb := Combatant.new(m, &"neutral", was["cell"] as Vector2i if not was.is_empty() else LocationView._cell(spec["cell"]))
 		cb.id = "npc_" + str(spec["npc"])
 		var tok := _npc_token(cb, str(npc.get("sprite", spec["npc"])))
 		tok.position = view.board.cell_center(cb.cell)
@@ -66,13 +76,24 @@ static func _build_npcs(view: LocationView) -> void:
 		if FACINGS.has(str(spec.get("facing", ""))):
 			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
 		view.npc_tokens[str(spec["npc"])] = tok
-		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW)})
+		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW),
+			"was": was})
 		view.grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
 	LocationClock.of(view)   # people keep their hours, and the day's events happen, as the clock moves
 	# People with a `path` walk it (NpcRoutes), round everyone standing still; each starts after its first pause.
 	for shown in view._npc_shown:
 		var spec := shown["spec"] as Dictionary
+		var was := shown.get("was", {}) as Dictionary
+		shown.erase("was")
 		if not spec.has("path"):
+			continue
+		if was.has("route"):
+			# Back where they were on the same route: the walk goes on from there.
+			for k: String in ["route", "at", "wait"]:
+				if was.has(k):
+					shown[k] = was[k]
+			if not (shown["route"] as Array).is_empty():
+				NpcRoutes.of(view)
 			continue
 		var own := shown["cell"] as Vector2i
 		view.grid.set_flag(own, CombatGrid.LOW, bool(shown["low_before"]))

@@ -24,7 +24,8 @@ static func hit(node: Node3D, camera: Camera3D, origin: Vector3, dir: Vector3) -
 			if g is SpriteBase3D:
 				sprites.append(g as SpriteBase3D)
 	for s in sprites:
-		if s.is_visible_in_tree():
+		# A reflection is only light on the floor: nothing to click (QA, 2026-10-09).
+		if s.is_visible_in_tree() and not s is SpriteReflection:
 			best = minf(best, sprite_hit(s, camera, origin, dir))
 	return minf(best, ModelPiece.hit(node, origin, dir))   # 3D pieces: their surfaces as drawn
 
@@ -98,9 +99,18 @@ static func _alpha_of(tex: Texture2D) -> Image:
 	var key := tex.resource_path if tex.resource_path != "" else str(tex.get_rid())
 	if _alpha.has(key):
 		return _alpha[key] as Image
-	var img := tex.get_image()
-	if img != null and img.is_compressed():
-		if img.decompress() != OK:
+	var img: Image = null
+	if tex is AtlasTexture and (tex as AtlasTexture).atlas != null:
+		# A frame cut from a sheet: its piece of the decoded sheet. AtlasTexture.get_image() cuts the sheet as it is,
+		# and a VRAM-compressed one can't be cut (owner report 2026-10-09: "Cannot blit_rect in compressed image
+		# formats" in Vallaki, from hovering over a reflection's frame).
+		var at := tex as AtlasTexture
+		var sheet := _alpha_of(at.atlas)
+		var region := Rect2i(at.region).intersection(Rect2i(Vector2i.ZERO, sheet.get_size())) if sheet != null else Rect2i()
+		img = sheet.get_region(region) if region.has_area() else null
+	else:
+		img = tex.get_image()
+		if img != null and img.is_compressed() and img.decompress() != OK:
 			img = null
 	_alpha[key] = img
 	return img

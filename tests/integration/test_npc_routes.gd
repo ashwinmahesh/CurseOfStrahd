@@ -196,3 +196,30 @@ func test_people_face_their_way_and_walkers_turn_as_they_go() -> void:
 	var ismark := v.npc_tokens["ismark"] as CombatToken
 	await _run(2.0)
 	assert_true(ismark.sprite.facing.x > 0.7, "walking east, he faces east (%s)" % ismark.sprite.facing)
+
+
+## Owner report (2026-10-09): people in Vallaki snapped back to their starting square as every conversation ended (the
+## people are rebuilt then, for whoever the story now brings on or takes off). They stay where they are, and walk on.
+func test_a_conversation_ending_leaves_walkers_where_they_are() -> void:
+	await _run(1.0)
+	var moved := _cell_of("ismark")
+	assert_ne(moved, Vector2i(3, 1), "he has set off (at %s)" % moved)
+	root.call("start_dialogue", "test/lane:start", "ismark")
+	await _frames(2)
+	var d := root.get("dialogue") as Node
+	for i in 20:
+		if root.get("dialogue") == null:
+			break
+		if bool(d.get("_waiting_continue")):
+			d.call("_advance")
+		await _frames(1)
+	assert_true(root.get("dialogue") == null, "the talk is over")
+	assert_eq(_cell_of("ismark"), moved, "he's still where he stood")
+	var tok := _view().npc_tokens["ismark"] as Node3D
+	assert_true(tok.position.distance_to(_view().board.cell_center(moved)) < 0.01, "and so is his figure")
+	assert_eq(str(_view().thing_at(moved).get("id", "")), "ismark", "hover and clicks find him there")
+	assert_false(_view().grid.has_flag(Vector2i(3, 1), CombatGrid.LOW), "his starting square isn't held for him")
+	var before := _cell_of("ismark")
+	await _run(2.0)
+	assert_ne(_cell_of("ismark"), before, "he walks on along his route")
+	assert_eq(_cell_of("ireena"), Vector2i(6, 3), "someone with no path is still at hers")
