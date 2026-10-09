@@ -97,6 +97,9 @@ func test_a_fight_on_the_road_then_the_journey_goes_on() -> void:
 			cv.e.deal_damage(null, c, [{"amount": 100, "type": "slashing"}], false, "test")
 	cv.finished.emit("victory")
 	await _frames(6)
+	# Every random encounter pays (RoadSpoils): the road waits while the spoils are taken.
+	assert_true(await _take_spoils(), "the wolves' spoils: coins and a find")
+	await _frames(6)
 	assert_eq(_view().loc_id, "test_town", "and on to town")
 	assert_eq(st.total_minutes() - start, 120 + 1 + 180, "the fight's minute and the second road")
 	assert_true(st.travel_resume.is_empty())
@@ -139,9 +142,57 @@ func test_a_road_fight_comes_back_after_a_load() -> void:
 			cv.e.deal_damage(null, c, [{"amount": 100, "type": "slashing"}], false, "test")
 	cv.finished.emit("victory")
 	await _frames(6)
+	assert_true(await _take_spoils(), "the road fight's reward came back with it")
+	await _frames(6)
 	assert_eq(_view().loc_id, "test_town", "won, and on to town")
 	assert_true((GameState.story.loc_state("test_ambush").get("custom_fights", {}) as Dictionary).is_empty(), "nothing left waiting")
 	SaveSystem.delete_slot(SaveSystem.ROUND_START)
+
+
+## A meeting on the road pays too (RoadSpoils): its reward opens when the conversation ends, and the journey waits.
+func test_a_meeting_on_the_road_leaves_a_reward_then_the_journey_goes_on() -> void:
+	DialogueFile.register(DialogueFile.parse("~ meet\nNarrator: A pedlar tips his hat and goes by.\n-> END\n", "test/road"))
+	Compendium.shared().tables["random_encounters"]["test_road"]["entries"] = [{"id": "pedlar", "weight": 1, "dialogue": "test/road:meet"}]
+	var st := GameState.story
+	st.set_flag("heard_of_town", true)
+	var gold_before := st.gold
+	_view().walk_to(Vector2i(6, 2))
+	for i in 200:
+		if root.get("screen") is TravelScreen:
+			break
+		await get_tree().process_frame
+	var map := root.get("screen") as TravelScreen
+	map.select("town")
+	map.travel_chosen.emit("town")
+	map.queue_free()
+	await _frames(5)
+	var d := root.get("dialogue") as DialogueUI
+	assert_true(d != null, "the pedlar on the road")
+	for i in 20:
+		if root.get("dialogue") == null:
+			break
+		d.call("_advance")
+		await _frames(1)
+	await _frames(4)
+	assert_true(await _take_spoils(), "the meeting leaves coins and a find")
+	await _frames(6)
+	assert_true(st.gold > gold_before, "the coins are in the purse")
+	assert_eq(_view().loc_id, "test_town", "and on to town")
+
+
+## The loot window that's open now: checks it holds coins and a find, that the party is still on the road while it's
+## open, then takes everything. False if there was none.
+func _take_spoils() -> bool:
+	var lw := root.get("loot") as LootWindow
+	if lw == null:
+		return false
+	var ok := lw.gold > 0.0 and not lw.items.is_empty()
+	await _frames(4)
+	assert_eq(_view().loc_id, "test_ambush", "still on the road while the spoils are open")
+	lw.call("_take_all")
+	if root.get("loot") != null:
+		lw.call("_close")
+	return ok
 
 
 func test_day_and_night_outdoors() -> void:

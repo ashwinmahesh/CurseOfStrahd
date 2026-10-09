@@ -274,3 +274,9 @@ once
 ~ search:name_cairn_candle
 | At the foot of the name cairn, half buried in snow, a fat wax candle left as an offering by someone who climbed this far and lit it for the names. It never burned down; it hasn't burned at all, though its wick is black and its light falls warm on {name}'s hands like a blessing.
 once
+
+# --- The road up's find, once its first one went into the story (Storyline QA, 2026-10-09) ---
+
+~ search:frozen_traveller_flask
+| The frozen traveller's pack opens with a crack of ice. Inside, a flask of something white as frost that hasn't frozen. He was saving it for the top.
+once

@@ -17,6 +17,11 @@ var loot: LootWindow = null
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
+## A road meeting's reward (RoadSpoils), given when its conversation ends, or after the fight it started:
+## {ref, key, loot, after_fight}.
+var _road_event := {}
+## Loot windows waiting their turn: a fight's spoils and a road meeting's reward can both come at once.
+var _loot_queue: Array[Array] = []
 var menu: ContextMenu                ## the right-click menu on things in the world
 var _menu_cell := Vector2i(-1, -1)
 var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
@@ -455,6 +460,11 @@ func _dialogue_ended(combat: String) -> void:
 	if not strahd_next.is_empty():
 		_strahd_step(strahd_next)
 		return
+	if not _road_event.is_empty() and str(_road_event["ref"]) == _dialogue_ref:
+		if combat == "":
+			_give_road_event()
+		else:
+			_road_event["after_fight"] = true   # the meeting turned into a fight: its reward comes after
 	if combat != "":
 		view.hide_npcs_of(_dialogue_ref)
 		view.start_encounter(combat)
@@ -462,7 +472,19 @@ func _dialogue_ended(combat: String) -> void:
 		_continue_journey.call_deferred()
 
 
+## A road meeting's reward, in the loot window.
+func _give_road_event() -> void:
+	var loot_spec := _road_event["loot"] as Dictionary
+	var key := str(_road_event["key"])
+	_road_event = {}
+	if view != null:
+		view.loot_opened.emit.call_deferred("road:" + key, (loot_spec["items"] as Array).duplicate(true), float(loot_spec["gold"]))
+
+
 func _open_loot(container_id: String, items: Array, gold: float) -> void:
+	if loot != null:
+		_loot_queue.append([container_id, items, gold])   # after the one that's open
+		return
 	# A Tarokka treasure among the spoils shows its picture first (story/cutscenes.gd `find:<item>`), once.
 	for it: Variant in items:
 		var item_id := str((it as Dictionary).get("id", "")) if it is Dictionary else str(it)
@@ -483,7 +505,10 @@ func _open_loot(container_id: String, items: Array, gold: float) -> void:
 		loot = null
 		_refresh()
 		if view != null:
-			LocationCrime.after_loot(view, container_id, taken))
+			LocationCrime.after_loot(view, container_id, taken)
+		if not _loot_queue.is_empty():
+			var next := _loot_queue.pop_front() as Array
+			_open_loot.call_deferred(str(next[0]), next[1] as Array, float(next[2])))
 	loot.show_loot(st, container_id, items, gold, view)
 
 
@@ -500,6 +525,11 @@ func _after_combat(outcome: String) -> void:
 		return
 	view.refresh_npcs()
 	_refresh()
+	if not _road_event.is_empty() and bool(_road_event["after_fight"]):
+		if outcome == "victory":
+			_give_road_event()   # after the fight's own spoils (the loot queue)
+		else:
+			_road_event = {}
 	var strahd_after := StrahdPresence.after_encounter(st, outcome)
 	if not strahd_after.is_empty():
 		_strahd_step(strahd_after)   # his parting words; the journey goes on when they're done
@@ -561,20 +591,30 @@ func travel(from: String, to: String) -> void:
 		st.travel_resume = {"to": to, "at": str(leg["to"])}
 		var table := ev["table"] as Dictionary
 		var entry := ev["entry"] as Dictionary
+		# Every random encounter pays (Ashwin, 2026-10-09): a fight's reward goes in with its spoils, a meeting's when its
+		# conversation ends (RoadSpoils).
+		var key := "%s:%s:%d" % [table["id"], entry.get("id", ""), st.total_minutes()]
 		_covered(str(table["map"]), func() -> void:
 			enter_location(str(table["map"]), "default")
 			if entry.has("monsters"):
 				if str(entry.get("text", "")) != "":
 					hud.narrate(str(entry["text"]))
 				view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": entry["monsters"],
-					"surprise": str(entry.get("surprise", ""))})
+					"surprise": str(entry.get("surprise", "")), "loot": RoadSpoils.for_fight(st, entry["monsters"] as Array, key)})
 			else:
+				_road_event = {"ref": str(entry["dialogue"]), "key": key, "loot": RoadSpoils.for_event(st, key), "after_fight": false}
 				start_dialogue(str(entry["dialogue"]), ""))
 		return
 	_covered(str(Travel.place(to).get("location", "")).get_slice(":", 0), _arrive.bind(to))
 
 
 func _continue_journey() -> void:
+	# Spoils open a frame after a fight or a road meeting ends: the road waits until they're taken.
+	await get_tree().process_frame
+	while loot != null or not _loot_queue.is_empty():
+		if loot != null:
+			await loot.closed
+		await get_tree().process_frame
 	var r := st.travel_resume
 	st.travel_resume = {}
 	if r.is_empty() or view.in_combat:
