@@ -654,7 +654,7 @@ func test_the_modern_glow_spreads_wide() -> void:
 	var env := v.atmosphere.env
 	assert_true(env.glow_enabled, "glow on in Modern")
 	for level: int in Atmosphere.GLOW_LEVELS:
-		assert_eq(env.get_glow_level(level), float(Atmosphere.GLOW_LEVELS[level]), "glow level %d" % level)
+		assert_true(is_equal_approx(env.get_glow_level(level), float(Atmosphere.GLOW_LEVELS[level])), "glow level %d" % level)
 	assert_true(env.get_glow_level(4) > 0.0 and env.get_glow_level(5) > 0.0, "the wide levels are on")
 	assert_true(env.get_glow_level(5) < env.get_glow_level(4), "fainter as it widens")
 	v.queue_free()
