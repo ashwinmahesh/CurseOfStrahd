@@ -24,12 +24,18 @@ It's built in Godot 4 with typed GDScript.
 ## Download
 
 The game is free for macOS (Apple silicon) and Windows 10 and 11 (64-bit), from
-[curseofstrahd.app](https://curseofstrahd.app/#download). Each download is about 3 GB, and about 8.5 GB once unzipped.
+[curseofstrahd.app](https://curseofstrahd.app/#download). Each download is about 3.3 GB, and about 8.8 GB once
+installed.
 
-- **macOS:** unzip it and open *Curse of Strahd*. It isn't notarized by Apple, so the first time macOS won't open it:
-  go to System Settings → Privacy & Security and choose **Open Anyway**.
+- **macOS:** open the disk image and drag *Curse of Strahd* into **Applications**. It's signed and notarized by Apple,
+  so it opens like any other app.
 - **Windows:** unzip the whole folder and run `CurseOfStrahd.exe`. It isn't code-signed, so if SmartScreen appears,
   choose **More info → Run anyway**.
+
+To update a copy you already have, run `curl -fsSL https://curseofstrahd.app/update.sh | bash` in Terminal on a Mac,
+or `irm https://curseofstrahd.app/update.ps1 | iex` in PowerShell from the game's folder on Windows. When it can, it
+fetches only the files that changed; saves and settings carry over. [Release notes](https://curseofstrahd.app/releases/)
+list what each version changed.
 
 Every published version is tagged in this repo on the commit it was built from ([tags](https://github.com/ashwinmahesh/CurseOfStrahd/tags);
 `v1.0.0` is the first). Problems and bug reports go in [Issues](https://github.com/ashwinmahesh/CurseOfStrahd/issues).
@@ -44,20 +50,33 @@ Every published version is tagged in this repo on the commit it was built from (
 | Rain over Vallaki at dusk: wet stone and lamplight. | Snow in Krezk, with footprints where the party has walked. |
 | ![The Vistani camp at Tser Pool](docs/screenshots/explore_tser_pool.jpg) | ![A candlelit hall in the Death House](docs/screenshots/explore_death_house.jpg) |
 | The Vistani camp at Tser Pool by firelight. | The Death House, its near walls cut away toward the camera. |
-| ![The gates of Castle Ravenloft in a storm](docs/screenshots/castle_gates.jpg) | ![Choosing four of the six companions](docs/screenshots/new_game.jpg) |
-| The gates of Castle Ravenloft in a storm. | A new game: four of the six companions travel, or make a hero of your own. |
+| ![Castle Ravenloft above the Village of Barovia at dusk](docs/screenshots/castle_gates.jpg) | ![Choosing four of the six companions](docs/screenshots/new_game.jpg) |
+| Castle Ravenloft above the Village of Barovia at dusk. | A new game: four of the six companions travel, or make a hero of your own. |
 | ![A Fireball in the village square](docs/screenshots/combat_fireball.jpg) | ![Aiming a Fireball, with a friendly fire warning](docs/screenshots/combat_spell.jpg) |
 | A Fireball among the village's dead: fights start where you stand. | Area spells show who they'll catch, each target's chance to fail the save, and any ally in the blast. |
 | ![Hit odds before the attack](docs/screenshots/combat_attack.jpg) | ![Strahd's name plate and health bar](docs/screenshots/combat_boss.jpg) |
 | Hover a foe to see the odds, the damage and any Advantage before you swing. | Bosses get a name plate and a health bar over the hotbar. |
 | ![A Performance check in Blinsky's toy shop](docs/screenshots/dialogue_check.jpg) | ![The d20 rolling for the check](docs/screenshots/dialogue_d20.jpg) |
-| Conversations show who will roll each check and their chance. | Then the d20 rolls with the DC and every bonus. |
+| Conversations show who will roll each check and their chance. | The d20 rolls for every check, with the DC and every bonus. |
+| ![Urwin Martikov at the Blue Water Inn, with Kip beside him](docs/screenshots/dialogue_busts.jpg) | ![Choosing a hairstyle for a hero of your own](docs/screenshots/new_hero.jpg) |
+| Everyone you talk to has a portrait, and the companion speaking for the party stands opposite. | Make a hero of your own: class, origin, scores, and a face, hair and outfit to match. |
 | ![Sneaking in the Blue Water Inn](docs/screenshots/stealth.jpg) | ![The character sheet](docs/screenshots/character_sheet.jpg) |
 | Sneaking: the ground each person can see, before you step into it. | The character sheet. Hover any number to see how it was worked out. |
 | ![The inventory's paper doll](docs/screenshots/inventory.jpg) | ![The travel map of Barovia](docs/screenshots/travel_map.jpg) |
 | The inventory: a paper doll, weapon sets and quick slots. | The travel map: hours on the road, the arrival time, and a warning before travelling after dark. |
-| ![Skirmish and the Character Lab](docs/screenshots/skirmish.jpg) | |
-| Skirmish and the Character Lab: any party at any level against any stat blocks. | |
+| ![Skirmish and the Character Lab](docs/screenshots/skirmish.jpg) | ![The party on the misty road at dusk](docs/screenshots/road_dusk.jpg) |
+| Skirmish and the Character Lab: any party at any level against any stat blocks. | The misty road at dusk, a sunbeam slanting through the trees. |
+
+### In motion
+
+![The emerald d20 rolling a Performance check to a success](docs/screenshots/loop_d20_roll.gif)
+
+| | |
+|---|---|
+| ![Arriving in Vallaki: the town's name, then the scene](docs/screenshots/loop_arrival.gif) | ![Lightning over Vallaki in the rain](docs/screenshots/loop_lightning.gif) |
+| Arriving in a place: its name, then the scene. | Lightning and rain over Vallaki at night. |
+| ![The party walking single file through falling snow](docs/screenshots/loop_snow.gif) | ![Footsteps splashing through puddles in the rain](docs/screenshots/loop_rain_steps.gif) |
+| The party walks single file through falling snow. | Footsteps splash through the puddles. |
 
 ## Running from source
 
