@@ -65,11 +65,11 @@ func test_from_ireena_to_vallaki_with_no_cheats() -> void:
 	if not _ok("ireena" in _st().guest_ids, "Ireena walks with the party"):
 		return
 
-	# 5. Madam Eva at Tser Pool. By the map from here by hand (_travel_to): StoryBot's way to the map takes a location's
-	# last road out whatever its `when`, and the crossroads' last is the castle road, closed until the invitation.
-	if not _ok(await _travel_to("svalich_crossroads"), "reached the crossroads"):
+	# 5. Madam Eva at Tser Pool, by the map (StoryBot sets out only by a road out that's open: the crossroads' castle road
+	# stays shut until the invitation).
+	if not _ok(await bot.go_to("svalich_crossroads"), "reached the crossroads"):
 		return
-	if not _ok(await _travel_to("tser_pool"), "reached Tser Pool"):
+	if not _ok(await bot.go_to("tser_pool"), "reached Tser Pool"):
 		return
 	if not _ok(await bot.go_to("tser_pool_eva_tent"), "reached Madam Eva's tent"):
 		return
@@ -82,7 +82,7 @@ func test_from_ireena_to_vallaki_with_no_cheats() -> void:
 	# 6. Vallaki's gate, with Ireena: the escort is done, and Sanctuary begins.
 	if not _ok(await bot.go_to("tser_pool"), "back out of the tent"):
 		return
-	if not _ok(await _travel_to("vallaki"), "reached Vallaki"):
+	if not _ok(await bot.go_to("vallaki"), "reached Vallaki"):
 		return
 	await bot.settle()
 	for i in 3:
@@ -100,45 +100,6 @@ func test_from_ireena_to_vallaki_with_no_cheats() -> void:
 	for f in bot.fights:
 		print("    %s: %s, %s in %d rounds, %d down" % [f["where"], ", ".join(f["foes"] as Array), f["outcome"],
 			int(f["rounds"]), int(f["downs"])])
-
-
-## Sets out by the map for travel place `place_id` from a way out whose `when` holds, as a player would; road events on
-## the way are handled by settle(). True once the party is at that place's location.
-func _travel_to(place_id: String) -> bool:
-	var want := str(Travel.place(place_id)["location"]).get_slice(":", 0)
-	for attempt in 4:
-		if _view().loc_id == want:
-			return true
-		var exit := {}
-		for ex: Variant in _view().loc.get("exits", []):
-			var e := ex as Dictionary
-			if str(e["to"]) == "travel" and StoryConditions.check(str(e.get("when", "")), _st()):
-				exit = e
-				break
-		if exit.is_empty():
-			print("    no open way to the map from %s" % _view().loc_id)
-			return false
-		await bot.walk_to(StoryBot._cell(exit["cell"]))
-		# StoryBot.settle() closes any open screen, the map this way out just opened among them: click it again and wait.
-		for i in 90:
-			if root.get("screen") is TravelScreen:
-				break
-			if i == 5:
-				_view().click(StoryBot._cell(exit["cell"]))
-			await get_tree().process_frame
-		var map := root.get("screen") as TravelScreen
-		if map == null:
-			print("    the map didn't open at %s (%s); screen %s, dialogue %s" % [_view().loc_id, exit["id"],
-				root.get("screen"), root.get("dialogue")])
-			await bot.settle()
-			continue
-		map.select(place_id)
-		map.travel_chosen.emit(place_id)
-		map.queue_free()
-		for i in 4:
-			await get_tree().process_frame
-		await bot.settle()
-	return _view().loc_id == want
 
 
 func _st() -> StoryState:

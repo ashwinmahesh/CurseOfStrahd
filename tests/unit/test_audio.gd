@@ -123,3 +123,39 @@ func test_regions_play_their_theme() -> void:
 	assert_true(checked > 0, "some region has a theme")
 	assert_eq(Audio.mood_for("vallaki_blue_water_inn", "tavern"), "tavern", "an inn keeps its tavern music")
 	assert_eq(Audio.mood_for("vallaki_st_andrals", "church"), "church", "St. Andral's keeps the church's")
+
+
+## The volumes are kept in the settings file GameSettings.path names, like every other setting: a test run's own file,
+## never the player's (QA, 2026-10-08: the pause menu's Voices slider test rewrote the owner's settings.cfg in every
+## full make ci). No game script names the player's file itself.
+func test_volumes_are_kept_in_the_settings_file_in_use() -> void:
+	assert_ne(GameSettings.path, "user://settings.cfg", "tests never touch the player's own settings")
+	var music := Audio.music_volume
+	var sfx := Audio.sfx_volume
+	var voice := VoiceOver.volume()
+	Audio.set_volumes(0.25, 0.5)
+	VoiceOver.set_volume(0.75)
+	var cfg := ConfigFile.new()
+	assert_eq(cfg.load(GameSettings.path), OK, "the volumes went to the run's own settings file")
+	assert_eq(float(cfg.get_value("audio", "music", -1.0)), 0.25, "music")
+	assert_eq(float(cfg.get_value("audio", "sfx", -1.0)), 0.5, "effects")
+	assert_eq(float(cfg.get_value("audio", "voice", -1.0)), 0.75, "voices")
+	Audio.set_volumes(music, sfx)
+	VoiceOver.set_volume(voice)
+	for dir: String in ["res://core/", "res://ui/", "res://world/", "res://story/", "res://rules/", "res://combat/"]:
+		for path in _scripts(dir):
+			if path == "res://core/game_settings.gd":
+				continue
+			for line in FileAccess.get_file_as_string(path).split("\n"):
+				if line.contains("\"user://settings.cfg\"") and not line.strip_edges().begins_with("#"):
+					fail("%s names the player's settings file itself; use GameSettings.path" % path)
+
+
+static func _scripts(dir: String) -> Array[String]:
+	var out: Array[String] = []
+	for f in DirAccess.get_files_at(dir):
+		if f.ends_with(".gd"):
+			out.append(dir + f)
+	for d in DirAccess.get_directories_at(dir):
+		out.append_array(_scripts(dir + d + "/"))
+	return out

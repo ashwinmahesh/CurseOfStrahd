@@ -2192,6 +2192,15 @@
       "accent_tag": "[faint Eastern European accent]",
       "generated_voice_id": "wtBAwepN6S9M6fZe3QSk",
       "released": true
+    },
+    "the_eye_below": {
+      "voice_id": "c2e2Qacn3oMFw74cBWbC",
+      "name": "Barovia The Eye Below",
+      "description": "A vast, ancient beholder, an alien floating eye-monster sealed in amber for a thousand years and half asleep, speaking English slowly and dreamily. A deep, wet, resonant voice with a whispery, many-throated hiss under it, drowsy and childlike in its curiosity, paranoid and imperious, gleefully hungry to see again.",
+      "settings": {},
+      "model": "eleven_v3",
+      "generated_voice_id": "c2e2Qacn3oMFw74cBWbC",
+      "released": true
     }
   },
   "sfx": {

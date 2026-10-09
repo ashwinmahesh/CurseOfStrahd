@@ -206,3 +206,22 @@ func test_khazan_withdraws_into_his_name() -> void:
 func test_khazan_unmade_at_level_10() -> void:
 	await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
 
+
+## The chamber of the Eye, the four at the top of its throat; the hall of sleepers, the four at the stair foot.
+const EYE_CHAMBER: Array[Vector2i] = [Vector2i(17, 11), Vector2i(18, 11), Vector2i(17, 12), Vector2i(18, 12)]
+const EYE_STAIR: Array[Vector2i] = [Vector2i(25, 21), Vector2i(26, 21), Vector2i(25, 22), Vector2i(26, 22)]
+
+
+func test_the_hall_of_sleepers_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "dreamed_eyes", [1, 2, 3, 4], [], [], [], EYE_STAIR)
+
+
+## The Eye Below as it wakes, its dreams coming out of the walls: the hardest way in.
+func test_the_eye_below_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], [], [], [], EYE_CHAMBER)
+
+
+## Both the wardens' ways: the mirrors turned on it and the lullaby sung.
+func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
+	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], ["deep_mirrors_turned", "deep_lullaby_sung"], [], [], EYE_CHAMBER)
+

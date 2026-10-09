@@ -193,3 +193,29 @@ func test_the_orders_armory_at_half_price_once_godfrey_remembers() -> void:
 		"half the price (and his attitude's)")
 	assert_eq(st.shop_offer("sir_godfrey_gwilym", "longsword"), -1.0, "the dead buy nothing")
 	assert_true(_opens_shop(st, "sir_godfrey_gwilym", "argynvostholt/godfrey:armory"))
+
+
+## No ware a shop never runs out of can be bought and sold again at a profit (QA FN-02: Sir Godfrey's half-price
+## scrolls, endless, sold on to Rictavio): at the best price anywhere (friendly and haggled), every merchant who buys it
+## pays less than it cost, or no more.
+func test_nothing_in_endless_stock_resells_at_a_profit() -> void:
+	var st := _party()
+	var shops: Array[String] = []
+	for id: String in Compendium.shared().table("npcs"):
+		var shop := Compendium.shared().get_entry("npcs", id).get("shop", {}) as Dictionary
+		if shop.is_empty():
+			continue
+		shops.append(id)
+		st.attitudes[id] = "friendly"
+		var h := shop.get("haggle", {}) as Dictionary
+		st.set_flag(str(h.get("won", "_haggle_won/" + id)), true)
+	assert_true(shops.size() > 10, "the book's merchants")
+	for seller in shops:
+		for w in st.shop_wares(seller):
+			if int(w["qty"]) >= 0:
+				continue
+			for buyer in shops:
+				var offer := st.shop_offer(buyer, str(w["id"]))
+				assert_true(offer <= float(w["price"]), "%s sells %s for %s gp; %s pays %s gp for it" % [seller, w["id"],
+					w["price"], buyer, offer])
+

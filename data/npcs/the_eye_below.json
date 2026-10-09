@@ -1,0 +1,18 @@
+{
+  "id": "the_eye_below",
+  "name": "The Eye Below",
+  "title": "What the Wardens Sealed",
+  "summary": "A beholder that came up from under the mountain while the Amber Temple was being built, and frightened the vestiges. The wardens couldn't kill it, so they sealed it in amber under their vaults and put it to sleep, at last with Exethanter's own memory.",
+  "portrait": "beholder",
+  "sprite": "beholder",
+  "attitude": "hostile",
+  "monster": "the_eye_below",
+  "guest": false,
+  "tags": [
+    "aberration",
+    "beholder",
+    "amber_temple"
+  ],
+  "region": "amber_temple",
+  "pronouns": "it/its"
+}

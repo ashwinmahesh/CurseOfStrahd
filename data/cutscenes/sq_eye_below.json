@@ -1,0 +1,15 @@
+{
+  "id": "sq_eye_below",
+  "title": "The Amber Debt",
+  "summary": "A beholder floats out of a block of amber split like an egg, its great eye still clouded.",
+  "images": [
+    {
+      "image": "sq_eye_below",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.45,
+    0.35
+  ]
+}

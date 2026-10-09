@@ -1,0 +1,44 @@
+# Narrator: under the Amber Temple's vaults, where the wardens sealed the Eye Below (The Amber Debt,
+# docs/story/side_quests.md; docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:amber_deep
+| Under the vault floor the amber isn't set. It weeps out of the walls like resin from a cut pine, warm and slow, and smells of honey, and of something that has been asleep for a very long time.
+| [flag.eye_below_slain] The amber in the walls has stopped running. It's setting, slowly, dull and brown, like honey left out in the cold.
+cooldown 30
+
+~ enter:deep_stair
+| The steps are slick with amber. Your boots stick and come away with a sound like a kiss. There are older footprints set into it, going down.
+once
+
+~ enter:hall_of_sleepers
+| A long hall full of amber, and people in the amber: standing, sitting, one with her hand up as if to knock. Wardens' robes, travellers' coats. All of them with their eyes open.
+once
+
+~ enter:wardens_archive
+| A small room of shelves and a desk, sealed so long the air is sweet. Everything in it has been put away very neatly, by someone who meant to come back.
+once
+
+~ enter:eye_chamber
+| A round chamber, all amber, lit from inside like a lantern of honey. In the middle, something very large has split its way out of a block of it, and is floating.
+once
+
+~ examine:deep_resin
+| Amber, running down the wall as slow as cold honey. Something small is caught in it, moving: a fly, still alive, still trying.
+
+~ examine:deep_scratches
+| Long scratches in the stair wall at the height of a man's hands, going down. Whoever made them was being dragged, and wasn't happy about it.
+
+~ examine:sleeper_1
+| A warden in amber, in the same robe as Exethanter's, an old woman with a lantern held up. Her eyes are open and her mouth is open, in the middle of a word, or a note.
+
+~ examine:sleeper_4
+| A young man in a good travelling coat, not old at all: the amber round him is still soft at the edges. He was here a month ago. His eyes follow you.
+
+~ examine:sleeper_8
+| A man in amber with his eyes open, and his eyes are the only thing about him that move. They look at you, and then at the throat of the chamber beyond, and then at you again, hard.
+
+~ examine:wardens_jars
+| Jars of amber on a shelf, each with a small round thing set in the middle of it, like a fruit preserved. Each one is an eye. Each one turns, slowly, to look at you.
+
+~ examine:eye_statue
+| A warden's statue with its eyes chiselled out, carefully, by someone with a steady hand. Under the plinth, in fresh scratches: SO IT CAN'T SEE ME.

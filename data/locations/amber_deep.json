@@ -1,0 +1,714 @@
+{
+  "id": "amber_deep",
+  "name": "Under the Vaults",
+  "region": "amber_temple",
+  "summary": "What the Amber Temple's wardens sealed under their own vaults: a stair down through the weeping floor, the hall of sleepers in their amber, the wardens' archive and, at the bottom, the chamber of the Eye Below (The Amber Debt, docs/story/side_quests.md).",
+  "text": "Under the vault floor the amber isn't set. It weeps out of the walls like resin from a cut pine, warm, and slow, and it smells of honey and of something that has been asleep for a very long time.",
+  "map": {
+    "rows": [
+      "##################################",
+      "###########..............#########",
+      "##########................########",
+      "#########.......===........#######",
+      "#########.......=.=........#######",
+      "#########..................#######",
+      "#########..............~...#######",
+      "#########...~..............#######",
+      "#########..................#######",
+      "##########................########",
+      "###########..............#########",
+      "#################..###############",
+      "#################..###############",
+      "#####........................#####",
+      "####..........................####",
+      "####....=....=........=....=..####",
+      "####..........................####",
+      "####....=....=........=....=..####",
+      "####..........................####",
+      "#####........................#####",
+      "######.##################..#######",
+      "###........###########........####",
+      "###........###########........####",
+      "###........###########........####",
+      "###........###########........####",
+      "###########################..#####"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "deep_stair",
+      "name": "The weeping stair",
+      "cells": [
+        [
+          22,
+          20
+        ],
+        [
+          29,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "hall_of_sleepers",
+      "name": "The hall of sleepers",
+      "cells": [
+        [
+          4,
+          13
+        ],
+        [
+          29,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "wardens_archive",
+      "name": "The wardens' archive",
+      "cells": [
+        [
+          3,
+          20
+        ],
+        [
+          10,
+          24
+        ]
+      ]
+    },
+    {
+      "id": "eye_chamber",
+      "name": "The chamber of the Eye",
+      "cells": [
+        [
+          9,
+          1
+        ],
+        [
+          26,
+          10
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      26,
+      23
+    ],
+    "from_vault": [
+      26,
+      23
+    ]
+  },
+  "exits": [
+    {
+      "id": "deep_up",
+      "cell": [
+        27,
+        25
+      ],
+      "to": "amber_temple_vault",
+      "spawn": "from_deep",
+      "label": "Up into the vaults"
+    },
+    {
+      "id": "deep_up_2",
+      "cell": [
+        28,
+        25
+      ],
+      "to": "amber_temple_vault",
+      "spawn": "from_deep",
+      "label": "Up into the vaults"
+    }
+  ],
+  "props": [
+    {
+      "id": "deep_resin",
+      "cell": [
+        23,
+        21
+      ],
+      "kind": "examine",
+      "label": "Amber, weeping",
+      "model": "puddle"
+    },
+    {
+      "id": "deep_resin_2",
+      "cell": [
+        28,
+        22
+      ],
+      "kind": "decor",
+      "label": "Amber",
+      "model": "puddle"
+    },
+    {
+      "id": "deep_rubble",
+      "cell": [
+        22,
+        24
+      ],
+      "kind": "decor",
+      "label": "Rubble",
+      "model": "rubble"
+    },
+    {
+      "id": "deep_scratches",
+      "cell": [
+        29,
+        21
+      ],
+      "kind": "examine",
+      "label": "Scratches",
+      "model": "claw_marks"
+    },
+    {
+      "id": "deep_lamp",
+      "cell": [
+        24,
+        21
+      ],
+      "kind": "decor",
+      "label": "A lamp bracket",
+      "model": "lantern_bracket"
+    },
+    {
+      "id": "sleeper_1",
+      "cell": [
+        8,
+        15
+      ],
+      "kind": "examine",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_2",
+      "cell": [
+        8,
+        17
+      ],
+      "kind": "decor",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_3",
+      "cell": [
+        13,
+        15
+      ],
+      "kind": "decor",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_4",
+      "cell": [
+        13,
+        17
+      ],
+      "kind": "examine",
+      "label": "A new sleeper",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_5",
+      "cell": [
+        22,
+        15
+      ],
+      "kind": "decor",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_6",
+      "cell": [
+        22,
+        17
+      ],
+      "kind": "decor",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_7",
+      "cell": [
+        27,
+        15
+      ],
+      "kind": "decor",
+      "label": "A sleeper in amber",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "sleeper_8",
+      "cell": [
+        27,
+        17
+      ],
+      "kind": "examine",
+      "label": "A sleeper with its eyes open",
+      "model": "amber_sarcophagus"
+    },
+    {
+      "id": "deep_mirror",
+      "cell": [
+        10,
+        13
+      ],
+      "kind": "examine",
+      "label": "A tall mirror, turned to the wall",
+      "model": "mirror_full",
+      "dialogue": "amber_temple/the_amber_debt:mirrors"
+    },
+    {
+      "id": "deep_mirror_2",
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "decor",
+      "label": "A tall mirror",
+      "model": "mirror_full"
+    },
+    {
+      "id": "deep_mirror_3",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "decor",
+      "label": "A tall mirror",
+      "model": "mirror_full"
+    },
+    {
+      "id": "deep_hall_bones",
+      "cell": [
+        19,
+        18
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "deep_hall_resin",
+      "cell": [
+        6,
+        18
+      ],
+      "kind": "decor",
+      "label": "Amber",
+      "model": "puddle"
+    },
+    {
+      "id": "deep_hall_cobwebs",
+      "cell": [
+        28,
+        14
+      ],
+      "kind": "decor",
+      "label": "Cobwebs",
+      "model": "cobwebs"
+    },
+    {
+      "id": "wardens_notes",
+      "cell": [
+        4,
+        21
+      ],
+      "kind": "examine",
+      "label": "The wardens' book",
+      "model": "lectern",
+      "dialogue": "amber_temple/the_amber_debt:notes"
+    },
+    {
+      "id": "wardens_shelves",
+      "cell": [
+        6,
+        21
+      ],
+      "kind": "decor",
+      "label": "Shelves",
+      "model": "bookshelf"
+    },
+    {
+      "id": "wardens_shelves_2",
+      "cell": [
+        9,
+        21
+      ],
+      "kind": "decor",
+      "label": "Shelves",
+      "model": "book_shelf"
+    },
+    {
+      "id": "wardens_jars",
+      "cell": [
+        3,
+        23
+      ],
+      "kind": "examine",
+      "label": "Jars in amber",
+      "model": "glass_vessels"
+    },
+    {
+      "id": "wardens_desk",
+      "cell": [
+        8,
+        23
+      ],
+      "kind": "decor",
+      "label": "A desk",
+      "model": "desk"
+    },
+    {
+      "id": "wardens_candles",
+      "cell": [
+        10,
+        24
+      ],
+      "kind": "decor",
+      "label": "Candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "wardens_books",
+      "cell": [
+        5,
+        24
+      ],
+      "kind": "decor",
+      "label": "Books",
+      "model": "floor_books"
+    },
+    {
+      "id": "eye_block",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "examine",
+      "label": "The broken amber block",
+      "model": "rubble",
+      "dialogue": "amber_temple/the_amber_debt:block"
+    },
+    {
+      "id": "eye_block_2",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "decor",
+      "label": "Broken amber",
+      "model": "rubble"
+    },
+    {
+      "id": "eye_block_3",
+      "cell": [
+        18,
+        4
+      ],
+      "kind": "decor",
+      "label": "Broken amber",
+      "model": "rubble"
+    },
+    {
+      "id": "eye_hoard",
+      "cell": [
+        21,
+        2
+      ],
+      "kind": "examine",
+      "label": "A heap of things",
+      "model": "gold_heap",
+      "dialogue": "amber_temple/the_amber_debt:hoard"
+    },
+    {
+      "id": "eye_hoard_2",
+      "cell": [
+        13,
+        2
+      ],
+      "kind": "decor",
+      "label": "Things",
+      "model": "gold_spill"
+    },
+    {
+      "id": "eye_bones",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "eye_bones_2",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "decor",
+      "label": "Bones",
+      "model": "bones"
+    },
+    {
+      "id": "eye_statue",
+      "cell": [
+        12,
+        3
+      ],
+      "kind": "examine",
+      "label": "A statue with no eyes",
+      "model": "statue_faceless"
+    },
+    {
+      "id": "eye_crack",
+      "cell": [
+        20,
+        9
+      ],
+      "kind": "decor",
+      "label": "A crack",
+      "model": "floor_crack"
+    }
+  ],
+  "lights": [
+    {
+      "cell": [
+        24,
+        21
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 20
+    },
+    {
+      "cell": [
+        17,
+        4
+      ],
+      "kind": "magic",
+      "color": "candle",
+      "bright_ft": 15,
+      "dim_ft": 40
+    },
+    {
+      "cell": [
+        4,
+        21
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        10,
+        24
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "magic",
+      "color": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15
+    },
+    {
+      "cell": [
+        22,
+        16
+      ],
+      "kind": "magic",
+      "color": "candle",
+      "bright_ft": 0,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "the_eye_below",
+      "cell": [
+        17,
+        6
+      ],
+      "dialogue": "amber_temple/the_amber_debt:eye",
+      "when": "not flag.eye_below_slain",
+      "facing": "south",
+      "approach": 7
+    }
+  ],
+  "encounters": [
+    {
+      "id": "dreamed_eyes",
+      "trigger": "enter_area:hall_of_sleepers",
+      "when": "not flag.dreamed_eyes_beaten",
+      "text": "Something blinks inside the nearest block of amber. Then the amber blinks back, everywhere, and the little eyes come swimming out of it, and the biggest sleeper in the hall climbs out after them.",
+      "monsters": [
+        {
+          "monster": "amber_golem",
+          "cell": [
+            17,
+            16
+          ],
+          "name": "A Sleeper Woken",
+          "hp": 130
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            6,
+            14
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            11,
+            18
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            20,
+            18
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            25,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "dreamed_eyes_beaten"
+    },
+    {
+      "id": "the_eye_below",
+      "trigger": "dialogue",
+      "when": "flag.deep_lullaby_sung and flag.deep_mirrors_turned",
+      "text": "The Eye Below sinks back into the amber to its middle as the last note of the lullaby goes, and wakes too late, half held.",
+      "monsters": [
+        {
+          "monster": "the_eye_below",
+          "cell": [
+            17,
+            6
+          ],
+          "hp": 135
+        }
+      ],
+      "lair": false,
+      "surprise": "enemies",
+      "flag": "eye_below_slain",
+      "quest": {
+        "id": "the_amber_debt",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "the_eye_below",
+      "trigger": "dialogue",
+      "when": "flag.deep_lullaby_sung and not flag.deep_mirrors_turned",
+      "text": "The Eye Below sinks back into the amber to its middle as the last note of the lullaby goes, and wakes too late, half held.",
+      "monsters": [
+        {
+          "monster": "the_eye_below",
+          "cell": [
+            17,
+            6
+          ],
+          "hp": 135
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            12,
+            4
+          ]
+        }
+      ],
+      "lair": true,
+      "surprise": "enemies",
+      "flag": "eye_below_slain",
+      "quest": {
+        "id": "the_amber_debt",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "the_eye_below",
+      "trigger": "dialogue",
+      "when": "not flag.deep_lullaby_sung and flag.deep_mirrors_turned",
+      "text": "The Eye Below rises out of the broken amber all at once, and every one of its small eyes opens.",
+      "monsters": [
+        {
+          "monster": "the_eye_below",
+          "cell": [
+            17,
+            6
+          ]
+        }
+      ],
+      "lair": false,
+      "surprise": "",
+      "flag": "eye_below_slain",
+      "quest": {
+        "id": "the_amber_debt",
+        "stage": "slain"
+      }
+    },
+    {
+      "id": "the_eye_below",
+      "trigger": "dialogue",
+      "text": "The Eye Below rises out of the broken amber all at once, and every one of its small eyes opens.",
+      "monsters": [
+        {
+          "monster": "the_eye_below",
+          "cell": [
+            17,
+            6
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            12,
+            4
+          ]
+        }
+      ],
+      "lair": true,
+      "surprise": "",
+      "flag": "eye_below_slain",
+      "quest": {
+        "id": "the_amber_debt",
+        "stage": "slain"
+      }
+    }
+  ],
+  "narration": {
+    "enter": "enter:amber_deep"
+  },
+  "rest": "no",
+  "rest_text": "Every time you shut your eyes, you feel it looking at you through them. Nobody sleeps down here."
+}

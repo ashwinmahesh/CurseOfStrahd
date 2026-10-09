@@ -182,10 +182,10 @@ func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 
 ## Moves one `item_id` from `ch`'s pack to the party stash (from anywhere; things come out again at safe places, which
 ## the inventory screen checks). A magic item keeps its own state there (charges, identified, a lifted curse), and an
-## attunement to it ends.
+## attunement to it ends; a cursed item its bearer is attuned to stays with them (Character.part_blocker).
 func stash_put(item_id: String, ch: Character, entry: Dictionary = {}) -> bool:
 	if not ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == item_id and int(e["qty"]) > 0 \
-			and (entry.is_empty() or is_same(e, entry))):
+			and (entry.is_empty() or is_same(e, entry))) or ch.part_blocker(item_id) != "":
 		return false
 	stash_add(item_id, 1, ch.remove_one(item_id, entry))
 	return true
@@ -470,13 +470,23 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
-		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * float(w.get("markup", shop.get("markup", 1.0)))
-		out.append({"id": id, "name": str(data.get("name", id)), "price": Trade.buy_price(self, npc_id, base), "qty": qty,
+		# Ammunition comes by its bundle (20 Arrows for 1 gp, as the PHB prices them), not a piece at a time.
+		var lot := StoryState.shop_lot(data)
+		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * float(w.get("markup", shop.get("markup", 1.0)))
+		out.append({"id": id, "name": str(data.get("name", id)) + (" ×%d" % lot if lot > 1 else ""), "lot": lot,
+			"price": Trade.buy_price(self, npc_id, base), "qty": qty,
 			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
 	return out
 
 
-## What `npc_id` pays for one `item_id` (after their attitude and a haggle), or -1 if they don't buy that kind of thing.
+## How many pieces a shop deals in at once: a bundle of ammunition (20 Arrows, 50 Blowgun Needles: the item's
+## `bundle`), anything else one at a time (QA FN-03: a 0.05 gp arrow rounded up to a whole 1 gp each way).
+static func shop_lot(data: Dictionary) -> int:
+	return maxi(1, int(data.get("bundle", 1))) if bool(data.get("stackable", false)) else 1
+
+
+## What `npc_id` pays for one `item_id`, or one bundle of it (shop_lot), after their attitude and a haggle; or -1 if
+## they don't buy that kind of thing.
 func shop_offer(npc_id: String, item_id: String) -> float:
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var data := Compendium.shared().item_data(item_id)
@@ -486,10 +496,10 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	# No `buys`: anything; an empty list: nothing (the Order of the Silver Dragon has no use for coin).
 	if (shop.has("buys") and buys.is_empty()) or (not buys.is_empty() and not str(data.get("category", "")) in buys):
 		return -1.0
-	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * float(shop.get("sell_rate", 0.5)), 0.01))
+	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * StoryState.shop_lot(data) * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
-## Buys one `item_id` from `npc_id` for `ch`. Returns "" or why not.
+## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`. Returns "" or why not.
 func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 	for w in shop_wares(npc_id):
 		if str(w["id"]) != item_id:
@@ -497,7 +507,7 @@ func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 		if gold < float(w["price"]):
 			return "Not enough gold"
 		gold -= float(w["price"])
-		ch.add_item(item_id, 1)
+		ch.add_item(item_id, int(w.get("lot", 1)))
 		if int(w["qty"]) > 0:
 			if not shops.has(npc_id):
 				shops[npc_id] = {}
@@ -511,19 +521,24 @@ func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 	return "Not for sale"
 
 
-## Sells one `item_id` from `ch` to `npc_id`, from `entry` when given (a particular one of several: Sell all junk
-## leaves an equipped one of the same kind alone). Returns "" or why not.
+## Sells one `item_id` (a whole bundle of ammunition, shop_lot) from `ch` to `npc_id`, from `entry` when given (a
+## particular one of several: Sell all junk leaves an equipped one of the same kind alone). Returns "" or why not.
 func shop_sell(npc_id: String, item_id: String, ch: Character, entry: Dictionary = {}) -> String:
 	var offer := shop_offer(npc_id, item_id)
 	if offer < 0.0:
 		return "They don't buy that"
+	var why := ch.part_blocker(item_id)
+	if why != "":
+		return why
+	var lot := StoryState.shop_lot(Compendium.shared().item_data(item_id))
 	for e in ch.inventory:
 		if str(e["id"]) == item_id and int(e["qty"]) > 0 and (entry.is_empty() or is_same(e, entry)):
-			if str(e.get("slot", "")) != "" and int(e["qty"]) <= 1:
-				ch.unequip(str(e["slot"]))
-			e["qty"] = int(e["qty"]) - 1
-			if int(e["qty"]) <= 0:
-				ch.inventory.erase(e)
+			if int(e["qty"]) < lot:
+				return "They only buy these %d at a time" % lot
+			# Out of the pack as giving it away does, which takes it off and ends its attunement with the last one
+			# (QA FN-04: a sold item's attunement stayed, and its slot with it, for good).
+			for i in lot:
+				ch.remove_one(item_id, e)
 			gold += offer
 			return ""
 	return "Not carried"
