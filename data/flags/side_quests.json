@@ -1145,6 +1145,26 @@
       "id": "agafia_thanked",
       "type": "bool",
       "summary": "Agafia thanked the party with her grandmother's speaking stones (The Oat Thief)."
+    },
+    {
+      "id": "tudor_told",
+      "type": "bool",
+      "summary": "Tudor told the party about his eleven nights at the castle (The Count's Portraitist)."
+    },
+    {
+      "id": "likeness_known",
+      "type": "bool",
+      "summary": "The party saw that Tudor's paint makes eyes of the castle (The Count's Portraitist)."
+    },
+    {
+      "id": "tudor_studio_open",
+      "type": "bool",
+      "summary": "Tudor let the party into his studio on the east row (The Count's Portraitist)."
+    },
+    {
+      "id": "likeness_burned",
+      "type": "bool",
+      "summary": "The count's great canvas in Tudor's studio is burned, and every copy in Vallaki is blank (The Count's Portraitist)."
     }
   ]
 }

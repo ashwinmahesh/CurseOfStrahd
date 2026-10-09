@@ -1,0 +1,26 @@
+# Narrator: Tudor the painter's house on Vallaki's east row (The Count's Portraitist, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:vallaki_tudor_studio
+| A painter's house that smells of linseed, and under it something like flowers left too long in a vase. Every canvas in the front room is turned to the wall.
+| [flag.likeness_burned] The house smells of linseed and smoke. The canvases are turned the right way round again, and they're all blank.
+cooldown 30
+
+~ enter:tudor_studio
+| A long room under the roof, full of easels. On every easel, and leaning on every wall, the same young woman in white looks back at you. Not one of them is the same size. All of them are the same face.
+once
+
+~ examine:tudor_copy_1
+| A portrait of a young woman in white, very finely done. Her eyes are on you when you look at her, and on you when you look away and back.
+
+~ examine:tudor_copies_stacked
+| A stack of canvases turned to the wall. On the back of each, in charcoal, a date, one a day for a month. On the last one, in a shakier hand: STOP.
+
+~ examine:tudor_pots
+| Paint pots, and in them a red-gold paint that catches the candlelight like wet amber. It hasn't dried in any of them, though some are weeks old.
+
+~ examine:tudor_sketches
+| Sketches pinned to a board, a hundred hands and mouths and the turn of a neck. In the margins, notes in Tudor's hand: "Higher at the brow, he says." "Kinder, he says." "No. Kinder."
+
+~ examine:tudor_sun_pots
+| Pots of plain yellow, for the Baron's sun, with the lids on. Tudor hasn't opened them in a month.

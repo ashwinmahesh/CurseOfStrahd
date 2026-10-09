@@ -271,3 +271,13 @@ func test_the_oat_hunters_at_level_2() -> void:
 ## At level 3, three wolves with it.
 func test_the_oat_hunters_at_level_3() -> void:
 	await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4], [], [], [], HOLLOW_DOOR)
+
+
+## The studio in Tudor's house, the four by the stair up from the front room.
+const TUDORS_STUDIO: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 5), Vector2i(8, 5), Vector2i(9, 5)]
+
+
+## The count's great canvas and six copies come off the walls.
+func test_the_counts_likeness_at_level_9() -> void:
+	await _series("vallaki_tudor_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6], [], [], [], TUDORS_STUDIO)
+

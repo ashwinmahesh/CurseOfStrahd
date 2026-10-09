@@ -403,3 +403,17 @@ func test_the_pack_hunters_come_up_the_oats() -> void:
 	await _fight(v, "oat_hunters", ["A Pack Hunter", "Wolf 1"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_oat_thief"), "defended")
+
+
+## The count's canvas leans out of its frame in Tudor's studio, Large, with its copies.
+func test_the_counts_likeness_comes_off_the_wall() -> void:
+	var v := await _boot("vallaki_tudor_studio", 20, 9, ["tudor_studio_open"])
+	GameState.story.set_quest_stage("the_counts_portraitist", "asked")
+	var e := await _fight(v, "counts_likeness", ["The Count's Likeness", "A Copy"])
+	for c in e.combatants:
+		if c.name() == "The Count's Likeness":
+			assert_eq(c.size_cells, 2, "Large")
+			assert_eq(CombatToken.height_of(c), 2.2)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_counts_portraitist"), "burned")
+

@@ -291,6 +291,10 @@
     "from_blinsky": [
       7,
       18
+    ],
+    "from_tudor": [
+      43,
+      18
     ]
   },
   "exits": [
@@ -376,6 +380,17 @@
       "to": "vallaki_blue_water_inn",
       "spawn": "default",
       "label": "The Blue Water Inn"
+    },
+    {
+      "id": "tudor_door",
+      "cell": [
+        43,
+        17
+      ],
+      "to": "vallaki_tudor_studio",
+      "spawn": "from_street",
+      "label": "Tudor's door",
+      "when": "flag.tudor_studio_open"
     }
   ],
   "props": [
@@ -1562,6 +1577,20 @@
         18
       ],
       "facing": "south"
+    },
+    {
+      "npc": "vallaki_sun_painter",
+      "cell": [
+        44,
+        18
+      ],
+      "dialogue": "vallaki/the_counts_portraitist:tudor",
+      "when": "level >= 9",
+      "hours": [
+        17,
+        21
+      ],
+      "facing": "west"
     }
   ],
   "encounters": [
