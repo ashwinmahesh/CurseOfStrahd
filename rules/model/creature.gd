@@ -575,7 +575,7 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 	t.disadvantage_sources = dis
 	if d20_after.is_valid():
 		d20_after.call(self, t, keys)
-	log_event({"type": "d20", "creature": id, "text": t.describe()})
+	log_event({"type": "d20", "creature": id, "text": t.describe(), "kind": int(kind), "test": t})
 	consume_effects(keys)
 	return t
 
