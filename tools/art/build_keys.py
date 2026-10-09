@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Renders the six heroes' HD animation sheets (animation set v2, docs/art/animation.md) from their keyframe strips.
+"""Renders the six heroes' HD animation sheets (animation set v2, docs/art/animation.md) from their keyframe strips, and
+Strahd's (the main villain gets the fuller set too, owner 2026-10-09: idle, walk, attack, hit and cast).
 
 Usage: tools/art/build_keys.py [--only id ...] [--kinds walk8 attack10 ...] [--jobs 2]
 
@@ -17,6 +18,9 @@ ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
 HEROES = ["godrick_pendlebrook", "kip_smudgewick", "liriel_dawnsong", "ratatoille", "thistle", "wren_featherfoot"]
 KINDS = ["walk8", "attack10", "hurt", "ride", "sneak", "cast"]
+## Everyone with the fuller set and the kinds each has: the heroes all six, Strahd a drawn idle with his walk (walk8i)
+## and no riding or sneaking.
+KEYED = {**{h: KINDS for h in HEROES}, "strahd": ["walk8i", "attack10", "hurt", "cast"]}
 
 
 def render(asset_id, kind):
@@ -37,7 +41,7 @@ def main():
     p.add_argument("--kinds", nargs="*")
     p.add_argument("--jobs", type=int, default=2)
     a = p.parse_args()
-    jobs = [(i, k) for i in (a.only or HEROES) for k in (a.kinds or KINDS)]
+    jobs = [(i, k) for i in (a.only or HEROES) for k in (a.kinds or KEYED.get(i, KINDS))]
     with ThreadPoolExecutor(max_workers=a.jobs) as pool:
         results = list(pool.map(lambda j: render(*j), jobs))
     failed = [f"{i} {k}" for (i, k), ok in zip(jobs, results) if not ok]

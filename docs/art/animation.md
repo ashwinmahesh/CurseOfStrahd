@@ -77,6 +77,7 @@ turns the strips into sheets, adding in-between frames (squash, stretch, lean, a
 | `ride` | seated astride (the horse drawn flat magenta and keyed out), weapon raised, striking down | `ride`: ride_idle_, ride_attack_ |
 | `sneak` | crouched, two crouched steps | `sneak`: sneak_idle_, sneak_walk_ |
 | `cast` | gathering, releasing | `cast`: cast_ (the release lands on frame 3) |
+| `idle4` (with `walk8a`, `walk8b`: plan `walk8i`) | the cape lifting, billowing and swaying while he stands | `walk`: as `walk8`, but idle_ is the drawn loop (6 frames at 6 fps; the cape never hangs still, owner 2026-10-09) instead of breathing |
 
 (Doubled frames, owner 2026-10-07: `walk4` and `attack5`, one strip of four or five poses, came first and still
 render.) About 40 strips a hero (8 strips for 6 kinds, 5 views; the other 3 directions are mirrors), plus redraws;
@@ -85,6 +86,14 @@ by eye: Gemini sometimes drops a hat or hands a bare-handed hero a staff (`"unar
 prompt there is no weapon); redraw one view with `tools/art/anim_keyframes.py --only <id> --kind <kind> --views <view>`.
 Touching poses (a beam reaching the next figure) are cut apart at even spacing (`anim.split_even`). `--check` (as for
 attacks) flags merged, clipped or mis-scaled strips, and panel borders Gemini sometimes draws are dropped.
+
+**Strahd (owner 2026-10-09: "give Strahd's sprite better animation treatment than the rest of the monsters since he
+is the main villain").** The main villain has the fuller set too, from a menacing turnaround (fangs, claws, a torn
+cape; `strahd_turnaround.png` and its `_hd`): `walk8i` (the walk plus a drawn idle, `idle4`, where his cape stirs and
+billows while he stands, never hanging still), `attack10`, `hurt` and `cast`, no riding or sneaking
+(`tools/art/build_keys.py` KEYED). His animations.json entry has `flow`, a sentence added to every strip's prompt so
+the cape moves in every pose, and `cast_gather` / `cast_release` for his shadow spell. `make keys ONLY=strahd`
+renders them; `make anims` leaves him alone. His dark aura (below) is drawn at run time, not in the sheets.
 
 **HD sheets (owner 2026-10-07: "crystal clear, and higher-res when zoomed in").** The heroes' cells are 768 px
 (twice the earlier 384). Each hero's turnaround is redrawn at 2K, faithful to the original with sharper line art
@@ -151,6 +160,14 @@ than `light_cap` so a carried lantern warms it without washing it out, and `ligh
 dark. The ink outline and the crisp sampling are unchanged. Classic draws figures at their own colours, as before.
 `tools/art/preview/lit_lab.tscn` shows figures at night with a torch behind one and a lamp by another (`--day`,
 `--flash`, `--classic`).
+
+**Auras (owner 2026-10-09).** `AuraFx` (world/look/aura_fx.gd), built by `CombatToken` for whoever has one, so it
+shows in fights and while exploring alike: Strahd's dark aura (smoke curling up round him with a crimson edge, a quad
+behind the figure, `shaders/fx/aura_halo.gdshader`, and a pool of creeping shadow under him, `aura_floor.gdshader`)
+surges when he attacks, casts or is struck (`AuraFx.surge`); a paladin with Aura of Protection glows faintly warm, and
+in a fight the floor shows the area the aura covers, 10 ft (two squares every way from their space, as
+`ClassFeatures._in_aura` measures it) or 30 ft with Aura Expansion. Both draw after the palette pass just before the
+sprites (render priority 5), so the figure covers the middle. `tools/capture/aura_capture.tscn` shoots them.
 
 **Motion between frames (G12).** Every DirectionalSprite, drawn frames or not, moves between them: it breathes while
 standing on a single frame (each figure in its own rhythm), leans into the way it travels across the screen and into a
