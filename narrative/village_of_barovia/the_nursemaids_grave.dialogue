@@ -1,0 +1,90 @@
+# The Nursemaid's Grave (side quest, docs/story/side_quests.md): Old Mihail can't bury someone who was never brought to
+# him. A girl in a nursemaid's cap stands at the churchyard wall by night and can't come in. It's the Dursts' nursemaid,
+# Veta, whose bones are folded into a trunk in Death House's attic, and she doesn't want the churchyard: she wants to lie
+# with her son Walter, in the smallest crypt under the house. **Twist:** his crypt is empty; the robed ones never buried
+# him at all. Laying her in it anyway rouses what's left of the house's keepers. Reached from Old Mihail
+# (townsfolk:gravedigger), the attic trunk (death_house/attic:nursemaid_trunk) and Walter's crypt
+# (death_house/dungeon:crypt_walter). Every line here is unvoiced for now.
+
+# --- Old Mihail (village_of_barovia/townsfolk:gravedigger jumps here) ---
+
+~ mihail
+quest the_nursemaids_grave rumored
+Old Mihail: Couldn't bury? Everyone gets buried in the end, I see to it. Everyone who's brought to me.
+Old Mihail: There's one nobody brought. A girl in a nursemaid's cap. She stands at the churchyard wall of a night, by the gate, and looks in. She won't come through. I don't think she can.
+Old Mihail: She's from the tall house at the top of the street, by her cap. That house had a nursemaid once. Nobody saw her leave it.
+-> END
+
+# --- The girl at the churchyard wall (npc durst_nursemaid, village, by night) ---
+
+~ wall
+if quest.the_nursemaids_grave == carried
+durst_nursemaid: You've got me. I can feel it, like a hand on my shoulder. Take me down to him. The smallest door in the row, under the house.
+-> END
+endif
+if flag.nursemaid_named
+durst_nursemaid: In the roof of the tall house, in the trunk. And then down, to my Walter.
+-> END
+endif
+Narrator: A young woman in a nursemaid's cap and apron stands at the churchyard wall in the dark, her hands folded, looking in through the gate at the graves. She's grey all through, and you can see the wall through her.
+if flag.death_house_nursemaid_calmed
+Narrator: She turns, and knows you. You hummed her a lullaby once, in a nursery that smelled of dust.
+durst_nursemaid: You. You sang it. Nobody had sung it since me.
+elif flag.death_house_nursemaid_destroyed
+durst_nursemaid: You broke me in the nursery. That's all right. That was only the part of me that was angry. This is the part that's left.
+else
+durst_nursemaid: Don't be frightened. I only stand here. It's the nearest I can get.
+endif
+* Why can't you go in? -> wall_why
+* Who are you? -> wall_who
+
+~ wall_why
+durst_nursemaid: You have to be brought. Somebody has to carry you, and say a word, and put the earth back. Nobody carried me anywhere. They folded me up and put me in the roof.
+-> wall_who
+
+~ wall_who
+set nursemaid_named
+if quest.the_nursemaids_grave == rumored or not quest.the_nursemaids_grave
+quest the_nursemaids_grave asked
+endif
+durst_nursemaid [sad]: Veta. My name's Veta. Nobody in that house ever said it. The children called me Nurse, and the master called me other things, and the mistress called me nothing at all.
+durst_nursemaid: My bones are in the trunk under the roof of the tall house. Don't bring them here. I don't want the churchyard.
+durst_nursemaid: I want my Walter. They took him down under the house the night he was born. There's a door down there with his name on it. Put me in with him. Please.
+interject class:cleric: We'll carry her. It's what the rite is for.
+-> END
+
+# --- The attic trunk (death_house/attic:nursemaid_trunk jumps here) ---
+
+~ bones
+set nursemaid_bones_taken
+quest the_nursemaids_grave carried
+Narrator: You fold the stiff sheet back over her and lift her out together, all of her, which is not much. Someone ties the blue ribbon back in what's left of her hair. It seems the least you can do.
+Narrator: In the pocket of the apron, under the sheet, there's a smooth grey stone with a hole through it, worn shiny by a thumb.
+-> END
+
+# --- Walter's crypt (death_house/dungeon:crypt_walter jumps here) ---
+
+~ crypt
+if flag.nursemaid_keepers_beaten
+-> rest
+endif
+Narrator: The smallest crypt in the row. Walter, and nothing else. You get your fingers round the edge of the slab, and it comes away easier than it should, as if it was never sealed.
+Narrator: It's empty. Not a bone, not a scrap of cloth. There was never a baby in it. The robed ones cut his name over a box and gave him to the thing in the pit instead.
+if flag.death_house_lorghoth_slain
+interject tag:blunt: Then what we killed down there is all there is of him.
+endif
+* (Lay her in it anyway.) -> lay
+* (Close it again.) -> END
+
+~ lay
+Narrator: You lay her in the little crypt, sheet and ribbon and all, though she hardly fits. Now there's somebody in it who loved him. That has to count for something.
+Narrator: Behind you, along the row of crypts, stone grinds on stone. The house has noticed someone has taken something out of it without asking.
+combat nursemaid_keepers
+
+~ rest
+quest the_nursemaids_grave done
+Narrator: The little crypt is closed again. On the lid, where nobody put it, lies the smooth grey stone with the hole through it, warm as a hand.
+Narrator: For a moment, somewhere in the stone of the house, someone hums the first bar of a lullaby, off key, and stops, satisfied.
+give stone_of_good_luck
+approve liriel_dawnsong +3 godrick_pendlebrook +2 wren_featherfoot +2 thistle +1 ratatoille +1: You laid Veta the nursemaid with her son
+-> END

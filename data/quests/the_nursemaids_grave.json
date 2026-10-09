@@ -1,0 +1,48 @@
+{
+  "id": "the_nursemaids_grave",
+  "name": "The Nursemaid's Grave",
+  "summary": "Old Mihail the gravedigger says a girl in a nursemaid's cap stands at the churchyard wall by night and won't come in. Nobody ever brought her to him.",
+  "giver": "barovia_gravedigger",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Old Mihail says a girl in a nursemaid's cap stands at the churchyard wall by night, looking in, and won't come through the gate. She's from the tall house by the gate. Nobody saw her leave it.",
+      "objectives": [
+        "Go to the churchyard wall after dark"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "The girl at the wall is Veta, the Dursts' nursemaid. Her bones are folded in a trunk in the attic of the tall house. She doesn't want the churchyard; she wants to lie with her son Walter, in the crypt with his name on it under the house.",
+      "objectives": [
+        "Fetch Veta's bones from the trunk in Death House's attic",
+        "Take her down to Walter's crypt"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "carried",
+      "journal": "We have Veta's bones, wrapped in the sheet they lay in, with her blue ribbon tied back in her hair.",
+      "objectives": [
+        "Take her down to Walter's crypt under the house"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "laid",
+      "journal": "Walter's crypt was empty: the robed ones never buried him at all. We laid Veta in it anyway, and the house's keepers came for her, and we put them down.",
+      "objectives": [
+        "Look at Walter's crypt once more"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Veta lies in her son's crypt under the tall house. Someone left her lucky stone on the lid for us, and somewhere in the stone of the house, someone hummed.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
