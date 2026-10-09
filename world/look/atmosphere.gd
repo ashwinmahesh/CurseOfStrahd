@@ -1363,6 +1363,7 @@ func _dress_light(light: Variant) -> void:
 		(l as CandleFlicker).flicker = 0.0
 	if not bool(spec.get("steady", false)):
 		LightFlicker.give(l, kind, _dark_boost(kind))
+	HeatShimmer.add(self, l, kind)   # the air wavers above fires and torches (Visual Polish Plan 8)
 	if kind == "window" and not outdoors:
 		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
 		l.light_color = sun.light_color
