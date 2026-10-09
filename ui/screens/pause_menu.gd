@@ -363,6 +363,11 @@ func _game_rows() -> void:
 			PadGlyphs.refresh_hints(),
 		"The controller's buttons as they're shown: Automatic follows the pad you play with.")
 	y += ROW_PITCH
+	# Controller fights (owner pick 2026-10-09): the bar, or Baldur's Gate 3's wheels of actions.
+	_choice_row(y, "Controller fights", ["Bar", "Wheels"], 1 if GameSettings.pad_wheels() else 0, func(i: int) -> void:
+		GameSettings.set_pad_wheels(i == 1),
+		"Bar: hold LB for a wheel of tabs, then step through the hotbar. Wheels: hold LB for a wheel of your actions themselves, the D-pad changing the filter and the page.")
+	y += ROW_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
