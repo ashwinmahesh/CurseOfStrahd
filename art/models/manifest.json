@@ -7942,9 +7942,9 @@
         "broad_oak_bough"
       ],
       "size": [
-        3.66,
-        4.742,
-        3.114
+        3.73,
+        4.852,
+        3.157
       ],
       "materials": [
         "pal_bog",
@@ -7952,7 +7952,7 @@
         "pal_moss",
         "pal_umber"
       ],
-      "triangles": 1026,
+      "triangles": 2006,
       "nature": true
     },
     "brazier_cold": {
