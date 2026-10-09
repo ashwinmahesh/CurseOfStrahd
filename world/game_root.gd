@@ -926,10 +926,21 @@ func _quick_save() -> void:
 
 ## F9: back to the game's own slot as last saved.
 func _quick_load() -> void:
+	# A live Honour run can't go back (Ashwin, 2026-10-09, QA D-3): its one save only moves forward.
+	if SaveSystem.honour():
+		hud.toast("An Honour run can't go back: the game saves as you go.")
+		return
 	if SaveSystem.current_slot != "" and SaveSystem.load_slot(SaveSystem.current_slot) == OK:
 		get_tree().reload_current_scene()
 	else:
 		hud.toast("No quick save yet.")
+
+
+## Closing the window in a live Honour run keeps where the party is (in a fight, the round's own save already does), so
+## coming back doesn't rewind it to the last autosave (QA D-3).
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and SaveSystem.honour() and view != null and not moving:
+		SaveSystem.autosave()
 
 
 # --- Captures -------------------------------------------------------------------------------------

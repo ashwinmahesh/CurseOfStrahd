@@ -73,8 +73,11 @@ An Honour run (`combat/difficulty.gd`, `one_save`) keeps one save, its own slot,
 
 - the autosaves (arriving, a rest, a won fight) write over it instead of the rotating autosaves, and the first one
   makes it;
-- each fight is kept as it starts: round 1 writes over it, later rounds leave it alone, and there's no round-start
-  save beside it, so leaving a fight comes back to its start, never past it;
+- each round of a fight writes over it as the round starts (its picture only at round 1), and there's no
+  round-start save beside it, so leaving a fight comes back to the round it was in, never further back (QA D-3; it
+  had been kept at the fight's start, which let a lost fight be quit and started again);
+- it can't go back (owner, 2026-10-09, QA D-3): F9 says so and loads nothing, the pause menu's Load a Save is off
+  (other games load from the title), and Quit to Title and closing the window write over it first, outside a fight;
 - Save Game shows only that save (Save Here asks nothing, since there's nothing else to lose) and no New Save once it
   exists; F5 writes over it too;
 - a wipe ends the Honour run as the game-over arch opens (`SaveSystem.end_honour`): the game and its save switch to
