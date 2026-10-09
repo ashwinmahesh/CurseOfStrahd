@@ -158,6 +158,13 @@ have Apple notarize the disk image. (Apple's notary can't take the zip: the game
 doesn't read.) Without them the app is signed ad hoc and macOS asks the first time it opens.
 `tools/release/mac_app.py` signs locally from `MAC_SIGN_P12` and `MAC_SIGN_P12_PASSWORD_FILE`.
 
+Players update with one line from the site (`curseofstrahd.app/update.sh` on a Mac, `update.ps1` on Windows), which
+reads `downloads.curseofstrahd.app/latest.json`. When a release changes nothing a pack can't carry since the last full
+download (the Godot version, `project.godot`, files removed from the folders the game lists), the release workflow also
+exports a cumulative patch against that download (`tools/release/patch.py`, Godot's `--export-patch`) and the
+updaters fetch just that, into the game's user folder beside the saves; `core/patch_loader.gd`, the first autoload,
+loads it at startup. `release.json` beside each release's downloads records which it is.
+
 The Windows .exe ships unsigned, so SmartScreen may warn. With an Azure Artifact Signing account, the secrets
 `AZURE_TENANT_ID`, `AZURE_CLIENT_ID` and `AZURE_CLIENT_SECRET` (an app registration allowed to sign with the
 certificate profile) and `ARTIFACT_SIGNING_ENDPOINT`, `ARTIFACT_SIGNING_ACCOUNT` and `ARTIFACT_SIGNING_PROFILE` (as
