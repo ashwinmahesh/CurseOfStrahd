@@ -884,7 +884,8 @@ func after_miss(c: Combatant, target: Combatant, option: Dictionary, _r: CombatR
 
 ## Any attack, hit or miss: a thrown weapon that returns to its wielder's hand (a weapon with the `returns` rule: a
 ## Dwarven Thrower, Whelm) comes back off the ground (GroundItems).
-func after_attack(c: Combatant, _target: Combatant, option: Dictionary, _hit: bool) -> void:
+func after_attack(c: Combatant, target: Combatant, option: Dictionary, _hit: bool) -> void:
+	_threatens_rats(c, target)
 	var ch := ch_of(c)
 	if ch == null or str(option.get("kind", "")) != "thrown":
 		return
@@ -1078,6 +1079,7 @@ func adjust_incoming(source: Combatant, target: Combatant, parts: Array, label: 
 func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array) -> void:
 	if target == null or target.creature == null:
 		return
+	_threatens_rats(source, target)
 	specials.on_damaged(source, target, amount, parts)
 
 
@@ -1122,6 +1124,18 @@ func reveals_invisible(a: Combatant, b: Combatant) -> bool:
 	return false
 
 
+## Pipes of the Sewers: rats and giant rats are Indifferent to whoever is attuned to them and won't attack them, unless
+## they've threatened or harmed rats (an attack on one, or damage to one, this fight).
+func _rats_leave_alone(target: Combatant) -> bool:
+	var ch := ch_of(target)
+	return ch != null and "pipes_of_the_sewers" in ch.attuned and not target.has_meta("threatened_rats")
+
+
+func _threatens_rats(c: Combatant, target: Combatant) -> void:
+	if c != null and target != null and c != target and specials._rat_kind(target) in ["rat", "giant_rat"]:
+		c.set_meta("threatened_rats", true)
+
+
 ## "" if `c` may attack `target` with `option`; otherwise what stops it (a Cube of Force's barrier, a Scroll of
 ## Protection's ward against the attacker's kind).
 func attack_blocked(c: Combatant, target: Combatant, option: Dictionary) -> String:
@@ -1133,6 +1147,8 @@ func attack_blocked(c: Combatant, target: Combatant, option: Dictionary) -> Stri
 		return "A Cube of Force barrier stops missiles"
 	if target.creature.has_flag("protection_from:%s" % c.creature.creature_type):
 		return "%s's Scroll of Protection keeps %ss away" % [target.name(), c.creature.creature_type]
+	if specials._rat_kind(c) in ["rat", "giant_rat"] and _rats_leave_alone(target):
+		return "Rats leave %s alone (Pipes of the Sewers)" % target.name()
 	return ""
 
 

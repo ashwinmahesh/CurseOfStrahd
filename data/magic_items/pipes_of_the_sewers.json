@@ -24,20 +24,28 @@
       "id": "play",
       "name": "Call the rats",
       "cost": "magic",
-      "custom": "summon_monster",
-      "params": {
-        "monster": "swarm_of_rats",
-        "count": 3,
-        "hours": 1,
-        "count_dice": "1d3",
-        "concentration": true
+      "custom": "pipes_of_the_sewers",
+      "charges": 1,
+      "targeting": "none",
+      "choice": {
+        "label": "Swarms (a charge each)",
+        "from": [
+          "one",
+          "two",
+          "three"
+        ]
       },
-      "targeting": "place",
-      "range": 60,
-      "text": "Magic action, 1 charge: 1d3 Swarms of Rats answer the tune and fight for you while you keep playing.",
-      "charges": 1
+      "text": "Magic action, 1 to 3 charges: a Swarm of Rats comes running for each. Each swarm within 30 ft then makes a contest, your Charisma check against its Wisdom check: if you win, it's Friendly and obeys you while you keep playing; if you lose, it acts as a swarm does and the music can't sway it again."
+    },
+    {
+      "id": "keep",
+      "name": "Keep playing",
+      "cost": "magic",
+      "custom": "pipes_keep_playing",
+      "targeting": "none",
+      "text": "Magic action: play on. A swarm you've swayed stays yours only while you play each round; swarms within 30 ft that no one else controls and that haven't refused you make the contest."
     }
   ],
-  "summary": "3 charges: call up to three swarms of rats that obey you while you play.",
-  "text": "Using these pipes requires proficiency with wind instruments. While you are attuned, ordinary rats and giant rats treat you with indifference and leave you alone unless you threaten or hurt them. The pipes hold 3 charges and regain 1d3 each dawn. Play them as a Magic action and spend 1 to 3 charges; each charge summons one Swarm of Rats, provided enough rats lie within half a mile to answer. Arriving swarms stay friendly toward you and your companions for as long as you keep playing, which works like maintaining Concentration."
+  "summary": "3 charges: call swarms of rats and sway them with a Charisma contest; they obey while you play each round. Rats leave you alone.",
+  "text": "Only a creature proficient with a wind instrument can use these pipes. While you're attuned to them, ordinary rats and giant rats are Indifferent to you and won't attack you unless you threaten or harm them. The pipes hold 3 charges and regain 1d3 each dawn. Playing them is a Magic action that spends 1 to 3 charges, each calling one Swarm of Rats if enough rats are within half a mile to answer. The swarms run toward the music but answer to no one. When a Swarm of Rats that no other creature controls comes within 30 feet of you while you're playing, you can pit a Charisma check against its Wisdom check. Lose, and it behaves as it normally would and can't be swayed by the pipes for 24 hours. Win, and it's Friendly to you and your allies for as long as you keep playing the pipes each round as a Magic action, and it obeys your commands; with no command it only defends itself. A swayed swarm that starts its turn without hearing the music slips your control, behaves as it normally would, and can't be swayed again for 24 hours."
 }
