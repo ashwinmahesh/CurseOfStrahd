@@ -253,3 +253,19 @@ func test_the_foes_still_to_fight_here_are_read_ahead() -> void:
 	arts = PlacePreload.foe_art_ids("wizard_of_wines", loc, st)
 	assert_false(str(art.call("twig_blight")) in arts, "the ambush has begun: its twig blights aren't (%s)" % [arts])
 	assert_true(str(art.call("vine_mother")) in arts, "the Vine Mother's fight is still to come")
+
+
+## Which fights still to come are read ahead (PlacePreload.could_happen): one that waits for night or a flag can come
+## true while the party is here, so it's read; an entry for another party level, or a final battle the cards put in
+## another room, can't, so it isn't.
+func test_fights_that_could_still_happen_this_visit_are_read_ahead() -> void:
+	GameState.reset()
+	var st := GameState.story
+	var ch := Pregens.build("ilse_varga", 1)
+	st.party.append(ch)
+	st.minute_of_day = 12 * 60
+	assert_true(PlacePreload.could_happen({"when": "night and flag.ismark_met"}, st), "night and a flag may still come")
+	assert_true(PlacePreload.could_happen({"when": ""}, st), "no condition")
+	assert_false(PlacePreload.could_happen({"when": "night and level >= 7"}, st), "a level-1 party won't be level 7 here")
+	assert_true(PlacePreload.could_happen({"when": "not flag.cleared and level >= 1"}, st), "its level test holds")
+	assert_false(PlacePreload.could_happen({"final_battle": "castle_ravenloft_court_study"}, st), "no reading put him there")
