@@ -371,6 +371,15 @@ func run_ai_turn() -> CombatResult:
 	return turns.run_ai_turn()
 
 
+## run_ai_turn in steps, the plan between them (EncounterTurns.begin_ai_turn).
+func begin_ai_turn() -> CombatResult:
+	return turns.begin_ai_turn()
+
+
+func finish_ai_turn(thought: Dictionary) -> CombatResult:
+	return turns.finish_ai_turn(thought)
+
+
 func _turn_check(c: Combatant) -> String:
 	return turns._turn_check(c)
 
