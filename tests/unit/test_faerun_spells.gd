@@ -9,6 +9,7 @@ func _cast(e: Encounter, c: Combatant, id: String, targets: Array = [], point: V
 
 
 func _order(e: Encounter, first: Combatant, rest: Array) -> void:
+	e.shared_turns = false   # the order is set by hand below, one turn at a time (a shared party turn would group them first)
 	TestCombat.start_with(e, first)
 	var init := 20
 	for x: Variant in rest:
