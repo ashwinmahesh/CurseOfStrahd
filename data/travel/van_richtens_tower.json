@@ -54,6 +54,19 @@
       "region": "lake_zarovich",
       "when": "visited:vallaki and (quest.the_ravens_ransom or quest.fens_trail >= the_blazes)",
       "summary": "A trappers' trail through the pines on the hills above Lake Zarovich, where the hunters set their snares."
+    },
+    {
+      "id": "reed_isle",
+      "name": "The Reed Isle",
+      "location": "zarovich_reed_island",
+      "spawn": "from_boat",
+      "pos": [
+        0.27,
+        0.37
+      ],
+      "region": "lake_zarovich",
+      "when": "quest.the_barons_island",
+      "summary": "A low island of reeds out on Lake Zarovich that nobody fishes near."
     }
   ],
   "roads": [
@@ -78,7 +91,12 @@
       "id": "vallaki_to_den",
       "from": "vallaki",
       "to": "werewolf_den",
-      "via": [[0.335, 0.34]],
+      "via": [
+        [
+          0.335,
+          0.34
+        ]
+      ],
       "hours": 5,
       "table": "zarovich_hills",
       "name": "The north track round the lake and up into the hills"
@@ -104,7 +122,12 @@
       "id": "tower_to_krezk",
       "from": "van_richtens_tower",
       "to": "krezk",
-      "via": [[0.11, 0.33]],
+      "via": [
+        [
+          0.11,
+          0.33
+        ]
+      ],
       "hours": 4,
       "table": "zarovich_hills",
       "name": "The Baratok track, down to Krezk"
@@ -115,6 +138,14 @@
       "to": "lake_hill_trail",
       "hours": 0.5,
       "name": "Up the hill trail"
+    },
+    {
+      "id": "lake_zarovich_to_reed_isle",
+      "from": "lake_zarovich",
+      "to": "reed_isle",
+      "hours": 1,
+      "name": "By Old Nistor's boat, out into the reeds",
+      "when": "quest.the_barons_island"
     }
   ]
 }

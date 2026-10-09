@@ -349,6 +349,7 @@ leaves a smaller purse and one find.
 | ✅ | Mount Baratok, the ring of glass | Censer of Controlling Air Elementals (rare) | Hoard: sunk in the glass where the mage's storm stood (The Forgotten Storm, docs/story/side_quests.md) |
 | ✅ | The Krezk road, the waystone | Wand of Slumber (rare) | Gift: from Lark, once Yanko has come into the light (The Waystone, docs/story/side_quests.md) |
 | ✅ | The goat path above the Tsolenka Pass | Rod of Alertness (very rare) | Hoard: in the guide's pack, once he's beaten (The Guide to the Temple, docs/story/side_quests.md) |
+| ✅ | Lake Zarovich, the Reed Isle | Dimensional Shackles (rare) | Gift: from Ostap, once the Baron's boatmen are beaten (The Baron's Island, docs/story/side_quests.md) |
 | ✅ | The Old Svalich Road, the Grey Goose | Pipes of the Sewers (uncommon) | Hoard: under the hearthstone, once the innkeeper puts his lantern down (The Lantern in the Roadhouse, docs/story/side_quests.md) |
 | ✅ | The Tser Pool camp, the plank stage | Wind Fan (uncommon) | Gift: from Lavinia, once she knows where Bujor is (The Dancing Bear, docs/story/side_quests.md) |
 | ✅ | Yester Hill, the foot of the hill | Blood Amulet (rare) | Gift: from Freydis, once Silverjaw is back in her mound (The Barrow on Yester Hill, docs/story/side_quests.md) |

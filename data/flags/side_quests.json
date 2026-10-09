@@ -1337,6 +1337,26 @@
       "summary": "The Guide to the Temple: the party beat the guide and his shadows (encounter amber_guide)."
     },
     {
+      "id": "reed_isle_met",
+      "type": "bool",
+      "summary": "The Baron's Island: the party met Ostap and the castaways on the Reed Isle."
+    },
+    {
+      "id": "reed_isle_boatmen_beaten",
+      "type": "bool",
+      "summary": "The Baron's Island: the party met the Baron's boatmen on the shingle (encounter reed_isle_boatmen)."
+    },
+    {
+      "id": "reed_isle_stayed",
+      "type": "bool",
+      "summary": "The Baron's Island: the castaways kept the boatmen's boat hidden and stayed on the island."
+    },
+    {
+      "id": "reed_isle_home",
+      "type": "bool",
+      "summary": "The Baron's Island: the castaways rowed home to Vallaki in daylight, singing."
+    },
+    {
       "id": "roadhouse_innkeeper_met",
       "type": "bool",
       "summary": "The Lantern in the Roadhouse: the party met the innkeeper's ghost at the Grey Goose."

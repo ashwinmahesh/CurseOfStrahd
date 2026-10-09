@@ -506,6 +506,17 @@ func test_the_guide_gets_up_from_his_fire() -> void:
 	assert_true(GameState.story.get_flag("amber_guide_beaten", false))
 
 
+## The Baron's boatmen come up the shingle of the Reed Isle with clubs and a lantern, and the reeds move behind them.
+func test_the_boatmen_come_for_the_smoke() -> void:
+	var v := await _boot("zarovich_reed_island", 22, 5, ["reed_isle_met"])
+	GameState.story.set_quest_stage("the_barons_island", "asked")
+	LocationNpcs.hide_npcs_of(v, "lake_zarovich/the_barons_island:ostap")
+	await _fight(v, "reed_isle_boatmen", ["The Boatmaster", "A Boatman", "Something in the Reeds"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_barons_island"), "defended")
+	assert_true(GameState.story.get_flag("reed_isle_boatmen_beaten", false))
+
+
 ## What's lived under the Grey Goose's trapdoor for twenty winters comes up into the lamplight.
 func test_the_cellar_of_the_grey_goose() -> void:
 	var v := await _boot("svalich_roadhouse", 23, 2, ["roadhouse_innkeeper_met"])
