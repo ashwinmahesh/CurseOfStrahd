@@ -298,7 +298,9 @@ jobs:
       upload: true
     secrets: inherit
 
-  # Its own job, so only these few lines hold a token that can write to the repository.
+  # Its own job, so only these few lines hold a token that can write to the repository. The tag is made through
+  # GitHub's API, not git push: pushing from a checkout ran the Git LFS pre-push hook over every pointer file and the
+  # push failed (HTTP 500 on 1.0.1's first tag).
   tag:
     needs: release
     if: github.event_name == 'workflow_dispatch' && inputs.upload
@@ -308,28 +310,32 @@ jobs:
       contents: write
     env:
       VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: false
-
       - name: Tag the commit that was published
         run: |
           tag="v${VERSION}"
-          if git ls-remote --exit-code --tags origin "refs/tags/${tag}" > /dev/null; then
-            git fetch -q --no-tags origin "refs/tags/${tag}:refs/tags/${tag}"
-            at="$(git rev-parse "${tag}^{commit}")"
-            if [ "$at" != "$GITHUB_SHA" ]; then
-              echo "::error::${tag} is already on ${at}, not on ${GITHUB_SHA}"
+          ref="$(gh api "repos/${GITHUB_REPOSITORY}/git/matching-refs/tags/${tag}" \
+            --jq ".[] | select(.ref == \"refs/tags/${tag}\") | \"\(.object.type) \(.object.sha)\"")"
+          if [ -n "$ref" ]; then
+            read -r kind sha <<< "$ref"
+            if [ "$kind" = "tag" ]; then   # an annotated tag: the commit is behind the tag object
+              sha="$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${sha}" --jq .object.sha)"
+            fi
+            if [ "$sha" != "$GITHUB_SHA" ]; then
+              echo "::error::${tag} is already on ${sha}, not on ${GITHUB_SHA}"
               exit 1
             fi
             echo "${tag} is already on this commit"
             exit 0
           fi
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
-            tag -a "$tag" "$GITHUB_SHA" -m "Curse of Strahd ${VERSION}" \
-            -m "Downloads: ${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-macos.zip and -windows.zip"
-          git push origin "refs/tags/${tag}"
+          object="$(gh api "repos/${GITHUB_REPOSITORY}/git/tags" -f tag="$tag" -f type=commit -f object="$GITHUB_SHA" \
+            -f message="Curse of Strahd ${VERSION}
+
+          Downloads: ${DOWNLOADS}/${VERSION}/" \
+            -f "tagger[name]=github-actions[bot]" -f "tagger[email]=41898282+github-actions[bot]@users.noreply.github.com" \
+            --jq .sha)"
+          gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="$object" > /dev/null
           echo "Tagged ${GITHUB_SHA} as ${tag}" >> "$GITHUB_STEP_SUMMARY"
 
   # Reads the three caches so GitHub keeps them (see the top of the file). Nothing is built.
