@@ -1205,6 +1205,31 @@
       "id": "escher_waits",
       "type": "bool",
       "summary": "Escher's Petition: the party talked Escher into waiting for a dawn the count isn't in; he's back in his suite."
+    },
+    {
+      "id": "tithe_told",
+      "type": "bool",
+      "summary": "The Silver Hoard: Sir Godfrey told the party about the Dragon's Tithe, or they found the draught under the servants' table; the undercroft stair opens."
+    },
+    {
+      "id": "tithe_keeper_met",
+      "type": "bool",
+      "summary": "The Silver Hoard: the party met the tithe-keeper on his chest in the undercroft."
+    },
+    {
+      "id": "tithe_keeper_remembered",
+      "type": "bool",
+      "summary": "The Silver Hoard: the party said the dragon's last words to the tithe-keeper (Let them go home); he wants the silver off him and fights at less than his full strength."
+    },
+    {
+      "id": "gilded_knight_slain",
+      "type": "bool",
+      "summary": "The Silver Hoard: the party beat the Gilded Knight (encounter gilded_knight) and the tithe chest is theirs to open."
+    },
+    {
+      "id": "tithe_idol_found",
+      "type": "bool",
+      "summary": "The Silver Hoard: the party took the tithe-keeper's golden idol from his armour."
     }
   ]
 }

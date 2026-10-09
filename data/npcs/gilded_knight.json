@@ -1,0 +1,18 @@
+{
+  "id": "gilded_knight",
+  "name": "The Gilded Knight",
+  "title": "Keeper of the Dragon's Tithe",
+  "summary": "The Order of the Silver Dragon's tithe-keeper, who went down to the dragon's last winter tithe in the undercroft the night Argynvostholt fell and has been counting it ever since.",
+  "portrait": "revenant",
+  "sprite": "revenant",
+  "attitude": "indifferent",
+  "monster": "gilded_knight",
+  "guest": false,
+  "tags": [
+    "revenant",
+    "order_of_the_silver_dragon",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

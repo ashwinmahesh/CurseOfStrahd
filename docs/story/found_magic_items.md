@@ -345,3 +345,4 @@ leaves a smaller purse and one find.
 | ✅ | Pidlwick II | Figurine of Wondrous Power, Ebony Fly (rare) | Gift: when you bring back his key |
 | ✅ | The catacombs, the crypt with no name | Rod of Absorption (very rare) | Hoard: in Corvina's crypt, once she's at rest (The Unnamed Crypt, docs/story/side_quests.md) |
 | ✅ | The castle roofs, the south tower | Helm of Brilliance (very rare) | Gift: from Escher at dawn, whether he watches the sun come up or waits for one the count isn't in (Escher's Petition, docs/story/side_quests.md) |
+| ✅ | Argynvostholt, the undercroft | Golden Idol of Good Fortunes (very rare) | Hoard: in the tithe-keeper's armour, once he's beaten (The Silver Hoard, docs/story/side_quests.md) |

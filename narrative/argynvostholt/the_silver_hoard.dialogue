@@ -1,0 +1,127 @@
+# The Silver Hoard (side quest, docs/story/side_quests.md): Argynvost gave his hoard away. Every Midwinter the Order
+# rode down the valley and left a silver coin on every doorstep with a fire behind it, the Dragon's Tithe. The last
+# winter's tithe was counted and chested in the undercroft the night the house fell, and the tithe-keeper went down to
+# it and shut the door (data/locations/argynvostholt_undercroft.json). **Twist:** (Insight) he isn't guarding it for
+# the valley: he struck down the squire who tried to carry it down the hill that night, and he can't let go of it.
+# **Escalation:** the silver has grown over him, and the tithe escort's empty harness rises with him
+# (data/monsters/gilded_knight.json). The dragon's last words, if the party has them (The Squire), make him want it
+# off him. Reached from Sir Godfrey's menu from level 9 (argynvostholt/godfrey:menu). Every line here is unvoiced for
+# now.
+
+# --- Sir Godfrey (argynvostholt/godfrey:menu jumps here) ---
+
+~ godfrey
+Sir Godfrey Gwilym: His hoard? (Something in the helmet that might be a laugh.) He gave it away. That was his joke: a dragon with a hoard, and every Midwinter he had us carry it down the valley, a sack at every saddle, and leave a coin on every doorstep that had a fire behind it.
+Sir Godfrey Gwilym: The Dragon's Tithe, the villages called it. They used to leave their doors unbarred for us, that one night of the year.
+Sir Godfrey Gwilym [sad]: The last winter's tithe was counted and chested in the undercroft the night the house fell. The tithe-keeper swore on his sword it would reach the valley if he had to carry it himself. He went down to it when the gate broke. He never came up to the table after.
+Sir Godfrey Gwilym: Sir... I had his name a moment ago. The stair's under the servants' table. Tell him Godfrey asks after him.
+set tithe_told
+quest the_silver_hoard asked
+-> argynvostholt/godfrey:menu
+
+# --- A draught under the servants' table (prop holt_tithe_draught, the hall) ---
+
+~ draught
+Narrator: Cold air comes up between the flagstones under the servants' table, and with it, very faint, a voice. Somebody down there is counting.
+Narrator: Scratched into the stone by the table leg, in a hand that was in a hurry: TITHE, and a little dragon.
+set tithe_told
+if not quest.the_silver_hoard
+quest the_silver_hoard asked
+endif
+-> END
+
+# --- The tithe-keeper on his chest (npc gilded_knight, the undercroft) ---
+
+~ keeper
+if flag.tithe_keeper_met
+The Gilded Knight: Four hundred and twelve. Thirteen. (He doesn't look up.) You're still here.
+-> keeper_menu
+endif
+set tithe_keeper_met
+cutscene sq_gilded_knight
+Narrator: At the far end of the vault, on an iron chest, sits a knight in armour that isn't steel any more. Coins have grown over it like frost over a window, layer on layer, until he is more hoard than man. He's counting.
+The Gilded Knight: Nine hundred and ninety-six. Ninety-seven. (His head comes up.) Halt. This is the valley's. Counted and sealed. Who sent you down?
+-> keeper_menu
+
+~ keeper_menu
+* Godfrey sent us. It's time it went down to the valley. -> valley
+* [Insight DC 15] (Watch his hands on the chest.) -> hands | no_hands
+* [if flag.vladimir_last_words_known or flag.ioan_cleared] Let them go home. -> words
+* (Leave him to his counting.) -> END
+
+~ valley
+The Gilded Knight: The valley. (He laughs, and coins slide off his shoulders and ring on the flagstones.) Have you been down to the valley? Every hearth in it is his now. Every door. Every child at every window.
+The Gilded Knight: I'll not pay the count's people the dragon's silver. It stays. It stays with me. I've kept it four hundred years, and it has never been safer.
+-> fight_or_words
+
+~ hands
+Narrator: His gauntlets aren't resting on the chest. They're gripping it, the way a drowning man grips a spar. Near his feet, half buried in coins, lies a squire's small round shield, cut nearly in two.
+Narrator: Somebody tried to carry the tithe down the hill the night the house fell. He didn't let them.
+interject tag:blunt: He's not guarding it. He's keeping it.
+-> fight_or_words
+
+~ no_hands
+Narrator: A knight on a chest, and a great deal of silver. That's all you can tell.
+-> fight_or_words
+
+~ fight_or_words
+* [if flag.vladimir_last_words_known or flag.ioan_cleared] Let them go home. -> words
+* Then we'll carry it down ourselves. -> fight
+* (Leave him to his counting.) -> END
+
+~ words
+set tithe_keeper_remembered
+Narrator: He stops counting. For a long moment the only sound is one coin rolling somewhere in the dark, round and round, and settling.
+The Gilded Knight: He said that. In the yard, with his head on the stones. I heard it from the stair, and I came down here anyway, and I shut the door.
+The Gilded Knight: I can't let go of it. I've tried. My hands won't. (The silver on his arms creaks, and tightens.) You'll have to take it off me.
+interject name:godrick_pendlebrook: Then we will, sir. Gently as we can.
+-> fight
+
+~ fight
+Narrator: The coins on his armour rise like hackles. Round the walls, the empty harness of the tithe escort, polished every night for four hundred years, lifts its swords.
+combat gilded_knight
+
+# --- The tithe chest (prop tithe_chest) ---
+
+~ chest
+if quest.the_silver_hoard == delivered
+Narrator: The chest stands open and empty. The undercroft smells of old metal, and of nothing else now.
+-> END
+endif
+if quest.the_silver_hoard == kept
+Narrator: An empty chest, and the long marks in the dust where you dragged the sacks to the stair.
+-> END
+endif
+if not flag.gilded_knight_slain
+Narrator: An iron chest with the Order's dragon on the lid. The tithe-keeper is sitting on it.
+-> END
+endif
+Narrator: The tithe chest is full to the lid with silver dragons: old coins with a dragon's head on one side and a lit beacon on the other. Round the walls, in sacks and drifts, enough for a coin on every doorstep in Barovia, and some over.
+if not flag.tithe_idol_found
+set tithe_idol_found
+Narrator: In what's left of the tithe-keeper's armour there's something heavier than silver: a little golden idol of a coiled dragon, warm to the touch, worn smooth by four hundred years of a thumb going round and round it.
+give golden_idol_of_good_fortunes
+endif
+* (Send it down to the valley, as the dragon meant.) -> deliver
+* (Keep it.) -> keep
+* (Leave it for now.) -> END
+
+~ deliver
+quest the_silver_hoard delivered
+if flag.order_fate == "rest"
+Narrator: The knights are at rest, so it's you who carry it: two nights up and down the undercroft stair, and a borrowed cart, and every village on the road. You leave a coin on every doorstep that has a fire behind it.
+else
+Narrator: Sir Godfrey has the dead knights carry it up the stair, sack by sack. At Midwinter, he says, the Order will ride down the valley the way it used to, and leave a coin on every doorstep that has a fire behind it.
+Sir Godfrey Gwilym: The doors will be barred, this time. Leave the coins on the step anyway. Somebody will open one.
+endif
+Narrator: Weeks later, in villages you pass through, you see old silver coins with a dragon's head on them, threaded on string round children's necks.
+gold +250
+approve godrick_pendlebrook +3 kip_smudgewick +3 liriel_dawnsong +2 wren_featherfoot +2 thistle +1: You sent the dragon's last tithe down to the valley
+-> END
+
+~ keep
+quest the_silver_hoard kept
+Narrator: It takes a long time to fill your packs, and longer to carry them up the stair. The silver is very heavy, and it never seems to get any lighter.
+gold +1200
+approve godrick_pendlebrook -3 kip_smudgewick -3 liriel_dawnsong -2 wren_featherfoot -1 ratatoille +1: You kept the dragon's tithe for yourselves
+-> END

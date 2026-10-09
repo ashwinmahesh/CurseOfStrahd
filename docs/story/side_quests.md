@@ -372,6 +372,31 @@ battle come out of the courtyard for the only living things on the ridge.
 - Godfrey writes Ioan's name right and Cosmin's under it, and gives the party Ioan's shield, left at the gate the night
   he rode: an Arrow-Catching Shield (rare), and 150 gp from the Order's chest. Not offered once the Order rests.
 
+### The Silver Hoard (`the_silver_hoard`, narrative/argynvostholt/the_silver_hoard.dialogue; batch 7, level 9)
+
+From level 9, Sir Godfrey has a new question to answer: where did the dragon keep his hoard? He gave it away. Every
+Midwinter the Order carried it down the valley and left a silver coin on every doorstep with a fire behind it, the
+Dragon's Tithe. The last winter's tithe was chested in the undercroft the night the house fell, and the tithe-keeper
+went down to it and never came up to the table again; Godfrey can't find his name. With the knights at rest, a
+draught under the servants' table (a new examine prop, from level 9) gives the same start. The stair down (a new
+gated exit in the servants' hall) opens on the undercroft (data/locations/argynvostholt_undercroft.json), where a
+knight sits on the tithe chest under four hundred years of grown-over silver, counting (`sq_gilded_knight`, a new
+still). **Twist:** (Insight DC 15) he isn't guarding the tithe for the valley: a squire's shield cut in two lies at
+his feet, and he says the valley is the count's now and won't have the dragon's silver. **Escalation:** the escort's
+empty harness rises with him. With the dragon's last words from The Squire (`vladimir_last_words_known` or
+`ioan_cleared`), "Let them go home" makes him want the silver off him, and he fights at 140 HP.
+
+- **Boss: the Gilded Knight** (data/monsters/gilded_knight.json, `source.book: custom`, built up from the 2025 Monster
+  Manual's revenant and drawn with its sprite): Medium undead, AC 19, 178 HP, two Silvered Longsword blows with
+  necrotic cold, a Covetous Glare that paralyzes (recharge 5-6, DC 16 Wis), Regeneration 10 that fire and radiant
+  stop, Legendary Resistance (2/day), and a blow or a step between turns. CR 10. Three animated armours come with him
+  ("An Escort's Harness").
+- Fight `gilded_knight` in the undercroft. The autopilot wins 3 of 8 at level 9 at full strength and 4 of 8 with the
+  dragon's words, losing two or three party members a fight.
+- In his armour: a Golden Idol of Good Fortunes (very rare). Then the tithe chest: send it down to the valley (the Order
+  rides it out at Midwinter, or the party carries it if the knights are at rest; 250 gp, and Godrick, Kip, Liriel,
+  Wren and Thistle approve), or keep it (1,200 gp, and they don't).
+
 ## Lake Zarovich (level 8)
 
 ### The Bell Under the Lake (`bell_under_the_lake`, narrative/lake_zarovich/bell_under_the_lake.dialogue; batch 2)
@@ -869,4 +894,6 @@ Vallaki: the_counts_portraitist.dialogue in full (Haralamb and the Count's Liken
 narrator/vallaki_painters_studio.dialogue. Batch 6,
 Castle Ravenloft: escher_petition.dialogue in full (new speaker Querreth; also Escher, a blunt interject and
 Godrick's and Liriel's) and Escher's two new greetings in spires_escher.dialogue ("My dawn-sellers..." and the
-petition option).
+petition option). Batch 7,
+Argynvostholt: the_silver_hoard.dialogue in full (new speaker the Gilded Knight; also Sir Godfrey, the Narrator, a
+blunt interject and Godrick's) and narrator/argynvostholt_undercroft.dialogue, and Godfrey's new menu option.

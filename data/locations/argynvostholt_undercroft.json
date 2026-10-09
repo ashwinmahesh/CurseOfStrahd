@@ -1,0 +1,325 @@
+{
+  "id": "argynvostholt_undercroft",
+  "name": "The Undercroft",
+  "region": "argynvostholt",
+  "summary": "The vaulted cellar under Argynvostholt's servants' hall, where the Order counted the dragon's winter tithe: drifts of old silver against the pillars, the empty harness of the tithe escort round the walls, and the tithe-keeper on the chest at the far end (The Silver Hoard, docs/story/side_quests.md).",
+  "text": "A low vault under the house, colder than the house. Silver lies in drifts against the pillars like snow against fence posts, and somewhere at the far end, in the dark, somebody is counting.",
+  "map": {
+    "rows": [
+      "######################",
+      "#....................#",
+      "#....................#",
+      "#....................#",
+      "#....#.....#....#....#",
+      "#....................#",
+      "#....................#",
+      "#....................#",
+      "#....................#",
+      "#....#.....#....#....#",
+      "#....................#",
+      "#....................#",
+      "#....................#",
+      "##.###################"
+    ],
+    "theme": "dungeon",
+    "light": "dark"
+  },
+  "areas": [
+    {
+      "id": "undercroft_stair_foot",
+      "name": "The foot of the stair",
+      "cells": [
+        [
+          1,
+          10
+        ],
+        [
+          9,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "undercroft_tithe_vault",
+      "name": "The tithe vault",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          20,
+          9
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      2,
+      11
+    ],
+    "from_hall": [
+      2,
+      11
+    ]
+  },
+  "exits": [
+    {
+      "id": "undercroft_up",
+      "cell": [
+        2,
+        13
+      ],
+      "to": "argynvostholt_hall",
+      "spawn": "from_undercroft",
+      "label": "The stair up to the servants' hall"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "tithe_chest",
+      "cell": [
+        11,
+        1
+      ],
+      "kind": "examine",
+      "label": "The tithe chest",
+      "model": "chest_iron",
+      "dialogue": "argynvostholt/the_silver_hoard:chest"
+    },
+    {
+      "id": "tithe_drift_1",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "gold_spill"
+    },
+    {
+      "id": "tithe_drift_2",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "gold_spill"
+    },
+    {
+      "id": "tithe_drift_3",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "gold_spill"
+    },
+    {
+      "id": "tithe_drift_4",
+      "cell": [
+        6,
+        9
+      ],
+      "kind": "decor",
+      "label": "Silver",
+      "model": "gold_spill"
+    },
+    {
+      "id": "tithe_drift_5",
+      "cell": [
+        19,
+        2
+      ],
+      "kind": "examine",
+      "label": "Silver",
+      "model": "gold_spill"
+    },
+    {
+      "id": "tithe_sacks",
+      "cell": [
+        1,
+        2
+      ],
+      "kind": "decor",
+      "label": "Sacks",
+      "model": "sack"
+    },
+    {
+      "id": "tithe_sacks_2",
+      "cell": [
+        20,
+        6
+      ],
+      "kind": "decor",
+      "label": "Sacks",
+      "model": "sack"
+    },
+    {
+      "id": "tithe_banner",
+      "cell": [
+        7,
+        0
+      ],
+      "kind": "examine",
+      "label": "A dragon banner",
+      "model": "banner_dragon"
+    },
+    {
+      "id": "tithe_roll",
+      "cell": [
+        14,
+        1
+      ],
+      "kind": "examine",
+      "label": "The tithe roll",
+      "model": "ledger"
+    },
+    {
+      "id": "tithe_squire_shield",
+      "cell": [
+        9,
+        2
+      ],
+      "kind": "examine",
+      "label": "A small round shield",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "tithe_escort_stands",
+      "cell": [
+        20,
+        4
+      ],
+      "kind": "decor",
+      "label": "Empty harness",
+      "model": "armor_stand",
+      "when": "not flag.gilded_knight_slain"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        11,
+        2
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "gilded_knight",
+      "cell": [
+        11,
+        2
+      ],
+      "dialogue": "argynvostholt/the_silver_hoard:keeper",
+      "when": "not flag.gilded_knight_slain",
+      "facing": "south",
+      "approach": 5
+    }
+  ],
+  "encounters": [
+    {
+      "id": "gilded_knight",
+      "trigger": "dialogue",
+      "when": "flag.tithe_keeper_remembered",
+      "text": "The silver on the tithe-keeper's armour rises like hackles, and round the walls the escort's empty harness lifts its swords.",
+      "surprise": "",
+      "flag": "gilded_knight_slain",
+      "quest": {
+        "id": "the_silver_hoard",
+        "stage": "fought"
+      },
+      "monsters": [
+        {
+          "monster": "gilded_knight",
+          "cell": [
+            11,
+            3
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            4,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            18,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            18,
+            7
+          ],
+          "name": "An Escort's Harness"
+        }
+      ]
+    },
+    {
+      "id": "gilded_knight",
+      "trigger": "dialogue",
+      "text": "The silver on the tithe-keeper's armour rises like hackles, and round the walls the escort's empty harness lifts its swords.",
+      "surprise": "",
+      "flag": "gilded_knight_slain",
+      "quest": {
+        "id": "the_silver_hoard",
+        "stage": "fought"
+      },
+      "monsters": [
+        {
+          "monster": "gilded_knight",
+          "cell": [
+            11,
+            3
+          ]
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            4,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            18,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            18,
+            7
+          ],
+          "name": "An Escort's Harness"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:argynvostholt_undercroft"
+  },
+  "rest": "risky"
+}
