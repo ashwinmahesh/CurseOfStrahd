@@ -1,0 +1,34 @@
+{
+  "id": "the_guide_to_the_temple",
+  "name": "The Guide to the Temple",
+  "summary": "Since the Tsolenka gate opened, a man has led three parties up the goat path toward the Amber Temple and come down alone each time.",
+  "giver": "tsolenka_sergeant",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "The dead sergeant at the Tsolenka watchtower has logged lanterns on the goat path round his tower: three parties this winter, and one lantern coming down each time. Last night a man, a woman, and a sledge with something small on it, coughing, and a guide in front who walks like he's never cold.",
+      "objectives": [
+        "Follow the goat path from the Tsolenka Pass toward the Amber Temple",
+        "Find the party with the sledge"
+      ],
+      "hint": "Take the goat path from the Tsolenka Pass toward the Amber Temple, and find the camp with the sledge.",
+      "ends": ""
+    },
+    {
+      "id": "fought",
+      "journal": "The guide had been keeping the child sick with sleep-root in her tea, to make her parents climb. Something in the amber paid him a year for every family. We stopped him.",
+      "objectives": [
+        "Talk to Floarea at the camp"
+      ],
+      "hint": "Talk to Floarea by the sledge at the camp on the goat path.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Without the tea the little girl will wake in a day or two, with only a cough to carry home. Remus and Floarea are taking her down.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

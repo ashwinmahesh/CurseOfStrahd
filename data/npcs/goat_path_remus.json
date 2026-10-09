@@ -1,0 +1,17 @@
+{
+  "id": "goat_path_remus",
+  "name": "Remus",
+  "title": "A Father from Vallaki",
+  "summary": "A Vallaki carter taking his sick daughter up the goat path to ask the Amber Temple for a cure, because the priest and the herb-wives couldn't.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "amber_temple"
+  ],
+  "region": "amber_temple",
+  "pronouns": "he/him"
+}

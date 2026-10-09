@@ -1,0 +1,17 @@
+{
+  "id": "amber_guide",
+  "name": "The Guide",
+  "title": "Of the Goat Path",
+  "summary": "A lean, smiling mountain guide in furs who goes bareheaded in the snow, leading desperate families up the goat path round the Tsolenka watchtower to ask the Amber Temple for what they can't get anywhere else.",
+  "portrait": "scout",
+  "sprite": "scout",
+  "attitude": "friendly",
+  "monster": "amber_guide",
+  "guest": false,
+  "tags": [
+    "human",
+    "amber_temple"
+  ],
+  "region": "amber_temple",
+  "pronouns": "he/him"
+}

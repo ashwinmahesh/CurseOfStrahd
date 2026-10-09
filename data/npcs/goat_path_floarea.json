@@ -1,0 +1,17 @@
+{
+  "id": "goat_path_floarea",
+  "name": "Floarea",
+  "title": "An Herb-Wife from Vallaki",
+  "summary": "Remus's wife, an herb-wife, who has been watching the guide make her daughter's tea every night and telling herself she's wrong about the smell.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "amber_temple"
+  ],
+  "region": "amber_temple",
+  "pronouns": "she/her"
+}

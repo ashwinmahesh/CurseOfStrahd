@@ -347,5 +347,6 @@ leaves a smaller purse and one find.
 | ✅ | The castle roofs, the south tower | Helm of Brilliance (very rare) | Gift: from Escher at dawn, whether he watches the sun come up or waits for one the count isn't in (Escher's Petition, docs/story/side_quests.md) |
 | ✅ | Argynvostholt, the undercroft | Golden Idol of Good Fortunes (very rare) | Hoard: in the tithe-keeper's armour, once he's beaten (The Silver Hoard, docs/story/side_quests.md) |
 | ✅ | Mount Baratok, the ring of glass | Censer of Controlling Air Elementals (rare) | Hoard: sunk in the glass where the mage's storm stood (The Forgotten Storm, docs/story/side_quests.md) |
+| ✅ | The goat path above the Tsolenka Pass | Rod of Alertness (very rare) | Hoard: in the guide's pack, once he's beaten (The Guide to the Temple, docs/story/side_quests.md) |
 | ✅ | The Tser Pool camp, the plank stage | Wind Fan (uncommon) | Gift: from Lavinia, once she knows where Bujor is (The Dancing Bear, docs/story/side_quests.md) |
 | ✅ | Yester Hill, the foot of the hill | Blood Amulet (rare) | Gift: from Freydis, once Silverjaw is back in her mound (The Barrow on Yester Hill, docs/story/side_quests.md) |

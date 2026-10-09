@@ -1,0 +1,234 @@
+{
+  "id": "amber_road_camp",
+  "name": "The Goat Path Camp",
+  "region": "amber_temple",
+  "summary": "A shelf of rock above the goat path round the Tsolenka watchtower, out of the wind, where the guide makes camp with the families he leads up to the Amber Temple (The Guide to the Temple, docs/story/side_quests.md).",
+  "text": "A shelf of rock above the goat path, out of the worst of the wind. A fire in a ring of stones, a low tent, a sledge drawn up to the warmth, and the mountain going up into the cloud behind.",
+  "map": {
+    "rows": [
+      "##########################",
+      "######.......#####.......#",
+      "####...........###.......#",
+      "###.....=..............###",
+      "##.......................#",
+      "#........................#",
+      "#....##..................#",
+      "#....##........=.........#",
+      "#........................#",
+      "#..............#.........#",
+      "##.......................#",
+      "###......................#",
+      "####.......=............##",
+      "#####...................##",
+      "######.................###",
+      "#######...........########",
+      "##########..##############"
+    ],
+    "theme": "shrine_yard",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "goat_path_camp",
+      "name": "The camp",
+      "cells": [
+        [
+          2,
+          3
+        ],
+        [
+          24,
+          14
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      11,
+      15
+    ],
+    "from_path": [
+      11,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "goat_path_down",
+      "cell": [
+        10,
+        16
+      ],
+      "to": "travel",
+      "label": "Down the goat path"
+    },
+    {
+      "id": "goat_path_down_2",
+      "cell": [
+        11,
+        16
+      ],
+      "to": "travel",
+      "label": "Down the goat path"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "goat_camp_fire",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "decor",
+      "label": "A fire in a ring of stones",
+      "model": "campfire"
+    },
+    {
+      "id": "goat_camp_tent",
+      "cell": [
+        18,
+        5
+      ],
+      "kind": "examine",
+      "label": "A low tent",
+      "model": "tent"
+    },
+    {
+      "id": "goat_camp_sledge",
+      "cell": [
+        9,
+        9
+      ],
+      "kind": "examine",
+      "label": "A sledge with blankets on it",
+      "model": "bedroll"
+    },
+    {
+      "id": "goat_camp_drift",
+      "cell": [
+        3,
+        5
+      ],
+      "kind": "decor",
+      "label": "Snow",
+      "model": "snowdrift"
+    },
+    {
+      "id": "goat_camp_drift_2",
+      "cell": [
+        21,
+        11
+      ],
+      "kind": "decor",
+      "label": "Snow",
+      "model": "snowdrift"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "fire",
+      "bright_ft": 10,
+      "dim_ft": 20
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "amber_guide",
+      "cell": [
+        13,
+        7
+      ],
+      "dialogue": "tsolenka_pass/the_guide:camp",
+      "when": "not flag.amber_guide_beaten",
+      "facing": "south",
+      "approach": 5
+    },
+    {
+      "npc": "goat_path_remus",
+      "cell": [
+        11,
+        9
+      ],
+      "dialogue": "tsolenka_pass/the_guide:camp",
+      "when": "quest.the_guide_to_the_temple != done",
+      "facing": "east"
+    },
+    {
+      "npc": "goat_path_floarea",
+      "cell": [
+        9,
+        10
+      ],
+      "dialogue": "tsolenka_pass/the_guide:camp",
+      "when": "quest.the_guide_to_the_temple",
+      "facing": "north"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "amber_guide",
+      "trigger": "dialogue",
+      "text": "The guide gets up. His shadows stand up off the snow without him, and out of the drifts below the shelf come grey shapes in old furs: the ones he led up before.",
+      "surprise": "",
+      "flag": "amber_guide_beaten",
+      "quest": {
+        "id": "the_guide_to_the_temple",
+        "stage": "fought"
+      },
+      "monsters": [
+        {
+          "monster": "amber_guide",
+          "cell": [
+            15,
+            6
+          ],
+          "hp": 170
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            7,
+            4
+          ],
+          "name": "One He Led Up"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "One He Led Up"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            12
+          ],
+          "name": "One of His Shadows"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            5,
+            10
+          ],
+          "name": "One of His Shadows"
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:amber_road_camp"
+  },
+  "rest": "risky"
+}

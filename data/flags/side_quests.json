@@ -1295,6 +1295,26 @@
       "id": "storm_censer_found",
       "type": "bool",
       "summary": "The Forgotten Storm: the party took the brass censer out of the glass where the storm stood."
+    },
+    {
+      "id": "amber_camp_met",
+      "type": "bool",
+      "summary": "The Guide to the Temple: the party sat down at the guide's fire on the goat path."
+    },
+    {
+      "id": "amber_tea_known",
+      "type": "bool",
+      "summary": "The Guide to the Temple: Medicine showed the child is being kept sick with sleep-root in her tea."
+    },
+    {
+      "id": "amber_guide_watched",
+      "type": "bool",
+      "summary": "The Guide to the Temple: Insight saw the guide watching the sledge like a drover (one Narrator line when the fight starts)."
+    },
+    {
+      "id": "amber_guide_beaten",
+      "type": "bool",
+      "summary": "The Guide to the Temple: the party beat the guide and his shadows (encounter amber_guide)."
     }
   ]
 }

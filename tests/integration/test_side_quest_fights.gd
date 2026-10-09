@@ -482,3 +482,14 @@ func test_the_forgotten_storm_comes_down() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_forgotten_storm"), "broken")
 	assert_true(GameState.story.get_flag("storm_dispersed", false))
+
+
+## The guide gets up at his camp on the goat path, with his shadows and the ones he led up before.
+func test_the_guide_gets_up_from_his_fire() -> void:
+	var v := await _boot("amber_road_camp", 20, 10, ["amber_camp_met"])
+	GameState.story.set_quest_stage("the_guide_to_the_temple", "asked")
+	LocationNpcs.hide_npcs_of(v, "tsolenka_pass/the_guide:camp")
+	await _fight(v, "amber_guide", ["The Guide", "One of His Shadows", "One He Led Up"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_guide_to_the_temple"), "fought")
+	assert_true(GameState.story.get_flag("amber_guide_beaten", false))

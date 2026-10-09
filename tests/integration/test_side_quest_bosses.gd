@@ -334,3 +334,12 @@ const GLASS_RING: Array[Vector2i] = [Vector2i(16, 18), Vector2i(17, 18), Vector2
 ## The Forgotten Storm and a squall, with the evening's lightning landing on the ring.
 func test_the_forgotten_storm_at_level_8() -> void:
 	await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
+
+
+## By the fire at the goat path camp, where the guide pours the tea.
+const BY_THE_FIRE: Array[Vector2i] = [Vector2i(11, 10), Vector2i(13, 10), Vector2i(12, 11), Vector2i(14, 11)]
+
+
+## The Guide, two of his shadows and two of the ones he led up before.
+func test_the_guide_at_level_10() -> void:
+	await _series("amber_road_camp", 20, 10, "amber_guide", [1, 2, 3, 4, 5, 6, 7, 8], ["amber_camp_met"], [], [], BY_THE_FIRE)
