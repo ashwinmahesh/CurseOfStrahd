@@ -99,3 +99,21 @@ func test_an_armed_smite_is_marked() -> void:
 	assert_false(bool(smite.get("armed", true)))
 	assert_true(cat.perform(god, smite).ok)
 	assert_true(bool(cat.find(god, "spell:divine_smite")["armed"]), "armed for the turn, and the slot says so")
+
+
+func test_every_slot_but_a_rule_has_an_icon() -> void:
+	# Common actions and class abilities have tiles of their own (art/icons.json "features"); a rule shows its mode.
+	var e := TestCombat.open_field()
+	var heroes: Array[Combatant] = []
+	for i in 4:
+		heroes.append(TestCombat.hero(e, ["ilse_varga", "godrick_pendlebrook", "tamsin_tealeaf", "wren_featherfoot"][i] as String, Vector2i(2, 1 + i * 2), 5))
+	TestCombat.foe(e, "zombie", Vector2i(9, 2))
+	TestCombat.start_with(e, heroes[0])
+	var cat := ActionCatalog.new(e)
+	for h in heroes:
+		for tab: String in [ActionCatalog.COMMON, cat.class_tab(h)]:
+			for s in cat.slots(h, tab):
+				assert_true(Icons.for_action(s) != null, "%s's %s has an icon" % [h.name(), s["label"]])
+		for s in cat.slots(h, ActionCatalog.REACTIONS):
+			assert_true(Icons.for_action(s) == null, "a rule shows its mode, not an icon")
+	assert_true(Icons.for_action(cat.find(heroes[0], "dash")) == Icons.feature("dash"), "Dash has its own tile, not the rune")

@@ -544,6 +544,23 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 				return cv.hud,
 				func() -> void: cv.hud._menu.hide())
 			break
+	# A reaction prompt (bottom right, above the hotbar) with the odds over a foe at the window's edge.
+	var party: Combatant = null
+	for c0 in cv.e.combatants:
+		if c0.side == &"party":
+			party = c0
+			break
+	var req := ReactionRequest.new("opportunity_attack", party.id, party.id)
+	req.title = "Reaction: Opportunity Attack?"
+	req.text = "A long trigger: the dire wolf of the Svalich Woods leaves %s's reach while the fight goes on around them. Strike it as it goes?" % party.name()
+	await _check("a reaction prompt and the odds over a foe", func() -> Variant:
+		cv.hud.show_prompt(req)
+		cv.hud.show_odds(0.55, "3–18", "advantage", Vector2(5000, -200))
+		await _frames(1)
+		return cv.hud,
+		func() -> void:
+			cv.hud.hide_prompt()
+			cv.hud.hide_tooltip())
 	for i in 10:
 		if cv.e.current().side == &"party":
 			break
