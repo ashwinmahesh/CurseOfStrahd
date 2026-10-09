@@ -96,7 +96,9 @@ columns so the numbers that matter are always on screen:
   `spend_hit_die`), and a list of what comes back on finishing (Second Wind +1, Channel Divinity +1, Arcane
   Recovery's slot levels to choose).
 - **Long Rest**: camp scene with the interruption risk for the region and time, watch order, and what finishing
-  restores (all HP and Hit Point Dice, slots, features, Exhaustion −1), then spell preparation.
+  restores (all HP and Hit Point Dice, slots, features, Exhaustion −1), then spell preparation. While one can't start
+  (enemies remain somewhere in the building or dungeon, or the last ended under 16 hours ago; story/rest_rules.gd)
+  its button is off and the card says why in words, with the time left, so the pad reads it too; the Short Rest stays.
 
 ## Spell preparation (`pm_04_spell_preparation`)
 ![Spell preparation](wireframes/pm_04_spell_preparation.svg)
@@ -117,7 +119,7 @@ prepared spells" button after an uninterrupted Long Rest.
 | Character at 0 HP | portrait greyed, "Unconscious · Death saves ✓✓ ✗" |
 | Dead | portrait faded, "Dead" and the ways back (Revivify within 1 minute ...) |
 | Guest present | fifth column "Guest: directed by you in combat; level and gear come from the story" |
-| Rest unavailable | "Can't rest: enemies nearby" or "needs at least 1 Hit Point" |
+| Rest unavailable | the place's own "You can't rest here" line; for a Long Rest only, "Enemies still prowl this place" or "the next can start in 7 hours 30 minutes" on its card |
 | Interrupted rest | what was gained (a Short Rest's benefits after 1 hour of a Long Rest) |
 | Controller | LB/RB tabs, LT/RT character, A on a number opens its breakdown |
 

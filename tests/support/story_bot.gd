@@ -680,7 +680,14 @@ func rest(long: bool) -> void:
 	if rule == "no":
 		root.call("close_screen")
 		return
+	# A Long Rest the rules refuse here (enemies left in the building, or less than 16 hours since the last; RestRules)
+	# becomes a Short Rest, as a player would take.
+	var refused: Array[String] = []
 	if long:
+		refused = RestRules.long_rest_refusals(st())
+	if not refused.is_empty():
+		note("no long rest: %s" % " ".join(refused))
+	if long and refused.is_empty():
 		rs.call("_long_rest", rule)
 		note("long rest")
 	else:
