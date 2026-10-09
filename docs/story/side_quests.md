@@ -573,7 +573,7 @@ take the chick. Step back and let him (400 gp from Tibor, the quest fails, and a
   150 HP), two of his hands (vampire spawn) and four stone birds (gargoyles). The autopilot wins 5 of 8 at level 9,
   losing about two party members a fight.
 - Defended: the mother roc comes back to her chick and lets the party be, on the bridge or anywhere
-  (`roc_driven_off`); in the bones under the nest, 300 gp and a Staff of the Woodlands (rare). Still: `sq_last_egg`.
+  (`roc_driven_off`); in the bones under the nest, 300 gp and a Belt of Hill Giant Strength (rare). Still: `sq_last_egg`.
 
 ### The Pack's Runt (`the_packs_runt`, narrative/krezk/the_packs_runt.dialogue; batch 4, level 8)
 
