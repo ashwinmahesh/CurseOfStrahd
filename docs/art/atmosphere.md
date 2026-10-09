@@ -295,6 +295,24 @@ it on the window).
   wall beside the window down across the room (casting shadows) and a glowing cone of dusty haze along it
   (`shaders/world/light_shaft.gdshader`), hung on the window's light so they hide with it.
 
+## Characters reflected in the Modern finish
+
+Visual Polish Plan 1 (the vault's "Visual Polish Plan.md", 2026-10-09). The world's screen-space reflections can't
+show the characters (they draw after the screen pass), so each figure has its own: `SpriteReflection`, a child of its
+`DirectionalSprite`, draws the figure upside down under its feet (`shaders/world/sprite_reflection.gdshader`, the crisp
+sprite's motion, billboard and light, without its rim) and keeps only the pixels where the surface already drawn there
+is level, at the figure's feet height and glossy, read per pixel from the depth and normal-roughness buffers. So open
+water and rain puddles (roughness 0.1 and under) show it fully and waver, wet ground, polished marble and tiles show it
+fainter and softer and fading sooner below the feet, dry ground (0.45 and over) not at all, and anything standing in
+front hides it. It draws after the screen pass and before the floor's rings and the figures (`PRIORITY` 0), casts no
+shadow, follows the figure's frame by signal (so it holds while the game is paused) and shows only in the Modern finish
+on a preset with reflections (Medium and High). It costs nothing measurable: 0.0 to 0.1 ms a frame at 3440 x 1440 in
+the village at night, Vallaki and the castle's main floor (`python3 tools/perf/perf_run.py --only effects_fast
+--effects SpriteReflection --size 3440x1440`).
+
+    make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/refl FRAMES=10 \
+      LOOK_SHOTS=pool_shore_dusk,village_wet_dusk,castle_hall   # LOOK_OFF=reflections for without
+
 ## Rules for new places
 
 - An outdoor place gets its region's or theme's mood; give it its own only when it should feel different. Indoor

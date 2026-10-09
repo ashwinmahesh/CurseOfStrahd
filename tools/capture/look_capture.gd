@@ -9,7 +9,7 @@ extends Node
 ## - LOOK_SHOTS=village_dusk,castle_hall: which shots (default every one).
 ## - LOOK_STYLE=classic|modern, LOOK_GRAPHICS=low|medium|high: the finish and the graphics preset.
 ## - LOOK_METER=1: the F3 frame meter shown.
-## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr: turn things off to see what they cost.
+## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr,reflections: turn things off to see what they cost.
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
@@ -49,6 +49,10 @@ const SHOTS := {
 	"inn_hearth": {"loc": "vallaki_blue_water_inn", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]], "zoom": 9},
 	"camp_fire": {"loc": "vallaki_vistani_camp", "hour": 22, "cells": [[14, 14], [16, 14], [13, 13], [17, 11]],
 		"zoom": 9},
+	# The party at the water's edge, the pool in front of them (Visual Polish Plan 1: reflections), and the village
+	# square after rain.
+	"pool_shore_dusk": {"loc": "tser_pool", "hour": 18, "cells": [[9, 4], [10, 4], [11, 4], [10, 3]]},
+	"village_wet_dusk": {"loc": "village_of_barovia", "hour": 18, "wet": 1.0},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
@@ -176,7 +180,11 @@ func _build(shot: Dictionary) -> void:
 		env.ssil_enabled = false
 	if OS.get_environment("LOOK_WET") != "":
 		RenderingServer.global_shader_parameter_set(&"world_wet", float(OS.get_environment("LOOK_WET")))
+	elif shot.has("wet"):
+		# A shot after rain, whatever the world's weather is (puddles for the reflections).
+		RenderingServer.global_shader_parameter_set(&"world_wet", float(shot["wet"]))
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
+	SpriteReflection.enabled = not "reflections" in off
 	if "msaa" in off:
 		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
 	match OS.get_environment("LOOK_AA"):
