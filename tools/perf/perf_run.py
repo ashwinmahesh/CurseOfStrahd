@@ -2,7 +2,8 @@
 """The performance pass (P3): runs tools/perf/perf_probe.tscn in a window that never shows and prints its report.
 
   python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N]
-                                 [--only title,newgame,places,saveload,combat,transitions] [--places id,id] [--profile]
+                                 [--only title,newgame,places,saveload,combat,transitions,fights] [--places id,id]
+                                 [--encounters id,id] [--profile]
                                  [--headless] [--cover] [--timeout S]
 
 --headless runs without a window or GPU: script and loading costs only (no shader compiles or texture uploads), for
@@ -294,6 +295,7 @@ def main():
     ap.add_argument("--passes", type=int, default=2)
     ap.add_argument("--only", default="")
     ap.add_argument("--places", default="")
+    ap.add_argument("--encounters", default="")
     ap.add_argument("--size", default="1920x1080")
     ap.add_argument("--profile", action="store_true")
     ap.add_argument("--preload", default="")
@@ -313,6 +315,8 @@ def main():
         user.append("--only=" + args.only)
     if args.places:
         user.append("--places=" + args.places)
+    if args.encounters:
+        user.append("--encounters=" + args.encounters)
     if args.preload:
         user.append("--preload=" + args.preload)
     if args.pairs:
@@ -371,6 +375,13 @@ def print_report(r):
         hitch = ", ".join("%.0f" % x["hitch_ms"] for x in rows if "hitch_ms" in x)
         print("  %-14s %-34s total %-16s%s%s" % (kind, what, totals, ("  sync " + syncs) if syncs else "",
                                               ("  worst next-second frame " + hitch) if hitch else ""))
+    if r.get("fights"):
+        print("\nFights starting (ms: call = starting it, first = the next frame drawn, worst = the worst frame in the "
+              "second after, with how many were over 100 ms)")
+        for f in r["fights"]:
+            print("  pass %d  %-30s %-34s %s call %5.0f  first %5.0f  worst %5.0f (%d slow)  load %4.1f" % (
+                f["pass"], f["location"][:30], f["encounter"][:34], "     " if f["started"] else "(not)",
+                f["call_ms"], f["first_frame_ms"], f["worst_after_ms"], f["slow_after"], f.get("load", 0)))
     if r.get("transitions"):
         print("\nChanges of place (ms from asking: block = the longest frame until the place is ready, first = the next "
               "frame drawn, ready = the place ready (under a cover: the cover starts to lift), stuck = the end of the last "
