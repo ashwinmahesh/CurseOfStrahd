@@ -1310,6 +1310,7 @@
   "ec64bc7a6cdca193": "[frightened, quiet, aching]"
  },
  "lz_old_fisher": {
+  "28677f9afdbcc870": "[dry, wry, weary]",
   "2e1aa45ebdd58527": "[weary, gruff, wistful]",
   "30019da825a70812": "[quiet, moved, grateful]",
   "32a7f1aa83a4a971": "[slow, low, storytelling]",
@@ -1317,8 +1318,10 @@
   "38fc71ffcb7c1826": "[surprised, slow, wry]",
   "3aa66b6cf38b19b7": "[calm, resigned, quiet]",
   "424bf74602238405": "[slow, weary, grim]",
+  "63d947f7662a176f": "[low, uneasy, grim]",
   "6baca514721b5024": "[low, uneasy, storytelling]",
   "7280b45849958245": "[quiet, haunted, sad]",
+  "cdb634f5b4996a6e": "[bitter, quiet, wry]",
   "d87b59855e04a239": "[warm, delighted, near tears]",
   "e9374aa7508b549a": "[hushed, uneasy, listening]",
   "eac4d438d7ecfc5c": "[afraid, bitter, hushed]",
@@ -2388,6 +2391,19 @@
   "b2eff5f66061c3c5": "[grim, wry resolve]",
   "b7444d82106229c6": "[bitter, wistful, quiet]",
   "c6263baf8234cf21": "[forcefully cheerful, bossy]"
+ },
+ "reed_isle_ostap": {
+  "01c32ebcdfd8af93": "[wondering, then defiant, rousing]",
+  "084bdd035ba0324a": "[grim, bitter, wry]",
+  "1a9806afa195eeb9": "[wary, rough, bitter]",
+  "3a199e4a45eb5346": "[content, gruff, warm]",
+  "3c6b117bf242a1b9": "[awkward, gentle, respectful]",
+  "6070f545ee0f9d00": "[hushed, wary, gruff]",
+  "86ffd683805ad5f1": "[laughing, bitter, then earnest]",
+  "9d108202fcb378e8": "[stunned, wondering, unsure]",
+  "a452fe451a3534e6": "[low, worried, grim]",
+  "d6bd1e152174a404": "[rough, wry, proud]",
+  "e09610f4729ccdf5": "[decided, joyful, defiant]"
  },
  "rictavio": {
   "06a35e1fc8575f1f": "[dry, grim]",

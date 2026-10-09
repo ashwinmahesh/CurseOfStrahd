@@ -2377,6 +2377,16 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "3f6uL9MdG9kO3wEExsPZ",
       "released": true
+    },
+    "reed_isle_ostap": {
+      "voice_id": "UkjgztV4ROOQ6jIHzKAv",
+      "name": "Barovia Ostap",
+      "description": "A big, bald Vallaki cooper in his forties with a bird's-nest beard, stranded on an island, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A loud, rough, booming, grumbling voice, bitter and sarcastic, starving and exhausted, with a stubborn sense of humour.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "UkjgztV4ROOQ6jIHzKAv",
+      "released": true
     }
   },
   "sfx": {
