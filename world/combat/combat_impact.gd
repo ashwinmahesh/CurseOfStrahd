@@ -44,6 +44,8 @@ var _time_tw: Tween
 var _shot_tw: Tween
 ## A big spell's turn is held until the spell has landed (spell_landed).
 var _turned := false
+## Where the big spell being cast lands (spell_cast), for its pulse as it lands.
+var _spell_at := Vector3.INF
 
 
 func _init(rig_: CameraRig = null) -> void:
@@ -64,9 +66,12 @@ func hit(target: Node3D, amount: int, max_hp: int, critical: bool, fells: bool, 
 	if last:
 		_slow_motion()
 		_push(target.global_position, LAST)
+		ScreenPulse.play(self, "kill", target.global_position)
 		return
 	if critical or fells:
 		_push(target.global_position, KILL if fells else CRIT)
+		# The picture streaks toward it for a beat (Visual Polish Plan 3).
+		ScreenPulse.play(self, "kill" if fells else "crit", target.global_position)
 	var heavy := CombatSfx.heavy(amount, max_hp)
 	if heavy:
 		_freeze()
@@ -85,6 +90,7 @@ func spell_cast(spell_id: String, from: Vector3, at: Vector3) -> void:
 	if not on() or rig == null or not big_spell(spell_id):
 		return
 	_turned = true
+	_spell_at = at
 	var far := Vector2(at.x - from.x, at.z - from.z).length()
 	var tw := _shot()
 	_aim(tw, at, SPELL_TURN)
@@ -97,6 +103,7 @@ func spell_landed() -> void:
 	if not _turned:
 		return
 	_turned = false
+	ScreenPulse.play(self, "spell", _spell_at)
 	_rest(SPELL_BACK)
 
 
