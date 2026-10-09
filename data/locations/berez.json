@@ -688,6 +688,15 @@
       "dialogue": "berez/marina:strahd",
       "when": "night and not flag.berez_strahd_met",
       "approach": 6
+    },
+    {
+      "npc": "strahd",
+      "cell": [
+        9,
+        13
+      ],
+      "dialogue": "berez/marina:strahd_again",
+      "when": "night and flag.berez_strahd_met and flag.marina_truth_known and not flag.strahd_knows_marina_truth"
     }
   ],
   "encounters": [
