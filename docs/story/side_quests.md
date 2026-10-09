@@ -432,6 +432,24 @@ either way.
 - Then cut the bell loose (Athletics DC 15, Water Breathing or the potion) or ring it once for the dead (Religion DC 14):
   200 gp of chapel silver and the drowned priest's Staff of Healing (rare).
 
+### The Baron's Island (`the_barons_island`, narrative/lake_zarovich/the_barons_island.dialogue; batch 8, level 5)
+
+From level 5, unless the council has the town, Old Nistor at the landing has a new answer: some nights the Baron's
+boat rows out to the Reed Isle with somebody tied up in the bottom of it, somebody who was unhappy too loudly about
+the festival, and rows back with nobody. He lends the party his boat (it leaks on the left). A new travel place, the
+Reed Isle (data/locations/zarovich_reed_island.json, a new outdoor map with a vistas.json place; by boat from the
+landing), holds Ostap (new NPC), a Vallaki cooper who said the festival was a waste of good wicker. **Twist:** they
+didn't drown. Fourteen of Vallaki's unhappy are living on the island on reeds and fish, and are the only happy people
+within a day's walk of the town. **Escalation:** tonight the boat comes back with another, and the boatmen saw the
+smoke last time. The Baron, Izek, the festival and Ireena are only read (`vallaki_backed` for the hook and one line,
+`guest:ireena` for Ostap's bow).
+
+- Fight `reed_isle_boatmen` on the shingle, by night: the Boatmaster (a bandit captain), two veteran boatmen, four
+  toughs, and something in the reeds (a giant constrictor snake). The autopilot wins 3 of 8 at level 5, losing three
+  party members a fight.
+- The castaways keep the boatmen's boat hidden and stay, or row home to Vallaki in daylight, singing. Either way Ostap
+  gives the party the shackles the boatmen brought: Dimensional Shackles (rare) and 80 gp.
+
 ## The Gates of Barovia (levels 6 and up)
 
 ### The Last Muster (`last_muster`, narrative/into_the_mists/last_muster.dialogue; batch 2, the book's skeletal riders)
@@ -978,4 +996,6 @@ Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a 
 Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
 the Narrator and a blunt interject), and the mage's two new menu options. Batch 8,
 the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
-interject) and narrator/krezk_road_waystone.dialogue.
+interject) and narrator/krezk_road_waystone.dialogue. Batch 8,
+Lake Zarovich: the_barons_island.dialogue in full (new speaker Ostap; also Old Nistor, the Narrator and a blunt
+interject) and narrator/zarovich_reed_island.dialogue.

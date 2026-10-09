@@ -343,3 +343,12 @@ const AT_THE_STONE: Array[Vector2i] = [Vector2i(12, 7), Vector2i(14, 7), Vector2
 ## Four of Kiril's hunters and a wolf come down the road for Lark and Yanko.
 func test_the_waystone_pack_at_level_6() -> void:
 	await _series("krezk_road_waystone", 23, 6, "waystone_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["waystone_lark_met"], [], [], AT_THE_STONE)
+
+
+## The shingle at the Reed Isle's landing, where the castaways pull people out of the shallows.
+const ON_THE_SHINGLE: Array[Vector2i] = [Vector2i(11, 11), Vector2i(12, 12), Vector2i(13, 12), Vector2i(11, 12)]
+
+
+## The Boatmaster, two veteran boatmen, four toughs and something in the reeds.
+func test_the_reed_isle_boatmen_at_level_5() -> void:
+	await _series("zarovich_reed_island", 22, 5, "reed_isle_boatmen", [1, 2, 3, 4, 5, 6, 7, 8], ["reed_isle_met"], [], [], ON_THE_SHINGLE)

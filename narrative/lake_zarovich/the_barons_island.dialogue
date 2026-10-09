@@ -1,0 +1,94 @@
+# The Baron's Island (side quest, docs/story/side_quests.md): out in the reeds of Lake Zarovich is an island nobody
+# fishes near. Some nights the Baron's boat rows out to it with somebody in it who was unhappy too loudly about the
+# festival, and rows back with nobody. **Twist:** they didn't drown. A dozen of Vallaki's unhappy are alive on the
+# island, living on reeds and fish, and they are the only happy people within a day's walk of the town.
+# **Escalation:** tonight the boat comes back with another, and the boatmen see the cookfires, and have orders for
+# that too. The Baron, Izek, the festival and Ireena are only read, never set. Reached from Old Nistor at the landing
+# from level 5, while the town isn't the council's (lake_zarovich/old_fisher:start), and the island
+# (data/locations/zarovich_reed_island.json). Every line here is unvoiced for now.
+
+# --- Old Nistor at the landing (lake_zarovich/old_fisher:start jumps here) ---
+
+~ nistor
+Old Nistor: The Reed Isle. (He doesn't look at it.) Nobody fishes near it. Some nights the Baron's boat rows out there from the town end of the lake, with somebody in the bottom of it tied up like washing.
+Old Nistor: Somebody who said the festival was a waste of good wicker, maybe. Or laughed at the wrong moment. The boat comes back with nobody in it. We don't ask. Asking's unhappy.
+Old Nistor: Take my boat if you want to look. It leaks on the left. Everything I own leaks on the left.
+quest the_barons_island asked
+-> END
+
+# --- Ostap on the island (npc reed_isle_ostap) ---
+
+~ ostap
+if quest.the_barons_island == done
+-> ostap_done
+endif
+if flag.reed_isle_boatmen_beaten
+-> ostap_after
+endif
+if flag.reed_isle_met
+Ostap: Keep your voice down when the moon's up. Sound carries on the water. That's how they'll find us, one night.
+-> END
+endif
+set reed_isle_met
+Narrator: In the middle of the island, among the reeds, there are huts: little bent-over things of reed and driftwood, a dozen of them, and cookfires banked low, and fish drying on lines. A big bald man with a beard like a bird's nest stands up from the nearest fire with a fish-spear in his hand.
+Ostap: You're not the Baron's. The Baron's don't land. (He looks you over.) Ostap. Cooper, once. I said at the Blue Water that the festival was a waste of good wicker, and the Baron's men took me out of my bed that night.
+Ostap: They rowed me out here and tipped me in the shallows with my hands tied, and rowed home. There were six of us here already, then. Now there are fourteen. We fish. We sing. Nobody has to be happy on a Thursday.
+if guest:ireena
+Ostap: (He sees Ireena, and goes quiet, and then bows, badly, the way a man does who hasn't bowed in years.) Lady. They said in town you were safe at the church. I'm glad of it.
+endif
+* [Insight DC 12] (Look at the faces round the fires.) -> faces | faces_missed
+* Come back with us. We'll get you home. -> home_ask
+* (Leave them to their fires.) -> END
+
+~ faces
+Narrator: Thin faces, sunburnt and windburnt, and every one of them easy in a way nobody in Vallaki is. A woman is mending a net and humming. Two men are arguing about fish, cheerfully, and losing their tempers, and nobody is watching to see.
+-> home_ask
+
+~ faces_missed
+Narrator: Fourteen castaways round three small fires. That's all you can tell.
+-> home_ask
+
+~ home_ask
+Ostap: Home? (He laughs.) To be happy on Thursdays? No. But if you mean to help, there's a thing. The Baron's boat comes tonight. Another one for us. We pull them out of the shallows before they drown, every time.
+Ostap: Only the last time, a boatman saw the smoke. If they see it again they'll tell the Baron, and the Baron doesn't leave a thing half done.
+* (Wait at the landing for the boat.) -> boat
+* (Leave them to it.) -> END
+
+~ boat
+Narrator: After dark a boat comes out of the mist from the town end of the lake, rowing hard, with something tied up in the bottom of it. It doesn't stop in the shallows. It runs up onto the shingle, and the men in it jump out with clubs and a lantern, looking for the smoke.
+if flag.vallaki_backed == "wachter"
+Narrator: They're wearing Lady Wachter's grey now, not the Baron's colours. The island changed hands with the town, that's all.
+endif
+interject tag:blunt: Fourteen people, and they've brought clubs.
+combat reed_isle_boatmen
+
+# --- After the boatmen (stage defended) ---
+
+~ ostap_after
+Narrator: The castaways have pulled the newest of them out of the boat and cut her hands free: a young woman who laughed at the Baron's sun, she says, and isn't laughing now. The boatmen's boat is pulled up into the reeds.
+Ostap: Now there's a boat on our island. (He looks at it as if it might bite.) We could go home. We could go anywhere. We could stay.
+* Stay. Keep the boat hidden, and nobody in town will know where it went. -> stay
+* Come home with us. We'll walk you in through the gate ourselves. -> home
+
+~ stay
+set reed_isle_stayed
+quest the_barons_island done
+Ostap: Stay. Yes. (A woman at the fire cheers, and then puts her hand over her mouth, and then laughs because she doesn't have to.) We'll row out at night for salt and come back before light. The Baron can count his drowned.
+-> gift
+
+~ home
+set reed_isle_home
+quest the_barons_island done
+Ostap: Home. (He says it like a word in a language he used to speak.) Then we'll row in by daylight, all fourteen, singing, and see who stops us.
+-> gift
+
+~ gift
+Ostap: The boatmen brought these for her. (A pair of heavy black shackles, cold and too smooth, with no keyhole you can see.) The Baron keeps a box of them. I'd rather they were on the right wrists, one day.
+give dimensional_shackles
+gold +80
+approve thistle +3 wren_featherfoot +2 godrick_pendlebrook +2 kip_smudgewick +1: You stood on the Reed Isle with the Baron's castaways
+-> END
+
+~ ostap_done
+Ostap: Fourteen, and the girl makes fifteen. We row out for salt at night. Nobody has to be happy. Come and eat fish sometime.
+-> END

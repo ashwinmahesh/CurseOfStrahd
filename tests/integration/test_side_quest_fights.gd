@@ -493,3 +493,14 @@ func test_the_pack_comes_for_the_waystone() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_waystone"), "defended")
 	assert_true(GameState.story.get_flag("waystone_wolves_beaten", false))
+
+
+## The Baron's boatmen come up the shingle of the Reed Isle with clubs and a lantern, and the reeds move behind them.
+func test_the_boatmen_come_for_the_smoke() -> void:
+	var v := await _boot("zarovich_reed_island", 22, 5, ["reed_isle_met"])
+	GameState.story.set_quest_stage("the_barons_island", "asked")
+	LocationNpcs.hide_npcs_of(v, "lake_zarovich/the_barons_island:ostap")
+	await _fight(v, "reed_isle_boatmen", ["The Boatmaster", "A Boatman", "Something in the Reeds"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_barons_island"), "defended")
+	assert_true(GameState.story.get_flag("reed_isle_boatmen_beaten", false))

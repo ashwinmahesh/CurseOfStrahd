@@ -8,4 +8,5 @@ endif
 Old Nistor: Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering.
 Old Nistor: Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks.
 * [if flag.arabelle_rescued or flag.arabelle_lost] Why did the fish go deep? -> lake_zarovich/bell_under_the_lake:nistor
+* [if level >= 5 and not quest.the_barons_island and flag.vallaki_backed != "neither"] What's on that island out in the reeds? -> lake_zarovich/the_barons_island:nistor
 * Goodbye. -> END
