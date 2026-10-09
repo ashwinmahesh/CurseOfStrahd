@@ -333,6 +333,19 @@ the screen pass, so they fade out toward the screen's blurred edges instead of s
     make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/beams FRAMES=10 \
       LOOK_SHOTS=road_dusk,village_dusk,lake_dusk   # LOOK_OFF=sunbeams for without
 
+## Footstep puffs in the Modern finish
+
+Visual Polish Plan 4 (the vault's "Visual Polish Plan.md", 2026-10-09). Out of doors the party's feet kick something up
+every stride or so (`StepPuffs`, built with the place's weather in `AtmosphereWeather.build`): a little tan dust on dry
+roads, earth, scree and mud patches (the floor's `surface`, and the roads the shaped ground lays between two ways out),
+pale kicked snow where it lies (`Atmosphere.snow_cover` at `SNOW_GROUND` or a snow floor), a spray of droplets in
+marsh mud and on any ground in the rain (`Atmosphere.wetness`), nothing on dry grass, cobbles or floors indoors. The
+ground is read as the footprints read it. Each kind keeps at most `POOL` small one-shot particle systems and reuses the
+oldest; a puff is one small draw while it lasts (under a second). They're sized by their quad: setting the process
+material's scale alone didn't change how big they were drawn.
+
+    make capture SCENE=res://tools/capture/puff_capture.tscn NAME=puffs/after FRAMES=10   # LOOK_OFF=puffs: without
+
 ## Rules for new places
 
 - An outdoor place gets its region's or theme's mood; give it its own only when it should feel different. Indoor
