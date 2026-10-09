@@ -14,7 +14,29 @@
       "region": "amber_temple",
       "when": "flag.tsolenka_gate_open or flag.kasimir_sister_told or guest:kasimir_velikov or tarokka.tome.region == amber_temple or tarokka.symbol.region == amber_temple or tarokka.sword.region == amber_temple",
       "summary": "A temple cut into the ice high above the Tsolenka Pass, its doors watched by colossi of amber. The things sealed inside it talk, and bargain."
+    },
+    {
+      "id": "goat_path_camp",
+      "name": "The Goat Path Camp",
+      "location": "amber_road_camp",
+      "spawn": "from_path",
+      "pos": [
+        0.392,
+        0.152
+      ],
+      "region": "amber_temple",
+      "when": "quest.the_guide_to_the_temple",
+      "summary": "A camp on the goat path round the Tsolenka watchtower, where a guide leads families up toward the Amber Temple."
     }
   ],
-  "roads": []
+  "roads": [
+    {
+      "id": "tsolenka_pass_to_goat_path_camp",
+      "from": "tsolenka_pass",
+      "to": "goat_path_camp",
+      "hours": 2,
+      "name": "The goat path round the watchtower",
+      "when": "quest.the_guide_to_the_temple"
+    }
+  ]
 }

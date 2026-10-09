@@ -676,6 +676,27 @@ exchange for the runt (`given`: the quest fails and the companions disapprove), 
 - Krezk's bounty, from Dmitri: 300 gp and the iron bands that have hung in the watch house for the wolf that never
   came, Iron Bands of Bilarro (rare).
 
+### The Guide to the Temple (`the_guide_to_the_temple`, narrative/tsolenka_pass/the_guide.dialogue; batch 8, level 10)
+
+Once the party has passed the Tsolenka gate, from level 10, the dead sergeant has a new answer: nobody went up his
+road, but three times this winter lanterns went up the goat path round his tower, and one came down each time. Last
+night, a man, a woman and a sledge with something small on it, coughing. A new travel place, the Goat Path Camp
+(data/locations/amber_road_camp.json, a new outdoor map with a vistas.json place; a road from the Tsolenka Pass),
+holds the guide (new NPC and boss), Remus and Floarea from Vallaki (new NPCs), and their daughter on the sledge, going
+to ask the Amber Temple for a cure. **Twist:** (Medicine DC 14) it isn't lung fever: the guide has been keeping her
+sick with sleep-root in her tea, and admits it when confronted: something in the amber pays him a year for every
+family he brings to its door. Insight DC 15 sees him watching the sledge like a drover. **Escalation:** nobody turns
+back on his mountain; tell the family to go home and he gets up anyway. The temple's vestige and dark-gift flags are
+never set or read, and The Frozen Pilgrims isn't touched.
+
+- **Boss: the Guide** (data/monsters/amber_guide.json, `source.book: custom`, drawn with the scout's sprite): Medium
+  humanoid, AC 16, 135 HP (170 in this fight), an Ice Axe and an Amber Bolt, a Whiteout that blinds (recharge 5-6),
+  Hold Person and Cone of Cold once a day, Legendary Resistance (2/day), and a bolt or a step between turns. CR 10.
+  Two of his shadows stand up off the snow with him (shadows), and two of the ones he led up before (wraiths).
+- Fight `amber_guide` at the camp: the autopilot wins 3 of 8 at level 10, losing three party members a fight.
+- Floarea, an herb-wife who smelled the sleep-root and told herself she was wrong, pours out the tea; without it the
+  child will wake with only a cough. In the guide's pack: a Rod of Alertness (very rare) and 400 gp.
+
 ## Mount Baratok (level 9)
 
 ### The Mage's Lost Pages (`the_mages_lost_pages`, narrative/mount_baratok/the_mages_lost_pages.dialogue; batch 4)
@@ -978,4 +999,6 @@ Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a 
 Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
 the Narrator and a blunt interject), and the mage's two new menu options. Batch 8,
 the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
-interject) and narrator/krezk_road_waystone.dialogue.
+interject) and narrator/krezk_road_waystone.dialogue. Batch 8,
+the Amber Temple road: the_guide.dialogue in full (new speakers the Guide, Remus and Floarea; also the Tsolenka
+sergeant, the Narrator and a blunt interject) and narrator/amber_road_camp.dialogue.

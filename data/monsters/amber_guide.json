@@ -1,0 +1,218 @@
+{
+  "id": "amber_guide",
+  "name": "The Guide",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Guide to the Temple, docs/story/side_quests.md): a mountain guide who took a gift from something in the Amber Temple long ago, a year of life for every family he brings to its door. Built on the 2025 Monster Manual's warlock-like casters at CR 10: an ice axe and bolts of amber light, a whiteout, Hold Person and Cone of Cold once a day, shadows that stand up off the snow, Legendary Resistance and two Legendary Actions. Drawn with the scout's sprite."
+  },
+  "size": "medium",
+  "type": "humanoid",
+  "tags": [
+    "boss",
+    "human"
+  ],
+  "alignment": "neutral evil",
+  "art": "scout",
+  "ac": 16,
+  "ac_note": "furs, and something hard as amber under the skin",
+  "initiative": 4,
+  "hp": {
+    "average": 135,
+    "dice": "18d8+54"
+  },
+  "speed": {
+    "walk": 30,
+    "climb": 30
+  },
+  "abilities": {
+    "str": 14,
+    "dex": 18,
+    "con": 16,
+    "int": 14,
+    "wis": 16,
+    "cha": 18
+  },
+  "saves": {
+    "dex": 8,
+    "wis": 7,
+    "cha": 8
+  },
+  "skills": {
+    "survival": 11,
+    "deception": 8,
+    "perception": 7
+  },
+  "resistances": [
+    "cold",
+    "necrotic"
+  ],
+  "condition_immunities": [
+    "exhaustion"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 17,
+  "languages": [
+    "Common",
+    "Infernal"
+  ],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Guide fails a saving throw, he can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_mountains_own",
+      "name": "The Mountain's Own",
+      "action": "passive",
+      "summary": "He's never cold and never lost. Something in the amber pays him a year for every family he brings to its door.",
+      "text": "Long ago the Guide took a gift from something sealed in the Amber Temple: he is never cold, never lost on the mountain, and every family he brings to the temple's door buys him another year. He was born before the count came over the mountains.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "ice_axe",
+          "count": 1
+        },
+        {
+          "action": "amber_bolt",
+          "count": 1
+        }
+      ],
+      "summary": "An Ice Axe and an Amber Bolt.",
+      "text": "The Guide makes one Ice Axe attack and one Amber Bolt attack."
+    },
+    {
+      "id": "ice_axe",
+      "name": "Ice Axe",
+      "kind": "melee",
+      "attack": {
+        "bonus": 8,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 8,
+          "dice": "1d8+4",
+          "type": "slashing"
+        },
+        {
+          "average": 10,
+          "dice": "3d6",
+          "type": "cold"
+        }
+      ],
+      "summary": "A climber's axe, rimed with frost that doesn't melt.",
+      "text": "Melee Attack Roll: +8, reach 5 ft. Hit: 8 (1d8 + 4) Slashing damage plus 10 (3d6) Cold damage."
+    },
+    {
+      "id": "amber_bolt",
+      "name": "Amber Bolt",
+      "kind": "ranged",
+      "attack": {
+        "bonus": 8,
+        "range": [
+          120,
+          240
+        ]
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "A bolt of thick golden light that feels like being swallowed.",
+      "text": "Ranged Attack Roll: +8, range 120 ft. Hit: 18 (4d8) Necrotic damage."
+    },
+    {
+      "id": "whiteout",
+      "name": "Whiteout",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "con",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 60,
+        "count": 3
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "4d8",
+          "type": "cold"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "blinded",
+          "until": "source_turn_end"
+        }
+      ],
+      "summary": "Recharge 5-6: the snow comes up round three creatures within 60 ft; DC 16 Con save, 4d8 Cold and Blinded until the end of his next turn, half damage on a success.",
+      "text": "Constitution Saving Throw: DC 16, up to three creatures the Guide can see within 60 feet. Failure: 18 (4d8) Cold damage, and the target has the Blinded condition until the end of the Guide's next turn. Success: Half damage only."
+    },
+    {
+      "id": "spellcasting",
+      "name": "Spellcasting",
+      "kind": "spellcasting",
+      "summary": "Hold Person and Cone of Cold, once a day each (Cha, DC 16).",
+      "text": "The Guide casts one of the following spells, using Charisma as the spellcasting ability (spell save DC 16): once a day each, Hold Person and Cone of Cold."
+    }
+  ],
+  "spellcasting": {
+    "ability": "cha",
+    "dc": 16,
+    "attack": 8,
+    "per_day": {
+      "1": [
+        "hold_person",
+        "cone_of_cold"
+      ]
+    }
+  },
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "bolt",
+        "name": "Bolt",
+        "cost": 1,
+        "action": "amber_bolt",
+        "summary": "Makes one Amber Bolt attack."
+      },
+      {
+        "id": "step",
+        "name": "Sure-Footed",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to half his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regions": [
+    "amber_temple"
+  ],
+  "ai_profile": "spellcaster",
+  "summary": "A lean, smiling mountain guide in furs who goes bareheaded in the snow. Something in the Amber Temple pays him a year of life for every family he brings to its door, and he has brought a great many."
+}
