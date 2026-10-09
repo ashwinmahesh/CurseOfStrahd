@@ -21,7 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 BLENDER = "/Applications/Blender.app/Contents/MacOS/Blender"
 REGISTRY = ROOT / "art" / "anim" / "animations.json"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_keys import HEROES  # noqa: E402
+from build_keys import KEYED  # noqa: E402
 
 
 def blender(script, args):
@@ -66,10 +66,10 @@ def main():
     for i in [i for i in ids if i not in reg]:
         print(f"skip {i}: not in {REGISTRY.relative_to(ROOT)} yet", flush=True)
     ids = [i for i in ids if i in reg]
-    # The six heroes have the fuller HD set (make keys); their walk and attack aren't cut from the turnaround.
-    for i in [i for i in ids if i in HEROES]:
-        print(f"skip {i}: an HD hero (make keys ONLY={i})", flush=True)
-    ids = [i for i in ids if i not in HEROES]
+    # The six heroes and Strahd have the fuller HD set (make keys); their walk and attack aren't cut from the turnaround.
+    for i in [i for i in ids if i in KEYED]:
+        print(f"skip {i}: the fuller HD set (make keys ONLY={i})", flush=True)
+    ids = [i for i in ids if i not in KEYED]
     manifest = json.loads((ROOT / "art" / "manifest.json").read_text())["assets"]
     sources = {Path(m["sprites"]).parent.name: m.get("source", "") for m in manifest
                if isinstance(m.get("sprites"), str) and m["sprites"].endswith("/walk.tres")}

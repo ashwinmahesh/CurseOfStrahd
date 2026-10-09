@@ -800,6 +800,7 @@
  },
  "freydis": {
   "0e9784be3c5506d5": "[still, grim, fond]",
+  "25804495b76f5b9d": "[angry, low]",
   "410bcbbca77fc886": "[proud, grieving, gruff]",
   "4b566044961baa47": "[dry, wary, gruff humour]",
   "4ffeddd19c4f4fa1": "[laughing through grief, proud]",
@@ -808,8 +809,10 @@
   "73038bd6b69af7e4": "[proud, low, bitter]",
   "99a14e57bb6678fc": "[blunt, gruff, resolute]",
   "9ac2d95b16e5a1e2": "[grim, dismissive, blunt]",
+  "bf6e926979a2fb04": "[furious, grieving, blunt]",
   "ed1b4d34907185f7": "[angry, grieving, fond]",
   "f8c99c4b1c741c5a": "[fierce, restrained, pleading]",
+  "fa1803e7c439f0fe": "[gruff, nearly warm, urgent]",
   "faa735c505311b71": "[quiet, at peace, wry]"
  },
  "ghakis_doina": {
@@ -2416,6 +2419,14 @@
  },
  "pool_mourner": {
   "b67838152353c70e": "[soft, grieving, devout]"
+ },
+ "quarry_captive": {
+  "00ca62b845475cb3": "[quiet, solemn, generous]",
+  "0e303b42ae890d40": "[flat, hopeless, bitter]",
+  "3d09d5fced2d0490": "[very quiet, steady, bitter]",
+  "43395372c9c08635": "[hushed, reverent, pleading]",
+  "520006545dccccd5": "[tired, gentle, grateful]",
+  "7cbd977d70ec6ed4": "[low, plain, then afraid]"
  },
  "querreth": {
   "20f67572374a0551": "[deep, gravelly, mocking, menacing]"
