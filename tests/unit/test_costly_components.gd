@@ -1,7 +1,7 @@
 extends TestCase
-## Costly material components (owner's pick, 2026-10-08): a spell whose Material component has a cost needs that
-## material carried (no component pouch or focus stands in for it) and uses it up when the spell says so; items of one
-## kind count together toward the cost. Hands stay free.
+## Costly material components (owner's pick, 2026-10-08): a spell whose Material component has a cost and is used up
+## needs that material carried (no component pouch or focus stands in for it) and uses it up; items of one kind count
+## together toward the cost. One the spell keeps isn't needed at all (owner, 2026-10-09). Hands stay free.
 
 
 ## A pregen wizard knowing `spells`, without the starter kit's components (each test gives its own).
@@ -19,22 +19,23 @@ func _empty(ch: Character) -> void:
 					ch.remove_one(material, e)
 
 
-func test_a_spell_waits_for_its_material_and_keeps_one_it_doesnt_use_up() -> void:
+func test_a_spell_waits_for_a_material_it_uses_up_but_not_for_one_it_keeps() -> void:
 	var e := TestCombat.open_field(3)
-	var c := _wizard(e, ["chromatic_orb"])
+	var c := _wizard(e, ["chromatic_orb", "revivify"])
 	var ch := c.creature as Character
 	var t := TestCombat.punching_bag(e, Vector2i(6, 3))
 	TestCombat.start_with(e, c)
-	var orb := {}
+	var listed := {}
 	for x in e.spells.castable(c):
-		if str(x["id"]) == "chromatic_orb":
-			orb = x
-	assert_false(bool(orb["legal"]))
-	assert_eq(str(orb["reason"]), "Needs Diamond worth 50 gp")
-	assert_false(e.spells.cast(c, "chromatic_orb", 1, [t]).ok, "no diamond, no spell")
-	ch.add_item("diamond")
-	assert_true(e.spells.cast(c, "chromatic_orb", 1, [t]).ok)
-	assert_eq(ch.material_worth("diamond"), 100.0, "Chromatic Orb doesn't use its diamond up")
+		listed[str(x["id"])] = x
+	assert_true(bool((listed["chromatic_orb"] as Dictionary)["legal"]), "Chromatic Orb keeps its diamond, so it needs none")
+	assert_eq(str((listed["revivify"] as Dictionary)["reason"]), "Needs Diamond worth 300 gp", "Revivify uses its diamonds up")
+	assert_true(e.spells.cast(c, "chromatic_orb", 1, [t]).ok, "no diamond, and still the spell")
+	for id: String in ["chromatic_orb", "identify", "gate", "programmed_illusion", "songals_elemental_suffusion"]:
+		var spell := Compendium.shared().spell_data(id)
+		assert_false(spell.is_empty(), id)
+		assert_eq(ch.component_why(spell), "", "%s keeps its component, so it needs none" % id)
+		assert_eq(Character.costly_component(spell), {}, id)
 
 
 func test_a_consumed_component_is_used_up_by_worth() -> void:
@@ -88,9 +89,10 @@ func test_the_materials_are_sold_and_every_kind_has_an_item() -> void:
 		assert_eq(str(item.get("material", "")), str(cc["material"]), "%s: its item counts as %s" % [f, cc["material"]])
 
 
-func test_pregens_start_with_what_their_spells_keep_and_incense_for_a_familiar() -> void:
+func test_pregens_start_with_incense_for_a_familiar() -> void:
 	var silvain := Pregens.build("silvain_aster", 9)
-	assert_eq(silvain.component_why(Compendium.shared().spell_data("chromatic_orb")), "", "a diamond for Chromatic Orb")
+	assert_eq(silvain.component_why(Compendium.shared().spell_data("chromatic_orb")), "", "Chromatic Orb needs no diamond")
+	assert_eq(silvain.material_worth("diamond"), 0.0, "so the kit no longer packs one")
 	assert_eq(silvain.material_worth("incense"), 20.0, "two blocks of incense for Find Familiar")
 	var liriel := Pregens.build("liriel_dawnsong", 9)
 	assert_true(liriel.knows_spell("revivify"))

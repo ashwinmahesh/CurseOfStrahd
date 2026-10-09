@@ -1,0 +1,18 @@
+{
+  "id": "the_counts_likeness",
+  "name": "The Count's Likeness",
+  "title": "An Eye of the Castle",
+  "summary": "The great canvas the count gave Haralamb to copy from: a young woman in white, painted from a dead man's memory, through whose eyes the castle sees and whose mouth the count speaks with.",
+  "portrait": "guardian_portrait",
+  "sprite": "guardian_portrait",
+  "attitude": "hostile",
+  "monster": "the_counts_likeness",
+  "guest": false,
+  "tags": [
+    "construct",
+    "portrait",
+    "vallaki"
+  ],
+  "region": "vallaki",
+  "pronouns": "it/its"
+}

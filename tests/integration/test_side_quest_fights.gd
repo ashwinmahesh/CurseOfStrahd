@@ -404,6 +404,7 @@ func test_the_pack_hunters_come_up_the_oats() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_oat_thief"), "defended")
 
+
 ## The falconer and his stone birds come down on the roc's shelf.
 func test_the_falconer_comes_for_the_last_egg() -> void:
 	var v := await _boot("tsolenka_pass", 12, 9, ["roc_driven_off"])
@@ -411,3 +412,16 @@ func test_the_falconer_comes_for_the_last_egg() -> void:
 	await _fight(v, "last_egg", ["The Falconer", "The Falconer's Hand", "A Stone Bird"])
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_last_egg"), "defended")
+
+
+## The count's canvas leans out of its frame in Haralamb's studio, Large, with its copies.
+func test_the_counts_likeness_comes_off_the_wall() -> void:
+	var v := await _boot("vallaki_painters_studio", 20, 9, ["painter_studio_open"])
+	GameState.story.set_quest_stage("the_counts_portraitist", "asked")
+	var e := await _fight(v, "counts_likeness", ["The Count's Likeness", "A Copy"])
+	for c in e.combatants:
+		if c.name() == "The Count's Likeness":
+			assert_eq(c.size_cells, 2, "Large")
+			assert_eq(CombatToken.height_of(c), 2.2)
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_counts_portraitist"), "burned")

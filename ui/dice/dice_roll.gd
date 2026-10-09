@@ -24,6 +24,8 @@ const HOLD_SECONDS := 1.15
 const LAYER := 26
 ## Where show_roll's panel sits: this share of the screen's height from the top.
 const TOP_SHARE := 0.16
+## The verdict's sound comes this long after the landing's.
+const VERDICT_CUE_DELAY := 0.08
 ## A natural 20's rays fade out by this long after the die lands.
 const RAYS_SECONDS := 2.0
 
@@ -340,10 +342,13 @@ func _process(delta: float) -> void:
 
 func _landed() -> void:
 	if not die.manual:
+		# The verdict's cue a beat after the landing's ring: a natural 20 or 1 has its own instead.
+		var cue := "die_success" if bool(result.get("success", false)) else "die_fail"
 		if die.tone == "crit":
-			Audio.sfx("radiant_chime", 0.0)
+			cue = "die_crit"
 		elif die.tone == "fumble":
-			Audio.sfx("thud_heavy", 0.0, -2.0)
+			cue = "die_fumble"
+		get_tree().create_timer(VERDICT_CUE_DELAY * pace, true).timeout.connect(Audio.sfx.bind(cue, 0.0))
 	_shake = 0.3 if die.tone == "fumble" else 0.0
 
 

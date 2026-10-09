@@ -331,10 +331,10 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		e.class_features.on_drop(source, target)
 		if e.rider_of(target) != null:
 			e.dismount(e.rider_of(target), true, false)
+		# A rider who drops falls off, Prone, into a free space beside the mount (2024 PHB, Mounted Combat; QA FN-21:
+		# they stayed in the mount's square, two creatures on one).
 		if e.mount_of(target) != null:
-			var mt := e.mount_of(target)
-			target.remove_meta("mounted_on")
-			mt.remove_meta("ridden_by")
+			e.dismount(target, true, false)
 	if departed:
 		pass
 	elif target.creature.dead and was_up:

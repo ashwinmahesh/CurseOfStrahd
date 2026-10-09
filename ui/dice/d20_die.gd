@@ -105,6 +105,8 @@ func roll(kept: int, other_: int = 0) -> void:
 	_did_land = false
 	_bounced = 0
 	_moving = true
+	if not manual:
+		Audio.sfx("die_throw", 0.03)
 	_fit()
 	_vp.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	set_process(not manual)

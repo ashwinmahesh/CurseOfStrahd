@@ -205,3 +205,13 @@ func test_a_trap_dropping_the_last_hero_rolls_the_save_and_the_party_falls() -> 
 	assert_false(lines.is_empty(), "and the HUD still gets the trap's line")
 	assert_eq(st.party[0].hp, 0, "the blade drops the last one standing")
 	assert_true(root.get("screen") is PauseMenu and (root.get("screen") as PauseMenu).game_over, "The party has fallen")
+
+
+## Every moment of the roll has its sound (generated for the die, art/sourced/elevenlabs_dice), and each file is there.
+func test_the_die_has_its_sounds() -> void:
+	for id: String in ["die_throw", "die_bounce", "die_land", "die_success", "die_fail", "die_crit", "die_fumble"]:
+		var files := Audio.files("sfx", id)
+		assert_false(files.is_empty(), "%s has a sound" % id)
+		for f in files:
+			assert_true(ResourceLoader.exists(f), "%s: %s is there" % [id, f])
+	assert_true(Audio.files("sfx", "die_bounce").size() > 1, "the bounces vary")
