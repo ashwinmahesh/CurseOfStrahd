@@ -410,3 +410,37 @@ func test_the_pigments_paint_real_objects_until_the_pots_run_out() -> void:
 	for i in pots - 1:
 		assert_true(bool(FieldItems.use(st, ch, "marvelous_pigments", "paint", ch, DiceRoller.new(3 + i), {"choice": "rope"})["ok"]))
 	assert_false(ch.carries("marvelous_pigments"), "the last pot used, the case is gone")
+
+
+## The Golden Idol of Good Fortunes (The Silver Hoard's reward): +1 AC while attuned, Augury once a day outside fights, a
+## carried gemstone turned into its full worth in coin, and Globe of Invulnerability once a day in a fight.
+func test_the_golden_idol_works_in_and_out_of_fights() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 9)
+	var ch := c.creature as Character
+	var ac := ch.ac_value()
+	ch.add_item("golden_idol_of_good_fortunes")
+	assert_true(ch.attune("golden_idol_of_good_fortunes"))
+	assert_eq(ch.ac_value(), ac + 1, "+1 AC while attuned")
+	var st := StoryState.new()
+	st.party.append(ch)
+	var opts := {}
+	for o in FieldItems.options(st.party, ch, "golden_idol_of_good_fortunes", DiceRoller.new(1)):
+		opts[str(o["power_id"])] = o
+	assert_true(bool(opts["augury"]["legal"]), str(opts["augury"]["reason"]))
+	assert_false(bool(opts["coin"]["legal"]), "nothing to change yet")
+	assert_eq(str(opts["coin"]["reason"]), "No gemstones to change")
+	ch.add_item("onyx")
+	for o in FieldItems.options(st.party, ch, "golden_idol_of_good_fortunes", DiceRoller.new(1)):
+		if str(o["power_id"]) == "coin":
+			assert_eq(o["choices"], ["onyx"], "only what's carried")
+	st.gold = 0.0
+	var res := FieldItems.use(st, ch, "golden_idol_of_good_fortunes", "coin", ch, DiceRoller.new(2), {"choice": "onyx"})
+	assert_true(bool(res["ok"]), str(res.get("text", "")))
+	assert_eq(roundi(st.gold), 50, "an onyx's full worth")
+	assert_false(ch.carries("onyx"))
+	assert_true(bool(FieldItems.use(st, ch, "golden_idol_of_good_fortunes", "augury", ch, DiceRoller.new(2))["ok"]))
+	TestCombat.start_with(e, c)
+	var r := e.items.use(c, "golden_idol_of_good_fortunes", "globe", [c])
+	assert_true(r.ok, r.reason)
+	assert_false(e.items.use(c, "golden_idol_of_good_fortunes", "globe", [c]).ok, "once a day")
