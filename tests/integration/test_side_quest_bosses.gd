@@ -206,3 +206,17 @@ func test_khazan_withdraws_into_his_name() -> void:
 func test_khazan_unmade_at_level_10() -> void:
 	await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
 
+
+## The burned crown of Yester Hill, the four at its edge.
+const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
+
+
+## Zorica fights beside the Ash Effigy (nobody talked her down).
+func test_the_ash_effigy_and_zorica_at_level_7() -> void:
+	await _series("yester_hill_gulthias_tree", 22, 7, "ash_effigy", [1, 2, 3, 4, 5, 6], ["yester_hill_resolved", "gulthias_tree_burned"], [], [], YESTER_CROWN)
+
+
+## Kostin's tree, and he stands aside: the effigy and its embers.
+func test_the_ash_effigy_at_level_8() -> void:
+	await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+

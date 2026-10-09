@@ -356,3 +356,13 @@ func test_khazan_stands_up_out_of_his_chair() -> void:
 	assert_true(e.lair, "his undercroft acts on initiative 20")
 	await _end(v)
 
+
+## The Ash Effigy stands up on Yester Hill's burned crown with Mother Ruxandra beside it, when she was spared.
+func test_the_ash_effigy_stands_up_with_ruxandra() -> void:
+	var v := await _boot("yester_hill_gulthias_tree", 12, 8, ["yester_hill_resolved", "gulthias_tree_burned"])
+	GameState.story.set_flag("yester_druids_fate", "spared")
+	var e := await _fight(v, "ash_effigy", ["The Ash Effigy", "Mother Ruxandra", "An Ember"])
+	await _end(v)
+	assert_true(bool(GameState.story.get_flag("ash_effigy_slain", false)))
+	assert_eq(GameState.story.quest_stage("the_druid_who_came_back"), "burned")
+

@@ -1043,6 +1043,13 @@
       ],
       "prompt": "A candlelit study deep under a tower, below the level of a lake, its stone walls lined floor to ceiling with books and sweating cold water. On a stone step at the far end, in a high-backed chair of black wood, sits a lich, drawn after the reference: a dead archmage in an old scholar's robe, parchment skin drawn tight over the bone, two small cold lights for eyes, his hands folded on a great open book on his knees. Every candle in the room leans toward him. {party} stand among the reading tables, seen from behind, one holding up a lantern. Cold blue candlelight, deep shadow, one single picture, no panels.",
       "use": "a"
+    },
+    "sq_ash_effigy": {
+      "refs": [
+        "tree_blight"
+      ],
+      "prompt": "The burned crown of a bald hill at night, black with old fire, a lantern lying on its side in turned earth. The grey ash of the whole hilltop is lifting off the ground and streaming inward from every side toward a thin young tree planted in the middle, building up round it into a towering shape twice a man's height, made of packed grey ash and charcoal with the young tree for its spine, its outline drawn after the reference's tree blight, smoking, with two embers for eyes. Small lumps of charcoal crawl toward it on twig legs. {party} stand at the edge of the crown, seen from behind, one holding up a lantern. Cold moonlight, the ash glowing faintly orange at its heart, one single picture, no panels.",
+      "use": "a"
     }
   }
 }

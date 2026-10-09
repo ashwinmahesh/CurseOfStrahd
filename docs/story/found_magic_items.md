@@ -176,6 +176,12 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
 | ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
 
+## Yester Hill (side quest, level 7)
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | Davian Martikov, the winery | Daern's Instant Fortress (rare) | Gift: once the lantern on Yester Hill is out (The Druid Who Came Back, docs/story/side_quests.md) |
+
 ## Krezk (level 7)
 
 | | Where | Item | How |
