@@ -9935,6 +9935,90 @@
   "recipe": "7eeb7eca65",
   "text": "And on the full moon I'm the best tracker in two worlds with teeth. No."
  },
+ "freydis/0e9784be3c5506d5": {
+  "chars": 132,
+  "direction": "[still, grim, fond]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "(Very still.) Then the first they took would be the one in charge of the rest. She'd like that. She always did like being in charge."
+ },
+ "freydis/410bcbbca77fc886": {
+  "chars": 153,
+  "direction": "[proud, grieving, gruff]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "This was hers. It drinks when you strike, and it was always thirsty. She'd want it to drink painted men, but she'll settle for anything that's earned it."
+ },
+ "freydis/4b566044961baa47": {
+  "chars": 66,
+  "direction": "[dry, wary, gruff humour]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "You're not painted men. Good. If you were painted men I'd be busy."
+ },
+ "freydis/4ffeddd19c4f4fa1": {
+  "chars": 165,
+  "direction": "[laughing through grief, proud]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "She got up? (Something that is almost a laugh.) Of course she got up. She never once in her life let anybody take anything of hers without a fight. Not even herself."
+ },
+ "freydis/61b798f94e412df9": {
+  "chars": 149,
+  "direction": "[blunt, practical, gruff]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "Halfway up the slope. The big heap. The skull with the silver wire in its jaw. Mind the painted men's camp on the shoulder; they don't like visitors."
+ },
+ "freydis/6493a5e9a8589566": {
+  "chars": 105,
+  "direction": "[quiet, moved, gruff]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "(She looks at your faces, and at the cuts on you, and at the skull.) Quiet. Yes. Thank you for saying so."
+ },
+ "freydis/73038bd6b69af7e4": {
+  "chars": 216,
+  "direction": "[proud, low, bitter]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "I'm Freydis, of the mountain folk, up in the Balinoks. For longer than the count has had teeth we've brought our dead down to this hill and put them in the mounds and sung them in. Then the painted men came, and dug."
+ },
+ "freydis/99a14e57bb6678fc": {
+  "chars": 92,
+  "direction": "[blunt, gruff, resolute]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "Halfway up the slope, the big heap. The skull with the silver wire in its jaw. I'll be here."
+ },
+ "freydis/9ac2d95b16e5a1e2": {
+  "chars": 69,
+  "direction": "[grim, dismissive, blunt]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "Skulls on heaps, for their tree. That's what I know, and it's enough."
+ },
+ "freydis/ed1b4d34907185f7": {
+  "chars": 278,
+  "direction": "[angry, grieving, fond]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "They've pulled our dead out of the mounds and stacked the skulls in heaps up the slope, for their tree. My grandmother's in the big heap halfway up. We called her Silverjaw. A horse kicked her at nine and broke her jaw, and they wired it with silver, and she bit the horse back."
+ },
+ "freydis/f8c99c4b1c741c5a": {
+  "chars": 164,
+  "direction": "[fierce, restrained, pleading]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "I can't go up. If I go up, I'll kill painted men until they kill me, and then who carries her home? You go. Bring me her bones, and I'll pay what the mountain pays."
+ },
+ "freydis/faa735c505311b71": {
+  "chars": 153,
+  "direction": "[quiet, at peace, wry]",
+  "model": "eleven_v3",
+  "recipe": "aa33e74c9d",
+  "text": "She's in the mound, with her face to the mountains. When the snow comes I'll walk home. I'll tell them the lowlanders carried her. They won't believe me."
+ },
  "gertruda/0247ee63cf822a9e": {
   "chars": 134,
   "model": "eleven_v3",
@@ -16249,6 +16333,12 @@
   "recipe": "956cd23797",
   "text": "A ward keyed to a single person? That's extraordinary craft."
  },
+ "hero_female/c76284eb206637d5": {
+  "chars": 55,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "That's Freydis's grandmother. Or what they made of her."
+ },
  "hero_female/c7c8ea7dff83226c": {
   "chars": 90,
   "model": "eleven_v4",
@@ -20526,6 +20616,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "A ward keyed to a single person? That's extraordinary craft."
+ },
+ "hero_male/c76284eb206637d5": {
+  "chars": 55,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "That's Freydis's grandmother. Or what they made of her."
  },
  "hero_male/c7c8ea7dff83226c": {
   "chars": 90,
@@ -33337,6 +33433,12 @@
   "recipe": "dd92281f92",
   "text": "Empty niches, cold stone, and a heap of rags in the corner. Whatever lived here doesn't any longer, in either sense."
  },
+ "narrator/005ee318baf03599": {
+  "chars": 131,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You carry the bones down in Freydis's sacks. She takes the one with the silver wire in her own hands and doesn't speak for a while."
+ },
  "narrator/0064e3d43d0abe52": {
   "chars": 100,
   "model": "eleven_v4",
@@ -33990,6 +34092,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Shelves of sealed jars and cheeses under cloth, every label in the same neat hand. Nothing has spoiled, and nothing is fresh."
+ },
+ "narrator/056e19180b6c4d98": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The cairn comes apart, and up out of it and out of the mounds round it come the dead the druids bound to watch the hill, with Silverjaw at their head."
  },
  "narrator/056fd71b0aae3230": {
   "chars": 131,
@@ -35221,6 +35329,12 @@
   "recipe": "dd92281f92",
   "text": "The Baron as a hunter. The Baron as a scholar. The Baron as a general, which he has never been. In every one he is smiling, and in every one the painter has given him very anxious eyes."
  },
+ "narrator/1089195a3791a752": {
+  "chars": 221,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She opens the oldest mound with her spade, and lays the bones in it with the skull facing north toward the mountains, and sings over it in a language you don't know, low and long. The hill is very quiet while she does it."
+ },
  "narrator/1092939b5752b10f": {
   "chars": 120,
   "model": "eleven_v4",
@@ -35610,6 +35724,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A long gallery of dark amber, ten silent sarcophagi, and nothing at all to listen to."
+ },
+ "narrator/1362962230cfefb8": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You lift the skull with the silver wire, and every painted eye on the heap turns to look at you at once."
  },
  "narrator/137a600ae40534f3": {
   "chars": 118,
@@ -36480,6 +36600,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A tunnel into the mountain, warm as a kitchen and getting warmer. The rock sweats. Every so often the whole floor trembles, very slightly, in and out, like a sleeper's chest."
+ },
+ "narrator/1a6f5c0ea55a8817": {
+  "chars": 88,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Near the bottom of the heap there's a skull with a twist of silver wire through its jaw."
  },
  "narrator/1a727e9186e3d114": {
   "chars": 108,
@@ -37716,6 +37842,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lockup is a squat log house with one barred window. Three faces look out of it at you, without much hope."
+ },
+ "narrator/250ecced7d02882e": {
+  "chars": 183,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Halfway up the slope stands a heap of skulls taller than a man, laid in rings like a beehive, every one facing out down the hill. The druids have painted a green eye on each forehead."
  },
  "narrator/251e3833118356b8": {
   "chars": 85,
@@ -40201,6 +40333,12 @@
   "recipe": "dd92281f92",
   "text": "All down the slope, every blight on the hill folds up where it stands and falls into a heap of dry brush."
  },
+ "narrator/3a015a320933c3d7": {
+  "chars": 246,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The heap comes apart. Out of it, and up out of the mounds round it, come the dead the druids bound to watch the hill. At their head, taller than the rest, in rotted furs with a bear-claw necklace, walks a woman with a silver wire through her jaw."
+ },
  "narrator/3a0a9130c0babdba": {
   "chars": 140,
   "model": "eleven_v4",
@@ -40783,6 +40921,12 @@
   "recipe": "dd92281f92",
   "text": "Liriel has been writing something in the back of her prayer book, very small. When she sees you looking, she turns the book round so you can read it. It's a list of your names."
  },
+ "narrator/3f13dce3394366cb": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The cairn has come down into a spill of bones on the slope. Every painted eye on the skulls is just paint now."
+ },
  "narrator/3f53a4b2e4fc7bd5": {
   "chars": 87,
   "model": "eleven_v4",
@@ -41226,6 +41370,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Grey steel comes out of grey scabbards with no sound at all."
+ },
+ "narrator/43401aa7c450f7a4": {
+  "chars": 217,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You remember the old songs about this hill: the people who held it before the druids did the same, and worse. Bones taken from a barrow and bound into a cairn are set to watch. Disturb the cairn and the watch gets up."
  },
  "narrator/4344346cf42950ff": {
   "chars": 131,
@@ -53257,6 +53407,12 @@
   "recipe": "dd92281f92",
   "text": "The cellar is quiet now except for the drip of a cask somebody cracked. The far end smells of turned earth."
  },
+ "narrator/aa3f875897db1007": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The painted men are gone from the hill, but what they bound is still bound."
+ },
  "narrator/aa56739943d9c5b0": {
   "chars": 146,
   "model": "eleven_v4",
@@ -58045,6 +58201,12 @@
   "recipe": "dd92281f92",
   "text": "Bogdan sends the boy to sit by the cart with his back turned. It is quick. It is not easy. Afterwards he closes the lid himself and stands with his hand on it."
  },
+ "narrator/d4c3cd8e08bd34f8": {
+  "chars": 220,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the foot of the hill, by the oldest of the stoneless mounds, a big woman in furs sits with an axe across her knees and a spade and two empty sacks beside her. She has been crying, and stopped, and is angry about both."
+ },
  "narrator/d4da24b1eefe59c5": {
   "chars": 112,
   "model": "eleven_v4",
@@ -62130,6 +62292,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Barred, and more than barred: you hear a second bolt slide home as you touch the latch, and then someone breathing very carefully on the other side."
+ },
+ "narrator/f9cc2014d133fc53": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Somebody's grandparents, stacked like turnips. You leave them be."
  },
  "narrator/f9e80da745c1853b": {
   "chars": 91,
@@ -67980,6 +68148,13 @@
   "model": "eleven_v4",
   "recipe": "87ceabb0d0",
   "text": "Vampire spawn rest by day in the earth they were buried in, or near enough. Inert. Defenceless, the treatises say."
+ },
+ "silverjaw/ba9264a63bd86961": {
+  "chars": 41,
+  "direction": "[hollow, commanding, cold]",
+  "model": "eleven_v3",
+  "recipe": "10f9a5a052",
+  "text": "Who lifts my bones? This hill is watched."
  },
  "sir_godfrey_gwilym/04587b68a62d27d6": {
   "chars": 159,

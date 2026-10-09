@@ -2300,6 +2300,25 @@
       "model": "eleven_v3",
       "generated_voice_id": "O7uUFMmQbSNnfVFzZG2n",
       "released": true
+    },
+    "silverjaw": {
+      "voice_id": "HH3kybY6uEJ2ebSa9Vy3",
+      "name": "Library voice: Agatha - Villainous, Ancient Witch",
+      "description": "Silverjaw, Freydis's grandmother, a mountain-folk chief bound as a wight into Yester Hill's watch, one line: a shared library voice (also the vestige Fekre's, in the Amber Temple), chosen by Claude (2026-10-09).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "shared_with": "vestige_fekre"
+    },
+    "freydis": {
+      "voice_id": "HxI2CD5gjRdZtDpAU4RL",
+      "name": "Barovia Freydis",
+      "description": "A big, fierce woman of the mountain folk of the Balinok mountains, a berserker in her forties, speaking English with a strong, rough Eastern European highland accent. A loud, deep, chesty, gravelly woman's voice, blunt and angry, grieving under it, with dry, gallows humour.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Eastern European accent]",
+      "generated_voice_id": "HxI2CD5gjRdZtDpAU4RL",
+      "released": true
     }
   },
   "sfx": {
