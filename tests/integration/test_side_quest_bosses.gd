@@ -307,3 +307,12 @@ const TITHE_VAULT: Array[Vector2i] = [Vector2i(10, 6), Vector2i(12, 6), Vector2i
 ## The Gilded Knight and three of the escort's empty harness, at his full strength.
 func test_the_gilded_knight_at_level_9() -> void:
 	await _series("argynvostholt_undercroft", 20, 9, "gilded_knight", [1, 2, 3, 4, 5, 6, 7, 8], ["tithe_told"], [], [], TITHE_VAULT)
+
+
+## The barrow slope on Yester Hill, below the druids' cairn of skulls.
+const BARROW_SLOPE: Array[Vector2i] = [Vector2i(28, 16), Vector2i(29, 16), Vector2i(27, 17), Vector2i(28, 17)]
+
+
+## Silverjaw, three barrow-wardens and four of the hill's watch, catching the party unawares.
+func test_the_hills_watch_at_level_7() -> void:
+	await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)

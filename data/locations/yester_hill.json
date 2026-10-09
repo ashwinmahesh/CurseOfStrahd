@@ -423,6 +423,17 @@
       "model": "rubble",
       "search_dc": 14,
       "item": "amulet_of_the_devout_plus_2"
+    },
+    {
+      "id": "barrow_watch_cairn",
+      "cell": [
+        28,
+        14
+      ],
+      "kind": "examine",
+      "label": "A cairn of skulls",
+      "model": "cairn",
+      "dialogue": "yester_hill/the_barrow:cairn"
     }
   ],
   "containers": [
@@ -477,6 +488,17 @@
       "when": "flag.kostin_doubts and not flag.kostin_hill_met and not flag.yester_hill_resolved",
       "facing": "west",
       "approach": 6
+    },
+    {
+      "npc": "freydis",
+      "cell": [
+        31,
+        26
+      ],
+      "dialogue": "yester_hill/the_barrow:freydis",
+      "when": "level >= 7 or quest.the_barrow_on_yester_hill",
+      "facing": "north",
+      "approach": 4
     }
   ],
   "encounters": [
@@ -665,6 +687,163 @@
       ],
       "surprise": "",
       "flag": "wardens_camp_cleared"
+    },
+    {
+      "id": "hill_watch",
+      "trigger": "dialogue",
+      "when": "not flag.barrow_watch_known",
+      "text": "The cairn comes apart, and up out of it and out of the mounds round it come the dead the druids bound to watch the hill, with Silverjaw at their head.",
+      "surprise": "party",
+      "flag": "hill_watch_beaten",
+      "quest": {
+        "id": "the_barrow_on_yester_hill",
+        "stage": "fought"
+      },
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            12
+          ],
+          "name": "Silverjaw",
+          "hp": 140
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            31,
+            14
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            12
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            25,
+            16
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            30,
+            16
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            30,
+            10
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "The Hill's Watch"
+        }
+      ]
+    },
+    {
+      "id": "hill_watch",
+      "trigger": "dialogue",
+      "text": "The cairn comes apart, and up out of it and out of the mounds round it come the dead the druids bound to watch the hill, with Silverjaw at their head.",
+      "surprise": "",
+      "flag": "hill_watch_beaten",
+      "quest": {
+        "id": "the_barrow_on_yester_hill",
+        "stage": "fought"
+      },
+      "monsters": [
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            12
+          ],
+          "name": "Silverjaw",
+          "hp": 140
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            31,
+            14
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            24,
+            12
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            25,
+            16
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            30,
+            16
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            30,
+            10
+          ],
+          "name": "The Hill's Watch"
+        }
+      ]
     }
   ],
   "narration": {

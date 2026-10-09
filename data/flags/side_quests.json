@@ -1230,6 +1230,16 @@
       "id": "tithe_idol_found",
       "type": "bool",
       "summary": "The Silver Hoard: the party took the tithe-keeper's golden idol from his armour."
+    },
+    {
+      "id": "barrow_watch_known",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: History told the party that bones bound into a cairn are set to watch; the watch doesn't catch them unawares."
+    },
+    {
+      "id": "hill_watch_beaten",
+      "type": "bool",
+      "summary": "The Barrow on Yester Hill: the party put down the hill's watch and Silverjaw (encounter hill_watch)."
     }
   ]
 }
