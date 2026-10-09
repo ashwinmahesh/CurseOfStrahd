@@ -998,7 +998,8 @@ func _equipment(ch: Character) -> VBoxContainer:
 	flow.add_theme_constant_override("h_separation", 6)
 	flow.add_theme_constant_override("v_separation", 6)
 	for e in ch.inventory:
-		if str(e["slot"]) != "" or int(e["qty"]) <= 0:
+		# What's in a hand or worn is above; the quiver's ammunition and a focus (the paper doll's) are in the pack.
+		if (str(e["slot"]) != "" and not str(e["slot"]) in ["ammo", "focus"]) or int(e["qty"]) <= 0:
 			continue
 		var data := Compendium.shared().item_data(str(e["id"]))
 		var text := str(data.get("name", e["id"])) + (" ×%d" % int(e["qty"]) if int(e["qty"]) > 1 else "")
