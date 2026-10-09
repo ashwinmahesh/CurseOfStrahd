@@ -219,6 +219,22 @@ young. **Escalation:** opening the trap makes the cub scream, and the blights co
   Lavinia gives her grandmother's fan either way: a Wind Fan (uncommon) and 60 gp. Told whose trap it was, she sends
   the party to Old Marin, who confesses and pulls all eleven of his traps.
 
+### The Spiders' Gully (`the_spiders_gully`, narrative/svalich_road/the_spiders_gully.dialogue; batch 9, level 3)
+
+From level 3, Iancu the knife-thrower at the Tser Pool camp stops throwing: his cousin Tsura (new NPC) rode the falls
+path three days ago with a letter in her coat, and her horse came home with web on its saddle as thick as rope. A new
+travel place, the Webbed Gully (data/locations/ivlis_spider_gully.json, a new outdoor map with a vistas.json place;
+roads from the crossroads and to Tser Falls), is a gully off the falls path strung with web. Tsura hangs wrapped on a
+ledge at the back, alive. **Twist:** the letter wasn't the camp's. It was hers, to her mother, saying she wasn't coming
+back to be married, and the rings were round her neck. **Escalation:** every strand runs back to the cracks in the
+walls; cutting her down brings the spiders (Nature DC 12 reads the web first, and they don't catch the party
+unawares).
+
+- Fight `gully_spiders` in the gully: three giant spiders and two swarms of spiderlings (swarms of insects). The
+  autopilot wins 4 of 8 at level 3 caught unawares and 3 of 8 warned, losing about three party members a fight.
+- Tsura goes back to the camp to tell her mother herself, or on to Krezk; Iancu's line says which. She gives the party
+  the wedding rings, Boon Companion's Bands (uncommon), and 40 gp.
+
 ## Vallaki (level 5)
 
 Talkers: the gate watch (gate:news, renamed) and Urwin (martikovs:rumors, renamed) wire into quests already built: the
@@ -1048,4 +1064,6 @@ sergeant, the Narrator and a blunt interject) and narrator/amber_road_camp.dialo
 Lake Zarovich: the_barons_island.dialogue in full (new speaker Ostap; also Old Nistor, the Narrator and a blunt
 interject) and narrator/zarovich_reed_island.dialogue. Batch 9,
 the Old Svalich Road: the_roadhouse_lantern.dialogue in full (new speaker Wenzel, the innkeeper's ghost; also Arik,
-the Narrator and a blunt interject) and narrator/svalich_roadhouse.dialogue.
+the Narrator and a blunt interject) and narrator/svalich_roadhouse.dialogue. Batch 9,
+the Tser Falls path: the_spiders_gully.dialogue in full (new speaker Tsura; also Iancu, the Narrator and a blunt
+interject) and narrator/ivlis_spider_gully.dialogue.

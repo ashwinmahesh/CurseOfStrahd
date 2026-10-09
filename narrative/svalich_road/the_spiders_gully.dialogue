@@ -1,0 +1,83 @@
+# The Spiders' Gully (side quest, docs/story/side_quests.md): Tsura of the Tser Pool camp rode the falls path three days
+# ago with a letter, and her horse came home yesterday with web on its saddle. She's in a gully off the path, wrapped
+# and hung on a ledge, alive (data/locations/ivlis_spider_gully.json). **Twist:** she wasn't carrying the camp's
+# letter to Vallaki. It was her own, to her mother, and she was running: from a wedding she didn't want, with the
+# rings in her pocket. **Escalation:** cutting her down shakes the whole gully's web. Reached from Iancu at the camp
+# from level 3 (svalich_road/tser_camp:iancu) and the gully. Every line here is unvoiced for now.
+
+# --- Iancu at the camp (svalich_road/tser_camp:iancu jumps here) ---
+
+~ iancu
+if quest.the_spiders_gully == done
+if flag.tsura_went_on
+Iancu: Tsura sent word from Krezk. She's mending nets for an old man who doesn't ask her anything. Her mother cried for a day and then started packing to visit.
+elif flag.tsura_went_back
+Iancu: Tsura's back by the fire. Nobody's said the word wedding where she can hear it. I throw better with her watching. Nine out of ten. Still nine.
+endif
+-> END
+endif
+if quest.the_spiders_gully
+Iancu: The falls path. There's a gully off it, on the left, where the stream cuts down. That's where the web on her saddle came from. Has to be.
+-> END
+endif
+Iancu: (He doesn't throw.) Tsura's late. My cousin. She rode for the Vallaki camp three days ago by the falls path, with a letter in her coat. Her horse came home yesterday with web on its saddle, as thick as rope.
+Iancu: Stanimir says wait. I've waited. I'm bad at it. You're going that way?
+quest the_spiders_gully asked
+-> END
+
+# --- Tsura, wrapped on the ledge (prop tsura_cocoon) ---
+
+~ cocoon
+if flag.gully_spiders_beaten
+-> tsura
+endif
+Narrator: On a ledge at the back of the gully, a long bundle of web hangs from a spur of rock, turning slowly. Inside it, through a gap, an eye is open, and moves to look at you.
+Narrator: Webs run from the bundle to every wall of the gully, tight as harp strings. Some of the bundles further up don't have eyes any more.
+* [Nature DC 12] (Look at how the webs are strung.) -> strung | strung_missed
+* (Cut her down.) -> cut
+
+~ strung
+set gully_web_read
+Narrator: Every strand runs back to the dark cracks high in the gully walls. Anything that touches the bundle tells everything in the cracks. Cut fast, and be ready.
+-> cut
+
+~ strung_missed
+Narrator: A great deal of web. That's all you can tell.
+-> cut
+
+~ cut
+Narrator: The first strand parts with a sound like a plucked string, and the whole gully answers. Things come out of the cracks in the walls on long legs, very quickly.
+interject tag:blunt: Get her down. I'll hold them.
+combat gully_spiders
+
+# --- Tsura, once she's down (prop tsura_cocoon, after the fight) ---
+
+~ tsura
+if quest.the_spiders_gully == done
+Narrator: Shreds of web on the ledge, stirring in the draught. Nothing else.
+-> END
+endif
+Narrator: Tsura sits on the rocks with web in her hair, shaking, sipping from your flask. A Vistana of seventeen or so, with a rider's hands. When she can talk, she checks her coat before anything else.
+Tsura: The letter. Still there. (She doesn't give it to you.) It isn't for Luvash. It's for my mother. It says I'm sorry, and I'm not coming back, and she's to tell the man in Vallaki to find another bride.
+Tsura: I'd have been in Krezk by now. (She laughs, badly.) Spiders. All the things I was afraid of, and it's spiders.
+* Come back to the camp. Iancu's sick with worry. Tell your mother yourself. -> back
+* Go on to Krezk, then. We'll tell Iancu you're alive. -> on
+
+~ back
+set tsura_went_back
+quest the_spiders_gully done
+Tsura: (A long breath.) Yes. All right. I'll say it to her face. It'll be worse, and better.
+-> rings
+
+~ on
+set tsura_went_on
+quest the_spiders_gully done
+Tsura: (She looks up the path toward the falls, and the far side.) Tell Iancu I said nine out of ten is very good. Tell my mother the letter's true.
+-> rings
+
+~ rings
+Tsura: Here. (Two silver rings on a thread round her neck.) They were for the wedding. They're old Vistani work: whoever wears the other, your magic won't touch them. I don't need them now.
+give boon_companions_bands
+gold +40
+approve thistle +2 wren_featherfoot +2 godrick_pendlebrook +1 kip_smudgewick +1: You cut Tsura out of the spiders' web
+-> END

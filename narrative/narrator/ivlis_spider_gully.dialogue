@@ -1,0 +1,13 @@
+# Narrator: the Webbed Gully off the falls path (The Spiders' Gully, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:ivlis_spider_gully
+| A gully off the falls path, where the stream comes down over black rock. Web hangs across it in grey sheets, and something high in the cracks shifts its weight.
+| [flag.gully_spiders_beaten] The gully's web hangs in rags now, and nothing moves in the cracks.
+cooldown 30
+
+~ examine:gully_old_bundles
+| Older bundles of web, fallen from the ledges, dry as paper. A boot sticks out of one. A deer's antler out of another. You don't open any of them.
+
+~ examine:gully_saddlebag
+| A saddlebag torn off on the rocks at the gully mouth, Vistani work, embroidered with a swallow. Empty but for oats and a spare bridle.
