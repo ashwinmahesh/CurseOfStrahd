@@ -158,6 +158,9 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	view.combat_view.story = view.st
 	view.add_child(view.combat_view)
 	view._say("combat:start")
+	# The picture streaks toward the party and drains for a beat as the fight breaks out (Visual Polish Plan 3).
+	if ScreenPulse.on():
+		ScreenPulse.play(view, "engage", view.rig.global_position)
 	_run_combat(view, encounter_id, spec, e, ctokens, surprised)
 	return true
 

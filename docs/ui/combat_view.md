@@ -98,6 +98,13 @@ Owner 2026-10-06: the switch into combat felt abrupt (the party's figures were s
 camera, foes popped in off screen, the HUD cut, the floor lit up). A fight now opens with a short beat
 (`CombatView.INTRO_TIME`) while the rules are already running:
 
+- As it breaks out the picture streaks toward the party, drains of colour and flashes for three quarters of a second
+  (Visual Polish Plan 3, `ScreenPulse` "engage": Octopath's encounter swirl done in place, nobody moves). Critical
+  hits, killing blows and big spells landing get a shorter pulse at the creature or spot hit on top of CombatImpact's
+  freeze and push-in ("crit", "kill", "spell"). It plays in real time (slow motion doesn't hold it), fast combat
+  shortens it, it never runs headless, and it draws over the world and under the HUD and menus. It costs about 1 ms
+  a frame at 3440 x 1440 while it plays and nothing otherwise (pulse_capture prints it).
+  `make capture SCENE=res://tools/capture/pulse_capture.tscn NAME=pulse FRAMES=10` holds each near its peak.
 - The party and guests keep the figures they were exploring with (mid-step, facing, the lit lantern) and turn to the
   nearest foe as their step lands; the foes fade in where they stand, nearest first, facing the party.
 - The camera eases to the middle of the fight and pulls out until everyone shows inside the HUD, so the player sees
