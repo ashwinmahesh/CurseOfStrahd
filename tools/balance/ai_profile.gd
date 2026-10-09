@@ -5,6 +5,7 @@ extends SceneTree
 ## (think, on the view's worker thread) and the rest (begin and finish, on the main thread).
 ##
 ##   godot --headless --script res://tools/balance/ai_profile.gd -- --location=<id> --fight=<id> [--level=n] [--seed=n]
+##       [--parts] [--aside: each plan made on a worker thread, as the combat view does]
 
 const Sim := preload("res://tools/balance/balance_sim.gd")
 
@@ -56,7 +57,13 @@ func _init() -> void:
 		var tb := Time.get_ticks_usec()
 		var tt := tb
 		if r == null:
-			var thought := e.ai.think(c)
+			var thought: Dictionary
+			if args.has("aside"):
+				var worker := Thread.new()
+				worker.start(e.ai.think.bind(c))
+				thought = worker.wait_to_finish() as Dictionary
+			else:
+				thought = e.ai.think(c)
 			tt = Time.get_ticks_usec()
 			e.finish_ai_turn(thought)
 		while e.pending != null:

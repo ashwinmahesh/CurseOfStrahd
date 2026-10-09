@@ -79,8 +79,8 @@ func test_a_read_belongs_to_the_thread_that_opened_it() -> void:
 	assert_true(m.has_flag("prone"), "once the read is over, everyone sees the change")
 
 
-## The arena through the combat view: its enemy turns made on a worker thread (as in the game) or in line (as headless
-## runs do) give the same fight; returns [log, whether a plan was seen on a thread].
+## The arena through the combat view, its first four enemy turns (the dead closing in) planned on a worker thread (as
+## in the game) or in line (as headless runs do); returns [log, whether a plan was seen on the thread].
 func _arena_log(aside: bool) -> Array:
 	Dice.reseed(3)
 	var arena := ARENA.instantiate() as Node3D
@@ -89,8 +89,10 @@ func _arena_log(aside: bool) -> Array:
 	view.think_aside = aside
 	var e := arena.get("e") as Encounter
 	var threaded := false
+	var ai_turns := 0
+	var who := e.current()
 	for i in 20000:
-		if e.state != Encounter.State.ACTIVE or e.round_no > 3:
+		if e.state != Encounter.State.ACTIVE or ai_turns >= 4:
 			break
 		threaded = threaded or view.get("_thinker") != null
 		var hud := view.get("hud") as CombatHud
@@ -99,6 +101,9 @@ func _arena_log(aside: bool) -> Array:
 		elif view.mode == CombatView.Mode.IDLE and e.current().is_player_controlled():
 			e.end_turn()
 			view.call("_advance")
+		if e.current() != who:
+			ai_turns += 0 if who.is_player_controlled() else 1
+			who = e.current()
 		await get_tree().process_frame
 	await _frames(2)
 	var out := [e.log.dump(), threaded]
