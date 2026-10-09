@@ -93,4 +93,5 @@ func _done(code: int) -> void:
 	for f in DirAccess.get_files_at(SaveSystem.save_dir):
 		DirAccess.remove_absolute(SaveSystem.save_dir.path_join(f))
 	DirAccess.remove_absolute(SaveSystem.save_dir)
+	DirAccess.remove_absolute("user://ai_turn_frames")   # only goes once no other run's folder is left in it
 	get_tree().quit(code)
