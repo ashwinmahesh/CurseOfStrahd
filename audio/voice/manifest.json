@@ -4804,6 +4804,13 @@
   "recipe": "b411de1800",
   "text": "The burgomaster's dog. Big grey wolfhound, Lupu. He sits under the mansion's study window every night and howls at the wall. Not at the wolves. At the wall."
  },
+ "bildrath/695177f98098cd24": {
+  "chars": 113,
+  "direction": "[gruff, dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "b411de1800",
+  "text": "Parriwimple says he hasn't seen anything. Parriwimple is a very poor liar. That's the one thing I like about him."
+ },
  "bildrath/711507c3f678ec4b": {
   "chars": 78,
   "direction": "[weary, grudging]",
@@ -4859,6 +4866,20 @@
   "model": "eleven_v3",
   "recipe": "b411de1800",
   "text": "You have coin in your purse that has my thumbprint on it. Out. Come back with thirty gold and an apology, in that order, or don't come back."
+ },
+ "bildrath/bde20d841adf197a": {
+  "chars": 110,
+  "direction": "[gruff, grudging, wry]",
+  "model": "eleven_v3",
+  "recipe": "b411de1800",
+  "text": "Four sacks a week, written off to wolves. I've decided it's charity. Don't repeat that; it's bad for business."
+ },
+ "bildrath/bfa709b417c7de45": {
+  "chars": 173,
+  "direction": "[gruff, indignant, baffled]",
+  "model": "eleven_v3",
+  "recipe": "b411de1800",
+  "text": "My stock. Somebody is robbing me. Four sacks of oats a week, gone out of the back, and the lock never touched. Oats. Who steals oats in a village where nobody keeps a horse?"
  },
  "bildrath/c3031882ae10585e": {
   "chars": 46,
@@ -13471,6 +13492,12 @@
   "recipe": "956cd23797",
   "text": "A life he loved, on the day he most wanted to be happy. The terms read like a wedding vow turned inside out."
  },
+ "hero_female/374ddde094e8c8f7": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "That's the bravest thing I've heard in this valley."
+ },
  "hero_female/376987855b6cbd06": {
   "chars": 13,
   "model": "eleven_v4",
@@ -17713,6 +17740,12 @@
   "recipe": "66638cecb8",
   "text": "A life he loved, on the day he most wanted to be happy. The terms read like a wedding vow turned inside out."
  },
+ "hero_male/374ddde094e8c8f7": {
+  "chars": 51,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "That's the bravest thing I've heard in this valley."
+ },
  "hero_male/376987855b6cbd06": {
   "chars": 13,
   "model": "eleven_v4",
@@ -21107,6 +21140,97 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "We're just going to leave the coffin there? In the road? All right."
+ },
+ "hollow_agafia/01828c1b1a34b5e8": {
+  "chars": 155,
+  "direction": "[quiet, fierce, protective]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Mine were born to it. They turn when the moon's full. He wanted them most of all. So I took them in the night and walked until I found a hut nobody wanted."
+ },
+ "hollow_agafia/04479a546445fbc0": {
+  "chars": 91,
+  "direction": "[low, guarded, hushed]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Keep your voices down. They're asleep. They sleep like other children when the moon's thin."
+ },
+ "hollow_agafia/048bb02d105ef0cb": {
+  "chars": 181,
+  "direction": "[low, fierce, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Meat teaches them. One taste and the wolf knows what it's for. Oats don't teach anything. If they never learn, maybe they'll grow up to be people who change, not wolves who pretend."
+ },
+ "hollow_agafia/0ce69d541a47c795": {
+  "chars": 85,
+  "direction": "[quiet, wry, grateful]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Tell Bildrath. Tell him the truth or tell him wolves. Either way, tell him thank you."
+ },
+ "hollow_agafia/14a5ffdff6193902": {
+  "chars": 103,
+  "direction": "[weary, resolute, grim]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "They'll send others, one day. One day the children will be bigger than the others. Go on. We'll manage."
+ },
+ "hollow_agafia/3822965469d7fbe8": {
+  "chars": 92,
+  "direction": "[quiet, content, wry]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Oats, and a door that shuts, and three children asleep. It's more than the den ever gave us."
+ },
+ "hollow_agafia/555748bd8fffb850": {
+  "chars": 190,
+  "direction": "[low, blunt, bitter]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "The den. Up the lake. I was one of them; I won't pretend I wasn't. Then Kiril came back from the castle with the master's orders, and he started taking children from the farms. For the army."
+ },
+ "hollow_agafia/61f2013812c7f22b": {
+  "chars": 102,
+  "direction": "[quiet, dismayed, rueful]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "(She sees it too. Her face goes still.) He's been carrying it with the hole at the bottom. Every week."
+ },
+ "hollow_agafia/6ca0b84bba52504c": {
+  "chars": 114,
+  "direction": "[urgent, tense, growling]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Inside. Bar the door. (To you, without turning round.) I can't change in front of them. If I change, I won't stop."
+ },
+ "hollow_agafia/96ca88060c115767": {
+  "chars": 93,
+  "direction": "[low, wary, grim]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "I hear Emil leads now. Good. Kiril's old hunters don't listen to Emil. They're still looking."
+ },
+ "hollow_agafia/abc042b97df3e14b": {
+  "chars": 112,
+  "direction": "[wary, dry, guarded]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "Parriwimple's friends. He talks about you. He talks about everybody, the way some people talk about the weather."
+ },
+ "hollow_agafia/b1ac97c58ca270d0": {
+  "chars": 149,
+  "direction": "[low, practical, warm]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "My grandmother's. Speak into one, and whoever holds the other hears you. Keep one. Leave the other with Parriwimple. If they come again, you'll know."
+ },
+ "hollow_agafia/c40ec70965883900": {
+  "chars": 192,
+  "direction": "[tired, bitter, then grateful]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes two smooth river stones from her apron, a pair, with the same mark scratched on each.)"
  },
  "ilarion/2f3229f4708b2447": {
   "chars": 177,
@@ -35139,6 +35263,12 @@
   "recipe": "dd92281f92",
   "text": "He shakes his head so hard his spectacles fly off. Then he looks at the storeroom door, and back at you, and his voice comes out in a whisper anyway."
  },
+ "narrator/133022c8c2d7974f": {
+  "chars": 59,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Pine needles, mud and the dark, and the howl again, nearer."
+ },
  "narrator/133a8c40b9cd3f79": {
   "chars": 167,
   "model": "eleven_v4",
@@ -35306,6 +35436,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Every black eye in the amber turns at once to whoever carries the gift. Four small black eyes along their hairline turn back."
+ },
+ "narrator/146ac21299a755d4": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bones in the needles, rabbits and a deer, cracked and old. Something has been eating well up here. Not the people in the hut."
  },
  "narrator/146b58d5754a32f7": {
   "chars": 103,
@@ -35504,6 +35640,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The pretty face slides off Bella like dough off a board."
+ },
+ "narrator/1688986619988801": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A charcoal mound, long cold, a hump of black under the moss. Small footprints go up one side of it and slide down the other. Somebody has been playing here."
  },
  "narrator/169ba7d102ed3d91": {
   "chars": 107,
@@ -35912,6 +36054,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He sees the step before you take it. He has been watching people try that since before your grandparents were born."
+ },
+ "narrator/19a66b9b1b39ffbb": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The hollow is quiet. Somebody has raked the needles over the place where the hunters fell, and planted oats in a little square of turned earth by the door."
  },
  "narrator/19baabb0ad6ed2db": {
   "chars": 161,
@@ -36693,6 +36841,12 @@
   "recipe": "dd92281f92",
   "text": "The little bird, the forty strokes, the careful letters. Nothing on the stone has changed. Ilse checks anyway."
  },
+ "narrator/203e2cd5abcd6106": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The wolves come out of the pines low and fast, and the thing behind them stands up on its hind legs and grins."
+ },
  "narrator/20409763d86caa67": {
   "chars": 82,
   "model": "eleven_v4",
@@ -37088,6 +37242,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The amber is warm, and it fits. For a moment you feel the whole valley at once, every road and grave and pulse in it, and on a hill far away, something turns its head toward you."
+ },
+ "narrator/2411c05ae1cbaf9e": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Three sacks of oats with BILDRATH stencilled on them, very neatly, by someone who does inventory for pleasure. One of them has a hole in the bottom corner."
  },
  "narrator/241c602adedf14d6": {
   "chars": 146,
@@ -37790,6 +37950,18 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She opens her mouth to answer, and the answer is in her face before she can stop it: pride, and something like devotion. The crowd sees it. A woman spits at her feet. Then another."
+ },
+ "narrator/29dd975103674568": {
+  "chars": 141,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wedged in a split of the fallen trunk, a slim birch wand with a crystal set in its tip. Point it at anything enchanted and the crystal glows."
+ },
+ "narrator/29de6d71867e64cf": {
+  "chars": 212,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A very large young man is creeping up the north path in the dark, which he does badly, with a sack of oats on each shoulder and a third in his arms. He freezes when he sees you, as if that might make him smaller."
  },
  "narrator/29e61160f31fddc3": {
   "chars": 241,
@@ -38768,6 +38940,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "West, the lake like a dropped mirror, and the walls of a town beside it."
+ },
+ "narrator/32d7233a6eeabc30": {
+  "chars": 170,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Something winks from a high branch of the claw-marked pine: a plain bronze ring on a snapped thong, still warm. Its last owner jumped higher than the wolves, for a while."
  },
  "narrator/32e26a7a7f98392d": {
   "chars": 135,
@@ -42039,6 +42217,12 @@
   "recipe": "dd92281f92",
   "text": "It isn't your finest work, but it's warm, and Krezk hasn't had warm in a long time. By the end two children are sitting at the front, and their mother hasn't pulled them back."
  },
+ "narrator/50241deaf2f8a073": {
+  "chars": 206,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Spilled oats, every few yards, all the way back down the path toward the village: a sack with a hole in it. A trail any hunter could follow. And over the oats, here and there, the print of a very large paw."
+ },
  "narrator/50625ad13e169daf": {
   "chars": 165,
   "model": "eleven_v4",
@@ -43383,6 +43567,12 @@
   "recipe": "dd92281f92",
   "text": "Straw, a bucket, a ring in the wall. Every cell is furnished the same, and so is every prisoner."
  },
+ "narrator/5bb982660172dc66": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The charcoal-burners left a long time ago. The mounds they left are grown over with moss on one side and nothing on the other."
+ },
  "narrator/5bbeba439b868fd8": {
   "chars": 183,
   "model": "eleven_v4",
@@ -43496,6 +43686,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "There is nothing frightened in her at all, which is rare in Barovia. What's there instead is patience, and faith, and a quiet appetite for the Baron's chair that she isn't troubling to hide."
+ },
+ "narrator/5cb730e8ee53051c": {
+  "chars": 161,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bunches of herbs hung to dry on a string: feverfew, sorrel, something purple and hooded you'd rather not name. Someone here knows what they're doing with plants."
  },
  "narrator/5cb8d2be912b019c": {
   "chars": 92,
@@ -45597,6 +45793,12 @@
   "recipe": "dd92281f92",
   "text": "A hard man with a bow, and friends in the trees. That much was already clear."
  },
+ "narrator/6e241f3491ac2d33": {
+  "chars": 176,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A thin woman with her sleeves rolled up stands in the door of a charcoal-burners' hut, a long knife in her hand, held low and steady. Behind her in the dark, three small faces."
+ },
  "narrator/6e2eeb5d3fee1cdb": {
   "chars": 140,
   "model": "eleven_v4",
@@ -45957,6 +46159,12 @@
   "recipe": "dd92281f92",
   "text": "The chair stands still. It looks smaller than it did when someone was sitting in it."
  },
+ "narrator/70eff9e283fe678e": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the bottom of the ditch, a stoppered vial of grey smoke that never settles, dropped by someone who meant to be gone before the hags looked up."
+ },
  "narrator/7106e2e8dea13951": {
   "chars": 138,
   "model": "eleven_v4",
@@ -46179,6 +46387,12 @@
   "recipe": "dd92281f92",
   "text": "The inscription has been scratched over with tiny star charts. Someone sat here a long time, copying what the vestige told them."
  },
+ "narrator/7404236d7a2bb516": {
+  "chars": 162,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You saw them coming up the oats, and where they'd come from. They didn't see you seeing, and one of the wolves is still down the path, sniffing at a spilled sack."
+ },
  "narrator/740b28974a193f3d": {
   "chars": 167,
   "model": "eleven_v4",
@@ -46316,6 +46530,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Down in the gorge there are lights: small, pale, drifting like lanterns carried by people who are taking their time. Under the roar of the water, somebody is calling."
+ },
+ "narrator/74f9b73c35539f4d": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You saw them coming up the oats, and where they'd come from. They didn't see you seeing, and the wolf is still down the path, sniffing at a spilled sack."
  },
  "narrator/751ae456398cf58d": {
   "chars": 106,
@@ -47589,6 +47809,12 @@
   "recipe": "dd92281f92",
   "text": "Both. Bluto is a monster and a neighbour, and he is the only other person who still lives on this shore."
  },
+ "narrator/80c44b9a553162db": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the wayside shrine, an offering nobody came back for: a small green flask with a bitter smell, the kind a careful traveller drinks before an unknown supper."
+ },
  "narrator/80d03873c733039f": {
   "chars": 172,
   "model": "eleven_v4",
@@ -47666,6 +47892,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She stands as you come in, sword in hand, then lowers it a few inches. A scarf is wound tight around her throat."
+ },
+ "narrator/8185bdc5528f137d": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Shapes come out of the pines at the edge of the hollow: wolves, low and silent, and behind them something that walks on two legs some of the time."
  },
  "narrator/818a566aaed976be": {
   "chars": 122,
@@ -51279,6 +51511,12 @@
   "recipe": "dd92281f92",
   "text": "Something on two legs steps out of the pines ahead, sniffing the air, and grins with far too many teeth."
  },
+ "narrator/a0f30ef9ae92bc1a": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The frozen traveller's pack opens with a crack of ice. Inside, a flask of something white as frost that hasn't frozen. He was saving it for the top."
+ },
  "narrator/a0f78003b45f9c74": {
   "chars": 82,
   "model": "eleven_v4",
@@ -53247,6 +53485,12 @@
   "recipe": "dd92281f92",
   "text": "A carnival wagon in red and gold, with RICTAVIO'S WONDERS painted along the side and a padlock the size of a fist. From inside comes the slow, heavy breathing of something very large."
  },
+ "narrator/b24030e9d18af334": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A clearing in the pines, black underfoot with old charcoal, a stream at the edge, and a little hut of logs and turf with its door patched shut from the inside."
+ },
  "narrator/b242c47c0296409e": {
   "chars": 135,
   "model": "eleven_v4",
@@ -53360,6 +53604,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Far below, the courtyard, the gate, and the road going away into the trees."
+ },
+ "narrator/b35cb5427cd3a47b": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind the woodcutter's stump, a flask of something pale blue, still corked. It keeps the cold out of your hands just to hold it."
  },
  "narrator/b35e3fdba4ed338d": {
   "chars": 174,
@@ -53654,6 +53904,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The door of the hut slams itself. The fire in the hearth stands up tall and green, and the jars on the shelf begin to hum."
+ },
+ "narrator/b60b4e6072202312": {
+  "chars": 82,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every few yards on the path there's a little spill of oats, as if something leaks."
  },
  "narrator/b60ce641bf9d954c": {
   "chars": 149,
@@ -55773,6 +56029,12 @@
   "recipe": "dd92281f92",
   "text": "Offalia snores on the bakery floor with crumbs on her chin, smiling at whatever she's dreaming. Now and then her fingers twitch, kneading."
  },
+ "narrator/c9e4a308feffc009": {
+  "chars": 102,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Spilled oats on the path, and in the soft ground beside them, the print of a paw as wide as your hand."
+ },
  "narrator/c9e57b49cab5daa7": {
   "chars": 180,
   "model": "eleven_v4",
@@ -56901,6 +57163,12 @@
   "recipe": "dd92281f92",
   "text": "Behind the iron gate, the books are chained twice. Some of the chains are on the inside of the covers."
  },
+ "narrator/d37d0c206f33a472": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One board in the broken cart's bed lifts out. Under it, a twist of oiled paper holds a pinch of grey dust that drinks a puddle dry in a breath."
+ },
  "narrator/d38dc6c404116587": {
   "chars": 78,
   "model": "eleven_v4",
@@ -57146,6 +57414,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Feathers still drift in the dark. The ravens that are left keep very still."
+ },
+ "narrator/d601c6553eded93a": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In a gap between the field wall's stones, someone tucked a pair of thin leather gloves. They grip the stone like a lizard's feet."
  },
  "narrator/d60376a9d4d971f1": {
   "chars": 135,
@@ -60255,6 +60529,12 @@
   "recipe": "dd92281f92",
   "text": "The village falls behind you, shutter by shutter, and nobody waves. Somewhere ahead the road forks, and from its cliff the castle watches you choose."
  },
+ "narrator/f2afe314080ef66e": {
+  "chars": 78,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "From down the path, a long howl that isn't any dog's. Agafia's knife comes up."
+ },
  "narrator/f2b0e18a06063025": {
   "chars": 103,
   "model": "eleven_v4",
@@ -60314,6 +60594,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The pass, with its bridge and its tower. The portcullis stands up in its slot now, and the road goes on into the cloud."
+ },
+ "narrator/f326f1f2658bede7": {
+  "chars": 173,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On the step, three little figures carved from pine: a horse, a man, and a wolf. The wolf has been carved with more care than the others, and then had its teeth filed smooth."
  },
  "narrator/f34b68a34fe9712e": {
   "chars": 135,
@@ -61551,6 +61837,12 @@
   "recipe": "dd92281f92",
   "text": "A plain church, cold and clean, rows of pews under a great gilded sunburst. Candles burn all along the altar rail. Nobody lit them that you saw."
  },
+ "narrator/fed7de32ee49c5ca": {
+  "chars": 212,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The north path climbs through the pines and comes out in a hollow that's black underfoot with old charcoal. A stream talks to itself at the edge of it. There's a hut, and its door is patched shut from the inside."
+ },
  "narrator/fee2a2c5fe555749": {
   "chars": 87,
   "model": "eleven_v4",
@@ -62700,6 +62992,13 @@
   "recipe": "f2004ca8b2",
   "text": "Hello. Uncle says to say welcome. Welcome."
  },
+ "parriwimple/04552de648bde4a4": {
+  "chars": 114,
+  "direction": "[proud, shy, moved]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "She says they mustn't have meat. Not ever. Only oats. She says I'm a good man. Nobody's ever said that. I counted."
+ },
  "parriwimple/092d288d50b4568c": {
   "chars": 104,
   "model": "eleven_v3",
@@ -62724,6 +63023,13 @@
   "recipe": "f2004ca8b2",
   "text": "Uncle says my time costs money. Five gold an hour. You'd have to ask Uncle. He likes being asked."
  },
+ "parriwimple/3a7cf9190b7315c6": {
+  "chars": 25,
+  "direction": "[startled, guilty, whispering]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "I'm not here. I'm in bed."
+ },
  "parriwimple/3bee90f2e6a2402d": {
   "chars": 87,
   "model": "eleven_v3",
@@ -62742,11 +63048,32 @@
   "recipe": "f2004ca8b2",
   "text": "Again. No. Don't, Uncle will charge you for the flour. But that was the best thing I ever saw. I'll remember you."
  },
+ "parriwimple/6836efe174070cb8": {
+  "chars": 125,
+  "direction": "[worried, earnest, pleading]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "(He looks at the oats, and at you, and at the dark up the path.) They're hungry. You'd do it too. You'd have to come and see."
+ },
  "parriwimple/6eba26bc8bb3fdbc": {
   "chars": 43,
   "model": "eleven_v3",
   "recipe": "f2004ca8b2",
   "text": "I didn't like it. I carried the sacks fast."
+ },
+ "parriwimple/715a2676f0ac0a68": {
+  "chars": 127,
+  "direction": "[earnest, gentle, simple]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "It's for the lady. Agafia. She's got three, and they're very small, and up in the woods there's nothing to eat that isn't meat."
+ },
+ "parriwimple/80bb4d62b584d733": {
+  "chars": 91,
+  "direction": "[eager, simple, earnest]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "Up the path and through the pines. Mind the stream. They're waiting. I said I'd bring more."
  },
  "parriwimple/85f3ae6cc252dbd9": {
   "chars": 17,
@@ -62783,6 +63110,13 @@
   "model": "eleven_v3",
   "recipe": "f2004ca8b2",
   "text": "Uncle says I'm not to leave the shop. Uncle says a lot. I can carry your packs. I can carry you, if you fall down. I'll count the days we're gone so he knows."
+ },
+ "parriwimple/fd503f6bed5e7fda": {
+  "chars": 72,
+  "direction": "[eager, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "f2004ca8b2",
+  "text": "Come up. You'll see. Up the path, past the last house. Don't tell Uncle."
  },
  "pastry_customer_man/0dae0db32326b89b": {
   "chars": 114,

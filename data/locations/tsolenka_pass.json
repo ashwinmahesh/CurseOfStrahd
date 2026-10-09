@@ -402,6 +402,28 @@
       "label": "Shapes in the ice",
       "model": "ice_patch",
       "dialogue": "tsolenka_pass/the_frozen_pilgrims:ice"
+    },
+    {
+      "id": "pass_frozen_traveller",
+      "cell": [
+        9,
+        27
+      ],
+      "kind": "decor",
+      "label": "A frozen traveller",
+      "model": "frozen_traveller"
+    },
+    {
+      "id": "frozen_traveller_rope",
+      "cell": [
+        8,
+        27
+      ],
+      "kind": "search",
+      "label": "something in the frozen traveller's pack",
+      "model": "satchel",
+      "search_dc": 12,
+      "item": "rope_of_climbing"
     }
   ],
   "containers": [

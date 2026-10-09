@@ -611,6 +611,18 @@
       "label": "A green painted wagon",
       "model": "wagon",
       "when": "not flag.wagon_slain"
+    },
+    {
+      "id": "field_wall_cache",
+      "cell": [
+        30,
+        9
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a farmer's cache behind the field wall",
+      "model": "rubble",
+      "item": "gauntlets_of_ogre_power"
     }
   ],
   "encounters": [

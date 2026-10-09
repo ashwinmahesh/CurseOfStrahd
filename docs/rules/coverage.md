@@ -227,7 +227,7 @@ Tests live in `tests/unit/` and `tests/integration/`; names below are files.
 | Turn-based exploring (F7): rounds of six seconds, each member moving up to their Speed; a companion's square costs double and can't be stopped on | location_plan.gd | tested | test_plan_before_the_fight |
 | Sleight of Hand to pick a pocket; stealing from what someone owns; witnesses; private rooms; the town watch's fine (F8) | story/crime.gd, location_crime.gd, narrative/watch/ | tested (DC, witnesses and trespass: deviations) | test_stealing_and_crime |
 | Short Rest: spend Hit Point Dice (roll + Con, minimum 1), short-rest features | rest_screen.gd, character.gd | tested | test_party_screens |
-| Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption | rest_screen.gd | implemented (interruption: deviations) | — |
+| Long Rest: all Hit Points, Hit Point Dice, slots and features; interruption; 16 hours after the last one before another starts; none while enemies remain in the building (deviations) | rest_screen.gd, story/rest_rules.gd | tested (interruption: deviations) | test_rest_rules, test_party_screens |
 | Ability checks in conversation (any skill or ability, the speaking character's bonus, Advantage sources) | story/dialogue_runner.gd | tested | test_story |
 | Milestone levelling | story/story_state.gd, level_up_screen.gd | tested | test_story, test_party_screens |
 | Saves outside combat and at the start of each round; effects and Concentration saved | core/save_system.gd, combat/encounter_snapshot.gd | tested | test_exploration, test_story |

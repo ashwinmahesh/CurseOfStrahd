@@ -123,6 +123,14 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
 - **Cut away.** A house between the camera and the party squashes down and is replaced by its low band: a ring of
   wall 0.5 high, capped dark like the cut-away interiors, round a floor of boards, with its footing.
 
+**L-shaped buildings** (W7). A block of wall that isn't a rectangle is split into rectangles as before, but they are
+one building: every part takes the main part's height (the biggest), roof and paint and stands on the lowest ground
+of any of them; no face, window or corner post where two parts meet; a wing whose end stands wholly against a part
+whose ridge crosses it runs its roof on into that part, to half a square short of its ridge, with no gable at that
+end, made flatter where it must be so its ridge stays under the other roof (`TownBuilder._butts`); and the parts are
+cut away together. The Abbey of St. Markovia and Argynvostholt have such blocks; kit_capture's `l_houses` shot shows
+two made-up L's.
+
 Yard walls are the kit's too: a stone arm from each square's middle toward each neighbouring wall or gate, a capped
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
 with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons. Vallaki's
@@ -156,4 +164,3 @@ camera turns). Captures, before and after:
 - Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
   carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
 - The kit's own HD materials (W4): timber, plaster, thatch and stone painted at 2K with normal and roughness maps.
-- Houses are still rectangles; an L-shaped block is two houses with their own roofs.

@@ -203,9 +203,14 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 		"manual_study", "exalted_deeds", "vile_darkness":
 			return _study(st, ch, p, opts)
 		"instant_fortress", "rod_of_security":
+			# A safe place to sleep wherever the party is, but still not within 16 hours of the last Long Rest (RestRules).
+			var wait := RestRules.item_rest_refusal(st)
+			if wait != "":
+				return {"ok": false, "text": wait, "lines": []}
 			for m in st.party:
 				m.finish_long_rest()
 			st.advance_minutes(8 * 60)
+			RestRules.note_long_rest(st)
 			return {"ok": true, "effect": "long_rest", "text": "%s: the party rests in perfect safety and wakes refreshed." % label}
 		"oil_of_sharpness":
 			var weapon := str(opts.get("choice", ""))

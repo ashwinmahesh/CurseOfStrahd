@@ -741,6 +741,19 @@
       ],
       "kind": "decor",
       "model": "sack"
+    },
+    {
+      "id": "cart_false_floor",
+      "cell": [
+        37,
+        17
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a false floor in the broken cart",
+      "model": "broken_boards",
+      "item": "bag_of_holding"
     }
   ],
   "containers": [
