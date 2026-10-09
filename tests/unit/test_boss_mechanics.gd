@@ -444,6 +444,31 @@ func test_a_saved_fight_keeps_shapes_lair_and_what_the_story_learns() -> void:
 	assert_true(bool(r.legendary.story_flags.get("boss_seen", false)))
 
 
+## The round-start save is the round as it begins, before its first turn starts (QA FN-11): taken after it, a reload
+## played that start again, so a regenerating foe first in the order healed twice (and a lair acted twice). The kept
+## round, restored, heals the revenant once, as the fight did.
+func test_a_round_start_save_plays_the_first_turns_start_once() -> void:
+	var e := _field()
+	e.keep_round_snapshots = true
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 1), 5)
+	var rev := TestCombat.foe(e, "revenant", Vector2i(9, 6))
+	TestCombat.start_with(e, rev)
+	rev.creature.hp = rev.creature.max_hp() - 40
+	for i in 6:
+		if e.round_no >= 2:
+			break
+		e.end_turn()
+		while e.pending != null:
+			e.answer_reaction(false)
+	assert_eq(e.round_no, 2)
+	assert_eq(e.current(), rev, "the revenant starts round 2")
+	assert_eq(int(e.round_snapshot.get("round", 0)), 2, "round 2 kept as it began")
+	var live := rev.creature.hp
+	var r := EncounterSnapshot.restore(JSON.parse_string(JSON.stringify(e.round_snapshot)) as Dictionary, DiceRoller.new(4))
+	assert_eq(r.get_c(rev.id).creature.hp, live, "Regeneration once, not twice")
+	assert_eq(r.get_c(a.id).creature.hp, a.creature.hp)
+
+
 # --- Strahd's own block ------------------------------------------------------------------------------------------
 
 func _strahd(e: Encounter, cell: Vector2i) -> Combatant:

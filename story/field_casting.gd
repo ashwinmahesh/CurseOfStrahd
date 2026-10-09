@@ -178,7 +178,9 @@ static func cast_at(party: Array[Character], caster: Character, spell_id: String
 	if slot <= 0 and level > 0:
 		var slots := _slots(caster, level)
 		slot = slots[0] if not slots.is_empty() else level
-	var point := Vector2(4.5, 7.5) if str((data.get("targets", {}) as Dictionary).get("kind", "")) == "area" else Vector2.INF
+	# An area spell lands on the target's square, whether its data names the area or the creatures in it (Calm
+	# Emotions' "each Humanoid in the Sphere": with no point it refused, "Choose a point", QA 2026-10-08).
+	var point := Vector2(4.5, 7.5) if data.has("area") or str((data.get("targets", {}) as Dictionary).get("kind", "")) == "area" else Vector2.INF
 	var before := e.log.entries.size()
 	var res := e.spells.cast(c, spell_id, slot, [tc], point)
 	if res.ok:

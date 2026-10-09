@@ -78,11 +78,13 @@ func start(surprised_ids: Array = []) -> void:
 	# they settle. A prompt here leaves `pending` set for the view, as any other does.
 	var offers := e.class_features.initiative_offers()
 	if offers.is_empty():
+		_keep_round()
 		_lair_then_begin()
 		return
 	e.reactions.offer(offers, func() -> CombatResult:
 		_order_by_initiative()
 		e.turn_index = 0
+		_keep_round()
 		return _lair_then_begin(), CombatResult.new())
 
 
@@ -252,10 +254,20 @@ func _next_turn(c: Combatant) -> CombatResult:
 		e.log.add("turn", "Time is still stopped: another turn for %s" % c.name(), c.id)
 		return _begin_turn()
 	c.remove_meta("time_stop")
+	var was := e.round_no
 	_advance_index()
 	if e.state != Encounter.State.ACTIVE:
 		return CombatResult.new()
+	if e.round_no != was:
+		_keep_round()
 	return _lair_then_begin()
+
+
+## The round as it begins, before the lair and the first turn (Encounter.keep_round_snapshots).
+func _keep_round() -> void:
+	var e := enc()
+	if e.keep_round_snapshots:
+		e.round_snapshot = EncounterSnapshot.capture(e).duplicate(true)   # kept apart from what the round goes on to change
 
 
 ## Moves `turn_index` to the next living creature, starting a new round past the end of the order (a lair that hasn't

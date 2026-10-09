@@ -442,6 +442,7 @@ func test_manacle_puppet_trophy_thimble_and_potion() -> void:
 	var rr := e.items.use(c, "mages_manacle", "release")
 	assert_true(rr.ok, "release: " + rr.reason)
 	assert_false(foe.creature.has_condition(&"restrained"), "let go")
+	assert_false(e.items.use(c, "mages_manacle", "release").ok, "nobody left to let go (QA, 2026-10-08)")
 	ch.add_item("spell_slingers_puppet")
 	ch.attune("spell_slingers_puppet")
 	ch.equip("spell_slingers_puppet", "main_hand")

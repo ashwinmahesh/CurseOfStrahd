@@ -25,6 +25,11 @@ var order: Array[Combatant] = []
 var turn_index: int = -1
 var round_no: int = 0
 var state: State = State.SETUP
+## A story fight keeps each round as it begins, before the lair or the first turn acts (EncounterSnapshot): the
+## round-start save, so reloading it plays the start of that turn once (QA FN-11: captured after it, Regeneration,
+## start-of-turn damage and lair actions happened twice). Off for simulations and tests, which don't save.
+var keep_round_snapshots := false
+var round_snapshot: Dictionary = {}
 var outcome: String = ""
 var log := CombatLog.new()
 ## For the scene: {type: move|attack|damage|heal|condition|death|turn|round|spell|reaction|over, ...}
