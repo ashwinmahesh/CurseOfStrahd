@@ -2616,6 +2616,10 @@
   "fee1c59e0538c0fe": "[wry, light, sad]",
   "ff83ef19908b28ec": "[low, grim]"
  },
+ "the_counts_likeness": {
+  "58be70a805351dab": "[silky, amused, possessive]",
+  "9270d45392965a00": "[intimate, menacing, tender]"
+ },
  "the_eye_below": {
   "1252da199b51cf91": "[sudden, cold, waking]",
   "2396587dd19e9daa": "[contemptuous, imperious, slow]",
@@ -2988,6 +2992,15 @@
   "ee0eca3a962a1c15": "[shivering, small, sad]"
  },
  "vallaki_sun_painter": {
+  "06dc4b8a8d319e5d": "[low, frightened, uneasy]",
+  "1f84fc52105213da": "[earnest, grateful, wry]",
+  "488130931ea76d0b": "[haunted, low, remembering]",
+  "51e76355c64b3ed3": "[weary, low, warning]",
+  "7de9420ec75f754a": "[dry, wry, relieved]",
+  "972284d95ee8aa2d": "[stunned, terrified, hushed]",
+  "a0757852bf852496": "[wry, relieved, near tears]",
+  "b5d4b6132f1109c2": "[frightened, ashamed, rambling]",
+  "ea7492832b45e283": "[haunted, slow, uneasy]",
   "fd4c4a2771f63ac2": "[dry, sardonic, tired]"
  },
  "vestige_dahlver_nar": {

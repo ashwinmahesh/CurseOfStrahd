@@ -291,6 +291,10 @@
     "from_blinsky": [
       7,
       18
+    ],
+    "from_painter": [
+      43,
+      18
     ]
   },
   "exits": [
@@ -376,6 +380,17 @@
       "to": "vallaki_blue_water_inn",
       "spawn": "default",
       "label": "The Blue Water Inn"
+    },
+    {
+      "id": "painter_door",
+      "cell": [
+        43,
+        17
+      ],
+      "to": "vallaki_painters_studio",
+      "spawn": "from_street",
+      "label": "Haralamb's door",
+      "when": "flag.painter_studio_open"
     }
   ],
   "props": [
@@ -1562,6 +1577,20 @@
         18
       ],
       "facing": "south"
+    },
+    {
+      "npc": "vallaki_sun_painter",
+      "cell": [
+        44,
+        18
+      ],
+      "dialogue": "vallaki/the_counts_portraitist:painter",
+      "when": "level >= 9",
+      "hours": [
+        17,
+        21
+      ],
+      "facing": "west"
     }
   ],
   "encounters": [

@@ -914,8 +914,11 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	UiParts.compact(menu)
 	menu.icon = UiKit.icon("spells")
 	var popup := menu.get_popup()
+	# A spell for another creature (Warding Bond) doesn't offer its caster.
+	var others := bool(o.get("others_only", false))
 	for i in st.party.size():
-		popup.add_item(st.party[i].name, i)
+		if not (others and st.party[i] == ch):
+			popup.add_item(st.party[i].name, i)
 	var count := int(o["count"])
 	if count > 1:
 		popup.add_separator()
@@ -924,7 +927,7 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 		var tgt: Array[Character] = []
 		if pid == 100:
 			for t in st.party:
-				if tgt.size() < count:
+				if tgt.size() < count and not (others and t == ch):
 					tgt.append(t)
 		else:
 			tgt.append(st.party[pid])

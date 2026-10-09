@@ -1330,6 +1330,10 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 	# An attack (a weapon, an Unarmed Strike, an attack-roll spell like Fire Bolt) never targets its own user.
 	if t == c and _is_attack(c, action):
 		return "Can't attack yourself"
+	# A spell for another creature (Warding Bond) never goes on its caster.
+	if t == c and str(action.get("kind", "")) == "spell" \
+			and bool((Compendium.shared().spell_data(str(action.get("spell_id", ""))).get("targets", {}) as Dictionary).get("other", false)):
+		return "Choose another creature"
 	var rng := int(action.get("range", 0))
 	match str(action["targeting"]):
 		"enemy":
