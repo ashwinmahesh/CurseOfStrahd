@@ -315,12 +315,18 @@
  },
  "barovia_goodwife": {
   "10ecb6559a8ce9e8": "[tearful, laughing, overwhelmed]",
+  "1941c7e126ec5c28": "[warm, teary, wry]",
   "35726aa871192e5e": "[low, bitter, ashamed]",
   "359cf2275eb065c6": "[warm, wry, relieved]",
+  "380bebadf3e11422": "[choked, tender, holding back tears]",
+  "5a9a75c76f90d885": "[weary, matter-of-fact]",
+  "7c73fc101736cd49": "[tender, scolding, voice breaking]",
   "7edb25d7c96bdf27": "[frightened, sharp whisper]",
+  "8294507f0d21122e": "[worried, low]",
   "af2855da68222a88": "[hushed, storytelling]",
   "b60727e8071a7270": "[whispered, disbelieving]",
-  "c8bb448db7473da5": "[weary, fond]"
+  "c8bb448db7473da5": "[weary, fond]",
+  "ca1c463983be7684": "[quiet, grateful, firm]"
  },
  "barovia_gravedigger": {
   "125bfed2d9b0c257": "[gruff, proud, dry]",
@@ -2327,6 +2333,15 @@
  },
  "pastry_customer_woman": {
   "be985d3814f61184": "[nervous, rationalising, craving]"
+ },
+ "pasture_erno": {
+  "14fbf38de39252c2": "[hushed, earnest, a little awed]",
+  "20fd5aa9221a245a": "[counting slowly, dread creeping in]",
+  "3d74b92a0b67a556": "[content, then quiet and wistful]",
+  "3ef512886ca181d2": "[whispering, relieved and sad]",
+  "5fdc17949bb1367c": "[shouting, panicked]",
+  "9294456fe7cbf1db": "[counting under his breath, then a frightened whisper]",
+  "fd636356d73ce2eb": "[beaming, proud, chatty]"
  },
  "phantom_warden": {
   "275fdea9032ac35a": "[stern, hollow challenge]",

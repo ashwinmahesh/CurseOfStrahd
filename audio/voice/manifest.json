@@ -3636,6 +3636,13 @@
   "recipe": "2fe94cdeab",
   "text": "Fifty years, Tata. Mama waited at that door till she died. Mihail dug you a grave. It's been empty all this time. He'll be so angry. He'll be so glad."
  },
+ "barovia_goodwife/1941c7e126ec5c28": {
+  "chars": 116,
+  "direction": "[warm, teary, wry]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "Father's by the fire. He'll cry when he sees you. He cries at everything now; he says he's fifty years behind on it."
+ },
  "barovia_goodwife/35726aa871192e5e": {
   "chars": 138,
   "direction": "[low, bitter, ashamed]",
@@ -3650,11 +3657,32 @@
   "recipe": "2fe94cdeab",
   "text": "My brother filled in a grave this week and dug no new one. First time in forty years. He doesn't know what to do with his hands. I've given him my garden."
  },
+ "barovia_goodwife/380bebadf3e11422": {
+  "chars": 70,
+  "direction": "[choked, tender, holding back tears]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "Snowdrop. You stupid old thing. Fifty years. (She doesn't cry, quite.)"
+ },
  "barovia_goodwife/592a69d7d86813c8": {
   "chars": 144,
   "model": "eleven_v3",
   "recipe": "16aa257fe7",
   "text": "Nobody. That's the point. There's nothing left here worth the trouble. Only the water, and the walk to it, and being home before the light goes."
+ },
+ "barovia_goodwife/5a9a75c76f90d885": {
+  "chars": 126,
+  "direction": "[weary, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "The goats? My grandson Erno's, or the village's; he minds them all for a copper a head. Up on the high pasture above the road."
+ },
+ "barovia_goodwife/7c73fc101736cd49": {
+  "chars": 49,
+  "direction": "[tender, scolding, voice breaking]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "Where's my father, then? Hm? You left him behind."
  },
  "barovia_goodwife/7edb25d7c96bdf27": {
   "chars": 34,
@@ -3662,6 +3690,13 @@
   "model": "eleven_v3",
   "recipe": "2fe94cdeab",
   "text": "Don't. Don't say that by the well."
+ },
+ "barovia_goodwife/8294507f0d21122e": {
+  "chars": 208,
+  "direction": "[worried, low]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "He came down last night white as milk. Says he counts one more every evening than he has. Twenty-three goats, and he counts twenty-four, and the dog won't go near the extra one. He's a good boy. He can count."
  },
  "barovia_goodwife/916fa48980b6991b": {
   "chars": 122,
@@ -3695,6 +3730,13 @@
   "model": "eleven_v3",
   "recipe": "2fe94cdeab",
   "text": "Mihail sent you? He worries. He digs when he worries. He's always digging."
+ },
+ "barovia_goodwife/ca1c463983be7684": {
+  "chars": 140,
+  "direction": "[quiet, grateful, firm]",
+  "model": "eleven_v3",
+  "recipe": "2fe94cdeab",
+  "text": "(To you.) This was my mother's. Smell it, and the dogs love you, and the goats follow you anywhere. I never had the heart to use it. Use it."
  },
  "barovia_gravedigger/125bfed2d9b0c257": {
   "chars": 90,
@@ -16350,6 +16392,12 @@
   "recipe": "956cd23797",
   "text": "Someone's listening here. Not loudly. But listening."
  },
+ "hero_female/bd08f0f644e6a1d6": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Behind the wall, Erno. We've got her."
+ },
  "hero_female/bd0bebba3a79f03c": {
   "chars": 89,
   "model": "eleven_v4",
@@ -20669,6 +20717,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Someone's listening here. Not loudly. But listening."
+ },
+ "hero_male/bd08f0f644e6a1d6": {
+  "chars": 37,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Behind the wall, Erno. We've got her."
  },
  "hero_male/bd0bebba3a79f03c": {
   "chars": 89,
@@ -33776,6 +33830,12 @@
   "recipe": "dd92281f92",
   "text": "The sun's ashes have been swept into a tidy pile with a sign on a stick: KEEP FOR THE NEXT FESTIVAL."
  },
+ "narrator/006bc5d1583c1eca": {
+  "chars": 208,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lean-to of stacked wood and a hide, where Erno keeps his crook, his bread and a slate with tally marks on it: twenty-three, twenty-three, twenty-three, then a week of twenty-fours, each one gone over twice."
+ },
  "narrator/006eaf8105ea6c4b": {
   "chars": 70,
   "model": "eleven_v4",
@@ -37052,6 +37112,12 @@
   "recipe": "dd92281f92",
   "text": "Little cots in rows, each with a name scratched on the frame. The children took their treasures with them, or never had any."
  },
+ "narrator/1aa11f3a7b45f135": {
+  "chars": 174,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the gate of the fold, Erno's left something for you: a little stoppered bottle Goodwife Petra gave him for the goats, wrapped in a note that says THANK YOU in big letters."
+ },
  "narrator/1aa7dce148b28e2c": {
   "chars": 76,
   "model": "eleven_v4",
@@ -37753,6 +37819,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Alenka's eyes keep returning to your weapons, your faces, the order you sit in. She isn't curious; she's taking inventory, for someone."
+ },
+ "narrator/20827d1e72376b2c": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You've seen that mark before: on a pair of good grey boots, on a young man by the edge of the fog who asked you what day it was."
  },
  "narrator/20bb23e9b4bd06ca": {
   "chars": 157,
@@ -39446,6 +39518,12 @@
   "recipe": "dd92281f92",
   "text": "A stone bench facing the view, its seat worn hollow by someone who sat here a great deal."
  },
+ "narrator/2e6fe3e8e51c4dd9": {
+  "chars": 182,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A boy of ten or so in a coat too big for him stands at the gate of a dry-stone fold, touching each goat on the back as it goes past him, with a big grey dog pressed against his legs."
+ },
  "narrator/2e7a8fa4a935cad9": {
   "chars": 98,
   "model": "eleven_v4",
@@ -40148,6 +40226,12 @@
   "recipe": "dd92281f92",
   "text": "The wardens' day-book, in many hands, the last pages in one: a careful hand you've seen pinned to a sleeve. Most of it is the same entry. It sleeps. It dreamed. We sang."
  },
+ "narrator/3499b7de97acc224": {
+  "chars": 211,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You walk her up to the edge of the fog. She looks back once, at the fold, at the village roofs below, and then walks into the white without hurrying, and the bell goes on for a long time after you can't see her."
+ },
  "narrator/34c62c5d7ccf9996": {
   "chars": 214,
   "model": "eleven_v4",
@@ -40700,6 +40784,12 @@
   "recipe": "dd92281f92",
   "text": "The words go out over the water. The bell rings once more, softer, and stops, and does not start again. The marsh feels less crowded afterwards."
  },
+ "narrator/3938de27f0346b4b": {
+  "chars": 166,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A long slope of thin grass above the road, a dry-stone fold with a gate, and at the top of the slope, close enough to throw a stone into, the white wall of the mists."
+ },
  "narrator/3942c3a69fd29611": {
   "chars": 229,
   "model": "eleven_v4",
@@ -41209,6 +41299,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Thistle isn't up a tree tonight. She's on the ground, right across the fire, staring at you. She's been doing it for some time."
+ },
+ "narrator/3d9e6a43f813893d": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Goodwife Petra comes up the pasture track with her skirts in her fists, and stops, and puts her hand on the old nanny's head, and the bell clanks once."
  },
  "narrator/3d9ecbcc1b512c29": {
   "chars": 120,
@@ -43537,6 +43633,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "From the cavern below, a long breath in, like a forge's bellows, held."
+ },
+ "narrator/5265eaccc040f341": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The bell is cracked and green, and scratched into the collar's leather, in letters fifty years old: SNOWDROP. And a little mark like a boot."
  },
  "narrator/5268322f387fef10": {
   "chars": 117,
@@ -46904,6 +47006,12 @@
   "recipe": "dd92281f92",
   "text": "The wind hits you the moment your head clears the hatch. Below, the valley is black, with a few small lights in it that look very far away."
  },
+ "narrator/6d3ebcdb9baffd0c": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The last one through the gate is an old nanny goat, white going yellow, with a cracked bell on a leather collar. The dog whines and won't look at her."
+ },
  "narrator/6d4a78859aa9966e": {
   "chars": 90,
   "model": "eleven_v4",
@@ -49136,6 +49244,12 @@
   "recipe": "dd92281f92",
   "text": "A painter's house that smells of linseed, and under it something like flowers left too long in a vase. Every canvas in the front room is turned to the wall."
  },
+ "narrator/807830adcbfcd405": {
+  "chars": 86,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A goat. It chews something that isn't grass, and looks at you as if you might be next."
+ },
  "narrator/80792de0cfa76d7a": {
   "chars": 121,
   "model": "eleven_v4",
@@ -50006,6 +50120,12 @@
   "recipe": "dd92281f92",
   "text": "Silvain reads the Tome of Strahd all night, and nobody tries to stop them. Near dawn they go very still, the way a hunting cat goes still."
  },
+ "narrator/877e5431538982dd": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Out of the mists at the top of the pasture come wolves, white and wet with fog, low and fast, for the old nanny goat."
+ },
  "narrator/87872e75a8a66abd": {
   "chars": 94,
   "model": "eleven_v4",
@@ -50851,6 +50971,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A lich keeps its soul in something: a box, a jar, a ring. Khazan has nothing on him. But the cold down here pulls upward, toward the tower, toward its door, the way smoke pulls toward a chimney. Toward the name."
+ },
+ "narrator/8dea52b148c72153": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A long slope of thin grass above the road, a dry-stone fold, goats, and at the top of the slope the white wall of the mists, close enough to throw a stone into."
  },
  "narrator/8df2f0d33f6d9ec1": {
   "chars": 147,
@@ -52087,6 +52213,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bone-strewn passage. The bones stay down now."
+ },
+ "narrator/98bf778c5d28efe5": {
+  "chars": 98,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The high pasture, quiet. Up at the top, the mists lie flat and white, the way they're supposed to."
  },
  "narrator/98cbe749fc916c93": {
   "chars": 113,
@@ -55028,6 +55160,12 @@
   "recipe": "dd92281f92",
   "text": "A long, low hall under the roof. Somewhere along it, a child is humming."
  },
+ "narrator/b1b42776703fad90": {
+  "chars": 206,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She lets you close. Her coat is damp, and cold, the way mist is cold, though the evening's dry. Burrs in her coat from bushes that don't grow on this side of the valley. Her eyes are very old and very calm."
+ },
  "narrator/b1b86bca15649509": {
   "chars": 79,
   "model": "eleven_v4",
@@ -55634,6 +55772,12 @@
   "recipe": "dd92281f92",
   "text": "Bones, polished by use. You try not to think about whose."
  },
+ "narrator/b76ae286f20275f0": {
+  "chars": 115,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The edge of the mists, like a wall of wet wool. When you stand close, you can hear, very far off inside it, a bell."
+ },
  "narrator/b76af35b11c7af62": {
   "chars": 140,
   "model": "eleven_v4",
@@ -55898,6 +56042,12 @@
   "recipe": "dd92281f92",
   "text": "Dead knights sit along both sides of a long table under rotted banners, armoured and unmoving, as if a feast was called four centuries ago and nobody has been dismissed."
  },
+ "narrator/b9a261d27ee9ae21": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She walks off along the wall, unhurried, and the bell on her collar clanks once. It's a sound the whole pasture seems to stop and listen to."
+ },
  "narrator/b9a8dde3ae009c44": {
   "chars": 76,
   "model": "eleven_v4",
@@ -56143,6 +56293,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The stone comes free with a small wet sound. It is warm, and it smells, impossibly, of grapes in the sun. In the cradle the root sighs and begins, very slowly, to wither."
+ },
+ "narrator/bc84d74bcc020fa1": {
+  "chars": 193,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The goats are all in the fold, crowded together, and the old nanny stands by the gate, quite calm, with mist still beading on her coat. Up at the top of the pasture the fog has gone flat again."
  },
  "narrator/bc89a65f20745c27": {
   "chars": 229,
@@ -59030,6 +59186,12 @@
   "recipe": "dd92281f92",
   "text": "The candles lean, all together, as if someone has opened a door. Nobody has."
  },
+ "narrator/d453315041667d47": {
+  "chars": 187,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Out of it, low and fast, come wolves. Not the valley's grey wolves; these are white with the mist, and wet, as if they'd come a very long way through it. They're coming for the old nanny."
+ },
  "narrator/d45f382e01a2734c": {
   "chars": 194,
   "model": "eleven_v4",
@@ -59179,6 +59341,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The book on the desk is closed now. It hasn't crumbled."
+ },
+ "narrator/d5c47bed947398d7": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Up at the top of the pasture, where the grass stops and the fog starts, the white wall of the mists bulges, the way a sheet does when someone pushes on it from the other side."
  },
  "narrator/d5c827da4c93acb0": {
   "chars": 212,
@@ -65113,6 +65281,55 @@
   "model": "eleven_v3",
   "recipe": "93c6b46ab0",
   "text": "Just one for my husband. He can't sleep without them any more. Maybe two. Maybe I'll try one. Only to know what he sees."
+ },
+ "pasture_erno/14fbf38de39252c2": {
+  "chars": 232,
+  "direction": "[hushed, earnest, a little awed]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "Gran had a nanny called Snowdrop, when she was little. Great-grandad took her with him the night he went into the fog. Gran says she still hears the bell sometimes, at the edge of the mists. (He swallows.) Gran says a lot of things."
+ },
+ "pasture_erno/20fd5aa9221a245a": {
+  "chars": 66,
+  "direction": "[counting slowly, dread creeping in]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "Twenty-one, twenty-two, twenty-three. (A long pause.) Twenty-four."
+ },
+ "pasture_erno/3d74b92a0b67a556": {
+  "chars": 136,
+  "direction": "[content, then quiet and wistful]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "Twenty-three. Every night. (He looks up at the fog, and then doesn't.) I can still hear the bell, sometimes. Gran says that's all right."
+ },
+ "pasture_erno/3ef512886ca181d2": {
+  "chars": 29,
+  "direction": "[whispering, relieved and sad]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "(Very quietly.) Twenty-three."
+ },
+ "pasture_erno/5fdc17949bb1367c": {
+  "chars": 31,
+  "direction": "[shouting, panicked]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "The fold! Get them in the fold!"
+ },
+ "pasture_erno/9294456fe7cbf1db": {
+  "chars": 110,
+  "direction": "[counting under his breath, then a frightened whisper]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "(Counting under his breath.) Twenty-two, twenty-three. Twenty-four. (He stops.) There. Her again. By the wall."
+ },
+ "pasture_erno/fd636356d73ce2eb": {
+  "chars": 139,
+  "direction": "[beaming, proud, chatty]",
+  "model": "eleven_v3",
+  "recipe": "72f7af2ee1",
+  "text": "Twenty-three. (He beams.) And Snowdrop sleeps in Gran's kitchen, so she doesn't count. Gran says that's the most beautiful number there is."
  },
  "patrina_velikovna/235ec244fd8e9dc9": {
   "chars": 107,

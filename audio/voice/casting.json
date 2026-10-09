@@ -2407,6 +2407,14 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "ZS1dLosEdBKX5U75Hkzp",
       "released": true
+    },
+    "pasture_erno": {
+      "voice_id": "atemG3csutMIyK7AbS5c",
+      "name": "Library voice: Quang Anh - Bright, Brilliant",
+      "description": "Erno, ten, Goodwife Petra's grandson who minds the village goats on the high pasture: chosen by Claude on the owner's go-ahead (2026-10-09), the library boy's voice Quang Anh (a bright young non-native speaker) over Sonu and Manni.",
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
     }
   },
   "sfx": {
