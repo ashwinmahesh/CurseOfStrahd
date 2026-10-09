@@ -107,6 +107,22 @@ break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the p
   party members a fight. It's the only side quest below level 3.
 - Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
 
+### The Oat Thief (`the_oat_thief`, narrative/village_of_barovia/the_oat_thief.dialogue; batch 6)
+
+Bildrath's news gets a new topic, his stock: four sacks of oats a week go missing and the lock is never touched; he says
+Parriwimple is a very poor liar. By night Parriwimple creeps up the north path with a sack on each shoulder (a night
+entry on the village map); Persuasion DC 10, or befriending him first, gets it out of him faster, but he tells either
+way, and the north path (a new exit, gated) opens on a new map, the charcoal-burners' hollow
+(data/locations/woodcutters_hollow.json). There Agafia (new speaker) hides with three children. **Twist:** she ran
+from the werewolf den when Kiril began taking children for the count's army, and hers were born to it; she keeps them
+on oats so they never learn the taste of meat. **Escalation:** Parriwimple's sack has a hole in it, and the pack's
+hunters come up the trail of oats; spotting it (Survival DC 12) catches them unawares, with a wolf left behind.
+
+- Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and a wolf at level 2, three wolves at level 3. The
+  autopilot wins 2 of 4 at level 2 and 3 of 4 at level 3, losing one or two party members a fight.
+- Reward: Agafia's grandmother's pair of speaking stones, Sending Stones (uncommon), one to keep and one for
+  Parriwimple; and Bildrath decides it's charity.
+
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
 Old Mihail the gravedigger, asked whether there's anyone he couldn't bury (a new option in his menu, from level 3): a
@@ -782,4 +798,6 @@ Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also 
 blunt interject). Batch 5,
 the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail). Batch 5,
 Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers Old Sabin, Sandu and the Lantern Girl;
-also the town guard) and gate.dialogue's news jump.
+also the town guard) and gate.dialogue's news jump. Batch 6,
+the Village of Barovia: the_oat_thief.dialogue in full (new speaker Agafia; also Bildrath and Parriwimple, and a kind
+interject) and narrator/woodcutters_hollow.dialogue.

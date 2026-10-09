@@ -80,6 +80,7 @@ Bildrath: News costs nothing, which is what it's worth. Ask.
 * The woman weeping down the lane. -> news_mary
 * [if not quest.cut_after_noon or quest.cut_after_noon == rumored] Grigore the woodcutter. -> news_grigore
 * [if not quest.the_burgomasters_hound or quest.the_burgomasters_hound == rumored] The dog at the burgomaster's house. -> village_of_barovia/the_burgomasters_hound:bildrath_news
+* Your stock. -> village_of_barovia/the_oat_thief:bildrath_news
 * Enough news. -> menu
 
 ~ news_morgantha
