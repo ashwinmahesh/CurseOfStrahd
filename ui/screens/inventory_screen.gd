@@ -1,34 +1,41 @@
 class_name InventoryScreen
 extends CanvasLayer
 ## The inventory (docs/ui/inventory.md inv_01, plan §5.6 "Inventory"), one character at a time:
-## - the paper doll (U11): every worn slot round the portrait in gothic-arch tiles, the two weapon sets with a quick
-##   swap, four quick slots for consumables (the fight's hotbar shows them on its Common tab), the load and attunements;
-## - the backpack as an icon grid with filters, the New and Junk marks, sorting and a search box (U3), and the party
-##   stash under it: things go in from anywhere and come out only at a safe place (Q7, owner 2026-10-07);
+## - the paper doll (U11): every slot in the shape of a person, where it's worn (owner 2026-10-09), the two weapon sets
+##   with a quick swap, the quiver and the spellcasting focus, four quick slots for consumables (the fight's hotbar
+##   shows them on its Common tab), the load and attunements;
+## - the backpack as a list with filters, the New and Junk marks, sorting and a search box (U3), and the party stash
+##   under it: things go in from anywhere and come out only at a safe place (Q7, owner 2026-10-07);
 ## - the item card: what the item does for this character compared with what's equipped, and its actions (equip, use,
 ##   give, split the stack, send to the stash, mark as junk, drop). Quest items can't be dropped, stashed or sold.
 ## Everything drags: a pack item onto a doll slot, a weapon set or a quick slot; anything onto another character's chip
 ## (it goes to them), the stash or back into the pack. Right-click a tile for its actions. "New" is what arrived since
 ## the character's page was last opened (Character.add_item marks it; closing this screen clears it for every page shown).
-## Two views (owner, 2026-10-07), kept in the player's settings: the paper doll with the icon grid, or the list (the
-## equipped and worn items as rows beside the portrait, the pack and stash as rows), with the same drags, right-click
-## menus, weapon sets and quick slots.
+## The bag is always a list (owner 2026-10-09: "keep the inventory as list always").
 
 const FILTERS := ["All", "Weapons", "Armor", "Consumables", "Magic", "Gear"]
 const SORTS := ["name", "weight", "value", "newest"]
 ## Item categories each filter keeps (Magic is any magic item, whatever its category; Gear is everything else).
 const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
 	"Consumables": ["potion", "consumable", "scroll"]}
-## The paper doll: worn slots down each side of the portrait (2024 DMG: one of each, two rings), armor among them.
-const DOLL_LEFT: Array[String] = ["head", "eyes", "neck", "cloak", "armor", "robe"]
-const DOLL_RIGHT: Array[String] = ["wrists", "hands", "belt", "ring", "ring", "feet"]
+## The paper doll: where each slot's tile sits on the figure (its middle, in the doll's own pixels), every worn slot of
+## the 2024 DMG (one of each, two rings: "ring2" is the second), the hands, the quiver ("ammo") and the focus.
+const DOLL_SIZE := Vector2(372, 432)
+const DOLL_AT := {"head": Vector2(186, 40), "eyes": Vector2(112, 40), "neck": Vector2(186, 106), "cloak": Vector2(102, 122),
+	"robe": Vector2(270, 122), "armor": Vector2(186, 178), "wrists": Vector2(102, 188), "hands": Vector2(270, 188),
+	"main_hand": Vector2(34, 250), "belt": Vector2(186, 252), "off_hand": Vector2(338, 250), "ring": Vector2(102, 262),
+	"ring2": Vector2(270, 262), "ammo": Vector2(102, 332), "focus": Vector2(270, 332), "feet": Vector2(186, 398)}
+## Ioun Stones orbit beside the head; weapon set II hangs under the hands, with the swap under it.
+const IOUN_AT := Vector2(260, 40)
+const SET2_AT := {"main_hand": Vector2(34, 318), "off_hand": Vector2(338, 318)}
+const SWAP_AT := Vector2(34, 392)
+## Slots kept to hand that aren't worn or wielded (Gear.carry_slot).
+const CARRY_SLOTS: Array[String] = ["ammo", "focus"]
 ## Consumables kept to hand for fights (plan §5.6 "Quick slots").
 const QUICK_SLOTS := 4
 const QUICK_CATEGORIES: Array[String] = ["potion", "consumable", "scroll"]
-const TILE := Vector2(64, 72)
 const DOLL_TILE := Vector2(54, 58)
 const STASH_TILE := Vector2(50, 56)
-const VIEWS := {"doll": "Paper doll", "list": "List"}
 
 var root: Node
 var st: StoryState
@@ -41,11 +48,9 @@ var selected := ""
 var search := ""
 ## "new" or "junk" shows only items with that mark; "" shows everything the filter keeps.
 var marks := ""
-## "doll" or "list" (GameSettings "inventory_view").
-var view := "doll"
 var _frame: VBoxContainer
 var _card: VBoxContainer
-## The pack's tiles (doll view) or rows (list view).
+## The pack's rows.
 var _grid: Container
 var _list_foot: Control
 ## Every tile showing an inventory entry, so picking one only relights them instead of rebuilding the screen (a drag
@@ -73,19 +78,7 @@ func open(root_: Node, state: StoryState, index_: int) -> void:
 	root = root_
 	st = state
 	index = clampi(index_, 0, st.party.size() - 1)
-	view = str(GameSettings.value("inventory_view", "doll"))
-	if not VIEWS.has(view):
-		view = "doll"
 	_frame = UiKit.screen_frame(self, "Inventory", Vector2(1500, 850))
-	_draw()
-
-
-## Switches between the paper doll and the list, and remembers the choice.
-func set_view(v: String) -> void:
-	if not VIEWS.has(v):
-		return
-	view = v
-	GameSettings.set_value("inventory_view", v)
 	_draw()
 
 
@@ -123,24 +116,12 @@ func _draw() -> void:
 	purse.add_child(UiParts.figure("%d gp" % int(st.gold), 22, "gilt_light"))
 	purse.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	strip.add_child(purse)
-	# The view switch: the paper doll or the list.
-	var views := HBoxContainer.new()
-	views.add_theme_constant_override("separation", 4)
-	views.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	views.add_child(UiParts.caption("View", 11))
-	for v: String in VIEWS:
-		var vb := UiParts.small_button(str(VIEWS[v]), func() -> void: set_view(v))
-		vb.tooltip_text = "Worn slots round the portrait, the pack as icons" if v == "doll" else "Equipped and worn items as rows, the pack as a list"
-		if v == view:
-			UiParts.light_up(vb)
-		views.add_child(vb)
-	strip.add_child(views)
 	_frame.add_child(strip)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(row)
-	row.add_child(_doll(ch) if view == "doll" else _list_column(ch))
+	row.add_child(_doll(ch))
 	row.add_child(_pack(ch))
 	_card = VBoxContainer.new()
 	_card.add_theme_constant_override("separation", 8)
@@ -185,32 +166,29 @@ func _chip(i: int) -> Control:
 
 # --- The paper doll ---------------------------------------------------------------------------------
 
+## The paper doll (owner 2026-10-09: the equipped items "in the place where they would be equipped, in the shape of a
+## person"): each slot's tile where it's worn, on a figure drawn behind them. The head at the top with the eyes beside
+## it and any Ioun Stones orbiting it, the neck under it, a cloak and a robe at the shoulders, armor on the chest,
+## bracers and gloves on the forearms, a weapon in each hand with weapon set II stowed under it, a ring by each hand,
+## the belt at the waist, the quiver and the spellcasting focus at the hips, and boots at the feet. Under it the quick
+## slots and the load.
 func _doll(ch: Character) -> Control:
 	var col := VBoxContainer.new()
-	col.custom_minimum_size = Vector2(336, 0)
+	col.custom_minimum_size = Vector2(DOLL_SIZE.x, 0)
 	col.add_theme_constant_override("separation", 6)
+	var who := HBoxContainer.new()
+	who.add_theme_constant_override("separation", 10)
+	who.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 52.0, ch.hp <= 0, ch.dead))
 	var n := UiKit.title(ch.name)
-	n.add_theme_font_size_override("font_size", 24)
+	n.add_theme_font_size_override("font_size", 20)
 	n.clip_text = true
 	n.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	n.custom_minimum_size = Vector2(336, 0)
-	col.add_child(n)
-	var body := HBoxContainer.new()
-	body.add_theme_constant_override("separation", 10)
-	body.alignment = BoxContainer.ALIGNMENT_CENTER
-	var left := VBoxContainer.new()
-	left.add_theme_constant_override("separation", 5)
-	for s in DOLL_LEFT:
-		left.add_child(_slot_tile(ch, s, 0))
-	body.add_child(left)
-	var mid := VBoxContainer.new()
-	mid.add_theme_constant_override("separation", 8)
-	mid.alignment = BoxContainer.ALIGNMENT_CENTER
-	mid.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 150.0, ch.hp <= 0, ch.dead))
-	var stats := HBoxContainer.new()
-	stats.add_theme_constant_override("separation", 6)
-	stats.alignment = BoxContainer.ALIGNMENT_CENTER
-	stats.add_child(UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class")))
+	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	n.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	who.add_child(n)
+	var ac := UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class"))
+	ac.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	who.add_child(ac)
 	var att := VBoxContainer.new()
 	att.add_theme_constant_override("separation", 2)
 	att.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -219,74 +197,93 @@ func _doll(ch: Character) -> Control:
 	att.tooltip_text = "Attuned to %d of %d magic items: %s" % [ch.attuned.size(), Character.MAX_ATTUNED,
 		", ".join(ch.attuned.map(func(a: String) -> String: return Compendium.shared().display_name("items", a))) if not ch.attuned.is_empty() else "none"]
 	att.mouse_filter = Control.MOUSE_FILTER_PASS
-	stats.add_child(att)
-	mid.add_child(stats)
-	body.add_child(mid)
-	var right := VBoxContainer.new()
-	right.add_theme_constant_override("separation", 5)
-	var rings := 0
-	for s in DOLL_RIGHT:
-		right.add_child(_slot_tile(ch, s, rings if s == "ring" else 0))
-		if s == "ring":
-			rings += 1
-	body.add_child(right)
-	col.add_child(body)
-	# Ioun Stones orbit the head, any number of them.
+	who.add_child(att)
+	col.add_child(who)
+	var doll := Control.new()
+	doll.name = "PaperDoll"
+	doll.custom_minimum_size = DOLL_SIZE
+	doll.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var figure := UiParts.Drawn.new()
+	figure.name = "Figure"
+	figure.painter = InventoryScreen._paint_figure
+	figure.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	figure.set_meta("pad_skip", true)
+	figure.size = DOLL_SIZE
+	doll.add_child(figure)
+	for at: String in DOLL_AT:
+		var slot := "ring" if at == "ring2" else at
+		_place(doll, _slot_tile(ch, slot, 1 if at == "ring2" else 0), DOLL_AT[at] as Vector2)
+	# Ioun Stones orbit the head, any number of them: the first two beside it, and how many more.
 	var ioun := _worn(ch, "ioun")
-	if not ioun.is_empty():
-		var orbit := HBoxContainer.new()
-		orbit.add_theme_constant_override("separation", 4)
-		orbit.add_child(UiParts.caption("Orbiting", 10))
-		for i in ioun.size():
-			orbit.add_child(_slot_tile(ch, "ioun", i))
-		col.add_child(orbit)
-	# The two weapon sets, the one in hand first, with the swap between them.
+	for i in mini(ioun.size(), 2):
+		_place(doll, _slot_tile(ch, "ioun", i), IOUN_AT + Vector2(i * (DOLL_TILE.x + 4), 0))
+	if ioun.size() > 2:
+		var more := UiParts.caption("+%d more" % (ioun.size() - 2), 11, "lilac")
+		more.position = IOUN_AT + Vector2(-DOLL_TILE.x / 2.0, DOLL_TILE.y / 2.0 + 2)
+		doll.add_child(more)
+	# Weapon set II, stowed under the hands, and the swap between the sets.
+	for slot2: String in SET2_AT:
+		_place(doll, _set2_tile(ch, slot2), SET2_AT[slot2] as Vector2)
 	var swap := UiParts.small_button("↻ Swap", func() -> void:
 		ch.swap_weapon_sets()
 		_say("%s swaps weapons." % ch.name.get_slice(" ", 0))
 		_draw())
-	swap.tooltip_text = "Hold the other set: what's in hand now becomes set II (outside fights; in one, a character can attack with any weapon they carry)"
-	col.add_child(UiParts.section("Weapons", swap))
-	var sets := HBoxContainer.new()
-	sets.add_theme_constant_override("separation", 6)
-	sets.add_child(_set_label("I", "In hand"))
-	sets.add_child(_slot_tile(ch, "main_hand", 0))
-	sets.add_child(_slot_tile(ch, "off_hand", 0))
-	sets.add_child(UiParts.gap())
-	sets.add_child(_set_label("II", "Stowed"))
-	sets.add_child(_set2_tile(ch, "main_hand"))
-	sets.add_child(_set2_tile(ch, "off_hand"))
-	col.add_child(sets)
-	col.add_child(UiParts.section("Quick slots"))
+	swap.tooltip_text = "Take weapon set II in hand: what's in hand now becomes set II (outside fights)"
+	doll.add_child(swap)
+	swap.position = SWAP_AT - swap.get_combined_minimum_size() / 2.0
+	col.add_child(doll)
+	col.add_child(UiParts.section("Quick slots", UiKit.label("On the fight's Common tab", 12, "parchment")))
 	var quick := HBoxContainer.new()
 	quick.add_theme_constant_override("separation", 6)
+	quick.alignment = BoxContainer.ALIGNMENT_CENTER
 	for i in QUICK_SLOTS:
 		quick.add_child(_quick_tile(ch, i))
-	var qnote := UiKit.label("On the fight's Common tab", 12, "parchment", 92)   # two lines, not one word a line (UI QA UI-14)
-	qnote.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	quick.add_child(qnote)
 	col.add_child(quick)
 	var cap := ch.carrying_capacity().total()
 	var carried := ch.carried_weight()
 	var over := carried > cap
 	col.add_child(UiParts.bar(carried, cap, 0.0, "%.1f / %d lb%s" % [carried, cap, " · Overloaded" if over else ""],
 		"vampire_red" if over else "gilt_dark", func() -> Control: return UiParts.breakdown_tip(ch.carrying_capacity(),
-			"Carrying capacity", "%d lb" % cap, "Overloaded: Speed drops." if over else ""), 336.0))
+			"Carrying capacity", "%d lb" % cap, "Overloaded: Speed drops." if over else ""), DOLL_SIZE.x))
 	return col
 
 
-## A weapon set's numeral in engraved capitals over a word.
-func _set_label(numeral: String, word: String) -> Control:
-	var v := VBoxContainer.new()
-	v.add_theme_constant_override("separation", -2)
-	v.alignment = BoxContainer.ALIGNMENT_CENTER
-	var big := UiParts.figure(numeral, 20, "gilt_light")
-	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.add_child(big)
-	var small := UiParts.caption(word, 9)
-	small.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.add_child(small)
-	return v
+## Puts tile `t` on the doll with its middle at `at`.
+func _place(doll: Control, t: Control, at: Vector2) -> void:
+	doll.add_child(t)
+	t.size = DOLL_TILE
+	t.position = at - DOLL_TILE / 2.0
+
+
+## The figure behind the doll's tiles: a dark silhouette rimmed in old gold, head, shoulders, arms reaching down to
+## the hands' tiles, and legs down to the boots'.
+static func _paint_figure(c: Control) -> void:
+	c.draw_set_transform(Vector2(-8, 0))   # drawn for a doll 388 wide, centred on the 372 it is
+	var rim := Look.color("gilt_dark")
+	var ink := Look.color("ui_oxblood").darkened(0.12)   # solid: see-through limbs would darken where they overlap
+	c.draw_circle(Vector2(194, 196), 160.0, Color(Look.color("gilt"), 0.05))
+	for pass_: Array in [[rim, 2.5], [ink, 0.0]]:
+		var col := pass_[0] as Color
+		var g := float(pass_[1])
+		c.draw_circle(Vector2(194, 42), 31.0 + g, col)
+		c.draw_rect(Rect2(Vector2(181 - g, 68), Vector2(26 + 2 * g, 30)), col)
+		var torso := PackedVector2Array([Vector2(150, 94), Vector2(238, 94), Vector2(258, 110), Vector2(246, 162),
+			Vector2(226, 250), Vector2(234, 294), Vector2(154, 294), Vector2(162, 250), Vector2(142, 162), Vector2(130, 110)])
+		if g > 0.0:
+			var grown := Geometry2D.offset_polygon(torso, g)
+			if not grown.is_empty():
+				torso = grown[0]
+		c.draw_colored_polygon(torso, col)
+		for limb: Array in [[Vector2(138, 110), Vector2(100, 188), Vector2(56, 246), 21.0],
+				[Vector2(250, 110), Vector2(288, 188), Vector2(332, 246), 21.0],
+				[Vector2(176, 286), Vector2(172, 344), Vector2(170, 398), 27.0],
+				[Vector2(212, 286), Vector2(216, 344), Vector2(218, 398), 27.0]]:
+			var w := float(limb[3]) + 2.0 * g
+			var pts: Array[Vector2] = [limb[0] as Vector2, limb[1] as Vector2, limb[2] as Vector2]
+			for i in 2:
+				c.draw_line(pts[i], pts[i + 1], col, w, true)
+			for q in pts:
+				c.draw_circle(q, w / 2.0, col)
 
 
 ## The entries worn in `slot` (two rings, any number of Ioun Stones).
@@ -306,14 +303,23 @@ static func slot_name(slot: String) -> String:
 			return "Main hand"
 		"off_hand":
 			return "Off hand"
+		"ammo":
+			return "Ammunition"
+		"focus":
+			return "Spellcasting focus"
 	return str(MagicItems.SLOT_NAMES.get(slot, slot.capitalize()))
+
+
+## A doll tile's caption: the slot's name, short enough for the tile.
+static func slot_caption(slot: String) -> String:
+	return {"ammo": "Ammo", "focus": "Focus"}.get(slot, slot_name(slot)) as String
 
 
 ## A doll slot: the item worn there (the `nth` of several), or its name when empty. Takes what fits from the pack or
 ## the stash; drag it out to take it off.
 func _slot_tile(ch: Character, slot: String, nth: int) -> ItemTile:
 	var t := ItemTile.make(DOLL_TILE)
-	t.caption = slot_name(slot)
+	t.caption = slot_caption(slot)
 	var worn := _worn(ch, slot)
 	var e: Dictionary = worn[nth] if nth < worn.size() else {}
 	if not e.is_empty():
@@ -321,7 +327,10 @@ func _slot_tile(ch: Character, slot: String, nth: int) -> ItemTile:
 		if slot in MagicItems.WORN_SLOTS and not ch.item_active(e):
 			t.marks.append("inactive")
 	else:
-		t.tip = func() -> Control: return UiParts.rules_tip(slot_name(slot), "Empty", "Drag something that goes here from the pack.")
+		var how := str({"ammo": "Drag arrows, bolts or other ammunition here to keep them in the quiver.",
+			"focus": "Drag a spellcasting focus or a component pouch here: the one this hero casts with."}.get(slot,
+			"Drag something that goes here from the pack."))
+		t.tip = func() -> Control: return UiParts.rules_tip(slot_name(slot), "Empty", how)
 	t.accepts = func(d: Dictionary) -> bool: return fits_slot(d, slot)
 	t.dropped = func(d: Dictionary) -> void: _drop_on_slot(d, slot, e)
 	return t
@@ -330,7 +339,7 @@ func _slot_tile(ch: Character, slot: String, nth: int) -> ItemTile:
 ## Weapon set II: a weapon (or shield, wand or rod) to hold when the sets are swapped. It stays in the pack meanwhile.
 func _set2_tile(ch: Character, slot: String) -> ItemTile:
 	var t := ItemTile.make(DOLL_TILE)
-	t.caption = slot_name(slot)
+	t.caption = "II main" if slot == "main_hand" else "II off"
 	var id := str(ch.weapon_set_2.get(slot, ""))
 	if id != "" and not ch.entry_of(id).is_empty():
 		var data := Compendium.shared().item_data(id)
@@ -416,77 +425,7 @@ func _fill_tile(t: ItemTile, ch: Character, e: Dictionary, from: Dictionary) -> 
 	_tiles.append(t)
 
 
-# --- The list view (owner, 2026-10-07: the old list beside the paper doll, with the same drags and menus) -------------
-
-## The left column of the list view: the portrait and Armor Class, the equipped and worn items as rows, weapon set II,
-## the quick slots and the load. It scrolls when a character wears a lot.
-func _list_column(ch: Character) -> Control:
-	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 8)
-	var who := HBoxContainer.new()
-	who.add_theme_constant_override("separation", 12)
-	who.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 120.0, ch.hp <= 0, ch.dead))
-	who.add_child(UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class")))
-	var att := VBoxContainer.new()
-	att.alignment = BoxContainer.ALIGNMENT_CENTER
-	att.add_child(UiParts.caption("Attuned", 10))
-	att.add_child(UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac"))
-	who.add_child(att)
-	col.add_child(who)
-	var n := UiKit.title(ch.name)
-	n.add_theme_font_size_override("font_size", 24)
-	n.clip_text = true
-	n.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	n.custom_minimum_size = Vector2(300, 0)
-	col.add_child(n)
-	var swap := UiParts.small_button("↻ Swap", func() -> void:
-		ch.swap_weapon_sets()
-		_say("%s swaps weapons." % ch.name.get_slice(" ", 0))
-		_draw())
-	swap.tooltip_text = "Hold weapon set II: what's in hand now becomes set II (outside fights)"
-	col.add_child(UiParts.section("Equipped", swap))
-	for slot in Character.EQUIP_SLOTS:
-		col.add_child(_slot_line(ch, slot))
-	col.add_child(UiParts.section("Set II"))
-	for slot2: String in ["main_hand", "off_hand"]:
-		col.add_child(_set2_line(ch, slot2))
-	# Worn magic items (2024 DMG: one cloak, one pair of boots..., two rings, any number of Ioun Stones). The section
-	# takes any worn item dropped on it, into its own slot.
-	col.add_child(UiParts.section("Worn"))
-	var worn := ItemTile.Zone.new()
-	worn.name = "WornZone"
-	worn.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
-	worn.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["pack", "stash"] \
-		and MagicItems.worn_slot(Compendium.shared().item_data(str(d.get("id", "")))) != "" \
-		and (str(d["from"]) != "stash" or _stash_open())
-	worn.dropped = func(d: Dictionary) -> void:
-		_drop_on_slot(d, MagicItems.worn_slot(Compendium.shared().item_data(str(d["id"]))), {})
-	var worn_list := VBoxContainer.new()
-	worn_list.add_theme_constant_override("separation", 4)
-	for e in ch.inventory:
-		if str(e.get("slot", "")) in MagicItems.WORN_SLOTS and int(e.get("qty", 0)) > 0:
-			worn_list.add_child(_worn_line(ch, e))
-	if worn_list.get_child_count() == 0:
-		worn_list.add_child(UiKit.label("Nothing worn. Drag a cloak, ring or boots here.", 13, "bone", 300))
-	worn.add_child(worn_list)
-	col.add_child(worn)
-	col.add_child(UiParts.section("Quick slots"))
-	var quick := HBoxContainer.new()
-	quick.add_theme_constant_override("separation", 6)
-	for i in QUICK_SLOTS:
-		quick.add_child(_quick_tile(ch, i))
-	col.add_child(quick)
-	var cap := ch.carrying_capacity().total()
-	var carried := ch.carried_weight()
-	var over := carried > cap
-	col.add_child(UiParts.bar(carried, cap, 0.0, "%.1f / %d lb%s" % [carried, cap, " · Overloaded" if over else ""],
-		"vampire_red" if over else "gilt_dark", func() -> Control: return UiParts.breakdown_tip(ch.carrying_capacity(),
-			"Carrying capacity", "%d lb" % cap, "Overloaded: Speed drops." if over else ""), 300.0))
-	var scroll := UiParts.fill_scroll(col)
-	scroll.custom_minimum_size = Vector2(336, 0)
-	scroll.size_flags_horizontal = Control.SIZE_FILL
-	return scroll
-
+# --- Rows: the pack and the stash as a list (owner, 2026-10-09: the bag is a list) -------------------------
 
 ## A list row for inventory entry `e` around `content`: what a drag from it carries, its tooltip, picking, the
 ## right-click menu and double-click, as on a tile.
@@ -528,7 +467,7 @@ func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 	if junk:
 		line.add_child(UiParts.pill("Junk", "bone"))
 	if str(e.get("slot", "")) != "":
-		line.add_child(UiParts.pill("Equipped", "moonlight"))
+		line.add_child(UiParts.pill({"ammo": "Readied", "focus": "Focus"}.get(str(e["slot"]), "Equipped") as String, "moonlight"))
 	if id in ch.quick_slots:
 		line.add_child(UiParts.pill("Quick", "bile"))
 	if InventoryScreen.is_quest(data):
@@ -542,115 +481,6 @@ func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 	wt.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	line.add_child(wt)
 	return line
-
-
-## An equipped slot as a row: its name, the item and its one key number, and Take off (owner report 2026-10-07: "no way
-## to unequip armor"). Takes what fits dropped on it; drag it to the pack to take it off.
-func _slot_line(ch: Character, slot: String) -> Control:
-	var item := ch.equipped(slot)
-	var line := HBoxContainer.new()
-	line.add_theme_constant_override("separation", 10)
-	if not item.is_empty():
-		UiParts.add_icon(line, "item", str(item["id"]))
-	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 0)
-	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(UiParts.caption(slot.replace("_", " "), 10))
-	var nm := UiKit.label(str(item.get("name", "Empty")), 15, "vellum" if not item.is_empty() else "bone")
-	nm.clip_text = true
-	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	col.add_child(nm)
-	line.add_child(col)
-	var e := {}
-	for x in ch.inventory:
-		if str(x.get("slot", "")) == slot and int(x.get("qty", 0)) > 0:
-			e = x
-	var r: Control
-	if not item.is_empty():
-		var stat := ""
-		if Gear.is_shield(item):
-			stat = "+%d AC" % int((item["armor"] as Dictionary).get("base_ac", 2))
-		elif Gear.is_armor(item):
-			stat = "AC %d" % int((item["armor"] as Dictionary).get("base_ac", 10))
-		elif Gear.is_weapon(item):
-			var p := WeaponProfile.build(ch, item)
-			stat = "%s · %s" % [p.attack.signed(), p.damage_dice + ("%+d" % p.damage_bonus.total() if p.damage_bonus.total() != 0 else "")]
-		line.add_child(UiParts.figure(stat, 15, "gilt_light"))
-		var off := UiParts.small_button("Take off", func() -> void:
-			ch.unequip(slot)
-			_draw())
-		off.tooltip_text = "Unequip it: back to the pack"
-		if ch.take_off_blocker(str(e["id"])) != "":
-			off.disabled = true
-			off.tooltip_text = ch.take_off_blocker(str(e["id"]))
-		line.add_child(off)
-		r = _row(ch, e, {"from": "slot", "slot": slot}, line)
-		off.mouse_filter = Control.MOUSE_FILTER_STOP
-	else:
-		var empty := ItemTile.Row.new()
-		empty.tip = func() -> Control: return UiParts.rules_tip(slot_name(slot), "Empty", "Drag something that goes here from the pack.")
-		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		empty.add_child(line)
-		r = empty
-	r.set("accepts", func(d: Dictionary) -> bool: return fits_slot(d, slot))
-	r.set("dropped", func(d: Dictionary) -> void: _drop_on_slot(d, slot, e))
-	return r
-
-
-## Weapon set II's main or off hand as a row: what's held when the sets are swapped.
-func _set2_line(ch: Character, slot: String) -> Control:
-	var id := str(ch.weapon_set_2.get(slot, ""))
-	var line := HBoxContainer.new()
-	line.add_theme_constant_override("separation", 10)
-	var has := id != "" and not ch.entry_of(id).is_empty()
-	if has:
-		UiParts.add_icon(line, "item", id, 28.0)
-	line.add_child(UiParts.caption(slot_name(slot), 10))
-	var nm := UiKit.label(Compendium.shared().display_name("items", id) if has else "Empty", 14, "vellum" if has else "bone")
-	nm.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	nm.clip_text = true
-	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	line.add_child(nm)
-	line.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var r := ItemTile.Row.new()
-	r.add_child(line)
-	if has:
-		r.icon = UiParts.icon_texture("item", id)
-		r.payload = {"from": "set2", "ch": index, "id": id, "slot": slot}
-		r.tip = LootWindow._item_tip(Compendium.shared().item_data(id))
-		r.picked.connect(func() -> void: _pick(ch.entry_of(id)))
-		var out_of_set := func() -> void:
-			ch.weapon_set_2.erase(slot)
-			_draw()
-		r.menu_requested.connect(func(at: Vector2) -> void: _open_menu([{"label": "Out of set II", "call": out_of_set}], at))
-	else:
-		r.tip = func() -> Control: return UiParts.rules_tip("Set II · %s" % slot_name(slot), "Empty",
-			"Drag a weapon here to hold it when you swap sets: a bow behind the sword and shield.")
-	r.accepts = func(d: Dictionary) -> bool: return fits_set2(d, slot)
-	r.dropped = func(d: Dictionary) -> void:
-		_set_weapon_2(_ch(), str(d["id"]), slot)
-		_draw()
-	return r
-
-
-## A worn magic item as a row: where it's worn, the item, and whether it's working.
-func _worn_line(ch: Character, e: Dictionary) -> Control:
-	var data := Compendium.shared().item_data(str(e["id"]))
-	var line := HBoxContainer.new()
-	line.add_theme_constant_override("separation", 10)
-	UiParts.add_icon(line, "item", str(MagicItems.shown_data(data, e).get("id", e["id"])))
-	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 0)
-	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(UiParts.caption(str(MagicItems.SLOT_NAMES.get(str(e["slot"]), e["slot"])), 10))
-	var nm := UiKit.label(MagicItems.display_name(data, e), 15, "vellum")
-	nm.clip_text = true
-	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	col.add_child(nm)
-	line.add_child(col)
-	if not ch.item_active(e):
-		line.add_child(UiParts.pill("Needs attunement", "flame"))
-	return _row(ch, e, {"from": "slot", "slot": str(e["slot"])}, line)
 
 
 ## A stash row: the item and its count, and Take at a safe place; dragged out of the stash only there.
@@ -686,7 +516,7 @@ func _stash_row(se: Dictionary, i: int, at_safe: bool, tip: Callable) -> Control
 
 func _pack(ch: Character) -> Control:
 	var pack := VBoxContainer.new()
-	pack.custom_minimum_size = Vector2(590, 0)
+	pack.custom_minimum_size = Vector2(550, 0)   # the doll beside it is 372 wide
 	pack.add_theme_constant_override("separation", 0)
 	pack.add_child(UiParts.tab_strip(Array(FILTERS, TYPE_STRING, "", null), filter, func(f: String) -> void:
 		filter = f
@@ -718,15 +548,8 @@ func _pack(ch: Character) -> Control:
 	sorts.add_child(UiParts.gap())
 	sorts.add_child(UiParts.caption("Drag onto a slot, a chip or the stash", 10, "parchment"))
 	inner.add_child(sorts)
-	if view == "doll":
-		var grid := GridContainer.new()
-		grid.columns = 8
-		grid.add_theme_constant_override("h_separation", 6)
-		grid.add_theme_constant_override("v_separation", 6)
-		_grid = grid
-	else:
-		_grid = VBoxContainer.new()
-		_grid.add_theme_constant_override("separation", 4)
+	_grid = VBoxContainer.new()
+	_grid.add_theme_constant_override("separation", 4)
 	inner.add_child(UiParts.fill_scroll(_grid))
 	_list_foot = VBoxContainer.new()
 	inner.add_child(_list_foot)
@@ -751,47 +574,23 @@ func _stash(ch: Character) -> Control:
 	zone.accepts = func(d: Dictionary) -> bool: return str(d.get("from", "")) in ["pack", "slot"] \
 		and not InventoryScreen.is_quest(Compendium.shared().item_data(str(d.get("id", ""))))
 	zone.dropped = func(d: Dictionary) -> void: _drop_on_stash(d)
-	# The list view stacks rows; the doll view flows tiles. Made as one or the other: a container made and dropped for
-	# the other is never freed (test_inventory_doll leaked one per list-view draw).
-	var flow: Container = VBoxContainer.new() if view == "list" else HFlowContainer.new()
-	if view == "list":
-		flow.add_theme_constant_override("separation", 4)
-	flow.add_theme_constant_override("h_separation", 5)
-	flow.add_theme_constant_override("v_separation", 5)
+	var flow := VBoxContainer.new()
+	flow.add_theme_constant_override("separation", 4)
 	if st.stash.is_empty():
 		flow.add_child(UiKit.label("Empty. Drag things here from anywhere, or choose Send to the stash.", 13, "bone", 520))
 	for i in st.stash.size():
 		var se := st.stash[i]
-		var sid := str(se["id"])
-		var t := ItemTile.make(STASH_TILE)
-		var data := Compendium.shared().item_data(sid)
-		t.icon = UiParts.icon_texture("item", str(MagicItems.shown_data(data, se).get("id", sid)))
-		t.qty = int(se["qty"])
-		t.dim = not at_safe
-		if InventoryScreen.is_junk(se):
-			t.marks.append("junk")
+		var data := Compendium.shared().item_data(str(se["id"]))
 		var shown := MagicItems.shown_data(data, se).duplicate()
 		shown["name"] = MagicItems.display_name(data, se) + (" ×%d" % int(se["qty"]) if int(se["qty"]) > 1 else "")
 		var tip := LootWindow._item_tip(shown)
-		if view == "list":
-			flow.add_child(_stash_row(se, i, at_safe, tip))
-			t.free()
-			continue
-		if at_safe:
-			t.tip = tip
-			t.payload = {"from": "stash", "index": i, "id": sid, "entry": se}
-			var take := func() -> void:
-				_take_from_stash(se, _ch())
-				_draw()
-			var label := "Take out (all %d)" % int(se["qty"]) if int(se["qty"]) > 1 else "Take out"
-			t.activated.connect(take)
-			t.menu_requested.connect(func(at: Vector2) -> void: _open_menu([{"label": label, "call": take}], at))
-		else:
-			t.tip = func() -> Control:
-				var c := tip.call() as VBoxContainer
+		if not at_safe:
+			var bare := tip
+			tip = func() -> Control:
+				var c := bare.call() as VBoxContainer
 				c.add_child(UiParts.wrapped("In the stash: take it out at an inn or a home.", 13, "flame", UiParts.TIP_WIDTH))
 				return c
-		flow.add_child(t)
+		flow.add_child(_stash_row(se, i, at_safe, tip))
 	var scroll := UiParts.fill_scroll(flow)
 	zone.add_child(scroll)
 	box.add_child(zone)
@@ -837,6 +636,8 @@ static func slot_takes(slot: String, data: Dictionary) -> bool:
 			return Gear.is_weapon(data) or MagicItems.is_held(data)
 		"off_hand":
 			return Gear.is_shield(data) or (Gear.is_weapon(data) and "light" in Gear.weapon_props(data)) or MagicItems.is_held(data)
+		"ammo", "focus":
+			return Gear.carry_slot(data) == slot
 	return MagicItems.worn_slot(data) == slot
 
 
@@ -1062,10 +863,13 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 		out.append({"label": "Take off", "disabled": stays_on != "", "tooltip": stays_on,
 			"call": redraw.call(func() -> void: ch.unequip_item(id))})
 	else:
-		for s: String in ["armor", "main_hand", "off_hand"] + MagicItems.WORN_SLOTS:
+		for s: String in ["armor", "main_hand", "off_hand"] + MagicItems.WORN_SLOTS + CARRY_SLOTS:
 			if InventoryScreen.slot_takes(s, data):
 				var verb := "Wear" if s == "armor" or s in MagicItems.WORN_SLOTS else ("Hold" if MagicItems.is_held(data) and not Gear.is_weapon(data) else "Equip")
-				out.append({"label": "%s (%s)" % [verb, slot_name(s).to_lower()], "call": redraw.call(func() -> void: _equip(ch, id, s))})
+				var label := "%s (%s)" % [verb, slot_name(s).to_lower()]
+				if s in CARRY_SLOTS:
+					label = "Ready in the quiver" if s == "ammo" else "Carry as the focus"
+				out.append({"label": label, "call": redraw.call(func() -> void: _equip(ch, id, s))})
 		for s2: String in ["main_hand", "off_hand"]:
 			if InventoryScreen.slot_takes(s2, data) and MagicItems.worn_slot(data) == "":
 				out.append({"label": "Set II (%s)" % slot_name(s2).to_lower(), "call": redraw.call(func() -> void: _set_weapon_2(ch, id, s2))})
@@ -1285,12 +1089,7 @@ func _fill_list() -> void:
 			why = "Nothing new since you last looked."
 		_list_foot.add_child(UiKit.label(why, 15, "bone", 540))
 	for r in rows:
-		if view == "doll":
-			var t := ItemTile.make(TILE)
-			_fill_tile(t, ch, r["e"] as Dictionary, {"from": "pack"})
-			_grid.add_child(t)
-		else:
-			_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))
+		_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))
 	if marks == "junk" and not rows.is_empty():
 		var weight := 0.0
 		var value := 0.0

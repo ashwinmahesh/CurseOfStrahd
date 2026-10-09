@@ -152,16 +152,6 @@ func _sheet_tab(index: int, tab: String) -> Callable:
 		return root.get("screen")
 
 
-## The inventory in `view` ("doll" or "list"; it opens in the view last chosen).
-func _inventory(index: int, view: String) -> Callable:
-	return func() -> Variant:
-		root.call("open_screen", "inventory", index)
-		await _frames(1)
-		(root.get("screen") as InventoryScreen).set_view(view)
-		await _frames(2)
-		return root.get("screen")
-
-
 func _close_screen() -> void:
 	root.call("close_screen")
 
@@ -250,10 +240,7 @@ func test_the_party_screens() -> void:
 		await _check("%s's sheet" % st.party[i].name, _screen("sheet", i), _close_screen)
 		# Spells too: a spell with many tags beside its slot picker widened the tab past the frame (UI QA UI-02).
 		await _check("%s's sheet (Spells)" % st.party[i].name, _sheet_tab(i, "Spells"), _close_screen)
-		await _check("%s's inventory" % st.party[i].name, _inventory(i, "doll"), _close_screen)
-		# The inventory's list view too (owner, 2026-10-07: a switch between it and the paper doll).
-		await _check("%s's inventory (list)" % st.party[i].name, _inventory(i, "list"), _close_screen)
-	GameSettings.set_value("inventory_view", "doll")
+		await _check("%s's inventory" % st.party[i].name, _screen("inventory", i), _close_screen)
 	for kind: String in ["journal", "party", "roster", "rest", "menu"]:
 		await _check("the %s" % kind, _screen(kind, 0), _close_screen)
 
@@ -544,6 +531,23 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 				return cv.hud,
 				func() -> void: cv.hud._menu.hide())
 			break
+	# A reaction prompt (bottom right, above the hotbar) with the odds over a foe at the window's edge.
+	var party: Combatant = null
+	for c0 in cv.e.combatants:
+		if c0.side == &"party":
+			party = c0
+			break
+	var req := ReactionRequest.new("opportunity_attack", party.id, party.id)
+	req.title = "Reaction: Opportunity Attack?"
+	req.text = "A long trigger: the dire wolf of the Svalich Woods leaves %s's reach while the fight goes on around them. Strike it as it goes?" % party.name()
+	await _check("a reaction prompt and the odds over a foe", func() -> Variant:
+		cv.hud.show_prompt(req)
+		cv.hud.show_odds(0.55, "3–18", "advantage", Vector2(5000, -200))
+		await _frames(1)
+		return cv.hud,
+		func() -> void:
+			cv.hud.hide_prompt()
+			cv.hud.hide_tooltip())
 	for i in 10:
 		if cv.e.current().side == &"party":
 			break
@@ -758,6 +762,10 @@ func test_a_cutscene_picture_is_whole_in_a_window_and_full_screen() -> void:
 		root.add_child(p)
 		p.play("test_layout_cut", [caption] as Array[String], GameState.story)
 		await _frames(3)
+		for i in 120:   # the still comes off a worker thread (FN-20)
+			if not p.view.loading():
+				break
+			await _frames(1)
 		var screen := get_tree().root.get_visible_rect()
 		var pic := p.view.picture_rect()
 		assert_true(pic.size.x > 0.0, "%s: the picture shows" % size_name)
