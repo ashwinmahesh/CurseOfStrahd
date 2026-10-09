@@ -213,8 +213,9 @@ func test_treasure_is_the_same_for_a_seed_and_fits_the_level() -> void:
 		var it := Treasure.roll_item(rng, 2)
 		var r := MagicItems.rarity(_comp().item_data(str(it.get("id", ""))))
 		counts[r] = int(counts.get(r, 0)) + 1
-	assert_false(counts.has("rare") or counts.has("very_rare") or counts.has("legendary"), "level 2: common and uncommon only, got %s" % counts)
-	assert_true(counts.has("common") and counts.has("uncommon"))
+	assert_false(counts.has("rare") or counts.has("very_rare") or counts.has("legendary"), "level 2: uncommon only, got %s" % counts)
+	assert_false(counts.has("common"), "no commons (owner, 2026-10-08), got %s" % counts)
+	assert_true(counts.has("uncommon"))
 
 
 func test_charges_come_back_when_the_clock_passes_dawn() -> void:
