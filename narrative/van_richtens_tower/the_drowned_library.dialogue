@@ -1,0 +1,105 @@
+# The Drowned Library (side quest, docs/story/side_quests.md): something whispers up the old well-shaft on the shore of
+# Lake Baratok, from Khazan's library under the lake (data/locations/drowned_library.json). It says don't come down,
+# and don't read anything. It's Xaver, the last of Khazan's apprentices, gone to a nothic in three hundred years down
+# there. **Twist:** the thing whispering in the dark is the frightened one. The predator is the furniture: the great
+# catalogue desk, the Index, which has eaten every other reader and filed their things
+# (data/monsters/the_index.json). **Escalation:** the moment anyone opens a drawer, every chair and trolley in the
+# room stands up. Van Richten, Ezmerelda and the tower's own plot are never read or set. Reached from Mordenkainen's
+# news once Khazan is unmade (mount_baratok/the_mages_lost_pages:news) and from the well-head on the shore from level 9.
+# Every line here is unvoiced for now.
+
+# --- Mordenkainen (mount_baratok/the_mages_lost_pages:news jumps here) ---
+
+~ mordenkainen_news
+quest the_drowned_library rumored
+Mordenkainen: Khazan's gone, then. Properly. Good. (He doesn't look as pleased as he says.) He kept a library under that lake, you know. Cut into the rock. He sent his apprentices down to read and some of them stayed.
+Mordenkainen: Since you unmade him I've been dreaming of a voice coming up a well, very small, asking me not to come down. I don't like being told not to come down. There's an old well-head on the shore by his tower.
+-> mount_baratok/mordenkainen:restored_menu
+
+# --- The well-head on the shore (prop vrt_wellhead) ---
+
+~ wellhead
+if flag.index_destroyed
+Narrator: The old well-head on the shore. A rope ladder goes down it now, and from far below comes the sound of pages being turned, very carefully.
+-> END
+endif
+Narrator: An old well-head of mossy stone on the shore, choked with reeds. When you lean over it, the air coming up is colder than the lake and smells of wet paper.
+Narrator: From very far down, a whisper, as if someone had their mouth right up against the stone: "Don't come down. Don't read anything. Please. Don't touch the desk."
+if not quest.the_drowned_library or quest.the_drowned_library == rumored
+quest the_drowned_library asked
+endif
+-> END
+
+# --- Xaver, on top of a bookcase (npc library_xaver) ---
+
+~ xaver
+if flag.index_destroyed
+-> after
+endif
+if flag.xaver_met
+Xaver: (From the top of the shelves.) Don't touch it. I mean it. I've watched it eat eleven people. I count them in the dark.
+-> xaver_menu
+endif
+set xaver_met
+Narrator: On top of the furthest bookcase, flattened against the ceiling, something grey and thin with arms too long for it and one great eye where a face should be. It's holding its claws over its eye as if that might make it smaller.
+Xaver: Oh no. Oh no. I said don't come down. Did you not hear me? I said it up the well every night for a month.
+Xaver: Xaver. I was Khazan's. I came down to read three hundred years ago, and I've been up here ever since, because it doesn't climb. Whatever you do, don't touch the desk.
+-> xaver_menu
+
+~ xaver_menu
+* What happened to you? -> what
+* [Insight DC 13] (Watch where his eye goes.) -> eye | eye_missed
+* (Leave him on his shelf.) -> END
+
+~ what
+Xaver: I read. That's what happened. Down here, hungry, three hundred years, reading the same books over and over in the dark until they were all I was. It does this to you. (He gestures at himself, all of himself.) I'm not dangerous. I'm just very, very hungry to know things.
+Xaver: It's not me you should be frightened of. It's never been me.
+-> xaver_menu
+
+~ eye
+set xaver_eye_followed
+Narrator: His great eye never leaves the catalogue desk in the middle of the room. Not for a moment. Its brass handles are bright, as if they were polished every day, and nothing else in the library is clean.
+-> xaver_menu
+
+~ eye_missed
+Narrator: A frightened thing on top of a bookcase. That's all you can tell.
+-> xaver_menu
+
+# --- The catalogue desk (prop library_desk) ---
+
+~ desk
+if flag.index_destroyed
+Narrator: What's left of the catalogue desk: splintered oak, brass handles, and a hundred little drawers, each with a reader's things filed in it, neat as a tax roll.
+-> END
+endif
+Narrator: A great catalogue desk of lacquered oak in the middle of the room, with a hundred little drawers, each labelled in a small brown hand. The brass handles shine. It's the only clean thing in the library.
+if flag.xaver_eye_followed
+interject tag:blunt: It's the only thing he won't take his eye off.
+endif
+* (Open a drawer.) -> open
+* (Leave it alone.) -> END
+
+~ open
+Xaver: (From the top of the shelves, a scream.) NO.
+Narrator: The drawer doesn't open. Every drawer opens. Every one of them has teeth.
+combat the_index
+
+# --- After the Index (npc library_xaver, once it's destroyed) ---
+
+~ after
+if quest.the_drowned_library == done
+Xaver: (He's sitting on the floor for the first time, reading, very slowly, with his eye an inch from the page.) Shh. I've never read this one. I didn't dare go near that shelf.
+-> END
+endif
+quest the_drowned_library done
+Narrator: Xaver comes down off the bookcase one long limb at a time, as if the floor might change its mind, and stands among the splinters of the desk for a long while.
+Xaver: Eleven. And me. It would have been me, the first winter, except it doesn't climb. (He laughs, and it doesn't sound like a laugh.) I can go anywhere in the room now. Do you know how big this room is?
+Xaver: Take this. The one book I saved, the first week, before I knew. I've read it nine thousand times; I don't need it any more. It teaches the body to be quick. I never studied it. I was too busy hiding.
+give manual_of_quickness_of_action
+Narrator: In the desk's drawers, filed, eleven readers' purses and a great deal of old gold.
+gold +350
+if flag.mordenkainen_restored
+Xaver: And tell the old man up the mountain he can come down now. I'll stop whispering. I'd like somebody to talk to who isn't a book.
+endif
+approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +1 ratatoille +2: You set Khazan's last apprentice free of the furniture
+-> END

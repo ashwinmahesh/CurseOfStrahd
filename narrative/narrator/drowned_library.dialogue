@@ -1,0 +1,17 @@
+# Narrator: Khazan's drowned library under Lake Baratok (The Drowned Library, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:drowned_library
+| The well-shaft opens into a long low hall under the lake: shelf after shelf of swollen books, the far half standing in still black water, and in the middle, a great catalogue desk with bright brass handles.
+| [flag.index_destroyed] The library under the lake, quiet but for pages turning. The catalogue desk is splinters.
+cooldown 30
+
+~ enter:library_flood
+| The black water is perfectly still and very cold. Books float in it, face down, like people.
+once
+
+~ examine:library_lectern
+| A lectern with a book open on it, the pages fused into one grey block by the damp. Somebody stopped reading here in the middle of a sentence and never came back to it.
+
+~ examine:library_chained
+| A bookcase with its books chained to the shelves, iron through every spine. Khazan didn't want these read. Or didn't want them leaving.

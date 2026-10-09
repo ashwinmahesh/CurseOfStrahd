@@ -143,6 +143,10 @@
     "from_tower": [
       15,
       12
+    ],
+    "from_library": [
+      22,
+      25
     ]
   },
   "exits": [
@@ -187,6 +191,18 @@
       "label": "The tower door",
       "when": "flag.tower_door_opened",
       "locked_text": "No handle, no keyhole. The door is warm, and it is waiting for a word."
+    },
+    {
+      "id": "vrt_well_down",
+      "cell": [
+        22,
+        26
+      ],
+      "to": "drowned_library",
+      "spawn": "from_shore",
+      "label": "Down the old well-shaft",
+      "when": "quest.the_drowned_library",
+      "locked_text": "An old well-head on the shore, choked with reeds. Something down there is whispering."
     }
   ],
   "props": [
@@ -346,6 +362,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "caltrops"
+    },
+    {
+      "id": "vrt_wellhead",
+      "cell": [
+        23,
+        26
+      ],
+      "kind": "examine",
+      "label": "An old well-head",
+      "model": "well_stone",
+      "dialogue": "van_richtens_tower/the_drowned_library:wellhead",
+      "when": "level >= 9"
     }
   ],
   "containers": [

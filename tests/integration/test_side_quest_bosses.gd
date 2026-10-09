@@ -379,3 +379,12 @@ const UNDER_THE_LEDGE: Array[Vector2i] = [Vector2i(12, 4), Vector2i(13, 5), Vect
 ## Three giant spiders and two swarms of spiderlings, catching the party unawares.
 func test_the_webbed_gully_at_level_3() -> void:
 	await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
+
+
+## By the catalogue desk in the middle of the Drowned Library.
+const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 12)]
+
+
+## The Index and two reading chairs, with the shelves coming down and the lake coming in.
+func test_the_index_at_level_9() -> void:
+	await _series("drowned_library", 14, 9, "the_index", [1, 2, 3, 4, 5, 6, 7, 8], ["xaver_met"], [], [], AT_THE_DESK)
