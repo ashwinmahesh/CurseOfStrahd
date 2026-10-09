@@ -159,7 +159,10 @@
     "die_success": -9.0,
     "die_fail": -9.0,
     "die_crit": -5.0,
-    "die_fumble": -5.0
+    "die_fumble": -5.0,
+    "thunder_near": -2.0,
+    "thunder_far": -4.0,
+    "thunder_crack": -6.0
   },
   "music": {
     "title": [
@@ -892,6 +895,23 @@
     ],
     "die_fumble": [
       "res://art/sourced/elevenlabs_dice/die_fumble_2.wav"
+    ],
+    "thunder_near": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+    ],
+    "thunder_far": [
+      "res://art/sourced/oga_100_cc0_sfx_2/sfx100v2_thunder_01.ogg"
+    ],
+    "thunder_crack": [
+      "res://art/sourced/oga_boom_pack_dklon/boom1.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom2.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom3.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom4.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom5.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom6.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom7.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom8.wav",
+      "res://art/sourced/oga_boom_pack_dklon/boom9.wav"
     ]
   },
   "ambient": {

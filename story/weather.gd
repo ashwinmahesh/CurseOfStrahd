@@ -114,6 +114,8 @@ static func dress_mood(st: StoryState, location_id: String, mood: Dictionary, ou
 		if look.has(k):
 			pieces.append({"kind": k, "amount": int(look[k])})
 	out["weather"] = pieces
+	if look.has("strikes"):
+		out["strikes"] = (look["strikes"] as Dictionary).duplicate()   # lightning now and then (Atmosphere._lightning)
 	if look.has("mist"):
 		var mist := (out.get("mist", {}) as Dictionary).duplicate()
 		var strength := float(mist.get("strength", 1.0)) * float((look["mist"] as Dictionary).get("strength", 1.0))
