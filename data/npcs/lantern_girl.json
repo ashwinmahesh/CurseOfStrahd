@@ -1,0 +1,17 @@
+{
+  "id": "lantern_girl",
+  "name": "The Lantern Girl",
+  "title": "Liliana, Who Went Down Holding It Up",
+  "summary": "Old Sabin's daughter Liliana, drowned in Lake Zarovich at the Baron's first festival with her lantern held up. A girl of light at the end of the fishers' jetty.",
+  "portrait": "will_o_wisp",
+  "sprite": "will_o_wisp",
+  "attitude": "indifferent",
+  "monster": "lantern_girl",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "lake_zarovich"
+  ],
+  "region": "lake_zarovich",
+  "pronouns": "she/her"
+}
