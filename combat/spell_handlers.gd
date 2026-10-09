@@ -179,6 +179,10 @@ func _spare_the_dying(_ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 func _teleport(c: Combatant, cell: Vector2i, r: CombatResult) -> void:
 	var spells := sp()
 	var e := enc()
+	# Dimensional Shackles: no teleporting while bound in them (the action or spell is spent).
+	if c.creature.has_flag("no_teleport"):
+		r.lines.append(e.log.add("info", "%s can't teleport: the Dimensional Shackles hold them" % c.name(), c.id))
+		return
 	var from := c.cell
 	c.cell = cell
 	c.clear_run()

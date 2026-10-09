@@ -532,6 +532,9 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 			r.lines.append(enc().log.add("spell", "%s: %s" % [s["name"], "%d curse%s lifted from %s" % [gone, "" if gone == 1 else "s", t0.name()] if gone > 0 else "%s bears no curse" % t0.name()], c.id))
 			return r
 		"etherealness", "plane_shift":
+			if c.creature.has_flag("no_teleport"):
+				r.lines.append(enc().log.add("info", "%s can't leave this plane: the Dimensional Shackles hold them (%s)" % [c.name(), s["name"]], c.id))
+				return r
 			c.creature.dead = true
 			enc().events.append({"type": "vanish", "id": c.id})
 			r.lines.append(enc().log.add("info", "%s slips away (%s)" % [c.name(), s["name"]], c.id))

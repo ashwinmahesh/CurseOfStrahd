@@ -126,12 +126,20 @@ func use(c: Combatant, p: Dictionary, targets: Array, point: Vector2, opts: Dict
 		"dimensional_shackles":
 			if t == null or e.distance(c, t) > 5 or not t.creature.has_condition(&"incapacitated"):
 				return CombatResult.fail("Choose an Incapacitated creature within 5 ft")
+			# One pair binds one creature at a time.
+			var bound := e.combatants.filter(func(o: Combatant) -> bool:
+				return not o.creature.dead and o.creature.effects.any(func(fx: Effect) -> bool: return fx.source_id == str(p["item_id"])))
+			var pairs := int((c.creature as Character).entry_of(str(p["item_id"])).get("qty", 1)) if c.creature is Character else 1
+			if bound.size() >= pairs:
+				return CombatResult.fail("The shackles are already on %s" % (bound[0] as Combatant).name())
 			_pay(c, p)
 			var fs := Effect.new(label, &"item", str(p["item_id"]))
 			fs.caster_id = c.id
-			fs.conditions.append(&"restrained")
+			# Manacles (2024): Disadvantage on attack rolls; Restrained only when chained to something fixed, which a
+			# fight has nothing for. One try to break free (the book allows one every 30 days).
+			fs.modifiers.append(Modifier.of("disadvantage", {"on": "attack"}, label, &"item"))
 			fs.modifiers.append(Modifier.of("flag", {"value": "no_teleport"}, label, &"item"))
-			fs.escape = {"skill": "athletics", "dc": 30}
+			fs.escape = {"skill": "athletics", "dc": 30, "once": true}
 			t.creature.add_effect(fs)
 			e.log.add("condition", "%s is bound in Dimensional Shackles" % t.name(), t.id)
 			e.events.append({"type": "condition", "id": t.id})

@@ -153,7 +153,7 @@ func reveal(c: Combatant, why: String) -> void:
 
 
 ## Breaking free of a spell that allows it (Web, Entangle): an action and the named ability check against the
-## spell's save DC.
+## spell's save DC. An `once` escape gets a single try.
 func escape_effect(c: Combatant, effect_id: int) -> CombatResult:
 	var e := enc()
 	var why := e._action_check(c)
@@ -174,6 +174,8 @@ func escape_effect(c: Combatant, effect_id: int) -> CombatResult:
 		e.events.append({"type": "condition", "id": c.id})
 	else:
 		e.log.add("info", "%s struggles against %s" % [c.name(), fx.name], c.id, [t.describe()])
+		if bool(fx.escape.get("once", false)):
+			fx.escape = {}   # one try (Dimensional Shackles: one every 30 days)
 	return CombatResult.new()
 
 
