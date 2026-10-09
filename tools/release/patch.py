@@ -9,8 +9,8 @@ player has the full download it builds on. A patch is cumulative: every file cha
 
 The base is the one the published latest.json names. A release can only be a patch on it when nothing a pack can't
 carry has changed since: the Godot version, project.godot (project settings are read before any pack loads), and no
-file removed or renamed in a folder the game lists at run time (data/, narrative/, art/: a patch can add and replace
-files, never take one away, and a listed folder would still show the old file). A removed script or scene is fine:
+file removed or renamed in a folder the game lists at run time (data/, narrative/, art/sprites/: a patch can add and
+replace files, never take one away, and a listed folder would still show the old file). A removed script or scene is fine:
 nothing asks for it any more. Otherwise this release is a full one and becomes the next base. Either way it writes <out>/release.json, which tools/publish_latest.sh on the site
 turns into latest.json once the release's files are checked; with a patch, also <out>/patch.pck.
 Run after make release, from the repo root, with the import done.
@@ -28,9 +28,10 @@ import zipfile
 from pathlib import Path
 
 DOWNLOADS = "https://downloads.curseofstrahd.app"
-# Folders the game lists at run time (DirAccess in rules/data/compendium.gd, story/*.gd, world/look/sprite_gallery.gd,
-# skirmish/skirmish_library.gd), where a file a patch can't remove would still be found.
-LISTED = ("data/", "narrative/", "art/")
+# Folders the game lists at run time, where a file a patch can't remove would still be found: data/ (the compendium,
+# cutscenes, endings, schedules), narrative/ (banter, camp talks, the Narrator) and art/sprites/ (the sprite gallery).
+# Everything else is loaded by name, so a removed sound or picture there just goes unused.
+LISTED = ("data/", "narrative/", "art/sprites/")
 # Cloudflare turns away Python's default user agent.
 HEADERS = {"User-Agent": "curseofstrahd-release (+https://curseofstrahd.app)"}
 
