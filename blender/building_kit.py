@@ -954,6 +954,150 @@ kit("kit_dungeon_coping", part="coping")(lambda p: stones(p, -0.5, 0.5, CUT - 0.
                                                           course=0.15, mortar="", soft=0.0, lengths=(0.22, 0.4), rough=4.0))
 
 
+# --- Interior doorways (W7) -------------------------------------------------------------------------------------
+# A one-square doorway between two room walls (InteriorWalls._header) is framed on both of its faces in the place's
+# style. Origin at the foot of the opening on the wall's face, front -y, the opening x -0.5 .. 0.5 and CUT high (an
+# interior door's leaf is 0.86 wide). The doorway module (the jambs) stays when the walls cut away; the head module
+# (a lintel, an arch or a cornice, all above CUT) goes with the wall over the doorway.
+
+def _jamb_blocks(p, mats, z1=CUT, proud=0.07, alt=(0.16, 0.11), course=0.23, x_in=0.45):
+    """Dressed jamb stones either side of an opening, long and short in turn, proud of the face."""
+    for s in (-1, 1):
+        z = 0.0
+        k = 0
+        while z < z1 - 0.01:
+            h = min(course, z1 - z)
+            wide = alt[k % 2]
+            p.box((wide, proud, h - 0.012), (s * (x_in + wide / 2), -proud / 2, z + h / 2), mats[k % len(mats)],
+                  soft=0.008, segs=1)
+            z += h
+            k += 1
+
+
+@kit("kit_timber_doorway", part="doorway")
+def kit_timber_doorway(p):
+    """Oak door posts either side of the opening, a knee brace in each top corner."""
+    for s in (-1, 1):
+        beam(p, (s * 0.52, 0.0), (s * 0.52, CUT), 0.14, OAK, d=0.08)
+        brace(p, s * 0.42, CUT - 0.2, s * 0.3, CUT - 0.01, 0.06, OAK, d=0.05)
+
+
+@kit("kit_timber_doorway_head", part="doorway_head")
+def kit_timber_doorway_head(p):
+    """A heavy oak lintel over the doorway, pegged into the posts."""
+    beam(p, (-0.66, CUT + 0.075), (0.66, CUT + 0.075), 0.15, OAK, d=0.09)
+    for s in (-1, 1):
+        p.cyl(0.02, 0.02, (s * 0.52, -0.1, CUT + 0.075), "pal_ink", rot=(90, 0, 0), segs=6)
+
+
+@kit("kit_manor_doorway", part="doorway")
+def kit_manor_doorway(p):
+    """A moulded architrave in dark painted wood: casing boards with a bead on the inner edge, on plinth blocks."""
+    for s in (-1, 1):
+        p.box((0.13, 0.05, CUT - 0.2), (s * 0.505, -0.025, 0.2 + (CUT - 0.2) / 2), "pal_peat")
+        p.box((0.025, 0.065, CUT - 0.2), (s * 0.452, -0.033, 0.2 + (CUT - 0.2) / 2), "pal_umber")
+        p.box((0.16, 0.07, 0.2), (s * 0.51, -0.035, 0.1), "pal_peat", soft=0.006, segs=1)
+
+
+@kit("kit_manor_doorway_head", part="doorway_head")
+def kit_manor_doorway_head(p):
+    """The architrave's head with a rosette at each corner, a frieze and a moulded cornice over it."""
+    p.box((0.88, 0.05, 0.13), (0, -0.025, CUT + 0.065), "pal_peat")
+    p.box((0.88, 0.065, 0.025), (0, -0.033, CUT + 0.012), "pal_umber")
+    for s in (-1, 1):
+        p.box((0.15, 0.065, 0.15), (s * 0.505, -0.033, CUT + 0.065), "pal_peat", soft=0.006, segs=1)
+        p.cyl(0.04, 0.025, (s * 0.505, -0.065, CUT + 0.065), "pal_umber", rot=(90, 0, 0), segs=10)
+    p.box((1.06, 0.04, 0.12), (0, -0.02, CUT + 0.19), "pal_walnut")
+    p.box((1.14, 0.075, 0.03), (0, -0.04, CUT + 0.24), "pal_umber")
+    p.box((1.2, 0.1, 0.05), (0, -0.05, CUT + 0.275), "pal_peat", soft=0.008)
+
+
+@kit("kit_castle_doorway", part="doorway")
+def kit_castle_doorway(p):
+    """Castle Ravenloft's doorways: dressed jambs, long and short in turn, each with a slender colonnette in front
+    on a moulded base under a carved capital."""
+    _jamb_blocks(p, [DRESSED], proud=0.08)
+    for s in (-1, 1):
+        p.lathe([(0.0, 0.0), (0.075, 0.0), (0.075, 0.07), (0.05, 0.11), (0.0, 0.11)], (s * 0.52, -0.1, 0), DRESSED_DARK,
+                segs=10)
+        p.cyl(0.038, CUT - 0.21, (s * 0.52, -0.1, 0.11), DRESSED, segs=10)
+        p.lathe([(0.0, 0.0), (0.045, 0.0), (0.085, 0.08), (0.085, 0.1), (0.0, 0.1)], (s * 0.52, -0.1, CUT - 0.1),
+                DRESSED_DARK, segs=10)
+
+
+@kit("kit_castle_doorway_head", part="doorway_head")
+def kit_castle_doorway_head(p):
+    """A pointed arch of dressed voussoirs springing from the colonnettes, a hood mould over it on carved label stops
+    and a boss at its point."""
+    outer = arch(-0.62, 0.62, CUT, 0.5, n=14)
+    inner = arch(-0.45, 0.45, CUT, 0.36, n=14)
+    p.prism(outer + list(reversed(inner)), 0.1, (0, -0.05, 0), DRESSED)
+    hood_o = arch(-0.7, 0.7, CUT - 0.02, 0.6, n=14)
+    hood_i = arch(-0.63, 0.63, CUT - 0.02, 0.53, n=14)
+    p.prism(hood_o + list(reversed(hood_i)), 0.05, (0, -0.125, 0), DRESSED_DARK)
+    for s in (-1, 1):
+        p.box((0.08, 0.08, 0.1), (s * 0.665, -0.12, CUT - 0.06), DRESSED_DARK, soft=0.015)
+    p.box((0.1, 0.09, 0.12), (0, -0.11, CUT + 0.55), DRESSED_DARK, rot=(0, 45, 0), soft=0.02)
+
+
+@kit("kit_church_doorway", part="doorway")
+def kit_church_doorway(p):
+    """A church's inner doorway: two recessed orders of dressed stone either side, on a chamfered plinth."""
+    for s in (-1, 1):
+        p.box((0.2, 0.08, 0.2), (s * 0.56, -0.04, 0.1), DRESSED_DARK)
+        for order, (x, d) in enumerate(((0.6, 0.12), (0.5, 0.07))):
+            p.box((0.09, d, CUT - 0.2), (s * x, -d / 2, 0.2 + (CUT - 0.2) / 2), DRESSED if order == 0 else DRESSED_DARK)
+
+
+@kit("kit_church_doorway_head", part="doorway_head")
+def kit_church_doorway_head(p):
+    """The two orders carried over the doorway as a lancet arch, a hood mould and its label stops."""
+    for order, (w, d) in enumerate(((0.645, 0.12), (0.545, 0.07))):
+        outer = arch(-w, w, CUT, 0.62 - 0.08 * order, n=14)
+        inner = arch(-w + 0.09, w - 0.09, CUT, 0.52 - 0.08 * order, n=14)
+        p.prism(outer + list(reversed(inner)), d, (0, -d / 2, 0), DRESSED if order == 0 else DRESSED_DARK)
+    hood_o = arch(-0.72, 0.72, CUT - 0.03, 0.72, n=14)
+    hood_i = arch(-0.66, 0.66, CUT - 0.03, 0.66, n=14)
+    p.prism(hood_o + list(reversed(hood_i)), 0.05, (0, -0.145, 0), DRESSED)
+    for s in (-1, 1):
+        p.box((0.07, 0.07, 0.09), (s * 0.69, -0.14, CUT - 0.07), DRESSED_DARK, soft=0.015)
+
+
+@kit("kit_dungeon_doorway", part="doorway")
+def kit_dungeon_doorway(p):
+    """Rough stone blocks stacked either side of a dungeon's opening."""
+    for x0, x1 in ((0.45, 0.66), (-0.66, -0.45)):
+        stones(p, x0, x1, 0.0, CUT, ["pal_stone", "pal_slate", "pal_stone_deep"], 0.08, course=0.2, mortar="",
+               soft=0.03, lengths=(0.21, 0.21), rough=5.0)
+
+
+@kit("kit_dungeon_doorway_head", part="doorway_head")
+def kit_dungeon_doorway_head(p):
+    """A massive rough lintel slab over the opening, cracked across, with relieving stones over its ends."""
+    p.box((0.66, 0.11, 0.24), (-0.36, -0.055, CUT + 0.12), "pal_slate", rot=(0, 1.5, 0), soft=0.03, segs=1)
+    p.box((0.66, 0.11, 0.23), (0.35, -0.055, CUT + 0.115), "pal_slate", rot=(0, -1.0, 0), soft=0.03, segs=1)
+    for s in (-1, 1):
+        p.box((0.24, 0.09, 0.16), (s * 0.5, -0.045, CUT + 0.33), "pal_stone_deep", rot=(0, s * 24, 0), soft=0.03, segs=1)
+
+
+@kit("kit_amber_doorway", part="doorway")
+def kit_amber_doorway(p):
+    """The Amber Temple's doorways: jambs of black stone on stepped bases, a vein of amber light down each."""
+    for s in (-1, 1):
+        p.box((0.2, 0.09, 0.16), (s * 0.55, -0.045, 0.08), "pal_ink", soft=0.006, segs=1)
+        p.box((0.15, 0.07, CUT - 0.16), (s * 0.54, -0.035, 0.16 + (CUT - 0.16) / 2), "tex_amber__black_stone")
+        p.box((0.025, 0.08, CUT - 0.34), (s * 0.54, -0.04, 0.25 + (CUT - 0.34) / 2), "glow_ember")
+
+
+@kit("kit_amber_doorway_head", part="doorway_head")
+def kit_amber_doorway_head(p):
+    """A black lintel with cut-away ends, a line of amber light along it and a glowing lozenge at its middle."""
+    p.prism([(-0.7, CUT + 0.05), (-0.62, CUT), (0.62, CUT), (0.7, CUT + 0.05), (0.7, CUT + 0.2), (0.62, CUT + 0.26),
+             (-0.62, CUT + 0.26), (-0.7, CUT + 0.2)], 0.09, (0, -0.045, 0), "tex_amber__black_stone")
+    p.box((1.1, 0.1, 0.02), (0, -0.05, CUT + 0.13), "glow_candle")
+    p.box((0.12, 0.1, 0.12), (0, -0.055, CUT + 0.13), "glow_ember", rot=(0, 45, 0))
+
+
 # --- Scatter (W10) ----------------------------------------------------------------------------------------------
 # Small things strewn by rule over a board's ground (world/look/clutter.gd): they never block a square. Origin at the
 # middle of the patch, on the ground; each is about a third of a square across.

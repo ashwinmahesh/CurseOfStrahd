@@ -48,6 +48,16 @@ every wall square of an interior or dungeon to `BuildingKit.interior_wall`, whic
   the village cobbles, a storey lower per floor: `below`); the outer walls of an upper floor run down to it. A
   dungeon's outside stays rock.
 - **A doorway's header**: the wall over a doorway between two wall squares, from the door's height to the storey's.
+- **A doorway's frame** (W7): on each side of a doorway that opens into a room, the style's doorway on the face of
+  the walls beside it: `kit_<style>_doorway`, the jambs (oak posts with knee braces; a manor's moulded architrave on
+  plinth blocks; the castle's dressed jambs with colonnettes; a church's two recessed orders; a dungeon's rough
+  blocks; the Amber Temple's black jambs veined with amber), and `kit_<style>_doorway_head` over them (a pegged oak
+  lintel; an architrave head, frieze and cornice; a pointed arch under a hood mould; a lancet of two orders; a cracked
+  lintel slab; a black lintel lit along its length). The jambs stay as the walls cut away; the head goes with the wall
+  over the doorway, which stands set back behind it. A door hung there has no plain frame (`InteriorWalls.frames`), and
+  a secret door nobody has found shows no doorway until it's found (`InteriorWalls.show_frame`). Not framed: a side
+  that runs on between walls the same way (a corridor under the wall over it), and a gap between free-standing walls
+  (the Amber Temple's book stacks) unless a door hangs in it.
 
 Each frame the board's cut-away (`TownBuilder.cut_away`, through a building entry `{"interior": true}`) asks each
 room wall whether there's floor just past it, looking away from the camera, within 7 squares of the party
@@ -113,6 +123,14 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
 - **Cut away.** A house between the camera and the party squashes down and is replaced by its low band: a ring of
   wall 0.5 high, capped dark like the cut-away interiors, round a floor of boards, with its footing.
 
+**L-shaped buildings** (W7). A block of wall that isn't a rectangle is split into rectangles as before, but they are
+one building: every part takes the main part's height (the biggest), roof and paint and stands on the lowest ground
+of any of them; no face, window or corner post where two parts meet; a wing whose end stands wholly against a part
+whose ridge crosses it runs its roof on into that part, to half a square short of its ridge, with no gable at that
+end, made flatter where it must be so its ridge stays under the other roof (`TownBuilder._butts`); and the parts are
+cut away together. The Abbey of St. Markovia and Argynvostholt have such blocks; kit_capture's `l_houses` shot shows
+two made-up L's.
+
 Yard walls are the kit's too: a stone arm from each square's middle toward each neighbouring wall or gate, a capped
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
 with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons. Vallaki's
@@ -140,11 +158,9 @@ camera turns). Captures, before and after:
 
 ## Not done yet
 
-- Interior door surrounds per style.
 - The castle's walls have no wall walk you can stand on, and the chasm's depth is drawn, not fallen into (lane 3's
   `drop_ft`). The keep has no roof of its own past its battlements.
 - Full walls have no ceilings or upper floors over them; a room's walls are full height whatever the room's size.
 - Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
   carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
 - The kit's own HD materials (W4): timber, plaster, thatch and stone painted at 2K with normal and roughness maps.
-- Houses are still rectangles; an L-shaped block is two houses with their own roofs.

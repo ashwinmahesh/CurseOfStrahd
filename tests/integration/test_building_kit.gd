@@ -126,6 +126,57 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 	v.queue_free()
 
 
+## W7: an L-shaped block of wall is one building: its parts share their height, roof and paint, there's no wall or
+## window between them, the wing's roof runs into the main roof (no gable there, its ridge under the main one's), and
+## the parts cut away together. Two made-up L's: a wing under one house's end, and one beside the other's.
+func test_an_l_shaped_block_is_one_building() -> void:
+	var rows: Array[String] = ["####################", "#..................#", "#.######.....###...#", "#.######.....###...#",
+		"#.######.....###...#", "#....###.....###...#", "#....###.....###...#", "#....###.....###...#",
+		"#....###.#######...#", "#........#######...#", "#........#######...#", "#..................#",
+		"#..................#", "####################"]
+	Compendium.shared().tables["locations"]["kit_l_test"] = {"id": "kit_l_test", "name": "A yard", "region": "village_of_barovia",
+		"summary": "", "map": {"theme": "village", "outdoors": true, "rows": rows}, "spawns": {"default": [1, 12]}}
+	var v := _view("kit_l_test")
+	await _frames(2)
+	var board := v.board
+	var parts := {}
+	for b: Dictionary in board.buildings:
+		if b.has("kit"):
+			parts[b["rect"]] = b
+	var main1 := parts.get(Rect2i(2, 2, 6, 3), {}) as Dictionary
+	var wing1 := parts.get(Rect2i(5, 5, 3, 4), {}) as Dictionary
+	var main2 := parts.get(Rect2i(13, 2, 3, 9), {}) as Dictionary
+	var wing2 := parts.get(Rect2i(9, 8, 4, 3), {}) as Dictionary
+	assert_eq(parts.size(), 4, "two L's, two parts each: %s" % [parts.keys()])
+	if main1.is_empty() or wing1.is_empty() or main2.is_empty() or wing2.is_empty():
+		v.queue_free()
+		Compendium.shared().tables["locations"].erase("kit_l_test")
+		return
+	for pair: Array in [[main1, wing1], [main2, wing2]]:
+		var m := pair[0] as Dictionary
+		var w := pair[1] as Dictionary
+		assert_eq(int(m["group"]), int(w["group"]), "one block")
+		assert_eq(float(m["height"]), float(w["height"]), "one height")
+		assert_eq(str(m["roof"]), str(w["roof"]), "one roof")
+		assert_eq(str(m["paint"]), str(w["paint"]), "one paint")
+		assert_true(float(w["rise"]) < float(m["rise"]), "the wing's ridge under the main one's")
+	assert_true((wing1["butts"] as Dictionary).has("-z"), "wing 1 runs into its house to the north")
+	assert_true((wing2["butts"] as Dictionary).has("+x"), "wing 2 runs into its house to the east")
+	for x: int in [5, 6, 7]:
+		assert_false((main1["faces"] as Dictionary).has("%d,4,0,1" % x), "no wall of the main house where the wing joins")
+		assert_false((wing1["faces"] as Dictionary).has("%d,5,0,-1" % x), "nor of the wing")
+	# One part in the way takes the other down with it: the camera west of wing 1, looking past it.
+	var focus := Vector3(8.5, 0, 6.5)
+	for i in 2:
+		board.cut_buildings(Vector3(0, 8, 6.5), focus, 1.0)
+	assert_true(bool(wing1["cut"]), "the wing in the way is cut away")
+	assert_true(bool(main1["cut"]), "and its main house with it")
+	assert_false(bool(main2["cut"]), "the other L stands")
+	v.queue_free()
+	await _frames(1)
+	Compendium.shared().tables["locations"].erase("kit_l_test")
+
+
 ## The village church and St. Andral's are churches: stone, with a bell tower over their doors.
 func test_churches_are_stone_with_a_tower() -> void:
 	for loc_id: String in ["village_of_barovia", "vallaki"]:
@@ -251,6 +302,75 @@ func test_interiors_have_full_walls_that_cut_away() -> void:
 
 func _open(board: ArenaBoard, c: Vector2i) -> bool:
 	return board.grid.in_bounds(c) and not board.grid.has_flag(c, CombatGrid.WALL) and not board.grid.has_flag(c, CombatGrid.VOID)
+
+
+## W7: a doorway inside is framed in the place's style on each side that opens into a room: jambs that stay as the
+## walls cut away, and a head (lintel, arch, cornice) that goes with the wall over the doorway. A door hung there has
+## no plain frame of its own; a secret door shows no doorway until it's found. A corridor under the wall over it and
+## the aisles between the Amber Temple's book stacks aren't doorways.
+func test_doorways_inside_are_framed_in_the_place_style() -> void:
+	for spec: Array in [["death_house_ground", Vector2i(21, 6), "manor"], ["castle_ravenloft_main_floor", Vector2i(11, 3), "castle"],
+			["village_church", Vector2i(18, 4), "church"], ["vallaki_blue_water_inn", Vector2i(16, 5), "timber"],
+			["death_house_dungeon_1", Vector2i(2, 5), "dungeon"], ["amber_temple_library", Vector2i(5, 8), "amber"]]:
+		var v := _view(str(spec[0]))
+		await _frames(2)
+		var board := v.board
+		var cell := spec[1] as Vector2i
+		var st := board.get_meta("interior_walls", {}) as Dictionary
+		assert_eq(str(st.get("style", "")), str(spec[2]), "%s is built in its style" % spec[0])
+		var parts := _frame_parts(board, cell)
+		assert_eq(parts.size(), 2, "%s's doorway at %s is framed" % [spec[0], cell])
+		assert_true(InteriorWalls.frames(board, cell), "and says so")
+		if parts.size() == 2:
+			var jambs := parts[0] as MeshInstance3D
+			var head := parts[1] as MeshInstance3D
+			assert_eq(str(jambs.name), "DoorwayJambs")
+			assert_true(jambs.get_aabb().size.y > InteriorWalls.CUT - 0.05, "jambs the opening's height")
+			assert_true(head.get_aabb().position.y >= InteriorWalls.CUT - 0.15, "the head over the opening")
+			for n: Node in board.get_children():
+				if str(n.name).begins_with("DoorFrame") and board.grid.cell_at((n as Node3D).global_position) == cell:
+					fail("%s's door at %s still has a plain frame" % [spec[0], cell])
+					break
+			# The camera across the doorway: the wall over it cuts away with its head, the jambs stay.
+			var at := board.cell_center(cell)
+			for i in 2:
+				board.cut_buildings(at + Vector3(0, 8, -10), at + Vector3(0, 0, 2), 1.0)
+			assert_false(head.is_visible_in_tree(), "%s: the head goes with the wall over the doorway" % spec[0])
+			assert_true(jambs.is_visible_in_tree(), "%s: the jambs stay" % spec[0])
+		v.queue_free()
+		await _frames(1)
+	# A secret door: no doorway until it's found.
+	var c := _view("castle_ravenloft_main_floor")
+	await _frames(2)
+	var secret := Vector2i(47, 5)
+	var hidden := _frame_parts(c.board, secret)
+	assert_false(hidden.is_empty(), "the hearth's secret door is in a framed doorway")
+	for part in hidden:
+		assert_false(part.visible, "hidden while nobody has found it")
+	InteriorWalls.show_frame(c.board, secret, true)
+	for part in hidden:
+		assert_true(part.visible, "shown once it's found")
+	c.queue_free()
+	await _frames(1)
+	# Not doorways: a corridor between walls, and the aisle between a book stack and the wall.
+	var d := _view("death_house_dungeon_1")
+	await _frames(2)
+	assert_false(InteriorWalls.frames(d.board, Vector2i(13, 6)), "a corridor under the wall over it")
+	d.queue_free()
+	await _frames(1)
+	var a := _view("amber_temple_library")
+	await _frames(2)
+	assert_false(InteriorWalls.frames(a.board, Vector2i(28, 10)), "an aisle between the stacks")
+	a.queue_free()
+
+
+## A framed doorway's jambs and head (InteriorWalls' state), or none.
+func _frame_parts(board: ArenaBoard, cell: Vector2i) -> Array[Node3D]:
+	var out: Array[Node3D] = []
+	var st := board.get_meta("interior_walls", {}) as Dictionary
+	for part: Variant in (st.get("frames", {}) as Dictionary).get(cell, []):
+		out.append(part as Node3D)
+	return out
 
 
 ## W19: Castle Ravenloft from outside. The gates' walls are the castle's: curtain walls six high with their

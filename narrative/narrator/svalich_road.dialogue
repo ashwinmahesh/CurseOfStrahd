@@ -305,3 +305,25 @@ once
 
 ~ examine:ambush_lookout_tree
 | A pine beside the road with planks lashed into it ten feet up, the rungs up the trunk worn smooth by hands and boots. Someone has sat up there before, watching for travellers.
+
+# --- The open road's finds, once their first ones went into the story (Storyline QA, 2026-10-09) ---
+
+~ search:cart_loose_board
+| One board in the broken cart's bed lifts out. Under it, a twist of oiled paper holds a pinch of grey dust that drinks a puddle dry in a breath.
+once
+
+~ search:field_wall_gloves
+| In a gap between the field wall's stones, someone tucked a pair of thin leather gloves. They grip the stone like a lizard's feet.
+once
+
+~ search:pine_ring
+| Something winks from a high branch of the claw-marked pine: a plain bronze ring on a snapped thong, still warm. Its last owner jumped higher than the wolves, for a while.
+once
+
+~ search:trunk_wand
+| Wedged in a split of the fallen trunk, a slim birch wand with a crystal set in its tip. Point it at anything enchanted and the crystal glows.
+once
+
+~ search:cutter_flask
+| Behind the woodcutter's stump, a flask of something pale blue, still corked. It keeps the cold out of your hands just to hold it.
+once

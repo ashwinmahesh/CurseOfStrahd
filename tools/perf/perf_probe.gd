@@ -56,6 +56,7 @@ func _ready() -> void:
 	pairs = int(args.get("pairs", pairs))
 	cycles = int(args.get("cycles", cycles))
 	cover = str(args.get("cover", "")) == "1"
+	fight_settle_s = float(args.get("settle", fight_settle_s))
 	if cover:
 		# The cover only runs with the interface's motion on, which a run with --out= (and a headless one) turns off.
 		UiMotion._checked = true
@@ -283,10 +284,10 @@ func _transitions(p: int) -> void:
 
 
 ## How each fight's first moments go (the loading lane, after Functional QA's hitch tour of 2026-10-09): every
-## encounter in the data (or `only`), each in its own place entered fresh and left a second to settle, as a party walks
-## up to a fight. `call` is the start of the fight (the foes' figures built, CombatView begun), `first` the next frame
+## encounter in the data (or `only`), each in its own place entered fresh and left a second (--settle) to settle, as a
+## party walks up to a fight. `call` is the start of the fight (the foes' figures built, CombatView begun), `first` the next frame
 ## drawn, `worst` the worst frame in the second after, with how many were over STUCK_MS.
-const FIGHT_SETTLE_S := 1.0
+var fight_settle_s := 1.0           ## --settle=seconds: how long a place is left before its fight starts
 
 
 func _fights(p: int, only: Array) -> void:
@@ -301,9 +302,10 @@ func _fights(p: int, only: Array) -> void:
 				continue
 			seen[eid] = true
 			GameState.story.minute_of_day = DAY
+			_phase("fight arrive: %s for %s" % [loc_id, eid])
 			root.call("enter_location", str(loc_id), "default")
 			_close_popups(root)
-			await get_tree().create_timer(FIGHT_SETTLE_S).timeout
+			await get_tree().create_timer(fight_settle_s).timeout
 			_close_popups(root)
 			var view := root.get("view") as LocationView
 			_phase("fight: " + eid)

@@ -21,21 +21,30 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Paper doll**: head, cloak, neck, armor, hands, belt, two rings, feet; **weapon sets** (main hand + off hand,
   two sets with a quick swap ↻); ammunition and spellcasting focus slots. Equipping armor shows the new AC on the
   slot; armor without training warns before equipping (Disadvantage on Str/Dex rolls, no spellcasting).
-  Built (U11, 2026-10-07): every worn slot of the 2024 DMG (head, eyes, neck, cloak, armor, robe down the left;
-  wrists, hands, belt, two rings, feet down the right; Ioun Stones in a row when worn) as gothic-arch tiles round
-  the portrait, with the Armor Class shield and three attunement lozenges beneath it; weapon set I (in hand) and set
-  II (stowed in the pack, `Character.weapon_set_2`) with ↻ Swap outside fights (in one, a character attacks only with
-  sets I and II, and Swap weapons or an attack with set II's weapon takes that set in hand: deviations.md, Weapon sets); four **quick slots** (`Character.quick_slots`) whose items the
-  fight's hotbar also shows on its Common tab. A slot takes only what fits (armor, a weapon or a held wand, rod or
-  staff, a Shield or Light weapon in the off hand, a worn item in its own slot) and lights green while a drag it takes
-  hovers over it. Ammunition and focus slots aren't built.
+  Built (U11, 2026-10-07; in the shape of a person 2026-10-09, owner: the items "in the place where they would be
+  equipped"): every slot sits on a drawn figure where it's worn: the head, the eyes beside it and any Ioun Stones
+  orbiting it (two shown, then "+n more"), the neck under it, a cloak and a robe at the shoulders, armor on the
+  chest, bracers and gloves on the forearms, a weapon in each hand (weapon set I) with set II (stowed in the pack,
+  `Character.weapon_set_2`) under it and ↻ Swap outside fights (in one, a character attacks only with sets I and II,
+  and Swap weapons or an attack with set II's weapon takes that set in hand: deviations.md, Weapon sets), a ring by
+  each hand, the belt at the waist, the **quiver** (`ammo`: a stack of ammunition) and the **focus** (a spellcasting
+  focus or a component pouch) at the hips, and boots at the feet (`InventoryScreen.DOLL_AT`). The portrait, name,
+  Armor Class shield and three attunement lozenges head the column; four **quick slots** (`Character.quick_slots`)
+  whose items the fight's hotbar also shows on its Common tab, and the load, sit under the figure. A slot takes only
+  what fits (armor, a weapon or a held wand, rod or staff, a Shield or Light weapon in the off hand, a worn item in
+  its own slot, ammunition in the quiver, a focus in the focus slot) and lights green while a drag it takes hovers
+  over it. The quiver and the focus change no rules (`Gear.carry_slot`): ammunition is drawn by its kind, and a
+  focus is assumed carried (deviations.md, Material components and focuses). A new hero starts with the ammunition
+  their weapons shoot in the quiver and a focus in the focus slot (`Character.seed_doll`); an older save fills them
+  once as it loads.
 - **Drag and drop**: pack items onto a doll slot, set II or a quick slot; anything onto another character's chip
   (the whole stack, that very item with its own charges) or the stash; slots, set II, quick slots and (at a safe
   place) the stash back into the pack. Right-click a tile for its actions (the first is what a double-click does):
   take off, wear or hold, set II, keep to hand, give, send to the stash, junk, split the stack in two, drop one. The
   card's How many stepper sets how many of a stack Give, Send to the stash and Split off move.
-- **Backpack**: an icon grid of arch tiles (count, a gilt spark when new, crossed out when junk, a moonlight lozenge
-  when equipped, lilac edge for magic, flame for a quest item); filters (All, Weapons, Armor, Consumables, Magic, Gear), the New and Junk marks as toggles with their
+- **Backpack**: a list, always (owner 2026-10-09; the icon grid and the view switch are gone): a row per stack with its
+  icon, name and count, its marks (New, Junk, Equipped, Readied for the quiver, Focus, Quick, Quest, Magic or
+  Attuned, charges) and weight; filters (All, Weapons, Armor, Consumables, Magic, Gear), the New and Junk marks as toggles with their
   counts, sort by name, weight, value or newest, and a search box (every word must appear in the item's name, kind
   or rarity); columns Item / Qty / Weight / Value; packs open as containers (▸). Quest items (and the three
   treasures) show Quest and can't be sold, stashed, dropped or marked as junk. **New** is what arrived since the

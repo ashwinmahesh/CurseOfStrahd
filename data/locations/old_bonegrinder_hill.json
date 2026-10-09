@@ -383,6 +383,18 @@
       "model": "satchel",
       "search_dc": 13,
       "item": "bell"
+    },
+    {
+      "id": "lane_ditch_knife",
+      "cell": [
+        9,
+        19
+      ],
+      "kind": "search",
+      "label": "Something in the ditch",
+      "model": "satchel",
+      "search_dc": 13,
+      "item": "vicious_weapon__dagger"
     }
   ],
   "containers": [

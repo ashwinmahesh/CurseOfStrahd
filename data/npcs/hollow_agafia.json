@@ -1,0 +1,19 @@
+{
+  "id": "hollow_agafia",
+  "name": "Agafia",
+  "title": "Who Ran from the Den",
+  "summary": "A woman of the werewolf den who ran when Kiril began taking children for the count's army, with her own three, who were born to it. She hides in a charcoal-burners' hollow above the village and feeds them oats, so they'll never learn the taste of meat.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "monster": "werewolf",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "werewolf",
+    "village_of_barovia"
+  ],
+  "region": "village_of_barovia",
+  "pronouns": "she/her",
+  "pockets": false
+}

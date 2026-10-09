@@ -210,6 +210,73 @@
       "model": "ledge",
       "dialogue": "svalich_road/called_by_name:falls",
       "when": "quest.called_by_name and quest.called_by_name != rumored and not flag.nelu_saved"
+    },
+    {
+      "id": "falls_claw_marked_pine",
+      "cell": [
+        14,
+        15
+      ],
+      "kind": "decor",
+      "label": "A claw-marked pine",
+      "model": "tree_marked"
+    },
+    {
+      "id": "pine_satchel",
+      "cell": [
+        15,
+        15
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a satchel snagged high in the pine",
+      "model": "satchel",
+      "item": "goggles_of_night"
+    },
+    {
+      "id": "falls_fallen_trunk",
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "decor",
+      "label": "A fallen trunk",
+      "model": "log"
+    },
+    {
+      "id": "trunk_hollow",
+      "cell": [
+        25,
+        13
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a hollow in the fallen trunk",
+      "model": "leaves",
+      "item": "bag_of_tricks_rust"
+    },
+    {
+      "id": "falls_cutter_wood",
+      "cell": [
+        21,
+        17
+      ],
+      "kind": "decor",
+      "label": "Split wood, left to rot",
+      "model": "woodpile"
+    },
+    {
+      "id": "forest_cutter_stump",
+      "cell": [
+        20,
+        17
+      ],
+      "kind": "search",
+      "label": "an axe left in a woodcutter's stump",
+      "model": "stump",
+      "search_dc": 12,
+      "item": "weapon_plus_1__handaxe"
     }
   ],
   "containers": [

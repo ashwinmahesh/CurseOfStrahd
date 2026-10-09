@@ -63,7 +63,7 @@ func save(slot: String, note: Variant = null) -> Error:
 
 
 ## Writes the game to `slot`, the game's own from now on; its picture now, or (`later`) once the place is showing.
-func _save(slot: String, note: Variant, later: bool) -> Error:
+func _save(slot: String, note: Variant, later: bool, picture: bool = true) -> Error:
 	var data := GameState.to_dict()
 	var keep := str(note) if note != null else str(_read(slot_path(slot)).get("note", ""))
 	if keep != "":
@@ -71,7 +71,9 @@ func _save(slot: String, note: Variant, later: bool) -> Error:
 	var err := _write(slot, data)
 	if err != OK:
 		return err
-	if later:
+	if not picture:
+		pass
+	elif later:
 		_thumb_later(slot)
 	else:
 		_write_thumb(slot, _view())
@@ -101,10 +103,9 @@ func new_slot_name() -> String:
 ## frame each round).
 func save_round(slot: String = ROUND_START) -> Error:
 	if honour():
-		# One save: a fight is kept as it starts, so leaving it comes back to its start, never past it.
-		if int((GameState.combat_snapshot.get("data", {}) as Dictionary).get("round", 1)) > 1:
-			return OK
-		return _save(honour_slot(), null, true)
+		# One save, kept at the start of each round (Ashwin, 2026-10-09, QA D-3): leaving a fight comes back to the round
+		# it was in, never further back. A picture only as the fight starts.
+		return _save(honour_slot(), null, true, int((GameState.combat_snapshot.get("data", {}) as Dictionary).get("round", 1)) <= 1)
 	return _write_beside(slot)
 
 

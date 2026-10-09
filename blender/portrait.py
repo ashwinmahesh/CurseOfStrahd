@@ -4,8 +4,9 @@ blender -b --python blender/portrait.py -- --in <png> --id <asset_id> [--size 51
 
 Centre-crops to a square, downsizes by box averaging (whole factors) or Blender's scaler, snaps every
 pixel to the Strahd palette (cutout.quantize, same as the sprites), clears the single-pixel speckle the
-JPEG source leaves (cutout.despeckle), flattens the background to one palette colour (Gemini often paints a
-grainy or mottled purple, worst on expression variants made from a reference) and writes art/portraits/<id>.png.
+JPEG source leaves (cutout.despeckle), flattens the background to one palette colour, ash_violet unless --bg names
+another (Gemini often paints a grainy or mottled purple, worst on expression variants made from a reference) and writes
+art/portraits/<id>.png.
 """
 import argparse
 import sys
@@ -24,7 +25,10 @@ def args():
     p.add_argument("--id", required=True)
     p.add_argument("--size", type=int, default=512)
     p.add_argument("--keep-background", action="store_true", help="skip the flat-background pass")
-    p.add_argument("--bg", default="", help="palette name for the flat background (default: the border's own colour)")
+    # Every portrait stands on the same ground, so they match side by side in the turn order and the party frames: the
+    # border's own colour gave 26 of them a darker or greyer square (UI QA ART-04). "border" keeps the old behaviour.
+    p.add_argument("--bg", default="ash_violet",
+                   help="palette name for the flat background (default ash_violet; 'border': the border's own colour)")
     p.add_argument("--saturate", type=float, default=1.0, help="chroma boost before quantizing (cutout.saturate)")
     return p.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
@@ -90,7 +94,7 @@ def main():
     out = cutout.ROOT / "art" / "portraits" / f"{a.id}.png"
     arr = cutout.despeckle(cutout.quantize(cutout.saturate(arr, a.saturate)))
     if not a.keep_background:
-        arr = flatten_background(arr, colour=cutout.palette_colour(a.bg) if a.bg else None)
+        arr = flatten_background(arr, colour=cutout.palette_colour(a.bg) if a.bg not in ("", "border") else None)
     cutout.save_rgba(arr, out)
     print(f"portrait: {out} ({a.size}x{a.size})")
 

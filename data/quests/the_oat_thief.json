@@ -1,0 +1,39 @@
+{
+  "id": "the_oat_thief",
+  "name": "The Oat Thief",
+  "summary": "Somebody is stealing four sacks of oats a week from Bildrath's back room, and the lock is never touched.",
+  "giver": "bildrath",
+  "region": "village_of_barovia",
+  "stages": [
+    {
+      "id": "rumored",
+      "journal": "Bildrath is short four sacks of oats a week, and the lock on his back room is never touched. He says Parriwimple is a very poor liar.",
+      "objectives": [
+        "Watch the north path at night"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "asked",
+      "journal": "Parriwimple carries the oats up the north path at night, to a woman called Agafia who is hiding in the woods with three small children. They mustn't ever have meat, she says.",
+      "objectives": [
+        "Go up the north path to the hollow in the pines"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "defended",
+      "journal": "Agafia ran from the werewolf den with her children, who were born to the wolf. The pack's hunters followed the oats up the path to her door, and we stood in it.",
+      "objectives": [
+        "Speak to Agafia"
+      ],
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Agafia and her children are safe in the hollow, for now, on oats, and Parriwimple still carries them up. Bildrath has decided it's charity. Don't repeat that.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

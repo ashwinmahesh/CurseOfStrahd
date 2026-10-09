@@ -74,6 +74,13 @@ start (somewhere everyone in the valley knows); a place with `when` appears once
 `map` is a location used as the battlefield (the party arrives at its `default` spawn). A dialogue entry plays a
 conversation instead of a fight (it may still end in `combat <id>` from that map's encounters).
 
+Every entry pays (Ashwin, 2026-10-09; story/road_spoils.gd, game_root): a fight's spoils hold coins for each foe by its
+Challenge Rating (after the 2024 DMG's individual treasure), one find in step with the party's level (a healing
+potion, a gem or a spell scroll) and a chance of a magic item that grows with the foes' XP against the party's
+Moderate budget; a dialogue entry leaves a smaller purse and one find in the loot window when its conversation ends,
+or after the fight it led to. Rolled from the playthrough's seed and the encounter, so a reload gives the same. A
+journey under way waits until the loot window closes.
+
 ## Shops (in data/npcs/<id>.json)
 
 ```json

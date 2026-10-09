@@ -38,6 +38,20 @@ const SHOTS := {
 	"inn": {"loc": "vallaki_blue_water_inn", "cells": [[6, 8], [7, 8], [6, 9], [7, 9]]},
 	"inn_turned": {"loc": "vallaki_blue_water_inn", "cells": [[6, 8], [7, 8], [6, 9], [7, 9]], "yaw": 2},
 	"hall_turned": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]], "yaw": 1},
+	"abbey_l": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[14, 12], [15, 12], [14, 13], [15, 13]],
+		"look": [22, 8], "dist": 20.0},
+	"argynvostholt_front": {"loc": "argynvostholt", "hour": 12, "cells": [[20, 9], [21, 9], [20, 10], [21, 10]],
+		"look": [20, 4], "dist": 18.0},
+	"argynvostholt_stable": {"loc": "argynvostholt", "hour": 12, "cells": [[30, 22], [31, 22], [30, 23], [31, 23]],
+		"look": [36, 21], "dist": 12.0},
+	# Two L-shaped houses in a made-up village yard: a wing under one house's end, and one beside the other's.
+	"l_houses": {"loc": "kit_l_houses", "hour": 12, "cells": [[2, 11], [3, 11], [2, 12], [3, 12]], "look": [9, 6], "dist": 16.0,
+		"rows": ["####################", "#..................#", "#.######.....###...#", "#.######.....###...#",
+			"#.######.....###...#", "#....###.....###...#", "#....###.....###...#", "#....###.....###...#",
+			"#....###.#######...#", "#........#######...#", "#........#######...#", "#..................#",
+			"#..................#", "####################"]},
+	"l_houses_turned": {"loc": "kit_l_houses", "hour": 12, "cells": [[2, 11], [3, 11], [2, 12], [3, 12]], "look": [9, 6],
+		"dist": 16.0, "yaw": 2, "rows": []},
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
@@ -110,6 +124,10 @@ func _build(shot: Dictionary) -> void:
 	for k: String in flags:
 		st.flags[k] = flags[k]   # (a fight that would start on arrival, kept off for the shot)
 	var loc_id := str(shot["loc"])
+	if not (shot.get("rows", []) as Array).is_empty():
+		# A made-up place for the shot (a village theme, so the kit's timber houses).
+		Compendium.shared().tables["locations"][loc_id] = {"id": loc_id, "name": "A made-up yard", "region": "village_of_barovia",
+			"summary": "", "map": {"theme": "village", "outdoors": true, "light": "dim", "rows": shot["rows"]}, "spawns": {"default": [1, 1]}}
 	var cells := shot.get("cells", []) as Array
 	if not cells.is_empty():
 		st.location = loc_id

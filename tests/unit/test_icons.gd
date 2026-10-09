@@ -72,14 +72,16 @@ func test_hotbar_entries_find_their_icons() -> void:
 	assert_true(Icons.for_action({"id": "attack:weapon:longsword", "spell_id": ""}) == Icons.item("longsword"), "a weapon attack")
 	assert_true(Icons.for_action({"id": "offhand:thrown:dagger", "spell_id": ""}) == Icons.item("dagger"), "a thrown off-hand dagger")
 	assert_true(Icons.for_action({"id": "item:potion_of_healing", "spell_id": ""}) == Icons.item("potion_of_healing"), "a potion")
-	assert_true(Icons.for_action({"id": "dash", "spell_id": ""}) == null, "plain actions keep their text")
+	# Common actions and class abilities have tiles of their own (Combat HUD plan, 2026-10-09); a rule shows its mode.
+	assert_true(Icons.for_action({"id": "dash", "spell_id": ""}) == Icons.feature("dash"), "a common action")
+	assert_true(Icons.for_action({"id": "feat:reaction_policy:knock_out:auto", "policy": "knock_out"}) == null, "a rule keeps its text")
 
 
 ## CC BY 3.0 asks for "Icons made by {author}": each artist whose silhouette is used is named on the Credits screen.
 func test_every_icon_artist_is_credited() -> void:
 	var credits := FileAccess.get_file_as_string("res://art/credits.json").to_lower()
 	var cat := _catalog()
-	for kind: String in ["spells", "items", "ui"]:
+	for kind: String in ["spells", "items", "features", "ui"]:
 		for key: String in cat[kind] as Dictionary:
 			var author := str((cat[kind] as Dictionary)[key]).get_slice("/", 0)
 			assert_true(credits.contains(author.replace("-", " ")), "credit %s for %s/%s in art/credits.json" % [author, kind, key])

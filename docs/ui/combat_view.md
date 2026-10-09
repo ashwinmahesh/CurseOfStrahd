@@ -175,3 +175,37 @@ rest of the plan: the vault note Combat HUD Plan.md.
 - **Armed riders and smites** glow (a bright edge on a warmer face) instead of a ✓ in the name.
 - **Out of the way**: Influence and Utilize show only when they can be used, Stabilize only while someone is dying.
 
+Readable at a glance (branch `hud-look`):
+
+- **An icon on every slot**: common actions and class abilities have tiles of their own (art/icons.json "features",
+  `make icons KIND=features`; an ability without one shows the rune), containers their name's or first choice's.
+- **The cost as a shape** in each slot's top right corner (● Action, ▲ Bonus Action, ◆ Reaction, a dash for
+  movement, a ring for free); pointing at a slot rings the economy shape it would spend.
+- **Extra Attack as pips** beside the Action: all of them until the Attack action starts, then the ones left.
+- **The resource row** on the bar's top edge: spell slots by level, then the hero's own resources (Second Wind, Action
+  Surge, Channel Divinity, Lay On Hands, Focus Points...) as pips, or left / most past ten; what doesn't fit folds into
+  a "+N" that names the rest.
+- **The weapon sets on the portrait**: what's in hand, the other set below it, dimmer; a click swaps (free).
+- **The odds over the foe**: pointing an attack at a creature puts its hit chance in large figures over its head
+  (green, gold or rose by the odds; edged for Advantage or Disadvantage) with the damage a hit does; the full math
+  stays in the tooltip.
+- **The reaction prompt** opens bottom right, above the hotbar, growing upward, so who's hitting whom stays in view
+  (UI QA, 2026-10-09).
+
+## Shared party turns (owner 2026-10-09, after Baldur's Gate 3)
+
+Heroes next to each other in the turn order act together (deviations.md). In the turn order the heroes who can still
+take theirs are edged green and the ones done dimmed; their party frames say **Ready**; the hotbar's note names them
+("Shared turn · Godrick and Thistle ready (Tab or a portrait)"). A click on a ready hero's frame or portrait, Tab or the
+radial's Inspect takes control of them; End Turn ends only the hero in control, and the next ready one takes over.
+Settings, Game, **Party turns**: Shared (the default) or One at a time.
+
+## Filters and one list (Ashwin's mix, 2026-10-09)
+
+Asked to choose between the tabs and Baldur's Gate 3's PC bar (a mock-up, tools/capture/hotbar_mockup_capture.tscn),
+the owner picked a mix: BG3's sidebar of filters, our icon-and-name slots. The filters run down the left of the slots
+(All, then the hero's tabs: Common, the class's, Spells, Items, Reactions, Passives, and Favourites and Hidden when
+used); **All** is the default and lists the starred actions, Common, the class's, Spells (cantrips first, by level)
+and Items one section after another, each section's name on a gilt rule above its rows. Six slots to a row; the
+list scrolls past two and a half rows. D-pad up and down (or the tab keys) step through the filters. A long name over
+the portrait is cut with an ellipsis so the bar never reaches End Turn.

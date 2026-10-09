@@ -25,6 +25,10 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## The filter that lists every action at once: Common, the class's, Spells and Items, one section after another.
+const ALL := "All"
+## Slots to a row (a section's name sits on a gilt rule above its rows).
+const COLUMNS := 6
 ## The target box's outline when an attack would roll with Advantage or Disadvantage.
 const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
@@ -40,7 +44,9 @@ var e: Encounter
 var catalog: ActionCatalog
 ## The party member whose hotbar is shown (the active one on their turn, or whoever the player inspects).
 var shown: Combatant = null
-var tab: String = ActionCatalog.COMMON
+## The hotbar's filter (Ashwin's mix of tabs and Baldur's Gate 3's bar, 2026-10-09): All (every action in one list, by
+## section), or one of ActionCatalog.tabs_for.
+var tab: String = ALL
 ## Index into the visible slots the controller has highlighted (-1 none).
 var focus_slot := -1
 ## The upcast pips for the spell being aimed.
@@ -58,7 +64,8 @@ var _hot_stats: Label
 var _economy: EconomyShapes
 var _move_bar: ProgressBar
 var _move_label: Label
-var _tabs: HBoxContainer
+## The filters down the left of the slots (Baldur's Gate 3's sidebar): All, then the hero's tabs.
+var _tabs: GridContainer
 ## The slot rows: one grid, or on the Spells tab a row of grids by spell level (SpellGroups) with the level beside each.
 var _slots: VBoxContainer
 var _slot_buttons: Array[Button] = []
@@ -67,6 +74,10 @@ var _end_turn: Button
 var _undo_move: Button
 var _turn_note: Label
 var _tooltip: PanelContainer
+## The odds over a pointed-at target's head (show_odds).
+var _odds: PanelContainer
+var _odds_chance: Label
+var _odds_damage: Label
 var _tooltip_box: VBoxContainer
 var _prompt: PanelContainer
 var _prompt_title: Label
@@ -82,7 +93,10 @@ var _banner_time := 0.0
 var _confirm: PanelContainer
 var _confirm_text: Label
 var _pips: HBoxContainer
-var _slot_box: VBoxContainer
+## Above the hotbar (Baldur's Gate 3's resource row): spell slots and the class's own resources as pips.
+var _slot_box: PanelContainer
+## The weapon sets on the portrait: the main hand of the set in hand, then the other set's.
+var _weapons: VBoxContainer
 var _slot_row: HBoxContainer
 var _menu: ContextMenu
 var _menu_action: Dictionary = {}
@@ -95,6 +109,9 @@ static var log_minimized := false
 ## It opens compact, over the top right only, and grows to its full height on a click (also for the session).
 static var log_tall := false
 const LOG_BOTTOM := 600.0
+## The reaction prompt: its width, and its bottom edge (above the hotbar, whose top is 244 px up).
+const PROMPT_WIDTH := 440.0
+const PROMPT_BOTTOM := -254.0
 const LOG_COMPACT_BOTTOM := 372.0
 var _log_panel: PanelContainer
 var _log_title: Label
@@ -286,6 +303,10 @@ func _build_hotbar() -> void:
 	card.custom_minimum_size = Vector2(150, 0)
 	_hot_name = _label("", 19, "gilt_light")
 	_hot_name.add_theme_font_override("font", UiKit.display_font())
+	# A long name is cut with an ellipsis rather than widening the bar into End Turn ("Godrick Pendlebrook").
+	_hot_name.custom_minimum_size = Vector2(150, 0)
+	_hot_name.clip_text = true
+	_hot_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	card.add_child(_hot_name)
 	# The character in the sheet's gilt frame.
 	var holder := Control.new()
@@ -310,6 +331,12 @@ func _build_hotbar() -> void:
 		for p: Vector2 in [Vector2(1, 1), Vector2(c.size.x - 1, 1), Vector2(1, c.size.y - 1), c.size - Vector2(1, 1)]:
 			UiParts.diamond(c, p, 7.0, Look.color("void"), true)
 			UiParts.diamond(c, p, 5.0, Look.color("gilt_light"), true)))
+	# The weapon sets on the portrait's right edge (Baldur's Gate 3's set switch): what's in hand, and the other set
+	# below it, dimmer; a click on either swaps them (free).
+	_weapons = VBoxContainer.new()
+	_weapons.add_theme_constant_override("separation", 2)
+	_weapons.position = Vector2(84, 50)
+	holder.add_child(_weapons)
 	card.add_child(holder)
 	_hot_stats = _label("", 15, "vellum")
 	card.add_child(_hot_stats)
@@ -339,23 +366,49 @@ func _build_hotbar() -> void:
 	_move_label = _label("", 15, "vellum")
 	mv.add_child(_move_label)
 	top.add_child(mv)
-	_slot_box = VBoxContainer.new()
-	_slot_box.add_child(UiParts.caption("Spell slots", 11))
+	# The resource row sits on the bar's top edge, left, so the shapes' row keeps its room.
+	_slot_box = PanelContainer.new()
+	var strip := _style("ui_black", "gilt_dark", 1)
+	strip.set_content_margin_all(4)
+	strip.content_margin_left = 10
+	strip.content_margin_right = 10
+	_slot_box.add_theme_stylebox_override("panel", strip)
+	_slot_box.anchor_left = 0.5
+	_slot_box.anchor_right = 0.5
+	_slot_box.anchor_top = 1.0
+	_slot_box.anchor_bottom = 1.0
+	# Sized by what it holds: it grows right from the bar's left end and up from the bar's top edge.
+	_slot_box.offset_left = -620
+	_slot_box.offset_right = -620
+	_slot_box.offset_top = -243
+	_slot_box.offset_bottom = -243
+	_slot_box.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_slot_row = HBoxContainer.new()
-	_slot_row.add_theme_constant_override("separation", 10)
+	_slot_row.add_theme_constant_override("separation", 16)
 	_slot_box.add_child(_slot_row)
-	top.add_child(_slot_box)
+	add_child(_slot_box)
 	_pips = HBoxContainer.new()
 	top.add_child(_pips)
 	_turn_note = _label("", 16, "gilt_light")
+	# It takes the row's spare width and cuts a long note with an ellipsis, so the bar never grows past End Turn.
+	_turn_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_turn_note.clip_text = true
+	_turn_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	top.add_child(_turn_note)
-	_tabs = HBoxContainer.new()
-	_tabs.add_theme_constant_override("separation", 6)
-	mid.add_child(_tabs)
+	# The filters down the left, the slots beside them: Baldur's Gate 3's bar with our icon-and-name slots (Ashwin's mix).
+	var body := HBoxContainer.new()
+	body.add_theme_constant_override("separation", 8)
+	mid.add_child(body)
+	_tabs = GridContainer.new()
+	_tabs.columns = 1
+	_tabs.add_theme_constant_override("h_separation", 2)
+	_tabs.add_theme_constant_override("v_separation", 1)
+	_tabs.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	body.add_child(_tabs)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(980, 112)
+	scroll.custom_minimum_size = Vector2(COLUMNS * SLOT_SIZE.x + (COLUMNS - 1) * 6 + 14, 146)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	mid.add_child(scroll)
+	body.add_child(scroll)
 	_slot_scroll = scroll
 	_slots = VBoxContainer.new()
 	_slots.add_theme_constant_override("separation", 6)
@@ -408,6 +461,21 @@ func _build_hotbar() -> void:
 
 
 func _build_tooltip() -> void:
+	_odds = _panel("gilt_dark", "ui_black", false)
+	_odds.visible = false
+	_odds.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var ob := VBoxContainer.new()
+	ob.add_theme_constant_override("separation", -4)
+	ob.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_odds.add_child(ob)
+	_odds_chance = _label("", 30, "gilt_light")
+	_odds_chance.add_theme_font_override("font", UiKit.display_font())
+	_odds_chance.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ob.add_child(_odds_chance)
+	_odds_damage = _label("", 14, "vellum")
+	_odds_damage.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ob.add_child(_odds_damage)
+	add_child(_odds)
 	_tooltip = _panel("gilt", "ui_black", false)
 	_tooltip.visible = false
 	_tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -419,13 +487,17 @@ func _build_tooltip() -> void:
 func _build_prompt() -> void:
 	_prompt = _panel("gilt_light")
 	_prompt.set_meta(&"pad_modal", true)   # while it's up the pad moves over it alone (PadNav)
-	_prompt.anchor_left = 0.5
-	_prompt.anchor_right = 0.5
-	_prompt.anchor_top = 0.5
-	_prompt.anchor_bottom = 0.5
-	_prompt.offset_left = -300
-	_prompt.offset_right = 300
-	_prompt.offset_top = -150
+	# Bottom right, just above the hotbar, growing upward over the log: out of the way of who's hitting whom (UI QA,
+	# 2026-10-09; Baldur's Gate 3 keeps its reaction prompt off the action too).
+	_prompt.anchor_left = 1.0
+	_prompt.anchor_right = 1.0
+	_prompt.anchor_top = 1.0
+	_prompt.anchor_bottom = 1.0
+	_prompt.offset_left = -PROMPT_WIDTH - 12
+	_prompt.offset_right = -12
+	_prompt.offset_top = PROMPT_BOTTOM
+	_prompt.offset_bottom = PROMPT_BOTTOM
+	_prompt.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_prompt.visible = false
 	add_child(_prompt)
 	var box := VBoxContainer.new()
@@ -433,14 +505,16 @@ func _build_prompt() -> void:
 	_prompt.add_child(box)
 	_prompt_title = _label("", 22, "gilt_light")
 	box.add_child(_prompt_title)
+	_prompt_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_prompt_title.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
 	_prompt_text = _label("", 16, "vellum")
 	_prompt_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_prompt_text.custom_minimum_size = Vector2(560, 0)
+	_prompt_text.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
 	box.add_child(_prompt_text)
 	_prompt_cost = _label("", 15, "parchment")
 	box.add_child(_prompt_cost)
 	var target_scroll := ScrollContainer.new()
-	target_scroll.custom_minimum_size.y = 150
+	target_scroll.custom_minimum_size.y = 120
 	target_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_child(target_scroll)
 	_prompt_targets = VBoxContainer.new()
@@ -554,6 +628,8 @@ func _refresh_strip() -> void:
 	var cur := e.current()
 	# The lair's turn sits at initiative count 20 (ADR 0014); legendary creatures show the actions they have left.
 	var lair_at := e.legendary.lair_slot()
+	# A shared party turn (EncounterTurns): the heroes who can still take theirs edged green, the ones done dimmed.
+	var sharing := e.shared_heroes()
 	for i in e.order.size():
 		var c := e.order[i]
 		if i == lair_at:
@@ -563,7 +639,12 @@ func _refresh_strip() -> void:
 		var active := c == cur
 		var card := PanelContainer.new()
 		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
-		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else 2))
+		var ready := not active and c in sharing
+		if ready:
+			frame = "bile"
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else (3 if ready else 2)))
+		if c.id in e.shared_ended:
+			card.modulate = Color(1, 1, 1, 0.55)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
@@ -580,6 +661,11 @@ func _refresh_strip() -> void:
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
+		if ready:
+			card.tooltip_text = "%s shares this turn: click to take it" % c.name()
+			card.gui_input.connect(func(ev: InputEvent) -> void:
+				if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+					inspect_requested.emit(c.id))
 		_strip.add_child(card)
 	if lair_at == e.order.size():
 		_strip.add_child(_lair_card())
@@ -601,6 +687,7 @@ func _lair_card() -> PanelContainer:
 func _refresh_party() -> void:
 	for ch in _party_box.get_children():
 		ch.queue_free()
+	var sharing := e.shared_heroes()
 	for c in e.combatants:
 		# An Echo Knight's echo is an image on the board, not a member of the party.
 		if c.side not in [&"party", &"guest"] or EchoKnight.is_echo(c):
@@ -637,6 +724,10 @@ func _refresh_party() -> void:
 			head.add_child(UiParts.pill("Guest", "moonlight", 11))
 		if c.is_down() and not c.creature.dead:
 			head.add_child(UiParts.pill("DOWN", "vampire_red", 11))
+		# Sharing the turn and still to take theirs: a click on the frame takes control of them.
+		var ready := c in sharing and c != e.current()
+		if ready:
+			head.add_child(UiParts.pill("Ready", "bile", 11))
 		v.add_child(head)
 		v.add_child(_hp_bar(c, 170, 10.0))
 		var cr := c.creature
@@ -663,7 +754,7 @@ func _refresh_party() -> void:
 		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
-		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
+		btn.tooltip_text = "%s · %s\n%s" % [c.name(), status, "They share this turn: click to take it now" if ready else "Click to see their actions"]
 		if c.creature is Character:
 			card.add_child(_sheet_button(c))
 		_party_box.add_child(card)
@@ -736,11 +827,16 @@ func _refresh_hotbar() -> void:
 	_hot_name.text = c.name()
 	_portrait.texture = _portrait_for(c)
 	_hot_stats.text = "HP %d/%d · AC %d" % [c.creature.hp, c.creature.max_hp(), c.creature.ac_value()]
-	_economy.set_state(c.action_available, c.bonus_available, c.reaction_available)
+	# Extra Attack's attacks as pips beside the Action: all of them until the Attack action starts, then what's left.
+	_economy.preview("")   # the slots are rebuilt: whatever was pointed at is gone
+	var per := e.attacks_per_action(c)
+	var attacks_left := c.attacks_left if mine and c.took_attack_action else (per if c.action_available else 0)
+	_economy.set_state(c.action_available, c.bonus_available, c.reaction_available, per, attacks_left)
 	var spd := maxi(1, c.speed())
 	_move_bar.max_value = maxf(spd, c.movement_left)
 	_move_bar.value = c.movement_left if mine else spd
 	_move_label.text = "%d / %d ft" % [c.movement_left if mine else spd, spd]
+	_turn_note.tooltip_text = ""
 	if e.state == Encounter.State.OVER:
 		_turn_note.text = "Victory!" if e.outcome == "victory" else "The party has fallen"
 	elif cur != null and not cur.is_player_controlled():
@@ -748,11 +844,18 @@ func _refresh_hotbar() -> void:
 	elif not mine:
 		_turn_note.text = "Inspecting %s (not their turn)" % c.name()
 	else:
-		var per := e.attacks_per_action(c)
-		_turn_note.text = ("%d attacks per Attack action" % per) if per > 1 else ""
-		if c.attacks_left > 0:
-			_turn_note.text = "%d attack%s left in this Attack action" % [c.attacks_left, "" if c.attacks_left == 1 else "s"]
+		_turn_note.text = ""   # the attacks left show as pips beside the Action
+		# A shared party turn: who else can act now, and how to switch to them.
+		var sharing := e.shared_heroes()
+		if sharing.size() > 1:
+			var names: Array[String] = []
+			for o: Combatant in sharing.slice(1):
+				names.append(o.name().get_slice(" ", 0))
+			_turn_note.text = "Shared turn · %d more ready (%s)" % [names.size(), InputActions.key_text(&"cycle_leader")]
+			_turn_note.tooltip_text = "%s can act now too: press %s or click their portrait to take their turn." % [", ".join(names), InputActions.key_text(&"cycle_leader")]
+			_turn_note.mouse_filter = Control.MOUSE_FILTER_PASS
 	_refresh_slot_pips(c)
+	_refresh_weapons(c, mine)
 	_end_turn.disabled = not mine or e.pending != null
 	_undo_move.disabled = not mine or not e.can_undo_move(c)
 	# A dying hero has nothing else to do: the Death Saving Throw takes the action slots' place inside the bar (owner
@@ -761,12 +864,15 @@ func _refresh_hotbar() -> void:
 	_death_button.visible = dying
 	_tabs.visible = not dying
 	_slot_scroll.visible = not dying
-	# Tabs.
+	# Filters.
 	for ch in _tabs.get_children():
 		ch.queue_free()
-	var tabs := catalog.tabs_for(c)
+	var tabs := filters(c)
 	if not tab in tabs:
-		tab = tabs[0]
+		tab = ALL
+	# One column of filters; two narrower ones when starred and hidden actions add theirs (the slots' height holds 7).
+	_tabs.columns = 1 if tabs.size() <= 7 else 2
+	var filter_w := 84.0 if tabs.size() <= 7 else 62.0
 	for t in tabs:
 		var b := Button.new()
 		b.text = t
@@ -774,7 +880,10 @@ func _refresh_hotbar() -> void:
 		b.button_pressed = t == tab
 		UiKit.button_look(b)
 		UiParts.compact(b)
-		b.add_theme_font_size_override("font_size", 15)
+		b.add_theme_font_size_override("font_size", 11 if tabs.size() <= 7 else 10)
+		b.custom_minimum_size = Vector2(filter_w, 18)
+		b.clip_text = true
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		var on := UiKit.button_style("hover")
 		on.border_color = Look.color("gilt_light")
 		on.set_border_width_all(2)
@@ -795,9 +904,12 @@ func _refresh_hotbar() -> void:
 	_slot_actions.clear()
 	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged), with
 	# one slot per idea: a rule's modes as one toggle, an action's variants as one container (ActionCatalog.slots).
-	var acts: Array = catalog.slots(c, tab)
+	var all := catalog.actions_for(c)   # read once for every section
+	var acts: Array = catalog.slots(c, tab, all) if tab != ALL else []
 	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
-	if tab == ActionCatalog.SPELLS:
+	if tab == ALL:
+		groups = _all_sections(c, all)
+	elif tab == ActionCatalog.SPELLS:
 		# By spell level, alphabetical within, like every other spell list (SpellGroups), unless the player arranged the
 		# tab: then each level keeps their order.
 		groups = SpellGroups.groups(acts, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
@@ -811,21 +923,19 @@ func _refresh_hotbar() -> void:
 		grid = GridContainer.new()
 		grid.add_theme_constant_override("h_separation", 6)
 		grid.add_theme_constant_override("v_separation", 6)
-		if str(g["heading"]) == "":
-			grid.columns = 7
-			_slots.add_child(grid)
-		else:
-			grid.columns = 6
-			var row := HBoxContainer.new()
-			row.add_theme_constant_override("separation", 8)
-			var cap := _label(str(g["heading"]), 13, "gilt")
-			cap.custom_minimum_size = Vector2(70, SLOT_SIZE.y)
-			cap.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			cap.size_flags_vertical = Control.SIZE_SHRINK_BEGIN   # beside the level's first row
-			cap.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			row.add_child(cap)
-			row.add_child(grid)
-			_slots.add_child(row)
+		grid.columns = COLUMNS
+		if str(g["heading"]) != "":
+			# The section's name on a gilt rule above its rows (a spell level, or under All: Common, the class's...).
+			var head := HBoxContainer.new()
+			head.add_theme_constant_override("separation", 6)
+			head.add_child(UiParts.caption(str(g["heading"]), 11, "gilt"))
+			var rule := UiParts.drawn(Vector2(0, 14), func(cv: Control) -> void:
+				cv.draw_line(Vector2(0, cv.size.y / 2.0), Vector2(cv.size.x, cv.size.y / 2.0), Color(Look.color("gilt_dark"), 0.8), 1.0))
+			rule.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			head.add_child(rule)
+			_slots.add_child(head)
+		_slots.add_child(grid)
 		for av: Variant in g["items"]:
 			i = _add_slot(grid, av as Dictionary, i, c, mine)
 
@@ -857,7 +967,18 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	stripe.offset_bottom = 5
 	stripe.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(stripe)
+	# The cost as the economy's own shape in the top right corner (Baldur's Gate 3's slots): ● Action, ▲ Bonus Action,
+	# ◆ Reaction, a dash for movement, a ring for free.
+	var cost := str(a["cost"])
+	var mark := UiParts.drawn(SLOT_SIZE, func(cv: Control) -> void:
+		_cost_mark(cv, Vector2(cv.size.x - 16.0, 11.0), cost, Look.color(colour) if usable else Color(Look.color(colour), 0.4)))
+	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	b.add_child(mark)
 	_slot_face(b, a, i, usable)
+	# Pointing at a slot lights what it would spend on the economy shapes (Baldur's Gate 3 does the same).
+	if usable:
+		b.mouse_entered.connect(func() -> void: _economy.preview(cost, c.attacks_left > 0))
+		b.mouse_exited.connect(func() -> void: _economy.preview(""))
 	b.disabled = not usable
 	var reason := str(a["reason"]) if not bool(a["legal"]) else ""
 	if not mine and not anytime and reason == "":
@@ -871,7 +992,7 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	var act := a
 	b.pressed.connect(func() -> void: use_action(act, b))
 	# Drag a slot onto another on the same tab to put it there (U2); a group moves by its first action.
-	var here_tab := tab
+	var here_tab := _tab_of(a)
 	b.set_drag_forwarding(func(_at: Vector2) -> Variant:
 			if not c.creature is Character:
 				return null
@@ -923,7 +1044,7 @@ func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
 	col.size = Vector2(width, SLOT_SIZE.y - 8.0)
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	b.add_child(col)
-	var name_ := _fitted(str(a["label"]), width, 13, 10, "ivory" if usable else "bone")
+	var name_ := _fitted(str(a["label"]), width - 7.0, 13, 10, "ivory" if usable else "bone")   # clear of the cost mark
 	col.add_child(name_)
 	if bool(a.get("toggle", false)):
 		# A rule: the mode in force in its own colour, and a pip per mode along the bottom with that one lit.
@@ -946,8 +1067,8 @@ func _slot_face(b: Button, a: Dictionary, i: int, usable: bool) -> void:
 	if bool(a.get("group", false)) and not bool(a.get("toggle", false)):
 		# A container: a small gilt corner says a click opens its choices (Baldur's Gate 3's fly-out mark).
 		var corner := UiParts.drawn(SLOT_SIZE, func(cv: Control) -> void:
-			var tip := Vector2(cv.size.x - 13.0, 9.0)
-			cv.draw_colored_polygon(PackedVector2Array([tip, tip + Vector2(-7, 0), tip + Vector2(0, 7)]),
+			var tip := Vector2(cv.size.x - 13.0, cv.size.y - 7.0)
+			cv.draw_colored_polygon(PackedVector2Array([tip, tip + Vector2(-8, 0), tip + Vector2(0, -8)]),
 				Look.color("gilt_light") if usable else Color(Look.color("gilt_dark"), 0.6)))
 		corner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		b.add_child(corner)
@@ -977,22 +1098,100 @@ func _fitted(text: String, width: float, big: int, small: int, colour: String) -
 	return l
 
 
-## Spell slots left by level, as filled and empty pips ("1st ●●●○").
+## The resource row: spell slots left by level ("1st ●●●○"), then the creature's own resources (Second Wind, Channel
+## Divinity, Focus Points, Rage...) as pips, or "left / most" past ten. What doesn't fit the bar's width folds into a
+## last "+N" chip that names the rest.
 func _refresh_slot_pips(c: Combatant) -> void:
 	for ch in _slot_row.get_children():
+		_slot_row.remove_child(ch)
 		ch.queue_free()
-	var pips := catalog.slot_pips(c)
-	_slot_box.visible = not pips.is_empty()
-	for p in pips:
-		var left := int(p["left"])
-		var total := int(p["total"])
-		var chip := HBoxContainer.new()
-		chip.add_theme_constant_override("separation", 4)
-		chip.add_child(UiParts.caption(ActionCatalog._ordinal(int(p["level"])), 11))
-		chip.add_child(UiParts.pips(total, left, "moonlight"))
-		chip.tooltip_text = "Level %d spell slots: %d of %d left" % [int(p["level"]), left, total]
-		chip.mouse_filter = Control.MOUSE_FILTER_PASS
+	var chips: Array[Control] = []
+	for p in catalog.slot_pips(c):
+		chips.append(_pip_chip(ActionCatalog._ordinal(int(p["level"])), int(p["total"]), int(p["left"]), "moonlight",
+			"Level %d spell slots: %d of %d left" % [int(p["level"]), int(p["left"]), int(p["total"])]))
+	var res := c.creature.resources
+	for rid: Variant in res:
+		var r := res[rid] as Dictionary
+		var most := int(r.get("max", 0))
+		if most <= 0:
+			continue
+		var left := c.creature.resource_left(str(rid))
+		chips.append(_pip_chip(str(r.get("name", rid)), most, left, "gilt_light",
+			"%s: %d of %d left (back after a %s rest)" % [r.get("name", rid), left, most, "Short or Long" if str(r.get("recharge", "")) == "short" else "Long"]))
+	_slot_box.visible = not chips.is_empty()
+	var room := 1120.0
+	var used := 0.0
+	var rest: Array[String] = []
+	for chip in chips:
+		var w := chip.get_combined_minimum_size().x + 16.0
+		if used + w > room - 60.0 and chip != chips.back() or used + w > room:
+			rest.append(chip.tooltip_text)
+			chip.queue_free()
+			continue
+		used += w
 		_slot_row.add_child(chip)
+	if not rest.is_empty():
+		var more := UiParts.caption("+%d" % rest.size(), 11, "gilt_light")
+		more.tooltip_text = "\n".join(rest)
+		more.mouse_filter = Control.MOUSE_FILTER_PASS
+		_slot_row.add_child(more)
+
+
+## The weapon sets on the portrait: the main hand in hand (or the off hand, or a fist), and the other set's below it.
+func _refresh_weapons(c: Combatant, mine: bool) -> void:
+	for ch in _weapons.get_children():
+		_weapons.remove_child(ch)
+		ch.queue_free()
+	if not c.creature is Character:
+		return
+	var ch := c.creature as Character
+	var held := ch.held_id("main_hand") if ch.held_id("main_hand") != "" else ch.held_id("off_hand")
+	var other := str(ch.weapon_set_2.get("main_hand", ch.weapon_set_2.get("off_hand", "")))
+	if not ch.has_weapon_set_2():
+		other = ""
+	if held == "" and other == "":
+		return
+	var names := func(hands: Array) -> String:
+		var out: Array[String] = []
+		for id: Variant in hands:
+			if str(id) != "" and not ch.entry_of(str(id)).is_empty():
+				out.append(str(Compendium.shared().item_data(str(id)).get("name", id)))
+		return " and ".join(out) if not out.is_empty() else "nothing"
+	var tip := "In hand: %s\nOther set: %s\nClick to swap (free; attacking with the other set swaps too)" % [
+		names.call([ch.held_id("main_hand"), ch.held_id("off_hand")]), names.call([ch.weapon_set_2.get("main_hand", ""), ch.weapon_set_2.get("off_hand", "")])]
+	for k in 2:
+		var id := held if k == 0 else other
+		if k == 1 and id == "":
+			continue
+		var b := Button.new()
+		b.custom_minimum_size = Vector2(34, 34) if k == 0 else Vector2(28, 28)
+		b.focus_mode = Control.FOCUS_NONE
+		b.add_theme_stylebox_override("normal", _style("ui_black", "gilt_light" if k == 0 else "gilt_dark", 1))
+		b.add_theme_stylebox_override("hover", _style("ui_wine", "gilt_light", 2))
+		b.add_theme_stylebox_override("pressed", _style("blood", "gilt_light", 2))
+		b.add_theme_stylebox_override("disabled", _style("ui_black", "gilt_light" if k == 0 else "gilt_dark", 1))
+		if id != "":
+			UiParts.texture_on_button(b, UiParts.icon_texture("item", id), 24 if k == 0 else 18)
+		if k == 1:
+			b.modulate = Color(1, 1, 1, 0.7)
+		b.tooltip_text = tip
+		b.disabled = not mine or other == ""
+		b.pressed.connect(func() -> void:
+			var swap := catalog.find(c, "swap_weapons")
+			if not swap.is_empty():
+				action_chosen.emit(swap))
+		_weapons.add_child(b)
+
+
+## One resource on the row: its name in small capitals, then its pips.
+func _pip_chip(name_: String, total: int, left: int, colour: String, tip: String) -> Control:
+	var chip := HBoxContainer.new()
+	chip.add_theme_constant_override("separation", 4)
+	chip.add_child(UiParts.caption(name_, 11))
+	chip.add_child(UiParts.pips(total, left, colour))
+	chip.tooltip_text = tip
+	chip.mouse_filter = Control.MOUSE_FILTER_PASS
+	return chip
 
 
 ## A slot used (a click, its hotkey, the pad's RB): a toggle steps to its next mode, a container opens its choices at the
@@ -1052,6 +1251,27 @@ static func _arrange_id(a: Dictionary) -> String:
 	if bool(a.get("group", false)):
 		return str(((a["items"] as Array)[0] as Dictionary)["id"])
 	return str(a["id"])
+
+
+## A slot's cost mark at `at`: the economy's shape for what it spends.
+static func _cost_mark(cv: Control, at: Vector2, cost: String, col: Color) -> void:
+	var edge := Color(Look.color("void"), 0.8)
+	match cost:
+		"action", "attack":
+			cv.draw_circle(at, 5.0, col)
+			cv.draw_arc(at, 5.0, 0.0, TAU, 16, edge, 1.0)
+		"bonus":
+			var tri := PackedVector2Array([at + Vector2(0, -6), at + Vector2(6, 5), at + Vector2(-6, 5)])
+			cv.draw_colored_polygon(tri, col)
+			cv.draw_polyline(PackedVector2Array([tri[0], tri[1], tri[2], tri[0]]), edge, 1.0)
+		"reaction":
+			var dia := PackedVector2Array([at + Vector2(0, -6), at + Vector2(6, 0), at + Vector2(0, 6), at + Vector2(-6, 0)])
+			cv.draw_colored_polygon(dia, col)
+			cv.draw_polyline(PackedVector2Array([dia[0], dia[1], dia[2], dia[3], dia[0]]), edge, 1.0)
+		"movement":
+			cv.draw_rect(Rect2(at + Vector2(-6, -2), Vector2(12, 4)), col)
+		_:
+			cv.draw_arc(at, 4.5, 0.0, TAU, 16, col, 1.5)
 
 
 ## A rule's mode in its colour: Ask gilt, Automatic green, Off grey.
@@ -1180,9 +1400,10 @@ func _arrange(action: Dictionary, what: String) -> void:
 			for one in ids:
 				catalog.set_hidden(shown, one, what == "hide")
 		"earlier", "later":
-			var at := catalog.arranged(shown, tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
+			var on := _tab_of(action)
+			var at := catalog.arranged(shown, on).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
 			if at >= 0:
-				catalog.move_action(shown, tab, aid, at + (-1 if what == "earlier" else 1))
+				catalog.move_action(shown, on, aid, at + (-1 if what == "earlier" else 1))
 	_refresh_hotbar()
 
 
@@ -1214,10 +1435,42 @@ func slot_count() -> int:
 	return _slot_actions.size()
 
 
+## The filters for `c`: All, then its tabs (ActionCatalog.tabs_for).
+func filters(c: Combatant) -> Array[String]:
+	var out: Array[String] = [ALL]
+	out.append_array(catalog.tabs_for(c))
+	return out
+
+
+## The All filter's sections: the starred actions, Common, the class's, Spells (by level, cantrips first) and Items, each
+## with its name at the left; Reactions and Passives keep their own filters, as in Baldur's Gate 3.
+func _all_sections(c: Combatant, all: Array[Dictionary]) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var tabs := catalog.tabs_for(c)
+	for t: String in [ActionCatalog.FAVOURITES, ActionCatalog.COMMON, catalog.class_tab(c), ActionCatalog.SPELLS, ActionCatalog.ITEMS]:
+		if not t in tabs:
+			continue
+		var items: Array = catalog.slots(c, t, all)
+		if t == ActionCatalog.SPELLS and not (ActionCatalog.layout(c).get("order", {}) as Dictionary).has(t):
+			var flat: Array = []
+			for g in SpellGroups.groups(items, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
+					func(a: Dictionary) -> int: return int(a.get("slot", 0))):
+				flat.append_array(g["items"] as Array)
+			items = flat
+		if not items.is_empty():
+			out.append({"heading": t, "items": items})
+	return out
+
+
+## The tab an action is arranged on (U2): the filter shown, or under All the action's own.
+func _tab_of(a: Dictionary) -> String:
+	return str(a.get("tab", ActionCatalog.COMMON)) if tab == ALL else tab
+
+
 func cycle_tab(step: int) -> void:
 	if shown == null:
 		return
-	var tabs := catalog.tabs_for(shown)
+	var tabs := filters(shown)
 	tab = tabs[posmod(tabs.find(tab) + step, tabs.size())]
 	focus_slot = -1
 	_refresh_hotbar()
@@ -1312,6 +1565,7 @@ func hide_details() -> bool:
 ## The box beside the pointer. `edge` outlines it for an attack with "advantage" (green) or "disadvantage" (red), as
 ## the roll would be made (both at once cancel and leave the gilt edge).
 func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edge: String = "") -> void:
+	_odds.visible = false   # show_odds after this puts them back for an attack
 	var box := _tooltip.get_theme_stylebox("panel") as StyleBoxFlat
 	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt") as String)
 	box.set_border_width_all(3 if EDGE_COLOURS.has(edge) else 2)
@@ -1333,6 +1587,26 @@ func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edg
 
 func hide_tooltip() -> void:
 	_tooltip.visible = false
+	_odds.visible = false
+
+
+## The odds over a target's head while an attack on it is pointed at (Baldur's Gate 3's hit chance): the chance to hit
+## in large figures, edged green or red for Advantage or Disadvantage, and the damage a hit does under it. `at` is the
+## head's place on screen. Any other tooltip, or none, takes it away.
+func show_odds(chance: float, damage: String, edge: String, at: Vector2) -> void:
+	_odds_chance.text = "%d%%" % roundi(chance * 100.0)
+	_odds_chance.add_theme_color_override("font_color", Look.color("bile" if chance >= 0.65 else ("gilt_light" if chance >= 0.35 else "rose")))
+	_odds_damage.text = damage + " dmg" if damage != "" else ""
+	var box := _odds.get_theme_stylebox("panel") as StyleBoxFlat
+	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt_dark") as String)
+	box.set_border_width_all(3 if EDGE_COLOURS.has(edge) else 1)
+	_odds.visible = true
+	_odds.reset_size()
+	var vp := _odds.get_viewport_rect().size
+	var pos := at - Vector2(_odds.size.x / 2.0, _odds.size.y + 6.0)
+	pos.x = clampf(pos.x, 4.0, maxf(4.0, vp.x - _odds.size.x - 4.0))
+	pos.y = clampf(pos.y, 4.0, maxf(4.0, vp.y - _odds.size.y - 4.0))
+	_odds.position = pos
 
 
 func show_prompt(req: ReactionRequest) -> void:
@@ -1366,6 +1640,9 @@ func show_prompt(req: ReactionRequest) -> void:
 			_prompt_use.disabled = req.selection_error() != "")
 		_prompt_targets.add_child(check)
 	_prompt_rule.select(0)
+	# Its height follows what it holds this time, grown up from just above the hotbar (grow_vertical).
+	_prompt.offset_top = PROMPT_BOTTOM
+	_prompt.offset_bottom = PROMPT_BOTTOM
 	_prompt.visible = true
 
 

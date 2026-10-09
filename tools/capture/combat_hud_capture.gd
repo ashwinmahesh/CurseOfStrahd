@@ -2,7 +2,8 @@ extends Node3D
 ## make capture SCENE=res://tools/capture/combat_hud_capture.tscn NAME=combat_hud FRAMES=10
 ## The combat HUD's hotbar for four level 5 heroes on an open field (Combat HUD Plan, the owner's BG3 audit, 2026-10-09):
 ## Ilse's Common and Fighter tabs, Godrick's Paladin, Spells and Reactions tabs, Thistle's Common and Tamsin's Rogue tab,
-## and Command's choices open at its slot, so a change to the hotbar can be shown before and after.
+## Command's choices open at its slot, the odds over a foe and a reaction prompt, so a change to the hotbar can be shown
+## before and after.
 
 var e: Encounter
 var view: CombatView
@@ -43,7 +44,8 @@ func _ready() -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 150)
-	var shots: Array = [["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
+	var shots: Array = [["ilse_varga", CombatHud.ALL, "0_ilse_all"], ["godrick_pendlebrook", CombatHud.ALL, "0_godrick_all"],
+		["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
 		["godrick_pendlebrook", "", "3_godrick_class"], ["godrick_pendlebrook", ActionCatalog.SPELLS, "4_godrick_spells"],
 		["thistle", ActionCatalog.COMMON, "5_thistle_common"], ["tamsin_tealeaf", "", "6_tamsin_class"],
 		["godrick_pendlebrook", ActionCatalog.REACTIONS, "7_godrick_reactions"]]
@@ -69,3 +71,32 @@ func capture_shots(tool: Node, out: String) -> void:
 			view.hud.use_slot(i)
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_8_command_open.png" % out)
+	view.hud._menu.hide()
+	# The odds over a foe's head while an attack on it is pointed at (Ilse's shortbow at a zombie).
+	var ilse := heroes["ilse_varga"] as Combatant
+	e.turn_index = e.order.find(ilse)
+	e._begin_turn()
+	view.hud.shown = ilse
+	view.hud.set_tab(ActionCatalog.COMMON)
+	view.hud.refresh()
+	var zombie: Combatant = null
+	for c in e.combatants:
+		if c.side == &"enemy":
+			zombie = c
+			break
+	var bow := view.catalog.find(ilse, "attack:weapon:shortbow")
+	var pv := view.catalog.attack_preview(ilse, bow, zombie)
+	view.hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], Vector2(1000, 420), str(pv.get("edge", "")))
+	view._show_odds(pv, zombie)
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_9_odds.png" % out)
+	view.hud.hide_tooltip()
+	# A reaction prompt: bottom right, above the hotbar, clear of the fight.
+	var req := ReactionRequest.new("opportunity_attack", ilse.id, zombie.id)
+	req.title = "Reaction: Opportunity Attack?"
+	req.text = "The zombie leaves Ilse Varga's reach. Strike it with the Greatsword as it goes (+7 to hit, 2d6+4)?"
+	req.cost = "Your Reaction"
+	view.hud.show_prompt(req)
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_10_prompt.png" % out)
+	view.hud.hide_prompt()
