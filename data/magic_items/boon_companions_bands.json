@@ -18,6 +18,7 @@
   "summary": "Two rings: once a day, one wearer's area spell spares the other (an automatic success, no damage instead of half).",
   "text": "These rings come as a pair. When one wearer casts a spell with an area that calls for saving throws, the other wearer in the area automatically succeeds and takes no damage if it would have taken half on a success. The pair shares one use per dawn, and destroying either ring destroys both.",
   "worn": "ring",
+  "pair": true,
   "playable": true,
   "powers": [
     {

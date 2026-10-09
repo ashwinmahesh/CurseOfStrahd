@@ -397,6 +397,10 @@
       "$ref": "common.schema.json#/$defs/id",
       "description": "The item this is one kind of (ring_of_resistance for its fire version): one entry on the random tables."
     },
+    "pair": {
+      "type": "boolean",
+      "description": "Comes as two of a kind, one for each of two wearers (Boon Companions' Bands): a random roll gives both."
+    },
     "worn": {
       "type": "string",
       "enum": [

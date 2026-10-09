@@ -39,7 +39,10 @@ func test_tsura_goes_home() -> void:
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_true(SideQuestPlay.text(beats).contains("find another bride"))
 	assert_eq(st.quest_stage("the_spiders_gully"), "done")
-	assert_true(st.party_has_item("boon_companions_bands"))
+	var bands := 0
+	for ch: Character in st.party:
+		bands += ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "boon_companions_bands").size()
+	assert_eq(bands, 2, "both rings of the pair, one for each wearer")
 	assert_eq(roundi(st.gold), 40)
 	st.location = "tser_pool"
 	beats = SideQuestPlay.play(st, "svalich_road/tser_camp:iancu")
