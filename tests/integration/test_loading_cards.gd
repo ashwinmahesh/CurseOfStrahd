@@ -269,3 +269,17 @@ func test_fights_that_could_still_happen_this_visit_are_read_ahead() -> void:
 	assert_false(PlacePreload.could_happen({"when": "night and level >= 7"}, st), "a level-1 party won't be level 7 here")
 	assert_true(PlacePreload.could_happen({"when": "not flag.cleared and level >= 1"}, st), "its level test holds")
 	assert_false(PlacePreload.could_happen({"final_battle": "castle_ravenloft_court_study"}, st), "no reading put him there")
+
+
+## The interface's first-time reads happen once, under the first loading cover (FN-23): the icons read for Icons'
+## cache, the figures' font and the glossary, so the first inventory and the first fight's hotbar don't read them.
+func test_the_interface_warms_once_under_the_first_cover() -> void:
+	var was := PlacePreload._ui_warm
+	PlacePreload._ui_warm = false
+	var p := PlacePreload.new()
+	p._icons = [["features", "dash"]] as Array[Array]
+	p._warm_ui()
+	assert_true(PlacePreload._ui_warm, "done for the session")
+	assert_true(Icons._cache.has(Icons.DIR + "features/dash.png"), "the Dash tile is in Icons' cache")
+	assert_true(UiParts._figure_font != null, "the figures' font is read")
+	PlacePreload._ui_warm = was

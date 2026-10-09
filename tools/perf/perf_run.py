@@ -2,7 +2,7 @@
 """The performance pass (P3): runs tools/perf/perf_probe.tscn in a window that never shows and prints its report.
 
   python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N]
-                                 [--only title,newgame,places,saveload,combat,transitions,fights,foemem] [--places id,id]
+                                 [--only title,newgame,places,saveload,combat,transitions,fights,foemem,screens] [--places id,id]
                                  [--encounters id,id] [--settle S] [--profile]
                                  [--headless] [--cover] [--timeout S]
 
@@ -378,6 +378,11 @@ def print_report(r):
         hitch = ", ".join("%.0f" % x["hitch_ms"] for x in rows if "hitch_ms" in x)
         print("  %-14s %-34s total %-16s%s%s" % (kind, what, totals, ("  sync " + syncs) if syncs else "",
                                               ("  worst next-second frame " + hitch) if hitch else ""))
+    if r.get("screens"):
+        print("\nScreens opening (ms: call = building it, worst = the worst of the eight frames after)")
+        for f in r["screens"]:
+            print("  %-34s %-10s open %d  call %6.1f  worst %6.1f" % (f["place"][:34], f["screen"], f["open"], f["call_ms"],
+                  f["worst_ms"]))
     if r.get("foe_memory"):
         print("\nHolding a place's foes (video and texture memory with their sheets read ahead: off, when = fights whose "
               "condition holds, possible = whose condition could come true this visit, all = every fight still to come)")
