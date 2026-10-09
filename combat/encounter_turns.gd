@@ -5,6 +5,8 @@ extends RefCounted
 ## Bonus Action or an attack is left).
 
 var _enc: WeakRef
+## Set while a turn begins inside the running shared turn (_take_shared, Time Stop): _join_shared keeps the group.
+var _keep_group := false
 
 
 func _init(encounter: Encounter) -> void:
@@ -120,6 +122,7 @@ func _begin_turn() -> CombatResult:
 	var c := e.current()
 	if c == null:
 		return CombatResult.new()
+	_join_shared(c)
 	for o in e.combatants:
 		o.cast_slot_spell_this_turn = false
 		o.creature.on_turn_start(c.id)
@@ -252,8 +255,18 @@ func _next_turn(c: Combatant) -> CombatResult:
 	if c.has_meta("time_stop") and int(c.get_meta("time_stop")) > 0 and c.is_alive() and c.can_act():
 		c.set_meta("time_stop", int(c.get_meta("time_stop")) - 1)
 		e.log.add("turn", "Time is still stopped: another turn for %s" % c.name(), c.id)
+		_keep_group = true
 		return _begin_turn()
 	c.remove_meta("time_stop")
+	# A shared party turn goes on while any of its heroes hasn't taken theirs: control passes to the next of them.
+	if c.id in e.shared:
+		if not c.id in e.shared_ended:
+			e.shared_ended.append(c.id)
+		var next := _next_shared()
+		if next != null:
+			return _take_shared(next)
+		e.turn_index = _shared_index(e.get_c(e.shared.back()))
+		_clear_shared()
 	var was := e.round_no
 	_advance_index()
 	if e.state != Encounter.State.ACTIVE:
@@ -261,6 +274,118 @@ func _next_turn(c: Combatant) -> CombatResult:
 	if e.round_no != was:
 		_keep_round()
 	return _lair_then_begin()
+
+
+# --- Shared party turns (owner 2026-10-09, after Baldur's Gate 3) -------------------------------------------------
+# Heroes next to each other in the order take their turns together: each one's turn starts the first time the player
+# takes control of them (switch_to, or when the one before ends) and ends when they end it, so everything keyed to a
+# creature's own turn (its start, its end, "until your next turn") still happens once, at its own time.
+
+## The shared turn `c` starts or joins (Encounter.shared): the running one when control passes within it (or Time Stop
+## gives its hero another turn), else a new group from here, so an order changed meanwhile never leaves a stale one.
+func _join_shared(c: Combatant) -> void:
+	var e := enc()
+	if not (_keep_group and c.id in e.shared):
+		_clear_shared()
+		e.shared = _shared_group()
+	_keep_group = false
+	if c.id in e.shared and not c.id in e.shared_started:
+		e.shared_started.append(c.id)
+
+
+## The heroes from the current place in the order who share its turn: the run of player-run party members and guests
+## in a row (a creature that's down or gone is passed over; the lair's count 20 or anyone else ends the run), when it's
+## two or more and the option is on.
+func _shared_group() -> Array[String]:
+	var e := enc()
+	var out: Array[String] = []
+	if not e.shared_turns or e.turn_index < 0:
+		return out
+	var lair := e.legendary.lair_slot()
+	for i in range(e.turn_index, e.order.size()):
+		var o := e.order[i]
+		if i > e.turn_index and i == lair:
+			break
+		if not o.is_alive() or o.has_meta("left_fight"):
+			continue
+		if not _shares(o) or o.id in out:
+			break   # a foe, a creature the AI plays, or a second turn of the same hero
+		out.append(o.id)
+	if out.size() < 2:
+		out.clear()
+	return out
+
+
+## Whether `o` takes part in a shared party turn: a party member or guest the player runs, not compelled by a spell.
+func _shares(o: Combatant) -> bool:
+	return o.is_player_controlled() and o.side in [&"party", &"guest"] and not compelled(o) and not EchoKnight.is_echo(o)
+
+
+func _clear_shared() -> void:
+	var e := enc()
+	e.shared.clear()
+	e.shared_started.clear()
+	e.shared_ended.clear()
+
+
+## Where `c` stands in the order within the shared turn.
+func _shared_index(c: Combatant) -> int:
+	var e := enc()
+	var start := e.order.find(e.get_c(e.shared[0])) if not e.shared.is_empty() else 0
+	var at := e.order.find(c, maxi(0, start))
+	return at if at >= 0 else e.order.find(c)
+
+
+## The first hero of the shared turn who hasn't ended theirs and can still take it, or null.
+func _next_shared() -> Combatant:
+	var e := enc()
+	for id in e.shared:
+		var o := e.get_c(id)
+		if o != null and not id in e.shared_ended and o.is_alive() and not o.has_meta("left_fight"):
+			return o
+	return null
+
+
+## Control to `c`, a hero of the shared turn: their turn starts if it hasn't yet, else it goes on.
+func _take_shared(c: Combatant) -> CombatResult:
+	var e := enc()
+	e.turn_index = _shared_index(c)
+	if c.id in e.shared_started:
+		e.events.append({"type": "switch", "id": c.id})
+		return CombatResult.new()
+	_keep_group = true
+	return _begin_turn()
+
+
+## The player takes control of another hero sharing the turn (a click on their frame, Tab): theirs starts the first
+## time, then goes on where it was left; the one left keeps what it hasn't used until control comes back to it.
+func switch_to(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return CombatResult.fail("Combat is over")
+	if e.pending != null:
+		return CombatResult.fail("Answer the reaction prompt first")
+	if c == null or not c.id in e.shared or c.id in e.shared_ended or not c.is_alive():
+		return CombatResult.fail("%s isn't sharing this turn" % (c.name() if c != null else "No one"))
+	if c == e.current():
+		return CombatResult.new()
+	return _take_shared(c)
+
+
+## The heroes sharing the turn who can still take theirs, the one in control first.
+func shared_heroes() -> Array[Combatant]:
+	var e := enc()
+	var out: Array[Combatant] = []
+	if e.shared.is_empty():
+		return out
+	var cur := e.current()
+	if cur != null and cur.id in e.shared:
+		out.append(cur)
+	for id in e.shared:
+		var o := e.get_c(id)
+		if o != null and o != cur and not id in e.shared_ended and o.is_alive() and not o.has_meta("left_fight"):
+			out.append(o)
+	return out
 
 
 ## The round as it begins, before the lair and the first turn (Encounter.keep_round_snapshots).
