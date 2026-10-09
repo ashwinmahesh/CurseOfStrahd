@@ -100,3 +100,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_10_prompt.png" % out)
 	view.hud.hide_prompt()
+	# A foe's Examine card (right-click a creature), studied so its defenses and abilities show.
+	e.studied[str((zombie.creature as Monster).data["id"])] = true
+	view.hud.show_examine(view.catalog.examine(ilse, zombie), zombie)
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_11_examine.png" % out)
+	view.hud.hide_details()

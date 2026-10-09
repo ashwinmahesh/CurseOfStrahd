@@ -741,6 +741,17 @@ func _open_square_menu(at: Vector2) -> bool:
 	return true
 
 
+## A right-click on a creature when there's no menu to open (another creature's turn): its Examine card.
+func _examine_at(at: Vector2) -> bool:
+	_pick_from_mouse(at)
+	var t := _target_under()
+	if t == null:
+		return false
+	hud.hide_tooltip()
+	hud.show_examine(catalog.examine(_player() if _player() != null else hud.shown, t.combatant), t.combatant)
+	return true
+
+
 func _square_picked(id: String) -> void:
 	var c := _player()
 	if c == null or mode != Mode.IDLE:
@@ -752,10 +763,8 @@ func _square_picked(id: String) -> void:
 		_confirm_at()
 		return
 	if id == "info":
-		if o != null and o.is_player_controlled():
-			_inspect(o.id)
-		elif o != null:
-			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
+		if o != null:
+			hud.show_examine(catalog.examine(c, o), o)
 		return
 	for it in _menu_items:
 		# Picking something up needs no one standing there.
@@ -974,6 +983,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_confirm_at()
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
 			if mode == Mode.IDLE and _open_square_menu(mb.position):
+				return
+			if mode != Mode.TARGET and _examine_at(mb.position):
 				return
 			if not _undo_pick():
 				_cancel_targeting()

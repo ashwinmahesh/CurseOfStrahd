@@ -872,7 +872,7 @@ func _refresh_hotbar() -> void:
 		tab = ALL
 	# One column of filters; two narrower ones when starred and hidden actions add theirs (the slots' height holds 7).
 	_tabs.columns = 1 if tabs.size() <= 7 else 2
-	var filter_w := 84.0 if tabs.size() <= 7 else 62.0
+	var filter_w := 92.0 if tabs.size() <= 7 else 64.0
 	for t in tabs:
 		var b := Button.new()
 		b.text = t
@@ -1548,6 +1548,42 @@ func show_details(title: String, lines: Array) -> void:
 		lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		lab.custom_minimum_size = Vector2(620, 0)
 		_details_box.add_child(lab)
+	_details_box.add_child(_label("(click anywhere or press Esc to close)", 12, "parchment"))
+	_details.reset_size()
+	_details.visible = true
+
+
+## The Examine card (ActionCatalog.examine; Baldur's Gate 3's Examine): the creature's portrait, name and what it is, a
+## line about it, then its sections (Condition, On it, Defenses, Abilities, Your odds) under small-caps headings. It
+## closes as the roll details do (a click anywhere, Esc or B).
+func show_examine(card: Dictionary, t: Combatant) -> void:
+	for ch in _details_box.get_children():
+		ch.queue_free()
+	var head := HBoxContainer.new()
+	head.add_theme_constant_override("separation", 12)
+	head.add_child(UiParts.framed_portrait(CombatToken.portrait_id(t), 72.0, t.is_down(), t.creature.dead))
+	var names := VBoxContainer.new()
+	names.add_theme_constant_override("separation", 0)
+	var title := _label(str(card["title"]), 22, "gilt_light")
+	title.add_theme_font_override("font", UiKit.display_font())
+	names.add_child(title)
+	if str(card["subtitle"]) != "":
+		names.add_child(_label(str(card["subtitle"]), 14, "parchment"))
+	head.add_child(names)
+	_details_box.add_child(head)
+	if str(card["summary"]) != "":
+		var sm := _label(str(card["summary"]), 14, "vellum")
+		sm.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		sm.custom_minimum_size = Vector2(620, 0)
+		_details_box.add_child(sm)
+	for sec: Variant in card["sections"]:
+		var sd := sec as Dictionary
+		_details_box.add_child(UiParts.caption(str(sd["heading"]), 11, "gilt"))
+		for l: Variant in sd["lines"]:
+			var lab := _label(str(l), 15, "vellum")
+			lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			lab.custom_minimum_size = Vector2(620, 0)
+			_details_box.add_child(lab)
 	_details_box.add_child(_label("(click anywhere or press Esc to close)", 12, "parchment"))
 	_details.reset_size()
 	_details.visible = true

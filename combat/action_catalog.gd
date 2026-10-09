@@ -1447,6 +1447,94 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	return out
 
 
+## The Examine card for `t` (Combat HUD plan, owner pick 2026-10-09; Baldur's Gate 3's Examine): what it is, how hurt it
+## looks (a foe shows only whether it's Bloodied, as its bar does), its AC and speed, what's working on it, what the party
+## knows of its defenses and abilities (Study teaches a kind of creature), and, for `c` facing a foe, the odds of `c`'s
+## best attack on it. {title, subtitle, summary, sections: [{heading, lines}]}
+func examine(c: Combatant, t: Combatant) -> Dictionary:
+	var cr := t.creature
+	var friend := t.side in [&"party", &"guest"] or (c != null and c.allied_with(t))
+	var subtitle := ""
+	var summary := ""
+	var sections: Array[Dictionary] = []
+	if cr is Monster:
+		var d := (cr as Monster).data
+		var crv := float(d.get("cr", 0))
+		var cr_text := {0.125: "1/8", 0.25: "1/4", 0.5: "1/2"}.get(crv, str(int(crv))) as String
+		subtitle = "%s %s · CR %s" % [str(d.get("size", "")).capitalize(), str(d.get("type", "")).capitalize(), cr_text]
+		summary = str(d.get("summary", ""))
+	elif cr is Character:
+		var ch := cr as Character
+		var classes: Array[String] = []
+		for cid in ch.class_order:
+			classes.append("%s %d" % [ch.class_name_of(cid), ch.class_level_of(cid)])
+		subtitle = "Level %d · %s" % [ch.character_level(), ", ".join(classes)]
+	var state: Array[String] = []
+	if cr.dead:
+		state.append("Dead")
+	elif friend:
+		state.append("%d / %d Hit Points%s" % [cr.hp, cr.max_hp(), (" (+%d temporary)" % cr.temp_hp) if cr.temp_hp > 0 else ""])
+	else:
+		state.append("Bloodied" if cr.is_bloodied() else "Not Bloodied")
+	state.append("AC %d · Speed %d ft" % [cr.ac_value(), t.speed()])
+	sections.append({"heading": "Condition", "lines": state})
+	var on: Array[String] = []
+	for cond in cr.active_conditions():
+		on.append(str(cond).capitalize())
+	if cr.concentration != null:
+		on.append("Concentrating on %s" % cr.concentration.name)
+	for fx in cr.effects:
+		if fx.conditions.is_empty() and fx.name != "" and not fx.name in on:
+			on.append(fx.name)
+	if t.hidden:
+		on.append("Hidden")
+	if not on.is_empty():
+		sections.append({"heading": "On it", "lines": [", ".join(on)] as Array[String]})
+	if cr is Monster:
+		var d := (cr as Monster).data
+		if friend or e.studied.has(str(d.get("id", ""))):
+			var defenses: Array[String] = []
+			for k: String in ["resistances", "immunities", "vulnerabilities", "condition_immunities"]:
+				var v := d.get(k, []) as Array
+				if not v.is_empty():
+					defenses.append("%s: %s" % [k.replace("_", " ").capitalize(), ", ".join(v.map(func(x: Variant) -> String: return str(x).capitalize()))])
+			sections.append({"heading": "Defenses", "lines": defenses if not defenses.is_empty() else ["No resistances or immunities"] as Array[String]})
+			var abilities: Array[String] = []
+			for key: String in ["traits", "actions"]:
+				var names: Array[String] = []
+				for a: Variant in d.get(key, []):
+					names.append(str((a as Dictionary).get("name", "")))
+				if not names.is_empty():
+					abilities.append("%s: %s" % [key.capitalize(), ", ".join(names)])
+			if not abilities.is_empty():
+				sections.append({"heading": "Abilities", "lines": abilities})
+		else:
+			sections.append({"heading": "Defenses", "lines": ["Unknown: Study it (an Intelligence check) to learn its defenses and abilities"] as Array[String]})
+		var pips := e.legendary.pips(t)
+		if pips != "":
+			sections.append({"heading": "Legendary actions left", "lines": [pips] as Array[String]})
+	if c != null and c != t and c.hostile_to(t) and not cr.dead:
+		var best := {}
+		var score := -1.0
+		for o in e.attack_options(c):
+			if not e.has_ammo_for(c, o):
+				continue
+			var hc := e.hit_chance(c, t, o)
+			var chance := (21 - int(hc["needs"])) / 20.0
+			var avg := (o["profile"] as WeaponProfile).average_damage()
+			if chance * avg > score:
+				score = chance * avg
+				best = {"o": o, "chance": chance}
+		if not best.is_empty():
+			var bo := best["o"] as Dictionary
+			var p := bo["profile"] as WeaponProfile
+			var why := e.attack_legal(c, t, bo)
+			sections.append({"heading": "Your odds", "lines": ["%s: hit %d%%, %s %s damage%s" % [p.name, roundi(float(best["chance"]) * 100.0),
+				p.damage_dice + (("%+d" % p.damage_bonus.total()) if p.damage_bonus.total() != 0 else ""), str(p.damage_type).capitalize(),
+				(" (%s)" % why.to_lower()) if why != "" else ""]] as Array[String]})
+	return {"title": t.name(), "subtitle": subtitle, "summary": summary, "sections": sections}
+
+
 func _known_defenses(t: Combatant) -> String:
 	if not t.creature is Monster:
 		return ""
@@ -1604,7 +1692,7 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 			continue
 		seen[str(a["label"])] = true
 		out.append({"id": "act:%s" % a["id"], "label": str(a["label"]), "enabled": true, "action": a})
-	out.append({"id": "info", "label": "Info"})
+	out.append({"id": "info", "label": "Examine"})
 	return out
 
 
