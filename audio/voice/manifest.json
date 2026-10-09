@@ -27602,6 +27602,55 @@
   "recipe": "f403c78978",
   "text": "You again. Come to see how the losers live? Very comfortably, as it happens. Enjoy your council. It will talk you all to death long before he gets round to it."
  },
+ "lantern_girl/13169c5c00fa34e5": {
+  "chars": 27,
+  "direction": "[small, sad, hurt]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "He didn't turn back either."
+ },
+ "lantern_girl/1e50d292108a2a55": {
+  "chars": 95,
+  "direction": "[small, hopeful, wondering]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "Papa? (The light of her flickers.) He makes the lanterns. He made me one every week. I counted."
+ },
+ "lantern_girl/206b0294f5627ee4": {
+  "chars": 21,
+  "direction": "[soft, wondering, at peace]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "Somebody turned back."
+ },
+ "lantern_girl/3a5de4a76b50c873": {
+  "chars": 92,
+  "direction": "[ghostly, sweet, possessive]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "He came. He saw the lantern. He's going to come in with me so I won't be by myself any more."
+ },
+ "lantern_girl/c450dc9317c7f297": {
+  "chars": 19,
+  "direction": "[cold, hurt, flat]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "You're rowing away."
+ },
+ "lantern_girl/d484c6fe211e9cab": {
+  "chars": 75,
+  "direction": "[stubborn, sad, eerie]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "He isn't cold. He's with me. You're going to row away. Everybody rows away."
+ },
+ "lantern_girl/f3f53dcbe83764f7": {
+  "chars": 117,
+  "direction": "[ghostly, wistful, wounded]",
+  "model": "eleven_v3",
+  "recipe": "a16cb1e8a3",
+  "text": "You came back. Nobody came back. They sang and rowed on, and I held my lantern up so they'd see me, all the way down."
+ },
  "lief_lipsiege/02933f601699be1e": {
   "chars": 139,
   "direction": "[prim, formal]",
@@ -32965,6 +33014,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A narrow passage, its stones cracked and stained red, the floor strewn with old bones. They are laid out too neatly."
+ },
+ "narrator/00d93afab149303c": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She has a boy by the hand, a real one, in a nightshirt, blue with cold, standing at the very edge of the boards and smiling at nothing."
  },
  "narrator/00dcbd8da9a1da38": {
   "chars": 126,
@@ -38936,6 +38991,12 @@
   "recipe": "dd92281f92",
   "text": "At the one desk not furred with frost sits a dusk elf woman, as translucent as breath on glass, her white hair floating as if she were under water. Her face is beautiful and ruined, scored with the marks of stones."
  },
+ "narrator/34c85c05d0a95b97": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old man sits on a stool among strings of paper lanterns, folding another with fingers that know the work better than he does. He doesn't look up."
+ },
  "narrator/34d6d3cfaf2c76f4": {
   "chars": 74,
   "model": "eleven_v4",
@@ -40669,6 +40730,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bars are on the outside, held by simple iron pins. Anyone could let them out. Nobody has."
+ },
+ "narrator/4433a50276c2993e": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He folds the thirty-second lantern differently. Smaller. A child's size. His hands slow on it, and on the last fold he stops, and looks at it."
  },
  "narrator/443904b55a80b77a": {
   "chars": 193,
@@ -46982,6 +47049,12 @@
   "recipe": "dd92281f92",
   "text": "The valley's bells ring at dusk, as they always have. The mist rolls down the mountain, patient as ever, and waits for the next carriage of strangers."
  },
+ "narrator/7bd395f998839623": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The cold drives you back up before you reach the bottom, gasping. Up on the jetty the girl watches you climb back into the boat, and her light goes hard and white."
+ },
  "narrator/7bd845e671a965e0": {
   "chars": 127,
   "model": "eleven_v4",
@@ -47407,6 +47480,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Thistle wins in the end by eating the last sausage straight off his fork. Godrick laughs so loud the horses startle, a beat after everyone else, the way he always does. Then he keeps looking at her after he's stopped laughing."
+ },
+ "narrator/7fecc2a688858d2b": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sabin doesn't say anything at first. He holds the boy and rocks him on the stool, among the strings of paper lanterns, the way you'd rock a much smaller child."
  },
  "narrator/7ff5789d200d5aa5": {
   "chars": 112,
@@ -52622,6 +52701,12 @@
   "recipe": "dd92281f92",
   "text": "A double set of stocks with a little roof over them, so that nobody in them gets rained on. The Baron is not a cruel man. He would want you to know that."
  },
+ "narrator/ad6ce7e4285c5cd5": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The girl's light goes hard and white. The water round the jetty lights up from underneath, here and there, as if more lanterns were coming up from the bottom."
+ },
  "narrator/ad6d68dc8cb6fbf8": {
   "chars": 105,
   "model": "eleven_v4",
@@ -53551,6 +53636,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A mound of rot and old rushes, taller than a man, steaming faintly in the cold. It rises and falls, very slowly, like something asleep."
+ },
+ "narrator/b5f2905426a6af4c": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You bring it up. In the boat, it lights by itself. On the jetty, the girl lets go of the boy's hand to hold her hands out for it."
  },
  "narrator/b5f30bd9722f56c3": {
   "chars": 152,
@@ -56540,6 +56631,12 @@
   "recipe": "dd92281f92",
   "text": "A cupboard of a room with vestments on pegs and a chest under the window. Everything here has been folded with great care by someone whose hands were shaking."
  },
+ "narrator/d1b896e389ca2c2a": {
+  "chars": 218,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She takes the light from you, and she goes out with it, like a candle at a window when someone finally comes home. Sandu sits down on the boards and starts to cry, which is the first sensible thing he's done all night."
+ },
  "narrator/d1c0e932b4f5a8a5": {
   "chars": 78,
   "model": "eleven_v4",
@@ -56803,6 +56900,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Behind the iron gate, the books are chained twice. Some of the chains are on the inside of the covers."
+ },
+ "narrator/d38dc6c404116587": {
+  "chars": 78,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An old man folding lanterns. He's very tired, and very frightened for the boy."
  },
  "narrator/d38efa48c8797959": {
   "chars": 134,
@@ -57847,6 +57950,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Three of the plinths are empty now, and their knights lie in the aisle in pieces that were never stone."
+ },
+ "narrator/de8d8fd6af4d334f": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The water out there is black and so cold it stops your breath. On the bottom, in the weed, a little tin lantern frame, the paper long gone, still holding the stub of a candle."
  },
  "narrator/de990aca37339894": {
   "chars": 115,
@@ -59275,6 +59384,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A folded sheet of good paper, written in a fast, educated hand. It's addressed to nobody, and signed with two initials."
+ },
+ "narrator/eb2d54b421e2e0c9": {
+  "chars": 198,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the end of the jetty, over the black water, a small light bobs. It's a paper lantern, and the one holding it is a girl of about nine made of the same pale light, in a festival dress, wet through."
  },
  "narrator/eb322f58499f15c4": {
   "chars": 170,
@@ -73295,6 +73410,13 @@
   "recipe": "1f2fc26177",
   "text": "Twenty-five gold for the Baron's coffers, and we'll call it festival spirit."
  },
+ "vallaki_guard/a0deb9812ae1f858": {
+  "chars": 157,
+  "direction": "[gossiping, uneasy, dry]",
+  "model": "eleven_v3",
+  "recipe": "1f2fc26177",
+  "text": "And festival nights the children carry paper lanterns round the square for the Baron. Somebody counted. Thirty-one children. Thirty-two lanterns. Every week."
+ },
  "vallaki_guard/ae5031b6bfae9b79": {
   "chars": 135,
   "direction": "[flustered, grumbling]",
@@ -73308,6 +73430,13 @@
   "model": "eleven_v3",
   "recipe": "1f2fc26177",
   "text": "Shouldn't you be in the square? Everyone's in the square. I'm in the square in spirit, and also in a lot of trouble if the sergeant counts."
+ },
+ "vallaki_guard/b739b14bab8ddc48": {
+  "chars": 95,
+  "direction": "[dry, wry, weary]",
+  "model": "eleven_v3",
+  "recipe": "1f2fc26177",
+  "text": "The Baron says count again. Old Sabin makes them, at the market. Ask him; he won't know either."
  },
  "vallaki_guard/b77934edfab10b66": {
   "chars": 112,
@@ -73923,6 +74052,76 @@
   "model": "eleven_v3",
   "recipe": "895bf15afd",
   "text": "The lamp on Main Street. Every dusk. Please don't make me watch."
+ },
+ "vallaki_sabin/2da4547b32fa6deb": {
+  "chars": 158,
+  "direction": "[tired, fond, faintly relieved]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "Thirty-one this week. My hands made thirty-one. (He holds them up, as if they belonged to someone else.) Sandu's helping. He folds them crooked. I don't mind."
+ },
+ "vallaki_sabin/6e7de2cb3c6c3462": {
+  "chars": 230,
+  "direction": "[dawning, stricken, grieving]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "Liliana. Oh. Oh, no. (He puts it down very carefully.) The Baron's first festival. Boats on the lake, with lanterns, all the way out and back. Hers turned over, and he wouldn't let us turn back. All will be well, he said. We sang."
+ },
+ "vallaki_sabin/7104f55641004f90": {
+  "chars": 221,
+  "direction": "[moved, grateful, tender]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "You turned back for her. Somebody turned back. (He takes a little woven ring of willow and thread from a hook over the stall.) She made this the week before. For catching the bad dreams, she said. It caught some. Take it."
+ },
+ "vallaki_sabin/7e1865ed65f33fb5": {
+  "chars": 236,
+  "direction": "[grieving, quiet, broken]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "She's gone, then. Thirty years in the cold, and gone. (He takes a little woven ring of willow and thread from a hook over the stall.) She made this the week before. For catching the bad dreams, she said. Take it. I've had enough dreams."
+ },
+ "vallaki_sabin/b67d9526323b0489": {
+  "chars": 134,
+  "direction": "[weary, resigned, worried]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "Out the west gate it goes. Down to the lake. To the fishers' jetty, I'd think. Everything in Vallaki goes down to the lake in the end."
+ },
+ "vallaki_sabin/e5fd4c13824743f9": {
+  "chars": 187,
+  "direction": "[frightened, rambling, worried]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "My grandson Sandu does. He said it was the one that floats. Last night he got up and went after it, out of the west gate, in his nightshirt. The guards let him by because he was laughing."
+ },
+ "vallaki_sabin/f91376b002a697cc": {
+  "chars": 129,
+  "direction": "[tired, bewildered, gentle]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "Thirty-two. I know. Everyone tells me. I sit down to make thirty-one and my hands make thirty-two, and I don't know who it's for."
+ },
+ "vallaki_sabin/ff84f6f0f9b9edbf": {
+  "chars": 38,
+  "direction": "[pleading, frightened, trembling]",
+  "model": "eleven_v3",
+  "recipe": "a52b1e96d2",
+  "text": "The lake road. Please. He's only nine."
+ },
+ "vallaki_sandu/96e45b1cb6cad9ea": {
+  "chars": 71,
+  "direction": "[proud, small, cheerful]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "I fold them crooked. Grandpa says that's how you can tell they're mine."
+ },
+ "vallaki_sandu/ee0eca3a962a1c15": {
+  "chars": 128,
+  "direction": "[shivering, small, sad]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "(His teeth are going like a sewing machine.) She was nice. She just didn't want to be on her own. Can we go home? I'm very cold."
  },
  "vallaki_sun_painter/fd4c4a2771f63ac2": {
   "chars": 128,

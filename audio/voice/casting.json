@@ -2214,6 +2214,35 @@
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "sWGyL0SesRcEgBs4mt9L",
       "released": true
+    },
+    "lantern_girl": {
+      "voice_id": "aHC3XZOMg3HZuXVYK6hy",
+      "name": "Library voice: Yuna - Playful, Bright & Curious",
+      "description": "Liliana, the Lantern Girl, Old Sabin's daughter drowned at the Baron's first festival: chosen by Claude on the owner's go-ahead (2026-10-09), the library girl's voice Yuna over Mini and Sammy (the most childlike and wistful).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "vallaki_sandu": {
+      "voice_id": "Xb3zeLrTi6F4ziIcXdwk",
+      "name": "Library voice: Austin - Timid and Casual",
+      "description": "Sandu, nine, Old Sabin's grandson, two lines: a shared library boy's voice (also Little Petru's, in Krezk), chosen by Claude.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "krezk_petru"
+    },
+    "vallaki_sabin": {
+      "voice_id": "aWs8fz4m3vKL1N0spA53",
+      "name": "Barovia Old Sabin",
+      "description": "An old Barovian lantern-maker in his seventies from Vallaki, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, cracked, gentle old man's voice, tired and grieving, trembling with worry for his grandson, tender and bewildered.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "aWs8fz4m3vKL1N0spA53",
+      "released": true
     }
   },
   "sfx": {

@@ -306,9 +306,9 @@
       ]
     },
     "izek": {
-      "name": "Izek Strazni",
+      "name": "Izek Strazni (his RIGHT arm, from the shoulder down, is a scaled red-black fiend's arm with claws; his left arm is an ordinary man's)",
       "ref": "art/generated/characters/izek_turnaround.png",
-      "side": "right",
+      "side": "left",
       "moods": [
         "angry"
       ]
@@ -424,6 +424,8 @@
     "morgantha_smile": [[523, 320]]
   },
   "use": {
+    "izek_neutral": "b",
+    "izek_angry": "b",
     "argynvost_neutral": "b"
   }
 }

@@ -3,7 +3,7 @@
   "name": "Anca",
   "title": "The Church's Girl",
   "summary": "A girl of fifteen who sweeps the church path for Father Donavich every morning and pretends not to hear the screaming under the floor.",
-  "portrait": "priest_acolyte",
+  "portrait": "barovia_acolyte",
   "sprite": "priest_acolyte",
   "attitude": "indifferent",
   "monster": "commoner",

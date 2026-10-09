@@ -44,3 +44,13 @@ func test_his_figure_stays_and_the_hud_shows_the_face() -> void:
 	assert_eq(CombatToken.art_id(c), "rictavio", "his figure on the board stays the showman")
 	assert_eq(CombatToken.portrait_id(c), "van_richten", "the HUD shows who he is")
 	GameState.reset()
+
+
+## Every creature has a portrait for the turn order and its frames (UI QA ART-06, 2026-10-08: the djinni's frame was
+## empty), and the summonable ones too.
+func test_every_monster_has_a_portrait() -> void:
+	var c := Compendium.shared()
+	for id: String in c.table("monsters"):
+		var m := c.get_entry("monsters", id)
+		var art := str(m.get("art", CombatToken.ART_ALIASES.get(id, id)))
+		assert_true(ResourceLoader.exists("res://art/portraits/%s.png" % art), "%s has a portrait (%s)" % [id, art])

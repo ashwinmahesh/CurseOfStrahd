@@ -488,6 +488,9 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			out.append(policy)
 	return out
 
+## One entry per mode of each rule (`feat:reaction_policy:<id>:<mode>`); the hotbar folds a rule's modes into one toggle
+## slot (ActionCatalog.slots) by `policy`, and `selected` marks the one in force. A rule changes on any turn (`anytime`):
+## nothing is spent.
 func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 	for policy in configurable_policies(c):
 		var current := str(c.reaction_rules.get(str(policy["id"]), policy["default"])) if policy.has("default") else enc()._reaction_decision(c, str(policy["id"]))
@@ -495,12 +498,14 @@ func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 			out.append({"id": "feat:reaction_policy:%s:%s" % [policy["id"], mode],
 				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
 				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
-				"cost": "free", "why": enc()._turn_check(c), "targeting": "none", "range": 0,
+				"policy": str(policy["id"]), "policy_name": str(policy["name"]), "mode": mode, "mode_label": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]),
+				"selected": current == mode, "anytime": true,
+				"cost": "free", "why": "", "targeting": "none", "range": 0,
 				"help": str(policy["help"]) if policy.has("help") else ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
 					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})
 
 func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:
-	if enc()._turn_check(c) != "" or not mode in ["ask", "auto", "never"] \
+	if not mode in ["ask", "auto", "never"] \
 			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id and mode in p.get("modes", ["ask", "auto", "never"])):
 		return CombatResult.fail("Not an available reaction preference")
 	c.reaction_rules[id] = mode
