@@ -159,9 +159,16 @@ static func show_roll(host: Node, roll_: Dictionary) -> Signal:
 	if not UiMotion.on():
 		# Nothing moves: the result shows (for a still capture) and the caller goes on next frame.
 		panel._closing = true
+		# Held weakly: a scene change can free the panel before the next frame (a lambda's freed capture is an error).
+		var wp: WeakRef = weakref(panel)
+		var wl: WeakRef = weakref(layer)
 		host.get_tree().process_frame.connect(func() -> void:
-			panel.finished.emit()
-			layer.queue_free(), CONNECT_ONE_SHOT)
+			var p := wp.get_ref() as DiceRoll
+			if p != null:
+				p.finished.emit()
+			var l := wl.get_ref() as Node
+			if l != null:
+				l.queue_free(), CONNECT_ONE_SHOT)
 	return panel.finished
 
 
