@@ -220,6 +220,11 @@ func _build() -> void:
 		board.mesh_occluders.append_array(land.mesh_occluders)
 
 
+## The glow's levels in the Modern finish (Environment.set_glow_level: 0 is the tightest, 6 the widest) and how strong
+## each is: Godot's own near pair, then wider ones that spread a soft halo (Visual Polish Plan 5).
+const GLOW_LEVELS := {0: 0.0, 1: 0.0, 2: 1.0, 3: 0.0, 4: 0.6, 5: 0.35, 6: 0.0}
+
+
 ## The modern finish (Look.modern, docs/plans/ui_polish.md): filmic tone, bloom on what burns, deeper contact shadows
 ## with light bounced off the walls, a thin haze that catches lantern light, and softer shadow edges. The mood's own
 ## settings (its haze, its contact shadows) still count; this only adds to them.
@@ -234,6 +239,10 @@ func _modern_finish() -> void:
 	env.glow_hdr_threshold = 0.9
 	env.glow_hdr_scale = 2.0
 	env.glow_blend_mode = Environment.GLOW_BLEND_MODE_SCREEN
+	# Wide, soft halos round what burns, lit windows and the moon on water (Visual Polish Plan 5, after Octopath
+	# Traveler 2): the broad levels on as well as the near ones, each softer as it widens.
+	for level: int in GLOW_LEVELS:
+		env.set_glow_level(level, float(GLOW_LEVELS[level]))
 	env.ssao_enabled = true
 	env.ssao_radius = 1.1
 	env.ssao_intensity = maxf(float(mood.get("ambient_occlusion", 0.0)), 1.8)
