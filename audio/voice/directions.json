@@ -1114,6 +1114,15 @@
  "krezk_well_wife": {
   "cfdd4758f012793f": "[warm, devout, practical]"
  },
+ "lantern_girl": {
+  "13169c5c00fa34e5": "[small, sad, hurt]",
+  "1e50d292108a2a55": "[small, hopeful, wondering]",
+  "206b0294f5627ee4": "[soft, wondering, at peace]",
+  "3a5de4a76b50c873": "[ghostly, sweet, possessive]",
+  "c450dc9317c7f297": "[cold, hurt, flat]",
+  "d484c6fe211e9cab": "[stubborn, sad, eerie]",
+  "f3f53dcbe83764f7": "[ghostly, wistful, wounded]"
+ },
  "lief_lipsiege": {
   "02933f601699be1e": "[prim, formal]",
   "087422d10073ad27": "[dry, fussy, precise]",
@@ -2834,8 +2843,10 @@
   "8a6616ca65cf4293": "[dry, insinuating]",
   "99b9cc15809cd3d7": "[weary, mock-cheerful threat]",
   "9c18b6510f54f4a5": "[weary, grudging]",
+  "a0deb9812ae1f858": "[gossiping, uneasy, dry]",
   "ae5031b6bfae9b79": "[flustered, grumbling]",
   "b3ba83901af0fe3b": "[nervous, rambling]",
+  "b739b14bab8ddc48": "[dry, wry, weary]",
   "b77934edfab10b66": "[sheepish, wry]",
   "b846705275bdfdbf": "[flustered, weary]",
   "bd9c02f7816b1549": "[weary, warning]",
@@ -2923,6 +2934,20 @@
   "c10b493fcdc66a45": "[quiet, wistful]",
   "c6c8bf31779171da": "[quiet, wry, a little defiant]",
   "e37dd3ebc95ddddd": "[pleading, frightened]"
+ },
+ "vallaki_sabin": {
+  "2da4547b32fa6deb": "[tired, fond, faintly relieved]",
+  "6e7de2cb3c6c3462": "[dawning, stricken, grieving]",
+  "7104f55641004f90": "[moved, grateful, tender]",
+  "7e1865ed65f33fb5": "[grieving, quiet, broken]",
+  "b67d9526323b0489": "[weary, resigned, worried]",
+  "e5fd4c13824743f9": "[frightened, rambling, worried]",
+  "f91376b002a697cc": "[tired, bewildered, gentle]",
+  "ff84f6f0f9b9edbf": "[pleading, frightened, trembling]"
+ },
+ "vallaki_sandu": {
+  "96e45b1cb6cad9ea": "[proud, small, cheerful]",
+  "ee0eca3a962a1c15": "[shivering, small, sad]"
  },
  "vallaki_sun_painter": {
   "fd4c4a2771f63ac2": "[dry, sardonic, tired]"
