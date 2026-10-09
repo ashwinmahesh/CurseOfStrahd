@@ -737,6 +737,10 @@ func test_a_cutscene_picture_is_whole_in_a_window_and_full_screen() -> void:
 		root.add_child(p)
 		p.play("test_layout_cut", [caption] as Array[String], GameState.story)
 		await _frames(3)
+		for i in 120:   # the still comes off a worker thread (FN-20)
+			if not p.view.loading():
+				break
+			await _frames(1)
 		var screen := get_tree().root.get_visible_rect()
 		var pic := p.view.picture_rect()
 		assert_true(pic.size.x > 0.0, "%s: the picture shows" % size_name)

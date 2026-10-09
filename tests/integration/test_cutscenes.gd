@@ -248,6 +248,33 @@ func test_stills_have_no_black_bands_and_pausing_holds_the_voice() -> void:
 	view.queue_free()
 
 
+## Functional QA (FN-20): a still not in memory is read on a worker thread, so opening a cutscene never waits on the
+## disk; the caption shows at once and the picture arrives a few frames later.
+func test_a_still_loads_off_the_main_thread() -> void:
+	var path := "res://art/cutscenes/castle_glimpse.jpg"
+	var view := CutsceneView.new()
+	add_child(view)
+	view.show_image(path)
+	if view.loading():   # (another test may have left it in memory; then it shows at once, which is fine too)
+		assert_true(view.art.texture == null, "nothing waits for the disk on the opening frame")
+		for i in 300:
+			if not view.loading():
+				break
+			await get_tree().process_frame
+	assert_false(view.loading(), "the still arrives")
+	assert_true(view.art.texture != null, "and shows")
+	assert_eq(view.image_path, path)
+	var held := view.art.texture
+	view.show_image("res://art/cutscenes/strahd_watcher.jpg")
+	view.show_image(path)   # a still superseded mid-read never replaces the one asked for last
+	for i in 300:
+		if not view.loading():
+			break
+		await get_tree().process_frame
+	assert_true(view.art.texture == held, "the last still asked for is the one shown")
+	view.queue_free()
+
+
 func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
 	Cutscenes.clear_cache()
 	var named := {}
