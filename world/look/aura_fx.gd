@@ -3,12 +3,13 @@ extends Node3D
 ## An aura round a figure on the board (owner 2026-10-09), one effect with two looks, built by CombatToken for whoever
 ## has one, in fights and while exploring alike (both show creatures as CombatTokens):
 ##
-## - DARK: Strahd's. Smoke and shadow curl up round him with a crimson edge (shaders/fx/aura_halo.gdshader) and he
-##   stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges when he acts: an attack, a spell,
-##   a blow taken.
-## - HOLY: a paladin's Aura of Protection (Paladin 6), a faint warm glow round the figure. In a fight the floor also
-##   shows the area the aura really covers: 10 ft, two squares every way from the paladin's space on the grid
-##   (ClassFeatures._in_aura measures it so), 30 ft with Aura Expansion.
+## - DARK: Strahd's. Black fire licks up round him, flickering, with crimson at its tips (shaders/fx/aura_halo.gdshader),
+##   and he stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges when he acts: an attack, a
+##   spell, a blow taken.
+## - HOLY: a paladin's Aura of Protection (Paladin 6), a warm flame flickering round the figure, faint enough that the
+##   figure reads. In a fight the floor also shows the area the aura really covers: 10 ft, two squares every way from
+##   the paladin's space on the grid (ClassFeatures._in_aura measures it so), 30 ft with Aura Expansion.
+## Both flicker like fire (owner 2026-10-09: "Does the aura flicker? Like a fire almost. I want that").
 ##
 ## Both draw just before the sprites, after the palette pass (render priority), so the figure covers the aura's middle.
 
@@ -98,6 +99,7 @@ func _material(shader: Shader, seed: float) -> ShaderMaterial:
 	m.set_shader_parameter("shadow_col", Look.color("void"))
 	m.set_shader_parameter("edge_col", Look.color("vampire_red"))
 	m.set_shader_parameter("glow_col", Look.color("candle"))
+	m.set_shader_parameter("fire_col", Look.color("flame"))
 	return m
 
 
