@@ -263,6 +263,28 @@ the cellar door until it's done); Urwin won't pay until he's himself.
   (`fowlers`, 1 point).
 - Urwin's thanks, once: 200 gp and the mail his grandfather flew in, Elven Chain (rare).
 
+### One Lantern Too Many (`one_lantern_too_many`, narrative/vallaki/one_lantern_too_many.dialogue; batch 5, festival week)
+
+The town guard's news (a last line before "Always the festival", from level 5): festival nights the children carry
+paper lanterns round the square for the Baron, thirty-one children and thirty-two lanterns. Old Sabin (new speaker, a
+lantern stall in the market by day) makes them, and his hands make one too many without his knowing why. **Escalation:**
+last night his grandson Sandu (new speaker) followed the extra one out of the west gate, toward the lake. Insight DC 12
+on Sabin's hands brings it back to him. **Twist:** thirty years ago the Baron's first festival was a procession of
+boats on Lake Zarovich; one turned over, the Baron wouldn't let the rest turn back ("All will be well"), and Sabin's
+daughter Liliana went down holding her lantern up. By night she stands at the end of the fishers' jetty, a girl of
+light, holding Sandu's hand. Somebody can turn back for her: take Bluto's boat out and dive for her lantern
+(Athletics DC 13), and she goes out of her own accord; miss the dive, or plead, or draw, and she fights.
+
+- **Boss: the Lantern Girl** (data/monsters/lantern_girl.json, `source.book: custom`, from the will-o'-wisp and the
+  ghost, drawn with the wisp's sprite at a child's height, `art_height` 0.9): Small undead, AC 15, 90 HP, flies, two
+  Cold Hands, a Lure that pulls a foe 20 ft toward her, Drowning Light (recharge 5-6, a 20-ft emanation, Restrained),
+  Legendary Resistance (1/day), and a flicker between turns. CR 5. Two drowned lights (will-o'-wisps) come up with
+  her.
+- Fight `lantern_girl` on the jetty (my entries on data/locations/lake_zarovich.json). The autopilot wins 6 of 8 at
+  level 5, losing about two party members a fight.
+- Sabin's thanks, once Sandu's home: 40 gp and the dream-catcher Liliana made the week before, a Dream Weaver (rare).
+  Still: `sq_lantern_girl` (her first meeting).
+
 ## The River Ivlis crossroads by day (level 5)
 
 ### The Tinker's Wagon (`the_tinkers_wagon`, narrative/svalich_road/the_tinkers_wagon.dialogue; batch 4)
@@ -773,6 +795,8 @@ thanks, and the companions' interjects), narrator/amber_deep.dialogue, and Morde
 the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party). Batch 5,
 Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also Davian, Ruxandra and Kostin, and a
 blunt interject). Batch 5,
-the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail). Batch 6,
+the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail). Batch 5,
+Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers Old Sabin, Sandu and the Lantern Girl;
+also the town guard) and gate.dialogue's news jump. Batch 6,
 the Village of Barovia: the_oat_thief.dialogue in full (new speaker Domnica; also Bildrath and Parriwimple, and a kind
 interject) and narrator/woodcutters_hollow.dialogue.

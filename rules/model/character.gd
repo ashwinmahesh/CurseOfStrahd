@@ -1938,6 +1938,31 @@ func unequip(slot: String) -> void:
 	_item_mods_key = ""
 
 
+## The id of what's in `slot` ("main_hand", "off_hand", "armor"...), or "".
+func held_id(slot: String) -> String:
+	for entry in inventory:
+		if str(entry["slot"]) == slot and int(entry.get("qty", 1)) > 0:
+			return str(entry["id"])
+	return ""
+
+
+## Which weapon set holds `item_id`: 1 in hand, 2 the second set (if still carried), 0 neither (only in the pack).
+func weapon_set_of(item_id: String) -> int:
+	if item_id != "" and item_id in [held_id("main_hand"), held_id("off_hand")]:
+		return 1
+	if item_id != "" and item_id in weapon_set_2.values() and not entry_of(item_id).is_empty():
+		return 2
+	return 0
+
+
+## Whether the second weapon set holds anything still carried (so swapping takes something in hand).
+func has_weapon_set_2() -> bool:
+	for id: Variant in weapon_set_2.values():
+		if not entry_of(str(id)).is_empty():
+			return true
+	return false
+
+
 ## Swaps the weapons in hand for the second set: what's held now becomes set 2, and set 2's items, if still carried,
 ## are taken in hand.
 func swap_weapon_sets() -> void:
@@ -1964,11 +1989,13 @@ func unequip_item(item_id: String) -> void:
 			return
 
 
-## Picks armor the character is trained in (best AC), a Shield if trained and one-handed fighting suits, and
-## the best melee weapon. The player can change all of it; this just gives a sensible start.
+## Picks armor the character is trained in (best AC), a Shield if trained and one-handed fighting suits, the best
+## melee weapon, and the weapon sets around it (seed_weapon_sets). The player can change all of it; this just gives a
+## sensible start.
 func auto_equip() -> void:
 	for slot in EQUIP_SLOTS:
 		unequip(slot)
+	weapon_set_2 = {}
 	var best_armor := ""
 	var best_ac := -1
 	var dex := ability_mod(&"dex")
@@ -2006,6 +2033,50 @@ func auto_equip() -> void:
 		equip(best_weapon, "main_hand")
 	if shield_id != "":
 		equip(shield_id, "off_hand")
+	seed_weapon_sets()
+
+
+## Only weapons in a set attack in a fight (owner 2026-10-09, Baldur's Gate 3's two sets), so the sets get what a hero
+## would reach for: a second Light weapon in a free off hand beside a Light one, and, when the second set is empty, the
+## best weapon of the other kind there (a ranged weapon, else a thrown one, beside a melee weapon; a melee one beside a
+## ranged weapon). It only fills what's empty, so nothing the player chose changes. Older saves get it once as they
+## load (from_dict), so a hero who shot a bow from the pack before still can.
+func seed_weapon_sets() -> void:
+	var main := equipped("main_hand")
+	var held_ids := [held_id("main_hand"), held_id("off_hand")]
+	var melee_light := func(w: Dictionary) -> bool: return "light" in Gear.weapon_props(w) and not Gear.is_ranged_weapon(w)
+	if held_ids[1] == "" and Gear.is_weapon(main) and melee_light.call(main):
+		var second := _best_spare_weapon(melee_light, held_ids)
+		if second != "":
+			equip(second, "off_hand")
+			held_ids[1] = second
+	if has_weapon_set_2():
+		return   # the player's second set
+	weapon_set_2 = {}
+	var other := ""
+	if Gear.is_weapon(main) and Gear.is_ranged_weapon(main):
+		other = _best_spare_weapon(func(w: Dictionary) -> bool: return not Gear.is_ranged_weapon(w), held_ids)
+	else:
+		other = _best_spare_weapon(func(w: Dictionary) -> bool: return Gear.is_ranged_weapon(w), held_ids)
+		if other == "":
+			other = _best_spare_weapon(func(w: Dictionary) -> bool: return "thrown" in Gear.weapon_props(w), held_ids)
+	if other != "":
+		weapon_set_2["main_hand"] = other
+
+
+## The carried weapon not in `held_ids` that `fits` with the best average damage (proficiency counting 2), or "".
+func _best_spare_weapon(fits: Callable, held_ids: Array) -> String:
+	var best := ""
+	var best_avg := -1.0
+	for entry in inventory:
+		var w := compendium.item_data(str(entry["id"]))
+		if int(entry.get("qty", 1)) <= 0 or str(entry["id"]) in held_ids or not Gear.is_weapon(w) or not fits.call(w):
+			continue
+		var avg := Gear.average(str((w["weapon"] as Dictionary)["damage"])) + (2.0 if weapon_proficient(w) else 0.0)
+		if avg > best_avg:
+			best_avg = avg
+			best = str(entry["id"])
+	return best
 
 
 ## Martial Arts (a feature with the `martial_arts` flag): the class table's die for Unarmed Strikes and Monk weapons
@@ -2207,22 +2278,57 @@ func attacks() -> Array[WeaponProfile]:
 		if not Gear.is_weapon(item) or seen.has(str(item["id"])):
 			continue
 		seen[str(item["id"])] = true
-		out.append(WeaponProfile.build(self, item, false, true))
-		# Magic ammunition: one profile per kind carried, with the ammunition's own bonuses.
-		var kind := str((item["weapon"] as Dictionary).get("ammunition", ""))
-		if kind != "":
-			var shot := {}
-			for a in inventory:
-				var ad := compendium.item_data(str(a["id"]))
-				if int(a["qty"]) > 0 and MagicItems.is_magic(ad) and Gear.ammo_matches(ad, kind) and not shot.has(str(ad["id"])):
-					shot[str(ad["id"])] = true
-					out.append(WeaponProfile.build(self, item, false, true, ad))
-		# A reshaped weapon may be thrown (a Keyholes dagger as a Handaxe, the Martialist's Quarterstaff).
-		var shown := WeaponProfile.reshaped(self, item)
-		if "thrown" in Gear.weapon_props(shown) and not Gear.is_ranged_weapon(shown):
-			out.append(WeaponProfile.build(self, item, true, false))
+		_weapon_profiles(item, out)
 	out.append(WeaponProfile.unarmed(self))
 	return out
+
+
+## What this character can attack with in a fight (owner 2026-10-09: only weapons it has equipped, Baldur's Gate 3's two
+## sets): the weapons in hand (`set` 1), then the second set's (`set` 2, built with that set's grip; an attack with one
+## takes that set in hand, EncounterWeapons.take_in_hand), each as {profile, set}, and an Unarmed Strike. A weapon that's
+## only in the pack isn't here.
+func wielded_attacks() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var seen := {}
+	var sets: Array[Dictionary] = [{"main_hand": held_id("main_hand"), "off_hand": held_id("off_hand")}, weapon_set_2]
+	for i in sets.size():
+		# The second set's weapons are read with its own off hand, as they'll be held.
+		var off: Variant = null
+		if i == 1:
+			var off_id := str(sets[i].get("off_hand", ""))
+			off = compendium.item_data(off_id) if off_id != "" and not entry_of(off_id).is_empty() else {}
+		for slot: String in ["main_hand", "off_hand"]:
+			var id := str(sets[i].get(slot, ""))
+			if id == "" or seen.has(id) or entry_of(id).is_empty():
+				continue
+			var item := compendium.item_data(id)
+			if not Gear.is_weapon(item):
+				continue
+			seen[id] = true
+			var profiles: Array[WeaponProfile] = []
+			_weapon_profiles(item, profiles, off)
+			for p in profiles:
+				out.append({"profile": p, "set": i + 1})
+	out.append({"profile": WeaponProfile.unarmed(self), "set": 1})
+	return out
+
+
+## One weapon's attack profiles: itself, one per kind of magic ammunition carried for it (with the ammunition's own
+## bonuses), and thrown when it can be (a reshaped weapon too: a Keyholes dagger as a Handaxe, the Martialist's
+## Quarterstaff). `off_hand`: WeaponProfile.build's.
+func _weapon_profiles(item: Dictionary, out: Array[WeaponProfile], off_hand: Variant = null) -> void:
+	out.append(WeaponProfile.build(self, item, false, true, {}, off_hand))
+	var kind := str((item["weapon"] as Dictionary).get("ammunition", ""))
+	if kind != "":
+		var shot := {}
+		for a in inventory:
+			var ad := compendium.item_data(str(a["id"]))
+			if int(a["qty"]) > 0 and MagicItems.is_magic(ad) and Gear.ammo_matches(ad, kind) and not shot.has(str(ad["id"])):
+				shot[str(ad["id"])] = true
+				out.append(WeaponProfile.build(self, item, false, true, ad, off_hand))
+	var shown := WeaponProfile.reshaped(self, item)
+	if "thrown" in Gear.weapon_props(shown) and not Gear.is_ranged_weapon(shown):
+		out.append(WeaponProfile.build(self, item, true, false, {}, off_hand))
 
 
 # --- Saving and loading --------------------------------------------------------------------------
@@ -2233,7 +2339,7 @@ func to_dict() -> Dictionary:
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
 		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
 		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(), "reaction_rules": reaction_rules.duplicate(),
-		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true)}
+		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true), "sets_seeded": true}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2264,6 +2370,9 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	c.reaction_rules = (d.get("reaction_rules", {}) as Dictionary).duplicate()
 	c.rest_casts = (d.get("rest_casts", {}) as Dictionary).duplicate()
 	c.hotbar = (d.get("hotbar", {}) as Dictionary).duplicate(true)
+	# Saved before only weapons in a set could attack (2026-10-09): fill the sets once, as a new hero's are.
+	if not bool(d.get("sets_seeded", false)):
+		c.seed_weapon_sets()
 	return c
 
 

@@ -175,6 +175,8 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 	var p := option["profile"] as WeaponProfile
 	if c.light_attack_weapon == "" or not c.took_attack_action:
 		return CombatResult.fail("First attack with a Light weapon in the Attack action")
+	if int(option.get("set", 1)) == 2:
+		return CombatResult.fail("Needs a Light weapon in hand: the extra attack can't come from the other weapon set")
 	# Dual Wielder: the extra attack can use any melee weapon that isn't Two-Handed. Psychic Blades: a second blade.
 	var dual := e.features.has_feat(c, "dual_wielder") and bool(option["melee"]) and not "two_handed" in p.properties
 	var blade := c.light_attack_weapon == "psychic_blade" and p.item_id == "psychic_blade"
@@ -415,6 +417,8 @@ func hit_chance(c: Combatant, target: Combatant, option: Dictionary) -> Dictiona
 ## Fortitude, mastery properties and on-hit effects, then reactions to the damage (Hellish Rebuke) and Riposte.
 func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: Dictionary) -> CombatResult:
 	var e := enc()
+	# A weapon of the second set: that set is taken in hand first.
+	option = e.weapons.take_in_hand(c, option)
 	if (option["profile"] as WeaponProfile).two_hands:
 		for fx: Effect in c.creature.effects.duplicate():
 			if bool(fx.data.get("ends_on_two_handed_attack", false)):

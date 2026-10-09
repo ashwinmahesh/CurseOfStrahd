@@ -1,11 +1,15 @@
 {
   "id": "ireena_window",
   "title": "At Ireena's Window",
-  "summary": "Strahd stands on empty air outside Ireena's window at the Blue Water Inn, holding out his hand, while Ismark sleeps by the door. Only when Ismark is guarding her there; otherwise the scene plays without a picture.",
+  "summary": "Strahd stands on empty air outside Ireena's window, holding out his hand: with Ismark asleep by the door when he is guarding her at the inn, otherwise the room behind her empty.",
   "images": [
     {
       "image": "ireena_window",
       "when": "flag.ismark_guards_ireena and not flag.ireena_in_krezk"
+    },
+    {
+      "image": "ireena_window_alone",
+      "when": ""
     }
   ],
   "focus": [

@@ -251,8 +251,11 @@ func list_slots(dir: String = "") -> Array[Dictionary]:
 		var s := describe(f.get_basename(), from)
 		if not s.is_empty():
 			out.append(s)
-	# Unfinished games first (Continue picks the newest of them), finished ones after.
+	# Unfinished games first (Continue picks the newest of them), finished ones after, and saves a newer build wrote
+	# (which this one can't load) last of all, so Continue never lands on one and does nothing (QA FN-16).
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if bool(a["newer"]) != bool(b["newer"]):
+			return not bool(a["newer"])
 		if (str(a["finished"]) == "") != (str(b["finished"]) == ""):
 			return str(a["finished"]) == ""
 		return str(a["saved_at"]) > str(b["saved_at"]))
@@ -262,7 +265,7 @@ func list_slots(dir: String = "") -> Array[Dictionary]:
 ## What a save says about itself for the lists, or {} when `slot` isn't a save: {slot, dir, saved_at, location (its
 ## name), location_id, level (the party's highest), day, party, finished: the ending's title or "", kind: "autosave", "round" (a fight's round start) or "" for a save
 ## the player made, note: the player's own, thumb: its picture's path or "", mode: the difficulty's name, "" for
-## Balanced}. Other files kept beside the saves (achievements.json, N8) aren't saves: every save says its version.
+## Balanced, newer: written by a newer build, so this one can't load it}. Other files kept beside the saves (achievements.json, N8) aren't saves: every save says its version.
 func describe(slot: String, dir: String = "") -> Dictionary:
 	var from := save_dir if dir == "" else dir
 	var raw := _read(from.path_join(slot + ".json"))
@@ -286,7 +289,8 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
 		"kind": "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
 		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else "",
-		"mode": Difficulty.named(mode).name if mode != Difficulty.DEFAULT else ""}
+		"mode": Difficulty.named(mode).name if mode != Difficulty.DEFAULT else "",
+		"newer": int(raw.get("version", 0)) > GameState.SAVE_VERSION}
 
 
 ## A save file as a dictionary ({} when it's missing or not JSON).

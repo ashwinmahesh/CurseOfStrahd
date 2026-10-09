@@ -251,6 +251,13 @@ func test_the_dursts_come_for_veta_at_level_3() -> void:
 func test_the_robed_ones_come_for_veta_at_level_3() -> void:
 	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)
 
+## The shore of Lake Zarovich at the foot of the fishers' jetty.
+const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2i(17, 11), Vector2i(18, 11)]
+
+
+## The Lantern Girl and two drowned lights, when nobody turned back for her lantern.
+func test_the_lantern_girl_at_level_5() -> void:
+	await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4], [], [], [], JETTY_FOOT)
 
 ## Domnica's door in the charcoal-burners' hollow.
 const HOLLOW_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(13, 10)]
@@ -264,4 +271,3 @@ func test_the_oat_hunters_at_level_2() -> void:
 ## At level 3, three wolves with it.
 func test_the_oat_hunters_at_level_3() -> void:
 	await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4], [], [], [], HOLLOW_DOOR)
-
