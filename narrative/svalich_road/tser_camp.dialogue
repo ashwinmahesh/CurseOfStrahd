@@ -135,6 +135,9 @@ Lavinia [smile]: Clap or don't, the steps are the same. My grandmother danced th
 -> END
 
 ~ iancu
+if level >= 3 or quest.the_spiders_gully
+-> svalich_road/the_spiders_gully:iancu
+endif
 Iancu: Ten paces. I hit the knot nine times in ten. Stanimir says that tenth one is the one that kills you. So I keep throwing.
 -> END
 

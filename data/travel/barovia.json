@@ -74,6 +74,19 @@
       ],
       "region": "vallaki",
       "summary": "A walled town on the shore of Lake Zarovich, with bells, banners and a festival every week."
+    },
+    {
+      "id": "webbed_gully",
+      "name": "The Webbed Gully",
+      "location": "ivlis_spider_gully",
+      "spawn": "from_path",
+      "pos": [
+        0.61,
+        0.47
+      ],
+      "region": "svalich_road",
+      "when": "quest.the_spiders_gully",
+      "summary": "A gully off the falls path where the stream cuts down and giant spiders have strung the walls with web."
     }
   ],
   "roads": [
@@ -124,6 +137,24 @@
       "hours": 4,
       "table": "svalich_woods",
       "name": "Old Svalich Road, through the Svalich Woods"
+    },
+    {
+      "id": "crossroads_to_webbed_gully",
+      "from": "svalich_crossroads",
+      "to": "webbed_gully",
+      "hours": 0.75,
+      "table": "svalich_woods",
+      "name": "The falls path, and down into the gully",
+      "when": "quest.the_spiders_gully"
+    },
+    {
+      "id": "webbed_gully_to_falls",
+      "from": "webbed_gully",
+      "to": "tser_falls",
+      "hours": 0.5,
+      "table": "svalich_woods",
+      "name": "Up out of the gully to the falls",
+      "when": "quest.the_spiders_gully"
     }
   ]
 }

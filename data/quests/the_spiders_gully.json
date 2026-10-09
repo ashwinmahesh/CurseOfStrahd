@@ -1,0 +1,34 @@
+{
+  "id": "the_spiders_gully",
+  "name": "The Spiders' Gully",
+  "summary": "Iancu's cousin Tsura rode the falls path with a letter three days ago. Her horse came home with web on its saddle.",
+  "giver": "tser_iancu",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Iancu's cousin Tsura rode for the Vallaki camp by the falls path three days ago with a letter in her coat. Her horse came home yesterday with web on its saddle as thick as rope. There's a gully off the falls path where the stream cuts down.",
+      "objectives": [
+        "Find the gully off the falls path",
+        "Find Tsura"
+      ],
+      "hint": "Take the path from the crossroads toward Tser Falls and turn off into the Webbed Gully, where the stream cuts down.",
+      "ends": ""
+    },
+    {
+      "id": "cut_down",
+      "journal": "Tsura was alive, wrapped and hung on a ledge at the back of the gully. We cut her down, and the spiders came out of the walls.",
+      "objectives": [
+        "See to Tsura in the gully"
+      ],
+      "hint": "Go to Tsura on the ledge at the back of the Webbed Gully.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Tsura's letter wasn't for the Vallaki camp. It was for her mother, and it said she wasn't coming back to be married. She gave us the wedding rings.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
