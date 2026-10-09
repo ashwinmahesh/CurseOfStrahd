@@ -1,0 +1,110 @@
+# The Lantern in the Roadhouse (side quest, docs/story/side_quests.md): the Grey Goose roadhouse on the Old Svalich Road
+# burned twenty winters ago, and every night since a lantern has hung in its upstairs window, though there's no upstairs
+# any more (data/locations/svalich_roadhouse.json). The innkeeper's ghost keeps it lit. **Twist:** the light isn't a
+# welcome, it's a warning: the winter the snow shut the road, his wife and sons ate the guests, and he nailed them in
+# the cellar and burned the house over them, and they didn't die. **Escalation:** they've been scratching at the
+# trapdoor every night this month, and tonight the nails give. Reached from Arik's one-word rumours from level 2
+# (village_of_barovia/arik:rumors) and the roadhouse by night. Every line here is unvoiced for now.
+
+# --- Arik's rumour (village_of_barovia/arik:rumors jumps here) ---
+
+~ arik
+quest the_roadhouse_lantern rumored
+Arik: Grey Goose. Lantern. No upstairs.
+-> village_of_barovia/arik:menu
+
+# --- The lantern (prop roadhouse_lantern) ---
+
+~ lantern
+if quest.the_roadhouse_lantern == done
+Narrator: An old lantern lies in the weeds of the taproom, cold, its glass cracked. Nothing holds it up any more.
+-> END
+endif
+if night
+Narrator: A lantern hangs in the empty air where an upstairs window used to be, burning steadily, with nothing holding it up and no wall around it.
+-> END
+endif
+Narrator: In daylight there's nothing in the air where the upstairs window was. On the hearth below, a lantern with its glass blacked by twenty years of smoke, cold to the touch, and full of oil.
+-> END
+
+# --- The innkeeper, by night (npc roadhouse_innkeeper) ---
+
+~ innkeeper
+if not quest.the_roadhouse_lantern or quest.the_roadhouse_lantern == rumored
+quest the_roadhouse_lantern asked
+endif
+if flag.roadhouse_innkeeper_met
+The Innkeeper: Still here. Go on. The crossroads is an hour. There's no room.
+-> innkeeper_menu
+endif
+set roadhouse_innkeeper_met
+Narrator: Under the lantern, in what's left of the taproom, a man in an apron stands behind a counter that's mostly charcoal. You can see the hearth through him.
+The Innkeeper: Travellers. Turn round. Go on to the crossroads. There's no room at the Goose. There hasn't been for twenty winters.
+-> innkeeper_menu
+
+~ innkeeper_menu
+* Who's the lantern for? -> for_whom
+* [Insight DC 12] (Watch where he keeps looking.) -> looking | not_looking
+* (Leave him to his lantern.) -> END
+
+~ for_whom
+The Innkeeper: For you. For anybody on the road. So you see the light, and see the walls, and see there's nothing here worth stopping for, and go on.
+The Innkeeper: People stop for an empty house in the dark. They don't stop for a lit one. A lit one has somebody in it already.
+-> innkeeper_menu
+
+~ looking
+Narrator: Every few words his eyes drop to the floor behind the counter, to a trapdoor nailed shut with more nails than it needs. Under it, faintly, something is scratching.
+The Innkeeper: (Quietly.) They're hungrier this month. The nails are old.
+-> innkeeper_menu
+
+~ not_looking
+Narrator: A dead man, keeping a light. That's all you can tell.
+-> innkeeper_menu
+
+# --- The ledger (prop roadhouse_ledger) ---
+
+~ ledger
+set roadhouse_ledger_read
+Narrator: A guest book, swollen with damp, the last pages still legible. The snow shut the road early that year. No guests for nine days. The oats gone. The salt pork gone.
+Narrator: Then, in the innkeeper's careful hand: "Two guests. A tinker and his boy, from the Gates." And in another hand, round and childish, underneath: "Mama made a stew."
+Narrator: After that, a few more names, a few days apart. Then nothing.
+-> END
+
+# --- The trapdoor (prop roadhouse_trapdoor) ---
+
+~ trapdoor
+if flag.roadhouse_cellar_beaten
+Narrator: The trapdoor hangs open on one hinge. The cellar below is quiet, and smells only of old smoke.
+-> END
+endif
+if not quest.the_roadhouse_lantern
+Narrator: A trapdoor nailed shut, with more nails than any trapdoor needs.
+-> END
+endif
+Narrator: A trapdoor behind the counter, nailed shut with three times the nails it needs. Something under it is scratching. When you crouch, it stops, and listens.
+if flag.roadhouse_ledger_read
+interject tag:blunt: Mama made a stew.
+endif
+* (Pull the nails.) -> open
+* (Leave it shut.) -> END
+
+~ open
+if night
+The Innkeeper: (From behind you, very quietly.) Don't. Please. That's my wife. Those are my boys. I burned the house over them and they didn't die.
+endif
+Narrator: The nails come out easily. Too easily: half of them were already loose, pushed up from below. The trapdoor lifts by itself before you've touched it.
+combat roadhouse_cellar
+
+# --- After the cellar, by night (npc roadhouse_innkeeper) ---
+
+~ after
+quest the_roadhouse_lantern done
+Narrator: The innkeeper stands by the trapdoor with his hands in his apron, looking down into the dark for a long time.
+The Innkeeper: The winter the snow shut the road, she fed the boys. That's all she did. Fed the boys. I found out on the tenth day, and I nailed the door, and I lit the thatch, and I sat down by the hearth to wait.
+The Innkeeper: I kept the light so no one else would stop. Twenty winters. It's very tiring, being a warning.
+The Innkeeper: Under the hearthstone. Everything we had. And my youngest's pipes; he played them to keep the rats out of the oats. Take them. I'd like to put the lantern down now.
+Narrator: He sets the lantern on the hearth. It goes out. So does he.
+give pipes_of_the_sewers
+gold +50
+approve liriel_dawnsong +2 godrick_pendlebrook +2 kip_smudgewick +1: You let the innkeeper of the Grey Goose put his lantern down
+-> END

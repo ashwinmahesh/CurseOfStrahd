@@ -352,3 +352,12 @@ const BY_THE_FIRE: Array[Vector2i] = [Vector2i(11, 10), Vector2i(13, 10), Vector
 ## The Guide, two of his shadows and two of the ones he led up before.
 func test_the_guide_at_level_10() -> void:
 	await _series("amber_road_camp", 20, 10, "amber_guide", [1, 2, 3, 4, 5, 6, 7, 8], ["amber_camp_met"], [], [], BY_THE_FIRE)
+
+
+## Behind the Grey Goose's counter, by the trapdoor.
+const BEHIND_THE_COUNTER: Array[Vector2i] = [Vector2i(14, 8), Vector2i(15, 8), Vector2i(16, 8), Vector2i(13, 8)]
+
+
+## The innkeeper's wife and son, and the cellar's rats, at level 2.
+func test_the_grey_goose_cellar_at_level_2() -> void:
+	await _series("svalich_roadhouse", 23, 2, "roadhouse_cellar", [1, 2, 3, 4, 5, 6, 7, 8], ["roadhouse_innkeeper_met"], [], [], BEHIND_THE_COUNTER)

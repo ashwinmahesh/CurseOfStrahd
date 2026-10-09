@@ -504,3 +504,14 @@ func test_the_guide_gets_up_from_his_fire() -> void:
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_guide_to_the_temple"), "fought")
 	assert_true(GameState.story.get_flag("amber_guide_beaten", false))
+
+
+## What's lived under the Grey Goose's trapdoor for twenty winters comes up into the lamplight.
+func test_the_cellar_of_the_grey_goose() -> void:
+	var v := await _boot("svalich_roadhouse", 23, 2, ["roadhouse_innkeeper_met"])
+	GameState.story.set_quest_stage("the_roadhouse_lantern", "asked")
+	LocationNpcs.hide_npcs_of(v, "svalich_road/the_roadhouse_lantern:innkeeper")
+	await _fight(v, "roadhouse_cellar", ["The Innkeeper's Wife", "A Son of the House", "Giant Rat 1"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_roadhouse_lantern"), "opened")
+	assert_true(GameState.story.get_flag("roadhouse_cellar_beaten", false))

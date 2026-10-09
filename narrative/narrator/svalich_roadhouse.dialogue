@@ -1,0 +1,14 @@
+# Narrator: the Grey Goose, a burned-out roadhouse on the Old Svalich Road (The Lantern in the Roadhouse,
+# docs/story/side_quests.md; docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:svalich_roadhouse
+| A roadhouse by the road, burned to its walls a long time ago. A painted goose still hangs from the sign-iron, grey with soot.
+| [night] A burned-out roadhouse, and high in its front, where an upstairs window used to be, a lantern burning steadily in the empty air.
+| [flag.roadhouse_cellar_beaten] The Grey Goose is only a ruin now, and the road goes past it without looking.
+cooldown 30
+
+~ examine:roadhouse_hearth
+| The hearth stands on its own among the weeds like a tombstone. Its stone is cracked across, and under the crack, a hollow.
+
+~ examine:roadhouse_sign
+| THE GREY GOOSE, says the sign, over a painted goose with a hat on. Under it, in fresher paint, somebody has added: GO ON.
