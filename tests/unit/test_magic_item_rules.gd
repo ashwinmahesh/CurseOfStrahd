@@ -444,3 +444,38 @@ func test_the_golden_idol_works_in_and_out_of_fights() -> void:
 	var r := e.items.use(c, "golden_idol_of_good_fortunes", "globe", [c])
 	assert_true(r.ok, r.reason)
 	assert_false(e.items.use(c, "golden_idol_of_good_fortunes", "globe", [c]).ok, "once a day")
+
+
+## The Wand of Slumber (The Waystone's reward): any hero can attune and put a foe to sleep with it in a fight, and its
+## Catnap works outside one: the user and two companions sleep ten minutes and wake with a Short Rest's benefits.
+func test_the_wand_of_slumber_sleeps_foes_and_rests_friends() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 6)
+	var ch := c.creature as Character
+	ch.add_item("wand_of_slumber")
+	assert_true(ch.attune("wand_of_slumber"), "a fighter can attune it")
+	var foe := TestCombat.foe(e, "bandit", Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	TestCombat.next_d20(e, 2)
+	assert_true(e.items.use(c, "wand_of_slumber", "sleep", [foe], Vector2(5, 2)).ok)
+	assert_true(foe.creature.has_condition(&"incapacitated"), "a failed save: the first stage of Sleep")
+	var st := StoryState.new()
+	st.party.append(ch)
+	for id: String in ["silvain_aster", "hedda_ironvow", "tamsin_tealeaf"]:
+		st.party.append(TestChars.pregen(id, 6))
+	ch.spend_resource("second_wind")
+	var left := ch.resource_left("second_wind")
+	var charges := ch.charges_left("wand_of_slumber")
+	var minutes := st.total_minutes()
+	var catnap: Dictionary = {}
+	for o in FieldItems.options(st.party, ch, "wand_of_slumber", DiceRoller.new(1)):
+		if str(o["power_id"]) == "catnap":
+			catnap = o
+	assert_true(bool(catnap.get("legal", false)), "Catnap is usable outside a fight: %s" % catnap.get("reason", "not offered"))
+	var res := FieldItems.use(st, ch, "wand_of_slumber", "catnap", ch, DiceRoller.new(3))
+	assert_true(bool(res["ok"]), str(res.get("text", "")))
+	assert_eq(ch.charges_left("wand_of_slumber"), charges - 3, "three charges")
+	assert_eq(st.total_minutes() - minutes, 10)
+	assert_true(ch.resource_left("second_wind") > left, "the user woke with a Short Rest's benefits")
+	assert_true(str(res["text"]).contains("Ilse, Silvain, Hedda") and not str(res["text"]).contains("Tamsin"),
+		"the user and two companions: %s" % res["text"])

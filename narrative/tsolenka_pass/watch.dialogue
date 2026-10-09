@@ -98,6 +98,7 @@ tsolenka_sergeant: Go back down. Go home. That's the best advice this tower has.
 ~ passed_again
 tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Nothing came down. Nobody went up. Well, you did. I've logged it.
 * Anything to report, sergeant? -> tsolenka_pass/the_frozen_pilgrims:sergeant_news
+* [if level >= 10 and not quest.the_guide_to_the_temple] Has anybody else gone up since we passed? -> tsolenka_pass/the_guide:sergeant
 * Goodbye, sergeant. -> END
 
 # ---------------------------------------------------------------- The watchman at his post

@@ -1,0 +1,94 @@
+# The Guide to the Temple (side quest, docs/story/side_quests.md): since the party opened the Tsolenka gate, a man
+# has led three parties up the goat path round the watchtower toward the Amber Temple, and come down alone each time.
+# Tonight's party is Remus and Floarea and their daughter on a sledge, coughing, going to ask the temple for a cure.
+# **Twist:** (Medicine or Insight) the child isn't sick with lung fever: the guide has been putting sleep-root in her
+# tea every night to keep her sick enough to climb for; something in the amber pays him a year of life for every
+# family he brings up (data/monsters/amber_guide.json). **Escalation:** nobody turns back on his mountain. The temple's
+# vestige and dark-gift flags are never set or read, and The Frozen Pilgrims isn't touched. Reached from the Tsolenka
+# sergeant once the party has passed his gate, from level 10 (tsolenka_pass/watch:passed_again), and the camp on the
+# goat path (data/locations/amber_road_camp.json). Every line here is unvoiced for now.
+
+# --- The sergeant, once the party has passed (tsolenka_pass/watch:passed_again jumps here) ---
+
+~ sergeant
+tsolenka_sergeant: Nobody went up the road. (He runs a dead finger down the log.) Somebody went up the goat path round the tower. Three times this winter. Lanterns, four or five to a party. One lantern came down, each time.
+tsolenka_sergeant: Last night, a man, a woman, and a sledge with something small on it, coughing. The one in front walks like he's never been cold in his life. I've logged it. The goat path isn't my road. I can't stop what isn't on my road.
+quest the_guide_to_the_temple asked
+-> END
+
+# --- The camp on the goat path (npc amber_guide, goat_path_remus, goat_path_floarea) ---
+
+~ camp
+if flag.amber_guide_beaten
+-> after
+endif
+if flag.amber_camp_met
+The Guide: Still here? We go up at first light. You can come, if you've something to ask for. Everyone has.
+-> camp_menu
+endif
+set amber_camp_met
+Narrator: On a shelf of rock above the goat path, out of the wind, a fire burns in a ring of stones beside a low tent. A sledge is drawn up close to the warmth with a bundle of blankets on it, and the bundle is coughing.
+The Guide: Travellers, this high? Sit. Share the fire. (A lean man in furs, bareheaded in the cold, who smiles easily.) There's tea. We go up to the temple at first light.
+Remus: Our daughter. The lung fever, since the autumn. The priest in Vallaki couldn't. The herb-wives couldn't. He says the temple can do anything, if you ask it right.
+Narrator: The woman beside the sledge, Floarea, says nothing. She's watching the tea.
+-> camp_menu
+
+~ camp_menu
+* [Medicine DC 14] (Look at the child on the sledge.) -> child | child_missed
+* [Insight DC 15] (Watch the guide while Remus talks.) -> guide_seen | guide_missed
+* [if flag.amber_tea_known] You've been putting something in her tea. -> confront
+* Turn back. Take her home. Whatever's up there, it isn't a cure. -> turn_back
+* (Leave them to their fire.) -> END
+
+~ child
+set amber_tea_known
+Narrator: It isn't lung fever. Her lips are the wrong blue, her eyes don't follow the firelight, and the pupils are pinpricks. Someone has been giving her sleep-root: not enough to kill her, every day, for a long time.
+Floarea: (Very quietly, not looking at the guide.) He makes her tea. Every night. He said it was for the cough.
+-> camp_menu
+
+~ child_missed
+Narrator: A sick little girl under too many blankets. That's all you can tell.
+-> camp_menu
+
+~ guide_seen
+set amber_guide_watched
+Narrator: He isn't watching the fire, or Remus, or you. He's watching the sledge, the way a drover watches a pen the night before market. When the child coughs, he smiles.
+-> camp_menu
+
+~ guide_missed
+Narrator: A guide who knows the mountain and isn't afraid of it. That's all you can tell.
+-> camp_menu
+
+~ confront
+The Guide: (He doesn't stop smiling.) A pinch. Every night. Enough to keep her sick enough to climb for. Do you know how hard it is to get a family up a mountain, otherwise?
+The Guide: There's something in the amber that pays me a year for each one I bring to its door. I was born before the count came over the mountains. I'd like to see him go.
+-> fight
+
+~ turn_back
+Remus: (He looks at the sledge, and at the mountain, and at Floarea.) If there's a chance...
+The Guide: Nobody turns back on my mountain. (He gets up, and his shadow on the snow doesn't get up with him; it stays where it was, and then it stands up on its own.)
+-> fight
+
+~ fight
+if flag.amber_guide_watched
+Narrator: You were watching him when he moved. You see his shadows peel up off the snow before they reach you.
+endif
+interject tag:blunt: Get the child behind the sledge.
+combat amber_guide
+
+# --- After the guide (npc goat_path_floarea, stage fought) ---
+
+~ after
+if quest.the_guide_to_the_temple == done
+Floarea: She's asleep. A real sleep. We'll go down in the morning.
+-> END
+endif
+quest the_guide_to_the_temple done
+Narrator: Floarea pours the tea out onto the snow, all of it, and throws the kettle after it, and then sits down very suddenly beside the sledge.
+Floarea: I'm an herb-wife. I knew sleep-root when I smelled it. I told myself I was wrong, because if I wasn't wrong there wasn't any cure up here, and we'd come all this way.
+Remus: Without the tea she'll wake in a day or two. Then it's only a cough. A cough we can carry home.
+Narrator: In the guide's pack: a heavy purse of other people's money, a list of names with lines through them, and a short silver rod that hums when you lift it, as if it's listening for something coming.
+give rod_of_alertness
+gold +400
+approve liriel_dawnsong +3 godrick_pendlebrook +2 kip_smudgewick +2 wren_featherfoot +1: You stopped the guide on the goat path and the family went home
+-> END

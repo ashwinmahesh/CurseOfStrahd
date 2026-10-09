@@ -1,0 +1,13 @@
+# Narrator: the camp on the goat path round the Tsolenka watchtower (The Guide to the Temple,
+# docs/story/side_quests.md; docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:amber_road_camp
+| A shelf of rock above the goat path, out of the worst of the wind: a fire in a ring of stones, a low tent, and a sledge drawn up close to the warmth.
+| [flag.amber_guide_beaten] The fire on the shelf is burning low. Nobody is making tea.
+cooldown 30
+
+~ examine:goat_camp_tent
+| A low tent of good oiled hide, much mended. Inside, a bedroll for one, and a pack nobody else is allowed to touch.
+
+~ examine:goat_camp_sledge
+| A child's sledge, padded with every blanket the family owns. The bundle on it coughs, and doesn't wake.
