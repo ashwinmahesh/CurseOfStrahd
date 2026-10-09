@@ -1,0 +1,18 @@
+{
+  "id": "waystone_yanko",
+  "name": "Yanko",
+  "title": "Lark's Brother",
+  "summary": "A Belview boy who went over the Abbey wall two winters ago and was taken by the wolves. A young grey werewolf with one ear like a hound's, he comes to the edge of the waystone's candlelight every night to hear his sister sing.",
+  "portrait": "wolf",
+  "sprite": "wolf",
+  "attitude": "indifferent",
+  "monster": "werewolf",
+  "guest": false,
+  "tags": [
+    "werewolf",
+    "belview",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "he/him"
+}

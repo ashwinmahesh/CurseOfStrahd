@@ -1,0 +1,224 @@
+{
+  "id": "krezk_road_waystone",
+  "name": "The Waystone",
+  "region": "krezk",
+  "summary": "A bend of the Old Svalich Road on the way to Krezk, where an old waystone with a sunburst cut into it stands at the roadside with a candle burning at its foot every night (The Waystone, docs/story/side_quests.md).",
+  "text": "The road bends between pines and rock. At the bend stands a waist-high stone with a sunburst cut into it, so old the rays are only dents, and in a niche at its foot a candle stub, burnt down almost to nothing.",
+  "map": {
+    "rows": [
+      "############################",
+      "#####......##########...####",
+      "###..........######.......##",
+      "##.....#.......##..........#",
+      "#...........=..............#",
+      "#.~~~.~~~~.......~~~~.~~~~.#",
+      "#..........................#",
+      "............................",
+      "............................",
+      "#..........................#",
+      "#.~~~~.~~~~.~~~~.~~~~.~~~~.#",
+      "#.....=.................#..#",
+      "##..........##.............#",
+      "###.....#.........=.......##",
+      "#####.........##.......#####",
+      "############################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "waystone_bend",
+      "name": "The bend",
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          26,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      3,
+      8
+    ],
+    "from_road": [
+      3,
+      8
+    ]
+  },
+  "exits": [
+    {
+      "id": "waystone_road_east",
+      "cell": [
+        27,
+        7
+      ],
+      "to": "travel",
+      "label": "On along the road"
+    },
+    {
+      "id": "waystone_road_west",
+      "cell": [
+        0,
+        8
+      ],
+      "to": "travel",
+      "label": "On along the road"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "waystone",
+      "cell": [
+        14,
+        6
+      ],
+      "kind": "examine",
+      "label": "The waystone",
+      "model": "milestone",
+      "dialogue": "krezk/the_waystone:stone"
+    },
+    {
+      "id": "waystone_candles",
+      "cell": [
+        15,
+        6
+      ],
+      "kind": "decor",
+      "label": "Candle stubs",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "waystone_signpost",
+      "cell": [
+        6,
+        6
+      ],
+      "kind": "examine",
+      "label": "A signpost",
+      "model": "signpost"
+    },
+    {
+      "id": "waystone_tracks",
+      "cell": [
+        20,
+        9
+      ],
+      "kind": "examine",
+      "label": "Tracks in the mud",
+      "model": "leaves"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        15,
+        6
+      ],
+      "kind": "candle",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [
+    {
+      "npc": "waystone_lark",
+      "cell": [
+        13,
+        6
+      ],
+      "dialogue": "krezk/the_waystone:lark",
+      "when": "night and quest.the_waystone and quest.the_waystone != done and not flag.waystone_wolves_beaten",
+      "facing": "south",
+      "approach": 4
+    },
+    {
+      "npc": "waystone_lark",
+      "cell": [
+        13,
+        6
+      ],
+      "dialogue": "krezk/the_waystone:after",
+      "when": "night and flag.waystone_wolves_beaten and quest.the_waystone != done",
+      "facing": "east",
+      "approach": 4
+    },
+    {
+      "npc": "waystone_yanko",
+      "cell": [
+        16,
+        5
+      ],
+      "dialogue": "krezk/the_waystone:after",
+      "when": "night and flag.waystone_wolves_beaten and quest.the_waystone != done",
+      "facing": "west"
+    }
+  ],
+  "encounters": [
+    {
+      "id": "waystone_wolves",
+      "trigger": "dialogue",
+      "text": "Kiril's hunters come down the road and out of the pines, and the wolves with them, for the girl at the stone and the one that's gone soft.",
+      "surprise": "",
+      "flag": "waystone_wolves_beaten",
+      "quest": {
+        "id": "the_waystone",
+        "stage": "defended"
+      },
+      "monsters": [
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            2
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            4
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            10,
+            13
+          ],
+          "name": "A Pack Hunter"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            13
+          ]
+        }
+      ]
+    }
+  ],
+  "narration": {
+    "enter": "enter:krezk_road_waystone"
+  },
+  "rest": "risky"
+}

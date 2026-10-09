@@ -600,6 +600,24 @@ down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
 - Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
   on Sundays, and Krezk's watchman has decided to be very calm about it.
 
+### The Waystone (`the_waystone`, narrative/krezk/the_waystone.dialogue; batch 8, level 6)
+
+From level 6, Clovin's "Heard anything interesting?" ends with Lark, his cousin's girl, who goes over the Abbey wall
+every night after the last bell, down the Krezk road toward the old stone with the sun cut into it. A new travel place,
+the Waystone (data/locations/krezk_road_waystone.json, a new outdoor map with a vistas.json place; roads from Krezk
+and Vallaki), opens with the rumour. By day the candle is burnt to nothing; by night Lark (new NPC, a Belview with a
+lark's feathers and legs) kneels at the stone lighting a new one, and sings in her dead mother's voice. **Twist:** the
+candle is for her brother Yanko (new NPC), who went over the wall two winters ago and was taken by the wolves, not
+eaten: he comes to the edge of the light every night as a young werewolf to hear her sing (Insight DC 12 sees his
+eyes). **Escalation:** the pack has noticed him going soft and comes down the road for both of them. The pack's flags
+are only read (`wolf_pack_leader` for one line).
+
+- Fight `waystone_wolves` at the stone, by night: four of Kiril's hunters (werewolves) and a wolf. The autopilot wins
+  3 of 8 at level 6, losing two or three party members a fight.
+- Then Yanko comes into the light. Talked down (Persuasion DC 13) he's a boy again, and goes with Lark to Great-uncle
+  Pavel in Krezk if Mother's Ninth Improvement found him; otherwise he lies down at her feet as a wolf. Lark gives the
+  party the Abbot's Wand of Slumber (rare), and Yanko a traveller's old purse, 120 gp. Clovin's news says how it ended.
+
 ## The Tsolenka Pass (level 10)
 
 ### The Frozen Pilgrims (`the_frozen_pilgrims`, narrative/tsolenka_pass/the_frozen_pilgrims.dialogue; batch 3)
@@ -958,4 +976,6 @@ the Tser Pool camp: the_dancing_bear.dialogue in full (Lavinia and Old Marin; a 
 own; Thistle's interject) and narrator/tser_woods_den.dialogue. Batch 7,
 Yester Hill: the_barrow.dialogue in full (new speakers Freydis and Silverjaw; a blunt interject). Batch 7,
 Mount Baratok: the_forgotten_storm.dialogue in full (new speaker the Forgotten Storm; also the mad mage and Mordenkainen,
-the Narrator and a blunt interject), and the mage's two new menu options.
+the Narrator and a blunt interject), and the mage's two new menu options. Batch 8,
+the Krezk road: the_waystone.dialogue in full (new speakers Lark and Yanko; also Clovin and the Narrator, and a kind
+interject) and narrator/krezk_road_waystone.dialogue.
