@@ -840,6 +840,41 @@
   "recipe": "1747d0c318",
   "text": "The mists let us pass. Not you. Not anyone he hasn't finished with."
  },
+ "amber_guide/0f0a1bc91582a801": {
+  "chars": 162,
+  "direction": "[smiling, calm, chilling]",
+  "model": "eleven_v3",
+  "recipe": "143d293c8e",
+  "text": "(He doesn't stop smiling.) A pinch. Every night. Enough to keep her sick enough to climb for. Do you know how hard it is to get a family up a mountain, otherwise?"
+ },
+ "amber_guide/41f118f132a0cb2b": {
+  "chars": 156,
+  "direction": "[smiling, quiet, menacing]",
+  "model": "eleven_v3",
+  "recipe": "143d293c8e",
+  "text": "Nobody turns back on my mountain. (He gets up, and his shadow on the snow doesn't get up with him; it stays where it was, and then it stands up on its own.)"
+ },
+ "amber_guide/47fe3148728ab74d": {
+  "chars": 96,
+  "direction": "[warm, easy, knowing]",
+  "model": "eleven_v3",
+  "recipe": "143d293c8e",
+  "text": "Still here? We go up at first light. You can come, if you've something to ask for. Everyone has."
+ },
+ "amber_guide/4ff1c2a620e3f5e3": {
+  "chars": 160,
+  "direction": "[warm, hospitable, smiling]",
+  "model": "eleven_v3",
+  "recipe": "143d293c8e",
+  "text": "Travellers, this high? Sit. Share the fire. (A lean man in furs, bareheaded in the cold, who smiles easily.) There's tea. We go up to the temple at first light."
+ },
+ "amber_guide/ff1f418cdc446eee": {
+  "chars": 161,
+  "direction": "[smiling, cold, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "143d293c8e",
+  "text": "There's something in the amber that pays me a year for each one I bring to its door. I was born before the count came over the mountains. I'd like to see him go."
+ },
  "amber_sentinel/0a25b9ddcc138304": {
   "chars": 28,
   "direction": "[booming, slow, grinding stone]",
@@ -10285,6 +10320,48 @@
   "recipe": "117d14dc79",
   "text": "I'll not pay the count's people the dragon's silver. It stays. It stays with me. I've kept it four hundred years, and it has never been safer."
  },
+ "goat_path_floarea/6dbe1d660b521acb": {
+  "chars": 166,
+  "direction": "[shaking, guilty, bitter]",
+  "model": "eleven_v3",
+  "recipe": "0936347dd8",
+  "text": "I'm an herb-wife. I knew sleep-root when I smelled it. I told myself I was wrong, because if I wasn't wrong there wasn't any cure up here, and we'd come all this way."
+ },
+ "goat_path_floarea/7417897ab056ef33": {
+  "chars": 57,
+  "direction": "[soft, relieved, exhausted]",
+  "model": "eleven_v3",
+  "recipe": "0936347dd8",
+  "text": "She's asleep. A real sleep. We'll go down in the morning."
+ },
+ "goat_path_floarea/91aadfad1cc0d5ea": {
+  "chars": 102,
+  "direction": "[very quiet, frightened, accusing]",
+  "model": "eleven_v3",
+  "recipe": "0936347dd8",
+  "text": "(Very quietly, not looking at the guide.) He makes her tea. Every night. He said it was for the cough."
+ },
+ "goat_path_remus/5b1168548d421bd8": {
+  "chars": 85,
+  "direction": "[torn, desperate, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3d4472244c",
+  "text": "(He looks at the sledge, and at the mountain, and at Floarea.) If there's a chance..."
+ },
+ "goat_path_remus/bc2661378c045b2c": {
+  "chars": 161,
+  "direction": "[tired, desperate, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "3d4472244c",
+  "text": "Our daughter. The lung fever, since the autumn. The priest in Vallaki couldn't. The herb-wives couldn't. He says the temple can do anything, if you ask it right."
+ },
+ "goat_path_remus/e6a689bcda79da73": {
+  "chars": 95,
+  "direction": "[relieved, tired, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "3d4472244c",
+  "text": "Without the tea she'll wake in a day or two. Then it's only a cough. A cough we can carry home."
+ },
  "godrick_pendlebrook/009047d86d13d4c5": {
   "chars": 13,
   "model": "eleven_v4",
@@ -14055,6 +14132,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "What a lovely, sturdy counter. Very... sturdy."
+ },
+ "hero_female/43d24db570460f98": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Get the child behind the sledge."
  },
  "hero_female/44e09698a38e3747": {
   "chars": 64,
@@ -18351,6 +18434,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "What a lovely, sturdy counter. Very... sturdy."
+ },
+ "hero_male/43d24db570460f98": {
+  "chars": 32,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Get the child behind the sledge."
  },
  "hero_male/44e09698a38e3747": {
   "chars": 64,
@@ -34674,6 +34763,12 @@
   "recipe": "dd92281f92",
   "text": "You bail it out and ship the oars. It sits low and steady in the water: a good boat. Across the lake, the hills wait."
  },
+ "narrator/08facb6078f9f991": {
+  "chars": 194,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the guide's pack: a heavy purse of other people's money, a list of names with lines through them, and a short silver rod that hums when you lift it, as if it's listening for something coming."
+ },
  "narrator/090e0ba81628ede1": {
   "chars": 37,
   "model": "eleven_v4",
@@ -35418,6 +35513,12 @@
   "recipe": "dd92281f92",
   "text": "A lean-to shed for the cart and the firewood. Everything in it is neat, swept and labelled in a careful hand. Whoever lives here is very, very tidy."
  },
+ "narrator/0ffc6ff1bc8397cf": {
+  "chars": 149,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A shelf of rock above the goat path, out of the worst of the wind: a fire in a ring of stones, a low tent, and a sledge drawn up close to the warmth."
+ },
  "narrator/1013a52bfac68007": {
   "chars": 73,
   "model": "eleven_v4",
@@ -35585,6 +35686,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You are in the Amber Temple, where the things sealed in the walls have not stopped talking."
+ },
+ "narrator/1121a8e56d96701e": {
+  "chars": 114,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A low tent of good oiled hide, much mended. Inside, a bedroll for one, and a pack nobody else is allowed to touch."
  },
  "narrator/112fc9ce7c212971": {
   "chars": 87,
@@ -36180,6 +36287,12 @@
   "recipe": "dd92281f92",
   "text": "A white tomb, cleaner than anything else under the castle. Candles burn here that nobody you can see has lit."
  },
+ "narrator/15b04575f5b0907c": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The woman beside the sledge, Floarea, says nothing. She's watching the tea."
+ },
  "narrator/15bedfc255f30cb8": {
   "chars": 113,
   "model": "eleven_v4",
@@ -36461,6 +36574,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A lantern burns over the mercantile door, the only lamp lit on the street. Bildrath, you suspect, is billing someone for it."
+ },
+ "narrator/1838d25e317c239f": {
+  "chars": 103,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A child's sledge, padded with every blanket the family owns. The bundle on it coughs, and doesn't wake."
  },
  "narrator/183f11b23e4cbecb": {
   "chars": 202,
@@ -42816,6 +42935,12 @@
   "recipe": "dd92281f92",
   "text": "A skeleton in shackles against the wall, in the remains of a keeper's hood. Whatever he did wrong, the others made sure he went on paying for it."
  },
+ "narrator/4e1f1dd8e199ec62": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Floarea pours the tea out onto the snow, all of it, and throws the kettle after it, and then sits down very suddenly beside the sledge."
+ },
  "narrator/4e206610104fb170": {
   "chars": 126,
   "model": "eleven_v4",
@@ -43289,6 +43414,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You walk her down to the village in the grey before morning. Goodwife Sarnov is on her step, waiting for nothing, the way she has waited every morning for twelve years."
+ },
+ "narrator/5315157d95a3a444": {
+  "chars": 59,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The fire on the shelf is burning low. Nobody is making tea."
  },
  "narrator/5318f69d917310b0": {
   "chars": 120,
@@ -46710,6 +46841,12 @@
   "recipe": "dd92281f92",
   "text": "A hard man with a bow, and friends in the trees. That much was already clear."
  },
+ "narrator/6e20cf4bff554ec4": {
+  "chars": 79,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A guide who knows the mountain and isn't afraid of it. That's all you can tell."
+ },
  "narrator/6e241f3491ac2d33": {
   "chars": 176,
   "model": "eleven_v4",
@@ -47663,6 +47800,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They have heard promises in Barovia before. They don't believe yours."
+ },
+ "narrator/76c01557a2e11846": {
+  "chars": 208,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It isn't lung fever. Her lips are the wrong blue, her eyes don't follow the firelight, and the pupils are pinpricks. Someone has been giving her sleep-root: not enough to kill her, every day, for a long time."
  },
  "narrator/76d97f25259b952d": {
   "chars": 167,
@@ -53790,6 +53933,12 @@
   "recipe": "dd92281f92",
   "text": "A lovely figure lies curled in the clear amber as if asleep in a warm bed, one hand cupped as though holding out something sweet. When you look closer, the smile has a few too many teeth."
  },
+ "narrator/aadcb7ea871d40df": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On a shelf of rock above the goat path, out of the wind, a fire burns in a ring of stones beside a low tent. A sledge is drawn up close to the warmth with a bundle of blankets on it, and the bundle is coughing."
+ },
  "narrator/aaee01168bb00245": {
   "chars": 142,
   "model": "eleven_v4",
@@ -54773,6 +54922,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A camp on the hill's shoulder: hide tents, a fire, a frame of poles hung with wicker cages. Bones are piled by the fire, picked and sorted, the way a careful cook sorts them."
+ },
+ "narrator/b36176abc00c0d87": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The guide gets up. His shadows stand up off the snow without him, and out of the drifts below the shelf come grey shapes in old furs: the ones he led up before."
  },
  "narrator/b369662c051f3935": {
   "chars": 115,
@@ -56838,6 +56993,12 @@
   "recipe": "dd92281f92",
   "text": "The bridge has no rail, only a lip of stone a hand high. It has been enough so far."
  },
+ "narrator/c5ccb91a9acc023e": {
+  "chars": 68,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A sick little girl under too many blankets. That's all you can tell."
+ },
  "narrator/c5d5afff9287a9f5": {
   "chars": 133,
   "model": "eleven_v4",
@@ -58230,6 +58391,12 @@
   "recipe": "dd92281f92",
   "text": "Hooks along the ceiling, and meat on the hooks. Most of it is mutton."
  },
+ "narrator/d217af6670f401d3": {
+  "chars": 188,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A shelf of rock above the goat path, out of the worst of the wind. A fire in a ring of stones, a low tent, a sledge drawn up to the warmth, and the mountain going up into the cloud behind."
+ },
  "narrator/d21d9053e4caf313": {
   "chars": 121,
   "model": "eleven_v4",
@@ -58445,6 +58612,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A lady's writing desk: good paper, a silver inkstand, a drawer with a lock. The blotter has been used so often that the backwards words on it have run into each other."
+ },
+ "narrator/d3b0fd598be537e7": {
+  "chars": 161,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He isn't watching the fire, or Remus, or you. He's watching the sledge, the way a drover watches a pen the night before market. When the child coughs, he smiles."
  },
  "narrator/d3b3e7ac4d366072": {
   "chars": 140,
@@ -60035,6 +60208,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The house is quiet. It has the stillness of something that has been fed and is in no hurry for its next meal."
+ },
+ "narrator/e2425f4a0021353a": {
+  "chars": 100,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You were watching him when he moved. You see his shadows peel up off the snow before they reach you."
  },
  "narrator/e2480cfadcb3b051": {
   "chars": 124,
@@ -74606,6 +74785,13 @@
   "recipe": "8a4538833b",
   "text": "Two of the lads went up once, on their own, at night. They came back talking about voices in the amber that knew their names. We sent them down to the valley. I don't know what became of them."
  },
+ "tsolenka_sergeant/45cc81e50e54f7c9": {
+  "chars": 204,
+  "direction": "[clipped, formal, uneasy]",
+  "model": "eleven_v3",
+  "recipe": "8a4538833b",
+  "text": "Nobody went up the road. (He runs a dead finger down the log.) Somebody went up the goat path round the tower. Three times this winter. Lanterns, four or five to a party. One lantern came down, each time."
+ },
  "tsolenka_sergeant/4739764e663fa67a": {
   "chars": 145,
   "model": "eleven_v3",
@@ -74676,6 +74862,13 @@
   "model": "eleven_v3",
   "recipe": "8a4538833b",
   "text": "Log. North shoulder of Ghakis: snow lying white, first time in forty years. No smoke. No cart. Logged it twice, to be sure."
+ },
+ "tsolenka_sergeant/9a32199f3c6a18b3": {
+  "chars": 221,
+  "direction": "[clipped, grim, ashamed]",
+  "model": "eleven_v3",
+  "recipe": "8a4538833b",
+  "text": "Last night, a man, a woman, and a sledge with something small on it, coughing. The one in front walks like he's never been cold in his life. I've logged it. The goat path isn't my road. I can't stop what isn't on my road."
  },
  "tsolenka_sergeant/9c80b8b365cefaa5": {
   "chars": 62,

@@ -1,0 +1,13 @@
+# Narrator: the Reed Isle out on Lake Zarovich (The Baron's Island, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:zarovich_reed_island
+| The boat grounds on shingle. Reeds higher than your heads, and somewhere in the middle of them, smoke, and somebody singing very quietly.
+| [flag.reed_isle_stayed] The boatmen's boat is hidden in the reeds under cut stems. Somebody is singing, not quietly at all.
+cooldown 30
+
+~ examine:reed_isle_huts
+| Huts of bent reed and driftwood, a dozen of them, patched with sailcloth that was once somebody's washing. On one door, a child's drawing of the Baron's wicker sun, with a face drawn on it, sticking its tongue out.
+
+~ examine:reed_isle_fish
+| Fish split and drying on lines between the reeds, more than fourteen people could eat in a week. They've been doing this a long time.
