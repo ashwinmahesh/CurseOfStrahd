@@ -1,0 +1,188 @@
+{
+  "id": "gilded_knight",
+  "name": "The Gilded Knight",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Silver Hoard, docs/story/side_quests.md): the Order of the Silver Dragon's tithe-keeper, who went down to the dragon's last winter tithe the night Argynvostholt fell and never let go of it. Built up from the 2025 Monster Manual's revenant to CR 10: silver grown over his plate, two blows, a covetous glare, Regeneration that fire and radiant stop, Legendary Resistance and two Legendary Actions. Drawn with the revenant's sprite."
+  },
+  "size": "medium",
+  "type": "undead",
+  "tags": [
+    "boss",
+    "revenant"
+  ],
+  "alignment": "lawful neutral",
+  "art": "revenant",
+  "ac": 19,
+  "ac_note": "plate grown over with silver",
+  "initiative": 2,
+  "hp": {
+    "average": 178,
+    "dice": "21d8+84"
+  },
+  "speed": {
+    "walk": 30
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 10,
+    "con": 18,
+    "int": 11,
+    "wis": 14,
+    "cha": 16
+  },
+  "saves": {
+    "str": 9,
+    "con": 8,
+    "wis": 6
+  },
+  "resistances": [
+    "necrotic",
+    "psychic"
+  ],
+  "immunities": [
+    "poison"
+  ],
+  "condition_immunities": [
+    "charmed",
+    "exhaustion",
+    "frightened",
+    "paralyzed",
+    "poisoned",
+    "stunned"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 12,
+  "languages": [
+    "Common"
+  ],
+  "cr": 10,
+  "xp": 5900,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "regeneration",
+      "name": "Regeneration",
+      "action": "passive",
+      "summary": "Regains 10 HP at the start of its turn; Fire or Radiant damage stops that for its next turn.",
+      "text": "The Gilded Knight regains 10 Hit Points at the start of its turn. If it took Fire or Radiant damage, this doesn't work at the start of its next turn.",
+      "implemented": "engine"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Gilded Knight fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_tithe_keeper",
+      "name": "The Tithe-Keeper",
+      "action": "passive",
+      "summary": "Four hundred years on the dragon's last tithe have grown the silver over him. He can't let go of it.",
+      "text": "The Order's tithe-keeper went down to the dragon's last winter tithe the night the house fell, and shut the door. The coins have grown over his armour like frost over a window. He can't let go of them, and he knows it.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "longsword",
+          "count": 2
+        }
+      ],
+      "summary": "Two Silvered Longsword attacks.",
+      "text": "The Gilded Knight makes two Silvered Longsword attacks."
+    },
+    {
+      "id": "longsword",
+      "name": "Silvered Longsword",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "slashing"
+        },
+        {
+          "average": 7,
+          "dice": "2d6",
+          "type": "necrotic"
+        }
+      ],
+      "summary": "An Order blade gone heavy with silver; a cold that goes into the bone.",
+      "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 14 (2d8 + 5) Slashing damage plus 7 (2d6) Necrotic damage."
+    },
+    {
+      "id": "covetous_glare",
+      "name": "Covetous Glare",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "wis",
+        "dc": 16,
+        "success": "none"
+      },
+      "targets": {
+        "range": 30
+      },
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "paralyzed",
+          "until": "minute",
+          "repeat_save": {
+            "ability": "wis",
+            "dc": 16,
+            "when": "end"
+          }
+        }
+      ],
+      "summary": "Recharge 5-6: one creature within 30 ft; DC 16 Wis save or Paralyzed for a minute (saving at the end of its turns).",
+      "text": "Wisdom Saving Throw: DC 16, one creature the Gilded Knight can see within 30 feet. Failure: the target has the Paralyzed condition for 1 minute, held by the look of a man watching a thief. It repeats the save at the end of each of its turns, ending the effect on a success."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "strike",
+        "name": "Strike",
+        "cost": 1,
+        "action": "longsword",
+        "summary": "Makes one Silvered Longsword attack."
+      },
+      {
+        "id": "step",
+        "name": "Guard the Hoard",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to half his Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "regenerates": {
+    "hp": 10,
+    "stopped_by": [
+      "fire",
+      "radiant"
+    ]
+  },
+  "regions": [
+    "argynvostholt"
+  ],
+  "ai_profile": "brute",
+  "summary": "The Order's tithe-keeper, four hundred years on the dragon's last winter tithe in the undercroft of Argynvostholt. Silver has grown over his plate like frost on a window. He swore it would reach the valley, and he can't let go of it."
+}

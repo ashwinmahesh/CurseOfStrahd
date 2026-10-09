@@ -47,6 +47,7 @@ Sir Godfrey Gwilym: One thing, and then I'll stop fussing. Don't cross the court
 * [if flag.order_fate != "rest"] Heard anything interesting? -> argynvostholt/the_squire:godfrey_news
 * [if flag.cosmin_met and not flag.ioan_cleared] Do you remember a squire called Ioan? -> argynvostholt/the_squire:godfrey_ioan
 * [if flag.godfrey_remembers and flag.order_fate != "rest"] Is anything left in the Order's armory? -> armory
+* [if level >= 9 and not quest.the_silver_hoard] A dragon's house. Where did he keep his hoard? -> argynvostholt/the_silver_hoard:godfrey
 * [name:godrick_pendlebrook] [if quest.the_ladle and not flag.ladle_sword_shown] Present Sir Aldric Ashgrove's sword. -> companions/ladle:sword
 * [name:godrick_pendlebrook] [if flag.ladle_sword_shown and not flag.ladle_wall_read] Ask what his wall says about Aldric Ashgrove. -> companions/ladle:wall
 * [name:godrick_pendlebrook] [if quest.the_ladle >= kept_faith and flag.godfrey_remembers and not (quest.the_ladle >= knighted)] Ask Sir Godfrey to knight him. -> companions/ladle:knighting

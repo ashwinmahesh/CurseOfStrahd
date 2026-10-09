@@ -300,6 +300,15 @@ func test_querreth_at_level_10() -> void:
 	await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
 
 
+## The tithe vault in Argynvostholt's undercroft, where the party stands when the tithe-keeper gets up.
+const TITHE_VAULT: Array[Vector2i] = [Vector2i(10, 6), Vector2i(12, 6), Vector2i(11, 7), Vector2i(9, 7)]
+
+
+## The Gilded Knight and three of the escort's empty harness, at his full strength.
+func test_the_gilded_knight_at_level_9() -> void:
+	await _series("argynvostholt_undercroft", 20, 9, "gilded_knight", [1, 2, 3, 4, 5, 6, 7, 8], ["tithe_told"], [], [], TITHE_VAULT)
+
+
 ## The clearing at the old den, where the party stands over the trapped cub.
 const OLD_DEN: Array[Vector2i] = [Vector2i(12, 12), Vector2i(13, 13), Vector2i(11, 12), Vector2i(12, 13)]
 

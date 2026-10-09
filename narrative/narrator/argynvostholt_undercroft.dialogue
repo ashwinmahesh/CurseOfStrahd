@@ -1,0 +1,23 @@
+# Narrator: the undercroft under Argynvostholt's servants' hall (The Silver Hoard, docs/story/side_quests.md;
+# docs/voice/narrator.md). Every line here is unvoiced for now.
+
+~ enter:argynvostholt_undercroft
+| A low vault under the house, colder than the house. Silver lies in drifts against the pillars like snow against fence posts, and somewhere at the far end, in the dark, somebody is counting.
+| [flag.gilded_knight_slain] A low vault under the house, and the silver in it lying quiet. Nobody is counting any more.
+cooldown 30
+
+~ enter:undercroft_tithe_vault
+| Old coins crunch underfoot like gravel. Every one has a dragon's head on one side.
+once
+
+~ examine:tithe_roll
+| The tithe roll: every village in the valley in a careful hand, and against each one a number of hearths and the same number of coins. The last line is a date four hundred years gone, and under it, in a different hand, the same numbers counted again, and again, down the margin and onto the floor.
+
+~ examine:tithe_banner
+| The Order's banner, the silver dragon on blue, hung where the tithe would see it go out. Coin-dust has settled in its folds like frost.
+
+~ examine:tithe_squire_shield
+| A squire's small round shield, cut nearly in two by one blow from above. The strap is still buckled. Whoever carried it was going somewhere in a hurry, up the stair, with something heavy.
+
+~ examine:tithe_drift_5
+| A drift of silver taller than you are. Pushed into it, at about the height of a man's hand, the print of a gauntlet, made over and over again.

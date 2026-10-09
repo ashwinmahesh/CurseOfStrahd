@@ -17,6 +17,7 @@ boot_splash/bg_color=Color(0.0706, 0.0275, 0.0353, 1)
 
 [autoload]
 
+PatchLoader="*res://core/patch_loader.gd"
 ErrorWatch="*res://core/error_watch.gd"
 EventBus="*res://core/event_bus.gd"
 Dice="*res://core/dice.gd"

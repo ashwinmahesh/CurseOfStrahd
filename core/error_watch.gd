@@ -5,7 +5,8 @@ extends Node
 ## hook (OS.add_logger) catches the errors. It can be called from any thread, so the hook only queues them and this
 ## node writes and shows them on the main thread. The notice offers the way back to the title, where Continue loads
 ## the newest save: the way out of a grey screen. It stays up while an error has left no scene, else it fades.
-## The first autoload, so it also catches errors in the others. It is off in headless runs (tests, make smoke) and when
+## The first autoload after PatchLoader (which loads an update patch and names no other script), so it also catches
+## errors in the others. It is off in headless runs (tests, make smoke) and when
 ## the first scene is a tool's or a test's (make capture), so only real play is reported. It names no other script
 ## or autoload directly: the notice must still work when a broken script is the problem.
 

@@ -1,0 +1,40 @@
+{
+  "id": "the_silver_hoard",
+  "name": "The Silver Hoard",
+  "summary": "Argynvost gave his hoard away: every Midwinter the Order left a silver coin on every doorstep in the valley. The last winter's tithe never went out.",
+  "giver": "sir_godfrey_gwilym",
+  "region": "argynvostholt",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Every Midwinter the Order of the Silver Dragon carried the dragon's hoard down the valley and left a coin on every doorstep with a fire behind it: the Dragon's Tithe. The last winter's tithe was chested in Argynvostholt's undercroft the night the house fell, and the knight who kept it went down to it and never came up again.",
+      "objectives": [
+        "Go down to the undercroft under the servants' hall at Argynvostholt",
+        "Find the tithe-keeper"
+      ],
+      "hint": "Take the stair under the servants' table in Argynvostholt's hall down to the undercroft, and talk to the knight on the tithe chest.",
+      "ends": ""
+    },
+    {
+      "id": "fought",
+      "journal": "The tithe-keeper had been sitting on the dragon's silver for four hundred years, and it had grown over him. We took it off him. The tithe chest is ours to open.",
+      "objectives": [
+        "Open the tithe chest in the undercroft"
+      ],
+      "hint": "Open the tithe chest at the far end of Argynvostholt's undercroft.",
+      "ends": ""
+    },
+    {
+      "id": "delivered",
+      "journal": "We sent the dragon's last tithe down to the valley, four hundred years late: a silver coin on every doorstep with a fire behind it. Children wear them on string now.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
+      "id": "kept",
+      "journal": "We kept the dragon's last tithe for ourselves. It's very heavy, and it never seems to get any lighter.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

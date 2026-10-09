@@ -440,6 +440,17 @@ func test_querreth_comes_for_escher() -> void:
 	assert_eq(GameState.story.quest_stage("escher_petition"), "held")
 
 
+## The tithe-keeper gets up off the dragon's silver in Argynvostholt's undercroft, with the escort's empty harness.
+func test_the_gilded_knight_gets_up_off_the_tithe() -> void:
+	var v := await _boot("argynvostholt_undercroft", 20, 9, ["tithe_told"])
+	GameState.story.set_quest_stage("the_silver_hoard", "asked")
+	LocationNpcs.hide_npcs_of(v, "argynvostholt/the_silver_hoard:keeper")
+	await _fight(v, "gilded_knight", ["The Gilded Knight", "An Escort's Harness"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_silver_hoard"), "fought")
+	assert_true(GameState.story.get_flag("gilded_knight_slain", false))
+
+
 ## The blights come out of the trees at the old den, toward the cub crying in the trap.
 func test_the_blights_come_for_the_cub() -> void:
 	var v := await _boot("tser_woods_den", 14, 3, ["bear_path_known"])

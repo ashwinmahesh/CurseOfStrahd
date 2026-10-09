@@ -26,4 +26,5 @@ show_sidebar = False
 icon_size = 128
 text_size = 13
 icon_locations = {os.path.basename(app): (170, 170), "Applications": (490, 170)}
-hide_extensions = [os.path.basename(app)]
+# No hide_extensions: it marks the app with Finder info, and a copy dragged out then fails codesign --verify --strict
+# (QA, 2026-10-09). Finder hides ".app" anyway.

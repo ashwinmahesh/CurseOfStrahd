@@ -1,0 +1,15 @@
+{
+  "id": "sq_gilded_knight",
+  "title": "The Silver Hoard",
+  "summary": "The dragon's last tithe in Argynvostholt's undercroft, and the knight who never let go of it.",
+  "images": [
+    {
+      "image": "sq_gilded_knight",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}
