@@ -775,6 +775,11 @@
   "d4a9068611182184": "[gentle, firm, sad]",
   "f571e83ef2b5d369": "[grim, firm]"
  },
+ "forgotten_storm": {
+  "052cb35be10b4fcb": "[roaring, furious, echoing]",
+  "4917ebd917cfea1a": "[thunderous, then quieter, searching]",
+  "8c77fb85f96e4609": "[roaring, thunderous, echoing]"
+ },
  "freydis": {
   "0e9784be3c5506d5": "[still, grim, fond]",
   "410bcbbca77fc886": "[proud, grieving, gruff]",
@@ -1304,6 +1309,8 @@
  },
  "mad_mage": {
   "0799847bf1f24e59": "[sly, sniffy]",
+  "1706a5d654093bc7": "[cheerful, scattered, generous]",
+  "1f13e7dc15e0f282": "[fretful, rambling, pleading]",
   "20f5a4e36bace942": "[quiet wonder]",
   "2fd9bb5410849bbf": "[rambling, then hushed and lost]",
   "4176cb9fd5b67da2": "[muttering, eccentric]",
@@ -1318,7 +1325,9 @@
   "b328bf23f63abd24": "[polite, lost]",
   "b7aed4eb40863307": "[huffy, dignified]",
   "c9494af8a083f107": "[confused, rambling, frustrated]",
+  "d0a515b18a054747": "[distracted, rambling, uneasy]",
   "d63fb7d5f1748a2e": "[proud, then puzzled]",
+  "d76ddc547aa92c02": "[hushed, wondering, relieved]",
   "d843c40716433037": "[gleeful, rushing]",
   "e8acd3a85e5ac97b": "[frightened muttering, then paranoid]",
   "f8c8ff03e596b080": "[suspicious, theatrical]",
@@ -1389,14 +1398,17 @@
   "13e98db11da162fd": "[gruff, dry]",
   "1da8112931c4a8aa": "[dry, knowing]",
   "271c430769a22da9": "[incredulous, exasperated]",
+  "2cf159e1bed29011": "[dry, warm, wry]",
   "30e3fb667d218623": "[dry, troubled]",
   "3135cf3405f63f8b": "[curt, imperious]",
   "3b55ccb3fbdbb5dd": "[stunned, whispered, remembering]",
   "3e4776c0771db2ed": "[quiet, self-aware, rueful]",
+  "45aef2a8cbb423e1": "[quiet, wondering, relieved]",
   "493f773ae43fc076": "[quiet, grieving, tender, then gruff]",
   "4df1cb73c1b61922": "[earnest, tender, grave]",
   "56086bdec4d7f055": "[cold fury, quiet]",
   "56531bff07ff1e3c": "[wistful, aching, frustrated]",
+  "57473900a964bc97": "[quiet, ashamed, remembering]",
   "5935756e75c9946a": "[surprised, touched]",
   "606ac0fb7ba9e610": "[firm, self-aware]",
   "635df20005b5e20d": "[sharp, probing]",
@@ -1411,6 +1423,7 @@
   "79aa4bba7ad413d1": "[testy, imperious]",
   "7acf851bea72f67c": "[grave, ominous]",
   "87567073b5aca62a": "[curt, imperious]",
+  "8c168b606e4a1649": "[grave, rueful]",
   "8cf20a6650bf9565": "[gruff, dry humour]",
   "92b9a4e4d228ed8a": "[dry, grave, wry]",
   "9b8c61be49a53a21": "[quiet, tender, resolute]",
@@ -1418,6 +1431,7 @@
   "9e16897fb3bf9713": "[quiet, shaking, ashamed, building]",
   "9f50816524148bb8": "[firm, warming, wise]",
   "a1212da00ddc2d25": "[bitter, ashamed, rising anger]",
+  "a63f1d89c10c2274": "[dry laugh, bitter, wry]",
   "a831a3edb6634711": "[low, uneasy, warning]",
   "aadfb61cb42cdd6a": "[gruff kindness]",
   "ca3cb782e1c07a87": "[quiet, tender, wry]",
@@ -1425,7 +1439,8 @@
   "ea4f69a7cc8b911d": "[brisk, wry]",
   "f249036fae21249c": "[grave, measured, expert]",
   "fcfea92e84679f35": "[solemn promise]",
-  "fd148b18de8835b2": "[brisk, wry, imperious]"
+  "fd148b18de8835b2": "[brisk, wry, imperious]",
+  "ff36452ae4f0f615": "[weary, grave, earnest]"
  },
  "mother_ecaterina": {
   "0829ac497eef668e": "[faint, slow, numb]",
