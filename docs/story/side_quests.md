@@ -107,6 +107,23 @@ break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the p
   party members a fight. It's the only side quest below level 3.
 - Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
 
+### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
+
+Old Mihail the gravedigger, asked whether there's anyone he couldn't bury (a new option in his menu, from level 3): a
+girl in a nursemaid's cap stands at the churchyard wall by night and won't come through the gate. By night she's there
+(`hours`, the Durst nursemaid's NPC on the village map). She knows the party if they hummed her the lullaby in Death
+House. Her name is Veta, which nobody in that house ever said; her bones are folded in the attic trunk, and she wants
+to lie with her son, Walter, not in the churchyard. **Escalation:** her bones from the trunk (a new option at the
+trunk) down to the smallest crypt in the family row (a new option at Walter's crypt). **Twist:** his crypt is empty;
+the robed ones cut his name over a box and gave him to the thing in the pit. Laying her in it anyway rouses the
+house's keepers.
+
+- Fight `nursemaid_keepers` in the family crypts (my entries on data/locations/death_house_dungeon_1.json): Gustav and
+  Elisabeth Durst (ghasts) and two robed ones (ghouls), unless the Dursts are already gone; then the robed one who
+  carried Walter down (a ghast) and four more. The autopilot wins 4 of 4 against the Dursts and 3 of 4 against the
+  robed ones at level 3, losing one or two party members a fight.
+- Reward: her lucky stone, left on the lid, a Stone of Good Luck (uncommon). No still.
+
 ## The Tser Pool camp (level 4)
 
 Talker: Zora ("Heard anything interesting?" is her old road question renamed). Radu's Nicu line now starts
@@ -763,5 +780,6 @@ thanks, and the companions' interjects), narrator/amber_deep.dialogue, and Morde
 the_mages_lost_pages.dialogue ("Corvina. I still say it every morning...", once he has thanked the party). Batch 5,
 Yester Hill: the_druid_who_came_back.dialogue in full (new speaker Zorica; also Davian, Ruxandra and Kostin, and a
 blunt interject). Batch 5,
+the Village of Barovia: the_nursemaids_grave.dialogue in full (the Durst nursemaid, named Veta, and Old Mihail). Batch 5,
 Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers Old Sabin, Sandu and the Lantern Girl;
 also the town guard) and gate.dialogue's news jump.

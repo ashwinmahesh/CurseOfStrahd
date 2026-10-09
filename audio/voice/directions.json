@@ -315,7 +315,9 @@
   "c8bb448db7473da5": "[weary, fond]"
  },
  "barovia_gravedigger": {
+  "125bfed2d9b0c257": "[gruff, proud, dry]",
   "189174c69301b144": "[slow, low, discreet]",
+  "29d1abb359bffd36": "[low, knowing, grim]",
   "493100e31a309f96": "[slow, gentle, courteous]",
   "5fa869f518ff62c6": "[slow, low, haunted]",
   "631b3a70be1e801e": "[slow, bewildered, relieved]",
@@ -324,6 +326,7 @@
   "78c01b99a1f0e116": "[slow, courteous, eerie]",
   "9d550fcd53c5fafd": "[slow, tender, grieving]",
   "c20c657ad9b3cf26": "[slow, gravelly, matter-of-fact]",
+  "d2bdc63e8142e311": "[low, uneasy, gentle]",
   "d461c61a417a517e": "[slow, courteous, odd]",
   "dbcd9b605fa9b11f": "[slow, gravelly, ominous]",
   "dd77a13ac686f2b5": "[slow, haunted]",
@@ -637,6 +640,17 @@
  "doru": {
   "186b2e0d5dcaaabb": "[sly, hungry, hissing]",
   "734c769a8a1b7a88": "[eerie, childlike, chilling]"
+ },
+ "durst_nursemaid": {
+  "174ceaa98bd28678": "[quiet, firm, sad]",
+  "266fab1faa818469": "[sad, quiet, bitter]",
+  "3092f01a07519558": "[quiet, wistful, hurt]",
+  "68e90991551f202d": "[gentle, soothing, sad]",
+  "aef88731a12285df": "[wondering, moved, whispered]",
+  "b340c514432d4484": "[gentle, sad, calm]",
+  "f0c17d34572d585c": "[soft, grateful, urgent]",
+  "f39b54569f3b51da": "[soft, yearning, hushed]",
+  "fbd4f05d644ed476": "[aching, pleading, breaking]"
  },
  "exethanter": {
   "055dd0501cc44a2f": "[alarmed whisper]",
@@ -1120,6 +1134,7 @@
   "da65623ed9274e63": "[panicked whisper]"
  },
  "liriel_dawnsong": {
+  "1813b7e53eabb415": "[gentle, certain, compassionate]",
   "27dc277991695aa4": "[quiet, certain, compassionate]",
   "2cf8f1542384a932": "[shaken, hushed, sorrowful]",
   "4503a76638b93b89": "[shaken, quiet]",

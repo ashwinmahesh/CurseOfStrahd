@@ -1343,6 +1343,20 @@
         18
       ],
       "facing": "south"
+    },
+    {
+      "npc": "durst_nursemaid",
+      "cell": [
+        30,
+        10
+      ],
+      "dialogue": "village_of_barovia/the_nursemaids_grave:wall",
+      "when": "quest.the_nursemaids_grave and quest.the_nursemaids_grave != laid and quest.the_nursemaids_grave != done",
+      "hours": [
+        20,
+        5
+      ],
+      "facing": "north"
     }
   ],
   "encounters": [

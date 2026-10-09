@@ -160,7 +160,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
-		view.toast.emit("Can't reach it")
+		if action_id == "use" and _seen_from_afar(thing):
+			then.call()
+		else:
+			view.toast.emit("Can't reach it")
 	elif stand == view.leader().cell:
 		then.call()
 	else:
@@ -267,7 +270,7 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		var prop := p as Dictionary
 		if LocationView._cell(prop["cell"]) == cell and view.prop_nodes.has(str(prop["id"])):
 			var verb := {"examine": "Examine", "book": "Read", "search": "Search", "lever": "Pull", "decor": "Look at"}.get(str(prop["kind"]), "Examine") as String
-			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s" % [verb, prop.get("label", "it")], "spec": prop}
+			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s" % [verb, prop_name(prop)], "spec": prop}
 	for t: Variant in view.loc.get("traps", []):
 		var trap := t as Dictionary
 		if str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
@@ -279,6 +282,26 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		if LocationView._cell(exit["cell"]) == cell:
 			return {"kind": "exit", "id": str(exit["id"]), "label": str(exit.get("label", "Leave")), "spec": exit}
 	return {}
+
+
+## Models whose id doesn't read as a name.
+const MODEL_NAMES := {"grave_open": "the open grave", "bone_scatter": "the scattered bones", "candle_cluster": "the candles",
+	"pine_clawed": "the clawed pine", "tub_wooden": "the wooden tub", "dead_tree": "the dead tree"}
+
+
+## A prop's name in its menu and name plate: its own label, else what its model is ("the fishing nets"); a decor prop
+## with neither said "Look at it" (Storyline QA via UI QA, 2026-10-08: the garden bed, the stacked casks).
+static func prop_name(prop: Dictionary) -> String:
+	if str(prop.get("label", "")) != "":
+		return str(prop["label"])
+	var model := str(prop.get("model", ""))
+	if model == "":
+		return "it"
+	if MODEL_NAMES.has(model):
+		return str(MODEL_NAMES[model])
+	if model.length() > 2 and model[-2] == "_":
+		model = model.left(-2)   # a variant: bramble_a, bramble_b
+	return "the " + model.replace("_", " ")
 
 
 ## Clicking a square: walk there, or walk next to the thing there and use it.
@@ -295,12 +318,27 @@ static func click(view: LocationView, cell: Vector2i) -> void:
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
-		view.toast.emit("Can't reach it")
+		if _seen_from_afar(thing):
+			interact(view, thing)
+		else:
+			view.toast.emit("Can't reach it")
 		return
 	if stand == view.leader().cell:
 		interact(view, thing)
 	else:
 		view.walk_to(stand, func() -> void: interact(view, thing))
+
+
+## A thing the party only looks at (a prop to examine, or decor, with nothing to take, read, pull or talk at: a house
+## front, a fire deep in an oven, horses behind a fence) is examined from where the party stands when no square beside
+## it can be reached (Storyline QA, 2026-10-08: five such props' narration could never play). tools/data/story_reach.py
+## holds everything else to be reachable.
+static func _seen_from_afar(thing: Dictionary) -> bool:
+	if thing.is_empty() or str(thing["kind"]) != "prop":
+		return false
+	var spec := thing["spec"] as Dictionary
+	return str(spec.get("kind", "")) in ["examine", "decor"] and str(spec.get("dialogue", "")) == "" \
+		and not spec.has("item") and not spec.has("flag")
 
 
 static func _adjacent_free(view: LocationView, cell: Vector2i) -> Vector2i:
