@@ -63,8 +63,10 @@ party member, as before.
 - `ui/dice/d20_mesh.gd` (`D20Mesh`): the gem-cut icosahedron, its numbering and the turn that shows each number.
 - `shaders/ui/emerald_die.gdshader` (the emerald, its back facets, the landing's light), `shaders/ui/die_feather.gdshader`
   (the die's picture fades out at its edges). Colours: `emerald_*` in the UI palette (tools/art/build_palette.py).
-- Sounds: `die_bounce` and `die_land` in art/audio.json (Kenney glass, CC0); `radiant_chime` and `thud_heavy` for a
-  natural 20 and 1.
+- Sounds (art/audio.json, generated with ElevenLabs for the die, art/sourced/elevenlabs_dice): `die_throw` as it flies
+  in, `die_bounce` at each bounce (several takes, picked at random, each bounce 4 dB softer), `die_land` as it rests,
+  then a beat later `die_success` or `die_fail`, or `die_crit` and `die_fumble` for a natural 20 and 1. The owner picks
+  takes on the Emerald Die Sounds listening page (https://claude.ai/artifact/AWFxBbEEhN3RfRg3Vc82mJ).
 - `ui/dialogue/dialogue_ui.gd`: shows the d20 on a check beat; the Speaker button, Tab and `cycle_speaker`.
 - `story/dialogue_runner.gd`: the check beat's dice; `set_speaker`, and `_check_info` for an option's check.
 - `world/exploration/location_view.gd` (`big_roll`) and its emitters in location_locks, location_crime,
