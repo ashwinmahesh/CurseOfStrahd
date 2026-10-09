@@ -209,3 +209,12 @@ used); **All** is the default and lists the starred actions, Common, the class's
 and Items one section after another, each section's name on a gilt rule above its rows. Six slots to a row; the
 list scrolls past two and a half rows. D-pad up and down (or the tab keys) step through the filters. A long name over
 the portrait is cut with an ellipsis so the bar never reaches End Turn.
+
+## Examine card (owner pick 2026-10-09, after Baldur's Gate 3)
+
+Right-click a creature (its square's menu: **Examine**; on another creature's turn the card opens straight away) for
+its card: portrait, name and what it is (size, type and CR; a hero's level and classes), a line about it, then
+Condition (a foe shows only whether it's Bloodied, as its bar does; a friend its Hit Points), AC and Speed, what's on it
+(conditions, Concentration, spells), its Defenses and Abilities once the party has studied its kind (else "Unknown:
+Study it"), legendary actions left, and the odds of the hero's best attack on it. `ActionCatalog.examine` builds it;
+`CombatHud.show_examine` draws it where the roll details open; a click, Esc or B closes it.

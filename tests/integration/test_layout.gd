@@ -531,6 +531,20 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 				return cv.hud,
 				func() -> void: cv.hud._menu.hide())
 			break
+	# A foe's Examine card (ActionCatalog.examine), studied so its defenses and abilities show too.
+	var foe: Combatant = null
+	for c1 in cv.e.combatants:
+		if c1.side == &"enemy":
+			foe = c1
+			break
+	if foe != null and foe.creature is Monster:
+		cv.e.studied[str((foe.creature as Monster).data["id"])] = true
+		await _check("a foe's Examine card", func() -> Variant:
+			var who := cv.e.current() if cv.e.current().side == &"party" else null
+			cv.hud.show_examine(cv.catalog.examine(who, foe), foe)
+			await _frames(1)
+			return cv.hud,
+			func() -> void: cv.hud.hide_details())
 	# A reaction prompt (bottom right, above the hotbar) with the odds over a foe at the window's edge.
 	var party: Combatant = null
 	for c0 in cv.e.combatants:
