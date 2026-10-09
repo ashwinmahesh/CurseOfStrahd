@@ -424,6 +424,56 @@ func test_castle_ravenloft_from_outside() -> void:
 	c.queue_free()
 
 
+## W7: Castle Ravenloft's wall walk and the keep's roof. Along the gate wall each side of the gatehouse, a walk thirty
+## feet up that the rules stand on, reached from the courtyard by stairs in five-foot steps (thirty feet of walking,
+## nothing climbed), drawn in the castle's stone with no floor of the board's own. The keep has a slated roof inside
+## its battlements that goes down with the keep when it's in the way. Classic draws the walk as raised floor.
+func test_the_castle_wall_walk_and_the_keep_roof() -> void:
+	var v := _view("castle_ravenloft_gates")
+	await _frames(2)
+	var board := v.board
+	var g := board.grid
+	var walk: Array[int] = []
+	walk.append_array(range(11, 17))
+	walk.append_array(range(23, 29))
+	for x in walk:
+		var c := Vector2i(x, 22)
+		assert_eq(g.height(c), 30, "the walk at %s is 30 ft up" % c)
+		assert_false(g.has_flag(c, CombatGrid.WALL), "and stood on")
+		assert_true(CastleBuilder.walk_at(board, c), "in the castle's stone")
+		assert_true(board.floor_box(c) == null, "with no floor of the board's own")
+	var none := func(_c: Vector2i) -> bool: return false
+	var reach := g.reachable(Vector2i(11, 21), 1, 60, none, none, none)
+	assert_eq(int((reach.get(Vector2i(16, 22), {"cost": -1}) as Dictionary)["cost"]), 30, "up the west stairs in steps")
+	reach = g.reachable(Vector2i(28, 21), 1, 60, none, none, none)
+	assert_eq(int((reach.get(Vector2i(23, 22), {"cost": -1}) as Dictionary)["cost"]), 30, "and the east stairs")
+	var roof := {}
+	var keep := {}
+	for b: Dictionary in board.buildings:
+		if b.has("castle") and str(b["part"]) == "keeproof":
+			roof = b
+	keep = board.buildings[int(board.house_cells[Vector2i(20, 4)])] as Dictionary
+	assert_false(roof.is_empty(), "the keep has a roof")
+	if not roof.is_empty():
+		var mi := (roof["upper"] as Node3D).get_node_or_null("Roof") as MeshInstance3D
+		assert_true(mi != null and mi.get_aabb().end.y > float(keep["height"]) + 2.0, "rising over its battlements")
+		var focus := board.cell_center(Vector2i(19, 18))
+		for i in 2:
+			board.cut_buildings(focus + Vector3(0, 12, -12), focus, 1.0)
+		assert_false((roof["upper"] as Node3D).visible, "turned round, the roof goes down with the keep")
+		for i in 2:
+			board.cut_buildings(focus + Vector3(0, 12, 12), focus, 1.0)
+		assert_true((roof["upper"] as Node3D).visible, "and stands again")
+	v.queue_free()
+	await _frames(1)
+	Look.set_style("classic", false)
+	var c := _view("castle_ravenloft_gates")
+	await _frames(2)
+	assert_false(CastleBuilder.walk_at(c.board, Vector2i(12, 22)), "Classic")
+	assert_true(c.board.floor_box(Vector2i(12, 22)) != null, "draws the walk as raised floor")
+	c.queue_free()
+
+
 ## The loading lane: merging appends each module from its arrays held in memory (BuildingKit.Arrays) instead of reading
 ## the module's mesh back from the GPU every time; the merged house is the same, vertex for vertex.
 func test_merging_from_memory_matches_merging_from_the_mesh() -> void:
