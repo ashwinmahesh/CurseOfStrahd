@@ -1693,14 +1693,14 @@
       "shared_with": "krezk_guard"
     },
     "tser_marin": {
-      "voice_id": "sGcPNcpR5PikknzyXcy7",
-      "name": "Library voice: Cristi Romana",
-      "description": "Old Marin, hunter of the tser pool camp: a generic townsperson on a shared voice, Cristi Romana (also Krezk Watchman's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "YIgX8Hligdg1Bc44qEcW",
+      "name": "Barovia Old Marin",
+      "description": "An old Vistani hunter in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, grumbling, gruff but kindly old voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "krezk_guard"
+      "generated_voice_id": "YIgX8Hligdg1Bc44qEcW",
+      "released": true
     },
     "wine_woodsplitter": {
       "voice_id": "AEPS4amQpAYS3CULyGRe",
