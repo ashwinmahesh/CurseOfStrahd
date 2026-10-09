@@ -192,3 +192,20 @@ Readable at a glance (branch `hud-look`):
 - **The reaction prompt** opens bottom right, above the hotbar, growing upward, so who's hitting whom stays in view
   (UI QA, 2026-10-09).
 
+## Shared party turns (owner 2026-10-09, after Baldur's Gate 3)
+
+Heroes next to each other in the turn order act together (deviations.md). In the turn order the heroes who can still
+take theirs are edged green and the ones done dimmed; their party frames say **Ready**; the hotbar's note names them
+("Shared turn · Godrick and Thistle ready (Tab or a portrait)"). A click on a ready hero's frame or portrait, Tab or the
+radial's Inspect takes control of them; End Turn ends only the hero in control, and the next ready one takes over.
+Settings, Game, **Party turns**: Shared (the default) or One at a time.
+
+## Filters and one list (Ashwin's mix, 2026-10-09)
+
+Asked to choose between the tabs and Baldur's Gate 3's PC bar (a mock-up, tools/capture/hotbar_mockup_capture.tscn),
+the owner picked a mix: BG3's sidebar of filters, our icon-and-name slots. The filters run down the left of the slots
+(All, then the hero's tabs: Common, the class's, Spells, Items, Reactions, Passives, and Favourites and Hidden when
+used); **All** is the default and lists the starred actions, Common, the class's, Spells (cantrips first, by level)
+and Items one section after another, each section's name on a gilt rule above its rows. Six slots to a row; the
+list scrolls past two and a half rows. D-pad up and down (or the tab keys) step through the filters. A long name over
+the portrait is cut with an ellipsis so the bar never reaches End Turn.

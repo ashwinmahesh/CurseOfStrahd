@@ -236,7 +236,11 @@ func _show_menu() -> void:
 		b.position = Vector2(x, _u(0, RESPEC_Y).y - b.size.y / 2.0)
 		x += b.size.x + gap
 	var can := SaveSystem.can_save()
-	var why := "In a fight the game saves itself at the start of each round; load that save to retry the round."
+	# A live Honour run can't go back (Ashwin, 2026-10-09, QA D-3): no loading from inside it, and leaving it keeps
+	# where the party is (in a fight, the start of the round it's in).
+	var honour := SaveSystem.honour() and root != null
+	var why := "In a fight the game saves itself at the start of each round." if honour \
+		else "In a fight the game saves itself at the start of each round; load that save to retry the round."
 	_button(0, "Resume", func() -> void: root.call("close_screen"))
 	var qs := InputActions.key_text(&"quick_save")
 	var quick := _button(1, "Quicksave  (%s)" % qs if qs != "" else "Quicksave", _quick_save)
@@ -248,7 +252,13 @@ func _show_menu() -> void:
 	save.tooltip_text = why if not can else "Save in a new slot, or over one of your saves."
 	var load := _button(3, "Load a Save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty()
-	_button(4, "Quit to Title", func() -> void: leave_to(TITLE_SCENE))
+	if honour:
+		load.disabled = true
+		load.tooltip_text = "An Honour run can't go back: the game saves as you go. Other games load from the title."
+	_button(4, "Quit to Title", func() -> void:
+		if honour:
+			SaveSystem.autosave()   # outside a fight; in one, the round's own save already is
+		leave_to(TITLE_SCENE))
 	_note = _text("", 10.0, _c("arch_gold_light"))
 	_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_note.position = _u(0, FIRST_BUTTON_Y + BUTTON_PITCH * 4.0 + 22.0)
@@ -329,6 +339,11 @@ func _game_rows() -> void:
 		y += ROW_PITCH
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
+	y += ROW_PITCH
+	# Shared party turns (owner 2026-10-09, after Baldur's Gate 3).
+	_choice_row(y, "Party turns", ["Shared", "One at a time"], 0 if GameSettings.shared_turns() else 1, func(i: int) -> void:
+		GameSettings.set_shared_turns(i == 0),
+		InputActions.fill("Shared: heroes next to each other in the turn order act together; click a hero's portrait or press {cycle_leader} to switch between them."))
 	y += ROW_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")

@@ -506,6 +506,7 @@
       "description": "A huge young man with a slow, soft, gentle deep voice and a strong, clearly audible Eastern European (Romanian) accent. Simple, sweet and earnest, speaks carefully, pleased to be useful.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "xw920H5ZOFK83ZkLEfHe",
       "released": true
     },
     "vestige_tarakamedes": {
@@ -2242,6 +2243,16 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "aWs8fz4m3vKL1N0spA53",
+      "released": true
+    },
+    "hollow_agafia": {
+      "voice_id": "9qBU8mZvPtQvuku5HHoD",
+      "name": "Barovia Agafia",
+      "description": "A thin, hard Barovian woman in her thirties, a werewolf who fled her pack to hide her children, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A low, husky, guarded voice, kept quiet so as not to wake her children; fierce, tired and protective, with a wolf's growl held down underneath.",
+      "settings": {},
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "9qBU8mZvPtQvuku5HHoD",
       "released": true
     }
   },

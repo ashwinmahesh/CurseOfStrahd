@@ -57,6 +57,7 @@ static func plan(board: ArenaBoard) -> Dictionary:
 	var taken := {}
 	var cells: Array = block.keys()
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return a.y < b.y or (a.y == b.y and a.x < b.x))
+	var rects: Array[Rect2i] = []
 	for c: Vector2i in cells:
 		if taken.has(c):
 			continue
@@ -78,7 +79,30 @@ static func plan(board: ArenaBoard) -> Dictionary:
 		for i in w:
 			for j in d:
 				taken[c + Vector2i(i, j)] = true
-		_house(board, Rect2i(c, Vector2i(w, d)), int(group[c]))
+		rects.append(Rect2i(c, Vector2i(w, d)))
+	# The houses of one block (an L, a T) are one building (W7): one height, one roof, one paint, no walls between
+	# them, and a wing's roof running into the main one.
+	var joined := {}
+	for r in rects:
+		var g := int(group[r.position])
+		if not joined.has(g):
+			joined[g] = {"rects": [] as Array[Rect2i], "cells": {}}
+		((joined[g] as Dictionary)["rects"] as Array[Rect2i]).append(r)
+	for c: Vector2i in block:
+		((joined[int(group[c])] as Dictionary)["cells"] as Dictionary)[c] = true
+	for g: int in joined:
+		var j := joined[g] as Dictionary
+		var main := Rect2i()
+		var area := 0
+		for r: Rect2i in j["rects"]:
+			area += r.get_area()
+			if r.get_area() > main.get_area():
+				main = r
+		j["main"] = main
+		j["area"] = area
+	for r in rects:
+		var g := int(group[r.position])
+		_house(board, r, g, joined[g] as Dictionary if ((joined[g] as Dictionary)["rects"] as Array).size() > 1 else {})
 	return lines
 
 
@@ -200,12 +224,14 @@ static func _flush_palisade(board: ArenaBoard) -> void:
 		board.add_child(mi)
 	board.remove_meta("palisade_parts")
 
-static func _house(board: ArenaBoard, r: Rect2i, group: int) -> void:
+## A house on rectangle `r` of wall block `group`; `joined` is the block's {rects, cells, main, area} when it holds
+## more than one house (an L-shaped block), else empty.
+static func _house(board: ArenaBoard, r: Rect2i, group: int, joined: Dictionary = {}) -> void:
 	var style := BuildingKit.style_for(board)
 	if style != "":
 		if _church_door(board, r) != Vector2i(-1, -1) and BuildingKit.has("kit_church_corner"):
 			style = "church"   # the house with the church's doors is the church: stone, buttresses, a bell tower
-		_house_kit(board, r, group, style)
+		_house_kit(board, r, group, style, joined)
 		return
 	var seed := absi(r.position.x * 73856093 ^ r.position.y * 19349663 ^ r.size.x * 83492791)
 	var area := r.size.x * r.size.y
@@ -296,10 +322,12 @@ static func _windows(board: ArenaBoard, r: Rect2i, upper: Node3D, h: float, seed
 ## module, picked by the square so the same house is always built the same way; windows go on faces over open ground
 ## as before (some lit, some shuttered); a door hung on a face later turns it into a door bay (face_taken). The walls
 ## and the roof are each merged into one mesh.
-static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String) -> void:
-	var seed := absi(r.position.x * 73856093 ^ r.position.y * 19349663 ^ r.size.x * 83492791)
-	var area := r.size.x * r.size.y
-	var h := HOUSE_H + (0.4 if area >= 16 else 0.0) + float(seed % 3) * 0.15
+static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String, joined: Dictionary = {}) -> void:
+	# A wing of an L-shaped block takes the main house's height, roof and paint, so the block reads as one building.
+	var m := joined.get("main", r) as Rect2i
+	var seed := absi(m.position.x * 73856093 ^ m.position.y * 19349663 ^ m.size.x * 83492791)
+	var area := int(joined.get("area", r.get_area()))
+	var h := HOUSE_H + (0.4 if m.get_area() >= 16 else 0.0) + float(seed % 3) * 0.15
 	var cfg := BuildingKit.settings()
 	var roofs := (cfg.get("roofs", {}) as Dictionary).get(style, {}) as Dictionary
 	var kind := str(roofs.get("grand", "slate")) if area >= int(cfg.get("grand_area", 30)) else str(roofs.get("small", "slate"))
@@ -307,12 +335,16 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String) 
 		kind = "slate"
 	var along_x := r.size.x >= r.size.y
 	var span := r.size.y if along_x else r.size.x
-	var rise := BuildingKit.rise(style, kind, span)
+	var butts := _butts(style, kind, r, along_x, joined)
+	# A wing's roof runs into the main roof under its ridge: no steeper than leaves it there.
+	var rise := BuildingKit.rise(style, kind, span) * float(butts.get("k", 1.0))
 	var paints := cfg.get("paints", []) as Array
 	var root := Node3D.new()
 	root.name = "Building"
 	board.add_child(root)
 	root.position.y = base_y(board, r)
+	for part: Rect2i in joined.get("rects", []):
+		root.position.y = minf(root.position.y, base_y(board, part))   # the parts' eaves line up on a slope
 	var upper := Node3D.new()
 	upper.name = "Upper"
 	root.add_child(upper)
@@ -321,7 +353,8 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String) 
 		"aabb": AABB(Vector3(r.position.x - over, root.position.y, r.position.y - over), Vector3(r.size.x + 2 * over, h + rise + 0.5, r.size.y + 2 * over)),
 		"rect": r, "group": group, "kit": style, "roof": kind, "rise": rise, "seed": seed,
 		"paint": str(paints[seed % paints.size()]) if style == "clapboard" and not paints.is_empty() else "",
-		"core": str((cfg.get("cores", {}) as Dictionary).get(style, "")), "faces": {}, "markers": []}
+		"core": str((cfg.get("cores", {}) as Dictionary).get(style, "")), "faces": {}, "markers": [],
+		"joined": joined.get("cells", {}), "butts": butts}
 	var idx := board.buildings.size()
 	board.buildings.append(b)
 	for i in r.size.x:
@@ -337,8 +370,8 @@ static func _house_kit(board: ArenaBoard, r: Rect2i, group: int, style: String) 
 			var c := r.position + Vector2i(i, j)
 			for d in SetDressing.FACES:
 				var out := c + d
-				if r.has_point(out):
-					continue
+				if r.has_point(out) or (b["joined"] as Dictionary).has(out):
+					continue   # inside the house, or the side another part of the same building stands against
 				var pick := ModelPiece.hash_cell(c * 3 + d)
 				var face := {"cell": c, "dir": d, "low": lows[pick % lows.size()], "up": ups[int(pick / 7.0) % ups.size()],
 					"window": "", "door": ""}
@@ -364,6 +397,57 @@ static func _church_door(board: ArenaBoard, r: Rect2i) -> Vector2i:
 		if cell.size() == 2 and words.contains("church") and r.has_point(Vector2i(int(cell[0]), int(cell[1]))):
 			return Vector2i(int(cell[0]), int(cell[1]))
 	return Vector2i(-1, -1)
+
+
+## Where a wing of an L-shaped building runs its roof into the main one (W7): the ends of house `r`'s ridge (+x, -x,
+## +z, -z) that stand wholly against another part of the block whose ridge crosses it, each with how far the roof
+## carries on into that part (to its ridge), and `k`, how much flatter the wing's roof is than the kit's so its ridge
+## stays under the other roof. Empty for a house on its own.
+static func _butts(style: String, kind: String, r: Rect2i, along_x: bool, joined: Dictionary) -> Dictionary:
+	var out := {}
+	if joined.is_empty():
+		return out
+	var span := r.size.y if along_x else r.size.x
+	var rise := BuildingKit.rise(style, kind, span)
+	var k := 1.0
+	for o: Rect2i in joined["rects"]:
+		if o == r:
+			continue
+		var o_x := o.size.x >= o.size.y
+		if o_x == along_x:
+			continue   # side by side, or end to end: their ridges don't cross
+		var o_span := o.size.y if o_x else o.size.x
+		var o_rise := BuildingKit.rise(style, kind, o_span)
+		var side := ""
+		if along_x and o.position.y <= r.position.y and o.end.y >= r.end.y:
+			side = "+x" if o.position.x == r.end.x else ("-x" if o.end.x == r.position.x else "")
+		elif not along_x and o.position.x <= r.position.x and o.end.x >= r.end.x:
+			side = "+z" if o.position.y == r.end.y else ("-z" if o.end.y == r.position.y else "")
+		if side == "":
+			continue
+		# Its ridge under the other roof half a square short of that roof's ridge.
+		var room := o_rise - 0.5 * o_rise / maxf(0.5, o_span / 2.0)
+		if room < rise * 0.45:
+			continue   # it would have to be nearly flat
+		k = minf(k, room / rise)
+		out[side] = floori(o_span / 2.0)
+	if not out.is_empty():
+		out["k"] = k
+	return out
+
+
+## Whether a house's corner `at` (world x, z) is an outside corner of its building: one of the four squares round it
+## is the building's. Where the parts of an L-shaped building meet, or along the line between them, it isn't.
+static func _outer_corner(b: Dictionary, at: Vector3) -> bool:
+	var cells := b.get("joined", {}) as Dictionary
+	if cells.is_empty():
+		return true
+	var n := 0
+	for c: Vector2i in [Vector2i(floori(at.x) - 1, floori(at.z) - 1), Vector2i(floori(at.x), floori(at.z) - 1),
+			Vector2i(floori(at.x) - 1, floori(at.z)), Vector2i(floori(at.x), floori(at.z))]:
+		if cells.has(c):
+			n += 1
+	return n == 1
 
 
 ## The lettered variants of a part the kit has for a style ("low_" -> ["low_a", "low_b" ...]).
@@ -455,6 +539,8 @@ static func _kit_walls(board: ArenaBoard, idx: int) -> void:
 	var s_corner := (h - foot) / (KH - foot)
 	for corner: Array in [[Vector3(r.position.x, 0, r.end.y), 0.0], [Vector3(r.end.x, 0, r.end.y), PI / 2.0],
 			[Vector3(r.end.x, 0, r.position.y), PI], [Vector3(r.position.x, 0, r.position.y), -PI / 2.0]]:
+		if not _outer_corner(b, corner[0] as Vector3):
+			continue   # where the parts of an L-shaped building meet
 		parts.append([BuildingKit.wall_id(style, "corner"), BuildingKit.face_xf(corner[0] as Vector3, float(corner[1]), s_corner, foot)])
 		stub.append([BuildingKit.wall_id(style, "corner"), BuildingKit.face_xf(corner[0] as Vector3, float(corner[1]),
 			(CUT_H + 0.06) / KH)])
@@ -488,26 +574,35 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 	var cx := r.position.x + r.size.x / 2.0
 	var cz := r.position.y + r.size.y / 2.0
 	var slice := BuildingKit.roof_id(style, kind, span, false)
+	var butts := b.get("butts", {}) as Dictionary
+	# A wing's roof is the kit's made flatter (W7: it runs in under the main roof), from its eaves up.
+	var kit_rise := BuildingKit.rise(style, kind, span)
+	var flat := Basis.from_scale(Vector3(1, rise / kit_rise if kit_rise > 0.0 else 1.0, 1))
 	var parts: Array = []
 	if slice == "":
 		# Wider than the kit's roofs: the plain gabled roof.
 		upper.add_child(_gable(Vector2(r.position), Vector2(r.position + r.size), h - 0.02, rise, along_x,
 			board.roof_material(kind == "slate"), BuildingKit.material(core_name)))
 	else:
-		for i in length:
+		# A wing's ridge carries on into the part of the building it runs into, to under that part's ridge.
+		var ahead := int(butts.get("+x" if along_x else "+z", 0))
+		var behind := int(butts.get("-x" if along_x else "-z", 0))
+		for i in range(-behind, length + ahead):
 			var at := Vector3(r.position.x + i + 0.5, h, cz) if along_x else Vector3(cx, h, r.position.y + i + 0.5)
-			parts.append([slice, Transform3D(Basis(Vector3.UP, 0.0 if along_x else PI / 2.0), at)])
+			parts.append([slice, Transform3D(Basis(Vector3.UP, 0.0 if along_x else PI / 2.0) * flat, at)])
 		var end := BuildingKit.roof_id(style, kind, span, true)
 		var gable := "kit_%s_gable_w%d" % [style, span]
-		# [where the gable is, the roof end's heading (its +x outward), the gable framing's heading (facing out)]
-		var gables: Array = [[Vector3(r.end.x, h, cz), 0.0, PI / 2.0], [Vector3(r.position.x, h, cz), PI, -PI / 2.0]] if along_x \
-			else [[Vector3(cx, h, r.end.y), -PI / 2.0, 0.0], [Vector3(cx, h, r.position.y), PI / 2.0, PI]]
+		# [where the gable is, the roof end's heading (its +x outward), the gable framing's heading (facing out), its side]
+		var gables: Array = [[Vector3(r.end.x, h, cz), 0.0, PI / 2.0, "+x"], [Vector3(r.position.x, h, cz), PI, -PI / 2.0, "-x"]] \
+			if along_x else [[Vector3(cx, h, r.end.y), -PI / 2.0, 0.0, "+z"], [Vector3(cx, h, r.position.y), PI / 2.0, PI, "-z"]]
 		for g: Array in gables:
+			if butts.has(str(g[3])):
+				continue   # no gable where the roof runs on into the rest of the building
 			if end != "":
-				parts.append([end, Transform3D(Basis(Vector3.UP, float(g[1])), g[0] as Vector3)])
+				parts.append([end, Transform3D(Basis(Vector3.UP, float(g[1])) * flat, g[0] as Vector3)])
 			if BuildingKit.has(gable):
-				parts.append([gable, Transform3D(Basis(Vector3.UP, float(g[2])), g[0] as Vector3)])
-		parts.append([_gable_ends(r, h, rise, along_x), Transform3D.IDENTITY, core_name])
+				parts.append([gable, Transform3D(Basis(Vector3.UP, float(g[2])) * flat, g[0] as Vector3)])
+		parts.append([_gable_ends(r, h, rise, along_x, butts), Transform3D.IDENTITY, core_name])
 		if style == "church" and BuildingKit.has("kit_church_tower"):
 			# The bell tower rises from the roof at the end with the church's doors.
 			var door := _church_door(board, r)
@@ -539,8 +634,9 @@ static func _kit_roof(board: ArenaBoard, b: Dictionary, along_x: bool, span: int
 		upper.add_child(roof)
 
 
-## The triangles of wall under each end of a gabled roof, in the house's core material.
-static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool) -> ArrayMesh:
+## The triangles of wall under each end of a gabled roof, in the house's core material (none on the sides in `skip`,
+## where the roof runs on into the rest of an L-shaped building).
+static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool, skip: Dictionary = {}) -> ArrayMesh:
 	var gs := SurfaceTool.new()
 	gs.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var a := Vector2(r.position)
@@ -548,12 +644,16 @@ static func _gable_ends(r: Rect2i, h: float, rise: float, along_x: bool) -> Arra
 	var top := h + rise
 	if along_x:
 		var zc := (a.y + b.y) / 2.0
-		_tri(gs, Vector3(a.x, h, a.y), Vector3(a.x, h, b.y), Vector3(a.x, top, zc), Vector3(-1, 0, 0))
-		_tri(gs, Vector3(b.x, h, a.y), Vector3(b.x, h, b.y), Vector3(b.x, top, zc), Vector3(1, 0, 0))
+		if not skip.has("-x"):
+			_tri(gs, Vector3(a.x, h, a.y), Vector3(a.x, h, b.y), Vector3(a.x, top, zc), Vector3(-1, 0, 0))
+		if not skip.has("+x"):
+			_tri(gs, Vector3(b.x, h, a.y), Vector3(b.x, h, b.y), Vector3(b.x, top, zc), Vector3(1, 0, 0))
 	else:
 		var xc := (a.x + b.x) / 2.0
-		_tri(gs, Vector3(a.x, h, a.y), Vector3(b.x, h, a.y), Vector3(xc, top, a.y), Vector3(0, 0, -1))
-		_tri(gs, Vector3(a.x, h, b.y), Vector3(b.x, h, b.y), Vector3(xc, top, b.y), Vector3(0, 0, 1))
+		if not skip.has("-z"):
+			_tri(gs, Vector3(a.x, h, a.y), Vector3(b.x, h, a.y), Vector3(xc, top, a.y), Vector3(0, 0, -1))
+		if not skip.has("+z"):
+			_tri(gs, Vector3(a.x, h, b.y), Vector3(b.x, h, b.y), Vector3(xc, top, b.y), Vector3(0, 0, 1))
 	return gs.commit()
 
 
@@ -652,6 +752,13 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3
 ## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others.
 static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	var target := focus + Vector3(0, 0.8, 0)
+	# The parts of an L-shaped building (W7) go down together: one in the way takes the others with it.
+	var joined_hides := {}
+	for b: Dictionary in board.buildings:
+		if b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+			var aabb := b["aabb"] as AABB
+			if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
+				joined_hides[int(b["group"])] = true
 	for b: Dictionary in board.buildings:
 		if bool(b.get("hidden", false)):
 			continue
@@ -663,6 +770,8 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 			continue
 		var aabb := b["aabb"] as AABB
 		var hides: bool = aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target)
+		if b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+			hides = joined_hides.has(int(b["group"]))
 		var h := float(b["height"])
 		var goal := CUT_H / h if hides else 1.0
 		if b.has("kit"):

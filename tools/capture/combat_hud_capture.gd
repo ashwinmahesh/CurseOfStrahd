@@ -44,7 +44,8 @@ func _ready() -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 150)
-	var shots: Array = [["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
+	var shots: Array = [["ilse_varga", CombatHud.ALL, "0_ilse_all"], ["godrick_pendlebrook", CombatHud.ALL, "0_godrick_all"],
+		["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
 		["godrick_pendlebrook", "", "3_godrick_class"], ["godrick_pendlebrook", ActionCatalog.SPELLS, "4_godrick_spells"],
 		["thistle", ActionCatalog.COMMON, "5_thistle_common"], ["tamsin_tealeaf", "", "6_tamsin_class"],
 		["godrick_pendlebrook", ActionCatalog.REACTIONS, "7_godrick_reactions"]]

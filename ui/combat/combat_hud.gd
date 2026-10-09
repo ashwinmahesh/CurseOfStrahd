@@ -25,6 +25,10 @@ signal square_picked(id: String)
 const COST_COLOURS := {"action": "moss", "attack": "moss", "bonus": "gilt", "reaction": "mist_blue", "free": "slate",
 	"movement": "moon_blue"}
 const SLOT_SIZE := Vector2(132, 50)
+## The filter that lists every action at once: Common, the class's, Spells and Items, one section after another.
+const ALL := "All"
+## Slots to a row (a section's name sits on a gilt rule above its rows).
+const COLUMNS := 6
 ## The target box's outline when an attack would roll with Advantage or Disadvantage.
 const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
@@ -40,7 +44,9 @@ var e: Encounter
 var catalog: ActionCatalog
 ## The party member whose hotbar is shown (the active one on their turn, or whoever the player inspects).
 var shown: Combatant = null
-var tab: String = ActionCatalog.COMMON
+## The hotbar's filter (Ashwin's mix of tabs and Baldur's Gate 3's bar, 2026-10-09): All (every action in one list, by
+## section), or one of ActionCatalog.tabs_for.
+var tab: String = ALL
 ## Index into the visible slots the controller has highlighted (-1 none).
 var focus_slot := -1
 ## The upcast pips for the spell being aimed.
@@ -58,7 +64,8 @@ var _hot_stats: Label
 var _economy: EconomyShapes
 var _move_bar: ProgressBar
 var _move_label: Label
-var _tabs: HBoxContainer
+## The filters down the left of the slots (Baldur's Gate 3's sidebar): All, then the hero's tabs.
+var _tabs: GridContainer
 ## The slot rows: one grid, or on the Spells tab a row of grids by spell level (SpellGroups) with the level beside each.
 var _slots: VBoxContainer
 var _slot_buttons: Array[Button] = []
@@ -296,6 +303,10 @@ func _build_hotbar() -> void:
 	card.custom_minimum_size = Vector2(150, 0)
 	_hot_name = _label("", 19, "gilt_light")
 	_hot_name.add_theme_font_override("font", UiKit.display_font())
+	# A long name is cut with an ellipsis rather than widening the bar into End Turn ("Godrick Pendlebrook").
+	_hot_name.custom_minimum_size = Vector2(150, 0)
+	_hot_name.clip_text = true
+	_hot_name.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	card.add_child(_hot_name)
 	# The character in the sheet's gilt frame.
 	var holder := Control.new()
@@ -379,14 +390,25 @@ func _build_hotbar() -> void:
 	_pips = HBoxContainer.new()
 	top.add_child(_pips)
 	_turn_note = _label("", 16, "gilt_light")
+	# It takes the row's spare width and cuts a long note with an ellipsis, so the bar never grows past End Turn.
+	_turn_note.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_turn_note.clip_text = true
+	_turn_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	top.add_child(_turn_note)
-	_tabs = HBoxContainer.new()
-	_tabs.add_theme_constant_override("separation", 6)
-	mid.add_child(_tabs)
+	# The filters down the left, the slots beside them: Baldur's Gate 3's bar with our icon-and-name slots (Ashwin's mix).
+	var body := HBoxContainer.new()
+	body.add_theme_constant_override("separation", 8)
+	mid.add_child(body)
+	_tabs = GridContainer.new()
+	_tabs.columns = 1
+	_tabs.add_theme_constant_override("h_separation", 2)
+	_tabs.add_theme_constant_override("v_separation", 1)
+	_tabs.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	body.add_child(_tabs)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(980, 112)
+	scroll.custom_minimum_size = Vector2(COLUMNS * SLOT_SIZE.x + (COLUMNS - 1) * 6 + 14, 146)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	mid.add_child(scroll)
+	body.add_child(scroll)
 	_slot_scroll = scroll
 	_slots = VBoxContainer.new()
 	_slots.add_theme_constant_override("separation", 6)
@@ -606,6 +628,8 @@ func _refresh_strip() -> void:
 	var cur := e.current()
 	# The lair's turn sits at initiative count 20 (ADR 0014); legendary creatures show the actions they have left.
 	var lair_at := e.legendary.lair_slot()
+	# A shared party turn (EncounterTurns): the heroes who can still take theirs edged green, the ones done dimmed.
+	var sharing := e.shared_heroes()
 	for i in e.order.size():
 		var c := e.order[i]
 		if i == lair_at:
@@ -615,7 +639,12 @@ func _refresh_strip() -> void:
 		var active := c == cur
 		var card := PanelContainer.new()
 		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")
-		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else 2))
+		var ready := not active and c in sharing
+		if ready:
+			frame = "bile"
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else (3 if ready else 2)))
+		if c.id in e.shared_ended:
+			card.modulate = Color(1, 1, 1, 0.55)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 2)
 		card.add_child(v)
@@ -632,6 +661,11 @@ func _refresh_strip() -> void:
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
+		if ready:
+			card.tooltip_text = "%s shares this turn: click to take it" % c.name()
+			card.gui_input.connect(func(ev: InputEvent) -> void:
+				if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+					inspect_requested.emit(c.id))
 		_strip.add_child(card)
 	if lair_at == e.order.size():
 		_strip.add_child(_lair_card())
@@ -653,6 +687,7 @@ func _lair_card() -> PanelContainer:
 func _refresh_party() -> void:
 	for ch in _party_box.get_children():
 		ch.queue_free()
+	var sharing := e.shared_heroes()
 	for c in e.combatants:
 		# An Echo Knight's echo is an image on the board, not a member of the party.
 		if c.side not in [&"party", &"guest"] or EchoKnight.is_echo(c):
@@ -689,6 +724,10 @@ func _refresh_party() -> void:
 			head.add_child(UiParts.pill("Guest", "moonlight", 11))
 		if c.is_down() and not c.creature.dead:
 			head.add_child(UiParts.pill("DOWN", "vampire_red", 11))
+		# Sharing the turn and still to take theirs: a click on the frame takes control of them.
+		var ready := c in sharing and c != e.current()
+		if ready:
+			head.add_child(UiParts.pill("Ready", "bile", 11))
 		v.add_child(head)
 		v.add_child(_hp_bar(c, 170, 10.0))
 		var cr := c.creature
@@ -715,7 +754,7 @@ func _refresh_party() -> void:
 		for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 			btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 		btn.pressed.connect(func() -> void: inspect_requested.emit(c.id))
-		btn.tooltip_text = "%s · %s\nClick to see their actions" % [c.name(), status]
+		btn.tooltip_text = "%s · %s\n%s" % [c.name(), status, "They share this turn: click to take it now" if ready else "Click to see their actions"]
 		if c.creature is Character:
 			card.add_child(_sheet_button(c))
 		_party_box.add_child(card)
@@ -797,6 +836,7 @@ func _refresh_hotbar() -> void:
 	_move_bar.max_value = maxf(spd, c.movement_left)
 	_move_bar.value = c.movement_left if mine else spd
 	_move_label.text = "%d / %d ft" % [c.movement_left if mine else spd, spd]
+	_turn_note.tooltip_text = ""
 	if e.state == Encounter.State.OVER:
 		_turn_note.text = "Victory!" if e.outcome == "victory" else "The party has fallen"
 	elif cur != null and not cur.is_player_controlled():
@@ -805,6 +845,15 @@ func _refresh_hotbar() -> void:
 		_turn_note.text = "Inspecting %s (not their turn)" % c.name()
 	else:
 		_turn_note.text = ""   # the attacks left show as pips beside the Action
+		# A shared party turn: who else can act now, and how to switch to them.
+		var sharing := e.shared_heroes()
+		if sharing.size() > 1:
+			var names: Array[String] = []
+			for o: Combatant in sharing.slice(1):
+				names.append(o.name().get_slice(" ", 0))
+			_turn_note.text = "Shared turn · %d more ready (%s)" % [names.size(), InputActions.key_text(&"cycle_leader")]
+			_turn_note.tooltip_text = "%s can act now too: press %s or click their portrait to take their turn." % [", ".join(names), InputActions.key_text(&"cycle_leader")]
+			_turn_note.mouse_filter = Control.MOUSE_FILTER_PASS
 	_refresh_slot_pips(c)
 	_refresh_weapons(c, mine)
 	_end_turn.disabled = not mine or e.pending != null
@@ -815,12 +864,15 @@ func _refresh_hotbar() -> void:
 	_death_button.visible = dying
 	_tabs.visible = not dying
 	_slot_scroll.visible = not dying
-	# Tabs.
+	# Filters.
 	for ch in _tabs.get_children():
 		ch.queue_free()
-	var tabs := catalog.tabs_for(c)
+	var tabs := filters(c)
 	if not tab in tabs:
-		tab = tabs[0]
+		tab = ALL
+	# One column of filters; two narrower ones when starred and hidden actions add theirs (the slots' height holds 7).
+	_tabs.columns = 1 if tabs.size() <= 7 else 2
+	var filter_w := 84.0 if tabs.size() <= 7 else 62.0
 	for t in tabs:
 		var b := Button.new()
 		b.text = t
@@ -828,7 +880,10 @@ func _refresh_hotbar() -> void:
 		b.button_pressed = t == tab
 		UiKit.button_look(b)
 		UiParts.compact(b)
-		b.add_theme_font_size_override("font_size", 15)
+		b.add_theme_font_size_override("font_size", 11 if tabs.size() <= 7 else 10)
+		b.custom_minimum_size = Vector2(filter_w, 18)
+		b.clip_text = true
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		var on := UiKit.button_style("hover")
 		on.border_color = Look.color("gilt_light")
 		on.set_border_width_all(2)
@@ -849,9 +904,12 @@ func _refresh_hotbar() -> void:
 	_slot_actions.clear()
 	# The player's arrangement (U2): their order, their favourites, the actions they hid (ActionCatalog.arranged), with
 	# one slot per idea: a rule's modes as one toggle, an action's variants as one container (ActionCatalog.slots).
-	var acts: Array = catalog.slots(c, tab)
+	var all := catalog.actions_for(c)   # read once for every section
+	var acts: Array = catalog.slots(c, tab, all) if tab != ALL else []
 	var groups: Array[Dictionary] = [{"heading": "", "items": acts}]
-	if tab == ActionCatalog.SPELLS:
+	if tab == ALL:
+		groups = _all_sections(c, all)
+	elif tab == ActionCatalog.SPELLS:
 		# By spell level, alphabetical within, like every other spell list (SpellGroups), unless the player arranged the
 		# tab: then each level keeps their order.
 		groups = SpellGroups.groups(acts, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
@@ -865,21 +923,19 @@ func _refresh_hotbar() -> void:
 		grid = GridContainer.new()
 		grid.add_theme_constant_override("h_separation", 6)
 		grid.add_theme_constant_override("v_separation", 6)
-		if str(g["heading"]) == "":
-			grid.columns = 7
-			_slots.add_child(grid)
-		else:
-			grid.columns = 6
-			var row := HBoxContainer.new()
-			row.add_theme_constant_override("separation", 8)
-			var cap := _label(str(g["heading"]), 13, "gilt")
-			cap.custom_minimum_size = Vector2(70, SLOT_SIZE.y)
-			cap.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-			cap.size_flags_vertical = Control.SIZE_SHRINK_BEGIN   # beside the level's first row
-			cap.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			row.add_child(cap)
-			row.add_child(grid)
-			_slots.add_child(row)
+		grid.columns = COLUMNS
+		if str(g["heading"]) != "":
+			# The section's name on a gilt rule above its rows (a spell level, or under All: Common, the class's...).
+			var head := HBoxContainer.new()
+			head.add_theme_constant_override("separation", 6)
+			head.add_child(UiParts.caption(str(g["heading"]), 11, "gilt"))
+			var rule := UiParts.drawn(Vector2(0, 14), func(cv: Control) -> void:
+				cv.draw_line(Vector2(0, cv.size.y / 2.0), Vector2(cv.size.x, cv.size.y / 2.0), Color(Look.color("gilt_dark"), 0.8), 1.0))
+			rule.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			head.add_child(rule)
+			_slots.add_child(head)
+		_slots.add_child(grid)
 		for av: Variant in g["items"]:
 			i = _add_slot(grid, av as Dictionary, i, c, mine)
 
@@ -936,7 +992,7 @@ func _add_slot(grid: GridContainer, a: Dictionary, i: int, c: Combatant, mine: b
 	var act := a
 	b.pressed.connect(func() -> void: use_action(act, b))
 	# Drag a slot onto another on the same tab to put it there (U2); a group moves by its first action.
-	var here_tab := tab
+	var here_tab := _tab_of(a)
 	b.set_drag_forwarding(func(_at: Vector2) -> Variant:
 			if not c.creature is Character:
 				return null
@@ -1344,9 +1400,10 @@ func _arrange(action: Dictionary, what: String) -> void:
 			for one in ids:
 				catalog.set_hidden(shown, one, what == "hide")
 		"earlier", "later":
-			var at := catalog.arranged(shown, tab).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
+			var on := _tab_of(action)
+			var at := catalog.arranged(shown, on).map(func(x: Dictionary) -> String: return str(x["id"])).find(aid)
 			if at >= 0:
-				catalog.move_action(shown, tab, aid, at + (-1 if what == "earlier" else 1))
+				catalog.move_action(shown, on, aid, at + (-1 if what == "earlier" else 1))
 	_refresh_hotbar()
 
 
@@ -1378,10 +1435,42 @@ func slot_count() -> int:
 	return _slot_actions.size()
 
 
+## The filters for `c`: All, then its tabs (ActionCatalog.tabs_for).
+func filters(c: Combatant) -> Array[String]:
+	var out: Array[String] = [ALL]
+	out.append_array(catalog.tabs_for(c))
+	return out
+
+
+## The All filter's sections: the starred actions, Common, the class's, Spells (by level, cantrips first) and Items, each
+## with its name at the left; Reactions and Passives keep their own filters, as in Baldur's Gate 3.
+func _all_sections(c: Combatant, all: Array[Dictionary]) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var tabs := catalog.tabs_for(c)
+	for t: String in [ActionCatalog.FAVOURITES, ActionCatalog.COMMON, catalog.class_tab(c), ActionCatalog.SPELLS, ActionCatalog.ITEMS]:
+		if not t in tabs:
+			continue
+		var items: Array = catalog.slots(c, t, all)
+		if t == ActionCatalog.SPELLS and not (ActionCatalog.layout(c).get("order", {}) as Dictionary).has(t):
+			var flat: Array = []
+			for g in SpellGroups.groups(items, func(a: Dictionary) -> String: return str(a.get("spell_id", "")),
+					func(a: Dictionary) -> int: return int(a.get("slot", 0))):
+				flat.append_array(g["items"] as Array)
+			items = flat
+		if not items.is_empty():
+			out.append({"heading": t, "items": items})
+	return out
+
+
+## The tab an action is arranged on (U2): the filter shown, or under All the action's own.
+func _tab_of(a: Dictionary) -> String:
+	return str(a.get("tab", ActionCatalog.COMMON)) if tab == ALL else tab
+
+
 func cycle_tab(step: int) -> void:
 	if shown == null:
 		return
-	var tabs := catalog.tabs_for(shown)
+	var tabs := filters(shown)
 	tab = tabs[posmod(tabs.find(tab) + step, tabs.size())]
 	focus_slot = -1
 	_refresh_hotbar()

@@ -267,3 +267,13 @@ once
 
 ~ search:lane_ditch_knife
 | At the bottom of the ditch, a small knife with a bone handle and an edge that looks hungry, dropped in a hurry by someone who needed it more than they knew.
+
+# --- The miller's lane's finds, once their first ones went into the story (Storyline QA, 2026-10-09) ---
+
+~ search:ditch_vial
+| At the bottom of the ditch, a stoppered vial of grey smoke that never settles, dropped by someone who meant to be gone before the hags looked up.
+once
+
+~ search:lane_shrine_flask
+| Behind the wayside shrine, an offering nobody came back for: a small green flask with a bitter smell, the kind a careful traveller drinks before an unknown supper.
+once
