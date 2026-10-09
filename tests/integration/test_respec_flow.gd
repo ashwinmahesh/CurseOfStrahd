@@ -133,3 +133,31 @@ func test_the_retired_heroes_are_never_offered_as_looks() -> void:
 	assert_true(text.contains("Thistle"), "the four-slot flow offers the current heroes:\n" + text)
 	assert_false(text.contains("Ilse"), "not the retired ones")
 	cs.queue_free()
+
+
+## A rebuild keeps what the road left on the hero (QA FN-15: it wiped it): a dark gift from the Amber Temple (for good,
+## its cost included), a lasting curse, the Raise Dead ordeal, Exhaustion, and attunement to a cursed item, which
+## otherwise came off with the old build.
+func test_a_rebuild_keeps_dark_gifts_curses_and_attunements() -> void:
+	var st := _party()
+	var old := st.party[0]
+	old.accept_dark_gift("gift_of_the_hollow")
+	var ordeal := Effect.new("Back from the dead", &"spell", "raise_dead").with_modifier("d20", {"value": -4})
+	ordeal.ends = Effect.Ends.MINUTES
+	ordeal.minutes_left = 600
+	old.add_effect(ordeal)
+	old.exhaustion = 2
+	var armor := "demon_armor__plate_armor"
+	old.add_item(armor)
+	old.equip(armor, "armor")
+	assert_true(old.attune(armor))
+	var fresh := TestChars.pregen("thistle", 1)
+	st.respec_member(old, fresh)
+	var now := st.party[0]
+	assert_eq(now, fresh)
+	assert_true("gift_of_the_hollow" in now.dark_gifts(), "the dark gift stays")
+	assert_true(now.effects.any(func(fx: Effect) -> bool: return fx.source_id == "raise_dead"), "the ordeal stays")
+	assert_eq(now.exhaustion, 2, "Exhaustion stays")
+	assert_true(armor in now.attuned, "the cursed armor's hold stays")
+	assert_ne(now.part_blocker(armor), "", "and it still won't leave them")
+
