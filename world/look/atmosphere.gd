@@ -385,10 +385,11 @@ func _flat_floors_cast_no_shadow() -> void:
 const EDGE_BLURS := {
 	"corners": {"name": "Corners", "start": 0.8, "lod": 4.0},
 	"edges": {"name": "Edges", "start": 0.7, "lod": 4.0},
-	"wide": {"name": "Wide", "start": 0.6, "lod": 4.0},
+	"wide": {"name": "Wide", "start": 0.55, "lod": 4.4},
 }
-## 70% of the way out (2026-10-08: shipped as the middle of the three for the owner to pick from).
-const EDGE_BLUR_DEFAULT := "edges"
+## Wide (owner 2026-10-09: Wide as the default, "maybe even a little stronger than wide", so it now starts 55% of the
+## way out, from 60%, and its corners go a little softer). Edges, at 70%, was the default before.
+const EDGE_BLUR_DEFAULT := "wide"
 var _blur_shown := -1.0
 var _blur_setting := ""
 
