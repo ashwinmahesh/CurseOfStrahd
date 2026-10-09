@@ -5,7 +5,8 @@ extends Node3D
 ##   make capture SCENE=res://tools/capture/outdoors_capture.tscn NAME=outdoors/before FRAMES=10
 ## Environment: OUTDOORS_SHOTS=tser_road,tser_tent (default: every shot), OUTDOORS_TIME=1, OUTDOORS_LOCS=krezk,berez
 ## (instead: each place from its arrival, near and far, to check it against its descriptions), OUTDOORS_WEATHER=overcast
-## (the same weather everywhere, so a fog day doesn't hide the place).
+## (the same weather everywhere, so a fog day doesn't hide the place), OUTDOORS_STRIKE=1 (a calm frame, then the frame
+## of a close lightning strike).
 
 ## Each shot: the place, the hour, where the leader stands (the others beside them), the camera's distance, its
 ## quarter turns and how far it tilts toward the horizon (CameraRig.horizon, 0 to 1).
@@ -65,6 +66,13 @@ func capture_shots(tool: Node, out: String) -> void:
 			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
 			print("outdoors %s: %.2f ms a frame uncapped (%d fps)" % [id, ms, int(1000.0 / ms)])
 			await tool.call("wait_frames", 10)
+		if OS.get_environment("OUTDOORS_STRIKE") != "":
+			# A lightning strike (lane 28): the calm frame, then the frame the bolt comes down and the flash lights it.
+			tool.call("_shot", "%s_%s_calm.png" % [out, id])
+			view.atmosphere.strike(true)
+			await tool.call("wait_frames", 2)
+			tool.call("_shot", "%s_%s_strike.png" % [out, id])
+			continue
 		tool.call("_shot", "%s_%s.png" % [out, id])
 
 
