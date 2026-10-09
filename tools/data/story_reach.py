@@ -228,20 +228,33 @@ class Story:
         return int(door.get("lock_dc", 0)) > 0 or (door.get("key") and ("item", door["key"]) in self.facts)
 
     def cells(self, loc, starts):
+        """The squares the party can walk to from `starts`: open floor and doors that open, a step at a time, and a
+        diagonal step only where it doesn't cut the corner of a wall, low obstacle or void (CombatGrid's 2024 rule;
+        a horse pen's fence with a gap only between two posts is closed)."""
         rows = loc["map"]["rows"]
         doors = {tuple(d["cell"]): d for d in loc.get("doors", [])}
-        seen, todo = set(), [tuple(c) for c in starts]
+
+        def open_(c):
+            x, z = c
+            if z < 0 or z >= len(rows) or x < 0 or x >= len(rows[z]):
+                return False
+            return self.door_open(doors[c]) if c in doors else rows[z][x] in ".~1234"
+
+        seen, todo = set(), [tuple(c) for c in starts if open_(tuple(c))]
         while todo:
-            x, z = c = todo.pop()
-            if c in seen or z < 0 or z >= len(rows) or x < 0 or x >= len(rows[z]):
-                continue
-            if c in doors:
-                if not self.door_open(doors[c]):
-                    continue
-            elif rows[z][x] not in ".~1234":
+            c = todo.pop()
+            if c in seen:
                 continue
             seen.add(c)
-            todo += [(x + dx, z + dz) for dx in (-1, 0, 1) for dz in (-1, 0, 1) if dx or dz]
+            x, z = c
+            for dx in (-1, 0, 1):
+                for dz in (-1, 0, 1):
+                    n = (x + dx, z + dz)
+                    if not (dx or dz) or n in seen or not open_(n):
+                        continue
+                    if dx and dz and not (open_((x + dx, z)) and open_((x, z + dz))):
+                        continue   # the diagonal would cut a corner
+                    todo.append(n)
         return seen
 
     @staticmethod
@@ -556,13 +569,18 @@ def findings(root=ROOT):
         if ("loc", lid) not in s.facts:
             out.append(f"data/locations/{lid}.json: no playthrough reaches this location")
             continue
-        for kind, key in (("props", "prop"), ("containers", "container")):
+        # Only what has to be touched: a prop to take, read, pull or talk at, a container, a person to talk to. A prop that
+        # is only looked at is examined from where the party stands (LocationInteraction._seen_from_afar).
+        for kind, key in (("props", "prop"), ("containers", "container"), ("npcs", "npc")):
             for e in loc.get(kind, []):
                 if kind == "props" and not (e.get("item") or e.get("dialogue") or e.get("flag")):
                     continue
-                if (key, lid, e["id"]) not in s.facts and s.possible(e.get("when", "")):
-                    out.append(f"data/locations/{lid}.json: {key} {e['id']} at {e['cell']} can't be reached (no square "
-                               f"beside it can be walked to)")
+                if kind == "npcs" and not e.get("dialogue"):
+                    continue
+                got = ("npc", lid, e["npc"], e["dialogue"]) if kind == "npcs" else (key, lid, e["id"])
+                if got not in s.facts and s.possible(e.get("when", "")):
+                    out.append(f"data/locations/{lid}.json: {key} {e.get('id', e.get('npc'))} at {e['cell']} can't be "
+                               f"reached (no square beside it can be walked to; diagonal steps can't cut a wall's corner)")
     for fid, v in sorted(_reads(s).items()):
         if not s.possible(f"flag.{fid}"):
             out.append(f"{v[0]}: flag '{fid}' is read, but nothing a playthrough reaches sets it")

@@ -88,6 +88,7 @@ if flag.death_house_learned_walter
   Narrator: He never got a surname. He never got a birthday either.
 endif
 * [if flag.death_house_knows_lullaby] Hum the nursemaid's lullaby. -> walter_lullaby
+* [if flag.nursemaid_bones_taken and quest.the_nursemaids_grave != done] (Bring his mother to him.) -> village_of_barovia/the_nursemaids_grave:crypt
 * Move on. -> END
 
 ~ walter_lullaby

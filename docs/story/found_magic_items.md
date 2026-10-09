@@ -73,6 +73,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Bildrath | Wraps of Unarmed Power, +1 (uncommon) | Gift: his hush money after the walking firewood (Cut After Noon) |
 | ✅ | Old Mihail | Amulet of Proof against Detection and Location (uncommon) | Gift: the bride's charm, once she's buried (Six Feet) |
 | ✅ | The burgomaster's study, behind the bricks | Mithral Armor (uncommon) | Hoard: Sergiu's shirt, once the Tenant is dead (The Burgomaster's Hound, docs/story/side_quests.md) |
+| ✅ | Death House, Walter's crypt | Stone of Good Luck (uncommon) | Gift: Veta's lucky stone, left on the lid once she's laid with her son (The Nursemaid's Grave, docs/story/side_quests.md) |
 
 ## Svalich Road (level 4)
 

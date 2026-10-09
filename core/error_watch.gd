@@ -269,9 +269,7 @@ func _build_notice() -> void:
 	col.add_theme_constant_override("separation", 6)
 	p.add_child(col)
 	var title := _label("Something went wrong", 19, "gilt_light")
-	var face := SystemFont.new()
-	face.font_names = PackedStringArray(["Luminari", "Trattatello", "Apple Chancery", "Palatino", "Georgia"])
-	title.add_theme_font_override("font", face)
+	title.add_theme_font_override("font", UiKit.display_font())   # the game's own book hand, on every platform
 	col.add_child(title)
 	_notice_text = _label("", 14, "vellum")
 	_notice_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

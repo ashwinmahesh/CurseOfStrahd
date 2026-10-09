@@ -160,7 +160,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
-		view.toast.emit("Can't reach it")
+		if action_id == "use" and _seen_from_afar(thing):
+			then.call()
+		else:
+			view.toast.emit("Can't reach it")
 	elif stand == view.leader().cell:
 		then.call()
 	else:
@@ -315,12 +318,27 @@ static func click(view: LocationView, cell: Vector2i) -> void:
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
-		view.toast.emit("Can't reach it")
+		if _seen_from_afar(thing):
+			interact(view, thing)
+		else:
+			view.toast.emit("Can't reach it")
 		return
 	if stand == view.leader().cell:
 		interact(view, thing)
 	else:
 		view.walk_to(stand, func() -> void: interact(view, thing))
+
+
+## A thing the party only looks at (a prop to examine, or decor, with nothing to take, read, pull or talk at: a house
+## front, a fire deep in an oven, horses behind a fence) is examined from where the party stands when no square beside
+## it can be reached (Storyline QA, 2026-10-08: five such props' narration could never play). tools/data/story_reach.py
+## holds everything else to be reachable.
+static func _seen_from_afar(thing: Dictionary) -> bool:
+	if thing.is_empty() or str(thing["kind"]) != "prop":
+		return false
+	var spec := thing["spec"] as Dictionary
+	return str(spec.get("kind", "")) in ["examine", "decor"] and str(spec.get("dialogue", "")) == "" \
+		and not spec.has("item") and not spec.has("flag")
 
 
 static func _adjacent_free(view: LocationView, cell: Vector2i) -> Vector2i:

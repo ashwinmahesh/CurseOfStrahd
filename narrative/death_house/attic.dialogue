@@ -104,6 +104,7 @@ if flag.death_house_learned_walter
   Narrator: Walter's nurse. They didn't let her go far.
 endif
 * [Medicine DC 10] Learn how she died. -> trunk_medicine | trunk_medicine_fail
+* [if quest.the_nursemaids_grave == asked and not flag.nursemaid_bones_taken] (Wrap her in the sheet to carry her down to Walter.) -> village_of_barovia/the_nursemaids_grave:bones
 * Close the lid gently. -> END
 
 ~ trunk_medicine
