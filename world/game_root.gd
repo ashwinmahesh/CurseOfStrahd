@@ -470,12 +470,15 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		dialogue = null
 		hud.visible = true
 		ModeController.force(ModeController.Mode.EXPLORATION)
+	else:
+		TalkCamera.open(view, _npc_id)   # the camera eases in on the leader and the speaker (Visual Polish Plan 7)
 
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
 	if view != null:
 		view.clear_staged()   # whoever stepped into the scene leaves with it
+		TalkCamera.close(view, combat != "")
 	# `end_game`, or the parley's yield or ireena, ends the campaign (ADR 0014).
 	if Endings.reached(st) != "" or (Endings.parley_ends(st) and Endings.request(st) != ""):
 		show_ending()
