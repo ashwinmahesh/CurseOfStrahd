@@ -11,6 +11,7 @@
       "objectives": [
         "Pay a call on Wachterhaus"
       ],
+      "hint": "Pay Lady Wachter a call at Wachterhaus in Vallaki.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Decide whether to stand with her"
       ],
+      "hint": "Pledge to Lady Wachter at Wachterhaus, or look into her cellar's reading circle first.",
       "ends": ""
     },
     {
@@ -27,18 +29,21 @@
       "objectives": [
         "Decide who should see the letter"
       ],
+      "hint": "The letter has been read. Go to the Festival of the Blazing Sun in Vallaki's square and see what Lady Wachter does.",
       "ends": ""
     },
     {
       "id": "cult_broken",
       "journal": "We broke up the midnight circle in Lady Wachter's cellar. Her sons and her hired swords are finished, whatever she still plans.",
       "objectives": [],
+      "hint": "Go to the Festival of the Blazing Sun in Vallaki's square and see what Lady Wachter still tries.",
       "ends": ""
     },
     {
       "id": "joined",
       "journal": "We pledged ourselves to Lady Wachter's cause. She wants the Baron's wicker sun to fail, and us beside her when it does.",
       "objectives": [],
+      "hint": "Ask the festival herald in Vallaki's square to begin, and stand with Lady Wachter when she speaks.",
       "ends": ""
     },
     {
@@ -63,6 +68,7 @@
       "id": "slipped_away",
       "journal": "Lady Wachter lost her chance at the festival, but nobody could prove what she is. She has gone home to Wachterhaus to wait for another.",
       "objectives": [],
+      "hint": "Lady Wachter is back at Wachterhaus. Nobody can prove what she is, so there's nothing more to do for now.",
       "ends": ""
     }
   ]

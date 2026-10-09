@@ -11,6 +11,7 @@
       "objectives": [
         "Find Exethanter's 'thing with a lid'"
       ],
+      "hint": "Search Exethanter's own study, the Amber Temple's library; look high.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Decide what to do with the jar"
       ],
+      "hint": "Decide what to do with the jar: give it back to Exethanter in the library, keep it, or smash it.",
       "ends": ""
     },
     {

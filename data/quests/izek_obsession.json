@@ -11,6 +11,7 @@
       "objectives": [
         "Find out why Izek knows Ireena's face"
       ],
+      "hint": "Ask Blinsky the toymaker in Vallaki who orders his dolls, or watch Izek when Ireena is near.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Learn what Izek wants with her"
       ],
+      "hint": "Ask Ireena what she remembers from before Kolyan found her, or press Izek about his past (Insight).",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Decide whether to tell Izek"
       ],
+      "hint": "Decide whether to tell Izek what you suspect. He is in Vallaki by day and in his room at the Baron's mansion at night.",
       "ends": ""
     },
     {
@@ -45,6 +48,7 @@
       "id": "spurned",
       "journal": "The Baron refused Izek his reward. Izek obeyed, for now, and still watches Ireena whenever she crosses the square.",
       "objectives": [],
+      "hint": "Izek still watches Ireena in Vallaki. Telling him what you know may change things.",
       "ends": ""
     }
   ]

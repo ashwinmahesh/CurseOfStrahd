@@ -11,6 +11,7 @@
       "objectives": [
         "Find Petru in Krezk's goat pens"
       ],
+      "hint": "Find Little Petru in Krezk's goat pens and talk to him.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Optional: lift the curse from him",
         "Wait with Petru by the pens after dark"
       ],
+      "hint": "Wait with Petru by Krezk's goat pens after dark. Look at him closely first (Insight): Remove Curse may help him.",
       "ends": ""
     },
     {

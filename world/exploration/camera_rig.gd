@@ -16,6 +16,10 @@ const HORIZON_PITCH_DEG := -8.0
 const HORIZON_HEIGHT := 9.0
 const HORIZON_BACK := 25.0
 const HORIZON_FAR := 900.0
+## The tactical view (owner pick 2026-10-09, after Baldur's Gate 3's): steeper and further back, to plan a fight or a
+## sneak from above; camera_tactical (O) switches it, eased in and out over about a third of a second.
+const TACTICAL_PITCH_DEG := -66.0
+const TACTICAL_ZOOM := 1.45
 ## How far a full shake (shake = 1) jolts the view, in world units, and how fast it dies away (shake per second).
 const SHAKE_MAX := 0.16
 const SHAKE_FADE := 3.0
@@ -40,6 +44,9 @@ var shot_pitch := 0.0
 var shot_focus := Vector3.ZERO
 var shot_weight := 0.0
 var shake := 0.0
+## Whether the tactical view is on, and how far the camera has eased into it.
+var tactical := false
+var tactical_shown := 0.0
 ## What walls, houses and trees clear the view to while a shot is on it (a boss's entrance), instead of the party's
 ## leader; null the rest of the time (LocationView._process).
 var cutaway_focus: Node3D = null
@@ -96,7 +103,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				distance = clampf(distance + 1.0, zoom_min, zoom_max)
 	if pad_look and event is InputEventJoypadButton:
 		return   # exploring, the stick clicks sneak and switch turn-based; the right stick turns the camera
-	if event.is_action_pressed(&"camera_rotate_left"):
+	if event.is_action_pressed(&"camera_tactical"):
+		tactical = not tactical
+	elif event.is_action_pressed(&"camera_rotate_left"):
 		rotate_step(-1)
 	elif event.is_action_pressed(&"camera_rotate_right"):
 		rotate_step(1)
@@ -117,6 +126,7 @@ func _process(delta: float) -> void:
 	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0
 	_yaw = lerp_angle(_yaw, goal, clampf(delta * 9.0, 0.0, 1.0))
 	horizon_shown = move_toward(horizon_shown, horizon, delta * 1.6)
+	tactical_shown = move_toward(tactical_shown, 1.0 if tactical else 0.0, delta * 3.0)
 	_shake(delta)
 	_apply()
 
@@ -151,13 +161,15 @@ func _shake(delta: float) -> void:
 func _apply() -> void:
 	rotation = Vector3(0, _yaw, 0)
 	var k := smoothstep(0.0, 1.0, horizon_shown)
-	var play := deg_to_rad(PITCH_DEG + shot_pitch)
-	var d := distance * shot_zoom
+	var kt := smoothstep(0.0, 1.0, tactical_shown)
+	var pitch := lerpf(PITCH_DEG, TACTICAL_PITCH_DEG, kt) + shot_pitch
+	var play := deg_to_rad(pitch)
+	var d := distance * shot_zoom * lerpf(1.0, TACTICAL_ZOOM, kt)
 	var at := Vector3(0, -sin(play) * d, cos(play) * d) + Vector3(0, 0.6, 0)
 	if shot_weight > 0.0:
 		at += Basis(Vector3.UP, -_yaw) * ((shot_focus - global_position) * shot_weight)
 	camera.position = at.lerp(Vector3(0, HORIZON_HEIGHT, HORIZON_BACK), k)
-	camera.rotation = Vector3(deg_to_rad(lerpf(PITCH_DEG + shot_pitch, HORIZON_PITCH_DEG, k)), 0, 0)
+	camera.rotation = Vector3(deg_to_rad(lerpf(pitch, HORIZON_PITCH_DEG, k)), 0, 0)
 	var far := lerpf(_far, HORIZON_FAR, k)
 	if not is_equal_approx(camera.far, far):
 		camera.far = far

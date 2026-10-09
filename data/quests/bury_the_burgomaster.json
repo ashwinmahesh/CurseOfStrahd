@@ -12,6 +12,7 @@
         "Go to the burgomaster's mansion",
         "Speak with Ireena Kolyana"
       ],
+      "hint": "Go to the burgomaster's mansion on the village's north side and talk to Ireena.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Ask Father Donavich to say the rites"
       ],
+      "hint": "Father Donavich is in the church on the hill at the village's north-east edge. Ask him if he'll bury the burgomaster.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
         "Tell Ireena or Ismark you're ready",
         "Carry the coffin to the churchyard"
       ],
+      "hint": "Go back to the mansion and tell Ireena or Ismark you're ready to carry the coffin.",
       "ends": ""
     },
     {
@@ -38,6 +41,7 @@
         "Tell Ireena or Ismark you're ready",
         "Carry the coffin to the churchyard"
       ],
+      "hint": "Go back to the mansion and tell Ireena or Ismark you're ready; you'll have to say the words yourselves.",
       "ends": ""
     },
     {
@@ -46,6 +50,7 @@
       "objectives": [
         "Go to the open grave"
       ],
+      "hint": "Go to the open grave in the churchyard behind the village church and talk to Ireena or Ismark there.",
       "ends": ""
     },
     {

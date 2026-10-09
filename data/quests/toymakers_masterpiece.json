@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Blinsky about the jester, at Blinsky Toys in Vallaki"
       ],
+      "hint": "Ask Gadof Blinsky at Blinsky Toys in Vallaki about the jester.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find von Weerg's jester in Castle Ravenloft"
       ],
+      "hint": "Look for von Weerg's jester on the stair of Castle Ravenloft's high tower and ask him to meet Blinsky.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Bring Pidlwick II to Blinsky Toys in Vallaki"
       ],
+      "hint": "Take Pidlwick II, now travelling with you, to Blinsky Toys in Vallaki.",
       "ends": ""
     },
     {

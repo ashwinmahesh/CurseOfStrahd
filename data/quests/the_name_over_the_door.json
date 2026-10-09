@@ -11,6 +11,7 @@
       "objectives": [
         "Look under the hearth in Van Richten's Tower"
       ],
+      "hint": "Look under the hearthstone in Van Richten's Tower on Lake Baratok.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go down under the tower"
       ],
+      "hint": "Take the stair under the hearthstone down beneath the tower.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
         "Find out what keeps him in the world",
         "Deal with Khazan"
       ],
+      "hint": "Learn what keeps Khazan in the world, then deal with him in his study under the tower.",
       "ends": ""
     },
     {
@@ -37,6 +40,7 @@
         "Unmake the name over the tower door",
         "Then go back down and finish him"
       ],
+      "hint": "Unmake the name carved over the tower door, then go back down and finish Khazan.",
       "ends": ""
     },
     {
@@ -45,6 +49,7 @@
       "objectives": [
         "Go down under the tower and finish Khazan"
       ],
+      "hint": "His name is gone from the door. Take the stair under the hearthstone back down to Khazan's study and finish him.",
       "ends": ""
     },
     {

@@ -55,6 +55,27 @@ func test_the_journal_keeps_its_order_through_a_save() -> void:
 	assert_eq(_ids(back), before, "the same order after a save and load")
 
 
+## Strahd's first visit to Marina's monument in Berez is once only, so a party that met him there before it learned
+## what Baba Lysaga did could never tell him, one of the three ways The Witch of Berez offers (SL-17). He comes back by
+## night until he's told.
+func test_strahd_comes_back_to_hear_about_marina() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 9, "berez", 22)
+	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "berez/marina:strahd", "the first night, he's at the monument")
+	var beats := SideQuestPlay.play(st, "berez/marina:strahd", ["leave you with her"])
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "", "not again while there's nothing to tell him")
+	st.set_flag("marina_truth_known")
+	st.set_quest_stage("the_witch_of_berez", "truth")
+	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "berez/marina:strahd_again", "back by night once the party knows")
+	st.advance_minutes(14 * 60)
+	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "", "but only by night")
+	st.advance_minutes(10 * 60)
+	beats = SideQuestPlay.play(st, "berez/marina:strahd_again", ["Your nurse did"])
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_eq(st.quest_stage("the_witch_of_berez"), "strahd_told")
+	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "", "and once he's told, he's gone")
+
+
 func _ids(st: StoryState) -> Array:
 	return QuestLog.journal(st).map(func(q: Dictionary) -> String: return str(q["id"]))
 

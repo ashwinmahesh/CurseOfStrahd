@@ -11,6 +11,7 @@
         "Learn who she is",
         "Lay her to rest, or don't"
       ],
+      "hint": "Talk to the weeping spirit in the Amber Temple's Hall of the Faceless God. Kasimir, the dusk elf at the Vistani camp outside Vallaki, may know who she is.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Lay Patrina to rest, or don't"
       ],
+      "hint": "Lay Patrina to rest in the Hall of the Faceless God, or don't. Kasimir may want a say.",
       "ends": ""
     },
     {

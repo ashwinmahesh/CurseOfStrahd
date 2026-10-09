@@ -11,6 +11,7 @@
       "objectives": [
         "Visit the chapel of Argynvostholt"
       ],
+      "hint": "Visit the chapel on Argynvostholt's ground floor.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Kindle the dragon's fire at his bones in the mausoleum",
         "Carry it to the beacon at the top of the tower"
       ],
+      "hint": "Kindle the dragon's fire at his bones in the mausoleum on Argynvostholt's grounds, then carry it to the beacon at the top of the tower.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Light the beacon at the top of the tower"
       ],
+      "hint": "Carry the silver flame up to the beacon at the top of Argynvostholt's tower.",
       "ends": ""
     },
     {
@@ -42,6 +45,7 @@
       "objectives": [
         "Bring Argynvost's skull home from Castle Ravenloft"
       ],
+      "hint": "Find Argynvost's skull in Castle Ravenloft and bring it home to his bones at Argynvostholt.",
       "ends": ""
     }
   ]

@@ -11,6 +11,7 @@
       "objectives": [
         "Find the guests in the dungeon"
       ],
+      "hint": "Find the cells in Castle Ravenloft's dungeon, below the larders.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Get her chain off",
         "Find her a way out of the castle"
       ],
+      "hint": "Get Nadia's chain off in her cell, then find her a way out of the castle.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Find her a way out of the castle"
       ],
+      "hint": "Find Nadia a way out of the castle, or have her hide in her cell until you're done.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Come back for Nadia"
       ],
+      "hint": "Come back to Nadia's cell in the castle dungeon when it's safe.",
       "ends": ""
     },
     {

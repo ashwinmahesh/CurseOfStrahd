@@ -11,6 +11,7 @@
       "objectives": [
         "Find Ilie the lamplighter; he lights Vallaki's lamps after dark"
       ],
+      "hint": "Ilie the lamplighter walks Vallaki's streets after dark, lighting the lamps. Find him and ask about the roses.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Watch the Petrovs' house in the lower town after dark"
       ],
+      "hint": "Wait outside the Petrovs' house in Vallaki's lower town after dark, and see who comes to the window.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Watch the Petrovs' house in the lower town after dark"
       ],
+      "hint": "Wait outside the Petrovs' house in Vallaki's lower town after dark, and see who comes to the window.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
         "Find where Ana sleeps by day: her grave in St. Andral's churchyard",
         "Or end it at night, when she is strongest"
       ],
+      "hint": "By day, look for Ana's grave in St. Andral's churchyard. Or face her by night, when she comes to the windows.",
       "ends": ""
     },
     {

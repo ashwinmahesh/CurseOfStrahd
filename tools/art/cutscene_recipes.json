@@ -1073,6 +1073,14 @@
       "prompt": "A long wooden fishing jetty running out into a black lake at night under a thin moon, mist lying on the water. At its very end, over the dark water, stands a little girl of about nine made entirely of pale glowing light, in a wet old-fashioned festival dress with ribbons, holding up a paper lantern, her glow the colour of a candle seen through paper. She holds the hand of a real little boy in a white nightshirt, barefoot and blue with cold, smiling at nothing, drawn exactly as the reference shows the boy's face and hair. Under the water round the jetty, a few faint lights glimmer like drowned lanterns. {party} come down the jetty toward them, seen from behind, one with a lantern. The girl's glow is the brightest thing in the picture, one single picture, no panels.",
       "use": "a"
     },
+    "sq_last_egg": {
+      "refs": [
+        "roc",
+        "gargoyle"
+      ],
+      "prompt": "A rock shelf high on a mountain above a gorge of cloud, cold wind and snow streaming off it. On the shelf, a nest as big as a cottage roof woven from whole pine trunks and lined with bones and old harness, and in it a huge grey freckled egg as tall as a child, cracked open, a wet grey baby bird's beak as long as an arm screaming out of it. On a tower parapet above the shelf, stone gargoyles drawn after the second reference are spreading their wings to drop off the stone, and among them a pale man in a falconer's leather glove. Far out over the gorge, tiny against the sky, the enormous shape of the mother roc drawn after the first reference, turning back. {party} stand at the edge of the nest, seen from behind. Cold thin daylight, one single picture, no panels.",
+      "use": "a"
+    },
     "sq_counts_likeness": {
       "refs": [
         "ireena"

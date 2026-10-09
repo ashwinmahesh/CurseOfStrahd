@@ -11,6 +11,7 @@
         "Explore the Amber Temple",
         "Learn how the devil made his bargain here"
       ],
+      "hint": "Explore the Amber Temple: listen at the sarcophagi in the Hall of the Faceless God, and talk to the scholar in the library.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Decide what, if anything, to take from the amber",
         "Find the deepest vault"
       ],
+      "hint": "Go down to the deepest vault of the temple. Taking anything from the amber is your choice, and it costs.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Go down to the bottom of the temple"
       ],
+      "hint": "Go down to the bottom of the temple, to its vaults.",
       "ends": ""
     },
     {
@@ -37,24 +40,28 @@
         "Deal with the broker of the temple's bargains",
         "Read the record of the devil's bargain"
       ],
+      "hint": "Deal with Master Vosk in the vaults, and read the record of the bargain beside the empty sarcophagus.",
       "ends": ""
     },
     {
       "id": "broker_banished",
       "journal": "We spoke Vosk's true name, Ashkarreth, and bound him: the jackal who brokered the devil's bargain has left the temple, and will never broker another in this valley.",
       "objectives": [],
+      "hint": "Read the record of the devil's bargain in the vaults, or ask Exethanter to seal the temple.",
       "ends": ""
     },
     {
       "id": "broker_destroyed",
       "journal": "Vosk was an arcanaloth, a jackal-headed fiend who witnessed the devil's bargain and took his fee. He offered us the same bargain. We refused, and destroyed him.",
       "objectives": [],
+      "hint": "Read the record of the devil's bargain in the vaults, or ask Exethanter to seal the temple.",
       "ends": ""
     },
     {
       "id": "broker_paid",
       "journal": "One of us lay down in the empty amber, and the Thirst that lives in the devil knows them now. Vosk, an arcanaloth, took his fee and left smiling.",
       "objectives": [],
+      "hint": "Read the record of the devil's bargain in the vaults, or ask Exethanter to seal the temple.",
       "ends": ""
     },
     {

@@ -10,6 +10,7 @@
       "objectives": [
         "Find Kasimir"
       ],
+      "hint": "With Wren in the party, find Kasimir, a dusk elf at the Vistani camp outside Vallaki's west gate.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Help Kasimir let his sister rest"
       ],
+      "hint": "Help Kasimir let his sister rest: she haunts the Amber Temple's Hall of the Faceless God. Take Wren.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Learn what Sorrel couldn't teach"
       ],
+      "hint": "Face Rahadin, Strahd's chamberlain, in Castle Ravenloft, with Wren in the party.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Face Rahadin"
       ],
+      "hint": "Face Rahadin in Castle Ravenloft's Court of the Count with Wren, and choose how it ends.",
       "ends": ""
     },
     {

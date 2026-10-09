@@ -10,6 +10,7 @@
       "objectives": [
         "Find what the silver raven means"
       ],
+      "hint": "Ask Father Donavich at the village church about the silver raven, or let Hedda speak her truth to Madam Eva at Tser Pool.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Find out where the Morninglord's warmth still reaches in Barovia"
       ],
+      "hint": "Ask Father Donavich in the village of Barovia about the raven from Hedda's dream.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Find the Holy Symbol of Ravenkind"
       ],
+      "hint": "Find the Holy Symbol of Ravenkind where Madam Eva's reading says it lies; the Martikovs at the Wizard of Wines know its old story.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Find the Holy Symbol of Ravenkind"
       ],
+      "hint": "Find the Holy Symbol of Ravenkind where Madam Eva's reading says it lies; Davian Martikov at the Wizard of Wines knows its old story.",
       "ends": ""
     },
     {
@@ -42,6 +46,7 @@
       "objectives": [
         "Find the Holy Symbol of Ravenkind"
       ],
+      "hint": "Find the Holy Symbol of Ravenkind where Madam Eva's reading says it lies, then rest with Hedda in the party.",
       "ends": ""
     },
     {
@@ -50,6 +55,7 @@
       "objectives": [
         "Carry the raven's sun into Castle Ravenloft"
       ],
+      "hint": "Carry the Holy Symbol into Castle Ravenloft and take Hedda to the chapel's altar step.",
       "ends": ""
     },
     {

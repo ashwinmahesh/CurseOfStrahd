@@ -11,6 +11,7 @@
       "objectives": [
         "Find the Sunsword"
       ],
+      "hint": "Search where Madam Eva's card pointed: {tarokka.sword.hint}",
       "ends": ""
     },
     {

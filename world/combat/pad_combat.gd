@@ -80,7 +80,7 @@ func tick(delta: float) -> void:
 				PadPrompts.set_world(self, [["a", "Death saving throw"], ["start", "Menu"]], PROMPTS_RAISE)
 			else:
 				PadPrompts.set_world(self, [["a", "Move or attack"], [PadGlyphs.place_for(&"combat_next_target"), "Next target"],
-					[PadGlyphs.place_for(&"combat_end_turn"), "End turn"], [PadGlyphs.place_for(&"combat_radial"), "Actions (hold)"],
+					[PadGlyphs.place_for(&"combat_end_turn"), "End turn"], [PadGlyphs.place_for(&"combat_radial"), "Actions, Tactical (hold)"],
 					[PadGlyphs.place_for(&"combat_square_menu"), "Options"], [PadGlyphs.place_for(&"combat_controls"), "Controls"]],
 					PROMPTS_RAISE)
 		_:

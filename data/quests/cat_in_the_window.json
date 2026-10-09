@@ -11,6 +11,7 @@
       "objectives": [
         "Find a way into the locked bedroom at Wachterhaus"
       ],
+      "hint": "Go to Wachterhaus in Vallaki and get into the locked bedroom; its lock can be picked or forced.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find out what is wrong with Stella"
       ],
+      "hint": "Watch Stella closely in her room at Wachterhaus: Insight, Arcana or Detect Magic will show what's wrong.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Break the binding: Remove Curse, a scroll of it, or Father Lucian's help"
       ],
+      "hint": "Free Stella at Wachterhaus with Remove Curse or a scroll of it (Father Lucian at St. Andral's can help), or cut the binding and be ready to fight.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Find Stella at St. Andral's"
       ],
+      "hint": "Visit Stella at St. Andral's Church in Vallaki.",
       "ends": ""
     },
     {

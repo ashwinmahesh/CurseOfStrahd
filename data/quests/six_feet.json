@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Old Mihail who his new grave is for; he digs in the churchyard by day"
       ],
+      "hint": "Ask Old Mihail, who digs in the village churchyard by day, who his new grave is for.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Find out who the woman in the well is",
         "Look into the well"
       ],
+      "hint": "Ask the village's older women about the woman in the well (Goodwife Petra remembers), or look closely at the well in the village square.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Bring Zinaida up out of the well"
       ],
+      "hint": "Go down the village well and bring up what's left of Zinaida.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Lay her in the grave Mihail dug this week"
       ],
+      "hint": "Lay Zinaida in the grave Old Mihail dug this week, in the churchyard.",
       "ends": ""
     },
     {

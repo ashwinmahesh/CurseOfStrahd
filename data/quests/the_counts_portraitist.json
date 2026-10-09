@@ -12,6 +12,7 @@
         "Go into Tudor's studio on the east row",
         "Deal with the great canvas the count gave him to copy from"
       ],
+      "hint": "Go into Tudor's studio on Vallaki's east row and look at the great canvas against the far wall.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Speak to Tudor at his door in the evening"
       ],
+      "hint": "Find Tudor at his door on Vallaki's east row in the evening.",
       "ends": ""
     },
     {

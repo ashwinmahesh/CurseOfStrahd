@@ -11,6 +11,7 @@
       "objectives": [
         "Look in on Victor in the mansion attic"
       ],
+      "hint": "Climb to the attic of the burgomaster's mansion in Vallaki and talk to Victor.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Talk Victor out of it, break the circle, or tell his father"
       ],
+      "hint": "In the mansion attic, study the circle's sigils (Arcana) and show Victor what's wrong, talk him out of it, or scuff the chalk.",
       "ends": ""
     },
     {

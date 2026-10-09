@@ -11,6 +11,7 @@
       "objectives": [
         "Climb to the top of the high tower"
       ],
+      "hint": "Climb Castle Ravenloft's high tower to the very top.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Break the heart, or leave it beating"
       ],
+      "hint": "Break the Heart of Sorrow at the top of the high tower, or leave it beating.",
       "ends": ""
     },
     {

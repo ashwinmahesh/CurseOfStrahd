@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Radu the horse-master about his grey mare"
       ],
+      "hint": "Ask Radu the horse-master at the Tser Pool camp about his grey mare.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find Steaua at the crossroads milestone before the carriage comes"
       ],
+      "hint": "Go to the milestone on the east side of the River Ivlis crossroads before midnight and find Steaua.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Find Steaua at the crossroads milestone before the carriage comes"
       ],
+      "hint": "Go to the milestone on the east side of the River Ivlis crossroads before midnight and break the castle's hold on Steaua.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Deal with the carriage's escort"
       ],
+      "hint": "Stay at the crossroads milestone and deal with the carriage's escort when it comes.",
       "ends": ""
     },
     {
@@ -43,6 +47,7 @@
       "objectives": [
         "Wait for the carriage at midnight"
       ],
+      "hint": "Wait at the crossroads milestone for the carriage at midnight.",
       "ends": ""
     },
     {
@@ -51,6 +56,7 @@
       "objectives": [
         "Go back to Radu at the Tser Pool camp"
       ],
+      "hint": "Radu keeps the horses at the Tser Pool camp, west of the crossroads on the Old Svalich Road. Tell him what happened.",
       "ends": ""
     },
     {

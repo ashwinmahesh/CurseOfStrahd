@@ -1,8 +1,9 @@
 class_name JournalScreen
 extends CanvasLayer
 ## The quest journal, the codex and the bestiary (plan §5.5, §5.6): each quest as a card with the journal text of
-## every stage reached and its current objectives (open quests first, finished ones tagged and greyed below), the
-## books, letters and notes the party has read, and what it has learned of the creatures it fought (BestiaryPage, U8).
+## every stage reached, its current objectives and a Hint button for what to do next (open quests first, finished ones
+## tagged and greyed below), the books, letters and notes the party has read, and what it has learned of the creatures
+## it fought (BestiaryPage, U8).
 ## The reading text follows the player's text size (UiScale.text).
 
 const TABS: Array[String] = ["Quests", "Codex", "Bestiary"]
@@ -12,6 +13,9 @@ var st: StoryState
 var tab := "Quests"
 ## The creature the Bestiary shows ("" for the first).
 var beast := ""
+## Quests whose hint the player asked for while the journal is open: {quest id: true}. Hints stay hidden until asked
+## for, so the journal never spoils on its own.
+var hints_shown := {}
 var _frame: VBoxContainer
 
 
@@ -92,7 +96,31 @@ func _quests(box: VBoxContainer) -> void:
 			orow.add_child(UiParts.mark(1))
 			orow.add_child(UiKit.label(o, UiScale.text(15), "gilt_light", 1020))
 			col.add_child(orow)
+		if status == "active" and str(q.get("hint", "")) != "":
+			col.add_child(_hint(str(q["id"]), str(q["hint"])))
 		box.add_child(UiParts.row(col, Callable(), false, 12))
+
+
+## What to do next for an open quest (its stage's `hint`): a Hint button that shows the hint beside it, and hides it
+## again. The button stays put, so a pad keeps its focus.
+func _hint(quest_id: String, hint: String) -> Control:
+	var holder := HBoxContainer.new()
+	holder.add_theme_constant_override("separation", 10)
+	var text := UiKit.label(hint, UiScale.text(14), "parchment", 940)
+	text.name = "HintText"
+	text.visible = hints_shown.has(quest_id)
+	var b := UiParts.small_button("Hide hint" if text.visible else "Hint", func() -> void:
+		text.visible = not text.visible
+		if text.visible:
+			hints_shown[quest_id] = true
+		else:
+			hints_shown.erase(quest_id)
+		(holder.get_child(0) as Button).text = "Hide hint" if text.visible else "Hint")
+	b.name = "Hint_" + quest_id
+	b.tooltip_text = "What to do next: where to go and who to see, never the twist."
+	holder.add_child(b)
+	holder.add_child(text)
+	return holder
 
 
 func _codex(box: VBoxContainer) -> void:

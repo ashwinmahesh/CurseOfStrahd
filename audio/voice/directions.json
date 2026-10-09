@@ -2768,6 +2768,11 @@
   "d982619061417eac": "[hushed, uneasy warning]",
   "e93e90dc560c2d73": "[low, watchful, uneasy]"
  },
+ "tsolenka_falconer": {
+  "2177b4b211178e56": "[bored, cold, sighing]",
+  "38c43e475a95099e": "[cold, courtly, menacing]",
+  "f64e4aefae8f7c11": "[cold, courtly, menacing]"
+ },
  "tsolenka_sergeant": {
   "23937c47bc593b87": "[clipped, grim, ashamed]",
   "4b72ba82022591ba": "[clipped, formal, reporting]",
@@ -2778,6 +2783,13 @@
   "b29f479eac7e6ff7": "[clipped, formal, faintly bewildered]",
   "c68446e15b7fd138": "[clipped, formal, flat]",
   "cfa6e8b17ac90026": "[clipped, grim, reporting]"
+ },
+ "tsolenka_tibor": {
+  "27fe7e8bca159b07": "[eager, salesman, persuasive]",
+  "3b4d2ffe1988cfce": "[eager, hushed, urgent]",
+  "48cd3ac0fe0af8e8": "[quiet, ashamed, guilty]",
+  "b260edb405a8487f": "[evasive, breezy, shifty]",
+  "d3a77ba5230bdfff": "[cheerful, wheedling]"
  },
  "urwin_martikov": {
   "001aff385e72021d": "[low, confiding]",

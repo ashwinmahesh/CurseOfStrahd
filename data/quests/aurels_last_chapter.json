@@ -10,6 +10,7 @@
       "objectives": [
         "Find out what happened to Aurel Mirescu"
       ],
+      "hint": "Take a Long Rest with Silvain in the party; he has something of Aurel's to show you at camp.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Follow Aurel's trail back through the valley"
       ],
+      "hint": "Take a Long Rest with Silvain in the party so he can read Aurel's note properly.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
         "Ask the showman in Vallaki about Aurel",
         "Find what Aurel read at the Amber Temple"
       ],
+      "hint": "In Vallaki, ask Rictavio at the Blue Water Inn about Aurel; at the Amber Temple, look for the library's chained books with Silvain beside you.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Find what Aurel read at the Amber Temple"
       ],
+      "hint": "Go to the Amber Temple and look among the library's chained books with Silvain in the party.",
       "ends": ""
     },
     {
@@ -43,6 +47,7 @@
       "objectives": [
         "Find the Tome of Strahd"
       ],
+      "hint": "Find the Tome of Strahd where Madam Eva's reading says it lies, then rest with Silvain and let him read it.",
       "ends": ""
     },
     {
@@ -51,6 +56,7 @@
       "objectives": [
         "Find Aurel behind the lit window in Castle Ravenloft"
       ],
+      "hint": "In Castle Ravenloft, look for the room with the lit window in the Court of the Count, with Silvain in the party.",
       "ends": ""
     },
     {

@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Davian Martikov about the Seventh Row"
       ],
+      "hint": "Ask Davian Martikov at the Wizard of Wines about the Seventh Row.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Look at the Seventh Row, and watch it after dark"
       ],
+      "hint": "Look at the Seventh Row in the vineyard, and watch it after dark.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Deal with the Seventh Row"
       ],
+      "hint": "Deal with the Seventh Row: talk the picker round first if you can, then cut the row out.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Tell Davian"
       ],
+      "hint": "Tell Davian Martikov at the Wizard of Wines what happened.",
       "ends": ""
     },
     {

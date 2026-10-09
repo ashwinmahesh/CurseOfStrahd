@@ -11,6 +11,7 @@
       "objectives": [
         "Find out what the witch keeps in her hut"
       ],
+      "hint": "Call up to Baba Lysaga's hut on the stump in the marsh and ask for a fire; keep your eyes open at her table.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Look around her hut",
         "Decide what to do about the witch"
       ],
+      "hint": "In Baba Lysaga's hut, look at the doll over the hearth, and watch what she serves (Insight or Medicine).",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Use it on her, tell Strahd, or keep it to ourselves"
       ],
+      "hint": "Use what you know on Baba Lysaga in her hut, tell Strahd if you meet him in Berez by night, or keep it to yourselves.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Go back to the hut on the stump"
       ],
+      "hint": "Go back to Baba Lysaga's hut on the stump in Berez.",
       "ends": ""
     },
     {

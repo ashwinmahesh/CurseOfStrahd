@@ -11,6 +11,7 @@
       "objectives": [
         "Speak with the commander, Vladimir Horngaard"
       ],
+      "hint": "Find the commander, Vladimir Horngaard, on Argynvostholt's ground floor; Sir Godfrey can tell you where.",
       "ends": ""
     },
     {
@@ -21,6 +22,7 @@
         "Or give the knights their rest",
         "Or accept the commander's terms"
       ],
+      "hint": "Help Sir Godfrey remember the Order's oath (the stone in the chapel, his own wall), or name terms with Vladimir, or challenge him by the Order's law.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
       "objectives": [
         "Ask Vladimir to call the muster"
       ],
+      "hint": "Ask Vladimir on Argynvostholt's ground floor to call the muster, and let Sir Godfrey say the oath.",
       "ends": ""
     },
     {

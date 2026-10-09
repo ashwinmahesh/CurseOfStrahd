@@ -15865,6 +15865,12 @@
   "recipe": "956cd23797",
   "text": "He's forgetting himself. Literally. Somebody should help with that before there's nothing left to help."
  },
+ "hero_female/bdb5d09679474fb2": {
+  "chars": 34,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "We're carrying a roc to the count."
+ },
  "hero_female/bdc919c5862d2a39": {
   "chars": 5,
   "model": "eleven_v4",
@@ -16493,6 +16499,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "He said he misjudged us. He was being kind. He judged us exactly right; we just hadn't decided yet."
+ },
+ "hero_female/e1effe2c6d37215d": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "The castle wants a roc."
  },
  "hero_female/e236a0a821bd1c1b": {
   "chars": 54,
@@ -20113,6 +20125,12 @@
   "recipe": "66638cecb8",
   "text": "He's forgetting himself. Literally. Somebody should help with that before there's nothing left to help."
  },
+ "hero_male/bdb5d09679474fb2": {
+  "chars": 34,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "We're carrying a roc to the count."
+ },
  "hero_male/bdc919c5862d2a39": {
   "chars": 5,
   "model": "eleven_v4",
@@ -20741,6 +20759,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "He said he misjudged us. He was being kind. He judged us exactly right; we just hadn't decided yet."
+ },
+ "hero_male/e1effe2c6d37215d": {
+  "chars": 23,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "The castle wants a roc."
  },
  "hero_male/e236a0a821bd1c1b": {
   "chars": 54,
@@ -33991,6 +34015,12 @@
   "recipe": "dd92281f92",
   "text": "The great hall goes up into the dark further than your light can follow. At its centre stands a colossal robed figure in a warden's hood, and under the hood there is no face, only smooth stone."
  },
+ "narrator/07997604f35e4bf0": {
+  "chars": 81,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An empty nest, and a long scrape where something heavy was dragged off the shelf."
+ },
  "narrator/07b7d399df8eb171": {
   "chars": 98,
   "model": "eleven_v4",
@@ -34578,6 +34608,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Horses in a rail pen, sleek and well fed, the best-cared-for living things you have seen in Barovia. They watch you the way the Vistani do: politely, and counting."
+ },
+ "narrator/0d6cf9f4831986c8": {
+  "chars": 185,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The falconer lifts the chick, shell and all, as if it weighed nothing, and the stone birds take it between them, and they go up the wind toward the castle with it screaming all the way."
  },
  "narrator/0daf81a7c8457296": {
   "chars": 179,
@@ -36943,6 +36979,12 @@
   "recipe": "dd92281f92",
   "text": "The church stands on its rise with its bell tower leaning slightly toward the castle, as if listening. Half its windows are boarded; the other half are dark."
  },
+ "narrator/214999fe3f0c130c": {
+  "chars": 261,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Up on the tower, the stone birds on the parapet lift their heads. They aren't carvings. They drop off the stone one after another and come down the wind on wide grey wings, and with them a man in a falconer's leather glove, falling slowly, the way a leaf falls."
+ },
  "narrator/2150c07eac4086d7": {
   "chars": 38,
   "model": "eleven_v4",
@@ -37476,6 +37518,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A cellar made into a chapel: benches, candles, and a shrine at the far end draped in black, with a silver S worked into the cloth."
+ },
+ "narrator/260de02df94d4741": {
+  "chars": 70,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He isn't here. His fire is cold, and somebody has kicked snow over it."
  },
  "narrator/26112c0252ca16b1": {
   "chars": 117,
@@ -39264,6 +39312,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The ice stair ends on a shelf of wind-scoured snow, and the mountain opens a door in front of you. Two colossi of amber stand on either side of it, and the air is so thin that your heart has to work twice as hard for each step."
+ },
+ "narrator/357dafde523e5ed8": {
+  "chars": 163,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The nest is the size of a cottage roof, woven of whole pines and lined with bones and the things the roc carried off with them: harness, a saddle, a rusted helmet."
  },
  "narrator/358aa30ea4a8c2ca": {
   "chars": 101,
@@ -41442,6 +41496,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He pats his robe. He unpins a note, reads it, pins it back. He unpins another."
+ },
+ "narrator/494d558100e0d906": {
+  "chars": 83,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She doesn't come for you. She never comes for you again, on the bridge or anywhere."
  },
  "narrator/494e4d52a24b1b46": {
   "chars": 130,
@@ -44557,6 +44617,12 @@
   "recipe": "dd92281f92",
   "text": "Somewhere far below the chapel floor, something in a coffin turns its face to the wall."
  },
+ "narrator/646ab2eff7534ade": {
+  "chars": 76,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A Vistana who likes money and doesn't like heights. That's all you can tell."
+ },
  "narrator/646fb05f81bb3db0": {
   "chars": 140,
   "model": "eleven_v4",
@@ -45013,6 +45079,12 @@
   "recipe": "dd92281f92",
   "text": "A sarcophagus barely long enough for a child, for the jester of the house. Someone has left a small brass winding key on the lid."
  },
+ "narrator/68465277ecd785dc": {
+  "chars": 81,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Below on the landing, Tibor has stood up from his fire and is not looking at you."
+ },
  "narrator/6860c22263afa343": {
   "chars": 189,
   "model": "eleven_v4",
@@ -45348,6 +45420,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You tell Krezk his name and step back. It is the quietest square you have ever stood in."
+ },
+ "narrator/6b05353e2731df0f": {
+  "chars": 197,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "When he says \"buyer\", he rubs his left wrist without knowing he's doing it. Under the cuff there are two small marks, neat as a sewing needle's. He isn't selling to anyone. He's been told to fetch."
  },
  "narrator/6b1094fff7546b95": {
   "chars": 88,
@@ -46086,6 +46164,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Ratatoille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight."
+ },
+ "narrator/7059d31c292eb306": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A Vistana in a sheepskin coat sits at a small fire on the landing, with a coil of rope, a sack lined with straw, and a long hooked pole. He waves you over as if you were late."
  },
  "narrator/705acaee3b0c9e2d": {
   "chars": 113,
@@ -49297,6 +49381,12 @@
   "recipe": "dd92281f92",
   "text": "A stone porch. Somebody has hung a sprig of dried flowers over the door, and it has been there so long it's the colour of the stone."
  },
+ "narrator/8d13eac05115eacc": {
+  "chars": 182,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stone birds come down on the shelf with a sound like a quarry falling, and the falconer lands among them, soft as a leaf, with two of his hands behind him, pulling off his glove."
+ },
  "narrator/8d2e2d5abf7357fb": {
   "chars": 127,
   "model": "eleven_v4",
@@ -49939,6 +50029,12 @@
   "recipe": "dd92281f92",
   "text": "He starts to hum, low and tuneless, and won't stop. It sounds like wind in dry branches."
  },
+ "narrator/92ed107bc73e0f26": {
+  "chars": 216,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Out over the gorge the roc comes back, enormous, and hangs on the wind beside the shelf looking at you with one gold eye, at the chick, and at you again. Then she settles over the nest, and the chick stops screaming."
+ },
  "narrator/92fc1b4234b6a201": {
   "chars": 175,
   "model": "eleven_v4",
@@ -50418,6 +50514,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The cart has a new wheel and a load of casks lashed under canvas, ready to roll. Someone has tied a black feather to the shaft for luck."
+ },
+ "narrator/979f33f212cfbb27": {
+  "chars": 220,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a wide leather belt with a buckle like a giant's fist, still strong enough to lift a cart."
  },
  "narrator/97aa09fb40e5cef9": {
   "chars": 85,
@@ -55933,6 +56035,12 @@
   "recipe": "dd92281f92",
   "text": "Glass bursts inward along both walls of the nave. Pale shapes come through the windows head first, like swimmers, and the candles gutter as they pass."
  },
+ "narrator/c944a39315628eac": {
+  "chars": 222,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the middle sits one egg, as tall as a child, grey and freckled. It's cracked. As you watch, a piece the size of a plate falls in, and a wet grey beak as long as your arm comes out, and opens, and screams for its mother."
+ },
  "narrator/c94a5476c57a6542": {
   "chars": 93,
   "model": "eleven_v4",
@@ -57852,6 +57960,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A young woman in a nursemaid's cap and apron stands at the churchyard wall in the dark, her hands folded, looking in through the gate at the graves. She's grey all through, and you can see the wall through her."
+ },
+ "narrator/dac8938e521aafea": {
+  "chars": 107,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It's heavy, and it screams the whole way down, and somewhere out over the gorge something enormous answers."
  },
  "narrator/dadb80929a8918f2": {
   "chars": 56,
@@ -61308,6 +61422,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bottom of the lift shaft: a floor of cracked stone, and old stains under the cage where it has come down too fast."
+ },
+ "narrator/fa1a8efa57304f6c": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The nest is empty and the shelf is quiet. High over the gorge, two shapes circle, one enormous and one small, the small one flying very badly."
  },
  "narrator/fa37c2038160b721": {
   "chars": 144,
@@ -72956,6 +73076,27 @@
   "recipe": "1f1ddb32d1",
   "text": "It stopped by Radu's pen. In the morning there was a purse on the gatepost, and Radu took it, and he hasn't looked anyone in the eye since."
  },
+ "tsolenka_falconer/2177b4b211178e56": {
+  "chars": 44,
+  "direction": "[bored, cold, sighing]",
+  "model": "eleven_v3",
+  "recipe": "9d6c0a64ad",
+  "text": "(He sighs.) The master does so hate to wait."
+ },
+ "tsolenka_falconer/38c43e475a95099e": {
+  "chars": 83,
+  "direction": "[cold, courtly, menacing]",
+  "model": "eleven_v3",
+  "recipe": "9d6c0a64ad",
+  "text": "The master's egg. Thank you for finding it for us. You may step back now, and live."
+ },
+ "tsolenka_falconer/f64e4aefae8f7c11": {
+  "chars": 101,
+  "direction": "[cold, courtly, menacing]",
+  "model": "eleven_v3",
+  "recipe": "9d6c0a64ad",
+  "text": "The master's egg. Thank you for carrying it so far. You may put it down now, and step back, and live."
+ },
  "tsolenka_sergeant/002f8272e3f7137d": {
   "chars": 37,
   "model": "eleven_v3",
@@ -73126,6 +73267,41 @@
   "model": "eleven_v3",
   "recipe": "8a4538833b",
   "text": "Captain's things. Off limits. And something that came up the road a while back in a dead man's pack, that the captain locked away and wouldn't talk about. You'll keep out of there, if you know what's good."
+ },
+ "tsolenka_tibor/27fe7e8bca159b07": {
+  "chars": 206,
+  "direction": "[eager, salesman, persuasive]",
+  "model": "eleven_v3",
+  "recipe": "5d862e0570",
+  "text": "The roc up there lays once in eleven years. This is the year. I have a buyer who pays four hundred gold for the egg, and I'll split it with whoever carries the sack, because my knees are not what they were."
+ },
+ "tsolenka_tibor/3b4d2ffe1988cfce": {
+  "chars": 99,
+  "direction": "[eager, hushed, urgent]",
+  "model": "eleven_v3",
+  "recipe": "5d862e0570",
+  "text": "The shelf, friends. While she's out. Eleven years I've waited for this, and she won't hunt all day."
+ },
+ "tsolenka_tibor/48cd3ac0fe0af8e8": {
+  "chars": 93,
+  "direction": "[quiet, ashamed, guilty]",
+  "model": "eleven_v3",
+  "recipe": "5d862e0570",
+  "text": "(From the landing, not loudly.) Four hundred. As promised. I'm sorry. I was told what to say."
+ },
+ "tsolenka_tibor/b260edb405a8487f": {
+  "chars": 84,
+  "direction": "[evasive, breezy, shifty]",
+  "model": "eleven_v3",
+  "recipe": "5d862e0570",
+  "text": "Someone with a great deal of money and a long view. Does it matter? An egg's an egg."
+ },
+ "tsolenka_tibor/d3a77ba5230bdfff": {
+  "chars": 111,
+  "direction": "[cheerful, wheedling]",
+  "model": "eleven_v3",
+  "recipe": "5d862e0570",
+  "text": "Climbers! Or at least people with arms. Tibor. I collect eggs. Hawks, eagles, the odd wyvern once, never again."
  },
  "tsolenka_watchman/5244e4f0f4452b18": {
   "chars": 21,

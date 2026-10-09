@@ -11,6 +11,7 @@
       "objectives": [
         "Find a way into the tower"
       ],
+      "hint": "Talk to Ezmerelda, camped on the shore of Lake Baratok by the tower; the door wants a word, and the lintel may show it.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Get into the tower",
         "Find something in Van Richten's hand"
       ],
+      "hint": "Get into the tower: read the worn letters on the lintel over the door (History) for the name it wants, or knock.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
         "Search the tower",
         "Decide what to tell Ezmerelda about her teacher"
       ],
+      "hint": "Search Van Richten's tower, then go back down to Ezmerelda on the shore and decide what to tell her.",
       "ends": ""
     },
     {

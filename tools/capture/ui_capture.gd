@@ -4,8 +4,8 @@ extends Node
 ## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
-## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts) and the Wait
-## screen (UI_ONLY=wait).
+## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
+## screen (UI_ONLY=wait) and the journal with two quests' hints showing (UI_ONLY=journal_hints).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -83,6 +83,16 @@ func capture_shots(tool: Node, out: String) -> void:
 				root.get("screen").call("_draw")
 			await _shoot(tool, "%s_%s.png" % [out, kind])
 			root.call("close_screen")
+	if _wants("journal_hints"):
+		# The journal's Hint buttons (Storyline QA): two quests' hints asked for, the others not.
+		st.set_quest_stage("the_oat_thief", "rumored")
+		st.set_quest_stage("the_nursemaids_grave", "asked")
+		root.call("open_screen", "journal", 0)
+		var js := root.get("screen") as JournalScreen
+		js.hints_shown = {"death_house": true, "the_nursemaids_grave": true}
+		js.call("_draw")
+		await _shoot(tool, "%s_journal_hints.png" % out)
+		root.call("close_screen")
 	if _wants("spellbook"):
 		# A found spellbook (the Dursts'): its spells, and the party's Wizard copying them.
 		GameState.story.party[0].add_item("durst_spellbook", 1)

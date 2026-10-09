@@ -879,6 +879,11 @@ def story_checks(data, errors, need):
             errors.append(f"{w}: dialogue file '{fkey}' doesn't exist")
         elif node not in parsed[fkey]["nodes"]:
             errors.append(f"{w}: dialogue {fkey} has no node '{node}'")
+    # Every stage that doesn't end its quest says what to do next: the journal's Hint (Storyline QA, 2026-10-09).
+    for qid, q in sorted(quests.items()):
+        for st in q["stages"]:
+            if not st.get("ends") and not str(st.get("hint", "")).strip():
+                errors.append(f"data/quests/{qid}.json: stage '{st['id']}' has no hint (what to do next, for the journal)")
     for fid, wh in sorted(flags_read.items()):
         if fid not in flags:
             errors.append(f"{wh[0]}: flag '{fid}' isn't registered in data/flags/")

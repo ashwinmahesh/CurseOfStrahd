@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Big Tobar about his son; he mends wheels at the Tser Pool camp"
       ],
+      "hint": "Find Big Tobar mending wheels at the Vistani camp at Tser Pool and ask about his son.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go to Tser Falls after dark"
       ],
+      "hint": "Go to Tser Falls after dark and look over the edge of the gorge.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
         "Put out the lights",
         "Find Nelu"
       ],
+      "hint": "At Tser Falls after dark, deal with the lights in the gorge, then search the gorge's edge for Nelu.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Bring Nelu home to the Tser Pool camp"
       ],
+      "hint": "Take Nelu back to Big Tobar at the Tser Pool camp.",
       "ends": ""
     },
     {

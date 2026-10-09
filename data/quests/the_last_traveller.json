@@ -11,6 +11,7 @@
       "objectives": [
         "Walk him down to the village"
       ],
+      "hint": "Walk Ilarion down the Old Svalich Road to the village.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Get him down the road"
       ],
+      "hint": "Get Ilarion past the wolves and on down the road.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Take him to the well in the Village of Barovia"
       ],
+      "hint": "Take Ilarion to the well in the village of Barovia's square.",
       "ends": ""
     },
     {

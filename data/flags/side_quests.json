@@ -1147,6 +1147,31 @@
       "summary": "Agafia thanked the party with her grandmother's speaking stones (The Oat Thief)."
     },
     {
+      "id": "tibor_met",
+      "type": "bool",
+      "summary": "The party met Tibor the egg-hunter at the Tsolenka landing (The Last Egg)."
+    },
+    {
+      "id": "tibor_marked",
+      "type": "bool",
+      "summary": "The party saw the count's marks on Tibor's wrist: the buyer is the castle (The Last Egg)."
+    },
+    {
+      "id": "roc_egg_taken",
+      "type": "bool",
+      "summary": "The party took the hatching roc egg from the nest (The Last Egg)."
+    },
+    {
+      "id": "roc_egg_sold",
+      "type": "bool",
+      "summary": "The party let the count's falconer take the roc's chick (The Last Egg)."
+    },
+    {
+      "id": "last_egg_defended",
+      "type": "bool",
+      "summary": "The count's falconer and his stone birds are beaten on the roc's shelf (The Last Egg)."
+    },
+    {
       "id": "tudor_told",
       "type": "bool",
       "summary": "Tudor told the party about his eleven nights at the castle (The Count's Portraitist)."

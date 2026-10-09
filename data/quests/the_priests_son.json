@@ -11,6 +11,7 @@
       "objectives": [
         "Decide what to do about Doru"
       ],
+      "hint": "Doru is barred in the undercroft beneath the village church. Talk to him, or to Father Donavich, and decide what to do.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Look for a cure for Doru"
       ],
+      "hint": "Doru waits in the undercroft beneath the village church. Go down to him, or talk to Father Donavich, when you know what you'll do.",
       "ends": ""
     },
     {
@@ -37,6 +39,7 @@
       "id": "doru_left",
       "journal": "We left Doru in the dark beneath the church, the door barred, his father praying above him.",
       "objectives": [],
+      "hint": "Doru is still barred beneath the village church. Go back down, or talk to Father Donavich, if you mean to end it.",
       "ends": ""
     }
   ]

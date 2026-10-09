@@ -11,6 +11,7 @@
       "objectives": [
         "Watch the north path at night"
       ],
+      "hint": "Watch the north path at the village's north edge after dark and see who's carrying the oats.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go up the north path to the hollow in the pines"
       ],
+      "hint": "Take the north path at the village's north edge up into the pines, to the hollow.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Speak to Agafia"
       ],
+      "hint": "Talk to Agafia at the hollow up the north path.",
       "ends": ""
     },
     {

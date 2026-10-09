@@ -405,6 +405,15 @@ func test_the_pack_hunters_come_up_the_oats() -> void:
 	assert_eq(GameState.story.quest_stage("the_oat_thief"), "defended")
 
 
+## The falconer and his stone birds come down on the roc's shelf.
+func test_the_falconer_comes_for_the_last_egg() -> void:
+	var v := await _boot("tsolenka_pass", 12, 9, ["roc_driven_off"])
+	GameState.story.set_quest_stage("the_last_egg", "asked")
+	await _fight(v, "last_egg", ["The Falconer", "The Falconer's Hand", "A Stone Bird"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_last_egg"), "defended")
+
+
 ## The count's canvas leans out of its frame in Tudor's studio, Large, with its copies.
 func test_the_counts_likeness_comes_off_the_wall() -> void:
 	var v := await _boot("vallaki_tudor_studio", 20, 9, ["tudor_studio_open"])
@@ -416,4 +425,3 @@ func test_the_counts_likeness_comes_off_the_wall() -> void:
 			assert_eq(CombatToken.height_of(c), 2.2)
 	await _end(v)
 	assert_eq(GameState.story.quest_stage("the_counts_portraitist"), "burned")
-
