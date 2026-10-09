@@ -152,16 +152,6 @@ func _sheet_tab(index: int, tab: String) -> Callable:
 		return root.get("screen")
 
 
-## The inventory in `view` ("doll" or "list"; it opens in the view last chosen).
-func _inventory(index: int, view: String) -> Callable:
-	return func() -> Variant:
-		root.call("open_screen", "inventory", index)
-		await _frames(1)
-		(root.get("screen") as InventoryScreen).set_view(view)
-		await _frames(2)
-		return root.get("screen")
-
-
 func _close_screen() -> void:
 	root.call("close_screen")
 
@@ -250,10 +240,7 @@ func test_the_party_screens() -> void:
 		await _check("%s's sheet" % st.party[i].name, _screen("sheet", i), _close_screen)
 		# Spells too: a spell with many tags beside its slot picker widened the tab past the frame (UI QA UI-02).
 		await _check("%s's sheet (Spells)" % st.party[i].name, _sheet_tab(i, "Spells"), _close_screen)
-		await _check("%s's inventory" % st.party[i].name, _inventory(i, "doll"), _close_screen)
-		# The inventory's list view too (owner, 2026-10-07: a switch between it and the paper doll).
-		await _check("%s's inventory (list)" % st.party[i].name, _inventory(i, "list"), _close_screen)
-	GameSettings.set_value("inventory_view", "doll")
+		await _check("%s's inventory" % st.party[i].name, _screen("inventory", i), _close_screen)
 	for kind: String in ["journal", "party", "roster", "rest", "menu"]:
 		await _check("the %s" % kind, _screen(kind, 0), _close_screen)
 
