@@ -209,6 +209,12 @@
       "when": "flag.strahd_withdrew",
       "points": 1,
       "summary": "Made him leave a fight."
+    },
+    {
+      "id": "roc_egg",
+      "when": "flag.roc_egg_sold",
+      "points": 1,
+      "summary": "Handed his falconer a roc chick off the Tsolenka shelf (The Last Egg). He noticed who carried it."
     }
   ]
 }
