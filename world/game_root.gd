@@ -778,6 +778,7 @@ func _fade_in_place(delay: float) -> void:
 	tw.tween_interval(delay)
 	tw.tween_property(_place_fade, "color:a", 0.0, 0.6).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 	_place_fade.set_meta(&"tween", tw)
+	PlaceDissolve.play(self, delay)   # and the world sharpens out of a soft blur as the black lifts (Visual Polish Plan 10)
 
 
 # --- Changing place behind a cover (the loading lane) ----------------------------------------------
