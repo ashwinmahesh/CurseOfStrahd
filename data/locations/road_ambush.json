@@ -113,31 +113,6 @@
       "model": "wall_low"
     },
     {
-      "id": "cart_false_floor",
-      "cell": [
-        13,
-        5
-      ],
-      "kind": "search",
-      "search_dc": 12,
-      "skill": "investigation",
-      "label": "a false floor in the broken cart",
-      "model": "broken_boards",
-      "item": "bag_of_holding"
-    },
-    {
-      "id": "field_wall_cache",
-      "cell": [
-        20,
-        2
-      ],
-      "kind": "search",
-      "search_dc": 14,
-      "label": "a farmer's cache behind the field wall",
-      "model": "rubble",
-      "item": "gauntlets_of_ogre_power"
-    },
-    {
       "id": "ambush_lookout_tree",
       "cell": [
         10,
@@ -147,6 +122,31 @@
       "label": "A platform up a pine by the road",
       "model": "hunters_tree_stand",
       "stand_ft": 10
+    },
+    {
+      "id": "cart_loose_board",
+      "cell": [
+        13,
+        5
+      ],
+      "kind": "search",
+      "search_dc": 12,
+      "skill": "investigation",
+      "label": "a loose board in the broken cart",
+      "model": "broken_boards",
+      "item": "dust_of_dryness"
+    },
+    {
+      "id": "field_wall_gloves",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "search",
+      "search_dc": 14,
+      "label": "a gap in the field wall",
+      "model": "rubble",
+      "item": "gloves_of_swimming_and_climbing"
     }
   ],
   "encounters": [

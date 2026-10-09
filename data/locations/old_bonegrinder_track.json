@@ -108,18 +108,6 @@
       "model": "shrine_small"
     },
     {
-      "id": "lane_shrine_tin",
-      "cell": [
-        23,
-        3
-      ],
-      "kind": "search",
-      "search_dc": 13,
-      "label": "a tin behind the wayside shrine",
-      "model": "satchel",
-      "item": "restorative_ointment"
-    },
-    {
       "id": "lane_stopped_handcart",
       "cell": [
         11,
@@ -142,18 +130,6 @@
       "model": "doll"
     },
     {
-      "id": "lane_ditch_knife",
-      "cell": [
-        27,
-        11
-      ],
-      "kind": "search",
-      "label": "Something in the ditch",
-      "model": "satchel",
-      "search_dc": 13,
-      "item": "vicious_weapon__dagger"
-    },
-    {
       "id": "mouse_hut",
       "cell": [
         23,
@@ -164,6 +140,30 @@
       "model": "crate",
       "dialogue": "old_bonegrinder/the_fourth_sister:hut_prop",
       "when": "flag.mouse_met"
+    },
+    {
+      "id": "ditch_vial",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "Something in the ditch",
+      "model": "satchel",
+      "item": "potion_of_gaseous_form"
+    },
+    {
+      "id": "lane_shrine_flask",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "an offering behind the wayside shrine",
+      "model": "satchel",
+      "item": "potion_of_resistance_poison"
     }
   ],
   "encounters": [

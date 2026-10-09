@@ -553,6 +553,18 @@
       "model": "rubble",
       "search_dc": 14,
       "item": "weapon_plus_1__sling"
+    },
+    {
+      "id": "lane_shrine_tin",
+      "cell": [
+        21,
+        11
+      ],
+      "kind": "search",
+      "search_dc": 13,
+      "label": "a tin behind the wayside shrine",
+      "model": "satchel",
+      "item": "restorative_ointment"
     }
   ],
   "containers": [

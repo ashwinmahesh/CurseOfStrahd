@@ -79,11 +79,11 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Road (open stretch), the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart |
-| ✅ | Road (open stretch), the field wall | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall |
-| ✅ | Svalich Woods, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches |
-| ✅ | Svalich Woods, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk |
-| ✅ | Svalich Woods, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot) |
+| ✅ | Tser Pool, the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart (from the open road, 2026-10-09) |
+| ✅ | Crossroads, the field wall by the falls track | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall (from the open road, 2026-10-09) |
+| ✅ | Tser Falls, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches (from the Svalich Woods road, 2026-10-09) |
+| ✅ | Tser Falls, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09) |
+| ✅ | Tser Falls, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot, from the Svalich Woods road, 2026-10-09) |
 | ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
 | ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone |
 | ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
@@ -93,6 +93,25 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot) |
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
+
+## The roads (random encounters)
+
+Ashwin (2026-10-09): the good finds that used to sit on the road maps, which only a random encounter opens, went into
+the main story above (each row says where from), and the road maps got different finds. Every random encounter also
+pays now (story/road_spoils.gd): a fight leaves coins by each foe's Challenge Rating, a potion, gem or spell scroll in
+step with the party's level, and a chance of a magic item that grows with how hard the fight was; a meeting on the road
+leaves a smaller purse and one find.
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | The open road, the broken cart | Dust of Dryness (uncommon) | Search (Investigation DC 12): under a loose board |
+| ✅ | The open road, the field wall | Gloves of Swimming and Climbing (uncommon) | Search (Perception DC 14): tucked in a gap |
+| ✅ | Svalich Woods, the claw-marked pine | Ring of Jumping (uncommon) | Search (Perception DC 14): high on a branch |
+| ✅ | Svalich Woods, the fallen trunk | Wand of Magic Detection (uncommon) | Search (Investigation DC 12): in a split |
+| ✅ | Svalich Woods, a woodcutter's stump | Potion of Resistance, Cold (uncommon) | Search (Perception DC 12): his flask |
+| ✅ | The miller's lane, the ditch | Potion of Gaseous Form (rare) | Search (Perception DC 13) |
+| ✅ | The miller's lane, the wayside shrine | Potion of Resistance, Poison (uncommon) | Search (Perception DC 13): an offering |
+| ✅ | The Amber Temple road, the frozen traveller | Potion of Giant Strength, Frost (rare) | Search (Perception DC 12): in his pack |
 
 ## The crossroads by day (side quest, level 5)
 
@@ -148,8 +167,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
 | ✅ | Loft, the little bags on hooks | Portable Hole (rare) | Search (Perception DC 15): a black cloth folded among the bags |
 | ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
-| ✅ | The track, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13) |
-| ✅ | The track, the ditch | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot) |
+| ✅ | The hill, the ditch by the track | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot, from the miller's lane, 2026-10-09) |
 | ✅ | The track, Granny Ash's basket | Robe of Eyes (rare) | Hoard: once Granny Ash is dead (The Fourth Sister, docs/story/side_quests.md) |
 
 ## The Wizard of Wines (level 6)
@@ -190,6 +208,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14) |
 | ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
 | ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
+| ✅ | Krezk, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13): a tin of salve left for whoever needs it (from the miller's lane, 2026-10-09) |
 | ✅ | Krezk, the square by the shrine | Ring of the Ram (rare) | Gift: Old Pavel's father's ring, after Clovin's show (Clovin's Audience, docs/story/side_quests.md) |
 | ✅ | Krezk, the watch house | Iron Bands of Bilarro (rare) | Gift: Krezk's bounty from Dmitri, once the Grandsire is dead (The Pack's Runt, docs/story/side_quests.md) |
 | ✅ | Burgomaster's house, the eldest son's room | Ioun Stone of Awareness (rare) | Search (Investigation DC 15): a box under the bed |
@@ -267,6 +286,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Mordenkainen | Ring of Spell Storing (rare) | Gift: once he remembers who he is |
 | ✅ | Tsolenka Pass, the bones on the shelf | Wings of Flying (rare) | Search (Perception DC 15): a traveller the roc dropped |
 | ✅ | Tsolenka Pass, the landing | Feather Token, Bird (rare) | Search (Perception DC 12): tucked in a roc's quill (lane 28's spot) |
+| ✅ | Tsolenka Pass, a frozen traveller on the climb | Rope of Climbing (uncommon) | Search (Perception DC 12): in his pack (lane 28's spot, from the Amber Temple road, 2026-10-09) |
 | ✅ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
 | ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
 | ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
@@ -282,7 +302,6 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | The road up, another frozen traveller | Rope of Climbing (uncommon) | Search (Perception DC 12): in his pack (lane 28's spot) |
 | ✅ | Entrance, the frozen traveller | Frost Brand Longsword (very rare) | Search (Perception DC 14): clutched in a frozen hand |
 | ✅ | Entrance, the rack of halberds | +3 Halberd (very rare) | Search (Investigation DC 16) |
 | ✅ | The ledge, the cairn of names | Candle of Invocation (very rare) | Search (Perception DC 12): an offering that never burned down (lane 28's spot) |
