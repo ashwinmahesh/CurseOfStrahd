@@ -11,6 +11,7 @@
       "objectives": [
         "Have a look at the billy in Krezk's goat pens"
       ],
+      "hint": "Go to the goat pens in Krezk and have a look at the one-horned billy.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Get close enough to see the ring, or look the goat in the eye"
       ],
+      "hint": "At Krezk's pens, get close enough to read the ring on the billy's horn (Animal Handling), look him in the eye (Insight), or speak with him by spell.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Lift the curse: Remove Curse, or a scroll of it"
       ],
+      "hint": "Lift the curse on the billy with Remove Curse or a scroll of it. The ring's engraving points to Berez.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Burn the Rag Queen in Berez's scarecrow field"
       ],
+      "hint": "Go to the scarecrow field in the Ruins of Berez and burn the Rag Queen.",
       "ends": ""
     },
     {
@@ -43,6 +47,7 @@
       "objectives": [
         "Tell Dragos, in Krezk"
       ],
+      "hint": "Go back to Krezk and tell Dragos.",
       "ends": ""
     },
     {

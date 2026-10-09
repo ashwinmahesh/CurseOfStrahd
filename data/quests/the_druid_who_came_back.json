@@ -11,6 +11,7 @@
       "objectives": [
         "Go up Yester Hill after dark"
       ],
+      "hint": "Climb to the crown of Yester Hill after dark and see who carries the lantern.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Deal with what's growing on the crown"
       ],
+      "hint": "Deal with what's growing on the crown of Yester Hill; talking first may tell you how.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Tell Davian the lantern's out"
       ],
+      "hint": "Go back to the Wizard of Wines and tell Davian Martikov the lantern's out.",
       "ends": ""
     },
     {

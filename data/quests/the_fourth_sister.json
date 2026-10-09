@@ -11,6 +11,7 @@
       "objectives": [
         "Find the girl on the miller's lane below Old Bonegrinder"
       ],
+      "hint": "Travel to the Miller's Lane, below Old Bonegrinder, by day and find the girl selling pastries.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find out what Mouse is waiting for"
       ],
+      "hint": "Keep talking to Mouse on the Miller's Lane; ask what she's waiting for.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
         "Be at Mouse's hut on the miller's lane after dark",
         "Optional: find out who Mouse was before she was Mouse"
       ],
+      "hint": "Be at Mouse's hut on the Miller's Lane after dark. Goodwife Sarnov in the village may know who Mouse was.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Talk to Mouse"
       ],
+      "hint": "Talk to Mouse by her hut on the Miller's Lane.",
       "ends": ""
     },
     {

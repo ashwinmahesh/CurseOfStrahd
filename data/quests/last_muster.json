@@ -11,6 +11,7 @@
       "objectives": [
         "Go to the Gates of Barovia after dark"
       ],
+      "hint": "Go to the Gates of Barovia, at the east end of the Old Svalich Road, after dark.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Convince the riders their war is over, or fight them for the gate"
       ],
+      "hint": "Talk to Marshal Dragomir at the Gates of Barovia: convince his riders their war is over, or fight for the gate.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Beat Marshal Dragomir at the gate"
       ],
+      "hint": "Beat Marshal Dragomir at the Gates of Barovia.",
       "ends": ""
     },
     {

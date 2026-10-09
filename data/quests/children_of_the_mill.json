@@ -12,6 +12,7 @@
         "Get the children out of the mill",
         "Don't fight all three hags at once"
       ],
+      "hint": "The children are in the loft of Old Bonegrinder, the windmill on the crag. Deal with the hag at the oven first, or the coven will fight together.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Climb to the loft"
       ],
+      "hint": "Climb the mill's stair to the loft and face Morgantha, by blade or by bargain.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Free the children"
       ],
+      "hint": "Open the cages in Old Bonegrinder's loft and talk to the children.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "See the children safely away"
       ],
+      "hint": "Talk to the children in the loft and see them out of the mill.",
       "ends": ""
     },
     {

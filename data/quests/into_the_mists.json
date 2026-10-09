@@ -10,6 +10,7 @@
       "objectives": [
         "Follow the road"
       ],
+      "hint": "Follow the Old Svalich Road west, away from the mist.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Follow the road to the village"
       ],
+      "hint": "Follow the road on to the village; there are children on the road at its edge.",
       "ends": ""
     },
     {

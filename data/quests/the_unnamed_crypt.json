@@ -11,6 +11,7 @@
       "objectives": [
         "Find the crypt with no name in the castle's catacombs"
       ],
+      "hint": "Search Castle Ravenloft's catacombs for the crypt with no name on it.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Open it, and say a name if you have one"
       ],
+      "hint": "If you've learned whose crypt it is, say her name at it; otherwise lift the lid, ready for a fight.",
       "ends": ""
     },
     {

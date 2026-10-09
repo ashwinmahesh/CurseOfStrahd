@@ -48,6 +48,10 @@
               "type": "string"
             }
           },
+          "hint": {
+            "type": "string",
+            "description": "What to do next at this stage, for the journal's Hint button: the place and the person or action, never the twist. Every stage that doesn't end the quest has one (make validate)."
+          },
           "ends": {
             "type": "string",
             "enum": [

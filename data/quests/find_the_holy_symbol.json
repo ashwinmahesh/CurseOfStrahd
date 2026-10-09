@@ -11,6 +11,7 @@
       "objectives": [
         "Find the Holy Symbol of Ravenkind"
       ],
+      "hint": "Search where Madam Eva's card pointed: {tarokka.symbol.hint}",
       "ends": ""
     },
     {

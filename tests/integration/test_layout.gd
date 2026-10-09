@@ -271,6 +271,21 @@ func test_the_settings_pages() -> void:
 	GameSettings.set_blur_reach("")
 
 
+## The journal with every open quest's hint showing (Storyline QA, 2026-10-09): the hints wrap inside their cards.
+func test_the_journal_hints() -> void:
+	if not await _game(LATE):
+		return
+	await _check("the journal with its hints showing", func() -> Variant:
+		root.call("open_screen", "journal", 0)
+		await _frames(1)
+		var j := root.get("screen") as JournalScreen
+		for q in QuestLog.journal(GameState.story):
+			j.hints_shown[str(q["id"])] = true
+		j.call("_draw")
+		await _frames(2)
+		return j, _close_screen)
+
+
 ## The journal's Bestiary (U8) with every creature in the game met, a third of them felled and a third studied.
 func test_the_bestiary() -> void:
 	if not await _game(LATE):

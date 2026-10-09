@@ -11,6 +11,7 @@
       "objectives": [
         "Find Cosmin on the squires' graves at Argynvostholt"
       ],
+      "hint": "Find Cosmin on the squires' graves in Argynvostholt's grounds.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find out what really happened to Ioan"
       ],
+      "hint": "Ask Sir Godfrey at Argynvostholt about the squire Ioan. The headstone Cosmin sits on may jog his memory (Investigation).",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Stand the vigil with Cosmin at the squires' graves, after dark"
       ],
+      "hint": "Go back to Cosmin on the squires' graves after dark and stand the vigil with him.",
       "ends": ""
     },
     {

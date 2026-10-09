@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Old Sabin about the lanterns"
       ],
+      "hint": "Find Old Sabin by his strings of paper lanterns in Vallaki's streets, by day, and ask about the extra lantern.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go to the fishers' jetty on Lake Zarovich after dark"
       ],
+      "hint": "Walk out to the end of the fishers' jetty at the Lake Zarovich landing after dark and watch the lanterns on the water.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "See to Sandu"
       ],
+      "hint": "See to Sandu at the fishers' landing, then take him back to Old Sabin in Vallaki.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Take Sandu back to Old Sabin in Vallaki"
       ],
+      "hint": "Old Sabin sits by his strings of paper lanterns in Vallaki's streets by day; bring Sandu to him there.",
       "ends": ""
     },
     {

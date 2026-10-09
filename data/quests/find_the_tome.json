@@ -11,6 +11,7 @@
       "objectives": [
         "Find the Tome of Strahd"
       ],
+      "hint": "Search where Madam Eva's card pointed: {tarokka.tome.hint}",
       "ends": ""
     },
     {

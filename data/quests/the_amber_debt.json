@@ -11,6 +11,7 @@
       "objectives": [
         "Look at the vault floor"
       ],
+      "hint": "Look at the floor of the Amber Temple's vaults for what Exethanter sealed.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Go down under the vaults"
       ],
+      "hint": "Go down the stair under the vault floor.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
         "Optional: learn the wardens' lullaby",
         "Put out the Eye Below"
       ],
+      "hint": "Under the vaults, use the wardens' book: turn the mirrors, learn their lullaby, then put out the Eye Below.",
       "ends": ""
     },
     {
@@ -37,6 +40,7 @@
       "objectives": [
         "Look through what it collected"
       ],
+      "hint": "Search the heap of things the Eye collected, under the vaults.",
       "ends": ""
     },
     {

@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Grigore about his son; he hauls wood on the west road by day"
       ],
+      "hint": "Find Grigore the woodcutter hauling wood by his yard on the village's west road, and ask about Luca.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Look at the wood Luca cut: Grigore's woodpile on the west road, or Bildrath's back room"
       ],
+      "hint": "Look at the pale logs on Grigore's woodpile on the west road, or the load Luca sold to Bildrath's back room.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
         "Burn every stick of the late wood by day, Bildrath's load too",
         "Or wait in Grigore's yard for whatever comes at dusk"
       ],
+      "hint": "Burn all the late wood by day, Grigore's pile and Bildrath's load, or wait in Grigore's yard at dusk.",
       "ends": ""
     },
     {
@@ -36,6 +39,7 @@
       "objectives": [
         "Get the splinter out of Luca's hand"
       ],
+      "hint": "Talk to Grigore and get the splinter out of Luca's hand (Medicine helps).",
       "ends": ""
     },
     {
@@ -44,6 +48,7 @@
       "objectives": [
         "Get the splinter out of Luca's hand"
       ],
+      "hint": "Talk to Grigore and get the splinter out of Luca's hand (Medicine helps).",
       "ends": ""
     },
     {

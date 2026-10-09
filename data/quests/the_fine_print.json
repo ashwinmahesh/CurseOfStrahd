@@ -10,6 +10,7 @@
       "objectives": [
         "Get out of the contract"
       ],
+      "hint": "Take Long Rests with Kip in the party; someone will come calling at the fire.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Read the contract properly"
       ],
+      "hint": "Have the contract read properly: rest with Kip and let him study it, or show it to Master Vosk in the Amber Temple's library.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Get Strahd's signature, freely given"
       ],
+      "hint": "Get Strahd's own signature, freely given: dinner at Castle Ravenloft is a chance, with Kip at the table.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Call Mister Quillon and settle up"
       ],
+      "hint": "Take a Long Rest with Kip in the party and call Mister Quillon to the fire.",
       "ends": ""
     },
     {

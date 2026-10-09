@@ -11,6 +11,7 @@
       "objectives": [
         "Take the goat path from the Tsolenka Pass up to the north shoulder of Ghakis"
       ],
+      "hint": "The goat path leaves the Tsolenka Pass, on the road to the Amber Temple; climb it to the north shoulder of Mount Ghakis.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find out what the count keeps under the mountain"
       ],
+      "hint": "Go in through the gate in the mountain and read the keepers' log at their post.",
       "ends": ""
     },
     {
@@ -30,6 +32,7 @@
         "Optional: open the sluice in the vent gallery",
         "Deal with the dragon"
       ],
+      "hint": "Under Mount Ghakis, use the keepers' tricks if you like (the larder, the great drum, the vent sluice), then face what they kept.",
       "ends": ""
     },
     {
@@ -38,6 +41,7 @@
       "objectives": [
         "Search the hoard she lay on"
       ],
+      "hint": "Search the hoard under Mount Ghakis; look hard at the coins.",
       "ends": ""
     },
     {

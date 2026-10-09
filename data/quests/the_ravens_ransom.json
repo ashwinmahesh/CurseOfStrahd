@@ -11,6 +11,7 @@
       "objectives": [
         "Find the cage on the hill trail above Lake Zarovich and bring Bray home"
       ],
+      "hint": "Go to the hill trail above Lake Zarovich and find the silver cage in a dead pine. Look at the branches before you go close.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Make sure nothing is listening through him",
         "Tell Urwin"
       ],
+      "hint": "Talk to Bray at the Blue Water Inn and watch where he keeps looking (Insight), then talk to Urwin.",
       "ends": ""
     },
     {

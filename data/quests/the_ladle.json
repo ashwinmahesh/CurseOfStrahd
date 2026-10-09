@@ -10,6 +10,7 @@
       "objectives": [
         "Find the Order of the Silver Dragon"
       ],
+      "hint": "With Godrick in the party, go to Argynvostholt, the dragon's ruined manor, and talk to Sir Godfrey Gwilym.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
         "Ask the Order to knight Godrick",
         "Learn what Sir Godfrey wrote about Aldric Ashgrove"
       ],
+      "hint": "Ask Sir Godfrey at Argynvostholt to knight Godrick, and read what he wrote on his wall about Aldric Ashgrove.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Learn what Sir Godfrey wrote about Aldric Ashgrove"
       ],
+      "hint": "Read the oldest writing on Sir Godfrey's wall at Argynvostholt, with Godrick beside you.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Ask Sir Godfrey to knight Godrick, once the Order has found its own oath again"
       ],
+      "hint": "Help the Order find its own oath again (the dragon's beacon), then ask Sir Godfrey to knight Godrick.",
       "ends": ""
     },
     {

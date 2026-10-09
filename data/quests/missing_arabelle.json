@@ -11,6 +11,7 @@
       "objectives": [
         "Visit the Vistani camp outside the west gate"
       ],
+      "hint": "Visit the Vistani camp outside Vallaki's west gate and talk to Luvash.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Ask around the camp about Arabelle"
       ],
+      "hint": "Ask the Vistani around the camp's fire about Arabelle.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Search the lakeshore north of the camp"
       ],
+      "hint": "Search the lakeshore north of the camp; follow the fisherman.",
       "ends": ""
     },
     {

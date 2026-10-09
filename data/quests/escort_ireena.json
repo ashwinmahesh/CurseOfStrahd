@@ -12,6 +12,7 @@
         "Help bury the burgomaster",
         "Speak with Ireena about leaving"
       ],
+      "hint": "Help bury the burgomaster first: talk to Ireena at the mansion.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Give Ireena your answer"
       ],
+      "hint": "Talk to Ireena by the grave, or at the mansion, and give her your answer.",
       "ends": ""
     },
     {
@@ -29,6 +31,7 @@
         "Take the road west out of the village",
         "Keep Ireena alive"
       ],
+      "hint": "Leave the village by the road west, past the posts at the village's west end, with Ireena in the party.",
       "ends": ""
     },
     {
@@ -37,6 +40,7 @@
       "objectives": [
         "Return to the mansion if you change your mind"
       ],
+      "hint": "If you change your mind, go back to the mansion and talk to Ireena.",
       "ends": ""
     },
     {
@@ -45,6 +49,7 @@
       "objectives": [
         "Follow the Old Svalich Road west"
       ],
+      "hint": "Follow the Old Svalich Road west: past the crossroads and Tser Pool to the gate of Vallaki.",
       "ends": ""
     },
     {

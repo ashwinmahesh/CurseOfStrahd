@@ -11,6 +11,7 @@
       "objectives": [
         "Hear Mary out"
       ],
+      "hint": "Talk to Mad Mary in her house near the village's main road and let her tell you about Gertruda.",
       "ends": ""
     },
     {
@@ -19,12 +20,14 @@
       "objectives": [
         "Look for Gertruda"
       ],
+      "hint": "Ask Mary to show you Gertruda's room; the window may tell you more. Gertruda herself is far from the village.",
       "ends": ""
     },
     {
       "id": "refused",
       "journal": "We told Mary we couldn't look for her daughter. Her weeping followed us all the way down the lane.",
       "objectives": [],
+      "hint": "If you change your mind, Mary is still in her house near the main road.",
       "ends": ""
     },
     {
@@ -33,6 +36,7 @@
       "objectives": [
         "Look for Gertruda"
       ],
+      "hint": "Gertruda went out to meet someone grand. Look for her in Castle Ravenloft, in the Rooms of Weeping.",
       "ends": ""
     },
     {
@@ -41,6 +45,7 @@
       "objectives": [
         "Bring Gertruda home to her mother's house in the village of Barovia"
       ],
+      "hint": "Take Gertruda home to Mad Mary's house in the village of Barovia.",
       "ends": ""
     },
     {

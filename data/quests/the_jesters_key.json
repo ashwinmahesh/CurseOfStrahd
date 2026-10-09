@@ -11,6 +11,7 @@
       "objectives": [
         "Find Pidlwick II's key in the ravens' roost"
       ],
+      "hint": "Find the brass key in the ravens' nests in the roost under Castle Ravenloft's roofs.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Bring the key back to Pidlwick II on the high tower stair"
       ],
+      "hint": "Pidlwick II plays on the stair of Castle Ravenloft's high tower; give him the key there.",
       "ends": ""
     },
     {

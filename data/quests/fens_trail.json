@@ -10,6 +10,7 @@
       "objectives": [
         "Follow Grandda Fen's blazes"
       ],
+      "hint": "With Thistle in the party, look for Fen's blaze on a dead tree at the River Ivlis crossroads.",
       "ends": ""
     },
     {
@@ -18,6 +19,7 @@
       "objectives": [
         "Find his next blaze"
       ],
+      "hint": "Fen's next blaze is on the hill trail above Lake Zarovich (the Hill Trail on the map, past Vallaki). Take Thistle there.",
       "ends": ""
     },
     {
@@ -26,6 +28,7 @@
       "objectives": [
         "Go up into the hills"
       ],
+      "hint": "Follow the blaze into the hills: the werewolves' den above the lake's north shore. Take Thistle.",
       "ends": ""
     },
     {
@@ -34,6 +37,7 @@
       "objectives": [
         "Decide what to do for Grandda Fen"
       ],
+      "hint": "Decide with Thistle what to do for Fen in the den's caves: lift the curse (Remove Curse), free him, or give him rest.",
       "ends": ""
     },
     {

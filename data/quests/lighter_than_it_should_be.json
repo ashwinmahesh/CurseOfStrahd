@@ -11,6 +11,7 @@
       "objectives": [
         "Look at the Krezkov graves by the pool"
       ],
+      "hint": "Look at the Krezkov children's graves at the Pool of the White Sun in Krezk.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Watch the Krezkov graves after midnight"
       ],
+      "hint": "Watch the Krezkov graves at the Pool of the White Sun after midnight.",
       "ends": ""
     },
     {
@@ -27,6 +29,7 @@
       "objectives": [
         "Find out who he is"
       ],
+      "hint": "Talk to the figure at the Krezkov graves after midnight, gently.",
       "ends": ""
     },
     {
@@ -35,6 +38,7 @@
       "objectives": [
         "Bring Sorin home to the Krezkovs"
       ],
+      "hint": "Bring Sorin to the Krezkovs' house in Krezk; the abbey may send someone after him.",
       "ends": ""
     },
     {
@@ -43,6 +47,7 @@
       "objectives": [
         "Bring Sorin home to the Krezkovs"
       ],
+      "hint": "Bring Sorin to the Krezkovs' house in Krezk.",
       "ends": ""
     },
     {

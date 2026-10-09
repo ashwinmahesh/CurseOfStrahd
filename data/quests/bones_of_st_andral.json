@@ -11,6 +11,7 @@
       "objectives": [
         "Ask Father Lucian at St. Andral's what has happened"
       ],
+      "hint": "Talk to Father Lucian at St. Andral's Church in Vallaki.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
         "Find out who took the bones",
         "Bring them back to the crypt"
       ],
+      "hint": "Find Milivoj the gravedigger in Vallaki's lower town by day; he has been spending more than he earns.",
       "ends": ""
     },
     {
@@ -28,6 +30,7 @@
       "objectives": [
         "Question Henrik the coffin maker"
       ],
+      "hint": "Visit Henrik van der Voort at the coffin maker's shop in Vallaki and ask about the bones.",
       "ends": ""
     },
     {
@@ -37,6 +40,7 @@
         "Search the coffin maker's storeroom by day",
         "Or keep vigil at St. Andral's after dark"
       ],
+      "hint": "Search the storeroom at the back of the coffin maker's shop by day, ready for a fight. Or keep vigil with Father Lucian at St. Andral's after dark.",
       "ends": ""
     },
     {
@@ -45,6 +49,7 @@
       "objectives": [
         "Recover the bones from the coffin maker's storeroom"
       ],
+      "hint": "The bones are still in the coffin maker's storeroom. Go in by day, ready for a fight.",
       "ends": ""
     },
     {
@@ -53,6 +58,7 @@
       "objectives": [
         "Take the bones back to Father Lucian"
       ],
+      "hint": "Take the bones back to Father Lucian at St. Andral's Church.",
       "ends": ""
     },
     {

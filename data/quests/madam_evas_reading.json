@@ -11,6 +11,7 @@
       "objectives": [
         "Visit Madam Eva in her tent"
       ],
+      "hint": "Go into the great tent at the Vistani camp at Tser Pool and sit with Madam Eva.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Return to Madam Eva's tent when you are ready"
       ],
+      "hint": "Go back to Madam Eva's tent at Tser Pool when you're ready to hear her.",
       "ends": ""
     },
     {

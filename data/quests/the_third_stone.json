@@ -12,6 +12,7 @@
         "Find the Martikovs' stone in Berez",
         "Bring it home to Davian"
       ],
+      "hint": "Find the green stone in Baba Lysaga's hut in Berez, the drowned village; the cradle is worth a look.",
       "ends": ""
     },
     {
@@ -20,6 +21,7 @@
       "objectives": [
         "Bring the stone to Davian at the Wizard of Wines"
       ],
+      "hint": "Davian Martikov is at the Wizard of Wines, south-west of Vallaki; give him the stone.",
       "ends": ""
     },
     {

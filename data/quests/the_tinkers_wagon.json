@@ -11,6 +11,7 @@
       "objectives": [
         "Find Iosif's wagon at the River Ivlis crossroads, by day"
       ],
+      "hint": "Go to the River Ivlis crossroads by day and find Iosif's green wagon.",
       "ends": ""
     },
     {
@@ -19,6 +20,7 @@
       "objectives": [
         "Find out what's wrong with Iosif and his wagon"
       ],
+      "hint": "Watch Iosif closely while he talks (Insight), or look at the wagon rather than the man (Perception).",
       "ends": ""
     },
     {
