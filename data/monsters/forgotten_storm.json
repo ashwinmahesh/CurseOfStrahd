@@ -1,0 +1,243 @@
+{
+  "id": "forgotten_storm",
+  "name": "The Forgotten Storm",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Forgotten Storm, docs/story/side_quests.md): the storm the Mad Mage called down to cover his flight from the castle forty years ago and told to bring his apprentice after him. It never found her, and every evening it comes back to the mountain to report. Built up from the 2025 Monster Manual's air elemental to CR 9 at Huge: harder slams, a wider whirlwind, lightning from the sky, lair actions on the ring of glass where it strikes, Legendary Resistance and a gust between turns. Drawn with the air elemental's sprite, made Huge."
+  },
+  "size": "huge",
+  "type": "elemental",
+  "tags": [
+    "boss",
+    "elemental",
+    "storm"
+  ],
+  "alignment": "neutral",
+  "art": "air_elemental",
+  "art_height": 3.2,
+  "ac": 15,
+  "initiative": 5,
+  "hp": {
+    "average": 152,
+    "dice": "16d12+48"
+  },
+  "speed": {
+    "walk": 10,
+    "fly": 90,
+    "hover": true
+  },
+  "abilities": {
+    "str": 18,
+    "dex": 20,
+    "con": 16,
+    "int": 8,
+    "wis": 12,
+    "cha": 10
+  },
+  "saves": {
+    "dex": 9,
+    "wis": 5
+  },
+  "resistances": [
+    "bludgeoning",
+    "lightning",
+    "piercing",
+    "slashing"
+  ],
+  "immunities": [
+    "poison",
+    "thunder"
+  ],
+  "condition_immunities": [
+    "exhaustion",
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "unconscious"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [
+    "Auran",
+    "understands Common but says only one thing"
+  ],
+  "cr": 9,
+  "xp": 5000,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "air_form",
+      "name": "Air Form",
+      "action": "passive",
+      "modifiers": [
+        {
+          "stat": "flag",
+          "value": "enters_spaces"
+        }
+      ],
+      "summary": "Can enter and stay in a creature's space, and slip through gaps an inch wide.",
+      "implemented": "engine"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (1/Day)",
+      "action": "special",
+      "summary": "Once a day, a failed saving throw becomes a success.",
+      "text": "When the Forgotten Storm fails a saving throw, it can choose to succeed instead, once a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "an_order_never_kept",
+      "name": "An Order Never Kept",
+      "action": "passive",
+      "summary": "Forty years ago a wizard told it to bring someone after him. It's still trying.",
+      "text": "The Mad Mage called it down to cover his flight from the castle and told it to bring his apprentice after him. It never found her. Every evening it comes back to the mountain to report, and strikes the place where he stood.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "thunderous_slam",
+          "count": 2
+        }
+      ],
+      "summary": "Two Thunderous Slams.",
+      "text": "The Forgotten Storm makes two Thunderous Slam attacks."
+    },
+    {
+      "id": "thunderous_slam",
+      "name": "Thunderous Slam",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 18,
+          "dice": "3d8+5",
+          "type": "thunder"
+        }
+      ],
+      "summary": "A blast of wind like a falling wall.",
+      "text": "Melee Attack Roll: +9, reach 15 ft. Hit: 18 (3d8 + 5) Thunder damage."
+    },
+    {
+      "id": "lightning",
+      "name": "Lightning",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 27,
+          "dice": "6d8",
+          "type": "lightning"
+        }
+      ],
+      "summary": "Recharge 5-6: lightning out of the cloud onto two creatures within 120 ft; DC 16 Dex save, 6d8 Lightning, half on a success.",
+      "text": "Dexterity Saving Throw: DC 16, up to two creatures the storm can see within 120 feet. Failure: 27 (6d8) Lightning damage. Success: Half damage."
+    },
+    {
+      "id": "whirlwind",
+      "name": "Whirlwind",
+      "kind": "save",
+      "recharge": "4-6",
+      "save": {
+        "ability": "str",
+        "dc": 16,
+        "success": "half"
+      },
+      "targets": {
+        "in_space": true,
+        "max_size": "large"
+      },
+      "damage": [
+        {
+          "average": 24,
+          "dice": "4d10+2",
+          "type": "thunder"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "push",
+          "feet": 20
+        },
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Recharge 4-6. Each Large or smaller creature in its space: DC 16 Str save or 4d10+2 Thunder, flung 20 ft and Prone (half damage only on a success)."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "gust",
+        "name": "Gust",
+        "cost": 1,
+        "move": true,
+        "summary": "Blows up to half its flying Speed without provoking Opportunity Attacks."
+      },
+      {
+        "id": "slam",
+        "name": "Slam",
+        "cost": 1,
+        "action": "thunderous_slam",
+        "summary": "Makes one Thunderous Slam."
+      }
+    ]
+  },
+  "legendary_resistance": 1,
+  "lair_actions": [
+    {
+      "id": "the_lightning_lands",
+      "name": "The Lightning Lands",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 120,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "3d10",
+          "type": "lightning"
+        }
+      ],
+      "summary": "One creature it can see: the evening's lightning comes down on it; DC 15 Dex save, 3d10 Lightning, half on a success.",
+      "text": "Every evening the lightning lands here. It comes down on a creature the storm can see: a DC 15 Dexterity saving throw, taking 16 (3d10) Lightning damage on a failure or half as much on a success."
+    }
+  ],
+  "regions": [
+    "mount_baratok"
+  ],
+  "ai_profile": "brute",
+  "summary": "A storm with a will: forty years ago the Mad Mage called it down to cover his flight from the castle and told it to bring his apprentice after him. It never found her. Every evening it comes back to Mount Baratok to report, and strikes the place where he stood until the rock turned to glass."
+}

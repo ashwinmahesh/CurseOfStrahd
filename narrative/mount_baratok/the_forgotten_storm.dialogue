@@ -1,0 +1,122 @@
+# The Forgotten Storm (side quest, docs/story/side_quests.md): every evening lightning lands on the ring of glass on
+# Mount Baratok. Forty years ago the Mad Mage called down a storm to cover his flight from the castle and told it to
+# bring his apprentice after him (The Mage's Lost Pages). It never found her, and it comes back every evening to say
+# so, angrier each time. **Twist:** (Arcana) under the mage's order, in another hand, the count has written two more
+# words into the spell: and him. It isn't wrecking the yard by accident; it has started coming for the mage.
+# **Escalation:** at dusk on the glass it asks where she is, and doesn't wait long for an answer
+# (data/monsters/forgotten_storm.json). Told she's at rest (The Unnamed Crypt), it can let go without a fight. The
+# mage stays where he is and as he is either way; nothing here touches find_the_ally. Reached from the mage's menu
+# from level 8, mad or restored (mount_baratok/mordenkainen). Every line here is unvoiced for now.
+
+# --- The mage, not yet himself (mount_baratok/mordenkainen:mad_menu jumps here) ---
+
+~ mad
+mad_mage: The lightning? (He looks at the window as if it might be listening.) I told it something. A long time ago. It's still doing it, whatever it is. It comes every evening to tell me, and I can't remember what I asked it, so I can't tell it to stop.
+mad_mage: It's getting angrier. Last week it took the roof off the woodshed. It looked in at the window, and the knights on the board fell over. Will you go down to the glass at dusk and ask it what it wants? I'd go myself, but I'm fairly sure it wants me.
+quest the_forgotten_storm asked
+-> mount_baratok/mordenkainen:mad_menu
+
+# --- Mordenkainen, himself again (mount_baratok/mordenkainen:restored_menu jumps here) ---
+
+~ restored
+Mordenkainen: That's mine. (He doesn't look at the window.) The night I ran from the castle I called a storm down behind me to cover the road, and I gave it one order: bring her after me. Corvina. I was already halfway down the hill when I said it.
+Mordenkainen: It never found her. It comes back every evening to say so, and strikes the place I stood when I gave the order. A spell doesn't forget, even when its wizard does.
+Mordenkainen: I can't dismiss it. It answers to the man who gave the order, and I'm not that man any more. Go down to the glass at dusk. Tell it what it needs to hear, or break it. I'd rather the first.
+quest the_forgotten_storm asked
+-> mount_baratok/mordenkainen:restored_menu
+
+# --- The ring of glass (prop storm_glass, below the summit) ---
+
+~ glass
+if flag.storm_dispersed
+-> glass_after
+endif
+if not quest.the_forgotten_storm
+Narrator: A ring of black glass in the rock, where something very hot has struck the same place again and again, for years.
+-> END
+endif
+if hour >= 6 and hour < 18
+Narrator: The glass is cold under your hand. Whatever strikes here comes at dusk.
+* (Wait here for dusk.) -> dusk
+* (Leave it for now.) -> END
+endif
+-> dusk
+
+~ dusk
+if hour >= 6 and hour < 19
+time until 19
+endif
+Narrator: At dusk the clouds come down off the summit one after another, as if they'd been called, and a column of grey wind settles onto the ring of glass, flickering with lightning inside like a lantern full of moths. Near the top of it there's almost a face.
+The Forgotten Storm: WHERE IS SHE.
+* [if flag.corvina_letter_2 or flag.corvina_name_known] (Say her name: Corvina.) -> name
+* [Arcana DC 15] (Read the spell that holds it together.) -> arcana | arcana_fail
+* (Stand your ground.) -> fight
+
+~ arcana
+set storm_spell_read
+Narrator: The spell is one order, written over and over in the mage's hand until it has worn a groove in the sky: bring her after me. Under it, smaller, in a different hand, cold and very neat, someone has added two words: and him.
+Narrator: It isn't wrecking the mage's yard by accident. Somebody taught it to come for him too.
+interject tag:blunt: The count's written himself into it.
+* [if flag.corvina_letter_2 or flag.corvina_name_known] (Say her name: Corvina.) -> name
+* (Stand your ground.) -> fight
+
+~ arcana_fail
+Narrator: Wind, and lightning in it, and a great deal of grief. That's all you can tell.
+* [if flag.corvina_letter_2 or flag.corvina_name_known] (Say her name: Corvina.) -> name
+* (Stand your ground.) -> fight
+
+~ name
+The Forgotten Storm: CORVINA. (The wind drops, a little, the way a dog's hackles do.) WHERE.
+* [if flag.corvina_slain] She's at rest. Her name's on her crypt. You can stop now. -> rest
+* [if not flag.corvina_slain] In the count's castle, in a crypt with no name. -> east
+* (Stand your ground.) -> fight
+
+~ rest
+set storm_dispersed
+quest the_forgotten_storm broken
+Narrator: The column of wind stands very still on the glass for a long moment. Then it lets go of itself, not all at once, but from the top down, like a held breath, and the last of it goes out over the lake as a little rain.
+Narrator: In the middle of the ring, where the storm stood, the glass is warm. Something is half sunk in it.
+approve liriel_dawnsong +2 wren_featherfoot +2 godrick_pendlebrook +1: You told the mage's storm it could stop
+-> glass_after
+
+~ east
+set storm_sent_east
+Narrator: The storm tears itself off the glass and goes east, toward the castle, howling, and the pines lie down flat as it passes. A minute later it comes back, ragged, smaller, as if it hit a wall in the sky. It can't go there. It never could.
+The Forgotten Storm: AND HIM.
+-> fight
+
+~ fight
+Narrator: The wind comes down off the glass at you, and the lightning comes down out of it.
+combat forgotten_storm
+
+# --- The glass once the storm is gone ---
+
+~ glass_after
+if not flag.storm_censer_found
+set storm_censer_found
+Narrator: Sunk in the glass where the storm stood is a little brass censer, half melted, the kind a wizard swings to call weather. Forty years ago it must have rolled out of a pocket on the road. When you lift it out, it's still warm, and the smoke inside it moves on its own.
+give censer_of_controlling_air_elementals
+else
+Narrator: The ring of glass is cold and still. In the evenings now, nothing comes.
+endif
+-> END
+
+# --- The mage, once it's over (mount_baratok/mordenkainen jumps here) ---
+
+~ thanks
+quest the_forgotten_storm done
+if flag.mordenkainen_restored
+Mordenkainen: Quiet. (He listens to it.) I'd forgotten what the mountain sounds like when nobody's angry on it.
+if flag.storm_spell_read
+Mordenkainen: And him. (A dry laugh.) Of course he wrote himself into my spell. He could never leave anything of mine alone.
+endif
+Mordenkainen: Here. The last of what I came over the mountains with. Spend it on something I would disapprove of.
+else
+mad_mage: It's quiet. (He sets the black king upright on the board, very carefully.) I'd forgotten quiet. I don't know what you did, but the pieces have stopped falling over.
+mad_mage: Take these. They're chess pieces. No, they're coins. One of them is a goat. You choose.
+endif
+gold +250
+if flag.mordenkainen_restored
+-> mount_baratok/mordenkainen:restored_menu
+endif
+-> mount_baratok/mordenkainen:mad_menu
