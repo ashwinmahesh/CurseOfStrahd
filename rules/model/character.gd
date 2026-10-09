@@ -2034,6 +2034,7 @@ func auto_equip() -> void:
 	if shield_id != "":
 		equip(shield_id, "off_hand")
 	seed_weapon_sets()
+	seed_doll()
 
 
 ## Only weapons in a set attack in a fight (owner 2026-10-09, Baldur's Gate 3's two sets), so the sets get what a hero
@@ -2062,6 +2063,33 @@ func seed_weapon_sets() -> void:
 			other = _best_spare_weapon(func(w: Dictionary) -> bool: return "thrown" in Gear.weapon_props(w), held_ids)
 	if other != "":
 		weapon_set_2["main_hand"] = other
+
+
+## The paper doll's quiver and focus (U11), when nothing's there yet: the biggest stack of ordinary ammunition a
+## weapon in either set shoots, and the first spellcasting focus or component pouch carried. Only what's empty is
+## filled, and neither changes the rules (Gear.carry_slot).
+func seed_doll() -> void:
+	if held_id("ammo") == "":
+		var kinds: Array[String] = []
+		for wid: Variant in [held_id("main_hand"), held_id("off_hand")] + weapon_set_2.values():
+			var kind := str((compendium.item_data(str(wid)).get("weapon", {}) as Dictionary).get("ammunition", ""))
+			if kind != "" and not kind in kinds:
+				kinds.append(kind)
+		var best := {}
+		for e in inventory:
+			var d := compendium.item_data(str(e["id"]))
+			if str(e["slot"]) != "" or int(e["qty"]) <= 0 or MagicItems.is_magic(d):
+				continue
+			for kind in kinds:
+				if Gear.ammo_matches(d, kind) and (best.is_empty() or int(e["qty"]) > int(best["qty"])):
+					best = e
+		if not best.is_empty():
+			best["slot"] = "ammo"
+	if held_id("focus") == "":
+		for e in inventory:
+			if str(e["slot"]) == "" and int(e["qty"]) > 0 and Gear.carry_slot(compendium.item_data(str(e["id"]))) == "focus":
+				e["slot"] = "focus"
+				break
 
 
 ## The carried weapon not in `held_ids` that `fits` with the best average damage (proficiency counting 2), or "".
@@ -2339,7 +2367,7 @@ func to_dict() -> Dictionary:
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
 		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
 		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(), "reaction_rules": reaction_rules.duplicate(),
-		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true), "sets_seeded": true}
+		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true), "sets_seeded": true, "doll_seeded": true}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2373,6 +2401,9 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	# Saved before only weapons in a set could attack (2026-10-09): fill the sets once, as a new hero's are.
 	if not bool(d.get("sets_seeded", false)):
 		c.seed_weapon_sets()
+	# Saved before the paper doll had a quiver and a focus (2026-10-09): fill them once, as a new hero's are.
+	if not bool(d.get("doll_seeded", false)):
+		c.seed_doll()
 	return c
 
 
