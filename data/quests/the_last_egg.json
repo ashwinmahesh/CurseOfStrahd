@@ -1,13 +1,13 @@
 {
   "id": "the_last_egg",
   "name": "The Last Egg",
-  "summary": "Vasko the egg-hunter, camped at the Tsolenka landing, says the roc of Mount Ghakis lays once in eleven years, and this is the year. He has a buyer.",
-  "giver": "tsolenka_vasko",
+  "summary": "Tibor the egg-hunter, camped at the Tsolenka landing, says the roc of Mount Ghakis lays once in eleven years, and this is the year. He has a buyer.",
+  "giver": "tsolenka_tibor",
   "region": "tsolenka_pass",
   "stages": [
     {
       "id": "asked",
-      "journal": "Vasko the egg-hunter, at the Tsolenka landing, has a buyer who'll pay four hundred gold for the roc's egg, and he'll split it with whoever carries the sack. The roc lays once in eleven years. This is the year.",
+      "journal": "Tibor the egg-hunter, at the Tsolenka landing, has a buyer who'll pay four hundred gold for the roc's egg, and he'll split it with whoever carries the sack. The roc lays once in eleven years. This is the year.",
       "objectives": [
         "Climb to the roc's nest on the shelf past the bridge"
       ],
@@ -29,7 +29,7 @@
     },
     {
       "id": "sold",
-      "journal": "We let the count's falconer take the roc's chick off the shelf, and Vasko paid us four hundred gold and said he was sorry.",
+      "journal": "We let the count's falconer take the roc's chick off the shelf, and Tibor paid us four hundred gold and said he was sorry.",
       "objectives": [],
       "ends": "failure"
     }

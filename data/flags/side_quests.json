@@ -1147,14 +1147,14 @@
       "summary": "Agafia thanked the party with her grandmother's speaking stones (The Oat Thief)."
     },
     {
-      "id": "vasko_met",
+      "id": "tibor_met",
       "type": "bool",
-      "summary": "The party met Vasko the egg-hunter at the Tsolenka landing (The Last Egg)."
+      "summary": "The party met Tibor the egg-hunter at the Tsolenka landing (The Last Egg)."
     },
     {
-      "id": "vasko_marked",
+      "id": "tibor_marked",
       "type": "bool",
-      "summary": "The party saw the count's marks on Vasko's wrist: the buyer is the castle (The Last Egg)."
+      "summary": "The party saw the count's marks on Tibor's wrist: the buyer is the castle (The Last Egg)."
     },
     {
       "id": "roc_egg_taken",

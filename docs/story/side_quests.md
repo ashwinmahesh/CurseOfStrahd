@@ -561,12 +561,12 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
 
 ### The Last Egg (`the_last_egg`, narrative/tsolenka_pass/the_last_egg.dialogue; batch 6)
 
-Vasko (new speaker), a Vistani egg-hunter camped at the Tsolenka landing from level 9: the roc of Mount Ghakis lays once
+Tibor (new speaker), a Vistani egg-hunter camped at the Tsolenka landing from level 9: the roc of Mount Ghakis lays once
 in eleven years, this is the year, and his buyer pays 400 gp, split with whoever carries the sack. Insight DC 15: two
 neat marks on his wrist; he's been told to fetch. **Escalation:** the nest on the roc's shelf (a new prop, shown once
 the quest is known) holds an egg as tall as a child, hatching as the party arrives. **Twist:** the buyer doesn't wait
 for deliveries: the stone birds on the tower drop off it, and the count's falconer (new speaker) lands among them to
-take the chick. Step back and let him (400 gp from Vasko, the quest fails, and a mark on Strahd's attention,
+take the chick. Step back and let him (400 gp from Tibor, the quest fails, and a mark on Strahd's attention,
 `roc_egg`), or stand between him and the nest.
 
 - Fight `last_egg` on the shelf (my entries on data/locations/tsolenka_pass.json): the Falconer (a vampire spawn at
@@ -817,4 +817,4 @@ Vallaki and Lake Zarovich: one_lantern_too_many.dialogue in full (new speakers O
 also the town guard) and gate.dialogue's news jump. Batch 6,
 the Village of Barovia: the_oat_thief.dialogue in full (new speaker Agafia; also Bildrath and Parriwimple, and a kind
 interject) and narrator/woodcutters_hollow.dialogue. Batch 6,
-the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Vasko and the Falconer; a blunt interject).
+the Tsolenka Pass: the_last_egg.dialogue in full (new speakers Tibor and the Falconer; a blunt interject).

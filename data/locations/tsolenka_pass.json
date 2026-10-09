@@ -426,7 +426,7 @@
       "item": "rope_of_climbing"
     },
     {
-      "id": "vasko_fire",
+      "id": "tibor_fire",
       "cell": [
         10,
         16
@@ -853,12 +853,12 @@
   "rest": "risky",
   "npcs": [
     {
-      "npc": "tsolenka_vasko",
+      "npc": "tsolenka_tibor",
       "cell": [
         9,
         16
       ],
-      "dialogue": "tsolenka_pass/the_last_egg:vasko",
+      "dialogue": "tsolenka_pass/the_last_egg:tibor",
       "when": "level >= 9 and quest.the_last_egg != done and quest.the_last_egg != sold",
       "facing": "east",
       "approach": 4

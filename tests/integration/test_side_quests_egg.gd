@@ -1,5 +1,5 @@
 extends TestCase
-## The Last Egg (docs/story/side_quests.md): Vasko at the Tsolenka landing and the marks on his wrist, the hatching egg
+## The Last Egg (docs/story/side_quests.md): Tibor at the Tsolenka landing and the marks on his wrist, the hatching egg
 ## on the roc's shelf, the count's falconer, and either the chick handed over or the roc's thanks.
 
 const FOUR: Array[String] = ["liriel_dawnsong", "godrick_pendlebrook", "ratatoille", "thistle"]
@@ -9,13 +9,13 @@ func _pass(level: int = 9) -> StoryState:
 	return SideQuestPlay.party(FOUR, level, "tsolenka_pass", 12)
 
 
-func test_vasko_and_his_buyer() -> void:
+func test_tibor_and_his_buyer() -> void:
 	var st := _pass(8)
-	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_vasko"), "", "not before level 9")
+	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_tibor"), "", "not before level 9")
 	st = _pass()
-	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_vasko"), "tsolenka_pass/the_last_egg:vasko")
+	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_tibor"), "tsolenka_pass/the_last_egg:tibor")
 	assert_false(SideQuestPlay.shown(st, "tsolenka_pass", "roc_egg"))
-	var beats := SideQuestPlay.play(st, "tsolenka_pass/the_last_egg:vasko", ["Watch him"], 3)
+	var beats := SideQuestPlay.play(st, "tsolenka_pass/the_last_egg:tibor", ["Watch him"], 3)
 	assert_true(SideQuestPlay.text(beats).contains("once in eleven years"))
 	assert_eq(st.quest_stage("the_last_egg"), "asked")
 	assert_true(SideQuestPlay.shown(st, "tsolenka_pass", "roc_egg"))
@@ -24,7 +24,7 @@ func test_vasko_and_his_buyer() -> void:
 func test_the_chick_handed_over() -> void:
 	var st := _pass()
 	st.set_quest_stage("the_last_egg", "asked")
-	st.set_flag("vasko_met")
+	st.set_flag("tibor_met")
 	st.gold = 0
 	var beats := SideQuestPlay.play(st, "tsolenka_pass/the_last_egg:egg", ["Wrap the egg", "Step back"])
 	assert_eq(SideQuestPlay.missing(beats), "")
@@ -34,7 +34,7 @@ func test_the_chick_handed_over() -> void:
 	assert_eq(st.quest_stage("the_last_egg"), "sold")
 	assert_eq(roundi(st.gold), 400)
 	assert_true(st.get_flag("roc_egg_sold", false), "a mark on his attention")
-	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_vasko"), "", "gone with his money")
+	assert_eq(SideQuestPlay.standing(st, "tsolenka_pass", "tsolenka_tibor"), "", "gone with his money")
 
 
 func test_the_falconer_and_the_rocs_thanks() -> void:
