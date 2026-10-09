@@ -10110,6 +10110,48 @@
   "recipe": "6bc1180ed7",
   "text": "Not much to us. To each other, plenty. One of them said \"open the sluice before you go down, or you'll cook like Andrei did.\" The other said Andrei was an idiot. They both laughed."
  },
+ "gilded_knight/1138f808971ddec7": {
+  "chars": 132,
+  "direction": "[hollow, ashamed, broken]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "He said that. In the yard, with his head on the stones. I heard it from the stair, and I came down here anyway, and I shut the door."
+ },
+ "gilded_knight/2401bc9a304ebcd4": {
+  "chars": 127,
+  "direction": "[desperate, pleading, strained]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "I can't let go of it. I've tried. My hands won't. (The silver on his arms creaks, and tightens.) You'll have to take it off me."
+ },
+ "gilded_knight/4b1047950902f5e2": {
+  "chars": 75,
+  "direction": "[murmuring, obsessive, cold]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "Four hundred and twelve. Thirteen. (He doesn't look up.) You're still here."
+ },
+ "gilded_knight/66a3b22e5f81cbc6": {
+  "chars": 192,
+  "direction": "[bitter laugh, anguished, rising]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "The valley. (He laughs, and coins slide off his shoulders and ring on the flagstones.) Have you been down to the valley? Every hearth in it is his now. Every door. Every child at every window."
+ },
+ "gilded_knight/a7d17ce597fc4b9b": {
+  "chars": 130,
+  "direction": "[murmuring, then sharp, possessive]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "Nine hundred and ninety-six. Ninety-seven. (His head comes up.) Halt. This is the valley's. Counted and sealed. Who sent you down?"
+ },
+ "gilded_knight/cc35c7fdb3143524": {
+  "chars": 142,
+  "direction": "[possessive, defiant, cracked]",
+  "model": "eleven_v3",
+  "recipe": "117d14dc79",
+  "text": "I'll not pay the count's people the dragon's silver. It stays. It stays with me. I've kept it four hundred years, and it has never been safer."
+ },
  "godrick_pendlebrook/009047d86d13d4c5": {
   "chars": 13,
   "model": "eleven_v4",
@@ -11126,6 +11168,13 @@
   "model": "eleven_v4",
   "recipe": "ef2f9464fb",
   "text": "A wall that big, and they still look at every face on the road. Fair enough. I'd look at us twice."
+ },
+ "godrick_pendlebrook/9e411cebf9f6d329": {
+  "chars": 36,
+  "direction": "[gentle, solemn, firm]",
+  "model": "eleven_v3",
+  "recipe": "52840be837",
+  "text": "Then we will, sir. Gently as we can."
  },
  "godrick_pendlebrook/9f9d6452b5a96ec1": {
   "chars": 182,
@@ -15424,6 +15473,12 @@
   "recipe": "956cd23797",
   "text": "\"Patience is how he feeds.\" The saint saw through him four hundred years ago. In one line."
  },
+ "hero_female/9eece9be3686d1b0": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "He's not guarding it. He's keeping it."
+ },
  "hero_female/9f114331655b9d50": {
   "chars": 36,
   "model": "eleven_v4",
@@ -19695,6 +19750,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "\"Patience is how he feeds.\" The saint saw through him four hundred years ago. In one line."
+ },
+ "hero_male/9eece9be3686d1b0": {
+  "chars": 38,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "He's not guarding it. He's keeping it."
  },
  "hero_male/9f114331655b9d50": {
   "chars": 36,
@@ -34380,6 +34441,12 @@
   "recipe": "dd92281f92",
   "text": "He comes over the north wall the way goats come down a cliff: all at once, without looking. He's very big and very bent, with a goat's legs and a man's shoulders, and a carved wolf held carefully in both hands."
  },
+ "narrator/0941c759c272e89b": {
+  "chars": 82,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Old coins crunch underfoot like gravel. Every one has a dragon's head on one side."
+ },
  "narrator/0956eb763d496c55": {
   "chars": 200,
   "model": "eleven_v4",
@@ -35057,6 +35124,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He doesn't fight. He leaves the fish where they lie and walks ahead of you along the shore to the painted wagons, and when Luvash sees who you have brought, the whole camp goes silent."
+ },
+ "narrator/0fc97f43be908b3c": {
+  "chars": 189,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A low vault under the house, colder than the house. Silver lies in drifts against the pillars like snow against fence posts, and somewhere at the far end, in the dark, somebody is counting."
  },
  "narrator/0fd0d6e63fda3d43": {
   "chars": 141,
@@ -41718,6 +41791,12 @@
   "recipe": "dd92281f92",
   "text": "Ireena looks at the doll on the offering stone for a long time, and doesn't touch it."
  },
+ "narrator/4922a505765e34d5": {
+  "chars": 70,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Flagstones under the servants' table, and a cold draught between them."
+ },
  "narrator/4922c2427b181f7c": {
   "chars": 175,
   "model": "eleven_v4",
@@ -43662,6 +43741,12 @@
   "recipe": "dd92281f92",
   "text": "Sir Godfrey comes down from the house with the Order's book under his arm, and a shield, and a pen that's been dry for centuries, and he writes for a long time."
  },
+ "narrator/5a600ad5e1e78fe8": {
+  "chars": 84,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An iron chest with the Order's dragon on the lid. The tithe-keeper is sitting on it."
+ },
  "narrator/5a777deeffce11f9": {
   "chars": 109,
   "model": "eleven_v4",
@@ -44051,6 +44136,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The black carriage again, waiting on the road with its door open, as patient as a stone."
+ },
+ "narrator/5d0e24017365fc66": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Weeks later, in villages you pass through, you see old silver coins with a dragon's head on them, threaded on string round children's necks."
  },
  "narrator/5d10c84bccac4bd0": {
   "chars": 126,
@@ -45006,6 +45097,12 @@
   "recipe": "dd92281f92",
   "text": "The paper takes the flame slowly, as if it would rather not, and the black wax runs like something alive."
  },
+ "narrator/653a2409adbf9ee8": {
+  "chars": 192,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "His gauntlets aren't resting on the chest. They're gripping it, the way a drowning man grips a spar. Near his feet, half buried in coins, lies a squire's small round shield, cut nearly in two."
+ },
  "narrator/653cb270e4cf23e7": {
   "chars": 187,
   "model": "eleven_v4",
@@ -45503,6 +45600,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Low beams, thick dust, the smell of mice and old cedar. The roof ticks overhead as it cools."
+ },
+ "narrator/698f5db782373647": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A drift of silver taller than you are. Pushed into it, at about the height of a man's hand, the print of a gauntlet, made over and over again."
  },
  "narrator/69a66a5e96ccc8fe": {
   "chars": 113,
@@ -46944,6 +47047,12 @@
   "recipe": "dd92281f92",
   "text": "A crib, a mobile of tin birds, and a single candle that should have burned out years ago. Everything a baby needs, except the baby."
  },
+ "narrator/756fee27f982a8c1": {
+  "chars": 135,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The Order's banner, the silver dragon on blue, hung where the tithe would see it go out. Coin-dust has settled in its folds like frost."
+ },
  "narrator/757bb658204d400a": {
   "chars": 181,
   "model": "eleven_v4",
@@ -47831,6 +47940,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The chair stops rocking."
+ },
+ "narrator/7d9f9f77703c9a73": {
+  "chars": 93,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Somebody tried to carry the tithe down the hill the night the house fell. He didn't let them."
  },
  "narrator/7db663a178665233": {
   "chars": 50,
@@ -49782,6 +49897,12 @@
   "recipe": "dd92281f92",
   "text": "The stair comes up into the loft between the rafters. Every board you step on announces you."
  },
+ "narrator/8ddf14848e4ebd03": {
+  "chars": 187,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A squire's small round shield, cut nearly in two by one blow from above. The strap is still buckled. Whoever carried it was going somewhere in a hurry, up the stair, with something heavy."
+ },
  "narrator/8ddf4f3bd949fe65": {
   "chars": 211,
   "model": "eleven_v4",
@@ -49991,6 +50112,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Baron's watch closes ranks around the dais, spears levelled at the crowd, and at you."
+ },
+ "narrator/8fcd6430d9f0e696": {
+  "chars": 212,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the far end of the vault, on an iron chest, sits a knight in armour that isn't steel any more. Coins have grown over it like frost over a window, layer on layer, until he is more hoard than man. He's counting."
  },
  "narrator/8fd0d28cc8c15a57": {
   "chars": 214,
@@ -50219,6 +50346,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The broken cart's floor is a hand's width too high. Under the false boards, wrapped in sacking, lies a plain cloth bag that is much bigger on the inside than the out."
+ },
+ "narrator/91f922aebdd4b850": {
+  "chars": 209,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The knights are at rest, so it's you who carry it: two nights up and down the undercroft stair, and a borrowed cart, and every village on the road. You leave a coin on every doorstep that has a fire behind it."
  },
  "narrator/9206bb19b0e7cfda": {
   "chars": 80,
@@ -52878,6 +53011,12 @@
   "recipe": "dd92281f92",
   "text": "A hairline seam runs round one flagstone, and the wall beside it has a long, low slot cut in it at knee height."
  },
+ "narrator/a9046a948fa4713f": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "It takes a long time to fill your packs, and longer to carry them up the stair. The silver is very heavy, and it never seems to get any lighter."
+ },
  "narrator/a90c8de33d58e02b": {
   "chars": 106,
   "model": "eleven_v4",
@@ -53411,6 +53550,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under the weeping she is perfectly clear-headed. She isn't mad; she's guilty, and grief is the only thing loud enough to drown it out."
+ },
+ "narrator/adc059c65f5b68c1": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He stops counting. For a long moment the only sound is one coin rolling somewhere in the dark, round and round, and settling."
  },
  "narrator/adc1edc2ef341e00": {
   "chars": 152,
@@ -54660,6 +54805,12 @@
   "recipe": "dd92281f92",
   "text": "The boards split, and a leg goes through to the ceiling of the room below."
  },
+ "narrator/b97c7c4b83f33932": {
+  "chars": 93,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The chest stands open and empty. The undercroft smells of old metal, and of nothing else now."
+ },
  "narrator/b9860ed9486d8ad6": {
   "chars": 123,
   "model": "eleven_v4",
@@ -55139,6 +55290,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Horses stamp on their line and the road runs back east to the gate. Somebody at the fire has noticed you, and gone to tell somebody else."
+ },
+ "narrator/becb0329c068d4f3": {
+  "chars": 296,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The tithe roll: every village in the valley in a careful hand, and against each one a number of hearths and the same number of coins. The last line is a date four hundred years gone, and under it, in a different hand, the same numbers counted again, and again, down the margin and onto the floor."
  },
  "narrator/bedbca263f7b1594": {
   "chars": 239,
@@ -55871,6 +56028,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "'The mansion, mostly. He keeps a room up there nobody goes into. Nobody. The last man who knocked lost a finger for it.'"
+ },
+ "narrator/c4155e25c2c7ac81": {
+  "chars": 88,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An empty chest, and the long marks in the dust where you dragged the sacks to the stair."
  },
  "narrator/c42cabe8943547a8": {
   "chars": 119,
@@ -56951,6 +57114,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The words reach her slowly, like warmth into frozen hands. Her cupped hands open, and there is nothing in them, and she looks at the nothing for a long time."
+ },
+ "narrator/cdfc84e689e15541": {
+  "chars": 213,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In what's left of the tithe-keeper's armour there's something heavier than silver: a little golden idol of a coiled dragon, warm to the touch, worn smooth by four hundred years of a thumb going round and round it."
  },
  "narrator/ce0688d32b6eb02f": {
   "chars": 64,
@@ -58272,6 +58441,12 @@
   "recipe": "dd92281f92",
   "text": "Empty crates, lids pried off, bottoms lined with grave earth. Somebody should burn them. Somebody will."
  },
+ "narrator/da2835ea53b01895": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sir Godfrey has the dead knights carry it up the stair, sack by sack. At Midwinter, he says, the Order will ride down the valley the way it used to, and leave a coin on every doorstep that has a fire behind it."
+ },
  "narrator/da359707965ffdbb": {
   "chars": 196,
   "model": "eleven_v4",
@@ -59064,6 +59239,12 @@
   "recipe": "dd92281f92",
   "text": "For a long moment he says nothing. Then he looks down at his hands as if they belonged to someone else."
  },
+ "narrator/e0f9d8c226cf98d9": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Cold air comes up between the flagstones under the servants' table, and with it, very faint, a voice. Somebody down there is counting."
+ },
  "narrator/e10d88f9b64745a1": {
   "chars": 97,
   "model": "eleven_v4",
@@ -59249,6 +59430,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The mirror is cracked clean across now, and a ribbon has been left tied round the crack like a bandage."
+ },
+ "narrator/e2a87d26eb093d9b": {
+  "chars": 91,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A low vault under the house, and the silver in it lying quiet. Nobody is counting any more."
  },
  "narrator/e2ae788bbaf5e8bd": {
   "chars": 97,
@@ -59609,6 +59796,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Wren comes back to the fire late, with his hands in his pockets, which he never does."
+ },
+ "narrator/e5ae93cdb5e61746": {
+  "chars": 101,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Scratched into the stone by the table leg, in a hand that was in a hurry: TITHE, and a little dragon."
  },
  "narrator/e5c1fbcb4688940f": {
   "chars": 89,
@@ -61032,6 +61225,12 @@
   "recipe": "dd92281f92",
   "text": "A hovel leaning against the palisade as though it's tired. A loaf on the sill, a big one, newly bought."
  },
+ "narrator/f2bddc26e7825241": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The silver on the tithe-keeper's armour rises like hackles, and round the walls the escort's empty harness lifts its swords."
+ },
  "narrator/f2bf02b0ff58f291": {
   "chars": 84,
   "model": "eleven_v4",
@@ -61842,6 +62041,12 @@
   "recipe": "dd92281f92",
   "text": "The bark is black and crazed like the skin of a burnt hand. Up close the tree smells of iron, and the earth round its roots is dark and wet, though it hasn't rained."
  },
+ "narrator/fa5c5f49d18ca253": {
+  "chars": 73,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A knight on a chest, and a great deal of silver. That's all you can tell."
+ },
  "narrator/fa7101eb18eab7e7": {
   "chars": 153,
   "model": "eleven_v4",
@@ -61913,6 +62118,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You are at the abbey above Krezk, where the bell rings for no service you would want to attend."
+ },
+ "narrator/fb231dfb1d782698": {
+  "chars": 230,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The tithe chest is full to the lid with silver dragons: old coins with a dragon's head on one side and a lit beacon on the other. Round the walls, in sacks and drifts, enough for a coin on every doorstep in Barovia, and some over."
  },
  "narrator/fb299b8fbb5c3a03": {
   "chars": 131,
@@ -62075,6 +62286,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She meets your eyes over the board as if she were the one doing the reading. Whatever she's waiting for, she can wait longer than you can look."
+ },
+ "narrator/fc867da72ae03c46": {
+  "chars": 161,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The coins on his armour rise like hackles. Round the walls, the empty harness of the tithe escort, polished every night for four hundred years, lifts its swords."
  },
  "narrator/fca24c4f4e9d82bc": {
   "chars": 115,
@@ -67620,6 +67837,13 @@
   "recipe": "5821254d72",
   "text": "I follow the commander. I have since we were boys with wooden swords. And he's not wrong about Strahd. He's never once been wrong about Strahd."
  },
+ "sir_godfrey_gwilym/1b2f9b4669f2935d": {
+  "chars": 261,
+  "direction": "[sad, grave, remembering]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "The last winter's tithe was counted and chested in the undercroft the night the house fell. The tithe-keeper swore on his sword it would reach the valley if he had to carry it himself. He went down to it when the gate broke. He never came up to the table after."
+ },
  "sir_godfrey_gwilym/1e4c51239b9cda9a": {
   "chars": 12,
   "model": "eleven_v3",
@@ -67643,6 +67867,20 @@
   "model": "eleven_v3",
   "recipe": "5821254d72",
   "text": "Ask the commander to call the muster. All of us at the table, the way it was. Say your piece to the Order, not to him. I'll stand up when you do. I promise, and I'll remember promising."
+ },
+ "sir_godfrey_gwilym/2777b49865131d6c": {
+  "chars": 96,
+  "direction": "[quiet, hopeful, resolute]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "The doors will be barred, this time. Leave the coins on the step anyway. Somebody will open one."
+ },
+ "sir_godfrey_gwilym/2a971f30ac9a7a72": {
+  "chars": 260,
+  "direction": "[fond, wry, remembering]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "His hoard? (Something in the helmet that might be a laugh.) He gave it away. That was his joke: a dragon with a hoard, and every Midwinter he had us carry it down the valley, a sack at every saddle, and leave a coin on every doorstep that had a fire behind it."
  },
  "sir_godfrey_gwilym/2d5e96189dfa6421": {
   "chars": 159,
@@ -67988,6 +68226,13 @@
   "recipe": "5821254d72",
   "text": "He went. That night. I'm sure of that and nothing else. Whether he ran or rode, I can't find it. It's in here somewhere. (He taps the side of his helmet.) Most things are."
  },
+ "sir_godfrey_gwilym/c90385206cc578de": {
+  "chars": 119,
+  "direction": "[wistful, warm, sad]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "The Dragon's Tithe, the villages called it. They used to leave their doors unbarred for us, that one night of the year."
+ },
  "sir_godfrey_gwilym/c9ab46f3276c7bb3": {
   "chars": 166,
   "model": "eleven_v3",
@@ -68123,6 +68368,13 @@
   "model": "eleven_v3",
   "recipe": "5821254d72",
   "text": "Sir Godfrey Gwilym, of the Order of the Silver Dragon, or what's left of it. You'll want the commander. Everyone does, eventually. Then they wish they hadn't."
+ },
+ "sir_godfrey_gwilym/f887559025a27f92": {
+  "chars": 107,
+  "direction": "[groping, frustrated, gentle]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "Sir... I had his name a moment ago. The stair's under the servants' table. Tell him Godfrey asks after him."
  },
  "sir_godfrey_gwilym/f9a8192c10360585": {
   "chars": 178,

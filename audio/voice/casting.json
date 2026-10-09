@@ -2291,6 +2291,15 @@
       "model": "eleven_v3",
       "library": true,
       "shared_with": "vestige_taar_haak"
+    },
+    "gilded_knight": {
+      "voice_id": "O7uUFMmQbSNnfVFzZG2n",
+      "name": "Barovia The Gilded Knight",
+      "description": "A revenant knight four hundred years dead, encased in tarnished silver coins, speaking English in a hollow, metallic voice with a faint ring of an empty helmet. Once a proud tithe-keeper, now obsessive and haunted: a low, dry, cracked murmur when counting, flaring into anguished, possessive anger; underneath, shame.",
+      "settings": {},
+      "model": "eleven_v3",
+      "generated_voice_id": "O7uUFMmQbSNnfVFzZG2n",
+      "released": true
     }
   },
   "sfx": {
