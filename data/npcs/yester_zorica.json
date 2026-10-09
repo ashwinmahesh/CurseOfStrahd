@@ -1,0 +1,18 @@
+{
+  "id": "yester_zorica",
+  "name": "Zorica",
+  "title": "The Youngest of the Circle",
+  "summary": "The youngest druid of Mother Ruxandra's circle on Yester Hill, sixteen, sent to the Krezk road for herbs the night the hill burned. She came back with a cutting of the old tree she had kept against her skin.",
+  "portrait": "druid",
+  "sprite": "druid",
+  "attitude": "hostile",
+  "monster": "druid",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "druid",
+    "yester_hill"
+  ],
+  "region": "yester_hill",
+  "pronouns": "she/her"
+}

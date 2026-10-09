@@ -1052,6 +1052,31 @@
       "summary": "Mordenkainen has thanked the party for finding Corvina (The Unnamed Crypt); his next news is Khazan (The Name Over the Door)."
     },
     {
+      "id": "kostin_planting_seen",
+      "type": "bool",
+      "summary": "The party found Kostin planting his clean tree on the burned crown of Yester Hill (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_met",
+      "type": "bool",
+      "summary": "The party met Zorica planting her cutting on the crown of Yester Hill (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_asked",
+      "type": "bool",
+      "summary": "The party tried to talk Zorica down from her planting, or she chose to fight (The Druid Who Came Back)."
+    },
+    {
+      "id": "zorica_stood_down",
+      "type": "bool",
+      "summary": "Zorica put her spade down: she doesn't fight beside the Ash Effigy (The Druid Who Came Back)."
+    },
+    {
+      "id": "ash_effigy_slain",
+      "type": "bool",
+      "summary": "The Ash Effigy on the crown of Yester Hill is destroyed (The Druid Who Came Back)."
+    },
+    {
       "id": "nursemaid_named",
       "type": "bool",
       "summary": "Veta the nursemaid told the party her name and where her bones are (The Nursemaid's Grave)."
