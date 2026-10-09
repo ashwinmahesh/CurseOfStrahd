@@ -372,6 +372,15 @@ func test_the_grey_goose_cellar_at_level_2() -> void:
 	await _series("svalich_roadhouse", 23, 2, "roadhouse_cellar", [1, 2, 3, 4, 5, 6, 7, 8], ["roadhouse_innkeeper_met"], [], [], BEHIND_THE_COUNTER)
 
 
+## Under the ledge in the Webbed Gully, where Tsura hangs in the web.
+const UNDER_THE_LEDGE: Array[Vector2i] = [Vector2i(12, 4), Vector2i(13, 5), Vector2i(14, 4), Vector2i(12, 5)]
+
+
+## Three giant spiders and two swarms of spiderlings, catching the party unawares.
+func test_the_webbed_gully_at_level_3() -> void:
+	await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
+
+
 ## By the fold on the high pasture, below the mists.
 const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector2i(9, 12), Vector2i(12, 12)]
 

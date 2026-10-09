@@ -1,0 +1,257 @@
+{
+  "id": "ivlis_spider_gully",
+  "name": "The Webbed Gully",
+  "region": "svalich_road",
+  "summary": "A gully off the path from the crossroads to Tser Falls, where a stream cuts down through the rock and giant spiders have strung the walls with web (The Spiders' Gully, docs/story/side_quests.md).",
+  "text": "A gully off the falls path, where a stream comes down over black rock. Web hangs across it in sheets, grey with dust and old rain, and in the cracks high in the walls something shifts its weight.",
+  "map": {
+    "rows": [
+      "##########################",
+      "######...~~###############",
+      "#####.....~~.....#########",
+      "####......~~.......#######",
+      "###....#..~~...#.....#####",
+      "###.......~~..........####",
+      "##........~~...........###",
+      "##..#.....~~.....#......##",
+      "##........~~............##",
+      "###.......~~.....=......##",
+      "###..=....~~............##",
+      "####......~~...........###",
+      "#####.....~~.........#####",
+      "######....~~........######",
+      "#######...~~......########",
+      "#########.~~...###########",
+      "##########~~.#############",
+      "##########################"
+    ],
+    "theme": "svalich_road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "gully_mouth",
+      "name": "The gully mouth",
+      "cells": [
+        [
+          9,
+          12
+        ],
+        [
+          15,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "gully_back",
+      "name": "The back of the gully",
+      "cells": [
+        [
+          3,
+          2
+        ],
+        [
+          22,
+          11
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      12,
+      15
+    ],
+    "from_path": [
+      12,
+      15
+    ]
+  },
+  "exits": [
+    {
+      "id": "gully_out",
+      "cell": [
+        12,
+        16
+      ],
+      "to": "travel",
+      "label": "Back to the falls path"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "tsura_cocoon",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "A long bundle of web",
+      "model": "sack",
+      "dialogue": "svalich_road/the_spiders_gully:cocoon"
+    },
+    {
+      "id": "gully_webs",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "decor",
+      "label": "Web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "gully_webs_2",
+      "cell": [
+        19,
+        6
+      ],
+      "kind": "decor",
+      "label": "Web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "gully_webs_3",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "decor",
+      "label": "Web",
+      "model": "cobwebs"
+    },
+    {
+      "id": "gully_old_bundles",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "examine",
+      "label": "Older bundles",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "gully_saddlebag",
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "examine",
+      "label": "A torn saddlebag",
+      "model": "satchel"
+    }
+  ],
+  "containers": [],
+  "lights": [],
+  "npcs": [],
+  "narration": {
+    "enter": "enter:ivlis_spider_gully"
+  },
+  "rest": "risky",
+  "encounters": [
+    {
+      "id": "gully_spiders",
+      "trigger": "dialogue",
+      "text": "Things come out of the cracks in the gully walls on long legs, very quickly, down their own threads.",
+      "flag": "gully_spiders_beaten",
+      "quest": {
+        "id": "the_spiders_gully",
+        "stage": "cut_down"
+      },
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            19,
+            4
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            6,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            7,
+            6
+          ],
+          "name": "A Swarm of Spiderlings"
+        }
+      ],
+      "when": "flag.gully_web_read",
+      "surprise": ""
+    },
+    {
+      "id": "gully_spiders",
+      "trigger": "dialogue",
+      "text": "Things come out of the cracks in the gully walls on long legs, very quickly, down their own threads.",
+      "flag": "gully_spiders_beaten",
+      "quest": {
+        "id": "the_spiders_gully",
+        "stage": "cut_down"
+      },
+      "monsters": [
+        {
+          "monster": "giant_spider",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            19,
+            4
+          ]
+        },
+        {
+          "monster": "giant_spider",
+          "cell": [
+            6,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            7,
+            6
+          ],
+          "name": "A Swarm of Spiderlings"
+        }
+      ],
+      "surprise": "party"
+    }
+  ]
+}

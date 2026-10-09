@@ -89,6 +89,19 @@
       "summary": "A burned-out roadhouse on the Old Svalich Road between the village and the crossroads, with a lantern in its window every night."
     },
     {
+      "id": "webbed_gully",
+      "name": "The Webbed Gully",
+      "location": "ivlis_spider_gully",
+      "spawn": "from_path",
+      "pos": [
+        0.61,
+        0.47
+      ],
+      "region": "svalich_road",
+      "when": "quest.the_spiders_gully",
+      "summary": "A gully off the falls path where the stream cuts down and giant spiders have strung the walls with web."
+    },
+    {
       "id": "high_pasture",
       "name": "The High Pasture",
       "location": "barovia_high_pasture",
@@ -168,6 +181,24 @@
       "table": "svalich_road",
       "name": "The Old Svalich Road, east of the crossroads",
       "when": "quest.the_roadhouse_lantern"
+    },
+    {
+      "id": "crossroads_to_webbed_gully",
+      "from": "svalich_crossroads",
+      "to": "webbed_gully",
+      "hours": 0.75,
+      "table": "svalich_woods",
+      "name": "The falls path, and down into the gully",
+      "when": "quest.the_spiders_gully"
+    },
+    {
+      "id": "webbed_gully_to_falls",
+      "from": "webbed_gully",
+      "to": "tser_falls",
+      "hours": 0.5,
+      "table": "svalich_woods",
+      "name": "Up out of the gully to the falls",
+      "when": "quest.the_spiders_gully"
     },
     {
       "id": "village_to_high_pasture",

@@ -1,0 +1,17 @@
+{
+  "id": "gully_tsura",
+  "name": "Tsura",
+  "title": "A Rider of the Tser Pool Camp",
+  "summary": "Iancu's cousin, a Vistana of seventeen with a rider's hands, who rode the falls path with a letter for her mother and two wedding rings round her neck, and didn't get far.",
+  "portrait": "vistana",
+  "sprite": "vistana",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "vistani",
+    "tser_pool"
+  ],
+  "region": "svalich_road",
+  "pronouns": "she/her"
+}

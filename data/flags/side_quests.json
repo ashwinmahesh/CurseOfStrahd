@@ -1372,6 +1372,26 @@
       "summary": "The Lantern in the Roadhouse: the party put down the innkeeper's wife and sons from the cellar (encounter roadhouse_cellar)."
     },
     {
+      "id": "gully_web_read",
+      "type": "bool",
+      "summary": "The Spiders' Gully: Nature read how the web is strung; cutting Tsura down doesn't catch the party unawares."
+    },
+    {
+      "id": "gully_spiders_beaten",
+      "type": "bool",
+      "summary": "The Spiders' Gully: the party beat the gully's spiders (encounter gully_spiders)."
+    },
+    {
+      "id": "tsura_went_back",
+      "type": "bool",
+      "summary": "The Spiders' Gully: Tsura went back to the Tser Pool camp to tell her mother herself."
+    },
+    {
+      "id": "tsura_went_on",
+      "type": "bool",
+      "summary": "The Spiders' Gully: Tsura went on to Krezk and sent her letter."
+    },
+    {
       "id": "pasture_erno_met",
       "type": "bool",
       "summary": "The Goatherd's Count: the party met Erno counting the goats into the fold."

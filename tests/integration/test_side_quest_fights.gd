@@ -528,6 +528,16 @@ func test_the_cellar_of_the_grey_goose() -> void:
 	assert_true(GameState.story.get_flag("roadhouse_cellar_beaten", false))
 
 
+## The spiders come down their threads when Tsura is cut out of the web in the gully off the falls path.
+func test_the_spiders_of_the_webbed_gully() -> void:
+	var v := await _boot("ivlis_spider_gully", 12, 3, [])
+	GameState.story.set_quest_stage("the_spiders_gully", "asked")
+	await _fight(v, "gully_spiders", ["Giant Spider 1", "A Swarm of Spiderlings"])
+	await _end(v)
+	assert_eq(GameState.story.quest_stage("the_spiders_gully"), "cut_down")
+	assert_true(GameState.story.get_flag("gully_spiders_beaten", false))
+
+
 ## Wolves come out of the mists at the top of the high pasture for the old nanny goat.
 func test_the_mist_wolves_come_for_snowdrop() -> void:
 	var v := await _boot("barovia_high_pasture", 18, 1, ["pasture_erno_met"])
