@@ -37519,6 +37519,12 @@
   "recipe": "dd92281f92",
   "text": "A cellar made into a chapel: benches, candles, and a shrine at the far end draped in black, with a silver S worked into the cloth."
  },
+ "narrator/260de02df94d4741": {
+  "chars": 70,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He isn't here. His fire is cold, and somebody has kicked snow over it."
+ },
  "narrator/26112c0252ca16b1": {
   "chars": 117,
   "model": "eleven_v4",
@@ -50508,6 +50514,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The cart has a new wheel and a load of casks lashed under canvas, ready to roll. Someone has tied a black feather to the shaft for luck."
+ },
+ "narrator/979f33f212cfbb27": {
+  "chars": 220,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a wide leather belt with a buckle like a giant's fist, still strong enough to lift a cart."
  },
  "narrator/97aa09fb40e5cef9": {
   "chars": 85,
