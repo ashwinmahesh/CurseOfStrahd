@@ -700,7 +700,9 @@ func _wall(c: Vector2i) -> void:
 		# The churchyard's outer wall: low, mossy, uneven.
 		var h := OUTER_H + _rng.randf_range(-0.25, 0.15)
 		_box("OuterWall", Vector3(1, h, 1), Vector3(c.x + 0.5, h / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("slate"))
-		if _rng.randf() < 0.3:
+		# Moss along the top, in Classic: in the Modern look a flat green cap read as a plain green box on the wall
+		# (UI QA W-03, Yester Hill), and the decals put moss where it grows instead (Clutter).
+		if _rng.randf() < 0.3 and not Look.modern():
 			_box("Moss", Vector3(1.02, 0.12, 1.02), Vector3(c.x + 0.5, h - 0.05, c.y + 0.5), Look.cel("moss"))
 	else:
 		# Shrine pillars and standing stones.

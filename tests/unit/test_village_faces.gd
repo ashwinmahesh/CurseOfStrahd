@@ -19,3 +19,12 @@ func test_the_villagers_wear_a_mans_face() -> void:
 func test_old_kolya_has_his_own_portrait() -> void:
 	assert_eq(str(Compendium.shared().get_entry("npcs", "vallaki_carter")["portrait"]), "vallaki_carter")
 	assert_true(ResourceLoader.exists("res://art/portraits/vallaki_carter.png"))
+
+
+## Owner rule (portraits match gender; 2026-10-09): Anca, the fifteen-year-old church girl, wore the acolyte portrait, a
+## young man. She has her own now.
+func test_anca_has_a_young_womans_face() -> void:
+	var anca := Compendium.shared().get_entry("npcs", "barovia_acolyte")
+	assert_eq(str(anca["pronouns"]), "she/her")
+	assert_eq(str(anca["portrait"]), "barovia_acolyte")
+	assert_true(ResourceLoader.exists("res://art/portraits/barovia_acolyte.png"))

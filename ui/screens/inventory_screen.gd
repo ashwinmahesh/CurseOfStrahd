@@ -262,7 +262,7 @@ func _doll(ch: Character) -> Control:
 	quick.add_theme_constant_override("separation", 6)
 	for i in QUICK_SLOTS:
 		quick.add_child(_quick_tile(ch, i))
-	var qnote := UiKit.label("On the fight's Common tab", 12, "parchment", 70)
+	var qnote := UiKit.label("On the fight's Common tab", 12, "parchment", 92)   # two lines, not one word a line (UI QA UI-14)
 	qnote.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	quick.add_child(qnote)
 	col.add_child(quick)

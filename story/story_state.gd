@@ -419,14 +419,31 @@ func loc_state(location_id: String) -> Dictionary:
 
 
 ## Madam Eva's respec: `ch` is replaced by `fresh` (built again at level 1), who keeps `ch`'s belongings and place in
-## the line; milestones let them level back up.
+## the line; milestones let them level back up. What the road left on them stays too (QA FN-15: a rebuild wiped it):
+## the Amber Temple's dark gifts (for good, benefit and cost), what lasts on them (a curse, the Raise Dead ordeal, a
+## spell still running), their Exhaustion, and their attunements (a cursed item's always; the rest where the new
+## build may still have them).
 func respec_member(ch: Character, fresh: Character) -> void:
 	var i := party.find(ch)
 	if i < 0:
 		return
 	fresh.inventory = ch.inventory.duplicate(true)
+	if not ch.dark_gifts().is_empty():
+		fresh.build["dark_gifts"] = ch.dark_gifts()
 	fresh.refresh()
 	fresh.finish_long_rest()
+	for fx: Effect in ch.effects:
+		if fx.source_kind != &"feature":
+			fresh.add_effect(fx)
+	fresh.exhaustion = ch.exhaustion
+	for item_id in ch.attuned:
+		if fresh.entry_of(item_id).is_empty() or item_id in fresh.attuned:
+			continue
+		var cursed := MagicItems.is_cursed(Compendium.shared().item_data(item_id)) \
+			and not bool(fresh.entry_of(item_id).get("curse_lifted", false))
+		if cursed or fresh.attune_blocker(item_id) == "":
+			fresh.attuned.append(item_id)
+	fresh.items_changed()
 	fresh.id = ch.id
 	party[i] = fresh
 
