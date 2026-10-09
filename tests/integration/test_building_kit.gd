@@ -126,6 +126,57 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 	v.queue_free()
 
 
+## W7: an L-shaped block of wall is one building: its parts share their height, roof and paint, there's no wall or
+## window between them, the wing's roof runs into the main roof (no gable there, its ridge under the main one's), and
+## the parts cut away together. Two made-up L's: a wing under one house's end, and one beside the other's.
+func test_an_l_shaped_block_is_one_building() -> void:
+	var rows: Array[String] = ["####################", "#..................#", "#.######.....###...#", "#.######.....###...#",
+		"#.######.....###...#", "#....###.....###...#", "#....###.....###...#", "#....###.....###...#",
+		"#....###.#######...#", "#........#######...#", "#........#######...#", "#..................#",
+		"#..................#", "####################"]
+	Compendium.shared().tables["locations"]["kit_l_test"] = {"id": "kit_l_test", "name": "A yard", "region": "village_of_barovia",
+		"summary": "", "map": {"theme": "village", "outdoors": true, "rows": rows}, "spawns": {"default": [1, 12]}}
+	var v := _view("kit_l_test")
+	await _frames(2)
+	var board := v.board
+	var parts := {}
+	for b: Dictionary in board.buildings:
+		if b.has("kit"):
+			parts[b["rect"]] = b
+	var main1 := parts.get(Rect2i(2, 2, 6, 3), {}) as Dictionary
+	var wing1 := parts.get(Rect2i(5, 5, 3, 4), {}) as Dictionary
+	var main2 := parts.get(Rect2i(13, 2, 3, 9), {}) as Dictionary
+	var wing2 := parts.get(Rect2i(9, 8, 4, 3), {}) as Dictionary
+	assert_eq(parts.size(), 4, "two L's, two parts each: %s" % [parts.keys()])
+	if main1.is_empty() or wing1.is_empty() or main2.is_empty() or wing2.is_empty():
+		v.queue_free()
+		Compendium.shared().tables["locations"].erase("kit_l_test")
+		return
+	for pair: Array in [[main1, wing1], [main2, wing2]]:
+		var m := pair[0] as Dictionary
+		var w := pair[1] as Dictionary
+		assert_eq(int(m["group"]), int(w["group"]), "one block")
+		assert_eq(float(m["height"]), float(w["height"]), "one height")
+		assert_eq(str(m["roof"]), str(w["roof"]), "one roof")
+		assert_eq(str(m["paint"]), str(w["paint"]), "one paint")
+		assert_true(float(w["rise"]) < float(m["rise"]), "the wing's ridge under the main one's")
+	assert_true((wing1["butts"] as Dictionary).has("-z"), "wing 1 runs into its house to the north")
+	assert_true((wing2["butts"] as Dictionary).has("+x"), "wing 2 runs into its house to the east")
+	for x: int in [5, 6, 7]:
+		assert_false((main1["faces"] as Dictionary).has("%d,4,0,1" % x), "no wall of the main house where the wing joins")
+		assert_false((wing1["faces"] as Dictionary).has("%d,5,0,-1" % x), "nor of the wing")
+	# One part in the way takes the other down with it: the camera west of wing 1, looking past it.
+	var focus := Vector3(8.5, 0, 6.5)
+	for i in 2:
+		board.cut_buildings(Vector3(0, 8, 6.5), focus, 1.0)
+	assert_true(bool(wing1["cut"]), "the wing in the way is cut away")
+	assert_true(bool(main1["cut"]), "and its main house with it")
+	assert_false(bool(main2["cut"]), "the other L stands")
+	v.queue_free()
+	await _frames(1)
+	Compendium.shared().tables["locations"].erase("kit_l_test")
+
+
 ## The village church and St. Andral's are churches: stone, with a bell tower over their doors.
 func test_churches_are_stone_with_a_tower() -> void:
 	for loc_id: String in ["village_of_barovia", "vallaki"]:
