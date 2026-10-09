@@ -182,3 +182,24 @@ func test_the_hotbar_can_be_arranged_from_a_slots_menu() -> void:
 	hud.set_tab(ActionCatalog.HIDDEN)
 	assert_eq(str(hud.slot_action(0)["id"]), str(second["id"]), "on the Hidden tab")
 	(c.creature as Character).hotbar = {}
+
+
+## Ashwin's mix of tabs and Baldur's Gate 3's bar (2026-10-09): the filters down the left start with All, which lists
+## Common first and then the rest, section by section.
+func test_the_hotbar_opens_on_all_with_its_sections() -> void:
+	await _until_player_turn()
+	var e := _enc()
+	if e.state != Encounter.State.ACTIVE:
+		return
+	var hud := _v().get("hud") as CombatHud
+	var c := e.current()
+	hud.shown = c
+	hud.set_tab(CombatHud.ALL)
+	assert_eq(hud.filters(c)[0], CombatHud.ALL)
+	var cat := ActionCatalog.new(e)
+	var common := cat.slots(c, ActionCatalog.COMMON)
+	assert_true(hud.slot_count() > common.size(), "All holds Common and the class's actions too")
+	assert_eq(str(hud.slot_action(0)["id"]), str(common[0]["id"]), "Common comes first")
+	hud.cycle_tab(1)
+	assert_eq(hud.tab, ActionCatalog.COMMON, "the next filter is Common")
+	hud.set_tab(CombatHud.ALL)
