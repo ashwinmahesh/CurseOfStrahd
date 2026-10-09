@@ -1,0 +1,260 @@
+{
+  "id": "the_index",
+  "name": "The Index",
+  "source": {
+    "book": "custom",
+    "note": "A side quest boss of our own (The Drowned Library, docs/story/side_quests.md): the great catalogue desk of Khazan's flooded library under Lake Baratok, which was never a desk. Built up from the 2025 Monster Manual's mimic to CR 9 at Huge: a bite, long pseudopods that hold three at once, a spray of acid-soaked pages, Legendary Resistance and two Legendary Actions, and lair actions as the shelves come down and the lake comes in. Drawn with the mimic's sprite, made Huge."
+  },
+  "size": "huge",
+  "type": "monstrosity",
+  "tags": [
+    "boss",
+    "shapechanger",
+    "mimic"
+  ],
+  "alignment": "neutral",
+  "art": "mimic",
+  "art_height": 2.4,
+  "ac": 14,
+  "ac_note": "lacquered oak",
+  "initiative": 2,
+  "hp": {
+    "average": 157,
+    "dice": "15d12+60"
+  },
+  "speed": {
+    "walk": 20
+  },
+  "abilities": {
+    "str": 20,
+    "dex": 8,
+    "con": 18,
+    "int": 10,
+    "wis": 13,
+    "cha": 8
+  },
+  "saves": {
+    "str": 9,
+    "con": 8
+  },
+  "skills": {
+    "stealth": 7
+  },
+  "immunities": [
+    "acid"
+  ],
+  "condition_immunities": [
+    "prone"
+  ],
+  "senses": {
+    "darkvision": 60
+  },
+  "passive_perception": 11,
+  "languages": [],
+  "cr": 9,
+  "xp": 5000,
+  "proficiency_bonus": 4,
+  "traits": [
+    {
+      "id": "adhesive",
+      "name": "Adhesive",
+      "action": "passive",
+      "summary": "Anything it touches sticks; pseudopod hits grapple.",
+      "text": "The Index adheres to anything that touches it. A Huge or smaller creature its pseudopods hit is Grappled.",
+      "implemented": "text"
+    },
+    {
+      "id": "legendary_resistance",
+      "name": "Legendary Resistance (2/Day)",
+      "action": "special",
+      "summary": "Twice a day, a failed saving throw becomes a success.",
+      "text": "When the Index fails a saving throw, it can choose to succeed instead, twice a day.",
+      "implemented": "engine"
+    },
+    {
+      "id": "the_catalogue",
+      "name": "The Catalogue",
+      "action": "passive",
+      "summary": "It has been the library's catalogue desk for three hundred years, and it has eaten every reader but one.",
+      "text": "Khazan's apprentices sat at the great desk to look things up. It looked them up too. Every drawer is full of a reader's things, filed.",
+      "implemented": "text"
+    }
+  ],
+  "actions": [
+    {
+      "id": "multiattack",
+      "name": "Multiattack",
+      "kind": "multiattack",
+      "multiattack": [
+        {
+          "action": "bite",
+          "count": 1
+        },
+        {
+          "action": "pseudopod",
+          "count": 2
+        }
+      ],
+      "summary": "A Bite and two Pseudopods.",
+      "text": "The Index makes one Bite attack and two Pseudopod attacks."
+    },
+    {
+      "id": "bite",
+      "name": "Bite",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 5
+      },
+      "damage": [
+        {
+          "average": 16,
+          "dice": "2d10+5",
+          "type": "piercing"
+        },
+        {
+          "average": 9,
+          "dice": "2d8",
+          "type": "acid"
+        }
+      ],
+      "summary": "A drawer full of teeth.",
+      "text": "Melee Attack Roll: +9, reach 5 ft. Hit: 16 (2d10 + 5) Piercing damage plus 9 (2d8) Acid damage."
+    },
+    {
+      "id": "pseudopod",
+      "name": "Pseudopod",
+      "kind": "melee",
+      "attack": {
+        "bonus": 9,
+        "reach": 15
+      },
+      "damage": [
+        {
+          "average": 14,
+          "dice": "2d8+5",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_hit": [
+        {
+          "do": "grapple",
+          "escape_dc": 16,
+          "max_size": "huge",
+          "limit": 3
+        }
+      ],
+      "summary": "A long arm of varnished wood that sticks; the target is Grappled (escape DC 16).",
+      "text": "Melee Attack Roll: +9, reach 15 ft. Hit: 14 (2d8 + 5) Bludgeoning damage, and the target has the Grappled condition (escape DC 16)."
+    },
+    {
+      "id": "pages",
+      "name": "Spray of Pages",
+      "kind": "save",
+      "recharge": "5-6",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 30,
+        "count": 3
+      },
+      "damage": [
+        {
+          "average": 22,
+          "dice": "5d8",
+          "type": "acid"
+        }
+      ],
+      "summary": "Recharge 5-6: a spray of acid-soaked pages at three creatures within 30 ft; DC 15 Dex save, 5d8 Acid, half on a success.",
+      "text": "Dexterity Saving Throw: DC 15, up to three creatures within 30 feet. Failure: 22 (5d8) Acid damage. Success: Half damage."
+    }
+  ],
+  "legendary_actions": {
+    "per_round": 2,
+    "options": [
+      {
+        "id": "reach",
+        "name": "Reach",
+        "cost": 1,
+        "action": "pseudopod",
+        "summary": "Makes one Pseudopod attack."
+      },
+      {
+        "id": "shift",
+        "name": "Shift",
+        "cost": 1,
+        "move": true,
+        "summary": "Slides up to its Speed without provoking Opportunity Attacks."
+      }
+    ]
+  },
+  "legendary_resistance": 2,
+  "lair_actions": [
+    {
+      "id": "shelves",
+      "name": "The Shelves Come Down",
+      "kind": "save",
+      "save": {
+        "ability": "dex",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 60,
+        "count": 2
+      },
+      "damage": [
+        {
+          "average": 11,
+          "dice": "2d10",
+          "type": "bludgeoning"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "condition",
+          "condition": "prone"
+        }
+      ],
+      "summary": "Two creatures it can sense: a sodden bookcase comes down on each; DC 15 Dex save, 2d10 Bludgeoning and Prone, half on a success.",
+      "text": "The library's shelves are rotten through. Two of them topple onto creatures the Index can sense: each makes a DC 15 Dexterity saving throw, taking 11 (2d10) Bludgeoning damage and falling Prone on a failure, or half the damage only on a success."
+    },
+    {
+      "id": "lake",
+      "name": "The Lake Comes In",
+      "kind": "save",
+      "save": {
+        "ability": "str",
+        "dc": 15,
+        "success": "half"
+      },
+      "targets": {
+        "range": 60,
+        "count": 1
+      },
+      "damage": [
+        {
+          "average": 13,
+          "dice": "3d8",
+          "type": "cold"
+        }
+      ],
+      "on_fail": [
+        {
+          "do": "push",
+          "feet": 10
+        }
+      ],
+      "summary": "One creature: black lake water bursts through the wall onto it; DC 15 Str save, 3d8 Cold and pushed 10 ft, half on a success.",
+      "text": "The lake pushes through a crack in the wall onto one creature: it makes a DC 15 Strength saving throw, taking 13 (3d8) Cold damage and being pushed 10 feet on a failure, or half the damage only on a success."
+    }
+  ],
+  "regions": [
+    "van_richtens_tower"
+  ],
+  "ai_profile": "brute",
+  "summary": "The great catalogue desk of Khazan's flooded library under Lake Baratok: lacquered oak, brass handles, a hundred little drawers, and none of it a desk. It has eaten every reader but one, and filed their things."
+}
