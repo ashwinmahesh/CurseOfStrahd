@@ -19,6 +19,15 @@ are in the vault note "Side Quests - Audit and Plan". This page is what's built.
 Rarity follows docs/story/found_magic_items.md (uncommon up to level 4, rare from 5, no commons). Gold is set against
 what the region's other quests pay. Each quest's items are listed there as Gifts or Tips.
 
+## Keeping them finishable
+
+tests/integration/test_side_quest_reach.gd reads the quest ids off this page's headings and checks each one: every
+stage is set by a dialogue line or a fight; every place the quest uses (its NPCs, props and fights) is on the travel
+map or through an exit from one; every item its lines give exists; and every open stage's hint names one of those
+places or a place on the travel map. tests/integration/test_side_quests_endings.gd covers the endings the per-quest
+tests didn't reach (Teodor into the woods, Sorin back up the mountain). Each quest's fight is played in
+test_side_quest_fights.gd and, for the hard ones, simulated in test_side_quest_bosses.gd.
+
 ## Into the Mists (level 1)
 
 ### The Last Traveller (`the_last_traveller`, narrative/into_the_mists/the_last_traveller.dialogue; batch 5)
