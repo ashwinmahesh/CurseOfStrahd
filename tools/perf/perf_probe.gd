@@ -3,7 +3,7 @@ extends Node
 ## loading) and measures frame time, draw calls and memory in the heavy places, at 1080p in a window that never shows.
 ## Writes one JSON report; tools/perf/perf_run.py launches it and prints the summary.
 ## Args after --: --out=/abs/report.json [--frames=N] [--warm=N] [--passes=N]
-## [--only=title,newgame,places,saveload,combat,transitions,fights] [--places=id,id] [--encounters=id,id]
+## [--only=title,newgame,places,saveload,combat,transitions,fights,foemem] [--places=id,id] [--encounters=id,id]
 ## [--size=1920x1080] [--cover=1]
 
 const PLACES := ["village_of_barovia", "vallaki", "castle_ravenloft_gates", "castle_ravenloft_main_floor",
@@ -35,7 +35,7 @@ var passes := 2
 var pairs := 3                       ## on/off pairs per effect in the effects phase
 var cycles := 10                     ## off/on switches per effect in the effects_fast phase
 var cover := false                   ## the transitions phase goes through the game's loading cover (--cover=1)
-var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "meta": {}}
+var report := {"samples": [], "loads": [], "memory": [], "transitions": [], "fights": [], "foe_memory": [], "meta": {}}
 var _last_usec := 0
 var _draw_start := 0
 var _draw_ms := 0.0                 ## ms drawing since the last frame began
@@ -107,6 +107,8 @@ func _ready() -> void:
 			await _presets(p)
 		if "transitions" in only:
 			await _transitions(p)
+		if "foemem" in only:
+			await _foe_memory(p, FOE_MEM_PLACES if str(args.get("places", "")) == "" else places)
 		if "fights" in only:
 			await _fights(p, [] if str(args.get("encounters", "")) == "" else Array(str(args["encounters"]).split(",")))
 	if "memory" in only:
@@ -287,6 +289,10 @@ func _transitions(p: int) -> void:
 ## encounter in the data (or `only`), each in its own place entered fresh and left a second (--settle) to settle, as a
 ## party walks up to a fight. `call` is the start of the fight (the foes' figures built, CombatView begun), `first` the next frame
 ## drawn, `worst` the worst frame in the second after, with how many were over STUCK_MS.
+## The foemem phase: the places holding the most foes to come, and a small room holding none to stop in between.
+const FOE_MEM_PLACES := ["village_of_barovia", "lake_zarovich", "vallaki", "castle_ravenloft_larders_dungeon",
+	"castle_ravenloft_court", "castle_ravenloft_main_floor", "castle_ravenloft_catacombs"]
+const FOE_MEM_NEUTRAL := "berez_marinas_monument"
 var fight_settle_s := 1.0           ## --settle=seconds: how long a place is left before its fight starts
 
 
@@ -330,6 +336,38 @@ func _fights(p: int, only: Array) -> void:
 			report["fights"].append(row)
 			print("PERF fight %d %-30s %-34s %s call %5.0f | first frame %5.0f | worst after %5.0f (%d slow)" % [p,
 				str(loc_id), eid, "     " if started else "(not started)", call, first, worst, slow])
+	root.queue_free()
+	await _wait(2)
+
+
+## What holding a place's foes costs (the loading lane): in each place, the video and texture memory once the foes of
+## its fights still to come are read (PlacePreload.foes_mode "when", "possible", "all") against none ("off"), each from
+## a fresh arrival after a stop in a small room that has no fights; and how long the threads took to read them.
+func _foe_memory(p: int, places: Array) -> void:
+	var root := await _story_root(5)
+	for id: Variant in places:
+		for mode: String in ["off", "when", "possible", "all"]:
+			PlacePreload.foes_mode = "off"
+			root.call("enter_location", FOE_MEM_NEUTRAL, "default")
+			_close_popups(root)
+			await _wait(30)
+			PlacePreload.foes_mode = mode
+			root.call("enter_location", str(id), "default")
+			_close_popups(root)
+			var kept := (root.get("view") as Node).get_node_or_null("FoeSheets")
+			var t0 := Time.get_ticks_msec()
+			while kept != null and not bool(kept.get("done")) and Time.get_ticks_msec() - t0 < 10000:
+				await get_tree().process_frame
+			var read_ms := Time.get_ticks_msec() - t0
+			await _wait(30)
+			var row := {"pass": p, "place": str(id), "mode": mode,
+				"files": (kept.get("pre") as PlacePreload).paths.size() if kept != null else 0, "read_ms": read_ms,
+				"video_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_VIDEO_MEM_USED) / 1048576.0,
+				"texture_mb": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED) / 1048576.0}
+			report["foe_memory"].append(row)
+			print("PERF foemem %-34s %-4s %3d files read in %5d ms | video %6.0f MB | textures %6.0f MB" % [str(id), mode,
+				row["files"], read_ms, row["video_mb"], row["texture_mb"]])
+	PlacePreload.foes_mode = "possible"
 	root.queue_free()
 	await _wait(2)
 

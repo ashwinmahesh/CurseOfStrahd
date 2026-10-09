@@ -22,7 +22,10 @@ controls (core/input_actions.gd, world/game_root.gd).
   `expected_ms`); `enter_location` stays synchronous and still shows the card itself when the region changes outside a
   cover (`_card_region`).
 - `world/exploration/place_preload.gd` (`PlacePreload`): the party's and the place's people's sprite sheets read on
-  worker threads while the cover is up.
+  worker threads while the cover is up; and once the party is there, the sheets and portraits of the foes of every
+  fight still to come whose condition could come true this visit (`keep_foes`, `could_happen`: night and flag fights
+  included, other levels' entries and a final battle the cards put elsewhere left out), held until it leaves, so a
+  fight doesn't start by reading them. Holding them costs 90 to 270 MB of video memory in the busiest places.
 - `world/exploration/npc_routes.gd`: a walking route's legs are searched once per session and with a growing budget
   (the whole-map search per leg was 0.85 s of Vallaki's build).
 - `tools/perf/perf_run.py --only transitions [--cover] [--headless]` times each change of place on a route through

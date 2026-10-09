@@ -14,6 +14,14 @@ const MAX_WAIT := 4.0
 ## Headless runs read nothing ahead: the stand-in renderer's texture store isn't made for textures made on several
 ## threads at once (a test run lost one). The perf probe turns this on to time the reading headless anyway.
 static var headless_too := false
+## Which of a place's fights still to come have their foes read ahead: "possible", every one whose condition could
+## still come true while the party is here (a fight at night, or one a conversation's flag opens, starts as smoothly
+## as the rest; entries for another party level, and a final battle the cards put elsewhere, are left out), "all" of
+## them, "when" only those whose condition holds as the party arrives, or "off". The perf probe switches it to measure
+## what holding them costs.
+static var foes_mode := "possible"
+## A party-level test in a condition ("level >= 7"): the level doesn't change while the party is in one place.
+static var _level_test := RegEx.create_from_string("level\\s*(>=|<=|==|!=|>|<)\\s*\\d+")
 
 ## The sheets asked for (res:// paths), each a threaded load to collect.
 var paths: Array[String] = []
@@ -49,15 +57,20 @@ static func _reading(arts: Array[String], portraits: bool) -> PlacePreload:
 	return p
 
 
-## The sprite ids of the foes a place's fights would bring on: the monsters of each encounter not started yet whose
-## condition holds now (LocationFights.spec_for picks among entries sharing an id the same way). Fights that only open
-## later in the visit (a flag a conversation sets) read their sheets as they start, as before.
+## The sprite ids of the foes a place's fights would bring on: the monsters of the encounter entries not started yet
+## that foes_mode keeps.
 static func foe_art_ids(loc_id: String, loc: Dictionary, st: StoryState) -> Array[String]:
 	var out: Array[String] = []
+	if foes_mode == "off":
+		return out
 	var begun := (st.location_states.get(loc_id, {}) as Dictionary).get("encounters", {}) as Dictionary
 	for en: Variant in loc.get("encounters", []):
 		var spec := en as Dictionary
-		if begun.has(str(spec["id"])) or not StoryConditions.check(StoryConditions.encounter_when(spec), st):
+		if begun.has(str(spec["id"])):
+			continue
+		if foes_mode == "when" and not StoryConditions.check(StoryConditions.encounter_when(spec), st):
+			continue
+		if foes_mode == "possible" and not could_happen(spec, st):
 			continue
 		for mo: Variant in spec.get("monsters", []):
 			var art := CombatToken.monster_art(Compendium.shared().monster_data(str((mo as Dictionary)["monster"])))
@@ -89,6 +102,18 @@ static func art_ids(loc: Dictionary, st: StoryState) -> Array[String]:
 	return out
 
 
+## Whether an encounter entry's condition could still come true during this visit: its party-level tests hold now, and
+## a final battle is in the room the cards chose. Flags, the hour and guests can change while the party is here.
+static func could_happen(spec: Dictionary, st: StoryState) -> bool:
+	var room := str(spec.get("final_battle", ""))
+	if room != "" and not StoryConditions.check("final_room:" + room, st):
+		return false
+	for m in _level_test.search_all(str(spec.get("when", ""))):
+		if not StoryConditions.check(m.get_string(), st):
+			return false
+	return true
+
+
 ## Waits, a frame at a time on `node`'s tree, until every sheet is read or MAX_WAIT has passed, and holds what's in.
 func wait(node: Node) -> void:
 	var until := Time.get_ticks_msec() + int(MAX_WAIT * 1000.0)
@@ -114,6 +139,7 @@ static func keep_foes(view: LocationView) -> void:
 		return
 	var kept := Kept.new()
 	kept.name = "FoeSheets"
+	kept.process_mode = Node.PROCESS_MODE_ALWAYS   # collects under an arrival picture too, which pauses the game
 	kept.pre = p
 	view.add_child(kept)
 
@@ -121,10 +147,13 @@ static func keep_foes(view: LocationView) -> void:
 ## Holds a place's foes' sheets: collects them as their threads finish, and lets them go with the place.
 class Kept extends Node:
 	var pre: PlacePreload
+	## Every sheet asked for has been read and is held.
+	var done := false
 
 	func _process(_delta: float) -> void:
-		if not pre._busy():
+		if not done and not pre._busy():
 			pre.collect()
+			done = true
 			set_process(false)
 
 	func _exit_tree() -> void:
