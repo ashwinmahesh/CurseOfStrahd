@@ -98,6 +98,7 @@ static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto
 		who = LocationParty._best(view, &"athletics")
 		t = who.roll_check(view.dice, &"athletics", dc + 2, CheckAids.before_check(who, &"athletics"), [], "%s forces it" % who.name)
 	view.check_rolled.emit(t.describe())
+	view.big_roll.emit(t, who.name, "Thieves' Tools" if picker != null else "Athletics")
 	view.st.last_check = t.success
 	if t.success:
 		(view.st.loc_state(view.loc_id)["doors"] as Dictionary)[id] = "unlocked"

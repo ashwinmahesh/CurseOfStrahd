@@ -44,7 +44,8 @@ func _ready() -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 150)
-	var shots: Array = [["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
+	var shots: Array = [["ilse_varga", CombatHud.ALL, "0_ilse_all"], ["godrick_pendlebrook", CombatHud.ALL, "0_godrick_all"],
+		["ilse_varga", ActionCatalog.COMMON, "1_ilse_common"], ["ilse_varga", "", "2_ilse_class"],
 		["godrick_pendlebrook", "", "3_godrick_class"], ["godrick_pendlebrook", ActionCatalog.SPELLS, "4_godrick_spells"],
 		["thistle", ActionCatalog.COMMON, "5_thistle_common"], ["tamsin_tealeaf", "", "6_tamsin_class"],
 		["godrick_pendlebrook", ActionCatalog.REACTIONS, "7_godrick_reactions"]]
@@ -59,6 +60,16 @@ func capture_shots(tool: Node, out: String) -> void:
 		view.hud.refresh()
 		await tool.call("wait_frames", 8)
 		tool.call("_shot", "%s_%s.png" % [out, str(s[2])])
+		# Godrick's All list scrolled to its spells: a section a level.
+		if str(s[2]) == "0_godrick_all":
+			var scroll := view.hud.get("_slot_scroll") as ScrollContainer
+			for row: Node in (view.hud.get("_slots") as Node).get_children():
+				if row is HBoxContainer and (row.get_child(0) as Label).text.begins_with("SPELLS"):
+					scroll.scroll_vertical = int((row as Control).position.y)
+					break
+			await tool.call("wait_frames", 4)
+			tool.call("_shot", "%s_0_godrick_all_spells.png" % out)
+			scroll.scroll_vertical = 0
 	# A container open at its slot: Command's words.
 	var god := heroes["godrick_pendlebrook"] as Combatant
 	view.hud.shown = god
@@ -99,3 +110,35 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_10_prompt.png" % out)
 	view.hud.hide_prompt()
+	# A foe's Examine card (right-click a creature), studied so its defenses and abilities show.
+	e.studied[str((zombie.creature as Monster).data["id"])] = true
+	view.hud.show_examine(view.catalog.examine(ilse, zombie), zombie)
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_11_examine.png" % out)
+	view.hud.hide_details()
+	# A Long Jump being aimed: its arc to where it lands (Ilse, after a 10 ft run-up).
+	e.turn_index = e.order.find(ilse)
+	e._begin_turn()
+	view.hud.shown = ilse
+	e.move(ilse, Vector2i(5, 3))
+	await view._play_events()   # her figure walks the run-up
+	await tool.call("wait_frames", 30)
+	view._choose(view.catalog.find(ilse, "long_jump"))
+	view.hover_cell = Vector2i(7, 4)
+	view._target_hover(ilse, null, Vector2(300, 260))
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_12_long_jump.png" % out)
+	view._cancel_targeting()
+	view.overlay.clear_all()
+	# A throw being aimed: Tamsin's dagger at a zombie, its arc and the odds over its head.
+	var tam := heroes["tamsin_tealeaf"] as Combatant
+	e.turn_index = e.order.find(tam)
+	e._begin_turn()
+	view.hud.shown = tam
+	view.hud.refresh()
+	var throw: Dictionary = view.catalog.find(tam, "attack:thrown:dagger")
+	view._choose(throw)
+	view._target_hover(tam, view.tokens[zombie.id] as CombatToken, Vector2(1000, 420))
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_13_throw.png" % out)
+	view._cancel_targeting()

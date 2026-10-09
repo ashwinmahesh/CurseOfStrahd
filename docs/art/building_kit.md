@@ -96,6 +96,15 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
   them (the keep's windows, its crest) hang on their faces and go with them.
 
+- **The wall walk** (W7, catalog `walks: true`): on the gates, the gate wall's inner row each side of the gatehouse is
+  a walk 30 ft up that the rules stand on, reached from the courtyard by stairs of 5 ft steps: built raised squares
+  in the map (raised floor digits with elevation stacked on them, so Classic draws them as raised floor). In the
+  Modern look the castle draws them in its own stone, a paved top with a coping on each edge over lower ground, no
+  face between the walk and the wall top beside it, and they cut away with the wall pieces they belong to.
+- **The keep's roof** (W7): a steep slated roof inside the battlements, the kit's stone roof along the keep's long
+  side half a square in from its faces, with an ashlar gable at each end; it hides with the keep when the keep is in
+  the way.
+
 `TownBuilder.plan` hands the gates and the overlook (yard boards) to `CastleBuilder.plan`; the roofs (a dungeon
 board) reach it through `BuildingKit.interior_wall`. Captures: `KIT_NO_CASTLE=1` shows the stone houses as before.
 
@@ -122,6 +131,14 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
   costs a few dozen draws, not thousands.
 - **Cut away.** A house between the camera and the party squashes down and is replaced by its low band: a ring of
   wall 0.5 high, capped dark like the cut-away interiors, round a floor of boards, with its footing.
+
+**L-shaped buildings** (W7). A block of wall that isn't a rectangle is split into rectangles as before, but they are
+one building: every part takes the main part's height (the biggest), roof and paint and stands on the lowest ground
+of any of them; no face, window or corner post where two parts meet; a wing whose end stands wholly against a part
+whose ridge crosses it runs its roof on into that part, to half a square short of its ridge, with no gable at that
+end, made flatter where it must be so its ridge stays under the other roof (`TownBuilder._butts`); and the parts are
+cut away together. The Abbey of St. Markovia and Argynvostholt have such blocks; kit_capture's `l_houses` shot shows
+two made-up L's.
 
 Yard walls are the kit's too: a stone arm from each square's middle toward each neighbouring wall or gate, a capped
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
@@ -150,10 +167,8 @@ camera turns). Captures, before and after:
 
 ## Not done yet
 
-- The castle's walls have no wall walk you can stand on, and the chasm's depth is drawn, not fallen into (lane 3's
-  `drop_ft`). The keep has no roof of its own past its battlements.
-- Full walls have no ceilings or upper floors over them; a room's walls are full height whatever the room's size.
+- Full walls have no ceilings or upper floors over them, by choice (W7, 2026-10-09): the approved interior frames
+  show rooms open from above, and a ceiling would hide the party. A room's walls are full height whatever its size.
 - Lights at the pillars' sconces and the lit windows (W5's, in the light lane): the window markers in `board.windows`
   carry meta `lit`, and the sconces are at 1.35 on two faces of each castle pier.
 - The kit's own HD materials (W4): timber, plaster, thatch and stone painted at 2K with normal and roughness maps.
-- Houses are still rectangles; an L-shaped block is two houses with their own roofs.

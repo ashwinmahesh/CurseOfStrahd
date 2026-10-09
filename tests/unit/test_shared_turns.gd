@@ -96,3 +96,22 @@ func test_a_foe_between_heroes_splits_the_turn() -> void:
 	var z := TestCombat.foe(e, "zombie", Vector2i(9, 2))
 	_start(e, [ilse, z, god])
 	assert_true(e.shared.is_empty(), "a foe between them: each alone")
+
+
+func test_an_order_re_sorted_by_hand_drops_the_stale_group() -> void:
+	# The fight starts with the two heroes side by side (a shared turn); then the order is re-sorted with a foe between
+	# them and no turn begun, as some tests and features do: ending the turn must go to the foe, not the other hero.
+	var e := TestCombat.open_field()
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 5)
+	var god := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(2, 4), 5)
+	var z := TestCombat.foe(e, "zombie", Vector2i(9, 2))
+	_start(e, [ilse, god, z])
+	assert_eq(e.shared.size(), 2)
+	ilse.initiative = 30
+	z.initiative = 20
+	god.initiative = 10
+	e.order.sort_custom(func(a: Combatant, b: Combatant) -> bool: return a.initiative > b.initiative)
+	e.turn_index = 0
+	assert_true(e.shared_heroes().is_empty(), "the group no longer matches the order")
+	assert_true(e.end_turn().ok)
+	assert_eq(e.current(), z, "the zombie's turn, as the order says")

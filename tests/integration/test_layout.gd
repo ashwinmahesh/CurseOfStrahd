@@ -546,6 +546,20 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 				return cv.hud,
 				func() -> void: cv.hud._menu.hide())
 			break
+	# A foe's Examine card (ActionCatalog.examine), studied so its defenses and abilities show too.
+	var foe: Combatant = null
+	for c1 in cv.e.combatants:
+		if c1.side == &"enemy":
+			foe = c1
+			break
+	if foe != null and foe.creature is Monster:
+		cv.e.studied[str((foe.creature as Monster).data["id"])] = true
+		await _check("a foe's Examine card", func() -> Variant:
+			var who := cv.e.current() if cv.e.current().side == &"party" else null
+			cv.hud.show_examine(cv.catalog.examine(who, foe), foe)
+			await _frames(1)
+			return cv.hud,
+			func() -> void: cv.hud.hide_details())
 	# A reaction prompt (bottom right, above the hotbar) with the odds over a foe at the window's edge.
 	var party: Combatant = null
 	for c0 in cv.e.combatants:
@@ -705,6 +719,31 @@ func test_a_conversation_check_with_the_big_d20() -> void:
 		func() -> void:
 			for d in root.find_children("*", "DialogueUI", false, false):
 				d.queue_free())
+
+
+## The big d20 that show_roll puts up for a hero's save in a fight or an overworld check (DiceRoll), with Advantage,
+## a long name and every part of the bonus, at rest.
+func test_the_big_d20_for_a_save() -> void:
+	if not await _game(LATE):
+		return
+	var roll := {"kind": "save", "natural": 14, "rolls": [14, 3], "total": 22, "target": 17, "success": true,
+		"critical": false, "fumble": false, "who": "Godrick Pendlebrook", "label": "Constitution saving throw", "advantage": true,
+		"parts": [{"label": "Con modifier", "value": 3}, {"label": "Proficiency", "value": 3}, {"label": "Aura of Protection", "value": 1},
+			{"label": "Cloak of Protection", "value": 1}], "extra": 2, "extra_label": "Bless 2"}
+	await _check("the big d20 for a save", func() -> Variant:
+		var layer := CanvasLayer.new()
+		layer.name = "BigRoll"
+		layer.layer = DiceRoll.LAYER
+		root.add_child(layer)
+		var p := DiceRoll.new()
+		layer.add_child(p)
+		p.place_for_screen()
+		p.roll(roll)
+		await _frames(2)
+		return layer,
+		func() -> void:
+			for l in root.find_children("BigRoll*", "CanvasLayer", false, false):
+				l.queue_free())
 
 
 ## A story cutscene (docs/ui/cutscenes.md) with the longest caption a line may have (60 words), and its pause card.

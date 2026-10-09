@@ -467,8 +467,11 @@
   "2409863728cde356": "[defensive, prim]",
   "2e9b63a01859ea99": "[prim, uneasy]",
   "614a653d21498f55": "[gruff, gossiping, uneasy]",
+  "695177f98098cd24": "[gruff, dry, wry]",
   "711507c3f678ec4b": "[weary, grudging]",
   "ae4426e24755c6b5": "[prim, grudging]",
+  "bde20d841adf197a": "[gruff, grudging, wry]",
+  "bfa709b417c7de45": "[gruff, indignant, baffled]",
   "ccc6ed1bc3422dfb": "[flustered, commanding]",
   "d0f206ecba2867b7": "[aggrieved, dramatic]",
   "d50e85db289b00d4": "[prim, dismissive]",
@@ -857,6 +860,21 @@
   "f05954db63ba6b36": "[uneasy, wry]",
   "f2d7df5f4edda223": "[gentle, sympathetic]",
   "fc571182487d3309": "[quiet, disgusted]"
+ },
+ "hollow_agafia": {
+  "01828c1b1a34b5e8": "[quiet, fierce, protective]",
+  "04479a546445fbc0": "[low, guarded, hushed]",
+  "048bb02d105ef0cb": "[low, fierce, hopeful]",
+  "0ce69d541a47c795": "[quiet, wry, grateful]",
+  "14a5ffdff6193902": "[weary, resolute, grim]",
+  "3822965469d7fbe8": "[quiet, content, wry]",
+  "555748bd8fffb850": "[low, blunt, bitter]",
+  "61f2013812c7f22b": "[quiet, dismayed, rueful]",
+  "6ca0b84bba52504c": "[urgent, tense, growling]",
+  "96ca88060c115767": "[low, wary, grim]",
+  "abc042b97df3e14b": "[wary, dry, guarded]",
+  "b1ac97c58ca270d0": "[low, practical, warm]",
+  "c40ec70965883900": "[tired, bitter, then grateful]"
  },
  "ilarion": {
   "2f3229f4708b2447": "[quiet, bewildered, content]",
@@ -2199,6 +2217,14 @@
   "c662a73180b691cc": "[hollow, grave]",
   "fa328a6e48ee85ee": "[distant, hollow, puzzled]",
   "faa24e037b2ca480": "[hollow, reciting the oath]"
+ },
+ "parriwimple": {
+  "04552de648bde4a4": "[proud, shy, moved]",
+  "3a7cf9190b7315c6": "[startled, guilty, whispering]",
+  "6836efe174070cb8": "[worried, earnest, pleading]",
+  "715a2676f0ac0a68": "[earnest, gentle, simple]",
+  "80bb4d62b584d733": "[eager, simple, earnest]",
+  "fd503f6bed5e7fda": "[eager, conspiratorial]"
  },
  "pastry_customer_man": {
   "0dae0db32326b89b": "[hollow, impatient, twitchy]",

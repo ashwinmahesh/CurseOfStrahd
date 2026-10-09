@@ -14,7 +14,14 @@ const LAYERS := {
 	"target": {"colour": "vampire_red", "alpha": 0.55, "lift": 0.018, "size": 0.98},
 	"friendly": {"colour": "flame", "alpha": 0.5, "lift": 0.018, "size": 0.98},
 	"weapon": {"colour": "lilac", "alpha": 0.6, "lift": 0.019, "size": 0.6},
+	# A jump's or a throw's flight (show_arc): beads along a curve through the air (Combat HUD plan, owner pick 5).
+	"arc": {"colour": "gilt_light", "alpha": 0.95, "lift": 0.0, "size": 0.11, "shape": "ball"},
+	"arc_bad": {"colour": "crimson", "alpha": 0.9, "lift": 0.0, "size": 0.11, "shape": "ball"},
 }
+## Beads in an arc, and how high it rises for each square it covers (up to ARC_RISE_MOST).
+const ARC_BEADS := 16
+const ARC_RISE := 0.22
+const ARC_RISE_MOST := 2.2
 
 ## How much higher a mark sits on a slope (natural ground), so the ground's bends don't swallow its corners.
 const SLOPE_LIFT := 0.03
@@ -46,6 +53,13 @@ func _make_layer(key: String) -> void:
 			dot.radial_segments = 16
 			dot.rings = 1
 			mm.mesh = dot
+		"ball":
+			var ball := SphereMesh.new()
+			ball.radius = size / 2.0
+			ball.height = size
+			ball.radial_segments = 8
+			ball.rings = 4
+			mm.mesh = ball
 		"ring":
 			var ring := TorusMesh.new()
 			ring.outer_radius = size / 2.0
@@ -101,6 +115,19 @@ func show_trail(key: String, cells: Array) -> void:
 		if i < cells.size() - 1:
 			spots.append(here)
 	_place(key, spots)
+
+
+## A flight through the air from `from` to `to` (world points) as beads on layer `key`, rising in the middle by how far it
+## goes: a leap's or a throw's path, so the player sees where it lands before choosing (Baldur's Gate 3's arcs).
+func show_arc(key: String, from: Vector3, to: Vector3) -> void:
+	var rise := minf(ARC_RISE_MOST, ARC_RISE * Vector2(to.x - from.x, to.z - from.z).length() + 0.3)
+	var mm := (_layers[key] as MultiMeshInstance3D).multimesh
+	mm.instance_count = ARC_BEADS
+	for i in ARC_BEADS:
+		var k := float(i + 1) / float(ARC_BEADS + 1)
+		var p := from.lerp(to, k)
+		p.y += rise * 4.0 * k * (1.0 - k)
+		mm.set_instance_transform(i, Transform3D(Basis.IDENTITY, p))
 
 
 func clear(key: String) -> void:

@@ -46,6 +46,7 @@ func _ready() -> void:
 	hud = ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
+	D20Die.warm.call_deferred(hud)   # the big d20's shader and numerals, ready before its first roll
 	hud.leader_picked.connect(func(i: int) -> void:
 		if view != null:
 			view.set_leader(i)
@@ -134,6 +135,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 		# conscious back up, and a pit leaves its victim Prone.
 		if not view.in_combat:
 			_check_fallen())
+	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
@@ -185,8 +187,12 @@ func _check_fallen() -> void:
 
 
 ## The game over, if the party is still all down once the moment has passed. A fight's own end goes first: its own
-## game over, or the final battle's wipe that is an ending (test_ending_screen).
+## game over, or the final battle's wipe that is an ending (test_ending_screen). So does the big d20 for the save that
+## dropped them: the player sees it fail before the party falls.
 func _fall() -> void:
+	var rolling := DiceRoll.showing()
+	if rolling != null:
+		await rolling.finished
 	if screen != null or dialogue != null or ending != null or moving or view == null or view.in_combat or not _party_down():
 		_fallen = false
 		return
@@ -1004,10 +1010,21 @@ func _quick_save() -> void:
 
 ## F9: back to the game's own slot as last saved.
 func _quick_load() -> void:
+	# A live Honour run can't go back (Ashwin, 2026-10-09, QA D-3): its one save only moves forward.
+	if SaveSystem.honour():
+		hud.toast("An Honour run can't go back: the game saves as you go.")
+		return
 	if SaveSystem.current_slot != "" and SaveSystem.load_slot(SaveSystem.current_slot) == OK:
 		get_tree().reload_current_scene()
 	else:
 		hud.toast("No quick save yet.")
+
+
+## Closing the window in a live Honour run keeps where the party is (in a fight, the round's own save already does), so
+## coming back doesn't rewind it to the last autosave (QA D-3).
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and SaveSystem.honour() and view != null and not moving:
+		SaveSystem.autosave()
 
 
 # --- Captures -------------------------------------------------------------------------------------

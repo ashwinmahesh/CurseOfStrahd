@@ -1,7 +1,7 @@
 extends TestCase
 ## Honour's one save (F1, combat/difficulty.gd's one_save; SaveSystem's Honour part): an Honour run keeps one save, its
-## own slot, which the autosaves, the start of each fight, Save Game and F5 all write over. A wipe ends the Honour run:
-## the game and its save carry on in Tactician, for good (lane 22's pick).
+## own slot, which the autosaves, the start of each round of a fight, Save Game and F5 all write over, and it can't go
+## back to it (QA D-3). A wipe ends the Honour run: the game and its save carry on in Tactician, for good (lane 22's pick).
 
 var root: Node
 var _real_dir := ""
@@ -75,7 +75,7 @@ func test_an_honour_run_keeps_one_save() -> void:
 	assert_eq(str(SaveSystem.describe(slot)["mode"]), "Honour", "the lists say it's an Honour run")
 
 
-func test_a_fight_is_kept_as_it_starts() -> void:
+func test_a_fight_is_kept_round_by_round() -> void:
 	assert_eq(SaveSystem.autosave(), OK)
 	var slot := SaveSystem.current_slot
 	GameState.combat_snapshot = {"location": "test_hall", "encounter": "rat", "data": {"round": 1}}
@@ -84,9 +84,50 @@ func test_a_fight_is_kept_as_it_starts() -> void:
 	assert_eq(int(((_on_disk(slot)["combat"] as Dictionary)["data"] as Dictionary)["round"]), 1, "the fight's start is the save")
 	GameState.combat_snapshot = {"location": "test_hall", "encounter": "rat", "data": {"round": 3}}
 	assert_eq(SaveSystem.save_round(), OK)
-	assert_eq(int(((_on_disk(slot)["combat"] as Dictionary)["data"] as Dictionary)["round"]), 1,
-		"later rounds leave it at the start: leaving mid-fight comes back to the start, never past it")
+	assert_eq(int(((_on_disk(slot)["combat"] as Dictionary)["data"] as Dictionary)["round"]), 3,
+		"each round writes over it: leaving mid-fight comes back to the round it was in, not the fight's start (QA D-3)")
+	assert_false(SaveSystem.has_slot(SaveSystem.ROUND_START), "still no save beside it")
 	GameState.combat_snapshot = {}
+
+
+## QA D-3 (owner, 2026-10-09): a live Honour run can't go back to its save. F9 loads nothing, the pause menu can't
+## load, and leaving keeps where the party is.
+func test_a_live_honour_run_cant_go_back() -> void:
+	assert_eq(SaveSystem.autosave(), OK)
+	var slot := SaveSystem.current_slot
+	GameState.story.gold = 77.0
+	root.call("_quick_load")
+	await _frames(1)
+	assert_true(is_instance_valid(root) and not root.is_queued_for_deletion(), "F9 doesn't reload the game")
+	assert_eq(GameState.story.gold, 77.0, "nor puts the save back")
+	root.call("open_screen", "menu", 0)
+	await _frames(1)
+	var menu := root.get("screen") as PauseMenu
+	assert_true(_button(menu, "Load a Save").disabled, "the pause menu can't load inside the run")
+	var went := []
+	menu.scene_changer = func(path: String) -> void: went.append(path)
+	_button(menu, "Quit to Title").pressed.emit()
+	assert_eq(went, [PauseMenu.TITLE_SCENE], "it goes to the title")
+	assert_eq(float((_on_disk(slot)["story"] as Dictionary)["gold"]), 77.0, "quitting kept where the party was")
+	root.call("close_screen")
+	await _frames(1)
+	GameState.story.gold = 91.0
+	root.notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
+	assert_eq(float((_on_disk(slot)["story"] as Dictionary)["gold"]), 91.0, "so did closing the window")
+	assert_eq(_slots(), [slot], "still the one save")
+
+
+func test_other_games_still_load_and_quit_as_before() -> void:
+	GameState.story.options["difficulty"] = "balanced"
+	assert_eq(SaveSystem.quick_save(), OK)
+	var slot := SaveSystem.current_slot
+	GameState.story.gold = 33.0
+	root.notification(Node.NOTIFICATION_WM_CLOSE_REQUEST)
+	assert_true(float((_on_disk(slot)["story"] as Dictionary)["gold"]) != 33.0, "closing the window saves nothing")
+	root.call("open_screen", "menu", 0)
+	await _frames(1)
+	assert_false(_button(root.get("screen") as Node, "Load a Save").disabled, "Load a Save is on")
+	root.call("close_screen")
 
 
 func test_save_game_writes_over_the_one_save() -> void:

@@ -36,6 +36,10 @@ UI_PALETTE = [
     ("arch_back", "0f0a0b"), ("arch_top", "4a121b"), ("arch_bottom", "1f070b"), ("arch_button", "33090f"),
     ("arch_button_lit", "6e1a26"), ("arch_track", "160407"), ("arch_gold", "b8913f"), ("arch_gold_light", "e3c47c"),
     ("arch_text", "f0e2c0"),
+    # The big d20 (docs/ui/d20_roll.md): an emerald, from its shadowed facets to the glint on its edges (owner,
+    # 2026-10-09: "I want the dice to be an emerald green color").
+    ("emerald_deep", "03251a"), ("emerald", "0b6a42"), ("emerald_bright", "1fa86a"), ("emerald_light", "62e3a6"),
+    ("emerald_glint", "d2fbe6"),
 ]
 
 

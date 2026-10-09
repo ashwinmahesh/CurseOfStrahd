@@ -741,6 +741,17 @@ func _open_square_menu(at: Vector2) -> bool:
 	return true
 
 
+## A right-click on a creature when there's no menu to open (another creature's turn): its Examine card.
+func _examine_at(at: Vector2) -> bool:
+	_pick_from_mouse(at)
+	var t := _target_under()
+	if t == null:
+		return false
+	hud.hide_tooltip()
+	hud.show_examine(catalog.examine(_player() if _player() != null else hud.shown, t.combatant), t.combatant)
+	return true
+
+
 func _square_picked(id: String) -> void:
 	var c := _player()
 	if c == null or mode != Mode.IDLE:
@@ -752,10 +763,8 @@ func _square_picked(id: String) -> void:
 		_confirm_at()
 		return
 	if id == "info":
-		if o != null and o.is_player_controlled():
-			_inspect(o.id)
-		elif o != null:
-			hud.show_details(o.name(), ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()], hud._chips(o)])
+		if o != null:
+			hud.show_examine(catalog.examine(c, o), o)
 		return
 	for it in _menu_items:
 		# Picking something up needs no one standing there.
@@ -802,6 +811,11 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				hud.banner("%d of %d spaces chosen" % [picked_points.size(), need], 1.2)
 				_update_hover()
 		"point":
+			# A leap lands on the square pointed at (its arc showed it), not the nearest grid corner.
+			if str(selected["kind"]) in ["long_jump", "jump"]:
+				if hover_cell.x >= 0:
+					_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
+				return
 			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
@@ -974,6 +988,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_confirm_at()
 		elif mb.button_index == MOUSE_BUTTON_RIGHT:
 			if mode == Mode.IDLE and _open_square_menu(mb.position):
+				return
+			if mode != Mode.TARGET and _examine_at(mb.position):
 				return
 			if not _undo_pick():
 				_cancel_targeting()
@@ -1249,6 +1265,32 @@ func _update_hover() -> void:
 		hud.show_tooltip(str(mp["reason"]), lying, [], at)
 
 
+## A leap being aimed: the arc from `c` to the square pointed at, a ring where it lands (red when it can't), and the
+## tooltip with the feet it costs and what's left.
+func _jump_hover(c: Combatant, at: Vector2) -> void:
+	if hover_cell.x < 0:
+		overlay.clear("goal")
+		hud.show_tooltip(str(selected["label"]), ["Choose where to land (%d ft at most)" % int(selected.get("range", 0))], [], at)
+		return
+	var feet := e.grid.distance_ft(c.cell, c.size_cells, hover_cell, c.size_cells)
+	var why := e.movement.leap_why(c, hover_cell)
+	if why == "" and feet > int(selected.get("range", 0)):
+		why = "Too far: %d ft at most" % int(selected.get("range", 0))
+	var to := board.cell_center(hover_cell, c.size_cells) + Vector3(0, 0.05, 0)
+	overlay.show_arc("arc" if why == "" else "arc_bad", board.cell_center(c.cell, c.size_cells) + Vector3(0, 0.05, 0), to)
+	overlay.show_cells("goal" if why == "" else "danger", [hover_cell])
+	var cost := feet if str(selected["kind"]) == "long_jump" else 10
+	var lines: Array = ["Leap %d ft over whatever is between" % feet, "Costs %d ft · %d ft left after" % [cost, maxi(0, c.movement_left - cost)]] if why == "" else [why]
+	hud.show_tooltip(str(selected["label"]), lines, [], at)
+
+
+## About chest height on a creature's figure, where a throw leaves or lands.
+func _chest(c: Combatant) -> Vector3:
+	var tok := tokens.get(c.id) as CombatToken
+	var base := tok.global_position if tok != null else board.cell_center(c.cell, c.size_cells)
+	return base + Vector3(0, CombatToken.height_of(c) * 0.6, 0)
+
+
 ## The odds of an attack over its target's head (CombatHud.show_odds), when the attack can be made.
 func _show_odds(pv: Dictionary, o: Combatant) -> void:
 	var tok := tokens.get(o.id) as CombatToken
@@ -1263,6 +1305,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
 		return
 	var kind := str(selected["targeting"])
+	overlay.clear("arc")
+	overlay.clear("arc_bad")
+	# A leap (Long Jump, the Jump spell): its arc to the square pointed at, the landing ringed, the feet it costs.
+	if str(selected["kind"]) in ["long_jump", "jump"]:
+		_jump_hover(c, at)
+		return
 	if kind == "points" or (kind == "point" and str(selected["kind"]) == "feat"):
 		var cells: Array = []
 		for point in picked_points:
@@ -1313,6 +1361,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		var pv2 := catalog.attack_preview(c, selected, o)
 		hud.show_tooltip(str(pv2["title"]), pv2["lines"] as Array, [], at, str(pv2.get("edge", "")))
 		_show_odds(pv2, o)
+		# A throw: its arc to the target, red when it can't be made.
+		if selected.has("group") and str(selected["group"]) == "Throw":
+			overlay.show_arc("arc" if bool(pv2.get("legal", false)) else "arc_bad", _chest(c), _chest(o))
 		return
 	var why := catalog.target_why(c, selected, o)
 	var lines2: Array = ["HP %d/%d · AC %d" % [o.creature.hp, o.creature.max_hp(), o.creature.ac_value()]]

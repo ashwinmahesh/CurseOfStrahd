@@ -5422,18 +5422,19 @@ def broad_oak_bough(p):
     p.tube([(tx + 0.1, 0.0, TOP - 0.45), (-0.95, 0.0, TOP - 0.2), (-0.6, 0.0, TOP - 0.17)], 0.17, trunk, segs=10,
            radii=[0.24, 0.19, 0.17])
     p.box((2.0, 0.36, 0.3), (0.0, 0.0, TOP - 0.15), trunk, soft=0.08, segs=2)   # the walked length, its top at TOP
-    p.box((1.9, 0.26, 0.01), (0.0, 0.0, TOP - 0.004), "pal_moss")   # moss worn on the top where feet go
+    # (No moss strip on the walk: a flat green box along the bark read as a plank floating in the tree; UI QA W-04.)
     p.tube([(0.95, 0.0, TOP - 0.15), (1.25, 0.05, TOP - 0.08), (1.5, 0.1, TOP + 0.15)], 0.1, trunk, segs=8, radii=[0.14, 0.09, 0.05])
     for x, side in ((-0.5, 1), (0.2, -1), (0.7, 1)):   # twigs off the bough, up and away from the walk
         p.tube([(x, side * 0.15, TOP - 0.1), (x + 0.15, side * 0.55, TOP + 0.5)], 0.035, trunk, segs=5, radii=[0.05, 0.015])
     for a, z in ((2.2, 2.6), (4.0, 2.4), (5.4, 2.9)):   # the other limbs, higher up
         p.tube([(tx, 0.0, z), (tx + 0.9 * math.cos(a), 0.9 * math.sin(a), z + 0.8)], 0.1, trunk, segs=7, radii=[0.14, 0.04])
-    for _ in range(14):   # the crown: clumps of leaves over three squares by three
-        cx = tx + rng.uniform(-0.2, 1.9)
+    for _ in range(18):   # the crown: rounded clumps of leaves over three squares by three, lit on top (they were
+        cx = tx + rng.uniform(-0.2, 1.9)   # nine-sided cones, which read low-poly beside the land's trees; UI QA W-04)
         cy = rng.uniform(-1.2, 1.2)
-        cz = rng.uniform(TOP + 1.0, TOP + 2.3)
-        p.cyl(rng.uniform(0.45, 0.7), rng.uniform(0.35, 0.55), (cx, cy, cz), rng.choice(["pal_bog", "pal_bog_deep", "pal_moss"]),
-              r2=0.2, segs=9)
+        cz = rng.uniform(TOP + 0.9, TOP + 1.9)
+        w = rng.uniform(0.85, 1.25)   # the crown as tall and wide as before (about 24 ft, catalog "feet")
+        p.rock((cx, cy, cz), (w, w * rng.uniform(0.8, 1.0), w * rng.uniform(0.55, 0.75)), rng.choice(["pal_bog", "pal_bog_deep"]),
+               top="pal_moss", rough=0.22, subdiv=2, bury=0.0, smooth=True, top_z=0.55, top_p=0.7, rot_z=rng.uniform(0, 6.3))
 
 
 # --- Interiors: the Amber Temple (docs/art/interiors.md) -------------------------------------------------------
