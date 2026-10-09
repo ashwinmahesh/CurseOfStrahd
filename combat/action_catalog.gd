@@ -182,13 +182,15 @@ func _attacks(c: Combatant, out: Array[Dictionary]) -> void:
 		if w == "" and not e.has_ammo_for(c, o):
 			w = "No ammunition"
 		var dmg := "%s%s" % [p.damage_dice, ("%+d" % p.damage_bonus.total()) if p.damage_bonus.total() != 0 else ""]
-		var a := _entry("attack:" + str(o["id"]), COMMON, p.name, "%+d · %s" % [p.attack.total(), dmg], cost, w, "enemy",
-			"Attack%s. %s" % [(" (%d attacks per Attack action)" % per) if per > 1 else "", p.describe()])
+		var other_set := int(o.get("set", 1)) == 2
+		var a := _entry("attack:" + str(o["id"]), COMMON, p.name, "%+d · %s%s" % [p.attack.total(), dmg, " · set II" if other_set else ""], cost, w, "enemy",
+			"Attack%s. %s%s" % [(" (%d attacks per Attack action)" % per) if per > 1 else "", p.describe(),
+				" From your other weapon set: attacking with it takes that set in hand (free)." if other_set else ""])
 		a["option_id"] = str(o["id"])
 		a["range"] = p.reach if bool(o["melee"]) else (p.long_range if p.long_range > 0 else p.normal_range)
 		out.append(a)
-		# The Light property's extra attack.
-		if "light" in p.properties and c.light_attack_weapon != "" and p.item_id != c.light_attack_weapon:
+		# The Light property's extra attack, with a Light weapon in hand.
+		if "light" in p.properties and not other_set and c.light_attack_weapon != "" and p.item_id != c.light_attack_weapon:
 			var nick := p.mastery == "nick"
 			for o2 in e.attack_options(c):
 				if (o2["profile"] as WeaponProfile).item_id == c.light_attack_weapon and (o2["profile"] as WeaponProfile).mastery == "nick":
@@ -205,6 +207,15 @@ func _attacks(c: Combatant, out: Array[Dictionary]) -> void:
 			off["option_id"] = str(o["id"])
 			off["range"] = a["range"]
 			out.append(off)
+	# The other weapon set (Baldur's Gate 3's switch beside the hotbar): free, as often as you like.
+	if c.creature is Character and (c.creature as Character).has_weapon_set_2():
+		var ch := c.creature as Character
+		var names: Array[String] = []
+		for id: Variant in [ch.weapon_set_2.get("main_hand", ""), ch.weapon_set_2.get("off_hand", "")]:
+			if str(id) != "" and not ch.entry_of(str(id)).is_empty():
+				names.append(str(Compendium.shared().item_data(str(id)).get("name", id)))
+		out.append(_entry("swap_weapons", COMMON, "Swap weapons", "to " + " and ".join(names), "free", e._turn_check(c), "none",
+			"Take your other weapon set in hand (free, as often as you like; attacking with a weapon of that set swaps too). Set both in the inventory."))
 	var dc := 8 + c.creature.ability_mod(&"str") + c.creature.proficiency_bonus()
 	var g := _entry("grapple", COMMON, "Grapple", "DC %d" % dc, cost, why, "enemy", "Unarmed Strike: the target makes a Str or Dex save or is Grappled.")
 	g["range"] = 5
@@ -1122,6 +1133,9 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.stand_up(c)
 		"drop_prone":
 			return e.drop_prone(c)
+		"swap_weapons":
+			var why := e._turn_check(c)
+			return CombatResult.fail(why) if why != "" else e.weapons.swap_sets(c)
 		"second_wind":
 			return e.features.second_wind(c)
 		"action_surge":

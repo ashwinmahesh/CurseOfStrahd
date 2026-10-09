@@ -191,6 +191,9 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 		return "Wear it first (%s)" % MagicItems.SLOT_NAMES.get(MagicItems.worn_slot(data), "")
 	if req == "worn_or_held" and not ch.item_active(p["entry"] as Dictionary):
 		return "Hold it first"
+	# A weapon's own power needs the weapon equipped (owner 2026-10-09): in hand, or in the other set, taken in hand to use it.
+	if Gear.is_weapon(data) and ch.weapon_set_of(iid) == 0 and req != "anyone":
+		return "Equip it first: in hand or in your other weapon set (inventory)"
 	if bool(power.get("combat", true)) == false:
 		return "Outside combat only"
 	var spell_id := power_spell(iid, power)
