@@ -263,6 +263,12 @@ func test_lights_take_their_kind() -> void:
 	for k: String in ["lamp", "window", "lantern"]:
 		assert_true(kinds.has(k), "Death House's %s is dressed as one" % k)
 	assert_true(shafts >= 1, "a window indoors lets a shaft of light in")
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		var kind := str(n.get_meta("light_kind", ""))
+		if kind in ["lamp", "lantern"]:
+			assert_true(LightFlicker.of(n) != null, "a %s flickers" % kind)
+		elif kind == "window":
+			assert_true(LightFlicker.of(n) == null, "a window doesn't")
 	v.queue_free()
 	Look.set_style(was, false)
 
@@ -284,6 +290,118 @@ func test_a_swaying_flame_comes_back_to_rest() -> void:
 		f._process(0.05)
 	assert_true(f.position.is_equal_approx(Vector3(2, 1, 3)), "and it comes back to rest")
 	f.queue_free()
+
+
+## How far a flicker of `kind` strays from the light's own energy over ten seconds (its standard deviation), and the
+## lowest and highest it went.
+func _flicker_spread(kind: String) -> Array[float]:
+	var f := LightFlicker.new()
+	f.set_style(LightFlicker.STYLES[kind] as Dictionary)
+	var sum := 0.0
+	var sq := 0.0
+	var lo := 9.0
+	var hi := 0.0
+	for i in 600:
+		var level := f.step(1.0 / 60.0)
+		sum += level
+		sq += level * level
+		lo = minf(lo, level)
+		hi = maxf(hi, level)
+	f.free()
+	var mean := sum / 600.0
+	return [sqrt(maxf(0.0, sq / 600.0 - mean * mean)), lo, hi]
+
+
+## Fires flicker hardest, candles gently, lamps barely (the owner's ask, 2026-10-09), and never out.
+func test_flames_flicker_by_kind() -> void:
+	var fire := _flicker_spread("fire")
+	var candle := _flicker_spread("candle")
+	var lamp := _flicker_spread("lamp")
+	assert_true(fire[0] > candle[0] and candle[0] > lamp[0] and lamp[0] > 0.0,
+		"fire %.3f > candle %.3f > lamp %.3f > 0" % [fire[0], candle[0], lamp[0]])
+	assert_true(fire[0] > 0.08, "a hearth's flicker shows (%.3f)" % fire[0])
+	assert_true(lamp[0] < 0.06, "a lamp's barely stirs (%.3f)" % lamp[0])
+	assert_true(fire[1] >= 0.25 and fire[2] < 1.8, "a fire never goes out or flares wildly (%.2f to %.2f)" % [fire[1],
+		fire[2]])
+
+
+## A flickering light's energy and colour waver about its own, each light on its own beat, and its range stays put
+## (no shadow map redrawn for it); a CandleFlicker's own jitter stops; a change made to the light by anything else
+## becomes its new own energy.
+func test_a_light_carries_its_flicker() -> void:
+	var lights: Array[CandleFlicker] = []
+	for i in 2:
+		var l := CandleFlicker.new()
+		l.base_energy = 2.0
+		l.light_color = Look.color("flame")
+		l.omni_range = 5.0
+		add_child(l)
+		LightFlicker.give(l, "fire")
+		lights.append(l)
+	assert_false(lights[0].is_processing(), "the candle's own jitter stops")
+	var seen: Array[PackedFloat32Array] = [PackedFloat32Array(), PackedFloat32Array()]
+	var reddened := false
+	for f in 240:
+		for i in 2:
+			LightFlicker.of(lights[i])._process(1.0 / 60.0)
+			seen[i].append(lights[i].light_energy)
+		reddened = reddened or lights[0].light_color.b < Look.color("flame").b - 0.01
+	var differ := 0
+	for f in 240:
+		assert_between(seen[0][f], 0.4, 3.6, "the energy wavers about its own")
+		if absf(seen[0][f] - seen[1][f]) > 0.05:
+			differ += 1
+	assert_true(differ > 120, "two fires don't pulse together (%d of 240 frames apart)" % differ)
+	assert_true(reddened, "a dipping fire reddens")
+	assert_eq(lights[0].omni_range, 5.0, "the range never changes")
+	var lantern := OmniLight3D.new()
+	lantern.light_energy = 2.0
+	add_child(lantern)
+	LightFlicker.give(lantern, "lantern")
+	for f in 30:
+		LightFlicker.of(lantern)._process(1.0 / 60.0)
+	assert_between(lantern.light_energy, 1.4, 2.6, "a lantern barely flickers")
+	lantern.light_energy = 0.5
+	for f in 30:
+		LightFlicker.of(lantern)._process(1.0 / 60.0)
+	assert_between(lantern.light_energy, 0.35, 0.65, "and a light dimmed by the game flickers about its new energy")
+	lantern.visible = false
+	LightFlicker.of(lantern)._process(1.0 / 60.0)
+	assert_true(is_equal_approx(lantern.light_energy, 0.5), "hidden, it rests at its own energy (to be faded back in)")
+	for l in lights:
+		l.queue_free()
+	lantern.queue_free()
+
+
+## Outdoors after dark a campfire burns brighter, or the moon and the lit mist drown it (LIGHT_KINDS dark_out); by
+## day it burns as itself; and a flame may sway while it casts no shadow, coming back to rest when told to stop.
+func test_outdoor_fires_after_dark() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	GameState.story.minute_of_day = 22 * 60
+	var v := _view("vallaki_vistani_camp")
+	v.update_daylight()
+	var fire: OmniLight3D = null
+	for n in v.find_children("*", "OmniLight3D", true, false):
+		if str(n.get_meta("light_kind", "")) == "fire":
+			fire = n as OmniLight3D
+	assert_true(fire != null and LightFlicker.of(fire) != null, "the camp's fire flickers")
+	assert_eq(LightFlicker.of(fire).boost, 3.5, "and burns brighter at night")
+	v.atmosphere.set_phase("day")
+	assert_eq(LightFlicker.of(fire).boost, 1.0, "but not by day")
+	var at := fire.position
+	fire.set_meta("sway", true)
+	var moved := false
+	for i in 40:
+		LightFlicker.of(fire)._process(0.05)
+		moved = moved or not fire.position.is_equal_approx(at)
+	assert_true(moved, "it sways while let")
+	fire.set_meta("sway", false)
+	for i in 80:
+		LightFlicker.of(fire)._process(0.05)
+	assert_true(fire.position.is_equal_approx(at), "and comes back to rest")
+	v.queue_free()
+	Look.set_style(was, false)
 
 
 

@@ -328,13 +328,14 @@ func _update_lamp_shadows() -> void:
 	var keep := {}
 	for i in mini(budget, ranked.size()):
 		keep[ranked[i][1]] = true
-	# The nearest few flames that cast shadows sway with their flicker, so their shadows stir (W5; CandleFlicker).
+	# Flames sway with their flicker (W5; LightFlicker), so the light they throw stirs: every one casting no shadow
+	# (nothing to redraw), and of those that cast one, the nearest few, so their shadows stir too.
 	var sway := Graphics.swaying_flames()
 	for i in ranked.size():
 		var l := ranked[i][1] as OmniLight3D
-		var swaying := i < budget and sway > 0 and l is CandleFlicker \
-			and str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"]
-		if swaying:
+		var swaying := str(l.get_meta("light_kind", "")) in ["candle", "lamp", "torch", "fire"] \
+			and (not keep.has(l) or sway > 0)
+		if swaying and keep.has(l):
 			sway -= 1
 		l.set_meta("sway", swaying)
 	var fade := _rig.distance + 12.0
@@ -890,8 +891,13 @@ func set_phase(p: String) -> void:
 	_show_night_pieces()
 
 
-## Lit windows and wisps only after dark (and always indoors, where "any" is the only time).
+## Lit windows and wisps only after dark (and always indoors, where "any" is the only time), and outdoor flames
+## brighter.
 func _show_night_pieces() -> void:
+	# Outdoor flames brighten as night falls (LIGHT_KINDS dark_out); at once when the place opens.
+	for l in _lights:
+		if is_instance_valid(l) and LightFlicker.of(l) != null:
+			LightFlicker.of(l).set_boost(_dark_boost(str(l.get_meta("light_kind", "lamp"))), _blend >= 1.0)
 	if weather == null:
 		return
 	var dark := phase != "day"
@@ -1280,13 +1286,15 @@ func _scan_lights() -> void:
 ## that it doesn't flicker. A window indoors is the moon or the day coming in: cold, steady, with a shaft of light
 ## through the haze (_window_shaft).
 ## `energy` and `reach` scale its strength and range in the Modern finish (the target frames: hearths and candelabras
-## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead).
+## throw warm pools across a room; the party's own lantern is gentler, so a room's lights lead). `dark_out` scales it
+## further outdoors after dark, where the moon, the sky's fill and the lit mist would otherwise drown a campfire.
+## Each kind that isn't steady flickers in its own way (LightFlicker.STYLES).
 const LIGHT_KINDS := {
-	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15},
-	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15},
+	"candle": {"size": 0.03, "fog": 1.0, "energy": 1.3, "reach": 1.15, "dark_out": 1.5},
+	"lamp": {"size": 0.06, "fog": 1.2, "energy": 1.25, "reach": 1.15, "dark_out": 1.5},
 	"lantern": {"size": 0.08, "fog": 1.2, "energy": 0.85, "reach": 0.9},
-	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2},
-	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4},
+	"torch": {"size": 0.12, "fog": 1.8, "energy": 1.3, "reach": 1.2, "dark_out": 2.5},
+	"fire": {"size": 0.25, "fog": 2.0, "energy": 1.6, "reach": 1.4, "dark_out": 3.5},
 	"magic": {"size": 0.12, "fog": 1.6, "steady": true},
 	"window": {"size": 0.4, "fog": 0.5, "steady": true},
 	"lit_window": {"size": 0.3, "fog": 1.0},
@@ -1319,6 +1327,13 @@ func _light_kind(l: OmniLight3D) -> String:
 	return "spell"
 
 
+## How much brighter a light of `kind` burns now than its own energy: outdoors after dark, its kind's `dark_out`.
+func _dark_boost(kind: String) -> float:
+	if not outdoors or phase == "" or phase == "day":
+		return 1.0
+	return float((LIGHT_KINDS[kind] as Dictionary).get("dark_out", 1.0))
+
+
 func _dress_light(light: Variant) -> void:
 	# Called deferred: the light may have gone with its place by now (a typed parameter would refuse the freed one).
 	if not is_instance_valid(light):
@@ -1337,6 +1352,8 @@ func _dress_light(light: Variant) -> void:
 		l.light_energy *= gain
 	if bool(spec.get("steady", false)) and l is CandleFlicker:
 		(l as CandleFlicker).flicker = 0.0
+	if not bool(spec.get("steady", false)):
+		LightFlicker.give(l, kind, _dark_boost(kind))
 	if kind == "window" and not outdoors:
 		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
 		l.light_color = sun.light_color
