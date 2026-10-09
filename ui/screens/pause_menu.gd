@@ -330,6 +330,11 @@ func _game_rows() -> void:
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
 	y += ROW_PITCH
+	# Shared party turns (owner 2026-10-09, after Baldur's Gate 3).
+	_choice_row(y, "Party turns", ["Shared", "One at a time"], 0 if GameSettings.shared_turns() else 1, func(i: int) -> void:
+		GameSettings.set_shared_turns(i == 0),
+		InputActions.fill("Shared: heroes next to each other in the turn order act together; click a hero's portrait or press {cycle_leader} to switch between them."))
+	y += ROW_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
 	y += ROW_PITCH
