@@ -236,3 +236,20 @@ func test_the_preload_reads_the_party_and_the_people() -> void:
 	pre.release()
 	for path: String in asked:
 		assert_eq(ResourceLoader.load_threaded_get_status(path), ResourceLoader.THREAD_LOAD_INVALID_RESOURCE, "%s collected" % path)
+
+
+## A place's fights still to come have their foes read ahead while the party is there (PlacePreload.foe_art_ids, after
+## Functional QA's hitch tour): the vineyard's blights while its ambush hasn't begun, and only the Vine Mother's once
+## it has.
+func test_the_foes_still_to_fight_here_are_read_ahead() -> void:
+	GameState.reset()
+	var st := GameState.story
+	var loc := Compendium.shared().get_entry("locations", "wizard_of_wines")
+	var art := func(m: String) -> String: return CombatToken.monster_art(Compendium.shared().monster_data(m))
+	var arts := PlacePreload.foe_art_ids("wizard_of_wines", loc, st)
+	for m: String in ["vine_blight", "needle_blight", "twig_blight", "vine_mother"]:
+		assert_true(str(art.call(m)) in arts, "%s is read ahead (%s)" % [m, arts])
+	(st.loc_state("wizard_of_wines")["encounters"] as Dictionary)["vineyard_ambush"] = "started"
+	arts = PlacePreload.foe_art_ids("wizard_of_wines", loc, st)
+	assert_false(str(art.call("twig_blight")) in arts, "the ambush has begun: its twig blights aren't (%s)" % [arts])
+	assert_true(str(art.call("vine_mother")) in arts, "the Vine Mother's fight is still to come")
