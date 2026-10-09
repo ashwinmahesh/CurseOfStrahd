@@ -366,13 +366,34 @@ func compelled(c: Combatant) -> bool:
 
 ## Plays the current creature's turn with the AI if it isn't player-controlled.
 func run_ai_turn() -> CombatResult:
+	var r := begin_ai_turn()
+	if r != null:
+		return r
+	return finish_ai_turn(enc().ai.think(enc().current()))
+
+
+## run_ai_turn in steps (FN-14): this one plays the turn up to its plan and returns null when the plan comes next
+## (AiBrain.think, which only reads, so the combat view runs it on a worker thread), then finish_ai_turn.
+func begin_ai_turn() -> CombatResult:
 	var e := enc()
 	var c := e.current()
 	if c == null or (c.is_player_controlled() and not compelled(c)):
 		return CombatResult.fail("Not an AI turn")
 	if not c.can_act() and e.features.fleeing_from(c) == null and not c.creature.has_flag("transfixed"):
 		return end_turn()
-	return e.then(e.ai.play_turn(c), func() -> CombatResult:
+	var r := e.ai.begin_turn(c)
+	return null if r == null else _after_ai_turn(c, r)
+
+
+## The rest of the AI turn begin_ai_turn left at its plan: `thought` is AiBrain.think's.
+func finish_ai_turn(thought: Dictionary) -> CombatResult:
+	var c := enc().current()
+	return _after_ai_turn(c, enc().ai.finish_turn(c, thought))
+
+
+func _after_ai_turn(c: Combatant, r: CombatResult) -> CombatResult:
+	var e := enc()
+	return e.then(r, func() -> CombatResult:
 		if e.state == Encounter.State.ACTIVE and e.current() == c:
 			return end_turn()
 		return CombatResult.new())
