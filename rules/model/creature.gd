@@ -1059,6 +1059,9 @@ func add_effect(e: Effect) -> bool:
 func remove_effect(e: Effect) -> void:
 	if e in effects:
 		effects.erase(e)
+		# A Hit Point maximum that drops (Aid dispelled or run out) takes current Hit Points down with it (QA FN-22).
+		if hp > max_hp() and e.modifiers.any(func(m: Modifier) -> bool: return m.stat == &"hp_max"):
+			hp = max_hp()
 		if e.data.has("temporary_exhaustion"):
 			exhaustion = maxi(0, exhaustion - int(e.data["temporary_exhaustion"]))
 		log_event({"type": "effect_removed", "creature": id, "effect": e.name})
