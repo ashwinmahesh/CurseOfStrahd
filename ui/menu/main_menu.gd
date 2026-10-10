@@ -5,6 +5,7 @@ extends Control
 
 
 var _creation: CreationScreen = null
+var _tutorial: TutorialSession = null
 ## The new game's choice: roster ids travelling ("hero" for the custom hero), and the hero once made.
 var _picked: Array[String] = []
 var _hero: Character = null
@@ -101,6 +102,7 @@ func _title() -> void:
 		cont = prime
 	_box.add_child(cont)
 	_box.add_child(UiKit.button("New game", _new_game, 24))
+	_box.add_child(UiKit.button("Learn to play", _launch_tutorial.bind(false), 20))
 	var load := UiKit.button("Load", _show_loads, 24)
 	load.disabled = slots.is_empty()
 	_box.add_child(load)
@@ -233,7 +235,51 @@ func _pick_difficulty() -> void:
 		c.queue_free()
 	DifficultyPage.build(_box, _difficulty, func(id: String) -> void:
 		_difficulty = id
-		_pick_difficulty(), _new_game, _begin)
+		_pick_difficulty(), _new_game, _offer_tutorial)
+
+
+## Teach in a disposable practice scene before the existing campaign-start path touches any saves or characters.
+func _offer_tutorial() -> void:
+	_view = "tutorial_offer"
+	for c in _box.get_children():
+		c.queue_free()
+	_box.add_child(UiKit.title("New to Dungeons & Dragons?"))
+	_box.add_child(UiKit.label("Learn by playing: movement, dice, attacks, spells and resting. No experience needed.", 19, "parchment", 560))
+	_box.add_child(UiKit.label("Practice with a prepared party. Your chosen heroes and difficulty will be waiting, and you can repeat or skip any lesson.", 16, "vellum", 560))
+	_box.add_child(_gap(12))
+	_box.add_child(UiParts.primary_button("Learn the basics", _launch_tutorial.bind(true)))
+	_box.add_child(UiKit.button("Start campaign", _begin, 20))
+	_box.add_child(UiKit.button("Back", _pick_difficulty, 18))
+	_box.add_child(UiKit.label("You can replay the tutorial from Learn to play on the title screen.", 14, "parchment", 560))
+
+
+func _launch_tutorial(for_campaign: bool) -> void:
+	if is_instance_valid(_tutorial):
+		return
+	_view = "tutorial"
+	_tutorial = TutorialSession.new()
+	_tutorial.pending_campaign = for_campaign
+	_tutorial.finished.connect(_tutorial_finished, CONNECT_DEFERRED)
+	hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	# A sibling can render its 3D world while this title's full-screen art and input are hidden.
+	get_parent().add_child(_tutorial)
+
+
+func _tutorial_finished(start_campaign: bool) -> void:
+	if not is_inside_tree():
+		return
+	if is_instance_valid(_tutorial):
+		_tutorial.get_parent().remove_child(_tutorial)
+		_tutorial.queue_free()
+	_tutorial = null
+	process_mode = Node.PROCESS_MODE_INHERIT
+	show()
+	if start_campaign:
+		_begin()
+	else:
+		Audio.play_music("title")
+		_title()
 
 
 ## The chosen travel; the rest of the roster waits at camp.
@@ -307,6 +353,9 @@ func _show_loads() -> void:
 
 
 func _exit_tree() -> void:
+	if is_instance_valid(_tutorial):
+		_tutorial.leave_tutorial()
+		_tutorial.queue_free()
 	Cursors.uninstall()
 	# The game scene loading in the background is taken in before the title goes, whether for the game (which needs
 	# it anyway) or for quitting (a load the engine's shutdown cuts off reports errors).
@@ -320,7 +369,9 @@ func _exit_tree() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _creation == null and _view != "title":
 		get_viewport().set_input_as_handled()
-		if _view == "difficulty":
+		if _view == "tutorial_offer":
+			_pick_difficulty()
+		elif _view == "difficulty":
 			_new_game()
 		else:
 			_title()

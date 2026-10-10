@@ -1,0 +1,64 @@
+# All consequences belong only to the tutorial's practice StoryState.
+~ start
+Narrator: This is a rehearsal. Ismark is playing a cautious gatekeeper, and you may choose which hero speaks for the party.
+Ismark: Pretend there is a storm on the road and I am guarding a safe courtyard. Why should I let your group inside?
+-> choices
+
+~ choices
+* [Persuasion DC 10] We can help secure the shutters and share the work if you let us shelter here. -> persuaded | unconvinced
+* [Insight DC 10] Watch his expression: is he worried about us, or about the storm? -> understood | uncertain
+* What are you worried about? -> question
+* I will come back and try this conversation later. -> END
+
+~ question
+Ismark: Strangers might bring trouble, but the wind could bring this roof down. That is what I am worried about.
+Narrator: This question needed no die roll. Ordinary dialogue can reveal information; a labelled skill choice tests something uncertain.
+-> choices
+
+~ persuaded
+set tutorial_dialogue_checked
+set tutorial_dialogue_skill = "persuasion"
+set tutorial_dialogue_result = "success"
+Ismark: Fair enough. Come inside, and help me fasten the shutters.
+Narrator: Your Persuasion check succeeded. The conversation followed the success branch, using the speaking hero's bonus.
+-> recap
+
+~ unconvinced
+set tutorial_dialogue_checked
+set tutorial_dialogue_skill = "persuasion"
+set tutorial_dialogue_result = "failure"
+Ismark: I am not ready to trust that offer. You can wait beneath the awning while I think.
+Narrator: The check failed, so he offered a different response. Failure is part of the story; you still complete this practice lesson.
+-> recap
+
+~ understood
+set tutorial_dialogue_checked
+set tutorial_dialogue_skill = "insight"
+set tutorial_dialogue_result = "success"
+Narrator: His eyes keep returning to a loose shutter. You judge that the storm worries him more than your arrival.
+Ismark: If you can hold that shutter steady, perhaps we can help each other.
+-> recap
+
+~ uncertain
+set tutorial_dialogue_checked
+set tutorial_dialogue_skill = "insight"
+set tutorial_dialogue_result = "failure"
+Narrator: The rain and his hurried movements give you little to go on. You cannot confidently tell what he is thinking.
+Ismark: Give me a moment. I need to check that shutter.
+Narrator: An unsuccessful Insight check means you did not learn what you hoped. It does not require you to attack or end an adventure.
+-> recap
+
+~ recap
+if flag.tutorial_dialogue_checked
+if flag.tutorial_dialogue_skill == "persuasion"
+Narrator: Persuasion tried to influence Ismark with an honest offer. Your speaking hero's Charisma and training supplied the bonus.
+else
+Narrator: Insight tried to understand Ismark's motives. Your speaking hero's Wisdom and training supplied the bonus.
+endif
+if flag.tutorial_dialogue_result == "success"
+Narrator: Meeting or beating the Difficulty Class succeeded. You can now return to the lesson.
+else
+Narrator: A result below the Difficulty Class failed. You saw a different reply, and you can still return to the lesson.
+endif
+endif
+-> END
