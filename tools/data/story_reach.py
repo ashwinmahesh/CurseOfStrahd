@@ -280,6 +280,22 @@ class Story:
                 return self
         return self
 
+    def run_tutorial(self):
+        """Walk the menu-launched practice dialogue with its own flags, never campaign facts."""
+        script = self.root / "world" / "tutorial" / "tutorial_session.gd"
+        if not script.exists():
+            return self
+        entry = re.search(r'CONVERSATION_REF\s*:=\s*"([^"]+)"', script.read_text())
+        if not entry:
+            return self
+        for _ in range(100):
+            self.changed = False
+            self._walked = set()
+            self.walk_ref(entry.group(1), "the optional tutorial from New Game or Learn to play")
+            if not self.changed:
+                break
+        return self
+
     def _locations(self):
         for lid, loc in self.locs.items():
             if ("loc", lid) not in self.facts:
@@ -549,6 +565,7 @@ def findings(root=ROOT):
     """The errors: what no playthrough reaches, and quest content only a random road encounter reaches."""
     s = Story(root).run()
     lucky = Story(root, chance_maps=False).run()
+    tutorial = Story(root).run_tutorial()
     out = []
     for qid, q in sorted(s.quests.items()):
         for st in q["stages"]:
@@ -561,8 +578,9 @@ def findings(root=ROOT):
     for fk, nodes in sorted(s.dlg.items()):
         if fk.startswith("narrator/"):
             continue
+        source = tutorial if fk.startswith("tutorial/") else s
         for node in nodes:
-            if ("node", fk, node) not in s.facts:
+            if ("node", fk, node) not in source.facts:
                 out.append(f"narrative/{fk}.dialogue: nothing reaches node '{node}' (no entry, jump or option leads there "
                            f"in a playthrough)")
     for lid, loc in sorted(s.locs.items()):
@@ -581,9 +599,12 @@ def findings(root=ROOT):
                 if got not in s.facts and s.possible(e.get("when", "")):
                     out.append(f"data/locations/{lid}.json: {key} {e.get('id', e.get('npc'))} at {e['cell']} can't be "
                                f"reached (no square beside it can be walked to; diagonal steps can't cut a wall's corner)")
-    for fid, v in sorted(_reads(s).items()):
-        if not s.possible(f"flag.{fid}"):
-            out.append(f"{v[0]}: flag '{fid}' is read, but nothing a playthrough reaches sets it")
+    for fid, places in sorted(_reads(s).items()):
+        for where in places:
+            source = tutorial if where.startswith("narrative/tutorial/") else s
+            if not source.possible(f"flag.{fid}"):
+                out.append(f"{where}: flag '{fid}' is read, but nothing a playthrough reaches sets it")
+                break
     return out
 
 
