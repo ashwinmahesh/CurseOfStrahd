@@ -1,10 +1,16 @@
 class_name CombatHud
 extends CanvasLayer
+
 ## The combat screen (docs/ui/combat_view.md, wireframes cb_01-03, approved 2026-10-06): initiative strip on top,
 ## party frames on the left, the combat log on the right, the hotbar with the action economy and End Turn at the
 ## bottom, plus the target tooltip, reaction prompts, roll details, banners and the controller's radial menu.
 ## It reads the Encounter and the ActionCatalog and never computes rules itself. Drawn on a CanvasLayer so the
 ## palette pass never touches it (plan §5.6).
+
+var coach_guided := false
+var coach_action_id := ""
+var _prompt_skip: Button
+var _confirm_yes: Button
 
 signal action_chosen(action: Dictionary)
 signal end_turn_pressed
@@ -536,6 +542,7 @@ func _build_prompt() -> void:
 	use.set_meta(&"pad_first", true)
 	use.pressed.connect(func() -> void: answer_prompt(true))
 	var skip := Button.new()
+	_prompt_skip = skip
 	PadGlyphs.hint(skip, "Skip (Esc)", "Skip ({b})")
 	skip.pressed.connect(func() -> void: answer_prompt(false))
 	buttons.add_child(use)
@@ -574,6 +581,7 @@ func _build_confirm() -> void:
 	box.add_child(_confirm_text)
 	var row := HBoxContainer.new()
 	var yes := Button.new()
+	_confirm_yes = yes
 	PadGlyphs.hint(yes, "End turn (%s)" % InputActions.key_text(&"combat_end_turn"), "End turn ({a})")
 	yes.set_meta(&"pad_first", true)
 	yes.pressed.connect(func() -> void:
@@ -1197,6 +1205,8 @@ func _pip_chip(name_: String, total: int, left: int, colour: String, tip: String
 ## A slot used (a click, its hotkey, the pad's RB): a toggle steps to its next mode, a container opens its choices at the
 ## slot, anything else goes to the fight.
 func use_action(a: Dictionary, from: Control = null) -> void:
+	if coach_guided and not _coach_matches(a):
+		return
 	if bool(a.get("toggle", false)):
 		var items := a["items"] as Array
 		action_chosen.emit(items[(int(a["current"]) + 1) % items.size()] as Dictionary)
@@ -1217,6 +1227,8 @@ func use_slot(index: int) -> void:
 ## A container's or a rule's choices at its slot: each action (or mode), greyed with why when it can't be used now, and
 ## with `arrange` (a right-click) the Hotbar choices for the whole slot.
 func open_group(a: Dictionary, at: Vector2, arrange: bool = true) -> void:
+	if coach_guided and not _coach_matches(a):
+		return
 	_menu_action = a
 	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
 	var toggle := bool(a.get("toggle", false))
@@ -1243,7 +1255,9 @@ func open_group(a: Dictionary, at: Vector2, arrange: bool = true) -> void:
 			"label": "Hide it (on the Hidden tab)" if not catalog.is_hidden(shown, first) else "Show it on its tab again"})
 		items.append({"id": "bar:earlier", "label": "Move earlier"})
 		items.append({"id": "bar:later", "label": "Move later"})
+	_coach_filter_menu(items)
 	_menu.show_actions(str(a["label"]), items, at)
+	_coach_focus_menu()
 
 
 ## The action id a slot is arranged by (U2): its own, or a group's first action's.
@@ -1285,6 +1299,8 @@ static func _mode_colour(mode: String) -> String:
 
 ## The right-click menu on a hotbar slot: Info, Use, and for spells each slot level it can be cast with.
 func open_slot_menu(action: Dictionary, at: Vector2) -> void:
+	if coach_guided and not _coach_matches(action):
+		return
 	_menu_action = action
 	var mine := shown != null and e.current() == shown and e.state == Encounter.State.ACTIVE
 	var usable := bool(action["legal"]) and mine
@@ -1330,7 +1346,9 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			for l in levels:
 				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
 					"enabled": usable, "why": why})
+	_coach_filter_menu(items)
 	_menu.show_actions(str(action.get("label", "")), items, at)
+	_coach_focus_menu()
 
 
 ## The right-click menu on a square of the board (combat_view builds the items from ActionCatalog.square_actions).
@@ -1340,6 +1358,8 @@ func open_square_menu(title: String, items: Array[Dictionary], at: Vector2) -> v
 
 
 func _on_menu(id: String) -> void:
+	if coach_guided and not _coach_menu_allowed(id):
+		return
 	var action := _menu_action
 	if bool(action.get("square", false)):
 		square_picked.emit(id)
@@ -1838,3 +1858,137 @@ func _panel(border: String = "gilt_dark", bg: String = "ui_black", ornate: bool 
 	if ornate:
 		UiKit.trim(p, 40.0)
 	return p
+
+
+## Visible viewport coordinates for the tutorial's outline; keep layout ownership here.
+func coach_anchor(key: String, action_id: String = "") -> Rect2:
+	var control: Control = null
+	match key:
+		"turn_order": control = _strip
+		"movement": control = _move_bar
+		"economy": control = _economy
+		"party": control = _party_box
+		"log": control = _log_panel
+		"spell_slots": control = _slot_box
+		"end_turn": control = _end_turn
+		"reaction": control = _prompt
+		"action":
+			if _menu != null and _menu.visible:
+				return Rect2(Vector2(_menu.position), Vector2(_menu.size)).intersection(get_viewport().get_visible_rect())
+			for i in _slot_actions.size():
+				var action := _slot_actions[i]
+				var matches := str(action.get("id", "")) == action_id
+				for member: Variant in action.get("items", []) as Array:
+					matches = matches or str((member as Dictionary).get("id", "")) == action_id
+				if matches and i < _slot_buttons.size():
+					control = _slot_buttons[i]
+					break
+	if not is_instance_valid(control) or not control.is_visible_in_tree():
+		return Rect2()
+	var rect := control.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, control.size)
+	var parent := control.get_parent()
+	while parent is Control:
+		var ancestor := parent as Control
+		if ancestor.clip_contents:
+			rect = rect.intersection(ancestor.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, ancestor.size))
+		parent = parent.get_parent()
+	return rect.intersection(get_viewport().get_visible_rect())
+
+
+func _coach_action_index(action_id: String) -> int:
+	for i in _slot_actions.size():
+		var action := _slot_actions[i]
+		if str(action.get("id", "")) == action_id:
+			return i
+		for member: Variant in action.get("items", []) as Array:
+			if str((member as Dictionary).get("id", "")) == action_id:
+				return i
+	return -1
+
+
+func coach_focus_action(action_id: String) -> void:
+	var index := _coach_action_index(action_id)
+	if index >= 0 and focus_slot != index:
+		focus_slot = index
+		_refresh_hotbar()
+
+
+func coach_controls(key: String, action_id: String = "") -> Array[Control]:
+	var controls: Array[Control] = []
+	match key:
+		"action":
+			var index := _coach_action_index(action_id)
+			if index >= 0 and index < _slot_buttons.size():
+				controls.append(_slot_buttons[index])
+		"end_turn": controls.append(_end_turn)
+		"end_confirm": controls.append(_confirm_yes)
+		"reaction_choices":
+			controls.append(_prompt_use)
+			controls.append(_prompt_skip)
+	return controls
+
+
+func coach_rects(key: String, action_id: String = "") -> Array[Rect2]:
+	var rects: Array[Rect2] = []
+	if key == "action" and _menu != null and _menu.visible:
+		rects.append(Rect2(Vector2(_menu.position), Vector2(_menu.size)).intersection(get_viewport().get_visible_rect()))
+		return rects
+	for control in coach_controls(key, action_id):
+		if not is_instance_valid(control) or not control.is_visible_in_tree():
+			continue
+		var rect := control.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, control.size)
+		var parent := control.get_parent()
+		while parent is Control:
+			var ancestor := parent as Control
+			if ancestor.clip_contents:
+				rect = rect.intersection(ancestor.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, ancestor.size))
+			parent = parent.get_parent()
+		rect = rect.intersection(get_viewport().get_visible_rect())
+		if rect.has_area():
+			rects.append(rect)
+	return rects
+
+
+func _coach_menu_allowed(id: String) -> bool:
+	if not coach_guided:
+		return true
+	if coach_action_id == "" or _menu_action.is_empty() or bool(_menu_action.get("square", false)):
+		return false
+	if id.begins_with("pick:") and _menu_action.has("items"):
+		var index := int(id.substr(5))
+		var members := _menu_action["items"] as Array
+		return index >= 0 and index < members.size() and str((members[index] as Dictionary).get("id", "")) == coach_action_id
+	if str(_menu_action.get("id", "")) != coach_action_id:
+		return false
+	var slotted := str(_menu_action.get("kind", "")) == "spell" and int(_menu_action.get("slot", 0)) > 0
+	return id == ("cast:1" if slotted else "use")
+
+
+func _coach_filter_menu(items: Array[Dictionary]) -> void:
+	if not coach_guided:
+		return
+	for item in items:
+		if not item.has("separator"):
+			item["enabled"] = bool(item.get("enabled", true)) and _coach_menu_allowed(str(item["id"]))
+			if not bool(item["enabled"]):
+				item["why"] = "Follow the highlighted choice for this lesson."
+
+
+func _coach_focus_menu() -> void:
+	if not coach_guided:
+		return
+	for index in _menu.item_count:
+		if not _menu.is_item_separator(index) and not _menu.is_item_disabled(index):
+			_menu.set_focused_item(index)
+			return
+
+
+func _coach_matches(action: Dictionary) -> bool:
+	if coach_action_id.is_empty():
+		return false
+	if str(action.get("id", "")) == coach_action_id:
+		return true
+	for member: Dictionary in action.get("items", []):
+		if str(member.get("id", "")) == coach_action_id:
+			return true
+	return false
