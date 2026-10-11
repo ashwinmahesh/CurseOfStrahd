@@ -1,0 +1,210 @@
+extends TestCase
+## Skill checks on things in a location (world/exploration/location_checks.gd): the right-click menu offers each one with
+## who'd roll, their bonus and the chance, and the hover name says which skills a thing still has to offer; a try walks up,
+## rolls on the big d20 and says how it went; a success can reveal a hiding place, a trap or something elsewhere, disarm a
+## trap, undo a lock, open a door from the far side, carry the party across to another square, teach a codex entry or
+## bring a chest into view with its flag; a failure can hurt whoever tried and passes the next try to someone else; and
+## Heroic Inspiration can still be spent on a failed roll.
+
+const LOC := {
+	"id": "test_checks", "name": "Test Checks", "region": "test", "summary": "A fixture.",
+	"map": {"rows": [
+		"#############",
+		"#.....#.....#",
+		"#.....#.....#",
+		"#...........#",
+		"#######.....#",
+		"#############"], "light": "dim"},
+	"spawns": {"default": [2, 2]},
+	"doors": [{"id": "bolted", "cell": [6, 3], "locked": true, "lock_dc": 0, "label": "the bolted door"}],
+	"props": [
+		{"id": "runes", "cell": [1, 1], "kind": "examine", "label": "Runes on the wall", "checks": [
+			{"id": "read_runes", "skill": "arcana", "dc": 1, "label": "Read the runes",
+				"success": {"text": "The runes point to a niche.", "reveal": ["hidden_cache", "plate", "test_elsewhere:far_cache"],
+					"codex": {"id": "test_rune_lore", "title": "The Runes", "text": "A warding script."}}},
+			{"id": "touch_runes", "skill": "arcana", "dc": 40, "label": "Draw on the runes",
+				"success": {"text": "Never."}, "failure": {"text": "A spark bites.", "damage": "1d4", "damage_type": "lightning"}}]},
+		{"id": "hidden_cache", "cell": [2, 1], "kind": "search", "search_dc": 40, "label": "A niche", "item": "potion_of_healing_greater"},
+		{"id": "crack", "cell": [5, 1], "kind": "decor", "label": "A crack in the wall", "checks": [
+			{"id": "squeeze", "skill": "acrobatics", "dc": 1, "label": "Squeeze through", "alone": true,
+				"success": {"text": "Through.", "move": [8, 2]}}]},
+		{"id": "bolt", "cell": [7, 1], "kind": "decor", "label": "The door's bolt", "checks": [
+			{"id": "draw_bolt", "skill": "athletics", "dc": 1, "label": "Draw the stiff bolt",
+				"success": {"text": "It grinds back.", "open": ["bolted"]}}]},
+		{"id": "marks", "cell": [4, 3], "kind": "decor", "label": "Scuffed floor", "checks": [
+			{"id": "jam_plate", "skill": "nature", "dc": 1, "label": "Wedge the plate",
+				"success": {"text": "Wedged.", "disarm": ["plate"]}},
+			{"id": "call_out", "skill": "performance", "dc": 1, "label": "Sing to the dark",
+				"success": {"text": "Something answers.", "flag": "test_checks_song"}}]}],
+	"containers": [
+		{"id": "coffer", "cell": [3, 1], "label": "Coffer", "lock_dc": 30, "gold": 4, "checks": [
+			{"id": "feel_lock", "skill": "sleight_of_hand", "dc": 1, "label": "Feel for the catch",
+				"success": {"text": "Click.", "unlock": ["coffer"]}}]},
+		{"id": "song_box", "cell": [1, 3], "label": "Music box", "gold": 2, "when": "flag.test_checks_song"}],
+	"traps": [{"id": "plate", "cells": [[5, 3]], "detect_dc": 40, "disarm_dc": 40, "label": "a pressure plate", "damage": "1d6",
+		"save": {"ability": "dex", "dc": 12}}],
+}
+
+const ELSEWHERE := {
+	"id": "test_elsewhere", "name": "Elsewhere", "region": "test", "summary": "A fixture.",
+	"map": {"rows": ["#####", "#...#", "#####"], "light": "dim"}, "spawns": {"default": [1, 1]},
+	"props": [{"id": "far_cache", "cell": [3, 1], "kind": "search", "search_dc": 40, "label": "A far cache", "item": "antitoxin"}],
+}
+
+var root: Node
+var said: Array[String] = []
+var rolls: Array[String] = []
+
+
+func before_each() -> void:
+	Compendium.shared().tables["locations"]["test_checks"] = LOC.duplicate(true)
+	Compendium.shared().tables["locations"]["test_elsewhere"] = ELSEWHERE.duplicate(true)
+	GameState.reset()
+	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
+		var ch := Pregens.build(id, 3)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = "test_checks"
+	Dice.reseed(4)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	said.clear()
+	rolls.clear()
+	var v := _view()
+	v.narration.connect(func(text: String) -> void: said.append(text))
+	v.toast.connect(func(text: String) -> void: said.append(text))
+	v.big_roll.connect(func(_t: D20Test, who: String, label: String) -> void: rolls.append("%s|%s" % [who, label]))
+
+
+func after_each() -> void:
+	if is_instance_valid(root):
+		root.queue_free()
+	await _frames(1)
+	# The fixtures aren't real content (test_set_dressing checks every location's props for art).
+	(Compendium.shared().tables["locations"] as Dictionary).erase("test_checks")
+	(Compendium.shared().tables["locations"] as Dictionary).erase("test_elsewhere")
+
+
+func _frames(n: int) -> void:
+	for i in n:
+		await get_tree().process_frame
+
+
+func _view() -> LocationView:
+	return root.get("view") as LocationView
+
+
+func _try(cell: Vector2i, check_id: String) -> void:
+	var v := _view()
+	LocationChecks.act(v, v.thing_at(cell), "check:" + check_id)
+
+
+func _action(cell: Vector2i, id: String) -> Dictionary:
+	for a: Variant in _view().actions_at(cell)["actions"]:
+		if str((a as Dictionary)["id"]) == id:
+			return a as Dictionary
+	return {}
+
+
+func _states(key: String, loc: String = "test_checks") -> Dictionary:
+	return GameState.story.loc_state(loc)[key] as Dictionary
+
+
+func test_the_menu_offers_each_check_with_who_and_the_chance() -> void:
+	var line := _action(Vector2i(1, 1), "check:read_runes")
+	assert_false(line.is_empty(), "the check is on the menu: %s" % [_view().actions_at(Vector2i(1, 1))])
+	var who := WorldChecks.roller(GameState.story, "test_checks", LOC["props"][0]["checks"][0] as Dictionary)
+	assert_true(str(line["label"]).begins_with("Read the runes (Arcana DC 1: %s " % who.name.get_slice(" ", 0)), str(line["label"]))
+	assert_true(str(line["label"]).ends_with("100%)"), str(line["label"]))
+	assert_true("(Arcana)" in str(_view().thing_at(Vector2i(1, 1))["label"]), "the hover name says what it offers")
+	assert_true("(Sleight Of Hand)" in str(_view().thing_at(Vector2i(3, 1))["label"]), "a chest's too: %s" % _view().thing_at(Vector2i(3, 1))["label"])
+
+
+func test_walking_up_and_trying_reveals_teaches_and_hints() -> void:
+	var v := _view()
+	v.act(Vector2i(1, 1), "check:read_runes")
+	for i in 400:
+		if not WorldChecks.open(GameState.story, "test_checks", LOC["props"][0]["checks"][0] as Dictionary):
+			break
+		await get_tree().process_frame
+	assert_eq(rolls.size(), 1, "it rolled on the big d20: %s" % [rolls])
+	assert_true(rolls[0].ends_with("|Arcana"))
+	assert_true(said.has("The runes point to a niche."), str(said))
+	assert_true(bool(_states("found").get("hidden_cache", false)), "the niche is found")
+	assert_false(v.thing_at(Vector2i(2, 1)).is_empty(), "and on the board")
+	assert_eq(str(_states("traps").get("plate", "")), "found", "the plate is found and marked")
+	assert_true(v.trap_marks.has("plate"))
+	assert_true(bool(_states("found", "test_elsewhere").get("far_cache", false)), "a place hint: the far cache is known")
+	assert_true("test_rune_lore" in GameState.story.codex)
+	assert_eq(JournalScreen._codex_entry("test_rune_lore")["title"], "The Runes", "the codex finds the entry")
+	assert_true(_action(Vector2i(1, 1), "check:read_runes").is_empty(), "a success is done")
+	assert_false("(Arcana)" in str(v.thing_at(Vector2i(1, 1))["label"]) and _action(Vector2i(1, 1), "check:touch_runes").is_empty())
+
+
+func test_a_failure_hurts_and_passes_the_try_on() -> void:
+	var v := _view()
+	var check := LOC["props"][0]["checks"][1] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	var hp := first.hp
+	_try(Vector2i(1, 1), "touch_runes")
+	assert_true(first.hp < hp, "the spark bites whoever touched it")
+	assert_true(said.has("A spark bites."), str(said))
+	var line := _action(Vector2i(1, 1), "check:touch_runes")
+	assert_false(str(line["label"]).contains(" %s " % first.name.get_slice(" ", 0)), "the next try is someone else's: %s" % line["label"])
+	for i in 3:
+		_try(Vector2i(1, 1), "touch_runes")
+	line = _action(Vector2i(1, 1), "check:touch_runes")
+	assert_false(bool(line.get("enabled", true)), "everyone has tried")
+	assert_eq(str(line["why"]), "Everyone able has tried")
+	var before := rolls.size()
+	_try(Vector2i(1, 1), "touch_runes")
+	assert_eq(rolls.size(), before, "and nobody rolls again")
+	assert_true(v != null)
+
+
+func test_a_squeeze_carries_the_party_across() -> void:
+	_try(Vector2i(5, 1), "squeeze")
+	var v := _view()
+	assert_eq(v.leader().cell, Vector2i(8, 2), "the leader is through")
+	for m in v.members:
+		assert_true(m.cell.x >= 7, "everyone's on the far side: %s" % m.cell)
+	assert_eq(GameState.story.positions[0], Vector2i(8, 2), "and it's kept")
+
+
+func test_drawing_the_bolt_opens_the_door() -> void:
+	_try(Vector2i(7, 1), "draw_bolt")
+	assert_eq(str(_states("doors").get("bolted", "")), LocationView.DOOR_OPEN)
+	assert_false(_view().grid.has_flag(Vector2i(6, 3), CombatGrid.WALL), "the way is open")
+
+
+func test_a_trap_wedged_and_a_lock_felt_open() -> void:
+	_try(Vector2i(4, 3), "jam_plate")
+	assert_eq(str(_states("traps").get("plate", "")), "disarmed")
+	_try(Vector2i(3, 1), "feel_lock")
+	assert_false(_view()._locked(LOC["containers"][0] as Dictionary), "the coffer's catch gives")
+
+
+func test_a_flag_brings_a_chest_into_view() -> void:
+	var v := _view()
+	assert_true(v.thing_at(Vector2i(1, 3)).is_empty(), "no music box yet")
+	_try(Vector2i(4, 3), "call_out")
+	assert_true(bool(GameState.story.get_flag("test_checks_song")))
+	assert_false(v.thing_at(Vector2i(1, 3)).is_empty(), "the music box is there now")
+
+
+func test_heroic_inspiration_rerolls_a_failure() -> void:
+	var v := _view()
+	var check := LOC["props"][0]["checks"][1] as Dictionary
+	var first := WorldChecks.roller(GameState.story, "test_checks", check)
+	first.heroic_inspiration = true
+	_try(Vector2i(1, 1), "touch_runes")
+	var aid := _action(Vector2i(1, 1), "check_aid:heroic_inspiration")
+	assert_false(aid.is_empty(), "the menu offers the reroll: %s" % [v.actions_at(Vector2i(1, 1))["actions"]])
+	# The new roll meets the DC (the runes give way after all).
+	((v.get_meta(LocationChecks.FAILED) as Dictionary)["test"] as D20Test).target = -20
+	v.act(Vector2i(1, 1), "check_aid:heroic_inspiration")
+	assert_false(first.heroic_inspiration, "it's spent")
+	assert_true(WorldChecks.done(GameState.story, "test_checks", check), "and the check succeeds")
+	assert_true(said.has("Never."), str(said))
+	assert_true(_action(Vector2i(1, 1), "check_aid:heroic_inspiration").is_empty())

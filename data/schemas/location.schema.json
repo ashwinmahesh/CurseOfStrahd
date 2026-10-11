@@ -225,6 +225,11 @@
           },
           "flag": {
             "type": "string"
+          },
+          "checks": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/check"},
+            "description": "Skill checks on this thing outside fights and conversations (story/world_checks.gd, docs/story/world_checks.md)."
           }
         }
       }
@@ -332,6 +337,11 @@
           "object": {
             "type": "string",
             "description": "What this prop is in a fight when its art alone doesn't say (a barrel of lamp oil): a kind in data/objects/kinds.json. Only a prop on a '=' square is a battlefield object (world/combat/battle_scenery.gd)."
+          },
+          "checks": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/check"},
+            "description": "Skill checks on this thing outside fights and conversations (story/world_checks.gd, docs/story/world_checks.md)."
           }
         }
       }
@@ -397,6 +407,11 @@
           "owner": {
             "$ref": "common.schema.json#/$defs/id",
             "description": "F8: the npc who owns it. Taking anything from it is stealing if somebody sees (docs/rules/stealth.md)."
+          },
+          "checks": {
+            "type": "array",
+            "items": {"$ref": "#/$defs/check"},
+            "description": "Skill checks on this thing outside fights and conversations (story/world_checks.gd, docs/story/world_checks.md)."
           }
         }
       }
@@ -842,6 +857,51 @@
     }
   },
   "$defs": {
+    "check": {
+      "type": "object",
+      "description": "A skill check on a thing in the world (story/world_checks.gd): the party's best hand at it who hasn't tried rolls on the big d20; each character gets one try (`once`: one for the party); a party member proficient in the skill Helps (Advantage) unless it's done `alone`; Guidance adds 1d4. The Narrator's line for how it went is `check:<skill>:<id>:success` or `:failure` (else the outcome's `text`). An encounter here whose trigger is `check:<id>:success` or `:failure` starts when it goes that way.",
+      "required": ["id", "skill", "dc", "label", "success"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "common.schema.json#/$defs/id", "description": "Unique in the location; names its Narrator lines and its record."},
+        "skill": {"type": "string", "enum": ["acrobatics", "animal_handling", "arcana", "athletics", "deception", "history", "insight", "intimidation", "investigation", "medicine", "nature", "perception", "performance", "persuasion", "religion", "sleight_of_hand", "stealth", "survival", "str", "dex", "con", "int", "wis", "cha"]},
+        "dc": {"type": "integer", "minimum": 5, "maximum": 30},
+        "label": {"type": "string", "description": "What trying it is, for the menu: \"Read the claw marks\"."},
+        "when": {"type": "string", "description": "Offered only while this condition holds."},
+        "once": {"type": "boolean", "description": "One try for the whole party: a failure spends it (a crumbling ledge, a rune that burns out)."},
+        "alone": {"type": "boolean", "description": "Nobody can Help: only one can do it (a narrow ledge, a whisper only the reader hears)."},
+        "minutes": {"type": "integer", "minimum": 0, "description": "How long a try takes (1 by default)."},
+        "success": {"$ref": "#/$defs/outcome"},
+        "failure": {"$ref": "#/$defs/outcome"}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "description": "What a check's success or failure does. Items and harm go to whoever rolled.",
+      "additionalProperties": false,
+      "properties": {
+        "text": {"type": "string", "description": "Said when the Narrator has no line for it."},
+        "items": {"type": "array", "items": {"type": "object", "required": ["id"], "additionalProperties": false,
+          "properties": {"id": {"type": "string"}, "qty": {"type": "integer", "minimum": 1}}}},
+        "gold": {"type": "number", "minimum": 0},
+        "flag": {"type": "string", "description": "A side flag (registered in data/flags/world_checks.json, so a check never moves the main story)."},
+        "codex": {"type": "object", "required": ["id", "title", "text"], "additionalProperties": false,
+          "properties": {"id": {"type": "string"}, "title": {"type": "string"}, "text": {"type": "string"}},
+          "description": "Lore for the journal's codex."},
+        "inspiration": {"type": "boolean", "description": "Whoever rolled gains Heroic Inspiration (passed on if they have it)."},
+        "heal": {"type": "string", "description": "Dice each hurt party member regains (a clean spring, a poultice)."},
+        "temp_hp": {"type": "string", "description": "Dice of Temporary Hit Points for each party member."},
+        "damage": {"type": "string", "description": "Dice of damage to whoever rolled (a fall, a shock)."},
+        "damage_type": {"type": "string"},
+        "minutes": {"type": "integer", "minimum": 1, "description": "Time lost on top of the try."},
+        "reveal": {"type": "array", "items": {"type": "string"},
+          "description": "Hidden things brought to light: a search prop, secret door or trap here, or <location>:<search prop> elsewhere (a place hint)."},
+        "disarm": {"type": "array", "items": {"type": "string"}, "description": "Traps here made safe."},
+        "unlock": {"type": "array", "items": {"type": "string"}, "description": "Doors or chests here unlocked."},
+        "open": {"type": "array", "items": {"type": "string"}, "description": "Doors here opened (a shortcut: a bar lifted from the far side)."},
+        "move": {"$ref": "#/$defs/cell", "description": "The party crosses to this square (a climb, a leap, a squeeze)."}
+      }
+    },
     "cell": {
       "type": "array",
       "minItems": 2,

@@ -359,7 +359,8 @@ func _codex(box: VBoxContainer) -> void:
 		box.add_child(UiParts.row(col, Callable(), false, 12))
 
 
-## A codex entry's title and text: from the book prop that grants it, or its Narrator examine line.
+## A codex entry's title and text: from the book prop that grants it, the skill check that learned it (WorldChecks), or
+## its Narrator examine line.
 static func _codex_entry(id: String) -> Dictionary:
 	for loc in Compendium.shared().all("locations"):
 		for p: Variant in loc.get("props", []):
@@ -367,6 +368,10 @@ static func _codex_entry(id: String) -> Dictionary:
 			if str(prop.get("codex", prop["id"])) == id and str(prop["kind"]) == "book":
 				var text := str(prop.get("text", ""))
 				return {"title": str(prop.get("label", id)), "text": text if text != "" else "(Read in %s.)" % loc.get("name", "")}
+		for c in WorldChecks.all_in(loc):
+			var codex := ((c["check"] as Dictionary).get("success", {}) as Dictionary).get("codex", {}) as Dictionary
+			if str(codex.get("id", "")) == id:
+				return {"title": str(codex.get("title", id)), "text": str(codex.get("text", ""))}
 	# A book carried and read (the Tome of Strahd): the item's own codex entry.
 	var item := Compendium.shared().item_data(id)
 	if item.has("codex"):
