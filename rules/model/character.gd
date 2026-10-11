@@ -79,6 +79,10 @@ var heroic_inspiration: bool = false
 ## Where this character's Find Familiar familiar is between fights (2024: it stays until dismissed or dropped to 0 Hit
 ## Points, then needs casting again): "" none, "here" with the party, "pocket" in its pocket dimension.
 var familiar: String = ""
+## The Otherworldly Steed this character's Find Steed called, between fights (2024: it stays until it drops to 0 Hit
+## Points or its caster dies, and a new casting replaces it): {type: celestial, fey or fiend, level: the spell's level},
+## or {} for none.
+var steed: Dictionary = {}
 
 
 static func from_build(build_: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2378,8 +2382,9 @@ func to_dict() -> Dictionary:
 		"currency": currency.duplicate(), "hit_dice_spent": hit_dice_spent.duplicate(),
 		"slots_used": slots_used.duplicate(), "pact_slots_used": pact_slots_used,
 		"heroic_inspiration": heroic_inspiration, "id": id, "attuned": attuned.duplicate(), "familiar": familiar,
-		"weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(), "reaction_rules": reaction_rules.duplicate(),
-		"rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true), "sets_seeded": true, "doll_seeded": true}
+		"steed": steed.duplicate(), "weapon_set_2": weapon_set_2.duplicate(), "quick_slots": quick_slots.duplicate(),
+		"reaction_rules": reaction_rules.duplicate(), "rest_casts": rest_casts.duplicate(), "hotbar": hotbar.duplicate(true),
+		"sets_seeded": true, "doll_seeded": true}
 
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
@@ -2402,6 +2407,7 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 	c.pact_slots_used = int(d.get("pact_slots_used", 0))
 	c.heroic_inspiration = bool(d.get("heroic_inspiration", false))
 	c.familiar = str(d.get("familiar", ""))
+	c.steed = (d.get("steed", {}) as Dictionary).duplicate()
 	for a: Variant in d.get("attuned", []):
 		c.attuned.append(str(a))
 	c.weapon_set_2 = (d.get("weapon_set_2", {}) as Dictionary).duplicate()
