@@ -3,6 +3,8 @@ Godot 4.7.2 (typed GDScript) · Blender 5.2 · macOS, Apple Silicon
 Plan: ~/Documents/Obsidian Vault/CurseOfStrahd/Game_Plan.md (status updates are fine; scope changes go through the
 project's coordinator)
 Build logs for the owner: ~/Documents/Obsidian Vault/CurseOfStrahd/ ("Build Log NN - <title>.md")
+Bug reports from the owner (F12 or the pause menu in dev builds, core/bug_reports.gd): ~/Documents/Obsidian Vault/
+CurseOfStrahd/Bug Reports/<date>T<time>-<title>/ with report.md (front matter `status: open`), screenshot.png, save.json
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)

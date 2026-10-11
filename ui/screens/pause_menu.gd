@@ -9,6 +9,7 @@ extends CanvasLayer
 ## so the arch is taller, with the concept's spacing kept. Settings' three pages (Game, Display, Keys) open in the same
 ## arch; the saves are a page of their own (ui/screens/saves_screen.gd). As the game-over screen it offers only loading.
 ## Quicksave (and its key, F5 unless the player moved it, here and exploring) saves over the game's current slot.
+## In a dev build Report a bug (BugReports) joins Settings and the cheat codes; the arch steps aside while it's open.
 
 ## Concept units to pixels.
 const K := 1.5
@@ -227,13 +228,32 @@ func _show_menu() -> void:
 	if CheatCodesPage.can_open(st):
 		links.append(_link("◆  Cheat codes  ◆", _open_cheats))
 		links[1].name = "CheatCodes"
+	# Report a bug, in dev builds only (an exported game has no BugReports).
+	if BugReports.current != null:
+		var bug := _link("◆  Report a bug  ◆", func() -> void: BugReports.current.open(self))
+		bug.name = "ReportBug"
+		bug.tooltip_text = "What went wrong, a picture and a copy of the game, for Claude to read. %s opens it anywhere." \
+			% OS.get_keycode_string(BugReports.KEY)
+		links.append(bug)
+	# Three fit the arch only without their own lozenges: one sits between each pair instead.
+	var between := links.size() > 2
+	if between:
+		for b in links:
+			b.text = b.text.trim_prefix("◆  ").trim_suffix("  ◆")
+			b.reset_size()
 	var gap := 16.0 * K
 	var x := _u(W_U, 0).x + gap
 	for b in links:
 		x -= b.size.x + gap
 	x /= 2.0
-	for b in links:
+	for i in links.size():
+		var b := links[i]
 		b.position = Vector2(x, _u(0, RESPEC_Y).y - b.size.y / 2.0)
+		if between and i > 0:
+			var mark := _place(UiParts.drawn(Vector2(gap, gap), func(c: Control) -> void:
+				_lozenge(c, c.size / 2.0, 2.5, _c("arch_gold"))))
+			mark.position = Vector2(x - gap, _u(0, RESPEC_Y).y - gap / 2.0)
+			mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		x += b.size.x + gap
 	var can := SaveSystem.can_save()
 	# A live Honour run can't go back (Ashwin, 2026-10-09, QA D-3): no loading from inside it, and leaving it keeps
