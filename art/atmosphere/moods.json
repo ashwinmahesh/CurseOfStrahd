@@ -1009,6 +1009,14 @@
       }
     },
     "indoors": {
+      "weather": [
+        {
+          "kind": "dust",
+          "indoors": true,
+          "amount": 50,
+          "modern_only": true
+        }
+      ],
       "key_angle": [
         -60,
         30
