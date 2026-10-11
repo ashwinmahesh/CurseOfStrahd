@@ -24781,6 +24781,13 @@
   "recipe": "4624eb3401",
   "text": "Last night. You held the door and the windows, and nobody ran. I've been the only one not running for a month. It was good to have company."
  },
+ "ismark/83c0fefdce0a57f1": {
+  "chars": 104,
+  "direction": "[worried, practical]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Strangers might bring trouble, but the wind could bring this roof down. That is what I am worried about."
+ },
  "ismark/892c597486a9eb84": {
   "chars": 87,
   "model": "eleven_v3",
@@ -24860,6 +24867,13 @@
   "recipe": "4624eb3401",
   "text": "Holy ground. I keep feeling I should take my boots off. Lucian says I needn't. I've taken them off anyway."
  },
+ "ismark/a2ad2ebdad02ac43": {
+  "chars": 108,
+  "direction": "[playful, wary, testing]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Pretend there is a storm on the road and I am guarding a safe courtyard. Why should I let your group inside?"
+ },
  "ismark/a311f89a2d7c100f": {
   "chars": 208,
   "model": "eleven_v3",
@@ -24926,6 +24940,13 @@
   "recipe": "4624eb3401",
   "text": "I've been put on the wall. They gave me a spear. It's a terrible spear. I'm having the time of my life."
  },
+ "ismark/c8046d644ecd9619": {
+  "chars": 82,
+  "direction": "[guarded, firm]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "I am not ready to trust that offer. You can wait beneath the awning while I think."
+ },
  "ismark/c8c9b57307f74b10": {
   "chars": 143,
   "direction": "[gruff, grieving, steady]",
@@ -24944,6 +24965,13 @@
   "model": "eleven_v3",
   "recipe": "4624eb3401",
   "text": "Right. Urwin, if anything so much as looks at her..."
+ },
+ "ismark/d6f67daead25963b": {
+  "chars": 68,
+  "direction": "[hopeful, plain]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "If you can hold that shutter steady, perhaps we can help each other."
  },
  "ismark/dbb3493ab5e7e9a5": {
   "chars": 157,
@@ -24969,6 +24997,13 @@
   "recipe": "4624eb3401",
   "text": "It's very good mud. Westward mud. I'm told the gentry prefer it."
  },
+ "ismark/e90be81f0a67987b": {
+  "chars": 58,
+  "direction": "[relieved, gruff, friendly]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Fair enough. Come inside, and help me fasten the shutters."
+ },
  "ismark/e928eadb909267d5": {
   "chars": 19,
   "model": "eleven_v3",
@@ -24986,6 +25021,13 @@
   "model": "eleven_v3",
   "recipe": "4624eb3401",
   "text": "He's in the ground. Properly or not, he's in it, and nobody's digging him up tonight. Now there's only her."
+ },
+ "ismark/ed3038ec47190f89": {
+  "chars": 47,
+  "direction": "[distracted, hurried]",
+  "model": "eleven_v3",
+  "recipe": "4624eb3401",
+  "text": "Give me a moment. I need to check that shutter."
  },
  "ismark/ee1f0ff83a4e0e5d": {
   "chars": 94,
@@ -40182,6 +40224,12 @@
   "recipe": "dd92281f92",
   "text": "There's something here, a pattern in the woods and the wolves and the red hair, but it slips away before you can hold it."
  },
+ "narrator/322d91f251218a1a": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The check failed, so he offered a different response. Failure is part of the story; you still complete this practice lesson."
+ },
  "narrator/324a5d7f23835283": {
   "chars": 117,
   "model": "eleven_v4",
@@ -40565,6 +40613,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The ice stair ends on a shelf of wind-scoured snow, and the mountain opens a door in front of you. Two colossi of amber stand on either side of it, and the air is so thin that your heart has to work twice as hard for each step."
+ },
+ "narrator/357749ff37130cfd": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "This question needed no die roll. Ordinary dialogue can reveal information; a labelled skill choice tests something uncertain."
  },
  "narrator/357dafde523e5ed8": {
   "chars": 163,
@@ -42768,6 +42822,12 @@
   "recipe": "dd92281f92",
   "text": "A clerk's desk with a groove worn into the floor around it in a half circle: exactly the length of the chain."
  },
+ "narrator/4876413af73008f4": {
+  "chars": 113,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "This is a rehearsal. Ismark is playing a cautious gatekeeper, and you may choose which hero speaks for the party."
+ },
  "narrator/488dc62c87721017": {
   "chars": 59,
   "model": "eleven_v4",
@@ -43817,6 +43877,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The spellbook is laid out like a cookery book. Every spell has its ingredients listed down the margin, its method numbered, and a note at the bottom headed \"Serving suggestion\". Fireball's says: \"Do not serve indoors.\""
+ },
+ "narrator/5181d7c69188139b": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A result below the Difficulty Class failed. You saw a different reply, and you can still return to the lesson."
  },
  "narrator/51876194037e998f": {
   "chars": 99,
@@ -44891,6 +44957,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "An iron chest with the Order's dragon on the lid. The tithe-keeper is sitting on it."
+ },
+ "narrator/5a6b0a34a8214dca": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "His eyes keep returning to a loose shutter. You judge that the storm worries him more than your arrival."
  },
  "narrator/5a777deeffce11f9": {
   "chars": 109,
@@ -54318,6 +54390,12 @@
   "recipe": "dd92281f92",
   "text": "Hedda gets up, mail and all, and walks to him with her hands held out in front of her, open and empty, like her eyes."
  },
+ "narrator/a765ab37cefbba75": {
+  "chars": 121,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Persuasion tried to influence Ismark with an honest offer. Your speaking hero's Charisma and training supplied the bonus."
+ },
  "narrator/a77001a5e5501f76": {
   "chars": 88,
   "model": "eleven_v4",
@@ -55283,6 +55361,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A bell rings as the door opens, and somewhere a pencil starts moving. Every shelf is dusted, every label straight, every price outrageous."
+ },
+ "narrator/af526ea8226d381a": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Insight tried to understand Ismark's motives. Your speaking hero's Wisdom and training supplied the bonus."
  },
  "narrator/af64e4553d7f082b": {
   "chars": 135,
@@ -57305,6 +57389,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The hearth is cold. The green copper rod at its back has been drawn out of its socket, and the air in the tower no longer tastes of thunder."
+ },
+ "narrator/c1802c5bb0591442": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An unsuccessful Insight check means you did not learn what you hoped. It does not require you to attack or end an adventure."
  },
  "narrator/c18174aae46813af": {
   "chars": 87,
@@ -60786,6 +60876,12 @@
   "recipe": "dd92281f92",
   "text": "Daciana watches the names curl and go, every one, and doesn't say anything until the last of it is ash. Then she takes the ribbon off her own sleeve and drops it in the fire as well."
  },
+ "narrator/dfb26a89d465fd9c": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Your Persuasion check succeeded. The conversation followed the success branch, using the speaking hero's bonus."
+ },
  "narrator/dfb5909534bc8893": {
   "chars": 48,
   "model": "eleven_v4",
@@ -61950,6 +62046,12 @@
   "recipe": "dd92281f92",
   "text": "You sleep under wolf furs in a hut colder than the snow outside. Nothing on the mountain comes near the door all night; nothing would dare."
  },
+ "narrator/e9948c17701694c2": {
+  "chars": 84,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Meeting or beating the Difficulty Class succeeded. You can now return to the lesson."
+ },
  "narrator/e9a1abde3f8db87e": {
   "chars": 113,
   "model": "eleven_v4",
@@ -62609,6 +62711,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The thin figure in the amber has stopped reading its missing sky. It looks at whoever carries its gift with something like pity."
+ },
+ "narrator/ef2d818e0819ce26": {
+  "chars": 109,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The rain and his hurried movements give you little to go on. You cannot confidently tell what he is thinking."
  },
  "narrator/ef2ecb1ab8f25d2b": {
   "chars": 112,
