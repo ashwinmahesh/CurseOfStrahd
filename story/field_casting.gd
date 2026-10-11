@@ -3,12 +3,13 @@ extends RefCounted
 ## Casting outside a fight (plan §5.2, "rest and recover between fights"): healing and helpful spells on the party,
 ## from the character sheet. It goes through the combat SpellCaster on a small peaceful board, so slots, free
 ## castings, Concentration and lasting effects behave exactly as they do in a fight. Spells that harm, push or
-## summon wait for a fight.
+## summon wait for a fight, except the companions that stay with their caster (Find Familiar, Find Steed).
 
 const MAX_TARGETS := 8
 ## Spells that also work in a fight but are worth casting while exploring (their light lasts; Find Familiar's familiar
-## stays with its caster and joins the next fights).
-const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar"]
+## and Find Steed's steed stay with their caster and join the next fights).
+const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar",
+	"find_steed"]
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
@@ -217,8 +218,10 @@ static func _waives_material(caster: Character, spell_id: String) -> bool:
 	return caster.resource_casts(spell_id).any(func(f: Dictionary) -> bool: return bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
 
 ## Spells whose effect is on exploring rather than fighting (Light, Detect Magic, Find Traps, Comprehend Languages,
-## Speak with Animals ...): [{id, name, level, ritual, slots, legal, reason}]. A Ritual spell can be cast as a Ritual
-## (10 minutes longer, no slot) by a caster who has it prepared (2024).
+## Speak with Animals ...): [{id, name, level, ritual, slots, free, choices, legal, reason}]. A Ritual spell can be cast
+## as a Ritual (10 minutes longer, no slot) by a caster who has it prepared (2024). `free`: a casting a feature gives
+## without a slot is left (Faithful Steed's Find Steed). `choices`: what the spell asks for as it's cast (Find Steed's
+## creature type), [] for none.
 static func utility_options(party: Array[Character], caster: Character, dice: DiceRoller) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var e := _board(party, caster, dice)
@@ -237,8 +240,12 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		var level := int(data.get("level", 0))
 		var slots := _slots(caster, level)
 		var ritual := bool(data.get("ritual", false))
-		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "legal": true, "reason": "", "resource_casts": caster.resource_casts(id)}
-		if level > 0 and slots.is_empty() and not ritual:
+		var free := level > 0 and caster.resource_left("spell:%s" % id) > 0
+		var choice_def := data.get("choice", {}) as Dictionary
+		var choices: Array = (choice_def.get("from", []) as Array) if str(choice_def.get("kind", "")) == "option" else []
+		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "free": free,
+			"choices": choices, "legal": true, "reason": "", "resource_casts": caster.resource_casts(id)}
+		if level > 0 and slots.is_empty() and not ritual and not free:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
 		# A costly material component (2024): carried, even for a Ritual (Find Familiar's incense).
@@ -252,10 +259,12 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 	return out
 
 
-## Casts an exploring spell: spends the slot (or, `as_ritual`, ten more minutes), records it in
-## StoryState.active_spells for its duration (conditions: `spell:<id>`), and returns {ok, text, effect}; the world
-## applies `effect` (light, detect_magic, find_traps) where the party stands.
-static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0, resource_feature: String = "") -> Dictionary:
+## Casts an exploring spell: spends the slot (or, `as_ritual`, ten more minutes; or a feature's free casting, Faithful
+## Steed's, when no slot is asked for), records it in StoryState.active_spells for its duration
+## (conditions: `spell:<id>`), and returns {ok, text, effect}; the world applies `effect` (light, detect_magic,
+## find_traps) where the party stands. `choice`: what the spell asks for as it's cast (Find Steed's creature type).
+static func cast_utility(st: StoryState, caster: Character, spell_id: String, as_ritual: bool, slot: int = 0, resource_feature: String = "",
+		choice: String = "") -> Dictionary:
 	var data := Compendium.shared().spell_data(spell_id)
 	if data.is_empty():
 		return {"ok": false, "text": "Unknown spell"}
@@ -286,25 +295,32 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	var level := int(data.get("level", 0))
 	if as_ritual and not bool(data.get("ritual", false)):
 		return {"ok": false, "text": "%s isn't a Ritual" % data["name"]}
+	var cast_level := level
 	if level > 0 and not as_ritual and payment.is_empty():
 		var slots := _slots(caster, level)
-		if slots.is_empty():
+		if caster.resource_left("spell:%s" % spell_id) > 0 and (slot <= 0 or slots.is_empty()):
+			caster.spend_resource("spell:%s" % spell_id)   # a free casting a feature gives (Faithful Steed)
+		elif slots.is_empty():
 			return {"ok": false, "text": "No spell slots left"}
-		if not caster.expend_slot(slot if slot in slots else slots[0]):
-			return {"ok": false, "text": "No spell slots left"}
+		else:
+			cast_level = slot if slot in slots else slots[0]
+			if not caster.expend_slot(cast_level):
+				return {"ok": false, "text": "No spell slots left"}
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var used := "" if omit_material else caster.use_component(data)
-	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty())
+	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty(), cast_level, choice)
 	if used != "":
 		res["text"] = str(res["text"]).trim_suffix(".") + ", using up %s." % used
 	return res
 
 
 ## What casting an exploring spell does once it's paid for (a slot, a Ritual's time, a feature's use, or a Spell
-## Scroll): the casting time passes, the spell is recorded for its duration, and Find Familiar's familiar is with the
-## caster. `own_time` false: a feature casting it with its Magic action, which takes a minute whatever the spell says.
-static func _take_effect(st: StoryState, caster: Character, spell_id: String, data: Dictionary, as_ritual: bool, own_time: bool) -> Dictionary:
+## Scroll): the casting time passes, the spell is recorded for its duration, and Find Familiar's familiar or Find
+## Steed's steed (of the `choice` type, at `level`) is with the caster. `own_time` false: a feature casting it with its
+## Magic action, which takes a minute whatever the spell says.
+static func _take_effect(st: StoryState, caster: Character, spell_id: String, data: Dictionary, as_ritual: bool, own_time: bool,
+		level: int = 0, choice: String = "") -> Dictionary:
 	var minutes := 10 if as_ritual else 1
 	# A casting time of minutes or hours takes that long (a Ritual adds its 10 minutes): Find Familiar's hour. A
 	# feature that casts the spell with its Magic action keeps the minute.
@@ -331,6 +347,13 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 	# Find Familiar: the familiar is with the caster from now on (it joins fights until it's lost or dismissed).
 	if spell_id == "find_familiar":
 		caster.familiar = "here"
+	# Find Steed (2024): the steed answers, a new one in place of any before it, and stays until it drops to 0 Hit Points.
+	if spell_id == "find_steed":
+		var kinds := (data.get("choice", {}) as Dictionary).get("from", ["celestial"]) as Array
+		var kind := choice if choice in kinds else str(kinds[0])
+		caster.steed = {"type": kind, "level": maxi(level, int(data.get("level", 2)))}
+		return {"ok": true, "effect": spell_id, "text": "%s casts Find Steed: a %s steed answers, and stays until it falls." % [
+			caster.name.get_slice(" ", 0), kind.capitalize()]}
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
 		" as a Ritual" if as_ritual else ""]}
 

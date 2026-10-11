@@ -56,12 +56,15 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 	m.name = str(block["name"])
 	e.feature_recipes.after_summon(ctx, m)
 	e.faerun.after_summon(ctx, m)
-	# A new Otherworldly Steed replaces the old one.
+	# A new Otherworldly Steed replaces the old one, and stays with its caster after the fight (Character.steed).
 	if bool(block.get("steed", false)):
 		for old_id: Variant in spells.summoned.get(c.id, []):
 			var old := e.get_c(str(old_id))
 			if old != null and old.is_alive() and old.creature is Monster and bool((old.creature as Monster).data.get("steed", false)):
 				_dismiss(old.id)
+		if spells.caster_char(c) != null:
+			var kind := str(ctx.get("choice", ""))
+			spells.caster_char(c).steed = {"type": kind if kind != "" else "celestial", "level": int(ctx["slot"])}
 	var size := CombatGrid.size_cells_for(m.size)
 	if cell.x < 0 or not _room_for(cell, size):
 		cell = _free_cell_near(c.cell, size)
@@ -90,6 +93,39 @@ func _summon(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		sc.set_meta("vanish_round", e.round_no + 10)
 	e.events.append({"type": "summon_creature", "id": sc.id, "cell": cell, "caster": c.id})
 	r.lines.append(e.log.add("spell", "%s appears beside %s" % [m.name, c.name()], c.id))
+
+
+## The Otherworldly Steed `c` called earlier (Character.steed: its type and level) joins the fight beside them, as
+## Find Familiar's familiar does; nothing is spent. False when there's none.
+func bring_steed(c: Combatant) -> bool:
+	var ch := sp().caster_char(c)
+	if ch == null or ch.steed.is_empty():
+		return false
+	var s := _comp().spell_data("find_steed")
+	var entry := sp()._entry_any(c, "find_steed")
+	if entry.is_empty():
+		entry = {"class_id": "paladin"}   # no longer prepared: the steed still comes, with the Paladin's numbers
+	var ctx := {"c": c, "s": s, "slot": int(ch.steed.get("level", 2)), "nums": sp().numbers(c, entry), "conc": null,
+		"opts": {}, "precast": true, "choice": str(ch.steed.get("type", "celestial"))}
+	_summon(ctx, c.cell, CombatResult.new())
+	return true
+
+
+## A death in the fight: an Otherworldly Steed that drops to 0 Hit Points is gone until Find Steed calls another, and
+## so is a caster's steed when the caster dies (2024).
+func on_death(dead: Combatant) -> void:
+	var e := enc()
+	if dead.creature is Monster and bool((dead.creature as Monster).data.get("steed", false)) and dead.has_meta("summoner"):
+		var owner := e.get_c(str(dead.get_meta("summoner")))
+		if owner != null and sp().caster_char(owner) != null:
+			sp().caster_char(owner).steed = {}
+	elif dead.creature is Character and not (dead.creature as Character).steed.is_empty():
+		(dead.creature as Character).steed = {}
+		for sid: Variant in sp().summoned.get(dead.id, []):
+			var steed := e.get_c(str(sid))
+			if steed != null and steed.is_alive() and steed.creature is Monster \
+					and bool((steed.creature as Monster).data.get("steed", false)):
+				_dismiss(steed.id)
 
 
 func _revert_shape(creature_id: String, why: String) -> void:
