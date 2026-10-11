@@ -643,6 +643,57 @@ def approval_checks(data, p, errors):
             errors.append(f"narrative/{where}: inspire {sel}: no pregen called that")
 
 
+def world_check_checks(loc, w, data, need, cond, flags_set, check_lines, errors, on_floor):
+    """Skill checks on things (story/world_checks.gd, docs/story/world_checks.md): unique ids, real items, a codex entry
+    whole, things revealed, disarmed, unlocked and opened that exist, a square to move to that's open floor, and side flags
+    only (registered in data/flags/world_checks.json, so a check never moves the main story). Each result needs words:
+    a Narrator line or its own text (checked once the dialogue files are read)."""
+    locations = data["locations"]
+    ids = set()
+    things = {k: {t["id"]: t for t in loc.get(k, [])} for k in ("props", "doors", "containers", "traps")}
+    for key in ("props", "doors", "containers"):
+        for t in loc.get(key, []):
+            for c in t.get("checks", []):
+                where = f"{w} {key[:-1]} {t['id']} check {c['id']}"
+                if c["id"] in ids:
+                    errors.append(f"{where}: check id used twice in this location")
+                ids.add(c["id"])
+                cond(c.get("when", ""), w)
+                for result in ("success", "failure"):
+                    out = c.get(result)
+                    if out is None:
+                        continue
+                    check_lines.append((f"check:{c['skill']}:{c['id']}:{result}", bool(out.get("text")) or result == "failure", where))
+                    for it in out.get("items", []):
+                        need("item", data["items"], it["id"], where)
+                    if out.get("flag"):
+                        flags_set.setdefault(out["flag"], []).append(w)
+                        check_lines.append(("flag:" + out["flag"], True, where))
+                    for ref in out.get("reveal", []):
+                        if ":" in ref:
+                            lid, _, pid = ref.partition(":")
+                            other = locations.get(lid)
+                            if other is None or not any(p["id"] == pid and p["kind"] == "search" for p in other.get("props", [])):
+                                errors.append(f"{where}: reveals '{ref}', which isn't a hiding place (search prop) there")
+                        elif not (things["props"].get(ref, {}).get("kind") == "search" or things["doors"].get(ref, {}).get("secret_dc")
+                                  or ref in things["traps"]):
+                            errors.append(f"{where}: reveals '{ref}', which isn't a hiding place, secret door or trap here")
+                    for tr in out.get("disarm", []):
+                        if tr not in things["traps"]:
+                            errors.append(f"{where}: disarms unknown trap '{tr}'")
+                    for u in out.get("unlock", []):
+                        if u not in things["doors"] and u not in things["containers"]:
+                            errors.append(f"{where}: unlocks unknown door or chest '{u}'")
+                    for o in out.get("open", []):
+                        if o not in things["doors"]:
+                            errors.append(f"{where}: opens unknown door '{o}'")
+                    if "move" in out:
+                        on_floor(out["move"], f"{where} move")
+                    codex = out.get("codex")
+                    if codex and result != "success":
+                        errors.append(f"{where}: only a success adds to the codex")
+
+
 def story_checks(data, errors, need):
     """Locations, NPCs, quests, the flag registry and every .dialogue file (ADR 0008, ADR 0009)."""
     flags = {}
@@ -672,6 +723,7 @@ def story_checks(data, errors, need):
     npcs, quests, locations = data["npcs"], data["quests"], data["locations"]
     encounter_ids = set()
     dialogue_refs = []
+    check_lines = []   # (narrator trigger, has text of its own, where) for each world check result
     for lid, loc in locations.items():
         rows = loc["map"]["rows"]
         w = f"locations/{lid}"
@@ -754,6 +806,7 @@ def story_checks(data, errors, need):
             cond(ct.get("when", ""), w)
             if ct.get("flag"):
                 flags_set.setdefault(ct["flag"], []).append(w)
+        world_check_checks(loc, w, data, need, cond, flags_set, check_lines, errors, on_floor)
         for tr in loc.get("traps", []):
             for c in tr["cells"]:
                 on_floor(c, f"trap {tr['id']}")
@@ -845,6 +898,16 @@ def story_checks(data, errors, need):
         for fid, wh in p["flags_set"].items():
             flags_set.setdefault(fid, []).extend(wh)
         approval_checks(data, p, errors)
+    narrator_keys = set()
+    for key, p in parsed.items():
+        if key.startswith("narrator/"):
+            narrator_keys.update(p["nodes"])
+    for trig, has_text, where in check_lines:
+        if trig.startswith("flag:"):
+            if flags.get(trig[5:]) not in (None, "world_checks.json"):
+                errors.append(f"{where}: sets '{trig[5:]}', a {flags[trig[5:]]} flag: checks set only side flags (data/flags/world_checks.json)")
+        elif not has_text and trig not in narrator_keys:
+            errors.append(f"{where}: no Narrator line '{trig}' and no text of its own")
     treasure_checks(data, parsed, errors, pending_list)
     cutscene_checks(data, parsed, errors)
     castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs)

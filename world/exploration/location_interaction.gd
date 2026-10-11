@@ -65,9 +65,11 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 					out.append({"id": "open", "label": verb, "enabled": false, "why": "Locked; it needs its key"})
 			else:
 				out.append({"id": "open", "label": verb})
+			out.append_array(LocationChecks.actions_for(view, spec))   # skill checks on it (WorldChecks)
 		"prop":
 			title = str(spec.get("label", "it")).capitalize()
 			out.append({"id": "use", "label": str(thing["label"]).get_slice(" ", 0)})
+			out.append_array(LocationChecks.actions_for(view, spec))
 		"trap":
 			title = str(spec.get("label", "a trap")).capitalize()
 			# Set it off on purpose, from within 5 ft or standing in it (owner, 2026-10-08); disarming is the player's choice.
@@ -156,11 +158,16 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 			then = func() -> void: LocationTraps._disarm(view, spec)
 		"pickpocket":
 			then = func() -> void: LocationCrime.pickpocket(view, str(spec["npc"]))
+	if action_id.begins_with("check_aid:"):
+		LocationChecks.act(view, thing, action_id)   # spent on the roll just made: no walking
+		return
+	if action_id.begins_with("check:"):
+		then = func() -> void: LocationChecks.act(view, thing, action_id)
 	if not then.is_valid():
 		return
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
-		if action_id == "use" and _seen_from_afar(thing):
+		if (action_id == "use" and _seen_from_afar(thing)) or action_id.begins_with("check:"):
 			then.call()
 		else:
 			view.toast.emit("Can't reach it")
@@ -260,17 +267,18 @@ static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			var secret := int(door.get("secret_dc", 0)) > 0 and not bool((view.st.loc_state(view.loc_id)["found"] as Dictionary).get(str(door["id"]), false))
 			if secret:
 				return {}
-			return {"kind": "door", "id": str(door["id"]), "label": "Open %s%s" % [door.get("label", "the door"), " (locked)" if view._locked(door) else ""], "spec": door}
+			return {"kind": "door", "id": str(door["id"]), "label": "Open %s%s%s" % [door.get("label", "the door"), " (locked)" if view._locked(door) else "",
+				LocationChecks.hint(view, door)], "spec": door}
 	for c: Variant in view.loc.get("containers", []):
 		var ct := c as Dictionary
 		if LocationView._cell(ct["cell"]) == cell and view.container_nodes.has(str(ct["id"])):
-			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else "",
-				LocationCrime.owned_note(ct)], "spec": ct}
+			return {"kind": "container", "id": str(ct["id"]), "label": "Open %s%s%s%s" % [ct.get("label", "the chest"), " (locked)" if view._locked(ct) else "",
+				LocationCrime.owned_note(ct), LocationChecks.hint(view, ct)], "spec": ct}
 	for p: Variant in view.loc.get("props", []):
 		var prop := p as Dictionary
 		if LocationView._cell(prop["cell"]) == cell and view.prop_nodes.has(str(prop["id"])):
 			var verb := {"examine": "Examine", "book": "Read", "search": "Search", "lever": "Pull", "decor": "Look at"}.get(str(prop["kind"]), "Examine") as String
-			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s" % [verb, prop_name(prop)], "spec": prop}
+			return {"kind": "prop", "id": str(prop["id"]), "label": "%s %s%s" % [verb, prop_name(prop), LocationChecks.hint(view, prop)], "spec": prop}
 	for t: Variant in view.loc.get("traps", []):
 		var trap := t as Dictionary
 		if str((view.st.loc_state(view.loc_id)["traps"] as Dictionary).get(str(trap["id"]), "")) == "found":
@@ -374,10 +382,19 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 			_use_container(view, spec)
 		"prop":
 			_use_prop(view, spec)
+			if str(spec.get("dialogue", "")) == "":
+				_check_tip(view, spec)
 		"trap":
 			LocationTraps.activate(view, spec)   # only from within 5 ft; disarming is a menu choice
 		"foe":
 			view.strike(str(thing["id"]))
+
+
+## After using a thing that still has a skill check someone could try: how to try it (the menu's line).
+static func _check_tip(view: LocationView, spec: Dictionary) -> void:
+	var hint := LocationChecks.hint(view, spec)
+	if hint != "":
+		view.toast.emit("Right-click it to try %s" % hint.strip_edges().trim_prefix("(").trim_suffix(")"))
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:
