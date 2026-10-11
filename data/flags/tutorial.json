@@ -1,0 +1,20 @@
+{
+  "region": "tutorial",
+  "flags": [
+    {
+      "id": "tutorial_dialogue_checked",
+      "type": "bool",
+      "summary": "A check was resolved in the disposable tutorial dialogue; gates its recap and lesson completion. Never copied into a campaign."
+    },
+    {
+      "id": "tutorial_dialogue_skill",
+      "type": "string",
+      "summary": "Persuasion or Insight in the practice conversation; selects the recap explanation and feedback."
+    },
+    {
+      "id": "tutorial_dialogue_result",
+      "type": "string",
+      "summary": "Success or failure of the practice conversation; selects the recap response."
+    }
+  ]
+}

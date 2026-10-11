@@ -13,6 +13,8 @@ signal menu_requested
 ## The player asked for a party member's character sheet (their frame's portrait, or C for the one shown): the host
 ## opens it view only while the fight waits.
 signal sheet_requested(who: Character)
+## An observed copy after normal presentation, for guided practice.
+signal events_presented(events: Array[Dictionary])
 
 ## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
 const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
@@ -75,6 +77,10 @@ var _reach: Dictionary = {}
 var _target_cycle := 0
 ## Captures and scene tests turn off the mouse so a stray pointer can't act.
 var input_locked := false
+## Optional practice opponent; ordinary encounters keep the default AI path.
+var opponent_turn: Callable
+## Optional guided-scenario restriction, absent in ordinary encounters.
+var command_filter: Callable
 ## The pad's own part of a fight (U6): the menu, controls, undo, the square's menu, death saves, the camera and prompts.
 var pad := PadCombat.new(self)
 ## The story's Narrator speaks rarely in combat (crits, falls, kills, victory; plan §5.7); none in the arena.
@@ -270,6 +276,8 @@ func _boss_entrance(boss: Combatant) -> bool:
 
 ## Removes the view's overlay and HUD (the board and tokens belong to the caller).
 func close() -> void:
+	_closed = true
+	input_locked = true
 	queue_free()
 
 
@@ -315,10 +323,16 @@ func _advance() -> void:
 		overlay.clear_all()
 		hud.hide_tooltip()
 		await get_tree().create_timer(AI_PAUSE * GameSettings.combat_pace()).timeout
+		if _closed or not is_inside_tree():
+			return
+		while opponent_turn.is_valid() and not can_process():
+			await get_tree().process_frame
+			if _closed or not is_inside_tree():
+				return
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
-		var r := e.begin_ai_turn()
+		var r: CombatResult = opponent_turn.call(c) as CombatResult if opponent_turn.is_valid() else e.begin_ai_turn()
 		if r == null:
 			var thought: Dictionary = await _think(c)
 			if thought.is_empty():
@@ -373,6 +387,7 @@ func _think(c: Combatant) -> Dictionary:
 
 
 func _exit_tree() -> void:
+	_closed = true
 	if _thinker != null:
 		_thinker.wait_to_finish()   # a plan still being made as the view goes (a load from the menu)
 		_thinker = null
@@ -440,6 +455,8 @@ func _player() -> Combatant:
 
 
 func _end_turn() -> void:
+	if not _command_allowed("end_turn", {}):
+		return
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
@@ -465,6 +482,8 @@ var _confirmed_end := false
 
 ## Takes back the current creature's last move (the HUD's Undo move, or Ctrl+Z): it goes back with its movement.
 func _undo_move() -> void:
+	if not _command_allowed("undo", {}):
+		return
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
@@ -493,6 +512,8 @@ func _death_save() -> void:
 
 
 func _inspect(id: String) -> void:
+	if not _command_allowed("inspect", {}):
+		return
 	if id.begins_with("hover:"):
 		var t := tokens.get(id.substr(6)) as CombatToken
 		for k: String in tokens:
@@ -511,6 +532,8 @@ func _inspect(id: String) -> void:
 ## Takes control of another hero sharing the turn (EncounterTurns.switch_to): a click on their frame or portrait, Tab,
 ## or the radial's Inspect. The camera goes to them; the one left keeps what it hasn't used.
 func _switch(c: Combatant) -> void:
+	if not _command_allowed("switch", {"target": c}):
+		return
 	_cancel_targeting()
 	var r := e.switch_to(c)
 	if not r.ok:
@@ -528,6 +551,8 @@ func _switch(c: Combatant) -> void:
 
 
 func _sheet(id: String) -> void:
+	if not _command_allowed("sheet", {}):
+		return
 	var c := e.get_c(id) if id != "" else hud.shown
 	if c == null:
 		for each in e.combatants:
@@ -539,6 +564,8 @@ func _sheet(id: String) -> void:
 
 
 func _answer(use: bool, rule: String) -> void:
+	if not _command_allowed("reaction", {"use": use}):
+		return
 	if e.pending == null:
 		return
 	var req := e.pending
@@ -561,6 +588,8 @@ func _answer(use: bool, rule: String) -> void:
 
 ## Starts an action from the hotbar; `level` picks the spell slot (0 = the lowest available).
 func _choose(action: Dictionary, level: int = 0) -> void:
+	if not _command_allowed("choose", {"action": action, "level": level}):
+		return
 	# A standing rule (Ask / Automatic / Off) changes on any turn for whoever the hotbar shows: nothing is spent.
 	if action.has("policy"):
 		if hud.shown != null:
@@ -638,6 +667,8 @@ func _show_target_marks() -> void:
 
 
 func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) -> void:
+	if not _command_allowed("perform", {"action": action, "targets": targets}):
+		return
 	var c := _player()
 	if c == null:
 		return
@@ -680,6 +711,8 @@ func _run_pick(cmd: Dictionary) -> void:
 ## Backspace or right-click while picking: takes back a wall's last square, or a second pick (TargetPicker). False
 ## when there was nothing to take back.
 func _undo_pick() -> bool:
+	if not _command_allowed("undo", {}):
+		return false
 	if mode != Mode.TARGET or not picker.undo():
 		return false
 	if not picker.active():
@@ -722,6 +755,8 @@ func _confirm_at() -> void:
 	if c == null:
 		return
 	var t := _target_under()
+	if not _command_allowed("board", {"cell": hover_cell, "target": t.combatant if t != null else null}):
+		return
 	if mode == Mode.TARGET:
 		_confirm_target(c, t)
 		return
@@ -764,6 +799,8 @@ var _menu_items: Array[Dictionary] = []
 
 
 func _open_square_menu(at: Vector2) -> bool:
+	if not _command_allowed("square_menu", {}):
+		return false
 	var c := _player()
 	if c == null or e.current() != c:
 		return false
@@ -825,6 +862,8 @@ func _square_picked(id: String) -> void:
 
 
 func _confirm_target(c: Combatant, t: CombatToken) -> void:
+	if not _command_allowed("target", {"target": t.combatant if t != null else null}):
+		return
 	if picker.active():
 		_run_pick(picker.pick(hover_cell, t.combatant if t != null else null))
 		return
@@ -1007,6 +1046,9 @@ func _cycle_inspect() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if input_locked:
 		return
+	if not _command_allowed("input", {"event": event}):
+		get_viewport().set_input_as_handled()
+		return
 	if _entrance_tw != null and _entrance_tw.is_valid() and (event.is_action_pressed(&"ui_accept") or event.is_action_pressed(&"ui_cancel")
 			or event is InputEventMouseButton and (event as InputEventMouseButton).pressed):
 		_entrance_tw.custom_step(BossBar.ENTRANCE)   # cuts the boss's entrance short
@@ -1137,6 +1179,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Casts what's being aimed with the targets picked so far (Enter; Y on a pad). False when nothing is being picked.
 func confirm_early() -> bool:
+	if not _command_allowed("confirm_spell", {}):
+		return false
 	if mode == Mode.TARGET and str(selected.get("targeting", "")) == "multi" and not picked.is_empty():
 		_perform(selected, picked.duplicate(), Vector2.INF, Vector2.ZERO)
 	elif mode == Mode.TARGET and picker.active():
@@ -1552,6 +1596,8 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 
 func _play_events() -> void:
 	await _dice_moments()
+	if _closed or not is_inside_tree():
+		return
 	var events := e.drain_events()
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
@@ -1872,6 +1918,8 @@ func _play_events() -> void:
 	impact.spell_landed()
 	_stop_walking(walking)
 	_refresh_all()
+	if not _closed and is_inside_tree() and events_presented.has_connections():
+		events_presented.emit(events.duplicate(true))
 
 
 # --- Dice moments (owner 2026-10-09: the big d20 only for the heroes' saving throws) -----------------------------
@@ -2226,3 +2274,7 @@ func _autoplay_turn(pilot: PartyAutopilot) -> void:
 		e.end_turn()
 		await _play_events()
 	_refresh_all()
+
+
+func _command_allowed(command: String, data: Dictionary = {}) -> bool:
+	return not command_filter.is_valid() or bool(command_filter.call(command, data))
