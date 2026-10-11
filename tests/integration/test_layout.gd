@@ -950,7 +950,7 @@ func test_the_cheat_codes_page() -> void:
 func test_the_title_screen() -> void:
 	_golden_saves_on_disk(true)
 	var menu: Node = null
-	for step: String in ["_title", "_new_game", "_pick_difficulty", "_show_loads", "_open_hero"]:
+	for step: String in ["_title", "_new_game", "_pick_difficulty", "_offer_tutorial", "_show_loads", "_open_hero"]:
 		await _check("the title screen (%s)" % step.trim_prefix("_"), func() -> Variant:
 			if menu != null:
 				menu.queue_free()
@@ -965,3 +965,42 @@ func test_the_title_screen() -> void:
 	if menu != null:
 		menu.queue_free()
 	_golden_saves_on_disk(false)
+
+
+## Coaching, its options and completion controls remain visible at all supported sizes.
+func test_the_tutorial_coach() -> void:
+	var previous_ui := GameSettings.ui_scale()
+	var previous_text := GameSettings.text_scale()
+	for largest: bool in [false, true]:
+		GameSettings.set_ui_scale(GameSettings.UI_SCALES.back() if largest else 1.0)
+		GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back() if largest else 1.0)
+		for state: String in ["practice", "details", "menu", "complete", "compact", "finished"]:
+			await _check("the tutorial coach (%s, %s)" % [state, "largest" if largest else "normal"], func() -> Variant:
+				var coach := TutorialCoach.new()
+				root = coach
+				add_child(coach)
+				UiScale.playing(coach)
+				coach.present({
+					"title": "Spell slots, healing and your party",
+					"body": "A spell slot is a limited resource spent on a powerful spell. A cantrip needs no slot. Spell level and character level are different: a higher-level hero can still cast a level 1 spell. Choose a wounded ally in range and inspect the result.",
+					"objective": "Cast a healing spell on your wounded companion. The healing and spent spell slot will appear in the real combat log.",
+					"details": "A creature may resist a spell by making a saving throw. This is a d20 roll plus its relevant bonus against the spell's Difficulty Class. A successful enemy save is a normal result, not a broken control. Concentration lets you maintain one ongoing spell at a time; damage can force a check to keep it.",
+				}, 12, 18)
+				coach.set_action("Open the character sheet", func() -> void: pass)
+				coach.set_highlight(Rect2(Vector2(600, 100), Vector2(360, 52)))
+				match state:
+					"details": coach.toggle_details()
+					"menu": coach.show_menu()
+					"complete": coach.set_complete("Your ally regained hit points and you spent one level 1 spell slot. Continue when you have read the result.")
+					"compact": coach.toggle_compact()
+					"finished": coach.show_finished(true)
+				await _frames(8)
+				var panel := coach.get("_panel") as PanelContainer
+				assert_true(get_viewport().get_visible_rect().encloses(panel.get_global_rect()), "the entire coach card stays inside the viewport")
+				return coach,
+				func() -> void:
+					if root != null:
+						root.queue_free()
+						root = null)
+	GameSettings.set_ui_scale(previous_ui)
+	GameSettings.set_text_scale(previous_text)
