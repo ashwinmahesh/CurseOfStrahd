@@ -67,6 +67,20 @@ static func bring_familiars(e: Encounter, party: Array[Combatant]) -> void:
 			e.faerun.pocket_familiar(c)
 
 
+## Otherworldly Steeds come along too: a party member whose Find Steed steed is still with them (Character.steed)
+## starts the fight with it beside them, of the type and level it was called with. Nothing is spent; a steed whose
+## caster has died is gone (2024).
+static func bring_steeds(e: Encounter, party: Array[Combatant]) -> void:
+	for c in party:
+		var ch := c.creature as Character if c.creature is Character else null
+		if ch == null or ch.steed.is_empty():
+			continue
+		if ch.dead:
+			ch.steed = {}
+			continue
+		e.spells.summons.bring_steed(c)
+
+
 ## The familiar Find Familiar gives `c` (the form a fight's casting makes): an imp for a Pact of the Chain warlock, a
 ## skeleton for a Necromancy Familiar, else an owl. Monster data, for the familiar that follows the party around.
 static func familiar_data(c: Combatant) -> Dictionary:
