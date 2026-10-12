@@ -105,7 +105,20 @@
       ],
       "kind": "examine",
       "label": "A wayside shrine",
-      "model": "shrine_small"
+      "model": "shrine_small",
+      "checks": [
+        {
+          "id": "lane_shrine_pray",
+          "skill": "religion",
+          "dc": 13,
+          "label": "Pray at the wayside shrine",
+          "success": {
+            "reveal": [
+              "lane_shrine_flask"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "lane_stopped_handcart",
