@@ -56,6 +56,7 @@ combat corvina
 
 ~ after
 quest the_unnamed_crypt done
+set corvina_name_known
 if flag.corvina_named
 Narrator: She doesn't fall the way his spawn fall. She sits down on the edge of her crypt, and looks at her inky fingers, and is gone, a little at a time, like a page left in the sun.
 Corvina: Corvina. Put it on the box. Everybody has a name on their box.

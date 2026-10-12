@@ -7,6 +7,11 @@
       "summary": "How the dinner with Strahd in the dining hall ended (castle_ravenloft/gates_dinner): dined (he thanked his guests and left them the house for the night) or affront (the party drew on him at his table; crg_dinner_affront). Unset if there was no dinner. Endings and epilogues may read it."
     },
     {
+      "id": "crg_dinner_excused",
+      "type": "bool",
+      "summary": "The party excused themselves from Strahd's table before the meal ended; he greets them back to it."
+    },
+    {
       "id": "crg_dinner_stared",
       "type": "bool",
       "summary": "A failed Insight at dinner: Strahd caught the party studying him and says so when he leaves."

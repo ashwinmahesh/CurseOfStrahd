@@ -209,7 +209,7 @@
     {
       "id": "tsolenka_watchword_known",
       "type": "bool",
-      "summary": "Mordenkainen told the party the Tsolenka watchword: cold hearth, shut door."
+      "summary": "The party knows the Tsolenka watchword, cold hearth, shut door: from Mordenkainen, or the watch log in the tower."
     },
     {
       "id": "tsolenka_watch_met",

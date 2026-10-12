@@ -162,6 +162,7 @@
       "label": "The watch log",
       "model": "desk",
       "codex": "tsolenka_watch_log",
+      "dialogue": "tsolenka_pass/watch:log",
       "text": "The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN. Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not."
     },
     {
