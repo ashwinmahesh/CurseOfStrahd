@@ -1,0 +1,70 @@
+# Sir Godfrey Gwilym travelling with the party (docs/voice/sir_godfrey_gwilym.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Sir Godfrey is with the party. Every line here is unvoiced for now.
+
+~ quest_beacon
+if guest:sir_godfrey_gwilym and flag.argynvost_beacon_lit
+interject guest:sir_godfrey_gwilym: The beacon's lit. I saw it from the road and forgot, for a moment, that I was dead. It was a lovely moment.
+endif
+-> END
+
+~ quest_oath
+if guest:sir_godfrey_gwilym and flag.godfrey_remembers
+interject guest:sir_godfrey_gwilym: I remember the oath now. All of it. I keep saying it under my breath, in case it tries to leave again.
+endif
+-> END
+
+~ place_argynvostholt
+if guest:sir_godfrey_gwilym and region:argynvostholt
+interject guest:sir_godfrey_gwilym: Mind the steps. I've said it to every visitor for a hundred years. Today I find I'm saying it to myself.
+endif
+-> END
+
+~ place_castle
+if guest:sir_godfrey_gwilym and region:castle_ravenloft
+interject guest:sir_godfrey_gwilym: We rode up this hill once, the whole Order, in silver. I remember the horses. I can't remember the faces. That seems unfair to the faces.
+endif
+-> END
+
+~ place_krezk
+if guest:sir_godfrey_gwilym and region:krezk
+interject guest:sir_godfrey_gwilym: We wintered in Krezk once, I think. Or it was another village. They had pears. I'm sure of the pears.
+endif
+-> END
+
+~ fight_nothing
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: Well fought. I felt nothing, which is the trouble with being dead, but I'm told it went well.
+endif
+-> END
+
+~ fight_ride
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: One more ride, I said. I think that counted. I'd like another.
+endif
+-> END
+
+~ fight_word
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: Is anyone hurt? I had a word for the kind of hurt that wants a priest. I had it a moment ago.
+endif
+-> END
+
+~ idle_gwenllian
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: My sister Gwenllian laughed like a goose. I can't remember her face, but I'd know that laugh in a crowd of a thousand.
+endif
+-> END
+
+~ idle_list
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: I read my list every night. Tonight I'll add all of you. Your names, and what you loved. You'll have to tell me the second part.
+endif
+-> END
+
+~ idle_mare
+if guest:sir_godfrey_gwilym
+interject guest:sir_godfrey_gwilym: I had a grey mare. Lovely creature, terrible manners. If there's a field after this, I hope she's in it, kicking someone.
+endif
+-> END

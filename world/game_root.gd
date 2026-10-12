@@ -17,6 +17,8 @@ var loot: LootWindow = null
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
+## Banter that came while the Narrator was speaking; it plays once the box is clear (_process).
+var _banter_waiting: Array = []
 ## A road meeting's reward (RoadSpoils), given when its conversation ends, or after the fight it started:
 ## {ref, key, loot, after_fight}.
 var _road_event := {}
@@ -117,17 +119,13 @@ func enter_location(location_id: String, spawn: String) -> void:
 	_title = PlaceTitle.show_for(self, view.loc)
 	Audio.play_music(_place_mood())
 	view.banter_player = banter
+	_banter_waiting = []
 	view.banter.connect(func(lines: Array) -> void:
-		var text: Array[String] = []
-		var faces := {}
-		for l: Variant in lines:
-			var d := l as Dictionary
-			text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [str(d["name"]).get_slice(" ", 0), d["text"]])
-			faces[str(d.get("portrait", ""))] = true
-		# One voice shows its face (the Narrator's included); a back-and-forth shows none.
-		hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else "")
-		# Each line in its speaker's voice, one after another (ADR 0013); the box stays up until they're done.
-		hud.hold_narration(VoiceOver.say_all(lines)))
+		# Banter never talks over the Narrator: it waits for the place's own words to finish (_process).
+		if hud.narration_showing():
+			_banter_waiting = lines
+		else:
+			_show_banter(lines))
 	view.exit_requested.connect(func(to: String, sp: String) -> void: _covered.call_deferred(to, enter_location.bind(to, sp)))
 	view.travel_requested.connect(func() -> void: open_travel.call_deferred(true))
 	view.dialogue_requested.connect(start_dialogue)
@@ -316,6 +314,9 @@ func _process(delta: float) -> void:
 		glow.clear()
 	if not exploring:
 		return
+	if not _banter_waiting.is_empty() and not hud.narration_showing():
+		_show_banter(_banter_waiting)
+		_banter_waiting = []
 	var v := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_back")
 	if v.length() < 0.3:
 		_move_repeat = 0.0
@@ -443,6 +444,23 @@ func respec(index: int) -> void:
 		cs.queue_free()
 		if dialogue != null:
 			dialogue.resume())
+
+
+## Party banter or a guest's line (story/banter.gd) in the Narrator's box, each line in its speaker's voice.
+func _show_banter(lines: Array) -> void:
+	var text: Array[String] = []
+	var faces := {}
+	for l: Variant in lines:
+		var d := l as Dictionary
+		var who := str(d["name"])
+		for title: String in ["Sir ", "Lady ", "Madam ", "Father ", "Mother ", "Brother "]:
+			who = who.trim_prefix(title)   # "Godfrey: ...", not "Sir: ..."
+		text.append(str(d["text"]) if bool(d["narrator"]) else "%s: %s" % [who.get_slice(" ", 0), d["text"]])
+		faces[str(d.get("portrait", ""))] = true
+	# One voice shows its face (the Narrator's included); a back-and-forth shows none.
+	hud.narrate("\n".join(text), str(faces.keys()[0]) if faces.size() == 1 else "")
+	# Each line in its speaker's voice, one after another (ADR 0013); the box stays up until they're done.
+	hud.hold_narration(VoiceOver.say_all(lines))
 
 
 func start_dialogue(ref: String, _npc_id: String) -> void:

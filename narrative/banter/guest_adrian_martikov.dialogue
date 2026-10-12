@@ -1,0 +1,100 @@
+# Adrian Martikov travelling with the party (docs/voice/adrian_martikov.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Adrian is with the party. Every line here is unvoiced for now.
+
+~ quest_bracken
+if guest:adrian_martikov and region:yester_hill and not flag.elvir_remains_recovered
+interject guest:adrian_martikov: This is the bracken. I came down through here last spring with his voice still in my ears. Fly, he said. So I flew.
+endif
+-> END
+
+~ quest_carry
+if guest:adrian_martikov and flag.elvir_remains_recovered and not flag.elvir_buried
+interject guest:adrian_martikov: I'm carrying him the whole way down. Nobody offer. He'd have done it for me, and complained about my weight the entire time.
+endif
+-> END
+
+~ quest_message
+if guest:adrian_martikov and flag.elvir_message_found and not flag.martikovs_reconciled
+interject guest:adrian_martikov: He gave the order in Father's voice. Of course he did. He knew it was the only voice I'd ever obey.
+endif
+-> END
+
+~ quest_hill_broken
+if guest:adrian_martikov and quest.wizard_of_wines == hill_broken
+interject guest:adrian_martikov: The hill's quiet. I thought I'd feel something grand. Mostly I feel like a bath, and a very large cup of our own wine.
+endif
+-> END
+
+~ quest_black_row
+if guest:adrian_martikov and region:wizard_of_wines and quest.the_black_row and quest.the_black_row != cut_out and quest.the_black_row != done
+interject guest:adrian_martikov: I picked that row every night for a month. I knew it wasn't him. I went anyway, because it was the only place he still talked to me.
+endif
+-> END
+
+~ quest_row_cut
+if guest:adrian_martikov and quest.the_black_row == cut_out
+interject guest:adrian_martikov: Black sap to the elbows. Father will smell it on me before I open my mouth. Good. It saves me deciding how to start.
+endif
+-> END
+
+~ place_winery_lost
+if guest:adrian_martikov and region:wizard_of_wines and not flag.winery_reclaimed
+interject guest:adrian_martikov: Druids in our cellar, drinking nothing, because we hid the good casks first. It's the only part of this I'm proud of.
+endif
+-> END
+
+~ place_winery_ours
+if guest:adrian_martikov and region:wizard_of_wines and flag.winery_reclaimed
+interject guest:adrian_martikov: The press-house roof still leaks over the third vat. I told Father in the spring. He'll say I should have mended it. He'll be right.
+endif
+-> END
+
+~ place_vallaki
+if guest:adrian_martikov and region:vallaki
+interject guest:adrian_martikov: My brother Urwin keeps the Blue Water Inn. He'll smile at you like a bishop and water your wine. Tell him I said so.
+endif
+-> END
+
+~ place_village
+if guest:adrian_martikov and region:village_of_barovia
+interject guest:adrian_martikov: The Blood of the Vine hasn't had a cask from us since spring. Whatever they're pouring now, I'd rather not know.
+endif
+-> END
+
+~ fight_feathers
+if guest:adrian_martikov
+interject guest:adrian_martikov: Feathers in my mouth again. I'd forgotten how much I hate that part.
+endif
+-> END
+
+~ fight_useful
+if guest:adrian_martikov
+interject guest:adrian_martikov: Everyone still standing? Good. Tell Father I was useful. He won't believe you, but tell him.
+endif
+-> END
+
+~ fight_second
+if guest:adrian_martikov
+interject guest:adrian_martikov: Elvir always went in first. I went in second and got blamed. Some things you don't grow out of.
+endif
+-> END
+
+~ idle_pruning
+if guest:adrian_martikov
+interject guest:adrian_martikov: The south slope wants pruning, and the druids want killing. Only one of those is relaxing, and it isn't the pruning.
+endif
+-> END
+
+~ idle_quiet
+if guest:adrian_martikov
+interject guest:adrian_martikov: Elvir talked the whole way up every hill we ever climbed. I keep waiting for him to start.
+endif
+-> END
+
+~ idle_raven
+if guest:adrian_martikov
+interject guest:adrian_martikov: If you hear a raven laughing behind us, it isn't me. Probably.
+endif
+-> END

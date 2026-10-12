@@ -1,0 +1,70 @@
+# Mordenkainen travelling with the party (docs/regions/berez.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Mordenkainen is with the party. Every line here is unvoiced for now.
+
+~ place_baratok
+if guest:mordenkainen and region:mount_baratok
+interject guest:mordenkainen: My hut. Forty years of muttering to the snow. I left the kettle on. Leave it. It'll outlive us.
+endif
+-> END
+
+~ place_berez
+if guest:mordenkainen and region:berez
+interject guest:mordenkainen: Lysaga's marsh. She held my eyes open and sang. If she's still here I'd like a word. Several. Some of them will be on fire.
+endif
+-> END
+
+~ place_amber
+if guest:mordenkainen and region:amber_temple
+interject guest:mordenkainen: Things whisper here that want to be asked. Don't ask. I asked, once, and look how I turned out.
+endif
+-> END
+
+~ place_castle
+if guest:mordenkainen and region:castle_ravenloft
+interject guest:mordenkainen: I came up this hill forty years ago to kill him. I'd like to say I've learned humility. Mostly I've learned better spells.
+endif
+-> END
+
+~ place_vallaki
+if guest:mordenkainen and region:vallaki
+interject guest:mordenkainen: Walls and a festival. The two oldest lies about safety, in one town.
+endif
+-> END
+
+~ fight_rusty
+if guest:mordenkainen
+interject guest:mordenkainen: Rusty, but serviceable. Like the rest of me.
+endif
+-> END
+
+~ fight_forgot
+if guest:mordenkainen
+interject guest:mordenkainen: That was a perfectly good spell, and I'd forgotten I knew it until it was coming out of my hands.
+endif
+-> END
+
+~ fight_questions
+if guest:mordenkainen
+interject guest:mordenkainen: Everyone has questions after a fight. Very few have the right ones. Bandages first.
+endif
+-> END
+
+~ idle_mirrors
+if guest:mordenkainen
+interject guest:mordenkainen: Keep me away from mirrors and from anyone who says hush. Otherwise I'm splendid company.
+endif
+-> END
+
+~ idle_mended
+if guest:mordenkainen
+interject guest:mordenkainen: Eva told me I'd be broken. She never said whether I'd be mended. I've decided to take that as a yes.
+endif
+-> END
+
+~ idle_soup
+if guest:mordenkainen
+interject guest:mordenkainen: I used to know a hundred spells by heart. Now I know forty, and a great deal about soup. The soup may yet be useful.
+endif
+-> END

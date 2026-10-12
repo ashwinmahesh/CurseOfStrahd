@@ -1,0 +1,58 @@
+# Pidlwick II travelling with the party (docs/voice/pidlwick_ii.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Pidlwick II is with the party. Every line here is unvoiced for now.
+
+~ quest_sorry
+if guest:pidlwick_ii and flag.pidlwick_truth_known
+interject guest:pidlwick_ii: SORRY ABOUT THE STAIRS. I SAY IT EVERY DAY. NOBODY HEARS.
+endif
+-> END
+
+~ place_castle
+if guest:pidlwick_ii and region:castle_ravenloft
+interject guest:pidlwick_ii: HOME. NOT HOME. DO NOT LEAN ON THE RAILS.
+endif
+-> END
+
+~ place_toy_shop
+if guest:pidlwick_ii and at:vallaki_blinsky_toys
+interject guest:pidlwick_ii: TOY SHOP. NICE MAN. I WILL NOT TOUCH. I WILL LOOK VERY HARD.
+endif
+-> END
+
+~ place_road
+if guest:pidlwick_ii and region:svalich_road
+interject guest:pidlwick_ii: TREES. SO MANY. NOBODY SAID.
+endif
+-> END
+
+~ fight_helped
+if guest:pidlwick_ii
+interject guest:pidlwick_ii: I HELPED. DID I HELP? I HELPED.
+endif
+-> END
+
+~ fight_behind
+if guest:pidlwick_ii
+interject guest:pidlwick_ii: I KEPT BEHIND. ALWAYS BEHIND. PROMISE KEPT.
+endif
+-> END
+
+~ fight_wind
+if guest:pidlwick_ii
+interject guest:pidlwick_ii: WIND ME PLEASE. A LITTLE. THANK YOU.
+endif
+-> END
+
+~ idle_play
+if guest:pidlwick_ii
+interject guest:pidlwick_ii: PLAY? LATER. LATER IS FINE.
+endif
+-> END
+
+~ idle_stairs
+if guest:pidlwick_ii
+interject guest:pidlwick_ii: STAIRS. I COUNT THEM. YOU COUNT THEM TOO. SAFER.
+endif
+-> END

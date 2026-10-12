@@ -1,0 +1,52 @@
+# Gertruda travelling with the party (docs/voice/gertruda.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Gertruda is with the party. Every line here is unvoiced for now.
+
+~ quest_going_home
+if guest:gertruda and quest.find_gertruda == found
+interject guest:gertruda: Mother's going to be so angry. She's going to be so angry, and then she'll hold on and not let go. I want both.
+endif
+-> END
+
+~ place_castle
+if guest:gertruda and region:castle_ravenloft
+interject guest:gertruda: He said I'd be a lady. Ladies don't have to walk this fast. Is something behind us? Don't tell me.
+endif
+-> END
+
+~ place_road
+if guest:gertruda and region:svalich_road
+interject guest:gertruda: Trees! Real ones! My book had them all wrong. They're so much taller, and so much darker.
+endif
+-> END
+
+~ place_village
+if guest:gertruda and region:village_of_barovia
+interject guest:gertruda: That's our street. That's our door. That's the window I climbed out of. It looks so small from out here.
+endif
+-> END
+
+~ fight_quiet
+if guest:gertruda
+interject guest:gertruda: I'm good at quiet. I stayed very quiet. Was that right?
+endif
+-> END
+
+~ fight_stories
+if guest:gertruda
+interject guest:gertruda: In the stories nobody bleeds. I should have known. I should have known from the stories.
+endif
+-> END
+
+~ idle_humming
+if guest:gertruda
+interject guest:gertruda: I keep humming. I don't know the song. I've hummed it ever since the carriage.
+endif
+-> END
+
+~ idle_both
+if guest:gertruda
+interject guest:gertruda: Is it wonderful, out here? It's frightening. Can it be both?
+endif
+-> END

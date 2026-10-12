@@ -1,0 +1,28 @@
+# Ilinca Vrana travelling with the party (docs/regions/old_bonegrinder.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Ilinca is with the party. Every line here is unvoiced for now.
+
+~ place_mill
+if guest:ilinca_vrana and region:old_bonegrinder
+interject guest:ilinca_vrana: The old woman's mill. I brought half the children in this valley into the world. I'm not leaving two of them in her oven.
+endif
+-> END
+
+~ fight_bird
+if guest:ilinca_vrana
+interject guest:ilinca_vrana: Seventy-one, and still a bird, and still quicker than a hag. Put that on my stone.
+endif
+-> END
+
+~ fight_oven
+if guest:ilinca_vrana
+interject guest:ilinca_vrana: That's one less thing in the dark. Keep moving. The oven's still lit.
+endif
+-> END
+
+~ idle_hurry
+if guest:ilinca_vrana
+interject guest:ilinca_vrana: Forty years a midwife. You learn to hurry without running. Running frightens the mother.
+endif
+-> END

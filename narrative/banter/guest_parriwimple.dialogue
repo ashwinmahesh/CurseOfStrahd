@@ -1,0 +1,64 @@
+# Parriwimple travelling with the party (docs/voice/parriwimple.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Parriwimple is with the party. Every line here is unvoiced for now.
+
+~ place_village
+if guest:parriwimple and region:village_of_barovia
+interject guest:parriwimple: That's Uncle's shop. He's counting the flour. Forty-one sacks. He'll know I'm gone by now.
+endif
+-> END
+
+~ place_vallaki
+if guest:parriwimple and region:vallaki
+interject guest:parriwimple: So many houses. I counted to sixty and lost my place. I'll start again later.
+endif
+-> END
+
+~ place_bonegrinder
+if guest:parriwimple and region:old_bonegrinder
+interject guest:parriwimple: The pie lady's windmill. It smells like bread. And like not bread. I don't want a pie.
+endif
+-> END
+
+~ place_castle
+if guest:parriwimple and region:castle_ravenloft
+interject guest:parriwimple: That's a lot of stairs. I can carry anybody who gets tired. Even the ones in armour.
+endif
+-> END
+
+~ fight_carry
+if guest:parriwimple
+interject guest:parriwimple: Is anybody hurt? I can carry you. I can carry two, if they're small.
+endif
+-> END
+
+~ fight_uncle
+if guest:parriwimple
+interject guest:parriwimple: Uncle says not to fight. I didn't tell Uncle. I'm telling you.
+endif
+-> END
+
+~ fight_none
+if guest:parriwimple
+interject guest:parriwimple: I counted them. All of them. Now there's none to count. That's the best number.
+endif
+-> END
+
+~ idle_days
+if guest:parriwimple
+interject guest:parriwimple: I'm counting the days since we left the shop. I'll tell Uncle the number. He likes numbers better than people.
+endif
+-> END
+
+~ idle_good_job
+if guest:parriwimple
+interject guest:parriwimple: Somebody told me I did a good job yesterday. I'm still thinking about it.
+endif
+-> END
+
+~ idle_bread
+if guest:parriwimple
+interject guest:parriwimple: I carry bread to the lady with the empty house, every week. Don't tell Uncle. I'm telling you because you're kind.
+endif
+-> END
