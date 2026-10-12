@@ -837,6 +837,12 @@ def story_checks(data, errors, need):
                 errors.append(f"{w}: encounter {en['id']} triggers on unknown area '{trig.split(':', 1)[1]}'")
             if trig.startswith("flag:"):
                 read([trig.split(":", 1)[1]], w)
+            if trig.startswith("check:"):
+                # A fight a skill check sets off (story/world_checks.gd): check:<check id>:success|failure, a check here.
+                cid, _, result = trig[6:].rpartition(":")
+                here = {c["id"] for k in ("props", "doors", "containers") for t in loc.get(k, []) for c in t.get("checks", [])}
+                if cid not in here or result not in ("success", "failure"):
+                    errors.append(f"{w}: encounter {en['id']} triggers on '{trig}', which isn't a check here going one way")
             if en.get("flag"):
                 flags_set.setdefault(en["flag"], []).append(w)
             if en.get("quest"):

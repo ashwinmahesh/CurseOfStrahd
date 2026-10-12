@@ -543,3 +543,39 @@ once
 
 ~ check:deception:relief_watch:failure
 | The watchmen's eyes go cold as the pass, and the cold reaches out for you.
+
+~ check:athletics:drowned_house_wade:success
+| You wade in up to the chest, and on the drowned house's mantel, above the waterline, a folded cloak has stayed perfectly dry.
+
+~ check:athletics:drowned_house_wade:failure
+| The floor gives under the silt, and the Luna's cold closes over you.
+
+~ check:athletics:ruin_beam_lift:success
+| You heave the beam up off the rubble, and underneath lies an iron rod that hasn't moved since the roof came down.
+
+~ check:athletics:ruin_beam_lift:failure
+| The beam is oak, waterlogged and determined. It stays.
+
+~ check:history:marina_story:success
+| Marina of Berez, courted by the castle's lord, who saw another woman's face in hers. When she died, he drowned her village.
+
+~ check:history:marina_story:failure
+| A young woman in white stone. Her story has gone under with her village.
+
+~ check:acrobatics:berez_jetty_walk:success
+| You skip from post to post along what's left of the jetty, and in the last post's hollow the drowned village's fishers left their coin.
+
+~ check:acrobatics:berez_jetty_walk:failure
+| A post rolls under your foot, and the Luna takes you in.
+
+~ check:arcana:hag_charms:success
+| The charms hum in harmony with the jars on the shelf; all but one jar, which is silent, and keeps what it holds very still.
+
+~ check:arcana:hag_charms:failure
+| Bones, string, hair and something that blinks. The charms mean a great deal to the hag.
+
+~ check:insight:lysaga_boy:success
+| The same boy at every age, drawn by someone who loved him and never stopped watching. She thinks she's his mother.
+
+~ check:insight:lysaga_boy:failure
+| A boy, again and again. Who he is to her escapes you.

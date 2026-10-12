@@ -226,7 +226,47 @@
       ],
       "label": "Escher's door",
       "locked": true,
-      "lock_dc": 16
+      "lock_dc": 16,
+      "checks": [
+        {
+          "id": "escher_door_lie",
+          "skill": "deception",
+          "dc": 15,
+          "label": "Tell Escher the count has sent for him",
+          "success": {
+            "unlock": [
+              "spires_escher_door"
+            ]
+          },
+          "once": true
+        },
+        {
+          "id": "escher_door_coax",
+          "skill": "persuasion",
+          "dc": 15,
+          "label": "Coax Escher into opening his door",
+          "success": {
+            "unlock": [
+              "spires_escher_door"
+            ]
+          },
+          "once": true
+        },
+        {
+          "id": "escher_door_listen",
+          "skill": "stealth",
+          "dc": 14,
+          "label": "Listen at Escher's door unseen",
+          "success": {
+            "codex": {
+              "id": "escher_fear",
+              "title": "Behind Escher's door",
+              "text": "Through the door, Escher talks to his own reflection, or to nobody: the count has tired of him, he is sure of it, and he would give anything, anyone, to be somewhere the count would never look."
+            }
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "spires_vestibule_door",

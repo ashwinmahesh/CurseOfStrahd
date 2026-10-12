@@ -176,7 +176,28 @@
       ],
       "kind": "examine",
       "label": "The faceless god",
-      "model": "statue_knight"
+      "model": "statue_knight",
+      "checks": [
+        {
+          "id": "faceless_rite",
+          "skill": "religion",
+          "dc": 16,
+          "label": "Read the faceless god's rite",
+          "success": {
+            "reveal": [
+              "faceless_gaze"
+            ],
+            "disarm": [
+              "faceless_gaze"
+            ]
+          },
+          "failure": {
+            "damage": "2d8",
+            "damage_type": "psychic"
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "hall_pillars",

@@ -129,7 +129,22 @@
       ],
       "kind": "examine",
       "label": "Drawings of a boy",
-      "model": "drawings"
+      "model": "drawings",
+      "checks": [
+        {
+          "id": "lysaga_boy",
+          "skill": "insight",
+          "dc": 13,
+          "label": "Look closely at the drawings",
+          "success": {
+            "codex": {
+              "id": "lysaga_boy",
+              "title": "The boy in the drawings",
+              "text": "Every drawing is the same boy, at every age, drawn by someone who loved him and never stopped watching. The old woman who lives here believes she is the castle lord's mother, the one who brought him into the world. Whatever he is to her, she would burn the valley to keep him."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "lysaga_oven",
@@ -180,7 +195,20 @@
       ],
       "kind": "examine",
       "label": "Bundles hanging from the beams",
-      "model": "charms"
+      "model": "charms",
+      "checks": [
+        {
+          "id": "hag_charms",
+          "skill": "arcana",
+          "dc": 16,
+          "label": "Study the hag's charms",
+          "success": {
+            "reveal": [
+              "silent_jar"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "lysaga_labelled_jar",
