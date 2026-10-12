@@ -52,3 +52,22 @@ func test_fire_and_river_beds_play_where_they_are() -> void:
 	var ear := ws.get_child(0) as AudioListener3D
 	var lead := view.tokens[view.leader().id] as Node3D
 	assert_true(ear.global_position.distance_to(lead.global_position) < 2.0, "the listener stands at the leader")
+
+
+## The leader's footsteps play on its figure's footfalls (owner 2026-10-12: two a square had been about four times the
+## pace of the legs): at the party's pace a stride is about two squares, so five squares are a few steps, not ten.
+func test_footsteps_keep_the_pace_of_the_legs() -> void:
+	var view := root.get("view") as LocationView
+	var ws := view.get_node("WorldSounds") as WorldSounds
+	var tok := view.tokens[view.leader().id] as CombatToken
+	await get_tree().process_frame
+	assert_true(tok.sprite.footfall.is_connected(ws._on_footfall), "the footsteps follow the leader's feet")
+	var falls: Array[int] = [0]
+	tok.sprite.footfall.connect(func() -> void: falls[0] += 1)
+	assert_eq(view.leader().cell, Vector2i(2, 2), "starts at the spawn")
+	assert_true(view.walk_to(Vector2i(7, 2)), "walks five squares along the bank")
+	var until := Time.get_ticks_msec() + 8000
+	while Time.get_ticks_msec() < until and not (view._queue.is_empty() and view._glides.is_empty() and not tok.sprite.finish_stride):
+		await get_tree().process_frame
+	assert_eq(view.leader().cell, Vector2i(7, 2), "arrived")
+	assert_between(falls[0], 2, 5, "a footfall about every two squares: %d" % falls[0])
