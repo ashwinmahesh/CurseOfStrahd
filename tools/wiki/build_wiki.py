@@ -2565,7 +2565,31 @@ class Wiki:
         self.home()
         self.w.sweep(self.out / "_Removed")
         self.relink()
+        self.broken = self.check_links()
         return self.w.stats
+
+    def check_links(self):
+        """Links and embeds on any page (hand-written ones included) that point at no page, heading or image."""
+        if self.dry or not self.out.exists():
+            return []
+        heads = {}
+        bad = []
+        link_re = re.compile(r"(!?)\[\[(" + re.escape(WIKI) + r"/[^\]|#\\]+)(?:#([^\]|\\]+))?(?:\\?\|[^\]]*)?\]\]")
+        for p in sorted(self.out.rglob("*.md")):
+            for m in link_re.finditer(p.read_text()):
+                target = self.out / m[2][len(WIKI) + 1:]
+                if m[1]:
+                    ok = target.exists()
+                else:
+                    page = target.with_name(target.name + ".md")
+                    ok = page.exists()
+                    if ok and m[3]:
+                        if page not in heads:
+                            heads[page] = {h.strip() for h in re.findall(r"^#+ (.+)$", page.read_text(), re.M)}
+                        ok = m[3].strip() in heads[page]
+                if not ok:
+                    bad.append(f"{p.relative_to(self.out)}: {m[0]}")
+        return bad
 
     def relink(self):
         """Links people wrote to a page or heading that has since been renamed (a quest, place or item whose name
@@ -2632,6 +2656,11 @@ def main():
     stats = wiki.build()
     print(f"wiki: {len(wiki.w.written)} pages ({stats['new']} new, {stats['changed']} changed, {stats['moved']} moved, "
           f"{stats['removed']} removed, {stats['relinked']} relinked), {wiki.img.made} images made, in {a.out}")
+    broken = getattr(wiki, "broken", [])
+    if broken:
+        print(f"wiki: {len(broken)} broken links or images (a page or heading renamed by hand, or a missing shot):")
+        for b in broken[:40]:
+            print("  " + b)
     return 0
 
 
