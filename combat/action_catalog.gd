@@ -569,6 +569,9 @@ func _effect_actions(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 	var tab := SPELLS if c.creature is Character and not (c.creature as Character).spellcasting.is_empty() else class_tab(c)
 	for a in e.spells.sustained_actions(c):
+		# Move Hex / Move Hunter's Mark shows only once the creature it's on is down (SpellSustained `waiting`).
+		if bool(a.get("waiting", false)):
+			continue
 		var d := a["def"] as Dictionary
 		var targeting := "none"
 		match str(a["do"]):

@@ -296,3 +296,11 @@ side of a foe an ally is already beside. Settings, Game, Flanking turns it off (
 A hero may end a move in an ally's space (Move here works on an ally's square; the walk up prefers an empty one). Two
 figures on one square stand side by side as the camera looks (`CombatView._share_offset`), and step back to the
 centre when one leaves (`_settle_shared`, after each batch of events).
+
+## Moving Hex and Hunter's Mark (owner question, 2026-10-12)
+
+Once the creature Hex or Hunter's Mark is on drops to 0 Hit Points (or is gone), "Move Hex" / "Move Hunter's Mark"
+shows on the Spells tab: a Bonus Action on a later turn, no slot, the same Concentration. It picks the new creature
+with the usual target picker (on a pad, the slot like any other); Hunter's Mark needs one the caster can see. Hex's
+curse on the chosen ability's checks goes with it (`SpellSustained` move_mark). Until the target drops the slot stays
+off the bar (`waiting`). A foe the AI plays moves its mark to the nearest foe it can see (`AiBrain._move_mark`).

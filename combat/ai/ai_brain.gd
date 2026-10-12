@@ -81,6 +81,24 @@ func play_turn(c: Combatant) -> CombatResult:
 	return finish_turn(c, think(c))
 
 
+## Hex or Hunter's Mark on a creature that dropped (owner, 2026-10-12): moved with a Bonus Action, no slot, to the
+## nearest foe it can see within range, the way the hotbar's Move Hex does for a hero.
+func _move_mark(c: Combatant) -> void:
+	var e := enc()
+	for a in e.spells.sustained_actions(c):
+		if str(a["do"]) != "move_mark" or not bool(a["legal"]):
+			continue
+		var reach := int((a["def"] as Dictionary).get("range", 90))
+		var best: Combatant = null
+		for h in e.hostiles_of(c):
+			if h.is_down() or not e.can_see(c, h) or e.distance(c, h) > reach:
+				continue
+			if best == null or e.distance(c, h) < e.distance(c, best):
+				best = h
+		if best != null:
+			e.spells.use_sustained(c, str(a["id"]), [best])
+
+
 ## The turn up to its plan: Fear, Commands, potions, morale, a boss's own moves, bonus actions and stat-block spells.
 ## Null when the plan comes next (think, then finish_turn); the combat view thinks on a worker thread (FN-14).
 func begin_turn(c: Combatant) -> CombatResult:
@@ -143,6 +161,7 @@ func begin_turn(c: Combatant) -> CombatResult:
 	_finishing = null
 	# A weapon it dropped lying within reach: back in hand with its free object interaction.
 	e.ground.ai_pick_up(c)
+	_move_mark(c)
 	# The difficulty's kit and morale: a Bloodied foe drinks its potion; a broken side flees (combat/ai/ai_tactics.gd).
 	if c.side == &"enemy":
 		# F13: a Bloodied talker whose side broke gives up, in every mode (story/captives.gd takes it from there).

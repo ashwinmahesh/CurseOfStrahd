@@ -57,7 +57,8 @@
       "range": 90,
       "label": "Move Hunter's Mark",
       "sub": "to a new creature",
-      "help": "A Bonus Action once the marked creature drops to 0 Hit Points: mark a new creature you can see within 90 ft."
+      "help": "A Bonus Action once the marked creature drops to 0 Hit Points: mark a new creature you can see within 90 ft.",
+      "requires_sight": true
     }
   ],
   "tags": [
