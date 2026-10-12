@@ -1000,7 +1000,7 @@ func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Arra
 	for t: Variant in targets:
 		tgt.append(t as Character)
 	var slot := pick.get_item_id(pick.selected) if pick.item_count > 0 and pick.selected >= 0 else 0
-	var res := FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller)
+	var res := FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller, st)
 	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
 	_draw()
 

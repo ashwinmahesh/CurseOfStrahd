@@ -40,6 +40,13 @@
   "tags": [
     "summon"
   ],
-  "summary": "At night, raise up to three corpses as Ghouls under your control.",
-  "text": "You command them with a Bonus Action for 24 hours, after which you must recast the spell to keep control of them."
+  "summary": "At night, raise three Ghouls (one more per slot level above 6) that follow you for a day and fight beside you; cast it while exploring.",
+  "text": "You command them with a Bonus Action for 24 hours, after which you must recast the spell to keep control of them.",
+  "choice": {
+    "kind": "option",
+    "label": "Undead",
+    "from": [
+      "ghoul"
+    ]
+  }
 }

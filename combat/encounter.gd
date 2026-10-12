@@ -33,6 +33,9 @@ var shared: Array[String] = []
 var shared_started: Array[String] = []
 var shared_ended: Array[String] = []
 var state: State = State.SETUP
+## The small board FieldCasting casts on outside fights: a spell that takes minutes or hours to cast is cast there
+## (Prayer of Healing, Regenerate, Foresight), its time passing on the clock instead.
+var peaceful := false
 ## A story fight keeps each round as it begins, before the lair or the first turn acts (EncounterSnapshot): the
 ## round-start save, so reloading it plays the start of that turn once (QA FN-11: captured after it, Regeneration,
 ## start-of-turn damage and lair actions happened twice). Off for simulations and tests, which don't save.

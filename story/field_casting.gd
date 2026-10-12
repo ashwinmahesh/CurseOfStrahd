@@ -14,7 +14,10 @@ const PURSE_COMPONENTS := {"heroes_feast": 1000}
 ## st.flags: the last brew of Tasha's Bubbling Cauldron {who, item, qty} (an underscore key: bookkeeping).
 const CAULDRON_KEY := "_cauldron"
 const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar",
-	"find_steed"]
+	"find_steed", "animate_dead", "create_undead"]
+## The dead raised while exploring (Animate Dead, Create Undead): how many, of what, at each slot level, for the day they
+## stay under the caster's control (2024: 24 hours), joining each fight beside the caster (bring_risen).
+const RISEN := {"animate_dead": {"base": 3, "count": 1, "per_level": 2}, "create_undead": {"base": 6, "count": 3, "per_level": 1}}
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
@@ -60,9 +63,10 @@ static func helpful(data: Dictionary) -> bool:
 	return kind in ["creature", "ally", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
 
 
-## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}.
+## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}. With
+## `st`, a spell that takes minutes or hours to cast (Prayer of Healing's ten minutes) takes them off the clock.
 static func cast(party: Array[Character], caster: Character, spell_id: String, slot: int, targets: Array[Character],
-		dice: DiceRoller) -> Dictionary:
+		dice: DiceRoller, st: StoryState = null) -> Dictionary:
 	var e := _board(party, caster, dice)
 	var c := e.get_c(caster.id)
 	if c == null:
@@ -93,6 +97,9 @@ static func cast(party: Array[Character], caster: Character, spell_id: String, s
 			lines.append(str(entry["text"]))
 	if not res.ok:
 		return {"ok": false, "text": res.reason, "lines": lines}
+	var ct := data.get("casting_time", {}) as Dictionary
+	if st != null and str(ct.get("unit", "")) in ["minute", "hour"]:
+		st.advance_minutes(int(ct.get("amount", 1)) * (60 if str(ct["unit"]) == "hour" else 1))
 	return {"ok": true, "text": "\n".join(lines), "lines": lines}
 
 
@@ -113,6 +120,7 @@ static func _board(party: Array[Character], caster: Character, dice: DiceRoller,
 	for i in size:
 		rows.append(".".repeat(size))
 	var e := Encounter.new(CombatGrid.from_rows(rows), dice)
+	e.peaceful = true   # outside a fight: a spell's minutes or hours of casting pass on the clock (cast())
 	var mid := floori(size / 2.0)
 	e.add(caster, &"party", Vector2i(mid, mid)).controller = &"player"
 	var spots: Array[Vector2i] = []
@@ -287,6 +295,8 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		return str(f["id"]) == resource_feature and bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
 	if not omit_material and caster.component_why(data) != "":
 		return {"ok": false, "text": caster.component_why(data)}
+	if spell_id == "create_undead" and not st.is_night():
+		return {"ok": false, "text": "Create Undead can only be cast at night"}
 	if spell_id == "commune_with_nature" and not bool((Compendium.shared().get_entry("locations", st.location).get("map", {}) as Dictionary).get("outdoors", false)):
 		return {"ok": false, "text": "Commune with Nature needs the open air"}
 	var purse := float(PURSE_COMPONENTS.get(spell_id, 0))
@@ -379,6 +389,16 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		caster.steed = {"type": kind, "level": maxi(level, int(data.get("level", 2)))}
 		return {"ok": true, "effect": spell_id, "text": "%s casts Find Steed: a %s steed answers, and stays until it falls." % [
 			caster.name.get_slice(" ", 0), kind.capitalize()]}
+	# Animate Dead, Create Undead: the dead rise and follow their caster for a day, joining each fight (bring_risen).
+	if RISEN.has(spell_id):
+		var rule := RISEN[spell_id] as Dictionary
+		var kinds := (data.get("choice", {}) as Dictionary).get("from", ["zombie" if spell_id == "animate_dead" else "ghoul"]) as Array
+		var kind := choice if choice in kinds else str(kinds[0])
+		var count := int(rule["count"]) + int(rule["per_level"]) * maxi(0, level - int(rule["base"]))
+		st.active_spells[spell_id] = {"until": st.total_minutes() + 24 * 60, "caster": caster.id, "kind": kind, "count": count}
+		return {"ok": true, "effect": spell_id, "text": "%s casts %s: %d %s%s rise%s to follow them for a day, and will fight beside them." % [
+			caster.name.get_slice(" ", 0), data["name"], count, Compendium.shared().display_name("monsters", kind),
+			"" if count == 1 else "s", "s" if count == 1 else ""]}
 	# Scouting and divining (story/oracles.gd): what the spell finds out where the party stands.
 	if spell_id in Oracles.HANDLED:
 		return {"ok": true, "effect": spell_id, "text": Oracles.cast(st, caster, spell_id, choice)}
@@ -429,6 +449,17 @@ static func _check_aid(st: StoryState, caster: Character, spell_id: String, data
 		fx.ends = Effect.Ends.MINUTES
 		fx.minutes_left = minutes
 		ch.add_effect(fx)
+
+
+## The dead raised while exploring join a fight beside their caster, if the day isn't over (LocationFights).
+static func bring_risen(e: Encounter, st: StoryState) -> void:
+	for id: String in RISEN:
+		if not st.spell_active(id):
+			continue
+		var a := st.active_spells[id] as Dictionary
+		var c := e.get_c(str(a.get("caster", "")))
+		if c != null and c.is_alive():
+			e.spells.summons.bring_risen(c, id, str(a.get("kind", "")), int(a.get("count", 1)))
 
 
 ## Tasha's Bubbling Cauldron (2024): copies of a common or uncommon potion (`choice`), one per point of the caster's
