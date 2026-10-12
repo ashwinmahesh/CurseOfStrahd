@@ -699,8 +699,9 @@ func test_bladesinger_cantrip_can_be_first_attack_but_only_once_per_action() -> 
 	var target := TestCombat.punching_bag(e, Vector2i(3, 3), 500)
 	TestCombat.start_with(e, c)
 	var catalog := ActionCatalog.new(e)
-	var action := catalog.find(c, "war_magic:fire_bolt")
-	assert_false(action.is_empty(), "can substitute the first attack")
+	# Picked from the Spells tab, it's cast in place of an attack (owner, 2026-10-12).
+	var action := catalog.find(c, "spell:fire_bolt")
+	assert_true(bool((action.get("opts", {}) as Dictionary).get("war_magic", false)), "can substitute the first attack")
 	assert_true(catalog.perform(c, action, [target]).ok)
 	assert_false(c.action_available)
 	assert_eq(c.attacks_left, 1)
@@ -711,7 +712,7 @@ func test_bladesinger_cantrip_can_be_first_attack_but_only_once_per_action() -> 
 	assert_eq(c.attacks_left, 0)
 	e.end_turn()
 	e.end_turn()
-	assert_false(catalog.find(c, "war_magic:fire_bolt").is_empty())
+	assert_true(bool((catalog.find(c, "spell:fire_bolt").get("opts", {}) as Dictionary).get("war_magic", false)), "a new turn, a new substitution")
 
 func test_song_of_victory_offers_weapon_attacks_including_ranged_and_checks_before_cost() -> void:
 	var e := TestCombat.open_field()
@@ -789,10 +790,10 @@ func test_attack_recipes_use_class_filter_and_configured_weapon_restrictions() -
 	var target := TestCombat.punching_bag(e, Vector2i(8, 3), 500)
 	TestCombat.start_with(e, c)
 	var catalog := ActionCatalog.new(e)
-	assert_true(catalog.find(c, "war_magic:fire_bolt").is_empty(), "the spell's casting class must match")
+	assert_false(bool((catalog.find(c, "spell:fire_bolt").get("opts", {}) as Dictionary).get("war_magic", false)), "the spell's casting class must match")
 	(ch.features[-1]["attack_cantrip"] as Dictionary)["class"] = "wizard"
-	var attack := catalog.find(c, "war_magic:fire_bolt")
-	assert_false(attack.is_empty())
+	var attack := catalog.find(c, "spell:fire_bolt")
+	assert_true(bool((attack.get("opts", {}) as Dictionary).get("war_magic", false)))
 	assert_true(catalog.perform(c, attack, [target]).ok)
 	assert_false(c.action_available)
 	assert_eq(c.bonus_attack, "Arcane Riposte")
