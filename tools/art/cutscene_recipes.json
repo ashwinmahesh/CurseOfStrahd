@@ -1342,6 +1342,46 @@
       "refs": [],
       "prompt": "The foot of a black stone stair in a castle's catacombs: a gaunt dead knight commander in battered plate and a ragged blue surcoat lowers his head, and behind him a file of dead knights of the Order on the stair bow their heads with him. Cold shaft of light from far above; dust; release.",
       "use": "a"
+    },
+    "forty_roll": {
+      "refs": [],
+      "prompt": "A castle's great dining hall at night, the long table lined with forty empty chairs, a grey soldier's coat over the back of each. The only living person in the hall is one hooded figure seen from behind at the near end, faceless, who stands reading aloud from a cracked leather book. All round the hall, the dark wood panelling is faintly translucent: behind it, pale grey faces of dead soldiers in grey coats press close, mouths open as if answering. At the head of the table a broad dead captain sits rigid, staring at the book. Candle gold and cold grey-blue ghost light. No other living people, no adventurers, no visible party faces.",
+      "use": "a"
+    },
+    "feast_gift": {
+      "refs": [],
+      "prompt": "A long burned hall under rotted blue banners: at the head of the great table a tall chair carved with a dragon's folded wings stands empty. On the table before it lie a pair of empty plate gauntlets side by side, and across them, laid as carefully as an offering, a long narrow sword-shaped bundle wrapped in faded blue cloth, no longer than a sword, glowing faintly warm through the weave; nothing human-shaped lies on the table. Rows of dead knights sit still and bowed down the dim table. Nobody living is in the picture: no adventurers, no visible faces of the party. Cold moonlight; quiet and reverent.",
+      "use": "a"
+    },
+    "marshal_stand_down": {
+      "refs": [],
+      "prompt": "Misty mountain road before great iron gates: a column of skeletal cavalry has dismounted. Every skeleton rider has climbed down and stands on foot beside his bone horse's head, holding the bridle, lance grounded, perfectly still; not one rider is still in the saddle. Only their skeletal marshal, whose ribs have grown into his bone horse's, stays mounted at the head and lifts a notched blade in a last salute. {party} small on the road before them, seen from behind. Cold grey mist; an army at rest at last.",
+      "use": "a"
+    },
+    "izek_truth": {
+      "refs": [
+        "izek"
+      ],
+      "prompt": "A bare dark room with a narrow cot: the brutal man of the reference sits on the cot facing us, staring at nothing. His RIGHT arm, on the LEFT side of the picture as he faces us, is the scaled red-black fiend's arm, hanging at his side, its clawed hand slowly opening. His LEFT arm, on the RIGHT side of the picture, is an ordinary man's arm, its hand loosely holding a small porcelain doll with red-painted hair. Shelves of dolls with red hair line the wall behind him. One candle. {party} in the doorway, hooded and seen from behind. Stillness after a blow; sorrow in a hard face.",
+      "use": "a"
+    },
+    "ireena_stake": {
+      "refs": [
+        "ireena",
+        "strahd"
+      ],
+      "prompt": "A crypt deep under a castle: Strahd lies grey and still in an open coffin set on blessed earth that smokes beneath him, only his clear eyes moving. Ireena kneels on the edge of the coffin holding a sharpened stake of pale raw wood in both hands, raised point down over his heart (a plain wooden stake, not a knife, not a dagger, no metal), auburn hair loose, her face calm and set. {party} in the shadows behind her, hooded, faces never visible. Cold torchlight; the end of a long story.",
+      "use": "a"
+    },
+    "knights_stair_fallen": {
+      "refs": [],
+      "prompt": "The foot of a black stone stair in a castle's catacombs: a gaunt dead knight commander in battered plate and a ragged blue surcoat lies where he fell, his face at peace for the first time in centuries, his greatsword beside him. Grey dust settles; one cold shaft of light from far above. Nobody living is in the picture: no adventurers, no visible faces of the party.",
+      "use": "a"
+    },
+    "knights_stair_salute": {
+      "refs": [],
+      "prompt": "A black stone stair in a castle's catacombs: dead knights of the Order in battered plate and ragged blue surcoats line the stair and raise their swords together in salute, blades catching a cold shaft of light from far above. Solemn triumph. Nobody living is in the picture: no adventurers, no visible faces of the party.",
+      "use": "a"
     }
   }
 }
