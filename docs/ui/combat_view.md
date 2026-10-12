@@ -318,3 +318,11 @@ shows on the Spells tab: a Bonus Action on a later turn, no slot, the same Conce
 with the usual target picker (on a pad, the slot like any other); Hunter's Mark needs one the caster can see. Hex's
 curse on the chosen ability's checks goes with it (`SpellSustained` move_mark). Until the target drops the slot stays
 off the bar (`waiting`). A foe the AI plays moves its mark to the nearest foe it can see (`AiBrain._move_mark`).
+
+## Hiding the action bar (owner, 2026-10-12)
+
+The ▾ at the bar's top right (or H; on a pad, Y while the radial is held) hides the action bar down to a slim strip on
+the bottom edge: the hero's name, the Action, Bonus Action and Reaction shapes, movement, the turn note and the ▴ that
+brings it back. End Turn and Undo move stay where they are. It stays hidden from turn to turn, and fight to fight for
+the session, until the player shows it, or something needs them in it: a prompt, a death save, a step through the
+slots or the tabs (`CombatHud.toggle_actions`, `show_actions`).

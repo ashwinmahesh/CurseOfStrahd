@@ -42,9 +42,9 @@ const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
 	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Click a portrait in the turn order to look at that creature. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
-	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
+	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_toggle_hud} hides or shows your actions for a clear view (the ▾ on the bar too) · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms · {camera_tactical} the tactical view from above, and back.",
-	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; {@combat_next_target} while holding it looks along the turn order, the camera going to each in turn; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
+	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; {@combat_next_target} while holding it looks along the turn order, the camera going to each in turn, and {@combat_end_turn} hides or shows your actions; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
 	"Reactions always ask unless you set a rule: in the prompt (Next time: Ask me / Always use it / Never), or on the Reactions tab, where a click on a rule steps it through Ask, Automatic and Off on any turn. A slot with a gilt corner holds choices: click it to pick one.",
 ]
 
@@ -116,6 +116,13 @@ var _portraits: Dictionary = {}
 static var log_minimized := false
 ## It opens compact, over the top right only, and grows to its full height on a click (also for the session).
 static var log_tall := false
+## The action bar hidden to a slim strip for a clear view of the field (owner, 2026-10-12): kept from turn to turn
+## (and fight to fight, for the session) until the player shows it, or something needs them in it (toggle_actions).
+static var actions_hidden := false
+var _hot_panel: PanelContainer
+var _hot_portrait: Control
+var _hot_body: HBoxContainer
+var _hide_btn: Button
 const LOG_BOTTOM := 600.0
 ## The reaction prompt: its width, and its bottom edge (above the hotbar, whose top is 244 px up).
 const PROMPT_WIDTH := 440.0
@@ -264,6 +271,39 @@ func _build_log() -> void:
 	_apply_log_state()
 
 
+## Hides the action bar down to a slim strip (the hero's name, the Action, Bonus Action and Reaction shapes, movement and
+## the button that brings it back) for a clear view of the field, or shows it again (owner, 2026-10-12: "Allow
+## minimizing the combat HUD with the players actions"). The H key; LB + Y on a pad.
+func toggle_actions() -> void:
+	actions_hidden = not actions_hidden
+	_apply_actions_state()
+
+
+## Brings the action bar back when something needs the player in it: a prompt, a death save, a step through the slots
+## or the tabs.
+func show_actions() -> void:
+	if actions_hidden:
+		actions_hidden = false
+		_apply_actions_state()
+
+
+func _apply_actions_state() -> void:
+	_hot_portrait.visible = not actions_hidden
+	_hot_stats.visible = not actions_hidden
+	_hot_body.visible = not actions_hidden
+	# Hidden, the strip sits on the bottom edge and takes its top row's height; shown, the bar as it was built.
+	_hot_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN if actions_hidden else Control.GROW_DIRECTION_END
+	_hot_panel.offset_bottom = -6.0 if actions_hidden else -48.0
+	_hot_panel.offset_top = _hot_panel.offset_bottom if actions_hidden else -244.0
+	_hide_btn.text = "▴" if actions_hidden else "▾"
+	_hide_btn.tooltip_text = ("Show your actions (%s)" if actions_hidden else "Hide your actions for a clear view of the field (%s)") \
+		% InputActions.key_text(&"combat_toggle_hud")
+	if actions_hidden:
+		_slot_box.visible = false
+	elif shown != null:
+		_refresh_hotbar()
+
+
 ## Minimizes the log to its title bar (showing the latest line) or restores it. Remembered for the session.
 func toggle_log() -> void:
 	log_minimized = not log_minimized
@@ -304,6 +344,7 @@ func _build_hotbar() -> void:
 	panel.offset_top = -244
 	panel.offset_bottom = -48
 	add_child(panel)
+	_hot_panel = panel
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	panel.add_child(row)
@@ -346,11 +387,13 @@ func _build_hotbar() -> void:
 	_weapons.position = Vector2(84, 50)
 	holder.add_child(_weapons)
 	card.add_child(holder)
+	_hot_portrait = holder
 	_hot_stats = _label("", 15, "vellum")
 	card.add_child(_hot_stats)
 	row.add_child(card)
 	var mid := VBoxContainer.new()
 	mid.add_theme_constant_override("separation", 4)
+	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL   # hidden to its top row, it still spans the bar
 	row.add_child(mid)
 	var top := HBoxContainer.new()
 	top.add_theme_constant_override("separation", 16)
@@ -403,10 +446,18 @@ func _build_hotbar() -> void:
 	_turn_note.clip_text = true
 	_turn_note.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	top.add_child(_turn_note)
+	# Hides the bar down to this row, or brings it back (the H key; LB + Y on a pad).
+	_hide_btn = Button.new()
+	_hide_btn.custom_minimum_size = Vector2(34, 28)
+	_hide_btn.focus_mode = Control.FOCUS_NONE
+	_hide_btn.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	_hide_btn.pressed.connect(toggle_actions)
+	top.add_child(_hide_btn)
 	# The filters down the left, the slots beside them: Baldur's Gate 3's bar with our icon-and-name slots (Ashwin's mix).
 	var body := HBoxContainer.new()
 	body.add_theme_constant_override("separation", 8)
 	mid.add_child(body)
+	_hot_body = body
 	_tabs = GridContainer.new()
 	_tabs.columns = 1
 	_tabs.add_theme_constant_override("h_separation", 2)
@@ -466,6 +517,7 @@ func _build_hotbar() -> void:
 	_death_button.custom_minimum_size = Vector2(260, 48)
 	_death_button.pressed.connect(func() -> void: death_save_pressed.emit())
 	mid.add_child(_death_button)
+	_apply_actions_state()
 
 
 func _build_tooltip() -> void:
@@ -875,6 +927,8 @@ func _refresh_hotbar() -> void:
 	# A dying hero has nothing else to do: the Death Saving Throw takes the action slots' place inside the bar (owner
 	# report 2026-10-07: added under them, it pushed the bar past the bottom of the screen).
 	var dying := mine and e.needs_death_save(c)
+	if dying:
+		show_actions()
 	_death_button.visible = dying
 	_tabs.visible = not dying
 	_slot_scroll.visible = not dying
@@ -1132,7 +1186,7 @@ func _refresh_slot_pips(c: Combatant) -> void:
 		var left := c.creature.resource_left(str(rid))
 		chips.append(_pip_chip(str(r.get("name", rid)), most, left, "gilt_light",
 			"%s: %d of %d left (back after a %s rest)" % [r.get("name", rid), left, most, "Short or Long" if str(r.get("recharge", "")) == "short" else "Long"]))
-	_slot_box.visible = not chips.is_empty()
+	_slot_box.visible = not chips.is_empty() and not actions_hidden
 	var room := 1120.0
 	var used := 0.0
 	var rest: Array[String] = []
@@ -1501,6 +1555,7 @@ func _tab_of(a: Dictionary) -> String:
 func cycle_tab(step: int) -> void:
 	if shown == null:
 		return
+	show_actions()
 	var tabs := filters(shown)
 	tab = tabs[posmod(tabs.find(tab) + step, tabs.size())]
 	focus_slot = -1
@@ -1510,12 +1565,14 @@ func cycle_tab(step: int) -> void:
 func set_tab(name_: String) -> void:
 	tab = name_
 	focus_slot = 0
+	show_actions()
 	_refresh_hotbar()
 
 
 func move_focus(step: int) -> void:
 	if _slot_actions.is_empty():
 		return
+	show_actions()
 	focus_slot = posmod(focus_slot + step, _slot_actions.size())
 	_refresh_hotbar()
 
@@ -1678,6 +1735,7 @@ func show_odds(chance: float, damage: String, edge: String, at: Vector2) -> void
 
 func show_prompt(req: ReactionRequest) -> void:
 	hide_tooltip()
+	show_actions()   # a choice to make: the bar comes back with it
 	var reactor := e.get_c(req.reactor_id)
 	if reactor != null and reactor.is_player_controlled():
 		shown = reactor

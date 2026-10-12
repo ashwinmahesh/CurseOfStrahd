@@ -1184,6 +1184,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			hud.close_confirm()
 			_confirmed_end = false
 		return
+	# Holding the radial, Y hides or shows the action bar (the H key on a pad; Y alone still ends the turn).
+	if hud.radial.visible and event is InputEventJoypadButton and event.is_action_pressed(&"combat_end_turn"):
+		hud.toggle_actions()
+		get_viewport().set_input_as_handled()
+		return
 	if pad.handle(event):   # the pad's menu, controls, undo, square menu and death saves (U6)
 		get_viewport().set_input_as_handled()
 		return
@@ -1275,6 +1280,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		_cycle_inspect()
 	elif event.is_action_pressed(&"combat_toggle_log"):
 		hud.toggle_log()
+	elif event.is_action_pressed(&"combat_toggle_hud"):
+		hud.toggle_actions()
 	else:
 		for i in 10:
 			if event.is_action_pressed(StringName("combat_slot_%d" % (i + 1))):
