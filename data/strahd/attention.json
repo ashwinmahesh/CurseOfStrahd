@@ -110,7 +110,7 @@
     },
     {
       "id": "kiril",
-      "when": "flag.kiril_defeated",
+      "when": "flag.kiril_defeated or flag.den_broken",
       "points": 1,
       "summary": "Kiril, whose pack hunts for him, dead."
     },

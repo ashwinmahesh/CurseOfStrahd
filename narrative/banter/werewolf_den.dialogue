@@ -45,7 +45,7 @@ endif
 ~ banter_kiril_won
 if flag.wolf_pack_leader == "kiril"
 interject tag:pious: We walked out of there and left him on top. I'll be praying about that for a long while.
-if flag.den_children_left
+if flag.den_children_left and not flag.den_children_freed
 interject class:fighter: Eleven days to the full moon. I'll be watching the sky every one of them.
 endif
 endif
