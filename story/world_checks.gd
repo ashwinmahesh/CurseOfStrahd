@@ -256,16 +256,14 @@ static func record(st: StoryState, loc_id: String, check: Dictionary, who: Chara
 
 ## Does the part of an outcome (a check's `success` or `failure`) that lives in the story, for `who`: items and gold to
 ## them, a flag, a codex entry, Heroic Inspiration, healing or harm, time lost. Returns {gains: [String] for a toast,
-## lines: [String] for the roll log}.
+## lines: [String] for the roll log}. Items aren't in `gains`: each has its own notice (StoryState.gain_item).
 static func apply(st: StoryState, outcome: Dictionary, who: Character, dice: DiceRoller, source: String) -> Dictionary:
 	var gains: Array[String] = []
 	var lines: Array[String] = []
-	var comp := Compendium.shared()
 	for e: Variant in outcome.get("items", []):
 		var entry := e as Dictionary
 		var qty := int(entry.get("qty", 1))
-		st.give_item(str(entry["id"]), qty, who)
-		gains.append("%s%s" % [comp.display_name("items", str(entry["id"])), " x%d" % qty if qty > 1 else ""])
+		st.gain_item(str(entry["id"]), qty, who)
 	if float(outcome.get("gold", 0)) > 0.0:
 		st.gold += float(outcome["gold"])
 		gains.append("%d gold" % int(outcome["gold"]))
