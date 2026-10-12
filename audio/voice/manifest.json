@@ -34474,6 +34474,13 @@
   "recipe": "b6ee845820",
   "text": "I used to know a hundred spells by heart. Now I know forty, and a great deal about soup. The soup may yet be useful."
  },
+ "mordenkainen/0e9a9ed3da5a5986": {
+  "chars": 123,
+  "direction": "[pleased, then troubled, musing]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "Interesting. My name came back, and nearly everything with it. Almost. There are pages missing. Not from the book. From me."
+ },
  "mordenkainen/118fa3e7ce0b5eab": {
   "chars": 200,
   "direction": "[wry, rueful]",
@@ -34487,6 +34494,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "Go on. And stay out of jars."
+ },
+ "mordenkainen/13ecc6206123dcc6": {
+  "chars": 87,
+  "direction": "[grave, wistful, sudden lucidity]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "One more thing, before we go down. There are pages missing. Not from the book. From me."
  },
  "mordenkainen/1da8112931c4a8aa": {
   "chars": 169,
@@ -36022,6 +36036,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under the ledge, where they left their bundles for the climb, there are nine purses of temple offerings nobody ever made."
+ },
+ "narrator/03a0155074c52432": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back."
  },
  "narrator/03a7927ab45b417d": {
   "chars": 130,
