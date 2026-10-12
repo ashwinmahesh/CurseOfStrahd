@@ -26,3 +26,65 @@ func test_ireena_is_not_the_noble() -> void:
 	assert_eq(CombatToken.art_for(cr), "ireena")
 	var c := Combatant.new(cr, &"guest", Vector2i.ZERO)
 	assert_eq(CombatToken.art_id(c), "ireena", "the HUD's portrait and the token both read this")
+
+
+
+## A guest in a fight, with a foe in view; the events the board would play are cleared.
+func _guest(e: Encounter, npc_id: String) -> Combatant:
+	var c := e.add(StoryState.make_guest(npc_id), &"guest", Vector2i(2, 2))
+	TestCombat.foe(e, "zombie", Vector2i(5, 2))
+	TestCombat.start_with(e, c)
+	e.events.clear()
+	return c
+
+
+func _forms(e: Encounter, c: Combatant) -> Array:
+	return e.events.filter(func(ev: Dictionary) -> bool: return str(ev.get("type", "")) == "form" and str(ev.get("id", "")) == c.id)
+
+
+func test_a_martikov_who_changes_in_a_fight_wears_the_wereraven_hybrid() -> void:
+	# Owner ask, 2026-10-12: the wereravens' change should show. They fight in their own clothes until they shift.
+	assert_true(DirectionalSprite.frames_for("wereraven") != null, "the hybrid has a figure to swap to")
+	assert_true(ResourceLoader.exists("res://art/portraits/wereraven.png"), "and a portrait")
+	for id: String in ["adrian_martikov", "davian_martikov", "ilinca_vrana"]:
+		var e := TestCombat.open_field()
+		var c := _guest(e, id)
+		var ids := e.feature_actions.list(c).map(func(x: Dictionary) -> String: return str(x["id"]))
+		assert_true("feat:creature:shape_shift" in ids, "%s can Shape-Shift" % id)
+		var r := e.feature_actions.perform(c, "creature:shape_shift", null, Vector2.INF)
+		assert_true(r.ok, "%s shifts (%s)" % [id, r.reason])
+		assert_eq(str(c.get_meta("form", "")), "hybrid")
+		assert_false(c.bonus_available, "a Bonus Action")
+		var forms := _forms(e, c)
+		assert_eq(forms.size(), 1, "%s's token changes" % id)
+		if forms.size() == 1:
+			assert_eq(str((forms[0] as Dictionary).get("art", "")), "wereraven", "%s becomes the hybrid" % id)
+		var beak := (c.creature as Monster).action("beak")
+		assert_eq(e.monster_actions.why_not(c, beak), "", "and fights with the beak")
+		# And back, on a later turn.
+		c.bonus_available = true
+		e.events.clear()
+		assert_true(e.feature_actions.perform(c, "creature:shape_shift", null, Vector2.INF).ok)
+		assert_eq(str(c.get_meta("form", "")), "humanoid", "%s is a man or woman again" % id)
+		forms = _forms(e, c)
+		assert_true(forms.size() == 1 and str((forms[0] as Dictionary).get("art", "x")) == "", "their own figure again")
+
+
+func test_emil_keeps_his_own_figure_when_he_changes() -> void:
+	var e := TestCombat.open_field()
+	var c := _guest(e, "emil_toranescu")
+	assert_true(e.feature_actions.perform(c, "creature:shape_shift", null, Vector2.INF).ok)
+	assert_eq(str(c.get_meta("form", "")), "hybrid", "he changes")
+	assert_true(_forms(e, c).is_empty(), "his stat block is his own, so his token stays")
+
+
+func test_an_enemy_lycanthrope_still_changes_on_its_own() -> void:
+	var e := TestCombat.open_field()
+	var w := TestCombat.foe(e, "werewolf", Vector2i(3, 3))
+	TestCombat.hero(e, "silvain_aster", Vector2i(1, 3))
+	TestCombat.start_with(e, w)
+	w.bonus_available = true
+	e.events.clear()
+	e.monster_actions.bonus_action(w, "shift")
+	assert_eq(str(w.get_meta("form", "")), "hybrid")
+	assert_true(_forms(e, w).is_empty(), "it already looks the part")
