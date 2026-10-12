@@ -497,6 +497,10 @@
       "kind": "decor",
       "label": "A black horse",
       "model": "horse",
+      "span": [
+        2,
+        1
+      ],
       "when": "flag.strahd_invitation != \"accepted\""
     },
     {
