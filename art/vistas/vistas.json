@@ -1,5 +1,5 @@
 {
-  "about": "What lies past a map's edge, seen when the camera tilts toward the horizon past its farthest zoom (Improvement Ideas W13, Vista, docs/art/atmosphere.md 'Vistas'). places: where each outdoor location lies on the travel art (fractions, x east, y south; from data/travel, with the places it leaves out set near their neighbours), so landmarks stand at their true bearing. castle: Castle Ravenloft on its crag (where it stands, the farthest it shows from, its art). lake: Lake Zarovich (where, how big, and from how far it shows). styles: the mountains round the valley for each set of plants (art/plants/flora.json), four ridges from the farthest to the nearest, each [height, rise, roughness, haze] in world units on a ring radius units out (the farthest tops out about 4 to 5 degrees above the tilted camera's eye, leaving the top quarter of the frame to the sky), with snow above snow_line and a fringe of trees on the nearer ridges (treeline).",
+  "about": "What lies past a map's edge, seen when the camera tilts toward the horizon past its farthest zoom (Improvement Ideas W13, Vista, docs/art/atmosphere.md 'Vistas'). places: where each outdoor location lies on the travel art (fractions, x east, y south; from data/travel, with the places it leaves out set near their neighbours), so landmarks stand at their true bearing. castle: Castle Ravenloft on its crag (where it stands, the farthest it shows from, its art). landmarks: each region's own painted landmark (the vault's Region Variety Plan; tools/art/build_vistas.py), shown from places within `within` of it and farther than `near` (a mountain isn't seen from its own slopes), the nearest four at most (Vista.MAX_LANDMARKS), none in front of another. lake: Lake Zarovich (where, how big, and from how far it shows). styles: the mountains round the valley for each set of plants (art/plants/flora.json), four ridges from the farthest to the nearest, each [height, rise, roughness, haze] in world units on a ring radius units out (the farthest tops out about 4 to 5 degrees above the tilted camera's eye, leaving the top quarter of the frame to the sky), with snow above snow_line and a fringe of trees on the nearer ridges (treeline).",
   "radius": 230.0,
   "places": {
     "into_the_mists_road": [0.93, 0.5],
@@ -65,6 +65,17 @@
     "sink": 6.0,
     "art": "art/vistas/castle_ravenloft.png"
   },
+  "landmarks": {
+    "mount_ghakis": {"at": [0.37, 0.09], "within": 0.45, "near": 0.06, "distance": 200.0, "height": 40.0, "sink": 8.0, "art": "art/vistas/mount_ghakis.png"},
+    "mount_baratok": {"at": [0.17, 0.11], "within": 0.4, "near": 0.06, "distance": 200.0, "height": 38.0, "sink": 8.0, "art": "art/vistas/mount_baratok.png"},
+    "abbey": {"at": [0.07, 0.36], "within": 0.25, "distance": 170.0, "height": 34.0, "sink": 6.0, "art": "art/vistas/abbey.png"},
+    "krezk": {"at": [0.075, 0.48], "within": 0.22, "distance": 170.0, "height": 26.0, "sink": 5.0, "art": "art/vistas/krezk.png"},
+    "vallaki": {"at": [0.32, 0.48], "within": 0.2, "distance": 160.0, "height": 17.0, "sink": 3.0, "art": "art/vistas/vallaki.png"},
+    "argynvostholt": {"at": [0.455, 0.23], "within": 0.25, "distance": 170.0, "height": 24.0, "sink": 4.0, "art": "art/vistas/argynvostholt.png"},
+    "yester_hill": {"at": [0.152, 0.578], "within": 0.22, "distance": 170.0, "height": 24.0, "sink": 4.0, "art": "art/vistas/yester_hill.png"},
+    "bonegrinder": {"at": [0.69, 0.24], "within": 0.3, "distance": 160.0, "height": 28.0, "sink": 5.0, "art": "art/vistas/bonegrinder.png"},
+    "van_richtens_tower": {"at": [0.158, 0.254], "within": 0.2, "distance": 150.0, "height": 28.0, "sink": 5.0, "art": "art/vistas/van_richtens_tower.png"}
+  },
   "lake": {
     "at": [0.2, 0.4],
     "within": 0.16,
@@ -72,6 +83,106 @@
     "size": [80.0, 46.0]
   },
   "styles": {
+    "woods": {
+      "layers": [
+        [14, 9, 1.6, 0.8],
+        [9, 6, 2.6, 0.6],
+        [4, 4, 4.5, 0.38],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 22,
+      "treeline": 1.0
+    },
+    "village": {
+      "layers": [
+        [14, 9, 1.6, 0.8],
+        [9, 6, 2.6, 0.6],
+        [4, 4, 4.5, 0.38],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 22,
+      "treeline": 0.8
+    },
+    "autumn": {
+      "layers": [
+        [13, 8, 1.6, 0.8],
+        [8, 6, 2.6, 0.6],
+        [3, 4, 4.5, 0.38],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 24,
+      "treeline": 0.9
+    },
+    "graves": {
+      "layers": [
+        [13, 8, 1.8, 0.8],
+        [8, 6, 3.0, 0.6],
+        [4, 4, 5.0, 0.38],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 60,
+      "treeline": 0.5
+    },
+    "vineyard": {
+      "layers": [
+        [12, 7, 1.4, 0.82],
+        [7, 5, 2.2, 0.62],
+        [3, 3, 3.5, 0.4],
+        [-1, 2, 6.0, 0.18]
+      ],
+      "snow_line": 60,
+      "treeline": 0.6
+    },
+    "heath": {
+      "layers": [
+        [11, 6, 1.4, 0.84],
+        [6, 4, 2.2, 0.66],
+        [2, 3, 3.5, 0.44],
+        [-1, 2, 6.0, 0.22]
+      ],
+      "snow_line": 60,
+      "treeline": 0.2
+    },
+    "sick": {
+      "layers": [
+        [13, 8, 1.8, 0.8],
+        [8, 6, 3.0, 0.6],
+        [4, 4, 5.0, 0.38],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 60,
+      "treeline": 0.4
+    },
+    "spectral": {
+      "layers": [
+        [14, 9, 1.8, 0.78],
+        [9, 6, 3.0, 0.58],
+        [4, 4, 5.0, 0.36],
+        [-1, 3, 8.0, 0.16]
+      ],
+      "snow_line": 18,
+      "treeline": 0.3
+    },
+    "rock": {
+      "layers": [
+        [17, 10, 2.2, 0.76],
+        [11, 7, 3.4, 0.56],
+        [5, 5, 5.5, 0.36],
+        [0, 3, 8.0, 0.16]
+      ],
+      "snow_line": 24,
+      "treeline": 0.3
+    },
+    "rock_snow": {
+      "layers": [
+        [18, 11, 2.4, 0.72],
+        [12, 8, 3.4, 0.52],
+        [6, 6, 5.0, 0.34],
+        [1, 4, 7.0, 0.16]
+      ],
+      "snow_line": 14,
+      "treeline": 0.15
+    },
     "forest": {
       "layers": [
         [14, 9, 1.6, 0.8],

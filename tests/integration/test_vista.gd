@@ -67,6 +67,36 @@ func test_landmarks_stand_where_they_are() -> void:
 	gates.queue_free()
 
 
+## Each region's own landmark on the horizon (the vault's Region Variety Plan): Van Richten's tower toward its bearing
+## from the lake shore, the windmill from the village, none from its own place nor a mountain from its own slopes, and
+## never more than Vista.MAX_LANDMARKS at once.
+func test_each_region_has_its_landmarks() -> void:
+	Look.set_style("modern", false)
+	var lake := _view("lake_zarovich")
+	var vista := lake.atmosphere.land.vista
+	var tower := vista.get_node_or_null("Landmark_van_richtens_tower") as Node3D
+	assert_true(tower != null, "Van Richten's tower seen from the lake shore")
+	var here := Vista.place_at("lake_zarovich") as Vector2
+	var at := ((Vista.config()["landmarks"] as Dictionary)["van_richtens_tower"] as Dictionary)["at"] as Array
+	var want := (Vector2(float(at[0]), float(at[1])) - here).normalized()
+	var got := Vector2(tower.position.x - vista.centre.x, tower.position.z - vista.centre.z).normalized()
+	assert_true(got.dot(want) > 0.99, "the tower stands toward its bearing on the travel art")
+	assert_true(vista.find_children("Landmark_*", "", false, false).size() <= Vista.MAX_LANDMARKS, "a few at most")
+	lake.queue_free()
+	var village := _view("village_of_barovia")
+	assert_true(village.atmosphere.land.vista.get_node_or_null("Landmark_bonegrinder") != null,
+		"Old Bonegrinder's windmill seen from the village")
+	village.queue_free()
+	var hill := _view("old_bonegrinder_hill")
+	assert_true(hill.atmosphere.land.vista.get_node_or_null("Landmark_bonegrinder") == null, "but not from its own hill")
+	hill.queue_free()
+	var shoulder := _view("ghakis_shoulder")
+	if shoulder.atmosphere.land != null and shoulder.atmosphere.land.vista != null:
+		assert_true(shoulder.atmosphere.land.vista.get_node_or_null("Landmark_mount_ghakis") == null,
+			"nor Mount Ghakis from its own slopes")
+	shoulder.queue_free()
+
+
 ## In play the vistas lie past the camera's far plane; they draw after the screen pass, farthest first.
 func test_vistas_cost_nothing_in_play() -> void:
 	Look.set_style("modern", false)
