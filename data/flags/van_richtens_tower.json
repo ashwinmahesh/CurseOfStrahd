@@ -273,6 +273,11 @@
       "summary": "Mircea, Grigor's brother, answered Speak with Dead from the midden below the werewolf den (werewolf_den/mircea.dialogue): Emil's chains, and where his boots came off."
     },
     {
+      "id": "wolfsbane_spoke",
+      "type": "bool",
+      "summary": "The wolfsbane at the den's door answered Speak with Plants (werewolf_den/wolfsbane.dialogue): Zuleika cut some to dry in the caves, and hid a flask among them."
+    },
+    {
       "id": "pack_resolved",
       "type": "bool",
       "summary": "The pack question is settled for now (Kiril's terms accepted, or the aftermath of a fight)."

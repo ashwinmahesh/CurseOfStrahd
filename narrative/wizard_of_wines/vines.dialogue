@@ -1,0 +1,32 @@
+# The last green row of the Wizard of Wines' vineyard (prop east_vines). Speak with Plants (2024 PHB;
+# docs/story/talking_creatures.md): plants tell what passed them in the last day. While the druids hold the winery the
+# vines saw them come down from Yester Hill last night (yester_hill_known), and a druid drop his sickle (vine_sickle).
+
+~ row
+narrate examine:east_vines
+* [if spell:speak_with_plants and not flag.vines_spoke] Ask the vines what came through the rows last night. -> speaks
+* [if not spell:speak_with_plants and not flag.vines_spoke] [knows:speak_with_plants] (Cast Speak with Plants, and ask the vines what came through the rows last night.) -> cast
+* [if spell:speak_with_plants or knows:speak_with_plants] Leave the vines to the frost. -> END
+-> END
+
+~ cast
+cast speak_with_plants
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set vines_spoke
+Narrator: Leaves rustle along the whole row with no wind to move them, and the vines answer in a sleepy, sour murmur, like old men woken too early.
+if flag.winery_reclaimed
+Narrator: "The family walked the rows last night with lamps, and the old man with the ravens counted us twice and wept. Nothing else came. Let us sleep."
+-> END
+endif
+Narrator: "The bark-men came down the rows in the dark, and the walking thorn-trees, and a man in a cloak of leaves who sang to them. They came from the hill with the black tree, and they went back to it before dawn."
+if not flag.yester_hill_known
+set yester_hill_known
+endif
+Narrator: "The ravens went for the singing man's eyes. He dropped his little moon-knife between our roots to beat them off, and never came back for it."
+reveal vine_sickle
+-> END

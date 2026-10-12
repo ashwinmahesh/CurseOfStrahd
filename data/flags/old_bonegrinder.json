@@ -37,6 +37,11 @@
       "summary": "Brother Kesten's bones answered Speak with Dead (old_bonegrinder/kesten.dialogue): the children in the loft, the three words that send Offalia off, and what Bella wants."
     },
     {
+      "id": "hag_garden_spoke",
+      "type": "bool",
+      "summary": "The hags' garden answered Speak with Plants (old_bonegrinder/garden.dialogue): Bella flew home on a broom and hid it in the loft's rafters."
+    },
+    {
       "id": "bonegrinder_recipe_read",
       "type": "bool",
       "summary": "The party read Morgantha's receipt book in the bakery (the special flour, the ledger of who owes)."

@@ -1,0 +1,25 @@
+# The hags' kitchen garden on the hill (prop bonegrinder_hag_garden): belladonna, mandrake, poppies. Speak with Plants
+# (2024 PHB; docs/story/talking_creatures.md): plants tell what passed them in the last day. Last night Bella flew home
+# low over them and hid her broom in the loft's rafters (rafters_broom).
+
+~ garden
+narrate examine:bonegrinder_hag_garden
+* [if spell:speak_with_plants and not flag.hag_garden_spoke and not flag.bella_slain and not flag.bella_fled and not flag.bonegrinder_burned] Ask the garden what went by last night. -> speaks
+* [if not spell:speak_with_plants and not flag.hag_garden_spoke and not flag.bella_slain and not flag.bella_fled and not flag.bonegrinder_burned] [knows:speak_with_plants] (Cast Speak with Plants, and ask the garden what went by last night.) -> cast
+* [if spell:speak_with_plants or knows:speak_with_plants] Leave the garden alone. -> END
+-> END
+
+~ cast
+cast speak_with_plants
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set hag_garden_spoke
+Narrator: The poppies nod, the mandrake leaves curl, and the whole bed answers at once in a sweet, sticky whisper, like a child who knows a secret.
+Narrator: "The round one picked a basket of us at dawn for the baking, and said sorry to each one. She always says sorry."
+Narrator: "The pretty one flew home over us at midnight on a broom, so low she brushed the poppies, and went in at the loft window. She hides it in the rafters, where her mother never looks up."
+reveal rafters_broom
+-> END
