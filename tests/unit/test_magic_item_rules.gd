@@ -241,6 +241,24 @@ func test_treasure_is_the_same_for_a_seed_and_fits_the_level() -> void:
 	assert_true(counts.has("uncommon"))
 
 
+
+## Random treasure spreads its uncommons (owner, 2026-10-12): a kind of item with only one or two to give (the relics)
+## no longer hands them out in a quarter of all rolls, and the withdrawn Amulet of Proof against Detection and
+## Location never comes up.
+func test_no_one_uncommon_dominates_random_treasure() -> void:
+	var counts := {}
+	var rng := DiceRoller.new(12)
+	var n := 2000
+	for i in n:
+		var id := str(Treasure.roll_item(rng, 2).get("id", ""))
+		var base := id.get_slice("__", 0) if not id.begins_with("spell_scroll") else "spell_scroll"
+		counts[base] = int(counts.get(base, 0)) + 1
+	assert_false(counts.has("amulet_of_proof_against_detection_and_location"))
+	for id: String in counts:
+		if id != "spell_scroll":
+			assert_true(int(counts[id]) < n * 0.05, "%s came up %d times in %d" % [id, counts[id], n])
+
+
 func test_charges_come_back_when_the_clock_passes_dawn() -> void:
 	var st := StoryState.new()
 	var ch := TestChars.pregen("silvain_aster", 5)

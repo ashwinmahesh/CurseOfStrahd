@@ -122,10 +122,18 @@ static func roll_item(rng: DiceRoller, level: int) -> Dictionary:
 		rchoices.append({"r": r, "weight": float(weights[r])})
 	var rarity := str(_weighted(rng, rchoices, "Treasure rarity").get("r", "uncommon"))
 	var by_theme := pools().get(rarity, {}) as Dictionary
+	# Each kind of item (theme) gets an even share, except one with only a handful of items to give: its share shrinks
+	# with its pool (theme_full_weight), so none of them turns up in one roll in five (owner, 2026-10-12: the Amulet of
+	# Proof against Detection and Location was 3 of every 4 uncommon relics).
+	var full := float(config().get("theme_full_weight", 8.0))
 	var themes: Array = []
 	for th: String in THEMES:
-		if not (by_theme.get(th, []) as Array).is_empty():
-			themes.append({"t": th, "weight": 1.0})
+		var pool := by_theme.get(th, []) as Array
+		if not pool.is_empty():
+			var total := 0.0
+			for it: Variant in pool:
+				total += float((it as Dictionary)["weight"])
+			themes.append({"t": th, "weight": minf(1.0, total / full)})
 	if themes.is_empty():
 		return {}
 	var theme := str(_weighted(rng, themes, "Treasure theme")["t"])
