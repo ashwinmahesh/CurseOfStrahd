@@ -153,6 +153,48 @@
       "text": "Vladimir's knights keep their grudge and their watch on the castle road. Their hate has outlived everything else about them."
     },
     {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == escaped",
+      "text": "Nadia Boteanu got home to Vallaki. She lights the lamps along Main Street at dusk, and never once looks up at the castle."
+    },
+    {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == waits",
+      "text": "Nadia Boteanu waited in her cell for someone to come back for her. In the end someone did: the count, at dinnertime."
+    },
+    {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == sent_alone",
+      "text": "Nadia Boteanu never reached the castle gates. Someone else lights the lamps in Vallaki now, and leaves one dark for her."
+    },
+    {
+      "topic": "doru",
+      "title": "Doru",
+      "portrait": "doru",
+      "when": "flag.larders_doru_fate == rest",
+      "text": "Father Donavich never learns how his son ended, only that strangers gave him an end. It is more than the count ever gave him."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_slain",
+      "text": "The castle kitchen stays cold. The count finds another cook. They never last as long."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_met",
+      "text": "Cyrus Belview keeps the soup on. The master is pleased with him, for now, and the cells below are never empty for long."
+    },
+    {
       "topic": "amber",
       "title": "The Amber Temple",
       "portrait": "exethanter",

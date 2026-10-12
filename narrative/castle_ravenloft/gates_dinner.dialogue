@@ -7,6 +7,10 @@
 if flag.castle_dinner
 -> END
 endif
+if flag.crg_dinner_excused
+Strahd [smile]: You came back. I had the soup kept warm.
+-> table
+endif
 cutscene dinner_organ
 Narrator: The organ stops in the middle of a phrase. The man at the keys closes the lid, gently, and turns on the bench.
 quest dinner_at_castle_ravenloft seated
@@ -83,7 +87,14 @@ cutscene dinner_toast
 * [name:ratatoille] [if not flag.ratatoille_dinner_tasted] Taste the food, critically. -> companions/table:dinner
 * [name:kip_smudgewick] [if quest.the_fine_print >= the_small_print and not flag.kip_strahd_signed and not (quest.the_fine_print >= free)] Ask Strahd to sign something. -> companions/fine_print:dinner
 * Thank him for his hospitality. -> thanks
+* (Excuse yourselves from the table for now.) -> excuse
 * Draw on him. -> affront
+
+# Leaving is always there (castle_ravenloft_gates.md §5; Wiki finding 51): the table keeps, and so does he.
+~ excuse
+set crg_dinner_excused
+Strahd: Of course. Walk about; stretch your legs. The table will keep, and so will I.
+-> END
 
 ~ why
 Strahd: Because you are the most interesting thing to happen in my valley for a very long time. And because I wanted to see you up close. Before.
