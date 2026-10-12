@@ -670,6 +670,7 @@
   "22c0cefb472c4e7c": "[moved, gruff, awed]",
   "23a0a6f576598eab": "[gruff, curt]",
   "28bcdec5fdddc375": "[gruff, determined]",
+  "29a7336dd53365c1": "[gruff, moved, proud]",
   "2b972daa8bca7e8e": "[stern, businesslike]",
   "2e561dd67d2df5f9": "[gruff, fond, wry]",
   "3777b0e2913650af": "[proud, stern, wry]",
@@ -682,6 +683,7 @@
   "4540aa248de7ea06": "[proud, moved, gruff]",
   "45f43798b7b71c3e": "[dry, sly]",
   "468fcccd31bbb157": "[grim, angry]",
+  "4d5856e8b79a6105": "[gruff, wry, hopeful]",
   "4df6d5640f3dd541": "[gruff, wary, low]",
   "4fb5a58643bd8552": "[angry, hurt]",
   "52d18762d2e55b42": "[gruff, dry, grudging]",
@@ -739,6 +741,7 @@
   "beece6da2670e83b": "[angry, proud, cold]",
   "bfa4ddc3022716d8": "[gruff, bitter, dry]",
   "c13b291b499f258c": "[calling out, joyful]",
+  "c2819df566c2def0": "[gruff, moved, grateful]",
   "c3f41c9dba707a5e": "[grave, hopeful]",
   "c46a3c183e9d8d6d": "[stern, warning]",
   "c718193e22f5214e": "[gruff, curt]",
@@ -766,6 +769,7 @@
   "ffb205836f61f052": "[gruff, wry, grateful]"
  },
  "dmitri_krezkov": {
+  "10c277663f730110": "[warm, welcoming, dignified]",
   "11ddf6131e28e94a": "[breaking, anguished]",
   "21600fa05176489b": "[incredulous, weary]",
   "2466c58c24dc6ee8": "[firm, regretful]",
@@ -1635,6 +1639,7 @@
   "0046292684ec4004": "[weary, guilty]",
   "12c21386ed5b35db": "[dry, stubborn]",
   "24db376d4d42af01": "[uneasy, curt]",
+  "29e4cd128ae72f14": "[urgent, calling out, glad]",
   "2f134c9582c66ff4": "[nervous, gruff]",
   "312c0d5358c752f3": "[stern, rough]",
   "3180b839011852a9": "[angry, stern]",
@@ -4163,6 +4168,7 @@
  },
  "yester_zorica": {
   "34563429556bba65": "[quiet, horrified, small]",
+  "ae3331f2ec7f6577": "[bitter, grieving, accusing]",
   "b92943959268ea97": "[stubborn, proud, trembling]",
   "c43f5336a1545391": "[fierce, grieving, accusing]",
   "d55b01402dbf29c9": "[defiant, cold, shaking]"

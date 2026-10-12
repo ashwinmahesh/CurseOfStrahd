@@ -6895,6 +6895,13 @@
   "recipe": "ade4614ea1",
   "text": "Now come and do the same to the ones sleeping in my house."
  },
+ "davian_martikov/29a7336dd53365c1": {
+  "chars": 104,
+  "direction": "[gruff, moved, proud]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "Three. All three in the ground again. My grandfather never lived to see that. I'll drink to him tonight."
+ },
  "davian_martikov/2b972daa8bca7e8e": {
   "chars": 201,
   "direction": "[stern, businesslike]",
@@ -6978,6 +6985,13 @@
   "model": "eleven_v3",
   "recipe": "ade4614ea1",
   "text": "One was stolen last autumn. The ravens followed the thief to Berez, the drowned village by the river, to the witch who lives there. One the druids carried off to their hill. The last I hid the night we fled."
+ },
+ "davian_martikov/4d5856e8b79a6105": {
+  "chars": 115,
+  "direction": "[gruff, wry, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "One in the ground. My grandfather swore a vine only needs one good reason to keep going. We'll see if he was right."
  },
  "davian_martikov/4df6d5640f3dd541": {
   "chars": 88,
@@ -7378,6 +7392,13 @@
   "recipe": "ade4614ea1",
   "text": "Stefania! Bring the children. We're going home."
  },
+ "davian_martikov/c2819df566c2def0": {
+  "chars": 181,
+  "direction": "[gruff, moved, grateful]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "From the witch. From Berez. You went into that drowned place for my vines. It isn't three, not yet. But it's one more than I had this morning, and I find I'm in less of a hurry now."
+ },
  "davian_martikov/c3f41c9dba707a5e": {
   "chars": 93,
   "direction": "[grave, hopeful]",
@@ -7570,6 +7591,13 @@
   "model": "eleven_v3",
   "recipe": "0b290f8aaa",
   "text": "The road ends here. The mountains don't. Everything that comes down out of them, or up the road at us, meets the wall first. That's what a wall is for."
+ },
+ "dmitri_krezkov/10c277663f730110": {
+  "chars": 135,
+  "direction": "[warm, welcoming, dignified]",
+  "model": "eleven_v3",
+  "recipe": "0b290f8aaa",
+  "text": "Dmitri Krezkov, burgomaster. The Martikovs' wine, and the people who walked it up the road. Come in, all of you. You and the wine both."
  },
  "dmitri_krezkov/11ddf6131e28e94a": {
   "chars": 122,
@@ -28976,6 +29004,13 @@
   "recipe": "1d8817fed7",
   "text": "Fine. Go. And if the Abbot asks, I never saw you. I'd rather he didn't ask."
  },
+ "krezk_guard/29e4cd128ae72f14": {
+  "chars": 63,
+  "direction": "[urgent, calling out, glad]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "The Martikovs' cart? Get that gate open! Somebody fetch Dmitri!"
+ },
  "krezk_guard/2f134c9582c66ff4": {
   "chars": 111,
   "direction": "[nervous, gruff]",
@@ -36995,6 +37030,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Ireena lifts the spoon, stops, and sniffs."
+ },
+ "narrator/0b3af36c233ec11a": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Shouting behind the gate. A broad, grey-bearded man in a sheepskin comes out through the wicket at a run and stops with his hand on the first barrel, as if to check it's real."
  },
  "narrator/0b4b73dafd02f01c": {
   "chars": 136,
@@ -86425,6 +86466,13 @@
   "model": "eleven_v3",
   "recipe": "20fdc7ff9c",
   "text": "(She looks at her own hands. The skin of her wrist is threaded with fine red lines, where the twig lay.) It never died. It just... went into me instead."
+ },
+ "yester_zorica/ae3331f2ec7f6577": {
+  "chars": 160,
+  "direction": "[bitter, grieving, accusing]",
+  "model": "eleven_v3",
+  "recipe": "20fdc7ff9c",
+  "text": "You burned it. You burned Mother's tree, and Mother's gone where none of us can find her. I was on the Krezk road for herbs. I came back and the hill was black."
  },
  "yester_zorica/b92943959268ea97": {
   "chars": 141,
