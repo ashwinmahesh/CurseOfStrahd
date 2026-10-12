@@ -60,6 +60,10 @@ if flag.ilarion_met
 Narrator: You've seen that mark before: on a pair of good grey boots, on a young man by the edge of the fog who asked you what day it was.
 endif
 Erno: Gran had a nanny called Snowdrop, when she was little. Great-grandad took her with him the night he went into the fog. Gran says she still hears the bell sometimes, at the edge of the mists. (He swallows.) Gran says a lot of things.
+# Once the wolves are beaten, the bell leads back to choosing where she goes, not to another fight (Wiki finding 9).
+if flag.pasture_wolves_beaten
+-> after
+endif
 -> wolves_come
 
 ~ snowdrop_cast

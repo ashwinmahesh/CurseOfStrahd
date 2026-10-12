@@ -150,6 +150,7 @@ Lady Wachter: Do come again. Bring an appetite and an open mind; I can supply ev
 -> END
 
 ~ cold
+set lady_wachter_met
 Narrator: The parlour is cold. The ring of chairs has been turned to face the wall, and Lady Wachter sits alone in black, with no tea.
 Lady Wachter: You killed my sons in my own cellar, and now you come to my parlour. I'd offer you a cup, but I don't think you'd drink it, and you'd be right.
 Lady Wachter: Go and tell Vargas, if you haven't. Go and tell the priest. And when you watch that wicker sun tomorrow, remember: the night is longer than any fire anyone has ever lit.
@@ -158,6 +159,7 @@ Lady Wachter: Go and tell Vargas, if you haven't. Go and tell the priest. And wh
 # ---------------------------------------------------------------- After the festival
 
 ~ after_free
+set lady_wachter_met
 Lady Wachter: You again. Come to see how the losers live? Very comfortably, as it happens. Enjoy your council. It will talk you all to death long before he gets round to it.
 -> END
 

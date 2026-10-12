@@ -18,7 +18,7 @@
       "every_days": 3,
       "first_day": 2,
       "location": "vallaki",
-      "when": "flag.vallaki_arrived and (not flag.festival_over or flag.vallaki_backed == \"baron\")",
+      "when": "flag.vallaki_arrived and (not flag.festival_over or flag.vallaki_backed == \"baron\") and flag.ribbons_ending != \"town\"",
       "set": {
         "vallaki_stocks_grumbler": true
       },

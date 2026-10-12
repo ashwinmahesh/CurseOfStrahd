@@ -4,6 +4,9 @@
 
 ~ start
 Narrator: A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do.
+if not flag.mists_arrived
+-> into_the_mists/arrival:first_sight
+endif
 interject name:kip_smudgewick: Good dog. Nice dog. Apricot? No? No. Very sensible.
 if not name:kip_smudgewick
   interject species:halfling: Just so everyone knows, I'm the bite-sized one.

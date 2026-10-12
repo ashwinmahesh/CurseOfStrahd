@@ -134,7 +134,7 @@
         11
       ],
       "dialogue": "village_of_barovia/the_goatherds_count:bell",
-      "when": "quest.the_goatherds_count and not flag.snowdrop_back and not flag.snowdrop_home",
+      "when": "quest.the_goatherds_count and hour >= 16 and not flag.snowdrop_back and not flag.snowdrop_home",
       "facing": "north"
     },
     {

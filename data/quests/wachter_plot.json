@@ -68,8 +68,7 @@
       "id": "slipped_away",
       "journal": "Lady Wachter lost her chance at the festival, but nobody could prove what she is. She has gone home to Wachterhaus to wait for another.",
       "objectives": [],
-      "hint": "Lady Wachter is back at Wachterhaus. Nobody can prove what she is, so there's nothing more to do for now.",
-      "ends": ""
+      "ends": "success"
     }
   ]
 }

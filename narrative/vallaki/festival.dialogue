@@ -143,8 +143,10 @@ approve thistle -1 wren_featherfoot -1: You seized a frightened servant for the 
 ~ sun_after
 if flag.vallaki_backed == "baron"
 Narrator: The sun's ashes have been swept into a tidy pile with a sign on a stick: KEEP FOR THE NEXT FESTIVAL.
-elif flag.vallaki_backed == "wachter"
+elif flag.vallaki_backed == "wachter" and flag.festival_sun_soaked
 Narrator: The black, sodden sun still stands on its pole. Lady Wachter has ordered it left where it is, as a reminder of what the Baron's light was worth.
+elif flag.vallaki_backed == "wachter"
+Narrator: The half-burnt sun still stands on its pole. Lady Wachter has ordered it left where it is, as a reminder of what the Baron's light was worth.
 else
 Narrator: The council has taken the half-burnt sun down and split it for kindling. Three families will be warm tonight on the Baron's festival, which is more than any festival did before.
 endif
