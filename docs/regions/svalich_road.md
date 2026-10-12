@@ -27,6 +27,12 @@ contempt, and Strahd's manners.
 | `tser_falls` | 34x22, svalich_road, outdoors | `falls_ledge`, `falls_path`, `falls_west_glade`, `falls_east_glade` | The falls and the overlook (Ireena's memory), the offering stone, the cairn of names, a lost pack (rope, torches, a potion of healing, 6 gp), a werewolf at the lip at night. Exit to travel: the path south. |
 | `road_ambush` | 32x18, svalich_road, outdoors | `open_road` | Battlefield for the `svalich_road` table: an open road between ditches, a broken cart, field walls. `default` spawn on the road; exits both ways to travel. Holds `road_dead_procession`. |
 | `road_forest` | 32x20, forest, outdoors | `forest_road` | Battlefield for the `svalich_woods` table: the road narrowing through pines, small clearings, a fallen trunk. Holds `road_hunters`. |
+| `road_fork` | 32x20, road, outdoors | the whole map | A road battle ground (below): the road splitting round a knoll with a cairn, a gibbet cage and a leaning signpost; an overturned cart, a hunter's platform. Exits west, north fork, south fork. |
+| `forest_clearing` | 32x20, forest, outdoors | the whole map | A road battle ground: a woodcutters' clearing climbing to a rocky rise, the broad oak (stood on at 10 ft), stumps, logs, a banked fire, a hunter's platform. |
+| `road_ravine` | 32x20, forest, outdoors | the whole map | A road battle ground: a stream's ravine with a 20 ft rock wall to the north, ledge paths down both walls, a ford, a washed-out bridge. |
+| `stream_ford` | 32x20, riverside, outdoors | the whole map | A road battle ground: a gravel ford over a running stream (its own `ford` mood), a high west bank, the old mill's footings, a cart at the water's edge. |
+| `wayside_shrine` | 32x20, forest, outdoors | the whole map, `shrine_nave` (stone flags) | A road battle ground: a roofless chapel of the Morninglord, statue pillars and broken walls for cover, a defaced saint, monks' graves on the rise. |
+| `roadside_graves` | 32x20, road, outdoors | the whole map | A road battle ground: a burial ground terraced up from the road behind a fence, rows of headstones (half cover), an open grave, a crypt on the top terrace. |
 
 Village of Barovia: a `road_west` exit at [0, 12] now leads to the travel map (`when: flag.village_departed`, so the
 departure scene at the `road_west_gates` posts plays first; locked text points at the posts).
@@ -173,6 +179,14 @@ and Ireena travelling as guests make them easier. The Tser Pool brawl is a choic
 | `falls_werewolf` | tser_falls | enter `falls_ledge` at night | werewolf, dire wolf, 2 wolves | 1000 | Moderate / Low (party surprised) |
 | `road_dead_procession` | road_ambush | dialogue (the night procession) | 6 Strahd zombies | 1200 | Moderate / Low |
 | `road_hunters` | road_forest | dialogue (Grigor's hunters) | warrior veteran, 3 scouts | 1000 | Moderate / Low |
+
+**Road battle grounds** (Ashwin, 2026-10-12; story/road_grounds.gd, docs/contracts/campaign.md): each table's fights
+take turns on a pool of maps from its land, never the same twice running; meetings stay on the table's own map. The
+valley and woods pools draw on `road_ambush`, `road_forest`, `road_fork`, `forest_clearing`, `road_ravine`,
+`stream_ford`, `wayside_shrine` and `roadside_graves` (the river roads past Tser Falls on the ford, the ravine and the
+woods); the lake's on `lake_zarovich_trail` and `lake_inlet`; Berez's on `berez_marsh_track`, `bog_causeway` and
+`barrow_moor` (also the barrow track to Yester Hill); the mountains' on `mount_baratok_trail`, `amber_temple_road`,
+`mountain_pass` and `frozen_tarn`. Each table lists its pool in `grounds`.
 
 **Random tables** (data/random_encounters/). `svalich_road` (map road_ambush), 15% by day, 40% by night:
 

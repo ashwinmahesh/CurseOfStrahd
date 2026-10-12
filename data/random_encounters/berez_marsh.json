@@ -1,6 +1,11 @@
 {
   "id": "berez_marsh",
   "map": "berez_marsh_track",
+  "grounds": [
+    "berez_marsh_track",
+    "bog_causeway",
+    "barrow_moor"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.45,
   "summary": "The marsh track between Vallaki and the drowned village of Berez: Baba Lysaga's scarecrows walk it, insects rise off it in clouds, and lights wander it at night.",

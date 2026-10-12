@@ -372,11 +372,46 @@ def campaign_checks(data, errors, pending):
                             (pending if o["region"] in LATER_REGIONS else errors).append(f"{w}: npc '{o['npc']}'" + (" (a later phase)" if o["region"] in LATER_REGIONS else " unknown"))
                     else:
                         place_ok(o["room"], "castle_ravenloft", w, "room")
+    def grounds_ok(grounds, home, w):
+        """A table's or a road's battle grounds (story/road_grounds.gd): outdoor maps with a road on, and foe spots on
+        every one but the table's own map (whose fights' cells are written for it)."""
+        for g in grounds:
+            loc = locations.get(g)
+            if loc is None:
+                errors.append(f"{w}: unknown battle ground '{g}'")
+                continue
+            if not loc["map"].get("outdoors"):
+                errors.append(f"{w}: battle ground '{g}' isn't outdoors")
+            if not any(ex.get("to") == "travel" for ex in loc.get("exits", [])):
+                errors.append(f"{w}: battle ground '{g}' has no road on (an exit to travel)")
+            if g != home and len(loc.get("foe_spots", [])) < MIN_FOE_SPOTS:
+                errors.append(f"{w}: battle ground '{g}' needs at least {MIN_FOE_SPOTS} foe_spots for other tables' fights")
+
+    for lid, loc in locations.items():
+        spots = loc.get("foe_spots", [])
+        rows = loc["map"]["rows"]
+        sx, sz = loc.get("spawns", {}).get("default", [0, 0])
+        reach = _floor_reach(rows, (sx, sz)) if spots else set()
+        exit_cells = {tuple(ex["cell"]) for ex in loc.get("exits", [])}
+        seen = set()
+        for x, z in spots:
+            w = f"data/locations/{lid}.json: foe spot [{x}, {z}]"
+            if not (0 <= z < len(rows) and 0 <= x < len(rows[z]) and rows[z][x] in OPEN_FLOOR):
+                errors.append(f"{w} isn't open floor")
+            elif (x, z) not in reach:
+                errors.append(f"{w} can't be walked to from the default spawn")
+            if max(abs(x - sx), abs(z - sz)) < 3:
+                errors.append(f"{w} is in the party's way (within 2 squares of the default spawn)")
+            if (x, z) in exit_cells or (x, z) in seen:
+                errors.append(f"{w} is an exit or listed twice")
+            seen.add((x, z))
+
     tables = data.get("random_encounters", {})
     for tid, t in tables.items():
         w = f"random_encounters/{tid}"
         if t["map"] not in locations:
             errors.append(f"{w}: unknown map location '{t['map']}'")
+        grounds_ok(t.get("grounds", []), t["map"], w)
         for e in t["entries"]:
             if not e.get("monsters") and not e.get("dialogue"):
                 errors.append(f"{w}: an entry needs monsters or a dialogue")
@@ -405,6 +440,10 @@ def campaign_checks(data, errors, pending):
                     errors.append(f"{w} road {r['id']}: unknown place '{end}'")
             if r.get("table") and r["table"] not in tables:
                 errors.append(f"{w} road {r['id']}: unknown random encounter table '{r['table']}'")
+            if r.get("grounds"):
+                if not r.get("table"):
+                    errors.append(f"{w} road {r['id']}: battle grounds but no random encounter table")
+                grounds_ok(r["grounds"], tables.get(r.get("table", ""), {}).get("map", ""), f"{w} road {r['id']}")
 
     def item_known(iid):
         # A template item on a base ("spell_scroll__daylight", "weapon_plus_1__longsword") needs both halves.
@@ -428,6 +467,8 @@ def campaign_checks(data, errors, pending):
 
 
 OPEN_FLOOR = ".~1234_"
+# A road battle ground's foe spots (story/road_grounds.gd): enough for most fights (the rest take open ground).
+MIN_FOE_SPOTS = 8
 
 
 def _floor_reach(rows, start):

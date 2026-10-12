@@ -1,6 +1,11 @@
 {
   "id": "baratok_slopes",
   "map": "mount_baratok_trail",
+  "grounds": [
+    "mount_baratok_trail",
+    "mountain_pass",
+    "frozen_tarn"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.4,
   "summary": "The mountain roads north of Vallaki: up Mount Baratok, along the high ridges and over the Tsolenka Pass. Wolves, ogres and spiders by day, werewolves by night, and a roc overhead.",
