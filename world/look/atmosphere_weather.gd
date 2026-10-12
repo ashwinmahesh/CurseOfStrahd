@@ -10,6 +10,8 @@ const SMOKE_SHADER := preload("res://shaders/atmosphere/smoke_puff.gdshader")
 const STREAK_SHADER := preload("res://shaders/atmosphere/streak.gdshader")
 const RING_SHADER := preload("res://shaders/atmosphere/ring.gdshader")
 const MOTE_SHADER := preload("res://shaders/atmosphere/mote.gdshader")
+## The Modern finish's dust: seen only where a lamp or a window's shaft lights it (Visual Polish Plan 9).
+const DUST_SHADER := preload("res://shaders/atmosphere/dust_mote.gdshader")
 const CROW_SHADER := preload("res://shaders/atmosphere/crow.gdshader")
 
 ## Pieces that follow the camera (rain, snow, leaves, crows): the Atmosphere moves them to the camera's focus, keeping
@@ -37,6 +39,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 		var spec := {"kind": str(k)} if not (k is Dictionary) else (k as Dictionary)
 		if not outdoors and not bool(spec.get("indoors", false)):
 			continue
+		if bool(spec.get("modern_only", false)) and not Look.modern():
+			continue   # the Classic finish is frozen as it was (the rooms' dust is the Modern finish's, Visual Polish Plan 9)
 		match str(spec["kind"]):
 			"leaves":
 				w._leaves(spec)
@@ -236,7 +240,11 @@ func _wisps(spec: Dictionary) -> void:
 
 ## Dust hanging in the air of a shut-up room, drifting slowly and catching the light.
 func _dust(spec: Dictionary) -> void:
-	var p := _particles("Dust", int(spec.get("amount", 60)), 12.0, Vector3(11, 1.0, 11), 1.4)
+	# In the Modern finish the motes show only where a lamp or a window's shaft catches them (Visual Polish Plan 9), so
+	# there are more of them in the air: most are dark at any moment.
+	var modern := Look.modern()
+	var amount := int(spec.get("amount", 60)) * (3 if modern else 1)
+	var p := _particles("Dust", amount, 12.0, Vector3(11, 1.0, 11), 1.4)
 	var pm := p.process_material as ParticleProcessMaterial
 	pm.gravity = Vector3(0, -0.01, 0)
 	pm.initial_velocity_min = 0.02
@@ -247,14 +255,18 @@ func _dust(spec: Dictionary) -> void:
 	pm.turbulence_noise_scale = 2.0
 	pm.turbulence_influence_min = 0.02
 	pm.turbulence_influence_max = 0.06
-	var size := float(spec.get("size", 0.035))
+	var size := float(spec.get("size", 0.035)) * (1.3 if modern else 1.0)
 	var quad := QuadMesh.new()
 	quad.size = Vector2(size, size)
 	var mat := ShaderMaterial.new()
-	mat.shader = MOTE_SHADER
-	mat.set_shader_parameter("core", Look.color(str(spec.get("core", "parchment"))))
-	mat.set_shader_parameter("rim", Look.color(str(spec.get("rim", "bone"))))
-	mat.set_shader_parameter("pulse", 0.4)
+	if modern:
+		mat.shader = DUST_SHADER
+		mat.set_shader_parameter("core", Look.color(str(spec.get("core", "parchment"))))
+	else:
+		mat.shader = MOTE_SHADER
+		mat.set_shader_parameter("core", Look.color(str(spec.get("core", "parchment"))))
+		mat.set_shader_parameter("rim", Look.color(str(spec.get("rim", "bone"))))
+		mat.set_shader_parameter("pulse", 0.4)
 	quad.material = mat
 	p.draw_pass_1 = quad
 

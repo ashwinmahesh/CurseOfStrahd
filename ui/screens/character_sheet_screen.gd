@@ -749,6 +749,9 @@ func _spell_row(ch: Character, k: Dictionary, s: Dictionary, cast: Dictionary, u
 		head.add_child(UiParts.pill("Ritual", "bile"))
 	if st.spell_active(id):
 		head.add_child(UiParts.pill("Active", "bile"))
+	# The steed Find Steed called is still with its caster (Character.steed).
+	if id == "find_steed" and not ch.steed.is_empty():
+		head.add_child(UiParts.pill("%s steed with you" % str(ch.steed.get("type", "celestial")).capitalize(), "bile"))
 	left.add_child(head)
 	left.add_child(UiKit.label(_spell_facts(ch, k, s), 13, "parchment"))
 	row.add_child(left)
@@ -945,7 +948,25 @@ func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void
 		resource_controls.add_child(normal_controls)
 		row = normal_controls
 	var id := str(o["id"])
-	var cast := UiParts.small_button("Cast", func() -> void: _do_utility(ch, id, false), "spells")
+	# What the spell asks for as it's cast (Find Steed's creature type), and which casting: a feature's free one or a
+	# slot, for a spell that grows with its slot.
+	var kind := OptionButton.new()
+	for k: Variant in o.get("choices", []):
+		kind.add_item(str(k).capitalize())
+		kind.set_item_metadata(kind.item_count - 1, str(k))
+	UiParts.compact(kind)
+	kind.visible = kind.item_count > 1
+	row.add_child(kind)
+	var pick := OptionButton.new()
+	if bool(o.get("free", false)):
+		pick.add_item("free", 0)
+	if bool(o.get("free", false)) or Compendium.shared().spell_data(id).has("upcast"):
+		for sl: int in o["slots"] as Array:
+			pick.add_item(ActionCatalog._ordinal(sl) + " slot", sl)
+	UiParts.compact(pick)
+	pick.visible = pick.item_count > 1
+	row.add_child(pick)
+	var cast := UiParts.small_button("Cast", func() -> void: _do_utility(ch, id, false, "", pick, kind), "spells")
 	cast.disabled = not bool(o["legal"])
 	cast.tooltip_text = str(o["reason"])
 	row.add_child(cast)
@@ -962,8 +983,11 @@ func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void
 		row.add_child(rit)
 
 
-func _do_utility(ch: Character, spell_id: String, ritual: bool, resource_feature: String = "") -> void:
-	var res := FieldCasting.cast_utility(st, ch, spell_id, ritual, 0, resource_feature)
+func _do_utility(ch: Character, spell_id: String, ritual: bool, resource_feature: String = "", pick: OptionButton = null,
+		kind: OptionButton = null) -> void:
+	var slot := pick.get_item_id(pick.selected) if pick != null and pick.item_count > 0 and pick.selected >= 0 else 0
+	var choice := str(kind.get_item_metadata(kind.selected)) if kind != null and kind.item_count > 0 and kind.selected >= 0 else ""
+	var res := FieldCasting.cast_utility(st, ch, spell_id, ritual, slot, resource_feature, choice)
 	_cast_note = str(res["text"])
 	if bool(res["ok"]) and root != null and root.get("view") != null:
 		(root.get("view") as LocationView).apply_spell_effect(spell_id)

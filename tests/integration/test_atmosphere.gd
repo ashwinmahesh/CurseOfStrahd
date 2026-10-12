@@ -161,7 +161,9 @@ func test_outdoor_places_have_land() -> void:
 func test_indoors_stays_indoors() -> void:
 	var v := _view("blood_of_the_vine")
 	assert_true(v.atmosphere.land == null, "no land around a room")
-	assert_true(v.atmosphere.weather.follow.is_empty(), "no weather indoors")
+	# Only the room's own dust hangs in the air (Visual Polish Plan 9): no rain, snow or leaves come indoors.
+	for w in v.atmosphere.weather.follow:
+		assert_eq(str(w.name), "Dust", "no weather indoors but the dust (%s)" % w.name)
 
 
 ## The renderer for each finish (Improvement Ideas W2): Classic keeps the renderer it was frozen with whatever the

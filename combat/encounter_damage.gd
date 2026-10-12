@@ -345,6 +345,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		e.ravenloft.on_death(source, target)
 		e.faerun.on_death(source, target)
 		e.echo_knight.on_death(source, target)
+		e.spells.summons.on_death(target)   # a fallen Otherworldly Steed, or a steed's dead caster
 		if target.has_meta("vanishes"):
 			e.events.append({"type": "vanish", "id": target.id})
 	elif dr.dropped_to_zero and not target.creature.dead and e.monster_actions.lycanthrope(target):

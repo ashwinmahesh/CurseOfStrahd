@@ -151,11 +151,16 @@
       "model_since": "2026-10-07"
     },
     "father_lucian": {
-      "voice_id": "MGJAUDu0HyArLnST1CKd",
-      "name": "Barovia father_lucian",
-      "description": "A man in his fifties with a soft, careful, tired tenor and a strong, clearly audible Eastern European (Romanian) accent. A kind priest: gentle, measured, conciliatory, choosing words so as not to accuse anyone. Quiet worry in every line.",
+      "voice_id": "CKULrjoxwvkJj8nnY2yT",
+      "name": "Barovia Father Lucian",
+      "description": "A Barovian parish priest in his fifties, speaking English with a strong, clearly audible Romanian accent. A warm, clear, full baritone at a normal speaking volume, never whispering and never breathy: a kind, steady, articulate priest, gentle but fully present, with tired warmth and a little dry humour.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "CKULrjoxwvkJj8nnY2yT",
+      "released": true,
+      "earlier_voice_id": "MGJAUDu0HyArLnST1CKd",
+      "model_note": "Recast 2026-10-11 on Ashwin's feedback: the earlier voice whispered."
     },
     "donavich": {
       "voice_id": "op88pBNeBHBmJiWLztAG",
@@ -306,13 +311,16 @@
       "released": true
     },
     "urwin_martikov": {
-      "voice_id": "8WRfTpaUoqZSfTerOXzI",
-      "name": "Library voice: Mihai",
-      "description": "Library voice chosen for urwin_martikov (2026-10-08, recast on v3). Was: A quiet man in his forties with a low, calm, measured voice and a strong, clearly audible Eastern European (Romanian) accent. An innkeeper who listens more than he talks; discreet, wry, careful.",
+      "voice_id": "5yhXQD3smYjhgzaztAzQ",
+      "name": "Barovia Urwin Martikov",
+      "description": "A quiet innkeeper in his forties, speaking English with a strong, clearly audible Romanian accent. A low, calm, measured, warm baritone, clearly a grown man's voice, steady and even: discreet, wry and careful, a man who listens more than he talks.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "5yhXQD3smYjhgzaztAzQ",
+      "released": true,
+      "earlier_voice_id": "8WRfTpaUoqZSfTerOXzI",
+      "model_note": "Recast 2026-10-11 on Ashwin's feedback: the earlier library voice (Mihai) drifted to a woman's pitch on some lines."
     },
     "patrina_velikovna": {
       "voice_id": "2t85BBUECtLLKQzxLD95",
@@ -424,12 +432,16 @@
       "released": true
     },
     "milivoj": {
-      "voice_id": "4vifcboLV6xlT0LKGQML",
-      "name": "Barovia milivoj",
-      "description": "A big, sullen young man with a low, gruff, defensive voice and a strong, clearly audible Eastern European (Romanian) accent. Short, surly answers, guilty and protective of his siblings.",
+      "voice_id": "QXigc5g0Mq8gTw7oKyYJ",
+      "name": "Barovia Milivoj",
+      "description": "A big, sullen young man of about twenty, a gravedigger in Vallaki, speaking English with a strong, clearly audible Romanian accent. A low, rough, mumbling voice at a normal, even, conversational volume, never shouting: flat, guarded, defensive and tired, with dry, grudging humour.",
       "settings": {},
       "model": "eleven_v3",
-      "released": true
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "QXigc5g0Mq8gTw7oKyYJ",
+      "released": true,
+      "earlier_voice_id": "4vifcboLV6xlT0LKGQML",
+      "model_note": "Recast 2026-10-11 on Ashwin's feedback: the earlier voice shouted every line."
     },
     "kostin": {
       "voice_id": "SbUFoR2zKmtEJ1Tg7fW5",
@@ -1655,22 +1667,21 @@
     "krezk_goatherd": {
       "voice_id": "8WRfTpaUoqZSfTerOXzI",
       "name": "Library voice: Mihai",
-      "description": "Stelian, goatherd of krezk: a generic townsperson on a shared voice, Mihai (also Urwin Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "description": "Stelian, goatherd of krezk: a generic townsperson on a shared voice, Mihai. Owner rule 2026-10-08: minor townsfolk share voices. Urwin Martikov had this voice until 2026-10-11, when he was recast on a designed voice (it drifted to a woman's pitch on some lines); Stelian and Ovidiu keep it.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
-      "accent_tag": "[strong Romanian accent]",
-      "shared_with": "urwin_martikov"
+      "accent_tag": "[strong Romanian accent]"
     },
     "wine_pruner": {
       "voice_id": "8WRfTpaUoqZSfTerOXzI",
       "name": "Library voice: Mihai",
-      "description": "Ovidiu, vine-dresser of the wizard of wines: a generic townsperson on a shared voice, Mihai (also Urwin Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "description": "Ovidiu, vine-dresser of the wizard of wines: a generic townsperson on a shared voice, Mihai (also Stelian's, in Krezk). Owner rule 2026-10-08: minor townsfolk share voices.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "urwin_martikov"
+      "shared_with": "krezk_goatherd"
     },
     "camp_groom": {
       "voice_id": "mDzEpb1CJDGMhJHYrU2N",
