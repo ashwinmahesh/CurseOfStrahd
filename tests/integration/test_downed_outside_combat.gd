@@ -225,3 +225,20 @@ func test_the_last_one_standing_falling_ends_the_game() -> void:
 	_view().check_rolled.emit("Trap: 9 piercing")   # as a trap's or a pit's blow does
 	await _frames(2)
 	assert_true(root.get("screen") is PauseMenu and (root.get("screen") as PauseMenu).game_over, "The party has fallen")
+
+
+## Owner report (2026-10-12): a fight ended with a hero Restrained in a web, and Restrained stayed on the party panel.
+func test_a_fight_ends_with_no_one_held() -> void:
+	var v := _view()
+	assert_true(v.start_encounter("rat"))
+	await _frames(3)
+	var ch := GameState.story.party[0]
+	var web := Effect.new("Web", &"spell", "web").with_condition(&"restrained")
+	web.escape = {"skill": "athletics", "dc": 13}
+	ch.add_effect(web)
+	ch.add_condition(&"grappled", "Rat")
+	v.combat_view.finished.emit("victory")
+	await _frames(4)
+	assert_false(ch.has_condition(&"restrained") or ch.has_condition(&"grappled"), "free once the fight is over")
+	var chips := str((v.tokens[v.members[0].id] as CombatToken).get("_status").text)
+	assert_false(chips.contains("Restrained") or chips.contains("Grappled"), "and the figure shows it: '%s'" % chips)

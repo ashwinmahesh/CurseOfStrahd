@@ -523,6 +523,20 @@ func _effect_actions(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 			var esc := _entry("escape_effect:%d" % fx.id, COMMON, "Break free: %s" % fx.name, "%s DC %d" % [str(fx.escape["skill"]).capitalize(), int(fx.escape["dc"])],
 				"action", why, "none", "An ability check against the spell's save DC ends it on you.")
 			out.append(esc)
+	# Webbing that holds `c` (a Giant Spider's Web: Restrained until it's destroyed): strike it with the best melee
+	# attack at hand (owner report 2026-10-12: nothing showed how to get out). Allies can strike it too, and fire
+	# burns it.
+	for o in e.objects.list:
+		if o.destroyed or o.holds != c.id:
+			continue
+		var best := e.best_melee_option(c, null)
+		var owhy := "" if c.attacks_left > 0 else why
+		if owhy == "":
+			owhy = e.objects.attack_why(c, o, best) if not best.is_empty() else "No melee attack to strike it with"
+		var web := _entry("escape_object:%s" % o.id, COMMON, "Break free: %s" % o.title(), "strike it · AC %d, %d HP" % [o.ac, o.hp],
+			"action", owhy, "none", "Strike the %s holding you with %s; at 0 Hit Points it breaks and you're free. Fire burns it, and allies can strike it too." % [o.title().to_lower(), (best["profile"] as WeaponProfile).name if not best.is_empty() else "a weapon"])
+		web["option_id"] = str(best.get("id", ""))
+		out.append(web)
 	if c.creature.effects.any(func(fx: Effect) -> bool: return bool(fx.data.get("douse", false))):
 		out.append(_entry("douse", COMMON, "Put out the flames", "drop Prone and roll", "action", why, "none",
 			"Use your action to fall Prone and roll on the ground, ending the Burning on you."))
@@ -1235,6 +1249,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 			return e.spells.use_sustained(c, sid, targets, pt, dir)
 		"escape_effect":
 			return e.escape_effect(c, int(id.get_slice(":", 1)))
+		"escape_object":
+			return e.objects.attack(c, id.get_slice(":", 1), str(action.get("option_id", "")))
 		"haste":
 			return e.haste_action_use(c, id.get_slice(":", 1), t, id.substr(("haste:attack:").length()) if id.begins_with("haste:attack:") else "")
 		"item", "item_spell":
