@@ -94,3 +94,13 @@ func test_who_asks_for_a_word_includes_those_waiting_at_camp() -> void:
 	assert_false(CampSite.talks(st, {"thistle": true}).has("thistle"), "one word each, this evening")
 	thistle.dead = true
 	assert_true(CampSite.company(st).is_empty(), "the dead aren't by the fire")
+
+
+func test_companions_retired_from_the_roster_never_come_to_the_fire() -> void:
+	var st := StoryState.new()
+	st.party.append(Pregens.build("godrick_pendlebrook", 3))
+	st.bench.append(Pregens.build("tamsin_tealeaf", 3))   # one of the original four, kept for old saves only
+	st.bench.append(Pregens.build("kip_smudgewick", 3))
+	var ids := CampSite.company(st).map(func(ch: Character) -> String: return ch.id)
+	assert_eq(ids, ["kip_smudgewick"], "Kip comes to the fire; Tamsin, retired, doesn't")
+

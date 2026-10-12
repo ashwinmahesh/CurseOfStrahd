@@ -1,0 +1,39 @@
+{
+  "$id": "night_visitors.schema.json",
+  "title": "What comes for a camp in the night (F16, docs/story/camp.md)",
+  "type": "object",
+  "required": ["id", "summary", "lands", "default_land", "groups"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"const": "night_visitors"},
+    "summary": {"type": "string"},
+    "lands": {
+      "type": "object",
+      "description": "Region id -> the lie of the land a group is for (forest, marsh, mountain, castle).",
+      "additionalProperties": {"$ref": "common.schema.json#/$defs/id"}
+    },
+    "default_land": {"$ref": "common.schema.json#/$defs/id", "description": "The land of a region not listed."},
+    "groups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "land", "levels", "text", "monsters"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"$ref": "common.schema.json#/$defs/id"},
+          "land": {"$ref": "common.schema.json#/$defs/id"},
+          "levels": {
+            "type": "array",
+            "items": {"type": "integer", "minimum": 1, "maximum": 20},
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "The party levels (its milestone level) the group comes for, lowest and highest."
+          },
+          "text": {"type": "string", "description": "What the one on watch sees as it comes (the fight's title)."},
+          "monsters": {"type": "array", "minItems": 1, "items": {"$ref": "common.schema.json#/$defs/id"}}
+        }
+      }
+    }
+  }
+}

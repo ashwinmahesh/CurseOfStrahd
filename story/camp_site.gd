@@ -188,13 +188,21 @@ static func _facing(dir: Vector2i) -> String:
 
 # --- Who is at camp, and what they have to say --------------------------------------------------------------------
 
-## The companions waiting at camp who are by the fire when the party makes camp: the bench, living.
+## The companions waiting at camp who are by the fire when the party makes camp: the bench, living, and never one of
+## the companions retired from the roster (the original four, kept for old saves only).
 static func company(st: StoryState) -> Array[Character]:
 	var out: Array[Character] = []
 	for ch in st.bench:
-		if not ch.dead:
+		if not ch.dead and not retired(ch):
 			out.append(ch)
 	return out
+
+
+## Whether `ch` is a pregenerated companion no longer on the roster (data/pregens `roster: false`).
+static func retired(ch: Character) -> bool:
+	var pregen := Compendium.shared().get_entry("pregens", ch.id)
+	return not pregen.is_empty() and not bool(pregen.get("roster", false)) \
+		and not bool((ch.build.get("appearance", {}) as Dictionary).get("custom", false))
 
 
 ## The talks waiting at camp, by who asks (CampTalk, narrative/camp/): {character id: talk ref}, one each, leaving out
@@ -230,3 +238,98 @@ static func idle_keys(id: String, guest: bool) -> Array[String]:
 	if guest:
 		return ["camp:guest:" + id, "camp:guest"]
 	return ["camp:" + id, "camp:someone"]
+
+
+# --- Night visitors --------------------------------------------------------------------------------------------------
+
+## What comes for a camp in the night (data/camp/night_visitors.json): groups by the lie of the land and the party's
+## level, each played to the end by the test autopilot (hard, but winnable).
+const VISITORS := "res://data/camp/night_visitors.json"
+## How far from the fire the night's visitors come out of the dark (squares).
+const DARK_NEAR := 5
+const DARK_FAR := 8
+static var _visitors: Dictionary = {}
+
+
+static func visitors() -> Dictionary:
+	if _visitors.is_empty():
+		_visitors = JSON.parse_string(FileAccess.get_file_as_string(VISITORS)) as Dictionary
+	return _visitors
+
+
+## The lie of the land a region has for its night visitors (forest, marsh, mountain, castle).
+static func land_of(region: String) -> String:
+	var d := visitors()
+	return str((d["lands"] as Dictionary).get(region, d["default_land"]))
+
+
+## The groups that may come for a camp in `region` when the party is at `level`.
+static func groups_for(region: String, level: int) -> Array[Dictionary]:
+	var land := land_of(region)
+	var out: Array[Dictionary] = []
+	for g: Variant in visitors()["groups"]:
+		var group := g as Dictionary
+		var levels := group["levels"] as Array
+		if str(group["land"]) == land and level >= int(levels[0]) and level <= int(levels[1]):
+			out.append(group)
+	return out
+
+
+## The night's fight at a camp round `center`: a group for the region and level (a die picks among several), its
+## monsters placed out in the dark round the fire, spread so they come from more than one side, on open ground they can
+## walk to the fire from (none on `taken`). {} when nothing fits.
+static func night_fight(grid: CombatGrid, center: Vector2i, taken: Dictionary, region: String, level: int, dice: DiceRoller) -> Dictionary:
+	var groups := groups_for(region, level)
+	if groups.is_empty():
+		return {}
+	var group := groups[0] if groups.size() == 1 else groups[dice.roll_one(groups.size(), "Night visitors") - 1]
+	return fight_for(group, grid, center, taken)
+
+
+## `group`'s fight round the fire at `center` (night_fight, once the group is chosen): {id, text, monsters}, or {}.
+static func fight_for(group: Dictionary, grid: CombatGrid, center: Vector2i, taken: Dictionary) -> Dictionary:
+	var reach := grid.reachable(center, 1, DARK_FAR * 5 + 10, func(_c: Vector2i) -> bool: return false,
+		func(_c: Vector2i) -> bool: return false, func(_c: Vector2i) -> bool: return false)
+	var used := taken.duplicate()
+	var monsters: Array = []
+	var turn := 0
+	for mid: Variant in group["monsters"]:
+		var size := CombatGrid.size_cells_for(StringName(str(Compendium.shared().monster_data(str(mid)).get("size", "medium"))))
+		var spot := _dark_spot(grid, center, reach, used, size, turn)
+		turn += 1
+		if spot.x < 0:
+			continue
+		for f in CombatGrid.footprint(spot, size):
+			used[f] = true
+		for dv in CombatGrid.DIRS:
+			used[spot + dv] = true   # a little room between them
+		monsters.append({"monster": str(mid), "cell": [spot.x, spot.y]})
+	if monsters.is_empty():
+		return {}
+	return {"id": "camp_night_" + str(group["id"]), "text": str(group["text"]), "monsters": monsters}
+
+
+## A square out in the dark for the `turn`th visitor of `size` squares: DARK_NEAR to DARK_FAR squares from the fire,
+## reachable from it, in the next of eight directions round it (so they come from all sides), else anywhere that fits.
+static func _dark_spot(grid: CombatGrid, center: Vector2i, reach: Dictionary, used: Dictionary, size: int, turn: int) -> Vector2i:
+	var want := Vector2(1, 0).rotated(TAU * float((turn * 3) % 8) / 8.0)
+	var best := Vector2i(-1, -1)
+	var best_score := -INF
+	for c: Vector2i in reach:
+		var off := Vector2(c - center)
+		var far := maxi(absi(c.x - center.x), absi(c.y - center.y))
+		if far < DARK_NEAR or far > DARK_FAR:
+			continue
+		var fits := true
+		for f in CombatGrid.footprint(c, size):
+			if not grid.in_bounds(f) or grid.flags(f) & ROUGH != 0 or used.has(f):
+				fits = false
+				break
+		if not fits:
+			continue
+		var score := off.normalized().dot(want) * 10.0 - absf(off.length() - float(DARK_NEAR + 1))
+		if score > best_score:
+			best_score = score
+			best = c
+	return best
+
