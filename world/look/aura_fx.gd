@@ -1,35 +1,29 @@
 class_name AuraFx
 extends Node3D
-## An aura round a figure on the board (owner 2026-10-09), one effect with two looks, built by CombatToken for whoever
-## has one, in fights and while exploring alike (both show creatures as CombatTokens):
+## Strahd's aura round his figure on the board (owner 2026-10-09), built by CombatToken in fights and while exploring
+## alike (both show creatures as CombatTokens): smoke and shadow curl up round him with a crimson edge
+## (shaders/fx/aura_halo.gdshader) and he stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges
+## when he acts: an attack, a spell, a blow taken. A fire-like flicker was tried and the owner preferred this
+## (2026-10-09: "I like the old auras better"). A paladin's Aura of Protection had a warm glow and its area on the floor
+## too; the owner had them taken off (2026-10-12: "Remove the paladin aura visual"); the aura's save bonus is unchanged.
 ##
-## - DARK: Strahd's. Smoke and shadow curl up round him with a crimson edge (shaders/fx/aura_halo.gdshader) and he
-##   stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges when he acts: an attack, a spell,
-##   a blow taken.
-## - HOLY: a paladin's Aura of Protection (Paladin 6), a faint warm glow round the figure. In a fight the floor also
-##   shows the area the aura really covers: 10 ft, two squares every way from the paladin's space on the grid
-##   (ClassFeatures._in_aura measures it so), 30 ft with Aura Expansion.
-## A fire-like flicker for both was tried and the owner preferred these (2026-10-09: "I like the old auras better").
-##
-## Both draw just before the sprites, after the palette pass (render priority), so the figure covers the aura's middle.
+## It draws just before the sprites, after the palette pass (render priority), so the figure covers the aura's middle.
 
 const HALO_SHADER := preload("res://shaders/fx/aura_halo.gdshader")
 const FLOOR_SHADER := preload("res://shaders/fx/aura_floor.gdshader")
 
-enum Style { DARK, HOLY }
+enum Style { DARK }
 
 ## Art ids that wear the dark aura (Strahd's own sprite; his mist form and his spawn don't).
 const DARK_ART: Array[String] = ["strahd"]
 ## How the halo quad is sized against the figure's height: (width, height) per style. Strahd's torn cape is wide.
-const HALO_SIZE := {Style.DARK: Vector2(1.9, 1.38), Style.HOLY: Vector2(0.95, 1.22)}
+const HALO_SIZE := {Style.DARK: Vector2(1.9, 1.38)}
 ## The shadow pool's radius under Strahd, in squares per square of his size.
 const POOL_RADIUS := 1.1
 ## A surge's decay per second (from 1: about three quarters of a second).
 const SURGE_FALL := 1.4
 
 var style: int = Style.DARK
-## HOLY: how far the aura reaches past the creature's space, in squares.
-var reach := 0
 var halo: MeshInstance3D
 ## The part on the ground (CombatToken tilts it along a slope with its ring).
 var floor_area: MeshInstance3D
@@ -38,31 +32,21 @@ var _floor_mat: ShaderMaterial
 var _surge := 0.0
 var _active := true
 var _fade := 1.0
-var _area := false
 ## Cosmetic randomness (each aura curls in its own way), never the dice.
 static var _rng := RandomNumberGenerator.new()
 
 
-## The aura `c` wears as `art` (its sprite id): DARK for Strahd, HOLY for anyone with Aura of Protection, -1 for none.
-static func style_for(c: Combatant, art: String) -> int:
-	if art in DARK_ART:
-		return Style.DARK
-	if c != null and c.creature is Character and ClassFeatures.has(c, "aura_of_protection"):
-		return Style.HOLY
-	return -1
+## The aura `c` wears as `art` (its sprite id): DARK for Strahd's own sprite, -1 for everyone else (a paladin's Aura of
+## Protection draws nothing, owner 2026-10-12).
+static func style_for(_c: Combatant, art: String) -> int:
+	return Style.DARK if art in DARK_ART else -1
 
 
-## How far a paladin's aura reaches past their space, in squares: 10 ft, or 30 ft with Aura Expansion.
-static func reach_of(c: Combatant) -> int:
-	return (30 if ClassFeatures.has(c, "aura_expansion") else 10) / CombatGrid.FEET
-
-
-## An aura for a figure `height` world units tall taking `size_cells` squares; `reach_` for a HOLY aura's area.
-static func create(style_: int, height: float, size_cells: int, reach_: int = 0) -> AuraFx:
+## An aura for a figure `height` world units tall taking `size_cells` squares.
+static func create(style_: int, height: float, size_cells: int) -> AuraFx:
 	var a := AuraFx.new()
 	a.name = "Aura"
 	a.style = style_
-	a.reach = reach_
 	var seed := _rng.randf()
 	var hs := HALO_SIZE[style_] as Vector2
 	a._halo_mat = a._material(HALO_SHADER, seed)
@@ -77,7 +61,7 @@ static func create(style_: int, height: float, size_cells: int, reach_: int = 0)
 	a._floor_mat = a._material(FLOOR_SHADER, seed)
 	a.floor_area = MeshInstance3D.new()
 	var plane := PlaneMesh.new()
-	var half := POOL_RADIUS * size_cells if style_ == Style.DARK else size_cells * 0.5 + reach_
+	var half := POOL_RADIUS * size_cells
 	plane.size = Vector2(half * 2.0, half * 2.0)
 	a.floor_area.mesh = plane
 	# Under the base ring (0.03), which stays readable over it.
@@ -108,24 +92,18 @@ func surge(amount: float = 1.0) -> void:
 	_param("surge", _surge)
 
 
-## Whether the aura is up (its owner standing and conscious), how far the figure has faded in, and whether the HOLY
-## aura's area shows on the floor (in a fight).
-func set_state(active: bool, fade: float, area: bool) -> void:
-	if active == _active and is_equal_approx(fade, _fade) and area == _area:
+## Whether the aura is up (its owner standing and conscious) and how far the figure has faded in.
+func set_state(active: bool, fade: float) -> void:
+	if active == _active and is_equal_approx(fade, _fade):
 		return
 	_active = active
 	_fade = fade
-	_area = area
 	_show()
-
-
-func is_showing_area() -> bool:
-	return floor_area.visible and style == Style.HOLY
 
 
 func _show() -> void:
 	halo.visible = _active and _fade > 0.0
-	floor_area.visible = halo.visible and (style == Style.DARK or (_area and reach > 0))
+	floor_area.visible = halo.visible
 	_param("fade", _fade)
 
 

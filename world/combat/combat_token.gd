@@ -77,7 +77,7 @@ var art_override := ""
 var mounted := false
 var sneaking := false
 var sprite: DirectionalSprite
-## Strahd's dark aura or a paladin's glow (AuraFx), or null.
+## Strahd's dark aura (AuraFx), or null.
 var aura: AuraFx
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
 var _lying: Sprite3D
@@ -215,7 +215,7 @@ func _build() -> void:
 		add_child(_lying)
 		var aura_style := AuraFx.style_for(c, aid)
 		if aura_style >= 0:
-			aura = AuraFx.create(aura_style, _height(aid), c.size_cells, AuraFx.reach_of(c) if aura_style == AuraFx.Style.HOLY else 0)
+			aura = AuraFx.create(aura_style, _height(aid), c.size_cells)
 			add_child(aura)
 	else:
 		var mi := MeshInstance3D.new()
@@ -490,14 +490,12 @@ func _show_fade() -> void:
 	_aura_state()
 
 
-## The aura shows while its owner stands and is conscious (a paladin's also needs them not Incapacitated, as the rule
-## does), fades with the figure, and a paladin's area shows on the floor in fights only.
+## The aura shows while its owner stands and is conscious, and fades with the figure.
 func _aura_state() -> void:
 	if aura == null:
 		return
 	var cr := combatant.creature
-	var up := not cr.dead and cr.hp > 0 and not (aura.style == AuraFx.Style.HOLY and cr.has_condition(&"incapacitated"))
-	aura.set_state(up, _fade, ModeController.mode == ModeController.Mode.COMBAT)
+	aura.set_state(not cr.dead and cr.hp > 0, _fade)
 
 
 ## Faces a ground direction (x, z) and plays walking or idle. `step_time` (seconds per square) paces the walk cycle.
