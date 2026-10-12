@@ -61,6 +61,11 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   no one), and the same pick on the keep-control action; after a Maneuvering Attack hit, the ally that moves (skipped
   when only one can) and its square, with the path and any other enemy's Opportunity Attack shown. Backspace or
   right-click goes back a step; Esc cancels (and passes on the maneuver's move).
+- **Sculpt Spells** (an Evoker's Evocation spell with the caster or its allies caught in it): once the spell is aimed,
+  the creatures in it show green when shielded and red when not, starting from the caster and its allies nearest it,
+  up to 1 + the spell's level; a click (A, or the next-target key to move between them) shields one or takes it back,
+  Enter (Y) casts. Backspace or right-click aims again; a spell from the caster with no aim (Thunderclap) asks as soon
+  as it's chosen, and Esc cancels it.
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
 

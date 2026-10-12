@@ -953,6 +953,10 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				if hover_cell.x >= 0:
 					_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 				return
+			# An Evoker's Evocation spell with its own side in it asks who to shield first (Sculpt Spells, TargetPicker).
+			if picker.sculpt(c, selected, _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()), slot_level):
+				_update_hover()
+				return
 			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
@@ -961,6 +965,9 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			elif hover_cell.x >= 0:
 				_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 		"direction":
+			if picker.sculpt(c, selected, Vector2.INF, _aim_dir(c), slot_level):
+				_update_hover()
+				return
 			_perform(selected, [], Vector2.INF, _aim_dir(c))
 		"multi":
 			if t == null:
@@ -1259,7 +1266,8 @@ func _next_target() -> void:
 		return
 	var list: Array[Combatant] = []
 	for o in e.living():
-		if o == c or o.is_down() and str(selected.get("targeting", "")) != "dying":
+		# The caster itself only when a pick takes it (Sculpt Spells shielding the Evoker).
+		if o == c and not (mode == Mode.TARGET and picker.active() and picker.candidate(o)) or o.is_down() and str(selected.get("targeting", "")) != "dying":
 			continue
 		if mode == Mode.TARGET and picker.active():
 			if not picker.candidate(o):

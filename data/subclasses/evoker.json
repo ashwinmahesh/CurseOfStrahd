@@ -191,7 +191,7 @@
         "id": "sculpt_spells",
         "name": "Sculpt Spells",
         "summary": "Choose 1 + spell level creatures to automatically succeed against your Evocation spell and take no damage.",
-        "text": "When you cast an Evocation spell that affects other creatures you can see, you can pick a number of them equal to 1 plus the spell's level. They automatically succeed on their saving throws against it, and take no damage where a success would normally halve it.",
+        "text": "When you cast an Evocation spell that affects other creatures you can see, you can pick a number of them equal to 1 plus the spell's level. They automatically succeed on their saving throws against it, and take no damage where a success would normally halve it. (In this game you can pick yourself too, and you pick as the spell goes off: you and your allies in it start picked.)",
         "implemented": "engine"
       }
     },
