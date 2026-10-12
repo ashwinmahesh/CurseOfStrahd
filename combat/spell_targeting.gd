@@ -140,6 +140,9 @@ func _area_spec(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2,
 		if dir.length() < 0.01:
 			dir = Vector2.RIGHT
 		spec.merge({"origin": center + dir * (c.size_cells / 2.0), "dir": dir}, true)
+		if shape == "line":
+			# Aimed at any angle, straight out from the caster's middle, starting where that leaves its space.
+			spec.merge({"origin": CombatGrid.line_origin(c.cell, c.size_cells, dir, int(spec["width"])), "without_caster": true}, true)
 	elif shape == "cylinder":
 		spec["shape"] = "sphere"
 	return spec

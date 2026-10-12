@@ -114,6 +114,41 @@ func test_walk_cycle_paced_to_the_step_time() -> void:
 	s.free()
 
 
+## The walk's footfalls, which the leader's footsteps play on (owner 2026-10-12: two a square had been about four
+## times too fast): a foot comes down on the cycle's first and middle frames while walking, and only then. Setting
+## off with a foot down is a step; turning mid-stride (another direction's walk at the same frame) isn't.
+func test_a_foot_comes_down_twice_a_walk_cycle() -> void:
+	var cam := Camera3D.new()
+	add_child(cam)
+	cam.make_current()
+	var frames := DirectionalSprite.frames_for("ilse_varga")
+	var s := DirectionalSprite.create(frames, 1.3)
+	add_child(s)
+	var falls: Array[int] = [0]
+	s.footfall.connect(func() -> void: falls[0] += 1)
+	var n := frames.get_frame_count(&"walk_s")
+	s.facing = Vector3.BACK   # toward the camera: walk_s
+	s.play(&"idle_s")
+	s.moving = true
+	s._process(0.0)
+	assert_eq(str(s.animation), "walk_s", "walking")
+	assert_eq(falls[0], 1, "setting off with a foot down")
+	for i in range(1, n):
+		s.frame = i
+	s.frame = 0
+	assert_eq(falls[0], 3, "a cycle of %d frames: two steps" % n)
+	s.frame = 3
+	s.facing = Vector3.RIGHT
+	s._process(0.0)
+	assert_true(str(s.animation) != "walk_s" and s.frame == 3, "turned mid-stride: %s %d" % [s.animation, s.frame])
+	assert_eq(falls[0], 3, "turning isn't a step")
+	s.moving = false
+	s.frame = n / 2
+	assert_eq(falls[0], 3, "standing isn't walking")
+	s.free()
+	cam.free()
+
+
 ## Every creature that can turn up in a fight has a sprite with a walk and an attack: each stat block in data/monsters,
 ## every creature the combat code makes on the spot (summons, familiars, severed limbs), each under the art id the
 ## combat token looks up (CombatToken.ART_ALIASES). A block that is also a person in data/npcs (Rahadin) wears that
