@@ -77,6 +77,16 @@ static func set_shared_turns(on: bool) -> void:
 	set_value("shared_turns", on)
 
 
+## Flanking (2024 DMG optional rule, owner 2026-10-12): Advantage on melee attacks against a foe with an ally on its
+## opposite side, for heroes and foes alike. On unless turned off.
+static func flanking() -> bool:
+	return bool(value("flanking", true))
+
+
+static func set_flanking(on: bool) -> void:
+	set_value("flanking", on)
+
+
 ## Controller fights (owner pick 2026-10-09): false the bar (LB's radial picks a tab, LT/RT/RB the slots), true the
 ## wheels, Baldur's Gate 3's console way (LB's radial holds the actions themselves).
 static func pad_wheels() -> bool:

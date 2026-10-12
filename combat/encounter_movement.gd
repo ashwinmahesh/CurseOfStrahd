@@ -133,6 +133,8 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 ## 2024: you can pass through an ally, an Incapacitated creature, a Tiny creature or one two sizes different
 ## (Halfling Nimbleness: any larger creature); another creature's space, an ally's too, is Difficult Terrain unless
 ## it's Tiny; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too.
+## Cramped rooms (owner, 2026-10-12; deviations.md): a creature the player moves may end its move in an ally's space,
+## so heroes can share a square; foes the game moves keep to squares of their own.
 func _occupancy_for(c: Combatant) -> Dictionary:
 	var e := enc()
 	var blocked := {}
@@ -148,12 +150,15 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		var swarmy := o.creature.has_flag("swarm") or c.creature.has_flag("swarm") or c.creature.has_flag("enters_spaces")
 		if swarmy:
 			continue
-		var passable := (c.allied_with(o) and not e.allies_block) or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
+		var ally := c.allied_with(o) and not e.allies_block
+		var passable := ally or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
 		# 2024: any other creature's space is Difficult Terrain, an ally's included (a Tiny one excepted).
 		var slows := o.creature.size != &"tiny"
+		var shares := ally and c.is_player_controlled()
 		for cell in o.footprint():
-			occupied[cell] = true
+			if not shares:
+				occupied[cell] = true
 			if not passable:
 				blocked[cell] = true
 			if slows:

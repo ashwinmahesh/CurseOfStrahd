@@ -172,10 +172,14 @@ static func _cells_around(view: LocationView, start: Vector2i, n: int) -> Array[
 		func(_c: Vector2i) -> bool: return false)
 	var cells: Array = reach.keys()
 	cells.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return int(reach[a]["cost"]) < int(reach[b]["cost"]))
+	# People don't block the way any more (owner, 2026-10-12), but the party doesn't arrive standing on them.
+	var people := {}
+	for shown in view._npc_shown:
+		people[shown["cell"] as Vector2i] = true
 	for c: Vector2i in cells:
 		if out.size() >= n:
 			break
-		if not c in out:
+		if not c in out and not people.has(c):
 			out.append(c)
 	while out.size() < n:
 		out.append(start)

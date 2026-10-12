@@ -210,6 +210,30 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 
 ## Every Advantage and Disadvantage source for this attack, plus cover:
 ## {advantage: [...], disadvantage: [...], cover: int, cover_bonus: int, cover_by: String}
+## Flanking (2024 DMG optional rule, on unless Settings turns it off; owner, 2026-10-12): `c`, standing at `from` (`size`
+## squares across), and an ally that can act and see `target` are both next to it, on opposite sides or corners of its
+## space. A creature that can't see the target doesn't flank it.
+func flanks(c: Combatant, target: Combatant, from: Vector2i, size: int) -> bool:
+	var e := enc()
+	if not e.flanking or e.grid.distance_ft(from, size, target.cell, target.size_cells, c.altitude, target.altitude) > 5:
+		return false
+	var side := side_of(from, size, target)
+	if side == Vector2i.ZERO or not e.can_see(c, target):
+		return false
+	for a in e.allies_of(c):
+		if a.can_act() and e.distance(a, target) <= 5 and side_of(a.cell, a.size_cells, target) == -side and e.can_see(a, target):
+			return true
+	return false
+
+
+## Which side of `t`'s space a creature at `cell` (`size` squares across) stands on: -1, 0 or 1 across and down, 0 where
+## the two overlap along that axis.
+static func side_of(cell: Vector2i, size: int, t: Combatant) -> Vector2i:
+	var sx := -1 if cell.x + size <= t.cell.x else (1 if cell.x >= t.cell.x + t.size_cells else 0)
+	var sy := -1 if cell.y + size <= t.cell.y else (1 if cell.y >= t.cell.y + t.size_cells else 0)
+	return Vector2i(sx, sy)
+
+
 func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	var e := enc()
 	var adv: Array[String] = []
@@ -271,6 +295,8 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 			if a.can_act() and e.distance(a, target) <= 5:
 				adv.append("Pack Tactics")
 				break
+	if melee and flanks(c, target, origin_cell, origin_size):
+		adv.append("Flanking")
 	for m in target.creature.modifiers_for(&"attacked_with_by_type"):
 		if str(c.creature.creature_type) in (m.data.get("types", []) as Array):
 			dis.append("%s (target)" % m.source_name)
