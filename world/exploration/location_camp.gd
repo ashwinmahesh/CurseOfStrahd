@@ -1,0 +1,446 @@
+class_name LocationCamp
+extends Node
+## The party's camp on the map (F16, lane 24; docs/story/camp.md). A Long Rest in the wild (CampSite.is_wild) pitches
+## it near the party, on the place's own map, so its weather, light, music and visitors stay the place's: the fire and
+## its pieces among the place's props, the party, the companions waiting at camp and the story's guests round the
+## fire, a mark over anyone who wants a word, and the camp's bar (CampBar). Walking up to someone starts the talk they
+## want to have (CampTalk; one each in the evening and one in the morning), or the Narrator says what they're doing.
+## Sleeping is the Long Rest (LongRest), and Strahd may come in the night; the morning offers the change of prepared
+## spells; breaking camp packs it away and the party falls in behind its leader again. The camp goes with the place:
+## leaving it, or anything that builds the place again, ends it.
+
+const NAME := "Camp"
+## The mark over someone who wants a word: the talk icon (a speech bubble).
+const MARK_ICON := preload("res://art/ui/icons/talk.png")
+## How big the camp's flame burns (a place's watch fire is 0.6).
+const FLAME := 0.5
+
+var view: LocationView
+var root: Node
+var center := Vector2i(-1, -1)
+var rule := "risky"
+## The night is over: it's morning at camp.
+var slept := false
+## Who has had their word this evening (once slept, this morning): character id -> true.
+var had: Dictionary = {}
+## Everyone at the fire: character id -> {character: Creature, token: CombatToken, cell: Vector2i,
+## kind: "party" | "bench" | "guest", npc: the guest's npc id}.
+var people: Dictionary = {}
+## The talks waiting, by who asks (CampSite.talks): character id -> talk ref.
+var talks: Dictionary = {}
+## PrepareScreen.snapshot() as the night's rest ended: what the morning's change of prepared spells counts from.
+var prepared_before: Dictionary = {}
+var bar: CampBar
+var _props: Array[String] = []
+var _taken: Dictionary = {}
+var _marks: Dictionary = {}          ## character id -> the mark over them
+var _bench_tokens: Array[CombatToken] = []
+var _roster_seen := ""
+var _mode_seen := -1
+## The Narrator's lines still to say, one after another as the box clears.
+var _queue: Array[String] = []
+var _fire_light: OmniLight3D = null
+var _flame: Node3D = null
+var _struck := false
+
+
+## The camp in `view_`, or null.
+static func of(view_: Node) -> LocationCamp:
+	return view_.get_node_or_null(NAME) as LocationCamp if view_ != null else null
+
+
+## Makes camp near the party (a Long Rest in the wild; `rule_` the place's rest rule, safe or risky). Returns the camp,
+## or null when there's no room for one within reach (the caller rests as it always did).
+static func pitch(view_: LocationView, root_: Node, rule_: String) -> LocationCamp:
+	var existing := of(view_)
+	if existing != null:
+		return existing
+	if view_ == null or view_.members.is_empty() or view_.in_combat:
+		return null
+	var taken := CampSite.things_at(view_.loc)
+	for shown in view_._npc_shown:
+		taken[shown["cell"] as Vector2i] = true
+	var c := CampSite.find_center(view_.grid, view_.leader().cell, taken, _head_count(view_))
+	if c.x < 0:
+		return null
+	var camp := LocationCamp.new()
+	camp.name = NAME
+	camp.view = view_
+	camp.root = root_
+	camp.rule = rule_
+	camp.center = c
+	camp._taken = taken
+	view_.add_child(camp)
+	camp._build()
+	return camp
+
+
+static func _head_count(view_: LocationView) -> int:
+	return view_.st.party.size() + CampSite.company(view_.st).size() + view_.st.guests.size()
+
+
+func _build() -> void:
+	if view.planning:
+		LocationPlan.stop(view)   # no rounds by the fire
+	view._queue.clear()
+	var lay := CampSite.layout(view.grid, center, _taken, _head_count(view), _cook_here())
+	for p: Dictionary in lay["props"]:
+		(view.loc.get_or_add("props", []) as Array).append(p)
+		_props.append(str(p["id"]))
+		view.prop_nodes[str(p["id"])] = LocationBuilder._prop_node(view, p)
+	_light_fire()
+	_seat(lay["seats"] as Array[Vector2i], lay["cook"] as Vector2i)
+	bar = CampBar.new()
+	bar.camp = self
+	add_child(bar)
+	_say_keys(["camp:pitch"])
+	_refresh_talks()
+
+
+## Whether Ratatouille is at camp to cook (travelling or waiting there).
+func _cook_here() -> bool:
+	var everyone: Array[Character] = view.st.party.duplicate()
+	everyone.append_array(CampSite.company(view.st))
+	for ch in everyone:
+		if ch.id == CampSite.COOK_ID and not ch.dead:
+			return true
+	return false
+
+
+## The fire burning, and its light, as a place's own watch fire has (LocationBuilder._build_lights; Atmosphere dresses
+## the light as it joins): the camp's flame stands taller than the stone ring's own small one.
+func _light_fire() -> void:
+	if not view.prop_nodes.has("camp_fire"):
+		return
+	var spec := {"cell": [center.x, center.y], "kind": "fire", "dim_ft": 30}
+	_fire_light = CandleFlicker.new()
+	_fire_light.name = "CampFireLight"
+	_fire_light.light_color = SetDressing.light_colour(spec)
+	_fire_light.omni_range = 6.0
+	(_fire_light as CandleFlicker).base_energy = 2.2
+	_fire_light.position = view.board.cell_center(center) + Vector3(0, 1.2, 0)
+	view.add_child(_fire_light)
+	_flame = LocationBuilder._flame(view, center, FLAME)
+
+
+# --- Who sits where ----------------------------------------------------------------------------------------------
+
+## Seats everyone round the fire: the cook at the pot, then the party, the companions waiting at camp and the guests
+## on the seats in order; each faces the fire. Figures for the companions at camp are the camp's own.
+func _seat(seats: Array[Vector2i], cook: Vector2i) -> void:
+	for t in _bench_tokens:
+		if is_instance_valid(t):
+			t.queue_free()
+	_bench_tokens.clear()
+	people.clear()
+	view.st.camp_company = CampSite.company(view.st)
+	var spots := seats.duplicate()
+	var next := func(ch_id: String) -> Vector2i:
+		if ch_id == CampSite.COOK_ID and cook.x >= 0:
+			return cook
+		if spots.is_empty():
+			return view.leader().cell
+		return spots.pop_front() as Vector2i
+	for m in view.members:
+		var cell := next.call(m.id) as Vector2i
+		_place(m, cell)
+		people[m.id] = {"character": m.creature, "token": view.tokens[m.id], "cell": cell, "kind": "party"}
+	for ch in view.st.camp_company:
+		var cell2 := next.call(ch.id) as Vector2i
+		var cb := Combatant.new(ch, &"party", cell2)
+		var tok := CombatToken.create(cb)
+		tok.position = view.board.cell_center(cell2)
+		view.add_child(tok)
+		tok.face(Vector2(center - cell2), false)
+		_bench_tokens.append(tok)
+		people[ch.id] = {"character": ch, "token": tok, "cell": cell2, "kind": "bench"}
+	for i in view.guest_members.size():
+		var g := view.guest_members[i]
+		if LocationParty.is_follower(g):
+			continue
+		var cell3 := next.call(g.id) as Vector2i
+		_place(g, cell3)
+		var npc := view.st.guest_ids[view.st.guests.find(g.creature)] if view.st.guests.has(g.creature) else ""
+		people[g.id] = {"character": g.creature, "token": view.tokens[g.id], "cell": cell3, "kind": "guest", "npc": npc}
+	view._save_positions()
+	_roster_seen = _roster_key()
+
+
+func _place(m: Combatant, cell: Vector2i) -> void:
+	m.cell = cell
+	var tok := view.tokens.get(m.id, null) as CombatToken
+	if tok == null:
+		return
+	tok.position = view.board.cell_center(cell)
+	tok.face(Vector2(center - cell), false)
+
+
+## Who's in the party, at camp and travelling with it, to notice a change (the roster screen, someone joining).
+func _roster_key() -> String:
+	var ids: Array[String] = []
+	for ch in view.st.party:
+		ids.append(ch.id)
+	ids.append("|")
+	for ch in view.st.bench:
+		ids.append(ch.id + ("+" if ch.dead else ""))
+	ids.append("|")
+	ids.append_array(view.st.guest_ids)
+	return ",".join(ids)
+
+
+# --- What happens at camp ----------------------------------------------------------------------------------------
+
+func _process(_delta: float) -> void:
+	if _struck or view == null or not is_instance_valid(view):
+		return
+	for t in _bench_tokens:
+		if is_instance_valid(t):
+			t.visible = not view.in_combat   # those at camp don't fight: they keep back from it
+	if view.in_combat:
+		return
+	if _roster_key() != _roster_seen:
+		var lay := CampSite.layout(view.grid, center, _taken, _head_count(view), _cook_here())
+		_seat(lay["seats"] as Array[Vector2i], lay["cook"] as Vector2i)
+		_refresh_talks()
+	var mode := int(ModeController.mode)
+	if mode != _mode_seen:
+		_mode_seen = mode
+		if ModeController.mode == ModeController.Mode.EXPLORATION:
+			_refresh_talks()   # a talk's choices, or the night, may have opened another
+	_say_next()
+
+
+## Looks again at who wants a word, and marks them.
+func _refresh_talks() -> void:
+	talks = CampSite.talks(view.st, had)
+	for id: String in _marks.keys():
+		var mark: Variant = _marks[id]
+		var keep: bool = is_instance_valid(mark) and talks.has(id) and people.has(id) \
+			and (people[id] as Dictionary)["token"] == (mark as Node).get_parent()
+		if not keep:
+			if is_instance_valid(mark):
+				(mark as Node).queue_free()
+			_marks.erase(id)
+	for id: String in talks:
+		if _marks.has(id) or not people.has(id):
+			continue
+		var tok := (people[id] as Dictionary)["token"] as CombatToken
+		if tok == null or not is_instance_valid(tok):
+			continue
+		_marks[id] = _mark(tok)
+
+
+## The speech bubble over someone who wants a word (the talk icon, with a dark rim and an ellipsis in it), bobbing
+## gently over their head.
+func _mark(tok: CombatToken) -> Node3D:
+	var mark := Node3D.new()
+	mark.name = "WantsAWord"
+	var top := CombatToken.height_of(tok.combatant) + 0.55
+	mark.position = Vector3(0, top, 0)
+	for layer: Array in [[0.0056, "void", 11], [0.0045, "parchment", 12]]:
+		var sp := Sprite3D.new()
+		sp.texture = MARK_ICON
+		sp.pixel_size = float(layer[0])
+		sp.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		sp.no_depth_test = true
+		sp.render_priority = int(layer[2])
+		sp.modulate = Look.color(str(layer[1]))
+		mark.add_child(sp)
+	var dots := Label3D.new()
+	dots.text = "…"
+	dots.font_size = 56
+	dots.pixel_size = 0.005
+	dots.position = Vector3(0, 0.04, 0)
+	dots.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	dots.no_depth_test = true
+	dots.render_priority = 13
+	dots.modulate = Look.color("void")
+	dots.outline_size = 0
+	mark.add_child(dots)
+	tok.add_child(mark)
+	var bob := mark.create_tween().set_loops()
+	bob.tween_property(mark, "position:y", top + 0.08, 0.7).set_trans(Tween.TRANS_SINE)
+	bob.tween_property(mark, "position:y", top, 0.7).set_trans(Tween.TRANS_SINE)
+	return mark
+
+
+## Who is at camp on `cell` (not the leader, who is the one walking about): their id, or "".
+func who_at(cell: Vector2i) -> String:
+	var lead := view.leader()
+	for id: String in people:
+		var tok := (people[id] as Dictionary)["token"] as CombatToken
+		if tok != null and is_instance_valid(tok) and tok.combatant.cell == cell and (lead == null or id != lead.id):
+			return id
+	return ""
+
+
+## [figure, square] for each companion waiting at camp, for the mouse and the controller to point at (the party's
+## and the guests' figures are the view's own).
+func pickables() -> Array:
+	var out: Array = []
+	for t in _bench_tokens:
+		if is_instance_valid(t) and t.visible:
+			out.append([t, t.combatant.cell])
+	return out
+
+
+## A first name for the hover hint and the menu.
+func first_name(id: String) -> String:
+	var p := people.get(id, {}) as Dictionary
+	return str((p["character"] as Creature).name).get_slice(" ", 0) if not p.is_empty() else ""
+
+
+## The hover hint over someone at camp.
+func label_for(id: String) -> String:
+	return "%s wants a word" % first_name(id) if talks.has(id) else "Talk to %s" % first_name(id)
+
+
+## Someone at camp asked over: the talk they want, if they have one, else what they're about.
+func talk(id: String) -> void:
+	if not people.has(id):
+		return
+	var p := people[id] as Dictionary
+	var tok := p["token"] as CombatToken
+	var lead := view.leader()
+	if tok != null and lead != null:
+		tok.face(Vector2(lead.cell - (p["cell"] as Vector2i)), false)
+	var ref := str(talks.get(id, ""))
+	if ref != "":
+		CampTalk.mark(view.st, ref)
+		had[id] = true
+		_refresh_talks()
+		view.dialogue_requested.emit(ref, "")
+		return
+	var guest := str(p["kind"]) == "guest"
+	var who := str(p.get("npc", "")) if guest else id
+	var text := ""
+	for key in CampSite.idle_keys(who, guest):
+		if text != "":
+			break
+		var actor: Character = p["character"] as Character if p["character"] is Character else null
+		text = view.narrator.line(key, view.st, actor, {"target": first_name(id)}) if view.narrator != null else ""
+	if text == "":
+		text = "%s sits by the fire." % first_name(id)
+	view.narration.emit(text)
+
+
+# --- The night and the morning ---------------------------------------------------------------------------------------
+
+## Why the party can't sleep now (RestRules: the 16 hours since the last Long Rest), or "".
+func sleep_refusal() -> String:
+	if slept:
+		return "Everyone has slept."
+	var why := RestRules.long_rest_refusals(view.st)
+	return " ".join(why)
+
+
+## Sleeps the night by the fire: the Long Rest (LongRest.take). An interrupted night gives a Short Rest's benefits and
+## the party can try again; a full one brings the morning, with the Narrator's lines for the night, a dream, and
+## perhaps Strahd (game root `strahd_after_rest`).
+func sleep() -> void:
+	if slept or view.in_combat or sleep_refusal() != "":
+		return
+	Audio.sfx("rest")
+	var res := LongRest.take(view.st, rule, Dice.roller)
+	if bool(res["interrupted"]):
+		_queue.append(str(res["text"]))
+		_refresh_root()
+		return
+	slept = true
+	had.clear()
+	prepared_before = PrepareScreen.snapshot(view.st)
+	_queue.append(str(res["text"]))
+	for line: String in res["lines"]:
+		_queue.append(line)
+	var region := str(view.loc.get("region", ""))
+	_say_keys(["rest:long:" + view.loc_id, "rest:long:" + region, "camp:night", "rest:long"])
+	_say_keys(["dream:" + region])
+	_say_keys(["camp:morning"])
+	_refresh_root()
+	_refresh_talks()
+	if root != null and root.has_method("strahd_after_rest"):
+		root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)   # Strahd may come in the night (ADR 0014)
+
+
+## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with.
+func prepare() -> void:
+	if not slept or PrepareScreen.preparable(view.st).is_empty():
+		return
+	var ps := PrepareScreen.new()
+	ps.earlier = prepared_before
+	bar.add_child(ps)
+	ps.open(root, view.st, 0)
+
+
+## Packs the camp away: its pieces and light go, the companions at camp with them, and the party falls in round its
+## leader to walk on.
+func strike() -> void:
+	if _struck:
+		return
+	_struck = true
+	var props := view.loc.get("props", []) as Array
+	for i in range(props.size() - 1, -1, -1):
+		if bool((props[i] as Dictionary).get("camp", false)):
+			props.remove_at(i)
+	for id in _props:
+		var node := view.prop_nodes.get(id, null) as Node
+		if node != null and is_instance_valid(node):
+			node.queue_free()
+		view.prop_nodes.erase(id)
+	for n: Node3D in [_fire_light, _flame]:
+		if n != null and is_instance_valid(n):
+			n.queue_free()
+	for t in _bench_tokens:
+		if is_instance_valid(t):
+			t.queue_free()
+	_bench_tokens.clear()
+	view.st.camp_company.clear()
+	# The party gathers on its leader, the guests behind, ready to walk on.
+	var lead := view.leader()
+	if lead != null:
+		var cells := LocationParty._cells_around(view, lead.cell, view.members.size())
+		for i in range(1, view.members.size()):
+			_place(view.members[i], cells[i])
+		view._save_positions()
+		view.place_guests()
+	_queue.clear()
+	var lead_ch := lead.creature as Character if lead != null else null
+	var said := view.narrator.line("camp:strike", view.st, lead_ch) if view.narrator != null else ""
+	if said != "":
+		view.narration.emit(said)
+	queue_free()
+
+
+func _exit_tree() -> void:
+	if view != null and is_instance_valid(view) and view.st != null and of(view) == self:
+		view.st.camp_company.clear()
+
+
+## Queues the first of `keys` the Narrator has a line for.
+func _say_keys(keys: Array[String]) -> void:
+	if view.narrator == null:
+		return
+	var lead := view.leader()
+	for key in keys:
+		var text := view.narrator.line(key, view.st, lead.creature as Character if lead != null else null)
+		if text != "":
+			_queue.append(text)
+			return
+
+
+## Says the next queued line once the Narrator's box is clear and the party is simply exploring.
+func _say_next() -> void:
+	if _queue.is_empty() or root == null or ModeController.mode != ModeController.Mode.EXPLORATION:
+		return
+	var hud := root.get("hud") as ExploreHud if "hud" in root else null
+	if hud == null:
+		view.narration.emit(_queue.pop_front())
+		return
+	if hud.narration_showing() or root.get("screen") != null:
+		return
+	hud.narrate(_queue.pop_front())
+
+
+func _refresh_root() -> void:
+	if root != null and root.has_method("_refresh"):
+		root.call("_refresh")

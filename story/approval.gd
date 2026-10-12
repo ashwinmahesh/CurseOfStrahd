@@ -142,10 +142,12 @@ static func compare(st: StoryState, id: String, op: String, rhs: String) -> bool
 # --- Changing -------------------------------------------------------------------------------------
 
 ## The companions who see a choice made: the six who are travelling with the party, alive (never a custom hero, even
-## one who took a companion's name).
+## one who took a companion's name), and those by the fire while the party has made camp (StoryState.camp_company).
 static func witnesses(st: StoryState) -> Array[String]:
 	var out: Array[String] = []
-	for ch in st.party:
+	var here: Array[Character] = st.party.duplicate()
+	here.append_array(st.camp_company)
+	for ch in here:
 		if ch.dead or not is_companion(ch.id):
 			continue
 		if StoryState.member_matches(ch, "name:" + ch.id):
