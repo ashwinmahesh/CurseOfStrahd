@@ -62,8 +62,11 @@ func focuses(_c: Combatant) -> bool:
 ## much less at Tactician and Honour, where they focus.
 func taste(c: Combatant, t: Combatant) -> float:
 	var x := float(posmod(hash(c.id + "|" + t.id), 1001)) / 1000.0 * 2.0 - 1.0
-	var spread := 0.2 if c.creature.ability_score(&"int") < 10 else 0.12
-	return x * spread * (0.4 if focuses(c) else 1.0)
+	# Story already spreads its blows by who's been struck (target_adjust), so it leans less; Tactician and Honour focus.
+	var spread: float = {"kind": 0.2, "standard": 0.35}.get(mode(), 0.08)
+	if c.creature.ability_score(&"int") >= 10:
+		spread *= 0.75
+	return x * spread
 
 
 ## How much each foot it would have to move counts against a target: a creature of animal wits (Intelligence 3 or
@@ -90,6 +93,8 @@ func target_adjust(t: Combatant, expected: float) -> float:
 	match mode():
 		"kind":
 			return -0.5 * expected * struck(t)
+		"standard":
+			return -0.25 * expected * struck(t)   # Balanced spreads a little too (owner, 2026-10-12)
 		"sharp", "ruthless":
 			var hurt := 1.0 - float(t.creature.hp) / maxf(1.0, float(t.creature.max_hp()))
 			var bonus := 0.5 * expected * hurt + 0.5 * struck(t)

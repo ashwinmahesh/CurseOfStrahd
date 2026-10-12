@@ -678,7 +678,7 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	if int((hc["situation"] as Dictionary)["cover"]) == CombatGrid.Cover.TOTAL:
 		return -1e9
 	var avg := _avg(c, o)
-	var chance := float(hc["chance"]) if tactics.focuses(c) else sqrt(maxf(0.0, float(hc["chance"])))
+	var chance := float(hc["chance"]) if tactics.focuses(c) else sqrt(maxf(0.0, float(hc["chance"])))   # gentle at Story/Balanced
 	var expected := chance * avg
 	# An Echo Knight's echo is only an image (its knight calls another with a Bonus Action): worth little.
 	var echo := EchoKnight.is_echo(t)
