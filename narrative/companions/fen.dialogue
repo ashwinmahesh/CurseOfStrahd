@@ -54,6 +54,8 @@ interject name:thistle: I'm not running.
 if not (quest.fens_trail >= the_wolf_road)
 quest fens_trail the_wolf_road
 endif
+# The blaze points the way: the den goes on the map (Wiki finding 37).
+set den_way_known
 approve thistle +2: You followed Grandda's blazes up from the lake with me
 -> END
 

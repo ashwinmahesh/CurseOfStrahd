@@ -86,7 +86,7 @@
     {
       "id": "the_conquerors_dead",
       "weight": 2,
-      "when": "night and not flag.argynvost_beacon_lit",
+      "when": "night and not flag.argynvost_beacon_lit and not flag.vladimir_pact",
       "monsters": [
         {
           "monster": "strahd_zombie",
