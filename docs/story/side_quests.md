@@ -212,7 +212,7 @@ Big Tobar's son Nelu followed his dead mother's voice toward Tser Falls (Zora's 
 are will-o'-wisps in the gorge, feeding on grief and speaking in whatever voice brings you to the edge; Nelu is alive on
 a ledge, and they've been calling his father in Nelu's voice. **Escalation:** at the falls after dark (prop
 `gorge_voices` in the west glade) they call each companion by someone they lost (Godrick's Sir Pellam, Wren's Sorrel,
-Thistle's grandda, Kip's Pip, Liriel's old teacher, Ratatoille's maman), and a Wisdom check (DC 14, the party's best)
+Thistle's grandda, Kip's Pip, Liriel's old teacher, Ratatouille's maman), and a Wisdom check (DC 14, the party's best)
 decides whether someone is lured toward the edge, which starts the fight with the party surprised.
 
 - Fight `falls_wisps` (the west glade): level 4 four will-o'-wisps (1,800 XP, High), level 5 five, below three.

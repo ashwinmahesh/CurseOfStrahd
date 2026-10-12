@@ -234,7 +234,7 @@ func test_the_romances_need_both_of_them() -> void:
 	var st := StoryState.new()
 	st.party.append(Pregens.build("liriel_dawnsong", 5))
 	_score(st, "liriel_dawnsong", 40)
-	assert_false("camp/romance_liriel_ratatoille:talk_spark" in _camp_refs(st), "no Ratatoille, no supper")
+	assert_false("camp/romance_liriel_ratatoille:talk_spark" in _camp_refs(st), "no Ratatouille, no supper")
 
 
 # --- Coverage over the campaign -------------------------------------------------------------------------------------

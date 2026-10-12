@@ -81,8 +81,8 @@ Strahd: Kip. Merchant. Come here. I want to inspect the goods.
 Narrator: Kip gets up and walks to him with his straw hat in his hands, the way he'd go to a customer, smiling a little. The smile is the worst part. It isn't his.
 elif name:ratatoille and not leader:name:ratatoille
 set strahd_knelt = "ratatoille"
-Strahd: Ratatoille. Come here, little cook. I am told you wish to be taken seriously.
-Narrator: Ratatoille sits up, folds his blanket into a neat square, and walks to him across the camp with his face as smooth and empty as a clean plate.
+Strahd: Ratatouille. Come here, little cook. I am told you wish to be taken seriously.
+Narrator: Ratatouille sits up, folds his blanket into a neat square, and walks to him across the camp with his face as smooth and empty as a clean plate.
 elif name:tamsin_tealeaf and not leader:name:tamsin_tealeaf
 set strahd_knelt = "tamsin_tealeaf"
 Strahd: Tamsin. Bring me what you stole, little thief.

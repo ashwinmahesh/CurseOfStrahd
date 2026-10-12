@@ -126,6 +126,8 @@ func test_an_outcome_gives_teaches_inspires_and_heals() -> void:
 	var hurt := st.party[2]
 	hurt.hp = 1
 	var gold := st.gold
+	var gained: Array[String] = []
+	st.item_gained.connect(func(item_id: String, qty: int, by: String) -> void: gained.append("%s %d %s" % [item_id, qty, by]))
 	var res := WorldChecks.apply(st, {"items": [{"id": "potion_of_healing_greater", "qty": 1}], "gold": 25,
 		"codex": {"id": "test_lore", "title": "Old Lore", "text": "Words."}, "inspiration": true, "heal": "1d4"}, who, dice, "Test")
 	assert_true(who.carries("potion_of_healing_greater"), "the find goes to whoever found it")
@@ -133,7 +135,8 @@ func test_an_outcome_gives_teaches_inspires_and_heals() -> void:
 	assert_true("test_lore" in st.codex)
 	assert_true(who.heroic_inspiration)
 	assert_true(hurt.hp > 1, "the hurt are healed")
-	assert_eq((res["gains"] as Array).size(), 4, str(res["gains"]))
+	assert_eq(gained, ["potion_of_healing_greater 1 %s" % who.name] as Array[String], "the find is announced (ItemNotices)")
+	assert_eq((res["gains"] as Array).size(), 3, "gold, lore and inspiration in the toast: %s" % [res["gains"]])
 	WorldChecks.apply(st, {"inspiration": true}, who, dice, "Test")
 	assert_true(st.party.filter(func(ch: Character) -> bool: return ch.heroic_inspiration).size() >= 2,
 		"someone who has it already passes it on")

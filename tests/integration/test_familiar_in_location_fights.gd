@@ -194,7 +194,7 @@ func test_the_familiar_takes_its_own_turn_under_the_players_hand() -> void:
 
 
 
-## Owner report (2026-10-12): Ratatoille's owl got no turn: his book doesn't hold Find Familiar (the owl came another
+## Owner report (2026-10-12): Ratatouille's owl got no turn: his book doesn't hold Find Familiar (the owl came another
 ## way), so it was left out of his fights. A familiar stays until it drops or is dismissed, whoever cast it.
 func test_a_familiar_whose_caster_cant_cast_the_spell_still_fights() -> void:
 	var v := _view()

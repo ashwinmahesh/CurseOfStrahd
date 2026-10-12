@@ -121,7 +121,7 @@ func test_a_wizard_swaps_one_cantrip_after_a_long_rest() -> void:
 
 
 func test_a_high_elf_swaps_prestidigitation_after_a_long_rest() -> void:
-	# Ratatoille, a High Elf Wizard: the lineage's Prestidigitation becomes another Wizard cantrip after a Long Rest.
+	# Ratatouille, a High Elf Wizard: the lineage's Prestidigitation becomes another Wizard cantrip after a Long Rest.
 	var ch := TestChars.pregen("ratatoille", 1)
 	var key := "species.lineage.high_elf_lineage.cantrip"
 	var c := ch.choice(key)

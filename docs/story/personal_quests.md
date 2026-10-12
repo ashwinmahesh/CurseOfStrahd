@@ -87,7 +87,7 @@ mists, bit him; he wouldn't hunt children, so he hangs in silver in the den besi
 Kiril asks her to run with the pack before the challenge (`kiril_offer_heard`, werewolf_den/kiril:challenge). Madam
 Eva: truth "she likes towns and fits nowhere"; question "is Grandda alive?" Camp: Grandda; the cakes; after Fen.
 
-## Ratatoille: A Seat at the Table (`a_seat_at_the_table`)
+## Ratatouille: A Seat at the Table (`a_seat_at_the_table`)
 
 He learned magic so people would sit with him, and came to apprentice himself to "the Wizard of Wines". It's a
 winery, named for the wizard who paid the Martikovs in vine stones: Mordenkainen, now mad on Mount Baratok.
@@ -99,7 +99,7 @@ winery, named for the wizard who paid the Martikovs in vine stones: Mordenkainen
 | `the_kitchen` | He cooks the Martikovs' supper once the winery is theirs again | davian menu, table:supper |
 | `the_wizard_found` | He recognises the mad mage (or connects him at the winery if met first) | mount_baratok/mordenkainen:start |
 | `the_masters_word` | Mordenkainen restored: "Status is a coat. Cook." | mordenkainen restored menu, table:apprentice |
-| `his_own_table` | He cooks for the party: "Ratatoille. Cook. And wizard. In that order." | camp/ratatoille:talk_table |
+| `his_own_table` | He cooks for the party: "Ratatouille. Cook. And wizard. In that order." | camp/ratatoille:talk_table |
 
 Temptations along the way: Zantras's audience in the Amber Temple (`ratatoille_zantras_refused`) and Strahd's offer of
 a title and a tower at dinner (`ratatoille_refused_strahd`); the final talk mentions whichever he turned down.
@@ -128,7 +128,7 @@ in his own hand". He meant a soul. It says signature.
 |---|---|---|
 | `the_contract` | Into the Mists | arrival:hooks |
 | `the_assessor` | Quillon calls at the fire | camp/kip:talk_quillon |
-| `the_small_print` | The party reads it (Ratatoille, Wren or Liriel, or Kip's Investigation 14), or Master Vosk reads it for a fee | camp/kip:talk_reading, amber_temple/vosk menu, companions/fine_print:vosk |
+| `the_small_print` | The party reads it (Ratatouille, Wren or Liriel, or Kip's Investigation 14), or Master Vosk reads it for a fee | camp/kip:talk_reading, amber_temple/vosk menu, companions/fine_print:vosk |
 | `signed` | Strahd's first letter kept (Kip asks for it), his dinner invitation kept, or Strahd signs at dinner | strahd/letters:first and :invitation_choice, castle_ravenloft/gates_dinner |
 | `free` | Quillon is paid with the signature; the contract burns; the apricots start to rot | camp/kip:talk_settle |
 | `strahds_debtor` | At dinner Kip lets Strahd buy the contract instead (failure) | fine_print:dinner_sold |
@@ -136,7 +136,7 @@ in his own hand". He meant a soul. It says signature.
 ## Castle Ravenloft
 
 The castle beats are built in rather than left as hooks: Liriel's dawn at the chapel altar step, Wren's lesson with
-Rahadin, Ratatoille's and Kip's moments at Strahd's dinner, and Strahd greeting each of the six by what they came for
+Rahadin, Ratatouille's and Kip's moments at Strahd's dinner, and Strahd greeting each of the six by what they came for
 (castle_ravenloft/gates_dinner). Godrick's knighting happens at Argynvostholt.
 
 ## New NPCs
