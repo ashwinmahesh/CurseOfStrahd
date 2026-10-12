@@ -757,7 +757,8 @@
             23,
             14
           ],
-          "name": "Lieutenant of the Vanguard"
+          "name": "Lieutenant of the Vanguard",
+          "hp": 52
         },
         {
           "monster": "wight",
@@ -765,7 +766,8 @@
             23,
             16
           ],
-          "name": "Lieutenant of the Vanguard"
+          "name": "Lieutenant of the Vanguard",
+          "hp": 52
         },
         {
           "monster": "skeleton",

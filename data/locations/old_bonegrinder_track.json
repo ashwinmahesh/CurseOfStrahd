@@ -513,7 +513,8 @@
           "cell": [
             26,
             4
-          ]
+          ],
+          "hp": 155
         },
         {
           "monster": "dire_wolf",

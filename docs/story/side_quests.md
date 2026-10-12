@@ -527,10 +527,11 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
 - **Boss: the Bone Marshal** (data/monsters/bone_marshal.json, `source.book: custom`, drawn with the phantom warrior's
   sprite): Large undead, AC 18, 150 HP, two grave-blade strokes (1d12+6 slashing and 1d8 necrotic, reach 10), Parry,
   Legendary Resistance (2/day) and a charge (one more stroke) between turns. CR 8.
-- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal, 2 lieutenants as wights and 6 skeleton riders,
-  5,600 XP; level 8 a third wight and 2 phantom warriors; below 6 the marshal at 110 HP, one wight, six riders), or
-  only the marshal and his lieutenants once the riders stand down. The autopilot wins 2 of 3 against the column at
-  level 6 and 1 of 3 against the marshal and three lieutenants at level 8, losing three party members a fight.
+- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal, 2 lieutenants as wights at 52 HP each and 6
+  skeleton riders, 5,600 XP; level 8 a third wight and 2 phantom warriors; below 6 the marshal at 110 HP, one wight, six
+  riders), or only the marshal and his lieutenants once the riders stand down. The autopilot wins 3 of 8 against the
+  column at level 6 (seeds 1-8; 2026-10-12 the lieutenants went from a wight's 82 HP to 52, when it won 1 of 8) and 3 of
+  8 against the marshal and three lieutenants at level 8, losing three party members a fight.
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
 ## Old Bonegrinder's lane (level 6)
@@ -551,10 +552,10 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
 - **Boss: Granny Ash** (data/monsters/granny_ash.json, `source.book: custom`, from the 2025 Monster Manual's annis
   hag, drawn with the night hag's sprite): Large fey, AC 17, 184 HP, two iron claws (reach 10) and a bite, a Crushing
   Hug (recharge 5-6) that restrains and crushes, Legendary Resistance (2/day) and a rake between turns. CR 8.
-- Fight `granny_ash` on the lane: level 6 Granny, 3 dire wolves ("Granny's Dog") and 4 needle blights (4,700 XP; the
-  autopilot wins 2 of 4 and loses three party members a fight); level 7 adds 2 needle and 2 vine blights; level 8
-  six needle blights and the hag garden's elm (a tree blight), 7,700 XP; below 6 Granny at 130 HP, one dog and 3
-  needle blights.
+- Fight `granny_ash` on the lane: level 6 Granny at 155 HP, 3 dire wolves ("Granny's Dog") and 4 needle blights (4,700
+  XP; the autopilot wins 3 of 8 and loses three party members a fight; 2026-10-12 her HP went from 184 to 155, when it
+  won 1 of 8); level 7 adds 2 needle and 2 vine blights; level 8 six needle blights and the hag garden's elm (a tree
+  blight), 7,700 XP; below 6 Granny at 130 HP, one dog and 3 needle blights.
 - Endings (`mouse_fate`): `home` (named: Zamfira back with her mother, Ilka and Toma, on the step in the village),
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
   companions disapprove).
