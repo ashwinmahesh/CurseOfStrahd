@@ -1455,6 +1455,51 @@ func spell_preview(spell_id: String, slot_level: int = 0) -> Dictionary:
 	return out
 
 
+## Spells taken out of the game (`removed` in their data, with `playable` false: Ashwin, 2026-10-12, the spells that did
+## nothing and couldn't be given a use; their files stay): each pick of one in this hero's choices is swapped for a
+## spell of the same level from the same choice's legal options (the first offered), spellbooks first so the prepared
+## spells drawn from them see the swap; a spell copied into a spellbook from a book on the road is simply gone. The
+## player can change the new pick at the next Long Rest or level as usual. True if anything changed.
+func swap_removed_spells() -> bool:
+	var changed := false
+	var choices := build.get("choices", {}) as Dictionary
+	var defs := choice_defs.filter(func(c: Choice) -> bool: return c.kind in ["cantrip", "spell", "spellbook"])
+	defs.sort_custom(func(a: Choice, b: Choice) -> bool: return a.kind == "spellbook" and b.kind != "spellbook")
+	for c: Choice in defs:
+		var picks: Array[String] = []
+		for p: Variant in choices.get(c.key, []):
+			picks.append(str(p))
+		var gone := picks.filter(func(p: String) -> bool: return removed_spell(compendium, p))
+		if gone.is_empty():
+			continue
+		for g: String in gone:
+			picks.erase(g)
+		c.picks = picks.duplicate()
+		ChoiceOptions.populate(c, self)
+		for g: String in gone:
+			var lvl := int(compendium.spell_data(g).get("level", 0))
+			for o in c.options:
+				if o.legal and not o.id in picks and not removed_spell(compendium, o.id) \
+						and int(compendium.spell_data(o.id).get("level", -1)) == lvl:
+					picks.append(o.id)
+					break
+		choices[c.key] = picks
+		changed = true
+	var copied := build.get("copied_spells", []) as Array
+	var kept := copied.filter(func(s: Variant) -> bool: return not removed_spell(compendium, str(s)))
+	if kept.size() != copied.size():
+		build["copied_spells"] = kept
+		changed = true
+	if changed:
+		build["choices"] = choices
+		refresh()
+	return changed
+
+
+static func removed_spell(comp: Compendium, spell_id: String) -> bool:
+	return comp.spell_data(spell_id).has("removed")
+
+
 func knows_spell(spell_id: String) -> bool:
 	for s in known_spells():
 		if str(s["id"]) == spell_id:
@@ -2389,6 +2434,7 @@ func to_dict() -> Dictionary:
 
 static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Character:
 	var c := Character.from_build(d.get("build", {}) as Dictionary, compendium_)
+	c.swap_removed_spells()   # a save from before a spell left the game
 	c.id = str(d.get("id", c.id))
 	c.state_from_dict(d.get("state", {}) as Dictionary)
 	c.inventory.clear()

@@ -21,6 +21,7 @@
     "policy": {"enum": ["ask", "auto", "never"], "description": "A Reaction the spell can take on its own once its caster allows it (class tab: Automatic or Off), starting at this value."},
     "policy_modes": {"type": "array", "items": {"enum": ["ask", "auto", "never"]}, "description": "The class tab's choices when Ask can prompt too (Backlash against an attack)."},
     "playable": {"type": "boolean", "description": "False until every rule of the entry works in the game: it is then left out of character creation, level-up and spell choices and random treasure (Compendium.playable). Absent means playable."},
+    "removed": {"type": "string", "description": "Taken out of the game (with playable false), and why: a saved hero who knows it gets another spell of its level when the save loads (Character.swap_removed_spells). The file stays so old saves load and patches stay small."},
     "id": {
       "$ref": "common.schema.json#/$defs/id"
     },
