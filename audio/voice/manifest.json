@@ -10677,12 +10677,6 @@
   "recipe": "ef2f9464fb",
   "text": "Maybe he's being polite. Sir Pellam always said, assume good manners until you're bitten."
  },
- "godrick_pendlebrook/210f2eb25aa98496": {
-  "chars": 105,
-  "model": "eleven_v4",
-  "recipe": "ef2f9464fb",
-  "text": "You're not walking it alone, Mirela. Ana can ride on my shoulders. Everybody else, single file behind me."
- },
  "godrick_pendlebrook/21dd394c752e6cae": {
   "chars": 100,
   "model": "eleven_v4",
@@ -11296,6 +11290,13 @@
   "model": "eleven_v4",
   "recipe": "ef2f9464fb",
   "text": "He wanted his father to know. Then his father will know. I swear it."
+ },
+ "godrick_pendlebrook/81831e9b73008e75": {
+  "chars": 109,
+  "direction": "[hearty, protective]",
+  "model": "eleven_v3",
+  "recipe": "52840be837",
+  "text": "You're not walking it alone, Mirela. Codruta can ride on my shoulders. Everybody else, single file behind me."
  },
  "godrick_pendlebrook/81fd62ff3066c23d": {
   "chars": 103,
@@ -14822,6 +14823,12 @@
   "recipe": "956cd23797",
   "text": "Ireena. Don't touch that."
  },
+ "hero_female/61240355749771aa": {
+  "chars": 44,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Rest, Brother. Someone's finishing the walk."
+ },
  "hero_female/6140a352b2b8c9c0": {
   "chars": 23,
   "model": "eleven_v4",
@@ -15600,6 +15607,12 @@
   "model": "eleven_v4",
   "recipe": "956cd23797",
   "text": "Most days. Not always when I'd like."
+ },
+ "hero_female/8c89a9cdfaec0a47": {
+  "chars": 102,
+  "model": "eleven_v4",
+  "recipe": "956cd23797",
+  "text": "Somebody promised him no voice would call him up again. We've had our questions. Let him go back down."
  },
  "hero_female/8cdfbe367ada6319": {
   "chars": 37,
@@ -19160,6 +19173,12 @@
   "recipe": "66638cecb8",
   "text": "Ireena. Don't touch that."
  },
+ "hero_male/61240355749771aa": {
+  "chars": 44,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Rest, Brother. Someone's finishing the walk."
+ },
  "hero_male/6140a352b2b8c9c0": {
   "chars": 23,
   "model": "eleven_v4",
@@ -19938,6 +19957,12 @@
   "model": "eleven_v4",
   "recipe": "66638cecb8",
   "text": "Most days. Not always when I'd like."
+ },
+ "hero_male/8c89a9cdfaec0a47": {
+  "chars": 102,
+  "model": "eleven_v4",
+  "recipe": "66638cecb8",
+  "text": "Somebody promised him no voice would call him up again. We've had our questions. Let him go back down."
  },
  "hero_male/8cdfbe367ada6319": {
   "chars": 37,
@@ -29639,6 +29664,13 @@
   "recipe": "af97fbe78c",
   "text": "Ireena. Don't touch that."
  },
+ "liriel_dawnsong/61240355749771aa": {
+  "chars": 44,
+  "direction": "[gentle, reverent]",
+  "model": "eleven_v3",
+  "recipe": "a968987b3b",
+  "text": "Rest, Brother. Someone's finishing the walk."
+ },
  "liriel_dawnsong/6243477b5611229c": {
   "chars": 95,
   "direction": "[shaken, hurt]",
@@ -31039,6 +31071,13 @@
   "model": "eleven_v3",
   "recipe": "b3ae06560a",
   "text": "She was Nicu's favourite. He used to ride her bareback in the river and pretend he couldn't hear Radu shouting."
+ },
+ "luminita/343635d53f919f32": {
+  "chars": 76,
+  "direction": "[sad, laughing through tears]",
+  "model": "eleven_v3",
+  "recipe": "b3ae06560a",
+  "text": "He said that? Dead, and still telling jokes. That's him. That's exactly him."
  },
  "luminita/43ef21b885f6a106": {
   "chars": 178,
@@ -32973,6 +33012,13 @@
   "recipe": "85a280ae4f",
   "text": "You came back. You left, and you came back. I counted the days you were gone."
  },
+ "mirela/0c7dfb4a4ab6148d": {
+  "chars": 95,
+  "direction": "[excited, relieved]",
+  "model": "eleven_v3",
+  "recipe": "85a280ae4f",
+  "text": "That's Codruta's! She dropped it when they carried us up. She's been crying for it every night."
+ },
  "mirela/1bc5eb0de43deaa4": {
   "chars": 28,
   "direction": "[small, hopeful, scared]",
@@ -32986,13 +33032,6 @@
   "model": "eleven_v3",
   "recipe": "85a280ae4f",
   "text": "Don't be long."
- },
- "mirela/4789adfea4428f9b": {
-  "chars": 91,
-  "direction": "[excited, relieved]",
-  "model": "eleven_v3",
-  "recipe": "85a280ae4f",
-  "text": "That's Ana's! She dropped it when they carried us up. She's been crying for it every night."
  },
  "mirela/6f2af3fc6e5fac3c": {
   "chars": 118,
@@ -33022,26 +33061,12 @@
   "recipe": "85a280ae4f",
   "text": "Now? With all of them out there?"
  },
- "mirela/884bcfeb5dc4f802": {
-  "chars": 113,
-  "direction": "[brave, practical]",
-  "model": "eleven_v3",
-  "recipe": "85a280ae4f",
-  "text": "Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Ana. Ana's little."
- },
  "mirela/8860815d0c64da4b": {
   "chars": 88,
   "direction": "[urgent, brave]",
   "model": "eleven_v3",
   "recipe": "85a280ae4f",
   "text": "Emil's loose? I heard him howl. Then hurry up and win. We'll be here. We're always here."
- },
- "mirela/9abb8d733af95629": {
-  "chars": 183,
-  "direction": "[steady, serious, sad]",
-  "model": "eleven_v3",
-  "recipe": "85a280ae4f",
-  "text": "Mirela. From the Vadu farm under Krezk. That's Ana, she's six, and Petru, and the twins, Ilie and Ioana. They came in the night with sacks. They took my dog first so he wouldn't bark."
  },
  "mirela/a37f36786dbc8bba": {
   "chars": 167,
@@ -33057,12 +33082,26 @@
   "recipe": "85a280ae4f",
   "text": "We can't run. They'd smell us on the hill before we got to the trees, and they're faster than horses. Zuleika says wait for Emil. Zuleika says a lot of things, but she brings bread."
  },
+ "mirela/b8aae3470894e323": {
+  "chars": 189,
+  "direction": "[steady, serious, sad]",
+  "model": "eleven_v3",
+  "recipe": "85a280ae4f",
+  "text": "Mirela. From the Vadu farm under Krezk. That's Codruta, she's six, and Petru, and the twins, Zamfir and Ioana. They came in the night with sacks. They took my dog first so he wouldn't bark."
+ },
  "mirela/bcb143189acfa5f9": {
   "chars": 36,
   "direction": "[tired, brave]",
   "model": "eleven_v3",
   "recipe": "85a280ae4f",
   "text": "Still here. We're always still here."
+ },
+ "mirela/e9d8f4cdfb128324": {
+  "chars": 121,
+  "direction": "[brave, practical]",
+  "model": "eleven_v3",
+  "recipe": "85a280ae4f",
+  "text": "Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Codruta. Codruta's little."
  },
  "mirela/f24c6f0c505c0618": {
   "chars": 43,
@@ -34297,11 +34336,23 @@
   "recipe": "dd92281f92",
   "text": "Days, scratched in fives, until they stop."
  },
+ "narrator/019c1adbcece350a": {
+  "chars": 166,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"My boots came off in the mud at the foot of the slope when they dragged me up. Grigor won them off a Vistana at dice; they run faster than a horse. Not fast enough.\""
+ },
  "narrator/01a6afbb7d0f2276": {
   "chars": 175,
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "When the last stitch is out the wings open by themselves, slowly, the way a hand does when you stop making a fist. They fill the kitchen. Every Belview in the room goes quiet."
+ },
+ "narrator/01ac90cd8d56386e": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"Mircea. I hunted the Svalich road with my brother Grigor, until the wolves that walk like men took me off it.\""
  },
  "narrator/01ace6cdc529fe5a": {
   "chars": 106,
@@ -34866,6 +34917,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The wolves that have been pacing you through the fields all morning stop pretending to be shy."
+ },
+ "narrator/05b07dde80f61ec3": {
+  "chars": 123,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"Tudor. Goats, mostly. The big grey wolf came down to drink at dusk, the way he does, and I was between him and the water.\""
  },
  "narrator/05b7c21606eb4ce5": {
   "chars": 128,
@@ -36954,12 +37011,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A hearth that has never had a fire in it. Frost grows on the firedogs like moss."
- },
- "narrator/1592c272bf344ffd": {
-  "chars": 142,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once."
  },
  "narrator/1595bcb03c740e36": {
   "chars": 257,
@@ -40141,6 +40192,12 @@
   "recipe": "dd92281f92",
   "text": "The high chair is empty. Grey dust lies on the seat and the step, and a thin trail of it runs up the wall and into a crack in the ceiling, toward the tower, toward the door."
  },
+ "narrator/2ca774ad456f9c16": {
+  "chars": 217,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"They wanted me to take the bite and run with them for the castle. Their old leader hangs in silver chains at the back of the cave for saying no. He told me to say no as well, and die quick. I did. Tell Grigor I did.\""
+ },
  "narrator/2cb8073128ffe667": {
   "chars": 91,
   "model": "eleven_v4",
@@ -41419,6 +41476,12 @@
   "recipe": "dd92281f92",
   "text": "He doesn't lift a hand. He only turns his face up, the way a flower turns to the window."
  },
+ "narrator/36b48b054c406546": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The woods past the lake. The wolves. A boy shouting a name through the trees, over and over. A dead burgomaster already told you the other half of this story."
+ },
  "narrator/36ea1a9a4174d647": {
   "chars": 114,
   "model": "eleven_v4",
@@ -41850,6 +41913,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "All down the slope, every blight on the hill folds up where it stands and falls into a heap of dry brush."
+ },
+ "narrator/39f00c69da5fe477": {
+  "chars": 180,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the morning the watch finds Ignat at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Catalina at all. Mila Petrova wakes up and eats her breakfast."
  },
  "narrator/3a015a320933c3d7": {
   "chars": 246,
@@ -42913,6 +42982,12 @@
   "recipe": "dd92281f92",
   "text": "Down here the amber in the walls glows, faintly, like honey held up to a candle. It is the only warm colour for a mile in any direction, and it is not warm."
  },
+ "narrator/42a6e4a516507f1d": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Two more girls come over the rooftops at Catalina's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once."
+ },
  "narrator/42b26b11ca54bc33": {
   "chars": 179,
   "model": "eleven_v4",
@@ -43380,12 +43455,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "It's a spell, not weather: a great one, cast once and left running, like a clock somebody wound and forgot. Whoever told the sky to strike here every evening never told it to stop, and the work is so good it hasn't faltered once."
- },
- "narrator/46e948ae1137ed98": {
-  "chars": 139,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth."
  },
  "narrator/46f195f5e2c2c601": {
   "chars": 108,
@@ -43968,6 +44037,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Bricks fill the doorway where the front door used to be, and the tall window you came out of is half bricked over already. The house is mending itself, slowly, like a scab."
+ },
+ "narrator/4b8f419914f48b92": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The three graves open from underneath. Catalina climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth."
  },
  "narrator/4b94c8e0ed06e64c": {
   "chars": 112,
@@ -44653,6 +44728,12 @@
   "recipe": "dd92281f92",
   "text": "Rings, pins and a lady's hair comb, every one of them old-fashioned and every one of them small."
  },
+ "narrator/514ddf30220c7935": {
+  "chars": 65,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "On the rise behind the shacks, a bow creaks, as it did for Tudor."
+ },
  "narrator/5159c09ed87b193a": {
   "chars": 72,
   "model": "eleven_v4",
@@ -44917,6 +44998,12 @@
   "recipe": "dd92281f92",
   "text": "These aren't the Martikovs' vines any more. Something has grown up into every rootstock in the row and is wearing the vines like sleeves. The wood under the bark is black and wet, and it's warm."
  },
+ "narrator/5341ca1332824909": {
+  "chars": 201,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"While they argued about the knot, a farmer came down the falls track with a sack, saw the rope, and stuffed the sack in behind the field wall as if we might rob him. Big leather gloves, sticking out.\""
+ },
  "narrator/534800187ba6d7c0": {
   "chars": 125,
   "model": "eleven_v4",
@@ -45000,12 +45087,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You step back. The drowned walk past you as if you were posts. They take Bluto at the end of the jetty; he doesn't fight them, in the end. They go down into the black water together, all of them, and the bell rings once, very loud."
- },
- "narrator/53a5146745ce54cb": {
-  "chars": 145,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Little cots with names scratched on the frames: Ana, Tomas, the twins, Little Bird. On one, under the name, a smaller hand has added: I WAS HERE."
  },
  "narrator/53a79dbb88e6834c": {
   "chars": 159,
@@ -45720,6 +45801,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The biggest house in Berez, and the only one with stone walls, which only means it took longer to fall. The burgomaster's chair is still at the head of a table under two feet of silt."
+ },
+ "narrator/595124ae8ebff26c": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A wolfskin coat, a bow, the rise behind the shacks: Szoldar Szoldarovich, who means to be on that rise again when you come for the wolf."
  },
  "narrator/595a54119d026c87": {
   "chars": 113,
@@ -46915,6 +47002,12 @@
   "recipe": "dd92281f92",
   "text": "A soldier stands in the inner doorway: a man-at-arms made of grey light and old mail, his spear held crosswise across the arch. Through him you can see the long dark of the vault."
  },
+ "narrator/61ac84fb6dbbd11a": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"Ireena? I found her on the lake road past Vallaki, the winter the wolves were bad. Red hair full of frost, bare feet, and no name she would give me.\""
+ },
  "narrator/61b7202f54dfbe23": {
   "chars": 121,
   "model": "eleven_v4",
@@ -48012,6 +48105,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A long stone house with a turf roof and a door with three bolts on the inside. Over the door, five little wooden suns are nailed in a row, and a sixth nail with nothing on it."
+ },
+ "narrator/6a5ca3ab5c27da1e": {
+  "chars": 116,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The voice that comes out of the reeds is an old man's, slow and put out, as if he has been woken before the milking."
  },
  "narrator/6a69f8f4e14ae528": {
   "chars": 125,
@@ -50023,6 +50122,12 @@
   "recipe": "dd92281f92",
   "text": "The mirror shows an empty room. You don't like what that says about the room."
  },
+ "narrator/798a7c86390ae6b9": {
+  "chars": 101,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"I'd seen him the week before at the Vistani fire, taking a purse from the one with the black horse.\""
+ },
  "narrator/798ced941e03d3cc": {
   "chars": 119,
   "model": "eleven_v4",
@@ -50214,6 +50319,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A pine as thick as a barrel lies along the edge of the road, felled long ago. Its upper side has been worn smooth by people sitting on it to rest, and by claws."
+ },
+ "narrator/7b19f06f8929af31": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"Tell Lumi it wasn't the mare. They'd have hanged me for a goat. Tell her the grey gelding is hers now, and she can stop brushing him. He's clean.\""
  },
  "narrator/7b1a275594cb247e": {
   "chars": 153,
@@ -53053,6 +53164,12 @@
   "recipe": "dd92281f92",
   "text": "A shed of grey boards. Through the gaps you can see rakes, a shovel, sacks. And on a nail, a sickle hung very carefully, blade inward."
  },
+ "narrator/913ccb82ff4306d4": {
+  "chars": 170,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"There's a loose panel behind my study desk, and my wife's brooch behind it. It turned an arrow for her once. Give it to whoever stands between Ireena and that door now.\""
+ },
  "narrator/91502d579e4d4309": {
   "chars": 147,
   "model": "eleven_v4",
@@ -53449,6 +53566,12 @@
   "recipe": "dd92281f92",
   "text": "The vines rise up off their trellises on both sides of the lane, and the vineyard comes for you row by row."
  },
+ "narrator/94c940cef74d0393": {
+  "chars": 168,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Izek Strazni's little sister, lost in the woods past the lake the night the wolves took his arm. Never found, because a burgomaster from over the hills found her first."
+ },
  "narrator/94dbeda1b872353f": {
   "chars": 161,
   "model": "eleven_v4",
@@ -53671,6 +53794,12 @@
   "recipe": "dd92281f92",
   "text": "The shades will not let you leave so easily."
  },
+ "narrator/96587b00466931bc": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Little cots with names scratched on the frames: Safta, Tomas, the twins, Little Bird. On one, under the name, a smaller hand has added: I WAS HERE."
+ },
  "narrator/9660d0a5d6fefbd3": {
   "chars": 139,
   "model": "eleven_v4",
@@ -53784,6 +53913,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The sacristy: vestments on pegs, a chest, the smell of old incense. One white surplice hangs apart from the others, freshly pressed, as if for an occasion."
+ },
+ "narrator/975a517fb68f3e48": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"I came up for the Petrescu boy, and I came too late. The ones still living they keep in cages in the loft, up the stair behind the oven.\""
  },
  "narrator/975fe49f3ea7b9a3": {
   "chars": 162,
@@ -54000,6 +54135,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A black, dripping firebox, still ticking as it cools."
+ },
+ "narrator/990241dcc083696c": {
+  "chars": 161,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"Nicu, of the Tser Pool fires. I found a mare with a Vallaki brand and rode her back to Vallaki like an honest man. Her owner and his two sons hanged me for it.\""
  },
  "narrator/99213082ebfd4aac": {
   "chars": 123,
@@ -54487,6 +54628,12 @@
   "recipe": "dd92281f92",
   "text": "The pin is as long as your arm, through a collar rivet the size of a fist. It would take two of you to work it loose."
  },
+ "narrator/9ceec8058a1407b1": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The jaw works, and a patient voice comes out of it: a man who said a great many last rites and half expected his own."
+ },
  "narrator/9d02c4438c551888": {
   "chars": 157,
   "model": "eleven_v4",
@@ -54624,6 +54771,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Nothing else comes. You keep the fire up until the sky in the east goes the colour of dishwater."
+ },
+ "narrator/9e270016a0f44ff5": {
+  "chars": 119,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"There was a man on the rise behind the shacks, in a wolfskin coat, with his bow strung. He watched. He never let fly.\""
  },
  "narrator/9e3a104f40b2a2ba": {
   "chars": 86,
@@ -54787,6 +54940,12 @@
   "recipe": "dd92281f92",
   "text": "She says amen. The gold goes grey, then black, and the window is only a window again. The warmth stays in your hands a little longer than it should."
  },
+ "narrator/9f8f10c2fed3e49f": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"A boy was shouting a name through the trees, over and over. I took it for the wolves, using a boy's voice. I wrapped her in my coat and never went back to ask whose she was.\""
+ },
  "narrator/9fa089599047e4ad": {
   "chars": 103,
   "model": "eleven_v4",
@@ -54834,6 +54993,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "On the burned crown a young man with a lantern kneels by a sapling, watering it from his own flask. It's Kostin. His feet are wrapped in strips of his robe again, worn through."
+ },
+ "narrator/9febe52ea8516c61": {
+  "chars": 170,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"The round one at the oven believes anything said in her mother's name. I heard the pretty one send her running down the hill with three words: Mother's calling, dearie.\""
  },
  "narrator/9ff9fa9f1408fcf0": {
   "chars": 85,
@@ -56460,6 +56625,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Zinaida looks down at the grave, and then at Mihail, and says nothing at all. Then there's only Mihail, and the hole, and the spade."
+ },
+ "narrator/ac4914f55ec746ae": {
+  "chars": 110,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The voice that answers is hoarse and impatient, a man interrupted halfway through an argument he meant to win."
  },
  "narrator/ac4bc1492aa34ccb": {
   "chars": 83,
@@ -59017,6 +59188,12 @@
   "recipe": "dd92281f92",
   "text": "Hoofbeats, unhurried, out of the fog ahead. A black horse with eyes like banked coals comes down the road at a walk, and the man riding it does not need to be introduced."
  },
+ "narrator/c1217d2a32acaf51": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Tudor stood on this shore with a bow behind him that never loosed. The rise behind the shacks is the only good shot at the shore; the shore is the only place a horse-sized wolf can come at you from three sides."
+ },
  "narrator/c124e9dc4b589352": {
   "chars": 212,
   "model": "eleven_v4",
@@ -60865,6 +61042,12 @@
   "recipe": "dd92281f92",
   "text": "She fades from the doorway like a word you meant to say and didn't."
  },
+ "narrator/cf995251061f6d43": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"They brought me out here to do it. Vallaki doesn't hang people inside its walls. It's bad for festivals.\""
+ },
  "narrator/cfa123cfbccaa626": {
   "chars": 218,
   "model": "eleven_v4",
@@ -61351,6 +61534,12 @@
   "recipe": "dd92281f92",
   "text": "Two colossi of amber flank the doors, each three times a man's height, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack."
  },
+ "narrator/d34cb1173b34c8e2": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Apart from the heap lies a skull in a scrap of brown cowl, set down facing the mill, as if someone wanted him to keep watching it."
+ },
  "narrator/d36156846a5794b0": {
   "chars": 109,
   "model": "eleven_v4",
@@ -61728,6 +61917,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The peak of the north tower, crowned with stone guardians on the parapet: winged, crouching, faces turned in toward you."
+ },
+ "narrator/d64614868b578b09": {
+  "chars": 120,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Something in the heap clicks, bone on bone, and a man's voice comes up out of it, hoarse from a month of not being used."
  },
  "narrator/d6627db08e226ebe": {
   "chars": 128,
@@ -62221,12 +62416,6 @@
   "recipe": "dd92281f92",
   "text": "A long gallery of fallen frames and torn canvas. Somebody has turned the few portraits still hanging to face the wall."
  },
- "narrator/db301207cef69370": {
-  "chars": 175,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "In the morning the watch finds Ignat at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast."
- },
  "narrator/db4b90c25c75cc16": {
   "chars": 124,
   "model": "eleven_v4",
@@ -62268,6 +62457,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Khazan stands up out of his chair, and every candle in the study leans toward him, and the books in the hall behind you begin to whisper."
+ },
+ "narrator/db883664e44c897b": {
+  "chars": 59,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She hangs the brush on the fence rail, and leaves it there."
  },
  "narrator/db8bf48bb0386f84": {
   "chars": 91,
@@ -64087,6 +64282,12 @@
   "recipe": "dd92281f92",
   "text": "A crowd of candles on the stones at the water's edge, the new ones lit from the stubs of the old. The pool's black surface holds every flame, perfectly still, a little warmer than it should be."
  },
+ "narrator/e9f866584d5425f4": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You tell her what he said: that it wasn't the mare, they'd have hanged him for a goat, and that the grey gelding is hers now and she can stop brushing him."
+ },
  "narrator/e9fe15eb4852cbec": {
   "chars": 161,
   "model": "eleven_v4",
@@ -64603,6 +64804,12 @@
   "recipe": "dd92281f92",
   "text": "He's tired. Not the way the dead are tired; the way a man is, at the end of a long day's walking, who would like very much to sit down and isn't allowed. He keeps his eyes off the hounds."
  },
+ "narrator/ee07bca42f549ac6": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A shepherd's crook lies in the reeds, and beside it an old coat with what the wolf left of its owner still inside. Since spring, by the look of it."
+ },
  "narrator/ee0a71f898d5cee0": {
   "chars": 155,
   "model": "eleven_v4",
@@ -64752,6 +64959,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He catches everything, one-handed, and for a moment he's very still. Then the stones are up again."
+ },
+ "narrator/ef0091d0a78975f5": {
+  "chars": 172,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "\"The pretty one offered me the mill if I'd kill her mother. She doesn't want the mill. She wants the little bags on the hooks. I said no. I should have said yes, and lied.\""
  },
  "narrator/ef0c8ab6dd441d77": {
   "chars": 98,
@@ -65904,6 +66117,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Exethanter sits very still at his desk, unpinning his notes one at a time and reading each before he lets it fall."
+ },
+ "narrator/f8843538d009a26e": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The voice is young and hoarse, and it's laughing, or trying to, the way people laugh at a joke that has gone on far too long."
  },
  "narrator/f884e84f5f3c09dd": {
   "chars": 137,
@@ -74660,6 +74879,13 @@
   "recipe": "60753ed0c1",
   "text": "Yes. Arrigal pays. A purse for every strong stranger I bring to the lake at dusk, and the wolf does the rest, and the castle learns what you're made of. You think I had a choice? You think anybody in this valley has a choice?"
  },
+ "szoldar/bf3dcf92bb4fba59": {
+  "chars": 100,
+  "direction": "[afraid, gruff, shaken]",
+  "model": "eleven_v3",
+  "recipe": "60753ed0c1",
+  "text": "Tudor. You've been talking to Tudor, and Tudor's been dead since the thaw. God keep me from priests."
+ },
  "szoldar/d735fbc1f0bd47ec": {
   "chars": 74,
   "direction": "[curt, gruff]",
@@ -79417,12 +79643,19 @@
   "recipe": "5c319ee602",
   "text": "She only takes a little. I thought if she had me, she wouldn't need anyone else. It isn't enough any more. She's growing. They don't stop growing, you know. Not like that."
  },
- "vallaki_lamplighter/0843bbad3ecaf937": {
-  "chars": 257,
-  "direction": "[tender, grieving]",
+ "vallaki_lamplighter/109e3048b58febec": {
+  "chars": 105,
+  "direction": "[broken, trembling]",
   "model": "eleven_v3",
   "recipe": "5c319ee602",
-  "text": "This was her mother's. She bought it off a Vistana the winter before Ana was born, to keep the night out. I put it on Ana's finger in the coffin. I took it back the first night she came to my window. It didn't keep the night out for either of them. Take it."
+  "text": "It's Catalina. She knocks on my shutter. Every night since the funeral. Papa, it's cold, Papa, let me in."
+ },
+ "vallaki_lamplighter/17285d47488c86ba": {
+  "chars": 204,
+  "direction": "[grieving, raw]",
+  "model": "eleven_v3",
+  "recipe": "5c319ee602",
+  "text": "For my girl, Catalina. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk."
  },
  "vallaki_lamplighter/1b3e2aeceb34df63": {
   "chars": 62,
@@ -79438,12 +79671,19 @@
   "recipe": "5c319ee602",
   "text": "You saw them, then. Black roses on Pyotr Petrov's step. Nobody in Vallaki grows black roses. Nobody in Vallaki grows roses."
  },
- "vallaki_lamplighter/5b1822998085e411": {
-  "chars": 100,
-  "direction": "[broken, whispering]",
+ "vallaki_lamplighter/44e5d2d39a3446e9": {
+  "chars": 98,
+  "direction": "[tender, grieving]",
   "model": "eleven_v3",
   "recipe": "5c319ee602",
-  "text": "It's Ana. She knocks on my shutter. Every night since the funeral. Papa, it's cold, Papa, let me in."
+  "text": "Mila Petrova was Catalina's best friend. They used to sit on our step and plait each other's hair."
+ },
+ "vallaki_lamplighter/4fc62e75c3483eb4": {
+  "chars": 267,
+  "direction": "[tender, grieving]",
+  "model": "eleven_v3",
+  "recipe": "5c319ee602",
+  "text": "This was her mother's. She bought it off a Vistana the winter before Catalina was born, to keep the night out. I put it on Catalina's finger in the coffin. I took it back the first night she came to my window. It didn't keep the night out for either of them. Take it."
  },
  "vallaki_lamplighter/6a20bb78681afd87": {
   "chars": 129,
@@ -79472,13 +79712,6 @@
   "model": "eleven_v3",
   "recipe": "5c319ee602",
   "text": "The lamps are lit on the Petrovs' street. Every one. Go."
- },
- "vallaki_lamplighter/b98c67abf434853a": {
-  "chars": 93,
-  "direction": "[tender, grieving]",
-  "model": "eleven_v3",
-  "recipe": "5c319ee602",
-  "text": "Mila Petrova was Ana's best friend. They used to sit on our step and plait each other's hair."
  },
  "vallaki_lamplighter/d8f62ca0eaf0f05d": {
   "chars": 117,
@@ -79515,13 +79748,6 @@
   "recipe": "5c319ee602",
   "text": "Slowly. Slower than she'd kill Mila. I'll take slowly."
  },
- "vallaki_lamplighter/f585f1822090d9b6": {
-  "chars": 199,
-  "direction": "[grieving, quiet, raw]",
-  "model": "eleven_v3",
-  "recipe": "5c319ee602",
-  "text": "For my girl, Ana. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk."
- },
  "vallaki_lamplighter/f851e906f49a524c": {
   "chars": 105,
   "direction": "[low, uneasy warning]",
@@ -79536,12 +79762,12 @@
   "recipe": "5c319ee602",
   "text": "I don't light the lamp outside my own window any more. There's nobody to see by it."
  },
- "vallaki_lamplighter/fa5e4eabfb162c4c": {
-  "chars": 196,
+ "vallaki_lamplighter/fe303722835f17a8": {
+  "chars": 201,
   "direction": "[bitter, shaking]",
   "model": "eleven_v3",
   "recipe": "5c319ee602",
-  "text": "I've counted. Three girls this year. Every one of them had roses on her step the day before. Before, not after. The card on Ana's said \"with sympathy\". It was a joke. It's always a joke, with him."
+  "text": "I've counted. Three girls this year. Every one of them had roses on her step the day before. Before, not after. The card on Catalina's said \"with sympathy\". It was a joke. It's always a joke, with him."
  },
  "vallaki_parishioner_varvara/a6c8f35e03eb612f": {
   "chars": 151,
