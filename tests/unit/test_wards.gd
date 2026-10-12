@@ -93,14 +93,17 @@ func test_hallow_keeps_strahds_night_visit_away_for_good() -> void:
 	assert_eq(Wards.keeps_rest(st), "", "only the place it was cast in")
 
 
-func test_nondetection_hides_the_party_for_eight_hours() -> void:
+func test_nondetection_hides_the_party_until_a_long_rest() -> void:
 	var st := _party(["nondetection"], "vallaki_blue_water_inn", 5)
 	st.set_flag("strahd_watcher_seen", true)
 	st.day = 4
 	var inn := {"location": "vallaki_blue_water_inn", "night": true}
 	_cast(st, "nondetection")
 	assert_true(StrahdPresence.due(st, "rest", inn).is_empty(), "Strahd's eyes can't find them")
+	# 8 hours lasts until the next Long Rest (the owner's house rule, Effect.until_long_rest), not the clock.
 	st.advance_minutes(9 * 60)
+	assert_true(StrahdPresence.due(st, "rest", inn).is_empty(), "still hidden 9 hours on")
+	RestRules.note_long_rest(st)
 	assert_eq(str(StrahdPresence.due(st, "rest", inn).get("id", "")), "night_visit", "once it's run out, he comes")
 
 

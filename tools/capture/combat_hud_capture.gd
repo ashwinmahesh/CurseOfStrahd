@@ -241,3 +241,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	view._focus_on(far_zombie.id)
 	await tool.call("wait_frames", 60)
 	tool.call("_shot", "%s_22_looked_at.png" % out)
+	# The action bar hidden for a clear view (owner, 2026-10-12), then back.
+	view.hud.toggle_actions()
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_23_actions_hidden.png" % out)
+	view.hud.toggle_actions()

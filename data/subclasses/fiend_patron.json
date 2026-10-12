@@ -37,7 +37,7 @@
         "id": "fiend_spells",
         "name": "Fiend Spells",
         "summary": "Burning Hands, Command, Scorching Ray and Suggestion always prepared; more at levels 5, 7 and 9.",
-        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Burning Hands, Command, Scorching Ray and Suggestion (3); Fireball and Stinking Cloud (5); Fire Shield and Wall of Fire (7); Geas and Insect Plague (9).",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Burning Hands, Command, Scorching Ray and Suggestion (3); Fireball and Stinking Cloud (5); Fire Shield and Wall of Fire (7); Insect Plague (9). (The book adds Geas at 9; it's out of this game.)",
         "implemented": "data"
       }
     },

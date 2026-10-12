@@ -1700,19 +1700,21 @@ func relentless_rage(c: Combatant) -> bool:
 	return true
 
 
-## A creature dropped to 0 Hit Points by `by`: Dark One's Blessing (Fiend Patron) for a warlock or a nearby ally.
+## A creature dropped to 0 Hit Points by `by`: Dark One's Blessing (Fiend Patron, 2024) for a warlock whose enemy it
+## was, when the warlock dropped it or anyone else did within 10 ft of the warlock (a foe felling its own side too).
+## Nobody dropped it (a fall, a trap): no blessing.
 func on_drop(by: Combatant, target: Combatant) -> void:
 	var e := enc()
 	# A vowed foe down: the paladin may move the vow (shown on the hotbar and the right-click menu).
 	for v in e.living():
 		if str(v.get_meta("vow_of_enmity", "")) == target.id and vow_can_move(v):
 			e.log.add("info", "%s's Vow of Enmity can move to another foe within 30 ft (free)" % v.name(), v.id)
-	if by == null or not by.hostile_to(target):
+	if by == null:
 		return
 	for w in e.living():
-		if not has(w, "dark_ones_blessing") or w.creature.hp <= 0:
+		if not has(w, "dark_ones_blessing") or w.creature.hp <= 0 or not w.hostile_to(target):
 			continue
-		if w == by or (w.allied_with(by) and e.distance(w, target) <= 10):
+		if w == by or e.distance(w, target) <= 10:
 			_temp(w, maxi(1, w.creature.ability_mod(&"cha") + level_of(w, "warlock")), "Dark One's Blessing")
 
 

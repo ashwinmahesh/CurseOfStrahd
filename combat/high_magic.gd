@@ -99,7 +99,7 @@ func _save(ctx: Dictionary, t: Combatant, ab: StringName, cond: String = "") -> 
 	return test.success
 
 
-func _kill(t: Combatant, why: String) -> void:
+func _kill(t: Combatant, why: String, by: Combatant = null) -> void:
 	var e := enc()
 	if t.creature.has_flag("death_ward"):
 		for fx: Effect in t.creature.effects.duplicate():
@@ -113,7 +113,7 @@ func _kill(t: Combatant, why: String) -> void:
 		t.creature.concentration.end("death")
 	e.log.add("death", "%s dies (%s)" % [t.name(), why], t.id)
 	e.events.append({"type": "death", "id": t.id})
-	e.class_features.on_drop(null, t)
+	e.class_features.on_drop(by, t)
 
 
 func _timed(ctx: Dictionary, t: Combatant, name: String, until: String) -> Effect:
@@ -168,7 +168,7 @@ func wail_of_the_banshee(ctx: Dictionary, targets: Array[Combatant], r: CombatRe
 			_log(ctx, "%s cannot hear the wail" % t.name(), t, r)
 			continue
 		if t.creature.hp <= 50:
-			_kill(t, "Wail of the Banshee")
+			_kill(t, "Wail of the Banshee", c)
 		else:
 			survivors.append(t)
 	sp()._save_spell(ctx, survivors, r)
@@ -177,7 +177,7 @@ func wail_of_the_banshee(ctx: Dictionary, targets: Array[Combatant], r: CombatRe
 func power_word_kill(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var e := enc()
 	if t.creature.hp <= 100:
-		_kill(t, "Power Word Kill")
+		_kill(t, "Power Word Kill", ctx["c"] as Combatant)
 		return
 	var rolled := e._roll_damage_dice("12d12", false, 0, "Power Word Kill")
 	r.damage += e.deal_damage(ctx["c"] as Combatant, t, [{"amount": int(rolled["total"]), "type": "psychic", "spell": true}], false, "Power Word Kill", [str(rolled["text"])]).final
@@ -275,7 +275,7 @@ func divine_word(ctx: Dictionary, tgt: Array[Combatant], r: CombatResult) -> voi
 			continue
 		var hp := t.creature.hp
 		if hp <= 20:
-			_kill(t, "Divine Word")
+			_kill(t, "Divine Word", c)
 			continue
 		var fx := Effect.new("Divine Word", &"spell", "divine_word")
 		fx.caster_id = c.id
