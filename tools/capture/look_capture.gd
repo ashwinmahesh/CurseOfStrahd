@@ -9,7 +9,7 @@ extends Node
 ## - LOOK_SHOTS=village_dusk,castle_hall: which shots (default every one).
 ## - LOOK_STYLE=classic|modern, LOOK_GRAPHICS=low|medium|high: the finish and the graphics preset.
 ## - LOOK_METER=1: the F3 frame meter shown.
-## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr,reflections,sunbeams: turn things off to see what they cost.
+## - LOOK_OFF=msaa,pcss,lamps,filter,splits,ssr,reflections,sunbeams,caustics: turn things off to see what they cost.
 ## - LOOK_AA=msaa2|fxaa|smaa: another anti-aliasing in place of the preset's.
 ## - LOOK_OUTLINE=off|silhouette|full: the world's ink lines.
 ## - LOOK_FADE=1: the 3D pieces near the party faded, as when they stand in front of it.
@@ -35,6 +35,7 @@ const SHOTS := {
 	"tavern": {"loc": "blood_of_the_vine"},
 	"lake_dusk": {"loc": "lake_zarovich", "hour": 18, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"lake_night": {"loc": "lake_zarovich", "hour": 23, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
+	"lake_day": {"loc": "lake_zarovich", "hour": 12, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]]},
 	"tser_pool_water": {"loc": "tser_pool", "hour": 23, "cells": [[15, 9], [16, 9], [15, 10], [16, 10]]},
 	"berez_night": {"loc": "berez", "hour": 23, "cells": [[24, 6], [25, 6], [24, 7], [25, 5]]},
 	"vallaki_rain": {"loc": "vallaki", "hour": 18},
@@ -68,6 +69,8 @@ func _ready() -> void:
 	SunShafts.enabled = not "sunbeams" in OS.get_environment("LOOK_OFF").split(",", false)
 	# Without the footstep puffs (Visual Polish Plan 4; LOOK_OFF=puffs).
 	StepPuffs.enabled = not "puffs" in OS.get_environment("LOOK_OFF").split(",", false)
+	# Without the branches framing the woods (Visual Polish Plan 11; LOOK_OFF=framing).
+	ForegroundFraming.enabled = not "framing" in OS.get_environment("LOOK_OFF").split(",", false)
 	# Without the heat shimmer over fires (Visual Polish Plan 8; LOOK_OFF=shimmer).
 	HeatShimmer.enabled = not "shimmer" in OS.get_environment("LOOK_OFF").split(",", false)
 	if OS.get_environment("LOOK_METER") != "":
@@ -191,6 +194,8 @@ func _build(shot: Dictionary) -> void:
 		RenderingServer.global_shader_parameter_set(&"world_wet", float(shot["wet"]))
 	var off := OS.get_environment("LOOK_OFF").split(",", false)
 	SpriteReflection.enabled = not "reflections" in off
+	if "caustics" in off:
+		post.set_shader_parameter("caustics", 0.0)   # without the light off the water (Visual Polish Plan 12)
 	if "msaa" in off:
 		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
 	match OS.get_environment("LOOK_AA"):

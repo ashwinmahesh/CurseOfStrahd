@@ -217,7 +217,22 @@
       ],
       "kind": "examine",
       "label": "Carving over the door",
-      "model": "relief"
+      "model": "relief",
+      "checks": [
+        {
+          "id": "raven_carving_read",
+          "skill": "history",
+          "dc": 13,
+          "label": "Read the raven over the door",
+          "success": {
+            "codex": {
+              "id": "raven_over_the_door",
+              "title": "The raven over the door",
+              "text": "The raven carved over the inn's door is older than the inn's name. In the valley's old stories, a raven above a door marks a house that is a friend to travellers and no friend to the castle."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "inn_wine_casks",
@@ -257,7 +272,22 @@
       ],
       "kind": "examine",
       "label": "A covered cage",
-      "model": "cage"
+      "model": "cage",
+      "checks": [
+        {
+          "id": "cage_calm",
+          "skill": "animal_handling",
+          "dc": 15,
+          "label": "Calm the great cat in the cage",
+          "success": {
+            "inspiration": true
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "slashing"
+          }
+        }
+      ]
     },
     {
       "id": "van_richten_notes",

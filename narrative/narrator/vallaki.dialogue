@@ -569,3 +569,53 @@ once
 ~ search:camp_reed_whistle
 | Caught in the reeds at the water's edge, a bone whistle on a cord, washed up from somewhere. {name} shakes the lake out of it.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:performance:dais_perform:success
+| For once the smiles in the square are real, and coins rattle onto the boards as you bow.
+
+~ check:performance:dais_perform:failure
+| The crowd gives you the Baron's smile, which is worse than silence, and drifts away.
+
+~ check:nature:herbs_sort:success
+| You point out which of the supplier's bundles are hay dyed green, and the old herb-woman, delighted, presses a pot of her own ointment into your hands.
+
+~ check:nature:herbs_sort:failure
+| It all looks like herbs to you. The herb-woman's smile says she expected no better.
+
+~ check:history:gate_carvings:success
+| The town's founders, carved in good oak; and at the end of the line, cut in a hurry by a worse hand, the present Baron's face.
+
+~ check:history:gate_carvings:failure
+| Wolves, suns and bearded men. Every town gate in the world says the same thing.
+
+~ check:religion:graves_epitaphs:success
+| The epitaphs all say it in different words: while the saint's bones lie here, nothing of the night may enter.
+
+~ check:religion:graves_epitaphs:failure
+| Old names, older prayers. The saints are not receiving visitors today.
+
+~ check:animal_handling:cage_calm:success
+| A low rumble from under the cover, then a long, contented sigh. The cat is enormous and, for now, entirely calm.
+
+~ check:animal_handling:cage_calm:failure
+| A paw the size of a dinner plate hooks out under the cover, quicker than you are.
+
+~ check:history:raven_carving_read:success
+| An old sign, older than the inn's name: a raven over the door marks a house that is a friend to travellers and no friend to the castle.
+
+~ check:history:raven_carving_read:failure
+| A raven, carved in dark wood. It regards you with mild disappointment.
+
+~ check:acrobatics:jetty_walk:success
+| You pick your way out along the bare joists, and under the last plank, out of sight of the shore, someone has nailed up a tin of coins.
+
+~ check:acrobatics:jetty_walk:failure
+| A plank gives, and Lake Zarovich is exactly as cold as it looks.
+
+~ check:religion:shrine_dedication:success
+| The prayers are to the castle's lord, written as if to a god; and the tithe for him is hidden closer than the prayers.
+
+~ check:religion:shrine_dedication:failure
+| Black velvet and bad poetry. The dedication is in a hand you can't make out.

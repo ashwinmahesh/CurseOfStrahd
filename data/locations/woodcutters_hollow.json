@@ -194,7 +194,18 @@
       ],
       "kind": "examine",
       "label": "Herbs drying",
-      "model": "drying_herbs"
+      "model": "drying_herbs",
+      "checks": [
+        {
+          "id": "herbs_name",
+          "skill": "nature",
+          "dc": 12,
+          "label": "Name the drying herbs",
+          "success": {
+            "heal": "1d6"
+          }
+        }
+      ]
     },
     {
       "id": "hollow_toys",

@@ -771,6 +771,38 @@ func attach(rig: CameraRig, post: MeshInstance3D) -> void:
 	_next_flash = _rng.randf_range(4.0, 10.0)
 
 
+## How strongly moving water throws light onto what stands beside it (Visual Polish Plan 12), unless a mood's water says.
+const CAUSTICS := 0.8
+
+
+## Where light off the water can fall, one texel per square: 1 on water squares and the squares beside them (the
+## screen pass reads it filtered, so it fades out across the next square).
+static func shore_mask(grid: CombatGrid) -> ImageTexture:
+	var img := Image.create(grid.width, grid.depth, false, Image.FORMAT_R8)
+	for z in grid.depth:
+		for x in grid.width:
+			var near := false
+			for dz in range(-1, 2):
+				for dx in range(-1, 2):
+					var c := Vector2i(x + dx, z + dz)
+					if grid.in_bounds(c) and grid.has_flag(c, CombatGrid.WATER):
+						near = true
+			if near:
+				img.set_pixel(x, z, Color.WHITE)
+	return ImageTexture.create_from_image(img)
+
+
+## Whether the map has any water squares (a mood's water colours are set for places with none, too).
+func _has_water() -> bool:
+	if board == null:
+		return false
+	for z in board.grid.depth:
+		for x in board.grid.width:
+			if board.grid.has_flag(Vector2i(x, z), CombatGrid.WATER):
+				return true
+	return false
+
+
 func _apply_static() -> void:
 	if _post == null:
 		return
@@ -805,6 +837,16 @@ func _apply_static() -> void:
 		_post.set_shader_parameter("land_rect", Vector4(0, 0, board.grid.width, board.grid.depth))
 		var fade := mood.get("land_fade", [5.0, 12.0]) as Array
 		_post.set_shader_parameter("land_fade", Vector2(float(fade[0]), float(fade[1])))
+	# Light thrown off moving water onto the stone and banks beside it (Visual Polish Plan 12; Modern only; still water
+	# throws none: a mood's water `caustics` sets it, else it follows its ripples).
+	var spec := mood.get("water", {}) as Dictionary
+	var caustic := 0.0
+	if Look.modern() and water != null and _has_water():
+		caustic = float(spec.get("caustics", CAUSTICS if float(spec.get("ripples", 0.35)) > 0.05 else 0.0))
+		_post.set_shader_parameter("caustic_mask", shore_mask(board.grid))
+		_post.set_shader_parameter("caustic_rect", water.get_shader_parameter("map_rect"))
+		_post.set_shader_parameter("caustic_colour", water.get_shader_parameter("glint"))
+	_post.set_shader_parameter("caustics", caustic)
 	var mists := str(mood.get("mists_edge", ""))
 	if mists != "" and board != null:
 		var w := float(board.grid.width)

@@ -192,3 +192,13 @@ func test_letting_ana_go_home_costs_her_father() -> void:
 	_play(st, "vallaki/black_roses:chandler")
 	assert_eq(roundi(st.gold), 200, "Mila lived, and her father pays")
 	assert_false(st.party_has_item("ring_of_resistance_necrotic"), "but there's nobody to give you the ring")
+
+
+## Owner's call (2026-10-12): at level 5 Stella's shadow brings one Master's Gaze, as at level 4. Its Life Drain lowers
+## the Hit Point maximum and kills at 0 (2024 Wraith), and two of them killed heroes outright too often.
+func test_stellas_shadow_has_one_masters_gaze_at_level_5() -> void:
+	for level: int in [4, 5]:
+		var st := _party(["godrick_pendlebrook", "liriel_dawnsong", "thistle", "wren_featherfoot"], level)
+		var enc := _encounter(st, "vallaki_wachter_house", "stella_shadow")
+		var wraiths := (enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary)["monster"]) == "wraith")
+		assert_eq(wraiths.size(), 1, "one Master's Gaze at level %d" % level)

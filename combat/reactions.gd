@@ -478,6 +478,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
 	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
+	# Repelling Blast (2024: a warlock cantrip's hit "can" push the creature 10 ft): pushing is the default; Off keeps a
+	# foe where it stands (owner, 2026-10-12), changeable on any turn from the Reactions tab.
+	if ClassFeatures.knows_invocation(c, "repelling_blast"):
+		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto",
+			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
+		seen["repelling_blast"] = true
 	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
 		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
 	seen["knock_out"] = true

@@ -101,6 +101,9 @@ func test_guidance_adds_a_d4_from_someone_free_to_concentrate() -> void:
 	var t := res["test"] as D20Test
 	assert_true("Guidance" in t.extra_label, "the 1d4 is on the roll: %s" % t.describe())
 	assert_between(float(t.extra), 1.0, 4.0)
+	assert_false("+ +" in t.describe(), "the log says it once: %s" % t.describe())
+	var shown := DiceRoll.parts_text(DiceRoll.from_test(t, cleric.name, "Investigation"))
+	assert_true(shown.ends_with("Guidance (%s) +%d" % [cleric.name.get_slice(" ", 0), t.extra]), "the big d20 says it once: %s" % shown)
 	assert_eq(WorldChecks.guide(st, _check("wis", 15), cleric), null, "a plain ability check names no skill to guide")
 	cleric.concentration = Concentration.new(cleric, "bless", "Bless")
 	assert_eq(WorldChecks.guide(st, c, cleric), null, "casting it would end the spell they're keeping")
@@ -156,3 +159,16 @@ func test_the_down_and_the_dead_do_not_try() -> void:
 	var best := WorldChecks.roller(st, LOC, c)
 	best.hp = 0
 	assert_true(WorldChecks.roller(st, LOC, c) != best, "someone standing tries instead")
+
+
+func test_a_check_that_would_only_find_what_is_found_is_not_offered() -> void:
+	var c := _check("athletics", 12, {"success": {"text": "Up the pine.", "reveal": ["pine_satchel"]}})
+	assert_true(WorldChecks.open(st, LOC, c))
+	(st.loc_state(LOC)["found"] as Dictionary)["pine_satchel"] = true
+	assert_false(WorldChecks.open(st, LOC, c), "a Search found it first: nothing to climb for")
+	var more := _check("athletics", 12, {"id": "climb_more", "success": {"reveal": ["pine_satchel"], "gold": 5}})
+	assert_true(WorldChecks.open(st, LOC, more), "still worth it for what else it gives")
+	var door := _check("arcana", 12, {"id": "ward", "success": {"unlock": ["vault"]}})
+	assert_true(WorldChecks.open(st, LOC, door))
+	(st.loc_state(LOC)["doors"] as Dictionary)["vault"] = "open"
+	assert_false(WorldChecks.open(st, LOC, door), "already open")

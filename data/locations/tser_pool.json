@@ -197,7 +197,18 @@
       "kind": "examine",
       "label": "The bonfire",
       "model": "campfire",
-      "burning": "not flag.tser_pool_brawl_won"
+      "burning": "not flag.tser_pool_brawl_won",
+      "checks": [
+        {
+          "id": "bonfire_dance",
+          "skill": "performance",
+          "dc": 12,
+          "label": "Dance at the bonfire",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "eva_tent_outside",
@@ -247,6 +258,19 @@
       "span": [
         2,
         1
+      ],
+      "checks": [
+        {
+          "id": "horses_calm",
+          "skill": "animal_handling",
+          "dc": 12,
+          "label": "Calm the skittish horses",
+          "success": {
+            "reveal": [
+              "tser_reed_dice"
+            ]
+          }
+        }
       ]
     },
     {
@@ -267,7 +291,20 @@
       ],
       "kind": "examine",
       "label": "A tree hung with ribbons",
-      "model": "ribbon_tree"
+      "model": "ribbon_tree",
+      "checks": [
+        {
+          "id": "ribbons_read",
+          "skill": "insight",
+          "dc": 13,
+          "label": "Read the knots on the ribbons",
+          "success": {
+            "reveal": [
+              "ribbon_tree_cache"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "tser_stream",
@@ -540,7 +577,20 @@
       ],
       "kind": "examine",
       "label": "A cart with a cracked wheel",
-      "model": "cart_broken"
+      "model": "cart_broken",
+      "checks": [
+        {
+          "id": "cart_lift",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Lift the cart off its cracked wheel",
+          "success": {
+            "reveal": [
+              "cart_false_floor"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "tser_woodpile",
@@ -578,7 +628,22 @@
       ],
       "kind": "examine",
       "label": "A cairn by the water",
-      "model": "cairn"
+      "model": "cairn",
+      "checks": [
+        {
+          "id": "cairn_history",
+          "skill": "history",
+          "dc": 13,
+          "label": "Read the cairn's oldest marks",
+          "success": {
+            "codex": {
+              "id": "tser_pool_cairn",
+              "title": "The cairn at Tser Pool",
+              "text": "The marks at the bottom of the cairn aren't names but a promise, in the Vistani's old signs: the first families to camp at the pool may pass through the mists when no one else can, and they owe the lord of the castle for it."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "tser_shrine",
@@ -737,7 +802,22 @@
       ],
       "kind": "examine",
       "label": "A stump stuck with knives",
-      "model": "stump"
+      "model": "stump",
+      "checks": [
+        {
+          "id": "knife_game",
+          "skill": "sleight_of_hand",
+          "dc": 13,
+          "label": "Play the knife game for coin",
+          "success": {
+            "gold": 12
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "slashing"
+          }
+        }
+      ]
     },
     {
       "id": "tser_deer",

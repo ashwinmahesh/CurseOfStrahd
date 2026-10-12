@@ -84,6 +84,14 @@ anyone touching this file.
   black and perfectly still"): `ripples` (0 for none), `texture` (how much of the water texture's colour shows),
   `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap. The crossroads'
   Ivlis is the colour of strong tea, Lake Zarovich behind the Vistani camp black.
+- **Light off the water** (Modern, Visual Polish Plan 12): moving water throws wavering threads of light onto what
+  stands beside it, jetties, banks, quays and walls, strongest just above the surface and on faces turned toward it,
+  fading within about a square of the shore and a couple of units up (the screen pass's `caustics`, over the water's
+  own mask, in the water's glint colour). Still water throws none: a mood's water `caustics` sets the strength, else it's
+  `Atmosphere.CAUSTICS` when the water ripples and 0 when it doesn't (Tser Pool). Thick mist (Lake Zarovich at dusk)
+  swallows most of it; it shows best by night. The threads are two layers of the screen pass's own ridged noise
+  (four noise reads) over a shore mask (`Atmosphere.shore_mask`: one filtered read), about 0.3 ms at 3440 x 1440 at
+  the lake under heavy load. `LOOK_OFF=caustics` in look_capture for without.
 - **Washing lines.** A mood's `lines` (world/look/washing_line.gd) strings a line between two posts with the week's
   wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
   `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.
@@ -358,6 +366,20 @@ oldest; a puff is one small draw while it lasts (under a second). They're sized 
 material's scale alone didn't change how big they were drawn.
 
     make capture SCENE=res://tools/capture/puff_capture.tscn NAME=puffs/after FRAMES=10   # LOOK_OFF=puffs: without
+
+## Fronds framing the woods in the Modern finish
+
+Visual Polish Plan 11 (the vault's "Visual Polish Plan.md"). On wild outdoor maps (`ArenaBoard.WILD` themes) whose
+land is wooded (the mood's surround `trees` at `ForegroundFraming.WOODED` or more), a few fern fronds grow into the
+bottom corners of the screen, out of focus and nearly black, with a faint edge of the key light, swaying a little, as
+if the camera looked past them (`world/look/foreground_framing.gd`, `shaders/post/foreground_leaf.gdshader`, the plants'
+own leaf cards at a high mipmap). They sit on a canvas layer over the world and under the HUD, never take a click, keep
+clear of the middle of the screen where the party stands, and fade out for fights, conversations and other screens and
+as the camera tilts to the horizon. Towns, rooms and Classic get none. In dark woods they mostly melt into the dark
+corners; they read best by day and at the camps.
+
+    make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/framing FRAMES=10 \
+      LOOK_SHOTS=camp_fire,road_dusk   # LOOK_OFF=framing for without
 
 ## Rules for new places
 

@@ -148,8 +148,9 @@ func test_a_bladesinger_can_swap_an_attack_for_booming_blade() -> void:
 	var t := TestCombat.punching_bag(e, Vector2i(3, 3), 500)
 	TestCombat.start_with(e, c)
 	var catalog := ActionCatalog.new(e)
-	var action := catalog.find(c, "war_magic:booming_blade")
-	assert_false(action.is_empty(), "Booming Blade can replace an attack")
+	# Picked from the Spells tab, it's cast in place of an attack (owner, 2026-10-12).
+	var action := catalog.find(c, "spell:booming_blade")
+	assert_true(bool((action.get("opts", {}) as Dictionary).get("war_magic", false)), "Booming Blade can replace an attack")
 	TestCombat.next_d20(e, 19)
 	assert_true(catalog.perform(c, action, [t]).ok)
 	assert_true(_booming(t))

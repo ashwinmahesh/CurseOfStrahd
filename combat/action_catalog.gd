@@ -512,20 +512,6 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 		re["kind"] = "rider"
 		re["armed"] = armed   # the slot glows while it's armed
 		out.append(re)
-	# War Magic (Eldritch Knight 7): a cantrip in place of one attack of the Attack action.
-	if (CombatFeatures.has_feature(c, "war_magic") or not e.triggered_features.recipes(c, "attack_cantrip").is_empty()) and (c.attacks_left > 0 or c.action_available):
-		for sp in e.spells.castable(c):
-			if int(sp["level"]) == 0 and str(sp["casting"]) == "action":
-				var data := Compendium.shared().spell_data(str(sp["id"]))
-				if not e.spells.has_combat_rules(data) or not e.triggered_features.cantrip_attack(c, data, sp):
-					continue
-				var wm := _entry("war_magic:" + str(sp["id"]), tab, "Cantrip attack: %s" % sp["name"], "replaces an attack", "attack", e.features_attack_why(c), _spell_targeting(data),
-					"Cast this cantrip in place of one of your attacks.")
-				wm["kind"] = "spell"
-				wm["spell_id"] = str(sp["id"])
-				wm["range"] = e.spells.range_ft(data, c)
-				wm["opts"] = {"war_magic": true}
-				out.append(wm)
 
 
 ## Actions that come from effects on the creature: breaking free of Web or Entangle, shaking a sleeping ally
@@ -750,7 +736,31 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 				w["opts"] = {"word": word}
 				out.append(w)
 			continue
+		_as_attack_cantrip(c, a, data, s)
 		out.append(a)
+
+
+## A cantrip that can stand in for one attack of the Attack action (a Bladesinger's or a Valor bard's Extra Attack, War
+## Magic, a feature's attack_cantrip recipe) is cast that way from its own Spells-tab slot (owner, 2026-10-12: no
+## separate entry on the class tab): it starts the Attack action or uses one of its attacks, so the weapon attacks
+## follow, rather than spending the Action as a Magic action.
+func _as_attack_cantrip(c: Combatant, a: Dictionary, data: Dictionary, s: Dictionary) -> void:
+	if int(s["level"]) != 0 or str(s["casting"]) != "action" or not (c.attacks_left > 0 or c.action_available):
+		return
+	if not CombatFeatures.has_feature(c, "war_magic") and e.triggered_features.recipes(c, "attack_cantrip").is_empty():
+		return
+	if not e.spells.has_combat_rules(data) or not e.triggered_features.cantrip_attack(c, data, s):
+		return
+	a["cost"] = "attack"
+	var opts := (a.get("opts", {}) as Dictionary).duplicate()
+	opts["war_magic"] = true
+	a["opts"] = opts
+	a["sub"] = str(a["sub"]) + " · in place of an attack"
+	a["help"] = (str(a["help"]) + " " if str(a["help"]) != "" else "") + "Cast in place of one attack of your Attack action, so your other attacks follow."
+	if str(a["reason"]) in ["", "Action already used", "Only one Magic action this turn", "Only one Magic action this turn (Action Surge's action can't be Magic)"]:
+		var why := e.features_attack_why(c)
+		a["legal"] = why == ""
+		a["reason"] = why
 
 
 func _spell_targeting(data: Dictionary) -> String:

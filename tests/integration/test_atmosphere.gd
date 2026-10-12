@@ -664,3 +664,25 @@ func test_the_modern_glow_spreads_wide() -> void:
 	assert_true(env.get_glow_level(5) < env.get_glow_level(4), "fainter as it widens")
 	v.queue_free()
 	Look.set_style(was, false)
+
+
+## Visual Polish Plan 12: moving water throws wavering light onto what stands beside it in the Modern finish (the
+## screen pass's caustics, over the water mask); still water and Classic throw none.
+func test_moving_water_throws_light_on_its_banks() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	var lake := _view("lake_zarovich")
+	var post := (lake.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_true(float(post.get_shader_parameter("caustics")) > 0.0, "Lake Zarovich throws light on its jetty")
+	assert_true(post.get_shader_parameter("caustic_mask") != null, "over the shore's mask")
+	lake.queue_free()
+	var village := _view("village_of_barovia")
+	var vpost := (village.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_eq(float(vpost.get_shader_parameter("caustics")), 0.0, "none where there's no water")
+	village.queue_free()
+	Look.set_style("classic", false)
+	var old := _view("lake_zarovich")
+	var opost := (old.post.mesh as QuadMesh).material as ShaderMaterial
+	assert_eq(float(opost.get_shader_parameter("caustics")), 0.0, "Classic stays as it was frozen")
+	old.queue_free()
+	Look.set_style(was, false)

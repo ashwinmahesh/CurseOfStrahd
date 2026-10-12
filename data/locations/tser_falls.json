@@ -153,7 +153,20 @@
       ],
       "kind": "examine",
       "label": "A stone heaped with tokens",
-      "model": "cairn"
+      "model": "cairn",
+      "checks": [
+        {
+          "id": "tokens_sense",
+          "skill": "arcana",
+          "dc": 13,
+          "label": "Sense the token that hums",
+          "success": {
+            "reveal": [
+              "humming_token"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "falls_cairn",
@@ -163,7 +176,20 @@
       ],
       "kind": "examine",
       "label": "A cairn of names",
-      "model": "cairn"
+      "model": "cairn",
+      "checks": [
+        {
+          "id": "cairn_names",
+          "skill": "religion",
+          "dc": 12,
+          "label": "Speak the names on the cairn",
+          "success": {
+            "reveal": [
+              "cairn_necklace"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "falls_marker",
@@ -219,7 +245,24 @@
       ],
       "kind": "decor",
       "label": "A claw-marked pine",
-      "model": "tree_marked"
+      "model": "tree_marked",
+      "checks": [
+        {
+          "id": "pine_climb",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Climb the claw-marked pine",
+          "success": {
+            "reveal": [
+              "pine_satchel"
+            ]
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "bludgeoning"
+          }
+        }
+      ]
     },
     {
       "id": "pine_satchel",
