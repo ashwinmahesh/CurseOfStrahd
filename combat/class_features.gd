@@ -2319,7 +2319,9 @@ func d20_offers(c: Combatant, t: D20Test, out: Array) -> void:
 				e.log.add("reaction", "%s reads woe in the stars for %s" % [woe.name(), c.name()], woe.id, [t.describe()])})
 	var ch := _ch(c)
 	if ch != null and has(c, "dark_ones_own_luck") and t.kind != D20Test.Kind.ATTACK_ROLL:
-		out.append({"kind": "dark_ones_own_luck", "reactor": c, "title": "Dark One's Own Luck?",
+		# Asked where the roll can pause; on a roll that can't, used only when its rule is Automatic (owner, 2026-10-12:
+		# "we should be asked ... it's not automatic"), never spent behind the player's back on Ask.
+		out.append({"kind": "dark_ones_own_luck", "reactor": c, "sync": "decision", "title": "Dark One's Own Luck?",
 			"text": func() -> String: return "%s. Add 1d10 to the roll?" % D20Responses.line(c, t),
 			"cost": func() -> String: return "A use of Dark One's Own Luck (%d left)" % ch.resource_left("dark_ones_own_luck"), "spends_reaction": false,
 			"still": func() -> bool: return not t.success and t.target - t.total <= 10 \
