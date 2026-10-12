@@ -354,6 +354,9 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 				lasting = maxi(lasting, m.number("value"))
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+	# Spells that help a check while they run (Detect Thoughts on Insight...): CHECK_AIDS.
+	if CHECK_AIDS.has(spell_id) and lasting > 0:
+		_check_aid(st, caster, spell_id, data, lasting)
 	# Wards on a place or a rest (and Hallow's places, for good): story/wards.gd.
 	Wards.cast_here(st, spell_id)
 	if spell_id == "heroes_feast":
@@ -368,8 +371,42 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		caster.steed = {"type": kind, "level": maxi(level, int(data.get("level", 2)))}
 		return {"ok": true, "effect": spell_id, "text": "%s casts Find Steed: a %s steed answers, and stays until it falls." % [
 			caster.name.get_slice(" ", 0), kind.capitalize()]}
+	# Druidcraft's Weather Sensor (2024): what the sky will do over the next day.
+	if spell_id == "druidcraft":
+		var tomorrow := Weather.at(st, st.location, st.total_minutes() + 24 * 60)
+		return {"ok": true, "effect": spell_id, "text": "%s casts Druidcraft and reads the sky: tomorrow brings %s." % [
+			caster.name.get_slice(" ", 0), str(Weather.kind(tomorrow).get("label", tomorrow)).to_lower()]}
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
 		" as a Ritual" if as_ritual else ""]}
+
+
+## Spells that only did something with people, a disguise or an illusion help the checks they'd help while they run
+## (Ashwin's answer to the spell audit, 2026-10-12; docs/rules/deviations.md): Advantage on these skills for the
+## spell's duration, for its caster (Seeming: the whole party). Zone of Amicability floors a check to influence at 10.
+const CHECK_AIDS := {"detect_thoughts": ["insight"], "zone_of_truth": ["insight"], "disguise_self": ["deception"],
+	"seeming": ["deception"], "silent_image": ["stealth"], "major_image": ["stealth", "deception"],
+	"comprehend_languages": ["history", "investigation"], "tongues": ["persuasion"], "beast_sense": ["perception"],
+	"locate_object": ["perception", "investigation"], "locate_creature": ["survival"],
+	"zone_of_amicability": ["animal_handling", "deception", "intimidation", "performance", "persuasion"]}
+
+
+static func _check_aid(st: StoryState, caster: Character, spell_id: String, data: Dictionary, minutes: int) -> void:
+	var who: Array[Character] = [caster]
+	if spell_id == "seeming":
+		who = st.party.filter(func(ch: Character) -> bool: return not ch.dead)
+	for ch in who:
+		for old: Effect in ch.effects.duplicate():
+			if old.source_id == spell_id:
+				ch.remove_effect(old)
+		var fx := Effect.new(str(data["name"]), &"spell", spell_id)
+		for skill: String in CHECK_AIDS[spell_id]:
+			if spell_id == "zone_of_amicability":
+				fx = fx.with_modifier("d20_floor", {"on": "check:" + skill, "value": 10})
+			else:
+				fx = fx.with_modifier("advantage", {"on": "check:" + skill})
+		fx.ends = Effect.Ends.MINUTES
+		fx.minutes_left = minutes
+		ch.add_effect(fx)
 
 
 ## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, immune to Poison damage

@@ -38,6 +38,6 @@
   "tags": [
     "detection"
   ],
-  "summary": "Sense the direction to a creature you know, or the nearest of a kind you've seen, within 1,000 ft.",
+  "summary": "Sense the way to a creature. In the game: Advantage on your Survival checks while it runs (tracking).",
   "text": "Describe or name a creature you know. You sense the direction to its location if it is within 1,000 feet of you, and if it is moving you know which way. You can look for a specific creature you know, or for the nearest creature of a particular kind (such as a human or a unicorn) as long as you have seen such a creature up close, within 30 feet, at least once. If the creature is in a different form, such as one from a Flesh to Stone or Polymorph spell, this spell doesn't find it. The spell can't locate a creature if any thickness of lead blocks a direct path between you and it. Concentration, up to 1 hour."
 }

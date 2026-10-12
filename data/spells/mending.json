@@ -36,6 +36,6 @@
   "tags": [
     "utility"
   ],
-  "summary": "Repairs one break or tear up to 1 foot across in an object you touch; can't restore magic.",
+  "summary": "Repairs a break or tear. In the game: Advantage on your Investigation checks outside fights (a mended seam, a hidden join).",
   "text": "Fix a single break or tear in an object you touch, such as a snapped chain link, a key broken in two, a ripped cloak or a leaking wineskin. If the damage is no larger than 1 foot in any dimension, it is mended without a trace. The spell can physically repair a magic item but can't restore its magic."
 }

@@ -26,7 +26,7 @@
     "kind": "minutes",
     "amount": 10
   },
-  "summary": "A 60-foot Emanation of goodwill surrounds you for 10 minutes: when you make an ability check to influence a creature in it, you treat a d20 roll of 9 or lower as a 10. It has no effect in a fight; the game's conversations play it out.",
+  "summary": "Goodwill around you for 10 minutes. In the game: a d20 of 9 or lower on your checks to influence counts as a 10.",
   "text": "A 60-foot Emanation of goodwill surrounds you for 10 minutes: when you make an ability check to influence a creature in it, you treat a d20 roll of 9 or lower as a 10. It has no effect in a fight; the game's conversations play it out.",
   "tags": [
     "utility"
