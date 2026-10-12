@@ -41699,6 +41699,12 @@
   "recipe": "dd92281f92",
   "text": "The high chair is empty. Grey dust lies on the seat and the step, and a thin trail of it runs up the wall and into a crack in the ceiling, toward the tower, toward the door."
  },
+ "narrator/2ca5965e1ce9499f": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN."
+ },
  "narrator/2ca774ad456f9c16": {
   "chars": 217,
   "model": "eleven_v4",
@@ -43193,6 +43199,12 @@
   "recipe": "dd92281f92",
   "text": "He's a raven before you can answer, going away over the vines toward the house."
  },
+ "narrator/38445176ce2f10b5": {
+  "chars": 115,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig."
+ },
  "narrator/38507f476e554479": {
   "chars": 153,
   "model": "eleven_v4",
@@ -44195,6 +44207,12 @@
   "recipe": "dd92281f92",
   "text": "A man of packed earth and split timber, forty feet long, lying on his back with a cloak of turf. The face is crude but you'd know it anywhere. In the chest, under the turf, something green beats like a heart."
  },
+ "narrator/3fc5bb65e4523fff": {
+  "chars": 219,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The newest entries are all from this winter: Goat path round the tower. Lanterns, four or five to a party. One lantern came down. Three times. The last: a man, a woman, and a sledge with something small on it, coughing."
+ },
  "narrator/3fd3ed244274e38e": {
   "chars": 114,
   "model": "eleven_v4",
@@ -44284,6 +44302,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She rises from the bier in one smooth movement, like a dancer, and the Belviews reach under their rags for cleavers and pruning hooks."
+ },
+ "narrator/40893055f2c43b99": {
+  "chars": 258,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not."
  },
  "narrator/408c87fdc5bbb9c7": {
   "chars": 88,
@@ -62999,6 +63023,12 @@
   "recipe": "dd92281f92",
   "text": "You kneel beside her in the wet grass. She doesn't look round, but she moves over a little, to make room."
  },
+ "narrator/d044b3fe7f3eb347": {
+  "chars": 240,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One entry comes round every month for forty years: North shoulder of Ghakis. Smoke where nobody lives. Snow melting in midwinter. The count's cart up the goat path at the new moon with a cage on the back, and down again with the cage empty."
+ },
  "narrator/d045763b23d437f6": {
   "chars": 79,
   "model": "eleven_v4",
@@ -76114,6 +76144,13 @@
   "recipe": "71f51bdb43",
   "text": "Not tonight, then. I can wait. I have had a great deal of practice."
  },
+ "strahd/2236516229225fef": {
+  "chars": 40,
+  "direction": "[silky, amused, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You came back. I had the soup kept warm."
+ },
  "strahd/23bcf96224094e90": {
   "chars": 87,
   "direction": "[soft, commanding, intimate]",
@@ -76468,6 +76505,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "The little priestess of the dawn. You sing to my windows in the mornings that aren't mornings. I hear everything in my valley. A lovely voice, and a hopeless task."
+ },
+ "strahd/64b8cf5947f81fca": {
+  "chars": 77,
+  "direction": "[gracious, mocking, patient]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Of course. Walk about; stretch your legs. The table will keep, and so will I."
  },
  "strahd/64ea66cdbc52ec27": {
   "chars": 87,
