@@ -94,7 +94,8 @@ combat drowned_landing
 ~ bell
 Narrator: The shore is quiet except for the water running back off the stones. Far out and far down, the bell still swings. It isn't ringing. It's waiting.
 * [Athletics DC 15] (Swim down the bell rope from the jetty's end and cut the bell loose.) -> cut | cut_fail
-* [knows:water_breathing] (Cast Water Breathing and go down for it properly.) -> cut
+* [if spell:water_breathing] (Go down for it properly, breathing water.) -> cut
+* [if not spell:water_breathing] [knows:water_breathing] (Cast Water Breathing and go down for it properly.) -> cast_water_breathing
 * [if item:potion_of_water_breathing] (Drink a Potion of Water Breathing and go down.) -> cut_potion
 * [Religion DC 14] (Ring it once, from the jetty, for every one of them, the way it should have been rung for the dead.) -> rung | rung_fail
 * Not now. -> END
@@ -102,6 +103,13 @@ Narrator: The shore is quiet except for the water running back off the stones. F
 ~ cut_fail
 time +30
 Narrator: The cold takes the breath out of you before you're a body's length down. You come up gasping, and the rope swings, and somewhere under you something patient waits for you to try again.
+-> END
+
+~ cast_water_breathing
+cast water_breathing
+if check.last
+-> cut
+endif
 -> END
 
 ~ cut_potion
