@@ -9,7 +9,8 @@ extends RefCounted
 ##   or a chest, examining something) or one was begun and not won; a fight only a conversation can start doesn't
 ##   count. Towns, inns, camps and the open road are unaffected, and so are the magic items that make a safe place to
 ##   sleep (Daern's Instant Fortress, the Rod of Security), which still keep the 16 hours.
-## Short Rests are never refused here. Pure story logic: no nodes.
+## Short Rests are never refused here. Leomund's Tiny Hut and Guards and Wards let a Long Rest start with enemies still
+## in the building (story/wards.gd). Pure story logic: no nodes.
 
 const WAIT_MINUTES := 16 * 60
 ## st.flags: the game minute the party last finished a Long Rest (an underscore key: bookkeeping, not story).
@@ -21,8 +22,8 @@ const SELF_STARTING: Array[String] = ["enter_area", "open", "examine"]
 ## Why the party can't start a Long Rest where it stands, one sentence per reason; [] when it can.
 static func long_rest_refusals(st: StoryState) -> Array[String]:
 	var out: Array[String] = []
-	if not waiting_fights(st, st.location).is_empty():
-		out.append("Enemies still prowl this place, on this floor or another. Clear them out, or rest somewhere else.")
+	if not waiting_fights(st, st.location).is_empty() and Wards.shelter(st) == "":
+		out.append("Enemies still prowl this place, on this floor or another. Clear them out, rest somewhere else, or ward the rest (Leomund's Tiny Hut, Guards and Wards).")
 	var wait := minutes_until_long_rest(st)
 	if wait > 0:
 		out.append("The last Long Rest ended less than 16 hours ago: the next can start in %s." % duration(wait))

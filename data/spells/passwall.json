@@ -34,6 +34,6 @@
     "utility",
     "movement"
   ],
-  "summary": "Open a passage through a wooden, plaster or stone surface.",
+  "summary": "Opens the nearest locked or secret door within 30 ft.",
   "text": "The passage is up to 5 feet wide, 8 feet tall and 20 feet deep. When it closes, anyone still inside is safely moved to the nearest unoccupied space."
 }

@@ -41,6 +41,6 @@
     "utility",
     "detection"
   ],
-  "summary": "Wards a door, window or 20-foot Cube for 8 hours and alerts you when a creature touches or enters it.",
+  "summary": "Wards your camp for 8 hours: a Long Rest something would interrupt still counts, because you're warned in time.",
   "text": "Ward a door, a window, or an area no bigger than a 20-foot Cube within range for 8 hours. Whenever a creature touches or enters the warded spot, an alarm goes off; creatures you name when you cast the spell don't trigger it. When casting, choose the kind of alarm. Audible: the sound of a handbell rings for 10 seconds and can be heard within 60 feet of the ward. Mental: you get a mental ping if you are within 1 mile of the ward, and it wakes you if you are asleep. Casting time 1 minute; can be cast as a Ritual."
 }

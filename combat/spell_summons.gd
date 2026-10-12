@@ -111,6 +111,19 @@ func bring_steed(c: Combatant) -> bool:
 	return true
 
 
+## The dead `c` raised while exploring (Animate Dead, Create Undead: FieldCasting.bring_risen) join the fight beside
+## them, `count` of `kind`; nothing is spent. They come whole to each fight of their day (docs/rules/deviations.md).
+func bring_risen(c: Combatant, spell_id: String, kind: String, count: int) -> void:
+	var s := _comp().spell_data(spell_id)
+	var entry := sp()._entry_any(c, spell_id)
+	if entry.is_empty():
+		entry = {"class_id": "wizard"}
+	for i in count:
+		var ctx := {"c": c, "s": s, "slot": int(s.get("level", 3)), "nums": sp().numbers(c, entry), "conc": null,
+			"opts": {}, "precast": true, "choice": kind}
+		_summon(ctx, Vector2i(-1, -1), CombatResult.new())
+
+
 ## The familiar `c` called earlier (Character.familiar) when `c` can't cast Find Familiar now (it came from a scroll, or
 ## the spell has left their book): it joins the fight beside them all the same, the form a casting would make.
 func bring_familiar(c: Combatant) -> bool:
