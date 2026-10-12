@@ -1124,7 +1124,7 @@ class Wiki:
                     sk, dc = st["check"]
                     txt = plain(st.get("text", ""), 90) if t == "option" else "(rolled in the scene)"
                     checks.append(f"{sk} DC {dc}: {txt}")
-                elif t in ("give", "gold") and qid not in (self._give_quests(key, node, st) or [qid]):
+                elif t in ("give", "gold", "xp") and qid not in (self._give_quests(key, node, st) or [qid]):
                     pass   # paid out for another quest the same conversation moves
                 elif t == "give":
                     gifts.append((st["item"], st["qty"]))
@@ -1159,9 +1159,9 @@ class Wiki:
                 self.npc_quests[nid].add(qid)
             reward_bits = []
             if gifts:
-                counts = OrderedDict()
+                counts = OrderedDict()   # the most one ending gives: endings are usually either-or
                 for iid, n in gifts:
-                    counts[iid] = counts.get(iid, 0) + n
+                    counts[iid] = max(counts.get(iid, 0), n)
                 reward_bits += [s.item(i) + (f" ×{n}" if n > 1 else "") for i, n in counts.items()]
             if golds:
                 amounts = sorted(set(golds))
