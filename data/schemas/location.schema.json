@@ -408,6 +408,10 @@
           "when": {
             "type": "string"
           },
+          "locked": {
+            "type": "boolean",
+            "description": "Locked with no lock to pick (lock_dc 0): it needs its key, or `unlocked_when`."
+          },
           "unlocked_when": {
             "type": "string",
             "description": "A lock the story takes off: the lid opens once this holds (Luvash's chest, once Arabelle is home)."

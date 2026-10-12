@@ -333,6 +333,7 @@ class Story:
                     for f in (p.get("flag"), (p.get("hangs") or {}).get("flag")):
                         if f:
                             self.changed |= self.add(("flag", f, True), f"{w} prop {p['id']}")
+                    self._check_flags(p, f"{w} prop {p['id']}")
                     self.walk_ref(p.get("dialogue"), f"{w} prop {p['id']}")
             for c in loc.get("containers", []):
                 if not self.beside(cells, c["cell"]) or not self.possible(c.get("when", "")):
@@ -344,6 +345,7 @@ class Story:
                     self.changed |= self.add(("item", i["id"]), f"{w} container {c['id']}")
                 if c.get("flag"):
                     self.changed |= self.add(("flag", c["flag"], True), f"{w} container {c['id']}")
+                self._check_flags(c, f"{w} container {c['id']}")
             for tr in loc.get("traps", []):
                 if tr.get("flag") and any(tuple(c) in cells for c in tr["cells"]) and self.possible(tr.get("when", "")):
                     self.changed |= self.add(("flag", tr["flag"], True), f"{w} trap {tr['id']}")
@@ -358,6 +360,13 @@ class Story:
                 for node in nodes:
                     if node not in targets:
                         self.walk(f"watch/{region}", node, "story/crime.gd (a crime the watch sees)")
+
+    def _check_flags(self, thing, why):
+        """A skill check on a thing in the world (WorldChecks) sets its success's flag (the abbey's scarecrows unbound)."""
+        for chk in thing.get("checks", []):
+            f = (chk.get("success") or {}).get("flag")
+            if f and self.possible(chk.get("when", "")):
+                self.changed |= self.add(("flag", f, True), f"{why} check {chk.get('id', '')}")
 
     def _encounter_on(self, lid, en):
         if not self.possible(en.get("when", "")):
