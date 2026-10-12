@@ -42,6 +42,10 @@ void fragment() {
 	float n = fbm(q + vec2(time_s * 0.025, time_s * 0.012));
 	float n2 = fbm(q * 1.7 - vec2(time_s * 0.018, 0.0));
 	float fog = smoothstep(0.18, 0.85, (1.0 - seen) + (n - 0.5) * 0.4);
+	// A soft mist at the very edge of the art, even with everything known: the valley fades out rather than stopping.
+	vec2 edge = min(art_uv, 1.0 - art_uv);
+	float rim = 1.0 - smoothstep(0.0, 0.05, min(edge.x, edge.y * 1.5) + (n - 0.5) * 0.02);
+	fog = max(fog, rim * 0.85);
 	vec3 col = mix(mist_dark.rgb, mist.rgb, smoothstep(0.25, 0.85, n2));
 	COLOR = vec4(col, fog * mist.a);
 }
