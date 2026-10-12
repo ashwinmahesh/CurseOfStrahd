@@ -77,8 +77,8 @@ Mirela: Is it over? Are they all...?
 * [Medicine DC 13] You're holding your arm strangely. Let me see it. -> bite_ok | bite_fail
 
 ~ home
-Mirela: Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Ana. Ana's little.
-interject name:godrick_pendlebrook: You're not walking it alone, Mirela. Ana can ride on my shoulders. Everybody else, single file behind me.
+Mirela: Krezk is down the stream path, then west on the road. We can find it. We're not little. Except Codruta. Codruta's little.
+interject name:godrick_pendlebrook: You're not walking it alone, Mirela. Codruta can ride on my shoulders. Everybody else, single file behind me.
 Narrator: You walk them down to the road and as far as the first milestone, where Mirela takes over, counting heads every twenty paces like a sergeant on a march.
 if not flag.wolf_den_milestone_reached
 set wolf_den_milestone_reached

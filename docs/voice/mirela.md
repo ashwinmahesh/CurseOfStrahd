@@ -8,7 +8,7 @@ aftermath.dialogue).
 
 Taken with the others from the farms under Krezk a month ago. She keeps the tally of days on the wall, shares out
 the food Zuleika slips them, and has decided that if anyone is going to be eaten first it will be her, because she's
-the oldest and the stringiest. The little ones are Ana (six, lost her rag doll on the hill), Petru, and the twins Ilie
+the oldest and the stringiest. The little ones are Codruta (six, lost her rag doll on the hill), Petru, and the twins Zamfir
 and Ioana.
 
 - **Wants:** home. Her mother. For the little ones to stop crying at night.
@@ -24,4 +24,4 @@ and Ioana.
 
 - "If you're here to eat us, you'll have to start with me. I'm the stringiest."
 - "We can't run. They'd smell us on the hill before we got to the trees."
-- "That's Ana's doll! She's been crying for it for a week."
+- "That's Codruta's doll! She's been crying for it for a week."

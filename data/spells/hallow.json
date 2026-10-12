@@ -36,6 +36,6 @@
     "defense",
     "utility"
   ],
-  "summary": "Consecrate an area up to 60 feet in radius against chosen kinds of creatures.",
+  "summary": "Takes a day: the place you're in becomes holy for good. A Long Rest there can't be interrupted, and Strahd's visits that can wait don't come there.",
   "text": "Celestials, Elementals, Fey, Fiends and Undead can't enter it or charm, frighten or possess anyone inside, and its dead can't be raised as Undead. You also bind one extra effect to it, such as courage, darkness, daylight, energy protection, fear or tongues."
 }

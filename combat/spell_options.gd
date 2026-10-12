@@ -90,7 +90,7 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	var unit := str(entry["casting"])
 	if unit == "reaction":
 		return "Cast as a Reaction when it triggers"
-	if unit in ["minute", "hour"]:
+	if unit in ["minute", "hour"] and not enc().peaceful:
 		return "Takes too long to cast in combat (cast it before the fight)"
 	var why := economy_block(c, unit)
 	if why != "":

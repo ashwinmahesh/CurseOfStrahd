@@ -37,6 +37,6 @@
   "tags": [
     "defense"
   ],
-  "summary": "Ward an area against teleportation, planar travel and creature types you choose.",
+  "summary": "Takes 10 minutes: for a day, a Long Rest in the place you're in can't be interrupted, and Strahd's visits that can wait don't come there.",
   "text": "The area is up to 40,000 square feet and 30 feet high. Chosen types (Celestials, Elementals, Fey, Fiends or Undead) take 5d10 Radiant or Necrotic damage when they first enter it on a turn or end a turn there; a password lets a creature through unharmed. Casting it daily for 30 days makes it last until dispelled."
 }

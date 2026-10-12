@@ -295,11 +295,14 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 			if a.can_act() and e.distance(a, target) <= 5:
 				adv.append("Pack Tactics")
 				break
-	if melee and flanks(c, target, origin_cell, origin_size):
+	# An option marked `ignore_flanking` is the AI weighing a square without it (AiTactics.seeks_flanks).
+	if melee and not bool(option.get("ignore_flanking", false)) and flanks(c, target, origin_cell, origin_size):
 		adv.append("Flanking")
 	for m in target.creature.modifiers_for(&"attacked_with_by_type"):
 		if str(c.creature.creature_type) in (m.data.get("types", []) as Array):
 			dis.append("%s (target)" % m.source_name)
+	if MagicCircle.shields(e, c, target):
+		dis.append("Magic Circle (target)")
 	if c.creature.has_flag("cursed_attacks:%s" % target.id):
 		dis.append("Bestow Curse")
 	if CombatFeatures.has_feature(c, "assassinate") and e.round_no == 1 and not target.has_acted:

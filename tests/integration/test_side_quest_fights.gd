@@ -108,13 +108,13 @@ func test_stellas_shadow_stands_up_in_her_bedroom() -> void:
 
 func test_ana_and_the_girls_in_the_street_and_in_their_graves() -> void:
 	var v := await _boot("vallaki", 22, 5, ["roses_vigil", "ana_met"])
-	await _fight(v, "roses_street", ["Ana", "Irina"])
+	await _fight(v, "roses_street", ["Catalina", "Irina"])
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("roses_spawn_destroyed", false)))
 	root.queue_free()
 	root = null
 	v = await _boot("vallaki", 11, 5, ["ana_grave_known"])
-	await _fight(v, "roses_graves", ["Ana", "Irina", "Daria"])
+	await _fight(v, "roses_graves", ["Catalina", "Irina", "Daria"])
 	await _end(v)
 
 

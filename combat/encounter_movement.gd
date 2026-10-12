@@ -75,6 +75,8 @@ func _move_blocks(c: Combatant) -> Dictionary:
 		blocked[cell3] = true
 	for cell4: Vector2i in e.spells.specials.mid.shell_blocks(c):
 		blocked[cell4] = true
+	for cell5: Vector2i in MagicCircle.blocks(e, c):
+		blocked[cell5] = true
 	# Compelled Duel: no square more than 30 ft from the duellist.
 	var anchor := e.spells.specials.duel_anchor(c)
 	if anchor != null:

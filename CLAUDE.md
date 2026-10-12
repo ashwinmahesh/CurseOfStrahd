@@ -13,6 +13,7 @@ make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"]
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; story/cheat_codes.gd makes the codes)
+make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
 
 ## Godot windows (the owner works on this Mac)

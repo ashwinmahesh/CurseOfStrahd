@@ -36,6 +36,38 @@
   "tags": [
     "detection"
   ],
-  "summary": "Learn the significant lore about a famous person, place or object you name.",
-  "text": "The more you already know or hold of the subject, the clearer the answer; for something obscure you may learn nothing."
+  "summary": "Name a legend of the valley: its bestiary entry fills in, defenses and traits, and its kind shows them from the start of a fight.",
+  "text": "The more you already know or hold of the subject, the clearer the answer; for something obscure you may learn nothing.",
+  "choice": {
+    "kind": "option",
+    "label": "Legend",
+    "from": [
+      "strahd_von_zarovich",
+      "rahadin",
+      "vampire_spawn",
+      "baba_lysaga",
+      "night_hag",
+      "vladimir_horngaard",
+      "sir_godfrey_gwilym",
+      "kiril_stoyanovich",
+      "the_grandsire",
+      "izek_strazni",
+      "exethanter",
+      "rag_queen"
+    ],
+    "labels": {
+      "strahd_von_zarovich": "Strahd von Zarovich",
+      "rahadin": "Rahadin",
+      "vampire_spawn": "Vampire Spawn",
+      "baba_lysaga": "Baba Lysaga",
+      "night_hag": "Night Hag",
+      "vladimir_horngaard": "Vladimir Horngaard",
+      "sir_godfrey_gwilym": "Sir Godfrey Gwilym",
+      "kiril_stoyanovich": "Kiril Stoyanovich",
+      "the_grandsire": "The Grandsire",
+      "izek_strazni": "Izek Strazni",
+      "exethanter": "Exethanter",
+      "rag_queen": "The Rag Queen"
+    }
+  }
 }

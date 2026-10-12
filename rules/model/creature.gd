@@ -579,6 +579,10 @@ func roll_d20(dice: DiceRoller, kind: D20Test.Kind, bonus: Breakdown, target: in
 		extra, extra_text.strip_edges())
 	if has_flag("luck"):
 		t.reroll_ones(dice, "Luck")
+	# A d20 of less than the floor counts as the floor (Zone of Amicability on a check to influence).
+	for m in modifiers_for(&"d20_floor"):
+		if m.matches_any(keys):
+			t.floor_natural(int(m.number("value")), m.source_name)
 	if forced > 0:
 		t.set_natural(forced, "Portent")
 	t.breakdown = bonus
@@ -1282,6 +1286,8 @@ func carrying_capacity() -> Breakdown:
 	var idx := clampi(SIZES.find(size) + step, 0, SIZES.size() - 1)
 	var mult := float(CARRY_MULTIPLIER[SIZES[idx]])
 	b.add("Strength %d × %s" % [ability_score(&"str"), str(mult)], int(ability_score(&"str") * mult))
+	for m in modifiers_for(&"carry_bonus"):   # Tenser's Floating Disk
+		b.add(m.source_name, mod_value(m, ctx))
 	return b
 
 

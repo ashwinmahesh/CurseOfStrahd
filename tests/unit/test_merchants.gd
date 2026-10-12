@@ -220,22 +220,22 @@ func test_nothing_in_endless_stock_resells_at_a_profit() -> void:
 					w["price"], buyer, offer])
 
 
-## A pair (Sending Stones) sells whole, both pieces for the item's price, and its pieces sell back for half each: buying
-## a pair and selling both pieces where the terms are best never turns a profit.
+## A pair (Boon Companions' Bands) sells whole, both pieces for the item's price, and its pieces sell back for half
+## each: buying a pair and selling both pieces where the terms are best never turns a profit.
 func test_a_pair_sells_whole_and_resells_at_no_profit() -> void:
 	Compendium.shared().tables["npcs"]["test_pair_seller"] = {"id": "test_pair_seller", "name": "Test Seller",
-		"shop": {"sells": [{"id": "sending_stones"}]}}
+		"shop": {"sells": [{"id": "boon_companions_bands"}]}}
 	var st := _party()
 	st.attitudes["test_pair_seller"] = "friendly"
 	st.set_flag("_haggle_won/test_pair_seller", true)
 	var ch := st.party[0]
 	var price := float(st.shop_wares("test_pair_seller")[0]["price"])
-	assert_eq(st.shop_buy("test_pair_seller", "sending_stones", ch), "")
-	assert_eq(ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "sending_stones").size(), 2, "both stones")
+	assert_eq(st.shop_buy("test_pair_seller", "boon_companions_bands", ch), "")
+	assert_eq(ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "boon_companions_bands").size(), 2, "both rings")
 	var back := 0.0
 	for i in 2:
-		back += st.shop_offer("test_pair_seller", "sending_stones")
-		assert_eq(st.shop_sell("test_pair_seller", "sending_stones", ch), "", "a single stone sells")
+		back += st.shop_offer("test_pair_seller", "boon_companions_bands")
+		assert_eq(st.shop_sell("test_pair_seller", "boon_companions_bands", ch), "", "a single ring sells")
 	assert_true(back <= price, "paid %s gp, sold the pieces for %s gp" % [price, back])
 	Compendium.shared().tables["npcs"].erase("test_pair_seller")
 

@@ -8,8 +8,16 @@ extends RefCounted
 const MAX_TARGETS := 8
 ## Spells that also work in a fight but are worth casting while exploring (their light lasts; Find Familiar's familiar
 ## and Find Steed's steed stay with their caster and join the next fights).
+## Costly components with no item to carry, bought from the party's purse as the spell is cast (docs/rules/deviations.md):
+## Heroes' Feast's gem-encrusted bowl.
+const PURSE_COMPONENTS := {"heroes_feast": 1000}
+## st.flags: the last brew of Tasha's Bubbling Cauldron {who, item, qty} (an underscore key: bookkeeping).
+const CAULDRON_KEY := "_cauldron"
 const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar",
-	"find_steed"]
+	"find_steed", "animate_dead", "create_undead"]
+## The dead raised while exploring (Animate Dead, Create Undead): how many, of what, at each slot level, for the day they
+## stay under the caster's control (2024: 24 hours), joining each fight beside the caster (bring_risen).
+const RISEN := {"animate_dead": {"base": 3, "count": 1, "per_level": 2}, "create_undead": {"base": 6, "count": 3, "per_level": 1}}
 
 
 ## What `caster` can cast right now outside combat: [{id, name, level, slots: Array[int], free, count, self_only,
@@ -55,9 +63,10 @@ static func helpful(data: Dictionary) -> bool:
 	return kind in ["creature", "ally", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
 
 
-## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}.
+## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}. With
+## `st`, a spell that takes minutes or hours to cast (Prayer of Healing's ten minutes) takes them off the clock.
 static func cast(party: Array[Character], caster: Character, spell_id: String, slot: int, targets: Array[Character],
-		dice: DiceRoller) -> Dictionary:
+		dice: DiceRoller, st: StoryState = null) -> Dictionary:
 	var e := _board(party, caster, dice)
 	var c := e.get_c(caster.id)
 	if c == null:
@@ -88,6 +97,9 @@ static func cast(party: Array[Character], caster: Character, spell_id: String, s
 			lines.append(str(entry["text"]))
 	if not res.ok:
 		return {"ok": false, "text": res.reason, "lines": lines}
+	var ct := data.get("casting_time", {}) as Dictionary
+	if st != null and str(ct.get("unit", "")) in ["minute", "hour"]:
+		st.advance_minutes(int(ct.get("amount", 1)) * (60 if str(ct["unit"]) == "hour" else 1))
 	return {"ok": true, "text": "\n".join(lines), "lines": lines}
 
 
@@ -233,6 +245,7 @@ static func _board(party: Array[Character], caster: Character, dice: DiceRoller,
 	for i in size:
 		rows.append(".".repeat(size))
 	var e := Encounter.new(CombatGrid.from_rows(rows), dice)
+	e.peaceful = true   # outside a fight: a spell's minutes or hours of casting pass on the clock (cast())
 	var mid := floori(size / 2.0)
 	e.add(caster, &"party", Vector2i(mid, mid)).controller = &"player"
 	var spots: Array[Vector2i] = []
@@ -369,7 +382,8 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		var choice_def := data.get("choice", {}) as Dictionary
 		var choices: Array = (choice_def.get("from", []) as Array) if str(choice_def.get("kind", "")) == "option" else []
 		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "free": free,
-			"choices": choices, "legal": true, "reason": "", "resource_casts": caster.resource_casts(id)}
+			"choices": choices, "choice_labels": choice_def.get("labels", {}), "legal": true, "reason": "",
+			"resource_casts": caster.resource_casts(id)}
 		if level > 0 and slots.is_empty() and not ritual and not free:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
@@ -406,6 +420,13 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		return str(f["id"]) == resource_feature and bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
 	if not omit_material and caster.component_why(data) != "":
 		return {"ok": false, "text": caster.component_why(data)}
+	if spell_id == "create_undead" and not st.is_night():
+		return {"ok": false, "text": "Create Undead can only be cast at night"}
+	if spell_id == "commune_with_nature" and not bool((Compendium.shared().get_entry("locations", st.location).get("map", {}) as Dictionary).get("outdoors", false)):
+		return {"ok": false, "text": "Commune with Nature needs the open air"}
+	var purse := float(PURSE_COMPONENTS.get(spell_id, 0))
+	if purse > 0.0 and st.gold < purse:
+		return {"ok": false, "text": "Needs %s (%d gp; the purse holds %d)" % [str((data.get("components", {}) as Dictionary).get("m", "its component")).get_slice(",", 0), roundi(purse), floori(st.gold)]}
 	var payment: Dictionary = {}
 	if resource_feature != "":
 		if as_ritual or slot > int(data.get("level", 0)):
@@ -434,9 +455,13 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var used := "" if omit_material else caster.use_component(data)
+	if purse > 0.0:
+		st.gold = maxf(0.0, st.gold - purse)
 	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty(), cast_level, choice)
 	if used != "":
 		res["text"] = str(res["text"]).trim_suffix(".") + ", using up %s." % used
+	if purse > 0.0:
+		res["text"] = str(res["text"]) + " The %s cost %d gp." % [str((data.get("components", {}) as Dictionary).get("m", "component")).get_slice(" worth", 0).trim_prefix("a "), roundi(purse)]
 	return res
 
 
@@ -467,8 +492,18 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		for m in caster.modifiers_for(&"ritual_duration"):
 			if m.text("spell_id") == spell_id:
 				lasting = maxi(lasting, m.number("value"))
+	# Leomund's Secret Chest lasts until dispelled; after 60 days it may fail any day (2024), so the game keeps it 60.
+	if spell_id == "leomunds_secret_chest":
+		lasting = 60 * 24 * 60
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+	# Spells that help a check while they run (Detect Thoughts on Insight...): CHECK_AIDS.
+	if CHECK_AIDS.has(spell_id) and lasting > 0:
+		_check_aid(st, caster, spell_id, data, lasting)
+	# Wards on a place or a rest (and Hallow's places, for good): story/wards.gd.
+	Wards.cast_here(st, spell_id)
+	if spell_id == "heroes_feast":
+		return {"ok": true, "effect": spell_id, "text": _feast(st, caster)}
 	# Find Familiar: the familiar is with the caster from now on (it joins fights until it's lost or dismissed).
 	if spell_id == "find_familiar":
 		caster.familiar = "here"
@@ -479,8 +514,126 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		caster.steed = {"type": kind, "level": maxi(level, int(data.get("level", 2)))}
 		return {"ok": true, "effect": spell_id, "text": "%s casts Find Steed: a %s steed answers, and stays until it falls." % [
 			caster.name.get_slice(" ", 0), kind.capitalize()]}
+	# Animate Dead, Create Undead: the dead rise and follow their caster for a day, joining each fight (bring_risen).
+	if RISEN.has(spell_id):
+		var rule := RISEN[spell_id] as Dictionary
+		var kinds := (data.get("choice", {}) as Dictionary).get("from", ["zombie" if spell_id == "animate_dead" else "ghoul"]) as Array
+		var kind := choice if choice in kinds else str(kinds[0])
+		var count := int(rule["count"]) + int(rule["per_level"]) * maxi(0, level - int(rule["base"]))
+		st.active_spells[spell_id] = {"until": st.total_minutes() + 24 * 60, "caster": caster.id, "kind": kind, "count": count}
+		return {"ok": true, "effect": spell_id, "text": "%s casts %s: %d %s%s rise%s to follow them for a day, and will fight beside them." % [
+			caster.name.get_slice(" ", 0), data["name"], count, Compendium.shared().display_name("monsters", kind),
+			"" if count == 1 else "s", "s" if count == 1 else ""]}
+	# Scouting and divining (story/oracles.gd): what the spell finds out where the party stands.
+	if spell_id in Oracles.HANDLED:
+		return {"ok": true, "effect": spell_id, "text": Oracles.cast(st, caster, spell_id, choice)}
+	# Tenser's Floating Disk: it carries 500 lb more for its caster while it lasts.
+	if spell_id == "tensers_floating_disk" and lasting > 0:
+		for old: Effect in caster.effects.duplicate():
+			if old.source_id == spell_id:
+				caster.remove_effect(old)
+		var disk := Effect.new("Tenser's Floating Disk", &"spell", spell_id).with_modifier("carry_bonus", {"value": 500})
+		disk.ends = Effect.Ends.MINUTES
+		disk.minutes_left = lasting
+		caster.add_effect(disk)
+	if spell_id == "tashas_bubbling_cauldron":
+		return {"ok": true, "effect": spell_id, "text": _cauldron(st, caster, data, choice)}
+	# Druidcraft's Weather Sensor (2024): what the sky will do over the next day.
+	if spell_id == "druidcraft":
+		var tomorrow := Weather.at(st, st.location, st.total_minutes() + 24 * 60)
+		return {"ok": true, "effect": spell_id, "text": "%s casts Druidcraft and reads the sky: tomorrow brings %s." % [
+			caster.name.get_slice(" ", 0), str(Weather.kind(tomorrow).get("label", tomorrow)).to_lower()]}
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
 		" as a Ritual" if as_ritual else ""]}
+
+
+## Spells that only did something with people, a disguise or an illusion help the checks they'd help while they run
+## (Ashwin's answer to the spell audit, 2026-10-12; docs/rules/deviations.md): Advantage on these skills for the
+## spell's duration, for its caster (Seeming: the whole party). Zone of Amicability floors a check to influence at 10.
+const CHECK_AIDS := {"detect_thoughts": ["insight"], "zone_of_truth": ["insight"], "disguise_self": ["deception"],
+	"seeming": ["deception"], "silent_image": ["stealth"], "major_image": ["stealth", "deception"],
+	"comprehend_languages": ["history", "investigation"], "tongues": ["persuasion"], "beast_sense": ["perception"],
+	"locate_object": ["perception", "investigation"], "locate_creature": ["survival"],
+	"zone_of_amicability": ["animal_handling", "deception", "intimidation", "performance", "persuasion"]}
+
+
+static func _check_aid(st: StoryState, caster: Character, spell_id: String, data: Dictionary, minutes: int) -> void:
+	var who: Array[Character] = [caster]
+	if spell_id == "seeming":
+		who = st.party.filter(func(ch: Character) -> bool: return not ch.dead)
+	for ch in who:
+		for old: Effect in ch.effects.duplicate():
+			if old.source_id == spell_id:
+				ch.remove_effect(old)
+		var fx := Effect.new(str(data["name"]), &"spell", spell_id)
+		for skill: String in CHECK_AIDS[spell_id]:
+			if spell_id == "zone_of_amicability":
+				fx = fx.with_modifier("d20_floor", {"on": "check:" + skill, "value": 10})
+			else:
+				fx = fx.with_modifier("advantage", {"on": "check:" + skill})
+		fx.ends = Effect.Ends.MINUTES
+		fx.minutes_left = minutes
+		ch.add_effect(fx)
+
+
+## The dead raised while exploring join a fight beside their caster, if the day isn't over (LocationFights).
+static func bring_risen(e: Encounter, st: StoryState) -> void:
+	for id: String in RISEN:
+		if not st.spell_active(id):
+			continue
+		var a := st.active_spells[id] as Dictionary
+		var c := e.get_c(str(a.get("caster", "")))
+		if c != null and c.is_alive():
+			e.spells.summons.bring_risen(c, id, str(a.get("kind", "")), int(a.get("count", 1)))
+
+
+## Tasha's Bubbling Cauldron (2024): copies of a common or uncommon potion (`choice`), one per point of the caster's
+## spellcasting modifier (at least one), in their pack; what's left of the last brew is gone when they brew again.
+static func _cauldron(st: StoryState, caster: Character, data: Dictionary, choice: String) -> String:
+	var kinds := (data.get("choice", {}) as Dictionary).get("from", ["potion_of_healing"]) as Array
+	var potion := choice if choice in kinds else str(kinds[0])
+	var last := st.flags.get(CAULDRON_KEY, {}) as Dictionary
+	if not last.is_empty():
+		for ch in st.party:
+			if ch.id == str(last.get("who", "")):
+				for i in int(last.get("qty", 0)):
+					if not ch.carries(str(last["item"])):
+						break
+					ch.remove_one(str(last["item"]))
+	var cls := str((caster.spellcasting[0] as Dictionary).get("class_id", "")) if not caster.spellcasting.is_empty() else ""
+	var casting := Compendium.shared().class_data(cls).get("spellcasting", {}) as Dictionary
+	var n := maxi(1, caster.ability_mod(StringName(str(casting.get("ability", "int")).to_lower().substr(0, 3))))
+	caster.add_item(potion, n)
+	st.flags[CAULDRON_KEY] = {"who": caster.id, "item": potion, "qty": n}
+	return "%s's cauldron bubbles: %d %s%s, ready in the pack." % [caster.name.get_slice(" ", 0), n,
+		Compendium.shared().display_name("items", potion), "" if n == 1 else " (x%d)" % n]
+
+
+## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, immune to Poison damage
+## and to the Poisoned and Frightened conditions, has Advantage on Wisdom saving throws, and gains 2d10 to their Hit
+## Point maximum and as many Hit Points.
+static func _feast(st: StoryState, caster: Character) -> String:
+	var dice := DiceRoller.new(st.playthrough_seed + st.total_minutes())
+	var fed: Array[String] = []
+	for ch in st.party:
+		if ch.dead:
+			continue
+		for old: Effect in ch.effects.duplicate():
+			if old.source_id == "heroes_feast":
+				ch.remove_effect(old)
+		var gain := int(dice.roll_expr("2d10", "Heroes' Feast (%s)" % ch.name)["total"])
+		var fx := Effect.new("Heroes' Feast", &"spell", "heroes_feast").with_modifier("hp_max", {"value": gain}) \
+			.with_modifier("immunity", {"value": "poison"}).with_modifier("condition_immunity", {"value": "poisoned"}) \
+			.with_modifier("condition_immunity", {"value": "frightened"}).with_modifier("advantage", {"on": "save:wis"})
+		fx.ends = Effect.Ends.MINUTES
+		fx.minutes_left = 24 * 60
+		ch.add_effect(fx)
+		Services.cure(ch, &"poisoned")
+		Services.cure(ch, &"frightened")
+		ch.heal(gain, "Heroes' Feast")
+		fed.append("%s +%d" % [ch.name.get_slice(" ", 0), gain])
+	return "%s lays out Heroes' Feast. For a day the party shrugs off poison and fear and keeps its wits (Hit Point maximum: %s)." % [
+		caster.name.get_slice(" ", 0), ", ".join(fed)]
 
 
 ## Casts an exploring spell from a Spell Scroll (story/field_items.gd): no slot and no preparation, in the spell's own

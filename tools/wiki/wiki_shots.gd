@@ -1,0 +1,175 @@
+extends Node
+## The wiki's screenshots in one off-screen run (make wiki-shots): tools/wiki/build_wiki.py --shot-list writes the list,
+## and this plays the story game (scenes/game.tscn) through it. For each place: the party arriving, then the whole place
+## from above; for each quest: the conversation that starts it, at its first choice; and the travel map. A shot whose
+## file is already there is skipped, so a run that stops can be started again and carry on.
+##   make capture SCENE=res://tools/wiki/wiki_shots.tscn NAME=wiki ARGS="--list=/abs/list.json --dir=/abs/folder"
+## Each entry: {name, kind: explore|closeup|overview|dialogue|map, location, spawn, hour, flags: {id: value},
+## dialogue: "file:node", npc, at: [x, z] and dist for a close-up}. Saves and settings are the capture tool's own (tools/capture/capture.gd), never the owner's.
+
+var game: Node = null
+var _here := ""      ## the place entered last and the time it was entered at, "" once a shot has moved the camera
+
+
+func capture_shots(tool: Node, _out: String) -> void:
+	var list_path := ""
+	var dir := ""
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--list="):
+			list_path = a.get_slice("=", 1)
+		elif a.begins_with("--dir="):
+			dir = a.get_slice("=", 1)
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(list_path))
+	if not parsed is Array or dir == "":
+		printerr("wiki_shots: needs --list=<json> and --dir=<folder>")
+		return
+	DirAccess.make_dir_recursive_absolute(dir)
+	game = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(game)
+	await tool.call("wait_frames", 90)
+	var made := 0
+	for v: Variant in parsed as Array:
+		var shot := v as Dictionary
+		var path := dir.path_join(str(shot.get("name", "shot")) + ".png")
+		if FileAccess.file_exists(path):
+			continue
+		var kind := str(shot.get("kind", "explore"))
+		if kind == "map":
+			# Every place known, from a place on the map, so the whole valley shows.
+			for p: Variant in Travel.map_data().get("places", []) as Array:
+				GameState.story.visited[str((p as Dictionary)["location"]).get_slice(":", 0)] = true
+			await _enter(tool, shot)
+			_clear()
+			game.call("open_travel", true)
+			await tool.call("wait_frames", 30)
+			tool.call("_shot", path)
+			game.call("close_screen")
+			made += 1
+			continue
+		await _enter(tool, shot)
+		var view := game.get("view") as LocationView
+		if view == null:
+			printerr("wiki_shots: no view for ", shot.get("location", ""))
+			continue
+		var hud := game.get("hud") as ExploreHud
+		_clear()
+		if kind != "dialogue":
+			_close_dialogue()   # a greeting that opened on arriving
+		hud.close_narration()   # the party's banter on arriving
+		await tool.call("wait_frames", 40)
+		if kind == "closeup":
+			# A close look at one square: the people or things there, without the HUD.
+			hud.visible = false
+			var at := shot.get("at", [0, 0]) as Array
+			var cam := view.rig
+			cam.follow = null
+			cam.distance = float(shot.get("dist", 10.0))
+			cam.global_position = view.board.cell_center(Vector2i(int(at[0]), int(at[1])))
+			cam.snap_to_target()
+			# The party's lantern is elsewhere: a lamp over the spot and a little more ambient light, so dark rooms show.
+			var env := view.get("_env") as Environment
+			var ambient := env.ambient_light_energy if env != null else 0.0
+			if env != null:
+				env.ambient_light_energy = maxf(ambient, 1.4)
+			var lamp := OmniLight3D.new()
+			lamp.light_color = Look.color("bone")
+			lamp.omni_range = 12.0
+			lamp.light_energy = 1.6
+			cam.add_child(lamp)
+			lamp.position = Vector3(0, 4, 0)
+			await tool.call("wait_frames", 30)
+			tool.call("_shot", path)
+			lamp.queue_free()
+			if env != null:
+				env.ambient_light_energy = ambient
+			hud.visible = true
+		elif kind == "overview":
+			hud.visible = false
+			var rig := view.rig
+			rig.follow = null
+			rig.zoom_max = 60.0
+			rig.distance = maxf(view.grid.width, view.grid.depth) * 1.05
+			rig.global_position = Vector3(view.grid.width / 2.0, 0, view.grid.depth / 2.0)
+			rig.snap_to_target()
+			await tool.call("wait_frames", 30)
+			tool.call("_shot", path)
+			hud.visible = true
+			_here = ""
+		elif kind == "dialogue":
+			_close_dialogue()
+			var dlg := await _talk(tool, str(shot.get("dialogue", "")), str(shot.get("npc", "")))
+			if dlg == null and str(shot.get("fallback", "")) != "":
+				# The quest's own node ran out before a choice: the person's usual conversation instead.
+				dlg = await _talk(tool, str(shot["fallback"]), str(shot.get("npc", "")))
+			if dlg != null:
+				tool.call("_shot", path)
+				dlg.queue_free()
+				game.set("dialogue", null)
+				(game.get("hud") as ExploreHud).visible = true
+				ModeController.force(ModeController.Mode.EXPLORATION)
+			else:
+				print("wiki_shots: ", shot.get("name", ""), " ended before a choice; no shot")
+			_here = ""
+		else:
+			tool.call("_shot", path)
+		made += 1
+	print("wiki_shots: %d shots made" % made)
+
+
+## Whatever arriving put over the place: a first visit's cutscene (it pauses the game) or a screen.
+func _clear() -> void:
+	for c: Node in game.get_children():
+		if c is CutscenePlayer:
+			(c as CutscenePlayer).close()
+	if game.get("screen") != null:
+		game.call("close_screen")
+	game.set("screen", null)
+	get_tree().paused = false
+
+
+## A conversation already open (one that greets the party on arriving): closed, back to exploring.
+func _close_dialogue() -> void:
+	var d := game.get("dialogue") as DialogueUI
+	if d == null:
+		return
+	d.queue_free()
+	game.set("dialogue", null)
+	(game.get("hud") as ExploreHud).visible = true
+	ModeController.force(ModeController.Mode.EXPLORATION)
+
+
+## A conversation from `ref`, played to its first choice; the dialogue screen, or null if it ended first.
+func _talk(tool: Node, ref: String, npc: String) -> DialogueUI:
+	game.call("start_dialogue", ref, npc)
+	for i in 40:
+		var d := game.get("dialogue") as DialogueUI
+		if d == null or not d.options_shown.is_empty():
+			break
+		_clear()   # a cutscene the conversation plays on its way
+		d.call("_advance")
+		await tool.call("wait_frames", 3)
+	_clear()
+	await tool.call("wait_frames", 40)
+	return game.get("dialogue") as DialogueUI
+
+
+## Into the shot's place at its hour with its flags set, unless the party is already there as it should be.
+func _enter(tool: Node, shot: Dictionary) -> void:
+	var st := GameState.story
+	var flags := shot.get("flags", {}) as Dictionary
+	for k: String in flags:
+		st.set_flag(k, flags[k])
+	var hour := int(shot.get("hour", 11))
+	var key := "%s@%d" % [str(shot.get("location", "")), hour]
+	if key == _here and flags.is_empty():
+		return
+	st.minute_of_day = hour * 60
+	var loc := Compendium.shared().get_entry("locations", str(shot.get("location", "")))
+	game.set("_card_region", str(loc.get("region", "")))   # no loading card over the shot
+	game.call("enter_location", str(shot.get("location", "")), str(shot.get("spawn", "default")))
+	await tool.call("wait_frames", 30)
+	_clear()
+	await tool.call("wait_frames", int(shot.get("settle", 120)))
+	_clear()
+	_close_dialogue()
+	_here = key

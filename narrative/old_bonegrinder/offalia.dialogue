@@ -1,6 +1,7 @@
 # Offalia Wormwiggle, Morgantha's younger daughter (voice: docs/regions/old_bonegrinder.md §3): a night hag in the
 # shape of a round, rosy baker's wife. She minds the oven. Feed her, fool her, or fight her alone (bakery_offalia);
-# whatever is left of her at the end follows Mother up the stair for the coven's last stand.
+# whatever is left of her at the end follows Mother up the stair for the coven's last stand. Brother Kesten's bones, under
+# Speak with Dead (kesten.dialogue), tell the three words that send her off without a roll.
 
 ~ start
 if flag.offalia_met
@@ -28,6 +29,7 @@ Offalia [smile]: Back again! Did you want a pastry? They're still warm. They're 
 * [if flag.bonegrinder_recipe_read] We read your mother's receipt book. -> receipts
 * [if item:dream_pastry] Have a pastry. One of your mother's. -> feed
 * [Deception DC 13] Your mother's down on the road, calling for you. -> lure_ok | lure_fail
+* [if flag.kesten_spoke and not flag.coven_knows_liars] (Brother Kesten's three words, in her mother's sugar.) Mother's calling, dearie. -> lure_ok
 * Step away from the oven, Offalia. Now. -> fight
 * Leave her to her baking. -> END
 

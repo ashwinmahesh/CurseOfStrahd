@@ -63,7 +63,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams; or a Tip from the goat by the barn (Speak with Animals) |
 | ✅ | Village, the churchyard | Wand of Secrets (uncommon) | Search (Perception DC 14): a grave dug up and filled in again |
 | ✅ | Village, behind a rain barrel | Oil of Slipperiness (uncommon) | Search (Perception DC 12): a flask kept dry (lane 28's spot) |
-| ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk |
+| ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk; or a Tip from Kolyan himself (Speak with Dead) |
 | ✅ | Ismark | +1 Longsword (uncommon) | Gift: his father's sword, after the burial |
 | ✅ | Blood of the Vine | Eyes of Minute Seeing (uncommon) | Search (Investigation DC 14): sewn into the lining of the scholar's satchel |
 | ✅ | Blood of the Vine, the Vistani women | Deck of Illusions (uncommon) | Gift: win them over with a song (Performance DC 13) |
@@ -76,14 +76,14 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Old Mihail | Amulet of Proof against Detection and Location (uncommon) | Gift: the bride's charm, once she's buried (Six Feet) |
 | ✅ | The burgomaster's study, behind the bricks | Mithral Armor (uncommon) | Hoard: Sergiu's shirt, once the Tenant is dead (The Burgomaster's Hound, docs/story/side_quests.md) |
 | ✅ | Death House, Walter's crypt | Stone of Good Luck (uncommon) | Gift: Veta's lucky stone, left on the lid once she's laid with her son (The Nursemaid's Grave, docs/story/side_quests.md) |
-| ✅ | The charcoal-burners' hollow, Agafia | Sending Stones (uncommon) | Gift: her grandmother's pair, once the pack's hunters are beaten at her door (The Oat Thief, docs/story/side_quests.md) |
+| ✅ | The charcoal-burners' hollow, Agafia | Bag of Tricks (Tan) (uncommon) | Gift: her grandmother's bag, once the pack's hunters are beaten at her door (The Oat Thief, docs/story/side_quests.md) |
 
 ## Svalich Road (level 4)
 
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | Tser Pool, the broken cart | Bag of Holding (uncommon) | Search (Investigation DC 12): a false floor in the cart (from the open road, 2026-10-09) |
-| ✅ | Crossroads, the field wall by the falls track | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall (from the open road, 2026-10-09) |
+| ✅ | Crossroads, the field wall by the falls track | Gauntlets of Ogre Power (uncommon) | Search (Perception DC 14): a farmer's cache behind the wall (from the open road, 2026-10-09); or a Tip from Nicu on the gallows (Speak with Dead) |
 | ✅ | Tser Falls, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot, from the Svalich Woods road, 2026-10-09) |
@@ -147,7 +147,7 @@ leaves a smaller purse and one find.
 | ✅ | Vistani camp, Luvash | Cloak of the Manta Ray (uncommon) | Gift: when Arabelle comes home |
 | ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer; or a Tip from his black horse (Speak with Animals) |
 | ✅ | Stella Wachter, St. Andral's | Cloak of the Bat (rare) | Gift: the master's birthday present, once her curse is broken (The Cat in the Window, docs/story/side_quests.md) |
-| ✅ | Ignat the lamplighter | Ring of Resistance, Necrotic (rare) | Gift: Ana's mother's ring, once Ana is at rest (Black Roses) |
+| ✅ | Ignat the lamplighter | Ring of Resistance, Necrotic (rare) | Gift: Catalina's mother's ring, once Catalina is at rest (Black Roses) |
 | ✅ | Watchman Dobre's satchel | Arcane Grimoire, +2 (rare) | Gift: in the satchel once Dobre is beaten (Ribbons) |
 | ✅ | Yevgeni | Horn of Valhalla, Silver (rare) | Gift: his father's horn, with the bounty on Old Greytooth (The Hunters at the Inn) |
 | ✅ | Urwin Martikov | Elven Chain (rare) | Gift: his grandfather's mail, once Bray is home and himself (The Ravens' Ransom, docs/story/side_quests.md) |
@@ -257,7 +257,7 @@ leaves a smaller purse and one find.
 | ✅ | Van Richten's tower, the wall of trophies | Wand of Binding (rare) | Search (Investigation DC 16) |
 | ✅ | Van Richten's tower, the jars and bottles | Oil of Etherealness (rare) | Search (Investigation DC 15) |
 | ✅ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
-| ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots |
+| ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots; or a Tip from Mircea, whose they were, in the bone midden (Speak with Dead) |
 | ✅ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
 | ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
 | ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14) |

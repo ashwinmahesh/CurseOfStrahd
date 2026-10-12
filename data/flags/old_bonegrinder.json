@@ -32,6 +32,11 @@
       "summary": "The party found Brother Kesten's holy symbol in the bone heap behind the mill."
     },
     {
+      "id": "kesten_spoke",
+      "type": "bool",
+      "summary": "Brother Kesten's bones answered Speak with Dead (old_bonegrinder/kesten.dialogue): the children in the loft, the three words that send Offalia off, and what Bella wants."
+    },
+    {
       "id": "bonegrinder_recipe_read",
       "type": "bool",
       "summary": "The party read Morgantha's receipt book in the bakery (the special flour, the ledger of who owes)."

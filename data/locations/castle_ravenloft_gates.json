@@ -492,15 +492,11 @@
       "id": "crg_carriage_horse",
       "cell": [
         37,
-        3
+        2
       ],
       "kind": "decor",
       "label": "A black horse",
       "model": "horse",
-      "span": [
-        2,
-        1
-      ],
       "when": "flag.strahd_invitation != \"accepted\""
     },
     {

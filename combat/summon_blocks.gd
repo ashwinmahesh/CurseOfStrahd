@@ -47,6 +47,11 @@ static func for_spell(spell_id: String, slot: int, option: String, nums: Diction
 			return fiendish_spirit(slot, option if option != "" else "devil", atk, dc)
 		"animate_objects":
 			return animated_object(slot, option if option != "" else "small", atk, int(nums.get("mod", 3)))
+		"create_undead":
+			var g := Compendium.shared().monster_data(option if option != "" else "ghoul")
+			if g.is_empty():
+				g = Compendium.shared().monster_data("ghoul")
+			return g.duplicate(true)
 		"animate_dead":
 			var z := Compendium.shared().monster_data(option if option != "" else "zombie")
 			if z.is_empty():

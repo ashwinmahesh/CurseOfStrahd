@@ -21949,6 +21949,13 @@
   "recipe": "358667b7db",
   "text": "Inside. Bar the door. (To you, without turning round.) I can't change in front of them. If I change, I won't stop."
  },
+ "hollow_agafia/913103fdd862ce7c": {
+  "chars": 181,
+  "direction": "[tired, bitter, then grateful]",
+  "model": "eleven_v3",
+  "recipe": "358667b7db",
+  "text": "They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes a little bag of tan cloth from her apron, gone soft and shiny at the neck.)"
+ },
  "hollow_agafia/96ca88060c115767": {
   "chars": 93,
   "direction": "[low, wary, grim]",
@@ -21963,19 +21970,12 @@
   "recipe": "358667b7db",
   "text": "Parriwimple's friends. He talks about you. He talks about everybody, the way some people talk about the weather."
  },
- "hollow_agafia/b1ac97c58ca270d0": {
-  "chars": 149,
+ "hollow_agafia/c10cc657d6038514": {
+  "chars": 192,
   "direction": "[low, practical, warm]",
   "model": "eleven_v3",
   "recipe": "358667b7db",
-  "text": "My grandmother's. Speak into one, and whoever holds the other hears you. Keep one. Leave the other with Parriwimple. If they come again, you'll know."
- },
- "hollow_agafia/c40ec70965883900": {
-  "chars": 192,
-  "direction": "[tired, bitter, then grateful]",
-  "model": "eleven_v3",
-  "recipe": "358667b7db",
-  "text": "They came up the oats. Of course they did. And you were here. (She puts the knife away at last, and takes two smooth river stones from her apron, a pair, with the same mark scratched on each.)"
+  "text": "My grandmother's. Feel inside and there's always something soft at the bottom. Throw it, and it gets up on four legs and fights for you till morning. Take it. We've teeth enough in this house."
  },
  "ilarion/2f3229f4708b2447": {
   "chars": 177,
@@ -35568,12 +35568,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One servant bolts. The other is slower, and fat with Lady Wachter's dinners. He sits in the mud, bucket in his lap, and tells you everything he knows, which is that he was told to make the sun wet and not to ask why."
- },
- "narrator/0aef14ee95e5e8c5": {
-  "chars": 174,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "In the morning the watch finds Ilie at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast."
  },
  "narrator/0afe4b6f76b6d7d4": {
   "chars": 71,
@@ -62227,6 +62221,12 @@
   "recipe": "dd92281f92",
   "text": "A long gallery of fallen frames and torn canvas. Somebody has turned the few portraits still hanging to face the wall."
  },
+ "narrator/db301207cef69370": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the morning the watch finds Ignat at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast."
+ },
  "narrator/db4b90c25c75cc16": {
   "chars": 124,
   "model": "eleven_v4",
@@ -78067,98 +78067,98 @@
   "chars": 196,
   "direction": "[warm, grateful, gruff]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "I've a little money put by for his wedding. He can earn it again. And this, off a dead archer on the road last winter; it holds more arrows than a quiver should, and I can't shoot to save my life."
  },
  "tser_tobar/3fe3271a6e04a96c": {
   "chars": 41,
-  "direction": "[soft, tender, shaken]",
+  "direction": "[gruff, tender, shaken]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "I know, boy. I know. It used yours on me."
  },
  "tser_tobar/55fdfc01d707e6ee": {
   "chars": 56,
   "direction": "[overwhelmed, crying, laughing with relief]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Nelu. Nelu. You great idiot. You great, beautiful idiot."
  },
  "tser_tobar/58365fdf9882ed3a": {
   "chars": 36,
   "direction": "[low, tense, urgent]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "The falls. After dark. Don't answer."
  },
  "tser_tobar/66a5446ccf0525b3": {
   "chars": 191,
   "direction": "[sad, shaking, near tears]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "I went after him. Halfway to the falls I heard him. \"Da. Da, I'm down here. Da, come down.\" Out of the gorge, out of the dark. I'd have gone over the edge after him if Petru hadn't sat on me."
  },
  "tser_tobar/8cd1c518c1640637": {
   "chars": 182,
   "direction": "[low, grave, choked with regret]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Whatever calls you, don't answer it. Whoever it sounds like. Especially then. I said that to strangers on the road for twenty years, and I never once thought to say it to my own son."
  },
  "tser_tobar/906f2e5f6fa51197": {
   "chars": 117,
-  "direction": "[deep, easy-going, grim humour]",
+  "direction": "[deep, gruff, grim humour]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Safe? It's the Svalich Road. The wolves keep to the trees in the day, mostly. At night they keep to wherever you are."
  },
  "tser_tobar/937ccef56dea46de": {
   "chars": 94,
   "direction": "[warm, fond, chuckling]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Nelu sits with his back to the falls now, and sings over anything that calls. Badly. It works."
  },
  "tser_tobar/acbd1000f1e0ea61": {
   "chars": 141,
   "direction": "[deep, warm, self-deprecating]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "The road to the crossroads happened to it. Roots under the mud, stones under the roots. Every wheel in this camp is half new spokes, like me."
  },
  "tser_tobar/b8f45da94ecb478b": {
   "chars": 81,
-  "direction": "[gentle, muttering, then sheepish]",
+  "direction": "[gruff, muttering, then sheepish]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Hold still, you. Hold still. There. Oh! Hello. Sorry. I was talking to the wheel."
  },
  "tser_tobar/bd940c7bad47932d": {
   "chars": 87,
   "direction": "[low, pleading, steady]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Nobody here will go to the falls at night. I'm not asking anybody here. I'm asking you."
  },
  "tser_tobar/c29236db776b79bd": {
   "chars": 117,
-  "direction": "[deep, earnest warning]",
+  "direction": "[hard, earnest warning]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Walk in the middle. Don't stop to help anyone who calls from the trees. Even if they know your name. Especially then."
  },
  "tser_tobar/c999c828f9d1afc0": {
   "chars": 180,
-  "direction": "[quiet, haunted, struggling]",
+  "direction": "[low, haunted, struggling]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "Three nights ago my boy Nelu was sitting up by the fire, and he stood up and said: that's Mama. And he walked off toward the falls track. His mother's been in the ground six years."
  },
  "tser_tobar/d820e413121e78d8": {
   "chars": 75,
-  "direction": "[heavy, weary, faint rueful]",
+  "direction": "[heavy, weary, rueful]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "dec5fab8b1",
   "text": "You heard. Zora counts everything, even the things you'd rather she didn't."
  },
  "tser_zora/10d63304a07cdba8": {
@@ -78513,6 +78513,13 @@
   "recipe": "68bb361575",
   "text": "Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room."
  },
+ "urwin_martikov/03a0d8729fa7e1df": {
+  "chars": 199,
+  "direction": "[low, gossiping, grave]",
+  "model": "eleven_v3",
+  "recipe": "68bb361575",
+  "text": "Black roses on Pyotr Petrov's step this morning, the chandler's. Ignat the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too."
+ },
  "urwin_martikov/0fc9b6a2312a4df6": {
   "chars": 199,
   "direction": "[warm, wry]",
@@ -78660,13 +78667,6 @@
   "recipe": "68bb361575",
   "text": "The boy, Yevgeni, says you took Old Greytooth. The ravens saw it. They were very pleased; he ate three of them last spring."
  },
- "urwin_martikov/8ab07ddaf540ca2f": {
-  "chars": 103,
-  "direction": "[low, relieved, dry]",
-  "model": "eleven_v3",
-  "recipe": "68bb361575",
-  "text": "Ilie's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year."
- },
  "urwin_martikov/8d522beb70bbb377": {
   "chars": 203,
   "direction": "[earnest, worried]",
@@ -78687,6 +78687,13 @@
   "model": "eleven_v3",
   "recipe": "68bb361575",
   "text": "It's a trap, and not for him. For whoever comes for him. If I go, the castle knows what I am. If Danika goes, the same. They've been trying to learn the Keepers' names for a hundred years."
+ },
+ "urwin_martikov/9920b4e3d020dfd5": {
+  "chars": 104,
+  "direction": "[low, relieved, dry]",
+  "model": "eleven_v3",
+  "recipe": "68bb361575",
+  "text": "Ignat's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year."
  },
  "urwin_martikov/9d49ef1fc54c55d8": {
   "chars": 146,
@@ -78764,13 +78771,6 @@
   "model": "eleven_v3",
   "recipe": "68bb361575",
   "text": "You stood between this town and the people who'd sell it. That makes you friends of ours."
- },
- "urwin_martikov/f42771bc880bd483": {
-  "chars": 198,
-  "direction": "[low, gossiping, grave]",
-  "model": "eleven_v3",
-  "recipe": "68bb361575",
-  "text": "Black roses on Pyotr Petrov's step this morning, the chandler's. Ilie the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too."
  },
  "vadoma/2fdeb7ae6ccd0b97": {
   "chars": 87,
@@ -78873,12 +78873,12 @@
   "recipe": "b12b47e2c9",
   "text": "Mila's out at the market today. In daylight. Laughing at something. Thank you."
  },
- "vallaki_chandler/faf10e9a9d0cc8ac": {
-  "chars": 138,
-  "direction": "[frightened, hushed, haggard]",
+ "vallaki_chandler/ae7db7e6c55cc05f": {
+  "chars": 139,
+  "direction": "[frightened, shaky, haggard]",
   "model": "eleven_v3",
   "recipe": "b12b47e2c9",
-  "text": "Black roses on my step. Ilie said not to throw them out, it makes her angry. Who is \"her\"? He won't say. I've nailed Mila's shutters shut."
+  "text": "Black roses on my step. Ignat said not to throw them out, it makes her angry. Who is \"her\"? He won't say. I've nailed Mila's shutters shut."
  },
  "vallaki_cloth_merchant/f89226a54aa3fccc": {
   "chars": 193,
@@ -79752,6 +79752,13 @@
   "model": "eleven_v3",
   "recipe": "895bf15afd",
   "text": "The Baron says I'm to go on handing out ribbons and leave the counting to him. I don't write anything down any more. I don't think he can read my hand anyway."
+ },
+ "vallaki_ribbon_girl/e07fefb509e78717": {
+  "chars": 127,
+  "direction": "[afraid, nervous, low]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "The festival's over, and they still want the list. Who's sour, who's sorry the sun burned. It goes under the lamp all the same."
  },
  "vallaki_ribbon_girl/e37dd3ebc95ddddd": {
   "chars": 64,

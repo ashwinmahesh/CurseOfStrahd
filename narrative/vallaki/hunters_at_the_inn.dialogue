@@ -3,6 +3,8 @@
 # paid by Arrigal to bring strong strangers to the lake at dusk; the hunt is the wolf's. His son Yevgeni hates it.
 # The boss, Old Greytooth, is our own (data/monsters/old_greytooth.json). Reached from Urwin's rumour
 # (martikovs:rumors) or the hunters themselves. Every line here is unvoiced for now; both hunters are new speakers.
+# Tudor, one of Greytooth's two shepherds, lies in the reeds at the landing (prop shepherd_remains); under Speak with
+# Dead (docs/story/talking_creatures.md) he saw Szoldar watch from the rise, which is a second way to the trap.
 
 # --- Szoldar, in the taproom ---
 
@@ -49,10 +51,18 @@ Szoldar: The landing at Lake Zarovich, where the fisherman's shack is. Dusk, any
 ~ szoldar_waiting
 Szoldar: Dusk. The landing. Don't keep him waiting; he isn't patient, and nor am I.
 * [if flag.hunt_trap_known] We know who pays you, Szoldar. Arrigal. The castle. -> confront
+* [if flag.tudor_spoke and not flag.hunt_trap_known and not flag.szoldar_stays] A shepherd died on that shore while you watched from the rise. Who pays you, Szoldar? -> confront_dead
 * Goodbye. -> END
 
 ~ confront
 Szoldar [angry]: Who told you that? ...Yevgeni. Of course.
+-> confess
+
+~ confront_dead
+Szoldar [afraid]: Tudor. You've been talking to Tudor, and Tudor's been dead since the thaw. God keep me from priests.
+-> confess
+
+~ confess
 Szoldar: Yes. Arrigal pays. A purse for every strong stranger I bring to the lake at dusk, and the wolf does the rest, and the castle learns what you're made of. You think I had a choice? You think anybody in this valley has a choice?
 * [Intimidation DC 14] You've got one now. Shoot the wolf, not us, or the Baron hears where your purses come from. -> turned | not_turned
 * Then don't come. We'll hunt your wolf without you. -> stays_home
@@ -139,6 +149,8 @@ endif
 Narrator: The landing, the empty shacks, the black water. Pawprints in the mud as wide as a dinner plate, going down to the lake and coming back.
 if flag.hunt_trap_known
 Narrator: Yevgeni said not to stand where his father told you to. The rise behind the shacks is the only good shot at the shore; the shore is the only place a horse-sized wolf can come at you from three sides.
+elif flag.tudor_spoke
+Narrator: Tudor stood on this shore with a bow behind him that never loosed. The rise behind the shacks is the only good shot at the shore; the shore is the only place a horse-sized wolf can come at you from three sides.
 endif
 * Wait here for the wolf until dusk. -> wait
 * Leave. -> END
@@ -148,8 +160,37 @@ time until 19
 Narrator: The light goes grey, then brown, then nothing. Out on the hill trail, a howl starts low and goes on getting louder for longer than anything's breath should last.
 if flag.szoldar_turned
 Narrator: On the rise behind the shacks, a bow creaks. Pointed at the hill, not at you.
-elif not flag.hunt_trap_known
+elif flag.tudor_spoke and not flag.szoldar_stays
+Narrator: On the rise behind the shacks, a bow creaks, as it did for Tudor.
+elif not flag.hunt_trap_known and not flag.szoldar_stays
 Narrator: On the rise behind the shacks, a bow creaks. You don't think much of it, then.
 endif
 Narrator: Old Greytooth comes down the trail at a walk, with his pack spread out behind him like a hunt in the old days, and stops at the edge of the light to look at you.
 combat greytooth_hunt
+
+# --- Tudor the shepherd, in the reeds at the landing (prop shepherd_remains) ---
+
+~ shepherd
+Narrator: A shepherd's crook lies in the reeds, and beside it an old coat with what the wolf left of its owner still inside. Since spring, by the look of it.
+* [if spell:speak_with_dead and not flag.tudor_spoke] Ask the dead shepherd what happened on this shore. -> shepherd_speaks
+* [if not spell:speak_with_dead and not flag.tudor_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the dead shepherd what happened on this shore.) -> shepherd_cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave him to the reeds. -> END
+-> END
+
+~ shepherd_cast
+cast speak_with_dead
+if check.last
+-> shepherd_speaks
+endif
+-> END
+
+~ shepherd_speaks
+set tudor_spoke
+Narrator: The voice that comes out of the reeds is an old man's, slow and put out, as if he has been woken before the milking.
+Narrator: "Tudor. Goats, mostly. The big grey wolf came down to drink at dusk, the way he does, and I was between him and the water."
+Narrator: "There was a man on the rise behind the shacks, in a wolfskin coat, with his bow strung. He watched. He never let fly."
+Narrator: "I'd seen him the week before at the Vistani fire, taking a purse from the one with the black horse."
+if quest.hunters_at_the_inn and not flag.hunt_trap_known
+Narrator: A wolfskin coat, a bow, the rise behind the shacks: Szoldar Szoldarovich, who means to be on that rise again when you come for the wolf.
+endif
+-> END
