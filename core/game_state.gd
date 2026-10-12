@@ -111,3 +111,20 @@ func from_dict(data: Dictionary) -> void:
 	if combat_snapshot.is_empty() and story != null:
 		for ch: Character in story.party + story.bench:
 			EncounterSetup.clear_fight_effects(ch)
+	if story != null:
+		_until_long_rest(story)
+
+
+## The 8-hour house rule (Effect.until_long_rest) on a save from before it: spells still running on the party and
+## exploring spells still active switch from the clock to the next Long Rest.
+static func _until_long_rest(st: StoryState) -> void:
+	for ch: Character in st.party + st.bench:
+		for fx: Effect in ch.effects:
+			if fx.ends == Effect.Ends.MINUTES and fx.source_kind == &"spell" \
+					and Effect.until_long_rest(Compendium.shared().spell_data(fx.source_id).get("duration", {}) as Dictionary):
+				fx.ends = Effect.Ends.LONG_REST
+				fx.minutes_left = 0
+	for id: String in st.active_spells.keys():
+		if st.spell_active(id) and not bool((st.active_spells[id] as Dictionary).get("long_rest", false)) \
+				and Effect.until_long_rest(Compendium.shared().spell_data(id).get("duration", {}) as Dictionary):
+			RestRules.keep_until_long_rest(st, id)
