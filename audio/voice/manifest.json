@@ -35463,6 +35463,12 @@
   "recipe": "dd92281f92",
   "text": "Two uniforms, pressed and hung, ready for the morning. The morning has been a long time coming."
  },
+ "narrator/06c7333b11c7ad91": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An altar split across by frost, with a sun cut into its face. The sun has been scratched through with a knife, carefully, over and over."
+ },
  "narrator/06c77778e873b40c": {
   "chars": 106,
   "model": "eleven_v4",
@@ -36195,6 +36201,12 @@
   "recipe": "dd92281f92",
   "text": "He can't hold your eyes. His hands go white on the spade handle, and there's dirt under his nails that didn't come from this grave: it's pale and dry, like dust from a stone box."
  },
+ "narrator/0cf29591ba52289e": {
+  "chars": 95,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The ravine at night is a black slot in the earth with a stream talking to itself at the bottom."
+ },
  "narrator/0cfcd936986b410e": {
   "chars": 128,
   "model": "eleven_v4",
@@ -36230,6 +36242,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Horses in a rail pen, sleek and well fed, the best-cared-for living things you have seen in Barovia. They watch you the way the Vistani do: politely, and counting."
+ },
+ "narrator/0d60f490f2efc47a": {
+  "chars": 201,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The track rounds a mountain tarn frozen black under a crag, drifts heaped at its rim and somebody's camp left standing on the shore. The ice is clear enough to see what's under it, if you care to look."
  },
  "narrator/0d6cf9f4831986c8": {
   "chars": 185,
@@ -37257,6 +37275,12 @@
   "recipe": "dd92281f92",
   "text": "He looks at the hundreds of notes on his robe and the thousands on the walls, and his shoulders sag."
  },
+ "narrator/14b79ac4dfd7bb6d": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lantern on a post at the burial ground's gate, kept trimmed and kept full. Somebody walks up here every evening to see to it, and walks back down before dark."
+ },
  "narrator/14bea1d7315be487": {
   "chars": 143,
   "model": "eleven_v4",
@@ -37346,6 +37370,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lid lifts without a whisper while Rahadin stands at the wall, listening to the screams only he can hear."
+ },
+ "narrator/156a9166477295c8": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A milestone worn too smooth to read, with a fresh notch cut into its top. Someone is counting something."
  },
  "narrator/15715fc9f343d23c": {
   "chars": 99,
@@ -37454,6 +37484,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A charcoal mound, long cold, a hump of black under the moss. Small footprints go up one side of it and slide down the other. Somebody has been playing here."
+ },
+ "narrator/169b48c8e5a4eb1b": {
+  "chars": 222,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The lake path skirts a reedy inlet where fishers keep their boats: a jetty out into the grey water, nets on their poles, a boat upturned on the shingle. The lake lies very still and very wide, and it is watching the shore."
  },
  "narrator/169ba7d102ed3d91": {
   "chars": 107,
@@ -37886,6 +37922,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Behind the jars of things you'd rather not name, someone has hidden a stoppered bottle of something honest: a remedy against poisons. Perhaps one of the hags is careful about her own cooking."
+ },
+ "narrator/19610bb7248aa59e": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The graves at night: two lanterns at the gate, rows of stones going up into the dark, and somewhere among them the soft sound of earth being moved."
  },
  "narrator/197a2fdb0ed078e8": {
   "chars": 147,
@@ -38445,6 +38487,12 @@
   "recipe": "dd92281f92",
   "text": "The chalk glows a little brighter as you near it, the way a dog's ears go up. Whatever this circle does, it's still awake."
  },
+ "narrator/1d53cb3ce3065777": {
+  "chars": 194,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The road wades a quick brown stream at a gravel ford, the water knee-deep and loud over the stones. Upstream stand the footings of an old mill; downstream lies a cart that didn't make it across."
+ },
  "narrator/1d58c1a8ef7af95d": {
   "chars": 153,
   "model": "eleven_v4",
@@ -38571,6 +38619,12 @@
   "recipe": "dd92281f92",
   "text": "The black carriage that brought you stands where it stopped, its horses still as statues. The door has no handle on the outside."
  },
+ "narrator/1de90f8b2f0ee6ce": {
+  "chars": 150,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's platform in a pine above the shore, looking out over the inlet and the lake beyond. A good place to watch for boats, or to be watched from."
+ },
  "narrator/1df073437ddd20b1": {
   "chars": 83,
   "model": "eleven_v4",
@@ -38672,6 +38726,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Fog, hills and the grey line of the road. Nothing catches your eye but the tree behind you."
+ },
+ "narrator/1ebade0e1978a34a": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cart sunk to its axles beside the causeway, its bed full of black water. It went off the edge one wheel at a time, and the bog took its time."
  },
  "narrator/1ec3709ea29243f6": {
   "chars": 131,
@@ -38840,6 +38900,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The camp dog noses at your pack, finds nothing worth stealing, and wanders back to the fire to wait for Dorina to drop something."
+ },
+ "narrator/201bcc63fbed4999": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A campfire still smouldering under a skin of new snow, so somebody sat here this morning. Their footprints go down to the ice and don't come back."
  },
  "narrator/201fd9f8e4e8768b": {
   "chars": 135,
@@ -39057,6 +39123,12 @@
   "recipe": "dd92281f92",
   "text": "The ceiling is covered in scratches: long scrapes where something crawled, and short ones, in rows of five, where something counted days."
  },
+ "narrator/21bc07ef232a2d8f": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A fresh grave, dug and left open with the spade still standing in the spoil. It is waiting for someone, and in this valley it won't wait long."
+ },
  "narrator/21c9948a3640c4da": {
   "chars": 155,
   "model": "eleven_v4",
@@ -39098,6 +39170,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The bolts slide back. The door opens a hand's width, and the point of a sword comes through it first."
+ },
+ "narrator/223a9facd230c7a9": {
+  "chars": 146,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Nets hung to dry on their poles, torn through the middle in a ragged hole the size of a door. The fish in Lake Zarovich are big, but not that big."
  },
  "narrator/22429dc41b5bd4c4": {
   "chars": 114,
@@ -39734,6 +39812,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The stair lets you out into cold so still that your breath hangs where you leave it. Aisles of iron gates run away into the dark, each with a name over it."
+ },
+ "narrator/26b8e5ac421a9bfa": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stumps of a bridge that once spanned the ravine, its timbers long since carried off by a spring flood. The road goes down and through now, the long way."
  },
  "narrator/26c2cd1c180fb637": {
   "chars": 183,
@@ -41157,6 +41241,12 @@
   "recipe": "dd92281f92",
   "text": "Ezmerelda doesn't say anything. She just looks at him, with her hair still standing up from his ward, until he looks away first."
  },
+ "narrator/315de13cbb0b5f25": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cart on its side, its sacks split and its horse long gone. The traces were cut, not snapped: someone left in a hurry and took the horse with them."
+ },
  "narrator/3166c126d29dae0a": {
   "chars": 139,
   "model": "eleven_v4",
@@ -41805,6 +41895,12 @@
   "recipe": "dd92281f92",
   "text": "Clean floors, aired sheets. Danika keeps a good house, and it keeps its secrets."
  },
+ "narrator/35f0241803656bf7": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's platform lashed into a pine on the ravine's lip, looking straight down onto the ford. A good place to wait for deer, or for anything else that has to cross."
+ },
  "narrator/35f31d266c38b184": {
   "chars": 193,
   "model": "eleven_v4",
@@ -41943,6 +42039,12 @@
   "recipe": "dd92281f92",
   "text": "Polished floors, good candles, and the particular hush of a house whose servants have been trained not to hear things. Somewhere upstairs, slow and patient, something is scratching at a door."
  },
+ "narrator/3790acc27b6b95e4": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A figure sitting at the ice's edge with a fishing line still in their frozen hands. The line runs down through a hole in the ice, and it is still taut."
+ },
  "narrator/379aa3424bc51c2d": {
   "chars": 207,
   "model": "eleven_v4",
@@ -42044,6 +42146,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Dead men in the castle's livery sit up on their pallets. Two suits of armour by the door turn their empty helms toward you. The watch was never relieved."
+ },
+ "narrator/385412f2e8181515": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A bedroll stiff with frost, slept in, a pack still tied at its foot. Nobody leaves their pack in the mountains unless they meant to come straight back."
  },
  "narrator/3858ad0b9cf4cd96": {
   "chars": 111,
@@ -42326,6 +42434,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The heap comes apart. Out of it, and up out of the mounds round it, come the dead the druids bound to watch the hill. At their head, taller than the rest, in rotted furs with a bear-claw necklace, walks a woman with a silver wire through her jaw."
+ },
+ "narrator/3a051414e8d43656": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn at the head of the ledge path, built up a stone at a time by everyone who reached the bottom and came back up. It is not a tall cairn."
  },
  "narrator/3a0a9130c0babdba": {
   "chars": 140,
@@ -43113,6 +43227,12 @@
   "recipe": "dd92281f92",
   "text": "The stables lost their roof long ago. The stalls still have their names painted over them, and their bones in them."
  },
+ "narrator/40728bc2ae1c8a53": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The barrow's mouth is a doorway of three great stones, so low you would have to crawl. The air coming out of it is warmer than the moor."
+ },
  "narrator/407b3539e7341c04": {
   "chars": 134,
   "model": "eleven_v4",
@@ -43251,6 +43371,12 @@
   "recipe": "dd92281f92",
   "text": "Amber, running down the wall as slow as cold honey. Something small is caught in it, moving: a fly, still alive, still trying."
  },
+ "narrator/41a5e7405df036d9": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Bread, a twist of ribbon and a child's carved horse, left at the altar's foot within the last day or two. Somebody here still hopes, and you find you'd rather not know for what."
+ },
  "narrator/41b38fdaa4450b05": {
   "chars": 50,
   "model": "eleven_v4",
@@ -43316,6 +43442,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The crowd parts to let him through. A few people don't look away. Most do."
+ },
+ "narrator/422e5bfc44e781cd": {
+  "chars": 119,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An iron gibbet cage on a dead branch, its door hanging open and its floor worn smooth. Whoever keeps it keeps it oiled."
  },
  "narrator/4231f1a188df2998": {
   "chars": 94,
@@ -43515,6 +43647,12 @@
   "recipe": "dd92281f92",
   "text": "Someone has come halfway down the stair to see what the noise was: a lovely young woman with flour-white hands and a red ribbon in her hair, who looks over the wreck of the bakery with mild interest."
  },
+ "narrator/43e5996448a43efd": {
+  "chars": 216,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A causeway of sunken logs and piled stone wanders out across the bog, black water on both sides and mire between, soft enough to swallow a boot. The dead trees on the islands lean together as if whispering about you."
+ },
  "narrator/43eadaeef07b3ff8": {
   "chars": 224,
   "model": "eleven_v4",
@@ -43604,6 +43742,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You don't stay to see what the Vistani decide. You hear it, a little later, from the road."
+ },
+ "narrator/44da959efeac4c1c": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A fisher's boat upturned on the shingle to keep the rain out, a hole knocked through its bottom. Somebody didn't want anybody else going out on the lake."
  },
  "narrator/44f37b21765a4007": {
   "chars": 130,
@@ -44055,6 +44199,12 @@
   "recipe": "dd92281f92",
   "text": "One stone at the foot of the cairn isn't part of it. It is smooth and marbled red and blue, and when you pick it up it leaves your hand to circle your head."
  },
+ "narrator/484e61b542b21743": {
+  "chars": 224,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The road tips over the lip of a ravine, picks its way down a ledge of rock to a stream at the bottom and climbs the far wall the same way. Sheer stone on both sides, and whatever is down here with you has nowhere else to be."
+ },
  "narrator/486cf2e3c027990e": {
   "chars": 109,
   "model": "eleven_v4",
@@ -44126,6 +44276,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Ireena looks at the doll on the offering stone for a long time, and doesn't touch it."
+ },
+ "narrator/491782ad39a797d5": {
+  "chars": 142,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A stone saint weeping over the crypt, its tears worn into grooves by the rain. It has been crying here longer than anyone it mourns was alive."
  },
  "narrator/4922a505765e34d5": {
   "chars": 70,
@@ -45098,6 +45254,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Under the velvet he's sweating. He believes every word, and the belief is the only thing holding him upright. He is not a cruel man by nature; he is a frightened one, and he has found that cruelty is quicker."
+ },
+ "narrator/50c95265c61e3b5a": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A little roadside shrine on a post, its painted saint peeling and its tiny roof furred with moss. A traveller's prayer hangs from it on a string, written very small."
  },
  "narrator/50e84b02602528df": {
   "chars": 160,
@@ -46203,6 +46365,12 @@
   "recipe": "dd92281f92",
   "text": "Inside lies a heavy book bound in black leather, clasped in tarnished silver. Nobody wants to be the first to touch it."
  },
+ "narrator/592b96c21e2269a2": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At night the ford is only sound: water over stone, and under it, now and then, something that isn't water."
+ },
  "narrator/5936a4f295326852": {
   "chars": 110,
   "model": "eleven_v4",
@@ -46533,6 +46701,12 @@
   "recipe": "dd92281f92",
   "text": "A hunter's trap, well kept and oiled. On the spring plate someone has stamped a mark: an M, with a notch through it. You've seen that mark before, burned into the handle of Old Marin's skinning knife, back at the camp."
  },
+ "narrator/5b554a1f4735403d": {
+  "chars": 161,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn on the crag above the tarn, built tall enough to be seen from the passes. Mountain folk raise one wherever someone went through the ice and wasn't found."
+ },
  "narrator/5b557329a9fe51e4": {
   "chars": 156,
   "model": "eleven_v4",
@@ -46796,6 +46970,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Wedged in the reeds, a waterlogged satchel: some fisher's knife, wrapped in oilcloth by someone who meant to come back for it."
+ },
+ "narrator/5d163e66969ce607": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A woodcutters' fire burned down to embers, a pot of something gone cold beside it. They left in the middle of supper, and they left their axes."
  },
  "narrator/5d467dddba173ff2": {
   "chars": 177,
@@ -47258,6 +47438,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Aurel reads on by the fire, to the empty chair. He didn't notice you leave, or come back."
+ },
+ "narrator/60037684f336b99f": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A fisher's fire burned down to embers on the shore, a fish still on the spit and blackened through. They left before supper and didn't take it with them."
  },
  "narrator/6014e371f1095d44": {
   "chars": 97,
@@ -48110,6 +48296,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Between the stone hands, laid across the sunburst, is something that was never carved."
+ },
+ "narrator/67824c4ea0ca71a1": {
+  "chars": 155,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A standing stone taller than any of you, its face carved with spirals worn almost smooth. Moss grows on every side of it but the one that faces the barrow."
  },
  "narrator/67921c62a9a67580": {
   "chars": 101,
@@ -49701,6 +49893,18 @@
   "recipe": "dd92281f92",
   "text": "Her lips part under the lace, and the voice that comes out is a girl's, puzzled, as if she has only just woken and can't think where she is."
  },
+ "narrator/7249a4a29e1bf0a6": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At night the inlet is reeds whispering and water lapping at the jetty, and far out on the lake something large turns over once and goes down again."
+ },
+ "narrator/72593adda8cee53e": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A woodcutter's axe left sunk in a stump, its handle dark with use. Nobody leaves a good axe behind unless something made them."
+ },
  "narrator/7272e32f4bb80b9e": {
   "chars": 79,
   "model": "eleven_v4",
@@ -50360,6 +50564,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He goes out of the alcove on four legs, fast and low, and at the mouth of the cave he stops and looks back once, and makes a sound that might have been a laugh."
+ },
+ "narrator/783a8b45b4a40422": {
+  "chars": 103,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Two roads run off into two darks, and on the knoll a cage creaks on its chain in a wind you can't feel."
  },
  "narrator/783d2b45dcc4d1b9": {
   "chars": 83,
@@ -51507,6 +51717,12 @@
   "recipe": "dd92281f92",
   "text": "Hours of it, and his eyes still go to the road when he thinks nobody's watching."
  },
+ "narrator/813f1c3d4eb32b64": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An iron cage on a post at the edge of the bog, its door wired shut and nothing inside. Somebody wanted whatever was in it to stay there, and it didn't."
+ },
  "narrator/814065652eb39424": {
   "chars": 139,
   "model": "eleven_v4",
@@ -51801,6 +52017,12 @@
   "recipe": "dd92281f92",
   "text": "A new ribbon hangs on the ribbon tree, knotted around a lock of black hair. It is the brightest red on the tree."
  },
+ "narrator/835a2742335c0d82": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The clearing at night: pale stumps like headstones, a fire burned down to red, and the oak's bough black against a starless sky."
+ },
  "narrator/8363c911e81dfa06": {
   "chars": 73,
   "model": "eleven_v4",
@@ -52034,6 +52256,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Steel clears the table's edge. A glass goes over. Strahd watches the wine run toward his sleeve, and moves the sleeve."
+ },
+ "narrator/84f7490410dfcde5": {
+  "chars": 125,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A log rolled up to the fire for a seat, worn smooth by a great many evenings. Tonight, by the look of it, nobody stayed long."
  },
  "narrator/84f83294f6f49ab0": {
   "chars": 125,
@@ -52376,6 +52604,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Granny's basket lies in the lane where she dropped it. Under a cloth that smells of kettle there is a sack of old coins and a robe folded small, sewn all over with eyes. Some of them blink."
+ },
+ "narrator/8839c509a9c67e29": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A millstone cracked through the middle, lying in the grass where the mill used to stand. Someone built here and ground grain here, and then left nothing else at all."
  },
  "narrator/883fb6459fb84b7a": {
   "chars": 158,
@@ -52749,6 +52983,12 @@
   "recipe": "dd92281f92",
   "text": "Dry histories, shelved by someone who never read them. They keep their secrets, if they have any."
  },
+ "narrator/8b30836b4efca8db": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At night the tarn holds the stars still in its ice, and every few minutes it groans from somewhere deep inside."
+ },
  "narrator/8b4e850d46ab1ad2": {
   "chars": 126,
   "model": "eleven_v4",
@@ -52952,6 +53192,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Through the flames, the back of the firebox is not soot-black like the sides. It is clean stone, with a seam down one edge."
+ },
+ "narrator/8c72d6c6b2eb1e5c": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A clearing opens in the pines, all stumps, where the woodcutters took what they needed and stopped at a great oak nobody seems to have dared. Their fire is still warm."
  },
  "narrator/8c7a95a5963f86c0": {
   "chars": 110,
@@ -53427,6 +53673,12 @@
   "recipe": "dd92281f92",
   "text": "At the heart of the scarecrow field stands one that isn't like the others: twice a man's height, its body a heap of rotted silk and lace, white and yellow and grey, with faces in the stitching if you look too long."
  },
+ "narrator/8fd576512fecb483": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A sledge-cart abandoned in the snow, its runners frozen fast and its load of firewood untouched. Whoever hauled it this far decided that walking was faster."
+ },
  "narrator/8fdf9f88d7649046": {
   "chars": 195,
   "model": "eleven_v4",
@@ -53678,6 +53930,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Hedda stops at the foot of the altar and looks at the dust on it for a long moment. Then she kneels on the cold step, the way her chapel taught her, and takes out the silver raven."
+ },
+ "narrator/91c76926c75a24ee": {
+  "chars": 116,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's platform high in a pine above the ford. From up there you'd see anyone crossing long before they saw you."
  },
  "narrator/91d8adae5833fd25": {
   "chars": 125,
@@ -54362,6 +54620,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "In a high chair on a step at the end of the study sits a dead man in a scholar's robe, very straight, his hands folded on a book. His skin is parchment over the bone. Two small lights move in his eyes, and turn to you."
+ },
+ "narrator/973eca7a5ab5637c": {
+  "chars": 147,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A gargoyle fallen from the chapel's roofline, lying on its back with its mouth open to the sky. It looks less like it fell than like it was thrown."
  },
  "narrator/974f7b5e9857db6f": {
   "chars": 73,
@@ -55149,6 +55413,12 @@
   "recipe": "dd92281f92",
   "text": "The bell rings. The pencil stops."
  },
+ "narrator/9d2c34d7f2c211c0": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The gravedigger's handcart, loaded with shovels and a coil of rope. The gravedigger is nowhere to be seen, which in that line of work is a bad sign."
+ },
  "narrator/9d2e8e2d8375725c": {
   "chars": 140,
   "model": "eleven_v4",
@@ -55683,6 +55953,12 @@
   "recipe": "dd92281f92",
   "text": "Nobody in the square says anything. Then Dumitru, the gate boy, who is twelve, fetches a stool and puts it next to Pavel's, and looks at Clovin until he sits on it."
  },
+ "narrator/a1003da7913d5759": {
+  "chars": 174,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn on the knoll above the bog, one of a string of them marking the track across the moor. In fog, the cairns are all that stands between a traveller and the black water."
+ },
  "narrator/a10096409434a85d": {
   "chars": 107,
   "model": "eleven_v4",
@@ -55706,6 +55982,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She has fallen at the foot of the white statue, her bone bowl cracked beside her, one hand still clawing at the plinth."
+ },
+ "narrator/a123b049023b5071": {
+  "chars": 189,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "An oak older than every pine around it, one great bough grown out level as a beam. The woodcutters felled everything else in the clearing; nobody has so much as carved an initial into this."
  },
  "narrator/a17fe6d90f329e04": {
   "chars": 212,
@@ -56847,6 +57129,12 @@
   "recipe": "dd92281f92",
   "text": "An old lantern lies in the weeds of the taproom, cold, its glass cracked. Nothing holds it up any more."
  },
+ "narrator/aa185da0473f6426": {
+  "chars": 115,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The causeway at night is a pale road over black water, and the lights that drift out over the bog are not lanterns."
+ },
  "narrator/aa22710562bf9a49": {
   "chars": 65,
   "model": "eleven_v4",
@@ -56906,6 +57194,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He follows you for three spells, then loses the thread and gets angry, and the room fills with a short, furious snowfall that settles on everybody."
+ },
+ "narrator/aa85f94f9e11279d": {
+  "chars": 148,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's platform of lashed planks high in a pine, with rungs nailed up the trunk. From up there you'd see both roads, and anyone waiting on them."
  },
  "narrator/aa8b5bf0ec9a3651": {
   "chars": 145,
@@ -58131,6 +58425,12 @@
   "recipe": "dd92281f92",
   "text": "Two figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
  },
+ "narrator/b48c36b10d699dfd": {
+  "chars": 182,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Behind a sagging fence the headstones climb the slope in crooked rows, leaning together like people sharing bad news. At the top a crypt waits with its door chained from the outside."
+ },
  "narrator/b4903aa44dd99dd3": {
   "chars": 90,
   "model": "eleven_v4",
@@ -58142,6 +58442,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Ireena takes the locket from her collar, opens it, and holds it up beside the portrait. The same face, twice. Three times."
+ },
+ "narrator/b4a0a95ddb7dda6c": {
+  "chars": 198,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Open moor in a cold fog, all heather and black water, with a long barrow humped beside the track and standing stones round it like guests who came early. The fog lies thickest at the barrow's mouth."
  },
  "narrator/b4bc0346e0a5a168": {
   "chars": 190,
@@ -58292,6 +58598,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They bury Elvir at the end of the last green row, under the cairn they raised for him when there was nothing to put beneath it. Stefania sings. Davian doesn't. Adrian digs, and won't let anyone else hold the spade."
+ },
+ "narrator/b5c8cd469a6dc3ca": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A saint carved atop a pillar at the chapel's corner, its face worn to a smooth oval by a century of weather. It still faces the road, as if expecting someone."
  },
  "narrator/b5d27c3ff5f1fac8": {
   "chars": 47,
@@ -58778,6 +59090,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Lysaga fills one more bowl, from a second, smaller pot at the back of the hearth, and puts it in front of Ireena with both hands, very kindly."
+ },
+ "narrator/b9d5a2cdfaed4bc0": {
+  "chars": 165,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A hunter's platform up in a pine at the clearing's edge, the rungs on its trunk scuffed pale by boots. It looks down on the whole clearing, which is the point of it."
  },
  "narrator/b9ddccd276fd180f": {
   "chars": 164,
@@ -59367,6 +59685,12 @@
   "recipe": "dd92281f92",
   "text": "The hooks are empty. You already have the keys."
  },
+ "narrator/bf9966b3311db798": {
+  "chars": 168,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A lantern on a pole, the kind lit at dusk to keep travellers on the causeway. Its glass is broken, its wick is drowned, and nobody has come to light it in a long while."
+ },
  "narrator/bfb3bfeb2744d04f": {
   "chars": 107,
   "model": "eleven_v4",
@@ -59930,6 +60254,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The rocking chair has worn two grooves in the floorboards from rocking in the same spot, day and night, for days."
+ },
+ "narrator/c2e1cc677aba7d98": {
+  "chars": 152,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A family crypt with its name worn off the lintel and a chain across its door, padlocked from the outside. Outside is the side you'd want it locked from."
  },
  "narrator/c2e27497108c7672": {
   "chars": 121,
@@ -60675,6 +61005,12 @@
   "recipe": "dd92281f92",
   "text": "Shreds of web on the ledge, stirring in the draught. Nothing else."
  },
+ "narrator/c9298e18f5b3d139": {
+  "chars": 172,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A statue of a saint with its face struck off by a hammer, the chips still lying at its feet. The Morninglord's people built this chapel; somebody came by later to disagree."
+ },
  "narrator/c93bff3a22a0ea61": {
   "chars": 150,
   "model": "eleven_v4",
@@ -60776,6 +61112,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She snatches her arm away and tucks it into her coat, and looks at you the way she looked at the wolves."
+ },
+ "narrator/c9dd98e976b81de7": {
+  "chars": 210,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A roofless chapel stands beside the road, its walls fallen to stubs and its stone saints still keeping their corners. Someone has left fresh offerings at the altar, in a valley where nobody gives anything away."
  },
  "narrator/c9dfa29e886b2828": {
   "chars": 54,
@@ -61004,6 +61346,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He's across the hall before anyone can move, and Rahadin's sword is already out to meet him, as if it had been waiting four hundred years for exactly this."
+ },
+ "narrator/cbcf4a5bb063ec18": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Small things left at the barrow's mouth: bread, beads, a lock of hair tied with thread. The folk round here still pay the barrow its rent."
  },
  "narrator/cbd4b75ec6105124": {
   "chars": 117,
@@ -61406,6 +61754,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He stands up, and the snow outside the window starts again, all at once, hard."
+ },
+ "narrator/ce8e611d892857d0": {
+  "chars": 183,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn of road stones on the knoll's crown, each carried up by a traveller who made it this far. Some of the stones have names scratched into them, and a few of the names have dates."
  },
  "narrator/ce99922b28e13fd0": {
   "chars": 139,
@@ -61904,6 +62258,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The gallery smells of burnt herbs and something worse that has gone cold."
+ },
+ "narrator/d28325ff8aa6f6a4": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A gibbet cage hung out over the water on a crooked post, low enough that the bog could reach it at high water. That was the idea."
  },
  "narrator/d28894eea9f240e0": {
   "chars": 136,
@@ -62691,6 +63051,12 @@
   "recipe": "dd92281f92",
   "text": "Under the jetty's last boards, tied to a post below the waterline, a ring on a string. It is dry when you pull it up, though the string is soaked."
  },
+ "narrator/d8fa6f5675920b34": {
+  "chars": 151,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A traveller sitting against a boulder with their hood up and their hands in their lap, as if resting. They have been resting here since the first snow."
+ },
  "narrator/d928564dca821626": {
   "chars": 120,
   "model": "eleven_v4",
@@ -62810,6 +63176,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Empty crates, lids pried off, bottoms lined with grave earth. Somebody should burn them. Somebody will."
+ },
+ "narrator/d9e8a6bf387b038a": {
+  "chars": 111,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The moor at night is fog, and the shapes of stones in the fog, and none of them stand quite where you remember."
  },
  "narrator/da2835ea53b01895": {
   "chars": 210,
@@ -63356,6 +63728,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A deer path up the stream into the pines. Nothing up there you need, yet."
+ },
+ "narrator/deca0953261c98e6": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The ruined chapel at night: candle stubs guttering on a cracked altar, and four stone saints watching the road instead of the sky."
  },
  "narrator/ded75e3b016f9aa2": {
   "chars": 174,
@@ -64179,6 +64557,12 @@
   "recipe": "dd92281f92",
   "text": "You heave the beam up off the rubble, and underneath lies an iron rod that hasn't moved since the roof came down."
  },
+ "narrator/e49a18b384b31adc": {
+  "chars": 116,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A rowboat pulled up on the bank and chained to a stake, its oars missing. Whoever owns it means to come back for it."
+ },
  "narrator/e49b68dc919129b5": {
   "chars": 107,
   "model": "eleven_v4",
@@ -64328,6 +64712,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The few ravens left keep to the far beams and watch you with flat black eyes. None of them comes near."
+ },
+ "narrator/e57cc458d8ddb942": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cart rolled over at the water's edge, one wheel still turning in the current. The stream took its load and is in no hurry to give it back."
  },
  "narrator/e589329066f53b3d": {
   "chars": 85,
@@ -64688,6 +65078,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Inside the ring of stones there's a black stump, a broken earth giant, and a great deal of ash. The wind has started, very carefully, to blow it away."
+ },
+ "narrator/e8fb9c9aa83abf6b": {
+  "chars": 222,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The track squeezes between walls of frost-split rock to a saddle in the snow, a ledge above it to the north and a shelf of boulders to the south. The wind comes through the narrows with a sound like someone drawing breath."
  },
  "narrator/e904573f840d086d": {
   "chars": 276,
@@ -65247,6 +65643,12 @@
   "recipe": "dd92281f92",
   "text": "In the amber stands a gaunt figure crowned with something that might be gold and might be teeth. One hand is raised to bless a crowd that left a very long time ago. Its eyes follow whoever is talking."
  },
+ "narrator/ed48581f979b9115": {
+  "chars": 141,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Both arms have had their names scraped off, and somebody has cut a single word into the post instead: BACK. It doesn't say which way that is."
+ },
  "narrator/ed56af5cfe0f2424": {
   "chars": 97,
   "model": "eleven_v4",
@@ -65643,6 +66045,12 @@
   "recipe": "dd92281f92",
   "text": "She looks at you a long moment, then jerks her chin at the road. 'Then keep off it after dark. Not everything that howls down by the river is a wolf.'"
  },
+ "narrator/f014d075f5c174cf": {
+  "chars": 171,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A cairn at the top of the saddle, its stones scratched with names. Those who crossed safely came back to add another stone, and the cairn is not as tall as it ought to be."
+ },
  "narrator/f01a8fdd3b0ca84b": {
   "chars": 129,
   "model": "eleven_v4",
@@ -65696,6 +66104,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Shapes come up the road out of the dark on both sides, low and patient. Behind you the gate stays shut. On the wall, someone is counting them out loud."
+ },
+ "narrator/f0a6122849e940ad": {
+  "chars": 174,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A roadside shrine standing up to its knees in the bog, its little saint green with slime. It stood on dry ground once; the marsh has been creeping toward the road ever since."
  },
  "narrator/f0b3042d4038500a": {
   "chars": 70,
@@ -65924,6 +66338,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A standing harp by the hearth, every string still taut. One of them hums when you breathe near it."
+ },
+ "narrator/f286950d185fcedb": {
+  "chars": 171,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The road splits round a wooded knoll, and the signpost at the split leans as though it can't make up its mind either. On the knoll an empty gibbet cage turns on its chain."
  },
  "narrator/f28c5a6dac3d5766": {
   "chars": 146,
@@ -66969,6 +67389,12 @@
   "recipe": "dd92281f92",
   "text": "A woman in a black shawl rocks in a chair by a cold stove, a girl's dress folded in her lap. She looks up at you with sudden, terrible hope."
  },
+ "narrator/fb52b11f59346cd6": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The pass at night: starlight on snow, black rock, and a long way to fall in every direction but forward."
+ },
  "narrator/fb5f65153d9ce2cb": {
   "chars": 82,
   "model": "eleven_v4",
@@ -67064,6 +67490,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The sails are turning, slow and creaking, for the first time in years. The ravens ride the blades round and drop off at the top, shouting."
+ },
+ "narrator/fc1abbd0f4f37f9e": {
+  "chars": 154,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A signpost snapped off at chest height, its arm half buried in a drift. The arm points back down the mountain, which is the most honest advice in Barovia."
  },
  "narrator/fc1bc50d7d56a8f0": {
   "chars": 185,
@@ -67436,6 +67868,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The north path climbs through the pines and comes out in a hollow that's black underfoot with old charcoal. A stream talks to itself at the edge of it. There's a hut, and its door is patched shut from the inside."
+ },
+ "narrator/fee1c01696fc2f05": {
+  "chars": 153,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A nest the size of a cart, woven from whole branches and lined with fur and old bones. Whatever built it has a wingspan you would rather not stand under."
  },
  "narrator/fee2a2c5fe555749": {
   "chars": 87,
