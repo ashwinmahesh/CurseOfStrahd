@@ -312,8 +312,9 @@ it on the window).
   `modern_only`, so Classic's rooms stay as they were frozen; the castle's halls, chapel and court keep their own),
   drawn with `shaders/atmosphere/dust_mote.gdshader`: a mote takes no ambient light and no moonlight, only the lamps',
   candles', fires' and window shafts' light at its own spot, shadows included, so it's invisible in the dark and
-  glints in a lamp's pool or a window's beam, twinkling as it turns. Three times as many motes as Classic's, since most
-  are dark at any moment.
+  glints in a lamp's pool or a window's beam, twinkling as it turns. Twice as many motes as Classic's, since most are
+  dark at any moment, and under half the size (`MODERN_DUST_SIZE`), with each light's share capped under the glow's
+  threshold so a mote never blooms: owner 2026-10-12, the first version's motes were "annoying dots on the screen".
 - **Indoor shade** (Modern) is filled a little by cool moonlight from unseen windows, readable blue-grey rather than
   black (`INDOOR_TONE`: the ambient leans to moon blue and the moon key light is stronger).
 - **Windows indoors** are the moon or the day coming in: the key light's colour, steady, with a spot light over the

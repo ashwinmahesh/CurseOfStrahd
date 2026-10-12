@@ -35,7 +35,9 @@ func test_every_room_has_dust_that_shows_only_in_the_light() -> void:
 	if d == null:
 		return
 	assert_eq(_shader(d), AtmosphereWeather.DUST_SHADER, "lit only by lamps and shafts")
-	assert_eq(d.amount, 150, "three times the motes, since most are dark")
+	assert_eq(d.amount, 100, "twice the motes, since most are dark")
+	var quad := d.draw_pass_1 as QuadMesh
+	assert_true(quad.size.x <= 0.02, "specks, not dots (%.3f units across)" % quad.size.x)
 	assert_true(_dust("village_of_barovia") == null, "none out of doors")
 
 
