@@ -17,6 +17,7 @@
   "theme": "implements",
   "icon": "stone",
   "pair": true,
+  "playable": false,
   "powers": [
     {
       "id": "sending",

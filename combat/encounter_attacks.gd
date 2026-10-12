@@ -274,6 +274,8 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 	for m in target.creature.modifiers_for(&"attacked_with_by_type"):
 		if str(c.creature.creature_type) in (m.data.get("types", []) as Array):
 			dis.append("%s (target)" % m.source_name)
+	if MagicCircle.shields(e, c, target):
+		dis.append("Magic Circle (target)")
 	if c.creature.has_flag("cursed_attacks:%s" % target.id):
 		dis.append("Bestow Curse")
 	if CombatFeatures.has_feature(c, "assassinate") and e.round_no == 1 and not target.has_acted:

@@ -42,13 +42,25 @@ static func apply(id: String, ch: Character, test: D20Test, dice: DiceRoller) ->
 	return test
 
 
-## Advantage sources for a check `cr` is about to make outside a fight with `skill`: Helpful Friend (Familiar
-## Friend) when the skill is one it's proficient in and a use is left, spending the use; its familiar is taken to be
-## at its side.
+## Cantrips that only did tricks help a skill check outside fights instead (Ashwin's answer to the spell audit,
+## 2026-10-12; docs/rules/deviations.md): a character who knows one works a little magic into the attempt.
+const CANTRIP_AIDS := {"druidcraft": ["nature"], "elementalism": ["survival"], "mending": ["investigation"],
+	"message": ["stealth"], "minor_illusion": ["deception"], "prestidigitation": ["performance"],
+	"thaumaturgy": ["intimidation"]}
+
+
+## Advantage sources for a check `cr` is about to make outside a fight with `skill`: a cantrip that helps it
+## (CANTRIP_AIDS), and Helpful Friend (Familiar Friend) when the skill is one it's proficient in and a use is left,
+## spending the use; its familiar is taken to be at its side.
 static func before_check(cr: Creature, skill: StringName) -> Array[String]:
 	var out: Array[String] = []
 	var ch := cr as Character if cr is Character else null
-	if ch == null or ch.resource_left("helpful_friend") <= 0 or not Abilities.SKILLS.has(skill) or ch.skill_rank(skill) < 1:
+	if ch == null:
+		return out
+	for spell_id: String in CANTRIP_AIDS:
+		if str(skill) in (CANTRIP_AIDS[spell_id] as Array) and ch.knows_spell(spell_id):
+			out.append(Compendium.shared().display_name("spells", spell_id))
+	if ch.resource_left("helpful_friend") <= 0 or not Abilities.SKILLS.has(skill) or ch.skill_rank(skill) < 1:
 		return out
 	if not ch.feats_taken.any(func(f: Dictionary) -> bool: return str(f["id"]) == "familiar_friend"):
 		return out

@@ -40,6 +40,38 @@
   "tags": [
     "detection"
   ],
-  "summary": "Spy on a creature on your plane through an invisible sensor: Wis save resists.",
-  "text": "The save is easier or harder by how well you know the target and what connects you to it. On a failure an invisible sensor follows within 10 ft of it, and you see and hear through it; you can instead spy on a place you've seen."
+  "summary": "Watch a legend of the valley: unless it makes a Wisdom save, its bestiary entry fills in, defenses and traits.",
+  "text": "The save is easier or harder by how well you know the target and what connects you to it. On a failure an invisible sensor follows within 10 ft of it, and you see and hear through it; you can instead spy on a place you've seen.",
+  "choice": {
+    "kind": "option",
+    "label": "Legend",
+    "from": [
+      "strahd_von_zarovich",
+      "rahadin",
+      "vampire_spawn",
+      "baba_lysaga",
+      "night_hag",
+      "vladimir_horngaard",
+      "sir_godfrey_gwilym",
+      "kiril_stoyanovich",
+      "the_grandsire",
+      "izek_strazni",
+      "exethanter",
+      "rag_queen"
+    ],
+    "labels": {
+      "strahd_von_zarovich": "Strahd von Zarovich",
+      "rahadin": "Rahadin",
+      "vampire_spawn": "Vampire Spawn",
+      "baba_lysaga": "Baba Lysaga",
+      "night_hag": "Night Hag",
+      "vladimir_horngaard": "Vladimir Horngaard",
+      "sir_godfrey_gwilym": "Sir Godfrey Gwilym",
+      "kiril_stoyanovich": "Kiril Stoyanovich",
+      "the_grandsire": "The Grandsire",
+      "izek_strazni": "Izek Strazni",
+      "exethanter": "Exethanter",
+      "rag_queen": "The Rag Queen"
+    }
+  }
 }

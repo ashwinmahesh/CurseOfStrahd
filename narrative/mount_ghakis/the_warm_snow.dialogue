@@ -283,6 +283,7 @@ endif
 
 ~ unchained
 set wyrm_unchained
+cutscene sarkhaza_freed
 Narrator: The pin comes out. The collar opens like a jaw. Sarkhaza lifts her head, all the way, for the first time in forty years, and the roof of the cavern isn't quite high enough for it.
 Sarkhaza: Thank you. Truly. And now, little things, I'm so very hungry.
 approve godrick_pendlebrook -3 liriel_dawnsong -3 thistle -2 wren_featherfoot -2 ratatoille -1: You took the dragon's chain off

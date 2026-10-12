@@ -615,3 +615,22 @@ func test_the_stone_calls_an_earth_elemental_beside_you() -> void:
 	TestCombat.start_with(e, c)
 	assert_false(e.items.use(c, "stone_of_controlling_earth_elementals", "dismiss", [], Vector2.INF).ok, "nothing left to dismiss")
 
+
+## Bag of Tricks (Tan), Agafia's gift in The Oat Thief: a charge pulls out a fuzzy ball that becomes a beast from the
+## bag's table, on the party's side under the user's orders, acting right after them.
+func test_the_tan_bag_of_tricks_pulls_out_a_beast() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "silvain_aster", Vector2i(2, 2), 2)
+	var ch := c.creature as Character
+	ch.add_item("bag_of_tricks_tan")
+	TestCombat.foe(e, "wolf", Vector2i(9, 2))
+	TestCombat.start_with(e, c)
+	var n := ch.charges_left("bag_of_tricks_tan")
+	assert_true(e.items.use(c, "bag_of_tricks_tan", "pull", [], Vector2(4.5, 2.5)).ok)
+	assert_eq(ch.charges_left("bag_of_tricks_tan"), n - 1)
+	var beast: Combatant = e.order[e.order.find(c) + 1]
+	var table: Array = ((Compendium.shared().item_data("bag_of_tricks_tan")["powers"] as Array)[0] as Dictionary)["params"]["table"]
+	assert_true(str((beast.creature as Monster).data.get("id", "")) in table, "a beast off the tan table")
+	assert_eq(beast.side, &"guest")
+	assert_eq(beast.controller, c.controller)
+

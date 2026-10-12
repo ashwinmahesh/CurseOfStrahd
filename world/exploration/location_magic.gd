@@ -9,6 +9,25 @@ extends RefCounted
 ## within 60 ft.
 static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 	match spell_id:
+		"augury", "divination", "commune", "contact_other_plane", "commune_with_nature", "clairvoyance", "arcane_eye":
+			LocationNpcs.refresh_npcs(view)   # the hidden finds it showed (story/oracles.gd)
+			LocationTraps._mark_found_traps(view)
+		"unseen_servant":
+			var trap := Oracles.spring_trap(view.st, view.loc_id, view.leader().cell)
+			if trap.is_empty():
+				view.narration.emit("The servant pads about the place and finds nothing to set off within 30 feet.")
+				return
+			LocationTraps._clear_marks(view, str(trap["id"]))
+			view.toast.emit("Unseen Servant springs %s harmlessly" % str(trap.get("label", "a trap")))
+		"stone_shape", "passwall":
+			var door := Oracles.open_way(view.st, view.loc_id, view.leader().cell)
+			if door.is_empty():
+				view.narration.emit("No locked or hidden way within 30 feet for the spell to open.")
+				return
+			if view.door_nodes.has(str(door["id"])) and int(door.get("secret_dc", 0)) > 0:
+				SetDressing.reveal_door(view.door_nodes[str(door["id"])] as Node3D)
+			Audio.sfx("unlock")
+			view.toast.emit("%s opens %s" % [Compendium.shared().display_name("spells", spell_id), str(door.get("label", "the way"))])
 		"light":
 			view.update_daylight()
 		"find_familiar", "find_steed":

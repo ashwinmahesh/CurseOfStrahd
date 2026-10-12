@@ -35,6 +35,6 @@
   "tags": [
     "communication"
   ],
-  "summary": "Whisper a message to a creature within 120 feet that only it hears; it can whisper back to you.",
+  "summary": "A whispered message. In the game: Advantage on your Stealth checks outside fights, the party whispering its plan.",
   "text": "Point at a creature within range and whisper a message. Only that creature hears it, and it can whisper a reply that only you hear. You can cast the spell through solid objects if you are familiar with the target and know it is beyond the barrier. Magical silence, 1 foot of stone, metal or wood, or a thin sheet of lead blocks the spell."
 }

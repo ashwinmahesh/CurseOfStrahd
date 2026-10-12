@@ -43,14 +43,9 @@ func test_agafia_and_the_hunters() -> void:
 	st.set_flag("oat_hunters_beaten")
 	st.set_quest_stage("the_oat_thief", "defended")
 	beats = SideQuestPlay.play(st, "village_of_barovia/the_oat_thief:agafia")
-	assert_true(SideQuestPlay.text(beats).contains("My grandmother's. It never once let her sleep"))
+	assert_true(SideQuestPlay.text(beats).contains("My grandmother's. Feel inside"))
 	assert_eq(st.quest_stage("the_oat_thief"), "done")
-	# Her grandmother's knife, a Dagger of Warning: the Sending Stones she used to give are out of the game with
-	# Sending (Ashwin, 2026-10-12).
-	var knives := 0
-	for ch: Character in st.party:
-		knives += ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "weapon_of_warning__dagger").size()
-	assert_eq(knives, 1, "her grandmother's knife")
+	assert_true(st.party_has_item("bag_of_tricks_tan"), "her grandmother's bag")
 	st.location = "village_of_barovia"
 	beats = SideQuestPlay.play(st, "village_of_barovia/bildrath:news", ["Your stock"])
 	assert_true(SideQuestPlay.text(beats).contains("I've decided it's charity"))

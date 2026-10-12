@@ -448,6 +448,13 @@
           "items": {
             "type": "string"
           }
+        },
+        "labels": {
+          "type": "object",
+          "description": "What the menu shows for each choice in 'from', when the id alone won't do (Suggestion's suggestions).",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       }
     },
@@ -1078,6 +1085,10 @@
     },
     "requires_sight": {
       "type": "boolean"
+    },
+    "needs_understanding": {
+      "type": "boolean",
+      "description": "The target must hear and understand you: a creature with a language that isn't Deafened (Suggestion)."
     },
     "roll_response": {
       "type": "object",

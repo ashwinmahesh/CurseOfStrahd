@@ -90,7 +90,7 @@ func _why_not(c: Combatant, s: Dictionary, entry: Dictionary) -> String:
 	var unit := str(entry["casting"])
 	if unit == "reaction":
 		return "Cast as a Reaction when it triggers"
-	if unit in ["minute", "hour"]:
+	if unit in ["minute", "hour"] and not enc().peaceful:
 		return "Takes too long to cast in combat (cast it before the fight)"
 	var why := economy_block(c, unit)
 	if why != "":
@@ -163,7 +163,8 @@ static func _out_of_combat_word(s: Dictionary) -> String:
 func has_combat_rules(s: Dictionary) -> bool:
 	if str(s.get("id", "")) in SpellCaster.SPECIAL or str(s.get("id", "")) in SpellCaster.SUMMON_SPELLS or str(s.get("id", "")) in SpellSpecials.HANDLED or str(s.get("id", "")) in HighMagic.HANDLED or str(s.get("id", "")) in MidMagic.HANDLED:
 		return true
-	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain", "roll_response"]:
+	# A burst around what an on-hit spell struck (Hail of Thorns) is its whole effect.
+	for k: String in ["attack", "heal", "damage", "temp_hp", "zone", "object", "sustain", "roll_response", "secondary"]:
 		if s.has(k):
 			return true
 	for fx: Variant in s.get("effects", []):

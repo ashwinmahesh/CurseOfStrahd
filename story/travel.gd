@@ -137,6 +137,9 @@ static func roll(road: Dictionary, st: StoryState, dice: DiceRoller) -> Dictiona
 	var tid := str(road.get("table", ""))
 	if tid == "":
 		return {}
+	# Find the Path: the party knows the safe way while it lasts (a day).
+	if st.spell_active("find_the_path"):
+		return {}
 	var table := Compendium.shared().get_entry("random_encounters", tid)
 	if table.is_empty():
 		return {}

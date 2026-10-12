@@ -129,8 +129,8 @@ hunters come up the trail of oats; spotting it (Survival DC 12) catches them una
 
 - Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and a wolf at level 2, three wolves at level 3. The
   autopilot wins 2 of 4 at level 2 and 3 of 4 at level 3, losing one or two party members a fight.
-- Reward: Agafia's grandmother's knife, a Dagger of Warning (uncommon; it was her speaking stones, Sending Stones,
-  until Sending left the game on 2026-10-12); and Bildrath decides it's charity.
+- Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
+  for the party until dawn; and Bildrath decides it's charity.
 
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
@@ -279,8 +279,8 @@ bedroom).
 
 ### Black Roses (`black_roses`, narrative/vallaki/black_roses.dialogue)
 
-Ilie the lamplighter's daughter Ana was taken last winter. **Twist one:** black roses come before a girl is taken, not
-after, and they are on the chandler's step. **Twist two:** Ilie's scarf hides bite marks (Insight DC 13 or Medicine DC
+Ignat the lamplighter's daughter Ana was taken last winter. **Twist one:** black roses come before a girl is taken, not
+after, and they are on the chandler's step. **Twist two:** Ignat's scarf hides bite marks (Insight DC 13 or Medicine DC
 12); Ana is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Ana comes to
 Mila Petrova's window in the lower town. Ask where she sleeps, talk her home to her grave (Persuasion DC 14), fight her
 and the two girls she calls (`roses_street`), or let her go home to her father, who is found dead at the lake gate in
@@ -289,7 +289,7 @@ dig them up by day (Athletics DC 12; they wake surprised and weak) or wait for t
 
 - Fights: `roses_street` at level 5 is Ana (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
   surprised at reduced HP, by night at full strength. Attention mark `roses` (+1).
-- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ilie gives Ana's mother's
+- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ignat gives Ana's mother's
   ring, a Ring of Resistance (Necrotic) (rare), once Ana is at rest.
 
 ### Ribbons (`ribbons`, narrative/vallaki/ribbons.dialogue; batch 2)
@@ -1062,7 +1062,7 @@ Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fishe
 last_muster.dialogue in full (new speaker Marshal Dragomir), tser_camp.dialogue's new zora_road lines (the riders) and
 townsfolk.dialogue's new gossip lines (the riders). Vallaki:
 cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
-Ilie and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
+Ignat and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
 six_feet.dialogue in full (new speaker Zinaida;
 also Old Mihail and Goodwife Petra), the new lines in townsfolk.dialogue (goodwife after the burial, gravedigger after it)

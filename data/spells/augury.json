@@ -36,6 +36,6 @@
     "detection",
     "utility"
   ],
-  "summary": "Ritual. Ask about a plan for the next 30 minutes and receive an omen: weal, woe, both, or neither.",
+  "summary": "Weal or woe for the place you're in: a fight still waiting here, something still hidden here, both, or neither.",
   "text": "You receive an omen from an otherworldly power about the outcome of a course of action you intend to take within the next 30 minutes. The DM picks the omen: Weal (good results), Woe (bad results), Weal and woe (both good and bad results), or Indifference (results neither good nor bad). The omen doesn't account for anything that might change the outcome later, such as other spells. Each casting after the first before you finish a Long Rest has a cumulative 25 percent chance of giving no answer."
 }

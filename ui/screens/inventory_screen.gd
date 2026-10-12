@@ -1448,7 +1448,8 @@ func _spellbook_card(book: Array) -> void:
 
 ## Things come out of the stash only where it's safe to rest (an inn, a home); they go in from anywhere.
 func _stash_open() -> bool:
-	return str(Compendium.shared().get_entry("locations", st.location).get("rest", "")) == "safe"
+	# Leomund's Secret Chest: the stash comes when called, anywhere, while the spell lasts (60 days).
+	return str(Compendium.shared().get_entry("locations", st.location).get("rest", "")) == "safe" or st.spell_active("leomunds_secret_chest")
 
 
 ## The picked entry when it's this item and still carried, else the first carried one.

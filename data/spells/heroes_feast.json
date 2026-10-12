@@ -38,6 +38,6 @@
     "buff",
     "restoration"
   ],
-  "summary": "A magical feast that hardens up to twelve diners for the next day.",
+  "summary": "A 10-minute feast (the bowl is 1,000 gp from the purse): for a day everyone who eats is immune to poison and fear, has Advantage on Wisdom saves, and gains 2d10 Hit Points and maximum.",
   "text": "Eating takes an hour. For 24 hours afterwards each diner has Resistance to Poison damage, immunity to the Poisoned and Frightened conditions, and a Hit Point maximum raised by 2d10, gaining that many Hit Points too."
 }

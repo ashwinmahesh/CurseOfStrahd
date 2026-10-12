@@ -135,6 +135,9 @@ func begin_turn(c: Combatant) -> CombatResult:
 		if caster != null:
 			last_plan = {"kind": "flee", "why": "Command: Flee"}
 			return _flee(c, caster, true)
+	var suggested := _suggested_turn(c)
+	if suggested != null:
+		return suggested
 	if not c.can_act():
 		return CombatResult.new()
 	_finishing = null
@@ -455,6 +458,50 @@ func _berserk_turn(c: Combatant) -> CombatResult:
 	if not mo0.is_empty() and e.distance(c, near) <= (mo0["profile"] as WeaponProfile).reach:
 		return strike.call() as CombatResult
 	return e.then(_approach(c, {"target": near}), strike)
+
+
+## A turn under Suggestion (SpellHandlers._suggestion), or null when none holds it: Go home walks away from the caster
+## and leaves the fight once clear of its foes (a party member only walks away); Sit drops what it holds and sits,
+## Prone, then stays sitting; Come with me walks to the caster and does nothing else. Stand aside is Calm Emotions'
+## indifference, above.
+func _suggested_turn(c: Combatant) -> CombatResult:
+	var e := enc()
+	var lead := _suggester(c)
+	if c.creature.has_flag("suggest_leave"):
+		var from := lead if lead != null else _nearest_enemy(c)
+		if from == null or c.speed() <= 0:
+			return CombatResult.new()
+		last_plan = {"kind": "flee", "why": "Suggestion: Go home"}
+		var r := _flee(c, from, true)
+		return e.then(r, func() -> CombatResult:
+			if c.is_alive() and c.creature.hp > 0 and c.side != &"party" and tactics._clear_of_foes(c):
+				e.legendary.leave(c, "went home")
+			return CombatResult.new())
+	if c.creature.has_flag("suggest_sit"):
+		last_plan = {"kind": "wait", "why": "Suggestion: Sit"}
+		if not c.creature.has_condition(&"prone"):
+			e.ground.drop_held(c, "Suggestion: Sit")
+			c.creature.add_condition(&"prone", "Suggestion")
+			e.log.add("condition", "%s puts down what it holds and sits (Suggestion)" % c.name(), c.id)
+			e.events.append({"type": "condition", "id": c.id})
+		else:
+			e.log.add("info", "%s stays sitting (Suggestion)" % c.name(), c.id)
+		return CombatResult.new()
+	if c.creature.has_flag("suggest_follow") and lead != null:
+		last_plan = {"kind": "approach", "why": "Suggestion: Come with me"}
+		if e.distance(c, lead) <= 5:
+			e.log.add("info", "%s keeps beside %s (Suggestion)" % [c.name(), lead.name()], c.id)
+			return CombatResult.new()
+		return _approach(c, {"target": lead, "dash": false})
+	return null
+
+
+## Who made the suggestion `c` is carrying out (null if none, or they've gone).
+func _suggester(c: Combatant) -> Combatant:
+	for fx: Effect in c.creature.effects:
+		if fx.source_id in ["suggestion", "mass_suggestion"]:
+			return enc().get_c(fx.caster_id)
+	return null
 
 
 func _commander(c: Combatant) -> Combatant:

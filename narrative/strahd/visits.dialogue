@@ -142,6 +142,7 @@ approve kip_smudgewick +1: You woke the camp when Strahd came
 ~ night_shield
 set strahd_night_visit = "shield"
 Strahd [smile]: Gallant. Do you know how many gallant men have stood exactly there? I stopped counting them. I did not stop killing them.
+cutscene camp_bow
 Narrator: He bows to Ireena, not to you, and the dark he stood in is only dark.
 approve godrick_pendlebrook +3 thistle +1: You got up and stood between Strahd and Ireena
 -> END

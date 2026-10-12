@@ -52,6 +52,14 @@
   "tags": [
     "summon"
   ],
-  "summary": "Raise a Skeleton or Zombie from bones or a corpse and command it with a Bonus Action for 24 hours.",
-  "text": "Pick a pile of bones or the corpse of a Small or Medium Humanoid within 10 feet. It rises as an Undead: a Skeleton if you chose bones, a Zombie if you chose a corpse (use those stat blocks). On each of your turns you can take a Bonus Action to mentally command any creature made with this spell that is within 60 feet of you; if you control several, you can command any or all of them at once with the same order. You decide what action it takes and where it moves on its next turn, or you give a general order such as guarding a room or hallway. With no orders it takes the Dodge action and moves only to avoid harm. Once ordered, it keeps at the task until it is done. You control the creature for 24 hours, after which it stops obeying you. Casting the spell on it again before the 24 hours run out keeps control for another 24 hours; used this way, the casting reasserts control over up to four creatures you animated with this spell instead of animating a new one. Casting time 1 minute. Using a Higher-Level Spell Slot: you animate or reassert control over two more Undead for each slot level above 3, each from a different corpse or pile of bones."
+  "summary": "Raise a Zombie or Skeleton (two more per slot level above 3) that follows you for a day and fights beside you; cast it while exploring.",
+  "text": "Pick a pile of bones or the corpse of a Small or Medium Humanoid within 10 feet. It rises as an Undead: a Skeleton if you chose bones, a Zombie if you chose a corpse (use those stat blocks). On each of your turns you can take a Bonus Action to mentally command any creature made with this spell that is within 60 feet of you; if you control several, you can command any or all of them at once with the same order. You decide what action it takes and where it moves on its next turn, or you give a general order such as guarding a room or hallway. With no orders it takes the Dodge action and moves only to avoid harm. Once ordered, it keeps at the task until it is done. You control the creature for 24 hours, after which it stops obeying you. Casting the spell on it again before the 24 hours run out keeps control for another 24 hours; used this way, the casting reasserts control over up to four creatures you animated with this spell instead of animating a new one. Casting time 1 minute. Using a Higher-Level Spell Slot: you animate or reassert control over two more Undead for each slot level above 3, each from a different corpse or pile of bones.",
+  "choice": {
+    "kind": "option",
+    "label": "Undead",
+    "from": [
+      "zombie",
+      "skeleton"
+    ]
+  }
 }

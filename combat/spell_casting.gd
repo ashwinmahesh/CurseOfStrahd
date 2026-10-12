@@ -476,6 +476,13 @@ func _resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 					spells._command(ctx, t, word, r)
 				return r
 			return enc().each(tgt, func(t: Variant) -> CombatResult: return spells._command(ctx, t as Combatant, word, r, true), func() -> CombatResult: return r)
+		"suggestion", "mass_suggestion":
+			var kind := str(ctx["choice"]) if str(ctx["choice"]) != "" else "stand_aside"
+			if not pausable:
+				for t in tgt:
+					spells.handlers._suggestion(ctx, t, kind, r)
+				return r
+			return enc().each(tgt, func(t: Variant) -> CombatResult: return spells.handlers._suggestion(ctx, t as Combatant, kind, r, true), func() -> CombatResult: return r)
 		"sanctuary":
 			spells.handlers._sanctuary(ctx, tgt[0], r)
 			return r

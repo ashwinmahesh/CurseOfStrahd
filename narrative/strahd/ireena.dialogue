@@ -177,6 +177,7 @@ approve wren_featherfoot +1 liriel_dawnsong +1: You asked Strahd what he was afr
 -> church_end
 
 ~ church_end
+cutscene church_gate_empty
 Narrator: Then the gate is empty. The bell stops in the middle of a stroke. Ireena breathes out, slowly, for a long time.
 Ireena: He can't come in. He can't. I'm going to tell myself that all night.
 -> END
