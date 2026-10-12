@@ -15,7 +15,7 @@ A long conversation over one picture gets more pictures where the scene changes 
 boring looking at the same image for multiple phases of dialogue, especially if the scene is evolving"). Each beat is a
 `cutscene <id>` statement placed just before the line where something new happens (the dead knights stand, the wolf
 comes out of the trapper, the organ bench is empty), so the next picture fades over the last. The first round,
-2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest. The second round, the same night: 11 beats in the next-longest ones.
+2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest. The second round, the same night: 12 beats in the next-longest ones.
 
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
@@ -144,6 +144,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | children_freed | Five Children Walk Past the Wolves | `werewolf_den/kiril` | 1 |
 | children_wave | Thorn Waves | `death_house/dungeon` (a later beat, ~ lay_to_rest) | 1 |
 | church_gate | At the Churchyard Gate | `strahd/ireena` | 1 |
+| church_gate_empty | The Gate Is Empty | `strahd/ireena` (a later beat, ~ church_end) | 1 |
 | church_vigil | Vigil at St. Andral's | `vallaki/lucian` | 1 |
 | coffin_turns | Something Turns to the Wall | `castle_ravenloft/personal_prayers` (a later beat, ~ prayer) | 1 |
 | crossroads_dead | The Gallows Field Wakes | `enter:crossroads_gallows` | 1 |
