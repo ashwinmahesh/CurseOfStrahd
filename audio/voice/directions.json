@@ -371,6 +371,7 @@
   "960a962d8c83ee5f": "[gloomy, grudging]",
   "96df1323fa3c93a6": "[gloomy, dry]",
   "aaa9ed70cadc18db": "[contrary, gloomy]",
+  "ac92eff3ab615cb2": "[gossiping, disapproving, low]",
   "ce3064d3a4d3a572": "[hushed, gossiping, relishing]",
   "e2d3e4c43b218984": "[contrary, gloomy]",
   "f799770d6863a3ce": "[gloomy, dry]"
@@ -1126,10 +1127,13 @@
  },
  "ireena": {
   "4ce1cdd833091795": "[desperate, begging, breaking]",
+  "79fb252b56f02c35": "[sad, bitter]",
   "a1327d06bad2c4fa": "[quiet, shaken, sad]",
   "af227a8982f72046": "[quiet, sorrowful, remembering her father]",
+  "ba3913b3f2ecd59b": "[shaken, sad]",
   "bb605e44cf728db9": "[wistful, wry, then stubborn]",
   "c018a979025ae2b3": "[sad, remembering, quiet]",
+  "c45ca2bbd0520374": "[shaken, eerie, hollow]",
   "ce7487cdfa1deea9": "[bitter, shaken, quiet]",
   "fb82ad34d66f23d9": "[cold, defiant]"
  },
@@ -2499,6 +2503,7 @@
   "6836efe174070cb8": "[worried, earnest, pleading]",
   "715a2676f0ac0a68": "[earnest, gentle, simple]",
   "80bb4d62b584d733": "[eager, simple, earnest]",
+  "f374965c8e4c8021": "[flustered, conspiratorial, loud]",
   "fd503f6bed5e7fda": "[eager, conspiratorial]"
  },
  "pastry_customer_man": {
