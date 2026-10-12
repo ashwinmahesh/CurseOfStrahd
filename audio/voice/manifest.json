@@ -36280,6 +36280,12 @@
   "recipe": "dd92281f92",
   "text": "He listens. Slowly he drops onto all fours and lets you come close, and then closer, though he never takes his eyes off your hands."
  },
+ "narrator/0502ffe05c7473f8": {
+  "chars": 149,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Gertruda is looking at everything: the fire, the trees, the dark. She has never slept outside a house before, and she's trying to remember all of it."
+ },
  "narrator/0505378ef79cbee9": {
   "chars": 186,
   "model": "eleven_v4",
@@ -36771,6 +36777,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You bury him by the road. This time he stays where he is put."
+ },
+ "narrator/0860196913123d89": {
+  "chars": 92,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Adrian sits a little apart, turning a cork over in his fingers, watching the sky for ravens."
  },
  "narrator/086b4fa82800c526": {
   "chars": 127,
@@ -37372,6 +37384,12 @@
   "recipe": "dd92281f92",
   "text": "The falconer lifts the chick, shell and all, as if it weighed nothing, and the stone birds take it between them, and they go up the wind toward the castle with it screaming all the way."
  },
+ "narrator/0d7094247572c828": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Godrick kneels by the fire, frowns, stands up, and kneels again, slightly to the left. He wants to get it right for the Order."
+ },
  "narrator/0daf81a7c8457296": {
   "chars": 179,
   "model": "eleven_v4",
@@ -37911,6 +37929,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "NOTHING LEAVES, says the colossus, and steps down to make sure of it."
+ },
+ "narrator/11935e8c8417c27d": {
+  "chars": 114,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is melting snow for the pot and complaining that it has no flavour, which he seems to take personally."
  },
  "narrator/119dfd09aedee4f0": {
   "chars": 98,
@@ -38458,6 +38482,12 @@
   "recipe": "dd92281f92",
   "text": "The leaves at the mouth of the den are freshly scraped, and in the mud by the stream there are two sets of tracks, one very big and one very small."
  },
+ "narrator/15434c8108ea469c": {
+  "chars": 107,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Davian Martikov sniffs at the camp's wine, sips it, and says nothing at all, which from him is high praise."
+ },
  "narrator/154f545be7214b5a": {
   "chars": 72,
   "model": "eleven_v4",
@@ -38751,6 +38781,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You break the rack free of its ice, and one halberd among the frosted ones is clean, bright and warm."
+ },
+ "narrator/177ed5009ea5e3ec": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ismark keeps watch with his sword across his knees, staring into the fire as if his father might be in it."
  },
  "narrator/17add33c1541213a": {
   "chars": 150,
@@ -39357,6 +39393,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The lamps come on, one by one, all down the street. The second bell rings. The square empties the way water leaves a basin."
+ },
+ "narrator/1b2ca291954ed2e6": {
+  "chars": 121,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The fire burns low and the woods creak and settle round you. Nothing comes. Somehow that's the part that keeps you awake."
  },
  "narrator/1b3d760a2236c8fa": {
   "chars": 174,
@@ -41086,6 +41128,12 @@
   "recipe": "dd92281f92",
   "text": "The inscription, in plain words: \"Norganas, the eraser. It has been forgotten twice already.\" Below, in a newer, shakier hand: \"Warden, if you can't remember why you carved this: you asked it to take the voices. It took you.\""
  },
+ "narrator/279565b8d4af0f70": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Pidlwick II sits with its painted face turned to the flames, ticking softly. Now and then it claps, once, at nothing."
+ },
  "narrator/27b97f7a037e8252": {
   "chars": 117,
   "model": "eleven_v4",
@@ -41409,6 +41457,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Across the courtyard in the wards, the stitched bride he never finished lies under her linen. She will not wake now. There's nobody left who knows how."
+ },
+ "narrator/2a4bd011f648f0fb": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Thistle is already up, crouched over a set of tracks at the edge of camp. Something came close in the night, had a look, and left."
  },
  "narrator/2a539c4b1f3ca006": {
   "chars": 161,
@@ -42478,6 +42532,12 @@
   "recipe": "dd92281f92",
   "text": "The hut lies on its side in the mud below the stump, its root legs snapped like kindling. Someone did this with his hands."
  },
+ "narrator/31d43abfe99df76c": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You wake in the dark to the last red coals of the fire. Whatever was out there all night is still out there, and so are you."
+ },
  "narrator/31f388e6ded2ecd1": {
   "chars": 184,
   "model": "eleven_v4",
@@ -42915,6 +42975,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The island is bare rock, moss and a few stunted thorns, and the tower takes up most of it. Close to, the stone hums very faintly, like a bell long after it has been struck."
+ },
+ "narrator/3522ea5d9c2ecb8c": {
+  "chars": 97,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You make camp in the fog. The fire's light goes three paces in every direction and then gives up."
  },
  "narrator/35282f5c47004d97": {
   "chars": 178,
@@ -44014,6 +44080,12 @@
   "recipe": "dd92281f92",
   "text": "Bells. The watch goes door to door with clubs and ribbons, and Vallaki comes out to be happy. Within the hour the square is full, shoulder to shoulder, nobody speaking much above a murmur."
  },
+ "narrator/3d7c4d8b77a120b2": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wren is juggling three pine cones and a knife, and talking, and none of the four has hit the ground yet."
+ },
  "narrator/3d8a7f4a14cf2176": {
   "chars": 127,
   "model": "eleven_v4",
@@ -44121,6 +44193,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The second suit of wolf-helmed armor, its spear a little crooked, as if it leaned to listen and straightened when you looked."
+ },
+ "narrator/3e46ca041f2adc5e": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You wake stiff and cold by a fire burned down to ash. Nobody took you in the night. In Barovia, that counts as a good night's sleep."
  },
  "narrator/3e4b1bc0dc8ec0d1": {
   "chars": 116,
@@ -44709,6 +44787,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Master, go. I'll hold the door. He's coming up the stair and he's laughing. Don't come back for me. I mean it. Corvina."
+ },
+ "narrator/42edb0fb9635d56e": {
+  "chars": 139,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kip's tail twitches in his sleep. Now and then he mutters a number, then a smaller number, then wakes to check the contract is still there."
  },
  "narrator/4306e065fa40bd7b": {
   "chars": 95,
@@ -45982,6 +46066,12 @@
   "recipe": "dd92281f92",
   "text": "The knife flickers between your fingers faster than the Vistana can follow, and the coins are yours."
  },
+ "narrator/4cec0c4e54a3d6ac": {
+  "chars": 118,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The fog comes right into camp in the night and sits by the embers like a guest. By morning everything you own is damp."
+ },
  "narrator/4ced36044a5d030d": {
   "chars": 223,
   "model": "eleven_v4",
@@ -46023,6 +46113,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A small wooden shrine at the water's edge, with candle stubs on its shelf and coins pressed into the wax. The candles face away from the pool."
+ },
+ "narrator/4d5d5d3a448085a7": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You make camp in the dark, by feel and by quiet swearing. When the fire catches, the trees seem to step back for a better look at you."
  },
  "narrator/4d728b8fa414580b": {
   "chars": 116,
@@ -47578,6 +47674,12 @@
   "recipe": "dd92281f92",
   "text": "A handcart comes squeaking round the bend, heaped high under a white cloth, and behind it, pushing, a little old woman in a flour-dusted shawl."
  },
+ "narrator/59888c2e4b6859e3": {
+  "chars": 144,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Liriel sits facing east with her eyes closed, waiting for a sunrise that hasn't come in four hundred years. She can wait. She's very good at it."
+ },
  "narrator/5995d1a37859b9f0": {
   "chars": 122,
   "model": "eleven_v4",
@@ -48256,6 +48358,12 @@
   "recipe": "dd92281f92",
   "text": "Webs run from the bundle to every wall of the gully, tight as harp strings. Some of the bundles further up don't have eyes any more."
  },
+ "narrator/5dee078727ac8f9f": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Liriel is mending someone's cloak by the firelight, humming a dawn hymn in a key the night doesn't seem to like."
+ },
  "narrator/5df51a7534f4f284": {
   "chars": 246,
   "model": "eleven_v4",
@@ -48538,6 +48646,12 @@
   "recipe": "dd92281f92",
   "text": "Half an hour of scraping silt and pulling reeds bares a slab at the foot of the plinth with an iron ring in it. Under the slab, a stair goes down into the mound, perfectly dry, and somewhere below it a candle is burning."
  },
+ "narrator/5fbfb545a7b7dfa9": {
+  "chars": 118,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You wake to the smell of something frying. Ratatouille has been up for an hour, and he would like everyone to know it."
+ },
  "narrator/5fc181fff200c0d1": {
   "chars": 96,
   "model": "eleven_v4",
@@ -48790,6 +48904,12 @@
   "recipe": "dd92281f92",
   "text": "Up close the hoard is a hoax: gilt lead by the cartload, cups that bend in the hand, crowns of painted tin."
  },
+ "narrator/61c3a0870f164424": {
+  "chars": 105,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Godrick has taken the first watch, and the second, and is quietly negotiating with himself for the third."
+ },
  "narrator/61f4cccf679edf48": {
   "chars": 97,
   "model": "eleven_v4",
@@ -48933,6 +49053,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The straw is dark with water to the heart. It will not burn at noon, whatever the Baron shouts at it."
+ },
+ "narrator/636b3cf52917ba9a": {
+  "chars": 126,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Lupu lies across the path into camp with his grey muzzle on his paws. Nothing is getting past him tonight without an argument."
  },
  "narrator/6380ed4b7fcb2e53": {
   "chars": 56,
@@ -49354,6 +49480,12 @@
   "recipe": "dd92281f92",
   "text": "Small cairns along the verge, each with a flat stone on top and a name scratched into it by somebody with a Vistani knife: Mihai. Old Dorota. The Lupescu twins. A tinker, no name, only a pot drawn in the stone. Dozens more, back into the grass, the oldest worn smooth."
  },
+ "narrator/669e35006433f046": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has found mushrooms in the woods and is sorting them into stew, maybe, and absolutely not. The last pile is growing fastest."
+ },
  "narrator/66ba60d345a05724": {
   "chars": 127,
   "model": "eleven_v4",
@@ -49443,6 +49575,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Izek Strazni walks down off the dais and out of the square, and nobody, not even the Baron, tells him to come back."
+ },
+ "narrator/675ea4156355849e": {
+  "chars": 160,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Godrick is polishing Sir Pellam's sword, though it was clean an hour ago. He's practising a speech under his breath; it begins \"Your Grace\" and gets no further."
  },
  "narrator/675f3960dda6ddbd": {
   "chars": 154,
@@ -49768,6 +49906,12 @@
   "recipe": "dd92281f92",
   "text": "A drift of silver taller than you are. Pushed into it, at about the height of a man's hand, the print of a gauntlet, made over and over again."
  },
+ "narrator/6990161b7ec63865": {
+  "chars": 114,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You make camp. Packs come off, bedrolls go down, and for a little while the world is no bigger than the firelight."
+ },
  "narrator/69a66a5e96ccc8fe": {
   "chars": 113,
   "model": "eleven_v4",
@@ -50043,6 +50187,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She turns, and knows you. You hummed her a lullaby once, in a nursery that smelled of dust."
+ },
+ "narrator/6b88120810248b77": {
+  "chars": 117,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You sleep in turns by the fire. Every watch hears something circle the camp, and every watch decides it was the wind."
  },
  "narrator/6b8a8a59479c3547": {
   "chars": 172,
@@ -51064,6 +51214,12 @@
   "recipe": "dd92281f92",
   "text": "A woodcutter's axe left sunk in a stump, its handle dark with use. Nobody leaves a good axe behind unless something made them."
  },
+ "narrator/72631b0d9be9fea2": {
+  "chars": 101,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wren is running through his forms on the far side of the fire, so fast the flames lean over to watch."
+ },
  "narrator/7272e32f4bb80b9e": {
   "chars": 79,
   "model": "eleven_v4",
@@ -51129,6 +51285,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A ring of blackened stones where the fishers cooked their catch. The ashes are cold and wet, and something has dug through them looking for scraps."
+ },
+ "narrator/732fa7b6e85cc172": {
+  "chars": 133,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ireena sits with her knees drawn up and a blanket round her shoulders, watching the dark. She doesn't sleep much. You understand why."
  },
  "narrator/732fd62c9d08fa3b": {
   "chars": 160,
@@ -51459,6 +51621,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "At the bottom of the stair the air is thick and warm and smells of rot. The chanting is very close now."
+ },
+ "narrator/75b40c2a2a9e2c08": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wren is supposed to be asleep. He's lying very still with his eyes open, turning his master's letter over and over in his fingers."
  },
  "narrator/75c3afdd14008841": {
   "chars": 86,
@@ -52185,6 +52353,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "When the last man-at-arms goes down into the frost, the squires come forward from their stones, one by one, and each of them touches the banner and goes back."
+ },
+ "narrator/7b5ad94a7647caaa": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Snow hisses in the fire as it catches. You pitch camp with your backs to the wind and your faces to the only warm thing for miles."
  },
  "narrator/7b81f772cece87d1": {
   "chars": 98,
@@ -54340,6 +54514,12 @@
   "recipe": "dd92281f92",
   "text": "The ground is iron-hard with frost, and it takes two hours and both hands before the spade rings on wood."
  },
+ "narrator/8c3f92f4538917c0": {
+  "chars": 86,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ireena is sharpening a knife she doesn't need, because her hands want something to do."
+ },
  "narrator/8c44a2587a0efdd7": {
   "chars": 98,
   "model": "eleven_v4",
@@ -54658,6 +54838,12 @@
   "recipe": "dd92281f92",
   "text": "The three of them are back on the castle road, exactly where you left them, as if they've been standing there ever since."
  },
+ "narrator/8dfda8855bfa8a91": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Arabelle sits close to the fire with her chin on her knees, watching the flames as if they were telling her something. Perhaps they are."
+ },
  "narrator/8e045b14919ca85a": {
   "chars": 115,
   "model": "eleven_v4",
@@ -54849,6 +55035,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You leave him turning. Behind you, the rope creaks once, as if he has shifted his weight."
+ },
+ "narrator/8f95b8b2ed9f55da": {
+  "chars": 90,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ezmerelda is laying out silver, stakes and holy water on a cloth and counting them, twice."
  },
  "narrator/8fafd0277e0ac5ef": {
   "chars": 180,
@@ -55636,6 +55828,12 @@
   "recipe": "dd92281f92",
   "text": "Hooves on the road behind you, a great many of them, coming fast. You get off the track just in time."
  },
+ "narrator/95b447e34d487cca": {
+  "chars": 115,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is stirring the pot and tasting, stirring and tasting, with the grave face of a man defusing something."
+ },
  "narrator/95bda2ca79555b1a": {
   "chars": 65,
   "model": "eleven_v4",
@@ -55930,6 +56128,12 @@
   "recipe": "dd92281f92",
   "text": "She is. And she's also counting, the way frightened people do: the names on her lists, and the faces in the stocks the next morning. They're the same faces."
  },
+ "narrator/981c77d46cea20cb": {
+  "chars": 107,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Parriwimple has carried a whole fallen log to the fire without being asked, and is now counting the sparks."
+ },
  "narrator/982196e935cb69c4": {
   "chars": 140,
   "model": "eleven_v4",
@@ -55977,6 +56181,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A roof beam swings down like a door slammed in your face."
+ },
+ "narrator/985bdb49f4a49163": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Liriel holds her holy symbol to the fire until it glows, and for a moment the circle of light is a little wider than a fire could make it."
  },
  "narrator/9867ea8ce900259d": {
   "chars": 126,
@@ -56031,6 +56241,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A deep grave, square and clean, by the east wall. The board at its head says PETRA, in Mihail's careful capitals."
+ },
+ "narrator/98d97398bcff93a7": {
+  "chars": 120,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Grey light comes up through the trees, which in Barovia is what passes for morning. The fire is ash and the pot is cold."
  },
  "narrator/98df82dc9d919acd": {
   "chars": 119,
@@ -56392,6 +56608,12 @@
   "recipe": "dd92281f92",
   "text": "Something blinks inside the nearest block of amber. Then the amber blinks back, everywhere, and the little eyes come swimming out of it, and the biggest sleeper in the hall climbs out after them."
  },
+ "narrator/9b84723518412dba": {
+  "chars": 108,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Victor sulks at the edge of the firelight with his stolen spellbook, pretending not to listen to every word."
+ },
  "narrator/9b8569b31a9263c6": {
   "chars": 103,
   "model": "eleven_v4",
@@ -56667,6 +56889,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Deeds and titles tied with string: this house, a vineyard plot long since sold, and a windmill on the Old Svalich Road, its sails sketched in the margin by a bored clerk."
+ },
+ "narrator/9db7380d7d5515c6": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You kick earth over the fire and shoulder your packs. Behind you, the woods close over the place you slept as if you were never there."
  },
  "narrator/9dd66d3007f2c9ff": {
   "chars": 130,
@@ -57333,6 +57561,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road narrows between the pines, so close on both sides that the branches meet overhead. The forest is quiet, in the attentive way of a room where everybody has just stopped talking."
+ },
+ "narrator/a2a7b8fc77589372": {
+  "chars": 113,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You make camp. Ratatouille has the pot on before the fire has properly caught, and is already disappointed in it."
  },
  "narrator/a2ba493e2920881c": {
   "chars": 87,
@@ -58996,6 +59230,12 @@
   "recipe": "dd92281f92",
   "text": "A bell rings as the door opens, and somewhere a pencil starts moving. Every shelf is dusted, every label straight, every price outrageous."
  },
+ "narrator/af4ffc9ffb8b3061": {
+  "chars": 109,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Emil lies just outside the firelight, a grey shape that might be a man or a wolf, depending on when you look."
+ },
  "narrator/af526ea8226d381a": {
   "chars": 106,
   "model": "eleven_v4",
@@ -60076,6 +60316,12 @@
   "recipe": "dd92281f92",
   "text": "KREZK, says the signpost, pointing west, and under it, in a smaller and much older hand: THE SUN IS NOT GONE. Somebody has gone over the letters with charcoal, recently."
  },
+ "narrator/b827888bb59ac442": {
+  "chars": 123,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ilinca roosts on a low branch over the camp, a raven with an old woman's patience, one eye on the fire and one on the road."
+ },
  "narrator/b86c130fa12021e9": {
   "chars": 86,
   "model": "eleven_v4",
@@ -60147,6 +60393,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "From the crest you can see a green smudge on the hills to the east where the Martikov vines are. It's the only green in the whole grey valley, and it looks like defiance."
+ },
+ "narrator/b8ea529e5450953b": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Thistle sits outside the firelight with her back to it, so her eyes keep the dark. Every so often she sniffs, and doesn't like it."
  },
  "narrator/b8f351440be5839a": {
   "chars": 104,
@@ -60514,6 +60766,12 @@
   "recipe": "dd92281f92",
   "text": "Dawn comes through the coloured glass. Real dawn, with real warmth in it, laid in red and gold squares across the dust and the broken pews and your faces."
  },
+ "narrator/bc73803f8412da28": {
+  "chars": 131,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Thistle is cutting a blaze into a tree at the edge of camp, the same mark Grandda Fen left on his trail. In case he comes this way."
+ },
  "narrator/bc833f76906023d1": {
   "chars": 170,
   "model": "eleven_v4",
@@ -60801,6 +61059,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The portcullis is up, and the way is open. Ahead, candlelight and voices."
+ },
+ "narrator/bee6f841c61a4d41": {
+  "chars": 91,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You break camp. The dark the fire held back all night moves in to take its patch of ground."
  },
  "narrator/bf0de607af3eb924": {
   "chars": 147,
@@ -61251,6 +61515,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "An empty cage on a hook, at the height where you'd hang a bird. There's straw in the bottom of it, and a child's shoe."
+ },
+ "narrator/c190cd5df1f5994e": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has a fish from the lake in the pan and is talking to it, kindly, about where it went wrong."
  },
  "narrator/c194d96e600b0a75": {
   "chars": 108,
@@ -61809,6 +62079,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The corridor is quiet. For the first time, nobody is crying behind any of the doors."
+ },
+ "narrator/c5a9c3f4463e4749": {
+  "chars": 123,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has laid out his spices on a cloth in a row, by colour, and is choosing between two that look exactly the same."
  },
  "narrator/c5b488c5fa619a46": {
   "chars": 83,
@@ -62464,6 +62740,12 @@
   "recipe": "dd92281f92",
   "text": "The camp smells of horses, plums and pipe smoke. Every wagon is painted in colours the valley has forgotten: red, gold, a green like summer."
  },
+ "narrator/caf876f40d57be82": {
+  "chars": 113,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kip is reading his contract by the firelight, his lips moving. He reads it every night. It hasn't got any better."
+ },
  "narrator/cb16a464af071b52": {
   "chars": 97,
   "model": "eleven_v4",
@@ -62649,6 +62931,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A child's book of tales, read until the spine gave up. One page falls open by itself."
+ },
+ "narrator/cc647dcd64e93d69": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Thistle is eating something with her hands that might have been a rabbit an hour ago. She offers you the other leg, in complete sincerity."
  },
  "narrator/cc697b74d48643e8": {
   "chars": 181,
@@ -62932,6 +63220,12 @@
   "recipe": "dd92281f92",
   "text": "Silvain takes a pen from an inside pocket, a good one, much mended, and puts it in Aurel's hand. His fingers close round it out of habit."
  },
+ "narrator/ce756eb5c8816ed4": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kasimir sits apart with his hood up and his hands folded. When the fire pops he doesn't flinch; he's somewhere a long way from here."
+ },
  "narrator/ce7a2b09e9baec61": {
   "chars": 81,
   "model": "eleven_v4",
@@ -63045,6 +63339,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "In the dark the falls are only a roar and a pale ribbon. Something on the far side of the gorge is howling, and the water is not quite loud enough to cover it."
+ },
+ "narrator/cf40c52f7497795f": {
+  "chars": 128,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Rictavio is telling a story about a carnival, a lion and a duke's wife. It's very funny. His eyes never stop watching the trees."
  },
  "narrator/cf48e84a59d72cef": {
   "chars": 92,
@@ -64264,6 +64564,12 @@
   "recipe": "dd92281f92",
   "text": "A traveller sitting against a boulder with their hood up and their hands in their lap, as if resting. They have been resting here since the first snow."
  },
+ "narrator/d8fe3ca74eae2d5e": {
+  "chars": 156,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sir Godfrey stands at the edge of the firelight in his dented plate. He doesn't sleep, or eat, or sit. He keeps the watch, as he has for four hundred years."
+ },
  "narrator/d928564dca821626": {
   "chars": 120,
   "model": "eleven_v4",
@@ -64401,6 +64707,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "His eyes keep going back to her. Her hair, her hands, the line of her throat. Not hunger. Worse: the look of a collector at the one piece missing from a set he has spent his whole life completing."
+ },
+ "narrator/da4dc3e5cfb1fdcb": {
+  "chars": 139,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Mordenkainen sits apart with a book open on his knee, reading by a light nobody lit. He doesn't turn the pages. He doesn't seem to need to."
  },
  "narrator/da4fc4d00a78d020": {
   "chars": 180,
@@ -65404,6 +65716,18 @@
   "recipe": "dd92281f92",
   "text": "A thin boy in a too-big coat is leaning over the well, shouting his own name down it to hear it come back."
  },
+ "narrator/e1c3430de26eac85": {
+  "chars": 118,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille holds a ladle of marsh water up to the firelight, sniffs it, and pours it quietly back where it came from."
+ },
+ "narrator/e1c69a4125b8bf85": {
+  "chars": 120,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Kip is polishing apricots on his sleeve one at a time and stacking them in a pyramid. He has already priced the pyramid."
+ },
  "narrator/e1c7727f45a664ee": {
   "chars": 101,
   "model": "eleven_v4",
@@ -65577,6 +65901,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Godrick unbuckles the old sword from his back, the one he never draws, and holds it out across both palms the way a squire is taught to. The pommel is a griffin, worn almost smooth."
+ },
+ "narrator/e2f7c9e884be89f6": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You find a level patch out of the wind and get a fire going. The dark comes right up to the edge of the light and waits there, politely."
  },
  "narrator/e3182e9f68cc10b5": {
   "chars": 114,
@@ -69015,6 +69345,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "And under that, in a different hand, so shallow the bark has nearly healed over it: J.F. I'M SORRY."
+ },
+ "narrator/fe04891645002687": {
+  "chars": 103,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ezmerelda has her false leg off and is oiling the joints, swearing softly at the damp in Barovia's air."
  },
  "narrator/fe39f354da7cc77a": {
   "chars": 172,
