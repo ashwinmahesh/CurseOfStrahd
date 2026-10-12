@@ -124,6 +124,7 @@
       "kind": "examine",
       "label": "A scarecrow with a stitched mouth",
       "model": "scarecrow_stitched",
+      "dialogue": "abbey_of_st_markovia/garden_sentry:sentry",
       "facing": "south",
       "checks": [
         {

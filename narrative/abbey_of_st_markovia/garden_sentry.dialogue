@@ -1,0 +1,17 @@
+# The scarecrow with the stitched mouth in the abbey garden (prop stitched_sentry). A treasure the Tarokka put in the
+# garden is sewn into it: the garden_sentry fight gives it when the scarecrows are burned, and with their binding
+# unpicked (Arcana, check scarecrows_unbind) the party can cut it out here instead (Wiki finding 64).
+
+~ sentry
+narrate examine:stitched_sentry
+if flag.abbey_scarecrows_unbound and treasure_at:abbey_of_st_markovia_garden
+Narrator: With the binding unpicked it's only sacking and straw. Something hard is sewn up inside its chest.
+* (Cut the stitches.) -> cut
+* Leave it. -> END
+endif
+-> END
+
+~ cut
+Narrator: The stitches part with a sound like a sigh. Inside, wrapped in a nun's old apron, is the thing it was holding closer than any gardener would.
+tarokka give abbey_of_st_markovia_garden
+-> END

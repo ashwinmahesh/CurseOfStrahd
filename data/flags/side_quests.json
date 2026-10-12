@@ -744,12 +744,27 @@
     {
       "id": "tinker_seen",
       "type": "bool",
-      "summary": "The party watched Iosif closely while he sold (The Tinker's Wagon)."
+      "summary": "The party tried watching Iosif closely while he sold (The Tinker's Wagon); one try. A success sets tinker_fear_seen."
     },
     {
       "id": "wagon_seen",
       "type": "bool",
-      "summary": "The party looked closely at Iosif's wagon (The Tinker's Wagon)."
+      "summary": "The party tried looking closely at Iosif's wagon (The Tinker's Wagon); one try. A success sets wagon_chain_seen."
+    },
+    {
+      "id": "tinker_fear_seen",
+      "type": "bool",
+      "summary": "Insight saw Iosif's fear of his own wagon (The Tinker's Wagon); the party can go for the chain."
+    },
+    {
+      "id": "wagon_chain_seen",
+      "type": "bool",
+      "summary": "Perception saw the chain from Iosif's ankle into the wagon (The Tinker's Wagon); the party can go for it."
+    },
+    {
+      "id": "tinker_board_asked",
+      "type": "bool",
+      "summary": "The party asked Iosif why he never gets down off the board; they can pull the blanket off his knees."
     },
     {
       "id": "wagon_slain",

@@ -44,7 +44,8 @@ endif
 * [if not flag.tinker_seen] [Insight DC 13] (Watch him while he talks.) -> seen | unseen
 * [if not flag.wagon_seen] [Perception DC 14] (Look at the wagon, not the man.) -> wagon | no_wagon
 * Why don't you ever get down off the board? -> board
-* [if flag.tinker_seen or flag.wagon_seen] (Go for the chain at his ankle.) -> chain
+* [if flag.tinker_fear_seen or flag.wagon_chain_seen] (Go for the chain at his ankle.) -> chain
+* [if flag.tinker_board_asked and not flag.tinker_fear_seen and not flag.wagon_chain_seen] (Pull the blanket off his knees.) -> chain
 * Goodbye. -> END
 
 ~ wares
@@ -52,8 +53,10 @@ Iosif the Tinker: The doll. Very fine. Porcelain face, a little cracked, and she
 Narrator: He holds the doll up and smiles. His eyes, over the top of it, don't smile at all.
 -> menu
 
+# The tries are one each (tinker_seen, wagon_seen); only a success saw anything (Wiki finding 71).
 ~ seen
 set tinker_seen
+set tinker_fear_seen
 Narrator: Every few words his eyes go down to his left foot, under the blanket, and away again. When he laughs, he laughs a beat late, like a man waiting for permission. And twice, in the middle of selling you the music box, his lips make a word without any sound: don't.
 -> menu
 
@@ -64,6 +67,7 @@ Narrator: A cheerful tinker who'd sell you your own boots. That's all you get fr
 
 ~ wagon
 set wagon_seen
+set wagon_chain_seen
 Narrator: The paint is too wet. The wheels have no nails and no joins; they're all one piece with the axle, like a knee. The shafts at the front twitch, once, the way a sleeping dog's leg does.
 Narrator: And the blanket over the tinker's knees hides a chain from his ankle into the boards, grey and glistening, that isn't iron.
 interject tag:blunt: That's not a wagon.
@@ -75,6 +79,7 @@ Narrator: Green paint, pots, a lot of bells. A wagon.
 -> menu
 
 ~ board
+set tinker_board_asked
 Iosif the Tinker: Get down? Ha! And leave all this? The wagon's my life. The wagon's my whole life. (He pats the board beside him, and something under the paint shivers.) Ask anyone. I'll never leave it.
 -> menu
 

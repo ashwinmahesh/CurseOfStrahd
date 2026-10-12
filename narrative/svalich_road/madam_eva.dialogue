@@ -358,26 +358,22 @@ endif
 -> treasure_here
 
 ~ treasure_here
-if tarokka.tome == stars_2 or tarokka.symbol == stars_2 or tarokka.sword == stars_2
+# Through the reading's own hand-over, so it's found once and her chest is empty after (Wiki finding 63).
+if treasure_at:tser_pool_eva_tent
 Madam Eva [sly]: And one of the three, you need not walk a step for. The cards put it in my keeping long ago, and told me to wait for the right hands. My hands are tired.
 cutscene eva_chest
 Narrator: She unlocks the iron-bound chest behind her with a key she keeps on a cord round her neck, lifts out a bundle of oilcloth, and sets it on the table between the cards.
 if tarokka.tome == stars_2
 Narrator: Inside lies a heavy book bound in black leather, clasped in tarnished silver. Nobody wants to be the first to touch it.
 interject name:ratatoille: I'll... I'll touch it. Carefully. Like a soufflé.
-give tome_of_strahd
-quest find_the_tome found
 elif tarokka.symbol == stars_2
 Narrator: Inside lies a platinum sunburst with a raven at its heart. Even through the oilcloth, it is warm.
 interject name:liriel_dawnsong: Oh. It's warm. Even here, it's warm.
-give holy_symbol_of_ravenkind
-quest find_the_holy_symbol found
 else
 Narrator: Inside lies a sword hilt of pale platinum with a sunburst guard and no blade. The candles burn a little brighter while it is uncovered.
 interject name:godrick_pendlebrook: No blade? I'll hold it anyway. Somebody ought to.
-give sunsword
-quest find_the_sunsword found
 endif
+tarokka give tser_pool_eva_tent
 set tser_treasure_given
 endif
 -> question

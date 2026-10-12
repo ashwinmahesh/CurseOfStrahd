@@ -500,6 +500,8 @@
       "model": "chest",
       "items": [],
       "gold": 0,
+      "locked": true,
+      "unlocked_when": "flag.arabelle_rescued",
       "owner": "luvash"
     }
   ],
@@ -706,7 +708,7 @@
   "rest": "risky",
   "treasure_spots": {
     "vallaki_vistani_camp:camp_edge": {
-      "container": "camp_edge_cache"
+      "dialogue": "vallaki/kasimir:trade"
     },
     "vallaki_vistani_camp:luvash_wagon": {
       "container": "luvash_chest"
