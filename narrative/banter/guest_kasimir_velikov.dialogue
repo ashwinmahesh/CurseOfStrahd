@@ -1,0 +1,76 @@
+# Kasimir Velikov travelling with the party (docs/voice/kasimir_velikov.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Kasimir is with the party. Every line here is unvoiced for now.
+
+~ quest_counting
+if guest:kasimir_velikov and flag.kasimir_bargain == "made"
+interject guest:kasimir_velikov: Every morning I wake and count. The number is smaller. I would not take the bargain back. I would like to stop counting.
+endif
+-> END
+
+~ quest_peace
+if guest:kasimir_velikov and flag.kasimir_at_peace
+interject guest:kasimir_velikov: I think of her less as a wound now, and more as a name. It is a strange relief. I do not trust it yet.
+endif
+-> END
+
+~ place_camp
+if guest:kasimir_velikov and at:vallaki_vistani_camp
+interject guest:kasimir_velikov: I mended nets here for twenty winters. I thought the nets needed me. They did not.
+endif
+-> END
+
+~ place_tsolenka
+if guest:kasimir_velikov and region:tsolenka_pass
+interject guest:kasimir_velikov: My people came over this pass as the count's guests. They are still his guests. It is the longest visit in the history of the world.
+endif
+-> END
+
+~ place_temple
+if guest:kasimir_velikov and region:amber_temple and not flag.kasimir_at_peace
+interject guest:kasimir_velikov: The temple whispers in a voice I knew as a boy. I told myself I would not listen. I am listening.
+endif
+-> END
+
+~ place_castle
+if guest:kasimir_velikov and region:castle_ravenloft
+interject guest:kasimir_velikov: Patrina walked up these stairs of her own will. I stood at the back the day they stoned her for it. I am done standing at the back.
+endif
+-> END
+
+~ fight_improving
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: I am poor at this. I am improving. It is not a skill I ever wished to improve.
+endif
+-> END
+
+~ fight_arms
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: My people were warriors once, before we were tenants. My arms remember it better than I do.
+endif
+-> END
+
+~ fight_whole
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: Is everyone whole? Good. I have buried enough people for an elf's lifetime.
+endif
+-> END
+
+~ idle_endings
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: The songs are always written before the ending. I would like, once, to hear the ending first.
+endif
+-> END
+
+~ idle_arithmetic
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: You all walk so quickly. I used to think it was impatience. Now I think it is arithmetic.
+endif
+-> END
+
+~ idle_company
+if guest:kasimir_velikov
+interject guest:kasimir_velikov: I am poor company, I know. I have decided to be poor company in the right direction.
+endif
+-> END

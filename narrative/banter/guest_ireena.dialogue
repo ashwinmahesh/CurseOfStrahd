@@ -1,0 +1,94 @@
+# Ireena Kolyana travelling with the party (docs/voice/ireena.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Ireena is with the party. Every line here is unvoiced for now.
+
+~ place_village
+if guest:ireena and region:village_of_barovia and quest.bury_the_burgomaster == buried
+interject guest:ireena: The church still smells of wax from his funeral. I'd like to walk past it without looking. I never manage it.
+endif
+-> END
+
+~ place_svalich_road
+if guest:ireena and region:svalich_road
+interject guest:ireena: The road to Vallaki. I used to think it went somewhere. Now I think it only goes round.
+endif
+-> END
+
+~ place_tser_pool
+if guest:ireena and at:tser_pool
+interject guest:ireena: The Vistani always look at me as if they're trying to remember where they put me down.
+endif
+-> END
+
+~ place_vallaki
+if guest:ireena and region:vallaki
+interject guest:ireena: Walls, a gate, and a burgomaster who throws festivals at the dark. I can see why Ismark wanted me here. I can see why it won't work.
+endif
+-> END
+
+~ place_krezk
+if guest:ireena and region:krezk
+interject guest:ireena: A pool that doesn't freeze, and a feeling I've been here before. I haven't. I'd remember the gate.
+endif
+-> END
+
+~ place_abbey
+if guest:ireena and region:abbey_of_st_markovia
+interject guest:ireena: Something here is stitched together and calls itself a saint's house. I'd rather sleep on the road.
+endif
+-> END
+
+~ place_lake
+if guest:ireena and region:lake_zarovich
+interject guest:ireena: I dream of a lake. A white dress, a fall, cold water. This is the lake. I don't want to stand any nearer the edge.
+endif
+-> END
+
+~ place_castle
+if guest:ireena and region:castle_ravenloft
+interject guest:ireena: I've never been here. I know where the stairs go. Tell me that isn't the worst thing you've heard today.
+endif
+-> END
+
+~ place_wizard_of_wines
+if guest:ireena and region:wizard_of_wines
+interject guest:ireena: Father bought one cask from this hill every year, for my name day. He said the wine was older than the valley's troubles. I believed him.
+endif
+-> END
+
+~ fight_glass
+if guest:ireena
+interject guest:ireena: I'm not made of glass. I'm made of whatever's left when the glass breaks, and it held.
+endif
+-> END
+
+~ fight_father
+if guest:ireena
+interject guest:ireena: Father taught me the sword so I'd never need it. He was a good man and a terrible prophet.
+endif
+-> END
+
+~ fight_plainly
+if guest:ireena
+interject guest:ireena: Is anyone hurt? Say it plainly. I'd rather know now than at the next door.
+endif
+-> END
+
+~ idle_spar
+if guest:ireena
+interject guest:ireena: When this is over, I'd like to spar with whichever of you is best with a blade. I want to know how far behind I am.
+endif
+-> END
+
+~ idle_scarf
+if guest:ireena
+interject guest:ireena: I keep a scarf over the marks. I'm not ashamed of them. I'm ashamed I don't remember.
+endif
+-> END
+
+~ idle_watch
+if guest:ireena
+interject guest:ireena: Take the watch in pairs tonight, and give me a turn. Don't argue. I hardly sleep anyway.
+endif
+-> END

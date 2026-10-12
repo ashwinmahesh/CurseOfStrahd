@@ -1,0 +1,16 @@
+# Teodor travelling with the party (narrative/village_of_barovia/polite_caller.dialogue): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Teodor is with the party. Every line here is unvoiced for now.
+
+~ fight_word
+if guest:teodor
+interject guest:teodor: There. Nobody's throat but theirs. I keep my word, you see. It's the one part of me that still works properly.
+endif
+-> END
+
+~ idle_manners
+if guest:teodor and night
+interject guest:teodor: Good evening to the dark. Forgive me. Three winters of manners; they don't wear off.
+endif
+-> END

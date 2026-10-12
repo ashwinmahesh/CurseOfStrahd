@@ -13,6 +13,9 @@ a minute and the validator can read it without Godot.
 - `narrative/<region>/<npc_or_scene>.dialogue` — conversations. Start a conversation at a node: `death_house/rose_thorn:start`.
 - `narrative/narrator/<region>.dialogue` — Narrator lines keyed by trigger (below).
 - `narrative/banter/<region>.dialogue` — party banter while exploring.
+- `narrative/banter/guest_<npc>.dialogue` — a guest's own lines while travelling with the party (story/banter.gd): one
+  line a node, named for when it may play: `quest_` and `place_` on entering an area (their own story's first),
+  `fight_` on the first step after a won fight (now and then), `idle_` after a long quiet walk. Each plays once.
 
 ## Grammar (one statement per line; indentation is ignored; `#` starts a comment)
 
@@ -113,7 +116,7 @@ inspire name:thistle: spoke her mind
 `background:acolyte`, `tag:pious`, `item:holy_symbol_amulet` (anyone carries it), `quest.<id> == stage_id`,
 `attitude.<npc> == friendly`, `visited:<location_id>`, `night`, `day`, `hour >= 20`, `tarokka.drawn`,
 `tarokka.sword == swords_3`, `tarokka.sword.region == vallaki`, `tarokka.ally.npc == ezmerelda`, `guest:ireena`,
-`spell:speak_with_dead` (an exploring spell the party cast is still running), `at:vallaki_st_andrals` (where the party is), `option:respec` (the owner's
+`spell:speak_with_dead` (an exploring spell the party cast is still running), `at:vallaki_st_andrals` (where the party is), `region:castle_ravenloft` (anywhere in that region), `option:respec` (the owner's
 switch), and `interject guest:ireena: Text` for a story ally travelling with the party,
 `approval.thistle >= close` (a companion's approval tier, compared by rank, so `<= strained` is Strained or worse;
 or a number), `attention >= marked` (Strahd's attention: a number or a tier from data/strahd/attention.json, F9),

@@ -55,6 +55,11 @@ var narrator: Narrator
 var dice: DiceRoller
 var banter_player: Banter = null
 var _last_banter := -1000
+## Squares the party has walked here, and the count when the last banter or guest line was heard (LocationWalk).
+var _steps := 0
+var _last_bark_step := 0
+## A fight was just won: a guest may say something as the party walks on.
+var _fight_bark_due := false
 
 ## Party members on the map (marching order = st.party order) and their tokens.
 var members: Array[Combatant] = []

@@ -3,8 +3,16 @@ extends RefCounted
 ## Party banter while exploring (plan §5.4, §5.7): short exchanges in narrative/banter/*.dialogue, one node each,
 ## written with interjections so only the party members who are present speak. Each plays once per playthrough;
 ## the world asks for one now and then (on entering an area), and an exchange that would come out empty is skipped.
+##
+## Guests have lines of their own while they travel with the party (narrative/banter/guest_<id>.dialogue, owner
+## 2026-10-12): the node's name says when one may play (GUEST_MOMENTS), and only while that guest is with the party.
+
+## Which of a guest's nodes each moment draws on, in order: entering an area plays a line about where their own story
+## stands before one about the place; a won fight and a long walk have their own.
+const GUEST_MOMENTS := {"enter": ["quest_", "place_"], "fight": ["fight_"], "idle": ["idle_"]}
 
 var _nodes: Array[String] = []      ## "banter/<file>:<node>"
+var _guest_nodes: Array[String] = []   ## "banter/guest_<id>:<node>"
 ## Cosmetic randomness for which exchange plays (never a rules roll).
 var _rng := RandomNumberGenerator.new()
 
@@ -21,7 +29,7 @@ func _init(seed_value: int = 11) -> void:
 		if df == null:
 			continue
 		for node in df.order:
-			_nodes.append("%s:%s" % [df.key, node])
+			(_guest_nodes if f.begins_with("guest_") else _nodes).append("%s:%s" % [df.key, node])
 
 
 ## The lines of an unplayed exchange that suits the party now ([{name, text, narrator, portrait}]), or [] if none.
@@ -40,6 +48,30 @@ func next(st: StoryState, region: String = "") -> Array[Dictionary]:
 		if not lines.is_empty():
 			st.flags["_banter/" + ref] = true
 			return lines
+	return []
+
+
+## A cosmetic chance (whether a moment gets a line at all; never a rules roll).
+func roll(chance: float) -> bool:
+	return _rng.randf() < chance
+
+
+## An unplayed line of a guest who's with the party, for a moment of GUEST_MOMENTS ("enter", "fight", "idle"), or []
+## if none suits. Marks it played.
+func guest_next(st: StoryState, moment: String) -> Array[Dictionary]:
+	for prefix: String in GUEST_MOMENTS.get(moment, []) as Array:
+		var pool: Array[String] = []
+		for ref in _guest_nodes:
+			if bool(st.flags.get("_banter/" + ref, false)) or not ref.get_slice(":", 1).begins_with(prefix):
+				continue
+			if ref.get_slice(":", 0).trim_prefix("banter/guest_") in st.guest_ids:
+				pool.append(ref)
+		while not pool.is_empty():
+			var ref := pool.pop_at(_rng.randi_range(0, pool.size() - 1)) as String
+			var lines := _lines(ref, st)
+			if not lines.is_empty():
+				st.flags["_banter/" + ref] = true
+				return lines
 	return []
 
 

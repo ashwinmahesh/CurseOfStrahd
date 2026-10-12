@@ -1,0 +1,70 @@
+# Ismark Kolyanovich travelling with the party (docs/voice/ismark.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Ismark is with the party. Every line here is unvoiced for now.
+
+~ place_blood_of_the_vine
+if guest:ismark and at:blood_of_the_vine
+interject guest:ismark: My corner table. They keep it for me now. It's the nearest thing to a title I've got.
+endif
+-> END
+
+~ place_village
+if guest:ismark and region:village_of_barovia
+interject guest:ismark: Welcome back to Barovia. The wine's still sour and the bread's still grey. Nobody's improved anything while we were away.
+endif
+-> END
+
+~ place_vallaki
+if guest:ismark and region:vallaki
+interject guest:ismark: Vallaki. Walls, and a baron who thinks a festival can keep out the dark. Well. It beats wolves at the window.
+endif
+-> END
+
+~ place_krezk
+if guest:ismark and region:krezk
+interject guest:ismark: Krezk shuts its gate on everyone. I respect that. I'd have done the same, if our gate had ever held.
+endif
+-> END
+
+~ place_castle
+if guest:ismark and region:castle_ravenloft
+interject guest:ismark: The landlord's house. Father came up these steps once, to beg. He came back down and never spoke of it.
+endif
+-> END
+
+~ fight_speech
+if guest:ismark
+interject guest:ismark: Still alive. Father would have made a speech. I'll just have a drink, if anyone's carrying one.
+endif
+-> END
+
+~ fight_lesser
+if guest:ismark
+interject guest:ismark: Ismark the Lesser, still standing. Somebody tell the village. They'll want to be disappointed.
+endif
+-> END
+
+~ fight_fingers
+if guest:ismark
+interject guest:ismark: Count your fingers. I always count mine. One day the number will be wrong, and I'll want to know when.
+endif
+-> END
+
+~ idle_useful
+if guest:ismark
+interject guest:ismark: I'd die for her. I'd prefer to do something more useful first, but the offer stands.
+endif
+-> END
+
+~ idle_disasters
+if guest:ismark
+interject guest:ismark: Every disaster I can think of, I've already imagined. It leaves the real ones very little room to surprise me.
+endif
+-> END
+
+~ idle_sister
+if guest:ismark and guest:ireena
+interject guest:ismark: Keep her in the middle of us. She'll hate it. Do it anyway, and blame me.
+endif
+-> END
