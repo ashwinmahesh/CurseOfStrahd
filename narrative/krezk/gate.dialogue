@@ -30,7 +30,8 @@ Krezk Watchman: We don't take strangers. Not for coin, not for pity, not for sto
 * We're travellers. We need shelter for the night. -> shelter
 * [if guest:ireena] This is Ireena Kolyana, daughter of the burgomaster of Barovia. She needs refuge. -> ireena
 * [if flag.abbot_vouched] The Abbot of St. Markovia sent us. He vouches for us. -> abbot
-* [if flag.wizard_of_wines_hook or flag.wine_shortage_heard] Your wine comes from the Wizard of Wines, doesn't it? We know why it stopped. -> wine
+* [if flag.winery_first_cart == "krezk"] We walked up beside the Martikovs' cart. The first wine of the year is yours. -> cart
+* [if (flag.wizard_of_wines_hook or flag.wine_shortage_heard) and not flag.winery_first_cart == "krezk"] Your wine comes from the Wizard of Wines, doesn't it? We know why it stopped. -> wine
 * [if flag.krezk_wolves_driven_off] We just cleared the wolves off your doorstep. -> wolves
 * [Cleric] I'm a priest. If you're this frightened of strangers, someone in there needs one. -> cleric
 * [if not flag.krezk_persuade_tried and not flag.krezk_threatened] [Persuasion DC 14] Everyone in this valley needs someone to open a door. Be the one who does. -> persuade_ok | persuade_fail
@@ -108,6 +109,14 @@ Krezk Watchman: The wine? Wait there. Don't go anywhere. Don't let the wine go a
 Narrator: Shouting behind the gate, and running. A broad, grey-bearded man in a sheepskin comes out through the wicket faster than his dignity would like.
 Dmitri Krezkov: Dmitri Krezkov, burgomaster. The Martikovs' wine has come up this road every autumn since my grandfather's time. This year: nothing. No cart, no word.
 Dmitri Krezkov: A village that can't drink can still pray, but it does it with less conviction. Come in. Drink our water. Tell me what you know.
+set krezk_reason = "wine"
+-> opened
+
+# The first cart of the free harvest, sent here by the party (davian:cart_krezk; Wiki finding 45).
+~ cart
+Krezk Watchman: The Martikovs' cart? Get that gate open! Somebody fetch Dmitri!
+Narrator: Shouting behind the gate. A broad, grey-bearded man in a sheepskin comes out through the wicket at a run and stops with his hand on the first barrel, as if to check it's real.
+Dmitri Krezkov: Dmitri Krezkov, burgomaster. The Martikovs' wine, and the people who walked it up the road. Come in, all of you. You and the wine both.
 set krezk_reason = "wine"
 -> opened
 

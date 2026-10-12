@@ -79,7 +79,7 @@ endif
 Narrator: Godrick has been quiet all evening, which for Godrick is like a mountain being quiet. At last he puts down the sword he's been sharpening and clears his throat.
 interject name:godrick_pendlebrook: Can I say something? I'm no good at hard things, so I'll say it plain and then I'll stop.
 interject name:godrick_pendlebrook: Sir Pellam said a knight's only as good as the people he won't leave behind. Lately I keep looking back, and I keep seeing people we left.
-if flag.bonegrinder_bargain == "abandoned" or flag.den_children_left
+if flag.bonegrinder_bargain == "abandoned" or (flag.den_children_left and not flag.den_children_freed)
 interject name:godrick_pendlebrook: Children. We walked away from children in a cage. I keep hearing it.
 endif
 interject name:godrick_pendlebrook: I'm not saying I'm better than anybody. I'm not clever enough to be sure what's right. But I'm sure about some things, and that's one of them.

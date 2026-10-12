@@ -736,6 +736,16 @@
         31,
         16
       ],
+      "dialogue": "berez/lysaga:bargained_after",
+      "when": "flag.lysaga_bargained and not flag.lysaga_dead and not flag.strahd_knows_marina_truth and not flag.lysaga_slain_in_hut and not flag.lysaga_lured",
+      "approach": 7
+    },
+    {
+      "npc": "baba_lysaga",
+      "cell": [
+        31,
+        16
+      ],
       "dialogue": "berez/lysaga:window",
       "when": "not flag.lysaga_dead and not flag.lysaga_guests and not flag.lysaga_lured",
       "approach": 7

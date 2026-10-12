@@ -142,8 +142,12 @@ Ezmerelda: ...Fine. Keep his secret. You're the first people in this valley who'
 approve godrick_pendlebrook +1 kip_smudgewick +1: You kept Van Richten's secret, even from his student
 -> menu
 
+# A lie keeps his secret as surely as a promise does (Wiki finding 54).
 ~ lie_ok
 set ezmerelda_lied
+if quest.the_hunters_tower != reunited
+quest the_hunters_tower kept
+endif
 Narrator: She looks at you for a long moment, and decides to believe you. It costs her something.
 Ezmerelda: Then I'll keep waiting. I'm good at waiting. No, I'm not. I'm terrible at it.
 approve wren_featherfoot +1 godrick_pendlebrook -1: You lied to Ezmerelda about her teacher
@@ -152,6 +156,9 @@ approve wren_featherfoot +1 godrick_pendlebrook -1: You lied to Ezmerelda about 
 ~ lie_fail
 set ezmerelda_lied
 set ezmerelda_trust -= 1
+if quest.the_hunters_tower != reunited
+quest the_hunters_tower kept
+endif
 Ezmerelda: You're a terrible liar. He made you promise, didn't he. He always makes people promise.
 -> menu
 

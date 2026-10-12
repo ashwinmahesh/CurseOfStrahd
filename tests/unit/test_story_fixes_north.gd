@@ -82,12 +82,30 @@ func test_godfrey_knights_godrick_at_the_beacon() -> void:
 
 
 ## Finding 36: a failed reading at the fire, with Vosk already gone down to the vaults, left Kip's contract unread.
+## Finding 87: the second try is Kip's own camp talk, offered after the next Long Rest, only with Kip there and only at
+## the_assessor.
 func test_kip_reads_his_contract_by_the_next_camp() -> void:
 	var st := SideQuestPlay.party(["kip_smudgewick"], 5, "vallaki", 22)
 	st.set_quest_stage("the_fine_print", "the_assessor")
+	CampTalk.mark(st, "camp/kip:talk_reading")   # the first try, chosen at the rest screen
 	st.set_flag("kip_reading_failed")
-	SideQuestPlay.play(st, "camp/kip:talk_reading")
+	var talks := CampTalk.available(st).filter(func(t: Dictionary) -> bool: return str(t["ref"]).begins_with("camp/kip:"))
+	assert_eq(talks.size(), 1, str(talks))
+	assert_eq(str(talks[0]["ref"]), "camp/kip:talk_reading_again")
+	assert_eq(str(talks[0]["label"]), "Kip wants a word")
+	SideQuestPlay.play(st, "camp/kip:talk_reading_again")
 	assert_eq(st.quest_stage("the_fine_print"), "the_small_print")
+	var away := SideQuestPlay.party(["ilse_varga"], 5, "vallaki", 22)
+	away.set_quest_stage("the_fine_print", "the_assessor")
+	away.set_flag("kip_reading_failed")
+	assert_false(CampTalk.available(away).any(func(t: Dictionary) -> bool: return str(t["ref"]).begins_with("camp/kip:")),
+		"not without Kip")
+	var signed := SideQuestPlay.party(["kip_smudgewick"], 5, "vallaki", 22)
+	signed.set_quest_stage("the_fine_print", "the_assessor")
+	signed.set_quest_stage("the_fine_print", "the_small_print")
+	signed.set_flag("kip_reading_failed")
+	SideQuestPlay.play(signed, "camp/kip:talk_reading_again")
+	assert_eq(signed.quest_stage("the_fine_print"), "the_small_print", "a later stage stays put")
 
 
 ## Finding 37: Grandda's blaze above the lake sent Thistle to a den the map didn't show.

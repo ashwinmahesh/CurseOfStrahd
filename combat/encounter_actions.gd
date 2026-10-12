@@ -170,6 +170,7 @@ func escape_effect(c: Combatant, effect_id: int) -> CombatResult:
 	var t := c.creature.roll_check(e.dice, skill, int(fx.escape["dc"]))
 	if t.success:
 		c.creature.remove_effect(fx)
+		c.regain_speed()
 		e.log.add("info", "%s breaks free of %s" % [c.name(), fx.name], c.id, [t.describe()])
 		e.events.append({"type": "condition", "id": c.id})
 	else:

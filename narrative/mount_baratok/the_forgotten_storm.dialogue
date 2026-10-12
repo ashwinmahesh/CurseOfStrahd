@@ -99,6 +99,10 @@ give censer_of_controlling_air_elementals
 else
 Narrator: The ring of glass is cold and still. In the evenings now, nothing comes.
 endif
+# The mage is here to hear it, travelling with the party (Wiki finding 56).
+if guest:mordenkainen and quest.the_forgotten_storm == broken
+-> thanks
+endif
 -> END
 
 # --- The mage, once it's over (mount_baratok/mordenkainen jumps here) ---
@@ -116,6 +120,9 @@ mad_mage: It's quiet. (He sets the black king upright on the board, very careful
 mad_mage: Take these. They're chess pieces. No, they're coins. One of them is a goat. You choose.
 endif
 gold +250
+if guest:mordenkainen
+-> END
+endif
 if flag.mordenkainen_restored
 -> mount_baratok/mordenkainen:restored_menu
 endif

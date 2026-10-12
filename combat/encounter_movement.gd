@@ -48,6 +48,8 @@ func in_running_water(c: Combatant) -> bool:
 ## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too.
 func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Dictionary:
 	var e := enc()
+	if budget < 0 and c == e.current():
+		c.regain_speed()   # a hold that ended this turn gives the Speed back
 	var feet := c.movement_left if budget < 0 else budget
 	feet = feet / extra_cost(c, standing)
 	var occ := _move_blocks(c)
@@ -203,6 +205,7 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	var why := e._turn_check(c)
 	if why != "":
 		return CombatResult.fail(why)
+	c.regain_speed()
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
 	# What the move may change, so it can be taken back if nothing comes of it (EncounterUndo).

@@ -18,6 +18,7 @@ endif
 
 ~ speaks
 set larders_prisoner_spoke
+set heart_of_sorrow_known
 Narrator: The jaw drops open on its own, and a hoarse voice counts "eleven, twelve" and stops, as if it has lost its place.
 Narrator: "Guards talk when they're bored. They said the master can't be hurt for long while the glass heart beats at the top of the high tower. They said it the way you'd say the well's deep."
 if not quest.the_heart_of_sorrow

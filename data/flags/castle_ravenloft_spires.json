@@ -89,7 +89,7 @@
     {
       "id": "heart_of_sorrow_known",
       "type": "bool",
-      "summary": "The party knows the crystal heart at the top of the high tower takes Strahd's wounds before he does (Escher, Pidlwick, Arcana or a cleric)."
+      "summary": "The party knows the crystal heart at the top of the high tower takes Strahd's wounds before he does (Escher, Pidlwick, the larders' dead prisoner, Arcana or a cleric)."
     },
     {
       "id": "heart_of_sorrow_seen",

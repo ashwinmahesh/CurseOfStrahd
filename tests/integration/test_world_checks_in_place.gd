@@ -37,7 +37,10 @@ const LOC := {
 			{"id": "jam_plate", "skill": "nature", "dc": 1, "label": "Wedge the plate",
 				"success": {"text": "Wedged.", "disarm": ["plate"]}},
 			{"id": "call_out", "skill": "performance", "dc": 1, "label": "Sing to the dark",
-				"success": {"text": "Something answers.", "flag": "test_checks_song"}}]}],
+				"success": {"text": "Something answers.", "flag": "test_checks_song"}}]},
+		{"id": "crypt", "cell": [9, 1], "kind": "examine", "label": "A small sarcophagus", "dialogue": "test/checks:crypt",
+			"checks": [{"id": "crypt_joke", "skill": "performance", "dc": 15, "label": "Tell the crypt a joke",
+				"success": {"text": "Something laughs."}}]}],
 	"containers": [
 		{"id": "coffer", "cell": [3, 1], "label": "Coffer", "lock_dc": 30, "gold": 4, "checks": [
 			{"id": "feel_lock", "skill": "sleight_of_hand", "dc": 1, "label": "Feel for the catch",
@@ -127,6 +130,27 @@ func test_the_menu_offers_each_check_with_who_and_the_chance() -> void:
 	plates.view = _view()
 	assert_eq(str(plates.call("_name", _view().thing_at(Vector2i(1, 1)))[0]), "Runes on the wall · Arcana", "and its name plate")
 	plates.free()
+
+
+## Wiki finding 79: a thing with a conversation (the castle's Speak with Dead talks) still gives its "Right-click it to
+## try" tip, once the conversation is over and the HUD is back.
+func test_a_thing_with_a_conversation_still_tips_its_check() -> void:
+	DialogueFile.register(DialogueFile.parse("~ crypt\nNarrator: A small sarcophagus, carved with bells.\n-> END\n", "test/checks"))
+	var v := _view()
+	LocationInteraction.interact(v, v.thing_at(Vector2i(9, 1)))
+	await _frames(2)
+	var d := root.get("dialogue") as DialogueUI
+	assert_true(d != null, "the conversation opens")
+	assert_false(said.has("Right-click it to try Performance"), "no tip under the conversation")
+	for i in 20:
+		if root.get("dialogue") == null:
+			break
+		if bool(d.get("_waiting_continue")):
+			d.call("_advance")
+		await _frames(1)
+	await _frames(2)
+	assert_true(root.get("dialogue") == null, "the talk is over")
+	assert_true(said.has("Right-click it to try Performance"), "the tip once it's over: %s" % [said])
 
 
 func test_walking_up_and_trying_reveals_teaches_and_hints() -> void:

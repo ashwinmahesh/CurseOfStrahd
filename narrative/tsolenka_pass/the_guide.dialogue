@@ -5,8 +5,9 @@
 # tea every night to keep her sick enough to climb for; something in the amber pays him a year of life for every
 # family he brings up (data/monsters/amber_guide.json). **Escalation:** nobody turns back on his mountain. The temple's
 # vestige and dark-gift flags are never set or read, and The Frozen Pilgrims isn't touched. Reached from the Tsolenka
-# sergeant once the party has passed his gate, from level 10 (tsolenka_pass/watch:passed_again), and the camp on the
-# goat path (data/locations/amber_road_camp.json). Every line here is unvoiced for now.
+# sergeant once the party has passed his gate, from level 10 (tsolenka_pass/watch:passed_again), or the watch log in
+# the tower with the gate open, for a party that released or fought the watch (tsolenka_pass/watch:log; Wiki finding
+# 47), and the camp on the goat path (data/locations/amber_road_camp.json). Every line here is unvoiced for now.
 
 # --- The sergeant, once the party has passed (tsolenka_pass/watch:passed_again jumps here) ---
 

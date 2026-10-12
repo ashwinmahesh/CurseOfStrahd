@@ -10,7 +10,8 @@ if not flag.patrina_met
 endif
 Narrator: Patrina is at her desk again, turning pages that crumble at her touch and re-form, and crumble.
 Patrina: You again. Have you come to stare, or have you finally brought me something worth reading?
-if guest:kasimir_velikov and not flag.patrina_named
+# Her brother's scene plays once he's here, whether or not the party named her first (Wiki finding 48).
+if guest:kasimir_velikov and not flag.patrina_kasimir_met
 -> kasimir_meets
 endif
 -> menu
@@ -117,6 +118,7 @@ combat patrina_wails
 
 ~ kasimir_meets
 set patrina_named
+set patrina_kasimir_met
 quest patrinas_wail named
 cutscene patrina_kasimir
 Narrator: Kasimir has stopped walking. He stands in the archway with his hands at his sides, as if he has forgotten what they are for.

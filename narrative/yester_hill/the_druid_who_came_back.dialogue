@@ -91,7 +91,11 @@ if not flag.zorica_met
 set zorica_met
 quest the_druid_who_came_back found
 Narrator: A girl of about sixteen in a druid's grey robe much too big for her is planting something on the burned crown by lantern light, and singing to it under her breath.
+if flag.yester_druids_fate == "spared" or flag.yester_druids_fate == "fled"
+Zorica: You burned it. You burned Mother's tree, and Mother's gone where none of us can find her. I was on the Krezk road for herbs. I came back and the hill was black.
+else
 Zorica: You burned it. You burned Mother's tree and Mother with it. I was on the Krezk road for herbs. I came back and the hill was black.
+endif
 Zorica: She taught us. Cut a twig from the tree and keep it against your skin, and it will never die. I kept it. I'm planting it. It's mine to plant.
 endif
 * [if not flag.zorica_asked] [Persuasion DC 15] It drank your teacher. It will drink you. Put the spade down. -> zorica_stops | zorica_fights

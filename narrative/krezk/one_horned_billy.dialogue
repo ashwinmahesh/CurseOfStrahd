@@ -85,6 +85,10 @@ Dragos: Dragos. My name. Dragos, the ferryman of Berez. Somebody give me a blank
 ~ dragos_tale
 Dragos: The old woman came to the landing in her hut and wanted rowing across to the castle side. I said I didn't row her sort. She laughed, and I was a goat. I swam the river. A goat can swim. I didn't know that.
 Dragos: Vera she kept. Lysaga takes the brides of Berez, the ones the river drowned, and she sews them into something. A queen, she calls it. A scarecrow queen in a dress made of every wedding dress in Berez, and my Vera's in it. I saw her face in the stitching, the night I swam.
+# Already burned (Wiki finding 85): straight to his thanks.
+if flag.rag_queen_beaten
+-> dragos_after
+endif
 Dragos [sad]: It walks the field by the old woman's stump. Whether she's there or not. Burn it. Please. Let my wife out of it.
 -> END
 

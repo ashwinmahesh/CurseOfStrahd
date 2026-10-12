@@ -35,6 +35,12 @@
       "ends": ""
     },
     {
+      "id": "with_her",
+      "journal": "Ezmerelda went into her teacher's tower with us, through his ward and swearing. He wasn't in it. She has seen enough to know he's alive, and as stubborn as ever, and she'll find him in her own time.",
+      "objectives": [],
+      "ends": "success"
+    },
+    {
       "id": "told",
       "journal": "Rudolph van Richten is Rictavio, the loud showman at Vallaki's Blue Water Inn. We told Ezmerelda, and she has gone to find him.",
       "objectives": [],

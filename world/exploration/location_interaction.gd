@@ -386,6 +386,8 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 			_use_prop(view, spec)
 			if str(spec.get("dialogue", "")) == "":
 				_check_tip(view, spec)
+			else:
+				_check_tip_after_talk(view, spec)
 		"trap":
 			LocationTraps.activate(view, spec)   # only from within 5 ft; disarming is a menu choice
 		"foe":
@@ -397,6 +399,17 @@ static func _check_tip(view: LocationView, spec: Dictionary) -> void:
 	var skills := LocationChecks.skills_offered(view, spec)
 	if skills != "":
 		view.toast.emit("Right-click it to try %s" % skills)
+
+
+## A thing with something to say (a Speak with Dead conversation) gives the same tip once the conversation is over and
+## the party is back to exploring, since the HUD's toasts are hidden while it's open (Wiki finding 79).
+static func _check_tip_after_talk(view: LocationView, spec: Dictionary) -> void:
+	while ModeController.mode == ModeController.Mode.DIALOGUE:
+		await view.get_tree().process_frame
+		if not is_instance_valid(view) or not view.is_inside_tree():
+			return
+	if ModeController.mode == ModeController.Mode.EXPLORATION and not view.in_combat:
+		_check_tip(view, spec)
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:

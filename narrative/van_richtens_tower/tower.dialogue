@@ -66,7 +66,11 @@ endif
 
 ~ open
 set tower_door_opened
-if not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked
+# Ezmerelda along walks in and sees for herself; named by the cards and still at the abbey, she isn't on the shore to be
+# told, so the tower is only a tower (Wiki finding 55).
+if guest:ezmerelda and (not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked)
+quest the_hunters_tower with_her
+elif tarokka.ally.npc != ezmerelda and (not quest.the_hunters_tower or quest.the_hunters_tower == heard or quest.the_hunters_tower == asked)
 quest the_hunters_tower inside
 endif
 Narrator: You say the name. Something in the wood listens, thinks it over, and lets go. The door swings inward on hinges that make no sound at all.

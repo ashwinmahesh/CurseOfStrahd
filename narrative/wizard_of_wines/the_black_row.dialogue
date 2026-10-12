@@ -9,7 +9,7 @@
 # --- Davian's news (davian:menu jumps here) ---
 
 ~ davian_news
-if quest.the_black_row and flag.gulthias_tree_burned and level >= 7 and quest.the_druid_who_came_back != done
+if quest.the_black_row and quest.the_black_row != rumored and flag.gulthias_tree_burned and level >= 7 and quest.the_druid_who_came_back != done
 -> yester_hill/the_druid_who_came_back:davian_news
 endif
 if quest.the_black_row == done
