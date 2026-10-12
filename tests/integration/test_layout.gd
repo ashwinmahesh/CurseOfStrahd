@@ -647,6 +647,25 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		func() -> void:
 			cv.hud.hide_prompt()
 			cv.hud.hide_tooltip())
+	# A hero's Reactions on one prompt (owner report 2026-10-12): long names wrap, the picked one's words show.
+	var many := ReactionRequest.new(Reactions.CHOICE, party.id, party.id)
+	many.title = "%s the Very Long-Named Knight of the Silver Dragon has a Reaction" % party.name()
+	many.text = "Pick one to use, or Skip to keep it."
+	many.min_targets = 1
+	many.max_targets = 1
+	many.target_choices.assign([
+		{"id": "now:0", "label": "Protection", "text": "The dire wolf of the Svalich Woods attacks Ireena Kolyana beside %s. Interpose the shield: Disadvantage on this attack and on others against Ireena until %s's next turn." % [party.name(), party.name()], "cost": "Reaction"},
+		{"id": "now:1", "label": "Warding Flare", "text": "A flash of light gives the attack roll Disadvantage.", "cost": "Reaction and a use of Warding Flare"},
+		{"id": "now:2:3", "label": "Hellish Rebuke · Level 3 slot (Pact Magic) · 4d10 Fire, a very long option name that has to wrap", "text": "Answer with fire.", "cost": "Reaction and the spell slot you choose"},
+		{"id": "later:sentinel", "label": "Sentinel, if the attack hits", "text": "If the dire wolf hits Ireena, %s makes an Opportunity Attack against it right after (Sentinel). If it misses, the Reaction is kept." % party.name(), "cost": "Reaction, only if it hits"}])
+	many.selected_ids.assign(["now:0"])
+	await _check("a prompt listing a hero's Reactions", func() -> Variant:
+		cv.hud.show_prompt(many)
+		await _frames(1)
+		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no one rule to set for a list")
+		assert_true((cv.hud.get("_prompt_text") as Label).text.contains("Interpose the shield"), "the picked one's words")
+		return cv.hud,
+		func() -> void: cv.hud.hide_prompt())
 	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.
 	var rows: Array = []
 	for k in 12:

@@ -8,6 +8,14 @@ extends RefCounted
 ## Callable}: the player is asked (or their per-reaction rule decides), the AI decides for its creatures.
 ## `use` applies the choice; if the offer has `stop`, using it ends the stage there (Shield turns the hit into a
 ## miss) and `stop` carries on instead.
+##
+## A hero with more than one Reaction to pick from gets one prompt listing them all (owner report 2026-10-12: Godrick's
+## Protection and Sentinel were only ever asked about one at a time): the ones that can be taken now, and during an
+## attack the ones whose trigger comes later in it (Sentinel and Interception need the hit), which keep the Reaction
+## for that moment. Skipping keeps the Reaction: a later trigger still asks.
+
+## The kind of the prompt that lists several Reactions (ReactionRequest.kind).
+const CHOICE := "reaction_choice"
 
 var _enc: WeakRef
 
@@ -29,7 +37,9 @@ func feats() -> CombatFeatures:
 ## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text`, `cost` and
 ## `target_choices` as Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
 ## change the outcome, the player isn't asked (a reroll that can't reach the DC).
-func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
+## `st` is the attack's state when the chain is one of an attack's stages: it holds the Reactions kept for later in it
+## (`reserved`: reactor id -> kind) and lets a prompt list those (later_options).
+func offer(chain: Array, done: Callable, r: CombatResult, st: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	while not chain.is_empty():
 		var o := chain.pop_front() as Dictionary
@@ -37,7 +47,7 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 		if o.has("still") and not (o["still"] as Callable).call():
 			continue
 		var kind := str(o["kind"])
-		var decision := decide(o)
+		var decision := decide(o, st)
 		if decision == "never":
 			continue
 		if decision == "auto":
@@ -45,14 +55,16 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 			if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 				return (o["stop"] as Callable).call() as CombatResult
 			continue
+		var group := _asked_with(o, chain, st)
+		var later := later_options(st, reactor, group)
+		if group.size() + later.size() > 1:
+			return _choose(group, later, chain, done, r, st)
 		var req := ReactionRequest.new(kind, reactor.id, str(o.get("trigger", "")))
 		req.title = str(o["title"])
-		req.text = str((o["text"] as Callable).call()) if o["text"] is Callable else str(o["text"])
-		var cost: Variant = o.get("cost", "Reaction")
-		req.cost = str((cost as Callable).call()) if cost is Callable else str(cost)
+		req.text = _text(o)
+		req.cost = _cost(o)
 		req.spends_reaction = bool(o.get("spends_reaction", true))
-		var choices: Variant = o.get("target_choices", [])
-		req.target_choices.assign((choices as Callable).call() if choices is Callable else choices)
+		req.target_choices.assign(_own_choices(o))
 		req.selected_ids.assign(o.get("selected_ids", []))
 		req.min_targets = int(o.get("min_targets", 0))
 		req.max_targets = int(o.get("max_targets", 0))
@@ -67,18 +79,167 @@ func offer(chain: Array, done: Callable, r: CombatResult) -> CombatResult:
 				(o["use"] as Callable).call()
 				if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
 					return (o["stop"] as Callable).call() as CombatResult
-			return offer(rest, done, r)
+			return offer(rest, done, r, st)
 		e.pending = req
 		r.pending = req
 		return r
 	return done.call() as CombatResult
 
 
+## Whether an offer spends its creature's Reaction: its cost or title names one (Lucky, Precision Attack and the rerolls
+## after a d20 don't).
+static func costs_reaction(o: Dictionary) -> bool:
+	if not bool(o.get("spends_reaction", true)):
+		return false
+	return _cost(o).contains("Reaction") or str(o.get("title", "")).begins_with("Reaction:")
+
+
+static func _text(o: Dictionary) -> String:
+	return str((o["text"] as Callable).call()) if o["text"] is Callable else str(o["text"])
+
+
+static func _cost(o: Dictionary) -> String:
+	var cost: Variant = o.get("cost", "Reaction")
+	return str((cost as Callable).call()) if cost is Callable else str(cost)
+
+
+static func _own_choices(o: Dictionary) -> Array:
+	var choices: Variant = o.get("target_choices", [])
+	return ((choices as Callable).call() if choices is Callable else choices) as Array
+
+
+## An offer's name on a list: its title without "Reaction: " and the question mark.
+static func offer_name(title: String) -> String:
+	return title.trim_prefix("Reaction: ").trim_suffix("?")
+
+
+## `o` (to be asked about) and the offers further down `chain` the same hero would be asked about that spend the same
+## Reaction: what one prompt lists. An offer that picks several things at once is asked about by itself, and so is a
+## second of the same kind (Protection for each of a spell's rays), after the first.
+func _asked_with(o: Dictionary, chain: Array, st: Dictionary) -> Array:
+	var reactor := o["reactor"] as Combatant
+	var group: Array = [o]
+	if not reactor.is_player_controlled() or not costs_reaction(o) or not _one_pick(o):
+		return group
+	for x: Dictionary in chain:
+		if x["reactor"] != reactor or not costs_reaction(x) or not _one_pick(x) or group.any(func(g: Dictionary) -> bool: return g["kind"] == x["kind"]):
+			continue
+		if (not x.has("still") or (x["still"] as Callable).call()) and decide(x, st) == "ask":
+			group.append(x)
+	return group
+
+
+static func _one_pick(o: Dictionary) -> bool:
+	return _own_choices(o).is_empty() or int(o.get("max_targets", 0)) == 1
+
+
+## One prompt for a hero's Reactions: each offer in `group` (one with picks of its own lists each pick: a slot level),
+## then the ones `later` in the attack. Picking one now uses it; picking a later one keeps the Reaction for it
+## (st.reserved); skipping declines this list and keeps the Reaction.
+func _choose(group: Array, later: Array[Dictionary], chain: Array, done: Callable, r: CombatResult, st: Dictionary) -> CombatResult:
+	var e := enc()
+	var first := group[0] as Dictionary
+	var reactor := first["reactor"] as Combatant
+	var req := chooser(reactor, str(first.get("trigger", "")))
+	for i in group.size():
+		var o := group[i] as Dictionary
+		var own := _own_choices(o)
+		if own.is_empty():
+			req.target_choices.append({"id": "now:%d" % i, "label": offer_name(str(o["title"])), "text": _text(o), "cost": _cost(o)})
+		for pick: Dictionary in own:
+			req.target_choices.append({"id": "now:%d:%s" % [i, pick["id"]], "label": "%s · %s" % [offer_name(str(o["title"])), pick["label"]],
+				"text": _text(o), "cost": _cost(o)})
+	for l in later:
+		req.target_choices.append({"id": "later:" + str(l["kind"]), "label": l["label"], "text": l["text"], "cost": l["cost"]})
+	# The first offer's own pick (the slot it would choose) starts selected.
+	var preset := first.get("selected_ids", []) as Array
+	req.selected_ids.assign(["now:0:%s" % preset[0]] if not _own_choices(first).is_empty() and not preset.is_empty() else [str(req.target_choices[0]["id"])])
+	req.validate_selected = func(ids: Array[String]) -> String:
+		var bits := ids[0].split(":", true, 2)
+		if bits[0] != "now" or bits.size() < 3 or not (group[int(bits[1])] as Dictionary).has("validate_selected"):
+			return ""
+		var sub: Array[String] = [bits[2]]
+		return str(((group[int(bits[1])] as Dictionary)["validate_selected"] as Callable).call(sub))
+	var rest := chain.filter(func(x: Dictionary) -> bool: return not group.any(func(g: Dictionary) -> bool: return is_same(g, x)))
+	var request_ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var request := request_ref.get_ref() as ReactionRequest
+		if not use or request == null:
+			return offer(rest, done, r, st)
+		var bits := request.selected_ids[0].split(":", true, 2)
+		if bits[0] == "later":
+			var kept := st.get("reserved", {}) as Dictionary
+			kept[reactor.id] = bits[1]
+			st["reserved"] = kept
+			return offer(rest, done, r, st)
+		var o := group[int(bits[1])] as Dictionary
+		if o.has("select"):
+			var sub: Array[String] = []
+			if bits.size() > 2:
+				sub.append(bits[2])
+			(o["select"] as Callable).call(sub)
+		(o["use"] as Callable).call()
+		if o.has("stop") and (not o.has("stop_if") or (o["stop_if"] as Callable).call()):
+			return (o["stop"] as Callable).call() as CombatResult
+		return offer(rest, done, r, st)
+	e.pending = req
+	r.pending = req
+	return r
+
+
+## An empty prompt listing `reactor`'s Reactions, one to pick: the caller adds the choices ({id, label, text, cost}; the
+## prompt shows the picked one's text and cost) and the continuation.
+func chooser(reactor: Combatant, trigger_id: String) -> ReactionRequest:
+	var req := ReactionRequest.new(CHOICE, reactor.id, trigger_id)
+	req.title = "%s has a Reaction" % reactor.name()
+	req.text = "Pick one to use, or Skip to keep it."
+	req.min_targets = 1
+	req.max_targets = 1
+	return req
+
+
+## The Reactions `reactor` could take later in the attack `st` (at its `stage`), listed on a prompt beside what it can take
+## now (`group`): Sentinel once the attack hits someone else (2024: "immediately after a creature within 5 feet of you
+## ... hits a target other than you"), Interception against the damage of a hit beside it, and an attack readied for
+## this one. Each is {kind, label, text, cost}; rules set to Off are left out.
+func later_options(st: Dictionary, reactor: Combatant, group: Array) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if not st.has("stage") or not reactor.is_player_controlled() or not costs_reaction(group[0] as Dictionary):
+		return out
+	var e := enc()
+	var c := st["c"] as Combatant
+	var target := st["target"] as Combatant
+	var stage := str(st["stage"])
+	var now := group.map(func(o: Dictionary) -> String: return str(o["kind"]))
+	var open := func(kind: String) -> bool: return not kind in now and e._reaction_decision(reactor, kind) != "never"
+	if stage != "missed" and reactor != target and reactor.hostile_to(c) and feats().has_feat(reactor, "sentinel") and open.call("sentinel") \
+			and e.distance(reactor, c) <= 5 and not e.best_melee_option(reactor, c).is_empty():
+		out.append({"kind": "sentinel", "label": "Sentinel, if the attack hits",
+			"text": "If %s hits %s, %s makes an Opportunity Attack against it right after (Sentinel). If it misses, the Reaction is kept." % [c.name(), target.name(), reactor.name()],
+			"cost": "Reaction, only if it hits"})
+	if stage in ["before_roll", "roll", "hit"] and reactor != target and reactor.allied_with(target) and feats().has_feat(reactor, "interception") \
+			and open.call("interception") and e.distance(reactor, target) <= 5 and (feats().wields_shield(reactor) or feats().holds_weapon(reactor)):
+		out.append({"kind": "interception", "label": "Interception, if the attack hits",
+			"text": "If %s hits %s, %s cuts the damage by 1d10 + %d (Interception). If it misses, the Reaction is kept." % [c.name(), target.name(), reactor.name(), reactor.creature.proficiency_bonus()],
+			"cost": "Reaction, only if it hits"})
+	if reactor.hostile_to(c) and open.call("readied_attack") and e.reaction_queue.any(func(q: Dictionary) -> bool:
+			return str(q["kind"]) == "readied_attack" and str(q["reactor"]) == reactor.id and str(q["trigger"]) == c.id):
+		var what := str(Compendium.shared().spell_data(str(reactor.readied["spell"])).get("name", "spell")) if reactor.readied.has("spell") else "attack"
+		out.append({"kind": "readied_attack", "label": "Readied %s, once the attack is done" % what,
+			"text": "%s's readied %s goes off at %s once its attack is done." % [reactor.name(), what, c.name()], "cost": "Reaction"})
+	return out
+
+
 ## What happens to an offer that's still open: "auto" (its creature's rule or the AI takes it, or it's `forced`),
 ## "never", or "ask" (the player is asked). An offer the creature's rule would ask about but that can't change the
 ## result (`helps`) is "never"; one that answers a roll about to be made (`ask: false`) follows D20Responses.sync_allows.
-func decide(o: Dictionary) -> String:
+## In an attack where the hero kept the Reaction for something later (st.reserved), that one is taken when it comes and
+## the hero's other Reactions aren't offered.
+func decide(o: Dictionary, st: Dictionary = {}) -> String:
 	var e := enc()
+	var kept := str((st.get("reserved", {}) as Dictionary).get((o["reactor"] as Combatant).id, ""))
+	if kept != "" and costs_reaction(o):
+		return "auto" if str(o["kind"]) == kept else "never"
 	if bool(o.get("forced", false)):
 		return "auto"
 	var decision := e._reaction_decision(o["reactor"] as Combatant, str(o["kind"]), str(o.get("default", "")))
@@ -95,9 +256,11 @@ func _react_ok(c: Combatant) -> bool:
 
 # --- Before the attack roll -------------------------------------------------------------------------
 
-## st: the attack's state {c, target, option, sit, ...}; offers add to st["sit"] advantage/disadvantage.
+## st: the attack's state {c, target, option, sit, ...}; offers add to st["sit"] advantage/disadvantage. Each stage's
+## builder notes the stage in st["stage"] for later_options.
 func before_roll(st: Dictionary) -> Array:
 	var e := enc()
+	st["stage"] = "before_roll"
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var out: Array = []
@@ -154,6 +317,7 @@ func before_roll(st: Dictionary) -> Array:
 ## War cleric's Channel Divinity, a Reaction for another's attack), Peerless Aim (Boon of Combat Prowess).
 func after_miss_attacker(st: Dictionary) -> Array:
 	var e := enc()
+	st["stage"] = "roll"
 	var c := st["c"] as Combatant
 	var t := st["t"] as D20Test
 	var ac := int(st["ac"])
@@ -226,6 +390,7 @@ func after_miss_attacker(st: Dictionary) -> Array:
 ## hand, melee attacks), Illusory Self (Illusionist 10). `miss` finishes the attack as a miss.
 func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 	var e := enc()
+	st["stage"] = "hit"
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var t := st["t"] as D20Test
@@ -301,6 +466,7 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 ## melee attack back, adding the die to its damage. Runs after the miss is resolved.
 func after_miss_target(st: Dictionary) -> Array:
 	var e := enc()
+	st["stage"] = "missed"
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var out: Array = []
@@ -327,6 +493,7 @@ func after_miss_target(st: Dictionary) -> Array:
 ## Ways to cut an attack's damage. `parts` is the damage by type (changed in place); `notes` collects log text.
 func against_damage(st: Dictionary, parts: Dictionary, notes: Array[String]) -> Array:
 	var e := enc()
+	st["stage"] = "damage"
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var melee := bool((st["option"] as Dictionary)["melee"])
