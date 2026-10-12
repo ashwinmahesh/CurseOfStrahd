@@ -12,8 +12,9 @@ extends Node
 const NAME := "Camp"
 ## The mark over someone who wants a word: the talk icon (a speech bubble).
 const MARK_ICON := preload("res://art/ui/icons/talk.png")
-## How big the camp's flame burns (a place's watch fire is 0.6).
-const FLAME := 0.5
+## How big the camp's flame burns (a place's watch fire's), and how brightly its light glows against a watch fire's.
+const FLAME := 0.6
+const GLOW := 0.55
 
 var view: LocationView
 var root: Node
@@ -39,7 +40,6 @@ var _roster_seen := ""
 var _mode_seen := -1
 ## The Narrator's lines still to say, one after another as the box clears.
 var _queue: Array[String] = []
-var _fire_light: OmniLight3D = null
 var _flame: Node3D = null
 var _struck := false
 
@@ -107,20 +107,15 @@ func _cook_here() -> bool:
 	return false
 
 
-## The fire burning, and its light, as a place's own watch fire has (LocationBuilder._build_lights; Atmosphere dresses
-## the light as it joins): the camp's flame stands taller than the stone ring's own small one.
+## The fire burning, with its light, as a place's own watch fire burns (LocationBuilder._flame; Atmosphere dresses the
+## light as it joins): taller than the stone ring's own small flame.
 func _light_fire() -> void:
 	if not view.prop_nodes.has("camp_fire"):
 		return
-	var spec := {"cell": [center.x, center.y], "kind": "fire", "dim_ft": 30}
-	_fire_light = CandleFlicker.new()
-	_fire_light.name = "CampFireLight"
-	_fire_light.light_color = SetDressing.light_colour(spec)
-	_fire_light.omni_range = 6.0
-	(_fire_light as CandleFlicker).base_energy = 2.2
-	_fire_light.position = view.board.cell_center(center) + Vector3(0, 1.2, 0)
-	view.add_child(_fire_light)
 	_flame = LocationBuilder._flame(view, center, FLAME)
+	# A cooking fire, not a watch fire: it lights the faces round it without blooming across the snow.
+	for l in _flame.find_children("*", "CandleFlicker", true, false):
+		(l as CandleFlicker).base_energy *= GLOW
 
 
 # --- Who sits where ----------------------------------------------------------------------------------------------
@@ -387,9 +382,8 @@ func strike() -> void:
 		if node != null and is_instance_valid(node):
 			node.queue_free()
 		view.prop_nodes.erase(id)
-	for n: Node3D in [_fire_light, _flame]:
-		if n != null and is_instance_valid(n):
-			n.queue_free()
+	if _flame != null and is_instance_valid(_flame):
+		_flame.queue_free()
 	for t in _bench_tokens:
 		if is_instance_valid(t):
 			t.queue_free()
