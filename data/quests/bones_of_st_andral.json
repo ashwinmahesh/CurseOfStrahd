@@ -21,7 +21,7 @@
         "Find out who took the bones",
         "Bring them back to the crypt"
       ],
-      "hint": "Find Milivoj the gravedigger in Vallaki's lower town by day; he has been spending more than he earns.",
+      "hint": "Find Milivoj the gravedigger in St. Andral's churchyard by day; he has been spending more than he earns.",
       "ends": ""
     },
     {
@@ -49,7 +49,7 @@
       "objectives": [
         "Recover the bones from the coffin maker's storeroom"
       ],
-      "hint": "The bones are still in the coffin maker's storeroom. Go in by day, ready for a fight.",
+      "hint": "The bones are still in the coffin maker's storeroom. Go in by day and take them back.",
       "ends": ""
     },
     {

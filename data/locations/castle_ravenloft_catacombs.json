@@ -445,6 +445,7 @@
       ],
       "kind": "examine",
       "label": "A small sarcophagus",
+      "dialogue": "castle_ravenloft/catacombs_jester:crypt",
       "model": "crypt_small",
       "checks": [
         {

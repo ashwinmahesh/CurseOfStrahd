@@ -37,6 +37,7 @@ Narrator: The branches above it are heavy with something that isn't leaves.
 
 ~ branches
 set cage_branches_seen
+set fowlers_spotted
 Narrator: Bats. Hundreds, hanging in the dead pine in black bunches. And in the crook of the trunk, very still, two pale shapes in good coats that are not asleep, with their eyes open, watching the trail.
 -> cage
 
@@ -57,6 +58,11 @@ Narrator: A dead twig goes under somebody's boot like a snapped bone. Up in the 
 -> fight
 
 ~ spring
+# Seen first (Perception DC 13), the fowlers lose their surprise (Wiki finding 16).
+if flag.fowlers_spotted
+Narrator: You walk up with your eyes on the branches, and when they unfold you're already turning to meet them.
+-> fight
+endif
 set fowlers_ready
 Narrator: The cage door is easy to reach. That was the idea. As your hand closes on the latch, the branches above you unfold.
 -> fight

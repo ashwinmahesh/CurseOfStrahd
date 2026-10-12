@@ -111,7 +111,8 @@ Narrator: Then he goes to the west gate, which should be shut, and isn't. A ride
 Narrator: The rider unfolds it, holds it to the lamp, and turns it over. Then he looks at Dobre for a long time, and Dobre stops smiling.
 Narrator: The rider rides away without a word. Dobre turns round, and sees you.
 Watchman Dobre: You. You did that. Do you know what he does with a man who brings him nothing?
--> fight_gate
+# The rider has gone: Dobre and his lads alone (Wiki finding 17).
+-> fight
 
 ~ fight
 Narrator: Two watchmen come round the corner at a run, and they aren't smiling either.

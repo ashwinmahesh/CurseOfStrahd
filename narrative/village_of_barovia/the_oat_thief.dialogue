@@ -18,7 +18,18 @@ quest the_oat_thief rumored
 endif
 Bildrath: My stock. Somebody is robbing me. Four sacks of oats a week, gone out of the back, and the lock never touched. Oats. Who steals oats in a village where nobody keeps a horse?
 Bildrath: Parriwimple says he hasn't seen anything. Parriwimple is a very poor liar. That's the one thing I like about him.
+# With Parriwimple in the party (the Tarokka's innocent), he can't be met on the north path by night (Wiki finding 10).
+if guest:parriwimple and not flag.hollow_known
+-> with_parriwimple
+endif
 -> village_of_barovia/bildrath:news
+
+~ with_parriwimple
+set hollow_known
+quest the_oat_thief asked
+Narrator: Behind you, Parriwimple has gone the colour of a beetroot and is studying the rafters very hard.
+Parriwimple: (Out on the step afterwards, in a whisper you could hear across the square.) It's for the lady. Agafia. Up the north path, past the last house. She's got three, and they mustn't have meat. Not ever.
+-> END
 
 # --- Parriwimple on the north path, by night (npc parriwimple) ---
 

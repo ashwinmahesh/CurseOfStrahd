@@ -159,7 +159,8 @@ set festival_over
 quest festival_of_the_blazing_sun wachter_triumph
 gold +150
 Lady Wachter: A hundred and fifty, as agreed, and the thanks of the burgomistress of Vallaki. My lord will have heard by nightfall; he hears everything in this valley sooner or later. I expect he'll be very pleased with you.
-if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported"
+# Not if he left the attic with the party (Wiki finding 19).
+if flag.victor_circle != "broken" and flag.victor_circle != "persuaded" and flag.victor_circle != "reported" and not guest:victor_vallakovich
 set victor_vanished
 quest victors_circle vanished
 cutscene attic_flash

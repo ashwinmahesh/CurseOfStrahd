@@ -559,3 +559,65 @@ func test_a_saved_fight_keeps_lingering_spells_and_summons() -> void:
 	assert_eq(e2.spells.zones.live().size(), 1, "Spirit Guardians is still on the field")
 	var c2 := e2.get_c(c.id)
 	assert_true(c2.creature.concentration != null and c2.creature.concentration.source_id == "spirit_guardians")
+
+
+## Owner report (2026-10-12): an attack readied for the first enemy into reach, ignored once, was never offered again.
+## Ignored, it stays held until the start of the readier's turn, and the next enemy into reach sets it off again.
+func test_an_ignored_approach_trigger_asks_again() -> void:
+	var e := TestCombat.open_field(3)
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	ilse.reaction_rules["readied_attack"] = "ask"
+	var first := TestCombat.foe(e, "wolf", Vector2i(9, 2))
+	var second := TestCombat.foe(e, "wolf", Vector2i(9, 5))
+	TestCombat.start_with(e, ilse)
+	assert_true(e.ready_attack(ilse, str(e.best_melee_option(ilse, null)["id"]), "approach").ok)
+	while e.current() != first:
+		e.end_turn()
+	first.movement_left = 40
+	e.move(first, Vector2i(6, 3))
+	assert_true(e.pending != null and e.pending.kind == "readied_attack", "asked as the first wolf comes in")
+	e.answer_reaction(false)
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_false(ilse.readied.is_empty(), "still held")
+	while e.current() != second:
+		e.end_turn()
+	second.movement_left = 40
+	e.move(second, Vector2i(5, 4))
+	assert_true(e.pending != null and e.pending.kind == "readied_attack", "asked again for the second")
+	e.answer_reaction(true)
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_true(ilse.readied.is_empty(), "used up")
+	assert_false(ilse.reaction_available)
+
+
+## Owner's default (2026-10-12): a readied spell going off is aimed on its prompt: the creatures it can reach, the one
+## that set it off picked first.
+func test_a_readied_spell_is_aimed_as_it_goes_off() -> void:
+	var e := TestCombat.open_field(3)
+	var mage := TestCombat.caster_with(e, ["shocking_grasp"], Vector2i(2, 3))
+	mage.reaction_rules["readied_attack"] = "ask"
+	var near := TestCombat.foe(e, "wolf", Vector2i(7, 3))
+	var other := TestCombat.foe(e, "wolf", Vector2i(3, 4))
+	near.creature.hp = 300
+	other.creature.hp = 300
+	TestCombat.start_with(e, mage)
+	assert_true(e.ready_spell(mage, "shocking_grasp", 0, "approach").ok)
+	while e.current() != near:
+		e.end_turn()
+	near.movement_left = 40
+	e.move(near, Vector2i(3, 3))
+	assert_true(e.pending != null and e.pending.kind == "readied_attack", "asked as it comes into range")
+	if e.pending == null:
+		return
+	assert_true(e.pending.title.contains("Shocking Grasp"), e.pending.title)
+	var ids: Array = e.pending.target_choices.map(func(o: Dictionary) -> String: return str(o["id"]))
+	assert_true(ids.has(near.id) and ids.has(other.id), "both wolves: %s" % [ids])
+	assert_eq(e.pending.selected_ids, [near.id] as Array[String], "the one that set it off, first")
+	e.pending.selected_ids.assign([other.id])
+	e.answer_reaction(true)
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("releases the readied Shocking Grasp at") and t.ends_with(other.name())),
+		"\n".join(e.log.texts().slice(-4)))

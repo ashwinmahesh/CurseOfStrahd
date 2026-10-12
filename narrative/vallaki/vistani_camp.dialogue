@@ -103,19 +103,20 @@ Luvash [sad]: She was in her bed when I went to sleep. In the morning, the bed w
 set vistani_friends
 Narrator: Luvash has Arabelle on his knee and both arms round her, and he is not drinking.
 Luvash [smile]: My friends. My friends! Every Vistani wagon in Barovia is your wagon now. Every fire is your fire. I've told them. I've told them all.
-if tarokka.ally.npc == arabelle and not guest:arabelle
-Arabelle: I'm going with them, Papa. The cards said. I saw it before they did.
-Luvash [afraid]: No. No! I only just got you back!
-Arabelle: You'll get me back again. I've seen that too.
-* Arabelle, stay with your father. -> arabelle_stays
-* We'll keep her safe, Luvash. On our lives. -> arabelle_joins
-endif
+# The reward first: either answer to Arabelle ends the talk (Wiki finding 15).
 if not flag.arabelle_reward_given
 set arabelle_reward_given
 gold +50
 Luvash: Take this. It's not enough. Nothing would be enough.
 Luvash: And this. My grandmother swam the Luna in it, all the way to the falls and back. In the water it makes you a fish. The lake took my girl once; let it never take you.
 give cloak_of_the_manta_ray
+endif
+if tarokka.ally.npc == arabelle and not guest:arabelle
+Arabelle: I'm going with them, Papa. The cards said. I saw it before they did.
+Luvash [afraid]: No. No! I only just got you back!
+Arabelle: You'll get me back again. I've seen that too.
+* Arabelle, stay with your father. -> arabelle_stays
+* We'll keep her safe, Luvash. On our lives. -> arabelle_joins
 endif
 -> END
 

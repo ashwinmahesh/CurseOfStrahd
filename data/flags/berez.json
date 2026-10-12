@@ -132,6 +132,11 @@
       "summary": "The party knows Baba Lysaga killed Marina (the doll, her slip in front of Ireena, the deduction at the bier, or her last words). Castle Ravenloft may read it."
     },
     {
+      "id": "marina_spoke",
+      "type": "bool",
+      "summary": "Marina answered Speak with Dead on her bier (berez/marina.dialogue): a thorn in her heart at her window, and the old woman from the hut singing on the marsh (marina_truth_known)."
+    },
+    {
       "id": "strahd_knows_marina_truth",
       "type": "bool",
       "summary": "The party told Strahd his nurse killed Marina (berez/marina:strahd_truth). He breaks her hut; she is found ruined. Castle Ravenloft and the epilogue read it."

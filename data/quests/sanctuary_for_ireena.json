@@ -51,6 +51,12 @@
       "journal": "Ireena won't stay in a town ruled by the devil's friends. She means to go on toward Krezk, with us.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "taken",
+      "journal": "Strahd came to the window and Ireena went with him. There's no sanctuary in Vallaki for her now; if she's anywhere, she's in his castle.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }
