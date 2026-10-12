@@ -1,0 +1,111 @@
+{
+  "id": "night_visitors",
+  "summary": "What comes out of the dark when a night at camp in a risky place is interrupted (F16, docs/story/camp.md): by the lie of the land the region has, and the party's level. Each group is played to the end by the test autopilot at the lowest level it's for, with the party tired as an interrupted night finds it (tests/integration/test_night_visitors.gd): hard but winnable, won and lost at least twice in eight.",
+  "lands": {
+    "svalich_road": "forest",
+    "into_the_mists": "forest",
+    "village_of_barovia": "forest",
+    "old_bonegrinder": "forest",
+    "werewolf_den": "forest",
+    "wizard_of_wines": "forest",
+    "van_richtens_tower": "forest",
+    "yester_hill": "forest",
+    "argynvostholt": "forest",
+    "lake_zarovich": "marsh",
+    "berez": "marsh",
+    "mount_baratok": "mountain",
+    "mount_ghakis": "mountain",
+    "tsolenka_pass": "mountain",
+    "amber_temple": "mountain",
+    "krezk": "mountain",
+    "castle_ravenloft": "castle",
+    "abbey_of_st_markovia": "castle"
+  },
+  "default_land": "forest",
+  "groups": [
+    {
+      "id": "forest_wolves",
+      "land": "forest",
+      "levels": [1, 3],
+      "text": "Eyes in the dark beyond the fire, low to the ground, and more of them every time you count.",
+      "monsters": ["wolf", "wolf", "wolf", "wolf"]
+    },
+    {
+      "id": "forest_hounds",
+      "land": "forest",
+      "levels": [4, 6],
+      "text": "Something big moves between the trees, then something bigger. The Count's hounds have found your fire.",
+      "monsters": ["dire_wolf", "dire_wolf", "wolf", "wolf", "wolf", "wolf"]
+    },
+    {
+      "id": "forest_werewolves",
+      "land": "forest",
+      "levels": [7, 11],
+      "text": "Shapes walk upright out of the pines, sniffing at the smoke, and the wolves behind them grin.",
+      "monsters": ["werewolf", "werewolf", "dire_wolf", "dire_wolf", "dire_wolf", "wolf"]
+    },
+    {
+      "id": "marsh_drowned",
+      "land": "marsh",
+      "levels": [1, 3],
+      "text": "The reeds part, and the drowned come up out of the water, walking stiffly toward the warmth.",
+      "monsters": ["zombie", "zombie", "zombie", "zombie", "giant_rat"]
+    },
+    {
+      "id": "marsh_ghast",
+      "land": "marsh",
+      "levels": [4, 6],
+      "text": "A stink of rot comes off the water ahead of them: ghasts, and the drowned they have been feeding on.",
+      "monsters": ["ghast", "ghast", "ghoul", "zombie", "zombie"]
+    },
+    {
+      "id": "marsh_watchers",
+      "land": "marsh",
+      "levels": [7, 11],
+      "text": "Scarecrows stand at the edge of the firelight that weren't there when you lay down. Behind them, something in a drowned bride's veil begins to wail.",
+      "monsters": ["banshee", "wight", "wight", "wight", "scarecrow", "scarecrow"]
+    },
+    {
+      "id": "mountain_wolves",
+      "land": "mountain",
+      "levels": [1, 3],
+      "text": "Grey wolves come down from the rocks above the camp, quiet as the snow.",
+      "monsters": ["wolf", "wolf", "wolf", "wolf"]
+    },
+    {
+      "id": "mountain_berserkers",
+      "land": "mountain",
+      "levels": [4, 6],
+      "text": "Men in furs come down the slope at a run, axes high, howling like wolves.",
+      "monsters": ["berserker", "berserker", "berserker"]
+    },
+    {
+      "id": "mountain_pack",
+      "land": "mountain",
+      "levels": [7, 11],
+      "text": "A werewolf leads them down off the heights: wild men in furs, and wolves the size of ponies.",
+      "monsters": ["werewolf", "berserker", "berserker", "berserker", "dire_wolf", "dire_wolf"]
+    },
+    {
+      "id": "castle_bats",
+      "land": "castle",
+      "levels": [1, 3],
+      "text": "The sky over the camp fills with wings, and the dead climb up out of the dark after them.",
+      "monsters": ["swarm_of_bats", "swarm_of_bats", "zombie", "zombie"]
+    },
+    {
+      "id": "castle_dead",
+      "land": "castle",
+      "levels": [4, 6],
+      "text": "Bats first, a cloud of them, and then the castle's dead and the things that eat them, crawling toward the warmth.",
+      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "strahd_zombie", "strahd_zombie"]
+    },
+    {
+      "id": "castle_spawn",
+      "land": "castle",
+      "levels": [7, 11],
+      "text": "Pale figures walk out of the dark behind the bats, smiling, in no hurry at all.",
+      "monsters": ["vampire_spawn", "vampire_spawn", "vampire_spawn", "swarm_of_bats", "swarm_of_bats"]
+    }
+  ]
+}

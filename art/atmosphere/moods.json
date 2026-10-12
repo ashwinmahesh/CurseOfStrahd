@@ -1067,7 +1067,7 @@
         "times": {
           "day": {
             "sky": "stone",
-            "fog": "bruise",
+            "fog": "ash_violet",
             "ambient": "plum",
             "ambient_energy": 0.7,
             "key": "parchment",
@@ -1076,7 +1076,7 @@
             "mist_strength": 0.45
           },
           "dusk": {
-            "fog": "bruise",
+            "fog": "ash_violet",
             "ambient": "plum",
             "ambient_energy": 0.65,
             "key": "flame",
@@ -1085,7 +1085,7 @@
             "mist_strength": 0.4
           },
           "dawn": {
-            "fog": "bruise",
+            "fog": "ash_violet",
             "ambient": "plum",
             "ambient_energy": 0.65,
             "key_energy": 0.85,
@@ -1398,7 +1398,7 @@
         "times": {
           "day": {
             "sky": "slate",
-            "fog": "bog",
+            "fog": "slate",
             "ambient": "moss",
             "ambient_energy": 0.5,
             "key": "bone",

@@ -2,7 +2,8 @@ class_name Vista
 extends Node3D
 ## What lies past a map's edge in the Modern look (Improvement Ideas W13, docs/art/atmosphere.md "Vistas"): the
 ## mountains round the valley as four painted ridges on a far ring, Castle Ravenloft on its crag at its true bearing
-## from here, and Lake Zarovich stretching away where it's near. They're seen when the camera tilts toward the horizon
+## from here, the regions' own landmarks (Mount Ghakis, Krezk on its cliff, Vallaki's palisade ...) where they're near,
+## and Lake Zarovich stretching away where it's near. They're seen when the camera tilts toward the horizon
 ## past its farthest zoom (CameraRig.horizon); in play they lie past the camera's far plane and cost nothing.
 ## They draw after the screen pass (blended, Look.make_post_process draws first among those), so the land's fade
 ## into the haze doesn't swallow them; nearer land and trees still hide them. Each frame they take the haze colour the
@@ -16,6 +17,10 @@ const LAKE_SHADER := preload("res://shaders/atmosphere/vista_lake.gdshader")
 const RING_PRIORITY := 1
 const LAKE_PRIORITY := 2
 const CARD_PRIORITY := 3
+## How many of the regions' painted landmarks a place shows at most (the nearest), besides the castle.
+const MAX_LANDMARKS := 4
+## A landmark whose bearing is closer than this (radians) to one already shown gives way, so none hides another.
+const SPREAD := 0.22
 
 static var _config: Dictionary = {}
 
@@ -54,8 +59,11 @@ static func build(board: ArenaBoard, set_id: String) -> Vista:
 	var castle := cfg.get("castle", {}) as Dictionary
 	var c_at := Vector2(float((castle["at"] as Array)[0]), float((castle["at"] as Array)[1]))
 	var c_far := (here as Vector2).distance_to(c_at)
+	var taken: Array[float] = []
 	if c_far > 0.02 and c_far < float(castle.get("within", 0.5)) and ResourceLoader.exists("res://" + str(castle["art"])):
-		v._castle(castle, c_at - (here as Vector2), c_far)
+		v._card("CastleRavenloft", castle, c_at - (here as Vector2), c_far)
+		taken.append((c_at - (here as Vector2)).angle())
+	v._landmarks(cfg.get("landmarks", {}) as Dictionary, here as Vector2, taken)
 	var lake := cfg.get("lake", {}) as Dictionary
 	var l_at := Vector2(float((lake["at"] as Array)[0]), float((lake["at"] as Array)[1]))
 	if (here as Vector2).distance_to(l_at) < float(lake.get("within", 0.15)):
@@ -90,9 +98,38 @@ func _ring(style: Dictionary, radius: float) -> void:
 	add_child(mi)
 
 
-## Castle Ravenloft on its crag, `toward` it on the travel art and `far` off: smaller and deeper in the haze the
-## farther it is, its foot sunk below the land's edge.
-func _castle(castle: Dictionary, toward: Vector2, far: float) -> void:
+## The regions' landmarks (the vault's Region Variety Plan: a place's own thing on the horizon, not only the castle):
+## the nearest few within their `within` on the travel art, leaving out a place's own (nearer than `near`) and any
+## that would stand in front of one already shown.
+func _landmarks(all: Dictionary, here: Vector2, taken: Array[float]) -> void:
+	var seen: Array = []
+	for id: String in all:
+		var spec := all[id] as Dictionary
+		var at := Vector2(float((spec["at"] as Array)[0]), float((spec["at"] as Array)[1]))
+		var far := here.distance_to(at)
+		if far > float(spec.get("near", 0.02)) and far < float(spec.get("within", 0.3)) \
+				and ResourceLoader.exists("res://" + str(spec["art"])):
+			seen.append([far, id, at - here])
+	seen.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
+	var shown := 0
+	for e: Array in seen:
+		if shown >= MAX_LANDMARKS:
+			break
+		var bearing := (e[2] as Vector2).angle()
+		var clear := true
+		for b: float in taken:
+			if absf(angle_difference(b, bearing)) < SPREAD:
+				clear = false
+		if not clear:
+			continue
+		taken.append(bearing)
+		_card("Landmark_" + str(e[1]), all[e[1]] as Dictionary, e[2] as Vector2, float(e[0]))
+		shown += 1
+
+
+## A painted landmark (Castle Ravenloft on its crag, a mountain, a town on its cliff), `toward` it on the travel art
+## and `far` off: smaller and deeper in the haze the farther it is, its foot sunk below the land's edge.
+func _card(node_name: String, castle: Dictionary, toward: Vector2, far: float) -> void:
 	var tex := load("res://" + str(castle["art"])) as Texture2D
 	var near := clampf(0.3 / maxf(far, 0.01), 0.45, 1.0)
 	var h := float(castle.get("height", 26.0)) * near
@@ -103,7 +140,7 @@ func _castle(castle: Dictionary, toward: Vector2, far: float) -> void:
 	m.set_shader_parameter("art", tex)
 	m.set_shader_parameter("hazing", clampf(0.12 + far * 0.5, 0.12, 0.6))
 	var mi := MeshInstance3D.new()
-	mi.name = "CastleRavenloft"
+	mi.name = node_name
 	mi.mesh = quad
 	mi.material_override = m
 	var dir := toward.normalized()
