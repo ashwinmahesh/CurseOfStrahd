@@ -731,6 +731,17 @@
         "normal_file": "art/textures/interior/wallpaper_yellow_2k_n.webp",
         "orm_file": "art/textures/interior/wallpaper_yellow_2k_orm.webp",
         "hd_source": "art/generated/surfaces/interior_wallpaper_yellow.webp"
+      },
+      "blue_panelling": {
+        "file": "art/textures/interior/blue_panelling_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/interior/blue_panelling_2k.webp",
+        "normal_file": "art/textures/interior/blue_panelling_2k_n.webp",
+        "orm_file": "art/textures/interior/blue_panelling_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/interior_blue_panelling.webp"
       }
     },
     "church": {
@@ -785,6 +796,43 @@
         "normal_file": "art/textures/church/stone_wall_2k_n.webp",
         "orm_file": "art/textures/church/stone_wall_2k_orm.webp",
         "hd_source": "art/generated/surfaces/church_stone_wall.webp"
+      },
+      "frosted_flags": {
+        "file": "art/textures/church/frosted_flags_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/church/frosted_flags_2k.webp",
+        "normal_file": "art/textures/church/frosted_flags_2k_n.webp",
+        "orm_file": "art/textures/church/frosted_flags_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/church_frosted_flags.webp",
+        "variants": [
+          {
+            "file": "art/textures/church/frosted_flags_2k_b.webp",
+            "normal_file": "art/textures/church/frosted_flags_2k_b_n.webp",
+            "orm_file": "art/textures/church/frosted_flags_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/church/frosted_flags_2k_c.webp",
+            "normal_file": "art/textures/church/frosted_flags_2k_c_n.webp",
+            "orm_file": "art/textures/church/frosted_flags_2k_c_orm.webp"
+          }
+        ]
+      },
+      "rich_flags": {
+        "file": "art/textures/church/rich_flags_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/church/rich_flags_2k.webp",
+        "normal_file": "art/textures/church/rich_flags_2k_n.webp",
+        "orm_file": "art/textures/church/rich_flags_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/church_rich_flags.webp",
+        "material": {
+          "roughness": 0.35
+        }
       }
     },
     "vallaki": {
@@ -972,6 +1020,43 @@
             "orm_file": "art/textures/dungeon/packed_earth_2k_c_orm.webp"
           }
         ]
+      },
+      "drowned_flags": {
+        "file": "art/textures/dungeon/drowned_flags_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/dungeon/drowned_flags_2k.webp",
+        "normal_file": "art/textures/dungeon/drowned_flags_2k_n.webp",
+        "orm_file": "art/textures/dungeon/drowned_flags_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_drowned_flags.webp",
+        "variants": [
+          {
+            "file": "art/textures/dungeon/drowned_flags_2k_b.webp",
+            "normal_file": "art/textures/dungeon/drowned_flags_2k_b_n.webp",
+            "orm_file": "art/textures/dungeon/drowned_flags_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/dungeon/drowned_flags_2k_c.webp",
+            "normal_file": "art/textures/dungeon/drowned_flags_2k_c_n.webp",
+            "orm_file": "art/textures/dungeon/drowned_flags_2k_c_orm.webp"
+          }
+        ],
+        "material": {
+          "roughness": 0.3
+        }
+      },
+      "slimed_brick": {
+        "file": "art/textures/dungeon/slimed_brick_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/dungeon/slimed_brick_2k.webp",
+        "normal_file": "art/textures/dungeon/slimed_brick_2k_n.webp",
+        "orm_file": "art/textures/dungeon/slimed_brick_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/dungeon_slimed_brick.webp"
       }
     },
     "wild": {
@@ -1197,6 +1282,40 @@
             "orm_file": "art/textures/cave/rock_wall_2k_c_orm.webp"
           }
         ]
+      },
+      "ember_basalt": {
+        "file": "art/textures/cave/ember_basalt_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/cave/ember_basalt_2k.webp",
+        "normal_file": "art/textures/cave/ember_basalt_2k_n.webp",
+        "orm_file": "art/textures/cave/ember_basalt_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/cave_ember_basalt.webp",
+        "variants": [
+          {
+            "file": "art/textures/cave/ember_basalt_2k_b.webp",
+            "normal_file": "art/textures/cave/ember_basalt_2k_b_n.webp",
+            "orm_file": "art/textures/cave/ember_basalt_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/cave/ember_basalt_2k_c.webp",
+            "normal_file": "art/textures/cave/ember_basalt_2k_c_n.webp",
+            "orm_file": "art/textures/cave/ember_basalt_2k_c_orm.webp"
+          }
+        ]
+      },
+      "ember_basalt_wall": {
+        "file": "art/textures/cave/ember_basalt_wall_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/cave/ember_basalt_wall_2k.webp",
+        "normal_file": "art/textures/cave/ember_basalt_wall_2k_n.webp",
+        "orm_file": "art/textures/cave/ember_basalt_wall_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/cave_ember_basalt_wall.webp"
       }
     },
     "amber": {
@@ -1250,6 +1369,20 @@
         "normal_file": "art/textures/amber/amber_wall_2k_n.webp",
         "orm_file": "art/textures/amber/amber_wall_2k_orm.webp",
         "hd_source": "art/generated/surfaces/amber_amber_wall.webp"
+      },
+      "warped_amber": {
+        "file": "art/textures/amber/warped_amber_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/amber/warped_amber_2k.webp",
+        "normal_file": "art/textures/amber/warped_amber_2k_n.webp",
+        "orm_file": "art/textures/amber/warped_amber_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/amber_warped_amber.webp",
+        "material": {
+          "roughness": 0.25
+        }
       }
     },
     "mountain": {

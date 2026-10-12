@@ -63,7 +63,8 @@
           17,
           4
         ]
-      ]
+      ],
+      "floor": "church/rich_flags"
     },
     {
       "id": "crypt_stair",
@@ -92,7 +93,8 @@
           22,
           14
         ]
-      ]
+      ],
+      "floor": "church/rich_flags"
     },
     {
       "id": "crypt",

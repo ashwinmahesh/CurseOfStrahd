@@ -547,9 +547,12 @@ func _set_weather_on_surfaces() -> void:
 		var flakes := weather_spec("snow")
 		if not flakes.is_empty():
 			snow = clampf(float(flakes.get("amount", SNOWED_AT)) / SNOWED_AT, 0.25, 1.0)
-		# Snow that lies whatever the sky is doing (a mood's `lying_snow`): high places keep last week's.
+	if Look.modern():
+		# Snow that lies whatever the sky is doing (a mood's `lying_snow`): high places keep last week's, and frost
+		# lies on the Tsolenka guard tower's stones indoors.
 		snow = maxf(snow, float(mood.get("lying_snow", 0.0)))
-		# Likewise ground that never dries (`lying_wet`): Vallaki's streets after the rain, the spray round the falls.
+		# Likewise ground that never dries (`lying_wet`): Vallaki's streets after the rain, the spray round the falls,
+		# the lake that got into Khazan's library.
 		wet = maxf(wet, float(mood.get("lying_wet", 0.0)))
 	wetness = wet
 	snow_cover = snow
@@ -1436,6 +1439,7 @@ func _dress_light(light: Variant) -> void:
 		l.light_energy *= gain
 	if bool(spec.get("steady", false)) and l is CandleFlicker:
 		(l as CandleFlicker).flicker = 0.0
+	_tint_flame(l, kind)
 	if not bool(spec.get("steady", false)):
 		LightFlicker.give(l, kind, _dark_boost(kind))
 	HeatShimmer.add(self, l, kind)   # the air wavers above fires and torches (Visual Polish Plan 8)
@@ -1443,6 +1447,25 @@ func _dress_light(light: Variant) -> void:
 		# The moon or the day, not a candle: the key light's colour, and its shaft through the haze.
 		l.light_color = sun.light_color
 		_window_shaft(l)
+
+
+## The kinds of flame a place's own `flame_tint` colours (the party's lantern, magic and windows keep theirs).
+const TINTED_FLAMES: Array[String] = ["candle", "lamp", "torch", "fire"]
+
+
+## A place's flames in its own colour (a mood's `flame_tint` {colour, mix, energy}, Modern only: the vault's Region
+## Variety Plan): St. Andral's candles gold, Barovia's church's thin and cold, the witch's hut's sick green, Death
+## House's gaslight yellow-green, the lich's glyph-lit study green.
+func _tint_flame(l: OmniLight3D, kind: String) -> void:
+	var tint := mood.get("flame_tint", {}) as Dictionary
+	if tint.is_empty() or not kind in TINTED_FLAMES:
+		return
+	l.light_color = l.light_color.lerp(Look.color(str(tint.get("colour", "candle"))), float(tint.get("mix", 0.3)))
+	var gain := float(tint.get("energy", 1.0))
+	if l is CandleFlicker:
+		(l as CandleFlicker).base_energy *= gain
+	else:
+		l.light_energy *= gain
 
 
 ## A shaft of the key light (the moon, or the day) coming in through a window over the wall beside the window's
