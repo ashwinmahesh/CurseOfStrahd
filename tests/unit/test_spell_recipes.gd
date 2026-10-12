@@ -559,3 +559,34 @@ func test_a_saved_fight_keeps_lingering_spells_and_summons() -> void:
 	assert_eq(e2.spells.zones.live().size(), 1, "Spirit Guardians is still on the field")
 	var c2 := e2.get_c(c.id)
 	assert_true(c2.creature.concentration != null and c2.creature.concentration.source_id == "spirit_guardians")
+
+
+## Owner report (2026-10-12): an attack readied for the first enemy into reach, ignored once, was never offered again.
+## Ignored, it stays held until the start of the readier's turn, and the next enemy into reach sets it off again.
+func test_an_ignored_approach_trigger_asks_again() -> void:
+	var e := TestCombat.open_field(3)
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3))
+	ilse.reaction_rules["readied_attack"] = "ask"
+	var first := TestCombat.foe(e, "wolf", Vector2i(9, 2))
+	var second := TestCombat.foe(e, "wolf", Vector2i(9, 5))
+	TestCombat.start_with(e, ilse)
+	assert_true(e.ready_attack(ilse, str(e.best_melee_option(ilse, null)["id"]), "approach").ok)
+	while e.current() != first:
+		e.end_turn()
+	first.movement_left = 40
+	e.move(first, Vector2i(6, 3))
+	assert_true(e.pending != null and e.pending.kind == "readied_attack", "asked as the first wolf comes in")
+	e.answer_reaction(false)
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_false(ilse.readied.is_empty(), "still held")
+	while e.current() != second:
+		e.end_turn()
+	second.movement_left = 40
+	e.move(second, Vector2i(5, 4))
+	assert_true(e.pending != null and e.pending.kind == "readied_attack", "asked again for the second")
+	e.answer_reaction(true)
+	while e.pending != null:
+		e.answer_reaction(false)
+	assert_true(ilse.readied.is_empty(), "used up")
+	assert_false(ilse.reaction_available)

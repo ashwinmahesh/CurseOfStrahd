@@ -510,7 +510,8 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 				rreq.continuation = func(use: bool) -> CombatResult:
 					if use:
 						return e.then(e.attacks._readied_attack(p, c), resume2)
-					p.readied = {}
+					# Ignored, it stays held until the start of its turn, asked again at the next trigger (2024 Ready; owner
+					# report 2026-10-12: declining once dropped it).
 					return resume2.call() as CombatResult
 				e.pending = rreq
 				r.pending = rreq
