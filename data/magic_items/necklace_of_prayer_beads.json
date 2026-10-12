@@ -73,35 +73,9 @@
         "count": 1,
         "per": "dawn"
       }
-    },
-    {
-      "id": "summons",
-      "name": "Bead of Summons",
-      "spell": "planar_ally",
-      "bead": "summons",
-      "cost": "bonus",
-      "uses": {
-        "count": 1,
-        "per": "dawn"
-      },
-      "combat": false,
-      "field": true
-    },
-    {
-      "id": "wind_walking",
-      "name": "Bead of Wind Walking",
-      "spell": "wind_walk",
-      "bead": "wind_walking",
-      "cost": "bonus",
-      "uses": {
-        "count": 1,
-        "per": "dawn"
-      },
-      "combat": false,
-      "field": true
     }
   ],
   "worn": "neck",
   "summary": "1d4 + 2 magic beads, each casting a spell once a day as a Bonus Action (Bless, Cure Wounds, Greater Restoration...).",
-  "text": "Strung among many plain beads of jade, coral, amber, quartz, citrine, bloodstone or pearl are 1d4 + 2 magic ones of topaz, aquamarine or black pearl. Each magic bead is one of six random types (duplicates are possible) and loses its magic if taken off the necklace. While wearing the necklace, you can cast a bead's spell with a Bonus Action, and any save it calls for uses your own spell save DC; that bead then rests until the next dawn. Bead types: Blessing casts Bless; Curing casts Cure Wounds (level 2) or Lesser Restoration; Favor casts Greater Restoration; Smiting casts Shining Smite; Summons casts Planar Ally; Wind Walking casts Wind Walk."
+  "text": "Strung among many plain beads of jade, coral, amber, quartz, citrine, bloodstone or pearl are 1d4 + 2 magic ones of topaz, aquamarine or black pearl. Each magic bead is one of four random types (duplicates are possible) and loses its magic if taken off the necklace. While wearing the necklace, you can cast a bead's spell with a Bonus Action, and any save it calls for uses your own spell save DC; that bead then rests until the next dawn. Bead types: Blessing casts Bless; Curing casts Cure Wounds (level 2) or Lesser Restoration; Favor casts Greater Restoration; Smiting casts Shining Smite. (The book's Summons and Wind Walking beads cast spells that are out of this game; they come up as Favor beads here.)"
 }

@@ -313,8 +313,11 @@ static func recipes_of(item: Dictionary) -> Dictionary:
 # --- A new item's own state ----------------------------------------------------------------------------
 
 ## Prayer bead types (2024 DMG, d20): 1-6 Blessing, 7-12 Curing, 13-16 Favor, 17-18 Smiting, 19 Summons, 20 Wind Walking.
+## Summons and Wind Walking cast spells that are out of the game (Planar Ally, Wind Walk), so they come up Favor here.
 const BEADS: Array[String] = ["blessing", "blessing", "blessing", "blessing", "blessing", "blessing", "curing", "curing", "curing",
-	"curing", "curing", "curing", "favor", "favor", "favor", "favor", "smiting", "smiting", "summons", "wind_walking"]
+	"curing", "curing", "curing", "favor", "favor", "favor", "favor", "smiting", "smiting", "favor", "favor"]
+## Beads an older save may still hold; Character.from_dict makes them Favor beads.
+const REMOVED_BEADS: Array[String] = ["summons", "wind_walking"]
 ## Robe of Useful Items: the six pairs it always has, then 4d4 rolled on its table (d100 bands, condensed to equal odds).
 const ROBE_FIXED: Array[String] = ["dagger", "dagger", "bullseye_lantern", "bullseye_lantern", "mirror", "mirror", "pole", "pole",
 	"rope", "rope", "sack", "sack"]

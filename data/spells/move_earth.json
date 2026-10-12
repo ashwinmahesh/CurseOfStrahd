@@ -1,5 +1,7 @@
 {
   "id": "move_earth",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: it did nothing in the game, and nothing in the game could give it a use",
   "name": "Move Earth",
   "source": {
     "book": "PHB2024",

@@ -548,8 +548,9 @@ func test_warlock_fiend_levels_8_to_11_with_mystic_arcanum() -> void:
 	assert_eq(ch.choice("warlock.1.eldritch_invocations").count, 7)
 	assert_eq(ch.resource_max("spell:contact_other_plane"), 1, "Contact Patron")
 	assert_eq(str(_known(ch, "contact_other_plane", "granted").get("class_id", "")), "warlock")
-	for s: String in ["geas", "insect_plague"]:
-		assert_eq(str(_known(ch, s).get("kind", "")), "always", "Fiend spell at 9: %s" % s)
+	# Geas is out of the game (Ashwin, 2026-10-12: it did nothing here; docs/rules/deviations.md): Insect Plague alone.
+	assert_eq(str(_known(ch, "insect_plague").get("kind", "")), "always", "Fiend spell at 9: insect_plague")
+	assert_eq(str(_known(ch, "geas").get("kind", "")), "", "Geas is out of the game")
 	_level_to(ch, "warlock", 10, {10: {"fiend_patron.10.fiendish_resilience": ["necrotic"]}})
 	_hp(ch, 73, "8 + 9 × 5 + 2 × 10")
 	assert_ne(ch.resistance_source(&"necrotic"), "", "Fiendish Resilience: Necrotic")

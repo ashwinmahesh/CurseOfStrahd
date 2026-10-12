@@ -1,6 +1,6 @@
 # Cheat codes
 
-Every code the game's Cheat codes page accepts: 742 items, 541 of them magic.
+Every code the game's Cheat codes page accepts: 740 items, 539 of them magic.
 Each code gives that item to the hero you pick, as many times as you like. `make cheat-codes` rewrites this file
 (and the vault's Cheat Codes.md) from the item data, so run it after adding items rather than editing this by
 hand; `python3 tools/data/cheat_codes.py --check` says whether it's behind.
@@ -302,7 +302,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Giant Slayer | `B09DBB` | Weapon | pick a weapon |
 | Glamoured Studded Leather | `4665AD` | Armor |  |
 | Golden Harper Pin | `34F85F` | Wondrous |  |
-| Helm of Teleportation | `55D182` | Wondrous |  |
 | Heward's Handy Haversack | `2BE7C9` | Wondrous |  |
 | Horn of Blasting | `935AE8` | Wondrous |  |
 | Horn of Valhalla (Brass) | `E60FF6` | Wondrous |  |
@@ -556,7 +555,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Ring of Elemental Command (Water) | `A6C478` | Ring |  |
 | Ring of Invisibility | `02A369` | Ring |  |
 | Ring of Spell Turning | `9DA68C` | Ring |  |
-| Ring of Three Wishes | `EBCBB8` | Ring |  |
 | Robe of the Archmagi | `2670D0` | Wondrous |  |
 | Rod of Lordly Might | `E24751` | Rod |  |
 | Rod of Resurrection | `24E4D8` | Rod |  |

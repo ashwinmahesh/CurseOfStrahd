@@ -151,12 +151,6 @@
                   "at_class_level": 7
                 },
                 {
-                  "stat": "spell",
-                  "value": "tree_stride",
-                  "always_prepared": true,
-                  "at_class_level": 9
-                },
-                {
                   "stat": "resistance",
                   "value": "lightning",
                   "at_class_level": 10

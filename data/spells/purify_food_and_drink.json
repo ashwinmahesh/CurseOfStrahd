@@ -1,5 +1,7 @@
 {
   "id": "purify_food_and_drink",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: it did nothing in the game, and nothing in the game could give it a use",
   "name": "Purify Food and Drink",
   "source": {
     "book": "PHB2024",

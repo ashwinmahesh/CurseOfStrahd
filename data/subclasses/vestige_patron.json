@@ -197,11 +197,6 @@
                   "stat": "spell",
                   "value": "dominate_person",
                   "at_class_level": 9
-                },
-                {
-                  "stat": "spell",
-                  "value": "modify_memory",
-                  "at_class_level": 9
                 }
               ]
             },

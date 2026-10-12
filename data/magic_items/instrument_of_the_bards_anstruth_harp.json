@@ -53,15 +53,6 @@
       }
     },
     {
-      "id": "control_weather",
-      "name": "Control Weather",
-      "spell": "control_weather",
-      "uses": {
-        "count": 1,
-        "per": "dawn"
-      }
-    },
-    {
       "id": "cure_wounds",
       "name": "Cure Wounds",
       "spell": "cure_wounds",
@@ -87,6 +78,6 @@
       "value": "bards_instrument"
     }
   ],
-  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Control Weather, Cure Wounds, Wall Of Thorns.",
-  "text": "Finer than any ordinary instrument, this one lets a Bard who is playing it cast Protection from Evil and Good, Fly, Levitate and Invisibility, along with its own Wall Of Thorns, Control Weather and Cure Wounds (level 5). Each spell can be cast this way once, and every use returns at dawn. When a spell cast through it would inflict the Charmed condition on a target that fails its save, that target makes the save with Disadvantage. Anyone who plays it without being attuned takes 2d4 Psychic damage unless it succeeds on a Wisdom saving throw against DC 15."
+  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Cure Wounds, Wall Of Thorns.",
+  "text": "Finer than any ordinary instrument, this one lets a Bard who is playing it cast Protection from Evil and Good, Fly, Levitate and Invisibility, along with its own Wall Of Thorns and Cure Wounds (level 5). Each spell can be cast this way once, and every use returns at dawn. When a spell cast through it would inflict the Charmed condition on a target that fails its save, that target makes the save with Disadvantage. Anyone who plays it without being attuned takes 2d4 Psychic damage unless it succeeds on a Wisdom saving throw against DC 15."
 }

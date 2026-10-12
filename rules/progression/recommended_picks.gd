@@ -28,7 +28,7 @@ const SPELLS: Array[String] = [
 	"mass_healing_word", "call_lightning", "conjure_animals", "fly", "slow", "remove_curse", "lightning_bolt",
 	"summon_undead", "summon_fey", "crusaders_mantle", "aura_of_vitality", "blinding_smite", "protection_from_energy",
 	"beacon_of_hope", "conjure_barrage", "lightning_arrow", "elemental_weapon", "vampiric_touch", "glyph_of_warding",
-	"leomunds_tiny_hut", "speak_with_dead", "sending", "tongues", "clairvoyance", "sleet_storm", "stinking_cloud", "blink",
+	"leomunds_tiny_hut", "speak_with_dead", "tongues", "clairvoyance", "sleet_storm", "stinking_cloud", "blink",
 	"fear", "plant_growth", "wind_wall", "magic_circle", "bestow_curse", "major_image", "gaseous_form", "hunger_of_hadar",
 	"polymorph", "banishment", "greater_invisibility", "dimension_door", "death_ward", "guardian_of_faith", "wall_of_fire",
 	"aura_of_purity", "aura_of_life", "freedom_of_movement", "summon_elemental", "summon_construct", "summon_aberration",
@@ -39,10 +39,10 @@ const SPELLS: Array[String] = [
 	"animate_objects", "cone_of_cold", "bigbys_hand", "steel_wind_strike", "circle_of_power", "destructive_wave",
 	"banishing_smite", "dispel_evil_and_good", "summon_celestial", "summon_dragon", "flame_strike", "telekinesis",
 	"insect_plague", "wall_of_stone", "dominate_person", "conjure_elemental", "cloudkill", "swift_quiver", "scrying",
-	"tree_stride", "teleportation_circle", "commune", "legend_lore",
+	"commune", "legend_lore",
 	"sunbeam", "heal", "heroes_feast", "blade_barrier", "true_seeing", "chain_lightning", "disintegrate",
 	"globe_of_invulnerability", "mass_suggestion", "otilukes_freezing_sphere", "wall_of_ice", "harm", "eyebite",
-	"circle_of_death", "find_the_path", "word_of_recall", "wind_walk", "conjure_fey", "summon_fiend", "wall_of_thorns"]
+	"circle_of_death", "find_the_path", "conjure_fey", "summon_fiend", "wall_of_thorns"]
 
 ## Inline options, best first: Eldritch Invocations, Battle Master maneuvers, Metamagic, and class options (a Cleric's
 ## Divine Order and Blessed Strikes, a Druid's Primal Order and Elemental Fury, a Hunter's prey, a Circle of the Land's
