@@ -219,6 +219,7 @@ func load_from(dir: String, slot: String) -> Error:
 ## game's "finished", a beside save's "home_slot") is no part of the game and needs no step: a save without one has none.
 static func upgrade(data: Dictionary) -> Dictionary:
 	var out := data.duplicate(true)
+	swap_withdrawn_items(out)
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
@@ -598,3 +599,39 @@ static func _remove_dir(dir: String) -> void:
 	for f in _files(dir):
 		DirAccess.remove_absolute(dir.path_join(f))
 	DirAccess.remove_absolute(dir)
+
+
+# --- Items taken out of the game --------------------------------------------------------------------------------
+
+## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn. The Amulet of
+## Proof against Detection and Location did nothing here and turned up far too often (owner, 2026-10-12): each one a
+## save holds, carried, stashed or waiting in a chest, becomes one of these useful uncommons.
+const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":
+	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"]}
+
+
+## Swaps every withdrawn item in `save` (in place) for its replacements, whatever the save's version: an item entry
+## takes the new id, off its slot, and an attunement to the old one ends. A save without one is unchanged.
+static func swap_withdrawn_items(save: Dictionary) -> void:
+	_swap_in(save, {})
+
+
+static func _swap_in(v: Variant, seen: Dictionary) -> void:
+	if v is Dictionary:
+		var d := v as Dictionary
+		var old := str(d.get("id", ""))
+		if WITHDRAWN.has(old):
+			var subs := WITHDRAWN[old] as Array
+			var n := int(seen.get(old, 0))
+			seen[old] = n + 1
+			d["id"] = str(subs[n % subs.size()])
+			if d.has("slot"):
+				d["slot"] = ""
+		if d.get("attuned", null) is Array:
+			d["attuned"] = (d["attuned"] as Array).filter(func(a: Variant) -> bool: return not WITHDRAWN.has(str(a)))
+		for k: Variant in d.keys():
+			_swap_in(d[k], seen)
+	elif v is Array:
+		for x: Variant in v as Array:
+			_swap_in(x, seen)
+

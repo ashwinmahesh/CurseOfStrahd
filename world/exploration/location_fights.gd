@@ -442,6 +442,13 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			if cr.hp <= 0 and not cr.dead and not cr.stable:
 				cr.stabilize()
 		view._say("combat:victory")
+	# A guest who fell isn't left for dead: carried home to heal, or patched up if they can't leave, and the player is
+	# told (StoryState.see_to_fallen_guests; Ashwin, 2026-10-12: Adrian's figure walked on after he fell).
+	var carried := view.st.see_to_fallen_guests()
+	if not carried.is_empty():
+		view.place_guests()
+		for who in carried:
+			view.toast.emit("%s is badly hurt and goes home to heal. You can ask them along again where you met." % who)
 	# What the fight hands back to the story, whatever the outcome (ADR 0014): Misty Escape's flag, a withdrawal's
 	# flag, Strahd destroyed and his quest's stage.
 	for f: String in e.legendary.story_flags:

@@ -13,6 +13,12 @@
     "monster": "wereraven",
     "note": "Joins for the assault on the mill (old_bonegrinder/ilinca:join) and leaves with the children."
   },
+  "guest_stays": [
+    {
+      "when": "quest.children_of_the_mill and not (quest.children_of_the_mill >= children_freed)",
+      "why": "Ilinca won't leave until the children are out of the mill."
+    }
+  ],
   "tags": [
     "barovian",
     "wereraven",

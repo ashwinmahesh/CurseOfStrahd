@@ -40,6 +40,8 @@ func _draw() -> void:
 	for i in st.party.size():
 		cols.add_child(_column(st.party[i], i))
 	page.add_child(cols)
+	if not st.guests.is_empty():
+		page.add_child(_guests())
 	if not st.fallen.is_empty():
 		var lost: Array[String] = []
 		for f in st.fallen:
@@ -53,6 +55,57 @@ func _draw() -> void:
 	var feelings := ApprovalPanel.build(st)
 	if feelings != null:
 		page.add_child(feelings)
+
+
+## The guests travelling with the party (story allies, ADR 0010), each with Send home, or what keeps them (Ashwin,
+## 2026-10-12): one sent home waits where the party found them, and their own scenes there can ask them along again.
+func _guests() -> Control:
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 6)
+	box.add_child(UiKit.header("Guests"))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	box.add_child(row)
+	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+	for gi in st.guests.size():
+		var id := st.guest_ids[gi]
+		var g := st.guests[gi]
+		var npc := Compendium.shared().get_entry("npcs", id)
+		var card := PanelContainer.new()
+		var cs := UiKit.style("ui_black", "moonlight", 2, 0.85)
+		cs.set_content_margin_all(8)
+		card.add_theme_stylebox_override("panel", cs)
+		var line := HBoxContainer.new()
+		line.add_theme_constant_override("separation", 10)
+		card.add_child(line)
+		line.add_child(UiParts.framed_portrait(NpcLooks.portrait(npc, st) if not npc.is_empty() else id, 56.0, g.hp <= 0))
+		var col := VBoxContainer.new()
+		col.add_theme_constant_override("separation", 4)
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 6)
+		head.add_child(UiKit.label(g.name, 15, "moonlight"))
+		head.add_child(UiParts.pill("Guest", "moonlight", 11))
+		col.add_child(head)
+		col.add_child(UiParts.hp_bar(g, 220.0, 8.0, false))
+		var why := st.guest_stays(id)
+		if why != "":
+			col.add_child(UiKit.label(why, 13, "parchment", 300))
+		else:
+			var b := UiParts.small_button("Send home", func() -> void:
+				if st.send_guest_home(id):
+					var v: Variant = root.get("view") if root != null else null
+					if v != null:
+						v.call("place_guests")
+						v.call("refresh_npcs")
+					_draw())
+			b.name = "SendHome_" + id
+			b.disabled = not calm
+			b.tooltip_text = "%s goes back to where you found them. Their own people there can ask them along again." % g.name \
+				if calm else "Not in the middle of a fight or a conversation."
+			col.add_child(b)
+		line.add_child(col)
+		row.add_child(card)
+	return box
 
 
 ## Who travels and a new custom character, both chosen outside fights and conversations. Whatever stops the create

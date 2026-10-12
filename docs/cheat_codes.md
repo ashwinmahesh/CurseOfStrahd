@@ -1,6 +1,6 @@
 # Cheat codes
 
-Every code the game's Cheat codes page accepts: 740 items, 539 of them magic.
+Every code the game's Cheat codes page accepts: 739 items, 538 of them magic.
 Each code gives that item to the hero you pick, as many times as you like. `make cheat-codes` rewrites this file
 (and the vault's Cheat Codes.md) from the item data, so run it after adding items rather than editing this by
 hand; `python3 tools/data/cheat_codes.py --check` says whether it's behind.
@@ -94,7 +94,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Adamantine Weapon | `10FD84` | Weapon | pick a weapon or ammunition |
 | Alchemy Jug | `CAA178` | Wondrous |  |
 | Ammunition, +1 | `AF7996` | Ammunition | pick ammunition |
-| Amulet of Proof against Detection and Location | `04C029` | Wondrous |  |
 | Amulet of the Devout, +1 | `1512F8` | Wondrous |  |
 | Arcane Grimoire, +1 | `7C1580` | Wondrous |  |
 | Bag of Holding | `AC8D35` | Wondrous |  |
