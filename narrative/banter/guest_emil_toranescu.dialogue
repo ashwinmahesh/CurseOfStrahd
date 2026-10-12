@@ -1,0 +1,64 @@
+# Emil Toranescu travelling with the party (docs/voice/emil_toranescu.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Emil is with the party. Every line here is unvoiced for now.
+
+~ quest_kiril_gone
+if guest:emil_toranescu and flag.kiril_defeated
+interject guest:emil_toranescu: Kiril's done. The pack will grumble for a season and then forget him. Wolves are good at forgetting. It's the only mercy we have.
+endif
+-> END
+
+~ place_den
+if guest:emil_toranescu and region:werewolf_den
+interject guest:emil_toranescu: The den. Nineteen winters I kept it. It smells of Kiril now. That will wash out.
+endif
+-> END
+
+~ place_krezk
+if guest:emil_toranescu and region:krezk
+interject guest:emil_toranescu: Krezk shut its gate on wolves for a hundred years. By the old law, they were right to.
+endif
+-> END
+
+~ place_castle
+if guest:emil_toranescu and region:castle_ravenloft
+interject guest:emil_toranescu: Kiril came down from this house with a new law and a sack of children. I'd like to meet the man who wrote it.
+endif
+-> END
+
+~ fight_silver
+if guest:emil_toranescu
+interject guest:emil_toranescu: The old wounds pull when I fight. Silver remembers you, even after it's off.
+endif
+-> END
+
+~ fight_eat
+if guest:emil_toranescu
+interject guest:emil_toranescu: Good hunt. Eat something. A hunter who doesn't eat after a kill is only a thief who works hard.
+endif
+-> END
+
+~ fight_law
+if guest:emil_toranescu
+interject guest:emil_toranescu: By the old law, you stood with me. I don't forget that. Wolves forget most things. Not that.
+endif
+-> END
+
+~ idle_zuleika
+if guest:emil_toranescu
+interject guest:emil_toranescu: Zuleika will hold the den till I'm back, and she'll make it plain she never needed me. That woman.
+endif
+-> END
+
+~ idle_four_legs
+if guest:emil_toranescu
+interject guest:emil_toranescu: Some nights I want to run on four legs till my heart gives out. Then I remember I've got people now. Two-legged ones, worse luck.
+endif
+-> END
+
+~ idle_rabbits
+if guest:emil_toranescu and night
+interject guest:emil_toranescu: Full dark. I can smell every rabbit for a mile. Don't mind me. I've got manners.
+endif
+-> END

@@ -1,0 +1,94 @@
+# Davian Martikov travelling with the party (docs/voice/davian_martikov.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Davian is with the party. Every line here is unvoiced for now.
+
+~ quest_stone
+if guest:davian_martikov and flag.winery_stone_hiding_told and not flag.winery_stone_recovered
+interject guest:davian_martikov: The founder's cask, third hoop. If the druids have found it, I'll drink water until I die. Hm. Which may not be long.
+endif
+-> END
+
+~ quest_third_stone
+if guest:davian_martikov and region:berez and quest.the_third_stone and not flag.winery_gem_berez_found
+interject guest:davian_martikov: The witch's marsh. The third stone is somewhere in this muck. Hm. Of course it is. Nothing good was ever kept anywhere dry.
+endif
+-> END
+
+~ quest_reconciled
+if guest:davian_martikov and flag.martikovs_reconciled
+interject guest:davian_martikov: Adrian has the press now. He'll ruin the first vintage proving he can, and make the second better than mine. Hm. Good.
+endif
+-> END
+
+~ place_yester_hill
+if guest:davian_martikov and region:yester_hill and not flag.martikovs_reconciled
+interject guest:davian_martikov: This is where my boys came. One came home. I've punished the wrong one for it all year, and I know it, and I can't stop.
+endif
+-> END
+
+~ place_winery_lost
+if guest:davian_martikov and region:wizard_of_wines and not flag.winery_reclaimed
+interject guest:davian_martikov: My vines, gone black. My cellar, full of druids. Three months, and I still turn my head to listen for the press.
+endif
+-> END
+
+~ place_winery_ours
+if guest:davian_martikov and region:wizard_of_wines and flag.winery_reclaimed
+interject guest:davian_martikov: Hm. Wine again. Not good wine yet. Good wine takes years and a quiet house. We'll see about the house.
+endif
+-> END
+
+~ place_vallaki
+if guest:davian_martikov and region:vallaki
+interject guest:davian_martikov: Urwin's town. My son keeps the inn, and keeps the family's business in the cellar with the casks. Drink what he gives you. Ask nothing about birds.
+endif
+-> END
+
+~ place_krezk
+if guest:davian_martikov and region:krezk
+interject guest:davian_martikov: The burgomaster here owes me for forty casks. Don't remind him. I want to watch his face when I do.
+endif
+-> END
+
+~ place_castle
+if guest:davian_martikov and region:castle_ravenloft
+interject guest:davian_martikov: My family has watched this roof from the trees for longer than I can count. Hm. The view is worse from inside.
+endif
+-> END
+
+~ fight_sharp
+if guest:davian_martikov
+interject guest:davian_martikov: Hm. Old bones, and still sharp. Write that on my cask.
+endif
+-> END
+
+~ fight_badly
+if guest:davian_martikov
+interject guest:davian_martikov: That was badly done, and it worked. Most good wine is the same.
+endif
+-> END
+
+~ fight_count
+if guest:davian_martikov
+interject guest:davian_martikov: Count the spoons. The people, I mean. Is everyone here? Speak.
+endif
+-> END
+
+~ idle_airs
+if guest:davian_martikov
+interject guest:davian_martikov: A winery without wine is a farm with airs. A valley without wine is this one.
+endif
+-> END
+
+~ idle_wizard
+if guest:davian_martikov
+interject guest:davian_martikov: The wizard who gave us the stones came for one winter and stayed in our stories for a hundred years. Wizards are poor at visiting, and worse at leaving.
+endif
+-> END
+
+~ idle_walk
+if guest:davian_martikov
+interject guest:davian_martikov: Hm. You walk like people who expect to win. Keep doing it. It annoys him.
+endif
+-> END

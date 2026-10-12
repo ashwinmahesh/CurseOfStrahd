@@ -114,6 +114,7 @@ static func tick(view: LocationView, delta: float) -> void:
 		view._queue.clear()
 		view._on_arrive = Callable()
 		return
+	_guest_chatter(view)
 	if view._queue.is_empty():
 		view._save_positions()
 		if view._on_arrive.is_valid():
@@ -233,11 +234,46 @@ static func _in_area(area: Dictionary, c: Vector2i) -> bool:
 	return c.x >= mini(a.x, b.x) and c.x <= maxi(a.x, b.x) and c.y >= mini(a.y, b.y) and c.y <= maxi(a.y, b.y)
 
 
-## Now and then (entering an area, at most every 10 game minutes) the party talks among themselves.
+## Now and then (entering an area, at most every 10 game minutes) the party talks among themselves. A guest with the
+## party speaks first, if their own story or the place gives them something to say (story/banter.gd).
 static func _maybe_banter(view: LocationView) -> void:
 	if view.banter_player == null or view.st.total_minutes() - view._last_banter < 10:
 		return
-	var lines := view.banter_player.next(view.st, str(view.loc.get("region", "")))
+	var lines := view.banter_player.guest_next(view.st, "enter")
+	if lines.is_empty():
+		lines = view.banter_player.next(view.st, str(view.loc.get("region", "")))
 	if not lines.is_empty():
 		view._last_banter = view.st.total_minutes()
-		view.banter.emit(lines)
+		_say_banter(view, lines)
+
+
+## Squares walked in quiet (no banter, no guest's line) before a guest passes a remark, and how often a won fight gets
+## a word from one as the party walks on (owner 2026-10-12: now and then, never a running commentary).
+const IDLE_STEPS := 150
+const FIGHT_CHANCE := 0.6
+
+
+## Each square walked: a guest's word on the first step after a won fight, or after a long quiet walk.
+static func _guest_chatter(view: LocationView) -> void:
+	view._steps += 1
+	if view.banter_player == null or view.st.guest_ids.is_empty():
+		view._fight_bark_due = false
+		return
+	var moment := ""
+	if view._fight_bark_due:
+		view._fight_bark_due = false
+		if view.banter_player.roll(FIGHT_CHANCE):
+			moment = "fight"
+	elif view._steps - view._last_bark_step >= IDLE_STEPS:
+		view._last_bark_step = view._steps   # with nothing to say, the quiet starts over
+		moment = "idle"
+	if moment == "":
+		return
+	var lines := view.banter_player.guest_next(view.st, moment)
+	if not lines.is_empty():
+		_say_banter(view, lines)
+
+
+static func _say_banter(view: LocationView, lines: Array[Dictionary]) -> void:
+	view._last_bark_step = view._steps
+	view.banter.emit(lines)

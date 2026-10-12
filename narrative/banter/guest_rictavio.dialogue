@@ -1,0 +1,82 @@
+# Rictavio travelling with the party (docs/voice/rictavio.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Rictavio is with the party. Every line here is unvoiced for now.
+
+~ quest_that_name
+if guest:rictavio and flag.rictavio_unmasked
+interject guest:rictavio: Not that name. Not out loud, not on the road. The trees have ears, and the ears have a master.
+endif
+-> END
+
+~ place_vallaki
+if guest:rictavio and region:vallaki and not flag.rictavio_unmasked
+interject guest:rictavio: Vallaki! A town of festivals, where every day is a celebration of how little anybody is celebrating!
+endif
+-> END
+
+~ place_tower_masked
+if guest:rictavio and region:van_richtens_tower and not flag.rictavio_unmasked
+interject guest:rictavio: An old tower full of somebody else's traps. Charming! Let's touch nothing, as the poet says, and admire it from a distance.
+endif
+-> END
+
+~ place_tower
+if guest:rictavio and region:van_richtens_tower and flag.rictavio_unmasked
+interject guest:rictavio: My tower. I built it to keep things out. It turns out it kept me out as well.
+endif
+-> END
+
+~ place_tser_pool
+if guest:rictavio and at:tser_pool and not flag.rictavio_unmasked
+interject guest:rictavio: The Vistani! Splendid people. Let's walk briskly past. They're very busy, and I'd hate to interrupt.
+endif
+-> END
+
+~ place_castle_masked
+if guest:rictavio and region:castle_ravenloft and not flag.rictavio_unmasked
+interject guest:rictavio: Ah, the castle! Every showman dreams of a bigger stage. Every sensible one leaves before the second act.
+endif
+-> END
+
+~ place_castle
+if guest:rictavio and region:castle_ravenloft and flag.rictavio_unmasked
+interject guest:rictavio: Stay in the light where you can. When you can't, stay together. That's all I know that's worth anything in here.
+endif
+-> END
+
+~ fight_encore
+if guest:rictavio and not flag.rictavio_unmasked
+interject guest:rictavio: Bravo! Encore! No, please, no encore. Once was quite enough.
+endif
+-> END
+
+~ fight_hat
+if guest:rictavio and not flag.rictavio_unmasked
+interject guest:rictavio: Marvellous! Magnificent! Somebody help me find my hat. There's a feather missing, and it was my favourite.
+endif
+-> END
+
+~ fight_bites
+if guest:rictavio and flag.rictavio_unmasked
+interject guest:rictavio: Check each other for bites. Now, not later. Later is how I lost most of my friends.
+endif
+-> END
+
+~ idle_wagon
+if guest:rictavio and not flag.rictavio_unmasked
+interject guest:rictavio: Did I mention my wagon? Nobody may look inside. That's the whole show, really. The not looking.
+endif
+-> END
+
+~ idle_amused
+if guest:rictavio and flag.rictavio_unmasked
+interject guest:rictavio: Keep him amused and he gets careless. It's the only weakness I've found in forty years, and it isn't much of one.
+endif
+-> END
+
+~ idle_finished
+if guest:rictavio and flag.rictavio_unmasked
+interject guest:rictavio: I've hunted him longer than some of you have been alive. I don't know what I do once I've finished.
+endif
+-> END

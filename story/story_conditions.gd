@@ -173,6 +173,9 @@ func _term() -> bool:
 		return st.spell_active(t.substr(6))
 	if t.begins_with("at:"):
 		return st.location == t.substr(3)
+	if t.begins_with("region:"):
+		# Anywhere in a region (data/locations/*.json `region`): `region:castle_ravenloft` for any of its parts.
+		return st.location != "" and str(Compendium.shared().get_entry("locations", st.location).get("region", "")) == t.substr(7)
 	if t.begins_with("option:"):
 		return bool(st.options.get(t.substr(7), false))
 	if t == "check.last":

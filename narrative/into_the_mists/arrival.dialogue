@@ -68,7 +68,7 @@ if not name:liriel_dawnsong
   interject class:cleric: Whatever brought us here went to some trouble. That's worth remembering.
 endif
 if flag.mists_arrival_late and not flag.mists_wolves_resolved
--> into_the_mists/wolves:choose
+-> into_the_mists/wolves:nerves
 endif
 * Try walking back into the mist. -> again
 * Follow the road. -> END

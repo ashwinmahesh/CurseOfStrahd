@@ -1,0 +1,58 @@
+# Kolyan Indirovich travelling with the party (narrative/village_of_barovia/kolyan.dialogue): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Kolyan is with the party. Every line here is unvoiced for now.
+
+~ quest_ireena
+if guest:kolyan_indirovich and guest:ireena
+interject guest:kolyan_indirovich: You're taller than when I died, girl. No? Then I've shrunk. The grave does that.
+endif
+-> END
+
+~ place_mansion
+if guest:kolyan_indirovich and at:burgomaster_mansion
+interject guest:kolyan_indirovich: My house. The shutters still hold. I nailed them myself, the winter the wolves came.
+endif
+-> END
+
+~ place_church
+if guest:kolyan_indirovich and at:village_church
+interject guest:kolyan_indirovich: Donavich still praying, is he? Good man. He'd have made a better burgomaster than me, and he's a better priest than either of us deserves.
+endif
+-> END
+
+~ place_village
+if guest:kolyan_indirovich and region:village_of_barovia
+interject guest:kolyan_indirovich: My village. They've let the church roof go while I was dead. Two weeks. You can't turn your back.
+endif
+-> END
+
+~ place_castle
+if guest:kolyan_indirovich and region:castle_ravenloft
+interject guest:kolyan_indirovich: I came up here once, to beg him to leave my daughter alone. He gave me wine. I've never forgiven myself for drinking it.
+endif
+-> END
+
+~ fight_heart
+if guest:kolyan_indirovich
+interject guest:kolyan_indirovich: My heart gave out the last time. It's held this time. Mostly because it isn't beating.
+endif
+-> END
+
+~ fight_road
+if guest:kolyan_indirovich
+interject guest:kolyan_indirovich: Twenty years I kept that village. I can keep a road for an afternoon.
+endif
+-> END
+
+~ idle_burgomaster
+if guest:kolyan_indirovich
+interject guest:kolyan_indirovich: Being dead's a bit like being burgomaster. Everybody wants something, and nobody brings food.
+endif
+-> END
+
+~ idle_fuss
+if guest:kolyan_indirovich
+interject guest:kolyan_indirovich: Don't fuss over me. I'm the only one here who can't get any worse.
+endif
+-> END

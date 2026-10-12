@@ -1,0 +1,64 @@
+# Victor Vallakovich travelling with the party (docs/voice/victor_vallakovich.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Victor is with the party. Every line here is unvoiced for now.
+
+~ quest_maids
+if guest:victor_vallakovich and quest.victors_circle >= persuaded
+interject guest:victor_vallakovich: Grigor and Mirela. Those were their names. I'm telling you so somebody else knows them.
+endif
+-> END
+
+~ place_mansion
+if guest:victor_vallakovich and at:vallaki_burgomaster_mansion
+interject guest:victor_vallakovich: Don't go up to the attic. I mean it. Not even to look. Especially not to look.
+endif
+-> END
+
+~ place_vallaki
+if guest:victor_vallakovich and region:vallaki
+interject guest:victor_vallakovich: Home. Father's arranged another festival, so the whole town can be miserable in matching hats.
+endif
+-> END
+
+~ place_castle
+if guest:victor_vallakovich and region:castle_ravenloft
+interject guest:victor_vallakovich: He has a library. A real one. I'm going to hate how much I want to see it.
+endif
+-> END
+
+~ place_amber
+if guest:victor_vallakovich and region:amber_temple
+interject guest:victor_vallakovich: Wizards came here to buy power. You can tell. The whole place smells like an argument somebody lost.
+endif
+-> END
+
+~ fight_nearly
+if guest:victor_vallakovich
+interject guest:victor_vallakovich: It's nearly right. My casting. It's nearly right. Stop looking at me.
+endif
+-> END
+
+~ fight_count
+if guest:victor_vallakovich
+interject guest:victor_vallakovich: I can count. Everyone's here. Good. I always count.
+endif
+-> END
+
+~ fight_table
+if guest:victor_vallakovich
+interject guest:victor_vallakovich: Father would have hidden under the table. I'm only telling you so you know I'm not him.
+endif
+-> END
+
+~ idle_out
+if guest:victor_vallakovich
+interject guest:victor_vallakovich: Out. That's all I wanted. Out of the house, out of the valley. Now I'm out, and it's mostly mud.
+endif
+-> END
+
+~ idle_practising
+if guest:victor_vallakovich
+interject guest:victor_vallakovich: If you see Mother, tell her I'm practising. She likes it when I'm practising.
+endif
+-> END

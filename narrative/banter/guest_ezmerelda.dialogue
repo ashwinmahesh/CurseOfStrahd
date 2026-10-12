@@ -1,0 +1,82 @@
+# Ezmerelda d'Avenir travelling with the party (docs/voice/ezmerelda.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Ezmerelda is with the party. Every line here is unvoiced for now.
+
+~ quest_rudolph_found
+if guest:ezmerelda and region:vallaki and flag.rictavio_unmasked
+interject guest:ezmerelda: Feathers. A hat full of feathers. Forty years of monographs, and he hid in a hat. I'll be laughing about that when I'm dead.
+endif
+-> END
+
+~ place_tower
+if guest:ezmerelda and region:van_richtens_tower
+interject guest:ezmerelda: Rudolph's tower. He left it to rot and me to find it. Mind my wagon; it bites. I built half the traps myself.
+endif
+-> END
+
+~ place_vallaki
+if guest:ezmerelda and region:vallaki and not flag.rictavio_unmasked
+interject guest:ezmerelda: A carnival wagon at the inn that nobody's allowed to open. That's a showman or a hunter. I'd like to know which.
+endif
+-> END
+
+~ place_den
+if guest:ezmerelda and region:werewolf_den
+interject guest:ezmerelda: Werewolves. I owe them a leg. I've been meaning to settle up.
+endif
+-> END
+
+~ place_abbey
+if guest:ezmerelda and region:abbey_of_st_markovia
+interject guest:ezmerelda: Angels don't stitch. Whatever runs this abbey, it's been practising on people.
+endif
+-> END
+
+~ place_castle
+if guest:ezmerelda and region:castle_ravenloft
+interject guest:ezmerelda: Every hunter I ever admired walked up a hill like this one. Silver first, questions never, and nobody wanders off.
+endif
+-> END
+
+~ place_tser_pool
+if guest:ezmerelda and at:tser_pool
+interject guest:ezmerelda: My people's wagons. They'll pretend not to know me. I left young, and they've never forgiven me for coming back taller.
+endif
+-> END
+
+~ fight_vampire
+if guest:ezmerelda
+interject guest:ezmerelda: Say something a vampire wouldn't. Good. You're all still you.
+endif
+-> END
+
+~ fight_pages
+if guest:ezmerelda
+interject guest:ezmerelda: Not bad. Rudolph would have written four pages on that and got the ending wrong.
+endif
+-> END
+
+~ fight_bits
+if guest:ezmerelda
+interject guest:ezmerelda: I've lost bits of me to worse than that. Keep your bits. You'll miss them.
+endif
+-> END
+
+~ idle_doors
+if guest:ezmerelda
+interject guest:ezmerelda: I go first through doors. Not because I'm brave. Because I've got the leg that doesn't bleed.
+endif
+-> END
+
+~ idle_stopping
+if guest:ezmerelda
+interject guest:ezmerelda: Stopping's the one thing I'm bad at. Rudolph says it'll kill me. Rudolph says a lot, from very far away.
+endif
+-> END
+
+~ idle_eva
+if guest:ezmerelda
+interject guest:ezmerelda: Eva dealt me into other people's games when I was six. I've stopped minding. I only wish she'd tell me the rules.
+endif
+-> END

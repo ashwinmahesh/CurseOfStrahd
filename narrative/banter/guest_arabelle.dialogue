@@ -1,0 +1,64 @@
+# Arabelle travelling with the party (docs/voice/arabelle.md): short lines a guest says while walking with the party, shown and voiced
+# like banter (story/banter.gd). The node's name says when it may play: quest_ on entering an area while their story is
+# at that point (these come first), place_ on entering an area, fight_ after a won fight, idle_ now and then on the
+# road. Each plays once per playthrough, only while Arabelle is with the party. Every line here is unvoiced for now.
+
+~ place_lake
+if guest:arabelle and region:lake_zarovich
+interject guest:arabelle: This is where the fisherman put me in the sack. The water was cold. It'll be cold for him too, one day.
+endif
+-> END
+
+~ place_camp
+if guest:arabelle and at:vallaki_vistani_camp
+interject guest:arabelle: Papa will shout, then hug me, then shout again. I've already counted.
+endif
+-> END
+
+~ place_castle
+if guest:arabelle and region:castle_ravenloft
+interject guest:arabelle: I've seen this room before. Not with my eyes. I don't like the next room. We should go to it anyway.
+endif
+-> END
+
+~ place_vallaki
+if guest:arabelle and region:vallaki
+interject guest:arabelle: Somebody in this town is lying about a festival. Everybody is, really. But one of them more.
+endif
+-> END
+
+~ fight_longer
+if guest:arabelle
+interject guest:arabelle: You took longer than last time. That's all right.
+endif
+-> END
+
+~ fight_trip
+if guest:arabelle
+interject guest:arabelle: I knew which of you would trip. I didn't say, because it was funny.
+endif
+-> END
+
+~ fight_nobody
+if guest:arabelle
+interject guest:arabelle: Nobody died. I knew they wouldn't. I don't always know.
+endif
+-> END
+
+~ idle_wedding
+if guest:arabelle
+interject guest:arabelle: One of you is going to cry at a wedding. It isn't a happy one. You'll cry anyway.
+endif
+-> END
+
+~ idle_feet
+if guest:arabelle
+interject guest:arabelle: I don't mind walking. My feet will be big when I'm grown. I've seen them.
+endif
+-> END
+
+~ idle_white_dress
+if guest:arabelle
+interject guest:arabelle: The man in the castle dreams about a lady in a white dress. He's going to be very disappointed.
+endif
+-> END
