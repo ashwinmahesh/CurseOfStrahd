@@ -141,6 +141,7 @@ interject guest:ireena: Sergei. I promised him. When we're out of here, there's 
 elif flag.cat_ireena_at_tomb == "farewell"
 interject guest:ireena: It's done. It's actually done. I'm going to sleep with the window open.
 endif
+cutscene knights_at_the_stair
 if flag.cat_oathbreakers_beaten
 Narrator: Vladimir Horngaard lies at the foot of the stair where he fell. For the first time in four hundred years his face is not angry.
 elif flag.cat_vladimir_stood_aside

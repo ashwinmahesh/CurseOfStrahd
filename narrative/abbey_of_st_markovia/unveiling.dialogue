@@ -119,6 +119,7 @@ Abbot: Faith. I have kept more faith than you have ever been offered, child. I k
 
 ~ repent_unmake
 Abbot [sad]: Forgive me, child.
+cutscene bride_rests
 Narrator: He lays his palm on Vasilka's brow again. She lies back on the bier, smooths the dress over her knees with great care, and closes her eyes. The seams at her wrists are only seams now.
 set vasilka_fate = "laid_to_rest"
 -> repent
@@ -230,6 +231,7 @@ combat abbot_wrath
 ~ demand
 Narrator: The Abbot isn't looking at his bride. He's looking past her. At Ireena.
 Abbot: ...Why send him a copy?
+cutscene bride_turns
 Narrator: The candles all lean toward her, every one, the flames lying almost flat. Vasilka, forgotten on her bier, turns her head to see what everyone is looking at.
 Abbot: Give her to me. I will take her down to him myself. He will be gentled by spring, and this valley will sleep. One woman, for every soul in Barovia. You must see the arithmetic.
 Ireena [angry]: I can count. I'm not going.

@@ -87,6 +87,7 @@ Marshal Dragomir: Tomorrow night, then. We have time. We have had nothing but.
 if flag.riders_stood_down
 Narrator: He salutes you with his blade, the old cavalry salute, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.
 else
+cutscene marshal_charge
 Narrator: The marshal lowers his blade, and the whole column lowers its lances with him, and the gate is full of bones coming at you.
 endif
 combat bone_marshal

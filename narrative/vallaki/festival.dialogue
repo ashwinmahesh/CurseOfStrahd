@@ -272,6 +272,7 @@ endif
 if flag.wachter_cult_broken
 Lady Wachter: You took my sons from me in my own cellar. My purse you left alone. Gentlemen, you have been paid.
 else
+cutscene festival_standoff
 Narrator: Nikolai and Karl Wachter draw at their mother's side, and all through the crowd men who were cheering a moment ago are drawing too.
 endif
 if flag.wachter_betrayed

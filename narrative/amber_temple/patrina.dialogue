@@ -101,6 +101,7 @@ set patrina_fate = "rest"
 quest patrinas_wail at_rest
 Narrator: For a long time she says nothing. Then she closes the book on her desk, gently, and it doesn't crumble.
 Patrina: Tell him I'm done waiting. Tell him the stones didn't hurt as much as the quiet afterward. He'll understand that. He was always very good at quiet.
+cutscene patrina_fades
 Narrator: She fades the way breath fades from a window. The frost on the other desks melts, just a little, and doesn't come back.
 -> END
 

@@ -104,6 +104,7 @@ set strahd_knelt = "someone"
 Strahd: You. The one asleep nearest the fire. Come here.
 Narrator: One of the sleepers rises and walks to him across the camp with open, empty eyes.
 endif
+cutscene camp_kneel
 Narrator: At his feet they kneel, and tilt their head to one side to bare their throat to him, as patient as a horse waiting for the bridle.
 Strahd: There. That is how little it takes. I wanted you to see it, before you decide to fight me.
 Narrator: He lays two fingers on the pulse in their neck, the way a buyer feels a horse's leg, and takes his hand away. They wake on their knees on the cold ground with a hand at their throat, and scramble back to the fire.

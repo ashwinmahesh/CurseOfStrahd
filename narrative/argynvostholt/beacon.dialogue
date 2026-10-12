@@ -115,6 +115,7 @@ cutscene beacon_lit
 Narrator: The flame touches the old ash, and the beacon takes it like a long-held breath let go.
 Narrator: Silver light goes up out of the cradle and over the parapet, over the treetops and the whole dark valley, all the way to the castle on its rock.
 Argynvost: There. There it is. Oh, look at it.
+cutscene beacon_hall_bows
 Narrator: Below you, the house goes quiet in a new way. Along the long table in the hall, armoured heads lift toward the windows and then bow, and the knights are only men sitting very still.
 if flag.vladimir_fate == "made_peace"
 Vladimir: It is warmer than I remembered. He always said it would not be, and it always was.
