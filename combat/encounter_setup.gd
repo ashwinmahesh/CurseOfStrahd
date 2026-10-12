@@ -95,6 +95,19 @@ static func familiar_data(c: Combatant) -> Dictionary:
 	return SummonBlocks.for_spell("find_familiar", 1, form, {})
 
 
+## What a fight leaves on a creature once it's over (owner report 2026-10-12: Restrained stayed on the party panel after
+## the fight): holds (a web, a net, a grapple, an area's grasp: the fight that made them is gone) and effects that last
+## only rounds or until a turn. Curses, exhaustion and anything that lasts minutes, hours or until a rest stay.
+static func clear_fight_effects(cr: Creature) -> void:
+	for fx: Effect in cr.effects.duplicate():
+		var holds := &"restrained" in fx.conditions or &"grappled" in fx.conditions
+		if fx.ends in [Effect.Ends.ROUNDS, Effect.Ends.START_OF_TURN, Effect.Ends.END_OF_TURN] or holds \
+				or not fx.escape.is_empty() or fx.stack_key.begins_with("zone:"):
+			cr.remove_effect(fx)
+	cr.remove_condition(&"grappled")
+	cr.remove_condition(&"restrained")
+
+
 ## Creature ids the encounter data marks as surprised.
 static func surprised_ids(entry: Dictionary, e: Encounter) -> Array[String]:
 	var out: Array[String] = []
