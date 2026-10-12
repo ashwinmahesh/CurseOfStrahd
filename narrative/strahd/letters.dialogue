@@ -52,6 +52,7 @@ Narrator: The black carriage again, waiting on the road with its door open, as p
 else
 Narrator: A black carriage waits on the road ahead, drawn by two black horses with embers for eyes. It has no driver. Its door stands open.
 endif
+cutscene carriage_letter
 Narrator: On the seat lies a letter sealed in black wax.
 Strahd: My guests. You have grown remarkable, and I have grown curious. Dine with me tonight at Castle Ravenloft. The carriage knows the way.
 if flag.kip_contract_void and not flag.strahd_letter_kept and not flag.kip_invitation_kept and not flag.kip_strahd_signed
@@ -88,6 +89,7 @@ approve ratatoille +1: You accepted Strahd's invitation to dinner
 
 ~ decline
 set strahd_invitation = "declined"
+cutscene carriage_turns
 Narrator: The door swings shut. The carriage turns in the road with great care and goes back the way it came.
 -> END
 

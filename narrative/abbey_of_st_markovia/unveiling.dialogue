@@ -185,6 +185,7 @@ Abbot: She asked me, this morning, what being married was like. I told her it wa
 * Kill him. -> kill_kneeling
 
 ~ letter_after
+cutscene abbot_letter
 Narrator: You read him Markovia's letter, kneeling there, every word. He listens with his eyes shut.
 Abbot: Patience is how he feeds. She knew. She went up that road knowing.
 -> repent

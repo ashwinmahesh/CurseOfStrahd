@@ -18,6 +18,7 @@ Narrator: The glass holds one heartbeat too long. Behind you, the dining room's 
 combat window_last_guard
 
 ~ window_through
+cutscene window_burst
 Narrator: Glass bursts outward and the soft brick crumbles with it, leaving a ragged gap onto grey daylight and the weeds of the lot. Behind you, every door in the house slams at once, like applause.
 if flag.death_house_lorghoth_slain
   Narrator: Somewhere far below, the thing you killed is already rotting back into its heap. The house will grow another; it can wait.

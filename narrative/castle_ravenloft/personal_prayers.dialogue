@@ -30,6 +30,7 @@ cutscene chapel_dawn
 Narrator: The raven in her hands grows warm, then hot, then too bright to look at. The black window over the altar turns grey, and then gold.
 Narrator: Dawn comes through the coloured glass. Real dawn, with real warmth in it, laid in red and gold squares across the dust and the broken pews and your faces.
 if flag.strahd_in_coffin
+cutscene coffin_turns
 Narrator: Somewhere far below the chapel floor, something in a coffin turns its face to the wall.
 endif
 interject name:ilse_varga: ...Warm. I'd forgotten.

@@ -1382,6 +1382,74 @@
       "refs": [],
       "prompt": "A black stone stair in a castle's catacombs: dead knights of the Order in battered plate and ragged blue surcoats line the stair and raise their swords together in salute, blades catching a cold shaft of light from far above. Solemn triumph. Nobody living is in the picture: no adventurers, no visible faces of the party.",
       "use": "a"
+    },
+    "carriage_letter": {
+      "refs": [],
+      "prompt": "Close view through the open door of a black lacquered carriage on a misty forest road: on the worn red velvet seat lies a single folded letter of heavy cream paper sealed with black wax stamped with an ornate letter S. Beyond the far window, the shadowy heads of two black horses with eyes like embers. No driver, nobody inside. Cold grey mist, a dim gold glint on the seal. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "carriage_turns": {
+      "refs": [],
+      "prompt": "A misty forest road under dead trees: a driverless black lacquered carriage drawn by two black horses with ember eyes turns slowly in the road with great care, its door swung shut, heading back the way it came toward a far castle on a cliff. {party} watch from the roadside, seen from behind. Grey mist, cold dusk light. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "dawn_sunburst": {
+      "refs": [],
+      "prompt": "A ruined chapel in a gothic castle, the dawn light fading from its tall stained-glass windows into grey: a slender hooded woman in pale robes seen from behind and to the side, her face hidden by her hood, presses a small gold sunburst pendant into the open hand of a hooded companion. The little sunburst still glows faintly warm gold, the only warm light in the grey chapel. Dust, broken pews; tender. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "coffin_turns": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A crypt deep beneath a castle: in an open black coffin on a stone dais, Strahd of the reference lies with his eyes open and turns his face away to the stone wall, shrinking from a thin shaft of warm gold dawn light that falls from a crack high above and lies across the coffin's edge. Cold blue crypt darkness everywhere else. Nobody else there.",
+      "use": "a"
+    },
+    "abbot_letter": {
+      "refs": [
+        "abbot",
+        "vasilka"
+      ],
+      "prompt": "A cold abbey chapel after a fight, broken candles and torn flowers on the floor: the golden-haired young monk of the reference kneels with his eyes shut beside a fallen pale young woman in a torn cream wedding dress, holding her limp hand. A hooded figure seen from behind kneels across from him reading aloud from an old letter. Grey light from a high window; grief. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "ruxandra_turns": {
+      "refs": [
+        "ruxandra"
+      ],
+      "prompt": "The top of a bleak hill under a grey sky: druids in rags sway in a ring around a black dead tree, and before a huge effigy of woven branches and earth, the old woman of the reference straightens slowly and turns, wiping earth off her hands, her face kind and grandmotherly, smiling at the viewer. {party} in the foreground, seen from behind, weapons drawn. Wind, grey light, dread. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "pact_two_books": {
+      "refs": [],
+      "prompt": "A vault in a temple of glowing amber: on a stone lectern lie two open books side by side, one with pages of thin hammered copper scratched with old writing and a tiny sketch of a jackal's head, the other a heavy book bound in black leather clasped in tarnished silver, written in a fine sure hand. Hands in hooded sleeves hold them open. Amber light glowing through the walls, cold frost on the stone. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "sarkhaza_freed": {
+      "refs": [],
+      "prompt": "A vast cavern of gold under a mountain: a huge red dragon, scarred and sooty, lifts her long neck all the way for the first time in forty years, a collar of black iron fallen open at its base like a jaw, a chain lying slack across the hoard. Her head brushes the cavern roof; firelight-red scales, gold everywhere. {party} small below, seen from behind, one holding a long iron pin. Awe and danger. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "window_burst": {
+      "refs": [],
+      "prompt": "From outside a tall dark townhouse: a high window bursts outward in a spray of glass and crumbling wet brick, {party} tumbling through the ragged gap into grey daylight and a weedy lot below. Every other window of the house is bricked up. Behind them in the dark of the house, doors slam. Grey morning, flying glass, escape. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
+    },
+    "children_wave": {
+      "refs": [
+        "rose",
+        "thorn"
+      ],
+      "prompt": "A dim crypt beneath a house: two small ghost children of the references, a girl and a little boy, stand clear and calm beside two small stone crypts, glowing softly. The boy waves goodbye; the girl holds his other hand. Their outlines are already fading into the light. Peaceful, sad, gentle.",
+      "use": "a"
+    },
+    "camp_bow": {
+      "refs": [
+        "strahd",
+        "ireena"
+      ],
+      "prompt": "A small forest camp at night, embers low: at the edge of the firelight Strahd of the reference bows to Ireena, one hand on his heart, ignoring everyone else; mist is already rising round his boots and he is half dissolved into the dark. Ireena stands by her bedroll, sword drawn, staring. {party} between them, seen from behind. Ember red and cold blue. The party, if shown, are hooded and seen from behind, faces never visible.",
+      "use": "a"
     }
   }
 }
