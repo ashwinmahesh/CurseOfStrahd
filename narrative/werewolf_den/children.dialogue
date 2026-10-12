@@ -30,7 +30,7 @@ endif
 * Goodbye. -> bye
 
 ~ who
-Mirela: Mirela. From the Vadu farm under Krezk. That's Ana, she's six, and Petru, and the twins, Ilie and Ioana. They came in the night with sacks. They took my dog first so he wouldn't bark.
+Mirela: Mirela. From the Vadu farm under Krezk. That's Codruta, she's six, and Petru, and the twins, Zamfir and Ioana. They came in the night with sacks. They took my dog first so he wouldn't bark.
 -> menu
 
 ~ how_long
@@ -49,9 +49,9 @@ endif
 
 ~ doll
 set ana_doll_returned
-Mirela: That's Ana's! She dropped it when they carried us up. She's been crying for it every night.
+Mirela: That's Codruta's! She dropped it when they carried us up. She's been crying for it every night.
 Narrator: The smallest girl takes the doll through the poles without a word and folds herself around it, and for the first time since you came in, nobody in the pen is shaking.
-approve thistle +1 kip_smudgewick +1 godrick_pendlebrook +1: You gave Ana back her rag doll
+approve thistle +1 kip_smudgewick +1 godrick_pendlebrook +1: You gave Codruta back her rag doll
 -> menu
 
 ~ bite_ok
