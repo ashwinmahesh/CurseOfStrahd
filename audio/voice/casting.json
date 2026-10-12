@@ -1434,13 +1434,16 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "tser_tobar": {
-      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
-      "name": "Library voice: Serban Popescu - Professional Narrator",
-      "description": "A huge, gentle Vistani wheelwright; a warm, deep Romanian voice.",
+      "voice_id": "29SRFmcGeljhOrH2EPhL",
+      "name": "Barovia Big Tobar",
+      "description": "A huge, powerful Vistani wheelwright in his forties, speaking English with a strong, clearly audible Romanian accent. A deep, rough, gravelly bass with a hard edge, a big chest and a working man's growl, tough and weathered, at a normal speaking volume: a hard man who has seen a lot of the road, gruff and blunt, gentle only underneath.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "29SRFmcGeljhOrH2EPhL",
+      "released": true,
+      "earlier_voice_id": "8nBBDfYxYXmDNaqTCxPH",
+      "model_note": "Recast 2026-10-12 on Ashwin's feedback (\"he should sound tougher\"): the earlier library voice (Serban Popescu) was a smooth narrator's voice."
     },
     "tser_zora": {
       "voice_id": "7J0saxKdSMiecCwLywpu",
@@ -1607,12 +1610,11 @@
     "camp_fisher": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",
       "name": "Library voice: Serban Popescu - Professional Narrator",
-      "description": "Stoica, fisherman of the lake camp: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "description": "Stoica, fisherman of the lake camp: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Cezar's, in Krezk). Owner rule 2026-10-08: minor townsfolk share voices.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
-      "accent_tag": "[strong Romanian accent]",
-      "shared_with": "tser_tobar"
+      "accent_tag": "[strong Romanian accent]"
     },
     "lz_old_fisher": {
       "voice_id": "zMjh6m7TYXb96Hz1Ah7t",
@@ -1627,12 +1629,12 @@
     "krezk_fence_mender": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",
       "name": "Library voice: Serban Popescu - Professional Narrator",
-      "description": "Cezar, of krezk: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Big Tobar's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "description": "Cezar, of krezk: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Stoica's, at the Lake Camp). Owner rule 2026-10-08: minor townsfolk share voices.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "tser_tobar"
+      "shared_with": "camp_fisher"
     },
     "krezk_wall_watch": {
       "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
