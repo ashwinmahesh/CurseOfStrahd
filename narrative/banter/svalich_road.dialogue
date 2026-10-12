@@ -76,7 +76,7 @@ endif
 
 ~ banter_truth_ratatoille
 if flag.eva_truth_teller == "ratatoille" and name:ratatoille and name:liriel_dawnsong
-interject name:liriel_dawnsong: Ratatoille. Feeding people is holy work. When I say grace over your cooking, I mean every word.
+interject name:liriel_dawnsong: Ratatouille. Feeding people is holy work. When I say grace over your cooking, I mean every word.
 interject name:ratatoille: ...Please don't tell the academy. Or do. No. Don't.
 elif flag.eva_truth_teller == "ratatoille" and name:ratatoille and name:thistle
 interject name:thistle: Cook more, then. Cast less. I'll eat it.
@@ -234,7 +234,7 @@ interject name:wren_featherfoot: No friend in the cards. Fine. We've got us.
 interject name:godrick_pendlebrook: Then we'll be our own ally. I'll be the big one.
 elif tarokka.drawn and name:ratatoille and name:liriel_dawnsong
 interject name:ratatoille: Her spread is crude, her technique unorthodox, and she is right. I can feel it. I hate it.
-interject name:liriel_dawnsong: Gently, Ratatoille. Envy is only admiration that hasn't eaten yet.
+interject name:liriel_dawnsong: Gently, Ratatouille. Envy is only admiration that hasn't eaten yet.
 endif
 -> END
 

@@ -1,12 +1,12 @@
 {
   "id": "ratatoille",
-  "name": "Ratatoille",
+  "name": "Ratatouille",
   "pronouns": "he/him",
   "summary": "High Elf Wizard (Diviner), Artisan. A spellbook, a skillet and an urgent need to be taken seriously.",
   "hook": "Nobody sat with him at the academy until he learned to throw fire. Then he heard of a great Wizard of Wines beyond the mists, a master of magic and the table both, and set out to become his apprentice.",
   "roster": true,
   "build": {
-    "name": "Ratatoille",
+    "name": "Ratatouille",
     "species": "elf",
     "background": "artisan",
     "ability_method": "standard_array",

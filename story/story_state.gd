@@ -192,6 +192,18 @@ func party_has_item(item_id: String) -> bool:
 	return false
 
 
+## The party came by an item outside a loot window or a shop (gain_item): `who` is the character who has it, "" for the
+## party's stash. The game shows it on the side (ItemNotices).
+signal item_gained(item_id: String, qty: int, who: String)
+
+
+## Gives `ch` (or the stash) an item the party has just come by, a skill check's find, a gift, a hidden find, a picked
+## pocket, and says so (item_gained). Loot windows, shops and moves to and from the stash use give_item quietly.
+func gain_item(item_id: String, qty: int, ch: Character = null) -> void:
+	give_item(item_id, qty, ch)
+	item_gained.emit(item_id, qty, ch.name if ch != null else "")
+
+
 ## Gives an item to `ch` (or the stash if nobody's given).
 func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 	if ch != null:
@@ -786,6 +798,20 @@ static func _upgrade_quests(st: StoryState) -> void:
 	if st.quests.has("into_the_mists") and not st.quest_ended("into_the_mists") \
 			and (st.visited.has("village_of_barovia") or st.visited.has("death_house_ground")):
 		st.set_quest_stage("into_the_mists", "village_edge")
+	# Ireena's escort put back to Ready by her asking again after the quiet burial (Wiki finding 74; saves from 1.0.3 and
+	# 1.0.4): back to the answer the party had given.
+	var esc := st.quests.get("escort_ireena", {}) as Dictionary
+	if str(esc.get("stage", "")) == "ready":
+		var said := esc.get("history", []) as Array
+		var back := ""
+		if "departed" in said:
+			back = "departed"
+		elif "accepted" in said and ("ireena" in st.guest_ids or not "declined" in said):
+			back = "accepted"
+		elif "declined" in said:
+			back = "declined"
+		if back != "":
+			esc["stage"] = back
 	st._settle_ally()
 
 

@@ -137,7 +137,7 @@ static func pickpocket(view: LocationView, npc_id: String) -> void:
 		got.append("%d gp" % int(p["gold"]))
 	for it: Variant in p["items"]:
 		var d := it as Dictionary
-		view.st.give_item(str(d["id"]), int(d.get("qty", 1)), thief.creature as Character)
+		view.st.gain_item(str(d["id"]), int(d.get("qty", 1)), thief.creature as Character)
 		got.append(Compendium.shared().display_name("items", str(d["id"])))
 	view.toast.emit("%s lifts %s from %s" % [thief.name().get_slice(" ", 0), ", ".join(got) if not got.is_empty() else "nothing worth having",
 		_name(npc_id)])

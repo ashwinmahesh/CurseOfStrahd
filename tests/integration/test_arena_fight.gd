@@ -12,7 +12,7 @@ func test_arena_loads_from_data() -> void:
 	assert_eq(e.combatants.size(), 13)
 	var names := e.combatants.map(func(c: Combatant) -> String: return c.name())
 	assert_true("Wolf 1" in names and "Wolf 4" in names and "Zombie 4" in names and "Dire Wolf" in names, str(names))
-	var wizard := e.combatants.filter(func(c: Combatant) -> bool: return c.name() == "Ratatoille")[0] as Combatant
+	var wizard := e.combatants.filter(func(c: Combatant) -> bool: return c.name() == "Ratatouille")[0] as Combatant
 	assert_eq(wizard.creature.ac_value(), 15, "Mage Armor cast before the fight: 13 + Dex 2")
 	assert_eq((wizard.creature as Character).slots_left(1), 3)
 	for c in e.combatants:

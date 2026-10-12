@@ -56,7 +56,7 @@ sometimes succeeds. He is the most anxious person in the party and makes the bra
 - **Liriel:** wants to save his soul. He's touched, awkward and a little scared of her, and keeps giving her apricots
   as if that settles it.
 - **Thistle:** she sniffs him and says he smells like smoke and fruit. He has started carrying a lavender sachet.
-- **Ratatoille:** apricot tarts, apricot glaze, a shop together someday. Rat reads the contract like a recipe and
+- **Ratatouille:** apricot tarts, apricot glaze, a shop together someday. Rat reads the contract like a recipe and
   finds the missing ingredient.
 - **Wren:** a double act. Wren helps him sell and helps him look for loopholes.
 - **Mister Quillon:** courteous terror. He always says "Mister Quillon", never just "Quillon".

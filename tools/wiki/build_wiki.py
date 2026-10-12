@@ -50,6 +50,8 @@ RARITIES = ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]
 ABILITIES = ["str", "dex", "con", "int", "wis", "cha"]
 SCHOOLS = ["abjuration", "conjuration", "divination", "enchantment", "evocation", "illusion", "necromancy",
            "transmutation"]
+TALK_SPELLS = {"speak_with_animals": "Speak with Animals", "speak_with_dead": "Speak with Dead",
+               "speak_with_plants": "Speak with Plants"}
 TAROKKA_TREASURES = {"tome_of_strahd": "tome", "holy_symbol_of_ravenkind": "symbol", "sunsword": "sword"}
 REST_WORDS = {"safe": "Safe: a Long Rest here isn't interrupted.",
               "risky": "Risky: a rest here can be interrupted.",
@@ -593,8 +595,8 @@ class Writer:
         new_blocks = OrderedDict((m[1], m[0]) for m in AUTO_RE.finditer(new_body))
         old_body = re.sub(r"^---\n.*?\n---\n", "", old, count=1, flags=re.S)
         old_names = [m[1] for m in AUTO_RE.finditer(old_body)]
-        # Title line: the generator's.
-        old_body = re.sub(r"^# .*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
+        # Title line: the generator's, even if an edit left a stray character in front of the `#`.
+        old_body = re.sub(r"^[^\n#]{0,3}#+ [^\n]*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
 
         def repl(m):
             blk = new_blocks.get(m[1])
@@ -1967,11 +1969,11 @@ class Wiki:
             for node, sts in dlg.nodes.items():
                 spells = set()
                 for st in sts:
-                    if st["t"] == "cast" and st["arg"] in ("speak_with_animals", "speak_with_dead"):
+                    if st["t"] == "cast" and st["arg"] in TALK_SPELLS:
                         spells.add(st["arg"])
                     if st["t"] == "option":
                         for tag in st.get("tags", []):
-                            m = re.search(r"(?:knows|spell):(speak_with_(?:animals|dead))", tag)
+                            m = re.search(r"(?:knows|spell):(speak_with_(?:animals|dead|plants))", tag)
                             if m:
                                 spells.add(m[1])
                 if not spells:
@@ -1980,10 +1982,11 @@ class Wiki:
                 for sp in spells:
                     for w in self.where_node(key, node, limit=3):
                         rows[sp].append((w, told))
-        lines = ["Animals and the dead who'll talk if you cast the right spell. With **Speak with Animals** (a Ritual: "
-                 "ten minutes, no slot) a Beast talks; with **Speak with Dead** a corpse answers once. The spell's "
-                 "option shows in the conversation when a hero knows it.", ""]
-        for sp, label in (("speak_with_animals", "Speak with Animals"), ("speak_with_dead", "Speak with Dead")):
+        lines = ["Animals, the dead and plants who'll talk if you cast the right spell. With **Speak with Animals** (a "
+                 "Ritual: ten minutes, no slot) a Beast talks; with **Speak with Dead** a corpse answers once; with "
+                 "**Speak with Plants** plants tell what passed them in the last day. The spell's option shows in the "
+                 "conversation when a hero knows it.", ""]
+        for sp, label in TALK_SPELLS.items():
             if not rows.get(sp):
                 continue
             lines += [f"## {label}", "", "| Who and where | What they say and what it leads to |", "|---|---|"]

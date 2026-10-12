@@ -81,6 +81,37 @@ func test_sanctuary_and_the_book_club_end() -> void:
 	assert_eq(_status(st, "wachter_plot"), "success")
 
 
+## Finding 73 (a release blocker): with every one-try check spent, the marshal's menus offered only a fight with the
+## whole column. Both menus have a way back down the road now.
+func test_the_last_muster_lets_the_party_turn_back() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 2, "into_the_mists_road", 23)
+	st.set_quest_stage("last_muster", "mustered")
+	for f: String in ["muster_met", "muster_history_failed", "muster_rite_failed", "muster_talk_failed"]:
+		st.set_flag(f)
+	var beats := SideQuestPlay.play(st, "into_the_mists/last_muster:marshal", ["Turn back down the road"])
+	assert_eq(SideQuestPlay.missing(beats), "", "a way out when every check has failed")
+	assert_eq(SideQuestPlay.combat_of(beats), "", "and no fight")
+	var first := SideQuestPlay.party(["ilse_varga"], 2, "into_the_mists_road", 23)
+	first.set_quest_stage("last_muster", "rumored")
+	beats = SideQuestPlay.play(first, "into_the_mists/last_muster:marshal", ["Turn back down the road"])
+	assert_eq(SideQuestPlay.combat_of(beats), "", "the first meeting has one too")
+
+
+## Finding 74 (a release blocker for saves from 1.0.3 and 1.0.4): the quiet burial's way home ends in Ireena asking
+## again, which put an accepted or declined escort back to Ready. Her answer stands, and old saves get it back.
+func test_ireenas_answer_stands_after_the_quiet_burial() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 2, "village_of_barovia", 12)
+	st.set_quest_stage("escort_ireena", "accepted")
+	SideQuestPlay.play(st, "village_of_barovia/ireena:escort_ask", ["No. We can't take you"])
+	assert_eq(st.quest_stage("escort_ireena"), "accepted", "not asked again")
+	var old := SideQuestPlay.party(["ilse_varga"], 2, "village_of_barovia", 12)
+	old.set_quest_stage("escort_ireena", "asked")
+	old.set_quest_stage("escort_ireena", "declined")
+	(old.quests["escort_ireena"] as Dictionary)["stage"] = "ready"   # what the question did in 1.0.4
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(old.to_dict())) as Dictionary)
+	assert_eq(back.quest_stage("escort_ireena"), "declined", "an old save gets its answer back")
+
+
 func _status(st: StoryState, quest_id: String) -> String:
 	for q in QuestLog.journal(st):
 		if str(q["id"]) == quest_id:
