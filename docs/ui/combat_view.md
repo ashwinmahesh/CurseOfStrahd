@@ -173,7 +173,7 @@ rest of the plan: the vault note Combat HUD Plan.md.
 - **Weapons in hand** (deviations.md, Weapon sets): only the weapons in hand and the second set attack; the second
   set's say "set II", and **Swap weapons** on Common takes that set in hand (free). The pack's spares aren't listed.
 - **Rules as toggles**: each Ask / Automatic / Off rule (Divine Smite, Knock Out, Heroic Inspiration, Shadow Martyr,
-  Song of Defense's slot levels...) is one slot on the **Reactions** tab, its mode in colour (Ask gilt, Automatic green,
+  Repelling Blast's push (owner, 2026-10-12: Off keeps the foe where it stands), Song of Defense's slot levels...) is one slot on the **Reactions** tab, its mode in colour (Ask gilt, Automatic green,
   Off grey) with a pip per mode; a click steps to the next mode, a right-click picks one, on any turn (nothing is
   spent). `ActionCatalog.slots` folds the modes; `CombatView._choose` sets them for whoever the hotbar shows.
 - **Containers**: variants of one action share a slot with a gilt corner (Shove, Cunning, Divine Spark, Haste, Open

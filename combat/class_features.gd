@@ -2146,7 +2146,9 @@ func cantrip_hit(ctx: Dictionary, t: Combatant) -> void:
 	if int(s.get("level", 0)) != 0 or not "warlock" in (s.get("classes", []) as Array) or not t.is_alive():
 		return
 	var e := enc()
-	if knows_invocation(c, "repelling_blast") and Creature.SIZES.find(t.creature.size) <= Creature.SIZES.find(&"large"):
+	# Repelling Blast: optional (its rule on the Reactions tab; pushing unless the player set it Off).
+	if knows_invocation(c, "repelling_blast") and Creature.SIZES.find(t.creature.size) <= Creature.SIZES.find(&"large") \
+			and str(c.reaction_rules.get("repelling_blast", "auto")) != "never":
 		e.forced_move(t, e.center_of(c), 10)
 	if knows_invocation(c, "grasp_of_hadar") and _once(c, "grasp_of_hadar"):
 		e.forced_move(t, e.center_of(c), 10, true)
