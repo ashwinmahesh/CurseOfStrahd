@@ -1051,7 +1051,18 @@ class Wiki:
             if key.split("/")[-1] == qid or mine * 2 >= len(all_q):
                 scope[key] = None
             else:
-                scope[key] = set(nodes)
+                # A shared file: the nodes that move this quest, and those a plain jump joins to them either way
+                # (the speech before a quest line often sits in the node that jumps into it).
+                jumps = {n: {st["to"] for st in sts if st["t"] == "jump" and st["to"] in dlg.nodes}
+                         for n, sts in dlg.nodes.items()}
+                near = set(nodes)
+                for n in nodes:
+                    near.update(jumps.get(n, ()))
+                frontier = set(nodes)
+                for _ in range(2):   # two plain jumps back
+                    frontier = {n for n, js in jumps.items() if js & frontier} - near
+                    near |= frontier
+                scope[key] = near
         for key in g.dialogues:
             if key.split("/")[-1] == qid:
                 scope[key] = None
@@ -1086,16 +1097,21 @@ class Wiki:
             for key, node, st in g.statements({"quest"}):
                 if st["id"] == qid:
                     set_at[st["stage"]].append((key, node))
-            starts = []
+            starts, gates = [], []
             for sid in stage_ids:
                 for key, node in set_at.get(sid, []):
                     for w in self.where_node(key, node, limit=3):
                         if w not in starts:
                             starts.append(w)
+                    for e in g.places_for(key, node):
+                        m = re.findall(r"level\s*>=\s*(\d+)", str(e.get("when", "")))
+                        gates.append(max(int(x) for x in m) if m else 0)
                 if starts:
                     break
             if starts:
                 facts.append(f"> **Starts:** {'; '.join(starts[:4])}")
+            if gates and min(gates) > 0:
+                facts.append(f"> **Only from party level {min(gates)}:** whoever starts it isn't there before then.")
             # Fights, checks, rewards, people, places.
             fights = OrderedDict()
             checks, gifts, golds, approvals, cuts, people, places, gifts_dark = [], [], [], defaultdict(list), [], [], [], []
@@ -1108,6 +1124,8 @@ class Wiki:
                     sk, dc = st["check"]
                     txt = plain(st.get("text", ""), 90) if t == "option" else "(rolled in the scene)"
                     checks.append(f"{sk} DC {dc}: {txt}")
+                elif t in ("give", "gold") and qid not in (self._give_quests(key, node, st) or [qid]):
+                    pass   # paid out for another quest the same conversation moves
                 elif t == "give":
                     gifts.append((st["item"], st["qty"]))
                 elif t == "gold" and st["amount"] > 0:
@@ -1146,7 +1164,9 @@ class Wiki:
                     counts[iid] = counts.get(iid, 0) + n
                 reward_bits += [s.item(i) + (f" ×{n}" if n > 1 else "") for i, n in counts.items()]
             if golds:
-                reward_bits.append(f"up to {sum(golds)} gp" if len(golds) > 1 else f"{golds[0]} gp")
+                amounts = sorted(set(golds))
+                reward_bits.append(f"{amounts[0]} gp" if len(amounts) == 1 else
+                                   " or ".join(f"{a} gp" for a in amounts) + ", depending on how it goes")
             if xp_milestones:
                 reward_bits.append("a level (milestone)")
             if reward_bits:
@@ -2544,7 +2564,46 @@ class Wiki:
         self.story_pages()
         self.home()
         self.w.sweep(self.out / "_Removed")
+        self.relink()
         return self.w.stats
+
+    def relink(self):
+        """Links people wrote to a page or heading that has since been renamed (a quest, place or item whose name
+        changed) follow it: the last build's links are kept in .wiki-links.json, and every page's old link becomes the
+        new one."""
+        s = self.site
+        manifest = self.out / ".wiki-links.json"
+        new = {k: s.link(k) for k in list(s.paths) + list(s.anchors)}
+        old = {}
+        if manifest.exists():
+            try:
+                old = json.loads(manifest.read_text())
+            except json.JSONDecodeError:
+                old = {}
+        swaps = []
+        for k, was in old.items():
+            now = new.get(k)
+            if not now or now == was:
+                continue
+            ot, _, ol = was[2:-2].partition("|")
+            nt, _, nl = now[2:-2].partition("|")
+            if ot == nt:
+                continue
+            swaps += [(was, now), (was.replace("|", "\\|"), now.replace("|", "\\|")),
+                      (f"[[{ot}|", f"[[{nt}|"), (f"[[{ot}\\|", f"[[{nt}\\|"), (f"[[{ot}]]", f"[[{nt}]]")]
+            if "#" not in ot:
+                swaps.append((f"[[{ot}#", f"[[{nt}#"))
+        if swaps and not self.dry:
+            for p in self.out.rglob("*.md"):
+                text = p.read_text()
+                fixed = text
+                for a, b in swaps:
+                    fixed = fixed.replace(a, b)
+                if fixed != text:
+                    p.write_text(fixed)
+                    self.w.stats["relinked"] += 1
+        if not self.dry:
+            manifest.write_text(json.dumps(new, indent=0, ensure_ascii=False, sort_keys=True))
 
 
 def main():
@@ -2572,7 +2631,7 @@ def main():
     wiki = Wiki(game, a.out, images=not a.no_images, shots=a.shots, dry=a.dry_run)
     stats = wiki.build()
     print(f"wiki: {len(wiki.w.written)} pages ({stats['new']} new, {stats['changed']} changed, {stats['moved']} moved, "
-          f"{stats['removed']} removed), {wiki.img.made} images made, in {a.out}")
+          f"{stats['removed']} removed, {stats['relinked']} relinked), {wiki.img.made} images made, in {a.out}")
     return 0
 
 
