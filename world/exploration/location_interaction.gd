@@ -13,6 +13,10 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	for i in view.members.size():
 		if view.members[i].cell == cell:
 			var ch := view.members[i].creature as Character
+			# At camp, the others are by the fire: walking up to them is a word with them (LocationCamp).
+			var camp := LocationCamp.of(view)
+			if i != 0 and camp != null and camp.who_at(cell) == ch.id:
+				out.append({"id": "talk", "label": camp.label_for(ch.id)})
 			# Party members share squares outside a fight, so the leader can walk onto anyone's.
 			if i != 0:
 				out.append({"id": "walk", "label": "Walk here"})
@@ -36,6 +40,9 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	var spec := thing["spec"] as Dictionary
 	var title := str(thing["label"]).get_slice(" ", 0)
 	match str(thing["kind"]):
+		"camper":
+			title = str(thing["name"])
+			out.append({"id": "talk", "label": str(thing["label"])})
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
@@ -231,6 +238,9 @@ static func _pickables(view: LocationView) -> Array:
 	for m: Combatant in view.members + view.guest_members:
 		if view.tokens.has(m.id):
 			out.append([view.tokens[m.id], m.cell])
+	var camp := LocationCamp.of(view)
+	if camp != null:
+		out.append_array(camp.pickables())   # the companions waiting at camp, by the fire
 	for w in view.waiting:
 		if LocationStealth.is_shown(w):
 			out.append([w["token"], (w["foe"] as Combatant).cell])
@@ -252,6 +262,12 @@ static func _pickables(view: LocationView) -> Array:
 static func thing_at(view: LocationView, cell: Vector2i) -> Dictionary:
 	if HiddenAreas.hides(view, cell):
 		return {}
+	var camp := LocationCamp.of(view)
+	if camp != null and not view.in_combat:
+		var who := camp.who_at(cell)
+		if who != "":
+			return {"kind": "camper", "id": who, "name": camp.first_name(who), "label": camp.label_for(who),
+				"spec": {"id": "camp:" + who, "cell": [cell.x, cell.y], "label": "%s, by the fire" % camp.first_name(who)}}
 	var w := LocationStealth.foe_at(view, cell)
 	if not w.is_empty():
 		var foe := w["foe"] as Combatant
@@ -372,6 +388,10 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 	var who := view.leader()
 	(view.tokens[who.id] as CombatToken).face(Vector2(LocationView._cell(spec.get("cell", [who.cell.x, who.cell.y])) - who.cell), false)
 	match str(thing["kind"]):
+		"camper":
+			var camp := LocationCamp.of(view)
+			if camp != null:
+				camp.talk(str(thing["id"]))
 		"npc":
 			if not LocationNpcs.can_talk(view, spec):
 				var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))

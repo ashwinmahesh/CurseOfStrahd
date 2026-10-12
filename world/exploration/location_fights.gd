@@ -66,6 +66,7 @@ static func _truthy(v: Variant) -> bool:
 static func start_custom_encounter(view: LocationView, spec: Dictionary) -> bool:
 	var s := spec.duplicate(true)
 	s["trigger"] = "dialogue"
+	s["custom"] = true   # not the place's own fight: it brings its own spoils, or none (_spoils)
 	if not view.loc.has("encounters"):
 		view.loc["encounters"] = []
 	(view.loc["encounters"] as Array).append(s)
@@ -513,8 +514,10 @@ static func _spoils(view: LocationView, encounter_id: String, spec: Dictionary, 
 	for treasure in Tarokka.take_from(Tarokka.place_for(view.loc, "encounter", encounter_id), view.st):
 		items.append({"id": treasure, "qty": 1})
 	var gold := float(loot.get("gold", 0))
-	# Every won fight here also leaves its foes' coins and a find, as a road fight does (RoadSpoils.for_story_fight).
-	if with_loot:
+	# Every won fight from the place's own data also leaves its foes' coins and a find, as a road fight does
+	# (RoadSpoils.for_story_fight). A fight that isn't the place's (a road encounter with its own spoils, Strahd's
+	# visit, the watch's arrest) leaves only what it brings.
+	if with_loot and not bool(spec.get("custom", false)):
 		var extra := RoadSpoils.for_story_fight(view.st, spec.get("monsters", []) as Array, "%s:%s" % [view.loc_id, encounter_id])
 		gold += float(extra["gold"])
 		items.append_array(extra["items"] as Array)

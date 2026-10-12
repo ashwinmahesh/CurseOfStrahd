@@ -51,12 +51,24 @@ static func for_story_fight(st: StoryState, monsters: Array, key: String) -> Dic
 	var gold := 0
 	for m: Variant in monsters:
 		var md := m as Dictionary
-		if str(md.get("side", "enemy")) != "enemy":
+		var data := Compendium.shared().get_entry("monsters", str(md.get("monster", "")))
+		if str(md.get("side", "enemy")) != "enemy" or not carries_treasure(data):
 			continue
-		gold += coins_for_cr(rng, float(Compendium.shared().get_entry("monsters", str(md.get("monster", ""))).get("cr", 0)))
+		gold += coins_for_cr(rng, float(data.get("cr", 0)))
 	if gold <= 0:
 		return {"gold": 0, "items": []}
 	return {"gold": gold, "items": [find(rng, party_level(st), false)]}
+
+
+## Whether a foe carries treasure of its own: not a Beast, Plant or Ooze, nor a mindless creature (Intelligence 3 or
+## less, a zombie's), as the 2025 Monster Manual lists those with no treasure; a stat block's own "treasure": "none"
+## says so too. (Road fights keep their coins: those are the road's earlier victims', for_fight.)
+static func carries_treasure(data: Dictionary) -> bool:
+	if str(data.get("treasure", "")) == "none":
+		return false
+	if str(data.get("type", "")) in ["beast", "plant", "ooze"]:
+		return false
+	return int((data.get("abilities", {}) as Dictionary).get("int", 10)) > 3
 
 
 ## A meeting on the road with no fight: {gold, items}.

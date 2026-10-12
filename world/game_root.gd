@@ -711,9 +711,13 @@ func _boss_music(cv: CombatView) -> void:
 
 # --- Strahd's presence (ADR 0014, story/strahd_presence.gd) -----------------------------------------
 
-## A visit from Strahd at `on` (arrive, rest) if one is due here and now and nothing else is going on.
+## A visit from Strahd at `on` (arrive, rest) if one is due here and now and nothing else is going on. Spoils still
+## open (they come a frame after a fight) hold it until they're taken: it plays then, never dropped.
 func _strahd(on: String, ctx: Dictionary = {}) -> bool:
-	if view == null or view.in_combat or dialogue != null or loot != null:
+	if view == null or view.in_combat or dialogue != null:
+		return false
+	if loot != null or not _loot_queue.is_empty():
+		_strahd_after_loot.call_deferred(on, ctx)
 		return false
 	var visit := StrahdPresence.due(st, on, ctx)
 	if visit.is_empty():
@@ -721,6 +725,14 @@ func _strahd(on: String, ctx: Dictionary = {}) -> bool:
 	close_screen()
 	_strahd_step(StrahdPresence.begin(st, visit))
 	return true
+
+
+func _strahd_after_loot(on: String, ctx: Dictionary) -> void:
+	while loot != null or not _loot_queue.is_empty():
+		if loot != null:
+			await loot.closed
+		await get_tree().process_frame
+	_strahd(on, ctx)
 
 
 ## A leg of a journey is over: a visit on the road stops it on the road's map, like a road event; the journey goes
