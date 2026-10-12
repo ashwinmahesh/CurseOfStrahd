@@ -63,11 +63,16 @@ static func helpful(data: Dictionary) -> bool:
 	return kind in ["creature", "ally", "self"] and (data.has("heal") or data.has("effects") or bool(data.get("field_utility", false)))
 
 
-## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`. Returns {ok, text, lines}. With
-## `st`, a spell that takes minutes or hours to cast (Prayer of Healing's ten minutes) takes them off the clock.
-static func cast(party: Array[Character], caster: Character, spell_id: String, slot: int, targets: Array[Character],
+## Casts `spell_id` from `caster` at `slot` (0 = the lowest that works) on `targets`: party members, or with `st` the
+## story allies travelling with the party too (st.guests; owner, 2026-10-12: a companion should take spells outside
+## fights). Returns {ok, text, lines}. With `st`, a spell that takes minutes or hours to cast (Prayer of Healing's ten
+## minutes) takes them off the clock.
+static func cast(party: Array[Character], caster: Character, spell_id: String, slot: int, targets: Array,
 		dice: DiceRoller, st: StoryState = null) -> Dictionary:
-	var e := _board(party, caster, dice)
+	var guests: Array = []
+	if st != null:
+		guests.append_array(st.guests)
+	var e := _board(party, caster, dice, 5, guests)
 	var c := e.get_c(caster.id)
 	if c == null:
 		return {"ok": false, "text": "%s isn't in the party" % caster.name, "lines": []}
@@ -82,10 +87,10 @@ static func cast(party: Array[Character], caster: Character, spell_id: String, s
 	if str((data.get("targets", {}) as Dictionary).get("kind", "")) == "self":
 		tgt.append(c)
 	else:
-		for t in targets:
+		for t: Variant in targets:
 			if t == caster and bool((data.get("targets", {}) as Dictionary).get("other", false)):
 				return {"ok": false, "text": "%s goes on another creature" % data.get("name", spell_id), "lines": []}
-			var tc := e.get_c(t.id)
+			var tc := e.get_c((t as Creature).id)
 			if tc != null:
 				tgt.append(tc)
 	var before := e.log.entries.size()
@@ -239,8 +244,8 @@ static func _slots(caster: Character, level: int) -> Array[int]:
 
 
 ## A 5x5 open board (or `size` x `size`) with the caster in the middle and everyone else in the squares around them
-## (all within touch), the caster's turn already begun.
-static func _board(party: Array[Character], caster: Character, dice: DiceRoller, size: int = 5) -> Encounter:
+## (all within touch), the caster's turn already begun: the party, then any `guests` (story allies, StoryState.guests).
+static func _board(party: Array[Character], caster: Character, dice: DiceRoller, size: int = 5, guests: Array = []) -> Encounter:
 	var rows: Array = []
 	for i in size:
 		rows.append(".".repeat(size))
@@ -257,6 +262,11 @@ static func _board(party: Array[Character], caster: Character, dice: DiceRoller,
 		if ch == caster or n >= MAX_TARGETS:
 			continue
 		e.add(ch, &"party", spots[n]).controller = &"player"
+		n += 1
+	for g: Variant in guests:
+		if n >= MAX_TARGETS or (g as Creature).dead:
+			continue
+		e.add(g as Creature, &"party", spots[n])
 		n += 1
 	e.order = e.combatants.duplicate()
 	e.turn_index = 0
