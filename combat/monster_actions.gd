@@ -340,6 +340,8 @@ func release_engulf(t: Combatant) -> void:
 			t.creature.remove_effect(fx)
 	t.cell = e.spells._free_cell_near(t.cell)
 	e.events.append({"type": "teleport", "id": t.id, "from": t.cell, "to": t.cell})
+	if t == e.current():
+		t.regain_speed()
 
 
 ## Hit Point maximum reduction (Life Drain, the Spawn's Bite): lasts until a Long Rest; 0 means death.
