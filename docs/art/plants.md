@@ -35,6 +35,21 @@ turns that share of a kind's plants, each picked by where it stands (foliage.gds
 between the set's two `autumn_colours` by the leaf's own brightness, so they read rust and gold rather than a tinted
 green.
 
+## The regions' trees and plants
+
+The Region Variety Plan's second half (owner's yes to Blender, 2026-10-12): eight more leaf cards at the end of the atlas
+(which grew to six rows; `cards.json` `rows`, and blender/plants_3d.py sizes cards by `BOX`, the boxes in atlas widths,
+so the older plants kept their shapes) and fourteen more plants. Broadleaf trees (`crown_tree`: a trunk and limbs into
+a crown that is a cloud of leafy sprays on an ellipsoid, the top ones sprung from its axis so a high camera sees leaves,
+not a ring): `birch_a`, `birch_b` (white bark, `bark_birch`), `oak_a`, `oak_b` (`bark_oak`), `willow_a` (strands
+hanging from its rim) and the Scots pines `scots_a`, `scots_b` (orange upper bark, `bark_pine`; kind `tree`, so they
+never turn), each with a `_far` copy. Broadleaf trees are their own kind, `broadleaf`, so a set's `autumn` can turn
+them (the Vistani camps' oaks go rust and gold) while its spruces stay green. Ground plants: `vine` (a grapevine on its
+stake, kind `bush`), `heather`, `thistle` and `cattails`. The sets: `autumn` oaks and birches round Tser Pool, `lake`
+birches and willows and cattails on the shore, `marsh` willows, `mountain` and `rock` Scots pines, `heath` Scots pines
+with heather and thistles, `spectral` birches at Argynvostholt, `vineyard` vines in the open rows, `village` an oak or
+a birch among the spruces, `sick` twisted oaks on Yester Hill.
+
 ## How a plant is made
 
 - **Cards.** A spray of fir is painted as clumps of needles along its twigs, dark at their roots and lighter toward
