@@ -7,10 +7,15 @@ extends RefCounted
 
 var party: Array[Character] = []
 ## Roster members at camp: the rest of the company, out of the party for now (owner, 2026-10-06: the player swaps
-## who travels, up to PARTY_CAP at once, outside fights and conversations). They don't speak in the story, and they
-## don't level while they're away (owner, 2026-10-07): they keep their level, and when they rejoin, the player takes
-## each level they missed in turn on the level-up screen (levels_waiting).
+## who travels, up to PARTY_CAP at once, outside fights and conversations). They don't speak in the story, except by
+## the fire when the party makes camp (camp_company), and they don't level while they're away (owner, 2026-10-07):
+## they keep their level, and when they rejoin, the player takes each level they missed in turn on the level-up screen
+## (levels_waiting).
 var bench: Array[Character] = []
+## The roster members by the fire while the party has made camp in the wild (LocationCamp, F16): there the story finds
+## them as it finds the party (find_member, so their camp talks come up) and they see what's chosen (Approval). Not
+## saved: a camp is pitched again each time.
+var camp_company: Array[Character] = []
 ## Index into party of the character leading in exploration and speaking in dialogue.
 var leader: int = 0
 var gold: float = 0.0
@@ -149,9 +154,12 @@ func leader_character() -> Character:
 
 
 ## The first party member (in marching order) that matches a selector: class:x, species:x, background:x,
-## tag:x, name:x, item:x.
+## tag:x, name:x, item:x. While the party has made camp, the companions by the fire count too (camp_company).
 func find_member(selector: String) -> Character:
 	for ch in party:
+		if member_matches(ch, selector):
+			return ch
+	for ch in camp_company:
 		if member_matches(ch, selector):
 			return ch
 	return null

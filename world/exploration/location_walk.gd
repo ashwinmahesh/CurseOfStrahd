@@ -131,8 +131,8 @@ static func _advance_party(view: LocationView, next: Vector2i) -> void:
 	for m in view.members:
 		old.append(m.cell)
 	_move_member(view, 0, next)
-	if view.solo:
-		return
+	if view.solo or LocationCamp.of(view) != null:
+		return   # split, or at camp: the others stay where they are (by the fire)
 	for i in range(1, view.members.size()):
 		if view.members[i].creature.hp <= 0 or PitFall.holds(view, view.members[i]):
 			continue

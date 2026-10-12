@@ -252,6 +252,27 @@ func test_the_turn_based_panel() -> void:
 	GameSettings.set_turn_based(false)
 
 
+## The camp's panel (F16, CampBar) before the night and after it, and the rest screen while the party is camped.
+func test_the_camp_panel() -> void:
+	if not await _game(LATE):
+		return
+	root.call("enter_location", "mount_baratok", "default")
+	await _frames(5)
+	(GameState.story.flags as Dictionary).erase(RestRules.DONE_AT)
+	var camp := LocationCamp.pitch(root.get("view") as LocationView, root, "safe")
+	assert_true(camp != null, "camp is made on the mountainside")
+	if camp == null:
+		return
+	await _check("the camp panel", func() -> Variant:
+		await _frames(2)
+		return camp.bar)
+	await _check("the rest screen at camp", _screen("rest", 0), _close_screen)
+	camp.sleep()
+	await _check("the camp panel after the night", func() -> Variant:
+		await _frames(2)
+		return camp.bar)
+
+
 func test_the_party_screens() -> void:
 	if not await _game(LATE):
 		return
