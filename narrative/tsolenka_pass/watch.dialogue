@@ -101,6 +101,26 @@ tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Not
 * [if level >= 10 and not quest.the_guide_to_the_temple] Has anybody else gone up since we passed? -> tsolenka_pass/the_guide:sergeant
 * Goodbye, sergeant. -> END
 
+# ---------------------------------------------------------------- The watch log (prop tower_watch_log)
+
+# What the sergeant would say, for a party that released or fought his watch before he said it (Wiki findings 47, 57,
+# 58): the watchword, the smoke on Ghakis (The Warm Snow) and the goat path (The Guide to the Temple).
+~ log
+Narrator: The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN.
+Narrator: Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not.
+if not flag.tsolenka_watchword_known
+set tsolenka_watchword_known
+endif
+if not quest.the_warm_snow
+quest the_warm_snow rumored
+Narrator: One entry comes round every month for forty years: North shoulder of Ghakis. Smoke where nobody lives. Snow melting in midwinter. The count's cart up the goat path at the new moon with a cage on the back, and down again with the cage empty.
+endif
+if level >= 10 and flag.tsolenka_gate_open and not quest.the_guide_to_the_temple
+quest the_guide_to_the_temple asked
+Narrator: The newest entries are all from this winter: Goat path round the tower. Lanterns, four or five to a party. One lantern came down. Three times. The last: a man, a woman, and a sledge with something small on it, coughing.
+endif
+-> END
+
 # ---------------------------------------------------------------- The watchman at his post
 
 ~ watchman

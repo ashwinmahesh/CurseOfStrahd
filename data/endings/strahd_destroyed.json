@@ -194,6 +194,69 @@
       "text": "The oath Vladimir made you swear is broken, and his knights know it. They lay down their arms in fury, and then, slowly, in relief."
     },
     {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == escaped",
+      "text": "Nadia Boteanu is home in Vallaki, lighting the lamps along Main Street at dusk. She lights the one by the castle road last, and brightest."
+    },
+    {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == waits",
+      "text": "Nadia Boteanu waited in her cell until the castle went quiet, then walked out of its front door. Nobody stopped her. Vallaki's lamps are lit again, and she counts every one."
+    },
+    {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == sent_alone",
+      "text": "Nadia Boteanu never reached the castle gates. Someone else lights the lamps in Vallaki now, and leaves one dark for her."
+    },
+    {
+      "topic": "doru",
+      "title": "Doru",
+      "portrait": "doru",
+      "when": "flag.larders_doru_fate == rest",
+      "text": "Father Donavich hears how his son ended, and believes the part about him being brave. For the first time in years, he sleeps through the night."
+    },
+    {
+      "topic": "doru",
+      "title": "Doru",
+      "portrait": "doru",
+      "when": "flag.larders_doru_destroyed",
+      "text": "Doru died in the castle's dungeon, hungry to the end. Father Donavich is told his son went far away, and chooses to believe it."
+    },
+    {
+      "topic": "doru",
+      "title": "Doru",
+      "portrait": "doru",
+      "when": "flag.larders_doru_fate == left",
+      "text": "Doru is still in his chains somewhere under an empty castle. Father Donavich keeps a candle in the church window, in case."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_slain",
+      "text": "The castle kitchen stays cold. Nobody in Barovia misses the soup, and nobody asks what was in it."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_helps",
+      "text": "Cyrus Belview walks up the mountain to the abbey with a sack of onions and a ladle, and asks for his family. He cooks for the Belviews now. They have never eaten better."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_met",
+      "text": "Cyrus Belview keeps the fire lit in an empty castle, and the soup on for a master who isn't coming down to dinner. He sets the place anyway."
+    },
+    {
       "topic": "amber",
       "title": "The Amber Temple",
       "portrait": "exethanter",
