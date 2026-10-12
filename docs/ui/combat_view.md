@@ -338,3 +338,10 @@ start), and drops out of the friendly-fire warning. It lists eight, then "+N mor
 and it follows the area as it moves, the pad's cursor included. By the pointer only a count stays ("5 in the area
 (1 friend)"). The numbers come from `ActionCatalog.spell_preview`'s creatures (`save_chance`, `damage`, `drops`,
 `safe`, `unaffected`).
+
+## Foes' rings and Slowed (owner, 2026-10-12)
+
+A foe's base ring is a little wider and a bright red that ignores light and fog (an unshaded material), so foes are easy
+to find in a dark room, in the mist and under depth blur; the party's gold and the guests' blue rings are as they were.
+A creature whose Speed a spell or effect cuts (Ray of Frost's minus, Slow's half, a cap) shows "Slowed" over it with its
+other conditions (`CombatToken.slowed`).

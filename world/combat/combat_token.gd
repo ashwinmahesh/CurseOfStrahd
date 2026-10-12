@@ -308,6 +308,28 @@ func _text(text: String, pos: Vector3, size: int, colour: String) -> Label3D:
 	return l
 
 
+## Whether a spell or effect on `cr` cuts its Speed: a minus to it (Ray of Frost), a share of it (Slow halves it), a cap
+## on it, or the Slow spell's own flag. Conditions that stop it (Grappled, Restrained) show as themselves.
+static func slowed(cr: Creature) -> bool:
+	for fx in cr.effects:
+		for m in fx.modifiers:
+			var v: Variant = m.data.get("value")
+			var number := v is int or v is float
+			match str(m.stat):
+				"speed":
+					if number and float(v) < 0.0:
+						return true
+				"speed_percent":
+					if number and float(v) < 100.0:
+						return true
+				"speed_cap":
+					return true
+				"flag":
+					if str(v) == "slowed":
+						return true
+	return false
+
+
 ## Re-reads the creature: health bar, conditions, down or dead.
 func refresh() -> void:
 	var cr := combatant.creature
@@ -339,6 +361,9 @@ func refresh() -> void:
 	# F13: a foe that gave up (combat/ai/ai_tactics.gd).
 	if cr.has_flag("surrendered") and not cr.dead:
 		chips.append("Surrendered")
+	# Slowed (owner, 2026-10-12): a spell or effect cutting its Speed (Ray of Frost, Slow...).
+	if slowed(cr):
+		chips.append("Slowed")
 	# Hex, Hunter's Mark: who marked it.
 	for fx in cr.effects:
 		if fx.data.has("mark_by"):
