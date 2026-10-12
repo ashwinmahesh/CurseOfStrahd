@@ -589,7 +589,7 @@ func _party_line(who: Character, text: String) -> Dictionary:
 ## A party member's portrait (art/portraits/<id>.png): the look picked in the creator, else one named after them.
 static func portrait_of(who: Character) -> String:
 	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
-	return look if look != "" else who.name.to_snake_case()
+	return look if look != "" else Character.id_for_name(who.name)
 
 
 static func _npc_for(low: String) -> Dictionary:

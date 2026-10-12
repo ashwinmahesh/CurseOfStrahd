@@ -1,4 +1,4 @@
-# Liriel and Ratatoille, a romance between two of the six (story/approval.gd ROMANCES, docs/story/approval.md). Camp
+# Liriel and Ratatouille, a romance between two of the six (story/approval.gd ROMANCES, docs/story/approval.md). Camp
 # talks (story/camp_talk.gd), each offered once: the spark, the courting, and together. Flag
 # romance_liriel_ratatoille: "spark", "courting", "together", or "over" when the party steered them apart.
 
@@ -9,12 +9,12 @@ endif
 -> END
 
 ~ spark
-Narrator: Supper is a stew tonight, and Ratatoille has fussed over it for an hour. When he finally ladles it out, Liriel folds her hands over her bowl, as she always does, and says grace.
+Narrator: Supper is a stew tonight, and Ratatouille has fussed over it for an hour. When he finally ladles it out, Liriel folds her hands over her bowl, as she always does, and says grace.
 interject name:liriel_dawnsong: For the bread, and the fire, and the hands that made them. Morning's grace on all three.
-Narrator: Ratatoille, who would usually be serving the second bowl by now, has stopped with the ladle in the air.
+Narrator: Ratatouille, who would usually be serving the second bowl by now, has stopped with the ladle in the air.
 interject name:ratatoille: You always do that. Every time. Even for rations.
 interject name:liriel_dawnsong: Of course. The Morninglord made bread before he made kings. You're the nearest thing to a temple we have out here.
-Narrator: Ratatoille goes pink to the tips of his ears and spills stew on his boot.
+Narrator: Ratatouille goes pink to the tips of his ears and spills stew on his boot.
 * He's blushing, Liriel. -> spark_tease
 * (Say nothing, and pass the bread.) -> spark_quiet
 * Can we eat before it's cold? -> spark_away
@@ -27,7 +27,7 @@ approve liriel_dawnsong +1 ratatoille +1: You noticed the blushing at supper
 -> END
 
 ~ spark_quiet
-Narrator: You pass the bread. Liriel takes a piece and tells him it's the best she's ever had, and Ratatoille says it isn't, it's a little dense, and looks as though he might float away.
+Narrator: You pass the bread. Liriel takes a piece and tells him it's the best she's ever had, and Ratatouille says it isn't, it's a little dense, and looks as though he might float away.
 set romance_liriel_ratatoille = "spark"
 -> END
 
@@ -44,7 +44,7 @@ endif
 -> END
 
 ~ courting
-Narrator: Ratatoille corners you behind the supply packs, looking as though he's about to cast something difficult.
+Narrator: Ratatouille corners you behind the supply packs, looking as though he's about to cast something difficult.
 interject name:ratatoille: I need a consultation. In confidence. I've tried divination. Divination says "obviously", which is very unhelpful, and also rude.
 interject name:ratatoille: Liriel. She's a priestess. She's lovely and she talks to a god, and I'm a cook who learned fire so people would sit with him. What would she want with a cook?
 * She says grace over your food, Rat. Every time. -> courting_grace
@@ -78,7 +78,7 @@ endif
 -> END
 
 ~ together
-Narrator: Ratatoille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading.
+Narrator: Ratatouille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading.
 interject name:ratatoille: I prepared remarks. Several drafts. They're all terrible. I'm going to say the shortest one.
 interject name:ratatoille: You say grace over my food. Nobody ever did. I think I've been cooking for you since Death House, and I didn't know it until somebody told me.
 Narrator: Liriel looks at the cakes a long while. Then she folds her hands over the plate, the way she always does.

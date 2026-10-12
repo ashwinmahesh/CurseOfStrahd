@@ -69,22 +69,22 @@
     {
       "id": "ratatoille_supper_cooked",
       "type": "bool",
-      "summary": "Ratatoille cooked supper for the Martikovs (companions/table:supper)."
+      "summary": "Ratatouille cooked supper for the Martikovs (companions/table:supper)."
     },
     {
       "id": "ratatoille_zantras_refused",
       "type": "bool",
-      "summary": "Ratatoille turned away from Zantras's offer of an audience forever."
+      "summary": "Ratatouille turned away from Zantras's offer of an audience forever."
     },
     {
       "id": "ratatoille_dinner_tasted",
       "type": "bool",
-      "summary": "Ratatoille passed judgement on Strahd's dinner, and heard his offer (companions/table:dinner)."
+      "summary": "Ratatouille passed judgement on Strahd's dinner, and heard his offer (companions/table:dinner)."
     },
     {
       "id": "ratatoille_refused_strahd",
       "type": "bool",
-      "summary": "Ratatoille refused Strahd's offer of a title and a tower at dinner."
+      "summary": "Ratatouille refused Strahd's offer of a title and a tower at dinner."
     },
     {
       "id": "wren_letter_given",

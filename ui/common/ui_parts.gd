@@ -728,7 +728,7 @@ static func chip(ch: Character, lit: bool, on_press: Callable, width: float = 13
 	var path := "res://art/portraits/%s.png" % CombatToken.art_for(ch)
 	if ResourceLoader.exists(path):
 		b.icon = load(path) as Texture2D
-	# The portrait keeps its own square, whatever the name: stretched into what a long name left (Ratatoille) it was
+	# The portrait keeps its own square, whatever the name: stretched into what a long name left (Ratatouille) it was
 	# a sliver a few pixels wide (UI QA UI-04). A long name widens the chip instead.
 	b.expand_icon = false
 	b.add_theme_constant_override("icon_max_width", 30)

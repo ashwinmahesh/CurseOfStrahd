@@ -26437,6 +26437,12 @@
   "recipe": "b7a728ee9d",
   "text": "Present."
  },
+ "kip_smudgewick/7134db4212d98339": {
+  "chars": 77,
+  "model": "eleven_v4",
+  "recipe": "b7a728ee9d",
+  "text": "\"Ratatouille and Smudgewick.\" Alphabetical, Rat. You'd want it done properly."
+ },
  "kip_smudgewick/713cc56e7cab01cc": {
   "chars": 100,
   "model": "eleven_v4",
@@ -27165,12 +27171,6 @@
   "model": "eleven_v4",
   "recipe": "b7a728ee9d",
   "text": "Can I sell these? I'm not going to. I just want to know if I can."
- },
- "kip_smudgewick/fef49dbbcbcad085": {
-  "chars": 76,
-  "model": "eleven_v4",
-  "recipe": "b7a728ee9d",
-  "text": "\"Ratatoille and Smudgewick.\" Alphabetical, Rat. You'd want it done properly."
  },
  "kip_smudgewick/ff8d914aab72d077": {
   "chars": 63,
@@ -28950,11 +28950,11 @@
   "recipe": "af97fbe78c",
   "text": "They answer, every one of them, the moment you speak. My god has been quiet all week."
  },
- "liriel_dawnsong/15066ba39d1eab61": {
-  "chars": 82,
+ "liriel_dawnsong/158353570a48e2ec": {
+  "chars": 83,
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
-  "text": "Never eat a stranger's pie in a cursed valley, Ratatoille. We teach it to novices."
+  "text": "Never eat a stranger's pie in a cursed valley, Ratatouille. We teach it to novices."
  },
  "liriel_dawnsong/17a00c30662db447": {
   "chars": 61,
@@ -29350,6 +29350,12 @@
   "recipe": "a968987b3b",
   "text": "The novices write down whoever they pray for, so nobody is forgotten at the morning hymn. I started this in Death House. I've never had to cross anyone out. I mean to keep it that way."
  },
+ "liriel_dawnsong/419d6ad54e5735d0": {
+  "chars": 98,
+  "model": "eleven_v4",
+  "recipe": "af97fbe78c",
+  "text": "Thank you for the bread this morning, Ratatouille. I said grace over it twice. Once wasn't enough."
+ },
  "liriel_dawnsong/41e2a0eb223cfd36": {
   "chars": 107,
   "model": "eleven_v4",
@@ -29513,6 +29519,12 @@
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
   "text": "We'll see him buried right. You have my word on it."
+ },
+ "liriel_dawnsong/50b001c279a7979f": {
+  "chars": 96,
+  "model": "eleven_v4",
+  "recipe": "af97fbe78c",
+  "text": "Ratatouille. Feeding people is holy work. When I say grace over your cooking, I mean every word."
  },
  "liriel_dawnsong/51288554aba60917": {
   "chars": 88,
@@ -29993,12 +30005,6 @@
   "recipe": "af97fbe78c",
   "text": "Stay back from him. He's starving, and he's looking at our throats."
  },
- "liriel_dawnsong/827918ee81c5ff0e": {
-  "chars": 97,
-  "model": "eleven_v4",
-  "recipe": "af97fbe78c",
-  "text": "Thank you for the bread this morning, Ratatoille. I said grace over it twice. Once wasn't enough."
- },
  "liriel_dawnsong/828c64534d961161": {
   "chars": 91,
   "model": "eleven_v4",
@@ -30233,12 +30239,6 @@
   "recipe": "af97fbe78c",
   "text": "She keeps a shrine to the devil of that castle under her own floor, and we have taken her coin. I want that said aloud."
  },
- "liriel_dawnsong/996e92ac7779f5cf": {
-  "chars": 95,
-  "model": "eleven_v4",
-  "recipe": "af97fbe78c",
-  "text": "Ratatoille. Feeding people is holy work. When I say grace over your cooking, I mean every word."
- },
  "liriel_dawnsong/99d3d0d191c7499b": {
   "chars": 106,
   "model": "eleven_v4",
@@ -30256,12 +30256,6 @@
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
   "text": "Morning's grace, my lord. I'll pray for you. No, I insist."
- },
- "liriel_dawnsong/9b65b39667a47149": {
-  "chars": 66,
-  "model": "eleven_v4",
-  "recipe": "af97fbe78c",
-  "text": "Gently, Ratatoille. Envy is only admiration that hasn't eaten yet."
  },
  "liriel_dawnsong/9c33f991d279bd74": {
   "chars": 93,
@@ -30694,6 +30688,12 @@
   "model": "eleven_v4",
   "recipe": "af97fbe78c",
   "text": "Kip. Whatever you signed, there is nothing in any contract that the Morninglord can't see through. We'll get you out."
+ },
+ "liriel_dawnsong/d1b384c915438083": {
+  "chars": 67,
+  "model": "eleven_v4",
+  "recipe": "af97fbe78c",
+  "text": "Gently, Ratatouille. Envy is only admiration that hasn't eaten yet."
  },
  "liriel_dawnsong/d23e09383048cde9": {
   "chars": 180,
@@ -34492,6 +34492,12 @@
   "recipe": "dd92281f92",
   "text": "You go easy. She stops pushing at once and looks at you, deeply offended."
  },
+ "narrator/02625c74f174f31b": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself."
+ },
  "narrator/026a105b45091f35": {
   "chars": 115,
   "model": "eleven_v4",
@@ -34515,6 +34521,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Every set of bootprints round the wagon steps wide of the step itself: someone has strung a wire there."
+ },
+ "narrator/02844121287998d0": {
+  "chars": 106,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille corners you behind the supply packs, looking as though he's about to cast something difficult."
  },
  "narrator/02865917b416c09e": {
   "chars": 176,
@@ -35722,12 +35734,6 @@
   "recipe": "dd92281f92",
   "text": "The crowd scatters like pigeons, and the square is suddenly very large."
  },
- "narrator/0c0a4ed2aa116541": {
-  "chars": 192,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille is doing something complicated to tonight's rations with a pinch of salt, a pinch of something from a twist of paper, and a great deal of concentration. It smells unreasonably good."
- },
  "narrator/0c10bcef2112a64f": {
   "chars": 181,
   "model": "eleven_v4",
@@ -36874,6 +36880,12 @@
   "recipe": "dd92281f92",
   "text": "The scarecrows turn their sacking heads all together, with a noise like dry leaves, and climb down off their poles."
  },
+ "narrator/148c128524423910": {
+  "chars": 59,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille sits down, quite suddenly, on the nearest cask."
+ },
  "narrator/149a5efec102875a": {
   "chars": 138,
   "model": "eleven_v4",
@@ -37216,12 +37228,6 @@
   "recipe": "dd92281f92",
   "text": "You sleep in shifts. Every watch hears wolves, far off, singing to each other about you."
  },
- "narrator/174aedfe99e1b032": {
-  "chars": 108,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has his spellbook open on his knees and is reading it the way some people read letters from home."
- },
  "narrator/175259ee34e99dc8": {
   "chars": 121,
   "model": "eleven_v4",
@@ -37371,12 +37377,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Set into the arm of the throne of bones, where a hand would rest, is a ring of dull gold. Take it, and the scrape on your knuckles closes while you watch."
- },
- "narrator/188010262cc181ee": {
-  "chars": 142,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "There's no supper tonight. Ratatoille hands round the rations cold, still in their paper, and sits apart with his spellbook shut on his knees."
  },
  "narrator/188adccc34e5193d": {
   "chars": 104,
@@ -37599,6 +37599,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One grave has been dug up and filled in again, badly. A little way down, a slim wand of grey wood, dropped by whoever did the digging."
+ },
+ "narrator/19ea6f8fe3c2cf67": {
+  "chars": 127,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille asks, very formally, for the use of the kitchen. Davian looks at him the way he looks at weather, and waves a hand."
  },
  "narrator/19f064d0690ef778": {
   "chars": 144,
@@ -38506,6 +38512,12 @@
   "recipe": "dd92281f92",
   "text": "An old church of dark timber and grey stone, with a sunburst carved over the door. Someone has hung a bundle of garlic from the knocker, which is either devotion or doubt."
  },
+ "narrator/20586337d4df33e5": {
+  "chars": 193,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is doing something complicated to tonight's rations with a pinch of salt, a pinch of something from a twist of paper, and a great deal of concentration. It smells unreasonably good."
+ },
  "narrator/2062d6d4b839aa27": {
   "chars": 110,
   "model": "eleven_v4",
@@ -39027,12 +39039,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Master Vosk waits beside the hollow sarcophagus, his books stacked neatly on the floor, his hands folded."
- },
- "narrator/24706a3e6eed72ea": {
-  "chars": 167,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook."
  },
  "narrator/247fb8ab4f01f067": {
   "chars": 156,
@@ -40617,6 +40623,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The founder's cask is older than the house: black oak, bound in iron gone brown, so big a man could stand up inside it. The druids have chopped at every cask in the cellar except this one, because it was too much trouble."
+ },
+ "narrator/301cf844aabc84b2": {
+  "chars": 158,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The eating contest was Thistle's idea. Most things involving shouting are. It has been going on for some time, and Ratatouille has stopped cooking in protest."
  },
  "narrator/3021789bb13bcd26": {
   "chars": 265,
@@ -42694,12 +42706,6 @@
   "recipe": "dd92281f92",
   "text": "A small room: a large bed under a faded coverlet, a writing table, an empty wardrobe with its doors ajar, and a full-length mirror that doesn't quite sit flush with the wall."
  },
- "narrator/4067d605d8ba3609": {
-  "chars": 119,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille is cooking breakfast with tremendous concentration, though there's very little to cook and nobody is hungry."
- },
  "narrator/407073a70fe7542e": {
   "chars": 115,
   "model": "eleven_v4",
@@ -43377,12 +43383,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The nails squeal out of the trapdoor on their own, and what's been living in the cellar for twenty winters comes up into the lamplight, hungry."
- },
- "narrator/462c370a7308968e": {
-  "chars": 157,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The eating contest was Thistle's idea. Most things involving shouting are. It has been going on for some time, and Ratatoille has stopped cooking in protest."
  },
  "narrator/4643b2536bf81e52": {
   "chars": 163,
@@ -44602,6 +44602,12 @@
   "recipe": "dd92281f92",
   "text": "A spinning wheel, turning. The thread's coming on again, fine and even."
  },
+ "narrator/4fc684f66f2ae9d1": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "There's no supper tonight. Ratatouille hands round the rations cold, still in their paper, and sits apart with his spellbook shut on his knees."
+ },
  "narrator/4fd14317c5a2f513": {
   "chars": 114,
   "model": "eleven_v4",
@@ -44655,12 +44661,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You break a seal stamped with a pointed hat. Somewhere, you hope, a wizard is not keeping count."
- },
- "narrator/507aa298f8797dc5": {
-  "chars": 129,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself."
  },
  "narrator/507f854e27b1bc40": {
   "chars": 172,
@@ -45106,6 +45106,12 @@
   "recipe": "dd92281f92",
   "text": "Wren does five minutes on Krezk's gate, and the goats, and the watchman's hat, and by the end someone at the back has laughed and been elbowed for it, and someone else has laughed at the elbowing."
  },
+ "narrator/53b969b08f38b719": {
+  "chars": 74,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille goes pink to the tips of his ears and spills stew on his boot."
+ },
  "narrator/53cd6950ddd86143": {
   "chars": 172,
   "model": "eleven_v4",
@@ -45525,12 +45531,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "St. Andral's stands on its rise at the north-east corner of the town, its bell tower leaning very slightly toward the castle, as if listening. Gravestones crowd its yard, and a fresh grave is being dug beside them."
- },
- "narrator/572ec03348adf5bc": {
-  "chars": 58,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille sits down, quite suddenly, on the nearest cask."
  },
  "narrator/5738943940b4b918": {
   "chars": 143,
@@ -46114,12 +46114,6 @@
   "recipe": "dd92281f92",
   "text": "A hunter's trap, well kept and oiled. On the spring plate someone has stamped a mark: an M, with a notch through it. You've seen that mark before, burned into the handle of Old Marin's skinning knife, back at the camp."
  },
- "narrator/5b557329a9fe51e4": {
-  "chars": 156,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille is making a tart tonight, and making it badly: doing a step wrong, stopping, doing it right, as if he were arguing with somebody who isn't there."
- },
  "narrator/5b5ac808ad26809a": {
   "chars": 74,
   "model": "eleven_v4",
@@ -46593,12 +46587,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You work the earring free. It is a little silver horse's head, warm from nothing at all."
- },
- "narrator/5e63692e3bbd6502": {
-  "chars": 105,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille corners you behind the supply packs, looking as though he's about to cast something difficult."
  },
  "narrator/5e688224b485faf9": {
   "chars": 129,
@@ -49024,12 +49012,6 @@
   "recipe": "dd92281f92",
   "text": "The scholar takes off his spectacles, and his face goes with them: a jackal's head, black-lipped and smiling. The cold braziers light themselves with green fire."
  },
- "narrator/7056c5d360f79f3f": {
-  "chars": 115,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight."
- },
  "narrator/7059d31c292eb306": {
   "chars": 175,
   "model": "eleven_v4",
@@ -49305,6 +49287,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why."
+ },
+ "narrator/72f56292268a2f13": {
+  "chars": 109,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has his spellbook open on his knees and is reading it the way some people read letters from home."
  },
  "narrator/730a28373da9019c": {
   "chars": 186,
@@ -50302,6 +50290,12 @@
   "recipe": "dd92281f92",
   "text": "Doors open a crack as Ireena passes and close again, and nobody calls out to her. A few people touch their foreheads, as if at a funeral."
  },
+ "narrator/7affe96c1229a729": {
+  "chars": 168,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook."
+ },
  "narrator/7b00c41b2e9b28ed": {
   "chars": 98,
   "model": "eleven_v4",
@@ -50361,12 +50355,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Frozen solid, and long dead. The cold isn't saying when."
- },
- "narrator/7b8bdb4c569a8b0e": {
-  "chars": 321,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille sends everyone away from the fire for an hour and won't say why. When you're let back, there's a cloth laid on the ground, and a supper on it that has no business existing in this valley: something roasted, something in a sauce, bread that's still warm, and a little pastry at each place with an apricot in it."
  },
  "narrator/7b983bebd2ea32c9": {
   "chars": 200,
@@ -50499,6 +50487,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "And one of you carries a little of the same Thirst now. You can feel it, if you hold still: a thread as fine as hair, running out of the mountain and down to a castle on a hill."
+ },
+ "narrator/7caa9a3c93e1eb01": {
+  "chars": 157,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is making a tart tonight, and making it badly: doing a step wrong, stopping, doing it right, as if he were arguing with somebody who isn't there."
  },
  "narrator/7cbd53fe59bfd079": {
   "chars": 99,
@@ -50649,6 +50643,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A cold room of tiles and glass, with four great vessels on stands in a row, each glowing faintly from inside."
+ },
+ "narrator/7e240c2aae7323cb": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The amber in front of Ratatouille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him."
  },
  "narrator/7e409cc04e3d9d8b": {
   "chars": 142,
@@ -52972,12 +52972,6 @@
   "recipe": "dd92281f92",
   "text": "A channel cut into the rock, dry, running from a stone gate in the wall to the cracks in the floor. Behind the gate you can hear water: the melt off the whole north face of the mountain, waiting."
  },
- "narrator/8fee80e7d4987494": {
-  "chars": 176,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "You pass the bread. Liriel takes a piece and tells him it's the best she's ever had, and Ratatoille says it isn't, it's a little dense, and looks as though he might float away."
- },
  "narrator/8ff2aa269ffbe8b2": {
   "chars": 48,
   "model": "eleven_v4",
@@ -53025,12 +53019,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "And at the back, on the carver's doorstep, one old man is laughing so hard he has to hold the doorpost. Old Pavel, with tears running into his beard. He can't stop."
- },
- "narrator/902f6f0170f7a631": {
-  "chars": 126,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille asks, very formally, for the use of the kitchen. Davian looks at him the way he looks at weather, and waves a hand."
  },
  "narrator/9039d55cb6b52865": {
   "chars": 231,
@@ -55744,12 +55732,6 @@
   "recipe": "dd92281f92",
   "text": "You are in the hills by the den, and the wolves know your scent by now."
  },
- "narrator/a5061ed668fd5ab8": {
-  "chars": 103,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille, who would usually be serving the second bowl by now, has stopped with the ladle in the air."
- },
  "narrator/a50db05cf33c0c01": {
   "chars": 100,
   "model": "eleven_v4",
@@ -56320,6 +56302,12 @@
   "recipe": "dd92281f92",
   "text": "A scratch that never heals, over the heart, and no hand laid on her: that is the mark a doll leaves when a thorn goes through it. Somebody in this marsh knows how to make that kind of doll, and lives on a stump."
  },
+ "narrator/a97e73318ca173dd": {
+  "chars": 178,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Supper is a stew tonight, and Ratatouille has fussed over it for an hour. When he finally ladles it out, Liriel folds her hands over her bowl, as she always does, and says grace."
+ },
  "narrator/a98c5a96632681a5": {
   "chars": 166,
   "model": "eleven_v4",
@@ -56403,12 +56391,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Midnight. The carriage comes up the castle road with its lamp swinging and no hand on the reins: one black horse in the traces, and an empty harness beside it, waiting."
- },
- "narrator/aa5db31ce5c21194": {
-  "chars": 137,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille is cooking tonight, which is normal. He's cooking badly, which isn't. The stew has caught on the bottom and he hasn't noticed."
  },
  "narrator/aa63cc35e94e74b5": {
   "chars": 82,
@@ -56637,6 +56619,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You step aside. Ireena looks at you once, and then she stops looking at you at all."
+ },
+ "narrator/ac4c3e42e470a313": {
+  "chars": 177,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You pass the bread. Liriel takes a piece and tells him it's the best she's ever had, and Ratatouille says it isn't, it's a little dense, and looks as though he might float away."
  },
  "narrator/ac5c4174e6a38908": {
   "chars": 238,
@@ -56968,12 +56956,6 @@
   "recipe": "dd92281f92",
   "text": "Old Greytooth comes down the trail at a walk, with his pack spread out behind him like a hunt in the old days, and stops at the edge of the light to look at you."
  },
- "narrator/aefd682cb1c96bcc": {
-  "chars": 142,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille sits up, folds his blanket into a neat square, and walks to him across the camp with his face as smooth and empty as a clean plate."
- },
  "narrator/aeff53adc5561ed8": {
   "chars": 178,
   "model": "eleven_v4",
@@ -57099,6 +57081,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A row of soldiers' faces carved into the tower, each one different, each one stern. Under them, a line of letters: THEY KEPT THE ROAD."
+ },
+ "narrator/afe58f6b3166131b": {
+  "chars": 116,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight."
  },
  "narrator/aff308c54065a129": {
   "chars": 128,
@@ -57753,6 +57741,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The shackle opens. She rubs her ankle, stands, sits down again, and stands up properly the second time."
+ },
+ "narrator/b5781bb21ff83c80": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille sits up, folds his blanket into a neat square, and walks to him across the camp with his face as smooth and empty as a clean plate."
  },
  "narrator/b5788e0c7b06f8fb": {
   "chars": 153,
@@ -58792,12 +58786,6 @@
   "recipe": "dd92281f92",
   "text": "The portcullis is up, and the way is open. Ahead, candlelight and voices."
  },
- "narrator/beff8e876a8b29bc": {
-  "chars": 142,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The amber in front of Ratatoille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him."
- },
  "narrator/bf0de607af3eb924": {
   "chars": 147,
   "model": "eleven_v4",
@@ -59697,6 +59685,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "On a ledge at the back of the gully, a long bundle of web hangs from a spur of rock, turning slowly. Inside it, through a gap, an eye is open, and moves to look at you."
+ },
+ "narrator/c50fef8c299ca63f": {
+  "chars": 208,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading."
  },
  "narrator/c5117b9c648c7956": {
   "chars": 160,
@@ -60640,6 +60634,12 @@
   "recipe": "dd92281f92",
   "text": "Pale logs roll out of his back room and up the road, end over end, like a procession of white dogs coming home. The woodpile in the yard leans, and shifts, and stands up."
  },
+ "narrator/cc959ae0d359a981": {
+  "chars": 138,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is cooking tonight, which is normal. He's cooking badly, which isn't. The stew has caught on the bottom and he hasn't noticed."
+ },
  "narrator/cc9bf93728d725b6": {
   "chars": 104,
   "model": "eleven_v4",
@@ -61059,12 +61059,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Godrick sits up on watch long after his turn is over, looking out at nothing. When you come to relieve him, he doesn't move over. He just says it."
- },
- "narrator/cfc12a648890b16d": {
-  "chars": 73,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille goes pink to the tips of his ears and spills stew on his boot."
  },
  "narrator/d00e05eb07219ed7": {
   "chars": 168,
@@ -64108,6 +64102,12 @@
   "recipe": "dd92281f92",
   "text": "The little jester laughs out of the paint. It's the last place in the castle anybody looks pleased to see you."
  },
+ "narrator/e7eac44e197b9149": {
+  "chars": 104,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille, who would usually be serving the second bowl by now, has stopped with the ladle in the air."
+ },
  "narrator/e7f2c00c4191a623": {
   "chars": 188,
   "model": "eleven_v4",
@@ -64299,6 +64299,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "In a hand that shakes: THE JACKAL IN THE STACKS IS NOT A SCHOLAR. HIS NAME IS ASHKARRETH. SAY IT AND HE MUST ANSWER."
+ },
+ "narrator/ea203718923b8007": {
+  "chars": 322,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille sends everyone away from the fire for an hour and won't say why. When you're let back, there's a cloth laid on the ground, and a supper on it that has no business existing in this valley: something roasted, something in a sauce, bread that's still warm, and a little pastry at each place with an apricot in it."
  },
  "narrator/ea2a1836f91119c9": {
   "chars": 92,
@@ -64738,12 +64744,6 @@
   "recipe": "dd92281f92",
   "text": "Dead pines lean over the road's last stretch. Beyond them is nothing at all, and then the castle."
  },
- "narrator/ed64e30cf7d42d3a": {
-  "chars": 207,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has made something small tonight, on a plate by itself: two honey cakes, still warm, and nothing else. He sets it down in front of Liriel and stands there holding a page of notes he isn't reading."
- },
  "narrator/ed65dd642d2589e8": {
   "chars": 187,
   "model": "eleven_v4",
@@ -64833,6 +64833,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Old bones in an old sheet. The sheet tells the story better than you can."
+ },
+ "narrator/ee199b2d03046357": {
+  "chars": 120,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ratatouille is cooking breakfast with tremendous concentration, though there's very little to cook and nobody is hungry."
  },
  "narrator/ee24d97e9d465a22": {
   "chars": 108,
@@ -65703,12 +65709,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Somewhere back toward the shrine, a woman's voice begins to keen, and keeps on, and then stops all at once, the way a door shuts."
- },
- "narrator/f502ce3165969eef": {
-  "chars": 177,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Supper is a stew tonight, and Ratatoille has fussed over it for an hour. When he finally ladles it out, Liriel folds her hands over her bowl, as she always does, and says grace."
  },
  "narrator/f5155f5acab07afc": {
   "chars": 160,
@@ -69167,6 +69167,12 @@
   "recipe": "eaa6a8f9c8",
   "text": "One can guess who. One would rather not."
  },
+ "ratatoille/1db5e37e269c5ae6": {
+  "chars": 241,
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
+  "text": "Master Mordenkainen. Archmage. Sir. I am Ratatouille, Diviner of the... I'm Ratatouille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice."
+ },
  "ratatoille/1dd1ff2f41301ff4": {
   "chars": 45,
   "model": "eleven_v4",
@@ -69480,6 +69486,12 @@
   "recipe": "eaa6a8f9c8",
   "text": "Yours is the one that worries them most."
  },
+ "ratatoille/467d6c030bbfbcf0": {
+  "chars": 97,
+  "model": "eleven_v3",
+  "recipe": "45b2eb9c71",
+  "text": "Both. Yes. Ratatouille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually."
+ },
  "ratatoille/46f1d50fb308f1e1": {
   "chars": 147,
   "model": "eleven_v4",
@@ -69695,12 +69707,6 @@
   "model": "eleven_v4",
   "recipe": "eaa6a8f9c8",
   "text": "Ash, badly balanced, a chip out of the grip. A truly dreadful wand. Somebody loved him enough to bury him with it."
- },
- "ratatoille/5f46b24e9a114598": {
-  "chars": 96,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
-  "text": "Both. Yes. Ratatoille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually."
  },
  "ratatoille/60a624b4c43d1525": {
   "chars": 142,
@@ -70112,6 +70118,12 @@
   "recipe": "45b2eb9c71",
   "text": "I am a diviner. I saw nothing coming. Nothing."
  },
+ "ratatoille/9536da3deacbacf2": {
+  "chars": 29,
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
+  "text": "\"Smudgewick and Ratatouille.\""
+ },
  "ratatoille/958a24bfe193ce23": {
   "chars": 75,
   "model": "eleven_v4",
@@ -70353,6 +70365,12 @@
   "recipe": "eaa6a8f9c8",
   "text": "The portcullis is iron a hand thick, and it's warded. Nobody's lifting that from out here. The winch will be inside the tower."
  },
+ "ratatoille/b65a3b59a78038f5": {
+  "chars": 45,
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
+  "text": "Ratatouille. Cook. And wizard. In that order."
+ },
  "ratatoille/b690bff2673bd2e3": {
   "chars": 89,
   "model": "eleven_v4",
@@ -70528,12 +70546,6 @@
   "model": "eleven_v4",
   "recipe": "eaa6a8f9c8",
   "text": "Low on the wall. Right. Is that a riddle? I'm bad at riddles."
- },
- "ratatoille/d14e77066a7bf864": {
-  "chars": 239,
-  "model": "eleven_v4",
-  "recipe": "eaa6a8f9c8",
-  "text": "Master Mordenkainen. Archmage. Sir. I am Ratatoille, Diviner of the... I'm Ratatoille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice."
  },
  "ratatoille/d158beff82b2d560": {
   "chars": 51,
@@ -70727,12 +70739,6 @@
   "recipe": "eaa6a8f9c8",
   "text": "Godrick. About the reading. Letters are only a recipe for sounds. I could teach you, evenings. I'd be very patient. Probably."
  },
- "ratatoille/f16a17c9656dee20": {
-  "chars": 28,
-  "model": "eleven_v4",
-  "recipe": "eaa6a8f9c8",
-  "text": "\"Smudgewick and Ratatoille.\""
- },
  "ratatoille/f21db2639a0240ee": {
   "chars": 65,
   "model": "eleven_v4",
@@ -70810,12 +70816,6 @@
   "model": "eleven_v4",
   "recipe": "eaa6a8f9c8",
   "text": "That crust had bone in it. I know flour, and that was not flour. And her windmill sits on the Vallaki road."
- },
- "ratatoille/fe49d15718175a52": {
-  "chars": 44,
-  "model": "eleven_v4",
-  "recipe": "eaa6a8f9c8",
-  "text": "Ratatoille. Cook. And wizard. In that order."
  },
  "ratatoille/ffed7f898f994de7": {
   "chars": 84,
@@ -74424,6 +74424,13 @@
   "recipe": "71f51bdb43",
   "text": "Silence. Keep it. It will be all you have left, in the end."
  },
+ "strahd/a96afa32b671f1bf": {
+  "chars": 78,
+  "direction": "[silken mockery]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Ratatouille. Come here, little cook. I am told you wish to be taken seriously."
+ },
  "strahd/abb4e2d87a25dd31": {
   "chars": 94,
   "model": "eleven_v3",
@@ -74661,13 +74668,6 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "As my guests wish. I only wanted her to hear the bell. Bells are for funerals, Ireena. Listen to it, and wonder whose is next."
- },
- "strahd/e2b2aa83d431dc9e": {
-  "chars": 77,
-  "direction": "[silken mockery]",
-  "model": "eleven_v3",
-  "recipe": "71f51bdb43",
-  "text": "Ratatoille. Come here, little cook. I am told you wish to be taken seriously."
  },
  "strahd/e404e9707d4c26db": {
   "chars": 7,

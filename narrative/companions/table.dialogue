@@ -1,5 +1,5 @@
-# Ratatoille's personal quest, A Seat at the Table (data/quests/a_seat_at_the_table.json,
-# docs/story/personal_quests.md). Every scene needs Ratatoille. Started from into_the_mists/arrival:hooks. The winery:
+# Ratatouille's personal quest, A Seat at the Table (data/quests/a_seat_at_the_table.json,
+# docs/story/personal_quests.md). Every scene needs Ratatouille. Started from into_the_mists/arrival:hooks. The winery:
 # wizard_of_wines/davian:stones (inline). The kitchen: Davian's menu once the winery is the family's again. The wizard
 # on the mountain: mount_baratok/mordenkainen:start (inline) and :restored_menu. The vestige that offers him an
 # audience: amber_temple/vestiges (Zantras). Strahd's offer: castle_ravenloft/gates_dinner. The ending: camp/ratatoille.
@@ -11,7 +11,7 @@ interject name:ratatoille: Forgive me. Master Martikov. Sir. I am looking for th
 Davian: You're sitting on his doorstep. That's his lane, with the druids on it. That's his vines. I'm the master of the Wizard of Wines, for my sins.
 interject name:ratatoille: You're the Wizard of Wines.
 Davian: The Wizard of Wines is a winery, boy. It's a sign over a gate. It's a house that makes wine.
-Narrator: Ratatoille sits down, quite suddenly, on the nearest cask.
+Narrator: Ratatouille sits down, quite suddenly, on the nearest cask.
 interject name:ratatoille: I crossed the mists. I crossed the mists for a farm.
 if name:wren_featherfoot
 interject name:wren_featherfoot: To be fair, it's a very magical farm. There's a sign and everything.
@@ -38,7 +38,7 @@ endif
 
 ~ supper
 set ratatoille_supper_cooked
-Narrator: Ratatoille asks, very formally, for the use of the kitchen. Davian looks at him the way he looks at weather, and waves a hand.
+Narrator: Ratatouille asks, very formally, for the use of the kitchen. Davian looks at him the way he looks at weather, and waves a hand.
 Narrator: For three hours the house smells of onions, thyme, browned butter and a great deal of muttering in another language. Stefania looks in once and is sent out again with a spoon to taste.
 interject name:ratatoille: Nobody touch the pot. Nobody look at the pot. The pot is thinking.
 Narrator: Supper is a stew of the winery's last mutton with dumplings that float, a loaf with a crust like a drum, and the family's own wine poured back into the gravy. Nine Martikovs eat it in silence, which in this family is a kind of applause.
@@ -61,7 +61,7 @@ approve ratatoille +5: You let me cook for the Martikovs
 # --- Asking the master (mount_baratok/mordenkainen:restored_menu) --------------------------------------------------
 
 ~ apprentice
-interject name:ratatoille: Master Mordenkainen. Archmage. Sir. I am Ratatoille, Diviner of the... I'm Ratatoille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice.
+interject name:ratatoille: Master Mordenkainen. Archmage. Sir. I am Ratatouille, Diviner of the... I'm Ratatouille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice.
 Mordenkainen: You crossed the mists for me? Nobody's done that on purpose.
 interject name:ratatoille: Well. For the Wizard of Wines. Which was you. Which I didn't know. It's complicated.
 Mordenkainen: I paid that family three stones for a winter's lodging and some decent food, forty years ago. Is that what I'm famous for now? Gods help us all.
@@ -83,7 +83,7 @@ approve ratatoille +5: You took me up the mountain to ask Mordenkainen myself
 # --- Zantras offers an audience (amber_temple/vestiges) --------------------------------------------------------------
 
 ~ zantras
-Narrator: The amber in front of Ratatoille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him.
+Narrator: The amber in front of Ratatouille warms like a hearth. The voice in it is glorious and fond, a king's voice from a stage, speaking only to him.
 interject name:ratatoille: It's saying... it says everyone would look at me. Everyone, everywhere, forever. They'd stand when I came into a room. They'd want me to sit with them.
 Narrator: For a moment he leans toward the amber. You see exactly how much he wants it.
 * [name:ratatoille] (Step back from it.) -> zantras_no
@@ -123,7 +123,7 @@ approve ratatoille +4: You let me tell Strahd I already have a table
 -> castle_ravenloft/gates_dinner:table
 
 ~ dinner_quiet
-Narrator: Ratatoille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight.
+Narrator: Ratatouille butters his bread very carefully and eats it. Strahd watches him do it with every appearance of delight.
 Strahd: The offer stands until you leave my house. Then it falls, like everything else.
 approve ratatoille -1: You left Strahd's offer lying on the table between us
 -> castle_ravenloft/gates_dinner:table

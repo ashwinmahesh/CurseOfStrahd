@@ -55,7 +55,7 @@ joke. He laughs anyway, louder than anybody, a beat late.
   a doorknob). Protective of her the way a big brother is, which she tolerates.
 - **Thistle:** his best friend inside a day. Arm-wrestling, eating contests, shouting across clearings. He calls her
   "Thistle" and she calls him "Big".
-- **Ratatoille:** loves his cooking out loud and asks him to explain magic "the short way". He is the first popular
+- **Ratatouille:** loves his cooking out loud and asks him to explain magic "the short way". He is the first popular
   person who ever wanted to sit with Rat, and doesn't know it.
 - **Wren:** Wren teases, Godrick laughs late, and would carry Wren out of any fire without being asked.
 - **Kip:** buys apricots constantly and worries about Kip's soul. Has offered, twice, to fight the devil.
