@@ -105,7 +105,7 @@
       "file": "art/plants/dead_a.glb",
       "kind": "dead",
       "size": [
-        2.772,
+        2.773,
         4.04,
         2.676
       ],
@@ -158,7 +158,7 @@
       "file": "art/plants/dead_b_far.glb",
       "kind": "dead",
       "size": [
-        2.498,
+        2.499,
         4.639,
         3.128
       ],
@@ -285,6 +285,221 @@
         0.702
       ],
       "triangles": 44
+    },
+    "birch_a": {
+      "file": "art/plants/birch_a.glb",
+      "kind": "broadleaf",
+      "size": [
+        1.892,
+        4.371,
+        2.071
+      ],
+      "triangles": 629,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "birch_a_far"
+    },
+    "birch_b": {
+      "file": "art/plants/birch_b.glb",
+      "kind": "broadleaf",
+      "size": [
+        1.697,
+        3.834,
+        1.66
+      ],
+      "triangles": 581,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "birch_b_far"
+    },
+    "oak_a": {
+      "file": "art/plants/oak_a.glb",
+      "kind": "broadleaf",
+      "size": [
+        3.627,
+        4.359,
+        3.429
+      ],
+      "triangles": 815,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "oak_a_far"
+    },
+    "oak_b": {
+      "file": "art/plants/oak_b.glb",
+      "kind": "broadleaf",
+      "size": [
+        3.197,
+        3.68,
+        3.133
+      ],
+      "triangles": 706,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "oak_b_far"
+    },
+    "willow_a": {
+      "file": "art/plants/willow_a.glb",
+      "kind": "broadleaf",
+      "size": [
+        4.303,
+        3.636,
+        4.392
+      ],
+      "triangles": 871,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "willow_a_far"
+    },
+    "scots_a": {
+      "file": "art/plants/scots_a.glb",
+      "kind": "tree",
+      "size": [
+        2.395,
+        5.63,
+        2.378
+      ],
+      "triangles": 586,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "scots_a_far"
+    },
+    "scots_b": {
+      "file": "art/plants/scots_b.glb",
+      "kind": "tree",
+      "size": [
+        2.219,
+        4.822,
+        2.206
+      ],
+      "triangles": 509,
+      "stands_for": [
+        "pine"
+      ],
+      "far": "scots_b_far"
+    },
+    "birch_a_far": {
+      "file": "art/plants/birch_a_far.glb",
+      "kind": "broadleaf",
+      "size": [
+        1.764,
+        4.28,
+        1.892
+      ],
+      "triangles": 100,
+      "far_of": "birch_a"
+    },
+    "birch_b_far": {
+      "file": "art/plants/birch_b_far.glb",
+      "kind": "broadleaf",
+      "size": [
+        1.45,
+        3.712,
+        1.569
+      ],
+      "triangles": 84,
+      "far_of": "birch_b"
+    },
+    "oak_a_far": {
+      "file": "art/plants/oak_a_far.glb",
+      "kind": "broadleaf",
+      "size": [
+        3.162,
+        4.126,
+        3.534
+      ],
+      "triangles": 112,
+      "far_of": "oak_a"
+    },
+    "oak_b_far": {
+      "file": "art/plants/oak_b_far.glb",
+      "kind": "broadleaf",
+      "size": [
+        2.898,
+        3.417,
+        2.907
+      ],
+      "triangles": 104,
+      "far_of": "oak_b"
+    },
+    "willow_a_far": {
+      "file": "art/plants/willow_a_far.glb",
+      "kind": "broadleaf",
+      "size": [
+        4.406,
+        3.56,
+        4.544
+      ],
+      "triangles": 168,
+      "far_of": "willow_a"
+    },
+    "scots_a_far": {
+      "file": "art/plants/scots_a_far.glb",
+      "kind": "tree",
+      "size": [
+        2.151,
+        5.602,
+        2.302
+      ],
+      "triangles": 80,
+      "far_of": "scots_a"
+    },
+    "scots_b_far": {
+      "file": "art/plants/scots_b_far.glb",
+      "kind": "tree",
+      "size": [
+        2.077,
+        4.767,
+        1.923
+      ],
+      "triangles": 80,
+      "far_of": "scots_b"
+    },
+    "vine": {
+      "file": "art/plants/vine.glb",
+      "kind": "bush",
+      "size": [
+        1.012,
+        1.064,
+        0.955
+      ],
+      "triangles": 121
+    },
+    "heather": {
+      "file": "art/plants/heather.glb",
+      "kind": "bush",
+      "size": [
+        0.627,
+        0.334,
+        0.627
+      ],
+      "triangles": 32
+    },
+    "thistle": {
+      "file": "art/plants/thistle.glb",
+      "kind": "grass",
+      "size": [
+        0.61,
+        0.569,
+        0.484
+      ],
+      "triangles": 16
+    },
+    "cattails": {
+      "file": "art/plants/cattails.glb",
+      "kind": "reeds",
+      "size": [
+        0.658,
+        1.25,
+        0.792
+      ],
+      "triangles": 32
     }
   }
 }

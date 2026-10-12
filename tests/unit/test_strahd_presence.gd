@@ -408,7 +408,10 @@ func test_the_game_plays_visits_on_the_road_at_a_rest_and_on_arriving() -> void:
 	root.call("open_screen", "rest", 0)
 	root.call("strahd_after_rest", 8 * 60)
 	await _frames(2)
-	assert_true(root.get("screen") == null, "the rest screen gives way to him")
+	assert_true(root.get("screen") is RestScreen, "he waits while the rest screen is open (its night, its words, its spells)")
+	assert_true(root.get("dialogue") == null, "no visit yet")
+	root.call("close_screen")
+	await _frames(3)
 	assert_eq(await _talk_through(), "strahd/visits:night")
 	assert_eq(str(st.get_flag("strahd_night_visit", "")), "woke")
 	# A visit's fight where the party stands, then his parting words.
