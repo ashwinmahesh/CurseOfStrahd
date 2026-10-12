@@ -360,6 +360,9 @@ func _advance() -> void:
 	if picker.begin_move(c):
 		selected = picker.action
 		mode = Mode.TARGET
+	# A walk up to a foe just ended: the blow it was for.
+	if mode == Mode.IDLE and _strike_after(c):
+		return
 	_update_hover()
 
 
@@ -764,7 +767,12 @@ func _confirm_at() -> void:
 		return
 	if t != null and t.combatant != c:
 		if c.hostile_to(t.combatant):
-			var a := _default_attack(c, t.combatant)
+			# A melee weapon in hand: walk up and swing when the movement left gets there (owner, 2026-10-12).
+			var ma := catalog.melee_approach(c, t.combatant, _reach)
+			if bool(ma["ok"]) and bool(ma["walk"]):
+				_walk_and_strike(c, ma, t.combatant)
+				return
+			var a := ma["action"] as Dictionary if bool(ma["ok"]) else _default_attack(c, t.combatant)
 			if a.is_empty():
 				hud.banner("No attack can reach %s from here" % t.combatant.name(), 1.6)
 				return
@@ -791,6 +799,50 @@ func _confirm_at() -> void:
 		hud.show_prompt(e.pending)
 		return
 	_advance()
+
+
+## A melee blow waiting on the walk up to its target (_walk_and_strike): {id, target, dest, action}, struck when the
+## walk is over and the hero is in control again (_advance), a reaction prompt on the way included.
+var _strike_after_walk := {}
+
+
+## A click on a foe that a melee weapon in hand can't reach from here but the movement left can (owner, 2026-10-12):
+## the hero walks up (the way that provokes the fewest Opportunity Attacks for the same feet), then swings.
+func _walk_and_strike(c: Combatant, plan: Dictionary, t: Combatant) -> void:
+	if not _command_allowed("perform", {"action": plan["action"], "targets": [t]}):
+		return
+	mode = Mode.BUSY
+	overlay.clear_all()
+	hud.hide_tooltip()
+	var r := e.move(c, plan["dest"] as Vector2i)
+	if r.ok:
+		_strike_after_walk = {"id": c.id, "target": t.id, "dest": plan["dest"], "action": str((plan["action"] as Dictionary)["id"])}
+	else:
+		hud.banner(r.reason, 1.4)
+	await _play_events()
+	if r.is_paused() or e.pending != null:
+		mode = Mode.PROMPT
+		_refresh_all()
+		hud.show_prompt(e.pending)
+		return
+	_advance()
+
+
+## The blow a walk up was for (_walk_and_strike), if `c` stands where it meant to and can still make it; true when it
+## goes ahead. Otherwise (stopped short, the foe down or out of reach) the turn is the player's again.
+func _strike_after(c: Combatant) -> bool:
+	var plan := _strike_after_walk
+	_strike_after_walk = {}
+	if plan.is_empty() or str(plan["id"]) != c.id or c.cell != (plan["dest"] as Vector2i):
+		return false
+	var t := e.get_c(str(plan["target"]))
+	if t == null or not t.is_alive():
+		return false
+	for a in catalog.actions_for(c):
+		if str(a["id"]) == str(plan["action"]) and bool(a["legal"]) and catalog.target_why(c, a, t) == "":
+			_perform(a, [t], Vector2.INF, Vector2.ZERO)
+			return true
+	return false
 
 
 ## Right-click on a square on your turn: one menu with Move here and everything you could do to whoever is there.
@@ -1355,7 +1407,23 @@ func _update_hover() -> void:
 	if t != null and t.combatant != c:
 		var o := t.combatant
 		if c.hostile_to(o):
-			var a := _default_attack(c, o)
+			# A melee weapon in hand and the foe within the movement left: the walk up drawn like a move, then the blow's
+			# odds as seen from where it ends (owner, 2026-10-12).
+			var ma := catalog.melee_approach(c, o, _reach)
+			if bool(ma["ok"]) and bool(ma["walk"]):
+				var warns := ma["warnings"] as Array
+				var provokes := false
+				for w: String in warns:
+					provokes = provokes or w.contains("Opportunity")
+				overlay.show_trail("path", ma["path"] as Array)
+				overlay.show_cells("danger" if provokes else "goal", [ma["dest"]])
+				var wpv := ma["preview"] as Dictionary
+				var wlines: Array = ["Walk %d ft up, then attack · %d ft left after" % [int(ma["cost"]), int(ma["left"])]]
+				wlines.append_array(wpv["lines"] as Array)
+				hud.show_tooltip(str(wpv["title"]), wlines, warns, at, str(wpv.get("edge", "")))
+				_show_odds(wpv, o)
+				return
+			var a := ma["action"] as Dictionary if bool(ma["ok"]) else _default_attack(c, o)
 			if a.is_empty():
 				var first := {}
 				for x in catalog.actions_for(c):

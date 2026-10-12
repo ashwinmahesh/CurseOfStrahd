@@ -174,3 +174,20 @@ func capture_shots(tool: Node, out: String) -> void:
 	view._update_hover()
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_17_too_far.png" % out)
+	# A melee weapon in hand and a foe within the movement left: the walk up drawn, the odds from beside it, then the
+	# click walks over and swings (owner, 2026-10-12).
+	e._begin_turn()
+	walker.movement_left = 30
+	view.mode = CombatView.Mode.IDLE
+	view.set("_reach", view.catalog.move_reach(walker))
+	var near := e.occupant_at(Vector2i(8, 2))
+	view.hover_token = view.tokens[near.id] as CombatToken
+	view.hover_cell = near.cell
+	view._update_hover()
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_18_walk_to_strike.png" % out)
+	view._confirm_at()
+	await tool.call("wait_frames", 150)
+	view.hover_token = null
+	view.hover_cell = Vector2i(-1, -1)
+	tool.call("_shot", "%s_19_struck.png" % out)

@@ -1740,7 +1740,7 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 	if bool(info["occupied"]):
 		out["reason"] = "Occupied"
 		return out
-	path = CombatGrid.path_to(r, cell)
+	path = e.movement.safe_path(c, r, cell)
 	var cost := int(info["cost"])
 	# What each foot costs on top (crawling, dragging a grappled creature); move_reach already added standing up.
 	var standing := c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2
@@ -1772,3 +1772,87 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		warnings.append("Drags %s along%s" % [held.name(), " (1 extra foot per foot)" if e.grappling.drag_extra(c) > 0 else ""])
 	out["warnings"] = warnings
 	return out
+
+
+## A click on a foe with a melee weapon in hand (owner, 2026-10-12: "use the melee weapon by default and automatically
+## walk the character to the target"): {ok, action, dest, walk, cost, left, path, warnings, preview}. `action` is the
+## hotbar's attack with the weapon in the main hand (a ranged one there means no walk); `dest` is where it strikes from:
+## where `c` stands when it already reaches, otherwise the cheapest free square within the movement left from which it
+## does, and of those that cost the same, the one whose way there provokes the fewest Opportunity Attacks (safe_path).
+## `preview` is attack_preview as seen from `dest`. {ok: false} when no such attack or square.
+func melee_approach(c: Combatant, t: Combatant, reach: Dictionary = {}) -> Dictionary:
+	var out := {"ok": false}
+	var a := _melee_in_hand(c)
+	if a.is_empty() or t == null or not c.hostile_to(t):
+		return out
+	if target_why(c, a, t) == "":
+		return {"ok": true, "action": a, "dest": c.cell, "walk": false, "cost": 0, "left": c.movement_left,
+			"path": [] as Array[Vector2i], "warnings": [] as Array[String], "preview": attack_preview(c, a, t)}
+	# Riding a mount it steers, the walk is the mount's: no walking up from the saddle here.
+	if e.controlled_mount(c) != null or c.speed() <= 0 or c.movement_left <= 0:
+		return out
+	var r := reach if not reach.is_empty() else move_reach(c)
+	var o := e.option_by_id(c, str(a["option_id"]))
+	var p := o["profile"] as WeaponProfile
+	var by_cost: Dictionary = {}
+	for cell: Vector2i in r:
+		var info := r[cell] as Dictionary
+		if cell == c.cell or bool(info["occupied"]):
+			continue
+		if e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > p.reach:
+			continue
+		var at := int(info["cost"])
+		if not by_cost.has(at):
+			by_cost[at] = []
+		(by_cost[at] as Array).append(cell)
+	var costs: Array = by_cost.keys()
+	costs.sort()
+	var keep := c.cell
+	for at: int in costs:
+		var pick := Vector2i(-1, -1)
+		var fewest := 1 << 30
+		for cell: Vector2i in by_cost[at]:
+			# Whether the blow lands from there (reach, height, a line to it), asked as if `c` stood there already.
+			c.cell = cell
+			var why := target_why(c, a, t)
+			c.cell = keep
+			if why != "":
+				continue
+			var n := e.movement.provocations(c, e.movement.safe_path(c, r, cell))
+			if n < fewest:
+				fewest = n
+				pick = cell
+		if pick.x < 0:
+			continue
+		var mp := move_preview(c, pick, r)
+		if not bool(mp["ok"]):
+			continue
+		c.cell = pick
+		var pv := attack_preview(c, a, t)
+		c.cell = keep
+		return {"ok": true, "action": a, "dest": pick, "walk": true, "cost": int(mp["cost"]), "left": int(mp["left"]),
+			"path": mp["path"], "warnings": mp["warnings"], "preview": pv}
+	return out
+
+
+## The hotbar's attack with the melee weapon `c` holds: the main hand's (none when that's a ranged weapon), else
+## another melee weapon in hand (a Soulknife's Psychic Blade, a beast's bite). Thrown and unarmed attacks don't count.
+func _melee_in_hand(c: Combatant) -> Dictionary:
+	var main := (c.creature as Character).held_id("main_hand") if c.creature is Character else ""
+	var main_ranged := false
+	var best := {}
+	for a in actions_for(c):
+		if str(a["kind"]) != "attack" or not bool(a["legal"]):
+			continue
+		var o := e.option_by_id(c, str(a["option_id"]))
+		if o.is_empty() or int(o.get("set", 1)) == 2 or str(o["kind"]) not in ["weapon", "blade", "monster"]:
+			continue
+		var item_id := (o["profile"] as WeaponProfile).item_id
+		if not bool(o["melee"]):
+			main_ranged = main_ranged or (main != "" and item_id == main)
+			continue
+		if main != "" and item_id == main:
+			return a
+		if best.is_empty():
+			best = a
+	return {} if main_ranged else best
