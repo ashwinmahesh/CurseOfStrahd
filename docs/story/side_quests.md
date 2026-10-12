@@ -311,7 +311,9 @@ leave the list blank to make the rider turn on him.
 
 Szoldar and his son Yevgeni (new NPCs in the Blue Water Inn's taproom; Urwin's rumour) offer half the Baron's 300 gp
 for Old Greytooth. **Twist:** Arrigal pays Szoldar to bring strong strangers to the lake at dusk; the wolf is the castle's,
-and the castle wants to see how you fight. Yevgeni says so (Persuasion DC 13, or a drink). **Escalation:** the hunt at
+and the castle wants to see how you fight. Yevgeni says so (Persuasion DC 13, or a drink), or Tudor does: one of
+Greytooth's shepherds, dead in the reeds at the landing (prop `shepherd_remains`), who under Speak with Dead saw Szoldar
+watch from the rise and take Arrigal's purse (docs/story/talking_creatures.md). **Escalation:** the hunt at
 the Lake Zarovich landing at dusk (prop `greytooth_shore`), with Szoldar's bow on the rise behind the shacks unless he's
 been turned (Intimidation DC 14) or left at the inn.
 

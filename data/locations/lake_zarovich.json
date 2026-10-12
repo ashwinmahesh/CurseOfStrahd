@@ -491,6 +491,17 @@
       "when": "quest.hunters_at_the_inn and quest.hunters_at_the_inn != rumored"
     },
     {
+      "id": "shepherd_remains",
+      "cell": [
+        3,
+        9
+      ],
+      "kind": "examine",
+      "label": "A shepherd's crook in the reeds",
+      "model": "bones",
+      "dialogue": "vallaki/hunters_at_the_inn:shepherd"
+    },
+    {
       "id": "bell_water",
       "cell": [
         18,

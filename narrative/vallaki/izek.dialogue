@@ -64,6 +64,16 @@ Izek: Wolves. When I was nine. My little sister and me, in the woods past the la
 Izek: I woke up with this one. Nobody knows where it came from. The Baron doesn't ask. That's why I work for him.
 interject class:cleric: And your sister?
 Izek: Never found. They found my arm. Not her.
+if flag.ireena_finding_known and not flag.izek_sister_truth
+-> arm_fits
+endif
+-> menu
+
+# Kolyan, under Speak with Dead (village_of_barovia/kolyan.dialogue), told the party where he found Ireena.
+~ arm_fits
+set izek_sister_truth
+quest izek_obsession truth_guessed
+Narrator: The woods past the lake. The wolves. A boy shouting a name through the trees, over and over. A dead burgomaster already told you the other half of this story.
 -> menu
 
 ~ read_ok
