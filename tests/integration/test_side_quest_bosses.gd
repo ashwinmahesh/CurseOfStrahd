@@ -73,7 +73,7 @@ func _series(location: String, hour: int, level: int, encounter: String, seeds: 
 
 
 func test_old_greytooth_at_level_6() -> void:
-	await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4])
+	await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
 
 
 func test_the_drowned_of_pescari_at_level_8() -> void:
@@ -81,11 +81,11 @@ func test_the_drowned_of_pescari_at_level_8() -> void:
 
 
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
-	await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3])
+	await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
 
 
 func test_the_bone_marshal_duel_at_level_8() -> void:
-	await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3], ["riders_stood_down"])
+	await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8], ["riders_stood_down"])
 
 
 func test_the_rag_queen_at_level_9() -> void:
@@ -97,7 +97,7 @@ func test_the_vine_mother_at_level_6() -> void:
 
 
 func test_granny_ash_at_level_6() -> void:
-	await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4], ["morgantha_slain"])
+	await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
 
 
 func test_the_counts_huntsman_at_level_8() -> void:
@@ -191,13 +191,13 @@ func test_the_remembered_at_level_10() -> void:
 
 ## While his name stands over the door he's at his strongest, and the best the party can do is drive him back into it.
 func test_khazan_with_his_name_at_level_10() -> void:
-	await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4, 5, 6, 7, 8], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
 
 
 ## Driven off, not destroyed: he leaves the fight below 60 Hit Points and goes back into his name.
 func test_khazan_withdraws_into_his_name() -> void:
-	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 2, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
-	assert_eq(str(res["outcome"]), "victory", "seed 2 drives him off")
+	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 3, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_eq(str(res["outcome"]), "victory", "seed 3 drives him off")
 	assert_true((res["story_flags"] as Dictionary).has("khazan_withdrawn"), "back into his name")
 	assert_true((res["departed"] as Array).has("withdraw"), "he left the fight, he didn't die in it")
 
