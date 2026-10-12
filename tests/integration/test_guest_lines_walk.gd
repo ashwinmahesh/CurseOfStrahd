@@ -82,6 +82,9 @@ func test_banter_waits_for_the_narrator() -> void:
 	assert_false((root.get("_banter_waiting") as Array).is_empty(), "it waits")
 	hud.close_narration()
 	await _frames(2)
+	assert_false(hud.narration_showing(), "a moment's quiet first")
+	await get_tree().create_timer(1.5).timeout
+	await _frames(2)
 	assert_true((root.get("_banter_waiting") as Array).is_empty(), "and then it plays")
 	assert_true(hud.narration_showing())
 	assert_true(str(hud.get("_narr").text).contains("Godfrey: Mind the steps."), "named without his title")
