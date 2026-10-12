@@ -141,18 +141,40 @@ endif
 -> godfrey_parting
 
 ~ godfrey_knights
+# Godrick carries Aldric's sword (Wiki finding 89); a Close Godrick names his fellowship here as at the wall (finding 88).
+# The Strained refusal and the wall's conditions stay out: this is Godfrey's last moment, and a no would leave The Ladle
+# with nobody to finish it.
 if not guest:sir_godfrey_gwilym
-Narrator: Sir Godfrey has come up the tower stair behind you, with Sir Aldric's sword across his arms.
+Narrator: Sir Godfrey has come up the tower stair behind you.
 endif
 Sir Godfrey Gwilym: Not yet. Not before I've done one thing right. Godrick, lad. The light can wait for this.
 Sir Godfrey Gwilym: Kneel, then. No, the other knee. That's it.
+Narrator: Sir Godfrey takes Sir Aldric's sword from Godrick's hands. It's too light for him now; he holds it as if it might blow away.
 cutscene godrick_knighting
 Narrator: The flat of the old blade touches one shoulder, then the other.
 Sir Godfrey Gwilym: Keep the watch. Shield the sleeper and the stranger. Lift the fallen. Take nothing not given. And when the light goes out, be the light. Rise, Sir Godrick, of the Order of the Silver Dragon.
+if approval.godrick_pendlebrook >= close
+Sir Godfrey Gwilym: One thing more, and then I'll let you up. A knight of the Order names his fellowship. Who stands with you, Sir Godrick?
+interject name:godrick_pendlebrook: Them, my lord. All of them. They're the ones I won't leave behind.
+Sir Godfrey Gwilym: Then the Order knows your faces too. I've written worse things on that wall than "these were his friends".
+cutscene knighting_sword
+Narrator: He holds out Sir Aldric's sword, hilt first. It seems heavier than it was a moment ago, as if it had made up its mind about something.
+Sir Godfrey Gwilym: Keep it. It has a knight again, and a fellowship. That's all a sword was ever for.
+give weapon_plus_2 to name:godrick_pendlebrook
+quest the_ladle knighted
+inspire party: stood as Sir Godrick's fellowship
+approve godrick_pendlebrook +8: You stood with me while I was knighted, and I named you my fellowship
+else
 Sir Godfrey Gwilym: Keep the sword. Aldric would want it to go on being carried by someone who comes back.
 give weapon_plus_1 to name:godrick_pendlebrook
 quest the_ladle knighted
 approve godrick_pendlebrook +8: You stood with me while I was knighted
+endif
+if tarokka.ally.npc == sir_godfrey_gwilym and not guest:sir_godfrey_gwilym
+# He's on the stair already (Wiki finding 84).
+Narrator: The light falls on Sir Godfrey's face, and he shuts his eyes in it.
+-> godfrey_asks_light
+endif
 -> godfrey_parting
 
 ~ godfrey_parting
@@ -175,6 +197,9 @@ Sir Godfrey Gwilym: It's calling. It's warm. ...Not yet. I promised somebody a r
 
 ~ godfrey_asks
 Narrator: Steps on the stair: Sir Godfrey, climbing slowly, one hand on the wall. The light falls on his face, and he shuts his eyes in it.
+-> godfrey_asks_light
+
+~ godfrey_asks_light
 Sir Godfrey Gwilym: The cards. The old woman's cards wanted me, didn't they? I can feel the light pulling. I could go now. I'd like to.
 Sir Godfrey Gwilym: Or I could stay for one more ride. Your choice. I've made enough of mine.
 * Ride with us, Sir Godfrey. One more. -> godfrey_joins

@@ -53,14 +53,19 @@ approve godrick_pendlebrook -2 liriel_dawnsong -1: You forced your way past the 
 combat bone_watch
 
 ~ bones
-if flag.dragon_fire_kindled
+if flag.dragon_fire_kindled and (flag.argynvost_skull_home or not flag.argynvost_skull_taken)
 Narrator: The frost on the ribs glows faintly where you took the light, like a coal remembering it was once a fire.
 -> END
+endif
+if flag.dragon_fire_kindled
+* Lay his skull at the end of the long neck. -> skull_home
+* Leave him be. -> END
 endif
 Narrator: The dragon lies along the bier with his wings folded like a cloak, every bone in its place, except at the end of the long neck, where there is nothing at all. Frost furs the ribs and doesn't melt.
 if flag.bone_watch_defeated and not flag.mausoleum_opened
 Narrator: The vault is quiet now. Somewhere in the stone, very faintly, a sentry is still saying the challenge to nobody.
 endif
+* [if flag.argynvost_skull_taken and not flag.argynvost_skull_home] Lay his skull at the end of the long neck. -> skull_home
 * [if flag.argynvost_echo_met] Kindle a light from the frost on his bones, as he asked. -> kindle
 * [if not flag.argynvost_echo_met] [Arcana DC 15] There's something still burning in these bones. -> arcana_ok | arcana_fail
 * [class:cleric] (Say a prayer for the dead.) -> prayer
@@ -79,6 +84,16 @@ Narrator: Old bones, very large, very cold. If there's anything else here, it is
 Narrator: {name} kneels at the foot of the bier and says the old words for the dead. The frost on the nearest rib brightens, very slightly, as if someone had leaned toward a window to listen.
 interject tag:pious: He's still here. Not much of him. Enough to say thank you.
 inspire class:cleric: prayed at the foot of a dead dragon's bier
+-> END
+
+# His skull home from the castle's trophy wall (castle_ravenloft/court_skull; Wiki finding 83).
+~ skull_home
+set argynvost_skull_home
+Narrator: The skull settles into place with a sound like a key turning in a lock. All along the bier the frost goes from white to silver, and stays that way.
+if flag.argynvost_beacon_lit
+Narrator: High on the tower the beacon flares white, and steadies, and you understand that it isn't going out again.
+endif
+approve godrick_pendlebrook +2 liriel_dawnsong +2: You brought Argynvost's skull home to his bones
 -> END
 
 ~ kindle
