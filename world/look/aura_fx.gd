@@ -1,18 +1,23 @@
 class_name AuraFx
 extends Node3D
-## Strahd's aura round his figure on the board (owner 2026-10-09), built by CombatToken in fights and while exploring
-## alike (both show creatures as CombatTokens): smoke and shadow curl up round him with a crimson edge
-## (shaders/fx/aura_halo.gdshader) and he stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges
-## when he acts: an attack, a spell, a blow taken. A fire-like flicker was tried and the owner preferred this
-## (2026-10-09: "I like the old auras better"). A paladin's Aura of Protection had a warm glow and its area on the floor
-## too; the owner had them taken off (2026-10-12: "Remove the paladin aura visual"); the aura's save bonus is unchanged.
+## An aura round a figure on the board (owner 2026-10-09), built by CombatToken for whoever has one, in fights and
+## while exploring alike (both show creatures as CombatTokens):
 ##
-## It draws just before the sprites, after the palette pass (render priority), so the figure covers the aura's middle.
+## - DARK: Strahd's. Smoke and shadow curl up round him with a crimson edge (shaders/fx/aura_halo.gdshader) and he
+##   stands in a pool of shadow whose edge creeps (aura_floor.gdshader). It surges when he acts: an attack, a spell,
+##   a blow taken. A fire-like flicker was tried and the owner preferred this (2026-10-09: "I like the old auras better").
+## - HOLY: a paladin's Aura of Protection (Paladin 6). In a fight the floor shows the area it really covers, a faint warm
+##   fill and edge: everything within 10 ft of the paladin's space (ClassFeatures._in_aura), 30 ft with Aura Expansion,
+##   so round with straight sides as long as the paladin is wide. There's no glow round the figure itself (owner,
+##   2026-10-12: "the paladin aura fix i wanted was the visual glow around the paladin sprite, not the aura showing on
+##   the floor").
+##
+## Both draw just before the sprites, after the palette pass (render priority), so the figure covers the aura's middle.
 
 const HALO_SHADER := preload("res://shaders/fx/aura_halo.gdshader")
 const FLOOR_SHADER := preload("res://shaders/fx/aura_floor.gdshader")
 
-enum Style { DARK }
+enum Style { DARK, HOLY }
 
 ## Art ids that wear the dark aura (Strahd's own sprite; his mist form and his spawn don't).
 const DARK_ART: Array[String] = ["strahd"]
@@ -24,6 +29,9 @@ const POOL_RADIUS := 1.1
 const SURGE_FALL := 1.4
 
 var style: int = Style.DARK
+## HOLY: how far the aura reaches past the creature's space, in squares.
+var reach := 0
+## The glow round the figure (DARK only; null for HOLY).
 var halo: MeshInstance3D
 ## The part on the ground (CombatToken tilts it along a slope with its ring).
 var floor_area: MeshInstance3D
@@ -32,38 +40,53 @@ var _floor_mat: ShaderMaterial
 var _surge := 0.0
 var _active := true
 var _fade := 1.0
+var _area := false
 ## Cosmetic randomness (each aura curls in its own way), never the dice.
 static var _rng := RandomNumberGenerator.new()
 
 
-## The aura `c` wears as `art` (its sprite id): DARK for Strahd's own sprite, -1 for everyone else (a paladin's Aura of
-## Protection draws nothing, owner 2026-10-12).
-static func style_for(_c: Combatant, art: String) -> int:
-	return Style.DARK if art in DARK_ART else -1
+## The aura `c` wears as `art` (its sprite id): DARK for Strahd's own sprite, HOLY for anyone with Aura of Protection,
+## -1 for none.
+static func style_for(c: Combatant, art: String) -> int:
+	if art in DARK_ART:
+		return Style.DARK
+	if c != null and c.creature is Character and ClassFeatures.has(c, "aura_of_protection"):
+		return Style.HOLY
+	return -1
 
 
-## An aura for a figure `height` world units tall taking `size_cells` squares.
-static func create(style_: int, height: float, size_cells: int) -> AuraFx:
+## How far a paladin's aura reaches past their space, in squares: 10 ft, or 30 ft with Aura Expansion.
+static func reach_of(c: Combatant) -> int:
+	return (30 if ClassFeatures.has(c, "aura_expansion") else 10) / CombatGrid.FEET
+
+
+## An aura for a figure `height` world units tall taking `size_cells` squares; `reach_` for a HOLY aura's area.
+static func create(style_: int, height: float, size_cells: int, reach_: int = 0) -> AuraFx:
 	var a := AuraFx.new()
 	a.name = "Aura"
 	a.style = style_
+	a.reach = reach_
 	var seed := _rng.randf()
-	var hs := HALO_SIZE[style_] as Vector2
-	a._halo_mat = a._material(HALO_SHADER, seed)
-	a.halo = MeshInstance3D.new()
-	var quad := QuadMesh.new()
-	quad.size = Vector2(hs.x * height * maxf(1.0, size_cells * 0.75), hs.y * height)
-	quad.center_offset = Vector3(0, quad.size.y * 0.5, 0)
-	a.halo.mesh = quad
-	a.halo.material_override = a._halo_mat
-	a.halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	a.add_child(a.halo)
+	if style_ == Style.DARK:
+		var hs := HALO_SIZE[style_] as Vector2
+		a._halo_mat = a._material(HALO_SHADER, seed)
+		a.halo = MeshInstance3D.new()
+		var quad := QuadMesh.new()
+		quad.size = Vector2(hs.x * height * maxf(1.0, size_cells * 0.75), hs.y * height)
+		quad.center_offset = Vector3(0, quad.size.y * 0.5, 0)
+		a.halo.mesh = quad
+		a.halo.material_override = a._halo_mat
+		a.halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		a.add_child(a.halo)
 	a._floor_mat = a._material(FLOOR_SHADER, seed)
 	a.floor_area = MeshInstance3D.new()
 	var plane := PlaneMesh.new()
-	var half := POOL_RADIUS * size_cells
+	var half := POOL_RADIUS * size_cells if style_ == Style.DARK else size_cells * 0.5 + reach_
 	plane.size = Vector2(half * 2.0, half * 2.0)
 	a.floor_area.mesh = plane
+	if style_ == Style.HOLY and half > 0.0:
+		# The area's rounding: the reach, as a share of the plane's half size (the rest is the paladin's own space).
+		a._floor_mat.set_shader_parameter("corner", reach_ / half)
 	# Under the base ring (0.03), which stays readable over it.
 	a.floor_area.position.y = 0.02
 	a.floor_area.material_override = a._floor_mat
@@ -92,23 +115,32 @@ func surge(amount: float = 1.0) -> void:
 	_param("surge", _surge)
 
 
-## Whether the aura is up (its owner standing and conscious) and how far the figure has faded in.
-func set_state(active: bool, fade: float) -> void:
-	if active == _active and is_equal_approx(fade, _fade):
+## Whether the aura is up (its owner standing and conscious), how far the figure has faded in, and whether the HOLY
+## aura's area shows on the floor (in a fight).
+func set_state(active: bool, fade: float, area: bool = false) -> void:
+	if active == _active and is_equal_approx(fade, _fade) and area == _area:
 		return
 	_active = active
 	_fade = fade
+	_area = area
 	_show()
 
 
+func is_showing_area() -> bool:
+	return floor_area.visible and style == Style.HOLY
+
+
 func _show() -> void:
-	halo.visible = _active and _fade > 0.0
-	floor_area.visible = halo.visible
+	var up := _active and _fade > 0.0
+	if halo != null:
+		halo.visible = up
+	floor_area.visible = up and (style == Style.DARK or (_area and reach > 0))
 	_param("fade", _fade)
 
 
 func _param(param: StringName, value: float) -> void:
-	_halo_mat.set_shader_parameter(param, value)
+	if _halo_mat != null:
+		_halo_mat.set_shader_parameter(param, value)
 	_floor_mat.set_shader_parameter(param, value)
 
 

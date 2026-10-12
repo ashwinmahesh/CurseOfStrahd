@@ -1,6 +1,7 @@
 extends TestCase
-## Auras round figures (world/look/aura_fx.gd, owner 2026-10-09): Strahd's dark aura, which surges when he acts. A
-## paladin's Aura of Protection draws nothing (owner, 2026-10-12).
+## Auras round figures (world/look/aura_fx.gd, owner 2026-10-09): Strahd's dark aura, which surges when he acts, and a
+## paladin's Aura of Protection: the area it covers on the floor in fights only, with no glow round the figure (owner,
+## 2026-10-12).
 
 var _made: Array[Node] = []
 var _was: ModeController.Mode
@@ -50,12 +51,39 @@ func test_only_strahds_own_sprite_has_it() -> void:
 	assert_true(staged.aura != null, "Strahd staged in a scene (his look on another block) has it too")
 
 
-func test_a_paladins_aura_of_protection_draws_nothing() -> void:
-	# The owner had the paladin's glow and the area on the floor taken off (2026-10-12); the save bonus stays.
+func test_a_paladins_aura_shows_on_the_floor_once_they_have_aura_of_protection() -> void:
+	assert_true(_token(TestChars.pregen("godrick_pendlebrook", 5), &"party").aura == null, "no aura before level 6")
+	assert_true(_token(TestChars.pregen("ilse_varga", 6), &"party").aura == null, "a fighter has none")
 	var tok := _token(TestChars.pregen("godrick_pendlebrook", 6), &"party")
-	assert_true(ClassFeatures.has(tok.combatant, "aura_of_protection"), "he has the aura")
-	assert_true(tok.aura == null, "but no glow round him, and no area on the floor")
-	assert_eq(tok.find_children("Aura", "", true, false).size(), 0)
+	assert_true(tok.aura != null)
+	if tok.aura == null:
+		return
+	assert_eq(tok.aura.style, AuraFx.Style.HOLY)
+	assert_eq(tok.aura.reach, 2, "10 ft is two squares")
+	var plane := tok.aura.floor_area.mesh as PlaneMesh
+	assert_eq(plane.size, Vector2(5, 5), "his square and two more every way")
+	var corner := float((tok.aura.floor_area.material_override as ShaderMaterial).get_shader_parameter("corner"))
+	assert_between(corner, 0.799, 0.801, "rounded by the whole reach: round, not a square")
+
+
+func test_no_glow_round_the_paladin_himself() -> void:
+	# The owner wanted the glow round the paladin's sprite gone, not the area on the floor (2026-10-12).
+	var tok := _token(TestChars.pregen("godrick_pendlebrook", 6), &"party")
+	assert_true(tok.aura.halo == null, "no glow round the figure")
+	assert_eq(tok.aura.find_children("*", "MeshInstance3D", false, false).size(), 1, "only the area on the floor")
+
+
+func test_the_paladins_area_shows_in_fights_only() -> void:
+	var tok := _token(TestChars.pregen("godrick_pendlebrook", 6), &"party")
+	ModeController.mode = ModeController.Mode.EXPLORATION
+	tok.call("_process", 0.016)
+	assert_false(tok.aura.is_showing_area(), "nothing while exploring")
+	ModeController.mode = ModeController.Mode.COMBAT
+	tok.call("_process", 0.016)
+	assert_true(tok.aura.is_showing_area(), "in a fight the floor shows who it covers")
+	tok.combatant.creature.add_condition(&"incapacitated", "test")
+	tok.refresh()
+	assert_false(tok.aura.is_showing_area(), "an Incapacitated paladin's aura is down")
 
 
 ## "Slowed" over a creature whose Speed a spell or effect cut (owner, 2026-10-12): Ray of Frost's minus, the Slow
