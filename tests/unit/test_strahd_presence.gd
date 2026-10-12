@@ -437,3 +437,22 @@ func test_the_game_plays_visits_on_the_road_at_a_rest_and_on_arriving() -> void:
 	assert_eq(str(st.get_flag("strahd_invitation", "")), "accepted")
 	assert_eq(_view().loc_id, "test_hall", "the carriage takes the party where the visit says")
 
+
+
+## A visit due while the spoils of a fight are still open waits for them to be taken, then plays: the loot window
+## never swallows it.
+func test_a_visit_waits_for_the_spoils_window() -> void:
+	await _start_scene()
+	var st := GameState.story
+	st.set_flag("burgomaster_buried", true)
+	StrahdPresence.use({"id": "visits", "summary": "", "visits": [{"id": "ride", "summary": "", "trigger": {"on": ["arrive"]},
+		"once": true, "urgent": true, "dialogue": "strahd/letters:invitation"}]})
+	root.call("_open_loot", "fight:test", [{"id": "potion_of_healing", "qty": 1}], 5.0)
+	await _frames(2)
+	assert_true(root.get("loot") != null, "the spoils are open")
+	root.call("enter_location", "test_town", "default")
+	await _frames(3)
+	assert_true(root.get("dialogue") == null, "he waits while the spoils are open")
+	(root.get("loot") as LootWindow).call("_close")
+	await _frames(4)
+	assert_eq(await _talk_through(), "strahd/letters:invitation", "then he comes")

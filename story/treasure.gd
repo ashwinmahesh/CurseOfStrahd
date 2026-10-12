@@ -201,7 +201,45 @@ static func placed(st: StoryState, loc_id: String) -> Dictionary:
 			if not out.has(cid):
 				out[cid] = []
 			(out[cid] as Array).append(it)
+		# And potions (owner, 2026-10-12: more of them): a healing potion for the place's tier, or any potion.
+		var pp := config().get("potions_per_location", {}) as Dictionary
+		var proll := rng.roll_one(100, "Treasure potions")
+		var np := 0 if proll <= int(pp.get("none", 100)) else (1 if proll <= int(pp.get("none", 100)) + int(pp.get("one", 0)) else 2)
+		for i in np:
+			var pot := roll_potion(rng, level, int(pp.get("healing", 60)))
+			if pot.is_empty():
+				continue
+			var pcid := containers[rng.roll_one(containers.size(), "Treasure container") - 1]
+			if not out.has(pcid):
+				out[pcid] = []
+			(out[pcid] as Array).append(pot)
 	ls["treasure"] = out
+	return out
+
+
+## A potion for a place of `level`: `healing` percent of the time a healing potion of the party's tier
+## (RoadSpoils.POTIONS), else any potion off the random tables at a rarity for the level.
+static func roll_potion(rng: DiceRoller, level: int, healing: int) -> Dictionary:
+	if rng.roll_one(100, "Treasure potion: healing") <= healing:
+		for p: Array in RoadSpoils.POTIONS:
+			if level <= int(p[0]):
+				return {"id": str(p[1]), "qty": 1}
+	var weights := rarity_weights(level)
+	var rchoices: Array = []
+	for r: String in weights:
+		rchoices.append({"r": r, "weight": float(weights[r])})
+	var rarity := str(_weighted(rng, rchoices, "Treasure potion rarity").get("r", "uncommon"))
+	var choices: Array = []
+	for th: String in THEMES:
+		for it: Variant in (pools().get(rarity, {}) as Dictionary).get(th, []):
+			var id := str((it as Dictionary)["id"])
+			if str(Compendium.shared().item_data(id).get("category", "")) == "potion":
+				choices.append({"id": id, "weight": float((it as Dictionary)["weight"])})
+	if choices.is_empty():
+		return {}
+	var id2 := str(_weighted(rng, choices, "Treasure potion").get("id", ""))
+	var out := {"id": id2, "qty": 1}
+	out.merge(MagicItems.init_state(Compendium.shared().item_data(id2), rng, Compendium.shared()))
 	return out
 
 
