@@ -77,6 +77,7 @@ func escape_grapple(c: Combatant) -> CombatResult:
 		c.creature.remove_condition(&"grappled")
 		c.remove_meta("escape_dc")
 		e.monster_actions.release_engulf(c)
+		c.regain_speed()   # its Speed for the rest of the turn
 		e.log.add("info", "%s breaks free" % c.name(), c.id, [t.describe()])
 	else:
 		e.log.add("info", "%s struggles but stays Grappled" % c.name(), c.id, [t.describe()])
@@ -183,6 +184,8 @@ func _end(t: Combatant, line: String) -> void:
 	if t.has_meta("escape_dc"):
 		t.remove_meta("escape_dc")
 	e.monster_actions.release_engulf(t)
+	if t == e.current():
+		t.regain_speed()
 	e.log.add("info", line, t.id)
 	e.events.append({"type": "condition", "id": t.id})
 
