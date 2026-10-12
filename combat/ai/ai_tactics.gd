@@ -50,6 +50,34 @@ func struck(t: Combatant) -> int:
 	return int(_struck.get(t.id, 0)) if _struck_round == enc().round_no else 0
 
 
+## Spreading blows (owner, 2026-10-12: every foe went for the hero with the lowest Armor Class). At Tactician and
+## Honour a foe weighs its odds as they are; at Story and Balanced it weighs them gently (the square root of the
+## chance), so a hard-to-hit hero isn't passed over every time.
+func focuses(_c: Combatant) -> bool:
+	return mode() in ["sharp", "ruthless"]
+
+
+## Whether `c` weighs its odds gently: a foe (not the party's autopilot) at Story or Balanced.
+func spreads(c: Combatant) -> bool:
+	return c.side == &"enemy" and not focuses(c)
+
+
+## A foe's own lean towards a hero, seeded by the two of them (so it holds from turn to turn, and two wolves differ):
+## up to this share of the blow's worth either way. A smart foe (Intelligence 10 or more) leans less, and every foe
+## much less at Tactician and Honour, where they focus.
+func taste(c: Combatant, t: Combatant) -> float:
+	var e := enc()
+	# Seeded by the two's names and places in the fight, not their ids: a monster's id counts every monster made since
+	# the game started, so the same fight would lean another way from one run to the next.
+	var key := "%s %d|%s %d" % [c.name(), e.combatants.find(c), t.name(), e.combatants.find(t)]
+	var x := float(posmod(hash(key), 1001)) / 1000.0 * 2.0 - 1.0
+	# Story already spreads its blows by who's been struck (target_adjust), so it leans less; Tactician and Honour focus.
+	var spread: float = {"kind": 0.08, "standard": 0.1}.get(mode(), 0.04)
+	if c.creature.ability_score(&"int") >= 10:
+		spread *= 0.75
+	return x * spread
+
+
 ## How much of the killing-blow bonus counts (none when the AI spreads its blows).
 func finish_scale() -> float:
 	return 0.0 if mode() == "kind" else 1.0
@@ -66,6 +94,9 @@ func target_adjust(t: Combatant, expected: float) -> float:
 	match mode():
 		"kind":
 			return -0.5 * expected * struck(t)
+		"standard":
+			# Balanced foes spread a little too (owner, 2026-10-12); the party's autopilot doesn't.
+			return -0.25 * expected * struck(t) if t.side in [&"party", &"guest"] else 0.0
 		"sharp", "ruthless":
 			var hurt := 1.0 - float(t.creature.hp) / maxf(1.0, float(t.creature.max_hp()))
 			var bonus := 0.5 * expected * hurt + 0.5 * struck(t)
