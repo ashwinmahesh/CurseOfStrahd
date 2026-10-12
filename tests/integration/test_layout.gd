@@ -612,12 +612,24 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		var who := cv.e.combatants[k % cv.e.combatants.size()]
 		rows.append({"id": who.id, "name": "%s the Very Long-Named %d" % [who.name(), k], "ally": k % 3 == 0, "safe": k == 3,
 			"unaffected": false, "save_chance": 0.35, "damage": 21, "drops": "may drop" if k == 1 else ""})
-	await _check("the area saves panel", func() -> Variant:
-		cv.hud.show_area_saves("Delayed Blast Fireball · slot level 9", "Dex save DC 19", rows,
-			["Friendly fire: Godrick Pendlebrook is in the area", "Ends your Concentration on Hunger of Hadar"])
-		await _frames(1)
-		return cv.hud,
-		func() -> void: cv.hud.hide_area_saves())
+	# At the top right (his correction, 04:35): beside the log, or under it in the corner when it's minimized.
+	for minimized: bool in [false, true]:
+		CombatHud.log_minimized = minimized
+		cv.hud.call("_apply_log_state")
+		await _check("the area saves panel" + (" with the log minimized" if minimized else ""), func() -> Variant:
+			cv.hud.show_area_saves("Delayed Blast Fireball · slot level 9", "Dex save DC 19", rows,
+				["Friendly fire: Godrick Pendlebrook is in the area", "Ends your Concentration on Hunger of Hadar"])
+			await _frames(1)
+			var area := (cv.hud.get("_area_panel") as Control).get_global_rect()
+			var screen := get_tree().root.get_visible_rect()
+			assert_true(area.position.x > screen.size.x * 0.5, "on the right half (%s)" % area)
+			assert_false(area.intersects((cv.hud.get("_log_panel") as Control).get_global_rect()), "clear of the log")
+			assert_false(area.intersects((cv.hud.get("_strip") as Control).get_global_rect()), "clear of the turn order")
+			assert_false(area.intersects((cv.hud.get("_hot_panel") as Control).get_global_rect()), "clear of the hotbar")
+			return cv.hud,
+			func() -> void: cv.hud.hide_area_saves())
+	CombatHud.log_minimized = false
+	cv.hud.call("_apply_log_state")
 	for i in 10:
 		if cv.e.current().side == &"party":
 			break
