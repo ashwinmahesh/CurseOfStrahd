@@ -219,7 +219,8 @@
             ]
           }
         }
-      ]
+      ],
+      "dialogue": "old_bonegrinder/ilinca:oak"
     },
     {
       "id": "bonegrinder_ravens_west",

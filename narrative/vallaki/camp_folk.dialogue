@@ -22,4 +22,36 @@ Mihnea: Keep to the fire, stranger. I watch the road so you don't have to. And s
 
 ~ dog
 Narrator: The camp dog trots after you for a few steps, decides you aren't carrying anything to eat, and goes back to sitting very hopefully beside the pot.
+* [if spell:speak_with_animals] Ask the dog about the camp. -> dog_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog about the camp.) -> dog_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it by the pot. -> END
+-> END
+
+~ dog_cast
+cast speak_with_animals
+if check.last
+-> dog_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the camp dog saw Bluto carry Arabelle off to the lake (Curse of Strahd, Vallaki).
+~ dog_speaks
+Narrator: The dog keeps one eye on the pot while it talks, the way a sentry keeps one eye on the road.
+if flag.arabelle_rescued or flag.arabelle_lost
+Narrator: "The little one's back, or she isn't. The big man in the red sash stopped shouting. The pot's still the pot."
+-> END
+endif
+if quest.missing_arabelle == asked
+quest missing_arabelle clue
+Narrator: "The little one went out in the dark in a sack, on the shoulder of the man who smells of the lake and no fish. North, to the water. I barked. The man in the black coat told me hush."
+-> END
+endif
+if quest.missing_arabelle == clue
+Narrator: "The lake-and-no-fish man. North, by the water. Go. Why are you still here?"
+-> END
+endif
+if not quest.missing_arabelle
+quest missing_arabelle rumored
+endif
+Narrator: "The big man in the red sash shouts at the lake and drinks. His little one is gone from her bed. Nobody looks for her, because the man in the black coat said don't. I sit with the big man. I'm a good dog."
 -> END
