@@ -116,6 +116,27 @@ const CEL_WORLD_SHADER := preload("res://shaders/cel_world.gdshader")
 const TEXTURES_JSON := "res://art/textures/manifest.json"
 static var _textures: Dictionary = {}
 static var _textured: Dictionary = {}
+## The place's own tint for some surfaces ("village/grass" -> Color), set by its mood (set_surface_tints).
+static var _surface_tints: Dictionary = {}
+
+
+## Tints surfaces for the place being built (a mood's `ground_tint`, Atmosphere): the grass of the woods mossier, the
+## moor's straw-coloured. Every textured material of a named surface takes its colour, and the surfaces the last place
+## tinted go back to white; materials made later take theirs as they're made (cel_textured).
+static func set_surface_tints(tints: Dictionary) -> void:
+	var touched := _surface_tints.duplicate()
+	touched.merge(tints, true)
+	_surface_tints = tints
+	for key: String in _textured:
+		var m := _textured[key] as ShaderMaterial
+		var surface := str(m.get_meta("surface", ""))
+		if touched.has(surface):
+			m.set_shader_parameter("tint", surface_tint(surface))
+
+
+## A surface's tint in the place being built (white unless its mood tints it).
+static func surface_tint(surface: String) -> Color:
+	return _surface_tints.get(surface, Color.WHITE) as Color
 
 
 ## The environment texture sets (art/textures/manifest.json, docs/art/textures.md).
@@ -155,6 +176,8 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_shader_parameter("grid_strength", grid)
 	m.set_shader_parameter("grid_line", color("ink"))
 	m.set_meta("surface", surface)   # what the ground is, for footprints (Atmosphere)
+	if _surface_tints.has(surface):
+		m.set_shader_parameter("tint", surface_tint(surface))
 	if modern():
 		var spec := material_for(surface)
 		var relief := MODERN_RELIEF * float(spec.get("relief", 1.0))

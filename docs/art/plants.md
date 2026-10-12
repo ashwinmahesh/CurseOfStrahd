@@ -25,6 +25,16 @@ own wild ground, and all of it sways in the place's wind. The Classic look keeps
     make capture SCENE=res://tools/art/preview/plants_preview.tscn NAME=plants FRAMES=20
     make capture SCENE=res://tools/capture/land_capture.tscn NAME=land/after FRAMES=10   # LAND_SHOTS=road_day,woods
 
+## Each region's plants
+
+The vault's Region Variety Plan: each region has its own set in art/plants/flora.json, from the plants we have, with
+its own mix, forest density and tint: `woods`, `village`, `autumn` (Tser Pool and the Vistani camps), `graves` (half
+the pines dead), `vineyard`, `heath`, `sick`, `spectral` (silver lichen on the dead trees), `rock` and `rock_snow`. A
+set's `tints` gives one kind of plant its own tint (the moor's grass straw, the heath's bushes heather), and `autumn`
+turns that share of a kind's plants, each picked by where it stands (foliage.gdshader `autumn`), from green to a ramp
+between the set's two `autumn_colours` by the leaf's own brightness, so they read rust and gold rather than a tinted
+green.
+
 ## How a plant is made
 
 - **Cards.** A spray of fir is painted as clumps of needles along its twigs, dark at their roots and lighter toward
