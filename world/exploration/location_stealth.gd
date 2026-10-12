@@ -4,7 +4,7 @@ extends RefCounted
 ##
 ## The party crouches while it sneaks, and each of them keeps the Stealth total they rolled on starting (as the Hide
 ## action notes its total). Foes waiting in plain view (an encounter marked `waiting`) stand where their fight puts
-## them and show once the party can see them. A waiting foe notices a party member it can see clearly within
+## them and show once the party can see them; a foe marked `unseen` waits out of view and appears with the fight. A waiting foe notices a party member it can see clearly within
 ## NOTICE_FT, if the member is inside its sight cone (CONE_DEG of the way it faces), or hears them within HEAR_FT
 ## whatever way it faces: at once if the party isn't sneaking, else when its passive Perception (5 lower when that
 ## member is in dim light to it, for sight) is at least the member's total. Being noticed starts the fight, and nobody
@@ -117,7 +117,12 @@ static func refresh_waiting(view: LocationView) -> void:
 		if have.has(id):
 			continue
 		var monsters := LocationFights.monsters_for(view, ids[id] as Dictionary)
+		var entries := (ids[id] as Dictionary)["monsters"] as Array
 		for i in monsters.size():
+			# An `unseen` foe isn't in plain view before its fight (among the casks): no figure, and it notices no one
+			# until the fight puts it on its square.
+			if bool((entries[i] as Dictionary).get("unseen", false)):
+				continue
 			var mo := monsters[i]
 			var foe := Combatant.new(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
 			foe.id = "waiting_%s_%d" % [id, i]
@@ -227,11 +232,16 @@ static func waiting_facing(view: LocationView, spec: Dictionary, i: int, monster
 	if DIRECTIONS.has(given):
 		return (DIRECTIONS[given] as Vector2).normalized()
 	var me := Vector2(monsters[i]["cell"] as Vector2i)
-	if monsters.size() >= 2:
+	# The middle of the group in view: `unseen` foes elsewhere (the cask vaults behind the dig) don't turn it round.
+	var shown: Array[Vector2] = []
+	for j in monsters.size():
+		if not bool(((spec["monsters"] as Array)[j] as Dictionary).get("unseen", false)):
+			shown.append(Vector2(monsters[j]["cell"] as Vector2i))
+	if shown.size() >= 2:
 		var mid := Vector2.ZERO
-		for mo in monsters:
-			mid += Vector2(mo["cell"] as Vector2i)
-		mid /= monsters.size()
+		for c in shown:
+			mid += c
+		mid /= shown.size()
 		if me.distance_to(mid) > 0.5:
 			return (mid - me).normalized()
 	for a: Variant in view.loc.get("areas", []):

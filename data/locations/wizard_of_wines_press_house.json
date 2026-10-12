@@ -390,7 +390,7 @@
       "id": "press_house_mash",
       "trigger": "dialogue",
       "when": "level >= 7",
-      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing. Around the press, the druids lift their hands, and the vines along the walls lift with them.",
       "monsters": [
         {
           "monster": "druid",
@@ -499,7 +499,7 @@
       "id": "press_house_mash",
       "trigger": "dialogue",
       "when": "level >= 6",
-      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing.",
+      "text": "The vat bursts its hoops. What rises out of it is the winery's last harvest: skins, stems and rot, heaped into something the height of a man and still growing. Around the press, the druids lift their hands, and the vines along the walls lift with them.",
       "monsters": [
         {
           "monster": "druid",

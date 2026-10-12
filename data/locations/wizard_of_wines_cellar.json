@@ -266,7 +266,7 @@
       "trigger": "enter_area:the_dig",
       "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 7",
-      "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
+      "text": "Needle blights are scraping at the earth floor with their claws, and druids with lanterns are telling them where. Behind you, among the casks, something else is getting up.",
       "monsters": [
         {
           "monster": "druid",
@@ -352,7 +352,8 @@
           "cell": [
             7,
             3
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "druid",
@@ -360,28 +361,32 @@
           "cell": [
             7,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
-            9,
+            10,
             3
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
             9,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
             8,
             6
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "druid",
@@ -415,7 +420,7 @@
       "trigger": "enter_area:the_dig",
       "waiting": true,
       "when": "not flag.cellar_dig_cleared and level >= 6",
-      "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
+      "text": "Needle blights are scraping at the earth floor with their claws, and druids with lanterns are telling them where. Behind you, among the casks, something else is getting up.",
       "monsters": [
         {
           "monster": "druid",
@@ -480,7 +485,8 @@
           "cell": [
             7,
             3
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "druid",
@@ -488,28 +494,32 @@
           "cell": [
             7,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
-            9,
+            10,
             3
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
             9,
             10
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "vine_blight",
           "cell": [
             8,
             6
-          ]
+          ],
+          "unseen": true
         },
         {
           "monster": "druid",

@@ -36,3 +36,41 @@ func test_the_cellar_dig_at_level_6() -> void:
 ## Kostin at the press with the Mash, four druids and six vine blights; the party just inside the door.
 func test_the_press_house_at_level_6() -> void:
 	await _held("wizard_of_wines_press_house", "press_house_mash", [])
+
+
+## From the stair foot to the dig, the way a party walks in (Wiki finding 114): the cask vaults' group waits out of
+## view among the casks, so nothing in the vaults hears the party go by; the fight starts at the dig door with the
+## overseers ahead and that group rising behind. Then the series again from where the walk set it off.
+func test_the_cellar_dig_starts_at_the_dig_from_the_stair() -> void:
+	GameState.reset()
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
+		var ch := Pregens.build(id, 6)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = "wizard_of_wines_cellar"
+	GameState.story.minute_of_day = 12 * 60
+	Dice.reseed(1)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	var v := root.get("view") as LocationView
+	LocationStealth.refresh_waiting(v)
+	for w: Dictionary in v.waiting:
+		assert_true((w["foe"] as Combatant).cell.x >= 17, "only the dig's foes stand in view: %s" % (w["foe"] as Combatant).cell)
+	assert_true(v.walk_to(Vector2i(17, 6)), "a way to the dig")
+	for i in 3000:
+		if v.in_combat or (not v.busy and v.leader().cell == Vector2i(17, 6)):
+			break
+		await get_tree().process_frame
+	assert_true(v.in_combat, "the dig's fight starts")
+	var at: Array[Vector2i] = []
+	for m: Combatant in v.members:
+		at.append(m.cell)
+		assert_true(m.cell.x >= 13, "%s is at the dig door, not deep in the vaults: %s" % [m.name(), m.cell])
+	var e := v.combat_view.e
+	var behind := e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy" and c.cell.x <= 10)
+	assert_eq(behind.size(), 5, "the vaults' group rises behind")
+	root.queue_free()
+	root = null
+	await _frames(2)
+	await _held("wizard_of_wines_cellar", "cellar_dig", at)
