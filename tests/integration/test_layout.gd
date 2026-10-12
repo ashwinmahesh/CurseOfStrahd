@@ -606,6 +606,18 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		func() -> void:
 			cv.hud.hide_prompt()
 			cv.hud.hide_tooltip())
+	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.
+	var rows: Array = []
+	for k in 12:
+		var who := cv.e.combatants[k % cv.e.combatants.size()]
+		rows.append({"id": who.id, "name": "%s the Very Long-Named %d" % [who.name(), k], "ally": k % 3 == 0, "safe": k == 3,
+			"unaffected": false, "save_chance": 0.35, "damage": 21, "drops": "may drop" if k == 1 else ""})
+	await _check("the area saves panel", func() -> Variant:
+		cv.hud.show_area_saves("Delayed Blast Fireball · slot level 9", "Dex save DC 19", rows,
+			["Friendly fire: Godrick Pendlebrook is in the area", "Ends your Concentration on Hunger of Hadar"])
+		await _frames(1)
+		return cv.hud,
+		func() -> void: cv.hud.hide_area_saves())
 	for i in 10:
 		if cv.e.current().side == &"party":
 			break
