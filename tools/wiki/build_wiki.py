@@ -50,6 +50,8 @@ RARITIES = ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]
 ABILITIES = ["str", "dex", "con", "int", "wis", "cha"]
 SCHOOLS = ["abjuration", "conjuration", "divination", "enchantment", "evocation", "illusion", "necromancy",
            "transmutation"]
+TALK_SPELLS = {"speak_with_animals": "Speak with Animals", "speak_with_dead": "Speak with Dead",
+               "speak_with_plants": "Speak with Plants"}
 TAROKKA_TREASURES = {"tome_of_strahd": "tome", "holy_symbol_of_ravenkind": "symbol", "sunsword": "sword"}
 REST_WORDS = {"safe": "Safe: a Long Rest here isn't interrupted.",
               "risky": "Risky: a rest here can be interrupted.",
@@ -1967,11 +1969,11 @@ class Wiki:
             for node, sts in dlg.nodes.items():
                 spells = set()
                 for st in sts:
-                    if st["t"] == "cast" and st["arg"] in ("speak_with_animals", "speak_with_dead"):
+                    if st["t"] == "cast" and st["arg"] in TALK_SPELLS:
                         spells.add(st["arg"])
                     if st["t"] == "option":
                         for tag in st.get("tags", []):
-                            m = re.search(r"(?:knows|spell):(speak_with_(?:animals|dead))", tag)
+                            m = re.search(r"(?:knows|spell):(speak_with_(?:animals|dead|plants))", tag)
                             if m:
                                 spells.add(m[1])
                 if not spells:
@@ -1980,10 +1982,11 @@ class Wiki:
                 for sp in spells:
                     for w in self.where_node(key, node, limit=3):
                         rows[sp].append((w, told))
-        lines = ["Animals and the dead who'll talk if you cast the right spell. With **Speak with Animals** (a Ritual: "
-                 "ten minutes, no slot) a Beast talks; with **Speak with Dead** a corpse answers once. The spell's "
-                 "option shows in the conversation when a hero knows it.", ""]
-        for sp, label in (("speak_with_animals", "Speak with Animals"), ("speak_with_dead", "Speak with Dead")):
+        lines = ["Animals, the dead and plants who'll talk if you cast the right spell. With **Speak with Animals** (a "
+                 "Ritual: ten minutes, no slot) a Beast talks; with **Speak with Dead** a corpse answers once; with "
+                 "**Speak with Plants** plants tell what passed them in the last day. The spell's option shows in the "
+                 "conversation when a hero knows it.", ""]
+        for sp, label in TALK_SPELLS.items():
             if not rows.get(sp):
                 continue
             lines += [f"## {label}", "", "| Who and where | What they say and what it leads to |", "|---|---|"]
