@@ -137,6 +137,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	EncounterSetup.bring_steeds(e, party_cbs)
+	Wards.bring_circle(e, view.st, view.loc_id)   # a Magic Circle cast here within the hour
 	_light_the_fight(view, e)
 	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	LocationTraps.into_fight(view, e)   # traps that haven't gone off go off under whoever steps on them

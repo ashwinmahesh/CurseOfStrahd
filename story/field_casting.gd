@@ -8,6 +8,9 @@ extends RefCounted
 const MAX_TARGETS := 8
 ## Spells that also work in a fight but are worth casting while exploring (their light lasts; Find Familiar's familiar
 ## and Find Steed's steed stay with their caster and join the next fights).
+## Costly components with no item to carry, bought from the party's purse as the spell is cast (docs/rules/deviations.md):
+## Heroes' Feast's gem-encrusted bowl.
+const PURSE_COMPONENTS := {"heroes_feast": 1000}
 const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar",
 	"find_steed"]
 
@@ -281,6 +284,9 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		return str(f["id"]) == resource_feature and bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
 	if not omit_material and caster.component_why(data) != "":
 		return {"ok": false, "text": caster.component_why(data)}
+	var purse := float(PURSE_COMPONENTS.get(spell_id, 0))
+	if purse > 0.0 and st.gold < purse:
+		return {"ok": false, "text": "Needs %s (%d gp; the purse holds %d)" % [str((data.get("components", {}) as Dictionary).get("m", "its component")).get_slice(",", 0), roundi(purse), floori(st.gold)]}
 	var payment: Dictionary = {}
 	if resource_feature != "":
 		if as_ritual or slot > int(data.get("level", 0)):
@@ -309,9 +315,13 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	if not payment.is_empty():
 		caster.spend_resource(str(payment["resource"]), int(payment["cost"]))
 	var used := "" if omit_material else caster.use_component(data)
+	if purse > 0.0:
+		st.gold = maxf(0.0, st.gold - purse)
 	var res := _take_effect(st, caster, spell_id, data, as_ritual, payment.is_empty(), cast_level, choice)
 	if used != "":
 		res["text"] = str(res["text"]).trim_suffix(".") + ", using up %s." % used
+	if purse > 0.0:
+		res["text"] = str(res["text"]) + " The %s cost %d gp." % [str((data.get("components", {}) as Dictionary).get("m", "component")).get_slice(" worth", 0).trim_prefix("a "), roundi(purse)]
 	return res
 
 
@@ -344,6 +354,10 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 				lasting = maxi(lasting, m.number("value"))
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+	# Wards on a place or a rest (and Hallow's places, for good): story/wards.gd.
+	Wards.cast_here(st, spell_id)
+	if spell_id == "heroes_feast":
+		return {"ok": true, "effect": spell_id, "text": _feast(st, caster)}
 	# Find Familiar: the familiar is with the caster from now on (it joins fights until it's lost or dismissed).
 	if spell_id == "find_familiar":
 		caster.familiar = "here"
@@ -356,6 +370,33 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 			caster.name.get_slice(" ", 0), kind.capitalize()]}
 	return {"ok": true, "effect": spell_id, "text": "%s casts %s%s." % [caster.name.get_slice(" ", 0), data["name"],
 		" as a Ritual" if as_ritual else ""]}
+
+
+## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, immune to Poison damage
+## and to the Poisoned and Frightened conditions, has Advantage on Wisdom saving throws, and gains 2d10 to their Hit
+## Point maximum and as many Hit Points.
+static func _feast(st: StoryState, caster: Character) -> String:
+	var dice := DiceRoller.new(st.playthrough_seed + st.total_minutes())
+	var fed: Array[String] = []
+	for ch in st.party:
+		if ch.dead:
+			continue
+		for old: Effect in ch.effects.duplicate():
+			if old.source_id == "heroes_feast":
+				ch.remove_effect(old)
+		var gain := int(dice.roll_expr("2d10", "Heroes' Feast (%s)" % ch.name)["total"])
+		var fx := Effect.new("Heroes' Feast", &"spell", "heroes_feast").with_modifier("hp_max", {"value": gain}) \
+			.with_modifier("immunity", {"value": "poison"}).with_modifier("condition_immunity", {"value": "poisoned"}) \
+			.with_modifier("condition_immunity", {"value": "frightened"}).with_modifier("advantage", {"on": "save:wis"})
+		fx.ends = Effect.Ends.MINUTES
+		fx.minutes_left = 24 * 60
+		ch.add_effect(fx)
+		Services.cure(ch, &"poisoned")
+		Services.cure(ch, &"frightened")
+		ch.heal(gain, "Heroes' Feast")
+		fed.append("%s +%d" % [ch.name.get_slice(" ", 0), gain])
+	return "%s lays out Heroes' Feast. For a day the party shrugs off poison and fear and keeps its wits (Hit Point maximum: %s)." % [
+		caster.name.get_slice(" ", 0), ", ".join(fed)]
 
 
 ## Casts an exploring spell from a Spell Scroll (story/field_items.gd): no slot and no preparation, in the spell's own
