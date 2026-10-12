@@ -199,6 +199,7 @@
   "f8029222ff23cba4": "[calm, unsurprised]"
  },
  "argynvost": {
+  "103b0b7d9855b66c": "[earnest, warm, deep]",
   "16fada46af855cc8": "[tender, grave]",
   "191326b9e6cee7a9": "[wistful, deep, gentle]",
   "207c675b35cde5a4": "[instructive, warm]",
@@ -220,7 +221,6 @@
   "b1bf4cfcff98e32f": "[sad, forgiving, weary]",
   "b61da00c69cb4f87": "[amused, fond]",
   "b95ede5536a45eb4": "[overjoyed, breathless wonder]",
-  "c619947d2e65763c": "[earnest, warm, deep]",
   "c70ed0469589108d": "[fond, dry]",
   "d1698c3716c5e815": "[noble, faint, melancholy]",
   "d1dc1abae7ba71c0": "[solemn recitation, reverent]",
@@ -230,8 +230,7 @@
   "e6619f4c23fea563": "[wondering, delighted, soft]",
   "f1df5b1043709f5b": "[remembering, plain, sad]",
   "f4ad49885dcfdd76": "[tender, loving]",
-  "f9b2b5d01c5e59de": "[sad, forgiving]",
-  "103b0b7d9855b66c": "[earnest, warm, deep]"
+  "f9b2b5d01c5e59de": "[sad, forgiving]"
  },
  "argynvostholt_cosmin": {
   "09797c1d0812a243": "[earnest, bitter, rambling]",
@@ -2024,14 +2023,14 @@
   "da087c9966525192": "[wry, self-deprecating]",
   "da17546869d35419": "[grim, resigned, firm]",
   "dffb877c0f19c47c": "[low, bitter warning]",
+  "e5d2cec55e9e460c": "[shrewd, grave, gentle]",
   "ea4f69a7cc8b911d": "[brisk, wry]",
   "ee74ae81dd95c5b8": "[brusque, then troubled, musing]",
   "f249036fae21249c": "[grave, measured, expert]",
   "f7b8f37c02d76c36": "[fond, eccentric]",
   "fcfea92e84679f35": "[solemn promise]",
   "fd148b18de8835b2": "[brisk, wry, imperious]",
-  "ff36452ae4f0f615": "[weary, grave, earnest]",
-  "e5d2cec55e9e460c": "[shrewd, grave, gentle]"
+  "ff36452ae4f0f615": "[weary, grave, earnest]"
  },
  "mother_ecaterina": {
   "0829ac497eef668e": "[faint, slow, numb]",
