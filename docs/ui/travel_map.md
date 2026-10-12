@@ -73,7 +73,8 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   gilt edge indoors;
   low cover, rough ground and water.
   Doors are drawn as they stand now; a secret door nobody has found shows as wall.
-- North up, centred on the leader's token. Marks: the party (the leader in gold), guests, people here, doors into
+- Turned with the camera (owner ask 2026-10-12): up on the minimap is the way the camera looks, and an N on a crimson
+  stud rides round the rim pointing north. Centred on the leader's token. Marks: the party (the leader in gold), guests, people here, doors into
   buildings (small lamps) and roads to other regions (gold arrows; on the rim pointing the way when beyond the
   edge; pewter while shut). A pale wedge shows which way the camera looks. The wheel zooms (6 to 16 px a square)
   and a click walks the party there.
@@ -149,4 +150,19 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   no check; without one, a DC 15 Strength (Athletics) check, a minute a try. Someone at 0 Hit Points needs the
   rope. The party doesn't drag anyone in a pit along; an open pit is walked round, or jumped where it fills a
   passage.
+
+## Who to talk to (`ui/common/quest_guide.gd`)
+
+- Owner ask (2026-10-12): for the tracked quest, the person to talk to is green on the map, and the journal shows who
+  it is.
+- QuestGuide finds the people whose conversation, as things stand, moves a quest on from its current stage: from each
+  person's dialogue entry in the locations' `npcs`, it walks the dialogue the way DialogueRunner plays it (`if`
+  blocks and option conditions checked against the story now, options for party members who aren't there left out,
+  both ways of a check) and looks for a `quest <id> <later stage>`. Nothing new in the data: it reads the dialogues
+  as written. Conversations at camp don't count; only people standing somewhere do.
+- Minimap: the tracked quest's people here get a bigger green mark (on the rim, pointing the way, when off the edge),
+  looked at once a second.
+- Travel map: a place where one of them is gets a green ring round its mark, and the side panel says "Talk to <name>
+  here (tracked quest)."
+- Journal: every open quest's card shows "Talk to" with the portrait, name and place of up to three of them.
 

@@ -445,7 +445,23 @@
       ],
       "kind": "examine",
       "label": "A card table",
-      "model": "table_chairs"
+      "model": "table_chairs",
+      "checks": [
+        {
+          "id": "brides_gossip",
+          "skill": "stealth",
+          "dc": 15,
+          "label": "Listen to the brides' gossip unseen",
+          "success": {
+            "codex": {
+              "id": "brides_gossip",
+              "title": "The brides' gossip",
+              "text": "Overheard at the card table: the count hasn't visited any of them in a year; he sleeps beneath the catacombs, in his family's tomb, and keeps the stair to it guarded; and Anastrasya has stopped pretending she doesn't hate him."
+            }
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "court_ludmilla_coffin",
@@ -744,7 +760,26 @@
         }
       ],
       "gold": 150,
-      "lock_dc": 17
+      "lock_dc": 17,
+      "checks": [
+        {
+          "id": "rahadin_footlocker",
+          "skill": "stealth",
+          "dc": 15,
+          "label": "Open Rahadin's footlocker while his back is turned",
+          "success": {
+            "unlock": [
+              "court_rahadin_footlocker"
+            ]
+          },
+          "failure": {
+            "text": "Rahadin turns, very slowly, and the screaming in the room rises."
+          },
+          "once": true,
+          "alone": true,
+          "when": "not flag.rahadin_defeated"
+        }
+      ]
     }
   ],
   "lights": [
@@ -956,6 +991,24 @@
     {
       "id": "court_rahadin_chamber_fight",
       "trigger": "dialogue",
+      "text": "Rahadin rises from his cot as if he has been expecting this, and the screaming rises with him.",
+      "monsters": [
+        {
+          "monster": "rahadin",
+          "cell": [
+            32,
+            17
+          ],
+          "name": "Rahadin"
+        }
+      ],
+      "surprise": "",
+      "flag": "rahadin_defeated"
+    },
+    {
+      "id": "court_rahadin_chamber_fight",
+      "trigger": "check:rahadin_footlocker:failure",
+      "when": "not flag.rahadin_defeated",
       "text": "Rahadin rises from his cot as if he has been expecting this, and the screaming rises with him.",
       "monsters": [
         {

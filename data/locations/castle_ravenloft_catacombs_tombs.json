@@ -27,10 +27,10 @@
       "##############.....#########",
       "################.###########",
       "######.....................#",
-      "######..#..11111111111..#..#",
-      "######.....11111111111.....#",
-      "######.....11111111111.....#",
-      "######..#..11111111111..#..#",
+      "######..#..___________..#..#",
+      "######.....___________.....#",
+      "######.....___________.....#",
+      "######..#..___________..#..#",
       "######.....................#",
       "############################"
     ],
@@ -289,7 +289,22 @@
       ],
       "kind": "examine",
       "label": "A carved family",
-      "model": "relief"
+      "model": "relief",
+      "checks": [
+        {
+          "id": "royal_family",
+          "skill": "history",
+          "dc": 15,
+          "label": "Name the carved family",
+          "success": {
+            "codex": {
+              "id": "barov_and_ravenovia",
+              "title": "King Barov and Queen Ravenovia",
+              "text": "The carved family is the castle lord's own: his father, King Barov, a warrior king; his mother, Queen Ravenovia, for whom the castle is named; and two sons, the elder in armour, the younger, Sergei, carved smiling. Someone has worn the elder son's face smooth with their thumb."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "cat_royal_candles_w",

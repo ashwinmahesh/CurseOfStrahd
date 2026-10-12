@@ -55,14 +55,16 @@ static func capture(e: Encounter) -> Dictionary:
 				row += "="
 			elif e.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				row += "~"
+			elif e.grid.height(cell) == CombatGrid.DAIS_FT and not e.grid.has_flag(cell, CombatGrid.NATURAL):
+				row += "_"
 			elif e.grid.height(cell) > 0 and not e.grid.has_flag(cell, CombatGrid.NATURAL):
-				row += str(mini(4, e.grid.height(cell) / CombatGrid.FEET))
+				row += str(clampi(e.grid.height(cell) / CombatGrid.FEET, 1, 4))
 			else:
 				row += "."
-			# A raised square its letter can't show (a crate shoved up a step, rubble on a dais, over 20 ft): its height.
-			# Natural ground comes back from the "elevation" rows instead.
-			if e.grid.height(cell) > 0 and not e.grid.has_flag(cell, CombatGrid.NATURAL) \
-					and not row.ends_with(str(e.grid.height(cell) / CombatGrid.FEET)):
+			# A raised square its letter can't show (a crate shoved up a step, rubble on a dais, over 20 ft, a height that
+			# isn't a step of 5 ft): its height. Natural ground comes back from the "elevation" rows instead.
+			var drawn := CombatGrid.DAIS_FT if row.ends_with("_") else int(row.right(1)) * CombatGrid.FEET if row.right(1).is_valid_int() else 0
+			if e.grid.height(cell) > 0 and not e.grid.has_flag(cell, CombatGrid.NATURAL) and e.grid.height(cell) != drawn:
 				heights["%d,%d" % [x, z]] = e.grid.height(cell)
 		rows.append(row)
 	var log: Array = []

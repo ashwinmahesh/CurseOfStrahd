@@ -119,3 +119,17 @@ once
 
 ~ examine:ghakis_hall_shackles
 | Shackles bolted into the rock at the height of a man's wrists. Some new moons, the keepers didn't throw the meat in. They chained it here and left.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:nature:meltwater_follow:success
+| The snow melts faster on one side of the yard, as if the mountain breathes there; in the slush lies a dropped flask, still warm.
+
+~ check:nature:meltwater_follow:failure
+| Water runs downhill. That's as far as the mountain will explain itself.
+
+~ check:arcana:scorch_judge:success
+| Not lightning, not a forge: breath, hot enough to glaze stone, from something that lives under the mountain.
+
+~ check:arcana:scorch_judge:failure
+| Black rock, scorched. Something hot happened here.

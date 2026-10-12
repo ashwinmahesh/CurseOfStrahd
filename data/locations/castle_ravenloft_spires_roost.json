@@ -158,7 +158,25 @@
       ],
       "kind": "examine",
       "label": "Small bones",
-      "model": "bone_scatter"
+      "model": "bone_scatter",
+      "checks": [
+        {
+          "id": "rafters_climb",
+          "skill": "acrobatics",
+          "dc": 16,
+          "label": "Climb the rafters to the high nests",
+          "success": {
+            "reveal": [
+              "nest_ring"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "spires_roost_feathers",

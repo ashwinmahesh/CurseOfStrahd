@@ -400,7 +400,22 @@
       ],
       "kind": "examine",
       "label": "A carved crest over the doors",
-      "model": "crest"
+      "model": "crest",
+      "checks": [
+        {
+          "id": "keep_crest",
+          "skill": "history",
+          "dc": 15,
+          "label": "Read the crest over the doors",
+          "success": {
+            "codex": {
+              "id": "von_zarovich_arms",
+              "title": "The arms of the house",
+              "text": "The crest over the doors is the von Zarovich arms: a conqueror's house from beyond the mists, which took the valley in a war and kept it. The motto under it has been chiselled away and recut, more than once, in a steadier hand each time."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "crg_dry_well",
@@ -410,7 +425,24 @@
       ],
       "kind": "examine",
       "label": "A dry well",
-      "model": "well_stone"
+      "model": "well_stone",
+      "checks": [
+        {
+          "id": "dry_well_climb",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Climb down the dry well",
+          "success": {
+            "reveal": [
+              "dry_well_rope"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          }
+        }
+      ]
     },
     {
       "id": "crg_courtyard_lamp",

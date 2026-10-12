@@ -430,7 +430,20 @@
       ],
       "kind": "examine",
       "label": "The organ",
-      "model": "pipe_organ"
+      "model": "pipe_organ",
+      "checks": [
+        {
+          "id": "count_organ",
+          "skill": "performance",
+          "dc": 16,
+          "label": "Play the count's organ",
+          "success": {
+            "reveal": [
+              "organ_harp"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "crg_dining_hearth",

@@ -23,7 +23,9 @@ const LOC := {
 				"success": {"text": "The runes point to a niche.", "reveal": ["hidden_cache", "plate", "test_elsewhere:far_cache"],
 					"codex": {"id": "test_rune_lore", "title": "The Runes", "text": "A warding script."}}},
 			{"id": "touch_runes", "skill": "arcana", "dc": 40, "label": "Draw on the runes",
-				"success": {"text": "Never."}, "failure": {"text": "A spark bites.", "damage": "1d4", "damage_type": "lightning"}}]},
+				"success": {"text": "Never."}, "failure": {"text": "A spark bites.", "damage": "1d4", "damage_type": "lightning"}},
+			{"id": "wake_runes", "skill": "arcana", "dc": 40, "label": "Wake the runes", "once": true,
+				"success": {"text": "Never."}, "failure": {"text": "Something answers."}}]},
 		{"id": "hidden_cache", "cell": [2, 1], "kind": "search", "search_dc": 40, "label": "A niche", "item": "potion_of_healing_greater"},
 		{"id": "crack", "cell": [5, 1], "kind": "decor", "label": "A crack in the wall", "checks": [
 			{"id": "squeeze", "skill": "acrobatics", "dc": 1, "label": "Squeeze through", "alone": true,
@@ -41,6 +43,7 @@ const LOC := {
 			{"id": "feel_lock", "skill": "sleight_of_hand", "dc": 1, "label": "Feel for the catch",
 				"success": {"text": "Click.", "unlock": ["coffer"]}}]},
 		{"id": "song_box", "cell": [1, 3], "label": "Music box", "gold": 2, "when": "flag.test_checks_song"}],
+	"encounters": [{"id": "rune_guard", "trigger": "check:wake_runes:failure", "monsters": [{"monster": "crawling_claw", "cell": [4, 2]}]}],
 	"traps": [{"id": "plate", "cells": [[5, 3]], "detect_dc": 40, "disarm_dc": 40, "label": "a pressure plate", "damage": "1d6",
 		"save": {"ability": "dex", "dc": 12}}],
 }
@@ -278,3 +281,11 @@ func test_unbinding_the_abbey_scarecrows_stops_their_fight() -> void:
 	assert_true(bool(GameState.story.get_flag("abbey_scarecrows_unbound")))
 	assert_false(v._trigger_encounter("enter_area:scarecrow_row"), "the scarecrows stay on their poles")
 	assert_false(v.in_combat)
+
+
+func test_a_failure_can_set_off_a_fight() -> void:
+	var v := _view()
+	_try(Vector2i(1, 1), "wake_runes")
+	assert_true(WorldChecks.spent(GameState.story, "test_checks", WorldChecks.find(LOC["props"][0] as Dictionary, "wake_runes")), "one try")
+	await _frames(2)
+	assert_true(v.in_combat, "the runes' guardian comes for whoever woke them")

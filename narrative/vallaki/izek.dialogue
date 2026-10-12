@@ -116,6 +116,7 @@ Ireena: I don't remember anything before Kolyan's house. Only trees, and being c
 set izek_told_truth
 quest izek_obsession truth_told
 Izek: No.
+cutscene izek_truth
 Narrator: He looks at you, and then at nothing, for a very long time. The scaled hand opens and closes. When he speaks again his voice has gone quiet, the way a struck bell goes quiet.
 Izek: My sister. My sister had red hair.
 Izek: I won't touch her. I won't let anyone touch her. And I won't break any more heads for that fat fool in the sash. I'm done.

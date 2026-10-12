@@ -107,8 +107,9 @@ static func _fit_party_size(view: LocationView) -> void:
 
 
 ## Puts the party's guests behind the last member (called again when someone joins or leaves), and after them each
-## Find Familiar familiar that's with its caster (not in its pocket dimension): it follows at the back of the line and
-## is marked `familiar_of` its caster, whose fights summon it themselves (EncounterSetup.bring_familiars).
+## Find Familiar familiar that's with its caster (not in its pocket dimension) and each Find Steed steed: they follow
+## at the back of the line, marked `familiar_of` or `steed_of` their caster, whose fights summon them themselves
+## (EncounterSetup.bring_familiars, bring_steeds).
 static func place_guests(view: LocationView) -> void:
 	for g in view.guest_members:
 		if view.tokens.has(g.id):
@@ -119,6 +120,12 @@ static func place_guests(view: LocationView) -> void:
 	for m in view.members:
 		if m.creature is Character and (m.creature as Character).familiar == "here" and not m.creature.dead:
 			keepers.append(m)
+	# A steed called while exploring (owner report 2026-10-12: Godrick's never showed up) walks with its paladin too.
+	var riders: Array[Combatant] = []
+	for m in view.members:
+		if m.creature is Character and not (m.creature as Character).steed.is_empty() and not m.creature.dead:
+			riders.append(m)
+	keepers.append_array(riders)
 	if (view.st.guests.is_empty() and keepers.is_empty()) or view.members.is_empty():
 		return
 	var tail := view.members[view.members.size() - 1].cell
@@ -137,13 +144,22 @@ static func place_guests(view: LocationView) -> void:
 		if i < view.st.guests.size():
 			cb = Combatant.new(view.st.guests[i], &"guest", cell)
 			art = str(Compendium.shared().get_entry("npcs", view.st.guest_ids[i]).get("sprite", view.st.guest_ids[i]))
-		else:
+		elif i - view.st.guests.size() < keepers.size() - riders.size():
 			var keeper := keepers[i - view.st.guests.size()]
 			var fam := Monster.from_data(EncounterSetup.familiar_data(keeper))
 			fam.id = "familiar_%s" % keeper.id
 			cb = Combatant.new(fam, &"guest", cell)
 			cb.id = fam.id
 			cb.set_meta("familiar_of", keeper.id)
+		else:
+			var rider := keepers[i - view.st.guests.size()]
+			var steed := (rider.creature as Character).steed
+			var horse := Monster.from_data(SummonBlocks.for_spell("find_steed", int(steed.get("level", 2)), str(steed.get("type", "celestial")), {}))
+			horse.id = "steed_%s" % rider.id
+			cb = Combatant.new(horse, &"guest", cell)
+			cb.id = horse.id
+			cb.set_meta("steed_of", rider.id)
+			cb.set_meta("steed", steed.duplicate())   # its type and level, so a new casting swaps it
 		view.guest_members.append(cb)
 		var tok := CombatToken.create(cb, art)
 		tok.position = view.board.cell_center(cell)
@@ -151,19 +167,28 @@ static func place_guests(view: LocationView) -> void:
 		view.tokens[cb.id] = tok
 
 
-## Brings the familiars at the back of the line up to date with their casters: one cast just now, lost in a fight,
-## dismissed or sent to its pocket dimension. Re-places the guests only when something changed.
+## Brings the familiars and steeds at the back of the line up to date with their casters: one cast just now, lost in a
+## fight, dismissed or sent to its pocket dimension. Re-places the guests only when something changed.
 static func refresh_familiars(view: LocationView) -> void:
 	var want := {}
 	for m in view.members:
 		if m.creature is Character and (m.creature as Character).familiar == "here" and not m.creature.dead:
-			want[m.id] = true
+			want["familiar:" + m.id] = true
+		if m.creature is Character and not (m.creature as Character).steed.is_empty() and not m.creature.dead:
+			want["steed:%s:%s" % [m.id, (m.creature as Character).steed]] = true
 	var have := {}
 	for g in view.guest_members:
 		if g.has_meta("familiar_of"):
-			have[str(g.get_meta("familiar_of"))] = true
+			have["familiar:" + str(g.get_meta("familiar_of"))] = true
+		if g.has_meta("steed_of"):
+			have["steed:%s:%s" % [g.get_meta("steed_of"), g.get_meta("steed", {})]] = true
 	if want != have:
 		place_guests(view)
+
+
+## A familiar or steed walking with its caster: not one of the story's guests, and its caster's fights bring it.
+static func is_follower(g: Combatant) -> bool:
+	return g.has_meta("familiar_of") or g.has_meta("steed_of")
 
 
 static func _cells_around(view: LocationView, start: Vector2i, n: int) -> Array[Vector2i]:
