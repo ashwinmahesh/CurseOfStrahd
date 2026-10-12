@@ -1,6 +1,6 @@
 {
   "id": "barovia",
-  "summary": "Barovia's weather (F12, story/weather.gd): what each kind does, how often each climate has it (weights for each six-hour spell), which regions have which climate, and how Strahd's attention brings more storms.",
+  "summary": "Barovia's weather (F12, story/weather.gd): what each kind does, how often each climate has it (weights for each six-hour spell), which regions have which climate, and how Strahd's attention brings more storms. The lake country (Vallaki, the lake, Van Richten's tower) rains more, Berez is foggier and the Wizard of Wines wetter (the vault's Region Variety Plan).",
   "kinds": {
     "overcast": {
       "label": "Overcast",
@@ -110,6 +110,24 @@
       "rain": 3,
       "storm": 1
     },
+    "lakeland": {
+      "overcast": 3,
+      "fog": 3,
+      "rain": 4,
+      "storm": 1
+    },
+    "marsh": {
+      "overcast": 3,
+      "fog": 5,
+      "rain": 2,
+      "storm": 1
+    },
+    "vineyard": {
+      "overcast": 3,
+      "fog": 2,
+      "rain": 5,
+      "storm": 1
+    },
     "highland": {
       "overcast": 4,
       "fog": 2,
@@ -138,7 +156,12 @@
     "mount_ghakis": "mountain",
     "mount_baratok": "mountain",
     "amber_temple": "mountain",
-    "castle_ravenloft": "castle"
+    "castle_ravenloft": "castle",
+    "vallaki": "lakeland",
+    "lake_zarovich": "lakeland",
+    "van_richtens_tower": "lakeland",
+    "berez": "marsh",
+    "wizard_of_wines": "vineyard"
   },
   "storm_by_attention": {
     "marked": 1.5,
