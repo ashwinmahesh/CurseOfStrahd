@@ -54,9 +54,15 @@ func test_a_won_fight_at_a_place_leaves_coins_and_a_find() -> void:
 	var st := StoryState.new()
 	st.playthrough_seed = 9
 	st.party.append(TestChars.pregen("ilse_varga", 3))
-	var foes := [{"monster": "zombie"}, {"monster": "zombie"}, {"monster": "ghoul", "side": "neutral"}]
+	var foes := [{"monster": "bandit"}, {"monster": "bandit"}, {"monster": "bandit", "side": "neutral"}]
 	var spoils := RoadSpoils.for_story_fight(st, foes, "village:test")
 	assert_true(int(spoils["gold"]) >= 6, "two foes' coins (3d6 each): %d" % int(spoils["gold"]))
 	assert_eq((spoils["items"] as Array).size(), 1, "and a find")
 	assert_eq(JSON.stringify(RoadSpoils.for_story_fight(st, foes, "village:test")), JSON.stringify(spoils), "the same on a reload")
-	assert_eq(int(RoadSpoils.for_story_fight(st, [{"monster": "ghoul", "side": "neutral"}], "x")["gold"]), 0, "no foes, no spoils")
+	assert_eq(int(RoadSpoils.for_story_fight(st, [{"monster": "bandit", "side": "neutral"}], "x")["gold"]), 0, "no foes, no spoils")
+	# Wolves and zombies carry no treasure (the 2025 Monster Manual): nothing.
+	var beasts := RoadSpoils.for_story_fight(st, [{"monster": "wolf"}, {"monster": "wolf"}, {"monster": "zombie"}], "y")
+	assert_eq(int(beasts["gold"]), 0)
+	assert_true((beasts["items"] as Array).is_empty())
+	assert_false(RoadSpoils.carries_treasure(Compendium.shared().get_entry("monsters", "wolf")))
+	assert_true(RoadSpoils.carries_treasure(Compendium.shared().get_entry("monsters", "bandit")))
