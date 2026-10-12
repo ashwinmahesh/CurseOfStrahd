@@ -16,6 +16,9 @@ var bench: Array[Character] = []
 ## them as it finds the party (find_member, so their camp talks come up) and they see what's chosen (Approval). Not
 ## saved: a camp is pitched again each time.
 var camp_company: Array[Character] = []
+## The morning after the last Long Rest (LongRest.morning_open): {at: the game minute it ended, prepared: the party's
+## prepared spells then (PrepareScreen.snapshot), what a change of them counts from}. Not saved.
+var morning: Dictionary = {}
 ## Index into party of the character leading in exploration and speaking in dialogue.
 var leader: int = 0
 var gold: float = 0.0

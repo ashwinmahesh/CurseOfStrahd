@@ -59,6 +59,12 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_log_card.custom_minimum_size = Vector2(0, 64)
 	_log_card.add_child(_log)
 	frame.add_child(_log_card)
+	# The morning after a Long Rest (LongRest.morning_open): opened again after Strahd's night visit, or after a magic
+	# item's rest from the inventory, the screen still offers the companions' words and the change of prepared spells,
+	# counted from the list the night ended with.
+	if LongRest.morning_open(st):
+		_long_done = true
+		_prepared_before = st.morning.get("prepared", {}) as Dictionary
 	_draw()
 
 
@@ -394,8 +400,10 @@ func _long_rest(rule: String) -> void:
 		_narrate("dream:" + region)
 		_long_done = true
 		_prepared_before = PrepareScreen.snapshot(st)
+		st.morning["prepared"] = _prepared_before
 		if root.has_method("strahd_after_rest"):
-			root.call_deferred("strahd_after_rest", 8 * 60)   # Strahd may come in the night (ADR 0014)
+			# Strahd may come in the night (ADR 0014): after this screen and any talk started from it.
+			root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)
 	_draw()
 	_refresh_long()
 	root.call("_refresh")
@@ -467,8 +475,8 @@ static func _has_recoverable(ch: Character, budget: int) -> bool:
 ## After a Long Rest, a companion with something on their mind asks for a word (CampTalk, narrative/camp/): a
 ## button per talk; choosing one closes the rest and starts the conversation.
 func _camp_talks() -> void:
-	if not _long_done or root == null or not root.has_method("start_dialogue"):
-		return
+	if not _long_done or root == null or not root.has_method("start_dialogue") or _camp() != null:
+		return   # at camp, a word is had by walking up to whoever wants it
 	for talk in CampTalk.available(st):
 		var ref := str(talk["ref"])
 		var b := UiKit.button(str(talk["label"]), func() -> void:
@@ -500,3 +508,39 @@ func _exit_tree() -> void:
 	if st != null:
 		for ch in st.party:
 			ch.close_slot_recovery()
+	# Closed with a word still waiting: the exploring screen says where to find it (it waits for the next rest otherwise).
+	if _long_done and root != null and is_instance_valid(root) and root.is_inside_tree() and "hud" in root \
+			and root.get("hud") is ExploreHud and _camp() == null:
+		var hint := talk_hint(st)
+		if hint != "":
+			(root.get("hud") as ExploreHud).toast(hint)
+
+
+## Where to hear a word a companion wants after a Long Rest ("Thistle wants a word: open Rest (R) to talk"), while the
+## morning lasts (LongRest.morning_open); "" when nobody is waiting.
+static func talk_hint(state: StoryState) -> String:
+	if not LongRest.morning_open(state):
+		return ""
+	var talks := CampTalk.available(state)
+	if talks.is_empty():
+		return ""
+	var who := str(talks[0]["label"]) if talks.size() == 1 else "%d companions want a word" % talks.size()
+	return "%s: open Rest (%s) to talk" % [who, InputActions.key_text(&"rest")]
+
+
+## What the Narrator says of the night just slept, for a rest taken somewhere other than this screen (a magic item's,
+## from the inventory): the place's night (as _narrate picks it) and the region's dream, or "".
+static func night_words(root_: Node, state: StoryState) -> String:
+	var narrator := root_.get("narrator") as Narrator if root_ != null and "narrator" in root_ else null
+	if narrator == null:
+		return ""
+	var loc := Compendium.shared().get_entry("locations", state.location)
+	var region := str(loc.get("region", ""))
+	var out: Array[String] = []
+	for keys: Array in [["rest:long:" + state.location, "rest:long:" + region, "rest:long"], ["dream:" + region]]:
+		for key: String in keys:
+			var line := narrator.line(key, state, state.leader_character())
+			if line != "":
+				out.append(line)
+				break
+	return " ".join(out)

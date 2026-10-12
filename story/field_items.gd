@@ -284,11 +284,10 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			var wait := RestRules.item_rest_refusal(st)
 			if wait != "":
 				return {"ok": false, "text": wait, "lines": []}
-			for m in st.party:
-				m.finish_long_rest()
-			st.advance_minutes(8 * 60)
-			RestRules.note_long_rest(st)
-			return {"ok": true, "effect": "long_rest", "text": "%s: the party rests in perfect safety and wakes refreshed." % label}
+			# The same Long Rest as anywhere else (LongRest.finish): the guests, the miles walked, the spells cast on waking.
+			var woke := LongRest.finish(st, dice)
+			var said := "%s: the party rests in perfect safety and wakes refreshed." % label
+			return {"ok": true, "effect": "long_rest", "text": " ".join([said] + woke)}
 		"oil_of_sharpness":
 			var weapon := str(opts.get("choice", ""))
 			if weapon == "":
