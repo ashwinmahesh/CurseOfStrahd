@@ -216,3 +216,41 @@ once
 ~ search:pool_sun_medallion
 | At the pool's edge, half sunk in the mud, a pewter sun on a broken chain, dropped or offered by some mourner. {name} lifts it out, and the water lets it go. It's warm, and its rays catch a light that isn't there.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:religion:krezk_shrine_pray:success
+| You pray at the little shrine, and notice the tin someone tucked behind it, out of the wind.
+
+~ check:religion:krezk_shrine_pray:failure
+| The wind takes the words before they're finished.
+
+~ check:history:abbey_cairn_names:success
+| The names are pilgrims who died on the abbey road, and under the newest stone someone left a ring for the last of them.
+
+~ check:history:abbey_cairn_names:failure
+| Names, worn by snow, belonging to nobody you know.
+
+~ check:animal_handling:goats_settle:success
+| You settle the billy before he breaks the gate, and the grateful herders press a bundle of cheese and hard bread on you.
+
+~ check:animal_handling:goats_settle:failure
+| The billy goat makes his feelings about you known, at speed.
+
+~ check:history:abbey_recall:success
+| A hospital in a saint's name, a bell that never rings, and an Abbot who never grows old.
+
+~ check:history:abbey_recall:failure
+| An abbey on a mountain. Every story you know about those is about wine.
+
+~ check:acrobatics:wall_top_walk:success
+| You run the top of the wall like a cat, and from up there you can see a stone low on the outside that someone has worked loose.
+
+~ check:acrobatics:wall_top_walk:failure
+| The top of the wall is icier than it looked. The ground is harder than it looked, too.
+
+~ check:stealth:krezkov_listen:success
+| Through the shutters, the Krezkovs argue in whispers over their dying son, and whether the Abbot's help would cost more than a sixth grave.
+
+~ check:stealth:krezkov_listen:failure
+| A board creaks under your boot, and the voices inside stop. The shutters close.

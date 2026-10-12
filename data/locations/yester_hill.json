@@ -199,7 +199,25 @@
       ],
       "kind": "examine",
       "label": "Old grave mounds",
-      "model": "grave_mound"
+      "model": "grave_mound",
+      "checks": [
+        {
+          "id": "barrow_stones",
+          "skill": "history",
+          "dc": 14,
+          "label": "Read the barrow stones",
+          "success": {
+            "reveal": [
+              "yester_barrow_amulet"
+            ],
+            "codex": {
+              "id": "yester_barrows",
+              "title": "The barrows of Yester Hill",
+              "text": "The barrows are older than any Barovian name: chieftains of the people who held the hill before the valley had lords, buried with their gods' signs. The druids built their fires here because the dead were already listening."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "wicker_cages",
@@ -251,7 +269,20 @@
       ],
       "kind": "examine",
       "label": "The view east",
-      "model": "rocks"
+      "model": "rocks",
+      "checks": [
+        {
+          "id": "hill_east_view",
+          "skill": "perception",
+          "dc": 13,
+          "label": "Look east from the hilltop",
+          "success": {
+            "reveal": [
+              "wizard_of_wines:vine_sickle"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "bone_cairn",
@@ -261,7 +292,20 @@
       ],
       "kind": "examine",
       "label": "A cairn of bones",
-      "model": "cairn"
+      "model": "cairn",
+      "checks": [
+        {
+          "id": "cairn_bones",
+          "skill": "medicine",
+          "dc": 14,
+          "label": "Examine the bones in the cairn",
+          "success": {
+            "reveal": [
+              "cairn_bracers"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "cairn_bracers",

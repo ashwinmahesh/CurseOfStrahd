@@ -178,3 +178,83 @@ Status: ✅ built · ○ planned
 |---|---|---|---|---|
 | ✅ | The Burgomaster's Mansion, a circle chalked on the floor | Read the chalk circle (Arcana DC 14) | finds teleportation circle; codex: Victor's circle | — |
 | ✅ | St. Andral's Church, the altar | Pray at the saint's altar (Religion DC 13), once his bones are back | 1d8 Temporary Hit Points | — |
+
+### Krezk (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Krezk, a wayside shrine | Pray at the wayside shrine (Religion DC 13) | finds a tin behind the wayside shrine (Keoghtom's Ointment) | — |
+| ✅ | Krezk, a cairn by the track | Read the names on the cairn (History DC 13) | finds something under the cairn by the track (Ring of Warmth) | — |
+| ✅ | Krezk, the goat pens | Settle the goats for the herders (Animal Handling DC 13) | Ration | — |
+| ✅ | Krezk, the abbey above | Recall what's told of the abbey (History DC 15) | codex: The abbey above Krezk | — |
+| ✅ | Krezk, the wall of Krezk | Walk the top of the wall (Acrobatics DC 14) | finds a loose stone low in the wall (Weapon, +1) | 1d6 bludgeoning damage |
+| ✅ | Krezk, the burgomaster's house | Listen at the Krezkovs' shutters unseen (Stealth DC 13) | codex: The Krezkovs' grief | one try for the party |
+
+### The Abbey of St. Markovia (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Abbey of St. Markovia, a statue of a woman | Recall Saint Markovia's story (History DC 14) | codex: Saint Markovia | — |
+| ✅ | The Abbey of St. Markovia, the bell tower | Climb into the bell tower (Athletics DC 15) | finds a little chime hung inside the great bell (Chime of Opening) | 2d6 bludgeoning damage |
+| ✅ | The Abbey of St. Markovia, the barred windows of the wards | Watch through the bars unseen (Stealth DC 14) | finds a child's hidden treasure under the cots (Figurine of Wondrous Power (Golden Lions), The Wards of St. Markovia); codex: The Belviews | one try for the party |
+| ✅ | The Abbey Garden, a scarecrow with a stitched mouth | Unpick the scarecrows' binding (Arcana DC 15) | the scarecrows stay on their poles: no fight (garden_sentry waits on flag.abbey_scarecrows_unbound) | — |
+| ✅ | The Church of St. Markovia, a small pipe organ | Play the little organ (Performance DC 14) | Heroic Inspiration | — |
+| ✅ | The Wards of St. Markovia, a basin and instruments | Study the surgeon's instruments (Medicine DC 14) | finds a false back in the instrument cabinet (Periapt of Proof against Poison); codex: The Abbot's surgery | — |
+
+### Yester Hill (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Yester Hill, old grave mounds | Read the barrow stones (History DC 14) | finds something in the barrow mound (Amulet of the Devout, +2); codex: The barrows of Yester Hill | — |
+| ✅ | Yester Hill, a cairn of bones | Examine the bones in the cairn (Medicine DC 14) | finds something under the bone cairn (Bracers of Archery) | — |
+| ✅ | Yester Hill, the view east | Look east from the hilltop (Perception DC 13) | finds something dropped between the vines (Moon Sickle, +1, The Wizard of Wines) | — |
+
+### Argynvostholt (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Argynvostholt, a well | Climb down to the ledge in the well (Athletics DC 15) | finds something on a ledge down the well (Cube of Force) | 2d6 bludgeoning damage |
+| ✅ | Argynvostholt, small headstones | Read the squires' headstones (History DC 14) | finds something left on a squire's grave (Holy Symbol (Emblem)) | — |
+| ✅ | Argynvostholt, the frost scar | Study the frost scar (Arcana DC 15) | codex: The frost scar | — |
+| ✅ | Argynvostholt, Ground Floor, the chapel altar | Pray at the dragon's altar (Religion DC 15) | finds a reliquary behind the chapel altar (Amulet of the Devout, +2) | — |
+| ✅ | Argynvostholt, Ground Floor, armour stands | Shift the armour stands (Athletics DC 14) | finds a sword behind the armour stands (Flame Tongue) | — |
+| ✅ | Argynvostholt, Upper Floor, burned bookcases | Search the burned books for a spell (Arcana DC 15) | spell_scroll__dispel_magic | — |
+| ✅ | The Beacon Tower, the parapet, facing the valley | Look out over the valley (Perception DC 15) | finds something under the jetty's boards (Ring of Water Walking, Lake Zarovich: the Fishers' Landing) | — |
+
+### Van Richten's Tower (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Van Richten's Tower, a lookout rock | Watch the lake from the lookout rock (Perception DC 14) | finds a satchel wedged behind the lookout rock (Eyes of the Eagle) | — |
+| ✅ | Van Richten's Tower, ezmerelda's campfire | Read the tracks around the camp (Survival DC 14) | finds a tripwire at the wagon step | — |
+| ✅ | Van Richten's Tower, jars and bottles | Sort the hunter's remedies (Medicine DC 15) | finds a flask among the jars that isn't labelled (Oil of Etherealness) | — |
+| ✅ | Van Richten's Tower, a wall of trophies | Read the trophies (Survival DC 15) | finds a clip behind one of the trophies (Wand of Binding); codex: The hunter's trophies | — |
+
+### The werewolf den (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Hills above Lake Zarovich, a patch of purple flowers | Name the purple flowers (Nature DC 13) | codex: Wolfsbane | — |
+| ✅ | The Hills above Lake Zarovich, a heap of bones | Sort through the bones (Medicine DC 14) | 30 gold | — |
+| ✅ | The Werewolf Den, bundles of drying herbs | Sort the drying herbs (Nature DC 14) | finds a flask in the drying herbs (Elixir of Health) | — |
+| ✅ | The Werewolf Den, kiril's trophies | Read Kiril's trophies (Survival DC 15) | finds a sword among Kiril's trophies (Sword of Wounding) | — |
+
+### Lake Zarovich (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Lake Zarovich: the Fishers' Landing, a fishers' shrine | Pray at the fishers' shrine (Religion DC 13) | finds something behind the fishers' shrine (Trident of Fish Command) | — |
+| ✅ | Lake Zarovich: the Fishers' Landing, a flat rock above the water | Dive from the flat rock (Athletics DC 13) | 25 gold | 1d4 cold damage |
+| ✅ | Lake Zarovich: the Fishers' Landing, bluto's rowboat | Swing under the jetty from the boat (Acrobatics DC 13) | finds something under the jetty's boards (Ring of Water Walking) | 1d4 cold damage |
+
+### Mount Baratok and the Tsolenka Pass (level 9)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Mount Baratok, a cairn on the summit | Unpick the ward round the cairn (Arcana DC 16) | disarms baratok_ward | 2d8 lightning damage; one try for the party |
+| ✅ | The Tsolenka Pass, bones on the shelf | Examine the roc's leavings (Medicine DC 15) | finds a traveller the roc dropped (Wings of Flying) | — |
+| ✅ | The Tsolenka Pass, carved faces | Read the carved faces (History DC 15) | codex: The watch at Tsolenka | — |
+| ✅ | The Tsolenka Pass, a wayside shrine | Pray at the wayside shrine (Religion DC 14) | Heroic Inspiration | — |
+| ✅ | The Tsolenka Pass, the gorge | Edge out along the rocks over the gorge (Acrobatics DC 14) | finds a feather as long as a man, caught on the rocks (Feather Token (Bird)) | 2d6 bludgeoning damage |
+| ✅ | The Tsolenka Guard Tower, a table with dice | Win a hand at the watch's dice (Sleight of Hand DC 15) | 40 gold | — |
+| ✅ | The Tsolenka Guard Tower, the watch roster | Sign the roster as the relief watch (Deception DC 15) | unlocks captains_strongbox; Heroic Inspiration | 1d6 cold damage; one try for the party |
