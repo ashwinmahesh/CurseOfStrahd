@@ -99,6 +99,9 @@ static func for_place(board: ArenaBoard, mood_id: String, mood: Dictionary) -> F
 
 func _apply(dir: Vector2, strength: float) -> void:
 	var tint := Color(str(spec.get("tint", "#ffffff")))
+	var tints := spec.get("tints", {}) as Dictionary
+	var autumn := spec.get("autumn", {}) as Dictionary
+	var fall := spec.get("autumn_colours", ["ember", "flame"]) as Array
 	var snow := float(spec.get("snow", 0.0))
 	var bark := spec.get("bark", {}) as Dictionary
 	for key: String in _all_material_keys():
@@ -106,7 +109,13 @@ func _apply(dir: Vector2, strength: float) -> void:
 		m.set_shader_parameter("wind_dir", dir.normalized())
 		m.set_shader_parameter("wind_strength", strength)
 		if key.begins_with("leaf|"):
-			m.set_shader_parameter("tint", tint)
+			# A kind's own tint (the moor's grass straw-coloured), else the set's; and the share of it turned
+			# for autumn (the Vistani camps' undergrowth), in the set's two autumn colours.
+			var kind := key.get_slice("|", 1)
+			m.set_shader_parameter("tint", Color(str(tints[kind])) if tints.has(kind) else tint)
+			m.set_shader_parameter("autumn", float(autumn.get(kind, 0.0)))
+			m.set_shader_parameter("autumn_dark", Look.color(str(fall[0])))
+			m.set_shader_parameter("autumn_light", Look.color(str(fall[1])))
 			m.set_shader_parameter("snow", snow if key.ends_with("|tree") or key.ends_with("|dead") else snow * 0.6)
 		else:
 			var b := bark.get(key.get_slice("|", 0).trim_prefix("bark_"), []) as Array

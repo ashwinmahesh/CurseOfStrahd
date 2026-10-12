@@ -51,6 +51,32 @@ anyone touching this file.
 | `ravenloft_halls`, `ravenloft_chapel`, `ravenloft_court`, `ravenloft_spires`, `ravenloft_larders`, `ravenloft_crypt` | the castle's main floor, chapel, Court of the Count, spires, larders, catacombs | candlelit cold halls with dust in the air; a bone-dust chapel; crimson for the brides' court; moonlit spires with lightning at the windows; a sick green below the kitchens; a cold, still mist on the crypt floors |
 | `indoors`, `tavern`, `eva_tent`, `chapel`, `crypt`, `cave`, `death_house`, `death_house_crypt`, `amber_temple`, `haunted` | rooms, taverns, Madam Eva's tent, churches, dungeons, caves, Death House, the Amber Temple, Argynvostholt's halls | warm firelit taverns, purple tent light, cold moonlit churches, mist lying on dungeon floors |
 
+## Each region's own look in the Modern finish
+
+The vault's "Region Variety Plan.md" (owner, 2026-10-12: "every place doesn't look the same"). Every mood a region
+uses carries a `modern` block, laid over it in the Modern finish only (`Atmosphere._dressed`), so the frozen Classic
+look is untouched. In it each region has its own daylight, dusk, dawn and some nights (key and ambient light, sky, far
+haze, mist colour and strength), its own shade (`tone`), its own mist shape, its own weather pieces (leaves in its
+colours, wisps by day at Argynvostholt) and two new keys:
+
+- `ground_tint`: a surface's texture multiplied by a hex colour for this place (`Look.set_surface_tints`, set as each
+  place is built; surfaces the last place tinted go back to white): mossy grass in the woods, straw on the moor, ochre
+  at the camps, rust scree at the werewolf den.
+- `lying_wet` (beside `lying_snow`): ground that never dries whatever the sky does: Vallaki's streets, the spray round
+  Tser Falls, the winery.
+
+The regions: the Mists' edge (today's pale grey, kept on purpose), the woods (`woods`: deep green shade, warm light
+through the trees), the village (sepia mud, warm windows), Old Bonegrinder (heath, bruised shade), Tser Pool and the
+Vistani camps (autumn and firelight), Tser Falls (spray), the crossroads (gallows violet), Vallaki (wet blue), the lake
+(steel blue), the winery (wine-dark), Yester Hill (sick yellow-green), Krezk (high and clear), the Abbey (bruised
+steel), Argynvostholt (spectral silver), the werewolf den (rust), Berez (green bog fog), the moor (straw and grey),
+the high snow (clearest, pink at dusk), Mount Ghakis (grey rock, `ghakis`), Tsolenka (white-out) and the Amber
+Temple's doors (`amber_approach`: a warm glow in the cold). Their plants are art/plants/flora.json's sets of the same
+names (docs/art/plants.md). tests/integration/test_region_looks.gd keeps every region's daylight its own.
+
+    make capture SCENE=res://tools/capture/region_capture.tscn NAME=region-variety/after FRAMES=10 \
+      REGION_HOURS=12,18 REGION_BEFORE=/abs/folder   # one place per region; the folder holds main's moods.json, flora.json
+
 ## What it adds
 
 - **Light by time of day.** Day is an overcast silver-grey, dusk a low warm sun under a violet sky, night a cold

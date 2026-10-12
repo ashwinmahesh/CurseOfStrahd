@@ -22,15 +22,23 @@ uniform float snow : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 snow_colour : source_color = vec3(0.82, 0.85, 0.9);
 // Leaves this close to the camera thin away (world units), so a camera tilted down near the trees sees past them.
 uniform float near_fade = 5.0;
+// Autumn (the vault's Region Variety Plan): this share of the plants turn, each picked by where it stands, from their
+// green to a ramp from autumn_dark to autumn_light by the leaf's own brightness, so they read rust and gold rather
+// than a tinted green.
+uniform float autumn : hint_range(0.0, 1.0) = 0.0;
+uniform vec3 autumn_dark : source_color = vec3(0.42, 0.16, 0.06);
+uniform vec3 autumn_light : source_color = vec3(0.95, 0.66, 0.23);
 
 varying float up;
 varying vec3 wpos;
+varying float turn;
 
 void vertex() {
 	vec3 root = MODEL_MATRIX[3].xyz;
 	VERTEX += wind_offset(root, VERTEX - root, UV2.x, UV2.y, TIME);
 	up = NORMAL.y;
 	wpos = VERTEX;
+	turn = fract(sin(dot(floor(root.xz * 7.0), vec2(12.9898, 78.233))) * 43758.5453);
 }
 
 void fragment() {
@@ -44,6 +52,11 @@ void fragment() {
 	ALPHA = clamp(t.a * (1.0 + mip * 0.22), 0.0, 1.0) * smoothstep(near_fade * 0.55, near_fade, distance(wpos, CAMERA_POSITION_WORLD));
 	ALPHA_SCISSOR_THRESHOLD = alpha_cut;
 	vec3 c = t.rgb * tint * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);
+	if (autumn > 0.0) {
+		float lum = dot(t.rgb, vec3(0.3, 0.59, 0.11));
+		vec3 fall = mix(autumn_dark, autumn_light, smoothstep(0.08, 0.55, lum)) * COLOR.rgb * mix(shade_floor, 1.0, COLOR.a);
+		c = mix(c, fall, clamp((autumn - turn) * 5.0, 0.0, 1.0));
+	}
 	if (snow > 0.0) {
 		// In patches on the tops of the sprays that face the sky, more on the open outside of the crown.
 		float patchy = smoothstep(0.35, 0.65, fract(sin(dot(floor(px / 48.0), vec2(12.9898, 78.233))) * 43758.5453));

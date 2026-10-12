@@ -979,6 +979,13 @@
             20,
             24
           ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            22,
+            18
+          ]
         }
       ],
       "surprise": "party",
@@ -1094,6 +1101,13 @@
           "cell": [
             20,
             24
+          ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            22,
+            18
           ]
         }
       ],

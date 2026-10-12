@@ -614,6 +614,13 @@
             22,
             5
           ]
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            19,
+            6
+          ]
         }
       ],
       "surprise": "",
@@ -730,6 +737,13 @@
           "cell": [
             22,
             5
+          ]
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            19,
+            6
           ]
         }
       ],

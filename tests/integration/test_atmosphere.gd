@@ -477,7 +477,8 @@ func test_weather_on_surfaces() -> void:
 	var kinds := {"downpour": {"look": {"rain": 460}}, "snowfall": {"look": {"snow": 460}}, "clear": {}}
 	for case: Array in [["downpour", true, false], ["snowfall", false, true], ["clear", false, false]]:
 		Weather.use({"kinds": kinds, "climates": {"valley": {str(case[0]): 1.0}}, "default_climate": "valley"})
-		var v := _view("vallaki")
+		# The village: its streets dry when the rain stops (Vallaki's never do, test_region_looks).
+		var v := _view("village_of_barovia")
 		await get_tree().process_frame
 		assert_eq(v.atmosphere.wetness > 0.0, bool(case[1]), "%s: wet" % case[0])
 		assert_eq(v.atmosphere.snow_cover > 0.0, bool(case[2]), "%s: snowy" % case[0])
