@@ -13,6 +13,9 @@ spell, so it needs no saving and a reload never changes it. Strahd's attention (
 | Climate | Where | Overcast | Fog | Rain | Storm | Snow | Blizzard |
 |---|---|---|---|---|---|---|---|
 | valley | everywhere else | 4 | 3 | 3 | 1 | | |
+| lakeland | Vallaki, Lake Zarovich, Van Richten's tower (Region Variety Plan, 2026-10-12: the lake country rainier) | 3 | 3 | 4 | 1 | | |
+| marsh | Berez (foggier) | 3 | 5 | 2 | 1 | | |
+| vineyard | the Wizard of Wines (wetter) | 3 | 2 | 5 | 1 | | |
 | highland | Krezk, the Abbey | 4 | 2 | 1 | 1 | 3 | |
 | mountain | Tsolenka Pass, Mount Baratok, the Amber Temple | 2 | 2 | | | 4 | 2 |
 | castle | Castle Ravenloft (Strahd's storm: rain or storm most of the time) | 1 | 2 | 3 | 5 | | |

@@ -45,6 +45,18 @@ func test_the_same_playthrough_gets_the_same_weather() -> void:
 	assert_true(mountain.has("snow") or mountain.has("blizzard"), "the pass gets snow (%s)" % [mountain.keys()])
 	assert_eq(Weather.climate_of("krezk"), "highland")
 	assert_eq(Weather.climate_of("castle_ravenloft_court"), "castle")
+	# The Region Variety Plan: the lake country rains more, the marsh is foggier, the vines wetter.
+	assert_eq(Weather.climate_of("vallaki"), "lakeland")
+	assert_eq(Weather.climate_of("berez_marsh_track"), "marsh")
+	assert_eq(Weather.climate_of("wizard_of_wines"), "vineyard")
+	var spells_of := func(loc_id: String, kind: String) -> int:
+		var n := 0
+		for spell in 400:
+			if Weather.at(st, loc_id, spell * 6 * 60) == kind:
+				n += 1
+		return n
+	assert_true(spells_of.call("vallaki", "rain") > spells_of.call("village_of_barovia", "rain"), "Vallaki rains more than the village")
+	assert_true(spells_of.call("berez", "fog") > spells_of.call("village_of_barovia", "fog"), "Berez is foggier")
 
 
 func test_his_attention_brings_storms() -> void:
