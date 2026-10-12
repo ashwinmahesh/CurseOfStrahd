@@ -117,7 +117,7 @@ Bildrath: It creaks at night. Wood creaks; I've told Parriwimple so. Parriwimple
 
 ~ hire
 Bildrath: Parriwimple's time is five gold an hour. A coffin takes an hour. A grave takes two. Fifteen gold, and he brings his own shovel, which is also mine.
-* Fifteen gold. Done. (15 gp) -> hire_paid
+* [if gold >= 15] Fifteen gold. Done. (15 gp) -> hire_paid
 * [if flag.parriwimple_befriended] Parriwimple already offered. For free. -> hire_free
 * Too dear. -> menu
 
@@ -137,7 +137,7 @@ Bildrath [angry]: He offered. For free. Parriwimple, we will be having a talk ab
 set bildrath_accused
 Bildrath [angry]: My strongbox is thirty gold lighter than it ought to be, and you are the only new faces in the valley. Parriwimple! Stand by the door.
 * [Deception DC 15] We've no idea what you're talking about. (If he doesn't believe you, you're thrown out.) -> lie_ok | lie_fail
-* Fine. Here's your money back. (30 gp) -> repay
+* [if gold >= 30] Fine. Here's your money back. (30 gp) -> repay
 * [Intimidation DC 14] Call your nephew off, or else. (If he doesn't back down, you're thrown out.) -> threat_ok | threat_fail
 
 ~ lie_ok
@@ -174,7 +174,7 @@ Bildrath: Out. Thieves aren't customers. They're weather.
 
 ~ banned
 Bildrath [angry]: No. Out. You know the price of coming back in.
-* Thirty gold, and an apology. We're sorry. (30 gp) -> unban
+* [if gold >= 30] Thirty gold, and an apology. We're sorry. (30 gp) -> unban
 * We'll go. -> END
 
 ~ unban

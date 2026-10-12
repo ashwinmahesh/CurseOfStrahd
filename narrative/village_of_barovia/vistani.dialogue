@@ -18,7 +18,7 @@ Sorvia: Your boots have walked farther than boots should, in this valley. Sorry.
 
 ~ menu
 * Who are you? -> who
-* [if not flag.vistani_wine_bought] Buy the table a bottle. (3 gp) -> wine
+* [if not flag.vistani_wine_bought and gold >= 3] Buy the table a bottle. (3 gp) -> wine
 * What can you tell us about the man by the hearth? -> ismark
 * What do you know about the burgomaster's daughter? -> ireena
 * How does anyone get out of this valley? -> leave_valley

@@ -457,6 +457,21 @@
       "summary": "Marshal Dragomir was beaten at the gate (encounter bone_marshal)."
     },
     {
+      "id": "muster_history_failed",
+      "type": "bool",
+      "summary": "The marshal didn't believe the party's history of his war: the History check is spent (one try)."
+    },
+    {
+      "id": "muster_rite_failed",
+      "type": "bool",
+      "summary": "The soldier's rite came out wrong: the Religion check is spent (one try)."
+    },
+    {
+      "id": "muster_talk_failed",
+      "type": "bool",
+      "summary": "The marshal refused to stand his riders down: the Persuasion check is spent (one try)."
+    },
+    {
       "id": "muster_paid",
       "type": "bool",
       "summary": "The party took the Marshal's blade and the vanguard's pay chest."
@@ -760,6 +775,11 @@
       "id": "fowlers_slain",
       "type": "bool",
       "summary": "The count's fowlers on the hill trail are dead (The Ravens' Ransom)."
+    },
+    {
+      "id": "fowlers_spotted",
+      "type": "bool",
+      "summary": "The party saw the count's fowlers in the dead pine before they moved (Perception DC 13): no surprise for them."
     },
     {
       "id": "bray_charm_seen",

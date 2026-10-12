@@ -76,7 +76,7 @@ endif
 -> price_menu
 
 ~ price_menu
-* Pay ten gold. -> paid_coin
+* [if gold >= 10] Pay ten gold. -> paid_coin
 * [if not (gold >= 10)] We can't spare ten gold. -> poor
 * One of us will tell you something true. -> truth
 * [if not flag.eva_haggle_failed] [Persuasion DC 15] Read for us because the valley needs it, not for coin. -> free_ok | free_fail
@@ -205,7 +205,7 @@ Madam Eva: You came into my tent and showed me your teeth. Now my family is show
 ~ threat_backdown
 Narrator: Stanimir steps back out without a word. After a while the fiddle starts again, a little slower than before.
 Madam Eva: Better. The price has doubled. Twenty gold, or the true thing. The true thing has not doubled; the truth is never on sale.
-* Pay twenty gold. -> paid_double
+* [if gold >= 20] Pay twenty gold. -> paid_double
 * One of us will tell you something true. -> truth
 
 ~ paid_double

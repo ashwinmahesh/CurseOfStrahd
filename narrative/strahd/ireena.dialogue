@@ -111,6 +111,10 @@ if flag.ireena_in_krezk
 set ireena_in_krezk = false
 else
 set ireena_sanctuary = "taken"
+# Sanctuary ends here (Wiki finding 20).
+if quest.sanctuary_for_ireena
+quest sanctuary_for_ireena taken
+endif
 endif
 if flag.ismark_guards_ireena or flag.ismark_in_krezk
 -> ismark_wakes

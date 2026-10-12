@@ -149,6 +149,9 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	# 5. Down to the altar, and the choice: refuse.
 	if not _ok(await bot.go_to("death_house_dungeon_2"), "reached death_house_dungeon_2"):
 		return
+	# The winch raises the portcullis to the ritual chamber; its room no longer opens onto it (Wiki finding 4).
+	if not _ok(await bot.use(Vector2i(23, 8)), "pulled the winch"):
+		return
 	if not _ok(await bot.talk("cult_shades"), "talked to cult_shades"):
 		return
 	if not _ok(bool(GameState.story.get_flag("death_house_refused")), "flag death_house_refused"):
