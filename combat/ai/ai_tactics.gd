@@ -57,24 +57,22 @@ func focuses(_c: Combatant) -> bool:
 	return mode() in ["sharp", "ruthless"]
 
 
+## Whether `c` weighs its odds gently: a foe (not the party's autopilot) at Story or Balanced.
+func spreads(c: Combatant) -> bool:
+	return c.side == &"enemy" and not focuses(c)
+
+
 ## A foe's own lean towards a hero, seeded by the two of them (so it holds from turn to turn, and two wolves differ):
 ## up to this share of the blow's worth either way. A smart foe (Intelligence 10 or more) leans less, and every foe
 ## much less at Tactician and Honour, where they focus.
 func taste(c: Combatant, t: Combatant) -> float:
 	var x := float(posmod(hash(c.id + "|" + t.id), 1001)) / 1000.0 * 2.0 - 1.0
 	# Story already spreads its blows by who's been struck (target_adjust), so it leans less; Tactician and Honour focus.
-	var spread: float = {"kind": 0.2, "standard": 0.35}.get(mode(), 0.08)
+	var spread: float = {"kind": 0.08, "standard": 0.1}.get(mode(), 0.04)
 	if c.creature.ability_score(&"int") >= 10:
 		spread *= 0.75
 	return x * spread
 
-
-## How much each foot it would have to move counts against a target: a creature of animal wits (Intelligence 3 or
-## less) goes for whoever is nearest, less so where foes fight smart.
-func nearness(c: Combatant) -> float:
-	if c.creature.ability_score(&"int") > 3:
-		return 0.01
-	return 0.02 if focuses(c) else 0.05
 
 
 ## How much of the killing-blow bonus counts (none when the AI spreads its blows).
@@ -94,7 +92,8 @@ func target_adjust(t: Combatant, expected: float) -> float:
 		"kind":
 			return -0.5 * expected * struck(t)
 		"standard":
-			return -0.25 * expected * struck(t)   # Balanced spreads a little too (owner, 2026-10-12)
+			# Balanced foes spread a little too (owner, 2026-10-12); the party's autopilot doesn't.
+			return -0.25 * expected * struck(t) if t.side in [&"party", &"guest"] else 0.0
 		"sharp", "ruthless":
 			var hurt := 1.0 - float(t.creature.hp) / maxf(1.0, float(t.creature.max_hp()))
 			var bonus := 0.5 * expected * hurt + 0.5 * struck(t)

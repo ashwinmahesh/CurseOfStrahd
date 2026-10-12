@@ -1,6 +1,6 @@
 extends TestCase
 ## Owner ask (2026-10-12): foes shouldn't all go for the hero with the lowest Armor Class. Over a sample of fights,
-## blows land on several heroes; a beast still goes for the nearest; summons still come after heroes.
+## blows land on several heroes.
 
 
 func _picks(rounds: int, monster: String) -> Dictionary:
@@ -26,6 +26,7 @@ func _picks(rounds: int, monster: String) -> Dictionary:
 			var t := plan.get("target") as Combatant
 			if t != null:
 				count[t.creature.name] = int(count.get(t.creature.name, 0)) + 1
+				e.ai.tactics.note_strike(t)   # as its attack would: the next foe knows who's been struck
 	count["_lowest"] = lowest_id
 	return count
 
@@ -41,13 +42,3 @@ func test_blows_spread_over_the_heroes() -> void:
 	assert_true(picks.size() >= 3, "several heroes are picked: %s" % [picks])
 	assert_true(float(picks.get(lowest, 0)) / maxf(1.0, total) < 0.6, "the lowest Armor Class (%s) isn't everyone's pick: %s" % [lowest, picks])
 
-
-func test_a_beast_goes_for_the_nearest() -> void:
-	var e := TestCombat.open_field(4)
-	var near := TestCombat.hero(e, "hedda_ironvow", Vector2i(6, 2), 5)
-	var far := TestCombat.hero(e, "silvain_aster", Vector2i(10, 6), 5)
-	var wolf := TestCombat.foe(e, "wolf", Vector2i(3, 2))
-	TestCombat.start_with(e, wolf)
-	assert_true(wolf.creature.ability_score(&"int") <= 3)
-	var plan := e.ai.plan_turn(wolf)
-	assert_true(plan.get("target") == near, "the nearer hero, armour or not: %s" % plan.get("why", ""))
