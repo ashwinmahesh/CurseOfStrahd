@@ -37,6 +37,6 @@
     "detection",
     "movement"
   ],
-  "summary": "Always know the shortest direct route to a fixed place you've been to before on the same plane.",
+  "summary": "For a day you know the safe way: no random encounters on the road.",
   "text": "You also know how far away it is and, when you face a choice of paths, which way to go. It fails on a destination that moves or that you don't know well enough."
 }

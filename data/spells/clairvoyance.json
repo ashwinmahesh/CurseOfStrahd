@@ -40,6 +40,6 @@
     "detection",
     "utility"
   ],
-  "summary": "Place an Invisible sensor within 1 mile and see or hear through it for up to 10 minutes.",
+  "summary": "Scouts the place you're in: its hidden traps show, and you learn what still waits to fight you there.",
   "text": "Create an Invisible sensor within 1 mile, either at a place you know (somewhere you have visited or seen) or at an obvious spot you don't know, such as behind a door, around a corner or in a grove. The sensor is intangible and invulnerable and stays in place for the duration. When you cast the spell, choose seeing or hearing; you use that sense through the sensor as if you were standing in its space. You can switch between seeing and hearing as a Bonus Action. A creature that can see the sensor (for example with See Invisibility or Truesight) sees a glowing orb about the size of a fist. Casting time 10 minutes."
 }

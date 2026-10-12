@@ -46,6 +46,12 @@ static func _entry(st: StoryState, id: String) -> Dictionary:
 	return st.bestiary[id] as Dictionary
 
 
+## Learned from a spell (Legend Lore, Scrying: story/oracles.gd): `id` is known as if studied, defenses and traits,
+## and a creature of its kind shows them from the start of a fight.
+static func learn(st: StoryState, id: String) -> void:
+	_entry(st, id)["studied"] = true
+
+
 ## How much the party knows: 0 unknown, 1 met, 2 felled one (toughness and attacks), 3 studied (defenses, traits).
 static func level(st: StoryState, id: String) -> int:
 	if not st.bestiary.has(id):

@@ -11,6 +11,8 @@ const MAX_TARGETS := 8
 ## Costly components with no item to carry, bought from the party's purse as the spell is cast (docs/rules/deviations.md):
 ## Heroes' Feast's gem-encrusted bowl.
 const PURSE_COMPONENTS := {"heroes_feast": 1000}
+## st.flags: the last brew of Tasha's Bubbling Cauldron {who, item, qty} (an underscore key: bookkeeping).
+const CAULDRON_KEY := "_cauldron"
 const EXPLORING_TOO: Array[String] = ["light", "dancing_lights", "continual_flame", "daylight", "find_familiar",
 	"find_steed"]
 
@@ -247,7 +249,8 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		var choice_def := data.get("choice", {}) as Dictionary
 		var choices: Array = (choice_def.get("from", []) as Array) if str(choice_def.get("kind", "")) == "option" else []
 		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "free": free,
-			"choices": choices, "legal": true, "reason": "", "resource_casts": caster.resource_casts(id)}
+			"choices": choices, "choice_labels": choice_def.get("labels", {}), "legal": true, "reason": "",
+			"resource_casts": caster.resource_casts(id)}
 		if level > 0 and slots.is_empty() and not ritual and not free:
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
@@ -284,6 +287,8 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 		return str(f["id"]) == resource_feature and bool((f["resource_cast"] as Dictionary).get("omit_material", false)))
 	if not omit_material and caster.component_why(data) != "":
 		return {"ok": false, "text": caster.component_why(data)}
+	if spell_id == "commune_with_nature" and not bool((Compendium.shared().get_entry("locations", st.location).get("map", {}) as Dictionary).get("outdoors", false)):
+		return {"ok": false, "text": "Commune with Nature needs the open air"}
 	var purse := float(PURSE_COMPONENTS.get(spell_id, 0))
 	if purse > 0.0 and st.gold < purse:
 		return {"ok": false, "text": "Needs %s (%d gp; the purse holds %d)" % [str((data.get("components", {}) as Dictionary).get("m", "its component")).get_slice(",", 0), roundi(purse), floori(st.gold)]}
@@ -352,6 +357,9 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		for m in caster.modifiers_for(&"ritual_duration"):
 			if m.text("spell_id") == spell_id:
 				lasting = maxi(lasting, m.number("value"))
+	# Leomund's Secret Chest lasts until dispelled; after 60 days it may fail any day (2024), so the game keeps it 60.
+	if spell_id == "leomunds_secret_chest":
+		lasting = 60 * 24 * 60
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
 	# Spells that help a check while they run (Detect Thoughts on Insight...): CHECK_AIDS.
@@ -371,6 +379,20 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		caster.steed = {"type": kind, "level": maxi(level, int(data.get("level", 2)))}
 		return {"ok": true, "effect": spell_id, "text": "%s casts Find Steed: a %s steed answers, and stays until it falls." % [
 			caster.name.get_slice(" ", 0), kind.capitalize()]}
+	# Scouting and divining (story/oracles.gd): what the spell finds out where the party stands.
+	if spell_id in Oracles.HANDLED:
+		return {"ok": true, "effect": spell_id, "text": Oracles.cast(st, caster, spell_id, choice)}
+	# Tenser's Floating Disk: it carries 500 lb more for its caster while it lasts.
+	if spell_id == "tensers_floating_disk" and lasting > 0:
+		for old: Effect in caster.effects.duplicate():
+			if old.source_id == spell_id:
+				caster.remove_effect(old)
+		var disk := Effect.new("Tenser's Floating Disk", &"spell", spell_id).with_modifier("carry_bonus", {"value": 500})
+		disk.ends = Effect.Ends.MINUTES
+		disk.minutes_left = lasting
+		caster.add_effect(disk)
+	if spell_id == "tashas_bubbling_cauldron":
+		return {"ok": true, "effect": spell_id, "text": _cauldron(st, caster, data, choice)}
 	# Druidcraft's Weather Sensor (2024): what the sky will do over the next day.
 	if spell_id == "druidcraft":
 		var tomorrow := Weather.at(st, st.location, st.total_minutes() + 24 * 60)
@@ -407,6 +429,28 @@ static func _check_aid(st: StoryState, caster: Character, spell_id: String, data
 		fx.ends = Effect.Ends.MINUTES
 		fx.minutes_left = minutes
 		ch.add_effect(fx)
+
+
+## Tasha's Bubbling Cauldron (2024): copies of a common or uncommon potion (`choice`), one per point of the caster's
+## spellcasting modifier (at least one), in their pack; what's left of the last brew is gone when they brew again.
+static func _cauldron(st: StoryState, caster: Character, data: Dictionary, choice: String) -> String:
+	var kinds := (data.get("choice", {}) as Dictionary).get("from", ["potion_of_healing"]) as Array
+	var potion := choice if choice in kinds else str(kinds[0])
+	var last := st.flags.get(CAULDRON_KEY, {}) as Dictionary
+	if not last.is_empty():
+		for ch in st.party:
+			if ch.id == str(last.get("who", "")):
+				for i in int(last.get("qty", 0)):
+					if not ch.carries(str(last["item"])):
+						break
+					ch.remove_one(str(last["item"]))
+	var cls := str((caster.spellcasting[0] as Dictionary).get("class_id", "")) if not caster.spellcasting.is_empty() else ""
+	var casting := Compendium.shared().class_data(cls).get("spellcasting", {}) as Dictionary
+	var n := maxi(1, caster.ability_mod(StringName(str(casting.get("ability", "int")).to_lower().substr(0, 3))))
+	caster.add_item(potion, n)
+	st.flags[CAULDRON_KEY] = {"who": caster.id, "item": potion, "qty": n}
+	return "%s's cauldron bubbles: %d %s%s, ready in the pack." % [caster.name.get_slice(" ", 0), n,
+		Compendium.shared().display_name("items", potion), "" if n == 1 else " (x%d)" % n]
 
 
 ## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, immune to Poison damage

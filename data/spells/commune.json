@@ -34,6 +34,6 @@
     "detection",
     "communication"
   ],
-  "summary": "Ask your deity up to three yes-or-no questions.",
+  "summary": "Three answers: how closely Strahd is watching you, whether a fight still waits here, whether anything here is still hidden.",
   "text": "Each answer is a single word, or a short phrase if one word would mislead. Each extra casting before a Long Rest has a cumulative 25 percent chance of getting no answer."
 }

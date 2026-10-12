@@ -951,8 +951,9 @@ func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void
 	# What the spell asks for as it's cast (Find Steed's creature type), and which casting: a feature's free one or a
 	# slot, for a spell that grows with its slot.
 	var kind := OptionButton.new()
+	var words := o.get("choice_labels", {}) as Dictionary
 	for k: Variant in o.get("choices", []):
-		kind.add_item(str(k).capitalize())
+		kind.add_item(str(words.get(str(k), str(k).capitalize())))
 		kind.set_item_metadata(kind.item_count - 1, str(k))
 	UiParts.compact(kind)
 	kind.visible = kind.item_count > 1
