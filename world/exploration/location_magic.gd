@@ -11,7 +11,7 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 	match spell_id:
 		"light":
 			view.update_daylight()
-		"find_familiar":
+		"find_familiar", "find_steed":
 			LocationParty.refresh_familiars(view)   # it appears beside the party and follows from now on
 		"knock":
 			var nearest := {}

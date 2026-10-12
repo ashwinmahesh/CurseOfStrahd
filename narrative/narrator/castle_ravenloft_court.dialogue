@@ -296,3 +296,47 @@ once
 ~ search:ludmilla_grimoire
 | Among Ludmilla's books is a grimoire bound in grey leather, its margins full of her notes. The spells in it feel stronger just for being read.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:performance:count_organ:success
+| You play the count's organ, and one of the stops won't draw: behind it, a compartment, and in the compartment, a harp.
+
+~ check:performance:count_organ:failure
+| The organ groans like a house in a storm. Somewhere above, someone winces.
+
+~ check:religion:dark_chapel_pray:success
+| You pray in the dead chapel anyway, and under the altar's dust something holy answers.
+
+~ check:religion:dark_chapel_pray:failure
+| The chapel hears your prayer and answers it, coldly, with its own.
+
+~ check:deception:auditor_lie:success
+| The clerk goes grey, then greyer, and hands over the key to the tax box without a word.
+
+~ check:deception:auditor_lie:failure
+| The clerk looks at you over his spectacles for a long time, and goes back to his sums.
+
+~ check:arcana:vault_glyph_read:success
+| A glyph of warding on the bottom step; you find its last stroke and smudge it, and the air goes slack.
+
+~ check:arcana:vault_glyph_read:failure
+| You trace the wrong line, and the glyph goes off in your face.
+
+~ check:stealth:rahadin_footlocker:success
+| The lid lifts without a whisper while Rahadin stands at the wall, listening to the screams only he can hear.
+
+~ check:stealth:rahadin_footlocker:failure
+| Rahadin turns, very slowly, and the screaming in the room rises.
+
+~ check:stealth:brides_gossip:success
+| Unseen, you listen to the brides complain: the count hasn't visited in a year, and he sleeps under the catacombs.
+
+~ check:stealth:brides_gossip:failure
+| The cards stop. Three pale faces turn toward the door at once.
+
+~ check:investigation:study_walls:success
+| Twelve paces inside, fifteen in the hall outside: the study is short a room's width, and the bookcase on that wall swings.
+
+~ check:investigation:study_walls:failure
+| Walls, shelves, a fireplace. The study adds up, as far as you can count.

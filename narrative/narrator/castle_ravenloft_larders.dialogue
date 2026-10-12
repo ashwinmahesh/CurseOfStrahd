@@ -294,3 +294,17 @@ once
 ~ check:perception:bone_throne_ring:failure
 | Bones, polished by use. You try not to think about whose.
 
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:insight:prisoner_tally:success
+| The tally ends in a warning, scratched by someone who learned too late: the floor of the open cell isn't a floor.
+
+~ check:insight:prisoner_tally:failure
+| Days, scratched in fives, until they stop.
+
+~ check:investigation:gears_draught:success
+| The gears turn in a draught that comes from nowhere, and you follow it to an iron plate low in the wall that isn't bolted down.
+
+~ check:investigation:gears_draught:failure
+| The gears turn, the fire roars, and the draught could be coming from anywhere.

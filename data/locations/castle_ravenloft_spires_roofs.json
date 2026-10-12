@@ -223,7 +223,25 @@
       ],
       "kind": "examine",
       "label": "Ravens on the ridge",
-      "model": "crow_barrel"
+      "model": "crow_barrel",
+      "checks": [
+        {
+          "id": "roof_ridge_walk",
+          "skill": "acrobatics",
+          "dc": 14,
+          "label": "Walk the roof ridge",
+          "success": {
+            "reveal": [
+              "spires_slick_slates"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "spires_south_view",

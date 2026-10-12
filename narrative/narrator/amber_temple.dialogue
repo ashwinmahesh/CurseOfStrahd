@@ -280,3 +280,41 @@ once
 ~ search:frozen_traveller_flask
 | The frozen traveller's pack opens with a crack of ice. Inside, a flask of something white as frost that hasn't frozen. He was saving it for the top.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:medicine:frozen_traveller_look:success
+| He froze sitting down, too tired to go on, and his pack is still buckled shut against the cold.
+
+~ check:medicine:frozen_traveller_look:failure
+| Frozen solid, and long dead. The cold isn't saying when.
+
+~ check:survival:cornice_read:success
+| The snow at the edge is an overhang with nothing under it, and the wind has been building it for years.
+
+~ check:survival:cornice_read:failure
+| Snow, and the long drop past it. It all looks solid enough.
+
+~ check:athletics:halberd_rack_break:success
+| You break the rack free of its ice, and one halberd among the frosted ones is clean, bright and warm.
+
+~ check:athletics:halberd_rack_break:failure
+| The ice is older than the temple's last visitors, and harder.
+
+~ check:medicine:frozen_hand_open:success
+| You warm the fingers one by one until they give, without breaking a single one, and take what they were holding.
+
+~ check:medicine:frozen_hand_open:failure
+| The hand is frozen past opening. You'd have to break it, and you won't.
+
+~ check:arcana:chained_titles:success
+| Every chained book is what its spine says, except one, whose spine lies and whose pages hum.
+
+~ check:arcana:chained_titles:failure
+| Titles in dead languages, and chains that don't care whether you read them.
+
+~ check:religion:faceless_rite:success
+| The faceless god's rite asks the faithful to look away; you know now where its blank gaze falls, and how to dull it.
+
+~ check:religion:faceless_rite:failure
+| You meet the statue's gaze while you puzzle at the rite, and it looks back into you.

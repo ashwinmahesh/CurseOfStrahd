@@ -14,7 +14,7 @@ const PATH := "res://data/strahd/visits.json"
 const MEMORY := "_strahd"
 const EVENTS: Array[String] = ["arrive", "rest", "travel"]
 ## The open floor a placed monster may stand on (as in tools/data/validate_data.py).
-const OPEN_FLOOR := ".~1234"
+const OPEN_FLOOR := ".~1234_"
 
 static var _data: Dictionary = {}
 ## Strahd's attention (F9, data/strahd/attention.json): what he has noticed about the party, worked out from the story

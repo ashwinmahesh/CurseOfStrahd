@@ -244,3 +244,17 @@ once
 ~ search:crg_dropped_mirror
 | Wedged between two flagstones, a little silver hand mirror, its glass unbroken. Someone who came here dropped it and never came back for it, and nobody who lives here has any use for one. {name} pockets it.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:athletics:dry_well_climb:success
+| At the bottom of the dry well, among the bones of whoever fell, a coil of rope moves very slightly on its own.
+
+~ check:athletics:dry_well_climb:failure
+| The well is dry, deep and unforgiving.
+
+~ check:history:keep_crest:success
+| The von Zarovich arms: a conqueror's house from beyond the mists. The motto under it has been recut more than once.
+
+~ check:history:keep_crest:failure
+| A crest, and a great deal of carved arrogance. Whose escapes you.

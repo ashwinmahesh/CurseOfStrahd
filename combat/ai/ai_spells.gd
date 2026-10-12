@@ -184,7 +184,9 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 		value += (1.0 - lands) * dmg / 2.0
 	if t.creature.concentration != null and dmg > 0.0:
 		value += 1.0
-	return value + e.ai.tactics.target_adjust(t, value) * 0.5
+	value += e.ai.tactics.target_adjust(t, value) * 0.5
+	# A familiar or a steed is worth little next to a hero: no area aimed for it, no single target while a hero's in reach.
+	return value * 0.1 if AiBrain.companion(t) else value
 
 
 ## Roughly the damage `t` deals in a turn: what a condition that costs it the turn is worth.

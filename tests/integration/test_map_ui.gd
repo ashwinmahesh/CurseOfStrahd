@@ -1,6 +1,6 @@
 extends TestCase
 ## The travel map and the minimap (owner ask 2026-10-06): the map of Barovia is a sharp illustrated sheet with the
-## known places on it, zooming and panning without leaving the art; the minimap shows the current location north up
+## known places on it, zooming and panning without leaving the art; the minimap shows the current location turned with the camera
 ## and keeps the party in its middle; ways out to other regions are marked, and doors into buildings are not; rooms
 ## behind secret doors stay out of the level view and off the minimap until the door is found; the travel map shows
 ## only places the party has been, one road from there or heard of, with mist over the rest.
@@ -107,7 +107,7 @@ func test_ways_out_to_other_regions_are_marked_and_doors_are_not() -> void:
 	abbey.queue_free()
 
 
-func test_the_minimap_follows_the_party_north_up() -> void:
+func test_the_minimap_follows_the_party() -> void:
 	var c := Compendium.shared()
 	c.tables["locations"]["test_yard"] = {"id": "test_yard", "name": "Test Yard", "region": "test", "summary": "",
 		"map": {"rows": ["##########", "#........#", "#...##...#", "#........#", "#.........", "##########"], "outdoors": true,
@@ -125,7 +125,9 @@ func test_the_minimap_follows_the_party_north_up() -> void:
 	assert_eq(map.ways_out.size(), 1)
 	assert_true(bool(map.ways_out[0]["region"]), "the road out is marked")
 	assert_eq(map.cell_at(map.size / 2.0), view.leader().cell, "the leader is in the middle")
-	assert_true(map.to_map(Vector2(5, 0)).y < map.to_map(Vector2(5, 5)).y, "north is up")
+	var fwd := view.rig.ground_basis()[0]
+	var ahead := Vector2(view.leader().cell) + Vector2(fwd.x, fwd.z) * 3.0
+	assert_true(map.to_map(ahead).y < map.size.y / 2.0, "the way the camera looks is up (owner ask 2026-10-12)")
 	view.walk_to(Vector2i(7, 3))
 	for i in 120:
 		if not view.busy and view.leader().cell == Vector2i(7, 3):

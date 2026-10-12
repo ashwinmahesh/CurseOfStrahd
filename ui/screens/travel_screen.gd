@@ -46,6 +46,8 @@ var _dragged := false
 var _time := 0.0
 ## The place the party is at for the marks and routes: `here`, or the one place of the region it's indoors in.
 var _at := ""
+## Places where someone the tracked quest needs talking to is (QuestGuide.targets): place id -> [their names].
+var talk_places: Dictionary = {}
 
 
 func _init() -> void:
@@ -109,9 +111,25 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_info.add_theme_constant_override("separation", 8)
 	row.add_child(_info)
 	_frame_known()
+	_find_talk_places()
 	_build_reveal()
 	_show_info()
 	_redraw()
+
+
+## Where the people the tracked quest needs talking to are, as travel places (a tavern's person is the village's).
+func _find_talk_places() -> void:
+	talk_places.clear()
+	for t in QuestGuide.targets(st):
+		var lid := str(t["location"])
+		var place := Travel.place_for_location(lid)
+		if place == "":
+			place = _place_of_region(lid)
+		if place == "":
+			continue
+		var names := talk_places.get(place, []) as Array
+		names.append(Compendium.shared().display_name("npcs", str(t["npc"])))
+		talk_places[place] = names
 
 
 ## The only travel place in the region of `location_id` (inside a village's tavern: the village), or "".
@@ -315,6 +333,11 @@ func _draw_map() -> void:
 func _mark(at: Vector2, id: String) -> void:
 	var grow := 2.0 if id == _hover else 0.0
 	var ink := Look.color("void")
+	if talk_places.has(id):
+		# Someone the tracked quest needs talking to is here: a green ring round the place's mark.
+		_ink.draw_circle(at, 21.0 + grow, Color(Look.color("bile"), 0.25), true, -1.0, true)
+		_ink.draw_circle(at, 21.0 + grow, Look.color("void"), false, 5.0, true)
+		_ink.draw_circle(at, 21.0 + grow, Look.color("bile"), false, 3.0, true)
 	if id == _at:
 		var pulse := 0.5 + 0.5 * sin(_time * 3.0)
 		_ink.draw_circle(at, 15.0 + 5.0 * pulse, Color(Look.color("vampire_red"), 0.45 * (1.0 - pulse)), false, 3.0, true)
@@ -533,6 +556,8 @@ func _show_info() -> void:
 	_info.add_child(UiKit.label("Day %d · %02d:%02d · %s" % [st.day, st.minute_of_day / 60, st.minute_of_day % 60,
 		"night" if st.is_night() else "day"], 15, "vellum"))
 	_info.add_child(UiKit.divider(280))
+	if talk_places.has(_at) and (_target == "" or _target == _at):
+		_info.add_child(UiKit.label("Talk to %s here (tracked quest)." % " or ".join(talk_places[_at] as Array), 14, "bile", 290))
 	if _target == "" or _target == _at:
 		_info.add_child(UiKit.label("Choose a place on the map to see the way there.", 15, "vellum", 290))
 	else:
@@ -544,6 +569,8 @@ func _show_info() -> void:
 		_info.add_child(t)
 		if str(to.get("summary", "")) != "":
 			_info.add_child(UiKit.label(str(to["summary"]), 14, "vellum", 290))
+		if talk_places.has(_target):
+			_info.add_child(UiKit.label("Talk to %s here (tracked quest)." % " or ".join(talk_places[_target] as Array), 14, "bile", 290))
 		var legs: Array[Dictionary] = []
 		if _at != "":
 			legs = Travel.route(_at, _target, st)
@@ -587,7 +614,7 @@ func _show_info() -> void:
 ## What the marks mean, drawn with the map's own marks.
 func _legend() -> Control:
 	var c := Control.new()
-	c.custom_minimum_size = Vector2(290, 84)
+	c.custom_minimum_size = Vector2(290, 108)
 	c.draw.connect(func() -> void:
 		var font := ThemeDB.fallback_font
 		var ink := Look.color("ink")
@@ -603,7 +630,10 @@ func _legend() -> Control:
 		c.draw_line(Vector2(24, 66), Vector2(32, 66), Look.color("bone"), 3.0, true)
 		c.draw_string(font, Vector2(40, 71), "Road", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
 		c.draw_line(Vector2(130, 66), Vector2(156, 66), Look.color("vampire_red"), 4.5, true)
-		c.draw_string(font, Vector2(164, 71), "Your way there", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
+		c.draw_string(font, Vector2(164, 71), "Your way there", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum"))
+		c.draw_circle(Vector2(20, 92), 9.0, Look.color("bile"), false, 2.5, true)
+		c.draw_circle(Vector2(20, 92), 5.0, Look.color("bone"), true, -1.0, true)
+		c.draw_string(font, Vector2(40, 97), "Someone to talk to (tracked quest)", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Look.color("vellum")))
 	return c
 
 

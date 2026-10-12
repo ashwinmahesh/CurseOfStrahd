@@ -15,7 +15,7 @@ A long conversation over one picture gets more pictures where the scene changes 
 boring looking at the same image for multiple phases of dialogue, especially if the scene is evolving"). Each beat is a
 `cutscene <id>` statement placed just before the line where something new happens (the dead knights stand, the wolf
 comes out of the trapper, the organ bench is empty), so the next picture fades over the last. The first round,
-2026-10-12: 37 beats (37 pictures) in the 26 conversations whose picture stayed up longest.
+2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest.
 
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
@@ -164,6 +164,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ending_sergei | At Sergei's Side | `endings/ireena_at_peace` | 1 |
 | eva_candles_lean | The Candles Lean | `svalich_road/madam_eva` (a later beat, ~ ally_seen) | 1 |
 | eva_chest | The Bundle in the Chest | `svalich_road/madam_eva` (a later beat, ~ treasure_here) | 1 |
+| feast_gift | The Thing He Kept | `argynvostholt/vladimir` (a later beat, ~ keeping) | 1 |
 | feast_pact | The Order Stands | `argynvostholt/vladimir` (a later beat, ~ pact) | 1 |
 | fen_chains | Grandda | `companions/fen` | 1 |
 | fen_cloak | The Trapper's Cloak | `companions/fen` (a later beat, ~ cure) | 1 |
@@ -175,6 +176,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | font_sergei | Beside Her in the Water | `castle_ravenloft/catacombs_sergei` (a later beat, ~ ireena_promised) | 1 |
 | forty_chairs | Forty Chairs | `castle_ravenloft/personal_kestrel` | 1 |
 | forty_fall_in | The Company Falls In | `castle_ravenloft/personal_kestrel` (a later beat, ~ merrow_counted) | 1 |
+| forty_roll | Roll Call | `castle_ravenloft/personal_kestrel` (a later beat, ~ roll) | 1 |
 | gallows_grave | The Horse Thief's Grave | `svalich_road/crossroads` (a later beat, ~ buried) | 1 |
 | gertruda_home | Gertruda Comes Home | `castle_ravenloft/court_gertruda` | 1 |
 | gilded_rises | The Hoard Rises | `argynvostholt/the_silver_hoard` (a later beat, ~ fight) | 1 |
@@ -189,13 +191,15 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ilinca_raven | The Raven Who Is a Woman | `old_bonegrinder/ilinca` | 1 |
 | ireena_door | Three Bolts Slide Back | `village_of_barovia/ireena` | 1 |
 | ireena_looks_back | Ireena Looks Back | `village_of_barovia/road_west` | 2 |
+| ireena_stake | She Kneels on the Coffin | `castle_ravenloft/catacombs_coffin` (a later beat, ~ ireena_stake) | 1 |
 | ireena_window | At Ireena's Window | `strahd/ireena` (Ismark asleep by the door while he guards her at the inn; otherwise the take with the room empty) | 2 |
 | ireena_window_empty | The Empty Window | `strahd/ireena` | 1 |
 | izek_doll | Izek and the Doll | `vallaki/izek` | 1 |
+| izek_truth | The Struck Bell | `vallaki/izek` (a later beat, ~ truth_ok) | 1 |
 | keepers_ravens | Ravens on Every Beam | `vallaki/martikovs` | 1 |
 | kiril_eyes | Eyes Behind Kiril | `werewolf_den/kiril` | 1 |
 | knighting_sword | Sir Aldric's Sword | `companions/ladle` (a later beat, ~ knighting_fellowship) | 1 |
-| knights_at_the_stair | The Order at the Stair | `castle_ravenloft/catacombs_coffin` (a later beat, ~ the_end; Vladimir stood aside) | 1 |
+| knights_at_the_stair | The Order at the Stair | `castle_ravenloft/catacombs_coffin` (a later beat, ~ the_end) | 3 |
 | krezk_reflection | The Second Reflection | `krezk/pool` | 1 |
 | krezk_wall | The Wall of Krezk | `enter:krezk` | 1 |
 | lantern_light | She Takes the Light | `vallaki/one_lantern_too_many` (a later beat, ~ girl_lantern) | 1 |
@@ -212,6 +216,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | marina_rose | A Black Rose | `berez/marina` | 1 |
 | marina_statue | Marina's Face | `berez/marina` | 1 |
 | marshal_charge | The Lances Come Down | `into_the_mists/last_muster` (a later beat, ~ fight) | 1 |
+| marshal_stand_down | The Column Stands Down | `into_the_mists/last_muster` (a later beat, ~ stood_down) | 1 |
 | mists_arrival | Out of the Mists | `into_the_mists/arrival` | 1 |
 | mordenkainen_jar | Mordenkainen Remembers | `mount_baratok/mordenkainen` | 1 |
 | order_rides | The Order Rides | `argynvostholt/vladimir` | 1 |

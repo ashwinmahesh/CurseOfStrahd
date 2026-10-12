@@ -66,6 +66,30 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 
 Status: ✅ built · ○ planned
 
+144 checks in all (2026-10-12). Each skill's checks on things, its checks in conversations, and its other uses outside
+fights:
+
+| Skill | Checks on things | In conversations | Also |
+|---|---|---|---|
+| Acrobatics | 8 | 1 | — |
+| Animal Handling | 5 | 11 | — |
+| Arcana | 13 | 24 | — |
+| Athletics | 18 | 21 | forcing locks, climbing out of pits |
+| Deception | 3 | 12 | — |
+| History | 19 | 24 | — |
+| Insight | 3 | 84 | — |
+| Intimidation | 1 | 35 | — |
+| Investigation | 4 | 17 | Search (hidden compartments) |
+| Medicine | 11 | 19 | — |
+| Nature | 8 | 9 | — |
+| Perception | 4 | 7 | Search (hidden things, traps, secret doors) |
+| Performance | 9 | 6 | — |
+| Persuasion | 2 | 86 | — |
+| Religion | 16 | 34 | — |
+| Sleight of Hand | 2 | 5 | picking pockets |
+| Stealth | 5 | 5 | sneaking past foes and watchers, Surprise |
+| Survival | 13 | 6 | — |
+
 ### The Village of Barovia (level 3)
 
 | | Where | Check | Success | Failure |
@@ -251,10 +275,71 @@ Status: ✅ built · ○ planned
 
 | | Where | Check | Success | Failure |
 |---|---|---|---|---|
-| ✅ | Mount Baratok, a cairn on the summit | Unpick the ward round the cairn (Arcana DC 16) | disarms baratok_ward | 2d8 lightning damage; one try for the party |
+| ✅ | Mount Baratok, a cairn on the summit | Unpick the ward round the cairn (Arcana DC 16) | makes the ward round the cairn safe | 2d8 lightning damage; one try for the party |
 | ✅ | The Tsolenka Pass, bones on the shelf | Examine the roc's leavings (Medicine DC 15) | finds a traveller the roc dropped (Wings of Flying) | — |
 | ✅ | The Tsolenka Pass, carved faces | Read the carved faces (History DC 15) | codex: The watch at Tsolenka | — |
 | ✅ | The Tsolenka Pass, a wayside shrine | Pray at the wayside shrine (Religion DC 14) | Heroic Inspiration | — |
 | ✅ | The Tsolenka Pass, the gorge | Edge out along the rocks over the gorge (Acrobatics DC 14) | finds a feather as long as a man, caught on the rocks (Feather Token (Bird)) | 2d6 bludgeoning damage |
 | ✅ | The Tsolenka Guard Tower, a table with dice | Win a hand at the watch's dice (Sleight of Hand DC 15) | 40 gold | — |
-| ✅ | The Tsolenka Guard Tower, the watch roster | Sign the roster as the relief watch (Deception DC 15) | unlocks captains_strongbox; Heroic Inspiration | 1d6 cold damage; one try for the party |
+| ✅ | The Tsolenka Guard Tower, the watch roster | Sign the roster as the relief watch (Deception DC 15) | unlocks the captain's strongbox; Heroic Inspiration | 1d6 cold damage; one try for the party |
+
+### Berez (level 9)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Ruins of Berez, a drowned house | Wade into the drowned house (Athletics DC 15) | finds something in the drowned house (Mantle of Spell Resistance) | 1d6 cold damage |
+| ✅ | The Ruins of Berez, a roofless house | Lift the fallen beam (Athletics DC 15) | finds something under a fallen beam (Immovable Rod) | — |
+| ✅ | The Ruins of Berez, a white statue of a young woman | Recall Marina's story (History DC 15) | codex: Marina of Berez | — |
+| ✅ | The Ruins of Berez, a rotten jetty | Walk out along the rotten jetty (Acrobatics DC 15) | 30 gold | 1d6 cold damage |
+| ✅ | Baba Lysaga's Hut, bundles hanging from the beams | Study the hag's charms (Arcana DC 16) | finds the one jar that doesn't hum (Potion of Speed) | — |
+| ✅ | Baba Lysaga's Hut, drawings of a boy | Look closely at the drawings (Insight DC 13) | codex: The boy in the drawings | — |
+
+### Mount Ghakis (level 10)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The North Shoulder of Ghakis, meltwater | Follow the meltwater (Nature DC 14) | finds something in the slush (Potion of Resistance (Fire)) | — |
+| ✅ | The North Shoulder of Ghakis, scorched rock | Judge what scorched the rock (Arcana DC 15) | codex: Fire on Ghakis | — |
+
+### The Amber Temple (level 10)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Ice Stair, a traveller frozen where he sat | Examine the frozen traveller (Medicine DC 13) | finds something in the frozen traveller's pack (Potion of Giant Strength (Frost Giant)) | — |
+| ✅ | The Amber Temple: the Doors, the edge | Read the snow at the edge (Survival DC 14) | finds an overhang of snow | — |
+| ✅ | The Amber Temple: the Doors, a rack of halberds | Break the ice off the halberd rack (Athletics DC 15) | finds one halberd on the rack that isn't frosted (Weapon, +3) | — |
+| ✅ | The Amber Temple: the Doors, a frozen traveller | Open the frozen hand without breaking it (Medicine DC 14) | finds something clutched in a frozen hand (Frost Brand) | — |
+| ✅ | The Amber Temple: the Library, books in chains | Read the chained titles (Arcana DC 17) | finds a chained book that isn't what its spine says (Tome of Clear Thought) | — |
+| ✅ | The Amber Temple: Hall of the Faceless God, the faceless god | Read the faceless god's rite (Religion DC 16) | finds where the statue's blank face looks; and makes it safe | 2d8 psychic damage; one try for the party |
+
+### Castle Ravenloft (level 10)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Castle Ravenloft, the Gates, a dry well | Climb down the dry well (Athletics DC 15) | finds something tangled at the bottom of the dry well (Rope of Entanglement) | 2d6 bludgeoning damage |
+| ✅ | Castle Ravenloft, the Gates, a carved crest over the doors | Read the crest over the doors (History DC 15) | codex: The arms of the house | — |
+| ✅ | Castle Ravenloft, the Main Floor, the organ | Play the count's organ (Performance DC 16) | finds a compartment behind one of the organ's stops (Instrument of the Bards (Anstruth Harp)) | — |
+| ✅ | Castle Ravenloft, the Chapel, the pews | Pray in the count's chapel (Religion DC 16) | finds something under the altar's dust (Amulet of the Devout, +3) | 2d6 necrotic damage; one try for the party |
+| ✅ | Castle Ravenloft, the Court of the Count, a chained desk | Tell the clerk you're the count's auditor (Deception DC 15) | unlocks the tax strongbox (220 gold) | one try for the party |
+| ✅ | Castle Ravenloft, the Treasury, a chair on the hoard | Read the glyph on the bottom step (Arcana DC 17) | finds a glyph on the bottom step; and makes it safe | 3d8 thunder damage; one try for the party |
+| ✅ | Castle Ravenloft, the Rooms of Weeping, a footlocker | Open Rahadin's footlocker while his back is turned (Stealth DC 15) | unlocks his footlocker | Rahadin's chamber fight starts; one try for the party |
+| ✅ | Castle Ravenloft, the Rooms of Weeping, a card table | Listen to the brides' gossip unseen (Stealth DC 15) | codex: The brides' gossip | one try for the party |
+| ✅ | Castle Ravenloft, the Tower Rooms, Escher's door | Tell Escher the count has sent for him (Deception DC 15) | unlocks his door | one try for the party |
+| ✅ | Castle Ravenloft, the Tower Rooms, Escher's door | Coax Escher into opening his door (Persuasion DC 15) | unlocks his door | one try for the party |
+| ✅ | Castle Ravenloft, the Tower Rooms, Escher's door | Listen at Escher's door unseen (Stealth DC 14) | codex: Behind Escher's door | one try for the party |
+| ✅ | Castle Ravenloft, the Roofs, ravens on the ridge | Walk the roof ridge (Acrobatics DC 14) | finds slick slates | 2d6 bludgeoning damage |
+| ✅ | Castle Ravenloft, the Ravens' Roost, small bones | Climb the rafters to the high nests (Acrobatics DC 16) | finds a ring in a raven's nest (Ring of Evasion) | 2d6 bludgeoning damage |
+| ✅ | Castle Ravenloft, the Dungeon, a skeleton in shackles | Read the dead prisoner's tally (Insight DC 14) | finds a false floor | — |
+| ✅ | Castle Ravenloft, the Catacombs, sigils on the wall | Read the sigils on the wall (Arcana DC 16) | finds a glyph cut into the threshold; and makes it safe | — |
+| ✅ | Castle Ravenloft, the Catacombs, a small sarcophagus | Tell the jester's crypt a joke (Performance DC 15) | finds a false bottom in the jester's sarcophagus (Cape of the Mountebank) | — |
+| ✅ | Castle Ravenloft, the Catacombs, torn regimental banners | Read the regiment's banners (History DC 15) | finds a scything blade under the flagstones | — |
+| ✅ | Castle Ravenloft, the Old Tombs, a carved family | Name the carved family (History DC 15) | codex: King Barov and Queen Ravenovia | — |
+
+### Castle Ravenloft: secret ways worked out (level 10)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Castle Ravenloft, the Court of the Count, the study fireplace | Pace out the study's walls (Investigation DC 15) | finds a bookcase that swings | — |
+| ✅ | Castle Ravenloft, the Dungeon, great gears turning by themselves | Work out where the gears' draught comes from (Investigation DC 15) | finds a loose iron plate low in the wall | — |
+| ✅ | Castle Ravenloft, the Catacombs, bones stacked to the ceiling | Work out why the bones are stacked so (Investigation DC 16) | finds a seam in the crypt's back wall | — |
+| ✅ | Castle Ravenloft, the High Tower, a faded tapestry | Study the tower plan woven into the tapestry (Investigation DC 14) | finds a panel in the wainscot | — |

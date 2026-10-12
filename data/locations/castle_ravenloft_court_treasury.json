@@ -114,7 +114,28 @@
       ],
       "kind": "examine",
       "label": "A chair on the hoard",
-      "model": "chair_high"
+      "model": "chair_high",
+      "checks": [
+        {
+          "id": "vault_glyph_read",
+          "skill": "arcana",
+          "dc": 17,
+          "label": "Read the glyph on the bottom step",
+          "success": {
+            "reveal": [
+              "court_vault_glyph"
+            ],
+            "disarm": [
+              "court_vault_glyph"
+            ]
+          },
+          "failure": {
+            "damage": "3d8",
+            "damage_type": "thunder"
+          },
+          "once": true
+        }
+      ]
     }
   ],
   "containers": [

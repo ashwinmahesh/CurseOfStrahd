@@ -160,7 +160,20 @@
       ],
       "kind": "examine",
       "label": "A traveller frozen where he sat",
-      "model": "frozen_traveller"
+      "model": "frozen_traveller",
+      "checks": [
+        {
+          "id": "frozen_traveller_look",
+          "skill": "medicine",
+          "dc": 13,
+          "label": "Examine the frozen traveller",
+          "success": {
+            "reveal": [
+              "frozen_traveller_flask"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "frozen_traveller_flask",

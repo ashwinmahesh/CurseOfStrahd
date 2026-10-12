@@ -247,3 +247,41 @@ once
 
 ~ check:perception:nest_ring:failure
 | Nests, feathers and droppings. A hundred ravens watch you look, and none of them helps.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:deception:escher_door_lie:success
+| There's a scramble behind the door, and it opens on a pale, hopeful face: the count has sent for him, at last.
+
+~ check:deception:escher_door_lie:failure
+| A long silence, and then a laugh, high and bitter. The door stays shut.
+
+~ check:persuasion:escher_door_coax:success
+| You talk through the door until the bolt slides back. He wants to be persuaded; he wants someone to talk to.
+
+~ check:persuasion:escher_door_coax:failure
+| He hears you out, and then tells the door to go away.
+
+~ check:stealth:escher_door_listen:success
+| Behind the door, Escher tells his reflection the count has tired of him, and that he'd give anyone up to get away.
+
+~ check:stealth:escher_door_listen:failure
+| The voice behind the door stops mid-word. It doesn't start again.
+
+~ check:acrobatics:roof_ridge_walk:success
+| You walk the ridge with your arms out and the valley turning below, and from up there you can see which slates have slipped.
+
+~ check:acrobatics:roof_ridge_walk:failure
+| A slate slides out from under you, and so does the roof.
+
+~ check:acrobatics:rafters_climb:success
+| You go up the rafters hand over hand, past the ravens, to a nest built round something gold.
+
+~ check:acrobatics:rafters_climb:failure
+| A rafter gives, the ravens scatter, and the floor comes up to meet you.
+
+~ check:investigation:tapestry_plan:success
+| The tapestry is a plan of the tower, and it shows a stair inside the wainscot of this very room.
+
+~ check:investigation:tapestry_plan:failure
+| Faded towers, faded sky. If it's a map, it's a map of somewhere else.

@@ -415,7 +415,7 @@ func test_the_abbey_is_lived_in() -> void:
 ## The Abbey garden has its raised place too (lane 28): a stone terrace before the nuns' graves.
 func test_the_abbey_garden_has_a_terrace() -> void:
 	var g := LocationView.grid_for(Compendium.shared().get_entry("locations", "abbey_of_st_markovia_garden"))
-	assert_eq(g.height(Vector2i(19, 15)) - g.height(Vector2i(16, 15)), 5, "a terrace a step up before the graves")
+	assert_eq(g.height(Vector2i(19, 15)) - g.height(Vector2i(16, 15)), CombatGrid.DAIS_FT, "a low terrace before the graves")
 
 
 ## Berez as a drowned village (lane 28): marsh mud and black water, the mound and the witch's stump as real rises of

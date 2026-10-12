@@ -42,7 +42,7 @@
           "minItems": 1,
           "items": {
             "type": "string",
-            "pattern": "^[.#=~w 1-4]+$"
+            "pattern": "^[.#=~w 1-4_]+$"
           }
         },
         "ceiling_ft": {
