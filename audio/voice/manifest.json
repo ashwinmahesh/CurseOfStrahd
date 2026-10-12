@@ -33123,6 +33123,13 @@
   "recipe": "090af50390",
   "text": "My men will stand down when I am relieved, and not one hour before. Who are you to relieve me?"
  },
+ "marshal_dragomir/bcd4bb99e7c130ce": {
+  "chars": 93,
+  "direction": "[stern, weary, resolute]",
+  "model": "eleven_v3",
+  "recipe": "090af50390",
+  "text": "Back the way you came, then. The gate is held. It will be held tomorrow, and the night after."
+ },
  "marshal_dragomir/de450bb3d934d81d": {
   "chars": 31,
   "direction": "[stern, commanding]",
