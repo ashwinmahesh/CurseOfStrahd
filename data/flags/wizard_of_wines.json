@@ -57,6 +57,11 @@
       "summary": "Davian told the party about the druids' work on Yester Hill. The travel map shows Yester Hill once this is set (data/travel/wizard_of_wines.json) or a treasure is there."
     },
     {
+      "id": "vines_spoke",
+      "type": "bool",
+      "summary": "The vineyard's last green row answered Speak with Plants (wizard_of_wines/vines.dialogue): the blights and a druid came from Yester Hill, and the druid dropped his sickle."
+    },
+    {
       "id": "vineyard_cleared",
       "type": "bool",
       "summary": "The blights in the vine rows were beaten on the lane (encounter vineyard_ambush)."

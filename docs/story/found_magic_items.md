@@ -169,7 +169,7 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | Ground floor, the pantry | Dust of Sneezing and Choking (uncommon) | Search (Investigation DC 15): a sack of "flour" that isn't |
 | ✅ | Ground floor, the great oven | Brazier of Commanding Fire Elementals (rare) | Search (Investigation DC 15): something cooling in the ash |
-| ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
+| ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house; or a Tip from the hags' garden (Speak with Plants) |
 | ✅ | Loft, the little bags on hooks | Portable Hole (rare) | Search (Perception DC 15): a black cloth folded among the bags |
 | ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow; or a Tip from the ravens themselves (Speak with Animals) |
 | ✅ | The hill, the ditch by the track | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot, from the miller's lane, 2026-10-09) |
@@ -181,7 +181,7 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | The yard well | Rope of Climbing (uncommon) | Search (Perception DC 13): tied off below the lip |
 | ✅ | The yard, behind the casks | Eversmoking Bottle (uncommon) | Search (Perception DC 13): a bottle set aside (lane 28's spot) |
-| ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot) |
+| ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot); or a Tip from the last green row (Speak with Plants) |
 | ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard; or a Tip from the winery's ravens (Speak with Animals) |
 | ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
@@ -260,7 +260,7 @@ leaves a smaller purse and one find.
 | ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots; or a Tip from Mircea, whose they were, in the bone midden (Speak with Dead) |
 | ✅ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
 | ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
-| ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14) |
+| ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14); or a Tip from the wolfsbane at the den's door (Speak with Plants) |
 | ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
 
 ## Under Van Richten's Tower (side quest, level 10)
