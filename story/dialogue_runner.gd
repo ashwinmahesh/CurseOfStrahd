@@ -161,7 +161,7 @@ func next() -> Dictionary:
 				var taker := speaker
 				if str(s.get("to", "")) != "" and st.find_member(str(s["to"])) != null:
 					taker = st.find_member(str(s["to"]))
-				st.give_item(str(s["item"]), int(s["qty"]), taker)
+				st.gain_item(str(s["item"]), int(s["qty"]), taker)
 				return {"kind": "notice", "text": "%s receives %s%s" % [_first(taker), Compendium.shared().display_name("items", str(s["item"])),
 					" ×%d" % int(s["qty"]) if int(s["qty"]) > 1 else ""]}
 			"take":
@@ -227,7 +227,7 @@ func next() -> Dictionary:
 					continue
 				var taker := st.leader_character()
 				for item in got:
-					st.give_item(item, 1, taker)
+					st.gain_item(item, 1, taker)
 				for item: Variant in got.slice(1):
 					_queued.append({"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", str(item))]})
 				var found := {"kind": "notice", "text": "%s receives %s" % [_first(taker), Compendium.shared().display_name("items", got[0])]}
@@ -589,7 +589,7 @@ func _party_line(who: Character, text: String) -> Dictionary:
 ## A party member's portrait (art/portraits/<id>.png): the look picked in the creator, else one named after them.
 static func portrait_of(who: Character) -> String:
 	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
-	return look if look != "" else who.name.to_snake_case()
+	return look if look != "" else Character.id_for_name(who.name)
 
 
 static func _npc_for(low: String) -> Dictionary:

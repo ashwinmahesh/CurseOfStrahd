@@ -38,7 +38,7 @@ endif
 ~ banter_pastry
 if flag.dream_pastry_eaten and name:ratatoille and name:liriel_dawnsong
 interject name:ratatoille: That sample. Underworked crust, far too sweet, and one bite brought dreams all night. I want the recipe.
-interject name:liriel_dawnsong: Never eat a stranger's pie in a cursed valley, Ratatoille. We teach it to novices.
+interject name:liriel_dawnsong: Never eat a stranger's pie in a cursed valley, Ratatouille. We teach it to novices.
 interject name:ratatoille: I'll have you know I only want to study it. Professionally.
 endif
 -> END

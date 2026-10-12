@@ -64,7 +64,7 @@ endif
 
 ~ liriel_ratatoille_grace
 if name:liriel_dawnsong and name:ratatoille
-interject name:liriel_dawnsong: Thank you for the bread this morning, Ratatoille. I said grace over it twice. Once wasn't enough.
+interject name:liriel_dawnsong: Thank you for the bread this morning, Ratatouille. I said grace over it twice. Once wasn't enough.
 interject name:ratatoille: It was... it was only bread.
 interject name:liriel_dawnsong: The Morninglord made bread before he made kings. There's a reason.
 interject name:ratatoille: I'm going to go and stand behind that tree for a moment.
@@ -125,8 +125,8 @@ endif
 if name:ratatoille and name:kip_smudgewick
 interject name:ratatoille: After all this. Apricot tarts. Apricot glaze on a pork loin. A little shop by a river.
 interject name:kip_smudgewick: Apricot jam on everything. Straw hats on a hook by the door. A sign. A painted sign.
-interject name:ratatoille: "Smudgewick and Ratatoille."
-interject name:kip_smudgewick: "Ratatoille and Smudgewick." Alphabetical, Rat. You'd want it done properly.
+interject name:ratatoille: "Smudgewick and Ratatouille."
+interject name:kip_smudgewick: "Ratatouille and Smudgewick." Alphabetical, Rat. You'd want it done properly.
 endif
 -> END
 

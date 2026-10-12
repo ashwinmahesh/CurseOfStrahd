@@ -18,6 +18,10 @@ const STANDARD_LANGUAGES: Array[String] = ["common_sign_language", "draconic", "
 const RARE_LANGUAGES: Array[String] = ["abyssal", "celestial", "deep_speech", "druidic", "infernal", "primordial",
 	"sylvan", "thieves_cant", "undercommon"]
 const EQUIP_SLOTS: Array[String] = ["armor", "main_hand", "off_hand"]
+## A character's id is its name in snake_case (id_for_name), except a prebuilt hero whose shown name was respelled
+## after saves, flags, art and voice were keyed by the old one: the id stays what the old name made it (owner,
+## 2026-10-12: the Wizard is "Ratatouille", and his id is still ratatoille).
+const RESPELLED_IDS := {"ratatouille": "ratatoille"}
 
 var build: Dictionary = {}
 
@@ -94,6 +98,12 @@ static func from_build(build_: Dictionary, compendium_: Compendium = null) -> Ch
 	c.refresh()
 	c.hp = c.max_hp()
 	return c
+
+
+## The id a character called `n` gets when nothing else gave it one (RESPELLED_IDS).
+static func id_for_name(n: String) -> String:
+	var key := n.to_snake_case()
+	return str(RESPELLED_IDS.get(key, key))
 
 
 static func empty_build() -> Dictionary:
@@ -563,7 +573,7 @@ func refresh() -> void:
 	proficiencies = {"armor": {}, "weapons": {}, "tools": {}, "languages": {}, "saves": {}, "skills": {}}
 	name = str(build.get("name", ""))
 	if id == "":
-		id = name.to_snake_case() if name != "" else "character"
+		id = id_for_name(name) if name != "" else "character"
 	_walk_species()
 	_walk_background()
 	_walk_languages()

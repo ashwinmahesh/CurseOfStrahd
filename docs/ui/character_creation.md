@@ -37,7 +37,7 @@ companions replace the four Phase 1 pregens, and the player picks who travels.
 
 The start screen ("Who goes into the mists?") shows the roster, the pregens marked `roster: true` in data/pregens
 (`Pregens.roster_ids()`, in name order): Godrick Pendlebrook (Goliath Paladin), Kip Smudgewick (Tiefling Warlock),
-Liriel Dawnsong (High Elf Cleric), Ratatoille (High Elf Wizard), Thistle (Human Ranger) and Wren Featherfoot
+Liriel Dawnsong (High Elf Cleric), Ratatouille (High Elf Wizard), Thistle (Human Ranger) and Wren Featherfoot
 (Halfling Monk). Each card has the portrait, name and class line, with the summary and hook in its tooltip. The
 player lights up to four (`StoryState.PARTY_CAP`) to travel; the first four are lit to begin with. The rest start
 at camp and can be swapped in on the road (party_management.md, "Who travels"). A seventh card, **Your own hero**,

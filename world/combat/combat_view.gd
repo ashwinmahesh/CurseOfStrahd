@@ -1447,6 +1447,8 @@ func _target_under() -> CombatToken:
 
 func _update_hover() -> void:
 	var c := _player()
+	if not _aiming_area():
+		hud.hide_area_saves()   # the area panel lives only while an area spell is aimed
 	overlay.clear("path")
 	overlay.clear("goal")
 	overlay.clear("danger")
@@ -1568,6 +1570,14 @@ func _show_odds(pv: Dictionary, o: Combatant) -> void:
 	hud.show_odds(float(pv.get("chance", 0.0)), str(pv.get("damage", "")), str(pv.get("edge", "")), rig.camera.unproject_position(head))
 
 
+## Whether the pointer is aiming an area spell at a point or in a direction (the area panel shows its saves).
+func _aiming_area() -> bool:
+	if mode != Mode.TARGET or picker.active() or str(selected.get("kind", "")) in ["long_jump", "jump"]:
+		return false
+	var kind := str(selected.get("targeting", ""))
+	return kind == "direction" or (kind == "point" and str(selected.get("kind", "")) != "feat")
+
+
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	if picker.active():
 		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
@@ -1593,12 +1603,14 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
 		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
 		overlay.show_cells("area", pv["cells"] as Array)
-		var lines: Array = []
-		for w: Dictionary in pv["creatures"]:
-			lines.append(str(w["line"]))
-		if lines.is_empty():
-			lines.append("No one in the area")
-		hud.show_tooltip("%s · %s" % [selected["label"], "slot level %d" % int(pv["slot"]) if int(pv["slot"]) > 0 else "cantrip"], lines, pv["warnings"] as Array, at)
+		# Who it catches and their saves go in the panel at the top left (owner, 2026-10-12); by the pointer, a count.
+		var caught := pv["creatures"] as Array
+		var friends := caught.filter(func(w: Dictionary) -> bool: return bool(w["ally"]) and not bool(w["safe"])).size()
+		var count := ("%d in the area%s" % [caught.size(), (" (%d %s)" % [friends, "friend" if friends == 1 else "friends"]) if friends > 0 else ""]) \
+			if not caught.is_empty() else "No one in the area"
+		var title := "%s · %s" % [selected["label"], "slot level %d" % int(pv["slot"]) if int(pv["slot"]) > 0 else "cantrip"]
+		hud.show_tooltip(title, [count], [], at)
+		hud.show_area_saves(title, ("%s save DC %d" % [pv["save"], int(pv["dc"])]) if str(pv["save"]) != "" else "", caught, pv["warnings"] as Array)
 		return
 	if kind == "place" and (t == null or not c.hostile_to(t.combatant)):
 		var rng := int(selected.get("range", 0))
