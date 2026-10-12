@@ -255,7 +255,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 **Your party**
 
 - Six voiced companions, each with their own art, accent, personal quest, camp talks and banter: Sir Godrick
-  Pendlebrook (Goliath Paladin), Liriel Dawnsong (High Elf Cleric), Thistle (Human Ranger), Ratatoille (High Elf
+  Pendlebrook (Goliath Paladin), Liriel Dawnsong (High Elf Cleric), Thistle (Human Ranger), Ratatouille (High Elf
   Wizard), Wren Featherfoot (Halfling Monk) and Kip Smudgewick (Tiefling Warlock).
 - Up to four travel at once, swapped outside fights; benched companions keep their level.
 - Companion approval with romances, and Heroic Inspiration for playing in character.

@@ -40,7 +40,7 @@ vestige_zantras: At last. An audience. Do you know how long it has been since an
 * What are you offering? -> zantras_offer
 * [History DC 13] Read the wardens' inscription on the lid. -> zantras_lid | zantras_lid_fail
 * [if guest:ireena] (It's looking at Ireena.) -> zantras_ireena
-* [name:ratatoille] [if not flag.ratatoille_zantras_refused and not gift:gift_of_zantras] (Ratatoille has gone very still, listening.) -> companions/table:zantras
+* [name:ratatoille] [if not flag.ratatoille_zantras_refused and not gift:gift_of_zantras] (Ratatouille has gone very still, listening.) -> companions/table:zantras
 * (Step away from the amber.) -> END
 
 ~ zantras_want

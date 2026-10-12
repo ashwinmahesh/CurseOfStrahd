@@ -76,7 +76,7 @@ func capture_shots(tool: Node, out: String) -> void:
 		_close("ShopScreen")
 		st.attitudes.erase("bildrath")
 	if _wants("services"):
-		# St. Andral's: Ratatoille fell two days ago, Godrick is hurt and poisoned.
+		# St. Andral's: Ratatouille fell two days ago, Godrick is hurt and poisoned.
 		var fallen := st.party[3]
 		fallen.hp = 0
 		fallen.dead = true

@@ -27,6 +27,7 @@ var _menu_cell := Vector2i(-1, -1)
 var ending: EndingScreen = null      ## the campaign's last screen, once the game has ended (ADR 0014)
 var glow := HoverGlow.new()          ## the rim on whatever the mouse is over
 var pad := PadExplore.new(self)      ## exploring on a controller (U6): the marked thing and the pad's buttons
+var notices := ItemNotices.new()     ## items the party comes by outside loot and shops, on the side
 
 
 func _ready() -> void:
@@ -39,6 +40,8 @@ func _ready() -> void:
 			SaveSystem.load_slot(a.get_slice("=", 1))   # captures: start from a save
 	st = GameState.story
 	st.time_passed.connect(_on_time_passed)
+	add_child(notices)
+	st.item_gained.connect(notices.show_item)   # an item come by outside loot and shops, on the side
 	narrator = Narrator.new()
 	banter = Banter.new()
 	if st.party.is_empty():
@@ -904,6 +907,8 @@ func _exit_tree() -> void:
 		_preload = null
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
+	if st != null and st.item_gained.is_connected(notices.show_item):
+		st.item_gained.disconnect(notices.show_item)
 
 
 # --- Screens --------------------------------------------------------------------------------------

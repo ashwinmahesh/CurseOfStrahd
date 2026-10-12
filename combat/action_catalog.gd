@@ -1614,32 +1614,52 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	else:
 		var entry := e.spells._entry_any(c, str(action["spell_id"]))
 		dc = (e.spells.numbers(c, entry)["dc"] as Breakdown).total() if not entry.is_empty() else 0
+	var caught: Array[Combatant] = []
 	for o in e.spells.creatures_in(cells):
 		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			continue
+		caught.append(o)
+	# Sculpt Spells: who it would shield as things stand (the caster, then the nearest allies; the player can change the
+	# picks as the spell goes off).
+	var sculpted: Array[String] = []
+	if e.spells.saves.sculpts(c, data):
+		sculpted = e.spells.saves.sculpt_default(c, e.spells.saves.sculpt_candidates(c, caught), SpellSaves.sculpt_cap(data, use_slot))
+	for o in caught:
 		var line := o.name()
+		# Each creature's numbers for the area panel (CombatHud.show_area_saves): its chance to save, the damage it can
+		# expect, whether it's safe or unaffected.
+		var row := {"id": o.id, "name": o.name(), "ally": not c.hostile_to(o), "safe": o.id in sculpted, "unaffected": false,
+			"save_chance": -1.0, "damage": -1, "drops": ""}
 		var unaffected := str(action["spell_id"]) == "sleep" and (o.creature.is_condition_immune(&"exhaustion") or o.creature.has_flag("trance"))
 		if unaffected:
 			line += ": unaffected (doesn't sleep)"
+			row["unaffected"] = true
+		elif bool(row["safe"]):
+			line += ": safe (Sculpt Spells)"
 		elif data.has("save"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()
 			var fail := clampf((dc - bonus - 1) / 20.0, 0.0, 1.0)
+			row["save_chance"] = 1.0 - fail
 			line += ": %s save DC %d, fails %d%%" % [Creature.ABILITY_SHORT[ab], dc, roundi(fail * 100.0)]
 			if preview.has("damage_dice"):
 				var avg := _avg(str(preview["damage_dice"])) + (preview["damage_bonus"] as Breakdown).total()
 				var half := str(data.get("save_success", "")) == "half"
 				var expected := avg * (fail + (0.5 * (1.0 - fail) if half else 0.0))
 				line += " · ~%d damage" % roundi(expected)
+				row["damage"] = roundi(expected)
 				if avg >= o.creature.hp:
-					line += " · likely drops" if fail > 0.5 else " · may drop"
-		var ally := not c.hostile_to(o)
-		if ally and o != c:
+					row["drops"] = "likely drops" if fail > 0.5 else "may drop"
+					line += " · " + str(row["drops"])
+		if bool(row["ally"]) and o != c and not bool(row["safe"]):
 			warnings.append("Friendly fire: %s is in the area" % o.name())
-		who.append({"id": o.id, "name": o.name(), "ally": ally, "line": line})
+		row["line"] = line
+		who.append(row)
 	if bool(action.get("concentration", false)) and c.creature.concentration != null:
 		warnings.append("Ends your Concentration on %s" % c.creature.concentration.name)
-	return {"cells": cells, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot}
+	var save := str(data.get("save", ""))
+	return {"cells": cells, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot,
+		"save": str(Creature.ABILITY_SHORT[StringName(save)]) if save != "" else ""}
 
 
 static func _avg(expr: String) -> float:

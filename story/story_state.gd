@@ -192,6 +192,18 @@ func party_has_item(item_id: String) -> bool:
 	return false
 
 
+## The party came by an item outside a loot window or a shop (gain_item): `who` is the character who has it, "" for the
+## party's stash. The game shows it on the side (ItemNotices).
+signal item_gained(item_id: String, qty: int, who: String)
+
+
+## Gives `ch` (or the stash) an item the party has just come by, a skill check's find, a gift, a hidden find, a picked
+## pocket, and says so (item_gained). Loot windows, shops and moves to and from the stash use give_item quietly.
+func gain_item(item_id: String, qty: int, ch: Character = null) -> void:
+	give_item(item_id, qty, ch)
+	item_gained.emit(item_id, qty, ch.name if ch != null else "")
+
+
 ## Gives an item to `ch` (or the stash if nobody's given).
 func give_item(item_id: String, qty: int, ch: Character = null) -> void:
 	if ch != null:
