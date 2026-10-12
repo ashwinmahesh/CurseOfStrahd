@@ -1,7 +1,7 @@
 # The winery's hands (lane 28, 2026-10-08: "more people walking around and doing things"). While the winery is lost,
 # Ionel keeps watch over the lane, Tereza keeps the camp's washing and Horia splits wood; once the family is home,
-# Ovidiu dresses the vines, Andrei picks the east rows and Old Silviu is back at his casks. And the ravens, always.
-# Unvoiced for now.
+# Ovidiu dresses the vines, Andrei picks the east rows and Old Silviu is back at his casks. And the ravens, always,
+# who talk under Speak with Animals. Unvoiced for now.
 
 ~ watch
 Ionel: Keep your voice down. They come up the rows at dusk, the twig things, and I'd like to hear them before they hear me. If you're going up to the winery, go now, while there's light.
@@ -39,4 +39,36 @@ Old Silviu: Every hoop loose, every stave dry. The druids didn't touch the casks
 
 ~ raven
 Narrator: The raven tilts its head and looks at you with one black eye, then the other, as if it is comparing notes. When you move, it hops after you, just far enough to keep watching.
+* [if spell:speak_with_animals] Ask the raven what it's seen. -> raven_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the raven what it's seen.) -> raven_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Let it keep watching. -> END
+-> END
+
+~ raven_cast
+cast speak_with_animals
+if check.last
+-> raven_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the ravens are the Keepers of the Feather's eyes (Curse of Strahd, the Wizard of
+# Wines): where the druids came from, where Davian hid his last stone, where the thief took the other.
+~ raven_speaks
+Narrator: The raven answers fast and low, like a scout making its report, and looks over its shoulder twice while it does.
+if not flag.winery_reclaimed
+set yester_hill_known
+Narrator: "Green men sleep in the old man's house by day and walk the vines by night with the walking trees. They came from the hill to the west, where they're building a big man out of earth."
+if not flag.winery_stone_hiding_told
+set winery_stone_hiding_told
+Narrator: "The old man's last green stone is in his cellar, in the oldest barrel at the foot of the stair. The third hoop turns too far. We watched him hide it. We watch everything."
+endif
+endif
+if not quest.the_third_stone >= found
+if not quest.the_third_stone
+quest the_third_stone told
+endif
+Narrator: "The stone the thief took is in the drowned village down the river, in the old woman's hut that walks. We followed him there. We'll follow you, if you go."
+endif
+Narrator: "And the ring in our dead tree by the road falls slowly, like a feather. Take it. We have wings."
+reveal roost_hoard
 -> END

@@ -261,3 +261,25 @@ A hero who can cast a cantrip in place of one attack of the Attack action (a Bla
 feature's attack_cantrip recipe) casts it that way from the cantrip's own Spells-tab slot: its cost mark reads as an
 attack, its line says "in place of an attack", and it starts the Attack action or uses an attack left, so the weapon
 attacks follow (`ActionCatalog._as_attack_cantrip`). The separate "Cantrip attack" slots on the class tab are gone.
+
+## A square too far (owner, 2026-10-12)
+
+Pointing at a square further than the movement left shows the walk as far toward it as the movement goes: the dotted
+trail to a ring where it would stop, and "Move 30 ft toward there · 0 ft left after" (the square's menu: "Move toward
+here"); a click walks it, with the usual path rules (Difficult Terrain doubles, Opportunity Attack warnings on the
+partial walk). Only a square with no way there at all, or no movement left, still says why not
+(`EncounterMovement.stop_toward`; `ActionCatalog.move_preview`'s `dest` and `partial`).
+
+## Walking up to strike (owner, 2026-10-12)
+
+With a melee weapon in the main hand (a Psychic Blade or a beast's bite counts; a bow there doesn't), a click on a foe
+the weapon can't reach from here but the movement left can walks the hero up and swings, like Baldur's Gate 3. The
+hover draws the walk (the trail and a ring, red when it provokes) with "Walk 20 ft up, then attack · 10 ft left after"
+over the usual attack lines, and the odds over the foe are read from the square it will strike from: the cheapest free
+square in reach, and of those that cost the same, the one whose way there provokes the fewest Opportunity Attacks
+(`ActionCatalog.melee_approach`). A foe beyond the movement left still takes a ranged attack if one reaches, or says
+it's out of reach. The blow waits for the walk: a reaction prompt on the way, or a walk cut short, leaves the turn to
+the player (`CombatView._walk_and_strike`, `_strike_after`).
+
+Every walk now takes, of the cheapest ways to its square, the one that leaves foes' reach the fewest times
+(`EncounterMovement.safe_path`), for the heroes and the foes alike; the trail on hover is the way it walks.

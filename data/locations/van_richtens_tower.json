@@ -248,7 +248,20 @@
       ],
       "kind": "examine",
       "label": "Ezmerelda's campfire",
-      "model": "campfire"
+      "model": "campfire",
+      "checks": [
+        {
+          "id": "camp_tracks",
+          "skill": "survival",
+          "dc": 14,
+          "label": "Read the tracks around the camp",
+          "success": {
+            "reveal": [
+              "vrt_wagon_tripwire"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "vrt_lookout",
@@ -258,7 +271,20 @@
       ],
       "kind": "examine",
       "label": "A lookout rock",
-      "model": "boulder"
+      "model": "boulder",
+      "checks": [
+        {
+          "id": "lookout_watch",
+          "skill": "perception",
+          "dc": 14,
+          "label": "Watch the lake from the lookout rock",
+          "success": {
+            "reveal": [
+              "lookout_satchel"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "lookout_satchel",

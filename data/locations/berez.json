@@ -8,8 +8,8 @@
     "rows": [
       "##############################################",
       "#wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww#",
-      "#wwwwwwwwwwwwwwwwwww11wwwwwwwwwwwwwwwwwwwwwww#",
-      "#wwwwwwwwwwwwwwwwwww11wwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwwwww__wwwwwwwwwwwwwwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwwwww__wwwwwwwwwwwwwwwwwwwwwww#",
       "#~~~~~~~~~~~~~~~~~~~..~~~~~~~~~~~~~~~~~~~~~~~#",
       "#~~~~~~..~~~~~............~~~~~~~~....~~~~~~~#",
       "#~~~~~~..~~~~~............~~~~~~~~....~~~~~~~#",
@@ -296,7 +296,23 @@
       ],
       "kind": "examine",
       "label": "A rotten jetty",
-      "model": "jetty"
+      "model": "jetty",
+      "checks": [
+        {
+          "id": "berez_jetty_walk",
+          "skill": "acrobatics",
+          "dc": 15,
+          "label": "Walk out along the rotten jetty",
+          "success": {
+            "gold": 30
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "cold"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "berez_luna",
@@ -316,7 +332,24 @@
       ],
       "kind": "examine",
       "label": "A drowned house",
-      "model": "rubble"
+      "model": "rubble",
+      "checks": [
+        {
+          "id": "drowned_house_wade",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Wade into the drowned house",
+          "success": {
+            "reveal": [
+              "drowned_house_mantle"
+            ]
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "cold"
+          }
+        }
+      ]
     },
     {
       "id": "berez_drowned_bones",
@@ -386,7 +419,22 @@
       "kind": "examine",
       "label": "A white statue of a young woman",
       "model": "statue_saint",
-      "facing": "south"
+      "facing": "south",
+      "checks": [
+        {
+          "id": "marina_story",
+          "skill": "history",
+          "dc": 15,
+          "label": "Recall Marina's story",
+          "success": {
+            "codex": {
+              "id": "marina_of_berez",
+              "title": "Marina of Berez",
+              "text": "Marina was a girl of Berez whom the castle's lord courted, and who looked, people said, exactly like a woman he had lost long before. When she died, he blamed the village and drowned it. The statue was raised by someone who loved her too, and not as he did."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "berez_ruin_north",
@@ -396,7 +444,20 @@
       ],
       "kind": "examine",
       "label": "A roofless house",
-      "model": "rubble"
+      "model": "rubble",
+      "checks": [
+        {
+          "id": "ruin_beam_lift",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Lift the fallen beam",
+          "success": {
+            "reveal": [
+              "ruin_beam_tools"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "causeway_log_1",

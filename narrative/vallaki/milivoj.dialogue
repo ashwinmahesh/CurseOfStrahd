@@ -34,12 +34,18 @@ Milivoj [angry]: Says who? The priest? He'd never say that. He wouldn't.
 * [Persuasion DC 13] Nobody's going to hang you. Just tell us the truth. -> plead_ok | plead_fail
 * [if flag.lid_scrapes_found] Only someone who knew the trick of the lid could open it without breaking it. -> confess
 * [if flag.henrik_confessed] Henrik already told us. Twenty gold, at night, for the saint. -> named
+* [if flag.vallaki_dog_told] A dog saw you carry a sack of old bones to the coffin maker's back door, at night. -> dog_saw
 * [if gold >= 20] (Hold out twenty gold.) Henrik paid you twenty. We'll match it, for the truth. -> bought
 * We'll be back. -> END
 
 ~ named
 Narrator: He stops digging. He looks at the spade for a while, as if it might have an opinion.
 Milivoj [sad]: Henrik. Of course Henrik. He couldn't keep a secret in a coffin.
+-> confess
+
+~ dog_saw
+Narrator: He opens his mouth to deny it, and shuts it again, and looks across the square to where a big dog lies asleep in the sun.
+Milivoj [weary]: A dog. Of course it was a dog. Every other soul in this town keeps its mouth shut.
 -> confess
 
 ~ bought

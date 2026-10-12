@@ -529,7 +529,20 @@
       ],
       "kind": "examine",
       "label": "great gears turning by themselves",
-      "model": "gear_brake"
+      "model": "gear_brake",
+      "checks": [
+        {
+          "id": "gears_draught",
+          "skill": "investigation",
+          "dc": 15,
+          "label": "Work out where the gears' draught comes from",
+          "success": {
+            "reveal": [
+              "larders_crawl_furnace"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "larders_furnace_chains",
@@ -579,7 +592,20 @@
       ],
       "kind": "examine",
       "label": "a skeleton in shackles",
-      "model": "skeleton_shackles"
+      "model": "skeleton_shackles",
+      "checks": [
+        {
+          "id": "prisoner_tally",
+          "skill": "insight",
+          "dc": 14,
+          "label": "Read the dead prisoner's tally",
+          "success": {
+            "reveal": [
+              "larders_open_cell_pit"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "larders_open_cell_straw",

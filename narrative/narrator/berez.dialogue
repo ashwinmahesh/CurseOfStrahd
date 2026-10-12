@@ -499,3 +499,83 @@ once
 
 ~ examine:marsh_dead_tree
 | A tree drowned where it stood when the marsh came up, grey and bare, its lower branches still strong enough to hold someone looking out over the reeds.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:arcana:cairn_ward_unpick:success
+| The ward hums round the cairn like a held note; you find where it was tied off and loosen it, and the air goes still.
+
+~ check:arcana:cairn_ward_unpick:failure
+| You pull the wrong thread, and the ward answers with lightning.
+
+~ check:medicine:roc_leavings:success
+| Most of the bones were dropped dead, but one traveller was dropped alive and lived a little while, still wearing something with feathers of its own.
+
+~ check:medicine:roc_leavings:failure
+| Bones, and very little else of anyone.
+
+~ check:history:watch_faces:success
+| The watch swore to hold the pass until relieved. Nobody ever came to relieve them.
+
+~ check:history:watch_faces:failure
+| Stern faces in stern stone. Their names are gone with the weather.
+
+~ check:religion:tsolenka_shrine_pray:success
+| You pray at the shrine with the wind at your back, and for a moment it feels like the mountain is on your side.
+
+~ check:religion:tsolenka_shrine_pray:failure
+| The wind whips the words away down the gorge.
+
+~ check:sleight_of_hand:ghost_dice:success
+| The grey watchmen roll, and so do you, with a little help from your sleeve; they push the pot across without a word.
+
+~ check:sleight_of_hand:ghost_dice:failure
+| The dice go cold in your hand, and the watchmen's pale faces turn to you all at once. You lose, and you are glad to.
+
+~ check:acrobatics:gorge_rocks:success
+| You edge out along the wet rocks with the gorge breathing below you, and pull the great feather free of the crevice it's caught in.
+
+~ check:acrobatics:gorge_rocks:failure
+| Your foot finds ice where there should be rock, and the slide ends a long, painful way down.
+
+~ check:deception:relief_watch:success
+| The grey sergeant reads your names, nods once, and lays the captain's key on the table. Relieved, at last.
+
+~ check:deception:relief_watch:failure
+| The watchmen's eyes go cold as the pass, and the cold reaches out for you.
+
+~ check:athletics:drowned_house_wade:success
+| You wade in up to the chest, and on the drowned house's mantel, above the waterline, a folded cloak has stayed perfectly dry.
+
+~ check:athletics:drowned_house_wade:failure
+| The floor gives under the silt, and the Luna's cold closes over you.
+
+~ check:athletics:ruin_beam_lift:success
+| You heave the beam up off the rubble, and underneath lies an iron rod that hasn't moved since the roof came down.
+
+~ check:athletics:ruin_beam_lift:failure
+| The beam is oak, waterlogged and determined. It stays.
+
+~ check:history:marina_story:success
+| Marina of Berez, courted by the castle's lord, who saw another woman's face in hers. When she died, he drowned her village.
+
+~ check:history:marina_story:failure
+| A young woman in white stone. Her story has gone under with her village.
+
+~ check:acrobatics:berez_jetty_walk:success
+| You skip from post to post along what's left of the jetty, and in the last post's hollow the drowned village's fishers left their coin.
+
+~ check:acrobatics:berez_jetty_walk:failure
+| A post rolls under your foot, and the Luna takes you in.
+
+~ check:arcana:hag_charms:success
+| The charms hum in harmony with the jars on the shelf; all but one jar, which is silent, and keeps what it holds very still.
+
+~ check:arcana:hag_charms:failure
+| Bones, string, hair and something that blinks. The charms mean a great deal to the hag.
+
+~ check:insight:lysaga_boy:success
+| The same boy at every age, drawn by someone who loved him and never stopped watching. She thinks she's his mother.
+
+~ check:insight:lysaga_boy:failure
+| A boy, again and again. Who he is to her escapes you.

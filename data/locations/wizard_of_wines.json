@@ -253,7 +253,24 @@
       ],
       "kind": "examine",
       "label": "The well",
-      "model": "well"
+      "model": "well",
+      "checks": [
+        {
+          "id": "winery_well_climb",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Climb down inside the well",
+          "success": {
+            "reveal": [
+              "winery_well_rope"
+            ]
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "bludgeoning"
+          }
+        }
+      ]
     },
     {
       "id": "martikov_house",
@@ -273,7 +290,25 @@
       ],
       "kind": "examine",
       "label": "Withered vines",
-      "model": "fence"
+      "model": "fence",
+      "checks": [
+        {
+          "id": "vines_study",
+          "skill": "nature",
+          "dc": 14,
+          "label": "Study the withered vines",
+          "success": {
+            "reveal": [
+              "yester_hill:gully_cache"
+            ],
+            "codex": {
+              "id": "vineyard_blight",
+              "title": "The blight on the vines",
+              "text": "The vines aren't sick. Something drains them from below, and the soil stinks of druid-work: the blight comes from the west, from the hill where the druids keep their fires. Their trail runs into a gully at its foot."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "east_vines",
@@ -293,7 +328,18 @@
       ],
       "kind": "examine",
       "label": "The camp fire",
-      "model": "campfire"
+      "model": "campfire",
+      "checks": [
+        {
+          "id": "martikov_song",
+          "skill": "performance",
+          "dc": 13,
+          "label": "Sing with the Martikovs at the fire",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "martikov_tents",
@@ -335,7 +381,25 @@
       ],
       "kind": "examine",
       "label": "A dead tree full of ravens",
-      "model": "dead_tree"
+      "model": "dead_tree",
+      "checks": [
+        {
+          "id": "ravens_ask",
+          "skill": "persuasion",
+          "dc": 14,
+          "label": "Ask the ravens for their help",
+          "success": {
+            "reveal": [
+              "roost_hoard"
+            ],
+            "codex": {
+              "id": "vineyard_ravens",
+              "title": "The vineyard's ravens",
+              "text": "The ravens at the Wizard of Wines listen when they're spoken to, and answer in their own way. They are no friends of the castle; whoever keeps this vineyard has friends with wings."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "winery_well_rope",

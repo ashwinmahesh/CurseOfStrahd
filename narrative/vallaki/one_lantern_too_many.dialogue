@@ -82,6 +82,7 @@ lantern_girl: He didn't turn back either.
 set lantern_girl_rested
 quest one_lantern_too_many home
 Narrator: The water out there is black and so cold it stops your breath. On the bottom, in the weed, a little tin lantern frame, the paper long gone, still holding the stub of a candle.
+cutscene lantern_light
 Narrator: You bring it up. In the boat, it lights by itself. On the jetty, the girl lets go of the boy's hand to hold her hands out for it.
 lantern_girl: Somebody turned back.
 Narrator: She takes the light from you, and she goes out with it, like a candle at a window when someone finally comes home. Sandu sits down on the boards and starts to cry, which is the first sensible thing he's done all night.

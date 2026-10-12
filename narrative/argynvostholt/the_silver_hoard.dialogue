@@ -55,6 +55,7 @@ The Gilded Knight: I'll not pay the count's people the dragon's silver. It stays
 -> fight_or_words
 
 ~ hands
+cutscene gilded_shield
 Narrator: His gauntlets aren't resting on the chest. They're gripping it, the way a drowning man grips a spar. Near his feet, half buried in coins, lies a squire's small round shield, cut nearly in two.
 Narrator: Somebody tried to carry the tithe down the hill the night the house fell. He didn't let them.
 interject tag:blunt: He's not guarding it. He's keeping it.
@@ -78,6 +79,7 @@ interject name:godrick_pendlebrook: Then we will, sir. Gently as we can.
 -> fight
 
 ~ fight
+cutscene gilded_rises
 Narrator: The coins on his armour rise like hackles. Round the walls, the empty harness of the tithe escort, polished every night for four hundred years, lifts its swords.
 combat gilded_knight
 

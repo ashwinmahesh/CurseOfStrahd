@@ -110,6 +110,7 @@ Narrator: You set the point over his heart and lean on it with all your weight. 
 ~ ireena_stake
 set cat_staked_by = "ireena"
 Ireena: Give it here.
+cutscene ireena_stake
 Narrator: She takes the stake in both hands and kneels on the edge of the coffin.
 Strahd: Tatyana.
 Ireena: No.
@@ -141,6 +142,7 @@ interject guest:ireena: Sergei. I promised him. When we're out of here, there's 
 elif flag.cat_ireena_at_tomb == "farewell"
 interject guest:ireena: It's done. It's actually done. I'm going to sleep with the window open.
 endif
+cutscene knights_at_the_stair
 if flag.cat_oathbreakers_beaten
 Narrator: Vladimir Horngaard lies at the foot of the stair where he fell. For the first time in four hundred years his face is not angry.
 elif flag.cat_vladimir_stood_aside

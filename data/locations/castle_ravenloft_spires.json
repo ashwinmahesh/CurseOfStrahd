@@ -249,7 +249,20 @@
       ],
       "kind": "examine",
       "label": "A faded tapestry",
-      "model": "tapestry"
+      "model": "tapestry",
+      "checks": [
+        {
+          "id": "tapestry_plan",
+          "skill": "investigation",
+          "dc": 14,
+          "label": "Study the tower plan woven into the tapestry",
+          "success": {
+            "reveal": [
+              "spires_closet_panel"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "spires_high_window",

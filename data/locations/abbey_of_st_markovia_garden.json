@@ -20,8 +20,8 @@
       "#..####..........=.=.=.#",
       "#..####................#",
       "#..####...........=.=..#",
-      "#........=........1111.#",
-      "#.................1111.#",
+      "#........=........____.#",
+      "#.................____.#",
       "###########..###########"
     ],
     "theme": "shrine_yard",
@@ -124,7 +124,18 @@
       "kind": "examine",
       "label": "A scarecrow with a stitched mouth",
       "model": "scarecrow_stitched",
-      "facing": "south"
+      "facing": "south",
+      "checks": [
+        {
+          "id": "scarecrows_unbind",
+          "skill": "arcana",
+          "dc": 15,
+          "label": "Unpick the scarecrows' binding",
+          "success": {
+            "flag": "abbey_scarecrows_unbound"
+          }
+        }
+      ]
     },
     {
       "id": "scarecrow_west",
@@ -359,6 +370,7 @@
     {
       "id": "garden_sentry",
       "trigger": "enter_area:scarecrow_row",
+      "when": "not flag.abbey_scarecrows_unbound",
       "text": "The scarecrows turn their sacking heads all together, with a noise like dry leaves, and climb down off their poles.",
       "monsters": [
         {

@@ -320,9 +320,41 @@ func _quest_card(q: Dictionary) -> Control:
 		orow.add_child(UiParts.mark(1))
 		orow.add_child(UiKit.label(o, UiScale.text(15), "gilt_light", DETAIL_W - 30.0))
 		col.add_child(orow)
+	if status == "active":
+		var who := _talk_to(qid)
+		if who != null:
+			col.add_child(who)
 	if status == "active" and str(q.get("hint", "")) != "":
 		col.add_child(_hint(qid, str(q["hint"])))
 	return UiParts.row(col, Callable(), false, 12)
+
+
+## Who to talk to next for an open quest (owner ask 2026-10-12): the portrait, name and place of each person whose
+## conversation moves it on now (QuestGuide), at most three; null when it doesn't need anyone talked to.
+func _talk_to(quest_id: String) -> Control:
+	var targets := QuestGuide.targets_for(st, quest_id)
+	if targets.is_empty():
+		return null
+	var box := VBoxContainer.new()
+	box.name = "TalkTo"
+	box.add_theme_constant_override("separation", 6)
+	box.add_child(UiKit.label("Talk to", UiScale.text(14), "parchment"))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	box.add_child(row)
+	var c := Compendium.shared()
+	for t: Dictionary in targets.slice(0, 3):
+		var npc := c.get_entry("npcs", str(t["npc"]))
+		var card := HBoxContainer.new()
+		card.add_theme_constant_override("separation", 10)
+		card.add_child(UiParts.framed_portrait(str(npc.get("portrait", t["npc"])), 64.0))
+		var words := VBoxContainer.new()
+		words.alignment = BoxContainer.ALIGNMENT_CENTER
+		words.add_child(UiKit.label(str(npc.get("name", t["npc"])), UiScale.text(16), "bile"))
+		words.add_child(UiKit.label(str(c.get_entry("locations", str(t["location"])).get("name", "")), UiScale.text(13), "parchment"))
+		card.add_child(words)
+		row.add_child(card)
+	return box
 
 
 ## What to do next for an open quest (its stage's `hint`): a Hint button that shows the hint beside it, and hides it

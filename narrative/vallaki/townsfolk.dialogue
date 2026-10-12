@@ -155,5 +155,29 @@ Gheorghe: Every morning I rake it smooth. Every afternoon the carts churn it up.
 
 ~ dog
 Narrator: The big dog sniffs your boots for a long moment, decides you are not food and not trouble, and lies down across the square's best patch of sun.
+* [if spell:speak_with_animals] Ask the dog what goes on in town at night. -> dog_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog what goes on in town at night.) -> dog_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it its sun. -> END
+-> END
+
+~ dog_cast
+cast speak_with_animals
+if check.last
+-> dog_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): a town dog knows the night streets. Milivoj sold St. Andral's bones to Henrik, and
+# Henrik keeps the count's vampire spawn in his storeroom (Curse of Strahd, Vallaki).
+~ dog_speaks
+set vallaki_dog_told
+Narrator: The dog rolls onto its back to think about it, and answers upside down.
+Narrator: "The digger-man with the spade carried a sack to the box-maker's back door, in the dark, a few nights back. Old bones in it. Old bones that smell like church."
+Narrator: "The box-maker's back room smells of the cold dead. More of them every night. They go out when it's dark, and come back before the sun, and they never smell of breathing."
+if not flag.bones_theft_known and not quest.bones_of_st_andral
+quest bones_of_st_andral rumored
+endif
+Narrator: "And there's a little ring in the mud by the punishing boards. It tastes of a frightened man. Nobody's come back for it."
+reveal stocks_mud
 -> END
 

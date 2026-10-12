@@ -342,7 +342,7 @@ func _recharge_spell_plan(c: Combatant) -> Dictionary:
 		var spell_id := str((act["cast"] as Array)[0])
 		var s := Compendium.shared().spell_data(spell_id)
 		var reach := int((s.get("range", {}) as Dictionary).get("feet", 60))
-		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach)
+		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach and not companion(h))
 		for f: Combatant in foes:
 			var near := foes.filter(func(g: Combatant) -> bool: return e.distance(f, g) <= 15)
 			if near.size() >= 2 or foes.size() == 1:
@@ -365,7 +365,7 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 		if spread and not act.has("recharge"):
 			var best_t: Combatant = null
 			for t0 in targets:
-				var foes := e.monster_actions.save_victims(c, act, t0).filter(func(v: Combatant) -> bool: return c.hostile_to(v))
+				var foes := e.monster_actions.save_victims(c, act, t0).filter(func(v: Combatant) -> bool: return c.hostile_to(v) and not companion(v))
 				if foes.size() >= 2:
 					best_t = t0
 			if best_t != null:
@@ -378,7 +378,12 @@ func _save_action_plan(c: Combatant) -> Dictionary:
 				if not h.is_down() and reach.has(h.cell):
 					return {"kind": "save_action", "action": act, "target": h, "move_to": h.cell, "why": "%s on %s" % [act.get("name", ""), h.name()]}
 		if not targets.is_empty():
-			return {"kind": "save_action", "action": act, "target": targets[0], "why": "%s on %s" % [act.get("name", ""), targets[0].name()]}
+			var pick: Combatant = targets[0]
+			for t1 in targets:
+				if not companion(t1):
+					pick = t1   # a hero before a familiar or a steed
+					break
+			return {"kind": "save_action", "action": act, "target": pick, "why": "%s on %s" % [act.get("name", ""), pick.name()]}
 	return {}
 
 
@@ -470,6 +475,14 @@ func _nearest_enemy(c: Combatant) -> Combatant:
 	return best
 
 
+## A Find Familiar familiar or a Find Steed steed: a foe goes for the heroes first.
+static func companion(t: Combatant) -> bool:
+	if not t.creature is Monster:
+		return false
+	var d := (t.creature as Monster).data
+	return bool(d.get("familiar", false)) or bool(d.get("steed", false))
+
+
 ## Picks this turn's plan: {kind: attack|approach|search|wait, target, cell, option, score, why}.
 func plan_turn(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -490,16 +503,23 @@ func plan_turn(c: Combatant) -> Dictionary:
 				heard.append(t)
 			continue
 		visible.append(t)
+	# A familiar or a steed is struck only when no hero can be reached this turn, moving first included (owner,
+	# 2026-10-12: summoned steeds and familiars rank below the players).
+	var pet_best := {"kind": "wait", "score": -1e9}
 	for t in visible:
+		var pet := companion(t)
 		for o in options:
 			var p := o["profile"] as WeaponProfile
 			var cells := _attack_cells(c, t, o, reach)
 			for cell: Vector2i in cells:
 				var cost := 0 if cell == c.cell else int((reach[cell] as Dictionary)["cost"])
 				var score := _score(c, t, o, cell, cost, reach, prof, threats)
-				if score > float(best["score"]):
-					best = {"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
-						"why": "%s at %s with %s" % [t.name(), cell, p.name]}
+				var into := pet_best if pet else best
+				if score > float(into["score"]):
+					into.merge({"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
+						"why": "%s at %s with %s" % [t.name(), cell, p.name]}, true)
+	if str(best["kind"]) != "attack" and str(pet_best["kind"]) == "attack":
+		best = pet_best
 	# Honour: a cruel foe may strike a hero on 0 Hit Points instead (combat/ai/ai_tactics.gd).
 	var fallen := tactics.fallen_plan(c, options, reach, threats, float(prof["oa_fear"]))
 	if not fallen.is_empty() and float(fallen["score"]) > float(best["score"]):
@@ -507,7 +527,12 @@ func plan_turn(c: Combatant) -> Dictionary:
 	if str(best["kind"]) == "attack":
 		return best
 	if not visible.is_empty():
-		var go := _approach_plan(c, visible, prof)
+		# Towards a hero rather than a familiar or a steed, while there's one in sight.
+		var heroes: Array[Combatant] = []
+		for t in visible:
+			if not companion(t):
+				heroes.append(t)
+		var go := _approach_plan(c, visible if heroes.is_empty() else heroes, prof)
 		go["threats"] = threats
 		return go
 	if not heard.is_empty():
@@ -838,8 +863,10 @@ func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> Comba
 			tt = null
 			for h in e.hostiles_of(c):
 				if not h.is_down() and not option.is_empty() and e.attack_legal(c, h, option) == "":
-					tt = h
-					break
+					if tt == null or (companion(tt) and not companion(h)):
+						tt = h   # a hero in reach before a familiar or a steed
+					if not companion(tt):
+						break
 		if tt == null:
 			continue
 		var avg := m.average_damage(cid2) + boss.action_bonus(c, act2)

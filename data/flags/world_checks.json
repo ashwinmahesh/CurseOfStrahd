@@ -1,4 +1,10 @@
 {
   "region": "world_checks",
-  "flags": []
+  "flags": [
+    {
+      "id": "abbey_scarecrows_unbound",
+      "type": "bool",
+      "summary": "An Arcana check unpicked the binding on the abbey garden's stitched scarecrows (abbey_of_st_markovia_garden, check scarecrows_unbind): their fight (garden_sentry) doesn't start."
+    }
+  ]
 }

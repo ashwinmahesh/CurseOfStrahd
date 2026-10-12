@@ -186,7 +186,18 @@
       ],
       "kind": "examine",
       "label": "A heap of bones",
-      "model": "bones"
+      "model": "bones",
+      "checks": [
+        {
+          "id": "midden_sort",
+          "skill": "medicine",
+          "dc": 14,
+          "label": "Sort through the bones",
+          "success": {
+            "gold": 30
+          }
+        }
+      ]
     },
     {
       "id": "den_claw_pine",
@@ -206,7 +217,22 @@
       ],
       "kind": "examine",
       "label": "A patch of purple flowers",
-      "model": "leaves"
+      "model": "leaves",
+      "checks": [
+        {
+          "id": "wolfsbane_name",
+          "skill": "nature",
+          "dc": 13,
+          "label": "Name the purple flowers",
+          "success": {
+            "codex": {
+              "id": "wolfsbane",
+              "title": "Wolfsbane",
+              "text": "The purple hooded flowers by the den are wolfsbane. A werewolf won't touch it and sickens in its smoke, and someone has been weeding it here, carefully, by hand."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "den_watch_stone",

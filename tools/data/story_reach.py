@@ -238,7 +238,7 @@ class Story:
             x, z = c
             if z < 0 or z >= len(rows) or x < 0 or x >= len(rows[z]):
                 return False
-            return self.door_open(doors[c]) if c in doors else rows[z][x] in ".~1234"
+            return self.door_open(doors[c]) if c in doors else rows[z][x] in ".~1234_"
 
         seen, todo = set(), [tuple(c) for c in starts if open_(tuple(c))]
         while todo:

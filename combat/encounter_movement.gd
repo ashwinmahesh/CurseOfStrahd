@@ -50,6 +50,15 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 	var e := enc()
 	var feet := c.movement_left if budget < 0 else budget
 	feet = feet / extra_cost(c, standing)
+	var occ := _move_blocks(c)
+	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(occ["blocked"] as Dictionary),
+		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
+
+
+## What stands in `c`'s way as it moves: _occupancy_for's {blocked, slowed, occupied}, plus the squares fear, a cage, a
+## shell or a duel keep it out of.
+func _move_blocks(c: Combatant) -> Dictionary:
+	var e := enc()
 	var occ := _occupancy_for(c)
 	var blocked := occ["blocked"] as Dictionary
 	# Frightened: no square closer to a source of fear the creature can see (a stricter, per-square reading of
@@ -74,8 +83,7 @@ func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Di
 				var cell2 := Vector2i(x2, y2)
 				if e.grid.distance_ft(cell2, c.size_cells, anchor.cell, anchor.size_cells, c.altitude, anchor.altitude) > 30:
 					blocked[cell2] = true
-	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(blocked),
-		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
+	return occ
 
 
 ## What each foot of `c`'s movement costs (2024: the extra feet add up): 1, plus 1 crawling while Prone (unless it
@@ -180,9 +188,9 @@ static func _value_fn(set: Dictionary) -> Callable:
 	return func(cell: Vector2i) -> Variant: return set.get(cell, false)
 
 
-## Moves the current creature to `dest` along the cheapest legal path. Leaving a hostile creature's reach
-## provokes an Opportunity Attack unless the mover took Disengage; a player-controlled reactor is asked first.
-## A Prone mover stands up first if it has the movement for it (half its Speed).
+## Moves the current creature to `dest` along the cheapest legal path (safe_path: of those, the one that provokes
+## least). Leaving a hostile creature's reach provokes an Opportunity Attack unless the mover took Disengage; a
+## player-controlled reactor is asked first. A Prone mover stands up first if it has the movement for it (half its Speed).
 func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	var e := enc()
 	var why := e._turn_check(c)
@@ -197,11 +205,15 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	if steed != null:
 		var sreach := reachable_for(steed)
 		if not sreach.has(dest):
-			return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
+			# Too far: as far along the way as the mount's movement goes (owner, 2026-10-12).
+			var sstop := stop_toward(steed, dest, sreach)
+			if sstop == steed.cell:
+				return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
+			dest = sstop
 		if bool((sreach[dest] as Dictionary)["occupied"]):
 			return CombatResult.fail("Your mount can't end its move in an occupied space")
 		c.moved = true
-		return e.undo.after_move(undo, _walk(steed, CombatGrid.path_to(sreach, dest), 1, CombatResult.new(), undo.handled))
+		return e.undo.after_move(undo, _walk(steed, safe_path(steed, sreach, dest), 1, CombatResult.new(), undo.handled))
 	# Freedom of Movement: 5 ft of movement slips any grapple.
 	if c.creature.has_flag("freedom_of_movement") and e.grapples.has(c.id) and c.movement_left >= 5:
 		e.grapples.erase(c.id)
@@ -216,12 +228,101 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		stand_up(c)
 	var reach := reachable_for(c)
 	if not reach.has(dest):
-		return CombatResult.fail("Can't reach that square with %d ft of movement" % c.movement_left)
+		# Too far: as far along the way as the movement left goes (owner, 2026-10-12: "just move as close as we can").
+		var stop := stop_toward(c, dest, reach)
+		if stop == c.cell:
+			return CombatResult.fail("Can't reach that square with %d ft of movement" % c.movement_left)
+		dest = stop
 	if bool((reach[dest] as Dictionary)["occupied"]):
 		return CombatResult.fail("You can't end your move in an occupied space")
-	var path := CombatGrid.path_to(reach, dest)
+	var path := safe_path(c, reach, dest)
 	var r := CombatResult.new()
 	return e.undo.after_move(undo, _walk(c, path, 1, r, undo.handled))
+
+
+## Where a move toward `dest` stops when it's further than the movement left takes `c` (owner, 2026-10-12): the last
+## square on the cheapest way there (as if the movement had no end) that `reach` (reachable_for, or the HUD's move_reach)
+## holds and where `c` may stop. `c.cell` when there's no way there, or no step along it to take.
+func stop_toward(c: Combatant, dest: Vector2i, reach: Dictionary = {}) -> Vector2i:
+	var r := reach if not reach.is_empty() else reachable_for(c)
+	if r.has(dest) and not bool((r[dest] as Dictionary)["occupied"]):
+		return dest
+	var far := reachable_for(c, 100000)
+	if not far.has(dest):
+		return c.cell
+	var path := CombatGrid.path_to(far, dest)
+	for i in range(path.size() - 1, 0, -1):
+		if r.has(path[i]) and not bool((r[path[i]] as Dictionary)["occupied"]):
+			return path[i]
+	return c.cell
+
+
+## The way `move` walks to `dest` (owner, 2026-10-12): the cheapest, and of the ways that cost the same, the one that
+## leaves foes' reach (an Opportunity Attack each) the fewest times. `reach` is reachable_for(c) or the HUD's move_reach.
+func safe_path(c: Combatant, reach: Dictionary, dest: Vector2i) -> Array[Vector2i]:
+	var path := CombatGrid.path_to(reach, dest)
+	if path.size() < 3 or c.creature.has_flag("flyby") or c.creature.has_flag("agile") or provocations(c, path) == 0:
+		return path
+	var e := enc()
+	var occ := _move_blocks(c)
+	var blocked := _has_fn(occ["blocked"] as Dictionary)
+	var slowed := _value_fn(occ["slowed"] as Dictionary)
+	var mode := move_mode(c)
+	var start := path[0]
+	# The steps into each square that some cheapest way to `dest` takes: back from `dest`, a step from u to v is on one
+	# when it costs exactly what v costs more than u.
+	var into := {}
+	var todo: Array[Vector2i] = [dest]
+	while not todo.is_empty():
+		var v: Vector2i = todo.pop_back()
+		if into.has(v):
+			continue
+		var v_cost := int((reach[v] as Dictionary)["cost"])
+		var steps: Array[Vector2i] = []
+		for d: Vector2i in CombatGrid.DIRS:
+			var u := v - d
+			if not reach.has(u):
+				continue
+			var u_cost := int((reach[u] as Dictionary)["cost"])
+			if u_cost >= v_cost:
+				continue
+			var s := e.grid.step_cost(u, v, c.size_cells, blocked, slowed, mode)
+			if s > 0 and u_cost + s == v_cost:
+				steps.append(u)
+				todo.append(u)
+		into[v] = steps
+	if not into.has(start):
+		return path
+	# Forward over those squares, cheapest first: the fewest reaches left on the way to each (ties keep the usual way).
+	var order: Array = into.keys()
+	order.sort_custom(func(a: Vector2i, b: Vector2i) -> bool: return int((reach[a] as Dictionary)["cost"]) < int((reach[b] as Dictionary)["cost"]))
+	var best := {start: 0}
+	var prev := {}
+	for v: Vector2i in order:
+		if v == start:
+			continue
+		var usual := (reach[v] as Dictionary)["prev"] as Vector2i
+		for u: Vector2i in into[v]:
+			if not best.has(u):
+				continue
+			var n := int(best[u]) + _provokers(c, u, v).size()
+			if not best.has(v) or n < int(best[v]) or (n == int(best[v]) and u == usual):
+				best[v] = n
+				prev[v] = u
+	if not best.has(dest) or int(best[dest]) >= provocations(c, path):
+		return path
+	var out: Array[Vector2i] = [dest]
+	while out[0] != start:
+		out.push_front(prev[out[0]] as Vector2i)
+	return out
+
+
+## How many times walking `path` leaves a foe's reach (an Opportunity Attack each, unless something stops it).
+func provocations(c: Combatant, path: Array[Vector2i]) -> int:
+	var n := 0
+	for i in range(1, path.size()):
+		n += _provokers(c, path[i - 1], path[i]).size()
+	return n
 
 
 ## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,

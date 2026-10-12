@@ -7,7 +7,7 @@
   "map": {
     "rows": [
       "##############################",
-      "#1....1......#...............#",
+      "#_...._......#...............#",
       "#............#...............#",
       "#...............===========..#",
       "#...=....=...#...............#",
@@ -23,7 +23,7 @@
       "#########.####################",
       "                              ",
       "##############################",
-      "#1...........................#",
+      "#_...........................#",
       "#........................==..#",
       "#............................#",
       "#............................#",
@@ -305,7 +305,25 @@
       ],
       "kind": "examine",
       "label": "A circle chalked on the floor",
-      "model": "rune_circle"
+      "model": "rune_circle",
+      "checks": [
+        {
+          "id": "circle_read",
+          "skill": "arcana",
+          "dc": 14,
+          "label": "Read the chalk circle",
+          "success": {
+            "reveal": [
+              "victor_circle_trap"
+            ],
+            "codex": {
+              "id": "victors_circle",
+              "title": "Victor's circle",
+              "text": "The circle in the attic is a teleportation circle, copied from a stolen book by someone clever who skipped a step. Whatever steps into it goes somewhere, but not all of it arrives."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "ash_marks",

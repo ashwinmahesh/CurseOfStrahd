@@ -455,6 +455,11 @@
       "id": "henrik_free_coffin",
       "type": "bool",
       "summary": "The party took the one coffin Henrik gives for nothing, from his shop screen (data/npcs/henrik.json)."
+    },
+    {
+      "id": "vallaki_dog_told",
+      "type": "bool",
+      "summary": "Under Speak with Animals, the big dog in Vallaki's square told the party it saw Milivoj carry a sack of old bones to the coffin maker's back door at night (The Bones of St. Andral)."
     }
   ]
 }

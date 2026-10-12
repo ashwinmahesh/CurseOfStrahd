@@ -112,3 +112,29 @@ once
 
 ~ examine:mists_climbing_pine
 | An old oak by the road with one broad bough grown out level, ten feet up, wide enough to walk along. From there you'd see the road both ways, and how close the Mists really are.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:survival:carcass_wolf_sign:success
+| The wolves came from the trees in a ring and left the same way, all but one track that steps wide around a patch of grass. Someone set a trap there, and someone dropped a pack beside it.
+
+~ check:survival:carcass_wolf_sign:failure
+| Wolves, a great many of them, and a great deal of blood. The rest is churned past reading.
+
+~ check:athletics:oak_lookout:success
+| From the broad bough the road is laid out like a map, and down by the headless statues something long and steel catches the light in the weeds.
+
+~ check:athletics:oak_lookout:failure
+| The bough is broad and mossy and much slicker than it looked. You come down the quick way.
+
+~ check:history:statues_plinths:success
+| The plinths name soldiers of the valley's old lords. Their heads were struck off on purpose, and lie in the weeds where they fell.
+
+~ check:history:statues_plinths:failure
+| Two headless soldiers and a lot of lichen. The plinths have kept their names to themselves.
+
+~ check:religion:wayside_pray:success
+| You say a traveller's prayer at the little shrine, and the road ahead feels, for a breath, like a road and not a throat.
+
+~ check:religion:wayside_pray:failure
+| The prayer trails off into the fog. Whatever god this shrine served has stopped listening at this distance.

@@ -116,3 +116,23 @@ once
 
 ~ examine:lzt_climbing_pine
 | A pine with a hunter's stand lashed into it ten feet up: a few planks and a ladder of nailed rungs. From up there you'd see the lake, and anything coming along the path.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:religion:fishers_shrine_pray:success
+| You pray for the drowned, and behind the shrine, where the fishers leave their offerings, a three-pronged shape catches your eye.
+
+~ check:religion:fishers_shrine_pray:failure
+| The lake laps at the shore and doesn't care.
+
+~ check:athletics:flat_rock_dive:success
+| You dive from the rock into the black water, and on the bottom, where the fishers' luck sank, there's coin enough to bring back up.
+
+~ check:athletics:flat_rock_dive:failure
+| The cold hits like a fist. You come up gasping and empty-handed.
+
+~ check:acrobatics:jetty_swing:success
+| You hook your knees over the boat's gunwale and swing under the jetty, where a ring is wedged between two boards out of sight from above.
+
+~ check:acrobatics:jetty_swing:failure
+| The boat tips, and so do you. Lake Zarovich closes over your head like a lid.

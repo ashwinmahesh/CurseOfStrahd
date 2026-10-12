@@ -206,7 +206,21 @@
       "kind": "examine",
       "label": "A dead oak full of ravens",
       "model": "dead_tree",
-      "stand_ft": 10
+      "stand_ft": 10,
+      "checks": [
+        {
+          "id": "oak_ravens_trust",
+          "skill": "animal_handling",
+          "dc": 14,
+          "label": "Win the ravens' trust",
+          "success": {
+            "reveal": [
+              "oak_raven_hoard"
+            ]
+          }
+        }
+      ],
+      "dialogue": "old_bonegrinder/ilinca:oak"
     },
     {
       "id": "bonegrinder_ravens_west",
@@ -226,7 +240,24 @@
       ],
       "kind": "decor",
       "label": "Ravens",
-      "model": "crow"
+      "model": "crow",
+      "checks": [
+        {
+          "id": "ravens_scatter",
+          "skill": "intimidation",
+          "dc": 12,
+          "label": "Scatter the ravens from the bone heap",
+          "success": {
+            "reveal": [
+              "bonegrinder_bone_heap"
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "piercing"
+          }
+        }
+      ]
     },
     {
       "id": "bonegrinder_bone_heap",
@@ -249,7 +280,28 @@
       ],
       "kind": "examine",
       "label": "A kitchen garden",
-      "model": "reeds"
+      "model": "reeds",
+      "checks": [
+        {
+          "id": "hag_garden",
+          "skill": "nature",
+          "dc": 14,
+          "label": "Pick through the hags' garden",
+          "success": {
+            "items": [
+              {
+                "id": "antitoxin",
+                "qty": 2
+              }
+            ],
+            "codex": {
+              "id": "hags_garden",
+              "title": "The hags' garden",
+              "text": "Belladonna, mandrake, poppies grown for their milk, and nothing anyone would eat. This is where the pastries begin. Among the poisons grows the plant that undoes them, and you know how to brew it."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "bonegrinder_lookout",
@@ -259,7 +311,20 @@
       ],
       "kind": "examine",
       "label": "The view from the crag",
-      "model": "rocks"
+      "model": "rocks",
+      "checks": [
+        {
+          "id": "crag_scan",
+          "skill": "perception",
+          "dc": 14,
+          "label": "Scan the lane from the crag",
+          "success": {
+            "reveal": [
+              "old_bonegrinder_track:ditch_vial"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "bonegrinder_track_marks",
@@ -269,7 +334,22 @@
       ],
       "kind": "examine",
       "label": "Cart ruts",
-      "model": "drag_marks"
+      "model": "drag_marks",
+      "checks": [
+        {
+          "id": "ruts_follow",
+          "skill": "survival",
+          "dc": 12,
+          "label": "Follow the cart ruts",
+          "success": {
+            "codex": {
+              "id": "bonegrinder_ruts",
+              "title": "Who comes up the hill",
+              "text": "The ruts come up from the Vallaki road and the Barovian lane, and every set arrives heavy and leaves light. Some carts bring grain. The narrower ones, pulled by hand, come at night."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "bonegrinder_kindling",

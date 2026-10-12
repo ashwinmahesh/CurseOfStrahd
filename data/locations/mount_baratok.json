@@ -232,7 +232,25 @@
       "label": "A cairn on the summit",
       "model": "cairn",
       "dialogue": "mount_baratok/events:cairn",
-      "when": "not flag.mordenkainen_spellbook_found"
+      "when": "not flag.mordenkainen_spellbook_found",
+      "checks": [
+        {
+          "id": "cairn_ward_unpick",
+          "skill": "arcana",
+          "dc": 16,
+          "label": "Unpick the ward round the cairn",
+          "success": {
+            "disarm": [
+              "baratok_ward"
+            ]
+          },
+          "failure": {
+            "damage": "2d8",
+            "damage_type": "lightning"
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "baratok_cairn_opened",

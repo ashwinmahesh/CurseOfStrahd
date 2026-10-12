@@ -132,7 +132,7 @@ leaves a smaller purse and one find.
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Town, by the stocks | Ring of Protection (rare) | Search (Perception DC 13): trodden into the mud |
+| ✅ | Town, by the stocks | Ring of Protection (rare) | Search (Perception DC 13): trodden into the mud; or a Tip from the big dog in the square (Speak with Animals) |
 | ✅ | Lower town, the leaning hovel | Handy Haversack (rare) | Search (Perception DC 14): a sack under the step |
 | ✅ | Wachterhaus, Lady Wachter's desk | Eyes of Charming (uncommon) | Search (Investigation DC 15): a hidden drawer |
 | ✅ | Wachterhaus cellar, the dark shrine | Rod of Rulership (rare) | Search (Perception DC 15): the cult's tithe under the shrine |
@@ -145,7 +145,7 @@ leaves a smaller purse and one find.
 | ✅ | St. Andral's crypt | Mace of Disruption (rare) | Tip: when the bones are back, the saint's niche opens |
 | ✅ | Coffin maker's storeroom | Slippers of Spider Climbing (uncommon) | Search (Investigation DC 14): a coffin with a false bottom |
 | ✅ | Vistani camp, Luvash | Cloak of the Manta Ray (uncommon) | Gift: when Arabelle comes home |
-| ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer |
+| ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer; or a Tip from his black horse (Speak with Animals) |
 | ✅ | Stella Wachter, St. Andral's | Cloak of the Bat (rare) | Gift: the master's birthday present, once her curse is broken (The Cat in the Window, docs/story/side_quests.md) |
 | ✅ | Ignat the lamplighter | Ring of Resistance, Necrotic (rare) | Gift: Ana's mother's ring, once Ana is at rest (Black Roses) |
 | ✅ | Watchman Dobre's satchel | Arcane Grimoire, +2 (rare) | Gift: in the satchel once Dobre is beaten (Ribbons) |
@@ -171,7 +171,7 @@ leaves a smaller purse and one find.
 | ✅ | Ground floor, the great oven | Brazier of Commanding Fire Elementals (rare) | Search (Investigation DC 15): something cooling in the ash |
 | ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
 | ✅ | Loft, the little bags on hooks | Portable Hole (rare) | Search (Perception DC 15): a black cloth folded among the bags |
-| ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
+| ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow; or a Tip from the ravens themselves (Speak with Animals) |
 | ✅ | The hill, the ditch by the track | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot, from the miller's lane, 2026-10-09) |
 | ✅ | The track, Granny Ash's basket | Robe of Eyes (rare) | Hoard: once Granny Ash is dead (The Fourth Sister, docs/story/side_quests.md) |
 
@@ -182,7 +182,7 @@ leaves a smaller purse and one find.
 | ✅ | The yard well | Rope of Climbing (uncommon) | Search (Perception DC 13): tied off below the lip |
 | ✅ | The yard, behind the casks | Eversmoking Bottle (uncommon) | Search (Perception DC 13): a bottle set aside (lane 28's spot) |
 | ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot) |
-| ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard |
+| ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard; or a Tip from the winery's ravens (Speak with Animals) |
 | ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
 | ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
@@ -210,7 +210,7 @@ leaves a smaller purse and one find.
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14) |
+| ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14); or a Tip from Krezk's goats (Speak with Animals) |
 | ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
 | ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
 | ✅ | Krezk, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13): a tin of salve left for whoever needs it (from the miller's lane, 2026-10-09) |
@@ -337,7 +337,7 @@ leaves a smaller purse and one find.
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
 | ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
 | ✅ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |
-| ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest |
+| ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest; or a Tip from the roost's oldest raven (Speak with Animals) |
 | ✅ | Catacombs, the conjurer's bier | +2 Wand of the War Mage (rare) | Search (Investigation DC 16) |
 | ✅ | Catacombs, the jester's sarcophagus | Cape of the Mountebank (rare) | Search (Investigation DC 15) |
 | ✅ | Strahd's tomb, the chest at the dais | Potion of Supreme Healing, two (very rare) | Hoard |
