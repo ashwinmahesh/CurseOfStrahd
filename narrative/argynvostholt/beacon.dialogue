@@ -133,6 +133,29 @@ approve godrick_pendlebrook +4 liriel_dawnsong +3 kip_smudgewick +1 thistle +1 w
 -> godfrey_check
 
 ~ godfrey_check
+# The knights rest when the beacon burns, Sir Godfrey with them: he knights Godrick first, if he hasn't
+# (Wiki finding 35; the light used to take him before he could).
+if name:godrick_pendlebrook and flag.godfrey_met and flag.ladle_sword_shown and not (quest.the_ladle >= knighted)
+-> godfrey_knights
+endif
+-> godfrey_parting
+
+~ godfrey_knights
+if not guest:sir_godfrey_gwilym
+Narrator: Sir Godfrey has come up the tower stair behind you, with Sir Aldric's sword across his arms.
+endif
+Sir Godfrey Gwilym: Not yet. Not before I've done one thing right. Godrick, lad. The light can wait for this.
+Sir Godfrey Gwilym: Kneel, then. No, the other knee. That's it.
+cutscene godrick_knighting
+Narrator: The flat of the old blade touches one shoulder, then the other.
+Sir Godfrey Gwilym: Keep the watch. Shield the sleeper and the stranger. Lift the fallen. Take nothing not given. And when the light goes out, be the light. Rise, Sir Godrick, of the Order of the Silver Dragon.
+Sir Godfrey Gwilym: Keep the sword. Aldric would want it to go on being carried by someone who comes back.
+give weapon_plus_1 to name:godrick_pendlebrook
+quest the_ladle knighted
+approve godrick_pendlebrook +8: You stood with me while I was knighted
+-> godfrey_parting
+
+~ godfrey_parting
 if guest:sir_godfrey_gwilym
 -> godfrey_stays
 endif

@@ -90,6 +90,9 @@ interject tag:cheerful: To the ear.
 endif
 Clovin Belview [smile]: To the ear!
 approve ratatoille +1 wren_featherfoot +1: You drank the last of the Martikovs' wine with Clovin
+if flag.abbot_fate
+-> krezk/clovins_audience:abbey_menu
+endif
 -> menu
 
 ~ after
@@ -105,7 +108,6 @@ endif
 if flag.markovia_letter_read
 Clovin Belview: I've still got the letter. I've learned three of the words. "Light", "candle" and "go". They're good words.
 endif
-if quest.clovins_audience == rumored or (flag.clovin_befriended and not quest.clovins_audience) or quest.clovins_audience == refused or flag.clovin_family_found or not quest.mothers_ninth_improvement or quest.mothers_ninth_improvement == done
+# He still has his rumours, his drink and his family once the Abbot's fate is settled, Mother's quest open or not
+# (Wiki finding 30).
 -> krezk/clovins_audience:abbey_menu
-endif
--> END

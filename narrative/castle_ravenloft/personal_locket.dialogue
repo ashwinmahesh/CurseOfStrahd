@@ -14,8 +14,15 @@ if flag.locket_fate == "pool"
 -> pool
 elif flag.locket_fate == "ireena"
 -> ireena
+elif flag.locket_fate == "strahd" or flag.locket_fate == "burned"
+-> settled
 endif
 -> kept
+
+# Already given to him, or burned (Wiki finding 33): it's done.
+~ settled
+interject name:tamsin_tealeaf: Nobody calls my name in my sleep any more. I keep listening anyway.
+-> END
 
 # --- He still has it ----------------------------------------------------------------------------------------
 
@@ -41,6 +48,7 @@ Strahd [smile]: For whoever came. You came. I am grateful, and I am not often gr
 * [name:tamsin_tealeaf] Not yet. -> not_yet
 
 ~ give
+set locket_fate = "strahd"
 cutscene locket_given
 Narrator: Tamsin takes out the locket and holds it a moment, the way he held it over the pool. Then he puts it in the long white hand.
 Strahd: Thank you.
@@ -54,6 +62,7 @@ endif
 -> END
 
 ~ burn
+set locket_fate = "burned"
 Narrator: Tamsin opens the locket once and says something to the painted face, too quietly for anyone else. Then he drops it into the fire.
 Narrator: The silver goes soft and dark. The little painted woman curls up like a leaf.
 Narrator: Strahd says nothing at all.
