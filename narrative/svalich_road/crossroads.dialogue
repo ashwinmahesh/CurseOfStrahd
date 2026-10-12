@@ -80,6 +80,7 @@ Narrator: The words come out in the wrong order. You say them anyway. It is the 
 -> buried
 
 ~ buried
+cutscene gallows_grave
 Narrator: You mark the grave with the HORSE THIEF board, turned face down. It is the kindest thing anyone has done with it.
 -> END
 

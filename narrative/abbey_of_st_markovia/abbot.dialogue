@@ -39,6 +39,7 @@ Abbot: Krezk shut its gate on you and pointed up the mountain. They do that. I a
 endif
 if guest:ireena
 set abbot_saw_ireena
+cutscene abbot_ireena_candles
 Narrator: His eyes find Ireena, and every candle in the chapel leans toward her, all at once, as if a door had opened behind her. Then they straighten.
 Abbot: Forgive me. For a moment you were someone I have prayed for for a very long time. Welcome, child. Welcome.
 interject guest:ireena: I've had warmer welcomes from wolves. They at least looked at the rest of me.

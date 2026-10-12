@@ -62,6 +62,7 @@ Narrator: In the middle sits one egg, as tall as a child, grey and freckled. It'
 
 ~ take
 set roc_egg_taken
+cutscene egg_carried
 Narrator: It's heavy, and it screams the whole way down, and somewhere out over the gorge something enormous answers.
 if flag.tibor_marked
 interject tag:blunt: We're carrying a roc to the count.
@@ -84,6 +85,7 @@ endif
 ~ sold
 quest the_last_egg sold
 set roc_egg_sold
+cutscene egg_sold
 Narrator: The falconer lifts the chick, shell and all, as if it weighed nothing, and the stone birds take it between them, and they go up the wind toward the castle with it screaming all the way.
 tsolenka_tibor: (From the landing, not loudly.) Four hundred. As promised. I'm sorry. I was told what to say.
 gold +400
