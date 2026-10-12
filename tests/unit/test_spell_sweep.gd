@@ -37,6 +37,9 @@ func _try(spell_id: String, seed_value: int) -> Dictionary:
 		f1.creature.dead = true
 		f1 = TestCombat.foe(e, "bandit", Vector2i(3, 2))
 	TestCombat.punching_bag(e, Vector2i(4, 2), 80, kind)
+	# A spell for a creature that understands you (Suggestion): the feeble foe speaks Common.
+	if bool(data0.get("needs_understanding", false)):
+		(f1.creature as Monster).data["languages"] = ["Common"]
 	c.creature.hp = maxi(1, c.creature.max_hp() / 2)
 	ally.creature.hp = 5
 	# Something for Dispel Magic to end.

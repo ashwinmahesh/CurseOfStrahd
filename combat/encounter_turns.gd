@@ -507,10 +507,11 @@ func _check_over() -> void:
 
 
 ## True if something takes this creature's turn out of its controller's hands (Command, Fear, Turn Undead, Crown of
-## Madness, Calm Emotions): the AI plays it as the effect demands, even for a party member.
+## Madness, Calm Emotions, Suggestion): the AI plays it as the effect demands, even for a party member.
 func compelled(c: Combatant) -> bool:
 	var e := enc()
-	for f: String in ["command_grovel", "command_halt", "command_flee", "command_approach", "command_drop", "fear_flee", "crowned"]:
+	for f: String in ["command_grovel", "command_halt", "command_flee", "command_approach", "command_drop", "fear_flee", "crowned",
+			"suggest_leave", "suggest_sit", "suggest_follow"]:
 		if c.creature.has_flag(f):
 			return true
 	return e.features.fleeing_from(c) != null
