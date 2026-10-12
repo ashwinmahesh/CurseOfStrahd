@@ -72,16 +72,18 @@ func quest_stage(quest_id: String) -> String:
 	return str((quests.get(quest_id, {}) as Dictionary).get("stage", ""))
 
 
-## Moves a quest to `stage` (data/quests). Returns false if the quest or stage doesn't exist.
+## Moves a quest to `stage` (data/quests). Returns false if the quest or stage doesn't exist, or if the quest has ended
+## and `stage` is an earlier one that's still open: a line that moves a quest on without asking where it is can't reopen
+## a finished quest (Storyline QA, 2026-10-12: Blinsky's doll talk put Izek's back to "Learn what Izek wants with her").
 func set_quest_stage(quest_id: String, stage: String) -> bool:
 	var q := Compendium.shared().get_entry("quests", quest_id)
 	if q.is_empty():
 		return false
-	var ok := false
-	for s: Variant in q.get("stages", []):
-		if str((s as Dictionary)["id"]) == stage:
-			ok = true
-	if not ok:
+	var at := quest_stage_index(quest_id, stage)
+	if at < 0:
+		return false
+	if quest_ended(quest_id) and at < quest_stage_index(quest_id, quest_stage(quest_id)) \
+			and str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == "":
 		return false
 	var entry := quests.get(quest_id, {"stage": "", "history": []}) as Dictionary
 	entry["stage"] = stage
@@ -92,6 +94,15 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
 	return true
+
+
+## Whether the quest stands at a stage that ends it (success or failure).
+func quest_ended(quest_id: String) -> bool:
+	var i := quest_stage_index(quest_id, quest_stage(quest_id))
+	if i < 0:
+		return false
+	var stages := Compendium.shared().get_entry("quests", quest_id).get("stages", []) as Array
+	return str((stages[i] as Dictionary).get("ends", "")) != ""
 
 
 ## The order of a quest's stages, for >= comparisons in conditions (-1 if not reached / unknown).
@@ -717,7 +728,36 @@ static func from_dict(d: Dictionary) -> StoryState:
 			st.guest_ids.append(str(gd["npc"]))
 			st.guests.append(cr)
 	_upgrade_durst_spellbook(st)
+	_upgrade_quests(st)
 	return st
+
+
+## Saves made before a quest fix (Storyline QA, 2026-10-12) are mended so the journal shows where the story really is.
+## A fight that now moves its quest on (a location encounter's `quest`) was won before it did: Black Roses stayed at
+## "vigil" after its vampires died. And a quest that an unguarded line moved back out of its ending (Izek's, by
+## Blinsky's doll talk; set_quest_stage refuses that now) goes back to that ending.
+static func _upgrade_quests(st: StoryState) -> void:
+	for loc in Compendium.shared().all("locations"):
+		var won := (st.location_states.get(str(loc["id"]), {}) as Dictionary).get("encounters", {}) as Dictionary
+		if won.is_empty():
+			continue
+		for e: Variant in loc.get("encounters", []):
+			var spec := e as Dictionary
+			if not spec.has("quest") or not bool(won.get(str(spec["id"]), false)):
+				continue
+			var qid := str((spec["quest"] as Dictionary)["id"])
+			var stage := str((spec["quest"] as Dictionary)["stage"])
+			if not st.quest_ended(qid) and st.quest_stage_index(qid, st.quest_stage(qid)) < st.quest_stage_index(qid, stage):
+				st.set_quest_stage(qid, stage)
+	for qid: String in st.quests:
+		if st.quest_ended(qid):
+			continue
+		var stages := Compendium.shared().get_entry("quests", qid).get("stages", []) as Array
+		var now := st.quest_stage_index(qid, st.quest_stage(qid))
+		for h: Variant in ((st.quests[qid] as Dictionary).get("history", []) as Array):
+			var i := st.quest_stage_index(qid, str(h))
+			if i > now and str((stages[i] as Dictionary).get("ends", "")) != "":
+				(st.quests[qid] as Dictionary)["stage"] = str(h)   # back to the ending it was moved out of
 
 
 ## Saves from before found spellbooks listed their spells (owner, 2026-10-07): the Dursts' footlocker in Death House

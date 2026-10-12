@@ -76,6 +76,77 @@ func test_strahd_comes_back_to_hear_about_marina() -> void:
 	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "", "and once he's told, he's gone")
 
 
+## Black Roses (Ashwin, 2026-10-12): winning the fight with Ana and her girls, at the Petrovs' window or at their graves,
+## left the journal at "Find where Ana sleeps", and only her father, out on his lamp rounds, could end it. Every one of
+## those fights moves the quest to "Tell Ignat" now, and he ends it.
+func test_black_roses_says_to_tell_ignat_after_the_fight() -> void:
+	var fights := 0
+	for e: Variant in Compendium.shared().get_entry("locations", "vallaki")["encounters"]:
+		var spec := e as Dictionary
+		if str(spec["id"]) in ["roses_street", "roses_graves"]:
+			fights += 1
+			var q := spec.get("quest", {}) as Dictionary
+			assert_eq("%s:%s" % [q.get("id", ""), q.get("stage", "")], "black_roses:slain", "%s moves the quest on" % spec["id"])
+	assert_true(fights >= 2, "the street fight and the graves fight")
+	var st := SideQuestPlay.party(["ilse_varga"], 6, "vallaki", 22)
+	st.set_quest_stage("black_roses", "vigil")
+	st.set_flag("roses_spawn_destroyed")
+	st.set_quest_stage("black_roses", "slain")   # what winning either fight does
+	assert_eq(_status(st, "black_roses"), "active")
+	assert_true(str((_entry(st, "black_roses")["objectives"] as Array)[0]).contains("Ignat"), "the journal says who to tell")
+	assert_eq(SideQuestPlay.standing(st, "vallaki", "vallaki_lamplighter"), "vallaki/townsfolk:lamplighter", "he's on his rounds")
+	SideQuestPlay.play(st, "vallaki/townsfolk:lamplighter")
+	assert_eq(_status(st, "black_roses"), "success")
+	assert_true(st.party_has_item("ring_of_resistance_necrotic"), "his wife's ring")
+
+
+## Ribbons (Ashwin, 2026-10-12): Daciana left the square for good when the festival ended, so a Ribbons begun before it
+## could never move on. She stays in the square by day while the quest is open.
+func test_daciana_stays_while_ribbons_is_open() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 5, "vallaki", 12)
+	st.set_flag("festival_over")
+	assert_eq(SideQuestPlay.standing(st, "vallaki", "vallaki_ribbon_girl"), "", "no ribbons after the festival")
+	st.set_quest_stage("ribbons", "rumored")
+	assert_eq(SideQuestPlay.standing(st, "vallaki", "vallaki_ribbon_girl"), "vallaki/townsfolk:ribbon_girl",
+		"but she's in the square while Ribbons is open")
+	var beats := SideQuestPlay.play(st, "vallaki/townsfolk:ribbon_girl", ["We'll see who comes"])
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_eq(st.quest_stage("ribbons"), "asked", "she says where the lists go")
+	assert_true(SideQuestPlay.shown(st, "vallaki", "ribbon_lamp"))
+
+
+## Izek (Ashwin, 2026-10-12): telling him Ireena is his sister ends his quest, but asking Blinsky about the dolls
+## afterwards moved it back to "Learn what Izek wants with her". A finished quest stays finished now: no line moves it
+## back to an earlier open stage, though it can still reach another ending.
+func test_a_finished_quest_stays_finished() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 5, "vallaki", 12)
+	st.set_quest_stage("izek_obsession", "noticed")
+	st.set_quest_stage("izek_obsession", "truth_told")
+	st.set_flag("izek_dolls_seen")
+	SideQuestPlay.play(st, "vallaki/blinsky:dolls")
+	assert_eq(st.quest_stage("izek_obsession"), "truth_told", "Blinsky's dolls don't reopen it")
+	assert_false(st.set_quest_stage("izek_obsession", "truth_guessed"), "nor does any other line")
+	assert_eq(_status(st, "izek_obsession"), "success")
+	assert_true(st.set_quest_stage("izek_obsession", "izek_slain"), "another ending still can")
+
+
+## Saves from before these fixes catch up when loaded: a Black Roses fight already won moves the quest to "Tell
+## Ignat", and a quest moved back out of its ending goes back to it (Ashwin's save had both).
+func test_old_saves_catch_up() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 6, "vallaki", 13)
+	st.set_quest_stage("black_roses", "vigil")
+	st.set_flag("roses_spawn_destroyed")
+	(st.loc_state("vallaki")["encounters"] as Dictionary)["roses_graves"] = true
+	st.set_quest_stage("izek_obsession", "noticed")
+	st.set_quest_stage("izek_obsession", "truth_told")
+	var izek := st.quests["izek_obsession"] as Dictionary
+	izek["stage"] = "dolls_found"   # what Blinsky's line did before
+	(izek["history"] as Array).append("dolls_found")
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(back.quest_stage("black_roses"), "slain")
+	assert_eq(back.quest_stage("izek_obsession"), "truth_told")
+
+
 func _ids(st: StoryState) -> Array:
 	return QuestLog.journal(st).map(func(q: Dictionary) -> String: return str(q["id"]))
 

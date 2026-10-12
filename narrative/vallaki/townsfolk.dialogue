@@ -1,5 +1,5 @@
 # Vallaki's townsfolk about their day (lane 4, F2): Goodwife Marta on her morning round of the market row and the main
-# street, Old Kolya hauling festival wicker from the lower town, and Ilie lighting the lamps after dark. They walk
+# street, Old Kolya hauling festival wicker from the lower town, and Ignat lighting the lamps after dark. They walk
 # their routes (the location's `path`) and stop when someone comes up to them.
 
 ~ goodwife
@@ -44,21 +44,21 @@ Old Kolya: Don't tell the Baron I said "grey".
 if quest.black_roses and quest.black_roses != rumored
 -> vallaki/black_roses:ilie
 endif
-Ilie the Lamplighter: Evening. Every lamp lit by the last bell, or I answer for it. The Baron says a lit street is a happy street.
+Ignat the Lamplighter: Evening. Every lamp lit by the last bell, or I answer for it. The Baron says a lit street is a happy street.
 if guest:ireena
-Ilie the Lamplighter: Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows.
+Ignat the Lamplighter: Your friend should keep her hood up. The dark has eyes on this town, and some of them are at the windows.
 endif
 * Who are the lamps really for? -> lamplighter_ana
 * [if flag.roses_rumor] There were black roses on the chandler's step this morning. -> vallaki/black_roses:asks
 * Good evening. -> END
 
 ~ lamplighter_ana
-Ilie the Lamplighter: For my girl, Ana. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk.
-Ilie the Lamplighter [sad]: The Baron called it a chill. The next day there were black roses on our step, and a card in a very fine hand: "With sympathy, from her neighbour across the lake."
+Ignat the Lamplighter: For my girl, Ana. Last winter she slept with her window open a crack, for the stove smoke. Three mornings later the watch found her at the lake gate, sitting against the post, smiling, white as milk.
+Ignat the Lamplighter [sad]: The Baron called it a chill. The next day there were black roses on our step, and a card in a very fine hand: "With sympathy, from her neighbour across the lake."
 interject tag:blunt: He sent flowers. To her father.
-Ilie the Lamplighter: He always does. I light every lamp on this street now. It doesn't keep him out. It only means I see whose window he's looking at.
+Ignat the Lamplighter: He always does. I light every lamp on this street now. It doesn't keep him out. It only means I see whose window he's looking at.
 * Have there been roses since? -> vallaki/black_roses:asks
-* Goodnight, Ilie. -> END
+* Goodnight, Ignat. -> END
 
 # --- Evenings at the Blue Water Inn (their `hours`), and the stocks (data/schedule/vallaki.json) ---
 
@@ -112,12 +112,17 @@ Matei: Heavy days are good days. You don't have time to think.
 -> END
 
 ~ ribbon_girl
+if quest.ribbons and quest.ribbons != rumored
+-> vallaki/ribbons:daciana
+endif
+# Ribbons outlasts the festival: she still writes the lists while the quest is open (Storyline QA, 2026-10-12).
+if flag.festival_over and quest.ribbons == rumored
+Daciana [afraid]: The festival's over, and they still want the list. Who's sour, who's sorry the sun burned. It goes under the lamp all the same.
+-> vallaki/ribbons:who
+endif
 if flag.festival_over
 Daciana: No more ribbons. Nobody's counting any more. I don't know what to do with my hands.
 -> END
-endif
-if quest.ribbons and quest.ribbons != rumored
--> vallaki/ribbons:daciana
 endif
 Daciana [smile]: A ribbon for the festival! It's free. It's for the sun. Everybody wears one.
 * Take a ribbon. -> ribbon_take
