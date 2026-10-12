@@ -327,3 +327,59 @@ once
 ~ search:cutter_flask
 | Behind the woodcutter's stump, a flask of something pale blue, still corked. It keeps the cold out of your hands just to hold it.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:animal_handling:horses_calm:success
+| Under your hand the horses settle, but they keep shying from the reeds up the shore, where something flashes when the light finds it.
+
+~ check:animal_handling:horses_calm:failure
+| The bay snorts and turns its rump to you. Horses have long memories, and you are not in them.
+
+~ check:performance:bonfire_dance:success
+| The Vistani clap the time, the fire leaps, and for a little while nobody is thinking about the castle at all.
+
+~ check:performance:bonfire_dance:failure
+| You lose the beat, and the Vistani are kind enough to laugh with you, mostly.
+
+~ check:sleight_of_hand:knife_game:success
+| The knife flickers between your fingers faster than the Vistana can follow, and the coins are yours.
+
+~ check:sleight_of_hand:knife_game:failure
+| One stab too many, one finger too slow. The Vistani wince politely and keep the pot.
+
+~ check:athletics:cart_lift:success
+| You heave the cart up off its cracked wheel, and the floorboards shift: one of them was never nailed down.
+
+~ check:athletics:cart_lift:failure
+| The cart doesn't care how strong you are. It stays exactly where it is.
+
+~ check:insight:ribbons_read:success
+| Every ribbon is a name, except one knot, tied tight and low, which isn't a name at all but a promise to come back for what's buried beneath.
+
+~ check:insight:ribbons_read:failure
+| Names, and the people who tied them. Their grief is nobody's business but the tree's.
+
+~ check:history:cairn_history:success
+| The oldest marks at the bottom aren't names but a Vistani promise: the pool's people may pass the mists, and owe the castle for it.
+
+~ check:history:cairn_history:failure
+| Stones stacked with care, scratched with signs you can't read. They mean a great deal to somebody.
+
+~ check:arcana:tokens_sense:success
+| One token among the hundreds is warm to the touch and hums when you hold it near, like a held breath.
+
+~ check:arcana:tokens_sense:failure
+| Buttons, rings and bits of string. Each meant something to someone, and nothing to you.
+
+~ check:athletics:pine_climb:success
+| Up past the claw marks, where the branches thin, a satchel hangs from a broken limb, its strap snagged fast.
+
+~ check:athletics:pine_climb:failure
+| Two-thirds of the way up the bark peels away under your hand, and the ground comes to meet you.
+
+~ check:religion:cairn_names:success
+| You speak the names one by one, and under the last a stone rocks loose: someone hid a keepsake with their dead.
+
+~ check:religion:cairn_names:failure
+| The names are worn, and you stumble over them. The cairn keeps its own.

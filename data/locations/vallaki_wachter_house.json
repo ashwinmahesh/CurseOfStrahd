@@ -229,7 +229,25 @@
       ],
       "kind": "examine",
       "label": "A shrine",
-      "model": "shrine_small"
+      "model": "shrine_small",
+      "checks": [
+        {
+          "id": "shrine_dedication",
+          "skill": "religion",
+          "dc": 15,
+          "label": "Read the shrine's dedication",
+          "success": {
+            "reveal": [
+              "shrine_tithe"
+            ],
+            "codex": {
+              "id": "wachter_shrine",
+              "title": "The shrine in the cellar",
+              "text": "The shrine under Wachterhaus is dedicated to the lord of Ravenloft as if he were a god. Its prayers ask for power, for vengeance on the Baron, and for the gifts promised to the faithful."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "strahd_letter",

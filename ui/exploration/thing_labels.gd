@@ -74,8 +74,18 @@ func plates() -> Array[Dictionary]:
 	return out
 
 
-## The plate's words and whether it's drawn dim (an emptied chest, a way that's shut for now).
+## The plate's words and whether it's drawn dim (an emptied chest, a way that's shut for now). A thing with a skill
+## check someone could still try names its skills too ("Old graves · History", WorldChecks).
 func _name(thing: Dictionary) -> Array:
+	var said := _name_only(thing)
+	if str(thing["kind"]) in ["prop", "door", "container"]:
+		var skills := LocationChecks.skills_offered(view, thing.get("spec", {}) as Dictionary)
+		if skills != "":
+			said[0] = "%s · %s" % [said[0], skills]
+	return said
+
+
+func _name_only(thing: Dictionary) -> Array:
 	var spec := thing.get("spec", {}) as Dictionary
 	match str(thing["kind"]):
 		"npc":

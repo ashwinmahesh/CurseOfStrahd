@@ -444,8 +444,21 @@ static func parts_text(r: Dictionary) -> String:
 		var d := p as Dictionary
 		bits.append("%s %+d" % [str(d["label"]), int(d["value"])])
 	if int(r.get("extra", 0)) != 0:
-		bits.append("%s %+d" % [str(r.get("extra_label", "Extra")) if str(r.get("extra_label", "")) != "" else "Extra", int(r["extra"])])
+		var each := extra_bits(str(r.get("extra_label", "")))
+		if each.is_empty():
+			bits.append("%s %+d" % [str(r.get("extra_label", "Extra")) if str(r.get("extra_label", "")) != "" else "Extra", int(r["extra"])])
+		bits.append_array(each)
 	return " · ".join(bits)
+
+
+## The dice added after the roll, one by one, from a D20Test's extra_label ("+ Bless 3 + Guidance (Liriel) 2"):
+## ["Bless +3", "Guidance (Liriel) +2"]. [] when the label isn't in that form.
+static func extra_bits(label: String) -> Array[String]:
+	var out: Array[String] = []
+	var re := RegEx.create_from_string("(?:^| )([+-]) (.+?) (\\d+)(?= [+-] |$)")
+	for m in re.search_all(label):
+		out.append("%s %s%s" % [m.get_string(2), m.get_string(1), m.get_string(3)])
+	return out
 
 
 ## The word for the result: the roll's own `verdict`, else one that fits its kind.

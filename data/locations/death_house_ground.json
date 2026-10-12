@@ -399,7 +399,25 @@
       ],
       "kind": "examine",
       "label": "a dumbwaiter",
-      "model": "dumbwaiter"
+      "model": "dumbwaiter",
+      "checks": [
+        {
+          "id": "dumbwaiter_squeeze",
+          "skill": "acrobatics",
+          "dc": 13,
+          "label": "Squeeze into the dumbwaiter shaft",
+          "success": {
+            "reveal": [
+              "dumbwaiter_soot"
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "bludgeoning"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "pantry_jars",
@@ -409,7 +427,22 @@
       ],
       "kind": "examine",
       "label": "sealed jars",
-      "model": "jars"
+      "model": "jars",
+      "checks": [
+        {
+          "id": "jars_judge",
+          "skill": "medicine",
+          "dc": 12,
+          "label": "Judge what's in the sealed jars",
+          "success": {
+            "heal": "1d4"
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "poison"
+          }
+        }
+      ]
     },
     {
       "id": "dining_tapestry",

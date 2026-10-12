@@ -423,7 +423,22 @@
         10
       ],
       "kind": "examine",
-      "label": "Castle on the cliff"
+      "label": "Castle on the cliff",
+      "checks": [
+        {
+          "id": "castle_recall",
+          "skill": "history",
+          "dc": 14,
+          "label": "Recall what's told of the castle",
+          "success": {
+            "codex": {
+              "id": "castle_ravenloft_tales",
+              "title": "The castle on the pillar of rock",
+              "text": "Castle Ravenloft was raised some four centuries ago by the soldier-prince who conquered this valley, and named for his mother. The valley folk say its lord never died, only changed, and that nobody who climbs the road to it uninvited is seen again."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "road_west_gates",
@@ -443,7 +458,22 @@
         12
       ],
       "kind": "examine",
-      "label": "The road east"
+      "label": "The road east",
+      "checks": [
+        {
+          "id": "mists_study",
+          "skill": "arcana",
+          "dc": 14,
+          "label": "Study the mists",
+          "success": {
+            "codex": {
+              "id": "barovian_mists",
+              "title": "The mists",
+              "text": "The fog around Barovia is a boundary, not weather. It turns walkers back to where they began and chokes those who push on. Something holds it shut, and nothing in it is natural."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "mansion_front_door",
@@ -464,7 +494,22 @@
         5
       ],
       "kind": "examine",
-      "label": "Clawed walls"
+      "label": "Clawed walls",
+      "checks": [
+        {
+          "id": "claw_marks_read",
+          "skill": "survival",
+          "dc": 13,
+          "label": "Read the claw marks",
+          "success": {
+            "codex": {
+              "id": "village_mansion_claw_marks",
+              "title": "Claw marks on the burgomaster's house",
+              "text": "Most of the gouges are wolves', the big valley wolves that hunt in packs of a dozen. The highest are something else's: a hand that ends in claws, reaching where no wolf could. Every trail comes in from the west road and goes back the same way, toward the woods past the crossroads."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "boarded_houses",
@@ -502,7 +547,25 @@
       ],
       "kind": "examine",
       "label": "Old graves",
-      "model": "gravestone"
+      "model": "gravestone",
+      "checks": [
+        {
+          "id": "old_graves_names",
+          "skill": "history",
+          "dc": 13,
+          "label": "Read the oldest names",
+          "success": {
+            "reveal": [
+              "refilled_grave"
+            ],
+            "codex": {
+              "id": "village_oldest_graves",
+              "title": "The oldest graves in Barovia",
+              "text": "The oldest stones are cut in a script nobody in the village writes any more, and their dates run back before the castle was raised. The valley had its own lords and its own dead before its conqueror came. One of those old graves has new earth on it."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "open_grave",
@@ -567,7 +630,25 @@
       "kind": "examine",
       "label": "Pastry cart",
       "model": "cart",
-      "when": "not flag.burgomaster_buried and not flag.morgantha_driven_off"
+      "when": "not flag.burgomaster_buried and not flag.morgantha_driven_off",
+      "checks": [
+        {
+          "id": "pastry_sniff",
+          "skill": "medicine",
+          "dc": 13,
+          "label": "Sniff the pastries",
+          "success": {
+            "codex": {
+              "id": "dream_pastries",
+              "title": "The pastry cart",
+              "text": "Under the honey and the butter there's a drug: a sleeping draught, and beneath that something that leaves the eater content and hollow and wanting another. Whoever bakes these knows exactly how much the village can stand."
+            }
+          },
+          "failure": {
+            "minutes": 60
+          }
+        }
+      ]
     },
     {
       "id": "collapsed_barn",
@@ -576,7 +657,25 @@
         25
       ],
       "kind": "examine",
-      "label": "Collapsed barn"
+      "label": "Collapsed barn",
+      "checks": [
+        {
+          "id": "barn_heave",
+          "skill": "athletics",
+          "dc": 14,
+          "label": "Heave the fallen beams aside",
+          "success": {
+            "reveal": [
+              "barn_beams_stash"
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "bludgeoning"
+          },
+          "minutes": 10
+        }
+      ]
     },
     {
       "id": "death_house_facade",
@@ -659,7 +758,20 @@
       ],
       "kind": "examine",
       "label": "A rain barrel",
-      "model": "barrel"
+      "model": "barrel",
+      "checks": [
+        {
+          "id": "barrel_tracks",
+          "skill": "survival",
+          "dc": 12,
+          "label": "Read the tracks by the barrel",
+          "success": {
+            "reveal": [
+              "rain_barrel_oil"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "mansion_dead_hedge_1",
@@ -850,7 +962,18 @@
       "kind": "examine",
       "label": "A roadside shrine",
       "model": "shrine_small",
-      "facing": "south"
+      "facing": "south",
+      "checks": [
+        {
+          "id": "shrine_pray",
+          "skill": "religion",
+          "dc": 12,
+          "label": "Pray to the Morninglord",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "well_trough",
@@ -942,6 +1065,29 @@
       ],
       "facing": "east",
       "stand_ft": 5
+    },
+    {
+      "id": "churchyard_raven",
+      "cell": [
+        27,
+        8
+      ],
+      "kind": "decor",
+      "label": "A raven on the lych-gate",
+      "model": "crow",
+      "checks": [
+        {
+          "id": "raven_coax",
+          "skill": "animal_handling",
+          "dc": 13,
+          "label": "Coax the raven down",
+          "success": {
+            "reveal": [
+              "lychgate_holy_water"
+            ]
+          }
+        }
+      ]
     }
   ],
   "lights": [

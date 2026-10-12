@@ -385,7 +385,22 @@
       ],
       "kind": "examine",
       "label": "the oldest crypt",
-      "model": "crypt"
+      "model": "crypt",
+      "checks": [
+        {
+          "id": "ancestors_read",
+          "skill": "history",
+          "dc": 14,
+          "label": "Read the oldest crypt",
+          "success": {
+            "codex": {
+              "id": "durst_ancestors",
+              "title": "The first of the Dursts",
+              "text": "The oldest crypt is older than the Durst name on it. Its founder took the house when it was new and swore it, in the carving, to a patron who would give the family whatever it asked for as long as the house was fed."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "crypt_gustav",
@@ -479,7 +494,23 @@
       ],
       "kind": "examine",
       "label": "the well",
-      "model": "well_stone"
+      "model": "well_stone",
+      "checks": [
+        {
+          "id": "well_climb",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Climb down the well shaft",
+          "success": {
+            "gold": 22
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "bludgeoning"
+          },
+          "minutes": 10
+        }
+      ]
     },
     {
       "id": "cult_ledger",
@@ -533,7 +564,18 @@
       ],
       "kind": "examine",
       "label": "skeletons in rusty shackles",
-      "model": "skeleton_shackles"
+      "model": "skeleton_shackles",
+      "checks": [
+        {
+          "id": "shackled_rites",
+          "skill": "religion",
+          "dc": 12,
+          "label": "Give the shackled dead their rites",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "shrine_shackles_b",
@@ -689,6 +731,29 @@
       "label": "Old meat",
       "model": "carcass",
       "kind": "decor"
+    },
+    {
+      "id": "pit_passage_scuffs",
+      "cell": [
+        18,
+        10
+      ],
+      "kind": "decor",
+      "label": "Scuffs in the dust",
+      "model": "drag_marks",
+      "checks": [
+        {
+          "id": "scuffs_read",
+          "skill": "survival",
+          "dc": 13,
+          "label": "Read the scuffs in the dust",
+          "success": {
+            "reveal": [
+              "passage_pit"
+            ]
+          }
+        }
+      ]
     }
   ],
   "containers": [
