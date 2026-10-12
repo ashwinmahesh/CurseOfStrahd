@@ -162,6 +162,17 @@ func record_step(from: Vector2i, to: Vector2i) -> void:
 	run_feet += maxi(absi(to.x - from.x), absi(to.y - from.y)) * 5
 
 
+## Speed back when a Speed-0 hold ends mid-turn (owner reports 2026-10-12: breaking free of Restrained, or killing the
+## monster that engulfed him, left a hero no movement): the turn's Speed now, less what was already walked. Never
+## takes movement away; heroes and monsters alike.
+func regain_speed() -> void:
+	var spent := maxi(0, turn_speed - movement_left)
+	var now := speed()
+	if now - spent > movement_left:
+		movement_left = now - spent
+		turn_speed = now
+
+
 func reset_turn() -> void:
 	remove_meta("attack_cantrip_used")
 	remove_meta("sequence_attacks")
