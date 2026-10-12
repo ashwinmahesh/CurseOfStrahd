@@ -25,147 +25,1020 @@
   "sets": {
     "forest": {
       "trees": {
-        "pine": ["spruce_a", "spruce_b", "spruce_c", "spruce_a", "spruce_b", "spruce_young"],
-        "dead_tree": ["dead_a", "dead_b", "dead_c"],
-        "pine_clawed": ["spruce_b"]
+        "pine": [
+          "spruce_a",
+          "spruce_b",
+          "spruce_c",
+          "spruce_a",
+          "spruce_b",
+          "spruce_young"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
       },
-      "scale": {"map": [0.62, 0.8], "land": [0.85, 1.1]},
-      "shortest": {"map": 2.3, "land": 2.0},
-      "tallest": {"map": 3.9, "land": 6.0},
+      "scale": {
+        "map": [
+          0.62,
+          0.8
+        ],
+        "land": [
+          0.85,
+          1.1
+        ]
+      },
+      "shortest": {
+        "map": 2.3,
+        "land": 2.0
+      },
+      "tallest": {
+        "map": 3.9,
+        "land": 6.0
+      },
       "tree_density": 0.45,
-      "land": [["fern_a", 0.35], ["fern_b", 0.3], ["bracken", 0.12], ["bush_a", 0.18], ["bush_b", 0.18],
-        ["grass_a", 0.7], ["grass_b", 0.6], ["grass_dry", 0.25], ["sedge", 0.15]],
-      "under": [["fern_a", 0.35], ["fern_b", 0.3], ["bush_b", 0.2], ["fern_small", 0.3], ["grass_a", 0.3]],
-      "open": [["grass_b", 0.9], ["grass_a", 0.4], ["fern_small", 0.08], ["grass_dry", 0.15]],
-      "edge": [["fern_a", 0.45], ["fern_b", 0.35], ["fern_small", 0.3], ["bracken", 0.12], ["bush_b", 0.15],
-        ["grass_a", 0.3]],
+      "land": [
+        [
+          "fern_a",
+          0.35
+        ],
+        [
+          "fern_b",
+          0.3
+        ],
+        [
+          "bracken",
+          0.12
+        ],
+        [
+          "bush_a",
+          0.18
+        ],
+        [
+          "bush_b",
+          0.18
+        ],
+        [
+          "grass_a",
+          0.7
+        ],
+        [
+          "grass_b",
+          0.6
+        ],
+        [
+          "grass_dry",
+          0.25
+        ],
+        [
+          "sedge",
+          0.15
+        ]
+      ],
+      "under": [
+        [
+          "fern_a",
+          0.35
+        ],
+        [
+          "fern_b",
+          0.3
+        ],
+        [
+          "bush_b",
+          0.2
+        ],
+        [
+          "fern_small",
+          0.3
+        ],
+        [
+          "grass_a",
+          0.3
+        ]
+      ],
+      "open": [
+        [
+          "grass_b",
+          0.9
+        ],
+        [
+          "grass_a",
+          0.4
+        ],
+        [
+          "fern_small",
+          0.08
+        ],
+        [
+          "grass_dry",
+          0.15
+        ]
+      ],
+      "edge": [
+        [
+          "fern_a",
+          0.45
+        ],
+        [
+          "fern_b",
+          0.35
+        ],
+        [
+          "fern_small",
+          0.3
+        ],
+        [
+          "bracken",
+          0.12
+        ],
+        [
+          "bush_b",
+          0.15
+        ],
+        [
+          "grass_a",
+          0.3
+        ]
+      ],
       "open_scale": 0.6,
-      "shore": [["reeds", 1.2], ["sedge", 1.0]],
+      "shore": [
+        [
+          "reeds",
+          1.2
+        ],
+        [
+          "sedge",
+          1.0
+        ]
+      ],
       "land_reach": 14.0,
       "tint": "#ffffff",
       "snow": 0.0,
-      "bark": {"spruce": ["#4d4148", "#1b161a", "#4a5446", 0.18], "dead": ["#6a5f73", "#2a2330", "#5c6450", 0.06]}
+      "bark": {
+        "spruce": [
+          "#4d4148",
+          "#1b161a",
+          "#4a5446",
+          0.18
+        ],
+        "dead": [
+          "#6a5f73",
+          "#2a2330",
+          "#5c6450",
+          0.06
+        ],
+        "birch": [
+          "#d4d0c6",
+          "#2b2628",
+          "#7d8a74",
+          0.05
+        ],
+        "oak": [
+          "#4a4038",
+          "#1e1814",
+          "#4a5446",
+          0.22
+        ],
+        "pine": [
+          "#8a5a40",
+          "#2a1c16",
+          "#4a5446",
+          0.1
+        ]
+      }
     },
     "lake": {
       "like": "forest",
       "tree_density": 0.3,
-      "tints": {"grass": "#d4e0d8"},
-      "land": [["fern_a", 0.25], ["fern_b", 0.2], ["bush_a", 0.15], ["grass_a", 0.9], ["grass_b", 0.7],
-        ["sedge", 0.4], ["grass_dry", 0.2]],
-      "shore": [["reeds", 1.8], ["sedge", 1.2], ["grass_a", 0.5]]
+      "tints": {
+        "grass": "#d4e0d8"
+      },
+      "land": [
+        [
+          "fern_a",
+          0.25
+        ],
+        [
+          "fern_b",
+          0.2
+        ],
+        [
+          "bush_a",
+          0.15
+        ],
+        [
+          "grass_a",
+          0.9
+        ],
+        [
+          "grass_b",
+          0.7
+        ],
+        [
+          "sedge",
+          0.4
+        ],
+        [
+          "grass_dry",
+          0.2
+        ]
+      ],
+      "shore": [
+        [
+          "reeds",
+          1.4
+        ],
+        [
+          "cattails",
+          0.6
+        ],
+        [
+          "sedge",
+          1.2
+        ],
+        [
+          "grass_a",
+          0.5
+        ]
+      ],
+      "trees": {
+        "pine": [
+          "spruce_b",
+          "birch_a",
+          "willow_a",
+          "spruce_c",
+          "birch_b",
+          "spruce_young"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
+      }
     },
     "mountain": {
       "like": "forest",
       "trees": {
-        "pine": ["spruce_b", "spruce_c", "spruce_young", "spruce_b"],
-        "dead_tree": ["dead_a", "dead_c"],
-        "pine_clawed": ["spruce_b"]
+        "pine": [
+          "scots_a",
+          "spruce_b",
+          "scots_b",
+          "spruce_c",
+          "spruce_young",
+          "scots_a"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
       },
-      "land": [["grass_dry", 0.6], ["sedge", 0.35], ["grass_b", 0.3], ["fern_small", 0.08], ["bush_b", 0.06]],
-      "under": [["grass_dry", 0.8], ["fern_small", 0.4], ["sedge", 0.5]],
-      "open": [["grass_dry", 0.35], ["sedge", 0.2]],
-      "edge": [["grass_dry", 0.5], ["fern_small", 0.25], ["sedge", 0.3]],
+      "land": [
+        [
+          "grass_dry",
+          0.6
+        ],
+        [
+          "sedge",
+          0.35
+        ],
+        [
+          "grass_b",
+          0.3
+        ],
+        [
+          "fern_small",
+          0.08
+        ],
+        [
+          "bush_b",
+          0.06
+        ]
+      ],
+      "under": [
+        [
+          "grass_dry",
+          0.8
+        ],
+        [
+          "fern_small",
+          0.4
+        ],
+        [
+          "sedge",
+          0.5
+        ]
+      ],
+      "open": [
+        [
+          "grass_dry",
+          0.35
+        ],
+        [
+          "sedge",
+          0.2
+        ]
+      ],
+      "edge": [
+        [
+          "grass_dry",
+          0.5
+        ],
+        [
+          "fern_small",
+          0.25
+        ],
+        [
+          "sedge",
+          0.3
+        ]
+      ],
       "tint": "#e8ecf2",
       "snow": 0.25
     },
     "snow": {
       "like": "mountain",
-      "land": [["grass_dry", 0.15]],
-      "under": [["grass_dry", 0.2]],
+      "land": [
+        [
+          "grass_dry",
+          0.15
+        ]
+      ],
+      "under": [
+        [
+          "grass_dry",
+          0.2
+        ]
+      ],
       "open": [],
-      "edge": [["grass_dry", 0.2]],
+      "edge": [
+        [
+          "grass_dry",
+          0.2
+        ]
+      ],
       "tint": "#dfe6ee",
       "snow": 0.7
     },
     "marsh": {
       "like": "forest",
       "trees": {
-        "pine": ["spruce_c", "spruce_young"],
-        "dead_tree": ["dead_a", "dead_b", "dead_c"],
-        "pine_clawed": ["dead_b"]
+        "pine": [
+          "willow_a",
+          "spruce_young",
+          "dead_b",
+          "willow_a",
+          "spruce_c"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
       },
-      "land": [["sedge", 0.8], ["reeds", 0.45], ["grass_dry", 0.5], ["grass_a", 0.3], ["bracken", 0.06]],
-      "under": [["sedge", 0.8], ["grass_dry", 0.6], ["reeds", 0.3]],
-      "open": [["sedge", 0.3], ["grass_dry", 0.3]],
-      "edge": [["sedge", 0.6], ["reeds", 0.3], ["grass_dry", 0.4]],
-      "shore": [["reeds", 2.2], ["sedge", 1.2]],
+      "land": [
+        [
+          "sedge",
+          0.8
+        ],
+        [
+          "reeds",
+          0.35
+        ],
+        [
+          "cattails",
+          0.2
+        ],
+        [
+          "grass_dry",
+          0.5
+        ],
+        [
+          "grass_a",
+          0.3
+        ],
+        [
+          "bracken",
+          0.06
+        ]
+      ],
+      "under": [
+        [
+          "sedge",
+          0.8
+        ],
+        [
+          "grass_dry",
+          0.6
+        ],
+        [
+          "reeds",
+          0.3
+        ]
+      ],
+      "open": [
+        [
+          "sedge",
+          0.3
+        ],
+        [
+          "grass_dry",
+          0.3
+        ]
+      ],
+      "edge": [
+        [
+          "sedge",
+          0.6
+        ],
+        [
+          "reeds",
+          0.3
+        ],
+        [
+          "grass_dry",
+          0.4
+        ]
+      ],
+      "shore": [
+        [
+          "cattails",
+          1.2
+        ],
+        [
+          "reeds",
+          1.4
+        ],
+        [
+          "sedge",
+          1.0
+        ]
+      ],
       "tint": "#e9e6cc",
-      "tints": {"grass": "#e4e4b4"}
+      "tints": {
+        "grass": "#e4e4b4"
+      }
     },
     "blight": {
       "like": "forest",
-      "land": [["bracken", 0.35], ["grass_dry", 0.8], ["fern_b", 0.15], ["bush_b", 0.12], ["sedge", 0.2]],
-      "under": [["bracken", 0.5], ["grass_dry", 0.7], ["fern_small", 0.3]],
-      "open": [["grass_dry", 0.6], ["grass_b", 0.2]],
-      "edge": [["bracken", 0.4], ["grass_dry", 0.5], ["fern_small", 0.2]],
+      "land": [
+        [
+          "bracken",
+          0.35
+        ],
+        [
+          "grass_dry",
+          0.8
+        ],
+        [
+          "fern_b",
+          0.15
+        ],
+        [
+          "bush_b",
+          0.12
+        ],
+        [
+          "sedge",
+          0.2
+        ]
+      ],
+      "under": [
+        [
+          "bracken",
+          0.5
+        ],
+        [
+          "grass_dry",
+          0.7
+        ],
+        [
+          "fern_small",
+          0.3
+        ]
+      ],
+      "open": [
+        [
+          "grass_dry",
+          0.6
+        ],
+        [
+          "grass_b",
+          0.2
+        ]
+      ],
+      "edge": [
+        [
+          "bracken",
+          0.4
+        ],
+        [
+          "grass_dry",
+          0.5
+        ],
+        [
+          "fern_small",
+          0.2
+        ]
+      ],
       "tint": "#ece3cf"
     },
     "woods": {
       "like": "forest",
       "tree_density": 0.6,
-      "under": [["fern_a", 0.45], ["fern_b", 0.4], ["bush_b", 0.2], ["fern_small", 0.4], ["grass_a", 0.2]],
-      "edge": [["fern_a", 0.55], ["fern_b", 0.45], ["fern_small", 0.35], ["bracken", 0.1], ["bush_b", 0.15],
-        ["grass_a", 0.25]],
+      "under": [
+        [
+          "fern_a",
+          0.45
+        ],
+        [
+          "fern_b",
+          0.4
+        ],
+        [
+          "bush_b",
+          0.2
+        ],
+        [
+          "fern_small",
+          0.4
+        ],
+        [
+          "grass_a",
+          0.2
+        ]
+      ],
+      "edge": [
+        [
+          "fern_a",
+          0.55
+        ],
+        [
+          "fern_b",
+          0.45
+        ],
+        [
+          "fern_small",
+          0.35
+        ],
+        [
+          "bracken",
+          0.1
+        ],
+        [
+          "bush_b",
+          0.15
+        ],
+        [
+          "grass_a",
+          0.25
+        ]
+      ],
       "tint": "#e4f0dc",
-      "tints": {"grass": "#d4e4c4"}
+      "tints": {
+        "grass": "#d4e4c4"
+      }
     },
     "village": {
       "like": "forest",
       "tree_density": 0.35,
-      "open": [["grass_dry", 0.6], ["grass_b", 0.4], ["fern_small", 0.04]],
-      "tints": {"grass": "#e0d8b8", "fern": "#d8d4bc"}
+      "open": [
+        [
+          "grass_dry",
+          0.6
+        ],
+        [
+          "grass_b",
+          0.4
+        ],
+        [
+          "fern_small",
+          0.04
+        ]
+      ],
+      "tints": {
+        "grass": "#e0d8b8",
+        "fern": "#d8d4bc"
+      },
+      "trees": {
+        "pine": [
+          "spruce_a",
+          "oak_b",
+          "spruce_b",
+          "spruce_young",
+          "birch_b"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
+      }
     },
     "autumn": {
       "like": "forest",
-      "land": [["fern_a", 0.35], ["fern_b", 0.3], ["bracken", 0.2], ["bush_a", 0.25], ["bush_b", 0.25],
-        ["grass_a", 0.5], ["grass_b", 0.5], ["grass_dry", 0.35], ["sedge", 0.15]],
-      "tints": {"grass": "#e8dcb0"},
-      "autumn": {"fern": 0.6, "bush": 0.75, "grass": 0.2},
-      "autumn_colours": ["ember", "flame"]
+      "land": [
+        [
+          "fern_a",
+          0.35
+        ],
+        [
+          "fern_b",
+          0.3
+        ],
+        [
+          "bracken",
+          0.2
+        ],
+        [
+          "bush_a",
+          0.25
+        ],
+        [
+          "bush_b",
+          0.25
+        ],
+        [
+          "grass_a",
+          0.5
+        ],
+        [
+          "grass_b",
+          0.5
+        ],
+        [
+          "grass_dry",
+          0.35
+        ],
+        [
+          "sedge",
+          0.15
+        ]
+      ],
+      "tints": {
+        "grass": "#e8dcb0"
+      },
+      "autumn": {
+        "fern": 0.6,
+        "bush": 0.75,
+        "grass": 0.2,
+        "broadleaf": 0.7
+      },
+      "autumn_colours": [
+        "rust",
+        "flame"
+      ],
+      "trees": {
+        "pine": [
+          "oak_a",
+          "spruce_a",
+          "oak_b",
+          "birch_a",
+          "spruce_b",
+          "oak_a",
+          "birch_b"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
+      }
     },
     "graves": {
       "like": "forest",
       "trees": {
-        "pine": ["spruce_c", "dead_a", "spruce_b", "dead_b", "spruce_young", "dead_c"],
-        "dead_tree": ["dead_a", "dead_b", "dead_c"],
-        "pine_clawed": ["dead_b"]
+        "pine": [
+          "spruce_c",
+          "dead_a",
+          "spruce_b",
+          "dead_b",
+          "spruce_young",
+          "dead_c"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
       },
       "tree_density": 0.35,
-      "tints": {"grass": "#dcd0ac"},
-      "autumn": {"fern": 0.5, "bush": 0.4},
-      "autumn_colours": ["umber", "tan"]
+      "tints": {
+        "grass": "#dcd0ac"
+      },
+      "autumn": {
+        "fern": 0.5,
+        "bush": 0.4
+      },
+      "autumn_colours": [
+        "umber",
+        "tan"
+      ]
     },
     "vineyard": {
       "like": "forest",
       "tree_density": 0.35,
-      "tints": {"grass": "#d8dcac", "bush": "#d0d4a0"},
-      "autumn": {"bush": 0.35, "fern": 0.2},
-      "autumn_colours": ["blood_deep", "plum"]
+      "tints": {
+        "grass": "#d8dcac",
+        "bush": "#d0d4a0"
+      },
+      "autumn": {
+        "bush": 0.35,
+        "fern": 0.2
+      },
+      "autumn_colours": [
+        "blood_deep",
+        "plum"
+      ],
+      "open": [
+        [
+          "vine",
+          0.22
+        ],
+        [
+          "grass_b",
+          0.6
+        ],
+        [
+          "grass_a",
+          0.3
+        ],
+        [
+          "grass_dry",
+          0.15
+        ]
+      ],
+      "edge": [
+        [
+          "vine",
+          0.3
+        ],
+        [
+          "fern_a",
+          0.3
+        ],
+        [
+          "bush_b",
+          0.2
+        ],
+        [
+          "grass_a",
+          0.3
+        ]
+      ]
     },
     "heath": {
       "like": "blight",
       "tree_density": 0.25,
-      "tints": {"grass": "#e4d0a4", "bush": "#c8a8c0"},
-      "autumn": {"fern": 0.6},
-      "autumn_colours": ["rust", "leather"]
+      "tints": {
+        "grass": "#e4d0a4",
+        "bush": "#c8a8c0"
+      },
+      "autumn": {
+        "fern": 0.6
+      },
+      "autumn_colours": [
+        "rust",
+        "leather"
+      ],
+      "trees": {
+        "pine": [
+          "scots_b",
+          "dead_a",
+          "scots_a",
+          "dead_c"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
+      },
+      "land": [
+        [
+          "heather",
+          0.9
+        ],
+        [
+          "grass_dry",
+          0.6
+        ],
+        [
+          "bracken",
+          0.25
+        ],
+        [
+          "thistle",
+          0.1
+        ],
+        [
+          "sedge",
+          0.2
+        ]
+      ],
+      "under": [
+        [
+          "heather",
+          0.7
+        ],
+        [
+          "bracken",
+          0.4
+        ],
+        [
+          "grass_dry",
+          0.5
+        ]
+      ],
+      "open": [
+        [
+          "heather",
+          0.35
+        ],
+        [
+          "grass_dry",
+          0.4
+        ],
+        [
+          "thistle",
+          0.06
+        ]
+      ],
+      "edge": [
+        [
+          "heather",
+          0.6
+        ],
+        [
+          "bracken",
+          0.3
+        ],
+        [
+          "grass_dry",
+          0.4
+        ],
+        [
+          "thistle",
+          0.08
+        ]
+      ]
     },
     "sick": {
       "like": "blight",
-      "tints": {"grass": "#dce49c", "fern": "#d0dc98"}
+      "tints": {
+        "grass": "#dce49c",
+        "fern": "#d0dc98"
+      },
+      "trees": {
+        "pine": [
+          "oak_b",
+          "dead_c",
+          "spruce_c",
+          "dead_a"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
+      },
+      "land": [
+        [
+          "bracken",
+          0.35
+        ],
+        [
+          "grass_dry",
+          0.8
+        ],
+        [
+          "thistle",
+          0.12
+        ],
+        [
+          "bush_b",
+          0.12
+        ],
+        [
+          "sedge",
+          0.2
+        ]
+      ]
     },
     "spectral": {
       "like": "blight",
       "tint": "#d8e0ec",
-      "tints": {"grass": "#dce4f0"},
-      "bark": {"spruce": ["#4d4148", "#1b161a", "#4a5446", 0.18], "dead": ["#7a7a88", "#2a2330", "#bdbdc6", 0.4]}
+      "tints": {
+        "grass": "#dce4f0"
+      },
+      "bark": {
+        "spruce": [
+          "#4d4148",
+          "#1b161a",
+          "#4a5446",
+          0.18
+        ],
+        "dead": [
+          "#7a7a88",
+          "#2a2330",
+          "#bdbdc6",
+          0.4
+        ],
+        "birch": [
+          "#d8d8e0",
+          "#2b2628",
+          "#bdbdc6",
+          0.3
+        ],
+        "oak": [
+          "#5a5660",
+          "#1e1a20",
+          "#bdbdc6",
+          0.35
+        ],
+        "pine": [
+          "#6a5a5a",
+          "#2a1c16",
+          "#bdbdc6",
+          0.3
+        ]
+      },
+      "trees": {
+        "pine": [
+          "birch_a",
+          "spruce_c",
+          "birch_b",
+          "dead_b",
+          "birch_a"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
+      }
     },
     "rock": {
       "like": "mountain",
       "tint": "#ffffff",
       "snow": 0.0,
-      "tints": {"grass": "#dcc4a0"},
-      "autumn": {"fern": 0.4},
-      "autumn_colours": ["rust", "leather"]
+      "tints": {
+        "grass": "#dcc4a0"
+      },
+      "autumn": {
+        "fern": 0.4
+      },
+      "autumn_colours": [
+        "rust",
+        "leather"
+      ],
+      "trees": {
+        "pine": [
+          "scots_b",
+          "dead_a",
+          "scots_a",
+          "spruce_c"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "spruce_b"
+        ]
+      }
     },
     "rock_snow": {
       "like": "snow",
@@ -174,14 +1047,59 @@
     "castle": {
       "like": "forest",
       "trees": {
-        "pine": ["spruce_c", "spruce_b"],
-        "dead_tree": ["dead_a", "dead_b", "dead_c"],
-        "pine_clawed": ["dead_b"]
+        "pine": [
+          "spruce_c",
+          "spruce_b"
+        ],
+        "dead_tree": [
+          "dead_a",
+          "dead_b",
+          "dead_c"
+        ],
+        "pine_clawed": [
+          "dead_b"
+        ]
       },
-      "land": [["grass_dry", 0.5], ["sedge", 0.2], ["bracken", 0.1]],
-      "under": [["grass_dry", 0.5], ["bracken", 0.2]],
-      "open": [["grass_dry", 0.2]],
-      "edge": [["grass_dry", 0.4], ["bracken", 0.15]],
+      "land": [
+        [
+          "grass_dry",
+          0.5
+        ],
+        [
+          "sedge",
+          0.2
+        ],
+        [
+          "bracken",
+          0.1
+        ]
+      ],
+      "under": [
+        [
+          "grass_dry",
+          0.5
+        ],
+        [
+          "bracken",
+          0.2
+        ]
+      ],
+      "open": [
+        [
+          "grass_dry",
+          0.2
+        ]
+      ],
+      "edge": [
+        [
+          "grass_dry",
+          0.4
+        ],
+        [
+          "bracken",
+          0.15
+        ]
+      ],
       "tint": "#e3e1e6"
     }
   }

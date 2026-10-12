@@ -90,7 +90,8 @@ func test_autumn_in_the_camps_not_the_woods() -> void:
 	var camp := _view("tser_pool")
 	await get_tree().process_frame
 	assert_true(float(Flora._material("leaf|bush").get_shader_parameter("autumn")) > 0.5, "the camp's undergrowth turns")
-	assert_eq(float(Flora._material("leaf|tree").get_shader_parameter("autumn")), 0.0, "and its spruces stay green")
+	assert_true(float(Flora._material("leaf|broadleaf").get_shader_parameter("autumn")) > 0.5, "and its oaks")
+	assert_eq(float(Flora._material("leaf|tree").get_shader_parameter("autumn")), 0.0, "but its spruces stay green")
 	camp.queue_free()
 	await get_tree().process_frame
 	var woods := _view("road_forest")
@@ -136,3 +137,18 @@ func test_regions_lay_their_own_ground() -> void:
 	Look.set_style("classic", false)
 	assert_eq(Atmosphere.region_surface("road_forest", "village/grass"), "village/grass", "Classic stays as it was")
 	Look.set_style(was, false)
+
+
+## The regions grow their own trees (blender/plants_3d.py): oaks round the camps, birches and willows by the lake,
+## willows in the marsh, Scots pines in the mountains and on the heath, staked vines in the winery's rows.
+func test_regions_grow_their_own_trees() -> void:
+	var want := {"autumn": "oak_a", "lake": "birch_a", "marsh": "willow_a", "mountain": "scots_a", "heath": "scots_b",
+		"spectral": "birch_b"}
+	for set_id: String in want:
+		var pines := (Flora.resolve(set_id)["trees"] as Dictionary)["pine"] as Array
+		assert_true(str(want[set_id]) in pines, "%s grows %s" % [set_id, want[set_id]])
+		assert_true(Flora.mesh(str(want[set_id])) != null, "%s is built" % want[set_id])
+	var vines := false
+	for e: Array in Flora.resolve("vineyard")["open"] as Array:
+		vines = vines or str(e[0]) == "vine"
+	assert_true(vines, "vines stand in the winery's rows")
