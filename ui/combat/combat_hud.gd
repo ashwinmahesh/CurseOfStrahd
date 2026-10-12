@@ -82,6 +82,16 @@ var _end_turn: Button
 var _undo_move: Button
 var _turn_note: Label
 var _tooltip: PanelContainer
+## While an area spell is aimed (owner, 2026-10-12: "Put the saves for AoE spells in the top left corner of the HUD (not
+## directly next to the pointer)"): the save and its DC and every creature caught with its chance to save, right of the
+## party's frames under the turn order (show_area_saves).
+var _area_panel: PanelContainer
+var _area_title: Label
+var _area_sub: Label
+var _area_rows: VBoxContainer
+var _area_key := 0
+## Rows the area panel lists before it counts the rest ("+3 more"), so it never runs down into the hotbar.
+const AREA_ROWS := 8
 ## The odds over a pointed-at target's head (show_odds).
 var _odds: PanelContainer
 var _odds_chance: Label
@@ -152,6 +162,7 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 	_build_log()
 	_build_hotbar()
 	_build_tooltip()
+	_build_area_saves()
 	_build_prompt()
 	_build_details()
 	_build_confirm()
@@ -542,6 +553,106 @@ func _build_tooltip() -> void:
 	_tooltip_box = VBoxContainer.new()
 	_tooltip.add_child(_tooltip_box)
 	add_child(_tooltip)
+
+
+func _build_area_saves() -> void:
+	_area_panel = _panel("gilt", "ui_black", false)
+	_area_panel.name = "AreaSaves"
+	_area_panel.visible = false
+	_area_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_area_panel.position = Vector2(292, 160)
+	_area_panel.custom_minimum_size = Vector2(350, 0)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 4)
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_area_panel.add_child(box)
+	_area_title = _label("", 17, "gilt_light")
+	_area_title.add_theme_font_override("font", UiKit.display_font())
+	box.add_child(_area_title)
+	_area_sub = _label("", 13, "parchment")
+	box.add_child(_area_sub)
+	_area_rows = VBoxContainer.new()
+	_area_rows.add_theme_constant_override("separation", 3)
+	box.add_child(_area_rows)
+	add_child(_area_panel)
+
+
+## The area panel for the spell being aimed: `title` (the spell), `sub` (the save and DC), `rows` from
+## ActionCatalog.spell_preview's creatures (friends first, each with a portrait, friend or foe, and its chance to save or
+## why it's safe), `warnings` (friendly fire, Concentration). Rebuilt only when something in it changed.
+func show_area_saves(title: String, sub: String, rows: Array, warnings: Array) -> void:
+	var key := hash([title, sub, rows, warnings])
+	if _area_panel.visible and key == _area_key:
+		return
+	_area_key = key
+	_area_title.text = title
+	_area_sub.text = sub
+	_area_sub.visible = sub != ""
+	for ch in _area_rows.get_children():
+		ch.queue_free()
+	var ordered: Array = rows.filter(func(r: Dictionary) -> bool: return bool(r["ally"]))
+	ordered.append_array(rows.filter(func(r: Dictionary) -> bool: return not bool(r["ally"])))
+	if ordered.is_empty():
+		_area_rows.add_child(_label("No one in the area", 14, "vellum"))
+	for i in mini(ordered.size(), AREA_ROWS):
+		_area_rows.add_child(_area_row(ordered[i] as Dictionary))
+	if ordered.size() > AREA_ROWS:
+		_area_rows.add_child(_label("+%d more" % (ordered.size() - AREA_ROWS), 14, "parchment"))
+	for w: Variant in warnings:
+		var wl := _label(str(w), 13, "rose")
+		wl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		wl.custom_minimum_size = Vector2(330, 0)
+		_area_rows.add_child(wl)
+	_area_panel.reset_size()
+	_area_panel.visible = true
+
+
+func hide_area_saves() -> void:
+	_area_panel.visible = false
+
+
+func area_saves_shown() -> bool:
+	return _area_panel.visible
+
+
+## One creature in the area panel: its portrait, its name, friend or foe, and its chance to save (or safe, unaffected),
+## the damage it can expect and whether it may drop.
+func _area_row(r: Dictionary) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var who := e.get_c(str(r["id"]))
+	if who != null:
+		row.add_child(UiParts.framed_portrait(CombatToken.portrait_id(who), 34.0, who.is_down(), who.creature.dead))
+	var mid := VBoxContainer.new()
+	mid.add_theme_constant_override("separation", -2)
+	mid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var name_row := HBoxContainer.new()
+	var nm := _label(str(r["name"]), 15, "vellum")
+	nm.clip_text = true
+	nm.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	nm.custom_minimum_size = Vector2(150, 0)
+	name_row.add_child(nm)
+	name_row.add_child(_label("friend" if bool(r["ally"]) else "foe", 12, "moonlight" if bool(r["ally"]) else "crimson"))
+	mid.add_child(name_row)
+	var what := ""
+	var colour := "parchment"
+	if bool(r["safe"]):
+		what = "safe (Sculpt Spells)"
+		colour = "bile"
+	elif bool(r["unaffected"]):
+		what = "unaffected"
+		colour = "bile"
+	elif float(r["save_chance"]) >= 0.0:
+		what = "%d%% to save" % roundi(float(r["save_chance"]) * 100.0)
+	if int(r["damage"]) >= 0:
+		what += (" · " if what != "" else "") + "~%d damage" % int(r["damage"])
+	if str(r["drops"]) != "":
+		what += " · " + str(r["drops"])
+		colour = "gilt_light"
+	mid.add_child(_label(what, 13, colour))
+	row.add_child(mid)
+	return row
 
 
 func _build_prompt() -> void:
@@ -1712,6 +1823,7 @@ func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edg
 func hide_tooltip() -> void:
 	_tooltip.visible = false
 	_odds.visible = false
+	hide_area_saves()
 
 
 ## The odds over a target's head while an attack on it is pointed at (Baldur's Gate 3's hit chance): the chance to hit
