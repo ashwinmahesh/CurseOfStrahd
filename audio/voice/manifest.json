@@ -26765,6 +26765,13 @@
   "recipe": "e91d2c917c",
   "text": "...She's right. She was always right. That was the whole trouble with her."
  },
+ "kasimir_velikov/649171114bae46d3": {
+  "chars": 197,
+  "direction": "[thoughtful, then resolved, grave]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "A road into the mountains. (He puts the net down.) Then I have something for you. The Vistani found it on the road and brought it to me, because I am the one who keeps the things nobody else wants."
+ },
  "kasimir_velikov/67a6a389225aa257": {
   "chars": 89,
   "direction": "[thoughtful, melancholy]",
@@ -26922,6 +26929,13 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "The songs are always written before the ending. I would like, once, to hear the ending first."
+ },
+ "kasimir_velikov/e6f63105398dc362": {
+  "chars": 41,
+  "direction": "[grave, firm]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "Find me that road. I will hold you to it."
  },
  "kasimir_velikov/eb7526d015abd872": {
   "chars": 155,
@@ -32484,6 +32498,13 @@
   "model": "eleven_v3",
   "recipe": "2d163e4e93",
   "text": "Go away! Unless you've come to find my girl. Have you come to find my girl? Arabelle. Seven years old. Black hair. Gone from her bed since last night, and my brother says she wandered!"
+ },
+ "luvash/79f5599bb992da45": {
+  "chars": 99,
+  "direction": "[grateful, gruff, moved]",
+  "model": "eleven_v3",
+  "recipe": "2d163e4e93",
+  "text": "And my chest. It wouldn't open for me all the while she was gone. Whatever's in it now, it's yours."
  },
  "luvash/7c1bc14cb90f215b": {
   "chars": 134,
@@ -53473,6 +53494,12 @@
   "recipe": "dd92281f92",
   "text": "A dead young man and a cheap rope. If there is more to read in him, the crows got to it first."
  },
+ "narrator/858824f2bb637bd8": {
+  "chars": 141,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The stitches part with a sound like a sigh. Inside, wrapped in a nun's old apron, is the thing it was holding closer than any gardener would."
+ },
  "narrator/859f68ebc074fdfe": {
   "chars": 85,
   "model": "eleven_v4",
@@ -59568,6 +59595,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Warm, floury and close. Everything is dusted white: the tables, the sacks, the floor, the millstone. The oven on the far wall breathes like something asleep."
+ },
+ "narrator/b4dd62a863970957": {
+  "chars": 98,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "With the binding unpicked it's only sacking and straw. Something hard is sewn up inside its chest."
  },
  "narrator/b4e23356182242e9": {
   "chars": 148,
