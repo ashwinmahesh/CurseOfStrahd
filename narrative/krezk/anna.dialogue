@@ -31,7 +31,7 @@ endif
 ~ menu
 * How long has he been like this? -> how_long
 * [Medicine DC 13] Let us look at him. -> medicine_ok | medicine_fail
-* [Cleric] [if not flag.ilya_fate] Let me pray over him. -> cleric_cure
+* [Cleric] [if flag.ilya_fate != "healed"] Let me pray over him. -> cleric_cure
 * [if flag.white_sun_water and not flag.ilya_fate] Bathe his brow with water from the Pool of the White Sun. -> water_cure
 * [if flag.abbot_dress_asked and not flag.anna_dress_given and not flag.wedding_dress_delivered] The Abbot asked us for a wedding dress. He says he'll come down for Ilya if he gets one. -> dress
 * [if flag.anna_dress_given and flag.wedding_dress_delivered and flag.wedding_dress_source != "anna" and not flag.anna_dress_returned] We didn't need your dress after all. Here it is. -> dress_returned

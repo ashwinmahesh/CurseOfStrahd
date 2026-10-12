@@ -55397,12 +55397,6 @@
   "recipe": "dd92281f92",
   "text": "The boy is gone between one breath and the next. What drops from the ceiling is only hunger."
  },
- "narrator/94e8f61ad30fc161": {
-  "chars": 92,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Sir Godfrey has come up the tower stair behind you, with Sir Aldric's sword across his arms."
- },
  "narrator/94efa484d505b429": {
   "chars": 163,
   "model": "eleven_v4",

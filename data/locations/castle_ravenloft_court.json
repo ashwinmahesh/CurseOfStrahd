@@ -385,7 +385,8 @@
       "kind": "examine",
       "label": "A dragon's skull",
       "model": "dragon_bones",
-      "flag": "argynvost_skull_found"
+      "flag": "argynvost_skull_found",
+      "dialogue": "castle_ravenloft/court_skull:skull"
     },
     {
       "id": "court_lady_portrait",

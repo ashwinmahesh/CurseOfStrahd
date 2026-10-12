@@ -34,7 +34,7 @@ Clovin Belview: Great-uncle Pavel comes up on Sundays with soup. Mother came out
 Clovin Belview: I'm writing new material. It's all about soup now. The cells think it's hilarious. The cells think everything's hilarious.
 -> END
 
-## Clovin's menu once the Abbot's business is settled (clovin:after jumps here when there's something to say).
+## Clovin's menu once the Abbot's business is settled (clovin:after always jumps here; Wiki finding 30).
 ~ abbey_menu
 * [if flag.abbot_fate and not flag.clovin_befriended] You look like a man who could use a drink. -> abbey_of_st_markovia/clovin:drink
 * [if quest.clovins_audience == rumored] The Krezk watch says a Belview came down to their gate to tell a joke. -> bucket
