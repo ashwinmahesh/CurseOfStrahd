@@ -383,6 +383,7 @@
         1
       ],
       "kind": "examine",
+      "when": "not flag.argynvost_skull_taken",
       "label": "A dragon's skull",
       "model": "dragon_bones",
       "flag": "argynvost_skull_found",

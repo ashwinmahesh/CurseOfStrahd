@@ -204,7 +204,10 @@ set ilya_heard
 quest the_burgomasters_son heard
 Krezk Watchman: The burgomaster's boy is sick. A fever since the spring. His last son, Dmitri says. You can hear Anna singing to him through the shutters every night, and you can hear her stop.
 endif
-if not flag.wizard_of_wines_hook and not flag.wine_shortage_heard
+# The wine flows again once the winery is free; the first cart may even have come here (Wiki finding 91).
+if flag.winery_first_cart == "krezk"
+Krezk Watchman: The Martikovs' first cart is in the shrine cellar. Half the town's found a reason to go up and pray.
+elif not flag.wizard_of_wines_hook and not flag.wine_shortage_heard and not flag.winery_wine_flows
 Krezk Watchman: And the wine's stopped. The Martikovs' cart came every autumn. Not this one.
 if not quest.wizard_of_wines
 quest wizard_of_wines rumored

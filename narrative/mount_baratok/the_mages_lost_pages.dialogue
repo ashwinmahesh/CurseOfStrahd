@@ -10,6 +10,11 @@
 # --- Mordenkainen (mordenkainen:restored_menu jumps here) ---
 
 ~ news
+# His own pages first: until he has his letters back he can't remember her, whatever the party found in the castle
+# (Wiki finding 97).
+if quest.the_mages_lost_pages != named
+-> pages_news
+endif
 if quest.the_unnamed_crypt == done and not flag.corvina_thanks_given
 set corvina_thanks_given
 Mordenkainen: You found her. (He doesn't ask how it went. He looks at your faces and doesn't need to.) Did she have ink on her fingers still? She always did. Thank you. Now go away for a while. I'd like to be old in private.
@@ -29,6 +34,9 @@ if flag.corvina_name_known
 Mordenkainen: Corvina. I say it every morning, so I don't lose it again. If you find her before I do, say it to her. Names matter to the dead in this valley. They're very nearly all the dead have left.
 -> mount_baratok/mordenkainen:restored_menu
 endif
+-> mount_baratok/mordenkainen:restored_menu
+
+~ pages_news
 if flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3
 -> letters_back
 endif

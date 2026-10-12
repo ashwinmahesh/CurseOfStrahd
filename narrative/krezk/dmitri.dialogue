@@ -30,7 +30,7 @@ endif
 * [if not flag.ilya_heard] Forgive me, but you look like a man carrying something heavy. -> son
 * [if flag.ilya_heard and not flag.ilya_fate] Your son. Is there nothing to be done for him? -> nothing_done
 * What do you make of the Abbot? -> abbot
-* [if flag.wizard_of_wines_hook or flag.wine_shortage_heard] About the wine that stopped coming. -> wine
+* [if (flag.wizard_of_wines_hook or flag.wine_shortage_heard) and not flag.winery_wine_flows] About the wine that stopped coming. -> wine
 * [if guest:ireena and not flag.krezk_refuge_offered] Could Ireena find refuge in Krezk? -> refuge
 * [if guest:ireena and flag.krezk_refuge_offered] Ireena, Dmitri's offered you a place here. -> krezk/ireena:stay_offer
 * [if flag.abbot_fate] About the Abbot. It's done. -> after

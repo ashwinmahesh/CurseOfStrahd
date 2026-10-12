@@ -61,7 +61,11 @@ if flag.dragon_fire_kindled
 * Lay his skull at the end of the long neck. -> skull_home
 * Leave him be. -> END
 endif
+if flag.argynvost_skull_home
+Narrator: The dragon lies along the bier with his wings folded like a cloak, every bone in its place, and his long skull at the end of the neck where it belongs. The frost on him is silver now.
+else
 Narrator: The dragon lies along the bier with his wings folded like a cloak, every bone in its place, except at the end of the long neck, where there is nothing at all. Frost furs the ribs and doesn't melt.
+endif
 if flag.bone_watch_defeated and not flag.mausoleum_opened
 Narrator: The vault is quiet now. Somewhere in the stone, very faintly, a sentry is still saying the challenge to nobody.
 endif

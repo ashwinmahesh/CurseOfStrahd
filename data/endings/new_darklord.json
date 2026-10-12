@@ -41,6 +41,34 @@
       "portrait": "ireena",
       "when": "",
       "text": "Ireena hears that the devil is dead and an heir sits in his chair. She does not wait to learn what kind of lord the heir will be."
+    },
+    {
+      "topic": "nadia",
+      "title": "Nadia Boteanu",
+      "portrait": "nadia_boteanu",
+      "when": "flag.larders_nadia_fate == waits",
+      "text": "Nadia Boteanu waited in her cell for someone to come back for her. When the house went quiet she walked out of its front door, and the new lord let her go, that once."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_slain",
+      "text": "The castle kitchen stays cold. The new lord doesn't eat, and nobody thinks to hire a cook."
+    },
+    {
+      "topic": "cyrus",
+      "title": "Cyrus Belview",
+      "portrait": "cyrus_belview",
+      "when": "flag.larders_cyrus_met",
+      "text": "Cyrus Belview keeps the soup on for a new master. He tells the pots it's the same as before. The pots know better."
+    },
+    {
+      "topic": "doru",
+      "title": "Doru",
+      "portrait": "doru",
+      "when": "flag.larders_doru_fate == rest",
+      "text": "Father Donavich never learns how his son ended, only that strangers gave him an end. He doesn't ask which of them sits in the castle now."
     }
   ]
 }
