@@ -13,6 +13,12 @@
     "monster": "pidlwick_ii",
     "note": "His own stat block (a small clockwork construct). Joins on the high tower stair if the Tarokka's marionette card names him, or when the party brings back his wind-up key from the ravens' roost."
   },
+  "guest_stays": [
+    {
+      "when": "quest.toymakers_masterpiece == willing",
+      "why": "Pidlwick II is on his way to meet the toymaker. He's frightened, and if he turns back now he won't start again."
+    }
+  ],
   "tags": [
     "construct",
     "jester",

@@ -111,6 +111,8 @@ func from_dict(data: Dictionary) -> void:
 	if combat_snapshot.is_empty() and story != null:
 		for ch: Character in story.party + story.bench:
 			EncounterSetup.clear_fight_effects(ch)
+		# A guest who fell in a fight before that was looked after mends here (StoryState.see_to_fallen_guests).
+		story.see_to_fallen_guests()
 	if story != null:
 		_until_long_rest(story)
 
