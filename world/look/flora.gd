@@ -16,8 +16,12 @@ const CARDS := preload("res://art/plants/cards.png")
 const CHUNK := 10.0
 ## How each kind of plant bends in the wind (wind.gdshaderinc `stiffness`, per unit of height squared) and how much
 ## its cards flutter.
-const SWAY := {"tree": [0.010, 0.03], "dead": [0.008, 0.05], "fern": [0.9, 0.05], "grass": [2.4, 0.035],
-	"bush": [0.5, 0.04], "reeds": [0.45, 0.03]}
+const SWAY := {"tree": [0.010, 0.03], "broadleaf": [0.012, 0.05], "dead": [0.008, 0.05], "fern": [0.9, 0.05],
+	"grass": [2.4, 0.035], "bush": [0.5, 0.04], "reeds": [0.45, 0.03]}
+## The kinds of plant with a trunk (their leaves shade their own crowns), and the barks a plant can wear (a set's
+## `bark` colours each: the spruce's, the dead trees', the birch's white, the oak's and willow's, the Scots pine's).
+const TREES: Array[String] = ["tree", "broadleaf", "dead"]
+const BARKS: Array[String] = ["bark_spruce", "bark_dead", "bark_birch", "bark_oak", "bark_pine"]
 
 static var _manifest: Dictionary = {}
 static var _config: Dictionary = {}
@@ -116,7 +120,7 @@ func _apply(dir: Vector2, strength: float) -> void:
 			m.set_shader_parameter("autumn", float(autumn.get(kind, 0.0)))
 			m.set_shader_parameter("autumn_dark", Look.color(str(fall[0])))
 			m.set_shader_parameter("autumn_light", Look.color(str(fall[1])))
-			m.set_shader_parameter("snow", snow if key.ends_with("|tree") or key.ends_with("|dead") else snow * 0.6)
+			m.set_shader_parameter("snow", snow if kind in TREES else snow * 0.6)
 		else:
 			var b := bark.get(key.get_slice("|", 0).trim_prefix("bark_"), []) as Array
 			if b.size() >= 4:
@@ -130,8 +134,8 @@ static func _all_material_keys() -> Array[String]:
 	var out: Array[String] = []
 	for kind: String in SWAY:
 		out.append("leaf|" + kind)
-	for kind: String in ["tree", "dead"]:
-		for bark: String in ["bark_spruce", "bark_dead"]:
+	for kind: String in TREES + ["bush"]:   # a vine's stake is a bush's bark
+		for bark: String in BARKS:
 			out.append(bark + "|" + kind)
 	return out
 
@@ -146,7 +150,7 @@ static func _material(key: String) -> ShaderMaterial:
 		m.shader = FOLIAGE_SHADER
 		m.set_shader_parameter("cards", CARDS)
 		# Ground plants are lit more evenly than a tree's crown, which shades its own inside.
-		m.set_shader_parameter("shade_floor", 0.4 if kind in ["tree", "dead"] else 0.6)
+		m.set_shader_parameter("shade_floor", 0.4 if kind in TREES else 0.6)
 	else:
 		m.shader = BARK_SHADER
 	m.set_shader_parameter("stiffness", float(sway[0]))

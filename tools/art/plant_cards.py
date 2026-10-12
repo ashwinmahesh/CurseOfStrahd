@@ -1,6 +1,8 @@
 """Paints the leaf cards the 3D trees and plants are dressed with (Improvement Ideas W9, docs/art/plants.md): one atlas,
-art/plants/cards.png, of 4 x 4 cells, each a spray of needles, a fern frond, a tuft of grass, a cluster of leaves,
-reeds or bare twigs on a transparent ground. blender/plants_3d.py maps its cards onto these cells (CELLS below is the
+art/plants/cards.png, four cells wide and as many rows as it needs, each a spray of needles, a fern frond, a tuft of
+grass, a cluster of leaves, reeds or bare twigs on a transparent ground; the last rows are the regions' own plants
+(the vault's Region Variety Plan): birch, oak and Scots pine sprays, willow strands, vine leaves, heather, thistles and
+cattails. blender/plants_3d.py maps its cards onto these cells (CELLS below is the
 shared list). Drawn here rather than generated, so it costs nothing and comes out the same every time (fixed seeds).
 
   python3 tools/art/plant_cards.py [--out art/plants/cards.png] [--size 512]
@@ -20,12 +22,15 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageMath
 
 ROOT = Path(__file__).resolve().parents[2]
 
-# Cell order in the 4 x 4 atlas (row by row from the top left). blender/plants_3d.py reads the same names.
+# Cell order in the atlas, four to a row (row by row from the top left). blender/plants_3d.py reads the same names.
+# New cells go at the end, so the ones before keep their seeds and their paintings.
 CELLS = [
     "fir_spray_a", "fir_spray_b", "fir_spray_c", "fir_top",
     "fern_a", "fern_b", "fern_brown", "bracken",
     "grass_a", "grass_b", "grass_dry", "sedge",
     "leaves_a", "leaves_b", "twigs", "reeds",
+    "birch_leaves", "oak_leaves", "pine_tuft", "willow_strand",
+    "vine_leaves", "heather", "thistle", "cattails",
 ]
 
 SS = 4   # supersampling
@@ -70,6 +75,32 @@ BARK_LIGHT = hexc("#7a6e78")
 REED = hexc("#6b6a3a")
 REED_LIGHT = hexc("#a09a5c")
 CATTAIL = hexc("#4e3020")
+# The regions' own plants: birch's light yellow-green, oak's olive, the Scots pine's blue-green, the willow's grey-green,
+# the vine's leaf and grapes, heather's dull purple, the thistle's grey leaf and purple head.
+BIRCH_DEEP = hexc("#2e3d22")
+BIRCH_MID = hexc("#5b7436")
+BIRCH_LIGHT = hexc("#9aa857")
+OAK_DEEP = hexc("#232e1e")
+OAK_MID = hexc("#45572c")
+OAK_LIGHT = hexc("#76803f")
+PINE_DEEP = hexc("#183029")
+PINE_MID = hexc("#2c5046")
+PINE_LIGHT = hexc("#55786a")
+PINE_TIP = hexc("#7d9a84")
+WILLOW_DEEP = hexc("#283828")
+WILLOW_MID = hexc("#4d6444")
+WILLOW_LIGHT = hexc("#86996a")
+VINE_DEEP = hexc("#25311c")
+VINE_MID = hexc("#4b5e2b")
+VINE_LIGHT = hexc("#7c8941")
+GRAPE = hexc("#2a1832")
+GRAPE_LIGHT = hexc("#4f3060")
+HEATHER_DEEP = hexc("#33282f")
+HEATHER = hexc("#6e4a6e")
+HEATHER_LIGHT = hexc("#a07aa0")
+THISTLE_LEAF = hexc("#46553f")
+THISTLE_LIGHT = hexc("#7f8f78")
+THISTLE_HEAD = hexc("#7a4a86")
 
 
 # --- Drawing helpers --------------------------------------------------------------------------------------------
@@ -174,12 +205,13 @@ def shrink(poly, k, toward):
     return [(cx + (x - cx) * k, cy + (y - cy) * k) for x, y in poly]
 
 
-def fir_spray(size, seed, density=1.0, top=False):
+def fir_spray(size, seed, density=1.0, top=False, colours=None, needles=1.0):
     """A spray of fir seen from above, filling its cell, painted rather than drawn needle by needle so it reads at the
     size a tree is on screen: the branch runs from the trunk (left) to its tip (right) and each side twig carries a
     clump of needles, dark at its root and lighter toward its fringed tip, the ones nearer the tip laid over the
     ones behind. The lighter tones lie toward the tips, the new growth; the inked edge comes from ink_and_bleed."""
     rng = random.Random(seed)
+    deep_c, mid_c, light_c, tip_c = colours or (FIR_DEEP, FIR_MID, FIR_LIGHT, FIR_TIP)
     S = size * SS
     img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -202,7 +234,7 @@ def fir_spray(size, seed, density=1.0, top=False):
         ln = width_at(pos) * rng.uniform(0.9, 1.1) / math.sin(0.95)
         ang = rng.uniform(0.7, 1.0) * side
         tip = (x + math.cos(ang) * ln, y + math.sin(ang) * ln)
-        clumps.append((pos, (x, y), tip, ln * rng.uniform(0.5, 0.62)))
+        clumps.append((pos, (x, y), tip, ln * rng.uniform(0.5, 0.62) * needles))
         k += 1
         pos += rng.uniform(0.055, 0.075) / density ** 0.3
     # The stem's own clump down the middle, on top of the twigs near the trunk.
@@ -211,16 +243,16 @@ def fir_spray(size, seed, density=1.0, top=False):
     for pos, base, tip, w in clumps:
         poly = needle_clump(base, tip, w, rng, teeth=max(6, int(9 + pos * 4)))
         lit = (base[0] + (tip[0] - base[0]) * 0.72, base[1] + (tip[1] - base[1]) * 0.72)
-        deep = jitter(mix(FIR_DEEP, (0, 0, 0, 255), 0.18), rng, 0.05)
-        midc = jitter(mix(FIR_DEEP, FIR_MID, min(1.0, 0.45 + pos * 0.6)), rng, 0.06)
-        light = jitter(mix(FIR_MID, FIR_LIGHT, min(1.0, 0.25 + pos * 0.9)), rng, 0.06)
+        deep = jitter(mix(deep_c, (0, 0, 0, 255), 0.18), rng, 0.05)
+        midc = jitter(mix(deep_c, mid_c, min(1.0, 0.45 + pos * 0.6)), rng, 0.06)
+        light = jitter(mix(mid_c, light_c, min(1.0, 0.25 + pos * 0.9)), rng, 0.06)
         d.polygon(poly, fill=deep)
         d.polygon(shrink(poly, 0.78, lit), fill=midc)
         d.polygon(shrink(poly, 0.48, lit), fill=light)
         if pos > 0.6 or rng.random() < 0.3:
             d.polygon(shrink(poly, 0.22, (base[0] + (tip[0] - base[0]) * 0.85, base[1] + (tip[1] - base[1]) * 0.85)),
-                      fill=jitter(mix(light, FIR_TIP, 0.6), rng, 0.05))
-    stroke(d, main, S * 0.014, S * 0.004, mix(BARK, FIR_DEEP, 0.4))
+                      fill=jitter(mix(light, tip_c, 0.6), rng, 0.05))
+    stroke(d, main, S * 0.014, S * 0.004, mix(BARK, deep_c, 0.4))
     return img
 
 
@@ -368,6 +400,152 @@ def reeds(size, seed):
     return img
 
 
+def leaf_spray(size, seed, colours, leaf=(0.06, 0.09), width=0.55, serrate=5, count=70, droop=0.0, fruit=0.0):
+    """A leafy spray seen from above for a broadleaf tree's crown (birch, oak) or a vine, its twig running from the
+    trunk (left) to its tip (right): side twigs either way, leaves crowded along their outer parts, the lighter ones
+    nearer the tips; `fruit` hangs that many bunches of grapes."""
+    rng = random.Random(seed)
+    deep, mid, light = colours
+    S = size * SS
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    cy = S * 0.5
+    main = curve((S * 0.01, cy), (S * 0.96, cy + droop * S), rng.uniform(-0.05, 0.05), 30)
+    twigs = [main]
+    pos, k = 0.1, 0
+    while pos < 0.86:
+        x, y = main[int(pos * (len(main) - 1))]
+        side = 1 if k % 2 == 0 else -1
+        ln = S * 0.34 * (1.0 - pos * 0.45) * rng.uniform(0.8, 1.1)
+        ang = rng.uniform(0.45, 0.9) * side + droop * 0.8
+        twigs.append(curve((x, y), (x + math.cos(ang) * ln, y + math.sin(ang) * ln), rng.uniform(-0.12, 0.12), 10))
+        k += 1
+        pos += rng.uniform(0.08, 0.13)
+    for t in twigs:
+        stroke(d, t, S * 0.009, S * 0.003, mix(BARK, deep, 0.35))
+    items = []
+    for n in range(count):
+        t = twigs[rng.randrange(len(twigs))]
+        q = rng.uniform(0.2, 1.0)
+        x, y = t[int(q * (len(t) - 1))]
+        items.append((y + rng.uniform(-S * 0.05, S * 0.05), x, y, q))
+    items.sort()
+    for _, x, y, q in items:
+        ln = S * rng.uniform(*leaf)
+        ang = rng.uniform(0, math.tau)
+        tip = (x + math.cos(ang) * ln, y + math.sin(ang) * ln)
+        col = mix(deep, mid, min(1.0, rng.uniform(0.25, 0.9) + q * 0.2))
+        if rng.random() < 0.3 + q * 0.2:
+            col = mix(col, light, rng.uniform(0.3, 0.8))
+        d.polygon(leaf_poly((x, y), tip, ln * width, serrate=serrate, rng=rng), fill=jitter(col, rng, 0.06))
+        stroke(d, [(x, y), ((x + tip[0]) / 2, (y + tip[1]) / 2)], S * 0.003, S * 0.0015, mix(col, deep, 0.5))
+    for n in range(int(fruit)):
+        t = twigs[1 + rng.randrange(max(1, len(twigs) - 1))] if len(twigs) > 1 else main
+        x, y = t[int(rng.uniform(0.3, 0.7) * (len(t) - 1))]
+        for g in range(14):
+            gx = x + rng.uniform(-0.035, 0.035) * S
+            gy = y + rng.uniform(0.0, 0.09) * S * (1.0 - g / 20)
+            r = S * rng.uniform(0.011, 0.016)
+            d.ellipse([gx - r, gy - r, gx + r, gy + r], fill=jitter(mix(GRAPE, GRAPE_LIGHT, rng.random()), rng, 0.05))
+    return img
+
+
+def strands(size, seed):
+    """Willow: long thin strands of narrow leaves rising from the bottom middle (they hang from the branch in the
+    tree, which turns the card over)."""
+    rng = random.Random(seed)
+    S = size * SS
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for k in range(9):
+        x0 = S * (0.5 + rng.uniform(-0.18, 0.18))
+        h = S * rng.uniform(0.75, 0.98)
+        pts = curve((x0, S * 0.995), (x0 + rng.uniform(-0.1, 0.1) * S, S - h), rng.uniform(-0.08, 0.08), 24)
+        stroke(d, pts, S * 0.006, S * 0.002, mix(BARK, WILLOW_DEEP, 0.5))
+        for i in range(2, len(pts), 1):
+            x, y = pts[i]
+            for side in (-1, 1):
+                if rng.random() < 0.25:
+                    continue
+                ln = S * rng.uniform(0.045, 0.07)
+                ang = -math.pi / 2 + side * rng.uniform(0.25, 0.6)
+                tip = (x + math.cos(ang) * ln, y + math.sin(ang) * ln)
+                t = i / len(pts)
+                col = mix(WILLOW_DEEP, WILLOW_MID, min(1.0, 0.3 + t))
+                if rng.random() < 0.35:
+                    col = mix(col, WILLOW_LIGHT, rng.uniform(0.3, 0.7))
+                d.polygon(leaf_poly((x, y), tip, ln * 0.28, rng=rng), fill=jitter(col, rng, 0.06))
+    return img
+
+
+def heather(size, seed):
+    """Heather: a low tuft of wiry stems from the bottom, their upper parts crowded with tiny dull-purple bells."""
+    rng = random.Random(seed)
+    S = size * SS
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for k in range(30):
+        x0 = S * (0.5 + rng.uniform(-0.2, 0.2))
+        h = S * rng.uniform(0.45, 0.9)
+        lean = rng.uniform(-0.45, 0.45)
+        pts = curve((x0, S * 0.995), (x0 + lean * h, S - h), rng.uniform(-0.15, 0.15), 14)
+        stroke(d, pts, S * 0.007, S * 0.003, mix(HEATHER_DEEP, BARK, 0.4))
+        for i in range(len(pts) // 3, len(pts)):
+            x, y = pts[i]
+            r = S * rng.uniform(0.008, 0.014)
+            col = mix(HEATHER_DEEP, HEATHER, min(1.0, 0.3 + i / len(pts)))
+            if rng.random() < 0.35:
+                col = mix(col, HEATHER_LIGHT, rng.uniform(0.3, 0.7))
+            d.ellipse([x - r + rng.uniform(-r, r), y - r, x + r + rng.uniform(-r, r), y + r], fill=jitter(col, rng, 0.06))
+    return img
+
+
+def thistle(size, seed):
+    """A thistle: spiny grey-green leaves round its foot and a stalk with a purple head."""
+    rng = random.Random(seed)
+    S = size * SS
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for k in range(11):
+        ang = -math.pi / 2 + rng.uniform(-1.3, 1.3)
+        ln = S * rng.uniform(0.3, 0.45)
+        base = (S * 0.5, S * 0.97)
+        tip = (base[0] + math.cos(ang) * ln, base[1] + math.sin(ang) * ln * 0.8)
+        col = mix(THISTLE_LEAF, THISTLE_LIGHT, rng.uniform(0.0, 0.6))
+        d.polygon(leaf_poly(base, tip, ln * 0.4, serrate=9, rng=rng), fill=jitter(col, rng, 0.06))
+    for k in range(rng.choice((2, 3))):
+        top = (S * (0.5 + rng.uniform(-0.18, 0.18)), S * rng.uniform(0.08, 0.2))
+        stalk = curve((S * 0.5, S * 0.97), top, rng.uniform(-0.06, 0.06), 12)
+        stroke(d, stalk, S * 0.012, S * 0.007, mix(THISTLE_LEAF, BARK, 0.3))
+        x, y = top
+        r = S * 0.07
+        for sp in range(18):
+            a = -math.pi + math.pi * sp / 17
+            stroke(d, [(x, y + r * 0.6), (x + math.cos(a) * r * 1.3, y + r * 0.6 + math.sin(a) * r * 1.5)],
+                   S * 0.008, S * 0.003, jitter(THISTLE_HEAD, rng, 0.08))
+        d.ellipse([x - r * 0.75, y + r * 0.3, x + r * 0.75, y + r * 1.6], fill=mix(THISTLE_LEAF, THISTLE_LIGHT, 0.3))
+    return img
+
+
+def cattails(size, seed):
+    """A stand of cattails: tall blades, most with a dark brown head."""
+    rng = random.Random(seed)
+    S = size * SS
+    img = Image.new("RGBA", (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for k in range(18):
+        x0 = S * (0.5 + rng.uniform(-0.22, 0.22))
+        h = S * rng.uniform(0.6, 0.98)
+        pts = curve((x0, S * 0.995), (x0 + rng.uniform(-0.1, 0.1) * h, S - h), rng.uniform(-0.05, 0.05), 12)
+        col = mix(hexc("#3e4a2c"), REED_LIGHT, rng.uniform(0.0, 0.6))
+        stroke(d, pts, S * rng.uniform(0.014, 0.022), 1.0, jitter(col, rng, 0.08))
+        if rng.random() < 0.55:
+            j = int(len(pts) * 0.7)
+            (x1, y1), (x2, y2) = pts[j], pts[min(len(pts) - 1, j + 2)]
+            stroke(d, [(x1, y1), (x2, y2)], S * 0.026, S * 0.024, jitter(CATTAIL, rng, 0.08))
+    return img
+
+
 def paint(name, size):
     seeds = {n: 1000 + i * 37 for i, n in enumerate(CELLS)}
     s = seeds[name]
@@ -403,6 +581,24 @@ def paint(name, size):
         img = twigs(size, s)
     elif name == "reeds":
         img = reeds(size, s)
+    elif name == "birch_leaves":
+        img = leaf_spray(size, s, (BIRCH_DEEP, BIRCH_MID, BIRCH_LIGHT), leaf=(0.05, 0.08), width=0.7, count=190,
+                         droop=0.25)
+    elif name == "oak_leaves":
+        img = leaf_spray(size, s, (OAK_DEEP, OAK_MID, OAK_LIGHT), leaf=(0.09, 0.13), width=0.6, serrate=4, count=120)
+    elif name == "pine_tuft":
+        img = fir_spray(size, s, density=0.9, colours=(PINE_DEEP, PINE_MID, PINE_LIGHT, PINE_TIP))
+    elif name == "willow_strand":
+        img = strands(size, s)
+    elif name == "vine_leaves":
+        img = leaf_spray(size, s, (VINE_DEEP, VINE_MID, VINE_LIGHT), leaf=(0.1, 0.15), width=0.95, serrate=3, count=34,
+                         fruit=3)
+    elif name == "heather":
+        img = heather(size, s)
+    elif name == "thistle":
+        img = thistle(size, s)
+    elif name == "cattails":
+        img = cattails(size, s)
     else:
         raise ValueError(name)
     img = img.resize((size, size), Image.LANCZOS)
@@ -417,7 +613,8 @@ def main():
     a = ap.parse_args()
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    atlas = Image.open(out).convert("RGBA") if a.only and out.exists() else Image.new("RGBA", (a.size * 4, a.size * 4))
+    rows = (len(CELLS) + 3) // 4
+    atlas = Image.open(out).convert("RGBA") if a.only and out.exists() else Image.new("RGBA", (a.size * 4, a.size * rows))
     for i, name in enumerate(CELLS):
         if a.only and name not in a.only:
             continue
@@ -434,11 +631,13 @@ def main():
         box = full.crop((x0, y0, x0 + a.size, y0 + a.size)).point(lambda v: 255 if v > 24 else 0).getbbox()
         box = box or (0, 0, a.size, a.size)
         W = float(a.size * 4)
-        cells[name] = [round((x0 + box[0]) / W, 5), round((y0 + box[1]) / W, 5), round((x0 + box[2]) / W, 5),
-                       round((y0 + box[3]) / W, 5)]
+        H = float(a.size * rows)
+        cells[name] = [round((x0 + box[0]) / W, 5), round((y0 + box[1]) / H, 5), round((x0 + box[2]) / W, 5),
+                       round((y0 + box[3]) / H, 5)]
     meta = {"about": "Leaf cards painted by tools/art/plant_cards.py: each cell's drawn box in the atlas, as fractions "
-                     "(u0, v0, u1, v1) from its top left. blender/plants_3d.py maps the plants' cards onto them.",
-            "atlas": out.name, "cells": cells}
+                     "(u0, v0, u1, v1) from its top left, in an atlas four cells wide and `rows` tall. "
+                     "blender/plants_3d.py maps the plants' cards onto them.",
+            "atlas": out.name, "rows": rows, "cells": cells}
     out.with_suffix(".json").write_text(json.dumps(meta, indent=2) + "\n")
     print("wrote", out, "and", out.with_suffix(".json").name)
 
