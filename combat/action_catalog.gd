@@ -1082,14 +1082,7 @@ func _spell_details(c: Combatant, action: Dictionary) -> Dictionary:
 	if comp.has("m"):
 		parts.append("M (%s)" % comp["m"])
 	lines.append("Components: %s" % ", ".join(parts))
-	var dur := data.get("duration", {}) as Dictionary
-	var dur_text := str(dur.get("kind", "instantaneous")).capitalize()
-	if dur.has("amount"):
-		var unit := str(dur["kind"])
-		dur_text = "%d %s" % [int(dur["amount"]), unit.trim_suffix("s") if int(dur["amount"]) == 1 else unit]
-	if bool(dur.get("concentration", false)):
-		dur_text = "Concentration, up to " + dur_text
-	lines.append("Duration: %s" % dur_text)
+	lines.append("Duration: %s" % Effect.duration_text(data.get("duration", {}) as Dictionary))
 	var ch := c.creature as Character
 	var slot := int(action.get("slot", level))
 	var prev := ch.spell_preview(sid, slot)

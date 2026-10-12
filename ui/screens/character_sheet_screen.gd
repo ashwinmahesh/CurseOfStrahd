@@ -872,22 +872,7 @@ func _components(s: Dictionary) -> String:
 
 
 func _duration(s: Dictionary) -> String:
-	var d := s.get("duration", {}) as Dictionary
-	var kind := str(d.get("kind", ""))
-	var amount := int(d.get("amount", 1))
-	var out := ""
-	match kind:
-		"instantaneous":
-			out = "Instantaneous"
-		"until_dispelled":
-			out = "Until dispelled"
-		"rounds", "minutes", "hours", "days":
-			out = "%d %s" % [amount, kind.trim_suffix("s") if amount == 1 else kind]
-		_:
-			out = kind.replace("_", " ").capitalize()
-	if bool(d.get("concentration", false)):
-		out = "Concentration, up to " + out.to_lower()
-	return out
+	return Effect.duration_text(s.get("duration", {}) as Dictionary)
 
 
 ## Healing and helpful spells outside a fight (FieldCasting): a slot picker when it can go at more than one level,

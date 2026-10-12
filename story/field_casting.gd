@@ -497,6 +497,8 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		lasting = 60 * 24 * 60
 	if lasting > 0:
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
+		if Effect.until_long_rest(dur):
+			RestRules.keep_until_long_rest(st, spell_id)
 	# Spells that help a check while they run (Detect Thoughts on Insight...): CHECK_AIDS.
 	if CHECK_AIDS.has(spell_id) and lasting > 0:
 		_check_aid(st, caster, spell_id, data, lasting)

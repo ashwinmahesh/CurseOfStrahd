@@ -46,6 +46,19 @@ static func minutes_until_long_rest(st: StoryState) -> int:
 ## Notes that the party has just finished a Long Rest.
 static func note_long_rest(st: StoryState) -> void:
 	st.flags[DONE_AT] = st.total_minutes()
+	# 8-hour exploring spells (the house rule, Effect.until_long_rest) end with the rest.
+	for id: String in st.active_spells.keys():
+		if bool((st.active_spells[id] as Dictionary).get("long_rest", false)):
+			st.active_spells.erase(id)
+
+
+## An exploring spell running until the next Long Rest (Effect.until_long_rest): no clock on it.
+static func keep_until_long_rest(st: StoryState, spell_id: String) -> void:
+	var a := st.active_spells.get(spell_id, {}) as Dictionary
+	if a.is_empty():
+		return
+	a["until"] = st.total_minutes() + 100 * 365 * 24 * 60
+	a["long_rest"] = true
 
 
 ## "7 hours 30 minutes", "1 hour", "45 minutes".
