@@ -614,6 +614,46 @@
             22,
             5
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            23,
+            1
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            19,
+            2
+          ]
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            21,
+            7
+          ]
         }
       ],
       "surprise": "",
@@ -730,6 +770,46 @@
           "cell": [
             22,
             5
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            23,
+            1
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            19,
+            2
+          ]
+        },
+        {
+          "monster": "berserker",
+          "name": "Warden of the hill",
+          "cell": [
+            21,
+            7
           ]
         }
       ],

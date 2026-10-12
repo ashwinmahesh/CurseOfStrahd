@@ -170,18 +170,20 @@ Moderate 5200 / High 6800. XP per block: druid 450, berserker 450, tree blight 2
 
 | id (map, trigger) | Variants (XP; L6 band) | Notes |
 |---|---|---|
-| `vineyard_ambush` (exterior, enter `vine_lane`; party surprised) | L7: druid, 3 vine, 6 needle, 6 twig (1200); L6: druid, 2 vine, 6 needle, 6 twig (1100, Low); under 6: 2 vine, 4 needle, 6 twig (550) | none once the tree burned |
-| `winery_occupation` (winery, enter `ferment_hall`) | tree burned: 3 druids at 35 HP (1350); L7: 3 druids, 4 vine, 6 needle, 4 twig (2150); L6: 2 druids, 3 vine, 6 needle, 4 twig (1600, Low; one druid fewer since the 2024 Druid's two attacks, 2026-10-06); under 6: 2 druids, 2 vine, 4 needle (1300) | critical path |
-| `cellar_dig` (cellar, enter `the_dig`) | tree burned: druid overseer 35 HP (450); L7: druid, 2 vine, 8 needle (1050); L6: druid, vine, 6 needle (850); under 6: vine, 4 needle (300) | optional |
-| `press_house_mash` (press house, dialogue) | burned+fled: the Mash (1800); burned: Kostin 44 HP + Mash (2250); fled: Mash, 2 vine, 3 needle (2150); L7: Kostin, druid, Mash, 2 vine (2900); L6: Kostin, Mash, 2 vine (2450, Low); under 6: Kostin, Mash at 90 HP, vine (2350) | critical path; the Mash is a `shambling_mound` named "The Mash" |
+| `vineyard_ambush` (exterior, enter `vine_lane`; party surprised) | L7: 3 druids, 3 wardens (berserkers), 3 vine, 6 needle, 6 twig (3450); L6: 3 druids, 3 wardens, 2 vine, 6 needle, 6 twig (3350, between Low and Moderate); under 6: 2 vine, 4 needle, 6 twig (550) | none once the tree burned |
+| `winery_occupation` (winery, enter `ferment_hall`) | tree burned: 3 druids at 35 HP (1350); L7: 5 druids, 3 wardens, 4 vine, 6 needle, 4 twig (4400); L6: 4 druids, 3 wardens, 3 vine, 6 needle, 4 twig (3850, between Low and Moderate); under 6: 2 druids, 2 vine, 4 needle (1300) | critical path |
+| `cellar_dig` (cellar, enter `the_dig`) | tree burned: druid overseer 35 HP (450); L7: 5 druids, 6 vine, 8 needle (3250); L6: 5 druids, 5 vine, 6 needle (3050; two druids and three vines rise from the cask vaults behind the party); under 6: vine, 4 needle (300) | optional |
+| `press_house_mash` (press house, dialogue) | burned+fled: the Mash (1800); burned: Kostin 44 HP + Mash (2250); fled: Mash, 2 vine, 3 needle (2150); L7: Kostin, 5 druids, Mash, 6 vine (5100); L6: Kostin, 4 druids, Mash, 6 vine (4650, between Moderate and High); under 6: Kostin, Mash at 90 HP, vine (2350) | critical path; the Mash is a `shambling_mound` named "The Mash" |
 | `wardens_camp_fight` (hill, enter `wardens_camp`) | L7: 4 berserkers, 4 twig (1900); L6: 3 berserkers, 4 twig (1450, Low); under 6: 2 berserkers, 4 twig (1000) | optional; gone once the hill is broken |
 | `summit_ritual` (crown, dialogue) — **the climax** | fled: Wintersplinter 120 + 6 twig (3050); struck first (enemies surprised): W 100, Ruxandra 55, 2 druids, 4 twig (4350); circle broken: W 140, Ruxandra 60, 6 twig (3500); Kostin warned: W 140, Ruxandra, Kostin, 2 druids, 4 twig (4800, Moderate); L7: W 149, Ruxandra, 2 druids, a warden, 2 vine, 4 twig (5000, Moderate for L7); L6: W 140, Ruxandra 60, 6 twig (3500, Moderate; no extra druids since the 2024 Druid and the 2025 Tree Blight's roots and Gnash, 2026-10-06); under 6: W 110, Ruxandra 50, druid, 4 twig (3900, Moderate for L5) | critical path; Wintersplinter is a Huge `tree_blight` |
 | `vineyard_road` table (map `road_forest`) | hedge blights (550, until the tree burns; party surprised), druid patrol (1150, until the hill is broken), wolves at night (600), the Keepers' leaf (event, once), `druids_return` (1650, once, if spared/fled and the tree stands) | day 15%, night 40% |
 
-The critical path is three Low fights (lane, hall, press) and one Moderate (the crown). Davian or Adrian as guests (a
+The critical path is three fights the party can lose (lane, hall, press; owner 2026-10-12, they were too easy at level 6
+on Balanced: the autopilot's four pregens now win about 3 in 8 of each, the cellar dig 4 in 8, with two or three heroes
+down, tests/integration/test_story_fights.gd) and the crown, which it wins about 4 in 8. Davian or Adrian as guests (a
 wereraven each, 450 XP) can add to the party's side; the summit stays Moderate with one guest. The auto-player has the
-Mash (110 HP, engulf) and Wintersplinter (140 HP, AC 15, reach) as the two big bodies; neither fight has a rider it can't
-answer, and the party can rest safely in the winery between the press house and the hill.
+Mash (110 HP, engulf) and Wintersplinter (140 HP, AC 15, reach) as the two big bodies; neither fight has a rider it
+can't answer, and the party can rest safely in the winery between the press house and the hill.
 
 ## 7. Milestone
 

@@ -345,6 +345,66 @@
             18,
             7
           ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            3
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            6
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            2
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            9
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            5
+          ]
         }
       ],
       "surprise": "",
@@ -412,6 +472,66 @@
           "cell": [
             27,
             11
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            3
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            6
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            2
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            9
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            5
           ]
         }
       ],
