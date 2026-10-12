@@ -9,6 +9,10 @@ extends AnimatedSprite3D
 ## The attack reached its hit frame (the blow lands): show the hit or miss now.
 signal struck
 signal attack_finished
+## A foot came down in the walk: the cycle's first or middle frame (the half-cycle marks a walk ends on), reached as it
+## plays, not by turning to another direction's walk mid-stride. The leader's footsteps play on it (WorldSounds), so
+## they keep the pace of the legs drawn (owner 2026-10-12: two a square had been about four times too fast).
+signal footfall
 
 ## Order matches the rows the Blender script renders.
 const DIRECTIONS: Array[String] = ["s", "se", "e", "ne", "n", "nw", "w", "sw"]
@@ -32,6 +36,8 @@ var pose := ""
 ## the figure doesn't snap from mid-stride to standing.
 var finish_stride := false
 var _stride_t := 0.0
+## Set while _process swaps one animation for another (a turn): the frame it passes through isn't a footfall.
+var _swapping := false
 var _attacking := false
 var _struck := false
 var _hit_frame := 2
@@ -350,6 +356,8 @@ func _on_frame_changed() -> void:
 	if _attacking and not _struck and frame >= _hit_frame:
 		_struck = true
 		struck.emit()
+	if not _swapping and (moving or finish_stride) and _foot_down():
+		footfall.emit()
 
 
 func _on_animation_finished() -> void:
@@ -384,18 +392,32 @@ func _process(delta: float) -> void:
 	flip_h = bool(shown[1])
 	if animation != anim:
 		var f := frame
+		var was_walking := _walking()
+		_swapping = true
 		play(anim)
 		frame = f if f < sprite_frames.get_frame_count(anim) else 0
+		_swapping = false
+		if moving and not was_walking and _foot_down():
+			footfall.emit()   # setting off with a foot down
 
 
 ## Whether the walk is still playing on to a foot-down frame (half-cycle marks), for at most a fifth of a second.
 func _finishing_stride(delta: float) -> bool:
-	var a := str(animation)
-	if not (a.begins_with("walk_") or a.begins_with("sneak_walk_")) or not is_playing():
+	if not _walking() or not is_playing():
 		return false
 	_stride_t += delta
-	var half := maxi(1, sprite_frames.get_frame_count(animation) / 2)
-	return frame % half != 0 and _stride_t < 0.2
+	return not _foot_down() and _stride_t < 0.2
+
+
+## Whether a walk (on foot or crouched) is showing.
+func _walking() -> bool:
+	var a := str(animation)
+	return a.begins_with("walk_") or a.begins_with("sneak_walk_")
+
+
+## Whether a walk shows a foot coming down: its first or middle frame (the half-cycle marks).
+func _foot_down() -> bool:
+	return _walking() and frame % maxi(1, sprite_frames.get_frame_count(animation) / 2) == 0
 
 
 ## The looping animation for the pose and whether the figure is moving.

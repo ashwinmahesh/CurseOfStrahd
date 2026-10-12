@@ -149,7 +149,9 @@ with a short step toward the target. Without an attack sheet the old lunge plays
 (`set_step_time`): legs keep a natural cadence of about a cycle (two steps) a second, with the stride as long as the
 pace makes it, from one square (townsfolk strolling at 0.7 s a square) to four (the party's quick pace); past four the
 legs speed up rather than skate (owner 2026-10-06), below one they slow with the feet on the ground (owner 2026-10-08:
-townsfolk had been held to four squares a cycle, so their legs alternated far too slowly).
+townsfolk had been held to four squares a cycle, so their legs alternated far too slowly). A foot comes down on a
+walk's first and middle frames: the sprite sends `footfall` there, and the leader's footsteps play on it
+(`WorldSounds`), so they keep the legs' pace (owner 2026-10-12: two a square had been about four times too fast).
 
 **Lit by the scene (Improvement Ideas W6, the Modern finish).** `sprite_crisp.gdshader` (`lit`, set from
 `Look.modern()`) lights each figure by the lamps near it, the sun or moon and the sky, so a figure takes a lantern's
