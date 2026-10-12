@@ -103,6 +103,131 @@ static func cast(party: Array[Character], caster: Character, spell_id: String, s
 	return {"ok": true, "text": "\n".join(lines), "lines": lines}
 
 
+# --- Bringing back the dead, outside a fight -------------------------------------------------------
+
+## The spells that bring a dead party member back outside a fight (owner, 2026-10-12: Revivify worked only inside the
+## fight, and a party caster's Raise Dead used up its diamond and did nothing): how long the hero may have been dead
+## (minutes, Services.dead_for), whether they come back with all their Hit Points or 1, and whether the ordeal follows
+## (-4 on D20 Tests for 10 days, as the temple's Raise Dead). Reincarnate's rare oils are bought with 1,000 gp from the
+## purse (there's no oils item; docs/rules/deviations.md). Gentle Repose keeps a body instead: its days don't count.
+const REVIVAL := {
+	"revivify": {"within": 1, "full_hp": false, "ordeal": false},
+	"raise_dead": {"within": 10 * 24 * 60, "full_hp": false, "ordeal": true},
+	"reincarnate": {"within": 10 * 24 * 60, "full_hp": true, "ordeal": false, "purse": 1000},
+	"resurrection": {"within": 100 * 365 * 24 * 60, "full_hp": true, "ordeal": true},
+	"true_resurrection": {"within": 200 * 365 * 24 * 60, "full_hp": true, "ordeal": false},
+	"gentle_repose": {"within": -1},
+}
+const REPOSE_MINUTES := 10 * 24 * 60
+
+
+## The revival spells `caster` knows, as options() gives them, with `targets`: the dead party members each can reach.
+static func revival_options(st: StoryState, caster: Character) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var seen := {}
+	for k in caster.known_spells():
+		var id := str(k["id"])
+		if not REVIVAL.has(id) or seen.has(id):
+			continue
+		seen[id] = true
+		var data := Compendium.shared().spell_data(id)
+		var level := int(data.get("level", 0))
+		var targets: Array[Character] = []
+		var first_why := ""
+		for ch in st.party:
+			if ch == caster or not ch.dead:
+				continue
+			var why := revive_why(st, id, ch)
+			if why == "":
+				targets.append(ch)
+			elif first_why == "":
+				first_why = why
+		var entry := {"id": id, "name": str(data["name"]), "level": level, "free": false, "count": 1, "self_only": false,
+			"others_only": true, "slots": _slots(caster, level), "targets": targets, "legal": true, "reason": "",
+			"ritual": bool(data.get("ritual", false))}
+		var why := _revive_cost_why(st, caster, id, data)
+		if targets.is_empty():
+			why = first_why if first_why != "" else "Nobody in the party is dead"
+		if why != "":
+			entry["legal"] = false
+			entry["reason"] = why
+		out.append(entry)
+	return out
+
+
+## Why `spell_id` can't bring `ch` back now, or "".
+static func revive_why(st: StoryState, spell_id: String, ch: Character) -> String:
+	if not ch.dead:
+		return "%s isn't dead" % ch.name.get_slice(" ", 0)
+	var within := int((REVIVAL.get(spell_id, {}) as Dictionary).get("within", -1))
+	if within >= 0 and Services.dead_for(st, ch) > within:
+		return "%s has been dead too long for %s" % [ch.name.get_slice(" ", 0), Compendium.shared().display_name("spells", spell_id)]
+	return ""
+
+
+## What stops `caster` paying for a revival spell: a slot (Gentle Repose can be a Ritual), its costly component, the
+## purse for Reincarnate's oils, or being unable to cast. "" when nothing does.
+static func _revive_cost_why(st: StoryState, caster: Character, spell_id: String, data: Dictionary) -> String:
+	if caster.dead or caster.hp <= 0 or caster.has_condition(&"incapacitated"):
+		return "%s can't cast" % caster.name.get_slice(" ", 0)
+	var level := int(data.get("level", 0))
+	if level > 0 and _slots(caster, level).is_empty() and not bool(data.get("ritual", false)):
+		return "No spell slots left"
+	if caster.component_why(data) != "":
+		return caster.component_why(data)
+	var purse := float((REVIVAL.get(spell_id, {}) as Dictionary).get("purse", 0))
+	if purse > 0.0 and st.gold < purse:
+		return "Needs rare oils worth %d gp (the purse holds %d)" % [roundi(purse), floori(st.gold)]
+	return ""
+
+
+## Casts a revival spell on dead party member `target`: the slot (`slot` 0: the lowest; Gentle Repose without a slot is
+## a Ritual), the component and the casting time are spent, and the hero comes back (Services.bring_back) or, for
+## Gentle Repose, their body keeps for 10 days. {ok, text}.
+static func revive(st: StoryState, caster: Character, spell_id: String, slot: int, target: Character) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	if data.is_empty() or not REVIVAL.has(spell_id):
+		return {"ok": false, "text": "Not a spell that brings back the dead"}
+	if not caster.known_spells().any(func(k: Dictionary) -> bool: return str(k["id"]) == spell_id):
+		return {"ok": false, "text": "Spell is not prepared or known"}
+	var why := revive_why(st, spell_id, target)
+	if why == "":
+		why = _revive_cost_why(st, caster, spell_id, data)
+	if why != "":
+		return {"ok": false, "text": why}
+	var level := int(data.get("level", 0))
+	var slots := _slots(caster, level)
+	var ritual := bool(data.get("ritual", false)) and (slot <= 0 or slots.is_empty())
+	if not ritual:
+		if not caster.expend_slot(slot if slot in slots else slots[0]):
+			return {"ok": false, "text": "No spell slots left"}
+	var used := caster.use_component(data)
+	var rule := REVIVAL[spell_id] as Dictionary
+	var purse := float(rule.get("purse", 0))
+	if purse > 0.0:
+		st.gold = maxf(0.0, st.gold - purse)
+	var ct := data.get("casting_time", {}) as Dictionary
+	var minutes := (int(ct.get("amount", 1)) * 60 if str(ct.get("unit", "")) == "hour" else 1) + (10 if ritual else 0)
+	var who := caster.name.get_slice(" ", 0)
+	var them := target.name.get_slice(" ", 0)
+	var text := ""
+	if spell_id == "gentle_repose":
+		Services.repose(st, target, REPOSE_MINUTES)
+		text = "%s casts Gentle Repose on %s's body: for 10 days it won't decay, and those days don't count against raising them." % [who, them]
+	else:
+		Services.bring_back(st, target, bool(rule["full_hp"]), bool(rule["ordeal"]), str(data["name"]))
+		text = "%s casts %s, and %s breathes again%s." % [who, data["name"], them,
+			" with every Hit Point" if bool(rule["full_hp"]) else ", with 1 Hit Point"]
+		if bool(rule["ordeal"]):
+			text += " The journey back leaves them -4 on D20 Tests for 10 days."
+	st.advance_minutes(minutes)
+	if used != "":
+		text = text.trim_suffix(".") + ", using up %s." % used
+	if purse > 0.0:
+		text += " The rare oils cost %d gp." % roundi(purse)
+	return {"ok": true, "text": text}
+
+
 static func _slots(caster: Character, level: int) -> Array[int]:
 	var out: Array[int] = []
 	if level == 0:

@@ -128,6 +128,66 @@ func _command(ctx: Dictionary, t: Combatant, word: String, r: CombatResult, paus
 	return after.call(roll.call() as D20Test) as CombatResult
 
 
+## Suggestion and Mass Suggestion (2024): a creature that can hear and understand you makes a Wisdom save or is
+## Charmed and carries out the suggestion until anyone on your side hurts it, its caster's Concentration ends, or it's
+## done. In a fight the game offers four, the way Command offers its words (docs/rules/deviations.md): Stand aside
+## (it stops fighting and makes no Opportunity Attacks), Go home (it walks off and leaves the fight), Sit (it drops
+## what it holds and sits, Prone) and Come with me (it follows its caster and does nothing else). `pausable` as for
+## Sleep.
+const SUGGESTIONS := {"stand_aside": ["indifferent", "no_opportunity_attacks"], "go_home": ["suggest_leave", "no_opportunity_attacks"],
+	"sit": ["suggest_sit", "no_opportunity_attacks"], "follow": ["suggest_follow", "no_opportunity_attacks"]}
+const SUGGESTION_NAMES := {"stand_aside": "Stand aside", "go_home": "Go home", "sit": "Put that down and sit", "follow": "Come with me"}
+
+
+func _suggestion(ctx: Dictionary, t: Combatant, kind: String, r: CombatResult, pausable: bool = false) -> CombatResult:
+	var c := ctx["c"] as Combatant
+	var s := ctx["s"] as Dictionary
+	var e := enc()
+	if not kind in SUGGESTIONS:
+		kind = "stand_aside"
+	if t == c or c.allied_with(t):
+		return r
+	if not understands(t.creature):
+		r.lines.append(e.log.add("info", "%s can't understand the suggestion" % t.name(), t.id))
+		return r
+	if t.creature.is_condition_immune(&"charmed"):
+		r.lines.append(e.log.add("info", "%s can't be charmed" % t.name(), t.id))
+		return r
+	var dc := (ctx["nums"]["dc"] as Breakdown).total()
+	var roll := func() -> D20Test:
+		return t.creature.roll_save(e.dice, &"wis", dc, [], [], "Wisdom save vs %s (%s)" % [s["name"], t.name()], SpellCaster.spell_save_keys(c.id))
+	var after := func(test: D20Test) -> CombatResult:
+		if test.success:
+			r.lines.append(e.log.add("info", "%s ignores the suggestion" % t.name(), t.id, [test.describe()]))
+			return r
+		var fx := Effect.new("%s: %s" % [s["name"], SUGGESTION_NAMES[kind]], &"spell", str(s["id"])).with_condition(&"charmed")
+		for flag: String in SUGGESTIONS[kind]:
+			fx = fx.with_modifier("flag", {"value": flag})
+		fx.caster_id = c.id
+		fx.ends_on.append("damaged_by_caster_side")
+		fx.stack_key = "spell:suggestion:%s" % t.id
+		var conc := ctx.get("conc", null) as Concentration
+		if conc != null:
+			conc.attach(t.creature, fx)
+		else:
+			t.creature.add_effect(fx)
+		r.lines.append(e.log.add("condition", "%s takes the suggestion: %s" % [t.name(), SUGGESTION_NAMES[kind]], t.id, [test.describe()]))
+		e.events.append({"type": "condition", "id": t.id})
+		return r
+	if pausable:
+		return e.d20.then_after(t, roll, after, r)
+	return after.call(roll.call() as D20Test) as CombatResult
+
+
+## Whether `cr` can hear and understand a spoken suggestion: a creature with a language that isn't Deafened.
+static func understands(cr: Creature) -> bool:
+	if cr.has_condition(&"deafened"):
+		return false
+	if cr is Monster:
+		return not ((cr as Monster).data.get("languages", []) as Array).is_empty()
+	return true
+
+
 func _sanctuary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
 	var fx := Effect.new("Sanctuary", &"spell", "sanctuary").lasting({"kind": "minutes", "amount": 1})

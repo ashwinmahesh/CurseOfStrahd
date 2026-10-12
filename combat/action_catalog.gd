@@ -652,8 +652,9 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		var choice := data.get("choice", {}) as Dictionary
 		if not choice.is_empty() and str(s["id"]) != "command":
 			var opts_list: Array = []
+			var words := choice.get("labels", {}) as Dictionary
 			for v: Variant in choice.get("from", []):
-				opts_list.append({"value": str(v), "label": str(v).replace("_", " ").capitalize()})
+				opts_list.append({"value": str(v), "label": str(words.get(str(v), str(v).replace("_", " ").capitalize()))})
 			a["choices"] = opts_list
 			a["choice_label"] = str(choice.get("label", "Choose"))
 			a["opts"] = {"choice": str((opts_list[0] as Dictionary)["value"])}
@@ -1372,6 +1373,9 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 			return ""
 	if str(action["kind"]) == "spell" and bool(Compendium.shared().spell_data(str(action["spell_id"])).get("requires_sight", false)) and not e.can_see(c, t):
 		return "You must see the target"
+	if str(action["kind"]) in ["spell", "item_spell"] and bool(Compendium.shared().spell_data(str(action["spell_id"])).get("needs_understanding", false)) \
+			and not SpellHandlers.understands(t.creature):
+		return "%s can't understand you" % t.name()
 	if str(action["kind"]) == "spell" and c.creature.has_condition(&"charmed"):
 		var charm := e.charm_blocks(c, t)
 		if charm != "" and c.hostile_to(t):

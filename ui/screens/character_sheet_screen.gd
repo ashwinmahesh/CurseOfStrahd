@@ -692,6 +692,8 @@ func _spells(ch: Character) -> VBoxContainer:
 	if not in_fight:   # spells are cast from the hotbar in a fight
 		for o in FieldCasting.options(st.party, ch, Dice.roller):
 			casts[str(o["id"])] = o
+		for o in FieldCasting.revival_options(st, ch):   # Revivify, Raise Dead ... on the party's dead
+			casts[str(o["id"])] = o
 		for o in FieldCasting.utility_options(st.party, ch, Dice.roller):
 			utility[str(o["id"])] = o
 	var unique: Array = []
@@ -902,6 +904,8 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	var pick := OptionButton.new()
 	if bool(o["free"]):
 		pick.add_item("free", lvl)
+	if bool(o.get("ritual", false)) and o.has("targets"):
+		pick.add_item("Ritual", 0)   # Gentle Repose: ten more minutes, no slot
 	for sl: int in o["slots"] as Array:
 		pick.add_item(ActionCatalog._ordinal(sl) + " slot", sl)
 	UiParts.compact(pick)
@@ -917,9 +921,11 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 	UiParts.compact(menu)
 	menu.icon = UiKit.icon("spells")
 	var popup := menu.get_popup()
-	# A spell for another creature (Warding Bond) doesn't offer its caster.
+	# A spell for another creature (Warding Bond) doesn't offer its caster; one for the dead offers those it can reach.
 	var others := bool(o.get("others_only", false))
 	for i in st.party.size():
+		if o.has("targets") and not st.party[i] in (o["targets"] as Array):
+			continue
 		if not (others and st.party[i] == ch):
 			popup.add_item(st.party[i].name, i)
 	var count := int(o["count"])
@@ -1000,7 +1006,8 @@ func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Arra
 	for t: Variant in targets:
 		tgt.append(t as Character)
 	var slot := pick.get_item_id(pick.selected) if pick.item_count > 0 and pick.selected >= 0 else 0
-	var res := FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller, st)
+	var res := FieldCasting.revive(st, ch, spell_id, slot, tgt[0]) if FieldCasting.REVIVAL.has(spell_id) and not tgt.is_empty() \
+		else FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller, st)
 	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
 	_draw()
 

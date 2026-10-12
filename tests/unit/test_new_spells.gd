@@ -184,6 +184,20 @@ func test_hail_of_thorns_bursts_around_a_ranged_hit() -> void:
 	assert_true(near.creature.hp < 200, "the creature beside the target is caught")
 
 
+## Owner audit (2026-10-11): it sat greyed out on the hotbar, "No effect in a fight", because its burst was all it had.
+func test_hail_of_thorns_can_be_armed_from_the_hotbar() -> void:
+	var e := _field()
+	var c := TestCombat.caster_with(e, ["hail_of_thorns"], Vector2i(1, 3))
+	TestCombat.punching_bag(e, Vector2i(6, 3), 200)
+	TestCombat.start_with(e, c)
+	var a := {}
+	for x in ActionCatalog.new(e).actions_for(c):
+		if str(x.get("spell_id", "")) == "hail_of_thorns":
+			a = x
+	assert_false(a.is_empty(), "on the hotbar")
+	assert_true(bool(a["legal"]), str(a.get("reason", "")))
+
+
 func test_hail_of_thorns_isnt_offered_on_a_melee_hit() -> void:
 	var e := _field()
 	var c := TestCombat.caster_with(e, ["hail_of_thorns"], Vector2i(2, 3))
