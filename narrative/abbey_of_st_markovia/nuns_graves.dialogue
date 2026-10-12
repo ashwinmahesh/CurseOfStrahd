@@ -1,0 +1,28 @@
+# The nuns' graves in the abbey garden (prop nuns_graves). Speak with Dead (2024 PHB; docs/story/talking_creatures.md):
+# the last sister buried here knew what the Abbot is (abbot_nature_known, abbot.dialogue) and buried the old holy
+# water at her own feet (grave_holy_water).
+
+~ graves
+narrate examine:nuns_graves
+* [if spell:speak_with_dead and not flag.abbey_nun_spoke] Ask the sister in the last grave about the Abbot. -> speaks
+* [if not spell:speak_with_dead and not flag.abbey_nun_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the sister in the last grave about the Abbot.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave the sisters to the garden. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set abbey_nun_spoke
+Narrator: The earth on the last grave stirs, and an old woman's voice comes up through it, firm: someone who ran a ward of the sick for a long time.
+Narrator: "He came down to us out of the morning, with wings, the year the fever came, and he healed every bed in the ward. We called him an angel because he was one."
+Narrator: "Then the fever went, and he stayed, and he began to mend things that weren't broken. I buried a flask of the old holy water at my own feet, before he could bless it into something else."
+if not flag.abbot_nature_known
+set abbot_nature_known
+endif
+reveal grave_holy_water
+-> END

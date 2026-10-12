@@ -1,7 +1,8 @@
 # Pidlwick II, the clockwork jester of the high tower (docs/voice/pidlwick_ii.md). The marionette card's ally.
 # He never speaks aloud: his lines are mime in parentheses and the words he chalks on a little slate, in capitals.
 # start: on the grand landing (approach). cards: the ally scene (join pidlwick_ii). key_back: the other way he joins.
-# His secret (he pushed the first Pidlwick down the stair) comes out by Insight, the portrait by the well, or Escher.
+# His secret (he pushed the first Pidlwick down the stair) comes out by Insight, the portrait by the well, Escher, or
+# the first Pidlwick himself under Speak with Dead (catacombs_jester.dialogue).
 
 ~ start
 if guest:pidlwick_ii
@@ -31,7 +32,7 @@ Pidlwick II: (He wipes the slate with his sleeve and writes again, quickly.) PLA
 * [if flag.pidlwick_key_found and not flag.pidlwick_wound] We found your key. -> key_back
 * Who made you? -> maker
 * [if not flag.pidlwick_wary and not flag.pidlwick_truth_known] Was there another Pidlwick? A first one? -> first_one
-* [if not flag.pidlwick_truth_known and (flag.jester_portrait_seen or flag.escher_told_jester)] We know what happened to the first Pidlwick. -> confront
+* [if not flag.pidlwick_truth_known and (flag.jester_portrait_seen or flag.escher_told_jester or flag.pidlwick_crypt_told)] We know what happened to the first Pidlwick. -> confront
 * [if not flag.pidlwick_played] Play a game with him. -> play
 * [if not quest.the_jesters_key] You're ticking slowly. Are you all right? -> winding
 * You know this castle. Show us its secrets. -> secrets

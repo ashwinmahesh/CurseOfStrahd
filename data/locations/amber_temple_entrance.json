@@ -273,6 +273,7 @@
       ],
       "kind": "examine",
       "label": "A frozen traveller",
+      "dialogue": "amber_temple/frozen_traveller:traveller",
       "model": "bones",
       "checks": [
         {
