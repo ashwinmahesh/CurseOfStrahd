@@ -34,6 +34,11 @@
       "id": "mists_gates_opened",
       "type": "bool",
       "summary": "The Gates of Barovia have opened for the party (door flag). Read by the gate statues' narration."
+    },
+    {
+      "id": "mists_crow_told",
+      "type": "bool",
+      "summary": "Under Speak with Animals, the crow at the village edge told the party that the two children in the road have no smell at all (Rose and Thorn are the house's illusion)."
     }
   ]
 }

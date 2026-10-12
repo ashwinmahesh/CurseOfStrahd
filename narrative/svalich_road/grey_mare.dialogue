@@ -2,6 +2,7 @@
 # and left a purse. Radu sold it his grey mare, Steaua, because the voice in the carriage promised Nicu would ride
 # home. She is tied at the Ivlis crossroads milestone, being finished into one of the castle's black horses, and the
 # carriage fetches her at midnight. Reached from Zora's rumour (tser_camp:zora_road) and Radu (tser_camp:radu).
+# Speak with Animals calms her too, and she knows what's hidden behind the milestone (milestone_hollow).
 # Every line here is unvoiced for now.
 
 ~ asks
@@ -143,8 +144,27 @@ endif
 * [class:ranger] (Talk to her the way you talk to anything wild.) -> calm_ok
 * [class:druid] (Talk to her in the old way.) -> calm_ok
 * [knows:animal_friendship] (Cast Animal Friendship.) -> calm_ok
+* [if spell:speak_with_animals] (Talk to her.) -> mare_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and talk to her.) -> mare_cast
 * Wait here for the carriage. -> wait
 * Leave her for now. -> END
+
+~ mare_cast
+cast speak_with_animals
+if check.last
+-> mare_speaks
+endif
+-> mare
+
+# Speak with Animals (2024 PHB): words calm her where hands can't, and she's had all day to smell the milestone.
+~ mare_speaks
+set mare_calmed
+Narrator: Her answer comes in a rush, through her nose and her ears and her whole shivering hide, the way a frightened horse says everything at once.
+Narrator: "Hot. Hot inside. The box with no man on it came, and a voice in it, kind like honey gone bad. It said I'll be a black horse and pull it forever. I don't want to pull it. I want my pen. I want Radu, even if he's stupid."
+Narrator: "Behind this stone there's a hole that smells of spiders and somebody's pipe. A stick in it. I've been smelling it all day. It's better than smelling me."
+reveal milestone_hollow
+interject name:thistle: There, lass. There. Nobody's finishing you tonight.
+-> cure_menu
 
 ~ calm_ok
 set mare_calmed

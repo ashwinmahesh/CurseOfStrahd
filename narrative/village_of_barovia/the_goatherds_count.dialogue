@@ -4,8 +4,8 @@
 # near her. **Twist:** she's Snowdrop, the nanny Petra's father Ilarion was leading the night he walked into the mists
 # for a doctor, fifty years ago (The Last Traveller): the mists are giving back what they took. **Escalation:** the
 # mists don't give anything back for nothing, and the wolves come out of them after her. Reached from Goodwife Petra at
-# the well (village_of_barovia/townsfolk:goodwife_menu) and Erno on the pasture by evening. Every line here is unvoiced
-# for now.
+# the well (village_of_barovia/townsfolk:goodwife_menu) and Erno on the pasture by evening; Speak with Animals lets
+# Snowdrop and the flock tell it themselves. Every line here is unvoiced for now.
 
 # --- Goodwife Petra at the well (village_of_barovia/townsfolk:goodwife_menu jumps here) ---
 
@@ -42,6 +42,8 @@ Narrator: The last one through the gate is an old nanny goat, white going yellow
 ~ erno_menu
 * [Animal Handling DC 10] (Go and look at the old nanny goat.) -> nanny | nanny_shy
 * (Look at the bell on her collar.) -> bell
+* [if spell:speak_with_animals] Ask the old nanny goat where she's been. -> snowdrop_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the old nanny goat where she's been.) -> snowdrop_cast
 * (Leave him to his counting.) -> END
 
 ~ nanny
@@ -59,6 +61,23 @@ Narrator: You've seen that mark before: on a pair of good grey boots, on a young
 endif
 Erno: Gran had a nanny called Snowdrop, when she was little. Great-grandad took her with him the night he went into the fog. Gran says she still hears the bell sometimes, at the edge of the mists. (He swallows.) Gran says a lot of things.
 -> wolves_come
+
+~ snowdrop_cast
+cast speak_with_animals
+if check.last
+-> snowdrop_speaks
+endif
+-> erno_menu
+
+# Speak with Animals (2024 PHB): fifty years in the mists, waiting for the man in the grey boots.
+~ snowdrop_speaks
+Narrator: She takes her time answering, the way very old goats take their time over everything. Her voice, when it comes, is cool and calm, like mist on a window.
+Narrator: "I walked into the white with the man in the grey boots. He said: wait here, Snowdrop, I'll be back with the doctor. So I waited. The white is long."
+if not flag.ilarion_home
+Narrator: "He's still in it. On a stone by the road, where the white starts, asking what day it is. He never was any good at waiting."
+endif
+Narrator: "The white let go of me. It doesn't let go for nothing. It wants something back, and it's sending for it." She looks up the pasture, at the fog.
+-> bell
 
 ~ wolves_come
 Narrator: Up at the top of the pasture, where the grass stops and the fog starts, the white wall of the mists bulges, the way a sheet does when someone pushes on it from the other side.
@@ -105,4 +124,30 @@ approve thistle +1 godrick_pendlebrook +1: You gave Snowdrop back to the mists s
 
 ~ goat
 Narrator: A goat. It chews something that isn't grass, and looks at you as if you might be next.
+* [if spell:speak_with_animals] Ask the goat what's wrong with the flock. -> goat_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what's wrong with the flock.) -> goat_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it to its chewing. -> END
+-> END
+
+~ goat_cast
+cast speak_with_animals
+if check.last
+-> goat_speaks
+endif
+-> END
+
+~ goat_speaks
+if quest.the_goatherds_count == done
+Narrator: "Twenty-three of us. The boy counts right now. He sings when he counts right."
+-> END
+endif
+if not quest.the_goatherds_count
+quest the_goatherds_count asked
+endif
+Narrator: "There's one too many of us. The old one with the bell. She came out of the white at the top of the field, and she smells of the other side of it, and the dog won't go near her."
+if flag.pasture_wolves_beaten
+Narrator: "The wet dogs that came out after her are dead. The white is still looking at her. We can feel it looking."
+else
+Narrator: "Something's coming after her, in the white. At dusk we can smell it from here. Wet dog. A lot of wet dog."
+endif
 -> END
