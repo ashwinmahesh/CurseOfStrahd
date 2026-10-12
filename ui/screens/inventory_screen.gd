@@ -883,6 +883,11 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 			"call": func() -> void:
 				_pick(e)
 				_use_power(pid, {})})
+		for gu in _guest_uses(data, opt):
+			out.append({"label": str(gu["label"]), "use": true, "disabled": not bool(opt["legal"]), "tooltip": str(opt["reason"]),
+				"call": func() -> void:
+					_pick(e)
+					_use_on_guest(pid, gu)})
 	if str(data.get("category", "")) in QUICK_CATEGORIES:
 		if id in ch.quick_slots:
 			out.append({"label": "Off the quick slots", "call": redraw.call(func() -> void: ch.quick_slots.erase(id))})
@@ -1278,6 +1283,11 @@ func _draw_card() -> void:
 			ub.disabled = not bool(opt["legal"])
 			ub.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
 			acts.add_child(ub)
+			for gu in _guest_uses(data, opt):
+				var gb := UiKit.button(str(gu["label"]), func() -> void: _use_on_guest(pid, gu), 14)
+				gb.disabled = not bool(opt["legal"])
+				gb.tooltip_text = ub.tooltip_text
+				acts.add_child(gb)
 		else:
 			for chv: Variant in choices:
 				var cv := str(chv)
@@ -1633,6 +1643,39 @@ func _open_prepare() -> void:
 	ps.earlier = _prepared_before
 	add_child(ps)
 	ps.open(root, st, 0)
+
+
+## A field power for a story ally travelling with the party (owner, 2026-10-12): a potion given to them to drink, or a
+## power aimed at a creature used on them. [{label, guest, potion}] for each living guest; [] for anything else.
+func _guest_uses(data: Dictionary, opt: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if opt.has("store") or not (opt.get("choices", []) as Array).is_empty():
+		return out
+	var potion := str(data.get("category", "")) == "potion"
+	if not potion and str(opt.get("targeting", "")) != "ally":
+		return out
+	for g in st.guests:
+		if g.dead:
+			continue
+		var who := g.name.get_slice(" ", 0)
+		out.append({"label": "Give to %s to drink" % who if potion else "%s on %s" % [InventoryScreen.power_label(opt), who],
+			"guest": g, "potion": potion})
+	return out
+
+
+## Gives the selected potion to a story ally to drink, or uses the power on them (story/field_items.gd).
+func _use_on_guest(power_id: String, gu: Dictionary) -> void:
+	var ch := _ch()
+	var g := gu["guest"] as Creature
+	var res := FieldItems.give_potion(st, ch, selected, power_id, g, Dice.roller) if bool(gu["potion"]) \
+		else FieldItems.use(st, ch, selected, power_id, g, Dice.roller, {})
+	if _entry(selected).is_empty():
+		selected = ""
+	if root.has_method("_refresh"):
+		root.call("_refresh")
+	_draw()
+	_card.add_child(UiKit.label(str(res.get("text", "")) if bool(res.get("ok", false)) else "Can't: %s" % res.get("text", ""), 15,
+		"bile" if bool(res.get("ok", false)) else "flame", 420))
 
 
 ## Uses a magic item's power outside a fight (story/field_items.gd) and shows what happened.

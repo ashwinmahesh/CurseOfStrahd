@@ -104,12 +104,13 @@ const FIELD_CUSTOM: Array[String] = ["read_tome", "alchemy_jug", "bag_of_beans",
 	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object", "trade_to_coin"]
 
 
-## Uses a power outside a fight. `target` is the character it's used on (yourself if null). Returns {ok, text, lines,
-## effect}: `effect` names an exploring effect the world applies (a spell id like detect_magic, "secrets", "unlock",
-## "long_rest").
-static func use(st: StoryState, ch: Character, item_id: String, power_id: String, target: Character, dice: DiceRoller,
+## Uses a power outside a fight. `target` is the creature it's used on (yourself if null): a party member, or a story
+## ally travelling with the party (st.guests; owner, 2026-10-12) for a power aimed at a creature. Returns {ok, text,
+## lines, effect}: `effect` names an exploring effect the world applies (a spell id like detect_magic, "secrets",
+## "unlock", "long_rest").
+static func use(st: StoryState, ch: Character, item_id: String, power_id: String, target: Creature, dice: DiceRoller,
 		opts: Dictionary = {}) -> Dictionary:
-	var e := FieldCasting._board(st.party, ch, dice)
+	var e := FieldCasting._board(st.party, ch, dice, 5, st.guests)
 	var c := e.get_c(ch.id)
 	if c == null:
 		return {"ok": false, "text": "%s isn't in the party" % ch.name, "lines": []}
@@ -122,7 +123,9 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 	var power := p["power"] as Dictionary
 	var data := p["data"] as Dictionary
 	if power.has("custom") and str(power["custom"]) in FIELD_CUSTOM:
-		var res := _custom(st, ch, c, e, p, target, dice, opts)
+		if target != null and not target is Character:
+			return {"ok": false, "text": "Only for the party", "lines": []}
+		var res := _custom(st, ch, c, e, p, target as Character, dice, opts)
 		if bool(res.get("ok", false)):
 			e.items._after_use(c, p, {}, 0)
 		return res
@@ -182,6 +185,42 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 	if not r.ok:
 		return {"ok": false, "text": r.reason, "lines": lines}
 	return {"ok": true, "text": "\n".join(lines), "lines": lines, "effect": spell_id}
+
+
+## A potion given to a story ally outside a fight (owner, 2026-10-12; 2024: administering a potion is a Bonus Action):
+## `to` drinks it, even when down, so its healing or what it grants is theirs, and it comes out of `ch`'s pack.
+## Returns {ok, text, lines}.
+static func give_potion(st: StoryState, ch: Character, item_id: String, power_id: String, to: Creature, dice: DiceRoller) -> Dictionary:
+	var e := FieldCasting._board(st.party, ch, dice, 5, st.guests)
+	var c := e.get_c(ch.id)
+	var tc := e.get_c(to.id) if to != null else null
+	if c == null or tc == null:
+		return {"ok": false, "text": "Not here", "lines": []}
+	if str(Compendium.shared().item_data(item_id).get("category", "")) != "potion":
+		return {"ok": false, "text": "Only a potion is given to drink", "lines": []}
+	var p := e.items.find_power(c, item_id, power_id)
+	if p.is_empty():
+		return {"ok": false, "text": "Not carried", "lines": []}
+	var why := _field_why(e, c, p)
+	if why != "":
+		return {"ok": false, "text": why, "lines": []}
+	var power := p["power"] as Dictionary
+	var spell := Compendium.shared().spell_data(CombatItems.power_spell(item_id, power))
+	if spell.is_empty():
+		return {"ok": false, "text": "Nothing to do", "lines": []}
+	var lvl := int(power.get("level", spell.get("level", 0)))
+	var before := e.log.entries.size()
+	var r := e.items.cast(tc, spell, lvl, [tc], Vector2.INF, Vector2.ZERO, e.items.numbers(c, p, lvl),
+		CombatItems.power_cost(power, spell), {}, str((p["data"] as Dictionary).get("name", item_id)))
+	var lines: Array[String] = []
+	for i in range(before, e.log.entries.size()):
+		if str(e.log.entries[i]["kind"]) != "turn":
+			lines.append(str(e.log.entries[i]["text"]))
+	if not r.ok:
+		return {"ok": false, "text": r.reason, "lines": lines}
+	e.items._grant(tc, tc, p)
+	e.items._after_use(c, p, spell, lvl)
+	return {"ok": true, "text": "\n".join(lines), "lines": lines}
 
 
 # --- Exploring and story powers ------------------------------------------------------------------------

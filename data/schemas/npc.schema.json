@@ -246,6 +246,16 @@
         }
       }
     },
+    "guest_stays": {
+      "type": "array",
+      "description": "What keeps a guest in the party: Send home and a fall in a fight leave them be while a rule's `when` holds, and `why` is said instead (StoryState.guest_stays). Madam Eva's ally always stays.",
+      "items": {
+        "type": "object",
+        "required": ["why"],
+        "additionalProperties": false,
+        "properties": {"when": {"type": "string"}, "why": {"type": "string"}}
+      }
+    },
     "pockets": {
       "description": "F8: what a picked pocket holds beyond the coins their tags give: items [{id, qty}], or false for a pocket nobody can pick.",
       "oneOf": [

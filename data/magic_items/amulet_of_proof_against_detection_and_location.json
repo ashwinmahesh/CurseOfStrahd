@@ -21,6 +21,7 @@
     }
   ],
   "worn": "neck",
+  "playable": false,
   "summary": "Divination magic can't find you, target you or see you through a scrying sensor.",
   "text": "Divination spells can't find you while you wear this amulet: they can't target you, and magical scrying sensors can't perceive you, unless you choose to let them."
 }
