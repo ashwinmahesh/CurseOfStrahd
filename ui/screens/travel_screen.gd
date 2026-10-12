@@ -2,9 +2,9 @@ class_name TravelScreen
 extends CanvasLayer
 ## The map of Barovia (plan §5.2, ADR 0010): an illustrated gothic map of the whole valley, painted as the land itself
 ## (art/ui/map/barovia.png, docs/ui/travel_map.md) with the places the party knows and the roads between them drawn on
-## top, so names stay sharp at any zoom. Mist covers everything the party hasn't learned of: only the land around
-## known places and along known roads is clear (Travel.known: been there, one road away, or heard of). Pick a place to
-## see the way there (roads, hours, when you'd arrive, day or night) and set out. The wheel zooms and dragging pans.
+## top, so names stay sharp at any zoom. Mist covers what the party hasn't learned of: the land around and between
+## known places and along known roads is clear (Travel.known: been there, one road away, or heard of), and with every
+## place known the whole valley is. Pick a place to see the way there (roads, hours, when you'd arrive, day or night) and set out. The wheel zooms and dragging pans.
 ## Opened from a way out of town (`setting_out`), or just to look (M).
 
 signal travel_chosen(place_id: String)
@@ -250,19 +250,30 @@ func _redraw() -> void:
 	fm.set_shader_parameter("time_s", _time)
 
 
-## The fog mask: clear around every known place (and Castle Ravenloft) and along every known road, soft at the edges.
+## The fog mask (owner report 2026-10-12: a fully explored map was still fog between the places). Clear: around every
+## known place (and Castle Ravenloft) and along every known road, and the land between the known places too (their
+## outline, widened a little); a soft patch of mist stays over the picture of each place the party doesn't know yet,
+## so the land between doesn't give it away. With every place on the map known, the whole valley is clear (the shader
+## keeps a soft mist at the very edge of the art).
 func _build_reveal() -> void:
 	_reveal = PackedByteArray()
 	_reveal.resize(MASK.x * MASK.y)
+	var all_places := Travel.map_data().get("places", []) as Array
+	var known := Travel.known(st)
+	if not all_places.is_empty() and known.size() >= all_places.size():
+		_reveal.fill(255)
+		_set_reveal_texture()
+		return
 	var spots: Array[Vector3] = []
 	for a in ALWAYS_SEEN:
 		spots.append(Vector3(float(a[0]), float(a[1]), float(a[2])))
-	for p in Travel.known(st):
+	var by_id := {}
+	var outline := PackedVector2Array()
+	for p in known:
 		var pos := p["pos"] as Array
 		spots.append(Vector3(float(pos[0]), float(pos[1]), float(p.get("reveal", REVEAL))))
-	var by_id := {}
-	for p in Travel.known(st):
 		by_id[str(p["id"])] = p
+		outline.append(Vector2(float(pos[0]) * MASK.x, float(pos[1]) * MASK.y))
 	for road in Travel.roads(st):
 		var a := _pos(by_id[str(road["from"])] as Dictionary)
 		var b := _pos(by_id[str(road["to"])] as Dictionary)
@@ -270,17 +281,58 @@ func _build_reveal() -> void:
 		for i in range(0, pts.size(), 2):
 			var f := (pts[i] - pan) / (MAP_SIZE * zoom)
 			spots.append(Vector3(f.x, f.y, REVEAL_ROAD))
+	_fill_between(outline)
+	# The places nobody has told the party about keep their mist where the land between has cleared; then the known
+	# places, their roads and the castle clear on top, so no unknown place's mist ever covers them.
+	for p: Variant in all_places:
+		var pl := p as Dictionary
+		if by_id.has(str(pl["id"])):
+			continue
+		var pos := pl["pos"] as Array
+		_stamp(Vector2(float(pos[0]) * MASK.x, float(pos[1]) * MASK.y), float(pl.get("reveal", REVEAL)) * MASK.x * 0.8, false)
 	for s in spots:
-		var c := Vector2(s.x * MASK.x, s.y * MASK.y)
-		var r := s.z * MASK.x
-		for y in range(maxi(0, floori(c.y - r)), mini(MASK.y, ceili(c.y + r) + 1)):
-			for x in range(maxi(0, floori(c.x - r)), mini(MASK.x, ceili(c.x + r) + 1)):
-				var d := Vector2(x + 0.5, y + 0.5).distance_to(c)
-				if d >= r:
-					continue
-				var v := int(255.0 * (1.0 - smoothstep(r * 0.35, r, d)))
-				if v > _reveal[y * MASK.x + x]:
-					_reveal[y * MASK.x + x] = v
+		_stamp(Vector2(s.x * MASK.x, s.y * MASK.y), s.z * MASK.x, true)
+	_set_reveal_texture()
+
+
+## Clears the land inside the known places' outline (their convex hull, widened by a place's reveal), soft at its edge.
+func _fill_between(points: PackedVector2Array) -> void:
+	if points.size() < 3:
+		return
+	var hull := Geometry2D.convex_hull(points)
+	var wide := Geometry2D.offset_polygon(hull, REVEAL * MASK.x * 0.6)
+	if wide.is_empty():
+		return
+	var poly := wide[0]
+	var hard := Image.create(MASK.x, MASK.y, false, Image.FORMAT_L8)
+	for y in MASK.y:
+		for x in MASK.x:
+			if Geometry2D.is_point_in_polygon(Vector2(x + 0.5, y + 0.5), poly):
+				hard.set_pixel(x, y, Color.WHITE)
+	# Softened by shrinking and growing again: a feathered edge about six mask pixels wide.
+	hard.resize(MASK.x / 6, MASK.y / 6, Image.INTERPOLATE_LANCZOS)
+	hard.resize(MASK.x, MASK.y, Image.INTERPOLATE_CUBIC)
+	var data := hard.get_data()
+	for i in _reveal.size():
+		_reveal[i] = maxi(_reveal[i], data[i])
+
+
+## A soft round patch: cleared (`clear`) or misted over again.
+func _stamp(c: Vector2, r: float, clear: bool) -> void:
+	for y in range(maxi(0, floori(c.y - r)), mini(MASK.y, ceili(c.y + r) + 1)):
+		for x in range(maxi(0, floori(c.x - r)), mini(MASK.x, ceili(c.x + r) + 1)):
+			var d := Vector2(x + 0.5, y + 0.5).distance_to(c)
+			if d >= r:
+				continue
+			var v := 1.0 - smoothstep(r * 0.35, r, d)
+			var i := y * MASK.x + x
+			if clear:
+				_reveal[i] = maxi(_reveal[i], int(255.0 * v))
+			else:
+				_reveal[i] = int(_reveal[i] * (1.0 - v))
+
+
+func _set_reveal_texture() -> void:
 	var img := Image.create_from_data(MASK.x, MASK.y, false, Image.FORMAT_L8, _reveal)
 	(_fog.material as ShaderMaterial).set_shader_parameter("reveal", ImageTexture.create_from_image(img))
 

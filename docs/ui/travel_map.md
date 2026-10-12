@@ -56,10 +56,13 @@ the top right of the HUD that moves with the party, and the ways out of an area 
   only once the party is one road from it; a place with a `when` waits for it, however close. At the gates that's
   the gates and the village; from the village, the crossroads; and so on. The story bot travels the same way, hop
   by hop toward a place it can't see yet.
-- Mist covers the rest of the art (shaders/ui/map_fog.gdshader): only the land around known places and along known
-  roads is clear, plus Castle Ravenloft, which is seen from everywhere in the valley. A place's optional `reveal`
-  (a fraction of the art's width, default 0.065) sets how much land clears around it; Lake Zarovich, Berez and
-  Mount Baratok clear more. The clearings' edges drift like mist.
+- Mist covers the rest of the art (shaders/ui/map_fog.gdshader): the land around known places and along known roads
+  is clear, and so is the land between them (the known places' outline, widened a little); Castle Ravenloft is seen
+  from everywhere in the valley. A place the party doesn't know yet keeps a soft patch of mist over its picture, so
+  the land between doesn't give it away. With every place known the whole valley is clear (owner report 2026-10-12:
+  a fully explored map was still fog between the places), with only a soft mist at the art's very edge. A place's
+  optional `reveal` (a fraction of the art's width, default 0.065) sets how much land clears around it; Lake
+  Zarovich, Berez and Mount Baratok clear more. The clearings' edges drift like mist.
 - Roads are drawn as dashes with a slight bow; the chosen route is solid red with each leg's hours on a tag.
   The party's place has a pulsing crimson mark; the destination's name sits on a crimson plaque. At night the sheet
   gets a moonlit wash.
