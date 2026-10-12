@@ -43,6 +43,9 @@ approve wren_featherfoot +3: You let me give Patrina her little brother's last w
 # --- Rahadin (castle_ravenloft/court_rahadin:menu) ---------------------------------------------------------------
 
 ~ rahadin
+if flag.wren_rahadin_met
+-> rahadin_again
+endif
 set wren_rahadin_met
 interject name:wren_featherfoot: You're a dusk elf.
 Rahadin: I was. I am Rahadin. I keep this house.
@@ -59,6 +62,14 @@ Narrator: Wren has gone very still. Not the stillness of a fighter waiting. The 
 if approval.wren_featherfoot <= strained
 Narrator: He doesn't look round at any of you. Whatever he's deciding, he isn't asking you to help him decide it.
 endif
+-> rahadin_choice
+
+# Pulled back once, Wren can step up to him again (Wiki finding 32).
+~ rahadin_again
+Narrator: Wren steps out in front of the chamberlain again.
+-> rahadin_choice
+
+~ rahadin_choice
 * [name:wren_featherfoot] [if not (approval.wren_featherfoot <= strained)] (Tell him what Sorrel thought of him.) -> rahadin_pity
 * [name:wren_featherfoot] (Go for his throat.) -> rahadin_rage
 * (Pull Wren back.) -> rahadin_pulled

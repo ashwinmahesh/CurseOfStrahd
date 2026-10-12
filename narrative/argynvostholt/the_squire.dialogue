@@ -41,12 +41,20 @@ Sir Godfrey Gwilym: A night at the squires' graves, standing, with the banner. I
 # --- Cosmin, on the squires' graves ---
 
 ~ cosmin
+if quest.the_squire == gone_home
+Cosmin: (He's packing the horse blanket into a roll.) Home. Ioan's stone says what it says. It'll have to be enough.
+-> END
+endif
 if quest.the_squire == done
 Cosmin: Squire Cosmin, of the Order of the Silver Dragon. The first living one in four hundred years, Sir Godfrey says. I've written to my mother. She's written back. Most of it was underlined.
 -> END
 endif
 if flag.squires_vigil_won
 -> after_vigil
+endif
+# The Order went to its rest before he could swear (Wiki finding 26): nobody is left to give the oath or the truth.
+if flag.order_fate == "rest"
+-> order_rests
 endif
 if not flag.cosmin_met
 set cosmin_met
@@ -60,6 +68,16 @@ endif
 * [Persuasion DC 17] Come home. Your mother's at the north gate every night. -> home | stays
 * [if not flag.ioan_stone_read] [Investigation DC 13] (Look at the last headstone, the one he's sitting on.) -> stone | stone_missed
 * [if night and quest.the_squire == truth] (Stand the vigil with him.) -> vigil
+* Goodbye. -> END
+
+~ order_rests
+Cosmin: They've gone. All of them, the night the light came on in the tower. The squires too. There's nobody left to give the oath.
+if flag.ioan_stone_read
+Cosmin: But Ioan didn't run. His stone says so, and his stone was here before any of them. That'll have to be enough. I'm going home.
+quest the_squire gone_home
+-> END
+endif
+* [Investigation DC 13] (Look at the last headstone, the one he's sitting on.) -> stone | stone_missed
 * Goodbye. -> END
 
 ~ why
@@ -80,7 +98,9 @@ set ioan_stone_read
 Narrator: The last stone is cut more carefully than any of the others. On its back, low down where the frost doesn't reach, small letters, chiselled in a hurry by someone who knew how:
 Narrator: I cut these for my brothers. I ride tonight with my lord's last word for the valley. Forgive me the haste. Ioan.
 Cosmin: He didn't run. (He reads it again with his finger.) He didn't run. He was sent. Who sent him?
+if flag.order_fate != "rest"
 interject tag:curious: Somebody up at the house will know. Godfrey was there.
+endif
 -> cosmin
 
 ~ stone_missed

@@ -246,3 +246,9 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_23_actions_hidden.png" % out)
 	view.hud.toggle_actions()
+	# Slowed over a zombie Ray of Frost caught (owner, 2026-10-12).
+	far_zombie.creature.add_effect(Effect.new("Ray of Frost", &"spell", "ray_of_frost").with_modifier("speed", {"value": -10}))
+	(view.tokens[far_zombie.id] as CombatToken).refresh()
+	view._focus_on(far_zombie.id)
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", "%s_24_slowed.png" % out)

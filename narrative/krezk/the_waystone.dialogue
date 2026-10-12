@@ -99,8 +99,11 @@ Lark: He came into the light. Did you see? He came into the light.
 set yanko_turned
 Narrator: The wolf shudders, and shrinks, and folds in on itself, and there's a boy of fifteen lying in the leaves, shaking, with a hound's ear and a wolf's bite in his shoulder. Lark throws her habit over him and doesn't let go.
 Yanko: (Hoarse, as if he hasn't used it in two winters.) I heard you. Every night. I couldn't remember how to come any closer.
-if flag.clovin_family_found
+if flag.clovin_family_found and flag.mother_flown
 Lark: Great-uncle Pavel. In Krezk. He took Mother in. He'll take us. (To Yanko.) He will.
+set yanko_to_krezk
+elif flag.clovin_family_found
+Lark: Great-uncle Pavel. In Krezk. He took Clovin in for a night, and he laughed. He'll take us. (To Yanko.) He will.
 set yanko_to_krezk
 endif
 -> reward

@@ -176,8 +176,9 @@
         3
       ],
       "kind": "examine",
-      "label": "A pillar with a saint on it",
-      "model": "gate_pillar"
+      "label": "A saint at the chapel's corner",
+      "model": "statue_saint",
+      "facing": "south"
     },
     {
       "id": "shrine_pillar_2",
@@ -186,7 +187,8 @@
         3
       ],
       "kind": "decor",
-      "model": "gate_pillar"
+      "model": "statue_saint",
+      "facing": "south"
     },
     {
       "id": "shrine_pillar_3",
@@ -195,7 +197,8 @@
         10
       ],
       "kind": "decor",
-      "model": "gate_pillar"
+      "model": "statue_saint",
+      "facing": "south"
     },
     {
       "id": "shrine_pillar_4",
@@ -204,7 +207,8 @@
         10
       ],
       "kind": "decor",
-      "model": "gate_pillar"
+      "model": "statue_saint",
+      "facing": "south"
     },
     {
       "id": "shrine_wall_ns_1",

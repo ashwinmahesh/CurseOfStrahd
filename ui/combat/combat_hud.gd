@@ -83,14 +83,14 @@ var _undo_move: Button
 var _turn_note: Label
 var _tooltip: PanelContainer
 ## While an area spell is aimed (owner, 2026-10-12: "Put the saves for AoE spells in the top left corner of the HUD (not
-## directly next to the pointer)"): the save and its DC and every creature caught with its chance to save, right of the
-## party's frames under the turn order (show_area_saves).
+## directly next to the pointer)", then "I meant top right corner"): the save and its DC and every creature caught with
+## its chance to save, at the top right by the combat log (show_area_saves, _place_area_panel).
 var _area_panel: PanelContainer
 var _area_title: Label
 var _area_sub: Label
 var _area_rows: VBoxContainer
 var _area_key := 0
-## Rows the area panel lists before it counts the rest ("+3 more"), so it never runs down into the hotbar.
+## Rows the area panel lists at most before it counts the rest ("+3 more"); fewer where the hotbar leaves less room.
 const AREA_ROWS := 8
 ## The odds over a pointed-at target's head (show_odds).
 var _odds: PanelContainer
@@ -560,7 +560,6 @@ func _build_area_saves() -> void:
 	_area_panel.name = "AreaSaves"
 	_area_panel.visible = false
 	_area_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_area_panel.position = Vector2(292, 160)
 	_area_panel.custom_minimum_size = Vector2(350, 0)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 4)
@@ -589,22 +588,50 @@ func show_area_saves(title: String, sub: String, rows: Array, warnings: Array) -
 	_area_sub.text = sub
 	_area_sub.visible = sub != ""
 	for ch in _area_rows.get_children():
+		_area_rows.remove_child(ch)
 		ch.queue_free()
 	var ordered: Array = rows.filter(func(r: Dictionary) -> bool: return bool(r["ally"]))
 	ordered.append_array(rows.filter(func(r: Dictionary) -> bool: return not bool(r["ally"])))
 	if ordered.is_empty():
 		_area_rows.add_child(_label("No one in the area", 14, "vellum"))
+	var listed: Array[Control] = []
 	for i in mini(ordered.size(), AREA_ROWS):
-		_area_rows.add_child(_area_row(ordered[i] as Dictionary))
-	if ordered.size() > AREA_ROWS:
-		_area_rows.add_child(_label("+%d more" % (ordered.size() - AREA_ROWS), 14, "parchment"))
+		var row := _area_row(ordered[i] as Dictionary)
+		_area_rows.add_child(row)
+		listed.append(row)
+	var more := _label("+%d more" % ordered.size(), 14, "parchment")
+	_area_rows.add_child(more)
 	for w: Variant in warnings:
 		var wl := _label(str(w), 13, "rose")
 		wl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		wl.custom_minimum_size = Vector2(330, 0)
 		_area_rows.add_child(wl)
+	# As many rows as fit above the hotbar where it stands, the rest counted.
+	_place_area_panel()
+	var room := _hot_panel.position.y - 8.0 - _area_panel.position.y
+	while listed.size() > 1 and _area_panel.get_combined_minimum_size().y > room:
+		var last: Control = listed.pop_back()
+		_area_rows.remove_child(last)
+		last.queue_free()
+	var rest := ordered.size() - listed.size()
+	more.text = "+%d more" % rest
+	more.visible = rest > 0
 	_area_panel.reset_size()
+	_place_area_panel()
 	_area_panel.visible = true
+
+
+## The area panel's place at the top right: in the corner under the combat log when the log is minimized to its title
+## bar, else just left of the log, under the turn order. It depends only on the log, so it never jumps about as the
+## area moves; either way it clears the log, the turn order and the hotbar (test_layout).
+func _place_area_panel() -> void:
+	var w := _area_panel.get_combined_minimum_size().x
+	var log_rect := Rect2(_log_panel.position, _log_panel.size)
+	if log_minimized:
+		_area_panel.position = Vector2(log_rect.end.x - w, log_rect.end.y + 8.0)
+	else:
+		var strip := _strip.get_parent().get_parent() as Control
+		_area_panel.position = Vector2(log_rect.position.x - 8.0 - w, strip.position.y + strip.size.y + 10.0)
 
 
 func hide_area_saves() -> void:

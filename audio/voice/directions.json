@@ -208,9 +208,12 @@
  "argynvostholt_cosmin": {
   "09797c1d0812a243": "[earnest, bitter, rambling]",
   "1e553de5ed33ebd9": "[stunned, wondering, rising]",
+  "68bfd935cd2a3c03": "[bitter, sad, low]",
   "7f5ce6d3d519a692": "[earnest, stubborn, shivering]",
   "9b12f57839bccca3": "[afraid, whispering, steeling himself]",
   "cb05a6b30ba17446": "[stubborn, apologetic, firm]",
+  "cf4cb7a1a5069d1c": "[resigned, steady]",
+  "d3d714dd14087c0b": "[proud, grieving, resolute]",
   "f3233d21d17d5109": "[proud, bright, wry]",
   "f67221f11d0d99e6": "[quiet, determined]",
   "f7bca603b3e84ccb": "[quiet, homesick, resolute]"
@@ -1444,7 +1447,8 @@
   "4d66206db97560d4": "[wry, then grateful]",
   "7659324dae0f54ff": "[shaken, quiet]",
   "c5d1f53fad2faedd": "[flustered, grateful]",
-  "f14d331047bb4e4b": "[hurt, quiet]"
+  "f14d331047bb4e4b": "[hurt, quiet]",
+  "f6985ff3a19c7cad": "[proud, shy, earnest]"
  },
  "kostin": {
   "3fd909b62e2ef1ce": "[pleading, earnest, desperate]",
@@ -1557,6 +1561,7 @@
   "115f8e1bf645cc6d": "[frightened, quiet, brave]",
   "2d5751628f04fa52": "[quiet, frightened, matter-of-fact]",
   "3282bff40dad69e3": "[wondering, a little sad, small]",
+  "e57d30be1d665df3": "[matter-of-fact, brave, a little sad]",
   "eb759d22e6ff008c": "[cheerful, proud, small]",
   "eee85352467602d1": "[sleepy, then relieved, small]"
  },
@@ -2953,6 +2958,7 @@
   "680211b15b8b5493": "[slow, remembering, fond]",
   "78bf3ad9d57d5dc1": "[thoughtful, measured]",
   "a6599f07edbc7b01": "[solemn, warm, faintly wry]",
+  "b60ce3f88bb17bdb": "[grave, resolute, warm]",
   "b8dfbcc5bd698daa": "[solemn, hollow, gentle]",
   "bc547a14b75e2348": "[ashamed, heavy, quiet]",
   "c553ecd0a172c9cc": "[uncertain, rueful, weary]",
@@ -3922,6 +3928,7 @@
   "6a9b76c38ca3b868": "[quiet, firm, bitter]",
   "7424744a2acae3ca": "[quiet, focused, protective]",
   "9700c8235cc9c290": "[quiet, earnest, sad]",
+  "a857d98a52f0e5cc": "[hopeful, eager, insistent]",
   "ecf23aa3bc95c4e2": "[soft, devoted, wistful]"
  },
  "waystone_yanko": {

@@ -108,11 +108,12 @@ func test_clovin_still_asks_once_the_abbot_is_dealt_with() -> void:
 	var beats := SideQuestPlay.play(st, "abbey_of_st_markovia/clovin:start", ["The Krezk watch says"])
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_eq(st.quest_stage("clovins_audience"), "asked")
-	# With nothing to ask him, his lines end as they did.
+	# With Mother's quest open and nothing else to ask him, he still has his menu: his drink and his rumours, the only
+	# way into The Waystone (Wiki finding 30; his lines used to end there).
 	var quiet := _krezk(NO_WREN)
 	quiet.location = "abbey_of_st_markovia"
 	quiet.set_flag("abbot_fate", "slain")
 	quiet.set_quest_stage("mothers_ninth_improvement", "rumored")
-	beats = SideQuestPlay.play(quiet, "abbey_of_st_markovia/clovin:start")
-	assert_eq(str(beats[-1]["kind"]), "end")
-	assert_false(beats.any(func(b: Dictionary) -> bool: return str(b["kind"]) == "options"), "no menu after his news")
+	beats = SideQuestPlay.play(quiet, "abbey_of_st_markovia/clovin:start", ["could use a drink"])
+	assert_eq(SideQuestPlay.missing(beats), "", "a menu after his news")
+	assert_true(bool(quiet.get_flag("clovin_befriended", false)))

@@ -28,7 +28,7 @@
       "objectives": [
         "Find out who put the locket where Tamsin's hand would find it"
       ],
-      "hint": "Take a Long Rest with Tamsin in the party, or ask Arrigal at the Vistani camp outside Vallaki about a carriage that drives itself.",
+      "hint": "Take a Long Rest with Tamsin in the party. For the carriage that drives itself, Henrik the coffin maker in Vallaki knows something; after him, ask Arrigal at the Vistani camp outside Vallaki.",
       "ends": ""
     },
     {
@@ -37,7 +37,7 @@
       "objectives": [
         "Find the water Sergei meant"
       ],
-      "hint": "The water is the Pool of the White Sun in Krezk. Take Tamsin there, and ask Arrigal about the coach.",
+      "hint": "The water is the Pool of the White Sun in Krezk: take Tamsin there. For the coach, Henrik the coffin maker in Vallaki knows something; then ask Arrigal at the Vistani camp.",
       "ends": ""
     },
     {

@@ -3,7 +3,8 @@ extends TestCase
 ## known places on it, zooming and panning without leaving the art; the minimap shows the current location turned with the camera
 ## and keeps the party in its middle; ways out to other regions are marked, and doors into buildings are not; rooms
 ## behind secret doors stay out of the level view and off the minimap until the door is found; the travel map shows
-## only places the party has been, one road from there or heard of, with mist over the rest.
+## only places the party has been, one road from there or heard of, with mist over the rest (the land between known
+## places clear, and the whole valley once every place is known).
 
 var root: Node
 
@@ -188,6 +189,28 @@ func test_the_map_shows_the_next_stop_and_mist_over_the_rest() -> void:
 	assert_true(t.clear_at(Vector2(0.411, 0.139)) < 0.05, "and the Amber Temple")
 	assert_true(t.clear_at(Vector2(0.695, 0.73)) > 0.9, "the castle on its cliff is seen from everywhere")
 	t.queue_free()
+
+
+func test_the_land_between_known_places_clears_and_all_of_it_once_everything_is_known() -> void:
+	# Owner report 2026-10-12: with every place discovered, the map was still fog between them.
+	var st := GameState.story
+	for l: String in ["into_the_mists_road", "village_of_barovia", "svalich_crossroads", "tser_pool", "vallaki"]:
+		st.visited[l] = true
+	var t := TravelScreen.new()
+	add_child(t)
+	t.open_map(st, "vallaki", false)
+	assert_true(t.clear_at(Vector2(0.43, 0.56)) > 0.5, "the woods between Tser Pool and Vallaki, off the road, are clear")
+	assert_true(t.clear_at(Vector2(0.69, 0.24)) < 0.3, "a place nobody has told the party about keeps its mist (Old Bonegrinder)")
+	t.queue_free()
+	for p: Variant in Travel.map_data()["places"]:
+		st.visited[str((p as Dictionary)["location"]).get_slice(":", 0)] = true
+	assert_eq(Travel.known(st).size(), (Travel.map_data()["places"] as Array).size(), "every place known")
+	var all := TravelScreen.new()
+	add_child(all)
+	all.open_map(st, "vallaki", false)
+	for at: Vector2 in [Vector2(0.22, 0.39), Vector2(0.55, 0.75), Vector2(0.69, 0.24), Vector2(0.1, 0.8), Vector2(0.9, 0.2)]:
+		assert_true(all.clear_at(at) > 0.99, "the whole valley is clear, %s too" % at)
+	all.queue_free()
 
 
 ## The roads a journey takes read as one line (UI QA, 2026-10-08: "By The lake road west").

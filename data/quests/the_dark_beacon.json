@@ -41,11 +41,12 @@
     },
     {
       "id": "waiting",
-      "journal": "The beacon stays dark for now. The dragon's skull still hangs somewhere in Castle Ravenloft; brought home to his bones, it would light the beacon for good.",
+      "journal": "The beacon stays dark for now. The dragon's fire still sleeps in the frost on his bones, in the mausoleum on Argynvostholt's grounds; kindled and carried up the tower, it would light the beacon again.",
       "objectives": [
-        "Bring Argynvost's skull home from Castle Ravenloft"
+        "Kindle the dragon's fire at his bones in the mausoleum",
+        "Carry it to the beacon at the top of the tower"
       ],
-      "hint": "Find Argynvost's skull in Castle Ravenloft and bring it home to his bones at Argynvostholt.",
+      "hint": "Kindle the dragon's fire at his bones in the mausoleum on Argynvostholt's grounds, then carry it to the beacon at the top of the tower.",
       "ends": ""
     }
   ]

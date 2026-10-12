@@ -37,6 +37,12 @@
       "journal": "Cosmin stood the vigil, the dead squires touched his banner, and Sir Godfrey wrote him into the Order's book under Ioan's corrected name. The first living squire of the Order in four hundred years.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "gone_home",
+      "journal": "The Order went to its rest before Cosmin could swear its oath. Ioan's own stone, cut the night he rode, was proof enough for him: he's gone home to Vallaki, a cooper's son with nothing to be ashamed of.",
+      "objectives": [],
+      "ends": "success"
     }
   ]
 }

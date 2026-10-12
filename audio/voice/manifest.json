@@ -1569,6 +1569,13 @@
   "recipe": "f4536716f4",
   "text": "He didn't run. (He reads it again with his finger.) He didn't run. He was sent. Who sent him?"
  },
+ "argynvostholt_cosmin/68bfd935cd2a3c03": {
+  "chars": 123,
+  "direction": "[bitter, sad, low]",
+  "model": "eleven_v3",
+  "recipe": "f4536716f4",
+  "text": "They've gone. All of them, the night the light came on in the tower. The squires too. There's nobody left to give the oath."
+ },
  "argynvostholt_cosmin/7f5ce6d3d519a692": {
   "chars": 144,
   "direction": "[earnest, stubborn, shivering]",
@@ -1589,6 +1596,20 @@
   "model": "eleven_v3",
   "recipe": "f4536716f4",
   "text": "No. I'm sorry. I'm not going home a coward's grandson. I'll go home a squire or I won't."
+ },
+ "argynvostholt_cosmin/cf4cb7a1a5069d1c": {
+  "chars": 108,
+  "direction": "[resigned, steady]",
+  "model": "eleven_v3",
+  "recipe": "f4536716f4",
+  "text": "(He's packing the horse blanket into a roll.) Home. Ioan's stone says what it says. It'll have to be enough."
+ },
+ "argynvostholt_cosmin/d3d714dd14087c0b": {
+  "chars": 125,
+  "direction": "[proud, grieving, resolute]",
+  "model": "eleven_v3",
+  "recipe": "f4536716f4",
+  "text": "But Ioan didn't run. His stone says so, and his stone was here before any of them. That'll have to be enough. I'm going home."
  },
  "argynvostholt_cosmin/f3233d21d17d5109": {
   "chars": 185,
@@ -27464,6 +27485,13 @@
   "recipe": "b7a728ee9d",
   "text": "Did anyone else... has anyone else seen a man? In a grey coat? Just there? At the edge of the light?"
  },
+ "kip_smudgewick/f6985ff3a19c7cad": {
+  "chars": 112,
+  "direction": "[proud, shy, earnest]",
+  "model": "eleven_v3",
+  "recipe": "db3ec091e2",
+  "text": "I've been at it every night since. A line at a time, with my finger on it so it can't move. I think I've got it."
+ },
  "kip_smudgewick/f6eef62574a85ee1": {
   "chars": 97,
   "model": "eleven_v4",
@@ -28457,6 +28485,13 @@
   "model": "eleven_v3",
   "recipe": "c67bd6139d",
   "text": "It's gone. (He sniffs.) I can't smell the rain any more."
+ },
+ "krezk_petru/e57d30be1d665df3": {
+  "chars": 122,
+  "direction": "[matter-of-fact, brave, a little sad]",
+  "model": "eleven_v3",
+  "recipe": "c67bd6139d",
+  "text": "The big one's gone. Mama locks the pen on full-moon nights now, with me in it. The goats don't mind. I don't either, much."
  },
  "krezk_petru/eb759d22e6ff008c": {
   "chars": 127,
@@ -41499,6 +41534,12 @@
   "recipe": "dd92281f92",
   "text": "A bowl of yellow bone comes skimming over the reeds, low and fast, with a tiny furious woman standing in it. Behind her the whole marsh rises in a cloud of wings."
  },
+ "narrator/330de09582eaa92d": {
+  "chars": 143,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A stone saint at the chapel's corner, its face worn to a smooth oval by a century of weather. It still faces the road, as if expecting someone."
+ },
  "narrator/331f455549c891a3": {
   "chars": 99,
   "model": "eleven_v4",
@@ -46557,6 +46598,12 @@
   "recipe": "dd92281f92",
   "text": "A priest kneels before an altar stripped of its cloth, as though the church were in mourning. He rises when he hears you, and his face rearranges itself into something welcoming, with effort."
  },
+ "narrator/5a916a398da2ae69": {
+  "chars": 49,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Wren steps out in front of the chamberlain again."
+ },
  "narrator/5a97fab1ca903a67": {
   "chars": 148,
   "model": "eleven_v4",
@@ -49346,6 +49393,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They're wearing Lady Wachter's grey now, not the Baron's colours. The island changed hands with the town, that's all."
+ },
+ "narrator/6e74b82ce15f7c07": {
+  "chars": 186,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Liriel looks from the Abbot to the door of the wards across the courtyard, and back. You watch her understand what he is making over there, and what it means that he's the one making it."
  },
  "narrator/6e7b5c9492742bbf": {
   "chars": 185,
@@ -54297,6 +54350,12 @@
   "recipe": "dd92281f92",
   "text": "The boy is gone between one breath and the next. What drops from the ceiling is only hunger."
  },
+ "narrator/94e8f61ad30fc161": {
+  "chars": 92,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Sir Godfrey has come up the tower stair behind you, with Sir Aldric's sword across his arms."
+ },
  "narrator/94efa484d505b429": {
   "chars": 163,
   "model": "eleven_v4",
@@ -58592,12 +58651,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They bury Elvir at the end of the last green row, under the cairn they raised for him when there was nothing to put beneath it. Stefania sings. Davian doesn't. Adrian digs, and won't let anyone else hold the spade."
- },
- "narrator/b5c8cd469a6dc3ca": {
-  "chars": 158,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A saint carved atop a pillar at the chapel's corner, its face worn to a smooth oval by a century of weather. It still faces the road, as if expecting someone."
  },
  "narrator/b5d27c3ff5f1fac8": {
   "chars": 47,
@@ -73714,6 +73767,13 @@
   "recipe": "5821254d72",
   "text": "Back again. Good. The house is better with somebody breathing in it."
  },
+ "sir_godfrey_gwilym/b60ce3f88bb17bdb": {
+  "chars": 89,
+  "direction": "[grave, resolute, warm]",
+  "model": "eleven_v3",
+  "recipe": "5821254d72",
+  "text": "Not yet. Not before I've done one thing right. Godrick, lad. The light can wait for this."
+ },
  "sir_godfrey_gwilym/b8dfbcc5bd698daa": {
   "chars": 206,
   "direction": "[solemn, hollow, gentle]",
@@ -83406,6 +83466,13 @@
   "model": "eleven_v3",
   "recipe": "b65b9e1cb8",
   "text": "My brother. Yanko. Two winters ago he went over the wall and down this road, and the wolves got him. Not ate him. Got him. Took him."
+ },
+ "waystone_lark/a857d98a52f0e5cc": {
+  "chars": 111,
+  "direction": "[hopeful, eager, insistent]",
+  "model": "eleven_v3",
+  "recipe": "b65b9e1cb8",
+  "text": "Great-uncle Pavel. In Krezk. He took Clovin in for a night, and he laughed. He'll take us. (To Yanko.) He will."
  },
  "waystone_lark/ecf23aa3bc95c4e2": {
   "chars": 247,

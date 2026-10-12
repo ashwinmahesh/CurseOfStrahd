@@ -52,6 +52,11 @@
       "summary": "Sir Godfrey remembers the oath and why it mattered (oath, his wall, the dragon's words or Persuasion). He will stand up at the muster; the warden accepts his word. Phase 6 Godfrey scenes."
     },
     {
+      "id": "godfrey_plate_given",
+      "type": "bool",
+      "summary": "Sir Godfrey gave the party his good plate, whichever way he remembered the oath (once)."
+    },
+    {
       "id": "muster_refused",
       "type": "bool",
       "summary": "Guard: Vladimir refused the party's unaided Persuasion at the muster; it can't be retried."

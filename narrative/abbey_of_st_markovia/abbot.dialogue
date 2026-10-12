@@ -15,6 +15,11 @@ endif
 if flag.wards_cells_freed and not flag.abbot_cells_noted
 -> cells
 endif
+# Liriel wasn't there when he told of his bride (it plays once): she learns it the first time she's back with him
+# (Wiki finding 34).
+if name:liriel_dawnsong and flag.abbot_bride_revealed and quest.carry_the_dawn and not (quest.carry_the_dawn >= the_fall)
+-> liriel_learns
+endif
 Abbot: Children. You came back. Sit, if you like. The pews are hard, but they are honest about it.
 -> menu
 
@@ -48,6 +53,12 @@ if guest:ezmerelda
 interject guest:ezmerelda: That's no monk. Look at his feet. He's standing a finger's breadth off the floor.
 Abbot: Hunters always notice the feet. Welcome, Ezmerelda d'Avenir. Your teacher noticed them too, once.
 endif
+-> menu
+
+~ liriel_learns
+Narrator: Liriel looks from the Abbot to the door of the wards across the courtyard, and back. You watch her understand what he is making over there, and what it means that he's the one making it.
+quest carry_the_dawn the_fall
+Abbot: Children. You came back. Sit, if you like. The pews are hard, but they are honest about it.
 -> menu
 
 ~ menu

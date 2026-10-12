@@ -327,13 +327,21 @@ brings it back. End Turn and Undo move stay where they are. It stays hidden from
 the session, until the player shows it, or something needs them in it: a prompt, a death save, a step through the
 slots or the tabs (`CombatHud.toggle_actions`, `show_actions`).
 
-## An area spell's saves at the top left (owner, 2026-10-12)
+## An area spell's saves at the top right (owner, 2026-10-12)
 
-While an area spell is aimed, its saves leave the pointer for a panel at the top left, right of the party's frames under
-the turn order (`CombatHud.show_area_saves`): the spell and slot level, the save and its DC, then every creature the
+While an area spell is aimed, its saves leave the pointer for a panel at the top right (the owner first said top left,
+then "I meant top right corner"): just left of the combat log under the turn order, or in the corner under the log when
+the log is minimized (`CombatHud.show_area_saves`, `_place_area_panel`). It shows the spell and slot level, the save and its DC, then every creature the
 area catches, friends first, each with its portrait, friend or foe, its chance to save, the damage it can expect and
 whether it may drop. Anyone Sculpt Spells would shield shows as safe (the caster, then the nearest allies, as the picks
 start), and drops out of the friendly-fire warning. It lists eight, then "+N more", so it never runs into the hotbar,
 and it follows the area as it moves, the pad's cursor included. By the pointer only a count stays ("5 in the area
 (1 friend)"). The numbers come from `ActionCatalog.spell_preview`'s creatures (`save_chance`, `damage`, `drops`,
 `safe`, `unaffected`).
+
+## Foes' rings and Slowed (owner, 2026-10-12)
+
+A foe's base ring is a little wider and a bright red that ignores light and fog (an unshaded material), so foes are easy
+to find in a dark room, in the mist and under depth blur; the party's gold and the guests' blue rings are as they were.
+A creature whose Speed a spell or effect cuts (Ray of Frost's minus, Slow's half, a cap) shows "Slowed" over it with its
+other conditions (`CombatToken.slowed`).
