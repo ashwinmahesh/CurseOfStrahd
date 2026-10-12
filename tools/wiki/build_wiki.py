@@ -593,8 +593,6 @@ class Writer:
         new_blocks = OrderedDict((m[1], m[0]) for m in AUTO_RE.finditer(new_body))
         old_body = re.sub(r"^---\n.*?\n---\n", "", old, count=1, flags=re.S)
         old_names = [m[1] for m in AUTO_RE.finditer(old_body)]
-        if not old_names:
-            return new_body
         # Title line: the generator's.
         old_body = re.sub(r"^# .*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
 
@@ -978,6 +976,17 @@ class Wiki:
             parts.append(f"{n} × {link}" if n > 1 else link)
         return ", ".join(parts)
 
+    def fight_label(self, e, quest=True):
+        """A fight in words: its quest and its opening line, since its id is only for the game."""
+        q = (e.get("quest") or {}).get("id", "")
+        text = plain(e.get("text", ""), 110)
+        bits = []
+        if quest and q in self.g.quests:
+            bits.append(self.site.quest(q))
+        if text:
+            bits.append(f"*{text}*")
+        return " · ".join(bits) or title_id(e.get("id", "a fight"))
+
     def xp_of(self, monsters):
         return sum(int(self.g.monsters.get(m.get("monster", ""), {}).get("xp", 0) or 0) for m in monsters)
 
@@ -1172,7 +1181,7 @@ class Wiki:
                 for eid in fights:
                     pl = self.fights.get(eid, [])
                     if pl:
-                        det.append(f"**{title_id(eid)}**" + (" (the first line your party fits is the fight you get)"
+                        det.append(f"**{self.fight_label(pl[0][1], quest=False)}**" + (" (the first line your party fits is the fight you get)"
                                                               if len(pl) > 1 else ""))
                         det += self.fight_block(eid, pl)
                         det.append("")
@@ -1390,9 +1399,8 @@ class Wiki:
                 for eid, pl in encs.items():
                     e0 = pl[0][1]
                     q = e0.get("quest") or {}
-                    head = f"**{title_id(eid)}**" + (f" ({s.quest(q['id'])})" if q.get("id") in g.quests else "")
-                    if e0.get("text"):
-                        head += f": *{plain(e0['text'], 160)}*"
+                    head = f"**{self.fight_label(e0, quest=False)}**" + \
+                        (f" ({s.quest(q['id'])})" if q.get("id") in g.quests else "")
                     fl.append(head)
                     if len(pl) > 1:
                         fl.append("*The first line your party fits is the fight you get.*")
@@ -1580,8 +1588,8 @@ class Wiki:
         for lid, loc in g.locations.items():
             for e in loc.get("encounters", []):
                 for m in e.get("monsters", []):
-                    if (lid, e["id"]) not in met[m.get("monster")]:
-                        met[m.get("monster")].append((lid, e["id"]))
+                    if (lid, e["id"]) not in [(a, b) for a, b, _ in met[m.get("monster")]]:
+                        met[m.get("monster")].append((lid, e["id"], e))
         roads = defaultdict(list)
         for rid, r in g.random_encounters.items():
             for e in r.get("entries", []):
@@ -1638,8 +1646,8 @@ class Wiki:
             if met.get(mid):
                 wl += ["## Where you meet it", ""]
                 seen = []
-                for lid, eid in met[mid]:
-                    t = f"- {s.loc(lid)} ({title_id(eid)})"
+                for lid, eid, e in met[mid]:
+                    t = f"- {s.loc(lid)}: {self.fight_label(e)}"
                     if t not in seen:
                         seen.append(t)
                 wl += seen[:30] + [""]
@@ -1930,12 +1938,7 @@ class Wiki:
                                 spells.add(m[1])
                 if not spells:
                     continue
-                told = []
-                for st in sts:
-                    if st["t"] == "reveal":
-                        told.append("shows where to find a hidden find")
-                    elif st["t"] == "quest" and st["id"] in g.quests:
-                        told.append(f"moves {s.quest(st['id'])}")
+                told = self.what_follows(key, node)
                 for sp in spells:
                     for w in self.where_node(key, node, limit=3):
                         rows[sp].append((w, told))
@@ -1945,16 +1948,52 @@ class Wiki:
         for sp, label in (("speak_with_animals", "Speak with Animals"), ("speak_with_dead", "Speak with Dead")):
             if not rows.get(sp):
                 continue
-            lines += [f"## {label}", "", "| Who and where | What it leads to |", "|---|---|"]
+            lines += [f"## {label}", "", "| Who and where | What they say and what it leads to |", "|---|---|"]
             seen = set()
             for w, told in rows[sp]:
                 if w in seen:
                     continue
                 seen.add(w)
-                lines.append(f"| {w} | {esc(', '.join(dict.fromkeys(told)))} |")
+                lines.append(f"| {w} | {esc('; '.join(told))} |")
             lines.append("")
         self.w.write("page/talking", "World/Talking Creatures", "Talking Creatures", [auto("list", "\n".join(lines))],
                      tags=["wiki", "world"])
+
+    def what_follows(self, key, node, depth=6):
+        """What a conversation leads to from `node` on, within its file: hidden finds it shows, quests it moves,
+        items it gives, and the first thing said."""
+        g, s = self.g, self.site
+        props = {}
+        for lid, loc in g.locations.items():
+            for p in loc.get("props", []):
+                props.setdefault(p["id"], (lid, p))
+        dlg = g.dialogues[key]
+        seen, frontier, out, said = {node}, [node], [], ""
+        for _ in range(depth):
+            nxt = []
+            for n in frontier:
+                after_cast = False
+                for st in dlg.nodes.get(n, []):
+                    if st["t"] == "cast":
+                        after_cast = True
+                    elif st["t"] == "reveal":
+                        lid, p = props.get(st["arg"], ("", {}))
+                        out.append(f"shows where {g.item_name(p['item'])} is hidden" if p.get("item") else
+                                   f"shows {p.get('label', st['arg'])}")
+                    elif st["t"] == "quest" and st["id"] in g.quests:
+                        out.append(f"moves {s.quest(st['id'])}")
+                    elif st["t"] == "give":
+                        out.append(f"gives {s.item(st['item'])}")
+                    elif st["t"] == "line" and not said and (after_cast or n != node) and st["speaker"] != "Narrator":
+                        said = plain(st["text"], 140)
+                for r in dlg.edges(n):
+                    if r[0] == key and r[1] not in seen:
+                        seen.add(r[1])
+                        nxt.append(r[1])
+            frontier = nxt
+        if said:
+            out.insert(0, f"“{said}”")
+        return list(dict.fromkeys(out))
 
     # Characters -------------------------------------------------------------------------------------------------
 
@@ -2171,6 +2210,9 @@ class Wiki:
         lines += ["## Mouse", "", "- Left-click the ground to walk there; left-click a person, door or thing to use it.",
                   "- Right-click for a menu of everything you can do with what's under the cursor.",
                   "- In a fight, click a square to move (a far click walks as far as it can) or a foe to attack.", ""]
+        tips = g.loading.get("tips", [])
+        if tips:
+            lines += ["## Tips from the loading screens", ""] + [f"- {t}" for t in tips] + [""]
         self.w.write("page/controls", "Rules/Controls", "Controls", ["%% default %%\n", auto("list", "\n".join(lines))],
                      tags=["wiki", "rules"])
 
@@ -2279,7 +2321,57 @@ class Wiki:
                      tags=["wiki", "story"])
         self.w.write("page/approval", "Characters/Companion Approval", "Companion Approval",
                      ["%% default %%\n", auto("list", self.approval_lines())], tags=["wiki", "characters"])
-        self.w.write("page/difficulty", "Rules/Difficulty", "Difficulty", ["%% default %%\n"], tags=["wiki", "rules"])
+        self.w.write("page/difficulty", "Rules/Difficulty", "Difficulty", ["%% default %%\n", auto("modes", self.difficulty_lines())],
+                     tags=["wiki", "rules"])
+        # Pages people write by hand: the generator only makes sure they exist and keeps them linked.
+        for key in ("page/magic", "page/stealth", "page/resting"):
+            self.w.write(key, s.paths[key], s.titles[key], ["%% default %%\n"], tags=["wiki", "rules"])
+
+    def difficulty_lines(self):
+        """The four modes, from combat/difficulty.gd's MODES table (its describe() in words)."""
+        src = (self.g.root / "combat" / "difficulty.gd").read_text()
+        lines = []
+        for mid, body in re.findall(r'^\t"([a-z]+)": \{(.*?)\},?$', src, re.S | re.M):
+            def val(k):
+                m = re.search(rf'"{k}":\s*("([^"]*)"|[\d.]+|true|false)', body)
+                return None if not m else (m[2] if m[2] is not None else m[1])
+            hp = float(val("hp") or 1)
+            out = []
+            out.append("Enemy Hit Points: their stat block's." if abs(hp - 1) < 1e-6 else
+                       f"Enemy Hit Points: {abs(round((hp - 1) * 100))}% {'fewer' if hp < 1 else 'more'}, within what "
+                       "their Hit Dice could roll.")
+            if int(float(val("party_bonus") or 0)):
+                out.append(f"+{int(float(val('party_bonus')))} to your attack rolls and saving throws.")
+            if int(float(val("enemy_bonus") or 0)):
+                out.append(f"+{int(float(val('enemy_bonus')))} to enemies' attack rolls and the DCs of their spells "
+                           "and abilities.")
+            t = val("tactics")
+            if t == "kind":
+                out.append("Enemies spread their attacks around and don't chase the killing blow.")
+            elif t == "standard":
+                out.append("Enemies fight as the book has them.")
+            else:
+                out.append("Enemies gang up on the hurt and go for your healers and spellcasters first; their "
+                           "spellcasters cast from their whole spell list.")
+            if t == "ruthless":
+                out.append("Cruel foes strike a hero who has fallen to 0 Hit Points.")
+            if val("kit") == "true":
+                out.append("Armed foes carry a Potion of Healing and drink it when Bloodied; casters carry a spell "
+                           "scroll. You loot what they don't use.")
+            if val("morale") == "true":
+                out.append("When their side breaks, foes flee the fight, except mindless things and bosses.")
+            if val("full_bosses") == "true":
+                out.append("Bosses fight at full strength even against a low-level party.")
+            if val("spared") == "true":
+                out.append("Nobody dies for good: a hero who would die is left Unconscious and Stable.")
+            if val("safe_rests") == "true":
+                out.append("A Long Rest is never interrupted, even in a risky place.")
+            if val("one_save") == "true":
+                out.append("One save for the whole playthrough.")
+            if val("switchable") == "false":
+                out.append("Picked only at a new game; leaving it is for good.")
+            lines += [f"## {val('name')}: *{val('tagline')}*", "", val("summary") or "", ""] + [f"- {x}" for x in out] + [""]
+        return "\n".join(lines)
 
     def approval_lines(self):
         g, s = self.g, self.site
@@ -2337,6 +2429,7 @@ class Wiki:
                                                          for i in range(10) if f"page/spells_{i}" in s.paths),
                                   s.link("page/dark_gifts", "Dark Gifts")]),
             ("Rules and play", [s.link("page/house_rules", "House Rules"), s.link("page/difficulty", "Difficulty"),
+                                s.link("page/magic", "How Magic Works"), s.link("page/stealth"), s.link("page/resting"),
                                 s.link("page/controls", "Controls"), s.link("page/conditions", "Conditions"),
                                 s.link("page/glossary", "Glossary"), s.link("page/achievements", "Achievements"),
                                 s.link("page/cutscenes", "Cutscene Gallery")]),
@@ -2421,6 +2514,9 @@ class Wiki:
                                  ("page/spells_by_class", "Spells/Spells by Class", "Spells by Class"),
                                  ("page/house_rules", "Rules/House Rules", "House Rules"),
                                  ("page/difficulty", "Rules/Difficulty", "Difficulty"),
+                                ("page/magic", "Rules/How Magic Works", "How Magic Works"),
+                                ("page/stealth", "Rules/Sneaking, Stealing and the Watch", "Sneaking, Stealing and the Watch"),
+                                ("page/resting", "Rules/Resting and Saving", "Resting and Saving"),
                                  ("page/controls", "Rules/Controls", "Controls"),
                                  ("page/conditions", "Rules/Conditions", "Conditions"),
                                  ("page/glossary", "Rules/Glossary", "Glossary"),

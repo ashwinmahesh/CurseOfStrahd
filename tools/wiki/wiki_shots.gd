@@ -39,6 +39,7 @@ func capture_shots(tool: Node, _out: String) -> void:
 			for p: Variant in Travel.map_data().get("places", []) as Array:
 				GameState.story.visited[str((p as Dictionary)["location"]).get_slice(":", 0)] = true
 			await _enter(tool, shot)
+			_clear()
 			game.call("open_travel", true)
 			await tool.call("wait_frames", 30)
 			tool.call("_shot", path)
@@ -51,8 +52,9 @@ func capture_shots(tool: Node, _out: String) -> void:
 			printerr("wiki_shots: no view for ", shot.get("location", ""))
 			continue
 		var hud := game.get("hud") as ExploreHud
+		_clear()
 		hud.close_narration()   # the party's banter on arriving
-		await tool.call("wait_frames", 10)
+		await tool.call("wait_frames", 40)
 		if kind == "overview":
 			hud.visible = false
 			var rig := view.rig
@@ -85,6 +87,17 @@ func capture_shots(tool: Node, _out: String) -> void:
 	print("wiki_shots: %d shots made" % made)
 
 
+## Whatever arriving put over the place: a first visit's cutscene (it pauses the game) or a screen.
+func _clear() -> void:
+	for c: Node in game.get_children():
+		if c is CutscenePlayer:
+			(c as CutscenePlayer).close()
+	if game.get("screen") != null:
+		game.call("close_screen")
+	game.set("screen", null)
+	get_tree().paused = false
+
+
 ## A conversation from `ref`, played to its first choice; the dialogue screen, or null if it ended first.
 func _talk(tool: Node, ref: String, npc: String) -> DialogueUI:
 	game.call("start_dialogue", ref, npc)
@@ -92,8 +105,10 @@ func _talk(tool: Node, ref: String, npc: String) -> DialogueUI:
 		var d := game.get("dialogue") as DialogueUI
 		if d == null or not d.options_shown.is_empty():
 			break
+		_clear()   # a cutscene the conversation plays on its way
 		d.call("_advance")
 		await tool.call("wait_frames", 3)
+	_clear()
 	await tool.call("wait_frames", 40)
 	return game.get("dialogue") as DialogueUI
 
@@ -112,5 +127,8 @@ func _enter(tool: Node, shot: Dictionary) -> void:
 	var loc := Compendium.shared().get_entry("locations", str(shot.get("location", "")))
 	game.set("_card_region", str(loc.get("region", "")))   # no loading card over the shot
 	game.call("enter_location", str(shot.get("location", "")), str(shot.get("spawn", "default")))
-	await tool.call("wait_frames", int(shot.get("settle", 150)))
+	await tool.call("wait_frames", 30)
+	_clear()
+	await tool.call("wait_frames", int(shot.get("settle", 120)))
+	_clear()
 	_here = key
