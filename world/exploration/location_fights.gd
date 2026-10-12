@@ -513,5 +513,10 @@ static func _spoils(view: LocationView, encounter_id: String, spec: Dictionary, 
 	for treasure in Tarokka.take_from(Tarokka.place_for(view.loc, "encounter", encounter_id), view.st):
 		items.append({"id": treasure, "qty": 1})
 	var gold := float(loot.get("gold", 0))
+	# Every won fight here also leaves its foes' coins and a find, as a road fight does (RoadSpoils.for_story_fight).
+	if with_loot:
+		var extra := RoadSpoils.for_story_fight(view.st, spec.get("monsters", []) as Array, "%s:%s" % [view.loc_id, encounter_id])
+		gold += float(extra["gold"])
+		items.append_array(extra["items"] as Array)
 	if not items.is_empty() or gold > 0.0:
 		view.loot_opened.emit.call_deferred("fight:" + encounter_id, items, gold)
