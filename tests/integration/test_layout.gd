@@ -947,6 +947,30 @@ func test_the_cheat_codes_page() -> void:
 			return menu, _close_screen)
 
 
+## Report a bug (dev builds, BugReports): the screen with a long place, the late party and a long build line, and the
+## screen once sent, naming a long folder.
+func test_the_bug_report_screen() -> void:
+	if not await _game(LATE):
+		return
+	for state: String in ["writing", "sent"]:
+		await _check("the bug report screen (%s)" % state, func() -> Variant:
+			var screen := BugReportScreen.new()
+			get_tree().root.add_child(screen)
+			var context := BugReports.current.gather("F12")
+			context["place"] = "The Abbey of Saint Markovia, the Belfry and the Upper Hall (abbey_of_saint_markovia_belfry)"
+			context["build"] = "a checkout on a-long-lane-branch-name at 0123456789 %s(/Volumes/StrahdLanes/CurseOfStrahdGame-bugreport)" \
+				% "a long commit subject ".repeat(6)
+			screen.open(BugReports.current, Image.create(1600, 900, false, Image.FORMAT_RGB8), context, {})
+			if state == "sent":
+				screen.sent_to = "/Users/someone/Documents/Obsidian Vault/CurseOfStrahd/Bug Reports/2026-10-11T23-59-59-%s" \
+					% "a-long-title-".repeat(4)
+				screen.call("_sent")
+			return screen,
+			func() -> void:
+				for s in get_tree().root.find_children("*", "BugReportScreen", false, false):
+					s.queue_free())
+
+
 func test_the_title_screen() -> void:
 	_golden_saves_on_disk(true)
 	var menu: Node = null
