@@ -129,7 +129,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 		party_cbs.append(e.add(m.creature, &"party", m.cell))
 	for g in view.guest_members:
 		# A familiar following the party joins as its caster's summon (EncounterSetup.bring_familiars below).
-		if not g.creature.dead and not g.has_meta("familiar_of"):
+		if not g.creature.dead and not LocationParty.is_follower(g):
 			e.add(g.creature, &"guest", g.cell).controller = &"player"
 	for mo: Dictionary in monsters_for(view, spec):
 		e.add(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
