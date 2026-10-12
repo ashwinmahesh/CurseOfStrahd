@@ -52,6 +52,9 @@ uniform vec2 squash = vec2(1.0);
 uniform float lean = 0.0;
 uniform float lift = 0.0;
 uniform float push = 0.0;
+// Each figure's own small step toward the camera, in world units (DirectionalSprite.create, owner 2026-10-12): two
+// figures on one square would otherwise sit at the same depth and flicker in front of each other.
+uniform float depth_nudge = 0.0;
 
 // From the fragment to each light: the edge's outward direction (view space) and how close the pixel is to it.
 varying vec3 rim_n;
@@ -72,6 +75,7 @@ void vertex() {
 			vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0),
 			vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
 			vec4(0.0, 0.0, 0.0, 1.0));
+		MODELVIEW_MATRIX[3].z += depth_nudge;   // view space: +z is toward the camera
 		MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
 	}
 }
