@@ -4,8 +4,16 @@
   "summary": "The Order at the Stair: a later beat of a long conversation picture (castle_ravenloft/catacombs_coffin, ~ the_end), Ashwin's ask 2026-10-12.",
   "images": [
     {
+      "image": "knights_stair_fallen",
+      "when": "flag.cat_oathbreakers_beaten"
+    },
+    {
       "image": "knights_stair_bow",
       "when": "flag.cat_vladimir_stood_aside"
+    },
+    {
+      "image": "knights_stair_salute",
+      "when": "flag.order_fate == \"ride\""
     }
   ]
 }

@@ -241,6 +241,7 @@ endif
 ~ keeping
 if treasure_at:argynvostholt_vladimir
 if flag.order_fate == "rest"
+cutscene feast_gift
 Narrator: Where the commander last stood, laid across a pair of empty gauntlets as carefully as an offering, is the thing he kept so that nobody would end the lord of the castle with it.
 elif flag.order_fate == "grudge"
 Vladimir: Take it. Use it to break him. If you use it to end him, the Order will know, and the Order will come.
