@@ -56,6 +56,16 @@ Narrator: The other watchman takes a stub of chalk from his pocket and writes so
 interject tag:blunt: He's right. Twelve spears. Bad odds for a doorway.
 -> rules
 
+# Ireena's first time through the gate, when the party came to Vallaki before without her (Wiki finding 6): only the
+# first arrival's rules ended the escort and began Sanctuary.
+~ ireena_arrives
+quest sanctuary_for_ireena arrived
+if quest.escort_ireena
+quest escort_ireena arrived
+endif
+Town Guard: Back again, and with a lady this time. Hood up, miss; the Baron's watch notices hair that colour. Father Lucian is at St. Andral's, if it's sanctuary you want.
+-> END
+
 ~ rules
 set vallaki_arrived
 quest festival_of_the_blazing_sun announced

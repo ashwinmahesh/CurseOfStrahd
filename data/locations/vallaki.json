@@ -1201,6 +1201,16 @@
         46,
         20
       ],
+      "dialogue": "vallaki/gate:ireena_arrives",
+      "when": "flag.vallaki_arrived and guest:ireena and not quest.sanctuary_for_ireena",
+      "approach": 5
+    },
+    {
+      "npc": "vallaki_guard",
+      "cell": [
+        46,
+        20
+      ],
       "dialogue": "vallaki/gate:guard"
     },
     {

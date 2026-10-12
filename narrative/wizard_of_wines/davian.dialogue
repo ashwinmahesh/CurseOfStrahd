@@ -10,6 +10,10 @@ endif
 if flag.winery_strongbox_opened and not flag.davian_strongbox_noticed and flag.winery_reclaimed
 -> strongbox
 endif
+# Saves from before that: the house is his again and a stone is home, but the press never started.
+if flag.winery_reclaimed and flag.winery_stones_returned >= 1 and not flag.winery_wine_flows
+-> first_wine
+endif
 if flag.winery_reclaimed
 Davian: My house smells of druid. It will smell of wine again by spring or I'll know the reason. Speak.
 else
@@ -70,8 +74,12 @@ Davian: Because a raven sees a great deal and repeats it in the right ears. My f
 set davian_pledged
 set winery_stone_hiding_told
 set yester_hill_known
+if not quest.wizard_of_wines >= asked
 quest wizard_of_wines asked
+endif
+if not quest.the_third_stone
 quest the_third_stone told
+endif
 if not flag.raven_harmed or flag.adrian_apology_heard
 attitude davian_martikov friendly
 endif
@@ -154,7 +162,8 @@ Davian: The ravens saw the boy Kostin walk west, slowly, like a man who isn't su
 elif flag.kostin_fled
 Davian: The boy Kostin ran west, the ravens say, toward the hill. He'll warn them you're coming. Expect to be expected.
 endif
--> check_done
+# Stones handed over before the house was clear start the press now (Wiki finding 41).
+-> first_wine
 
 ~ return_cellar
 set winery_stone_returned

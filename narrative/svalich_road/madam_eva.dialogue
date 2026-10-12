@@ -347,6 +347,9 @@ quest find_the_tome foretold
 quest find_the_holy_symbol foretold
 quest find_the_sunsword foretold
 quest find_the_ally foretold
+if tarokka.ally == darklord
+quest find_the_ally alone
+endif
 quest strahds_lair foretold
 quest madam_evas_reading read
 if flag.eva_reading_paid != "forced"

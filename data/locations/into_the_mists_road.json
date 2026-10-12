@@ -432,7 +432,8 @@
       ],
       "dialogue": "death_house/rose_thorn:start",
       "when": "not visited:death_house_ground",
-      "facing": "east"
+      "facing": "east",
+      "approach": 6
     },
     {
       "npc": "thorn",
