@@ -110,6 +110,14 @@ def human_cond(expr):
     return e
 
 
+def lock_dc(c):
+    """A container's lock: its DC, 0 for a lock with nothing to pick, 15 for one locked with no DC of its own
+    (world/exploration/location_locks.gd), None when it isn't locked."""
+    if "lock_dc" in c:
+        return int(c["lock_dc"])
+    return 15 if c.get("locked") else None
+
+
 def safe_heading(text):
     """A heading Obsidian can link to: no characters its link syntax reserves."""
     return re.sub(r"[#|\[\]^]", "", str(text)).strip()
@@ -913,7 +921,7 @@ class Wiki:
                 for it in c.get("items", []):
                     out[it["id"]].append({"kind": "container", "location": lid, "label": c.get("label", c["id"]),
                                           "cell": c.get("cell"), "qty": it.get("qty", 1),
-                                          "lock": c.get("lock_dc") or (15 if c.get("locked") else None),
+                                          "lock": lock_dc(c),
                                           "opens_when": c.get("unlocked_when", ""), "owner": c.get("owner", ""),
                                           "when": c.get("when", ""), "key": c.get("key", "")})
             for p in loc.get("props", []):
@@ -985,7 +993,9 @@ class Wiki:
         if k == "container":
             area = g.area_name(src["location"], src.get("cell"))
             extra = []
-            if src.get("lock"):
+            if src.get("lock") == 0:
+                extra.append("locked, with nothing to pick")
+            elif src.get("lock"):
                 extra.append(f"locked, DC {src['lock']}")
             if src.get("opens_when"):
                 extra.append(f"opened for you when {human_cond(src['opens_when'])}")
@@ -1490,8 +1500,11 @@ class Wiki:
                 if c.get("gold"):
                     inside.append(f"{c['gold']} gp")
                 how_ = ["open it"]
-                if c.get("lock_dc") or c.get("locked"):
-                    how_ = [f"lock DC {c.get('lock_dc') or 15}"]   # a lock with no DC of its own picks at 15
+                dc = lock_dc(c)
+                if dc == 0:
+                    how_ = ["locked, with nothing to pick"]
+                elif dc:
+                    how_ = [f"lock DC {dc}"]
                 if c.get("unlocked_when"):
                     how_.append(f"opened for you when {human_cond(c['unlocked_when'])}")
                 if c.get("key"):
