@@ -136,3 +136,23 @@ once
 
 ~ check:acrobatics:jetty_swing:failure
 | The boat tips, and so do you. Lake Zarovich closes over your head like a lid.
+
+# ---------------------------------------------------------------- Road battle grounds (lane 3, 2026-10-12)
+# Where the lake roads' random fights may play out (story/road_grounds.gd).
+
+~ enter:lake_inlet
+| The lake path skirts a reedy inlet where fishers keep their boats: a jetty out into the grey water, nets on their poles, a boat upturned on the shingle. The lake lies very still and very wide, and it is watching the shore.
+| [night] At night the inlet is reeds whispering and water lapping at the jetty, and far out on the lake something large turns over once and goes down again.
+cooldown 0
+
+~ examine:inlet_boat
+| A fisher's boat upturned on the shingle to keep the rain out, a hole knocked through its bottom. Somebody didn't want anybody else going out on the lake.
+
+~ examine:inlet_nets_1
+| Nets hung to dry on their poles, torn through the middle in a ragged hole the size of a door. The fish in Lake Zarovich are big, but not that big.
+
+~ examine:inlet_lookout
+| A hunter's platform in a pine above the shore, looking out over the inlet and the lake beyond. A good place to watch for boats, or to be watched from.
+
+~ examine:inlet_campfire
+| A fisher's fire burned down to embers on the shore, a fish still on the spit and blackened through. They left before supper and didn't take it with them.

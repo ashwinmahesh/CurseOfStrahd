@@ -1,6 +1,11 @@
 {
   "id": "amber_temple_road",
   "map": "amber_temple_road",
+  "grounds": [
+    "amber_temple_road",
+    "mountain_pass",
+    "frozen_tarn"
+  ],
   "chance_day": 0.25,
   "chance_night": 0.45,
   "summary": "The ice stair between the Tsolenka Pass and the Amber Temple: whiteouts, a dead expedition, gargoyles off the cliffs, and the frozen dead who climb at night.",

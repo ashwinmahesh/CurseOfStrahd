@@ -1,6 +1,12 @@
 {
   "id": "zarovich_shore",
   "map": "lake_zarovich_trail",
+  "grounds": [
+    "lake_zarovich_trail",
+    "lake_inlet",
+    "stream_ford",
+    "forest_clearing"
+  ],
   "chance_day": 0.1,
   "chance_night": 0.35,
   "summary": "The lake path between Vallaki's west gate and the fishers' landing: reeds, shingle and black water. Quiet by day; by night the lake gives things back.",

@@ -1,0 +1,407 @@
+{
+  "id": "lake_inlet",
+  "name": "A Reedy Inlet",
+  "region": "lake_zarovich",
+  "summary": "The lake path skirts a reedy inlet of Lake Zarovich: a fishing jetty, an upturned boat, nets on their poles, and a pine rise above the shore. A random fight on the lake roads may play out here.",
+  "map": {
+    "rows": [
+      "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwww..wwwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwww..wwwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwww..wwwwwwwwwww",
+      "wwwwwwwwwwwwwwwwwww..wwwwwwwwwww",
+      "wwwww.wwwwwwww............wwwwww",
+      "...=..wwwwwwww..............=...",
+      "......wwwwwwww.........=.=......",
+      ".#....wwwwwww..=..............#.",
+      "......wwwwwww.=.................",
+      "...........................=....",
+      ".....==.........................",
+      "................................",
+      "............................#...",
+      "........................##......",
+      "...#.......=.....#...........#..",
+      "##....##.....#.....##.....##...#",
+      "################################",
+      "################################"
+    ],
+    "elevation": [
+      "................................",
+      "................................",
+      "...................00...........",
+      "...................00...........",
+      "...................00...........",
+      "...................00...........",
+      ".....0........000000000000......",
+      "000000........000000000000000000",
+      "000000........000000000000000000",
+      "111110.......0000000000000000000",
+      "112210.......1111111111111111111",
+      "22221100000001220222221211111111",
+      "11111111111111111111111122222111",
+      "11111111111111111112222222222222",
+      "22222222222222222222233333333332",
+      "22222222222222222222333455444333",
+      "33333333333333333333334455554433",
+      "33333333333333333333333444444333",
+      "33333333333333333333333344443333",
+      "33333333333333333333333333333333"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "lake_inlet",
+      "name": "A Reedy Inlet",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "inlet_jetty",
+      "name": "The jetty",
+      "cells": [
+        [
+          19,
+          2
+        ],
+        [
+          20,
+          5
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      13
+    ]
+  },
+  "foe_spots": [
+    [
+      20,
+      3
+    ],
+    [
+      17,
+      8
+    ],
+    [
+      22,
+      7
+    ],
+    [
+      26,
+      9
+    ],
+    [
+      29,
+      11
+    ],
+    [
+      25,
+      13
+    ],
+    [
+      20,
+      15
+    ],
+    [
+      4,
+      8
+    ],
+    [
+      2,
+      11
+    ],
+    [
+      8,
+      15
+    ],
+    [
+      14,
+      16
+    ],
+    [
+      29,
+      8
+    ],
+    [
+      10,
+      12
+    ],
+    [
+      5,
+      15
+    ]
+  ],
+  "exits": [
+    {
+      "id": "path_west",
+      "cell": [
+        0,
+        13
+      ],
+      "to": "travel",
+      "label": "On along the lake path, west"
+    },
+    {
+      "id": "path_east",
+      "cell": [
+        31,
+        12
+      ],
+      "to": "travel",
+      "label": "On along the lake path, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "inlet_boat",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "examine",
+      "label": "An upturned boat on the shingle",
+      "model": "rowboat",
+      "facing": "east"
+    },
+    {
+      "id": "inlet_boat_2",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "decor",
+      "model": "rowboat",
+      "facing": "north"
+    },
+    {
+      "id": "inlet_nets_1",
+      "cell": [
+        23,
+        8
+      ],
+      "kind": "examine",
+      "label": "Nets drying on their poles",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "inlet_nets_2",
+      "cell": [
+        25,
+        8
+      ],
+      "kind": "decor",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "inlet_creel",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "decor",
+      "model": "basket"
+    },
+    {
+      "id": "inlet_barrels",
+      "cell": [
+        5,
+        12
+      ],
+      "kind": "decor",
+      "model": "barrel"
+    },
+    {
+      "id": "inlet_crates",
+      "cell": [
+        6,
+        12
+      ],
+      "kind": "decor",
+      "model": "crate"
+    },
+    {
+      "id": "inlet_boulder_1",
+      "cell": [
+        28,
+        7
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "inlet_boulder_2",
+      "cell": [
+        3,
+        7
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "inlet_boulder_3",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "inlet_dead_tree",
+      "cell": [
+        14,
+        10
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "inlet_bones",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "decor",
+      "model": "bones_water"
+    },
+    {
+      "id": "inlet_lookout",
+      "cell": [
+        22,
+        15
+      ],
+      "kind": "examine",
+      "label": "A hunter's platform in a pine",
+      "model": "hunters_tree_stand",
+      "stand_ft": 10
+    },
+    {
+      "id": "inlet_campfire",
+      "cell": [
+        10,
+        15
+      ],
+      "kind": "examine",
+      "label": "A fisher's fire, burned low",
+      "model": "campfire"
+    },
+    {
+      "id": "inlet_log",
+      "cell": [
+        11,
+        16
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "inlet_reeds_1",
+      "cell": [
+        5,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_2",
+      "cell": [
+        14,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_3",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_4",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_5",
+      "cell": [
+        26,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_6",
+      "cell": [
+        29,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_7",
+      "cell": [
+        0,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_8",
+      "cell": [
+        16,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_9",
+      "cell": [
+        12,
+        11
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "inlet_reeds_10",
+      "cell": [
+        8,
+        11
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    }
+  ],
+  "narration": {
+    "enter": "enter:lake_inlet"
+  },
+  "rest": "risky"
+}

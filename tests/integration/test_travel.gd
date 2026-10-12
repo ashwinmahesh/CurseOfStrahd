@@ -47,7 +47,7 @@ func after_each() -> void:
 	var c := Compendium.shared()
 	c.tables["travel"] = _saved["travel"]
 	c.tables["random_encounters"] = _saved["random_encounters"]
-	for id: String in ["test_hall", "test_town", "test_ambush"]:
+	for id: String in ["test_hall", "test_town", "test_ambush", "test_glade"]:
 		c.tables["locations"].erase(id)
 
 
@@ -147,6 +147,40 @@ func test_a_road_fight_comes_back_after_a_load() -> void:
 	assert_eq(_view().loc_id, "test_town", "won, and on to town")
 	assert_true((GameState.story.loc_state("test_ambush").get("custom_fights", {}) as Dictionary).is_empty(), "nothing left waiting")
 	SaveSystem.delete_slot(SaveSystem.ROUND_START)
+
+
+## A road's fights take turns on its battle grounds (RoadGrounds, Ashwin 2026-10-12): two fights on the same road
+## play out on two different maps, and on a ground that isn't the table's own map the foes start on its foe spots.
+func test_road_fights_take_turns_on_the_road_s_battle_grounds() -> void:
+	var c := Compendium.shared()
+	var spots: Array[Vector2i] = [Vector2i(7, 1), Vector2i(7, 3), Vector2i(8, 2)]
+	c.tables["locations"]["test_glade"] = {"id": "test_glade", "name": "A Glade", "region": "test", "summary": "",
+		"map": {"rows": ["##########", "#........#", "#........#", "#........#", "##########"], "outdoors": true},
+		"spawns": {"default": [2, 2]}, "foe_spots": [[7, 1], [7, 3], [8, 2]]}
+	(c.tables["random_encounters"]["test_road"] as Dictionary)["grounds"] = ["test_ambush", "test_glade"]
+	var grounds: Array[String] = []
+	for leg: Array in [["hall", "mid"], ["mid", "hall"]]:
+		root.call("travel", str(leg[0]), str(leg[1]))
+		await _frames(5)
+		assert_true(_view().in_combat, "wolves on the road from %s" % leg[0])
+		grounds.append(_view().loc_id)
+		var cv := _view().combat_view
+		for cb in cv.e.combatants:
+			if cb.side == &"enemy":
+				if _view().loc_id == "test_glade":
+					assert_true(cb.cell in spots, "the wolf starts on a foe spot of the glade (%s)" % cb.cell)
+				else:
+					assert_eq(cb.cell, Vector2i(7, 2), "on the table's own map the wolf stands where written")
+				cv.e.deal_damage(null, cb, [{"amount": 100, "type": "slashing"}], false, "test")
+		cv.finished.emit("victory")
+		await _frames(6)
+		var lw := root.get("loot") as LootWindow
+		if lw != null:
+			lw.call("_take_all")
+			if root.get("loot") != null:
+				lw.call("_close")
+		await _frames(8)
+	assert_true(grounds.has("test_ambush") and grounds.has("test_glade"), "one fight on each ground, not the same twice: %s" % [grounds])
 
 
 ## A meeting on the road pays too (RoadSpoils): its reward opens when the conversation ends, and the journey waits.

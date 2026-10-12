@@ -1,0 +1,352 @@
+{
+  "id": "forest_clearing",
+  "name": "A Clearing in the Pines",
+  "region": "svalich_road",
+  "summary": "A woodcutters' clearing beside the road through the Svalich Woods: stumps, a stacked woodpile, a cold fire and a broad old oak nobody cut, under a rocky rise. A random fight on a forest road may play out here.",
+  "map": {
+    "rows": [
+      "################################",
+      "################################",
+      "################################",
+      "#########.............#####=####",
+      "###................#.....=...###",
+      "##...==......................###",
+      "##.~.....##.................=###",
+      "###.=...............=........###",
+      "####.........=.............#####",
+      "####........=.............=#####",
+      "#####..#.........~~..#....######",
+      "######......#..........=.#######",
+      "########=.........=....#########",
+      "#########.................###~##",
+      ".......~........................",
+      "................................",
+      ".........############...........",
+      "#####################......#####",
+      "################################",
+      "################################"
+    ],
+    "elevation": [
+      "66666666666666666668888888888888",
+      "55555555555555555566888889998888",
+      "44444444444444444456666778887766",
+      "44444444444444444455666778887766",
+      "44444444444444444445555667777655",
+      "33333333333333333334555566666555",
+      "33333333333333333344445555555544",
+      "33333333333333333333444455555444",
+      "22222222222222222233334444433333",
+      "22222222222222222223333333333333",
+      "22222222222222222222222222222222",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111",
+      "11111111100000000000000000111111",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "forest_clearing",
+      "name": "A Clearing in the Pines",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      14,
+      13
+    ]
+  },
+  "foe_spots": [
+    [
+      16,
+      5
+    ],
+    [
+      22,
+      5
+    ],
+    [
+      25,
+      7
+    ],
+    [
+      24,
+      10
+    ],
+    [
+      8,
+      4
+    ],
+    [
+      4,
+      9
+    ],
+    [
+      19,
+      9
+    ],
+    [
+      9,
+      9
+    ],
+    [
+      24,
+      13
+    ],
+    [
+      28,
+      16
+    ],
+    [
+      3,
+      14
+    ],
+    [
+      21,
+      16
+    ],
+    [
+      12,
+      5
+    ],
+    [
+      23,
+      8
+    ]
+  ],
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "clearing_oak",
+      "cell": [
+        16,
+        6
+      ],
+      "kind": "examine",
+      "label": "An old oak with a broad low bough",
+      "model": "broad_oak_bough",
+      "stand_ft": 10,
+      "span": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "clearing_fire",
+      "cell": [
+        11,
+        9
+      ],
+      "kind": "examine",
+      "label": "A woodcutters' fire, burned low",
+      "model": "campfire"
+    },
+    {
+      "id": "clearing_woodpile",
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "clearing_woodpile_2",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "decor",
+      "model": "woodpile"
+    },
+    {
+      "id": "clearing_stump_1",
+      "cell": [
+        13,
+        8
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "clearing_stump_2",
+      "cell": [
+        20,
+        7
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "clearing_stump_3",
+      "cell": [
+        8,
+        12
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "clearing_stump_4",
+      "cell": [
+        23,
+        11
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "clearing_log_1",
+      "cell": [
+        12,
+        9
+      ],
+      "kind": "examine",
+      "label": "A log seat by the fire",
+      "model": "log"
+    },
+    {
+      "id": "clearing_log_2",
+      "cell": [
+        18,
+        12
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "clearing_log_3",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "clearing_rocks_1",
+      "cell": [
+        25,
+        4
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "clearing_rocks_2",
+      "cell": [
+        28,
+        6
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "clearing_rocks_3",
+      "cell": [
+        27,
+        3
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "clearing_axe",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "examine",
+      "label": "An axe left in a stump",
+      "model": "sword_leaning"
+    },
+    {
+      "id": "clearing_leaves_1",
+      "cell": [
+        10,
+        13
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "clearing_leaves_2",
+      "cell": [
+        21,
+        13
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "clearing_leaves_3",
+      "cell": [
+        6,
+        8
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "clearing_sacks",
+      "cell": [
+        4,
+        7
+      ],
+      "kind": "decor",
+      "model": "sack"
+    },
+    {
+      "id": "clearing_stand",
+      "cell": [
+        24,
+        16
+      ],
+      "kind": "examine",
+      "label": "A hunter's platform in a pine",
+      "model": "hunters_tree_stand",
+      "stand_ft": 10
+    }
+  ],
+  "narration": {
+    "enter": "enter:forest_clearing"
+  },
+  "rest": "risky"
+}

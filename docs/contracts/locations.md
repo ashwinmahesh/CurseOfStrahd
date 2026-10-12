@@ -45,6 +45,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   jumped down; docs/rules/deviations.md). The board draws them as one sloped ground with rock under cliffs; empty
   squares given a height are the hillside the land draws round the walked ones. Yester Hill and Krezk's road and abbey
   track are the first maps that use it.
+- **Road battle grounds:** `foe_spots` (`[[x, y], ...]`) makes a map somewhere a random road fight from another table
+  can play out (a table's or a road's `grounds`, docs/contracts/campaign.md): open squares three or more from the
+  `default` spawn, off the ways out, in cover or up high (the treeline, behind a cairn, on a ledge), where the fight's
+  foes start, each on the free one nearest where its table put it round the party (story/road_grounds.gd). Give one
+  a dozen or so, on both sides of the road; `make validate` wants at least eight, each walkable from the spawn. A
+  ground needs a way out to `travel`; it is outdoors, with its mood and vista place like any outdoor map.
 - **Light:** `bright`, `dim` or `dark` for the map and each area; `lights` add bright and dim radii, and an optional
   `color` (a palette colour: Baba Lysaga's green hearth is "bile"; a fire's own flame takes it too). A prop's `flame`
   colours the fire burning in its piece (a hearth), as SetDressing.FLAME_TINTS has it. (Vision rules —

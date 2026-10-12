@@ -630,12 +630,15 @@ func travel(from: String, to: String) -> void:
 		# Every random encounter pays (Ashwin, 2026-10-09): a fight's reward goes in with its spoils, a meeting's when its
 		# conversation ends (RoadSpoils).
 		var key := "%s:%s:%d" % [table["id"], entry.get("id", ""), st.total_minutes()]
-		_covered(str(table["map"]), func() -> void:
-			enter_location(str(table["map"]), "default")
+		# A fight plays out on one of the road's battle grounds, a meeting on the table's own map (RoadGrounds).
+		var ground := RoadGrounds.choose(table, leg["road"] as Dictionary, st) if entry.has("monsters") else str(table["map"])
+		_covered(ground, func() -> void:
+			enter_location(ground, "default")
 			if entry.has("monsters"):
 				if str(entry.get("text", "")) != "":
 					hud.narrate(str(entry["text"]))
-				view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": entry["monsters"],
+				var foes := RoadGrounds.placed(entry["monsters"] as Array, str(table["map"]), ground)
+				view.start_custom_encounter({"id": "random_%s_%d" % [table["id"], st.total_minutes()], "monsters": foes,
 					"surprise": str(entry.get("surprise", "")), "loot": RoadSpoils.for_fight(st, entry["monsters"] as Array, key)})
 			else:
 				_road_event = {"ref": str(entry["dialogue"]), "key": key, "loot": RoadSpoils.for_event(st, key), "after_fight": false}

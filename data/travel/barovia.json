@@ -146,6 +146,12 @@
       "to": "tser_falls",
       "hours": 1,
       "table": "svalich_woods",
+      "grounds": [
+        "stream_ford",
+        "road_ravine",
+        "road_forest",
+        "forest_clearing"
+      ],
       "name": "The river track"
     },
     {
@@ -154,6 +160,12 @@
       "to": "tser_pool",
       "hours": 0.5,
       "table": "svalich_woods",
+      "grounds": [
+        "stream_ford",
+        "road_ravine",
+        "road_forest",
+        "forest_clearing"
+      ],
       "name": "The path along the Ivlis"
     },
     {
@@ -188,6 +200,11 @@
       "to": "webbed_gully",
       "hours": 0.75,
       "table": "svalich_woods",
+      "grounds": [
+        "road_ravine",
+        "road_forest",
+        "forest_clearing"
+      ],
       "name": "The falls path, and down into the gully",
       "when": "quest.the_spiders_gully"
     },
@@ -197,6 +214,11 @@
       "to": "tser_falls",
       "hours": 0.5,
       "table": "svalich_woods",
+      "grounds": [
+        "road_ravine",
+        "road_forest",
+        "forest_clearing"
+      ],
       "name": "Up out of the gully to the falls",
       "when": "quest.the_spiders_gully"
     },

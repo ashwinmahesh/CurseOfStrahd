@@ -1,0 +1,955 @@
+{
+  "id": "roadside_graves",
+  "name": "Graves by the Road",
+  "region": "svalich_road",
+  "summary": "A burial ground climbs the slope beside the road behind a sagging fence: rows of leaning headstones, raw mounds, an open grave and a crypt on the top terrace. A random fight on the valley's roads may play out here.",
+  "map": {
+    "rows": [
+      "################################",
+      "################################",
+      "################################",
+      "#####.........####.........#####",
+      "####.......=................####",
+      "###..==.==..=.=..==.=..==.=..###",
+      "###.=........................###",
+      "###...==.=..==....==....==...###",
+      "###........................=.###",
+      "###..=.==....==..=.==..=.==..###",
+      "###..........=...............###",
+      "###..==.==..=.=..==.=..==.=..###",
+      "###...........=..=...........###",
+      "###============..============###",
+      ".........................~......",
+      "................................",
+      ".........~......................",
+      "#####......................#####",
+      "################################",
+      "################################"
+    ],
+    "elevation": [
+      "55555555555555555555555555555555",
+      "55555555555555555555555555555555",
+      "55555555555555555555555555555555",
+      "55555444444444555544444444455555",
+      "33333444444444333344444444433333",
+      "33333333333333333333333333333333",
+      "33333333333333333333333333333333",
+      "33333333333333333333333333333333",
+      "22222222222222222222222222222222",
+      "22222222222222222222222222222222",
+      "22222222222222222222222222222222",
+      "22222222222222222222222222222222",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000000000",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111"
+    ],
+    "theme": "road",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "roadside_graves",
+      "name": "Graves by the Road",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      15,
+      15
+    ]
+  },
+  "foe_spots": [
+    [
+      15,
+      4
+    ],
+    [
+      12,
+      6
+    ],
+    [
+      19,
+      6
+    ],
+    [
+      8,
+      8
+    ],
+    [
+      23,
+      8
+    ],
+    [
+      16,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      27,
+      11
+    ],
+    [
+      21,
+      4
+    ],
+    [
+      7,
+      4
+    ],
+    [
+      25,
+      6
+    ],
+    [
+      4,
+      16
+    ],
+    [
+      27,
+      16
+    ],
+    [
+      11,
+      12
+    ]
+  ],
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "graves_stone_1",
+      "cell": [
+        5,
+        11
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_2",
+      "cell": [
+        6,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_3",
+      "cell": [
+        8,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_4",
+      "cell": [
+        9,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_5",
+      "cell": [
+        12,
+        11
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_6",
+      "cell": [
+        14,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_7",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_8",
+      "cell": [
+        18,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_9",
+      "cell": [
+        20,
+        11
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_10",
+      "cell": [
+        23,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_11",
+      "cell": [
+        24,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_12",
+      "cell": [
+        26,
+        11
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_13",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_14",
+      "cell": [
+        7,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_15",
+      "cell": [
+        8,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_16",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_17",
+      "cell": [
+        14,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_18",
+      "cell": [
+        17,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_19",
+      "cell": [
+        19,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_20",
+      "cell": [
+        20,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_21",
+      "cell": [
+        23,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_22",
+      "cell": [
+        25,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_23",
+      "cell": [
+        26,
+        9
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_24",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_25",
+      "cell": [
+        7,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_26",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_27",
+      "cell": [
+        12,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_28",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_29",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_30",
+      "cell": [
+        19,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_31",
+      "cell": [
+        24,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_32",
+      "cell": [
+        25,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_33",
+      "cell": [
+        5,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_34",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_35",
+      "cell": [
+        8,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_36",
+      "cell": [
+        9,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_37",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_38",
+      "cell": [
+        14,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_39",
+      "cell": [
+        17,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_40",
+      "cell": [
+        18,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_41",
+      "cell": [
+        20,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_stone_42",
+      "cell": [
+        23,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_43",
+      "cell": [
+        24,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_stone_44",
+      "cell": [
+        26,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "graves_fence_1",
+      "cell": [
+        3,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_2",
+      "cell": [
+        4,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_3",
+      "cell": [
+        5,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_4",
+      "cell": [
+        6,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_5",
+      "cell": [
+        7,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_6",
+      "cell": [
+        8,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_7",
+      "cell": [
+        9,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_8",
+      "cell": [
+        10,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_9",
+      "cell": [
+        11,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_10",
+      "cell": [
+        12,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_11",
+      "cell": [
+        13,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_12",
+      "cell": [
+        14,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_13",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_14",
+      "cell": [
+        18,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_15",
+      "cell": [
+        19,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_16",
+      "cell": [
+        20,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_17",
+      "cell": [
+        21,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_18",
+      "cell": [
+        22,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_19",
+      "cell": [
+        23,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_20",
+      "cell": [
+        24,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_21",
+      "cell": [
+        25,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_22",
+      "cell": [
+        26,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_23",
+      "cell": [
+        27,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_fence_24",
+      "cell": [
+        28,
+        13
+      ],
+      "kind": "decor",
+      "model": "fence",
+      "facing": "south"
+    },
+    {
+      "id": "graves_crypt",
+      "cell": [
+        15,
+        3
+      ],
+      "kind": "examine",
+      "label": "A family crypt, its door chained",
+      "model": "crypt"
+    },
+    {
+      "id": "graves_crypt_2",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "decor",
+      "model": "crypt_small"
+    },
+    {
+      "id": "graves_angel",
+      "cell": [
+        14,
+        3
+      ],
+      "kind": "examine",
+      "label": "A weeping saint over the crypt",
+      "model": "statue_saint"
+    },
+    {
+      "id": "graves_urn",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "decor",
+      "model": "statue_head"
+    },
+    {
+      "id": "graves_open",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "examine",
+      "label": "An open grave, freshly dug",
+      "model": "grave_open"
+    },
+    {
+      "id": "graves_spade_cart",
+      "cell": [
+        13,
+        10
+      ],
+      "kind": "examine",
+      "label": "The gravedigger's handcart",
+      "model": "handcart"
+    },
+    {
+      "id": "graves_lantern",
+      "cell": [
+        17,
+        12
+      ],
+      "kind": "examine",
+      "label": "A lantern post at the gate",
+      "model": "lantern_post"
+    },
+    {
+      "id": "graves_lantern_2",
+      "cell": [
+        14,
+        12
+      ],
+      "kind": "decor",
+      "model": "lantern_post"
+    },
+    {
+      "id": "graves_dead_tree_1",
+      "cell": [
+        4,
+        6
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "graves_dead_tree_2",
+      "cell": [
+        27,
+        8
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "graves_mound_1",
+      "cell": [
+        19,
+        4
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_mound_2",
+      "cell": [
+        8,
+        4
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_mound_3",
+      "cell": [
+        24,
+        10
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "graves_crow_barrel",
+      "cell": [
+        26,
+        12
+      ],
+      "kind": "decor",
+      "model": "crow_barrel"
+    },
+    {
+      "id": "graves_bones",
+      "cell": [
+        6,
+        10
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "graves_leaves",
+      "cell": [
+        20,
+        14
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "graves_bench",
+      "cell": [
+        11,
+        4
+      ],
+      "kind": "decor",
+      "model": "stone_bench"
+    }
+  ],
+  "narration": {
+    "enter": "enter:roadside_graves"
+  },
+  "rest": "risky"
+}
