@@ -129,7 +129,7 @@ interject tag:blunt: He didn't lose. He ran. And she stayed.
 
 # The last letter found with the mage travelling alongside: he reads them there (Wiki finding 56).
 ~ letters_check
-if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and not flag.corvina_name_known
+if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named
 Narrator: You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back.
 -> letters_read
 endif
