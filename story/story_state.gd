@@ -743,7 +743,8 @@ static func _upgrade_quests(st: StoryState) -> void:
 			continue
 		for e: Variant in loc.get("encounters", []):
 			var spec := e as Dictionary
-			if not spec.has("quest") or not bool(won.get(str(spec["id"]), false)):
+			var w: Variant = won.get(str(spec["id"]), false)   # "started" while a fight is under way, true once won
+			if not spec.has("quest") or not (w is bool and w):
 				continue
 			var qid := str((spec["quest"] as Dictionary)["id"])
 			var stage := str((spec["quest"] as Dictionary)["stage"])
