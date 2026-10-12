@@ -617,7 +617,8 @@ func can_see(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
 ##     2026-10-12: "round the rule too"); 5 ft still takes every square touching it
 ##   cube: origin = grid point on a face, `direction` = which way it extends, size = side ft
 ##   cone: origin = grid point at the caster, `direction` = aim vector, size = length ft
-##   line: origin = grid point, `direction`, size = length ft, width ft (default 5)
+##   line: origin = where it starts (line_origin, for one from a creature), `direction` at any angle, size = length ft,
+##     width ft (default 5); a square is in it when at least half of it is (2024 DMG, areas of effect on a grid)
 func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2 = Vector2.RIGHT,
 		width_ft: int = 5, origin_cell: Vector2i = Vector2i(-1, -1), origin_size: int = 1) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
@@ -655,10 +656,7 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var thick := maxf(1.0, floorf(width_ft / float(FEET)))
 					inside = along4 <= r / 2.0 + 0.001 and across4 <= thick / 2.0 + 0.001
 				"line":
-					var v2 := p - origin
-					var along3 := v2.dot(dir)
-					var across3 := absf(v2.dot(Vector2(-dir.y, dir.x)))
-					inside = along3 > 0.0 and along3 <= r + 0.001 and across3 <= width_ft / float(FEET) / 2.0 + 0.001
+					inside = _line_covers(c, origin, dir, r, width_ft / float(FEET) / 2.0)
 			if inside and not _wall_between(check_origin, p):
 				out.append(c)
 	return out
@@ -684,6 +682,66 @@ func in_emanation(origin: Vector2i, origin_size: int, size_ft: int, cell: Vector
 		if _emanation_gap(centre, origin_size, f).length_squared() + dy * dy <= r * r:
 			return true
 	return false
+
+
+## A square is in a Line when at least half of it lies inside the line's rectangle (2024 DMG: "If an area of effect
+## covers at least half a square, the entire square is affected"), so a line aimed at any angle takes a band of squares
+## about as wide as it is, with no gaps where it crosses a corner. `half_w` is half its width in squares.
+static func _line_covers(c: Vector2i, origin: Vector2, dir: Vector2, r: float, half_w: float) -> bool:
+	var side := Vector2(-dir.y, dir.x)
+	var v := Vector2(c.x + 0.5, c.y + 0.5) - origin
+	var along := v.dot(dir)
+	var across := absf(v.dot(side))
+	# A square's corners lie within half its diagonal of its centre: wholly outside or wholly inside needs no clipping.
+	var corner := 0.7072
+	if along < -corner or along > r + corner or across > half_w + corner:
+		return false
+	if along >= corner and along <= r - corner and across <= half_w - corner:
+		return true
+	var rect := PackedVector2Array([origin - side * half_w, origin + dir * r - side * half_w, origin + dir * r + side * half_w,
+		origin + side * half_w])
+	var square := PackedVector2Array([Vector2(c), Vector2(c.x + 1, c.y), Vector2(c.x + 1, c.y + 1), Vector2(c.x, c.y + 1)])
+	var area := 0.0
+	for part: PackedVector2Array in Geometry2D.intersect_polygons(square, rect):
+		area += absf(_polygon_area(part))
+	return area >= 0.5 - 0.0001
+
+
+## The area inside a polygon's corners (negative when they run the other way round).
+static func _polygon_area(pts: PackedVector2Array) -> float:
+	var twice := 0.0
+	for i in pts.size():
+		twice += pts[i].cross(pts[(i + 1) % pts.size()])
+	return twice / 2.0
+
+
+## Where a Line from a creature starts: where a ray from the middle of its space along `dir` leaves it (a corner of it,
+## aimed diagonally), so it runs straight from the creature's middle. Aimed along a row or column, when the line's width
+## and the space's aren't both an odd or both an even number of squares (a 10-ft Gust of Wind from a Medium caster), it
+## starts half a square to the side, so its edges run along grid lines and it takes whole squares, as wide as it is.
+static func line_origin(cell: Vector2i, size_cells: int, dir: Vector2, width_ft: int = 5) -> Vector2:
+	var d := dir.normalized() if dir.length() > 0.001 else Vector2.RIGHT
+	var out := Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0) + d * (size_cells / 2.0) / maxf(absf(d.x), absf(d.y))
+	if (absf(d.x) < 0.0001 or absf(d.y) < 0.0001) and (maxi(1, width_ft / FEET) + size_cells) % 2 == 1:
+		out += Vector2(-d.y, d.x) * 0.5
+	return out
+
+
+## How close (degrees) an aimed Line must point to a row, a column or a diagonal to lie exactly along it.
+const LINE_SNAP_DEG := 2.0
+
+
+## The way a Line points when aimed along `d` (owner, 2026-10-12: "Allow aiming straight line spells (like lightning
+## bolt) in any straight line (not just aligned with squares)"): any angle, except within LINE_SNAP_DEG of the eight grid
+## directions, where it lies exactly along the row, column or diagonal, so a line down a row is easy to point.
+static func line_aim(d: Vector2) -> Vector2:
+	if d.length() < 0.0001:
+		return Vector2.RIGHT
+	var grid_dir := snappedf(d.angle(), PI / 4.0)
+	if absf(angle_difference(d.angle(), grid_dir)) <= deg_to_rad(LINE_SNAP_DEG):
+		var step := Vector2(roundf(cos(grid_dir)), roundf(sin(grid_dir)))
+		return step.normalized()
+	return d.normalized()
 
 
 ## A square is in a cone when at least a quarter of it lies inside the cone's triangle (its width at any distance
