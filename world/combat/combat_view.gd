@@ -2217,7 +2217,8 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if narrator == null or story == null:
 		return
 	var who: Character = actor.creature as Character if actor != null and actor.creature is Character else null
-	var text := narrator.line(key, story, who, {"round": e.round_no, "target": target.name() if target != null else ""})
+	var text := narrator.line(key, story, who, {"round": e.round_no, "fight": str(e.get_instance_id()),
+		"target": target.name() if target != null else ""})
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()

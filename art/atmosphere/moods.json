@@ -1,5 +1,5 @@
 {
-  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. In the Modern finish a mood's `tone` sets its grade (the shade's colour and how much colour it keeps; world/look/atmosphere.gd MODERN_TONE), which Classic doesn't use. A mood's `modern` block is laid over it in the Modern finish only (the vault's Region Variety Plan: each region's own daylight, mist, shade and ground, so no two neighbours look alike), leaving the frozen Classic look as it was; in it `ground_tint` multiplies a ground surface's texture by a colour (hex, like the plants' tints) and `lying_wet` keeps the ground that wet whatever the sky does.",
+  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. In the Modern finish a mood's `tone` sets its grade (the shade's colour and how much colour it keeps; world/look/atmosphere.gd MODERN_TONE), which Classic doesn't use. A mood's `modern` block is laid over it in the Modern finish only (the vault's Region Variety Plan: each region's own daylight, mist, shade and ground, so no two neighbours look alike), leaving the frozen Classic look as it was; in it `ground_tint` multiplies a ground surface's texture by a colour (hex, like the plants' tints) `lying_wet` keeps the ground that wet whatever the sky does, and `ground_swap` lays the region's own ground in place of a surface on its maps (Atmosphere.region_surface: the woods' moss, the camps' leaf litter, the moor's heath).",
   "places": {
     "into_the_mists_road": "svalich_road",
     "svalich_crossroads": "crossroads",
@@ -509,6 +509,12 @@
             "mist": "tan",
             "mist_strength": 0.6
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/leaf_litter"
+        },
+        "surround": {
+          "ground": "wild/leaf_litter"
         }
       }
     },
@@ -609,6 +615,9 @@
             "mist": "moonlight",
             "mist_strength": 0.55
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/shore_shingle"
         }
       }
     },
@@ -1089,6 +1098,9 @@
             "mist": "plum",
             "mist_strength": 0.45
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/vineyard_earth"
         }
       }
     },
@@ -1178,6 +1190,12 @@
             "mist": "lilac",
             "mist_strength": 0.4
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/heath"
+        },
+        "surround": {
+          "ground": "wild/heath"
         }
       }
     },
@@ -1645,6 +1663,13 @@
             "mist": "slate",
             "mist_strength": 0.45
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/red_scree",
+          "mountain/scree": "wild/red_scree"
+        },
+        "surround": {
+          "ground": "wild/red_scree"
         }
       }
     },
@@ -2500,6 +2525,13 @@
             "mist_strength": 0.45,
             "fog": "stone"
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/heath",
+          "marsh/marsh_mud": "wild/heath"
+        },
+        "surround": {
+          "ground": "wild/heath"
         }
       }
     },
@@ -2582,6 +2614,12 @@
             "mist": "mist_blue",
             "mist_strength": 0.55
           }
+        },
+        "ground_swap": {
+          "village/grass": "wild/moss"
+        },
+        "surround": {
+          "ground": "wild/moss"
         }
       }
     },

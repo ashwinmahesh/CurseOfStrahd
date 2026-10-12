@@ -1,0 +1,102 @@
+# Narrator: the nights after a Long Rest (lane 24; ui/screens/rest_screen.gd, world/exploration/location_camp.gd). A
+# region's own night (rest:long:<region>) where its places have none, and its dreams (dream:<region>), said after the
+# night's line, each in turn before any comes round again; the places' own dreams live in their region files
+# (death_house, old_bonegrinder).
+
+# ---------------------------------------------------------------- Nights
+
+~ rest:long:into_the_mists
+| You sleep with your backs to the iron gates. All night the fog stands a little way off up the road, the way a dog waits for a door to open.
+
+~ rest:long:svalich_road
+| You sleep in turns. Every watch hears wolves, far off in the pines, and every watch hears them a little closer than the last one did.
+| [night] The trees creak all night like a ship at anchor. Twice, something walks the edge of the dark on two feet, and doesn't come any nearer.
+
+~ rest:long:village_of_barovia
+| You sleep behind shutters that don't fit their frames. Somewhere in the village a dog barks once, and then thinks better of it, all night long.
+
+~ rest:long:vallaki
+| You sleep inside the palisade, to the sound of the watch calling the hours. Each one sounds a little less sure that all will be well.
+
+~ rest:long:vallaki_blue_water_inn
+| You sleep under the Blue Water Inn's roof, in a bed with a quilt on it. Downstairs, someone plays the same sad song until dawn.
+
+~ rest:long:krezk
+| You sleep inside Krezk's walls, behind a gate that was shut against you not long ago. The guards on the wall don't look out all night. They look in.
+
+~ rest:long:mount_baratok
+| You sleep in the lee of the rocks with the frost creeping in at your collars. Up the mountain, lightning strikes the same place over and over, and the thunder never quite reaches you.
+
+~ rest:long:mount_ghakis
+| You sleep on rock that's warm to the touch, though the snow lies everywhere else. Deep in the mountain, something very large breathes in, and out, and in.
+
+~ rest:long:castle_ravenloft
+| You sleep in shifts in a castle that belongs to someone else. Every watch hears music, very faint, from far above, and nobody on watch feels like dancing.
+
+# ---------------------------------------------------------------- Dreams
+
+~ dream:into_the_mists
+| You dream of the road behind you, and the mist across it like a closed door. When you walk into it you come out on the same road, facing the same way.
+
+~ dream:svalich_road
+| You dream of a crossroads and a gallows with an empty noose, swinging though there's no wind. A voice behind you says it has been saving it.
+| You dream of wagons round a bonfire and fiddles playing, and an old woman's hand turning over a card with your face on it.
+| You dream you are running through the pines with the pack, and it's the most natural thing in the world, until you see what you're chasing.
+
+~ dream:village_of_barovia
+| You dream of a church bell ringing for a funeral, and every face in the pews turning to look at you, and none of them with eyes.
+| You dream of a red-haired woman at a window, and something at the glass outside, tapping, as patient as rain.
+
+~ dream:vallaki
+| You dream of a festival in a town square, everyone smiling and dancing and unable to stop. All will be well, they sing, faster and faster.
+| You dream of a great wicker sun burning against a black sky. It gives off no warmth at all.
+
+~ dream:krezk
+| You dream of a pool in a garden, warm as a bath, holding the reflection of a sun that isn't in the sky.
+| You dream of a high wall and a gate, and someone outside asking politely to be let in, again and again, never raising his voice.
+
+~ dream:lake_zarovich
+| You dream of the lake, flat as a mirror, and something under it swimming up slowly to look at your reflection.
+| You dream of a sack in the water, and a small voice inside it singing, quite calmly, a song about the end of everything.
+
+~ dream:berez
+| You dream of a village under the water, its chimney smoke rising up through the lake in slow grey threads.
+| You dream of an old woman rocking a cradle in a hut that walks. The cradle is empty. She sings to it anyway.
+
+~ dream:mount_baratok
+| You dream of snow falling upward, back into the sky, and the whole mountain holding its breath to watch.
+| You dream of a man in a stone hut shouting a name over and over, and the name slipping away from him a little more each time.
+
+~ dream:mount_ghakis
+| You dream of a great chain going down into the dark, link after link, and something at the bottom of it pulling, slowly, the way the tide does.
+| You dream of white wings folded too long in a cave, and a voice older than the mountain asking what day it is.
+
+~ dream:tsolenka_pass
+| You dream of a bridge over nothing, and halfway across a shadow passing over you with a sound like a sail filling.
+
+~ dream:amber_temple
+| You dream of a voice in amber, warm and reasonable, offering you exactly what you want. In the dream you say yes. You wake not sure you didn't.
+| You dream of a library where every book is about you, and the last page of each one is torn out.
+
+~ dream:argynvostholt
+| You dream of a silver skull on a hilltop, and a beacon that won't light, and four hundred years of waiting in the dark.
+| You dream of knights at a long table, their armour full of nothing, raising their cups to a toast none of them can remember.
+
+~ dream:abbey_of_st_markovia
+| You dream of a wedding dress on a stand, stitched and unstitched and stitched again, and someone humming as they sew.
+
+~ dream:van_richtens_tower
+| You dream of a tower in a lake with no door, and an old man inside writing names in a book: everyone he couldn't save.
+
+~ dream:wizard_of_wines
+| You dream of a vineyard in summer, the grapes heavy and black, and a raven on every post, watching you eat.
+
+~ dream:werewolf_den
+| You dream of a cave full of sleeping wolves, and one of them is wearing your face.
+
+~ dream:yester_hill
+| You dream of a tree on a hill, its roots in a grave and its branches full of hands.
+
+~ dream:castle_ravenloft
+| You dream of a ballroom where you are the only guest who has to breathe. The host bows. The music never stops.
+| You dream of a long table laid for one, and a chair pulled out for you, and a voice saying how glad he is that you finally came.

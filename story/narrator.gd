@@ -37,7 +37,7 @@ func add_file(f: DialogueFile) -> void:
 					if str(s["speaker"]).to_lower() == "narrator":
 						list.append({"cond": "", "text": str(s["text"])})
 				"cooldown":
-					_cooldown[key] = maxi(int(_cooldown.get(key, 0)), int(s["n"]))
+					_cooldown[key] = maxi(int(_cooldown.get(key, 0)), int(s["minutes"]))
 				"once":
 					_once[key] = true
 		_variants[key] = list
@@ -48,7 +48,8 @@ func has_trigger(key: String) -> bool:
 
 
 ## The line for a trigger, or "" (no lines, all conditions fail, or it's cooling down). Marks it played.
-## `actor` fills {name}; `extra` may hold {target: name, round: int (combat cooldowns count rounds)}.
+## `actor` fills {name}; `extra` may hold {target: name, round: int, fight: id} (combat cooldowns count rounds, within
+## one fight: a new fight's rounds start again from 1).
 func line(key: String, st: StoryState, actor: Character = null, extra: Dictionary = {}) -> String:
 	if not _variants.has(key):
 		return ""
@@ -56,7 +57,9 @@ func line(key: String, st: StoryState, actor: Character = null, extra: Dictionar
 	if bool(mem.get("done", false)):
 		return ""
 	var now := int(extra.get("round", st.total_minutes()))
-	if _cooldown.has(key) and now - int(mem.get("last", -100000)) < int(_cooldown[key]):
+	var fight := str(extra.get("fight", ""))
+	if _cooldown.has(key) and now - int(mem.get("last", -100000)) < int(_cooldown[key]) \
+			and str(mem.get("fight", "")) == fight:
 		return ""
 	var list := _variants[key] as Array[Dictionary]
 	var ctx := st
@@ -86,6 +89,10 @@ func line(key: String, st: StoryState, actor: Character = null, extra: Dictionar
 	played.append(pick)
 	mem["played"] = played
 	mem["last"] = now
+	if fight != "":
+		mem["fight"] = fight
+	else:
+		mem.erase("fight")
 	if _once.has(key):
 		mem["done"] = true
 	st.narrator[key] = mem
