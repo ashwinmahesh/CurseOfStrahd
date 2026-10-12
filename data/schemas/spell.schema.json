@@ -928,6 +928,10 @@
           "once_per_turn": {
             "type": "boolean"
           },
+          "requires_sight": {
+            "type": "boolean",
+            "description": "A move_mark that needs a new target the caster can see (Hunter's Mark)."
+          },
           "at_point": {
             "type": "boolean",
             "description": "The area lands on a chosen point (Call Lightning), not from the caster."

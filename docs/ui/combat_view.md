@@ -310,3 +310,11 @@ turn still takes the turn on a click, and the camera goes along. The next turn, 
 cursor take the camera on from there; a creature nobody can see isn't shown. On a pad, Next target (X) while the radial
 is held steps the camera along the order, one creature a press, the cursor going too (`_look_along_order`); a line under
 the wheel names the button.
+
+## Moving Hex and Hunter's Mark (owner question, 2026-10-12)
+
+Once the creature Hex or Hunter's Mark is on drops to 0 Hit Points (or is gone), "Move Hex" / "Move Hunter's Mark"
+shows on the Spells tab: a Bonus Action on a later turn, no slot, the same Concentration. It picks the new creature
+with the usual target picker (on a pad, the slot like any other); Hunter's Mark needs one the caster can see. Hex's
+curse on the chosen ability's checks goes with it (`SpellSustained` move_mark). Until the target drops the slot stays
+off the bar (`waiting`). A foe the AI plays moves its mark to the nearest foe it can see (`AiBrain._move_mark`).
