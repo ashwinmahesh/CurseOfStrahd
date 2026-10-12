@@ -2,10 +2,13 @@ class_name RestScreen
 extends CanvasLayer
 ## Short and Long Rests (plan §5.2, docs/ui/party_management.md pm_03). Short Rest: one hour; each character spends
 ## Hit Point Dice one at a time (roll + Con, minimum 1) and short-rest features come back. Long Rest: eight hours;
-## everything comes back, with the location's interruption risk (LongRest). A location can forbid resting ("rest": no)
-## or make it risky. Rests need nobody hostile around (the screen can't open in combat). A Long Rest also waits 16
-## hours after the last one and isn't taken in a dungeon or building while enemies remain in it (RestRules): its card
-## says why, in words, for the mouse and the pad alike, and the Short Rest stays open. Wherever the place's own rest is
+## everything comes back, with the location's interruption risk (LongRest). Rests need nobody hostile around (the
+## screen can't open in combat). A Short Rest is taken anywhere else, a dungeon and a place that allows no sleep
+## included, unless a fight here was begun and not won or foes are in plain view of the party (RestRules,
+## LocationStealth.foes_in_sight); Hit Point Dice are spent only while one can be. A location can forbid sleeping
+## ("rest": no, its `rest_text` saying why) or make it risky. A Long Rest also waits 16 hours after the last one and
+## isn't taken in a dungeon or building while enemies remain in it (RestRules). Each card says why it can't be taken,
+## in words, for the mouse and the pad alike, and the other stays open. Wherever the place's own rest is
 ## risky (the wild, the road, a town's streets, a house, a dungeon; CampSite.makes_camp, whatever the Story
 ## difficulty's safe rests) the Long Rest makes camp (F16, LocationCamp): the card pitches it, and while the party is
 ## camped it sleeps there or breaks camp. Where no square will take a fire, the party sleeps where it stands, here, and
@@ -18,7 +21,9 @@ var _box: VBoxContainer
 var _log: Label
 ## Holds the Long Rest's card, built again when time passes (_refresh_long).
 var _long_slot: VBoxContainer
-var _rule := "risky"   ## the place's rest rule: safe or risky
+var _rule := "risky"   ## the place's rest rule: safe, risky or no (after the Story difficulty's safe rests)
+## Why a Short Rest can't be taken here now (RestRules.short_rest_refusals), one sentence each; [] when it can.
+var _short_why: Array[String] = []
 ## The log's card, hidden until there's something in it (an empty bordered box sat under the party; UI QA UI-16).
 var _log_card: PanelContainer
 var _short_done := false   ## Arcane Recovery comes after a finished Short Rest
@@ -41,13 +46,14 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	# Story difficulty: a Long Rest in a risky place is never interrupted (combat/difficulty.gd).
 	if rule == "risky" and Difficulty.of_options(st.options).safe_rests:
 		rule = "safe"
-	if rule == "no":
-		frame.add_child(UiParts.row(UiKit.label("You can't rest here: %s" % loc.get("rest_text", "this place won't let you."), 17, "gilt", 1040)))
-		return
 	var kinds := HBoxContainer.new()
 	kinds.add_theme_constant_override("separation", 12)
-	kinds.add_child(_rest_card("Short Rest", "1 hour", "Spend Hit Point Dice to heal; some features come back.",
-		UiKit.button("Finish the Short Rest (1 hour)", _finish_short, 16, "rest"), ""))
+	_short_why = _short_refusals()
+	var short := UiKit.button("Finish the Short Rest (1 hour)", _finish_short, 16, "rest")
+	short.disabled = not _short_why.is_empty()
+	short.tooltip_text = "\n".join(_short_why)
+	kinds.add_child(_rest_card("Short Rest", "1 hour", "Spend Hit Point Dice to heal; some features come back.", short,
+		"" if _short_why.is_empty() else "Not now", _short_why))
 	_rule = rule
 	_long_slot = VBoxContainer.new()
 	_long_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -119,13 +125,22 @@ func _refresh_long() -> void:
 	button.disabled = not why.is_empty()
 	button.tooltip_text = "\n".join(why)
 	var ward := Wards.keeps_rest(st)
-	var risk := "Not now" if not why.is_empty() else ("Safe here: %s" % ward if ward != "" else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here"))
+	var risk := ("Not here" if _rule == "no" else "Not now") if not why.is_empty() else ("Safe here: %s" % ward if ward != "" else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here"))
 	_long_slot.add_child(_rest_card("Long Rest", "8 hours", text, button, risk, why))
 	if camp != null:
 		var strike := UiKit.button("Break camp", _break_camp, 15)
 		strike.tooltip_text = "Pack up and walk on."
 		strike.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_long_slot.add_child(strike)
+
+
+## Why a Short Rest can't be taken here now: a fight here begun and not won, or foes in plain view of the party.
+func _short_refusals() -> Array[String]:
+	var view := _view()
+	var foes: Array[String] = []
+	if view != null:
+		foes = LocationStealth.foes_in_sight(view)
+	return RestRules.short_rest_refusals(st, foes)
 
 
 ## The place the party is resting in, when the screen is open over the campaign itself: never the tutorial's practice
@@ -216,6 +231,9 @@ func _draw() -> void:
 	if anyone:
 		var heal := UiKit.button("Heal up with Hit Point Dice", heal_up, 15, "rest")
 		heal.tooltip_text = "Each hurt character spends Hit Point Dice, largest first, until they're close to full or out of dice."
+		if not _short_why.is_empty():
+			heal.disabled = true
+			heal.tooltip_text = "\n".join(_short_why)   # Hit Point Dice are spent in a Short Rest
 		heal.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(heal)
 	for ch in st.party:
@@ -243,8 +261,8 @@ func _draw() -> void:
 		for die: String in hd:
 			var e2 := hd[die] as Dictionary
 			var b := UiParts.small_button("Spend a d%s" % die, func() -> void: _spend(ch, int(die)))
-			b.disabled = int(e2["spent"]) >= int(e2["total"]) or ch.hp >= ch.max_hp() or ch.dead
-			b.tooltip_text = "Roll it and add your Constitution modifier (minimum 1)."
+			b.disabled = int(e2["spent"]) >= int(e2["total"]) or ch.hp >= ch.max_hp() or ch.dead or not _short_why.is_empty()
+			b.tooltip_text = "Roll it and add your Constitution modifier (minimum 1)." if _short_why.is_empty() else "\n".join(_short_why)
 			row.add_child(b)
 		_box.add_child(UiParts.row(row))
 		_study_row(ch)
@@ -319,6 +337,8 @@ func _finish_study(rested: Array[Character]) -> String:
 ## Heal up (docs/plans/ui_polish.md): every hurt character spends Hit Point Dice, largest first, while what they're
 ## missing is at least an average roll of that die (so little of a roll is wasted), then the screen reports it.
 func heal_up() -> void:
+	if not _short_why.is_empty():
+		return
 	var lines: Array[String] = []
 	for ch in st.party:
 		var spent := 0
@@ -360,12 +380,20 @@ func _heal_plan(ch: Character) -> Array:
 
 
 func _spend(ch: Character, die: int) -> void:
+	if not _short_why.is_empty():
+		return
 	var healed := ch.spend_hit_die(Dice.roller, die)
 	_log.text = "%s spends a d%d and regains %d Hit Points." % [ch.name, die, healed]
 	_draw()
 
 
 func _finish_short() -> void:
+	# The card's button is off while one is refused; this keeps anything else that starts one to the same rules.
+	_short_why = _short_refusals()
+	if not _short_why.is_empty():
+		_log.text = "No Short Rest now. " + " ".join(_short_why)
+		_draw()
+		return
 	Audio.sfx("rest")
 	var denied: Array[String] = []
 	var rested: Array[Character] = []

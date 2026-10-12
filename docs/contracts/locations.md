@@ -64,7 +64,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group.
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
-- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
+- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6, and makes camp on the map: docs/story/camp.md)
+  or `no` (no Long Rest: its card says `rest_text`); default risky. A Short Rest is taken in any of them, `no`
+  included, unless a fight on the map was begun and not won or foes are in plain view of the party
+  (story/rest_rules.gd).
 - **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
   sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
   the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
