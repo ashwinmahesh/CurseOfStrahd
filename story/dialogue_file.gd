@@ -7,7 +7,7 @@ extends RefCounted
 ##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
-##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
+##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {minutes} · once · end_game (ADR 0014)
 ##   cast {spell} · reveal {prop} (an exploring spell cast in the scene; a hidden find shown to the party)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
 
@@ -106,7 +106,8 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 	if line == "once":
 		return {"t": "once"}
 	if line.begins_with("cooldown "):
-		return {"t": "cooldown", "n": int(line.substr(9))}
+		# Its own key: every statement's "n" is its line number, which would overwrite the minutes (lane 24's find).
+		return {"t": "cooldown", "minutes": int(line.substr(9))}
 	if line.begins_with("|"):
 		var mv := re_variant.search(line)
 		if mv != null:
