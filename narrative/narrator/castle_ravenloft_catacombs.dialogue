@@ -244,3 +244,35 @@ once
 
 ~ check:investigation:jester_cape:failure
 | A jester's grave: bells, a painted mask and a joke nobody remembers. Nothing else.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:arcana:conjurer_sigils:success
+| The sigils are a key to the glyph on the threshold; you read it backwards and it goes quiet.
+
+~ check:arcana:conjurer_sigils:failure
+| The sigils crawl when you look at them, and you'd rather they didn't.
+
+~ check:performance:jester_joke:success
+| You tell the crypt your best joke, and the carved face on the lid seems to grin; the false bottom beneath it gives a little.
+
+~ check:performance:jester_joke:failure
+| Your joke dies in the crypt. Down here, that's saying something.
+
+~ check:history:mad_dog_banners:success
+| The Mad Dog's own regiment, and the story goes that his men rigged his crypt so nobody would ever disturb him.
+
+~ check:history:mad_dog_banners:failure
+| Torn banners, a dog's head, a lot of old glory you can't place.
+
+~ check:history:royal_family:success
+| King Barov, Queen Ravenovia, and their two sons. Someone has worn the elder son's face smooth with their thumb.
+
+~ check:history:royal_family:failure
+| A carved family, very grand, very old, and strangers to you.
+
+~ check:investigation:ossuary_stack:success
+| The skulls are stacked to hide a seam: every row leans the same way, away from one crack in the back wall.
+
+~ check:investigation:ossuary_stack:failure
+| Bones, stacked with terrible care. The pattern means something; you can't see it.

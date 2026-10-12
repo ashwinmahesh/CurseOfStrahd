@@ -250,7 +250,20 @@
       ],
       "kind": "examine",
       "label": "The edge",
-      "model": "ledge"
+      "model": "ledge",
+      "checks": [
+        {
+          "id": "cornice_read",
+          "skill": "survival",
+          "dc": 14,
+          "label": "Read the snow at the edge",
+          "success": {
+            "reveal": [
+              "snow_cornice"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "frozen_pilgrim",
@@ -260,7 +273,20 @@
       ],
       "kind": "examine",
       "label": "A frozen traveller",
-      "model": "bones"
+      "model": "bones",
+      "checks": [
+        {
+          "id": "frozen_hand_open",
+          "skill": "medicine",
+          "dc": 14,
+          "label": "Open the frozen hand without breaking it",
+          "success": {
+            "reveal": [
+              "frozen_hand_sword"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "vestibule_reliefs",
@@ -290,7 +316,20 @@
       ],
       "kind": "examine",
       "label": "A rack of halberds",
-      "model": "armor_stand"
+      "model": "armor_stand",
+      "checks": [
+        {
+          "id": "halberd_rack_break",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Break the ice off the halberd rack",
+          "success": {
+            "reveal": [
+              "rack_halberd"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "east_bunks",

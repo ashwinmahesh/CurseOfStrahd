@@ -299,7 +299,20 @@
       ],
       "kind": "examine",
       "label": "The study fireplace",
-      "model": "fireplace"
+      "model": "fireplace",
+      "checks": [
+        {
+          "id": "study_walls",
+          "skill": "investigation",
+          "dc": 15,
+          "label": "Pace out the study's walls",
+          "success": {
+            "reveal": [
+              "court_study_bookcase"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "court_unsent_letters",
@@ -433,7 +446,21 @@
       ],
       "kind": "examine",
       "label": "A chained desk",
-      "model": "desk"
+      "model": "desk",
+      "checks": [
+        {
+          "id": "auditor_lie",
+          "skill": "deception",
+          "dc": 15,
+          "label": "Tell the clerk you're the count's auditor",
+          "success": {
+            "unlock": [
+              "court_tax_strongbox"
+            ]
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "court_count_ledger",

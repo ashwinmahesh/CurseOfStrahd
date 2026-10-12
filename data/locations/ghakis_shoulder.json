@@ -258,7 +258,22 @@
       ],
       "kind": "examine",
       "label": "Scorched rock",
-      "model": "scorch"
+      "model": "scorch",
+      "checks": [
+        {
+          "id": "scorch_judge",
+          "skill": "arcana",
+          "dc": 15,
+          "label": "Judge what scorched the rock",
+          "success": {
+            "codex": {
+              "id": "ghakis_dragonfire",
+              "title": "Fire on Ghakis",
+              "text": "The scorch on the rock isn't lightning or a forge: it's breath, hot enough to glaze stone, from something big that lives under the mountain and is fed by the people who keep its gate."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "ghakis_soot",
@@ -388,7 +403,20 @@
       ],
       "kind": "examine",
       "label": "Meltwater",
-      "model": "puddle"
+      "model": "puddle",
+      "checks": [
+        {
+          "id": "meltwater_follow",
+          "skill": "nature",
+          "dc": 14,
+          "label": "Follow the meltwater",
+          "success": {
+            "reveal": [
+              "ghakis_dropped_flask"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "ghakis_melt_2",
