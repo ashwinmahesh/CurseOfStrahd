@@ -1171,7 +1171,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			finished.emit(e.outcome)
 		return
 	if hud.prompt_open():
-		if event.is_action_pressed(&"combat_confirm"):
+		# On a pad, A on one of the prompt's options picks that option (the engine presses it): it isn't Use Reaction.
+		if event.is_action_pressed(&"combat_confirm") and not (event is InputEventJoypadButton and hud.prompt_option_focused()):
 			hud.answer_prompt(true)
 		elif event.is_action_pressed(&"combat_cancel"):
 			hud.answer_prompt(false)

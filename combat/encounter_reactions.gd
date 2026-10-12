@@ -19,7 +19,7 @@ func enc() -> Encounter:
 const _QUEUED_TEXT := {
 	"hellish_rebuke": ["Reaction: Hellish Rebuke?", "%s hurt %s. Answer with Hellish Rebuke: a Dex save or Fire damage.", "Reaction and a spell slot"],
 	"storms_thunder": ["Reaction: Storm's Thunder?", "%s hurt %s. Answer with 1d8 Thunder damage.", "Reaction and a use of Giant Ancestry"],
-	"sentinel": ["Reaction: Sentinel?", "%s attacks someone beside %s. Make an Opportunity Attack against it?", "Reaction"],
+	"sentinel": ["Reaction: Sentinel?", "%s, beside %s, hits someone else. Make an Opportunity Attack against it?", "Reaction"],
 	"retaliation": ["Reaction: Retaliation?", "%s hurt %s. Strike back with a melee attack?", "Reaction"],
 	"misty_escape": ["Reaction: Misty Escape?", "%s hurt %s. Vanish with Misty Step (Steps of the Fey or a slot)?", "Reaction and a use of Steps of the Fey"],
 	"fount_of_moonlight": ["Reaction: Fount of Moonlight?", "%s hurt %s. Flare moonlight at it: a Constitution save or Blinded?", "Reaction"],
@@ -54,9 +54,12 @@ func answer_reaction(use: bool) -> CombatResult:
 		verbs = ["spends Heroic Inspiration", "keeps Heroic Inspiration"]
 	elif not req.spends_reaction:
 		verbs = ["confirms " + req.title, "declines " + req.title]
+	elif req.kind == Reactions.CHOICE and use and req.selected_ids[0].begins_with("later:"):
+		verbs[0] = "keeps its Reaction for %s" % str(req.choice(req.selected_ids[0]).get("label", "later"))
 	e.log.add("reaction" if req.spends_reaction else "info", "%s %s" % [e.get_c(req.reactor_id).name(), verbs[0] if use else verbs[1]], req.reactor_id)
 	var res := req.continuation.call(use) as CombatResult
 	req.continuation = Callable()
+	req.validate_selected = Callable()
 	res.pending = e.pending
 	return res
 
@@ -279,8 +282,107 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 	return CombatResult.new()
 
 
+## A queued Reaction's prompt: its words (the trigger's name, then the reactor's), Hellish Rebuke's slot levels or a
+## readied spell's aim as its picks.
+func _queued_request(q: Dictionary, reactor: Combatant, trigger: Combatant) -> ReactionRequest:
+	var e := enc()
+	var kind := str(q["kind"])
+	var words: Array = _readied_words(q, reactor) if kind == "readied_attack" else (e.ravenloft.queued_text(kind) if kind.begins_with("rh_") \
+		else (e.faerun.queued_text(kind) if kind.begins_with("fr_") else _QUEUED_TEXT[kind] as Array))
+	var req := ReactionRequest.new(kind, reactor.id, trigger.id)
+	req.title = str(words[0])
+	req.text = str(words[1]) % [trigger.name(), reactor.name()]
+	req.cost = str(words[2])
+	if kind == "hellish_rebuke":
+		_rebuke_levels(req, reactor)
+	if kind == "readied_attack":
+		readied_targets(req, reactor, trigger)
+	return req
+
+
+## What the prompt picked for queued Reaction `q` (`picked`: its selected ids): Hellish Rebuke's slot, a readied spell's aim.
+func _queued_pick(q: Dictionary, picked: Array[String], trigger: Combatant) -> void:
+	var e := enc()
+	if not picked.is_empty() and str(q["kind"]) == "hellish_rebuke":
+		q["slot"] = int(picked[0])
+	if str(q["kind"]) == "readied_attack":
+		var aim := e.get_c(picked[0]) if not picked.is_empty() else null
+		q["aim"] = aim.id if aim != null and aim.is_alive() else trigger.id
+
+
+## A queued Reaction's fate: the one a hero kept their Reaction for in the attack that queued it is taken, their others
+## aren't (`plan`, keep_reserved); otherwise the creature's rule, or the AI.
+func _queued_decision(q: Dictionary, reactor: Combatant) -> String:
+	var plan := str(q.get("plan", ""))
+	return plan if plan in ["auto", "never"] else _reaction_decision(reactor, str(q["kind"]))
+
+
+## In an attack (its state `st`) where heroes kept their Reaction for something later on a prompt listing their
+## Reactions (st.reserved): their Reactions waiting in the queue for it are settled, the kept one taken.
+func keep_reserved(st: Dictionary) -> void:
+	var e := enc()
+	var kept := st.get("reserved", {}) as Dictionary
+	if kept.is_empty():
+		return
+	var attacker := st["c"] as Combatant
+	for q: Dictionary in e.reaction_queue:
+		if not q.has("offers") and kept.has(str(q["reactor"])) and str(q["trigger"]) == attacker.id:
+			q["plan"] = "auto" if str(q["kind"]) == str(kept[str(q["reactor"])]) else "never"
+
+
+## The other queued Reactions `reactor` (a hero) would be asked about now, besides `first`: listed on one prompt with it.
+## One of each kind.
+func _queued_mates(first: Dictionary, reactor: Combatant) -> Array[Dictionary]:
+	var e := enc()
+	var out: Array[Dictionary] = []
+	if not reactor.is_player_controlled():
+		return out
+	for q: Dictionary in e.reaction_queue:
+		if q.has("offers") or str(q["reactor"]) != reactor.id or q["kind"] == first["kind"] or out.any(func(m: Dictionary) -> bool: return m["kind"] == q["kind"]):
+			continue
+		var trigger := e.get_c(str(q["trigger"]))
+		if trigger != null and trigger.is_alive() and _queued_ok(q, reactor) and _queued_decision(q, reactor) == "ask":
+			out.append(q)
+	return out
+
+
+## One prompt for a hero's queued Reactions (`group`, the first already taken off the queue): each one, or each of its
+## picks (a slot level, an aim). The others leave the queue with it: picking one takes it, skipping keeps the Reaction.
+func _choose_queued(group: Array[Dictionary], reactor: Combatant, r: CombatResult) -> CombatResult:
+	var e := enc()
+	var req := e.reactions.chooser(reactor, str(group[0]["trigger"]))
+	for i in group.size():
+		var q := group[i]
+		if i > 0:
+			e.reaction_queue.erase(q)
+		var one := _queued_request(q, reactor, e.get_c(str(q["trigger"])))
+		var name := Reactions.offer_name(one.title)
+		if one.target_choices.is_empty():
+			req.target_choices.append({"id": "now:%d" % i, "label": name, "text": one.text, "cost": one.cost})
+		for pick in one.target_choices:
+			req.target_choices.append({"id": "now:%d:%s" % [i, pick["id"]], "label": "%s · %s" % [name, pick["label"]], "text": one.text, "cost": one.cost})
+	req.selected_ids.assign([str(req.target_choices[0]["id"])])
+	var asked_ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var asked := asked_ref.get_ref() as ReactionRequest
+		if not use or asked == null:
+			return run_reaction_queue(r)
+		var bits := asked.selected_ids[0].split(":", true, 2)
+		var q := group[int(bits[1])]
+		var trigger := e.get_c(str(q["trigger"]))
+		var picked: Array[String] = []
+		if bits.size() > 2:
+			picked.append(bits[2])
+		_queued_pick(q, picked, trigger)
+		return e.then(_fire_queued(q, reactor, trigger), func() -> CombatResult: return run_reaction_queue(r))
+	e.pending = req
+	r.pending = req
+	return r
+
+
 ## Offers the queued reactions one by one (asking the player, or the AI deciding), then the queued Cleave attacks,
-## then returns `r`. Called while a prompt is still open (a save action that paused), it waits for the answer.
+## then returns `r`. Called while a prompt is still open (a save action that paused), it waits for the answer. A hero
+## with several waiting is asked about them on one prompt.
 func run_reaction_queue(r: CombatResult) -> CombatResult:
 	var e := enc()
 	if e.pending != null:
@@ -302,8 +404,7 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		var trigger := e.get_c(str(q["trigger"]))
 		if reactor == null or trigger == null or not trigger.is_alive() or not _queued_ok(q, reactor):
 			continue
-		var kind := str(q["kind"])
-		var decision := _reaction_decision(reactor, kind)
+		var decision := _queued_decision(q, reactor)
 		if decision == "never":
 			continue
 		var fire := func() -> CombatResult: return _fire_queued(q, reactor, trigger)
@@ -312,24 +413,17 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 			if e.pending != null:
 				return e.then(sub, func() -> CombatResult: return run_reaction_queue(r))
 			continue
-		var words: Array = _readied_words(q, reactor) if kind == "readied_attack" else (e.ravenloft.queued_text(kind) if kind.begins_with("rh_") \
-			else (e.faerun.queued_text(kind) if kind.begins_with("fr_") else _QUEUED_TEXT[kind] as Array))
-		var req := ReactionRequest.new(kind, reactor.id, trigger.id)
-		req.title = str(words[0])
-		req.text = str(words[1]) % [trigger.name(), reactor.name()]
-		req.cost = str(words[2])
-		if kind == "hellish_rebuke":
-			_rebuke_levels(req, reactor)
-		if kind == "readied_attack":
-			readied_targets(req, reactor, trigger)
+		var mates := _queued_mates(q, reactor)
+		if not mates.is_empty():
+			mates.push_front(q)
+			return _choose_queued(mates, reactor, r)
+		var req := _queued_request(q, reactor, trigger)
 		var asked_ref: WeakRef = weakref(req)   # the request holds this Callable: no cycle back to it
 		req.continuation = func(use: bool) -> CombatResult:
 			var asked := asked_ref.get_ref() as ReactionRequest
 			if use:
-				if asked != null and not asked.selected_ids.is_empty() and kind == "hellish_rebuke":
-					q["slot"] = int(asked.selected_ids[0])
-				if asked != null and kind == "readied_attack":
-					q["aim"] = readied_aim(asked, trigger).id
+				if asked != null:
+					_queued_pick(q, asked.selected_ids, trigger)
 				return e.then(fire.call() as CombatResult, func() -> CombatResult: return run_reaction_queue(r))
 			return run_reaction_queue(r)
 		e.pending = req

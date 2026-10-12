@@ -102,6 +102,7 @@ var _prompt_title: Label
 var _prompt_text: Label
 var _prompt_cost: Label
 var _prompt_rule: OptionButton
+var _prompt_rule_row: HBoxContainer
 var _prompt_targets: VBoxContainer
 var _prompt_use: Button
 var _details: PanelContainer
@@ -719,6 +720,7 @@ func _build_prompt() -> void:
 	_prompt_targets.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	target_scroll.add_child(_prompt_targets)
 	var rule_row := HBoxContainer.new()
+	_prompt_rule_row = rule_row
 	rule_row.add_child(_label("Next time: ", 15, "parchment"))
 	_prompt_rule = OptionButton.new()
 	_prompt_rule.add_item("Ask me")
@@ -1881,8 +1883,7 @@ func show_prompt(req: ReactionRequest) -> void:
 		_refresh_hotbar()
 		_refresh_party()
 	_prompt_title.text = req.title
-	_prompt_text.text = req.text
-	_prompt_cost.text = "Costs: " + req.cost
+	_prompt_words(req)
 	_prompt_use.text = "Use Reaction (A / Enter)" if req.spends_reaction else "Confirm (A / Enter)"
 	for child: Node in _prompt_targets.get_children():
 		_prompt_targets.remove_child(child)
@@ -1894,6 +1895,7 @@ func show_prompt(req: ReactionRequest) -> void:
 		var target_id := str(choice["id"])
 		var check := CheckButton.new()
 		check.text = str(choice["label"])
+		check.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # a long name wraps inside the prompt's width
 		check.button_group = group
 		check.button_pressed = target_id in req.selected_ids
 		check.toggled.connect(func(on: bool) -> void:
@@ -1901,13 +1903,29 @@ func show_prompt(req: ReactionRequest) -> void:
 				req.selected_ids.append(target_id)
 			elif not on:
 				req.selected_ids.erase(target_id)
-			_prompt_use.disabled = req.selection_error() != "")
+			_prompt_use.disabled = req.selection_error() != ""
+			if on and choice.has("text"):
+				_prompt_words(req)
+				_prompt.offset_top = PROMPT_BOTTOM
+			# On a pad, picking an option goes on to Use Reaction (down from the list would land on Skip).
+			if on and req.max_targets == 1 and check.has_focus() and PadNav.current != null and PadNav.current.pad:
+				PadNav.current.focus_on(_prompt_use))
 		_prompt_targets.add_child(check)
 	_prompt_rule.select(0)
+	# A list of Reactions has no one rule to set: each keeps its own (the Reactions tab).
+	_prompt_rule_row.visible = req.kind != Reactions.CHOICE
 	# Its height follows what it holds this time, grown up from just above the hotbar (grow_vertical).
 	_prompt.offset_top = PROMPT_BOTTOM
 	_prompt.offset_bottom = PROMPT_BOTTOM
 	_prompt.visible = true
+
+
+## The prompt's words: a list of Reactions (Reactions.CHOICE) shows what the picked one does and costs, then how to
+## choose.
+func _prompt_words(req: ReactionRequest) -> void:
+	var picked := req.choice(req.selected_ids[0]) if not req.selected_ids.is_empty() else {}
+	_prompt_text.text = "%s\n%s" % [picked["text"], req.text] if picked.has("text") else req.text
+	_prompt_cost.text = "Costs: " + str(picked.get("cost", req.cost))
 
 
 func hide_prompt() -> void:
@@ -1916,6 +1934,12 @@ func hide_prompt() -> void:
 
 func prompt_open() -> bool:
 	return _prompt.visible
+
+
+## Whether focus is on one of the open prompt's options (a Reaction on a list, a target): A picks it there.
+func prompt_option_focused() -> bool:
+	var f := get_viewport().gui_get_focus_owner()
+	return _prompt.visible and f != null and _prompt_targets.is_ancestor_of(f)
 
 
 func answer_prompt(use: bool) -> void:

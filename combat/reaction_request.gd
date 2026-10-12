@@ -25,6 +25,15 @@ var max_targets: int = 0
 var validate_selected: Callable
 
 
+## The listed option with this id ({} if none). The options of a prompt listing several Reactions (Reactions.CHOICE)
+## also carry the `text` and `cost` it shows while that one is picked.
+func choice(choice_id: String) -> Dictionary:
+	for t in target_choices:
+		if str(t["id"]) == choice_id:
+			return t
+	return {}
+
+
 func selection_error() -> String:
 	if selected_ids.size() < min_targets or (max_targets > 0 and selected_ids.size() > max_targets):
 		return "Choose exactly %d option%s" % [min_targets, "" if min_targets == 1 else "s"]

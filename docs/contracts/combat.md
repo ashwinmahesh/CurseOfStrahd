@@ -104,6 +104,16 @@ illusory_self, riposte, parry, stones_endurance, interception, protective_field,
 `title`, `text` (the trigger with its numbers), `cost`. A player-controlled creature's
 `reaction_rules[kind]` = ask (default) / auto / never decides whether it's asked.
 
+A hero with more than one Reaction to be asked about gets one prompt of kind `Reactions.CHOICE` ("<name> has a
+Reaction", owner report 2026-10-12): `target_choices` lists each (`id` `now:<i>`, or `now:<i>:<pick>` for each pick of
+one with its own, a slot level or an aim; `label`, plus the `text` and `cost` shown while it's picked), one to pick, and
+Skip keeps the Reaction. `Reactions.offer` builds it from a chain's offers that spend the same Reaction (one of each
+kind), `run_reaction_queue` from the queued ones, and a step into reach from Reactive Strike and a readied attack. In
+an attack (`offer(chain, done, r, st)`) it also lists what comes later in the attack (`Reactions.later_options`, `id`
+`later:<kind>`: Sentinel and Interception once it hits, an attack readied for it): picking one keeps the Reaction for
+it (`st.reserved`), so it's taken there without asking and the hero's other Reactions in that attack aren't offered;
+if the attack misses, the Reaction is kept. On a pad, A on an option picks it and moves to Use Reaction.
+
 ### Choices after a D20 Test (F6, `D20Responses`, `e.d20`)
 
 Everything that can change a roll once its die is rolled is an offer in the shape `Reactions.offer` takes, built by
