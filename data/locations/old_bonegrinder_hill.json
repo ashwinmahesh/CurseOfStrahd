@@ -206,7 +206,8 @@
       "kind": "examine",
       "label": "A dead oak full of ravens",
       "model": "dead_tree",
-      "stand_ft": 10
+      "stand_ft": 10,
+      "dialogue": "old_bonegrinder/ilinca:oak"
     },
     {
       "id": "bonegrinder_ravens_west",

@@ -37,8 +37,23 @@ Built in batches; this page lists what's built.
 The One-Horned Billy (Krezk) and Elvir's bones (Yester Hill) were there before; both now cast in the scene too.
 Tests: tests/integration/test_speak_with_animals.gd.
 
+## Batch 2: the animals east of the crossroads (branch `more-to-speak-with-2`)
+
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| The big dog | Vallaki, the square | Milivoj carried a sack of old bones to the coffin maker's back door; the cold dead in Henrik's back room; a ring by the stocks | `vallaki_dog_told` (a way to make Milivoj confess); The Bones of St. Andral to `rumored`; reveals `stocks_mud` (Ring of Protection) |
+| The camp dog | The Vistani camp by the lake | Luvash's grief, then Bluto carrying Arabelle north in a sack | The Missing Girl to `rumored`, or from `asked` to `clue` |
+| Arrigal's black horse | The Vistani camp | He rides to the castle at night; a snake-smelling knife under his wagon | `arrigal_suspected`; reveals `arrigal_wagon_drawer` (Dagger of Venom) |
+| A bay in the inn's stable | The Blue Water Inn | The striped beast in Rictavio's wagon, and the old man's voice he uses with it | `rictavio_suspected` |
+| Stella Wachter | Wachterhaus | The spell finds no cat in the room to answer | Seen through, as Insight would (`stella_bound_known`, The Cat in the Window to `bound`) |
+| The ravens | The Wizard of Wines | Where the druids came from, where Davian hid his last stone, where the thief took the other; their own hoard | `yester_hill_known`, `winery_stone_hiding_told`, The Third Stone to `told`; reveals `roost_hoard` (Ring of Feather Falling) |
+| The ravens in the dead oak | Old Bonegrinder's crag | Children go into the mill and don't come out; Ilinca is one of them | The Children in the Mill to `heard`; reveals `oak_raven_hoard` (Figurine of Wondrous Power, Silver Raven) |
+| The goats | Krezk, the pens | The billy talks in his sleep; Petru smells of wolf; a warm ring under the track cairn | The One-Horned Billy and The Pack's Runt to `rumored`; reveals `track_cairn_ring` (Ring of Warmth) |
+| The roost | Castle Ravenloft, under the roofs | They hate the count's bats; Pidlwick II's key; a ring in the far nest | Calms them, even after a raven was hurt (`roost_ravens_calm`); reveals `nest_ring` (Ring of Evasion); Thistle approves |
+
+Tests: tests/integration/test_speak_with_animals_east.gd.
+
 ## Still to build
 
-- The animals of Vallaki, the Wizard of Wines, Old Bonegrinder, Krezk and Castle Ravenloft's roost.
 - The dead around the village of Barovia, Death House, the crossroads gallows, Vallaki and Old Bonegrinder.
 - The dead of Krezk, Berez, Argynvostholt, Yester Hill's barrows and Castle Ravenloft's catacombs.

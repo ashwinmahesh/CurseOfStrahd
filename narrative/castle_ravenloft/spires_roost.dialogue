@@ -1,6 +1,7 @@
 # The ravens' roost under the castle's roofs (castle_ravenloft_spires_roost). The ravens guard the great nest (a
 # Tarokka place): friends of the Keepers or of the road raven, food, or Animal Handling calm them; a failed try or a
-# grab at the nest is a fight. Pidlwick II's wind-up key is in a smaller nest.
+# grab at the nest is a fight. Pidlwick II's wind-up key is in a smaller nest. Speak with Animals calms them too, and
+# they tell where things are.
 
 ~ ravens
 if flag.roost_swarm_cleared
@@ -19,6 +20,8 @@ endif
 * [if item:ration] Scatter some food on the boards. -> fed
 * [if not flag.raven_harmed] [Animal Handling DC 14] Move slowly and talk low. -> calm | roused
 * [if flag.raven_harmed] [Animal Handling DC 18] Move slowly and talk low. -> calm | roused
+* [if spell:speak_with_animals] Speak to them. -> roost_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and speak to them.) -> roost_cast
 * Leave them be. -> END
 
 ~ friends
@@ -41,6 +44,29 @@ approve thistle +2: You fed the ravens in Strahd's roost
 set roost_ravens_calm
 Narrator: You move like someone with all night to spare, and the ravens decide you aren't worth the trouble of a fight.
 approve thistle +1: You calmed the ravens in Strahd's roost
+-> hint
+
+~ roost_cast
+cast speak_with_animals
+if check.last
+-> roost_speaks
+endif
+-> ravens
+
+# Speak with Animals (2024 PHB): asked, not grabbed at, the roost talks; it hates the count's bats.
+~ roost_speaks
+set roost_ravens_calm
+Narrator: The whole roost goes quiet to listen. Then the oldest raven on the highest beam answers, slowly, in a voice like a door that hasn't been opened in a long time.
+if flag.raven_harmed
+Narrator: "You hurt one of us on the road. We know. We remember. But you came up here and asked, which nobody does. Ask, then."
+endif
+Narrator: "The cold one never comes up here. He sends his bats, and we eat them. This roof is ours."
+if not flag.pidlwick_key_found
+Narrator: "The shiny brass thing with the little bells is in the small nest. It's the clicking toy-man's. He came up the stair for it once and we chased him down again."
+endif
+Narrator: "In the far nest by the broken window there's a ring from the man who fell off the tower, long ago. He won't want it. Take it, and go before the bats wake."
+reveal nest_ring
+approve thistle +2: You spoke with the castle's ravens instead of fighting them
 -> hint
 
 ~ hint

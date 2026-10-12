@@ -1,6 +1,7 @@
 # The Vistani camp outside Vallaki's west gate (docs/voice/arrigal.md, luvash.md, arabelle.md, bluto.md, vistana.md).
 # arrigal greets newcomers; luvash grieves for Arabelle; the vistana at the fire saw the fisherman; bluto is on the
-# lakeshore with a sack; arabelle, once home.
+# lakeshore with a sack; arabelle, once home. Arrigal's black horse (prop arrigal_black_horse) talks under Speak with
+# Animals: he rides to the castle at night.
 
 ~ arrigal
 if not flag.vistani_camp_met
@@ -227,4 +228,29 @@ Arabelle: Your red-haired friend has been to the lake before. A long time ago. S
 else
 Arabelle: One of you is going to lie to the man in the castle, and he's going to like it. I don't know which one. I'd tell you if I did.
 endif
+-> END
+
+# --- Arrigal's black horse (prop arrigal_black_horse) ---
+
+~ black_horse
+narrate examine:arrigal_black_horse
+* [if spell:speak_with_animals] Ask the horse where it goes at night. -> black_horse_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the horse where it goes at night.) -> black_horse_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it tied. -> END
+-> END
+
+~ black_horse_cast
+cast speak_with_animals
+if check.last
+-> black_horse_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): Arrigal is the count's spy (Curse of Strahd); his horse knows the castle road.
+~ black_horse_speaks
+set arrigal_suspected
+Narrator: The black horse looks at you down the length of its nose, the way a well-paid servant looks at a beggar, and answers anyway.
+Narrator: "My man rides me up the castle road in the dark, to the big gate. Their people take me in and give me oats that taste of nothing. He comes out smelling of the cold one, and pleased with himself. We're back before the sun."
+Narrator: "Under his wagon he keeps a little box with a knife in it that stinks of snake. He touches it before we ride."
+reveal arrigal_wagon_drawer
 -> END

@@ -27,9 +27,23 @@ endif
 * [if not flag.stella_bound_known] [Insight DC 13] (Watch her, not the cat she's playing.) -> held | held_missed
 * [if not flag.stella_bound_known] [Arcana DC 14] (Is there magic on her?) -> ribbon | ribbon_missed
 * [knows:detect_magic] [if not flag.stella_bound_known] (Cast Detect Magic.) -> ribbon
+* [if spell:speak_with_animals and not flag.stella_bound_known] (Speak to the cat.) -> not_a_cat
+* [if not spell:speak_with_animals and not flag.stella_bound_known] [knows:speak_with_animals] (Cast Speak with Animals, and speak to the cat.) -> not_a_cat_cast
 * [if flag.stella_bound_known] (Free her.) -> break_menu
 * Stella? Can you hear us? -> talk
 * Leave her be. -> END
+
+~ not_a_cat_cast
+cast speak_with_animals
+if check.last
+-> not_a_cat
+endif
+-> stella_menu
+
+# Speak with Animals (2024 PHB) speaks to Beasts: there's no cat in this room to answer it.
+~ not_a_cat
+Narrator: The spell reaches for the cat in the room and finds nothing there to answer it: no cat at all, only a frightened young woman doing a very good impression of one.
+-> held
 
 ~ talk
 Narrator: At her name her ears, if she had a cat's ears, would go flat. She opens her mouth, and what comes out is a long, low, perfectly made yowl.

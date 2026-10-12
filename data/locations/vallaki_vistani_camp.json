@@ -283,7 +283,8 @@
       "kind": "examine",
       "label": "A saddled black horse",
       "model": "black_horse",
-      "facing": "east"
+      "facing": "east",
+      "dialogue": "vallaki/vistani_camp:black_horse"
     },
     {
       "id": "camp_pot",

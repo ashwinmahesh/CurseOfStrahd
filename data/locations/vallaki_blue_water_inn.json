@@ -303,9 +303,10 @@
         2,
         12
       ],
-      "kind": "decor",
+      "kind": "examine",
       "label": "A horse in its stall",
-      "model": "stall_horse"
+      "model": "stall_horse",
+      "dialogue": "vallaki/rictavio:stable_horse"
     },
     {
       "id": "stable_stall_grey",
