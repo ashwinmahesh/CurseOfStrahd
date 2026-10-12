@@ -119,6 +119,65 @@ func test_cube_cone_and_line_areas() -> void:
 	assert_eq(line.size(), 6)
 
 
+## Lines aimed at any angle (owner, 2026-10-12: "Allow aiming straight line spells (like lightning bolt) in any straight
+## line (not just aligned with squares)"): a square is in one when at least half of it is (2024 DMG).
+func test_a_line_starts_where_its_aim_leaves_the_casters_space() -> void:
+	assert_eq(CombatGrid.line_origin(Vector2i(5, 5), 1, Vector2.RIGHT), Vector2(6, 5.5), "straight out: the middle of the facing edge")
+	assert_eq(CombatGrid.line_origin(Vector2i(5, 5), 1, Vector2(1, 1)), Vector2(6, 6), "diagonally: the corner")
+	assert_true(CombatGrid.line_origin(Vector2i(5, 5), 1, Vector2(2, 1)).distance_to(Vector2(6, 5.75)) < 0.001,
+		"at a slant: where the line from the middle crosses the edge")
+	assert_eq(CombatGrid.line_origin(Vector2i(5, 5), 1, Vector2.RIGHT, 10), Vector2(6, 6),
+		"10 ft wide from one square, straight: half a square aside, so its edges run along grid lines")
+	assert_eq(CombatGrid.line_origin(Vector2i(4, 4), 2, Vector2.UP), Vector2(5.5, 4), "5 ft wide from a Large space: down a column")
+
+
+func test_a_line_at_a_slant_takes_a_band_of_squares_as_wide_as_it_is() -> void:
+	var rows: Array = []
+	for i in 12:
+		rows.append("................")
+	var g := CombatGrid.from_rows(rows)
+	var me := Vector2i(3, 6)
+	var aim := Vector2(14.5, 2.0) - Vector2(3.5, 6.5)
+	var bolt := g.area_cells("line", 100, CombatGrid.line_origin(me, 1, aim), aim)
+	for want: Vector2i in [Vector2i(4, 6), Vector2i(8, 4), Vector2i(10, 3), Vector2i(13, 2)]:
+		assert_true(want in bolt, "%s on the slant" % want)
+	for not_hit: Vector2i in [me, Vector2i(9, 6), Vector2i(12, 6), Vector2i(8, 6)]:
+		assert_false(not_hit in bolt, "%s off it" % not_hit)
+	# Squares that run off the board are lost, so count only up to where it leaves the board (x = 16 at about 13.5 sq).
+	var short := g.area_cells("line", 50, CombatGrid.line_origin(me, 1, aim), aim)
+	assert_between(short.size(), 9, 11, "a 50-ft line covers about ten squares' area, so about ten squares")
+	for cell in short:
+		var x_band := Vector2(cell) + Vector2(0.5, 0.5) - CombatGrid.line_origin(me, 1, aim)
+		assert_true(absf(x_band.dot(Vector2(-aim.normalized().y, aim.normalized().x))) < 1.0, "%s close to the line" % cell)
+	var diagonal := g.area_cells("line", 30, CombatGrid.line_origin(Vector2i(2, 2), 1, Vector2(1, 1)), Vector2(1, 1))
+	assert_eq(diagonal.size(), 4, "diagonally: the squares on the diagonal it crosses")
+	for cell in diagonal:
+		assert_eq(cell.x, cell.y, "%s on the diagonal, none beside it" % cell)
+	var mirror := g.area_cells("line", 50, CombatGrid.line_origin(me, 1, Vector2(aim.x, -aim.y)), Vector2(aim.x, -aim.y))
+	assert_eq(mirror.size(), short.size(), "aimed the other way round the row: the same shape mirrored")
+	for cell in short:
+		assert_true(Vector2i(cell.x, 2 * me.y - cell.y) in mirror, "%s mirrored" % cell)
+
+
+func test_a_10_ft_line_straight_from_one_square_is_two_rows_wide() -> void:
+	var rows: Array = []
+	for i in 9:
+		rows.append("................")
+	var g := CombatGrid.from_rows(rows)
+	var me := Vector2i(2, 4)
+	var gust := g.area_cells("line", 60, CombatGrid.line_origin(me, 1, Vector2.RIGHT, 10), Vector2.RIGHT, 10)
+	assert_eq(gust.size(), 24, "12 squares long, 2 wide")
+	for cell in gust:
+		assert_true(cell.y in [4, 5] and cell.x >= 3 and cell.x <= 14, "%s in the two rows" % cell)
+
+
+func test_a_line_aims_anywhere_but_settles_on_a_row_or_diagonal_when_close() -> void:
+	assert_eq(CombatGrid.line_aim(Vector2(10, 0.2)), Vector2.RIGHT, "a degree off a row: along the row")
+	assert_eq(CombatGrid.line_aim(Vector2(-3, -3.05)), Vector2(-1, -1).normalized(), "close to a diagonal: along it")
+	var slant := CombatGrid.line_aim(Vector2(11, -4.5))
+	assert_true(slant.distance_to(Vector2(11, -4.5).normalized()) < 0.0001, "anywhere else: just where it's pointed")
+
+
 func test_a_15_ft_cone_is_an_even_wedge_in_all_eight_directions() -> void:
 	var rows: Array = []
 	for i in 11:

@@ -1067,13 +1067,42 @@ func _aim_point() -> Vector2:
 	return Vector2(roundf(hover_world.x), roundf(hover_world.z))
 
 
+## The way an area aimed from the caster points, toward the pointer: a Line at any angle (CombatGrid.line_aim), anything
+## else along the nearest of the eight grid directions.
 func _aim_dir(c: Combatant) -> Vector2:
 	var center := Vector2(c.cell.x + c.size_cells / 2.0, c.cell.y + c.size_cells / 2.0)
 	var d := Vector2(hover_world.x, hover_world.z) - center
 	if d.length() < 0.1:
 		return Vector2(c.facing)
+	if catalog.line_ft(c, selected) > 0:
+		return CombatGrid.line_aim(d)
 	var a := snappedf(d.angle(), PI / 4.0)
 	return Vector2(cos(a), sin(a))
+
+
+## A Line aimed on a pad (owner, 2026-10-12): the left stick points it, at any angle, and the cursor goes to its far
+## end (short of the board's edge), where its count and saves show and A casts it. The camera stays put.
+func _pad_line_aim(c: Combatant, stick: Vector2, length_ft: int) -> void:
+	var basis := rig.ground_basis()
+	var world := basis[0] * -stick.y + basis[1] * stick.x
+	var d := Vector2(world.x, world.z)
+	if d.length() < 0.01:
+		return
+	d = d.normalized()
+	var center := e.center_of(c)
+	var reach := c.size_cells / 2.0 + length_ft / float(CombatGrid.FEET) - 0.5
+	var p := center + d * reach
+	while reach > 0.5 and not e.grid.in_bounds(Vector2i(floori(p.x), floori(p.y))):
+		reach -= 0.25
+		p = center + d * reach
+	cursor_cell = Vector2i(clampi(floori(p.x), 0, e.grid.width - 1), clampi(floori(p.y), 0, e.grid.depth - 1))
+	hover_cell = cursor_cell
+	hover_world = Vector3(p.x, board.cell_center(cursor_cell).y, p.y)
+	hover_token = null
+	var o := e.occupant_at(cursor_cell)
+	if o != null:
+		hover_token = tokens.get(o.id) as CombatToken
+	_update_hover()
 
 
 func _radial(choice: String) -> void:
@@ -1345,9 +1374,17 @@ func _process(delta: float) -> void:
 		return
 	if hud.radial.visible:
 		hud.radial.aim(Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)))
-	# Controller cursor: the left stick steps it a square at a time.
+	# Controller cursor: the left stick steps it a square at a time, or points a Line being aimed.
 	var stick := Input.get_vector(&"cursor_left", &"cursor_right", &"cursor_up", &"cursor_down")
-	if stick.length() > 0.5:
+	var line := 0
+	if stick.length() > 0.5 and mode == Mode.TARGET and _player() != null and not picker.active() \
+			and str(selected.get("targeting", "")) == "direction":
+		line = catalog.line_ft(_player(), selected)
+	if line > 0:
+		using_pad = true
+		_pad_repeat = 0.0
+		_pad_line_aim(_player(), stick, line)
+	elif stick.length() > 0.5:
 		using_pad = true
 		_pad_repeat -= delta
 		if _pad_repeat <= 0.0:

@@ -1595,6 +1595,22 @@ func _known_defenses(t: Combatant) -> String:
 	return " · " + ("; ".join(parts) if not parts.is_empty() else "no resistances")
 
 
+## How long the Line an action aimed in a direction makes, in feet (Lightning Bolt, Gust of Wind and its turn, Sunbeam's
+## later beams, a Dragonborn's Breath Weapon line); 0 when it makes another shape or none. A Line is aimed at any angle,
+## where the other shapes take the nearest of the eight grid directions (owner, 2026-10-12).
+func line_ft(c: Combatant, action: Dictionary) -> int:
+	if str(action.get("id", "")) == "feat:breath_weapon:line":
+		return 30
+	var area := {}
+	if str(action.get("kind", "")) == "sustain":
+		for a: Dictionary in e.spells.sustained:
+			if str(a["id"]) == str(action.get("sustain_id", "")) and str(a["owner_id"]) == c.id:
+				area = (a["def"] as Dictionary).get("area", {}) as Dictionary
+	if area.is_empty() and str(action.get("spell_id", "")) != "":
+		area = Compendium.shared().spell_data(str(action["spell_id"])).get("area", {}) as Dictionary
+	return int(area.get("size", 0)) if str(area.get("shape", "")) == "line" else 0
+
+
 ## The area a spell would cover and who's in it (cb_02): {cells, outline: its edge to draw (SpellTargeting.area_outline;
 ## {} for a wall, which shows its squares), creatures: [{id, name, ally, line}], warnings}.
 func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector2, slot: int = 0) -> Dictionary:
