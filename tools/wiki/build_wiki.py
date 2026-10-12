@@ -593,8 +593,8 @@ class Writer:
         new_blocks = OrderedDict((m[1], m[0]) for m in AUTO_RE.finditer(new_body))
         old_body = re.sub(r"^---\n.*?\n---\n", "", old, count=1, flags=re.S)
         old_names = [m[1] for m in AUTO_RE.finditer(old_body)]
-        # Title line: the generator's.
-        old_body = re.sub(r"^# .*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
+        # Title line: the generator's, even if an edit left a stray character in front of the `#`.
+        old_body = re.sub(r"^[^\n#]{0,3}#+ [^\n]*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
 
         def repl(m):
             blk = new_blocks.get(m[1])
