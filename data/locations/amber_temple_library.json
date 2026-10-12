@@ -216,7 +216,20 @@
       ],
       "kind": "examine",
       "label": "Books in chains",
-      "model": "bookcase"
+      "model": "bookcase",
+      "checks": [
+        {
+          "id": "chained_titles",
+          "skill": "arcana",
+          "dc": 17,
+          "label": "Read the chained titles",
+          "success": {
+            "reveal": [
+              "chained_tome"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "aurel_margins",

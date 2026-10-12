@@ -38,7 +38,7 @@ var _bar_plate: PanelContainer
 ## Where the last roll sits on its own: at the bottom left, above the "F1: controls" line.
 const ROLL_LEFT := 14.0
 const ROLL_BOTTOM := -78.0
-## The current location at the top right, north up, following the party (ui/exploration/minimap.gd).
+## The current location at the top right, turned with the camera, following the party (ui/exploration/minimap.gd).
 var minimap: Minimap
 ## Ways out to other regions marked over the world (ui/exploration/exit_signs.gd).
 var exit_signs: ExitSigns

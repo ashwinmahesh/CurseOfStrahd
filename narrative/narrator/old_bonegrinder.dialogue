@@ -277,3 +277,41 @@ once
 ~ search:lane_shrine_flask
 | Behind the wayside shrine, an offering nobody came back for: a small green flask with a bitter smell, the kind a careful traveller drinks before an unknown supper.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:animal_handling:oak_ravens_trust:success
+| One by one the ravens settle, and the boldest hops along the branch to a hollow and taps on something that clinks.
+
+~ check:animal_handling:oak_ravens_trust:failure
+| The ravens watch you with great interest and no trust at all.
+
+~ check:intimidation:ravens_scatter:success
+| You wave your arms and roar, and the ravens lift off the bone heap in a black, complaining cloud. Something on the heap shines that didn't before.
+
+~ check:intimidation:ravens_scatter:failure
+| The ravens consider you, decide you are not frightening, and come for your eyes to make the point.
+
+~ check:nature:hag_garden:success
+| Belladonna, mandrake, poppies grown for their milk; and in the corner, the plain grey leaf that undoes them all, which you boil down into two stoppered doses.
+
+~ check:nature:hag_garden:failure
+| Leaves, roots and flowers. Some of them are probably deadly; you'd rather not find out which by touch.
+
+~ check:perception:crag_scan:success
+| From the crag the whole lane lies below you, and in a ditch beside it a little glass vial winks in the grey light.
+
+~ check:perception:crag_scan:failure
+| Fog, fields and the long road down. Nothing stands out but the mill behind you.
+
+~ check:survival:ruts_follow:success
+| Heavy carts arrive and light carts leave. The narrow ruts of a handcart come only at night, from the direction of Vallaki.
+
+~ check:survival:ruts_follow:failure
+| Ruts on ruts on ruts. Everyone comes to the mill, and the lane doesn't remember who.
+
+~ check:religion:lane_shrine_pray:success
+| You say a prayer at the little shrine, and notice that someone else left an offering behind it, out of the hags' sight.
+
+~ check:religion:lane_shrine_pray:failure
+| The words don't come. The mill's sails creak on behind you, keeping time.

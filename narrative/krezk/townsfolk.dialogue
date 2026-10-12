@@ -60,6 +60,36 @@ Watchman Lazar: The gate's watched, the wall's watched, and the road is watched 
 
 ~ goat
 Narrator: The goat chews something that was probably part of the fence, and watches you with its strange square eyes until you go away.
+* [if spell:speak_with_animals] Ask the goat what's been happening in the pens. -> goat_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what's been happening in the pens.) -> goat_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it to the fence. -> END
+-> END
+
+~ goat_cast
+cast speak_with_animals
+if check.last
+-> goat_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the pens know who sleeps in them (The One-Horned Billy, The Pack's Runt).
+~ goat_speaks
+Narrator: The goat answers with its mouth full. Krezk's goats, it turns out, are as blunt as Krezk's people.
+if not flag.dragos_freed
+Narrator: "The one-horned billy isn't a goat. He talks people-words in his sleep, and cries."
+if not quest.one_horned_billy
+set billy_rumor
+quest one_horned_billy rumored
+endif
+endif
+if flag.den_children_freed and quest.the_packs_runt != done and quest.the_packs_runt != given
+Narrator: "The small boy who sleeps in our pen smells of wolf. More every night. He doesn't eat us. He shakes. Something big comes to the bottom of the wall in the dark and calls him by a name that isn't his."
+if not quest.the_packs_runt
+quest the_packs_runt rumored
+endif
+endif
+Narrator: "Under the stones by the track there's a ring that's warm in the mouth. Good in winter. We take turns."
+reveal track_cairn_ring
 -> END
 
 ~ billy

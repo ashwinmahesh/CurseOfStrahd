@@ -55,7 +55,10 @@ func test_moving_spends_feet_and_cant_end_in_an_occupied_square() -> void:
 	assert_eq(a.cell, Vector2i(2, 0))
 	assert_eq(a.movement_left, 20)
 	assert_true(a.moved)
-	assert_false(e.move(a, Vector2i(9, 0)).ok, "35 ft is too far")
+	# 35 ft away with 20 ft left: as far along the way as the movement goes (owner, 2026-10-12), no refusal.
+	assert_true(e.move(a, Vector2i(9, 0)).ok, "a square too far walks as far as it can")
+	assert_eq(a.cell, Vector2i(6, 0))
+	assert_eq(a.movement_left, 0)
 	assert_eq(ally.cell, Vector2i(1, 0))
 
 

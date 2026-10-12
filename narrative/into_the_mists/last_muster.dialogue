@@ -73,6 +73,7 @@ Marshal Dragomir: My men will stand down when I am relieved, and not one hour be
 ~ stood_down
 set riders_stood_down
 quest last_muster stood_down
+cutscene marshal_stand_down
 Narrator: The marshal turns his horse and looks at his column for a long time. Then he lifts his blade, and the riders dismount, all at once, the way they were drilled to, and stand by their horses' heads, and are still.
 Marshal Dragomir: They are relieved. I am not. An officer is relieved by his commander, or by defeat. My commander will not come.
 Marshal Dragomir: So. Beat me. Fairly, at the gate I was told to hold. Then I can tell him, when I see him, that I held it until I couldn't.
@@ -87,6 +88,7 @@ Marshal Dragomir: Tomorrow night, then. We have time. We have had nothing but.
 if flag.riders_stood_down
 Narrator: He salutes you with his blade, the old cavalry salute, and his two lieutenants walk their bone horses out of the column to his flanks. Nobody else moves.
 else
+cutscene marshal_charge
 Narrator: The marshal lowers his blade, and the whole column lowers its lances with him, and the gate is full of bones coming at you.
 endif
 combat bone_marshal

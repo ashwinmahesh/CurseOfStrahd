@@ -216,7 +216,7 @@ things to find, more people to talk to", and "the great tent... should be wayyy 
 - **Things to stand on** (Ashwin: "larger things that change elevation and can be interacted with"). A prop's
   `stand_ft` on a piece whose top sits at that height (a vardo's roof at 10 ft, a broken cart or a treading vat at 5, a
   dead tree climbed into at 10) makes its squares high ground; built digits make platforms and walks (Krezk's wall
-  walk, the winery's watch platform, Tser Pool's stage).
+  walk, the winery's watch platform), and `_` a low dais two feet up (Tser Pool's stage, Vallaki's podium, altars).
 - **Big pieces clear what's under them.** A building-sized 3D piece hides the trees and the board's own furniture on
   every square its footprint covers, however big (it was two squares each way at most).
 - **Fences run along their rails** (catalog `runs_along`): a pen's east and west rails go up the map. A place's

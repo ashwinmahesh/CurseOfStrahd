@@ -619,3 +619,15 @@ once
 
 ~ check:religion:shrine_dedication:failure
 | Black velvet and bad poetry. The dedication is in a hand you can't make out.
+
+~ check:arcana:circle_read:success
+| A teleportation circle, copied from a book by someone clever who skipped a step: whatever steps into it goes somewhere, but not all of it arrives.
+
+~ check:arcana:circle_read:failure
+| Chalk lines, sigils and a smell of burned hair. The circle means something, and is very sure of it.
+
+~ check:religion:saint_blessing:success
+| With the saint's bones back beneath the floor, the prayer comes easily, and something warm and steady settles over each of you.
+
+~ check:religion:saint_blessing:failure
+| The words are right and the moment isn't. The saint, today, is listening to someone else.

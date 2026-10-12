@@ -387,3 +387,51 @@ once
 
 ~ check:religion:cairn_names:failure
 | The names are worn, and you stumble over them. The cairn keeps its own.
+
+~ check:survival:mounds_earth:success
+| Every mound has sunk the way old graves do, except one, piled higher and newer, as if someone dug it up and filled it in again.
+
+~ check:survival:mounds_earth:failure
+| Grass, weeds and mounds. The hanged keep their own counsel.
+
+~ check:athletics:bridge_climb:success
+| You find handholds in the old stone and climb down to the footings, where the river has wedged something in a gap above the waterline.
+
+~ check:athletics:bridge_climb:failure
+| A handhold crumbles, and the Ivlis takes you in up to the chest. It is very cold and very fast.
+
+~ check:survival:castle_road_tracks:success
+| Only one set of fresh tracks climbs the castle road: a heavy carriage, and horses that never paused to rest.
+
+~ check:survival:castle_road_tracks:failure
+| Mud, stones and old ruts. The castle road isn't telling you who uses it.
+
+~ check:athletics:pine_lookout:success
+| From the clawed pine's crown you can see across the clearing, where something glints high in the next tree.
+
+~ check:athletics:pine_lookout:failure
+| A branch you trusted gives way. The ground has been waiting.
+
+~ check:survival:werewolf_marks:success
+| These are a boundary, not an attack: renewed every full moon by something that walks upright. The trail runs north to the lake hills, and a hunter followed it.
+
+~ check:survival:werewolf_marks:failure
+| Deep claw marks, old and new. Something big, and you'd rather not know more.
+
+~ check:athletics:hunters_platform:success
+| The platform holds a dead hunter's stash of coin, and a warning cut into the rail for whoever climbs up next.
+
+~ check:athletics:hunters_platform:failure
+| The rungs are rotten two from the top. You get there eventually, by way of the ground.
+
+~ check:athletics:wall_stones:success
+| You lift the top stones off the tumbled wall, and in the gap beneath them someone has tucked a bundle out of the rain.
+
+~ check:athletics:wall_stones:failure
+| The wall has been falling down for fifty years and has no intention of hurrying for you.
+
+~ check:medicine:bundles_cut:success
+| You slit the old silk carefully, away from the venom-stained threads, and inside a dead traveller's purse is still tied to what's left of his belt.
+
+~ check:medicine:bundles_cut:failure
+| Your knife slips on the silk, and the venom on it finds the cut.

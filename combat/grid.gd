@@ -24,6 +24,9 @@ const NATURAL := 32      ## its height is the lie of the land (the map's `elevat
 ## a steep one (uphill costs as Difficult Terrain), and CLIFF_FT or more a cliff (climbed, or jumped down with a fall).
 ## A built height (a map row's digit: a dais, a ledge, a stair) keeps F4's rule: more than 5 ft is climbing.
 const CLIFF_FT := 15
+## `_` in a map row: a low dais, a podium, a stage, a porch or a jetty, a step up of this many feet (owner 2026-10-12:
+## "the podium in vallaki should just be a couple of feet tall"). Under 5 ft it is no climb and no high ground.
+const DAIS_FT := 2
 ## The map's `elevation` rows: a character per square, '0'-'9' then 'a'-'z', each step 5 ft (up to 175 ft).
 const ELEVATION_CHARS := "0123456789abcdefghijklmnopqrstuvwxyz"
 
@@ -71,7 +74,7 @@ func resize(w: int, d: int) -> void:
 
 
 ## Builds a grid from rows of characters (data/encounters): `.` floor, `#` wall, `=` low cover, `~` difficult,
-## digits 1-4 raise the floor by 5 ft per step (a platform), ` ` void. `elevation` (a map's `elevation`, the same
+## digits 1-4 raise the floor by 5 ft per step (a walk, a ledge, a stair), `_` a low dais (DAIS_FT), ` ` void. `elevation` (a map's `elevation`, the same
 ## size) is the lie of the land under it all: a character per square (ELEVATION_CHARS, 5 ft a step), its squares
 ## NATURAL unless a digit builds on them.
 static func from_rows(rows: Array, elevation: Array = []) -> CombatGrid:
@@ -97,6 +100,8 @@ static func from_rows(rows: Array, elevation: Array = []) -> CombatGrid:
 					g.set_flag(Vector2i(x, z), VOID | WATER)
 				"1", "2", "3", "4":
 					g.set_height(Vector2i(x, z), int(c) * FEET)
+				"_":
+					g.set_height(Vector2i(x, z), DAIS_FT)
 	if not elevation.is_empty():
 		g.apply_elevation(elevation)
 	return g

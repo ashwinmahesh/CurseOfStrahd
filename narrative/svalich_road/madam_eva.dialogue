@@ -339,6 +339,7 @@ Madam Eva [sad]: A child of ours. Don't sit here listening to me. When we're don
 endif
 Madam Eva: The last card. Where the darkness will be waiting when you come for him. And you will come for him; the cards are very sure of that part.
 tarokka read enemy
+cutscene eva_candles_lean
 Narrator: The candles lean, all together, as if someone has opened a door. Nobody has.
 Madam Eva [sad]: There. That is the shape of it. Three things lost, a friend, and the room at the end. Everything else, you will have to do yourselves.
 set eva_reading_done
@@ -356,6 +357,7 @@ endif
 ~ treasure_here
 if tarokka.tome == stars_2 or tarokka.symbol == stars_2 or tarokka.sword == stars_2
 Madam Eva [sly]: And one of the three, you need not walk a step for. The cards put it in my keeping long ago, and told me to wait for the right hands. My hands are tired.
+cutscene eva_chest
 Narrator: She unlocks the iron-bound chest behind her with a key she keeps on a cord round her neck, lifts out a bundle of oilcloth, and sets it on the table between the cards.
 if tarokka.tome == stars_2
 Narrator: Inside lies a heavy book bound in black leather, clasped in tarnished silver. Nobody wants to be the first to touch it.

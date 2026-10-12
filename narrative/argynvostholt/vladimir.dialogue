@@ -119,6 +119,7 @@ set order_fate = "grudge"
 set vladimir_fate = "pact"
 quest the_order_of_the_silver_dragon grudge
 quest the_dark_beacon waiting
+cutscene feast_pact
 Narrator: Vladimir stands. Down the long table the dead knights stand with him, and the sound of their armour is like a house settling. He lays his sword flat on the table, and one by one, so do they.
 Vladimir: Say it after me. He lives. He suffers. We watch.
 Narrator: You say it. The knights say it with you, in a voice like a door that has not been opened for a very long time.
@@ -240,6 +241,7 @@ endif
 ~ keeping
 if treasure_at:argynvostholt_vladimir
 if flag.order_fate == "rest"
+cutscene feast_gift
 Narrator: Where the commander last stood, laid across a pair of empty gauntlets as carefully as an offering, is the thing he kept so that nobody would end the lord of the castle with it.
 elif flag.order_fate == "grudge"
 Vladimir: Take it. Use it to break him. If you use it to end him, the Order will know, and the Order will come.

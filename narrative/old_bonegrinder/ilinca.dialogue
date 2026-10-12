@@ -1,6 +1,7 @@
 # Ilinca Vrana, a Keeper of the Feather (voice: docs/regions/old_bonegrinder.md §3). An old midwife and wereraven who
 # watches the mill from the dead oak. She warns the party, tells them how to split the coven, and may fly in with them
-# as a guest. She takes the children away at the end (children.dialogue).
+# as a guest. She takes the children away at the end (children.dialogue). The ravens in her oak (prop
+# bonegrinder_dead_oak) talk under Speak with Animals.
 
 ~ start
 if flag.ilinca_met
@@ -118,4 +119,35 @@ Ilinca: No. I'll watch from the oak. If you get them out, I'll carry them home. 
 
 ~ alone
 Ilinca: Suit yourselves. I'll be in the oak. Shout if you need someone to carry the children down, or to tell your families how it went.
+-> END
+
+# --- The ravens in the dead oak (prop bonegrinder_dead_oak) ---
+
+~ oak
+narrate examine:bonegrinder_dead_oak
+* [if spell:speak_with_animals] Ask the ravens about the mill. -> oak_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the ravens about the mill.) -> oak_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave them to their committee. -> END
+-> END
+
+~ oak_cast
+cast speak_with_animals
+if check.last
+-> oak_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the night hags of Old Bonegrinder bake children into dream pastries (Curse of Strahd);
+# the ravens watch for the Keepers.
+~ oak_speaks
+Narrator: A hundred ravens answer at once. Then, after some shoving on the branches, one old bird answers for all of them.
+if not flag.children_rescued
+Narrator: "Children go into the mill-house. Children don't come out. The old women bake, and sell the sweet bread on the road, and the bread makes people sleep and dream and want more."
+Narrator: "There are little ones in the cages under the roof now. Alive. Crying. The feathered woman in our tree watches the mill. She's one of us. Talk to her."
+if not quest.children_of_the_mill
+quest children_of_the_mill heard
+endif
+endif
+Narrator: "The silver bird at the bottom of our hollow isn't ours. A feathered friend left it for whoever helps the little ones. Take it."
+reveal oak_raven_hoard
 -> END

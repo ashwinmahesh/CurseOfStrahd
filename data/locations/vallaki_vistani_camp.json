@@ -8,9 +8,9 @@
   "map": {
     "rows": [
       "################################",
-      "#wwwwwwwwwwwwwwwww11wwwwwwwwwww#",
-      "#wwwwwwwwwwwwwwwww11wwwwwwwwwww#",
-      "#wwwwwwwwwwwwwwwww11wwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwww__wwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwww__wwwwwwwwwww#",
+      "#wwwwwwwwwwwwwwwww__wwwwwwwwwww#",
       "#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#",
       "#.~~~~~~~~~~~~~~~~~~~~~~~~~~~~.#",
       "#..=....................=......#",
@@ -299,7 +299,8 @@
       "kind": "examine",
       "label": "A saddled black horse",
       "model": "black_horse",
-      "facing": "east"
+      "facing": "east",
+      "dialogue": "vallaki/vistani_camp:black_horse"
     },
     {
       "id": "camp_pot",

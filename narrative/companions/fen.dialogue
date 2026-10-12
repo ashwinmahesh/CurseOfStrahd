@@ -141,6 +141,7 @@ interject name:thistle: No. I'll find someone else. Someone I trust.
 
 ~ cure
 Narrator: The prayer is short and old, and the words go into him like a hand into a wound, and find the thing curled up inside, and pull.
+cutscene fen_cure
 Narrator: Fen arches in his chains and howls, and the howl breaks halfway and comes out as an old man's yell, and the fur goes, and the length goes out of his arms, and then there's only a skinny, white-stubbled trapper hanging from two rings, sobbing and laughing at once.
 if flag.emil_key_found or flag.emil_freed
 Narrator: The cuffs open with Emil's key. Thistle catches him before he hits the straw.
@@ -154,6 +155,7 @@ Fen Burley: I'll go down to Krezk. They've walls there, but you can climb them, 
 if approval.thistle >= close
 Narrator: Fen looks past her at the rest of you for a long moment, the way he'd size up a strange dog: slowly, and all the way to the bottom.
 interject name:thistle: My pack, Grandda. All of them. Even the loud ones.
+cutscene fen_cloak
 Narrator: He nods once, as if that settles something. Then he shrugs out of the ragged trapper's cloak the wolf never quite tore off him and drops it round her shoulders.
 Narrator: It has hidden him in the trees through forty winters, and he won't need hiding any more. It smells of pine and wet dog and woodsmoke, and she pulls it closed with both fists.
 give cloak_of_elvenkind to name:thistle

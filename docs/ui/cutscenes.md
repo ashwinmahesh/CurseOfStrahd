@@ -11,6 +11,12 @@ shows exactly what is happening. No motion is needed: the picture fades up out o
 the screen allows, with black bars filling whatever is left (owner, 2026-10-08: in fullscreen the old fill-and-crop and
 slow push-in cut off the top of the picture); the caption sits low over the picture or its bottom bar.
 
+A long conversation over one picture gets more pictures where the scene changes (owner, 2026-10-12: "it's kind of
+boring looking at the same image for multiple phases of dialogue, especially if the scene is evolving"). Each beat is a
+`cutscene <id>` statement placed just before the line where something new happens (the dead knights stand, the wolf
+comes out of the trapper, the organ bench is empty), so the next picture fades over the last. The first round,
+2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest.
+
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
 - `title`, `summary`: our own words.
@@ -96,6 +102,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | abbey_shelf | The Abbey on Its Shelf | `enter:abbey_of_st_markovia` | 1 |
 | abbot_candles | The Abbot Lights the Candles | `abbey_of_st_markovia/abbot` | 1 |
 | abbot_holds_hand | He Is Holding Her Hand | `abbey_of_st_markovia/unveiling` | 1 |
+| abbot_ireena_candles | The Candles Lean to Her | `abbey_of_st_markovia/abbot` (a later beat, ~ first) | 1 |
 | abbot_kneeling | Light Like Water | `abbey_of_st_markovia/unveiling` | 1 |
 | abbot_wings | The Abbot's Wings | `abbey_of_st_markovia/abbot`, `abbey_of_st_markovia/unveiling` | 1 |
 | amber_gift | Lying Down in the Amber | `amber_temple/vosk` | 1 |
@@ -106,7 +113,10 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | argynvost_flame | The Silver Flame | `argynvostholt/mausoleum` | 1 |
 | argynvost_frost | A Dragon in the Frost | `argynvostholt/argynvost` | 1 |
 | attic_flash | The Attic Window Flashes | `vallaki/aftermath` | 1 |
+| aurel_leaves | The Lamp Goes Out | `castle_ravenloft/personal_aurel` (a later beat, ~ woken) | 1 |
 | aurel_reading | Reading to an Empty Chair | `castle_ravenloft/personal_aurel` | 1 |
+| aurel_tome | The Book in His Hands | `castle_ravenloft/personal_aurel` (a later beat, ~ woken_tome) | 1 |
+| beacon_hall_bows | The Knights Bow | `argynvostholt/beacon` (a later beat, ~ light) | 1 |
 | beacon_lit | The Beacon Is Lit | `argynvostholt/beacon` | 2 |
 | beacon_road | The Light on the Ridge | `argynvostholt/events` | 1 |
 | black_carriage | The Black Carriage | `strahd/letters` | 1 |
@@ -115,9 +125,13 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | bonegrinder_hag | Morgantha Stands | `old_bonegrinder/morgantha` | 1 |
 | bonegrinder_loft | Cages and a Rocking Chair | `old_bonegrinder/children` | 1 |
 | bonegrinder_view | The View from the Crag | `examine:bonegrinder_lookout` | 2 |
+| bride_rests | She Lies Back | `abbey_of_st_markovia/unveiling` (a later beat, ~ repent_unmake) | 1 |
+| bride_turns | She Turns Her Head | `abbey_of_st_markovia/unveiling` (a later beat, ~ demand) | 1 |
+| burial_choke | Ismark Can't Breathe | `village_of_barovia/burial` (a later beat, ~ ismark_choked) | 1 |
 | burial_doru | A Messenger on the Wall | `village_of_barovia/burial` | 1 |
 | burial_graves | The Graves Split | `village_of_barovia/burial` | 1 |
 | burial_strahd | A Mourner Who Came Late | `village_of_barovia/burial` | 1 |
+| camp_kneel | At His Feet | `strahd/visits` (a later beat, ~ night_kneel) | 1 |
 | carriage_ride | Up into the Cloud | `strahd/letters` | 1 |
 | castle_chasm | The Castle Across the Chasm | `enter:castle_ravenloft_gates` | 2 |
 | castle_glimpse | The Castle on Its Pillar | `examine:castle_glimpse` | 1 |
@@ -134,22 +148,40 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | death_house_cult | The Ring of Shadows | `death_house/altar` | 1 |
 | death_house_lorghoth | The Heap That Stands Up | `death_house/altar` | 1 |
 | death_house_window | The House Shuts Its Mouth | `death_house/escape` | 1 |
+| dinner_empty | The Empty Bench | `castle_ravenloft/gates_dinner` (a later beat, ~ thanks) | 1 |
 | dinner_organ | Dinner at the Organ | `castle_ravenloft/gates_dinner` | 2 |
+| dinner_toast | Strahd's Table | `castle_ravenloft/gates_dinner` (a later beat, ~ table) | 1 |
 | doru_ceiling | The Face on the Ceiling | `village_of_barovia/doru` (the first meeting only) | 1 |
 | doru_rest | Doru at Rest | `castle_ravenloft/larders_cells` | 1 |
 | durst_supper | Supper with the Dursts | `death_house/dursts` | 1 |
+| egg_carried | Down with the Chick | `tsolenka_pass/the_last_egg` (a later beat, ~ take) | 1 |
+| egg_sold | The Stone Birds Take It | `tsolenka_pass/the_last_egg` (a later beat, ~ sold) | 1 |
 | elvir_burial | Elvir Comes Home | `wizard_of_wines/davian` | 1 |
 | ending_bride | The Bride of Ravenloft | `endings/ireena_given_up` | 1 |
 | ending_darklord | The Second Thirst | `endings/new_darklord` | 1 |
 | ending_dawn | Dawn over Barovia | `endings/strahd_destroyed` | 1 |
 | ending_mists | The Mists Remain | `endings/strahd_triumphant` | 1 |
 | ending_sergei | At Sergei's Side | `endings/ireena_at_peace` | 1 |
+| eva_candles_lean | The Candles Lean | `svalich_road/madam_eva` (a later beat, ~ ally_seen) | 1 |
+| eva_chest | The Bundle in the Chest | `svalich_road/madam_eva` (a later beat, ~ treasure_here) | 1 |
+| feast_gift | The Thing He Kept | `argynvostholt/vladimir` (a later beat, ~ keeping) | 1 |
+| feast_pact | The Order Stands | `argynvostholt/vladimir` (a later beat, ~ pact) | 1 |
 | fen_chains | Grandda | `companions/fen` | 1 |
+| fen_cloak | The Trapper's Cloak | `companions/fen` (a later beat, ~ cure) | 1 |
+| fen_cure | The Wolf Comes Out | `companions/fen` (a later beat, ~ cure) | 1 |
 | festival_square | The Square Turns | `vallaki/festival` | 1 |
+| festival_standoff | Vallaki Draws Steel | `vallaki/festival` (a later beat, ~ baron_side) | 1 |
 | festival_sun_blazes | The Blazing Sun | `vallaki/festival` | 1 |
 | festival_sun_dies | The Sun That Wouldn't Burn | `vallaki/festival` | 1 |
+| font_sergei | Beside Her in the Water | `castle_ravenloft/catacombs_sergei` (a later beat, ~ ireena_promised) | 1 |
 | forty_chairs | Forty Chairs | `castle_ravenloft/personal_kestrel` | 1 |
+| forty_fall_in | The Company Falls In | `castle_ravenloft/personal_kestrel` (a later beat, ~ merrow_counted) | 1 |
+| forty_roll | Roll Call | `castle_ravenloft/personal_kestrel` (a later beat, ~ roll) | 1 |
+| gallows_grave | The Horse Thief's Grave | `svalich_road/crossroads` (a later beat, ~ buried) | 1 |
 | gertruda_home | Gertruda Comes Home | `castle_ravenloft/court_gertruda` | 1 |
+| gilded_rises | The Hoard Rises | `argynvostholt/the_silver_hoard` (a later beat, ~ fight) | 1 |
+| gilded_shield | The Squire's Shield | `argynvostholt/the_silver_hoard` (a later beat, ~ hands) | 1 |
+| godfrey_names | The Names on the Wall | `argynvostholt/godfrey` (a later beat, ~ remember_list) | 1 |
 | godfrey_rests | Godfrey Rests | `argynvostholt/beacon` | 1 |
 | godfrey_steps | Sir Godfrey on the Steps | `argynvostholt/godfrey` | 1 |
 | godrick_knighting | Rise, Sir Godrick | `companions/ladle` | 1 |
@@ -159,34 +191,47 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ilinca_raven | The Raven Who Is a Woman | `old_bonegrinder/ilinca` | 1 |
 | ireena_door | Three Bolts Slide Back | `village_of_barovia/ireena` | 1 |
 | ireena_looks_back | Ireena Looks Back | `village_of_barovia/road_west` | 2 |
+| ireena_stake | She Kneels on the Coffin | `castle_ravenloft/catacombs_coffin` (a later beat, ~ ireena_stake) | 1 |
 | ireena_window | At Ireena's Window | `strahd/ireena` (Ismark asleep by the door while he guards her at the inn; otherwise the take with the room empty) | 2 |
 | ireena_window_empty | The Empty Window | `strahd/ireena` | 1 |
 | izek_doll | Izek and the Doll | `vallaki/izek` | 1 |
+| izek_truth | The Struck Bell | `vallaki/izek` (a later beat, ~ truth_ok) | 1 |
 | keepers_ravens | Ravens on Every Beam | `vallaki/martikovs` | 1 |
 | kiril_eyes | Eyes Behind Kiril | `werewolf_den/kiril` | 1 |
+| knighting_sword | Sir Aldric's Sword | `companions/ladle` (a later beat, ~ knighting_fellowship) | 1 |
+| knights_at_the_stair | The Order at the Stair | `castle_ravenloft/catacombs_coffin` (a later beat, ~ the_end) | 3 |
 | krezk_reflection | The Second Reflection | `krezk/pool` | 1 |
 | krezk_wall | The Wall of Krezk | `enter:krezk` | 1 |
+| lantern_light | She Takes the Light | `vallaki/one_lantern_too_many` (a later beat, ~ girl_lantern) | 1 |
 | lightning_ridge | Lightning on the Ridge | `mount_baratok/events` | 1 |
 | locket_chair | The Chair by the Fire | `castle_ravenloft/personal_locket` | 1 |
+| locket_given | The Locket | `castle_ravenloft/personal_locket` (a later beat, ~ give) | 1 |
 | lysaga_bowl | The Witch in Her Bowl | `berez/marina` | 1 |
 | lysaga_hut | The Hut Stands Up | `berez/lysaga` | 1 |
 | lysaga_poppet | The Poppet over the Hearth | `berez/hut` | 1 |
 | madam_eva_reading | Five Cards | `svalich_road/madam_eva` | 1 |
 | mansion_siege | Hands Through the Boards | `village_of_barovia/ireena` | 1 |
 | marina_bier | Marina on Her Bier | `berez/marina` | 2 |
+| marina_gone | Only the Rose | `berez/marina` (a later beat, ~ strahd_truth) | 1 |
 | marina_rose | A Black Rose | `berez/marina` | 1 |
 | marina_statue | Marina's Face | `berez/marina` | 1 |
+| marshal_charge | The Lances Come Down | `into_the_mists/last_muster` (a later beat, ~ fight) | 1 |
+| marshal_stand_down | The Column Stands Down | `into_the_mists/last_muster` (a later beat, ~ stood_down) | 1 |
 | mists_arrival | Out of the Mists | `into_the_mists/arrival` | 1 |
 | mordenkainen_jar | Mordenkainen Remembers | `mount_baratok/mordenkainen` | 1 |
 | order_rides | The Order Rides | `argynvostholt/vladimir` | 1 |
 | pack_law | Pack Law | `werewolf_den/kiril` | 1 |
 | patrina | Patrina | `amber_temple/patrina` | 1 |
+| patrina_fades | She Fades Like Breath | `amber_temple/patrina` (a later beat, ~ at_rest) | 1 |
 | patrina_kasimir | Patrina, and Her Brother | `amber_temple/patrina` | 1 |
 | phantom_ride | The Phantom Ride | `argynvostholt/events` | 1 |
+| pool_alone | Only Her Reflection | `krezk/pool` (a later beat, ~ ireena_fade) | 1 |
+| pool_lean | Her Breath on the Water | `krezk/pool` (a later beat, ~ ireena_promise) | 1 |
 | quillon_fire | The Man at the Edge of the Light | `camp/kip` | 1 |
 | rahadin_voices | Rahadin and His Voices | `castle_ravenloft/court_rahadin` | 1 |
 | roc_shadow | The Roc's Shadow | `tsolenka_pass/events` | 1 |
 | sergei_font | Sergei in the Font | `castle_ravenloft/catacombs_sergei` | 1 |
+| sergei_tomb | The Thing Never Carved | `castle_ravenloft/catacombs_sergei` (a later beat, ~ tomb_look) | 1 |
 | strahd_asleep | Strahd Asleep | `castle_ravenloft/catacombs_coffin` | 1 |
 | strahd_camp | Someone Is Watching the Camp | `strahd/visits` | 2 |
 | strahd_end | Like Old Paper | `castle_ravenloft/catacombs_coffin` | 2 |
@@ -206,11 +251,14 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | tser_pool_fire | Firelight at Tser Pool | `enter:tser_pool` | 1 |
 | vallaki_palisade | The Palisade | `vallaki/gate` | 1 |
 | village_rain | The Village in the Rain | `enter:village_of_barovia` | 1 |
+| vines_feast | A Cask from Before | `wizard_of_wines/davian` (a later beat, ~ milestone) | 1 |
 | vines_gem | The Vines Remember | `wizard_of_wines/davian` | 1 |
+| vines_planted | The Gem in the Soil | `wizard_of_wines/davian` (a later beat, ~ return_cellar) | 1 |
 | vosk_unmasked | Vosk Takes Off His Face | `amber_temple/vosk` | 1 |
 | vr_reunion | Two People by a Fire | `van_richtens_tower/van_richten` | 1 |
 | vr_tower | The Tower on Lake Baratok | `enter:van_richtens_tower` | 1 |
 | watch_stands_down | The Watch Stands Down | `tsolenka_pass/watch` | 1 |
+| window_teeth | What Is Under the Courtesy | `strahd/ireena` (a later beat, ~ woke) | 1 |
 | wolves_part | The Wolves Part | `strahd/visits` | 1 |
 | yester_burn | The Tree Burns | `yester_hill/summit` | 1 |
 | yester_effigy | The Effigy on Yester Hill | `yester_hill/ruxandra` | 1 |

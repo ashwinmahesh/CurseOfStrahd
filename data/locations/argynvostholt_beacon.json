@@ -21,8 +21,8 @@
       "#............#",
       "#............#",
       "#............#",
-      "#.....11.....#",
-      "#.....11.....#",
+      "#.....__.....#",
+      "#.....__.....#",
       "#............#",
       "#............#",
       "#............#",
@@ -154,7 +154,20 @@
       ],
       "kind": "examine",
       "label": "The parapet, facing the valley",
-      "model": "wall_low"
+      "model": "wall_low",
+      "checks": [
+        {
+          "id": "parapet_view",
+          "skill": "perception",
+          "dc": 15,
+          "label": "Look out over the valley",
+          "success": {
+            "reveal": [
+              "lake_zarovich:jetty_boards"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "holt_lamp_soot",

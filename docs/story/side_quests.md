@@ -263,12 +263,13 @@ puts Old Bonegrinder on the map. The watch adds Stella's rumour, Urwin the black
 ### The Cat in the Window (`cat_in_the_window`, narrative/vallaki/cat_in_the_window.dialogue)
 
 Lady Wachter's daughter Stella, locked in the bedroom at Wachterhaus, believes she's a cat. **Twist:** she isn't mad,
-she's held (Insight DC 13, Arcana DC 14 or Detect Magic): at one of her mother's soirees she promised a stranger in
-black she'd follow him like a cat follows cream, a black velvet ribbon with a silver bell holds the promise, and what
-she sees, he sees; her mother ties the bow fresh every morning. **Breaking it:** Remove Curse (Liriel from level 6), a
-Scroll of Remove Curse (Urwin's cellar, Vadoma, Rictavio, Lucian's services, or the scroll Lucian gives for her), not a
-knife (cutting it rings the bell, an attention mark, and it ties itself again). **Escalation:** the master looks out of
-her shadow one last time (`stella_shadow` in her bedroom).
+she's held (Insight DC 13, Arcana DC 14, Detect Magic, or Speak with Animals finding no cat to answer): at one of
+her mother's soirees she promised a stranger in black she'd follow him like a cat follows cream, a black velvet ribbon
+with a silver bell holds the promise, and what she sees, he sees; her mother ties the bow fresh every morning.
+**Breaking it:** Remove Curse (Liriel from level 6), a Scroll of Remove Curse (Urwin's cellar, Vadoma, Rictavio,
+Lucian's services, or the scroll Lucian gives for her), not a knife (cutting it rings the bell, an attention mark, and
+it ties itself again). **Escalation:** the master looks out of her shadow one last time (`stella_shadow` in her
+bedroom).
 
 - Fight `stella_shadow`: level 5 two wraiths ("The Master's Gaze", one at 50 HP) and 2 shadows (3,800 XP, High-ish);
   level 4 a wraith and 3 shadows (2,100, High); level 6+ two wraiths and 4 shadows; below, a wraith at 45 HP and 2

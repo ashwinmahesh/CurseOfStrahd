@@ -133,3 +133,23 @@ once
 ~ search:yester_barrow_amulet
 | Pushed into the side of the barrow mound, a tarnished sun on a thong, buried with someone who believed in the morning. {name} brushes the earth off it, and the tarnish goes with it, like breath off a mirror.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:history:barrow_stones:success
+| The barrows belong to chieftains older than any Barovian name, and one mound was opened and closed again, not long ago.
+
+~ check:history:barrow_stones:failure
+| Old mounds, older stones. The dead here were forgotten before your grandmother's grandmother.
+
+~ check:medicine:cairn_bones:success
+| The bones are soldiers', killed by thorns, not blades; one of them still wears his bracers under the heap.
+
+~ check:medicine:cairn_bones:failure
+| Bones, picked clean. How they died isn't written on them clearly enough for you.
+
+~ check:perception:hill_east_view:success
+| From the hilltop you can see the vineyard's dead rows, and between them, a glint of curved steel someone dropped in the mud.
+
+~ check:perception:hill_east_view:failure
+| Fog, hills and the grey line of the road. Nothing catches your eye but the tree behind you.

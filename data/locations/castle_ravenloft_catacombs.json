@@ -412,7 +412,20 @@
       ],
       "kind": "examine",
       "label": "Torn regimental banners",
-      "model": "tapestry"
+      "model": "tapestry",
+      "checks": [
+        {
+          "id": "mad_dog_banners",
+          "skill": "history",
+          "dc": 15,
+          "label": "Read the regiment's banners",
+          "success": {
+            "reveal": [
+              "cat_mad_dog_blade"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "cat_mad_dog_niches",
@@ -432,7 +445,20 @@
       ],
       "kind": "examine",
       "label": "A small sarcophagus",
-      "model": "crypt_small"
+      "model": "crypt_small",
+      "checks": [
+        {
+          "id": "jester_joke",
+          "skill": "performance",
+          "dc": 15,
+          "label": "Tell the jester's crypt a joke",
+          "success": {
+            "reveal": [
+              "jester_cape"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "cat_conjurer_bier",
@@ -454,7 +480,23 @@
       ],
       "kind": "examine",
       "label": "Sigils on the wall",
-      "model": "wall_alcoves"
+      "model": "wall_alcoves",
+      "checks": [
+        {
+          "id": "conjurer_sigils",
+          "skill": "arcana",
+          "dc": 16,
+          "label": "Read the sigils on the wall",
+          "success": {
+            "reveal": [
+              "cat_conjurer_glyph"
+            ],
+            "disarm": [
+              "cat_conjurer_glyph"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "cat_mw1_crypt",
@@ -524,7 +566,20 @@
       ],
       "kind": "examine",
       "label": "Bones stacked to the ceiling",
-      "model": "bone_scatter"
+      "model": "bone_scatter",
+      "checks": [
+        {
+          "id": "ossuary_stack",
+          "skill": "investigation",
+          "dc": 16,
+          "label": "Work out why the bones are stacked so",
+          "success": {
+            "reveal": [
+              "cat_ossuary_secret"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "cat_names_wall",

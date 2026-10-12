@@ -45,6 +45,7 @@ endif
 -> roll
 
 ~ roll
+cutscene forty_roll
 Narrator: She reads the names in the order they signed. After each one, from somewhere inside the walls, a voice she knows says "Present."
 Narrator: Nine names get nothing back: the night at Tser Pool. Ilse reads those slower, and marks each one.
 interject name:ilse_varga: Fenn, Jory. ...Alive. Vallaki, on the wall. I'll answer for him.
@@ -77,6 +78,7 @@ Captain Merrow: ...Merrow, Aldous. Captain. Forty.
 Captain Merrow [sad]: I signed for them, Ilse. He asked for forty at his table and I said we'd be honoured. I thought it was a contract.
 interject name:ilse_varga: It was. You read it badly. Now finish it.
 Captain Merrow: Company. On me. Fall in.
+cutscene forty_fall_in
 Narrator: The panels along the walls swing open. They come out in file, grey under crimson, each taking a coat from a chair in passing, and follow their captain out toward the courtyard to wait for the sun.
 if not flag.kestrel_vell_rests
 Narrator: Last up the cellar stair comes a young corporal, who stops by Ilse just long enough to nod.

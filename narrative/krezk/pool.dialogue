@@ -123,6 +123,7 @@ Narrator: Her face is turned to the water, and the water gives you back nothing 
 ~ ireena_promise
 set ireena_pool_choice = "promised"
 quest the_pool_of_the_white_sun promised
+cutscene pool_lean
 Narrator: Ireena leans out over the water until her breath clouds its surface. Then she stops.
 Ireena: If I go now, he waits. A hundred years, two hundred, for the next one of me, in some village, with my face. Some girl who doesn't know what's coming to her window.
 Ireena: No. When he's dead, I'll come back. I swear it on my father. Wait for me a little longer, Sergei. You're good at it.
@@ -142,6 +143,7 @@ Sergei von Zarovich: Then be someone. That is all I ever wanted for her.
 -> ireena_fade
 
 ~ ireena_fade
+cutscene pool_alone
 Narrator: The second reflection is gone. Only hers is left, and the sky, which is brighter than it should be, for a moment, before it remembers the clouds.
 Narrator: Ireena wipes her face with the heel of her hand and stands up, and is herself again, mostly.
 Ireena: Don't. Whatever you're about to say. Later. By a fire.

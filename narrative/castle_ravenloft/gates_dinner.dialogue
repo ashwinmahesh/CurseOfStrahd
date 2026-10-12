@@ -73,6 +73,7 @@ Narrator: Places are laid for each of you. The silver is real, the food is hot, 
 -> table
 
 ~ table
+cutscene dinner_toast
 * Why did you invite us? -> why
 * Tell us about this house. -> house
 * [if guest:ireena or flag.ireena_met] What do you want with Ireena? -> ireena
@@ -150,6 +151,7 @@ if flag.crg_dinner_want_seen
 Strahd: Keep me interested. In this house, it is the only thing that has ever kept anyone safe.
 endif
 Strahd: The house is yours tonight. Do not let me keep you.
+cutscene dinner_empty
 Narrator: He bows, and between one flicker of the candles and the next, the bench at the organ is empty. Somewhere above, a door closes.
 approve kip_smudgewick +1 ratatoille +1 liriel_dawnsong +1 thistle -1: You thanked Strahd for his hospitality
 -> END

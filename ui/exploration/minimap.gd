@@ -1,7 +1,9 @@
 class_name Minimap
 extends Control
-## The minimap at the top right of the exploration HUD: the current location drawn from its grid map, north up,
-## centred on the party's leader and moving with them. Ways out are marked: a gilt arrow for a road to another region
+## The minimap at the top right of the exploration HUD: the current location drawn from its grid map, centred on the
+## party's leader and moving with them, turned with the camera so up on the minimap is the way the camera looks (owner
+## ask 2026-10-12); an N on the rim turns with it, pointing north. The people the tracked quest needs talking to are
+## marked in green (QuestGuide). Ways out are marked: a gilt arrow for a road to another region
 ## (on the rim, pointing toward it, while it's beyond the edge) and a small lamp for a door into a building. Doors,
 ## noticed traps, the people here and the party show as marks, and a pale wedge shows which way the camera looks. The wheel zooms;
 ## a click walks the party to that square. It reads the LocationView and never changes it except through `click`.
@@ -26,6 +28,12 @@ var _hidden: Dictionary = {}
 var _hidden_sig := ""
 var _check := 0.0
 var _drawn_sig := 0                ## _content_signature() when the content was last drawn
+## How far the map is turned (radians): the camera's forward is up.
+var turn := 0.0
+var _rim_turn := INF               ## `turn` when the rim (its N) was last drawn
+## The people here whose conversation moves the tracked quest on (QuestGuide.targets_here): npc id -> true.
+var talk_to: Dictionary = {}
+var _talk_check := 0.0
 
 
 func _init() -> void:
@@ -206,15 +214,31 @@ func _leader_ground() -> Vector2:
 	return Vector2(tok.global_position.x, tok.global_position.z) if tok != null else _centre
 
 
-## A ground point (world x, z) on the minimap.
+## A ground point (world x, z) on the minimap, turned with the camera.
 func to_map(ground: Vector2) -> Vector2:
-	return _mid() + (ground - _centre) * cell_px
+	return _mid() + ((ground - _centre) * cell_px).rotated(turn)
+
+
+## The turn that puts the camera's forward at the top: forward (x, z) on the ground is (x, y) on the map.
+func camera_turn() -> float:
+	if view == null or not is_instance_valid(view) or view.rig == null:
+		return 0.0
+	var fwd := view.rig.ground_basis()[0]
+	return -PI / 2.0 - Vector2(fwd.x, fwd.z).angle()
 
 
 func _process(delta: float) -> void:
 	if view == null or not is_instance_valid(view) or not is_visible_in_tree():
 		return
 	_centre = _leader_ground()   # the token glides from square to square, and the map with it
+	turn = camera_turn()   # the rig eases round in its own time, and the map with it
+	if not is_equal_approx(turn, _rim_turn):
+		_rim_turn = turn
+		_rim.queue_redraw()
+	_talk_check -= delta
+	if _talk_check <= 0.0:
+		_talk_check = 1.0   # conversations change the story; a second's delay is fine for a marker
+		talk_to = QuestGuide.targets_here(view)
 	_check -= delta
 	if _check <= 0.0:
 		_check = HiddenAreas.CHECK_EVERY
@@ -231,9 +255,7 @@ func _process(delta: float) -> void:
 ## Everything the map's content shows that can change while it's up: where the middle is, the zoom, the camera's
 ## heading, the people and the party, doors, noticed traps and hidden rooms.
 func _content_signature() -> int:
-	var parts: Array = [_centre, cell_px, size, _hidden_sig]
-	if view.rig != null:
-		parts.append(view.rig.ground_basis()[0])
+	var parts: Array = [_centre, cell_px, size, _hidden_sig, turn, talk_to.keys()]
 	for npc: Variant in view.npc_tokens.values():
 		if is_instance_valid(npc):
 			parts.append((npc as Node3D).global_position)
@@ -262,16 +284,22 @@ func _draw_content() -> void:
 	_content.draw_circle(mid, RADIUS, Look.color("ink"), true, -1.0, true)
 	if view == null or not is_instance_valid(view) or _tex == null:
 		return
-	_content.draw_texture_rect(_tex, Rect2(to_map(Vector2.ZERO), Vector2(_grid.width, _grid.depth) * cell_px), false)
+	# The squares, doors and traps in the map's own frame, turned about the middle with the camera.
+	_content.draw_set_transform(mid, turn, Vector2.ONE)
+	_content.draw_texture_rect(_tex, Rect2(-_centre * cell_px, Vector2(_grid.width, _grid.depth) * cell_px), false)
 	_draw_doors()
 	_draw_traps()
+	_content.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	_draw_camera_wedge()
 	for e in ways_out:
 		_draw_way_out(e)
-	for npc: Variant in view.npc_tokens.values():
-		var n := npc as Node3D
+	for id: String in view.npc_tokens:
+		var n := view.npc_tokens[id] as Node3D
 		if is_instance_valid(n) and n.visible and not _hidden.has(Vector2i(floori(n.global_position.x), floori(n.global_position.z))):
 			var at := to_map(Vector2(n.global_position.x, n.global_position.z))
+			if talk_to.has(id):
+				_talk_mark(at)
+				continue
 			_content.draw_circle(at, 4.0, Look.color("ink"), true, -1.0, true)
 			_content.draw_circle(at, 2.8, Look.color("moonlight"), true, -1.0, true)
 	for g in view.guest_members:
@@ -284,12 +312,29 @@ func _draw_content() -> void:
 		_content.draw_arc(mid, RADIUS - i * 2.0, 0.0, TAU, 96, Color(Look.color("void"), 0.42 - i * 0.07), 2.5, true)
 
 
+## Someone the tracked quest needs talking to: a bigger green mark with a pale ring, on the rim pointing the way when
+## they're beyond its edge.
+func _talk_mark(at: Vector2) -> void:
+	var off := at - _mid()
+	if off.length() > RADIUS - 8.0:
+		at = _mid() + off.normalized() * (RADIUS - 8.0)
+	_content.draw_circle(at, 7.5, Color(Look.color("bile"), 0.3), true, -1.0, true)
+	_content.draw_circle(at, 5.5, Look.color("ink"), true, -1.0, true)
+	_content.draw_circle(at, 4.2, Look.color("bile"), true, -1.0, true)
+	_content.draw_circle(at, 6.5, Look.color("sickly"), false, 1.5, true)
+
+
 func _dot(tok: Node3D, r: float, colour: Color) -> void:
 	if tok == null or not is_instance_valid(tok):
 		return
 	var at := to_map(Vector2(tok.global_position.x, tok.global_position.z))
 	_content.draw_circle(at, r + 1.5, Look.color("ink"), true, -1.0, true)
 	_content.draw_circle(at, r, colour, true, -1.0, true)
+
+
+## A ground point in the map's own (unturned) frame about the middle, for what's drawn under the turn transform.
+func _in_frame(ground: Vector2) -> Vector2:
+	return (ground - _centre) * cell_px
 
 
 ## Closed doors as wooden bars; a secret door nobody has found yet as plain wall.
@@ -300,7 +345,7 @@ func _draw_doors() -> void:
 		var a := door["cell"] as Array
 		if _hidden.has(Vector2i(int(a[0]), int(a[1]))):
 			continue
-		var r := Rect2(to_map(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px)
+		var r := Rect2(_in_frame(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px)
 		var id := str(door["id"])
 		if int(door.get("secret_dc", 0)) > 0 and not bool(found.get(id, false)):
 			_content.draw_rect(r, _colours["wall"], true)
@@ -320,7 +365,7 @@ func _draw_traps() -> void:
 			continue
 		for c: Variant in trap["cells"]:
 			var a := c as Array
-			var r := Rect2(to_map(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px).grow(-cell_px * 0.12)
+			var r := Rect2(_in_frame(Vector2(float(a[0]), float(a[1]))), Vector2.ONE * cell_px).grow(-cell_px * 0.12)
 			_content.draw_rect(r, Color(Look.color("vampire_red"), 0.35), true)
 			_content.draw_rect(r, Look.color("vampire_red"), false, 1.5)
 
@@ -330,7 +375,7 @@ func _draw_camera_wedge() -> void:
 		return
 	var fwd := view.rig.ground_basis()[0]
 	var at := to_map(_leader_ground())
-	var ang := Vector2(fwd.x, fwd.z).angle()
+	var ang := Vector2(fwd.x, fwd.z).angle() + turn   # straight up while the map turns with the camera
 	var pts := PackedVector2Array([at])
 	for i in 9:
 		pts.append(at + Vector2.from_angle(ang - 0.55 + i * 0.1375) * 54.0)
@@ -349,7 +394,7 @@ func _draw_way_out(e: Dictionary) -> void:
 			_content.draw_circle(at, 2.8, Look.color("flame") if open else Look.color("pewter"), true, -1.0, true)
 		return
 	var colour := Look.color("gilt_light") if open else Look.color("pewter")
-	var dir := Vector2(e["dir"] as Vector2i)
+	var dir := Vector2(e["dir"] as Vector2i).rotated(turn)
 	var off := at - _mid()
 	if off.length() > RADIUS - 14.0:
 		# Beyond the edge: an arrow on the rim, pointing the way.
@@ -381,8 +426,8 @@ func _draw_rim() -> void:
 	_rim.draw_arc(mid, RADIUS + RIM - 1.0, 0.0, TAU, 128, Look.color("gilt_dark"), 2.0, true)
 	for i in 8:
 		_rim.draw_circle(mid + Vector2.from_angle(PI / 8.0 + i * PI / 4.0) * (RADIUS + RIM * 0.5), 1.8, Look.color("gilt"), true, -1.0, true)
-	# North on a crimson stud at the top.
-	var n_at := mid + Vector2(0, -RADIUS - RIM * 0.5)
+	# North on a crimson stud on the rim, wherever north is as the map turns.
+	var n_at := mid + Vector2(0, -RADIUS - RIM * 0.5).rotated(turn)
 	_rim.draw_circle(n_at, 12.0, Look.color("ui_oxblood"), true, -1.0, true)
 	_rim.draw_circle(n_at, 12.0, Look.color("gilt"), false, 1.5, true)
 	var font := ThemeDB.fallback_font
@@ -409,5 +454,5 @@ func _gui_input(event: InputEvent) -> void:
 
 ## The square under a point on the minimap.
 func cell_at(point: Vector2) -> Vector2i:
-	var g := _centre + (point - _mid()) / cell_px
+	var g := _centre + (point - _mid()).rotated(-turn) / cell_px
 	return Vector2i(floori(g.x), floori(g.y))

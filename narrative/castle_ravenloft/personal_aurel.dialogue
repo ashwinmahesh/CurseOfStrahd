@@ -53,6 +53,7 @@ Narrator: Somewhere around the tenth "Silvain" the reading slows. Around the twe
 -> woken
 
 ~ woken_tome
+cutscene aurel_tome
 Narrator: Silvain kneels and puts the Tome of Strahd into the empty hands, real and heavy, open at the page he's reading. Then they close it.
 Narrator: Aurel looks down at the shut book in his lap as if it has just said his name.
 -> woken
@@ -78,5 +79,6 @@ quest aurels_last_chapter the_last_page
 endif
 Aurel: I'll go down by the servants' stair. I know the way; I've had a year to count the steps. The tavern in the village, the back room. I'll wait for you there, and sleep, and then we'll argue.
 interject name:hedda_ironvow: Mm. Sleep first. Healer's orders.
+cutscene aurel_leaves
 Narrator: He goes slowly, holding the pen. Behind him, for the first time in a year, the lamp in the window goes out.
 -> END

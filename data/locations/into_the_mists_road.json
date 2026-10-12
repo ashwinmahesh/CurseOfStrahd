@@ -168,7 +168,21 @@
       "kind": "examine",
       "label": "a torn carcass",
       "model": "carcass",
-      "dialogue": "into_the_mists/arrival:carcass"
+      "dialogue": "into_the_mists/arrival:carcass",
+      "checks": [
+        {
+          "id": "carcass_wolf_sign",
+          "skill": "survival",
+          "dc": 12,
+          "label": "Read the wolf sign by the carcass",
+          "success": {
+            "reveal": [
+              "mists_wolf_trap",
+              "carcass_pack"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "mists_wayside_shrine",
@@ -178,7 +192,18 @@
       ],
       "kind": "examine",
       "label": "a wayside shrine",
-      "model": "shrine_small"
+      "model": "shrine_small",
+      "checks": [
+        {
+          "id": "wayside_pray",
+          "skill": "religion",
+          "dc": 11,
+          "label": "Pray at the wayside shrine",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "gate_statues",
@@ -188,7 +213,25 @@
       ],
       "kind": "examine",
       "label": "the headless statues",
-      "model": "statue_headless"
+      "model": "statue_headless",
+      "checks": [
+        {
+          "id": "statues_plinths",
+          "skill": "history",
+          "dc": 12,
+          "label": "Read the statues' plinths",
+          "success": {
+            "reveal": [
+              "gate_heads"
+            ],
+            "codex": {
+              "id": "barovia_gate_statues",
+              "title": "The headless statues",
+              "text": "The plinths name the gate's old guardians, soldiers of the lords who held the valley before the castle was built. Their heads were struck off long ago and lie in the weeds nearby, as if whoever did it wanted the road to remember."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "gate_heads",
@@ -284,6 +327,19 @@
       "span": [
         2,
         1
+      ],
+      "checks": [
+        {
+          "id": "oak_lookout",
+          "skill": "athletics",
+          "dc": 10,
+          "label": "Climb the oak and look out",
+          "success": {
+            "reveal": [
+              "mists_guard_sword"
+            ]
+          }
+        }
       ]
     },
     {
