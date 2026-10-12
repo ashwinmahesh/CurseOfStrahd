@@ -158,6 +158,40 @@ func _readied_words(q: Dictionary, reactor: Combatant) -> Array:
 		"%%s %s. %%s readied %s for that: use the Reaction now?" % [did, what if reactor.readied.has("spell") else "an attack"], "Reaction"]
 
 
+## A readied spell going off (owner's default 2026-10-12): the creatures it can be aimed at now, the one that set it
+## off first and picked, as the prompt's one choice; the prompt names the spell. Nothing changes for a readied attack.
+func readied_targets(req: ReactionRequest, reactor: Combatant, trigger: Combatant) -> void:
+	if not reactor.readied.has("spell"):
+		return
+	var e := enc()
+	var s := Compendium.shared().spell_data(str(reactor.readied["spell"]))
+	var slot := int(reactor.readied.get("slot", 0))
+	req.title = "Readied %s?" % s.get("name", "spell")
+	req.text = "%s set off %s's readied %s: release it now with the Reaction? Pick who it's aimed at." % [trigger.name(), reactor.name(), s.get("name", "spell")]
+	var picks: Array[Combatant] = [trigger]
+	for o in e.living():
+		if o == trigger or o == reactor or o.is_down() or not e.can_see(reactor, o) or e.distance(reactor, o) > readied_reach(reactor):
+			continue
+		var at := e.center_of(o) if s.has("area") else Vector2.INF
+		var aimed: Array = [] if s.has("area") else [o]
+		if str(e.spells._check_targets(reactor, s, slot, aimed, at, {})["why"]) == "":
+			picks.append(o)
+	if picks.size() < 2:
+		return
+	for o in picks:
+		req.target_choices.append({"id": o.id, "label": "%s · %d ft%s" % [o.name(), e.distance(reactor, o), " (set it off)" if o == trigger else ""]})
+	req.selected_ids.assign([trigger.id])
+	req.min_targets = 1
+	req.max_targets = 1
+
+
+## The creature a readied spell's prompt was aimed at, or `fallback` (the one that set it off).
+func readied_aim(req: ReactionRequest, fallback: Combatant) -> Combatant:
+	var e := enc()
+	var picked := e.get_c(req.selected_ids[0]) if not req.selected_ids.is_empty() else null
+	return picked if picked != null and picked.is_alive() else fallback
+
+
 func _queued_ok(q: Dictionary, reactor: Combatant) -> bool:
 	var e := enc()
 	if str(q["kind"]).begins_with("rh_"):
@@ -212,7 +246,8 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 		"retaliation":
 			return e._opportunity_attack(reactor, trigger)
 		"readied_attack":
-			return e.attacks._readied_attack(reactor, trigger)
+			var aim := e.get_c(str(q.get("aim", ""))) if q.has("aim") else null
+			return e.attacks._readied_attack(reactor, aim if aim != null and aim.is_alive() else trigger)
 		"fount_of_moonlight":
 			reactor.reaction_available = false
 			var dc := (e.spells.numbers(reactor, e.spells._entry_any(reactor, "fount_of_moonlight"))["dc"] as Breakdown).total()
@@ -285,11 +320,16 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		req.cost = str(words[2])
 		if kind == "hellish_rebuke":
 			_rebuke_levels(req, reactor)
-		var asked := req
+		if kind == "readied_attack":
+			readied_targets(req, reactor, trigger)
+		var asked_ref: WeakRef = weakref(req)   # the request holds this Callable: no cycle back to it
 		req.continuation = func(use: bool) -> CombatResult:
+			var asked := asked_ref.get_ref() as ReactionRequest
 			if use:
-				if not asked.selected_ids.is_empty():
+				if asked != null and not asked.selected_ids.is_empty() and kind == "hellish_rebuke":
 					q["slot"] = int(asked.selected_ids[0])
+				if asked != null and kind == "readied_attack":
+					q["aim"] = readied_aim(asked, trigger).id
 				return e.then(fire.call() as CombatResult, func() -> CombatResult: return run_reaction_queue(r))
 			return run_reaction_queue(r)
 		e.pending = req

@@ -175,8 +175,11 @@ endif
 if not flag.burgomaster_buried
 Vasile: And the burgomaster. Heart.
 Petre: Wasn't his heart.
-else
+elif flag.burial_method == "church_rites"
 Petre: And they buried the burgomaster. Properly, with the priest.
+Vasile: Took them long enough. He was starting to be a rumour himself.
+else
+Petre: And they buried the burgomaster. No priest, mind.
 Vasile: Took them long enough. He was starting to be a rumour himself.
 endif
 -> END

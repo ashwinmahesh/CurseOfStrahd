@@ -7,6 +7,11 @@
       "summary": "The party has met Cyrus Belview in the castle kitchen (larders_cyrus:first)."
     },
     {
+      "id": "larders_prisoner_spoke",
+      "type": "bool",
+      "summary": "The skeleton in shackles answered Speak with Dead (larders_prisoner.dialogue): the guards' talk of the glass heart in the high tower, and the false floor in the open cell."
+    },
+    {
       "id": "larders_guests_heard",
       "type": "bool",
       "summary": "Cyrus told the party he cooks for the Master's guests in the cells (quest the_cooks_guests heard)."

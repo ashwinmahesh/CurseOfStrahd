@@ -661,12 +661,14 @@ func _cast(spell_id: String) -> String:
 func _reveal(prop_id: String) -> String:
 	var where := ""
 	var label := ""
+	var trap := false
 	var ids: Array[String] = [st.location]
 	for loc: Dictionary in Compendium.shared().all("locations"):
 		if str(loc.get("id", "")) != st.location:
 			ids.append(str(loc.get("id", "")))
 	for loc_id in ids:
-		for p: Variant in Compendium.shared().get_entry("locations", loc_id).get("props", []):
+		var loc := Compendium.shared().get_entry("locations", loc_id)
+		for p: Variant in loc.get("props", []):
 			var prop := p as Dictionary
 			if str(prop["id"]) == prop_id and str(prop.get("kind", "")) == "search":
 				where = loc_id
@@ -674,8 +676,23 @@ func _reveal(prop_id: String) -> String:
 				break
 		if where != "":
 			break
+		# A trap someone warned of shows as found, as a successful search would show it.
+		for t: Variant in loc.get("traps", []):
+			if str((t as Dictionary)["id"]) == prop_id:
+				where = loc_id
+				label = str((t as Dictionary).get("label", "a trap"))
+				trap = true
+				break
+		if where != "":
+			break
 	if where == "":
 		return ""
+	if trap:
+		var traps := st.loc_state(where)["traps"] as Dictionary
+		if traps.has(prop_id):
+			return ""
+		traps[prop_id] = "found"
+		return label
 	var found := st.loc_state(where)["found"] as Dictionary
 	if bool(found.get(prop_id, false)):
 		return ""

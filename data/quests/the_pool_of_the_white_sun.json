@@ -6,6 +6,15 @@
   "region": "krezk",
   "stages": [
     {
+      "id": "rumored",
+      "journal": "Asked under Speak with Dead in his tomb, Sergei von Zarovich said that if Tatyana ever came looking for him she would go to the pool at Krezk, where the water is white with the sun.",
+      "objectives": [
+        "Bring Ireena to the Pool of the White Sun in Krezk"
+      ],
+      "hint": "Bring Ireena to the Pool of the White Sun, inside Krezk's wall.",
+      "ends": ""
+    },
+    {
       "id": "seen",
       "journal": "At the Pool of the White Sun, Ireena saw Sergei von Zarovich in the water beside her reflection, Strahd's brother, dead four hundred years. She remembered being Tatyana: a chapel full of white flowers, a wall, a stair. The water is the only door he has.",
       "objectives": [

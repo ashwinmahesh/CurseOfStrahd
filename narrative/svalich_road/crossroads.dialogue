@@ -8,16 +8,17 @@
 # (field_wall_cache), and a message for Luminita (luminita.dialogue).
 
 ~ gallows
+# Seen, however he was met: the cut-down grave, the fight with the risen hanged, or him on the rope.
+if not flag.crossroads_gallows_seen
+set crossroads_gallows_seen
+quest the_hanged_vistana found
+endif
 if flag.nicu_cut_down
 Narrator: The gallows rope hangs empty, cut short above the knot. Beside the road, a mound of turned earth, marked with a board laid face down.
 -> grave_menu
 endif
 if flag.crossroads_dead_cleared
 -> remains
-endif
-if not flag.crossroads_gallows_seen
-set crossroads_gallows_seen
-quest the_hanged_vistana found
 endif
 cutscene crossroads_gallows
 Narrator: A young man turns slowly on the rope, black hair across his face, a silver earring catching what light there is. A board hung round his neck says HORSE THIEF, in large and careful letters.

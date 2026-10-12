@@ -1,4 +1,4 @@
-# Animals and the dead who talk (lane 2)
+# Animals, the dead and plants who talk (lane 2)
 
 Ashwin (2026-10-11): more animals and dead to talk to with Speak with Animals and Speak with Dead. Each one is true to
 Curse of Strahd and this game's own story, stands where it makes sense, and knows something worth the casting: a hint
@@ -70,7 +70,31 @@ Left out on purpose: the dead in Death House's dungeon (a party there is level 1
 three small graves in St. Andral's churchyard (Ana and her friends are vampire spawn, not corpses; Black Roses).
 Tests: tests/integration/test_speak_with_dead.gd.
 
-## Still to build
+## Batch 4: the dead of the high places (branch `more-to-speak-with-4`)
 
-- The dead of Krezk, Berez, Argynvostholt, Yester Hill's barrows and Castle Ravenloft's catacombs.
-- Speak with Plants.
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| Marina | Berez, her bier in the vault under the monument | A thorn in her heart at her window, and the old woman from the hut singing on the marsh | `marina_truth_known`, The Witch of Berez to `truth` (as the Arcana deduction does) |
+| The last sister | The Abbey of St. Markovia, the nuns' graves in the garden | The Abbot came down with wings in a fever year and began to mend what wasn't broken; the holy water at her feet | `abbot_nature_known` (as the Religion check does); reveals `grave_holy_water` |
+| The first Pidlwick | Castle Ravenloft's catacombs, the jester's crypt | His clockwork copy pushed him down the stair; a false bottom under him | `pidlwick_crypt_told` (a way to confront Pidlwick II); reveals `jester_cape` (Cape of the Mountebank) |
+| A prisoner in shackles | Castle Ravenloft's larders, the dungeon | The guards' talk of the glass heart in the high tower; the open cell's straw is a lid | The Heart of Sorrow to `heard`; reveals the trap `larders_open_cell_pit` |
+| Sergei von Zarovich | Castle Ravenloft's catacombs, his tomb | Tatyana chose the wedding flowers; if she came looking for him she'd go to the pool at Krezk | The Pool of the White Sun to `rumored` (a new first stage) |
+| A frozen traveller | The Amber Temple, inside the doors | Came for a gift, sat down for a moment; the sword in their hand | Reveals `frozen_hand_sword` (Frost Brand) |
+
+`reveal` now takes a trap's id too: the trap shows as found, as a warning would show it (docs/contracts/dialogue.md).
+Left out on purpose: Argynvost's skull (bringing it home isn't built yet), the squires' graves (they died before Ioan
+rode out, so they can't clear him), the Krezkovs' children, and the undead (the brides, Beucephalus, Silverjaw's
+watch). Tests: tests/integration/test_speak_with_dead_high.gd.
+
+## Speak with Plants (branch `speak-with-plants`)
+
+Plants answer for the last day only (2024 PHB: "events in the spell's area within the past day"), so each one tells
+what passed it last night. The conversation casts the spell with a 3rd-level slot (it isn't a Ritual).
+
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| The wolfsbane | The werewolf den's door, planted in rows | Zuleika cut some at moonset to dry in the caves, and hid a flask in the bundles | Reveals `herb_elixir` (Elixir of Health) |
+| The last green row | The Wizard of Wines' vineyard | While the druids hold it: the blights and a singing druid came from the hill with the black tree, and the druid dropped his sickle to the ravens; once it's won back, only the family's lamps | `yester_hill_known`; reveals `vine_sickle` (+1 Moon Sickle) |
+| The hags' garden | Old Bonegrinder's hill, while Bella is there | Offalia picked a basket for the baking; Bella flew home on a broom and hid it in the rafters | Reveals `rafters_broom` (Broom of Flying) |
+
+Tests: tests/integration/test_speak_with_plants.gd.

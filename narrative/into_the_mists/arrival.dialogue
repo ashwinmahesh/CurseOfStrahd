@@ -12,6 +12,14 @@ endif
 Narrator: You walk into the white, and a dozen steps later you walk out of it facing the same road in the same direction. The mist is not a wall; it is a hand, turning you around.
 -> END
 
+# Nothing made the party look back at the mist, so the arrival (and every personal quest with it) could be missed:
+# the wolf in the narrows plays it, then the standoff goes on, if it hasn't played (Wiki finding 2).
+~ first_sight
+set mists_arrived
+set mists_arrival_late
+quest into_the_mists lost_in_mist
+-> hooks
+
 ~ hooks
 cutscene mists_arrival
 Narrator: Each of you came looking for something. None of you came looking for this.
@@ -58,6 +66,9 @@ if not name:godrick_pendlebrook
 endif
 if not name:liriel_dawnsong
   interject class:cleric: Whatever brought us here went to some trouble. That's worth remembering.
+endif
+if flag.mists_arrival_late and not flag.mists_wolves_resolved
+-> into_the_mists/wolves:choose
 endif
 * Try walking back into the mist. -> again
 * Follow the road. -> END

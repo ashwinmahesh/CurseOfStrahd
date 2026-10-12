@@ -24,7 +24,8 @@ once
 | The town square is swept, garlanded and full of people pretending to be in no hurry. In the middle stands a wooden dais, a pair of stocks, and a great wicker sun on a pole, as tall as a house and painted a desperate yellow.
 | [flag.festival_begun and not flag.festival_over] The square is packed shoulder to shoulder. The watch walks through the crowd with clubs, listening.
 | [flag.vallaki_backed == "neither"] The dais has a trestle table on it now, with a jug, some cups and a ledger, and the stocks are half gone for kindling.
-| [flag.vallaki_backed == "wachter"] The black, sodden sun still stands on its pole over an empty dais. Nobody lingers in the square now. Nobody needs to.
+| [flag.vallaki_backed == "wachter" and flag.festival_sun_soaked] The black, sodden sun still stands on its pole over an empty dais. Nobody lingers in the square now. Nobody needs to.
+| [flag.vallaki_backed == "wachter" and not flag.festival_sun_soaked] The half-burnt sun still stands on its pole over an empty dais. Nobody lingers in the square now. Nobody needs to.
 cooldown 15
 
 ~ enter:market_row

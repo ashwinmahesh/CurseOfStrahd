@@ -26,6 +26,16 @@
       "summary": "A party member said the rites for the dead over Sergei's tomb (Religion)."
     },
     {
+      "id": "sergei_spoke",
+      "type": "bool",
+      "summary": "Sergei answered Speak with Dead in his tomb (catacombs_sergei.dialogue): Tatyana would look for him at the pool in Krezk (the_pool_of_the_white_sun rumored)."
+    },
+    {
+      "id": "pidlwick_crypt_told",
+      "type": "bool",
+      "summary": "The first Pidlwick answered Speak with Dead from his crypt (catacombs_jester.dialogue): his clockwork copy pushed him down the stair, and his cape is under a false bottom. Lets the party confront Pidlwick II."
+    },
+    {
       "id": "cat_keepers_defeated",
       "type": "bool",
       "summary": "The vampire spawn who keep Strahd's tomb are dead (the darklord battle or cat_tomb_keepers). The keepers' fight doesn't start again."

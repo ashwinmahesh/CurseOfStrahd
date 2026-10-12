@@ -23,8 +23,8 @@ endif
 ~ menu
 * What's in them? -> whats_in
 * What do they do? -> what_do
-* We'll take one. (1 gp) -> buy_one
-* We'll take three. (3 gp) -> buy_three
+* [if gold >= 1] We'll take one. (1 gp) -> buy_one
+* [if gold >= 3] We'll take three. (3 gp) -> buy_three
 * [if not flag.dream_pastry_eaten] Try the free sample. -> sample
 * [if not flag.morgantha_suspected] Look closer at her. -> look_closer
 * Where do you bake? -> where

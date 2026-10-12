@@ -6582,568 +6582,646 @@
  },
  "davian_martikov/04bdad0bddfbb706": {
   "chars": 222,
+  "direction": "[bitter, grave]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "To starve us, first. A winery without wine is a farm with airs. And on Yester Hill, west of here, they're building a great figure of earth shaped like the lord in the castle. They mean to wake it with my stone for a heart."
  },
  "davian_martikov/09885e7b26566722": {
   "chars": 34,
+  "direction": "[dry, gruff]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "I'll be counting the spoons, mind."
  },
  "davian_martikov/143c7482326823ac": {
   "chars": 32,
+  "direction": "[gruff, warm]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Go carefully. Come back thirsty."
  },
  "davian_martikov/1528b1ed336d0b3b": {
   "chars": 62,
+  "direction": "[grieving, tender, gruff]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "He's home. That's the thing. Whatever else is true, he's home."
  },
  "davian_martikov/1b08ef440bb2f70d": {
   "chars": 190,
   "direction": "[gruff, uneasy, low]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Interesting. There's a lantern on Yester Hill at night. Up on the crown, where you burned it. My pickers watch it from the rows. It goes round and round the top, slow, like somebody digging."
  },
  "davian_martikov/1d9ae58e27c2b7dd": {
   "chars": 89,
+  "direction": "[suspicious, cold]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Someone has been in my strongbox. It was a good lock. It was a good lock for forty years."
  },
  "davian_martikov/202e8be18e0dce58": {
   "chars": 170,
+  "direction": "[proud, practical]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "To Krezk. They keep their gate shut to strangers and open it for my carts. If you're going that way, walk beside the casks. A gate that opens for wine might open for you."
  },
  "davian_martikov/22072ef1e254e3c9": {
   "chars": 36,
+  "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Go on. The house won't empty itself."
  },
  "davian_martikov/22c0cefb472c4e7c": {
   "chars": 169,
+  "direction": "[moved, gruff, awed]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "From the witch. From Berez. You went into that drowned place for my vines. ...Three. I didn't think I'd see three again before I died. I find I'm in less of a hurry now."
  },
  "davian_martikov/23a0a6f576598eab": {
   "chars": 25,
+  "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Still alive. Good. Speak."
  },
  "davian_martikov/28bcdec5fdddc375": {
   "chars": 58,
+  "direction": "[gruff, determined]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Now come and do the same to the ones sleeping in my house."
  },
  "davian_martikov/2b972daa8bca7e8e": {
   "chars": 201,
+  "direction": "[stern, businesslike]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Then here are the terms. Drive them out of the winery and out of the press house. Bring up my stone from the founder's cask: cellar, foot of the stair, third hoop, pull. Then we'll talk about the hill."
  },
  "davian_martikov/2e561dd67d2df5f9": {
   "chars": 69,
+  "direction": "[gruff, fond, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "To Urwin, then. He'll pretend he isn't pleased. He gets that from me."
  },
  "davian_martikov/3777b0e2913650af": {
   "chars": 149,
+  "direction": "[proud, stern, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The first bottles of a free harvest. You'll pay what they cost me to make and not a copper more, and you'll drink the Champagne slowly, or I'll know."
  },
  "davian_martikov/3b8479070333e8b1": {
   "chars": 122,
+  "direction": "[dry, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Gone up into the mountains, last I heard, forty years back. If he's alive, he's somewhere high and cold, being rude to it."
  },
  "davian_martikov/3cc035f43c2eb270": {
   "chars": 143,
+  "direction": "[broken, ashamed, low]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "...I sent them. I sent them to that hill. And I couldn't look at the one who came home, because then I'd have to look at the one who sent them."
  },
  "davian_martikov/3e6d620a0659bde1": {
   "chars": 131,
   "direction": "[sad, gruff, tender]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "A hat a night, for a dream. You could have told me. I'd have sat in the row with you. I dream of him too, boy. I don't need grapes."
  },
  "davian_martikov/425880c667ec1953": {
   "chars": 129,
+  "direction": "[grudging, sardonic]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Your fee. My father paid men to clear wolves from these rows, and they charged less, and they were also thieves. Fine. It's paid."
  },
  "davian_martikov/441260068c83c52c": {
   "chars": 142,
+  "direction": "[uneasy, grave]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "And one thing I can't account for. The ravens say a cold light shows in my house some nights, where no lamp is. If you find it, it isn't mine."
  },
  "davian_martikov/4540aa248de7ea06": {
   "chars": 198,
+  "direction": "[proud, moved, gruff]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Then the press runs again. Not this week; the grapes need a month to remember themselves. But the cellar still holds what we pressed before they came, and the cart in the yard has three good wheels."
  },
  "davian_martikov/45f43798b7b71c3e": {
   "chars": 112,
+  "direction": "[dry, sly]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "To the village. The shopkeeper there will try to charge them double for it. The ravens will see that he doesn't."
  },
  "davian_martikov/468fcccd31bbb157": {
   "chars": 207,
+  "direction": "[grim, angry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "One was stolen last autumn. The ravens followed the thief to Berez, the drowned village by the river, to the witch who lives there. One the druids carried off to their hill. The last I hid the night we fled."
  },
  "davian_martikov/4df6d5640f3dd541": {
   "chars": 88,
+  "direction": "[gruff, wary, low]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hm. Say \"ravens\" more quietly in my yard, priestess. The castle keeps ears in its eaves."
  },
  "davian_martikov/4fb5a58643bd8552": {
   "chars": 87,
+  "direction": "[angry, hurt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Then why didn't he say so? He's had a year. A year of me looking through him at supper."
  },
  "davian_martikov/52d18762d2e55b42": {
   "chars": 107,
+  "direction": "[gruff, dry, grudging]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Even you. My son says you're not as bad as your aim. Ravens have long memories, but we're not unreasonable."
  },
  "davian_martikov/59ede29d685f4250": {
   "chars": 204,
+  "direction": "[grim, practical]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The druids sleep in the fermenting hall and feed my vats to their creatures. Their leader, a boy called Kostin, keeps to the press house with something he grew in my best vat. Some nights it sings to him."
  },
  "davian_martikov/5d3a4576e5431408": {
   "chars": 130,
   "direction": "[gruff, fond, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The Seventh Row's in again. Young vines. Adrian waters them himself and won't let anyone else hold the can. It's a family failing."
  },
  "davian_martikov/5e055893fd771cf1": {
   "chars": 267,
+  "direction": "[dry, amused, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "It's named for a wizard, if that helps. My grandfather named the house for the man who paid us the stones, to annoy him. He stayed a whole winter. A rude old man with a long nose, played dragonchess against himself every night and lost his temper with the black king."
  },
  "davian_martikov/61fd1d1f90c91ac6": {
   "chars": 141,
+  "direction": "[bitter, proud, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "You're sitting on his doorstep. That's his lane, with the druids on it. That's his vines. I'm the master of the Wizard of Wines, for my sins."
  },
  "davian_martikov/6286b12e37972198": {
   "chars": 215,
+  "direction": "[proud, storytelling]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "My family pressed wine on this hill before the valley had its lord. The man on the sign is the wizard who paid us in stones. We set by a cask for him every year. He's never come for it. Wizards are poor at visiting."
  },
  "davian_martikov/64a9818c69a9f9b1": {
   "chars": 165,
+  "direction": "[grave, grieving, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "It was carried, once, by a woman who should have lived to be old. It came back without her. My family has been waiting a long while for someone else to ask after it."
  },
  "davian_martikov/66116f83e084ebc7": {
   "chars": 166,
+  "direction": "[wise, gruff, earnest]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "A vine in winter has no leaves, no fruit, and no warmth you can feel with your hand. You prune it anyway, and you wait. That is faith, priestess. The rest is weather."
  },
  "davian_martikov/6a2161fca8ab3566": {
   "chars": 84,
   "direction": "[grim, approving]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "My grandfather's row, and you cut it out by the roots. Good. It wasn't his any more."
  },
  "davian_martikov/6c86fde58ecaf410": {
   "chars": 179,
   "direction": "[stern, grim, determined]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Somebody picks it in the dark. My pickers won't go near it. Find out who. If it's druids, I want them. If it isn't, I want to know what it is before I burn my grandfather's vines."
  },
  "davian_martikov/71240a536a501054": {
   "chars": 214,
   "direction": "[gruff, wry, grateful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "This came with the house, from my grandfather's time, and nobody here has ever needed a tower. You lot need little else. And the money's from the barrel I was saving for my own funeral. I've decided to postpone it."
  },
  "davian_martikov/72c8f059be314d06": {
   "chars": 59,
+  "direction": "[gruff, grateful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The first cart goes where you say. You've earned that much."
  },
  "davian_martikov/72e38efe441343df": {
   "chars": 193,
+  "direction": "[solemn, proud, grateful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The Keepers of the Feather owe you two stones and a house, and ravens don't forget a debt. Wherever you go in this valley, look up. If you need word carried or eyes on a place, say so out loud."
  },
  "davian_martikov/76086d5d5b8a8327": {
   "chars": 58,
+  "direction": "[gruff, tender, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Adrian. The press is yours. My knees are finished with it."
  },
  "davian_martikov/797674be2f94d1e5": {
   "chars": 51,
+  "direction": "[tender, relieved]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hello, old friend. You hid well. Better than I did."
  },
  "davian_martikov/7ee8dc21c668eb56": {
   "chars": 102,
+  "direction": "[gruff, dry, amused]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Urwin's friends. The birds have talked of nothing else for a week. Sit. You're shorter than they said."
  },
  "davian_martikov/8298993ef7419b23": {
   "chars": 76,
+  "direction": "[sarcastic, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The druids. Of course. Filthy creatures, druids. No respect for a good lock."
  },
  "davian_martikov/82be96bf7ad8ef09": {
   "chars": 72,
+  "direction": "[curt, pained]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "My son Elvir went to watch that hill last spring. Don't ask me about it."
  },
  "davian_martikov/87b0c452879959b2": {
   "chars": 32,
+  "direction": "[gruff, sly]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Whichever annoys the enemy more."
  },
  "davian_martikov/888f0f7d82eafac7": {
   "chars": 3,
   "direction": "[gruff, grudging]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hm."
  },
  "davian_martikov/8997baf4dc2b8a0f": {
   "chars": 121,
+  "direction": "[gruff, wry, resigned]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Adrian has the press. Stefania has the house. I have nothing left to do here but get in the way. Better I get in his way."
  },
  "davian_martikov/8d4054be526c4adf": {
   "chars": 32,
+  "direction": "[gruff, disgusted]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hm. They've scratched the paint."
  },
  "davian_martikov/8da3aa0050b64a48": {
   "chars": 96,
   "direction": "[gruff, relieved, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The lantern's out. The pickers say the hill looked grey this morning, not black. Grey's a start."
  },
  "davian_martikov/8f615f8ae8811e4d": {
   "chars": 80,
+  "direction": "[gruff, moved, grateful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "You took my son up that hill and brought him back down it. I'll not forget that."
  },
  "davian_martikov/902f1a22c3f612e7": {
   "chars": 111,
+  "direction": "[grim, warning]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The boy Kostin ran west, the ravens say, toward the hill. He'll warn them you're coming. Expect to be expected."
  },
  "davian_martikov/90e037efa83533db": {
   "chars": 196,
+  "direction": "[gruff, wary, then confiding]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hm. You have honest faces, or faces that have practised. In the cellar, at the foot of the stair, stands the founder's cask, older than the house. It has a false end. Turn the third hoop and pull."
  },
  "davian_martikov/934bd45451438a99": {
   "chars": 127,
+  "direction": "[thoughtful, grim, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The figure broken and the druids scattered. And the tree? Still standing, the ravens say. Hm. Trees are patient. So are ravens."
  },
  "davian_martikov/9663837b68445e83": {
   "chars": 191,
   "direction": "[gruff, troubled, low]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Interesting. Hm. The Seventh Row. My grandfather planted it, and Elvir pruned it from the day he could hold the knife. It's coming up black. Black grapes every night, and every morning, bare."
  },
  "davian_martikov/9735213fc88d9874": {
   "chars": 92,
+  "direction": "[impatient, gruff]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The Wizard of Wines is a winery, boy. It's a sign over a gate. It's a house that makes wine."
  },
  "davian_martikov/a293478e7fc6964d": {
   "chars": 28,
+  "direction": "[gruff, sad]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "No. You don't. Neither do I."
  },
  "davian_martikov/a8844ce231f80cc9": {
   "chars": 113,
+  "direction": "[dry, sardonic]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Then we'll find out when I count it, won't we. I'll count it later, alone, like a miser. It's a family tradition."
  },
  "davian_martikov/a9021a11974952e4": {
   "chars": 71,
   "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The Seventh Row. You know as much as I do. Go and sit in it after dark."
  },
  "davian_martikov/ab6bc8bfa8d12887": {
   "chars": 91,
+  "direction": "[grieving, broken, fond]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "\"I sent him.\" ...Elvir. You stubborn, stupid boy. You always did think you were the eldest."
  },
  "davian_martikov/ac5267e14875a621": {
   "chars": 76,
   "direction": "[stern, weary, firm]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "I don't care who. I want it stopped. That hill has had enough planted in it."
  },
  "davian_martikov/ac6554596f34ce2d": {
   "chars": 197,
+  "direction": "[proud, grave]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Because a raven sees a great deal and repeats it in the right ears. My family has watched the lord in the castle for longer than he has known he was being watched. He knows now. This is his answer."
  },
  "davian_martikov/afa2cc7f0b32405b": {
   "chars": 60,
+  "direction": "[gruff, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Someone in Vallaki misses my wine, then. Good. So do I. Sit."
  },
  "davian_martikov/b153146082bb74f8": {
   "chars": 100,
   "direction": "[gruff, weary, gentle]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "He told me. Some of it. Enough. We'll talk about the rest when we've both drunk enough to manage it."
  },
  "davian_martikov/b23c9a6aa58d7411": {
   "chars": 227,
+  "direction": "[grave, proud, explaining]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "No vine should live in this valley; there's no sun worth the name. Ours do because three stones lie in their soil, green as new leaves, each the size of a plum. A wizard paid them to my family, long ago, for a winter's lodging."
  },
  "davian_martikov/b3ac8e7e818840f9": {
   "chars": 99,
+  "direction": "[proud, toasting, gruff]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "To the hill, broken. To the house, ours. And to strangers, who it turns out are good for something."
  },
  "davian_martikov/b69f5eca980e1e64": {
   "chars": 135,
+  "direction": "[gruff, grudging, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Ilinca Vrana says you pulled two children out of a hag's oven. Ilinca doesn't say good things about anyone, so I expect it's true. Sit."
  },
  "davian_martikov/bacefd1b4bdc2e95": {
   "chars": 130,
+  "direction": "[gruff, grudging, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Hm. A thief who brings it back is either a fool or an honest man having a bad week. I'll assume the second. Keep ten for the lock."
  },
  "davian_martikov/bb707eb29cee8445": {
   "chars": 107,
+  "direction": "[proud, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "I'll pay in the only coin I trust. Wine, when there's wine again. Until then, my gratitude, which is rarer."
  },
  "davian_martikov/bc615c5aa10812aa": {
   "chars": 147,
+  "direction": "[sad, grave, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "And Ruxandra is dead. I knew her when she was a girl who picked my grapes for a copper a basket. I'll drink to who she was. Not to what she became."
  },
  "davian_martikov/bcd096b25d42202a": {
   "chars": 133,
+  "direction": "[grim, satisfied]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The ravens saw the smoke from here: one black column, straight up, as if the hill were being emptied. Good. Let it burn to the roots."
  },
  "davian_martikov/beece6da2670e83b": {
   "chars": 109,
+  "direction": "[angry, proud, cold]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Don't tell me what my son meant. I know what my son meant. I knew him before you knew this valley had a name."
  },
  "davian_martikov/bfa4ddc3022716d8": {
   "chars": 89,
+  "direction": "[gruff, bitter, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Stefania will mind the house. Adrian will mind the vines. He's good at being left behind."
  },
  "davian_martikov/c13b291b499f258c": {
   "chars": 47,
+  "direction": "[calling out, joyful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Stefania! Bring the children. We're going home."
  },
  "davian_martikov/c3f41c9dba707a5e": {
   "chars": 93,
+  "direction": "[grave, hopeful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "It's been near that tree. Good soil will draw it out, in time. Most things wash out, in time."
  },
  "davian_martikov/c46a3c183e9d8d6d": {
   "chars": 109,
+  "direction": "[stern, warning]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "And Ruxandra lives, somewhere out there. Mercy's a fine thing. Remember that you chose it, if she comes back."
  },
  "davian_martikov/c718193e22f5214e": {
   "chars": 53,
+  "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "You asked before. My house is mine again. Ask me now."
  },
  "davian_martikov/cc05af62cd12ef3e": {
   "chars": 113,
+  "direction": "[thoughtful, dry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The ravens saw the boy Kostin walk west, slowly, like a man who isn't sure where he's going anymore. Interesting."
  },
  "davian_martikov/d1fbd1f564d0d6eb": {
   "chars": 104,
+  "direction": "[gruff, wry, amused]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Three helpings. I don't take three helpings of anything. Ask my wife. Ask my dead wife; she'll tell you."
  },
  "davian_martikov/d3485ae57dbc6745": {
   "chars": 150,
+  "direction": "[cold, proud, bitter]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "You're the ones who struck my son out of the air on the Svalich road. Sit down. I can't afford to throw you out, and I hate that more than I hate you."
  },
  "davian_martikov/d45085ae41a49497": {
   "chars": 95,
+  "direction": "[gruff, impatient]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "My house smells of druid. It will smell of wine again by spring or I'll know the reason. Speak."
  },
  "davian_martikov/db79474244be5812": {
   "chars": 135,
+  "direction": "[cold, stern]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Druids don't pick locks. They don't need to; they grow through them. Don't lie to me in my own house. You're not good enough at it yet."
  },
  "davian_martikov/de2d01219cde5cc6": {
   "chars": 165,
+  "direction": "[wry, fond, resolute]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Eva. Of course it was Eva. She bought wine from my father and haggled him to tears. If her cards say the old raven flies with you, then the old raven flies with you."
  },
  "davian_martikov/dee5a26e2a1db4a8": {
   "chars": 20,
+  "direction": "[gruff, gentle]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Then take it anyway."
  },
  "davian_martikov/df7e02a91ded3b9e": {
   "chars": 39,
+  "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Fewer than yesterday, if you start now."
  },
  "davian_martikov/e0e22f1750d3af2d": {
   "chars": 15,
+  "direction": "[gruff, satisfied]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Again tomorrow."
  },
  "davian_martikov/e19e3896b40a87b8": {
   "chars": 70,
+  "direction": "[gruff, wry, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "They're tearing my house apart to find it. So far my house is winning."
  },
  "davian_martikov/e6a16f2ad3e15da4": {
   "chars": 289,
+  "direction": "[storytelling, grave, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "My grandmother told it so. At the first dawn the sun was given a raven to carry it, because the sun cannot walk. Long after, when this valley went dark, a raven carried a little of that dawn down here, in silver, for anyone fool enough to carry it back up into the night for somebody else."
  },
  "davian_martikov/e88ed32b191335d4": {
   "chars": 136,
+  "direction": "[gruff, wary, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Strangers, at my fire. Either you've come to rob me, and you're three months late, or you've come to help, and you're very welcome. Sit."
  },
  "davian_martikov/f0e193c4db4cc43c": {
   "chars": 207,
+  "direction": "[proud, bitter, grave]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "I am Davian Martikov. That was my winery up there until the druids of Yester Hill walked up my lane with the forest at their backs. Now my family lives under the trees like birds. Which, in fairness, we are."
  },
  "davian_martikov/f25fe283265ca1f6": {
   "chars": 39,
+  "direction": "[dry, wry]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "I've drunk to both, in alternate years."
  },
  "davian_martikov/f5a398517b1daae9": {
   "chars": 199,
+  "direction": "[gruff, wry, proud]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "A Vistani crone shuffled her deck and my name fell out. Hm. I'll go where her cards say, and gladly, once there are no druids asleep in my bed. Not before. A man doesn't leave his house to squatters."
  },
  "davian_martikov/fea6eab5c80fd098": {
   "chars": 135,
+  "direction": "[gruff, wry, hopeful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "Two. Two in the ground. My grandfather had only two for a while, when he was a boy, and he swore the wine was better for having to try."
  },
  "davian_martikov/fed678b5a082c9d4": {
   "chars": 81,
   "direction": "[gruff, curt]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The lantern on the hill. Every night now. Go up after dark; that's when it's lit."
  },
  "davian_martikov/ffb205836f61f052": {
   "chars": 227,
   "direction": "[gruff, wry, grateful]",
   "model": "eleven_v3",
-  "recipe": "6eeb2cd7e9",
+  "recipe": "ade4614ea1",
   "text": "The wizard who gave us the stones left this in the press-house rack a hundred years ago, against the day something in the vines needed burning. I always thought it was a joke. It turns out he was a better farmer than he looked."
  },
  "dmitri_krezkov/064e7686dee8c1a1": {

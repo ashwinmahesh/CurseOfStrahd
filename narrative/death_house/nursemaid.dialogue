@@ -53,7 +53,9 @@ endif
 
 ~ rest_fail
 durst_nursemaid [angry]: Liars. You're with them. You're wearing their faces!
--> fight
+# She attacks: no disapproval for striking first (Wiki finding 3).
+Narrator: The cold comes off her like a slammed door.
+combat nursery_specter
 
 ~ fight
 Narrator: The cold comes off her like a slammed door.
