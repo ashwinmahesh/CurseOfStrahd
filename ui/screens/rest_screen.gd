@@ -5,8 +5,12 @@ extends CanvasLayer
 ## everything comes back, with the location's interruption risk (LongRest). A location can forbid resting ("rest": no)
 ## or make it risky. Rests need nobody hostile around (the screen can't open in combat). A Long Rest also waits 16
 ## hours after the last one and isn't taken in a dungeon or building while enemies remain in it (RestRules): its card
-## says why, in words, for the mouse and the pad alike, and the Short Rest stays open. In the wild the Long Rest makes
-## camp (F16, LocationCamp): the card pitches it, and while the party is camped it sleeps there or breaks camp.
+## says why, in words, for the mouse and the pad alike, and the Short Rest stays open. Wherever the place's own rest is
+## risky (the wild, the road, a town's streets, a house, a dungeon; CampSite.makes_camp, whatever the Story
+## difficulty's safe rests) the Long Rest makes camp (F16, LocationCamp): the card pitches it, and while the party is
+## camped it sleeps there or breaks camp. Where no square will take a fire, the party sleeps where it stands, here, and
+## the log says so. A safe place (an inn, a house that takes the party in), a room booked for the night (Services), the
+## tutorial and the magic items' rests keep the plain Long Rest.
 
 var root: Node
 var st: StoryState
@@ -136,19 +140,27 @@ func _camp() -> LocationCamp:
 	return LocationCamp.of(_view())
 
 
-## Whether a Long Rest here makes camp (in the wild, F16).
+## Whether a Long Rest here makes camp (F16): where the place's own rest is risky, unless a room is booked for the
+## night here.
 func _can_camp() -> bool:
 	var view := _view()
-	return view != null and not view.in_combat and CampSite.is_wild(Compendium.shared().get_entry("locations", st.location))
+	return view != null and not view.in_combat and Services.booked(st) == "" \
+		and CampSite.makes_camp(Compendium.shared().get_entry("locations", st.location))
 
 
-## Makes camp in the wild: the screen gives way to the camp, and the night is slept there (LocationCamp). With no
-## room for a camp within reach, the party rests here as before.
+## Why the party sleeps on the screen when it meant to make camp.
+const NO_ROOM := "No room to make camp here, so the party sleeps where it stands."
+
+
+## Makes camp: the screen gives way to the camp, and the night is slept there (LocationCamp). Where no square the
+## party can walk to will take a fire, the party sleeps here, where it stands, and the log says why.
 func _make_camp() -> void:
 	if not RestRules.long_rest_refusals(st).is_empty():
 		return
 	if LocationCamp.pitch(_view(), root, _rule) == null:
 		_long_rest(_rule)
+		_log.text = NO_ROOM + "\n" + _log.text
+		_log_card.visible = true
 		return
 	_close()
 

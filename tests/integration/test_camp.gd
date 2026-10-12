@@ -1,10 +1,14 @@
 extends TestCase
-## The camp in the wild (F16, world/exploration/location_camp.gd): a Long Rest out of doors makes camp near the party,
-## the company sits round the fire (those waiting at camp too), walking up to someone who wants a word starts their
-## talk, sleeping is the Long Rest, and breaking camp packs it away. Indoors and in towns the rest stays as it was.
+## The camp (F16, world/exploration/location_camp.gd): a Long Rest wherever the place's own rest is risky makes camp
+## near the party, the company sits round the fire (those waiting at camp too), walking up to someone who wants a word
+## starts their talk, sleeping is the Long Rest, and breaking camp packs it away. Indoors there's no tent and the
+## Narrator speaks of walls, not trees; a cramped room makes a smaller camp; with nowhere for a fire the party sleeps
+## where it stands. A safe place and a booked room keep the rest screen. The party plays on Story, whose safe rests
+## keep the nights quiet and don't stop the camp.
 
 var root: Node
 const FIELD := "test_camp_field"
+const ROOM := "test_camp_room"
 
 
 func before_each() -> void:
@@ -12,8 +16,9 @@ func before_each() -> void:
 	for z in 14:
 		rows.append("#".repeat(20) if z == 0 or z == 13 else "#" + ".".repeat(18) + "#")
 	Compendium.shared().tables["locations"][FIELD] = {"id": FIELD, "name": "Test Field", "region": "svalich_road",
-		"summary": "", "map": {"rows": rows, "outdoors": true, "theme": "forest"}, "spawns": {"default": [9, 7]}, "rest": "safe"}
+		"summary": "", "map": {"rows": rows, "outdoors": true, "theme": "forest"}, "spawns": {"default": [9, 7]}, "rest": "risky"}
 	GameState.reset()
+	GameState.story.options["difficulty"] = "story"
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, 3)
 		ch.finish_long_rest()
@@ -34,6 +39,7 @@ func after_each() -> void:
 		root = null
 		await _frames(3)
 	(Compendium.shared().tables["locations"] as Dictionary).erase(FIELD)
+	(Compendium.shared().tables["locations"] as Dictionary).erase(ROOM)
 
 
 func _frames(n: int) -> void:
@@ -57,10 +63,34 @@ func _make_camp() -> LocationCamp:
 	await _frames(1)
 	var rest := root.get("screen") as RestScreen
 	var make := _button(rest, "Make camp (8 hours)")
-	assert_true(make != null and not make.disabled, "the Long Rest makes camp out here")
-	make.pressed.emit()
+	assert_true(make != null and not make.disabled, "the Long Rest makes camp here")
+	if make != null:
+		make.pressed.emit()
 	await _frames(2)
 	return LocationCamp.of(_view())
+
+
+## Walks the party into a room of `rows` (indoors), standing at `at`.
+func _enter_room(rows: Array, at: Array) -> void:
+	Compendium.shared().tables["locations"][ROOM] = {"id": ROOM, "name": "Test Room", "region": "village_of_barovia",
+		"summary": "", "map": {"rows": rows, "outdoors": false, "theme": "manor"}, "spawns": {"default": at}, "rest": "risky"}
+	root.call("enter_location", ROOM, "default")
+	await _frames(3)
+
+
+## Everyone at camp has a square of their own, off the fire and the camp's pieces.
+func _assert_everyone_has_a_square(camp: LocationCamp) -> void:
+	var view := _view()
+	var used := {}
+	for p: Variant in view.loc["props"]:
+		var prop := p as Dictionary
+		if bool(prop.get("camp", false)):
+			used[Vector2i(int((prop["cell"] as Array)[0]), int((prop["cell"] as Array)[1]))] = prop["id"]
+	for id: String in camp.people:
+		var cell := ((camp.people[id] as Dictionary)["token"] as CombatToken).combatant.cell
+		assert_false(used.has(cell), "%s has a square of their own (%s), not %s's" % [id, cell, used.get(cell, "")])
+		assert_true(view.grid.flags(cell) & CombatGrid.WALL == 0, "%s isn't in a wall" % id)
+		used[cell] = id
 
 
 func test_a_long_rest_in_the_wild_makes_camp_round_a_fire() -> void:
@@ -139,10 +169,79 @@ func test_sleeping_by_the_fire_is_the_long_rest_and_breaking_camp_packs_up() -> 
 	assert_ne(thistle.cell, before, "the party follows its leader again")
 
 
-func test_indoors_the_long_rest_is_as_it_was() -> void:
-	(Compendium.shared().tables["locations"][FIELD] as Dictionary)["map"]["outdoors"] = false
+func test_a_safe_place_or_a_room_booked_for_the_night_keeps_the_rest_screen() -> void:
+	(Compendium.shared().tables["locations"][FIELD] as Dictionary)["rest"] = "safe"
 	root.call("open_screen", "rest", 0)
 	await _frames(1)
 	var rest := root.get("screen") as RestScreen
-	assert_true(_button(rest, "Make camp (8 hours)") == null, "no camp indoors")
+	assert_true(_button(rest, "Make camp (8 hours)") == null, "no camp in a safe place")
 	assert_true(_button(rest, "Take a Long Rest (8 hours)") != null, "the plain Long Rest")
+	root.call("close_screen")
+	await _frames(1)
+	(Compendium.shared().tables["locations"][FIELD] as Dictionary)["rest"] = "risky"
+	var st := GameState.story
+	st.set_flag("_room", {"id": "room_modest", "location": st.location, "day": st.day})
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	rest = root.get("screen") as RestScreen
+	assert_true(_button(rest, "Make camp (8 hours)") == null, "a room is booked here: no camp")
+	assert_true(_button(rest, "Take a Long Rest (8 hours)") != null, "the night in the room")
+
+
+func test_indoors_the_camp_has_no_tent_and_the_fire_lights_the_walls() -> void:
+	var rows: Array = []
+	for z in 12:
+		rows.append("#".repeat(16) if z == 0 or z == 11 else "#" + ".".repeat(14) + "#")
+	await _enter_room(rows, [7, 6])
+	var camp := await _make_camp()
+	assert_true(camp != null, "camp is made indoors")
+	if camp == null:
+		return
+	assert_eq(camp.setting, CampSite.INDOORS)
+	var view := _view()
+	var fire: Dictionary = {}
+	for p: Variant in view.loc["props"]:
+		var prop := p as Dictionary
+		if bool(prop.get("camp", false)):
+			assert_ne(str(prop["model"]), "tent", "no tent under a roof")
+			if str(prop["id"]) == "camp_fire":
+				fire = prop
+	assert_false(fire.is_empty(), "a fire on the floor")
+	_assert_everyone_has_a_square(camp)
+	var said: Array[String] = []
+	view.narration.connect(func(t: String) -> void: said.append(t))
+	GameState.story.minute_of_day = 12 * 60   # by day, the fire's plain line
+	LocationInteraction._use_prop(view, fire)
+	assert_eq(said.size(), 1, "the fire is looked at")
+	assert_true(said[0].contains("walls"), "its light on the walls, not the trees: %s" % [said])
+
+
+func test_a_cramped_room_makes_a_smaller_camp() -> void:
+	await _enter_room(["#########", "#.......#", "#.......#", "#########"], [3, 1])
+	var camp := await _make_camp()
+	assert_true(camp != null, "camp is made in a narrow room")
+	if camp == null:
+		return
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille", "wren_featherfoot"]:
+		assert_true(camp.people.has(id), "%s is at camp" % id)
+	_assert_everyone_has_a_square(camp)
+	camp.sleep()
+	assert_true(camp.slept, "the night is slept there")
+
+
+func test_with_nowhere_for_a_fire_the_party_sleeps_where_it_stands() -> void:
+	await _enter_room(["#######", "#~~~~~#", "#~~~~~#", "#~~~~~#", "#######"], [3, 2])
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	var make := _button(rest, "Make camp (8 hours)")
+	assert_true(make != null, "the Long Rest means to make camp")
+	if make == null:
+		return
+	make.pressed.emit()
+	await _frames(2)
+	assert_true(LocationCamp.of(_view()) == null, "no camp in the rubble")
+	assert_true(root.get("screen") == rest, "the rest screen stays")
+	assert_true(GameState.story.flags.has(RestRules.DONE_AT), "the Long Rest is taken there")
+	var log := rest.get("_log") as Label
+	assert_true(log.text.begins_with(RestScreen.NO_ROOM), "and the log says why: %s" % log.text)
