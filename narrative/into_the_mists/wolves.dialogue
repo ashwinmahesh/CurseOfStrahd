@@ -7,6 +7,10 @@ Narrator: A grey wolf stands square in the narrows, head low, while more shapes 
 if not flag.mists_arrived
 -> into_the_mists/arrival:first_sight
 endif
+-> nerves
+
+# The party's nerves, also after the arrival plays here (Wiki finding 76).
+~ nerves
 interject name:kip_smudgewick: Good dog. Nice dog. Apricot? No? No. Very sensible.
 if not name:kip_smudgewick
   interject species:halfling: Just so everyone knows, I'm the bite-sized one.

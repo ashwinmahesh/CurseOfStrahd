@@ -111,7 +111,13 @@ Luvash: Take this. It's not enough. Nothing would be enough.
 Luvash: And this. My grandmother swam the Luna in it, all the way to the falls and back. In the water it makes you a fish. The lake took my girl once; let it never take you.
 give cloak_of_the_manta_ray
 endif
-if tarokka.ally.npc == arabelle and not guest:arabelle
+if tarokka.ally.npc == arabelle and not guest:arabelle and flag.arabelle_stayed
+# She stayed once: she asks again, without the whole scene (Wiki finding 77).
+Arabelle: Have you come back for me? I said you would.
+* Not yet, Arabelle. Stay with your father. -> END
+* Come with us, Arabelle. -> arabelle_joins
+endif
+if tarokka.ally.npc == arabelle and not guest:arabelle and not flag.arabelle_stayed
 Arabelle: I'm going with them, Papa. The cards said. I saw it before they did.
 Luvash [afraid]: No. No! I only just got you back!
 Arabelle: You'll get me back again. I've seen that too.
@@ -121,6 +127,7 @@ endif
 -> END
 
 ~ arabelle_stays
+set arabelle_stayed
 Arabelle: All right. But you'll want me later, at the end. You'll see.
 approve kip_smudgewick +1: You left Arabelle with her father
 -> END

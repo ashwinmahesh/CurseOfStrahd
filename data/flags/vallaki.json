@@ -402,6 +402,11 @@
       "summary": "Luvash has paid the party for Arabelle's return (once)."
     },
     {
+      "id": "arabelle_stayed",
+      "type": "bool",
+      "summary": "The party, with Arabelle as their Tarokka ally, left her with her father once; she asks again on later visits, briefly."
+    },
+    {
       "id": "vistani_friends",
       "type": "bool",
       "summary": "Luvash declared every Vistani wagon in Barovia the party's own. Later Vistani scenes read."
