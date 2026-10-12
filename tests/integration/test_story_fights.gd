@@ -17,12 +17,12 @@ func _held(location: String, encounter: String, at: Array[Vector2i]) -> void:
 	assert_true(wins <= 6, "%s is lost at least twice in 8 (%d)" % [encounter, wins])
 
 
-## Up the lane from the road: the vines stand up around them, three druids and three wardens of the hill among them.
+## Up the lane from the road: the vines stand up around them, and an old tree blight with them.
 func test_the_vineyard_ambush_at_level_6() -> void:
 	await _held("wizard_of_wines", "vineyard_ambush", VINE_LANE)
 
 
-## Into the fermenting hall from the tasting room: four druids, their blights and three wardens of the hill.
+## Into the fermenting hall from the tasting room: two druids, their blights and a shambling mound.
 func test_the_winery_hall_at_level_6() -> void:
 	await _held("wizard_of_wines_winery", "winery_occupation", HALL_DOOR)
 

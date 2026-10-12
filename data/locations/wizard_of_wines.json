@@ -981,43 +981,10 @@
           ]
         },
         {
-          "monster": "druid",
+          "monster": "tree_blight",
           "cell": [
-            18,
-            16
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            16,
+            22,
             18
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            21,
-            18
-          ]
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            23,
-            18
-          ]
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            21,
-            20
           ]
         }
       ],
@@ -1137,43 +1104,10 @@
           ]
         },
         {
-          "monster": "druid",
+          "monster": "tree_blight",
           "cell": [
-            18,
-            16
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            16,
+            22,
             18
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            21,
-            18
-          ]
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            23,
-            18
-          ]
-        },
-        {
-          "monster": "berserker",
-          "name": "Warden of the hill",
-          "cell": [
-            21,
-            20
           ]
         }
       ],

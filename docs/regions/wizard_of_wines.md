@@ -170,8 +170,8 @@ Moderate 5200 / High 6800. XP per block: druid 450, berserker 450, tree blight 2
 
 | id (map, trigger) | Variants (XP; L6 band) | Notes |
 |---|---|---|
-| `vineyard_ambush` (exterior, enter `vine_lane`; party surprised) | L7: 3 druids, 3 wardens (berserkers), 3 vine, 6 needle, 6 twig (3450); L6: 3 druids, 3 wardens, 2 vine, 6 needle, 6 twig (3350, between Low and Moderate); under 6: 2 vine, 4 needle, 6 twig (550) | none once the tree burned |
-| `winery_occupation` (winery, enter `ferment_hall`) | tree burned: 3 druids at 35 HP (1350); L7: 5 druids, 3 wardens, 4 vine, 6 needle, 4 twig (4400); L6: 4 druids, 3 wardens, 3 vine, 6 needle, 4 twig (3850, between Low and Moderate); under 6: 2 druids, 2 vine, 4 needle (1300) | critical path |
+| `vineyard_ambush` (exterior, enter `vine_lane`; party surprised) | L7: druid, tree blight, 3 vine, 6 needle, 6 twig (4100); L6: druid, tree blight, 2 vine, 6 needle, 6 twig (4000, Moderate); under 6: 2 vine, 4 needle, 6 twig (550) | none once the tree burned |
+| `winery_occupation` (winery, enter `ferment_hall`) | tree burned: 3 druids at 35 HP (1350); L7: 3 druids, shambling mound, 4 vine, 6 needle, 4 twig (3950); L6: 2 druids, shambling mound, 3 vine, 6 needle, 4 twig (3400, between Low and Moderate); under 6: 2 druids, 2 vine, 4 needle (1300) | critical path |
 | `cellar_dig` (cellar, enter `the_dig`) | tree burned: druid overseer 35 HP (450); L7: 5 druids, 6 vine, 8 needle (3250); L6: 5 druids, 5 vine, 6 needle (3050; two druids and three vines rise from the cask vaults behind the party); under 6: vine, 4 needle (300) | optional |
 | `press_house_mash` (press house, dialogue) | burned+fled: the Mash (1800); burned: Kostin 44 HP + Mash (2250); fled: Mash, 2 vine, 3 needle (2150); L7: Kostin, 5 druids, Mash, 6 vine (5100); L6: Kostin, 4 druids, Mash, 6 vine (4650, between Moderate and High); under 6: Kostin, Mash at 90 HP, vine (2350) | critical path; the Mash is a `shambling_mound` named "The Mash" |
 | `wardens_camp_fight` (hill, enter `wardens_camp`) | L7: 4 berserkers, 4 twig (1900); L6: 3 berserkers, 4 twig (1450, Low); under 6: 2 berserkers, 4 twig (1000) | optional; gone once the hill is broken |
@@ -182,8 +182,9 @@ The critical path is three fights the party can lose (lane, hall, press; owner 2
 on Balanced: the autopilot's four pregens now win about 3 in 8 of each, the cellar dig 4 in 8, with two or three heroes
 down, tests/integration/test_story_fights.gd) and the crown, which it wins about 4 in 8. Davian or Adrian as guests (a
 wereraven each, 450 XP) can add to the party's side; the summit stays Moderate with one guest. The auto-player has the
-Mash (110 HP, engulf) and Wintersplinter (140 HP, AC 15, reach) as the two big bodies; neither fight has a rider it
-can't answer, and the party can rest safely in the winery between the press house and the hill.
+Mash (110 HP, engulf) and Wintersplinter (140 HP, AC 15, reach) as the two big bodies at the press and the crown, and a
+shambling mound in the hall and a tree blight in the vines at level 6 and up; neither fight has a rider it can't answer,
+and the party can rest safely in the winery between the press house and the hill.
 
 ## 7. Milestone
 
