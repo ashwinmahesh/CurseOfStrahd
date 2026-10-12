@@ -781,7 +781,7 @@ func _confirm_at() -> void:
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
-	var r := e.move(c, hover_cell)
+	var r := e.move(c, mp["dest"] as Vector2i)   # a square too far: as far toward it as the movement goes
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
 	await _play_events()
@@ -1397,8 +1397,9 @@ func _update_hover() -> void:
 		for w: String in mp["warnings"]:
 			provokes = provokes or w.contains("Opportunity")
 		overlay.clear("cursor")
-		overlay.show_cells("danger" if provokes else "goal", [hover_cell])
-		hud.show_tooltip("Move %d ft · %d ft left after" % [int(mp["cost"]), int(mp["left"])], lying, mp["warnings"] as Array, at)
+		overlay.show_cells("danger" if provokes else "goal", [mp["dest"]])
+		var head := ("Move %d ft toward there · %d ft left after" if bool(mp["partial"]) else "Move %d ft · %d ft left after") % [int(mp["cost"]), int(mp["left"])]
+		hud.show_tooltip(head, lying, mp["warnings"] as Array, at)
 	else:
 		hud.show_tooltip(str(mp["reason"]), lying, [], at)
 

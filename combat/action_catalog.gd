@@ -1691,7 +1691,8 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 		var why := str(mp["reason"])
 		if why == "Occupied":
 			why = "You can move through %s's space but not stop in it" % o.name() if o != null and c.allied_with(o) else "Someone is there"
-		out.append({"id": "move", "label": "Move here (%d ft)" % int(mp["cost"]) if bool(mp["ok"]) else "Move here", "enabled": bool(mp["ok"]), "why": why})
+		var move_label := ("Move toward here (%d ft)" if bool(mp["partial"]) else "Move here (%d ft)") % int(mp["cost"]) if bool(mp["ok"]) else "Move here"
+		out.append({"id": "move", "label": move_label, "enabled": bool(mp["ok"]), "why": why})
 	# Jumping down a cliff or ledge beside it, taking the fall (EncounterMovement.jump_down).
 	var drop := e.grid.height(c.cell) - e.grid.height(cell)
 	if o == null and drop > 0 and e.grid.is_cliff(c.cell, cell) and maxi(absi(cell.x - c.cell.x), absi(cell.y - c.cell.y)) == 1:
@@ -1718,13 +1719,23 @@ func square_actions(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Arr
 func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dictionary:
 	var r := reach if not reach.is_empty() else move_reach(c)
 	var path: Array[Vector2i] = []
-	var out := {"ok": false, "cost": 0, "left": c.movement_left, "path": path, "warnings": [] as Array[String], "reason": ""}
+	var out := {"ok": false, "cost": 0, "left": c.movement_left, "path": path, "warnings": [] as Array[String], "reason": "",
+		"dest": cell, "partial": false}
 	if c.speed() <= 0:
 		out["reason"] = "Speed 0"
 		return out
-	if not r.has(cell) or cell == c.cell:
+	if cell == c.cell:
 		out["reason"] = "Out of reach (%d ft left)" % c.movement_left
 		return out
+	if not r.has(cell):
+		# Too far: the walk stops as far along the way as the movement left goes (owner, 2026-10-12), and `dest` says where.
+		var stop := e.movement.stop_toward(c, cell, r)
+		if stop == c.cell:
+			out["reason"] = "No way there (%d ft left)" % c.movement_left if c.movement_left > 0 else "No movement left"
+			return out
+		out["dest"] = stop
+		out["partial"] = true
+		cell = stop
 	var info := r[cell] as Dictionary
 	if bool(info["occupied"]):
 		out["reason"] = "Occupied"

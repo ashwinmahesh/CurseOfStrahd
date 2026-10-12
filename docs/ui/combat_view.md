@@ -254,3 +254,11 @@ When a hero makes a saving throw in a fight (a death save included), the dice la
 ui/dice/dice_roll.gd) rolls it before the action's effects play: `CombatView._dice_moments` at the start of
 `_play_events`, one roll after another, from the heroes' d20 events (`Creature.roll_d20` logs each roll's kind and
 test). Foes' saves and attack rolls don't get it (owner, 01:27). Any press skips a roll; fast combat plays it quicker.
+
+## A square too far (owner, 2026-10-12)
+
+Pointing at a square further than the movement left shows the walk as far toward it as the movement goes: the dotted
+trail to a ring where it would stop, and "Move 30 ft toward there · 0 ft left after" (the square's menu: "Move toward
+here"); a click walks it, with the usual path rules (Difficult Terrain doubles, Opportunity Attack warnings on the
+partial walk). Only a square with no way there at all, or no movement left, still says why not
+(`EncounterMovement.stop_toward`; `ActionCatalog.move_preview`'s `dest` and `partial`).

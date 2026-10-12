@@ -197,7 +197,11 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	if steed != null:
 		var sreach := reachable_for(steed)
 		if not sreach.has(dest):
-			return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
+			# Too far: as far along the way as the mount's movement goes (owner, 2026-10-12).
+			var sstop := stop_toward(steed, dest, sreach)
+			if sstop == steed.cell:
+				return CombatResult.fail("Your mount can't reach that square with %d ft of movement" % steed.movement_left)
+			dest = sstop
 		if bool((sreach[dest] as Dictionary)["occupied"]):
 			return CombatResult.fail("Your mount can't end its move in an occupied space")
 		c.moved = true
@@ -216,12 +220,33 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 		stand_up(c)
 	var reach := reachable_for(c)
 	if not reach.has(dest):
-		return CombatResult.fail("Can't reach that square with %d ft of movement" % c.movement_left)
+		# Too far: as far along the way as the movement left goes (owner, 2026-10-12: "just move as close as we can").
+		var stop := stop_toward(c, dest, reach)
+		if stop == c.cell:
+			return CombatResult.fail("Can't reach that square with %d ft of movement" % c.movement_left)
+		dest = stop
 	if bool((reach[dest] as Dictionary)["occupied"]):
 		return CombatResult.fail("You can't end your move in an occupied space")
 	var path := CombatGrid.path_to(reach, dest)
 	var r := CombatResult.new()
 	return e.undo.after_move(undo, _walk(c, path, 1, r, undo.handled))
+
+
+## Where a move toward `dest` stops when it's further than the movement left takes `c` (owner, 2026-10-12): the last
+## square on the cheapest way there (as if the movement had no end) that `reach` (reachable_for, or the HUD's move_reach)
+## holds and where `c` may stop. `c.cell` when there's no way there, or no step along it to take.
+func stop_toward(c: Combatant, dest: Vector2i, reach: Dictionary = {}) -> Vector2i:
+	var r := reach if not reach.is_empty() else reachable_for(c)
+	if r.has(dest) and not bool((r[dest] as Dictionary)["occupied"]):
+		return dest
+	var far := reachable_for(c, 100000)
+	if not far.has(dest):
+		return c.cell
+	var path := CombatGrid.path_to(far, dest)
+	for i in range(path.size() - 1, 0, -1):
+		if r.has(path[i]) and not bool((r[path[i]] as Dictionary)["occupied"]):
+			return path[i]
+	return c.cell
 
 
 ## Moves `c` (not on its own turn) up to `feet` toward the reachable square that best follows `dir` (Confusion,

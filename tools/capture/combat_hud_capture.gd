@@ -161,3 +161,16 @@ func capture_shots(tool: Node, out: String) -> void:
 	tool.call("_shot", "%s_16_wheel.png" % out)
 	view.hud.radial.visible = false
 	GameSettings.set_value("pad_wheels", false, false)
+	# A square too far: the walk toward it as far as the movement goes (owner, 2026-10-12).
+	var walker := heroes["ilse_varga"] as Combatant
+	e.turn_index = e.order.find(walker)
+	e._begin_turn()
+	view.hud.shown = walker
+	view.hud.refresh()
+	walker.movement_left = 15   # half her movement spent already
+	view.set("_reach", view.catalog.move_reach(walker))
+	view.hover_token = null
+	view.hover_cell = Vector2i(11, 2)
+	view._update_hover()
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_17_too_far.png" % out)
