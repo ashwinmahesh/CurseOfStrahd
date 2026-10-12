@@ -254,3 +254,10 @@ When a hero makes a saving throw in a fight (a death save included), the dice la
 ui/dice/dice_roll.gd) rolls it before the action's effects play: `CombatView._dice_moments` at the start of
 `_play_events`, one roll after another, from the heroes' d20 events (`Creature.roll_d20` logs each roll's kind and
 test). Foes' saves and attack rolls don't get it (owner, 01:27). Any press skips a roll; fast combat plays it quicker.
+
+## A cantrip in place of an attack (owner, 2026-10-12)
+
+A hero who can cast a cantrip in place of one attack of the Attack action (a Bladesinger's Extra Attack, War Magic, a
+feature's attack_cantrip recipe) casts it that way from the cantrip's own Spells-tab slot: its cost mark reads as an
+attack, its line says "in place of an attack", and it starts the Attack action or uses an attack left, so the weapon
+attacks follow (`ActionCatalog._as_attack_cantrip`). The separate "Cantrip attack" slots on the class tab are gone.
