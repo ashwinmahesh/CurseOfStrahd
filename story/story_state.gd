@@ -649,6 +649,50 @@ func remove_guest(npc_id: String) -> bool:
 	return true
 
 
+## Why a guest won't leave the party now ("" when they can): the first of the npc's `guest_stays` ([{when, why}])
+## whose condition holds, else Madam Eva's ally, who sees the end through. Send home and a fall in a fight both ask
+## (Ashwin, 2026-10-12).
+func guest_stays(npc_id: String) -> String:
+	var npc := Compendium.shared().get_entry("npcs", npc_id)
+	for s: Variant in npc.get("guest_stays", []):
+		var rule := s as Dictionary
+		if StoryConditions.check(str(rule.get("when", "")), self):
+			return str(rule["why"])
+	if Tarokka.field(self, "ally.npc") == npc_id:
+		return "Madam Eva's cards named %s for the end of this, and that isn't a promise to walk away from." \
+			% str(npc.get("name", npc_id))
+	return ""
+
+
+## Sends a guest home (the Party screen's Send home): they leave the party and wait where the party found them, and
+## their own scenes there can ask them along again. False if they won't go (guest_stays) or aren't travelling.
+func send_guest_home(npc_id: String) -> bool:
+	if not npc_id in guest_ids or guest_stays(npc_id) != "":
+		return false
+	return remove_guest(npc_id)
+
+
+## After a fight: guests fight on monster stat blocks and die outright at 0 Hit Points, but a guest who fell isn't
+## left for dead. One who can leave is carried home to heal (out of the party, to be asked along again where the party
+## found them); one who can't (guest_stays) is patched up at 1 Hit Point and stays. Returns the names carried home.
+## Ashwin, 2026-10-12: Adrian fell at the winery, his figure walked on with the party, and a reload showed him gone.
+func see_to_fallen_guests() -> Array[String]:
+	var home: Array[String] = []
+	for i in range(guests.size() - 1, -1, -1):
+		var g := guests[i]
+		if g.hp > 0 and not g.dead:
+			continue
+		var id := guest_ids[i]
+		if guest_stays(id) == "":
+			home.push_front(g.name)
+			remove_guest(id)
+		else:
+			g.dead = false
+			g.hp = 0
+			g.heal(1)
+	return home
+
+
 func _guests_to_dict() -> Array:
 	var out: Array = []
 	for i in guest_ids.size():

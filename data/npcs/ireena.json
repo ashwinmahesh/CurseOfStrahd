@@ -16,5 +16,10 @@
     "village_of_barovia"
   ],
   "region": "village_of_barovia",
-  "pronouns": "she/her"
+  "pronouns": "she/her",
+  "guest_stays": [
+    {
+      "why": "Ireena goes where you go now. There's nothing back there to send her home to."
+    }
+  ]
 }

@@ -13,6 +13,12 @@
     "monster": "emil_toranescu",
     "note": "His own stat block (a werewolf). Joins for the challenge against Kiril; stays only if the Tarokka names him (the Beast)."
   },
+  "guest_stays": [
+    {
+      "when": "not flag.pack_aftermath_done",
+      "why": "Emil won't leave his den until the pack's leadership is settled."
+    }
+  ],
   "tags": [
     "werewolf",
     "lycanthrope",

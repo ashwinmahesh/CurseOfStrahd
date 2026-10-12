@@ -16,5 +16,11 @@
     "village_of_barovia"
   ],
   "region": "village_of_barovia",
-  "pronouns": "he/him"
+  "pronouns": "he/him",
+  "guest_stays": [
+    {
+      "when": "guest:ireena",
+      "why": "Ismark won't leave his sister."
+    }
+  ]
 }
