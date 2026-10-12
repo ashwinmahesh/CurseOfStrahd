@@ -35569,12 +35569,6 @@
   "recipe": "dd92281f92",
   "text": "One servant bolts. The other is slower, and fat with Lady Wachter's dinners. He sits in the mud, bucket in his lap, and tells you everything he knows, which is that he was told to make the sun wet and not to ask why."
  },
- "narrator/0aef14ee95e5e8c5": {
-  "chars": 174,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "In the morning the watch finds Ilie at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast."
- },
  "narrator/0afe4b6f76b6d7d4": {
   "chars": 71,
   "model": "eleven_v4",
@@ -62227,6 +62221,12 @@
   "recipe": "dd92281f92",
   "text": "A long gallery of fallen frames and torn canvas. Somebody has turned the few portraits still hanging to face the wall."
  },
+ "narrator/db301207cef69370": {
+  "chars": 175,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "In the morning the watch finds Ignat at the lake gate, sitting against the post, smiling, white as milk. Nobody finds Ana at all. Mila Petrova wakes up and eats her breakfast."
+ },
  "narrator/db4b90c25c75cc16": {
   "chars": 124,
   "model": "eleven_v4",
@@ -78513,6 +78513,13 @@
   "recipe": "68bb361575",
   "text": "Down in the cellar, behind the casks nobody drinks. Draughts that close a wound in a breath, prayers for the bad nights, a silver bird my father carved. For the Keepers' friends, at what it cost us. Nobody else ever hears about this room."
  },
+ "urwin_martikov/03a0d8729fa7e1df": {
+  "chars": 199,
+  "direction": "[low, gossiping, grave]",
+  "model": "eleven_v3",
+  "recipe": "68bb361575",
+  "text": "Black roses on Pyotr Petrov's step this morning, the chandler's. Ignat the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too."
+ },
  "urwin_martikov/0fc9b6a2312a4df6": {
   "chars": 199,
   "direction": "[warm, wry]",
@@ -78660,13 +78667,6 @@
   "recipe": "68bb361575",
   "text": "The boy, Yevgeni, says you took Old Greytooth. The ravens saw it. They were very pleased; he ate three of them last spring."
  },
- "urwin_martikov/8ab07ddaf540ca2f": {
-  "chars": 103,
-  "direction": "[low, relieved, dry]",
-  "model": "eleven_v3",
-  "recipe": "68bb361575",
-  "text": "Ilie's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year."
- },
  "urwin_martikov/8d522beb70bbb377": {
   "chars": 203,
   "direction": "[earnest, worried]",
@@ -78687,6 +78687,13 @@
   "model": "eleven_v3",
   "recipe": "68bb361575",
   "text": "It's a trap, and not for him. For whoever comes for him. If I go, the castle knows what I am. If Danika goes, the same. They've been trying to learn the Keepers' names for a hundred years."
+ },
+ "urwin_martikov/9920b4e3d020dfd5": {
+  "chars": 104,
+  "direction": "[low, relieved, dry]",
+  "model": "eleven_v3",
+  "recipe": "68bb361575",
+  "text": "Ignat's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year."
  },
  "urwin_martikov/9d49ef1fc54c55d8": {
   "chars": 146,
@@ -78764,13 +78771,6 @@
   "model": "eleven_v3",
   "recipe": "68bb361575",
   "text": "You stood between this town and the people who'd sell it. That makes you friends of ours."
- },
- "urwin_martikov/f42771bc880bd483": {
-  "chars": 198,
-  "direction": "[low, gossiping, grave]",
-  "model": "eleven_v3",
-  "recipe": "68bb361575",
-  "text": "Black roses on Pyotr Petrov's step this morning, the chandler's. Ilie the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too."
  },
  "vadoma/2fdeb7ae6ccd0b97": {
   "chars": 87,
@@ -78873,12 +78873,12 @@
   "recipe": "b12b47e2c9",
   "text": "Mila's out at the market today. In daylight. Laughing at something. Thank you."
  },
- "vallaki_chandler/faf10e9a9d0cc8ac": {
-  "chars": 138,
-  "direction": "[frightened, hushed, haggard]",
+ "vallaki_chandler/ae7db7e6c55cc05f": {
+  "chars": 139,
+  "direction": "[frightened, shaky, haggard]",
   "model": "eleven_v3",
   "recipe": "b12b47e2c9",
-  "text": "Black roses on my step. Ilie said not to throw them out, it makes her angry. Who is \"her\"? He won't say. I've nailed Mila's shutters shut."
+  "text": "Black roses on my step. Ignat said not to throw them out, it makes her angry. Who is \"her\"? He won't say. I've nailed Mila's shutters shut."
  },
  "vallaki_cloth_merchant/f89226a54aa3fccc": {
   "chars": 193,
@@ -79752,6 +79752,13 @@
   "model": "eleven_v3",
   "recipe": "895bf15afd",
   "text": "The Baron says I'm to go on handing out ribbons and leave the counting to him. I don't write anything down any more. I don't think he can read my hand anyway."
+ },
+ "vallaki_ribbon_girl/e07fefb509e78717": {
+  "chars": 127,
+  "direction": "[afraid, nervous, low]",
+  "model": "eleven_v3",
+  "recipe": "895bf15afd",
+  "text": "The festival's over, and they still want the list. Who's sour, who's sorry the sun burned. It goes under the lamp all the same."
  },
  "vallaki_ribbon_girl/e37dd3ebc95ddddd": {
   "chars": 64,
