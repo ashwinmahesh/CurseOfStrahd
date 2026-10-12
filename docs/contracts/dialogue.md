@@ -80,6 +80,15 @@ interject <selector>: Text         A party member matching the selector says Tex
                                    pregen's own voice.
 combat encounter_id                Ends the conversation and starts a fight from the location's encounters.
 narrate trigger_key                Plays a Narrator trigger (below) inline.
+cast speak_with_dead               The one speaking for the party casts an exploring spell in the scene (story/
+                                   field_casting.gd): as a Ritual when it is one, else a feature's free casting or their
+                                   lowest slot; if they can't, whoever in the party can, who then speaks. check.last
+                                   says whether it worked, and a notice says what it cost or why not. A casting still
+                                   running (cast from the character sheet) needs no new one. Put it behind an option
+                                   tagged [knows:<spell>], with an [if spell:<spell>] option for that earlier casting.
+reveal oak_raven_hoard             A hidden find (a search prop in a location, docs/story/found_magic_items.md) shows
+                                   itself as if searched out: someone told the party where it is (a Tip). A notice,
+                                   once; nothing if it was found already.
 cutscene cutscene_id               A full-screen picture (data/cutscenes/<id>.json, docs/ui/cutscenes.md) under the
                                    lines that follow, which read as captions on it; the box comes back over it for
                                    options and notices. Skipped when none of its pictures' conditions hold.

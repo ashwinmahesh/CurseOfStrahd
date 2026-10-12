@@ -292,9 +292,10 @@
         12,
         11
       ],
-      "kind": "decor",
+      "kind": "examine",
       "label": "A raven on a fencepost",
-      "model": "crow"
+      "model": "crow",
+      "dialogue": "svalich_road/crossroads:raven"
     },
     {
       "id": "kestrel_tally_crossroads",

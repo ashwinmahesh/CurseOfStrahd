@@ -1,6 +1,8 @@
 # The River Ivlis crossroads (data/locations/svalich_crossroads.json): the gallows and the signpost.
 # The hanged man is Nicu, a young Vistana from the Tser Pool camp (stanimir.dialogue, luminita.dialogue). Cut him down
 # and he stays dead; leave him, and after dark he and the old hanged dead in the field rise (crossroads_hanged_dead).
+# The raven on the fencepost (prop crossroads_raven) talks under Speak with Animals: the Keepers of the Feather want
+# help at the Wizard of Wines, and a man buried his boots in the newest mound (newer_mound).
 
 ~ gallows
 if flag.nicu_cut_down
@@ -114,4 +116,36 @@ Ismark: It's very good mud. Westward mud. I'm told the gentry prefer it.
 endif
 endif
 interject class:rogue: The crow's fresh. Somebody keeps replacing it.
+-> END
+
+# --- The raven on the fencepost (prop crossroads_raven) ---
+
+~ raven
+narrate examine:crossroads_raven
+* [if spell:speak_with_animals] Ask the raven what it's seen from its post. -> raven_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the raven what it's seen from its post.) -> raven_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it to its post. -> END
+-> END
+
+~ raven_cast
+cast speak_with_animals
+if check.last
+-> raven_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the valley's ravens carry word for the Keepers of the Feather (the Martikovs).
+~ raven_speaks
+Narrator: The raven looks you over with one eye and then the other before it answers, as if it's comparing notes.
+if not flag.winery_reclaimed
+Narrator: "The feather-folk at the vine-house, over the hills past the walled town, lost their house to green men and walking trees. They want hands. Yours will do."
+if not quest.wizard_of_wines
+quest wizard_of_wines rumored
+endif
+endif
+Narrator: "One of the hump-graves behind the hanging tree is new. A man in soft boots dug it in the dark, put his soft boots in it, and went away barefoot. Who buries boots?"
+reveal newer_mound
+if not flag.nicu_cut_down and not flag.crossroads_dead_cleared
+Narrator: "We don't take the hanging one's eyes. He's cold wrong. When it's dark, the old ones under the humps get up, and he'll go with them."
+endif
 -> END

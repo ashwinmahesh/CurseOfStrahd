@@ -7,8 +7,10 @@ shader_type spatial;
 render_mode blend_add, cull_disabled, depth_draw_never, ambient_light_disabled, specular_disabled, fog_disabled;
 
 uniform vec3 core : source_color = vec3(0.96, 0.93, 0.84);
-// How brightly a mote shows in a lamp's light, and how much it twinkles (0 = steady).
-uniform float gain = 5.0;
+// How brightly a mote shows in a lamp's light, the most one light adds (kept under the glow's threshold, so a mote
+// never blooms into a halo: owner 2026-10-12, "annoying dots on the screen"), and how much it twinkles (0 = steady).
+uniform float gain = 2.5;
+uniform float light_cap = 0.45;
 uniform float twinkle = 0.7;
 
 varying float seed;
@@ -36,6 +38,8 @@ void fragment() {
 void light() {
 	// Lamps, candles, fires and the shafts through windows: not the moon or the day, which reach every room.
 	if (!LIGHT_IS_DIRECTIONAL) {
-		DIFFUSE_LIGHT += LIGHT_COLOR / PI * ATTENUATION * gain;
+		vec3 c = LIGHT_COLOR / PI * ATTENUATION * gain;
+		float peak = max(c.r, max(c.g, c.b));
+		DIFFUSE_LIGHT += c * min(1.0, light_cap / max(peak, 0.0001));
 	}
 }

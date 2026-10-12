@@ -1832,14 +1832,15 @@
       "released": true
     },
     "vallaki_porter": {
-      "voice_id": "hTrAwHrubhIyiZISmtKP",
+      "voice_id": "UMDm1VOXFKxF32BiQUvE",
       "name": "Barovia Matei",
-      "description": "A huge, cheerful Vallaki porter in his thirties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A big, warm, breathless, genuinely happy voice.",
+      "description": "A huge, strong, cheerful Vallaki porter in his thirties, speaking English with a strong, clearly audible Romanian accent. A deep, booming, warm bass-baritone from a big chest, hearty and steady at a normal speaking volume, never breathy or panting: easygoing, friendly and genuinely happy, the only real smile in a grim town.",
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "hTrAwHrubhIyiZISmtKP",
-      "released": true
+      "generated_voice_id": "UMDm1VOXFKxF32BiQUvE",
+      "released": true,
+      "earlier_voice_id": "hTrAwHrubhIyiZISmtKP"
     },
     "vallaki_raker": {
       "voice_id": "Agtn2Ybo5e8bHlzRTfaf",

@@ -183,5 +183,23 @@ endif
 
 ~ goat
 Narrator: The goat looks up from the fence it is eating, considers you, and goes back to the fence. It has seen worse than you, and it has eaten better fences.
+* [if spell:speak_with_animals] Ask the goat what it's seen. -> goat_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what it's seen.) -> goat_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it to the fence. -> END
+-> END
+
+~ goat_cast
+cast speak_with_animals
+if check.last
+-> goat_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): the goat has tasted most of the village, including the barn's stash.
+~ goat_speaks
+Narrator: The goat answers with its mouth full, and doesn't stop chewing to do it.
+Narrator: "The old barn that fell down. Under the beams there's a long stick with a sharp shiny head, wrapped up in sacking. Tastes of storms. I spat it out."
+reveal barn_beams_stash
+Narrator: "And the god-house screams every night, when the sun goes. Don't eat anything near the god-house."
 -> END
 
