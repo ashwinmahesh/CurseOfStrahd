@@ -1134,7 +1134,7 @@ class Wiki:
                     for who, d in st["changes"]:
                         approvals[who].append((d, st.get("why", "")))
                 elif t == "cutscene":
-                    if st["arg"] not in cuts:
+                    if st["arg"] in g.cutscenes and st["arg"] not in cuts:   # `cutscene end` closes one
                         cuts.append(st["arg"])
                 elif t == "xp" and "milestone" in st.get("arg", ""):
                     xp_milestones += 1
@@ -1291,10 +1291,17 @@ class Wiki:
             body = facts[:]
             if loc.get("text"):
                 body += ["", loc["text"]]
-            shots = [self.shot(f"loc_{lid}_overview.png")] + [self.shot(f"loc_{lid}_{i}.png") for i in (1, 2, 3)]
-            shots = [x for x in shots if x]
-            if shots:
-                body += ["", embed(shots[0], 900)]
+            arrive = self.shot(f"loc_{lid}_1.png")
+            above = self.shot(f"loc_{lid}_overview.png")
+            if arrive:
+                body += ["", embed(arrive, 900), "*Arriving.*"]
+            if above:
+                body += ["", embed(above, 900), "*The whole place from above.*"]
+            closeups = []
+            for i, (cell, labels) in enumerate(self.spots(lid), 1):
+                pic = self.shot(f"loc_{lid}_spot{i}.png")
+                if pic:
+                    closeups.append((pic, labels))
             parts = [auto("about", "\n".join(body))]
             # Numbered map markers and the tables that explain them.
             markers, at_cell = [], {}
@@ -1384,8 +1391,10 @@ class Wiki:
                 mp += ["## Map", "", embed(f"images/maps/{lid}.svg"), "",
                        "Gold dots are people, red containers, purple hidden finds, teal skill checks, white exits, "
                        "orange traps. The numbers match the tables below.", ""]
-            if len(shots) > 1:
-                mp += ["", " ".join(embed(x, 300) for x in shots[1:]), ""]
+            if closeups:
+                mp += ["## Close up", ""]
+                for pic, labels in closeups:
+                    mp += [embed(pic, 600), f"*{', '.join(labels[:5])}*" if labels else "", ""]
             if exits:
                 mp += ["## Ways out", "", "| # | Exit | Leads to | Only when |", "|---|---|---|---|"] + exits + [""]
             if people:
@@ -2505,8 +2514,38 @@ class Wiki:
         for lid, quests in by_loc.items():
             out.append({"name": f"loc_{lid}_1", "kind": "explore", "location": lid, "hour": 11})
             out += sorted(quests, key=lambda x: x["hour"])
+            for i, (cell, _) in enumerate(self.spots(lid), 1):
+                out.append({"name": f"loc_{lid}_spot{i}", "kind": "closeup", "location": lid, "hour": 11,
+                            "at": [int(cell[0]), int(cell[1])], "dist": 9.0})
             out.append({"name": f"loc_{lid}_overview", "kind": "overview", "location": lid, "hour": 11})
         return out
+
+    def spots(self, lid, most=3):
+        """Up to `most` squares worth a close look in a place, far enough apart, each with what stands near it:
+        [(cell, [labels])]. People who are always there first, then containers, then finds and things to try."""
+        g = self.g
+        loc = g.locations[lid]
+        cands = []
+        for n in loc.get("npcs", []):
+            if not n.get("when"):
+                cands.append((n["cell"], g.npc_name(n.get("npc", ""))))
+        for c in loc.get("containers", []):
+            if not c.get("when"):
+                cands.append((c["cell"], lower_article(c.get("label", c["id"]))))
+        for p in loc.get("props", []):
+            if (p.get("item") or p.get("checks") or p.get("dialogue")) and not p.get("when"):
+                cands.append((p["cell"], lower_article(p.get("label", p["id"]))))
+        picked = []
+        for cell, _ in cands:
+            if all(max(abs(cell[0] - c[0]), abs(cell[1] - c[1])) >= 8 for c, _ in picked):
+                picked.append((cell, []))
+            if len(picked) >= most:
+                break
+        for cell, labels in picked:
+            for c, label in cands:
+                if max(abs(cell[0] - c[0]), abs(cell[1] - c[1])) <= 3 and label not in labels:
+                    labels.append(label)
+        return picked
 
     def build(self):
         s = self.site

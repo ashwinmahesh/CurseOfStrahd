@@ -4,8 +4,8 @@ extends Node
 ## from above; for each quest: the conversation that starts it, at its first choice; and the travel map. A shot whose
 ## file is already there is skipped, so a run that stops can be started again and carry on.
 ##   make capture SCENE=res://tools/wiki/wiki_shots.tscn NAME=wiki ARGS="--list=/abs/list.json --dir=/abs/folder"
-## Each entry: {name, kind: explore|overview|dialogue|map, location, spawn, hour, flags: {id: value}, dialogue: "file:node",
-## npc}. Saves and settings are the capture tool's own (tools/capture/capture.gd), never the owner's.
+## Each entry: {name, kind: explore|closeup|overview|dialogue|map, location, spawn, hour, flags: {id: value},
+## dialogue: "file:node", npc, at: [x, z] and dist for a close-up}. Saves and settings are the capture tool's own (tools/capture/capture.gd), never the owner's.
 
 var game: Node = null
 var _here := ""      ## the place entered last and the time it was entered at, "" once a shot has moved the camera
@@ -55,7 +55,19 @@ func capture_shots(tool: Node, _out: String) -> void:
 		_clear()
 		hud.close_narration()   # the party's banter on arriving
 		await tool.call("wait_frames", 40)
-		if kind == "overview":
+		if kind == "closeup":
+			# A close look at one square: the people or things there, without the HUD.
+			hud.visible = false
+			var at := shot.get("at", [0, 0]) as Array
+			var cam := view.rig
+			cam.follow = null
+			cam.distance = float(shot.get("dist", 10.0))
+			cam.global_position = view.board.cell_center(Vector2i(int(at[0]), int(at[1])))
+			cam.snap_to_target()
+			await tool.call("wait_frames", 30)
+			tool.call("_shot", path)
+			hud.visible = true
+		elif kind == "overview":
 			hud.visible = false
 			var rig := view.rig
 			rig.follow = null
