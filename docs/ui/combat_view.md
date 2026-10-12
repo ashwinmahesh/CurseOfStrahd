@@ -296,3 +296,12 @@ side of a foe an ally is already beside. Settings, Game, Flanking turns it off (
 A hero may end a move in an ally's space (Move here works on an ally's square; the walk up prefers an empty one). Two
 figures on one square stand side by side as the camera looks (`CombatView._share_offset`), and step back to the
 centre when one leaves (`_settle_shared`, after each batch of events).
+
+## Looking along the turn order (owner, 2026-10-12)
+
+A click on a portrait in the turn order sends the camera gliding over to that creature, hero or foe, and lights its
+figure (`CombatHud.focus_requested`, `CombatView._focus_on`; the rig eases after what it follows). A hero sharing the
+turn still takes the turn on a click, and the camera goes along. The next turn, an action, the camera keys or the pad's
+cursor take the camera on from there; a creature nobody can see isn't shown. On a pad, Next target (X) while the radial
+is held steps the camera along the order, one creature a press, the cursor going too (`_look_along_order`); a line under
+the wheel names the button.

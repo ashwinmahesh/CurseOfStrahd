@@ -18,6 +18,8 @@ signal end_turn_pressed
 signal undo_move_pressed
 signal reaction_answered(use: bool, rule: String)
 signal inspect_requested(combatant_id: String)
+## A click on a portrait in the turn order (owner, 2026-10-12): the camera goes to that creature (CombatView._focus_on).
+signal focus_requested(combatant_id: String)
 ## A click on a party frame's portrait: that hero's character sheet, view only (CombatView.sheet_requested).
 signal sheet_requested(combatant_id: String)
 signal death_save_pressed
@@ -39,10 +41,10 @@ const COLUMNS := 6
 const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
-	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
+	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Click a portrait in the turn order to look at that creature. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
 	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms · {camera_tactical} the tactical view from above, and back.",
-	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
+	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; {@combat_next_target} while holding it looks along the turn order, the camera going to each in turn; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
 	"Reactions always ask unless you set a rule: in the prompt (Next time: Ask me / Always use it / Never), or on the Reactions tab, where a click on a rule steps it through Ask, Automatic and Off on any turn. A slot with a gilt corner holds choices: click it to pick one.",
 ]
 
@@ -669,11 +671,15 @@ func _refresh_strip() -> void:
 			lg.tooltip_text = "Legendary actions left this round"
 			v.add_child(lg)
 		card.mouse_entered.connect(func() -> void: inspect_requested.emit("hover:" + c.id))
-		if ready:
-			card.tooltip_text = "%s shares this turn: click to take it" % c.name()
-			card.gui_input.connect(func(ev: InputEvent) -> void:
-				if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-					inspect_requested.emit(c.id))
+		# A click takes a shared turn (the camera goes along), or looks at whoever it is: the camera glides over to them.
+		card.tooltip_text = ("%s shares this turn: click to take it" if ready else "Click to look at %s") % c.name()
+		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		card.gui_input.connect(func(ev: InputEvent) -> void:
+			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
+				if c in e.shared_heroes() and c != e.current():
+					inspect_requested.emit(c.id)
+				else:
+					focus_requested.emit(c.id))
 		_strip.add_child(card)
 	if lair_at == e.order.size():
 		_strip.add_child(_lair_card())
