@@ -43,6 +43,11 @@
       "to": "yester_hill",
       "hours": 2,
       "table": "vineyard_road",
+      "grounds": [
+        "barrow_moor",
+        "roadside_graves",
+        "road_fork"
+      ],
       "name": "The barrow track over the moor"
     }
   ]

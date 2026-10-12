@@ -1,6 +1,14 @@
 {
   "id": "krezk_road",
   "map": "road_ambush",
+  "grounds": [
+    "road_ambush",
+    "road_forest",
+    "road_fork",
+    "road_ravine",
+    "wayside_shrine",
+    "roadside_graves"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.45,
   "summary": "The Old Svalich Road west of Vallaki, climbing through pine and rock to Krezk at the end of the valley. Wolves, blights and the druids who tend them by day; werewolves and the dead by night.",

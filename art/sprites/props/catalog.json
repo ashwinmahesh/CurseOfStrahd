@@ -518,6 +518,25 @@
     "tsolenka_pass": [
       "snowdrift",
       "ice_patch"
+    ],
+    "stream_ford": [
+      "rubble"
+    ],
+    "barrow_moor": [
+      "reeds",
+      "bramble_a"
+    ],
+    "mountain_pass": [
+      "snowdrift",
+      "ice_patch"
+    ],
+    "bog_causeway": [
+      "reeds",
+      "bramble_b"
+    ],
+    "frozen_tarn": [
+      "snowdrift",
+      "ice_patch"
     ]
   },
   "doors": {
@@ -1067,6 +1086,23 @@
     "castle_ravenloft_spires_heart": {
       "floor": "castle/flagstones",
       "wall": "castle/ashlar"
+    },
+    "stream_ford": {
+      "difficult": "marsh/marsh_mud"
+    },
+    "barrow_moor": {
+      "difficult": "marsh/marsh_mud"
+    },
+    "mountain_pass": {
+      "floor": "mountain/snow",
+      "difficult": "mountain/snow"
+    },
+    "bog_causeway": {
+      "difficult": "marsh/marsh_mud"
+    },
+    "frozen_tarn": {
+      "floor": "mountain/snow",
+      "difficult": "mountain/snow"
     }
   },
   "feet": {

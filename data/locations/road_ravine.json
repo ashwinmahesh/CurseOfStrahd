@@ -1,0 +1,309 @@
+{
+  "id": "road_ravine",
+  "name": "The Ravine Road",
+  "region": "svalich_road",
+  "summary": "The road drops into a stony ravine where a stream has cut through the woods: down a ledge path on the south wall, across a ford, up the north wall. Sheer rock between, pines along both rims. A random fight on a forest road may play out here.",
+  "map": {
+    "rows": [
+      "################################",
+      "#######################.....####",
+      "###....###############.......###",
+      "#........#############..........",
+      ".......=..##########............",
+      "#........##########.............",
+      "###....##########......####.....",
+      "..........#######..........=....",
+      "....=...................=..wwwww",
+      "wwwwwwwwww...........wwwwwwwwwww",
+      "wwwwwwwwwwwww~~wwwwwwwwwwww.....",
+      "..........www~~wwwwww...........",
+      "......................=.........",
+      "......=....=.................#..",
+      "..##............................",
+      "...................#...=........",
+      "........=.....=...........#.....",
+      "..#.........#.................#.",
+      "################################",
+      "################################"
+    ],
+    "elevation": [
+      "66666666666666666666666666666666",
+      "66666666666666666666666666666666",
+      "66666666666666666666666666666666",
+      "55555555555555555555555555555555",
+      "55555555555555555555555555555555",
+      "55555555555555555555555555555555",
+      "55555555555555555123455555511111",
+      "11111111115555555123411111000000",
+      "000000000001111111110000000.....",
+      "..........00000000000...........",
+      ".............00............00000",
+      "0000000000...00......00000001111",
+      "11111111100000000000001111133333",
+      "33333333211111111111133333333333",
+      "33333333213333333333333333333333",
+      "33333333333333333333333333333333",
+      "33333333333333333333333333333333",
+      "33333333333333333333333333333333",
+      "44444444444444444444444444444444",
+      "44444444444444444444444444444444"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "road_ravine",
+      "name": "The Ravine Road",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      4,
+      15
+    ]
+  },
+  "foe_spots": [
+    [
+      9,
+      7
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      20,
+      4
+    ],
+    [
+      25,
+      3
+    ],
+    [
+      28,
+      5
+    ],
+    [
+      23,
+      7
+    ],
+    [
+      18,
+      12
+    ],
+    [
+      25,
+      12
+    ],
+    [
+      20,
+      15
+    ],
+    [
+      11,
+      15
+    ],
+    [
+      24,
+      16
+    ],
+    [
+      29,
+      11
+    ],
+    [
+      5,
+      12
+    ]
+  ],
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        4
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "ravine_bridge_ruin",
+      "cell": [
+        16,
+        8
+      ],
+      "kind": "examine",
+      "label": "The stumps of a washed-out bridge",
+      "model": "fallen_beam"
+    },
+    {
+      "id": "ravine_boulder_1",
+      "cell": [
+        4,
+        8
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ravine_boulder_2",
+      "cell": [
+        22,
+        12
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ravine_boulder_3",
+      "cell": [
+        11,
+        13
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ravine_boulder_4",
+      "cell": [
+        27,
+        7
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ravine_dead_tree",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "ravine_reeds_1",
+      "cell": [
+        6,
+        11
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ravine_reeds_2",
+      "cell": [
+        19,
+        12
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ravine_bones",
+      "cell": [
+        17,
+        12
+      ],
+      "kind": "decor",
+      "model": "bones_water"
+    },
+    {
+      "id": "ravine_rim_log",
+      "cell": [
+        14,
+        16
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "ravine_rim_stump",
+      "cell": [
+        23,
+        15
+      ],
+      "kind": "decor",
+      "model": "stump"
+    },
+    {
+      "id": "ravine_rim_boulder",
+      "cell": [
+        8,
+        16
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ravine_rim_cairn",
+      "cell": [
+        6,
+        13
+      ],
+      "kind": "examine",
+      "label": "A cairn at the top of the path",
+      "model": "cairn"
+    },
+    {
+      "id": "ravine_lookout",
+      "cell": [
+        27,
+        15
+      ],
+      "kind": "examine",
+      "label": "A hunter's platform in a pine",
+      "model": "hunters_tree_stand",
+      "stand_ft": 10
+    },
+    {
+      "id": "ravine_leaves",
+      "cell": [
+        17,
+        15
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    },
+    {
+      "id": "ravine_rim_rocks",
+      "cell": [
+        7,
+        4
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    }
+  ],
+  "narration": {
+    "enter": "enter:road_ravine"
+  },
+  "rest": "risky"
+}

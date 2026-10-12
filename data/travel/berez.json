@@ -65,6 +65,7 @@
       "via": [[0.335, 0.34], [0.25, 0.265]],
       "hours": 5,
       "table": "baratok_slopes",
+      "grounds": ["lake_inlet", "mount_baratok_trail", "mountain_pass", "frozen_tarn"],
       "name": "The lake shore and the goat track up Mount Baratok"
     },
     {
@@ -89,6 +90,7 @@
       "to": "mount_baratok",
       "hours": 2,
       "table": "baratok_slopes",
+      "grounds": ["mount_baratok_trail", "mountain_pass", "frozen_tarn", "lake_inlet"],
       "name": "The path up from the tower's lake"
     },
     {

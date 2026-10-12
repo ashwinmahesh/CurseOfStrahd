@@ -1,6 +1,13 @@
 {
   "id": "svalich_road",
   "map": "road_ambush",
+  "grounds": [
+    "road_ambush",
+    "road_fork",
+    "wayside_shrine",
+    "roadside_graves",
+    "stream_ford"
+  ],
   "chance_day": 0.15,
   "chance_night": 0.4,
   "summary": "The Old Svalich Road between the Gates, the village, the crossroads and Tser Pool: open ground, ditches and field walls. Wolves by day, the dead and worse by night; now and then a meeting.",

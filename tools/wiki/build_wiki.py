@@ -110,6 +110,11 @@ def human_cond(expr):
     return e
 
 
+def safe_heading(text):
+    """A heading Obsidian can link to: no characters its link syntax reserves."""
+    return re.sub(r"[#|\[\]^]", "", str(text)).strip()
+
+
 def lower_article(label):
     return re.sub(r"^(A|An|The) ", lambda m: m[1].lower() + " ", str(label))
 
@@ -535,6 +540,39 @@ def table_safe(body):
     return "\n".join(out)
 
 
+# Front matter fields the generator writes (an old page's copies of these are dropped, anything else is kept).
+OWNED_FM = {"wiki", "tags", "type", "kind", "region", "level", "giver", "starts", "image", "rest", "title", "cr",
+            "creature", "summary", "rarity"}
+
+
+def fm_value(v):
+    if isinstance(v, (list, tuple)):
+        return "[" + ", ".join(fm_value(x) for x in v) + "]"
+    v = str(v)
+    if re.search(r"[:#\[\]{},&*!|>'\"%@`]", v) or v != v.strip():
+        return '"' + v.replace("\\", "\\\\").replace('"', '\\"') + '"'
+    return v
+
+
+def infobox(image, rows, width=360):
+    """The summary box at the top of a page: an `[!infobox]` callout with a picture and `**Label:** value` lines."""
+    lines = ["> [!infobox]"]
+    if image:
+        lines.append(f"> {embed(image, width)}")
+    for label, value in rows:
+        if value not in (None, ""):
+            lines.append(f"> **{label}:** {value}")
+    return "\n".join(lines)
+
+
+def collapsed(kind, title, lines):
+    """A folded callout for reference detail (`> [!example]- title`), so it doesn't push the guide down."""
+    out = [f"> [!{kind}]- {title}"]
+    for ln in lines:
+        out.append("> " + ln if ln else ">")
+    return "\n".join(out)
+
+
 def auto(name, body):
     return f"%% auto:{name} %%\n{table_safe(body.rstrip())}\n%% /auto:{name} %%\n"
 
@@ -558,21 +596,47 @@ class Writer:
                     if k:
                         self.existing[k[1]] = p
 
-    def write(self, key, rel_path, title, parts, tags=()):
-        """parts: a list of strings, each either an auto() block or a person's default text for a new page."""
+    def write(self, key, rel_path, title, parts, tags=(), meta=None, prose_fix=None):
+        """parts: auto() blocks in page order, and at most one person's part (the default text a new page gets).
+        What people wrote on an existing page (everything outside its auto blocks) goes where that part is, so blocks
+        can be added, renamed or reordered without moving anyone's words. `meta`: front matter fields the generator
+        owns for the website (type, region, image...). `prose_fix(text)` may tidy the kept text (heading levels)."""
         path = self.out / (rel_path + ".md")
-        front = f"---\nwiki: {key}\n" + (f"tags: [{', '.join(tags)}]\n" if tags else "") + "---\n"
-        new_body = f"# {title}\n\n" + "\n".join(p.rstrip() + "\n" for p in parts)
+        fm = OrderedDict([("wiki", key)])
+        if tags:
+            fm["tags"] = f"[{', '.join(tags)}]"
+        for k, v in (meta or {}).items():
+            if v not in (None, "", []):
+                fm[k] = fm_value(v)
         old_path = self.existing.get(key)
-        if old_path and old_path.exists():
-            old = old_path.read_text()
-            body = self._merge(old, new_body)
+        old = old_path.read_text() if old_path and old_path.exists() else None
+        kept_fm = []
+        prose = None
+        if old is not None:
             om = re.match(r"^---\n(.*?)\n---\n", old, re.S)
             if om:
-                keep = [ln for ln in om[1].split("\n") if not re.match(r"^(wiki|tags):", ln)]
-                if keep:
-                    front = front[:-4] + "\n".join(keep) + "\n---\n"
-            text = front + body
+                kept_fm = [ln for ln in om[1].split("\n")
+                           if ln.strip() and ln.split(":", 1)[0].strip() not in OWNED_FM | set(fm)]
+            body = old[om.end():] if om else old
+            body = re.sub(r"^\s*[^\n#]{0,3}#+ [^\n]*\n", "", body, count=1)   # the title line, damaged or not
+            prose = re.sub(r"\n{3,}", "\n\n", AUTO_RE.sub("\n", body)).strip()
+            if prose_fix and prose:
+                prose = prose_fix(prose)
+        out = [f"# {title}", ""]
+        placed = False
+        for part in parts:
+            if part.startswith("%% auto:") or placed:
+                out.append(part.rstrip() + "\n")
+            else:
+                text_ = (prose if prose else part).rstrip()
+                if text_:
+                    out.append(text_ + "\n")
+                placed = True
+        if not placed and prose:
+            out.append(prose + "\n")
+        front = "---\n" + "".join(f"{k}: {v}\n" for k, v in fm.items()) + "".join(ln + "\n" for ln in kept_fm) + "---\n"
+        text = front + "\n".join(out)
+        if old is not None:
             if old_path != path:
                 self.stats["moved"] += 1
                 if not self.dry:
@@ -581,39 +645,12 @@ class Writer:
             if text != old:
                 self.stats["changed"] += 1
         else:
-            text = front + new_body
             self.stats["new"] += 1
         self.written.add(path.resolve())
         if not self.dry:
             path.parent.mkdir(parents=True, exist_ok=True)
             if not path.exists() or path.read_text() != text:
                 path.write_text(text)
-
-    @staticmethod
-    def _merge(old, new_body):
-        """The old page with its auto blocks replaced by the new ones; new blocks go after the block before them."""
-        new_blocks = OrderedDict((m[1], m[0]) for m in AUTO_RE.finditer(new_body))
-        old_body = re.sub(r"^---\n.*?\n---\n", "", old, count=1, flags=re.S)
-        old_names = [m[1] for m in AUTO_RE.finditer(old_body)]
-        # Title line: the generator's, even if an edit left a stray character in front of the `#`.
-        old_body = re.sub(r"^[^\n#]{0,3}#+ [^\n]*\n", new_body.split("\n", 1)[0] + "\n", old_body, count=1)
-
-        def repl(m):
-            blk = new_blocks.get(m[1])
-            return blk if blk is not None else ""
-        body = AUTO_RE.sub(repl, old_body)
-        names = list(new_blocks)
-        for i, name in enumerate(names):
-            if name in old_names:
-                continue
-            before = next((n for n in reversed(names[:i]) if n in old_names or f"%% auto:{n} %%" in body), None)
-            if before:
-                end = body.find(f"%% /auto:{before} %%")
-                end = body.find("\n", end) + 1
-                body = body[:end] + "\n" + new_blocks[name] + body[end:]
-            else:
-                body = body.rstrip() + "\n\n" + new_blocks[name]
-        return body
 
     def sweep(self, removed_dir):
         """Pages that weren't written this run: deleted, or moved aside if a person wrote on them."""
@@ -783,9 +820,28 @@ class Wiki:
             s.anchor(f"spell/{sid}", f"Spells/Level {sp.get('level', 0)} Spells" if sp.get("level") else
                      "Spells/Cantrips", sp["name"])
         self.item_sources = self._item_sources()
-        for iid in self.item_sources:
-            s.anchor(f"item/{iid}", "Items/Where to Find Items", g.item_name(iid))
+        self.codes = self._cheat_codes()
+        self.item_heads = {}     # catalog item id -> (page, heading)
+        used = defaultdict(set)
+        for iid, d in sorted(list(g.items.items()) + list(g.magic.items()), key=lambda kv: kv[1].get("name", kv[0])):
+            if not d.get("playable", True):
+                continue
+            page = "Items/Magic Items" if iid in g.magic else "Items/Equipment"
+            head = safe_heading(d.get("name", title_id(iid)))
+            if head in used[page]:
+                head = f"{head} ({iid})"
+            used[page].add(head)
+            self.item_heads[iid] = (page, head)
+        for iid in set(self.item_sources) | set(self.item_heads):
+            base = iid if iid in self.item_heads else iid.split("__")[0]
+            if base in self.item_heads:
+                s.anchor(f"item/{iid}", *self.item_heads[base])
+            else:
+                s.anchor(f"item/{iid}", "Items/Where to Find Items", safe_heading(g.item_name(iid)))
         self.quest_files = self._quest_files()
+        main = [q for q in MAIN_ORDER if q in g.quests and g.quests[q].get("kind") == "main"]
+        main += [q for q, d in g.quests.items() if d.get("kind") == "main" and q not in main]
+        self.main_next = {a: b for a, b in zip(main, main[1:])}
         self.npc_places = self._npc_places()
         self.fights = self._fights()
 
@@ -994,6 +1050,18 @@ class Wiki:
             bits.append(f"*{text}*")
         return " · ".join(bits) or title_id(e.get("id", "a fight"))
 
+    def fight_summary(self, placements, quest=True):
+        """A fight in one line: its opening, where, and who (every creature any of its versions brings)."""
+        g, s = self.g, self.site
+        lid, e0 = placements[0]
+        who = OrderedDict()
+        for _, e in placements:
+            for m in e.get("monsters", []):
+                who.setdefault(m.get("monster", ""), m.get("name", ""))
+        names = ", ".join(s.mon(mid) for mid in who if mid)
+        scales = " Scales with your level." if len(placements) > 1 else ""
+        return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
+
     def xp_of(self, monsters):
         return sum(int(self.g.monsters.get(m.get("monster", ""), {}).get("xp", 0) or 0) for m in monsters)
 
@@ -1179,72 +1247,94 @@ class Wiki:
             if reward_bits:
                 facts.append(f"> **Rewards:** {', '.join(reward_bits)}")
             pic = self.shot(f"quest_{qid}.png")
-            if pic:
-                facts += ["", embed(pic, 900)]
-            parts = [auto("facts", "\n".join(facts))]
-            parts.append("## Walkthrough\n\n*No walkthrough written yet.*\n")
-            # Journal stages.
-            st_lines = ["## Journal stages", ""]
-            for st in q.get("stages", []):
-                end = {"success": " (ends: success)", "failure": " (ends: failure)"}.get(st.get("ends", ""), "")
-                st_lines.append(f"### {title_id(st['id'])}{end}")
-                st_lines.append(f"> {st.get('journal', '')}")
-                for o in st.get("objectives", []):
-                    st_lines.append(f"- [ ] {o}")
-                if st.get("hint"):
-                    st_lines.append(f"\n**Hint:** {st['hint']}")
-                wh = []
-                for key, node in set_at.get(st["id"], []):
-                    for w in self.where_node(key, node, limit=2, short=True):
-                        if w not in wh:
-                            wh.append(w)
-                if wh:
-                    st_lines.append(f"\n*Reached through:* {'; '.join(wh[:4])}")
-                st_lines.append("")
-            parts.append(auto("stages", "\n".join(st_lines)))
-            det = []
-            if fights:
-                det += ["## Fights", ""]
-                for eid in fights:
-                    pl = self.fights.get(eid, [])
-                    if pl:
-                        det.append(f"**{self.fight_label(pl[0][1], quest=False)}**" + (" (the first line your party fits is the fight you get)"
-                                                              if len(pl) > 1 else ""))
-                        det += self.fight_block(eid, pl)
-                        det.append("")
-            if checks:
-                det += ["## Skill checks in conversation", ""]
-                seen = []
-                for c in checks:
-                    if c not in seen:
-                        seen.append(c)
-                det += [f"- {c}" for c in seen[:40]] + [""]
+            start = self.quest_start(qid)
+            start_loc = start[2]["location"] if start else (places[0] if places else "")
+            nxt = self.main_next.get(qid)
+            rows = [("Type", "Main quest" if q.get("kind") == "main" else "Side quest"),
+                    ("Region", s.region(region) + (f" · level {lvl}" if lvl else "")),
+                    ("Given by", s.npc(q["giver"]) if q.get("giver") in g.npcs else ""),
+                    ("Starts at", s.loc(start_loc) if start_loc else ""),
+                    ("Only from level", str(min(gates)) if gates and min(gates) > 0 else ""),
+                    ("Rewards", ", ".join(reward_bits)),
+                    ("Next", s.quest(nxt) if nxt else "")]
+            parts = [auto("infobox", infobox(pic, rows)),
+                     auto("summary", "## Summary\n\n" + q.get("summary", "")),
+                     "## Walkthrough\n\n*No walkthrough written yet.*\n"]
+            # Rewards, with what each companion thinks.
+            rw = []
+            if reward_bits:
+                rw += [f"- {b[0].upper() + b[1:]}" for b in reward_bits]
+            if gifts_dark:
+                rw += [f"- A dark gift: " + ", ".join(s.link("page/dark_gifts", g.dark_gifts.get(x, {}).get("name", title_id(x)))
+                                                       for x in dict.fromkeys(gifts_dark))]
             if approvals:
-                det += ["## Companion approval", ""]
+                rw += ["", "**What your companions think**", ""]
                 for who, ch in approvals.items():
                     name = g.pregens.get(who, {}).get("name", g.npc_name(who))
-                    bits = "; ".join(f"{'+' if d > 0 else ''}{d}: {why}" for d, why in ch[:6])
-                    det.append(f"- **{name}:** {bits}")
-                det.append("")
-            if gifts_dark:
-                det += ["## Dark gifts offered", ""] + [f"- {s.link('page/dark_gifts', g.dark_gifts.get(x, {}).get('name', title_id(x)))}" for x in gifts_dark] + [""]
+                    seen = []
+                    for d, why in ch:
+                        b = f"{'+' if d > 0 else ''}{d} {why[0].lower() + why[1:] if why else ''}".strip()
+                        if b not in seen:
+                            seen.append(b)
+                    rw.append(f"- **{name}:** " + "; ".join(seen[:6]))
+            if rw:
+                parts.append(auto("rewards", "## Rewards\n\n" + "\n".join(rw)))
+            # Fights: one line each, the party-level variants folded away.
+            fl = []
+            for eid in fights:
+                pl = self.fights.get(eid, [])
+                if not pl:
+                    continue
+                fl.append(self.fight_summary(pl, quest=False))
+                if len(pl) > 1:
+                    fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                                        self.fight_block(eid, pl)))
+                fl.append("")
+            if fl:
+                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl)))
+            # The journal and the conversation checks, folded: the walkthrough tells it better.
+            jl = []
+            for st in q.get("stages", []):
+                end = {"success": " (the end: success)", "failure": " (the end: failure)"}.get(st.get("ends", ""), "")
+                jl.append(f"**{title_id(st['id'])}**{end}: {st.get('journal', '')}")
+                if st.get("hint"):
+                    jl.append(f"*Hint:* {st['hint']}")
+                jl.append("")
+            jr = ["## Journal", "", collapsed("quote", "Every journal entry and hint", jl[:-1])]
+            if checks:
+                seen = list(dict.fromkeys(checks))
+                jr += ["", collapsed("abstract", "Every skill check in its conversations", [f"- {c}" for c in seen[:40]])]
+            parts.append(auto("journal", "\n".join(jr)))
+            # Related: people, places, where to go next.
+            rel = []
             if people:
-                det += ["## People", "", ", ".join(s.npc(n) for n in people if n in g.npcs), ""]
+                rel.append("- **People:** " + ", ".join(s.npc(n) for n in people if n in g.npcs))
             if places:
-                det += ["## Places", "", ", ".join(s.loc(lid) for lid in places), ""]
+                rel.append("- **Places:** " + ", ".join(s.loc(lid) for lid in places))
+            if nxt:
+                rel.append(f"- **Next in the story:** {s.quest(nxt)}")
+            elif q.get("kind") != "main":
+                near = [x for x, d in g.quests.items() if d.get("region") == region and x != qid and d.get("kind") != "main"]
+                if near:
+                    rel.append(f"- **More in {g.region_name(region)}:** " +
+                               ", ".join(s.quest(x) for x in sorted(near, key=lambda x: g.quests[x]["name"])[:8]))
             if cuts:
-                det += ["## Cutscenes", ""]
+                cl = []
                 for cid in cuts:
                     c = g.cutscenes.get(cid, {})
-                    stills = self.cutscene_stills(cid)
-                    det.append(f"**{c.get('title', title_id(cid))}**: {c.get('summary', '')}")
-                    for p, cond in stills[:2]:
-                        det.append(embed(p, 480) + (f"\n*({cond})*" if cond else ""))
-                    det.append("")
-            if det:
-                parts.append(auto("details", "\n".join(det)))
+                    cl.append(f"**{c.get('title', title_id(cid))}**: {c.get('summary', '')}")
+                    for p_, cond in self.cutscene_stills(cid)[:2]:
+                        cl.append(embed(p_, 420) + (f" *({cond})*" if cond else ""))
+                    cl.append("")
+                rel += ["", collapsed("example", "Cutscenes", cl[:-1])]
+            if rel:
+                parts.append(auto("related", "## Related\n\n" + "\n".join(rel)))
+            meta = {"type": "quest", "kind": q.get("kind") or "side", "region": region, "level": lvl,
+                    "giver": q.get("giver", ""), "starts": start_loc, "image": pic,
+                    "summary": plain(q.get("summary", ""), 200)}
             self.w.write(f"quest/{qid}", s.paths[f"quest/{qid}"], q["name"], parts,
-                         tags=["wiki", "quest", "main-quest" if q.get("kind") == "main" else "side-quest"])
+                         tags=["wiki", "quest", "main-quest" if q.get("kind") == "main" else "side-quest"],
+                         meta=meta, prose_fix=lambda t: re.sub(r"(?m)^#### ", "### ", t))
         self._quest_indexes()
 
     def _quest_indexes(self):
@@ -1285,32 +1375,47 @@ class Wiki:
 
     def location_pages(self):
         g, s = self.g, self.site
+        ways_in = defaultdict(list)
+        for l2, loc2 in g.locations.items():
+            for e in loc2.get("exits", []):
+                if e.get("to") and e["to"] != "travel" and (l2, e.get("label", "")) not in [(a, b.get("label", "")) for a, b in ways_in[e["to"]]]:
+                    ways_in[e["to"]].append((l2, e))
+        on_map = defaultdict(list)
+        for tid, t in g.travel.items():
+            for pl in t.get("places", []):
+                on_map[str(pl.get("location", "")).split(":")[0]].append((t, pl))
         for lid, loc in g.locations.items():
             region = loc.get("region", "")
             lvl = loc.get("treasure_level") or g.region_level(region)
-            facts = [f"> [!info] {s.region(region)}" + (f" · party level about {lvl}" if lvl else ""),
-                     f"> {loc.get('summary', '')}"]
-            if loc.get("rest"):
-                facts += [">", f"> **Resting:** {REST_WORDS.get(loc['rest'], loc['rest'])}" +
-                          (f" {loc['rest_text']}" if loc.get("rest_text") else "")]
-            if loc.get("map", {}).get("light"):
-                facts.append(f"> **Light:** {loc['map']['light']}" + (", outdoors" if loc["map"].get("outdoors") else ""))
-            body = facts[:]
-            if loc.get("text"):
-                body += ["", loc["text"]]
             arrive = self.shot(f"loc_{lid}_1.png")
             above = self.shot(f"loc_{lid}_overview.png")
-            if arrive:
-                body += ["", embed(arrive, 900), "*Arriving.*"]
+            qs = sorted(self.quest_locations.get(lid, ()), key=lambda x: g.quests[x]["name"])
+            rest = REST_WORDS.get(loc.get("rest", ""), loc.get("rest", ""))
+            light = loc.get("map", {}).get("light", "")
+            if light and loc.get("map", {}).get("outdoors"):
+                light += ", outdoors"
+            how = []
+            for t, pl in on_map.get(lid, []):
+                how.append(f"the travel map ({pl.get('name', '')})")
+            if not how:
+                for l2, e in ways_in.get(lid, [])[:3]:
+                    how.append(s.loc(l2))
+            rows = [("Region", s.region(region) + (f" · level {lvl}" if lvl else "")),
+                    ("Resting", rest.split(":")[0] if rest else ""),
+                    ("Light", light),
+                    ("Getting here", ", ".join(dict.fromkeys(how)) if how else ""),
+                    ("Quests", ", ".join(s.quest(x) for x in qs[:4]) + (f" and {len(qs) - 4} more" if len(qs) > 4 else ""))]
+            parts = [auto("infobox", infobox(arrive, rows))]
+            ov = ["## Overview", "", loc.get("summary", "")]
+            if loc.get("text"):
+                ov += ["", loc["text"]]
+            if loc.get("rest_text") or rest:
+                ov += ["", f"**Resting:** {rest}" + (f" {loc['rest_text']}" if loc.get("rest_text") else "")]
             if above:
-                body += ["", embed(above, 900), "*The whole place from above.*"]
-            closeups = []
-            for i, (cell, labels) in enumerate(self.spots(lid), 1):
-                pic = self.shot(f"loc_{lid}_spot{i}.png")
-                if pic:
-                    closeups.append((pic, labels))
-            parts = [auto("about", "\n".join(body))]
-            # Numbered map markers and the tables that explain them.
+                ov += ["", embed(above, 900), "*The whole place from above.*"]
+            parts.append(auto("overview", "\n".join(ov)))
+            parts.append("")   # anyone's notes go here
+            # Numbered map markers, shared by the map and the lists below.
             markers, at_cell = [], {}
 
             def mark(cell, kind):
@@ -1320,53 +1425,92 @@ class Wiki:
                     at_cell[key] = len(at_cell) + 1
                     markers.append((at_cell[key], cell, kind))
                 return at_cell[key]
-            people, chests, hidden, checks, exits, traps, doors, reads = [], [], [], [], [], [], [], []
+            gh = []
+            if on_map.get(lid) or ways_in.get(lid):
+                gh += ["### Ways in", ""]
+                for t, pl in on_map.get(lid, []):
+                    cond = human_cond(pl.get("when", ""))
+                    gh.append(f"- **The travel map:** {pl.get('name', '')}, in {t.get('name', '')}" +
+                              (f". It shows once {cond}." if cond else "."))
+                outs_to = {e.get("to") for e in loc.get("exits", [])} if on_map.get(lid) else set()
+                for l2, e in ways_in.get(lid, []):
+                    if l2 not in outs_to:
+                        gh.append(f"- **From {s.loc(l2)}:** {e.get('label', '')}")
+                gh.append("")
+            outs = []
             for e in loc.get("exits", []):
                 n = mark(e["cell"], "exit")
                 to = "the travel map" if e.get("to") == "travel" else s.loc(e["to"])
                 cond = human_cond(e.get("when", ""))
-                exits.append(f"| {n} | {esc(e.get('label', ''))} | {to} | {esc(cond)} |")
+                outs.append(f"| {n} | {esc(e.get('label', ''))} | {to} | {esc(cond)} |")
+            if outs:
+                gh += ["### Ways out", "", "| # | Exit | Leads to | Only when |", "|---|---|---|---|"] + outs
+            usual, later = OrderedDict(), []
             for p in loc.get("npcs", []):
                 n = mark(p["cell"], "npc")
-                hrs = p.get("hours")
-                when = human_cond(p.get("when", ""))
-                bits = []
-                if hrs:
-                    bits.append(f"{hrs[0]:02d}:00–{hrs[1]:02d}:00")
-                if when:
-                    bits.append(f"when {when}")
-                if p.get("asleep"):
-                    bits.append("asleep")
-                people.append(f"| {n} | {s.npc(p['npc'])} | {esc(g.area_name(lid, p['cell']))} | {esc('; '.join(bits))} |")
+                area = g.area_name(lid, p["cell"])
+                hrs = f"{p['hours'][0]:02d}:00–{p['hours'][1]:02d}:00" if p.get("hours") else ""
+                when = p.get("when", "")
+                story = re.sub(r"\b(night|day)\b|hour\s*[<>=]+\s*\d+|\band\b|\bor\b|\bnot\b|[()]", "", when).strip()
+                if not story:
+                    who = usual.setdefault(p["npc"], {"bits": [], "n": []})
+                    bit = ", ".join(x for x in (area, hrs, human_cond(when)) if x)
+                    if bit and bit not in who["bits"]:
+                        who["bits"].append(bit)
+                    who["n"].append(n)
+                else:
+                    later.append((p["npc"], n, area, human_cond(when)))
+            pe = []
+            for nid, who in usual.items():
+                title = g.npcs.get(nid, {}).get("title", "")
+                pe.append(f"- **{s.npc(nid)}**" + (f", {title}" if title else "") +
+                          (f": {'; '.join(who['bits'])}" if who["bits"] else "") +
+                          f" (#{', #'.join(str(x) for x in dict.fromkeys(who['n']))})")
+            if later:
+                by_who = OrderedDict()
+                for nid, n, area, cond in later:
+                    w = by_who.setdefault(nid, {"n": [], "areas": [], "when": []})
+                    w["n"].append(n)
+                    if area and area not in w["areas"]:
+                        w["areas"].append(area)
+                    if cond not in w["when"]:
+                        w["when"].append(cond)
+                ll = []
+                for nid, w in by_who.items():
+                    ll.append(f"- **{s.npc(nid)}**, {', '.join(w['areas']) or 'here'} "
+                              f"(#{', #'.join(str(x) for x in dict.fromkeys(w['n']))}): when " + "; or when ".join(w["when"]))
+                pe += ["", collapsed("note", f"Who turns up at points in the story ({len(by_who)})", ll)]
+            finds, checks, traps, doors, reads = [], [], [], [], []
             for c in loc.get("containers", []):
                 n = mark(c["cell"], "container")
                 inside = [s.item(i["id"]) + (f" ×{i['qty']}" if i.get("qty", 1) > 1 else "") for i in c.get("items", [])]
                 if c.get("gold"):
                     inside.append(f"{c['gold']} gp")
-                notes = []
+                how_ = ["open it"]
                 if c.get("lock_dc"):
-                    notes.append(f"lock DC {c['lock_dc']}")
+                    how_ = [f"lock DC {c['lock_dc']}"]
                 if c.get("key"):
-                    notes.append(f"key: {s.item(c['key'])}")
+                    how_.append(f"or the {s.item(c['key'])}")
                 if c.get("owner"):
-                    notes.append(f"{g.npc_name(c['owner'])}'s (theft)")
+                    how_.append(f"{g.npc_name(c['owner'])}'s, so taking is theft")
                 if c.get("when"):
-                    notes.append(f"when {human_cond(c['when'])}")
-                chests.append(f"| {n} | {esc(c.get('label', c['id']))} | {esc(', '.join(inside) or 'empty')} | "
-                              f"{esc('; '.join(notes))} |")
+                    how_.append(f"only when {human_cond(c['when'])}")
+                finds.append(f"| {n} | {esc(lower_article(c.get('label', c['id'])))} | {esc(', '.join(inside) or 'empty')} | "
+                             f"{esc('; '.join(how_))} |")
             for p in loc.get("props", []):
                 if p.get("item"):
                     n = mark(p["cell"], "hidden")
-                    dc = f"{skill_name(p.get('skill', 'perception'))} DC {p['search_dc']}" if p.get("search_dc") else ""
-                    hidden.append(f"| {n} | {esc(p.get('label', p['id']))} | {s.item(p['item'])} | {dc} |")
+                    dc = f"Search: {skill_name(p.get('skill') or 'perception')} DC {p['search_dc']}" if p.get("search_dc") else "Search"
+                    if p.get("when"):
+                        dc += f"; only when {human_cond(p['when'])}"
+                    finds.append(f"| {n} | {esc(lower_article(p.get('label', p['id'])))} (hidden) | {s.item(p['item'])} | {esc(dc)} |")
                 if p.get("checks"):
                     n = mark(p["cell"], "check")
                     for c in p["checks"]:
-                        checks.append(f"| {n} | {esc(p.get('label', p['id']))} | {skill_name(c['skill'])} {c['dc']} | "
+                        checks.append(f"| {n} | {esc(lower_article(p.get('label', p['id'])))} | {skill_name(c['skill'])} {c['dc']} | "
                                       f"{esc(c.get('label', ''))} | {esc(self.check_result(lid, c))} |")
-                if p.get("kind") == "book" or p.get("codex"):
-                    if p.get("text"):
-                        reads.append((p.get("label", p["id"]), p["text"], human_cond(p.get("when", ""))))
+                if (p.get("kind") == "book" or p.get("codex")) and p.get("text"):
+                    reads.append((p.get("label", p["id"]), p["text"], human_cond(p.get("when", ""))))
             for t in loc.get("traps", []):
                 n = mark(t["cells"][0], "trap")
                 sv = t.get("save") or {}
@@ -1381,84 +1525,84 @@ class Wiki:
                     if d.get("secret_dc"):
                         bits.append(f"secret, found at DC {d['secret_dc']}")
                     if d.get("key"):
-                        bits.append(f"opens with {s.item(d['key'])}")
+                        bits.append(f"opens with the {s.item(d['key'])}")
                     if d.get("locked") and not d.get("lock_dc"):
                         bits.append("barred")
                     if d.get("unlocked_when"):
                         bits.append(f"opens when {human_cond(d['unlocked_when'])}")
                     doors.append(f"- {d.get('label', d['id'])}: {', '.join(bits)}")
             svg = map_svg(g, lid, markers)
-            mp = []
             if svg and not self.dry:
-                p = self.out / "images" / "maps" / f"{lid}.svg"
-                p.parent.mkdir(parents=True, exist_ok=True)
-                if not p.exists() or p.read_text() != svg:
-                    p.write_text(svg)
+                mp_path = self.out / "images" / "maps" / f"{lid}.svg"
+                mp_path.parent.mkdir(parents=True, exist_ok=True)
+                if not mp_path.exists() or mp_path.read_text() != svg:
+                    mp_path.write_text(svg)
+            if gh:
+                parts.append(auto("getting_here", "## Getting here\n\n" + "\n".join(gh)))
+            mp = []
             if svg:
                 mp += ["## Map", "", embed(f"images/maps/{lid}.svg"), "",
-                       "Gold dots are people, red containers, purple hidden finds, teal skill checks, white exits, "
-                       "orange traps. The numbers match the tables below.", ""]
+                       "**Key:** gold, people; red, containers; purple, hidden finds; teal, skill checks; white, exits; "
+                       "orange, traps. The numbers match the lists on this page.", ""]
+            closeups = []
+            for i, (cell, labels) in enumerate(self.spots(lid), 1):
+                pic = self.shot(f"loc_{lid}_spot{i}.png")
+                if pic:
+                    closeups.append((pic, labels))
             if closeups:
-                mp += ["## Close up", ""]
+                mp += ["### Close up", ""]
                 for pic, labels in closeups:
-                    mp += [embed(pic, 600), f"*{', '.join(labels[:5])}*" if labels else "", ""]
-            if exits:
-                mp += ["## Ways out", "", "| # | Exit | Leads to | Only when |", "|---|---|---|---|"] + exits + [""]
-            if people:
-                mp += ["## People here", "", "| # | Who | Where | When |", "|---|---|---|---|"] + people + [""]
-            if chests:
-                mp += ["## Containers", "", "| # | Container | Inside | Notes |", "|---|---|---|---|"] + chests + [""]
+                    mp += [embed(pic, 420), f"*{', '.join(labels[:5])}*" if labels else "", ""]
+            if mp:
+                parts.append(auto("map", "\n".join(mp)))
+            if pe:
+                parts.append(auto("people", "## People\n\n" + "\n".join(pe)))
+            wf = []
+            if finds:
+                wf += ["| # | Where | What | How |", "|---|---|---|---|"] + finds + [""]
             spots = loc.get("treasure_spots") or {}
             if isinstance(spots, dict) and spots:
-                mp += ["**Tarokka treasure spots.** If the reading hid one of the treasures here, it's in: " +
+                wf += ["**Tarokka treasure spots.** If the reading hid one of the treasures here, it's in: " +
                        "; ".join(f"{title_id(k)} ({v.get('container', '')})" for k, v in spots.items()), ""]
-            mp += [f"Containers can also hold random magic items, rolled for a party of level {lvl or 5} the first "
-                   f"time you come here ({s.link('page/random_treasure', 'Random Treasure')}).", ""]
-            if hidden:
-                mp += ["## Hidden finds", "", "Press Search (F) near the spot; the best Perception in the party "
-                       "rolls against the DC.", "", "| # | Where | What | DC |", "|---|---|---|---|"] + hidden + [""]
+            wf += [f"Containers can also hold random magic items, rolled for a party of level {lvl or 5} the first "
+                   f"time you come here ({s.link('page/random_treasure', 'Random Treasure')}). Hidden finds need a "
+                   "Search (F) nearby; the party's best roll counts.", ""]
             if checks:
-                mp += ["## Skill checks", "", "| # | Where | Check | Try | What it does |", "|---|---|---|---|---|"] \
+                wf += ["### Skill checks", "", "| # | Where | Check | Try | What it does |", "|---|---|---|---|---|"] \
                       + checks + [""]
             if traps:
-                mp += ["## Traps", "", "| # | Trap | Find DC | Disarm DC | Save | Damage |", "|---|---|---|---|---|---|"] \
+                wf += ["### Traps", "", "| # | Trap | Find DC | Disarm DC | Save | Damage |", "|---|---|---|---|---|---|"] \
                       + traps + [""]
             if doors:
-                mp += ["## Locked and secret doors", ""] + doors + [""]
-            parts.append(auto("map", "\n".join(mp)))
-            fl = []
+                wf += ["### Locked and secret doors", ""] + doors + [""]
+            parts.append(auto("finds", "## What to find\n\n" + "\n".join(wf)))
             encs = OrderedDict()
             for e in loc.get("encounters", []):
                 encs.setdefault(e["id"], []).append((lid, e))
             if encs:
-                fl += ["## Fights", ""]
+                fl = []
                 for eid, pl in encs.items():
-                    e0 = pl[0][1]
-                    q = e0.get("quest") or {}
-                    head = f"**{self.fight_label(e0, quest=False)}**" + \
-                        (f" ({s.quest(q['id'])})" if q.get("id") in g.quests else "")
-                    fl.append(head)
+                    q = pl[0][1].get("quest") or {}
+                    line = self.fight_summary(pl, quest=False)
+                    if q.get("id") in g.quests:
+                        line += f" Part of {s.quest(q['id'])}."
+                    fl.append(line)
                     if len(pl) > 1:
-                        fl.append("*The first line your party fits is the fight you get.*")
-                    for lid2, e in pl:
-                        cond = human_cond(e.get("when", ""))
-                        fl.append(f"- {self.monsters_line(e.get('monsters', []))} ({self.xp_of(e.get('monsters', []))} XP)"
-                                  + (f", when {cond}" if cond else ""))
+                        fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                                            self.fight_block(eid, pl)))
                     fl.append("")
-            qs = sorted(self.quest_locations.get(lid, ()), key=lambda x: g.quests[x]["name"])
+                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl)))
+            ql = []
             if qs:
-                fl += ["## Quests here", "", ", ".join(s.quest(x) for x in qs), ""]
-            if reads:
-                fl += ["## Things to read", ""]
-                for label, text, cond in reads:
-                    fl.append(f"> [!quote]- {label}" + (f" (when {cond})" if cond else ""))
-                    for para in str(text).split("\n"):
-                        fl.append(f"> {para}")
-                    fl.append("")
-            if fl:
-                parts.append(auto("more", "\n".join(fl)))
+                ql += [f"- {s.quest(x)}: {plain(g.quests[x].get('summary', ''), 140)}" for x in qs] + [""]
+            for label, text, cond in reads:
+                ql += [collapsed("quote", label + (f" (when {cond})" if cond else ""), str(text).split("\n")), ""]
+            if ql:
+                parts.append(auto("quests", "## Quests and lore\n\n" + "\n".join(ql)))
+            meta = {"type": "location", "region": region, "level": lvl, "rest": loc.get("rest", ""), "image": arrive,
+                    "summary": plain(loc.get("summary", ""), 200)}
             self.w.write(f"location/{lid}", s.paths[f"location/{lid}"], loc["name"], parts,
-                         tags=["wiki", "location"])
+                         tags=["wiki", "location"], meta=meta)
         self._region_pages()
 
     def check_result(self, lid, c):
@@ -1553,46 +1697,38 @@ class Wiki:
         g, s = self.g, self.site
         for nid, n in g.npcs.items():
             pic = self.img.portrait(n.get("portrait", nid))
-            facts = []
-            if pic:
-                facts.append(embed(pic, 200))
-                facts.append("")
-            facts.append(f"> [!info] {n.get('title', '')}" if n.get("title") else "> [!info]")
-            facts.append(f"> {n.get('summary', '')}")
-            facts.append(">")
-            if n.get("region"):
-                facts.append(f"> **Region:** {s.region(n['region'])}")
-            if n.get("attitude"):
-                facts.append(f"> **Starting attitude:** {n['attitude']}")
-            if n.get("pronouns"):
-                facts.append(f"> **Pronouns:** {n['pronouns']}")
-            if n.get("monster") and n["monster"] in g.monsters:
-                facts.append(f"> **In a fight:** {s.mon(n['monster'])}")
-            if n.get("guest"):
-                facts.append("> **Can travel with the party** as a guest.")
-            parts = [auto("about", "\n".join(facts))]
+            rows = [("Title", n.get("title", "")),
+                    ("Region", s.region(n["region"]) if n.get("region") else ""),
+                    ("Starting attitude", n.get("attitude", "")),
+                    ("Pronouns", n.get("pronouns", "")),
+                    ("In a fight", s.mon(n["monster"]) if n.get("monster") in g.monsters else ""),
+                    ("Travels with you", "yes, as a guest" if n.get("guest") else ""),
+                    ("Sells", s.link("page/merchants", "see Merchants") if n.get("shop") else "")]
+            parts = [auto("infobox", infobox(pic, rows, 220)),
+                     auto("about", "## About\n\n" + n.get("summary", "")), ""]
             lines = []
             places = self.npc_places.get(nid, [])
-            if places:
-                lines += ["## Where to find them", ""]
-                for p in places:
-                    area = g.area_name(p["location"], p.get("cell"))
-                    bits = []
-                    if p.get("hours"):
-                        bits.append(f"{p['hours'][0]:02d}:00–{p['hours'][1]:02d}:00")
-                    if p.get("when"):
-                        bits.append(f"when {human_cond(p['when'])}")
-                    if p.get("path"):
-                        bits.append("walks a round")
-                    lines.append(f"- {s.loc(p['location'])}" + (f", {area}" if area else "") +
-                                 (f" ({'; '.join(bits)})" if bits else ""))
+            usual, later = [], []
+            for p in places:
+                area = g.area_name(p["location"], p.get("cell"))
+                hrs = f"{p['hours'][0]:02d}:00–{p['hours'][1]:02d}:00" if p.get("hours") else ""
+                story = re.sub(r"\b(night|day)\b|hour\s*[<>=]+\s*\d+|\band\b|\bor\b|\bnot\b|[()]", "", p.get("when", "")).strip()
+                line = f"- {s.loc(p['location'])}" + (f", {area}" if area else "") + (f", {hrs}" if hrs else "") + \
+                    (", walking a round" if p.get("path") else "")
+                if story:
+                    later.append(line + f": when {human_cond(p['when'])}")
+                elif line not in usual:
+                    usual.append(line + (f" ({human_cond(p['when'])})" if p.get("when") else ""))
+            if usual or later:
+                lines += ["## Where to find them", ""] + usual
+                if later:
+                    lines += ["", collapsed("note", f"At points in the story ({len(later)})", later)]
                 lines.append("")
-            if n.get("shop"):
-                lines += ["## Merchant", "", f"Sells and buys goods: see {s.link('page/merchants', 'Merchants')} "
-                          f"(#{n['name']}).", ""]
-            if n.get("services"):
-                lines += ["## Services", ""]
-                for sv in n["services"]:
+            if n.get("shop") or n.get("services"):
+                lines += ["## Shop and services", ""]
+                if n.get("shop"):
+                    lines.append(f"- Buys and sells: {s.link('page/merchants', 'Merchants and Services')} lists the stock and prices.")
+                for sv in n.get("services", []):
                     lines.append(f"- {self.service_name(sv['id'])}" + (f" (when {human_cond(sv['if'])})" if sv.get("if") else ""))
                 lines.append("")
             qs = sorted(self.npc_quests.get(nid, ()), key=lambda x: g.quests[x]["name"])
@@ -1601,7 +1737,9 @@ class Wiki:
                                              for q in qs] + [""]
             if lines:
                 parts.append(auto("where", "\n".join(lines)))
-            self.w.write(f"npc/{nid}", s.paths[f"npc/{nid}"], n["name"], parts, tags=["wiki", "person"])
+            self.w.write(f"npc/{nid}", s.paths[f"npc/{nid}"], n["name"], parts, tags=["wiki", "person"],
+                         meta={"type": "person", "region": n.get("region", ""), "title": n.get("title", ""), "image": pic,
+                               "summary": plain(n.get("summary", ""), 200)})
         by_region = defaultdict(list)
         for nid, n in g.npcs.items():
             by_region[n.get("region", "")].append(nid)
@@ -1638,11 +1776,13 @@ class Wiki:
             hp = m.get("hp", {})
             speed = ", ".join(f"{k} {v} ft" if k != "walk" else f"{v} ft" for k, v in (m.get("speed") or {}).items()
                               if not isinstance(v, bool))
-            lines = []
-            if pic:
-                lines += [embed(pic, 220), ""]
-            lines.append(f"*{m.get('size', '').title()} {m.get('type', '')}, {m.get('alignment', '')}*")
-            lines.append("")
+            box = infobox(pic, [("Type", f"{m.get('size', '').title()} {m.get('type', '')}"),
+                                ("Alignment", m.get("alignment", "")),
+                                ("Challenge", f"{self.cr(m.get('cr'))} ({m.get('xp', '')} XP)"),
+                                ("Armor Class", m.get("ac", "")),
+                                ("Hit Points", f"{hp.get('average', '')} ({hp.get('dice', '')})"),
+                                ("Speed", speed)], 240)
+            lines = ["## Stat block", ""]
             if m.get("summary"):
                 lines += [m["summary"], ""]
             lines += ["| AC | HP | Speed | CR | XP |", "|---|---|---|---|---|",
@@ -1677,7 +1817,7 @@ class Wiki:
                     for a in acts:
                         lines.append(f"- **{a.get('name', title_id(a.get('id', '')))}.** {a.get('text') or a.get('summary', '')}")
                     lines.append("")
-            parts = [auto("stats", "\n".join(lines))]
+            parts = [auto("infobox", box), auto("stats", "\n".join(lines)), ""]
             wl = []
             if met.get(mid):
                 wl += ["## Where you meet it", ""]
@@ -1691,7 +1831,9 @@ class Wiki:
                 wl += ["On the road: " + ", ".join(s.link("page/random_encounters", title_id(r)) for r in roads[mid]), ""]
             if wl:
                 parts.append(auto("where", "\n".join(wl)))
-            self.w.write(f"monster/{mid}", s.paths[f"monster/{mid}"], m["name"], parts, tags=["wiki", "monster"])
+            self.w.write(f"monster/{mid}", s.paths[f"monster/{mid}"], m["name"], parts, tags=["wiki", "monster"],
+                         meta={"type": "creature", "creature": m.get("type", ""), "cr": self.cr(m.get("cr")), "image": pic,
+                               "summary": plain(m.get("summary", ""), 200)})
         lines = [f"Every creature the party can fight: {len(g.monsters)} of them. The journal's Bestiary tab fills in "
                  "as you meet, fell and Study them.", "", "| | Creature | Type | CR | XP | AC | HP |",
                  "|---|---|---|---|---|---|---|"]
@@ -1710,124 +1852,161 @@ class Wiki:
 
     # Items ------------------------------------------------------------------------------------------------------
 
+    def _cheat_codes(self):
+        """Every item's cheat code, from tools/data/cheat_codes.py (the game's own rule, story/cheat_codes.gd)."""
+        import importlib.util
+        path = self.g.root / "tools" / "data" / "cheat_codes.py"
+        if not path.exists():
+            return {}
+        spec = importlib.util.spec_from_file_location("wiki_cheat_codes", path)
+        self.cheat = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.cheat)
+        return self.cheat.assign(list(self.g.items) + list(self.g.magic))
+
+    def item_where(self, iid, shops_inline=True):
+        """Where an item (and, for a template like +1 Weapon, each of its versions) can be had, as bullet lines."""
+        g, s = self.g, self.site
+        srcs = []
+        for k, lst in self.item_sources.items():
+            if k == iid or k.split("__")[0] == iid:
+                for x in lst:
+                    srcs.append((k, x))
+        lines, shops, rot = [], [], []
+        for k, x in srcs:
+            prefix = f"{g.item_name(k)}: " if k != iid else ""
+            if x["kind"] == "shop":
+                (rot if x.get("rotating") else shops).append(g.npc_name(x["npc"]) if not x.get("rotating") else g.npc_name(x["npc"]))
+                continue
+            lines.append(f"- {prefix}{self.source_words(x)}")
+        if len(lines) > 12:
+            lines = lines[:12] + [f"- …and {len(lines) - 12} more places"]
+        if shops:
+            names = list(dict.fromkeys(shops))
+            lines.append("- Sold by " + ", ".join(s.npc(next(k for k, v in g.npcs.items() if v['name'] == n), n) for n in names)
+                         + f" ({s.link('page/merchants', 'prices')})")
+        if rot:
+            lines.append("- Sometimes in the changing stock of " + ", ".join(dict.fromkeys(rot)))
+        return lines
+
+    def item_entry(self, iid, d, stats=""):
+        g, s = self.g, self.site
+        page, head = self.item_heads[iid]
+        meta = []
+        if d.get("magic"):
+            meta.append(str(d["magic"].get("rarity", "")).replace("_", " "))
+        meta.append(str(d.get("category", "item")).replace("_", " "))
+        if (d.get("magic") or {}).get("attunement"):
+            meta.append("needs attunement")
+        code = self.codes.get(iid, "")
+        pick = self.cheat.pick_note(d) if code and hasattr(self, "cheat") else ""
+        lines = [f"### {head}", f"*{', '.join(meta)}*" + (f" · {stats}" if stats else "") +
+                 (f" · **Cheat code:** `{code}`" + (f" ({pick})" if pick else "") if code else ""), ""]
+        if d.get("summary"):
+            lines += [d["summary"], ""]
+        where = self.item_where(iid)
+        if where:
+            lines += ["**Where to find it:**"] + where
+        elif d.get("magic"):
+            rnd = (d.get("treasure") or {}).get("random", True) and (d.get("magic") or {}).get("rarity") != "artifact"
+            lines.append("**Where to find it:** no fixed place. " +
+                         (f"It can turn up as random treasure ({s.link('page/random_treasure', 'Random Treasure')})"
+                          if rnd else "It isn't in the random treasure either") + "; or give it with its cheat code.")
+        lines.append("")
+        return lines
+
     def item_pages(self):
         g, s = self.g, self.site
-        groups = OrderedDict([("Magic items", []), ("Story items, keys and letters", []), ("Equipment and supplies", [])])
-        for iid in self.item_sources:
-            d = g.item_data(iid)
-            if d.get("magic") or iid.split("__")[0] in g.magic:
-                groups["Magic items"].append(iid)
-            elif d.get("category") in ("quest",) or not d:
-                groups["Story items, keys and letters"].append(iid)
-            else:
-                groups["Equipment and supplies"].append(iid)
-        lines = ["Every item placed in the world, given by someone or sold, and where to get it. Containers and "
-                 "hidden finds are numbered on each place's map. Random magic items rolled into containers are on top "
-                 f"of these ({s.link('page/random_treasure', 'Random Treasure')}); merchants' prices are on "
-                 f"{s.link('page/merchants', 'Merchants')}.", ""]
-        for gname, ids in groups.items():
-            lines += [f"## {gname}", ""]
-            for iid in ids:
-                d = g.item_data(iid)
-                lines.append(f"### {g.item_name(iid)}")
-                meta = []
-                if d.get("magic"):
-                    meta.append(str(d["magic"].get("rarity", "")).replace("_", " "))
-                    if d["magic"].get("attunement"):
-                        meta.append("attunement")
-                if d.get("category"):
-                    meta.append(d["category"])
-                if meta or d.get("summary"):
-                    lines.append(f"*{', '.join(meta)}*" + (f". {d.get('summary', '')}" if d.get("summary") else ""))
-                srcs = self.item_sources[iid]
-                shops = [x for x in srcs if x["kind"] == "shop"]
-                others = [x for x in srcs if x["kind"] != "shop"]
-                for x in others[:25]:
-                    lines.append(f"- {self.source_words(x)}")
-                if len(others) > 25:
-                    lines.append(f"- …and {len(others) - 25} more places")
-                if shops:
-                    fixed = sorted({g.npc_name(x["npc"]) for x in shops if not x.get("rotating")})
-                    rot = sorted({g.npc_name(x["npc"]) for x in shops if x.get("rotating")})
-                    if fixed:
-                        lines.append(f"- Sold by: {', '.join(s.npc(next(k for k, v in g.npcs.items() if v['name'] == f), f) for f in fixed)}")
-                    if rot:
-                        lines.append(f"- Sometimes in the changing stock of: {', '.join(rot)}")
-                lines.append("")
-        self.w.write("page/item_sources", "Items/Where to Find Items", "Where to Find Items",
-                     [auto("list", "\n".join(lines))], tags=["wiki", "items"])
-        # The magic item catalogue, by rarity.
-        lines = [f"All {sum(1 for d in g.magic.values() if d.get('playable', True))} magic items in the game, by rarity. Most turn up as random treasure "
-                 f"({s.link('page/random_treasure', 'Random Treasure')}); those with a fixed home link to it.", ""]
+        how = getattr(self, "cheat", None)
+        # Magic items, by rarity, each with what it does, where it is and its code.
+        lines = [f"Every magic item in the game, by rarity: what it does, where to find it and its cheat code "
+                 f"({s.link('page/cheat_codes', 'how to use a code')}). Most have no fixed place and turn up as random "
+                 f"treasure ({s.link('page/random_treasure', 'Random Treasure')}).", ""]
         by_r = defaultdict(list)
         for iid, d in g.magic.items():
-            if d.get("playable", True):
+            if iid in self.item_heads:
                 by_r[(d.get("magic") or {}).get("rarity", "common")].append(iid)
         for r in RARITIES:
-            if not by_r.get(r):
-                continue
-            lines += [f"## {r.replace('_', ' ').title()} ({len(by_r[r])})", "",
-                      "| Item | Type | Attune | What it does | Placed |", "|---|---|---|---|---|"]
-            for iid in sorted(by_r[r], key=lambda x: g.magic[x]["name"]):
-                d = g.magic[iid]
-                placed = [k for k in self.item_sources if k == iid or k.startswith(iid + "__")]
-                where = " ".join(s.item(k, "where") for k in placed[:1]) if placed else ""
-                lines.append(f"| {esc(d['name'])} | {d.get('category', '')} | "
-                             f"{'yes' if (d.get('magic') or {}).get('attunement') else ''} | "
-                             f"{esc(d.get('summary', ''))} | {where} |")
-            lines.append("")
+            if by_r.get(r):
+                lines += [f"## {r.replace('_', ' ').title()} ({len(by_r[r])})", ""]
+                for iid in sorted(by_r[r], key=lambda x: g.magic[x]["name"]):
+                    lines += self.item_entry(iid, g.magic[iid])
         self.w.write("page/magic_items", "Items/Magic Items", "Magic Items", [auto("list", "\n".join(lines))],
-                     tags=["wiki", "items"])
-        # Mundane equipment.
-        lines = ["The everyday gear of the 2024 Player's Handbook as this game prices it. Merchants charge their own "
-                 f"markup on these ({s.link('page/merchants', 'Merchants')}).", ""]
-        mundane = [d for d in g.items.values() if d.get("playable", True)]
-        weapons = [d for d in mundane if d.get("category") == "weapon"]
-        if weapons:
-            lines += ["## Weapons", "", "| Weapon | Kind | Damage | Properties | Mastery | Cost | Weight |",
-                      "|---|---|---|---|---|---|---|"]
-            for d in sorted(weapons, key=lambda d: (d.get("weapon", {}).get("kind", ""), d["name"])):
-                w = d.get("weapon", {})
-                props = ", ".join(str(p).replace("_", " ") for p in w.get("properties", []))
-                if w.get("versatile"):
-                    props += f" ({w['versatile']})"
-                if w.get("range"):
-                    rg = w["range"]
-                    props += f" (range {rg[0]}/{rg[1]})" if isinstance(rg, list) else f" (range {rg})"
-                lines.append(f"| {d['name']} | {w.get('kind', '').replace('_', ' ')} | {w.get('damage', '')} "
-                             f"{w.get('damage_type', '')} | {props} | {w.get('mastery', '')} | {self.gp(d.get('cost_gp'))} | "
-                             f"{d.get('weight_lb', '')} lb |")
-            lines.append("")
-        armor = [d for d in mundane if d.get("category") in ("armor", "shield")]
-        if armor:
-            lines += ["## Armor", "", "| Armor | Kind | AC | Strength | Stealth | Cost | Weight |",
-                      "|---|---|---|---|---|---|---|"]
-            for d in sorted(armor, key=lambda d: (d.get("armor", {}).get("kind", ""), d.get("cost_gp", 0))):
-                a = d.get("armor", {})
-                ac = f"{a.get('base_ac', '')}"
-                if a.get("kind") == "shield":
-                    ac = f"+{a.get('base_ac', 2)}"
-                elif a.get("dex_cap") is None:
-                    ac += " + Dex"
-                elif a.get("dex_cap"):
-                    ac += f" + Dex (max {a['dex_cap']})"
-                lines.append(f"| {d['name']} | {a.get('kind', '')} | {ac} | {a.get('strength', '') or ''} | "
-                             f"{'Disadvantage' if a.get('stealth_disadvantage') else ''} | {self.gp(d.get('cost_gp'))} | "
-                             f"{d.get('weight_lb', '')} lb |")
-            lines.append("")
-        rest = [d for d in mundane if d.get("category") not in ("weapon", "armor", "shield", "quest")]
-        cats = defaultdict(list)
-        for d in rest:
-            cats[d.get("category", "gear")].append(d)
-        for c in sorted(cats):
-            lines += [f"## {c.replace('_', ' ').title()}", "", "| Item | What it does | Cost | Weight |", "|---|---|---|---|"]
-            for d in sorted(cats[c], key=lambda d: d["name"]):
-                lines.append(f"| {d['name']} | {esc(d.get('summary', ''))} | {self.gp(d.get('cost_gp'))} | "
-                             f"{d.get('weight_lb', '')} lb |")
-            lines.append("")
+                     tags=["wiki", "items"], meta={"type": "item-list"})
+        # Everyday equipment, by kind.
+        lines = ["The everyday gear of the 2024 Player's Handbook: what each piece does, where to find it, what it "
+                 f"costs and its cheat code. Merchants charge their own markup ({s.link('page/merchants', 'Merchants')}).", ""]
+        cats = OrderedDict()
+        order = ["weapon", "ammunition", "armor", "shield", "focus", "tool", "gear", "light", "container", "consumable",
+                 "potion", "scroll", "pack", "clothing", "quest"]
+        for c in order + sorted({d.get("category", "gear") for d in g.items.values()} - set(order)):
+            ids = [iid for iid, d in g.items.items() if d.get("category", "gear") == c and iid in self.item_heads]
+            if ids:
+                cats[c] = sorted(ids, key=lambda x: g.items[x]["name"])
+        for c, ids in cats.items():
+            lines += [f"## {('Story items' if c == 'quest' else c.replace('_', ' ').title())}", ""]
+            for iid in ids:
+                d = g.items[iid]
+                st = []
+                w = d.get("weapon") or {}
+                a = d.get("armor") or {}
+                if w:
+                    st.append(f"{w.get('damage', '')} {w.get('damage_type', '')}".strip())
+                    props = ", ".join(str(x).replace("_", " ") for x in w.get("properties", []))
+                    if props:
+                        st.append(props)
+                    if w.get("mastery"):
+                        st.append(f"mastery {w['mastery']}")
+                if a:
+                    ac = f"+{a.get('base_ac', 2)} AC" if a.get("kind") == "shield" else f"AC {a.get('base_ac', '')}" + \
+                        ("" if a.get("dex_cap") == 0 else " + Dex" + (f" (max {a['dex_cap']})" if a.get("dex_cap") else ""))
+                    st.append(ac)
+                if d.get("cost_gp"):
+                    st.append(self.gp(d["cost_gp"]))
+                if d.get("weight_lb"):
+                    st.append(f"{d['weight_lb']} lb")
+                lines += self.item_entry(iid, d, " · ".join(x for x in st if x))
         self.w.write("page/equipment", "Items/Equipment", "Equipment", [auto("list", "\n".join(lines))],
-                     tags=["wiki", "items"])
-        # Random treasure.
+                     tags=["wiki", "items"], meta={"type": "item-list"})
+        # The finder: every item with a fixed home, and the story items that aren't in the catalog.
+        lines = ["Every item that has a fixed place in the world, is given by someone or is sold, A to Z. Each name "
+                 f"opens its entry in {s.link('page/magic_items', 'Magic Items')} or "
+                 f"{s.link('page/equipment', 'Equipment')}, with the full list of places.", ""]
+        story = []
+        for iid, srcs in self.item_sources.items():
+            base = iid.split("__")[0]
+            if base not in self.item_heads and iid not in self.item_heads:
+                story.append(iid)
+                continue
+            first = next((x for x in srcs if x["kind"] != "shop"), srcs[0])
+            more = len(srcs) - 1
+            lines.append(f"- {s.item(iid)}: {self.source_words(first)}" + (f" (+{more} more)" if more > 0 else ""))
+        if story:
+            lines += ["", "## Story items, keys and letters", ""]
+            for iid in story:
+                lines += [f"### {safe_heading(g.item_name(iid))}"] + [f"- {self.source_words(x)}" for x in self.item_sources[iid]] + [""]
+        self.w.write("page/item_sources", "Items/Where to Find Items", "Where to Find Items",
+                     [auto("list", "\n".join(lines))], tags=["wiki", "items"], meta={"type": "item-list"})
+        # Cheat codes.
+        lines = ["Every item has a six-character code that gives it to a hero. **Codes work in every copy of the game, "
+                 "the released one included:** the Cheat codes page is in the pause menu whenever you have a party "
+                 "(only Report a bug is for dev builds).", ""]
+        if how is not None:
+            lines += [ln for ln in how.HOW_TO]
+        lines += ["## Magic items", ""]
+        for r in RARITIES:
+            if by_r.get(r):
+                lines += [f"### {r.replace('_', ' ').title()}", "", "| Item | Code | Kind | Pick |", "|---|---|---|---|"]
+                for iid in sorted(by_r[r], key=lambda x: g.magic[x]["name"]):
+                    d = g.magic[iid]
+                    lines.append(f"| {s.item(iid, d['name'])} | `{self.codes.get(iid, '')}` | {esc(str(d.get('category', '')).replace('_', ' '))} | "
+                                 f"{how.pick_note(d) if how else ''} |")
+                lines.append("")
+        lines += ["## Equipment and supplies", "", "| Item | Code | Kind |", "|---|---|---|"]
+        for iid in sorted((i for i in g.items if i in self.item_heads), key=lambda x: g.items[x]["name"]):
+            d = g.items[iid]
+            lines.append(f"| {s.item(iid, d['name'])} | `{self.codes.get(iid, '')}` | {esc(str(d.get('category', '')).replace('_', ' '))} |")
+        self.w.write("page/cheat_codes", "Items/Cheat Codes", "Cheat Codes", [auto("list", "\n".join(lines))],
+                     tags=["wiki", "items"], meta={"type": "guide"})
         t = g.treasure
         lines = [plain(t.get("_note", "")), "", "## Party level by region", "", "| Region | Level |", "|---|---|"]
         for rid, lvl in sorted(t.get("region_levels", {}).items(), key=lambda kv: kv[1]):
@@ -2445,34 +2624,39 @@ class Wiki:
         g, s = self.g, self.site
         n_side = sum(1 for q in g.quests.values() if q.get("kind") != "main")
         n_main = len(g.quests) - n_side
+        n_magic = sum(1 for d in g.magic.values() if d.get("playable", True))
         sec = [
-            ("Walkthroughs", [s.link("page/main_story", "Main Story") + f" ({n_main} quests)",
-                              s.link("page/side_quests", "Side Quests") + f" ({n_side} quests)",
-                              s.link("page/tarokka", "The Tarokka Reading"), s.link("page/endings", "Endings")]),
-            ("The world", [s.link("page/locations", "All Locations") + f" ({len(g.locations)} places, with maps)",
-                           s.link("page/regions", "Regions"),
-                           s.link("page/people", "People") + f" ({len(g.npcs)})",
-                           s.link("page/bestiary", "Bestiary") + f" ({len(g.monsters)} creatures)",
-                           s.link("page/checks", "World Skill Checks"), s.link("page/talking", "Talking Creatures"),
-                           s.link("page/random_encounters", "Random Encounters"), s.link("page/weather", "Weather"),
-                           s.link("page/strahd", "Strahd's Visits")]),
-            ("Items and money", [s.link("page/item_sources", "Where to Find Items"),
-                                 s.link("page/merchants", "Merchants and Services"),
-                                 s.link("page/magic_items", "Magic Items") +
-                                 f" ({sum(1 for d in g.magic.values() if d.get('playable', True))})",
-                                 s.link("page/equipment", "Equipment"), s.link("page/random_treasure", "Random Treasure"),
-                                 "[[Cheat Codes]] (every item's code)"]),
-            ("Heroes and magic", [s.link("page/heroes", "Heroes"), s.link("page/approval", "Companion Approval"),
+            ("Walkthroughs", [s.link("page/main_story", "Main Story") + f": the {n_main} quests of the story, in order",
+                              s.link("page/side_quests", "Side Quests") + f": all {n_side}, by region and level",
+                              s.link("page/tarokka", "The Tarokka Reading") + ": every card, and where it hides the treasures",
+                              s.link("page/endings", "Endings") + ": how the game can end"]),
+            ("The world", [s.link("page/locations", "All Locations") + f": {len(g.locations)} places, each with a map and screenshots",
+                           s.link("page/people", "People") + f": all {len(g.npcs)}, with where to find them",
+                           s.link("page/bestiary", "Bestiary") + f": {len(g.monsters)} creatures and their stat blocks",
+                           s.link("page/checks", "World Skill Checks") + ": everything in the world you can try a check on",
+                           s.link("page/talking", "Talking Creatures") + ": animals, the dead and plants that talk to a spell",
+                           s.link("page/random_encounters", "Random Encounters") + ": what the roads can throw at you",
+                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits")]),
+            ("Items and money", [s.link("page/item_sources", "Where to Find Items") + ": every item with a fixed home, A to Z",
+                                 s.link("page/magic_items", "Magic Items") + f": all {n_magic}, with where they are and their codes",
+                                 s.link("page/equipment", "Equipment") + ": weapons, armor and gear",
+                                 s.link("page/cheat_codes", "Cheat Codes") + ": every item's code, and how to use one",
+                                 s.link("page/merchants", "Merchants and Services") + ": who sells what, and for how much",
+                                 s.link("page/random_treasure", "Random Treasure") + ": how chests are filled"]),
+            ("Heroes and magic", [s.link("page/heroes", "Heroes") + " and " + s.link("page/approval", "Companion Approval"),
                                   "Classes: " + ", ".join(s.link(f"class/{c}") for c in g.classes),
-                                  s.link("page/species", "Species"), s.link("page/backgrounds", "Backgrounds"),
-                                  s.link("page/feats", "Feats"), s.link("page/spells_by_class", "Spells by Class"),
+                                  s.link("page/species", "Species") + ", " + s.link("page/backgrounds", "Backgrounds") +
+                                  " and " + s.link("page/feats", "Feats"),
                                   "Spells: " + ", ".join(s.link(f"page/spells_{i}", "Cantrips" if i == 0 else f"Level {i}")
-                                                         for i in range(10) if f"page/spells_{i}" in s.paths),
-                                  s.link("page/dark_gifts", "Dark Gifts")]),
-            ("Rules and play", [s.link("page/house_rules", "House Rules"), s.link("page/difficulty", "Difficulty"),
-                                s.link("page/magic", "How Magic Works"), s.link("page/stealth"), s.link("page/resting"),
-                                s.link("page/controls", "Controls"), s.link("page/conditions", "Conditions"),
-                                s.link("page/glossary", "Glossary"), s.link("page/achievements", "Achievements"),
+                                                         for i in range(10) if f"page/spells_{i}" in s.paths) +
+                                  "; " + s.link("page/spells_by_class", "by class"),
+                                  s.link("page/dark_gifts", "Dark Gifts") + ": the Amber Temple's bargains"]),
+            ("Rules and play", [s.link("page/magic", "How Magic Works") + ", " + s.link("page/stealth") + " and " +
+                                s.link("page/resting"),
+                                s.link("page/house_rules", "House Rules") + ": where the game differs from the 2024 books",
+                                s.link("page/difficulty", "Difficulty") + " and " + s.link("page/controls", "Controls"),
+                                s.link("page/conditions", "Conditions") + " and the " + s.link("page/glossary", "Glossary"),
+                                s.link("page/achievements", "Achievements") + " and the " +
                                 s.link("page/cutscenes", "Cutscene Gallery")]),
         ]
         lines = []
@@ -2485,7 +2669,7 @@ class Wiki:
                  "A guide to the Curse of Strahd game: walkthroughs for every quest, where every item is, who sells "
                  "what, every place and person in Barovia, the creatures you'll fight, and how the rules work here.\n")
         self.w.write("page/home", "Home", "Curse of Strahd Wiki", [intro, auto("contents", "\n".join(lines))],
-                     tags=["wiki"])
+                     tags=["wiki"], meta={"type": "index"})
 
     def quest_start(self, qid):
         """(file key, node, entry) of the conversation that starts a quest: its earliest stage set where a person
@@ -2572,6 +2756,7 @@ class Wiki:
                                  ("page/equipment", "Items/Equipment", "Equipment"),
                                  ("page/random_treasure", "Items/Random Treasure", "Random Treasure"),
                                  ("page/merchants", "Items/Merchants", "Merchants and Services"),
+                                 ("page/cheat_codes", "Items/Cheat Codes", "Cheat Codes"),
                                  ("page/checks", "World/Skill Checks", "World Skill Checks"),
                                  ("page/talking", "World/Talking Creatures", "Talking Creatures"),
                                  ("page/random_encounters", "World/Random Encounters", "Random Encounters"),

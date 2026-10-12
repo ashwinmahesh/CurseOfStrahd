@@ -56,3 +56,18 @@ func test_a_paladins_aura_of_protection_draws_nothing() -> void:
 	assert_true(ClassFeatures.has(tok.combatant, "aura_of_protection"), "he has the aura")
 	assert_true(tok.aura == null, "but no glow round him, and no area on the floor")
 	assert_eq(tok.find_children("Aura", "", true, false).size(), 0)
+
+
+## "Slowed" over a creature whose Speed a spell or effect cut (owner, 2026-10-12): Ray of Frost's minus, the Slow
+## spell's half; nothing for an untouched creature.
+func test_slowed_shows_over_a_creature_whose_speed_is_cut() -> void:
+	var tok := _token(Monster.from_data(Compendium.shared().monster_data("zombie")), &"enemy")
+	assert_false(str((tok.get("_status") as Label3D).text).contains("Slowed"), "nothing yet")
+	var frost := Effect.new("Ray of Frost", &"spell", "ray_of_frost").with_modifier("speed", {"value": -10})
+	tok.combatant.creature.add_effect(frost)
+	tok.refresh()
+	assert_true(str((tok.get("_status") as Label3D).text).contains("Slowed"), "Ray of Frost's minus 10 ft")
+	tok.combatant.creature.remove_effect(frost)
+	tok.combatant.creature.add_effect(Effect.new("Slow", &"spell", "slow").with_modifier("speed_percent", {"value": 50}))
+	tok.refresh()
+	assert_true(str((tok.get("_status") as Label3D).text).contains("Slowed"), "the Slow spell's half")

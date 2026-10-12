@@ -1,6 +1,7 @@
 {
   "about": "What grows where in the Modern look (Flora, docs/art/plants.md). A place takes the set named for its mood in moods, else the set of the mood it is like (art/atmosphere/moods.json), else forest. trees: the 3D plants standing in for each 2D tree (a variant is picked per tree), how tall they stand against their model (scale, in the map and on the land, kept between shortest and tallest) and how thick the land's forest is against the old trees (tree_density). Plant lists are [plant, how many per square]: land on the forest ground past the map's edge (out to land_reach squares), under on the map's tree squares, edge on the side of a square beside them, open on its other grass squares where people walk (kept short: open_scale, and off the middle of the square), shore beside water. tint warms or cools the leaves; snow lies on the tops; bark is the trunks' ridge and furrow colours and lichen.",
   "moods": {
+    "moor": "blight",
     "svalich_woods": "forest",
     "barovia_village": "forest",
     "vallaki": "forest",

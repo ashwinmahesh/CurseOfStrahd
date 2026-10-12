@@ -32,8 +32,12 @@ endif
 if quest.the_packs_runt == given
 -> END
 endif
-if quest.the_packs_runt == done
+if quest.the_packs_runt == done and flag.petru_cured
 Little Petru: I'm a boy all month now. Except I can still smell when it's going to rain. Mama says that's useful. Stelian says it's cheating.
+-> END
+endif
+if quest.the_packs_runt == done
+Little Petru: The big one's gone. Mama locks the pen on full-moon nights now, with me in it. The goats don't mind. I don't either, much.
 -> END
 endif
 if not flag.petru_met

@@ -74,6 +74,18 @@ start (somewhere everyone in the valley knows); a place with `when` appears once
 `map` is a location used as the battlefield (the party arrives at its `default` spawn). A dialogue entry plays a
 conversation instead of a fight (it may still end in `combat <id>` from that map's encounters).
 
+`grounds` (Ashwin, 2026-10-12: "a variety of these to randomly pick from"; story/road_grounds.gd) lists the battle maps
+the table's fights may play out on, its own `map` among them if it is to be one: the land of its roads (a fork in the
+road, a clearing, a ravine, a ford, a ruined shrine, graves by the road, a moor, a lake inlet, a mountain pass). Each
+fight picks one with its own dice (the playthrough's seed, the table and the hour, so the fight's rolls are untouched),
+never the ground picked last, and a ground fought on in the last few fights a third as often as a fresh one. A road
+whose land differs from the rest of its table's names its own `grounds` instead (the river legs past Tser Falls, the
+barrow track over the moor, the lake shore up Mount Baratok). Meetings stay on `map`. The entries' monster `cell`s are
+written for `map`; on another ground each foe takes the free square of the ground's `foe_spots`
+(docs/contracts/locations.md) nearest where its table put it round the party, so a fight keeps its shape, and a foe
+with no spot left takes open ground about four squares from the party. A ground's look (its mood, its vista place)
+and its region's weather are its own, so each pool keeps to one land.
+
 Every entry pays (Ashwin, 2026-10-09; story/road_spoils.gd, game_root): a fight's spoils hold coins for each foe by its
 Challenge Rating (after the 2024 DMG's individual treasure), one find in step with the party's level (a healing
 potion, a gem or a spell scroll) and a chance of a magic item that grows with the foes' XP against the party's

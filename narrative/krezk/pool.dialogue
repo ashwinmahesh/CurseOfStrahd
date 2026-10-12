@@ -18,7 +18,7 @@ endif
 * [if not flag.white_sun_water] Fill flasks from the pool. -> fill
 * [if not flag.pool_offerings_taken] Look at the coins on the bottom. -> offerings
 * [if flag.ireena_pool_vision and guest:ireena] (Look at Ireena.) -> ireena_after
-* [name:tamsin_tealeaf] [if quest.the_locket >= her_name and flag.locket_fate != "pool" and flag.locket_fate != "ireena"] (Take out the locket.) -> companions/locket:pool
+* [name:tamsin_tealeaf] [if quest.the_locket >= her_name and flag.locket_fate != "pool" and flag.locket_fate != "ireena" and flag.locket_fate != "strahd" and flag.locket_fate != "burned"] (Take out the locket.) -> companions/locket:pool
 * Leave the water be. -> END
 
 ~ wade

@@ -61,6 +61,7 @@ approve ratatoille +5: You let me cook for the Martikovs
 # --- Asking the master (mount_baratok/mordenkainen:restored_menu) --------------------------------------------------
 
 ~ apprentice
+set ratatoille_master_asked
 interject name:ratatoille: Master Mordenkainen. Archmage. Sir. I am Ratatouille, Diviner of the... I'm Ratatouille. I've read everything you ever wrote, including the footnotes, including the footnote about the footnotes. I crossed the mists to become your apprentice.
 Mordenkainen: You crossed the mists for me? Nobody's done that on purpose.
 interject name:ratatoille: Well. For the Wizard of Wines. Which was you. Which I didn't know. It's complicated.

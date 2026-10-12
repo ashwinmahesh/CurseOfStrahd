@@ -98,6 +98,7 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 	var success := false
 	if not save.is_empty():
 		var t := victim.creature.roll_save(view.dice, StringName(str(save["ability"])), int(save["dc"]))
+		CheckAids.own_luck_on_save(victim.creature, t, view.dice)   # Automatic only: a trap can't wait to ask
 		success = t.success
 		lines.append(t.describe())
 		view.big_roll.emit(t, victim.name(), "%s saving throw" % Creature.ABILITY_NAMES.get(StringName(str(save["ability"])), "A"))

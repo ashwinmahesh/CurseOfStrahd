@@ -1,0 +1,391 @@
+{
+  "id": "stream_ford",
+  "name": "The Ford",
+  "region": "svalich_road",
+  "summary": "The road wades a quick brown stream at a gravel ford, the banks thick with reeds; upstream the stones of an old mill, downstream a cart that didn't make it across. A random fight on the valley's roads may play out here.",
+  "map": {
+    "rows": [
+      "#############www################",
+      "#############www################",
+      "#############www######......####",
+      "#########....www......=.=.....##",
+      "######.......www..............##",
+      "####.........www......=.......##",
+      "##..##.......www.............###",
+      "#........=....www=............##",
+      "#....=........www.............##",
+      "..............~~~...............",
+      "..............~~~...............",
+      "..............~~~...............",
+      "#.=.........=.www....=........##",
+      "##............www=.......=...###",
+      "##.............www.........#####",
+      "............=..www.......#######",
+      "#..............www....##########",
+      "###....########www##############",
+      "###############www##############",
+      "###############www##############"
+    ],
+    "elevation": [
+      "4444444444421...0222222222222222",
+      "4444444444421...0222222222222222",
+      "3333333333320...0111111222211111",
+      "3333333333221...0111111222211111",
+      "3344444333221...0111111222211111",
+      "3344544333321...0111111222211111",
+      "3445554433221...0011111111111111",
+      "34455544333211...011111111111111",
+      "33445443332211...011111111111111",
+      "33444443332221000011111111111111",
+      "33333333333221000111111111111111",
+      "33333333333221000011111111111111",
+      "33333333333321...011111111111111",
+      "33333333333321...001111111111111",
+      "333333333332210...01111111111111",
+      "333333333332211...01111111111111",
+      "333333333332221...01111111111111",
+      "333333333333320...01111111111111",
+      "444444444444421...02222222222222",
+      "444444444444421...02222222222222"
+    ],
+    "theme": "riverside",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "stream_ford",
+      "name": "The Ford",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      10
+    ]
+  },
+  "foe_spots": [
+    [
+      24,
+      6
+    ],
+    [
+      26,
+      7
+    ],
+    [
+      28,
+      11
+    ],
+    [
+      24,
+      15
+    ],
+    [
+      20,
+      14
+    ],
+    [
+      21,
+      7
+    ],
+    [
+      8,
+      4
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      3,
+      14
+    ],
+    [
+      7,
+      15
+    ],
+    [
+      29,
+      4
+    ],
+    [
+      17,
+      4
+    ],
+    [
+      18,
+      15
+    ],
+    [
+      26,
+      9
+    ]
+  ],
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        10
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        10
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "ford_mill_stones_1",
+      "cell": [
+        22,
+        3
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_mill_stones_2",
+      "cell": [
+        24,
+        3
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_mill_stones_3",
+      "cell": [
+        22,
+        5
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_mill_beam",
+      "cell": [
+        23,
+        4
+      ],
+      "kind": "decor",
+      "model": "fallen_beam"
+    },
+    {
+      "id": "ford_millstone",
+      "cell": [
+        25,
+        5
+      ],
+      "kind": "examine",
+      "label": "A cracked millstone in the grass",
+      "model": "millstone"
+    },
+    {
+      "id": "ford_mill_rubble",
+      "cell": [
+        27,
+        4
+      ],
+      "kind": "decor",
+      "model": "rubble"
+    },
+    {
+      "id": "ford_cart",
+      "cell": [
+        17,
+        13
+      ],
+      "kind": "examine",
+      "label": "A cart on its side at the water's edge",
+      "model": "cart_broken"
+    },
+    {
+      "id": "ford_rowboat",
+      "cell": [
+        17,
+        7
+      ],
+      "kind": "examine",
+      "label": "A rowboat pulled up on the bank",
+      "model": "rowboat"
+    },
+    {
+      "id": "ford_nets",
+      "cell": [
+        12,
+        12
+      ],
+      "kind": "decor",
+      "model": "fishing_nets"
+    },
+    {
+      "id": "ford_dead_willow",
+      "cell": [
+        5,
+        8
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "ford_boulder_1",
+      "cell": [
+        9,
+        7
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_boulder_2",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_boulder_3",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "ford_log",
+      "cell": [
+        25,
+        13
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "ford_milestone",
+      "cell": [
+        2,
+        12
+      ],
+      "kind": "decor",
+      "model": "milestone"
+    },
+    {
+      "id": "ford_reeds_1",
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_2",
+      "cell": [
+        13,
+        13
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_3",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_4",
+      "cell": [
+        19,
+        6
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_5",
+      "cell": [
+        22,
+        15
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_6",
+      "cell": [
+        12,
+        3
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_7",
+      "cell": [
+        18,
+        16
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_reeds_8",
+      "cell": [
+        5,
+        16
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "ford_bones",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "model": "bones_water"
+    },
+    {
+      "id": "ford_lookout",
+      "cell": [
+        2,
+        6
+      ],
+      "kind": "examine",
+      "label": "A hunter's platform in a pine",
+      "model": "hunters_tree_stand",
+      "stand_ft": 10
+    }
+  ],
+  "narration": {
+    "enter": "enter:stream_ford"
+  },
+  "rest": "risky"
+}

@@ -10,7 +10,7 @@
       "objectives": [
         "Find out what happened to Aurel Mirescu"
       ],
-      "hint": "Take a Long Rest with Silvain in the party; he has something of Aurel's to show you at camp.",
+      "hint": "Read the scholar's note in the Blood of the Vine, the village of Barovia's tavern, then take a Long Rest with Silvain in the party.",
       "ends": ""
     },
     {
@@ -19,7 +19,7 @@
       "objectives": [
         "Follow Aurel's trail back through the valley"
       ],
-      "hint": "Take a Long Rest with Silvain in the party so he can read Aurel's note properly.",
+      "hint": "Read the scholar's note in the Blood of the Vine, the village of Barovia's tavern, then take a Long Rest with Silvain in the party.",
       "ends": ""
     },
     {

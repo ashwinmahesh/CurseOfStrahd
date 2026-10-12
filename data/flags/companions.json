@@ -72,6 +72,11 @@
       "summary": "Ratatouille cooked supper for the Martikovs (companions/table:supper)."
     },
     {
+      "id": "ratatoille_master_asked",
+      "type": "bool",
+      "summary": "Ratatouille asked Mordenkainen to take him as an apprentice (once, whenever the supper happened)."
+    },
+    {
       "id": "ratatoille_zantras_refused",
       "type": "bool",
       "summary": "Ratatouille turned away from Zantras's offer of an audience forever."
@@ -105,6 +110,11 @@
       "id": "kip_vosk_paid",
       "type": "bool",
       "summary": "Master Vosk read Kip's contract and took his fee."
+    },
+    {
+      "id": "kip_reading_failed",
+      "type": "bool",
+      "summary": "Kip couldn't read his contract at the fire; he works at it and has it by the next camp."
     },
     {
       "id": "kip_invitation_kept",

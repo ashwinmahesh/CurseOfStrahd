@@ -1,0 +1,363 @@
+{
+  "id": "frozen_tarn",
+  "name": "A Frozen Tarn",
+  "region": "mount_baratok",
+  "summary": "The track rounds a tarn frozen white in a bowl of the mountain: thin ice in the middle, drifts at its rim, a shepherd's fallen shelter and a crag over the north shore. A random fight on the mountain roads may play out here.",
+  "map": {
+    "rows": [
+      "................................",
+      "...#.....................#......",
+      ".##..........=......=.......#.#.",
+      "................=............#..",
+      ".........=....~~~..........~....",
+      "...~......~~~~~~~~~~~..=........",
+      "......=..~~wwwwwwwww~~..........",
+      "........~~wwwwwwwwwww~~....=....",
+      "........~~wwwwwwwwwww~~........#",
+      ".....=...~~wwwwwwwww~~..........",
+      "#.........~~~~~~~~~~~...=.......",
+      ".......=......~~~..........=....",
+      "....=.......=.....=.............",
+      "..=.............................",
+      "............................=...",
+      "......~.........................",
+      "...........=.......~.....~....#.",
+      ".....#................#......#..",
+      "......#.....#........#..........",
+      "................................"
+    ],
+    "elevation": [
+      "77766656788888888888888766667777",
+      "76665556788888888888888765566677",
+      "66655556777777777777777665556667",
+      "66555456577777777777777655555666",
+      "65544455444332333232365544445566",
+      "55544444330000000000023243445556",
+      "55444333200.........002233444556",
+      "5544333210...........01233344556",
+      "5544333210...........01233344556",
+      "55444332100.........001233444556",
+      "55544332110000000000011233445555",
+      "65544432211111111111112234445545",
+      "55444433222222222222222334444444",
+      "44443333333333333333333344445555",
+      "44444444343333333333334444555666",
+      "55555554444444444444444555566667",
+      "66666655555555555555555566667787",
+      "77776766666665555566666667777888",
+      "77777777777676666667777777788899",
+      "8888887777777777777777888888999a"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "frozen_tarn",
+      "name": "A Frozen Tarn",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      14
+    ]
+  },
+  "foe_spots": [
+    [
+      15,
+      2
+    ],
+    [
+      18,
+      3
+    ],
+    [
+      11,
+      3
+    ],
+    [
+      22,
+      3
+    ],
+    [
+      25,
+      9
+    ],
+    [
+      28,
+      9
+    ],
+    [
+      23,
+      12
+    ],
+    [
+      16,
+      12
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      3,
+      11
+    ],
+    [
+      13,
+      16
+    ],
+    [
+      20,
+      15
+    ],
+    [
+      27,
+      13
+    ]
+  ],
+  "exits": [
+    {
+      "id": "track_west",
+      "cell": [
+        0,
+        14
+      ],
+      "to": "travel",
+      "label": "Down the track, west"
+    },
+    {
+      "id": "track_east",
+      "cell": [
+        31,
+        12
+      ],
+      "to": "travel",
+      "label": "Up the track, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "tarn_camp_fire",
+      "cell": [
+        26,
+        8
+      ],
+      "kind": "examine",
+      "label": "A campfire, still smouldering",
+      "model": "campfire"
+    },
+    {
+      "id": "tarn_camp_bedroll",
+      "cell": [
+        25,
+        7
+      ],
+      "kind": "examine",
+      "label": "A bedroll, stiff with frost",
+      "model": "bedroll"
+    },
+    {
+      "id": "tarn_camp_pot",
+      "cell": [
+        27,
+        8
+      ],
+      "kind": "decor",
+      "model": "cookpot"
+    },
+    {
+      "id": "tarn_camp_sacks",
+      "cell": [
+        27,
+        7
+      ],
+      "kind": "decor",
+      "model": "sack_pile"
+    },
+    {
+      "id": "tarn_traveller",
+      "cell": [
+        12,
+        12
+      ],
+      "kind": "examine",
+      "label": "Someone sitting by the ice, frozen stiff",
+      "model": "frozen_traveller"
+    },
+    {
+      "id": "tarn_cairn",
+      "cell": [
+        16,
+        3
+      ],
+      "kind": "examine",
+      "label": "A cairn on the crag",
+      "model": "cairn"
+    },
+    {
+      "id": "tarn_cairn_2",
+      "cell": [
+        4,
+        12
+      ],
+      "kind": "decor",
+      "model": "cairn"
+    },
+    {
+      "id": "tarn_signpost",
+      "cell": [
+        2,
+        13
+      ],
+      "kind": "decor",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "tarn_birds",
+      "cell": [
+        19,
+        4
+      ],
+      "kind": "decor",
+      "model": "frozen_birds"
+    },
+    {
+      "id": "tarn_bones",
+      "cell": [
+        21,
+        12
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "tarn_dead_tree",
+      "cell": [
+        6,
+        6
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "tarn_dead_tree_2",
+      "cell": [
+        27,
+        11
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "tarn_boulder_1",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_2",
+      "cell": [
+        9,
+        4
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_3",
+      "cell": [
+        23,
+        5
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_4",
+      "cell": [
+        24,
+        10
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_5",
+      "cell": [
+        13,
+        2
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_6",
+      "cell": [
+        20,
+        2
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_7",
+      "cell": [
+        7,
+        11
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_8",
+      "cell": [
+        18,
+        12
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_9",
+      "cell": [
+        28,
+        14
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "tarn_boulder_10",
+      "cell": [
+        11,
+        16
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    }
+  ],
+  "narration": {
+    "enter": "enter:frozen_tarn"
+  },
+  "rest": "risky"
+}

@@ -148,6 +148,11 @@ endif
 -> END
 
 ~ reading
+# A failed reading isn't the end of it: he works at it a line a night until the next camp (Wiki finding 36).
+if flag.kip_reading_failed
+interject name:kip_smudgewick: I've been at it every night since. A line at a time, with my finger on it so it can't move. I think I've got it.
+-> reading_self
+endif
 Narrator: Kip has the contract out tonight, unrolled across his knees and over the log and onto the grass. It's longer unrolled than it could possibly be rolled. The ink moves a little in the firelight, like something asleep.
 interject name:kip_smudgewick: Mum always says read the small print. I never have. I signed it in the lane in the dark, crying. I'm going to read it now. Will somebody help? Some of the words are in a language that hurts.
 if name:ratatoille
@@ -180,6 +185,7 @@ approve kip_smudgewick +3: You read the small print with me
 -> END
 
 ~ reading_fail
+set kip_reading_failed
 interject name:kip_smudgewick: It keeps... the words keep moving. Every time I get to the end of a line it's a different line. I can't. I can't read it on my own.
 -> reading_later
 

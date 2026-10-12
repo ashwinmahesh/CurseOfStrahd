@@ -1,6 +1,13 @@
 {
   "id": "vineyard_road",
   "map": "road_forest",
+  "grounds": [
+    "road_forest",
+    "road_fork",
+    "forest_clearing",
+    "wayside_shrine",
+    "stream_ford"
+  ],
   "chance_day": 0.15,
   "chance_night": 0.4,
   "summary": "The lake road west of Vallaki and the barrow track to Yester Hill: hedgerows, moor and thin woods. Blights grown on Yester Hill by day and night until the tree burns, druid patrols until the hill is broken, wolves after dark, the Keepers' ravens, and the druids come back for revenge if they were let go and the tree still stands.",

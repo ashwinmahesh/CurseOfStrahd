@@ -579,3 +579,80 @@ once
 
 ~ check:insight:lysaga_boy:failure
 | A boy, again and again. Who he is to her escapes you.
+
+# ---------------------------------------------------------------- Road battle grounds (lane 3, 2026-10-12)
+# Where the marsh's, the moor's and the mountains' random fights may play out (story/road_grounds.gd).
+
+~ enter:barrow_moor
+| Open moor in a cold fog, all heather and black water, with a long barrow humped beside the track and standing stones round it like guests who came early. The fog lies thickest at the barrow's mouth.
+| [night] The moor at night is fog, and the shapes of stones in the fog, and none of them stand quite where you remember.
+cooldown 0
+
+~ examine:moor_barrow
+| The barrow's mouth is a doorway of three great stones, so low you would have to crawl. The air coming out of it is warmer than the moor.
+
+~ examine:moor_standing_stone_1
+| A standing stone taller than any of you, its face carved with spirals worn almost smooth. Moss grows on every side of it but the one that faces the barrow.
+
+~ examine:moor_cairn
+| A cairn on the knoll above the bog, one of a string of them marking the track across the moor. In fog, the cairns are all that stands between a traveller and the black water.
+
+~ examine:moor_cage
+| An iron cage on a post at the edge of the bog, its door wired shut and nothing inside. Somebody wanted whatever was in it to stay there, and it didn't.
+
+~ examine:moor_offering
+| Small things left at the barrow's mouth: bread, beads, a lock of hair tied with thread. The folk round here still pay the barrow its rent.
+
+~ enter:bog_causeway
+| A causeway of sunken logs and piled stone wanders out across the bog, black water on both sides and mire between, soft enough to swallow a boot. The dead trees on the islands lean together as if whispering about you.
+| [night] The causeway at night is a pale road over black water, and the lights that drift out over the bog are not lanterns.
+cooldown 0
+
+~ examine:bog_cart
+| A cart sunk to its axles beside the causeway, its bed full of black water. It went off the edge one wheel at a time, and the bog took its time.
+
+~ examine:bog_shrine
+| A roadside shrine standing up to its knees in the bog, its little saint green with slime. It stood on dry ground once; the marsh has been creeping toward the road ever since.
+
+~ examine:bog_cage
+| A gibbet cage hung out over the water on a crooked post, low enough that the bog could reach it at high water. That was the idea.
+
+~ examine:bog_lantern
+| A lantern on a pole, the kind lit at dusk to keep travellers on the causeway. Its glass is broken, its wick is drowned, and nobody has come to light it in a long while.
+
+~ enter:mountain_pass
+| The track squeezes between walls of frost-split rock to a saddle in the snow, a ledge above it to the north and a shelf of boulders to the south. The wind comes through the narrows with a sound like someone drawing breath.
+| [night] The pass at night: starlight on snow, black rock, and a long way to fall in every direction but forward.
+cooldown 0
+
+~ examine:pass_traveller
+| A traveller sitting against a boulder with their hood up and their hands in their lap, as if resting. They have been resting here since the first snow.
+
+~ examine:pass_cairn_1
+| A cairn at the top of the saddle, its stones scratched with names. Those who crossed safely came back to add another stone, and the cairn is not as tall as it ought to be.
+
+~ examine:pass_cart
+| A sledge-cart abandoned in the snow, its runners frozen fast and its load of firewood untouched. Whoever hauled it this far decided that walking was faster.
+
+~ examine:pass_signpost
+| A signpost snapped off at chest height, its arm half buried in a drift. The arm points back down the mountain, which is the most honest advice in Barovia.
+
+~ examine:pass_nest
+| A nest the size of a cart, woven from whole branches and lined with fur and old bones. Whatever built it has a wingspan you would rather not stand under.
+
+~ enter:frozen_tarn
+| The track rounds a mountain tarn frozen black under a crag, drifts heaped at its rim and somebody's camp left standing on the shore. The ice is clear enough to see what's under it, if you care to look.
+| [night] At night the tarn holds the stars still in its ice, and every few minutes it groans from somewhere deep inside.
+cooldown 0
+
+~ examine:tarn_camp_fire
+| A campfire still smouldering under a skin of new snow, so somebody sat here this morning. Their footprints go down to the ice and don't come back.
+
+~ examine:tarn_camp_bedroll
+| A bedroll stiff with frost, slept in, a pack still tied at its foot. Nobody leaves their pack in the mountains unless they meant to come straight back.
+
+~ examine:tarn_traveller
+| A figure sitting at the ice's edge with a fishing line still in their frozen hands. The line runs down through a hole in the ice, and it is still taut.
+
+~ examine:tarn_cairn
+| A cairn on the crag above the tarn, built tall enough to be seen from the passes. Mountain folk raise one wherever someone went through the ice and wasn't found.

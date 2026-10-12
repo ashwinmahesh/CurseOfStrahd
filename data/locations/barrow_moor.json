@@ -1,0 +1,373 @@
+{
+  "id": "barrow_moor",
+  "name": "The Barrow Moor",
+  "region": "berez",
+  "summary": "Open moor in a cold fog: heather, black bog pools, and a long barrow ringed with standing stones beside the track. A random fight on the moor and marsh roads may play out here.",
+  "map": {
+    "rows": [
+      "################################",
+      "##...##.....#........##.......##",
+      "...........................##...",
+      ".............#.......#......#...",
+      "....~~~~..=.....................",
+      "...~~ww~~.......................",
+      "...~~ww~~........#..........=...",
+      "....~~~~....#.........#.........",
+      "........................=.......",
+      "...=...........=................",
+      "......................=.........",
+      "................................",
+      "................................",
+      ".............................=..",
+      ".....=.................~~~~~....",
+      ".........=..~~......=.~wwwww~...",
+      "..##.......~~~~........~~~~~....",
+      "............~~..................",
+      "##.......#.......##.......#....#",
+      "################################"
+    ],
+    "elevation": [
+      "22222111000000111222222111000000",
+      "22222111000001121222222111000000",
+      "22221111100012222233221111100001",
+      "11111111111112333333311111111111",
+      "11110000111122334333221111222221",
+      "11110..0111123333322221111233222",
+      "00000..0122222222222111112233322",
+      "00000001122222211111100112234332",
+      "00000111222222111100000111233322",
+      "00000111222222111000000111222221",
+      "00001111122221111100001111111111",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111",
+      "22222111100000111122221000000000",
+      "22222111000000111222211.....0000",
+      "22222111000000111222211100000000",
+      "22222111000000111222211111000000",
+      "22221111100001111122221111100001",
+      "11111111111111111111111111111111"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "barrow_moor",
+      "name": "The Barrow Moor",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      8,
+      12
+    ]
+  },
+  "foe_spots": [
+    [
+      17,
+      4
+    ],
+    [
+      14,
+      5
+    ],
+    [
+      20,
+      5
+    ],
+    [
+      11,
+      9
+    ],
+    [
+      23,
+      6
+    ],
+    [
+      28,
+      8
+    ],
+    [
+      26,
+      12
+    ],
+    [
+      19,
+      14
+    ],
+    [
+      13,
+      14
+    ],
+    [
+      4,
+      16
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      30,
+      15
+    ],
+    [
+      24,
+      3
+    ]
+  ],
+  "exits": [
+    {
+      "id": "track_west",
+      "cell": [
+        0,
+        12
+      ],
+      "to": "travel",
+      "label": "On along the track, west"
+    },
+    {
+      "id": "track_east",
+      "cell": [
+        31,
+        10
+      ],
+      "to": "travel",
+      "label": "On along the track, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "moor_barrow",
+      "cell": [
+        17,
+        6
+      ],
+      "kind": "examine",
+      "label": "The barrow's stone mouth",
+      "model": "barrow"
+    },
+    {
+      "id": "moor_standing_stone_1",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "examine",
+      "label": "A standing stone",
+      "model": "standing_stones"
+    },
+    {
+      "id": "moor_standing_stone_2",
+      "cell": [
+        21,
+        3
+      ],
+      "kind": "decor",
+      "model": "standing_stones"
+    },
+    {
+      "id": "moor_standing_stone_3",
+      "cell": [
+        12,
+        7
+      ],
+      "kind": "decor",
+      "model": "standing_stones"
+    },
+    {
+      "id": "moor_standing_stone_4",
+      "cell": [
+        22,
+        7
+      ],
+      "kind": "decor",
+      "model": "standing_stones"
+    },
+    {
+      "id": "moor_cairn",
+      "cell": [
+        28,
+        6
+      ],
+      "kind": "examine",
+      "label": "A cairn on the knoll",
+      "model": "cairn"
+    },
+    {
+      "id": "moor_dead_tree_1",
+      "cell": [
+        3,
+        9
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "moor_dead_tree_2",
+      "cell": [
+        20,
+        15
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "moor_dead_tree_3",
+      "cell": [
+        10,
+        4
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "moor_boulder_1",
+      "cell": [
+        24,
+        8
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "moor_boulder_2",
+      "cell": [
+        9,
+        15
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "moor_boulder_3",
+      "cell": [
+        29,
+        13
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "moor_boulder_4",
+      "cell": [
+        15,
+        9
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "moor_bones",
+      "cell": [
+        18,
+        9
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "moor_carcass",
+      "cell": [
+        5,
+        14
+      ],
+      "kind": "decor",
+      "model": "carcass"
+    },
+    {
+      "id": "moor_cage",
+      "cell": [
+        22,
+        10
+      ],
+      "kind": "examine",
+      "label": "A gibbet cage on a post",
+      "model": "cage_hanging"
+    },
+    {
+      "id": "moor_reeds_1",
+      "cell": [
+        4,
+        4
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_reeds_2",
+      "cell": [
+        8,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_reeds_3",
+      "cell": [
+        23,
+        14
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_reeds_4",
+      "cell": [
+        27,
+        17
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_reeds_5",
+      "cell": [
+        12,
+        15
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_reeds_6",
+      "cell": [
+        3,
+        7
+      ],
+      "kind": "decor",
+      "model": "reeds"
+    },
+    {
+      "id": "moor_offering",
+      "cell": [
+        17,
+        8
+      ],
+      "kind": "examine",
+      "label": "Offerings left at the barrow's mouth",
+      "model": "offering_pile"
+    }
+  ],
+  "narration": {
+    "enter": "enter:barrow_moor"
+  },
+  "rest": "risky"
+}
