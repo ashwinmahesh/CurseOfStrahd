@@ -1,6 +1,13 @@
 {
   "id": "bonegrinder_lane",
   "map": "old_bonegrinder_track",
+  "grounds": [
+    "old_bonegrinder_track",
+    "road_fork",
+    "forest_clearing",
+    "road_ravine",
+    "wayside_shrine"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.45,
   "summary": "The miller's lane between the Old Svalich Road and Old Bonegrinder: close pines and deep ruts. Wolves and the dead, Morgantha on her rounds while the coven stands, and afterwards whichever daughter is still loose.",

@@ -1364,7 +1364,9 @@
       "castle_ravenloft_spires_rooms": "stone",
       "argynvostholt_hall": "stone",
       "argynvostholt_upper": "stone",
-      "tsolenka_pass": "snow"
+      "tsolenka_pass": "snow",
+      "mountain_pass": "snow",
+      "frozen_tarn": "snow"
     }
   },
   "containers": {

@@ -147,6 +147,13 @@
         "$ref": "#/$defs/cell"
       }
     },
+    "foe_spots": {
+      "type": "array",
+      "description": "A road battle ground (a random encounter table's or a road's `grounds`): where foes may start when a fight from another table plays out here. Open squares three or more from the default spawn, in cover or up high; each foe takes the free spot nearest where its table put it round the party (story/road_grounds.gd).",
+      "items": {
+        "$ref": "#/$defs/cell"
+      }
+    },
     "exits": {
       "type": "array",
       "items": {

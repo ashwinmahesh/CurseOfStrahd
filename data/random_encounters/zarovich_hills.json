@@ -1,6 +1,13 @@
 {
   "id": "zarovich_hills",
   "map": "lake_zarovich_trail",
+  "grounds": [
+    "lake_zarovich_trail",
+    "lake_inlet",
+    "forest_clearing",
+    "road_ravine",
+    "road_fork"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.45,
   "summary": "The trails through the hills between Vallaki, Lake Zarovich, the werewolves' den and Lake Baratok: pines, boulders and long views. Kiril's wolves by day and night until the pack question is settled; the hungry dead by night.",

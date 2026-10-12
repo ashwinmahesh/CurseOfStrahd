@@ -420,11 +420,15 @@ class Story:
         for r in open_roads:
             if r["from"] in reached and r["to"] in reached and r.get("table"):
                 self.changed |= self.add(("table", r["table"]), f"the road {r['id']}")
+                for g in r.get("grounds", []) if self.chance_maps else []:
+                    self.changed |= self.add(("loc", g), f"a random fight on the road {r['id']}")
         for tid, tb in self.random.items():
             if ("table", tid) not in self.facts:
                 continue
             if tb.get("map") and self.chance_maps:
                 self.changed |= self.add(("loc", tb["map"]), f"a random encounter on a {tid} road")
+                for g in tb.get("grounds", []):
+                    self.changed |= self.add(("loc", g), f"a random fight on a {tid} road (its grounds)")
             for e in tb.get("entries", []):
                 if e.get("dialogue") and self.possible(e.get("when", "")):
                     self.walk_ref(e["dialogue"], f"a random encounter on a {tid} road")

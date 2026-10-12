@@ -1,0 +1,364 @@
+{
+  "id": "mountain_pass",
+  "name": "A Narrow Pass",
+  "region": "mount_baratok",
+  "summary": "The track squeezes between frost-cracked crags to a saddle in the snow: a ledge above it on the north side, a shelf of boulders on the south, and old cairns for the ones who didn't get over. A random fight on the mountain roads may play out here.",
+  "map": {
+    "rows": [
+      "....#.........#.................",
+      ".##..........#....~...#.....#...",
+      ".........~.................#....",
+      ".......................#......#.",
+      "..#.........=.......=...........",
+      "...#............=.........#.....",
+      "................................",
+      ".............=..................",
+      "................................",
+      "...=...............~..=....=....",
+      "..........~.....=.......=.......",
+      "..~..=....................~.....",
+      "..................=.............",
+      "...............=.......~......#.",
+      ".#....=....=..~......=...=......",
+      "................................",
+      ".............................#..",
+      "....##.............#......#.....",
+      "...........#........#...~.......",
+      "................................"
+    ],
+    "elevation": [
+      "bbbbbbbbbccccddddddccccbbaaaaaaa",
+      "aaaaaaabbbbccccccccccbbbbaa99999",
+      "aaaaaaaabbbbccccccccbbbbaa999999",
+      "aaaaaa6677778888888877776a999999",
+      "aaaaaa6566778888888877776a999999",
+      "aaaaaa6455778888888877776a999999",
+      "aaaaaa6344778888888877776a999999",
+      "22222222333388844888333322111111",
+      "22222222333344444444333322111111",
+      "22222222333344444444333322111111",
+      "22222222333344444444333322111111",
+      "22222222333344444444333322111111",
+      "22222222333788444888333322111111",
+      "88844444555566666666555544333777",
+      "88844444555566666666555544333777",
+      "88844444555566666666555544333777",
+      "888888889999aaaaaaaa999988777777",
+      "888888889999aaaaaaaa999988777777",
+      "88888889999aaaaaaaaaa99998877777",
+      "999999999aaaabbbbbbaaaa998888888"
+    ],
+    "theme": "wilderness",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "mountain_pass",
+      "name": "A Narrow Pass",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    }
+  ],
+  "spawns": {
+    "default": [
+      6,
+      10
+    ]
+  },
+  "foe_spots": [
+    [
+      15,
+      4
+    ],
+    [
+      18,
+      4
+    ],
+    [
+      18,
+      6
+    ],
+    [
+      11,
+      3
+    ],
+    [
+      20,
+      8
+    ],
+    [
+      22,
+      11
+    ],
+    [
+      26,
+      9
+    ],
+    [
+      29,
+      10
+    ],
+    [
+      17,
+      13
+    ],
+    [
+      22,
+      14
+    ],
+    [
+      9,
+      13
+    ],
+    [
+      12,
+      11
+    ],
+    [
+      26,
+      13
+    ],
+    [
+      14,
+      8
+    ]
+  ],
+  "exits": [
+    {
+      "id": "pass_west",
+      "cell": [
+        0,
+        10
+      ],
+      "to": "travel",
+      "label": "Down the pass, west"
+    },
+    {
+      "id": "pass_east",
+      "cell": [
+        31,
+        9
+      ],
+      "to": "travel",
+      "label": "Over the saddle, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "pass_traveller",
+      "cell": [
+        16,
+        10
+      ],
+      "kind": "examine",
+      "label": "A traveller, frozen where they sat down",
+      "model": "frozen_traveller"
+    },
+    {
+      "id": "pass_cairn_1",
+      "cell": [
+        22,
+        9
+      ],
+      "kind": "examine",
+      "label": "A cairn with names scratched on its stones",
+      "model": "cairn"
+    },
+    {
+      "id": "pass_cairn_2",
+      "cell": [
+        11,
+        14
+      ],
+      "kind": "decor",
+      "model": "cairn"
+    },
+    {
+      "id": "pass_cart",
+      "cell": [
+        24,
+        10
+      ],
+      "kind": "examine",
+      "label": "A sledge-cart abandoned in the snow",
+      "model": "cart_broken"
+    },
+    {
+      "id": "pass_signpost",
+      "cell": [
+        3,
+        9
+      ],
+      "kind": "examine",
+      "label": "A snapped signpost",
+      "model": "signpost_broken"
+    },
+    {
+      "id": "pass_nest",
+      "cell": [
+        20,
+        4
+      ],
+      "kind": "examine",
+      "label": "A nest of whole branches on the ledge",
+      "model": "roc_nest"
+    },
+    {
+      "id": "pass_birds",
+      "cell": [
+        19,
+        3
+      ],
+      "kind": "decor",
+      "model": "frozen_birds"
+    },
+    {
+      "id": "pass_bones_1",
+      "cell": [
+        13,
+        9
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "pass_bones_2",
+      "cell": [
+        21,
+        5
+      ],
+      "kind": "decor",
+      "model": "bones"
+    },
+    {
+      "id": "pass_dead_tree",
+      "cell": [
+        25,
+        14
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "pass_boulder_1",
+      "cell": [
+        6,
+        14
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_2",
+      "cell": [
+        15,
+        13
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_3",
+      "cell": [
+        21,
+        14
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_4",
+      "cell": [
+        27,
+        9
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_5",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_6",
+      "cell": [
+        16,
+        5
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_7",
+      "cell": [
+        5,
+        11
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_8",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_boulder_9",
+      "cell": [
+        18,
+        12
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "pass_ice_1",
+      "cell": [
+        11,
+        8
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "pass_ice_2",
+      "cell": [
+        21,
+        11
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    },
+    {
+      "id": "pass_ice_3",
+      "cell": [
+        17,
+        14
+      ],
+      "kind": "decor",
+      "model": "ice_patch"
+    }
+  ],
+  "narration": {
+    "enter": "enter:mountain_pass"
+  },
+  "rest": "risky"
+}

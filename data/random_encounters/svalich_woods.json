@@ -1,6 +1,14 @@
 {
   "id": "svalich_woods",
   "map": "road_forest",
+  "grounds": [
+    "road_forest",
+    "forest_clearing",
+    "road_ravine",
+    "stream_ford",
+    "wayside_shrine",
+    "roadside_graves"
+  ],
   "chance_day": 0.2,
   "chance_night": 0.5,
   "summary": "The Old Svalich Road through the Svalich Woods, between Tser Pool, Tser Falls and Vallaki: close pines and small clearings. Wolves and hunters by day, werewolves and the dead by night.",

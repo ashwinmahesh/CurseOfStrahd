@@ -1,6 +1,14 @@
 {
   "id": "argynvostholt_road",
   "map": "road_forest",
+  "grounds": [
+    "road_forest",
+    "forest_clearing",
+    "road_ravine",
+    "road_fork",
+    "wayside_shrine",
+    "roadside_graves"
+  ],
   "chance_day": 0.15,
   "chance_night": 0.4,
   "summary": "The knights' road: a narrow track that leaves the Svalich Woods and climbs through old pines to the ridge of Argynvostholt. The Order's dead walk it at night; so do older things.",

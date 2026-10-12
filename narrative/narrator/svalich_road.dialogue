@@ -435,3 +435,123 @@ once
 
 ~ check:medicine:bundles_cut:failure
 | Your knife slips on the silk, and the venom on it finds the cut.
+
+# ---------------------------------------------------------------- Road battle grounds (lane 3, 2026-10-12)
+# Where the valley's and the woods' random fights may play out (story/road_grounds.gd).
+
+~ enter:road_fork
+| The road splits round a wooded knoll, and the signpost at the split leans as though it can't make up its mind either. On the knoll an empty gibbet cage turns on its chain.
+| [night] Two roads run off into two darks, and on the knoll a cage creaks on its chain in a wind you can't feel.
+cooldown 0
+
+~ examine:fork_signpost
+| Both arms have had their names scraped off, and somebody has cut a single word into the post instead: BACK. It doesn't say which way that is.
+
+~ examine:fork_cairn
+| A cairn of road stones on the knoll's crown, each carried up by a traveller who made it this far. Some of the stones have names scratched into them, and a few of the names have dates.
+
+~ examine:fork_cage
+| An iron gibbet cage on a dead branch, its door hanging open and its floor worn smooth. Whoever keeps it keeps it oiled.
+
+~ examine:fork_cart
+| A cart on its side, its sacks split and its horse long gone. The traces were cut, not snapped: someone left in a hurry and took the horse with them.
+
+~ examine:fork_milestone
+| A milestone worn too smooth to read, with a fresh notch cut into its top. Someone is counting something.
+
+~ examine:fork_lookout
+| A hunter's platform of lashed planks high in a pine, with rungs nailed up the trunk. From up there you'd see both roads, and anyone waiting on them.
+
+~ enter:forest_clearing
+| A clearing opens in the pines, all stumps, where the woodcutters took what they needed and stopped at a great oak nobody seems to have dared. Their fire is still warm.
+| [night] The clearing at night: pale stumps like headstones, a fire burned down to red, and the oak's bough black against a starless sky.
+cooldown 0
+
+~ examine:clearing_oak
+| An oak older than every pine around it, one great bough grown out level as a beam. The woodcutters felled everything else in the clearing; nobody has so much as carved an initial into this.
+
+~ examine:clearing_fire
+| A woodcutters' fire burned down to embers, a pot of something gone cold beside it. They left in the middle of supper, and they left their axes.
+
+~ examine:clearing_log_1
+| A log rolled up to the fire for a seat, worn smooth by a great many evenings. Tonight, by the look of it, nobody stayed long.
+
+~ examine:clearing_axe
+| A woodcutter's axe left sunk in a stump, its handle dark with use. Nobody leaves a good axe behind unless something made them.
+
+~ examine:clearing_stand
+| A hunter's platform up in a pine at the clearing's edge, the rungs on its trunk scuffed pale by boots. It looks down on the whole clearing, which is the point of it.
+
+~ enter:road_ravine
+| The road tips over the lip of a ravine, picks its way down a ledge of rock to a stream at the bottom and climbs the far wall the same way. Sheer stone on both sides, and whatever is down here with you has nowhere else to be.
+| [night] The ravine at night is a black slot in the earth with a stream talking to itself at the bottom.
+cooldown 0
+
+~ examine:ravine_bridge_ruin
+| The stumps of a bridge that once spanned the ravine, its timbers long since carried off by a spring flood. The road goes down and through now, the long way.
+
+~ examine:ravine_rim_cairn
+| A cairn at the head of the ledge path, built up a stone at a time by everyone who reached the bottom and came back up. It is not a tall cairn.
+
+~ examine:ravine_lookout
+| A hunter's platform lashed into a pine on the ravine's lip, looking straight down onto the ford. A good place to wait for deer, or for anything else that has to cross.
+
+~ enter:stream_ford
+| The road wades a quick brown stream at a gravel ford, the water knee-deep and loud over the stones. Upstream stand the footings of an old mill; downstream lies a cart that didn't make it across.
+| [night] At night the ford is only sound: water over stone, and under it, now and then, something that isn't water.
+cooldown 0
+
+~ examine:ford_millstone
+| A millstone cracked through the middle, lying in the grass where the mill used to stand. Someone built here and ground grain here, and then left nothing else at all.
+
+~ examine:ford_cart
+| A cart rolled over at the water's edge, one wheel still turning in the current. The stream took its load and is in no hurry to give it back.
+
+~ examine:ford_rowboat
+| A rowboat pulled up on the bank and chained to a stake, its oars missing. Whoever owns it means to come back for it.
+
+~ examine:ford_lookout
+| A hunter's platform high in a pine above the ford. From up there you'd see anyone crossing long before they saw you.
+
+~ enter:wayside_shrine
+| A roofless chapel stands beside the road, its walls fallen to stubs and its stone saints still keeping their corners. Someone has left fresh offerings at the altar, in a valley where nobody gives anything away.
+| [night] The ruined chapel at night: candle stubs guttering on a cracked altar, and four stone saints watching the road instead of the sky.
+cooldown 0
+
+~ examine:shrine_pillar_1
+| A saint carved atop a pillar at the chapel's corner, its face worn to a smooth oval by a century of weather. It still faces the road, as if expecting someone.
+
+~ examine:shrine_saint
+| A statue of a saint with its face struck off by a hammer, the chips still lying at its feet. The Morninglord's people built this chapel; somebody came by later to disagree.
+
+~ examine:shrine_altar
+| An altar split across by frost, with a sun cut into its face. The sun has been scratched through with a knife, carefully, over and over.
+
+~ examine:shrine_offerings
+| Bread, a twist of ribbon and a child's carved horse, left at the altar's foot within the last day or two. Somebody here still hopes, and you find you'd rather not know for what.
+
+~ examine:shrine_gargoyle
+| A gargoyle fallen from the chapel's roofline, lying on its back with its mouth open to the sky. It looks less like it fell than like it was thrown.
+
+~ examine:shrine_post
+| A little roadside shrine on a post, its painted saint peeling and its tiny roof furred with moss. A traveller's prayer hangs from it on a string, written very small.
+
+~ enter:roadside_graves
+| Behind a sagging fence the headstones climb the slope in crooked rows, leaning together like people sharing bad news. At the top a crypt waits with its door chained from the outside.
+| [night] The graves at night: two lanterns at the gate, rows of stones going up into the dark, and somewhere among them the soft sound of earth being moved.
+cooldown 0
+
+~ examine:graves_crypt
+| A family crypt with its name worn off the lintel and a chain across its door, padlocked from the outside. Outside is the side you'd want it locked from.
+
+~ examine:graves_angel
+| A stone saint weeping over the crypt, its tears worn into grooves by the rain. It has been crying here longer than anyone it mourns was alive.
+
+~ examine:graves_open
+| A fresh grave, dug and left open with the spade still standing in the spoil. It is waiting for someone, and in this valley it won't wait long.
+
+~ examine:graves_spade_cart
+| The gravedigger's handcart, loaded with shovels and a coil of rope. The gravedigger is nowhere to be seen, which in that line of work is a bad sign.
+
+~ examine:graves_lantern
+| A lantern on a post at the burial ground's gate, kept trimmed and kept full. Somebody walks up here every evening to see to it, and walks back down before dark.

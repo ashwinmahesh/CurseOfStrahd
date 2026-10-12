@@ -24,7 +24,18 @@
     "vallaki": "vallaki_festival",
     "krezk": "krezk_town",
     "wizard_of_wines": "winery_grounds",
-    "yester_hill": "yester_slope"
+    "yester_hill": "yester_slope",
+    "road_fork": "crossroads",
+    "forest_clearing": "svalich_woods",
+    "road_ravine": "ford",
+    "stream_ford": "ford",
+    "wayside_shrine": "svalich_woods",
+    "roadside_graves": "crossroads",
+    "barrow_moor": "moor",
+    "lake_inlet": "lake_zarovich",
+    "mountain_pass": "high_snow",
+    "bog_causeway": "berez",
+    "frozen_tarn": "tarn"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -1585,6 +1596,74 @@
           ]
         }
       ]
+    },
+    "ford": {
+      "like": "svalich_woods",
+      "water": {
+        "deep": "void",
+        "shallow": "night_deep",
+        "foam": "slate",
+        "flow": [
+          0.0,
+          0.3
+        ],
+        "ripples": 0.15,
+        "texture": 0.2,
+        "reflect": 0.45,
+        "map": "void",
+        "map_edge": "slate"
+      },
+      "weather": [
+        "leaves",
+        {
+          "kind": "crows",
+          "amount": 2
+        }
+      ]
+    },
+    "moor": {
+      "like": "berez",
+      "mist": {
+        "height": 1.4,
+        "cover": 0.75,
+        "thickness": 4.0,
+        "open": 0.65
+      },
+      "surround": {
+        "trees": 0.3,
+        "dead": 0.8,
+        "rise": 2.5,
+        "hills": 1.6
+      },
+      "weather": [
+        {
+          "kind": "crows",
+          "amount": 5
+        },
+        {
+          "kind": "wisps",
+          "amount": 10,
+          "core": "bile",
+          "rim": "sickly",
+          "size": 0.1
+        }
+      ]
+    },
+    "tarn": {
+      "like": "high_snow",
+      "water": {
+        "deep": "night_deep",
+        "shallow": "moon_blue",
+        "foam": "frost",
+        "glint": "frost",
+        "flow": [
+          0.0,
+          0.0
+        ],
+        "ripples": 0.0,
+        "texture": 0.04,
+        "reflect": 0.7
+      }
     }
   }
 }

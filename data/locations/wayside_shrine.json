@@ -1,0 +1,550 @@
+{
+  "id": "wayside_shrine",
+  "name": "A Ruined Wayside Shrine",
+  "region": "svalich_road",
+  "summary": "A roofless chapel of the Morninglord beside the road, its walls fallen to stubs and its saint defaced; monks' graves on the rise beside it and the pines all round. A random fight on the valley's roads may play out here.",
+  "map": {
+    "rows": [
+      "################################",
+      "################################",
+      "############.........###########",
+      "###########.#==..==.=#.#########",
+      "###.........=........=.~.#######",
+      "##..=.=.....=......#.....#######",
+      "#.......=......=...=....#.#.####",
+      "#...=.=...~..........=........##",
+      "##..........=........=.....=...#",
+      "###..=.........................#",
+      "########....#==....==#........##",
+      "##########.............##=#.####",
+      "######...........=......~.######",
+      "##.......=................#.....",
+      "................................",
+      "................................",
+      "..........................######",
+      "################################",
+      "################################",
+      "################################"
+    ],
+    "elevation": [
+      "44444444444444444444444444444444",
+      "22222222222222222222222222222222",
+      "11112221111111111111111111111111",
+      "00111211100000000000000000000000",
+      "00122222100000000000000000000000",
+      "01123332110000000000000000111000",
+      "01223332210000000000000001111100",
+      "01123332110000000000000011222110",
+      "00122222100000000000000011222110",
+      "00111211100000000000000011222110",
+      "00001110000000000000000001111100",
+      "00000000000000000000000000111000",
+      "00000000000000000000000000000000",
+      "00000000000000000000000000111111",
+      "00000000000000000000000011111111",
+      "00000000000000000000000011111111",
+      "00000000000000000000000011000000",
+      "00000000000000000000000000000000",
+      "11111111111111111111111111111111",
+      "11111111111111111111111111111111"
+    ],
+    "theme": "forest",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "wayside_shrine",
+      "name": "A Ruined Wayside Shrine",
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          31,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "shrine_nave",
+      "name": "The ruined nave",
+      "cells": [
+        [
+          13,
+          4
+        ],
+        [
+          20,
+          9
+        ]
+      ],
+      "floor": "church/stone_flags",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      16,
+      14
+    ]
+  },
+  "foe_spots": [
+    [
+      16,
+      5
+    ],
+    [
+      17,
+      8
+    ],
+    [
+      14,
+      5
+    ],
+    [
+      23,
+      8
+    ],
+    [
+      26,
+      7
+    ],
+    [
+      29,
+      10
+    ],
+    [
+      22,
+      10
+    ],
+    [
+      9,
+      9
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      3,
+      7
+    ],
+    [
+      24,
+      13
+    ],
+    [
+      28,
+      15
+    ],
+    [
+      6,
+      16
+    ],
+    [
+      11,
+      5
+    ]
+  ],
+  "exits": [
+    {
+      "id": "road_west",
+      "cell": [
+        0,
+        15
+      ],
+      "to": "travel",
+      "label": "On along the road, west"
+    },
+    {
+      "id": "road_east",
+      "cell": [
+        31,
+        14
+      ],
+      "to": "travel",
+      "label": "On along the road, east"
+    }
+  ],
+  "props": [
+    {
+      "id": "shrine_pillar_1",
+      "cell": [
+        12,
+        3
+      ],
+      "kind": "examine",
+      "label": "A pillar with a saint on it",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "shrine_pillar_2",
+      "cell": [
+        21,
+        3
+      ],
+      "kind": "decor",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "shrine_pillar_3",
+      "cell": [
+        12,
+        10
+      ],
+      "kind": "decor",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "shrine_pillar_4",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "decor",
+      "model": "gate_pillar"
+    },
+    {
+      "id": "shrine_wall_ns_1",
+      "cell": [
+        12,
+        4
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "east"
+    },
+    {
+      "id": "shrine_wall_ns_2",
+      "cell": [
+        12,
+        5
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "east"
+    },
+    {
+      "id": "shrine_wall_ns_3",
+      "cell": [
+        12,
+        8
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "east"
+    },
+    {
+      "id": "shrine_wall_ns_4",
+      "cell": [
+        21,
+        4
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "west"
+    },
+    {
+      "id": "shrine_wall_ns_5",
+      "cell": [
+        21,
+        7
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "west"
+    },
+    {
+      "id": "shrine_wall_ns_6",
+      "cell": [
+        21,
+        8
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "west"
+    },
+    {
+      "id": "shrine_wall_ew_1",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_wall_ew_2",
+      "cell": [
+        14,
+        3
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_wall_ew_3",
+      "cell": [
+        17,
+        3
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_wall_ew_4",
+      "cell": [
+        18,
+        3
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_wall_ew_5",
+      "cell": [
+        20,
+        3
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "south"
+    },
+    {
+      "id": "shrine_wall_ew_6",
+      "cell": [
+        13,
+        10
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "north"
+    },
+    {
+      "id": "shrine_wall_ew_7",
+      "cell": [
+        14,
+        10
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "north"
+    },
+    {
+      "id": "shrine_wall_ew_8",
+      "cell": [
+        19,
+        10
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "north"
+    },
+    {
+      "id": "shrine_wall_ew_9",
+      "cell": [
+        20,
+        10
+      ],
+      "kind": "decor",
+      "model": "bridge_parapet",
+      "facing": "north"
+    },
+    {
+      "id": "shrine_saint",
+      "cell": [
+        19,
+        5
+      ],
+      "kind": "examine",
+      "label": "A defaced statue of a saint",
+      "model": "saint_defaced"
+    },
+    {
+      "id": "shrine_altar",
+      "cell": [
+        19,
+        6
+      ],
+      "kind": "examine",
+      "label": "A cracked altar",
+      "model": "altar_stone",
+      "facing": "west"
+    },
+    {
+      "id": "shrine_candles",
+      "cell": [
+        18,
+        7
+      ],
+      "kind": "decor",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "shrine_offerings",
+      "cell": [
+        18,
+        5
+      ],
+      "kind": "examine",
+      "label": "Fresh offerings at the altar's foot",
+      "model": "offering_pile"
+    },
+    {
+      "id": "shrine_gargoyle",
+      "cell": [
+        15,
+        6
+      ],
+      "kind": "examine",
+      "label": "A fallen gargoyle",
+      "model": "gargoyle"
+    },
+    {
+      "id": "shrine_beam",
+      "cell": [
+        14,
+        8
+      ],
+      "kind": "decor",
+      "model": "fallen_beam"
+    },
+    {
+      "id": "shrine_rubble_1",
+      "cell": [
+        16,
+        4
+      ],
+      "kind": "decor",
+      "model": "rubble"
+    },
+    {
+      "id": "shrine_rubble_2",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "model": "rubble"
+    },
+    {
+      "id": "shrine_post",
+      "cell": [
+        17,
+        12
+      ],
+      "kind": "examine",
+      "label": "A little roadside shrine",
+      "model": "shrine_small"
+    },
+    {
+      "id": "shrine_grave_1",
+      "cell": [
+        4,
+        5
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "shrine_grave_2",
+      "cell": [
+        6,
+        5
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "shrine_grave_3",
+      "cell": [
+        4,
+        7
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "shrine_grave_4",
+      "cell": [
+        6,
+        7
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "shrine_grave_5",
+      "cell": [
+        8,
+        6
+      ],
+      "kind": "decor",
+      "model": "gravestone"
+    },
+    {
+      "id": "shrine_grave_6",
+      "cell": [
+        5,
+        9
+      ],
+      "kind": "decor",
+      "model": "grave_mound"
+    },
+    {
+      "id": "shrine_dead_tree",
+      "cell": [
+        27,
+        8
+      ],
+      "kind": "decor",
+      "model": "dead_tree"
+    },
+    {
+      "id": "shrine_boulder",
+      "cell": [
+        25,
+        11
+      ],
+      "kind": "decor",
+      "model": "boulder"
+    },
+    {
+      "id": "shrine_log",
+      "cell": [
+        9,
+        13
+      ],
+      "kind": "decor",
+      "model": "log"
+    },
+    {
+      "id": "shrine_bones",
+      "cell": [
+        22,
+        12
+      ],
+      "kind": "decor",
+      "model": "bone_scatter"
+    },
+    {
+      "id": "shrine_leaves",
+      "cell": [
+        11,
+        12
+      ],
+      "kind": "decor",
+      "model": "leaves"
+    }
+  ],
+  "narration": {
+    "enter": "enter:wayside_shrine"
+  },
+  "rest": "risky"
+}
