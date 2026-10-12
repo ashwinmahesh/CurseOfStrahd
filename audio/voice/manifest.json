@@ -79252,6 +79252,13 @@
   "recipe": "1f2fc26177",
   "text": "No. I've heard that one before, and so has the Baron, and he made it a crime to say it."
  },
+ "vallaki_guard/4752703158ecb20f": {
+  "chars": 159,
+  "direction": "[dry, wary, low warning]",
+  "model": "eleven_v3",
+  "recipe": "1f2fc26177",
+  "text": "Back again, and with a lady this time. Hood up, miss; the Baron's watch notices hair that colour. Father Lucian is at St. Andral's, if it's sanctuary you want."
+ },
  "vallaki_guard/53387ce7f5e02b78": {
   "chars": 42,
   "direction": "[dry, amused]",
