@@ -68,3 +68,23 @@ func test_a_fight_leaves_no_holds_behind() -> void:
 	assert_false(ch.has_condition(&"restrained") or ch.has_condition(&"grappled"), "no holds")
 	assert_false(ch.effects.has(dodge), "nothing that lasts until a turn")
 	assert_true(ch.effects.has(aid), "Aid lasts its 8 hours")
+
+
+## Owner report (2026-10-12): a save made after that fight still had Restrained on the hero. Loading a save made outside
+## a fight mends it; one made mid-fight (a round-start save) keeps its holds for the fight it resumes.
+func test_a_save_outside_a_fight_loads_without_stray_holds() -> void:
+	GameState.reset()
+	var ch := TestChars.pregen("ilse_varga", 5)
+	var web := Effect.new("Web", &"spell", "web").with_condition(&"restrained")
+	web.escape = {"skill": "athletics", "dc": 13}
+	ch.add_effect(web)
+	ch.add_condition(&"grappled", "Wolf")
+	GameState.story.party.append(ch)
+	var saved := GameState.to_dict()
+	GameState.from_dict(JSON.parse_string(JSON.stringify(saved)) as Dictionary)
+	var back := GameState.story.party[0]
+	assert_false(back.has_condition(&"restrained") or back.has_condition(&"grappled"), "free after the load")
+	saved["combat"] = {"location": "x", "encounter": "y", "data": {"round": 2}}
+	GameState.from_dict(JSON.parse_string(JSON.stringify(saved)) as Dictionary)
+	assert_true(GameState.story.party[0].has_condition(&"restrained"), "a mid-fight save keeps it for its fight")
+	GameState.reset()

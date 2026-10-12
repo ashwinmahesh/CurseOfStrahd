@@ -3,6 +3,9 @@ extends RefCounted
 ## Spell attacks in a fight (SpellCaster): the shots a spell makes, the pause for reactions before the rolls, the
 ## attack roll itself, what a hit does, secondary targets (Ice Knife's burst) and Chromatic Orb's leap.
 
+## The prompt (and its Ask / Auto / Never rule) for where a Chromatic Orb leaps.
+const ORB_LEAP := "chromatic_orb_leap"
+
 var _enc: WeakRef
 
 
@@ -232,8 +235,11 @@ func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 				e.monster_actions.set_burning(ctx["c"] as Combatant, obj)
 
 
-## Chromatic Orb (2024): if two or more of the d8s match, the orb leaps to a creature within 30 ft of the last
-## one it hit (a new attack roll and damage), up to the slot level in leaps, never the same creature twice.
+## Chromatic Orb (2024): if two or more of the d8s match on a hit, the orb leaps to a different creature of the
+## caster's choice within 30 ft of the one it hit (a new attack roll and new damage), up to the slot level in leaps; no
+## creature is targeted twice by one casting. On the player's own turn a prompt asks where (the foe nearest the caster
+## already picked; declining lets the leap go, docs/rules/deviations.md). The AI, the prompt's Auto rule and a casting
+## on someone else's turn (War Caster) send it to the foe nearest the caster.
 func _orb_leap(ctx: Dictionary, last: Combatant, rolled: Dictionary, r: CombatResult) -> void:
 	var e := enc()
 	var c := ctx["c"] as Combatant
@@ -241,6 +247,31 @@ func _orb_leap(ctx: Dictionary, last: Combatant, rolled: Dictionary, r: CombatRe
 	var hitlist := ctx.get("orb_hit", [last.id]) as Array
 	if leaps <= 0 or not _has_duplicate(rolled):
 		return
+	var next := orb_leap_default(c, last, hitlist)
+	if c.is_player_controlled() and e.current() == c and e.pending == null:
+		var decision := e._reaction_decision(c, ORB_LEAP)
+		if decision == "never":
+			return
+		if decision != "auto":
+			_ask_orb_leap(ctx, last, next, leaps, hitlist)
+			return
+	if next != null:
+		_leap_to(ctx, next, leaps, hitlist, r)
+
+
+## Where the orb can leap from `last`: any other creature within 30 ft of it, but not the caster or a creature this
+## casting already targeted.
+func orb_leap_targets(c: Combatant, last: Combatant, hitlist: Array) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for o in enc().living():
+		if o != c and not o.id in hitlist and not o.is_down() and enc().distance(last, o) <= 30:
+			out.append(o)
+	return out
+
+
+## The leap the AI makes and the prompt starts from: the foe nearest the caster among those it can reach.
+func orb_leap_default(c: Combatant, last: Combatant, hitlist: Array) -> Combatant:
+	var e := enc()
 	var next: Combatant = null
 	var best := 1 << 30
 	for o in e.hostiles_of(c):
@@ -250,14 +281,49 @@ func _orb_leap(ctx: Dictionary, last: Combatant, rolled: Dictionary, r: CombatRe
 		if d < best:
 			best = d
 			next = o
-	if next == null:
-		return
-	e.log.add("spell", "The orb leaps to %s (matching dice)" % next.name(), c.id)
+	return next
+
+
+func _leap_to(ctx: Dictionary, next: Combatant, leaps: int, hitlist: Array, r: CombatResult) -> void:
+	enc().log.add("spell", "The orb leaps to %s (matching dice)" % next.name(), (ctx["c"] as Combatant).id)
 	var sub := ctx.duplicate()
 	sub["leaps_left"] = leaps - 1
 	hitlist.append(next.id)
 	sub["orb_hit"] = hitlist
 	spell_attack(sub, next, r)
+
+
+## The player's choice of where the orb leaps (a prompt that costs nothing; one creature, or decline to let it go).
+func _ask_orb_leap(ctx: Dictionary, last: Combatant, next: Combatant, leaps: int, hitlist: Array) -> void:
+	var e := enc()
+	var c := ctx["c"] as Combatant
+	var options := orb_leap_targets(c, last, hitlist)
+	if options.is_empty():
+		return
+	var req := ReactionRequest.new(ORB_LEAP, c.id, last.id)
+	req.title = "Chromatic Orb's leap"
+	req.text = "Two of the dice matched: the orb leaps to another creature within 30 ft of %s, with a new attack roll and new damage.%s" % [
+		last.name(), " It can leap %d more time%s after this." % [leaps - 1, "" if leaps == 2 else "s"] if leaps > 1 else ""]
+	req.cost = "No action or Reaction"
+	req.spends_reaction = false
+	req.min_targets = 1
+	req.max_targets = 1
+	if next != null:
+		req.selected_ids.assign([next.id])
+	for o in options:
+		req.target_choices.append({"id": o.id, "label": "%s · %d ft from %s%s" % [o.name(), e.distance(last, o), last.name(),
+			"" if c.hostile_to(o) else " (not a foe)"]})
+	# Weakly hold the prompt: the continuation lives on it until the player answers.
+	var request_ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var out := CombatResult.new()
+		var request := request_ref.get_ref() as ReactionRequest
+		if use and request != null and not request.selected_ids.is_empty():
+			var to := e.get_c(request.selected_ids[0])
+			if to != null and to in orb_leap_targets(c, last, hitlist):
+				_leap_to(ctx, to, leaps, hitlist, out)
+		return out
+	e.pending = req
 
 
 func _has_duplicate(rolled: Dictionary) -> bool:

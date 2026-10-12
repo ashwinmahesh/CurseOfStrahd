@@ -291,6 +291,7 @@ func _finish_short() -> void:
 			denied.append(ch.name)
 			continue
 		ch.finish_short_rest()
+		EncounterSetup.clear_fight_effects(ch)   # nothing from a fight outlasts a rest
 		rested.append(ch)
 	for g in st.guests:
 		if not g.dead:
@@ -337,6 +338,7 @@ func _long_rest(rule: String) -> void:
 		for ch in st.party:
 			if not ch.dead:
 				ch.finish_long_rest()
+				EncounterSetup.clear_fight_effects(ch)
 		for g in st.guests:
 			if not g.dead:
 				g.finish_long_rest()

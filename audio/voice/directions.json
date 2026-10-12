@@ -894,13 +894,13 @@
  "godrick_pendlebrook": {
   "495c0e9d613c19d1": "[grim, protective, firm]",
   "749ad33145e91a88": "[ashamed, breaking]",
+  "81831e9b73008e75": "[hearty, protective]",
   "861377174da00d79": "[sheepish, then grim resolve]",
   "9e411cebf9f6d329": "[gentle, solemn, firm]",
   "ad6fb43460ac6bd1": "[sheepish, warm]",
   "e8132e0bd3f69c72": "[shaken, ashamed]",
   "ef44b2d45b858fc8": "[stubborn, earnest]",
-  "faa040029a6d13bd": "[stunned, shaken, haunted]",
-  "81831e9b73008e75": "[hearty, protective]"
+  "faa040029a6d13bd": "[stunned, shaken, haunted]"
  },
  "goodwife_sarnov": {
   "04598ecc522ff691": "[flat, grieving, hollow]",
@@ -1323,6 +1323,7 @@
   "3bb8a2d6d931bfef": "[soft, prayerful, tender]",
   "4503a76638b93b89": "[shaken, quiet]",
   "4d8455c78fc689a3": "[firm, reassuring]",
+  "61240355749771aa": "[gentle, reverent]",
   "6243477b5611229c": "[shaken, hurt]",
   "72f14888a0adcbfd": "[focused, certain]",
   "7bd553d4f3057a4d": "[frightened, honest]",
@@ -1333,14 +1334,14 @@
   "b9b3928aa3eff45a": "[determined, quiet]",
   "c1dacf3daf3c8513": "[sorrowful, grave]",
   "cc0b9b8bb7f76a78": "[rueful, wry]",
-  "d6dfbeffc0c3fe50": "[quiet, appalled]",
-  "61240355749771aa": "[gentle, reverent]"
+  "d6dfbeffc0c3fe50": "[quiet, appalled]"
  },
  "luminita": {
   "0d2878bcf2224c6a": "[relieved, sardonic]",
   "1d94b8003046e26b": "[stunned, flat]",
   "20d1e887bfc46c70": "[sardonic, bitter]",
   "274bf636856e2c98": "[tender, grieving, wry]",
+  "343635d53f919f32": "[sad, laughing through tears]",
   "43ef21b885f6a106": "[worried, fond]",
   "57a0999cc89f2417": "[worried, deflated]",
   "8217c5a5435ca2a7": "[surprised, grudging]",
@@ -1357,8 +1358,7 @@
   "eab8e8a56d430473": "[dry, unimpressed]",
   "eeea6649f9ca30fb": "[gruff, softening]",
   "f1a656af02664efe": "[fierce, angry]",
-  "fe9941b3a62e82c2": "[quiet, choked, tender]",
-  "343635d53f919f32": "[sad, laughing through tears]"
+  "fe9941b3a62e82c2": "[quiet, choked, tender]"
  },
  "luvash": {
   "64a572c9d3c7ff2b": "[gruff, emotional]",
@@ -1497,6 +1497,7 @@
  },
  "mirela": {
   "080fafe8c058c8c7": "[relieved, quiet]",
+  "0c7dfb4a4ab6148d": "[excited, relieved]",
   "1bc5eb0de43deaa4": "[small, hopeful, scared]",
   "3e992dcf570ba3a1": "[small, brave]",
   "6f2af3fc6e5fac3c": "[defiant, fierce]",
@@ -1506,13 +1507,12 @@
   "8860815d0c64da4b": "[urgent, brave]",
   "a37f36786dbc8bba": "[flat, brave, matter-of-fact]",
   "ae976ad836d8d6d9": "[practical, serious, then wry]",
+  "b8aae3470894e323": "[steady, serious, sad]",
   "bcb143189acfa5f9": "[tired, brave]",
+  "e9d8f4cdfb128324": "[brave, practical]",
   "f24c6f0c505c0618": "[wondering, relieved]",
   "f6ebcb90460e9388": "[dry, serious]",
-  "f88094accf22e979": "[determined, practical]",
-  "0c7dfb4a4ab6148d": "[excited, relieved]",
-  "e9d8f4cdfb128324": "[brave, practical]",
-  "b8aae3470894e323": "[steady, serious, sad]"
+  "f88094accf22e979": "[determined, practical]"
  },
  "mister_quillon": {
   "005b37de2db4a27e": "[clipped, seething politeness]",
@@ -1798,6 +1798,7 @@
   "4146fc1d92297172": "[quiet, moved, tense]",
   "41b38fdaa4450b05": "[quiet, weary]",
   "420628c9bd2f54c7": "[dry, then chilling]",
+  "42a6e4a516507f1d": "[tense, eerie]",
   "42b26b11ca54bc33": "[quiet, uneasy]",
   "42e1cfb0f849c1e8": "[dry, desolate]",
   "42e34402f7b5160a": "[urgent, breathless, reading a letter]",
@@ -1824,6 +1825,7 @@
   "4a5e0deddc28da25": "[hushed, disturbing]",
   "4a7f5aee68e2b8f0": "[tense, sudden]",
   "4b61f9c95e646bc3": "[quiet, gentle]",
+  "4b8f419914f48b92": "[chilling, eerie]",
   "4bdd717cd6790b00": "[reverent, hushed]",
   "4befb82ac6a68e78": "[gentle, warm]",
   "4c5146ecb7728c73": "[hushed, reading, anguished]",
@@ -2394,9 +2396,7 @@
   "fe7ea43c6b1ed806": "[quiet, tense]",
   "feadac1b6e19e649": "[knowing, low]",
   "febcb29da16304e3": "[dry, wry]",
-  "ff767341d78f5e39": "[hushed, eerie]",
-  "42a6e4a516507f1d": "[tense, eerie]",
-  "4b8f419914f48b92": "[chilling, eerie]"
+  "ff767341d78f5e39": "[hushed, eerie]"
  },
  "order_knight": {
   "033e22728e7133ad": "[hollow, almost cheerful]",
@@ -2836,8 +2836,8 @@
   "b6755399b75f1974": "[low, grim, measured]",
   "b71dbc2d32729bed": "[gruff, grudging, faintly proud]",
   "bf1e58cf4b907e6d": "[bitter, defensive, rising]",
-  "d735fbc1f0bd47ec": "[curt, gruff]",
-  "bf3dcf92bb4fba59": "[afraid, gruff, shaken]"
+  "bf3dcf92bb4fba59": "[afraid, gruff, shaken]",
+  "d735fbc1f0bd47ec": "[curt, gruff]"
  },
  "teodor": {
   "028dc4837d57ab3e": "[tender, soft, farewell]",
@@ -3147,6 +3147,7 @@
   "2db5a60925212325": "[weary, dry]",
   "3324fc1f94909276": "[gossiping, sympathetic, gruff]",
   "3790933d403866dc": "[dry, unimpressed]",
+  "4752703158ecb20f": "[dry, wary, low warning]",
   "53387ce7f5e02b78": "[dry, amused]",
   "574a5e2ec62e0d5d": "[weary, deadpan]",
   "59e443e01c93a446": "[weary, flat]",
@@ -3188,8 +3189,12 @@
  },
  "vallaki_lamplighter": {
   "0040ceb3e03d27ee": "[haunted, ashamed, low]",
+  "109e3048b58febec": "[broken, trembling]",
+  "17285d47488c86ba": "[grieving, raw]",
   "1b3e2aeceb34df63": "[raw, defensive, grieving]",
   "29f24476688d436e": "[haunted, low, urgent]",
+  "44e5d2d39a3446e9": "[tender, grieving]",
+  "4fc62e75c3483eb4": "[tender, grieving]",
   "6a20bb78681afd87": "[weary, haunted]",
   "6b1fdb90ac9a4e2c": "[weary, wry]",
   "867051f76cd3284c": "[bitter, shaking]",
@@ -3201,10 +3206,6 @@
   "f23f85856ef5eac8": "[quiet, grim resolve]",
   "f851e906f49a524c": "[low, uneasy warning]",
   "f8dce1d944f978f0": "[hollow, sad]",
-  "4fc62e75c3483eb4": "[tender, grieving]",
-  "109e3048b58febec": "[broken, trembling]",
-  "44e5d2d39a3446e9": "[tender, grieving]",
-  "17285d47488c86ba": "[grieving, raw]",
   "fe303722835f17a8": "[bitter, shaking]"
  },
  "vallaki_parishioner_varvara": {
