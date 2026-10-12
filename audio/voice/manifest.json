@@ -1520,6 +1520,12 @@
   "recipe": "ca26150727",
   "text": "There you are. The rope came undone. I knew it would. I sat in the boat anyway, so you'd know where to find me."
  },
+ "argynvost/103b0b7d9855b66c": {
+  "chars": 142,
+  "model": "eleven_v3",
+  "recipe": "58a554c9ac",
+  "text": "It needs my fire. My skull is in his castle; bring it home to my bones one day, and once it's lit the beacon will burn as it should, for good."
+ },
  "argynvost/16fada46af855cc8": {
   "chars": 164,
   "direction": "[tender, grave]",
@@ -34908,6 +34914,12 @@
   "recipe": "b6ee845820",
   "text": "And he cheats. Not with magic. With people. He'll put somebody you care about between you and him, and smile."
  },
+ "mordenkainen/e5d2cec55e9e460c": {
+  "chars": 181,
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "And you've been in that castle already, haven't you. (He looks at your faces, and doesn't need to ask.) You said it to her. You put it on her box. Then she has it back, and so do I."
+ },
  "mordenkainen/ea4f69a7cc8b911d": {
   "chars": 163,
   "direction": "[brisk, wry]",
@@ -66818,6 +66830,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "His purse is still on his belt. The ledger's last page is a bill to the castle for six casks, marked paid in a different hand."
+ },
+ "narrator/ecf42dfc443e97c1": {
+  "chars": 152,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Above the empty hooks where the dragon's skull hung, hangs the sword that took its head. The edge is so fine it seems to cut the light that falls on it."
  },
  "narrator/ed22bbce31392794": {
   "chars": 115,
