@@ -103,19 +103,8 @@
         "count": 1,
         "per": "dawn"
       }
-    },
-    {
-      "id": "teleport",
-      "name": "Teleport",
-      "spell": "teleport",
-      "uses": {
-        "count": 1,
-        "per": "dawn"
-      },
-      "combat": false,
-      "field": true
     }
   ],
   "summary": "Vecna's hand: Strength 20, a freezing touch, and dreadful spells (DC 18), for one who cuts off their own hand.",
-  "text": "Attuning to this artifact demands that you cut off your own left hand at the wrist, then press the Hand to the stump, where it fuses to your arm and works as a living hand. While attuned, your Strength score becomes 20, and a hit with a melee spell attack made through the Hand adds 2d8 Cold damage. Once per dawn each, you can cast Teleport, Slow, Sleep and Finger of Death through the Hand (save DC 18). It also bears four random properties: a minor and a major beneficial one, and a minor and a major detrimental one."
+  "text": "Attuning to this artifact demands that you cut off your own left hand at the wrist, then press the Hand to the stump, where it fuses to your arm and works as a living hand. While attuned, your Strength score becomes 20, and a hit with a melee spell attack made through the Hand adds 2d8 Cold damage. Once per dawn each, you can cast Slow, Sleep and Finger of Death through the Hand (save DC 18). It also bears four random properties: a minor and a major beneficial one, and a minor and a major detrimental one."
 }

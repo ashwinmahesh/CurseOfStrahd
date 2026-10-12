@@ -61,6 +61,28 @@ func answer_reaction(use: bool) -> CombatResult:
 	return res
 
 
+## Hellish Rebuke's prompt (owner report 2026-10-12: a level 6 warlock's looked like a 1st-level cast): the damage at
+## each slot level `reactor` could spend, picked on the prompt, the lowest first; a warlock's one pact level is named.
+func _rebuke_levels(req: ReactionRequest, reactor: Combatant) -> void:
+	var ch := reactor.creature as Character
+	if ch == null:
+		return
+	var levels := SpellReactions.slot_levels(ch, 1)
+	if levels.is_empty():
+		return
+	var pact := int(ch.pact_magic()["level"])
+	if levels.size() == 1:
+		req.cost = "Reaction and a level %d spell slot%s" % [levels[0], " (Pact Magic)" if levels[0] == pact else ""]
+		req.text += " At level %d: %dd10 Fire, half on a save." % [levels[0], levels[0] + 1]
+		return
+	req.cost = "Reaction and the spell slot you choose"
+	for l in levels:
+		req.target_choices.append({"id": str(l), "label": "Level %d slot%s · %dd10 Fire" % [l, " (Pact Magic)" if l == pact else "", l + 1]})
+	req.selected_ids.assign([str(levels[0])])
+	req.min_targets = 1
+	req.max_targets = 1
+
+
 ## Reactions to being damaged (Hellish Rebuke, Storm's Thunder) wait until the attack or spell that caused them has
 ## finished.
 func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
@@ -174,7 +196,7 @@ func _fire_queued(q: Dictionary, reactor: Combatant, trigger: Combatant) -> Comb
 		return e.faerun.fire_queued(q, reactor, trigger)
 	match str(q["kind"]):
 		"hellish_rebuke":
-			return e.spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger)
+			return e.spells.cast_reaction_spell(reactor, "hellish_rebuke", trigger, int(q.get("slot", 0)))
 		"storms_thunder":
 			reactor.reaction_available = false
 			(reactor.creature as Character).spend_resource("giant_ancestry")
@@ -261,8 +283,13 @@ func run_reaction_queue(r: CombatResult) -> CombatResult:
 		req.title = str(words[0])
 		req.text = str(words[1]) % [trigger.name(), reactor.name()]
 		req.cost = str(words[2])
+		if kind == "hellish_rebuke":
+			_rebuke_levels(req, reactor)
+		var asked := req
 		req.continuation = func(use: bool) -> CombatResult:
 			if use:
+				if not asked.selected_ids.is_empty():
+					q["slot"] = int(asked.selected_ids[0])
 				return e.then(fire.call() as CombatResult, func() -> CombatResult: return run_reaction_queue(r))
 			return run_reaction_queue(r)
 		e.pending = req

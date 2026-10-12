@@ -248,7 +248,31 @@ func _teleport(c: Combatant, cell: Vector2i, r: CombatResult) -> void:
 	c.clear_run()
 	e.events.append({"type": "teleport", "id": c.id, "from": from, "to": cell})
 	r.lines.append(e.log.add("move", "%s teleports %d ft" % [c.name(), e.grid.distance_ft(from, c.size_cells, cell, c.size_cells)], c.id))
+	free_on_teleport(c)
 	spells.zones.on_moved(c, from)
+
+
+## A teleport leaves behind whatever held `c` in its place (owner ask 2026-10-12: Misty Step out of a web): a grapple,
+## now out of reach, and a Restrained or Grappled from a place or a holder (a web or an area's grasp, a net, a Giant
+## Spider's webbing: an effect with an escape check, an area's, or one a battle object holds). Conditions of the body or
+## mind (Hold Person, a curse) stay. The AI's teleports do the same.
+func free_on_teleport(c: Combatant) -> void:
+	var e := enc()
+	e.grappling.check_range(c)
+	var held_by_object := {}
+	for o in e.objects.list:
+		if not o.destroyed and o.holds == c.id:
+			held_by_object[o.hold_source] = o
+	var freed: Array[String] = []
+	for fx: Effect in c.creature.effects.duplicate():
+		if not (&"restrained" in fx.conditions or &"grappled" in fx.conditions):
+			continue
+		if not fx.escape.is_empty() or fx.stack_key.begins_with("zone:") or held_by_object.has(fx.source_id):
+			c.creature.remove_effect(fx)
+			freed.append(fx.name)
+	if not freed.is_empty():
+		e.log.add("info", "%s slips free of %s" % [c.name(), ", ".join(freed)], c.id)
+		e.events.append({"type": "condition", "id": c.id})
 
 
 ## Revivify: a creature that died within the last minute returns with 1 Hit Point.

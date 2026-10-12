@@ -16,6 +16,9 @@ if not name:godrick_pendlebrook
 endif
 set death_house_heard_plea
 quest death_house plea
+if not quest.into_the_mists >= village_edge
+quest into_the_mists village_edge
+endif
 -> questions
 
 ~ questions
@@ -123,6 +126,9 @@ Narrator: She says it the way a music box plays its tune: exactly the same, ever
 -> END
 
 ~ return
+if not quest.into_the_mists >= village_edge
+quest into_the_mists village_edge
+endif
 Narrator: Two children stand in the road where the cottages begin, as if they have never moved. The girl lifts her chin; the boy holds his wolf by one ear.
 Rose [afraid]: Please, you have to help us. Something horrible lives in our house, down in the basement.
 Thorn [sad]: It's got Walter.

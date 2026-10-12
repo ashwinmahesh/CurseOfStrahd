@@ -217,18 +217,56 @@ static func _conditions_in(entries: Array, choice: String) -> Array[String]:
 	return out
 
 
-## Sculpt Spells (Evoker 6): allies the caster chooses (up to 1 + the spell's level) in an Evocation spell's area
-## automatically succeed and take no damage.
+## Sculpt Spells (Evoker 6): up to 1 + the spell's level creatures in an Evocation spell automatically succeed on their
+## saves and take no damage. The player picks them as the spell goes off (opts.sculpt, the combat view's TargetPicker);
+## without picks (the AI) it's the caster and then its allies nearest it. House rule (Ashwin, 2026-10-12;
+## docs/rules/deviations.md): the caster can be one of them, where the 2024 text says "other creatures".
 func _sculpted(ctx: Dictionary, t: Combatant) -> bool:
 	var c := ctx["c"] as Combatant
 	var s := ctx["s"] as Dictionary
-	if t == c or not c.allied_with(t) or str(s.get("school", "")) != "evocation" or not CombatFeatures.has_feature(c, "sculpt_spells"):
+	if not sculpts(c, s):
 		return false
-	var used := int(ctx.get("sculpted", 0))
-	if used >= 1 + int(s.get("level", 0)):
-		return false
-	ctx["sculpted"] = used + 1
-	return true
+	if not ctx.has("sculpt_ids"):
+		var cap := sculpt_cap(s, int(ctx.get("slot", 0)))
+		var picks: Variant = (ctx.get("opts", {}) as Dictionary).get("sculpt")
+		if picks is Array:
+			ctx["sculpt_ids"] = (picks as Array).slice(0, cap).map(func(x: Variant) -> String: return str(x))
+		else:
+			var cells: Array[Vector2i] = []
+			cells.assign(ctx.get("cells", []) as Array)
+			ctx["sculpt_ids"] = sculpt_default(c, sculpt_candidates(c, sp()._area_victims(c, s, cells, str(ctx.get("choice", "")))), cap)
+	return t.id in (ctx["sculpt_ids"] as Array)
+
+
+## Whether `c`'s Sculpt Spells shapes `s`: an Evocation spell, cast by an Evoker of level 6 or more.
+func sculpts(c: Combatant, s: Dictionary) -> bool:
+	return str(s.get("school", "")) == "evocation" and CombatFeatures.has_feature(c, "sculpt_spells")
+
+
+## How many Sculpt Spells shields: 1 + the level the spell is cast at.
+static func sculpt_cap(s: Dictionary, slot: int) -> int:
+	return 1 + maxi(int(s.get("level", 0)), slot)
+
+
+## Who in the spell Sculpt Spells can shield: the creatures the caster can see, and the caster (house rule).
+func sculpt_candidates(c: Combatant, victims: Array[Combatant]) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	for v in victims:
+		if v == c or enc().can_see(c, v):
+			out.append(v)
+	return out
+
+
+## The ids shielded when nobody picks (the AI), and the picks the player starts from: the caster, then its allies
+## nearest it, up to `cap`.
+func sculpt_default(c: Combatant, candidates: Array[Combatant], cap: int) -> Array[String]:
+	var ours := candidates.filter(func(v: Combatant) -> bool: return v == c or c.allied_with(v))
+	ours.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		return a == c or (b != c and enc().distance(c, a) < enc().distance(c, b)))
+	var out: Array[String] = []
+	for v: Combatant in ours.slice(0, cap):
+		out.append(v.id)
+	return out
 
 
 ## Careful Spell: up to the caster's Charisma modifier allies automatically succeed and take no damage.

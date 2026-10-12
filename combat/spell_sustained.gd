@@ -101,6 +101,14 @@ func sustained_actions(c: Combatant) -> Array[Dictionary]:
 			why = "Not on the turn you cast it"
 		if why == "" and bool((a["def"] as Dictionary).get("once_per_turn", false)) and str(a.get("last_turn", "")) == "%d:%d" % [enc().round_no, enc().turn_index]:
 			why = "Already used this turn"
+		# Hex, Hunter's Mark: moved only once the creature it's on drops to 0 Hit Points (or is gone); until then the
+		# hotbar leaves it off (`waiting`).
+		if str(a["do"]) == "move_mark":
+			var marked := enc().get_c(str(a["target_id"]))
+			if marked != null and marked.is_alive() and marked.creature.hp > 0:
+				entry["waiting"] = true
+				if why == "":
+					why = "The marked creature is still up"
 		entry["legal"] = why == ""
 		entry["reason"] = why
 		out.append(entry)
@@ -317,6 +325,20 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 					for m in fx.modifiers:
 						if m.data.has("vs"):
 							m.data["vs"] = t.id
+			# What the spell put on the creature itself goes with it (Hex's Disadvantage on the chosen ability's
+			# checks), still held by the caster's Concentration.
+			for o in e.combatants:
+				if o == c or o == t:
+					continue
+				for fx2: Effect in o.creature.effects.duplicate():
+					if fx2.source_id != str(a["spell_id"]) or fx2.caster_id != c.id:
+						continue
+					o.creature.remove_effect(fx2)
+					var moved := Effect.from_dict(fx2.to_dict())
+					if conc != null and not conc.ended:
+						conc.attach(t.creature, moved)
+					else:
+						t.creature.add_effect(moved)
 			var sd0 := _comp().spell_data(str(a["spell_id"]))
 			spells.mark_badge(c, t, str(a["spell_id"]), str(sd0.get("name", a["spell_id"])), c.creature.concentration)
 			for x in spells.sustained:
@@ -407,6 +429,11 @@ func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, 
 				return "The marked creature is still up"
 			if t == null or e.distance(c, t) > int(d.get("range", 90)):
 				return "Choose a creature within %d ft" % int(d.get("range", 90))
+			if t == old:
+				return "Choose a new creature"
+			# Hunter's Mark: "a new creature you can see".
+			if bool(d.get("requires_sight", false)) and not e.can_see(c, t):
+				return "You must see the new quarry"
 		"maintain":
 			return spells.targeting.crown_victim_why(c, e.get_c(str(a["target_id"])), t)
 	return ""

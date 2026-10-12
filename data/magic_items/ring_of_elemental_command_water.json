@@ -55,24 +55,10 @@
       "text": "2 charges: cast Dominate Monster (save DC 18) on an Water Elemental."
     },
     {
-      "id": "create_or_destroy_water",
-      "name": "Create Or Destroy Water",
-      "spell": "create_or_destroy_water",
-      "charges": 1,
-      "dc": 18
-    },
-    {
       "id": "ice_storm",
       "name": "Ice Storm",
       "spell": "ice_storm",
       "charges": 2,
-      "dc": 18
-    },
-    {
-      "id": "control_water",
-      "name": "Control Water",
-      "spell": "control_water",
-      "charges": 3,
       "dc": 18
     },
     {
@@ -84,5 +70,5 @@
     }
   ],
   "summary": "Command over Water elementals, Resistance to Cold damage, and its element's spells (save DC 18).",
-  "text": "Linked with the Elemental Plane of Water, this ring gives your attack rolls against Water Elementals Advantage, while their attack rolls against you have Disadvantage. You also gain Resistance to Cold damage, a Swim Speed of 60 feet, the ability to breathe underwater, and the Aquan language. It holds 5 charges, regaining 1d4 + 1 of them at each dawn. For 2 charges you can target a Water Elemental with Dominate Monster (save DC 18). Other spells it casts, with their charge costs: Wall Of Ice (3), Control Water (3), Ice Storm (2), Create Or Destroy Water (1)."
+  "text": "Linked with the Elemental Plane of Water, this ring gives your attack rolls against Water Elementals Advantage, while their attack rolls against you have Disadvantage. You also gain Resistance to Cold damage, a Swim Speed of 60 feet, the ability to breathe underwater, and the Aquan language. It holds 5 charges, regaining 1d4 + 1 of them at each dawn. For 2 charges you can target a Water Elemental with Dominate Monster (save DC 18). Other spells it casts, with their charge costs: Wall Of Ice (3) and Ice Storm (2)."
 }

@@ -1,5 +1,7 @@
 {
   "id": "hindsight",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: it did nothing in the game, and nothing in the game could give it a use",
   "name": "Hindsight",
   "source": {
     "book": "AU",
@@ -36,6 +38,5 @@
   "tags": [
     "utility"
   ],
-  "icon": "magic_missile",
-  "playable": true
+  "icon": "magic_missile"
 }

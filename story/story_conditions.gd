@@ -26,9 +26,10 @@ func _init(state: StoryState) -> void:
 
 
 ## What a final battle (ADR 0014) needs besides its own `when`: Strahd waits in `room`, the reading's quest has been
-## given, and he isn't destroyed.
+## given, and he isn't destroyed, or already beaten and misted down to his coffin (Wiki finding 69: only the catacombs'
+## final battles asked, so the chapel's or the study's could start again with him in it).
 static func final_battle_condition(room: String) -> String:
-	return "final_room:%s and quest.strahds_lair >= foretold and not flag.strahd_destroyed" % room
+	return "final_room:%s and quest.strahds_lair >= foretold and not flag.strahd_destroyed and not flag.strahd_in_coffin" % room
 
 
 ## A location encounter's full condition: its `when`, and for a `final_battle` the final battle's own.

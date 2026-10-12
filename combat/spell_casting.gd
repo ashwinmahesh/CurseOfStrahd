@@ -122,6 +122,11 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	elif use_free:
 		slot = maxi(level, int(entry.get("free_slot", 0)))
 	else:
+		# No slot named: the lowest it has from the spell's level up (a warlock's is its pact level, owner report
+		# 2026-10-12).
+		if slot <= 0:
+			var lowest := spells.reaction_spells._lowest_slot(ch, level)
+			slot = lowest if lowest > 0 else level
 		slot = maxi(slot, level)
 		if c.cast_slot_spell_this_turn:
 			return CombatResult.fail("Already cast a spell with a slot this turn")

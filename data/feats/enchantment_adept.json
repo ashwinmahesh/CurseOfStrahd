@@ -40,12 +40,6 @@
           "value": "dominate_beast",
           "at_slot_level": 4,
           "prepared_for_classes": true
-        },
-        {
-          "stat": "spell",
-          "value": "modify_memory",
-          "at_slot_level": 5,
-          "prepared_for_classes": true
         }
       ]
     },

@@ -2,13 +2,14 @@ class_name TargetPicker
 extends RefCounted
 ## The combat view's picks beyond the first click (docs/ui/combat_view.md, docs/contracts/combat.md): a wall drawn
 ## square by square and the side a drawn Wall of Fire burns on, the creature Commander's Strike's ally attacks, the
-## creature Crown of Madness's victim must attack (or no one), and the ally Maneuvering Attack lets move, with its
-## square. It keeps what has been picked, says what the floor and the tooltip show, and builds the command; the engine
-## checks every pick (SpellTargeting, SpellPlacement, EncounterWeapons, EncounterMovement).
+## creature Crown of Madness's victim must attack (or no one), the ally Maneuvering Attack lets move, with its square,
+## and who an Evoker's Evocation spell shields (Sculpt Spells). It keeps what has been picked, says what the floor and
+## the tooltip show, and builds the command; the engine checks every pick (SpellTargeting, SpellPlacement,
+## EncounterWeapons, EncounterMovement, SpellSaves).
 
 ## What is being picked: "" (nothing), "wall" (the wall's squares), "side" (the side a drawn Wall of Fire burns on),
 ## "strike" (the creature Commander's Strike's ally attacks), "victim" (the creature the crowned one must attack),
-## "mover" (the ally Maneuvering Attack moves) or "square" (where that ally goes).
+## "mover" (the ally Maneuvering Attack moves), "square" (where that ally goes) or "sculpt" (who Sculpt Spells shields).
 var step := ""
 var e: Encounter
 ## Who acts, the hotbar action being aimed, and its spell slot.
@@ -24,6 +25,14 @@ var _pointed := Vector2i(-1, -1)
 ## Squares the moving ally can reach (the square step), and whether it was the only one who could move.
 var _reach: Dictionary = {}
 var _only_mover := false
+## The sculpt step: the creatures the spell can shield, those picked, its squares, and where it goes off. `_sculpt_self`:
+## a spell from the caster with no aim of its own (Thunderclap), so Backspace has no aim to go back to.
+var _sculpt_all: Array[Combatant] = []
+var _sculpt_picks: Array[Combatant] = []
+var _sculpt_cells: Array[Vector2i] = []
+var _point := Vector2.INF
+var _dir := Vector2.ZERO
+var _sculpt_self := false
 
 
 func _init(encounter: Encounter) -> void:
@@ -44,6 +53,12 @@ func reset() -> void:
 	_pointed = Vector2i(-1, -1)
 	_reach = {}
 	_only_mover = false
+	_sculpt_all = []
+	_sculpt_picks = []
+	_sculpt_cells = []
+	_point = Vector2.INF
+	_dir = Vector2.ZERO
+	_sculpt_self = false
 
 
 ## The player backed out: a move Maneuvering Attack offered is passed on.
@@ -56,9 +71,11 @@ func cancel() -> void:
 # --- Starting -------------------------------------------------------------------------------------
 
 ## Whether `a` (aimed with nothing on the hotbar) still takes a pick here: Crown of Madness's keep-control action picks
-## the creature the crowned one must attack.
+## the creature the crowned one must attack; an Evoker's Evocation spell from itself (Thunderclap) with its own side
+## caught in it, who to shield.
 func takes(who: Combatant, a: Dictionary) -> bool:
-	return not _crowned_by(who, a).is_empty()
+	return not _crowned_by(who, a).is_empty() or str(a.get("targeting", "")) == "none" \
+		and not _sculptable(who, a, Vector2.INF, Vector2.ZERO, int(a.get("slot", 0))).is_empty()
 
 
 ## Starts aiming `a`: a wall starts its drawing, Crown of Madness's keep-control its victim. Returns the action to aim:
@@ -77,7 +94,27 @@ func begin(who: Combatant, a: Dictionary, slot_: int) -> Dictionary:
 	if not crowned.is_empty():
 		_start(who, a, slot_, "victim")
 		first = e.get_c(crowned)
+	elif str(a.get("targeting", "")) == "none" and sculpt(who, a, Vector2.INF, Vector2.ZERO, slot_):
+		_sculpt_self = true
 	return a
+
+
+## The spell is aimed (`point`, or `dir` for a cone or a line): an Evoker's Evocation spell with the caster or its
+## allies caught in it asks who to shield first (Sculpt Spells), starting from the caster and the allies nearest it.
+## True when that pick starts; otherwise the spell is cast as aimed.
+func sculpt(who: Combatant, a: Dictionary, point: Vector2, dir: Vector2, slot_: int) -> bool:
+	var all := _sculptable(who, a, point, dir, slot_)
+	if all.is_empty():
+		return false
+	var s := _spell(a)
+	_start(who, a, slot_, "sculpt")
+	_sculpt_all = all
+	_sculpt_cells = e.spells.area_for(who, s, point, dir, slot_)
+	_point = point
+	_dir = dir
+	for id in e.spells.saves.sculpt_default(who, all, SpellSaves.sculpt_cap(s, slot_)):
+		_sculpt_picks.append(e.get_c(id))
+	return true
 
 
 ## After the first pick of an action that takes a second: Commander's Strike's ally (then the creature it attacks) and
@@ -170,6 +207,16 @@ func pick(cell: Vector2i, who: Combatant) -> Dictionary:
 			if not _reach.has(to) or bool((_reach[to] as Dictionary)["occupied"]):
 				return _refuse("%s can't get there with %d ft" % [first.name(), first.speed() / 2])
 			return {"do": "move", "ally": first, "cell": to}
+		"sculpt":
+			if who == null or not who in _sculpt_all:
+				return _refuse("Click a creature in the spell to shield it, or not · Enter: cast")
+			if who in _sculpt_picks:
+				_sculpt_picks.erase(who)
+				return {}
+			if _sculpt_picks.size() >= _sculpt_cap():
+				return _refuse("Sculpt Spells shields up to %d creatures" % _sculpt_cap())
+			_sculpt_picks.append(who)
+			return {}
 	return {}
 
 
@@ -185,6 +232,8 @@ func confirm() -> Dictionary:
 			return _command([first])
 		"victim":
 			return _victim(null)
+		"sculpt":
+			return _cast_sculpted()
 	return {}
 
 
@@ -213,6 +262,12 @@ func undo() -> bool:
 			step = "mover"
 			first = null
 			return true
+		"sculpt":
+			# Back to aiming the spell; a spell from the caster has no aim, so Backspace cancels it.
+			if _sculpt_self:
+				return false
+			reset()
+			return true
 	return false
 
 
@@ -225,6 +280,8 @@ func candidate(o: Combatant) -> bool:
 			return e.spells.targeting.crown_victim_why(c, first, o) == ""
 		"mover":
 			return o.is_player_controlled() and e.movement.reaction_mover_why(o) == ""
+		"sculpt":
+			return o in _sculpt_all
 	return false
 
 
@@ -248,6 +305,8 @@ func show(cell: Vector2i, who: Combatant) -> Dictionary:
 			_show_mover(out, who)
 		"square":
 			_show_square(out)
+		"sculpt":
+			_show_sculpt(out, who)
 	return out
 
 
@@ -379,6 +438,18 @@ func _show_square(out: Dictionary) -> void:
 	out["warnings"] = warnings
 
 
+func _show_sculpt(out: Dictionary, who: Combatant) -> void:
+	out["area"] = _sculpt_cells.duplicate()
+	for o in _sculpt_all:
+		((out["friendly"] if o in _sculpt_picks else out["target"]) as Array).append_array(o.footprint())
+	out["title"] = "Sculpt Spells: %d of %d shielded" % [_sculpt_picks.size(), _sculpt_cap()]
+	var lines: Array = ["Click a creature in the spell to shield it, or not · Enter: cast",
+		"Esc: don't cast" if _sculpt_self else "Backspace or right-click: aim again"]
+	if who != null and who in _sculpt_all:
+		lines.push_front("%s: %s" % [who.name(), "shielded (no save, no damage)" if who in _sculpt_picks else "caught in it"])
+	out["lines"] = lines
+
+
 # --- Helpers --------------------------------------------------------------------------------------
 
 ## The square a click means: the floor square pointed at, or a 1-square creature's own square when the pointer is on
@@ -467,6 +538,39 @@ func _victim(who: Combatant) -> Dictionary:
 	opts["crown_victim"] = who.id if who != null else ""
 	cast["opts"] = opts
 	return {"do": "perform", "action": cast, "targets": [first], "point": Vector2.INF, "dir": Vector2.ZERO}
+
+
+## The spell goes off with the creatures picked shielded (opts.sculpt, read by SpellSaves).
+func _cast_sculpted() -> Dictionary:
+	var cast := action.duplicate(true)
+	var opts := (cast.get("opts", {}) as Dictionary).duplicate()
+	opts["sculpt"] = _sculpt_picks.map(func(o: Combatant) -> String: return o.id)
+	cast["opts"] = opts
+	return {"do": "perform", "action": cast, "targets": [], "point": _point, "dir": _dir}
+
+
+## Who an Evoker's Evocation spell aimed so could shield, when the caster or one of its allies is among them; else
+## nothing (not an Evoker's Evocation spell with a save, or only foes in it).
+func _sculptable(who: Combatant, a: Dictionary, point: Vector2, dir: Vector2, slot_: int) -> Array[Combatant]:
+	var none: Array[Combatant] = []
+	if who == null or not str(a.get("kind", "")) in ["spell", "item_spell"]:
+		return none
+	var s := _spell(a)
+	if s.is_empty() or not s.has("save") or not s.has("area") or not e.spells.saves.sculpts(who, s):
+		return none
+	var self_origin := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	if point == Vector2.INF and dir == Vector2.ZERO and not self_origin:
+		return none
+	var cells := e.spells.area_for(who, s, point, dir, slot_)
+	var all := e.spells.saves.sculpt_candidates(who, e.spells._area_victims(who, s, cells,
+		SpellTargeting.choice_of(s, a.get("opts", {}) as Dictionary)))
+	if not all.any(func(v: Combatant) -> bool: return v == who or who.allied_with(v)):
+		return none
+	return all
+
+
+func _sculpt_cap() -> int:
+	return SpellSaves.sculpt_cap(_spell(action), slot)
 
 
 func _command(targets: Array) -> Dictionary:

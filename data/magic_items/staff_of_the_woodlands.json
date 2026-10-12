@@ -61,27 +61,11 @@
       "dc": "wielder"
     },
     {
-      "id": "awaken",
-      "name": "Awaken",
-      "spell": "awaken",
-      "charges": 5,
-      "dc": "wielder",
-      "field": true
-    },
-    {
       "id": "barkskin",
       "name": "Barkskin",
       "spell": "barkskin",
       "charges": 2,
       "dc": "wielder"
-    },
-    {
-      "id": "locate_animals_or_plants",
-      "name": "Locate Animals Or Plants",
-      "spell": "locate_animals_or_plants",
-      "charges": 2,
-      "dc": "wielder",
-      "field": true
     },
     {
       "id": "speak_with_animals",
@@ -128,5 +112,5 @@
     }
   ],
   "summary": "+2 quarterstaff and spell attacks; 10 charges of nature spells; Pass without Trace at will.",
-  "text": "Fight with it as a magic Quarterstaff that adds +2 to its attack and damage rolls; holding it also adds +2 to your spell attack rolls. It stores 10 charges and recovers 1d6 + 4 of them each dawn. Spending its final charge means rolling 1d20: on a 1 the staff's magic is gone and it is just a nonmagical Quarterstaff. Spells: spend charges to cast any of these with your own spell save DC: Speak with Animals (1 charge), Animal Friendship (1), Locate Animals or Plants (2), Barkskin (2), Speak with Plants (3), Awaken (5) or Wall of Thorns (6). Pass without Trace costs nothing. Tree Form (1 charge): as a Magic action, push one end into fertile soil and the staff grows into a healthy, 60-foot-tall tree; another Magic action makes it a staff again."
+  "text": "Fight with it as a magic Quarterstaff that adds +2 to its attack and damage rolls; holding it also adds +2 to your spell attack rolls. It stores 10 charges and recovers 1d6 + 4 of them each dawn. Spending its final charge means rolling 1d20: on a 1 the staff's magic is gone and it is just a nonmagical Quarterstaff. Spells: spend charges to cast any of these with your own spell save DC: Speak with Animals (1 charge), Animal Friendship (1), Barkskin (2), Speak with Plants (3) or Wall of Thorns (6). Pass without Trace costs nothing. Tree Form (1 charge): as a Magic action, push one end into fertile soil and the staff grows into a healthy, 60-foot-tall tree; another Magic action makes it a staff again."
 }

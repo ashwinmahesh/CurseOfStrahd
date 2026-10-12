@@ -158,8 +158,7 @@
     "3": [
       "detect_magic",
       "magic_missile",
-      "magic_weapon",
-      "nystuls_magic_aura"
+      "magic_weapon"
     ],
     "5": [
       "counterspell",
@@ -170,8 +169,7 @@
       "leomunds_secret_chest"
     ],
     "9": [
-      "bigbys_hand",
-      "teleportation_circle"
+      "bigbys_hand"
     ]
   },
   "playable": true

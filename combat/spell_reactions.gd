@@ -144,6 +144,16 @@ func _lowest_slot(ch: Character, from_level: int) -> int:
 	return 0
 
 
+## The slot levels `ch` could spend on a spell of `from_level`, lowest first. A warlock's Pact Magic slots are all of
+## its pact level, so a pure warlock has just that one: its spells are always cast at it.
+static func slot_levels(ch: Character, from_level: int) -> Array[int]:
+	var out: Array[int] = []
+	for l in range(maxi(1, from_level), 10):
+		if ch.slots_left(l) > 0:
+			out.append(l)
+	return out
+
+
 ## Shield (2024): +5 AC until the start of your next turn, as a Reaction, with a level 1 slot (the lowest
 ## available). Also stops Magic Missile.
 func cast_shield(c: Combatant) -> bool:
@@ -168,13 +178,14 @@ func cast_shield(c: Combatant) -> bool:
 
 
 ## A reaction spell answering `trigger` (Hellish Rebuke against whoever hurt the caster; Counterspell against a
-## caster): the Reaction and the lowest slot are spent, then the spell resolves against the trigger.
-func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> CombatResult:
+## caster): the Reaction and a slot are spent (`slot_choice`, the level picked on the prompt, else the lowest; a
+## warlock's is its pact level), then the spell resolves against the trigger at that level.
+func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant, slot_choice: int = 0) -> CombatResult:
 	var spells := sp()
 	var e := enc()
 	var ch := spells.caster_char(c)
 	var s := _comp().spell_data(spell_id)
-	var slot := _lowest_slot(ch, int(s.get("level", 1)))
+	var slot := slot_choice if slot_choice in slot_levels(ch, int(s.get("level", 1))) else _lowest_slot(ch, int(s.get("level", 1)))
 	if slot == 0 or not can_react(c):
 		return CombatResult.new()
 	c.reaction_available = false

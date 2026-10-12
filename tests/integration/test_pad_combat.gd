@@ -203,3 +203,34 @@ func test_the_wheels_hold_the_actions_and_the_tactical_view() -> void:
 	assert_true(cv.rig.tactical, "releasing on Tactical view switches the camera")
 	cv.rig.tactical = false
 	GameSettings.set_value("pad_wheels", false, false)
+
+
+## The turn order's portraits (owner, 2026-10-12): a click on one sends the camera gliding over to that creature; on a
+## pad, X while the radial is held steps the camera along the order.
+func test_the_turn_order_points_the_camera() -> void:
+	if not _ready_for_input():
+		return
+	var rat: Combatant = null
+	for c in cv.e.combatants:
+		if c.side == &"enemy":
+			rat = c
+	var rat_tok := cv.tokens[rat.id] as CombatToken
+	var card: Control = null
+	for n: Node in (cv.hud.get("_strip") as Node).get_children():
+		if n is Control and (n as Control).tooltip_text == "Click to look at %s" % rat.name():
+			card = n as Control
+	assert_true(card != null, "the rat's portrait says what a click does")
+	var click := InputEventMouseButton.new()
+	click.button_index = MOUSE_BUTTON_LEFT
+	click.pressed = true
+	card.gui_input.emit(click)
+	assert_eq(cv.rig.follow, rat_tok, "a click on its portrait: the camera goes to the rat")
+	var before := cv.rig.global_position.distance_to(rat_tok.global_position)
+	await _frames(6)
+	var after := cv.rig.global_position.distance_to(rat_tok.global_position)
+	assert_true(after < before and (before < 0.1 or after > 0.01), "gliding there, not jumping (%.2f, then %.2f)" % [before, after])
+	cv.hud.radial.open()
+	await _press(JOY_BUTTON_X)
+	assert_true(cv.rig.follow != rat_tok and cv.rig.follow != null, "X with the radial held: the next in the turn order")
+	assert_eq((cv.rig.follow as CombatToken).combatant, cv.e.order[(cv.e.order.find(rat) + 1) % cv.e.order.size()])
+	cv.hud.radial.visible = false

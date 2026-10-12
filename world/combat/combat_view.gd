@@ -138,6 +138,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
+	hud.focus_requested.connect(_focus_on)
 	hud.sheet_requested.connect(_sheet)
 	hud.death_save_pressed.connect(_death_save)
 	hud.slot_level_changed.connect(func(l: int) -> void:
@@ -319,6 +320,7 @@ func _advance() -> void:
 		return
 	var c := e.current()
 	rig.follow = tokens[c.id] as Node3D
+	_looked_at = ""
 	if not c.is_player_controlled() or e.compelled(c):
 		mode = Mode.BUSY
 		overlay.clear_all()
@@ -531,6 +533,44 @@ func _inspect(id: String) -> void:
 	if c != null and c.is_player_controlled():
 		hud.shown = c
 		hud.refresh()
+
+
+## A click on a portrait in the turn order (owner, 2026-10-12: "it should pan the camera over to where that enemy or
+## player character is"): the camera glides over to them (the rig eases after what it follows) and their figure lights
+## up; on a pad the cursor goes too. The next turn, the camera keys or the cursor take the camera on. A creature
+## nobody can see stays unseen.
+func _focus_on(id: String) -> void:
+	if not _command_allowed("focus", {}):
+		return
+	var tok := _tok(id)
+	if tok == null or not tok.visible or tok.combatant == null or not tok.combatant.is_alive():
+		return
+	_looked_at = id
+	if using_pad:
+		cursor_cell = tok.combatant.cell
+		_pad_hover()
+	rig.follow = tok
+	for k: String in tokens:
+		(tokens[k] as CombatToken).set_highlight(tokens[k] == tok)
+
+
+## The last creature looked at from the turn order (_focus_on), where the pad's next look starts from.
+var _looked_at := ""
+
+
+## On a pad (holding the radial, the Next target button): the camera to the next creature in the turn order after the
+## one last looked at, or after whoever's turn it is.
+func _look_along_order() -> void:
+	var order: Array[Combatant] = []
+	for c in e.order:
+		var tok := _tok(c.id)
+		if c.is_alive() and tok != null and tok.visible:
+			order.append(c)
+	if order.is_empty():
+		return
+	var from := e.get_c(_looked_at) if _looked_at != "" else e.current()
+	var i := order.find(from)
+	_focus_on(order[(i + 1) % order.size()].id)
 
 
 ## Takes control of another hero sharing the turn (EncounterTurns.switch_to): a click on their frame or portrait, Tab,
@@ -953,6 +993,10 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				if hover_cell.x >= 0:
 					_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 				return
+			# An Evoker's Evocation spell with its own side in it asks who to shield first (Sculpt Spells, TargetPicker).
+			if picker.sculpt(c, selected, _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()), slot_level):
+				_update_hover()
+				return
 			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
@@ -961,6 +1005,9 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			elif hover_cell.x >= 0:
 				_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 		"direction":
+			if picker.sculpt(c, selected, Vector2.INF, _aim_dir(c), slot_level):
+				_update_hover()
+				return
 			_perform(selected, [], Vector2.INF, _aim_dir(c))
 		"multi":
 			if t == null:
@@ -1149,6 +1196,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			hud.radial.open()
 		return
+	# While the radial is held, Next target looks along the turn order instead (the portraits' click on a pad).
+	if hud.radial.visible and event.is_action_pressed(&"combat_next_target"):
+		_look_along_order()
+		get_viewport().set_input_as_handled()
+		return
 	# While a wheel of actions is open the D-pad changes its filter (up and down) and its page (left and right).
 	if hud.radial.visible and not hud.radial.items.is_empty() and event is InputEventJoypadButton and event.is_pressed():
 		var jb := event as InputEventJoypadButton
@@ -1259,7 +1311,8 @@ func _next_target() -> void:
 		return
 	var list: Array[Combatant] = []
 	for o in e.living():
-		if o == c or o.is_down() and str(selected.get("targeting", "")) != "dying":
+		# The caster itself only when a pick takes it (Sculpt Spells shielding the Evoker).
+		if o == c and not (mode == Mode.TARGET and picker.active() and picker.candidate(o)) or o.is_down() and str(selected.get("targeting", "")) != "dying":
 			continue
 		if mode == Mode.TARGET and picker.active():
 			if not picker.candidate(o):

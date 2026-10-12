@@ -407,10 +407,11 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	view.rig.follow = view.tokens[view.leader().id] as Node3D
 	view.st.advance_minutes(1)
-	# With the fight over, nobody is still held by a dead grappler, and the fallen-over get up.
-	for m in view.members:
+	# With the fight over, nobody is still held by a dead grappler, and the fallen-over get up; nobody stays held by a
+	# web, a net or a grapple, and what lasted only rounds is gone (EncounterSetup.clear_fight_effects).
+	for m in view.members + view.guest_members:
+		EncounterSetup.clear_fight_effects(m.creature)
 		if m.creature.hp > 0:
-			m.creature.remove_condition(&"grappled")
 			m.creature.remove_condition(&"prone")
 	LocationStealth.after_fight(view, e)
 	BattleScenery.after_fight(view, e)   # broken doors stay open; what else broke stays broken this visit

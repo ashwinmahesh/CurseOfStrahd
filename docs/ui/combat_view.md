@@ -61,6 +61,11 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   no one), and the same pick on the keep-control action; after a Maneuvering Attack hit, the ally that moves (skipped
   when only one can) and its square, with the path and any other enemy's Opportunity Attack shown. Backspace or
   right-click goes back a step; Esc cancels (and passes on the maneuver's move).
+- **Sculpt Spells** (an Evoker's Evocation spell with the caster or its allies caught in it): once the spell is aimed,
+  the creatures in it show green when shielded and red when not, starting from the caster and its allies nearest it,
+  up to 1 + the spell's level; a click (A, or the next-target key to move between them) shields one or takes it back,
+  Enter (Y) casts. Backspace or right-click aims again; a spell from the caster with no aim (Thunderclap) asks as soon
+  as it's chosen, and Esc cancels it.
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
 
@@ -296,3 +301,20 @@ side of a foe an ally is already beside. Settings, Game, Flanking turns it off (
 A hero may end a move in an ally's space (Move here works on an ally's square; the walk up prefers an empty one). Two
 figures on one square stand side by side as the camera looks (`CombatView._share_offset`), and step back to the
 centre when one leaves (`_settle_shared`, after each batch of events).
+
+## Looking along the turn order (owner, 2026-10-12)
+
+A click on a portrait in the turn order sends the camera gliding over to that creature, hero or foe, and lights its
+figure (`CombatHud.focus_requested`, `CombatView._focus_on`; the rig eases after what it follows). A hero sharing the
+turn still takes the turn on a click, and the camera goes along. The next turn, an action, the camera keys or the pad's
+cursor take the camera on from there; a creature nobody can see isn't shown. On a pad, Next target (X) while the radial
+is held steps the camera along the order, one creature a press, the cursor going too (`_look_along_order`); a line under
+the wheel names the button.
+
+## Moving Hex and Hunter's Mark (owner question, 2026-10-12)
+
+Once the creature Hex or Hunter's Mark is on drops to 0 Hit Points (or is gone), "Move Hex" / "Move Hunter's Mark"
+shows on the Spells tab: a Bonus Action on a later turn, no slot, the same Concentration. It picks the new creature
+with the usual target picker (on a pad, the slot like any other); Hunter's Mark needs one the caster can see. Hex's
+curse on the chosen ability's checks goes with it (`SpellSustained` move_mark). Until the target drops the slot stays
+off the bar (`waiting`). A foe the AI plays moves its mark to the nearest foe it can see (`AiBrain._move_mark`).

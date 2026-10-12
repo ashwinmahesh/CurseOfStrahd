@@ -37,12 +37,6 @@
         },
         {
           "stat": "spell",
-          "value": "hallucinatory_terrain",
-          "at_slot_level": 4,
-          "prepared_for_classes": true
-        },
-        {
-          "stat": "spell",
           "value": "seeming",
           "at_slot_level": 5,
           "prepared_for_classes": true

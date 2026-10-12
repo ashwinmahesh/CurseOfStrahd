@@ -412,6 +412,7 @@
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "QZdK444I5gePjl8kDFcM",
       "released": true
     },
     "offalia_wormwiggle": {
@@ -1768,7 +1769,7 @@
     "ana": {
       "voice_id": "6tPpQd1OMENsZ3qD7FSl",
       "name": "Library voice: Yoana - Fresh, bright, and engaging",
-      "description": "Ana, the lamplighter's daughter: the owner's casting-room pick (2026-10-08), library voice Yoana.",
+      "description": "Catalina, the lamplighter's daughter: the owner's casting-room pick (2026-10-08), library voice Yoana.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,

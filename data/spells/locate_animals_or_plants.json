@@ -1,5 +1,7 @@
 {
   "id": "locate_animals_or_plants",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: it did nothing in the game, and nothing in the game could give it a use",
   "name": "Locate Animals or Plants",
   "source": {
     "book": "PHB2024",

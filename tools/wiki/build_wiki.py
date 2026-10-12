@@ -776,6 +776,8 @@ class Wiki:
         for cid, c in g.classes.items():
             s.register(f"class/{cid}", "Characters/Classes", c["name"])
         for sid, sp in g.spells.items():
+            if not sp.get("playable", True):
+                continue   # taken out of play: kept in the data, hidden in the game
             s.anchor(f"spell/{sid}", f"Spells/Level {sp.get('level', 0)} Spells" if sp.get("level") else
                      "Spells/Cantrips", sp["name"])
         self.item_sources = self._item_sources()
@@ -882,6 +884,9 @@ class Wiki:
             for grp in (shop.get("rotating") or {}).get("groups", []):
                 for iid in grp.get("pool", []):
                     out[iid].append({"kind": "shop", "npc": nid, "rotating": True})
+        for iid in list(out):
+            if not self.g.item_data(iid).get("playable", True):
+                del out[iid]   # taken out of play (hidden in the game)
         for iid, slot in TAROKKA_TREASURES.items():
             out[iid] = [x for x in out.get(iid, []) if x["kind"] != "gift"]
             out[iid].insert(0, {"kind": "tarokka", "slot": slot})
@@ -1750,7 +1755,7 @@ class Wiki:
         self.w.write("page/item_sources", "Items/Where to Find Items", "Where to Find Items",
                      [auto("list", "\n".join(lines))], tags=["wiki", "items"])
         # The magic item catalogue, by rarity.
-        lines = [f"All {len(g.magic)} magic items in the game, by rarity. Most turn up as random treasure "
+        lines = [f"All {sum(1 for d in g.magic.values() if d.get('playable', True))} magic items in the game, by rarity. Most turn up as random treasure "
                  f"({s.link('page/random_treasure', 'Random Treasure')}); those with a fixed home link to it.", ""]
         by_r = defaultdict(list)
         for iid, d in g.magic.items():
@@ -1774,7 +1779,8 @@ class Wiki:
         # Mundane equipment.
         lines = ["The everyday gear of the 2024 Player's Handbook as this game prices it. Merchants charge their own "
                  f"markup on these ({s.link('page/merchants', 'Merchants')}).", ""]
-        weapons = [d for d in g.items.values() if d.get("category") == "weapon"]
+        mundane = [d for d in g.items.values() if d.get("playable", True)]
+        weapons = [d for d in mundane if d.get("category") == "weapon"]
         if weapons:
             lines += ["## Weapons", "", "| Weapon | Kind | Damage | Properties | Mastery | Cost | Weight |",
                       "|---|---|---|---|---|---|---|"]
@@ -1790,7 +1796,7 @@ class Wiki:
                              f"{w.get('damage_type', '')} | {props} | {w.get('mastery', '')} | {self.gp(d.get('cost_gp'))} | "
                              f"{d.get('weight_lb', '')} lb |")
             lines.append("")
-        armor = [d for d in g.items.values() if d.get("category") in ("armor", "shield")]
+        armor = [d for d in mundane if d.get("category") in ("armor", "shield")]
         if armor:
             lines += ["## Armor", "", "| Armor | Kind | AC | Strength | Stealth | Cost | Weight |",
                       "|---|---|---|---|---|---|---|"]
@@ -1807,7 +1813,7 @@ class Wiki:
                              f"{'Disadvantage' if a.get('stealth_disadvantage') else ''} | {self.gp(d.get('cost_gp'))} | "
                              f"{d.get('weight_lb', '')} lb |")
             lines.append("")
-        rest = [d for d in g.items.values() if d.get("category") not in ("weapon", "armor", "shield", "quest")]
+        rest = [d for d in mundane if d.get("category") not in ("weapon", "armor", "shield", "quest")]
         cats = defaultdict(list)
         for d in rest:
             cats[d.get("category", "gear")].append(d)
@@ -1900,6 +1906,8 @@ class Wiki:
                     bits.append(f"haggle DC {h['dc']}")
             lines += [f"*{'; '.join(bits)}*", "", "| Item | Price | Stock | Only when |", "|---|---|---|---|"]
             for it in shop.get("sells", []):
+                if not g.item_data(it["id"]).get("playable", True):
+                    continue
                 if "price" in it:
                     price = float(it["price"])
                 else:
@@ -1913,7 +1921,8 @@ class Wiki:
             if rot:
                 lines.append(f"**Changing stock:** every {rot.get('days', 1)} days the stock is redrawn:")
                 for grp in rot.get("groups", []):
-                    lines.append(f"- {grp.get('count', 1)} of: " + ", ".join(g.item_name(x) for x in grp.get("pool", [])))
+                    lines.append(f"- {grp.get('count', 1)} of: " + ", ".join(
+                        g.item_name(x) for x in grp.get("pool", []) if g.item_data(x).get("playable", True)))
                 lines.append("")
         lines += ["# Services", "", "Temples sell spells cast for the party, and inns sell a night's room.", "",
                   "| Service | Base price | What it does |", "|---|---|---|"]
@@ -2122,7 +2131,8 @@ class Wiki:
             if re.search(r"EXPLORING_TOO", field) else set()
         by_level = defaultdict(list)
         for sid, sp in g.spells.items():
-            by_level[int(sp.get("level", 0))].append(sid)
+            if sp.get("playable", True):
+                by_level[int(sp.get("level", 0))].append(sid)
         for lv in sorted(by_level):
             title = "Cantrips" if lv == 0 else f"Level {lv} Spells"
             lines = []
@@ -2144,8 +2154,6 @@ class Wiki:
                 lines.append("")
                 lines.append(sp.get("text") or sp.get("summary", ""))
                 notes = []
-                if not sp.get("playable", True):
-                    notes.append("Not castable in this game yet.")
                 if sid in exploring or sp.get("field_utility"):
                     notes.append("Can also be cast while exploring, from the character sheet.")
                 if notes:
@@ -2447,7 +2455,8 @@ class Wiki:
                            s.link("page/strahd", "Strahd's Visits")]),
             ("Items and money", [s.link("page/item_sources", "Where to Find Items"),
                                  s.link("page/merchants", "Merchants and Services"),
-                                 s.link("page/magic_items", "Magic Items") + f" ({len(g.magic)})",
+                                 s.link("page/magic_items", "Magic Items") +
+                                 f" ({sum(1 for d in g.magic.values() if d.get('playable', True))})",
                                  s.link("page/equipment", "Equipment"), s.link("page/random_treasure", "Random Treasure"),
                                  "[[Cheat Codes]] (every item's code)"]),
             ("Heroes and magic", [s.link("page/heroes", "Heroes"), s.link("page/approval", "Companion Approval"),

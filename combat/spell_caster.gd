@@ -365,8 +365,8 @@ func cast_shield(c: Combatant) -> bool:
 	return reaction_spells.cast_shield(c)
 
 
-func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant) -> CombatResult:
-	return reaction_spells.cast_reaction_spell(c, spell_id, trigger)
+func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant, slot_choice: int = 0) -> CombatResult:
+	return reaction_spells.cast_reaction_spell(c, spell_id, trigger, slot_choice)
 
 
 func release_readied(c: Combatant, held: Dictionary, target: Combatant) -> CombatResult:
