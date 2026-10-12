@@ -73,7 +73,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Mad Mary | Necklace of Prayer Beads (rare) | Gift: when Gertruda comes home (late in the game) |
 | ✅ | Teodor's empty grave, the churchyard | Shield, +1 (uncommon) | Tip: Teodor tells you at dawn (The Polite Caller, docs/story/side_quests.md) |
 | ✅ | Bildrath | Wraps of Unarmed Power, +1 (uncommon) | Gift: his hush money after the walking firewood (Cut After Noon) |
-| ✅ | Old Mihail | Amulet of Proof against Detection and Location (uncommon) | Gift: the bride's charm, once she's buried (Six Feet) |
+| ✅ | Old Mihail | Elemental Gem (Blue Sapphire) (uncommon) | Gift: the bride's little blue stone, once she's buried (Six Feet) |
 | ✅ | The burgomaster's study, behind the bricks | Mithral Armor (uncommon) | Hoard: Sergiu's shirt, once the Tenant is dead (The Burgomaster's Hound, docs/story/side_quests.md) |
 | ✅ | Death House, Walter's crypt | Stone of Good Luck (uncommon) | Gift: Veta's lucky stone, left on the lid once she's laid with her son (The Nursemaid's Grave, docs/story/side_quests.md) |
 | ✅ | The charcoal-burners' hollow, Agafia | Bag of Tricks (Tan) (uncommon) | Gift: her grandmother's bag, once the pack's hunters are beaten at her door (The Oat Thief, docs/story/side_quests.md) |

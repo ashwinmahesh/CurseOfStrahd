@@ -98,8 +98,8 @@ grave Mihail dug for Petra (prop `sixfeet_grave`); he cuts her name on the back 
 
 - Fight `well_bride` (the well): level 3 Zinaida (banshee, her Deathly Wail drops anyone at 25 HP or less) and 2
   shadows (1,300 XP, High-ish with the wail); level 4 adds 2 specters; below, Zinaida at 40 HP and a shadow.
-- Rewards: 60 gp in her silver coins and the charm she wore so the castle couldn't find her, an Amulet of Proof against
-  Detection and Location (uncommon).
+- Rewards: 60 gp in her silver coins and the little blue stone she wore with them, an Elemental Gem (Blue Sapphire)
+  (uncommon): broken, it calls up an Air Elemental for an hour.
 
 ### The Burgomaster's Hound (`the_burgomasters_hound`, narrative/village_of_barovia/the_burgomasters_hound.dialogue; batch 4, level 2)
 

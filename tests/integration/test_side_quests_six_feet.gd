@@ -78,7 +78,7 @@ func test_her_name_brings_her_up_quietly_and_mihail_buries_her() -> void:
 	assert_eq(st.quest_stage("six_feet"), "buried")
 	assert_true(_text(burial).contains("They were all for you"))
 	assert_eq(roundi(st.gold), 60)
-	assert_true(st.party_has_item("amulet_of_proof_against_detection_and_location"))
+	assert_true(st.party_has_item("elemental_gem_blue_sapphire"), "the little blue stone she wore")
 	assert_false(_prop_shown(st, "sixfeet_grave"), "the grave is filled")
 	var petra := _play(st, "village_of_barovia/townsfolk:goodwife")
 	assert_true(_text(petra).contains("herb") or _text(petra).contains("garden"))
