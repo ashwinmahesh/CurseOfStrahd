@@ -118,9 +118,10 @@ func _refresh_long() -> void:
 		_long_slot.add_child(strike)
 
 
-## The place the party is resting in, when the screen is open over the game (not a practice or a capture).
+## The place the party is resting in, when the screen is open over the campaign itself: never the tutorial's practice
+## ground or a capture's own party, where a Long Rest stays the plain one.
 func _view() -> LocationView:
-	if root == null or not "view" in root:
+	if root == null or root is TutorialSession or st != GameState.story or not "view" in root:
 		return null
 	return root.get("view") as LocationView
 
