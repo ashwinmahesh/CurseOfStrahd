@@ -368,6 +368,20 @@ material's scale alone didn't change how big they were drawn.
 
     make capture SCENE=res://tools/capture/puff_capture.tscn NAME=puffs/after FRAMES=10   # LOOK_OFF=puffs: without
 
+## Fronds framing the woods in the Modern finish
+
+Visual Polish Plan 11 (the vault's "Visual Polish Plan.md"). On wild outdoor maps (`ArenaBoard.WILD` themes) whose
+land is wooded (the mood's surround `trees` at `ForegroundFraming.WOODED` or more), a few fern fronds grow into the
+bottom corners of the screen, out of focus and nearly black, with a faint edge of the key light, swaying a little, as
+if the camera looked past them (`world/look/foreground_framing.gd`, `shaders/post/foreground_leaf.gdshader`, the plants'
+own leaf cards at a high mipmap). They sit on a canvas layer over the world and under the HUD, never take a click, keep
+clear of the middle of the screen where the party stands, and fade out for fights, conversations and other screens and
+as the camera tilts to the horizon. Towns, rooms and Classic get none. In dark woods they mostly melt into the dark
+corners; they read best by day and at the camps.
+
+    make capture SCENE=res://tools/capture/look_capture.tscn NAME=look/framing FRAMES=10 \
+      LOOK_SHOTS=camp_fire,road_dusk   # LOOK_OFF=framing for without
+
 ## Rules for new places
 
 - An outdoor place gets its region's or theme's mood; give it its own only when it should feel different. Indoor

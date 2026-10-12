@@ -63,9 +63,39 @@ static func _tried_key(check: Dictionary, ch: Character) -> String:
 	return "tried:%s:%s" % [check["id"], ch.id if ch.id != "" else ch.name]
 
 
-## Shown in the menu now: its `when` holds and it isn't spent.
+## Shown in the menu now: its `when` holds, it isn't spent, and it still has something to do.
 static func open(st: StoryState, loc_id: String, check: Dictionary) -> bool:
-	return not spent(st, loc_id, check) and StoryConditions.check(str(check.get("when", "")), st)
+	return not spent(st, loc_id, check) and StoryConditions.check(str(check.get("when", "")), st) and not moot(st, loc_id, check)
+
+
+## What a success can do that the party may already have done another way: finding, disarming, unlocking, opening.
+const ONLY_WAYS: Array[String] = ["text", "reveal", "disarm", "unlock", "open"]
+
+
+## Its success would only find, disarm, unlock or open things that already are (a Search found the satchel the climb
+## would have reached): nothing left to try it for.
+static func moot(st: StoryState, loc_id: String, check: Dictionary) -> bool:
+	var win := check.get("success", {}) as Dictionary
+	if win.keys().any(func(k: Variant) -> bool: return not str(k) in ONLY_WAYS) or win.keys().all(func(k: Variant) -> bool: return str(k) == "text"):
+		return false
+	var ls := st.loc_state(loc_id)
+	for r: Variant in win.get("reveal", []):
+		var ref := str(r)
+		# Somewhere else's state is only read, never made (hovering mustn't add places to the save).
+		var where := st.location_states.get(ref.get_slice(":", 0), {}) as Dictionary if ref.contains(":") else ls
+		var id := ref.get_slice(":", 1) if ref.contains(":") else ref
+		if not bool((where.get("found", {}) as Dictionary).get(id, false)) and str((where.get("traps", {}) as Dictionary).get(id, "")) == "":
+			return false
+	for t: Variant in win.get("disarm", []):
+		if not str((ls["traps"] as Dictionary).get(str(t), "")) in ["disarmed", "triggered"]:
+			return false
+	for u: Variant in win.get("unlock", []):
+		if not str((ls["doors"] as Dictionary).get(str(u), "")) in ["unlocked", "open"]:
+			return false
+	for o: Variant in win.get("open", []):
+		if str((ls["doors"] as Dictionary).get(str(o), "")) != "open":
+			return false
+	return true
 
 
 ## The checks on a thing that are open now.

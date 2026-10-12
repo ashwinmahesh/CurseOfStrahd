@@ -252,7 +252,20 @@
       ],
       "kind": "examine",
       "label": "a bookcase",
-      "model": "bookcase"
+      "model": "bookcase",
+      "checks": [
+        {
+          "id": "odd_shelf_titles",
+          "skill": "history",
+          "dc": 13,
+          "label": "Read the titles on the odd shelf",
+          "success": {
+            "reveal": [
+              "study_bookcase"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "library_hearth",
@@ -379,7 +392,18 @@
       ],
       "kind": "examine",
       "label": "a standing harp",
-      "model": "harp"
+      "model": "harp",
+      "checks": [
+        {
+          "id": "harp_play",
+          "skill": "performance",
+          "dc": 13,
+          "label": "Play the standing harp",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "conservatory_glass",

@@ -198,7 +198,20 @@
       ],
       "kind": "examine",
       "label": "alcoves of strange relics",
-      "model": "shelves_wall"
+      "model": "shelves_wall",
+      "checks": [
+        {
+          "id": "relics_sense",
+          "skill": "arcana",
+          "dc": 14,
+          "label": "Sense which relic still holds power",
+          "success": {
+            "reveal": [
+              "reliquary_pipes"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "reliquary_niches_b",
@@ -270,7 +283,22 @@
       ],
       "kind": "examine",
       "label": "wall reliefs",
-      "model": "relief"
+      "model": "relief",
+      "checks": [
+        {
+          "id": "reliefs_rite",
+          "skill": "religion",
+          "dc": 14,
+          "label": "Read the rite in the reliefs",
+          "success": {
+            "codex": {
+              "id": "death_house_rite",
+              "title": "The rite on the walls",
+              "text": "The reliefs show the rite: robed figures, an altar, a small bundle laid on it, and above them the house itself, its windows lit like eyes. Every generation fed it once. The last panel has been left blank."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "reliquary_pipes",

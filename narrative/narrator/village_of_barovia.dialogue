@@ -484,3 +484,107 @@ once
 ~ search:door_mirror
 | Hung low on a door where a child would see it first: a small steel mirror on a nail, to show the dead their own faces. {name} takes it down; the door has another.
 
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:survival:claw_marks_read:success
+| Wolves by the dozen made most of these, but the highest gouges belong to something that stood on two legs to reach them.
+
+~ check:survival:claw_marks_read:failure
+| Claws, and more claws. Whatever made them is better at reading this than you are.
+
+~ check:history:old_graves_names:success
+| Some of these names were old before the castle was built. And one grave's earth is a good deal younger than its stone.
+
+~ check:history:old_graves_names:failure
+| Moss and weather have taken the names. The dead keep their own counsel.
+
+~ check:religion:shrine_pray:success
+| You find the old words, and for a moment the grey morning seems a shade less grey. It is a small mercy, and you take it.
+
+~ check:religion:shrine_pray:failure
+| The words come out in the wrong order. The little wooden sun stays cold.
+
+~ check:athletics:barn_heave:success
+| The beams groan and roll aside, and underneath, wrapped in sacking, lies something long and narrow that someone wanted kept dry.
+
+~ check:athletics:barn_heave:failure
+| The beam rolls back the way it came, over a foot that was in the way.
+
+~ check:medicine:pastry_sniff:success
+| Honey, butter, and under them a bitter, sleepy note you last smelled in the back room of a bad apothecary.
+
+~ check:medicine:pastry_sniff:failure
+| You taste the smallest crumb, to be sure. The next hour is warm and soft and entirely gone.
+
+~ check:history:castle_recall:success
+| You remember the stories, and the stories remember the castle: a conqueror, his mother's name, and a lord who never died.
+
+~ check:history:castle_recall:failure
+| Every tale you know about castles on cliffs ends badly. None of them names this one.
+
+~ check:arcana:mists_study:success
+| The fog breathes. It turns anyone who walks into it back the way they came, and it never tires of doing so.
+
+~ check:arcana:mists_study:failure
+| The mist is grey and wet and refuses to be anything more interesting while you watch.
+
+~ check:survival:barrel_tracks:success
+| Paw prints round the barrel, and one set of bootprints that stepped behind it, knelt, and left without drinking.
+
+~ check:survival:barrel_tracks:failure
+| Mud, and prints on prints. Everything in the village drinks here.
+
+~ check:animal_handling:raven_coax:success
+| The raven hops down, cocks its head at you, and pecks pointedly at a crack in the lych-gate post.
+
+~ check:animal_handling:raven_coax:failure
+| The raven weighs your offer, and you, and flies off with the air of a bird that has seen better.
+
+~ check:performance:pews_hymn:success
+| Your voice fills the cold nave, and for the length of one hymn the church feels like a church again.
+
+~ check:performance:pews_hymn:failure
+| The hymn wanders off key and never finds its way back.
+
+~ check:medicine:niches_examine:success
+| One of the dead died old and in his bed, by his bones, and something on a chain lies under his collar.
+
+~ check:medicine:niches_examine:failure
+| Old bones in older robes. Time killed most of them, and time leaves no clues.
+
+~ check:religion:altar_blessing:success
+| You say the dedication over the worn sunburst, and a thin warmth settles on each of you like a hand on the shoulder.
+
+~ check:religion:altar_blessing:failure
+| The candles gutter as you finish. The altar takes no notice.
+
+~ check:survival:valley_map_study:success
+| Among the roads and wolf runs, the burgomaster has inked a small cross by the field wall at the crossroads, and written beside it: theirs, if they come back.
+
+~ check:survival:valley_map_study:failure
+| Roads, rivers, and a castle drawn larger than it needs to be. The burgomaster's hand is cramped and his notes are worse.
+
+~ check:history:portrait_history:success
+| The village knows the story: years ago a girl came to this man's door with no past she could remember, and he took her in.
+
+~ check:history:portrait_history:failure
+| A stern man in a good coat. The painter flattered the coat.
+
+~ check:nature:casks_judge:success
+| Every cask carries the same vineyard's brand, and every one is nearly dry. The deliveries have stopped.
+
+~ check:nature:casks_judge:failure
+| It's red, and it's sour, and that is as far as your palate goes.
+
+~ check:performance:hearth_play:success
+| The room stops pretending not to listen, and a few coins ring on the hearthstone as you finish.
+
+~ check:performance:hearth_play:failure
+| The room goes on drinking as if you were weather.
+
+~ check:nature:herbs_name:success
+| Yarrow, feverfew and comfrey, cut at the right moon. You brew a little over the fire, and the ache goes out of everyone's bones.
+
+~ check:nature:herbs_name:failure
+| Leaves, and more leaves, and one of them makes your fingers itch for an hour.

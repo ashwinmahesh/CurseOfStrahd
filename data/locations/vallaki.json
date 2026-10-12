@@ -500,7 +500,18 @@
       ],
       "kind": "examine",
       "label": "The festival dais",
-      "model": "dais"
+      "model": "dais",
+      "checks": [
+        {
+          "id": "dais_perform",
+          "skill": "performance",
+          "dc": 14,
+          "label": "Perform on the festival dais",
+          "success": {
+            "gold": 20
+          }
+        }
+      ]
     },
     {
       "id": "lake_gate",
@@ -510,7 +521,22 @@
       ],
       "kind": "examine",
       "label": "The Lake Gate",
-      "model": "gate"
+      "model": "gate",
+      "checks": [
+        {
+          "id": "gate_carvings",
+          "skill": "history",
+          "dc": 12,
+          "label": "Read the Lake Gate's carvings",
+          "success": {
+            "codex": {
+              "id": "vallaki_founding",
+              "title": "The founding of Vallaki",
+              "text": "The gate's carvings tell how the Vallakovich family raised the town and swore it would stand until the sun came back to Barovia. At the end of the line, cut in a hurry by a worse hand, is the present Baron's face."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "st_andrals_facade",
@@ -530,7 +556,22 @@
       ],
       "kind": "examine",
       "label": "Churchyard graves",
-      "model": "gravestone"
+      "model": "gravestone",
+      "checks": [
+        {
+          "id": "graves_epitaphs",
+          "skill": "religion",
+          "dc": 13,
+          "label": "Read the epitaphs",
+          "success": {
+            "codex": {
+              "id": "st_andral",
+              "title": "Saint Andral",
+              "text": "Andral was a priest martyred in Barovia's early days. His bones lie in the church that bears his name, and the faithful believe that while they rest there no creature of the night can cross its threshold. In a hundred years the church has never been harmed."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "open_grave",
@@ -679,6 +720,21 @@
       "span": [
         2,
         1
+      ],
+      "checks": [
+        {
+          "id": "herbs_sort",
+          "skill": "nature",
+          "dc": 15,
+          "label": "Pick the real herbs from the dross",
+          "success": {
+            "items": [
+              {
+                "id": "restorative_ointment"
+              }
+            ]
+          }
+        }
       ]
     },
     {

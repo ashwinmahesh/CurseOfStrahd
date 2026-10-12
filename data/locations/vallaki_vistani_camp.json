@@ -201,7 +201,23 @@
       ],
       "kind": "examine",
       "label": "Rotten jetty",
-      "model": "jetty"
+      "model": "jetty",
+      "checks": [
+        {
+          "id": "jetty_walk",
+          "skill": "acrobatics",
+          "dc": 13,
+          "label": "Walk out to the end of the rotten jetty",
+          "success": {
+            "gold": 18
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "cold"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "lake_view",

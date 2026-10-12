@@ -111,6 +111,24 @@ func bring_steed(c: Combatant) -> bool:
 	return true
 
 
+## The familiar `c` called earlier (Character.familiar) when `c` can't cast Find Familiar now (it came from a scroll, or
+## the spell has left their book): it joins the fight beside them all the same, the form a casting would make.
+func bring_familiar(c: Combatant) -> bool:
+	if sp().caster_char(c) == null:
+		return false
+	var s := _comp().spell_data("find_familiar")
+	var entry := sp()._entry_any(c, "find_familiar")
+	if entry.is_empty():
+		entry = {"class_id": "wizard"}
+	var choice := str(c.get_meta("chain_form", "imp")) if ClassFeatures.knows_invocation(c, "pact_of_the_chain") else ""
+	if CombatFeatures.has_feature(c, "necromancy_familiar"):
+		choice = str(c.get_meta("familiar_form", "skeleton"))
+	var ctx := {"c": c, "s": s, "slot": 1, "nums": sp().numbers(c, entry), "conc": null, "opts": {}, "precast": true,
+		"choice": choice}
+	_summon(ctx, c.cell, CombatResult.new())
+	return true
+
+
 ## A death in the fight: an Otherworldly Steed that drops to 0 Hit Points is gone until Find Steed calls another, and
 ## so is a caster's steed when the caster dies (2024).
 func on_death(dead: Combatant) -> void:

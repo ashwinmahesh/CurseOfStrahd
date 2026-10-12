@@ -197,7 +197,18 @@
       ],
       "kind": "examine",
       "label": "Altar",
-      "model": "altar"
+      "model": "altar",
+      "checks": [
+        {
+          "id": "altar_blessing",
+          "skill": "religion",
+          "dc": 14,
+          "label": "Say the dedication over the altar",
+          "success": {
+            "temp_hp": "1d6"
+          }
+        }
+      ]
     },
     {
       "id": "morninglord_window",
@@ -217,7 +228,18 @@
       ],
       "kind": "examine",
       "label": "Pews",
-      "model": "pew"
+      "model": "pew",
+      "checks": [
+        {
+          "id": "pews_hymn",
+          "skill": "performance",
+          "dc": 12,
+          "label": "Sing a hymn from the old hymnal",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "undercroft_door_gouges",
@@ -247,7 +269,20 @@
         20
       ],
       "kind": "examine",
-      "label": "Burial niches"
+      "label": "Burial niches",
+      "checks": [
+        {
+          "id": "niches_examine",
+          "skill": "medicine",
+          "dc": 13,
+          "label": "Examine the remains in the niches",
+          "success": {
+            "reveal": [
+              "undercroft_priest"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "undercroft_bones",

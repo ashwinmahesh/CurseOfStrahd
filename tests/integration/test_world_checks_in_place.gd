@@ -115,10 +115,15 @@ func test_the_menu_offers_each_check_with_who_and_the_chance() -> void:
 	var line := _action(Vector2i(1, 1), "check:read_runes")
 	assert_false(line.is_empty(), "the check is on the menu: %s" % [_view().actions_at(Vector2i(1, 1))])
 	var who := WorldChecks.roller(GameState.story, "test_checks", LOC["props"][0]["checks"][0] as Dictionary)
-	assert_true(str(line["label"]).begins_with("Read the runes (Arcana DC 1: %s " % who.name.get_slice(" ", 0)), str(line["label"]))
+	assert_true(str(line["label"]).begins_with("Read the runes (Arcana DC 1: %s %s" % [who.name.get_slice(" ", 0), who.skill_bonus(&"arcana").signed()]),
+		"who rolls and their bonus, signed: %s" % line["label"])
 	assert_true(str(line["label"]).ends_with("100%)"), str(line["label"]))
 	assert_true("(Arcana)" in str(_view().thing_at(Vector2i(1, 1))["label"]), "the hover name says what it offers")
 	assert_true("(Sleight Of Hand)" in str(_view().thing_at(Vector2i(3, 1))["label"]), "a chest's too: %s" % _view().thing_at(Vector2i(3, 1))["label"])
+	var plates := ThingLabels.new()
+	plates.view = _view()
+	assert_eq(str(plates.call("_name", _view().thing_at(Vector2i(1, 1)))[0]), "Runes on the wall · Arcana", "and its name plate")
+	plates.free()
 
 
 func test_walking_up_and_trying_reveals_teaches_and_hints() -> void:
@@ -208,3 +213,53 @@ func test_heroic_inspiration_rerolls_a_failure() -> void:
 	assert_true(WorldChecks.done(GameState.story, "test_checks", check), "and the check succeeds")
 	assert_true(said.has("Never."), str(said))
 	assert_true(_action(Vector2i(1, 1), "check_aid:heroic_inspiration").is_empty())
+
+
+## In the real village: the raven's success points at the lych-gate post, and the holy water hidden there is found.
+func test_the_village_raven_points_to_the_lych_gate() -> void:
+	root.call("enter_location", "village_of_barovia", "")
+	await _frames(2)
+	var v := _view()
+	var spec := {}
+	for p: Variant in v.loc["props"]:
+		if str((p as Dictionary)["id"]) == "churchyard_raven":
+			spec = p as Dictionary
+	assert_false(spec.is_empty(), "the raven is in the churchyard")
+	assert_false(v.thing_at(LocationView._cell(spec["cell"])).is_empty(), "and on the board")
+	assert_false(_action(LocationView._cell(spec["cell"]), "check:raven_coax").is_empty(), "with its check on the menu")
+	var check := WorldChecks.find(spec, "raven_coax")
+	LocationChecks._resolve(v, spec, check, v.leader().creature as Character, true)
+	assert_true(bool(_states("found", "village_of_barovia").get("lychgate_holy_water", false)), "the crack in the post is found")
+	assert_false(v.thing_at(Vector2i(26, 8)).is_empty(), "and its hiding place is on the board")
+
+
+## Every check placed in the game's data gives what the party can use: real items, no common magic items, and magic
+## no rarer than the region's level allows (docs/story/found_magic_items.md); its DC is a 2024 DMG one.
+func test_placed_checks_give_playable_things_that_fit_their_region() -> void:
+	var comp := Compendium.shared()
+	var max_rank := {1: 2, 2: 2, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3, 9: 4, 10: 4}   # 2 uncommon, 3 rare, 4 very rare
+	var ranks := {"common": 1, "uncommon": 2, "rare": 3, "very_rare": 4, "legendary": 5, "artifact": 6}
+	var n := 0
+	var skills := {}
+	for loc: Dictionary in comp.all("locations"):
+		if str(loc["id"]).begins_with("test_"):
+			continue
+		for c in WorldChecks.all_in(loc):
+			var check := c["check"] as Dictionary
+			var where := "%s %s" % [loc["id"], check["id"]]
+			n += 1
+			skills[str(check["skill"])] = true
+			assert_between(float(check["dc"]), 5.0, 30.0, where)
+			for result: String in ["success", "failure"]:
+				for e: Variant in (check.get(result, {}) as Dictionary).get("items", []):
+					var item := comp.item_data(str((e as Dictionary)["id"]))
+					assert_false(item.is_empty(), "%s: no item %s" % [where, e])
+					if not MagicItems.is_magic(item):
+						continue
+					assert_true(Compendium.playable(item), "%s: %s isn't playable yet" % [where, e])
+					var rank := int(ranks.get(MagicItems.rarity(item), 0))
+					assert_true(rank >= 2, "%s: %s is a common item" % [where, e])
+					assert_true(rank <= int(max_rank.get(Treasure.level_for(str(loc["id"])), 4)), "%s: %s is too rare here" % [where, e])
+	assert_true(n >= 40, "the checks are placed (%d)" % n)
+	for s: String in ["nature", "arcana", "acrobatics", "animal_handling", "history", "religion", "medicine", "survival", "athletics", "performance"]:
+		assert_true(skills.has(s), "%s has a use in the world" % s)

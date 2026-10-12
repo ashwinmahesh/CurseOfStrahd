@@ -91,7 +91,9 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			var open := StoryConditions.check(str(spec.get("when", "")), view.st)
 			out.append({"id": "go", "label": "Go: %s" % Compendium.shared().get_entry("locations", str(spec["to"])).get("name", spec["to"]),
 				"enabled": open, "why": "" if open else str(spec.get("locked_text", "The way is barred."))})
-	out.append({"id": "look", "label": "Look"})
+	# A piece of scenery's own first line is already "Look" (its narration): no second one.
+	if not (str(thing["kind"]) == "prop" and str(thing["label"]).begins_with("Look at ")):
+		out.append({"id": "look", "label": "Look"})
 	return {"title": title, "actions": out}
 
 
@@ -392,9 +394,9 @@ static func interact(view: LocationView, thing: Dictionary) -> void:
 
 ## After using a thing that still has a skill check someone could try: how to try it (the menu's line).
 static func _check_tip(view: LocationView, spec: Dictionary) -> void:
-	var hint := LocationChecks.hint(view, spec)
-	if hint != "":
-		view.toast.emit("Right-click it to try %s" % hint.strip_edges().trim_prefix("(").trim_suffix(")"))
+	var skills := LocationChecks.skills_offered(view, spec)
+	if skills != "":
+		view.toast.emit("Right-click it to try %s" % skills)
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:
