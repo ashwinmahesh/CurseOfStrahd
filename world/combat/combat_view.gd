@@ -681,6 +681,7 @@ func _cancel_targeting() -> void:
 	overlay.clear("target")
 	overlay.clear("friendly")
 	overlay.clear("area")
+	overlay.clear_outline()
 	overlay.clear("arc")   # a leap's or a throw's flight
 	overlay.clear("arc_bad")
 	if mode == Mode.TARGET:
@@ -1580,6 +1581,7 @@ func _aiming_area() -> bool:
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	if picker.active():
+		overlay.clear_outline()   # a wall drawn square by square shows its squares
 		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
 		return
 	var kind := str(selected["targeting"])
@@ -1602,7 +1604,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
 		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
 		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
-		overlay.show_cells("area", pv["cells"] as Array)
+		# The area's edge, round for a radius, and no orange squares (owner, 2026-10-12: "for AoE spells, don't make the
+		# floor orange. Instead show a circular border which shows the area that would be affected").
+		overlay.show_outline(pv["outline"] as Dictionary, pv["cells"] as Array)
 		# Who it catches and their saves go in the panel at the top left (owner, 2026-10-12); by the pointer, a count.
 		var caught := pv["creatures"] as Array
 		var friends := caught.filter(func(w: Dictionary) -> bool: return bool(w["ally"]) and not bool(w["safe"])).size()
@@ -1945,9 +1949,9 @@ func _play_events() -> void:
 				final_played = _impact_on(landed_on, events, ev_at, final_fall, false) or final_played
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
-					overlay.show_cells("area", cells)
+					overlay.show_outline(ev.get("outline", {}) as Dictionary, cells)
 					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
-					overlay.clear("area")
+					overlay.clear_outline()
 				turned_until = CombatImpact.window_end(events, ev_at)
 			"ability":
 				# A class feature or a monster's save action (Second Wind, a breath, a wail): its effect, if it has one.

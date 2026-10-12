@@ -2,7 +2,7 @@ class_name GridOverlay
 extends Node3D
 ## Marks painted on the combat floor, only while they answer something the player is pointing at (owner 2026-10-06:
 ## the always-lit blue squares of where a creature could move were noise). Hovering the floor shows a dotted trail to
-## a ring where the creature would stop, red when the walk provokes; aiming shows an area template and who can be
+## a ring where the creature would stop, red when the walk provokes; aiming shows an area's edge and who can be
 ## targeted; a controller's cursor is a pale ring. Drawn just above the floor, one instance per mark per layer.
 
 const LAYERS := {
@@ -26,8 +26,21 @@ const ARC_RISE_MOST := 2.2
 ## How much higher a mark sits on a slope (natural ground), so the ground's bends don't swallow its corners.
 const SLOPE_LIFT := 0.03
 
+## An area's edge on the floor while a spell is aimed (show_outline), in place of its squares painted orange (owner,
+## 2026-10-12: "for AoE spells, don't make the floor orange. Instead show a circular border which shows the area that
+## would be affected"): a pale gold line, smooth round a radius, just under the creatures' rings so those stay clear.
+const OUTLINE := {"colour": "wick", "alpha": 0.95, "lift": 0.026, "width": 0.14}
+## The most a stretch of the line runs straight (squares), so it bends with natural ground and stays round.
+const OUTLINE_STEP := 0.1
+## How far a sharp corner's mitre may reach, in line widths (a cone's tip).
+const OUTLINE_MITRE := 2.5
+const OUTLINE_SHADER := preload("res://shaders/fx/area_outline.gdshader")
+
 var board: ArenaBoard
 var _layers: Dictionary = {}
+var _outline: MeshInstance3D
+## What the outline shows now, so pointing again at the same aim doesn't rebuild it.
+var _outline_shows: Variant = null
 
 
 static func create(board_: ArenaBoard) -> GridOverlay:
@@ -36,7 +49,22 @@ static func create(board_: ArenaBoard) -> GridOverlay:
 	o.board = board_
 	for key: String in LAYERS:
 		o._make_layer(key)
+	o._make_outline()
 	return o
+
+
+func _make_outline() -> void:
+	_outline = MeshInstance3D.new()
+	_outline.name = "AreaOutline"
+	var mat := ShaderMaterial.new()
+	mat.shader = OUTLINE_SHADER
+	mat.set_shader_parameter("line_col", Color(Look.color(str(OUTLINE["colour"])), float(OUTLINE["alpha"])))
+	# Drawn after the palette pass, like the other marks.
+	mat.render_priority = 5
+	_outline.material_override = mat
+	_outline.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_outline.visible = false
+	add_child(_outline)
 
 
 func _make_layer(key: String) -> void:
@@ -138,6 +166,159 @@ func clear_all() -> void:
 	for key: String in LAYERS:
 		if key != "weapon":
 			clear(key)
+	clear_outline()
+
+
+## Draws an area's edge on the floor: `outline` as CombatGrid.area_outline gives it (a circle, an emanation's rounded
+## edge, a cone's or a box's corners), or when that's empty the outer edge of `cells` (a wall's squares).
+func show_outline(outline: Dictionary, cells: Array = []) -> void:
+	var shows: Variant = [outline, cells]
+	if _outline.visible and shows == _outline_shows:
+		return
+	_outline_shows = shows
+	var loops := outline_loops(outline, cells)
+	if loops.is_empty():
+		clear_outline()
+		return
+	_outline.mesh = _ribbon(loops)
+	_outline.visible = true
+
+
+func clear_outline() -> void:
+	_outline.visible = false
+	_outline.mesh = null
+	_outline_shows = null
+
+
+func is_showing_outline() -> bool:
+	return _outline.visible
+
+
+## The closed lines an outline is drawn along, on the floor's grid (x, z; a square is 1), each point at most
+## OUTLINE_STEP from the next: the shape's edge, else the outer edges of `cells`.
+static func outline_loops(outline: Dictionary, cells: Array = []) -> Array[PackedVector2Array]:
+	var loops: Array[PackedVector2Array] = []
+	if outline.has("circle"):
+		var centre := outline["circle"] as Vector2
+		var r := float(outline["radius"])
+		if r > 0.0:
+			var n := clampi(ceili(TAU * r / OUTLINE_STEP), 24, 720)
+			var ring := PackedVector2Array()
+			for i in n:
+				ring.append(centre + Vector2.from_angle(TAU * i / n) * r)
+			loops.append(ring)
+	elif outline.has("rect"):
+		# Everything within `radius` of a box of squares: its sides pushed out, joined by quarter circles round its corners.
+		var box := outline["rect"] as Rect2
+		var r := float(outline["radius"])
+		var ring := PackedVector2Array()
+		var corners := [box.end, Vector2(box.position.x, box.end.y), box.position, Vector2(box.end.x, box.position.y)]
+		var arc := clampi(ceili(PI / 2.0 * r / OUTLINE_STEP), 1, 180)
+		for k in 4:
+			for i in arc + 1:
+				ring.append((corners[k] as Vector2) + Vector2.from_angle(PI / 2.0 * (k + float(i) / arc)) * r)
+		loops.append(_dense(ring))
+	elif outline.has("points"):
+		loops.append(_dense(outline["points"] as PackedVector2Array))
+	elif not cells.is_empty():
+		for loop in _cell_edges(cells):
+			loops.append(_dense(loop))
+	return loops
+
+
+## A closed line with points added along its straight stretches, none longer than OUTLINE_STEP.
+static func _dense(loop: PackedVector2Array) -> PackedVector2Array:
+	var out := PackedVector2Array()
+	for i in loop.size():
+		var a := loop[i]
+		var b := loop[(i + 1) % loop.size()]
+		if a.is_equal_approx(b):
+			continue
+		var steps := maxi(1, ceili(a.distance_to(b) / OUTLINE_STEP))
+		for j in steps:
+			out.append(a.lerp(b, float(j) / steps))
+	return out
+
+
+## The outer edges of a set of squares as closed lines round each patch (and round each hole in one).
+static func _cell_edges(cells: Array) -> Array[PackedVector2Array]:
+	var inside := {}
+	for c: Vector2i in cells:
+		inside[c] = true
+	# Each edge with nothing on its far side, going round its square the same way: start corner -> end corners.
+	var edges := {}
+	var sides := [[Vector2i(0, -1), Vector2i(0, 0), Vector2i(1, 0)], [Vector2i(1, 0), Vector2i(1, 0), Vector2i(1, 1)],
+		[Vector2i(0, 1), Vector2i(1, 1), Vector2i(0, 1)], [Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, 0)]]
+	for c: Vector2i in inside:
+		for sd: Array in sides:
+			if not inside.has(c + (sd[0] as Vector2i)):
+				var from := c + (sd[1] as Vector2i)
+				if not edges.has(from):
+					edges[from] = []
+				(edges[from] as Array).append(c + (sd[2] as Vector2i))
+	var loops: Array[PackedVector2Array] = []
+	while not edges.is_empty():
+		var start: Vector2i = edges.keys()[0]
+		var loop := PackedVector2Array()
+		var at := start
+		while edges.has(at):
+			var outs := edges[at] as Array
+			var to: Vector2i = outs.pop_back()
+			if outs.is_empty():
+				edges.erase(at)
+			loop.append(Vector2(at))
+			at = to
+		if loop.size() >= 3:
+			loops.append(loop)
+	return loops
+
+
+## A flat band OUTLINE["width"] wide along each closed line, lying on the floor (natural ground's slope, a low wall's
+## top), with UV.y running across it for the shader's soft edges.
+func _ribbon(loops: Array[PackedVector2Array]) -> ArrayMesh:
+	var verts := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var index := PackedInt32Array()
+	var half := float(OUTLINE["width"]) / 2.0
+	var lift := float(OUTLINE["lift"]) + (SLOPE_LIFT if board.has_terrain() else 0.0)
+	for loop in loops:
+		var n := loop.size()
+		var first := verts.size()
+		for i in n:
+			var p := loop[i]
+			var to_prev := (p - loop[(i - 1 + n) % n]).normalized()
+			var to_next := (loop[(i + 1) % n] - p).normalized()
+			var n0 := Vector2(-to_prev.y, to_prev.x)
+			var n1 := Vector2(-to_next.y, to_next.x)
+			var mitre := (n0 + n1).normalized()
+			if mitre == Vector2.ZERO:
+				mitre = n1
+			var reach := half / maxf(mitre.dot(n1), 1.0 / OUTLINE_MITRE)
+			var y := _floor_at(p) + lift
+			verts.append(Vector3(p.x - mitre.x * reach, y, p.y - mitre.y * reach))
+			verts.append(Vector3(p.x + mitre.x * reach, y, p.y + mitre.y * reach))
+			uvs.append(Vector2(float(i) / n, 0.0))
+			uvs.append(Vector2(float(i) / n, 1.0))
+			var a := first + i * 2
+			var b := first + ((i + 1) % n) * 2
+			index.append_array([a, a + 1, b + 1, a, b + 1, b])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = index
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
+
+
+## The floor's height under a point of the grid (x, z), where a mark lies: the ground there, or a low wall's top.
+func _floor_at(p: Vector2) -> float:
+	var cell := Vector2i(floori(p.x), floori(p.y))
+	var y := board.ground_y(p)
+	if board.grid.in_bounds(cell) and board.grid.has_flag(cell, CombatGrid.LOW):
+		y += ArenaBoard.LOW_H
+	return y
 
 
 ## Where a mark sits on a square: its centre, on the floor or on top of a low wall.

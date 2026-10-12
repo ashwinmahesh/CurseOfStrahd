@@ -612,7 +612,9 @@ func can_see(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
 ## Squares in an area of effect (2024 glossary): a square is in the area if its center is inside the shape
 ## and a line from the point of origin to it isn't blocked by Total Cover (walls).
 ##   sphere/cylinder: origin = grid point (corner), size = radius ft
-##   emanation: around the footprint `origin_cell` x `origin_size`, size = ft (origin squares excluded)
+##   emanation: around the footprint `origin_cell` x `origin_size`, size = ft (origin squares excluded): everything
+##     within that reach of the footprint measured straight, so round rather than a square of squares (owner,
+##     2026-10-12: "round the rule too"); 5 ft still takes every square touching it
 ##   cube: origin = grid point on a face, `direction` = which way it extends, size = side ft
 ##   cone: origin = grid point at the caster, `direction` = aim vector, size = length ft
 ##   line: origin = grid point, `direction`, size = length ft, width ft (default 5)
@@ -637,9 +639,7 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 				"sphere", "cylinder":
 					inside = p.distance_to(origin) <= r + 0.001
 				"emanation":
-					var dx := _axis_gap(origin_cell.x, origin_size, x, 1)
-					var dz := _axis_gap(origin_cell.y, origin_size, z, 1)
-					inside = maxi(dx, dz) * FEET <= size_ft
+					inside = _emanation_gap(check_origin, origin_size, c).length() <= r + 0.001
 				"cube":
 					var along := (p - origin).dot(dir)
 					var side := Vector2(-dir.y, dir.x)
@@ -664,6 +664,28 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 	return out
 
 
+## How far square `cell`'s centre lies outside the footprint `origin_size` squares wide round `centre`, along x and z
+## (zero along an axis it lines up with): an Emanation reaches it when that's within its size.
+static func _emanation_gap(centre: Vector2, origin_size: int, cell: Vector2i) -> Vector2:
+	var p := Vector2(cell.x + 0.5, cell.y + 0.5)
+	return Vector2(maxf(0.0, absf(p.x - centre.x) - origin_size / 2.0), maxf(0.0, absf(p.y - centre.y) - origin_size / 2.0))
+
+
+## Whether a creature on `cell` (`size` squares, `up` ft above its floor) is in an Emanation of `size_ft` from the
+## creature on `origin` (`origin_size` squares, `origin_up` ft up): one of its squares is, as area_cells measures one,
+## with the height between them counted as distance too (an aura round a paladin, a monster's Stench). Walls don't
+## matter.
+func in_emanation(origin: Vector2i, origin_size: int, size_ft: int, cell: Vector2i, size: int, origin_up: int = 0,
+		up: int = 0) -> bool:
+	var r := size_ft / float(FEET) + 0.001
+	var dy := _axis_gap((height(origin) + origin_up) / FEET, origin_size, (height(cell) + up) / FEET, size)
+	var centre := Vector2(origin.x + origin_size / 2.0, origin.y + origin_size / 2.0)
+	for f in footprint(cell, size):
+		if _emanation_gap(centre, origin_size, f).length_squared() + dy * dy <= r * r:
+			return true
+	return false
+
+
 ## A square is in a cone when at least a quarter of it lies inside the cone's triangle (its width at any distance
 ## equals that distance): that gives the even, symmetric templates of the grid rules (a 15-ft cone straight out is
 ## 1, 3, 3 squares; diagonally 2, 3, 1) instead of the thin, lopsided shapes a square's centre alone gives.
@@ -682,16 +704,59 @@ func _cone_covers(c: Vector2i, origin: Vector2, dir: Vector2, r: float) -> bool:
 ## A cone from a creature toward `toward`: aimed along the nearest of the eight grid directions, starting at the
 ## middle of the creature's facing edge (straight out) or at its corner (diagonally).
 func cone_from(cell: Vector2i, size_cells: int, toward: Vector2, size_ft: int) -> Array[Vector2i]:
+	var aim := cone_aim(cell, size_cells, toward)
+	var out := area_cells("cone", size_ft, aim[0] as Vector2, aim[1] as Vector2)
+	for f in footprint(cell, size_cells):
+		out.erase(f)
+	return out
+
+
+## Where cone_from's cone starts and the way it points: [origin, direction].
+static func cone_aim(cell: Vector2i, size_cells: int, toward: Vector2) -> Array:
 	var center := Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0)
 	var aim := toward - center
 	if aim.length() < 0.01:
 		aim = Vector2.RIGHT
 	var step := Vector2(roundf(cos(snappedf(aim.angle(), PI / 4.0))), roundf(sin(snappedf(aim.angle(), PI / 4.0))))
-	var origin := center + step * (size_cells / 2.0)
-	var out := area_cells("cone", size_ft, origin, step.normalized())
-	for f in footprint(cell, size_cells):
-		out.erase(f)
-	return out
+	return [center + step * (size_cells / 2.0), step.normalized()]
+
+
+## The edge of the area area_cells covers with the same arguments, for drawing it (GridOverlay.show_outline), in the
+## grid's units (a square is 1): {circle: centre, radius} for a sphere or cylinder; {rect: the origin's squares, radius}
+## for an emanation, everything within that reach of them (round, with straight sides as long as the origin is wide);
+## {points: corners in order} for a cube, a cone, a line or a straight wall. Walls between squares cut an area's squares
+## but not its edge.
+static func area_outline(shape: String, size_ft: int, origin: Vector2, direction: Vector2 = Vector2.RIGHT,
+		width_ft: int = 5, origin_cell: Vector2i = Vector2i(-1, -1), origin_size: int = 1) -> Dictionary:
+	var r := size_ft / float(FEET)
+	var dir := direction.normalized() if direction.length() > 0.001 else Vector2.RIGHT
+	var side := Vector2(-dir.y, dir.x)
+	# A shape from `origin`: `back` to `ahead` along the direction, `across` either side of it at the back and the front.
+	var box := func(back: float, ahead: float, across_back: float, across_ahead: float) -> Dictionary:
+		var b := origin + dir * back
+		var f := origin + dir * ahead
+		var pts := PackedVector2Array([b - side * across_back, f - side * across_ahead, f + side * across_ahead, b + side * across_back])
+		if across_back <= 0.0:
+			pts.remove_at(3)
+		return {"points": pts}
+	match shape:
+		"sphere", "cylinder":
+			return {"circle": origin, "radius": r}
+		"emanation":
+			if origin_cell.x < 0:
+				return {"circle": origin, "radius": r}
+			return {"rect": Rect2(Vector2(origin_cell), Vector2(origin_size, origin_size)), "radius": r}
+		"cube":
+			return box.call(0.0, r, r / 2.0, r / 2.0)
+		"cone":
+			return box.call(0.0, r, 0.0, r / 2.0)
+		"line":
+			var w := width_ft / float(FEET) / 2.0
+			return box.call(0.0, r, w, w)
+		"wall":
+			var thick := maxf(1.0, floorf(width_ft / float(FEET))) / 2.0
+			return box.call(-r / 2.0, r / 2.0, thick, thick)
+	return {}
 
 
 func _wall_between(a: Vector2, b: Vector2) -> bool:

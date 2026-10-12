@@ -719,7 +719,8 @@ func _aura_on(o: Combatant, c: Combatant, tr: Dictionary, pausable: bool = false
 	var aura := tr.get("aura", {}) as Dictionary
 	if str(aura.get("affects", "others")) == "enemies" and not o.hostile_to(c):
 		return r
-	if e.distance(o, c) > int(aura.get("radius", 5)):
+	# An Emanation round the monster: round, as CombatGrid.in_emanation measures it (owner, 2026-10-12).
+	if not e.grid.in_emanation(o.cell, o.size_cells, int(aura.get("radius", 5)), c.cell, c.size_cells, o.altitude, c.altitude):
 		return r
 	var label := str(tr.get("name", "Aura"))
 	if c.has_meta(ClassFeatures.meta_key("immune_%s_%s" % [o.id, label])):

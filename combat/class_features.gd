@@ -1852,10 +1852,13 @@ func refresh_auras() -> void:
 			t.creature.add_effect(fx)
 
 
+## Whether `t` is in paladin `p`'s aura: an ally (or the paladin) in the 10-ft Emanation round them (30 ft with Aura
+## Expansion), round rather than a square of squares (CombatGrid.in_emanation; owner, 2026-10-12).
 func _in_aura(p: Combatant, t: Combatant) -> bool:
 	if not (t == p or p.allied_with(t)):
 		return false
-	return enc().distance(p, t) <= (30 if has(p, "aura_expansion") else 10)
+	return enc().grid.in_emanation(p.cell, p.size_cells, 30 if has(p, "aura_expansion") else 10, t.cell, t.size_cells,
+		p.altitude, t.altitude)
 
 
 # --- Turns --------------------------------------------------------------------------------------------
