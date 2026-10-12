@@ -2559,6 +2559,22 @@ class Wiki:
         for k, d in w.get("kinds", {}).items():
             lines.append(f"| {d.get('label', k)} | ×{d.get('travel', 1)} | +{d.get('road_day', 0)} / +{d.get('road_night', 0)} | "
                          f"{'yes' if d.get('obscures') else ''} |")
+        cl = w.get("climates") or {}
+        if cl:
+            kinds = [k for k in w.get("kinds", {}) if any(k in c for c in cl.values())]
+            where = defaultdict(list)
+            for rid, c in (w.get("regions") or {}).items():
+                where[c].append(g.region_name(rid))
+            lines += ["", "## Climates", "", "How likely each kind of weather is in each climate (it changes every six "
+                      "hours), and where each climate holds. Everywhere not listed is "
+                      f"{w.get('default_climate', 'valley')}.", "",
+                      "| Climate | " + " | ".join(w["kinds"][k].get("label", k) for k in kinds) + " | Regions |",
+                      "|---|" + "---|" * len(kinds) + "---|"]
+            for name, weights in cl.items():
+                tot = sum(weights.values()) or 1
+                lines.append(f"| {name.title()} | " + " | ".join(f"{round(100 * weights.get(k, 0) / tot)}%" if weights.get(k)
+                                                                else "" for k in kinds) +
+                             f" | {', '.join(where.get(name, [])) or ('everywhere else' if name == w.get('default_climate') else '')} |")
         self.w.write("page/weather", "World/Weather", "Weather", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         src = (g.root / "core" / "achievements.gd").read_text()
         ach = re.findall(r'"([a-z_0-9]+)": \["([^"]+)", "([^"]+)"\]', src)
