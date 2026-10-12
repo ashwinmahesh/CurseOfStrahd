@@ -183,6 +183,12 @@ func capture_shots(tool: Node, out: String) -> void:
 	var near := e.occupant_at(Vector2i(8, 2))
 	view.hover_token = view.tokens[near.id] as CombatToken
 	view.hover_cell = near.cell
+	# The card beside the zombie, as the pointer over it puts it (the pad's placement, so the real pointer stays put).
+	view.using_pad = true
+	view.hover_world = (view.tokens[near.id] as Node3D).global_position
+	rig.follow = view.tokens[near.id] as Node3D   # framed on the zombie, so the walk up shows left of the card
+	rig.snap_to_target()
+	await tool.call("wait_frames", 4)
 	view._update_hover()
 	await tool.call("wait_frames", 6)
 	tool.call("_shot", "%s_18_walk_to_strike.png" % out)
@@ -190,4 +196,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 150)
 	view.hover_token = null
 	view.hover_cell = Vector2i(-1, -1)
+	view._update_hover()
+	view.using_pad = false
+	await tool.call("wait_frames", 4)
 	tool.call("_shot", "%s_19_struck.png" % out)
