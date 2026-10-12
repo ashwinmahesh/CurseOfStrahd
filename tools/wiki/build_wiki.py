@@ -913,7 +913,8 @@ class Wiki:
                 for it in c.get("items", []):
                     out[it["id"]].append({"kind": "container", "location": lid, "label": c.get("label", c["id"]),
                                           "cell": c.get("cell"), "qty": it.get("qty", 1),
-                                          "lock": c.get("lock_dc"), "owner": c.get("owner", ""),
+                                          "lock": c.get("lock_dc") or (15 if c.get("locked") else None),
+                                          "opens_when": c.get("unlocked_when", ""), "owner": c.get("owner", ""),
                                           "when": c.get("when", ""), "key": c.get("key", "")})
             for p in loc.get("props", []):
                 if p.get("item"):
@@ -986,6 +987,8 @@ class Wiki:
             extra = []
             if src.get("lock"):
                 extra.append(f"locked, DC {src['lock']}")
+            if src.get("opens_when"):
+                extra.append(f"opened for you when {human_cond(src['opens_when'])}")
             if src.get("key"):
                 extra.append(f"key: {g.item_name(src['key'])}")
             if src.get("owner"):
@@ -1487,8 +1490,10 @@ class Wiki:
                 if c.get("gold"):
                     inside.append(f"{c['gold']} gp")
                 how_ = ["open it"]
-                if c.get("lock_dc"):
-                    how_ = [f"lock DC {c['lock_dc']}"]
+                if c.get("lock_dc") or c.get("locked"):
+                    how_ = [f"lock DC {c.get('lock_dc') or 15}"]   # a lock with no DC of its own picks at 15
+                if c.get("unlocked_when"):
+                    how_.append(f"opened for you when {human_cond(c['unlocked_when'])}")
                 if c.get("key"):
                     how_.append(f"or the {s.item(c['key'])}")
                 if c.get("owner"):
