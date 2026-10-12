@@ -263,6 +263,26 @@ func test_the_doll_is_shaped_like_a_person_and_the_bag_is_a_list() -> void:
 	assert_eq(keep.size(), 1, "a potion's menu offers a quick slot")
 
 
+## A guest travelling with the party (owner, 2026-10-12): a potion's right-click menu offers to give it to them to drink.
+func test_a_potion_can_be_given_to_a_guest_to_drink() -> void:
+	assert_true(GameState.story.add_guest("adrian_martikov"))
+	var adrian := GameState.story.guests[0]
+	adrian.hp = 2
+	var ch := GameState.story.party[0]
+	ch.add_item("potion_of_healing", 1)
+	var inv := await _open(0)
+	var acts := inv.actions_for(ch.entry_of("potion_of_healing"))
+	var give := acts.filter(func(a: Dictionary) -> bool: return str(a["label"]) == "Give to Adrian to drink")
+	assert_eq(give.size(), 1, str(acts.map(func(a: Dictionary) -> String: return str(a["label"]))))
+	if give.is_empty():
+		return
+	var before := ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "potion_of_healing").size()
+	((give[0] as Dictionary)["call"] as Callable).call()
+	assert_true(adrian.hp > 2, "Adrian drank it")
+	assert_true(ch.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "potion_of_healing").size() < before or ch.entry_of("potion_of_healing").is_empty(),
+		"one fewer in the pack")
+
+
 ## The quiver and the focus (U11): a new hero starts with the ammunition their weapons shoot in the quiver and a focus
 ## in the focus slot; each takes only its own kind; dropping another stack swaps it; Take off empties it; arrows shot
 ## come out of the quivered stack; and an old save fills them once.
