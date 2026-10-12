@@ -217,9 +217,10 @@
         9,
         20
       ],
-      "kind": "decor",
+      "kind": "examine",
       "label": "a crow on a barrel",
-      "model": "crow"
+      "model": "crow",
+      "dialogue": "into_the_mists/arrival:crow"
     },
     {
       "id": "mists_guard_sword",

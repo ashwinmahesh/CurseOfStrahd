@@ -15,7 +15,8 @@ Rules for this list:
 - **One look each**: a character who searches near a hidden find and misses it has missed it for good; someone else
   in the party can still try. Detect Magic tells you when something magical is hidden within 30 ft.
 - **Gift**: an NPC hands it over in conversation (a favour, a quest's end, a check). **Tip**: an NPC tells you
-  where something is hidden, and the spot shows up once you know. **Hoard**: a lair's container.
+  where something is hidden, and the spot shows up once you know (or an animal or a corpse does, under Speak with
+  Animals or Speak with Dead: docs/story/talking_creatures.md). **Hoard**: a lair's container.
 - Random treasure (story/treasure.gd) still rolls on top of this: one location in five now rolls nothing, down
   from about one in three, and nearly a third roll two items. Random rolls (chests and the road's spoils) never give a common item either: the
   DMG's common share goes to uncommon (data/treasure/levels.json).
@@ -28,7 +29,7 @@ Status: ✅ built · ○ planned
 |---|---|---|---|
 | ✅ | Old Svalich Road, by the headless statues | Longsword of Warning (uncommon) | Search (Perception DC 13): a gate guard's sword in the weeds |
 | ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
-| ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass |
+| ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass; or a Tip from the crow at the village edge (Speak with Animals) |
 | ✅ | Ilarion, at the village well | Winged Boots (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md) |
 
 ## The Gates of Barovia (side quest, levels 6 and up)
@@ -59,7 +60,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams |
+| ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams; or a Tip from the goat by the barn (Speak with Animals) |
 | ✅ | Village, the churchyard | Wand of Secrets (uncommon) | Search (Perception DC 14): a grave dug up and filled in again |
 | ✅ | Village, behind a rain barrel | Oil of Slipperiness (uncommon) | Search (Perception DC 12): a flask kept dry (lane 28's spot) |
 | ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk |
@@ -86,13 +87,13 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Falls, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot, from the Svalich Woods road, 2026-10-09) |
-| ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
-| ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone |
+| ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others; or a Tip from the raven on the fencepost (Speak with Animals) |
+| ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone; or a Tip from Steaua, tied to it (Speak with Animals) |
 | ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
 | ✅ | Tser Falls, the cairn of names | Necklace of Adaptation (uncommon) | Search (Perception DC 13) |
 | ✅ | Tser Pool, the ribbon tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
 | ✅ | Tser Pool, in the reeds | Elemental Gem, Yellow Diamond (uncommon) | Search (Perception DC 12): a gambler's stake in a bag of dice (lane 28's spot; was a Stone of Good Luck, now Veta's in The Nursemaid's Grave) |
-| ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot) |
+| ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot); or a Tip from the camp dog (Speak with Animals) |
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 

@@ -8,6 +8,7 @@ extends RefCounted
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp · check {skill, dc, ok, fail} · interject {selector, text}
 ##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {n} · once · end_game (ADR 0014)
+##   cast {spell} · reveal {prop} (an exploring spell cast in the scene; a hidden find shown to the party)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
 
 const ROOT := "res://narrative/"
@@ -218,6 +219,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"narrate":
 			if parts.size() == 2:
 				return {"t": "narrate", "key": parts[1]}
+		"cast":
+			if parts.size() == 2:
+				return {"t": "cast", "spell": parts[1]}
+		"reveal":
+			if parts.size() == 2:
+				return {"t": "reveal", "prop": parts[1]}
 		"cutscene":
 			if parts.size() == 2:
 				return {"t": "cutscene", "id": parts[1]}

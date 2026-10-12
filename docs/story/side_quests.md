@@ -193,7 +193,8 @@ The black carriage that drives itself stopped by Radu's pen and left a purse; to
 Steaua, to the Ivlis crossroads. **Twist:** he didn't sell her for the money; the voice in the carriage promised Nicu
 would ride home (Insight or Persuasion; if the party has seen the gallows they can tell him what that promise was
 worth). **Escalation:** at the milestone she is being finished into one of the castle's black horses, a brand smoking
-on her flank. Calm her (Animal Handling DC 14, one try, or a ranger, a druid, Animal Friendship), then break the brand
+on her flank. Calm her (Animal Handling DC 14, one try, or a ranger, a druid, Animal Friendship, or Speak with Animals,
+which also has her tell you what's hidden behind the milestone), then break the brand
 (Remove Curse, Protection from Evil and Good, holy water, or Religion DC 15, one try: "she hates priests"). Saved, she
 bolts home and the carriage comes early; failed or left alone, she is black by midnight and fights for it.
 

@@ -47,6 +47,10 @@ once
 | Mounds with no markers. The rope's work, buried where the rope left it. Somebody once tried to plant a little cross on one of them; it is lying in the grass.
 | [class:cleric] Unblessed ground, and a great deal of it. {name} murmurs a word over the nearest mound, and the grass on it stirs, though there is no wind.
 
+~ examine:crossroads_raven
+| A raven sits on a fencepost by the road, very still, watching the crossroads the way a toll-keeper watches a bridge.
+| [night] A raven on the fencepost, awake when ravens shouldn't be, with its back to the gallows field.
+
 ~ examine:ivlis_bridge_stones
 | Names are scratched into the parapet, hundreds of them, by people waiting for someone to come along the road. Some of the newest have dates. None of the dates are recent.
 | [class:wizard] {name} reads the scratched names out of habit. A few are in a hand {name} recognises: neat, crossing its sevens. AUREL WAS HERE. HE KNOWS.

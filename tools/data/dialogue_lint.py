@@ -6,6 +6,7 @@ parse_file(path) -> {"nodes": {id: line_no}, "jumps": [(target, line)], "flags_r
                      "flags_set": {id: [where]}, "speakers": [(id, line)], "items": [...], "quests": [...],
                      "skills": [...], "encounters": [...], "selectors": [...], "errors": [str]}
                      (+ "end_games": [where] for each `end_game`, when a file has one)
+                     (+ "casts": [(spell id, where)] for `cast`, "reveals": [(prop id, where)] for `reveal`)
                      (+ "approvals": [(companion id, delta, where)] for `approve`, "inspires": [(selector, where)] for
                      `inspire`, and "approval_terms": [(companion id, rhs or "", where)] for `approval.<id>` in conditions)
 """
@@ -36,6 +37,8 @@ RE_CHECK = re.compile(r"^check\s+([A-Za-z][A-Za-z ]*?)\s+DC\s+(\d+)\s*->\s*([A-Z
 RE_INTERJECT = re.compile(r"^interject\s+([a-z]+:[a-z0-9_]+):\s+(.+)$")
 RE_COMBAT = re.compile(rf"^combat\s+({ID})$")
 RE_NARRATE = re.compile(r"^narrate\s+([a-z0-9_:]+)$")
+RE_CAST = re.compile(rf"^cast\s+({ID})$")
+RE_REVEAL = re.compile(rf"^reveal\s+({ID})$")
 RE_CUTSCENE = re.compile(r"^cutscene\s+([a-z][a-z0-9_]*)$")
 RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
@@ -246,6 +249,14 @@ def parse_file(path):
         m = RE_NARRATE.match(line)
         if m:
             out["narrates"].append((m.group(1), where))
+            continue
+        m = RE_CAST.match(line)
+        if m:
+            out.setdefault("casts", []).append((m.group(1), where))
+            continue
+        m = RE_REVEAL.match(line)
+        if m:
+            out.setdefault("reveals", []).append((m.group(1), where))
             continue
         m = RE_CUTSCENE.match(line)
         if m:
