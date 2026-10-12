@@ -1,5 +1,5 @@
 extends TestCase
-## The 54 spells that left the game (Ashwin, 2026-10-12: the spells that did nothing and couldn't be given a use): their
+## The 55 spells that left the game (Ashwin, 2026-10-12: the spells that did nothing and couldn't be given a use): their
 ## files stay, marked removed and not playable, so they're out of every spell list, picker and scroll, and a saved hero
 ## who knew one gets another spell of its level when the save loads (Character.swap_removed_spells).
 
@@ -14,7 +14,7 @@ func _removed() -> Array[String]:
 
 func test_fifty_four_spells_are_out_of_every_list_and_scroll() -> void:
 	var gone := _removed()
-	assert_eq(gone.size(), 54)
+	assert_eq(gone.size(), 55, "54, and Water Walk: nowhere in the game sits across deep water")
 	for id in gone:
 		assert_false(Compendium.playable(Compendium.shared().spell_data(id)), id)
 	for cls: String in ["bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "warlock", "wizard"]:

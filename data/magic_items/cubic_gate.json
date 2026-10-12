@@ -29,16 +29,8 @@
       "spell": "plane_shift",
       "charges": 1,
       "text": "1 charge: cast Plane Shift to the plane keyed to a side."
-    },
-    {
-      "id": "gate",
-      "name": "Gate",
-      "spell": "gate",
-      "charges": 1,
-      "combat": false,
-      "text": "1 charge: cast Gate to the plane keyed to a side."
     }
   ],
-  "summary": "3 charges: Plane Shift or Gate to one of six planes keyed to its sides.",
-  "text": "A 3-inch cube humming with magic. Each of its six faces is tied to a different plane: one to the Material Plane, the rest to planes the DM chooses. It has 3 charges and recovers 1d3 each dawn. As a Magic action, spend 1 charge to cast Gate to open a doorway to the plane tied to the face you press, or Plane Shift, sending the targets to that plane. (No one escapes the Mists of Barovia this way.)"
+  "summary": "3 charges: Plane Shift to one of six planes keyed to its sides.",
+  "text": "A 3-inch cube humming with magic. Each of its six faces is tied to a different plane: one to the Material Plane, the rest to planes the DM chooses. It has 3 charges and recovers 1d3 each dawn. As a Magic action, spend 1 charge to cast Plane Shift, sending the targets to the plane tied to the face you press. (The book's cube also opens a Gate; Gate is out of this game.) (No one escapes the Mists of Barovia this way.)"
 }

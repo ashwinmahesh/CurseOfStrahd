@@ -1,5 +1,7 @@
 {
   "id": "water_walk",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: nowhere in the game is reachable only across deep water, so it did nothing, and nothing in the game could give it a use",
   "name": "Water Walk",
   "source": {
     "book": "PHB2024",

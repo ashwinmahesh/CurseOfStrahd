@@ -2444,6 +2444,10 @@ static func from_dict(d: Dictionary, compendium_: Compendium = null) -> Characte
 		if MagicItems.GENERIC_SCROLLS.has(str(ed.get("id", ""))):
 			c.add_item(str(ed["id"]), int(ed.get("qty", 1)))
 			continue
+		# A Necklace of Prayer Beads from before Planar Ally and Wind Walk left the game: those beads are Favor beads.
+		if ed.has("beads"):
+			ed["beads"] = (ed["beads"] as Array).map(
+				func(b: Variant) -> Variant: return "favor" if str(b) in MagicItems.REMOVED_BEADS else b)
 		c.inventory.append(ed)
 	c.currency = (d.get("currency", c.currency) as Dictionary).duplicate()
 	c.hit_dice_spent = (d.get("hit_dice_spent", {}) as Dictionary).duplicate()

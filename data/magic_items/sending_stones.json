@@ -1,5 +1,7 @@
 {
   "id": "sending_stones",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: its only power was a spell taken out of the game (Sending)",
   "name": "Sending Stones",
   "source": {
     "book": "DMG2024",

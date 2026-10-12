@@ -62,15 +62,6 @@
       }
     },
     {
-      "id": "control_weather",
-      "name": "Control Weather",
-      "spell": "control_weather",
-      "uses": {
-        "count": 1,
-        "per": "dawn"
-      }
-    },
-    {
       "id": "fire_storm",
       "name": "Fire Storm",
       "spell": "fire_storm",
@@ -86,6 +77,6 @@
       "value": "bards_instrument"
     }
   ],
-  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Confusion, Control Weather, Fire Storm.",
-  "text": "Finer than any ordinary instrument, this one lets a Bard who is playing it cast Protection from Evil and Good, Fly, Levitate and Invisibility, along with its own Fire Storm, Confusion and Control Weather. Each spell can be cast this way once, and every use returns at dawn. When a spell cast through it would inflict the Charmed condition on a target that fails its save, that target makes the save with Disadvantage. Anyone who plays it without being attuned takes 2d4 Psychic damage unless it succeeds on a Wisdom saving throw against DC 15."
+  "summary": "Each once a day: Fly, Invisibility, Levitate, Protection from Evil and Good, Confusion, Fire Storm.",
+  "text": "Finer than any ordinary instrument, this one lets a Bard who is playing it cast Protection from Evil and Good, Fly, Levitate and Invisibility, along with its own Fire Storm and Confusion. Each spell can be cast this way once, and every use returns at dawn. When a spell cast through it would inflict the Charmed condition on a target that fails its save, that target makes the save with Disadvantage. Anyone who plays it without being attuned takes 2d4 Psychic damage unless it succeeds on a Wisdom saving throw against DC 15."
 }

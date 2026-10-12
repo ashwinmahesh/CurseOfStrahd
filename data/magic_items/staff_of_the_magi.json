@@ -146,14 +146,6 @@
       "dc": "wielder"
     },
     {
-      "id": "arcane_lock",
-      "name": "Arcane Lock",
-      "spell": "arcane_lock",
-      "charges": 0,
-      "dc": "wielder",
-      "field": true
-    },
-    {
       "id": "detect_magic",
       "name": "Detect Magic",
       "spell": "detect_magic",
@@ -206,5 +198,5 @@
     }
   ],
   "summary": "+2 quarterstaff and spell attacks, Advantage on saves against spells, 50 charges of spells, Spell Absorption, Retributive Strike.",
-  "text": "A magic Quarterstaff granting +2 to attack and damage rolls; while you hold it, your spell attack rolls also get +2. It stores 50 charges and recovers 4d6 + 2 at dawn. If you spend the last one, roll 1d20; a 20 gives it 1d12 + 1 fresh charges. Spell Absorption: while you hold the staff, your saving throws against spells have Advantage. If a spell cast by another creature targets only you, you can use your Reaction to have the staff soak up its magic, cancelling the effect and gaining charges equal to that spell's level; if this would push the staff above 50 charges, it explodes as though you had triggered Retributive Strike. Spells: cast these from the staff using your own spell attack bonus and save DC. 2 charges: Flaming Sphere, Invisibility or Knock. 3 charges: Dispel Magic. 4 charges: Ice Storm or Wall of Fire. 5 charges: Passwall or Telekinesis. 7 charges: Conjure Elemental, Plane Shift, or Fireball or Lightning Bolt at level 7. No charge: Protection from Evil and Good, Light, Mage Hand, Detect Magic, Arcane Lock or Enlarge/Reduce. Retributive Strike: as a Magic action, break the staff. There is a 50 percent chance you are carried off to another plane; if not, the blast deals you 16 Force damage per remaining charge. All other creatures within 30 feet must attempt a Dexterity saving throw (DC 17), and on a failure take Force damage of 8 times the remaining charges if within 10 feet of the staff, 6 times at 11 to 20 feet, or 4 times at 21 to 30 feet; a success halves it."
+  "text": "A magic Quarterstaff granting +2 to attack and damage rolls; while you hold it, your spell attack rolls also get +2. It stores 50 charges and recovers 4d6 + 2 at dawn. If you spend the last one, roll 1d20; a 20 gives it 1d12 + 1 fresh charges. Spell Absorption: while you hold the staff, your saving throws against spells have Advantage. If a spell cast by another creature targets only you, you can use your Reaction to have the staff soak up its magic, cancelling the effect and gaining charges equal to that spell's level; if this would push the staff above 50 charges, it explodes as though you had triggered Retributive Strike. Spells: cast these from the staff using your own spell attack bonus and save DC. 2 charges: Flaming Sphere, Invisibility or Knock. 3 charges: Dispel Magic. 4 charges: Ice Storm or Wall of Fire. 5 charges: Passwall or Telekinesis. 7 charges: Conjure Elemental, Plane Shift, or Fireball or Lightning Bolt at level 7. No charge: Protection from Evil and Good, Light, Mage Hand, Detect Magic or Enlarge/Reduce. Retributive Strike: as a Magic action, break the staff. There is a 50 percent chance you are carried off to another plane; if not, the blast deals you 16 Force damage per remaining charge. All other creatures within 30 feet must attempt a Dexterity saving throw (DC 17), and on a failure take Force damage of 8 times the remaining charges if within 10 feet of the staff, 6 times at 11 to 20 feet, or 4 times at 21 to 30 feet; a success halves it."
 }

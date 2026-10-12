@@ -1,5 +1,7 @@
 {
   "id": "helm_of_teleportation",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-12: its only power was a spell taken out of the game (Teleport)",
   "name": "Helm of Teleportation",
   "source": {
     "book": "DMG2024",

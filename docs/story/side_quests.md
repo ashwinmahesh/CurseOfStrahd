@@ -129,8 +129,8 @@ hunters come up the trail of oats; spotting it (Survival DC 12) catches them una
 
 - Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and a wolf at level 2, three wolves at level 3. The
   autopilot wins 2 of 4 at level 2 and 3 of 4 at level 3, losing one or two party members a fight.
-- Reward: Agafia's grandmother's pair of speaking stones, Sending Stones (uncommon), one to keep and one for
-  Parriwimple; and Bildrath decides it's charity.
+- Reward: Agafia's grandmother's knife, a Dagger of Warning (uncommon; it was her speaking stones, Sending Stones,
+  until Sending left the game on 2026-10-12); and Bildrath decides it's charity.
 
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
