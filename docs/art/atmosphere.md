@@ -64,6 +64,10 @@ colours, wisps by day at Argynvostholt) and two new keys:
   at the camps, rust scree at the werewolf den.
 - `lying_wet` (beside `lying_snow`): ground that never dries whatever the sky does: Vallaki's streets, the spray round
   Tser Falls, the winery.
+- `ground_swap`: the region's own ground in place of a surface on its maps (`Atmosphere.region_surface`, asked by
+  ArenaBoard for its floor and raised ground), with `surround.ground` for the land past the edge: moss in the woods,
+  leaf litter at Tser Pool and the Vistani camp, heath at Old Bonegrinder and on the moor, tilled earth between the
+  winery's vines, shingle on the lake shore, red scree at the werewolf den (the `wild/*` sets, docs/art/textures.md).
 
 The regions: the Mists' edge (today's pale grey, kept on purpose), the woods (`woods`: deep green shade, warm light
 through the trees), the village (sepia mud, warm windows), Old Bonegrinder (heath, bruised shade), Tser Pool and the

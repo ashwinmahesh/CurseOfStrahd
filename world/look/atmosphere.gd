@@ -87,6 +87,20 @@ func _dressed() -> Dictionary:
 	return Weather.dress_mood(GameState.story, loc_id, base, outdoors)
 
 
+## The ground a place's board lays for `surface` ("village/grass"): its region's own in the Modern finish (a mood's
+## `ground_swap`: the woods' moss, the Vistani camps' leaf litter, the lake's shingle; the vault's Region Variety Plan),
+## else `surface` (Classic, an unknown place, or a swap whose surface doesn't exist).
+static func region_surface(place: String, surface: String) -> String:
+	if place == "" or surface == "" or not Look.modern():
+		return surface
+	var loc := Compendium.shared().get_entry("locations", place)
+	if loc.is_empty():
+		return surface
+	var own := resolve(mood_for(place, loc)).get("modern", {}) as Dictionary
+	var to := str((own.get("ground_swap", {}) as Dictionary).get(surface, surface))
+	return to if to == surface or Look.cel_textured(to) != null else surface
+
+
 ## The mood's `ground_tint` as colours: a surface ("village/grass") -> the colour its texture is multiplied by.
 func _ground_tints() -> Dictionary:
 	var out := {}

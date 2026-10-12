@@ -991,6 +991,144 @@
         ],
         "source": "art/generated/textures/wild_water.png",
         "hd_file": "art/textures/wild/water_hd.png"
+      },
+      "moss": {
+        "file": "art/textures/wild/moss_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/moss_2k.webp",
+        "normal_file": "art/textures/wild/moss_2k_n.webp",
+        "orm_file": "art/textures/wild/moss_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_moss.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/moss_2k_b.webp",
+            "normal_file": "art/textures/wild/moss_2k_b_n.webp",
+            "orm_file": "art/textures/wild/moss_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/moss_2k_c.webp",
+            "normal_file": "art/textures/wild/moss_2k_c_n.webp",
+            "orm_file": "art/textures/wild/moss_2k_c_orm.webp"
+          }
+        ]
+      },
+      "leaf_litter": {
+        "file": "art/textures/wild/leaf_litter_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/leaf_litter_2k.webp",
+        "normal_file": "art/textures/wild/leaf_litter_2k_n.webp",
+        "orm_file": "art/textures/wild/leaf_litter_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_leaf_litter.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/leaf_litter_2k_b.webp",
+            "normal_file": "art/textures/wild/leaf_litter_2k_b_n.webp",
+            "orm_file": "art/textures/wild/leaf_litter_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/leaf_litter_2k_c.webp",
+            "normal_file": "art/textures/wild/leaf_litter_2k_c_n.webp",
+            "orm_file": "art/textures/wild/leaf_litter_2k_c_orm.webp"
+          }
+        ]
+      },
+      "heath": {
+        "file": "art/textures/wild/heath_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/heath_2k.webp",
+        "normal_file": "art/textures/wild/heath_2k_n.webp",
+        "orm_file": "art/textures/wild/heath_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_heath.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/heath_2k_b.webp",
+            "normal_file": "art/textures/wild/heath_2k_b_n.webp",
+            "orm_file": "art/textures/wild/heath_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/heath_2k_c.webp",
+            "normal_file": "art/textures/wild/heath_2k_c_n.webp",
+            "orm_file": "art/textures/wild/heath_2k_c_orm.webp"
+          }
+        ]
+      },
+      "vineyard_earth": {
+        "file": "art/textures/wild/vineyard_earth_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/vineyard_earth_2k.webp",
+        "normal_file": "art/textures/wild/vineyard_earth_2k_n.webp",
+        "orm_file": "art/textures/wild/vineyard_earth_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_vineyard_earth.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/vineyard_earth_2k_b.webp",
+            "normal_file": "art/textures/wild/vineyard_earth_2k_b_n.webp",
+            "orm_file": "art/textures/wild/vineyard_earth_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/vineyard_earth_2k_c.webp",
+            "normal_file": "art/textures/wild/vineyard_earth_2k_c_n.webp",
+            "orm_file": "art/textures/wild/vineyard_earth_2k_c_orm.webp"
+          }
+        ]
+      },
+      "shore_shingle": {
+        "file": "art/textures/wild/shore_shingle_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/shore_shingle_2k.webp",
+        "normal_file": "art/textures/wild/shore_shingle_2k_n.webp",
+        "orm_file": "art/textures/wild/shore_shingle_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_shore_shingle.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/shore_shingle_2k_b.webp",
+            "normal_file": "art/textures/wild/shore_shingle_2k_b_n.webp",
+            "orm_file": "art/textures/wild/shore_shingle_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/shore_shingle_2k_c.webp",
+            "normal_file": "art/textures/wild/shore_shingle_2k_c_n.webp",
+            "orm_file": "art/textures/wild/shore_shingle_2k_c_orm.webp"
+          }
+        ]
+      },
+      "red_scree": {
+        "file": "art/textures/wild/red_scree_2k.webp",
+        "size": 1024,
+        "wrap": "xy",
+        "tile_world_units": 2.0,
+        "palette": [],
+        "hd_file": "art/textures/wild/red_scree_2k.webp",
+        "normal_file": "art/textures/wild/red_scree_2k_n.webp",
+        "orm_file": "art/textures/wild/red_scree_2k_orm.webp",
+        "hd_source": "art/generated/surfaces/wild_red_scree.webp",
+        "variants": [
+          {
+            "file": "art/textures/wild/red_scree_2k_b.webp",
+            "normal_file": "art/textures/wild/red_scree_2k_b_n.webp",
+            "orm_file": "art/textures/wild/red_scree_2k_b_orm.webp"
+          },
+          {
+            "file": "art/textures/wild/red_scree_2k_c.webp",
+            "normal_file": "art/textures/wild/red_scree_2k_c_n.webp",
+            "orm_file": "art/textures/wild/red_scree_2k_c_orm.webp"
+          }
+        ]
       }
     },
     "cave": {
