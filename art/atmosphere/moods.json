@@ -1380,7 +1380,7 @@
         "times": {
           "day": {
             "sky": "slate",
-            "fog": "bog",
+            "fog": "slate",
             "ambient": "moss",
             "ambient_energy": 0.5,
             "key": "bone",
