@@ -230,11 +230,23 @@ func _build() -> void:
 	var side_colour := _side_colour()
 	_ring = MeshInstance3D.new()
 	var tm := TorusMesh.new()
-	tm.inner_radius = 0.36 * size_units
-	tm.outer_radius = 0.43 * size_units
+	# A foe's ring is a little wider and a bright red of its own that no light, fog or rain dims or bleaches, so it shows
+	# in a dark room and in the mist (owner, 2026-10-12: "make the red circle around enemies brighter"); the party's
+	# gold and the guests' blue stay as they were, lit by the scene, so a foe still stands out from a friend.
+	var foe := side_colour == "crimson"
+	tm.inner_radius = (0.35 if foe else 0.36) * size_units
+	tm.outer_radius = (0.45 if foe else 0.43) * size_units
 	_ring.mesh = tm
 	_ring.position.y = 0.03
-	_ring.material_override = Look.cel(side_colour)
+	if foe:
+		var rm := StandardMaterial3D.new()
+		rm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		rm.albedo_color = Look.color("vampire_red")
+		rm.disable_fog = true
+		_ring.material_override = rm
+		_ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	else:
+		_ring.material_override = Look.cel(side_colour)
 	add_child(_ring)
 	_active_ring = MeshInstance3D.new()
 	var tm2 := TorusMesh.new()
@@ -296,6 +308,28 @@ func _text(text: String, pos: Vector3, size: int, colour: String) -> Label3D:
 	return l
 
 
+## Whether a spell or effect on `cr` cuts its Speed: a minus to it (Ray of Frost), a share of it (Slow halves it), a cap
+## on it, or the Slow spell's own flag. Conditions that stop it (Grappled, Restrained) show as themselves.
+static func slowed(cr: Creature) -> bool:
+	for fx in cr.effects:
+		for m in fx.modifiers:
+			var v: Variant = m.data.get("value")
+			var number := v is int or v is float
+			match str(m.stat):
+				"speed":
+					if number and float(v) < 0.0:
+						return true
+				"speed_percent":
+					if number and float(v) < 100.0:
+						return true
+				"speed_cap":
+					return true
+				"flag":
+					if str(v) == "slowed":
+						return true
+	return false
+
+
 ## Re-reads the creature: health bar, conditions, down or dead.
 func refresh() -> void:
 	var cr := combatant.creature
@@ -327,6 +361,9 @@ func refresh() -> void:
 	# F13: a foe that gave up (combat/ai/ai_tactics.gd).
 	if cr.has_flag("surrendered") and not cr.dead:
 		chips.append("Surrendered")
+	# Slowed (owner, 2026-10-12): a spell or effect cutting its Speed (Ray of Frost, Slow...).
+	if slowed(cr):
+		chips.append("Slowed")
 	# Hex, Hunter's Mark: who marked it.
 	for fx in cr.effects:
 		if fx.data.has("mark_by"):
