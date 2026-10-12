@@ -507,9 +507,12 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 				var rreq := ReactionRequest.new("readied_attack", p.id, c.id)
 				rreq.title = "Readied attack?"
 				rreq.text = "%s comes within reach of %s, who readied an attack. Use the Reaction to attack now?" % [c.name(), p.name()]
+				e.reaction_flow.readied_targets(rreq, p, c)   # a readied spell: who it's aimed at
+				var rref: WeakRef = weakref(rreq)
 				rreq.continuation = func(use: bool) -> CombatResult:
 					if use:
-						return e.then(e.attacks._readied_attack(p, c), resume2)
+						var aim := e.reaction_flow.readied_aim(rref.get_ref() as ReactionRequest, c) if rref.get_ref() != null else c
+						return e.then(e.attacks._readied_attack(p, aim), resume2)
 					# Ignored, it stays held until the start of its turn, asked again at the next trigger (2024 Ready; owner
 					# report 2026-10-12: declining once dropped it).
 					return resume2.call() as CombatResult
