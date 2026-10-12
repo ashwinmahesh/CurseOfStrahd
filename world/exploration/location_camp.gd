@@ -338,8 +338,9 @@ func sleep() -> void:
 	Audio.sfx("rest")
 	var res := LongRest.take(view.st, rule, Dice.roller)
 	if bool(res["interrupted"]):
-		_queue.append(str(res["text"]))
 		_refresh_root()
+		if not _night_visitors():
+			_queue.append(str(res["text"]))
 		return
 	slept = true
 	had.clear()
@@ -355,6 +356,23 @@ func sleep() -> void:
 	_refresh_talks()
 	if root != null and root.has_method("strahd_after_rest"):
 		root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)   # Strahd may come in the night (ADR 0014)
+
+
+## The night interrupted at camp: what comes out of the dark (CampSite.night_fight) falls on the camp, where everyone
+## lies. Afterwards the party can try to sleep again. False if nothing came (the night just wasn't restful).
+func _night_visitors() -> bool:
+	var taken := _taken.duplicate()
+	for id in _props:
+		var node := view.prop_nodes.get(id, null) as Node3D
+		if node != null:
+			taken[view.grid.cell_at(node.global_position)] = true
+	for m: Combatant in view.members + view.guest_members:
+		taken[m.cell] = true
+	var spec := CampSite.night_fight(view.grid, center, taken, str(view.loc.get("region", "")), view.st.target_level(), Dice.roller)
+	if spec.is_empty():
+		return false
+	view.narration.emit(str(spec["text"]))
+	return view.start_custom_encounter(spec)
 
 
 ## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with.

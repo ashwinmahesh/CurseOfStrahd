@@ -2,20 +2,29 @@
 out of their plain white ground: art/generated/vistas/<source>.png -> art/vistas/<name>.png with a soft alpha, so the
 mist at a crag's foot thins out rather than stopping at a hard edge.
 
-  python3 tools/art/build_vistas.py
+  python3 tools/art/build_vistas.py [--generate] [--only id ...]
 
-The paintings come from tools/art/generate.sh with art/prompts/vista_preamble.txt; BACKDROPS picks the take used.
+The paintings come from tools/art/generate.sh with art/prompts/vista_preamble.txt, one prompt per landmark in
+tools/art/vista_recipes.json (Castle Ravenloft, and each region's own: the vault's Region Variety Plan); a recipe's
+`take` picks the painting used. --generate paints two takes of each landmark that has none yet (the art spend ledger
+checks the batch first).
 """
+import argparse
+import json
 import math
+import subprocess
+import sys
 from pathlib import Path
 
 from PIL import Image
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gemini_budget  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[2]
-# name -> (generated source, height in pixels of the cut-out)
-BACKDROPS = {
-    "castle_ravenloft": ("castle_ravenloft_far_1", 768),
-}
+RECIPES = ROOT / "tools" / "art" / "vista_recipes.json"
+PAINTINGS = ROOT / "art" / "generated" / "vistas"
+TAKES = 2
 
 
 def cut(src: Path, height: int) -> Image.Image:
@@ -41,11 +50,30 @@ def cut(src: Path, height: int) -> Image.Image:
     return out
 
 
+def generate(landmarks):
+    """Two takes of each landmark that has no painting yet."""
+    todo = [(k, t) for k in landmarks for t in range(1, TAKES + 1) if not (PAINTINGS / f"{k}_far_{t}.png").exists()]
+    if not todo:
+        return
+    gemini_budget.preflight(len(todo), "1K", "vista landmarks")
+    for k, t in todo:
+        r = landmarks[k]
+        subprocess.run([str(ROOT / "tools" / "art" / "generate.sh"), f"{k}_far_{t}", "vistas", r["prompt"],
+                        "--aspect", r["aspect"], "--preamble", "art/prompts/vista_preamble.txt"], check=True)
+
+
 def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("--generate", action="store_true")
+    p.add_argument("--only", nargs="*", default=[])
+    a = p.parse_args()
+    landmarks = {k: v for k, v in json.loads(RECIPES.read_text())["landmarks"].items() if not a.only or k in a.only}
+    if a.generate:
+        generate(landmarks)
     out_dir = ROOT / "art" / "vistas"
     out_dir.mkdir(parents=True, exist_ok=True)
-    for name, (source, height) in BACKDROPS.items():
-        img = cut(ROOT / "art" / "generated" / "vistas" / (source + ".png"), height)
+    for name, r in landmarks.items():
+        img = cut(PAINTINGS / f"{name}_far_{r['take']}.png", int(r["height"]))
         img.save(out_dir / (name + ".png"))
         print("backdrop", name, img.size)
 

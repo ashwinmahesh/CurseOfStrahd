@@ -231,6 +231,12 @@ What it sees (`Vista`, built with the land in the Modern finish, placed from `ar
   `art/prompts/vista_preamble.txt`, cut out by `tools/art/build_vistas.py`) at its true bearing from each place on
   the travel art, smaller and deeper in the haze the farther off, its foot sunk in the mist, its lit windows warm.
   Never seen from the castle's own maps.
+- **Each region's own landmark** (the vault's Region Variety Plan, 2026-10-12), painted the same way
+  (`tools/art/vista_recipes.json`, `python3 tools/art/build_vistas.py [--generate]`): Mount Ghakis with the Amber
+  Temple's glow, Mount Baratok, the Abbey on its crag, Krezk on its cliff, Vallaki's palisade, Argynvostholt's beacon
+  tower, Yester Hill's stones and tree, Old Bonegrinder's windmill and Van Richten's tower on its island (vistas.json
+  `landmarks`). A place sees the nearest four within each one's `within`, never one standing in front of another
+  (`Vista.SPREAD`), never its own (closer than `near`: a mountain isn't seen from its slopes).
 - **Lake Zarovich** stretching away from the places near it (Vallaki, the lake shore, Van Richten's tower, the
   werewolf den, the Wizard of Wines).
 

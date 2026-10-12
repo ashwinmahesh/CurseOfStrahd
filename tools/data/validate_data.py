@@ -32,6 +32,7 @@ FOLDERS = {
     "schedule": "schedule",
     "objects": {"kinds": "object_kinds"},
     "weather": "weather",
+    "camp": {"night_visitors": "night_visitors"},
 }
 
 TYPES = {
@@ -280,10 +281,34 @@ def semantic_checks(data):
                 errors.append(f"encounters/{eid}: {xp} XP is a {band} encounter for {len(enc['party'])} level {level} characters, not {enc['difficulty']}")
     story_checks(data, errors, need)
     object_checks(data, errors)
+    camp_checks(data, errors)
     pending.extend(pending_list)
     pending_list.clear()
     campaign_checks(data, errors, pending)
     return errors, pending
+
+
+def camp_checks(data, errors):
+    """The camp's night visitors (data/camp/night_visitors.json, F16): every monster exists, every land a region has
+    (and the default) has a group for every party level from 1 to the level cap, and no two of a land's groups
+    overlap."""
+    nv = data.get("camp", {}).get("night_visitors")
+    if not nv:
+        return
+    w = "camp/night_visitors.json"
+    groups = nv.get("groups", [])
+    for g in groups:
+        for m in g.get("monsters", []):
+            if m not in data["monsters"]:
+                errors.append(f"{w} {g['id']}: unknown monster '{m}'")
+        lo, hi = g["levels"]
+        if lo > hi:
+            errors.append(f"{w} {g['id']}: levels {lo} to {hi} run backwards")
+    for land in sorted(set(nv.get("lands", {}).values()) | {nv.get("default_land")}):
+        for level in range(1, 12):
+            n = sum(1 for g in groups if g["land"] == land and g["levels"][0] <= level <= g["levels"][1])
+            if n == 0:
+                errors.append(f"{w}: nothing comes for a level {level} camp in the {land}")
 
 
 def object_checks(data, errors):

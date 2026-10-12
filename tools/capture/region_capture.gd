@@ -11,6 +11,8 @@ extends Node
 ## - REGION_BEFORE=/abs/dir: a folder holding the "before" moods.json, flora.json, vistas.json and catalog.json (any
 ##   of them; a missing one keeps the game's). Shots are then named <out>_<shot>_<hour>_before.png and _after.png.
 ## - REGION_WEATHER=rain: the world's weather for every shot (default the new game's own).
+## - REGION_TILT=1: the camera tilted to the horizon (the ridges and landmarks past the edge), a shot each quarter turn
+##   (<shot>_<hour>_t0 ... _t3).
 
 ## Each shot: the region's place, where the party stands (empty: the place's own spawn) and optionally the camera's
 ## distance and quarter turns.
@@ -84,7 +86,17 @@ func _shoot(tool: Node, shot: Dictionary, hour: int, path: String) -> void:
 	await tool.call("wait_frames", 45)
 	print("region %s: mood %s, plants %s" % [path.get_file(), view.atmosphere.mood_id,
 		Flora.set_for(view.atmosphere.mood_id)])
-	tool.call("_shot", path)
+	if OS.get_environment("REGION_TILT") == "":
+		tool.call("_shot", path)
+		return
+	# Looking out to the horizon, all the way round.
+	view.rig.distance = view.rig.zoom_max
+	view.rig.horizon = 1.0
+	for turn in 4:
+		view.rig.snap_to_target()
+		await tool.call("wait_frames", 20)
+		tool.call("_shot", path.trim_suffix(".png") + "_t%d.png" % turn)
+		view.rig.rotate_step(1)
 
 
 ## The look data the next place is built with: the files in `dir` where it has them, else the game's own (an empty
