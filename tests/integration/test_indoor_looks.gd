@@ -51,7 +51,7 @@ func test_the_lairs_stand_out() -> void:
 	Look.set_style("modern", false)
 	var dragon := _view("ghakis_lair")
 	await get_tree().process_frame
-	assert_eq(str(dragon.board.floor_material().get_meta("surface", "")), "cave/rock_floor", "the dragon's lair is a cave")
+	assert_eq(str(dragon.board.floor_material().get_meta("surface", "")), "cave/ember_basalt", "the dragon's lair is ember-cracked basalt")
 	assert_false(_any_room_floor(dragon.board, "interior/marble_floor"), "with no checker marble in its gallery")
 	dragon.queue_free()
 	await get_tree().process_frame
@@ -64,6 +64,12 @@ func test_the_lairs_stand_out() -> void:
 	await get_tree().process_frame
 	assert_eq(str(eye.board.floor_material().get_meta("surface", "")), "amber/black_stone", "the Eye lies under amber")
 	eye.queue_free()
+	await get_tree().process_frame
+	var library := _view("drowned_library")
+	await get_tree().process_frame
+	assert_eq(str(library.board.floor_material().get_meta("surface", "")), "dungeon/drowned_flags",
+		"the drowned library's floor is under water and slime")
+	library.queue_free()
 
 
 func _any_room_floor(board: ArenaBoard, surface: String) -> bool:

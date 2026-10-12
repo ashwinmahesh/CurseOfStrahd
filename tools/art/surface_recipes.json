@@ -399,6 +399,74 @@
       "ref": "road_day_ab",
       "new": true,
       "brightness": 1.2
+    },
+    "cave/ember_basalt": {
+      "subject": "a black basalt cave floor split by thin glowing ember-orange cracks, scorched dark rock, drifts of grey ash and a few charred bones",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "brightness": 1.15
+    },
+    "cave/ember_basalt_wall": {
+      "subject": "a rough wall of black volcanic basalt rock in columns and slabs with thin glowing ember-red cracks between them and soot stains",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "brightness": 1.3
+    },
+    "dungeon/drowned_flags": {
+      "subject": "old worn flagstones under a thin film of black water, green slime and algae in the joints, sodden scraps of paper and a few bones",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "material": {
+        "roughness": 0.3
+      }
+    },
+    "dungeon/slimed_brick": {
+      "subject": "a damp black brick wall streaked with green slime, water stains, white salt crust and patches of moss",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab",
+      "new": true
+    },
+    "amber/warped_amber": {
+      "subject": "a wall of translucent golden amber, warped and bulging, with the dark shapes of trapped creatures and bones suspended inside and cracks running through it",
+      "view": "wall",
+      "variants": 1,
+      "ref": "castle_hall_ab",
+      "new": true,
+      "material": {
+        "roughness": 0.25
+      }
+    },
+    "church/frosted_flags": {
+      "subject": "grey stone flagstones rimed with white frost, ice in the joints and a thin dusting of blown snow",
+      "view": "floor",
+      "variants": 3,
+      "ref": "castle_hall_ab",
+      "new": true
+    },
+    "church/rich_flags": {
+      "subject": "a polished church floor of red and cream stone laid in a geometric pattern with thin gilt inlay lines, worn smooth down the middle",
+      "view": "floor",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "new": true,
+      "material": {
+        "roughness": 0.35
+      },
+      "brightness": 1.3
+    },
+    "interior/blue_panelling": {
+      "subject": "painted wooden wall panelling in faded blue-green with darker moulded trim and a dado rail, worn and chipped",
+      "view": "wall",
+      "variants": 1,
+      "ref": "death_house_hall_ab",
+      "new": true
     }
   },
   "derived": {
