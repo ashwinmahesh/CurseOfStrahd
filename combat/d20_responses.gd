@@ -258,7 +258,9 @@ func policies(c: Combatant) -> Array[Dictionary]:
 	if e.features.has_feat(c, "mage_slayer"):
 		add.call("guarded_mind", "Guarded Mind", "Guarded Mind")
 	if CombatFeatures.has_feature(c, "dark_ones_own_luck"):
-		add.call("dark_ones_own_luck", "Dark One's Own Luck", "A use of Dark One's Own Luck")
+		out.append({"id": "dark_ones_own_luck", "name": "Dark One's Own Luck", "modes": ["ask", "auto", "never"], "default": "ask",
+			"cost": "A use of Dark One's Own Luck (%d left)" % ch.resource_left("dark_ones_own_luck"),
+			"help": "1d10 on a failed saving throw or ability check it could still turn, once a roll. Ask: you're asked, in a fight and on a failed check outside one. Automatic: used whenever it could. Off: never. A roll that can't wait (an instant check in a fight, a trap outside one) uses it only when it's Automatic."})
 	if CombatFeatures.has_feature(c, "bend_luck"):
 		add.call("bend_luck", "Bend Luck", "Your Reaction and 1 Sorcery Point")
 	if CombatFeatures.has_feature(c, "countercharm"):
