@@ -675,6 +675,13 @@ func cast_armed_smite(c: Combatant, melee: bool, missed: bool) -> Dictionary:
 			if str(k["id"]) == sid and bool(k["free"]):
 				free = true
 		var slot := lvl if free else e.spells._lowest_slot(ch, lvl)
+		# Divine Smite asked on the hit: the slot picked on the prompt (or its free use), while it's still there.
+		if five_e and c.has_meta("smite_slot"):
+			var picked := str(c.get_meta("smite_slot"))
+			c.remove_meta("smite_slot")
+			if picked != "free" and int(picked) in SpellReactions.slot_levels(ch, lvl):
+				free = false
+				slot = int(picked)
 		if slot == 0 or (c.cast_slot_spell_this_turn and not free and not five_e):
 			return {}
 		if not five_e:
@@ -713,21 +720,32 @@ func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dicti
 	if entry.is_empty():
 		return []
 	var free := bool(entry["free"])
-	var slot := 1 if free else e.spells._lowest_slot(c.creature as Character, 1)
-	if slot == 0:
+	var levels := SpellReactions.slot_levels(c.creature as Character, 1)
+	if not free and levels.is_empty():
 		return []
-	var dice := mini(5, 1 + slot)
 	var extra := " (1d8 more against %s)" % ("a Fiend" if str(target.creature.creature_type) == "fiend" else "the Undead") \
 		if str(target.creature.creature_type) in ["fiend", "undead"] else ""
+	# The slot to smite with (owner ask 2026-10-12): every level the paladin has, the free use or the lowest first.
+	var options: Array[Dictionary] = []
+	if free:
+		options.append({"id": "free", "label": "Free use (Paladin's Smite) · 2d8"})
+	for l in levels:
+		options.append({"id": str(l), "label": "Level %d slot · %dd8%s" % [l, mini(5, 1 + l), " (the most)" if 1 + l >= 5 else ""]})
+	var choice := {"slot": str(options[0]["id"])}
 	return [{"kind": DIVINE_SMITE, "reactor": c, "trigger": target.id, "title": "Divine Smite?", "spends_reaction": false,
 		"default": "ask",
-		"text": "%s hits %s%s. Smite for %dd8 more Radiant damage%s?" % [c.name(), target.name(),
-			" with a Critical Hit, so the smite's dice double too" if bool(st.get("critical", false)) else "", dice, extra],
-		"cost": "Its free use (Paladin's Smite)" if free else "A level %d spell slot" % slot,
+		"text": "%s hits %s%s. Smite for more Radiant damage: 2d8, and 1d8 more for each slot level above 1st, up to 5d8%s?" % [c.name(),
+			target.name(), " with a Critical Hit, so the smite's dice double too" if bool(st.get("critical", false)) else "", extra],
+		"cost": "The free use or the spell slot you choose",
+		"target_choices": options, "selected_ids": [str(options[0]["id"])], "min_targets": 1, "max_targets": 1,
+		"select": func(selected: Array[String]) -> void:
+			if not selected.is_empty():
+				choice["slot"] = selected[0],
 		"use": func() -> void:
 			if not ("smite:" + DIVINE_SMITE) in c.armed:
 				c.armed.append("smite:" + DIVINE_SMITE)
-				c.set_meta("smite_asked", true)}]
+				c.set_meta("smite_asked", true)
+			c.set_meta("smite_slot", str(choice["slot"]))}]
 
 
 ## The extra dice a smite spell adds to the hit: its damage with the slot's extra dice, plus Divine Smite's die
