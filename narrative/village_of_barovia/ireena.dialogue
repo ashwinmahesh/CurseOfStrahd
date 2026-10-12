@@ -218,7 +218,14 @@ endif
 -> escort_ask
 
 ~ escort_ask
+# Asked once: a yes or a no already given stands (Wiki finding 74: the burial's quiet route asked again, and put an
+# accepted or declined escort back to Ready).
+if quest.escort_ireena >= accepted
+-> END
+endif
+if not quest.escort_ireena >= ready
 quest escort_ireena ready
+endif
 Ireena: Ismark wants me in Vallaki, behind walls. He's probably right; it's the first time in years I've said that. Will you take me?
 if flag.madam_eva_rumor
 Ireena: The Vistani women say there's a seer at Tser Pool, on the way. If anyone can tell me what he wants with me, perhaps she can.

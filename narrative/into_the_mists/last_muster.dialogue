@@ -32,6 +32,7 @@ Marshal Dragomir: State your names and your lord.
 * [if not flag.muster_rite_failed] [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
 * [if not flag.muster_talk_failed] [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
 * (Draw steel.) -> fight
+* (Turn back down the road.) -> withdraw
 
 ~ rematch
 Marshal Dragomir: You came back. Good. My men are relieved and I am not. On guard, then, when you're ready.
@@ -48,6 +49,7 @@ Marshal Dragomir: An order is an order until it is countermanded. Four hundred y
 * [if not flag.muster_rite_failed] [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
 * [if not flag.muster_talk_failed] [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
 * (Draw steel.) -> fight
+* (Turn back down the road.) -> withdraw
 
 ~ war_over
 Narrator: You tell him: the kingdom his count came from has no name any more, the war that brought him here is four centuries done, and there's nobody left on either side of it but the count, and the valley, and the dead.
@@ -82,6 +84,11 @@ Marshal Dragomir: They are relieved. I am not. An officer is relieved by his com
 Marshal Dragomir: So. Beat me. Fairly, at the gate I was told to hold. Then I can tell him, when I see him, that I held it until I couldn't.
 * Then on guard, Marshal. -> fight
 * Not tonight. -> later
+
+# A way out of both menus, whatever's been tried (Wiki finding 73): the column holds the gate again tomorrow night.
+~ withdraw
+Marshal Dragomir: Back the way you came, then. The gate is held. It will be held tomorrow, and the night after.
+-> END
 
 ~ later
 Marshal Dragomir: Tomorrow night, then. We have time. We have had nothing but.

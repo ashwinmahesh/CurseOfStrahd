@@ -786,6 +786,20 @@ static func _upgrade_quests(st: StoryState) -> void:
 	if st.quests.has("into_the_mists") and not st.quest_ended("into_the_mists") \
 			and (st.visited.has("village_of_barovia") or st.visited.has("death_house_ground")):
 		st.set_quest_stage("into_the_mists", "village_edge")
+	# Ireena's escort put back to Ready by her asking again after the quiet burial (Wiki finding 74; saves from 1.0.3 and
+	# 1.0.4): back to the answer the party had given.
+	var esc := st.quests.get("escort_ireena", {}) as Dictionary
+	if str(esc.get("stage", "")) == "ready":
+		var said := esc.get("history", []) as Array
+		var back := ""
+		if "departed" in said:
+			back = "departed"
+		elif "accepted" in said and ("ireena" in st.guest_ids or not "declined" in said):
+			back = "accepted"
+		elif "declined" in said:
+			back = "declined"
+		if back != "":
+			esc["stage"] = back
 	st._settle_ally()
 
 
