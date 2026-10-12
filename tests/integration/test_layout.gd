@@ -220,6 +220,26 @@ func test_the_exploring_hud() -> void:
 	await _check("the exploring HUD", func() -> Variant: return root.get("hud"))
 
 
+## Four item notices (ItemNotices) at once, with the longest item names in the game, magic and not.
+func test_item_notices_with_the_longest_names() -> void:
+	if not await _game(LATE):
+		return
+	var names: Array = []
+	for item: Dictionary in Compendium.shared().all("items") + Compendium.shared().all("magic_items"):
+		names.append([Compendium.shared().display_name("items", str(item["id"])).length(), str(item["id"])])
+	names.sort_custom(func(a: Array, b: Array) -> bool: return int(a[0]) > int(b[0]))
+	await _check("item notices", func() -> Variant:
+		var n := root.get("notices") as ItemNotices
+		for i in ItemNotices.MAX_SHOWN:
+			n.show_item(str((names[i] as Array)[1]), 12, "Godrick Pendlebrook")
+		await _frames(2)
+		return n.get_child(0),
+		func() -> void:
+			var n := root.get("notices") as ItemNotices
+			for p in n.shown():
+				p.free())
+
+
 func test_the_turn_based_panel() -> void:
 	if not await _game(LATE):
 		return

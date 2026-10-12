@@ -141,6 +141,15 @@ func test_walking_up_and_trying_reveals_teaches_and_hints() -> void:
 	assert_true(said.has("The runes point to a niche."), str(said))
 	assert_true(bool(_states("found").get("hidden_cache", false)), "the niche is found")
 	assert_false(v.thing_at(Vector2i(2, 1)).is_empty(), "and on the board")
+	var roller := rolls[0].get_slice("|", 0)
+	var taker: Character = null
+	for ch in GameState.story.party:
+		if ch.name == roller:
+			taker = ch
+	assert_true(taker != null and taker.carries("potion_of_healing_greater"), "and what's in it goes to whoever read the runes (%s)" % roller)
+	assert_true(bool(_states("props").get("hidden_cache", false)), "taken: the niche is empty now")
+	assert_true((root.get("notices") as ItemNotices).shown().size() >= 1, "and the find is announced on the side")
+	assert_true(said.any(func(s: String) -> bool: return s.begins_with("Now you know where to look: A far cache (Elsewhere)")), str(said))
 	assert_eq(str(_states("traps").get("plate", "")), "found", "the plate is found and marked")
 	assert_true(v.trap_marks.has("plate"))
 	assert_true(bool(_states("found", "test_elsewhere").get("far_cache", false)), "a place hint: the far cache is known")
@@ -289,3 +298,37 @@ func test_a_failure_can_set_off_a_fight() -> void:
 	assert_true(WorldChecks.spent(GameState.story, "test_checks", WorldChecks.find(LOC["props"][0] as Dictionary, "wake_runes")), "one try")
 	await _frames(2)
 	assert_true(v.in_combat, "the runes' guardian comes for whoever woke them")
+
+
+## A save from before checks handed their finds over: the check passed and its niche was found, but nobody took what was
+## in it. On arriving, it goes to the leader.
+func test_an_older_save_gets_its_find_on_arriving() -> void:
+	WorldChecks.records(GameState.story, "test_checks")["read_runes"] = "done"
+	_states("found")["hidden_cache"] = true
+	root.call("enter_location", "test_checks", "")
+	await _frames(2)
+	var leader := _view().leader().creature as Character
+	assert_true(leader.carries("potion_of_healing_greater"), "the niche's potion comes with the party now")
+	assert_true(bool(_states("props").get("hidden_cache", false)))
+	root.call("enter_location", "test_checks", "")
+	await _frames(2)
+	assert_eq(leader.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "potion_of_healing_greater").size(), 1, "and only once")
+
+
+## The owner's report (2026-10-12): at the Wizard of Wines, passing the well's Athletics check hands over the rope tied off
+## below its lip, and says so.
+func test_the_wizard_of_wines_well_hands_over_its_rope() -> void:
+	root.call("enter_location", "wizard_of_wines", "")
+	await _frames(2)
+	var v := _view()
+	var spec := {}
+	for p: Variant in v.loc["props"]:
+		if str((p as Dictionary)["id"]) == "yard_well":
+			spec = p as Dictionary
+	var climber := v.leader().creature as Character
+	LocationChecks._resolve(v, spec, WorldChecks.find(spec, "winery_well_climb"), climber, true)
+	assert_true(climber.carries("rope_of_climbing"), "the climber comes up with the Rope of Climbing")
+	var notices := root.get("notices") as ItemNotices
+	assert_true(notices.shown().any(func(p: PanelContainer) -> bool:
+		return p.find_children("ItemName", "Label", true, false).any(func(l: Node) -> bool: return (l as Label).text == "Rope of Climbing")),
+		"and a notice says so")
