@@ -55,8 +55,10 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	return res
 
 
+## Plays `encounter` once per seed: every fight finishes and at least one is won. Returns the wins, for a test that
+## wants more of them.
 func _series(location: String, hour: int, level: int, encounter: String, seeds: Array, flags: Array[String] = [],
-		guests: Array[String] = [], open_doors: Array[String] = [], at: Array[Vector2i] = []) -> void:
+		guests: Array[String] = [], open_doors: Array[String] = [], at: Array[Vector2i] = []) -> int:
 	var wins := 0
 	var downs := 0
 	var rounds := 0
@@ -70,6 +72,7 @@ func _series(location: String, hour: int, level: int, encounter: String, seeds: 
 	print("        %s at level %d: %d/%d won, %.1f rounds, %.1f party members dropped per fight" % [
 		encounter, level, wins, seeds.size(), rounds / float(seeds.size()), downs / float(seeds.size())])
 	assert_true(wins >= 1, "%s can be won at level %d (%d/%d)" % [encounter, level, wins, seeds.size()])
+	return wins
 
 
 func test_old_greytooth_at_level_6() -> void:
@@ -80,8 +83,10 @@ func test_the_drowned_of_pescari_at_level_8() -> void:
 	await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3])
 
 
+## Hard but winnable: at least two of eight.
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
-	await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
+	var wins := await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 2, "the column falls in at least 2 of 8 (%d)" % wins)
 
 
 func test_the_bone_marshal_duel_at_level_8() -> void:
@@ -96,8 +101,10 @@ func test_the_vine_mother_at_level_6() -> void:
 	await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4], ["winery_reclaimed"])
 
 
+## Hard but winnable: at least two of eight.
 func test_granny_ash_at_level_6() -> void:
-	await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
+	var wins := await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
+	assert_true(wins >= 2, "Granny Ash falls in at least 2 of 8 (%d)" % wins)
 
 
 func test_the_counts_huntsman_at_level_8() -> void:
