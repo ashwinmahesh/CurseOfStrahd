@@ -20,7 +20,8 @@ quest one_horned_billy asked
 endif
 * [Animal Handling DC 14] (Get close enough to look at the ring.) -> ring | butted
 * [Insight DC 13] (Look him in the eye.) -> eyes | eyes_missed
-* [knows:speak_with_animals] (Cast Speak with Animals.) -> speaks
+* [if spell:speak_with_animals] (Talk to him.) -> speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals.) -> speaks_cast
 * [if flag.billy_ring_read or flag.billy_eyes_seen] [knows:remove_curse] (Cast Remove Curse on him.) -> freed
 * [if (flag.billy_ring_read or flag.billy_eyes_seen) and item:spell_scroll__remove_curse] (Read a Scroll of Remove Curse over him.) -> freed_scroll
 * Leave him be. -> END
@@ -44,6 +45,13 @@ Narrator: Goats have strange square eyes. These are a man's, behind the square: 
 
 ~ eyes_missed
 Narrator: A goat. A large, ill-tempered goat with one horn. It stares back until you look away first.
+-> END
+
+~ speaks_cast
+cast speak_with_animals
+if check.last
+-> speaks
+endif
 -> END
 
 ~ speaks

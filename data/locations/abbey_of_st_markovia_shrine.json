@@ -175,7 +175,18 @@
       ],
       "kind": "examine",
       "label": "A small pipe organ",
-      "model": "harpsichord"
+      "model": "harpsichord",
+      "checks": [
+        {
+          "id": "abbey_organ_play",
+          "skill": "performance",
+          "dc": 14,
+          "label": "Play the little organ",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "church_pews",

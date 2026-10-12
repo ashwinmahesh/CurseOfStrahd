@@ -1106,6 +1106,242 @@
       "refs": [],
       "prompt": "A small clearing in a dark pine forest at dusk, a stream running over stones, a heap of mossy boulders with a dark den mouth beneath them. In the middle of the clearing a big brown bear stands up on its hind legs, a heavy iron collar on its neck with a length of broken chain swinging from it, not attacking, its body planted protectively over a small bear cub lying in the fallen leaves; the small cub's own back leg, and only the cub's, is clamped in a rusty iron jaw trap chained to a stake, and the cub is crying; the big bear's feet are free. The bear's eyes are on the viewer, wary rather than savage. {party} stand at the edge of the clearing in the foreground, seen from behind, one with a hand raised slowly, one holding a little tin whistle on a red cord. Among the pine trunks at the very edge of the picture, barely visible, knotted shapes of twigs and creeping vines are starting to move toward the clearing. No campfire and no candles anywhere. Cold blue dusk light with a warm last glow through the trees, one single picture, no panels.",
       "use": "b"
+    },
+    "eva_candles_lean": {
+      "refs": [
+        "madam_eva"
+      ],
+      "prompt": "Inside a great patched tent lit purple and amber, a low round table draped in wine-red cloth: five painted fortune cards laid in a cross, all face up now, ornate painted figures with no lettering. Every candle flame in the tent lies almost flat, leaning the same way toward the tent flap, as if a door had opened on a gale, though the flap hangs still. The tiny stooped ancient Vistani seer of the reference sits very still, staring at the last card, her bangled hands lifted off the table. Long shadows thrown sideways across the tent.",
+      "use": "a"
+    },
+    "eva_chest": {
+      "refs": [
+        "madam_eva"
+      ],
+      "prompt": "Inside a patched Vistani tent lit by candles: the tiny stooped ancient seer of the reference kneels at an old iron-bound chest behind her table, its lid thrown back, lifting out a heavy bundle wrapped in dark oilcloth with both hands, a key on a cord round her neck. On the round table beside her, five painted fortune cards still lie in a cross. Warm amber candlelight, deep purple shadow, a sense of something long kept.",
+      "use": "a"
+    },
+    "forty_fall_in": {
+      "refs": [],
+      "prompt": "A castle's long dining hall: the panels along both walls stand swung open like doors, and out of them file dead soldiers in grey coats under crimson ones, two by two, each lifting a grey coat from the back of a chair as they pass. At their head a broad dead captain in a crimson coat marches toward the tall doors at the far end, where grey pre-dawn light waits. A hooded figure seen from behind stands at the side, holding a closed book against their chest. Solemn, orderly, sad; candlelight and the first cold blue of morning.",
+      "use": "a"
+    },
+    "camp_kneel": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A small camp in a forest hollow at night, the fire burned low to red embers, bedrolls with sleeping hooded shapes. At the edge of the firelight, among black pine trunks and mist, Strahd in his black coat and red-lined cape stands looking down, two gloved fingers resting on the throat of a hooded companion who kneels before him with their head tilted to one side, baring the neck, utterly still, like a horse waiting for the bridle. Ember light from below, cold blue night above; intimate and horrible.",
+      "use": "a"
+    },
+    "dinner_toast": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A vast candlelit dining hall in a gothic castle: Strahd sits at the head of a long table laid with real silver and hot food, a glass of dark red wine raised in his gloved hand, smiling with courteous menace, the great organ's pipes rising in the dark behind him. Along the table {party} sit with untouched plates. No servants anywhere; a covered dish lifts its own lid. Candle gold against black vaults.",
+      "use": "a"
+    },
+    "dinner_empty": {
+      "refs": [],
+      "prompt": "A vast candlelit dining hall in a gothic castle after a meal: the long table with its silver, half-finished plates and guttering candelabra, the host's high-backed chair pushed back and empty. Beneath the towering organ pipes at the far end, the organ bench stands empty, the lid closed. High above in the dark, a door is just closing on a sliver of light. {party} at the near end of the table, alone. Candle gold, deep black vaults, a few bats.",
+      "use": "a"
+    },
+    "feast_pact": {
+      "refs": [
+        "vladimir_horngaard"
+      ],
+      "prompt": "A long burned hall under rotted blue banners with silver dragons: down both sides of a great table the dead knights in battered plate and ragged royal-blue surcoats have risen to their feet, each laying a sword flat on the table before him. At the head the gaunt revenant commander of the reference stands with his greatsword laid flat before him, head bowed. {party} standing at the foot of the table with them. Cold moonlight through broken windows, dust in the air; a solemn oath.",
+      "use": "a"
+    },
+    "abbot_ireena_candles": {
+      "refs": [
+        "abbot",
+        "ireena"
+      ],
+      "prompt": "A cold abbey chapel under a gilded sunburst: every candle along the altar rail and in the stands has leaned toward one young auburn-haired woman in a travelling cloak, the flames lying almost flat in her direction, as if a door had opened behind her. The serene golden-haired young monk of the reference stands at the altar rail with one hand lifted, staring at her as if at a ghost. {party} around her. Gold candlelight, grey stone, a held breath.",
+      "use": "a"
+    },
+    "pool_lean": {
+      "refs": [
+        "ireena",
+        "sergei_von_zarovich"
+      ],
+      "prompt": "A perfectly round black pool in a snowy graveyard, ringed with melted-back snow: Ireena kneels on the stones at the very edge and leans out over the water until her breath clouds its surface, auburn hair falling forward, one hand reaching toward the reflection of a gentle young nobleman in old-fashioned wedding clothes, pale spectral blue, who reaches back up toward her from beneath the surface. Her hand has stopped a finger's width from the water. Grey sky, a brighter sky in the water.",
+      "use": "a"
+    },
+    "pool_alone": {
+      "refs": [
+        "ireena"
+      ],
+      "prompt": "A perfectly round black pool in a snowy graveyard: Ireena kneels alone on the stones at the edge wiping her face with the heel of her hand, and in the water there is only her own reflection and a sky brighter than the grey one above, as if lit for a moment. {party} standing a little way back among the snowy graves. Quiet, sad, hopeful.",
+      "use": "a"
+    },
+    "burial_choke": {
+      "refs": [
+        "strahd",
+        "ireena",
+        "ismark"
+      ],
+      "prompt": "A dusk churchyard beside a fresh grave and a plain pine coffin on trestles: Ismark, the broad young man of the reference, has gone down on his knees in the grave dirt clutching his throat, mouth open, blood running from his nose into his beard. Ireena turns toward the lych-gate with a hand out, pleading. At the iron gate Strahd stands in his black coat and red-lined cape, hat in his gloved hand, simply looking at Ismark with mild interest. {party} frozen among the headstones. Cold blue dusk, foggy breath.",
+      "use": "a"
+    },
+    "aurel_tome": {
+      "refs": [],
+      "prompt": "A castle study at night, low fire and lamplight: a thin man in an ink-stained coat with red-rimmed eyes sits by the fire, and a hooded figure seen from behind kneels before him, placing a heavy book bound in black leather and clasped in tarnished silver into his open hands. He looks down at it as if it had spoken his name. An empty high-backed armchair across the hearth; a portrait of a red-haired woman over the mantel. Warm, quiet, uncanny.",
+      "use": "a"
+    },
+    "aurel_leaves": {
+      "refs": [],
+      "prompt": "A castle study at night: a thin man in an ink-stained coat walks slowly away through a narrow servants' door, holding a mended pen in his hand, not looking back. Behind him, in the study's one tall window, the lamp that has burned there for a year is just going out, its last thread of smoke curling up. The fire has burned low; an empty armchair by the hearth. Melancholy, a little hopeful.",
+      "use": "a"
+    },
+    "fen_cure": {
+      "refs": [],
+      "prompt": "A low cave alcove of straw and rock lit by one torch: a grey-furred wolfish creature hangs from iron rings by silver cuffs, arching back and howling, and the change is breaking halfway: fur sloughing off in tufts, the long arms shrinking, half an old man's white-stubbled face showing through the wolf's. Before him a hooded figure seen from behind holds up a holy symbol blazing with warm light. Torchlight and holy light against cold silver; painful and hopeful.",
+      "use": "a"
+    },
+    "fen_cloak": {
+      "refs": [],
+      "prompt": "A low cave alcove of straw and rock, one torch, broken silver cuffs hanging empty from iron rings: a skinny, white-stubbled old trapper with a broken nose and two fingers missing from his left hand, sitting in the straw, drapes a ragged fur-trimmed trapper's cloak around the shoulders of a small hooded young woman kneeling before him, who pulls it closed with both fists. Warm torchlight; tender, quiet.",
+      "use": "a"
+    },
+    "bride_turns": {
+      "refs": [
+        "abbot",
+        "vasilka",
+        "ireena"
+      ],
+      "prompt": "A cold abbey chapel under a huge gilded sunburst: on a white stone bier a beautiful pale young woman in a cream wedding dress with fine stitched seams at her throat and wrists has sat up and turned her head to look across the chapel. Every candle in the chapel leans toward one auburn-haired young woman in a travelling cloak, flames lying almost flat. The serene golden-haired monk of the reference stands by the bier ignoring his bride, gazing only at the auburn-haired woman. Hunched mongrelfolk in rags shrink back. Gold candlelight; unsettling.",
+      "use": "a"
+    },
+    "bride_rests": {
+      "refs": [
+        "abbot",
+        "vasilka"
+      ],
+      "prompt": "A cold abbey chapel under a gilded sunburst, the candles burning low and ordinary: on a white stone bier a pale young woman in a cream wedding dress lies back with her eyes closed and her hands smoothing the dress over her knees, at peace. The golden-haired young monk of the reference kneels beside the bier with his palm resting gently on her brow, his head bowed. Quiet grief; soft gold light.",
+      "use": "a"
+    },
+    "beacon_hall_bows": {
+      "refs": [],
+      "prompt": "A long burned hall under rotted blue dragon banners: silver light from outside floods through the tall broken windows across a great table where dead knights in battered plate sit. Their armoured heads have lifted toward the light and now bow, one after another, and they are only men sitting very still. At the head, in a chair carved with a dragon's folded wings, a gaunt commander sits back and lets his sword lie across his knees. Silver light and dust; peace after a very long war.",
+      "use": "a"
+    },
+    "festival_standoff": {
+      "refs": [
+        "baron_vargas",
+        "lady_wachter"
+      ],
+      "prompt": "A muddy town square during a festival gone wrong, ribbons and bunting overhead and the great wicker sun on its pole behind: the crowd has split down the middle, men drawing knives and swords on both sides. Two young noblemen draw blades beside their mother, a stern lady in black with her chin up and armed men behind her; across from them a fat baron in a garish coat shouts from a wooden dais, town watchmen with festival ribbons on their spears around him. {party} in the middle of the square between them. Grey daylight, tension.",
+      "use": "a"
+    },
+    "knighting_sword": {
+      "refs": [
+        "sir_godfrey_gwilym"
+      ],
+      "prompt": "The broken front steps of a burned manor under a grey sky: the big dead knight of the reference in dented plate, his grey face doing its best to smile, holds out an old longsword hilt first to a hooded figure in armour seen from behind, who reaches for it. {party} watching on the steps. Pale light breaking through cloud onto the blade; quiet honour.",
+      "use": "a"
+    },
+    "marshal_charge": {
+      "refs": [],
+      "prompt": "Misty mountain road before great iron gates: a column of skeletal cavalry of bone and rusted harness lowers its lances all at once and charges, bone horses galloping silently out of the mist, a skeletal marshal with a notched blade at its head flanked by two bone lieutenants. {party} brace on the road in front of them, weapons up. Dynamic, cold, dreadful.",
+      "use": "a"
+    },
+    "godfrey_names": {
+      "refs": [
+        "sir_godfrey_gwilym"
+      ],
+      "prompt": "A small bare room in a burned manor: a wall covered top to bottom in names written in charcoal in a big careful hand. The dead knight of the reference sits on a narrow cot with his helmet in his hands, his grey face turned up, listening hard, while a hooded figure seen from behind reads the list aloud, one finger tracing the lowest name. Grey window light; tender and sad.",
+      "use": "a"
+    },
+    "font_sergei": {
+      "refs": [
+        "ireena",
+        "sergei_von_zarovich"
+      ],
+      "prompt": "A quiet stone tomb deep under a castle: Ireena kneels at a stone basin at the foot of a white sarcophagus, auburn hair falling forward, and in the still water beside her reflection appears the gentle young nobleman of the reference in old-fashioned wedding clothes, pale spectral blue, looking up at her. Beside her on the stones, nobody. A single lamp; cool blue spectral light on her face.",
+      "use": "a"
+    },
+    "sergei_tomb": {
+      "refs": [],
+      "prompt": "A quiet stone tomb under a castle: a long sarcophagus of clean white stone, the lid carved with a young man lying at rest in an old-fashioned coat, a sunburst on his breast, hands folded on a carved sword hilt. Laid across the carved sunburst, between the stone hands, lies something real and never carved, softly glowing, wrapped in a strip of faded white silk. {party} standing at the foot of the tomb. Lamplight and deep shadow; reverent.",
+      "use": "a"
+    },
+    "patrina_fades": {
+      "refs": [
+        "patrina_velikovna",
+        "kasimir_velikov"
+      ],
+      "prompt": "A frozen library in a temple of amber: at a frosted desk the translucent ghost of a young dusk elf woman, the reference, is fading away like breath from a window, her hand resting on a closed book. In an archway a grey-skinned dusk elf man with long white hair, the second reference, stands with his hands at his sides, watching her go. The frost on the other desks is melting into droplets. Cold amber glow; release, grief.",
+      "use": "a"
+    },
+    "window_teeth": {
+      "refs": [
+        "strahd",
+        "ireena"
+      ],
+      "prompt": "Night, an open casement window high above snowy rooftops: outside, standing on empty air level with the sill, Strahd's face has for one breath lost its courtesy, lips drawn back from long fangs, red eyes blazing, a gloved hand clenched. Inside at the window Ireena has stepped back, auburn hair loose, a hand at her throat, awake and herself again. Cold moonlight, mist curling over the sill.",
+      "use": "a"
+    },
+    "vines_planted": {
+      "refs": [
+        "davian_martikov"
+      ],
+      "prompt": "A grey vineyard of blighted vines on a hillside: the stern old white-bearded vintner of the reference kneels in a row of dead vines and presses a glowing green gem into the soil with his thumb. Green light spreads from it along the roots, and the nearest withered vine is already greening, a small new leaf unfurling. Grey sky, a green glow; the first hope in years.",
+      "use": "a"
+    },
+    "vines_feast": {
+      "refs": [
+        "davian_martikov"
+      ],
+      "prompt": "Night in a winery's yard under a starless sky: a large family of vintners, the white-bearded patriarch of the reference among them, gathered round an old cask broached on trestles, raising cups of dark red wine, laughing, lanterns hung from the press-house eaves. {party} among them with cups. Warm lantern light against a black sky; for an hour, joy.",
+      "use": "a"
+    },
+    "marina_gone": {
+      "refs": [],
+      "prompt": "A ruined drowned village at night: at the foot of a weathered stone statue of a young woman, among a heap of black roses, lies one fresh black rose. Nobody stands there now; only mist curling where someone was. A grave-lamp's flame lies flat. Far off in the east, against the dark, a great timber hut on legs rises against the sky. {party} small in the foreground. Cold moonlight; eerie quiet.",
+      "use": "a"
+    },
+    "gilded_shield": {
+      "refs": [],
+      "prompt": "A vault under a burned manor, lit by one lantern: a knight whose armour has grown over with gold and silver coins like frost sits on an iron chest, his coin-crusted gauntlets gripping its edges like a drowning man gripping a spar. At his feet, half buried in spilled coins, lies a small round squire's shield cut nearly in two. Gleaming gold in the dark; a sad, greedy stillness.",
+      "use": "a"
+    },
+    "gilded_rises": {
+      "refs": [],
+      "prompt": "A vault under a burned manor: a knight whose armour is crusted with gold and silver coins rises from an iron chest, the coins on his armour lifting like hackles. All round the walls, suits of empty polished harness of an old escort lift their swords by themselves. {party} brace in the lantern light. Gleaming gold, deep shadow; menace.",
+      "use": "a"
+    },
+    "locket_given": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A castle study at night by a low fire: in a high-backed chair by the hearth sits Strahd, the reference, holding out a long pale hand, palm up. A small hooded figure seen from behind places an open silver locket into it. Inside the locket, a tiny painted portrait of a red-haired young woman. Strahd's face, looking down at it, is unguarded and sad. Firelight and deep shadow.",
+      "use": "a"
+    },
+    "lantern_light": {
+      "refs": [],
+      "prompt": "A fishers' jetty over black lake water at night: a girl of about nine made of pale lantern light, in a wet festival dress, holds out both hands toward a little tin lantern frame held up from a rowing boat, and the stub of candle in it has just lit by itself. Beside her on the boards a real boy in a nightshirt, blue with cold, blinks awake. A drunk man sits on the jetty in the background. Black water, warm small light; tender.",
+      "use": "a"
+    },
+    "egg_carried": {
+      "refs": [],
+      "prompt": "A snowy mountain cliff path above a deep gorge: {party} struggle down the path carrying between them an enormous grey freckled eggshell with a screaming wet grey roc chick the size of a calf poking out, its beak as long as an arm. Far out over the gorge, a vast shadow of wings answers. Wind, snow, frantic.",
+      "use": "a"
+    },
+    "egg_sold": {
+      "refs": [],
+      "prompt": "A great nest of whole pines on a snowy mountain ledge beside a watchtower: a man in a falconer's leather glove lifts a screaming grey roc chick, shell and all, and a flock of grey stone-skinned birds with wide wings takes it between them, carrying it up the wind toward a distant castle on a cliff. An old man by a fire on a landing below looks away. Cold wind, grey sky; a sad bargain.",
+      "use": "a"
+    },
+    "gallows_grave": {
+      "refs": [],
+      "prompt": "A misty crossroads beside an empty gallows, the cut rope swaying: a fresh grave in soft earth at the roadside, marked with a wooden board turned face down. {party} stand around it, one holding a silver earring in an open palm. Old burial mounds behind; grey dusk. Quiet kindness.",
+      "use": "a"
+    },
+    "knights_stair_bow": {
+      "refs": [],
+      "prompt": "The foot of a black stone stair in a castle's catacombs: a gaunt dead knight commander in battered plate and a ragged blue surcoat lowers his head, and behind him a file of dead knights of the Order on the stair bow their heads with him. Cold shaft of light from far above; dust; release.",
+      "use": "a"
     }
   }
 }

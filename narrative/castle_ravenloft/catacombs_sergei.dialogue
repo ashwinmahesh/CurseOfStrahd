@@ -12,6 +12,7 @@ endif
 ~ tomb_look
 Narrator: A long sarcophagus of white stone. On the lid a young man lies at rest in an old-fashioned coat, a sunburst on his breast and his hands folded on the hilt of a sword. Someone has kept the stone clean.
 if treasure_at:castle_ravenloft_sergeis_tomb
+cutscene sergei_tomb
 Narrator: Between the stone hands, laid across the sunburst, is something that was never carved.
 endif
 -> tomb_menu
@@ -91,6 +92,7 @@ endif
 
 ~ ireena_promised
 set cat_ireena_at_tomb = "promised"
+cutscene font_sergei
 Narrator: The water shivers and settles, and he is there beside her, the way he was at the pool.
 Sergei von Zarovich: You came the long way round.
 Ireena: I said I'd come back to you when he's dead. I'm close now. He's somewhere under our feet.

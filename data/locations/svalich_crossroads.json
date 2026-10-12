@@ -242,7 +242,20 @@
       ],
       "kind": "examine",
       "label": "Unmarked mounds",
-      "model": "grave_mound"
+      "model": "grave_mound",
+      "checks": [
+        {
+          "id": "mounds_earth",
+          "skill": "survival",
+          "dc": 13,
+          "label": "Read the disturbed earth",
+          "success": {
+            "reveal": [
+              "newer_mound"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "ivlis_bridge_stones",
@@ -252,7 +265,24 @@
       ],
       "kind": "examine",
       "label": "The bridge parapet",
-      "model": "bridge"
+      "model": "bridge",
+      "checks": [
+        {
+          "id": "bridge_climb",
+          "skill": "athletics",
+          "dc": 12,
+          "label": "Climb down to the bridge footings",
+          "success": {
+            "reveal": [
+              "bridge_cache"
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "cold"
+          }
+        }
+      ]
     },
     {
       "id": "castle_road_view",
@@ -262,7 +292,22 @@
       ],
       "kind": "examine",
       "label": "The road south",
-      "model": "signpost_broken"
+      "model": "signpost_broken",
+      "checks": [
+        {
+          "id": "castle_road_tracks",
+          "skill": "survival",
+          "dc": 14,
+          "label": "Read the tracks on the castle road",
+          "success": {
+            "codex": {
+              "id": "castle_road_tracks",
+              "title": "The road to the castle",
+              "text": "The only fresh tracks on the castle road are a heavy carriage's, iron-rimmed, drawn by horses that leave no droppings and never seem to tire. They come down to the crossroads and go back up, and nothing else goes that way at all."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "crossroads_milestone",
@@ -292,9 +337,10 @@
         12,
         11
       ],
-      "kind": "decor",
+      "kind": "examine",
       "label": "A raven on a fencepost",
-      "model": "crow"
+      "model": "crow",
+      "dialogue": "svalich_road/crossroads:raven"
     },
     {
       "id": "kestrel_tally_crossroads",

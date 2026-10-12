@@ -2,7 +2,8 @@
 # mansion's study wall every night, not at the wolves. Behind the wall, under new plaster and old garlic, Kolyan bricked
 # up his first son, Sergiu, who let the thing at the window in during the siege winter years ago and came back hungry.
 # Lupu was Sergiu's dog. Seal the wall again, or open it and face the Tenant with the hound beside you. Reached from
-# Bildrath's news, Lupu by the mansion and the study wall (prop study_bricks). Every line here is unvoiced for now.
+# Bildrath's news, Lupu by the mansion and the study wall (prop study_bricks); Speak with Animals has Lupu tell you
+# himself. Every line here is unvoiced for now.
 
 # --- Bildrath's news (bildrath:news jumps here) ---
 
@@ -31,7 +32,25 @@ Narrator: A big grey wolfhound lies across the mansion's side step with his chin
 endif
 * [if not flag.lupu_friend] [Animal Handling DC 12] (Crouch down and let him come to you.) -> friend | wary
 * [if flag.lupu_friend] (Follow where he's looking.) -> follow
+* [if spell:speak_with_animals and not flag.sergiu_known] Ask him why he watches the house. -> lupu_speaks
+* [if not spell:speak_with_animals and not flag.sergiu_known] [knows:speak_with_animals] (Cast Speak with Animals, and ask him why he watches the house.) -> lupu_cast
 * (Leave him be.) -> END
+
+~ lupu_cast
+cast speak_with_animals
+if check.last
+-> lupu_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): a dog knows its own boy, whatever he smells like now.
+~ lupu_speaks
+set lupu_friend
+set sergiu_known
+Narrator: He doesn't answer at once. When he does, it's less words than grief: a big slow dog's grief, put into the plainest pictures he has.
+Narrator: "My boy. Sergiu. My boy is in the wall. He smells wrong now, cold-wrong, but he's my boy. The old man put him in there with the stinking flowers, and cried. Then the old man died."
+Narrator: "He scratches, at night. He wants out. I want him out." He looks at the study window, and back at you, and whines once, very low. "I don't know if I want him out."
+-> follow
 
 ~ friend
 set lupu_friend

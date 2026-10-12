@@ -162,6 +162,7 @@ set winery_stones_returned += 1
 cutscene vines_gem
 Narrator: Davian takes the stone in both hands. Green light comes up between his fingers, the way sun comes through a leaf.
 Davian: Hello, old friend. You hid well. Better than I did.
+cutscene vines_planted
 Narrator: He carries it to the nearest row and presses it into the soil with his thumb. For a moment nothing happens. Then the vine above it makes a small sound, like a cork easing out of a bottle.
 -> first_wine
 
@@ -250,6 +251,7 @@ endif
 set wizard_of_wines_milestone_reached
 quest wizard_of_wines saved
 xp milestone
+cutscene vines_feast
 Narrator: That night the Martikovs broach a cask from before the druids came, and the whole family drinks in the yard under a sky with no stars in it, and for an hour nobody looks up.
 Davian: To the hill, broken. To the house, ours. And to strangers, who it turns out are good for something.
 if name:godrick_pendlebrook

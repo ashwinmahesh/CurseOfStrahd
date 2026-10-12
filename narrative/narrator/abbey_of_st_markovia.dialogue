@@ -247,3 +247,41 @@ once
 ~ search:grave_holy_water
 | At the foot of the last nun's grave, under a sun scratched into the frozen earth, a small stoppered flask of holy water, buried as an offering. {name} digs it free.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:history:markovia_story:success
+| Saint Markovia led the faithful up the castle road and very nearly won. He killed her in his own halls.
+
+~ check:history:markovia_story:failure
+| A woman in stone, a sword, a sun. The story behind her escapes you.
+
+~ check:athletics:bell_tower_climb:success
+| You haul yourself up into the belfry, and inside the great bell's lip hangs a little chime that sings when you touch it.
+
+~ check:athletics:bell_tower_climb:failure
+| The tower's stones are glazed with ice. You come down considerably faster than you went up.
+
+~ check:arcana:scarecrows_unbind:success
+| The binding runs through every stitch like a nerve; you find its knot and pick it loose, and the scarecrows sag on their poles.
+
+~ check:arcana:scarecrows_unbind:failure
+| The stitches are tight and the magic in them tighter. The sacking face seems to smile at you.
+
+~ check:performance:abbey_organ_play:success
+| The little organ wheezes into a hymn, and for a moment the abbey sounds the way it was meant to.
+
+~ check:performance:abbey_organ_play:failure
+| The organ produces a sound like a cat being taught theology.
+
+~ check:medicine:surgeon_instruments:success
+| Fine saws, finer needles and thread meant to last a lifetime: nobody here is being healed, someone is being made. The cabinet behind them has a false back.
+
+~ check:medicine:surgeon_instruments:failure
+| Blades and needles, very clean. What they're for is beyond you, and you're grateful.
+
+~ check:stealth:wards_watch:success
+| Unseen at the bars, you watch the smallest of the Belviews tuck something shiny under the cots and glance round to be sure nobody saw.
+
+~ check:stealth:wards_watch:failure
+| A dozen mismatched eyes turn to the window at once, and somebody draws the inside shutter.

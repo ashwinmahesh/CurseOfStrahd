@@ -108,10 +108,27 @@ Narrator: In the clearing below the rocks, a big brown bear rears up on its hind
 Narrator: At its feet, in the leaves, a bear cub no bigger than a dog has its back leg in an iron trap.
 * [if flag.lavinia_whistle] (Blow Lavinia's whistle: two notes, high then low.) -> whistle
 * [Animal Handling DC 13] (Talk him down, slow and low.) -> calmed | not_calmed
+* [if spell:speak_with_animals] (Tell him you've come to help.) -> den_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and tell him you've come to help.) -> den_cast
 * (Back away for now.) -> END
 
 ~ whistle
 Narrator: Bujor's ears come up. He drops onto all fours and, after a moment, turns three slow circles in the leaves, the way he does on the plank stage. Then he sits down beside the cub and looks at you, as if to say: there, now you know me.
+-> free
+
+~ den_cast
+cast speak_with_animals
+if check.last
+-> den_speaks
+endif
+-> den
+
+# Speak with Animals (2024 PHB): he heard the cub over the fiddles, and he knows whose iron this is by its smell.
+~ den_speaks
+set bear_trap_marked
+Narrator: He drops onto all fours to answer, which is a thing bears do when they've decided you're worth answering.
+Narrator: "A little one in the iron. It cried all night, and I heard it over the fiddles. The trees come when it cries. Help me open the iron. Don't let the trees have it."
+Narrator: "The iron smells of the skinning man from my camp. The one with the notch in his knife."
 -> free
 
 ~ calmed
@@ -123,7 +140,7 @@ Narrator: He roars, a sound that shakes the needles off the pines, and doesn't m
 -> free
 
 ~ free
-* [Investigation DC 12] (Look at the trap before you touch it.) -> trap | trap_missed
+* [if not flag.bear_trap_marked] [Investigation DC 12] (Look at the trap before you touch it.) -> trap | trap_missed
 * (Open the trap.) -> blights
 
 ~ trap

@@ -241,7 +241,22 @@
       ],
       "kind": "examine",
       "label": "A statue of a woman",
-      "model": "statue_knight"
+      "model": "statue_knight",
+      "checks": [
+        {
+          "id": "markovia_story",
+          "skill": "history",
+          "dc": 14,
+          "label": "Recall Saint Markovia's story",
+          "success": {
+            "codex": {
+              "id": "saint_markovia",
+              "title": "Saint Markovia",
+              "text": "Markovia was a priestess who led an army of the faithful up the castle road against its lord, and very nearly won. He killed her in his own halls. Her followers built the abbey in her name, and her bones are said to rest in the valley still, beyond his reach."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "abbey_well",
@@ -261,7 +276,24 @@
       ],
       "kind": "examine",
       "label": "The bell tower",
-      "model": "palisade"
+      "model": "palisade",
+      "checks": [
+        {
+          "id": "bell_tower_climb",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Climb into the bell tower",
+          "success": {
+            "reveal": [
+              "bell_chime"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          }
+        }
+      ]
     },
     {
       "id": "abbey_bench",
@@ -301,7 +333,26 @@
       ],
       "kind": "examine",
       "label": "The barred windows of the wards",
-      "model": "shutters"
+      "model": "shutters",
+      "checks": [
+        {
+          "id": "wards_watch",
+          "skill": "stealth",
+          "dc": 14,
+          "label": "Watch through the bars unseen",
+          "success": {
+            "reveal": [
+              "abbey_of_st_markovia_wards:foundling_treasure"
+            ],
+            "codex": {
+              "id": "belviews",
+              "title": "The Belviews",
+              "text": "The family in the wards were people once. The Abbot has been improving them for years, a little at a time, with parts that weren't theirs. The smallest of them keeps a treasure hidden under the cots, and checks on it whenever the others aren't looking."
+            }
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "bell_chime",

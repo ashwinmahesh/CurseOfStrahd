@@ -129,3 +129,132 @@ Status: ✅ built · ○ planned
 | ✅ | The Blue Water Inn, carving over the door | Read the raven over the door (History DC 13) | codex: The raven over the door | — |
 | ✅ | The Vistani Camp, rotten jetty | Walk out to the end of the rotten jetty (Acrobatics DC 13) | 18 gold | 1d4 cold damage |
 | ✅ | Wachterhaus, a shrine | Read the shrine's dedication (Religion DC 15) | finds the cult's tithe under the shrine (Rod of Rulership); codex: The shrine in the cellar | — |
+
+### Into the Mists (level 1)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Old Svalich Road, a torn carcass | Read the wolf sign by the carcass (Survival DC 12) | finds a hunter's wolf trap; finds a traveller's pack under the carcass (Boots of the Winterlands) | — |
+| ✅ | The Old Svalich Road, an old oak with a broad low bough | Climb the oak and look out (Athletics DC 10) | finds a gate guard's sword in the weeds (Weapon of Warning) | — |
+| ✅ | The Old Svalich Road, the headless statues | Read the statues' plinths (History DC 12) | finds stone heads in the weeds; codex: The headless statues | — |
+| ✅ | The Old Svalich Road, a wayside shrine | Pray at the wayside shrine (Religion DC 11) | Heroic Inspiration | — |
+
+### The Old Svalich Road (level 4)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The River Ivlis Crossroads, unmarked mounds | Read the disturbed earth (Survival DC 13) | finds a mound that isn't as old as the others (Boots of Elvenkind) | — |
+| ✅ | The River Ivlis Crossroads, the bridge parapet | Climb down to the bridge footings (Athletics DC 12) | finds the bridge footings (Potion of Healing) | 1d4 cold damage |
+| ✅ | The River Ivlis Crossroads, the road south | Read the tracks on the castle road (Survival DC 14) | codex: The road to the castle | — |
+| ✅ | The Svalich Woods, a clawed pine with low branches | Climb the clawed pine and look around (Athletics DC 11) | finds something glinting high in the pine (Ring of Jumping) | 1d6 bludgeoning damage |
+| ✅ | The Svalich Woods, a claw-marked pine | Read the claw marks (Survival DC 14) | finds a hunter's boots in the mud (Boots of Speed, The Hills above Lake Zarovich); codex: A werewolf's mark | — |
+| ✅ | The Old Svalich Road, a platform up a pine by the road | Climb to the hunters' platform (Athletics DC 12) | 12 gold; codex: The hunters' warning | — |
+| ✅ | The Old Svalich Road, a tumbled field wall | Shift the tumbled stones (Athletics DC 13) | finds a gap in the field wall (Gloves of Swimming and Climbing) | — |
+| ✅ | The Webbed Gully, older bundles | Cut open the older bundles (Medicine DC 13) | Antitoxin; 20 gold | 1d4 poison damage |
+
+### Old Bonegrinder (level 6)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Old Bonegrinder, the Hill, a dead oak full of ravens | Win the ravens' trust (Animal Handling DC 14) | finds a raven's hoard in the dead oak (Figurine of Wondrous Power (Silver Raven)) | — |
+| ✅ | Old Bonegrinder, the Hill, ravens | Scatter the ravens from the bone heap (Intimidation DC 12) | finds a heap of bones (Holy Symbol (Amulet)) | 1d4 piercing damage |
+| ✅ | Old Bonegrinder, the Hill, a kitchen garden | Pick through the hags' garden (Nature DC 14) | Antitoxin; codex: The hags' garden | — |
+| ✅ | Old Bonegrinder, the Hill, the view from the crag | Scan the lane from the crag (Perception DC 14) | finds something in the ditch (Potion of Gaseous Form, The Miller's Lane) | — |
+| ✅ | Old Bonegrinder, the Hill, cart ruts | Follow the cart ruts (Survival DC 12) | codex: Who comes up the hill | — |
+| ✅ | The Miller's Lane, a wayside shrine | Pray at the wayside shrine (Religion DC 13) | finds an offering behind the wayside shrine (Potion of Resistance (Poison)) | — |
+
+### The Wizard of Wines (level 6)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Wizard of Wines, the well | Climb down inside the well (Athletics DC 13) | finds a rope tied off below the well's lip (Rope of Climbing) | 1d6 bludgeoning damage |
+| ✅ | The Wizard of Wines, a dead tree full of ravens | Ask the ravens for their help (Persuasion DC 14) | finds the ravens' hoard in the dead tree (Ring of Feather Falling); codex: The vineyard's ravens | — |
+| ✅ | The Wizard of Wines, withered vines | Study the withered vines (Nature DC 14) | finds a druid's cache in the gully (Wand of Paralysis, Yester Hill); codex: The blight on the vines | — |
+| ✅ | The Wizard of Wines, the camp fire | Sing with the Martikovs at the fire (Performance DC 13) | Heroic Inspiration | — |
+
+### Vallaki, the mansion and the church (level 5)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Burgomaster's Mansion, a circle chalked on the floor | Read the chalk circle (Arcana DC 14) | finds teleportation circle; codex: Victor's circle | — |
+| ✅ | St. Andral's Church, the altar | Pray at the saint's altar (Religion DC 13), once his bones are back | 1d8 Temporary Hit Points | — |
+
+### Krezk (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Krezk, a wayside shrine | Pray at the wayside shrine (Religion DC 13) | finds a tin behind the wayside shrine (Keoghtom's Ointment) | — |
+| ✅ | Krezk, a cairn by the track | Read the names on the cairn (History DC 13) | finds something under the cairn by the track (Ring of Warmth) | — |
+| ✅ | Krezk, the goat pens | Settle the goats for the herders (Animal Handling DC 13) | Ration | — |
+| ✅ | Krezk, the abbey above | Recall what's told of the abbey (History DC 15) | codex: The abbey above Krezk | — |
+| ✅ | Krezk, the wall of Krezk | Walk the top of the wall (Acrobatics DC 14) | finds a loose stone low in the wall (Weapon, +1) | 1d6 bludgeoning damage |
+| ✅ | Krezk, the burgomaster's house | Listen at the Krezkovs' shutters unseen (Stealth DC 13) | codex: The Krezkovs' grief | one try for the party |
+
+### The Abbey of St. Markovia (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Abbey of St. Markovia, a statue of a woman | Recall Saint Markovia's story (History DC 14) | codex: Saint Markovia | — |
+| ✅ | The Abbey of St. Markovia, the bell tower | Climb into the bell tower (Athletics DC 15) | finds a little chime hung inside the great bell (Chime of Opening) | 2d6 bludgeoning damage |
+| ✅ | The Abbey of St. Markovia, the barred windows of the wards | Watch through the bars unseen (Stealth DC 14) | finds a child's hidden treasure under the cots (Figurine of Wondrous Power (Golden Lions), The Wards of St. Markovia); codex: The Belviews | one try for the party |
+| ✅ | The Abbey Garden, a scarecrow with a stitched mouth | Unpick the scarecrows' binding (Arcana DC 15) | the scarecrows stay on their poles: no fight (garden_sentry waits on flag.abbey_scarecrows_unbound) | — |
+| ✅ | The Church of St. Markovia, a small pipe organ | Play the little organ (Performance DC 14) | Heroic Inspiration | — |
+| ✅ | The Wards of St. Markovia, a basin and instruments | Study the surgeon's instruments (Medicine DC 14) | finds a false back in the instrument cabinet (Periapt of Proof against Poison); codex: The Abbot's surgery | — |
+
+### Yester Hill (level 7)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Yester Hill, old grave mounds | Read the barrow stones (History DC 14) | finds something in the barrow mound (Amulet of the Devout, +2); codex: The barrows of Yester Hill | — |
+| ✅ | Yester Hill, a cairn of bones | Examine the bones in the cairn (Medicine DC 14) | finds something under the bone cairn (Bracers of Archery) | — |
+| ✅ | Yester Hill, the view east | Look east from the hilltop (Perception DC 13) | finds something dropped between the vines (Moon Sickle, +1, The Wizard of Wines) | — |
+
+### Argynvostholt (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Argynvostholt, a well | Climb down to the ledge in the well (Athletics DC 15) | finds something on a ledge down the well (Cube of Force) | 2d6 bludgeoning damage |
+| ✅ | Argynvostholt, small headstones | Read the squires' headstones (History DC 14) | finds something left on a squire's grave (Holy Symbol (Emblem)) | — |
+| ✅ | Argynvostholt, the frost scar | Study the frost scar (Arcana DC 15) | codex: The frost scar | — |
+| ✅ | Argynvostholt, Ground Floor, the chapel altar | Pray at the dragon's altar (Religion DC 15) | finds a reliquary behind the chapel altar (Amulet of the Devout, +2) | — |
+| ✅ | Argynvostholt, Ground Floor, armour stands | Shift the armour stands (Athletics DC 14) | finds a sword behind the armour stands (Flame Tongue) | — |
+| ✅ | Argynvostholt, Upper Floor, burned bookcases | Search the burned books for a spell (Arcana DC 15) | spell_scroll__dispel_magic | — |
+| ✅ | The Beacon Tower, the parapet, facing the valley | Look out over the valley (Perception DC 15) | finds something under the jetty's boards (Ring of Water Walking, Lake Zarovich: the Fishers' Landing) | — |
+
+### Van Richten's Tower (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Van Richten's Tower, a lookout rock | Watch the lake from the lookout rock (Perception DC 14) | finds a satchel wedged behind the lookout rock (Eyes of the Eagle) | — |
+| ✅ | Van Richten's Tower, ezmerelda's campfire | Read the tracks around the camp (Survival DC 14) | finds a tripwire at the wagon step | — |
+| ✅ | Van Richten's Tower, jars and bottles | Sort the hunter's remedies (Medicine DC 15) | finds a flask among the jars that isn't labelled (Oil of Etherealness) | — |
+| ✅ | Van Richten's Tower, a wall of trophies | Read the trophies (Survival DC 15) | finds a clip behind one of the trophies (Wand of Binding); codex: The hunter's trophies | — |
+
+### The werewolf den (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Hills above Lake Zarovich, a patch of purple flowers | Name the purple flowers (Nature DC 13) | codex: Wolfsbane | — |
+| ✅ | The Hills above Lake Zarovich, a heap of bones | Sort through the bones (Medicine DC 14) | 30 gold | — |
+| ✅ | The Werewolf Den, bundles of drying herbs | Sort the drying herbs (Nature DC 14) | finds a flask in the drying herbs (Elixir of Health) | — |
+| ✅ | The Werewolf Den, kiril's trophies | Read Kiril's trophies (Survival DC 15) | finds a sword among Kiril's trophies (Sword of Wounding) | — |
+
+### Lake Zarovich (level 8)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Lake Zarovich: the Fishers' Landing, a fishers' shrine | Pray at the fishers' shrine (Religion DC 13) | finds something behind the fishers' shrine (Trident of Fish Command) | — |
+| ✅ | Lake Zarovich: the Fishers' Landing, a flat rock above the water | Dive from the flat rock (Athletics DC 13) | 25 gold | 1d4 cold damage |
+| ✅ | Lake Zarovich: the Fishers' Landing, bluto's rowboat | Swing under the jetty from the boat (Acrobatics DC 13) | finds something under the jetty's boards (Ring of Water Walking) | 1d4 cold damage |
+
+### Mount Baratok and the Tsolenka Pass (level 9)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Mount Baratok, a cairn on the summit | Unpick the ward round the cairn (Arcana DC 16) | disarms baratok_ward | 2d8 lightning damage; one try for the party |
+| ✅ | The Tsolenka Pass, bones on the shelf | Examine the roc's leavings (Medicine DC 15) | finds a traveller the roc dropped (Wings of Flying) | — |
+| ✅ | The Tsolenka Pass, carved faces | Read the carved faces (History DC 15) | codex: The watch at Tsolenka | — |
+| ✅ | The Tsolenka Pass, a wayside shrine | Pray at the wayside shrine (Religion DC 14) | Heroic Inspiration | — |
+| ✅ | The Tsolenka Pass, the gorge | Edge out along the rocks over the gorge (Acrobatics DC 14) | finds a feather as long as a man, caught on the rocks (Feather Token (Bird)) | 2d6 bludgeoning damage |
+| ✅ | The Tsolenka Guard Tower, a table with dice | Win a hand at the watch's dice (Sleight of Hand DC 15) | 40 gold | — |
+| ✅ | The Tsolenka Guard Tower, the watch roster | Sign the roster as the relief watch (Deception DC 15) | unlocks captains_strongbox; Heroic Inspiration | 1d6 cold damage; one try for the party |

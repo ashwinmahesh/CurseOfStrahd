@@ -15,7 +15,8 @@ Rules for this list:
 - **One look each**: a character who searches near a hidden find and misses it has missed it for good; someone else
   in the party can still try. Detect Magic tells you when something magical is hidden within 30 ft.
 - **Gift**: an NPC hands it over in conversation (a favour, a quest's end, a check). **Tip**: an NPC tells you
-  where something is hidden, and the spot shows up once you know. **Hoard**: a lair's container.
+  where something is hidden, and the spot shows up once you know (or an animal or a corpse does, under Speak with
+  Animals or Speak with Dead: docs/story/talking_creatures.md). **Hoard**: a lair's container.
 - Random treasure (story/treasure.gd) still rolls on top of this: one location in five now rolls nothing, down
   from about one in three, and nearly a third roll two items. Random rolls (chests and the road's spoils) never give a common item either: the
   DMG's common share goes to uncommon (data/treasure/levels.json).
@@ -28,7 +29,7 @@ Status: ✅ built · ○ planned
 |---|---|---|---|
 | ✅ | Old Svalich Road, by the headless statues | Longsword of Warning (uncommon) | Search (Perception DC 13): a gate guard's sword in the weeds |
 | ✅ | Old Svalich Road, the wayside shrine | Ring of Mind Shielding (uncommon) | Search (Investigation DC 12): a loose board at the back of the shrine |
-| ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass |
+| ✅ | Svalich Woods, the torn carcass | Boots of the Winterlands (uncommon) | Search (Perception DC 12): a traveller's pack under the carcass; or a Tip from the crow at the village edge (Speak with Animals) |
 | ✅ | Ilarion, at the village well | Winged Boots (uncommon) | Gift: once he's home with his children (The Last Traveller, docs/story/side_quests.md) |
 
 ## The Gates of Barovia (side quest, levels 6 and up)
@@ -59,7 +60,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams |
+| ✅ | Village, the collapsed barn | Javelin of Lightning (uncommon) | Search (Perception DC 13): a stash under the fallen beams; or a Tip from the goat by the barn (Speak with Animals) |
 | ✅ | Village, the churchyard | Wand of Secrets (uncommon) | Search (Perception DC 14): a grave dug up and filled in again |
 | ✅ | Village, behind a rain barrel | Oil of Slipperiness (uncommon) | Search (Perception DC 12): a flask kept dry (lane 28's spot) |
 | ✅ | Burgomaster's mansion, study | Brooch of Shielding (uncommon) | Search (Investigation DC 13): behind the study desk |
@@ -86,13 +87,13 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Falls, the claw-marked pine | Goggles of Night (uncommon) | Search (Perception DC 14): a satchel snagged high in the branches (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, the fallen trunk | Bag of Tricks, Rust (uncommon) | Search (Investigation DC 12): a hollow in the trunk (from the Svalich Woods road, 2026-10-09) |
 | ✅ | Tser Falls, a woodcutter's stump | +1 Handaxe (uncommon) | Search (Perception DC 12): an axe left in the stump (lane 28's spot, from the Svalich Woods road, 2026-10-09) |
-| ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others |
-| ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone |
+| ✅ | Crossroads, the unmarked mounds | Boots of Elvenkind (uncommon) | Search (Perception DC 14): a mound that isn't as old as the others; or a Tip from the raven on the fencepost (Speak with Animals) |
+| ✅ | Crossroads, the carved milestone | Wand of Web (uncommon) | Search (Investigation DC 14): a hollow behind the stone; or a Tip from Steaua, tied to it (Speak with Animals) |
 | ✅ | Tser Falls, the stone of tokens | Pearl of Power (uncommon) | Search (Perception DC 13): one token among the many that hums |
 | ✅ | Tser Falls, the cairn of names | Necklace of Adaptation (uncommon) | Search (Perception DC 13) |
 | ✅ | Tser Pool, the ribbon tree | Boots of Striding and Springing (uncommon) | Search (Investigation DC 14): a Vistani cache in the roots |
 | ✅ | Tser Pool, in the reeds | Elemental Gem, Yellow Diamond (uncommon) | Search (Perception DC 12): a gambler's stake in a bag of dice (lane 28's spot; was a Stone of Good Luck, now Veta's in The Nursemaid's Grave) |
-| ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot) |
+| ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot); or a Tip from the camp dog (Speak with Animals) |
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 
@@ -131,7 +132,7 @@ leaves a smaller purse and one find.
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Town, by the stocks | Ring of Protection (rare) | Search (Perception DC 13): trodden into the mud |
+| ✅ | Town, by the stocks | Ring of Protection (rare) | Search (Perception DC 13): trodden into the mud; or a Tip from the big dog in the square (Speak with Animals) |
 | ✅ | Lower town, the leaning hovel | Handy Haversack (rare) | Search (Perception DC 14): a sack under the step |
 | ✅ | Wachterhaus, Lady Wachter's desk | Eyes of Charming (uncommon) | Search (Investigation DC 15): a hidden drawer |
 | ✅ | Wachterhaus cellar, the dark shrine | Rod of Rulership (rare) | Search (Perception DC 15): the cult's tithe under the shrine |
@@ -144,7 +145,7 @@ leaves a smaller purse and one find.
 | ✅ | St. Andral's crypt | Mace of Disruption (rare) | Tip: when the bones are back, the saint's niche opens |
 | ✅ | Coffin maker's storeroom | Slippers of Spider Climbing (uncommon) | Search (Investigation DC 14): a coffin with a false bottom |
 | ✅ | Vistani camp, Luvash | Cloak of the Manta Ray (uncommon) | Gift: when Arabelle comes home |
-| ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer |
+| ✅ | Vistani camp, Arrigal's wagon | Dagger of Venom (rare) | Search (Investigation DC 16): Arrigal's hidden drawer; or a Tip from his black horse (Speak with Animals) |
 | ✅ | Stella Wachter, St. Andral's | Cloak of the Bat (rare) | Gift: the master's birthday present, once her curse is broken (The Cat in the Window, docs/story/side_quests.md) |
 | ✅ | Ilie the lamplighter | Ring of Resistance, Necrotic (rare) | Gift: Ana's mother's ring, once Ana is at rest (Black Roses) |
 | ✅ | Watchman Dobre's satchel | Arcane Grimoire, +2 (rare) | Gift: in the satchel once Dobre is beaten (Ribbons) |
@@ -170,7 +171,7 @@ leaves a smaller purse and one find.
 | ✅ | Ground floor, the great oven | Brazier of Commanding Fire Elementals (rare) | Search (Investigation DC 15): something cooling in the ash |
 | ✅ | Loft, up in the rafters | Broom of Flying (uncommon) | Search (Perception DC 15): a broom far too clean for this house |
 | ✅ | Loft, the little bags on hooks | Portable Hole (rare) | Search (Perception DC 15): a black cloth folded among the bags |
-| ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow |
+| ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow; or a Tip from the ravens themselves (Speak with Animals) |
 | ✅ | The hill, the ditch by the track | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot, from the miller's lane, 2026-10-09) |
 | ✅ | The track, Granny Ash's basket | Robe of Eyes (rare) | Hoard: once Granny Ash is dead (The Fourth Sister, docs/story/side_quests.md) |
 
@@ -181,7 +182,7 @@ leaves a smaller purse and one find.
 | ✅ | The yard well | Rope of Climbing (uncommon) | Search (Perception DC 13): tied off below the lip |
 | ✅ | The yard, behind the casks | Eversmoking Bottle (uncommon) | Search (Perception DC 13): a bottle set aside (lane 28's spot) |
 | ✅ | The vineyard, between the rows | +1 Moon Sickle (uncommon) | Search (Perception DC 12): dropped by a druid (lane 28's spot) |
-| ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard |
+| ✅ | The vineyard's dead tree | Ring of Feather Falling (rare) | Search (Perception DC 15): the ravens' hoard; or a Tip from the winery's ravens (Speak with Animals) |
 | ✅ | Cellar, the founder's cask | Alchemy Jug (uncommon) | Search (Investigation DC 14) |
 | ✅ | Press house, the wizard's casks | Decanter of Endless Water (uncommon) | Search (Perception DC 14) |
 | ✅ | Winery, the pried-up floorboards | Elemental Gem, Emerald (uncommon) | Search (Perception DC 15): what the druids missed |
@@ -209,7 +210,7 @@ leaves a smaller purse and one find.
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14) |
+| ✅ | Krezk, the cairn by the track | Ring of Warmth (uncommon) | Search (Perception DC 14); or a Tip from Krezk's goats (Speak with Animals) |
 | ✅ | Krezk, the watch fire | Sentinel Shield (uncommon) | Search (Perception DC 14): under the woodpile |
 | ✅ | Krezk, a loose stone in the wall | +1 Sling (uncommon) | Search (Perception DC 14): a boy's treasure (lane 28's spot) |
 | ✅ | Krezk, the wayside shrine | Restorative Ointment (uncommon) | Search (Perception DC 13): a tin of salve left for whoever needs it (from the miller's lane, 2026-10-09) |
@@ -336,7 +337,7 @@ leaves a smaller purse and one find.
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
 | ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
 | ✅ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |
-| ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest |
+| ✅ | The roost, a glint of brass | Ring of Evasion (rare) | Search (Perception DC 15): a raven's nest; or a Tip from the roost's oldest raven (Speak with Animals) |
 | ✅ | Catacombs, the conjurer's bier | +2 Wand of the War Mage (rare) | Search (Investigation DC 16) |
 | ✅ | Catacombs, the jester's sarcophagus | Cape of the Mountebank (rare) | Search (Investigation DC 15) |
 | ✅ | Strahd's tomb, the chest at the dais | Potion of Supreme Healing, two (very rare) | Hoard |

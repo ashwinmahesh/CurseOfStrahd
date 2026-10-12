@@ -1,5 +1,6 @@
 # Into the Mists: the arrival on the Old Svalich Road (docs/regions/into_the_mists.md).
-# Started by props on into_the_mists_road: mists_wall (the fog at the east edge) and mists_deer_carcass.
+# Started by props on into_the_mists_road: mists_wall (the fog at the east edge), mists_deer_carcass and
+# edge_alley_crow (Speak with Animals: Rose and Thorn have no smell; the pack under the carcass).
 
 ~ mist_wall
 narrate examine:mists_wall
@@ -95,4 +96,28 @@ endif
 ~ carcass_no_tracks
 set mists_carcass_studied
 Narrator: Prints, fog and old leaves, churned into one dark mess by something large, numerous and gone. Probably gone.
+-> END
+
+# --- The crow on a barrel at the village edge (prop edge_alley_crow) ---
+
+~ crow
+narrate examine:edge_alley_crow
+* [if spell:speak_with_animals] Ask the crow what it's seen. -> crow_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the crow what it's seen.) -> crow_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it to its barrel. -> END
+-> END
+
+~ crow_cast
+cast speak_with_animals
+if check.last
+-> crow_speaks
+endif
+-> END
+
+~ crow_speaks
+set mists_crow_told
+Narrator: The crow puts its head on one side and talks fast, in clicks and little pictures, like a gossip who has waited all morning for someone to tell.
+Narrator: "The two small ones in the road have no smell. None. Not boy, not girl, not even scared. They smell like the white. The tall house eats the ones who go in. Crows don't sit on its roof."
+Narrator: "Back up the road, under the dead deer, there's a man-bag the wolves didn't want. Buckles. Too heavy for me. You can have it."
+reveal carcass_pack
 -> END

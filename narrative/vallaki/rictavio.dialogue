@@ -1,4 +1,5 @@
-# Rictavio, the showman at the Blue Water Inn, who is Rudolph van Richten in disguise (docs/voice/rictavio.md).
+# Rictavio, the showman at the Blue Water Inn, who is Rudolph van Richten in disguise (docs/voice/rictavio.md). The
+# bay horse in the inn's stable (prop stable_stall_bay) talks under Speak with Animals about the beast in his wagon.
 
 ~ start
 if flag.rictavio_wagon_opened and not flag.rictavio_wagon_noticed
@@ -199,4 +200,29 @@ Rictavio: Stay in the light where you can. And when you can't, stay together.
 else
 Rictavio [smile]: Farewell, farewell! Tell your friends! Tell your enemies! Tell anyone, really; I'm not particular.
 endif
+-> END
+
+# --- The bay horse in the inn's stable (prop stable_stall_bay) ---
+
+~ stable_horse
+Narrator: A bay horse in the end stall, rugged against the cold, with its ears turned toward the painted wagon in the yard and its eyes showing white at the edges.
+* [if spell:speak_with_animals] Ask the horse what's wrong. -> stable_horse_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the horse what's wrong.) -> stable_horse_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Leave it be. -> END
+-> END
+
+~ stable_horse_cast
+cast speak_with_animals
+if check.last
+-> stable_horse_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): Rictavio's wagon holds a saber-toothed tiger, and the showman is an old hunter in a
+# costume (Curse of Strahd, Vallaki).
+~ stable_horse_speaks
+set rictavio_suspected
+Narrator: The bay stamps and blows before it answers, as if it's been waiting all week for somebody to complain to.
+Narrator: "The red wagon has a cat in it. A cat as big as me, with teeth like icicles. Every horse in this yard can smell it. It smells like the end of horses."
+Narrator: "The loud man in the red coat goes in at night and talks to it. Not his loud voice. A quiet one, an old man's voice. He reads it papers. Then he sits very still until the sun, the way old dogs sit by doors."
 -> END
