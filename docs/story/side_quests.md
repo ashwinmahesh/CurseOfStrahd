@@ -957,7 +957,7 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
   (`khazan_unmade`): 210 HP and two Visitors, no lair, no way back; given his name to die with, he starts the fight
   surprised. The autopilot wins 2 of 4, losing three a fight. A party that works it out first can unmake the name before
   they ever fight him.
-- The hall of names (`remembered`): a banshee, two ghosts, six specters and a wraith. The autopilot wins 3 of 4 at level 10.
+- The hall of names (`remembered`): a banshee, two ghosts, five specters and a wraith. The autopilot wins 3 of 4 at level 10.
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
   800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
 

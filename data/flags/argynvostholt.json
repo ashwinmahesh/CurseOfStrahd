@@ -34,7 +34,7 @@
     {
       "id": "argynvost_skull_known",
       "type": "bool",
-      "summary": "The party knows the dragon's skull hangs as a trophy in Castle Ravenloft (chronicle, Vladimir, the echo). Phase 6: bringing it home to the mausoleum lights the beacon for good."
+      "summary": "The party knows the dragon's skull hangs as a trophy in Castle Ravenloft (chronicle, Vladimir, the echo). Bringing it home to the mausoleum (argynvost_skull_home) keeps a lit beacon burning for good."
     },
     {
       "id": "argynvost_skull_home",

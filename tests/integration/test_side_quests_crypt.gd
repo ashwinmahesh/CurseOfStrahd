@@ -19,6 +19,8 @@ func test_the_name_said_before_she_rises() -> void:
 	assert_eq(st.quest_stage("the_unnamed_crypt"), "rumored")
 	st.location = "castle_ravenloft_catacombs"
 	st.set_flag("corvina_name_known")
+	st.set_quest_stage("the_mages_lost_pages", "asked")
+	st.set_quest_stage("the_mages_lost_pages", "named")   # the name from his letters (Wiki finding 97)
 	assert_true(SideQuestPlay.shown(st, "castle_ravenloft_catacombs", "unnamed_crypt"))
 	beats = SideQuestPlay.play(st, "castle_ravenloft/the_unnamed_crypt:crypt", ["Corvina."])
 	assert_eq(SideQuestPlay.missing(beats), "")

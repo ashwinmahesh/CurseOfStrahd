@@ -273,7 +273,8 @@ once
 | Soot on the plinth, old and greasy, in a long black smear like a lick from a tongue. The dark up here came in after the light went out, and made itself at home.
 
 ~ examine:holt_empty_skull_place
-| At the head of the bier there is a hollow in the stone, smooth and round, made for something that isn't here. Someone has laid a single dried flower in it.
+| [not flag.argynvost_skull_home] At the head of the bier there is a hollow in the stone, smooth and round, made for something that isn't here. Someone has laid a single dried flower in it.
+| [flag.argynvost_skull_home] At the head of the bier, in the hollow made for it, the dragon's skull rests again. Someone has moved the dried flower to lie beside it.
 
 ~ examine:holt_kneeling_marks
 | Candle stubs in rows, a hundred years of them, and the stone floor worn into two hollows where the same knees went down every night.

@@ -17,6 +17,8 @@ func test_mordenkainen_dreams_of_a_voice_up_a_well() -> void:
 	var st := SideQuestPlay.party(FOUR, 10, "mount_baratok_hut", 14)
 	st.set_flag("mordenkainen_restored")
 	st.set_flag("corvina_name_known")
+	st.set_quest_stage("the_mages_lost_pages", "asked")
+	st.set_quest_stage("the_mages_lost_pages", "named")   # his letters back (Wiki finding 97: they come first)
 	st.set_quest_stage("the_name_over_the_door", "unmade")
 	var beats := SideQuestPlay.play(st, "mount_baratok/the_mages_lost_pages:news")
 	assert_true(SideQuestPlay.text(beats).contains("a voice coming up a well"))

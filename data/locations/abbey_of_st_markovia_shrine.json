@@ -389,7 +389,7 @@
         3
       ],
       "dialogue": "abbey_of_st_markovia/abbot:start",
-      "when": "not flag.bride_defeated and not flag.abbot_struck_down and (not flag.abbot_fate or flag.abbot_fate == \"wedding\" or flag.abbot_fate == \"broken\")",
+      "when": "not flag.abbot_struck_down and ((not flag.bride_defeated and (not flag.abbot_fate or flag.abbot_fate == \"wedding\")) or flag.abbot_fate == \"broken\")",
       "approach": 5
     },
     {

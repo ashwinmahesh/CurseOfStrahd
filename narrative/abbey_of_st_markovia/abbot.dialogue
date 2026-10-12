@@ -4,6 +4,10 @@
 # The Abbey is one of the scariest places in the game: his humour is the dreadful calm of the very sure.
 
 ~ start
+# Liriel wasn't there the first time: she meets him on the next visit she's with the party (Wiki finding 94).
+if flag.abbot_met and name:liriel_dawnsong and quest.carry_the_dawn and not (quest.carry_the_dawn >= the_angel)
+-> liriel_meets
+endif
 # Liriel wasn't there when he told of his bride (it plays once): she learns it the first time she's back with him
 # (Wiki finding 34), wedding or no (finding 90).
 if flag.abbot_met and name:liriel_dawnsong and flag.abbot_bride_revealed and quest.carry_the_dawn and not (quest.carry_the_dawn >= the_fall)
@@ -54,6 +58,13 @@ interject guest:ezmerelda: That's no monk. Look at his feet. He's standing a fin
 Abbot: Hunters always notice the feet. Welcome, Ezmerelda d'Avenir. Your teacher noticed them too, once.
 endif
 -> menu
+
+~ liriel_meets
+interject name:liriel_dawnsong: The light leaned toward him. I have never seen light do that. Not for anyone.
+Narrator: Liriel takes one step toward him and goes down on both knees on the cold flags, her hands over her mouth. When she looks up her face is wet and shining.
+interject name:liriel_dawnsong: You're one of His. An angel of the Morninglord, here, in the dark. Oh, I knew it. I knew He hadn't forgotten this place.
+quest carry_the_dawn the_angel
+-> start
 
 ~ liriel_learns
 Narrator: Liriel looks from the Abbot to the door of the wards across the courtyard, and back. You watch her understand what he is making over there, and what it means that he's the one making it.

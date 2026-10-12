@@ -1,5 +1,5 @@
-# The Mage's Lost Pages (side quest, docs/story/side_quests.md): Mordenkainen's memory came back from the witch's jar
-# with pages missing: someone's handwriting he knows better than his own, and no name with it. Letters from his
+# The Mage's Lost Pages (side quest, docs/story/side_quests.md): Mordenkainen's memory came back (the witch's jar, his
+# spellbook, or his own spells said back to him) with pages missing: someone's handwriting he knows better than his own, and no name with it. Letters from his
 # apprentice, blown out of the hut by the storm he forgot he'd ordered, are frozen into the mountain. They give her
 # name, Corvina, and the truth he lost: he didn't lose a fight with the count; he ran, while she held the door behind
 # him. The last letter has a postscript in the count's hand. It leads to The Unnamed Crypt in the castle. Reached from
@@ -10,6 +10,11 @@
 # --- Mordenkainen (mordenkainen:restored_menu jumps here) ---
 
 ~ news
+# His own pages first: until he has his letters back he can't remember her, whatever the party found in the castle
+# (Wiki finding 97).
+if quest.the_mages_lost_pages != named
+-> pages_news
+endif
 if quest.the_unnamed_crypt == done and not flag.corvina_thanks_given
 set corvina_thanks_given
 Mordenkainen: You found her. (He doesn't ask how it went. He looks at your faces and doesn't need to.) Did she have ink on her fingers still? She always did. Thank you. Now go away for a while. I'd like to be old in private.
@@ -29,6 +34,9 @@ if flag.corvina_name_known
 Mordenkainen: Corvina. I say it every morning, so I don't lose it again. If you find her before I do, say it to her. Names matter to the dead in this valley. They're very nearly all the dead have left.
 -> mount_baratok/mordenkainen:restored_menu
 endif
+-> mount_baratok/mordenkainen:restored_menu
+
+~ pages_news
 if flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3
 -> letters_back
 endif
@@ -121,7 +129,7 @@ interject tag:blunt: He didn't lose. He ran. And she stayed.
 
 # The last letter found with the mage travelling alongside: he reads them there (Wiki finding 56).
 ~ letters_check
-if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and not flag.corvina_name_known
+if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and quest.the_mages_lost_pages != named
 Narrator: You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back.
 -> letters_read
 endif
