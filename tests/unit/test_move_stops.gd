@@ -33,13 +33,15 @@ func test_a_creature_restrained_by_a_web_on_its_way_stops_there() -> void:
 
 
 ## A move stopped in an ally's space it was passing through goes back to the last square it could stop in (QA FN-18:
-## a griffon's Opportunity Attack grabbed the mover as it stepped out of an ally's square, and the two shared it).
+## a griffon's Opportunity Attack grabbed the mover as it stepped out of an ally's square, and the two shared it). Heroes
+## the player moves may share a square now (owner, 2026-10-12), so the mover here is one the game moves.
 func test_a_mover_stopped_in_an_allys_space_steps_back() -> void:
 	var e := TestCombat.encounter(["##########", "#####.####", "#####.####", "#####.####", "#####.####", "#####..###",
 		"#####.####", "#####.####", "##########"], 1)
 	var mover := TestCombat.hero(e, "hedda_ironvow", Vector2i(5, 6), 5)
 	var ally := TestCombat.hero(e, "ilse_varga", Vector2i(5, 4), 5)
 	var griffon := TestCombat.foe(e, "griffon", Vector2i(6, 5))
+	mover.controller = &"ai"
 	TestCombat.start_with(e, mover)
 	griffon.reaction_rules["opportunity_attack"] = "auto"
 	mover.creature.hp = 200

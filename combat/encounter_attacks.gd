@@ -208,8 +208,6 @@ func offhand_attack(c: Combatant, target: Combatant, option_id: String) -> Comba
 	return e.echo_knight.strike(c, echo, func() -> CombatResult: return _resolve_attack(c, target, option, {"offhand": true}))
 
 
-## Every Advantage and Disadvantage source for this attack, plus cover:
-## {advantage: [...], disadvantage: [...], cover: int, cover_bonus: int, cover_by: String}
 ## Flanking (2024 DMG optional rule, on unless Settings turns it off; owner, 2026-10-12): `c`, standing at `from` (`size`
 ## squares across), and an ally that can act and see `target` are both next to it, on opposite sides or corners of its
 ## space. A creature that can't see the target doesn't flank it.
@@ -234,6 +232,8 @@ static func side_of(cell: Vector2i, size: int, t: Combatant) -> Vector2i:
 	return Vector2i(sx, sy)
 
 
+## Every Advantage and Disadvantage source for this attack, plus cover:
+## {advantage: [...], disadvantage: [...], cover: int, cover_bonus: int, cover_by: String}
 func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Dictionary:
 	var e := enc()
 	var adv: Array[String] = []

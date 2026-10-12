@@ -284,3 +284,15 @@ the player (`CombatView._walk_and_strike`, `_strike_after`).
 
 Every walk now takes, of the cheapest ways to its square, the one that leaves foes' reach the fewest times
 (`EncounterMovement.safe_path`), for the heroes and the foes alike; the trail on hover is the way it walks.
+
+## Flanking and shared squares (owner, 2026-10-12)
+
+Flanking (the 2024 DMG's optional rule, docs/rules/deviations.md) shows where every Advantage does: "Advantage:
+Flanking" in the attack's lines and the green edge on the odds over the foe (`EncounterAttacks.flanks`). The walk up to
+strike prefers, of the equally cheap and equally safe squares, the one with the best odds, so it walks round to the far
+side of a foe an ally is already beside. Settings, Game, Flanking turns it off (`GameSettings.flanking`, read into
+`Encounter.flanking` every turn like Party turns).
+
+A hero may end a move in an ally's space (Move here works on an ally's square; the walk up prefers an empty one). Two
+figures on one square stand side by side as the camera looks (`CombatView._share_offset`), and step back to the
+centre when one leaves (`_settle_shared`, after each batch of events).

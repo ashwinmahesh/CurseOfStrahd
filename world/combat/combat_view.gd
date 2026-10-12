@@ -1664,8 +1664,8 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
 
 
-## Creatures sharing a square (owner, 2026-10-12: heroes may end a move in an ally's space) stand apart on it, round
-## its middle in the fight's order, so each figure shows and can be pointed at. Zero for a creature alone there.
+## Creatures sharing a square (owner, 2026-10-12: heroes may end a move in an ally's space) stand side by side on it as
+## the camera looks, in the fight's order, so each figure shows and can be pointed at. Zero for a creature alone there.
 func _share_offset(c: Combatant, cell: Vector2i) -> Vector3:
 	if e.mount_of(c) != null:
 		return Vector3.ZERO
@@ -1675,8 +1675,8 @@ func _share_offset(c: Combatant, cell: Vector2i) -> Vector3:
 			here.append(o)
 	if here.size() < 2:
 		return Vector3.ZERO
-	var a := TAU * here.find(c) / here.size() + PI / 4.0
-	return Vector3(cos(a), 0.0, sin(a)) * 0.24 * c.size_cells
+	var right := rig.ground_basis()[1] if rig != null else Vector3(1, 0, 0)
+	return right * (here.find(c) - (here.size() - 1) / 2.0) * 0.38 * c.size_cells
 
 
 ## After the events: tokens whose square is now shared, or no longer is, step to their place on it.
