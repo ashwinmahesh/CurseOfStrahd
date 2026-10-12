@@ -132,6 +132,10 @@
           "where": {
             "type": "string"
           },
+          "lost_when": {
+            "type": "string",
+            "description": "When the ally is gone for good (drowned, vanished, dead, refused, at rest): find_the_ally ends lost, at the reading too (tarokka.ally.lost)."
+          },
           "verse": {
             "type": "string",
             "minLength": 10

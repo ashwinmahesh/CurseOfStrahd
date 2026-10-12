@@ -64,7 +64,7 @@ quest the_dark_beacon echo
 endif
 set argynvost_skull_known
 Argynvost: I lit it every night for a hundred years, so the valley would know someone was awake. It went out when I did. It's very dark out there without it.
-Argynvost: It needs my fire. My skull is in his castle; bring it home to my bones and the beacon will burn as it should, for good, and all of us will rest.
+Argynvost: It needs my fire. My skull is in his castle; bring it home to my bones one day, and once it's lit the beacon will burn as it should, for good.
 Argynvost: But there's a little fire left in my bones, out in the mausoleum. Not much. Enough for one night, and one night is all they need to remember who they were and go home.
 -> beacon_menu
 

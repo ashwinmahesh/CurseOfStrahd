@@ -123,6 +123,10 @@ static func field(st: StoryState, path: String) -> String:
 		return final_room(st) if str(outcome("enemy", card_id).get("room", "")) == ROAM_ROOM else ""
 	if parts[1] == "card":
 		return str(card(card_id).get("name", card_id))
+	# `tarokka.ally.lost`: the one the cards named is gone for good (their outcome's lost_when; Wiki finding 113).
+	if parts[1] == "lost":
+		var when := str(outcome(parts[0], card_id).get("lost_when", ""))
+		return "lost" if when != "" and StoryConditions.check(when, st) else ""
 	return str(outcome(parts[0], card_id).get(parts[1], ""))
 
 

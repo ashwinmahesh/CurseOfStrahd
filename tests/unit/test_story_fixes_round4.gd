@@ -67,10 +67,9 @@ func test_mordenkainens_pages_come_first() -> void:
 	assert_false(bool(st.get_flag("corvina_thanks_given", false)), "no thanks for a name he doesn't have yet")
 	for n: String in ["1", "2", "3"]:
 		st.set_flag("corvina_letter_" + n)
-	SideQuestPlay.play(st, "mount_baratok/the_mages_lost_pages:news", ["Let him rage", "Goodbye"])
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "mount_baratok/the_mages_lost_pages:news", ["Let him rage", "Goodbye"]))
 	assert_eq(st.quest_stage("the_mages_lost_pages"), "named")
-	var said := SideQuestPlay.text(SideQuestPlay.play(st, "mount_baratok/the_mages_lost_pages:news", ["Goodbye"]))
-	assert_true(said.contains("You found her."), "then his thanks: %s" % said)
+	assert_true(said.contains("You put it on her box"), "and he knows she's at rest (finding 111): %s" % said)
 
 
 ## Finding 98: the Second Thirst borrowed Strahd's win's slides, so the count came for Nadia after he was destroyed.

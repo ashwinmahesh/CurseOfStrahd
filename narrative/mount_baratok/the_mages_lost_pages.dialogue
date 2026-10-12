@@ -158,7 +158,13 @@ Narrator: He rages. It isn't loud. The windows frost over from the inside, and e
 quest the_mages_lost_pages named
 set corvina_name_known
 Mordenkainen: No. You're right. I'd go up there as exactly the man who ran. I need to be someone else first, and that takes longer than a night.
+# She may be at rest already (Wiki finding 111).
+if quest.the_unnamed_crypt == done
+set corvina_thanks_given
+Mordenkainen: And you've been in that castle already, haven't you. (He looks at your faces, and doesn't need to ask.) You said it to her. You put it on her box. Then she has it back, and so do I.
+else
 Mordenkainen: But you'll be in that castle before I am. If you find her, and you will, he'll have seen to that, say her name to her. Corvina. Names matter to the dead in this valley. They're very nearly all the dead have left.
+endif
 Mordenkainen: And take this. She made it, her first year, to fetch my books down without asking. I took it off her desk the night we went up, because I thought I'd need it more. I didn't. I needed her.
 give ring_of_telekinesis
 approve ratatoille +3 liriel_dawnsong +2 godrick_pendlebrook +1 wren_featherfoot +1: You brought Mordenkainen his apprentice's letters
