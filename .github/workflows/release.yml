@@ -196,9 +196,10 @@ jobs:
           ls -la "$RUNNER_TEMP/release" "$RUNNER_TEMP/release/macos"
           rm -rf "$RUNNER_TEMP/apple"
 
-      # In-place updates: a patch of everything changed since the last full download, when a pack can carry it all
-      # (tools/release/patch.py says why not, when not). Always writes release.json for the site's latest.json.
-      - name: Export the update patch
+      # In-place updates: a patch for each earlier full download back to the first base, of everything changed since
+      # it, when a pack can carry it all (tools/release/patch.py says why not, when not). Always writes release.json for
+      # the site's latest.json.
+      - name: Export the update patches
         run: python3 tools/release/patch.py --version "$VERSION" --out "$RUNNER_TEMP/release"
 
       # Off until the Azure Artifact Signing secrets exist (owner's call): without them the .exe ships unsigned, as
@@ -291,11 +292,11 @@ jobs:
             --s3-chunk-size 64M --s3-upload-concurrency 8
           rclone copyto "$out/CurseOfStrahd-windows.zip" "r2:${BUCKET}/${VERSION}/CurseOfStrahd-${VERSION}-windows.zip" \
             --s3-chunk-size 64M --s3-upload-concurrency 8
-          if [ -f "$out/patch.pck" ]; then
-            name="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["patch"]["file"])' "$out/release.json")"
-            rclone copyto "$out/patch.pck" "r2:${BUCKET}/${VERSION}/${name}" --s3-chunk-size 64M --s3-upload-concurrency 8
-            echo "Published the update patch ${name}" >> "$GITHUB_STEP_SUMMARY"
-          fi
+          for patch in "$out"/patches/*.pck; do
+            [ -f "$patch" ] || continue
+            rclone copyto "$patch" "r2:${BUCKET}/${VERSION}/$(basename "$patch")" --s3-chunk-size 64M --s3-upload-concurrency 8
+            echo "Published the update patch $(basename "$patch")" >> "$GITHUB_STEP_SUMMARY"
+          done
           rclone copyto "$out/release.json" "r2:${BUCKET}/${VERSION}/release.json" --header-upload "Cache-Control: no-cache"
           for os in macos windows; do
             curl -fsSI "${DOWNLOADS}/${VERSION}/CurseOfStrahd-${VERSION}-${os}.zip" | head -1

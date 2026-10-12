@@ -1482,7 +1482,7 @@
         9,
         17
       ],
-      "when": "not flag.festival_over and not weather == storm"
+      "when": "not weather == storm and (not flag.festival_over or (quest.ribbons and not flag.ribbons_resolved))"
     },
     {
       "npc": "vallaki_sun_painter",
@@ -2777,7 +2777,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_street",
@@ -2811,7 +2815,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_street",
@@ -2839,7 +2847,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_street",
@@ -2872,7 +2884,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -2909,7 +2925,11 @@
         }
       ],
       "surprise": "enemies",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -2946,7 +2966,11 @@
         }
       ],
       "surprise": "enemies",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -2974,7 +2998,11 @@
         }
       ],
       "surprise": "enemies",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -3009,7 +3037,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -3043,7 +3075,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "roses_graves",
@@ -3071,7 +3107,11 @@
         }
       ],
       "surprise": "",
-      "flag": "roses_spawn_destroyed"
+      "flag": "roses_spawn_destroyed",
+      "quest": {
+        "id": "black_roses",
+        "stage": "slain"
+      }
     },
     {
       "id": "ribbons_street",

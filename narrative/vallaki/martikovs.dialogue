@@ -74,9 +74,9 @@ endif
 if not quest.black_roses
 set roses_rumor
 quest black_roses rumored
-Urwin: Black roses on Pyotr Petrov's step this morning, the chandler's. Ilie the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too.
+Urwin: Black roses on Pyotr Petrov's step this morning, the chandler's. Ignat the lamplighter saw them on his way home and went white as his tapers. He lost his girl last winter. There were roses then, too.
 elif flag.roses_ring_given
-Urwin: Ilie's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year.
+Urwin: Ignat's put out the lamp outside his own window. The birds say he sleeps at night now. It's been a year.
 endif
 if not quest.hunters_at_the_inn
 set hunters_rumor

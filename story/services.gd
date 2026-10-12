@@ -139,18 +139,26 @@ static func buy(st: StoryState, npc_id: String, line: Dictionary, ch: Character,
 
 ## Raise Dead on `ch`: back with 1 Hit Point, poison gone, and -4 on D20 Tests for 10 days.
 static func raise(st: StoryState, ch: Character) -> void:
+	bring_back(st, ch, false, true, "Raise Dead")
+
+
+## Brings `ch` back to life: with 1 Hit Point or all of them, poison gone, and with `ordeal` -4 on D20 Tests for 10
+## days (the temple's Raise Dead, and a party caster's Raise Dead or Resurrection: FieldCasting.revive).
+static func bring_back(st: StoryState, ch: Character, full_hp: bool, ordeal: bool, how: String) -> void:
 	ch.dead = false
 	ch.hp = 0
 	ch.death_successes = 0
 	ch.death_failures = 0
-	ch.heal(1, "Raise Dead")
+	ch.heal(ch.max_hp() if full_hp else 1, how)
 	if ch.has_condition(&"poisoned"):
 		cure(ch, &"poisoned")
-	var fx := Effect.new("Back from the dead", &"spell", "raise_dead").with_modifier("d20", {"value": ORDEAL_PENALTY})
-	fx.ends = Effect.Ends.MINUTES
-	fx.minutes_left = ORDEAL
-	ch.add_effect(fx)
+	if ordeal:
+		var fx := Effect.new("Back from the dead", &"spell", "raise_dead").with_modifier("d20", {"value": ORDEAL_PENALTY})
+		fx.ends = Effect.Ends.MINUTES
+		fx.minutes_left = ORDEAL
+		ch.add_effect(fx)
 	st.flags.erase(_died_key(ch))
+	st.flags.erase(_repose_key(ch))
 
 
 ## Ends a condition however it was given: as a plain condition or by an effect (as Lesser Restoration does in a fight).
@@ -201,6 +209,11 @@ static func _died_key(ch: Character) -> String:
 	return "_died/" + ch.id
 
 
+## Gentle Repose on a dead hero: {from, until} game minutes, kept beside the time they died.
+static func _repose_key(ch: Character) -> String:
+	return "_repose/" + ch.id
+
+
 ## Notes the time for any dead party member not yet noted (StoryState.advance_minutes calls this with the time before
 ## the clock moved, so a death in a fight is noted at about the time it happened).
 static func note_deaths(st: StoryState, at: int) -> void:
@@ -209,14 +222,38 @@ static func note_deaths(st: StoryState, at: int) -> void:
 			st.flags[_died_key(ch)] = at
 		elif not ch.dead and st.flags.has(_died_key(ch)):
 			st.flags.erase(_died_key(ch))
+			st.flags.erase(_repose_key(ch))
 
 
-## Minutes since `ch` died (0 if alive or just now).
+## Minutes since `ch` died (0 if alive or just now), less the time Gentle Repose kept the body (2024 PHB: those days
+## don't count against Raise Dead's limit).
 static func dead_for(st: StoryState, ch: Character) -> int:
 	if not ch.dead:
 		return 0
-	note_deaths(st, st.total_minutes())
-	return st.total_minutes() - int(st.flags.get(_died_key(ch), st.total_minutes()))
+	var now := st.total_minutes()
+	note_deaths(st, now)
+	var died := int(st.flags.get(_died_key(ch), now))
+	var span := now - died
+	var rest := st.flags.get(_repose_key(ch), {}) as Dictionary
+	if not rest.is_empty():
+		span -= maxi(0, mini(now, int(rest.get("until", 0))) - maxi(died, int(rest.get("from", 0))))
+	return maxi(0, span)
+
+
+## Gentle Repose on `ch`'s body: for `minutes` from now its time dead doesn't count (a second casting carries on from
+## the first's end).
+static func repose(st: StoryState, ch: Character, minutes: int) -> void:
+	var now := st.total_minutes()
+	note_deaths(st, now)
+	var rest := st.flags.get(_repose_key(ch), {}) as Dictionary
+	if not rest.is_empty() and int(rest.get("until", 0)) >= now:
+		st.flags[_repose_key(ch)] = {"from": int(rest.get("from", now)), "until": int(rest["until"]) + minutes}
+		return
+	# An earlier casting that has run out: its days are folded into the time of death, so they still don't count.
+	if not rest.is_empty() and st.flags.has(_died_key(ch)):
+		var died := int(st.flags[_died_key(ch)])
+		st.flags[_died_key(ch)] = died + maxi(0, int(rest.get("until", 0)) - maxi(died, int(rest.get("from", 0))))
+	st.flags[_repose_key(ch)] = {"from": now, "until": now + minutes}
 
 
 # --- Rooms ---------------------------------------------------------------------------------------
