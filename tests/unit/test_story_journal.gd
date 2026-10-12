@@ -76,9 +76,9 @@ func test_strahd_comes_back_to_hear_about_marina() -> void:
 	assert_eq(SideQuestPlay.standing(st, "berez", "strahd"), "", "and once he's told, he's gone")
 
 
-## Black Roses (Ashwin, 2026-10-12): winning the fight with Ana and her girls, at the Petrovs' window or at their graves,
-## left the journal at "Find where Ana sleeps", and only her father, out on his lamp rounds, could end it. Every one of
-## those fights moves the quest to "Tell Ignat" now, and he ends it.
+## Black Roses (Ashwin, 2026-10-12): winning the fight with Catalina and her girls, at the Petrovs' window or at their
+## graves, left the journal at "Find where Catalina sleeps", and only her father, out on his lamp rounds, could end it.
+## Every one of those fights moves the quest to "Tell Ignat" now, and he ends it.
 func test_black_roses_says_to_tell_ignat_after_the_fight() -> void:
 	var fights := 0
 	for e: Variant in Compendium.shared().get_entry("locations", "vallaki")["encounters"]:
@@ -145,6 +145,17 @@ func test_old_saves_catch_up() -> void:
 	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
 	assert_eq(back.quest_stage("black_roses"), "slain")
 	assert_eq(back.quest_stage("izek_obsession"), "truth_told")
+
+
+## A save made mid-fight holds the fight as "started", not won: it loads without an error, and the quest stays where
+## it was until the fight is won (Game build's fix forward c90b0d531; StoryBot's _reload_fight hit it).
+func test_a_save_mid_fight_loads_and_waits_for_the_win() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 6, "vallaki", 23)
+	st.set_quest_stage("black_roses", "vigil")
+	(st.loc_state("vallaki")["encounters"] as Dictionary)["roses_graves"] = "started"
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(back.quest_stage("black_roses"), "vigil", "a fight under way hasn't been won")
+	assert_eq(str((back.loc_state("vallaki")["encounters"] as Dictionary)["roses_graves"]), "started", "and stays under way")
 
 
 func _ids(st: StoryState) -> Array:

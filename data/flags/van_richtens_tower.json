@@ -165,7 +165,7 @@
     {
       "id": "den_doll_found",
       "type": "bool",
-      "summary": "The party found Ana's rag doll on the slope below the den."
+      "summary": "The party found Codruta's rag doll on the slope below the den."
     },
     {
       "id": "zuleika_met",
@@ -295,7 +295,7 @@
     {
       "id": "ana_doll_returned",
       "type": "bool",
-      "summary": "The party gave Ana her rag doll back through the pen gate."
+      "summary": "The party gave Codruta her rag doll back through the pen gate."
     },
     {
       "id": "den_children_freed",

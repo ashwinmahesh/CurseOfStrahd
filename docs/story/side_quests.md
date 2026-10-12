@@ -279,18 +279,18 @@ bedroom).
 
 ### Black Roses (`black_roses`, narrative/vallaki/black_roses.dialogue)
 
-Ignat the lamplighter's daughter Ana was taken last winter. **Twist one:** black roses come before a girl is taken, not
+Ignat the lamplighter's daughter Catalina was taken last winter. **Twist one:** black roses come before a girl is taken, not
 after, and they are on the chandler's step. **Twist two:** Ignat's scarf hides bite marks (Insight DC 13 or Medicine DC
-12); Ana is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Ana comes to
+12); Catalina is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Catalina comes to
 Mila Petrova's window in the lower town. Ask where she sleeps, talk her home to her grave (Persuasion DC 14), fight her
 and the two girls she calls (`roses_street`), or let her go home to her father, who is found dead at the lake gate in
 the morning (`ilie_fate` lost). **The grave:** three graves at the edge of St. Andral's churchyard (prop `ana_grave`):
 dig them up by day (Athletics DC 12; they wake surprised and weak) or wait for them at night (`roses_graves`).
 
-- Fights: `roses_street` at level 5 is Ana (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
+- Fights: `roses_street` at level 5 is Catalina (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
   surprised at reduced HP, by night at full strength. Attention mark `roses` (+1).
-- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ignat gives Ana's mother's
-  ring, a Ring of Resistance (Necrotic) (rare), once Ana is at rest.
+- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ignat gives Catalina's mother's
+  ring, a Ring of Resistance (Necrotic) (rare), once Catalina is at rest.
 
 ### Ribbons (`ribbons`, narrative/vallaki/ribbons.dialogue; batch 2)
 
@@ -1063,7 +1063,7 @@ martikovs.dialogue's new rumours lines (the hunters). Batch 2, Lake
 Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. The Gates:
 last_muster.dialogue in full (new speaker Marshal Dragomir), tser_camp.dialogue's new zora_road lines (the riders) and
 townsfolk.dialogue's new gossip lines (the riders). Vallaki:
-cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
+cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Catalina and Pyotr Petrov; also
 Ignat and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
 six_feet.dialogue in full (new speaker Zinaida;
