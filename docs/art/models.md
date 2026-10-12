@@ -7,7 +7,9 @@ Date: 2026-10-06 · Owner request: "we can build 3D assets for things in Blender
 Furniture, hearths, stairs, doors and wall panelling read wrong as flat cards: seen along a wall they vanish, and
 they never catch the lantern light or throw a shadow. These pieces are now real models, built by a script in
 Blender from the 2D props they replace. Characters and creatures stay 2D sprites, and so do trees, brambles and
-boulders, which already look right from every side.
+boulders, which already look right from every side. The decor horses are creatures too: sculpted for a while, they
+tore at the edges whenever the camera turned (owner report 2026-10-12: "really glitchy"), so they are drawn flat
+again, at full size (catalog `big`).
 
 The Death House upper floor was the pilot; the owner signed it off the same day ("the 3D pieces look so much
 better. Lets start rolling out this change everywhere") and then asked for everything: "Anything that isnt a player,
@@ -62,12 +64,12 @@ without a model is drawn as before.
 | woodpile, notice_board, crypt_small, crypt, gravestone, well, well_stone, bridge_parapet, signpost | the same | free-standing |
 | pine_a/b/c, pine_clawed, dead_tree_a/b | pine, pine_clawed, dead_tree (variants picked by square) | trees in the board's woods and the land past the map's edge, as tall as the 2D trees, each turned its own way; they fade like the billboards (ArenaBoard.mesh_occluders) |
 | bramble_a/b, boulder_a/b, log, stump, rubble, cairn, snowdrift, ice_patch, reeds, leaves, grave_mound, hay_bale, garden_bed, vines | the same | free-standing, turned per square (nature has no front) |
-| sculpted pieces (statues, armour, scarecrows, the stuffed wolves, the horse, carcasses, skeletons, dolls, cages, charms, sheeted furniture, the dollhouse, harp, spinning wheel, the colossus, the faceless statue, Strahd's effigy, the wicker sun ...) | the same | made from their own sprite: its silhouette made solid, swelling toward the middle, painted with the sprite in front and the 2D back view behind (`spr_<art>` materials, shaders/cel_sprite.gdshader) |
+| sculpted pieces (statues, armour, scarecrows, the stuffed wolves, carcasses, skeletons, dolls, cages, charms, sheeted furniture, the dollhouse, harp, spinning wheel, the colossus, the faceless statue, Strahd's effigy, the wicker sun ...) | the same | made from their own sprite: its silhouette made solid, swelling toward the middle, painted with the sprite in front and the 2D back view behind (`spr_<art>` materials, shaders/cel_sprite.gdshader) |
 | wall pictures (paintings, portraits, mirrors, boards, notices, reliefs, carvings, tapestries, banners) | the same | the 2D picture kept in a 3D mount: a moulded frame, a board, a stone slab, a hanging rod |
 | wall fittings (trophies, chains, shelves of jars, winches, robes on pegs ...) | the same | sculpted from their art against the wall |
 | about 60 more hand-modelled objects (braziers, altars, shrines, cabinets, the canopy bed, harpsichord, organ, tubs, the wine press, stoves, marble hearths, the manor entrance, painted doors, windows, rugs, straw ...) | the same | as their 2D pieces were mounted |
 | cottage, tent, vardo, barn_collapsed, windmill, bell_tower, tower_vr, hut_lysaga, standing_stones, gallows, barrow, gulthias_tree, ribbon_tree ... | the same | building-sized: they keep their size and clear the trees; a piece standing in for a whole house is a 3D building over its ground; tall ones fade |
-| Castle Ravenloft: throne, black_carriage, bone_table, iron_maiden, reliquary_sealed, coffin_plinth, heart_of_sorrow, lift_cage, cauldron, stone_font, glass_vessels, bat_perch, gold_heap, gold_spill, skull_chandelier, great_doors (a door leaf; spans the keep's two-square doorway), drawbridge, roof_hatch (a floor exit); gargoyle, black_horse, saint_defaced, bone_throne, bone_chair, statue_young_strahd sculpted; the portraits, dragon_skull, stone_faces, names_wall, bronze_plaque, banner_regiment, key_board, wine_rack_bricked in 3D mounts | the same | as their 2D pieces were mounted; cobwebs and blood pools stay painted |
+| Castle Ravenloft: throne, black_carriage, bone_table, iron_maiden, reliquary_sealed, coffin_plinth, heart_of_sorrow, lift_cage, cauldron, stone_font, glass_vessels, bat_perch, gold_heap, gold_spill, skull_chandelier, great_doors (a door leaf; spans the keep's two-square doorway), drawbridge, roof_hatch (a floor exit); gargoyle, saint_defaced, bone_throne, bone_chair, statue_young_strahd sculpted; the portraits, dragon_skull, stone_faces, names_wall, bronze_plaque, banner_regiment, key_board, wine_rack_bricked in 3D mounts | the same | as their 2D pieces were mounted; cobwebs and blood pools stay painted |
 
 ## How a piece finds its place (`world/look/model_piece.gd`, `ModelPiece`)
 

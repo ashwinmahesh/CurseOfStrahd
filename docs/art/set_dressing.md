@@ -93,9 +93,11 @@ at real size in catalog `feet` (a person is 6 ft and one unit is 5 ft; low, deep
 the top seen from above): a wardrobe 7 ft, a table 3.5, a bed 4, a cottage 16, a gallows 15. A piece wider than
 `big_width` (1.6 units) at that size, such as a cottage, tent, wagon or the standing stones, keeps its size whatever
 the room and clears the trees (and the board's own stumps and brambles) on the squares it covers, plus one more row
-on the west and south, the sides the opening camera looks from, so no tree stands in front of it. Furniture against
-a wall is squeezed sideways to its square but keeps its height. `test_pieces_are_drawn_at_their_real_size` builds
-every location and fails on any piece drawn under 70% or over 135% of its real size.
+on the west and south, the sides the opening camera looks from, so no tree stands in front of it. A narrower piece
+with `big` in its catalog entry keeps its size the same way (the horses, two squares long, would shrink to ponies).
+Furniture against a wall is squeezed sideways to its square but keeps its height.
+`test_pieces_are_drawn_at_their_real_size` builds every location and fails on any piece drawn under 70% or over 135%
+of its real size.
 
 ## Pieces don't overlap (owner report, 2026-10-06)
 

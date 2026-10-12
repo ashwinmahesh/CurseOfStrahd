@@ -159,8 +159,9 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 				_take_square(board, root, cell)
 			elif board.grid.has_flag(cell, CombatGrid.LOW) or board.grid.has_flag(cell, CombatGrid.DIFFICULT):
 				_take_square(board, root, cell)   # its own art replaces the board's furniture or brambles there
+			# A catalog `big` piece (a horse) keeps its size; spanning squares, it clears only what stands under them.
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false)),
-				facing_yaw(spec), span_centre(board, spec))
+				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2())
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
@@ -185,6 +186,14 @@ static func span_centre(board: ArenaBoard, spec: Dictionary) -> Variant:
 		return null
 	var cell := Vector2i(int((spec["cell"] as Array)[0]), int((spec["cell"] as Array)[1]))
 	return board.cell_center(cell) + Vector3((float(span[0]) - 1.0) / 2.0, 0.0, (float(span[1]) - 1.0) / 2.0)
+
+
+## The ground a prop that spans several squares covers (x and z, in squares), or an empty rect for one square.
+static func span_foot(spec: Dictionary) -> Rect2:
+	var span := spec.get("span", []) as Array
+	if span.size() != 2:
+		return Rect2()
+	return Rect2(float((spec["cell"] as Array)[0]), float((spec["cell"] as Array)[1]), float(span[0]), float(span[1]))
 
 
 ## A tall piece (the Gulthias Tree, a windmill) fades like the trees when it stands between the camera and the party.
@@ -580,10 +589,11 @@ static func _stand(board: ArenaBoard, root: Node3D, art: String, cell: Vector2i,
 ## the opening camera); anything else looks the same from every side (a barrel, a tree) and is a plain billboard.
 ## Added to `parent`; returns the piece.
 ## `yaw` (a prop's `facing`, facing_yaw) turns a piece that would otherwise face away from its wall or south;
-## `centre` (span_centre) stands it over the middle of the squares it spans.
+## `centre` (span_centre) stands it over the middle of the squares it spans. A big piece clears the trees and the
+## board's own scenery around it, or with `foot` (span_foot) only what stands under it (a horse keeps its pen's rails).
 static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Vector2i, scale_: float = 1.0,
 		at_override: Variant = null, front_override: String = "", big: bool = false, yaw: Variant = null,
-		centre: Variant = null) -> Node3D:
+		centre: Variant = null, foot := Rect2()) -> Node3D:
 	var model := ModelPiece.for_art(board, art, ModelPiece.hash_cell(cell))
 	if model != "":
 		return ModelPiece.stand(board, parent, model, art, cell, at_override, 1.0, yaw, centre)   # a 3D piece (docs/art/models.md)
@@ -612,7 +622,7 @@ static func stand_piece(board: ArenaBoard, parent: Node3D, art: String, cell: Ve
 	var info := manifest()[art] as Dictionary
 	var back := str(info.get("back", ""))
 	if big and at_override == null:
-		_clear_trees_around(board, parent, cell, maxf(_width(art), _width(back) if back != "" else 0.0) * scale_)
+		_clear_trees_around(board, parent, cell, maxf(_width(art), _width(back) if back != "" else 0.0) * scale_, foot)
 	if not big and at_override == null:
 		# Owner report (2026-10-06): pieces overlapped walls and each other. A piece is no wider than its square,
 		# unless all eight squares around it are open floor with nothing standing there.
