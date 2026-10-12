@@ -1,5 +1,6 @@
 extends Node
-## Auras round figures (world/look/aura_fx.gd, owner 2026-10-09): Strahd's dark aura and a level 6 paladin's glow.
+## Auras round figures (world/look/aura_fx.gd, owner 2026-10-09): Strahd's dark aura and a level 6 paladin's area on the
+## floor (no glow round the paladin, owner 2026-10-12).
 ## make capture SCENE=res://tools/capture/aura_capture.tscn NAME=aura/after FRAMES=10 [ARGS="--day"]
 ## Godrick (level 6, so he has Aura of Protection) leads the party in the village at night with Strahd beside them:
 ## exploring (<out>_explore.png), as in a fight with the paladin's area on the floor (<out>_fight.png), Strahd mid-surge

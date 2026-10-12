@@ -1595,13 +1595,17 @@ func _known_defenses(t: Combatant) -> String:
 	return " · " + ("; ".join(parts) if not parts.is_empty() else "no resistances")
 
 
-## The area a spell would cover and who's in it (cb_02): {cells, creatures: [{id, name, ally, line}], warnings}.
+## The area a spell would cover and who's in it (cb_02): {cells, outline: its edge to draw (SpellTargeting.area_outline;
+## {} for a wall, which shows its squares), creatures: [{id, name, ally, line}], warnings}.
 func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector2, slot: int = 0) -> Dictionary:
 	var data := Compendium.shared().spell_data(str(action["spell_id"]))
 	var cells: Array[Vector2i] = []
+	var outline := {}
 	if data.has("area"):
 		# A wall's ring or globe shows as it's cast (SpellTargeting.wall_cells).
 		cells = e.spells.targeting.wall_cells(data, action.get("opts", {}) as Dictionary, point, e.spells.area_for(c, data, point, dir))
+		if str((data["area"] as Dictionary).get("shape", "")) != "wall":
+			outline = e.spells.targeting.area_outline(c, data, point, dir)
 	var who: Array[Dictionary] = []
 	var warnings: Array[String] = []
 	var level := int(data.get("level", 0))
@@ -1658,7 +1662,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	if bool(action.get("concentration", false)) and c.creature.concentration != null:
 		warnings.append("Ends your Concentration on %s" % c.creature.concentration.name)
 	var save := str(data.get("save", ""))
-	return {"cells": cells, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot,
+	return {"cells": cells, "outline": outline, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot,
 		"save": str(Creature.ABILITY_SHORT[StringName(save)]) if save != "" else ""}
 
 

@@ -145,3 +145,46 @@ func test_walls_stop_areas() -> void:
 	var cells := g.area_cells("sphere", 15, Vector2(2, 2.5))
 	assert_false(Vector2i(4, 2) in cells, "behind the wall from the origin")
 	assert_true(Vector2i(1, 2) in cells)
+
+
+func test_an_emanation_is_round() -> void:
+	# Everything within its reach of the creature's space, measured straight (owner, 2026-10-12: "round the rule too").
+	var g := CombatGrid.from_rows([".........", ".........", ".........", ".........", ".........", ".........", ".........", ".........", "........."])
+	var me := Vector2i(4, 4)
+	var five := g.area_cells("emanation", 5, Vector2(4.5, 4.5), Vector2.RIGHT, 5, me, 1)
+	assert_eq(five.size(), 8, "5 ft: every square touching it, the diagonals too")
+	var ten := g.area_cells("emanation", 10, Vector2(4.5, 4.5), Vector2.RIGHT, 5, me, 1)
+	assert_eq(ten.size(), 20, "10 ft: the 5x5 block less its own square and the four far corners")
+	assert_true(Vector2i(6, 5) in ten and Vector2i(4, 2) in ten)
+	assert_false(Vector2i(6, 6) in ten, "a far corner square is past 10 ft measured straight")
+	var big := g.area_cells("emanation", 5, Vector2(4, 4), Vector2.RIGHT, 5, Vector2i(3, 3), 2)
+	assert_eq(big.size(), 12, "a Large creature's 5 ft: every square touching its 2x2")
+
+
+func test_a_creature_is_in_an_emanation_when_one_of_its_squares_is() -> void:
+	var g := CombatGrid.from_rows([".........", ".........", ".........", ".........", ".........", ".........", ".........", ".........", "........."])
+	var me := Vector2i(4, 4)
+	assert_true(g.in_emanation(me, 1, 10, Vector2i(6, 5), 1), "two squares out, one across")
+	assert_false(g.in_emanation(me, 1, 10, Vector2i(6, 6), 1), "a far corner")
+	assert_false(g.in_emanation(me, 1, 10, Vector2i(1, 4), 1), "three squares off")
+	assert_true(g.in_emanation(me, 1, 10, Vector2i(1, 4), 2), "a Large creature there has a square two off")
+	assert_true(g.in_emanation(me, 1, 5, Vector2i(5, 5), 1), "5 ft takes the diagonal")
+	assert_true(g.in_emanation(me, 1, 10, me, 1, 0, 10), "straight above, 10 ft up")
+	assert_false(g.in_emanation(me, 1, 10, Vector2i(5, 4), 1, 0, 10), "10 ft up and a square across is further")
+
+
+func test_area_outlines_match_their_shapes() -> void:
+	var sphere := CombatGrid.area_outline("sphere", 20, Vector2(4, 3))
+	assert_eq(sphere["circle"], Vector2(4, 3))
+	assert_eq(float(sphere["radius"]), 4.0, "a 20 ft radius is four squares")
+	assert_eq(CombatGrid.area_outline("cylinder", 10, Vector2(1, 1))["radius"], 2.0)
+	var em := CombatGrid.area_outline("emanation", 10, Vector2(4.5, 4.5), Vector2.RIGHT, 5, Vector2i(4, 4), 1)
+	assert_eq(em["rect"], Rect2(4, 4, 1, 1), "round the creature's own square")
+	assert_eq(float(em["radius"]), 2.0)
+	var cone := CombatGrid.area_outline("cone", 15, Vector2(2, 2.5), Vector2.RIGHT)["points"] as PackedVector2Array
+	assert_eq(cone, PackedVector2Array([Vector2(2, 2.5), Vector2(5, 1), Vector2(5, 4)]), "a triangle as wide as it is long")
+	var cube := CombatGrid.area_outline("cube", 15, Vector2(2, 2.5), Vector2.RIGHT)["points"] as PackedVector2Array
+	assert_eq(cube, PackedVector2Array([Vector2(2, 1), Vector2(5, 1), Vector2(5, 4), Vector2(2, 4)]))
+	var line := CombatGrid.area_outline("line", 30, Vector2(0, 2.5), Vector2.RIGHT)["points"] as PackedVector2Array
+	assert_eq(line, PackedVector2Array([Vector2(0, 2), Vector2(6, 2), Vector2(6, 3), Vector2(0, 3)]))
+	assert_true(CombatGrid.area_outline("ring", 10, Vector2.ZERO).is_empty(), "nothing for a shape it doesn't know")

@@ -1,7 +1,8 @@
 // An aura on the ground (world/look/aura_fx.gd), drawn on a plane lying on the floor under a figure.
 // `style` 0: the shadow Strahd stands in, a dark pool whose edge creeps and sends out tendrils, mixed over the floor;
-// `surge` (0..1) throws it wider. `style` 1: a paladin's aura, the area it really covers (a rounded square: 10 ft is two
-// squares every way on the grid), a faint warm fill and edge, added. The plane's half size is the aura's reach.
+// `surge` (0..1) throws it wider. `style` 1: a paladin's aura, the area it really covers (everything within its reach of
+// the paladin's space: the space's square grown by the reach, its corners rounded by the reach), a faint warm fill and
+// edge, added. The plane's half size is the paladin's half width plus the reach.
 shader_type spatial;
 render_mode unshaded, blend_premul_alpha, depth_draw_never, cull_disabled, shadows_disabled, fog_disabled;
 
@@ -9,7 +10,7 @@ uniform int style = 0;
 uniform float strength = 1.0;
 uniform float surge = 0.0;
 uniform float fade = 1.0;
-// Style 1: the corner rounding, as a share of the half size.
+// Style 1: the corner rounding, as a share of the half size (AuraFx sets it to the reach's share).
 uniform float corner = 0.18;
 uniform vec3 shadow_col : source_color = vec3(0.05, 0.02, 0.08);
 uniform vec3 edge_col : source_color = vec3(0.6, 0.05, 0.1);
