@@ -72,9 +72,11 @@ func quest_stage(quest_id: String) -> String:
 	return str((quests.get(quest_id, {}) as Dictionary).get("stage", ""))
 
 
-## Moves a quest to `stage` (data/quests). Returns false if the quest or stage doesn't exist, or if the quest has ended
-## and `stage` is an earlier one that's still open: a line that moves a quest on without asking where it is can't reopen
-## a finished quest (Storyline QA, 2026-10-12: Blinsky's doll talk put Izek's back to "Learn what Izek wants with her").
+## Moves a quest to `stage` (data/quests). Returns false if the quest or stage doesn't exist, or if `stage` is an
+## earlier one that's still open and the quest has ended or `stage` is its first: a line that starts or moves a quest
+## without asking where it is can't reopen a finished quest or start a begun one over (Storyline QA, 2026-10-12:
+## Blinsky's doll talk put Izek's back to "Learn what Izek wants with her"; Davian's pledge put The Third Stone back to
+## "told" after the stone was found, Wiki finding 40).
 func set_quest_stage(quest_id: String, stage: String) -> bool:
 	var q := Compendium.shared().get_entry("quests", quest_id)
 	if q.is_empty():
@@ -82,8 +84,8 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	var at := quest_stage_index(quest_id, stage)
 	if at < 0:
 		return false
-	if quest_ended(quest_id) and at < quest_stage_index(quest_id, quest_stage(quest_id)) \
-			and str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == "":
+	var opens := str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == ""
+	if opens and at < quest_stage_index(quest_id, quest_stage(quest_id)) and (at == 0 or quest_ended(quest_id)):
 		return false
 	var entry := quests.get(quest_id, {"stage": "", "history": []}) as Dictionary
 	entry["stage"] = stage
@@ -93,7 +95,21 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	entry["history"] = hist
 	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
+	if quest_id == "find_the_ally":
+		_settle_ally()
 	return true
+
+
+## The Tarokka ally's quest follows the party (Wiki finding 66): it's found the moment the one the cards named travels
+## with the party, however they came to join (Ismark's, Kolyan's and Parriwimple's scenes never said so), and the
+## Darklord card, which names no one, closes it at once.
+func _settle_ally() -> void:
+	if quest_stage("find_the_ally") != "foretold":
+		return
+	if str(tarokka.get("ally", "")) == "darklord":
+		set_quest_stage("find_the_ally", "alone")
+	elif Tarokka.field(self, "ally.npc") in guest_ids:
+		set_quest_stage("find_the_ally", "found")
 
 
 ## Whether the quest stands at a stage that ends it (success or failure).
@@ -608,6 +624,7 @@ func add_guest(npc_id: String) -> bool:
 		return false
 	guest_ids.append(npc_id)
 	guests.append(cr)
+	_settle_ally()
 	return true
 
 
@@ -734,8 +751,10 @@ static func from_dict(d: Dictionary) -> StoryState:
 
 ## Saves made before a quest fix (Storyline QA, 2026-10-12) are mended so the journal shows where the story really is.
 ## A fight that now moves its quest on (a location encounter's `quest`) was won before it did: Black Roses stayed at
-## "vigil" after its vampires died. And a quest that an unguarded line moved back out of its ending (Izek's, by
-## Blinsky's doll talk; set_quest_stage refuses that now) goes back to that ending.
+## "vigil" after its vampires died. A quest that an unguarded line moved back out of its ending (Izek's, by Blinsky's
+## doll talk) goes back to that ending, and one moved back to its first stage (The Third Stone, by Davian's pledge) to
+## the furthest it had reached; set_quest_stage refuses both now. Wiki findings 1 and 66 too: Into the Mists closes
+## for a party already in the village, and the Tarokka ally's quest catches up (_settle_ally).
 static func _upgrade_quests(st: StoryState) -> void:
 	for loc in Compendium.shared().all("locations"):
 		var won := (st.location_states.get(str(loc["id"]), {}) as Dictionary).get("encounters", {}) as Dictionary
@@ -755,10 +774,19 @@ static func _upgrade_quests(st: StoryState) -> void:
 			continue
 		var stages := Compendium.shared().get_entry("quests", qid).get("stages", []) as Array
 		var now := st.quest_stage_index(qid, st.quest_stage(qid))
+		var furthest := now
 		for h: Variant in ((st.quests[qid] as Dictionary).get("history", []) as Array):
 			var i := st.quest_stage_index(qid, str(h))
+			furthest = maxi(furthest, i)
 			if i > now and str((stages[i] as Dictionary).get("ends", "")) != "":
 				(st.quests[qid] as Dictionary)["stage"] = str(h)   # back to the ending it was moved out of
+		if now == 0 and furthest > 0 and not st.quest_ended(qid):
+			(st.quests[qid] as Dictionary)["stage"] = str((stages[furthest] as Dictionary)["id"])   # started over by mistake
+	# Into the Mists closed only when Rose and Thorn were spoken to; a party already past them is past the mists.
+	if st.quests.has("into_the_mists") and not st.quest_ended("into_the_mists") \
+			and (st.visited.has("village_of_barovia") or st.visited.has("death_house_ground")):
+		st.set_quest_stage("into_the_mists", "village_edge")
+	st._settle_ally()
 
 
 ## Saves from before found spellbooks listed their spells (owner, 2026-10-07): the Dursts' footlocker in Death House

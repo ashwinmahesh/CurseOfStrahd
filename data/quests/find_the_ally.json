@@ -26,6 +26,12 @@
       "journal": "The ally the cards named will not stand with us. We go on without them.",
       "objectives": [],
       "ends": "failure"
+    },
+    {
+      "id": "alone",
+      "journal": "Madam Eva's fourth card named no one. Whatever help comes, the cards didn't send it: we face Strahd with the friends we already have.",
+      "objectives": [],
+      "ends": "success"
     }
   ]
 }
