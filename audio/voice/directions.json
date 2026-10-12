@@ -3068,6 +3068,7 @@
  },
  "urwin_martikov": {
   "001aff385e72021d": "[low, confiding]",
+  "03a0d8729fa7e1df": "[low, gossiping, grave]",
   "0fc9b6a2312a4df6": "[warm, wry]",
   "110838260fc16742": "[low, thoughtful]",
   "13563ae05310b740": "[dry, low]",
@@ -3089,10 +3090,10 @@
   "814067b8fa3b7f0f": "[calm, measured, dry]",
   "829088f77fdd1884": "[dry, calm]",
   "845c15601cbdfd87": "[dry, amused]",
-  "8ab07ddaf540ca2f": "[low, relieved, dry]",
   "8d522beb70bbb377": "[earnest, worried]",
   "9538ea75fea5af15": "[firm, low, final]",
   "9771d258fcea2a85": "[low, tense, measured]",
+  "9920b4e3d020dfd5": "[low, relieved, dry]",
   "9d49ef1fc54c55d8": "[plain, dry]",
   "aaf152705524cb37": "[dry, wry]",
   "c8e51f1333bd35a0": "[moved, grateful, warm]",
@@ -3103,8 +3104,7 @@
   "dce6362d3d0598b4": "[firm, low, steady]",
   "df7a03d811b9cb01": "[calm, protective]",
   "e671bd8d7c84b34a": "[low, pleading]",
-  "ebac9da5dae65691": "[warm, low, trusting]",
-  "f42771bc880bd483": "[low, gossiping, grave]"
+  "ebac9da5dae65691": "[warm, low, trusting]"
  },
  "vadoma": {
   "2fdeb7ae6ccd0b97": "[amused, low, inviting]",
@@ -3120,7 +3120,7 @@
   "199ebfe1b0181f28": "[warm, heartfelt]",
   "38b62e3c10f92aaf": "[firm, wry, grateful]",
   "7652c4c5fdb86f0f": "[emotional, grateful, near tears]",
-  "faf10e9a9d0cc8ac": "[frightened, hushed, haggard]"
+  "ae7db7e6c55cc05f": "[frightened, shaky, haggard]"
  },
  "vallaki_cloth_merchant": {
   "f89226a54aa3fccc": "[booming salesman, then nervous]"
@@ -3246,6 +3246,7 @@
   "bd66423387e296fb": "[shocked, hushed, frightened]",
   "c10b493fcdc66a45": "[quiet, wistful]",
   "c6c8bf31779171da": "[quiet, wry, a little defiant]",
+  "e07fefb509e78717": "[afraid, nervous, low]",
   "e37dd3ebc95ddddd": "[pleading, frightened]"
  },
  "vallaki_sabin": {

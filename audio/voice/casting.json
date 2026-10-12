@@ -318,9 +318,9 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "5yhXQD3smYjhgzaztAzQ",
-      "released": true,
       "earlier_voice_id": "8WRfTpaUoqZSfTerOXzI",
-      "model_note": "Recast 2026-10-11 on Ashwin's feedback: the earlier library voice (Mihai) drifted to a woman's pitch on some lines."
+      "model_note": "Recast 2026-10-11 on Ashwin's feedback: the earlier library voice (Mihai) drifted to a woman's pitch on some lines.",
+      "released": true
     },
     "patrina_velikovna": {
       "voice_id": "2t85BBUECtLLKQzxLD95",
@@ -1390,7 +1390,7 @@
     "vallaki_lamplighter": {
       "voice_id": "NKQBjfoAhInP7Bjx6P7l",
       "name": "Library voice: Bogdan  Gamaleț",
-      "description": "Ilie the Lamplighter of Vallaki, a grieving father; library voice (2026-10-08). Was: An old lamplighter with a thin, quiet, careful voice and a strong, clearly audible Eastern European (Romanian) accent. Superstitious about the dark, speaks softly.",
+      "description": "Ignat the Lamplighter of Vallaki, a grieving father; library voice (2026-10-08). Was: An old lamplighter with a thin, quiet, careful voice and a strong, clearly audible Eastern European (Romanian) accent. Superstitious about the dark, speaks softly.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
