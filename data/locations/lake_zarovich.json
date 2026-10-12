@@ -188,7 +188,25 @@
       "label": "Bluto's rowboat",
       "model": "rowboat",
       "dialogue": "lake_zarovich/landing:boat",
-      "facing": "north"
+      "facing": "north",
+      "checks": [
+        {
+          "id": "jetty_swing",
+          "skill": "acrobatics",
+          "dc": 13,
+          "label": "Swing under the jetty from the boat",
+          "success": {
+            "reveal": [
+              "jetty_boards"
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "cold"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "lz_bluto_shack",
@@ -238,7 +256,20 @@
       ],
       "kind": "examine",
       "label": "A fishers' shrine",
-      "model": "shrine_small"
+      "model": "shrine_small",
+      "checks": [
+        {
+          "id": "fishers_shrine_pray",
+          "skill": "religion",
+          "dc": 13,
+          "label": "Pray at the fishers' shrine",
+          "success": {
+            "reveal": [
+              "shrine_trident"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "lz_flat_rock",
@@ -248,7 +279,22 @@
       ],
       "kind": "examine",
       "label": "A flat rock above the water",
-      "model": "boulder"
+      "model": "boulder",
+      "checks": [
+        {
+          "id": "flat_rock_dive",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Dive from the flat rock",
+          "success": {
+            "gold": 25
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "cold"
+          }
+        }
+      ]
     },
     {
       "id": "lz_fishers_notice",

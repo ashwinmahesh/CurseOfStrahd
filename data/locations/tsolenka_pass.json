@@ -267,7 +267,18 @@
       ],
       "kind": "examine",
       "label": "A wayside shrine",
-      "model": "shrine_small"
+      "model": "shrine_small",
+      "checks": [
+        {
+          "id": "tsolenka_shrine_pray",
+          "skill": "religion",
+          "dc": 14,
+          "label": "Pray at the wayside shrine",
+          "success": {
+            "inspiration": true
+          }
+        }
+      ]
     },
     {
       "id": "tsolenka_road_stone",
@@ -287,7 +298,25 @@
       ],
       "kind": "examine",
       "label": "The gorge",
-      "model": "ledge"
+      "model": "ledge",
+      "checks": [
+        {
+          "id": "gorge_rocks",
+          "skill": "acrobatics",
+          "dc": 14,
+          "label": "Edge out along the rocks over the gorge",
+          "success": {
+            "reveal": [
+              "landing_roc_quill"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "tsolenka_bridge_parapet",
@@ -307,7 +336,20 @@
       ],
       "kind": "examine",
       "label": "Bones on the shelf",
-      "model": "bones"
+      "model": "bones",
+      "checks": [
+        {
+          "id": "roc_leavings",
+          "skill": "medicine",
+          "dc": 15,
+          "label": "Examine the roc's leavings",
+          "success": {
+            "reveal": [
+              "roc_dropped_wings"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "tsolenka_tower_carvings",
@@ -317,7 +359,22 @@
       ],
       "kind": "examine",
       "label": "Carved faces",
-      "model": "relief"
+      "model": "relief",
+      "checks": [
+        {
+          "id": "watch_faces",
+          "skill": "history",
+          "dc": 15,
+          "label": "Read the carved faces",
+          "success": {
+            "codex": {
+              "id": "tsolenka_watch",
+              "title": "The watch at Tsolenka",
+              "text": "The faces carved over the gate are the watch who held the pass for the castle's lord when he was young. They swore to keep it until relieved. Nobody ever came to relieve them."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "tsolenka_gate_notice",

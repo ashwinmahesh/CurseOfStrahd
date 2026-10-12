@@ -120,3 +120,29 @@ once
 ~ search:vrt_path_caltrops
 | Beside the path, a small leather pouch spilling iron caltrops, the points still sharp. Someone careful scattered a few here and kept the rest. {name} takes what's left.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:perception:lookout_watch:success
+| From the rock the lake is a sheet of lead, and wedged behind the rock itself someone has left a satchel.
+
+~ check:perception:lookout_watch:failure
+| The lake is grey and so is everything else.
+
+~ check:survival:camp_tracks:success
+| Every set of bootprints round the wagon steps wide of the step itself: someone has strung a wire there.
+
+~ check:survival:camp_tracks:failure
+| Bootprints, horse prints and a lot of mud.
+
+~ check:medicine:remedies_sort:success
+| Salves, tonics and antitoxins, all labelled; and one flask that isn't, which smells of nothing at all.
+
+~ check:medicine:remedies_sort:failure
+| A great many bottles. Some of them will save your life, and you can't tell which.
+
+~ check:survival:trophies_read:success
+| A werewolf's paw, a hag's eye, a vampire's fang, every one labelled; and one trophy hangs a finger's width from the wall, clipped over something.
+
+~ check:survival:trophies_read:failure
+| A great many dead things, labelled in a small neat hand you can't make out.

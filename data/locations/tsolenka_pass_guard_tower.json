@@ -182,7 +182,18 @@
       ],
       "kind": "examine",
       "label": "A table with dice",
-      "model": "table_set"
+      "model": "table_set",
+      "checks": [
+        {
+          "id": "ghost_dice",
+          "skill": "sleight_of_hand",
+          "dc": 15,
+          "label": "Win a hand at the watch's dice",
+          "success": {
+            "gold": 40
+          }
+        }
+      ]
     },
     {
       "id": "tower_roster",
@@ -192,7 +203,26 @@
       ],
       "kind": "examine",
       "label": "The watch roster",
-      "model": "notice_board"
+      "model": "notice_board",
+      "checks": [
+        {
+          "id": "relief_watch",
+          "skill": "deception",
+          "dc": 15,
+          "label": "Sign the roster as the relief watch",
+          "success": {
+            "unlock": [
+              "captains_strongbox"
+            ],
+            "inspiration": true
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "cold"
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "tower_captain_crest",

@@ -284,7 +284,25 @@
       ],
       "kind": "examine",
       "label": "The wall of Krezk",
-      "model": "palisade"
+      "model": "palisade",
+      "checks": [
+        {
+          "id": "wall_top_walk",
+          "skill": "acrobatics",
+          "dc": 14,
+          "label": "Walk the top of the wall",
+          "success": {
+            "reveal": [
+              "wall_loose_stone"
+            ]
+          },
+          "failure": {
+            "damage": "1d6",
+            "damage_type": "bludgeoning"
+          },
+          "alone": true
+        }
+      ]
     },
     {
       "id": "abbey_cairn",
@@ -294,7 +312,20 @@
       ],
       "kind": "examine",
       "label": "A cairn by the track",
-      "model": "cairn"
+      "model": "cairn",
+      "checks": [
+        {
+          "id": "abbey_cairn_names",
+          "skill": "history",
+          "dc": 13,
+          "label": "Read the names on the cairn",
+          "success": {
+            "reveal": [
+              "track_cairn_ring"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "krezk_well",
@@ -324,7 +355,23 @@
       ],
       "kind": "examine",
       "label": "The goat pens",
-      "model": "fence"
+      "model": "fence",
+      "checks": [
+        {
+          "id": "goats_settle",
+          "skill": "animal_handling",
+          "dc": 13,
+          "label": "Settle the goats for the herders",
+          "success": {
+            "items": [
+              {
+                "id": "ration",
+                "qty": 4
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "krezk_watch_fire",
@@ -354,7 +401,23 @@
       ],
       "kind": "examine",
       "label": "The burgomaster's house",
-      "model": "manor_front"
+      "model": "manor_front",
+      "checks": [
+        {
+          "id": "krezkov_listen",
+          "skill": "stealth",
+          "dc": 13,
+          "label": "Listen at the Krezkovs' shutters unseen",
+          "success": {
+            "codex": {
+              "id": "krezkov_grief",
+              "title": "The Krezkovs' grief",
+              "text": "Through the shutters, the burgomaster and his wife talk quietly about the five children they have buried by the pool, and Ilya upstairs, who is dying. Anna wants to ask the Abbot to save him. Dmitri would rather bury a sixth child than owe the Abbot anything."
+            }
+          },
+          "once": true
+        }
+      ]
     },
     {
       "id": "abbey_on_the_mountain",
@@ -364,7 +427,22 @@
       ],
       "kind": "examine",
       "label": "The abbey above",
-      "model": "ledge"
+      "model": "ledge",
+      "checks": [
+        {
+          "id": "abbey_recall",
+          "skill": "history",
+          "dc": 15,
+          "label": "Recall what's told of the abbey",
+          "success": {
+            "codex": {
+              "id": "abbey_of_st_markovia_tales",
+              "title": "The abbey above Krezk",
+              "text": "The abbey was built as a hospital for the sick in body and mind, in the name of a saint who once led the faithful against the castle. Its bell hasn't rung in living memory. Krezk sends it food and asks no questions, and its Abbot is said never to have aged."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "track_cairn_ring",
@@ -440,7 +518,20 @@
       "kind": "examine",
       "label": "A wayside shrine",
       "model": "shrine_small",
-      "facing": "south"
+      "facing": "south",
+      "checks": [
+        {
+          "id": "krezk_shrine_pray",
+          "skill": "religion",
+          "dc": 13,
+          "label": "Pray at the wayside shrine",
+          "success": {
+            "reveal": [
+              "lane_shrine_tin"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "shrine_candles",

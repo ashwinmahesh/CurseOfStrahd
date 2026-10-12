@@ -263,3 +263,18 @@ func test_placed_checks_give_playable_things_that_fit_their_region() -> void:
 	assert_true(n >= 40, "the checks are placed (%d)" % n)
 	for s: String in ["nature", "arcana", "acrobatics", "animal_handling", "history", "religion", "medicine", "survival", "athletics", "performance"]:
 		assert_true(skills.has(s), "%s has a use in the world" % s)
+
+
+## In the abbey garden: unpicking the scarecrows' binding (a side flag) keeps their fight from starting.
+func test_unbinding_the_abbey_scarecrows_stops_their_fight() -> void:
+	root.call("enter_location", "abbey_of_st_markovia_garden", "")
+	await _frames(2)
+	var v := _view()
+	var spec := {}
+	for p: Variant in v.loc["props"]:
+		if str((p as Dictionary)["id"]) == "stitched_sentry":
+			spec = p as Dictionary
+	LocationChecks._resolve(v, spec, WorldChecks.find(spec, "scarecrows_unbind"), v.leader().creature as Character, true)
+	assert_true(bool(GameState.story.get_flag("abbey_scarecrows_unbound")))
+	assert_false(v._trigger_encounter("enter_area:scarecrow_row"), "the scarecrows stay on their poles")
+	assert_false(v.in_combat)

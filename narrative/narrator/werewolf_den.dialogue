@@ -159,3 +159,29 @@ once
 
 ~ examine:den_climbing_pine
 | A pine scored with claw marks far higher than a wolf could reach on four legs. Its branches start low enough to climb, if you don't think about who climbed it last.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:nature:wolfsbane_name:success
+| Wolfsbane, and someone has been weeding it by hand. Whoever lives here isn't one of the pack.
+
+~ check:nature:wolfsbane_name:failure
+| Pretty purple flowers. You'd rather not pick them to find out.
+
+~ check:medicine:midden_sort:success
+| Deer, goats and people; and with one of the people, a purse that the wolves had no use for.
+
+~ check:medicine:midden_sort:failure
+| Bones, a great many, and none of them saying how they got here.
+
+~ check:nature:zuleika_herbs:success
+| Feverfew, willow bark and wolfsbane, hung by someone who knows what she's doing; and among them a flask that holds something stronger.
+
+~ check:nature:zuleika_herbs:failure
+| Herbs, drying. The cave smells of them and of wet dog.
+
+~ check:survival:kiril_trophies:success
+| Every trophy is a hunter's: their bows, their charms, their boots. And among them a sword that's still sharp.
+
+~ check:survival:kiril_trophies:failure
+| Trophies of a great many hunts. You'd rather not be one.

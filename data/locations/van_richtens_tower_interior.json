@@ -225,7 +225,25 @@
       ],
       "kind": "examine",
       "label": "A wall of trophies",
-      "model": "trophy_wolf"
+      "model": "trophy_wolf",
+      "checks": [
+        {
+          "id": "trophies_read",
+          "skill": "survival",
+          "dc": 15,
+          "label": "Read the trophies",
+          "success": {
+            "reveal": [
+              "trophy_wand"
+            ],
+            "codex": {
+              "id": "van_richten_trophies",
+              "title": "The hunter's trophies",
+              "text": "Every trophy on the wall is labelled in a small, neat hand: where, when, and what it cost. A werewolf's paw, a hag's eye, a vampire's fang. The labels on the oldest ones have been written over, more than once, as if the hunter kept remembering it differently."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "vrt_casebook",
@@ -272,7 +290,20 @@
       ],
       "kind": "examine",
       "label": "Jars and bottles",
-      "model": "jars"
+      "model": "jars",
+      "checks": [
+        {
+          "id": "remedies_sort",
+          "skill": "medicine",
+          "dc": 15,
+          "label": "Sort the hunter's remedies",
+          "success": {
+            "reveal": [
+              "jars_oil"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "vrt_letter",

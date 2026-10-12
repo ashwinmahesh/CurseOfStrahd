@@ -281,7 +281,22 @@
       ],
       "kind": "examine",
       "label": "The frost scar",
-      "model": "scorch"
+      "model": "scorch",
+      "checks": [
+        {
+          "id": "frost_scar",
+          "skill": "arcana",
+          "dc": 15,
+          "label": "Study the frost scar",
+          "success": {
+            "codex": {
+              "id": "argynvost_frost_scar",
+              "title": "The frost scar",
+              "text": "The scar in the courtyard is a dragon's breath, cold enough to crack stone and still frosting over centuries later. A silver dragon stood here at the end and breathed on the castle's soldiers as they came through the gate."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "holt_gatehouse_ruin",
@@ -382,7 +397,20 @@
       ],
       "kind": "examine",
       "label": "Small headstones",
-      "model": "gravestone"
+      "model": "gravestone",
+      "checks": [
+        {
+          "id": "squires_names",
+          "skill": "history",
+          "dc": 14,
+          "label": "Read the squires' headstones",
+          "success": {
+            "reveal": [
+              "holt_squire_token"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "holt_headstone_1",
@@ -452,7 +480,24 @@
       ],
       "kind": "examine",
       "label": "A well",
-      "model": "well"
+      "model": "well",
+      "checks": [
+        {
+          "id": "holt_well_climb",
+          "skill": "athletics",
+          "dc": 15,
+          "label": "Climb down to the ledge in the well",
+          "success": {
+            "reveal": [
+              "well_cube"
+            ]
+          },
+          "failure": {
+            "damage": "2d6",
+            "damage_type": "bludgeoning"
+          }
+        }
+      ]
     },
     {
       "id": "holt_resting_sentry",

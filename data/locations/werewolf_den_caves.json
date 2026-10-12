@@ -240,7 +240,20 @@
       ],
       "kind": "examine",
       "label": "Kiril's trophies",
-      "model": "trophy_wolf"
+      "model": "trophy_wolf",
+      "checks": [
+        {
+          "id": "kiril_trophies",
+          "skill": "survival",
+          "dc": 15,
+          "label": "Read Kiril's trophies",
+          "success": {
+            "reveal": [
+              "trophy_sword"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "den_kiril_rug",
@@ -282,7 +295,20 @@
       ],
       "kind": "examine",
       "label": "Bundles of drying herbs",
-      "model": "charms"
+      "model": "charms",
+      "checks": [
+        {
+          "id": "zuleika_herbs",
+          "skill": "nature",
+          "dc": 14,
+          "label": "Sort the drying herbs",
+          "success": {
+            "reveal": [
+              "herb_elixir"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "den_bone_heap",

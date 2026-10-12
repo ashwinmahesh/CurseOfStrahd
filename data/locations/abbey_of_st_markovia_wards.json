@@ -232,7 +232,25 @@
       ],
       "kind": "examine",
       "label": "A basin and instruments",
-      "model": "workbench"
+      "model": "workbench",
+      "checks": [
+        {
+          "id": "surgeon_instruments",
+          "skill": "medicine",
+          "dc": 14,
+          "label": "Study the surgeon's instruments",
+          "success": {
+            "reveal": [
+              "cabinet_periapt"
+            ],
+            "codex": {
+              "id": "abbot_surgery",
+              "title": "The Abbot's surgery",
+              "text": "These are a surgeon's tools, kept with love: needles for stitching flesh to flesh, saws too fine for amputations, and thread meant to last a lifetime. Whoever works here isn't healing anyone. They are making someone."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "vasilka_slippers",

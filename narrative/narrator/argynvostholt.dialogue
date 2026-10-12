@@ -367,3 +367,47 @@ once
 ~ search:holt_squire_token
 | On a squire's small grave, under a fallen leaf, a dragon-sun badge of the Order, left by someone who still remembers. {name} takes it gently.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:athletics:holt_well_climb:success
+| Thirty feet down, on a ledge just above the water, a small cube rests where someone set it down and never came back for it.
+
+~ check:athletics:holt_well_climb:failure
+| The rope's knot slips, and you find out how deep the well is.
+
+~ check:history:squires_names:success
+| The squires died young, defending the gate, and someone still leaves things on their graves.
+
+~ check:history:squires_names:failure
+| Small stones, small names. Time has worn them past reading.
+
+~ check:arcana:frost_scar:success
+| Dragon's breath, cold enough to crack stone and still frosting over: a silver dragon stood here at the end.
+
+~ check:arcana:frost_scar:failure
+| Cold stone, colder than it should be. The reason escapes you.
+
+~ check:religion:dragon_altar_pray:success
+| You pray to whatever this altar served, and feel a draught from behind it, where a reliquary is set into the wall.
+
+~ check:religion:dragon_altar_pray:failure
+| The altar is silent. Whoever it answered to has gone.
+
+~ check:athletics:armour_stands_shift:success
+| You drag the rusted stands aside, and behind them a sword leans against the wall, its blade warm to the touch.
+
+~ check:athletics:armour_stands_shift:failure
+| The armour stands are rusted to the floor, and they have no intention of moving for you.
+
+~ check:arcana:burned_books:success
+| Most of the books are ash, but one scroll survived in a case, its spell still bright on the page.
+
+~ check:arcana:burned_books:failure
+| Ash, scorched vellum and one surviving page about the care of saddles.
+
+~ check:perception:parapet_view:success
+| From the parapet the whole lake lies below, and at the fishers' landing something glints under the jetty's boards.
+
+~ check:perception:parapet_view:failure
+| Fog, forest and the castle across the water. The valley gives nothing away.
