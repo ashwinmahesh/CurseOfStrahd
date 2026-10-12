@@ -2624,34 +2624,39 @@ class Wiki:
         g, s = self.g, self.site
         n_side = sum(1 for q in g.quests.values() if q.get("kind") != "main")
         n_main = len(g.quests) - n_side
+        n_magic = sum(1 for d in g.magic.values() if d.get("playable", True))
         sec = [
-            ("Walkthroughs", [s.link("page/main_story", "Main Story") + f" ({n_main} quests)",
-                              s.link("page/side_quests", "Side Quests") + f" ({n_side} quests)",
-                              s.link("page/tarokka", "The Tarokka Reading"), s.link("page/endings", "Endings")]),
-            ("The world", [s.link("page/locations", "All Locations") + f" ({len(g.locations)} places, with maps)",
-                           s.link("page/regions", "Regions"),
-                           s.link("page/people", "People") + f" ({len(g.npcs)})",
-                           s.link("page/bestiary", "Bestiary") + f" ({len(g.monsters)} creatures)",
-                           s.link("page/checks", "World Skill Checks"), s.link("page/talking", "Talking Creatures"),
-                           s.link("page/random_encounters", "Random Encounters"), s.link("page/weather", "Weather"),
-                           s.link("page/strahd", "Strahd's Visits")]),
-            ("Items and money", [s.link("page/item_sources", "Where to Find Items"),
-                                 s.link("page/merchants", "Merchants and Services"),
-                                 s.link("page/magic_items", "Magic Items") +
-                                 f" ({sum(1 for d in g.magic.values() if d.get('playable', True))})",
-                                 s.link("page/equipment", "Equipment"), s.link("page/random_treasure", "Random Treasure"),
-                                 s.link("page/cheat_codes", "Cheat Codes") + " (every item's code)"]),
-            ("Heroes and magic", [s.link("page/heroes", "Heroes"), s.link("page/approval", "Companion Approval"),
+            ("Walkthroughs", [s.link("page/main_story", "Main Story") + f": the {n_main} quests of the story, in order",
+                              s.link("page/side_quests", "Side Quests") + f": all {n_side}, by region and level",
+                              s.link("page/tarokka", "The Tarokka Reading") + ": every card, and where it hides the treasures",
+                              s.link("page/endings", "Endings") + ": how the game can end"]),
+            ("The world", [s.link("page/locations", "All Locations") + f": {len(g.locations)} places, each with a map and screenshots",
+                           s.link("page/people", "People") + f": all {len(g.npcs)}, with where to find them",
+                           s.link("page/bestiary", "Bestiary") + f": {len(g.monsters)} creatures and their stat blocks",
+                           s.link("page/checks", "World Skill Checks") + ": everything in the world you can try a check on",
+                           s.link("page/talking", "Talking Creatures") + ": animals, the dead and plants that talk to a spell",
+                           s.link("page/random_encounters", "Random Encounters") + ": what the roads can throw at you",
+                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits")]),
+            ("Items and money", [s.link("page/item_sources", "Where to Find Items") + ": every item with a fixed home, A to Z",
+                                 s.link("page/magic_items", "Magic Items") + f": all {n_magic}, with where they are and their codes",
+                                 s.link("page/equipment", "Equipment") + ": weapons, armor and gear",
+                                 s.link("page/cheat_codes", "Cheat Codes") + ": every item's code, and how to use one",
+                                 s.link("page/merchants", "Merchants and Services") + ": who sells what, and for how much",
+                                 s.link("page/random_treasure", "Random Treasure") + ": how chests are filled"]),
+            ("Heroes and magic", [s.link("page/heroes", "Heroes") + " and " + s.link("page/approval", "Companion Approval"),
                                   "Classes: " + ", ".join(s.link(f"class/{c}") for c in g.classes),
-                                  s.link("page/species", "Species"), s.link("page/backgrounds", "Backgrounds"),
-                                  s.link("page/feats", "Feats"), s.link("page/spells_by_class", "Spells by Class"),
+                                  s.link("page/species", "Species") + ", " + s.link("page/backgrounds", "Backgrounds") +
+                                  " and " + s.link("page/feats", "Feats"),
                                   "Spells: " + ", ".join(s.link(f"page/spells_{i}", "Cantrips" if i == 0 else f"Level {i}")
-                                                         for i in range(10) if f"page/spells_{i}" in s.paths),
-                                  s.link("page/dark_gifts", "Dark Gifts")]),
-            ("Rules and play", [s.link("page/house_rules", "House Rules"), s.link("page/difficulty", "Difficulty"),
-                                s.link("page/magic", "How Magic Works"), s.link("page/stealth"), s.link("page/resting"),
-                                s.link("page/controls", "Controls"), s.link("page/conditions", "Conditions"),
-                                s.link("page/glossary", "Glossary"), s.link("page/achievements", "Achievements"),
+                                                         for i in range(10) if f"page/spells_{i}" in s.paths) +
+                                  "; " + s.link("page/spells_by_class", "by class"),
+                                  s.link("page/dark_gifts", "Dark Gifts") + ": the Amber Temple's bargains"]),
+            ("Rules and play", [s.link("page/magic", "How Magic Works") + ", " + s.link("page/stealth") + " and " +
+                                s.link("page/resting"),
+                                s.link("page/house_rules", "House Rules") + ": where the game differs from the 2024 books",
+                                s.link("page/difficulty", "Difficulty") + " and " + s.link("page/controls", "Controls"),
+                                s.link("page/conditions", "Conditions") + " and the " + s.link("page/glossary", "Glossary"),
+                                s.link("page/achievements", "Achievements") + " and the " +
                                 s.link("page/cutscenes", "Cutscene Gallery")]),
         ]
         lines = []
@@ -2664,7 +2669,7 @@ class Wiki:
                  "A guide to the Curse of Strahd game: walkthroughs for every quest, where every item is, who sells "
                  "what, every place and person in Barovia, the creatures you'll fight, and how the rules work here.\n")
         self.w.write("page/home", "Home", "Curse of Strahd Wiki", [intro, auto("contents", "\n".join(lines))],
-                     tags=["wiki"])
+                     tags=["wiki"], meta={"type": "index"})
 
     def quest_start(self, qid):
         """(file key, node, entry) of the conversation that starts a quest: its earliest stage set where a person
