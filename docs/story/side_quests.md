@@ -129,8 +129,8 @@ hunters come up the trail of oats; spotting it (Survival DC 12) catches them una
 
 - Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and a wolf at level 2, three wolves at level 3. The
   autopilot wins 2 of 4 at level 2 and 3 of 4 at level 3, losing one or two party members a fight.
-- Reward: Agafia's grandmother's pair of speaking stones, Sending Stones (uncommon), one to keep and one for
-  Parriwimple; and Bildrath decides it's charity.
+- Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
+  for the party until dawn; and Bildrath decides it's charity.
 
 ### The Nursemaid's Grave (`the_nursemaids_grave`, narrative/village_of_barovia/the_nursemaids_grave.dialogue; batch 5)
 
@@ -279,18 +279,18 @@ bedroom).
 
 ### Black Roses (`black_roses`, narrative/vallaki/black_roses.dialogue)
 
-Ignat the lamplighter's daughter Ana was taken last winter. **Twist one:** black roses come before a girl is taken, not
+Ignat the lamplighter's daughter Catalina was taken last winter. **Twist one:** black roses come before a girl is taken, not
 after, and they are on the chandler's step. **Twist two:** Ignat's scarf hides bite marks (Insight DC 13 or Medicine DC
-12); Ana is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Ana comes to
+12); Catalina is the visitor and he has been feeding her so she won't go to anyone else. **The vigil:** at night Catalina comes to
 Mila Petrova's window in the lower town. Ask where she sleeps, talk her home to her grave (Persuasion DC 14), fight her
 and the two girls she calls (`roses_street`), or let her go home to her father, who is found dead at the lake gate in
 the morning (`ilie_fate` lost). **The grave:** three graves at the edge of St. Andral's churchyard (prop `ana_grave`):
 dig them up by day (Athletics DC 12; they wake surprised and weak) or wait for them at night (`roses_graves`).
 
-- Fights: `roses_street` at level 5 is Ana (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
+- Fights: `roses_street` at level 5 is Catalina (50 HP), Irina and a swarm of bats; `roses_graves` by day has all three girls
   surprised at reduced HP, by night at full strength. Attention mark `roses` (+1).
-- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ignat gives Ana's mother's
-  ring, a Ring of Resistance (Necrotic) (rare), once Ana is at rest.
+- Rewards: Pyotr Petrov the chandler (by day in the lower town) pays 200 gp for Mila's life; Ignat gives Catalina's mother's
+  ring, a Ring of Resistance (Necrotic) (rare), once Catalina is at rest.
 
 ### Ribbons (`ribbons`, narrative/vallaki/ribbons.dialogue; batch 2)
 
@@ -311,7 +311,9 @@ leave the list blank to make the rider turn on him.
 
 Szoldar and his son Yevgeni (new NPCs in the Blue Water Inn's taproom; Urwin's rumour) offer half the Baron's 300 gp
 for Old Greytooth. **Twist:** Arrigal pays Szoldar to bring strong strangers to the lake at dusk; the wolf is the castle's,
-and the castle wants to see how you fight. Yevgeni says so (Persuasion DC 13, or a drink). **Escalation:** the hunt at
+and the castle wants to see how you fight. Yevgeni says so (Persuasion DC 13, or a drink), or Tudor does: one of
+Greytooth's shepherds, dead in the reeds at the landing (prop `shepherd_remains`), who under Speak with Dead saw Szoldar
+watch from the rise and take Arrigal's purse (docs/story/talking_creatures.md). **Escalation:** the hunt at
 the Lake Zarovich landing at dusk (prop `greytooth_shore`), with Szoldar's bow on the rise behind the shacks unless he's
 been turned (Intimidation DC 14) or left at the inn.
 
@@ -1061,7 +1063,7 @@ martikovs.dialogue's new rumours lines (the hunters). Batch 2, Lake
 Zarovich: bell_under_the_lake.dialogue in full (Old Nistor, Bluto) and old_fisher.dialogue's added option. The Gates:
 last_muster.dialogue in full (new speaker Marshal Dragomir), tser_camp.dialogue's new zora_road lines (the riders) and
 townsfolk.dialogue's new gossip lines (the riders). Vallaki:
-cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Ana and Pyotr Petrov; also
+cat_in_the_window.dialogue and black_roses.dialogue in full (new speakers Stella Wachter, Catalina and Pyotr Petrov; also
 Ignat and Father Lucian), the new lines in gate.dialogue (news: Stella), martikovs.dialogue (rumors: the roses),
 arasek.dialogue (roads: the windmill) and the polite_caller.dialogue sunrise line rewritten as a break in the mist. Krezk:
 six_feet.dialogue in full (new speaker Zinaida;

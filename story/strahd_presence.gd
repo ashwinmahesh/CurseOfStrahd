@@ -118,9 +118,11 @@ static func due(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 	var now := st.total_minutes()
 	# The more he has noticed, the sooner he comes again (the attention tier's `gap`, a share of the usual wait).
 	var gap := roundi(float(d.get("gap_hours", 0)) * 60.0 * float(tier(st).get("gap", 1.0)))
+	# Nondetection, or a hallowed, forbidden or sanctum place (story/wards.gd): only the visits that can't wait come.
+	var hidden := Wards.hides_from_strahd(st, loc_id) != ""
 	for v: Variant in d.get("visits", []):
 		var vis := v as Dictionary
-		if not bool(vis.get("urgent", false)) and now - int(mem["last"]) < gap:
+		if not bool(vis.get("urgent", false)) and (hidden or now - int(mem["last"]) < gap):
 			continue
 		if fires(vis, st, on, loc_id, region, night, outdoors):
 			_mark(st, vis)

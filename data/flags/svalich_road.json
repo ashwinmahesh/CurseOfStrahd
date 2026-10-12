@@ -16,6 +16,16 @@
       "summary": "The party took Nicu's silver horse's-head earring from the body, to bring to his people."
     },
     {
+      "id": "nicu_spoke",
+      "type": "bool",
+      "summary": "Nicu answered Speak with Dead on the gallows or in his grave (crossroads.dialogue): who hanged him, the farmer's cache behind the field wall, and a message for Luminita."
+    },
+    {
+      "id": "nicu_message_given",
+      "type": "bool",
+      "summary": "The party gave Luminita her brother's last words (luminita.dialogue)."
+    },
+    {
       "id": "nicu_cut_down",
       "type": "bool",
       "summary": "The party cut Nicu down from the gallows (or gathered his remains) and buried him by the road; he will not rise."

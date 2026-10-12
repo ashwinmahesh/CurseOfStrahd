@@ -76,9 +76,10 @@ static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 		if FACINGS.has(str(spec.get("facing", ""))):
 			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
 		view.npc_tokens[str(spec["npc"])] = tok
+		# Outside fights nobody blocks anybody (owner, 2026-10-12: rooms were too cramped): the party walks through
+		# people and people through the party, so a person's square stays as open as the floor under them.
 		view._npc_shown.append({"spec": spec, "token": tok, "cell": cb.cell, "low_before": view.grid.has_flag(cb.cell, CombatGrid.LOW),
 			"was": was})
-		view.grid.set_flag(cb.cell, CombatGrid.LOW, true)   # an NPC blocks the square while standing there
 	LocationClock.of(view)   # people keep their hours, and the day's events happen, as the clock moves
 	# People with a `path` walk it (NpcRoutes), round everyone standing still; each starts after its first pause.
 	for shown in view._npc_shown:
@@ -95,10 +96,7 @@ static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 			if not (shown["route"] as Array).is_empty():
 				NpcRoutes.of(view)
 			continue
-		var own := shown["cell"] as Vector2i
-		view.grid.set_flag(own, CombatGrid.LOW, bool(shown["low_before"]))
 		shown["route"] = NpcRoutes.route_for(view, spec)
-		view.grid.set_flag(own, CombatGrid.LOW, true)
 		shown["wait"] = float(spec.get("pause", NpcRoutes.PAUSE))
 		if not (shown["route"] as Array).is_empty():
 			NpcRoutes.of(view)

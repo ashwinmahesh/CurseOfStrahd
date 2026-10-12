@@ -134,6 +134,7 @@ func _ready() -> void:
 	LocationBuilder._build_environment(self)
 	LocationBuilder._build_doors(self)
 	LocationBuilder._build_props(self)
+	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)

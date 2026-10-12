@@ -22,7 +22,7 @@ func test_the_spells_tab_cantrip_is_an_attack_then_the_sword_follows() -> void:
 	var bolt := cat.find(c, "spell:fire_bolt")
 	assert_eq(str(bolt["tab"]), ActionCatalog.SPELLS)
 	assert_eq(str(bolt["cost"]), "attack", "one attack of the Attack action")
-	assert_true(str(bolt["sub"]).ends_with("in place of an attack"))
+	assert_true(str(bolt["sub"]).begins_with("Attack cantrip"), str(bolt["sub"]))
 	assert_true(cat.slots(c, cat.class_tab(c)).all(func(s: Dictionary) -> bool: return not str(s["label"]).begins_with("Cantrip attack")),
 		"no separate entry on the class tab")
 	assert_true(cat.perform(c, bolt, [t]).ok)

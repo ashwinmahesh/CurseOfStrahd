@@ -185,7 +185,8 @@
       "kind": "examine",
       "label": "The burgomaster's coffin",
       "model": "coffin",
-      "when": "not flag.burial_procession"
+      "when": "not flag.burial_procession",
+      "dialogue": "village_of_barovia/kolyan:coffin"
     },
     {
       "id": "boarded_windows",

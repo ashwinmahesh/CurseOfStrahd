@@ -66,6 +66,7 @@ Rose [smile]: It's quiet in here. Thank you. Thorn, say thank you.
 Thorn: Thank you. Don't go downstairs.
 Rose: Mother hid her purse under the bottom stair in the hall, under the loose board. She said it was for emergencies. I think this is one.
 Rose: Goodbye. Properly, this time.
+cutscene children_wave
 Narrator: Thorn waves. Then there is nobody to wave at.
 set death_house_children_at_rest
 set death_house_children_riding = false

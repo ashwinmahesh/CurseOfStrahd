@@ -200,3 +200,32 @@ func capture_shots(tool: Node, out: String) -> void:
 	view.using_pad = false
 	await tool.call("wait_frames", 4)
 	tool.call("_shot", "%s_19_struck.png" % out)
+	# Flanking (owner, 2026-10-12): Godrick across the zombie from Ilse, and the odds name it.
+	var god3 := heroes["godrick_pendlebrook"] as Combatant
+	god3.cell = near.cell * 2 - walker.cell
+	(view.tokens[god3.id] as Node3D).position = view._token_spot(god3, god3.cell)
+	view.hover_token = view.tokens[near.id] as CombatToken
+	view.hover_cell = near.cell
+	view.using_pad = true
+	view.hover_world = (view.tokens[near.id] as Node3D).global_position
+	rig.follow = view.tokens[near.id] as Node3D
+	rig.snap_to_target()
+	await tool.call("wait_frames", 4)
+	view._update_hover()
+	await tool.call("wait_frames", 6)
+	tool.call("_shot", "%s_20_flanking.png" % out)
+	view.using_pad = false
+	view.hover_token = null
+	view.hover_cell = Vector2i(-1, -1)
+	view._update_hover()
+	# Two heroes on one square (owner, 2026-10-12): Thistle walks onto Tamsin's.
+	var thistle := heroes["thistle"] as Combatant
+	var tamsin := heroes["tamsin_tealeaf"] as Combatant
+	e.turn_index = e.order.find(thistle)
+	e._begin_turn()
+	e.move(thistle, tamsin.cell)
+	await view._play_events()
+	rig.follow = view.tokens[tamsin.id] as Node3D
+	rig.snap_to_target()
+	await tool.call("wait_frames", 20)
+	tool.call("_shot", "%s_21_shared_square.png" % out)

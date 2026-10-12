@@ -33,6 +33,6 @@
     "detection",
     "communication"
   ],
-  "summary": "Put up to five questions to an otherworldly mind, at the risk of your sanity.",
+  "summary": "Five answers about the place you're in (what waits here, and up to five hidden finds shown), or 6d6 Psychic damage if you fail an Intelligence save (DC 15).",
   "text": "You make a DC 15 Intelligence save: on a failure you take 6d6 Psychic damage and are Incapacitated until a Long Rest (Greater Restoration ends it); on a success you may ask up to five questions, answered with a word or short phrase, possibly unhelpfully."
 }

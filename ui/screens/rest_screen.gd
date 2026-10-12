@@ -95,7 +95,8 @@ func _refresh_long() -> void:
 	var button := UiKit.button("Take a Long Rest (8 hours)", _long_rest.bind(_rule), 16, "rest")
 	button.disabled = not why.is_empty()
 	button.tooltip_text = "\n".join(why)
-	var risk := "Not now" if not why.is_empty() else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here")
+	var ward := Wards.keeps_rest(st)
+	var risk := "Not now" if not why.is_empty() else ("Safe here: %s" % ward if ward != "" else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here"))
 	_long_slot.add_child(_rest_card("Long Rest", "8 hours", "All Hit Points, Hit Point Dice, spell slots and features come back.",
 		button, risk, why))
 
@@ -316,8 +317,13 @@ func _long_rest(rule: String) -> void:
 		return
 	Audio.sfx("rest")
 	var interrupted := false
-	if rule == "risky":
+	var warned := ""
+	if rule == "risky" and Wards.keeps_rest(st) == "":
 		interrupted = Dice.roller.roll_one(6, "Long Rest interruption") == 1
+	# Alarm: whatever comes in the night finds you awake and ready, and slinks off; you sleep again.
+	if interrupted and Wards.alarmed(st):
+		interrupted = false
+		warned = " In the small hours the Alarm sounds; you're up before whatever it was gets close, and it slinks away."
 	if interrupted:
 		st.advance_minutes(60)
 		for ch in st.party:
@@ -334,7 +340,7 @@ func _long_rest(rule: String) -> void:
 		for g in st.guests:
 			if not g.dead:
 				g.finish_long_rest()
-		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed."
+		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed." + warned
 		var room := Services.after_long_rest(st)   # a room booked at the inn (F14)
 		if room != "":
 			_log.text += " " + room

@@ -137,6 +137,8 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	Difficulty.of_options(view.st.options).prepare(e)
 	EncounterSetup.bring_familiars(e, party_cbs)
 	EncounterSetup.bring_steeds(e, party_cbs)
+	Wards.bring_circle(e, view.st, view.loc_id)   # a Magic Circle cast here within the hour
+	FieldCasting.bring_risen(e, view.st)   # Animate Dead's and Create Undead's dead, for their day
 	_light_the_fight(view, e)
 	BattleScenery.for_location(view, e)   # doors, furniture and chandeliers that can be broken (F5)
 	LocationTraps.into_fight(view, e)   # traps that haven't gone off go off under whoever steps on them
@@ -361,9 +363,14 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 	for d: Variant in view.loc.get("doors", []):
 		var door := d as Dictionary
 		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
+	# A bystander's square blocks in the fight, unless one of the party stands in it (nobody blocks outside fights).
+	var party_at := {}
+	for m in view.members + view.guest_members:
+		party_at[m.cell] = true
 	for npc: String in view.npc_tokens:
-		if (view.npc_tokens[npc] as CombatToken).visible:
-			g.set_flag((view.npc_tokens[npc] as CombatToken).combatant.cell, CombatGrid.LOW, true)
+		var at := (view.npc_tokens[npc] as CombatToken).combatant.cell
+		if (view.npc_tokens[npc] as CombatToken).visible and not party_at.has(at):
+			g.set_flag(at, CombatGrid.LOW, true)
 	return g
 
 

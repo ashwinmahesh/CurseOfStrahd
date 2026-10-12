@@ -58,7 +58,7 @@ Six maps (data/locations/). Map themes are existing ones; §13 lists the themes 
 | `lake_zarovich_trail` | 32 x 20, wilderness, outdoors | `lzt_trail` | Battlefield for the region's random fights (tables `zarovich_hills`, `zarovich_shore`). |
 | `van_richtens_tower` | 32 x 30, village, outdoors | `vrt_island`, `vrt_causeway`, `vrt_camp`, `vrt_shore` | Lake Baratok: the island and its tower (a 6 x 6 block), a two-wide causeway, Ezmerelda's camp (her wagon is a locked container with a tripwire), her note on the wagon. The door (prop `vrt_door_ward`) opens the exits `vrt_tower_door` when `tower_door_opened`. At night after the casebook is read, the castle's servants wait at the causeway's shore end. |
 | `van_richtens_tower_interior` | 14 x 35, manor | `vrt_hall`, `vrt_workroom`, `vrt_lantern_room` | Three round floors stacked in one map (stair exits to the same location). Hall: supplies, the hearth with the ward's copper rod. Workroom: casebook, ledger of disguises, map of the valley (`den_way_known`), medicine cabinet; Van Richten himself if he left Vallaki. Lantern room: the lightning ward across the floor (trap), the strongbox (Tarokka spot), the letter to Ezmerelda. Safe rest. |
-| `werewolf_den` | 34 x 26, wilderness, outdoors | `den_trail`, `den_stream`, `den_slope`, `den_watch_rock` | The slope under the cave mouth: Zuleika at her wolfsbane patch (approach), Ana's rag doll in the mud, a torn hunter's pack (Grigor's brother), the bone midden. Exits: `den_trail_out` → travel; `den_cave_mouth` → the caves. |
+| `werewolf_den` | 34 x 26, wilderness, outdoors | `den_trail`, `den_stream`, `den_slope`, `den_watch_rock` | The slope under the cave mouth: Zuleika at her wolfsbane patch (approach), Codruta's rag doll in the mud, a torn hunter's pack (Grigor's brother), the bone midden. Exits: `den_trail_out` → travel; `den_cave_mouth` → the caves. |
 | `werewolf_den_caves` | 40 x 30, dungeon, dark | `den_mouth_cave`, `den_passage`, `den_great_cave`, `den_emil_alcove`, `den_children_pen`, `den_kiril_lair`, `den_shrine`, `den_zuleika_nook` | The mouth cave (guards if the party came uninvited), the great cave round its fire pit (the challenge), Emil's alcove, the pen behind a pole gate, Kiril's lair (hoard, trophies, the second key on a peg), the shrine of Mother Night (offerings: Tarokka spot), Zuleika's nook. No rest. |
 
 ### Scene flow (every step optional; the critical path is §14)
@@ -228,7 +228,7 @@ All 64 flags are registered, set and read. For later regions:
 - **`wolf_pack_leader`** (`emil` / `kiril` / `none`): Krezk (raids on the farms stop or don't), Castle Ravenloft
   (Emil said "send word up the hill" if you need teeth at the gates; Kiril's pack answers the castle), the epilogue.
 - **`den_children_freed`**, **`den_children_left`**, **`mirela_cured`**, `mirela_bite_seen`: Krezk (five children
-  from the farms below Krezk: Mirela, Ana, Petru, Ilie and Ioana; untreated, Mirela turns at the next moon), epilogue.
+  from the farms below Krezk: Mirela, Codruta, Petru, Zamfir and Ioana; untreated, Mirela turns at the next moon), epilogue.
 - `emil_dead`, `emil_betrayed`, `kiril_defeated`, `den_broken`, `kiril_bribed`: epilogue, Strahd's remarks.
 - **`ezmerelda_trust`** (int), `ezmerelda_told_rictavio`, `ezmerelda_left_tower`, `ezmerelda_secret_kept`,
   **`van_richten_reunited`**: the abbey's Ezmerelda, Vallaki (if she arrives looking for Rictavio), the castle, the

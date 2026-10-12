@@ -33,6 +33,9 @@ var shared: Array[String] = []
 var shared_started: Array[String] = []
 var shared_ended: Array[String] = []
 var state: State = State.SETUP
+## The small board FieldCasting casts on outside fights: a spell that takes minutes or hours to cast is cast there
+## (Prayer of Healing, Regenerate, Foresight), its time passing on the clock instead.
+var peaceful := false
 ## A story fight keeps each round as it begins, before the lair or the first turn acts (EncounterSnapshot): the
 ## round-start save, so reloading it plays the start of that turn once (QA FN-11: captured after it, Regeneration,
 ## start-of-turn damage and lair actions happened twice). Off for simulations and tests, which don't save.
@@ -64,6 +67,9 @@ var difficulty: Difficulty = Difficulty.named(Difficulty.DEFAULT)
 var shapes: ShapeChange
 ## A place where even allies can't pass through each other (a location's or fight's `allies_block`).
 var allies_block := false
+## Flanking (2024 DMG optional rule, owner 2026-10-12; Settings can turn it off): Advantage on melee attacks against a
+## foe with an ally on its opposite side (EncounterAttacks.flanks).
+var flanking := true
 var class_features: ClassFeatures
 ## Ravenloft: The Horrors Within options (combat/ravenloft_features.gd).
 var triggered_features: TriggeredFeatures

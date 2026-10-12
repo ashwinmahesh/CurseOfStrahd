@@ -273,6 +273,18 @@
       "flag": "bone_heap_searched"
     },
     {
+      "id": "kesten_bones",
+      "cell": [
+        22,
+        5
+      ],
+      "kind": "examine",
+      "label": "Brother Kesten's bones",
+      "model": "bones",
+      "when": "flag.bone_heap_searched",
+      "dialogue": "old_bonegrinder/kesten:bones"
+    },
+    {
       "id": "bonegrinder_hag_garden",
       "cell": [
         20,

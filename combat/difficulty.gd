@@ -21,7 +21,8 @@ const BOSS_CR := 5.0
 ##   party_bonus:   added to the party's attack rolls (weapons and spells) and saving throws.
 ##   enemy_bonus:   added to enemies' attack rolls (weapons and spells) and the DCs of their spells and actions.
 ##   tactics:       kind (spread blows, no killing blow), standard (as before the modes), sharp (focus fire on the
-##                  hurt and on healers and casters), ruthless (sharp, and cruel foes strike heroes at 0 HP).
+##                  hurt and on healers and casters, and move to flank), ruthless (sharp, and cruel foes strike heroes
+##                  at 0 HP).
 ##   kit:           armed humanoid foes carry a Potion of Healing (drunk when Bloodied), casters a scroll of their
 ##                  strongest spell; what isn't used is looted.
 ##   morale:        when its side breaks, a foe that isn't mindless or a boss flees the field.

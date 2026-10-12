@@ -957,8 +957,9 @@ func _utility_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void
 	# What the spell asks for as it's cast (Find Steed's creature type), and which casting: a feature's free one or a
 	# slot, for a spell that grows with its slot.
 	var kind := OptionButton.new()
+	var words := o.get("choice_labels", {}) as Dictionary
 	for k: Variant in o.get("choices", []):
-		kind.add_item(str(k).capitalize())
+		kind.add_item(str(words.get(str(k), str(k).capitalize())))
 		kind.set_item_metadata(kind.item_count - 1, str(k))
 	UiParts.compact(kind)
 	kind.visible = kind.item_count > 1
@@ -1006,7 +1007,7 @@ func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Arra
 		tgt.append(t as Character)
 	var slot := pick.get_item_id(pick.selected) if pick.item_count > 0 and pick.selected >= 0 else 0
 	var res := FieldCasting.revive(st, ch, spell_id, slot, tgt[0]) if FieldCasting.REVIVAL.has(spell_id) and not tgt.is_empty() \
-		else FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller)
+		else FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller, st)
 	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
 	_draw()
 

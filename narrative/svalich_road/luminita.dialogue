@@ -1,6 +1,7 @@
 # Luminita, horse-tender of the Tser Pool camp (docs/voice/luminita.md). Her brother Nicu is the hanged man at the
 # crossroads (crossroads.dialogue). The party can tell her (quest the_hanged_vistana `told`), give her his earring,
-# or never say. She knows why he was hanged, and it is her fault.
+# or never say. She knows why he was hanged, and it is her fault. Under Speak with Dead (crossroads.dialogue) Nicu
+# sends her word that it wasn't.
 
 ~ start
 if flag.nicu_kin_told
@@ -77,6 +78,7 @@ endif
 
 ~ told_menu
 * [if flag.nicu_token_taken] Give her his earring. -> earring
+* [if flag.nicu_spoke and not flag.nicu_message_given] Nicu had a message for you. -> nicu_message
 * Leave her be. -> END
 
 ~ earring
@@ -95,6 +97,7 @@ Luminita: You again. The ones who cut him down. Sit with the horses if you like.
 else
 Luminita: You again. I'm still brushing the same horse. It's very clean now.
 endif
+* [if flag.nicu_spoke and not flag.nicu_message_given] Nicu had a message for you. -> nicu_message
 * Ask about Vallaki. -> vallaki
 * Ask about the Vistani by the lake. -> lake_camp
 * Goodbye. -> END
@@ -106,3 +109,11 @@ Luminita: Walls, bells, banners, and a burgomaster who throws a festival every w
 ~ lake_camp
 Luminita: Our cousins camp by the lake outside Vallaki. Arrigal runs it. He smiles more than I do and means it less. Tell him Luminita says the horse was mine. Watch his face.
 -> after_news
+
+~ nicu_message
+set nicu_message_given
+Narrator: You tell her what he said: that it wasn't the mare, they'd have hanged him for a goat, and that the grey gelding is hers now and she can stop brushing him.
+Luminita [sad]: He said that? Dead, and still telling jokes. That's him. That's exactly him.
+Narrator: She hangs the brush on the fence rail, and leaves it there.
+approve wren_featherfoot +1 liriel_dawnsong +1: You brought Luminita her brother's last words
+-> END
