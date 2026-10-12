@@ -53,6 +53,8 @@ func capture_shots(tool: Node, _out: String) -> void:
 			continue
 		var hud := game.get("hud") as ExploreHud
 		_clear()
+		if kind != "dialogue":
+			_close_dialogue()   # a greeting that opened on arriving
 		hud.close_narration()   # the party's banter on arriving
 		await tool.call("wait_frames", 40)
 		if kind == "closeup":
@@ -64,8 +66,22 @@ func capture_shots(tool: Node, _out: String) -> void:
 			cam.distance = float(shot.get("dist", 10.0))
 			cam.global_position = view.board.cell_center(Vector2i(int(at[0]), int(at[1])))
 			cam.snap_to_target()
+			# The party's lantern is elsewhere: a lamp over the spot and a little more ambient light, so dark rooms show.
+			var env := view.get("_env") as Environment
+			var ambient := env.ambient_light_energy if env != null else 0.0
+			if env != null:
+				env.ambient_light_energy = maxf(ambient, 1.4)
+			var lamp := OmniLight3D.new()
+			lamp.light_color = Look.color("bone")
+			lamp.omni_range = 12.0
+			lamp.light_energy = 1.6
+			cam.add_child(lamp)
+			lamp.position = Vector3(0, 4, 0)
 			await tool.call("wait_frames", 30)
 			tool.call("_shot", path)
+			lamp.queue_free()
+			if env != null:
+				env.ambient_light_energy = ambient
 			hud.visible = true
 		elif kind == "overview":
 			hud.visible = false
@@ -80,6 +96,7 @@ func capture_shots(tool: Node, _out: String) -> void:
 			hud.visible = true
 			_here = ""
 		elif kind == "dialogue":
+			_close_dialogue()
 			var dlg := await _talk(tool, str(shot.get("dialogue", "")), str(shot.get("npc", "")))
 			if dlg == null and str(shot.get("fallback", "")) != "":
 				# The quest's own node ran out before a choice: the person's usual conversation instead.
@@ -108,6 +125,17 @@ func _clear() -> void:
 		game.call("close_screen")
 	game.set("screen", null)
 	get_tree().paused = false
+
+
+## A conversation already open (one that greets the party on arriving): closed, back to exploring.
+func _close_dialogue() -> void:
+	var d := game.get("dialogue") as DialogueUI
+	if d == null:
+		return
+	d.queue_free()
+	game.set("dialogue", null)
+	(game.get("hud") as ExploreHud).visible = true
+	ModeController.force(ModeController.Mode.EXPLORATION)
 
 
 ## A conversation from `ref`, played to its first choice; the dialogue screen, or null if it ended first.
@@ -143,4 +171,5 @@ func _enter(tool: Node, shot: Dictionary) -> void:
 	_clear()
 	await tool.call("wait_frames", int(shot.get("settle", 120)))
 	_clear()
+	_close_dialogue()
 	_here = key
