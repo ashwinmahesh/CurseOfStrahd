@@ -108,6 +108,17 @@ lfs-quiet:
 cheat-codes:
 	python3 tools/data/cheat_codes.py
 
+## The spoiler wiki in the vault (Wiki/), rebuilt from the game's data (tools/wiki/build_wiki.py). What people wrote on
+## its pages outside the generated blocks is kept. wiki-shots first takes its screenshots in one off-screen run
+## (tools/wiki/wiki_shots.gd; shots already in captures/wiki are kept, so delete one to retake it).
+.PHONY: wiki wiki-shots
+wiki:
+	python3 tools/wiki/build_wiki.py $(if $(wildcard captures/wiki/*.png),--shots $(CURDIR)/captures/wiki,)
+wiki-shots:
+	python3 tools/wiki/build_wiki.py --shot-list $(CURDIR)/captures/wiki_shots.json
+	$(UNSEEN) res://tools/capture/capture.tscn -- --scene=res://tools/wiki/wiki_shots.tscn --out=$(CURDIR)/captures/wiki --frames=30 --list=$(CURDIR)/captures/wiki_shots.json --dir=$(CURDIR)/captures/wiki < /dev/null
+	python3 tools/wiki/build_wiki.py --shots $(CURDIR)/captures/wiki
+
 validate:
 	python3 tools/data/validate_data.py
 	python3 tools/data/check_implemented.py

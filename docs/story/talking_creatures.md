@@ -53,7 +53,24 @@ Tests: tests/integration/test_speak_with_animals.gd.
 
 Tests: tests/integration/test_speak_with_animals_east.gd.
 
+## Batch 3: the dead around Barovia and Vallaki (branch `more-to-speak-with-3`)
+
+Speak with Dead is a 3rd-level spell, so a party first casts it around Vallaki: these are the dead a party of level 5
+or more can still reach, around the village (on the way back), the roads and the places past Vallaki.
+
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| Kolyan Indirovich | His coffin in the mansion, or his grave in the churchyard (not once he's raised) | Where he found Ireena: the lake road past Vallaki, the winter the wolves were bad, with a boy shouting a name in the trees; his wife's brooch behind the study desk | With Izek's story heard, `izek_sister_truth` (Izek's Obsession to `truth_guessed`); otherwise `ireena_finding_known`, and Izek's story finishes it; reveals `study_panel` (Brooch of Shielding) |
+| Nicu | The crossroads gallows, or his grave by the road (not once he has walked: he died Undead) | The mare's owner and his sons hanged him; a farmer hid a sack behind the field wall while they argued over the knot; a message for his sister | Reveals `field_wall_cache` (Gauntlets of Ogre Power); `nicu_spoke` lets the party give Luminita his last words |
+| Brother Kesten | Old Bonegrinder, his skull by the bone heap once his holy symbol is found | The children in the loft; the three words that send Offalia off; Bella wants the soul bags, not the mill | A sure way to lure Offalia from the oven (no Deception roll) |
+| Mircea, Grigor's brother | The bone midden below the werewolf den | The pack wanted him bitten; Emil, in silver chains, told him to say no; where his boots came off | Reveals `mud_boots` (Boots of Speed) |
+| Tudor the shepherd | The reeds at the Lake Zarovich landing | Old Greytooth killed him while a man in a wolfskin coat watched from the rise, a man he'd seen take a purse from Arrigal | A second way to confront Szoldar, without Yevgeni (The Hunters at the Inn) |
+
+Left out on purpose: the dead in Death House's dungeon (a party there is level 1 to 3, long before the spell) and the
+three small graves in St. Andral's churchyard (Ana and her friends are vampire spawn, not corpses; Black Roses).
+Tests: tests/integration/test_speak_with_dead.gd.
+
 ## Still to build
 
-- The dead around the village of Barovia, Death House, the crossroads gallows, Vallaki and Old Bonegrinder.
 - The dead of Krezk, Berez, Argynvostholt, Yester Hill's barrows and Castle Ravenloft's catacombs.
+- Speak with Plants.

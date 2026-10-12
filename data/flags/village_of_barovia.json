@@ -342,6 +342,16 @@
       "summary": "Kolyan Indirovich was raised from his grave by the party (the horseman card's ally, Phase 5)."
     },
     {
+      "id": "kolyan_spoke",
+      "type": "bool",
+      "summary": "Kolyan answered Speak with Dead at his coffin or grave (village_of_barovia/kolyan.dialogue): where he found Ireena, and his wife's brooch behind the study desk."
+    },
+    {
+      "id": "ireena_finding_known",
+      "type": "bool",
+      "summary": "Kolyan told the party he found Ireena on the lake road past Vallaki, with a boy shouting a name in the trees. Hearing Izek's story then completes it (izek_sister_truth)."
+    },
+    {
       "id": "bildrath_surcharge",
       "type": "bool",
       "summary": "A failed Intimidation haggle at Bildrath's (bildrath): he puts ten percent on the dear things for the rest of the game (the healer's kit at 55 gp, the potion at 550 gp)."

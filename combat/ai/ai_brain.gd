@@ -649,7 +649,12 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 		return 100.0 - cost - e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) * 0.1
 	var keep := c.cell
 	c.cell = cell
-	var hc := e.hit_chance(c, t, o)
+	# The odds as this foe weighs them: a Balanced one doesn't go round the hero for Flanking (AiTactics.seeks_flanks).
+	var weighed := o
+	if not tactics.seeks_flanks():
+		weighed = o.duplicate()
+		weighed["ignore_flanking"] = true
+	var hc := e.hit_chance(c, t, weighed)
 	c.cell = keep
 	if int((hc["situation"] as Dictionary)["cover"]) == CombatGrid.Cover.TOTAL:
 		return -1e9

@@ -301,6 +301,7 @@ func _advance() -> void:
 	if _closed:
 		return   # the story took the fight back (close_softly); a turn still in flight stops here
 	e.shared_turns = GameSettings.shared_turns()   # the Settings choice, read again in case it changed mid-fight
+	e.flanking = GameSettings.flanking()
 	_refresh_all()
 	if e.state == Encounter.State.OVER:
 		mode = Mode.OVER
@@ -1652,15 +1653,42 @@ func _concentration_kept(c: Combatant) -> void:
 	CombatSfx.concentration(false)
 
 
-## Where a token stands: its square's centre, raised onto the mount's back for a rider, and as high off the floor as
-## it flies (1 unit = 5 ft).
+## Where a token stands: its square's centre (a little to one side when heroes share it), raised onto the mount's back
+## for a rider, and as high off the floor as it flies (1 unit = 5 ft).
 func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
-	var p := board.cell_center(cell, c.size_cells)
+	var p := board.cell_center(cell, c.size_cells) + _share_offset(c, cell)
 	var m := e.mount_of(c)
 	if m != null:
 		var h := CombatToken.height_of(m) * (m.size_cells if m.size_cells > 1 else 1)
 		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
 	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
+
+
+## Creatures sharing a square (owner, 2026-10-12: heroes may end a move in an ally's space) stand side by side on it as
+## the camera looks, in the fight's order, so each figure shows and can be pointed at. Zero for a creature alone there.
+func _share_offset(c: Combatant, cell: Vector2i) -> Vector3:
+	if e.mount_of(c) != null:
+		return Vector3.ZERO
+	var here: Array[Combatant] = []
+	for o in e.combatants:
+		if o == c or (o.is_alive() and o.cell == cell and o.size_cells == c.size_cells and e.mount_of(o) == null and e.rider_of(c) != o):
+			here.append(o)
+	if here.size() < 2:
+		return Vector3.ZERO
+	var right := rig.ground_basis()[1] if rig != null else Vector3(1, 0, 0)
+	return right * (here.find(c) - (here.size() - 1) / 2.0) * 0.38 * c.size_cells
+
+
+## After the events: tokens whose square is now shared, or no longer is, step to their place on it.
+func _settle_shared() -> void:
+	for id: String in tokens:
+		var tok := _tok(id)
+		if tok == null or not tok.visible or tok.combatant == null or not tok.combatant.is_alive():
+			continue
+		var to := _token_spot(tok.combatant, tok.combatant.cell)
+		var off := Vector2(to.x - tok.position.x, to.z - tok.position.z).length()
+		if off > 0.02 and off < 0.75 and absf(to.y - tok.position.y) < 0.05:
+			create_tween().tween_property(tok, "position", to, STEP_TIME * GameSettings.combat_pace())
 
 
 func _play_events() -> void:
@@ -1986,6 +2014,7 @@ func _play_events() -> void:
 				_refresh_all()
 	impact.spell_landed()
 	_stop_walking(walking)
+	_settle_shared()
 	_refresh_all()
 	if not _closed and is_inside_tree() and events_presented.has_connections():
 		events_presented.emit(events.duplicate(true))
