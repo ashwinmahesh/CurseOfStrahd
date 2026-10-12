@@ -1282,17 +1282,17 @@ func _pick_from_mouse(screen: Vector2) -> void:
 			hover_world = hit as Vector3
 			hover_cell = Vector2i(floori(hover_world.x), floori(hover_world.z))
 		return
-	for h: int in [4, 3, 2, 1, 0]:
+	for h: float in GridPick.planes():
 		if absf(dir.y) < 0.0001:
 			break
-		var t := (float(h) - origin.y) / dir.y
+		var t := (h - origin.y) / dir.y
 		if t < 0.0:
 			continue
 		var p := origin + dir * t
 		var cell := Vector2i(floori(p.x), floori(p.z))
 		if not e.grid.in_bounds(cell):
 			continue
-		if e.grid.height(cell) / CombatGrid.FEET == h or h == 0:
+		if GridPick.on_plane(e.grid, cell, h):
 			hover_cell = cell
 			hover_world = p
 			break
