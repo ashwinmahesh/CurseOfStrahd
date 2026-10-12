@@ -21,6 +21,8 @@ endif
 * [if treasure_at:castle_ravenloft_sergeis_tomb] Take what lies in his hands. -> take_treasure
 * Read the words on the lid. -> inscription
 * [if not flag.cat_sergei_rites_said] [Religion DC 13] Say the rites for the dead over him. -> rites | rites_lost
+* [if spell:speak_with_dead and not flag.sergei_spoke] Ask Sergei about Tatyana. -> sergei_speaks
+* [if not spell:speak_with_dead and not flag.sergei_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask Sergei about Tatyana.) -> sergei_cast
 * Leave him in peace. -> END
 
 ~ take_treasure
@@ -39,6 +41,30 @@ interject class:wizard: One can guess who. One would rather not.
 set cat_sergei_rites_said
 Narrator: The old words, said properly, in a room that has heard only one man's apologies for a very long time. The candle flames lean toward the tomb, and then stand up straight again.
 approve liriel_dawnsong +1: You said the rites over Sergei's tomb
+-> tomb_menu
+
+# Speak with Dead (2024 PHB; docs/story/talking_creatures.md): he died at his wedding, alive, and never knew who killed
+# him. What he knew of Tatyana points at the pool in Krezk (krezk/pool.dialogue).
+~ sergei_cast
+cast speak_with_dead
+if check.last
+-> sergei_speaks
+endif
+-> tomb_menu
+
+~ sergei_speaks
+set sergei_spoke
+Narrator: The voice comes from inside the stone, young and very gentle: a man who expects to be at his own wedding feast in a moment, and can't think why it's so dark.
+Narrator: "Tatyana? She'll be in the chapel. White flowers; she chose every one. My brother has been kind to her all week. He's been kind to everyone."
+Narrator: "If she ever comes looking for me, she'll go to the pool at Krezk. She says the water there is white with the sun, and you can see your whole life in it."
+if guest:ireena and quest.the_pool_of_the_white_sun
+Ireena [sad]: He was there, in the water. He's still waiting at that pool.
+elif guest:ireena
+Ireena: (She has gone very white.) I've never been to Krezk. I know exactly what that water looks like.
+endif
+if not quest.the_pool_of_the_white_sun
+quest the_pool_of_the_white_sun rumored
+endif
 -> tomb_menu
 
 ~ rites_lost

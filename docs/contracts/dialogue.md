@@ -88,7 +88,8 @@ cast speak_with_dead               The one speaking for the party casts an explo
                                    tagged [knows:<spell>], with an [if spell:<spell>] option for that earlier casting.
 reveal oak_raven_hoard             A hidden find (a search prop in a location, docs/story/found_magic_items.md) shows
                                    itself as if searched out: someone told the party where it is (a Tip). A notice,
-                                   once; nothing if it was found already.
+                                   once; nothing if it was found already. A trap's id works the same way: the trap
+                                   shows as found (someone warned of it), unless it was found or dealt with already.
 cutscene cutscene_id               A full-screen picture (data/cutscenes/<id>.json, docs/ui/cutscenes.md) under the
                                    lines that follow, which read as captions on it; the box comes back over it for
                                    options and notices. Skipped when none of its pictures' conditions hold.

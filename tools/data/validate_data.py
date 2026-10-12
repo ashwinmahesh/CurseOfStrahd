@@ -860,12 +860,14 @@ def story_checks(data, errors, need):
         if n.get("monster") and n["monster"] not in data["monsters"]:
             errors.append(f"npcs/{nid}: unknown monster '{n['monster']}'")
     # Dialogue files.
-    # Hidden finds a conversation can show (`reveal`): search props by id, counted over every location.
+    # Hidden finds a conversation can show (`reveal`): search props and traps by id, counted over every location.
     search_props = {}
     for loc in locations.values():
         for pr in loc.get("props", []):
             if pr.get("kind") == "search":
                 search_props[pr["id"]] = search_props.get(pr["id"], 0) + 1
+        for tr in loc.get("traps", []):
+            search_props[tr["id"]] = search_props.get(tr["id"], 0) + 1
     narrative = ROOT / "narrative"
     parsed = {}
     for f in sorted(narrative.rglob("*.dialogue")) if narrative.exists() else []:
@@ -910,7 +912,7 @@ def story_checks(data, errors, need):
                 errors.append(f"narrative/{where}: cast '{sid}' isn't a spell")
         for pid, where in p.get("reveals", []):
             if search_props.get(pid, 0) != 1:
-                errors.append(f"narrative/{where}: reveal '{pid}' must name one hidden find (a search prop) in one location"
+                errors.append(f"narrative/{where}: reveal '{pid}' must name one hidden find (a search prop) or trap in one location"
                               f" (found {search_props.get(pid, 0)})")
         for fid, wh in p["flags_read"].items():
             flags_read.setdefault(fid, []).extend(wh)

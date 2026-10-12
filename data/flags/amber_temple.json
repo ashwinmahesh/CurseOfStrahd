@@ -7,6 +7,11 @@
       "summary": "The Amber Sentinel challenged the party on its first approach to the temple doors (sentinel:arrival); quest the_amber_temple arrived. The sentinel's arrival scene stops playing."
     },
     {
+      "id": "frozen_traveller_spoke",
+      "type": "bool",
+      "summary": "The traveller frozen inside the temple doors answered Speak with Dead (amber_temple/frozen_traveller.dialogue): they came for a gift, and their Frost Brand is still in their hand."
+    },
+    {
       "id": "lintel_read_attempted",
       "type": "bool",
       "summary": "The party made its one History attempt at the script over the temple doors (sentinel)."

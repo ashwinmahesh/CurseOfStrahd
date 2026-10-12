@@ -188,6 +188,7 @@
       ],
       "kind": "examine",
       "label": "The nuns' graves",
+      "dialogue": "abbey_of_st_markovia/nuns_graves:graves",
       "model": "gravestone"
     },
     {
