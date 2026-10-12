@@ -1,0 +1,65 @@
+{
+  "about": "The painted landmarks seen past a map's edge (docs/art/atmosphere.md 'Vistas', the vault's Region Variety Plan): one Gemini painting each with art/prompts/vista_preamble.txt (python3 tools/art/build_vistas.py --generate [--only id]), cut out of its white ground into art/vistas/<id>.png. take: which of the generated takes is used (art/generated/vistas/<id>_far_<take>.png); height: the cut-out's height in pixels.",
+  "landmarks": {
+    "castle_ravenloft": {
+      "aspect": "2:3",
+      "take": 1,
+      "height": 768,
+      "prompt": "Castle Ravenloft seen from many miles away across the valley: a dark gothic castle of sheer walls, tall slender towers and needle-thin spires crowning the flat top of a colossal sheer pillar of grey rock that rises straight up out of mist, the rock pillar much taller than the castle on it, with steep cliffs and deep vertical cracks. Seen from straight on and a little below, as one tall narrow silhouette filling the picture from top to bottom. A few tiny warm lit windows high in the keep."
+    },
+    "mount_ghakis": {
+      "aspect": "3:2",
+      "take": 1,
+      "height": 768,
+      "prompt": "Mount Ghakis seen from many miles away: a towering jagged mountain peak of dark grey rock with sheer ice-streaked cliffs and snow in its gullies, its summit sharp and broken. High on its shoulder, a tiny warm amber glow from a great doorway cut into the rock. Seen from straight on, as one broad tall silhouette filling the picture from side to side, its foot fading into mist."
+    },
+    "mount_baratok": {
+      "aspect": "3:2",
+      "take": 2,
+      "height": 768,
+      "prompt": "Mount Baratok seen from many miles away: a broad, heavy, snow-covered mountain with long white shoulders and a rounded summit, bare ribs of dark rock showing through the snow, a dark fringe of spruce forest along its lowest slopes. Seen from straight on, as one wide silhouette filling the picture from side to side, its foot fading into mist."
+    },
+    "krezk": {
+      "aspect": "3:2",
+      "take": 1,
+      "height": 640,
+      "prompt": "The walled village of Krezk seen from many miles away: a high grey stone wall with a square gatehouse, a few steep snow-dusted roofs and a small chapel bell tower rising behind it, all standing at the edge of a high cliff above dark pines. A few tiny warm lit windows. Seen from straight on and a little below, as one wide low silhouette, its foot fading into mist."
+    },
+    "abbey": {
+      "aspect": "2:3",
+      "take": 2,
+      "height": 768,
+      "prompt": "The Abbey of Saint Markovia seen from many miles away: a grim, narrow stone abbey with a square bell tower and a long steep slate roof perched alone on the summit of a tall steep crag of grey rock, snow on its ledges. One tiny warm lit window. Seen from straight on and a little below, as one tall silhouette filling the picture from top to bottom, its foot fading into mist."
+    },
+    "vallaki": {
+      "aspect": "16:9",
+      "take": 1,
+      "height": 512,
+      "prompt": "The walled town of Vallaki seen from many miles away across a dark lake: a long low wall of sharpened upright logs with two plain wooden gate towers, a church steeple and a cluster of steep dark roofs rising above it, thin chimney smoke. A few tiny warm lit windows. Seen from straight on, as one long low silhouette, its foot fading into mist."
+    },
+    "argynvostholt": {
+      "aspect": "3:2",
+      "take": 1,
+      "height": 640,
+      "prompt": "Argynvostholt seen from many miles away: a long ruined grey stone mansion on a bare rise, its roof broken open, with one tall slender stone tower at its end crowned by a cold unlit beacon, pale and ghostly, wrapped in thin silver mist. No lights. Seen from straight on, as one wide silhouette, its foot fading into mist."
+    },
+    "yester_hill": {
+      "aspect": "3:2",
+      "take": 1,
+      "height": 640,
+      "prompt": "Yester Hill seen from many miles away: a bald, rounded, blighted hill with a ring of crooked standing stones on its crown and one enormous gnarled leafless tree beside them, a thin column of grey smoke rising from a fire at its foot. Seen from straight on, as one wide silhouette, its foot fading into mist."
+    },
+    "bonegrinder": {
+      "aspect": "2:3",
+      "take": 2,
+      "height": 640,
+      "prompt": "Old Bonegrinder seen from many miles away: a crooked, leaning old wooden windmill with ragged torn sails standing alone on top of a rocky crag, a thin smoke rising from it and one tiny warm lit window. Seen from straight on and a little below, as one tall silhouette, its foot fading into mist."
+    },
+    "van_richtens_tower": {
+      "aspect": "2:3",
+      "take": 2,
+      "height": 640,
+      "prompt": "Van Richten's Tower seen from many miles away: a tall narrow round stone tower with a steep conical roof standing alone on a small rocky island, half veiled in mist rising off dark water. One tiny warm lit window near its top. Seen from straight on, as one tall slender silhouette, its foot fading into mist."
+    }
+  }
+}
