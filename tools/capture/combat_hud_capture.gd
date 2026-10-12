@@ -229,3 +229,15 @@ func capture_shots(tool: Node, out: String) -> void:
 	rig.snap_to_target()
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", "%s_21_shared_square.png" % out)
+	# A click on a portrait in the turn order (owner, 2026-10-12): the camera glides to that creature.
+	e.turn_index = e.order.find(heroes["ilse_varga"] as Combatant)
+	e._begin_turn()
+	view._advance()
+	await tool.call("wait_frames", 30)
+	var far_zombie: Combatant = null
+	for c in e.combatants:
+		if c.side == &"enemy" and c.is_alive():
+			far_zombie = c
+	view._focus_on(far_zombie.id)
+	await tool.call("wait_frames", 60)
+	tool.call("_shot", "%s_22_looked_at.png" % out)
