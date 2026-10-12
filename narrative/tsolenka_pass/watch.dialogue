@@ -106,7 +106,8 @@ tsolenka_sergeant: Travellers. You've passed. The winch is in the gatehouse. Not
 # What the sergeant would say, for a party that released or fought his watch before he said it (Wiki findings 47, 57,
 # 58): the watchword, the smoke on Ghakis (The Warm Snow) and the goat path (The Guide to the Temple).
 ~ log
-Narrator: The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN. Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not.
+Narrator: The watch log of the Tsolenka tower, in a dozen hands, the last of them steady and square. Each entry is the same: date, weather, the watchword, and the words NOTHING CAME DOWN.
+Narrator: Near the end: Two of the lads went up the road at night without orders. They came back talking about voices in the amber. Sent them down to the valley. Gate shut. Watchword unchanged: cold hearth, shut door. After that the dates stop, and the entries do not.
 if not flag.tsolenka_watchword_known
 set tsolenka_watchword_known
 endif
