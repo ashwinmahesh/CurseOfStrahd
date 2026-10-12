@@ -954,6 +954,30 @@ func lycanthrope(t: Combatant) -> bool:
 	return true
 
 
+## Shape-Shift (no cost here): a lycanthrope between its true form and the hybrid it fights in. The AI only ever goes
+## into the hybrid; an ally the player runs (FeatureActions) can go back.
+func shift(c: Combatant) -> void:
+	var e := enc()
+	var back := str(c.get_meta("form", "humanoid")) == "hybrid"
+	c.set_meta("form", "humanoid" if back else "hybrid")
+	e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	var art := _hybrid_art(c)
+	if art != "":
+		e.events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art})
+
+
+## The figure a story ally takes on in their hybrid form, or "" to keep their own. Davian, Adrian and Ilinca fight in
+## their own clothes under the wereraven's stat block, so their hybrid is the wereraven's; someone whose stat block is
+## their own (Emil) keeps the figure they have.
+func _hybrid_art(c: Combatant) -> String:
+	if not c.creature.id.begins_with("guest_") or not c.creature is Monster:
+		return ""
+	var data := (c.creature as Monster).data
+	var art := str(data.get("art", data.get("id", "")))
+	var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
+	return "" if art == str(npc.get("sprite", npc.get("id", ""))) else art
+
+
 # --- Bonus Actions and Reactions ------------------------------------------------------------------
 
 ## The monster's Bonus Action this turn, chosen by the AI: Deathless Agility, Shadow Stealth, Shape-Shift, Divine
@@ -999,8 +1023,7 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 			"shape_shift":
 				if plan == "shift" and str(c.get_meta("form", "humanoid")) == "humanoid":
 					c.bonus_available = false
-					c.set_meta("form", "hybrid")
-					e.log.add("info", "%s twists into a snarling hybrid form" % c.name(), c.id)
+					shift(c)
 				return CombatResult.new()
 			"cast":
 				if plan == "support":

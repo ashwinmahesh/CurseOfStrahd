@@ -256,8 +256,8 @@ func movement_restriction(c: Combatant, id: String) -> String:
 
 # --- Using them ---------------------------------------------------------------------------------
 
-## A summoned creature the player controls: its stat block's save actions and Bonus Actions (Fey Step, Fell Glare,
-## Healing Touch, Venomous Spew).
+## A summoned creature or story ally the player controls: its stat block's save actions and Bonus Actions (Fey Step,
+## Fell Glare, Healing Touch, Venomous Spew, a lycanthrope's Shape-Shift).
 func _creature_actions(c: Combatant, out: Array[Dictionary], aw: String, bw: String) -> void:
 	var ma := enc().monster_actions
 	var data := MonsterActions.data_of(c)
@@ -280,6 +280,11 @@ func _creature_actions(c: Combatant, out: Array[Dictionary], aw: String, bw: Str
 				"heal":
 					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), str(act.get("heal", "")), cost, why, "ally",
 						str(act.get("summary", "")), int(act.get("range", 5))))
+				"shape_shift":
+					# A lycanthrope ally (the Martikovs and Ilinca as wereravens, Emil): into the hybrid and back.
+					var hybrid := str(c.get_meta("form", "humanoid")) == "hybrid"
+					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), "human form" if hybrid else "hybrid", cost, why, "none",
+						"Return to your human form." if hybrid else "Take your hybrid form, and the attacks that come with it."))
 
 
 func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2i) -> CombatResult:
@@ -295,7 +300,9 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 	if act.is_empty():
 		return CombatResult.fail("Not available")
 	var r := CombatResult.new()
-	if act.has("teleport"):
+	if str(act.get("do", "")) == "shape_shift":
+		ma.shift(c)
+	elif act.has("teleport"):
 		r = _teleport(c, cell, int(act["teleport"]))
 		if not r.ok:
 			return r
