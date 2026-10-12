@@ -1522,6 +1522,7 @@
  },
  "argynvost/103b0b7d9855b66c": {
   "chars": 142,
+  "direction": "[earnest, warm, deep]",
   "model": "eleven_v3",
   "recipe": "58a554c9ac",
   "text": "It needs my fire. My skull is in his castle; bring it home to my bones one day, and once it's lit the beacon will burn as it should, for good."
@@ -34916,6 +34917,7 @@
  },
  "mordenkainen/e5d2cec55e9e460c": {
   "chars": 181,
+  "direction": "[shrewd, grave, gentle]",
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "And you've been in that castle already, haven't you. (He looks at your faces, and doesn't need to ask.) You said it to her. You put it on her box. Then she has it back, and so do I."
