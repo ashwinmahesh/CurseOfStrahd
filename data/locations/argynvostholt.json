@@ -702,7 +702,7 @@
         23
       ],
       "dialogue": "argynvostholt/the_squire:cosmin",
-      "when": "(flag.order_fate != \"rest\" or quest.the_squire) and quest.the_squire != done and quest.the_squire != gone_home",
+      "when": "(flag.order_fate != \"rest\" or quest.the_squire) and quest.the_squire != done and not flag.cosmin_packed",
       "facing": "north"
     },
     {

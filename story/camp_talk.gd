@@ -1,12 +1,15 @@
 class_name CampTalk
 extends RefCounted
 ## Camp conversations (docs/story/personal_quests.md): after a Long Rest a companion may ask for a word, the way a
-## good table lets a character's own story breathe between sessions. Each node of narrative/camp/*.dialogue is one
-## talk; its first statement is `if <condition>` (who is asking, and when), and the talk is offered once its
+## good table lets a character's own story breathe between sessions. Each `talk_*` node of narrative/camp/*.dialogue is
+## one talk; its first statement is `if <condition>` (who is asking, and when), and the talk is offered once its
 ## condition holds, plays once per playthrough, and at most one per file (one per companion) is offered at a time.
+## Other nodes are the talks' own scenes, even when one happens to open with an `if` (Wiki finding 87: Kip's
+## settling-up, opening with its stage guard, was offered to every party at its first rest).
 ## The rest screen shows them as buttons; choosing one starts the conversation.
 
 const FOLDER := "camp"
+const TALK := "talk_"   # the prefix of a talk node
 
 
 ## Talks that could start now: [{ref: "camp/<file>:<node>", label: "Ilse wants a word"}].
@@ -25,7 +28,7 @@ static func available(st: StoryState) -> Array[Dictionary]:
 			continue
 		for node in df.order:
 			var ref := "%s:%s" % [df.key, node]
-			if bool(st.flags.get("_camp/" + ref, false)):
+			if not node.begins_with(TALK) or bool(st.flags.get("_camp/" + ref, false)):
 				continue
 			var cond := opening_condition(df, node)
 			if cond == "" or not StoryConditions.check(cond, st):

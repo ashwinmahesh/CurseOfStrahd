@@ -42,6 +42,8 @@ Sir Godfrey Gwilym: A night at the squires' graves, standing, with the banner. I
 
 ~ cosmin
 if quest.the_squire == gone_home
+# He stays to pack until he's said goodbye (Wiki finding 82).
+set cosmin_packed
 Cosmin: (He's packing the horse blanket into a roll.) Home. Ioan's stone says what it says. It'll have to be enough.
 -> END
 endif

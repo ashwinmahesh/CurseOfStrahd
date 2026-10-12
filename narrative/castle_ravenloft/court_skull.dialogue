@@ -1,0 +1,13 @@
+# The silver dragon Argynvost's skull on the trophy wall of Castle Ravenloft's court (prop court_dragon_skull). Argynvost
+# asks for it home to his bones at Argynvostholt (argynvostholt/argynvost:beacon, beacon:farewell); the party can carry
+# it there (argynvostholt/mausoleum:skull_home). Wiki finding 83.
+
+~ skull
+narrate examine:court_dragon_skull
+* [if flag.argynvost_skull_known and not flag.argynvost_skull_taken] (Lift it down, and take it home to Argynvostholt.) -> take
+* Leave it on the wall. -> END
+
+~ take
+set argynvost_skull_taken
+Narrator: It takes all of you to lift it down. It is lighter than it looks, as if it wanted to come.
+-> END

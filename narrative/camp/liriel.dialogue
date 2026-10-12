@@ -184,7 +184,8 @@ interject name:liriel_dawnsong: Goodnight. Be at peace.
 -> END
 
 ~ talk_faith
-if name:liriel_dawnsong and quest.carry_the_dawn >= the_fall and flag.abbot_fate
+# Once his fate is settled, whether or not she learned of the bride from him first (Wiki finding 90).
+if name:liriel_dawnsong and quest.carry_the_dawn >= the_angel and flag.abbot_fate
 -> faith
 endif
 -> END

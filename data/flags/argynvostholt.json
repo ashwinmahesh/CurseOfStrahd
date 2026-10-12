@@ -37,6 +37,16 @@
       "summary": "The party knows the dragon's skull hangs as a trophy in Castle Ravenloft (chronicle, Vladimir, the echo). Phase 6: bringing it home to the mausoleum lights the beacon for good."
     },
     {
+      "id": "argynvost_skull_home",
+      "type": "bool",
+      "summary": "The party laid Argynvost's skull with his bones in the mausoleum. With the beacon lit, it burns for good (the epilogue reads it)."
+    },
+    {
+      "id": "cosmin_packed",
+      "type": "bool",
+      "summary": "Cosmin, going home once the Order has rested (the_squire gone_home), has said goodbye; he leaves the graves."
+    },
+    {
       "id": "godfrey_list_read",
       "type": "bool",
       "summary": "The party read Godfrey's charcoal wall of names in his room (prop). Helps him remember; ally route."
