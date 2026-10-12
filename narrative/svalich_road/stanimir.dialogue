@@ -24,7 +24,7 @@ Stanimir: And you bring the burgomaster's girl, out past the crossroads. Well, w
 Ireena: You knew my father?
 Stanimir: Everyone knew your father. He shouted at me for an hour once, about a horse. Best conversation I had that year.
 endif
-if flag.crossroads_gallows_seen
+if flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down
 Narrator: His eyes go to your faces, one by one, and stop. Whatever the road has written on them, he reads part of it.
 endif
 Stanimir: Madam Eva is in the big tent. She has been expecting you. Don't ask me how; I stopped asking forty years ago.
@@ -42,7 +42,7 @@ endif
 -> menu
 
 ~ menu
-* [if flag.crossroads_gallows_seen and not flag.nicu_kin_told] We found a young Vistana hanged at the crossroads. -> nicu_news
+* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down) and not flag.nicu_kin_told] We found a young Vistana hanged at the crossroads. -> nicu_news
 * [if not flag.stanimir_wine_shared] Share a cup of your wine. -> wine
 * Show us what you have to trade. -> trade
 * Tell us about Madam Eva. -> about_eva

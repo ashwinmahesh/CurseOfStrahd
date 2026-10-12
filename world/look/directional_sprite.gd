@@ -78,11 +78,22 @@ static var _frames_cache: Dictionary = {}
 ## resolution: their sheets are already quantized to the palette by the pipeline, so they stay on-model while
 ## staying sharp (owner request 2026-10-06).
 const RENDER_PRIORITY := 6
+## Each figure made steps this much closer to the camera than the one before, over NUDGE_STEPS figures, then starts
+## again (the crisp shader's `depth_nudge`; owner report 2026-10-12: two figures sharing a square, a hero on an ally's
+## or walking through a townsperson, flickered in front of each other at the same depth). At most a tenth of a square.
+const NUDGE := 0.002
+const NUDGE_STEPS := 48
+static var _figures := 0
 ## Owner feedback (2026-10-06 "blurry", 2026-10-07 "crisp lines and high definition of each character's features"):
 ## a 384 px sheet shown about 170 px tall was sampled plainly (jagged, broken lines) or through mipmaps (soft). Every
 ## character sprite now draws through shaders/world/sprite_crisp.gdshader: a 4x4 grid of samples over each screen
 ## pixel on the full sheet (sharp without jaggies) and an ink outline round the figure at any zoom.
 const CRISP := preload("res://shaders/world/sprite_crisp.gdshader")
+
+
+## The `n`th figure's step toward the camera (NUDGE): no two of NUDGE_STEPS figures made one after another share one.
+static func nudge_for(n: int) -> float:
+	return (n % NUDGE_STEPS) * NUDGE
 
 
 ## `cell_px` is the sheet's cell size; by default it's read from the frames.
@@ -99,6 +110,10 @@ static func create(frames: SpriteFrames, height_units: float, cell_px: int = -1)
 	s._height = height_units
 	s._breath_phase = _rng.randf() * TAU
 	setup_material(s)
+	# Drawn a hair nearer than the figure made before it, and sorted the same way, so two on one square never trade places.
+	(s.material_override as ShaderMaterial).set_shader_parameter("depth_nudge", nudge_for(_figures))
+	s.sorting_offset = nudge_for(_figures)
+	_figures += 1
 	# The figure fills about 89% of its cell (render_walk.py frames it at 1.12x figure height).
 	s.pixel_size = height_units / (cell_px / 1.12)
 	s.offset = Vector2(0, cell_px * 0.5 - cell_px * 0.04)

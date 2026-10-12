@@ -1,0 +1,25 @@
+# The wolfsbane at the werewolf den's door (prop den_herb_patch), planted in rows and weeded. Speak with Plants (2024
+# PHB; docs/story/talking_creatures.md): plants tell what passed them in the last day. Last night Zuleika cut some of
+# them to dry in the caves, with the flask she hides there (herb_elixir).
+
+~ patch
+narrate examine:den_herb_patch
+* [if spell:speak_with_plants and not flag.wolfsbane_spoke] Ask the wolfsbane who came by last night. -> speaks
+* [if not spell:speak_with_plants and not flag.wolfsbane_spoke] [knows:speak_with_plants] (Cast Speak with Plants, and ask the wolfsbane who came by last night.) -> cast
+* [if spell:speak_with_plants or knows:speak_with_plants] Leave the flowers be. -> END
+-> END
+
+~ cast
+cast speak_with_plants
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set wolfsbane_spoke
+Narrator: The purple hoods turn toward you all together, like a row of small listening faces, and the patch whispers in one dry voice.
+Narrator: "At moonset the grey-braided woman came with her knife and cut three of us, gently, the way she always does, and carried us into the cave to hang with the others."
+Narrator: "She hid a little flask in our bundles. The big ones sniff at everything in that cave, and they never sniff at us."
+reveal herb_elixir
+-> END

@@ -304,3 +304,21 @@ func test_the_walk_cycle_keeps_pace_with_the_feet() -> void:
 			assert_between(squares, 0.99, 4.01, "%s, %s: a cycle covers %.2f squares" % [art, who, squares])
 			assert_between(cycle, 0.6, 1.3, "%s, %s: a cycle takes %.2f s (legs at a natural cadence)" % [art, who, cycle])
 		s.free()
+
+
+## Two figures on one square (owner report 2026-10-12: one flickered in and out): each figure is drawn and sorted a
+## hair nearer the camera than the one made before it, so no two of a fight's figures sit at the same depth.
+func test_figures_made_one_after_another_never_share_a_depth() -> void:
+	var frames := load("res://art/sprites/villager_standin/walk.tres") as SpriteFrames
+	var made: Array[DirectionalSprite] = []
+	var seen := {}
+	for i in DirectionalSprite.NUDGE_STEPS:
+		var s := DirectionalSprite.create(frames, 1.2)
+		made.append(s)
+		var nudge := float((s.material_override as ShaderMaterial).get_shader_parameter("depth_nudge"))
+		assert_false(seen.has(nudge), "figure %d has a depth of its own (%.4f)" % [i, nudge])
+		seen[nudge] = true
+		assert_between(s.sorting_offset, nudge - 0.0001, nudge + 0.0001, "and sorts by it")
+		assert_true(nudge <= 0.1, "at most a tenth of a square")
+	for s in made:
+		s.free()

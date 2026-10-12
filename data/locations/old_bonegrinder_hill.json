@@ -291,6 +291,7 @@
         12
       ],
       "kind": "examine",
+      "dialogue": "old_bonegrinder/garden:garden",
       "label": "A kitchen garden",
       "model": "reeds",
       "checks": [
