@@ -1,7 +1,9 @@
 extends TestCase
 ## Night visitors at camp (F16, data/camp/night_visitors.json): an interrupted night in a risky place brings a fight to
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
-## seed 1-8: every fight finishes, and the party can win, but pays for it (the owner's standing rule for fights).
+## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
+## Rest benefits. Every fight finishes, and each group is hard but winnable (the owner's standing rule, and his
+## 2026-10-12 word on easy fights): won at least twice in eight and lost at least twice.
 
 var root: Node
 const FIELD := "test_night_field"
@@ -31,6 +33,7 @@ func _camp(region: String, level: int) -> LocationCamp:
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, level)
 		ch.finish_long_rest()
+		_tired(ch)
 		GameState.story.party.append(ch)
 	GameState.story.milestones = level - 1
 	GameState.story.location = FIELD
@@ -39,6 +42,17 @@ func _camp(region: String, level: int) -> LocationCamp:
 	add_child(root)
 	await _frames(3)
 	return LocationCamp.pitch(root.get("view") as LocationView, root, "risky")
+
+
+## A hero as the night's visitors find them: a day's adventuring behind them (half their Hit Points and half of each
+## level's spell slots spent), then the interrupted hour's Short Rest benefits (LongRest.take).
+static func _tired(ch: Character) -> void:
+	ch.hp = maxi(1, ch.max_hp() / 2)
+	var slots := ch.spell_slots()
+	for i in slots.size():
+		for n in slots[i] / 2:
+			ch.expend_slot(i + 1)
+	ch.finish_short_rest()
 
 
 ## A region whose land is `land`.
@@ -77,24 +91,28 @@ func _play(group: Dictionary, seed_value: int) -> Dictionary:
 	return res
 
 
-## Plays each of `land`'s groups once per seed 1-8: every fight finishes, and the party wins at least half of them.
+## Plays each of `land`'s groups once per seed 1-8: every fight finishes, and each is won at least twice and lost at
+## least twice.
 func _land(land: String) -> void:
 	for g: Variant in CampSite.visitors()["groups"]:
 		var group := g as Dictionary
 		if str(group["land"]) != land:
 			continue
+		var level := int((group["levels"] as Array)[0])
 		var wins := 0
-		var downs := 0
+		var won_downs := 0
 		var rounds := 0
 		for s in range(1, 9):
 			var res := await _play(group, s)
 			assert_ne(str(res["outcome"]), "timeout", "%s seed %d finished" % [group["id"], s])
-			wins += 1 if str(res["outcome"]) == "victory" else 0
-			downs += int(res["downs"])
+			if str(res["outcome"]) == "victory":
+				wins += 1
+				won_downs += int(res["downs"])
 			rounds += int(res["rounds"])
-		print("        %s at level %d: %d/8 won, %.1f rounds, %.1f party members dropped per fight" % [group["id"],
-			int((group["levels"] as Array)[0]), wins, rounds / 8.0, downs / 8.0])
-		assert_true(wins >= 4, "%s can be won at level %d, most nights (%d/8)" % [group["id"], int((group["levels"] as Array)[0]), wins])
+		print("        %s at level %d: %d/8 won, %.1f rounds, %.1f heroes dropped per win" % [group["id"], level, wins,
+			rounds / 8.0, won_downs / float(maxi(1, wins))])
+		assert_true(wins >= 2, "%s is won at least twice in 8 at level %d (%d)" % [group["id"], level, wins])
+		assert_true(wins <= 6, "%s is lost at least twice in 8 at level %d (%d)" % [group["id"], level, wins])
 
 
 func test_an_interrupted_night_at_camp_brings_its_visitors() -> void:

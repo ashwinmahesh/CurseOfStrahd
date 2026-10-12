@@ -39,8 +39,9 @@ An interrupted night gives a Short Rest's benefits, and then the night's visitor
 from the fire, from more than one side (data/camp/night_visitors.json): a group for the region's land (forest, marsh,
 mountain, castle) and the party's milestone level, a die picking among several. Those waiting at camp keep back from
 the fight. Afterwards the party can try to sleep again. Each group is played to the end eight times by the test
-autopilot at the lowest level it comes for (tests/integration/test_night_visitors.gd): the party wins most nights,
-and pays for it.
+autopilot at the lowest level it comes for, with the party as an interrupted night finds it (half its Hit Points and
+half its spell slots spent, then the hour's Short Rest): hard but winnable, won and lost at least twice in eight
+(tests/integration/test_night_visitors.gd; the owner wants fights hard, 2026-10-12).
 
 A full night brings back what a Long Rest does. Then the Narrator says the night's line (`rest:long:<place>`,
 `rest:long:<region>`, `camp:night`, `rest:long`), the region's dream, and `camp:morning`. Strahd may come in the

@@ -1,6 +1,6 @@
 {
   "id": "night_visitors",
-  "summary": "What comes out of the dark when a night at camp in a risky place is interrupted (F16, docs/story/camp.md): by the lie of the land the region has, and the party's level. Each group is played to the end by the test autopilot at the lowest level it's for (tests/integration/test_night_visitors.gd): hard, but winnable.",
+  "summary": "What comes out of the dark when a night at camp in a risky place is interrupted (F16, docs/story/camp.md): by the lie of the land the region has, and the party's level. Each group is played to the end by the test autopilot at the lowest level it's for, with the party tired as an interrupted night finds it (tests/integration/test_night_visitors.gd): hard but winnable, won and lost at least twice in eight.",
   "lands": {
     "svalich_road": "forest",
     "into_the_mists": "forest",
@@ -35,35 +35,35 @@
       "land": "forest",
       "levels": [4, 6],
       "text": "Something big moves between the trees, then something bigger. The Count's hounds have found your fire.",
-      "monsters": ["dire_wolf", "dire_wolf", "dire_wolf", "wolf", "wolf"]
+      "monsters": ["dire_wolf", "dire_wolf", "wolf", "wolf", "wolf", "wolf"]
     },
     {
       "id": "forest_werewolves",
       "land": "forest",
       "levels": [7, 11],
       "text": "Shapes walk upright out of the pines, sniffing at the smoke, and the wolves behind them grin.",
-      "monsters": ["werewolf", "werewolf", "werewolf", "dire_wolf", "dire_wolf"]
+      "monsters": ["werewolf", "werewolf", "dire_wolf", "dire_wolf", "dire_wolf", "wolf"]
     },
     {
       "id": "marsh_drowned",
       "land": "marsh",
       "levels": [1, 3],
       "text": "The reeds part, and the drowned come up out of the water, walking stiffly toward the warmth.",
-      "monsters": ["zombie", "zombie", "zombie", "zombie"]
+      "monsters": ["zombie", "zombie", "zombie", "zombie", "giant_rat"]
     },
     {
       "id": "marsh_ghast",
       "land": "marsh",
       "levels": [4, 6],
       "text": "A stink of rot comes off the water ahead of them: ghasts, and the drowned they have been feeding on.",
-      "monsters": ["ghast", "ghast", "zombie", "zombie"]
+      "monsters": ["ghast", "ghast", "ghoul", "zombie", "zombie"]
     },
     {
       "id": "marsh_watchers",
       "land": "marsh",
       "levels": [7, 11],
       "text": "Scarecrows stand at the edge of the firelight that weren't there when you lay down. Behind them, something in a drowned bride's veil begins to wail.",
-      "monsters": ["banshee", "wight", "wight", "scarecrow", "scarecrow"]
+      "monsters": ["banshee", "wight", "wight", "wight", "scarecrow", "scarecrow"]
     },
     {
       "id": "mountain_wolves",
@@ -76,8 +76,8 @@
       "id": "mountain_berserkers",
       "land": "mountain",
       "levels": [4, 6],
-      "text": "Men in furs come down the slope at a run, axes high, howling like the wolves at their heels.",
-      "monsters": ["berserker", "berserker", "berserker", "wolf", "wolf"]
+      "text": "Men in furs come down the slope at a run, axes high, howling like wolves.",
+      "monsters": ["berserker", "berserker", "berserker"]
     },
     {
       "id": "mountain_pack",
@@ -104,8 +104,8 @@
       "id": "castle_spawn",
       "land": "castle",
       "levels": [7, 11],
-      "text": "Two pale figures walk out of the dark behind the bats, smiling, in no hurry at all.",
-      "monsters": ["vampire_spawn", "vampire_spawn", "swarm_of_bats", "swarm_of_bats"]
+      "text": "Pale figures walk out of the dark behind the bats, smiling, in no hurry at all.",
+      "monsters": ["vampire_spawn", "vampire_spawn", "vampire_spawn", "swarm_of_bats", "swarm_of_bats"]
     }
   ]
 }
