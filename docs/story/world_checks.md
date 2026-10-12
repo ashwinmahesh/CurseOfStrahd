@@ -11,7 +11,8 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 
 - **Shows on the right-click menu** of its thing: "Read the claw marks (Survival DC 13: Thistle +5 with Advantage, 80%)".
   The tooltip says who helps and how. The thing's hover name (and its Alt plate) adds the skills it still offers,
-  "Examine Clawed walls (Survival)", and a left click on it says "Right-click it to try Survival".
+  "Examine Clawed walls (Survival)", its Alt name plate says "Clawed walls · Survival", and a left click on it says
+  "Right-click it to try Survival".
 - **Is rolled by the party's best hand at it who hasn't tried yet**: the best chance, then the best bonus, then the
   leader. The party walks up first (or tries from where it stands when the thing can't be reached).
 - **Gets the 2024 PHB's help before the roll:** another party member proficient in the skill takes the Help action
@@ -23,6 +24,8 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 - **One try each:** a character who fails it has had their try (the owner's rule that failed checks are final); the next
   best who hasn't tried takes the next one. `once`: one try for the whole party (a crumbling ledge, a rune that burns
   out). A success is done for good.
+- **Goes away once it's pointless:** a check whose success would only find, disarm, unlock or open what the party
+  already found or opened another way (a Search turned up the satchel the climb was for) isn't offered any more.
 - **After a failure** the roller can still spend Heroic Inspiration (a new d20), a Lucky Foot (a natural 1 again) or
   Tactical Mind (+1d10) from the same menu (CheckAids). A reroll that succeeds makes the success happen.
 
@@ -63,4 +66,66 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 
 Status: ✅ built · ○ planned
 
-(The first batch follows with its own section per region.)
+### The Village of Barovia (level 3)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Village of Barovia, clawed walls | Read the claw marks (Survival DC 13) | codex: Claw marks on the burgomaster's house | — |
+| ✅ | Village of Barovia, old graves | Read the oldest names (History DC 13) | finds a grave dug up and filled in again (Wand of Secrets); codex: The oldest graves in Barovia | — |
+| ✅ | Village of Barovia, a roadside shrine | Pray to the Morninglord (Religion DC 12) | Heroic Inspiration | — |
+| ✅ | Village of Barovia, collapsed barn | Heave the fallen beams aside (Athletics DC 14) | finds a stash under the fallen beams (Javelin of Lightning) | 1d4 bludgeoning damage |
+| ✅ | Village of Barovia, pastry cart | Sniff the pastries (Medicine DC 13) | codex: The pastry cart | loses 60 minutes |
+| ✅ | Village of Barovia, castle on the cliff | Recall what's told of the castle (History DC 14) | codex: The castle on the pillar of rock | — |
+| ✅ | Village of Barovia, the road east | Study the mists (Arcana DC 14) | codex: The mists | — |
+| ✅ | Village of Barovia, a rain barrel | Read the tracks by the barrel (Survival DC 12) | finds something kept dry behind the rain barrel (Oil of Slipperiness) | — |
+| ✅ | Village of Barovia, a raven on the lych-gate | Coax the raven down (Animal Handling DC 13) | finds a crack in the lych-gate post (Holy Water) | — |
+| ✅ | Village Church, pews | Sing a hymn from the old hymnal (Performance DC 12) | Heroic Inspiration | — |
+| ✅ | Village Church, burial niches | Examine the remains in the niches (Medicine DC 13) | finds an old priest in the burial niches (Periapt of Health) | — |
+| ✅ | Village Church, altar | Say the dedication over the altar (Religion DC 14) | 1d6 Temporary Hit Points | — |
+| ✅ | Burgomaster's Mansion, a map of the valley | Study the burgomaster's map (Survival DC 13) | finds a farmer's cache behind the field wall (Gauntlets of Ogre Power, The River Ivlis Crossroads); codex: The burgomaster's map | — |
+| ✅ | Burgomaster's Mansion, portrait of the burgomaster | Recall the Indirovich family (History DC 12) | codex: The Indirovich family | — |
+| ✅ | Blood of the Vine, wine casks | Judge the wine (Nature DC 12) | codex: The wizard's wine | — |
+| ✅ | Blood of the Vine, hearth | Play for the room by the hearth (Performance DC 13) | 6 gold | — |
+| ✅ | The Charcoal-Burners' Hollow, herbs drying | Name the drying herbs (Nature DC 12) | heals 1d6 | — |
+
+### Death House (level 2)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Death House, Ground Floor, a dumbwaiter | Squeeze into the dumbwaiter shaft (Acrobatics DC 13) | finds something in the soot under the dumbwaiter (Driftglobe) | 1d4 bludgeoning damage |
+| ✅ | Death House, Ground Floor, sealed jars | Judge what's in the sealed jars (Medicine DC 12) | heals 1d4 | 1d4 poison damage |
+| ✅ | Death House, Upper Floor, a bookcase | Read the titles on the odd shelf (History DC 13) | finds the swinging bookcase | — |
+| ✅ | Death House, Upper Floor, a standing harp | Play the standing harp (Performance DC 13) | Heroic Inspiration | — |
+| ✅ | Death House, Dungeon (Upper Level), scuffs in the dust | Read the scuffs in the dust (Survival DC 13) | finds a covered spiked pit | — |
+| ✅ | Death House, Dungeon (Upper Level), the oldest crypt | Read the oldest crypt (History DC 14) | codex: The first of the Dursts | — |
+| ✅ | Death House, Dungeon (Upper Level), the well | Climb down the well shaft (Athletics DC 13) | 22 gold | 1d6 bludgeoning damage |
+| ✅ | Death House, Dungeon (Upper Level), skeletons in rusty shackles | Give the shackled dead their rites (Religion DC 12) | Heroic Inspiration | — |
+| ✅ | Death House, Dungeon (Lower Level), alcoves of strange relics | Sense which relic still holds power (Arcana DC 14) | finds a relic in the niches that isn't bone (Pipes of Haunting) | — |
+| ✅ | Death House, Dungeon (Lower Level), wall reliefs | Read the rite in the reliefs (Religion DC 14) | codex: The rite on the walls | — |
+
+### Tser Pool and Tser Falls (level 4)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Tser Pool Encampment, horses | Calm the skittish horses (Animal Handling DC 12) | finds something in the reeds (Elemental Gem (Yellow Diamond)) | — |
+| ✅ | Tser Pool Encampment, the bonfire | Dance at the bonfire (Performance DC 12) | Heroic Inspiration | — |
+| ✅ | Tser Pool Encampment, a stump stuck with knives | Play the knife game for coin (Sleight of Hand DC 13) | 12 gold | 1d4 slashing damage |
+| ✅ | Tser Pool Encampment, a cart with a cracked wheel | Lift the cart off its cracked wheel (Athletics DC 13) | finds a false floor in the broken cart (Bag of Holding) | — |
+| ✅ | Tser Pool Encampment, a tree hung with ribbons | Read the knots on the ribbons (Insight DC 13) | finds a Vistani cache under the ribbon tree (Boots of Striding and Springing) | — |
+| ✅ | Tser Pool Encampment, a cairn by the water | Read the cairn's oldest marks (History DC 13) | codex: The cairn at Tser Pool | — |
+| ✅ | Tser Falls, a stone heaped with tokens | Sense the token that hums (Arcana DC 13) | finds a token that hums (Pearl of Power) | — |
+| ✅ | Tser Falls, a claw-marked pine | Climb the claw-marked pine (Athletics DC 13) | finds a satchel snagged high in the pine (Goggles of Night) | 1d6 bludgeoning damage |
+| ✅ | Tser Falls, a cairn of names | Speak the names on the cairn (Religion DC 12) | finds a necklace among the names on the cairn (Necklace of Adaptation) | — |
+
+### Vallaki (level 5)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Vallaki, the festival dais | Perform on the festival dais (Performance DC 14) | 20 gold | — |
+| ✅ | Vallaki, old Smaranda's herb stall | Pick the real herbs from the dross (Nature DC 15) | Keoghtom's Ointment (uncommon) | — |
+| ✅ | Vallaki, the Lake Gate | Read the Lake Gate's carvings (History DC 12) | codex: The founding of Vallaki | — |
+| ✅ | Vallaki, churchyard graves | Read the epitaphs (Religion DC 13) | codex: Saint Andral | — |
+| ✅ | The Blue Water Inn, a covered cage | Calm the great cat in the cage (Animal Handling DC 15) | Heroic Inspiration | 1d6 slashing damage |
+| ✅ | The Blue Water Inn, carving over the door | Read the raven over the door (History DC 13) | codex: The raven over the door | — |
+| ✅ | The Vistani Camp, rotten jetty | Walk out to the end of the rotten jetty (Acrobatics DC 13) | 18 gold | 1d4 cold damage |
+| ✅ | Wachterhaus, a shrine | Read the shrine's dedication (Religion DC 15) | finds the cult's tithe under the shrine (Rod of Rulership); codex: The shrine in the cellar | — |

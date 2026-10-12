@@ -29,7 +29,7 @@ static func actions_for(view: LocationView, spec: Dictionary) -> Array[Dictionar
 		elif (pv["advantage"] as Array).is_empty() and not (pv["disadvantage"] as Array).is_empty():
 			edge = " with Disadvantage"
 		out.append({"id": "check:" + str(check["id"]), "label": "%s (%s: %s %s%s, %d%%)" % [check["label"], what,
-			who.name.get_slice(" ", 0), signi(int(pv["bonus"])), edge, roundi(float(pv["chance"]) * 100.0)], "why": _why(pv)})
+			who.name.get_slice(" ", 0), _signed(int(pv["bonus"])), edge, roundi(float(pv["chance"]) * 100.0)], "why": _why(pv)})
 	var failed := view.get_meta(FAILED, {}) as Dictionary
 	if not failed.is_empty() and failed["spec"] == spec:
 		var who := failed["who"] as Character
@@ -38,8 +38,8 @@ static func actions_for(view: LocationView, spec: Dictionary) -> Array[Dictionar
 	return out
 
 
-static func signi(n: int) -> String:
-	return ("+%d" if n >= 0 else "%d") % n
+static func _signed(n: int) -> String:
+	return ("+%d" % n) if n >= 0 else str(n)
 
 
 ## The tooltip: who helps, and how.
@@ -56,12 +56,18 @@ static func _why(pv: Dictionary) -> String:
 
 ## What a thing's hover name adds while it has a check someone can still try: " (Arcana, History)". "" otherwise.
 static func hint(view: LocationView, spec: Dictionary) -> String:
+	var names := skills_offered(view, spec)
+	return "" if names == "" else " (%s)" % names
+
+
+## The skills a thing's checks still offer someone: "Arcana, History", or "".
+static func skills_offered(view: LocationView, spec: Dictionary) -> String:
 	var names: Array[String] = []
 	for check in WorldChecks.open_checks(view.st, view.loc_id, spec):
 		var n := WorldChecks.skill_name(check)
 		if not n in names and WorldChecks.anyone_left(view.st, view.loc_id, check):
 			names.append(n)
-	return "" if names.is_empty() else " (%s)" % ", ".join(names)
+	return ", ".join(names)
 
 
 ## A menu choice `check:<id>` or `check_aid:<aid>` on `thing` (the party has walked up to it).

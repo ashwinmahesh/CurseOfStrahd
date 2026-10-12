@@ -211,7 +211,9 @@ func describe() -> String:
 			die = "d20 %s [%s] (%d, %d)" % ["adv" if advantage else "dis", ", ".join(why), rolls[0], rolls[1]]
 	var sign := "+" if modifier >= 0 else "-"
 	var bonus := ""
-	if extra != 0 or extra_label != "":
+	if extra_label.begins_with("+ ") or extra_label.begins_with("- "):
+		bonus = " " + extra_label   # each die already signed ("+ Bless 3")
+	elif extra != 0 or extra_label != "":
 		bonus = " %s %s" % ["+" if extra >= 0 else "-", extra_label if extra_label != "" else str(absi(extra))]
 	var outcome := "success" if success else "failure"
 	if kind == Kind.ATTACK_ROLL:

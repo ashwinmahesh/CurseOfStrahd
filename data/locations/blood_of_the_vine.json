@@ -66,14 +66,40 @@
       "cell": [9, 1],
       "kind": "examine",
       "label": "Wine casks",
-      "model": "barrel"
+      "model": "barrel",
+      "checks": [
+        {
+          "id": "casks_judge",
+          "skill": "nature",
+          "dc": 12,
+          "label": "Judge the wine",
+          "success": {
+            "codex": {
+              "id": "barovian_wine",
+              "title": "The wizard's wine",
+              "text": "Every cask in the Blood of the Vine comes from the Wizard of Wines vineyard on the road between Vallaki and Krezk, and every one is nearly dry. The deliveries have stopped. Barovians say the wine is the only thing that makes the valley bearable."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "tavern_hearth",
       "cell": [0, 8],
       "kind": "examine",
       "label": "Hearth",
-      "model": "hearth"
+      "model": "hearth",
+      "checks": [
+        {
+          "id": "hearth_play",
+          "skill": "performance",
+          "dc": 13,
+          "label": "Play for the room by the hearth",
+          "success": {
+            "gold": 6
+          }
+        }
+      ]
     },
     {
       "id": "tavern_stairs",

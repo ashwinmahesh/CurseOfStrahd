@@ -159,7 +159,22 @@
       ],
       "kind": "examine",
       "label": "Portrait of the burgomaster",
-      "model": "painting"
+      "model": "painting",
+      "checks": [
+        {
+          "id": "portrait_history",
+          "skill": "history",
+          "dc": 12,
+          "label": "Recall the Indirovich family",
+          "success": {
+            "codex": {
+              "id": "indirovich_family",
+              "title": "The Indirovich family",
+              "text": "Kolyan Indirovich was the village's burgomaster, a hard man and a fair one. Years ago a girl came to his door with no memory of where she came from, and he took her in and raised her as his own: Ireena. His son Ismark grew up beside her."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "kolyan_coffin",
@@ -314,7 +329,25 @@
       ],
       "label": "A map of the valley",
       "model": "valley_map",
-      "kind": "decor"
+      "kind": "decor",
+      "checks": [
+        {
+          "id": "valley_map_study",
+          "skill": "survival",
+          "dc": 13,
+          "label": "Study the burgomaster's map",
+          "success": {
+            "reveal": [
+              "svalich_crossroads:field_wall_cache"
+            ],
+            "codex": {
+              "id": "kolyan_valley_map",
+              "title": "The burgomaster's map",
+              "text": "Kolyan Indirovich marked the valley in his own cramped hand: the roads, the wolf runs, the fords. By the field wall at the crossroads he inked a small cross where the farmers hid what they owned the year they fled, and wrote beside it: theirs, if they come back."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "study_bricks",

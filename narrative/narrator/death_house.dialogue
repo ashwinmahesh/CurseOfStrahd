@@ -824,3 +824,65 @@ once
 ~ search:pallet_gem
 | Under a straw pallet, where an initiate hid it from the others, a red stone the size of a hen's egg. It is hot, and something inside it is moving.
 once
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:acrobatics:dumbwaiter_squeeze:success
+| You fold yourself into the shaft and feel about in the soot at the bottom: something smooth and round, wrapped in a rag.
+
+~ check:acrobatics:dumbwaiter_squeeze:failure
+| The shaft is narrower than it looked, and it lets you go only after a struggle and a bruise.
+
+~ check:medicine:jars_judge:success
+| Most of the jars have turned, but the honeyed plums at the back are sound, and sweet enough to put heart back into anyone.
+
+~ check:medicine:jars_judge:failure
+| The wrong jar. Your stomach turns over and stays that way a while.
+
+~ check:history:odd_shelf_titles:success
+| Every book on this shelf is the history of a family that never existed, and one spine is worn smooth from being pulled.
+
+~ check:history:odd_shelf_titles:failure
+| Histories, genealogies, a treatise on sheep. None of it rings false to you.
+
+~ check:performance:harp_play:success
+| The harp is tuned to a lullaby you never learned, and your hands play it anyway. When it ends, the house is quieter, and so are you.
+
+~ check:performance:harp_play:failure
+| A string snaps under your fingers with a sound like a sob.
+
+~ check:survival:scuffs_read:success
+| Footprints, robed and barefoot, every one of them stepping over the same flagstone without breaking stride.
+
+~ check:survival:scuffs_read:failure
+| Dust, scuffed by many feet. The passage gives nothing away.
+
+~ check:history:ancestors_read:success
+| The first of the line swore this house to a patron who would give the family anything it asked, for as long as the house was fed.
+
+~ check:history:ancestors_read:failure
+| The carving is old and the stone is soft. Whoever lies here kept their secrets.
+
+~ check:athletics:well_climb:success
+| At the bottom, knee-deep in black water, nothing breathes but you; the cultists' thrown coins glint in the silt.
+
+~ check:athletics:well_climb:failure
+| Halfway down, the stones turn slick. The rest of the descent is quicker than you planned.
+
+~ check:religion:shackled_rites:success
+| You say the words nobody said for them. It changes nothing, and you are steadier for it anyway.
+
+~ check:religion:shackled_rites:failure
+| The rite falters in this place. The chains are louder than the words.
+
+~ check:arcana:relics_sense:success
+| Most of the relics are only bone and malice, but a set of reed pipes among the knuckles hums faintly against your teeth.
+
+~ check:arcana:relics_sense:failure
+| Bone, horn, a dried hand. If any of it still holds power, it isn't telling you.
+
+~ check:religion:reliefs_rite:success
+| Generation after generation in black robes, feeding the house. The last panel has been left blank, waiting.
+
+~ check:religion:reliefs_rite:failure
+| Figures in robes, doing something you would rather not understand. You don't.
