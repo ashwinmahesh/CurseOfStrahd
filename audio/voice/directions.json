@@ -1544,6 +1544,7 @@
   "443814ef14f36f04": "[dry, melancholy]",
   "5812cd97cac3e1e7": "[wry, melancholy]",
   "59749cb7be0f1946": "[sad, resolute]",
+  "649171114bae46d3": "[thoughtful, then resolved, grave]",
   "67a6a389225aa257": "[thoughtful, melancholy]",
   "6d863f0c594b0ea5": "[haunted, uneasy]",
   "97cc58da84d67314": "[bitter, dry]",
@@ -1551,7 +1552,8 @@
   "ac8259dba30e614d": "[quietly relieved, wary]",
   "b18ab6350af81668": "[grieving, resolute]",
   "bc7b5b7106ee10a1": "[grave, wistful]",
-  "de59ce467e9a6fbb": "[wistful, grave]"
+  "de59ce467e9a6fbb": "[wistful, grave]",
+  "e6f63105398dc362": "[grave, firm]"
  },
  "khazan": {
   "0eb5006722199d80": "[proud, wistful, scholarly]",
@@ -1796,6 +1798,7 @@
  "luvash": {
   "64a572c9d3c7ff2b": "[gruff, emotional]",
   "66767035b732cf69": "[drunk, roaring, desperate]",
+  "79f5599bb992da45": "[grateful, gruff, moved]",
   "7c1bc14cb90f215b": "[booming, overjoyed]",
   "9f3fc92e33ce7f3b": "[broken, pleading]",
   "a0397bb660d3b605": "[desperate, hoarse]",
