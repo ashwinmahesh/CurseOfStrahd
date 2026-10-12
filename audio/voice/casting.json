@@ -77,9 +77,9 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "xlSTqwiSiR0LzPAJJKIA",
-      "released": true,
       "earlier_voice_id": "M9KGJWNbMiNbJ9UAd6Vo",
-      "model_note": "Recast 2026-10-12 on Ashwin's word (\"needs a new voice\"): the earlier design had no accent tag and 78 of 92 lines undirected, and drifted 73-143 Hz."
+      "model_note": "Recast 2026-10-12 on Ashwin's word (\"needs a new voice\"): the earlier design had no accent tag and 78 of 92 lines undirected, and drifted 73-143 Hz.",
+      "released": true
     },
     "morgantha": {
       "voice_id": "wsKtc2AxcXSSvFx8G0FU",
@@ -226,6 +226,7 @@
       "description": "A big, grey-bearded man with a deep, rumbling, patient voice and a strong, clearly audible Eastern European (Romanian) accent. Slow and steady like a farmer, with a wolf's growl underneath; pained and proud, few words, great weight.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "zJkooQj8YQ0EJZRwSyY2",
       "released": true
     },
     "stanimir": {
@@ -296,6 +297,7 @@
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "egtZ15cBfFMi3QlBJdxk",
       "released": true
     },
     "kasha_varo": {
@@ -826,6 +828,7 @@
       "description": "An old man's tired, dignified, fading voice and a strong, clearly audible Eastern European (Romanian) accent, the late burgomaster speaking from a letter or memory: formal, grave and loving.",
       "settings": {},
       "model": "eleven_v3",
+      "generated_voice_id": "txNn8Kx65CvjfuI1lv7e",
       "released": true
     },
     "cult_shades": {
