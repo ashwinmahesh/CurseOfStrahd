@@ -67,6 +67,8 @@ static func build(parent: Node, board: ArenaBoard, mood: Dictionary, outdoors: b
 		SunShafts.build(parent as Atmosphere, board, view)
 		# Dust, snow or a splash where the party's feet land (Visual Polish Plan 4).
 		StepPuffs.build(parent as Atmosphere, view)
+		# Out-of-focus branches framing the view in the woods (Visual Polish Plan 11).
+		ForegroundFraming.build(parent as Atmosphere, view)
 	return w
 
 

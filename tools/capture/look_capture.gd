@@ -68,6 +68,8 @@ func _ready() -> void:
 	SunShafts.enabled = not "sunbeams" in OS.get_environment("LOOK_OFF").split(",", false)
 	# Without the footstep puffs (Visual Polish Plan 4; LOOK_OFF=puffs).
 	StepPuffs.enabled = not "puffs" in OS.get_environment("LOOK_OFF").split(",", false)
+	# Without the branches framing the woods (Visual Polish Plan 11; LOOK_OFF=framing).
+	ForegroundFraming.enabled = not "framing" in OS.get_environment("LOOK_OFF").split(",", false)
 	# Without the heat shimmer over fires (Visual Polish Plan 8; LOOK_OFF=shimmer).
 	HeatShimmer.enabled = not "shimmer" in OS.get_environment("LOOK_OFF").split(",", false)
 	if OS.get_environment("LOOK_METER") != "":
