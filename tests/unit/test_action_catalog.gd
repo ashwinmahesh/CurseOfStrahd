@@ -237,7 +237,7 @@ func test_right_click_square_menu_lists_move_and_what_you_can_do_to_whoever_is_t
 	var mv := on_foe[0] as Dictionary
 	assert_false(bool(mv["enabled"]), "can't stop in a foe's square")
 	var on_ally := cat.square_actions(ilse, hedda.cell)
-	assert_true(str((on_ally[0] as Dictionary)["why"]).contains("through"), "an ally's square: pass through, don't stop")
+	assert_true(bool((on_ally[0] as Dictionary)["enabled"]), "an ally's square: a hero may stop there too (owner, 2026-10-12)")
 	assert_false(on_ally.any(func(x: Dictionary) -> bool: return str(x["id"]).begins_with("act:attack")), "no attacking a friend from the menu by accident")
 	var empty := cat.square_actions(ilse, Vector2i(6, 5))
 	assert_eq(empty.size(), 1, "an empty square: just Move here")
