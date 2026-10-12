@@ -22,7 +22,9 @@ endif
 
 ~ doll_lady
 set izek_dolls_seen
+if not quest.izek_obsession >= dolls_found
 quest izek_obsession dolls_found
+endif
 Narrator: Blinsky looks at Ireena, and his long face goes slack. He takes off his cap, and puts it back on, and takes it off again.
 Blinsky [afraid]: The doll lady. You are the doll lady. I have carved your face eleven times. Green dress, grey cloak, once smiling, he was very particular about the smiling.
 Ireena: Who was particular?
@@ -54,7 +56,9 @@ endif
 
 ~ dolls
 set izek_dolls_seen
+if not quest.izek_obsession >= dolls_found
 quest izek_obsession dolls_found
+endif
 Blinsky: Eleven dolls. One lady, red hair, always the same face. He tells me her face from his dreams, every line of it. He has dreamed it since he was a boy, he says, since the night the wolves took his arm in the woods.
 Blinsky: He keeps them in a chest at the foot of his bed in the Baron's house. He talks to them, the maids say. I do not want to know what he says.
 -> menu
