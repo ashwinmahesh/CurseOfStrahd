@@ -1,19 +1,26 @@
 {
-  "about": "What grows where in the Modern look (Flora, docs/art/plants.md). A place takes the set named for its mood in moods, else the set of the mood it is like (art/atmosphere/moods.json), else forest. trees: the 3D plants standing in for each 2D tree (a variant is picked per tree), how tall they stand against their model (scale, in the map and on the land, kept between shortest and tallest) and how thick the land's forest is against the old trees (tree_density). Plant lists are [plant, how many per square]: land on the forest ground past the map's edge (out to land_reach squares), under on the map's tree squares, edge on the side of a square beside them, open on its other grass squares where people walk (kept short: open_scale, and off the middle of the square), shore beside water. tint warms or cools the leaves; snow lies on the tops; bark is the trunks' ridge and furrow colours and lichen.",
+  "about": "What grows where in the Modern look (Flora, docs/art/plants.md). A place takes the set named for its mood in moods, else the set of the mood it is like (art/atmosphere/moods.json), else forest. Each region has its own set (the vault's Region Variety Plan). trees: the 3D plants standing in for each 2D tree (a variant is picked per tree), how tall they stand against their model (scale, in the map and on the land, kept between shortest and tallest) and how thick the land's forest is against the old trees (tree_density). Plant lists are [plant, how many per square]: land on the forest ground past the map's edge (out to land_reach squares), under on the map's tree squares, edge on the side of a square beside them, open on its other grass squares where people walk (kept short: open_scale, and off the middle of the square), shore beside water. tint warms or cools the leaves (tints: a kind's own, tree, dead, fern, grass, bush or reeds); autumn turns that share of a kind's plants (each picked by where it stands) to a ramp between the two autumn_colours (palette names); snow lies on the tops; bark is the trunks' ridge and furrow colours and lichen.",
   "moods": {
-    "moor": "blight",
+    "moor": "heath",
     "svalich_woods": "forest",
-    "barovia_village": "forest",
+    "woods": "woods",
+    "barovia_village": "village",
     "vallaki": "forest",
+    "bonegrinder": "heath",
+    "tser_pool": "autumn",
+    "tser_falls": "woods",
+    "crossroads": "graves",
+    "wizard_of_wines": "vineyard",
     "lake_zarovich": "lake",
     "krezk": "mountain",
     "abbey": "mountain",
-    "werewolf_den": "mountain",
+    "werewolf_den": "rock",
     "high_snow": "snow",
+    "ghakis": "rock_snow",
     "berez": "marsh",
-    "yester_hill": "blight",
+    "yester_hill": "sick",
     "ravenloft": "castle",
-    "argynvostholt": "blight"
+    "argynvostholt": "spectral"
   },
   "sets": {
     "forest": {
@@ -41,6 +48,8 @@
     },
     "lake": {
       "like": "forest",
+      "tree_density": 0.3,
+      "tints": {"grass": "#d4e0d8"},
       "land": [["fern_a", 0.25], ["fern_b", 0.2], ["bush_a", 0.15], ["grass_a", 0.9], ["grass_b", 0.7],
         ["sedge", 0.4], ["grass_dry", 0.2]],
       "shore": [["reeds", 1.8], ["sedge", 1.2], ["grass_a", 0.5]]
@@ -80,7 +89,8 @@
       "open": [["sedge", 0.3], ["grass_dry", 0.3]],
       "edge": [["sedge", 0.6], ["reeds", 0.3], ["grass_dry", 0.4]],
       "shore": [["reeds", 2.2], ["sedge", 1.2]],
-      "tint": "#e9e6cc"
+      "tint": "#e9e6cc",
+      "tints": {"grass": "#e4e4b4"}
     },
     "blight": {
       "like": "forest",
@@ -89,6 +99,77 @@
       "open": [["grass_dry", 0.6], ["grass_b", 0.2]],
       "edge": [["bracken", 0.4], ["grass_dry", 0.5], ["fern_small", 0.2]],
       "tint": "#ece3cf"
+    },
+    "woods": {
+      "like": "forest",
+      "tree_density": 0.6,
+      "under": [["fern_a", 0.45], ["fern_b", 0.4], ["bush_b", 0.2], ["fern_small", 0.4], ["grass_a", 0.2]],
+      "edge": [["fern_a", 0.55], ["fern_b", 0.45], ["fern_small", 0.35], ["bracken", 0.1], ["bush_b", 0.15],
+        ["grass_a", 0.25]],
+      "tint": "#e4f0dc",
+      "tints": {"grass": "#d4e4c4"}
+    },
+    "village": {
+      "like": "forest",
+      "tree_density": 0.35,
+      "open": [["grass_dry", 0.6], ["grass_b", 0.4], ["fern_small", 0.04]],
+      "tints": {"grass": "#e0d8b8", "fern": "#d8d4bc"}
+    },
+    "autumn": {
+      "like": "forest",
+      "land": [["fern_a", 0.35], ["fern_b", 0.3], ["bracken", 0.2], ["bush_a", 0.25], ["bush_b", 0.25],
+        ["grass_a", 0.5], ["grass_b", 0.5], ["grass_dry", 0.35], ["sedge", 0.15]],
+      "tints": {"grass": "#e8dcb0"},
+      "autumn": {"fern": 0.6, "bush": 0.75, "grass": 0.2},
+      "autumn_colours": ["ember", "flame"]
+    },
+    "graves": {
+      "like": "forest",
+      "trees": {
+        "pine": ["spruce_c", "dead_a", "spruce_b", "dead_b", "spruce_young", "dead_c"],
+        "dead_tree": ["dead_a", "dead_b", "dead_c"],
+        "pine_clawed": ["dead_b"]
+      },
+      "tree_density": 0.35,
+      "tints": {"grass": "#dcd0ac"},
+      "autumn": {"fern": 0.5, "bush": 0.4},
+      "autumn_colours": ["umber", "tan"]
+    },
+    "vineyard": {
+      "like": "forest",
+      "tree_density": 0.35,
+      "tints": {"grass": "#d8dcac", "bush": "#d0d4a0"},
+      "autumn": {"bush": 0.35, "fern": 0.2},
+      "autumn_colours": ["blood_deep", "plum"]
+    },
+    "heath": {
+      "like": "blight",
+      "tree_density": 0.25,
+      "tints": {"grass": "#e4d0a4", "bush": "#c8a8c0"},
+      "autumn": {"fern": 0.6},
+      "autumn_colours": ["rust", "leather"]
+    },
+    "sick": {
+      "like": "blight",
+      "tints": {"grass": "#dce49c", "fern": "#d0dc98"}
+    },
+    "spectral": {
+      "like": "blight",
+      "tint": "#d8e0ec",
+      "tints": {"grass": "#dce4f0"},
+      "bark": {"spruce": ["#4d4148", "#1b161a", "#4a5446", 0.18], "dead": ["#7a7a88", "#2a2330", "#bdbdc6", 0.4]}
+    },
+    "rock": {
+      "like": "mountain",
+      "tint": "#ffffff",
+      "snow": 0.0,
+      "tints": {"grass": "#dcc4a0"},
+      "autumn": {"fern": 0.4},
+      "autumn_colours": ["rust", "leather"]
+    },
+    "rock_snow": {
+      "like": "snow",
+      "snow": 0.45
     },
     "castle": {
       "like": "forest",

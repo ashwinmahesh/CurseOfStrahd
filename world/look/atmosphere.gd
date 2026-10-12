@@ -66,17 +66,34 @@ static func create(loc_id: String, loc_: Dictionary, board_: ArenaBoard) -> Atmo
 	a.mood_id = mood_for(loc_id, loc_)
 	a.mood = a._dressed()
 	a._rng.seed = hash(loc_id)   # cosmetic only, never rules
+	# The region's own ground colours (a mood's `ground_tint`), before the land's materials are made.
+	Look.set_surface_tints(a._ground_tints())
 	a._build()
 	return a
 
 
 ## The place's mood dressed for the world's weather (lane 4's Weather, F12): outdoors its own rain and snow give way to
-## the weather's and fog thickens its mist; indoors it is the mood as it stands.
+## the weather's and fog thickens its mist; indoors it is the mood as it stands. In the Modern finish a mood's `modern`
+## block goes on top first: each region's own light, mist, air and ground (the vault's Region Variety Plan), which the
+## frozen Classic look leaves out.
 func _dressed() -> Dictionary:
 	var base := resolve(mood_id)
+	var own := base.get("modern", {}) as Dictionary
+	base.erase("modern")
+	if Look.modern():
+		_merge(base, own)
 	if GameState.story == null:
 		return base
 	return Weather.dress_mood(GameState.story, loc_id, base, outdoors)
+
+
+## The mood's `ground_tint` as colours: a surface ("village/grass") -> the colour its texture is multiplied by.
+func _ground_tints() -> Dictionary:
+	var out := {}
+	var tints := mood.get("ground_tint", {}) as Dictionary
+	for surface: String in tints:
+		out[surface] = Color(str(tints[surface]))
+	return out
 
 
 ## The world's weather turned while the party is here (LocationClock calls it, F12): the mood is dressed again, and its
@@ -518,6 +535,8 @@ func _set_weather_on_surfaces() -> void:
 			snow = clampf(float(flakes.get("amount", SNOWED_AT)) / SNOWED_AT, 0.25, 1.0)
 		# Snow that lies whatever the sky is doing (a mood's `lying_snow`): high places keep last week's.
 		snow = maxf(snow, float(mood.get("lying_snow", 0.0)))
+		# Likewise ground that never dries (`lying_wet`): Vallaki's streets after the rain, the spray round the falls.
+		wet = maxf(wet, float(mood.get("lying_wet", 0.0)))
 	wetness = wet
 	snow_cover = snow
 	RenderingServer.global_shader_parameter_set(&"world_wet", wet)
