@@ -2748,7 +2748,7 @@
       "id": "roses_street",
       "trigger": "dialogue",
       "when": "level >= 6",
-      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "text": "Two more girls come over the rooftops at Catalina's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -2756,7 +2756,7 @@
             11,
             28
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 60
         },
         {
@@ -2787,7 +2787,7 @@
       "id": "roses_street",
       "trigger": "dialogue",
       "when": "level >= 5",
-      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "text": "Two more girls come over the rooftops at Catalina's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -2795,7 +2795,7 @@
             11,
             28
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 50
         },
         {
@@ -2825,7 +2825,7 @@
       "id": "roses_street",
       "trigger": "dialogue",
       "when": "level >= 4",
-      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "text": "Two more girls come over the rooftops at Catalina's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -2833,7 +2833,7 @@
             11,
             28
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 45
         },
         {
@@ -2857,7 +2857,7 @@
       "id": "roses_street",
       "trigger": "dialogue",
       "when": "",
-      "text": "Two more girls come over the rooftops at Ana's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
+      "text": "Two more girls come over the rooftops at Catalina's call, barefoot, in nightgowns, their arms full of black roses. They drop the roses all at once.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -2865,7 +2865,7 @@
             11,
             28
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 40
         },
         {
@@ -2902,7 +2902,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 40
         },
         {
@@ -2943,7 +2943,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 35
         },
         {
@@ -2984,7 +2984,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 30
         },
         {
@@ -3008,7 +3008,7 @@
       "id": "roses_graves",
       "trigger": "dialogue",
       "when": "level >= 6",
-      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "text": "The three graves open from underneath. Catalina climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -3016,7 +3016,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 60
         },
         {
@@ -3047,7 +3047,7 @@
       "id": "roses_graves",
       "trigger": "dialogue",
       "when": "level >= 5",
-      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "text": "The three graves open from underneath. Catalina climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -3055,7 +3055,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 50
         },
         {
@@ -3085,7 +3085,7 @@
       "id": "roses_graves",
       "trigger": "dialogue",
       "when": "",
-      "text": "The three graves open from underneath. Ana climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
+      "text": "The three graves open from underneath. Catalina climbs out first, and brushes the earth off her nightgown, and smiles at you with all her teeth.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -3093,7 +3093,7 @@
             46,
             6
           ],
-          "name": "Ana",
+          "name": "Catalina",
           "hp": 45
         },
         {

@@ -204,7 +204,7 @@
     {
       "id": "ilie_bitten_known",
       "type": "bool",
-      "summary": "The party saw the bite marks under Ignat's scarf: Ana feeds on her father."
+      "summary": "The party saw the bite marks under Ignat's scarf: Catalina feeds on her father."
     },
     {
       "id": "roses_vigil",
@@ -214,27 +214,27 @@
     {
       "id": "ana_met",
       "type": "bool",
-      "summary": "Ana came to Mila's window and spoke with the party."
+      "summary": "Catalina came to Mila's window and spoke with the party."
     },
     {
       "id": "ana_grave_known",
       "type": "bool",
-      "summary": "The party knows Ana sleeps in her own grave in St. Andral's churchyard (the grave prop shows)."
+      "summary": "The party knows Catalina sleeps in her own grave in St. Andral's churchyard (the grave prop shows)."
     },
     {
       "id": "roses_spawn_destroyed",
       "type": "bool",
-      "summary": "Ana and the two other girls are destroyed (encounters roses_street or roses_graves)."
+      "summary": "Catalina and the two other girls are destroyed (encounters roses_street or roses_graves)."
     },
     {
       "id": "roses_ring_given",
       "type": "bool",
-      "summary": "Ignat gave the party Ana's mother's ring; Black Roses is over."
+      "summary": "Ignat gave the party Catalina's mother's ring; Black Roses is over."
     },
     {
       "id": "ilie_fate",
       "type": "string",
-      "summary": "lost: the party let Ana go home and she fed on Ignat until he died."
+      "summary": "lost: the party let Catalina go home and she fed on Ignat until he died."
     },
     {
       "id": "chandler_paid",

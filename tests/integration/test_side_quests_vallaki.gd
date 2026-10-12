@@ -1,7 +1,7 @@
 extends TestCase
 ## Vallaki's side quests (docs/story/side_quests.md): the watch's and Urwin's rumours (and the wiring into the bones,
 ## Arabelle and Lady Wachter), The Cat in the Window (Stella's ribbon, broken three ways or cut in vain) and Black Roses
-## (Ilie's secret, Ana at Mila's window, her grave by day, and the bitter way out), each paying once.
+## (Ignat's secret, Catalina at Mila's window, her grave by day, and the bitter way out), each paying once.
 
 
 func _party(ids: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "wren_featherfoot"], level: int = 5) -> StoryState:
@@ -148,14 +148,14 @@ func test_ilies_secret_the_vigil_and_the_grave_by_day() -> void:
 	_play(st, "vallaki/townsfolk:lamplighter", ["black roses on the chandler's step", "We'll watch the house"])
 	assert_eq(st.quest_stage("black_roses"), "asked")
 	assert_true(bool(st.get_flag("roses_vigil", false)))
-	assert_eq(_standing(st, "vallaki", "ana"), "vallaki/black_roses:ana", "Ana comes to Mila's window")
+	assert_eq(_standing(st, "vallaki", "ana"), "vallaki/black_roses:ana", "Catalina comes to Mila's window")
 	var ana := _play(st, "vallaki/black_roses:ana", ["Where do you sleep", "Attack"])
 	assert_true(bool(st.get_flag("ana_grave_known", false)))
 	assert_eq(str(ana[-1].get("combat", "")), "roses_street")
 	assert_eq(_standing(st, "vallaki", "ana"), "", "she's gone from the street")
 	var night := _encounter(st, "vallaki", "roses_street")
 	assert_eq((night["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary)["monster"]) == "vampire_spawn").size(), 2,
-		"Ana and Irina at level 5")
+		"Catalina and Irina at level 5")
 	# By day her grave is the easier way; the dig fight starts with the girls asleep.
 	st.minute_of_day = 11 * 60
 	var dig := _play(st, "vallaki/black_roses:grave", ["Dig them up"])
@@ -166,7 +166,7 @@ func test_ilies_secret_the_vigil_and_the_grave_by_day() -> void:
 	st.minute_of_day = 21 * 60
 	var told := _play(st, "vallaki/townsfolk:lamplighter")
 	assert_eq(st.quest_stage("black_roses"), "ended")
-	assert_true(st.party_has_item("ring_of_resistance_necrotic"), "Ana's mother's ring")
+	assert_true(st.party_has_item("ring_of_resistance_necrotic"), "Catalina's mother's ring")
 	assert_true(_text(told).contains("keep the night out"))
 	st.minute_of_day = 11 * 60
 	st.gold = 0
