@@ -13,7 +13,8 @@ endif
 set luminita_met
 Narrator: A young woman with a horse brush in her fist looks up from the pen, sees that you are not who she hoped, and goes back to brushing harder than the horse needs.
 Luminita: You came along the road. Did you pass a rider? Black hair, silver earring, a laugh you can hear across a field. Too handsome, and he knows it.
-if not flag.crossroads_gallows_seen
+# Only to start it: the party may have met Nicu before her, at the gallows or in the fight (Ashwin, 2026-10-12).
+if not quest.the_hanged_vistana
 quest the_hanged_vistana asked
 endif
 -> menu
@@ -23,8 +24,8 @@ Luminita: Still no rider on the road? No. You'd have said.
 -> menu
 
 ~ menu
-* [if flag.crossroads_gallows_seen] We found a Vistana at the crossroads. Hanged. -> tell
-* [if not flag.crossroads_gallows_seen] We passed no one. -> none
+* [if (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down)] We found a Vistana at the crossroads. Hanged. -> tell
+* [if not (flag.crossroads_gallows_seen or flag.crossroads_dead_cleared or flag.nicu_cut_down)] We passed no one. -> none
 * Who is he? -> who
 * [Animal Handling DC 12] Help her with the horse. -> horse_ok | horse_fail
 * Goodbye. -> END

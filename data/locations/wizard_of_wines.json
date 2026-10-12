@@ -317,6 +317,7 @@
         26
       ],
       "kind": "examine",
+      "dialogue": "wizard_of_wines/vines:row",
       "label": "The last green row",
       "model": "fence"
     },

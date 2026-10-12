@@ -1,4 +1,4 @@
-# Animals and the dead who talk (lane 2)
+# Animals, the dead and plants who talk (lane 2)
 
 Ashwin (2026-10-11): more animals and dead to talk to with Speak with Animals and Speak with Dead. Each one is true to
 Curse of Strahd and this game's own story, stands where it makes sense, and knows something worth the casting: a hint
@@ -86,6 +86,15 @@ Left out on purpose: Argynvost's skull (bringing it home isn't built yet), the s
 rode out, so they can't clear him), the Krezkovs' children, and the undead (the brides, Beucephalus, Silverjaw's
 watch). Tests: tests/integration/test_speak_with_dead_high.gd.
 
-## Still to build
+## Speak with Plants (branch `speak-with-plants`)
 
-- Speak with Plants.
+Plants answer for the last day only (2024 PHB: "events in the spell's area within the past day"), so each one tells
+what passed it last night. The conversation casts the spell with a 3rd-level slot (it isn't a Ritual).
+
+| Who | Where | What they know | What it does |
+|---|---|---|---|
+| The wolfsbane | The werewolf den's door, planted in rows | Zuleika cut some at moonset to dry in the caves, and hid a flask in the bundles | Reveals `herb_elixir` (Elixir of Health) |
+| The last green row | The Wizard of Wines' vineyard | While the druids hold it: the blights and a singing druid came from the hill with the black tree, and the druid dropped his sickle to the ravens; once it's won back, only the family's lamps | `yester_hill_known`; reveals `vine_sickle` (+1 Moon Sickle) |
+| The hags' garden | Old Bonegrinder's hill, while Bella is there | Offalia picked a basket for the baking; Bella flew home on a broom and hid it in the rafters | Reveals `rafters_broom` (Broom of Flying) |
+
+Tests: tests/integration/test_speak_with_plants.gd.

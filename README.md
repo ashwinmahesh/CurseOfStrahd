@@ -255,7 +255,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 **Your party**
 
 - Six voiced companions, each with their own art, accent, personal quest, camp talks and banter: Sir Godrick
-  Pendlebrook (Goliath Paladin), Liriel Dawnsong (High Elf Cleric), Thistle (Human Ranger), Ratatoille (High Elf
+  Pendlebrook (Goliath Paladin), Liriel Dawnsong (High Elf Cleric), Thistle (Human Ranger), Ratatouille (High Elf
   Wizard), Wren Featherfoot (Halfling Monk) and Kip Smudgewick (Tiefling Warlock).
 - Up to four travel at once, swapped outside fights; benched companions keep their level.
 - Companion approval with romances, and Heroic Inspiration for playing in character.
@@ -361,14 +361,13 @@ this game.
 
 - Kevin MacLeod ([incompetech.com](https://incompetech.com/)): "Ossuary 6 - Air", "Oppressive Gloom", "Folk Round",
   "Duet Musette", "Darkling", "Darkest Child", "Unholy Knight", "Lightless Dawn", "Night Vigil", "Gypsy Shoegazer",
-  "Minstrel Guild", "Clash Defiant", "Nightmare Machine", "Final Count", "Danse Macabre", "Achaidh Cheide", "Agnus
-  Dei X", "Ancient Rite", "Baba Yaga", "Black Vortex", "Bump in the Night", "Celtic Impulse", "Children's Theme",
-  "Come Play with Me", "Dama-May", "Dark Walk", "Death and Axes", "Echoes of Time", "Gloom Horizon", "Gregorian
-  Chant", "Grim Idol", "Ice Demon", "Inner Sanctum", "Land of the Dead", "Long Road Ahead", "Lord of the Land", "Lost
-  Frontier", "Malicious", "Midnight Tale", "Mirage", "Moorland", "Mystery Bazaar", "Ossuary 2 - Turn", "Pippin the
-  Hunchback", "Relent", "Rites", "Shadowlands 1 - Horizon", "Teller of the Tales", "Tenebrous Brothers Carnival -
-  Snake Lady", "Thatched Villagers", "The Britons", "Virtutes Instrumenti", "Volatile Reaction" and "Willow and the
-  Light", under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+  "Minstrel Guild", "Clash Defiant", "Nightmare Machine", "Final Count", "Danse Macabre", "Agnus Dei X", "Ancient Rite",
+  "Baba Yaga", "Black Vortex", "Bump in the Night", "Children's Theme", "Come Play with Me", "Dama-May", "Dark Walk",
+  "Death and Axes", "Echoes of Time", "Gloom Horizon", "Gregorian Chant", "Grim Idol", "Ice Demon", "Inner Sanctum",
+  "Land of the Dead", "Long Road Ahead", "Lord of the Land", "Lost Frontier", "Malicious", "Midnight Tale", "Mirage",
+  "Moorland", "Mystery Bazaar", "Ossuary 2 - Turn", "Pippin the Hunchback", "Relent", "Rites", "Shadowlands 1 -
+  Horizon", "Tenebrous Brothers Carnival - Snake Lady", "Thatched Villagers", "The Britons", "Virtutes Instrumenti",
+  "Volatile Reaction" and "Willow and the Light", under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - Scott Buckley ([scottbuckley.com.au](https://www.scottbuckley.com.au/)): "Memories Of Stone", "Anabasis I", "Eyes
   In The Void", "Nightfall", "Penumbra" and "Unraveling", under CC BY 4.0.
 - Toccata and Fugue in D minor, BWV 565 (J. S. Bach), played by Norbert Schenk. CC BY 4.0, via Wikimedia Commons.

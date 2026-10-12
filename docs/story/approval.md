@@ -39,7 +39,7 @@ What each of them cares about, as tagged across the campaign:
   Gifts, cruelty and the wedding.
 - **Thistle:** freeing anything caged, children and animals, saying it straight, burning what's rotten. Hates cages,
   cruelty to the small, bowing to tyrants and leaving the little ones behind.
-- **Ratatoille:** cleverness and study, hospitality and food, being taken seriously. Hates waste, bullying cooks,
+- **Ratatouille:** cleverness and study, hospitality and food, being taken seriously. Hates waste, bullying cooks,
   Morgantha's pastries and being made to keep quiet.
 - **Wren:** wit, mercy over vengeance, freeing people, the overlooked. Hates cold-blooded killing, bullying and
   hatred, which is the wrong lesson.
@@ -61,7 +61,7 @@ until approval recovers; nothing is lost for good, unless the campaign ends firs
 | Godrick | Won't kneel for the knighting | Names the party his fellowship; Sir Aldric's sword is +2 instead of +1; the party gains Heroic Inspiration |
 | Liriel | Can't sing the dawn in the chapel | Leaves her novice's sunburst (Amulet of the Devout +1) that kept the dawn; the party gains Heroic Inspiration |
 | Thistle | Won't let the party's magic near Fen | Fen gives her his trapper's cloak (Cloak of Elvenkind) |
-| Ratatoille | Lays no table | The supper is a feast: the party gains Heroic Inspiration |
+| Ratatouille | Lays no table | The supper is a feast: the party gains Heroic Inspiration |
 | Wren | Won't take the party's way at Rahadin (no pity option) | Says the last lesson out loud and gains Heroic Inspiration |
 | Kip | Won't settle with Quillon with the party watching | Carves the first pit off a free tree into a charm that works (Stone of Good Luck) |
 
@@ -74,7 +74,7 @@ thread picked while asking whether he'd rather romance a custom hero). Three pai
 |---|---|---|---|
 | Thistle and Wren | The rematch footrace | Wren asks how to tell her | The race in the rain |
 | Godrick and Thistle | The eating contest | Godrick asks how to court her | Thistle asks him |
-| Liriel and Ratatoille | Grace over his stew | Rat asks what she'd want with a cook | The honey cakes |
+| Liriel and Ratatouille | Grace over his stew | Rat asks what she'd want with a cook | The honey cakes |
 
 The party can nudge, stay quiet, or steer them apart at the spark and the courting; steering them apart ends it
 (flag value `over`). Thistle walks one road at a time: either spark waits until the other is unset or over. Kip, a
@@ -83,7 +83,7 @@ family man, has no romance. Banter in `narrative/banter/party_six.dialogue` noti
 ## Heroic Inspiration for playing in character (`story/in_character.gd`, F15)
 
 `inspire <selector>: reason` gives Heroic Inspiration to the party member the moment fits: `name:` for a companion
-true to their own nature (Thistle turning down Kiril, Ratatoille refusing Strahd's tower, Kip getting a receipt
+true to their own nature (Thistle turning down Kiril, Ratatouille refusing Strahd's tower, Kip getting a receipt
 signed, a companion paying Madam Eva in truth), and `class:`, `background:` or the like when the option was a class or
 background option, so a custom hero earns it too (a Cleric's prayer, a Wizard's reading of a circle, a Sage knowing
 Van Richten's monographs). `inspire party` inspires everyone (a feast, a fellowship). Under the 2024 rules a character
@@ -95,7 +95,7 @@ who already has it passes it on; here it goes to the first party member in march
 ```
 approve godrick_pendlebrook +3 kip_smudgewick -2: You refused to give the house one of your own
 inspire name:thistle: turned down Kiril's pack to his face
-inspire party: ate Ratatoille's supper at his own table
+inspire party: ate Ratatouille's supper at his own table
 give cloak_of_elvenkind to name:thistle
 if approval.thistle >= close        (a tier, compared by rank: `<= strained` is Strained or worse; or a number)
 ```

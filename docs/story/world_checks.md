@@ -33,13 +33,13 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 
 | Key | Does |
 |---|---|
-| `items`, `gold` | Given to whoever rolled (gold to the purse). |
+| `items`, `gold` | Given to whoever rolled (gold to the purse). Each item is announced on the side (ItemNotices). |
 | `codex` | `{id, title, text}`: lore in the journal's codex (successes only). |
 | `inspiration` | Heroic Inspiration for whoever rolled, passed on if they have it. |
 | `heal`, `temp_hp` | Dice of healing for each hurt party member, or Temporary Hit Points for each. |
 | `damage`, `damage_type` | Dice of damage to whoever rolled: a fall, a shock, a bite. |
 | `minutes` | Time lost on top of the try (a try takes `minutes` on the check, 1 by default). |
-| `reveal` | Hidden things found: a search prop, secret door or trap here, or `<location>:<search prop>` somewhere else (a place hint: the hiding place is waiting when the party gets there). |
+| `reveal` | Hidden things found: a search prop, secret door or trap here, or `<location>:<search prop>` elsewhere (a place hint: the hiding place is waiting when the party gets there, and a toast says where). A hiding place here that holds an item hands it to whoever rolled, announced on the side like every item the party comes by (owner, 2026-10-12: the well at the Wizard of Wines showed its rope and nothing more); a save from before that hands it to the leader on arriving. |
 | `disarm` | Traps here made safe without thieves' tools (a glyph read and unpicked, a wire wedged). |
 | `unlock`, `open` | Locks undone; doors opened (a bar lifted from the far side: a shortcut back). |
 | `move` | The party crosses to a square: a climb, a leap, a squeeze. |

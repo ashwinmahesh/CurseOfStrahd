@@ -318,3 +318,22 @@ shows on the Spells tab: a Bonus Action on a later turn, no slot, the same Conce
 with the usual target picker (on a pad, the slot like any other); Hunter's Mark needs one the caster can see. Hex's
 curse on the chosen ability's checks goes with it (`SpellSustained` move_mark). Until the target drops the slot stays
 off the bar (`waiting`). A foe the AI plays moves its mark to the nearest foe it can see (`AiBrain._move_mark`).
+
+## Hiding the action bar (owner, 2026-10-12)
+
+The ▾ at the bar's top right (or H; on a pad, Y while the radial is held) hides the action bar down to a slim strip on
+the bottom edge: the hero's name, the Action, Bonus Action and Reaction shapes, movement, the turn note and the ▴ that
+brings it back. End Turn and Undo move stay where they are. It stays hidden from turn to turn, and fight to fight for
+the session, until the player shows it, or something needs them in it: a prompt, a death save, a step through the
+slots or the tabs (`CombatHud.toggle_actions`, `show_actions`).
+
+## An area spell's saves at the top left (owner, 2026-10-12)
+
+While an area spell is aimed, its saves leave the pointer for a panel at the top left, right of the party's frames under
+the turn order (`CombatHud.show_area_saves`): the spell and slot level, the save and its DC, then every creature the
+area catches, friends first, each with its portrait, friend or foe, its chance to save, the damage it can expect and
+whether it may drop. Anyone Sculpt Spells would shield shows as safe (the caster, then the nearest allies, as the picks
+start), and drops out of the friendly-fire warning. It lists eight, then "+N more", so it never runs into the hotbar,
+and it follows the area as it moves, the pad's cursor included. By the pointer only a count stays ("5 in the area
+(1 friend)"). The numbers come from `ActionCatalog.spell_preview`'s creatures (`save_chance`, `damage`, `drops`,
+`safe`, `unaffected`).

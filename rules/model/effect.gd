@@ -102,6 +102,28 @@ func lasting_rounds(rounds: int, owner_id: String = "") -> Effect:
 	return self
 
 
+## House rule (owner, 2026-10-12): a spell that lasts 8 hours (Mage Armor, Aid, Darkvision, Death Ward ...) lasts until
+## its creature's next Long Rest instead, and is cast again after it; 24 hours and longer keep the clock.
+static func until_long_rest(duration: Dictionary) -> bool:
+	return str(duration.get("kind", "")) == "hours" and int(duration.get("amount", 0)) == 8
+
+
+## How a spell's duration reads (the sheet and the hotbar): "1 hour", "Until your next Long Rest" ...
+static func duration_text(duration: Dictionary) -> String:
+	var kind := str(duration.get("kind", "instantaneous"))
+	var out := kind.replace("_", " ").capitalize()
+	if until_long_rest(duration):
+		out = "Until your next Long Rest"
+	elif kind in ["rounds", "minutes", "hours", "days"]:
+		var amount := int(duration.get("amount", 1))
+		out = "%d %s" % [amount, kind.trim_suffix("s") if amount == 1 else kind]
+	elif kind == "until_dispelled":
+		out = "Until dispelled"
+	if bool(duration.get("concentration", false)):
+		out = "Concentration, up to " + out.to_lower()
+	return out
+
+
 ## Sets the duration from a spell's duration block ({kind, amount, concentration}).
 func lasting(duration: Dictionary) -> Effect:
 	var amount := int(duration.get("amount", 1))
@@ -114,8 +136,8 @@ func lasting(duration: Dictionary) -> Effect:
 			rounds_left = amount * ROUNDS_PER_MINUTE
 			minutes_left = amount
 		"hours":
-			ends = Ends.MINUTES
-			minutes_left = amount * 60
+			ends = Ends.LONG_REST if until_long_rest(duration) else Ends.MINUTES
+			minutes_left = 0 if until_long_rest(duration) else amount * 60
 		"days":
 			ends = Ends.MINUTES
 			minutes_left = amount * 24 * 60

@@ -139,6 +139,7 @@ func _ready() -> void:
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)
 	LocationTraps._mark_found_traps(self)
+	LocationChecks.settle(self)   # a find a passed skill check reached but nobody took (saves from before it was handed over)
 	rig = CameraRig.new()
 	add_child(rig)
 	rig.zoom_max = 30.0

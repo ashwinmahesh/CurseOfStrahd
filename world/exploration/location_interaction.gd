@@ -450,8 +450,7 @@ static func _use_prop(view: LocationView, prop: Dictionary) -> void:
 	if prop.has("flag") and kind != "lever":
 		view.st.set_flag(str(prop["flag"]))
 	if prop.has("item") and not bool(used.get(id, false)):
-		view.st.give_item(str(prop["item"]), 1, view.leader().creature as Character)
-		view.toast.emit("%s takes %s" % [view.leader().name(), Compendium.shared().display_name("items", str(prop["item"]))])
+		view.st.gain_item(str(prop["item"]), 1, view.leader().creature as Character)   # shown on the side (ItemNotices)
 	used[id] = true
 	if str(prop.get("dialogue", "")) != "":
 		view.dialogue_requested.emit(str(prop["dialogue"]), "")

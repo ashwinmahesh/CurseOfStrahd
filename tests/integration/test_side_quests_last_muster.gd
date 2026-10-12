@@ -29,7 +29,7 @@ func test_the_riders_stand_down_and_the_marshal_asks_for_his_duel() -> void:
 	st.set_quest_stage("last_muster", "rumored")
 	var stood := false
 	for seed: int in [1, 2, 3, 4, 5, 6]:
-		# Ratatoille leads: the History roll is his.
+		# Ratatouille leads: the History roll is his.
 		var copy := SideQuestPlay.party(["ratatoille", "liriel_dawnsong", "thistle", "godrick_pendlebrook"], 8, "into_the_mists_road", 23)
 		copy.quests = st.quests.duplicate(true)
 		var beats := SideQuestPlay.play(copy, "into_the_mists/last_muster:marshal", ["Tell him what year it is", "Not tonight"], seed)

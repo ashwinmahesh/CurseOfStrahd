@@ -166,6 +166,8 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		var lasting: int = int(dur.get("amount", 1)) * int(unit_minutes.get(str(dur.get("kind", "")), 0))
 		if lasting > 0:
 			st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": ch.id}
+			if Effect.until_long_rest(dur):
+				RestRules.keep_until_long_rest(st, spell_id)
 		e.items._after_use(c, p, spell, int(power.get("level", spell.get("level", 0))))
 		st.advance_minutes(1)
 		return {"ok": true, "text": "%s uses the %s: %s." % [ch.name.get_slice(" ", 0), data.get("name", ""), spell.get("name", "")],

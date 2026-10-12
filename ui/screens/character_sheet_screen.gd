@@ -872,22 +872,7 @@ func _components(s: Dictionary) -> String:
 
 
 func _duration(s: Dictionary) -> String:
-	var d := s.get("duration", {}) as Dictionary
-	var kind := str(d.get("kind", ""))
-	var amount := int(d.get("amount", 1))
-	var out := ""
-	match kind:
-		"instantaneous":
-			out = "Instantaneous"
-		"until_dispelled":
-			out = "Until dispelled"
-		"rounds", "minutes", "hours", "days":
-			out = "%d %s" % [amount, kind.trim_suffix("s") if amount == 1 else kind]
-		_:
-			out = kind.replace("_", " ").capitalize()
-	if bool(d.get("concentration", false)):
-		out = "Concentration, up to " + out.to_lower()
-	return out
+	return Effect.duration_text(s.get("duration", {}) as Dictionary)
 
 
 ## Healing and helpful spells outside a fight (FieldCasting): a slot picker when it can go at more than one level,
@@ -928,16 +913,28 @@ func _cast_controls(ch: Character, o: Dictionary, row: HBoxContainer) -> void:
 			continue
 		if not (others and st.party[i] == ch):
 			popup.add_item(st.party[i].name, i)
+	# Story allies travelling with the party take helpful spells too (owner, 2026-10-12), after the party (ids 200+).
+	var allies: Array[Creature] = []
+	if not o.has("targets"):
+		for g in st.guests.size():
+			if not st.guests[g].dead:
+				allies.append(st.guests[g])
+				popup.add_item(st.guests[g].name, 200 + g)
 	var count := int(o["count"])
 	if count > 1:
 		popup.add_separator()
-		popup.add_item("%d of us" % mini(count, st.party.size()), 100)
+		popup.add_item("%d of us" % mini(count, st.party.size() + allies.size()), 100)
 	popup.id_pressed.connect(func(pid: int) -> void:
-		var tgt: Array[Character] = []
+		var tgt: Array = []
 		if pid == 100:
-			for t in st.party:
+			var pool: Array = []
+			pool.append_array(st.party)
+			pool.append_array(allies)
+			for t: Variant in pool:
 				if tgt.size() < count and not (others and t == ch):
 					tgt.append(t)
+		elif pid >= 200:
+			tgt.append(st.guests[pid - 200])
 		else:
 			tgt.append(st.party[pid])
 		_do_cast(ch, id, pick, tgt))
@@ -1001,13 +998,11 @@ func _do_utility(ch: Character, spell_id: String, ritual: bool, resource_feature
 	_draw()
 
 
+## `targets`: party members, or story allies (guests) for a helpful spell.
 func _do_cast(ch: Character, spell_id: String, pick: OptionButton, targets: Array) -> void:
-	var tgt: Array[Character] = []
-	for t: Variant in targets:
-		tgt.append(t as Character)
 	var slot := pick.get_item_id(pick.selected) if pick.item_count > 0 and pick.selected >= 0 else 0
-	var res := FieldCasting.revive(st, ch, spell_id, slot, tgt[0]) if FieldCasting.REVIVAL.has(spell_id) and not tgt.is_empty() \
-		else FieldCasting.cast(st.party, ch, spell_id, slot, tgt, Dice.roller, st)
+	var res := FieldCasting.revive(st, ch, spell_id, slot, targets[0] as Character) if FieldCasting.REVIVAL.has(spell_id) and not targets.is_empty() \
+		else FieldCasting.cast(st.party, ch, spell_id, slot, targets, Dice.roller, st)
 	_cast_note = str(res["text"]) if str(res["text"]) != "" else "Done."
 	_draw()
 

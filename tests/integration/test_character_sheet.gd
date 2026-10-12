@@ -134,6 +134,27 @@ func test_casting_from_the_spells_tab() -> void:
 	assert_true(_texts(sheet).has(str(sheet.get("_cast_note"))), "what the cast did is shown")
 
 
+func test_a_guest_is_on_the_cast_on_menu_and_takes_the_spell() -> void:
+	assert_true(GameState.story.add_guest("adrian_martikov"))
+	var adrian := GameState.story.guests[0]
+	adrian.hp = 3
+	var sheet := _sheet(2)
+	sheet.show_tab("Spells")
+	var cast: MenuButton = null
+	for mb in sheet.find_children("*", "MenuButton", true, false):
+		for l in (mb.get_parent() as Node).find_children("*", "Label", true, false):
+			if (l as Label).text == "Healing Word":
+				cast = mb as MenuButton
+	assert_true(cast != null, "a Cast on menu for Healing Word")
+	if cast == null:
+		return
+	var popup := cast.get_popup()
+	var at := popup.get_item_index(200)
+	assert_true(at >= 0 and popup.get_item_text(at) == adrian.name, "the guest is on the menu")
+	popup.id_pressed.emit(200)
+	assert_true(adrian.hp > 3, "Adrian healed")
+
+
 func test_effects_in_words() -> void:
 	var ilse := GameState.story.party[0]
 	var hedda := GameState.story.party[2]

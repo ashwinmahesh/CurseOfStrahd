@@ -1,10 +1,10 @@
-# Ratatoille — voice bible
+# Ratatouille — voice bible
 
 High Elf Wizard (Diviner), Artisan (cook's utensils). Pregen `ratatoille`, he/him. Identity tags: `eager`, `fussy`,
 `gourmet`. Selectors for writers: `interject name:ratatoille:` for his own voice; `class:wizard`,
 `background:artisan`, `species:elf` for lines any such character could say. Owner brief (2026-10-06): "A nerdy
 wizard who picked up magic to gain status since he wasn't very popular." Owner: "the wizard is an elf named
-Ratatoille", and "Ratatoille loves to cook."
+Ratatouille", and "Ratatouille loves to cook."
 
 ## Who he is
 
@@ -33,7 +33,7 @@ docs/story/personal_quests.md.)
 
 - Quick, precise and fussy, in a French accent. Talks fast when excited, and his voice climbs and cracks.
 - Name-drops great wizards he has never met ("As Mordenkainen writes in the third treatise...") and introduces
-  himself with titles he invented: "Ratatoille, Diviner of the Third Circle." (There are no circles.)
+  himself with titles he invented: "Ratatouille, Diviner of the Third Circle." (There are no circles.)
 - Mixes arcane theory and the kitchen without noticing: "A fireball is simply a soufflé with ambition." "Divination
   is like tasting a sauce before it's finished."
 - A little French in the seasoning, never the meal: "Voilà." "Mon dieu." "Non, non, non."
@@ -72,7 +72,7 @@ can't manage it.
 
 ## Sample lines
 
-- "Ratatoille, Diviner of the Third Circle. There are no circles. I'm establishing them."
+- "Ratatouille, Diviner of the Third Circle. There are no circles. I'm establishing them."
 - "It's a winery. The Wizard of Wines is a winery. I crossed the mists for a winery."
 - "Everyone stay calm. Step one: do not panic. Step two: fire. Step three: season to taste."
 

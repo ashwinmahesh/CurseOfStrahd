@@ -70,11 +70,16 @@
       "accent_tag": "[Romanian accent]"
     },
     "davian_martikov": {
-      "voice_id": "M9KGJWNbMiNbJ9UAd6Vo",
+      "voice_id": "xlSTqwiSiR0LzPAJJKIA",
       "name": "Barovia Davian Martikov",
-      "description": "An old man in his seventies with a deep, grave, weathered voice and a light Eastern European accent. A stern patriarch: few words, heavy pauses, pride and grief held tightly. Speaks like stones being set down.",
+      "description": "An old man in his seventies, the proud patriarch of a family winery, speaking English with a strong, clearly audible Romanian accent. A deep, gruff, gravelly old man's voice with real weight and warmth underneath, at a normal speaking volume, never breathy: stern and proud, dry and sardonic, with grief held tightly, a grandfather who growls but loves.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "xlSTqwiSiR0LzPAJJKIA",
+      "released": true,
+      "earlier_voice_id": "M9KGJWNbMiNbJ9UAd6Vo",
+      "model_note": "Recast 2026-10-12 on Ashwin's word (\"needs a new voice\"): the earlier design had no accent tag and 78 of 92 lines undirected, and drifted 73-143 Hz."
     },
     "morgantha": {
       "voice_id": "wsKtc2AxcXSSvFx8G0FU",

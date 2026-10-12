@@ -234,3 +234,45 @@ func test_the_turn_order_points_the_camera() -> void:
 	assert_true(cv.rig.follow != rat_tok and cv.rig.follow != null, "X with the radial held: the next in the turn order")
 	assert_eq((cv.rig.follow as CombatToken).combatant, cv.e.order[(cv.e.order.find(rat) + 1) % cv.e.order.size()])
 	cv.hud.radial.visible = false
+
+
+## Hiding the action bar (owner, 2026-10-12): H (or LB + Y, or its button) shrinks it to a slim strip, it stays so from
+## refresh to refresh, and it comes back for a prompt or a step through the slots. Y while the radial is held never
+## ends the turn.
+func test_the_action_bar_hides_and_comes_back() -> void:
+	if not _ready_for_input():
+		return
+	var hud := cv.hud
+	CombatHud.actions_hidden = false
+	hud.toggle_actions()
+	hud.toggle_actions()
+	var tall := (hud.get("_hot_panel") as Control).size.y
+	var key := InputEventKey.new()
+	key.physical_keycode = KEY_H
+	key.keycode = KEY_H
+	key.pressed = true
+	get_viewport().push_input(key)
+	await _frames(2)
+	assert_true(CombatHud.actions_hidden, "H hides the actions")
+	assert_false((hud.get("_hot_body") as Control).visible, "the slots are gone")
+	assert_true((hud.get("_hot_panel") as Control).size.y < tall * 0.6, "down to a slim strip (%.0f of %.0f)" % [(hud.get("_hot_panel") as Control).size.y, tall])
+	assert_eq(roundi((hud.get("_hot_panel") as Control).size.x), 1160, "the strip keeps the bar's width (nothing spills out)")
+	hud.refresh()
+	assert_true(CombatHud.actions_hidden, "and it stays hidden through a refresh (a new turn)")
+	var who := cv.e.current()
+	hud.radial.open()
+	await _press(JOY_BUTTON_Y)
+	assert_false(CombatHud.actions_hidden, "LB + Y shows them again")
+	assert_eq(cv.e.current(), who, "without ending the turn")
+	assert_false(hud.confirm_open(), "or asking to")
+	hud.radial.visible = false
+	hud.toggle_actions()
+	hud.move_focus(1)
+	assert_false(CombatHud.actions_hidden, "a step through the slots brings them back")
+	hud.toggle_actions()
+	var req := ReactionRequest.new("opportunity_attack", who.id, who.id)
+	req.title = "A test prompt?"
+	hud.show_prompt(req)
+	assert_false(CombatHud.actions_hidden, "and so does a prompt")
+	hud.hide_prompt()
+	CombatHud.actions_hidden = false

@@ -311,12 +311,12 @@ func errors() -> Array[String]:
 func name_problems() -> Array[String]:
 	var out: Array[String] = []
 	var app := build.get("appearance", {}) as Dictionary
-	var key := str(build.get("name", "")).to_snake_case()
+	var key := Character.id_for_name(str(build.get("name", "")))
 	if bool(app.get("custom", false)) and key != "" and not compendium.get_entry("pregens", key).is_empty():
 		out.append("%s is one of your companions' names; choose another for your hero." % str(build["name"]))
 	elif key != "":
 		for t in taken_names:
-			if t.to_snake_case() == key:
+			if Character.id_for_name(t) == key:
 				out.append("Someone in your company is already called %s; choose another name." % t)
 				break
 	return out

@@ -83,13 +83,13 @@ func test_the_dursts_book_shows_its_spells_and_a_wizard_copies_from_the_inventor
 			texts.append((c as Label).text)
 		if after_disguise and c is HFlowContainer:
 			for b in c.find_children("*", "Button", true, false):
-				if (b as Button).text.begins_with("Ratatoille copies it"):
+				if (b as Button).text.begins_with("Ratatouille copies it"):
 					copy_disguise = b as Button
 			after_disguise = false
 	var joined := "\n".join(texts)
 	assert_true(joined.contains("Spells in this book"), "the card lists the book's spells")
 	assert_true(joined.contains("Disguise Self") and joined.contains("Darkness"), "by name")
-	assert_true(copy_disguise != null, "Ratatoille can copy Disguise Self")
+	assert_true(copy_disguise != null, "Ratatouille can copy Disguise Self")
 	assert_false(copy_disguise.disabled, copy_disguise.tooltip_text)
 	var t0 := st.total_minutes()
 	copy_disguise.pressed.emit()
@@ -113,6 +113,6 @@ func test_an_older_save_gets_the_dursts_book_back() -> void:
 	var back := StoryState.from_dict(st.to_dict())
 	assert_true(back.party[0].carries("durst_spellbook"), "Godrick's plain book was the Dursts'")
 	assert_false(back.party[0].carries("spellbook"))
-	assert_true(back.party[1].carries("spellbook"), "Ratatoille's own spellbook stays his")
+	assert_true(back.party[1].carries("spellbook"), "Ratatouille's own spellbook stays his")
 	var fresh := StoryState.from_dict(StoryState.new().to_dict())
 	assert_false(fresh.party_has_item("durst_spellbook"), "a save that never opened the footlocker is left alone")

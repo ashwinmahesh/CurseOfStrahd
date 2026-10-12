@@ -82,14 +82,15 @@ func test_until_start_of_next_turn() -> void:
 
 
 func test_minutes_and_hours_in_exploration() -> void:
+	# An hour's spell runs out on the clock (8-hour spells last until the next Long Rest: test_eight_hour_spells).
 	var c := TestChars.dummy(20)
-	var spell := Compendium.shared().spell_data("mage_armor")
-	var e := Effect.new("Mage Armor", &"spell", "mage_armor").lasting(spell["duration"] as Dictionary)
+	var spell := Compendium.shared().spell_data("longstrider")
+	var e := Effect.new("Longstrider", &"spell", "longstrider").lasting(spell["duration"] as Dictionary)
 	c.add_effect(e)
-	c.advance_minutes(60 * 7)
+	c.advance_minutes(59)
 	assert_eq(c.effects.size(), 1)
-	c.advance_minutes(61)
-	assert_eq(c.effects.size(), 0, "8 hours is up")
+	c.advance_minutes(2)
+	assert_eq(c.effects.size(), 0, "the hour is up")
 
 
 func test_rest_durations() -> void:

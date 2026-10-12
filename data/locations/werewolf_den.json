@@ -217,6 +217,7 @@
         5
       ],
       "kind": "examine",
+      "dialogue": "werewolf_den/wolfsbane:patch",
       "label": "A patch of purple flowers",
       "model": "leaves",
       "checks": [
