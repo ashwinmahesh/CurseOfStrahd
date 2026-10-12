@@ -107,8 +107,8 @@ if flag.bride_calmed
 Narrator: Zinaida looks down at the grave, and then at Mihail, and says nothing at all. Then there's only Mihail, and the hole, and the spade.
 endif
 Narrator: He fills it in himself and packs it hard. When he's done he sits down on the edge of the next grave over and cries for a while, like a man setting down something heavy.
-Old Mihail: Her coins. The silver ones round her neck. She'd want them spent on the living; take them. And the little charm with them: our grandmother said the girl wore it so the castle couldn't find her. It didn't help her at the bottom of a well. It might help you up here.
+Old Mihail: Her coins. The silver ones round her neck. She'd want them spent on the living; take them. And the little blue stone she wore with them: our grandmother said there was a wind shut up in it, for the day you needed one. She never broke it. You might.
 gold +60
-give amulet_of_proof_against_detection_and_location
+give elemental_gem_blue_sapphire
 approve liriel_dawnsong +2 godrick_pendlebrook +2 thistle +1 wren_featherfoot +1: You buried the bride in the well
 -> END
