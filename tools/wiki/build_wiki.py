@@ -308,6 +308,8 @@ class Game:
         self.glossary = load_json(d / "glossary" / "terms.json")
         self.loading = load_json(d / "loading" / "cards.json")
         self.schedules = folder("schedule")
+        nv = d / "camp" / "night_visitors.json"
+        self.night_visitors = load_json(nv) if nv.exists() else {}
         self.all_items = OrderedDict(list(self.items.items()) + list(self.magic.items()))
         self.dialogues = OrderedDict()
         for p in sorted((root / "narrative").rglob("*.dialogue")):
@@ -2551,6 +2553,29 @@ class Wiki:
                 lines.append(f"| {e.get('weight', 1)} | {esc(human_cond(e.get('when', '')))} | "
                              f"{self.monsters_line(e.get('monsters', []))} | {self.xp_of(e.get('monsters', []))} |")
             lines.append("")
+        nv = g.night_visitors
+        if nv.get("groups"):
+            lands = defaultdict(list)
+            for rid, land in (nv.get("lands") or {}).items():
+                lands[land].append(g.region_name(rid))
+            lines += ["## Night visitors at camp", "",
+                      "When a night at camp in a risky place is interrupted, one of these comes out of the dark, picked by "
+                      f"the region's land and your party's level ({s.link('page/resting', 'Resting and Saving')}). "
+                      "They're meant to be hard.", ""]
+            order = list(dict.fromkeys(gr.get("land", "") for gr in nv["groups"]))
+            for land in order:
+                regions = ", ".join(lands.get(land, [])) or ("everywhere else" if land == nv.get("default_land") else "")
+                lines += [f"### {land.title()}", "", f"*{regions}*" if regions else "", "",
+                          "| Party level | What comes | XP |", "|---|---|---|"]
+                for gr in nv["groups"]:
+                    if gr.get("land") != land:
+                        continue
+                    lv = gr.get("levels") or []
+                    lvl = f"{lv[0]}–{lv[1]}" if len(lv) == 2 else ""
+                    mons = [{"monster": m} if isinstance(m, str) else m for m in gr.get("monsters", [])]
+                    lines.append(f"| {lvl} | *{esc(plain(gr.get('text', ''), 120))}* {self.monsters_line(mons)} | "
+                                 f"{self.xp_of(mons)} |")
+                lines.append("")
         self.w.write("page/random_encounters", "World/Random Encounters", "Random Encounters",
                      [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         w = g.weather
