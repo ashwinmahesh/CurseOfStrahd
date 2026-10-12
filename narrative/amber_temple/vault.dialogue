@@ -92,6 +92,10 @@ interject tag:blunt: Then the land is how it ends.
 if flag.stanimir_tale_heard
 interject tag:curious: Stanimir's story by the fire had a prince, a brother and a bride. It left out the box.
 endif
+# With the broker dealt with, the record is the revelation the quest's last steps ask for (Wiki finding 52).
+if (flag.vosk_fate or flag.vosk_destroyed) and not flag.amber_milestone_given
+-> revelation
+endif
 -> END
 
 # ------------------------------------------------------------------------------------------ After the broker

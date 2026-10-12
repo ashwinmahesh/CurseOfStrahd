@@ -162,6 +162,9 @@ give figurine_of_wondrous_power_ebony_fly
 if guest:pidlwick_ii
 -> companion
 endif
+if flag.pidlwick_with_blinsky
+-> END
+endif
 if not flag.pidlwick_refused
 Pidlwick II: CAN I COME WITH YOU? I KNOW ALL THE STAIRS.
 endif

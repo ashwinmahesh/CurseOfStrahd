@@ -152,4 +152,6 @@ Blinsky [smile]: He has written me an order on his slate: one hour of happiness 
 ~ pidlwick_home
 Pidlwick II: (He drops two of his three balls to wave at you with both hands, and doesn't mind at all.) HELLO. I WORK HERE NOW.
 Pidlwick II: (He wipes the slate and writes again.) HE NEVER ASKED ABOUT MY KNEES. NOT ONCE. I LET HIM LOOK ANYWAY.
--> END
+# His key still finds him here (Wiki finding 46).
+* [if flag.pidlwick_key_found and not flag.pidlwick_wound] We found your key. -> castle_ravenloft/spires_pidlwick:key_back
+* Goodbye, Pidlwick. -> END

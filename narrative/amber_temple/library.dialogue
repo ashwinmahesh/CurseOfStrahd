@@ -48,4 +48,5 @@ Narrator: It's heavier than clay ought to be, and colder. Something inside shift
 set exethanter_phylactery = "smashed"
 quest something_with_a_lid smashed
 Narrator: The jar bursts on the flagstones. Among the shards, a dull grey stone splits in two. Across the room, Exethanter puts down his pen and sits very still.
+approve liriel_dawnsong +2 thistle +1: You smashed Exethanter's phylactery and let him go
 -> END
