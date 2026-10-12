@@ -756,7 +756,8 @@ func _as_attack_cantrip(c: Combatant, a: Dictionary, data: Dictionary, s: Dictio
 	var opts := (a.get("opts", {}) as Dictionary).duplicate()
 	opts["war_magic"] = true
 	a["opts"] = opts
-	a["sub"] = str(a["sub"]) + " · in place of an attack"
+	# Short enough for the slot's second line: "Attack cantrip · 2d10" (the cost mark reads as an attack too).
+	a["sub"] = "Attack cantrip" + str(a["sub"]).trim_prefix("Cantrip")
 	a["help"] = (str(a["help"]) + " " if str(a["help"]) != "" else "") + "Cast in place of one attack of your Attack action, so your other attacks follow."
 	if str(a["reason"]) in ["", "Action already used", "Only one Magic action this turn", "Only one Magic action this turn (Action Surge's action can't be Magic)"]:
 		var why := e.features_attack_why(c)
@@ -1792,7 +1793,8 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 ## walk the character to the target"): {ok, action, dest, walk, cost, left, path, warnings, preview}. `action` is the
 ## hotbar's attack with the weapon in the main hand (a ranged one there means no walk); `dest` is where it strikes from:
 ## where `c` stands when it already reaches, otherwise the cheapest free square within the movement left from which it
-## does, and of those that cost the same, the one whose way there provokes the fewest Opportunity Attacks (safe_path).
+## does, and of those that cost the same, the one whose way there provokes the fewest Opportunity Attacks (safe_path),
+## then the one with the best odds (a flanking square).
 ## `preview` is attack_preview as seen from `dest`. {ok: false} when no such attack or square.
 func melee_approach(c: Combatant, t: Combatant, reach: Dictionary = {}) -> Dictionary:
 	var out := {"ok": false}
@@ -1825,25 +1827,28 @@ func melee_approach(c: Combatant, t: Combatant, reach: Dictionary = {}) -> Dicti
 	for at: int in costs:
 		var pick := Vector2i(-1, -1)
 		var fewest := 1 << 30
-		for cell: Vector2i in by_cost[at]:
-			# Whether the blow lands from there (reach, height, a line to it), asked as if `c` stood there already.
+		var pv := {}
+		# An empty square before one an ally stands in (heroes may share, owner 2026-10-12), when all else is equal.
+		var bucket := (by_cost[at] as Array).filter(func(x: Vector2i) -> bool: return e.occupant_at(x) == null)
+		bucket.append_array((by_cost[at] as Array).filter(func(x: Vector2i) -> bool: return e.occupant_at(x) != null))
+		for cell: Vector2i in bucket:
+			# Whether the blow lands from there (reach, height, a line to it), and its odds (Flanking), asked as if `c`
+			# stood there already.
 			c.cell = cell
-			var why := target_why(c, a, t)
+			var cell_pv := attack_preview(c, a, t)
 			c.cell = keep
-			if why != "":
+			if not bool(cell_pv["legal"]):
 				continue
 			var n := e.movement.provocations(c, e.movement.safe_path(c, r, cell))
-			if n < fewest:
+			if n < fewest or (n == fewest and float(cell_pv["chance"]) > float(pv["chance"]) + 0.001):
 				fewest = n
 				pick = cell
+				pv = cell_pv
 		if pick.x < 0:
 			continue
 		var mp := move_preview(c, pick, r)
 		if not bool(mp["ok"]):
 			continue
-		c.cell = pick
-		var pv := attack_preview(c, a, t)
-		c.cell = keep
 		return {"ok": true, "action": a, "dest": pick, "walk": true, "cost": int(mp["cost"]), "left": int(mp["left"]),
 			"path": mp["path"], "warnings": mp["warnings"], "preview": pv}
 	return out

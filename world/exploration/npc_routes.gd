@@ -191,20 +191,11 @@ func _work(shown: Dictionary, delta: float) -> void:
 			tok.face(dir, false)
 
 
-## Whether a square is someone's: the party's, a guest's, another person's, a foe's in plain view, on the party's way
-## (the next few squares of its walk), behind a door now shut, or in a room nobody has found.
-func _taken(c: Vector2i, me: Dictionary) -> bool:
+## Whether a person can't step onto a square: a foe's in plain view, behind a door now shut, or in a room nobody has
+## found. The party and other people don't stop them (owner, 2026-10-12: outside fights nobody blocks anybody).
+func _taken(c: Vector2i, _me: Dictionary) -> bool:
 	if view.grid.is_solid(c) or HiddenAreas.hides(view, c):
 		return true
-	for m: Combatant in view.members + view.guest_members:
-		if m.cell == c:
-			return true
-	for i in mini(3, view._queue.size()):
-		if view._queue[i] == c:
-			return true
-	for shown in view._npc_shown:
-		if shown != me and shown["cell"] == c:
-			return true
 	for w in view.waiting:
 		if (w["foe"] as Combatant).cell == c:
 			return true
@@ -214,13 +205,9 @@ func _taken(c: Vector2i, me: Dictionary) -> bool:
 	return false
 
 
-## One square on: the person's square (and the low block that keeps the party off it) moves with them.
+## One square on.
 func _step(shown: Dictionary, next: Vector2i) -> void:
-	var was := shown["cell"] as Vector2i
-	if not bool(shown["low_before"]):
-		view.grid.set_flag(was, CombatGrid.LOW, false)
 	shown["low_before"] = view.grid.has_flag(next, CombatGrid.LOW)
-	view.grid.set_flag(next, CombatGrid.LOW, true)
 	shown["cell"] = next
 	var tok := shown["token"] as CombatToken
 	tok.combatant.cell = next

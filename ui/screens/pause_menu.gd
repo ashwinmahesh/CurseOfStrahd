@@ -351,7 +351,8 @@ func _page_tabs(page: String) -> void:
 			_place(mark)
 
 
-## Game: the playthrough's difficulty, how fights and the Narrator play, turn-based exploring, and the respec option.
+## Game: the playthrough's difficulty, how fights (Flanking among them) and the Narrator play, turn-based exploring, and
+## the respec option.
 func _game_rows() -> void:
 	var y := ROW_Y
 	if st != null:
@@ -364,6 +365,11 @@ func _game_rows() -> void:
 	_choice_row(y, "Party turns", ["Shared", "One at a time"], 0 if GameSettings.shared_turns() else 1, func(i: int) -> void:
 		GameSettings.set_shared_turns(i == 0),
 		InputActions.fill("Shared: heroes next to each other in the turn order act together; click a hero's portrait or press {cycle_leader} to switch between them."))
+	y += ROW_PITCH
+	# Flanking (2024 DMG optional rule, owner 2026-10-12).
+	_choice_row(y, "Flanking", ["On", "Off"], 0 if GameSettings.flanking() else 1, func(i: int) -> void:
+		GameSettings.set_flanking(i == 0),
+		"On: a creature with an ally on the far side of its foe, both next to it, has Advantage on melee attacks against that foe. For heroes and foes alike.")
 	y += ROW_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")

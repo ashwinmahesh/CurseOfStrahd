@@ -55,6 +55,12 @@ func finish_scale() -> float:
 	return 0.0 if mode() == "kind" else 1.0
 
 
+## Whether foes move to flank (Flanking, owner 2026-10-12): Tactician and Honour's sharp foes pick squares across from an
+## ally; on Story and Balanced they fight as before the rule and take its Advantage only when it falls their way.
+func seeks_flanks() -> bool:
+	return mode() in ["sharp", "ruthless"]
+
+
 ## Extra score for an attack on `t` worth `expected` damage.
 func target_adjust(t: Combatant, expected: float) -> float:
 	match mode():

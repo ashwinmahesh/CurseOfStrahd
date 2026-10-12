@@ -104,6 +104,44 @@ static func _build_props(view: LocationView) -> void:
 		view.container_nodes[str(ct["id"])] = node
 
 
+## Small things on the floor (owner, 2026-10-12: "decor items should be navigable around if they are small"): the art
+## of a stool, a basket, sacks, candles and lamps on stands, jars, cushions, books on the floor, a small crate. A '='
+## square that holds nothing else is walked over, in fights and out of them; furniture, barrels, crate stacks and
+## containers still fill their squares.
+const SMALL_DECOR: Array[String] = ["footstool", "basket", "sack", "sack_pile", "candelabra", "oil_lamp", "candle_cluster",
+	"lantern_stand", "jars", "cushions", "straw", "doll", "music_box", "book_stack", "floor_books", "rope_coils",
+	"cheeses", "crate", "bones", "cookpot"]
+
+
+## Opens the location grid's '=' squares that only small decor stands on (SMALL_DECOR): a prop's art, or the board's
+## own dressing where no prop stands. A fight's grid follows (BattleScenery.for_location keeps a '=' square the location
+## grid has open, open).
+static func open_small_decor(view: LocationView) -> void:
+	var arts := {}
+	for p: Variant in view.loc.get("props", []):
+		var prop := p as Dictionary
+		if prop.has("hangs") or not StoryConditions.check(str(prop.get("when", "")), view.st):
+			continue
+		var art := str(SetDressing.look_for(prop).get("art", prop.get("model", "")))
+		for c in BattleScenery.span_cells(prop):
+			if not arts.has(c):
+				arts[c] = []
+			(arts[c] as Array).append(art)
+	var kept := {}
+	for ct: Variant in view.loc.get("containers", []):
+		kept[LocationView._cell((ct as Dictionary)["cell"])] = true
+	var rows := (view.loc["map"] as Dictionary)["rows"] as Array
+	for z in rows.size():
+		var row := str(rows[z])
+		for x in row.length():
+			var cell := Vector2i(x, z)
+			if row[x] != "=" or kept.has(cell) or not view.grid.has_flag(cell, CombatGrid.LOW):
+				continue
+			var here := arts.get(cell, [BattleScenery.art_at(view.board, cell)]) as Array
+			if here.all(func(a: Variant) -> bool: return str(a) in SMALL_DECOR):
+				view.grid.set_flag(cell, CombatGrid.LOW, false)
+
+
 ## A prop's piece (SetDressing, art/sprites/props/catalog.json), else a billboard by name, else a plain marker.
 static func _prop_node(view: LocationView, prop: Dictionary) -> Node3D:
 	var node: Node3D = SetDressing.place(view.board, prop)

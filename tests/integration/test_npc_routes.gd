@@ -1,6 +1,6 @@
 extends TestCase
 ## People walking routes (NpcRoutes, owner 2026-10-07: "NPCs should move around the map"): a `path` entry walks from
-## its cell through its waypoints and back, its square (hover, clicks, the low block) going with it; it holds while a
+## its cell through its waypoints and back, its square (hover, clicks) going with it; it holds while a
 ## conversation runs, while the leader stands beside it and under turn-based exploring until a round ends; a sleeper
 ## and a person with no path stay where they are.
 
@@ -87,7 +87,7 @@ func test_a_walker_follows_its_route_and_its_square_goes_with_it() -> void:
 	assert_true(moved.x > at.x, "he set off along his path (from %s to %s)" % [at, moved])
 	assert_eq(str(v.thing_at(moved).get("id", "")), "ismark", "hover and clicks find him where he is now")
 	assert_true(v.thing_at(at).is_empty(), "nobody is left behind where he was")
-	assert_true(v.grid.has_flag(moved, CombatGrid.LOW), "his square is taken")
+	assert_false(v.grid.has_flag(moved, CombatGrid.LOW), "nobody blocks outside fights: the party walks through him (owner, 2026-10-12)")
 	assert_false(v.grid.has_flag(at, CombatGrid.LOW), "the square he left is free again")
 	var seen := {}
 	var back := false
