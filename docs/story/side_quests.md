@@ -320,10 +320,11 @@ been turned (Intimidation DC 14) or left at the inn.
 - **Boss: Old Greytooth** (data/monsters/old_greytooth.json, `source.book: custom`, drawn with the dire wolf's sprite):
   Huge, AC 15, 171 HP, two 2d10+5 bites that knock prone, a recharging howl (DC 15 Wis or Frightened), Legendary
   Resistance (2/day) and one extra bite a round as a legendary action. CR 8.
-- Fight `greytooth_hunt`: level 6 Greytooth (150 HP), 2 dire wolves, 2 wolves; level 7 three dire wolves; level 8 adds
+- Fight `greytooth_hunt`: level 6 Greytooth (140 HP), 2 dire wolves, 2 wolves; level 7 three dire wolves; level 8 adds
   a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`). The
-  autopilot (tests/integration/test_side_quest_bosses.gd) wins about half its level 6 tries, losing three of four
-  party members on the way. Attention mark `greytooth` (+1).
+  autopilot (tests/integration/test_side_quest_bosses.gd) wins five of its eight level 6 tries, losing two or three of
+  the four party members on the way (2026-10-12: 140 HP, down from 150, once foes spread their blows over the heroes).
+  Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
 ### The Ravens' Ransom (`the_ravens_ransom`, narrative/vallaki/the_ravens_ransom.dialogue; batch 4, level 6)

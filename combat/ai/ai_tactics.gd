@@ -66,13 +66,16 @@ func spreads(c: Combatant) -> bool:
 ## up to this share of the blow's worth either way. A smart foe (Intelligence 10 or more) leans less, and every foe
 ## much less at Tactician and Honour, where they focus.
 func taste(c: Combatant, t: Combatant) -> float:
-	var x := float(posmod(hash(c.id + "|" + t.id), 1001)) / 1000.0 * 2.0 - 1.0
+	var e := enc()
+	# Seeded by the two's names and places in the fight, not their ids: a monster's id counts every monster made since
+	# the game started, so the same fight would lean another way from one run to the next.
+	var key := "%s %d|%s %d" % [c.name(), e.combatants.find(c), t.name(), e.combatants.find(t)]
+	var x := float(posmod(hash(key), 1001)) / 1000.0 * 2.0 - 1.0
 	# Story already spreads its blows by who's been struck (target_adjust), so it leans less; Tactician and Honour focus.
 	var spread: float = {"kind": 0.08, "standard": 0.1}.get(mode(), 0.04)
 	if c.creature.ability_score(&"int") >= 10:
 		spread *= 0.75
 	return x * spread
-
 
 
 ## How much of the killing-blow bonus counts (none when the AI spreads its blows).
