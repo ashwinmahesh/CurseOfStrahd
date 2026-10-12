@@ -755,7 +755,8 @@ func _as_attack_cantrip(c: Combatant, a: Dictionary, data: Dictionary, s: Dictio
 	var opts := (a.get("opts", {}) as Dictionary).duplicate()
 	opts["war_magic"] = true
 	a["opts"] = opts
-	a["sub"] = str(a["sub"]) + " · in place of an attack"
+	# Short enough for the slot's second line: "Attack cantrip · 2d10" (the cost mark reads as an attack too).
+	a["sub"] = "Attack cantrip" + str(a["sub"]).trim_prefix("Cantrip")
 	a["help"] = (str(a["help"]) + " " if str(a["help"]) != "" else "") + "Cast in place of one attack of your Attack action, so your other attacks follow."
 	if str(a["reason"]) in ["", "Action already used", "Only one Magic action this turn", "Only one Magic action this turn (Action Surge's action can't be Magic)"]:
 		var why := e.features_attack_why(c)
