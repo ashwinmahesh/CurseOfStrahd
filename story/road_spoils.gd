@@ -42,6 +42,23 @@ static func for_fight(st: StoryState, monsters: Array, key: String) -> Dictionar
 	return {"gold": maxi(gold, 1), "items": items}
 
 
+## What a won fight at a place leaves besides its own loot (owner, 2026-10-12: loot felt light): each foe's coins by
+## its Challenge Rating and one find for the party's level, as on the road, without the road's magic item (the place's
+## chests have those). Rolled from the playthrough's seed and the place and fight, the same however often it's
+## reloaded. {gold, items}.
+static func for_story_fight(st: StoryState, monsters: Array, key: String) -> Dictionary:
+	var rng := _rng(st, "story_fight", key)
+	var gold := 0
+	for m: Variant in monsters:
+		var md := m as Dictionary
+		if str(md.get("side", "enemy")) != "enemy":
+			continue
+		gold += coins_for_cr(rng, float(Compendium.shared().get_entry("monsters", str(md.get("monster", ""))).get("cr", 0)))
+	if gold <= 0:
+		return {"gold": 0, "items": []}
+	return {"gold": gold, "items": [find(rng, party_level(st), false)]}
+
+
 ## A meeting on the road with no fight: {gold, items}.
 static func for_event(st: StoryState, key: String) -> Dictionary:
 	var rng := _rng(st, "event", key)
