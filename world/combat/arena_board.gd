@@ -103,6 +103,8 @@ func _load_textures() -> void:
 	if own != "":
 		floor_s = own
 	floor_s = str(_look.get("floor", floor_s))
+	# The region's own ground in the Modern finish (Atmosphere.region_surface: moss in the woods, shingle at the lake).
+	floor_s = Atmosphere.region_surface(place, floor_s)
 	if floor_s != "":
 		_floor_tex = Look.cel_textured(floor_s, 0.22)
 	var mud := str(_look.get("difficult", Look.theme_surface(t, "difficult")))
@@ -149,7 +151,7 @@ func _build() -> void:
 		# Raised ground: grassy banks outdoors (hills, ledges, a gallows mound), stone in churches and dungeons,
 		# boards in towns and rooms.
 		var raised := "village/grass" if theme in WILD else ("church/stone_flags" if theme == "church" else ("dungeon/stone_floor" if theme == "dungeon" else "interior/wood_planks"))
-		var raised_mat := Look.cel_textured(raised, 0.22)
+		var raised_mat := Look.cel_textured(Atmosphere.region_surface(place, raised), 0.22)
 		if raised_mat != null:
 			dais = raised_mat
 		if _floor_tex != null:

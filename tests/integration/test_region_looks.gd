@@ -1,7 +1,8 @@
 extends TestCase
 ## Each region's own look in the Modern finish (the vault's Region Variety Plan, art/atmosphere/moods.json `modern`):
-## its own daylight, mist and shade so no two regions look alike, its ground tinted its own colour, autumn in the
-## Vistani camps' undergrowth, Vallaki's streets wet whatever the sky, and the frozen Classic look left as it was.
+## its own daylight, mist and shade so no two regions look alike, its ground tinted its own colour or swapped for its
+## own (the woods' moss), autumn in the Vistani camps' undergrowth, Vallaki's streets wet whatever the sky, and the
+## frozen Classic look left as it was.
 
 ## One place from each region the plan names.
 const REGIONS := ["road_forest", "village_of_barovia", "old_bonegrinder_hill", "tser_pool", "tser_falls",
@@ -115,4 +116,23 @@ func test_vallaki_stays_wet() -> void:
 	assert_eq(c.atmosphere.wetness, 0.0, "Classic stays as it was")
 	c.queue_free()
 	Weather.use({})
+	Look.set_style(was, false)
+
+
+## A region lays its own ground (a mood's `ground_swap`): the woods' maps walk on moss in the Modern finish, Classic
+## and places without a swap keep theirs.
+func test_regions_lay_their_own_ground() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	assert_eq(Atmosphere.region_surface("road_forest", "village/grass"), "wild/moss", "the woods walk on moss")
+	assert_eq(Atmosphere.region_surface("tser_pool", "village/grass"), "wild/leaf_litter", "the camp on fallen leaves")
+	assert_eq(Atmosphere.region_surface("werewolf_den", "mountain/scree"), "wild/red_scree", "the den on red scree")
+	assert_eq(Atmosphere.region_surface("village_of_barovia", "village/grass"), "village/grass", "the village keeps its own")
+	assert_eq(Atmosphere.region_surface("", "village/grass"), "village/grass", "and a board with no place")
+	var woods := _view("road_forest")
+	await get_tree().process_frame
+	assert_eq(str(woods.board.floor_material().get_meta("surface", "")), "wild/moss", "the woods' board is laid in moss")
+	woods.queue_free()
+	Look.set_style("classic", false)
+	assert_eq(Atmosphere.region_surface("road_forest", "village/grass"), "village/grass", "Classic stays as it was")
 	Look.set_style(was, false)

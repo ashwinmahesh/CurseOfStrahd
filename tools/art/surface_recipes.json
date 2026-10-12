@@ -351,6 +351,54 @@
       "view": "wall",
       "variants": 1,
       "ref": "death_house_hall_ab"
+    },
+    "wild/moss": {
+      "subject": "a deep spruce-forest floor: thick dark green cushion moss over roots and black earth, scattered fallen brown spruce needles, a few small fern sprouts and pale stones",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 1.25
+    },
+    "wild/leaf_litter": {
+      "subject": "an autumn forest floor thick with fallen leaves in rust red, ochre and dull gold over dark earth, with a few twigs, pine needles and patches of dark green grass",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 1.15
+    },
+    "wild/heath": {
+      "subject": "an upland heath: low tangled heather in dull purple and brown, tufts of dry straw-coloured grass and small grey stones over dark peaty earth",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 1.12
+    },
+    "wild/vineyard_earth": {
+      "subject": "the tilled soil between vineyard rows: dark red-brown earth in soft furrows, scattered small stones, fallen vine leaves in wine red and olive green, damp from rain, a little grass at the edges",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 1.05
+    },
+    "wild/shore_shingle": {
+      "subject": "a cold lake shore: grey and blue-grey rounded pebbles and coarse shingle with tufts of pale sedge grass, dark wet patches and a few bits of driftwood",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 0.85
+    },
+    "wild/red_scree": {
+      "subject": "loose rust-red and brown mountain scree and broken rock with patches of dark earth and dry grass and a few small old bones",
+      "view": "floor",
+      "variants": 3,
+      "ref": "road_day_ab",
+      "new": true,
+      "brightness": 1.2
     }
   },
   "derived": {
