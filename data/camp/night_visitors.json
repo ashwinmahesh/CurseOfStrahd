@@ -55,15 +55,15 @@
       "id": "marsh_ghast",
       "land": "marsh",
       "levels": [4, 6],
-      "text": "A stink of rot comes off the water ahead of them: a ghast, and the drowned it has been feeding on.",
-      "monsters": ["ghast", "zombie", "zombie", "zombie"]
+      "text": "A stink of rot comes off the water ahead of them: ghasts, and the drowned they have been feeding on.",
+      "monsters": ["ghast", "ghast", "zombie", "zombie"]
     },
     {
       "id": "marsh_watchers",
       "land": "marsh",
       "levels": [7, 11],
-      "text": "Scarecrows stand at the edge of the firelight that weren't there when you lay down. Then they move.",
-      "monsters": ["wight", "wight", "scarecrow", "scarecrow", "scarecrow"]
+      "text": "Scarecrows stand at the edge of the firelight that weren't there when you lay down. Behind them, something in a drowned bride's veil begins to wail.",
+      "monsters": ["banshee", "wight", "wight", "scarecrow", "scarecrow"]
     },
     {
       "id": "mountain_wolves",
@@ -97,8 +97,8 @@
       "id": "castle_dead",
       "land": "castle",
       "levels": [4, 6],
-      "text": "Bats first, a cloud of them, and then the castle's dead, dragging themselves toward the warmth.",
-      "monsters": ["swarm_of_bats", "swarm_of_bats", "strahd_zombie", "strahd_zombie", "strahd_zombie"]
+      "text": "Bats first, a cloud of them, and then the castle's dead and the things that eat them, crawling toward the warmth.",
+      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "strahd_zombie", "strahd_zombie"]
     },
     {
       "id": "castle_spawn",
