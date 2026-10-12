@@ -2440,13 +2440,14 @@ class Wiki:
         self.w.write("page/conditions", "Rules/Conditions", "Conditions", [auto("list", "\n".join(lines))], tags=["wiki", "rules"])
         lines = ["The rules words the game underlines; hover one in the game to read it. *In this game* notes are "
                  "where it plays differently.", ""]
-        for t in sorted(g.glossary.get("terms", []), key=lambda t: t.get("name", "")):
-            text = t.get("text") or t.get("summary", "")
-            if not text and t.get("from"):
-                kind, _, tid = t["from"].partition(":")
-                if kind == "condition":
-                    text = g.conditions.get(tid, {}).get("text", "")
-            lines.append(f"## {t.get('name', '')}")
+        def source(t):
+            """The condition a term points at with `from` (its name and text when the term leaves them out)."""
+            kind, _, tid = str(t.get("from", "")).partition(":")
+            return g.conditions.get(tid, {}) if kind == "condition" else {}
+
+        for t in sorted(g.glossary.get("terms", []), key=lambda t: t.get("name") or source(t).get("name", "")):
+            text = t.get("text") or t.get("summary", "") or source(t).get("text", "")
+            lines.append(f"## {t.get('name') or source(t).get('name', '')}")
             if t.get("kind"):
                 lines.append(f"*{t['kind']}*")
             lines.append(text)
