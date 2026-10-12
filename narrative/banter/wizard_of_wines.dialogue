@@ -1,6 +1,6 @@
 # Party banter at the Wizard of Wines. Each node opens with an `if` gate: the node is eligible only while its
 # condition holds. Party members speak only through interjections; a line plays if a matching member is present.
-# Ratatoille has no lines here: his reaction to the place is a quest scene of its own.
+# Ratatouille has no lines here: his reaction to the place is a quest scene of its own.
 
 ~ banter_wine_country
 if flag.davian_met and not flag.winery_reclaimed and name:kip_smudgewick and name:thistle

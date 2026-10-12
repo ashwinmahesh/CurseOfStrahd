@@ -46,7 +46,7 @@ He is never cruel; his jokes are for keeping everyone's spirits up, his own most
   for him.
 - **Liriel:** expects to win their arguments and keeps losing. She's the one person who sees through the jokes.
 - **Thistle:** racing rivals: footraces, climbing, who-can-catch-the-crow. He won once and won't stop mentioning it.
-- **Ratatoille:** mocks the titles, eats the seconds. "Diviner of the Third Circle, pass the bread."
+- **Ratatouille:** mocks the titles, eats the seconds. "Diviner of the Third Circle, pass the bread."
 - **Kip:** a double act. Wren talks people into buying apricots and helps him look for loopholes. They both know a con
   when they see one, and neither has quite told the other why.
 - **Kasimir and the dusk elves:** quiet respect; he becomes careful and polite in a way he never is with anyone else.

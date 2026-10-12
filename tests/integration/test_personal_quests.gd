@@ -113,7 +113,7 @@ func test_kips_way_out_is_read_then_paid() -> void:
 		refs.append(str(t["ref"]))
 	assert_true("camp/kip:talk_reading" in refs, "Kip asks for help reading it")
 	_run(st, "camp/kip:talk_reading")
-	assert_eq(st.quest_stage("the_fine_print"), "the_small_print", "Ratatoille reads the clause")
+	assert_eq(st.quest_stage("the_fine_print"), "the_small_print", "Ratatouille reads the clause")
 	refs.clear()
 	for t in CampTalk.available(st):
 		refs.append(str(t["ref"]))

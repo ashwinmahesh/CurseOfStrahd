@@ -1,9 +1,9 @@
-# Ratatoille's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
+# Ratatouille's camp talks (story/camp_talk.gd): offered after a Long Rest once the opening `if` holds; each plays
 # once. Quest: A Seat at the Table (narrative/companions/table.dialogue). The table talk is the quest's ending. The
 # file offers its first talk that holds: when he's Strained or Doubtful (story/approval.gd), those first; then the
 # quest's; then Warm, Close and Devoted.
 
-# --- After Strahd called Ratatoille to kneel at the night visit (strahd/visits:night_kneel) ---------------------------
+# --- After Strahd called Ratatouille to kneel at the night visit (strahd/visits:night_kneel) ---------------------------
 
 ~ talk_knelt
 if name:ratatoille and flag.strahd_knelt == "ratatoille"
@@ -12,7 +12,7 @@ endif
 -> END
 
 ~ knelt
-Narrator: Ratatoille is cooking breakfast with tremendous concentration, though there's very little to cook and nobody is hungry.
+Narrator: Ratatouille is cooking breakfast with tremendous concentration, though there's very little to cook and nobody is hungry.
 interject name:ratatoille: He said I wished to be taken seriously. Then he had me fold my blanket and walk to him like a waiter with an empty plate.
 interject name:ratatoille: I am a diviner. I saw nothing coming. Nothing.
 * Nobody could have foreseen that. -> knelt_foresee
@@ -37,11 +37,11 @@ endif
 -> END
 
 ~ strained
-Narrator: There's no supper tonight. Ratatoille hands round the rations cold, still in their paper, and sits apart with his spellbook shut on his knees.
+Narrator: There's no supper tonight. Ratatouille hands round the rations cold, still in their paper, and sits apart with his spellbook shut on his knees.
 interject name:ratatoille: I'm not cooking. Don't ask me to. I can't cook for people when it doesn't taste right in my mouth to do it.
 interject name:ratatoille: I learned magic so people would sit with me. Then I found people who would. And now I look at the table and I don't know whether I want to sit at it.
 * Then help us set it right. -> strained_right
-* We're sorry, Ratatoille. -> strained_sorry
+* We're sorry, Ratatouille. -> strained_sorry
 * Suit yourself. -> strained_cold
 
 ~ strained_right
@@ -67,7 +67,7 @@ endif
 -> END
 
 ~ doubt
-Narrator: Ratatoille is cooking tonight, which is normal. He's cooking badly, which isn't. The stew has caught on the bottom and he hasn't noticed.
+Narrator: Ratatouille is cooking tonight, which is normal. He's cooking badly, which isn't. The stew has caught on the bottom and he hasn't noticed.
 interject name:ratatoille: Non, it's fine. I'm distracted. A chef is permitted to be distracted once a century.
 interject name:ratatoille: May I say something without anyone putting a frog in my soup? Lately I don't like who we're being. It's like a sauce that's split. You keep stirring, and you can't tell when it went wrong, and then it's just wrong.
 interject name:ratatoille: At the academy I kept my head down and agreed with whoever was loudest. I came here to stop doing that. So. I'm not agreeing.
@@ -99,7 +99,7 @@ endif
 -> END
 
 ~ refectory
-Narrator: Ratatoille is doing something complicated to tonight's rations with a pinch of salt, a pinch of something from a twist of paper, and a great deal of concentration. It smells unreasonably good.
+Narrator: Ratatouille is doing something complicated to tonight's rations with a pinch of salt, a pinch of something from a twist of paper, and a great deal of concentration. It smells unreasonably good.
 interject name:ratatoille: Don't watch. I can't work when people watch. Watch a little.
 * Where did you learn to cook like that? -> refectory_where
 * Why magic, then, and not cooking? -> refectory_why
@@ -136,7 +136,7 @@ endif
 -> END
 
 ~ recipes
-Narrator: Ratatoille has his spellbook open on his knees and is reading it the way some people read letters from home.
+Narrator: Ratatouille has his spellbook open on his knees and is reading it the way some people read letters from home.
 interject name:ratatoille: You can look. It's all right. Everyone's going to find out eventually.
 Narrator: The spellbook is laid out like a cookery book. Every spell has its ingredients listed down the margin, its method numbered, and a note at the bottom headed "Serving suggestion". Fireball's says: "Do not serve indoors."
 interject name:ratatoille: I'd rather cook than cast. I always would. I'm good at magic, I'm very good, I'm going to be extremely good. But I'd rather cook. When I cook, I'm not trying to be anything.
@@ -163,7 +163,7 @@ endif
 -> END
 
 ~ table
-Narrator: Ratatoille sends everyone away from the fire for an hour and won't say why. When you're let back, there's a cloth laid on the ground, and a supper on it that has no business existing in this valley: something roasted, something in a sauce, bread that's still warm, and a little pastry at each place with an apricot in it.
+Narrator: Ratatouille sends everyone away from the fire for an hour and won't say why. When you're let back, there's a cloth laid on the ground, and a supper on it that has no business existing in this valley: something roasted, something in a sauce, bread that's still warm, and a little pastry at each place with an apricot in it.
 if name:kip_smudgewick
 interject name:kip_smudgewick: Those are my apricots. You got them out of my cart. ...They're beautiful. Keep going.
 endif
@@ -180,12 +180,12 @@ if flag.ratatoille_refused_strahd
 interject name:ratatoille: And the devil himself offered me a tower, and I told him I already had a table. I meant this one. I meant you.
 endif
 Narrator: He stands up. He looks round at all of you, and visibly loses his nerve, and visibly gets it back.
-interject name:ratatoille: Ratatoille. Cook. And wizard. In that order.
+interject name:ratatoille: Ratatouille. Cook. And wizard. In that order.
 Narrator: He sits down again, very fast, and goes very pink, and starts serving before anyone can say anything.
 if approval.ratatoille >= close
 Narrator: There's a name piped on each pastry in burnt sugar, one per person, spelled wrong only once. Nobody mentions which. The supper sits warm in all of you right through the next day, like a hand on the back.
 interject name:ratatoille: I cooked for the Martikovs because they let me. I used to cook so that people would sit with me. This one I cooked because you're mine. That's different. I didn't know it was different.
-inspire party: ate Ratatoille's supper at his own table
+inspire party: ate Ratatouille's supper at his own table
 endif
 quest a_seat_at_the_table his_own_table
 approve ratatoille +8: You sat at my table
@@ -205,7 +205,7 @@ endif
 -> END
 
 ~ warm
-Narrator: Ratatoille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself.
+Narrator: Ratatouille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself.
 interject name:ratatoille: The Circles. First Circle: cantrips. Second Circle: anything that explodes. Third Circle: me. I'm establishing them. Somebody has to.
 interject name:ratatoille: You may join, if you like. The entrance requirement is that you eat whatever I cook without asking what's in it.
 * What's in it? -> warm_what
@@ -234,7 +234,7 @@ endif
 -> END
 
 ~ close
-Narrator: Ratatoille is making a tart tonight, and making it badly: doing a step wrong, stopping, doing it right, as if he were arguing with somebody who isn't there.
+Narrator: Ratatouille is making a tart tonight, and making it badly: doing a step wrong, stopping, doing it right, as if he were arguing with somebody who isn't there.
 interject name:ratatoille: It's my grandmother's. She makes it every feast day, and every feast day she tells me I'm doing the crust wrong. I'm doing it her way tonight. I wanted to see if I could stand it.
 interject name:ratatoille: Before I left, I told my whole family I was going to be apprenticed to the greatest wizard of the age. My brothers laughed. My grandmother said, "He'll be back in the kitchen by spring," and they all laughed harder.
 interject name:ratatoille: And the thing is, I want to go back to the kitchen. I want to go home and cook. And I'm terrified that means she was right, and I'll only ever be the boy under the pastry table.
@@ -248,7 +248,7 @@ approve ratatoille +3: You told me the kitchen isn't small
 -> close_end
 
 ~ close_both
-interject name:ratatoille: Both. Yes. Ratatoille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually.
+interject name:ratatoille: Both. Yes. Ratatouille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually.
 approve ratatoille +3: You told me I can go home a wizard and a cook
 -> close_end
 
@@ -268,7 +268,7 @@ endif
 -> END
 
 ~ devoted
-Narrator: Ratatoille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook.
+Narrator: Ratatouille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook.
 interject name:ratatoille: A recipe. My best one. My grandmother's, actually, with improvements. Many improvements. She'd be furious. It's the bread.
 interject name:ratatoille: I've never given anyone a recipe. In my family you inherit them; you don't hand them out. I'm handing it out. To you. Because if anything happens up at that castle, somebody should still be able to make it.
 * Nothing's going to happen. -> devoted_nothing

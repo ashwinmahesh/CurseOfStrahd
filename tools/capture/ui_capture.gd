@@ -159,7 +159,7 @@ func capture_shots(tool: Node, out: String) -> void:
 		await _shoot(tool, "%s_item_rest.png" % out)
 		inv.call("_open_prepare")
 		await tool.call("wait_frames", 4)
-		# Ratatoille's cantrips, the Wizard's one Long Rest swap.
+		# Ratatouille's cantrips, the Wizard's one Long Rest swap.
 		for l in inv.find_children("*", "Label", true, false):
 			if (l as Label).text.contains("Wizard cantrips") or (l as Label).text.contains("Wizard Cantrips"):
 				for sc in inv.find_children("*", "ScrollContainer", true, false):
@@ -330,7 +330,7 @@ func _bust_shots(tool: Node, out: String) -> void:
 	st.party.insert(2, thistle)
 
 
-## Creating a character from the party screen (owner, 2026-10-07): the party at level 5 with Ratatoille and the
+## Creating a character from the party screen (owner, 2026-10-07): the party at level 5 with Ratatouille and the
 ## starting hero at camp; the creator with the hero's portrait worn, the new character's Review, the party screen with
 ## her four level-ups waiting, her level-up screen, and the create option once four custom characters are made.
 func _create_shots(tool: Node, out: String) -> void:

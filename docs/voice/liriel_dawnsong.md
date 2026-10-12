@@ -51,7 +51,7 @@ devastating with a mace.
   life and his directions with nothing.
 - **Thistle:** tries to teach her manners; Thistle teaches her to whistle through her fingers. She is secretly
   delighted by Thistle and calls her "dear heart".
-- **Ratatoille:** says grace over his food, which no one has ever done, and he is undone by it. She treats his
+- **Ratatouille:** says grace over his food, which no one has ever done, and he is undone by it. She treats his
   cooking as a kind of prayer and tells him so.
 - **Wren:** spars with him verbally and wins more often than he expects. She suspects his jokes are a way of not
   grieving, and says so once, kindly.
