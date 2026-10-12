@@ -727,13 +727,11 @@
           "name": "The Master's Gaze"
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             22,
             12
-          ],
-          "name": "The Master's Gaze",
-          "hp": 50
+          ]
         },
         {
           "monster": "shadow",
