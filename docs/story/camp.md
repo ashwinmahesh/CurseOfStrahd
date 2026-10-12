@@ -35,9 +35,16 @@ the pair its condition names. Anyone else says what they're doing, in the Narrat
 
 The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
 Rest (story/long_rest.gd, the same rules as the screen's: 16 hours since the last, the place's risk, wards, Alarm).
-An interrupted night gives a Short Rest's benefits, and the party can try again. A full night brings back what a Long
-Rest does. Then the Narrator says the night's line (`rest:long:<place>`, `rest:long:<region>`, `camp:night`,
-`rest:long`), the region's dream, and `camp:morning`. Strahd may come in the night, as after any Long Rest.
-Afterwards the panel offers **Change prepared spells**, counted from the list the night ended with, and
-**Break camp**. Breaking camp packs everything away (`camp:strike`), and the party falls in behind its leader. Leaving
+An interrupted night gives a Short Rest's benefits, and then the night's visitors come out of the dark, 25 to 40 ft
+from the fire, from more than one side (data/camp/night_visitors.json): a group for the region's land (forest, marsh,
+mountain, castle) and the party's milestone level, a die picking among several. Those waiting at camp keep back from
+the fight. Afterwards the party can try to sleep again. Each group is played to the end eight times by the test
+autopilot at the lowest level it comes for, with the party as an interrupted night finds it (half its Hit Points and
+half its spell slots spent, then the hour's Short Rest): hard but winnable, won and lost at least twice in eight
+(tests/integration/test_night_visitors.gd; the owner wants fights hard, 2026-10-12).
+
+A full night brings back what a Long Rest does. Then the Narrator says the night's line (`rest:long:<place>`,
+`rest:long:<region>`, `camp:night`, `rest:long`), the region's dream, and `camp:morning`. Strahd may come in the
+night, as after any Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
+night ended with, and **Break camp**. Breaking camp packs everything away (`camp:strike`), and the party falls in behind its leader. Leaving
 the place, or anything that builds it again, ends the camp too.
