@@ -81,6 +81,19 @@ names (docs/art/plants.md). tests/integration/test_region_looks.gd keeps every r
     make capture SCENE=res://tools/capture/region_capture.tscn NAME=region-variety/after FRAMES=10 \
       REGION_HOURS=12,18 REGION_BEFORE=/abs/folder   # one place per region; the folder holds main's moods.json, flora.json
 
+### Indoors (the plan's part two)
+
+Every indoor place has a look of its own too (41 looks for 59 places; none is left on the bare `indoors` mood): its
+`modern` block gives the shade and the fill that lights it in place of the shared moon blue (`tone`'s `ambient_tint`
+and `ambient_mix` over `INDOOR_TONE`), the room's light and mist (`times.any`), its motes (`dust` with `indoors`), and
+`flame_tint` {colour, mix, energy}: the place's candles, lamps, torches and fires lean to its colour (`_tint_flame`;
+the party's lantern, magic and windows keep theirs). `lying_wet` and `lying_snow` now apply indoors in the Modern
+finish. The lairs stand out: the dragon's under Mount Ghakis (`dragon_lair`: blood-red shade, embers and glowing ash,
+cave rock), the lich's undercroft and drowned library (`drowned`: sick green glyph light, wet floors, slimed brick),
+the Eye Below (`eye_below`: amber walls and black stone, gold from below, a violet bruise in the shade). Their floors
+and walls are catalog `place_looks` with `keep`, and a dungeon's halls and galleries stay stone (`theme_rooms`).
+tests/integration/test_indoor_looks.gd.
+
 ## What it adds
 
 - **Light by time of day.** Day is an overcast silver-grey, dusk a low warm sun under a violet sky, night a cold

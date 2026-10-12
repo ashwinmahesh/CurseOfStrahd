@@ -1038,7 +1038,8 @@
     },
     "abbey_of_st_markovia_wards": {
       "floor": "church/stone_flags",
-      "wall": "interior/whitewash"
+      "wall": "interior/whitewash",
+      "keep": true
     },
     "berez_baba_lysagas_hut": {
       "wall": "interior/kitchen_wall"
@@ -1103,6 +1104,26 @@
     "frozen_tarn": {
       "floor": "mountain/snow",
       "difficult": "mountain/snow"
+    },
+    "ghakis_lair": {
+      "floor": "cave/rock_floor",
+      "wall": "cave/rock_wall",
+      "keep": true
+    },
+    "amber_deep": {
+      "floor": "amber/black_stone",
+      "wall": "amber/amber_wall",
+      "keep": true
+    },
+    "khazan_undercroft": {
+      "wall": "dungeon/damp_brick"
+    },
+    "drowned_library": {
+      "wall": "dungeon/damp_brick",
+      "keep": true
+    },
+    "tsolenka_pass_guard_tower": {
+      "floor": "church/stone_flags"
     }
   },
   "feet": {
@@ -4971,7 +4992,7 @@
     }
   },
   "theme_rooms": {
-    "about": "Room styles for one board theme, checked before the general `rooms`: a farmhouse's bedrooms are plaster and planks, not a manor's carpet and wallpaper.",
+    "about": "Room styles for one board theme, checked before the general `rooms`: a farmhouse's bedrooms are plaster and planks, not a manor's carpet and wallpaper. A dungeon's halls, galleries and chambers stay stone (the Region Variety Plan: the dragon's gallery was laid in checker marble).",
     "house": [
       [
         [
@@ -5002,6 +5023,23 @@
         {
           "floor": "interior/attic_boards",
           "wall": "interior/damp_plaster"
+        }
+      ]
+    ],
+    "dungeon": [
+      [
+        [
+          "hall",
+          "gallery",
+          "entrance",
+          "entry",
+          "foyer",
+          "landing",
+          "chamber"
+        ],
+        {
+          "floor": "dungeon/stone_floor",
+          "wall": "dungeon/stone_wall"
         }
       ]
     ]

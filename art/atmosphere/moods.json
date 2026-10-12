@@ -1,5 +1,5 @@
 {
-  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. In the Modern finish a mood's `tone` sets its grade (the shade's colour and how much colour it keeps; world/look/atmosphere.gd MODERN_TONE), which Classic doesn't use. A mood's `modern` block is laid over it in the Modern finish only (the vault's Region Variety Plan: each region's own daylight, mist, shade and ground, so no two neighbours look alike), leaving the frozen Classic look as it was; in it `ground_tint` multiplies a ground surface's texture by a colour (hex, like the plants' tints) `lying_wet` keeps the ground that wet whatever the sky does, and `ground_swap` lays the region's own ground in place of a surface on its maps (Atmosphere.region_surface: the woods' moss, the camps' leaf litter, the moor's heath).",
+  "about": "Each place's atmosphere (world/look/atmosphere.gd, docs/art/atmosphere.md): its light by time of day, the mist and cloud shadows of the screen pass, the colour grade, weather, water, and the land drawn around the map. Colours are palette names. A location takes its mood from `places` (its id), else the longest of `prefixes` its id starts with, else `regions` (\"<region>\", or \"<region>/indoors\" for its indoor maps), else `themes` (\"<theme>\" or \"<theme>/indoors\"), else `outdoors` or `indoors`. A mood can be `like` another and change only what differs. In the Modern finish a mood's `tone` sets its grade (the shade's colour and how much colour it keeps; world/look/atmosphere.gd MODERN_TONE), which Classic doesn't use. A mood's `modern` block is laid over it in the Modern finish only (the vault's Region Variety Plan: each region's own daylight, mist, shade and ground, so no two neighbours look alike), leaving the frozen Classic look as it was; in it `ground_tint` multiplies a ground surface's texture by a colour (hex, like the plants' tints), `lying_wet` keeps the ground that wet whatever the sky does, and `ground_swap` lays the region's own ground in place of a surface on its maps (Atmosphere.region_surface: the woods' moss, the camps' leaf litter, the moor's heath).",
   "places": {
     "into_the_mists_road": "svalich_road",
     "svalich_crossroads": "crossroads",
@@ -37,7 +37,38 @@
     "bog_causeway": "berez",
     "frozen_tarn": "tarn",
     "woodcutters_hollow": "woods",
-    "amber_road_camp": "high_snow"
+    "amber_road_camp": "high_snow",
+    "ghakis_lair": "dragon_lair",
+    "khazan_undercroft": "drowned",
+    "drowned_library": "drowned",
+    "amber_deep": "eye_below",
+    "werewolf_den_caves": "den_caves",
+    "abbey_of_st_markovia_wards": "asylum",
+    "tsolenka_pass_guard_tower": "frozen_tower",
+    "wizard_of_wines_cellar": "wine_cellar",
+    "blood_of_the_vine": "sour_tavern",
+    "vallaki_blue_water_inn": "warm_inn",
+    "wizard_of_wines_winery": "winery_hall",
+    "bildraths_mercantile": "tallow_shop",
+    "mad_marys_house": "grief_house",
+    "burgomaster_mansion": "faded_mansion",
+    "krezk_burgomaster_house": "stone_house",
+    "mount_baratok_hut": "hermit_hut",
+    "berez_baba_lysagas_hut": "witch_hut",
+    "old_bonegrinder": "flour_mill",
+    "old_bonegrinder_loft": "moonlit_loft",
+    "vallaki_blinsky_toys": "toy_shop",
+    "vallaki_coffin_maker": "coffin_shop",
+    "vallaki_painters_studio": "studio",
+    "vallaki_wachter_house": "cult_house",
+    "vallaki_burgomaster_mansion": "baron_mansion",
+    "van_richtens_tower_interior": "wizard_study",
+    "wizard_of_wines_press_house": "press_house",
+    "village_church": "poor_chapel",
+    "vallaki_st_andrals": "rich_chapel",
+    "abbey_of_st_markovia_shrine": "stark_chapel",
+    "berez_marinas_monument": "drowned_shrine",
+    "amber_temple_faceless_god": "faceless_void"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -1974,6 +2005,35 @@
             "amount": 0.3
           }
         }
+      },
+      "modern": {
+        "tone": {
+          "shade": "bog_deep",
+          "amount": 0.4,
+          "ambient_tint": "sickly",
+          "ambient_mix": 0.35
+        },
+        "times": {
+          "any": {
+            "ambient": "grave",
+            "ambient_energy": 0.8
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bone",
+            "rim": "pewter",
+            "amount": 80
+          }
+        ],
+        "flame_tint": {
+          "colour": "bile",
+          "mix": 0.3,
+          "energy": 0.85
+        }
       }
     },
     "amber_temple": {
@@ -1989,6 +2049,25 @@
             "lights": "flame",
             "amount": 0.35
           }
+        }
+      },
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.4,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "candle",
+            "ambient_energy": 0.75
+          }
+        },
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.25,
+          "energy": 1.0
         }
       }
     },
@@ -2046,6 +2125,25 @@
             "amount": 0.3
           }
         }
+      },
+      "modern": {
+        "tone": {
+          "shade": "blood_deep",
+          "amount": 0.5,
+          "ambient_tint": "blood",
+          "ambient_mix": 0.45
+        },
+        "times": {
+          "any": {
+            "ambient": "blood_deep",
+            "ambient_energy": 0.85
+          }
+        },
+        "flame_tint": {
+          "colour": "vampire_red",
+          "mix": 0.4,
+          "energy": 1.0
+        }
       }
     },
     "haunted": {
@@ -2061,6 +2159,39 @@
             "lights": "moonlight",
             "amount": 0.35
           }
+        }
+      },
+      "modern": {
+        "tone": {
+          "shade": "night",
+          "amount": 0.45,
+          "ambient_tint": "moonlight",
+          "ambient_mix": 0.7,
+          "shade_saturation": 0.7,
+          "ambient": 1.5
+        },
+        "times": {
+          "any": {
+            "ambient": "moonlight",
+            "ambient_energy": 0.9,
+            "mist": "moonlight",
+            "mist_strength": 0.3
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "silver",
+            "rim": "frost",
+            "amount": 70
+          }
+        ],
+        "flame_tint": {
+          "colour": "moonlight",
+          "mix": 0.5,
+          "energy": 1.0
         }
       }
     },
@@ -2709,6 +2840,873 @@
             "mist": "vellum",
             "mist_strength": 0.45
           }
+        }
+      }
+    },
+    "dragon_lair": {
+      "like": "cave",
+      "modern": {
+        "tone": {
+          "shade": "blood_deep",
+          "amount": 0.55,
+          "ambient_tint": "ember_deep",
+          "ambient_mix": 0.65,
+          "shade_saturation": 0.9,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "ember",
+            "ambient_energy": 0.9,
+            "mist": "rust",
+            "mist_strength": 0.5,
+            "key": "flame",
+            "key_energy": 0.35
+          }
+        },
+        "weather": [
+          {
+            "kind": "embers",
+            "indoors": true
+          },
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "ember",
+            "rim": "flame",
+            "amount": 90,
+            "size": 0.05
+          }
+        ],
+        "flame_tint": {
+          "colour": "ember",
+          "mix": 0.35,
+          "energy": 1.2
+        }
+      }
+    },
+    "drowned": {
+      "like": "crypt",
+      "modern": {
+        "tone": {
+          "shade": "bog_deep",
+          "amount": 0.5,
+          "ambient_tint": "moss",
+          "ambient_mix": 0.6,
+          "shade_saturation": 0.85,
+          "ambient": 1.3
+        },
+        "times": {
+          "any": {
+            "ambient": "bog",
+            "ambient_energy": 1.0,
+            "mist": "sickly",
+            "mist_strength": 0.55,
+            "key": "moonlight",
+            "key_energy": 0.35
+          }
+        },
+        "lying_wet": 0.9,
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bile",
+            "rim": "moss",
+            "amount": 50
+          }
+        ],
+        "flame_tint": {
+          "colour": "sickly",
+          "mix": 0.45,
+          "energy": 1.0
+        }
+      }
+    },
+    "eye_below": {
+      "like": "amber_temple",
+      "modern": {
+        "tone": {
+          "shade": "bruise",
+          "amount": 0.5,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.55,
+          "shade_saturation": 0.9,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "flame",
+            "ambient_energy": 0.8,
+            "mist": "wick",
+            "mist_strength": 0.35
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "wick",
+            "rim": "candle",
+            "amount": 110,
+            "size": 0.045
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.35,
+          "energy": 1.1
+        }
+      }
+    },
+    "den_caves": {
+      "like": "cave",
+      "modern": {
+        "tone": {
+          "shade": "blood_deep",
+          "amount": 0.45,
+          "ambient_tint": "ember_deep",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "rust",
+            "ambient_energy": 0.9,
+            "mist": "bone",
+            "mist_strength": 0.4
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bone",
+            "rim": "rust",
+            "amount": 50
+          }
+        ],
+        "flame_tint": {
+          "colour": "ember",
+          "mix": 0.25,
+          "energy": 1.0
+        }
+      }
+    },
+    "asylum": {
+      "like": "crypt",
+      "modern": {
+        "tone": {
+          "shade": "slate",
+          "amount": 0.35,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.6,
+          "ambient": 1.3
+        },
+        "times": {
+          "any": {
+            "ambient": "silver",
+            "ambient_energy": 0.9,
+            "mist": "frost",
+            "mist_strength": 0.3,
+            "key": "frost",
+            "key_energy": 0.45
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "silver",
+            "rim": "frost",
+            "amount": 40
+          }
+        ],
+        "flame_tint": {
+          "colour": "ivory",
+          "mix": 0.4,
+          "energy": 1.0
+        }
+      }
+    },
+    "frozen_tower": {
+      "like": "crypt",
+      "modern": {
+        "tone": {
+          "shade": "moon_blue",
+          "amount": 0.5,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.7,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "moonlight",
+            "ambient_energy": 0.9,
+            "mist": "frost",
+            "mist_strength": 0.5
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "frost",
+            "rim": "moonlight",
+            "amount": 60
+          }
+        ],
+        "flame_tint": {
+          "colour": "frost",
+          "mix": 0.45,
+          "energy": 1.0
+        }
+      }
+    },
+    "wine_cellar": {
+      "like": "crypt",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.45,
+          "ambient_tint": "plum",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "bruise",
+            "ambient_energy": 1.0,
+            "mist": "plum",
+            "mist_strength": 0.3
+          }
+        },
+        "lying_wet": 0.3,
+        "flame_tint": {
+          "colour": "rose",
+          "mix": 0.3,
+          "energy": 1.1
+        }
+      }
+    },
+    "sour_tavern": {
+      "like": "tavern",
+      "modern": {
+        "tone": {
+          "shade": "blood_deep",
+          "amount": 0.4,
+          "ambient_tint": "rust",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "rust",
+            "ambient_energy": 0.85
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "leather",
+            "rim": "rust",
+            "amount": 50
+          }
+        ],
+        "flame_tint": {
+          "colour": "blood",
+          "mix": 0.3,
+          "energy": 0.9
+        }
+      }
+    },
+    "warm_inn": {
+      "like": "tavern",
+      "modern": {
+        "tone": {
+          "shade": "night",
+          "amount": 0.3,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.35,
+          "ambient": 1.3
+        },
+        "times": {
+          "any": {
+            "ambient": "flame",
+            "ambient_energy": 1.0
+          }
+        },
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.25,
+          "energy": 1.2
+        }
+      }
+    },
+    "winery_hall": {
+      "like": "tavern",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.4,
+          "ambient_tint": "plum",
+          "ambient_mix": 0.45
+        },
+        "times": {
+          "any": {
+            "ambient": "plum",
+            "ambient_energy": 0.9
+          }
+        },
+        "flame_tint": {
+          "colour": "rose",
+          "mix": 0.25,
+          "energy": 1.0
+        }
+      }
+    },
+    "tallow_shop": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "peat",
+          "amount": 0.35,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "bone",
+            "ambient_energy": 0.8
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "parchment",
+            "rim": "bone",
+            "amount": 70
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.2,
+          "energy": 1.0
+        }
+      }
+    },
+    "grief_house": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "night",
+          "amount": 0.5,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.7
+        },
+        "times": {
+          "any": {
+            "ambient": "slate",
+            "ambient_energy": 0.8
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "pewter",
+            "rim": "silver",
+            "amount": 40
+          }
+        ],
+        "flame_tint": {
+          "colour": "silver",
+          "mix": 0.35,
+          "energy": 0.8
+        }
+      }
+    },
+    "faded_mansion": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.4,
+          "ambient_tint": "rose",
+          "ambient_mix": 0.35
+        },
+        "times": {
+          "any": {
+            "ambient": "plum",
+            "ambient_energy": 0.8
+          }
+        },
+        "flame_tint": {
+          "colour": "rose",
+          "mix": 0.3,
+          "energy": 0.85
+        }
+      }
+    },
+    "stone_house": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "slate",
+          "amount": 0.4,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.6,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "silver",
+            "ambient_energy": 0.85,
+            "key": "frost",
+            "key_energy": 0.5
+          }
+        },
+        "flame_tint": {
+          "colour": "ivory",
+          "mix": 0.35,
+          "energy": 1.0
+        }
+      }
+    },
+    "hermit_hut": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "ember_deep",
+          "amount": 0.4,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "rust",
+            "ambient_energy": 0.9
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bone",
+            "rim": "tan",
+            "amount": 60
+          }
+        ],
+        "flame_tint": {
+          "colour": "candle",
+          "mix": 0.2,
+          "energy": 1.0
+        }
+      }
+    },
+    "witch_hut": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "bog_deep",
+          "amount": 0.5,
+          "ambient_tint": "sickly",
+          "ambient_mix": 0.6
+        },
+        "times": {
+          "any": {
+            "ambient": "bog",
+            "ambient_energy": 0.9,
+            "mist": "sickly",
+            "mist_strength": 0.3
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "bile",
+            "rim": "sickly",
+            "amount": 50
+          }
+        ],
+        "flame_tint": {
+          "colour": "bile",
+          "mix": 0.45,
+          "energy": 1.0
+        }
+      }
+    },
+    "flour_mill": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "ember_deep",
+          "amount": 0.35,
+          "ambient_tint": "flame",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "tan",
+            "ambient_energy": 0.85
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "vellum",
+            "rim": "parchment",
+            "amount": 160,
+            "size": 0.045
+          }
+        ],
+        "flame_tint": {
+          "colour": "flame",
+          "mix": 0.2,
+          "energy": 1.1
+        }
+      }
+    },
+    "moonlit_loft": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.5,
+          "ambient_tint": "moon_blue",
+          "ambient_mix": 0.8
+        },
+        "times": {
+          "any": {
+            "ambient": "night",
+            "ambient_energy": 0.8
+          }
+        },
+        "flame_tint": {
+          "colour": "moonlight",
+          "mix": 0.3,
+          "energy": 1.0
+        }
+      }
+    },
+    "toy_shop": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "ash_violet",
+          "amount": 0.35,
+          "ambient_tint": "lilac",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "orchid",
+            "ambient_energy": 0.75
+          }
+        },
+        "flame_tint": {
+          "colour": "rose",
+          "mix": 0.3,
+          "energy": 1.0
+        }
+      }
+    },
+    "coffin_shop": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "stone",
+          "amount": 0.4,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.4
+        },
+        "times": {
+          "any": {
+            "ambient": "bone",
+            "ambient_energy": 0.8
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "vellum",
+            "rim": "bone",
+            "amount": 90
+          }
+        ],
+        "flame_tint": {
+          "colour": "ivory",
+          "mix": 0.35,
+          "energy": 1.0
+        }
+      }
+    },
+    "studio": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "slate",
+          "amount": 0.35,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.6,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "silver",
+            "ambient_energy": 0.9,
+            "key": "frost",
+            "key_energy": 0.55
+          }
+        },
+        "flame_tint": {
+          "colour": "ivory",
+          "mix": 0.35,
+          "energy": 1.0
+        }
+      }
+    },
+    "cult_house": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.5,
+          "ambient_tint": "plum",
+          "ambient_mix": 0.6
+        },
+        "times": {
+          "any": {
+            "ambient": "bruise",
+            "ambient_energy": 0.8
+          }
+        },
+        "flame_tint": {
+          "colour": "orchid",
+          "mix": 0.35,
+          "energy": 1.0
+        }
+      }
+    },
+    "baron_mansion": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "peat",
+          "amount": 0.3,
+          "ambient_tint": "wick",
+          "ambient_mix": 0.5,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "flame",
+            "ambient_energy": 0.9
+          }
+        },
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.35,
+          "energy": 1.15
+        }
+      }
+    },
+    "wizard_study": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "night",
+          "amount": 0.4,
+          "ambient_tint": "mist_blue",
+          "ambient_mix": 0.6,
+          "ambient": 1.8
+        },
+        "times": {
+          "any": {
+            "ambient": "moon_blue",
+            "ambient_energy": 1.4
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "moonlight",
+            "rim": "mist_blue",
+            "amount": 60
+          }
+        ],
+        "flame_tint": {
+          "colour": "moonlight",
+          "mix": 0.45,
+          "energy": 1.2
+        }
+      }
+    },
+    "press_house": {
+      "like": "indoors",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.4,
+          "ambient_tint": "plum",
+          "ambient_mix": 0.5
+        },
+        "times": {
+          "any": {
+            "ambient": "bruise",
+            "ambient_energy": 0.85
+          }
+        },
+        "lying_wet": 0.3,
+        "flame_tint": {
+          "colour": "rose",
+          "mix": 0.3,
+          "energy": 1.0
+        }
+      }
+    },
+    "poor_chapel": {
+      "like": "chapel",
+      "modern": {
+        "tone": {
+          "shade": "night_deep",
+          "amount": 0.5,
+          "ambient_tint": "moon_blue",
+          "ambient_mix": 0.75
+        },
+        "times": {
+          "any": {
+            "ambient": "night",
+            "ambient_energy": 0.75
+          }
+        },
+        "flame_tint": {
+          "colour": "frost",
+          "mix": 0.35,
+          "energy": 0.7
+        }
+      }
+    },
+    "rich_chapel": {
+      "like": "chapel",
+      "modern": {
+        "tone": {
+          "shade": "peat",
+          "amount": 0.3,
+          "ambient_tint": "candle",
+          "ambient_mix": 0.5,
+          "ambient": 1.2
+        },
+        "times": {
+          "any": {
+            "ambient": "flame",
+            "ambient_energy": 0.9
+          }
+        },
+        "weather": [
+          {
+            "kind": "dust",
+            "modern_only": true,
+            "indoors": true,
+            "core": "wick",
+            "rim": "candle",
+            "amount": 60
+          }
+        ],
+        "flame_tint": {
+          "colour": "wick",
+          "mix": 0.3,
+          "energy": 1.2
+        }
+      }
+    },
+    "stark_chapel": {
+      "like": "chapel",
+      "modern": {
+        "tone": {
+          "shade": "slate",
+          "amount": 0.35,
+          "ambient_tint": "frost",
+          "ambient_mix": 0.7,
+          "ambient": 1.3
+        },
+        "times": {
+          "any": {
+            "ambient": "silver",
+            "ambient_energy": 0.9,
+            "key": "frost",
+            "key_energy": 0.55
+          }
+        },
+        "flame_tint": {
+          "colour": "ivory",
+          "mix": 0.4,
+          "energy": 0.8
+        }
+      }
+    },
+    "drowned_shrine": {
+      "like": "chapel",
+      "modern": {
+        "tone": {
+          "shade": "bog_deep",
+          "amount": 0.5,
+          "ambient_tint": "moss",
+          "ambient_mix": 0.6
+        },
+        "times": {
+          "any": {
+            "ambient": "bog",
+            "ambient_energy": 0.85
+          }
+        },
+        "lying_wet": 0.5,
+        "flame_tint": {
+          "colour": "sickly",
+          "mix": 0.4,
+          "energy": 0.9
+        }
+      }
+    },
+    "faceless_void": {
+      "like": "amber_temple",
+      "modern": {
+        "tone": {
+          "shade": "bruise_deep",
+          "amount": 0.6,
+          "ambient_tint": "plum",
+          "ambient_mix": 0.6,
+          "ambient": 0.8
+        },
+        "times": {
+          "any": {
+            "ambient": "bruise_deep",
+            "ambient_energy": 0.6,
+            "mist": "plum",
+            "mist_strength": 0.35
+          }
+        },
+        "flame_tint": {
+          "colour": "plum",
+          "mix": 0.5,
+          "energy": 0.7
         }
       }
     }
