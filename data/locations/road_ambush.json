@@ -110,7 +110,20 @@
       ],
       "kind": "decor",
       "label": "A tumbled field wall",
-      "model": "wall_low"
+      "model": "wall_low",
+      "checks": [
+        {
+          "id": "wall_stones",
+          "skill": "athletics",
+          "dc": 13,
+          "label": "Shift the tumbled stones",
+          "success": {
+            "reveal": [
+              "field_wall_gloves"
+            ]
+          }
+        }
+      ]
     },
     {
       "id": "ambush_lookout_tree",
@@ -121,7 +134,23 @@
       "kind": "examine",
       "label": "A platform up a pine by the road",
       "model": "hunters_tree_stand",
-      "stand_ft": 10
+      "stand_ft": 10,
+      "checks": [
+        {
+          "id": "hunters_platform",
+          "skill": "athletics",
+          "dc": 12,
+          "label": "Climb to the hunters' platform",
+          "success": {
+            "gold": 12,
+            "codex": {
+              "id": "hunters_warning",
+              "title": "The hunters' warning",
+              "text": "Cut into the platform's rail by a hunter's knife: don't sleep on the road; they walk it at night in a line, carrying their lanterns, and they don't stop for anyone."
+            }
+          }
+        }
+      ]
     },
     {
       "id": "cart_loose_board",

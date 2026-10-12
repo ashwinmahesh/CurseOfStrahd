@@ -261,3 +261,29 @@ once
 
 ~ examine:raven_oak
 | An old oak at the foot of the lane with one great bough grown out level ten feet up, wide enough to walk along. Ravens crowd the upper branches and watch you climb with great interest.
+
+# ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)
+
+~ check:athletics:winery_well_climb:success
+| A few feet down the shaft, a rope is tied off to an iron ring and coiled out of sight of anyone looking from the top.
+
+~ check:athletics:winery_well_climb:failure
+| The well's stones are wet and the drop is longer than the rope you didn't bring.
+
+~ check:persuasion:ravens_ask:success
+| You ask, politely, and the ravens look at each other as if deciding something. Then one drops from the tree, lands by a hollow in the trunk, and waits for you.
+
+~ check:persuasion:ravens_ask:failure
+| The ravens hear you out, turn their backs, and go on discussing you among themselves.
+
+~ check:nature:vines_study:success
+| The vines aren't sick; something drains them from below. The soil stinks of druid-work, and the trail leads west, to the hill and a gully at its foot.
+
+~ check:nature:vines_study:failure
+| Dead vines are dead vines. Whatever killed them didn't leave a note.
+
+~ check:performance:martikov_song:success
+| You start an old drinking song, and one by one the Martikovs join in, until even Davian is beating time on his knee.
+
+~ check:performance:martikov_song:failure
+| Your song meets polite smiles and a long silence. The Martikovs have had a hard year.

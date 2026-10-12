@@ -129,3 +129,52 @@ Status: ✅ built · ○ planned
 | ✅ | The Blue Water Inn, carving over the door | Read the raven over the door (History DC 13) | codex: The raven over the door | — |
 | ✅ | The Vistani Camp, rotten jetty | Walk out to the end of the rotten jetty (Acrobatics DC 13) | 18 gold | 1d4 cold damage |
 | ✅ | Wachterhaus, a shrine | Read the shrine's dedication (Religion DC 15) | finds the cult's tithe under the shrine (Rod of Rulership); codex: The shrine in the cellar | — |
+
+### Into the Mists (level 1)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Old Svalich Road, a torn carcass | Read the wolf sign by the carcass (Survival DC 12) | finds a hunter's wolf trap; finds a traveller's pack under the carcass (Boots of the Winterlands) | — |
+| ✅ | The Old Svalich Road, an old oak with a broad low bough | Climb the oak and look out (Athletics DC 10) | finds a gate guard's sword in the weeds (Weapon of Warning) | — |
+| ✅ | The Old Svalich Road, the headless statues | Read the statues' plinths (History DC 12) | finds stone heads in the weeds; codex: The headless statues | — |
+| ✅ | The Old Svalich Road, a wayside shrine | Pray at the wayside shrine (Religion DC 11) | Heroic Inspiration | — |
+
+### The Old Svalich Road (level 4)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The River Ivlis Crossroads, unmarked mounds | Read the disturbed earth (Survival DC 13) | finds a mound that isn't as old as the others (Boots of Elvenkind) | — |
+| ✅ | The River Ivlis Crossroads, the bridge parapet | Climb down to the bridge footings (Athletics DC 12) | finds the bridge footings (Potion of Healing) | 1d4 cold damage |
+| ✅ | The River Ivlis Crossroads, the road south | Read the tracks on the castle road (Survival DC 14) | codex: The road to the castle | — |
+| ✅ | The Svalich Woods, a clawed pine with low branches | Climb the clawed pine and look around (Athletics DC 11) | finds something glinting high in the pine (Ring of Jumping) | 1d6 bludgeoning damage |
+| ✅ | The Svalich Woods, a claw-marked pine | Read the claw marks (Survival DC 14) | finds a hunter's boots in the mud (Boots of Speed, The Hills above Lake Zarovich); codex: A werewolf's mark | — |
+| ✅ | The Old Svalich Road, a platform up a pine by the road | Climb to the hunters' platform (Athletics DC 12) | 12 gold; codex: The hunters' warning | — |
+| ✅ | The Old Svalich Road, a tumbled field wall | Shift the tumbled stones (Athletics DC 13) | finds a gap in the field wall (Gloves of Swimming and Climbing) | — |
+| ✅ | The Webbed Gully, older bundles | Cut open the older bundles (Medicine DC 13) | Antitoxin; 20 gold | 1d4 poison damage |
+
+### Old Bonegrinder (level 6)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | Old Bonegrinder, the Hill, a dead oak full of ravens | Win the ravens' trust (Animal Handling DC 14) | finds a raven's hoard in the dead oak (Figurine of Wondrous Power (Silver Raven)) | — |
+| ✅ | Old Bonegrinder, the Hill, ravens | Scatter the ravens from the bone heap (Intimidation DC 12) | finds a heap of bones (Holy Symbol (Amulet)) | 1d4 piercing damage |
+| ✅ | Old Bonegrinder, the Hill, a kitchen garden | Pick through the hags' garden (Nature DC 14) | Antitoxin; codex: The hags' garden | — |
+| ✅ | Old Bonegrinder, the Hill, the view from the crag | Scan the lane from the crag (Perception DC 14) | finds something in the ditch (Potion of Gaseous Form, The Miller's Lane) | — |
+| ✅ | Old Bonegrinder, the Hill, cart ruts | Follow the cart ruts (Survival DC 12) | codex: Who comes up the hill | — |
+| ✅ | The Miller's Lane, a wayside shrine | Pray at the wayside shrine (Religion DC 13) | finds an offering behind the wayside shrine (Potion of Resistance (Poison)) | — |
+
+### The Wizard of Wines (level 6)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Wizard of Wines, the well | Climb down inside the well (Athletics DC 13) | finds a rope tied off below the well's lip (Rope of Climbing) | 1d6 bludgeoning damage |
+| ✅ | The Wizard of Wines, a dead tree full of ravens | Ask the ravens for their help (Persuasion DC 14) | finds the ravens' hoard in the dead tree (Ring of Feather Falling); codex: The vineyard's ravens | — |
+| ✅ | The Wizard of Wines, withered vines | Study the withered vines (Nature DC 14) | finds a druid's cache in the gully (Wand of Paralysis, Yester Hill); codex: The blight on the vines | — |
+| ✅ | The Wizard of Wines, the camp fire | Sing with the Martikovs at the fire (Performance DC 13) | Heroic Inspiration | — |
+
+### Vallaki, the mansion and the church (level 5)
+
+| | Where | Check | Success | Failure |
+|---|---|---|---|---|
+| ✅ | The Burgomaster's Mansion, a circle chalked on the floor | Read the chalk circle (Arcana DC 14) | finds teleportation circle; codex: Victor's circle | — |
+| ✅ | St. Andral's Church, the altar | Pray at the saint's altar (Religion DC 13), once his bones are back | 1d8 Temporary Hit Points | — |

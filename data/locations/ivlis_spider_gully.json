@@ -131,7 +131,27 @@
       ],
       "kind": "examine",
       "label": "Older bundles",
-      "model": "bone_scatter"
+      "model": "bone_scatter",
+      "checks": [
+        {
+          "id": "bundles_cut",
+          "skill": "medicine",
+          "dc": 13,
+          "label": "Cut open the older bundles",
+          "success": {
+            "gold": 20,
+            "items": [
+              {
+                "id": "antitoxin"
+              }
+            ]
+          },
+          "failure": {
+            "damage": "1d4",
+            "damage_type": "poison"
+          }
+        }
+      ]
     },
     {
       "id": "gully_saddlebag",
