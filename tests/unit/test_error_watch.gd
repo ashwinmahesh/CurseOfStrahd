@@ -91,3 +91,41 @@ func test_repeats_are_counted_not_written_out_again_and_again() -> void:
 	watch.call("dismiss")
 	assert_true(watch.get_node_or_null("ErrorNotice") == null or watch.get_node("ErrorNotice").is_queued_for_deletion(),
 		"Dismiss takes it away")
+
+
+func test_the_hook_keeps_the_logs_last_lines_and_the_latest_errors_for_a_bug_report() -> void:
+	var c: Logger = WATCH.Catcher.new()
+	var none: Array[ScriptBacktrace] = []
+	c.call("_log_message", "Godot Engine v4.7.2\n", false)
+	c.call("_log_error", "f", "res://a.gd", 4, "careful", "", false, Logger.ERROR_TYPE_WARNING, none)
+	var lines: PackedStringArray = c.call("lines")
+	assert_eq(lines[0], "Godot Engine v4.7.2", "messages, without their line break")
+	assert_eq(lines[1], "WARNING: careful at res://a.gd:4", "and warnings, which aren't reported")
+	for i in WATCH.TAIL_LINES + 5:
+		c.call("_log_message", "line %d" % i, false)
+	lines = c.call("lines")
+	assert_eq(lines.size(), WATCH.TAIL_LINES, "only the last lines kept")
+	assert_eq(lines[lines.size() - 1], "line %d" % (WATCH.TAIL_LINES + 4), "the newest last")
+	for i in WATCH.RECENT_KEPT + 3:
+		watch.call("report", ERROR)
+	assert_eq((watch.get("recent") as Array).size(), WATCH.RECENT_KEPT, "the latest errors kept")
+	assert_true(str(watch.call("session_report")).ends_with("report.txt"), "and where this session's report is")
+	assert_true(str(watch.call("context")).contains("scene: "), "where the game was, for the bug report too")
+
+
+func test_a_dev_builds_notice_offers_to_report_it() -> void:
+	watch.call("report", ERROR)
+	var notice := watch.get_node("ErrorNotice")
+	var report := notice.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text == "Report it")
+	assert_eq(report.size(), 1, "Report it, beside Open the log (a dev build has BugReports)")
+	if report.is_empty():
+		return
+	(report[0] as Button).pressed.emit()
+	await get_tree().process_frame
+	var reports := BugReports.current
+	assert_true(reports.screen != null, "it opens the report screen")
+	assert_true(watch.get_node_or_null("ErrorNotice") == null or notice.is_queued_for_deletion(), "and the notice goes")
+	reports.screen.close()
+	await get_tree().process_frame
+	assert_false(get_tree().paused, "closing it lets the game go on")

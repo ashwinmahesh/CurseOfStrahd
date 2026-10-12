@@ -9,6 +9,8 @@ extends Node
 ## errors in the others. It is off in headless runs (tests, make smoke) and when
 ## the first scene is a tool's or a test's (make capture), so only real play is reported. It names no other script
 ## or autoload directly: the notice must still work when a broken script is the problem.
+## It also keeps the log's last lines and this session's latest errors, which a bug report (core/bug_reports.gd, dev
+## builds) puts beside what the player wrote, with context() and build() for where the game was.
 
 const REPORTS := "user://saves/errors/"
 const KEEP_REPORTS := 20
@@ -17,6 +19,9 @@ const NOTICE_SECONDS := 14.0
 ## The same error (file and line) is written out in full this many times a session, then only counted.
 const REPEATS_WRITTEN := 3
 const ENTRIES_WRITTEN := 300
+## The log's last lines kept for a bug report, and this session's latest errors.
+const TAIL_LINES := 200
+const RECENT_KEPT := 20
 
 ## Off, undecided or on (decided on the first frame, from the first scene).
 var active := -1
@@ -24,6 +29,8 @@ var active := -1
 var reports_dir := REPORTS
 var save_dir := "user://saves/"
 var catcher: Catcher = null
+## This session's latest errors, oldest first (RECENT_KEPT of them).
+var recent: Array[Dictionary] = []
 var _session := ""
 var _written := 0
 var _counts: Dictionary = {}
@@ -36,13 +43,18 @@ var _palette: Dictionary = {}
 
 
 ## The hook Godot calls for every error and message. Errors and script errors are queued; warnings, shader errors
-## and messages aren't.
+## and messages aren't. Every one of them, messages too, goes into the log's last lines (tail).
 class Catcher extends Logger:
+	const KINDS := {ERROR_TYPE_ERROR: "ERROR", ERROR_TYPE_WARNING: "WARNING", ERROR_TYPE_SCRIPT: "SCRIPT ERROR",
+		ERROR_TYPE_SHADER: "SHADER ERROR"}
 	var queue: Array[Dictionary] = []
+	var tail := PackedStringArray()
 	var mutex := Mutex.new()
 
 	func _log_error(function: String, file: String, line: int, code: String, rationale: String, _editor_notify: bool,
 			error_type: int, script_backtraces: Array[ScriptBacktrace]) -> void:
+		_keep("%s: %s at %s:%d" % [KINDS.get(error_type, "ERROR"), code if rationale == "" else "%s (%s)" % [rationale, code],
+			file, line])
 		if error_type != ERROR_TYPE_ERROR and error_type != ERROR_TYPE_SCRIPT:
 			return
 		var trace := ""
@@ -61,8 +73,23 @@ class Catcher extends Logger:
 			queue.append(entry)
 		mutex.unlock()
 
-	func _log_message(_message: String, _error: bool) -> void:
-		pass
+	func _log_message(message: String, _error: bool) -> void:
+		_keep(message.strip_edges(false, true))
+
+	## One line into the tail, the oldest dropped past TAIL_LINES.
+	func _keep(text: String) -> void:
+		mutex.lock()
+		tail.append(text.left(600))
+		if tail.size() > TAIL_LINES:
+			tail = tail.slice(tail.size() - TAIL_LINES)
+		mutex.unlock()
+
+	## The log's last lines, oldest first.
+	func lines() -> PackedStringArray:
+		mutex.lock()
+		var out := tail.duplicate()
+		mutex.unlock()
+		return out
 
 	func take() -> Array[Dictionary]:
 		mutex.lock()
@@ -110,6 +137,9 @@ func _process(delta: float) -> void:
 func report(e: Dictionary) -> void:
 	var key := "%s %s" % [e.get("where", ""), e.get("text", "")]
 	_counts[key] = int(_counts.get(key, 0)) + 1
+	recent.append(e)
+	if recent.size() > RECENT_KEPT:
+		recent.pop_front()
 	if _counts[key] <= REPEATS_WRITTEN and _written < ENTRIES_WRITTEN:
 		_write(e, _counts[key])
 	show_notice(e)
@@ -129,7 +159,7 @@ func report_path() -> String:
 			_written = ENTRIES_WRITTEN   # nowhere to write: stop trying (each failure would be an error of its own)
 		else:
 			f.store_string("Curse of Strahd error report\nStarted: %s\nBuild: %s\nNewest save: %s\n\n" % [
-				Time.get_datetime_string_from_system(false, true), _build(),
+				Time.get_datetime_string_from_system(false, true), build(),
 				save.get_file() + " (copied here)" if save != "" else "none"])
 			f.close()
 		_prune()
@@ -144,7 +174,7 @@ func _write(e: Dictionary, nth: int) -> void:
 	f.seek_end()
 	var kind := "SCRIPT ERROR" if bool(e.get("script", false)) else "ERROR"
 	f.store_string("[%s] %s at %s%s\n  %s\n  %s\n" % [e.get("time", ""), kind, e.get("where", ""),
-		" (again: %d)" % nth if nth > 1 else "", e.get("text", ""), _context()])
+		" (again: %d)" % nth if nth > 1 else "", e.get("text", ""), context()])
 	var trace := str(e.get("trace", "")).strip_edges()
 	if trace != "" and nth == 1:
 		f.store_string("  " + trace.replace("\n", "\n  ") + "\n")
@@ -156,7 +186,7 @@ func _write(e: Dictionary, nth: int) -> void:
 
 
 ## Where the game was: scene, place, day and mode, read by name so a broken autoload can't stop the report.
-func _context() -> String:
+func context() -> String:
 	var scene := get_tree().current_scene
 	var parts: Array[String] = ["scene: %s" % (scene.scene_file_path if scene != null else "none (grey screen)")]
 	var state := get_node_or_null("/root/GameState")
@@ -174,7 +204,7 @@ func _context() -> String:
 
 
 ## The play copy's commit (make play writes it), or "a working checkout".
-func _build() -> String:
+func build() -> String:
 	var path := "res://builds/play_build.json"
 	if FileAccess.file_exists(path):
 		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
@@ -200,6 +230,16 @@ func _newest_save() -> String:
 			newest_at = FileAccess.get_modified_time(p)
 			newest = p
 	return newest
+
+
+## The log's last lines, oldest first (none in headless runs, which have no log hook).
+func log_tail() -> PackedStringArray:
+	return catcher.lines() if catcher != null else PackedStringArray()
+
+
+## This session's error report, or "" before its first error.
+func session_report() -> String:
+	return reports_dir.path_join(_session).path_join("report.txt") if _session != "" else ""
 
 
 ## Keeps the newest KEEP_REPORTS sessions' reports.
@@ -290,6 +330,12 @@ func _build_notice() -> void:
 		get_tree().change_scene_to_file(str(ProjectSettings.get_setting("application/run/main_scene")))))
 	row.add_child(_button("Open the log", func() -> void:
 		OS.shell_open(ProjectSettings.globalize_path(report_path().get_base_dir()))))
+	# A dev build's Report a bug (core/bug_reports.gd, found by its path): the picture still has this notice in it.
+	var reporter := get_node_or_null("/root/UiFeel/BugReports")
+	if reporter != null:
+		row.add_child(_button("Report it", func() -> void:
+			dismiss()
+			reporter.call("open")))
 	row.add_child(_button("Dismiss", dismiss))
 
 
