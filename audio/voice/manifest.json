@@ -39417,12 +39417,6 @@
   "recipe": "dd92281f92",
   "text": "Master Vosk waits beside the hollow sarcophagus, his books stacked neatly on the floor, his hands folded."
  },
- "narrator/24706a3e6eed72ea": {
-  "chars": 167,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has been unusually quiet for an hour, which means he's planning something. Eventually he presents you, very formally, with a page torn out of his spellbook."
- },
  "narrator/2470ef490890889e": {
   "chars": 117,
   "model": "eleven_v4",
@@ -45080,12 +45074,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "\"The pretty one flew home over us at midnight on a broom, so low she brushed the poppies, and went in at the loft window. She hides it in the rafters, where her mother never looks up.\""
- },
- "narrator/507aa298f8797dc5": {
-  "chars": 129,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Ratatoille has drawn three circles in the dirt with a stick and is standing in the middle one, looking very pleased with himself."
  },
  "narrator/507f854e27b1bc40": {
   "chars": 172,
