@@ -74,7 +74,7 @@
     {
       "id": "ratatoille_master_asked",
       "type": "bool",
-      "summary": "Ratatoille asked Mordenkainen to take him as an apprentice (once, whenever the supper happened)."
+      "summary": "Ratatouille asked Mordenkainen to take him as an apprentice (once, whenever the supper happened)."
     },
     {
       "id": "ratatoille_zantras_refused",

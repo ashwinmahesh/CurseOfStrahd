@@ -99,7 +99,7 @@ func test_the_lake_blaze_puts_the_den_on_the_map() -> void:
 	assert_eq(st.quest_stage("fens_trail"), "the_wolf_road")
 
 
-## Finding 38: Ratatoille's supper could end his quest before he asked Mordenkainen, and hid the asking for good.
+## Finding 38: Ratatouille's supper could end his quest before he asked Mordenkainen, and hid the asking for good.
 func test_ratatoille_can_still_ask_the_master() -> void:
 	var st := SideQuestPlay.party(["ratatoille"], 9, "mount_baratok_hut", 12)
 	st.set_quest_stage("a_seat_at_the_table", "his_own_table")
