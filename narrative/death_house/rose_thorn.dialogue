@@ -24,6 +24,7 @@ quest death_house plea
 * What does the monster look like? -> monster
 * [if not flag.death_house_lure_tested] [Insight DC 13] Something about them is wrong. Watch them closely. -> insight_ok | insight_fail
 * [if not flag.death_house_lure_tested] [Arcana DC 14] Is there magic on them? -> arcana_ok | arcana_fail
+* [if flag.mists_crow_told and not flag.death_house_saw_through_lure] The crow down the road says you two don't smell of anything at all. -> crow_said
 * [Cleric] Offer to say a prayer with them. -> pray
 * We'll find Walter. I promise. -> promise
 * We can't help you. -> refuse
@@ -65,6 +66,11 @@ Narrator: {name} feels it like a draft from an open door: an illusion, beautiful
 set death_house_lure_tested
 Narrator: If there is magic here, it is subtler than anything {name} was taught to look for.
 -> questions
+
+~ crow_said
+set death_house_lure_tested
+Narrator: Rose opens her mouth and shuts it again. Thorn hugs the wolf tighter. For a moment the road shows through the both of them, like daylight through a curtain, and then they're solid again and pretending nothing happened.
+-> saw_through
 
 ~ saw_through
 if not flag.death_house_saw_through_lure

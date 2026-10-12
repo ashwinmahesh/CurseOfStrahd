@@ -58,9 +58,17 @@ endif
 
 ~ elvir_menu
 * [if spell:speak_with_dead and not flag.elvir_spoke] Ask the dead man how he came here. -> speak_dead
+* [if not spell:speak_with_dead and not flag.elvir_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask him how he came here.) -> speak_dead_cast
 * [if not flag.elvir_examined] [Medicine DC 12] How did he die? -> medicine_ok | medicine_fail
 * Cut him free. He's going home. -> carry
 * Leave him for now. -> END
+
+~ speak_dead_cast
+cast speak_with_dead
+if check.last
+-> speak_dead
+endif
+-> elvir_menu
 
 ~ speak_dead
 set elvir_spoke

@@ -12,6 +12,8 @@ const RING_SHADER := preload("res://shaders/atmosphere/ring.gdshader")
 const MOTE_SHADER := preload("res://shaders/atmosphere/mote.gdshader")
 ## The Modern finish's dust: seen only where a lamp or a window's shaft lights it (Visual Polish Plan 9).
 const DUST_SHADER := preload("res://shaders/atmosphere/dust_mote.gdshader")
+## A Modern mote's size against Classic's (two or three pixels across at the usual zoom).
+const MODERN_DUST_SIZE := 0.45
 const CROW_SHADER := preload("res://shaders/atmosphere/crow.gdshader")
 
 ## Pieces that follow the camera (rain, snow, leaves, crows): the Atmosphere moves them to the camera's focus, keeping
@@ -243,9 +245,10 @@ func _wisps(spec: Dictionary) -> void:
 ## Dust hanging in the air of a shut-up room, drifting slowly and catching the light.
 func _dust(spec: Dictionary) -> void:
 	# In the Modern finish the motes show only where a lamp or a window's shaft catches them (Visual Polish Plan 9), so
-	# there are more of them in the air: most are dark at any moment.
+	# there are a few more of them in the air (most are dark at any moment), and they're specks, not dots (owner
+	# 2026-10-12: "too big ... annoying dots on the screen").
 	var modern := Look.modern()
-	var amount := int(spec.get("amount", 60)) * (3 if modern else 1)
+	var amount := int(spec.get("amount", 60)) * (2 if modern else 1)
 	var p := _particles("Dust", amount, 12.0, Vector3(11, 1.0, 11), 1.4)
 	var pm := p.process_material as ParticleProcessMaterial
 	pm.gravity = Vector3(0, -0.01, 0)
@@ -257,7 +260,7 @@ func _dust(spec: Dictionary) -> void:
 	pm.turbulence_noise_scale = 2.0
 	pm.turbulence_influence_min = 0.02
 	pm.turbulence_influence_max = 0.06
-	var size := float(spec.get("size", 0.035)) * (1.3 if modern else 1.0)
+	var size := float(spec.get("size", 0.035)) * (MODERN_DUST_SIZE if modern else 1.0)
 	var quad := QuadMesh.new()
 	quad.size = Vector2(size, size)
 	var mat := ShaderMaterial.new()

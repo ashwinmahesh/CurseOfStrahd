@@ -287,6 +287,16 @@ func next() -> Dictionary:
 					else InCharacter.award(st, str(s["selector"]), str(s["why"]))
 				if said != "":
 					return {"kind": "notice", "text": said, "approval": str(s["t"]) == "approve"}
+			"cast":
+				pc += 1
+				var cast_said := _cast(str(s["spell"]))
+				if cast_said != "":
+					return {"kind": "notice", "text": cast_said}
+			"reveal":
+				pc += 1
+				var shown := _reveal(str(s["prop"]))
+				if shown != "":
+					return {"kind": "notice", "text": "Found: %s" % shown}
 			"narrate":
 				pc += 1
 				if narrator != null:
@@ -614,6 +624,63 @@ static func _bonus(ch: Character, skill: String) -> int:
 	if Abilities.SKILLS.has(key):
 		return ch.skill_bonus(key).total()
 	return ch.ability_check_bonus(key).total()
+
+
+## `cast <spell>`: the one speaking for the party casts an exploring spell in the scene (FieldCasting.cast_utility: as
+## a Ritual when it is one, else a feature's free casting or their lowest slot), or, if they can't, whoever in the party
+## can; they speak for the party after it. check.last says whether it worked, and the notice says what it cost or why
+## not. A casting still running (cast from the character sheet a few minutes ago) needs no new one.
+func _cast(spell_id: String) -> String:
+	if st.spell_active(spell_id):
+		st.last_check = true
+		return ""
+	var data := Compendium.shared().spell_data(spell_id)
+	var casters: Array[Character] = []
+	if speaker != null:
+		casters.append(speaker)
+	for ch in st.party:
+		if not ch in casters:
+			casters.append(ch)
+	var why := ""
+	for ch in casters:
+		if not ch.known_spells().any(func(k: Dictionary) -> bool: return str(k["id"]) == spell_id):
+			continue
+		var res := FieldCasting.cast_utility(st, ch, spell_id, bool(data.get("ritual", false)))
+		if bool(res["ok"]):
+			st.last_check = true
+			speaker = ch
+			return str(res["text"])
+		if why == "":
+			why = "%s can't cast %s: %s." % [_first(ch), str(data.get("name", spell_id)), str(res["text"]).trim_suffix(".")]
+	st.last_check = false
+	return why if why != "" else "Nobody here can cast %s." % str(data.get("name", spell_id))
+
+
+## `reveal <prop>`: a hidden find (a search prop, docs/story/found_magic_items.md) shows itself, as if the party had
+## searched it out: someone told them where to look (a Tip). Its label, or "" if it was already found or doesn't exist.
+func _reveal(prop_id: String) -> String:
+	var where := ""
+	var label := ""
+	var ids: Array[String] = [st.location]
+	for loc: Dictionary in Compendium.shared().all("locations"):
+		if str(loc.get("id", "")) != st.location:
+			ids.append(str(loc.get("id", "")))
+	for loc_id in ids:
+		for p: Variant in Compendium.shared().get_entry("locations", loc_id).get("props", []):
+			var prop := p as Dictionary
+			if str(prop["id"]) == prop_id and str(prop.get("kind", "")) == "search":
+				where = loc_id
+				label = str(prop.get("label", "something"))
+				break
+		if where != "":
+			break
+	if where == "":
+		return ""
+	var found := st.loc_state(where)["found"] as Dictionary
+	if bool(found.get(prop_id, false)):
+		return ""
+	found[prop_id] = true
+	return label
 
 
 func _best_for(skill: String) -> Character:

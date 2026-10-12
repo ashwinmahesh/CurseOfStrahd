@@ -1,5 +1,6 @@
 # The wolf pack in the narrows of the Old Svalich Road. NPC mists_wolves blocks the road until this resolves.
 # Talking them down sets mists_wolves_cowed; a fight is the mists_wolves encounter (3 wolves, 150 XP, level 1).
+# Speak with Animals asks them what they want: the master sent them to look (and there's an old man in the fog).
 
 ~ start
 Narrator: A grey wolf stands square in the narrows, head low, while more shapes wait in the fog beyond it and something shifts in the trees behind you. None of them growl; they are waiting to see what you do.
@@ -14,6 +15,8 @@ endif
 * [Animal Handling DC 12] Eyes down, move slowly, walk through. Startle them and they attack. -> cowed_gentle | attack
 * [if flag.mists_read_the_pack] [Insight DC 10] They're sentries, not hunters: nod to them and walk on. Misjudge them and they attack. -> cowed_sentries | attack
 * [Wizard] [Arcana DC 12] Scatter them with harmless light and thunder. If they don't scare, they attack. -> cowed_magic | attack
+* [if spell:speak_with_animals] Ask the lead wolf what they want. -> spoken
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the lead wolf what they want.) -> speak_cast
 * Draw steel and kill the leader before it calls the rest. -> fight_first
 * Wait for them to leave. -> wait
 
@@ -21,6 +24,25 @@ endif
 Narrator: You wait, and the wolves wait longer. When you finally look up, every one of them is still looking at you.
 interject name:ratatoille: Non, they are not leaving. They hold a line, like sentries at a gate. Someone has drilled them.
 -> choose
+
+~ speak_cast
+cast speak_with_animals
+if check.last
+-> spoken
+endif
+-> choose
+
+# Speak with Animals (2024 PHB): the master's wolves answer, and let the party by.
+~ spoken
+set mists_read_the_pack
+Narrator: The lead wolf listens with its head on one side. Its answer comes as much in smell and the set of its ears as in words, and it is very simple.
+Narrator: "The master wants to look at you. Not eat. Look. Walk on to the houses. He sees everything that comes out of the white, and he will see you soon."
+if not flag.ilarion_met
+Narrator: "There is an old one in the white, back where you came out, who sits on a stone and asks the trees what day it is. We don't eat him. The master says not yet."
+endif
+Narrator: It steps aside like a doorman, and the pack goes into the fog to tell someone what it saw.
+approve thistle +2: You asked the master's wolves what they wanted, in their own tongue
+-> resolved
 
 ~ cowed_shout
 Narrator: {name}'s voice cracks across the narrows like a whip. The lead wolf holds its ground for one long breath, then turns and trots into the fog, and the pack goes with it, unhurried, as if it had somewhere to report.

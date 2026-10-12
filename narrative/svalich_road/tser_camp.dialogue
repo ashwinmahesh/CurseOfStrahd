@@ -154,4 +154,27 @@ Nelu: I sing now, when anything calls from the trees. Badly, on purpose. Things 
 
 ~ dog
 Narrator: The camp dog noses at your pack, finds nothing worth stealing, and wanders back to the fire to wait for Dorina to drop something.
+* [if spell:speak_with_animals] Ask the dog what's new in the camp. -> dog_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the dog what's new in the camp.) -> dog_cast
+* [if spell:speak_with_animals or knows:speak_with_animals] Let it get back to the pot. -> END
+-> END
+
+~ dog_cast
+cast speak_with_animals
+if check.last
+-> dog_speaks
+endif
+-> END
+
+# Speak with Animals (2024 PHB): a camp dog knows who went out, who didn't come back, and what everyone hides.
+~ dog_speaks
+Narrator: The dog sits down to answer, which is polite of it, and keeps one eye on the cook-pot the whole time.
+if not flag.nicu_kin_told and not flag.nicu_cut_down
+Narrator: "The boy who sings went off toward the sun-side, four sleeps ago, with the mare that has the town's mark on her. He didn't come back. When the wind comes from the crossroads, it smells of him. Dead-smell."
+if not quest.the_hanged_vistana and not flag.crossroads_gallows_seen
+quest the_hanged_vistana asked
+endif
+endif
+Narrator: "And somebody hides a drink that smokes in the hollow stump at the edge of the camp, where the chief won't smell it. I can smell it. Everybody can smell it."
+reveal tser_stump_flask
 -> END

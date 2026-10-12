@@ -77991,16 +77991,16 @@
  },
  "vallaki_porter/2cff144da15dd520": {
   "chars": 55,
-  "direction": "[warm, cheerful]",
+  "direction": "[warm, content]",
   "model": "eleven_v3",
-  "recipe": "0cbd2c8d43",
+  "recipe": "c330dd2d04",
   "text": "Heavy days are good days. You don't have time to think."
  },
  "vallaki_porter/c1239e8554182968": {
   "chars": 130,
-  "direction": "[cheerful, breathless]",
+  "direction": "[hearty, cheerful]",
   "model": "eleven_v3",
-  "recipe": "0cbd2c8d43",
+  "recipe": "c330dd2d04",
   "text": "Mind your feet! Sacks for Urwin, wine for the square, wicker for the sun. Everything in this town goes on my back sooner or later."
  },
  "vallaki_raker/75a30eed73200d93": {
