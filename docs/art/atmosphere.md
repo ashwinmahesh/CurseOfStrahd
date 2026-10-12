@@ -84,6 +84,14 @@ anyone touching this file.
   black and perfectly still"): `ripples` (0 for none), `texture` (how much of the water texture's colour shows),
   `reflect` (how much of the sky it shows), and `map` / `map_edge` for its colour on the minimap. The crossroads'
   Ivlis is the colour of strong tea, Lake Zarovich behind the Vistani camp black.
+- **Light off the water** (Modern, Visual Polish Plan 12): moving water throws wavering threads of light onto what
+  stands beside it, jetties, banks, quays and walls, strongest just above the surface and on faces turned toward it,
+  fading within about a square of the shore and a couple of units up (the screen pass's `caustics`, over the water's
+  own mask, in the water's glint colour). Still water throws none: a mood's water `caustics` sets the strength, else it's
+  `Atmosphere.CAUSTICS` when the water ripples and 0 when it doesn't (Tser Pool). Thick mist (Lake Zarovich at dusk)
+  swallows most of it; it shows best by night. The threads are two layers of the screen pass's own ridged noise
+  (four noise reads) over a shore mask (`Atmosphere.shore_mask`: one filtered read), about 0.3 ms at 3440 x 1440 at
+  the lake under heavy load. `LOOK_OFF=caustics` in look_capture for without.
 - **Washing lines.** A mood's `lines` (world/look/washing_line.gd) strings a line between two posts with the week's
   wash pegged out on it in muted palette colours, swaying: Barovia's back yards (lane 28, "an actual village"). With
   `"kind": "bunting"` it is a high festival string of little pennants with no posts, in Vallaki's yellow by default.

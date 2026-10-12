@@ -80,6 +80,14 @@ uniform vec4 glow_pos[8];
 uniform vec4 glow_col[8];
 // Broad light and dark patches over level ground (0 = none).
 uniform float ground_variation : hint_range(0.0, 1.0) = 0.0;
+// Light thrown up off the water onto the stone and banks beside it (Visual Polish Plan 12; Atmosphere sets these where
+// a place has moving water): how strong (0 = none), the shore mask (Atmosphere.shore_mask: 1 on water and the squares
+// beside it, one texel per square over `caustic_rect`), the water's surface height and its glint colour.
+uniform float caustics : hint_range(0.0, 1.0) = 0.0;
+uniform sampler2D caustic_mask : filter_linear, repeat_disable;
+uniform vec4 caustic_rect = vec4(0.0, 0.0, 1.0, 1.0);
+uniform float caustic_level = -0.13;
+uniform vec3 caustic_colour : source_color = vec3(0.56, 0.7, 0.81);
 // Cloud shadows sweeping the ground (0 = none).
 uniform float cloud_strength : hint_range(0.0, 1.0) = 0.0;
 uniform float cloud_scale = 0.035;
@@ -262,6 +270,16 @@ vec3 sky_colour(vec3 d) {
 	return col;
 }
 
+// Caustic threads from the screen pass's own noise: two layers of ridged noise (bright where the noise crosses its
+// middle) drifting different ways, so their thin lines cross into a moving net. 0..1. Cheap: four noise reads.
+float caustic_light(vec2 p, float t) {
+	float a = 1.0 - abs(vnoise(p + vec2(t * 0.21, t * 0.13)) * 2.0 - 1.0);
+	float b = 1.0 - abs(vnoise(p * 1.63 + vec2(-t * 0.17, t * 0.24) + 7.3) * 2.0 - 1.0);
+	a = pow(a, 7.0);
+	b = pow(b, 7.0);
+	return smoothstep(0.2, 0.85, a * 0.7 + b * 0.7 + a * b * 1.5);
+}
+
 void fragment() {
 	vec2 vp = VIEWPORT_SIZE;
 	vec2 cell = floor(FRAGCOORD.xy / pixel_size);
@@ -331,6 +349,25 @@ void fragment() {
 			float g = fbm(gp + vec2(fbm(gp * 2.3 + 1.7), fbm(gp * 2.3 + 6.2)) * 1.4);
 			float step_g = soft_bands ? (g - 0.5) * 0.9 : floor(g * 4.0) / 3.0 - 0.5;
 			col *= 1.0 + step_g * ground_variation;
+		}
+	}
+
+	if (caustics > 0.0 && !empty && own_colour < 0.5) {
+		// Bright wavering threads of light on what stands beside moving water, strongest just above the surface and on
+		// faces turned toward it, fading within a square or so of the shore and a couple of units up.
+		vec2 span = max(caustic_rect.zw - caustic_rect.xy, vec2(1.0));
+		// The shore mask (Atmosphere.shore_mask): 1 on water and on the squares beside it, fading out a square away.
+		float near_ = texture(caustic_mask, (wpos.xz - caustic_rect.xy) / span).r;
+		float h = wpos.y - caustic_level;
+		float rise = smoothstep(-0.05, 0.1, h) * (1.0 - smoothstep(0.6, 2.2, h));
+		if (near_ * rise > 0.0) {
+			vec3 wn = (INV_VIEW_MATRIX * vec4(normal_at(uv), 0.0)).xyz;
+			float face = mix(0.45, 1.0, 1.0 - abs(wn.y));
+			vec2 cpos = wpos.xz * 2.2 + vec2(wpos.y * 1.4, -wpos.y * 0.9);
+			// Added light in the water's own glint colour (a multiply left dark banks dark), a little of it lifting the
+			// surface it falls on too.
+			float k = caustics * near_ * rise * face * caustic_light(cpos, atmo_time);
+			col = col * (1.0 + k * 0.6) + caustic_colour * k * 0.35;
 		}
 	}
 
