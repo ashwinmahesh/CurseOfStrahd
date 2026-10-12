@@ -15,7 +15,7 @@ A long conversation over one picture gets more pictures where the scene changes 
 boring looking at the same image for multiple phases of dialogue, especially if the scene is evolving"). Each beat is a
 `cutscene <id>` statement placed just before the line where something new happens (the dead knights stand, the wolf
 comes out of the trapper, the organ bench is empty), so the next picture fades over the last. The first round,
-2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest.
+2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest. The second round, the same night: 12 beats in the next-longest ones.
 
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
@@ -104,6 +104,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | abbot_holds_hand | He Is Holding Her Hand | `abbey_of_st_markovia/unveiling` | 1 |
 | abbot_ireena_candles | The Candles Lean to Her | `abbey_of_st_markovia/abbot` (a later beat, ~ first) | 1 |
 | abbot_kneeling | Light Like Water | `abbey_of_st_markovia/unveiling` | 1 |
+| abbot_letter | Markovia's Letter | `abbey_of_st_markovia/unveiling` (a later beat, ~ letter_after) | 1 |
 | abbot_wings | The Abbot's Wings | `abbey_of_st_markovia/abbot`, `abbey_of_st_markovia/unveiling` | 1 |
 | amber_gift | Lying Down in the Amber | `amber_temple/vosk` | 1 |
 | amber_pact | The Bargain | `amber_temple/vault` | 1 |
@@ -131,17 +132,24 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | burial_doru | A Messenger on the Wall | `village_of_barovia/burial` | 1 |
 | burial_graves | The Graves Split | `village_of_barovia/burial` | 1 |
 | burial_strahd | A Mourner Who Came Late | `village_of_barovia/burial` | 1 |
+| camp_bow | He Bows to Her | `strahd/visits` (a later beat, ~ night_shield) | 1 |
 | camp_kneel | At His Feet | `strahd/visits` (a later beat, ~ night_kneel) | 1 |
+| carriage_letter | A Letter in Black Wax | `strahd/letters` (a later beat, ~ invitation) | 1 |
 | carriage_ride | Up into the Cloud | `strahd/letters` | 1 |
+| carriage_turns | The Carriage Goes Back | `strahd/letters` (a later beat, ~ decline) | 1 |
 | castle_chasm | The Castle Across the Chasm | `enter:castle_ravenloft_gates` | 2 |
 | castle_glimpse | The Castle on Its Pillar | `examine:castle_glimpse` | 1 |
 | castle_road_west | The Castle on Its Pillar | `village_of_barovia/road_west` (the first try at the west posts, alone; once) | 1 |
 | chapel_dawn | Dawn in the Chapel | `castle_ravenloft/personal_prayers`, `companions/dawn` | 1 |
 | children_freed | Five Children Walk Past the Wolves | `werewolf_den/kiril` | 1 |
+| children_wave | Thorn Waves | `death_house/dungeon` (a later beat, ~ lay_to_rest) | 1 |
 | church_gate | At the Churchyard Gate | `strahd/ireena` | 1 |
+| church_gate_empty | The Gate Is Empty | `strahd/ireena` (a later beat, ~ church_end) | 1 |
 | church_vigil | Vigil at St. Andral's | `vallaki/lucian` | 1 |
+| coffin_turns | Something Turns to the Wall | `castle_ravenloft/personal_prayers` (a later beat, ~ prayer) | 1 |
 | crossroads_dead | The Gallows Field Wakes | `enter:crossroads_gallows` | 1 |
 | crossroads_gallows | The Hanged Man | `svalich_road/crossroads` | 1 |
+| dawn_sunburst | The Sunburst Given | `companions/dawn` (a later beat, ~ chapel_hymn) | 1 |
 | dead_feast | A Feast Nobody Dismissed | `argynvostholt/vladimir` | 1 |
 | dead_procession | The Dead Procession | `svalich_road/events` | 1 |
 | death_house_children | The Children Go Home | `death_house/dungeon` | 1 |
@@ -221,6 +229,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | mordenkainen_jar | Mordenkainen Remembers | `mount_baratok/mordenkainen` | 1 |
 | order_rides | The Order Rides | `argynvostholt/vladimir` | 1 |
 | pack_law | Pack Law | `werewolf_den/kiril` | 1 |
+| pact_two_books | Two Accounts of One Night | `amber_temple/vault` (a later beat, ~ pact_tome) | 1 |
 | patrina | Patrina | `amber_temple/patrina` | 1 |
 | patrina_fades | She Fades Like Breath | `amber_temple/patrina` (a later beat, ~ at_rest) | 1 |
 | patrina_kasimir | Patrina, and Her Brother | `amber_temple/patrina` | 1 |
@@ -230,6 +239,8 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | quillon_fire | The Man at the Edge of the Light | `camp/kip` | 1 |
 | rahadin_voices | Rahadin and His Voices | `castle_ravenloft/court_rahadin` | 1 |
 | roc_shadow | The Roc's Shadow | `tsolenka_pass/events` | 1 |
+| ruxandra_turns | The Kindest Face | `yester_hill/ruxandra` (a later beat, ~ speak) | 1 |
+| sarkhaza_freed | The Collar Opens | `mount_ghakis/the_warm_snow` (a later beat, ~ unchained) | 1 |
 | sergei_font | Sergei in the Font | `castle_ravenloft/catacombs_sergei` | 1 |
 | sergei_tomb | The Thing Never Carved | `castle_ravenloft/catacombs_sergei` (a later beat, ~ tomb_look) | 1 |
 | strahd_asleep | Strahd Asleep | `castle_ravenloft/catacombs_coffin` | 1 |
@@ -258,6 +269,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | vr_reunion | Two People by a Fire | `van_richtens_tower/van_richten` | 1 |
 | vr_tower | The Tower on Lake Baratok | `enter:van_richtens_tower` | 1 |
 | watch_stands_down | The Watch Stands Down | `tsolenka_pass/watch` | 1 |
+| window_burst | Out Through the Window | `death_house/escape` (a later beat, ~ window_through) | 1 |
 | window_teeth | What Is Under the Courtesy | `strahd/ireena` (a later beat, ~ woke) | 1 |
 | wolves_part | The Wolves Part | `strahd/visits` | 1 |
 | yester_burn | The Tree Burns | `yester_hill/summit` | 1 |
