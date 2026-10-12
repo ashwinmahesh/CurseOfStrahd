@@ -27,6 +27,11 @@ const BACKUPS := "backups"
 const BACKUPS_KEPT := 8
 ## "Previously in Barovia" (Q3): a game saved at least this many minutes ago opens with the Narrator's recap.
 const RECAP_AFTER := 30.0
+## Names the game spells differently now (owner, 2026-10-12: the Wizard is "Ratatouille"). A save an older build wrote
+## has the old spelling in every string that shows the name (his build, the run's stats, a fight's log), and upgrade
+## respells them all whatever the save's version. Ids are lowercase (ratatoille) and stay, and so does the player's
+## note. tools/data/respell.py made the same change across the game's own text.
+const RESPELLED := {"Ratatoille": "Ratatouille"}   # respell: keep
 
 ## The world as the pause menu opened over it (hold_view), for the thumbnail of a save made from its pages.
 var _held: Image = null
@@ -209,7 +214,8 @@ func load_from(dir: String, slot: String) -> Error:
 ## it. Every save in tests/saves (made by older builds) goes through this in every test run
 ## (tests/integration/test_golden_saves.gd), so a missing or wrong step fails there first. Version 1 was Phase 0's;
 ## 2 has been the format since Phase 3. Mends that apply to every save whatever its version (a pregen's current look,
-## the Dursts' book) stay in StoryState.from_dict. What only the saves lists read (the player's "note", a finished
+## the Dursts' book) stay in StoryState.from_dict; a name spelled differently now (RESPELLED) is mended here, so the
+## saves lists show it too. What only the saves lists read (the player's "note", a finished
 ## game's "finished", a beside save's "home_slot") is no part of the game and needs no step: a save without one has none.
 static func upgrade(data: Dictionary) -> Dictionary:
 	var out := data.duplicate(true)
@@ -220,7 +226,28 @@ static func upgrade(data: Dictionary) -> Dictionary:
 				pass   # Phase 0 saves held no story: the game starts them on the mists road as a new game does
 		v += 1
 		out["version"] = v
+	for k: Variant in out.keys():
+		if k != "note":
+			out[k] = _respelled(out[k])
 	return out
+
+
+## `v` with each old spelling in RESPELLED replaced, a dictionary or array in place (upgrade's own copy).
+static func _respelled(v: Variant) -> Variant:
+	if v is String:
+		var s := v as String
+		for old: String in RESPELLED:
+			s = s.replace(old, str(RESPELLED[old]))
+		return s
+	if v is Dictionary:
+		var d := v as Dictionary
+		for k: Variant in d.keys():
+			d[k] = _respelled(d[k])
+	elif v is Array:
+		var a := v as Array
+		for i in a.size():
+			a[i] = _respelled(a[i])
+	return v
 
 
 ## Whether a recap is due (Q3), once: the first call after such a load says so, and the next says no.

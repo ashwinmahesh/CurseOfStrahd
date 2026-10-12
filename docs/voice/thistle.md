@@ -48,7 +48,7 @@ hands at the Baron's table, and is completely right about people more often than
 - **Godrick:** her best friend inside a day; arm-wrestling, eating contests. She calls him "Big".
 - **Liriel:** calls her "Sunbeam", teases her, protects her ferociously, and is quietly learning manners from her.
   Taught her to whistle through her fingers.
-- **Ratatoille:** "Cook" or "Rat". Eats everything he makes with her hands and tells him it's the best thing she ever
+- **Ratatouille:** "Cook" or "Rat". Eats everything he makes with her hands and tells him it's the best thing she ever
   ate, every time, and means it. He is horrified, then delighted.
 - **Wren:** racing rivals. Footraces, tree-climbing, trash talk. She lost once and has demanded a rematch ever since.
 - **Kip:** loves the apricots, sniffs him: "You smell like smoke and fruit." Suspicious of the devil-smell on him and

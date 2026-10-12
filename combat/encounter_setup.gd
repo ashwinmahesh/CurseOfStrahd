@@ -64,7 +64,7 @@ static func bring_familiars(e: Encounter, party: Array[Combatant]) -> void:
 			continue
 		var pocket := ch.familiar == "pocket"
 		# A familiar stays until it drops to 0 Hit Points or is dismissed (2024), so one called from a scroll, or before
-		# the spell left its caster's book, comes too (owner report 2026-10-12: Ratatoille's owl sat out his fights).
+		# the spell left its caster's book, comes too (owner report 2026-10-12: Ratatouille's owl sat out his fights).
 		var came := e.spells.precast(c, "find_familiar", true) if ch.knows_spell("find_familiar") else e.spells.summons.bring_familiar(c)
 		if came and pocket:
 			e.faerun.pocket_familiar(c)
