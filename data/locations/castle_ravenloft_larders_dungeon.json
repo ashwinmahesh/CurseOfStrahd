@@ -592,6 +592,7 @@
       ],
       "kind": "examine",
       "label": "a skeleton in shackles",
+      "dialogue": "castle_ravenloft/larders_prisoner:skeleton",
       "model": "skeleton_shackles",
       "checks": [
         {

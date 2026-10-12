@@ -1,0 +1,25 @@
+# The first Pidlwick's crypt in the catacombs (prop cat_jester_crypt_lid): the house's jester, whom Pidlwick II pushed
+# down the tower stair (spires_pidlwick.dialogue). Speak with Dead (2024 PHB; docs/story/talking_creatures.md): how he
+# fell, which Pidlwick II won't say, and the false bottom under him (jester_cape).
+
+~ crypt
+narrate examine:cat_jester_crypt_lid
+* [if spell:speak_with_dead and not flag.pidlwick_crypt_told] Ask the jester how he died. -> speaks
+* [if not spell:speak_with_dead and not flag.pidlwick_crypt_told] [knows:speak_with_dead] (Cast Speak with Dead, and ask the jester how he died.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave him his last joke. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set pidlwick_crypt_told
+Narrator: The little lid buzzes, and a small dry voice comes up through the stone: a man who timed his lines for a living.
+Narrator: "I fell down the tower stair. Fell is the polite word. My clockwork copy put his hands on my back. He wanted them to laugh at him the way they laughed at me."
+Narrator: "There's a false bottom under me, and my best cape in it. A fool always keeps a way out. Use it. I didn't."
+reveal jester_cape
+-> END

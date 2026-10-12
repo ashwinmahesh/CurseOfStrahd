@@ -86,7 +86,10 @@ approve liriel_dawnsong -3 godrick_pendlebrook -2 kip_smudgewick -1: You filled 
 ~ lowered
 set burgomaster_buried
 quest bury_the_burgomaster buried
+# Not back to "ready" if she already said yes, or no (Wiki finding 8).
+if not quest.escort_ireena >= ready
 quest escort_ireena ready
+endif
 if flag.doru_destroyed
 quest the_priests_son doru_destroyed
 endif
@@ -214,6 +217,13 @@ Narrator: Ismark drags in a breath like a man pulled out of a river. Before he c
 if flag.burial_method == "hasty"
 Narrator: The quiet lasts a breath; then the hasty grave shifts, and every old grave around it answers. Unblessed earth, it seems, is an open door.
 -> rise
+endif
+# The quiet way home skips the graveside Ismark (he waits only until the escort is settled), so his father's sword is
+# given here (Wiki finding 7).
+if not flag.ismark_gave_father_sword
+set ismark_gave_father_sword
+Ismark: Here. This was his. He had it blessed in Vallaki when he was young and foolish, and it never once let him down. I'm keeping her. You keep this.
+give weapon_plus_1__longsword
 endif
 -> village_of_barovia/ireena:after_burial
 

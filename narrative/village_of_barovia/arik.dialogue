@@ -5,7 +5,7 @@ Arik: Wine.
 -> menu
 
 ~ menu
-* A cup, then. (1 gp) -> wine
+* [if gold >= 1] A cup, then. (1 gp) -> wine
 * Sell us a bottle to take with us. -> bottles
 * Who's the man drinking alone by the hearth? -> ismark
 * Do you have rooms? -> rooms

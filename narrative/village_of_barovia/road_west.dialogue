@@ -48,7 +48,8 @@ Narrator: You walk out of the village of Barovia with the burgomaster's daughter
 -> END
 
 ~ depart_alone
-if flag.ismark_met and not flag.ireena_escort
+# Leaving counts as a no only once she's been asked, after the burial (Wiki finding 8).
+if flag.ismark_met and not flag.ireena_escort and flag.burgomaster_buried
 set ireena_escort = "declined"
 quest escort_ireena declined
 endif

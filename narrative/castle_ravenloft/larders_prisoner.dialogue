@@ -1,0 +1,28 @@
+# The skeleton in shackles in the larders' dungeon (prop larders_tally_skeleton), whose tally on the wall stops partway
+# through a group. Speak with Dead (2024 PHB; docs/story/talking_creatures.md): what the guards said of the heart at
+# the top of the high tower (the_heart_of_sorrow), and the false floor in the open cell (trap larders_open_cell_pit).
+
+~ skeleton
+narrate examine:larders_tally_skeleton
+* [if spell:speak_with_dead and not flag.larders_prisoner_spoke] Ask the prisoner what the guards said down here. -> speaks
+* [if not spell:speak_with_dead and not flag.larders_prisoner_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the prisoner what the guards said down here.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave the count where it stopped. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set larders_prisoner_spoke
+Narrator: The jaw drops open on its own, and a hoarse voice counts "eleven, twelve" and stops, as if it has lost its place.
+Narrator: "Guards talk when they're bored. They said the master can't be hurt for long while the glass heart beats at the top of the high tower. They said it the way you'd say the well's deep."
+if not quest.the_heart_of_sorrow
+quest the_heart_of_sorrow heard
+endif
+Narrator: "The cell with its door open, with the fresh straw: the straw is a lid. They put the clever ones in there first. I counted every one of them going down."
+reveal larders_open_cell_pit
+-> END

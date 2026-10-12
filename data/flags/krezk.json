@@ -192,6 +192,11 @@
       "summary": "Religion, a cleric or a paladin showed the party the Abbot is a celestial gone wrong. Unlocks the Religion appeal at the unveiling."
     },
     {
+      "id": "abbey_nun_spoke",
+      "type": "bool",
+      "summary": "The last sister in the abbey garden answered Speak with Dead (abbey_of_st_markovia/nuns_graves.dialogue): the Abbot came down with wings in a fever year (abbot_nature_known), and the holy water at her feet."
+    },
+    {
       "id": "abbot_bride_revealed",
       "type": "bool",
       "summary": "The Abbot told the party he is making a bride for the lord of Barovia."

@@ -6,6 +6,11 @@
       "summary": "The party has tried the mist wall at the road's east edge and heard each other's reasons for coming (arrival.dialogue). Guards the hook scene."
     },
     {
+      "id": "mists_arrival_late",
+      "type": "bool",
+      "summary": "The arrival played at the wolves, the party never having looked back at the mist; it goes on to the wolves."
+    },
+    {
       "id": "mists_carcass_studied",
       "type": "bool",
       "summary": "The party has studied the wolf-killed deer once (one Survival attempt only)."

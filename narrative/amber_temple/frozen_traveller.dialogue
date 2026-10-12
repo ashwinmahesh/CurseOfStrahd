@@ -1,0 +1,26 @@
+# The traveller frozen just inside the Amber Temple's doors (prop frozen_pilgrim), a sword in a hand the cold has shut
+# (search frozen_hand_sword, or the Medicine check that opens the hand). Speak with Dead (2024 PHB;
+# docs/story/talking_creatures.md): what brought them up here, and the sword.
+
+~ traveller
+narrate examine:frozen_pilgrim
+* [if spell:speak_with_dead and not flag.frozen_traveller_spoke] Ask the frozen traveller what brought them up here. -> speaks
+* [if not spell:speak_with_dead and not flag.frozen_traveller_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the frozen traveller what brought them up here.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Let them sit. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set frozen_traveller_spoke
+Narrator: Frost cracks at the corners of the mouth, and a voice comes out slow and slurred with cold, still trying to get warm.
+Narrator: "I came for a gift. The voices in the amber promised I'd never lose another fight. I got past the stone giants and in out of the wind, and then I sat down for a moment."
+Narrator: "My sword's still in my hand. It burns cold, and it never once let me down. Take it. It's no use to me in here."
+reveal frozen_hand_sword
+interject tag:blunt: Every gift in this place costs more than the climb. Noted.
+-> END

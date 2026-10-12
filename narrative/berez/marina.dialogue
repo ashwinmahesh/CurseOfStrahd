@@ -67,6 +67,8 @@ endif
 ~ bier_menu
 * [Medicine DC 14] Look, gently, for how she died. -> bier_medicine | bier_medicine_fail
 * [if (flag.berez_diary_read or flag.marina_body_examined) and not flag.marina_truth_known] [Arcana DC 14] A scratch like a thorn's and nothing else. Is that a witch's death? -> bier_deduce | bier_deduce_fail
+* [if spell:speak_with_dead and not flag.marina_spoke] Ask Marina how she died. -> marina_speaks
+* [if not spell:speak_with_dead and not flag.marina_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask Marina how she died.) -> marina_cast
 * Straighten her veil, and go. -> bier_veil
 * Leave her as she is. -> END
 
@@ -89,6 +91,30 @@ Narrator: A scratch that never heals, over the heart, and no hand laid on her: t
 
 ~ bier_deduce_fail
 Narrator: It could be anything. In Barovia, it usually is.
+-> bier_menu
+
+# Speak with Dead (2024 PHB; docs/story/talking_creatures.md): she died alive, of a witch's doll, and heard the witch.
+~ marina_cast
+cast speak_with_dead
+if check.last
+-> marina_speaks
+endif
+-> bier_menu
+
+~ marina_speaks
+set marina_spoke
+Narrator: Her lips part under the lace, and the voice that comes out is a girl's, puzzled, as if she has only just woken and can't think where she is.
+Narrator: "I was sitting at my window, waiting for him. Something went into my heart like a thorn, and I couldn't get up again."
+Narrator: "Out on the marsh an old woman was singing the song she used to sing him when he was small. The one from the hut on the stump. She never forgave me for taking her boy."
+if guest:ireena
+Ireena [sad]: Waiting at a window for him. I know that feeling, and I hate that I know it.
+endif
+if not flag.marina_truth_known
+set marina_truth_known
+if not quest.the_witch_of_berez >= truth
+quest the_witch_of_berez truth
+endif
+endif
 -> bier_menu
 
 ~ bier_veil

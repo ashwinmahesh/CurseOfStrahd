@@ -28,9 +28,9 @@ Narrator: Their marshal rides forward alone. His horse's ribs and his own have g
 Marshal Dragomir: Halt. This gate is held. No one passes in, no one passes out, until the count returns to relieve us.
 Marshal Dragomir: State your names and your lord.
 * We have no lord. Your count is in his castle. He isn't coming. -> news
-* [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
-* [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
-* [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
+* [if not flag.muster_history_failed] [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
+* [if not flag.muster_rite_failed] [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
+* [if not flag.muster_talk_failed] [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
 * (Draw steel.) -> fight
 
 ~ rematch
@@ -44,9 +44,9 @@ Marshal Dragomir: An order is an order until it is countermanded. Four hundred y
 -> news_menu
 
 ~ news_menu
-* [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
-* [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
-* [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
+* [if not flag.muster_history_failed] [History DC 14] (Tell him what year it is, and what happened to his war.) -> war_over | war_doubted
+* [if not flag.muster_rite_failed] [Religion DC 15] (Speak the soldier's rite for the dead, the one that relieves a man of his post.) -> rite | rite_fails
+* [if not flag.muster_talk_failed] [Persuasion DC 15] Your riders have held long enough. Stand them down. -> stood_down | not_stood_down
 * (Draw steel.) -> fight
 
 ~ war_over
@@ -55,6 +55,7 @@ Marshal Dragomir: Done. The war is done. ...Then what have my men been holding?
 -> stood_down
 
 ~ war_doubted
+set muster_history_failed
 Marshal Dragomir: Lies are a scout's work. I have heard them all.
 -> news_menu
 
@@ -63,10 +64,12 @@ Narrator: You say the old words, the ones soldiers say over the ones who don't m
 -> stood_down
 
 ~ rite_fails
+set muster_rite_failed
 Narrator: The words come out wrong, or the wrong way round, and the column doesn't move. The marshal's hand goes to his blade.
 -> news_menu
 
 ~ not_stood_down
+set muster_talk_failed
 Marshal Dragomir: My men will stand down when I am relieved, and not one hour before. Who are you to relieve me?
 -> news_menu
 
