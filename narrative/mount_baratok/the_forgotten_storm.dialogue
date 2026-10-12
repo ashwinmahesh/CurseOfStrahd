@@ -31,6 +31,10 @@ quest the_forgotten_storm asked
 if flag.storm_dispersed
 -> glass_after
 endif
+# The mage along with the party knows his own storm's glass (Wiki finding 108).
+if not quest.the_forgotten_storm and guest:mordenkainen and flag.mordenkainen_restored and level >= 8
+-> guest_glass
+endif
 if not quest.the_forgotten_storm
 Narrator: A ring of black glass in the rock, where something very hot has struck the same place again and again, for years.
 -> END
@@ -41,6 +45,13 @@ Narrator: The glass is cold under your hand. Whatever strikes here comes at dusk
 * (Leave it for now.) -> END
 endif
 -> dusk
+
+~ guest_glass
+Narrator: Mordenkainen stops at the edge of the black glass and doesn't step onto it.
+Mordenkainen: That's mine. The night I ran from the castle I called a storm down behind me and gave it one order: bring her after me. It never found her. It comes back every evening and strikes the place I stood.
+Mordenkainen: I can't dismiss it. It answers to the man who gave the order, and I'm not that man any more. We'll wait here for dusk, and you'll tell it what it needs to hear, or break it. I'd rather the first.
+quest the_forgotten_storm asked
+-> glass
 
 ~ dusk
 if hour >= 6 and hour < 19

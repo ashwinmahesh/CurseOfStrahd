@@ -1,7 +1,7 @@
 {
   "id": "the_mages_lost_pages",
   "name": "The Mage's Lost Pages",
-  "summary": "Mordenkainen's memory came back from the witch's jar with pages missing: letters in a hand he knows better than his own, and no name with it.",
+  "summary": "Mordenkainen's memory came back with pages missing: letters in a hand he knows better than his own, and no name with it.",
   "giver": "mordenkainen",
   "region": "mount_baratok",
   "stages": [

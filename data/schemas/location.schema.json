@@ -410,7 +410,7 @@
           },
           "locked": {
             "type": "boolean",
-            "description": "Locked with no lock to pick (lock_dc 0): it needs its key, or `unlocked_when`."
+            "description": "Locked. With lock_dc 0 there's no lock to pick or force: it needs its key, magic, or `unlocked_when`."
           },
           "unlocked_when": {
             "type": "string",

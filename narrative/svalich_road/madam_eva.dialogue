@@ -350,6 +350,10 @@ quest find_the_ally foretold
 if tarokka.ally == darklord
 quest find_the_ally alone
 endif
+# The cards named someone already lost (Wiki finding 101).
+if tarokka.ally.npc == arabelle and flag.arabelle_lost
+quest find_the_ally lost
+endif
 quest strahds_lair foretold
 quest madam_evas_reading read
 if flag.eva_reading_paid != "forced"

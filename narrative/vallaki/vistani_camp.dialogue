@@ -77,6 +77,11 @@ endif
 if flag.arabelle_lost
 Narrator: Luvash sits on the step of his wagon with an empty bottle and doesn't look up when you come.
 Luvash [sad]: You tried. They tell me you tried. Go away now. Please.
+# The Tax Collector's treasure isn't lost with her (Wiki finding 99).
+if treasure_at:vallaki_vistani_camp:luvash_wagon
+Luvash [sad]: Take whatever's in the chest. I don't want anything in it.
+tarokka give vallaki_vistani_camp:luvash_wagon
+endif
 -> END
 endif
 if not flag.luvash_met

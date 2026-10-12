@@ -74,6 +74,11 @@ Kasimir: Beyond the pass to the north, in the ice. I have read of it, and dreame
 ~ ally
 Kasimir: Eva named me? Then the cards have a sense of humour, or a sense of justice. I have never been able to tell those apart.
 Kasimir: I will come. Somewhere along your road is the castle, and beneath it, my sister. And past it, perhaps, the temple. It is time I stopped mending nets.
+# The road into the mountains is his now, so is the trade (Wiki finding 100).
+if treasure_at:vallaki_vistani_camp:camp_edge
+Kasimir: And you will want this. I was keeping it for whoever would take me into the mountains. It seems that is you.
+tarokka give vallaki_vistani_camp:camp_edge
+endif
 join kasimir_velikov
 quest find_the_ally found
 -> END

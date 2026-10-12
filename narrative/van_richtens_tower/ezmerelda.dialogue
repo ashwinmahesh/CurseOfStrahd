@@ -234,6 +234,10 @@ else
 Ezmerelda: I hunt alone. Usually. But you've done more for me in a week than the whole valley has in a year. All right. Until it's done.
 endif
 join ezmerelda
+# The tower's been searched and he isn't in it: she comes along instead of waiting (Wiki finding 105).
+if quest.the_hunters_tower == inside and not flag.rictavio_gone
+quest the_hunters_tower with_her
+endif
 Ezmerelda: I go first through doors, I take the silver, and nobody calls me "girl".
 -> END
 

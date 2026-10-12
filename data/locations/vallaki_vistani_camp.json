@@ -487,7 +487,16 @@
       ],
       "label": "A sack under the brambles",
       "model": "chest",
-      "items": [],
+      "items": [
+        {
+          "id": "ration",
+          "qty": 2
+        },
+        {
+          "id": "net",
+          "qty": 1
+        }
+      ],
       "gold": 0
     },
     {
@@ -501,7 +510,8 @@
       "items": [],
       "gold": 0,
       "locked": true,
-      "unlocked_when": "flag.arabelle_rescued",
+      "lock_dc": 0,
+      "unlocked_when": "flag.arabelle_rescued or flag.arabelle_lost",
       "owner": "luvash"
     }
   ],

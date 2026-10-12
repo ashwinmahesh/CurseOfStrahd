@@ -82,3 +82,63 @@ func test_the_second_thirst_has_its_own_larder_slides() -> void:
 	assert_false(str(texts).contains("the count, at dinnertime"), str(texts))
 	assert_false(str(texts).contains("The master is pleased with him"), str(texts))
 	assert_true(str(texts).contains("the new lord let her go"), str(texts))
+
+
+## Finding 99: Luvash's chest could be picked before Arabelle was home; with her drowned, he hands it over anyway.
+func test_luvash_hands_over_his_chest_either_way() -> void:
+	var chest := {}
+	for c: Variant in Compendium.shared().get_entry("locations", "vallaki_vistani_camp")["containers"]:
+		if str((c as Dictionary)["id"]) == "luvash_chest":
+			chest = c as Dictionary
+	assert_eq(int(chest.get("lock_dc", 15)), 0, "no lock to pick or force")
+	var st := SideQuestPlay.party(["ilse_varga"], 5, "vallaki_vistani_camp", 12)
+	st.tarokka = {"tome": "coins_8", "symbol": "swords_6", "sword": "coins_7", "ally": "mists", "enemy": "donjon"}
+	st.set_flag("luvash_met")
+	st.set_flag("arabelle_lost")
+	SideQuestPlay.play(st, "vallaki/vistani_camp:luvash")
+	assert_true(st.party_has_item("tome_of_strahd"))
+
+
+## Finding 100: Kasimir joining as the ally took the Beggar's treasure with him.
+func test_kasimir_brings_the_beggars_treasure_when_he_joins() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 5, "vallaki_vistani_camp", 12)
+	st.tarokka = {"tome": "coins_6", "symbol": "swords_6", "sword": "coins_7", "ally": "seer", "enemy": "donjon"}   # Kasimir
+	SideQuestPlay.play(st, "vallaki/kasimir:ally")
+	assert_true("kasimir_velikov" in st.guest_ids)
+	assert_true(st.party_has_item("tome_of_strahd"), "the trade comes with him")
+
+
+## Finding 101: Arabelle drowned before the reading named her left find_the_ally at Foretold for good.
+func test_an_ally_already_lost_is_lost() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 3, "tser_pool_eva_tent", 20)
+	st.tarokka = {"ally": "tempter"}   # Arabelle
+	st.set_flag("arabelle_lost")
+	st.set_quest_stage("find_the_ally", "foretold")
+	var back := StoryState.from_dict(JSON.parse_string(JSON.stringify(st.to_dict())) as Dictionary)
+	assert_eq(back.quest_stage("find_the_ally"), "lost")
+
+
+## Findings 104 and 105: With Her only when the tower's empty, and joining after the party searched it ends it too.
+func test_the_hunters_tower_ends_with_her() -> void:
+	var home := SideQuestPlay.party(["ilse_varga"], 6, "van_richtens_tower", 12)
+	home.set_quest_stage("the_hunters_tower", "heard")
+	home.set_flag("rictavio_gone")
+	assert_true(home.add_guest("ezmerelda"))
+	SideQuestPlay.play(home, "van_richtens_tower/tower:open")
+	assert_ne(home.quest_stage("the_hunters_tower"), "with_her", "he's upstairs: the reunion ends it")
+	var st := SideQuestPlay.party(["ilse_varga"], 6, "van_richtens_tower", 12)
+	st.set_quest_stage("the_hunters_tower", "heard")
+	st.set_quest_stage("the_hunters_tower", "inside")
+	st.set_flag("ezmerelda_trust", 2)
+	SideQuestPlay.play(st, "van_richtens_tower/ezmerelda:join")
+	assert_eq(st.quest_stage("the_hunters_tower"), "with_her")
+
+
+## Finding 108: The Forgotten Storm couldn't start with Mordenkainen travelling with the party.
+func test_mordenkainen_along_knows_his_storm() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 9, "mount_baratok", 12)
+	st.set_flag("mordenkainen_restored")
+	assert_true(st.add_guest("mordenkainen"))
+	var beats := SideQuestPlay.play(st, "mount_baratok/the_forgotten_storm:glass", ["Leave it for now"])
+	assert_eq(st.quest_stage("the_forgotten_storm"), "asked")
+	assert_true(SideQuestPlay.text(beats).contains("doesn't step onto it"))
