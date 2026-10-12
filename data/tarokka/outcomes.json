@@ -739,7 +739,8 @@
       "region": "werewolf_den",
       "where": "The werewolf den in the hills, a prisoner of his own pack",
       "verse": "In the den in the hills, one wolf has started to look at his pack the way you look at the castle. When they turn on him, be there.",
-      "hint": "Emil, a werewolf at odds with his own pack, in their den in the hills above Lake Zarovich."
+      "hint": "Emil, a werewolf at odds with his own pack, in their den in the hills above Lake Zarovich.",
+      "lost_when": "flag.emil_dead or flag.wolf_pack_leader == \"kiril\" or flag.wolf_pack_leader == \"none\""
     },
     "broken_one": {
       "npc": "mordenkainen",
@@ -761,7 +762,8 @@
       "region": "vallaki",
       "where": "Vallaki, the burgomaster's mansion, shut in the attic",
       "verse": "In the walled town's grandest house, a clever young man has made his attic into a cell and a workshop. Free his mind from that house, and he will lend it to you.",
-      "hint": "Victor, the troubled son of Vallaki's burgomaster, shut in the attic of his father's mansion."
+      "hint": "Victor, the troubled son of Vallaki's burgomaster, shut in the attic of his father's mansion.",
+      "lost_when": "flag.victor_vanished"
     },
     "executioner": {
       "npc": "ismark",
@@ -775,7 +777,8 @@
       "region": "argynvostholt",
       "where": "Argynvostholt, among the revenant knights",
       "verse": "The dragon's house is full of dead knights who have forgotten their oath. One of them still remembers, a little. Find him, and make him remember the rest.",
-      "hint": "Sir Godfrey, a dead knight of the dragon's order, at Argynvostholt."
+      "hint": "Sir Godfrey, a dead knight of the dragon's order, at Argynvostholt.",
+      "lost_when": "flag.order_fate == \"rest\" and not guest:sir_godfrey_gwilym"
     },
     "horseman": {
       "npc": "kolyan_indirovich",
@@ -796,7 +799,8 @@
       "region": "castle_ravenloft",
       "where": "Somewhere in the towers of Castle Ravenloft",
       "verse": "Something clockwork walks the castle's stairs on its own: a jester with a wound-down smile. It knows every passage in that house, and it is lonely.",
-      "hint": "Pidlwick II, a clockwork jester who wanders the towers of Castle Ravenloft."
+      "hint": "Pidlwick II, a clockwork jester who wanders the towers of Castle Ravenloft.",
+      "lost_when": "flag.pidlwick_refused"
     },
     "mists": {
       "npc": "ezmerelda",
@@ -824,7 +828,8 @@
       "region": "lake_zarovich",
       "where": "Somewhere on Lake Zarovich, in danger",
       "verse": "One of our little ones has wandered where she shouldn't, out onto the big water by the walled town. Someone has her who should not. Go quickly.",
-      "hint": "Arabelle, a missing Vistani girl, somewhere on Lake Zarovich. There is no time to waste."
+      "hint": "Arabelle, a missing Vistani girl, somewhere on Lake Zarovich. There is no time to waste.",
+      "lost_when": "flag.arabelle_lost"
     }
   },
   "enemy": {

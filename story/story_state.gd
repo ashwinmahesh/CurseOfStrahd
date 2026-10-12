@@ -110,8 +110,8 @@ func _settle_ally() -> void:
 		set_quest_stage("find_the_ally", "alone")
 	elif Tarokka.field(self, "ally.npc") in guest_ids:
 		set_quest_stage("find_the_ally", "found")
-	elif str(Tarokka.field(self, "ally.npc")) == "arabelle" and bool(get_flag("arabelle_lost", false)):
-		set_quest_stage("find_the_ally", "lost")   # drowned before the cards named her (Wiki finding 101)
+	elif Tarokka.field(self, "ally.lost") != "":
+		set_quest_stage("find_the_ally", "lost")   # gone before the cards named them (Wiki findings 101, 113)
 
 
 ## Whether the quest stands at a stage that ends it (success or failure).
