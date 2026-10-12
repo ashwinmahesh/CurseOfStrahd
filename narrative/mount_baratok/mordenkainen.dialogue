@@ -180,6 +180,10 @@ quest find_the_ally found
 quest the_mad_mage joined
 interject class:wizard: You'll want notes. I take very good notes.
 Mordenkainen: Then try to keep up.
+# His lost pages travel with him (Wiki finding 56).
+if not quest.the_mages_lost_pages
+-> mount_baratok/the_mages_lost_pages:joined
+endif
 -> END
 
 ~ promise

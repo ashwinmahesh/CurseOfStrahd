@@ -72,7 +72,7 @@ endif
 Narrator: Thistle isn't up a tree tonight. She's on the ground, right across the fire, staring at you. She's been doing it for some time.
 interject name:thistle: You smell wrong. Lately. All of you. Like a dog that's been in the bins.
 interject name:thistle: Grandda says you can tell a pack by what it leaves behind. We've been leaving bad things.
-if flag.den_children_left
+if flag.den_children_left and not flag.den_children_freed
 interject name:thistle: Pups. In the den. We left the pups.
 endif
 interject name:thistle: Fix it. Or don't. But I'm watching.

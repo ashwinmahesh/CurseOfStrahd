@@ -31,7 +31,7 @@ endif
 if flag.lysaga_dead
 Strahd: Baba Lysaga is dead. She held me when I was born. Whatever else she was, that was hers to keep, and you took it.
 endif
-if flag.kiril_defeated
+if flag.kiril_defeated or flag.den_broken
 Strahd: My wolves have a new leader. They will want to make a good impression.
 endif
 if flag.strahd_window and flag.strahd_window != "taken"

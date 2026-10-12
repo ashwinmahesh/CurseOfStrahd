@@ -35,9 +35,26 @@ endif
 if not quest.the_mages_lost_pages
 quest the_mages_lost_pages asked
 endif
+# Whatever gave him back his name (Wiki finding 62).
+if flag.mordenkainen_memory_jar_taken
 Mordenkainen: Interesting. The witch's jar gave me back almost everything. Almost. There are pages missing. Not from the book. From me.
+else
+Mordenkainen: Interesting. My name came back, and nearly everything with it. Almost. There are pages missing. Not from the book. From me.
+endif
+-> pages_ask
+
+# Joining the party before he'd asked (mordenkainen:ally; Wiki finding 56).
+~ joined
+quest the_mages_lost_pages asked
+Mordenkainen: One more thing, before we go down. There are pages missing. Not from the book. From me.
+-> pages_ask
+
+~ pages_ask
 Mordenkainen: A hand I know better than my own. Small, slanted, impatient, always running out of margin. Letters, written to me. I can see the handwriting when I close my eyes, and I can't see the name.
 Mordenkainen: They were in my coat the night the witch took me. Since then this hut has been blown inside out by a storm I forgot I'd ordered, for forty years. They'll be in the snow somewhere. In the ice. Bring them to me.
+if guest:mordenkainen
+-> END
+endif
 -> mount_baratok/mordenkainen:restored_menu
 
 # --- The letters, on the mountain ---
@@ -59,7 +76,7 @@ time +30
 set corvina_letter_1
 Narrator: The paper is stiff with frost and the ink has run, but the hand is the one he described: small, slanted, running out of margin.
 Narrator: Master. The mists are thick here and the people thicker. I've started a list of the count's servants and what they're afraid of. It's a long list and a short one at the same time. C.
--> END
+-> letters_check
 
 ~ letter_ring
 if flag.corvina_letter_2
@@ -78,7 +95,7 @@ time +30
 set corvina_letter_2
 Narrator: Scorched at the corners. The same small hand.
 Narrator: You'll remember your apprentice's name when you need it, you said, when I asked you to stop calling me "girl". So I'm writing it at the bottom of every letter, in case you don't. Corvina. Corvina. Corvina.
--> END
+-> letters_check
 
 ~ letter_overlook
 if flag.corvina_letter_3
@@ -100,19 +117,30 @@ Narrator: Master, go. I'll hold the door. He's coming up the stair and he's laug
 Narrator: Under it, in a different hand altogether, black and beautifully formed:
 Narrator: She held it very well. She holds my doors still. S.
 interject tag:blunt: He didn't lose. He ran. And she stayed.
+-> letters_check
+
+# The last letter found with the mage travelling alongside: he reads them there (Wiki finding 56).
+~ letters_check
+if guest:mordenkainen and flag.corvina_letter_1 and flag.corvina_letter_2 and flag.corvina_letter_3 and not flag.corvina_name_known
+Narrator: You hand Mordenkainen the three letters. He reads them in order, once each, standing in the snow, and doesn't give them back.
+-> letters_read
+endif
 -> END
 
 # --- The letters brought back ---
 
 ~ letters_back
 Narrator: You lay the three letters on his chessboard. He reads them in order, once each, and doesn't touch them.
+-> letters_read
+
+~ letters_read
 Mordenkainen: Corvina.
 Mordenkainen: I told everyone he beat me. I told myself. He didn't. I was beaten, and I knew it on the stair, and she said go, and I went. I left a girl of twenty-two holding a door against him so that I could be ashamed of losing instead of ashamed of running.
 Mordenkainen [angry]: "She holds my doors still." He wrote that for me to find. He knew I'd come looking one day. He's been waiting forty years for me to read it.
 Narrator: He stands up, and the snow outside the window starts again, all at once, hard.
 * [if flag.mordenkainen_promised_aid or guest:mordenkainen or quest.the_mad_mage == joined] You promised to come with us when we go up. Keep that promise, not this one. -> stays
-* [Persuasion DC 16] If you go up that road tonight, you'll die on his stair, and she'll have held that door for nothing. -> stays | storms
-* (Let him rage.) -> storms
+* [if not guest:mordenkainen] [Persuasion DC 16] If you go up that road tonight, you'll die on his stair, and she'll have held that door for nothing. -> stays | storms
+* [if not guest:mordenkainen] (Let him rage.) -> storms
 
 ~ storms
 Narrator: He rages. It isn't loud. The windows frost over from the inside, and every candle in the hut goes out and relights itself, twice. When it's finished he's sitting down again, older.
@@ -126,4 +154,7 @@ Mordenkainen: But you'll be in that castle before I am. If you find her, and you
 Mordenkainen: And take this. She made it, her first year, to fetch my books down without asking. I took it off her desk the night we went up, because I thought I'd need it more. I didn't. I needed her.
 give ring_of_telekinesis
 approve ratatoille +3 liriel_dawnsong +2 godrick_pendlebrook +1 wren_featherfoot +1: You brought Mordenkainen his apprentice's letters
+if guest:mordenkainen
+-> END
+endif
 -> mount_baratok/mordenkainen:restored_menu
