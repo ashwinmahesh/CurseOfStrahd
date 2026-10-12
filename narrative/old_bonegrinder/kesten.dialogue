@@ -1,0 +1,28 @@
+# Brother Kesten, the priest who walked up to the mill last spring to fetch back the Petrescu boy (ilinca.dialogue),
+# whose holy symbol is in the bone heap behind the mill (search bonegrinder_bone_heap). Once that's found his skull is
+# a prop of its own (kesten_bones). Speak with Dead (2024 PHB; docs/story/talking_creatures.md): where the children
+# are kept, the three words that send Offalia off without a lie that can fail (offalia.dialogue), and what Bella
+# really wants.
+
+~ bones
+Narrator: Apart from the heap lies a skull in a scrap of brown cowl, set down facing the mill, as if someone wanted him to keep watching it.
+* [if spell:speak_with_dead and not flag.kesten_spoke] Ask Brother Kesten what he found in the mill. -> speaks
+* [if not spell:speak_with_dead and not flag.kesten_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask Brother Kesten what he found in the mill.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave him to his watch. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set kesten_spoke
+Narrator: The jaw works, and a patient voice comes out of it: a man who said a great many last rites and half expected his own.
+Narrator: "I came up for the Petrescu boy, and I came too late. The ones still living they keep in cages in the loft, up the stair behind the oven."
+Narrator: "The round one at the oven believes anything said in her mother's name. I heard the pretty one send her running down the hill with three words: Mother's calling, dearie."
+Narrator: "The pretty one offered me the mill if I'd kill her mother. She doesn't want the mill. She wants the little bags on the hooks. I said no. I should have said yes, and lied."
+interject class:cleric: Rest, Brother. Someone's finishing the walk.
+-> END

@@ -1,5 +1,12 @@
 # Kolyan Indirovich at his grave: the horseman card's ally (ADR 0011). He can be raised by a priest or bard who
 # commands the magic for it (Raise Dead, level 9) and 500 gp of diamonds for the rite.
+# Speak with Dead (2024 PHB; docs/story/talking_creatures.md) at his coffin in the mansion or at his grave: where he
+# found Ireena, the other half of Izek's story (vallaki/izek.dialogue), and his wife's brooch behind the study desk
+# (study_panel). Not once he's raised: then he answers for himself.
+
+~ coffin
+narrate examine:kolyan_coffin
+-> dead_menu
 
 ~ grave
 # Raised, then told "Rest a while": he waits on his own grave until the party comes back for him.
@@ -11,13 +18,65 @@ if tarokka.ally.npc == kolyan_indirovich and not guest:kolyan_indirovich and not
 interject guest:ismark: Madam Eva said Father would ride with us. I thought she meant his memory. She didn't, did she.
 -> raise_menu
 endif
+if flag.kolyan_raised
 -> END
+endif
+-> dead_menu
 
 ~ raise_menu
 * [if (class:cleric or class:bard) and level >= 9 and gold >= 500] Call him back: the rite, and five hundred gold of diamonds in the grave. -> raise
 * [if not ((class:cleric or class:bard) and level >= 9)] (Raising the dead needs a cleric or bard of ninth level.) -> END
 * [if (class:cleric or class:bard) and level >= 9 and gold < 500] (The rite needs 500 gp of diamonds.) -> END
+* [if spell:speak_with_dead and not flag.kolyan_spoke] Ask him a few questions first. -> speak_dead
+* [if not spell:speak_with_dead and not flag.kolyan_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask him a few questions first.) -> speak_dead_cast
 * Let him rest. -> END
+
+~ dead_menu
+* [if spell:speak_with_dead and not flag.kolyan_spoke] Ask the burgomaster a few questions. -> speak_dead
+* [if not spell:speak_with_dead and not flag.kolyan_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the burgomaster a few questions.) -> speak_dead_cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Let him rest. -> END
+-> END
+
+# Back to whichever menu brought the party here: the raising, at the grave of the horseman card's ally, or the dead.
+~ back
+if tarokka.ally.npc == kolyan_indirovich and not guest:kolyan_indirovich and not flag.kolyan_raised and not at:burgomaster_mansion
+-> raise_menu
+endif
+-> dead_menu
+
+~ speak_dead_cast
+cast speak_with_dead
+if check.last
+-> speak_dead
+endif
+-> back
+
+~ speak_dead
+set kolyan_spoke
+Narrator: The voice that answers is hoarse and impatient, a man interrupted halfway through an argument he meant to win.
+Narrator: "Ireena? I found her on the lake road past Vallaki, the winter the wolves were bad. Red hair full of frost, bare feet, and no name she would give me."
+Narrator: "A boy was shouting a name through the trees, over and over. I took it for the wolves, using a boy's voice. I wrapped her in my coat and never went back to ask whose she was."
+if flag.izek_story_heard and not flag.izek_sister_truth
+-> sister
+endif
+if not flag.izek_sister_truth
+set ireena_finding_known
+endif
+-> brooch
+
+~ sister
+set izek_sister_truth
+quest izek_obsession truth_guessed
+Narrator: Izek Strazni's little sister, lost in the woods past the lake the night the wolves took his arm. Never found, because a burgomaster from over the hills found her first.
+-> brooch
+
+~ brooch
+Narrator: "There's a loose panel behind my study desk, and my wife's brooch behind it. It turned an arrow for her once. Give it to whoever stands between Ireena and that door now."
+reveal study_panel
+if flag.burial_method == "church_rites" or flag.burial_method == "cleric_rites"
+interject tag:pious: Somebody promised him no voice would call him up again. We've had our questions. Let him go back down.
+endif
+-> back
 
 ~ raise
 gold -500

@@ -268,6 +268,11 @@
       "summary": "THE END STATE of the den: emil (Kiril dead; the pack keeps to the hills and won't answer the castle), kiril (Emil dead; the pack still hunts for the castle), none (Kiril and Emil dead; the pack is gone). Random tables, Ezmerelda, Krezk, the castle and the epilogue read it."
     },
     {
+      "id": "mircea_spoke",
+      "type": "bool",
+      "summary": "Mircea, Grigor's brother, answered Speak with Dead from the midden below the werewolf den (werewolf_den/mircea.dialogue): Emil's chains, and where his boots came off."
+    },
+    {
       "id": "pack_resolved",
       "type": "bool",
       "summary": "The pack question is settled for now (Kiril's terms accepted, or the aftermath of a fight)."

@@ -187,6 +187,7 @@
       "kind": "examine",
       "label": "A heap of bones",
       "model": "bones",
+      "dialogue": "werewolf_den/mircea:midden",
       "checks": [
         {
           "id": "midden_sort",

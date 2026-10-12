@@ -3,11 +3,14 @@
 # and he stays dead; leave him, and after dark he and the old hanged dead in the field rise (crossroads_hanged_dead).
 # The raven on the fencepost (prop crossroads_raven) talks under Speak with Animals: the Keepers of the Feather want
 # help at the Wizard of Wines, and a man buried his boots in the newest mound (newer_mound).
+# Nicu answers Speak with Dead (2024 PHB; docs/story/talking_creatures.md) on the gallows or in his grave by the road,
+# never once he has walked (he died Undead): who hanged him, the farmer's cache behind the field wall
+# (field_wall_cache), and a message for Luminita (luminita.dialogue).
 
 ~ gallows
 if flag.nicu_cut_down
 Narrator: The gallows rope hangs empty, cut short above the knot. Beside the road, a mound of turned earth, marked with a board laid face down.
--> END
+-> grave_menu
 endif
 if flag.crossroads_dead_cleared
 -> remains
@@ -32,6 +35,8 @@ endif
 ~ gallows_menu
 * Cut him down and bury him. -> cut_down
 * [if not flag.nicu_body_examined] [Medicine DC 12] Look at the body. -> body_ok | body_fail
+* [if spell:speak_with_dead and not flag.nicu_spoke] Ask the hanged man who did this to him. -> nicu_speaks
+* [if not spell:speak_with_dead and not flag.nicu_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the hanged man who did this to him.) -> nicu_cast
 * [if not flag.nicu_token_taken] Take the earring, for his people. -> token
 * Leave him. -> leave
 
@@ -106,6 +111,41 @@ Narrator: Someone keeps the silver earring back from the grave. His people will 
 endif
 approve liriel_dawnsong +2 godrick_pendlebrook +1: You buried the hanged Vistana by the road
 -> END
+
+# --- Speak with Dead: Nicu ---
+
+# He walked before he was buried (the old hanged dead rose with him): he died Undead, and the spell can't wake him.
+~ grave_menu
+if flag.crossroads_dead_cleared
+-> END
+endif
+* [if spell:speak_with_dead and not flag.nicu_spoke] Ask the dead man in the roadside grave who hanged him. -> nicu_speaks
+* [if not spell:speak_with_dead and not flag.nicu_spoke] [knows:speak_with_dead] (Cast Speak with Dead over the grave, and ask him who hanged him.) -> nicu_cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave him be. -> END
+-> END
+
+~ nicu_cast
+cast speak_with_dead
+if check.last
+-> nicu_speaks
+endif
+-> nicu_back
+
+~ nicu_back
+if flag.nicu_cut_down
+-> grave_menu
+endif
+-> gallows_menu
+
+~ nicu_speaks
+set nicu_spoke
+Narrator: The voice is young and hoarse, and it's laughing, or trying to, the way people laugh at a joke that has gone on far too long.
+Narrator: "Nicu, of the Tser Pool fires. I found a mare with a Vallaki brand and rode her back to Vallaki like an honest man. Her owner and his two sons hanged me for it."
+Narrator: "They brought me out here to do it. Vallaki doesn't hang people inside its walls. It's bad for festivals."
+Narrator: "While they argued about the knot, a farmer came down the falls track with a sack, saw the rope, and stuffed the sack in behind the field wall as if we might rob him. Big leather gloves, sticking out."
+reveal field_wall_cache
+Narrator: "Tell Lumi it wasn't the mare. They'd have hanged me for a goat. Tell her the grey gelding is hers now, and she can stop brushing him. He's clean."
+-> nicu_back
 
 ~ signpost
 Narrator: Four arms on a leaning post, the paint long gone and the names cut deep with a knife: BAROVIA east, VALLAKI and TSER POOL west, TSER FALLS north. The south arm has been sawn off, and someone has nailed a dead crow in its place.

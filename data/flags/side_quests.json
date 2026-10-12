@@ -387,6 +387,11 @@
       "summary": "Yevgeni told the party that Arrigal pays his father to bring strong strangers to Old Greytooth."
     },
     {
+      "id": "tudor_spoke",
+      "type": "bool",
+      "summary": "Tudor the shepherd answered Speak with Dead from the reeds at the Lake Zarovich landing: Szoldar watched Greytooth kill him and took a purse from Arrigal (a second way to confront Szoldar)."
+    },
+    {
       "id": "szoldar_turned",
       "type": "bool",
       "summary": "Szoldar agreed to shoot the wolf, not the party."

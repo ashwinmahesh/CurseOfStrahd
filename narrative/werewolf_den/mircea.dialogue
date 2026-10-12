@@ -1,0 +1,27 @@
+# Mircea, Grigor's brother (the hunters on the Svalich road, svalich_road/events.dialogue: "The wolves took my brother
+# off this road a month back"). His bones are at the bottom of the midden below the den (prop den_bone_midden), his
+# torn pack in the caves (den_hunter_pack). Speak with Dead (2024 PHB; docs/story/talking_creatures.md): Emil in his
+# chains, and where his boots came off (mud_boots).
+
+~ midden
+narrate examine:den_bone_midden
+* [if spell:speak_with_dead and not flag.mircea_spoke] Ask the dead man at the bottom of the heap who he was. -> speaks
+* [if not spell:speak_with_dead and not flag.mircea_spoke] [knows:speak_with_dead] (Cast Speak with Dead, and ask the dead man at the bottom of the heap who he was.) -> cast
+* [if spell:speak_with_dead or knows:speak_with_dead] Leave the bones. -> END
+-> END
+
+~ cast
+cast speak_with_dead
+if check.last
+-> speaks
+endif
+-> END
+
+~ speaks
+set mircea_spoke
+Narrator: Something in the heap clicks, bone on bone, and a man's voice comes up out of it, hoarse from a month of not being used.
+Narrator: "Mircea. I hunted the Svalich road with my brother Grigor, until the wolves that walk like men took me off it."
+Narrator: "They wanted me to take the bite and run with them for the castle. Their old leader hangs in silver chains at the back of the cave for saying no. He told me to say no as well, and die quick. I did. Tell Grigor I did."
+Narrator: "My boots came off in the mud at the foot of the slope when they dragged me up. Grigor won them off a Vistana at dice; they run faster than a horse. Not fast enough."
+reveal mud_boots
+-> END
