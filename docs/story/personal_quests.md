@@ -25,6 +25,8 @@ rewritten for the six, so in an old save they speak only in their own quest scen
   `if not (quest.<id> >= <stage>)`, so finding things out of order never rolls the journal back.
 - **Camp talks.** After a Long Rest a companion may ask for a word (`story/camp_talk.gd`, `narrative/camp/<who>.dialogue`).
   A talk is a node whose first statement is `if <condition>`; it's offered once the condition holds and plays once.
+  In the wild the party makes camp and walks up to whoever wants a word, the companions waiting at camp included
+  (docs/story/camp.md); elsewhere the rest screen offers them.
 - **Party banter** between the six plays anywhere: `narrative/banter/party_six.dialogue`, each exchange gated on its
   speakers being in the party.
 - **Madam Eva** takes a truth from any of the six as her price, and answers one question from each

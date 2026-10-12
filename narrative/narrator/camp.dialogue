@@ -1,0 +1,139 @@
+# Narrator: the party's camp in the wild (F16, lane 24; docs/story/camp.md, world/exploration/location_camp.gd).
+# camp:pitch, camp:night, camp:morning and camp:strike are said with no one acting, so a [name:...] there asks whether
+# that companion is at camp. camp:<id> is what a companion is doing when they've nothing particular to say;
+# camp:guest:<npc> a guest's ({target} is their name); camp:someone a custom hero's ({name}).
+
+# ---------------------------------------------------------------- Making camp, the night, the morning
+
+~ camp:pitch
+| You find a level patch out of the wind and get a fire going. The dark comes right up to the edge of the light and waits there, politely.
+| You make camp. Packs come off, bedrolls go down, and for a little while the world is no bigger than the firelight.
+| [night] You make camp in the dark, by feel and by quiet swearing. When the fire catches, the trees seem to step back for a better look at you.
+| [weather == fog] You make camp in the fog. The fire's light goes three paces in every direction and then gives up.
+| [weather == snow] Snow hisses in the fire as it catches. You pitch camp with your backs to the wind and your faces to the only warm thing for miles.
+| [name:ratatoille] You make camp. Ratatouille has the pot on before the fire has properly caught, and is already disappointed in it.
+
+~ camp:night
+| You sleep in turns by the fire. Every watch hears something circle the camp, and every watch decides it was the wind.
+| The fire burns low and the woods creak and settle round you. Nothing comes. Somehow that's the part that keeps you awake.
+| [weather == fog] The fog comes right into camp in the night and sits by the embers like a guest. By morning everything you own is damp.
+
+~ camp:morning
+| You wake stiff and cold by a fire burned down to ash. Nobody took you in the night. In Barovia, that counts as a good night's sleep.
+| [day] Grey light comes up through the trees, which in Barovia is what passes for morning. The fire is ash and the pot is cold.
+| [night] You wake in the dark to the last red coals of the fire. Whatever was out there all night is still out there, and so are you.
+| [name:ratatoille] You wake to the smell of something frying. Ratatouille has been up for an hour, and he would like everyone to know it.
+| [name:thistle] Thistle is already up, crouched over a set of tracks at the edge of camp. Something came close in the night, had a look, and left.
+
+~ camp:strike
+| You kick earth over the fire and shoulder your packs. Behind you, the woods close over the place you slept as if you were never there.
+| You break camp. The dark the fire held back all night moves in to take its patch of ground.
+
+# ---------------------------------------------------------------- The camp's pieces
+
+~ examine:camp_fire
+| A good fire, built the way somebody's grandfather taught them. It throws your shadows out into the trees, long and restless.
+| [night] The fire spits and settles. Beyond its light the woods are so black they look solid.
+
+~ examine:camp_stewpot
+| A black pot on a tripod over its own bed of coals, smelling of onions and ambition.
+
+~ examine:camp_tent
+| A low canvas tent, patched in three places with three different cloths. It smells of damp wool and somebody's boots.
+
+# ---------------------------------------------------------------- The six by the fire
+
+~ camp:godrick_pendlebrook
+| Godrick is polishing Sir Pellam's sword, though it was clean an hour ago. He's practising a speech under his breath; it begins "Your Grace" and gets no further.
+| Godrick kneels by the fire, frowns, stands up, and kneels again, slightly to the left. He wants to get it right for the Order.
+| [night] Godrick has taken the first watch, and the second, and is quietly negotiating with himself for the third.
+
+~ camp:liriel_dawnsong
+| Liriel sits facing east with her eyes closed, waiting for a sunrise that hasn't come in four hundred years. She can wait. She's very good at it.
+| Liriel is mending someone's cloak by the firelight, humming a dawn hymn in a key the night doesn't seem to like.
+| [night] Liriel holds her holy symbol to the fire until it glows, and for a moment the circle of light is a little wider than a fire could make it.
+
+~ camp:thistle
+| Thistle is eating something with her hands that might have been a rabbit an hour ago. She offers you the other leg, in complete sincerity.
+| Thistle is cutting a blaze into a tree at the edge of camp, the same mark Grandda Fen left on his trail. In case he comes this way.
+| [night] Thistle sits outside the firelight with her back to it, so her eyes keep the dark. Every so often she sniffs, and doesn't like it.
+
+~ camp:ratatoille
+| Ratatouille is stirring the pot and tasting, stirring and tasting, with the grave face of a man defusing something.
+| Ratatouille has laid out his spices on a cloth in a row, by colour, and is choosing between two that look exactly the same.
+| [region:svalich_road] Ratatouille has found mushrooms in the woods and is sorting them into stew, maybe, and absolutely not. The last pile is growing fastest.
+| [region:lake_zarovich] Ratatouille has a fish from the lake in the pan and is talking to it, kindly, about where it went wrong.
+| [region:berez] Ratatouille holds a ladle of marsh water up to the firelight, sniffs it, and pours it quietly back where it came from.
+| [weather == snow] Ratatouille is melting snow for the pot and complaining that it has no flavour, which he seems to take personally.
+
+~ camp:wren_featherfoot
+| Wren is running through his forms on the far side of the fire, so fast the flames lean over to watch.
+| Wren is juggling three pine cones and a knife, and talking, and none of the four has hit the ground yet.
+| [night] Wren is supposed to be asleep. He's lying very still with his eyes open, turning his master's letter over and over in his fingers.
+
+~ camp:kip_smudgewick
+| Kip is reading his contract by the firelight, his lips moving. He reads it every night. It hasn't got any better.
+| Kip is polishing apricots on his sleeve one at a time and stacking them in a pyramid. He has already priced the pyramid.
+| [night] Kip's tail twitches in his sleep. Now and then he mutters a number, then a smaller number, then wakes to check the contract is still there.
+
+~ camp:someone
+| {name} sits close to the fire, hands to the warmth, watching the dark between the trees.
+| {name} is checking straps and buckles by the firelight, the way people do when they'd rather not think about tomorrow.
+
+# ---------------------------------------------------------------- Guests by the fire
+
+~ camp:guest
+| {target} sits by the fire, close enough to feel it and far enough back to keep an eye on the dark.
+
+~ camp:guest:ireena
+| Ireena sits with her knees drawn up and a blanket round her shoulders, watching the dark. She doesn't sleep much. You understand why.
+| Ireena is sharpening a knife she doesn't need, because her hands want something to do.
+
+~ camp:guest:ismark
+| Ismark keeps watch with his sword across his knees, staring into the fire as if his father might be in it.
+
+~ camp:guest:ezmerelda
+| Ezmerelda has her false leg off and is oiling the joints, swearing softly at the damp in Barovia's air.
+| Ezmerelda is laying out silver, stakes and holy water on a cloth and counting them, twice.
+
+~ camp:guest:rictavio
+| Rictavio is telling a story about a carnival, a lion and a duke's wife. It's very funny. His eyes never stop watching the trees.
+
+~ camp:guest:arabelle
+| Arabelle sits close to the fire with her chin on her knees, watching the flames as if they were telling her something. Perhaps they are.
+
+~ camp:guest:kasimir_velikov
+| Kasimir sits apart with his hood up and his hands folded. When the fire pops he doesn't flinch; he's somewhere a long way from here.
+
+~ camp:guest:sir_godfrey_gwilym
+| Sir Godfrey stands at the edge of the firelight in his dented plate. He doesn't sleep, or eat, or sit. He keeps the watch, as he has for four hundred years.
+
+~ camp:guest:emil_toranescu
+| Emil lies just outside the firelight, a grey shape that might be a man or a wolf, depending on when you look.
+
+~ camp:guest:gertruda
+| Gertruda is looking at everything: the fire, the trees, the dark. She has never slept outside a house before, and she's trying to remember all of it.
+
+~ camp:guest:pidlwick_ii
+| Pidlwick II sits with its painted face turned to the flames, ticking softly. Now and then it claps, once, at nothing.
+
+~ camp:guest:mordenkainen
+| Mordenkainen sits apart with a book open on his knee, reading by a light nobody lit. He doesn't turn the pages. He doesn't seem to need to.
+
+~ camp:guest:davian_martikov
+| Davian Martikov sniffs at the camp's wine, sips it, and says nothing at all, which from him is high praise.
+
+~ camp:guest:adrian_martikov
+| Adrian sits a little apart, turning a cork over in his fingers, watching the sky for ravens.
+
+~ camp:guest:victor_vallakovich
+| Victor sulks at the edge of the firelight with his stolen spellbook, pretending not to listen to every word.
+
+~ camp:guest:ilinca_vrana
+| Ilinca roosts on a low branch over the camp, a raven with an old woman's patience, one eye on the fire and one on the road.
+
+~ camp:guest:lupu
+| Lupu lies across the path into camp with his grey muzzle on his paws. Nothing is getting past him tonight without an argument.
+
+~ camp:guest:parriwimple
+| Parriwimple has carried a whole fallen log to the fire without being asked, and is now counting the sparks.

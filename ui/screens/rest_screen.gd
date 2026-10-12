@@ -2,10 +2,11 @@ class_name RestScreen
 extends CanvasLayer
 ## Short and Long Rests (plan §5.2, docs/ui/party_management.md pm_03). Short Rest: one hour; each character spends
 ## Hit Point Dice one at a time (roll + Con, minimum 1) and short-rest features come back. Long Rest: eight hours;
-## everything comes back, with the location's interruption risk. A location can forbid resting ("rest": no) or make
-## it risky. Rests need nobody hostile around (the screen can't open in combat). A Long Rest also waits 16 hours after
-## the last one and isn't taken in a dungeon or building while enemies remain in it (RestRules): its card says why, in
-## words, for the mouse and the pad alike, and the Short Rest stays open.
+## everything comes back, with the location's interruption risk (LongRest). A location can forbid resting ("rest": no)
+## or make it risky. Rests need nobody hostile around (the screen can't open in combat). A Long Rest also waits 16
+## hours after the last one and isn't taken in a dungeon or building while enemies remain in it (RestRules): its card
+## says why, in words, for the mouse and the pad alike, and the Short Rest stays open. In the wild the Long Rest makes
+## camp (F16, LocationCamp): the card pitches it, and while the party is camped it sleeps there or breaks camp.
 
 var root: Node
 var st: StoryState
@@ -92,13 +93,79 @@ func _refresh_long() -> void:
 	for c in _long_slot.get_children():
 		c.queue_free()
 	var why := RestRules.long_rest_refusals(st)
-	var button := UiKit.button("Take a Long Rest (8 hours)", _long_rest.bind(_rule), 16, "rest")
+	var camp := _camp()
+	var text := "All Hit Points, Hit Point Dice, spell slots and features come back."
+	var label := "Take a Long Rest (8 hours)"
+	var take := _long_rest.bind(_rule)
+	if camp != null and not camp.slept:
+		label = "Sleep by the fire (8 hours)"
+		take = _sleep_at_camp
+		text = "The party has made camp. " + text
+	elif camp == null and _can_camp():
+		label = "Make camp (8 hours)"
+		take = _make_camp
+		text = "Make camp here: a fire, a word with whoever wants one, then sleep. " + text
+	var button := UiKit.button(label, take, 16, "rest")
 	button.disabled = not why.is_empty()
 	button.tooltip_text = "\n".join(why)
 	var ward := Wards.keeps_rest(st)
 	var risk := "Not now" if not why.is_empty() else ("Safe here: %s" % ward if ward != "" else ("Dangerous here: it may be interrupted" if _rule == "risky" else "Safe here"))
-	_long_slot.add_child(_rest_card("Long Rest", "8 hours", "All Hit Points, Hit Point Dice, spell slots and features come back.",
-		button, risk, why))
+	_long_slot.add_child(_rest_card("Long Rest", "8 hours", text, button, risk, why))
+	if camp != null:
+		var strike := UiKit.button("Break camp", _break_camp, 15)
+		strike.tooltip_text = "Pack up and walk on."
+		strike.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		_long_slot.add_child(strike)
+
+
+## The place the party is resting in, when the screen is open over the campaign itself: never the tutorial's practice
+## ground or a capture's own party, where a Long Rest stays the plain one.
+func _view() -> LocationView:
+	if root == null or root is TutorialSession or st != GameState.story or not "view" in root:
+		return null
+	return root.get("view") as LocationView
+
+
+func _camp() -> LocationCamp:
+	return LocationCamp.of(_view())
+
+
+## Whether a Long Rest here makes camp (in the wild, F16).
+func _can_camp() -> bool:
+	var view := _view()
+	return view != null and not view.in_combat and CampSite.is_wild(Compendium.shared().get_entry("locations", st.location))
+
+
+## Makes camp in the wild: the screen gives way to the camp, and the night is slept there (LocationCamp). With no
+## room for a camp within reach, the party rests here as before.
+func _make_camp() -> void:
+	if not RestRules.long_rest_refusals(st).is_empty():
+		return
+	if LocationCamp.pitch(_view(), root, _rule) == null:
+		_long_rest(_rule)
+		return
+	_close()
+
+
+func _sleep_at_camp() -> void:
+	var camp := _camp()
+	_close()
+	if camp != null:
+		camp.sleep()
+
+
+func _break_camp() -> void:
+	var camp := _camp()
+	_close()
+	if camp != null:
+		camp.strike()
+
+
+func _close() -> void:
+	if root != null and root.has_method("close_screen") and root.get("screen") == self:
+		root.call("close_screen")
+	else:
+		queue_free()
 
 
 func _draw() -> void:
@@ -317,36 +384,10 @@ func _long_rest(rule: String) -> void:
 		_draw()
 		return
 	Audio.sfx("rest")
-	var interrupted := false
-	var warned := ""
-	if rule == "risky" and Wards.keeps_rest(st) == "":
-		interrupted = Dice.roller.roll_one(6, "Long Rest interruption") == 1
-	# Alarm: whatever comes in the night finds you awake and ready, and slinks off; you sleep again.
-	if interrupted and Wards.alarmed(st):
-		interrupted = false
-		warned = " In the small hours the Alarm sounds; you're up before whatever it was gets close, and it slinks away."
-	if interrupted:
-		st.advance_minutes(60)
-		for ch in st.party:
-			if not ch.dead:
-				ch.finish_short_rest()
-		_log.text = "Something moves in the dark, and nobody sleeps again. (Interrupted: a Short Rest's benefits only.)"
-	else:
-		st.advance_minutes(8 * 60)
-		st.miles_since_long_rest = 0.0
-		RestRules.note_long_rest(st)
-		for ch in st.party:
-			if not ch.dead:
-				ch.finish_long_rest()
-				EncounterSetup.clear_fight_effects(ch)
-		for g in st.guests:
-			if not g.dead:
-				g.finish_long_rest()
-		_log.text = "Eight hours pass. Everyone wakes rested, if not refreshed." + warned
-		var room := Services.after_long_rest(st)   # a room booked at the inn (F14)
-		if room != "":
-			_log.text += " " + room
-		for line in RestCasts.after_long_rest(st.party, Dice.roller):
+	var res := LongRest.take(st, rule, Dice.roller)
+	_log.text = str(res["text"])
+	if not bool(res["interrupted"]):
+		for line: String in res["lines"]:
 			_log.text += "\n" + line
 		_narrate("rest:long")
 		var region := str(Compendium.shared().get_entry("locations", st.location).get("region", ""))
