@@ -191,7 +191,8 @@ func list(c: Combatant) -> Array[Dictionary]:
 	if has(c, "draconic_flight"):
 		out.append(_entry("draconic_flight", "Draconic Flight", "Fly = Speed", "bonus", _first(bw, _res_why(c, "draconic_flight")), "none", "Bonus Action: spectral wings give a Fly Speed equal to your Speed for 10 minutes."))
 	if has(c, "clouds_jaunt"):
-		out.append(_entry("clouds_jaunt", "Cloud's Jaunt", "teleport 30 ft", "bonus", _first(bw, _res_why(c, "giant_ancestry")), "point", "Bonus Action: teleport up to 30 ft to an unoccupied space you can see.", 30))
+		# The square picker (with "Out of range" past 30 ft), as Misty Step's: owner report 2026-10-12, it couldn't be used.
+		out.append(_entry("clouds_jaunt", "Cloud's Jaunt", "teleport 30 ft", "bonus", _first(bw, _res_why(c, "giant_ancestry")), "place", "Bonus Action: teleport up to 30 ft to an unoccupied space you can see.", 30))
 	if has(c, "adrenaline_rush"):
 		out.append(_entry("adrenaline_rush", "Adrenaline Rush", "Dash + %d temp HP" % c.creature.proficiency_bonus(), "bonus", _first(bw, _res_why(c, "adrenaline_rush")), "none", "Bonus Action: Dash and gain Temporary Hit Points equal to your Proficiency Bonus."))
 	if has(c, "stonecunning"):
@@ -655,9 +656,12 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			df.turn_owner_id = c.id
 			c.creature.add_effect(df)
 		"clouds_jaunt":
-			ch.spend_resource("giant_ancestry")
-			c.bonus_available = false
-			return _teleport(c, cell, 30)
+			# The square is checked first: a square it can't reach spends neither the use nor the Bonus Action.
+			var jr := _teleport(c, cell, 30)
+			if jr.ok:
+				ch.spend_resource("giant_ancestry")
+				c.bonus_available = false
+			return jr
 		"adrenaline_rush":
 			ch.spend_resource("adrenaline_rush")
 			c.bonus_available = false
