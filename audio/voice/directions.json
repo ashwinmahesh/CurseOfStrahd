@@ -1547,6 +1547,7 @@
   "649171114bae46d3": "[thoughtful, then resolved, grave]",
   "67a6a389225aa257": "[thoughtful, melancholy]",
   "6d863f0c594b0ea5": "[haunted, uneasy]",
+  "833f3ad6604fab91": "[grave, warm, resolute]",
   "97cc58da84d67314": "[bitter, dry]",
   "9c90ef1d3c26c8f7": "[weary, relieved]",
   "ac8259dba30e614d": "[quietly relieved, wary]",
@@ -1649,6 +1650,7 @@
   "3c7f29aac052b66b": "[dry, deadpan, bemused]",
   "40d5fb78b6ae639d": "[flat, stubborn]",
   "40fd5b4a7ea170b1": "[baffled, gruff]",
+  "4c319a026336dbdb": "[amused, gossiping, cheerful]",
   "4f24320a17e7bf62": "[stubborn, dry]",
   "556172d271c5e674": "[uneasy, low]",
   "5aa874c7813fa9ff": "[wondering, hushed]",
@@ -1805,7 +1807,8 @@
   "abf47bbbf26a4f39": "[broken, quiet]",
   "aea24ecdab977b7c": "[heartbroken, heavy, booming]",
   "affcdc5968d28e75": "[emotional, booming, tender]",
-  "b27b96bbd42702f6": "[panicked, roaring]"
+  "b27b96bbd42702f6": "[panicked, roaring]",
+  "ba0c6eaa442c9465": "[sad, bitter, low]"
  },
  "lydia_petrovna": {
   "09e2cb7a7b005777": "[delighted, chirpy]",
@@ -2013,10 +2016,12 @@
   "a63f1d89c10c2274": "[dry laugh, bitter, wry]",
   "a831a3edb6634711": "[low, uneasy, warning]",
   "aadfb61cb42cdd6a": "[gruff kindness]",
+  "b67f36d444020375": "[haunted, rueful, remembering]",
   "b74c8b4e61f24dc9": "[delighted, surprised]",
   "ca3cb782e1c07a87": "[quiet, tender, wry]",
   "d2eed7c51296dc8a": "[wry, hopeful]",
   "da087c9966525192": "[wry, self-deprecating]",
+  "da17546869d35419": "[grim, resigned, firm]",
   "dffb877c0f19c47c": "[low, bitter warning]",
   "ea4f69a7cc8b911d": "[brisk, wry]",
   "ee74ae81dd95c5b8": "[brusque, then troubled, musing]",

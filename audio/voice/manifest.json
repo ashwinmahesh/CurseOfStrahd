@@ -26798,6 +26798,13 @@
   "recipe": "e91d2c917c",
   "text": "Kasimir Velikov. My people came to this valley long ago, the elves of the dusk, as guests of its lord. We stayed as his tenants. Now there are only a handful of us, none of us young, and there will never be another. That was his doing. And, I am afraid, a little of ours."
  },
+ "kasimir_velikov/833f3ad6604fab91": {
+  "chars": 108,
+  "direction": "[grave, warm, resolute]",
+  "model": "eleven_v3",
+  "recipe": "e91d2c917c",
+  "text": "And you will want this. I was keeping it for whoever would take me into the mountains. It seems that is you."
+ },
  "kasimir_velikov/838a484be330adf0": {
   "chars": 195,
   "model": "eleven_v3",
@@ -29073,6 +29080,13 @@
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "The burgomaster's got a son home who went up the mountain twenty years ago. I don't understand it and I'm not asking. Anna's singing again. All day."
+ },
+ "krezk_guard/4c319a026336dbdb": {
+  "chars": 100,
+  "direction": "[amused, gossiping, cheerful]",
+  "model": "eleven_v3",
+  "recipe": "1d8817fed7",
+  "text": "The Martikovs' first cart is in the shrine cellar. Half the town's found a reason to go up and pray."
  },
  "krezk_guard/4f24320a17e7bf62": {
   "chars": 104,
@@ -32555,6 +32569,13 @@
   "recipe": "2d163e4e93",
   "text": "No. No! I only just got you back!"
  },
+ "luvash/ba0c6eaa442c9465": {
+  "chars": 58,
+  "direction": "[sad, bitter, low]",
+  "model": "eleven_v3",
+  "recipe": "2d163e4e93",
+  "text": "Take whatever's in the chest. I don't want anything in it."
+ },
  "lydia_petrovna/09e2cb7a7b005777": {
   "chars": 116,
   "direction": "[delighted, chirpy]",
@@ -34838,6 +34859,13 @@
   "recipe": "b6ee845820",
   "text": "No apprentice. You don't need a master; you need a kitchen. Come back when this is over and make me something that isn't a turnip."
  },
+ "mordenkainen/b67f36d444020375": {
+  "chars": 198,
+  "direction": "[haunted, rueful, remembering]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "That's mine. The night I ran from the castle I called a storm down behind me and gave it one order: bring her after me. It never found her. It comes back every evening and strikes the place I stood."
+ },
  "mordenkainen/b74c8b4e61f24dc9": {
   "chars": 97,
   "direction": "[delighted, surprised]",
@@ -34865,6 +34893,13 @@
   "model": "eleven_v3",
   "recipe": "b6ee845820",
   "text": "Rusty, but serviceable. Like the rest of me."
+ },
+ "mordenkainen/da17546869d35419": {
+  "chars": 195,
+  "direction": "[grim, resigned, firm]",
+  "model": "eleven_v3",
+  "recipe": "b6ee845820",
+  "text": "I can't dismiss it. It answers to the man who gave the order, and I'm not that man any more. We'll wait here for dusk, and you'll tell it what it needs to hear, or break it. I'd rather the first."
  },
  "mordenkainen/dffb877c0f19c47c": {
   "chars": 109,
@@ -47296,6 +47331,12 @@
   "recipe": "dd92281f92",
   "text": "The fermenting hall is quiet. The mash in the vats has gone still and grey, like porridge nobody wanted."
  },
+ "narrator/57cc6f82369e566e": {
+  "chars": 75,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Mordenkainen stops at the edge of the black glass and doesn't step onto it."
+ },
  "narrator/57d257a862c4136a": {
   "chars": 153,
   "model": "eleven_v4",
@@ -53548,6 +53589,12 @@
   "recipe": "dd92281f92",
   "text": "\"The family walked the rows last night with lamps, and the old man with the ravens counted us twice and wept. Nothing else came. Let us sleep.\""
  },
+ "narrator/86094301ee867212": {
+  "chars": 136,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the head of the bier, in the hollow made for it, the dragon's skull rests again. Someone has moved the dried flower to lie beside it."
+ },
  "narrator/861eb1967a82a91d": {
   "chars": 81,
   "model": "eleven_v4",
@@ -57297,6 +57344,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A four-poster bed hung with embroidered curtains, two wardrobes, a vanity laid out for a woman who took great care over her face, and over the cold hearth a portrait of the master and mistress. One pillow is dented; the other has never been touched."
+ },
+ "narrator/a2c4531f9c6443be": {
+  "chars": 183,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The dragon lies along the bier with his wings folded like a cloak, every bone in its place, and his long skull at the end of the neck where it belongs. The frost on him is silver now."
  },
  "narrator/a2d9a64d02f4830f": {
   "chars": 94,
