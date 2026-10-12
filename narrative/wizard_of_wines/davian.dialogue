@@ -184,7 +184,14 @@ else
 Narrator: The second stone has a dark thread through it now, fine as a hair. Davian holds it up to the light for a long moment.
 Davian: It's been near that tree. Good soil will draw it out, in time. Most things wash out, in time.
 endif
+# The count is the stones in the ground, whichever came home first (Wiki finding 45).
+if flag.winery_stones_returned >= 3
+Davian: Three. All three in the ground again. My grandfather never lived to see that. I'll drink to him tonight.
+elif flag.winery_stones_returned >= 2
 Davian: Two. Two in the ground. My grandfather had only two for a while, when he was a boy, and he swore the wine was better for having to try.
+else
+Davian: One in the ground. My grandfather swore a vine only needs one good reason to keep going. We'll see if he was right.
+endif
 -> first_wine
 
 ~ return_berez
@@ -192,7 +199,11 @@ set berez_stone_returned
 set winery_stones_returned += 1
 quest the_third_stone returned
 Narrator: Davian doesn't take the third stone at once. He looks at it in your hand, then at you, and his face does something it hasn't done since you met him.
+if flag.winery_stones_returned >= 3
 Davian: From the witch. From Berez. You went into that drowned place for my vines. ...Three. I didn't think I'd see three again before I died. I find I'm in less of a hurry now.
+else
+Davian: From the witch. From Berez. You went into that drowned place for my vines. It isn't three, not yet. But it's one more than I had this morning, and I find I'm in less of a hurry now.
+endif
 -> first_wine
 
 ~ first_wine

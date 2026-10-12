@@ -141,6 +141,9 @@ Narrator: He polishes a cup that doesn't need polishing and gives you nothing. H
 ~ keepers
 set keepers_of_the_feather_met
 set wizard_of_wines_hook
+if not quest.wizard_of_wines
+quest wizard_of_wines rumored
+endif
 cutscene keepers_ravens
 Narrator: Urwin closes the shutters, one after another, and when he turns round there are ravens on every beam of the taproom: a dozen, two dozen, silent, all watching you.
 if flag.raven_fed
@@ -187,6 +190,9 @@ Danika: Stew. It's always stew. What's in it depends what Urwin found. Don't ask
 
 ~ wine
 set wizard_of_wines_hook
+if not quest.wizard_of_wines
+quest wizard_of_wines rumored
+endif
 Danika: Thin? It's the last cask. The wine comes from Urwin's father's vineyard, the Wizard of Wines, south of the lake road. Every month, a cart. Three months now, no cart, and no word.
 if flag.wine_shortage_heard
 interject tag:curious: The tavern in the village of Barovia is out too. The barkeep said the deliveries had stopped.

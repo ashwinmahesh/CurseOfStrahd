@@ -423,7 +423,7 @@
       "trigger": "enter_area:the_dig",
       "waiting": true,
       "when": "not flag.cellar_dig_cleared",
-      "text": "Needle blights are scraping at the earth floor with their claws, and a druid with a lantern is telling them where.",
+      "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig.",
       "monsters": [
         {
           "monster": "vine_blight",

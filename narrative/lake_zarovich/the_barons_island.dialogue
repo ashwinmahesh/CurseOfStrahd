@@ -27,7 +27,9 @@ if flag.reed_isle_boatmen_beaten
 endif
 if flag.reed_isle_met
 Ostap: Keep your voice down when the moon's up. Sound carries on the water. That's how they'll find us, one night.
--> END
+# Leaving before the boat came isn't the end of it (Wiki finding 43).
+* Come back with us. We'll get you home. -> home_ask
+* (Leave them to their fires.) -> END
 endif
 set reed_isle_met
 Narrator: In the middle of the island, among the reeds, there are huts: little bent-over things of reed and driftwood, a dozen of them, and cookfires banked low, and fish drying on lines. A big bald man with a beard like a bird's nest stands up from the nearest fire with a fish-spear in his hand.
