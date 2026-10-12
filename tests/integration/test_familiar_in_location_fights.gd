@@ -155,3 +155,58 @@ func test_a_familiar_cast_while_exploring_appears_and_follows_the_party() -> voi
 	wizard.familiar = ""
 	LocationParty.refresh_familiars(v)
 	assert_eq(_world_familiars(v).size(), 0, "a familiar that's gone leaves the line")
+
+
+## Owner report (2026-10-12): a wizard's familiar got no turn. In the 2024 rules it rolls its own Initiative and acts
+## on its own turn: it can't attack, but it can move and take other actions, such as Help. The player runs that turn.
+func test_the_familiar_takes_its_own_turn_under_the_players_hand() -> void:
+	var v := _view()
+	var wizard := GameState.story.party[0]
+	wizard.familiar = "here"
+	assert_true(v.start_encounter("rat"))
+	await _frames(3)
+	var cv := v.combat_view
+	var e := cv.e
+	var owl := _familiars(e, wizard.id)
+	assert_eq(owl.size(), 1)
+	if owl.is_empty():
+		return
+	var fam := owl[0]
+	assert_true(e.order.has(fam), "in the initiative order: %s" % [e.order.map(func(c: Combatant) -> String: return c.name())])
+	assert_true(fam.is_player_controlled(), "the player's to run")
+	var turned := false
+	for i in 12:
+		var c := e.current()
+		if c == fam:
+			turned = true
+			break
+		if e.state != Encounter.State.ACTIVE:
+			break
+		e.end_turn()
+		await _frames(1)
+	assert_true(turned, "its turn comes round")
+	if not turned:
+		return
+	assert_true(fam.movement_left > 0, "it can move")
+	var acts := cv.catalog.actions_for(fam).map(func(a: Dictionary) -> String: return str(a.get("id", "")))
+	assert_true(acts.has("help"), "and Help: %s" % [acts])
+	await _end_fight(v)
+
+
+
+## Owner report (2026-10-12): Ratatoille's owl got no turn: his book doesn't hold Find Familiar (the owl came another
+## way), so it was left out of his fights. A familiar stays until it drops or is dismissed, whoever cast it.
+func test_a_familiar_whose_caster_cant_cast_the_spell_still_fights() -> void:
+	var v := _view()
+	var ilse := GameState.story.party[1]
+	assert_false(ilse.knows_spell("find_familiar"), "Ilse has no Find Familiar")
+	ilse.familiar = "here"
+	assert_true(v.start_encounter("rat"))
+	await _frames(3)
+	var e := v.combat_view.e
+	var owl := _familiars(e, ilse.id)
+	assert_eq(owl.size(), 1, "her familiar is on the board")
+	if owl.is_empty():
+		return
+	assert_true(e.order.has(owl[0]) and owl[0].is_player_controlled(), "with its own turn, the player's to run")
+	await _end_fight(v)
