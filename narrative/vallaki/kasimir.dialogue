@@ -17,6 +17,7 @@ endif
 * [Insight DC 13] What is he grieving for? -> grief_ok | grief_fail
 * [if not flag.kasimir_sister_told] (Sit with him a while, and say nothing.) -> sit
 * [if flag.kasimir_sister_told] Tell us about the temple in the mountains. -> temple
+* [if flag.kasimir_sister_told and treasure_at:vallaki_vistani_camp:camp_edge] We'll find you a road into the mountains, to that temple. -> trade
 * [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
 * [name:wren_featherfoot] [if quest.the_last_lesson and not flag.wren_letter_given] Give him Master Sorrel's letter. -> companions/lesson:kasimir
 * We heard you have spells to spare. Scrolls? -> scrolls
@@ -53,6 +54,13 @@ Kasimir: My sister, Patrina. Cleverer than me, prouder than me. She went up to t
 Kasimir: Her bones lie under his castle now. They say there is a temple high in the mountains, sealed in amber, where death itself can be argued with. One day I will go there and argue.
 interject class:cleric: Some doors are shut for a reason.
 Kasimir: I know. I have stood behind one for a very long time.
+-> menu
+
+# The Beggar's treasure: he keeps it, and trades it for a road into the mountains (Wiki finding 70).
+~ trade
+Kasimir: A road into the mountains. (He puts the net down.) Then I have something for you. The Vistani found it on the road and brought it to me, because I am the one who keeps the things nobody else wants.
+tarokka give vallaki_vistani_camp:camp_edge
+Kasimir: Find me that road. I will hold you to it.
 -> menu
 
 ~ grief_fail

@@ -111,6 +111,11 @@ Luvash: Take this. It's not enough. Nothing would be enough.
 Luvash: And this. My grandmother swam the Luna in it, all the way to the falls and back. In the water it makes you a fish. The lake took my girl once; let it never take you.
 give cloak_of_the_manta_ray
 endif
+# The Tax Collector's treasure: the lid opens once his daughter is home (Wiki finding 70).
+if treasure_at:vallaki_vistani_camp:luvash_wagon
+Luvash: And my chest. It wouldn't open for me all the while she was gone. Whatever's in it now, it's yours.
+tarokka give vallaki_vistani_camp:luvash_wagon
+endif
 if tarokka.ally.npc == arabelle and not guest:arabelle and flag.arabelle_stayed
 # She stayed once: she asks again, without the whole scene (Wiki finding 77).
 Arabelle: Have you come back for me? I said you would.
@@ -217,6 +222,10 @@ approve kip_smudgewick +3 godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 w
 -> END
 
 ~ lost
+# The ally the cards named is gone with her (Wiki finding 67).
+if tarokka.ally.npc == arabelle
+quest find_the_ally lost
+endif
 set arabelle_lost
 quest missing_arabelle lost
 Narrator: When you come up the last time, the water is flat and black and empty, and Bluto has gone, somewhere in the reeds. There is nothing in your hands but lake weed.

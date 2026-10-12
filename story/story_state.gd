@@ -856,6 +856,10 @@ static func _upgrade_quests(st: StoryState) -> void:
 			back = "declined"
 		if back != "":
 			esc["stage"] = back
+	# Madam Eva handed her treasure over without marking it found, so her chest held a second copy (Wiki finding 63).
+	if bool(st.get_flag("tser_treasure_given", false)):
+		for slot: String in Tarokka.treasures_at("tser_pool_eva_tent", st):
+			st.set_flag("treasure_found_" + slot, true)
 	st._settle_ally()
 
 

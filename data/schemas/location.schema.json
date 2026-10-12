@@ -408,6 +408,10 @@
           "when": {
             "type": "string"
           },
+          "unlocked_when": {
+            "type": "string",
+            "description": "A lock the story takes off: the lid opens once this holds (Luvash's chest, once Arabelle is home)."
+          },
           "flag": {
             "type": "string"
           },
