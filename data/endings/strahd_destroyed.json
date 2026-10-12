@@ -167,6 +167,13 @@
     },
     {
       "topic": "order",
+      "title": "The Order of the Silver Dragon",
+      "portrait": "argynvost",
+      "when": "flag.argynvost_skull_home and flag.argynvost_beacon_lit",
+      "text": "The beacon on Argynvostholt burns every night now, white and steady, above a dragon whose bones lie whole again. Shepherds on the far side of the valley set their watches by it."
+    },
+    {
+      "topic": "order",
       "title": "Argynvostholt",
       "portrait": "argynvost",
       "when": "flag.order_fate == rest",

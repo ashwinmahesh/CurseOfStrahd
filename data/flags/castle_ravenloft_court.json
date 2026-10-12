@@ -82,6 +82,11 @@
       "summary": "The party found the silver dragon Argynvost's skull mounted in the castle's trophy room (Argynvostholt's quest the_dark_beacon wants it home)."
     },
     {
+      "id": "argynvost_skull_taken",
+      "type": "bool",
+      "summary": "The party lifted Argynvost's skull down from the castle's trophy wall to take it home to Argynvostholt."
+    },
+    {
       "id": "gertruda_met",
       "type": "bool",
       "summary": "The party has met Gertruda in the yellow guest room."
