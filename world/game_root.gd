@@ -711,12 +711,12 @@ func _boss_music(cv: CombatView) -> void:
 
 # --- Strahd's presence (ADR 0014, story/strahd_presence.gd) -----------------------------------------
 
-## A visit from Strahd at `on` (arrive, rest) if one is due here and now and nothing else is going on. Spoils still
-## open (they come a frame after a fight) hold it until they're taken: it plays then, never dropped.
+## A visit from Strahd at `on` (arrive, rest) if one is due here and now and nothing else is going on. What holds it
+## (_strahd_holds) makes it wait until it's done with: it plays then, never dropped.
 func _strahd(on: String, ctx: Dictionary = {}) -> bool:
-	if view == null or view.in_combat or dialogue != null:
+	if view == null or view.in_combat or (dialogue != null and on != "rest"):
 		return false
-	if loot != null or not _loot_queue.is_empty():
+	if _strahd_holds(on):
 		_strahd_after_loot.call_deferred(on, ctx)
 		return false
 	var visit := StrahdPresence.due(st, on, ctx)
@@ -727,10 +727,20 @@ func _strahd(on: String, ctx: Dictionary = {}) -> bool:
 	return true
 
 
+## Whether a visit at `on` waits: spoils still open (they come a frame after a fight), and for the night's visit after
+## a Long Rest, a screen still open (the rest screen with the night's lines, the companions' words and the change of
+## prepared spells; the inventory a magic item's rest was taken from) or a talk started from it (lane 24, gap 2: the
+## visit used to close the rest screen and take its morning with it).
+func _strahd_holds(on: String) -> bool:
+	return loot != null or not _loot_queue.is_empty() or (on == "rest" and (screen != null or dialogue != null))
+
+
 func _strahd_after_loot(on: String, ctx: Dictionary) -> void:
-	while loot != null or not _loot_queue.is_empty():
+	while _strahd_holds(on):
 		if loot != null:
 			await loot.closed
+		if not is_inside_tree():
+			return
 		await get_tree().process_frame
 	_strahd(on, ctx)
 
@@ -749,7 +759,8 @@ func _strahd_on_road(leg: Dictionary, to: String) -> bool:
 	return true
 
 
-## The rest screen's Long Rest is over (ui/screens/rest_screen.gd): he may have come in the night.
+## A Long Rest is over (the rest screen, a camp's night, a magic item's rest): he may have come in the night, and
+## comes once the screen it was taken from, and any talk started there, are done (_strahd_holds).
 func strahd_after_rest(minutes: int) -> void:
 	_strahd("rest", {"night": StrahdPresence.night_between(st.total_minutes() - minutes, st.total_minutes())})
 

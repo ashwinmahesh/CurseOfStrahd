@@ -48,3 +48,13 @@ A full night brings back what a Long Rest does. Then the Narrator says the night
 night, as after any Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
 night ended with, and **Break camp**. Breaking camp packs everything away (`camp:strike`), and the party falls in behind its leader. Leaving
 the place, or anything that builds it again, ends the camp too.
+
+## Rests elsewhere
+
+Indoors, in towns and at inns the rest screen takes the Long Rest as before (story/long_rest.gd for both). For an
+hour after any Long Rest (`LongRest.MORNING_MINUTES`, `StoryState.morning`, not saved), opening the rest screen again
+still offers the companions' words and the change of prepared spells, counted from the list the night ended with.
+Strahd's night visit waits until the rest screen, or a talk started from it, is closed (game root `_strahd_holds`),
+instead of closing it and taking the morning with it. Closing the screen with a word still waiting puts up a hint
+("Thistle wants a word: open Rest (R) to talk"). Daern's Instant Fortress and the Rod of Security take the same Long
+Rest (the guests, the miles walked, the spells cast on waking), with the night's lines, the hint and Strahd's chance.

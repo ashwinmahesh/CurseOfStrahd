@@ -345,6 +345,7 @@ func sleep() -> void:
 	slept = true
 	had.clear()
 	prepared_before = PrepareScreen.snapshot(view.st)
+	view.st.morning["prepared"] = prepared_before
 	_queue.append(str(res["text"]))
 	for line: String in res["lines"]:
 		_queue.append(line)
