@@ -678,7 +678,8 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	if int((hc["situation"] as Dictionary)["cover"]) == CombatGrid.Cover.TOTAL:
 		return -1e9
 	var avg := _avg(c, o)
-	var expected := float(hc["chance"]) * avg
+	var chance := float(hc["chance"]) if tactics.focuses(c) else sqrt(maxf(0.0, float(hc["chance"])))
+	var expected := chance * avg
 	# An Echo Knight's echo is only an image (its knight calls another with a Bonus Action): worth little.
 	var echo := EchoKnight.is_echo(t)
 	if echo:
@@ -698,7 +699,10 @@ func _score(c: Combatant, t: Combatant, o: Dictionary, cell: Vector2i, cost: int
 	# Opportunity Attacks along the way.
 	if cell != c.cell and float(prof["oa_fear"]) > 0.0:
 		score -= float(prof["oa_fear"]) * _oa_risk(c, CombatGrid.path_to(reach, cell), threats)
-	score -= cost * 0.01
+	# Spread the blows: each foe's own lean, and the walk to get there (more for a beast).
+	if not echo:
+		score += expected * tactics.taste(c, t)
+	score -= cost * tactics.nearness(c)
 	return score
 
 
