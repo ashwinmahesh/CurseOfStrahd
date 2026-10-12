@@ -106,3 +106,8 @@ func from_dict(data: Dictionary) -> void:
 	if data.has("story"):
 		story = StoryState.from_dict(data["story"] as Dictionary)
 	combat_snapshot = (data.get("combat", {}) as Dictionary).duplicate(true)
+	# A save made outside a fight holds no fight's holds (owner report 2026-10-12: a save kept Restrained from a fight
+	# that had ended): the same rule as a fight's end, EncounterSetup.clear_fight_effects.
+	if combat_snapshot.is_empty() and story != null:
+		for ch: Character in story.party + story.bench:
+			EncounterSetup.clear_fight_effects(ch)
