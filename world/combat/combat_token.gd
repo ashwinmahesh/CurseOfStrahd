@@ -230,11 +230,23 @@ func _build() -> void:
 	var side_colour := _side_colour()
 	_ring = MeshInstance3D.new()
 	var tm := TorusMesh.new()
-	tm.inner_radius = 0.36 * size_units
-	tm.outer_radius = 0.43 * size_units
+	# A foe's ring is a little wider and a bright red of its own that no light, fog or rain dims or bleaches, so it shows
+	# in a dark room and in the mist (owner, 2026-10-12: "make the red circle around enemies brighter"); the party's
+	# gold and the guests' blue stay as they were, lit by the scene, so a foe still stands out from a friend.
+	var foe := side_colour == "crimson"
+	tm.inner_radius = (0.35 if foe else 0.36) * size_units
+	tm.outer_radius = (0.45 if foe else 0.43) * size_units
 	_ring.mesh = tm
 	_ring.position.y = 0.03
-	_ring.material_override = Look.cel(side_colour)
+	if foe:
+		var rm := StandardMaterial3D.new()
+		rm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		rm.albedo_color = Look.color("vampire_red")
+		rm.disable_fog = true
+		_ring.material_override = rm
+		_ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	else:
+		_ring.material_override = Look.cel(side_colour)
 	add_child(_ring)
 	_active_ring = MeshInstance3D.new()
 	var tm2 := TorusMesh.new()
