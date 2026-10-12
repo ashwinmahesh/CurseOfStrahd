@@ -13,17 +13,31 @@ static func cell_under(camera: Camera3D, grid: CombatGrid, screen: Vector2, boar
 	if board != null and board.shaped():
 		var hit: Variant = ground_hit(board, origin, dir)
 		return Vector2i(floori((hit as Vector3).x), floori((hit as Vector3).z)) if hit != null else Vector2i(-1, -1)
-	for h: int in [4, 3, 2, 1, 0]:
-		var t := (float(h) - origin.y) / dir.y
+	for h: float in planes():
+		var t := (h - origin.y) / dir.y
 		if t < 0.0:
 			continue
 		var p := origin + dir * t
 		var cell := Vector2i(floori(p.x), floori(p.z))
 		if not grid.in_bounds(cell):
 			continue
-		if grid.height(cell) / CombatGrid.FEET == h or h == 0:
+		if on_plane(grid, cell, h):
 			return cell
 	return Vector2i(-1, -1)
+
+
+## The heights (world units) a level map's floors can stand at, highest first: the raised steps, a low dais, the floor.
+static func planes() -> Array[float]:
+	return [4.0, 3.0, 2.0, 1.0, float(CombatGrid.DAIS_FT) / CombatGrid.FEET, 0.0]
+
+
+## Whether square `cell`'s floor is the one at plane `h` (or `h` is the floor, which catches every square).
+static func on_plane(grid: CombatGrid, cell: Vector2i, h: float) -> bool:
+	if h == 0.0:
+		return true
+	if grid.height(cell) == CombatGrid.DAIS_FT:
+		return is_equal_approx(h, float(CombatGrid.DAIS_FT) / CombatGrid.FEET)
+	return h >= 1.0 and grid.height(cell) / CombatGrid.FEET == int(h)
 
 
 ## Where a ray first meets the ground on the map (natural slopes, raised floors and their sides; walls are passed

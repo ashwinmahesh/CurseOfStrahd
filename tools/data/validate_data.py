@@ -252,7 +252,7 @@ def semantic_checks(data):
             for dz in range(size):
                 for dx in range(size):
                     cx, cz = x + dx, z + dz
-                    if cz >= len(rows) or cx >= len(rows[cz]) or rows[cz][cx] not in ".~1234":
+                    if cz >= len(rows) or cx >= len(rows[cz]) or rows[cz][cx] not in ".~1234_":
                         errors.append(f"encounters/{eid}: {who} at {cell} isn't on open floor")
                         return
                     if (cx, cz) in taken:
@@ -385,7 +385,7 @@ def campaign_checks(data, errors, pending):
                 if m["monster"] not in monsters:
                     errors.append(f"{w}: unknown monster '{m['monster']}'")
                 x, z = m["cell"]
-                if rows and not (0 <= z < len(rows) and 0 <= x < len(rows[z]) and rows[z][x] in ".~1234"):
+                if rows and not (0 <= z < len(rows) and 0 <= x < len(rows[z]) and rows[z][x] in ".~1234_"):
                     errors.append(f"{w}: {m['monster']} at {m['cell']} isn't on open floor of {t['map']}")
     # Every travel file is part of one map (ADR 0011): roads may join places from any file; place ids are unique.
     all_places = {}
@@ -427,7 +427,7 @@ def campaign_checks(data, errors, pending):
             errors.append(f"npcs/{nid}: guest_build pregen '{gb['pregen']}' unknown")
 
 
-OPEN_FLOOR = ".~1234"
+OPEN_FLOOR = ".~1234_"
 
 
 def _floor_reach(rows, start):
