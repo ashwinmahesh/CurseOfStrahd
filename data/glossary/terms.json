@@ -71,7 +71,7 @@
       "here": "When the party sneaks up, its lowest Stealth total is checked against each enemy's Passive Perception.",
       "see": ["initiative"]},
     {"id": "bonus_action", "name": "Bonus Action", "kind": "Combat", "match": ["Bonus Action", "Bonus Actions"],
-      "text": "A swift extra deed that some spells and features let you do on your turn besides your action. You get one Bonus Action a turn, and only when something gives you a use for it.",
+      "text": "A swift extra deed that some spells and features let you do on your turn besides your action. You get one Bonus Action a turn, and only when something gives you a use for it. Drinking a potion, or giving one to a creature within 5 feet, is a Bonus Action.",
       "see": ["reaction"]},
     {"id": "reaction", "name": "Reaction", "kind": "Combat", "match": ["Reaction", "Reactions"],
       "text": "An instant response to a trigger, such as an Opportunity Attack or the Shield spell, and it can happen on someone else's turn. You have one per round; it comes back at the start of your turn.",

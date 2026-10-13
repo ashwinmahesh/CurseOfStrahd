@@ -546,6 +546,25 @@ func test_a_loot_window() -> void:
 			root.set("loot", null))
 
 
+## Guidance offered before a check (ui/common/guidance_prompt.gd) at its fullest: the whole party could cast it, each
+## keeping the spell with the longest name it would end, before the skill with the longest name.
+func test_the_guidance_prompt() -> void:
+	if not await _game(LATE):
+		return
+	var casters: Array[Dictionary] = []
+	for ch in GameState.story.party:
+		casters.append({"caster": ch, "ends": "Protection from Evil and Good", "rule": "ask"})
+	var offer := {"st": GameState.story, "who": GameState.story.party[0], "skill": &"sleight_of_hand", "dc": 25,
+		"casters": casters, "auto": null}
+	await _check("the Guidance prompt", func() -> Variant:
+		var p := GuidancePrompt.ask(root, offer, func(_i: int, _rule: String) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("GuidancePrompt*", "", false, false):
+				p.queue_free())
+
+
 ## The longest options the game's conversations offer, each with a check's chance after it, the way the cut-off ones
 ## looked (owner report).
 static func longest_options(n: int) -> Array:
@@ -664,6 +683,27 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		await _frames(1)
 		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no one rule to set for a list")
 		assert_true((cv.hud.get("_prompt_text") as Label).text.contains("Interpose the shield"), "the picked one's words")
+		assert_false((cv.hud.get("_prompt_callout") as Label).visible, "no red line when there's nothing to call out")
+		return cv.hud,
+		func() -> void: cv.hud.hide_prompt())
+	# Divine Smite on a Critical Hit (owner, 2026-10-13): the red line under its title, each slot's dice doubled.
+	var smite := ReactionRequest.new(CombatFeatures.DIVINE_SMITE, party.id, party.id)
+	smite.title = "Divine Smite?"
+	smite.callout = "Critical Hit: the smite's dice are doubled"
+	smite.text = "%s lands a Critical Hit on the dire wolf of the Svalich Woods. Smite for more Radiant damage: 2d8, and 1d8 more for each slot level above 1st, up to 5d8 (1d8 more against a Fiend), every die doubled?" % party.name()
+	smite.cost = "The free use or the spell slot you choose"
+	smite.spends_reaction = false
+	smite.min_targets = 1
+	smite.max_targets = 1
+	smite.target_choices.assign([{"id": "free", "label": "Free use (Paladin's Smite) · 4d8 (2d8 doubled)"},
+		{"id": "1", "label": "Level 1 slot · 4d8 (2d8 doubled)"}, {"id": "2", "label": "Level 2 slot · 6d8 (3d8 doubled)"},
+		{"id": "3", "label": "Level 3 slot · 8d8 (4d8 doubled)"}, {"id": "4", "label": "Level 4 slot · 10d8 (5d8 doubled, the most)"},
+		{"id": "5", "label": "Level 5 slot · 10d8 (5d8 doubled, the most)"}])
+	smite.selected_ids.assign(["free"])
+	await _check("Divine Smite's prompt on a Critical Hit", func() -> Variant:
+		cv.hud.show_prompt(smite)
+		await _frames(1)
+		assert_true((cv.hud.get("_prompt_callout") as Label).visible, "the Critical Hit line shows")
 		return cv.hud,
 		func() -> void: cv.hud.hide_prompt())
 	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.

@@ -93,6 +93,14 @@ func capture_shots(tool: Node, out: String) -> void:
 		root.call("open_shop", "gunther_arasek")
 		await _shoot(tool, "%s_shop.png" % out)
 		var shop := root.find_child("ShopScreen", true, false) as ShopScreen
+		# The pack side's Weapons tab with Only what Gunther buys on, then the whole pack with it off.
+		if shop != null and shop.has_method("pick_filter"):
+			shop.call("pick_filter", "Weapons")
+			await _shoot(tool, "%s_shop_weapons.png" % out)
+			shop.call("pick_filter", "All")
+			shop.call("set_only_buys", false)
+			await _shoot(tool, "%s_shop_everything.png" % out)
+			shop.call("set_only_buys", true)
 		if shop != null and shop.has_method("sell_all_junk"):
 			shop.call("sell_all_junk")
 			await _shoot(tool, "%s_shop_sold.png" % out)

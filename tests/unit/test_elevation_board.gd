@@ -126,3 +126,34 @@ func test_high_ground_over_a_drop_shows_rock() -> void:
 	var b := _board(["...  ", "...  "], ["334..", "334.."])
 	assert_true(b.floor_box(Vector2i(2, 0)).has_node("Cliff"), "20 ft up over an empty square: a rock face down to it")
 	assert_false(b.floor_box(Vector2i(0, 0)).has_node("Cliff"), "ground with nothing below it keeps its own sides")
+
+
+## Owner report (2026-10-13): "The Abbey walls start high in the air." What a wall square's builder already stands on
+## the square's floor (the kit's yard walls, a town's palisade, InteriorWalls' walls) isn't lifted onto the hill again,
+## and a palisade stands on each square of a raised edge rather than at the height of the last one built.
+func test_walls_on_a_hill_stand_on_it() -> void:
+	var b := _board([".....", ".###.", "....."], ["33333", "33333", "33333"], "village")
+	var walls := 0
+	for c: Vector2i in [Vector2i(1, 1), Vector2i(2, 1), Vector2i(3, 1)]:
+		for n: Node3D in b.dressing.get(c, []) as Array:
+			var mi := n as MeshInstance3D
+			if mi != null and mi.get_aabb().size.y > 0.5:
+				walls += 1
+				var box := mi.global_transform * mi.get_aabb()
+				assert_between(box.position.y, b.floor_y(c) - 0.05, b.floor_y(c) + 0.05, "the yard wall at %s stands on the hill (%.2f)" % [c, box.position.y])
+	assert_eq(walls, 3, "a yard wall on each square")
+	var t := _board(["#####", "#...#", "#####"], ["11111", "1...1", "33333"], "vallaki")
+	var pal := t.find_child("Palisade", false, false) as MeshInstance3D
+	assert_true(pal != null, "the town's palisade")
+	if pal == null:
+		return
+	var lows := {}
+	for s in pal.mesh.get_surface_count():
+		for p: Vector3 in pal.mesh.surface_get_arrays(s)[Mesh.ARRAY_VERTEX] as PackedVector3Array:
+			var g := pal.global_transform * p
+			var c := Vector2i(floori(g.x), floori(g.z))
+			if absf(g.x - (c.x + 0.5)) < 0.45 and absf(g.z - (c.y + 0.5)) < 0.45:
+				lows[c] = minf(float(lows.get(c, INF)), g.y)
+	for c: Vector2i in [Vector2i(2, 0), Vector2i(0, 1), Vector2i(2, 2)]:
+		assert_true(lows.has(c), "logs on %s" % c)
+		assert_between(float(lows.get(c, INF)), t.floor_y(c) - 0.3, t.floor_y(c) + 0.1, "the palisade at %s stands on its ground (%.2f)" % [c, float(lows.get(c, INF))])

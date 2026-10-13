@@ -1,7 +1,8 @@
 # Narrator: the nights after a Long Rest (lane 24; ui/screens/rest_screen.gd, world/exploration/location_camp.gd). A
 # region's own night (rest:long:<region>) where its places have none, and its dreams (dream:<region>), said after the
 # night's line, each in turn before any comes round again; the places' own dreams live in their region files
-# (death_house, old_bonegrinder).
+# (death_house, old_bonegrinder). A night written for sleeping behind walls carries [indoors], so a camp out of doors
+# (docs/story/camp.md) passes over it to the camp's own night; one written for the open air carries [not indoors].
 
 # ---------------------------------------------------------------- Nights
 
@@ -13,7 +14,7 @@
 | [night] The trees creak all night like a ship at anchor. Twice, something walks the edge of the dark on two feet, and doesn't come any nearer.
 
 ~ rest:long:village_of_barovia
-| You sleep behind shutters that don't fit their frames. Somewhere in the village a dog barks once, and then thinks better of it, all night long.
+| [indoors] You sleep behind shutters that don't fit their frames. Somewhere in the village a dog barks once, and then thinks better of it, all night long.
 
 ~ rest:long:vallaki
 | You sleep inside the palisade, to the sound of the watch calling the hours. Each one sounds a little less sure that all will be well.
