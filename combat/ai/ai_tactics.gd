@@ -333,8 +333,8 @@ static func fearless(c: Combatant) -> bool:
 	return c.creature is Monster and Difficulty.is_boss(c.creature as Monster)
 
 
-## A broken side's turn: away from the nearest foe at a Dash; out of every foe's sight or far enough away, it leaves
-## the fight. Null when it can't flee (nothing to flee from, or no Speed).
+## A broken side's turn: away from the nearest foe at a Dash; out of every foe's sight, far enough away, or somewhere no
+## way leads from its foes (cut_off), it leaves the fight. Null when it can't flee (nothing to flee from, or no Speed).
 func flee_turn(c: Combatant) -> Variant:
 	var e := enc()
 	var near := e.ai._nearest_enemy(c)
@@ -343,7 +343,7 @@ func flee_turn(c: Combatant) -> Variant:
 	e.ai.last_plan = {"kind": "flee", "why": "its side broke"}
 	var r := e.ai._flee(c, near, true)
 	return e.then(r, func() -> CombatResult:
-		if c.is_alive() and c.creature.hp > 0 and _clear_of_foes(c):
+		if c.is_alive() and c.creature.hp > 0 and (_clear_of_foes(c) or cut_off(c)):
 			e.legendary.leave(c, "fled")
 		return CombatResult.new())
 

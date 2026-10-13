@@ -4,10 +4,11 @@ extends RefCounted
 ## this only drives creatures the party doesn't.
 ##
 ## Each turn: obey anything that takes the turn away (Turn Undead, Command), then score every attack the creature
-## could make this turn — each visible, standing enemy, from each square it could reach — by expected damage
-## (hit chance with every Advantage source, cover and Pack Tactics included), a bonus for finishing a foe, and a
-## penalty for the Opportunity Attacks the path would provoke. The best plan is a move then an attack; with no
-## attack in reach it Dashes toward its best target. Behavior profiles (monster data "ai_profile") weigh this:
+## could make this turn — each standing enemy it can see, or hear (not hidden), from each square it could reach — by
+## expected damage (hit chance with every Advantage source, cover and Pack Tactics included), a bonus for finishing a
+## foe, and a penalty for the Opportunity Attacks the path would provoke. The best plan is a move then an attack; with
+## no attack in reach it Dashes toward its best target, and a foe cut off from every enemy for two turns leaves the
+## fight (AiTactics.stranded_turn). Behavior profiles (monster data "ai_profile") weigh this:
 ##   pack_hunter: wolves. Loves Pack Tactics and wounded prey, avoids Opportunity Attacks.
 ##   brute:       goes for the biggest hit, shrugs off Opportunity Attacks.
 ##   mindless:    zombies. Shambles at the nearest enemy, ignores everything else.
@@ -597,7 +598,12 @@ func plan_turn(c: Combatant) -> Dictionary:
 	# Attacks that cost it on dangerous ground, that cost taken off their score: only when no foe can be reached round it.
 	var risky := {"kind": "wait", "score": -1e9}
 	var risky_pet := {"kind": "wait", "score": -1e9}
-	for t in visible:
+	# A foe out of sight but not hidden (Invisible, in a Fog Cloud or magical Darkness) is struck where it's heard, at
+	# Disadvantage (2024: an unseen target), which _score weighs: two sides that can't see each other still fight.
+	var strikable: Array[Combatant] = []
+	strikable.append_array(visible)
+	strikable.append_array(heard)
+	for t in strikable:
 		var pet := companion(t)
 		for o in options:
 			var p := o["profile"] as WeaponProfile
