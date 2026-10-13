@@ -90,3 +90,26 @@ func test_the_pool_says_who_sergei_is() -> void:
 	told.set_flag("stanimir_tale_heard")
 	beats = SideQuestPlay.play(told, "krezk/pool:the_pool", ["Stay with us"])
 	assert_false(SideQuestPlay.text(beats).contains("She was meant to marry this one."), "the tale already said it")
+
+
+# ---------------------------------------------------------------- Batch 3: Ireena and Tatyana
+
+## Ireena goes to Madam Eva to learn what he wants with her; the answer used to cost the party its one question.
+func test_madam_eva_answers_ireenas_own_question() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 3, "tser_pool_eva_tent", 20)
+	assert_true(st.add_guest("ireena"))
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "svalich_road/madam_eva:ireena_seen", ["", "", ""]))
+	assert_true(said.contains("She keeps being born in this valley with the same face"), said)
+	assert_true(bool(st.get_flag("eva_recognized_ireena", false)))
+	said = SideQuestPlay.text(SideQuestPlay.play(st, "svalich_road/madam_eva:q_ireena"))
+	assert_true(said.contains("You have the first of it already."), "the paid question gives the rest: %s" % said)
+
+
+func test_marinas_face_is_ireenas_without_her_there() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 8, "berez_marinas_monument", 20)
+	st.set_flag("ireena_met")
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "berez/marina:monument", ["Leave her in peace"]))
+	assert_true(said.contains("it is Ireena Kolyana's"), said)
+	said = SideQuestPlay.text(SideQuestPlay.play(st, "berez/marina:bier", ["Leave her as she is"]))
+	assert_true(said.contains("the girl has Ireena's face too"), said)
+

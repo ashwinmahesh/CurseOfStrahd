@@ -136,7 +136,8 @@ once
 | The silver is real, the plates are old, and the food is very good. Nobody carries it in, and nobody takes it out.
 
 ~ examine:crg_dining_portrait
-| A portrait of a young woman with dark hair, looking away out of the frame. You have seen her face before, or one very like it.
+| A portrait of a young woman with red hair, looking away out of the frame. You have seen her face before, or one very like it.
+| [flag.ireena_met] A portrait of a young woman in a gown four hundred years out of fashion, looking away out of the frame. She has Ireena Kolyana's face, to the small frown.
 
 ~ examine:crg_guests_portraits
 | Guests of the house, painted one by one. The newest frames are empty, and the brass plates under them are blank.
