@@ -845,7 +845,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 80
+          "hp": 78
         },
         {
           "monster": "druid",
@@ -855,6 +855,70 @@
           ],
           "name": "Mother Ruxandra",
           "hp": 50
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.yester_circle_broken and level >= 7",
+      "text": "Ruxandra presses her forehead to the effigy and shouts one word into the earth. The chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 170
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 65
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
+            13
+          ],
+          "name": "Warden of the hill"
         },
         {
           "monster": "twig_blight",
@@ -901,7 +965,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 140
+          "hp": 165
         },
         {
           "monster": "druid",
@@ -1481,6 +1545,22 @@
             10
           ],
           "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            13,
+            10
+          ],
+          "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "An Ember"
         }
       ],
       "surprise": "",
@@ -1605,6 +1685,14 @@
             10
           ],
           "name": "An Ember"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "An Ember"
         }
       ],
       "surprise": "",
@@ -1626,7 +1714,7 @@
             18,
             12
           ],
-          "hp": 210
+          "hp": 212
         },
         {
           "monster": "twig_blight",
