@@ -516,7 +516,8 @@
             15,
             5
           ],
-          "name": "The Mash"
+          "name": "The Mash",
+          "hp": 135
         },
         {
           "monster": "vine_blight",
@@ -624,7 +625,7 @@
             5
           ],
           "name": "The Mash",
-          "hp": 90
+          "hp": 140
         },
         {
           "monster": "vine_blight",

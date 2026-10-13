@@ -472,7 +472,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 100
+          "hp": 120
         },
         {
           "monster": "twig_blight",
@@ -589,13 +589,6 @@
           "cell": [
             18,
             13
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            14,
-            15
           ]
         },
         {
@@ -716,7 +709,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 80
+          "hp": 70
         },
         {
           "monster": "druid",
@@ -780,7 +773,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 110
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -789,7 +782,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 55
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -852,7 +845,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 80
         },
         {
           "monster": "druid",
@@ -978,7 +971,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 140
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -1059,7 +1052,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 60
         },
         {
           "monster": "druid",
@@ -1077,7 +1070,7 @@
             14
           ],
           "name": "Kostin",
-          "hp": 44
+          "hp": 30
         },
         {
           "monster": "twig_blight",
@@ -1124,7 +1117,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 100
+          "hp": 110
         },
         {
           "monster": "druid",
@@ -1205,7 +1198,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 160
+          "hp": 170
         },
         {
           "monster": "druid",
@@ -1214,7 +1207,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 60
+          "hp": 65
         },
         {
           "monster": "berserker",
@@ -1269,7 +1262,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 140
+          "hp": 165
         },
         {
           "monster": "druid",
@@ -1338,7 +1331,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 78
         },
         {
           "monster": "druid",
@@ -1392,7 +1385,8 @@
           "cell": [
             18,
             12
-          ]
+          ],
+          "hp": 220
         },
         {
           "monster": "druid",
@@ -1507,7 +1501,8 @@
           "cell": [
             18,
             12
-          ]
+          ],
+          "hp": 220
         },
         {
           "monster": "druid",
@@ -1569,7 +1564,7 @@
             18,
             12
           ],
-          "hp": 150
+          "hp": 140
         },
         {
           "monster": "druid",
@@ -1623,7 +1618,7 @@
             18,
             12
           ],
-          "hp": 155
+          "hp": 210
         },
         {
           "monster": "twig_blight",

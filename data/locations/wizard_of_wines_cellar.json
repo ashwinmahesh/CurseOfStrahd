@@ -584,7 +584,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 38
+          "hp": 40
         },
         {
           "monster": "vine_blight",
