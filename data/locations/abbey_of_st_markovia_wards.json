@@ -6,10 +6,10 @@
   "map": {
     "rows": [
       "##############################",
-      "#.=.=.=.=.=..#...............#",
-      "#............#...............#",
-      "#.=.=.=.=.=..#...............#",
-      "#............##=============##",
+      "#.=.=.=.=.=..#..#..#..#..#..##",
+      "#............#..#..#..#..#..##",
+      "#.=.=.=.=.=..#..#..#..#..#..##",
+      "#............#==#==#==#==#==##",
       "######..######...............#",
       "#............................#",
       "#............................#",
@@ -211,8 +211,108 @@
       ],
       "kind": "examine",
       "label": "The cell bars",
-      "model": "barred_door",
+      "model": "cell_bars",
+      "facing": "south",
       "dialogue": "abbey_of_st_markovia/belviews:cells"
+    },
+    {
+      "id": "ward_cell_bars_1",
+      "cell": [
+        14,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_2",
+      "cell": [
+        15,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_3",
+      "cell": [
+        17,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_4",
+      "cell": [
+        18,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_5",
+      "cell": [
+        21,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_6",
+      "cell": [
+        23,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_7",
+      "cell": [
+        24,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_8",
+      "cell": [
+        26,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
+    },
+    {
+      "id": "ward_cell_bars_9",
+      "cell": [
+        27,
+        4
+      ],
+      "label": "Bars across a cell door",
+      "model": "cell_bars",
+      "facing": "south",
+      "kind": "decor"
     },
     {
       "id": "surgery_table",
@@ -608,6 +708,33 @@
       "dialogue": "abbey_of_st_markovia/mothers_ninth_improvement:mother",
       "when": "not flag.mother_flown",
       "facing": "west"
+    },
+    {
+      "npc": "belview_caged_1",
+      "cell": [
+        15,
+        3
+      ],
+      "facing": "south",
+      "when": "not flag.wards_cells_freed and not flag.wards_cells_riot and not flag.wards_cells_fought"
+    },
+    {
+      "npc": "belview_caged_2",
+      "cell": [
+        21,
+        3
+      ],
+      "facing": "south",
+      "when": "not flag.wards_cells_freed and not flag.wards_cells_riot and not flag.wards_cells_fought"
+    },
+    {
+      "npc": "belview_caged_3",
+      "cell": [
+        27,
+        3
+      ],
+      "facing": "south",
+      "when": "not flag.wards_cells_freed and not flag.wards_cells_riot and not flag.wards_cells_fought"
     }
   ],
   "encounters": [
