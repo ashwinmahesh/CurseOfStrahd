@@ -172,6 +172,7 @@ static func _kit_yard(board: ArenaBoard, c: Vector2i, h: float) -> bool:
 		return false
 	mi.name = "YardWall"
 	mi.position = base
+	mi.set_meta("on_floor", true)   # (on its square's floor already: ArenaBoard._lift leaves it be)
 	board.add_child(mi)
 	if tall:
 		board.mesh_occluders.append(mi)   # three men high: it would hide the party behind it
@@ -210,7 +211,7 @@ static func palisade(board: ArenaBoard, c: Vector2i, ground: Material) -> bool:
 		board.set_meta("palisade_left", count)
 		_flush_palisade.bind(board).call_deferred()   # in case a border square was drawn some other way (rock)
 	var parts := board.get_meta("palisade_parts") as Array
-	var at := Vector3(c.x + 0.5, 0, c.y + 0.5)
+	var at := Vector3(c.x + 0.5, board.floor_y(c), c.y + 0.5)   # on raised ground too (Vallaki's edge sank its logs)
 	var w := board.grid.width
 	var d := board.grid.depth
 	# The module's rails (its -z) face into the town.
@@ -231,6 +232,7 @@ static func _flush_palisade(board: ArenaBoard) -> void:
 	var mi := BuildingKit.merge(board.get_meta("palisade_parts") as Array)
 	if mi != null:
 		mi.name = "Palisade"
+		mi.set_meta("on_floor", true)   # (made while the last border square is built: not lifted to that one's height)
 		board.add_child(mi)
 	board.remove_meta("palisade_parts")
 
