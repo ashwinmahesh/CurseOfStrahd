@@ -197,6 +197,43 @@ func test_the_seventh_row_stands_up() -> void:
 		await _frames(2)
 
 
+## The owner's report (2026-10-12 20:13): Adrian took his hybrid form in the Vine Mother's fight, which freed his own
+## figure, so the fight's end stopped on it and the game was stuck. His figure is kept and walks on after the fight.
+func test_a_guest_who_took_his_hybrid_form_walks_on_after_the_fight() -> void:
+	var v := await _boot("wizard_of_wines", 1, 6, ["winery_reclaimed"], ["adrian_martikov"])
+	var e := await _fight(v, "vine_mother", ["The Vine Mother", "Adrian Martikov"])
+	var adrian: Combatant = null
+	for c in e.combatants:
+		if c.side == &"guest" and c.name() == "Adrian Martikov":
+			adrian = c
+	assert_true(adrian != null, "Adrian fights")
+	var own: Variant = v.tokens[v.guest_members[0].id]
+	e.monster_actions.shift(adrian)
+	await v.combat_view._play_events()
+	var hybrid := v.combat_view.tokens[adrian.id] as CombatToken
+	assert_true(hybrid != own and hybrid.art_override != "", "he fights in his hybrid's figure")
+	assert_true(is_instance_valid(own) and not (own as Node3D).visible, "his own figure waits, hidden")
+	await _end(v)
+	assert_false(v.in_combat, "the fight ended")
+	assert_true(bool(GameState.story.get_flag("vine_mother_slain", false)), "and handed the story its flag")
+	assert_eq(GameState.story.quest_stage("the_black_row"), "cut_out")
+	var after: Variant = v.tokens[v.guest_members[0].id]
+	assert_true(is_instance_valid(after) and after == own and (after as Node3D).visible, "he walks on in his own figure")
+
+
+## The same evening's earlier reports (20:06, 20:08): a screen that frees itself (a rest's camp talk did) was still the
+## game's open screen, so Esc in the next fight and the bug report read a freed one.
+func test_a_screen_that_frees_itself_is_no_longer_the_open_one() -> void:
+	await _boot("wizard_of_wines", 1, 6, ["winery_reclaimed"])
+	root.call("open_screen", "journal", 0)
+	var s := root.get("screen") as Node
+	assert_true(s != null, "the journal is open")
+	s.queue_free()
+	await _frames(3)
+	assert_true(root.get("screen") == null, "nothing is left open")
+	assert_false(get_tree().paused)
+
+
 func test_granny_ash_comes_out_of_the_trees_with_her_dogs() -> void:
 	for level: int in [5, 6, 7, 8]:
 		var v := await _boot("old_bonegrinder_track", 23, level, ["morgantha_slain"])
