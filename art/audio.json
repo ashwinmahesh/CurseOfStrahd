@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -274,6 +274,10 @@
     "vineyard": [
       "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3",
       "res://art/sourced/kevin_macleod/Duet Musette.mp3"
+    ],
+    "vineyard_freed": [
+      "res://art/sourced/kevin_macleod/Lachaim.mp3",
+      "res://art/sourced/kevin_macleod/Bushwick Tarantella.mp3"
     ],
     "wildlands": [
       "res://art/sourced/kevin_macleod/Bump in the Night.mp3",
@@ -1451,6 +1455,8 @@
     "res://art/sourced/scott_buckley/Unraveling.mp3": -4.5,
     "res://art/sourced/kevin_macleod/Duet Musette.mp3": 2.1,
     "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg": -2.6,
+    "res://art/sourced/kevin_macleod/Lachaim.mp3": -2.5,
+    "res://art/sourced/kevin_macleod/Bushwick Tarantella.mp3": -3.6,
     "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3": -2.9,
     "res://art/sourced/kevin_macleod/Darkest Child.mp3": -3.3,
     "res://art/sourced/scott_buckley/Penumbra.mp3": -1.5
@@ -1474,5 +1480,13 @@
     "inn",
     "camp",
     "tent"
-  ]
+  ],
+  "region_turns": {
+    "wizard_of_wines": [
+      {
+        "when": "flag.yester_hill_resolved",
+        "mood": "vineyard_freed"
+      }
+    ]
+  }
 }

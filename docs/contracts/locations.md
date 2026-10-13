@@ -64,7 +64,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group.
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
-- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
+- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6, and makes camp on the map: docs/story/camp.md)
+  or `no` (no Long Rest: its card says `rest_text`); default risky. A Short Rest is taken in any of them, `no`
+  included, unless a fight on the map was begun and not won or foes are in plain view of the party
+  (story/rest_rules.gd).
 - **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
   sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
   the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
@@ -83,7 +86,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
   while the party is in the location (LocationClock).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
-  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`, and
+  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`, `say`
+  (a Narrator trigger tried before `examine:<id>`: a camp's fire indoors says `examine:camp_fire:indoors`), and
   `facing` (north, south, east, west or between: which way the piece's front looks, instead of away from the wall
   beside it or south) and `span` ([across, down] squares, its own cell the north-west one: a wagon stands over the middle
   of its two-by-two block of low cover).

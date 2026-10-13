@@ -103,6 +103,14 @@ else
 interject tag:curious: Stanimir's story. The bride and the brother. He's the brother who died.
 endif
 endif
+# Who he is, said aloud for a party that never heard Stanimir's tale (Narrative Audit batch 2).
+if not flag.stanimir_tale_heard and not (flag.tamsin_locket_recognized and name:tamsin_tealeaf)
+if name:godrick_pendlebrook
+interject name:godrick_pendlebrook: White flowers, and a wall, and his brother at the top of the stair. I'd bet my boots that brother lives in a castle now. She was meant to marry this one.
+else
+interject tag:curious: White flowers, a wall, and his brother at the top of the stair. That brother lives in a castle now, I'd wager. She was meant to marry this one.
+endif
+endif
 Sergei von Zarovich: The water is the only door I have. I cannot come out. You could come in. When you are ready. Not before. It will wait. I will.
 * Go to him, if you want to, Ireena. We'll understand. -> ireena_promise
 * Stay with us, Ireena. You're not her. Not only her. -> ireena_stays

@@ -142,8 +142,10 @@ two made-up L's.
 
 Yard walls are the kit's too: a stone arm from each square's middle toward each neighbouring wall or gate, a capped
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
-with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons. Vallaki's
-palisade is one mesh for the whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
+with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons; it rings a walled
+town at the map's edge too, where an open village thins into pines (`TownBuilder.walled`, `ArenaBoard._town_wall`),
+stands on ground of its own, and fades like the trees when it hides the party. Vallaki's palisade is one mesh for the
+whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
 ## Making and changing the modules (`blender/building_kit.py`)
 
@@ -158,10 +160,10 @@ and the existing texture sets; the HD surfaces (W4) will give the kit its own pa
 
 Checks: `tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
 village is built of kit houses with door bays and lit windows, a house cuts away to its footing, the churches are
-stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall, and lone
-wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper floor has
-full walls over the street a storey down, headers over its doorways, and its north wall stands or is cut away as the
-camera turns). Captures, before and after:
+stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall all round,
+and lone wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper
+floor has full walls over the street a storey down, headers over its doorways, and its north wall stands or is cut
+away as the camera turns). Captures, before and after:
 
     make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/after FRAMES=10   # KIT_SHOTS=village_close,...
 

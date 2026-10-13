@@ -1,6 +1,6 @@
 extends TestCase
-## Where and how the party makes camp in the wild (story/camp_site.gd, F16): which places, the fire's square, the
-## camp's pieces and seats, and who has a word to say by the fire.
+## Where and how the party makes camp (story/camp_site.gd, F16): which places, the fire's square, the camp's pieces and
+## seats, and who has a word to say by the fire.
 
 
 func _open_grid(w: int, d: int) -> CombatGrid:
@@ -10,14 +10,33 @@ func _open_grid(w: int, d: int) -> CombatGrid:
 	return CombatGrid.from_rows(rows)
 
 
-func test_the_wild_makes_camp_and_towns_and_houses_do_not() -> void:
-	assert_true(CampSite.is_wild(Compendium.shared().get_entry("locations", "road_forest")), "a forest road")
-	assert_true(CampSite.is_wild(Compendium.shared().get_entry("locations", "lake_zarovich")), "a lake shore")
-	assert_true(CampSite.is_wild(Compendium.shared().get_entry("locations", "mount_baratok")), "a mountainside")
-	assert_false(CampSite.is_wild(Compendium.shared().get_entry("locations", "village_of_barovia")), "a village")
-	assert_false(CampSite.is_wild(Compendium.shared().get_entry("locations", "vallaki_blue_water_inn")), "an inn")
-	assert_false(CampSite.is_wild(Compendium.shared().get_entry("locations", "death_house_ground")), "a house")
-	assert_false(CampSite.is_wild(Compendium.shared().get_entry("locations", "yester_hill")), "a place that allows no rest")
+func _loc(id: String) -> Dictionary:
+	return Compendium.shared().get_entry("locations", id)
+
+
+func test_camp_is_made_wherever_the_places_own_rest_is_risky() -> void:
+	for id: String in ["road_forest", "lake_zarovich", "mount_baratok", "village_of_barovia", "vallaki",
+			"death_house_ground", "burgomaster_mansion", "castle_ravenloft_catacombs", "argynvostholt_hall"]:
+		assert_true(CampSite.makes_camp(_loc(id)), "%s makes camp" % id)
+	# A safe place keeps the rest screen: the inns, the Krezkovs' house, the Mad Mage's hut, the tower, the winery,
+	# Tser Pool's camp and the Pool of the White Sun.
+	for id: String in ["vallaki_blue_water_inn", "blood_of_the_vine", "wizard_of_wines_winery", "krezk_burgomaster_house",
+			"mount_baratok_hut", "van_richtens_tower_interior", "tser_pool", "krezk_pool_of_the_white_sun"]:
+		assert_false(CampSite.makes_camp(_loc(id)), "%s is safe: the rest screen" % id)
+	assert_false(CampSite.makes_camp(_loc("yester_hill")), "a place that allows no rest")
+
+
+func test_where_a_camp_is() -> void:
+	assert_eq(CampSite.setting(_loc("road_forest")), CampSite.WILD, "a forest road")
+	assert_eq(CampSite.setting(_loc("lake_zarovich")), CampSite.WILD, "a lake shore")
+	assert_eq(CampSite.setting(_loc("village_of_barovia")), CampSite.TOWN, "a village street")
+	assert_eq(CampSite.setting(_loc("vallaki")), CampSite.TOWN, "Vallaki")
+	assert_eq(CampSite.setting(_loc("death_house_ground")), CampSite.INDOORS, "a house")
+	assert_eq(CampSite.setting(_loc("castle_ravenloft_catacombs")), CampSite.INDOORS, "a dungeon")
+	assert_eq(CampSite.keys_for("camp:pitch", CampSite.INDOORS), ["camp:pitch:indoors", "camp:pitch"] as Array[String])
+	assert_eq(CampSite.idle_keys("thistle", false, CampSite.TOWN),
+		["camp:thistle:town", "camp:thistle", "camp:someone:town", "camp:someone"] as Array[String])
+	assert_eq(CampSite.idle_keys("ireena", true), ["camp:guest:ireena:wild", "camp:guest:ireena", "camp:guest:wild", "camp:guest"] as Array[String])
 
 
 func test_the_fire_goes_on_open_ground_near_the_party() -> void:
@@ -30,9 +49,46 @@ func test_the_fire_goes_on_open_ground_near_the_party() -> void:
 			assert_true(CampSite.open_square(g, c + Vector2i(dx, dy), 0, {}), "the fire's ring is clear")
 
 
-func test_no_camp_where_nothing_is_open() -> void:
-	var g := CombatGrid.from_rows(["#####", "#...#", "#####"])
-	assert_eq(CampSite.find_center(g, Vector2i(2, 1), {}, 4), Vector2i(-1, -1), "a corridor has no room for a fire")
+func test_no_camp_where_no_square_will_take_a_fire() -> void:
+	var g := CombatGrid.from_rows(["#####", "#~~~#", "#####"])
+	assert_eq(CampSite.find_center(g, Vector2i(2, 1), {}, 4), Vector2i(-1, -1), "rubble everywhere: no fire")
+	var g2 := CombatGrid.from_rows(["#####", "#...#", "#####"])
+	var all := {Vector2i(1, 1): true, Vector2i(2, 1): true, Vector2i(3, 1): true}
+	assert_eq(CampSite.find_center(g2, Vector2i(2, 1), all, 4), Vector2i(-1, -1), "every square is the place's own")
+
+
+func test_a_cramped_place_makes_a_smaller_camp() -> void:
+	var g := CombatGrid.from_rows(["###########", "#.........#", "###########"])
+	var c := CampSite.find_center(g, Vector2i(1, 1), {}, 5)
+	assert_true(c.x >= 1 and c.y == 1, "a fire in the passage: %s" % c)
+	var lay := CampSite.layout(g, c, {}, 5, false, false)
+	var seats := lay["seats"] as Array
+	assert_eq(seats.size(), 5, "everyone has somewhere to sit or stand: %s" % [seats])
+	var used := {}
+	for p: Dictionary in lay["props"]:
+		used[Vector2i(int((p["cell"] as Array)[0]), int((p["cell"] as Array)[1]))] = true
+	assert_true(used.has(c), "the fire")
+	for s: Vector2i in seats:
+		assert_true(g.flags(s) & CombatGrid.WALL == 0, "nobody in a wall: %s" % s)
+		assert_false(used.has(s), "nobody on the fire, on a piece or on someone else: %s" % s)
+		used[s] = true
+
+
+func test_with_no_room_near_the_party_the_camp_goes_further_off() -> void:
+	# A passage from the party's end of it to a hall well beyond 40 ft away.
+	var rows: Array = []
+	for z in 11:
+		var row := ""
+		for x in 30:
+			var hall := x >= 19 and x <= 28 and z >= 1 and z <= 9
+			row += "." if hall or (z == 5 and x >= 1 and x <= 18) else "#"
+		rows.append(row)
+	var g := CombatGrid.from_rows(rows)
+	var c := CampSite.find_center(g, Vector2i(1, 5), {}, 4)
+	assert_true(c.x >= 19, "the fire goes in the hall, beyond the passage: %s" % c)
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			assert_true(CampSite.open_square(g, c + Vector2i(dx, dy), 0, {}), "a whole camp there")
 
 
 func test_the_camp_keeps_off_the_places_own_things_and_its_fights() -> void:
@@ -81,6 +137,16 @@ func test_a_cramped_camp_leaves_pieces_out() -> void:
 		assert_ne(str(p["model"]), "tent", "no room for the tent")
 
 
+func test_no_tent_indoors() -> void:
+	var g := _open_grid(24, 18)
+	var lay := CampSite.layout(g, Vector2i(12, 9), {}, 4, true, false)
+	var models: Array[String] = []
+	for p: Dictionary in lay["props"]:
+		models.append(str(p["model"]))
+	assert_false("tent" in models, "no tent under a roof: %s" % [models])
+	assert_true("campfire" in models and "stewpot" in models and "woodpile" in models and "bedroll" in models, "the rest as ever")
+
+
 func test_who_asks_for_a_word_includes_those_waiting_at_camp() -> void:
 	var st := StoryState.new()
 	st.party.append(Pregens.build("godrick_pendlebrook", 3))
@@ -104,3 +170,15 @@ func test_companions_retired_from_the_roster_never_come_to_the_fire() -> void:
 	var ids := CampSite.company(st).map(func(ch: Character) -> String: return ch.id)
 	assert_eq(ids, ["kip_smudgewick"], "Kip comes to the fire; Tamsin, retired, doesn't")
 
+
+func test_night_visitors_fit_the_place() -> void:
+	assert_eq(CampSite.land_of("svalich_road"), "forest", "the wild goes by the region")
+	assert_eq(CampSite.land_of("svalich_road", CampSite.TOWN), "town", "a town's streets have their own")
+	assert_eq(CampSite.land_of("castle_ravenloft", CampSite.INDOORS), "indoors", "and so does a roof")
+	for where: String in [CampSite.TOWN, CampSite.INDOORS]:
+		for level in range(1, StoryState.LEVEL_CAP + 1):
+			var groups := CampSite.groups_for("village_of_barovia", level, where)
+			assert_false(groups.is_empty(), "something comes for a level %d camp %s" % [level, where])
+			for g: Dictionary in groups:
+				if where == CampSite.INDOORS:
+					assert_false("wolf" in g["monsters"] or "dire_wolf" in g["monsters"], "no wolf pack inside a house: %s" % g["id"])
