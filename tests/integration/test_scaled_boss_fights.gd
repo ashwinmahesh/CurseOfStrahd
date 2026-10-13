@@ -22,14 +22,22 @@ const KIRILS_CAVE: Array[Vector2i] = [Vector2i(19, 22), Vector2i(18, 22), Vector
 const LYSAGAS_STUMP: Array[Vector2i] = [Vector2i(31, 17), Vector2i(30, 17), Vector2i(31, 18), Vector2i(30, 18)]
 const BELOW_THE_STUMP: Array[Vector2i] = [Vector2i(30, 20), Vector2i(29, 20), Vector2i(31, 20), Vector2i(30, 21)]
 
+## Castle Ravenloft: the stair where Rahadin waits for Gertruda, the hall where he meets the party, his chamber off the
+## hall of brides; the brides' gallery; Strahd's tomb in the catacombs.
+const RAHADINS_STAIR: Array[Vector2i] = [Vector2i(22, 21), Vector2i(21, 20), Vector2i(21, 22), Vector2i(23, 20)]
+const RAHADINS_HALL: Array[Vector2i] = [Vector2i(21, 13), Vector2i(22, 14), Vector2i(22, 15), Vector2i(22, 16)]
+const RAHADINS_CHAMBER: Array[Vector2i] = [Vector2i(32, 16), Vector2i(31, 15), Vector2i(31, 14), Vector2i(31, 13)]
+const BRIDES_GALLERY: Array[Vector2i] = [Vector2i(8, 14), Vector2i(7, 13), Vector2i(7, 12), Vector2i(7, 11)]
+const STRAHDS_TOMB: Array[Vector2i] = [Vector2i(11, 11), Vector2i(11, 10), Vector2i(11, 9), Vector2i(11, 8)]
+
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 ## Wins over seeds 1-8 between `low` and `high`.
 func _held(location: String, level: int, encounter: String, at: Array[Vector2i], low: int, high: int,
-		flags: Array[String] = []) -> void:
+		flags: Array[String] = [], guests: Array[String] = []) -> void:
 	speakers_step_aside = true
-	var wins := await _series(location, 12, level, encounter, SEEDS, flags, [], [], at)
+	var wins := await _series(location, 12, level, encounter, SEEDS, flags, guests, [], at)
 	assert_true(wins >= low, "%s is won at least %d times in 8 (%d)" % [encounter, low, wins])
 	assert_true(wins <= high, "%s is lost at least %d times in 8 (%d)" % [encounter, 8 - high, wins])
 
@@ -119,3 +127,36 @@ func test_lysaga_and_her_hut_at_level_9() -> void:
 ## and slain there, so her scarecrows never stood up.
 func test_the_masterless_hut_at_level_9() -> void:
 	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_lured", "lysaga_slain_at_monument"])
+
+
+## Rahadin on the stair when the party brings Gertruda out, with two suits of the count's armour and a third, battered.
+func test_rahadin_on_the_stair_at_level_10() -> void:
+	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_STAIR, 1, 3, [], ["gertruda"])
+
+
+## Rahadin in the hall, two suits of the count's armour with him: 1 of 8, the harder side of the owner's 2 (with one
+## suit and a battered one, 4).
+func test_rahadin_in_the_hall_at_level_10() -> void:
+	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_HALL, 1, 3)
+
+
+## Rahadin in his chamber with three suits of the count's armour: 1 of 8, the harder side (with two, 3).
+func test_rahadin_in_his_chamber_at_level_10() -> void:
+	await _held("castle_ravenloft_court_weeping", 10, "court_rahadin_chamber_fight", RAHADINS_CHAMBER, 1, 3)
+
+
+## Ludmilla and Volenta, two of Strahd's spawn and two suits of the count's armour.
+func test_two_brides_at_level_10() -> void:
+	await _held("castle_ravenloft_court_weeping", 10, "court_brides_fight", BRIDES_GALLERY, 1, 3, ["court_anastrasya_story"])
+
+
+## All three brides and two suits of the count's armour: 1 of 8, the harder side (with one suit, 6).
+func test_all_three_brides_at_level_10() -> void:
+	await _held("castle_ravenloft_court_weeping", 10, "court_brides_fight", BRIDES_GALLERY, 1, 3)
+
+
+## Vladimir and four oathbreakers (revenants) at Strahd's tomb, the tomb's keepers already met: 1 of 8, the harder side
+## (with three, 3).
+func test_vladimir_at_strahds_tomb_at_level_10() -> void:
+	cleared_fights.assign(["cat_tomb_keepers"])
+	await _held("castle_ravenloft_catacombs_strahd", 10, "cat_oathbreakers", STRAHDS_TOMB, 1, 3, ["cat_keepers_defeated"])

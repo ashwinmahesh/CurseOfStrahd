@@ -160,12 +160,18 @@ func test_the_grandsire_at_level_9() -> void:
 
 
 ## The sim boots at the catacombs' gate stair; in play the party is at her crypt, inside the open gate.
+## Corvina and two door-wardens (helmed horrors): 1 of 8, the harder side of the owner's 2 (with one, 5).
 func test_corvina_at_level_10() -> void:
-	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4], [], [], ["cat_e3_gate"])
+	speakers_step_aside = true
+	var wins := await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4, 5, 6, 7, 8], [], [], ["cat_e3_gate"])
+	assert_true(wins >= 1 and wins <= 3, "Corvina falls in 1 to 3 of 8 (%d)" % wins)
 
 
+## Named, with four door-wardens: 1 of 8, the harder side (with three, 3).
 func test_corvina_named_at_level_10() -> void:
-	await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3], ["corvina_named"], [], ["cat_e3_gate"])
+	speakers_step_aside = true
+	var wins := await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4, 5, 6, 7, 8], ["corvina_named"], [], ["cat_e3_gate"])
+	assert_true(wins >= 1 and wins <= 3, "Corvina falls in 1 to 3 of 8 (%d)" % wins)
 
 
 func test_ilarions_wolves_at_level_1() -> void:
@@ -350,9 +356,18 @@ func test_the_counts_likeness_at_level_9() -> void:
 const SOUTH_TOWER: Array[Vector2i] = [Vector2i(7, 20), Vector2i(8, 20), Vector2i(7, 21), Vector2i(8, 21)]
 
 
-## Querreth and two of the ones who asked before, catching the party unawares.
+## Querreth (240 HP in this fight) and two of the ones who asked before, catching the party unawares.
 func test_querreth_at_level_10() -> void:
-	await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
+	speakers_step_aside = true
+	var wins := await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
+	assert_true(wins >= 1 and wins <= 3, "Querreth falls in 1 to 3 of 8 (%d)" % wins)
+
+
+## Forewarned by Escher's note, the party isn't caught unawares, and Querreth stands at 280 HP.
+func test_querreth_forewarned_at_level_10() -> void:
+	speakers_step_aside = true
+	var wins := await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], ["escher_note_read"], [], [], SOUTH_TOWER)
+	assert_true(wins >= 1 and wins <= 3, "Querreth falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The tithe vault in Argynvostholt's undercroft, where the party stands when the tithe-keeper gets up.

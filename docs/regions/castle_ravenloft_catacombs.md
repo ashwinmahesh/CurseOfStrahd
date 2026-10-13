@@ -97,7 +97,7 @@ revenant 1,800; nightmare 700; gargoyle 450; dire wolf 200; specter 200; swarm o
 | `cat_darklord_final` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` | Strahd, 2 vampire spawn | 16,600 High+ | `final_battle: castle_ravenloft_strahds_tomb`, `lair`; sets `cat_keepers_defeated` (the spawn are the keepers) |
 | `cat_tomb_keepers` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` while `not flag.cat_keepers_defeated` | 2 vampire spawn, 3 swarms of bats | 3,750 | the short fight at the tomb while he rests (or is out); `cat_keepers_defeated` |
 | `cat_daylight_waking` | Strahd's tomb, dialogue (the coffin by day) | Strahd, 2 swarms of bats | 13,100 High | `lair`; not a final battle (no parley) |
-| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 2 revenants | 6,500 Low | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` |
+| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 4 revenants (1 of 8 at level 10; with 3, 3) | 10,100 High | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` |
 
 The darklord's room is the hardest on purpose ("where he is strongest"). Strahd appears outside a final battle only
 in `cat_daylight_waking`, which is the owner's rule for finding him asleep by day (§5): a hard fight in his own lair,

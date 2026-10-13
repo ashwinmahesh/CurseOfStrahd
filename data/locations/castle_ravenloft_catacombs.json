@@ -1167,6 +1167,30 @@
             20
           ],
           "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
+            20
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            37,
+            22
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            41,
+            23
+          ],
+          "name": "A Door-Warden"
         }
       ],
       "surprise": "",
@@ -1189,6 +1213,14 @@
           "monster": "helmed_horror",
           "cell": [
             38,
+            20
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
             20
           ],
           "name": "A Door-Warden"

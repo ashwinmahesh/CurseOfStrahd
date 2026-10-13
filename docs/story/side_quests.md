@@ -857,8 +857,9 @@ Lost Pages), made one of the count's spawn for holding the door while her master
   vampire spawn and mage, drawn with the vampire spawn's sprite): Medium undead, AC 16, 165 HP, claws with necrotic
   chill or arcane bolts of force, Slam the Door (recharge 5-6, a 30-ft cone that pushes), Regeneration 10 that radiant
   stops, Legendary Resistance (2/day), and a bolt or a step between turns. CR 12.
-- Fight `corvina` in her crypt: level 10 Corvina and a door-warden (a helmed horror); named, she's down to 105 HP (the
-  autopilot wins 2 of 3 named, 1 of 4 not, losing two to four party members a fight); level 9 and below, lighter.
+- Fight `corvina` in her crypt: level 10 Corvina and two door-wardens (helmed horrors); named, she's down to 105 HP
+  with four (the autopilot wins 1 of 8 either way, losing three party members a fight: the harder side of the owner's 2,
+  as one door-warden fewer wins 5 and 3; 2026-10-13); level 9 and below, lighter.
 - In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
   crypt, and Mordenkainen has a line for it.
 
@@ -880,8 +881,9 @@ unawares.
   Chains with 10-ft reach that grapple and a burning Claw, The Chains Answer (recharge 5-6, three creatures within
   30 ft, DC 16 Str, 4d10 and Restrained), Magic Resistance, Legendary Resistance (2/day), and a lash or a wingbeat
   between turns. CR 11. Two of the ones who asked before come with it (wraiths, "One Who Asked").
-- Fight `querreth` on the south tower roof. The autopilot wins 3 of 8 at level 10 caught unawares and 4 of 8
-  forewarned, losing about three party members a fight.
+- Fight `querreth` on the south tower roof, Querreth at 240 HP: the autopilot wins 2 of 8 at level 10 caught unawares
+  (3 of 8 at 180, 2026-10-13), and 2 of 8 forewarned with him at 280 HP (5 at 180), losing about three party members a
+  fight.
 - Then the party sits out the night with him and the sun comes up (`sq_escher_dawn`, a new still). Either he watches it
   and burns, and leaves a red velvet coat on the stones with the count's present in the pocket, or (Persuasion DC 15)
   the party talks him into waiting for a dawn the count isn't in, and he goes back down to his chair. Either way: a
