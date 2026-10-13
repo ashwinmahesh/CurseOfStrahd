@@ -11,6 +11,7 @@ const DIALOGUE := """
 Ismark: Help my sister.
 * [Persuasion DC 30] Talk him round. -> yes | no
 * Leave. -> END
+* [Medicine DC 10] Let me see that wound. -> yes | no
 
 ~ yes
 Ismark: Yes.
@@ -119,6 +120,24 @@ func test_a_conversation_check_stops_for_guidance_before_the_roll() -> void:
 	assert_false("Guidance" in str(seen["extra_label"]), "rolled without it")
 	assert_eq(GuidanceOffer.rule_of(_party(1)), "never", "Don't offer it: for every caster offered")
 	assert_eq(str(r.next()["text"]), "You see it.", "then on down the branch the roll chose")
+
+
+## Ashwin, 2026-10-13: his cleric, who knows Guidance, made a conversation's Medicine check without it.
+func test_a_caster_making_the_check_can_guide_herself() -> void:
+	var r := _runner()
+	var hedda := _party(1)
+	r.set_speaker(hedda)
+	var b := r.choose(2)
+	assert_eq(str(b["kind"]), "guidance", "Medicine asks too")
+	var offer := b["offer"] as Dictionary
+	assert_eq(offer["who"], hedda)
+	assert_eq(offer["skill"], &"medicine")
+	var at := (offer["casters"] as Array).map(func(e: Dictionary) -> Creature: return e["caster"]).find(hedda)
+	assert_true(at >= 0, "the one making the check can cast it on herself")
+	var check := r.answer_guidance(at)
+	assert_eq(str(check["skill"]), "Medicine")
+	assert_eq(str(check["who"]), hedda.name)
+	assert_true("Guidance (Hedda)" in str(check["extra_label"]), "her own d4 is on the roll: %s" % check["detail"])
 
 
 func test_without_a_screen_the_roll_comes_at_once() -> void:
