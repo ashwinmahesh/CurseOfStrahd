@@ -61,7 +61,9 @@ Davian: Hm. You have honest faces, or faces that have practised. In the cellar, 
 
 ~ druids_want
 set yester_hill_known
+set yester_effigy_known
 Davian: To starve us, first. A winery without wine is a farm with airs. And on Yester Hill, west of here, they're building a great figure of earth shaped like the lord in the castle. They mean to wake it with my stone for a heart.
+Davian: When they've sung him awake, he walks east. The first thing east of that hill is my vines.
 Davian: My son Elvir went to watch that hill last spring. Don't ask me about it.
 -> stones_menu
 
@@ -84,6 +86,12 @@ if not flag.raven_harmed or flag.adrian_apology_heard
 attitude davian_martikov friendly
 endif
 Davian: Then here are the terms. Drive them out of the winery and out of the press house. Bring up my stone from the founder's cask: cellar, foot of the stair, third hoop, pull. Then we'll talk about the hill.
+# The hill's purpose is told here too, so a party that pledges first still knows what waits on Yester Hill.
+if not flag.yester_effigy_known
+set yester_effigy_known
+Davian: And there is a great deal to say about it. On Yester Hill, west of here, the druids are heaping up a man of earth forty feet long, in the likeness of the lord in the castle. My stone is to be his heart.
+Davian: When they've sung him awake, he walks east. The first thing east of that hill is my vines.
+endif
 Davian: I'll pay in the only coin I trust. Wine, when there's wine again. Until then, my gratitude, which is rarer.
 if name:wren_featherfoot
 interject name:wren_featherfoot: How many druids? Roughly. Asking for my knees.
@@ -242,6 +250,7 @@ Narrator: Adrian walks into the yard ahead of you and stops in front of his fath
 elif flag.adrian_went_to_hill
 Davian: You took my son up that hill and brought him back down it. I'll not forget that.
 endif
+Davian: So it won't walk. Every night for three months I've stood at the end of the rows and watched that hill, waiting for it to stand up and come down to us. Tonight I'll sleep.
 if flag.gulthias_tree_burned
 Davian: The ravens saw the smoke from here: one black column, straight up, as if the hill were being emptied. Good. Let it burn to the roots.
 else
