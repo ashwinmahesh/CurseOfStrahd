@@ -404,7 +404,8 @@
           "cell": [
             20,
             9
-          ]
+          ],
+          "hp": 60
         },
         {
           "monster": "vine_blight",

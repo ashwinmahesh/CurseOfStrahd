@@ -773,7 +773,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 132
+          "hp": 136
         },
         {
           "monster": "druid",
@@ -901,7 +901,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 115
+          "hp": 100
         },
         {
           "monster": "druid",
@@ -1181,7 +1181,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 95
         },
         {
           "monster": "druid",
@@ -1271,7 +1271,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 65
+          "hp": 55
         },
         {
           "monster": "berserker",
@@ -1714,7 +1714,7 @@
             18,
             12
           ],
-          "hp": 210
+          "hp": 190
         },
         {
           "monster": "twig_blight",

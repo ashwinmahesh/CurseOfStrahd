@@ -508,7 +508,8 @@
             25,
             5
           ],
-          "name": "Druid of Yester Hill"
+          "name": "Druid of Yester Hill",
+          "hp": 60
         },
         {
           "monster": "druid",
