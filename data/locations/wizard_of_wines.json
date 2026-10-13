@@ -1090,6 +1090,14 @@
             18,
             24
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            24
+          ],
+          "hp": 8
         }
       ],
       "surprise": "party",
@@ -1316,7 +1324,7 @@
             27,
             26
           ],
-          "hp": 145
+          "hp": 140
         },
         {
           "monster": "vine_blight",
@@ -1372,13 +1380,6 @@
           "cell": [
             38,
             26
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            42,
-            24
           ]
         },
         {

@@ -399,7 +399,7 @@
             8
           ],
           "name": "Kostin",
-          "hp": 65
+          "hp": 55
         },
         {
           "monster": "druid",
@@ -483,6 +483,14 @@
             10,
             1
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            8
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",

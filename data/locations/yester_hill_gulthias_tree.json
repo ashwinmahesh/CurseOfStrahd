@@ -901,7 +901,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 85
         },
         {
           "monster": "druid",
@@ -1279,7 +1279,8 @@
             8,
             13
           ],
-          "name": "Warden of the hill"
+          "name": "Warden of the hill",
+          "hp": 40
         },
         {
           "monster": "twig_blight",
