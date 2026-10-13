@@ -159,7 +159,8 @@ func withdraw_of(c: Combatant) -> Dictionary:
 
 
 ## `c` leaves the fight without dying ("mist": Misty Escape, "withdraw": the encounter's withdraw): it takes its mist
-## (or bat) shape if it has one and is gone: no more turns, no target, no space, no loot. Sets the flag the data names.
+## (or bat) shape if it has one and is gone: no more turns, no target, no space, no loot. Sets the flag the data names;
+## a withdraw's `say` is its parting line, in the voice of its `speaker`.
 func leave(c: Combatant, how: String) -> void:
 	var e := enc()
 	if departed.has(c.id):
@@ -189,13 +190,19 @@ func leave(c: Combatant, how: String) -> void:
 		if me.has("flag"):
 			story_flags[str(me["flag"])] = true
 		_log("info", "%s dissolves into mist and flees to its resting place" % c.name(), c)
-	else:
+	var say := ""
+	if how != "mist":
 		var w := withdraw_of(c)
 		if w.has("flag"):
 			story_flags[str(w["flag"])] = true
 		var shown := (" as a %s" % str(shape(c, shape_id).get("name", shape_id)).to_lower()) if shape_id != "" else ""
 		_log("info", "%s withdraws from the fight%s" % [c.name(), shown], c)
-	e.events.append({"type": "vanish", "id": c.id, "left": how, "narration": str(me.get("narration", "")) if how == "mist" else ""})
+		# Its parting line (Strahd's visits, owner 2026-10-13): logged, and spoken as it goes (CombatView).
+		say = str(w.get("say", ""))
+		if say != "":
+			_log("info", "%s: \"%s\"" % [c.name(), say], c)
+	e.events.append({"type": "vanish", "id": c.id, "left": how, "narration": str(me.get("narration", "")) if how == "mist" else "",
+		"say": say, "speaker": str(withdraw_of(c).get("speaker", "")) if say != "" else ""})
 	e._check_over()
 
 

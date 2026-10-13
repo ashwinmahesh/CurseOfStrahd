@@ -249,20 +249,42 @@ const DINNER_TABLE: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 6), Vector2i(
 const HEART_STAIR: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector2i(7, 14), Vector2i(8, 13)]
 
 
-## The party draws on Strahd at his table, carrying the Sunsword: he leaves after three rounds or below 100 HP, and four
-## suits of his armour (one battered) stay to finish it with his bats.
+## The party draws on Strahd at his table, carrying the Sunsword: 375 HP, his bats and two suits of his armour; he fights
+## until he's beaten, then flees.
 func test_strahds_dinner_with_the_sunsword() -> void:
 	prepare = _sunsword
 	await _held("castle_ravenloft_main_floor", 10, "crg_dinner_affront", DINNER_TABLE, 4, 6)
 	prepare = Callable()
 
 
-## The heart broken, he comes up the stair for a round and goes; six suits of his armour stay (4 of 8, the harder side:
-## with five, 7).
+## The heart broken, he comes up the stair at 350 HP with two suits of his armour, fights until he's beaten and flees.
 func test_strahd_at_the_broken_heart_with_the_sunsword() -> void:
 	prepare = _sunsword
 	await _held("castle_ravenloft_spires_heart", 10, "heart_strahd_test", HEART_STAIR, 4, 6)
 	prepare = Callable()
+
+
+## Strahd's visits before the castle (data/strahd/visits.json), played where the game plays them: he fights until he's
+## beaten, then flees with a parting line (owner, 2026-10-13), 5 in 8 for the sharp party without the Sunsword. On a night
+## road at level 7, at his book 144 HP with two dire wolves.
+func test_strahds_test_of_strength_at_level_7() -> void:
+	await _visit("test_of_strength", "road_ambush", 7)
+
+
+## At Ireena's window: the Blue Water Inn at level 5 (110 HP), the Krezkovs' house at level 7 (200 HP), a swarm of bats.
+func test_strahd_at_the_inn_window_at_level_5() -> void:
+	await _visit("ireena_at_the_inn", "vallaki_blue_water_inn", 5)
+
+
+func test_strahd_at_the_krezk_window_at_level_7() -> void:
+	await _visit("ireena_in_krezk", "krezk_burgomaster_house", 7)
+
+
+func _visit(visit_id: String, location: String, level: int) -> void:
+	custom_fight = ((StrahdPresence.visit(visit_id)["then"] as Array)[0] as Dictionary)["encounter"] as Dictionary
+	var wins := await _series(location, 23, level, str(custom_fight["id"]), SEEDS)
+	assert_true(wins >= 4 and wins <= 6, "%s is won 4 to 6 times in 8 (%d)" % [visit_id, wins])
+	custom_fight = {}
 
 
 static func _sunsword(st: StoryState) -> void:

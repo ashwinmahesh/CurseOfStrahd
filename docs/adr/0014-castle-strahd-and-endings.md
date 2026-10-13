@@ -69,8 +69,9 @@ first so content and code can be built in parallel.
   - An AI profile `strahd`: he strikes the weakest or the one carrying a treasure, charms, summons, uses legendary
     moves to stay out of reach, and leaves (mist or bat) when the encounter says so.
 - **Withdrawing.** An encounter may say when a foe leaves: `"withdraw": {"who": "<monster id>", "at_hp_below": n,
-  "after_rounds": n, "flag": "<flag set when he leaves>"}`. Strahd's harassment fights use it: he tests the party and
-  goes. Leaving is not dying: no loot, no Misty Escape. (Refined by the engine, P6-01: the field shapes above, the
+  "after_rounds": n, "flag": "<flag set when he leaves>", "say": "<his parting line>", "speaker": "<whose voice>"}`.
+  Strahd's harassment fights use it: since 2026-10-13 he fights until beaten (`at_hp_below: 1`) and goes with his line,
+  which the fight waits for before it ends. Leaving is not dying: no loot, no Misty Escape. (Refined by the engine, P6-01: the field shapes above, the
   Tarokka's `enemy_roam` key, resting places inside a location, and the ward.)
 
 ### Strahd's presence across the campaign
