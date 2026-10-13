@@ -44,7 +44,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 
 | | Where | Item | How |
 |---|---|---|---|
-| ✅ | Ground floor, Den of Wolves | Medallion of Thoughts (uncommon) | Search (Investigation DC 13): under the card cabinet; Gustav never lost at cards |
+| ✅ | Ground floor, Den of Wolves | Eyes of Minute Seeing (uncommon) | Search (Investigation DC 13): under the card cabinet; Gustav never lost at cards (his marked deck); a Medallion of Thoughts until Detect Thoughts left the game (2026-10-13) |
 | ✅ | Ground floor, kitchen | Driftglobe (uncommon) | Search (Perception DC 13): something wedged in the dumbwaiter shaft |
 | ✅ | Upper floor, library | Wand of Magic Missiles (uncommon) | Search (Investigation DC 14): a hollow book among the histories |
 | ✅ | Upper floor, conservatory | Instrument of the Bards, Doss Lute (uncommon) | Search (Investigation DC 13): a lute case behind the harp |
@@ -233,7 +233,7 @@ leaves a smaller purse and one find.
 | ✅ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
 | ✅ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
 | ✅ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
-| ✅ | Mother, on the courtyard wall | Boots of Levitation (rare) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
+| ✅ | Mother, on the courtyard wall | Winged Boots (uncommon) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
 
 ## Argynvostholt (level 8)
 

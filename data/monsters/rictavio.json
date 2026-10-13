@@ -106,7 +106,7 @@
       "name": "Spellcasting",
       "kind": "spellcasting",
       "summary": "A 9th-level wizard (Int, DC 16, +8): detection, warding and binding magic rather than blasts.",
-      "text": "Rictavio casts spells as a 9th-level wizard, using Intelligence (spell save DC 16, +8 to hit with spell attacks). Cantrips (at will): Friends, Light, Mage Hand, Message, Prestidigitation. 1st level (4 slots): Comprehend Languages, Detect Magic, Protection from Evil and Good, Sleep. 2nd level (3 slots): Detect Thoughts, Gentle Repose, Hold Person. 3rd level (3 slots): Clairvoyance, Magic Circle, Remove Curse. 4th level (3 slots): Arcane Eye, Banishment, Locate Creature. 5th level (1 slot): Hold Monster."
+      "text": "Rictavio casts spells as a 9th-level wizard, using Intelligence (spell save DC 16, +8 to hit with spell attacks). Cantrips (at will): Friends, Light, Mage Hand, Message, Prestidigitation. 1st level (4 slots): Comprehend Languages, Detect Magic, Protection from Evil and Good, Sleep. 2nd level (3 slots): Gentle Repose, Hold Person. 3rd level (3 slots): Clairvoyance, Magic Circle, Remove Curse. 4th level (3 slots): Arcane Eye, Banishment, Locate Creature. 5th level (1 slot): Hold Monster."
     }
   ],
   "spellcasting": {
@@ -128,7 +128,6 @@
         "sleep"
       ],
       "3": [
-        "detect_thoughts",
         "gentle_repose",
         "hold_person",
         "clairvoyance",

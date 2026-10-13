@@ -45,7 +45,8 @@ func test_the_wire_the_wall_and_the_flight() -> void:
 		assert_true(said.contains("Old Pavel's house") or said.contains("goat pens"))
 		assert_true(bool(copy.get_flag("mother_flown", false)))
 		assert_eq(copy.quest_stage("mothers_ninth_improvement"), "done")
-		assert_true(copy.party_has_item("boots_of_levitation"))
+		assert_true(copy.party_has_item("winged_boots"), "her eighth gift")
+		assert_true(bool(copy.get_flag("mother_boots_given", false)))
 		assert_eq(SideQuestPlay.standing(copy, "abbey_of_st_markovia_wards", "belview_mother"), "", "she's gone down the mountain")
 		copy.location = "krezk"
 		beats = SideQuestPlay.play(copy, "krezk/townsfolk:carver", ["Good day"])

@@ -13,7 +13,7 @@ func knowledge(level: int = 9) -> Character:
 
 func test_prepared_domain_filter_and_level_gates() -> void:
 	var ch := knowledge(3)
-	for id: String in ["comprehend_languages", "detect_magic", "detect_thoughts", "identify", "mind_spike"]:
+	for id: String in ["augury", "comprehend_languages", "detect_magic", "identify", "mind_spike"]:
 		assert_eq(ch.resource_casts(id).size(), 1, id)
 	for id: String in ["command", "tongues", "arcane_eye", "legend_lore", "scrying", "guidance"]:
 		assert_true(ch.resource_casts(id).is_empty(), id)

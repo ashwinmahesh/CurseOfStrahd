@@ -1,6 +1,6 @@
 extends TestCase
 ## Items taken out of the game (SaveSystem.WITHDRAWN): a save's copies, carried, stashed or waiting in a chest, become
-## useful uncommons in turn when it's loaded, the attunement to them ends, and the owner's old saves load clean.
+## useful items of the same rarity in turn when it's loaded, the attunement to them ends, and the owner's old saves load clean.
 
 const AMULET := "amulet_of_proof_against_detection_and_location"
 
@@ -32,7 +32,8 @@ func test_the_owners_old_save_keeps_no_amulet() -> void:
 		assert_false(Compendium.playable(Compendium.shared().item_data(id)), "%s is hidden, its data kept" % id)
 		for sub: Variant in SaveSystem.WITHDRAWN[id]:
 			var data := Compendium.shared().item_data(str(sub))
-			assert_true(Compendium.playable(data) and MagicItems.rarity(data) == "uncommon", "%s is a playable uncommon" % sub)
+			assert_true(Compendium.playable(data), "%s is playable" % sub)
+			assert_eq(MagicItems.rarity(data), MagicItems.rarity(Compendium.shared().item_data(id)), "%s: the same rarity as %s" % [sub, id])
 
 
 ## Every replacement does something in the game: the gem's elemental fights under the user's orders, the headband

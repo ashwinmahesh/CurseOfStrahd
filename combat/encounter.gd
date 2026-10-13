@@ -446,8 +446,8 @@ func in_running_water(c: Combatant) -> bool:
 	return movement.in_running_water(c)
 
 
-func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Dictionary:
-	return movement.reachable_for(c, budget, standing)
+func reachable_for(c: Combatant, budget: int = -1, standing: bool = false, avoid: Dictionary = {}) -> Dictionary:
+	return movement.reachable_for(c, budget, standing, avoid)
 
 
 func move_mode(c: Combatant) -> int:
@@ -489,8 +489,8 @@ func fear_in_sight(cr: Creature) -> bool:
 	return not known
 
 
-func move(c: Combatant, dest: Vector2i) -> CombatResult:
-	return movement.move(c, dest)
+func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
+	return movement.move(c, dest, avoid)
 
 
 func march(c: Combatant, dir: Vector2, feet: int, r: CombatResult) -> CombatResult:
