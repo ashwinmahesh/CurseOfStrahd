@@ -1683,7 +1683,16 @@ func _use_power(power_id: String, opts: Dictionary) -> void:
 	var ch := _ch()
 	var res := FieldItems.use(st, ch, selected, power_id, ch, Dice.roller, opts)
 	if bool(res.get("ok", false)) and str(res.get("effect", "")) == "long_rest":
+		# The same night as any other Long Rest's: its morning (the rest screen keeps the companions' words and the
+		# change of prepared spells for the hour), the Narrator's night and dream, a word to hear, and perhaps Strahd,
+		# who waits for this screen to close.
 		_prepared_before = PrepareScreen.snapshot(st)
+		st.morning["prepared"] = _prepared_before
+		var words := RestScreen.night_words(root, st)
+		var hint := RestScreen.talk_hint(st)
+		res["text"] = " ".join([str(res["text"]), words, hint]).strip_edges().replace("  ", " ")
+		if root != null and root.has_method("strahd_after_rest"):
+			root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)
 	# What it does to the place the party is in (a Wand of Secrets' pointing, a Wand of Magic Detection's Detect Magic).
 	if bool(res.get("ok", false)) and str(res.get("effect", "")) != "" and root != null and root.get("view") != null:
 		(root.get("view") as LocationView).apply_spell_effect(str(res["effect"]))

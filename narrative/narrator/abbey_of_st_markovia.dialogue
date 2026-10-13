@@ -201,7 +201,7 @@ cooldown 10
 cooldown 10
 
 ~ rest:long:abbey_of_st_markovia
-| You sleep in the cart shed with a watch at the door. All night, something walks the cloister in slow, even steps, and every hour it stops outside and listens, and goes on.
+| [indoors] You sleep in the cart shed with a watch at the door. All night, something walks the cloister in slow, even steps, and every hour it stops outside and listens, and goes on.
 
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 

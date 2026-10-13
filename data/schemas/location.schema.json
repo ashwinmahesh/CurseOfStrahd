@@ -307,6 +307,10 @@
           "text": {
             "type": "string"
           },
+          "say": {
+            "type": "string",
+            "description": "A Narrator trigger tried before examine:<id> (or search:<id>) when the prop is used: a camp's fire indoors says examine:camp_fire:indoors."
+          },
           "burning": {
             "type": "string",
             "description": "A condition: while it holds, the prop burns (a big flame and light)."
@@ -702,6 +706,10 @@
                     "southwest"
                   ],
                   "description": "F7: which way this foe faces while it waits in plain view before its fight (its sight cone points there). Unset: toward the middle of its group, else of its fight's area."
+                },
+                "unseen": {
+                  "type": "boolean",
+                  "description": "In a `waiting` fight, a foe not in plain view before it starts (among the casks): no figure, and it notices no one, until the fight puts it on its square."
                 }
               }
             }

@@ -575,7 +575,7 @@
         2
       ],
       "kind": "magic",
-      "color": "frost",
+      "color": "sickly",
       "bright_ft": 5,
       "dim_ft": 15
     },
@@ -603,7 +603,7 @@
         3
       ],
       "kind": "magic",
-      "color": "moon_blue",
+      "color": "sickly",
       "bright_ft": 0,
       "dim_ft": 15
     }

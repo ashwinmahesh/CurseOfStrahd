@@ -482,15 +482,19 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					preq.title = "Reaction: Reactive Strike?"
 					preq.text = "%s enters %s's reach. Strike with the polearm?" % [c.name(), pm.name()]
 					var jj := i
+					var cont := func() -> CombatResult:
+						if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
+							return _halt(c, path, jj, r)
+						return _walk(c, path, jj, r, handled)
+					var strike := func() -> CombatResult:
+						pm.reaction_available = false
+						return e.then(e._resolve_attack(pm, c, pole, {"reaction": true}), cont)
 					preq.continuation = func(use: bool) -> CombatResult:
-						var cont := func() -> CombatResult:
-							if c.is_down() or c.speed() <= 0 or e.state != Encounter.State.ACTIVE:
-								return _halt(c, path, jj, r)
-							return _walk(c, path, jj, r, handled)
-						if use:
-							pm.reaction_available = false
-							return e.then(e._resolve_attack(pm, c, pole, {"reaction": true}), cont)
-						return cont.call() as CombatResult
+						return strike.call() as CombatResult if use else cont.call() as CombatResult
+					# The same step sets off an attack it readied too: one prompt for both (owner report 2026-10-12).
+					if not handled.has("ready:%s" % pm.id) and pm in _readied_triggers(c, from, to) and e._reaction_decision(pm, "readied_attack") == "ask":
+						handled["ready:%s" % pm.id] = true
+						preq = _strike_or_readied(pm, c, preq, strike, cont)
 					e.pending = preq
 					r.pending = preq
 					return r
@@ -507,10 +511,7 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 					return _halt(c, path, next_i, r)
 				return _walk(c, path, next_i, r, handled)
 			if rdecision == "ask":
-				var rreq := ReactionRequest.new("readied_attack", p.id, c.id)
-				rreq.title = "Readied attack?"
-				rreq.text = "%s comes within reach of %s, who readied an attack. Use the Reaction to attack now?" % [c.name(), p.name()]
-				e.reaction_flow.readied_targets(rreq, p, c)   # a readied spell: who it's aimed at
+				var rreq := _readied_request(p, c)
 				var rref: WeakRef = weakref(rreq)
 				rreq.continuation = func(use: bool) -> CombatResult:
 					if use:
@@ -533,6 +534,43 @@ func _walk(c: Combatant, path: Array[Vector2i], i: int, r: CombatResult, handled
 		e._check_still_hidden(c)
 	settle_all()
 	return r
+
+
+## The prompt for an attack `p` readied for `mover` coming into its reach (a readied spell: who it's aimed at).
+func _readied_request(p: Combatant, mover: Combatant) -> ReactionRequest:
+	var e := enc()
+	var req := ReactionRequest.new("readied_attack", p.id, mover.id)
+	req.title = "Readied attack?"
+	req.text = "%s comes within reach of %s, who readied an attack. Use the Reaction to attack now?" % [mover.name(), p.name()]
+	e.reaction_flow.readied_targets(req, p, mover)
+	return req
+
+
+## One prompt (Reactions.CHOICE) for Polearm Master's Reactive Strike (`strike_req`, `strike`) and the attack `p` readied
+## for `mover` coming into reach, set off by the same step: the strike, or the readied attack (each aim of a readied
+## spell). Skipping keeps the readied one held for its next trigger; `cont` carries the move on.
+func _strike_or_readied(p: Combatant, mover: Combatant, strike_req: ReactionRequest, strike: Callable, cont: Callable) -> ReactionRequest:
+	var e := enc()
+	var ready := _readied_request(p, mover)
+	var req := e.reactions.chooser(p, mover.id)
+	req.target_choices.append({"id": "now:0", "label": Reactions.offer_name(strike_req.title), "text": strike_req.text, "cost": strike_req.cost})
+	if ready.target_choices.is_empty():
+		req.target_choices.append({"id": "now:1", "label": Reactions.offer_name(ready.title), "text": ready.text, "cost": ready.cost})
+	for pick in ready.target_choices:
+		req.target_choices.append({"id": "now:1:%s" % pick["id"], "label": "%s · %s" % [Reactions.offer_name(ready.title), pick["label"]],
+			"text": ready.text, "cost": ready.cost})
+	req.selected_ids.assign(["now:0"])
+	var ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var asked := ref.get_ref() as ReactionRequest
+		if not use or asked == null:
+			return cont.call() as CombatResult
+		var bits := asked.selected_ids[0].split(":", true, 2)
+		if bits[1] == "0":
+			return strike.call() as CombatResult
+		var aim := e.get_c(bits[2]) if bits.size() > 2 else null
+		return e.then(e.attacks._readied_attack(p, aim if aim != null and aim.is_alive() else mover), cont)
+	return req
 
 
 ## A move cut short (a grapple's Speed 0 from an Opportunity Attack, a Web, the mover dropped by a blow) where the mover

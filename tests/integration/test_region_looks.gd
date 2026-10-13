@@ -1,7 +1,8 @@
 extends TestCase
 ## Each region's own look in the Modern finish (the vault's Region Variety Plan, art/atmosphere/moods.json `modern`):
-## its own daylight, mist and shade so no two regions look alike, its ground tinted its own colour, autumn in the
-## Vistani camps' undergrowth, Vallaki's streets wet whatever the sky, and the frozen Classic look left as it was.
+## its own daylight, mist and shade so no two regions look alike, its ground tinted its own colour or swapped for its
+## own (the woods' moss), autumn in the Vistani camps' undergrowth, Vallaki's streets wet whatever the sky, and the
+## frozen Classic look left as it was.
 
 ## One place from each region the plan names.
 const REGIONS := ["road_forest", "village_of_barovia", "old_bonegrinder_hill", "tser_pool", "tser_falls",
@@ -89,7 +90,8 @@ func test_autumn_in_the_camps_not_the_woods() -> void:
 	var camp := _view("tser_pool")
 	await get_tree().process_frame
 	assert_true(float(Flora._material("leaf|bush").get_shader_parameter("autumn")) > 0.5, "the camp's undergrowth turns")
-	assert_eq(float(Flora._material("leaf|tree").get_shader_parameter("autumn")), 0.0, "and its spruces stay green")
+	assert_true(float(Flora._material("leaf|broadleaf").get_shader_parameter("autumn")) > 0.5, "and its oaks")
+	assert_eq(float(Flora._material("leaf|tree").get_shader_parameter("autumn")), 0.0, "but its spruces stay green")
 	camp.queue_free()
 	await get_tree().process_frame
 	var woods := _view("road_forest")
@@ -116,3 +118,37 @@ func test_vallaki_stays_wet() -> void:
 	c.queue_free()
 	Weather.use({})
 	Look.set_style(was, false)
+
+
+## A region lays its own ground (a mood's `ground_swap`): the woods' maps walk on moss in the Modern finish, Classic
+## and places without a swap keep theirs.
+func test_regions_lay_their_own_ground() -> void:
+	var was := Look.style()
+	Look.set_style("modern", false)
+	assert_eq(Atmosphere.region_surface("road_forest", "village/grass"), "wild/moss", "the woods walk on moss")
+	assert_eq(Atmosphere.region_surface("tser_pool", "village/grass"), "wild/leaf_litter", "the camp on fallen leaves")
+	assert_eq(Atmosphere.region_surface("werewolf_den", "mountain/scree"), "wild/red_scree", "the den on red scree")
+	assert_eq(Atmosphere.region_surface("village_of_barovia", "village/grass"), "village/grass", "the village keeps its own")
+	assert_eq(Atmosphere.region_surface("", "village/grass"), "village/grass", "and a board with no place")
+	var woods := _view("road_forest")
+	await get_tree().process_frame
+	assert_eq(str(woods.board.floor_material().get_meta("surface", "")), "wild/moss", "the woods' board is laid in moss")
+	woods.queue_free()
+	Look.set_style("classic", false)
+	assert_eq(Atmosphere.region_surface("road_forest", "village/grass"), "village/grass", "Classic stays as it was")
+	Look.set_style(was, false)
+
+
+## The regions grow their own trees (blender/plants_3d.py): oaks round the camps, birches and willows by the lake,
+## willows in the marsh, Scots pines in the mountains and on the heath, staked vines in the winery's rows.
+func test_regions_grow_their_own_trees() -> void:
+	var want := {"autumn": "oak_a", "lake": "birch_a", "marsh": "willow_a", "mountain": "scots_a", "heath": "scots_b",
+		"spectral": "birch_b"}
+	for set_id: String in want:
+		var pines := (Flora.resolve(set_id)["trees"] as Dictionary)["pine"] as Array
+		assert_true(str(want[set_id]) in pines, "%s grows %s" % [set_id, want[set_id]])
+		assert_true(Flora.mesh(str(want[set_id])) != null, "%s is built" % want[set_id])
+	var vines := false
+	for e: Array in Flora.resolve("vineyard")["open"] as Array:
+		vines = vines or str(e[0]) == "vine"
+	assert_true(vines, "vines stand in the winery's rows")

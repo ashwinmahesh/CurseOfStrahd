@@ -110,6 +110,19 @@ lime plaster), `kit/painted_wood` (weathered paint with no board seams, tinted p
 `BuildingKit.painted`) and `kit/dressed_stone` (trims). Gemini draws at its own scale: check a new swatch's pieces against
 the old tile's (a recipe's `pieces` can recut it, but its spectral count mistakes mortar lines for pieces, so check).
 
+## The regions' own grounds (the vault's Region Variety Plan, 2026-10-12)
+
+Six new HD sets in `art/textures/wild/`, painted and quilted like the rest (`tools/art/surface_recipes.json`, `new`:
+Modern only, no Classic tile), each brought near the old grass's brightness by its recipe's `brightness`: `moss` (the
+woods), `leaf_litter` (Tser Pool, the Vistani camp), `heath` (Old Bonegrinder, the moor), `vineyard_earth` (the Wizard of
+Wines), `shore_shingle` (Lake Zarovich and its shore), `red_scree` (the werewolf den). A region lays its own through its
+mood's `ground_swap` (docs/art/atmosphere.md).
+
+Indoors (the plan's part two): `cave/ember_basalt` and `cave/ember_basalt_wall` (the dragon's lair under Mount Ghakis),
+`dungeon/drowned_flags` and `dungeon/slimed_brick` (the lich's drowned library and undercroft), `amber/warped_amber`
+(the Eye Below), `church/frosted_flags` (the Tsolenka guard tower), `church/rich_flags` (St. Andral's nave and chancel,
+an area `floor` in its data) and `interior/blue_panelling` (the Blue Water Inn), laid by catalog `place_looks`.
+
 ## How a surface takes the light (the Modern finish, Improvement Ideas W3)
 
 In the Modern finish `Look.cel_textured` gives a surface `shaders/world/lit_world.gdshader` and `Look.cel` gives

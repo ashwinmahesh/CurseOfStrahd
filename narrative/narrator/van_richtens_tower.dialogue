@@ -93,7 +93,7 @@ once
 | You sleep inside Van Richten's wards, on his floor, under his maps. For the first time in Barovia nothing scratches at the door all night. It turns out to be very hard to sleep without it.
 
 ~ rest:long:van_richtens_tower
-| You sleep on the shore with the tower at your backs. Twice in the night, out on the ridge, eyes catch the firelight and then think better of it.
+| [not indoors] You sleep on the shore with the tower at your backs. Twice in the night, out on the ridge, eyes catch the firelight and then think better of it.
 
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 

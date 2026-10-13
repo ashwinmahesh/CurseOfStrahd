@@ -80,40 +80,72 @@ func target_count(s: Dictionary, slot: int) -> int:
 
 ## The area a spell would cover: cells around the point of origin.
 func area_for(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, slot: int = 0) -> Array[Vector2i]:
-	var area := s.get("area", {}) as Dictionary
-	if area.is_empty():
+	var a := _area_spec(c, s, point, direction, slot)
+	if a.is_empty():
 		return []
-	var shape := str(area["shape"])
-	var size := int(area["size"]) + int((s.get("upcast", {}) as Dictionary).get("area", 0)) * maxi(0, slot - int(s.get("level", 0)))
 	var g := enc().grid
-	var center := enc().center_of(c)
-	var self_origin := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
-	if shape == "emanation" and self_origin:
-		return g.area_cells("emanation", size, center, Vector2.RIGHT, 5, c.cell, c.size_cells)
-	if shape == "emanation":
+	var out := g.area_cells(str(a["shape"]), int(a["size"]), a["origin"] as Vector2, a["dir"] as Vector2, int(a["width"]),
+		a["cell"] as Vector2i, int(a["cells"]))
+	if a.has("with_origin"):
 		# An Emanation from something placed at the point (Conjure Animals' Large pack, Guardian of Faith): its own
 		# squares count too.
+		for f in CombatGrid.footprint(a["cell"] as Vector2i, int(a["cells"])):
+			if g.in_bounds(f) and not f in out:
+				out.append(f)
+	if a.has("without_caster"):
+		# A cone from the caster (CombatGrid.cone_from): not the caster's own squares.
+		for f in CombatGrid.footprint(c.cell, c.size_cells):
+			out.erase(f)
+	return out
+
+
+## The edge of the area area_for covers, for drawing it while the spell is aimed (CombatGrid.area_outline's shapes),
+## {} for a spell with no area.
+func area_outline(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, slot: int = 0) -> Dictionary:
+	var a := _area_spec(c, s, point, direction, slot)
+	if a.is_empty():
+		return {}
+	return CombatGrid.area_outline(str(a["shape"]), int(a["size"]), a["origin"] as Vector2, a["dir"] as Vector2,
+		int(a["width"]), a["cell"] as Vector2i, int(a["cells"]))
+
+
+## How a spell's area lies, cast by `c` at `point` or along `direction`: CombatGrid.area_cells's arguments {shape, size,
+## origin, dir, width, cell, cells}, with `with_origin` when the origin's own squares count and `without_caster` when the
+## caster's don't; {} for a spell with no area.
+func _area_spec(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2, slot: int) -> Dictionary:
+	var area := s.get("area", {}) as Dictionary
+	if area.is_empty():
+		return {}
+	var shape := str(area["shape"])
+	var size := int(area["size"]) + int((s.get("upcast", {}) as Dictionary).get("area", 0)) * maxi(0, slot - int(s.get("level", 0)))
+	var center := enc().center_of(c)
+	var self_origin := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var spec := {"shape": shape, "size": size, "origin": point, "dir": direction, "width": int(area.get("width", 5)),
+		"cell": Vector2i(-1, -1), "cells": 1}
+	if shape == "emanation" and self_origin:
+		spec.merge({"origin": center, "dir": Vector2.RIGHT, "width": 5, "cell": c.cell, "cells": c.size_cells}, true)
+	elif shape == "emanation":
 		var osz := int(area.get("origin_size", 1))
 		var oc := Vector2i(floori(point.x - osz / 2.0 + 0.5), floori(point.y - osz / 2.0 + 0.5)) if osz > 1 else Vector2i(floori(point.x), floori(point.y))
-		var em := g.area_cells("emanation", size, Vector2(oc) + Vector2(osz / 2.0, osz / 2.0), Vector2.RIGHT, 5, oc, osz)
-		for f in CombatGrid.footprint(oc, osz):
-			if g.in_bounds(f) and not f in em:
-				em.append(f)
-		return em
-	if self_origin and shape == "cone":
+		spec.merge({"origin": Vector2(oc) + Vector2(osz / 2.0, osz / 2.0), "dir": Vector2.RIGHT, "width": 5, "cell": oc,
+			"cells": osz, "with_origin": true}, true)
+	elif self_origin and shape == "cone":
 		var aim := direction if direction.length() > 0.01 else Vector2(c.facing)
 		if aim.length() < 0.01:
 			aim = Vector2.RIGHT
-		return g.cone_from(c.cell, c.size_cells, center + aim, size)
-	if self_origin:
+		var cone := CombatGrid.cone_aim(c.cell, c.size_cells, center + aim)
+		spec.merge({"origin": cone[0], "dir": cone[1], "width": 5, "without_caster": true}, true)
+	elif self_origin:
 		var dir := direction.normalized() if direction.length() > 0.01 else Vector2(c.facing)
 		if dir.length() < 0.01:
 			dir = Vector2.RIGHT
-		var origin := center + dir * (c.size_cells / 2.0)
-		return g.area_cells(shape, size, origin, dir, int(area.get("width", 5)))
-	if shape == "cylinder":
-		shape = "sphere"
-	return g.area_cells(shape, size, point, direction, int(area.get("width", 5)))
+		spec.merge({"origin": center + dir * (c.size_cells / 2.0), "dir": dir}, true)
+		if shape == "line":
+			# Aimed at any angle, straight out from the caster's middle, starting where that leaves its space.
+			spec.merge({"origin": CombatGrid.line_origin(c.cell, c.size_cells, dir, int(spec["width"])), "without_caster": true}, true)
+	elif shape == "cylinder":
+		spec["shape"] = "sphere"
+	return spec
 
 
 func creatures_in(cells: Array[Vector2i]) -> Array[Combatant]:

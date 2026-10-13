@@ -1,13 +1,13 @@
 class_name WorldSounds
 extends Node3D
-## The sounds of a place, heard from where they happen (A3, lane 11): the leader's footsteps on what the floor is made
-## of, fires crackling and water running from where they are, louder as the party comes near, and the creak of a chest
-## or the rustle of a sack as it's opened. art/audio.json says what plays: "steps" names each place's or map theme's
-## floor, "loops" lists the fire and water beds, "containers" names each container model's sound. Doors, locks, levers
-## and traps play their own one-shot effects where the game handles them.
+## The sounds of a place, heard from where they happen (A3, lane 11): the leader's footsteps, one each time its figure
+## puts a foot down, on what the floor is made of, fires crackling and water running from where they are, louder as
+## the party comes near, and the creak of a chest or the rustle of a sack as it's opened. art/audio.json says what
+## plays: "steps" names each place's or map theme's floor, "loops" lists the fire and water beds, "containers" names
+## each container model's sound. Doors, locks, levers and traps play their own one-shot effects where the game handles
+## them.
 
-## Footfalls to a 5 ft square, and how much quieter they are while the party sneaks.
-const STEPS_PER_SQUARE := 2
+## How much quieter footsteps are while the party sneaks.
 const SNEAK_DB := -9.0
 ## A fire or water bed is heard from this far (world units, one a square) and at full volume within UNIT of it.
 const HEARD_FROM := 14.0
@@ -25,8 +25,8 @@ var view: LocationView
 var floor_sound := ""
 var beds: Array[AudioStreamPlayer3D] = []
 var _ear: AudioListener3D
-var _last_cell := Vector2i(-1, -1)
-var _second_step := -1.0
+## The leader's figure, whose footfalls (DirectionalSprite.footfall) the footsteps play on.
+var _feet: DirectionalSprite = null
 var _rng := RandomNumberGenerator.new()   # cosmetic: where in its loop each bed starts
 
 
@@ -129,31 +129,36 @@ func _add_bed(id: String, cell: Vector2i) -> void:
 			p.play(_rng.randf() * stream.get_length())
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var lead := view.leader()
 	if lead == null or not view.tokens.has(lead.id):
 		return
 	var token := view.tokens[lead.id] as Node3D
 	var cam := view.rig.camera if view.rig != null else null
 	_ear.global_transform = Transform3D(cam.global_basis if cam != null else Basis(), token.global_position + Vector3(0, EAR_HEIGHT, 0))
-	if _second_step >= 0.0:
-		_second_step -= delta
-		if _second_step < 0.0:
-			_step()
-	if lead.cell == _last_cell:
+	_listen_to(token as CombatToken)
+
+
+## Hears the footfalls of `token`'s figure (the leader's): a new leader's, or a figure drawn anew, replaces the last.
+func _listen_to(token: CombatToken) -> void:
+	var feet: DirectionalSprite = token.sprite if token != null else null
+	if is_instance_valid(_feet) and feet == _feet:
 		return
-	var first := _last_cell == Vector2i(-1, -1)
-	_last_cell = lead.cell
-	if first or view.in_combat:
-		return   # arriving isn't a step, and a fight's moves have their own sounds
-	_step()
-	if STEPS_PER_SQUARE > 1:
-		_second_step = (LocationView.SNEAK_STEP_TIME if view.sneaking else LocationView.STEP_TIME) / STEPS_PER_SQUARE
+	if is_instance_valid(_feet):
+		_feet.footfall.disconnect(_on_footfall)
+	_feet = feet
+	if feet != null:
+		feet.footfall.connect(_on_footfall)
 
 
-func _step() -> void:
+## A footfall of the leader's: its footstep, on what the square under it is made of. A fight's moves have their own
+## sounds, and arriving somewhere isn't a step (the figure doesn't walk there).
+func _on_footfall() -> void:
+	if view.in_combat or not is_instance_valid(_feet):
+		return
+	var at := view.grid.cell_at((_feet.get_parent() as Node3D).position)
 	var outdoors := bool((view.loc.get("map", {}) as Dictionary).get("outdoors", false))
-	var id := step_for(floor_sound, view.grid.has_flag(_last_cell, CombatGrid.DIFFICULT), outdoors)
+	var id := step_for(floor_sound, view.grid.has_flag(at, CombatGrid.DIFFICULT), outdoors)
 	Audio.sfx(id, 0.08, SNEAK_DB if view.sneaking else 0.0)
 
 

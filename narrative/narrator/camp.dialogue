@@ -1,7 +1,11 @@
-# Narrator: the party's camp in the wild (F16, lane 24; docs/story/camp.md, world/exploration/location_camp.gd).
+# Narrator: the party's camp (F16, lane 24; docs/story/camp.md, world/exploration/location_camp.gd).
 # camp:pitch, camp:night, camp:morning and camp:strike are said with no one acting, so a [name:...] there asks whether
 # that companion is at camp. camp:<id> is what a companion is doing when they've nothing particular to say;
 # camp:guest:<npc> a guest's ({target} is their name); camp:someone a custom hero's ({name}).
+# A camp indoors (under a roof, or in a dungeon) or in a town's streets says its setting's lines first (CampSite.keys_for:
+# camp:pitch:indoors, then camp:pitch; examine:camp_fire:town, then examine:camp_fire), at the end of this file: a set
+# of its own wherever the wild's lines speak of trees, woods, sky or open country. A line that reads right anywhere is
+# repeated there word for word, so one voice clip serves both.
 
 # ---------------------------------------------------------------- Making camp, the night, the morning
 
@@ -137,3 +141,89 @@
 
 ~ camp:guest:parriwimple
 | Parriwimple has carried a whole fallen log to the fire without being asked, and is now counting the sparks.
+
+# ---------------------------------------------------------------- Indoors and in town
+
+~ camp:pitch:indoors
+| You make camp. Packs come off, bedrolls go down, and for a little while the world is no bigger than the firelight.
+| You clear a space on the floor and get a fire going. The smoke finds its own way out. The dark in the corners stays where it is, and watches.
+| [night] You make camp by the last of the lamplight. With a fire going, the room looks bigger than it did, and has more doorways.
+| [name:ratatoille] You make camp. Ratatouille has the pot on before the fire has properly caught, and is already disappointed in it.
+
+~ camp:pitch:town
+| You find a level patch out of the wind and get a fire going. The dark comes right up to the edge of the light and waits there, politely.
+| You make camp. Packs come off, bedrolls go down, and for a little while the world is no bigger than the firelight.
+| [night] You make camp in the empty street. One by one the shutters close along it, and somewhere a bar drops across a door, loudly, so you'll hear.
+| [weather == fog] You make camp in the fog. The fire's light goes three paces in every direction and then gives up.
+| [name:ratatoille] You make camp. Ratatouille has the pot on before the fire has properly caught, and is already disappointed in it.
+
+~ camp:night:indoors
+| You sleep in turns by the fire. Every watch hears something circle the camp, and every watch decides it was the wind.
+| The fire burns low, and the old place creaks and settles round you. Nothing comes. Somehow that's the part that keeps you awake.
+
+~ camp:night:town
+| You sleep in turns by the fire. Every watch hears something circle the camp, and every watch decides it was the wind.
+| [weather == fog] The fog comes right into camp in the night and sits by the embers like a guest. By morning everything you own is damp.
+
+~ camp:morning:indoors
+| You wake stiff and cold by a fire burned down to ash. Nobody took you in the night. In Barovia, that counts as a good night's sleep.
+| [day] A little grey light finds its way in from somewhere, which in Barovia is what passes for morning. The fire is ash and the pot is cold.
+| [night] You wake in the dark to the last red coals of the fire. Whatever was out there all night is still out there, and so are you.
+| [name:ratatoille] You wake to the smell of something frying. Ratatouille has been up for an hour, and he would like everyone to know it.
+| [name:thistle] Thistle is already up, crouched over a set of tracks at the edge of camp. Something came close in the night, had a look, and left.
+
+~ camp:morning:town
+| You wake stiff and cold by a fire burned down to ash. Nobody took you in the night. In Barovia, that counts as a good night's sleep.
+| [day] Grey light comes up over the rooftops, which in Barovia is what passes for morning. The fire is ash and the pot is cold.
+| [night] You wake in the dark to the last red coals of the fire. Whatever was out there all night is still out there, and so are you.
+| [name:ratatoille] You wake to the smell of something frying. Ratatouille has been up for an hour, and he would like everyone to know it.
+| [name:thistle] Thistle is already up, crouched over a set of tracks at the edge of camp. Something came close in the night, had a look, and left.
+
+~ camp:strike:indoors
+| You scatter the ashes and roll up the bedrolls. The room goes back to its own silence, as if you were never there.
+
+~ camp:strike:town
+| You break camp. The dark the fire held back all night moves in to take its patch of ground.
+| You stamp out the fire and shoulder your packs. Along the street a shutter opens a crack to watch you go, and closes again.
+
+~ examine:camp_fire:indoors
+| A good fire, built the way somebody's grandfather taught them. It throws your shadows up the walls, long and restless.
+| [night] The fire spits and settles. Beyond its light the doorways are so black they look solid.
+
+~ examine:camp_fire:town
+| A good fire, built the way somebody's grandfather taught them. It throws your shadows across the shuttered houses, long and restless.
+| [night] The fire spits and settles. Beyond its light the street is so black it looks solid.
+
+~ camp:thistle:indoors
+| Thistle is eating something with her hands that might have been a rabbit an hour ago. She offers you the other leg, in complete sincerity.
+| Thistle is scratching a mark into the doorpost, the same mark Grandda Fen left on his trail. In case he comes this way.
+| [night] Thistle sits outside the firelight with her back to it, so her eyes keep the dark. Every so often she sniffs, and doesn't like it.
+
+~ camp:someone:indoors
+| {name} sits close to the fire, hands to the warmth, watching the dark in the doorway.
+| {name} is checking straps and buckles by the firelight, the way people do when they'd rather not think about tomorrow.
+
+~ camp:someone:town
+| {name} sits close to the fire, hands to the warmth, watching the dark between the houses.
+| {name} is checking straps and buckles by the firelight, the way people do when they'd rather not think about tomorrow.
+
+~ camp:guest:rictavio:indoors
+| Rictavio is telling a story about a carnival, a lion and a duke's wife. It's very funny. His eyes never stop watching the door.
+
+~ camp:guest:rictavio:town
+| Rictavio is telling a story about a carnival, a lion and a duke's wife. It's very funny. His eyes never stop watching the street.
+
+~ camp:guest:gertruda:indoors
+| Gertruda is looking at everything: the fire, the shadows, the strange room. She has never slept anywhere but her mother's house before, and she's trying to remember all of it.
+
+~ camp:guest:gertruda:town
+| Gertruda is looking at everything: the fire, the dark windows, the empty street. She has never slept outside a house before, and she's trying to remember all of it.
+
+~ camp:guest:adrian_martikov:indoors
+| Adrian sits a little apart, turning a cork over in his fingers, listening for ravens he can't see from in here.
+
+~ camp:guest:ilinca_vrana:indoors
+| Ilinca roosts on a beam over the camp, a raven with an old woman's patience, one eye on the fire and one on the door.
+
+~ camp:guest:parriwimple:indoors
+| Parriwimple has carried a whole broken bench to the fire without being asked, and is now counting the sparks.

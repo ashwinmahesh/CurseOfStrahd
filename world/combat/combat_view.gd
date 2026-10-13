@@ -681,6 +681,7 @@ func _cancel_targeting() -> void:
 	overlay.clear("target")
 	overlay.clear("friendly")
 	overlay.clear("area")
+	overlay.clear_outline()
 	overlay.clear("arc")   # a leap's or a throw's flight
 	overlay.clear("arc_bad")
 	if mode == Mode.TARGET:
@@ -1066,13 +1067,42 @@ func _aim_point() -> Vector2:
 	return Vector2(roundf(hover_world.x), roundf(hover_world.z))
 
 
+## The way an area aimed from the caster points, toward the pointer: a Line at any angle (CombatGrid.line_aim), anything
+## else along the nearest of the eight grid directions.
 func _aim_dir(c: Combatant) -> Vector2:
 	var center := Vector2(c.cell.x + c.size_cells / 2.0, c.cell.y + c.size_cells / 2.0)
 	var d := Vector2(hover_world.x, hover_world.z) - center
 	if d.length() < 0.1:
 		return Vector2(c.facing)
+	if catalog.line_ft(c, selected) > 0:
+		return CombatGrid.line_aim(d)
 	var a := snappedf(d.angle(), PI / 4.0)
 	return Vector2(cos(a), sin(a))
+
+
+## A Line aimed on a pad (owner, 2026-10-12): the left stick points it, at any angle, and the cursor goes to its far
+## end (short of the board's edge), where its count and saves show and A casts it. The camera stays put.
+func _pad_line_aim(c: Combatant, stick: Vector2, length_ft: int) -> void:
+	var basis := rig.ground_basis()
+	var world := basis[0] * -stick.y + basis[1] * stick.x
+	var d := Vector2(world.x, world.z)
+	if d.length() < 0.01:
+		return
+	d = d.normalized()
+	var center := e.center_of(c)
+	var reach := c.size_cells / 2.0 + length_ft / float(CombatGrid.FEET) - 0.5
+	var p := center + d * reach
+	while reach > 0.5 and not e.grid.in_bounds(Vector2i(floori(p.x), floori(p.y))):
+		reach -= 0.25
+		p = center + d * reach
+	cursor_cell = Vector2i(clampi(floori(p.x), 0, e.grid.width - 1), clampi(floori(p.y), 0, e.grid.depth - 1))
+	hover_cell = cursor_cell
+	hover_world = Vector3(p.x, board.cell_center(cursor_cell).y, p.y)
+	hover_token = null
+	var o := e.occupant_at(cursor_cell)
+	if o != null:
+		hover_token = tokens.get(o.id) as CombatToken
+	_update_hover()
 
 
 func _radial(choice: String) -> void:
@@ -1170,7 +1200,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			finished.emit(e.outcome)
 		return
 	if hud.prompt_open():
-		if event.is_action_pressed(&"combat_confirm"):
+		# On a pad, A on one of the prompt's options picks that option (the engine presses it): it isn't Use Reaction.
+		if event.is_action_pressed(&"combat_confirm") and not (event is InputEventJoypadButton and hud.prompt_option_focused()):
 			hud.answer_prompt(true)
 		elif event.is_action_pressed(&"combat_cancel"):
 			hud.answer_prompt(false)
@@ -1344,9 +1375,17 @@ func _process(delta: float) -> void:
 		return
 	if hud.radial.visible:
 		hud.radial.aim(Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)))
-	# Controller cursor: the left stick steps it a square at a time.
+	# Controller cursor: the left stick steps it a square at a time, or points a Line being aimed.
 	var stick := Input.get_vector(&"cursor_left", &"cursor_right", &"cursor_up", &"cursor_down")
-	if stick.length() > 0.5:
+	var line := 0
+	if stick.length() > 0.5 and mode == Mode.TARGET and _player() != null and not picker.active() \
+			and str(selected.get("targeting", "")) == "direction":
+		line = catalog.line_ft(_player(), selected)
+	if line > 0:
+		using_pad = true
+		_pad_repeat = 0.0
+		_pad_line_aim(_player(), stick, line)
+	elif stick.length() > 0.5:
 		using_pad = true
 		_pad_repeat -= delta
 		if _pad_repeat <= 0.0:
@@ -1580,6 +1619,7 @@ func _aiming_area() -> bool:
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 	if picker.active():
+		overlay.clear_outline()   # a wall drawn square by square shows its squares
 		_show_pick(picker.show(hover_cell, t.combatant if t != null else null), at)
 		return
 	var kind := str(selected["targeting"])
@@ -1602,7 +1642,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
 		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
 		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
-		overlay.show_cells("area", pv["cells"] as Array)
+		# The area's edge, round for a radius, and no orange squares (owner, 2026-10-12: "for AoE spells, don't make the
+		# floor orange. Instead show a circular border which shows the area that would be affected").
+		overlay.show_outline(pv["outline"] as Dictionary, pv["cells"] as Array)
 		# Who it catches and their saves go in the panel at the top left (owner, 2026-10-12); by the pointer, a count.
 		var caught := pv["creatures"] as Array
 		var friends := caught.filter(func(w: Dictionary) -> bool: return bool(w["ally"]) and not bool(w["safe"])).size()
@@ -1945,9 +1987,9 @@ func _play_events() -> void:
 				final_played = _impact_on(landed_on, events, ev_at, final_fall, false) or final_played
 				var cells := ev.get("cells", []) as Array
 				if not cells.is_empty():
-					overlay.show_cells("area", cells)
+					overlay.show_outline(ev.get("outline", {}) as Dictionary, cells)
 					await get_tree().create_timer(0.45 * GameSettings.combat_pace()).timeout
-					overlay.clear("area")
+					overlay.clear_outline()
 				turned_until = CombatImpact.window_end(events, ev_at)
 			"ability":
 				# A class feature or a monster's save action (Second Wind, a breath, a wail): its effect, if it has one.
@@ -2217,7 +2259,8 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 	if narrator == null or story == null:
 		return
 	var who: Character = actor.creature as Character if actor != null and actor.creature is Character else null
-	var text := narrator.line(key, story, who, {"round": e.round_no, "target": target.name() if target != null else ""})
+	var text := narrator.line(key, story, who, {"round": e.round_no, "fight": str(e.get_instance_id()),
+		"target": target.name() if target != null else ""})
 	if text != "":
 		e.log.add("narr", text, "")
 		hud.refresh_log()

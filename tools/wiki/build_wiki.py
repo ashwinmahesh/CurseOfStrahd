@@ -54,7 +54,8 @@ TALK_SPELLS = {"speak_with_animals": "Speak with Animals", "speak_with_dead": "S
                "speak_with_plants": "Speak with Plants"}
 TAROKKA_TREASURES = {"tome_of_strahd": "tome", "holy_symbol_of_ravenkind": "symbol", "sunsword": "sword"}
 REST_WORDS = {"safe": "Safe: a Long Rest here isn't interrupted.",
-              "risky": "Risky: a rest here can be interrupted.",
+              "risky": "Risky: a Long Rest here makes camp, and the night can be interrupted.",
+              "no": "No sleeping here: a Short Rest only, out of sight of foes.",
               "none": "No resting here.", "unsafe": "Unsafe: resting here is asking for trouble."}
 AUTO_RE = re.compile(r"%% auto:([a-z0-9_]+) %%\n(.*?)%% /auto:\1 %%\n?", re.S)
 TODAY = datetime.date.today().isoformat()
@@ -308,6 +309,8 @@ class Game:
         self.glossary = load_json(d / "glossary" / "terms.json")
         self.loading = load_json(d / "loading" / "cards.json")
         self.schedules = folder("schedule")
+        nv = d / "camp" / "night_visitors.json"
+        self.night_visitors = load_json(nv) if nv.exists() else {}
         self.all_items = OrderedDict(list(self.items.items()) + list(self.magic.items()))
         self.dialogues = OrderedDict()
         for p in sorted((root / "narrative").rglob("*.dialogue")):
@@ -1582,8 +1585,8 @@ class Wiki:
             if isinstance(spots, dict) and spots:
                 wf += ["**Tarokka treasure spots.** If the reading hid one of the treasures here, it's in: " +
                        "; ".join(f"{title_id(k)} ({v.get('container', '')})" for k, v in spots.items()), ""]
-            wf += [f"Containers can also hold random magic items, rolled for a party of level {lvl or 5} the first "
-                   f"time you come here ({s.link('page/random_treasure', 'Random Treasure')}). Hidden finds need a "
+            wf += [f"The containers here also get random magic items and potions, rolled for a party of level "
+                   f"{lvl or 5} the first time you come ({s.link('page/random_treasure', 'Random Treasure')}). Hidden finds need a "
                    "Search (F) nearby; the party's best roll counts.", ""]
             if checks:
                 wf += ["### Skill checks", "", "| # | Where | Check | Try | What it does |", "|---|---|---|---|---|"] \
@@ -2026,16 +2029,47 @@ class Wiki:
         self.w.write("page/cheat_codes", "Items/Cheat Codes", "Cheat Codes", [auto("list", "\n".join(lines))],
                      tags=["wiki", "items"], meta={"type": "guide"})
         t = g.treasure
-        lines = [plain(t.get("_note", "")), "", "## Party level by region", "", "| Region | Level |", "|---|---|"]
+        lines = ["What you find besides the fixed treasure the story puts in place: random magic items and potions in "
+                 "containers, and the spoils of fights. Each place rolls its share the first time you come, from your "
+                 "playthrough's seed, and keeps it.", ""]
+        ipl, ppl = t.get("items_per_location") or {}, t.get("potions_per_location") or {}
+        if ipl or ppl:
+            lines += ["## In a place's containers", ""]
+            if ipl:
+                lines.append(f"- **Magic items:** none {ipl.get('none', 0)}% of the time, one {ipl.get('one', 0)}%, "
+                             f"two {ipl.get('two', 0)}%; a place with {ipl.get('extra_if_containers', 3)} or more "
+                             f"containers gets one more {ipl.get('extra_chance', 0)}% of the time.")
+            if ppl:
+                lines.append(f"- **Potions:** none {ppl.get('none', 0)}% of the time, one {ppl.get('one', 0)}%, two "
+                             f"{ppl.get('two', 0)}%. Each is a healing potion for your tier {ppl.get('healing', 0)}% of "
+                             "the time, else any potion of the place's rarity.")
+            lines.append("")
+        if t.get("_loot_note"):
+            lines += ["## Fights", "", "Story fights you win leave coins by each foe's Challenge Rating and one find "
+                      "(a healing potion, a gem or a spell scroll). Beasts, plants, oozes and mindless creatures carry "
+                      "no coins. Strahd's visits, road fights and arrests leave only their own spoils.", ""]
+        rbl = t.get("rarity_by_level") or []
+        if rbl:
+            lines += ["## Rarity by party level", "", "| Party level | Uncommon | Rare | Very rare | Legendary |",
+                      "|---|---|---|---|---|"]
+            low = 1
+            for row in rbl:
+                w = row.get("weights", {})
+                lines.append(f"| {low}–{row.get('max_level')} | " + " | ".join(
+                    f"{w.get(r, 0)}%" if w.get(r) else "" for r in ("uncommon", "rare", "very_rare", "legendary")) + " |")
+                low = int(row.get("max_level", 0)) + 1
+            lines.append("")
+        lines += ["## Party level by region", "", "Each region's containers roll for this party level (a place can set "
+                  "its own).", "", "| Region | Level |", "|---|---|"]
         for rid, lvl in sorted(t.get("region_levels", {}).items(), key=lambda kv: kv[1]):
             lines.append(f"| {s.region(rid)} | {lvl} |")
         lines.append("")
-        for k, v in t.items():
-            if k in ("_note", "region_levels") or not isinstance(v, (dict, list)):
-                continue
-            lines += [f"## {title_id(k)}", "", "```json", json.dumps(v, indent=1)[:3000], "```", ""]
+        notes = [plain(t[k]) for k in ("_note", "_theme_note") if t.get(k)]
+        if notes:
+            lines += [collapsed("abstract", "How the rolls work", [n + "\n" if i < len(notes) - 1 else n
+                                                                     for i, n in enumerate(notes)])]
         self.w.write("page/random_treasure", "Items/Random Treasure", "Random Treasure", [auto("list", "\n".join(lines))],
-                     tags=["wiki", "items"])
+                     tags=["wiki", "items"], meta={"type": "guide"})
 
     @staticmethod
     def gp(v):
@@ -2406,13 +2440,14 @@ class Wiki:
         self.w.write("page/conditions", "Rules/Conditions", "Conditions", [auto("list", "\n".join(lines))], tags=["wiki", "rules"])
         lines = ["The rules words the game underlines; hover one in the game to read it. *In this game* notes are "
                  "where it plays differently.", ""]
-        for t in sorted(g.glossary.get("terms", []), key=lambda t: t.get("name", "")):
-            text = t.get("text") or t.get("summary", "")
-            if not text and t.get("from"):
-                kind, _, tid = t["from"].partition(":")
-                if kind == "condition":
-                    text = g.conditions.get(tid, {}).get("text", "")
-            lines.append(f"## {t.get('name', '')}")
+        def source(t):
+            """The condition a term points at with `from` (its name and text when the term leaves them out)."""
+            kind, _, tid = str(t.get("from", "")).partition(":")
+            return g.conditions.get(tid, {}) if kind == "condition" else {}
+
+        for t in sorted(g.glossary.get("terms", []), key=lambda t: t.get("name") or source(t).get("name", "")):
+            text = t.get("text") or t.get("summary", "") or source(t).get("text", "")
+            lines.append(f"## {t.get('name') or source(t).get('name', '')}")
             if t.get("kind"):
                 lines.append(f"*{t['kind']}*")
             lines.append(text)
@@ -2520,6 +2555,29 @@ class Wiki:
                 lines.append(f"| {e.get('weight', 1)} | {esc(human_cond(e.get('when', '')))} | "
                              f"{self.monsters_line(e.get('monsters', []))} | {self.xp_of(e.get('monsters', []))} |")
             lines.append("")
+        nv = g.night_visitors
+        if nv.get("groups"):
+            lands = defaultdict(list)
+            for rid, land in (nv.get("lands") or {}).items():
+                lands[land].append(g.region_name(rid))
+            lines += ["## Night visitors at camp", "",
+                      "When a night at camp in a risky place is interrupted, one of these comes out of the dark, picked by "
+                      f"the region's land and your party's level ({s.link('page/resting', 'Resting and Saving')}). "
+                      "They're meant to be hard.", ""]
+            order = list(dict.fromkeys(gr.get("land", "") for gr in nv["groups"]))
+            for land in order:
+                regions = ", ".join(lands.get(land, [])) or ("everywhere else" if land == nv.get("default_land") else "")
+                lines += [f"### {land.title()}", "", f"*{regions}*" if regions else "", "",
+                          "| Party level | What comes | XP |", "|---|---|---|"]
+                for gr in nv["groups"]:
+                    if gr.get("land") != land:
+                        continue
+                    lv = gr.get("levels") or []
+                    lvl = f"{lv[0]}–{lv[1]}" if len(lv) == 2 else ""
+                    mons = [{"monster": m} if isinstance(m, str) else m for m in gr.get("monsters", [])]
+                    lines.append(f"| {lvl} | *{esc(plain(gr.get('text', ''), 120))}* {self.monsters_line(mons)} | "
+                                 f"{self.xp_of(mons)} |")
+                lines.append("")
         self.w.write("page/random_encounters", "World/Random Encounters", "Random Encounters",
                      [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         w = g.weather
@@ -2528,6 +2586,22 @@ class Wiki:
         for k, d in w.get("kinds", {}).items():
             lines.append(f"| {d.get('label', k)} | ×{d.get('travel', 1)} | +{d.get('road_day', 0)} / +{d.get('road_night', 0)} | "
                          f"{'yes' if d.get('obscures') else ''} |")
+        cl = w.get("climates") or {}
+        if cl:
+            kinds = [k for k in w.get("kinds", {}) if any(k in c for c in cl.values())]
+            where = defaultdict(list)
+            for rid, c in (w.get("regions") or {}).items():
+                where[c].append(g.region_name(rid))
+            lines += ["", "## Climates", "", "How likely each kind of weather is in each climate (it changes every six "
+                      "hours), and where each climate holds. Everywhere not listed is "
+                      f"{w.get('default_climate', 'valley')}.", "",
+                      "| Climate | " + " | ".join(w["kinds"][k].get("label", k) for k in kinds) + " | Regions |",
+                      "|---|" + "---|" * len(kinds) + "---|"]
+            for name, weights in cl.items():
+                tot = sum(weights.values()) or 1
+                lines.append(f"| {name.title()} | " + " | ".join(f"{round(100 * weights.get(k, 0) / tot)}%" if weights.get(k)
+                                                                else "" for k in kinds) +
+                             f" | {', '.join(where.get(name, [])) or ('everywhere else' if name == w.get('default_climate') else '')} |")
         self.w.write("page/weather", "World/Weather", "Weather", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         src = (g.root / "core" / "achievements.gd").read_text()
         ach = re.findall(r'"([a-z_0-9]+)": \["([^"]+)", "([^"]+)"\]', src)

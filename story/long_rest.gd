@@ -1,13 +1,17 @@
 class_name LongRest
 extends RefCounted
-## A Long Rest's eight hours (plan §5.2), wherever it's taken: the rest screen, the camp in the wild (LocationCamp) and
-## the magic items that make a safe place to sleep (FieldItems). A risky place may interrupt it (a d6 shows 1, unless
+## A Long Rest's eight hours (plan §5.2), wherever it's taken: the rest screen, the camp (LocationCamp: wherever the
+## place's rest is risky) and the magic items that make a safe place to sleep (FieldItems). A risky place may interrupt it (a d6 shows 1, unless
 ## a ward keeps the rest or Alarm wakes the party first); an interrupted rest gives a Short Rest's benefits after an
 ## hour. A finished one takes eight hours off the clock and brings everything back (Creature.finish_long_rest), for the
 ## party and the guests travelling with it. Pure story logic: whoever started it shows what's returned and starts what
 ## follows the night (the Narrator's lines, Strahd's visit, a camp's night visitors).
 
 const HOURS := 8
+## How long after a Long Rest its morning lasts (game minutes): while it does, the rest screen still offers what a
+## rest's end offers (the companions' words, the change of prepared spells), whatever closed it meanwhile (Strahd's
+## night visit, the inventory a magic item's rest was taken from).
+const MORNING_MINUTES := 60
 
 
 ## Takes the rest in a place whose rule is `rule` ("safe" or "risky": the place's, after the difficulty's safe rests).
@@ -41,6 +45,7 @@ static func finish(st: StoryState, dice: DiceRoller) -> Array[String]:
 	st.advance_minutes(HOURS * 60)
 	st.miles_since_long_rest = 0.0
 	RestRules.note_long_rest(st)
+	st.morning = {"at": st.total_minutes()}
 	for ch in st.party:
 		if not ch.dead:
 			ch.finish_long_rest()
@@ -54,3 +59,12 @@ static func finish(st: StoryState, dice: DiceRoller) -> Array[String]:
 		lines.append(room)
 	lines.append_array(RestCasts.after_long_rest(st.party, dice))
 	return lines
+
+
+## Whether the morning after the last Long Rest is still on (MORNING_MINUTES since it ended, and no Long Rest since).
+static func morning_open(st: StoryState) -> bool:
+	if st.morning.is_empty() or not st.flags.has(RestRules.DONE_AT):
+		return false
+	var at := int(st.morning.get("at", -1))
+	return at == int(st.flags[RestRules.DONE_AT]) and st.total_minutes() - at <= MORNING_MINUTES
+

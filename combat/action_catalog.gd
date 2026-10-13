@@ -924,7 +924,7 @@ const ACTION_TEXT := {
 	"stand": "Standing up costs half your Speed.",
 	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
 	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
-	"utilize": "Use an object, such as a lever or a potion.",
+	"utilize": "Use an object, such as a lever. A potion isn't drunk this way: drinking one, or giving it to a creature within 5 ft, is a Bonus Action on the Items tab.",
 }
 
 
@@ -1595,13 +1595,33 @@ func _known_defenses(t: Combatant) -> String:
 	return " · " + ("; ".join(parts) if not parts.is_empty() else "no resistances")
 
 
-## The area a spell would cover and who's in it (cb_02): {cells, creatures: [{id, name, ally, line}], warnings}.
+## How long the Line an action aimed in a direction makes, in feet (Lightning Bolt, Gust of Wind and its turn, Sunbeam's
+## later beams, a Dragonborn's Breath Weapon line); 0 when it makes another shape or none. A Line is aimed at any angle,
+## where the other shapes take the nearest of the eight grid directions (owner, 2026-10-12).
+func line_ft(c: Combatant, action: Dictionary) -> int:
+	if str(action.get("id", "")) == "feat:breath_weapon:line":
+		return 30
+	var area := {}
+	if str(action.get("kind", "")) == "sustain":
+		for a: Dictionary in e.spells.sustained:
+			if str(a["id"]) == str(action.get("sustain_id", "")) and str(a["owner_id"]) == c.id:
+				area = (a["def"] as Dictionary).get("area", {}) as Dictionary
+	if area.is_empty() and str(action.get("spell_id", "")) != "":
+		area = Compendium.shared().spell_data(str(action["spell_id"])).get("area", {}) as Dictionary
+	return int(area.get("size", 0)) if str(area.get("shape", "")) == "line" else 0
+
+
+## The area a spell would cover and who's in it (cb_02): {cells, outline: its edge to draw (SpellTargeting.area_outline;
+## {} for a wall, which shows its squares), creatures: [{id, name, ally, line}], warnings}.
 func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector2, slot: int = 0) -> Dictionary:
 	var data := Compendium.shared().spell_data(str(action["spell_id"]))
 	var cells: Array[Vector2i] = []
+	var outline := {}
 	if data.has("area"):
 		# A wall's ring or globe shows as it's cast (SpellTargeting.wall_cells).
 		cells = e.spells.targeting.wall_cells(data, action.get("opts", {}) as Dictionary, point, e.spells.area_for(c, data, point, dir))
+		if str((data["area"] as Dictionary).get("shape", "")) != "wall":
+			outline = e.spells.targeting.area_outline(c, data, point, dir)
 	var who: Array[Dictionary] = []
 	var warnings: Array[String] = []
 	var level := int(data.get("level", 0))
@@ -1658,7 +1678,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	if bool(action.get("concentration", false)) and c.creature.concentration != null:
 		warnings.append("Ends your Concentration on %s" % c.creature.concentration.name)
 	var save := str(data.get("save", ""))
-	return {"cells": cells, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot,
+	return {"cells": cells, "outline": outline, "creatures": who, "warnings": warnings, "dc": dc, "slot": use_slot,
 		"save": str(Creature.ABILITY_SHORT[StringName(save)]) if save != "" else ""}
 
 

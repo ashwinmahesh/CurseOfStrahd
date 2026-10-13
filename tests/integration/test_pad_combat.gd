@@ -276,3 +276,44 @@ func test_the_action_bar_hides_and_comes_back() -> void:
 	assert_false(CombatHud.actions_hidden, "and so does a prompt")
 	hud.hide_prompt()
 	CombatHud.actions_hidden = false
+
+
+## A hero's Reactions on one prompt (owner report 2026-10-12): the D-pad reaches each of them, A picks one and goes on
+## to Use Reaction, and A there takes it.
+func test_a_list_of_reactions_on_the_pad() -> void:
+	if not _ready_for_input():
+		return
+	var who := cv.e.current()
+	var req := cv.e.reactions.chooser(who, who.id)
+	req.target_choices.assign([{"id": "now:0", "label": "Protection", "text": "The shield goes up.", "cost": "Reaction"},
+		{"id": "later:sentinel", "label": "Sentinel, if the attack hits", "text": "A strike back once it hits.", "cost": "Reaction, only if it hits"}])
+	req.selected_ids.assign(["now:0"])
+	var picked: Array[String] = []
+	var ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		if use:
+			picked.assign((ref.get_ref() as ReactionRequest).selected_ids)
+		return CombatResult.new()
+	cv.e.pending = req
+	cv.mode = CombatView.Mode.PROMPT
+	cv.hud.show_prompt(req)
+	await _frames(2)
+	var box := cv.hud.get("_prompt") as Control
+	assert_eq(nav.scope_now(), box, "the prompt takes the pad alone")
+	assert_eq(PadNav.choices(box).filter(func(c: Control) -> bool: return c is CheckButton).size(), 2, "both Reactions can be reached")
+	var sentinel := func() -> bool:
+		var f := get_viewport().gui_get_focus_owner()
+		return f is CheckButton and (f as CheckButton).text.begins_with("Sentinel")
+	for i in 4:
+		if sentinel.call():
+			break
+		await _press(JOY_BUTTON_DPAD_UP)
+	assert_true(sentinel.call(), "up from Use Reaction to Sentinel (on %s)" % get_viewport().gui_get_focus_owner())
+	await _press(JOY_BUTTON_A)
+	assert_eq(req.selected_ids, ["later:sentinel"] as Array[String], "A picks it")
+	assert_true((cv.hud.get("_prompt_text") as Label).text.contains("A strike back"), "and its words show")
+	var use := cv.hud.get("_prompt_use") as Control
+	assert_eq(get_viewport().gui_get_focus_owner(), use, "and goes on to Use Reaction")
+	await _press(JOY_BUTTON_A)
+	await _frames(2)
+	assert_eq(picked, ["later:sentinel"] as Array[String], "the picked Reaction is the one used")

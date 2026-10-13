@@ -480,7 +480,7 @@ func _resolve_attack(c: Combatant, target: Combatant, option: Dictionary, opts: 
 	var before := e.echo_knight.before_roll(st)
 	before.append_array(e.reactions.before_roll(st))
 	before.append_array(e.items.before_roll(st))
-	return e.reactions.offer(before, func() -> CombatResult: return _roll_attack(st), r)
+	return e.reactions.offer(before, func() -> CombatResult: return _roll_attack(st), r, st)
 
 
 func _roll_attack(st: Dictionary) -> CombatResult:
@@ -521,7 +521,7 @@ func _roll_attack(st: Dictionary) -> CombatResult:
 	return e.reactions.offer(responses, func() -> CombatResult:
 		if t.success:
 			return _attack_outcome(st)
-		return e.reactions.offer(_miss_offers(st), func() -> CombatResult: return _attack_outcome(st), r), r)
+		return e.reactions.offer(_miss_offers(st), func() -> CombatResult: return _attack_outcome(st), r, st), r, st)
 
 
 ## The attacker's ways to turn its own miss into a hit: Heroic Inspiration (2024: reroll the d20 and use the new roll),
@@ -587,7 +587,7 @@ func _attack_outcome(st: Dictionary) -> CombatResult:
 	hit_offers.append_array(e.monster_actions.parry_offer(st, miss))
 	return e.reactions.offer(hit_offers, func() -> CombatResult:
 		e.events.append({"type": "attack", "attacker": c.id, "from": EchoKnight.striking_from(c), "target": target.id, "hit": true, "critical": critical, "edge": attack_edge(st["t"] as D20Test), "action": str(option.get("id", ""))})
-		return _after_hit(st), r)
+		return _after_hit(st), r, st)
 
 
 ## "advantage", "disadvantage" or "" for an attack roll, with the reasons (the view shows it over the attacker).
@@ -614,13 +614,14 @@ func _attack_missed(st: Dictionary) -> CombatResult:
 	e.features.after_miss(c, target, option, r)
 	e.items.after_miss(c, target, option, r)
 	return e.reactions.offer(e.reactions.after_miss_target(st), func() -> CombatResult:
+		e.reaction_flow.keep_reserved(st)
 		if st.has("riposte"):
 			var rp := st["riposte"] as Dictionary
 			var by := rp["by"] as Combatant
 			return _resolve_attack(by, c, rp["option"] as Dictionary, {"reaction": true,
 				"extra_dice": [{"dice": "1d%d" % int(rp["die"]), "type": str(((rp["option"] as Dictionary)["profile"] as WeaponProfile).damage_type), "label": "Riposte"}]})
 		# What waits for the attack to be done (a Ready action, a reaction to a Graze's damage) comes now, as after a hit.
-		return e.run_reaction_queue(r), r)
+		return e.run_reaction_queue(r), r, st)
 
 
 func _after_hit(st: Dictionary) -> CombatResult:
@@ -630,7 +631,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 		var responses := e.feature_recipes.hit_responses(st["c"] as Combatant, st["target"] as Combatant)
 		# The attacker's own choice once it has hit: Divine Smite, the 2014 way.
 		responses.append_array(e.features.smite_offers(st["c"] as Combatant, st["target"] as Combatant, st["option"] as Dictionary, st))
-		return e.reactions.offer(responses, func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult)
+		return e.reactions.offer(responses, func() -> CombatResult: return _after_hit(st), st["r"] as CombatResult, st)
 	var c := st["c"] as Combatant
 	var target := st["target"] as Combatant
 	var option := st["option"] as Dictionary
@@ -728,7 +729,7 @@ func _after_hit(st: Dictionary) -> CombatResult:
 		dmg_text.append(p.damage_bonus.describe())
 	var details := st["details"] as Array[String]
 	var r2 := e.reactions.offer(e.reactions.against_damage(st, parts, dmg_text), func() -> CombatResult:
-		return _apply_hit(st, parts, details, dmg_text), r)
+		return _apply_hit(st, parts, details, dmg_text), r, st)
 	return r2
 
 
@@ -762,6 +763,7 @@ func _apply_hit(st: Dictionary, parts: Dictionary, details: Array[String], dmg_t
 		e.features.after_hit(c, target, option, dr, st, r)
 		e.items.after_hit(c, target, option, dr, st, r)
 		e.reaction_flow._queue_sentinels(c, target)
+		e.reaction_flow.keep_reserved(st)
 		return e.run_reaction_queue(r))
 
 

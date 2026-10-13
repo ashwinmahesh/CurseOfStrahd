@@ -11,6 +11,7 @@ extends Node
 ## - REGION_BEFORE=/abs/dir: a folder holding the "before" moods.json, flora.json, vistas.json and catalog.json (any
 ##   of them; a missing one keeps the game's). Shots are then named <out>_<shot>_<hour>_before.png and _after.png.
 ## - REGION_WEATHER=rain: the world's weather for every shot (default the new game's own).
+## - REGION_PLACES=ghakis_lair,amber_deep: shoot these places (at their own spawn) instead of the region shots.
 ## - REGION_TILT=1: the camera tilted to the horizon (the ridges and landmarks past the edge), a shot each quarter turn
 ##   (<shot>_<hour>_t0 ... _t3).
 
@@ -66,19 +67,25 @@ func capture_shots(tool: Node, out: String) -> void:
 	if hours.is_empty():
 		hours = PackedStringArray(["12"])
 	var before := OS.get_environment("REGION_BEFORE")
-	for id: String in SHOTS:
+	var shots := SHOTS.duplicate()
+	var places := OS.get_environment("REGION_PLACES").split(",", false)
+	if not places.is_empty():
+		shots = {}
+		for p: String in places:
+			shots[p] = {"loc": p}
+	for id: String in shots:
 		if not only.is_empty() and not id in only:
 			continue
 		for h: String in hours:
 			var name := "%s_%s_%02d" % [out, id, int(h)]
 			if before != "":
 				_use_look(before)
-				await _shoot(tool, SHOTS[id] as Dictionary, int(h), name + "_before.png")
+				await _shoot(tool, shots[id] as Dictionary, int(h), name + "_before.png")
 				_use_look("")
-				await _shoot(tool, SHOTS[id] as Dictionary, int(h), name + "_after.png")
+				await _shoot(tool, shots[id] as Dictionary, int(h), name + "_after.png")
 			else:
 				_use_look("")
-				await _shoot(tool, SHOTS[id] as Dictionary, int(h), name + ".png")
+				await _shoot(tool, shots[id] as Dictionary, int(h), name + ".png")
 
 
 func _shoot(tool: Node, shot: Dictionary, hour: int, path: String) -> void:

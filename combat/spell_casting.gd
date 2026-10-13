@@ -227,17 +227,23 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 	e.log.add("spell", "%s casts %s%s%s" % [c.name(), s["name"], slot_text, (": " + choice.capitalize().replace("_", " ")) if choice != "" else ""], c.id, [
 		"Spell save DC %d · Spell attack %+d" % [(nums["dc"] as Breakdown).total(), (nums["attack"] as Breakdown).total()]])
 	var cells: Array[Vector2i] = []
+	# The area's edge, for the board to draw as it goes off (GridOverlay.show_outline): a wall or several areas show
+	# their squares' edges instead.
+	var outline := {}
 	if s.has("area"):
 		cells = spells.area_for(c, s, point, direction, slot)
+		if str((s["area"] as Dictionary).get("shape", "")) != "wall":
+			outline = spells.targeting.area_outline(c, s, point, direction, slot)
 	# Fire Storm's ten 10-ft Cubes and Meteor Swarm's four Spheres at the points chosen (opts.points).
 	if opts.has("points") and spell_id in ["fire_storm", "meteor_swarm"]:
 		cells = spells.multi_area(c, spell_id, opts["points"] as Array)
+		outline = {}
 	# Wall of Fire as a ring 20 ft across.
 	if str((s.get("area", {}) as Dictionary).get("shape", "")) == "wall" and SpellCaster.choice_of(s, opts) in ["ring", "globe"] and point != Vector2.INF:
 		cells = spells._ring(point, 10 if SpellCaster.choice_of(s, opts) == "ring" else 15)
 	# A wall drawn square by square (opts.path) covers those squares; a ring takes its own size.
 	cells = spells.targeting.wall_cells(s, opts, point, cells)
-	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells,
+	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": cells, "outline": outline,
 		"targets": tgt.map(func(t: Combatant) -> String: return t.id)})
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": conc, "opts": opts, "point": point,
 		"cells": cells, "choice": choice, "direction": direction, "cell": cell, "metamagic": meta, "spent_slot": level > 0 and not use_free, "paid_slot": paid_slot}

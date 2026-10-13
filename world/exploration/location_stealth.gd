@@ -4,7 +4,7 @@ extends RefCounted
 ##
 ## The party crouches while it sneaks, and each of them keeps the Stealth total they rolled on starting (as the Hide
 ## action notes its total). Foes waiting in plain view (an encounter marked `waiting`) stand where their fight puts
-## them and show once the party can see them. A waiting foe notices a party member it can see clearly within
+## them and show once the party can see them; a foe marked `unseen` waits out of view and appears with the fight. A waiting foe notices a party member it can see clearly within
 ## NOTICE_FT, if the member is inside its sight cone (CONE_DEG of the way it faces), or hears them within HEAR_FT
 ## whatever way it faces: at once if the party isn't sneaking, else when its passive Perception (5 lower when that
 ## member is in dim light to it, for sight) is at least the member's total. Being noticed starts the fight, and nobody
@@ -117,7 +117,12 @@ static func refresh_waiting(view: LocationView) -> void:
 		if have.has(id):
 			continue
 		var monsters := LocationFights.monsters_for(view, ids[id] as Dictionary)
+		var entries := (ids[id] as Dictionary)["monsters"] as Array
 		for i in monsters.size():
+			# An `unseen` foe isn't in plain view before its fight (among the casks): no figure, and it notices no one
+			# until the fight puts it on its square.
+			if bool((entries[i] as Dictionary).get("unseen", false)):
+				continue
 			var mo := monsters[i]
 			var foe := Combatant.new(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
 			foe.id = "waiting_%s_%d" % [id, i]
@@ -227,11 +232,16 @@ static func waiting_facing(view: LocationView, spec: Dictionary, i: int, monster
 	if DIRECTIONS.has(given):
 		return (DIRECTIONS[given] as Vector2).normalized()
 	var me := Vector2(monsters[i]["cell"] as Vector2i)
-	if monsters.size() >= 2:
+	# The middle of the group in view: `unseen` foes elsewhere (the cask vaults behind the dig) don't turn it round.
+	var shown: Array[Vector2] = []
+	for j in monsters.size():
+		if not bool(((spec["monsters"] as Array)[j] as Dictionary).get("unseen", false)):
+			shown.append(Vector2(monsters[j]["cell"] as Vector2i))
+	if shown.size() >= 2:
 		var mid := Vector2.ZERO
-		for mo in monsters:
-			mid += Vector2(mo["cell"] as Vector2i)
-		mid /= monsters.size()
+		for c in shown:
+			mid += c
+		mid /= shown.size()
 		if me.distance_to(mid) > 0.5:
 			return (mid - me).normalized()
 	for a: Variant in view.loc.get("areas", []):
@@ -295,6 +305,33 @@ static func watch(view: LocationView) -> Encounter:
 		e.combatants.append(w["foe"] as Combatant)
 	LocationFights._light_the_fight(view, e)
 	return e
+
+
+## The waiting foes awake and in plain view of the party now, by name (a Short Rest needs an hour out of their sight;
+## RestRules.short_rest_refusals): any a party member or guest who is up can see, not hidden away (HiddenAreas), the
+## nearest first. A foe waiting out of view (`unseen`) isn't among them.
+static func foes_in_sight(view: LocationView) -> Array[String]:
+	var out: Array[String] = []
+	if view == null or view.in_combat or view.waiting.is_empty() or view.members.is_empty():
+		return out
+	var e := watch(view)
+	var seen: Array[Combatant] = []
+	for w in view.waiting:
+		var foe := w["foe"] as Combatant
+		if not foe.can_act() or HiddenAreas.hides(view, foe.cell):
+			continue
+		for m: Combatant in _watchers(view):
+			if sees(e, m, foe):
+				seen.append(foe)
+				break
+	var lead := view.leader().cell
+	seen.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		return view.grid.distance_ft(lead, 1, a.cell, a.size_cells) < view.grid.distance_ft(lead, 1, b.cell, b.size_cells))
+	for foe in seen:
+		var what := str((foe.creature as Monster).data.get("name", foe.name())) if foe.creature is Monster else foe.name()
+		if not what in out:
+			out.append(what)
+	return out
 
 
 ## Party members and guests who are up (only they can be seen moving, or look).

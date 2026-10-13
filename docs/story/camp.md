@@ -1,27 +1,54 @@
 # The camp (F16, lane 24)
 
-A Long Rest out in the wild makes camp on the place's own map, near where the party stands, instead of only filling
-a screen. The place's weather, light, music and visitors stay its own. Towns, villages, inns, houses and dungeons keep
-the rest screen as it was.
+A Long Rest makes camp on the place's own map, near where the party stands, instead of only filling a screen, wherever
+the place's own rest is risky: the wild and the road, a town's or village's streets, a house, a church, a manor, a
+dungeon. The place's weather, light, music and visitors stay its own. Only somewhere that offers a safe night keeps
+the plain rest screen (the owner, 2026-10-12).
 
 ## Where
 
-`CampSite.is_wild` (story/camp_site.gd): an outdoor map whose board theme is forest, riverside, road, svalich_road,
-wilderness, shrine_yard or camp, in a place that allows a rest. The fire goes on the reachable square within 40 ft of
-the leader with its eight neighbours open and the most open ground round it. The ground must be open, within 5 ft of
-the fire's height, and clear of the place's own things: props, containers, doors, ways out, lights, people, traps,
-and areas a fight starts in. With no such square within reach, the rest happens on the screen as before.
+`CampSite.makes_camp` (story/camp_site.gd): the place's own `rest` is `risky`. It goes by the place's rule, not the
+Story difficulty's safe rests: on Story the party still makes camp, and its nights are never interrupted. The rest
+screen (ui/screens/rest_screen.gd) keeps the plain Long Rest where:
+
+- the place's rest is `safe`: the Blue Water Inn, the Blood of the Vine, the Wizard of Wines' winery, the Krezkovs'
+  house, the Mad Mage's hut, Van Richten's tower, the Tser Pool encampment and the Pool of the White Sun;
+- a room is booked for the night here (Services, the `_room` flag);
+- in the tutorial, and for a capture's own party (RestScreen._view);
+- `rest: no` places allow no rest at all, and the magic items' rests (Daern's Instant Fortress, the Rod of Security)
+  are taken from the inventory, as before.
+
+`CampSite.setting` says what kind of camp it is: **indoors** (the map isn't outdoors, or its theme is dungeon),
+**wild** (an outdoor map whose theme is forest, riverside, road, svalich_road, wilderness, shrine_yard or camp), else
+**town** (a village's or a town's streets: village, vallaki).
+
+The fire goes on the reachable square within 40 ft of the leader with its eight neighbours open, a seat for everyone
+and the most open ground round it. The ground must be open, within 5 ft of the fire's height, and clear of the place's
+own things: props, containers, doors, ways out, lights, people, traps, and areas a fight starts in. With no such square
+within 40 ft, the nearest one anywhere the party can walk to; failing that, a smaller camp, the most seats first
+(fewer seats and bedrolls, the rest standing on open squares near the fire). Only where no square the party can reach
+will take a fire at all does the rest happen on the screen, and its log says why: "No room to make camp here, so the
+party sleeps where it stands."
 
 ## What's there
 
 - The pieces (existing models, `camp: true` in the place's props for the visit): the campfire with a taller flame and
-  a light, the stew pot and woodpile beside it, a bedroll behind each seat, and a tent and the packs at the back where
-  there's room. `examine:camp_*` lines in narrative/narrator/camp.dialogue.
+  a light, the stew pot and woodpile beside it, a bedroll behind each seat, and the packs and (out of doors) a tent at
+  the back where there's room. Indoors there's no tent. `examine:camp_*` lines in narrative/narrator/camp.dialogue; a
+  camp indoors or in town tries its setting's own first (the piece's `say`: `examine:camp_fire:indoors`).
 - The company round the fire, each facing it: the party, the companions waiting at camp (the bench, living), and the
   story's guests. Ratatouille stands at the stew pot. The leader walks about; the others stay where they sit.
 - While the camp is up, the companions waiting at camp count as present for the story (`StoryState.camp_company`, not
   saved): `name:` conditions find them, their camp talks come up, and they see the choices made there
   (`Approval.witnesses`).
+
+## The Narrator
+
+camp:pitch, camp:night, camp:morning, camp:strike, `examine:camp_*` and the idle lines (`camp:<id>`, `camp:someone`,
+`camp:guest:<npc>`, `camp:guest`) each try the setting's own trigger first (`camp:pitch:indoors`,
+`camp:thistle:town`; CampSite.keys_for), then the plain one. A setting has a set of its own only where the wild's
+lines speak of trees, woods, sky or open country; the lines that read right anywhere are repeated in it word for word,
+so one voice clip serves both.
 
 ## Talking
 
@@ -36,15 +63,35 @@ the pair its condition names. Anyone else says what they're doing, in the Narrat
 The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
 Rest (story/long_rest.gd, the same rules as the screen's: 16 hours since the last, the place's risk, wards, Alarm).
 An interrupted night gives a Short Rest's benefits, and then the night's visitors come out of the dark, 25 to 40 ft
-from the fire, from more than one side (data/camp/night_visitors.json): a group for the region's land (forest, marsh,
-mountain, castle) and the party's milestone level, a die picking among several. Those waiting at camp keep back from
-the fight. Afterwards the party can try to sleep again. Each group is played to the end eight times by the test
-autopilot at the lowest level it comes for, with the party as an interrupted night finds it (half its Hit Points and
-half its spell slots spent, then the hour's Short Rest): hard but winnable, won and lost at least twice in eight
-(tests/integration/test_night_visitors.gd; the owner wants fights hard, 2026-10-12).
+from the fire, from more than one side, or 15 to 60 ft off where a cramped house has no room that far
+(data/camp/night_visitors.json): a group for the party's milestone level and the lie of the land, a die picking among
+several. A town's streets and indoors have their own (the file's `settings`: cutthroats, the churchyard's dead and
+Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never a wolf pack in a house); in the wild,
+the region's land (forest, marsh, mountain, castle). Where none can be placed, the night is just restless, as the
+rest screen's is. Those waiting at camp keep back from the fight. Afterwards the party can try to sleep again. Each
+group is played to the end eight times by the test autopilot at the lowest level it comes for, with the party as an
+interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest): hard but
+winnable, won and lost at least twice in eight (tests/integration/test_night_visitors.gd; the owner wants fights hard,
+2026-10-12). The wild's groups are played in an open field; the town's in the Village of Barovia and the indoor ones
+in the burgomaster's mansion, from the camp the party makes on arriving there.
 
-A full night brings back what a Long Rest does. Then the Narrator says the night's line (`rest:long:<place>`,
-`rest:long:<region>`, `camp:night`, `rest:long`), the region's dream, and `camp:morning`. Strahd may come in the
-night, as after any Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
+A full night brings back what a Long Rest does. Then the Narrator says the night's line (CampSite.night_keys:
+`rest:long:<place>`, `rest:long:<region>`, `camp:night:<setting>`, `camp:night`, `rest:long`), the region's dream, and
+`camp:morning`. A place's own night comes first (Death House's lives on `rest:long:death_house`), except that one
+written for sleeping behind walls carries `[indoors]` and one for the open air `[not indoors]` (the Village of
+Barovia's shutters, the abbey's cart shed, Argynvostholt's door, the Martikovs' house; Tsolenka's rock, Van Richten's
+shore), so a camp where it doesn't fit passes over it to the camp's own. Strahd may come in the night, as after any
+Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
 night ended with, and **Break camp**. Breaking camp packs everything away (`camp:strike`), and the party falls in behind its leader. Leaving
 the place, or anything that builds it again, ends the camp too.
+
+## Rests elsewhere
+
+In a safe place, under a booked roof and where no fire will go, the rest screen takes the Long Rest as before
+(story/long_rest.gd for both). For an
+hour after any Long Rest (`LongRest.MORNING_MINUTES`, `StoryState.morning`, not saved), opening the rest screen again
+still offers the companions' words and the change of prepared spells, counted from the list the night ended with.
+Strahd's night visit waits until the rest screen, or a talk started from it, is closed (game root `_strahd_holds`),
+instead of closing it and taking the morning with it. Closing the screen with a word still waiting puts up a hint
+("Thistle wants a word: open Rest (R) to talk"). Daern's Instant Fortress and the Rod of Security take the same Long
+Rest (the guests, the miles walked, the spells cast on waking), with the night's lines, the hint and Strahd's chance.
