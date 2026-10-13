@@ -5,6 +5,10 @@ extends TestCase
 ## per the owner's standing rule).
 
 var root: Node
+## Whether a fight a conversation starts has its speakers step aside first, as the conversation does (step_aside). Off,
+## they stand on the board and block their squares, as the series were measured before 2026-10-13 (fight stalls lane):
+## a lane re-measuring its fights turns it on.
+var speakers_step_aside := false
 
 
 func after_each() -> void:
@@ -44,7 +48,7 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	var v := root.get("view") as LocationView
 	# A party set down inside a fight's trigger area sets it off as it arrives; otherwise it starts here.
 	var started := str((GameState.story.loc_state(location)["encounters"] as Dictionary).get(encounter, "")) == "started"
-	if not started:
+	if not started and speakers_step_aside:
 		step_aside(v, encounter)
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)
 	await _frames(2)
