@@ -7,8 +7,8 @@ extends RefCounted
 ##
 ## Who rolls: the party's best hand at it who hasn't tried it yet. Each character gets one try (the owner's rule that
 ## failed checks are final; `once`: one try for the whole party). The 2024 PHB's help comes before the roll: a party member
-## proficient in the skill takes the Help action (Advantage) unless the thing is done `alone`, someone with Guidance
-## ready (and no other spell to keep) casts it for 1d4, and Helpful Friend adds its own Advantage (CheckAids). After a
+## proficient in the skill takes the Help action (Advantage) unless the thing is done `alone`, someone with Guidance may
+## cast it for 1d4 (offered first, GuidanceOffer), and Helpful Friend adds its own Advantage (CheckAids). After a
 ## failure the roller can still spend Heroic Inspiration, a Lucky Foot or Tactical Mind on it (CheckAids.options).
 ##
 ## This file is the rules and the record (StoryState, the location's `checks` states). LocationChecks shows it on the
@@ -146,16 +146,15 @@ static func helper(st: StoryState, check: Dictionary, who: Character) -> Charact
 	return best
 
 
-## Who casts Guidance on `who` first (2024 PHB: 1d4 on checks with the chosen skill), or null: someone able who knows
-## it and isn't concentrating on another spell, which Guidance would end. Only for skill checks.
-static func guide(st: StoryState, check: Dictionary, who: Character) -> Character:
+## Who'd cast Guidance on `who` first (2024 PHB: 1d4 on checks with the chosen skill), for the chance the menu shows,
+## or null: the first offered (GuidanceOffer) who isn't concentrating on another spell, which Guidance would end. Only
+## for skill checks. Whether it's cast is asked before the roll (LocationView.ask_guidance).
+static func guide(st: StoryState, check: Dictionary, who: Character) -> Creature:
 	if not is_skill(check):
 		return null
-	for ch in st.party:
-		if not able(ch) or ch.concentration != null:
-			continue
-		if ch.known_spells().any(func(k: Dictionary) -> bool: return str(k["id"]) == "guidance"):
-			return ch
+	for e: Variant in GuidanceOffer.offer(st, who, skill_of(check))["casters"]:
+		if str((e as Dictionary)["ends"]) == "":
+			return (e as Dictionary)["caster"] as Creature
 	return null
 
 
@@ -219,18 +218,15 @@ static func chance(bonus: int, dc: int, adv: bool, dis: bool, d4: bool = false) 
 	return total / faces.size()
 
 
-## Rolls `check` for the party and records the try: {test, who, helper, guide, success}, or {} when nobody can try.
-static func attempt(st: StoryState, loc_id: String, check: Dictionary, dice: DiceRoller) -> Dictionary:
+## Rolls `check` for the party and records the try: {test, who, helper, success}, or {} when nobody can try. `extra`:
+## dice cast on the roller first (Guidance, GuidanceOffer).
+static func attempt(st: StoryState, loc_id: String, check: Dictionary, dice: DiceRoller, extra: Array = []) -> Dictionary:
 	var who := roller(st, loc_id, check)
 	if who == null:
 		return {}
 	var k := skill_of(check)
 	var adv := _advantage(st, check, who)
 	adv.append_array(CheckAids.before_check(who, k))
-	var extra: Array = []
-	var g := guide(st, check, who)
-	if g != null:
-		extra.append({"dice": "1d4", "source": "Guidance (%s)" % g.name.get_slice(" ", 0)})
 	var bonus := who.skill_bonus(k) if is_skill(check) else who.ability_check_bonus(k)
 	var keys := who.check_keys(k)
 	keys.append("world_check")
@@ -238,7 +234,7 @@ static func attempt(st: StoryState, loc_id: String, check: Dictionary, dice: Dic
 		"%s: %s" % [who.name, str(check.get("label", skill_name(check)))], 20, extra)
 	record(st, loc_id, check, who, t.success)
 	st.advance_minutes(int(check.get("minutes", MINUTES)))
-	return {"test": t, "who": who, "helper": helper(st, check, who), "guide": g, "success": t.success}
+	return {"test": t, "who": who, "helper": helper(st, check, who), "success": t.success}
 
 
 ## Writes down how a try by `who` went (again after an aid turns a failure into a success).

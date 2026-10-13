@@ -8,6 +8,8 @@ extends RefCounted
 ## Beats: {kind: "line", speaker_id, name, portrait, mood, text, narrator, party}
 ##        {kind: "options", options: [{text, label, check: {skill, dc, bonus, chance, who}, enabled}]}
 ##        {kind: "check", who, portrait, skill, dc, total, success, detail, said}
+##        {kind: "guidance", offer}: before a check, someone could cast Guidance (GuidanceOffer); the screen asks and
+##            calls answer_guidance(), which rolls the check and returns its beat
 ##        {kind: "notice", text}
 ##        {kind: "cutscene", id, image, focus}: a full-screen picture under what follows (id "" takes it away)
 ##        {kind: "end", combat: encounter id or "", end_game: the conversation ended the campaign (`end_game`)}
@@ -42,6 +44,11 @@ var _last_option_key := ""     ## the spent-option key of the last social check 
 var _last_check: Dictionary = {}        ## {who, test, skill, said} of the last check rolled
 var _check_jumps: Array[String] = []    ## [ok, fail] targets of the last check
 var _queued: Array[Dictionary] = []   ## beats a statement produced beyond its first (a Tarokka card, then the verse)
+## The game's conversations offer Guidance before a check (a `guidance` beat); off for the bots and tools that play
+## conversations without a screen.
+var offer_guidance := false
+## A check waiting on the Guidance prompt: {offer, who, skill, dc, said, then: Callable(check beat) -> beat to show}.
+var _guidance_wait: Dictionary = {}
 ## The NPC being spoken to (shops open for them).
 var npc_id: String = ""
 
@@ -188,10 +195,12 @@ func next() -> Dictionary:
 			"check":
 				pc += 1
 				var who2 := _best_for(str(s["skill"]))
-				var beat := _roll(who2, str(s["skill"]), int(s["dc"]), "")
-				_check_jumps = [str(s["ok"]), str(s["fail"])]
-				_pending_jump = str(s["ok"]) if bool(beat["success"]) or str(s["fail"]) == "" else str(s["fail"])
-				return beat
+				var ok := str(s["ok"])
+				var fail := str(s["fail"])
+				return _check(who2, str(s["skill"]), int(s["dc"]), "", func(beat: Dictionary) -> Dictionary:
+					_check_jumps = [ok, fail]
+					_pending_jump = ok if bool(beat["success"]) or fail == "" else fail
+					return beat)
 			"combat":
 				combat = str(s["encounter"])
 				finished = true
@@ -391,15 +400,15 @@ func choose(i: int) -> Dictionary:
 		speaker = who
 	var check := opt["check"] as Dictionary
 	if not check.is_empty():
-		var beat := _roll(speaker, str(check["skill"]), int(check["dc"]), str(opt["text"]))
-		_check_jumps = [str(opt["ok"]), str(opt["fail"])]
-		_pending_jump = str(opt["ok"]) if bool(beat["success"]) or str(opt["fail"]) == "" else str(opt["fail"])
-		# Owner rule (2026-10-06): a failed Persuasion, Intimidation, Deception, Performance or Insight attempt is spent;
-		# the option doesn't come back (they won't fall for it twice, and a read face doesn't change).
-		_last_option_key = _spent_key(str(opt["text"])) if _social(str(check["skill"])) else ""
-		if _last_option_key != "" and not bool(beat["success"]):
-			st.flags[_last_option_key] = true
-		return beat
+		return _check(speaker, str(check["skill"]), int(check["dc"]), str(opt["text"]), func(beat: Dictionary) -> Dictionary:
+			_check_jumps = [str(opt["ok"]), str(opt["fail"])]
+			_pending_jump = str(opt["ok"]) if bool(beat["success"]) or str(opt["fail"]) == "" else str(opt["fail"])
+			# Owner rule (2026-10-06): a failed Persuasion, Intimidation, Deception, Performance or Insight attempt is
+			# spent; the option doesn't come back (they won't fall for it twice, and a read face doesn't change).
+			_last_option_key = _spent_key(str(opt["text"])) if _social(str(check["skill"])) else ""
+			if _last_option_key != "" and not bool(beat["success"]):
+				st.flags[_last_option_key] = true
+			return beat)
 	_pending_jump = str(opt["ok"])
 	return next()
 
@@ -710,11 +719,36 @@ func _best_for(skill: String) -> Character:
 	return best if best != null else speaker
 
 
-func _roll(who: Character, skill: String, dc: int, said: String) -> Dictionary:
+## A check about to be rolled: Guidance first when someone could cast it and the screen asks (offer_guidance), as a
+## `guidance` beat that answer_guidance() follows up; otherwise it's rolled now, with Guidance from a caster whose rule
+## is Automatic. `then` takes the check's beat, does what follows the roll (the branch to take) and returns the beat.
+func _check(who: Character, skill: String, dc: int, said: String, then: Callable) -> Dictionary:
+	var extra: Array = []
+	if offer_guidance and who != null:
+		var offer := GuidanceOffer.offer(st, who, _skill_key(skill), dc)
+		if GuidanceOffer.asks(offer):
+			_guidance_wait = {"offer": offer, "who": who, "skill": skill, "dc": dc, "said": said, "then": then}
+			return {"kind": "guidance", "offer": offer}
+		extra = GuidanceOffer.automatic(offer)
+	return then.call(_roll(who, skill, dc, said, extra))
+
+
+## The Guidance prompt's answer: the offer's caster `index` casts it (-1: nobody), and `rule` is the casters' answer
+## from now on (GuidanceOffer.answer). Rolls the waiting check and returns its beat.
+func answer_guidance(index: int, rule: String = "") -> Dictionary:
+	if _guidance_wait.is_empty():
+		return next()
+	var w := _guidance_wait
+	_guidance_wait = {}
+	var extra := GuidanceOffer.answer(w["offer"] as Dictionary, index, rule)
+	return (w["then"] as Callable).call(_roll(w["who"] as Character, str(w["skill"]), int(w["dc"]), str(w["said"]), extra))
+
+
+func _roll(who: Character, skill: String, dc: int, said: String, extra: Array = []) -> Dictionary:
 	if who == null:
 		st.last_check = false
 		return {"kind": "check", "who": "Nobody", "skill": skill, "dc": dc, "total": 0, "success": false, "detail": "", "said": said}
-	var test := who.roll_check(dice, _skill_key(skill), dc, CheckAids.before_check(who, _skill_key(skill)))
+	var test := who.roll_check(dice, _skill_key(skill), dc, CheckAids.before_check(who, _skill_key(skill)), [], "", [], extra)
 	st.last_check = test.success
 	_last_check = {"who": who, "test": test, "skill": skill, "said": said}
 	return _check_beat()

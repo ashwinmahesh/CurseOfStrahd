@@ -1,9 +1,9 @@
 extends TestCase
 ## Skill checks on things in the world (story/world_checks.gd; owner, 2026-10-11: Nature, Arcana, Acrobatics and the
 ## rest need real uses outside fights and conversations): the best hand who hasn't tried rolls, each character gets one
-## try (or the party one, `once`), a proficient ally Helps (Advantage) unless it's done alone, Guidance adds 1d4 from
-## someone free to concentrate, the chance the menu shows is the real one, and an outcome gives, teaches, inspires,
-## heals or hurts.
+## try (or the party one, `once`), a proficient ally Helps (Advantage) unless it's done alone, Guidance cast first adds
+## 1d4 (the menu's chance counts on someone free to concentrate), the chance the menu shows is the real one, and an
+## outcome gives, teaches, inspires, heals or hurts.
 
 const LOC := "test_world_checks"
 
@@ -96,8 +96,15 @@ func test_guidance_adds_a_d4_from_someone_free_to_concentrate() -> void:
 			cleric = ch
 	assert_true(cleric != null, "the party has Guidance (Hedda)")
 	var c := _check("investigation", 15)
-	assert_eq(WorldChecks.guide(st, c, WorldChecks.roller(st, LOC, c)), cleric)
-	var res := WorldChecks.attempt(st, LOC, c, dice)
+	var who := WorldChecks.roller(st, LOC, c)
+	assert_eq(WorldChecks.guide(st, c, who), cleric)
+	assert_eq(WorldChecks.preview(st, LOC, c)["guide"], cleric, "the menu's chance counts on it")
+	assert_false("Guidance" in (WorldChecks.attempt(st, LOC, _check("investigation", 15, {"id": "unasked"}), dice)["test"] as D20Test).extra_label,
+		"nothing is cast unless it's asked for or Automatic")
+	# Cast before the roll (the prompt's answer, GuidanceOffer): the d4 rides on the check.
+	var offer := GuidanceOffer.offer(st, who, &"investigation", 15)
+	var at := (offer["casters"] as Array).map(func(e: Dictionary) -> Creature: return e["caster"]).find(cleric)
+	var res := WorldChecks.attempt(st, LOC, c, dice, GuidanceOffer.answer(offer, at))
 	var t := res["test"] as D20Test
 	assert_true("Guidance" in t.extra_label, "the 1d4 is on the roll: %s" % t.describe())
 	assert_between(float(t.extra), 1.0, 4.0)

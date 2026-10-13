@@ -546,6 +546,25 @@ func test_a_loot_window() -> void:
 			root.set("loot", null))
 
 
+## Guidance offered before a check (ui/common/guidance_prompt.gd) at its fullest: the whole party could cast it, each
+## keeping the spell with the longest name it would end, before the skill with the longest name.
+func test_the_guidance_prompt() -> void:
+	if not await _game(LATE):
+		return
+	var casters: Array[Dictionary] = []
+	for ch in GameState.story.party:
+		casters.append({"caster": ch, "ends": "Protection from Evil and Good", "rule": "ask"})
+	var offer := {"st": GameState.story, "who": GameState.story.party[0], "skill": &"sleight_of_hand", "dc": 25,
+		"casters": casters, "auto": null}
+	await _check("the Guidance prompt", func() -> Variant:
+		var p := GuidancePrompt.ask(root, offer, func(_i: int, _rule: String) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("GuidancePrompt*", "", false, false):
+				p.queue_free())
+
+
 ## The longest options the game's conversations offer, each with a check's chance after it, the way the cut-off ones
 ## looked (owner report).
 static func longest_options(n: int) -> Array:

@@ -52,7 +52,7 @@ static func _why(pv: Dictionary) -> String:
 	for s: Variant in pv["disadvantage"]:
 		parts.append("Disadvantage: %s" % s)
 	if pv["guide"] != null:
-		parts.append("Guidance (%s): +1d4" % (pv["guide"] as Character).name.get_slice(" ", 0))
+		parts.append("Guidance (%s): +1d4, offered before the roll" % (pv["guide"] as Creature).name.get_slice(" ", 0))
 	return ". ".join(parts)
 
 
@@ -83,7 +83,17 @@ static func act(view: LocationView, thing: Dictionary, action_id: String) -> voi
 		return
 	if view.has_meta(FAILED):
 		view.remove_meta(FAILED)
-	var res := WorldChecks.attempt(view.st, view.loc_id, check, view.dice)
+	var who := WorldChecks.roller(view.st, view.loc_id, check)
+	if who == null:
+		view.toast.emit("Everyone able has tried that")
+		return
+	# Guidance first, if someone can cast it (asked, or cast on their Automatic rule), then the roll.
+	view.ask_guidance(who, WorldChecks.skill_of(check), int(check["dc"]), func(extra: Array) -> void: _try(view, spec, check, extra))
+
+
+## The try itself, with Guidance's die if it was cast (`extra`).
+static func _try(view: LocationView, spec: Dictionary, check: Dictionary, extra: Array) -> void:
+	var res := WorldChecks.attempt(view.st, view.loc_id, check, view.dice, extra)
 	if res.is_empty():
 		view.toast.emit("Everyone able has tried that")
 		return
