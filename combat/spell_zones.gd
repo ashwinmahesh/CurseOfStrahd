@@ -30,6 +30,9 @@ func spells() -> SpellCaster:
 func add(o: FieldObject, r: CombatResult) -> void:
 	objects.append(o)
 	enc().events.append({"type": "object", "id": o.id, "kind": FieldObject.kind_name(o.kind), "cell": o.cell})
+	# Spike Growth looks like plain ground (2024): only those who see the area appear know it's there (AiHazards).
+	if bool(o.rule("camouflaged", false)):
+		o.rules["known_by"] = _onlookers(o)
 	refresh_auras()
 	if o.has_trigger("cast"):
 		var shared := {}
@@ -90,6 +93,34 @@ func _inside(o: FieldObject) -> Array[Combatant]:
 		if o.covers(t) and _affects(o, t):
 			out.append(t)
 	return out
+
+
+## The ids of the creatures that see a square of `o` (not Blinded, with a line of sight to it).
+func _onlookers(o: FieldObject) -> Array:
+	var e := enc()
+	var out: Array = []
+	for t in e.living():
+		if t.creature.has_condition(&"blinded"):
+			continue
+		for cell in o.cells:
+			if e.grid.can_see(t.cell, t.size_cells, cell, 1):
+				out.append(t.id)
+				break
+	return out
+
+
+## A creature hurt by a camouflaged area knows it's there from then on (AiHazards).
+func _learn(o: FieldObject, t: Combatant) -> void:
+	var known := o.rule("known_by", []) as Array
+	if bool(o.rule("camouflaged", false)) and not t.id in known:
+		known = known.duplicate()
+		known.append(t.id)
+		o.rules["known_by"] = known
+
+
+## Whether the zone's rules apply to `t` at all (_affects), for the AI's reading of dangerous ground (AiHazards).
+func affects(o: FieldObject, t: Combatant) -> bool:
+	return _affects(o, t)
 
 
 ## Whether the zone's rules apply to `t` at all: "affects" is all (default), others (not the caster), enemies (the
@@ -373,6 +404,7 @@ func _affect(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, sha
 func _affected(o: FieldObject, t: Combatant, trigger: String, r: CombatResult, shared: Dictionary, ctx: Dictionary, label: String,
 		failed: bool, details: Array[String]) -> CombatResult:
 	var e := enc()
+	_learn(o, t)
 	var has_save := o.rules.has("save")
 	var has_damage := not (o.rule("damage", []) as Array).is_empty()
 	var effects := o.rule("effects", []) as Array
