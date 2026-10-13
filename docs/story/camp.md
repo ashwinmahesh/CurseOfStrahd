@@ -77,7 +77,8 @@ follows as after any night; with foes still waiting in the place, nobody sleeps 
 `LongRest.resume`; game root `_sleep_again`). A visit of Strahd's that may come to blows comes before the rest's
 benefits too, and the night goes on the same way once he's gone. Each
 group is played to the end eight times by the test autopilot at the lowest level it comes for, with the party as an
-interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest), and is
+interrupted night finds it (half its Hit Points and half its spell slots spent, and nothing back, since the fight comes before the rest's
+benefits), and is
 tuned to be won exactly as often in those eight (seeds 1-8) as the owner set on 2026-10-13 18:05: 5 of 8 at every
 level, for the sharp test autopilot that smites, opens with Spirit Guardians and throws Fireball as he plays
 (tests/integration/test_night_visitors.gd, `target_wins`; a timeout would count as a loss, and fails the test besides).
