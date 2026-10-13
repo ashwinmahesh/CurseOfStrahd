@@ -924,7 +924,7 @@ const ACTION_TEXT := {
 	"stand": "Standing up costs half your Speed.",
 	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
 	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
-	"utilize": "Use an object, such as a lever or a potion.",
+	"utilize": "Use an object, such as a lever. A potion isn't drunk this way: drinking one, or giving it to a creature within 5 ft, is a Bonus Action on the Items tab.",
 }
 
 
