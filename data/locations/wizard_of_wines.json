@@ -972,6 +972,13 @@
             18,
             24
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            24
+          ]
         }
       ],
       "surprise": "party",
@@ -1424,13 +1431,6 @@
           "cell": [
             30,
             26
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            40,
-            22
           ]
         },
         {

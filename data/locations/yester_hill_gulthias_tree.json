@@ -1384,7 +1384,8 @@
           "cell": [
             18,
             12
-          ]
+          ],
+          "hp": 155
         },
         {
           "monster": "twig_blight",
