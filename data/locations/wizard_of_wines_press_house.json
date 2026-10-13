@@ -399,7 +399,7 @@
             8
           ],
           "name": "Kostin",
-          "hp": 44
+          "hp": 55
         },
         {
           "monster": "druid",
@@ -415,7 +415,8 @@
             15,
             5
           ],
-          "name": "The Mash"
+          "name": "The Mash",
+          "hp": 160
         },
         {
           "monster": "vine_blight",
@@ -482,6 +483,14 @@
             10,
             1
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            8
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -500,7 +509,7 @@
             8
           ],
           "name": "Kostin",
-          "hp": 44
+          "hp": 60
         },
         {
           "monster": "shambling_mound",
@@ -509,7 +518,7 @@
             5
           ],
           "name": "The Mash",
-          "hp": 135
+          "hp": 160
         },
         {
           "monster": "vine_blight",
@@ -556,14 +565,6 @@
           ]
         },
         {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
           "monster": "vine_blight",
           "cell": [
             11,
@@ -576,6 +577,14 @@
             10,
             1
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -602,7 +611,7 @@
             5
           ],
           "name": "The Mash",
-          "hp": 155
+          "hp": 160
         },
         {
           "monster": "vine_blight",

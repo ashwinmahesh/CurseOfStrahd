@@ -7,13 +7,15 @@ extends RefCounted
 ##
 ## Sharp play (owner, 2026-10-13: "Yes they should", "And spellcasters should cast fireball"): the party as the owner
 ## plays it, so a fight tuned against it is as hard in his hands. The paladin smites a sturdy foe or on a Critical Hit
-## when the blade alone won't finish it,
-## the cleric opens with Spirit Guardians once foes close in and keeps near them, and a caster who knows Fireball throws
-## it whenever it catches two foes. Off by default while the fights are retuned against it: AUTOPILOT_SHARP=1 in the
-## environment, or `sharp` set by a test, turns it on.
+## when the blade alone won't finish it, the cleric opens with Spirit Guardians once foes close in and keeps near them,
+## and a caster who knows Fireball throws it whenever it catches two foes. On by default since the fights were retuned
+## against it (the owner's 5 wins in 8 on Balanced); AUTOPILOT_SHARP=0 in the environment, or `sharp` set by a test,
+## plays the party plain as before.
 
-## Whether the party plays sharp (see above).
-static var sharp: bool = OS.get_environment("AUTOPILOT_SHARP") == "1"
+## Whether the party plays sharp unless a test says otherwise (see above).
+static var sharp_by_default: bool = OS.get_environment("AUTOPILOT_SHARP") != "0"
+## Whether the party plays sharp now.
+static var sharp: bool = sharp_by_default
 ## A smite is worth its slot on a hit against a foe with at least this many Hit Points left (or on a Critical Hit).
 const SMITE_WORTH_HP := 20
 

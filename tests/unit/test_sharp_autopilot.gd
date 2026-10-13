@@ -1,10 +1,15 @@
 extends TestCase
 ## The test party's sharp play (owner, 2026-10-13): the paladin smites what's worth a slot, the cleric opens with Spirit
-## Guardians once foes close in, and a caster who knows Fireball throws it at two foes. Off, it plays as before.
+## Guardians once foes close in, and a caster who knows Fireball throws it at two foes. Plain (sharp off), it plays as
+## it did before 2026-10-13.
+
+
+func before_each() -> void:
+	PartyAutopilot.sharp = false
 
 
 func after_each() -> void:
-	PartyAutopilot.sharp = false
+	PartyAutopilot.sharp = PartyAutopilot.sharp_by_default
 
 
 static func _field() -> Encounter:
