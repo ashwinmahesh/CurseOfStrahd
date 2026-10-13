@@ -1314,6 +1314,32 @@ func slots_left(level: int) -> int:
 	return left
 
 
+## The slot levels a spell of `from_level` can be cast at, lowest first: each level with a Spellcasting slot left, and
+## the pact level while a Pact Magic slot is. Pact Magic slots are all one level (2024 PHB), so a warlock's spells are
+## offered at that level only (owner, 2026-10-13).
+func slot_levels(from_level: int) -> Array[int]:
+	var out: Array[int] = []
+	for l in range(maxi(1, from_level), 10):
+		if slots_left(l) > 0:
+			out.append(l)
+	return out
+
+
+## The pact level when only a Pact Magic slot could pay for a spell of `from_level` (a warlock's, or a multiclassed
+## caster's whose Spellcasting slots of that level and up are spent), else 0: such a spell is always cast at the pact
+## level, whatever level is asked for (owner, 2026-10-13).
+func pact_only_level(from_level: int) -> int:
+	var pact := pact_magic()
+	var pl := int(pact["level"])
+	if from_level < 1 or pl < from_level or int(pact["left"]) <= 0:
+		return 0
+	var ordinary := spellcasting_slots()
+	for l in range(from_level, 10):
+		if ordinary[l - 1] - slots_used[l - 1] > 0:
+			return 0
+	return pl
+
+
 ## Spends a slot of that level: a Pact Magic slot first (they return on a Short Rest), else a Spellcasting slot.
 ## Expended slots of either pool at this level; used by effects that restore spell slots without a pool restriction.
 func expended_slots(level: int) -> int:

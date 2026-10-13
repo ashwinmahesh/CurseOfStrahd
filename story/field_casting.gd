@@ -37,9 +37,9 @@ static func options(party: Array[Character], caster: Character, dice: DiceRoller
 			"count": int((data.get("targets", {}) as Dictionary).get("count", 1)),
 			"self_only": str((data.get("targets", {}) as Dictionary).get("kind", "")) == "self",
 			"others_only": bool((data.get("targets", {}) as Dictionary).get("other", false)),
-			"legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight"),
-			"slots": _slots(caster, int(s["level"]))}
-		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(s["free"]) and (entry["slots"] as Array).is_empty():
+			"legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight")}
+		entry.merge(_offer(caster, int(s["level"]), bool(s["free"]), bool(s.get("at_will", false))), true)
+		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(entry["free"]) and (entry["slots"] as Array).is_empty():
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
 		if not c.can_act():
@@ -237,10 +237,20 @@ static func _slots(caster: Character, level: int) -> Array[int]:
 	var out: Array[int] = []
 	if level == 0:
 		return out
-	for l in range(level, 10):
-		if caster.slots_left(l) > 0:
-			out.append(l)
-	return out
+	return caster.slot_levels(level)
+
+
+## What an option is paid with, {slots, free, at_will}, as a fight's hotbar offers it (owner, 2026-10-13: a warlock's
+## spells only at the pact level). An at-will casting (an Eldritch Invocation's) is free and takes no slot. A spell only
+## a Pact Magic slot pays for is cast at the pact level: a free casting of it (a tiefling's Darkness) comes first only
+## when it's of that level too, and otherwise waits until the pact slots are spent.
+static func _offer(caster: Character, level: int, free: bool, at_will: bool) -> Dictionary:
+	var slots := _slots(caster, level)
+	var pact_at := caster.pact_only_level(level)
+	if at_will or (free and pact_at == level):
+		slots.clear()
+		return {"slots": slots, "free": true, "at_will": at_will}
+	return {"slots": slots, "free": free and pact_at == 0, "at_will": false}
 
 
 ## A 5x5 open board (or `size` x `size`) with the caster in the middle and everyone else in the squares around them
@@ -304,9 +314,9 @@ static func options_at(party: Array[Character], caster: Character, dice: DiceRol
 		if not at_creature(data):
 			continue
 		var entry := {"id": str(s["id"]), "name": str(s["name"]), "level": int(s["level"]), "free": bool(s["free"]),
-			"range": e.spells.range_ft(data, c), "legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight"),
-			"slots": _slots(caster, int(s["level"]))}
-		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(s["free"]) and (entry["slots"] as Array).is_empty():
+			"range": e.spells.range_ft(data, c), "legal": bool(s["legal"]), "reason": str(s["reason"]).replace("in this fight", "outside a fight")}
+		entry.merge(_offer(caster, int(s["level"]), bool(s["free"]), bool(s.get("at_will", false))), true)
+		if bool(entry["legal"]) and int(s["level"]) > 0 and not bool(entry["free"]) and (entry["slots"] as Array).is_empty():
 			entry["legal"] = false
 			entry["reason"] = "No spell slots left"
 		if not c.can_act():
@@ -373,6 +383,7 @@ static func _waives_material(caster: Character, spell_id: String) -> bool:
 static func utility_options(party: Array[Character], caster: Character, dice: DiceRoller) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var e := _board(party, caster, dice)
+	var c := e.get_c(caster.id)
 	var seen := {}
 	for k in caster.known_spells():
 		var id := str(k["id"])
@@ -386,13 +397,15 @@ static func utility_options(party: Array[Character], caster: Character, dice: Di
 		if unit == "reaction":
 			continue
 		var level := int(data.get("level", 0))
-		var slots := _slots(caster, level)
+		var at_will := level > 0 and c != null and (ClassFeatures.at_will(c, id) or bool(k.get("at_will", false)))
+		var offer := _offer(caster, level, level > 0 and caster.resource_left("spell:%s" % id) > 0, at_will)
+		var slots := offer["slots"] as Array[int]
 		var ritual := bool(data.get("ritual", false))
-		var free := level > 0 and caster.resource_left("spell:%s" % id) > 0
+		var free := bool(offer["free"])
 		var choice_def := data.get("choice", {}) as Dictionary
 		var choices: Array = (choice_def.get("from", []) as Array) if str(choice_def.get("kind", "")) == "option" else []
 		var entry := {"id": id, "name": str(data["name"]), "level": level, "ritual": ritual, "slots": slots, "free": free,
-			"choices": choices, "choice_labels": choice_def.get("labels", {}), "legal": true, "reason": "",
+			"at_will": at_will, "choices": choices, "choice_labels": choice_def.get("labels", {}), "legal": true, "reason": "",
 			"resource_casts": caster.resource_casts(id)}
 		if level > 0 and slots.is_empty() and not ritual and not free:
 			entry["legal"] = false
@@ -452,9 +465,10 @@ static func cast_utility(st: StoryState, caster: Character, spell_id: String, as
 	if as_ritual and not bool(data.get("ritual", false)):
 		return {"ok": false, "text": "%s isn't a Ritual" % data["name"]}
 	var cast_level := level
-	if level > 0 and not as_ritual and payment.is_empty():
+	var offered: Dictionary = utilities.filter(func(option: Dictionary) -> bool: return str(option["id"]) == spell_id)[0]
+	if level > 0 and not as_ritual and payment.is_empty() and not bool(offered["at_will"]):
 		var slots := _slots(caster, level)
-		if caster.resource_left("spell:%s" % spell_id) > 0 and (slot <= 0 or slots.is_empty()):
+		if bool(offered["free"]) and (slot <= 0 or slots.is_empty()):
 			caster.spend_resource("spell:%s" % spell_id)   # a free casting a feature gives (Faithful Steed)
 		elif slots.is_empty():
 			return {"ok": false, "text": "No spell slots left"}
