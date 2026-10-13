@@ -275,7 +275,9 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		else:
 			dis.append("target Prone beyond 5 ft")
 	if not melee:
-		var sharp := e.features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"]
+		# Sharpshooter's Long Shots and Firing in Melee are for Ranged weapons: not a spell, nor a melee weapon thrown (a
+		# dagger, a Psychic Blade).
+		var sharp := e.features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"] and not p.thrown
 		if p.normal_range > 0 and dist > p.normal_range and not sharp:
 			dis.append("long range")
 		var melee_ok := sharp or (e.features.has_feat(c, "crossbow_expert") and p.item_id.contains("crossbow")) \
