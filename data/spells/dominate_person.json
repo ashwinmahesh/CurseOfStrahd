@@ -41,7 +41,27 @@
     "charmed"
   ],
   "upcast": {
-    "text": "Concentration lasts up to 10 minutes with a level 6 slot, 1 hour with level 7 and 8 hours with level 8+."
+    "text": "Concentration lasts up to 10 minutes with a level 6 slot, 1 hour with level 7 and 8 hours with level 8+.",
+    "durations": [
+      {
+        "slot": 6,
+        "kind": "minutes",
+        "amount": 10,
+        "concentration": true
+      },
+      {
+        "slot": 7,
+        "kind": "hours",
+        "amount": 1,
+        "concentration": true
+      },
+      {
+        "slot": 8,
+        "kind": "hours",
+        "amount": 8,
+        "concentration": true
+      }
+    ]
   },
   "effects": [
     {

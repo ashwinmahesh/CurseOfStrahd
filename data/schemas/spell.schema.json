@@ -389,6 +389,21 @@
         "heal_flat": {
           "type": "integer",
           "description": "Hit Points of healing added per slot level (Heal: 10)."
+        },
+        "durations": {
+          "type": "array",
+          "description": "The duration from a slot level up (Hex: 4 hours at 2, 8 at 3, 24 at 5); the highest step at or under the slot used applies (Spellcasting.duration_at).",
+          "items": {
+            "type": "object",
+            "required": ["slot", "kind"],
+            "additionalProperties": false,
+            "properties": {
+              "slot": {"type": "integer", "minimum": 2, "maximum": 9},
+              "kind": {"type": "string", "enum": ["rounds", "minutes", "hours", "days", "until_dispelled"]},
+              "amount": {"type": "integer", "minimum": 1},
+              "concentration": {"type": "boolean"}
+            }
+          }
         }
       }
     },
