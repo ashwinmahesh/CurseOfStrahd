@@ -679,12 +679,12 @@
           "name": "Balcony Sword"
         },
         {
-          "monster": "broom_of_animated_attack",
+          "monster": "animated_flying_sword",
           "cell": [
             13,
             5
           ],
-          "name": "Hall Broom"
+          "name": "Balcony Sword"
         }
       ],
       "text": "The armor on the landing steps down off its stand."
@@ -722,6 +722,13 @@
             22,
             13
           ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            21,
+            8
+          ]
         }
       ],
       "text": "She wants her baby back."
@@ -739,6 +746,34 @@
             13
           ],
           "name": "Broom"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            12,
+            14
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            13,
+            14
+          ]
         }
       ],
       "text": "The broom against the wall has opinions about visitors."

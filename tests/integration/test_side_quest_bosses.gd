@@ -133,7 +133,8 @@ func test_the_penitent_at_level_11() -> void:
 
 ## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
 func test_the_tenant_at_level_2() -> void:
-	await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4], [], ["lupu"], ["study_door"])
+	var wins := await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4, 5, 6, 7, 8], [], ["lupu"], ["study_door"])
+	assert_true(wins >= 2 and wins <= 6, "the Tenant falls in 2 to 6 of 8 (%d)" % wins)
 
 
 func test_the_tinkers_wagon_at_level_5() -> void:

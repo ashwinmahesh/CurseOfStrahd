@@ -399,6 +399,20 @@
             10,
             14
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            14
+          ]
         }
       ],
       "surprise": "enemies",
@@ -421,6 +435,20 @@
             14
           ],
           "name": "A Pack Hunter"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            14
+          ]
         }
       ],
       "surprise": "enemies",
@@ -464,6 +492,20 @@
             13,
             15
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            14
+          ]
         }
       ],
       "surprise": "",
@@ -490,6 +532,20 @@
           "monster": "wolf",
           "cell": [
             5,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            8,
+            14
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            6,
             13
           ]
         }

@@ -104,16 +104,16 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 
 | Map | id | Trigger | Monsters | XP | Level | Difficulty |
 |---|---|---|---|---|---|---|
-| third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor"), 2 animated flying swords off the wall, a broom | 350 | 1 | Moderate+ |
-| third | `nursery_specter` | dialogue (fail or attack) | 4 specters ("The Nursemaid" and three more of the house's dead) | 800 | 1 | Twice High (avoidable) |
-| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack | 50 | 1 | Trivial (optional room). Not scaled yet: any bigger line-up stalls in its one-square doorway (a downed hero blocks it), so it waits for that fix |
-| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects | 700 | 2 | Moderate+ (optional) |
+| third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor"), 3 animated flying swords off the wall | 350 | 1 | Moderate+ (3 wins in 8, the nearest harder step to 4 that the Phase 3 playthrough's created level 1 party can still win: two armors were 4 for the pregens but beat it every try) |
+| third | `nursery_specter` | dialogue (fail or attack) | 4 specters ("The Nursemaid" and three more of the house's dead), a giant rat | 825 | 1 | Twice High (avoidable) |
+| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack, an animated armor, 2 animated flying swords, a giant rat | 375 | 1 | Moderate+ (optional room; 3 wins in 8, the nearest harder step to 4) |
+| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects | 700 | 2 | Moderate+ (optional; 3 wins in 8, the nearest harder step to 4: six swarms were 8) |
 | dungeon 1 | `larder_grick` | enter `dh_larder` | grick | 450 | 2 | Low (optional room; already about 4 wins in 8) |
-| dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 6 ghouls | 1,200 | 2 | Above High (on the way to the shrine and the Dursts, off the way down) |
+| dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 5 ghouls | 1,000 | 2 | Above High (on the way to the shrine and the Dursts, off the way down) |
 | dungeon 1 | `shrine_shadows` | dialogue (take the statue's orb) | 7 shadows | 700 | 2 | Moderate+ (optional) |
-| dungeon 1 | `den_mimic` | open `durst_door` | 2 mimics ("The Door", "The Chest"), a ghoul | 1,100 | 2 | Above High |
-| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) | 900 | 2 | Above High, as in the book; the "shaken" version surprises the Dursts. Left as they were: 0 and 2 wins in 8 |
-| dungeon 2 | `shades_harry` | dialogue (failed run) | 5 shadows | 500 | 2 | Moderate |
+| dungeon 1 | `den_mimic` | open `durst_door` | 2 mimics ("The Door", "The Chest"), a ghast | 1,350 | 2 | Above High |
+| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) with a robed one and 2 giant rats from the larder; the "shaken" version 2 robed ones and a swarm of rats, and the Dursts surprised | 1,150 / 1,350 | 2 | Above High |
+| dungeon 2 | `shades_harry` | dialogue (failed run) | 7 shadows | 700 | 2 | Moderate+ (3 wins in 8, the nearest harder step to 4: six were 5) |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
 | ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
 | third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 2 animated flying swords (tuned down from 3) | 100 | 2 | Trivial |
@@ -121,11 +121,11 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 
 Scaled up for 2024 heroes (owner, 2026-10-13: the book's fights were written for weaker characters; his targets are 4
 wins in 8 at levels 1 and 2). tests/integration/test_scaled_fights_death_house.gd plays each over seeds 1-8 from where
-walking in or talking sets it off and holds it near that. The run out after a refusal stays as it was: its fights come
+walking in or talking sets it off (whoever talks steps aside first) and holds it near that. The run out after a refusal stays as it was: its fights come
 back to back with no rest, and with five swords on the third floor the Phase 3 playthrough's drained level 2 party lost
 all eight tries.
 
-Critical path at level 1: the armor (350), plus the nursemaid (800, avoidable) and the broom (50, optional).
+Critical path at level 1: the armor (350), plus the nursemaid (850, avoidable) and the storage room (500, optional).
 Critical path at level 2: no fight, only the spiked pit (stair foot, crypts, well, pit passage, dining hall, stair
 down). The grick, the ghouls, the shrine, the mimic and the Dursts are all off that route, as the book's dungeon is: the
 deadliest rooms are the ones a party chooses to open. The book's creatures are kept and there are more of them now

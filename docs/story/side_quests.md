@@ -63,9 +63,10 @@ with Ileana, the woods, or the party ends him (before the fight or after).
   adds Teodor's open grave (townsfolk:gravedigger_teodor).
 - Vigil: by day, "wait with her until dark" (`time until 21`); at night Ileana stands at her door and Teodor comes to
   the shutter (approach). After the fight Ileana comes to the party (`polite_caller:dawn`).
-- Fight `teodor_errand` (village map, the east road by the churchyard gate): level 4+ the coachman (vampire spawn), 2
-  Strahd zombies, 2 dire wolves, 2 swarms of bats (2,700 XP, High); level 3 the coachman at 60 HP, 2 Strahd zombies, a
-  swarm (2,250 raw); below, the coachman at 45 HP with zombies. The coachman is an attention mark (`coachman`, +1).
+- Fight `teodor_errand` (village map, the east road by the churchyard gate): level 4+ the coachman (vampire spawn), 3
+  Strahd zombies, 4 dire wolves, 2 swarms of bats (3,300 XP); level 3 the coachman at full strength, 2 Strahd zombies,
+  4 dire wolves and a swarm (3,050 XP); below, the coachman at 45 HP with zombies. Scaled up for 2024 heroes
+  (2026-10-13): the autopilot wins 3 of 8 at level 4 and 2 at level 3 (three dire wolves were 4). The coachman is an attention mark (`coachman`, +1).
 - Rewards: Teodor's grave (container `teodor_grave`, opens once he tells you): 90 gp, 2 Potions of Healing, a Shield,
   +1 (uncommon). Heroic Inspiration for the party if he sees the sunrise.
 
@@ -96,8 +97,9 @@ bring her bones up from the bottom (prop `well_lip`, Athletics DC 13, by day or 
 name talks her down; so may Persuasion DC 14; otherwise she screams and fights (`well_bride`). Then lay her in the
 grave Mihail dug for Petra (prop `sixfeet_grave`); he cuts her name on the back of the board.
 
-- Fight `well_bride` (the well): level 3 Zinaida (banshee, her Deathly Wail drops anyone at 25 HP or less) and 2
-  shadows (1,300 XP, High-ish with the wail); level 4 adds 2 specters; below, Zinaida at 40 HP and a shadow.
+- Fight `well_bride` (the well): level 3 Zinaida (banshee, her Deathly Wail drops anyone at 25 HP or less), 2
+  shadows, a specter and a swarm of rats (1,550 XP); level 4 three specters instead of one; below, Zinaida at 40 HP and
+  a shadow. The autopilot wins 3 of 8 at levels 3 and 4 (2026-10-13).
 - Rewards: 60 gp in her silver coins and the little blue stone she wore with them, an Elemental Gem (Blue Sapphire)
   (uncommon): broken, it calls up an Air Elemental for an hour.
 
@@ -111,9 +113,9 @@ the siege winter and came back hungry, and his father couldn't end it and walled
 **Escalation:** bless the bricks and seal them again (Religion DC 12: 60 gp in the desk, and the howling stops), or
 break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the party for the fight.
 
-- Fight `hound_tenant` in the study: level 2 the Tenant (a ghast) and two starved servants (ghouls), 850 XP; level 3
-  three servants; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot wins 3 of 4 at level 2 and loses two
-  party members a fight. It's the only side quest below level 3.
+- Fight `hound_tenant` in the study: level 2 the Tenant (a ghast), three starved servants (ghouls) and a giant rat;
+  level 3 five servants, a swarm of rats and a giant rat; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot
+  wins 3 of 8 at level 2 and 2 of 8 at level 3 (2026-10-13; the nearest steps to 4 and 3). It's the only side quest below level 3.
 - Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
 
 ### The Oat Thief (`the_oat_thief`, narrative/village_of_barovia/the_oat_thief.dialogue; batch 6)
@@ -127,8 +129,9 @@ from the werewolf den when Kiril began taking children for the count's army, and
 on oats so they never learn the taste of meat. **Escalation:** Parriwimple's sack has a hole in it, and the pack's
 hunters come up the trail of oats; spotting it (Survival DC 12) catches them unawares, with a wolf left behind.
 
-- Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and a wolf at level 2, three wolves at level 3. The
-  autopilot wins 2 of 4 at level 2 and 3 of 4 at level 3, losing one or two party members a fight.
+- Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter"), two wolves and a giant rat at level 2, five wolves at
+  level 3; with the trail read (the hunters caught unawares), two wolves at level 2 and four at level 3. The autopilot
+  wins 4 of 8 at level 2 and 2 of 8 at level 3 (2026-10-13; one wolf fewer at level 3 was 4).
 - Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
   for the party until dawn; and Bildrath decides it's charity.
 
@@ -144,9 +147,9 @@ the robed ones cut his name over a box and gave him to the thing in the pit. Lay
 house's keepers.
 
 - Fight `nursemaid_keepers` in the family crypts (my entries on data/locations/death_house_dungeon_1.json): Gustav and
-  Elisabeth Durst (ghasts) and two robed ones (ghouls), unless the Dursts are already gone; then the robed one who
-  carried Walter down (a ghast) and four more. The autopilot wins 4 of 4 against the Dursts and 3 of 4 against the
-  robed ones at level 3, losing one or two party members a fight.
+  Elisabeth Durst (ghasts), three robed ones (ghouls) and a giant rat, unless the Dursts are already gone; then the robed
+  one who carried Walter down (a ghast), five more and a rat. The autopilot wins 3 of 8 either way at level 3
+  (2026-10-13).
 - Reward: her lucky stone, left on the lid, a Stone of Good Luck (uncommon). No still.
 
 ### The Lantern in the Roadhouse (`the_roadhouse_lantern`, narrative/svalich_road/the_roadhouse_lantern.dialogue; batch 9, level 2)
@@ -160,8 +163,8 @@ warning. The guest book's last pages (an examine prop) show the winter the snow 
 and in a child's hand, "Mama made a stew"; Insight DC 12 sees him watching a trapdoor nailed shut with too many nails.
 **Escalation:** his wife and sons, who fed on the guests, have been pushing the nails up from below all month.
 
-- Fight `roadhouse_cellar` in the taproom: level 2 the innkeeper's wife and a son (ghouls) and four giant rats (the
-  autopilot wins 4 of 8, losing two party members a fight); level 3 and up a second son (5 of 8).
+- Fight `roadhouse_cellar` in the taproom: level 2 the innkeeper's wife and a son (ghouls) and five giant rats (the
+  autopilot wins 4 of 8); level 3 and up two more sons and six rats (3 of 8; 2026-10-13).
 - By night afterwards Wenzel tells it, puts the lantern down on the hearth, and goes out with it. Under the
   hearthstone: 50 gp and his youngest's Pipes of the Sewers (uncommon).
 
@@ -177,8 +180,8 @@ for a doctor, fifty years ago (The Last Traveller; with `ilarion_met` the party 
 name). The mists are giving back what they took. **Escalation:** they don't give anything back for nothing, and
 wolves come out of the fog after her.
 
-- Fight `pasture_wolves` on the pasture, in the evening: level 1 six mist wolves (the autopilot wins 3 of 8, losing
-  three party members a fight); level 2 and up two dire wolves and four wolves (3 of 8).
+- Fight `pasture_wolves` on the pasture, in the evening: level 1 seven mist wolves (the autopilot wins 2 of 8, the
+  nearest harder step to 4: six were 5); level 2 and up two dire wolves and four wolves.
 - Snowdrop goes down to Petra's kitchen (with `ilarion_home`, to her father by the fire), or back into the mists. A
   Potion of Animal Friendship (uncommon) and 25 gp either way.
 
@@ -248,8 +251,9 @@ back to be married, and the rings were round her neck. **Escalation:** every str
 walls; cutting her down brings the spiders (Nature DC 12 reads the web first, and they don't catch the party
 unawares).
 
-- Fight `gully_spiders` in the gully: three giant spiders and two swarms of spiderlings (swarms of insects). The
-  autopilot wins 4 of 8 at level 3 caught unawares and 3 of 8 warned, losing about three party members a fight.
+- Fight `gully_spiders` in the gully: three giant spiders and three swarms of spiderlings (swarms of insects) when it
+  catches the party unawares, two when they read the web first. The autopilot wins 3 of 8 at level 3 either way
+  (2026-10-13).
 - Tsura goes back to the camp to tell her mother herself, or on to Krezk; Iancu's line says which. She gives the party
   the wedding rings, Boon Companion's Bands (uncommon), and 40 gp.
 

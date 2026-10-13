@@ -1058,14 +1058,6 @@
             14
           ],
           "lying": true
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            4,
-            14
-          ],
-          "lying": true
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."
@@ -1130,14 +1122,14 @@
           "monster": "shadow",
           "cell": [
             2,
-            19
+            16
           ]
         },
         {
           "monster": "shadow",
           "cell": [
             6,
-            19
+            16
           ]
         }
       ],
@@ -1166,10 +1158,10 @@
           "name": "The Chest"
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
-            2,
-            17
+            4,
+            18
           ]
         }
       ],
@@ -1195,6 +1187,27 @@
             19
           ],
           "name": "Elisabeth Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            16
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            10,
+            16
+          ]
         }
       ],
       "text": "Supper is served."
@@ -1220,6 +1233,27 @@
             19
           ],
           "name": "Elisabeth Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            16
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            16
+          ]
         }
       ],
       "text": "For one moment they are only parents, and grieving."
@@ -1269,12 +1303,11 @@
           "name": "A Robed One"
         },
         {
-          "monster": "ghoul",
+          "monster": "giant_rat",
           "cell": [
-            20,
+            7,
             3
-          ],
-          "name": "A Robed One"
+          ]
         }
       ],
       "trigger": "dialogue",
@@ -1336,6 +1369,13 @@
             3
           ],
           "name": "A Robed One"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            7,
+            3
+          ]
         }
       ],
       "trigger": "dialogue",

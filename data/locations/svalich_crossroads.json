@@ -716,6 +716,38 @@
             7
           ],
           "name": "Hanged dead"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            7
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            21,
+            7
+          ],
+          "name": "Hanged dead"
         }
       ],
       "surprise": "",
@@ -753,6 +785,41 @@
             22
           ],
           "name": "Kestrel soldier"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            18,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            22
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            23
+          ]
         }
       ],
       "surprise": "",
@@ -790,6 +857,55 @@
             22
           ],
           "name": "Kestrel soldier"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            18,
+            23
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            21
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            22
+          ]
         }
       ],
       "surprise": "",
