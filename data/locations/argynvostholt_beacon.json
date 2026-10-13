@@ -364,8 +364,7 @@
             2,
             17
           ],
-          "name": "Dead Knight",
-          "hp": 110
+          "name": "Dead Knight"
         },
         {
           "monster": "revenant",
@@ -373,8 +372,7 @@
             4,
             13
           ],
-          "name": "Dead Knight",
-          "hp": 110
+          "name": "Dead Knight"
         },
         {
           "monster": "phantom_warrior",
@@ -383,6 +381,14 @@
             19
           ],
           "name": "Phantom Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            6,
+            14
+          ],
+          "name": "Dead Knight"
         }
       ]
     },

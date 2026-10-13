@@ -13,6 +13,15 @@ const IZEKS_DOOR: Array[Vector2i] = [Vector2i(4, 11), Vector2i(5, 11), Vector2i(
 ## Old Bonegrinder's loft, at Morgantha's elbow.
 const LOFT: Array[Vector2i] = [Vector2i(9, 6), Vector2i(8, 7), Vector2i(7, 8), Vector2i(6, 9)]
 
+## The Abbey's chancel, before the Abbot; the beacon's lantern landing; Argynvostholt's hall, before Vladimir; the den's
+## inner cave, before Kiril; Berez, at Lysaga's stump and south of it.
+const CHANCEL: Array[Vector2i] = [Vector2i(12, 4), Vector2i(11, 4), Vector2i(13, 4), Vector2i(12, 5)]
+const LANTERN_LANDING: Array[Vector2i] = [Vector2i(4, 18), Vector2i(5, 18), Vector2i(4, 19), Vector2i(5, 19)]
+const VLADIMIRS_HALL: Array[Vector2i] = [Vector2i(16, 3), Vector2i(17, 4), Vector2i(16, 4), Vector2i(15, 4)]
+const KIRILS_CAVE: Array[Vector2i] = [Vector2i(19, 22), Vector2i(18, 22), Vector2i(20, 22), Vector2i(19, 23)]
+const LYSAGAS_STUMP: Array[Vector2i] = [Vector2i(31, 17), Vector2i(30, 17), Vector2i(31, 18), Vector2i(30, 18)]
+const BELOW_THE_STUMP: Array[Vector2i] = [Vector2i(30, 20), Vector2i(29, 20), Vector2i(31, 20), Vector2i(30, 21)]
+
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
@@ -61,3 +70,49 @@ func test_morgantha_and_offalia_at_level_6() -> void:
 
 func test_morgantha_and_bella_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 1, 3, ["bella_in_last_stand"])
+
+
+## The Abbot's wrath: the deva at its full 229 HP (the 2025 Monster Manual's), a Belview brute and two mongrelfolk.
+func test_the_abbots_wrath_at_level_7() -> void:
+	await _held("abbey_of_st_markovia_shrine", 7, "abbot_wrath", CHANCEL, 1, 3)
+
+
+## Vasilka rises from her bier with five Belview brutes and three mongrelfolk.
+func test_vasilka_defends_the_abbot_at_level_7() -> void:
+	await _held("abbey_of_st_markovia_shrine", 7, "bride_defends", CHANCEL, 1, 3)
+
+
+## Vladimir at the beacon with three dead knights (revenants at their full 127 HP) and a man-at-arms.
+func test_vladimir_at_the_beacon_at_level_8() -> void:
+	await _held("argynvostholt_beacon", 8, "beacon_stand", LANTERN_LANDING, 1, 3)
+
+
+## Vladimir's duel in the hall, his three seconds behind him.
+func test_vladimirs_duel_at_level_8() -> void:
+	await _held("argynvostholt_hall", 8, "vladimir_duel", VLADIMIRS_HALL, 1, 3)
+
+
+## Kiril's challenge once the den's guards are dealt with: three werewolves, three dire wolves and a wolf.
+func test_kirils_challenge_at_level_8() -> void:
+	await _held("werewolf_den_caves", 8, "pack_challenge", KIRILS_CAVE, 1, 3, ["den_guards_cleared"])
+
+
+## Zuleika vouched for the party, so the guards stand with Kiril: four werewolves and a dire wolf.
+func test_kirils_challenge_with_the_guards_at_level_8() -> void:
+	await _held("werewolf_den_caves", 8, "pack_challenge", KIRILS_CAVE, 1, 3, ["zuleika_vouched"])
+
+
+## The whole den turns on the party: Kiril, Emil, Zuleika, two werewolves, a dire wolf and a wolf. 1 of 8, the harder
+## side of the owner's 2 (with no wolf, 5).
+func test_the_dens_reckoning_at_level_8() -> void:
+	await _held("werewolf_den_caves", 8, "den_reckoning", KIRILS_CAVE, 1, 3, ["den_guards_cleared"])
+
+
+## Baba Lysaga and her creeping hut at the stump.
+func test_lysaga_and_her_hut_at_level_9() -> void:
+	await _held("berez", 9, "lysaga_and_hut", LYSAGAS_STUMP, 1, 3)
+
+
+## Her hut without her, at its book 263 HP, and three swarms of insects out of its eaves.
+func test_the_masterless_hut_at_level_9() -> void:
+	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_slain_at_monument"])

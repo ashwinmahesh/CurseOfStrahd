@@ -863,6 +863,20 @@
             23,
             22
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            18,
+            24
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            21,
+            25
+          ]
         }
       ],
       "surprise": "",
@@ -923,13 +937,6 @@
           "cell": [
             15,
             25
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            23,
-            22
           ]
         }
       ],
@@ -1153,13 +1160,6 @@
           ]
         },
         {
-          "monster": "werewolf",
-          "cell": [
-            20,
-            24
-          ]
-        },
-        {
           "monster": "dire_wolf",
           "cell": [
             15,
@@ -1167,10 +1167,10 @@
           ]
         },
         {
-          "monster": "dire_wolf",
+          "monster": "wolf",
           "cell": [
             23,
-            22
+            24
           ]
         }
       ],

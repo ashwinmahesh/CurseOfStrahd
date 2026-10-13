@@ -132,7 +132,16 @@ func test_the_raven_trap_at_level_6() -> void:
 
 ## The sim starts at the road gate; in play the party is already by the pens, inside the open gate.
 func test_the_grandsire_at_level_8() -> void:
-	await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
+	speakers_step_aside = true
+	var wins := await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4, 5, 6, 7, 8], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
+	assert_true(wins >= 1 and wins <= 3, "the Grandsire falls in 1 to 3 of 8 (%d)" % wins)
+
+
+## Level 9: the Grandsire at 225 HP with three of the pack's old wolves and two dire wolves.
+func test_the_grandsire_at_level_9() -> void:
+	speakers_step_aside = true
+	var wins := await _series("krezk", 23, 9, "grandsire", [1, 2, 3, 4, 5, 6, 7, 8], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
+	assert_true(wins >= 1 and wins <= 3, "the Grandsire falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The sim boots at the catacombs' gate stair; in play the party is at her crypt, inside the open gate.
@@ -324,9 +333,11 @@ func test_querreth_at_level_10() -> void:
 const TITHE_VAULT: Array[Vector2i] = [Vector2i(10, 6), Vector2i(12, 6), Vector2i(11, 7), Vector2i(9, 7)]
 
 
-## The Gilded Knight and three of the escort's empty harness, at his full strength.
+## The Gilded Knight (207 HP in this fight, of his 178) and three of the escort's empty harness.
 func test_the_gilded_knight_at_level_9() -> void:
-	await _series("argynvostholt_undercroft", 20, 9, "gilded_knight", [1, 2, 3, 4, 5, 6, 7, 8], ["tithe_told"], [], [], TITHE_VAULT)
+	speakers_step_aside = true
+	var wins := await _series("argynvostholt_undercroft", 20, 9, "gilded_knight", [1, 2, 3, 4, 5, 6, 7, 8], ["tithe_told"], [], [], TITHE_VAULT)
+	assert_true(wins >= 1 and wins <= 3, "the Gilded Knight falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The clearing at the old den, where the party stands over the trapped cub.

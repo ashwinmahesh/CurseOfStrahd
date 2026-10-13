@@ -490,11 +490,28 @@
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
-            23,
-            14
-          ]
+            5,
+            8
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            5,
+            12
+          ],
+          "name": "Belview Brute"
         }
       ],
       "surprise": "",
@@ -613,8 +630,7 @@
             12,
             3
           ],
-          "name": "The Abbot",
-          "hp": 120
+          "name": "The Abbot"
         },
         {
           "monster": "mongrelfolk",
@@ -629,6 +645,14 @@
             17,
             4
           ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
+            6
+          ],
+          "name": "Belview Brute"
         }
       ],
       "surprise": "",
