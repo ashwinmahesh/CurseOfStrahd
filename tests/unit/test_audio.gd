@@ -125,6 +125,47 @@ func test_regions_play_their_theme() -> void:
 	assert_eq(Audio.mood_for("vallaki_st_andrals", "church"), "church", "St. Andral's keeps the church's")
 
 
+## The Wizard of Wines turns cheerful once Yester Hill is broken (owner, 2026-10-13): every one of its places, the
+## winery's tavern hall too, plays the region's later theme; before that each keeps its own, and other regions never
+## take it.
+func test_the_vineyard_turns_cheerful_once_yester_hill_is_broken() -> void:
+	var c := Compendium.shared()
+	var st := StoryState.new()
+	var places := {}
+	for id: String in c.table("locations"):
+		var loc := c.get_entry("locations", id)
+		if str(loc.get("region", "")) == "wizard_of_wines":
+			places[id] = ArenaBoard.theme_for(loc.get("map", {}) as Dictionary)
+	for id: String in ["wizard_of_wines", "wizard_of_wines_winery", "wizard_of_wines_press_house", "wizard_of_wines_cellar"]:
+		assert_true(places.has(id), "%s is in the Wizard of Wines" % id)
+	assert_false(Audio.files("music", "vineyard_freed").is_empty(), "the later theme has music")
+	for id: String in places:
+		var before := Audio.mood_for(id, str(places[id]), st)
+		assert_eq(before, Audio.mood_for(id, str(places[id])), "%s keeps its music before the hill falls" % id)
+		assert_ne(before, "vineyard_freed", id)
+	st.set_flag("yester_hill_resolved")
+	for id: String in places:
+		assert_eq(Audio.mood_for(id, str(places[id]), st), "vineyard_freed", "%s turns cheerful" % id)
+	for id: String in ["yester_hill", "vallaki_blue_water_inn"]:
+		var theme := ArenaBoard.theme_for(c.get_entry("locations", id).get("map", {}) as Dictionary)
+		assert_eq(Audio.mood_for(id, theme, st), Audio.mood_for(id, theme), "%s keeps its own music" % id)
+
+
+## Every later theme names a region places belong to, a mood with music and a condition (an empty one would always hold).
+func test_every_region_turn_is_complete() -> void:
+	var regions := {}
+	for id: String in Compendium.shared().table("locations"):
+		regions[str(Compendium.shared().get_entry("locations", id).get("region", ""))] = true
+	var turns := Audio._data.get("region_turns", {}) as Dictionary
+	assert_false(turns.is_empty(), "some region has a later theme")
+	for region: String in turns:
+		assert_true(regions.has(region), "%s is a region places belong to" % region)
+		for t: Variant in turns[region] as Array:
+			var turn := t as Dictionary
+			assert_ne(str(turn.get("when", "")).strip_edges(), "", "%s: a later theme needs a condition" % region)
+			assert_false(Audio.files("music", str(turn.get("mood", ""))).is_empty(), "%s: %s has music" % [region, turn.get("mood", "")])
+
+
 ## The volumes are kept in the settings file GameSettings.path names, like every other setting: a test run's own file,
 ## never the player's (QA, 2026-10-08: the pause menu's Voices slider test rewrote the owner's settings.cfg in every
 ## full make ci). No game script names the player's file itself.
