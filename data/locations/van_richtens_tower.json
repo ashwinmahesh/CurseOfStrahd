@@ -220,8 +220,8 @@
     {
       "id": "vrt_wagon_note",
       "cell": [
-        7,
-        22
+        5,
+        23
       ],
       "kind": "book",
       "label": "A note nailed to the wagon",

@@ -189,8 +189,8 @@
     {
       "id": "hollow_drying",
       "cell": [
-        16,
-        6
+        11,
+        8
       ],
       "kind": "examine",
       "label": "Herbs drying",

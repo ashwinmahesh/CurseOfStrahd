@@ -118,6 +118,36 @@ func test_a_prop_takes_a_trees_square() -> void:
 	v.queue_free()
 
 
+## Owner report (2026-10-13): "There is a random floating plaque in the Abbey (it should be on the wall)". Every piece
+## made to hang on a wall (manifest or catalog mount "wall": a plaque, a portrait, cobwebs, a winch, a stove) stands
+## beside a wall it can hang on, or on a wall square itself; with none beside it, it stood loose on the floor or hung in
+## the air (28 of them did).
+func test_wall_pieces_have_a_wall() -> void:
+	var problems: Array[String] = []
+	for loc_id: String in Compendium.shared().tables["locations"]:
+		var loc := Compendium.shared().get_entry("locations", loc_id) as Dictionary
+		var g := LocationView.grid_for(loc)
+		var doors := {}
+		for dd: Variant in loc.get("doors", []):
+			doors[LocationView._cell((dd as Dictionary)["cell"])] = true
+		for kind: String in ["props", "containers"]:
+			for p: Dictionary in loc.get(kind, []):
+				var look := SetDressing.look_for(p, kind == "containers")
+				var art := str(look.get("art", ""))
+				if art == "" or str(look.get("mount", (SetDressing.manifest().get(art, {}) as Dictionary).get("mount", ""))) != "wall":
+					continue
+				var c := LocationView._cell(p["cell"])
+				if g.has_flag(c, CombatGrid.WALL):
+					continue
+				var hung := false
+				for d: Vector2i in SetDressing.FACES:
+					if g.in_bounds(c - d) and g.has_flag(c - d, CombatGrid.WALL) and not doors.has(c - d):
+						hung = true
+				if not hung:
+					problems.append("%s: %s at %s (%s)" % [loc_id, p["id"], c, art])
+	assert_eq(problems, [] as Array[String], "wall pieces beside a wall")
+
+
 ## The village is houses with roofs, not one box per wall square; its yard walls are low.
 func test_village_houses_and_yard_walls() -> void:
 	var v := _view("village_of_barovia")
