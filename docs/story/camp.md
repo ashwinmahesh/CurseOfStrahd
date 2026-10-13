@@ -75,9 +75,13 @@ winnable, won and lost at least twice in eight (tests/integration/test_night_vis
 2026-10-12). The wild's groups are played in an open field; the town's in the Village of Barovia and the indoor ones
 in the burgomaster's mansion, from the camp the party makes on arriving there.
 
-A full night brings back what a Long Rest does. Then the Narrator says the night's line (`rest:long:<place>`,
-`rest:long:<region>`, `camp:night`, `rest:long`), the region's dream, and `camp:morning`. Strahd may come in the
-night, as after any Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
+A full night brings back what a Long Rest does. Then the Narrator says the night's line (CampSite.night_keys:
+`rest:long:<place>`, `rest:long:<region>`, `camp:night:<setting>`, `camp:night`, `rest:long`), the region's dream, and
+`camp:morning`. A place's own night comes first (Death House's lives on `rest:long:death_house`), except that one
+written for sleeping behind walls carries `[indoors]` and one for the open air `[not indoors]` (the Village of
+Barovia's shutters, the abbey's cart shed, Argynvostholt's door, the Martikovs' house; Tsolenka's rock, Van Richten's
+shore), so a camp where it doesn't fit passes over it to the camp's own. Strahd may come in the night, as after any
+Long Rest. Afterwards the panel offers **Change prepared spells**, counted from the list the
 night ended with, and **Break camp**. Breaking camp packs everything away (`camp:strike`), and the party falls in behind its leader. Leaving
 the place, or anything that builds it again, ends the camp too.
 

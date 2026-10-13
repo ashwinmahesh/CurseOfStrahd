@@ -62,6 +62,17 @@ static func keys_for(key: String, where: String) -> Array[String]:
 	return [key + ":" + where, key]
 
 
+## The Narrator's triggers for the night slept at a camp at `loc_id` in `region`, in `where` (setting()), in order: the
+## place's own night, its region's, the camp's for the setting, the camp's, and anyone's. A place's or region's night
+## written for sleeping behind walls carries [indoors] (and one for the open air [not indoors]), so a camp where it
+## doesn't fit passes over it to the camp's own.
+static func night_keys(loc_id: String, region: String, where: String) -> Array[String]:
+	var out: Array[String] = ["rest:long:" + loc_id, "rest:long:" + region]
+	out.append_array(keys_for("camp:night", where))
+	out.append("rest:long")
+	return out
+
+
 ## The squares the place's own things stand on (props, containers, doors, ways out, lights, its people's spots and
 ## traps), and (with `fights`, for the camp itself) the areas a fight starts in as the party walks in, as a set.
 static func things_at(loc: Dictionary, fights := true) -> Dictionary:

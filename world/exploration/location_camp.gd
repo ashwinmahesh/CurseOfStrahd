@@ -363,10 +363,7 @@ func sleep() -> void:
 	for line: String in res["lines"]:
 		_queue.append(line)
 	var region := str(view.loc.get("region", ""))
-	var night: Array[String] = ["rest:long:" + view.loc_id, "rest:long:" + region]
-	night.append_array(CampSite.keys_for("camp:night", setting))
-	night.append("rest:long")
-	_say_keys(night)
+	_say_keys(CampSite.night_keys(view.loc_id, region, setting))
 	_say_keys(["dream:" + region])
 	_say_keys(CampSite.keys_for("camp:morning", setting))
 	_refresh_root()

@@ -9,7 +9,8 @@ extends RefCounted
 ## `treasure_at:<place>` (a treasure the reading put there, not yet found) and `gift:<dark gift>` (ADR 0011),
 ## `approval.thistle >= close` (a companion's approval tier, or a score; story/approval.gd),
 ## `attention >= marked` (Strahd's attention, a number or a tier; story/strahd_presence.gd), `weather == fog` (where
-## the party is; story/weather.gd),
+## the party is; story/weather.gd), `indoors` (the party's map is under a roof or a dungeon: CampSite.setting; a night's
+## line written for sleeping behind walls carries it, so an outdoor camp doesn't say it),
 ## `leader:name:thistle` (the party member speaking for the party matches the selector after `leader:`),
 ## `check.last`, `true`, `false`, with `and`, `or`, `not` and parentheses. An empty condition is true.
 
@@ -148,6 +149,8 @@ func _term() -> bool:
 		return st.is_night()
 	if t == "day":
 		return not st.is_night()
+	if t == "indoors":
+		return st.location != "" and CampSite.setting(Compendium.shared().get_entry("locations", st.location)) == CampSite.INDOORS
 	if t == "hour":
 		return _compare(st.minute_of_day / 60, op if op != "" else ">=", _literal(rhs) if op != "" else 0)
 	if t.begins_with("tarokka."):
