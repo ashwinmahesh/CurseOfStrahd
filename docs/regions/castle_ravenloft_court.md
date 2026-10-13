@@ -125,11 +125,15 @@ guardian portrait 200, crawling claw 10, dire wolf 200, swarm of bats 50.
 | `court_final_study` (final battle `castle_ravenloft_study`, seer, lair) | court | enter `court_study` | Strahd by the hearth, 2 swarms of bats down the chimney | 13100 (above High) |
 | `court_final_treasury` (final battle `castle_ravenloft_treasury`, tempter, lair) | treasury | enter `court_treasury` | Strahd on the hoard, a helmed horror | 14100 (above High) |
 | `court_post_watch` | court | enter `court_guard_post` | Strahd's animated armour, 3 helmed horrors | 5600 (Low) |
-| `court_rahadin_fight` | court | dialogue (Rahadin in the hall or at the stairs) | Rahadin | 5900 (Low) |
+| `court_rahadin_fight` | court | dialogue (Rahadin in the hall or at the stairs) | Rahadin and 2 of Strahd's animated armour (at the stairs a third, battered, at 50 HP) | 10500 / 12800 (High) |
 | `court_accountant_rug` | court | dialogue (freeing Lief) | rug of smothering, 3 crawling claws | 480 (trivial; a scare) |
 | `court_portrait_watch` | weeping | enter `court_portrait_gallery` | guardian portrait, 2 of Strahd's animated armour | 4800 (under Low) |
-| `court_brides_fight` | weeping | dialogue (provoking the brides) | Ludmilla, Volenta (+ Anastrasya unless she told her story) | 3600 / 5400 |
-| `court_rahadin_chamber_fight` | weeping | dialogue (Rahadin in his room) | Rahadin | 5900 (Low) |
+| `court_brides_fight` | weeping | dialogue (provoking the brides) | Ludmilla, Volenta, 2 of Strahd's spawn and 2 animated armours; or all three brides and 2 armours | 11800 / 10000 |
+| `court_rahadin_chamber_fight` | weeping | dialogue (Rahadin in his room) | Rahadin and 3 of Strahd's animated armour | 12800 (High) |
+
+Scaled for 2024-rules heroes (owner, 2026-10-13: 2 wins in 8 at level 10): the four pregens on autopilot won every
+Rahadin and brides fight 8 of 8; with the count's armour and spawn beside them they win 1 or 2 of 8
+(tests/integration/test_scaled_boss_fights.gd), 1 where the next lighter step wins 3 or more.
 
 The engine plays the parley first and moves `strahds_lair` to `confronted` when a final battle starts; dropping
 Strahd to 0 there turns him to mist and sends him to his coffin (catacombs). Strahd appears in this part only in the

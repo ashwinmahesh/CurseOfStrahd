@@ -1070,6 +1070,28 @@
             21
           ],
           "name": "Rahadin"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            20,
+            21
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            24,
+            21
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            22,
+            19
+          ],
+          "hp": 50
         }
       ],
       "surprise": "",
@@ -1087,6 +1109,20 @@
             13
           ],
           "name": "Rahadin"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            20,
+            12
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            24,
+            12
+          ]
         }
       ],
       "surprise": "",

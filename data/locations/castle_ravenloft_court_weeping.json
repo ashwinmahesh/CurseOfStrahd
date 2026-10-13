@@ -950,6 +950,36 @@
             15
           ],
           "name": "Volenta Popofsky"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            11,
+            13
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            2,
+            14
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            13
+          ],
+          "name": "One of Strahd's spawn"
         }
       ],
       "surprise": "",
@@ -983,6 +1013,20 @@
             15
           ],
           "name": "Anastrasya Karelova"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            13
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            11,
+            13
+          ]
         }
       ],
       "surprise": "",
@@ -1000,6 +1044,27 @@
             17
           ],
           "name": "Rahadin"
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            30,
+            17
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            34,
+            17
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            32,
+            15
+          ]
         }
       ],
       "surprise": "",
