@@ -121,19 +121,25 @@ guardian portrait 200, crawling claw 10, dire wolf 200, swarm of bats 50.
 
 | id | Map | Trigger | Monsters | XP (band) |
 |---|---|---|---|---|
-| `court_final_audience_hall` (final battle `castle_ravenloft_audience_hall`, beast, lair) | court | enter `court_audience_hall` | Strahd on the dais, 2 dire wolves | 13400 (above High) |
-| `court_final_study` (final battle `castle_ravenloft_study`, seer, lair) | court | enter `court_study` | Strahd by the hearth, 2 swarms of bats down the chimney | 13100 (above High) |
-| `court_final_treasury` (final battle `castle_ravenloft_treasury`, tempter, lair) | treasury | enter `court_treasury` | Strahd on the hoard, a helmed horror | 14100 (above High) |
+| `court_final_audience_hall` (final battle `castle_ravenloft_audience_hall`, beast, lair) | court | enter `court_audience_hall` | Strahd on the dais (350 HP), 3 dire wolves, 4 of his spawn | 20800 (above High) |
+| `court_final_study` (final battle `castle_ravenloft_study`, seer, lair) | court | enter `court_study` | Strahd by the hearth (350 HP), 2 swarms of bats down the chimney, 5 of his spawn | 22100 (above High) |
+| `court_final_treasury` (final battle `castle_ravenloft_treasury`, tempter, lair) | treasury | enter `court_treasury` | Strahd on the hoard (400 HP), a helmed horror, 3 of his spawn | 19500 (above High) |
 | `court_post_watch` | court | enter `court_guard_post` | Strahd's animated armour, 3 helmed horrors | 5600 (Low) |
-| `court_rahadin_fight` | court | dialogue (Rahadin in the hall or at the stairs) | Rahadin and 2 of Strahd's animated armour (at the stairs a third, battered, at 50 HP) | 10500 / 12800 (High) |
+| `court_rahadin_fight` | court | dialogue (Rahadin in the hall or at the stairs) | Rahadin and 2 of Strahd's animated armour and a third, battered (at the stairs Rahadin at 300 HP and the third at 50; in the hall the third at 90) | 12800 (High) |
 | `court_accountant_rug` | court | dialogue (freeing Lief) | rug of smothering, 3 crawling claws | 480 (trivial; a scare) |
 | `court_portrait_watch` | weeping | enter `court_portrait_gallery` | guardian portrait, 2 of Strahd's animated armour | 4800 (under Low) |
 | `court_brides_fight` | weeping | dialogue (provoking the brides) | Ludmilla, Volenta, 2 of Strahd's spawn and 2 animated armours; or all three brides and 2 armours | 11800 / 10000 |
 | `court_rahadin_chamber_fight` | weeping | dialogue (Rahadin in his room) | Rahadin and 3 of Strahd's animated armour | 12800 (High) |
 
-Scaled for 2024-rules heroes (owner, 2026-10-13: 2 wins in 8 at level 10): the four pregens on autopilot won every
-Rahadin and brides fight 8 of 8; with the count's armour and spawn beside them they win 1 or 2 of 8
-(tests/integration/test_scaled_boss_fights.gd), 1 where the next lighter step wins 3 or more.
+Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced at every level): at level 10 Rahadin on the stair, in the hall and in
+his chamber and both brides fights win 4 or 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
+
+Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
+wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
+blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
+outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
+(tests/integration/test_scaled_boss_fights.gd).
 
 The engine plays the parley first and moves `strahds_lair` to `confronted` when a final battle starts; dropping
 Strahd to 0 there turns him to mist and sends him to his coffin (catacombs). Strahd appears in this part only in the

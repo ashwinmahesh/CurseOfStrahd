@@ -86,9 +86,21 @@ to be hard.
 | `crg_courtyard_gargoyles` | gates | enter `crg_front_courtyard` at night, uninvited (`flag.strahd_invitation != "accepted"`) | 6 gargoyles (2700) | 4 gargoyles (1800) |
 | `crg_turret_guard` | main floor | enter `crg_turret_post_east` | 2 Strahd's animated armor (4600) | 1 (2300) |
 | `crg_faces_wake` | main floor | `flag:crg_ever_hearth_out` unless it went out quietly | 2 guardian portraits + 3 helmed horrors (3700) | 2 portraits + 2 horrors (2600) |
-| `crg_dinner_affront` | main floor | dialogue (the party draws on Strahd at his table) | Strahd (withdraws after 3 rounds or under 100 HP; flag `strahd_withdrew`) + 3 swarms of bats | same |
-| `crg_chapel_final_battle` | chapel | enter `crg_chapel_nave`; `final_battle: castle_ravenloft_chapel`, `lair: true` | Strahd + 2 vampire spawn (his thralls at prayer in the pews): 16600, a deadly finale | same |
-| `crg_overlook_final_battle` | overlook | enter `crg_overlook`; `final_battle: castle_ravenloft_overlook`, `lair: true` | Strahd + 3 swarms of bats boiling up from the cliff: 13150 | same |
+| `crg_dinner_affront` | main floor | dialogue (the party draws on Strahd at his table) | Strahd at 375 HP (fights until beaten, then flees with a parting line; flag `strahd_withdrew`) + 3 swarms of bats + 2 suits of his animated armour | same |
+| `crg_chapel_final_battle` | chapel | enter `crg_chapel_nave`; `final_battle: castle_ravenloft_chapel`, `lair: true` | Strahd (350 HP) + 2 vampire spawn (his thralls at prayer in the pews) + 4 more of his spawn: 23800, a deadly finale | same |
+| `crg_overlook_final_battle` | overlook | enter `crg_overlook`; `final_battle: castle_ravenloft_overlook`, `lair: true` | Strahd (350 HP) + 3 swarms of bats boiling up from the cliff + one of his spawn: 14950 | same |
+
+Strahd's dinner is tuned like his other fights (owner, 2026-10-13): the sharp test party carrying the Sunsword wins 5 of
+8, Strahd at 375 HP with two suits of his armour. He fights until he's beaten (owner, 2026-10-13: "let him fight till
+his HP goes to 0, but that's his signal to flee") and goes with a parting line, which the fight waits for
+(tests/integration/test_scaled_boss_fights.gd). His spawn didn't last against the Sunsword and Turn Undead, so the
+count's armour fights here instead.
+
+Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
+wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
+blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
+outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
+(tests/integration/test_scaled_boss_fights.gd).
 
 Why Strahd appears outside a final battle: only at the dinner, as the host the invitation promised. He fights there
 only if the party attacks him at his own table, and then he leaves (`withdraw`), as ADR 0014 asks of every fight that

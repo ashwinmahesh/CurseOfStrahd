@@ -168,18 +168,19 @@ to dig when Coins 7 is drawn (`tarokka.tome == coins_7` etc.).
 
 ## 6. Encounters (2024 DMG budgets for four characters: level 3 Low 600 / Moderate 900 / High 1600; level 4 Low 1000 / Moderate 1500 / High 2000)
 
-Scaled up for 2024 heroes (owner, 2026-10-13): each is about 3 wins in 8 for the four pregens at the level it's met
-(tests/integration/test_scaled_fights_barovia.gd); Ismark (a veteran) and Ireena travelling as guests make them easier.
+Scaled up for 2024 heroes (owner, 2026-10-13), then retuned for the sharp test party (owner, 2026-10-13 18:05: the autopilot smites, opens with Spirit Guardians and throws Fireball as he plays, and should win 5 in 8 on Balanced at every level): each is 5 wins in 8 for the four pregens at the
+level it's met, or 4 where no line-up won exactly 5 (tests/integration/test_scaled_fights_barovia.gd holds them at 4 to
+6); Ismark (a veteran) and Ireena travelling as guests make them easier.
 The Tser Pool brawl is a choice the party makes, not a test.
 
 | id | Map | Trigger | Monsters | XP | L3 / L4 |
 |---|---|---|---|---|---|
-| `crossroads_hanged_dead` | svalich_crossroads | enter `crossroads_gallows` at night, Nicu not cut down | Nicu + 6 hanged dead (7 Strahd zombies) and 2 hanged men risen as vampire spawn | 5000 | met at level 5 |
-| `tser_pool_brawl` | tser_pool | dialogue (Stanimir: "Come and take it") | 2 bandit captains, 2 bandits, 3 scouts (Vistani) | 1250 | met at level 4 |
-| `tser_pool_ambush` | tser_pool | enter `tser_camp` after the party chose to fight Eva's family | the same | 1250 | met at level 4 (party surprised) |
-| `falls_werewolf` | tser_falls | enter `falls_ledge` at night | werewolf, dire wolf, 5 wolves | 1150 | met at level 4 (party surprised; 2 wins in 8, the nearest harder step to 3) |
-| `road_dead_procession` | road_ambush | dialogue (the night procession) | 7 Strahd zombies led by 2 wights ("Mourner in Black") | 2800 | met at level 4 |
-| `road_hunters` | road_forest | dialogue (Grigor's hunters) | 2 warrior veterans, 3 scouts | 1700 | met at level 4 |
+| `crossroads_hanged_dead` | svalich_crossroads | enter `crossroads_gallows` at night, Nicu not cut down | Nicu + 6 hanged dead (5 Strahd zombies, 2 zombies) and 2 hanged men risen as vampire spawn | 4700 | met at level 5 (4 wins in 8, the harder side: one zombie for a Strahd zombie was 6) |
+| `tser_pool_brawl` | tser_pool | dialogue (Stanimir: "Come and take it") | 2 bandit captains, 2 bandits, 3 scouts (Vistani) | 1250 | met at level 4 (5 wins in 8) |
+| `tser_pool_ambush` | tser_pool | enter `tser_camp` after the party chose to fight Eva's family | the same | 1250 | met at level 4 (party surprised; 5 wins in 8) |
+| `falls_werewolf` | tser_falls | enter `falls_ledge` at night | werewolf, dire wolf, 4 wolves, a rat | 1110 | met at level 4 (party surprised; 5 wins in 8) |
+| `road_dead_procession` | road_ambush | dialogue (the night procession) | 7 Strahd zombies led by 2 wights ("Mourner in Black") | 2800 | met at level 4 (4 wins in 8, the harder side: a ghast for one wight was 6) |
+| `road_hunters` | road_forest | dialogue (Grigor's hunters) | 2 warrior veterans, 3 scouts | 1700 | met at level 4 (5 wins in 8) |
 
 **Road battle grounds** (Ashwin, 2026-10-12; story/road_grounds.gd, docs/contracts/campaign.md): each table's fights
 take turns on a pool of maps from its land, never the same twice running; meetings stay on the table's own map. The

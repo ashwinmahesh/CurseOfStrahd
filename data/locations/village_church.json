@@ -542,6 +542,13 @@
             19,
             24
           ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            16,
+            24
+          ]
         }
       ],
       "surprise": "",

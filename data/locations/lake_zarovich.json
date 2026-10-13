@@ -879,7 +879,8 @@
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 195
         },
         {
           "monster": "dire_wolf",
@@ -948,7 +949,8 @@
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 240
         },
         {
           "monster": "dire_wolf",
@@ -1226,6 +1228,38 @@
           "cell": [
             24,
             10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            16,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            16,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            8
           ],
           "name": "Drowned of Pescari"
         }

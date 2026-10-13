@@ -183,7 +183,7 @@
       "trigger": "enter_area:crg_overlook",
       "final_battle": "castle_ravenloft_overlook",
       "lair": true,
-      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter.",
+      "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter. One of his spawn drops from the tower onto the wall walk behind you.",
       "surprise": "",
       "monsters": [
         {
@@ -192,7 +192,8 @@
             20,
             5
           ],
-          "name": "Strahd von Zarovich"
+          "name": "Strahd von Zarovich",
+          "hp": 350
         },
         {
           "monster": "swarm_of_bats",
@@ -214,6 +215,14 @@
             17,
             5
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            5
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     }

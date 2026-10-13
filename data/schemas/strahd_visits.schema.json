@@ -117,6 +117,13 @@
         },
         "flag": {
           "$ref": "common.schema.json#/$defs/id"
+        },
+        "say": {
+          "type": "string",
+          "description": "A line it speaks as it goes, in its own voice (`speaker`); the fight waits for it before it ends."
+        },
+        "speaker": {
+          "$ref": "common.schema.json#/$defs/id"
         }
       }
     },

@@ -270,20 +270,6 @@
             10,
             5
           ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            10,
-            6
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            10,
-            7
-          ]
         }
       ],
       "when": "level >= 3"
@@ -344,10 +330,17 @@
           ]
         },
         {
-          "monster": "giant_rat",
+          "monster": "rat",
           "cell": [
-            11,
+            10,
             5
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            10,
+            6
           ]
         }
       ]

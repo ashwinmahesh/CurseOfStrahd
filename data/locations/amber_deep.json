@@ -597,6 +597,56 @@
             25,
             14
           ]
+        },
+        {
+          "monster": "amber_golem",
+          "cell": [
+            16,
+            15
+          ],
+          "name": "A Sleeper Woken"
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            16,
+            17
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            17,
+            15
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            17,
+            17
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            18,
+            15
+          ]
+        },
+        {
+          "monster": "dream_gazer",
+          "cell": [
+            18,
+            16
+          ]
         }
       ],
       "surprise": "",
@@ -614,7 +664,7 @@
             17,
             6
           ],
-          "hp": 135
+          "hp": 100
         }
       ],
       "lair": false,
@@ -637,7 +687,7 @@
             17,
             6
           ],
-          "hp": 135
+          "hp": 100
         },
         {
           "monster": "dream_gazer",
@@ -666,7 +716,8 @@
           "cell": [
             17,
             6
-          ]
+          ],
+          "hp": 135
         }
       ],
       "lair": false,
@@ -687,7 +738,8 @@
           "cell": [
             17,
             6
-          ]
+          ],
+          "hp": 135
         },
         {
           "monster": "dream_gazer",

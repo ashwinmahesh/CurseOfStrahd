@@ -303,6 +303,9 @@ func test_wizard_of_wines_saved_and_yester_hill_broken() -> void:
 		"The druids are out of your house.", "Your stone, from the founder's cask.", "To Vallaki.", "We're taking the stone.",
 		"Go. Crawl off this hill", "The stone from Yester Hill.", "Yester Hill is finished."],
 		["End it", "Call it our fee", "Deception", "Leave it standing"])
+	# The region's fights come back to back in one day: like a careful player, the bot waits out the 16 hours for a Long
+	# Rest it needs rather than walking on worn.
+	bot.waits_for_long_rest = true
 	await bot.settle()
 	GoldenSaves.keep("wizard_of_wines", "test_phase5_exit")
 	await bot.talk("davian_martikov")

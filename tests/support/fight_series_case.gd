@@ -12,6 +12,12 @@ var speakers_step_aside := false
 ## Fights at the location already won before this one starts (its loc state's encounters), for a fight the party can only
 ## reach through another (Lysaga's stump inside her scarecrow field): unset, every fight there is still to come.
 var cleared_fights: Array[String] = []
+## Run on the story once the party and flags are set, before the location loads (a Tarokka reading, a quest stage, a
+## treasure in a hero's hands): unset, nothing more.
+var prepare: Callable
+## A fight that isn't in the place's data (Strahd's visits, data/strahd/visits.json): set, the series plays it on the
+## location's map, its foes placed as the game places them (custom_start); `encounter` is then its id.
+var custom_fight: Dictionary = {}
 
 
 func after_each() -> void:
@@ -45,6 +51,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 		(GameState.story.loc_state(location)["doors"] as Dictionary)[d] = LocationView.DOOR_OPEN
 	for c in cleared_fights:
 		(GameState.story.loc_state(location)["encounters"] as Dictionary)[c] = true
+	if prepare.is_valid():
+		prepare.call(GameState.story)
 	GameState.story.location = location
 	if at.size() == GameState.story.party.size():
 		GameState.story.positions = at.duplicate()
@@ -56,6 +64,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	var v := root.get("view") as LocationView
 	# A party set down inside a fight's trigger area sets it off as it arrives; otherwise it starts here.
 	var started := str((GameState.story.loc_state(location)["encounters"] as Dictionary).get(encounter, "")) == "started"
+	if not started and not custom_fight.is_empty():
+		started = custom_start(v, custom_fight)
 	if not started and speakers_step_aside:
 		step_aside(v, encounter)
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)
@@ -70,6 +80,21 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	root = null
 	await _frames(2)
 	return res
+
+
+## Starts `spec`, a fight from outside the place's data, the way the game starts one of Strahd's visits
+## (GameRoot._strahd_step): its foes placed about four squares from the leader, clear of the party, guests, people,
+## doors and exits (StrahdPresence.placed).
+static func custom_start(v: LocationView, spec: Dictionary) -> bool:
+	var taken: Array[Vector2i] = []
+	for m: Combatant in v.members + v.guest_members:
+		taken.append(m.cell)
+	for t: Variant in (v.loc.get("doors", []) as Array) + (v.loc.get("exits", []) as Array):
+		var c := (t as Dictionary)["cell"] as Array
+		taken.append(Vector2i(int(c[0]), int(c[1])))
+	for npc: String in v.npc_tokens:
+		taken.append((v.npc_tokens[npc] as CombatToken).combatant.cell)
+	return v.start_custom_encounter(StrahdPresence.placed(spec, v.loc["map"]["rows"] as Array, taken, v.leader().cell))
 
 
 ## The people whose conversation ends in `encounter` step aside before it starts, as they do when it ends in the fight

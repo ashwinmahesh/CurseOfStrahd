@@ -44,8 +44,8 @@ var _enc: WeakRef
 var last_plan: Dictionary = {}
 ## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
 var boss: BossBrain
-## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells at Tactician
-## and Honour (combat/ai/ai_spells.gd).
+## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells on every mode but
+## Story (combat/ai/ai_spells.gd, Difficulty.spells).
 var tactics: AiTactics
 var spells: AiSpells
 ## The dangerous ground each creature knows of (combat/ai/ai_hazards.gd).
@@ -57,6 +57,10 @@ var _walks: Dictionary = {}
 ## Creature id -> the round it held back at the edge of dangerous ground with no way round it (_approach_square): the
 ## next round it goes in, so a foe never waits out a whole fight there.
 var _held_back: Dictionary = {}
+## Creature id -> {round, target, gap}: the round it last closed round dangerous ground on a target, and how far off it
+## was. Round after round with the gap no smaller (a cleric who keeps her Spirit Guardians on it as it circles), it
+## stops circling and strikes from in the ground.
+var _rounding: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -244,8 +248,8 @@ func begin_turn(c: Combatant) -> CombatResult:
 	return null
 
 
-## The turn's plan: {plan: plan_turn's, cast: on Tactician and Honour the best spell of a caster's whole list, or its
-## scroll, when it beats the weapon plan, else {}}. It only reads the fight, so it may run on a worker thread while
+## The turn's plan: {plan: plan_turn's, cast: when the mode's casters weigh their spells (Difficulty.spells: Balanced,
+## Tactician, Honour) the best spell of a caster's whole list, or its scroll, when it beats the weapon plan, else {}}. It only reads the fight, so it may run on a worker thread while
 ## nothing else changes the fight (the combat view's enemy turns, FN-14).
 func think(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -253,7 +257,7 @@ func think(c: Combatant) -> Dictionary:
 	Creature.begin_read()
 	var plan := plan_turn(c)
 	var cast_plan := {}
-	if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
+	if e.difficulty.spells and c.action_available and AiSpells.casts(c):
 		cast_plan = spells.plan(c, action_worth(c, plan))
 	# Closing in: the square too (finish_turn drops it if a bonus Dash changes what's in reach).
 	if str(plan["kind"]) == "approach" and cast_plan.is_empty():
@@ -295,7 +299,8 @@ func finish_turn(c: Combatant, thought: Dictionary) -> CombatResult:
 	return CombatResult.new()
 
 
-## After the main action: skirmishers pull back (Deathless Agility's Disengage, or Shadow Stealth to hide).
+## After the main action: out of sunlight that burns it (Strahd and his spawn), or skirmishers pull back (Deathless
+## Agility's Disengage, or Shadow Stealth to hide).
 func _after_main(c: Combatant) -> CombatResult:
 	var e := enc()
 	if e.state != Encounter.State.ACTIVE or e.current() != c or not c.can_act():
@@ -310,6 +315,10 @@ func _after_main(c: Combatant) -> CombatResult:
 			if r.is_paused():
 				return e.then(r, func() -> CombatResult: return _pull_back(c))
 		e.monster_actions.bonus_action(c, "vanish")
+	# Out of sunlight that burns it, when no foe can strike it as it goes (combat/ai/boss_brain.gd).
+	var out: Variant = boss.leave_sun(c)
+	if out != null:
+		return out as CombatResult
 	return _pull_back(c)
 
 
@@ -329,8 +338,9 @@ func _pull_back(c: Combatant) -> CombatResult:
 	return CombatResult.new()
 
 
-## A spell worth casting this turn (spellcaster profile): flee through the Ethereal Plane when badly hurt; Phantasmal
-## Killer on the toughest foe while it has uses; otherwise Magic Missile at the weakest foe in range.
+## A spell worth casting this turn (spellcaster profile): flee through the Ethereal Plane when badly hurt; then, where
+## the mode's casters don't weigh their whole list (Story), Phantasmal Killer on the toughest foe while it has uses, or
+## Magic Missile at the weakest foe in range. Where they do, AiSpells weighs those with the rest (think).
 func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 	var e := enc()
 	if not bool(prof.get("caster", false)) or not c.action_available:
@@ -344,7 +354,7 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 			foes.append(h)
 	if c.creature.hp * 4 < c.creature.max_hp() and (known.has("etherealness") or known.has("plane_shift")) and not c.creature.has_flag("no_teleport"):
 		return {"kind": "cast", "spell": "etherealness" if known.has("etherealness") else "plane_shift", "targets": [c], "why": "escape"}
-	if foes.is_empty():
+	if foes.is_empty() or (e.difficulty.spells and AiSpells.casts(c)):
 		return {}
 	if known.has("phantasmal_killer"):
 		var tough: Combatant = null
@@ -601,7 +611,8 @@ static func companion(t: Combatant) -> bool:
 ## Picks this turn's plan: {kind: attack|approach|search|wait, target, cell, option, score, why}. With dangerous ground
 ## it knows of (combat/ai/ai_hazards.gd): an attack from a square clear of it, walked to round it, comes first; while a
 ## foe can still be reached round it, it closes on that one (or strikes a familiar or a steed in reach) rather than go
-## in; only when none can be does it go in, where the ground costs least. Such a plan carries the ground: `avoid` (the
+## in; only when none can be, or it has circled that one a round already and is no nearer (_circling), does it go in,
+## where the ground costs least. Such a plan carries the ground: `avoid` (the
 ## squares its walk goes round), or for an approach `hazards` (AiHazards.View) and `round` (a way round exists).
 func plan_turn(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -671,8 +682,9 @@ func plan_turn(c: Combatant) -> Dictionary:
 		if foes.is_empty():
 			foes = near
 		round_to = hazards.reachable_foes(c, hz, foes, options, calm)
-		if round_to.is_empty() and str(risky["kind"]) == "attack":
+		if (round_to.is_empty() or _circling(c)) and str(risky["kind"]) == "attack":
 			best = risky
+			round_to = []
 	if str(best["kind"]) != "attack" and str(pet_best["kind"]) == "attack":
 		best = pet_best
 	if hz != null and round_to.is_empty() and str(best["kind"]) != "attack" and str(risky_pet["kind"]) == "attack":
@@ -692,6 +704,9 @@ func plan_turn(c: Combatant) -> Dictionary:
 		# Closing in round the dangerous ground on a foe it can reach that way, or, with none, the way it must.
 		var go0 := _approach_plan(c, round_to if not round_to.is_empty() else foes, prof)
 		go0.merge({"threats": threats, "hazards": hz, "round": not round_to.is_empty()}, true)
+		var gt := go0.get("target") as Combatant
+		if not round_to.is_empty() and gt != null:
+			_rounding[c.id] = {"round": e.round_no, "target": gt.id, "gap": e.distance(c, gt)}
 		return go0
 	if not visible.is_empty():
 		# Towards a hero rather than a familiar or a steed, while there's one in sight.
@@ -898,6 +913,11 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var sq := (plan["square"] if plan.has("square") else _approach_square(c, plan)) as Dictionary
 	var best_cell: Vector2i = sq["cell"]
 	if best_cell == c.cell:
+		# A flyer on the floor kept from its foe by low walls, crates or a railing (a roc beside a bridge) rises over
+		# them and tries again.
+		if _take_off(c, plan):
+			plan.erase("square")
+			return _approach(c, plan)
 		return _through_door(c, plan)
 	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
 		e.dash(c)
@@ -905,6 +925,28 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	if not moved.ok:
 		return moved
 	return e.then(moved, func() -> CombatResult: return _through_door(c, plan))
+
+
+## A foe that can fly, standing on the floor with no square nearer its target in reach, where 5 ft up one would be:
+## it flies up, so low walls, crates and railings no longer stop it (CombatGrid._flies_over). Once a turn. True if it
+## rose.
+func _take_off(c: Combatant, plan: Dictionary) -> bool:
+	var e := enc()
+	if plan.has("took_off") or not c.creature is Monster or c.altitude > 0 or e.state != Encounter.State.ACTIVE \
+			or e.current() != c or not c.can_act() or c.movement_left <= CombatGrid.FEET:
+		return false
+	plan["took_off"] = true
+	if e.movement.vertical_why(c, CombatGrid.FEET) != "":
+		return false
+	# Only when up there a square nearer its foe comes in reach (it looks with its height raised, then puts it back).
+	var probe := plan.duplicate()
+	probe.erase("square")
+	c.altitude = CombatGrid.FEET
+	var up := _approach_square(c, probe)
+	c.altitude = 0
+	if up["cell"] == c.cell:
+		return false
+	return e.fly_vertical(c, CombatGrid.FEET).ok and c.altitude > 0
 
 
 ## At a shut door on its way to the plan's target (one it can open, door_opener): it opens it with its object
@@ -941,6 +983,16 @@ static func door_opener(c: Combatant) -> bool:
 	if c.creature.has_flag("swarm") or str(c.creature.creature_type) in ["beast", "ooze", "plant", "construct"]:
 		return false
 	return c.creature.ability_score(&"int") >= 3
+
+
+## Whether `c` closed round dangerous ground on a foe last round too and is no nearer it now (_rounding).
+func _circling(c: Combatant) -> bool:
+	var e := enc()
+	var last := _rounding.get(c.id, {}) as Dictionary
+	if last.is_empty() or int(last["round"]) != e.round_no - 1:
+		return false
+	var t := e.get_c(str(last["target"]))
+	return t != null and not t.is_down() and e.distance(c, t) >= int(last["gap"])
 
 
 ## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the
