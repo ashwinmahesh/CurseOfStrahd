@@ -20,7 +20,7 @@ static func _smite_prompt(paladin: Combatant, target: Combatant, crit: bool) -> 
 	return req
 
 
-func test_the_paladin_smites_a_sturdy_foe_or_on_a_critical_hit() -> void:
+func test_the_paladin_smites_a_sturdy_foe_the_blade_wont_fell() -> void:
 	var e := _field()
 	var godrick := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(5, 5), 6)
 	var ogre := TestCombat.foe(e, "ogre", Vector2i(6, 5))
@@ -30,7 +30,10 @@ func test_the_paladin_smites_a_sturdy_foe_or_on_a_critical_hit() -> void:
 	PartyAutopilot.sharp = true
 	assert_true(pilot._answer(_smite_prompt(godrick, ogre, false)), "an ogre is worth a slot")
 	assert_false(pilot._answer(_smite_prompt(godrick, twig, false)), "a twig blight isn't")
-	assert_true(pilot._answer(_smite_prompt(godrick, twig, true)), "a Critical Hit always is")
+	assert_true(pilot._answer(_smite_prompt(godrick, ogre, true)), "a Critical Hit on an ogre is")
+	assert_false(pilot._answer(_smite_prompt(godrick, twig, true)), "but not when the blade alone fells it")
+	ogre.creature.hp = 8
+	assert_false(pilot._answer(_smite_prompt(godrick, ogre, false)), "nor a nearly dead ogre")
 
 
 func test_the_cleric_opens_with_spirit_guardians_once_foes_close_in() -> void:
