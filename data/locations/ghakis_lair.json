@@ -1242,7 +1242,8 @@
           ],
           "lying": {
             "head": "west"
-          }
+          },
+          "hp": 220
         }
       ],
       "lair": true,

@@ -1362,7 +1362,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 300
         },
         {
           "monster": "nightmare",
@@ -1403,6 +1404,14 @@
             15
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
         }
       ],
       "surprise": "",
@@ -1423,7 +1432,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 300
         },
         {
           "monster": "nightmare",
@@ -1516,7 +1526,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 250
         },
         {
           "monster": "nightmare",
@@ -1549,6 +1560,22 @@
             13
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
         }
       ],
       "surprise": "",
@@ -1569,7 +1596,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 250
         },
         {
           "monster": "nightmare",
@@ -1646,7 +1674,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 240
         },
         {
           "monster": "nightmare",
@@ -1671,6 +1700,14 @@
             15
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
         }
       ],
       "surprise": "",
@@ -1691,7 +1728,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 240
         },
         {
           "monster": "nightmare",
@@ -1730,6 +1768,22 @@
           "cell": [
             33,
             15
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            11
           ],
           "name": "Hound of the Hunt"
         }

@@ -258,8 +258,7 @@
             21,
             7
           ],
-          "name": "Bella Sunbane",
-          "hp": 100
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",
@@ -295,8 +294,7 @@
             20,
             8
           ],
-          "name": "Offalia Wormwiggle",
-          "hp": 100
+          "name": "Offalia Wormwiggle"
         }
       ],
       "surprise": "",
@@ -513,8 +511,7 @@
           "cell": [
             26,
             4
-          ],
-          "hp": 155
+          ]
         },
         {
           "monster": "dire_wolf",

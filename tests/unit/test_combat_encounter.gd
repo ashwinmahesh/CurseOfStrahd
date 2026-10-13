@@ -49,17 +49,17 @@ func test_moving_spends_feet_and_a_hero_may_stop_in_an_allys_square() -> void:
 	var ally := TestCombat.hero(e, "hedda_ironvow", Vector2i(1, 0))
 	TestCombat.foe(e, "zombie", Vector2i(10, 7))
 	TestCombat.start_with(e, a)
-	# Heroes may share a square (owner, 2026-10-12); the ally's space is still Difficult Terrain.
+	# Heroes may share a square (owner, 2026-10-12); an ally's space isn't Difficult Terrain (2024).
 	assert_true(e.move(a, Vector2i(1, 0)).ok, "a hero may stop in an ally's square")
-	assert_eq(a.movement_left, 20, "10 ft into the ally's space")
+	assert_eq(a.movement_left, 25, "5 ft into the ally's space")
 	var r := e.move(a, Vector2i(2, 0))
 	assert_true(r.ok, r.reason)
 	assert_eq(a.cell, Vector2i(2, 0))
-	assert_eq(a.movement_left, 15)
+	assert_eq(a.movement_left, 20)
 	assert_true(a.moved)
-	# 35 ft away with 15 ft left: as far along the way as the movement goes (owner, 2026-10-12), no refusal.
+	# 35 ft away with 20 ft left: as far along the way as the movement goes (owner, 2026-10-12), no refusal.
 	assert_true(e.move(a, Vector2i(9, 0)).ok, "a square too far walks as far as it can")
-	assert_eq(a.cell, Vector2i(5, 0))
+	assert_eq(a.cell, Vector2i(6, 0))
 	assert_eq(a.movement_left, 0)
 	assert_eq(ally.cell, Vector2i(1, 0))
 
@@ -463,7 +463,7 @@ func test_frightened_is_at_disadvantage_only_while_the_source_is_in_line_of_sigh
 	assert_true(dis.call(attack), "a fear with no known source counts as in sight")
 
 
-func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
+func test_party_members_move_through_each_other_at_no_extra_cost() -> void:
 	var e := TestCombat.encounter(["#########", "#.......#", "#########"])
 	var a := TestCombat.hero(e, "ilse_varga", Vector2i(1, 1))
 	TestCombat.hero(e, "silvain_aster", Vector2i(2, 1))
@@ -471,7 +471,7 @@ func test_party_members_move_through_each_other_as_difficult_terrain() -> void:
 	TestCombat.start_with(e, a)
 	var reach := e.reachable_for(a)
 	assert_true(reach.has(Vector2i(3, 1)), "through the ally in a one-square corridor")
-	assert_eq(int((reach[Vector2i(3, 1)] as Dictionary)["cost"]), 15, "the ally's square costs double (Difficult Terrain)")
+	assert_eq(int((reach[Vector2i(3, 1)] as Dictionary)["cost"]), 10, "an ally's square isn't Difficult Terrain (2024)")
 	assert_false(bool((reach[Vector2i(2, 1)] as Dictionary)["occupied"]), "and a hero may stop there too (owner, 2026-10-12)")
 	e.allies_block = true
 	assert_false(e.reachable_for(a).has(Vector2i(3, 1)), "a place can say allies block each other")
