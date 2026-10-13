@@ -583,10 +583,11 @@ a guest until Davian's report); otherwise he flies off and the party cuts the ro
 - Fight `vine_mother` at the foot of the row: she rises right behind the Seventh Row, her branches in reach of the
   party at its basket, with the row's vines between them (the heroes reach her round its end, or shoot). Level 6 the
   Vine Mother at 195 HP, 3 vine blights and 4 needle blights (4,400 XP; one fewer since the vine blights stopped
-  holding her in their own Entangle, 2026-10-13); level 7 five vine and six needle blights;
-  level 8 six of each and the Sixth Row (a tree blight), 7,700 XP; below 6 the Vine Mother at 110 HP, 2 vine and 3
-  needle blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at level 6 with Adrian and 3 without him, and at
-  levels 7 and 8, two or three heroes down in a win; 3 of 8 at level 5 (the owner's targets, 2026-10-13).
+  holding her in their own Entangle, 2026-10-13); level 7 four vine and six needle blights; level 8 five vine and six
+  needle blights and the Sixth Row (a tree blight), 7,600 XP; below 6 the Vine Mother at 110 HP, 2 vine and 3 needle
+  blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at level 6 with Adrian and 3 without him, 3 at level
+  7 and 1 at level 8, about three heroes down in a win; 3 of 8 at level 5 before the Entangle change (the owner's
+  targets, 2026-10-13).
 - Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
 
 ## Vallaki and Castle Ravenloft (level 10)
