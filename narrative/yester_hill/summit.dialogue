@@ -38,6 +38,9 @@ approve thistle -1: You left the Gulthias tree standing
 ~ heart
 set yester_stone_recovered
 Narrator: Wintersplinter lies across the crown in splinters long as spears. In the split heartwood, where a heart would be, sits a green stone the size of a plum, pulsing faintly, like something trying to get its breath back.
+if flag.davian_met
+Narrator: Davian's stone. Without it, the giant that was to walk east onto the Martikov vines is only firewood.
+endif
 if not flag.gulthias_tree_burned
 Narrator: A thread of black runs through the green, fine as a hair: the same black as the tree's bark.
 interject class:wizard: The tree's in it. A little. Good soil and time will draw it out, I think. Or fire.

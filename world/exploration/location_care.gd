@@ -138,14 +138,9 @@ static func _tend(view: LocationView, cell: Vector2i, action_id: String) -> void
 		var medic := LocationParty._best(view, &"medicine")
 		if medic == null or target.stable:
 			return
-		var t := medic.roll_check(view.dice, &"medicine", 10, CheckAids.before_check(medic, &"medicine"))
-		view.check_rolled.emit(t.describe())
-		view.big_roll.emit(t, medic.name, "Medicine")
-		if t.success:
-			target.stabilize()
-			view.toast.emit("%s stops %s's bleeding: Stable" % [medic.name.get_slice(" ", 0), who])
-		else:
-			view.toast.emit("%s can't stop %s's bleeding (try again)" % [medic.name.get_slice(" ", 0), who])
+		# Guidance can go on the medic's check first (LocationView.ask_guidance).
+		view.ask_guidance(medic, &"medicine", 10, func(extra: Array) -> void: _stabilize(view, medic, target, extra))
+		return
 	elif action_id == "kit":
 		var holder := _holder_of(view, "healers_kit")
 		if holder == null or target.stable:
@@ -165,5 +160,22 @@ static func _tend(view: LocationView, cell: Vector2i, action_id: String) -> void
 		var healed := target.heal(amount, name)
 		holder.remove_one(item_id)
 		view.toast.emit("%s gives %s a %s: rolled %d, %d Hit Points" % [holder.name.get_slice(" ", 0), who, name, amount, healed])
+	refresh_party(view)
+	view.party_tended.emit()
+
+
+## `medic` tries to stop `target`'s bleeding: Wisdom (Medicine) DC 10, with Guidance's die if it was cast (`extra`).
+static func _stabilize(view: LocationView, medic: Character, target: Character, extra: Array) -> void:
+	if target.stable or target.dead or target.hp > 0:
+		return
+	var who := target.name.get_slice(" ", 0)
+	var t := medic.roll_check(view.dice, &"medicine", 10, CheckAids.before_check(medic, &"medicine"), [], "", [], extra)
+	view.check_rolled.emit(t.describe())
+	view.big_roll.emit(t, medic.name, "Medicine")
+	if t.success:
+		target.stabilize()
+		view.toast.emit("%s stops %s's bleeding: Stable" % [medic.name.get_slice(" ", 0), who])
+	else:
+		view.toast.emit("%s can't stop %s's bleeding (try again)" % [medic.name.get_slice(" ", 0), who])
 	refresh_party(view)
 	view.party_tended.emit()

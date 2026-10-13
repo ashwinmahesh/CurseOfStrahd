@@ -23,6 +23,7 @@ Kostin: This house belongs to the land, and the land belongs to its lord. You ar
 
 ~ hill_question
 set kostin_asked_hill
+set yester_effigy_known
 Kostin: Our Mother. Our tree. And the Lord-in-the-Land, lying in the earth, waiting for a heart. When it beats he'll stand up and walk east, and these vines will be the first thing he treads on.
 interject class:wizard: A golem of earth with a magic stone for a heart. Ambitious. Badly sourced, but ambitious.
 -> choices
@@ -39,6 +40,8 @@ combat press_house_mash
 set kostin_fled
 Narrator: He tries to hold your stare and can't. With a sound halfway between a curse and a sob he kicks the hoops off the vat and bolts out of the back door, west.
 Kostin: Mother will know you're coming! She'll be ready for you!
+set yester_effigy_known
+Kostin [angry]: And when the Lord-in-the-Land stands up, he'll walk down off that hill and tread the bird-man's vines into the mud!
 combat press_house_mash
 
 ~ doubt_nature
