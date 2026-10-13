@@ -106,7 +106,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			(s["components"] as Dictionary).erase(key)
 	var ch := spells.caster_char(c)
 	var level := int(s.get("level", 0))
-	var use_free := bool(entry["free"]) and not bool(opts.get("splintered", false)) and str(opts.get("slot_boost", "")) == "" and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
+	# An at-will casting (an Eldritch Invocation's) is free whatever slot is named (owner, 2026-10-13: it spent a pact slot).
+	var use_free := bool(entry["free"]) and not bool(opts.get("splintered", false)) and str(opts.get("slot_boost", "")) == "" \
+		and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta or bool(entry.get("at_will", false)))
 	# Tome of the Stilled Tongue: the next Wizard spell needs no slot.
 	if level > 0 and c.has_meta("free_wizard_spell") and "wizard" in (s.get("classes", []) as Array):
 		c.remove_meta("free_wizard_spell")
@@ -127,6 +129,11 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		if slot <= 0:
 			var lowest := spells.reaction_spells._lowest_slot(ch, level)
 			slot = lowest if lowest > 0 else level
+		# Only a Pact Magic slot can pay: the pact level, whatever was named (owner, 2026-10-13), so the autopilot's or a
+		# test's "level 1" Hex is a warlock's level 3 one.
+		var pact_at := ch.pact_only_level(level)
+		if pact_at > 0:
+			slot = pact_at
 		slot = maxi(slot, level)
 		if c.cast_slot_spell_this_turn:
 			return CombatResult.fail("Already cast a spell with a slot this turn")
@@ -224,7 +231,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 		spells.zones.prune()
 		spells._prune_sustained()
-	var slot_text := " (level %d slot)" % slot if level > 0 and slot > 0 else (" (free casting)" if use_free else "")
+	# A free casting says so, not "level 1 slot" (an at-will Mage Armor read as a slot spent, 2026-10-13).
+	var slot_text := (" (free casting)" if slot <= level else " (level %d, free casting)" % slot) if use_free and level > 0 \
+		and resource_recipe.is_empty() and not "psionic_sorcery" in meta else (" (level %d slot)" % slot if level > 0 and slot > 0 else "")
 	var choice := SpellCaster.choice_of(s, opts)
 	e.log.add("spell", "%s casts %s%s%s" % [c.name(), s["name"], slot_text, (": " + choice.capitalize().replace("_", " ")) if choice != "" else ""], c.id, [
 		"Spell save DC %d · Spell attack %+d" % [(nums["dc"] as Breakdown).total(), (nums["attack"] as Breakdown).total()]])

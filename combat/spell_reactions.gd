@@ -171,11 +171,7 @@ func _lowest_slot(ch: Character, from_level: int) -> int:
 ## The slot levels `ch` could spend on a spell of `from_level`, lowest first. A warlock's Pact Magic slots are all of
 ## its pact level, so a pure warlock has just that one: its spells are always cast at it.
 static func slot_levels(ch: Character, from_level: int) -> Array[int]:
-	var out: Array[int] = []
-	for l in range(maxi(1, from_level), 10):
-		if ch.slots_left(l) > 0:
-			out.append(l)
-	return out
+	return ch.slot_levels(from_level)
 
 
 ## Shield (2024): +5 AC until the start of your next turn, as a Reaction, with a level 1 slot (the lowest

@@ -21,7 +21,8 @@ static func choices(party: Array[Character], ch: Character, dice: DiceRoller) ->
 		for o in options:
 			if str(o["id"]) != id:
 				continue
-			var free := bool(o["free"])
+			# Its free casting first, though a warlock is offered a pact slot before one elsewhere (FieldCasting._offer).
+			var free := bool(o["free"]) or ch.resource_left("spell:%s" % id) > 0
 			out.append({"id": id, "name": str(o["name"]), "free": free, "on": wanted(ch, id, free), "why": _why(ch, id, o)})
 	return out
 
@@ -50,6 +51,7 @@ static func after_long_rest(party: Array[Character], dice: DiceRoller) -> Array[
 				continue
 			var level := int(Compendium.shared().spell_data(str(choice["id"])).get("level", 1))
 			var slots_before := ch.slots_used.duplicate()
+			var pact_before := int(ch.pact_magic()["used"])
 			var me: Array[Character] = [ch]
 			var res := FieldCasting.cast(party, ch, str(choice["id"]), level if bool(choice["free"]) else 0, me, dice)
 			if not bool(res["ok"]):
@@ -59,6 +61,8 @@ static func after_long_rest(party: Array[Character], dice: DiceRoller) -> Array[
 			for l in 9:
 				if ch.slots_used[l] > slots_before[l]:
 					paid = "a level %d spell slot" % (l + 1)
+			if int(ch.pact_magic()["used"]) > pact_before:
+				paid = "a level %d Pact Magic slot" % int(ch.pact_magic()["level"])
 			lines.append("%s casts %s before setting off (%s)." % [first, choice["name"], paid if paid != "" else "free, no spell slot"])
 	return lines
 
