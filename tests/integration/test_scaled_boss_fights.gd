@@ -82,9 +82,10 @@ func test_vasilka_defends_the_abbot_at_level_7() -> void:
 	await _held("abbey_of_st_markovia_shrine", 7, "bride_defends", CHANCEL, 1, 3)
 
 
-## Vladimir at the beacon with three dead knights (revenants at their full 127 HP) and a man-at-arms.
+## Vladimir at the beacon with three dead knights (revenants at their full 127 HP) and a man-at-arms, the lantern
+## room's dark already met on the way up.
 func test_vladimir_at_the_beacon_at_level_8() -> void:
-	await _held("argynvostholt_beacon", 8, "beacon_stand", LANTERN_LANDING, 1, 3)
+	await _held("argynvostholt_beacon", 8, "beacon_stand", LANTERN_LANDING, 1, 3, ["lamp_dark_cleared"])
 
 
 ## Vladimir's duel in the hall, his three seconds behind him.
@@ -108,11 +109,11 @@ func test_the_dens_reckoning_at_level_8() -> void:
 	await _held("werewolf_den_caves", 8, "den_reckoning", KIRILS_CAVE, 1, 3, ["den_guards_cleared"])
 
 
-## Baba Lysaga and her creeping hut at the stump.
+## Baba Lysaga and her creeping hut at the stump, past her scarecrow field.
 func test_lysaga_and_her_hut_at_level_9() -> void:
-	await _held("berez", 9, "lysaga_and_hut", LYSAGAS_STUMP, 1, 3)
+	await _held("berez", 9, "lysaga_and_hut", LYSAGAS_STUMP, 1, 3, ["berez_scarecrows_burned"])
 
 
 ## Her hut without her, at its book 263 HP, and three swarms of insects out of its eaves.
 func test_the_masterless_hut_at_level_9() -> void:
-	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_slain_at_monument"])
+	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_slain_at_monument", "berez_scarecrows_burned"])
