@@ -725,17 +725,27 @@ func smite_offers(c: Combatant, target: Combatant, option: Dictionary, st: Dicti
 		return []
 	var extra := " (1d8 more against %s)" % ("a Fiend" if str(target.creature.creature_type) == "fiend" else "the Undead") \
 		if str(target.creature.creature_type) in ["fiend", "undead"] else ""
+	# On a Critical Hit the smite's dice double too, so the prompt says so in red and each choice shows its dice doubled
+	# (owner, 2026-10-13).
+	var crit := bool(st.get("critical", false))
+	var dice := func(n: int, most: bool) -> String:
+		var notes: Array[String] = []
+		if crit:
+			notes.append("%dd8 doubled" % n)
+		if most:
+			notes.append("the most")
+		return "%dd8%s" % [n * 2 if crit else n, " (%s)" % ", ".join(notes) if not notes.is_empty() else ""]
 	# The slot to smite with (owner ask 2026-10-12): every level the paladin has, the free use or the lowest first.
 	var options: Array[Dictionary] = []
 	if free:
-		options.append({"id": "free", "label": "Free use (Paladin's Smite) · 2d8"})
+		options.append({"id": "free", "label": "Free use (Paladin's Smite) · %s" % dice.call(2, false)})
 	for l in levels:
-		options.append({"id": str(l), "label": "Level %d slot · %dd8%s" % [l, mini(5, 1 + l), " (the most)" if 1 + l >= 5 else ""]})
+		options.append({"id": str(l), "label": "Level %d slot · %s" % [l, dice.call(mini(5, 1 + l), 1 + l >= 5)]})
 	var choice := {"slot": str(options[0]["id"])}
 	return [{"kind": DIVINE_SMITE, "reactor": c, "trigger": target.id, "title": "Divine Smite?", "spends_reaction": false,
-		"default": "ask",
-		"text": "%s hits %s%s. Smite for more Radiant damage: 2d8, and 1d8 more for each slot level above 1st, up to 5d8%s?" % [c.name(),
-			target.name(), " with a Critical Hit, so the smite's dice double too" if bool(st.get("critical", false)) else "", extra],
+		"default": "ask", "callout": "Critical Hit: the smite's dice are doubled" if crit else "",
+		"text": "%s %s %s. Smite for more Radiant damage: 2d8, and 1d8 more for each slot level above 1st, up to 5d8%s%s?" % [c.name(),
+			"lands a Critical Hit on" if crit else "hits", target.name(), extra, ", every die doubled" if crit else ""],
 		"cost": "The free use or the spell slot you choose",
 		"target_choices": options, "selected_ids": [str(options[0]["id"])], "min_targets": 1, "max_targets": 1,
 		"select": func(selected: Array[String]) -> void:
