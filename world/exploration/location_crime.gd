@@ -120,9 +120,18 @@ static func pickpocket(view: LocationView, npc_id: String) -> void:
 		view.toast.emit(why if why != "" else "Nobody there")
 		return
 	var thief := view.leader()
+	# Guidance can go on the try first (LocationView.ask_guidance).
+	view.ask_guidance(thief.creature, &"sleight_of_hand", 0, func(extra: Array) -> void: _lift(view, npc_id, thief, extra))
+
+
+## The hand goes into `npc_id`'s pocket, with Guidance's die on the check if it was cast (`extra`).
+static func _lift(view: LocationView, npc_id: String, thief: Combatant, extra: Array) -> void:
+	var tok := token(view, npc_id)
+	if tok == null:
+		return
 	var dc := passive(tok.combatant)
 	var t := thief.creature.roll_check(view.dice, &"sleight_of_hand", dc, CheckAids.before_check(thief.creature, &"sleight_of_hand"),
-		[], "Sleight of Hand (%s) vs %s's passive Perception" % [thief.name(), _name(npc_id)])
+		[], "Sleight of Hand (%s) vs %s's passive Perception" % [thief.name(), _name(npc_id)], [], extra)
 	view.check_rolled.emit(t.describe())
 	view.big_roll.emit(t, thief.name(), "Sleight of Hand")
 	(view.st.loc_state(view.loc_id)["props"] as Dictionary)["pocket:" + npc_id] = true

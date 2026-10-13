@@ -33,7 +33,9 @@ Speaker [away]: Text               The speaker turns their back on the other sid
                                    A skill check option. It rolls in the open with the speaking character's
                                    bonus (Advantage and Heroic Inspiration apply). Skills: any of the 18, or an
                                    ability (Strength ... Charisma). "| fail_node" may be left out (then failure
-                                   goes to ok_node with check.last = false).
+                                   goes to ok_node with check.last = false). Before a skill's roll, whoever in the
+                                   party can cast Guidance is offered it (a `guidance` beat the game's screen
+                                   answers with answer_guidance(); story/guidance_offer.gd), as before `check`.
                                    A failed Persuasion, Intimidation, Deception, Performance or Insight option is
                                    spent (owner rule, 2026-10-06): it never shows again, in this conversation or
                                    later (saved). So a menu must never depend on one such check: give another way
