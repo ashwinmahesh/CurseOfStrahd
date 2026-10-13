@@ -138,6 +138,7 @@ func test_after_a_slot_spell_the_log_says_why_hellish_rebuke_isnt_asked_about() 
 	var e := f["e"] as Encounter
 	var h := f["h"] as Combatant
 	var wolf := f["wolf"] as Combatant
+	(h.creature as Character).spend_resource("spell:hellish_rebuke")   # the tiefling's free casting is gone
 	var hex := e.spells.cast(h, "hex", int((h.creature as Character).pact_magic()["level"]), [wolf])
 	assert_true(hex.ok, "Hex with a pact slot: %s" % hex.reason)
 	_decline_rest(e)
@@ -145,6 +146,107 @@ func test_after_a_slot_spell_the_log_says_why_hellish_rebuke_isnt_asked_about() 
 	e.move(h, Vector2i(0, 3))
 	assert_false(_decline_rest(e).has("hellish_rebuke"), "one slot per turn")
 	assert_true(_logged(e, "Kip Smudgewick can't cast Hellish Rebuke: a spell slot was already spent this turn"))
+
+
+# --- Free castings (coordinator relay 2026-10-13: a Reaction spell never used one) ---------------------------------
+
+## Kip's tiefling Hellish Rebuke (once a Long Rest, no slot): answered with it once his pact slots are spent.
+func test_a_free_casting_answers_once_the_slots_are_gone() -> void:
+	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var wolf := f["wolf"] as Combatant
+	var ch := h.creature as Character
+	ch.pact_slots_used = int(ch.pact_magic()["count"])
+	assert_eq(ch.resource_left("spell:hellish_rebuke"), 1, "the Infernal legacy's free casting")
+	assert_true(e.spells.can_cast_reaction(h, "hellish_rebuke"), "no slots, but the free casting")
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	var guard := 0
+	while e.pending != null and e.pending.kind != "hellish_rebuke" and guard < 10:
+		e.answer_reaction(false)
+		guard += 1
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked")
+	if e.pending == null:
+		return
+	assert_true(e.pending.cost.contains("free casting"), e.pending.cost)
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_true(_logged(e, "answers with Hellish Rebuke (free casting"), "cast for free")
+	assert_eq(ch.resource_left("spell:hellish_rebuke"), 0, "the free casting spent")
+	assert_true(wolf.creature.hp < 200, "the wolf burns")
+
+
+## A free casting spends no slot, so the one-slot-per-turn rule leaves it: after Hex on his turn, it still answers.
+func test_a_free_casting_isnt_held_back_by_the_one_slot_rule() -> void:
+	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var wolf := f["wolf"] as Combatant
+	var ch := h.creature as Character
+	assert_true(e.spells.cast(h, "hex", int(ch.pact_magic()["level"]), [wolf]).ok, "Hex with a pact slot")
+	_decline_rest(e)
+	var pact_left := int(ch.pact_magic()["left"])
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	var guard := 0
+	while e.pending != null and e.pending.kind != "hellish_rebuke" and guard < 10:
+		e.answer_reaction(false)
+		guard += 1
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked: the free casting is still there")
+	if e.pending == null:
+		return
+	assert_true(e.pending.target_choices.is_empty(), "no slot to pick this turn")
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_eq(int(ch.pact_magic()["left"]), pact_left, "no pact slot spent")
+	assert_eq(ch.resource_left("spell:hellish_rebuke"), 0)
+	assert_false(_logged(e, "can't cast Hellish Rebuke"))
+
+
+## With both a free casting and slots, the prompt lists the free casting first and picks it.
+func test_the_prompt_lists_the_free_casting_before_the_slots() -> void:
+	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var ch := h.creature as Character
+	var pact_left := int(ch.pact_magic()["left"])
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	var guard := 0
+	while e.pending != null and e.pending.kind != "hellish_rebuke" and guard < 10:
+		e.answer_reaction(false)
+		guard += 1
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked")
+	if e.pending == null:
+		return
+	var ids := e.pending.target_choices.map(func(x: Dictionary) -> String: return str(x["id"]))
+	assert_eq(ids, ["0", str(ch.pact_magic()["level"])], "free casting, then the pact slot")
+	assert_eq(e.pending.selected_ids, ["0"] as Array[String])
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_eq(int(ch.pact_magic()["left"]), pact_left, "the free casting went first")
+
+
+## Shield from a free casting (Magic Initiate's, say) with no slots left.
+func test_shield_from_a_free_casting() -> void:
+	var f := _beside_wolf(TestChars.pregen("ratatoille", 9))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var ch := h.creature as Character
+	for l in range(1, 10):
+		while ch.slots_left(l) > 0:
+			ch.expend_slot(l)
+	ch.set_resource("spell:shield", "Shield", 1, "long", "A test's free casting")
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	assert_true(e.pending != null and e.pending.kind == "shield", "asked with no slots left")
+	if e.pending == null:
+		return
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_true(_logged(e, "casts Shield (+5 AC until its next turn, free casting)"))
+	assert_eq(ch.resource_left("spell:shield"), 0)
 
 
 ## The test autopilot plays with every rule on Automatic: Shield goes up by itself.

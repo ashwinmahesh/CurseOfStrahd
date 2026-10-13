@@ -10,6 +10,7 @@ func test_a_warlocks_hellish_rebuke_uses_its_pact_slot_and_says_so() -> void:
 	ogre.creature.hp = 500
 	TestCombat.start_with(e, ogre)
 	kip.reaction_rules["hellish_rebuke"] = "ask"
+	(kip.creature as Character).spend_resource("spell:hellish_rebuke")   # the tiefling's free casting would go first
 	e.deal_damage(ogre, kip, [{"amount": 3, "type": "bludgeoning"}], false, "A shove")
 	e.run_reaction_queue(CombatResult.new())
 	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked: %s" % [e.pending.kind if e.pending != null else "nothing"])
@@ -29,6 +30,7 @@ func test_a_reaction_spell_is_cast_at_the_level_picked() -> void:
 	var ogre := TestCombat.foe(e, "ogre", Vector2i(3, 2))
 	ogre.creature.hp = 500
 	TestCombat.start_with(e, ogre)
+	(kip.creature as Character).spend_resource("spell:hellish_rebuke")   # the tiefling's free casting would go first
 	e.spells.cast_reaction_spell(kip, "hellish_rebuke", ogre, 1)   # no level 1 slot: its pact level instead
 	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("(level 3 slot)")))
 

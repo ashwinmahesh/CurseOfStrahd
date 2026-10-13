@@ -66,22 +66,35 @@ func answer_reaction(use: bool) -> CombatResult:
 
 ## Hellish Rebuke's prompt (owner report 2026-10-12: a level 6 warlock's looked like a 1st-level cast): the damage at
 ## each slot level `reactor` could spend, picked on the prompt, the lowest first; a warlock's one pact level is named.
+## A free casting left (a tiefling's, once a Long Rest) comes first, as pick "0"; with a slot already spent this turn
+## it's the only one.
 func _rebuke_levels(req: ReactionRequest, reactor: Combatant) -> void:
+	var e := enc()
 	var ch := reactor.creature as Character
 	if ch == null:
 		return
-	var levels := SpellReactions.slot_levels(ch, 1)
-	if levels.is_empty():
+	var levels: Array[int] = []
+	if not reactor.cast_slot_spell_this_turn:
+		levels = SpellReactions.slot_levels(ch, 1)
+	var free_at := maxi(1, int(e.spells._entry_any(reactor, "hellish_rebuke").get("free_slot", 0))) \
+		if e.spells.reaction_spells.free_casting(reactor, "hellish_rebuke") else 0
+	if levels.is_empty() and free_at == 0:
 		return
 	var pact := int(ch.pact_magic()["level"])
-	if levels.size() == 1:
+	if levels.is_empty():
+		req.cost = "Reaction and its free casting (no spell slot)"
+		req.text += " At level %d: %dd10 Fire, half on a save." % [free_at, free_at + 1]
+		return
+	if levels.size() == 1 and free_at == 0:
 		req.cost = "Reaction and a level %d spell slot%s" % [levels[0], " (Pact Magic)" if levels[0] == pact else ""]
 		req.text += " At level %d: %dd10 Fire, half on a save." % [levels[0], levels[0] + 1]
 		return
-	req.cost = "Reaction and the spell slot you choose"
+	req.cost = "Reaction and the casting you choose" if free_at > 0 else "Reaction and the spell slot you choose"
+	if free_at > 0:
+		req.target_choices.append({"id": "0", "label": "Free casting (no slot) · %dd10 Fire" % (free_at + 1)})
 	for l in levels:
 		req.target_choices.append({"id": str(l), "label": "Level %d slot%s · %dd10 Fire" % [l, " (Pact Magic)" if l == pact else "", l + 1]})
-	req.selected_ids.assign([str(levels[0])])
+	req.selected_ids.assign([str(req.target_choices[0]["id"])])
 	req.min_targets = 1
 	req.max_targets = 1
 
