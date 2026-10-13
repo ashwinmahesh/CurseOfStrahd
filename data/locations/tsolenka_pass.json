@@ -564,7 +564,7 @@
       "id": "roc_of_ghakis",
       "trigger": "enter_area:tsolenka_bridge",
       "when": "day and not flag.roc_driven_off and level >= 9",
-      "text": "A shadow the size of a barn roof slides across the bridge. Then the wind comes, and the scream, and the talons.",
+      "text": "A shadow the size of a barn roof slides across the bridge. Then the wind comes, and the scream, and the talons. A second, smaller shadow comes down after it: its mate.",
       "monsters": [
         {
           "monster": "roc",
@@ -574,6 +574,15 @@
           ],
           "name": "The Roc of Mount Ghakis",
           "hp": 190
+        },
+        {
+          "monster": "roc",
+          "cell": [
+            24,
+            8
+          ],
+          "name": "The Roc's Mate",
+          "hp": 85
         }
       ],
       "surprise": "",

@@ -239,15 +239,17 @@ insects 100).
 | `creeping_hut_masterless` | berez | enter `berez_hut_stump` after the lure | the hut at 195 HP + 3 swarms of insects (7500) | 160 HP | 120 HP | Low-Moderate |
 | `lysaga_and_hut` | berez | dialogue (the challenge) | Lysaga 100 + hut 110 (14400 nominal) | 85 + 120 | 70 + 100 | above High: the very hard way |
 | `lysaga_scorned` | berez | dialogue (after Strahd) | Lysaga at 60 HP, no hut | same | same | Low in effect |
-| `roc_of_ghakis` | tsolenka_pass | enter `tsolenka_bridge` by day | roc 190 HP (7200) | 160 HP | 130 HP | Low-Moderate |
+| `roc_of_ghakis` | tsolenka_pass | enter `tsolenka_bridge` by day | roc 190 HP and its mate at 85 (14400) | 160 HP | 130 HP | above High at 9 (two rocs); Low-Moderate below |
 | `tsolenka_watch` | tower | dialogue | sergeant + 4 phantom warriors (3500) | same | sergeant + 3 | Low |
 
 Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
 Fireball as he plays, and wins 5 in 8 on Balanced; foes with spells now cast their best one on Balanced, so Baba Lysaga
 throws her book spells). At level 9 her kitchen fight (Lysaga at 400 HP with six swarms and four scarecrows), the
 grave (180 HP with four scarecrows), the challenge with her hut (the hut at 110 HP) and the masterless hut (195 HP)
-each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). The roc still wins 8 of 8 at any Hit Points it was tried
-at, so its fight is left for a later pass.
+each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). The roc on its own lost 8 of 8 at any
+Hit Points (and once the party fell back over the bridge it sat out the fight on its own side of the chasm, behind
+the railings, until the round cap: a flying foe now rises over a railing to reach a foe); with its mate at 85 HP it
+wins 4 of 8 at level 9, the harder side (with the mate at 78, 6).
 
 Shaping Baba Lysaga: together with her hut she is 14400 XP, deadly for level 9. The region separates them three
 ways (inside the hut the hut can't fight; the lure pulls her to the monument; Strahd breaks the hut), trims her hit

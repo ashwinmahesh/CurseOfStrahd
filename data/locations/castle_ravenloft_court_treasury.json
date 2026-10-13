@@ -210,7 +210,7 @@
       "trigger": "enter_area:court_treasury",
       "final_battle": "castle_ravenloft_treasury",
       "lair": true,
-      "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword.",
+      "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword. Three of his spawn climb up out of the gold.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",

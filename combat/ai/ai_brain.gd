@@ -913,6 +913,11 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var sq := (plan["square"] if plan.has("square") else _approach_square(c, plan)) as Dictionary
 	var best_cell: Vector2i = sq["cell"]
 	if best_cell == c.cell:
+		# A flyer on the floor kept from its foe by low walls, crates or a railing (a roc beside a bridge) rises over
+		# them and tries again.
+		if _take_off(c, plan):
+			plan.erase("square")
+			return _approach(c, plan)
 		return _through_door(c, plan)
 	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
 		e.dash(c)
@@ -920,6 +925,28 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	if not moved.ok:
 		return moved
 	return e.then(moved, func() -> CombatResult: return _through_door(c, plan))
+
+
+## A foe that can fly, standing on the floor with no square nearer its target in reach, where 5 ft up one would be:
+## it flies up, so low walls, crates and railings no longer stop it (CombatGrid._flies_over). Once a turn. True if it
+## rose.
+func _take_off(c: Combatant, plan: Dictionary) -> bool:
+	var e := enc()
+	if plan.has("took_off") or not c.creature is Monster or c.altitude > 0 or e.state != Encounter.State.ACTIVE \
+			or e.current() != c or not c.can_act() or c.movement_left <= CombatGrid.FEET:
+		return false
+	plan["took_off"] = true
+	if e.movement.vertical_why(c, CombatGrid.FEET) != "":
+		return false
+	# Only when up there a square nearer its foe comes in reach (it looks with its height raised, then puts it back).
+	var probe := plan.duplicate()
+	probe.erase("square")
+	c.altitude = CombatGrid.FEET
+	var up := _approach_square(c, probe)
+	c.altitude = 0
+	if up["cell"] == c.cell:
+		return false
+	return e.fly_vertical(c, CombatGrid.FEET).ok and c.altitude > 0
 
 
 ## At a shut door on its way to the plan's target (one it can open, door_opener): it opens it with its object

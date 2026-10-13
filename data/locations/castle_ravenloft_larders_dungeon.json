@@ -1511,7 +1511,7 @@
       "trigger": "enter_area:larders_hall_of_bones",
       "final_battle": "castle_ravenloft_hall_of_bones",
       "lair": true,
-      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him.",
+      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him. Four of his spawn take the places at the foot of the table.",
       "surprise": "",
       "monsters": [
         {

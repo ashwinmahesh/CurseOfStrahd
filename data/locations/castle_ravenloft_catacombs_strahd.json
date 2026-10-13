@@ -219,7 +219,7 @@
       "lair": true,
       "surprise": "",
       "flag": "cat_keepers_defeated",
-      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage.",
+      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage. Two of his spawn rise from the niches at his back.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -296,7 +296,7 @@
       "lair": true,
       "surprise": "",
       "flag": "strahd_in_coffin",
-      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy.",
+      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy. In the coffin beside his, one of his spawn sits up.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",

@@ -340,7 +340,7 @@
       "trigger": "enter_area:crg_chapel_nave",
       "final_battle": "castle_ravenloft_chapel",
       "lair": true,
-      "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him.",
+      "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him. All along the pews, more of them get to their feet.",
       "surprise": "",
       "monsters": [
         {

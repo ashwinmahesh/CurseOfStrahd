@@ -956,7 +956,7 @@
       "trigger": "enter_area:court_audience_hall",
       "final_battle": "castle_ravenloft_audience_hall",
       "lair": true,
-      "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Two great wolves rise from the dais steps.",
+      "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Three great wolves rise from the dais steps, and four of his spawn step out from behind the throne.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -1033,7 +1033,7 @@
       "trigger": "enter_area:court_study",
       "final_battle": "castle_ravenloft_study",
       "lair": true,
-      "text": "He is reading by the fire. He finishes the page before he looks up, and marks it with a ribbon, and the chimney fills with wings.",
+      "text": "He is reading by the fire. He finishes the page before he looks up, and marks it with a ribbon, and the chimney fills with wings. Five of his spawn come in from the gallery and close the doors behind you.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",

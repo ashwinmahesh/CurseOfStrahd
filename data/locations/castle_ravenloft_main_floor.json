@@ -1038,7 +1038,7 @@
     {
       "id": "crg_dinner_affront",
       "trigger": "dialogue",
-      "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats.",
+      "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats. Behind his chair, the suits of armour step down off their stands.",
       "surprise": "",
       "flag": "crg_dinner_fight_over",
       "withdraw": {
@@ -1076,6 +1076,35 @@
             2,
             11
           ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            4,
+            5
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            5,
+            4
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            4,
+            4
+          ],
+          "hp": 75
         }
       ]
     },
