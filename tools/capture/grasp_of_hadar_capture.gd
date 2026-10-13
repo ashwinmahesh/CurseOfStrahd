@@ -1,9 +1,10 @@
 extends Node3D
 ## make capture SCENE=res://tools/capture/grasp_of_hadar_capture.tscn NAME=grasp_of_hadar FRAMES=10
-## Grasp of Hadar (Ashwin, 2026-10-13: the pull that mirrors Repelling Blast): Kip, with Grasp of Hadar in place of
-## Repelling Blast, faces a zombie 35 ft off with Ilse beside it (<out>_1_before.png); the Reactions tab shows the
-## invocation's rule, Automatic (<out>_2_reactions_tab.png); two beams of Eldritch Blast drag the zombie toward him
-## (<out>_3_pulling.png), 10 ft a hit, out of Ilse's reach without an Opportunity Attack (<out>_4_pulled.png).
+## Grasp of Hadar (Ashwin, 2026-10-13: the pull that mirrors Repelling Blast): Kip, knowing both, faces a zombie 35 ft
+## off with Ilse beside it (<out>_1_before.png). The Warlock tab holds both On / Off switches, Repelling Blast On and
+## Grasp of Hadar Off (<out>_2_warlock_tab.png); switching Grasp of Hadar On turns Repelling Blast Off
+## (<out>_3_grasp_on.png); two beams of Eldritch Blast drag the zombie toward him (<out>_4_pulling.png), 10 ft a hit,
+## out of Ilse's reach without an Opportunity Attack (<out>_5_pulled.png).
 
 var e: Encounter
 var view: CombatView
@@ -25,7 +26,8 @@ func _ready() -> void:
 	var ch := TestChars.pregen("kip_smudgewick", 5)
 	for cd in ch.choice_defs:
 		if cd.kind == "invocation" and "repelling_blast" in cd.picks:
-			cd.picks[cd.picks.find("repelling_blast")] = "grasp_of_hadar"
+			cd.picks.append("grasp_of_hadar")
+	ch.reaction_rules.clear()
 	kip = e.add(ch, &"party", Vector2i(3, 5))
 	ilse = TestCombat.hero(e, "ilse_varga", Vector2i(11, 5), 5)
 	zombie = TestCombat.foe(e, "zombie", Vector2i(10, 5))
@@ -57,10 +59,14 @@ func capture_shots(tool: Node, out: String) -> void:
 	_frame()
 	await tool.call("wait_frames", 20)
 	tool.call("_shot", out + "_1_before.png")
-	view.hud.set_tab(ActionCatalog.REACTIONS)
+	view.hud.set_tab(view.catalog.class_tab(kip))
 	view.hud.refresh()
 	await tool.call("wait_frames", 10)
-	tool.call("_shot", out + "_2_reactions_tab.png")
+	tool.call("_shot", out + "_2_warlock_tab.png")
+	view._choose(view.catalog.find(kip, "feat:reaction_policy:grasp_of_hadar:auto"))
+	view.hud.refresh()
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_3_grasp_on.png")
 	view.hud.set_tab(ActionCatalog.SPELLS)
 	view.hud.refresh()
 	var blast := {}
@@ -72,13 +78,13 @@ func capture_shots(tool: Node, out: String) -> void:
 	TestCombat.next_d20(e, 19)
 	view._perform(blast, [zombie], Vector2.INF, Vector2.ZERO)
 	await tool.call("wait_frames", 45)
-	tool.call("_shot", out + "_3_pulling.png")
+	tool.call("_shot", out + "_4_pulling.png")
 	await tool.call("wait_frames", 150)
 	_frame()
 	await tool.call("wait_frames", 20)
-	tool.call("_shot", out + "_4_pulled.png")
-	print("grasp of hadar capture: %s, zombie %s -> %s, Ilse's Reaction %s" % [str(blast.get("id", "none")), str(from),
-		str(zombie.cell), "unspent" if ilse.reaction_available else "spent"])
+	tool.call("_shot", out + "_5_pulled.png")
+	print("grasp of hadar capture: %s, zombie %s -> %s, Ilse's Reaction %s, rules %s" % [str(blast.get("id", "none")), str(from),
+		str(zombie.cell), "unspent" if ilse.reaction_available else "spent", str(kip.reaction_rules)])
 
 
 ## The camera over Kip, the zombie and Ilse.

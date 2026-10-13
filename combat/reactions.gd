@@ -646,17 +646,18 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
 	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
 	# Repelling Blast (2024: a warlock cantrip's hit "can" push the creature 10 ft): pushing is the default; Off keeps a
-	# foe where it stands (owner, 2026-10-12), changeable on any turn from the Reactions tab.
+	# foe where it stands (owner, 2026-10-12), changeable on any turn. Not a reaction: its toggle sits on the class tab
+	# (`class_tab`; Ashwin, 2026-10-13), Grasp of Hadar's beside it.
 	if ClassFeatures.knows_invocation(c, "repelling_blast"):
-		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto",
-			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
+		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto", "class_tab": true,
+			"help": "On: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
 		seen["repelling_blast"] = true
 	# Grasp of Hadar (Ashwin's house rule, 2026-10-13: Repelling Blast's mirror) pulls the creature 10 ft toward you. Beside
 	# Repelling Blast it starts Off, and turning either on turns the other off (set_policy; ClassFeatures.blast_rule).
 	if ClassFeatures.knows_invocation(c, "grasp_of_hadar"):
-		out.append({"id": "grasp_of_hadar", "name": "Grasp of Hadar", "cost": "Nothing", "modes": ["auto", "never"],
+		out.append({"id": "grasp_of_hadar", "name": "Grasp of Hadar", "cost": "Nothing", "modes": ["auto", "never"], "class_tab": true,
 			"default": ClassFeatures.blast_rule(c, "grasp_of_hadar"),
-			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pulls a Large or smaller creature 10 ft straight toward you. Off: no pull. With Repelling Blast as well, only one of the two is on at a time."})
+			"help": "On: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pulls a Large or smaller creature 10 ft straight toward you. Off: no pull. With Repelling Blast as well, only one of the two is on at a time."})
 		seen["grasp_of_hadar"] = true
 	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
 		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
@@ -670,16 +671,17 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 
 ## One entry per mode of each rule (`feat:reaction_policy:<id>:<mode>`); the hotbar folds a rule's modes into one toggle
 ## slot (ActionCatalog.slots) by `policy`, and `selected` marks the one in force. A rule changes on any turn (`anytime`):
-## nothing is spent.
+## nothing is spent. A class feature's own switch (`class_tab`) reads On / Off.
 func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 	for policy in configurable_policies(c):
 		var current := str(c.reaction_rules.get(str(policy["id"]), policy["default"])) if policy.has("default") else enc()._reaction_decision(c, str(policy["id"]))
+		var names := {"ask": "Ask", "auto": "On" if bool(policy.get("class_tab", false)) else "Automatic", "never": "Off"}
 		for mode: String in policy.get("modes", ["ask", "auto", "never"]):
 			out.append({"id": "feat:reaction_policy:%s:%s" % [policy["id"], mode],
-				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
-				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
-				"policy": str(policy["id"]), "policy_name": str(policy["name"]), "mode": mode, "mode_label": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]),
-				"selected": current == mode, "anytime": true,
+				"label": "%s: %s" % [policy["name"], names[mode]],
+				"sub": str(names[mode]) + (" · selected" if current == mode else ""),
+				"policy": str(policy["id"]), "policy_name": str(policy["name"]), "mode": mode, "mode_label": str(names[mode]),
+				"selected": current == mode, "anytime": true, "class_tab": bool(policy.get("class_tab", false)),
 				"cost": "free", "why": "", "targeting": "none", "range": 0,
 				"help": str(policy["help"]) if policy.has("help") else ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
 					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})

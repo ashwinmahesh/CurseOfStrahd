@@ -423,7 +423,9 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 ## FeatureActions' entries as hotbar actions.
 func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), REACTIONS if fa.has("policy") else tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
+		# A rule goes on the Reactions tab, unless it's a class feature's own switch (Repelling Blast, Grasp of Hadar).
+		var where := REACTIONS if fa.has("policy") and not bool(fa.get("class_tab", false)) else tab
+		var en := _entry(str(fa["id"]), where, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
 			str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
 		# A standing rule's mode (Reactions.list_policies, DamageResponses.list): folded into one toggle slot (slots()).

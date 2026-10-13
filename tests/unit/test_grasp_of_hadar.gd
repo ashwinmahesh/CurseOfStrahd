@@ -1,9 +1,10 @@
 extends TestCase
 ## Grasp of Hadar (Ashwin, 2026-10-13): Xanathar's invocation, which the 2024 book dropped, kept as a house rule
 ## (deviations.md) and built as the mirror of the 2024 Repelling Blast: a hit with a damaging Warlock cantrip's attack
-## pulls a Large or smaller creature up to 10 ft straight toward the warlock, beam by beam, unless its rule on the
-## Reactions tab is Off. The pull is forced movement like the push: no Opportunity Attacks, and the traps and areas it
-## crosses still act. A warlock with both moves a creature one way: turning one rule on turns the other off.
+## pulls a Large or smaller creature up to 10 ft straight toward the warlock, beam by beam, unless its switch on the
+## Warlock tab is Off (not a reaction: Ashwin, 2026-10-13). The pull is forced movement like the push: no Opportunity
+## Attacks, and the traps and areas it crosses still act. A warlock with both moves a creature one way: turning one on
+## turns the other off.
 
 const INV := "warlock.1.eldritch_invocations"
 
@@ -28,8 +29,9 @@ func _hits(e: Encounter) -> int:
 	return e.events.filter(func(ev: Dictionary) -> bool: return str(ev.get("type", "")) == "attack" and bool(ev.get("hit", false))).size()
 
 
+## The On / Off switch `label` on the Warlock tab.
 func _rule(cat: ActionCatalog, c: Combatant, label: String) -> Dictionary:
-	for s in cat.slots(c, ActionCatalog.REACTIONS):
+	for s in cat.slots(c, cat.class_tab(c)):
 		if str(s["label"]) == label:
 			return s
 	return {}
@@ -95,8 +97,11 @@ func test_each_beam_that_hits_pulls_10_ft_toward_the_warlock() -> void:
 	TestCombat.start_with(e, kip)
 	var cat := ActionCatalog.new(e)
 	var rule := _rule(cat, kip, "Grasp of Hadar")
-	assert_true(bool(rule.get("toggle", false)), "a Grasp of Hadar toggle on the Reactions tab")
-	assert_eq(str(rule["sub"]), "Automatic", "pulling to start with")
+	assert_eq(cat.class_tab(kip), "Warlock")
+	assert_true(bool(rule.get("toggle", false)), "a Grasp of Hadar toggle on the Warlock tab")
+	assert_eq(str(rule["sub"]), "On", "pulling to start with")
+	assert_false(cat.slots(kip, ActionCatalog.REACTIONS).any(func(s: Dictionary) -> bool: return str(s["label"]) == "Grasp of Hadar"),
+		"not a reaction")
 	assert_true(_rule(cat, kip, "Repelling Blast").is_empty(), "Kip traded Repelling Blast for it")
 	TestCombat.next_d20(e, 19)
 	e.events.clear()
@@ -227,7 +232,7 @@ func test_with_repelling_blast_too_one_rule_at_a_time_moves_the_creature() -> vo
 	var bag := TestCombat.punching_bag(e, Vector2i(6, 3), 300)
 	TestCombat.start_with(e, kip)
 	var cat := ActionCatalog.new(e)
-	assert_eq(str(_rule(cat, kip, "Repelling Blast")["sub"]), "Automatic", "the push, as before")
+	assert_eq(str(_rule(cat, kip, "Repelling Blast")["sub"]), "On", "the push, as before")
 	assert_eq(str(_rule(cat, kip, "Grasp of Hadar")["sub"]), "Off", "the pull waits beside it")
 	TestCombat.next_d20(e, 19)
 	assert_true(e.spells.cast(kip, "eldritch_blast", 0, [bag]).ok)
