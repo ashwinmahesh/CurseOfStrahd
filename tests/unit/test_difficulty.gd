@@ -296,7 +296,7 @@ func test_a_foe_joining_mid_fight_gets_the_mode_too() -> void:
 	assert_eq(pup.creature.max_hp(), 11, "the party's own summons are left alone")
 
 
-# --- Spells and scrolls (Tactician and Honour) --------------------------------------------------------------------
+# --- Spells (Balanced, Tactician and Honour) and scrolls (Tactician and Honour) ------------------------------------
 
 func _witch_fight(mode: String) -> Array[Combatant]:
 	var e := TestCombat.open_field(4)
@@ -308,20 +308,23 @@ func _witch_fight(mode: String) -> Array[Combatant]:
 	return [w, h]
 
 
-func test_tactician_casters_cast_from_their_whole_list() -> void:
-	var sharp := _witch_fight("tactician")
-	var e := _encounter_of(sharp[0])
-	e.run_ai_turn()
-	while e.pending != null:
-		e.answer_reaction(false)
-	assert_eq(str(e.ai.last_plan.get("kind", "")), "cast", "a Barovian witch casts rather than stabbing with her dagger")
-	assert_true(e.log.texts().any(func(t: String) -> bool: return "casts" in t))
-	var calm := _witch_fight("balanced")
-	var e2 := _encounter_of(calm[0])
+## Owner, 2026-10-13: every foe with spells uses them when that's its best option, on Balanced as on Tactician; only
+## Story keeps the old caster AI.
+func test_casters_cast_from_their_whole_list_except_on_story() -> void:
+	for mode: String in ["balanced", "tactician"]:
+		var pair := _witch_fight(mode)
+		var e := _encounter_of(pair[0])
+		e.run_ai_turn()
+		while e.pending != null:
+			e.answer_reaction(false)
+		assert_eq(str(e.ai.last_plan.get("kind", "")), "cast", "%s: a Barovian witch casts rather than stabbing with her dagger" % mode)
+		assert_true(e.log.texts().any(func(t: String) -> bool: return "casts" in t), mode)
+	var kind := _witch_fight("story")
+	var e2 := _encounter_of(kind[0])
 	e2.run_ai_turn()
 	while e2.pending != null:
 		e2.answer_reaction(false)
-	assert_ne(str(e2.ai.last_plan.get("kind", "")), "cast", "Balanced keeps the old caster AI")
+	assert_ne(str(e2.ai.last_plan.get("kind", "")), "cast", "Story keeps the old caster AI")
 
 
 func test_a_caster_reads_its_scroll_when_its_spells_are_spent() -> void:
