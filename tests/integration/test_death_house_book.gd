@@ -89,7 +89,8 @@ func test_the_rooms_and_fights_are_the_books() -> void:
 	for area: String in ["dh_family_crypts", "dh_cult_dormitory", "dh_well_chamber", "dh_pit_passage", "dh_cult_refectory",
 			"dh_larder", "dh_ghoul_passage", "dh_lower_stair", "dh_shrine", "dh_trapdoor_stair", "dh_durst_chambers", "dh_durst_quarters"]:
 		assert_false(_find(d1, "areas", area).is_empty(), "the dungeon has %s" % area)
-	var counts := {"larder_grick": 1, "passage_ghouls": 4, "shrine_shadows": 5, "den_mimic": 1, "crypt_insects": 1}
+	# The book's creatures, more of them since 2026-10-13 for 2024 heroes (owner; docs/regions/death_house.md).
+	var counts := {"larder_grick": 1, "passage_ghouls": 6, "shrine_shadows": 7, "den_mimic": 3, "crypt_insects": 7}
 	for enc_id: String in counts:
 		assert_eq((_find(d1, "encounters", enc_id)["monsters"] as Array).size(), int(counts[enc_id]), enc_id)
 	for m: Variant in _find(d1, "encounters", "durst_reunion")["monsters"]:

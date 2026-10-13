@@ -455,7 +455,7 @@ func test_berez_baratok_and_the_tsolenka_gate() -> void:
 	await bot.settle()
 	await bot.talk("tsolenka_sergeant")
 	await bot.settle()
-	await bot.use(Vector2i(3, 2))
+	await bot.use(Vector2i(3, 1))
 	await bot.settle()
 	_fights(bot)
 	_ok(bool(st.get_flag("tsolenka_gate_open", false)), "the Tsolenka gate is open", bot)
