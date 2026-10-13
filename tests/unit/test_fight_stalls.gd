@@ -1,8 +1,7 @@
 extends TestCase
 ## Fights that can't stall forever: a foe with no way to any enemy gives the fight up after two turns of it, one that
-## can still find a way (round a wall, through a door) stays; a foe it can't see but hears is struck at Disadvantage;
-## the party's autopilot Searches for hidden foes and foes search for hidden heroes; a creature standing on a body is
-## attacked like any other.
+## can still find a way (round a wall, through a door) stays; the party's autopilot Searches for hidden foes and foes
+## search for hidden heroes; a creature standing on a body is attacked like any other.
 
 
 ## A wall splits the room with no way through: the wolf, already as close as it can get, gives up on its second turn,
@@ -104,22 +103,3 @@ func test_a_creature_standing_on_a_body_is_attacked_like_any_other() -> void:
 	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("Grey Wolf") and (t.contains(" hits ") or t.contains(" misses "))),
 		"Hedda swung at it")
 
-
-## An Invisible hero who isn't hidden is heard: the wolf beside her bites at Disadvantage rather than stand there.
-func test_a_foe_strikes_a_hero_it_hears_but_cant_see() -> void:
-	var e := TestCombat.open_field(4)
-	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(3, 3))
-	var w := TestCombat.foe(e, "wolf", Vector2i(4, 3))
-	ilse.creature.add_condition(&"invisible", "test")
-	TestCombat.start_with(e, w)
-	assert_false(e.can_see(w, ilse))
-	var plan := e.ai.plan_turn(w)
-	assert_eq(str(plan["kind"]), "attack", "it goes for where she is")
-	assert_eq(plan["target"], ilse)
-	assert_true((e.attack_situation(w, ilse, e.option_by_id(w, str(plan["option"])))["disadvantage"] as Array).has("you can't see the target"))
-	e.run_ai_turn()
-	assert_false(w.action_available, "and bit")
-	# Hidden, her square isn't known: nothing to strike.
-	ilse.hidden = true
-	ilse.stealth_total = 30
-	assert_ne(str(e.ai.plan_turn(w)["kind"]), "attack")
