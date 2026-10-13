@@ -537,7 +537,7 @@
           ]
         },
         {
-          "monster": "swarm_of_rats",
+          "monster": "giant_rat",
           "cell": [
             19,
             24

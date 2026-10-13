@@ -102,7 +102,7 @@
       "land": "castle",
       "levels": [4, 6],
       "text": "Bats first, a cloud of them, and then the castle's dead and the things that eat them, crawling toward the warmth.",
-      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "ghoul", "skeleton", "skeleton", "skeleton", "rat", "rat"]
+      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "ghoul", "skeleton", "skeleton", "rat", "rat", "rat"]
     },
     {
       "id": "castle_spawn",
@@ -123,7 +123,7 @@
       "land": "town",
       "levels": [4, 6],
       "text": "The churchyard gate stands open. The dead come up the street toward the fire, slow and sure, and every shutter stays shut.",
-      "monsters": ["strahd_zombie", "strahd_zombie", "ghoul", "ghoul", "ghast", "zombie", "zombie"]
+      "monsters": ["strahd_zombie", "strahd_zombie", "ghoul", "ghoul", "ghast", "zombie", "zombie", "swarm_of_rats"]
     },
     {
       "id": "town_spawn",

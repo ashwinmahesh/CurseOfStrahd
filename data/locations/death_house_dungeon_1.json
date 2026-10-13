@@ -1216,13 +1216,6 @@
             10,
             16
           ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            11,
-            16
-          ]
         }
       ],
       "text": "Supper is served."

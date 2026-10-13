@@ -403,6 +403,13 @@
             5,
             8
           ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            6,
+            6
+          ]
         }
       ],
       "surprise": "party",

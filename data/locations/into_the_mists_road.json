@@ -515,14 +515,6 @@
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            19,
-            13
-          ],
-          "name": "The Pack Leader"
-        },
-        {
           "monster": "wolf",
           "cell": [
             19,
@@ -540,6 +532,13 @@
           "monster": "wolf",
           "cell": [
             20,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
             13
           ]
         }
