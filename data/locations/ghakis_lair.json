@@ -266,8 +266,8 @@
     {
       "id": "ghakis_stove",
       "cell": [
-        5,
-        28
+        4,
+        24
       ],
       "kind": "examine",
       "label": "A cold stove",
@@ -327,7 +327,7 @@
       "id": "ghakis_winch",
       "cell": [
         22,
-        15
+        14
       ],
       "kind": "examine",
       "label": "The great drum",
@@ -351,7 +351,7 @@
     {
       "id": "ghakis_brake",
       "cell": [
-        19,
+        18,
         15
       ],
       "kind": "decor",
@@ -362,7 +362,7 @@
       "id": "ghakis_tool_rack",
       "cell": [
         26,
-        15
+        14
       ],
       "kind": "decor",
       "label": "Tools",
@@ -754,7 +754,7 @@
     {
       "id": "ghakis_hall_shackles",
       "cell": [
-        33,
+        34,
         6
       ],
       "kind": "examine",

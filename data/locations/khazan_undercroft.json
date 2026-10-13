@@ -177,7 +177,7 @@
       "id": "undercroft_lamp",
       "cell": [
         12,
-        18
+        17
       ],
       "kind": "decor",
       "label": "A lamp bracket",
@@ -187,7 +187,7 @@
       "id": "undercroft_cobwebs",
       "cell": [
         17,
-        18
+        17
       ],
       "kind": "decor",
       "label": "Cobwebs",
@@ -236,8 +236,8 @@
     {
       "id": "names_wall",
       "cell": [
-        4,
-        10
+        3,
+        9
       ],
       "kind": "examine",
       "label": "Names on the wall",
@@ -326,7 +326,7 @@
     {
       "id": "names_cobwebs",
       "cell": [
-        25,
+        26,
         13
       ],
       "kind": "decor",
@@ -591,7 +591,7 @@
     {
       "cell": [
         12,
-        18
+        17
       ],
       "kind": "lamp",
       "bright_ft": 10,

@@ -281,7 +281,7 @@
     {
       "id": "deep_mirror_3",
       "cell": [
-        17,
+        16,
         13
       ],
       "kind": "decor",
@@ -312,7 +312,7 @@
       "id": "deep_hall_cobwebs",
       "cell": [
         28,
-        14
+        13
       ],
       "kind": "decor",
       "label": "Cobwebs",

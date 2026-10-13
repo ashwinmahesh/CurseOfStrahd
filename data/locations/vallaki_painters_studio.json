@@ -150,7 +150,7 @@
       "id": "painter_pots",
       "cell": [
         5,
-        4
+        1
       ],
       "kind": "examine",
       "label": "Pots of paint",
@@ -160,7 +160,7 @@
       "id": "painter_sketches",
       "cell": [
         10,
-        4
+        1
       ],
       "kind": "examine",
       "label": "Sketches",

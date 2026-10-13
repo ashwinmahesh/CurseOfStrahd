@@ -277,7 +277,7 @@
       ],
       "kind": "examine",
       "label": "A clay pot, a knife and a basket",
-      "model": "jars"
+      "model": "cookpot"
     },
     {
       "id": "den_basket",
