@@ -45,24 +45,43 @@ func free_casting(c: Combatant, spell_id: String) -> bool:
 	return ch != null and ch.resource_left("spell:%s" % spell_id) > 0
 
 
-## Pays for the Reaction spell `spell_id`: the slot picked on its prompt (`slot_choice`) when it has one of that level,
-## else its free casting when one is left (the way a free casting goes first everywhere), else its lowest slot (a
-## warlock's pact level). {level: the level it's cast at, 0 when nothing paid; free: a free casting}.
+## Pays for the Reaction spell `spell_id`: `slot_choice`, what its prompt picked (a slot level, or -1 for the free
+## casting), else the free casting when one is left, else the lowest slot. As anywhere else (FieldCasting._offer), a
+## warlock's free casting below its pact level waits until the pact slots are spent. {level: the level it's cast at, 0
+## when nothing paid; free: a free casting}.
 func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
 	var ch := sp().caster_char(c)
-	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
 	if ch == null:
 		return {"level": 0, "free": false}
-	var levels := slot_levels(ch, level)
-	if free_casting(c, spell_id) and (not slot_choice in levels or c.cast_slot_spell_this_turn):
+	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
+	var levels: Array[int] = []
+	if not c.cast_slot_spell_this_turn:
+		levels = slot_levels(ch, level)
+	if free_casting(c, spell_id) and (slot_choice == -1 or not slot_choice in levels) and (slot_choice == -1 or free_first(c, spell_id)):
 		ch.spend_resource("spell:%s" % spell_id)
-		return {"level": maxi(level, int(sp()._entry_any(c, spell_id).get("free_slot", 0))), "free": true}
+		return {"level": free_level(c, spell_id), "free": true}
 	var slot := slot_choice if slot_choice in levels else _lowest_slot(ch, level)
 	if slot == 0:
 		return {"level": 0, "free": false}
 	ch.expend_slot(slot)
 	c.cast_slot_spell_this_turn = true
 	return {"level": slot, "free": false}
+
+
+## The level a free casting of `spell_id` is cast at: its own, or higher for a feature that says so (Genie Magic).
+func free_level(c: Combatant, spell_id: String) -> int:
+	return maxi(maxi(1, int(_comp().spell_data(spell_id).get("level", 1))), int(sp()._entry_any(c, spell_id).get("free_slot", 0)))
+
+
+## Whether `c`'s free casting of `spell_id` goes before its slots: yes, unless only a Pact Magic slot of a higher level
+## could pay and one is left (a tiefling warlock's level 1 Hellish Rebuke waits for the pact slots, as FieldCasting
+## offers it), or no slot can be spent this turn.
+func free_first(c: Combatant, spell_id: String) -> bool:
+	var ch := sp().caster_char(c)
+	if ch == null or c.cast_slot_spell_this_turn:
+		return true
+	var pact_at := ch.pact_only_level(maxi(1, int(_comp().spell_data(spell_id).get("level", 1))))
+	return pact_at == 0 or free_level(c, spell_id) >= pact_at
 
 
 ## Reaction spells that answer a failed d20 roll (Reweave Fate: the roll again with Advantage; Moment of Prescience: a

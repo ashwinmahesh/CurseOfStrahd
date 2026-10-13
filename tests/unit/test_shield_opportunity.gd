@@ -204,8 +204,9 @@ func test_a_free_casting_isnt_held_back_by_the_one_slot_rule() -> void:
 	assert_false(_logged(e, "can't cast Hellish Rebuke"))
 
 
-## With both a free casting and slots, the prompt lists the free casting first and picks it.
-func test_the_prompt_lists_the_free_casting_before_the_slots() -> void:
+## With both, a warlock's prompt lists the pact slot first and picks it: the free casting (level 1) waits for the pact
+## slots, as it does on the hotbar. Picking the free casting spends it instead.
+func test_a_warlocks_prompt_lists_the_pact_slot_then_the_free_casting() -> void:
 	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
 	var e := f["e"] as Encounter
 	var h := f["h"] as Combatant
@@ -221,11 +222,29 @@ func test_the_prompt_lists_the_free_casting_before_the_slots() -> void:
 	if e.pending == null:
 		return
 	var ids := e.pending.target_choices.map(func(x: Dictionary) -> String: return str(x["id"]))
-	assert_eq(ids, ["0", str(ch.pact_magic()["level"])], "free casting, then the pact slot")
-	assert_eq(e.pending.selected_ids, ["0"] as Array[String])
+	assert_eq(ids, [str(ch.pact_magic()["level"]), "free"], "the pact slot, then the free casting")
+	assert_eq(e.pending.selected_ids, [str(ch.pact_magic()["level"])] as Array[String])
+	e.pending.selected_ids.assign(["free"])
 	e.answer_reaction(true)
 	_decline_rest(e)
-	assert_eq(int(ch.pact_magic()["left"]), pact_left, "the free casting went first")
+	assert_eq(int(ch.pact_magic()["left"]), pact_left, "no pact slot spent")
+	assert_eq(ch.resource_left("spell:hellish_rebuke"), 0, "the free casting picked")
+	assert_true(_logged(e, "answers with Hellish Rebuke (free casting"))
+
+
+## On Automatic (the AI's way too) the warlock spends its pact slot first and keeps the free casting.
+func test_on_automatic_a_warlock_spends_the_pact_slot_first() -> void:
+	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var ch := h.creature as Character
+	e.default_player_reaction = "auto"
+	var pact_left := int(ch.pact_magic()["left"])
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	_decline_rest(e)
+	assert_eq(int(ch.pact_magic()["left"]), pact_left - 1, "a pact slot")
+	assert_eq(ch.resource_left("spell:hellish_rebuke"), 1, "the free casting kept")
 
 
 ## Shield from a free casting (Magic Initiate's, say) with no slots left.
