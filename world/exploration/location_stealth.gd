@@ -307,6 +307,33 @@ static func watch(view: LocationView) -> Encounter:
 	return e
 
 
+## The waiting foes awake and in plain view of the party now, by name (a Short Rest needs an hour out of their sight;
+## RestRules.short_rest_refusals): any a party member or guest who is up can see, not hidden away (HiddenAreas), the
+## nearest first. A foe waiting out of view (`unseen`) isn't among them.
+static func foes_in_sight(view: LocationView) -> Array[String]:
+	var out: Array[String] = []
+	if view == null or view.in_combat or view.waiting.is_empty() or view.members.is_empty():
+		return out
+	var e := watch(view)
+	var seen: Array[Combatant] = []
+	for w in view.waiting:
+		var foe := w["foe"] as Combatant
+		if not foe.can_act() or HiddenAreas.hides(view, foe.cell):
+			continue
+		for m: Combatant in _watchers(view):
+			if sees(e, m, foe):
+				seen.append(foe)
+				break
+	var lead := view.leader().cell
+	seen.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		return view.grid.distance_ft(lead, 1, a.cell, a.size_cells) < view.grid.distance_ft(lead, 1, b.cell, b.size_cells))
+	for foe in seen:
+		var what := str((foe.creature as Monster).data.get("name", foe.name())) if foe.creature is Monster else foe.name()
+		if not what in out:
+			out.append(what)
+	return out
+
+
 ## Party members and guests who are up (only they can be seen moving, or look).
 static func _watchers(view: LocationView) -> Array[Combatant]:
 	var out: Array[Combatant] = []

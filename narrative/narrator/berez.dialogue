@@ -363,7 +363,7 @@ cooldown 20
 | [flag.mordenkainen_restored] You sleep by a fire that someone has lit with far too much magic. Your host stays up all night writing, and swears at his own handwriting.
 
 ~ rest:long:tsolenka_pass
-| You sleep in the lee of the rock with a watch set. In the night, from the tower above, someone calls the hour, and gets it right.
+| [not indoors] You sleep in the lee of the rock with a watch set. In the night, from the tower above, someone calls the hour, and gets it right.
 
 # ---------------------------------------------------------------- Fights
 

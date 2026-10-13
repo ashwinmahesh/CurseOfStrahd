@@ -1,7 +1,7 @@
 class_name LongRest
 extends RefCounted
-## A Long Rest's eight hours (plan §5.2), wherever it's taken: the rest screen, the camp in the wild (LocationCamp) and
-## the magic items that make a safe place to sleep (FieldItems). A risky place may interrupt it (a d6 shows 1, unless
+## A Long Rest's eight hours (plan §5.2), wherever it's taken: the rest screen, the camp (LocationCamp: wherever the
+## place's rest is risky) and the magic items that make a safe place to sleep (FieldItems). A risky place may interrupt it (a d6 shows 1, unless
 ## a ward keeps the rest or Alarm wakes the party first); an interrupted rest gives a Short Rest's benefits after an
 ## hour. A finished one takes eight hours off the clock and brings everything back (Creature.finish_long_rest), for the
 ## party and the guests travelling with it. Pure story logic: whoever started it shows what's returned and starts what

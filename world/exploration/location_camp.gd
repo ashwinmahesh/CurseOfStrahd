@@ -1,13 +1,15 @@
 class_name LocationCamp
 extends Node
-## The party's camp on the map (F16, lane 24; docs/story/camp.md). A Long Rest in the wild (CampSite.is_wild) pitches
-## it near the party, on the place's own map, so its weather, light, music and visitors stay the place's: the fire and
-## its pieces among the place's props, the party, the companions waiting at camp and the story's guests round the
-## fire, a mark over anyone who wants a word, and the camp's bar (CampBar). Walking up to someone starts the talk they
-## want to have (CampTalk; one each in the evening and one in the morning), or the Narrator says what they're doing.
-## Sleeping is the Long Rest (LongRest), and Strahd may come in the night; the morning offers the change of prepared
-## spells; breaking camp packs it away and the party falls in behind its leader again. The camp goes with the place:
-## leaving it, or anything that builds the place again, ends it.
+## The party's camp on the map (F16, lane 24; docs/story/camp.md). A Long Rest wherever the place's own rest is risky
+## (CampSite.makes_camp: the wild, a town's streets, a house, a dungeon) pitches it near the party, on the place's own
+## map, so its weather, light, music and visitors stay the place's: the fire and its pieces among the place's props,
+## the party, the companions waiting at camp and the story's guests round the fire, a mark over anyone who wants a
+## word, and the camp's bar (CampBar). Walking up to someone starts the talk they want to have (CampTalk; one each in
+## the evening and one in the morning), or the Narrator says what they're doing. Sleeping is the Long Rest (LongRest),
+## and Strahd may come in the night; the morning offers the change of prepared spells; breaking camp packs it away and
+## the party falls in behind its leader again. The camp goes with the place: leaving it, or anything that builds the
+## place again, ends it. Indoors (CampSite.setting) there's no tent, and in town or indoors the Narrator and the
+## night's visitors are the setting's own.
 
 const NAME := "Camp"
 ## The mark over someone who wants a word: the talk icon (a speech bubble).
@@ -20,6 +22,8 @@ var view: LocationView
 var root: Node
 var center := Vector2i(-1, -1)
 var rule := "risky"
+## Where the camp is (CampSite.setting: wild, town or indoors): its pieces, the Narrator's lines and the night's visitors.
+var setting := CampSite.WILD
 ## The night is over: it's morning at camp.
 var slept := false
 ## Who has had their word this evening (once slept, this morning): character id -> true.
@@ -49,8 +53,9 @@ static func of(view_: Node) -> LocationCamp:
 	return view_.get_node_or_null(NAME) as LocationCamp if view_ != null else null
 
 
-## Makes camp near the party (a Long Rest in the wild; `rule_` the place's rest rule, safe or risky). Returns the camp,
-## or null when there's no room for one within reach (the caller rests as it always did).
+## Makes camp near the party (a Long Rest where the place's rest is risky; `rule_` the rest's rule, safe or risky).
+## Returns the camp, or null when no square the party can walk to will take a fire (the caller rests where the party
+## stands, and says so).
 static func pitch(view_: LocationView, root_: Node, rule_: String) -> LocationCamp:
 	var existing := of(view_)
 	if existing != null:
@@ -69,6 +74,7 @@ static func pitch(view_: LocationView, root_: Node, rule_: String) -> LocationCa
 	camp.root = root_
 	camp.rule = rule_
 	camp.center = c
+	camp.setting = CampSite.setting(view_.loc)
 	camp._taken = taken
 	view_.add_child(camp)
 	camp._build()
@@ -83,8 +89,10 @@ func _build() -> void:
 	if view.planning:
 		LocationPlan.stop(view)   # no rounds by the fire
 	view._queue.clear()
-	var lay := CampSite.layout(view.grid, center, _taken, _head_count(view), _cook_here())
+	var lay := _layout()
 	for p: Dictionary in lay["props"]:
+		if setting != CampSite.WILD and str(p["kind"]) == "examine":
+			p["say"] = "examine:%s:%s" % [p["id"], setting]   # the fire's light on walls or shutters, not on trees
 		(view.loc.get_or_add("props", []) as Array).append(p)
 		_props.append(str(p["id"]))
 		view.prop_nodes[str(p["id"])] = LocationBuilder._prop_node(view, p)
@@ -93,8 +101,13 @@ func _build() -> void:
 	bar = CampBar.new()
 	bar.camp = self
 	add_child(bar)
-	_say_keys(["camp:pitch"])
+	_say_keys(CampSite.keys_for("camp:pitch", setting))
 	_refresh_talks()
+
+
+## The camp's pieces and seats round the fire (CampSite.layout): a tent only out of doors.
+func _layout() -> Dictionary:
+	return CampSite.layout(view.grid, center, _taken, _head_count(view), _cook_here(), setting != CampSite.INDOORS)
 
 
 ## Whether Ratatouille is at camp to cook (travelling or waiting there).
@@ -194,7 +207,7 @@ func _process(_delta: float) -> void:
 	if view.in_combat:
 		return
 	if _roster_key() != _roster_seen:
-		var lay := CampSite.layout(view.grid, center, _taken, _head_count(view), _cook_here())
+		var lay := _layout()
 		_seat(lay["seats"] as Array[Vector2i], lay["cook"] as Vector2i)
 		_refresh_talks()
 	var mode := int(ModeController.mode)
@@ -309,7 +322,7 @@ func talk(id: String) -> void:
 	var guest := str(p["kind"]) == "guest"
 	var who := str(p.get("npc", "")) if guest else id
 	var text := ""
-	for key in CampSite.idle_keys(who, guest):
+	for key in CampSite.idle_keys(who, guest, setting):
 		if text != "":
 			break
 		var actor: Character = p["character"] as Character if p["character"] is Character else null
@@ -350,9 +363,9 @@ func sleep() -> void:
 	for line: String in res["lines"]:
 		_queue.append(line)
 	var region := str(view.loc.get("region", ""))
-	_say_keys(["rest:long:" + view.loc_id, "rest:long:" + region, "camp:night", "rest:long"])
+	_say_keys(CampSite.night_keys(view.loc_id, region, setting))
 	_say_keys(["dream:" + region])
-	_say_keys(["camp:morning"])
+	_say_keys(CampSite.keys_for("camp:morning", setting))
 	_refresh_root()
 	_refresh_talks()
 	if root != null and root.has_method("strahd_after_rest"):
@@ -362,18 +375,28 @@ func sleep() -> void:
 ## The night interrupted at camp: what comes out of the dark (CampSite.night_fight) falls on the camp, where everyone
 ## lies. Afterwards the party can try to sleep again. False if nothing came (the night just wasn't restful).
 func _night_visitors() -> bool:
-	var taken := _taken.duplicate()
+	var spec := CampSite.night_fight(view.grid, center, night_taken(), str(view.loc.get("region", "")), view.st.target_level(),
+		Dice.roller, setting)
+	if spec.is_empty():
+		return false
+	view.narration.emit(str(spec["text"]))
+	return view.start_custom_encounter(spec)
+
+
+## The squares the night's visitors can't come out of: the place's things and people, the camp's pieces and everyone
+## at the fire. They may come out of an area a fight starts in (the camp keeps out of those): in a house that's often
+## the only dark there is.
+func night_taken() -> Dictionary:
+	var taken := CampSite.things_at(view.loc, false)
+	for shown in view._npc_shown:
+		taken[shown["cell"] as Vector2i] = true
 	for id in _props:
 		var node := view.prop_nodes.get(id, null) as Node3D
 		if node != null:
 			taken[view.grid.cell_at(node.global_position)] = true
 	for m: Combatant in view.members + view.guest_members:
 		taken[m.cell] = true
-	var spec := CampSite.night_fight(view.grid, center, taken, str(view.loc.get("region", "")), view.st.target_level(), Dice.roller)
-	if spec.is_empty():
-		return false
-	view.narration.emit(str(spec["text"]))
-	return view.start_custom_encounter(spec)
+	return taken
 
 
 ## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with.
@@ -418,7 +441,10 @@ func strike() -> void:
 		view.place_guests()
 	_queue.clear()
 	var lead_ch := lead.creature as Character if lead != null else null
-	var said := view.narrator.line("camp:strike", view.st, lead_ch) if view.narrator != null else ""
+	var said := ""
+	for key in CampSite.keys_for("camp:strike", setting):
+		if said == "" and view.narrator != null:
+			said = view.narrator.line(key, view.st, lead_ch)
 	if said != "":
 		view.narration.emit(said)
 	queue_free()

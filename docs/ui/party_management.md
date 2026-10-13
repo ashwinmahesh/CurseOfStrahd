@@ -94,11 +94,14 @@ columns so the numbers that matter are always on screen:
   Pairs, Wedge, Spread. A tip appears when the best spotter is at the back.
 - **Short Rest**: per character, spend Hit Point Dice one at a time with on-screen dice (roll + Con, minimum 1:
   `spend_hit_die`), and a list of what comes back on finishing (Second Wind +1, Channel Divinity +1, Arcane
-  Recovery's slot levels to choose).
+  Recovery's slot levels to choose). Taken anywhere outside a fight, dungeons and places that allow no sleep
+  included; while a fight on this map was begun and not won, or foes are in plain view of the party, its button and
+  the dice are off and the card says why (owner, 2026-10-12; story/rest_rules.gd).
 - **Long Rest**: camp scene with the interruption risk for the region and time, watch order, and what finishing
   restores (all HP and Hit Point Dice, slots, features, Exhaustion −1), then spell preparation. While one can't start
-  (enemies remain somewhere in the building or dungeon, or the last ended under 16 hours ago; story/rest_rules.gd)
-  its button is off and the card says why in words, with the time left, so the pad reads it too; the Short Rest stays.
+  (the place allows no sleep, enemies remain somewhere in the building or dungeon, or the last ended under 16 hours
+  ago; story/rest_rules.gd) its button is off and the card says why in words (the place's own `rest_text`, or the
+  time left), so the pad reads it too; the Short Rest stays.
 
 ## Spell preparation (`pm_04_spell_preparation`)
 ![Spell preparation](wireframes/pm_04_spell_preparation.svg)
@@ -119,7 +122,7 @@ prepared spells" button after an uninterrupted Long Rest.
 | Character at 0 HP | portrait greyed, "Unconscious · Death saves ✓✓ ✗" |
 | Dead | portrait faded, "Dead" and the ways back (Revivify within 1 minute ...) |
 | Guest present | fifth column "Guest: directed by you in combat; level and gear come from the story" |
-| Rest unavailable | the place's own "You can't rest here" line; for a Long Rest only, "Enemies still prowl this place" or "the next can start in 7 hours 30 minutes" on its card |
+| Rest unavailable | on the card that can't be taken, in words: for a Long Rest, the place's own `rest_text` ("Nobody sleeps beside that heartbeat."), "Enemies still prowl this place" or "the next can start in 7 hours 30 minutes"; for a Short Rest, "A fight here isn't over" or "Foes in sight (Ghoul, Ghast)" |
 | Interrupted rest | what was gained (a Short Rest's benefits after 1 hour of a Long Rest) |
 | Controller | LB/RB tabs, LT/RT character, A on a number opens its breakdown |
 

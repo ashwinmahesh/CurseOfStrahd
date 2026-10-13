@@ -1,6 +1,7 @@
 class_name RestRules
 extends RefCounted
 ## When and where the party may start a Long Rest (owner rules, 2026-10-09):
+## - not in a place that allows no sleep (`rest`: no; its `rest_text` says why);
 ## - not within 16 hours of finishing the last one (2024 PHB), so two back to back can't clear Exhaustion or the Raise
 ##   Dead penalty twice in a night;
 ## - not in a dungeon or any building while enemies remain in it, on any of its floors (docs/rules/deviations.md). A
@@ -9,8 +10,10 @@ extends RefCounted
 ##   or a chest, examining something) or one was begun and not won; a fight only a conversation can start doesn't
 ##   count. Towns, inns, camps and the open road are unaffected, and so are the magic items that make a safe place to
 ##   sleep (Daern's Instant Fortress, the Rod of Security), which still keep the 16 hours.
-## Short Rests are never refused here. Leomund's Tiny Hut and Guards and Wards let a Long Rest start with enemies still
-## in the building (story/wards.gd). Pure story logic: no nodes.
+## Leomund's Tiny Hut and Guards and Wards let a Long Rest start with enemies still in the building (story/wards.gd).
+## A Short Rest (owner, 2026-10-12) is taken anywhere outside a fight, a dungeon and a place that allows no sleep
+## included, unless a fight on this map was begun and not won (the party ran) or foes awake and in plain view of the
+## party are about (LocationStealth.foes_in_sight). Pure story logic: no nodes.
 
 const WAIT_MINUTES := 16 * 60
 ## st.flags: the game minute the party last finished a Long Rest (an underscore key: bookkeeping, not story).
@@ -19,14 +22,44 @@ const DONE_AT := "_long_rest_at"
 const SELF_STARTING: Array[String] = ["enter_area", "open", "examine"]
 
 
-## Why the party can't start a Long Rest where it stands, one sentence per reason; [] when it can.
+## Why the party can't start a Long Rest where it stands, one sentence per reason; [] when it can. A place that allows
+## no sleep says so in its own words (`rest_text`), and nothing else needs saying.
 static func long_rest_refusals(st: StoryState) -> Array[String]:
 	var out: Array[String] = []
+	var loc := Compendium.shared().get_entry("locations", st.location)
+	if str(loc.get("rest", "risky")) == "no":
+		out.append(str(loc.get("rest_text", "This place won't let anyone sleep.")))
+		return out
 	if not waiting_fights(st, st.location).is_empty() and Wards.shelter(st) == "":
 		out.append("Enemies still prowl this place, on this floor or another. Clear them out, rest somewhere else, or ward the rest (Leomund's Tiny Hut, Guards and Wards).")
 	var wait := minutes_until_long_rest(st)
 	if wait > 0:
 		out.append("The last Long Rest ended less than 16 hours ago: the next can start in %s." % duration(wait))
+	return out
+
+
+## Why the party can't start a Short Rest where it stands, one sentence per reason; [] when it can: a fight on this
+## map begun and not won, or `foes` (the names of those awake and in plain view of the party, from
+## LocationStealth.foes_in_sight) about.
+static func short_rest_refusals(st: StoryState, foes: Array[String] = []) -> Array[String]:
+	var out: Array[String] = []
+	if not unfinished_fights(st).is_empty():
+		out.append("A fight here isn't over, and its enemies are still about. Finish it, or get well away first.")
+	if not foes.is_empty():
+		out.append("Foes in sight (%s): nobody rests for an hour in plain view of them. Get out of their sight first." % ", ".join(foes))
+	return out
+
+
+## The fights on the party's map that were begun and not won (the party ran): their ids.
+static func unfinished_fights(st: StoryState) -> Array[String]:
+	var out: Array[String] = []
+	var states := (st.location_states.get(st.location, {}) as Dictionary).get("encounters", {}) as Dictionary
+	for en: Variant in Compendium.shared().get_entry("locations", st.location).get("encounters", []):
+		var spec := en as Dictionary
+		var id := str(spec.get("id", ""))
+		if str(states.get(id, false)) == "started" and not id in out \
+				and StoryConditions.check(StoryConditions.encounter_when(spec), st):
+			out.append(id)
 	return out
 
 

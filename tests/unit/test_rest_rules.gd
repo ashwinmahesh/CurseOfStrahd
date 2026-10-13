@@ -1,6 +1,8 @@
 extends TestCase
 ## When and where the party may take a Long Rest (story/rest_rules.gd; owner rules, 2026-10-09): 16 hours after the
-## last one, and not in a dungeon or building while enemies remain on any of its floors.
+## last one, not where the place allows no sleep, and not in a dungeon or building while enemies remain on any of its
+## floors. A Short Rest (owner, 2026-10-12) anywhere, unless a fight on the map was begun and not won or foes are in
+## sight.
 
 ## A keep: a hall and a cellar indoors, joined by stairs, and the yard outside. Rats wait in the cellar; the steward in
 ## the hall only fights if a conversation goes wrong.
@@ -103,3 +105,25 @@ func test_sixteen_hours_between_long_rests() -> void:
 	assert_eq(RestRules.duration(60), "1 hour")
 	assert_eq(RestRules.duration(45), "45 minutes")
 	assert_eq(RestRules.duration(121), "2 hours 1 minute")
+
+
+func test_a_place_that_allows_no_sleep_refuses_a_long_rest_in_its_own_words_but_not_a_short_one() -> void:
+	var st := _at("castle_ravenloft_spires_heart")
+	var loc := Compendium.shared().get_entry("locations", "castle_ravenloft_spires_heart")
+	assert_eq(RestRules.long_rest_refusals(st), [str(loc["rest_text"])] as Array[String], "the place says why")
+	assert_eq(RestRules.short_rest_refusals(st), [] as Array[String], "an hour's breather is still possible")
+
+
+func test_a_short_rest_waits_for_an_unfinished_fight_here_and_foes_out_of_sight() -> void:
+	var st := _at("test_keep_cellar")
+	assert_eq(RestRules.short_rest_refusals(st), [] as Array[String], "rats waiting somewhere don't stop a Short Rest")
+	_won(st, "test_keep_cellar", "rats", "started")
+	var why := RestRules.short_rest_refusals(st)
+	assert_eq(why.size(), 1, "the rats' fight was begun and the party ran")
+	assert_true(why[0].begins_with("A fight here isn't over"), why[0])
+	st.location = "test_keep_hall"
+	assert_eq(RestRules.short_rest_refusals(st), [] as Array[String], "upstairs, away from it (though no Long Rest)")
+	assert_false(RestRules.long_rest_refusals(st).is_empty(), "the building isn't clear for sleep")
+	why = RestRules.short_rest_refusals(st, ["Ghoul", "Ghast"] as Array[String])
+	assert_eq(why.size(), 1, "foes in sight")
+	assert_true(why[0].contains("Ghoul, Ghast"), why[0])
