@@ -93,19 +93,22 @@ func answer_incoming_roll(c: Combatant, test: D20Test, spell_id: String) -> bool
 	return not test.success
 
 
-func incoming_roll_responses(c: Combatant) -> Array[String]:
+## `one_slot_rule` false leaves out the rule of one spell slot per turn (can_cast_reaction).
+func incoming_roll_responses(c: Combatant, one_slot_rule: bool = true) -> Array[String]:
 	var spells := sp()
 	var out: Array[String] = []
 	if spells.caster_char(c) == null:
 		return out
 	for known in spells.caster_char(c).known_spells():
 		var id := str(known["id"])
-		if not id in out and (_comp().spell_data(id).get("roll_response", {}) as Dictionary).has("incoming_natural") and can_cast_reaction(c, id):
+		if not id in out and (_comp().spell_data(id).get("roll_response", {}) as Dictionary).has("incoming_natural") and can_cast_reaction(c, id, one_slot_rule):
 			out.append(id)
 	return out
 
 
-func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
+## Whether `c` can cast `spell_id` as a Reaction now. `one_slot_rule` false leaves out the 2024 rule of one spell slot per
+## turn (the turn's slot already spent), for note_slot_rule to tell that one apart.
+func can_cast_reaction(c: Combatant, spell_id: String, one_slot_rule: bool = true) -> bool:
 	var spells := sp()
 	if spells.caster_char(c) == null or not can_react(c):
 		return false
@@ -113,7 +116,7 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	if not ch.knows_spell(spell_id):
 		return false
 	var s := _comp().spell_data(spell_id)
-	if str(s.get("automation", "")) == "reference" or c.cast_slot_spell_this_turn or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
+	if str(s.get("automation", "")) == "reference" or (one_slot_rule and c.cast_slot_spell_this_turn) or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
 		return false
 	if bool((s.get("components", {}) as Dictionary).get("v", false)):
 		if c.creature.has_flag("speechless"):
@@ -129,6 +132,27 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 		if ch.slots_left(l) > 0:
 			return true
 	return false
+
+
+## Says in the log when only the 2024 rule of one spell slot per turn keeps a hero from casting the Reaction spells
+## `spell_ids` it would be asked about (owner report 2026-10-13: Ratatouille cast a level 3 spell, then an Opportunity
+## Attack hit him on the way out and Shield wasn't offered). The rule holds on any turn, the hero's own included. Once
+## a turn per hero and list.
+func note_slot_rule(c: Combatant, spell_ids: Array[String]) -> void:
+	var e := enc()
+	if not c.is_player_controlled() or not c.cast_slot_spell_this_turn:
+		return
+	var names: Array[String] = []
+	for sid in spell_ids:
+		if e._reaction_decision(c, sid) != "never" and can_cast_reaction(c, sid, false):
+			names.append(str(_comp().spell_data(sid)["name"]))
+	if names.is_empty():
+		return
+	var key := "%d:%d:%s" % [e.round_no, e.turn_index, ",".join(names)]
+	if str(c.get_meta("slot_rule_noted", "")) == key:
+		return
+	c.set_meta("slot_rule_noted", key)
+	e.log.add("info", "%s can't cast %s: a spell slot was already spent this turn (one per turn)" % [c.name(), " or ".join(names)], c.id)
 
 
 ## Whether `c` can take a Reaction now (it has one, can act, and nothing stops it: Shocking Grasp, Slow).

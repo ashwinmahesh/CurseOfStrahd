@@ -345,12 +345,16 @@ func answer_incoming_roll(c: Combatant, test: D20Test, spell_id: String) -> bool
 	return reaction_spells.answer_incoming_roll(c, test, spell_id)
 
 
-func incoming_roll_responses(c: Combatant) -> Array[String]:
-	return reaction_spells.incoming_roll_responses(c)
+func incoming_roll_responses(c: Combatant, one_slot_rule: bool = true) -> Array[String]:
+	return reaction_spells.incoming_roll_responses(c, one_slot_rule)
 
 
-func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
-	return reaction_spells.can_cast_reaction(c, spell_id)
+func can_cast_reaction(c: Combatant, spell_id: String, one_slot_rule: bool = true) -> bool:
+	return reaction_spells.can_cast_reaction(c, spell_id, one_slot_rule)
+
+
+func note_slot_rule(c: Combatant, spell_ids: Array[String]) -> void:
+	reaction_spells.note_slot_rule(c, spell_ids)
 
 
 func can_react(c: Combatant) -> bool:

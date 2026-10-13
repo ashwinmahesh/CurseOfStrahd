@@ -112,6 +112,8 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 	for q in e.reaction_queue:
 		if str(q["reactor"]) == target.id:
 			return
+	var rebuke: Array[String] = ["hellish_rebuke"]
+	e.spells.note_slot_rule(target, rebuke)
 	if e.spells.can_cast_reaction(target, "hellish_rebuke"):
 		e.reaction_queue.append({"kind": "hellish_rebuke", "reactor": target.id, "trigger": source.id})
 	elif CombatFeatures.has_feature(target, "storms_thunder") and (target.creature as Character).resource_left("giant_ancestry") > 0 and e.spells.can_react(target):
