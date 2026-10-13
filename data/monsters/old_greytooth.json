@@ -137,7 +137,7 @@
     }
   ],
   "legendary_actions": {
-    "per_round": 3,
+    "per_round": 2,
     "options": [
       {
         "id": "snap",
@@ -145,13 +145,6 @@
         "cost": 2,
         "action": "bite",
         "summary": "Makes one Bite."
-      },
-      {
-        "id": "lope",
-        "name": "Lope",
-        "cost": 1,
-        "move": true,
-        "summary": "Moves up to its Speed without provoking Opportunity Attacks."
       }
     ]
   },

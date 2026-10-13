@@ -162,7 +162,7 @@
     }
   ],
   "legendary_actions": {
-    "per_round": 3,
+    "per_round": 2,
     "options": [
       {
         "id": "rake",
@@ -170,13 +170,6 @@
         "cost": 2,
         "action": "iron_claw",
         "summary": "Makes one Iron Claw attack."
-      },
-      {
-        "id": "stride",
-        "name": "Long Stride",
-        "cost": 1,
-        "move": true,
-        "summary": "Moves up to her Speed without provoking Opportunity Attacks."
       }
     ]
   },
