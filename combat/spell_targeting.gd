@@ -159,22 +159,21 @@ func creatures_in(cells: Array[Vector2i]) -> Array[Combatant]:
 
 
 ## Who an area spell affects among the creatures in it: everyone (default for a point), everyone but the caster
-## (default for areas from yourself), or "creatures of your choice" (`area_targets`: enemies / allies).
-func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: String = "") -> Array[Combatant]:
-	var spells := sp()
+## (default for areas from yourself), or "creatures of your choice" (`area_targets`: enemies / allies). A spell on up
+## to so many creatures of the caster's choice (`area_max_targets`: Slow, Mass Cure Wounds) takes `chosen` (creature
+## ids, the player's picks: TargetPicker) from any in it, else the ones `area_default` ranks first.
+func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: String = "", chosen: Variant = null) -> Array[Combatant]:
+	var cap := int(s.get("area_max_targets", 0))
+	var all := area_candidates(c, s, cells)
+	if cap > 0 and chosen is Array:
+		var picked: Array[Combatant] = []
+		picked.assign(all.filter(func(v: Combatant) -> bool: return v.id in (chosen as Array)))
+		return picked.slice(0, cap)
 	var self_area := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
 	var mode := str(s.get("area_targets", "others" if self_area else "all"))
 	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
-	for v in creatures_in(cells):
-		if enc().items.spell_blocked(c, v) != "":
-			continue
-		# A conjured object (Bigby's Hand) is only hurt by what targets it.
-		if v.creature.has_flag("spell_object"):
-			continue
-		# A creature in the air above the area (flying, levitating) is out of it.
-		if not reaches_height(c, s, v):
-			continue
+	for v in all:
 		match mode:
 			"others":
 				if v == c:
@@ -186,12 +185,44 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 				if v != c and not c.allied_with(v):
 					continue
 		out.append(v)
+	if cap > 0 and out.size() > cap:
+		out = area_default(c, out, cap)
+	return out
+
+
+## Every creature in an area spell's squares that it can reach: not behind a Cube of Force or a Scroll of Protection,
+## not a conjured object (Bigby's Hand is only hurt by what targets it), not in the air above it, not inside an
+## Antimagic Field or a Globe of Invulnerability that stops it. The ones a spell of the caster's choice picks from.
+func area_candidates(c: Combatant, s: Dictionary, cells: Array[Vector2i]) -> Array[Combatant]:
+	var spells := sp()
+	var out: Array[Combatant] = []
+	for v in creatures_in(cells):
+		if enc().items.spell_blocked(c, v) != "":
+			continue
+		if v.creature.has_flag("spell_object"):
+			continue
+		if not reaches_height(c, s, v):
+			continue
+		out.append(v)
 	out.assign(out.filter(func(v: Combatant) -> bool: return not spells.specials.high.in_antimagic(v) or str(s.get("id", "")) == "antimagic_field"))
 	out.assign(out.filter(func(v: Combatant) -> bool: return not spells.specials.mid.globe_blocks(c, v, int(s.get("level", 0)))))
-	var cap := int(s.get("area_max_targets", 0))
-	if cap > 0 and out.size() > cap:
-		out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
-		out.resize(cap)
+	return out
+
+
+## The `cap` creatures a spell of the caster's choice takes when no one picks (the AI, the test autopilot, the picks a
+## player starts from): its foes that hit hardest first, its own side's most hurt first, then the nearest.
+func area_default(c: Combatant, among: Array[Combatant], cap: int) -> Array[Combatant]:
+	var ranked := among.duplicate()
+	var weight := func(v: Combatant) -> float:
+		return AiSpells._threat(v) if c.hostile_to(v) else float(v.creature.max_hp() - v.creature.hp)
+	ranked.sort_custom(func(a: Combatant, b: Combatant) -> bool:
+		var wa := float(weight.call(a))
+		var wb := float(weight.call(b))
+		if not is_equal_approx(wa, wb):
+			return wa > wb
+		return enc().distance(c, a) < enc().distance(c, b))
+	var out: Array[Combatant] = []
+	out.assign(ranked.slice(0, cap))
 	return out
 
 
@@ -234,6 +265,23 @@ static func choice_of(s: Dictionary, opts: Dictionary) -> String:
 	if pick in from.map(func(x: Variant) -> String: return str(x)):
 		return pick
 	return str(from[0]) if not from.is_empty() else ""
+
+
+## How far a point of origin is from `who`: to the nearest square it touches (a point on a grid line touches two, a
+## grid intersection, where a Sphere is centred, four), so it measures the same from every side.
+func point_distance_ft(who: Combatant, point: Vector2) -> int:
+	var xs: Array[int] = [floori(point.x)]
+	if is_equal_approx(point.x, roundf(point.x)):
+		xs.append(roundi(point.x) - 1)
+	var zs: Array[int] = [floori(point.y)]
+	if is_equal_approx(point.y, roundf(point.y)):
+		zs.append(roundi(point.y) - 1)
+	var best := enc().grid.distance_ft(who.cell, who.size_cells, Vector2i(xs[0], zs[0]), 1)
+	for x in xs:
+		for z in zs:
+			if enc().grid.in_bounds(Vector2i(x, z)):
+				best = mini(best, enc().grid.distance_ft(who.cell, who.size_cells, Vector2i(x, z), 1))
+	return best
 
 
 ## Validates targets, range and line of effect. {why, targets: Array[Combatant], cell: Vector2i}
@@ -359,8 +407,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if point == Vector2.INF:
 			out["why"] = "Choose a point"
 			return out
-		var pc := Vector2i(floori(point.x), floori(point.y))
-		if e.grid.distance_ft(c.cell, c.size_cells, pc, 1) > rng and e.grid.distance_ft(from.cell, from.size_cells, pc, 1) > rng:
+		if point_distance_ft(c, point) > rng and point_distance_ft(from, point) > rng:
 			out["why"] = "That point is out of range (%d ft)" % rng
 		return out
 	if s.has("area") and not s.has("attack"):
