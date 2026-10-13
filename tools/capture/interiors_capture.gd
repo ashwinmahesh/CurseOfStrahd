@@ -6,7 +6,8 @@ extends Node3D
 ## Environment: INTERIORS_LOCS=death_house_ground,death_house_upper (default: every interior and dungeon map),
 ## INTERIORS_LIT=1 (a work light and brighter ambient, to see what's in a dark room), INTERIORS_HOUR=12,
 ## INTERIORS_SPOTS=death_house_ground@4,3@21,3|death_house_upper@4,4 (close shots of those squares too, named
-## <out>_<loc>_<x>_<z>.png; places are split by | and squares by @, since make capture's ARGS can't hold a ;).
+## <out>_<loc>_<x>_<z>.png; places are split by | and squares by @, since make capture's ARGS can't hold a ;),
+## INTERIORS_FLAGS=mouse_met,... (story flags set first, for things that show only once they hold).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
@@ -64,6 +65,8 @@ func _build(loc_id: String, hour: int) -> void:
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
 	GameState.story.minute_of_day = hour * 60
+	for flag: String in OS.get_environment("INTERIORS_FLAGS").split(",", false):
+		GameState.story.set_flag(flag)
 	view = LocationView.create(loc_id, GameState.story, Narrator.new(), Dice.roller, "default")
 	add_child(view)
 	var rig := view.rig
