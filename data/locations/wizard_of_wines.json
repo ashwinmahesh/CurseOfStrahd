@@ -1102,13 +1102,6 @@
         {
           "monster": "vine_blight",
           "cell": [
-            20,
-            16
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
             25,
             20
           ]
@@ -1180,6 +1173,21 @@
           "monster": "twig_blight",
           "cell": [
             20,
+            24
+          ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            22,
+            18
+          ],
+          "hp": 60
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
             24
           ]
         }
@@ -1466,7 +1474,7 @@
             27,
             26
           ],
-          "hp": 110
+          "hp": 100
         },
         {
           "monster": "vine_blight",

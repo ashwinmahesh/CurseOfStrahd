@@ -820,6 +820,14 @@
             12,
             9
           ]
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            19,
+            6
+          ],
+          "hp": 55
         }
       ],
       "surprise": "",

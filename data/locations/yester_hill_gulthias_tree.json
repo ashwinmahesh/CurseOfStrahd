@@ -462,6 +462,67 @@
     {
       "id": "summit_ritual",
       "trigger": "dialogue",
+      "when": "flag.yester_druids_fate == \"fled\" and level <= 5",
+      "text": "Out of the split chest, unfolding, comes a tree that walks, and all round the crown the brush gets up to follow it: creepers, thorn-backs, little men of twigs.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 100
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            16
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
       "when": "flag.yester_druids_fate == \"fled\"",
       "text": "Out of the split chest, unfolding, comes a tree that walks, and all round the crown the brush gets up to follow it: creepers, thorn-backs, little men of twigs.",
       "monsters": [
@@ -645,6 +706,70 @@
     {
       "id": "summit_ritual",
       "trigger": "dialogue",
+      "when": "flag.yester_struck_first and level <= 5",
+      "text": "You are among them before the chant can end. The effigy cracks too soon, and what drags itself out of its chest is half-made and furious.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 80
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 45
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            9,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "enemies",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
       "when": "flag.yester_struck_first",
       "text": "You are among them before the chant can end. The effigy cracks too soon, and what drags itself out of its chest is half-made and furious.",
       "monsters": [
@@ -712,6 +837,62 @@
         }
       ],
       "surprise": "enemies",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.yester_circle_broken and level <= 5",
+      "text": "Ruxandra presses her forehead to the effigy and shouts one word into the earth. The chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 90
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 50
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
       "flag": "yester_hill_resolved"
     },
     {
@@ -832,6 +1013,71 @@
             15
           ],
           "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
+      "when": "flag.kostin_fled and not flag.kostin_doubts and level <= 5",
+      "text": "The humming breaks into a shout. The effigy's chest splits like a log in frost, and out of it, unfolding, comes a tree that walks.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 90
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            10
+          ],
+          "name": "Mother Ruxandra",
+          "hp": 50
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            13,
+            14
+          ],
+          "name": "Kostin",
+          "hp": 44
         },
         {
           "monster": "twig_blight",
@@ -1092,7 +1338,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 110
+          "hp": 90
         },
         {
           "monster": "druid",
@@ -1102,14 +1348,6 @@
           ],
           "name": "Mother Ruxandra",
           "hp": 50
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            9,
-            8
-          ],
-          "name": "Druid of Yester Hill"
         },
         {
           "monster": "twig_blight",
