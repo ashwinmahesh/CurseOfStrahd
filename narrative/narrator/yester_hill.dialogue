@@ -66,6 +66,7 @@ once
 
 ~ examine:strahd_effigy
 | A man of packed earth and split timber, forty feet long, lying on his back with a cloak of turf. The face is crude but you'd know it anywhere. In the chest, under the turf, something green beats like a heart.
+| [flag.yester_effigy_known and not flag.yester_hill_resolved] The druids' giant: forty feet of packed earth and split timber in the lord's likeness, waiting for the song to end. Under the turf of its chest the stolen stone beats like a heart, keeping time for the walk east.
 | [flag.yester_hill_resolved] The effigy is split from collar to belt, the earth spilling out of it like grain from a burst sack. It looks smaller broken, the way the dead do.
 
 ~ examine:ritual_fire

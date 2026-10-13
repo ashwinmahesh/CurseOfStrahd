@@ -497,7 +497,11 @@ static func _use_prop(view: LocationView, prop: Dictionary) -> void:
 	if str(prop.get("dialogue", "")) != "":
 		view.dialogue_requested.emit(str(prop["dialogue"]), "")
 		return
-	var said := view._say("%s:%s" % ["search" if kind == "search" else "examine", id], view.leader().creature as Character)
+	# A prop's own `say` first (a camp's fire indoors: examine:camp_fire:indoors), then examine:<id> or search:<id>.
+	var lead := view.leader().creature as Character
+	var said := str(prop.get("say", "")) != "" and view._say(str(prop["say"]), lead)
+	if not said:
+		said = view._say("%s:%s" % ["search" if kind == "search" else "examine", id], lead)
 	if not said and str(prop.get("text", "")) != "":
 		view.narration.emit(str(prop["text"]))
 	view._trigger_encounter("examine:" + id)

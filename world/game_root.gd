@@ -973,10 +973,11 @@ func _exit_tree() -> void:
 
 # --- Screens --------------------------------------------------------------------------------------
 
-## The music for where the party is (art/audio.json: the place's own mood, else its map's theme).
+## The music for where the party is (art/audio.json: the place's own mood, else its region's as the story stands, else
+## its map's theme).
 func _place_mood() -> String:
 	var loc := Compendium.shared().get_entry("locations", st.location)
-	return Audio.mood_for(st.location, ArenaBoard.theme_for(loc.get("map", {}) as Dictionary))
+	return Audio.mood_for(st.location, ArenaBoard.theme_for(loc.get("map", {}) as Dictionary), st)
 
 
 func open_screen(kind: String, index: int) -> void:

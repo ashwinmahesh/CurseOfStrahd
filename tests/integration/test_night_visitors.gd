@@ -3,10 +3,13 @@ extends TestCase
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
 ## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
 ## Rest benefits. Every fight finishes, and each group is hard but winnable (the owner's standing rule, and his
-## 2026-10-12 word on easy fights): won at least twice in eight and lost at least twice.
+## 2026-10-12 word on easy fights): won at least twice in eight and lost at least twice. The wild's groups are played
+## in an open field; a town's and indoors' in a real village and a real house, from the camp the party makes there.
 
 var root: Node
 const FIELD := "test_night_field"
+## Where a setting's own groups are played: the camp the party makes on arriving in a real place.
+const PLACES := {"town": "village_of_barovia", "indoors": "burgomaster_mansion"}
 
 
 func after_each() -> void:
@@ -29,6 +32,11 @@ func _camp(region: String, level: int) -> LocationCamp:
 		rows.append("#".repeat(26) if z == 0 or z == 19 else "#" + ".".repeat(24) + "#")
 	Compendium.shared().tables["locations"][FIELD] = {"id": FIELD, "name": "Test Field", "region": region, "summary": "",
 		"map": {"rows": rows, "outdoors": true, "theme": "wilderness"}, "spawns": {"default": [12, 10]}, "rest": "risky"}
+	return await _camp_in(FIELD, level)
+
+
+## The four at `level` in `place` at night, and the camp they make where they arrive.
+func _camp_in(place: String, level: int) -> LocationCamp:
 	GameState.reset()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		var ch := Pregens.build(id, level)
@@ -36,7 +44,7 @@ func _camp(region: String, level: int) -> LocationCamp:
 		_tired(ch)
 		GameState.story.party.append(ch)
 	GameState.story.milestones = level - 1
-	GameState.story.location = FIELD
+	GameState.story.location = place
 	GameState.story.minute_of_day = 22 * 60
 	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
 	add_child(root)
@@ -71,14 +79,25 @@ func _group(id: String) -> Dictionary:
 	return {}
 
 
+## The camp `group` comes for at the lowest level it's for: a town's or indoors' in its real place, else the open field
+## in a region of its land.
+func _camp_for(group: Dictionary) -> LocationCamp:
+	var level := int((group["levels"] as Array)[0])
+	var land := str(group["land"])
+	for where: String in PLACES:
+		if CampSite.land_of("", where) == land:
+			return await _camp_in(str(PLACES[where]), level)
+	return await _camp(_region_of(land), level)
+
+
 ## Plays `group` at camp at the lowest level it comes for, with the dice at `seed_value`.
 func _play(group: Dictionary, seed_value: int) -> Dictionary:
-	var camp := await _camp(_region_of(str(group["land"])), int((group["levels"] as Array)[0]))
+	var camp := await _camp_for(group)
 	var view := root.get("view") as LocationView
-	var taken := {}
-	for m: Combatant in view.members:
-		taken[m.cell] = true
-	var spec := CampSite.fight_for(group, view.grid, camp.center, taken)
+	assert_true(camp != null, "%s: camp is made" % group["id"])
+	if camp == null:
+		return {"outcome": "no camp", "rounds": 0, "downs": 0}
+	var spec := CampSite.fight_for(group, view.grid, camp.center, camp.night_taken())
 	assert_eq((spec.get("monsters", []) as Array).size(), (group["monsters"] as Array).size(), "%s: all of them come" % group["id"])
 	Dice.reseed(seed_value)
 	assert_true(view.start_custom_encounter(spec), "%s starts" % group["id"])
@@ -137,7 +156,37 @@ func test_every_land_has_a_group_for_every_level() -> void:
 	for land: String in ["forest", "marsh", "mountain", "castle"]:
 		for level in range(1, StoryState.LEVEL_CAP + 1):
 			assert_false(CampSite.groups_for(_region_of(land), level).is_empty(), "something comes for a level %d camp in the %s" % [level, land])
+	for where: String in PLACES:
+		for level in range(1, StoryState.LEVEL_CAP + 1):
+			assert_false(CampSite.groups_for("svalich_road", level, where).is_empty(), "something comes for a level %d camp %s" % [level, where])
 	assert_eq(CampSite.land_of("nowhere_at_all"), str(CampSite.visitors()["default_land"]), "a region not listed")
+
+
+func test_a_night_in_town_or_indoors_brings_their_own_visitors() -> void:
+	for where: String in PLACES:
+		var camp := await _camp_in(str(PLACES[where]), 2)
+		assert_true(camp != null, "camp is made in %s" % PLACES[where])
+		if camp == null:
+			continue
+		assert_eq(camp.setting, where)
+		var view := root.get("view") as LocationView
+		var s := 1
+		while DiceRoller.new(s).roll_one(6) != 1:
+			s += 1
+		Dice.reseed(s)
+		camp.sleep()
+		await _frames(2)
+		assert_true(view.in_combat, "something comes in the night %s" % where)
+		var want: Array = CampSite.groups_for(str(view.loc.get("region", "")), 2, where)[0]["monsters"]
+		var foes := view.combat_view.e.combatants.filter(func(c: Combatant) -> bool: return c.side == &"enemy")
+		var ids: Array = foes.map(func(c: Combatant) -> String: return (c.creature as Monster).data.get("id", ""))
+		ids.sort()
+		want = want.duplicate()
+		want.sort()
+		assert_eq(ids, want, "the %s's own visitors" % where)
+		root.queue_free()
+		root = null
+		await _frames(3)
 
 
 func test_the_forests_visitors_are_hard_but_winnable() -> void:
@@ -154,3 +203,11 @@ func test_the_mountains_visitors_are_hard_but_winnable() -> void:
 
 func test_the_castles_visitors_are_hard_but_winnable() -> void:
 	await _land("castle")
+
+
+func test_a_towns_visitors_are_hard_but_winnable() -> void:
+	await _land("town")
+
+
+func test_the_visitors_indoors_are_hard_but_winnable() -> void:
+	await _land("indoors")
