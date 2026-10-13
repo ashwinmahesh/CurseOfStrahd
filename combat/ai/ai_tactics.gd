@@ -368,8 +368,9 @@ const CUT_OFF_TURNS := 2
 
 ## Whether `c` can't get at any of its enemies however long it walks: no way across the map (its own way of moving:
 ## walls, drops and bystanders in the way, but not creatures, nor doors and furniture, which can be opened or broken)
-## ends where one of its attacks reaches a standing enemy, a ranged one with a clear line to it. Stat-block spells
-## count as a 60 ft reach.
+## ends where one of its attacks reaches a standing enemy, a ranged one with a clear line to it (stat-block spells
+## count as a 60 ft reach); and no enemy can walk up beside it either (a Large dire wolf can't pass a one-square
+## doorway, but the heroes behind it can come out to it).
 func cut_off(c: Combatant) -> bool:
 	var e := enc()
 	var foes: Array[Combatant] = []
@@ -389,19 +390,9 @@ func cut_off(c: Combatant) -> bool:
 	if AiSpells.casts(c):
 		ranged = maxi(ranged, 60)
 	var g := e.grid
-	# The squares doors and furniture fill count as open for the walk (their flags go back right after).
-	var kept := {}
-	for o in e.objects.list:
-		if o.destroyed or o.hangs or o.blocks == 0:
-			continue
-		for cell in o.cells:
-			if not kept.has(cell):
-				kept[cell] = g.flags(cell) & (CombatGrid.WALL | CombatGrid.LOW)
-				g.set_flag(cell, CombatGrid.WALL | CombatGrid.LOW, false)
+	var open := open_grid(true, true)
 	var none := func(_x: Vector2i) -> bool: return false
-	var walk := g.reachable(c.cell, c.size_cells, 4000, none, none, none, e.movement.move_mode(c))
-	for cell: Vector2i in kept:
-		g.set_flag(cell, int(kept[cell]), true)
+	var walk := open.reachable(c.cell, c.size_cells, 4000, none, none, none, e.movement.move_mode(c))
 	# Lines are looked for from at most this many squares; past that it counts as able to get at them.
 	var looks := 400
 	for f in foes:
@@ -413,7 +404,34 @@ func cut_off(c: Combatant) -> bool:
 				looks -= 1
 				if looks <= 0 or g.can_see(cell, c.size_cells, f.cell, f.size_cells):
 					return false
+	for f in foes:
+		for cell: Vector2i in open.reachable(f.cell, f.size_cells, 4000, none, none, none, e.movement.move_mode(f)):
+			if g.distance_ft(cell, f.size_cells, c.cell, c.size_cells, f.altitude, c.altitude) <= 5:
+				return false
 	return true
+
+
+## A copy of the fight's grid to walk on (the fight's own is never touched, so a worker thread may make one): shut doors
+## open (`locked`: the locked ones too), and with `furniture` the squares furniture and other breakable things fill.
+func open_grid(locked: bool, furniture: bool) -> CombatGrid:
+	var e := enc()
+	var src := e.grid
+	var g := CombatGrid.new()
+	g.width = src.width
+	g.depth = src.depth
+	g._flags = src._flags.duplicate()
+	g._height = src._height
+	g.raised = src.raised
+	g.drop_ft = src.drop_ft
+	g.ceiling_ft = src.ceiling_ft
+	g.has_relief = src.has_relief
+	g._max_height = src._max_height
+	for o in e.objects.list:
+		if o.destroyed or o.hangs or o.blocks == 0 or not (o.is_door() or furniture) or (o.is_door() and o.locked and not locked):
+			continue
+		for cell in o.cells:
+			g.set_flag(cell, CombatGrid.WALL | CombatGrid.LOW, false)
+	return g
 
 
 ## A turn with no attack in it (`plan`, AiBrain.plan_turn): a foe cut off from every enemy (cut_off) for CUT_OFF_TURNS
