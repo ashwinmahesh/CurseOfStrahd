@@ -236,7 +236,7 @@ insects 100).
 | `berez_drowned_lights` | berez | enter `berez_drowned_lane` at night | 3 wisps, 2 swarms (1550) | same | 2 wisps, swarm | Low |
 | `lysaga_in_hut` (critical path) | hut | dialogue | Lysaga 120 HP, 2 swarms (7400) | Lysaga 105 HP, 2 swarms | Lysaga 85 HP, swarm | Moderate |
 | `lysaga_at_monument` | berez | dialogue (the grave-lamp) | Lysaga 120, 2 swarms, 2 scarecrows (7800) | Lysaga 105, 2 swarms, scarecrow | Lysaga 85, 2 swarms | Moderate |
-| `creeping_hut_masterless` | berez | enter `berez_hut_stump` after the lure | the hut at 200 HP (7200) | 160 HP | 120 HP | Low-Moderate |
+| `creeping_hut_masterless` | berez | enter `berez_hut_stump` after the lure | the hut at its book 263 HP + 3 swarms of insects (7500) | 160 HP | 120 HP | Low-Moderate |
 | `lysaga_and_hut` | berez | dialogue (the challenge) | Lysaga 100 + hut 150 (14400 nominal) | 85 + 120 | 70 + 100 | above High: the very hard way |
 | `lysaga_scorned` | berez | dialogue (after Strahd) | Lysaga at 60 HP, no hut | same | same | Low in effect |
 | `roc_of_ghakis` | tsolenka_pass | enter `tsolenka_bridge` by day | roc 190 HP (7200) | 160 HP | 130 HP | Low-Moderate |

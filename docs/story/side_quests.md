@@ -478,8 +478,9 @@ empty harness rises with him. With the dragon's last words from The Squire (`vla
   necrotic cold, a Covetous Glare that paralyzes (recharge 5-6, DC 16 Wis), Regeneration 10 that fire and radiant
   stop, Legendary Resistance (2/day), and a blow or a step between turns. CR 10. Three animated armours come with him
   ("An Escort's Harness").
-- Fight `gilded_knight` in the undercroft. The autopilot wins 3 of 8 at level 9 at full strength and 4 of 8 with the
-  dragon's words, losing two or three party members a fight.
+- Fight `gilded_knight` in the undercroft. The autopilot wins 2 of 8 at level 9 with the knight at 207 HP in this
+  fight (3 of 8 at his 178; 2026-10-13, the owner's 2/8) and 4 of 8 with the dragon's words, losing two or three party
+  members a fight.
 - In his armour: a Golden Idol of Good Fortunes (very rare). Then the tithe chest: send it down to the valley (the Order
   rides it out at Midwinter, or the party carries it if the knights are at rest; 250 gp, and Godrick, Kip, Liriel,
   Wren and Thistle approve), or keep it (1,200 gp, and they don't).
@@ -768,7 +769,8 @@ exchange for the runt (`given`: the quest fails and the companions disapprove), 
   claws, Pack Tactics, a howl that frightens (recharge 5-6), Legendary Resistance (2/day), and a bite or a lope
   between turns. CR 9.
 - Fight `grandsire` in Krezk's square: level 8 the Grandsire, 2 old wolves of the pack (werewolves) and 2 dire wolves,
-  6,800 XP (the autopilot wins 2 of 4 and loses two or three party members a fight); level 9 three werewolves; level 7
+  6,800 XP (the autopilot wins 2 of 8 and loses two or three party members a fight); level 9 three werewolves and the
+  Grandsire at 225 HP (2 of 8; at 180 it won 4); level 7
   one dire wolf fewer; below 7 the Grandsire at 140 HP with one of each.
 - Krezk's bounty, from Dmitri: 300 gp and the iron bands that have hung in the watch house for the wolf that never
   came, Iron Bands of Bilarro (rare).
