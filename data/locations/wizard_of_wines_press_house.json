@@ -516,7 +516,8 @@
             15,
             5
           ],
-          "name": "The Mash"
+          "name": "The Mash",
+          "hp": 135
         },
         {
           "monster": "vine_blight",
@@ -624,12 +625,34 @@
             5
           ],
           "name": "The Mash",
-          "hp": 90
+          "hp": 140
         },
         {
           "monster": "vine_blight",
           "cell": [
             19,
+            3
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            10,
+            8
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            5,
+            3
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            7,
             3
           ]
         }

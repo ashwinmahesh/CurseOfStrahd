@@ -589,12 +589,11 @@ a guest until Davian's report); otherwise he flies off and the party cuts the ro
   lash and a creeping move between turns. CR 8.
 - Fight `vine_mother` at the foot of the row: she rises right behind the Seventh Row, her branches in reach of the
   party at its basket, with the row's vines between them (the heroes reach her round its end, or shoot). Level 6 the
-  Vine Mother at 195 HP, 3 vine blights and 4 needle blights (4,400 XP; one fewer since the vine blights stopped
-  holding her in their own Entangle, 2026-10-13); level 7 four vine and six needle blights; level 8 five vine and six
-  needle blights and the Sixth Row (a tree blight), 7,600 XP; below 6 the Vine Mother at 110 HP, 2 vine and 3 needle
-  blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at level 6 with Adrian and 3 without him, 3 at level
-  7 and 1 at level 8, about three heroes down in a win; 3 of 8 at level 5 before the Entangle change (the owner's
-  targets, 2026-10-13).
+  Vine Mother at 215 HP, 3 vine blights and 5 needle blights (4,450 XP); level 7 at 212 HP, four vine and six needle
+  blights; level 8 at 180 HP, five vine and six needle blights and the Sixth Row (a tree blight), 7,600 XP; below 6
+  the Vine Mother at 87 HP, a vine and 3 needle blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at levels
+  6 (with Adrian or without him), 7 and 8 and 3 at level 5, about three heroes down in a win (the owner's targets,
+  2026-10-13; measured with the vine blights' new Entangle aim, foes striking unseen heroes and opening doors).
 - Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
 
 ## Vallaki and Castle Ravenloft (level 10)
@@ -1043,14 +1042,14 @@ Kostin stands aside (and stays to keep the hill afterwards); Ruxandra fights bes
 down (Persuasion DC 15, one try).
 
 - **Boss: the Ash Effigy** (data/monsters/ash_effigy.json, `source.book: custom`, built up from the tree blight, drawn
-  with its sprite at Huge): Huge plant, AC 15, 175 HP (150 below level 8, 155 at level 8 when it stands alone), two Ash
-  Fists (reach 15), Choking Ash
-  (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and Blinded), Regeneration 10 that cold stops, immune to fire and
-  vulnerable to cold, Legendary Resistance (2/day), and a fist or a step between turns. CR 8. Embers (twig blights)
-  crawl after it.
-- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 3
-  of 8 at level 7 with Zorica beside it (2 of the test's 6) and 2 of 8 at level 8 against it alone (owner's 2/8,
-  2026-10-13; it spends both legendary uses on fists since legendary-uses), losing three a fight.
+  with its sprite at Huge): Huge plant, AC 15, 175 HP (150 below level 8; 212 at level 8 alone with five embers, 220
+  with a druid beside it), two Ash Fists (reach 15), Choking Ash (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and
+  Blinded), Regeneration 10 that cold stops, immune to fire and vulnerable to cold, Legendary Resistance (2/day), and
+  a fist or a step between turns. CR 8. Embers (twig blights) crawl after it.
+- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 2
+  of 8 at level 7 with Zorica or Ruxandra beside it (five embers), and 2 of 8 at level 8 alone or with either of them
+  (the owner's 2/8, 2026-10-13; it spends both legendary uses on fists since legendary-uses, and foes strike unseen
+  heroes whose squares they know), losing three a fight.
 - Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
 
 ### The Barrow on Yester Hill (`the_barrow_on_yester_hill`, narrative/yester_hill/the_barrow.dialogue; batch 7)

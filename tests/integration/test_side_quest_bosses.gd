@@ -59,12 +59,14 @@ const SEVENTH_ROW: Array[Vector2i] = [Vector2i(29, 24), Vector2i(28, 24), Vector
 
 ## Hard but winnable (the owner's 2/8 at level 6), with Adrian along or without him.
 func test_the_vine_mother_at_level_6() -> void:
+	speakers_step_aside = true
 	var wins := await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"],
 		["adrian_martikov"], [], SEVENTH_ROW)
 	assert_true(wins >= 2 and wins <= 6, "the Vine Mother falls in 2 to 6 of 8 with Adrian (%d)" % wins)
 	wins = await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"], [], [],
 		SEVENTH_ROW)
 	assert_true(wins >= 2 and wins <= 6, "and in 2 to 6 of 8 without him (%d)" % wins)
+	speakers_step_aside = false
 
 
 ## Granny Ash at her full 184 HP.
@@ -228,15 +230,22 @@ func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
 const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
 
 
-## Zorica fights beside the Ash Effigy (nobody talked her down).
+## Zorica fights beside the Ash Effigy (nobody talked her down), stepping aside from the conversation first: the
+## owner's 2 in 8 over seeds 1-8 (2026-10-13).
 func test_the_ash_effigy_and_zorica_at_level_7() -> void:
-	await _series("yester_hill_gulthias_tree", 22, 7, "ash_effigy", [1, 2, 3, 4, 5, 6], ["yester_hill_resolved", "gulthias_tree_burned"], [], [], YESTER_CROWN)
+	speakers_step_aside = true
+	var wins := await _series("yester_hill_gulthias_tree", 22, 7, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned"], [], [], YESTER_CROWN)
+	speakers_step_aside = false
+	assert_true(wins <= 3, "the Ash Effigy and Zorica stay hard at level 7: %d/8" % wins)
 
 
 ## Kostin's tree, and he stands aside: the effigy and its embers. Seeds 1-8 (the owner's series): the effigy spends both
-## legendary uses on a fist now, so it stands at 155 HP here, about 2 wins in 8.
+## legendary uses on a fist now, and foes strike unseen heroes whose squares they know, so it stands at 212 HP with five
+## embers here, 2 wins in 8.
 func test_the_ash_effigy_at_level_8() -> void:
+	speakers_step_aside = true
 	var wins := await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+	speakers_step_aside = false
 	assert_true(wins <= 3, "the Ash Effigy stays hard at level 8 (the owner's 2/8): %d/8" % wins)
 
 ## The family crypts under Death House, the four at Walter's crypt.
