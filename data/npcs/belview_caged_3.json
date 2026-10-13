@@ -1,0 +1,20 @@
+{
+  "id": "belview_caged_3",
+  "name": "Belview",
+  "title": "In the Cells",
+  "summary": "A Belview the Abbot's gifts didn't take, pressed to the bars of the last cell, a paw that was once a hand curled round the iron.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them",
+  "pockets": false
+}

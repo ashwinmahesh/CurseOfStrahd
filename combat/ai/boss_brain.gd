@@ -154,7 +154,12 @@ func _close_in(c: Combatant) -> CombatResult:
 	var target := _best_target(c)
 	if target == null or e.distance(c, target) <= 5:
 		return CombatResult.new()
-	return e.ai._approach(c, {"target": target, "dash": false})
+	# Round dangerous ground it knows of while that reaches the target (combat/ai/ai_hazards.gd).
+	var hz := e.ai.hazards.read(c)
+	var only: Array[Combatant] = [target]
+	var round_it := hz != null \
+		and not e.ai.hazards.reachable_foes(c, hz, only, e.ai._usable_options(c), e.ai.hazards.calm_reach(c)).is_empty()
+	return e.ai._approach(c, {"target": target, "dash": false, "hazards": hz, "round": round_it})
 
 
 ## Moves as far from the foes as it can this turn.
@@ -349,20 +354,31 @@ func _threatened(c: Combatant) -> bool:
 	return false
 
 
-## The square within its Speed farthest beyond every foe's reach (its own square when nothing is better).
+## The square within its Speed farthest beyond every foe's reach (its own square when nothing is better), clear of the
+## dangerous ground it knows of first (combat/ai/ai_hazards.gd).
 func _safe_cell(c: Combatant) -> Vector2i:
 	var e := enc()
 	var reach := e.reachable_for(c, c.speed())
+	var hz := e.ai.hazards.read(c)
+	var calm := reach if hz == null else e.reachable_for(c, c.speed(), false, hz.avoid)
+	var here: Array[Vector2i] = [c.cell]
 	var best := c.cell
-	var best_s := _safety(c, c.cell)
+	var best_s := _safety(c, c.cell) - _harm(hz, here)
 	for cell: Vector2i in reach:
 		if bool((reach[cell] as Dictionary)["occupied"]):
 			continue
-		var s := _safety(c, cell) - int((reach[cell] as Dictionary)["cost"]) * 0.01
+		var way := calm if calm.has(cell) else reach
+		var s := _safety(c, cell) - int((way[cell] as Dictionary)["cost"]) * 0.01
+		s -= _harm(hz, CombatGrid.path_to(way, cell))
 		if s > best_s + 0.01:
 			best_s = s
 			best = cell
 	return best
+
+
+## Dangerous ground on the walk `path` and where it ends (AiHazards.View.cost), weighed far above any square's safety.
+static func _harm(hz: AiHazards.View, path: Array[Vector2i]) -> float:
+	return 0.0 if hz == null else hz.cost(path) * 100.0
 
 
 func _safety(c: Combatant, cell: Vector2i) -> float:
@@ -376,18 +392,25 @@ func _safety(c: Combatant, cell: Vector2i) -> float:
 	return minf(nearest, 30.0)
 
 
-## A free square next to `t` that `c` can reach within its Speed, the closest to walk to (its own square if none).
+## A free square next to `t` that `c` can reach within its Speed, the closest to walk to (its own square if none), and
+## none on the dangerous ground it knows of or walked to across it (combat/ai/ai_hazards.gd).
 func _cell_beside(c: Combatant, t: Combatant) -> Vector2i:
 	var e := enc()
 	var reach := e.reachable_for(c, c.speed())
+	var hz := e.ai.hazards.read(c)
+	var calm := reach if hz == null else e.reachable_for(c, c.speed(), false, hz.avoid)
 	var best := c.cell
 	var best_cost := 1 << 30
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > 5:
 			continue
-		if int(info["cost"]) < best_cost:
-			best_cost = int(info["cost"])
+		var way := calm if calm.has(cell) else reach
+		if _harm(hz, CombatGrid.path_to(way, cell)) > 0.0:
+			continue
+		var cost := int((way[cell] as Dictionary)["cost"])
+		if cost < best_cost:
+			best_cost = cost
 			best = cell
 	return best
 

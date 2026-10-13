@@ -534,6 +534,10 @@ func use(c: Combatant, opt_id: String, target: Combatant = null, cell: Vector2i 
 func _move(c: Combatant, cell: Vector2i) -> CombatResult:
 	var e := enc()
 	var reach := e.reachable_for(c, c.speed())
+	# Round the dangerous ground the AI knows of, when that way gets there (combat/ai/ai_hazards.gd).
+	var calm := e.ai.hazards.calm_reach(c, c.speed())
+	if calm.has(cell):
+		reach = calm
 	var path := CombatGrid.path_to(reach, cell)
 	var keep_move := c.movement_left
 	var keep_dis := c.disengaged

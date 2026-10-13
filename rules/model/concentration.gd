@@ -11,6 +11,9 @@ var _links: Array[Dictionary] = []   ## {creature: WeakRef, effect: Effect}
 var ended: bool = false
 ## Rounds left before the spell's duration runs out (10 a minute); -1 = no limit kept here.
 var rounds_left: int = -1
+## An 8-hour spell held until the caster's next Long Rest instead (the house rule, Effect.until_long_rest): no clock,
+## and the rest ends it even for a caster who stays conscious through it (Creature.finish_long_rest).
+var until_long_rest: bool = false
 
 
 func _init(caster: Creature, source_id_: String, name_: String) -> void:
@@ -21,6 +24,10 @@ func _init(caster: Creature, source_id_: String, name_: String) -> void:
 
 ## Sets the time limit from a spell's duration ({kind: rounds|minutes|hours|days, amount}).
 func set_duration(duration: Dictionary) -> void:
+	until_long_rest = Effect.until_long_rest(duration)
+	if until_long_rest:
+		rounds_left = -1
+		return
 	var amount := int(duration.get("amount", 1))
 	match str(duration.get("kind", "")):
 		"rounds":

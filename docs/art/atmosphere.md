@@ -253,7 +253,12 @@ What it sees (`Vista`, built with the land in the Modern finish, placed from `ar
   Temple's glow, Mount Baratok, the Abbey on its crag, Krezk on its cliff, Vallaki's palisade, Argynvostholt's beacon
   tower, Yester Hill's stones and tree, Old Bonegrinder's windmill and Van Richten's tower on its island (vistas.json
   `landmarks`). A place sees the nearest four within each one's `within`, never one standing in front of another
-  (`Vista.SPREAD`), never its own (closer than `near`: a mountain isn't seen from its slopes).
+  (`Vista.SPREAD`), never its own (closer than `near`: a mountain isn't seen from its slopes). The tilted camera only
+  ever looks along a diagonal (its frame reaches about 27 degrees either side), so a landmark due north, east, south
+  or west of a place is never in view; a landmark's `from` lays a place's own `bearing`, `far`, `height` or `sink` over
+  its numbers where that place's map knows better than the travel art (`Vista.seen_from`). The Abbey, due north of
+  Krezk on the travel art, stands north-north-east of Krezk and the Pool of the White Sun, up the mountain Krezk's
+  track climbs, its crag above the far ridges (owner ask, 2026-10-13); right at Krezk's gate the slope hides it.
 - **Lake Zarovich** stretching away from the places near it (Vallaki, the lake shore, Van Richten's tower, the
   werewolf den, the Wizard of Wines).
 

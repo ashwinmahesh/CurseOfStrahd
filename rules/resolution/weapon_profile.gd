@@ -5,6 +5,9 @@ extends RefCounted
 ## property if the wielder can use it. Character sheets list these; AttackResolver rolls them.
 
 var item_id: String = ""
+## The mundane weapon underneath: a +1 Hand Crossbow's "hand_crossbow", a Keyholes dagger reshaped as a Handaxe's
+## "handaxe"; item_id for a plain weapon.
+var base_item: String = ""
 var name: String = ""
 var melee: bool = true
 var thrown: bool = false
@@ -40,6 +43,7 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	var either := bool(item.get("_either_ability", false))
 	var w := item.get("weapon", {}) as Dictionary
 	p.item_id = str(item.get("id", ""))
+	p.base_item = str(item.get("base_item", p.item_id))
 	p.name = str(item.get("name", p.item_id)) + (" (thrown)" if as_thrown else "")
 	if not ammo.is_empty():
 		p.ammo_id = str(ammo.get("id", ""))
@@ -102,7 +106,7 @@ static func build(c: Creature, item: Dictionary, as_thrown: bool = false, in_mai
 	if p.melee and not p.two_hands and not other_weapon:
 		p.tags.append("one_handed_alone")
 	p.proficient = ch.weapon_proficient(item) if ch != null else true
-	if ch != null and str(item.get("base_item", p.item_id)) in ch.weapon_masteries:
+	if ch != null and p.base_item in ch.weapon_masteries:
 		p.mastery = str(w.get("mastery", ""))
 	p._apply_overrides(c)
 	p._compute(c)
@@ -163,7 +167,7 @@ func _apply_overrides(c: Creature) -> void:
 ## The same weapon using another ability for attack and damage (True Strike's spellcasting ability).
 func with_ability(ab: StringName, c: Creature) -> WeaponProfile:
 	var p := WeaponProfile.new()
-	for prop: String in ["item_id", "name", "melee", "thrown", "proficient", "damage_dice", "damage_type", "mastery",
+	for prop: String in ["item_id", "base_item", "name", "melee", "thrown", "proficient", "damage_dice", "damage_type", "mastery",
 			"properties", "normal_range", "long_range", "reach", "two_hands", "ammo_id"]:
 		p.set(prop, get(prop))
 	p.tags = tags.duplicate()
