@@ -141,7 +141,7 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 
 ## Owner decision (2026-10-13: "why do buildings shrink down ... when I get near them? Same things with walls. Lets
 ## disable this effect"): outside, a house or Castle Ravenloft's wall between the camera and the party stands, roof and
-## all; trees still fade.
+## all, and goes see-through like the trees while it hides the party (his pick the same day), solid again once clear.
 func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_false(bool(BuildingKit.settings().get("cut_away", false)), "the catalog's cut_away is off")
 	var v := _view("village_of_barovia")
@@ -154,6 +154,10 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	assert_true((b0["walls"] as Node3D).visible and is_equal_approx((b0["walls"] as Node3D).scale.y, 1.0), "the house in the way stands")
 	assert_false((b0["stub"] as Node3D).visible, "no footing in its place")
 	assert_true((b0["upper"] as Node3D).visible, "roof and all")
+	assert_true(_fade_of(b0["walls"] as Node3D) > 0.5 and _fade_of(b0["upper"] as Node3D) > 0.5, "see-through while it hides the party")
+	for i in 2:
+		v.board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
+	assert_true(is_zero_approx(_fade_of(b0["walls"] as Node3D)) and is_zero_approx(_fade_of(b0["upper"] as Node3D)), "solid again once clear")
 	v.queue_free()
 	await _frames(1)
 	var c := _view("castle_ravenloft_gates")
@@ -163,7 +167,18 @@ func test_buildings_and_walls_in_the_way_stand() -> void:
 	for i in 2:
 		c.board.cut_buildings(focus + Vector3(0, 12, 12), focus, 1.0)
 	assert_true((gate_wall["walls"] as Node3D).visible and not (gate_wall["stub"] as Node3D).visible, "the castle wall in the way stands")
+	assert_true(_fade_of(gate_wall["walls"] as Node3D) > 0.5, "see-through")
+	var keep := c.board.buildings[int(c.board.house_cells[Vector2i(20, 4)])] as Dictionary
+	assert_true(is_zero_approx(_fade_of(keep["walls"] as Node3D)), "the keep behind the party stays solid")
 	c.queue_free()
+
+
+## The most see-through any mesh under `n` is (GeometryInstance3D.transparency, as ModelPiece.set_fade sets it).
+func _fade_of(n: Node3D) -> float:
+	var most := (n as GeometryInstance3D).transparency if n is GeometryInstance3D else 0.0
+	for g in n.find_children("*", "GeometryInstance3D", true, false):
+		most = maxf(most, (g as GeometryInstance3D).transparency)
+	return most
 
 
 ## W7: an L-shaped block of wall is one building: its parts share their height, roof and paint, there's no wall or

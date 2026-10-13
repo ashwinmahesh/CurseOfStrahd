@@ -1013,6 +1013,14 @@ func open_screen(kind: String, index: int) -> void:
 		_:
 			return
 	add_child(screen)
+	# A screen that frees itself (not through close_screen) isn't left behind as the open one: Esc in a later fight
+	# or a bug report would read a freed screen (owner's reports 2026-10-12 20:06 and 20:08).
+	var opened := screen
+	opened.tree_exited.connect(func() -> void:
+		if screen == opened:
+			screen = null
+			if is_inside_tree():
+				get_tree().paused = false)
 	var fighting := view != null and view.in_combat
 	if screen is CharacterSheetScreen:
 		(screen as CharacterSheetScreen).in_fight = fighting   # view only in a fight (owner, 2026-10-08)
