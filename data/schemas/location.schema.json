@@ -307,6 +307,10 @@
           "text": {
             "type": "string"
           },
+          "say": {
+            "type": "string",
+            "description": "A Narrator trigger tried before examine:<id> (or search:<id>) when the prop is used: a camp's fire indoors says examine:camp_fire:indoors."
+          },
           "burning": {
             "type": "string",
             "description": "A condition: while it holds, the prop burns (a big flame and light)."

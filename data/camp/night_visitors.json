@@ -1,6 +1,10 @@
 {
   "id": "night_visitors",
-  "summary": "What comes out of the dark when a night at camp in a risky place is interrupted (F16, docs/story/camp.md): by the lie of the land the region has, and the party's level. Each group is played to the end by the test autopilot at the lowest level it's for, with the party tired as an interrupted night finds it (tests/integration/test_night_visitors.gd): hard but winnable, won and lost at least twice in eight.",
+  "summary": "What comes out of the dark when a night at camp in a risky place is interrupted (F16, docs/story/camp.md): by the lie of the land (a town's streets and indoors have their own; elsewhere the region's) and the party's level. Each group is played to the end by the test autopilot at the lowest level it's for, with the party tired as an interrupted night finds it (tests/integration/test_night_visitors.gd): hard but winnable, won and lost at least twice in eight.",
+  "settings": {
+    "town": "town",
+    "indoors": "indoors"
+  },
   "lands": {
     "svalich_road": "forest",
     "into_the_mists": "forest",
@@ -106,6 +110,48 @@
       "levels": [7, 11],
       "text": "Pale figures walk out of the dark behind the bats, smiling, in no hurry at all.",
       "monsters": ["vampire_spawn", "vampire_spawn", "vampire_spawn", "swarm_of_bats", "swarm_of_bats"]
+    },
+    {
+      "id": "town_cutthroats",
+      "land": "town",
+      "levels": [1, 3],
+      "text": "Soft footsteps in the empty street. Cutthroats, come to see what strangers carry, and sure that no door will open however loud it gets.",
+      "monsters": ["tough", "tough", "bandit", "bandit", "mastiff"]
+    },
+    {
+      "id": "town_dead",
+      "land": "town",
+      "levels": [4, 6],
+      "text": "The churchyard gate stands open. The dead come up the street toward the fire, slow and sure, and every shutter stays shut.",
+      "monsters": ["strahd_zombie", "strahd_zombie", "ghoul", "ghoul", "ghast", "zombie", "zombie"]
+    },
+    {
+      "id": "town_spawn",
+      "land": "town",
+      "levels": [7, 11],
+      "text": "Two pale figures walk down the middle of the street, smiling, and the Count's wolves follow at their heels like dogs.",
+      "monsters": ["vampire_spawn", "vampire_spawn", "dire_wolf", "wolf", "wolf"]
+    },
+    {
+      "id": "indoors_rats",
+      "land": "indoors",
+      "levels": [1, 3],
+      "text": "Scratching in the walls, then squeaking, then rats pour out of every crack and gap toward the warmth.",
+      "monsters": ["swarm_of_rats", "swarm_of_rats", "giant_rat", "giant_rat", "giant_rat"]
+    },
+    {
+      "id": "indoors_shadows",
+      "land": "indoors",
+      "levels": [4, 6],
+      "text": "The shadows in the corners don't move when the fire does. Then they peel off the walls, and the dead come through the door behind them.",
+      "monsters": ["shadow", "shadow", "ghoul", "ghoul", "ghast", "skeleton"]
+    },
+    {
+      "id": "indoors_wraith",
+      "land": "indoors",
+      "levels": [7, 11],
+      "text": "The fire gutters and burns blue. Something cold comes through the wall, and the dead it has made come with it.",
+      "monsters": ["wraith", "wight", "wight", "wight", "wight", "specter", "specter", "shadow", "shadow"]
     }
   ]
 }

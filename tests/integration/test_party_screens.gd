@@ -72,6 +72,59 @@ func test_a_long_rest_waits_for_a_clear_building_and_sixteen_hours() -> void:
 	assert_true(_says(rest, "the next can start in 16 hours"), "and how long until the next")
 
 
+## A Short Rest is taken anywhere outside a fight, a place that allows no sleep included (owner, 2026-10-12): there
+## the Long Rest's card is off, in the place's own words. Foes in plain view, or a fight here begun and not won, stop
+## it, and its card says why; the Hit Point Dice wait with it.
+func test_a_short_rest_where_nobody_sleeps_out_of_sight_of_foes() -> void:
+	(Compendium.shared().tables["locations"] as Dictionary)["test_crypt"] = {"id": "test_crypt", "name": "Test Crypt",
+		"region": "test", "summary": "", "map": {"rows": ["##############", "#............#", "#............#", "#............#",
+		"##############"], "light": "bright"}, "spawns": {"default": [1, 2]}, "rest": "no",
+		"rest_text": "Something below breathes when you do. Nobody sleeps here.",
+		"areas": [{"id": "far_end", "name": "Far End", "cells": [[11, 1], [12, 3]]}],
+		"encounters": [{"id": "ghoul", "trigger": "enter_area:far_end", "waiting": true,
+			"monsters": [{"monster": "ghoul", "cell": [12, 2], "facing": "east"}]}]}
+	root.call("enter_location", "test_crypt", "default")
+	await _frames(3)
+	var view := root.get("view") as LocationView
+	assert_true(not view.waiting.is_empty() and LocationStealth.is_shown(view.waiting[0]), "the ghoul waits in plain view")
+	assert_false(view.in_combat, "it hasn't noticed the party")
+	var ilse := GameState.story.party[0]
+	ilse.hp = 1
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	assert_true(rest != null, "the screen opens where nobody sleeps")
+	assert_true(_button(rest, "Finish the Short Rest (1 hour)").disabled, "no Short Rest in sight of the ghoul")
+	assert_true(_says(rest, "Foes in sight (Ghoul)"), "the card says why")
+	assert_true(_button(rest, "Heal up with Hit Point Dice").disabled, "the Hit Point Dice wait too")
+	assert_true(_button(rest, "Take a Long Rest (8 hours)").disabled, "no Long Rest here")
+	assert_true(_says(rest, "Nobody sleeps here."), "in the place's own words")
+	root.call("close_screen")
+	await _frames(1)
+	# The ghoul dealt with: an hour's breather.
+	(GameState.story.loc_state("test_crypt")["encounters"] as Dictionary)["ghoul"] = true
+	LocationStealth.refresh_waiting(view)
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	rest = root.get("screen") as RestScreen
+	var short := _button(rest, "Finish the Short Rest (1 hour)")
+	assert_false(short.disabled, "a Short Rest where nobody sleeps")
+	assert_true(_button(rest, "Take a Long Rest (8 hours)").disabled, "though still no Long Rest")
+	var before := GameState.story.total_minutes()
+	short.pressed.emit()
+	await _frames(1)
+	assert_eq(GameState.story.total_minutes() - before, 60, "an hour passes")
+	root.call("close_screen")
+	await _frames(1)
+	# A fight here begun and not won (the party ran).
+	(GameState.story.loc_state("test_crypt")["encounters"] as Dictionary)["ghoul"] = "started"
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	rest = root.get("screen") as RestScreen
+	assert_true(_button(rest, "Finish the Short Rest (1 hour)").disabled, "not with the fight unfinished")
+	assert_true(_says(rest, "A fight here isn't over"), "and the card says so")
+
+
 func test_every_screen_opens() -> void:
 	for kind: String in ["sheet", "inventory", "journal", "party", "rest", "menu", "level_up"]:
 		root.call("open_screen", kind, 0)
