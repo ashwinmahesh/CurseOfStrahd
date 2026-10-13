@@ -59,6 +59,10 @@ cutscene heart_breaks
 Narrator: It takes time. The crystal is hard, and it mends a little between blows. But the cracks spread, and at last, with a sound like a church window breaking, the heart comes apart.
 Narrator: Red light pours out of it and is gone. The pieces that hit the floor are only glass.
 Narrator: Far below, deep in the castle, something draws a long breath, and the whole tower seems to listen.
+# What it was, for a party that broke it without ever learning (Narrative Audit batch 4).
+if not flag.heart_of_sorrow_known and not name:ratatoille
+Narrator: In the last of the red light you see what the glass held: wounds, hundreds of them, none of them yours. It took every blow meant for the man downstairs. It won't take another.
+endif
 set heart_of_sorrow_shattered
 quest the_heart_of_sorrow shattered
 interject name:ratatoille: The binding is cut. Every wound it was carrying for him, he carries himself now.

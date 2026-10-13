@@ -44,6 +44,12 @@ Narrator: The shuffling stops. Madam Eva looks past you at Ireena for a long mom
 Madam Eva [sad]: So. You have come round again, child. Further along the road than last time.
 Ireena: I've never been here in my life.
 Madam Eva: No. Not in this one. Sit by the brazier; you are cold all the way through, and it isn't the weather.
+# Ireena came to ask what he wants with her (village_of_barovia/ireena:...): she asks, and Eva tells her the first of it
+# for nothing; the paid question keeps the rest (Narrative Audit batch 3).
+Ireena: The women in the village said you could tell me what he wants with me.
+Madam Eva [sad]: What he has always wanted. A girl who told him no, a long time ago, in his own house. She keeps being born in this valley with the same face, and he keeps finding her.
+Ireena [afraid]: I'm not her. Whoever she was.
+Madam Eva: No. That is the part he has never understood.
 if flag.tamsin_locket_recognized and name:tamsin_tealeaf
 interject name:tamsin_tealeaf: She means the locket. The woman in the locket. Doesn't she?
 Madam Eva [sly]: Keep that stolen face in your pocket, little thief. Some faces belong to the dead, and the dead want them back.
@@ -404,7 +410,11 @@ Madam Eva: One question more, and then the cards sleep. Only one. Choose it well
 
 ~ q_ireena
 set eva_question = "ireena"
+if flag.eva_recognized_ireena
+Madam Eva: You have the first of it already. Here is the rest. Keep her away from high places and still water. She has fallen before, and the water remembers her.
+else
 Madam Eva: He wants what he has always wanted: a woman who told him no, long ago, and keeps being born to tell him again. Keep her away from high places and still water. She has fallen before.
+endif
 Ireena [afraid]: I dream about falling. Every time I close my eyes near a window.
 Madam Eva [sad]: Then you know more than he would like. Good. Hold on to that.
 -> farewell
