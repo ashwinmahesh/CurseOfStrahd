@@ -751,20 +751,18 @@
           ]
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             16,
             8
-          ],
-          "name": "The Master's Gaze"
+          ]
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             16,
             9
-          ],
-          "name": "The Master's Gaze"
+          ]
         },
         {
           "monster": "shadow",
@@ -778,6 +776,20 @@
           "cell": [
             18,
             8
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            9
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            21,
+            11
           ]
         }
       ],
@@ -824,28 +836,74 @@
           ]
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             16,
             8
-          ],
-          "name": "The Master's Gaze"
+          ]
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             16,
             9
-          ],
-          "name": "The Master's Gaze"
+          ]
         },
         {
-          "monster": "wraith",
+          "monster": "shadow",
           "cell": [
             17,
             9
-          ],
-          "name": "The Master's Gaze"
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            8
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            9
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            21,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            21,
+            12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            11
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            16,
+            10
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            16,
+            12
+          ]
         }
       ],
       "surprise": "",

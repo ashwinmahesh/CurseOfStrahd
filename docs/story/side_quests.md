@@ -277,9 +277,9 @@ Lucian's services, or the scroll Lucian gives for her), not a knife (cutting it 
 it ties itself again). **Escalation:** the master looks out of her shadow one last time (`stella_shadow` in her
 bedroom).
 
-- Fight `stella_shadow`: level 5 four wraiths ("The Master's Gaze") and 3 shadows (7,500 XP; the sharp autopilot
-  wins 4 of 8, the harder side: three wraiths were 7); level 4 a wraith and 3 shadows (2,100, High); level 6+ four
-  wraiths and 6 shadows (5 of 8); below, a wraith at 45 HP and 2
+- Fight `stella_shadow`: level 5 one wraith ("The Master's Gaze": one, by the owner's call of
+  2026-10-12), 12 shadows and a ghast (3,450 XP; the sharp autopilot wins 5 of 8); level 4 a wraith and 3 shadows (2,100,
+  High); level 6+ two wraiths and 10 shadows (6 of 8, the easier side: twelve shadows were 6 too, eight 8); below, a wraith at 45 HP and 2
   shadows. Attention marks `stella_eyes` (+1) and, if the ribbon was cut, `stella_bell` (+1).
 - Stella then goes to Father Lucian; in the vestry she gives 250 gp (her dowry), the Cloak of the Bat (rare; the
   master's present for her sixteenth birthday) and how the cellar panel at Wachterhaus opens.

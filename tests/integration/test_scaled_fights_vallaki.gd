@@ -65,11 +65,13 @@ func test_the_siege_of_st_andrals() -> void:
 	await _held("vallaki_st_andrals", 23, "church_siege", BY_LUCIAN)
 
 
+## One Master's Gaze at level 5 (the owner's call, 2026-10-12: two killed heroes outright too often), with twelve
+## shadows and a ghast.
 func test_stellas_shadow() -> void:
 	await _held("vallaki_wachter_house", 14, "stella_shadow", STELLAS_ROOM, ["stella_bound_known", "stella_met"])
 
 
-## A level later the Master looks out of more of them: four wraiths and six shadows.
+## A level later the Master looks out of two of them, with ten shadows.
 func test_stellas_shadow_at_level_6() -> void:
 	var wins := await _series("vallaki_wachter_house", 14, 6, "stella_shadow", SEEDS, ["stella_bound_known", "stella_met"],
 		[], [], STELLAS_ROOM)
