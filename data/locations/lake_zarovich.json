@@ -303,8 +303,8 @@
         13
       ],
       "kind": "book",
-      "label": "A notice on a hut door",
-      "model": "notice_papers",
+      "label": "A notice board by a hut door",
+      "model": "notice_board",
       "codex": "lz_fishers_notice",
       "text": "To whoever comes after: the lake has given nothing for a year. We have gone to my sister's in Vallaki. The boats are yours if you want them; the lake is yours if you want it. We don't. - the Petrescus, and Old Toma, and the Brancu boys"
     },

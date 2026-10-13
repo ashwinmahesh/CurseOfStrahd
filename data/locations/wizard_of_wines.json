@@ -216,8 +216,8 @@
     {
       "id": "winery_sign",
       "cell": [
-        22,
-        9
+        23,
+        8
       ],
       "kind": "examine",
       "label": "The sign over the gate",

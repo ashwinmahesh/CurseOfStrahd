@@ -169,8 +169,8 @@
     {
       "id": "bonegrinder_hopper",
       "cell": [
-        11,
-        5
+        13,
+        4
       ],
       "kind": "examine",
       "label": "The grain hopper",
