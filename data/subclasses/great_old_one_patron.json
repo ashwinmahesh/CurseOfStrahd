@@ -13,8 +13,8 @@
   ],
   "always_prepared": {
     "3": [
-      "detect_thoughts",
       "dissonant_whispers",
+      "mind_spike",
       "phantasmal_force",
       "tashas_hideous_laughter"
     ],
@@ -39,8 +39,8 @@
       "feature": {
         "id": "great_old_one_spells",
         "name": "Great Old One Spells",
-        "summary": "Detect Thoughts, Dissonant Whispers, Phantasmal Force and Tasha's Hideous Laughter always prepared; more at levels 5, 7 and 9.",
-        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Detect Thoughts, Dissonant Whispers, Phantasmal Force and Tasha's Hideous Laughter (3); Clairvoyance and Hunger of Hadar (5); Confusion and Summon Aberration (7); Modify Memory and Telekinesis (9).",
+        "summary": "Dissonant Whispers, Mind Spike, Phantasmal Force and Tasha's Hideous Laughter always prepared; more at levels 5, 7 and 9.",
+        "text": "When you reach a Warlock level shown, you always have these spells prepared; they don't count against your Prepared Spells: Dissonant Whispers, Mind Spike, Phantasmal Force and Tasha's Hideous Laughter (3); Clairvoyance and Hunger of Hadar (5); Confusion and Summon Aberration (7); Modify Memory and Telekinesis (9).",
         "implemented": "data"
       }
     },

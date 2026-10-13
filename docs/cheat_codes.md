@@ -1,6 +1,6 @@
 # Cheat codes
 
-Every code the game's Cheat codes page accepts: 739 items, 538 of them magic.
+Every code the game's Cheat codes page accepts: 735 items, 534 of them magic.
 Each code gives that item to the hero you pick, as many times as you like. `make cheat-codes` rewrites this file
 (and the vault's Cheat Codes.md) from the item data, so run it after adding items rather than editing this by
 hand; `python3 tools/data/cheat_codes.py --check` says whether it's behind.
@@ -147,7 +147,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Hat of Disguise | `C8D440` | Wondrous |  |
 | Headband of Intellect | `BB420D` | Wondrous |  |
 | Helm of Comprehending Languages | `BF57C0` | Wondrous |  |
-| Helm of Telepathy | `77E848` | Wondrous |  |
 | Immovable Rod | `0BE83D` | Rod |  |
 | Instrument of the Bards (Doss Lute) | `A41E8E` | Wondrous |  |
 | Instrument of the Bards (Fochlucan Bandore) | `B72BEC` | Wondrous |  |
@@ -158,7 +157,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Magewright’s Gloves | `D06B5F` | Wondrous |  |
 | Mariner's Armor | `7290C1` | Armor | pick an armor |
 | Martialist’s Quarterstaff | `8D25C2` | Staff |  |
-| Medallion of Thoughts | `100F87` | Wondrous |  |
 | Mithral Armor | `95278E` | Armor | pick an armor |
 | Moon Sickle, +1 | `7FB2D2` | Weapon |  |
 | Necklace of Adaptation | `12C31F` | Wondrous |  |
@@ -335,7 +333,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Potion of Healing (Superior) | `FDB255` | Potion |  |
 | Potion of Heroism | `1DA183` | Potion |  |
 | Potion of Invulnerability | `166999` | Potion |  |
-| Potion of Mind Reading | `9FC653` | Potion |  |
 | Prismatic Rune | `C6728A` | Wondrous |  |
 | Rhythm-Maker's Drum, +2 | `278075` | Wondrous |  |
 | Ring of Animal Influence | `A63CC3` | Ring |  |
@@ -526,7 +523,6 @@ Story items such as the Sunsword count as found for the story too, so giving the
 | Belt of Giant Strength (Cloud Giant) | `957BD8` | Wondrous |  |
 | Belt of Giant Strength (Storm Giant) | `29CB3A` | Wondrous |  |
 | Cloak of Invisibility | `FE4DAD` | Wondrous |  |
-| Crystal Ball of Mind Reading | `998A1F` | Wondrous |  |
 | Crystal Ball of Telepathy | `6B2406` | Wondrous |  |
 | Crystal Ball of True Seeing | `6999B7` | Wondrous |  |
 | Cubic Gate | `08BBCA` | Wondrous |  |

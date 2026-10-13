@@ -509,7 +509,7 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 		st.active_spells[spell_id] = {"until": st.total_minutes() + lasting, "caster": caster.id}
 		if Effect.until_long_rest(dur):
 			RestRules.keep_until_long_rest(st, spell_id)
-	# Spells that help a check while they run (Detect Thoughts on Insight...): CHECK_AIDS.
+	# Spells that help a check while they run (Zone of Truth on Insight...): CHECK_AIDS.
 	if CHECK_AIDS.has(spell_id) and lasting > 0:
 		_check_aid(st, caster, spell_id, data, lasting)
 	# Wards on a place or a rest (and Hallow's places, for good): story/wards.gd.
@@ -562,7 +562,7 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 ## Spells that only did something with people, a disguise or an illusion help the checks they'd help while they run
 ## (Ashwin's answer to the spell audit, 2026-10-12; docs/rules/deviations.md): Advantage on these skills for the
 ## spell's duration, for its caster (Seeming: the whole party). Zone of Amicability floors a check to influence at 10.
-const CHECK_AIDS := {"detect_thoughts": ["insight"], "zone_of_truth": ["insight"], "disguise_self": ["deception"],
+const CHECK_AIDS := {"zone_of_truth": ["insight"], "disguise_self": ["deception"],
 	"seeming": ["deception"], "silent_image": ["stealth"], "major_image": ["stealth", "deception"],
 	"comprehend_languages": ["history", "investigation"], "tongues": ["persuasion"], "beast_sense": ["perception"],
 	"locate_object": ["perception", "investigation"], "locate_creature": ["survival"],

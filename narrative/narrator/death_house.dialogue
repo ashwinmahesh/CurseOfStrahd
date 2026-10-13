@@ -755,7 +755,7 @@ cooldown 10
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:den_cabinet_board
-| One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why.
+| One board under the card cabinet lifts at a touch. Beneath it, a velvet pouch holding two crystal lenses. Through them the faint marks on the backs of Gustav's cards stand out plain. Gustav Durst never lost at cards, and now you know why.
 once
 
 ~ check:investigation:den_cabinet_board:failure

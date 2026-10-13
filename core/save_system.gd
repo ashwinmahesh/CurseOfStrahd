@@ -603,15 +603,24 @@ static func _remove_dir(dir: String) -> void:
 
 # --- Items taken out of the game --------------------------------------------------------------------------------
 
-## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn. The Amulet of
-## Proof against Detection and Location did nothing here and turned up far too often (owner, 2026-10-12): each one a
-## save holds, carried, stashed or waiting in a chest, becomes one of these useful uncommons.
+## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn: useful items of
+## the same rarity and price. The Amulet of Proof against Detection and Location did nothing here and turned up far
+## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13).
+## Each one a save holds, carried, stashed or waiting in a chest, becomes the next one on its list.
 const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":
-	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"]}
+	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"],
+	"helm_of_telepathy": ["circlet_of_blasting", "headband_of_intellect"],
+	"medallion_of_thoughts": ["eyes_of_minute_seeing", "brooch_of_shielding"],
+	"potion_of_mind_reading": ["potion_of_healing_superior", "potion_of_heroism"],
+	"crystal_ball_of_mind_reading": ["crystal_ball_of_true_seeing", "crystal_ball_of_telepathy"]}
+## What an item entry holds of its own (MagicItems.init_state's charges and the like): the old item's goes with it, so
+## its replacement starts fresh when it's next picked up.
+const ITEM_STATE := ["charges", "max_charges", "gems", "beads", "patches", "stored", "artifact_properties", "made"]
 
 
 ## Swaps every withdrawn item in `save` (in place) for its replacements, whatever the save's version: an item entry
-## takes the new id, off its slot, and an attunement to the old one ends. A save without one is unchanged.
+## takes the new id, off its slot and without the old item's charges, a replacement that stacks (a potion) joins a
+## stack of its kind in the same list, and an attunement to the old one ends. A save without one is unchanged.
 static func swap_withdrawn_items(save: Dictionary) -> void:
 	_swap_in(save, {})
 
@@ -627,11 +636,35 @@ static func _swap_in(v: Variant, seen: Dictionary) -> void:
 			d["id"] = str(subs[n % subs.size()])
 			if d.has("slot"):
 				d["slot"] = ""
+			for k: String in ITEM_STATE:
+				d.erase(k)
 		if d.get("attuned", null) is Array:
 			d["attuned"] = (d["attuned"] as Array).filter(func(a: Variant) -> bool: return not WITHDRAWN.has(str(a)))
 		for k: Variant in d.keys():
 			_swap_in(d[k], seen)
 	elif v is Array:
-		for x: Variant in v as Array:
-			_swap_in(x, seen)
+		var a := v as Array
+		var swapped: Array[int] = []
+		for i in a.size():
+			if a[i] is Dictionary and WITHDRAWN.has(str((a[i] as Dictionary).get("id", ""))):
+				swapped.append(i)
+			_swap_in(a[i], seen)
+		for k in range(swapped.size() - 1, -1, -1):
+			_join_stack(a, swapped[k])
+
+
+## A replacement at `i` in `a` that stacks joins another entry of its kind there: the earlier of the two keeps both.
+static func _join_stack(a: Array, i: int) -> void:
+	var d := a[i] as Dictionary
+	if not d.has("qty") or not bool(Compendium.shared().item_data(str(d["id"])).get("stackable", false)):
+		return
+	for j in a.size():
+		if j != i and a[j] is Dictionary and str((a[j] as Dictionary).get("id", "")) == str(d["id"]) and (a[j] as Dictionary).has("qty"):
+			var keep := a[mini(i, j)] as Dictionary
+			var drop := a[maxi(i, j)] as Dictionary
+			keep["qty"] = int(keep["qty"]) + int(drop["qty"])
+			if bool(drop.get("new", false)):
+				keep["new"] = true
+			a.remove_at(maxi(i, j))
+			return
 

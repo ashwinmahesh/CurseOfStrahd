@@ -1,5 +1,7 @@
 {
   "id": "detect_thoughts",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-13: taken out of the game; what granted it grants another spell of its level",
   "name": "Detect Thoughts",
   "source": {
     "book": "PHB2024",
