@@ -790,6 +790,20 @@
             18,
             23
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            22
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            23
+          ]
         }
       ],
       "surprise": "",
@@ -846,6 +860,20 @@
           "monster": "dire_wolf",
           "cell": [
             18,
+            23
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            19,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
             23
           ]
         }

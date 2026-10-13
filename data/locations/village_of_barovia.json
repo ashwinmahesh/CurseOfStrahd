@@ -1588,13 +1588,6 @@
           ]
         },
         {
-          "monster": "zombie",
-          "cell": [
-            28,
-            8
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             26,
@@ -1823,6 +1816,34 @@
           "monster": "swarm_of_bats",
           "cell": [
             33,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            37,
             10
           ]
         }
@@ -2363,6 +2384,20 @@
           "cell": [
             24,
             15
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            22,
+            13
           ]
         }
       ],

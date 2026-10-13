@@ -1220,6 +1220,27 @@
             19
           ],
           "name": "Elisabeth Durst"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            16
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            16
+          ]
         }
       ],
       "text": "For one moment they are only parents, and grieving."

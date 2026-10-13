@@ -714,6 +714,13 @@
             22,
             13
           ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            21,
+            8
+          ]
         }
       ],
       "text": "She wants her baby back."
