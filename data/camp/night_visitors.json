@@ -32,14 +32,14 @@
       "land": "forest",
       "levels": [1, 3],
       "text": "Eyes in the dark beyond the fire, low to the ground, and more of them every time you count.",
-      "monsters": ["wolf", "wolf", "wolf", "wolf"]
+      "monsters": ["wolf", "wolf", "wolf", "wolf", "giant_rat"]
     },
     {
       "id": "forest_hounds",
       "land": "forest",
       "levels": [4, 6],
       "text": "Something big moves between the trees, then something bigger. The Count's hounds have found your fire.",
-      "monsters": ["dire_wolf", "wolf", "wolf", "wolf", "wolf", "wolf", "wolf", "wolf"]
+      "monsters": ["dire_wolf", "wolf", "wolf", "wolf", "wolf", "wolf", "wolf"]
     },
     {
       "id": "forest_werewolves",
@@ -53,14 +53,14 @@
       "land": "marsh",
       "levels": [1, 3],
       "text": "The reeds part, and the drowned come up out of the water, walking stiffly toward the warmth.",
-      "monsters": ["zombie", "zombie", "zombie", "zombie", "zombie", "giant_rat"]
+      "monsters": ["zombie", "zombie", "zombie", "zombie", "rat", "giant_rat"]
     },
     {
       "id": "marsh_ghast",
       "land": "marsh",
       "levels": [4, 6],
       "text": "A stink of rot comes off the water ahead of them: ghasts, and the drowned they have been feeding on.",
-      "monsters": ["ghast", "ghoul", "ghoul", "zombie", "zombie", "zombie", "rat"]
+      "monsters": ["ghast", "ghoul", "ghoul", "zombie", "zombie", "zombie", "rat", "rat"]
     },
     {
       "id": "marsh_watchers",
@@ -74,7 +74,7 @@
       "land": "mountain",
       "levels": [1, 3],
       "text": "Grey wolves come down from the rocks above the camp, quiet as the snow.",
-      "monsters": ["wolf", "wolf", "wolf", "wolf"]
+      "monsters": ["wolf", "wolf", "wolf", "wolf", "giant_rat"]
     },
     {
       "id": "mountain_berserkers",
@@ -102,7 +102,7 @@
       "land": "castle",
       "levels": [4, 6],
       "text": "Bats first, a cloud of them, and then the castle's dead and the things that eat them, crawling toward the warmth.",
-      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "ghoul", "skeleton", "skeleton", "skeleton", "rat", "rat"]
+      "monsters": ["swarm_of_bats", "swarm_of_bats", "ghoul", "ghoul", "ghoul", "skeleton", "skeleton", "rat", "rat", "rat"]
     },
     {
       "id": "castle_spawn",
@@ -123,7 +123,7 @@
       "land": "town",
       "levels": [4, 6],
       "text": "The churchyard gate stands open. The dead come up the street toward the fire, slow and sure, and every shutter stays shut.",
-      "monsters": ["strahd_zombie", "strahd_zombie", "ghoul", "ghoul", "ghast", "zombie", "zombie"]
+      "monsters": ["strahd_zombie", "strahd_zombie", "ghoul", "ghoul", "ghast", "zombie", "zombie", "swarm_of_rats"]
     },
     {
       "id": "town_spawn",
