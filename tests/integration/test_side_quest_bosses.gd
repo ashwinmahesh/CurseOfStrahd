@@ -526,8 +526,8 @@ func test_the_webbed_gully_at_level_3() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the spiders fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## With the web read first the party isn't caught unawares, and a bat comes down with the spiders: 4 of 8, the
-## harder side (without it, 7).
+## With the web read first the party isn't caught unawares, and a rat comes down with the spiders: 6 of 8, the reading's
+## reward (without the rat, 7; with a bat or a giant rat instead, 4).
 func test_the_webbed_gully_read_first_at_level_3() -> void:
 	speakers_step_aside = true
 	var wins := await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], ["gully_web_read"], [], [], UNDER_THE_LEDGE)
