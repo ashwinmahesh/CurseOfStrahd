@@ -901,7 +901,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 85
+          "hp": 100
         },
         {
           "monster": "druid",
@@ -910,15 +910,16 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 65
+          "hp": 55
         },
         {
           "monster": "berserker",
           "cell": [
-            8,
-            13
+            5,
+            6
           ],
-          "name": "Warden of the hill"
+          "name": "Warden of the hill",
+          "hp": 40
         },
         {
           "monster": "twig_blight",
@@ -1276,8 +1277,8 @@
         {
           "monster": "berserker",
           "cell": [
-            8,
-            13
+            5,
+            6
           ],
           "name": "Warden of the hill",
           "hp": 40
