@@ -358,6 +358,109 @@
     {
       "id": "summit_ritual",
       "trigger": "dialogue",
+      "when": "flag.yester_druids_fate == \"fled\" and level >= 7",
+      "text": "Out of the split chest, unfolding, comes a tree that walks, and all round the crown the brush gets up to follow it: creepers, thorn-backs, little men of twigs.",
+      "monsters": [
+        {
+          "monster": "tree_blight",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Wintersplinter",
+          "hp": 160
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            12,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            7,
+            10
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            19,
+            16
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            11,
+            9
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            18,
+            13
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            13,
+            4
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            9,
+            7
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            23,
+            5
+          ]
+        }
+      ],
+      "surprise": "",
+      "flag": "yester_hill_resolved"
+    },
+    {
+      "id": "summit_ritual",
+      "trigger": "dialogue",
       "when": "flag.yester_druids_fate == \"fled\"",
       "text": "Out of the split chest, unfolding, comes a tree that walks, and all round the crown the brush gets up to follow it: creepers, thorn-backs, little men of twigs.",
       "monsters": [
@@ -424,6 +527,13 @@
           "cell": [
             18,
             13
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            14,
+            15
           ]
         },
         {
