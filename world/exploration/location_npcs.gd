@@ -75,6 +75,8 @@ static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 		view.add_child(tok)
 		if FACINGS.has(str(spec.get("facing", ""))):
 			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
+		if spec.has("lying"):
+			LyingFigures.lay(view, tok, spec["lying"], cb.cell)   # Vasilka under her sheet, a witch where she fell
 		view.npc_tokens[str(spec["npc"])] = tok
 		# Outside fights nobody blocks anybody (owner, 2026-10-12: rooms were too cramped): the party walks through
 		# people and people through the party, so a person's square stays as open as the floor under them.
@@ -143,6 +145,13 @@ static func is_asleep(view: LocationView, npc_id: String) -> bool:
 	return tok != null and sleep_of(tok.combatant.creature) != null
 
 
+## Whether an NPC shown here lies down as the story has them (an entry's `lying`: Vasilka on her table, a witch where
+## she fell), so they're approached rather than talked to.
+static func is_lying(view: LocationView, npc_id: String) -> bool:
+	var tok := view.npc_tokens.get(npc_id, null) as CombatToken
+	return tok != null and tok.resting
+
+
 ## How a creature on the map is, for the hover hint, Look and the Alt plates: its conditions (a sleeper's "asleep" in
 ## place of the Unconscious and Incapacitated it carries), then the spells on it that someone else cast, after a dot:
 ## "asleep, prone", "charmed · Charm Person", "asleep, prone · Sleep", "Bane"; "" when nothing is the matter.
@@ -174,12 +183,14 @@ static func state_words(view: LocationView, npc_id: String) -> String:
 	return state_of(tok.combatant.creature) if tok != null else ""
 
 
-## The hover hint over a person: "Talk to Ismark", "Talk to Ismark (charmed · Charm Person)", or a sleeper's name and
-## state ("Offalia Wormwiggle (asleep, prone)").
+## The hover hint over a person: "Talk to Ismark", "Talk to Ismark (charmed · Charm Person)", a sleeper's name and
+## state ("Offalia Wormwiggle (asleep, prone)"), or the name of someone lying there ("Vasilka").
 static func hover_label(view: LocationView, npc_id: String, who: String) -> String:
 	var state := state_words(view, npc_id)
 	if is_asleep(view, npc_id):
 		return "%s (%s)" % [who, state]
+	if is_lying(view, npc_id):
+		return who + (" (%s)" % state if state != "" else "")
 	return "Talk to %s%s" % [who, " (%s)" % state if state != "" else ""]
 
 

@@ -162,7 +162,7 @@
     }
   ],
   "legendary_actions": {
-    "per_round": 3,
+    "per_round": 2,
     "options": [
       {
         "id": "rake",

@@ -292,6 +292,11 @@
       "summary": "The party looked closely at Vasilka on her table and saw she was made of several women."
     },
     {
+      "id": "vasilka_face_covered",
+      "type": "bool",
+      "summary": "The party drew the sheet up over the face of Vasilka, who never woke: her figure on the surgery table lies covered from then on."
+    },
+    {
       "id": "garden_sentry_burned",
       "type": "bool",
       "summary": "The party destroyed the stitched scarecrows in the abbey garden (encounter garden_sentry)."

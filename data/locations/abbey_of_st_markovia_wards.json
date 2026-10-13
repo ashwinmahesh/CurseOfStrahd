@@ -322,7 +322,7 @@
       ],
       "kind": "decor",
       "label": "The long table",
-      "model": "table_round"
+      "model": "surgery_table"
     },
     {
       "id": "surgery_basin",
@@ -684,20 +684,41 @@
     {
       "npc": "vasilka",
       "cell": [
-        24,
+        23,
         10
       ],
       "dialogue": "abbey_of_st_markovia/vasilka:on_the_table",
-      "when": "not flag.wedding_dress_delivered and not flag.vasilka_fate"
+      "when": "not flag.wedding_dress_delivered and not flag.vasilka_fate",
+      "lying": {
+        "sheet": "chest",
+        "head": "east"
+      }
     },
     {
       "npc": "vasilka",
       "cell": [
-        24,
+        23,
         10
       ],
       "dialogue": "abbey_of_st_markovia/vasilka:never_woke",
-      "when": "flag.vasilka_fate == \"never_woke\""
+      "when": "flag.vasilka_fate == \"never_woke\" and flag.vasilka_face_covered",
+      "lying": {
+        "sheet": "face",
+        "head": "east"
+      }
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        23,
+        10
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:never_woke",
+      "when": "flag.vasilka_fate == \"never_woke\"",
+      "lying": {
+        "sheet": "chest",
+        "head": "east"
+      }
     },
     {
       "npc": "belview_mother",

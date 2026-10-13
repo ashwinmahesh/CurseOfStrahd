@@ -797,6 +797,10 @@ def story_checks(data, errors, need):
         if elevation and (len(elevation) != len(rows) or any(len(e) > len(r) for e, r in zip(elevation, rows))):
             errors.append(f"{w}: map elevation must have a row per map row, none longer than its row")
 
+        def cell_char(rows, cell):
+            x, z = cell
+            return rows[z][x] if 0 <= z < len(rows) and 0 <= x < len(rows[z]) else ""
+
         def on_floor(cell, what, allow_wall=False):
             x, z = cell
             if z >= len(rows) or x >= len(rows[z]):
@@ -879,7 +883,10 @@ def story_checks(data, errors, need):
             if tr.get("flag"):
                 flags_set.setdefault(tr["flag"], []).append(w)
         for n in loc.get("npcs", []):
-            on_floor(n["cell"], f"npc {n['npc']}")
+            # Someone lying on the furniture of a low-cover square (Vasilka on the surgery table) lies on it.
+            lies_on_it = bool(n.get("lying")) and cell_char(rows, n["cell"]) == "="
+            if not lies_on_it:
+                on_floor(n["cell"], f"npc {n['npc']}")
             # A waypoint is [x, y], [x, y, seconds] or {"at": [x, y], ...} (a stop at work, npc_routes.gd).
             stops = [(p["at"] if isinstance(p, dict) else p) for p in n.get("path", [])]
             for p in stops:

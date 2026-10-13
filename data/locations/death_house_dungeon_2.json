@@ -569,6 +569,30 @@
             13
           ],
           "name": "Hooded Shade"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Hooded Shade"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            23,
+            17
+          ],
+          "name": "Hooded Shade"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            27,
+            18
+          ],
+          "name": "Hooded Shade"
         }
       ],
       "text": "The shades will not let you leave so easily."

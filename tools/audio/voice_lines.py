@@ -7,11 +7,11 @@ gets a new key, so only new or changed lines are generated, and a line written t
 
 Voiced: NPC lines and story allies' interjections in conversations and banter, Madam Eva's Tarokka verses, the
 Narrator's lines in conversations, banter and its trigger variants, the Narrator text in location and travel data
-(first visit, encounter intros, traps, barred exits), and the party's lines: a hero's own (`name:`) lines in that
-hero's voice, and every line any party member could say (`class:`, `species:`, `background:`, `tag:`, "Player:") in
-the voice of each prebuilt hero it fits and in both custom-hero voices (VoiceOver.voice_for picks the one that
-speaks). Not voiced: player options, rolls, notices, book and letter text, and any line holding {name}, {leader} or
-{target} (filled in at run time).
+(first visit, encounter intros, traps, barred exits) and in what comes for a camp in the night, and the party's
+lines: a hero's own (`name:`) lines in that hero's voice, and every line any party member could say (`class:`,
+`species:`, `background:`, `tag:`, "Player:") in the voice of each prebuilt hero it fits and in both custom-hero
+voices (VoiceOver.voice_for picks the one that speaks). Not voiced: player options, rolls, notices, book and letter
+text, and any line holding {name}, {leader} or {target} (filled in at run time).
 
 In fights (narrative/combat/barks.json): each kind of talking enemy's battle cries, taunts, pain and death lines as
 the speaker bark_<kind>, and each kind of creature's noises as noise_<kind>, where a noise's text is the prompt it is
@@ -150,6 +150,11 @@ def _data_lines():
         for e in d.get("entries", []):
             if e.get("text") and e.get("monsters"):
                 yield NARRATOR, e["text"], f"random_encounters/{f.stem}"
+    visitors = ROOT / "data" / "camp" / "night_visitors.json"
+    if visitors.exists():
+        for g in json.loads(visitors.read_text()).get("groups", []):
+            if g.get("text"):
+                yield NARRATOR, g["text"], f"camp/night_visitors:{g.get('id', '')}"
     outcomes = json.loads((ROOT / "data" / "tarokka" / "outcomes.json").read_text())
     for slot, cards in outcomes.items():
         if isinstance(cards, dict):

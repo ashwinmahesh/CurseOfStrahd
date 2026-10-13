@@ -1021,11 +1021,16 @@
         "per_round",
         "options"
       ],
-      "description": "ADR 0014: `per_round` actions, spent at the end of another creature's turn and refreshed at the start of the monster's own (combat/legendary.gd).",
+      "description": "ADR 0014: `per_round` uses (`in_lair` in a lair fight), one spent at the end of another creature's turn and all refreshed at the start of the monster's own (combat/legendary.gd).",
       "properties": {
         "per_round": {
           "type": "integer",
           "minimum": 1
+        },
+        "in_lair": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Uses a round in a lair fight instead of `per_round` (2025 Monster Manual: \"3 (4 in Lair)\")."
         },
         "options": {
           "type": "array",

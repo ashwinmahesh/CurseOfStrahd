@@ -1,5 +1,7 @@
 {
   "id": "helm_of_telepathy",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-13: it casts Detect Thoughts, which left the game; a save's copies become items of the same rarity and price (SaveSystem.WITHDRAWN)",
   "name": "Helm of Telepathy",
   "source": {
     "book": "DMG2024",

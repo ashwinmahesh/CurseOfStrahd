@@ -435,8 +435,12 @@ func _apply_body(c: Combatant) -> void:
 
 # --- Legendary actions ------------------------------------------------------------------------------------------
 
+## Legendary action uses a round: `per_round`, or `in_lair` in a lair fight (2025 Monster Manual: "3 (4 in Lair)").
 func per_round(c: Combatant) -> int:
-	return int((data_of(c).get("legendary_actions", {}) as Dictionary).get("per_round", 0))
+	var la := data_of(c).get("legendary_actions", {}) as Dictionary
+	if la.has("in_lair") and enc() != null and enc().lair:
+		return int(la["in_lair"])
+	return int(la.get("per_round", 0))
 
 
 func options(c: Combatant) -> Array:

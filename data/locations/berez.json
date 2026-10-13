@@ -699,7 +699,8 @@
       ],
       "dialogue": "berez/lysaga:last_words",
       "when": "flag.lysaga_slain_at_monument and not flag.lysaga_dead",
-      "approach": 10
+      "approach": 10,
+      "lying": true
     },
     {
       "npc": "baba_lysaga",
@@ -709,7 +710,8 @@
       ],
       "dialogue": "berez/lysaga:last_words",
       "when": "(flag.lysaga_slain_at_stump or flag.lysaga_slain_scorned) and not flag.lysaga_dead",
-      "approach": 10
+      "approach": 10,
+      "lying": true
     },
     {
       "npc": "baba_lysaga",

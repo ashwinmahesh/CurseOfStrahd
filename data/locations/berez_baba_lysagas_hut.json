@@ -150,7 +150,7 @@
       "id": "lysaga_oven",
       "cell": [
         2,
-        2
+        1
       ],
       "kind": "examine",
       "label": "The oven",
@@ -439,7 +439,8 @@
       ],
       "dialogue": "berez/lysaga:last_words",
       "when": "flag.lysaga_slain_in_hut and not flag.lysaga_dead",
-      "approach": 10
+      "approach": 10,
+      "lying": true
     },
     {
       "npc": "baba_lysaga",
