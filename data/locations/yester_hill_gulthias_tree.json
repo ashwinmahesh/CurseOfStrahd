@@ -296,7 +296,8 @@
       "dialogue": "yester_hill/ruxandra:fallen",
       "when": "flag.yester_hill_resolved and not flag.yester_druids_fate",
       "facing": "south",
-      "approach": 12
+      "approach": 12,
+      "lying": true
     },
     {
       "npc": "ruxandra",

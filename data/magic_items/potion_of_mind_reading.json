@@ -1,5 +1,7 @@
 {
   "id": "potion_of_mind_reading",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-13: it casts Detect Thoughts, which left the game; a save's copies become items of the same rarity and price (SaveSystem.WITHDRAWN)",
   "name": "Potion of Mind Reading",
   "source": {
     "book": "DMG2024",

@@ -132,7 +132,9 @@ func test_village_houses_and_yard_walls() -> void:
 		if str(c.name).contains("YardWall"):
 			yard += 1
 	assert_true(yard > 0, "yard walls are built")
-	# A house between the camera and the party is cut away.
+	# With the catalog's cut_away on (off outside since 2026-10-13), a house between the camera and the party is cut away.
+	var cut_away: Variant = BuildingKit.settings().get("cut_away")
+	BuildingKit.settings()["cut_away"] = true
 	var b0 := board.buildings[0]
 	var aabb := b0["aabb"] as AABB
 	var behind := aabb.get_center() + Vector3(0, -aabb.size.y / 2.0, -aabb.size.z / 2.0 - 1.0)
@@ -140,6 +142,7 @@ func test_village_houses_and_yard_walls() -> void:
 	assert_false((b0["upper"] as Node3D).visible, "its roof hides")
 	board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
 	assert_true((b0["upper"] as Node3D).visible, "and comes back")
+	BuildingKit.settings()["cut_away"] = cut_away
 	v.queue_free()
 
 

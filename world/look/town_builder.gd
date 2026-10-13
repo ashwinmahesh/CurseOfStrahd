@@ -5,9 +5,10 @@ extends RefCounted
 ## from the building kit (BuildingKit, docs/art/building_kit.md) in the town's style: Barovian timber framing over
 ## plaster under deep thatch, Vallaki's painted clapboard, Krezk's coursed stone; each face of a house is a module
 ## (braced timbers, a casement with its shutters, a door bay where a door hangs), with corner posts or quoins, a stone
-## footing, a roof with eaves and gables, and a chimney. Lines of wall one square thick are low stone yard walls. A
-## building standing between the camera and the party is cut away: its roof and everything on its walls hide and the
-## walls drop to a low band, like the cut-away interiors.
+## footing, a roof with eaves and gables, and a chimney. Lines of wall one square thick are low stone yard walls. With
+## the catalog's building_kit "cut_away" on (off since 2026-10-13, owner), a building standing between the camera and
+## the party is cut away: its roof and everything on its walls hide and the walls drop to a low band, like the cut-away
+## interiors.
 
 const HOUSE_H := 2.2
 const YARD_WALL_H := 1.0
@@ -761,13 +762,17 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3
 		st.add_vertex(p)
 
 
-## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others.
+## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others. Outside,
+## only while the catalog's building_kit "cut_away" is on: the owner turned it off (2026-10-13: "why do buildings
+## shrink down ... when I get near them? Same things with walls. Lets disable this effect"), so town houses and Castle
+## Ravenloft's walls and towers stand; an interior's full-height walls still open the room the party is in (W8).
 static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+	var outside := bool(BuildingKit.settings().get("cut_away", false))
 	var target := focus + Vector3(0, 0.8, 0)
 	# The parts of an L-shaped building (W7) go down together: one in the way takes the others with it.
 	var joined_hides := {}
 	for b: Dictionary in board.buildings:
-		if b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+		if outside and b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
 			var aabb := b["aabb"] as AABB
 			if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
 				joined_hides[int(b["group"])] = true
@@ -776,6 +781,8 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 			continue
 		if b.has("interior"):
 			InteriorWalls.cut(board, b, camera_pos, focus, delta)   # an interior's full-height walls (W8)
+			continue
+		if not outside:
 			continue
 		if b.has("castle"):
 			CastleBuilder.cut(b, camera_pos, focus, delta)   # Castle Ravenloft's walls and towers (W19)

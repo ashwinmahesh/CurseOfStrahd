@@ -182,7 +182,12 @@ static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictiona
 	for mo: Variant in spec["monsters"]:
 		var md := mo as Dictionary
 		var data := Compendium.shared().monster_data(str(md["monster"]))
+		if md.has("art"):
+			data = data.duplicate()
+			data["art"] = str(md["art"])   # a named foe drawn as themselves (Vasilka, not any flesh golem)
 		var mon := Monster.from_data(data)
+		if md.has("lying"):
+			mon.set_meta(&"lying", md["lying"])   # lies there until its fight opens (LyingFigures)
 		if md.has("hp"):
 			# A tuned stat block for this fight (docs/contracts/locations.md).
 			mon.hp_max_base = int(md["hp"])
@@ -288,17 +293,22 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		if t != null:
 			ctokens[c.id] = t
 			standing.append(t)
+			t.get_up(0.3)   # one lying in plain view (curled in the straw) gets up
 			continue
 		t = _combat_token(c)
 		t.position = view.board.cell_center(c.cell, c.size_cells)
 		var look := party_mid - t.position
 		t.face(Vector2(look.x, look.z), false)
 		view.add_child(t)
+		if LyingFigures.of(c.creature) != null:
+			LyingFigures.lay(view, t, LyingFigures.of(c.creature), c.cell)
 		ctokens[c.id] = t
 		foes.append(t)
 	foes.sort_custom(func(a: CombatToken, b: CombatToken) -> bool: return a.position.distance_to(party_mid) < b.position.distance_to(party_mid))
 	for i in foes.size():
-		foes[i].emerge(0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0), 0.6)
+		var delay := 0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0)
+		foes[i].emerge(delay, 0.6)
+		foes[i].get_up(delay + 0.5)   # one lying there gets up as it comes into view (the dead on their pallets)
 	var turn := view.create_tween()
 	turn.tween_interval(LocationView.STEP_TIME + 0.05)
 	var every_foe: Array[CombatToken] = foes.duplicate()
