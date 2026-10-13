@@ -394,7 +394,8 @@
           "cell": [
             20,
             2
-          ]
+          ],
+          "hp": 55
         },
         {
           "monster": "druid",
@@ -409,6 +410,20 @@
           "cell": [
             22,
             5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            28,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            6
           ]
         }
       ],
