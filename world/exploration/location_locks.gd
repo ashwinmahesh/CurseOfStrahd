@@ -35,13 +35,21 @@ static func _locked(view: LocationView, spec: Dictionary) -> bool:
 
 
 static func _use_door(view: LocationView, door: Dictionary, method: String = "auto") -> void:
-	var id := str(door["id"])
 	if not StoryConditions.check(str(door.get("when", "")), view.st):
 		Audio.sfx("locked")
 		view.narration.emit("It won't budge.")
 		return
+	if method == "force" and _locked(view, door):
+		with_guidance(view, door, func(extra: Array) -> void: _open_door(view, door, method, extra))
+		return
+	_open_door(view, door, method)
+
+
+## Undoes the door's lock if it has one (`extra`: Guidance's die on forcing it), then opens it.
+static func _open_door(view: LocationView, door: Dictionary, method: String, extra: Array = []) -> void:
+	var id := str(door["id"])
 	if _locked(view, door):
-		if not _unlock(view, door, method):
+		if not _unlock(view, door, method, extra):
 			return
 	(view.st.loc_state(view.loc_id)["doors"] as Dictionary)[id] = LocationView.DOOR_OPEN
 	Audio.sfx("door")
@@ -56,8 +64,9 @@ static func _use_door(view: LocationView, door: Dictionary, method: String = "au
 ## Tries a key, thieves' tools (2024: Dexterity check, + Proficiency Bonus with the tools, Advantage with Sleight of
 ## Hand too), force (Strength (Athletics)) or the Knock spell, with the best party member for the job. Returns true
 ## if it opens. `method`: "auto" (a left click: the key if the party carries it, else the lock rattles and says so;
-## nothing is tried), or "key", "pick", "force" or "knock" (the right-click menu).
-static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto") -> bool:
+## nothing is tried), or "key", "pick", "force" or "knock" (the right-click menu). `extra`: dice cast on whoever
+## forces it first (Guidance, with_guidance).
+static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto", extra: Array = []) -> bool:
 	var id := str(spec["id"])
 	var key := str(spec.get("key", ""))
 	if key != "" and view.st.party_has_item(key) and method in ["auto", "key"]:
@@ -96,7 +105,8 @@ static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto
 		t = picker.roll_d20(view.dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, picker.check_keys(&"dex"), adv, [], "%s picks the lock" % picker.name)
 	else:
 		who = LocationParty._best(view, &"athletics")
-		t = who.roll_check(view.dice, &"athletics", dc + 2, CheckAids.before_check(who, &"athletics"), [], "%s forces it" % who.name)
+		t = who.roll_check(view.dice, &"athletics", dc + 2, CheckAids.before_check(who, &"athletics"), [], "%s forces it" % who.name, [],
+			extra)
 	view.check_rolled.emit(t.describe())
 	view.big_roll.emit(t, who.name, "Thieves' Tools" if picker != null else "Athletics")
 	view.st.last_check = t.success
@@ -108,6 +118,18 @@ static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto
 	view._say("check:unlock:failure", who, "It holds.")
 	view.st.advance_minutes(1)
 	return false
+
+
+## Forcing a lock is a Strength (Athletics) check by the party's best at it: Guidance can go on it first
+## (LocationView.ask_guidance). `go(extra)` tries it, with Guidance's die if it was cast, now or once the prompt is
+## answered.
+static func with_guidance(view: LocationView, spec: Dictionary, go: Callable) -> void:
+	var who := LocationParty._best(view, &"athletics")
+	var dc := int(spec.get("lock_dc", 15))
+	if who == null or dc <= 0:
+		go.call([])
+		return
+	view.ask_guidance(who, &"athletics", dc + 2, go)
 
 
 ## Knock (2024): the lock opens, with a knock heard 300 feet away. Spends the caster's lowest slot that works.

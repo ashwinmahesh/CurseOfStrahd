@@ -151,10 +151,21 @@ func _terms_row() -> Control:
 	return UiParts.row(row)
 
 
-## The chosen character haggles (Trade.haggle); the roll and its result go in the note.
+## The chosen character haggles (Trade.haggle); the roll and its result go in the note. Someone can cast Guidance on
+## them first (GuidanceOffer): asked over the shop (GuidancePrompt), or cast on a caster's Automatic rule.
 func haggle() -> void:
 	var ch := st.party[index]
-	var test := Trade.haggle(st, npc_id, ch, Dice.roller)
+	if ch.hp <= 0 or Trade.why_no_haggle(st, npc_id) != "":
+		return
+	var offer := GuidanceOffer.offer(st, ch, &"persuasion", Trade.haggle_dc(npc_id))
+	if GuidanceOffer.asks(offer):
+		GuidancePrompt.ask(self, offer, func(i: int, rule: String) -> void: _haggle(ch, GuidanceOffer.answer(offer, i, rule)))
+		return
+	_haggle(ch, GuidanceOffer.automatic(offer))
+
+
+func _haggle(ch: Character, extra: Array) -> void:
+	var test := Trade.haggle(st, npc_id, ch, Dice.roller, extra)
 	if test == null:
 		return
 	_note_colour = "bile" if test.success else "rose"

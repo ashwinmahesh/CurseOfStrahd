@@ -124,11 +124,19 @@ static func _spring_trap(view: LocationView, trap: Dictionary, victim: Combatant
 ## (search props, secret doors) whose DC it meets. A hidden compartment (a search prop with `skill: investigation`)
 ## takes an Intelligence (Investigation) check instead, rolled as well when one is near. A hidden find that holds an
 ## item gets one look from each character: whoever misses it has missed it for good (the owner's rule that failed
-## checks are final), though someone else in the party can still try. Takes a minute.
+## checks are final), though someone else in the party can still try. Takes a minute. Guidance can go on the Perception
+## check first (LocationView.ask_guidance).
 static func search(view: LocationView) -> void:
 	if view.busy or view.in_combat:
 		return
 	var who := view.leader().creature as Character
+	view.ask_guidance(who, &"perception", 0, func(extra: Array) -> void: _search(view, who, extra))
+
+
+## The search itself, by `who` (the leader as it began), with Guidance's die on the Perception check if it was cast.
+static func _search(view: LocationView, who: Character, extra: Array) -> void:
+	if view.in_combat or view.leader() == null or view.leader().creature != who:
+		return
 	var c := view.leader().cell
 	var states := view.st.loc_state(view.loc_id)
 	# Sharp Eye (Ravenloft: The Horrors Within): Advantage on a Search, Proficiency Bonus times per Long Rest.
@@ -138,7 +146,8 @@ static func search(view: LocationView) -> void:
 		adv.append("Sharp Eye")
 	var sharp_eye := not adv.is_empty()
 	adv.append_array(CheckAids.before_check(who, &"perception"))
-	var t := who.roll_check(view.dice, &"perception", 0, adv, Weather.sight_penalty(view.st, view.loc_id), "%s searches" % who.name, ["search"])
+	var t := who.roll_check(view.dice, &"perception", 0, adv, Weather.sight_penalty(view.st, view.loc_id), "%s searches" % who.name, ["search"],
+		extra)
 	view.check_rolled.emit(t.describe())
 	var study: D20Test = null
 	if hidden_within(view, c, SEARCH_FT, who).any(func(p: Dictionary) -> bool: return search_skill(p) == &"investigation"):

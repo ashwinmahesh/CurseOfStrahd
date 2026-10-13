@@ -96,12 +96,12 @@ static func why_no_haggle(st: StoryState, npc_id: String) -> String:
 
 
 ## `ch` haggles with `npc_id`: a Persuasion check against the shop's DC, rolled in the open. Records the result and
-## returns the test, or null if the party can't haggle now.
-static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoller) -> D20Test:
+## returns the test, or null if the party can't haggle now. `extra`: dice cast on them first (Guidance, GuidanceOffer).
+static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoller, extra: Array = []) -> D20Test:
 	if ch == null or ch.hp <= 0 or why_no_haggle(st, npc_id) != "":
 		return null
 	var dc := haggle_dc(npc_id)
-	var test := ch.roll_check(dice, &"persuasion", dc, CheckAids.before_check(ch, &"persuasion"))
+	var test := ch.roll_check(dice, &"persuasion", dc, CheckAids.before_check(ch, &"persuasion"), [], "", [], extra)
 	var h := shop(npc_id).get("haggle", {}) as Dictionary
 	st.set_flag(str(h.get("won" if test.success else "lost", ("_haggle_won/" if test.success else "_haggle_lost/") + npc_id)), true)
 	return test
