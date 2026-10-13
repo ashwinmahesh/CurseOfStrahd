@@ -2092,14 +2092,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            21,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "vallaki_guard",
           "cell": [
             16,

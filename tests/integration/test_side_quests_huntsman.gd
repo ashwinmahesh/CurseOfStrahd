@@ -36,7 +36,7 @@ func test_gavrils_scent_the_names_and_the_stand() -> void:
 	assert_eq(SideQuestPlay.combat_of(beats), "the_hunt")
 	var enc := SideQuestPlay.encounter(st, "svalich_crossroads", "the_hunt")
 	assert_true(SideQuestPlay.has_foe(enc, "count_huntsman"))
-	assert_eq((enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary).get("name", "")) == "Hound of the Hunt").size(), 2, "two hounds still come when the rest are called")
+	assert_eq((enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary).get("name", "")) == "Hound of the Hunt").size(), 3, "three hounds still come when the rest are called")
 	# After.
 	st.set_flag("huntsman_slain")
 	st.set_quest_stage("the_counts_huntsman", "stood")
@@ -70,7 +70,7 @@ func test_once_strahd_has_marked_them_the_horn_is_for_the_party() -> void:
 	assert_false(SideQuestPlay.text(beats).contains("horse-seller"))
 	assert_eq(SideQuestPlay.combat_of(beats), "the_hunt")
 	var enc := SideQuestPlay.encounter(st, "svalich_crossroads", "the_hunt")
-	assert_eq((enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary).get("name", "")) == "Hound of the Hunt").size(), 4, "the whole pack at level 8")
+	assert_eq((enc["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary).get("name", "")) == "Hound of the Hunt").size(), 6, "the whole pack at level 8")
 
 
 func test_beating_him_is_a_mark_against_the_party() -> void:

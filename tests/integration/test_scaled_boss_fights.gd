@@ -35,7 +35,8 @@ func test_izeks_festival_rampage_at_level_5() -> void:
 	await _held("vallaki", 5, "festival_izek_rampage", IZEK_SQUARE, 2, 4)
 
 
-## The Baron's loyalists at the festival: Izek, four sergeants, the captain and two guards.
+## The Baron's loyalists at the festival: Izek, three sergeants, the captain and two guards (3 in 8 with four sergeants
+## too, but then the phase 4 playthrough's Wachter path could lose it).
 func test_the_festival_loyalists_at_level_5() -> void:
 	await _held("vallaki", 5, "festival_loyalists", FESTIVAL_GROUND, 2, 4)
 
