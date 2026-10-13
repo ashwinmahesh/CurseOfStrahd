@@ -63,6 +63,10 @@
     "black_horse": {
       "art": "black_horse",
       "big": true
+    },
+    "cell_bars": {
+      "art": "crypt_gate",
+      "mount": "stand"
     }
   },
   "ids": {

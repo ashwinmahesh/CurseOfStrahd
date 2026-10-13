@@ -1,0 +1,20 @@
+{
+  "id": "belview_caged_1",
+  "name": "Belview",
+  "title": "In the Cells",
+  "summary": "A Belview in one of the abbey's barred cells, all elbows and matted fur, who watches the corridor without blinking and answers footsteps with footsteps.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them",
+  "pockets": false
+}

@@ -394,6 +394,56 @@ func test_krezk_and_the_abbey_have_what_their_text_names() -> void:
 		await _frames(1)
 
 
+## Owner reports (2026-10-13): "the narrow cells with the Belviews that didn't take isn't showing like it should" and
+## "a random floating plaque in the Abbey". The wards' cells are a row of narrow cells walled apart, iron bars across
+## their doors, with Belviews behind them until they're let out; the church's memorial plaque hangs on a wall.
+func test_the_abbeys_cells_and_plaque() -> void:
+	Look.set_style("modern", false)
+	var v := _view("abbey_of_st_markovia_wards")
+	await _frames(1)
+	var loc := Compendium.shared().get_entry("locations", "abbey_of_st_markovia_wards") as Dictionary
+	var barred := {}
+	for p: Dictionary in loc["props"]:
+		if str(p.get("model", "")) != "cell_bars":
+			continue
+		var node := v.prop_nodes.get(str(p["id"])) as Node
+		var models := node.find_children("Model_*", "Node3D", true, false) if node != null else []
+		assert_true(not models.is_empty() and str(models[0].get_meta("art", "")) == "crypt_gate", "%s is iron bars" % p["id"])
+		if not models.is_empty():
+			assert_between((models[0] as Node3D).rotation.y, -0.01, 0.01, "%s faces the corridor" % p["id"])
+		barred[LocationView._cell(p["cell"])] = true
+	var cells := 0
+	for x in range(14, 28):
+		if v.grid.has_flag(Vector2i(x, 4), CombatGrid.WALL):
+			for z in range(1, 4):
+				assert_true(v.grid.has_flag(Vector2i(x, z), CombatGrid.WALL), "a wall between two cells at %s" % Vector2i(x, z))
+			continue
+		cells += 1
+		assert_true(barred.has(Vector2i(x, 4)), "bars across the cell door at %s" % Vector2i(x, 4))
+	assert_eq(cells, 10, "five narrow cells, two squares across")
+	for id: String in ["belview_caged_1", "belview_caged_2", "belview_caged_3"]:
+		var token := v.npc_tokens.get(id) as Node3D
+		assert_true(token != null, "%s is in the cells" % id)
+		if token != null:
+			var at := Vector2i(floori(token.global_position.x), floori(token.global_position.z))
+			assert_true(Rect2i(14, 1, 14, 3).has_point(at) and not v.grid.has_flag(at, CombatGrid.WALL), "%s behind the bars (%s)" % [id, at])
+	v.queue_free()
+	await _frames(1)
+	GameState.story.flags["wards_cells_freed"] = true
+	var freed := _view("abbey_of_st_markovia_wards")
+	await _frames(1)
+	for id: String in ["belview_caged_1", "belview_caged_2", "belview_caged_3"]:
+		assert_false(freed.npc_tokens.has(id), "let out, %s is gone" % id)
+	freed.queue_free()
+	await _frames(1)
+	var church := _view("abbey_of_st_markovia_shrine")
+	await _frames(1)
+	var plaque := church.prop_nodes.get("markovia_plaque") as Node
+	var hung := plaque.find_children("Model_*", "Node3D", true, false) if plaque != null else []
+	assert_true(not hung.is_empty() and (hung[0] as Node3D).has_meta("hung"), "the memorial plaque hangs on a wall")
+	church.queue_free()
+
+
 ## Old Bonegrinder and the Wizard of Wines (the audit, docs/art/interiors.md): what their text names; the winery's eight
 ## great vats over their blocks, with no rug or armchairs among them; casks in the wine cellar where little tombs and
 ## bones stood; the hags' nest is straw.

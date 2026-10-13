@@ -1,0 +1,20 @@
+{
+  "id": "belview_caged_2",
+  "name": "Belview",
+  "title": "In the Cells",
+  "summary": "A thin Belview with legs that bend the wrong way, crouched in the straw of a barred cell, mouthing words in voices that aren't its own.",
+  "portrait": "belview",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "they/them",
+  "pockets": false
+}
