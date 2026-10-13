@@ -10,6 +10,7 @@ func test_a_warlocks_hellish_rebuke_uses_its_pact_slot_and_says_so() -> void:
 	ogre.creature.hp = 500
 	TestCombat.start_with(e, ogre)
 	kip.reaction_rules["hellish_rebuke"] = "ask"
+	(kip.creature as Character).spend_resource("spell:hellish_rebuke")   # the tiefling's free casting: a second pick
 	e.deal_damage(ogre, kip, [{"amount": 3, "type": "bludgeoning"}], false, "A shove")
 	e.run_reaction_queue(CombatResult.new())
 	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked: %s" % [e.pending.kind if e.pending != null else "nothing"])
