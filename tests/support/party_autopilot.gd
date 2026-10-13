@@ -70,6 +70,10 @@ func _melee_turn(c: Combatant) -> CombatResult:
 		return e.ai._move_then_attack(c, plan)
 	if str(plan["kind"]) == "approach":
 		return e.ai._approach(c, plan)
+	# Foes hidden and none in sight or heard: look for them (Search), as a player would, rather than wait them out (a
+	# dim nursery's shadows hid until the fight ran out of rounds).
+	if str(plan["kind"]) == "search":
+		return e.search(c)
 	return CombatResult.new()
 
 

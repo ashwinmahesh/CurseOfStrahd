@@ -261,6 +261,10 @@ func finish_turn(c: Combatant, thought: Dictionary) -> CombatResult:
 		if cr.ok or cr.is_paused():
 			return e.then(cr, func() -> CombatResult: return _after_main(c))
 	last_plan = plan
+	# Cut off from every enemy turn after turn: it gives up the fight (combat/ai/ai_tactics.gd).
+	var stranded: Variant = tactics.stranded_turn(c, plan)
+	if stranded != null:
+		return stranded as CombatResult
 	match str(plan["kind"]):
 		"attack":
 			if bool(plan.get("finish", false)):
