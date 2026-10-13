@@ -4,6 +4,17 @@ extends RefCounted
 ## (healing the fallen, Turn Undead on a crowd of zombies, Sleep on a wolf pack, Steady Aim from range, a ranger's
 ## bow and a warlock's Eldritch Blast from range). Paladins and monks fight like fighters.
 ## Test-only: in the game the player controls every party member (plan pillar 2).
+##
+## Sharp play (owner, 2026-10-13: "Yes they should", "And spellcasters should cast fireball"): the party as the owner
+## plays it, so a fight tuned against it is as hard in his hands. The paladin smites a sturdy foe or on a Critical Hit,
+## the cleric opens with Spirit Guardians once foes close in and keeps near them, and a caster who knows Fireball throws
+## it whenever it catches two foes. Off by default while the fights are retuned against it: AUTOPILOT_SHARP=1 in the
+## environment, or `sharp` set by a test, turns it on.
+
+## Whether the party plays sharp (see above).
+static var sharp: bool = OS.get_environment("AUTOPILOT_SHARP") == "1"
+## A smite is worth its slot on a hit against a foe with at least this many Hit Points left (or on a Critical Hit).
+const SMITE_WORTH_HP := 20
 
 var e: Encounter
 
@@ -21,6 +32,10 @@ func play(c: Combatant) -> CombatResult:
 		return e.ai.play_turn(c)
 	# A weapon it dropped (falling Unconscious, a Disarming Attack) lying within reach: back in hand first.
 	e.ground.ai_pick_up(c)
+	if sharp:
+		var fireball := _sharp_fireball(c)
+		if fireball != null:
+			return fireball
 	if ch.class_level_of("cleric") > 0:
 		return _cleric(c)
 	if ch.class_level_of("wizard") > 0:
@@ -158,8 +173,13 @@ func _cleric(c: Combatant) -> CombatResult:
 	if c.action_available and ch.resource_left("channel_divinity") > 0 and e.features.preserve_life_room(c).size() >= 2:
 		e.features.preserve_life(c)
 	var foes := _enemies(c)
-	# 4. Spiritual Weapon, then its Bonus Action attacks.
-	if c.bonus_available and not foes.is_empty():
+	# Sharp: Spirit Guardians once foes close in, and the cleric stays near them while it lasts.
+	if sharp:
+		var guardians := _sharp_guardians(c, foes)
+		if guardians != null:
+			return guardians
+	# 4. Spiritual Weapon, then its Bonus Action attacks (not over Spirit Guardians: both need Concentration).
+	if c.bonus_available and not foes.is_empty() and not _concentrating_on(c, "spirit_guardians"):
 		var near := _nearest(c, foes)
 		if e.spells.has_spiritual_weapon(c):
 			var wcell := e.spells.weapon_of(c).cell
@@ -198,7 +218,8 @@ func _wizard(c: Combatant) -> CombatResult:
 	if foes.is_empty():
 		return _melee_turn(c)
 	# Fireball on a crowd (lane 22, 2026-10-08: the Yester Hill summit's fire-vulnerable twig blights): three foes or
-	# more, or two with a big one, never the wizard; allies only when Sculpt Spells keeps them out (Evoker 6).
+	# more, or two with a big one, never the wizard; allies only when Sculpt Spells keeps them out (Evoker 6). Sharp
+	# play has thrown it already when it catches two.
 	if ch.slots_left(3) > 0 and not c.cast_slot_spell_this_turn and ch.knows_spell("fireball"):
 		var fb := _fireball_point(c, foes)
 		if fb != Vector2.INF:
@@ -241,8 +262,9 @@ func _wizard(c: Combatant) -> CombatResult:
 	return _melee_turn(c)
 
 
-## The Fireball point catching the most foes within 150 ft: {point} or Vector2.INF when no point is worth it.
-func _fireball_point(c: Combatant, foes: Array[Combatant]) -> Vector2:
+## The Fireball point catching the most foes within 150 ft: {point} or Vector2.INF when no point is worth it (`least`
+## foes, or two with a big one).
+func _fireball_point(c: Combatant, foes: Array[Combatant], least: int = 3) -> Vector2:
 	var sculpts := CombatFeatures.has_feature(c, "sculpt_spells")
 	var best := Vector2.INF
 	var best_score := 0.0
@@ -265,7 +287,7 @@ func _fireball_point(c: Combatant, foes: Array[Combatant]) -> Vector2:
 		if hits_me or (allies > 0 and (not sculpts or allies > 4)):
 			continue
 		var score := float(n) + (1.0 if big else 0.0)
-		if (n >= 3 or (n >= 2 and big)) and score > best_score:
+		if (n >= least or (n >= 2 and big)) and score > best_score:
 			best_score = score
 			best = p
 	return best
@@ -309,6 +331,77 @@ static func _takes(req: ReactionRequest) -> bool:
 	return req.kind != CombatFeatures.DIVINE_SMITE
 
 
+## Its answer this time: sharp play smites a foe worth a slot (one with SMITE_WORTH_HP left, or on a Critical Hit) with
+## the free use or the lowest slot, as the prompt offers first.
+func _answer(req: ReactionRequest) -> bool:
+	if not sharp or req.kind != CombatFeatures.DIVINE_SMITE:
+		return _takes(req)
+	var target := e.get_c(req.trigger_id)
+	return req.callout != "" or (target != null and target.creature.hp >= SMITE_WORTH_HP)
+
+
+# --- Sharp play -----------------------------------------------------------------------------------
+
+## Fireball from any caster who knows it, with the lowest slot that casts it, when it catches two foes or more (or one
+## with a big one) and no ally Sculpt Spells can't spare. Null when it isn't cast.
+func _sharp_fireball(c: Combatant) -> CombatResult:
+	var ch := c.creature as Character
+	if not c.action_available or c.cast_slot_spell_this_turn or not ch.knows_spell("fireball"):
+		return null
+	var point := _fireball_point(c, _enemies(c), 2)
+	if point == Vector2.INF:
+		return null
+	for slot: int in [3, 4, 5]:
+		if ch.slots_left(slot) > 0:
+			var r := _cast(c, "fireball", slot, [], point)
+			return r if r.ok else null
+	return null
+
+
+## Spirit Guardians, with the lowest slot that casts it, once a foe is within 20 ft or two within 40 ft; while it lasts
+## the cleric steps up beside the nearest foe so the spirits keep biting. Null when the turn goes on as usual.
+func _sharp_guardians(c: Combatant, foes: Array[Combatant]) -> CombatResult:
+	var ch := c.creature as Character
+	if foes.is_empty():
+		return null
+	if _concentrating_on(c, "spirit_guardians"):
+		_close_in(c, foes)
+		return null
+	if not c.action_available or c.cast_slot_spell_this_turn or not ch.knows_spell("spirit_guardians"):
+		return null
+	var near := 0
+	var closing := 0
+	for f in foes:
+		var d := e.distance(c, f)
+		near += 1 if d <= 20 else 0
+		closing += 1 if d <= 40 else 0
+	if near == 0 and closing < 2:
+		return null
+	for slot: int in [3, 4, 5]:
+		if ch.slots_left(slot) > 0:
+			var r := _cast(c, "spirit_guardians", slot, [])
+			if not r.ok:
+				return null
+			return e.then(r, func() -> CombatResult:
+				if e.state == Encounter.State.ACTIVE and e.current() == c and c.can_act():
+					_close_in(c, _enemies(c))
+				return CombatResult.new())
+	return null
+
+
+## Moves `c` beside the nearest foe when none is within 10 ft (no Dash).
+func _close_in(c: Combatant, foes: Array[Combatant]) -> void:
+	var near := _nearest(c, foes)
+	if near == null or e.distance(c, near) <= 10 or c.movement_left <= 0:
+		return
+	e.ai._approach(c, {"kind": "approach", "target": near, "score": 0.0, "dash": false})
+
+
+func _concentrating_on(c: Combatant, spell_id: String) -> bool:
+	var conc := c.creature.concentration
+	return conc != null and not conc.ended and conc.source_id == spell_id
+
+
 ## Plays the encounter to the end (or `max_rounds`): the autopilot for the party, AiBrain for everyone else.
 ## Every reaction is taken automatically. Returns {outcome, rounds, downs}.
 func run(max_rounds: int = 30) -> Dictionary:
@@ -326,13 +419,13 @@ func run(max_rounds: int = 30) -> Dictionary:
 		if c.is_player_controlled():
 			r = play(c)
 			while e.pending != null:
-				r = e.answer_reaction(_takes(e.pending))
+				r = e.answer_reaction(_answer(e.pending))
 			if e.state == Encounter.State.ACTIVE and e.current() == c:
 				e.end_turn()
 		else:
 			r = e.run_ai_turn()
 			while e.pending != null:
-				r = e.answer_reaction(_takes(e.pending))
+				r = e.answer_reaction(_answer(e.pending))
 	for c in e.combatants:
 		if c.side == &"party" and e.log.texts().any(func(t: String) -> bool: return t == "%s falls unconscious" % c.name()):
 			downs += 1
