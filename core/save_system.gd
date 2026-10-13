@@ -220,6 +220,8 @@ func load_from(dir: String, slot: String) -> Error:
 static func upgrade(data: Dictionary) -> Dictionary:
 	var out := data.duplicate(true)
 	swap_withdrawn_items(out)
+	swap_regifted_items(out)
+	top_up_charges(out)
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
@@ -635,3 +637,81 @@ static func _swap_in(v: Variant, seen: Dictionary) -> void:
 		for x: Variant in v as Array:
 			_swap_in(x, seen)
 
+
+# --- Gifts and items that changed -----------------------------------------------------------------------------------
+
+## Story gifts that became other items after saves already held them. In a save whose `given` flag is set but not its
+## `mark` (the scene sets it now as it hands the new item over), the first copy of `old` the party carries, or else has
+## stashed, becomes `new`; then `mark` is set, so it happens once and a copy found later stays as it is. Mother's eighth
+## gift was Boots of Levitation and is Winged Boots now (owner, 2026-10-13).
+const REGIFTED := [{"given": "mother_flown", "old": "boots_of_levitation", "new": "winged_boots", "mark": "mother_boots_given"}]
+
+## Items that gained charges after saves already held them: a copy made before then has none, so it gets the item's
+## starting count. Winged Boots moved to the 2024 rules' 4 charges (2026-10-13).
+const CHARGED_LATER := ["winged_boots"]
+
+
+## Swaps each changed gift in `save` (in place) for the new item, once per save (REGIFTED). The new item keeps the old
+## one's place: its slot and its attunement.
+static func swap_regifted_items(save: Dictionary) -> void:
+	var story := save.get("story", {}) as Dictionary
+	var flags := story.get("flags", {}) as Dictionary
+	for g: Dictionary in REGIFTED:
+		if bool(flags.get(str(g["given"]), false)) and not bool(flags.get(str(g["mark"]), false)):
+			_regift(story, str(g["old"]), str(g["new"]))
+			flags[str(g["mark"])] = true
+
+
+static func _regift(story: Dictionary, old: String, new: String) -> void:
+	var holders: Array = []
+	holders.append_array(story.get("party", []) as Array)
+	holders.append_array(story.get("bench", []) as Array)
+	for h: Variant in holders:
+		var ch := h as Dictionary
+		for e: Variant in ch.get("inventory", []):
+			if str((e as Dictionary).get("id", "")) == old:
+				_become(e as Dictionary, new)
+				if ch.get("attuned", null) is Array:
+					ch["attuned"] = (ch["attuned"] as Array).map(func(a: Variant) -> String: return new if str(a) == old else str(a))
+				return
+	for e: Variant in story.get("stash", []):
+		if str((e as Dictionary).get("id", "")) == old:
+			_become(e as Dictionary, new)
+			return
+
+
+## An item entry turned into `id`: the old item's spent uses go, the new one's charges come, and it shows as new.
+static func _become(entry: Dictionary, id: String) -> void:
+	entry["id"] = id
+	for k: String in ["uses", "budget_used", "cooldowns", "charges", "max_charges"]:
+		entry.erase(k)
+	_charge(entry)
+	entry["new"] = true
+
+
+## Gives every made copy of a CHARGED_LATER item in `save` (in place) that has no charges its starting count.
+static func top_up_charges(save: Dictionary) -> void:
+	_top_up_in(save)
+
+
+static func _top_up_in(v: Variant) -> void:
+	if v is Dictionary:
+		var d := v as Dictionary
+		if str(d.get("id", "")) in CHARGED_LATER and d.has("made") and not d.has("charges"):
+			_charge(d)
+		for k: Variant in d.keys():
+			_top_up_in(d[k])
+	elif v is Array:
+		for x: Variant in v as Array:
+			_top_up_in(x)
+
+
+## An item entry's starting charges, if its item has any (MagicItems.init_state).
+static func _charge(entry: Dictionary) -> void:
+	var data := Compendium.shared().item_data(str(entry["id"]))
+	if not MagicItems.has_charges(data):
+		return
+	var fresh := MagicItems.init_state(data, DiceRoller.new(hash(str(entry["id"]))))
+	for k: String in ["charges", "max_charges"]:
+		if fresh.has(k):
+			entry[k] = fresh[k]
