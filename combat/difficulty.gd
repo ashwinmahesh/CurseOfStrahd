@@ -5,8 +5,9 @@ extends RefCounted
 ## dice stay the 2024 numbers) except Baldur's Gate 3's +2s, which the owner asked for (2026-10-07): the party's
 ## attack rolls and saving throws on Story, and enemies' attack rolls and DCs on Tactician and Honour. A mode also moves
 ## enemy Hit Points within what their Hit Dice could roll, sets how the enemy AI fights (AiBrain reads `tactics`), and
-## switches a few optional rules. Balanced is the game exactly as it played before the modes, so older saves are
-## Balanced. Every change shows in a Breakdown under the mode's name ("Tactician +2").
+## switches a few optional rules. Balanced was the game as it played before the modes, so older saves are Balanced;
+## since 2026-10-13 its casters also cast their best spell when it beats the weapon (owner). Every change shows in a
+## Breakdown under the mode's name ("Tactician +2").
 ##
 ## A fight is set up with prepare() before it starts; a fight resumed from a round-start save only needs arm().
 
@@ -23,6 +24,10 @@ const BOSS_CR := 5.0
 ##   tactics:       kind (spread blows, no killing blow), standard (as before the modes), sharp (focus fire on the
 ##                  hurt and on healers and casters, and move to flank), ruthless (sharp, and cruel foes strike heroes
 ##                  at 0 HP).
+##   spells:        enemy spellcasters weigh every harmful spell of their list (AiSpells) and cast the best when it
+##                  beats their weapon (owner, 2026-10-13: every foe with spells uses them when that's its best
+##                  option, on Balanced too); off, only a spellcaster's few (an escape, Phantasmal Killer, Magic
+##                  Missile).
 ##   kit:           armed humanoid foes carry a Potion of Healing (drunk when Bloodied), casters a scroll of their
 ##                  strongest spell; what isn't used is looted.
 ##   morale:        when its side breaks, a foe that isn't mindless or a boss flees the field.
@@ -32,19 +37,19 @@ const BOSS_CR := 5.0
 ##   one_save:      the playthrough keeps a single save (built by the saves lane).
 ##   switchable:    can be picked in Settings mid-game (Honour only at a new game).
 const MODES := {
-	"story": {"name": "Story", "hp": 0.75, "party_bonus": 2, "enemy_bonus": 0, "tactics": "kind", "kit": false, "morale": false, "full_bosses": false,
+	"story": {"name": "Story", "hp": 0.75, "party_bonus": 2, "enemy_bonus": 0, "tactics": "kind", "spells": false, "kit": false, "morale": false, "full_bosses": false,
 		"spared": true, "safe_rests": true, "one_save": false, "switchable": true,
 		"tagline": "For the tale",
 		"summary": "Foes are frailer and spread their blows around, your party gets +2 to attacks and saves, and nobody dies for good."},
-	"balanced": {"name": "Balanced", "hp": 1.0, "party_bonus": 0, "enemy_bonus": 0, "tactics": "standard", "kit": false, "morale": false,
+	"balanced": {"name": "Balanced", "hp": 1.0, "party_bonus": 0, "enemy_bonus": 0, "tactics": "standard", "spells": true, "kit": false, "morale": false,
 		"full_bosses": false, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
 		"tagline": "The book as written",
 		"summary": "Foes at their stat block, fighting the way the book has them."},
-	"tactician": {"name": "Tactician", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "sharp", "kit": true, "morale": true,
+	"tactician": {"name": "Tactician", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "sharp", "spells": true, "kit": true, "morale": true,
 		"full_bosses": false, "spared": false, "safe_rests": false, "one_save": false, "switchable": true,
 		"tagline": "For a hard fight",
 		"summary": "Tougher, sharper foes (+2 to hit and to their DCs) who gang up on the hurt, go for your healers, drink their potions and run when beaten."},
-	"honour": {"name": "Honour", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "ruthless", "kit": true, "morale": true, "full_bosses": true,
+	"honour": {"name": "Honour", "hp": 1.2, "party_bonus": 0, "enemy_bonus": 2, "tactics": "ruthless", "spells": true, "kit": true, "morale": true, "full_bosses": true,
 		"spared": false, "safe_rests": false, "one_save": true, "switchable": false,
 		"tagline": "One life, one save",
 		"summary": "Tactician with no mercy: bosses at full strength, cruel foes finish the fallen, and one save."},
@@ -58,6 +63,7 @@ var hp_scale: float = 1.0
 var party_bonus: int = 0
 var enemy_bonus: int = 0
 var tactics: String = "standard"
+var spells: bool = false
 var kit: bool = false
 var morale: bool = false
 var full_bosses: bool = false
@@ -80,6 +86,7 @@ static func named(mode_id: String) -> Difficulty:
 	d.party_bonus = int(m["party_bonus"])
 	d.enemy_bonus = int(m["enemy_bonus"])
 	d.tactics = str(m["tactics"])
+	d.spells = bool(m["spells"])
 	d.kit = bool(m["kit"])
 	d.morale = bool(m["morale"])
 	d.full_bosses = bool(m["full_bosses"])
@@ -127,7 +134,8 @@ func describe() -> Array[String]:
 			out.append("Enemies fight as the book has them.")
 		_:
 			out.append("Enemies gang up on the hurt and go for your healers and spellcasters first.")
-			out.append("Enemy spellcasters cast from their whole spell list.")
+	if spells:
+		out.append("Enemy spellcasters cast from their whole spell list when a spell beats their weapon.")
 	if tactics == "ruthless":
 		out.append("Cruel foes strike a hero who has fallen to 0 Hit Points.")
 	if kit:

@@ -1,8 +1,8 @@
 class_name AiSpells
 extends RefCounted
-## Enemy spellcasters at Tactician and Honour (combat/difficulty.gd): each turn the best spell of the stat block's list
-## (or the scroll it carries) against the best weapon attack, weighed in the same units as AiBrain's attack scores,
-## expected damage. Damage counts by the chance to hit or the chance the save fails (half on a success when the spell
+## Enemy spellcasters on Balanced, Tactician and Honour (combat/difficulty.gd, `spells`): each turn the best spell of the
+## stat block's list (or the scroll it carries) against the best weapon attack, weighed in the same units as AiBrain's
+## attack scores, expected damage. Damage counts by the chance to hit or the chance the save fails (half on a success when the spell
 ## says so); a condition counts by what it takes away from the target, a creature's whole turn for Paralyzed or
 ## Unconscious; allies caught in an area count against it. A spell that needs Concentration waits while the caster
 ## keeps another. Spells that summon, place an object or a wall, teleport, buff or heal are left to the stat block's
@@ -113,7 +113,8 @@ func _best_use(c: Combatant, id: String) -> Dictionary:
 			var cells := e.spells.area_for(c, s, point if point != Vector2.INF else e.center_of(c), dir)
 			var score := 0.0
 			for v in e.spells.creatures_in(cells):
-				if v == c:
+				# The caster in its own blast (a Fireball at the foe beside it) counts against it like an ally.
+				if v == c and self_origin:
 					continue
 				var w := worth(c, s, v)
 				score += -1.5 * w if not c.hostile_to(v) else w
