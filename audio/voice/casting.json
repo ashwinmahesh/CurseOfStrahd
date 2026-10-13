@@ -1066,9 +1066,10 @@
       "voice_id": "ozdh3TOFkOj4aavMcQpz",
       "name": "Barovia Ratatoille",
       "description": "A young elven man with a light, quick, slightly nasal tenor and a French accent. Fussy, precise and eager, talking fast and rising in pitch when excited, voice occasionally cracking; pompous on purpose, warm by accident, and very quiet and proud when someone loves his food.",
-      "model": "eleven_v3",
-      "earlier_model": "eleven_v4",
-      "model_since": "2026-10-07"
+      "model": "eleven_v4",
+      "earlier_model": "eleven_v3",
+      "model_since": "2026-10-13",
+      "model_note": "Owner, 2026-10-13: his v3 lines (the apprentice and his grandmother's tart) sounded like a different voice from his 253 v4 originals; every line is on v4, same voice, no direction tags, as the Narrator (2026-10-08)."
     },
     "thistle": {
       "voice_id": "FSY8XsIBUNaLJ1nyCSXE",
@@ -1765,14 +1766,13 @@
       "shared_with": "escher"
     },
     "krezk_gate_boy": {
-      "voice_id": "bA58y3FqVI6b6gTNh0oT",
-      "name": "Library voice: Kavya - Cute & Engaging Character",
-      "description": "Dumitru, a boy of krezk: a generic townsperson on a shared voice, Kavya - Cute & Engaging Character (also Thorn's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "c6cUlh8iJa74kYbBwDaZ",
+      "name": "Library voice: Oceano - Calm, Light and Soft",
+      "description": "Dumitru, a boy of twelve at the Krezk gate: the library boy's voice Oceano (a real 14-year-old's voice), picked by Claude 2026-10-13 over Leo and Anatoly. Owner 2026-10-13: his old shared voice, Kavya (Thorn's), sounded like a small girl. Keep him off Kavya.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
-      "accent_tag": "[strong Romanian accent]",
-      "shared_with": "thorn"
+      "accent_tag": "[strong Romanian accent]"
     },
     "ana": {
       "voice_id": "6tPpQd1OMENsZ3qD7FSl",

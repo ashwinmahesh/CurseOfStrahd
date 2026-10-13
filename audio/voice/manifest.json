@@ -28973,14 +28973,14 @@
   "chars": 119,
   "direction": "[excited, breathless, curious]",
   "model": "eleven_v3",
-  "recipe": "9e6aefb001",
+  "recipe": "df8ac37650",
   "text": "Nobody comes up the road. Except you. Did you see wolves? Did you see the castle? Is it true it has a thousand windows?"
  },
  "krezk_gate_boy/ebac213a6861ca7d": {
   "chars": 115,
   "direction": "[excited, breathless]",
   "model": "eleven_v3",
-  "recipe": "9e6aefb001",
+  "recipe": "df8ac37650",
   "text": "Ilya's out of the house! Everybody says it was you. Is it true you've been past Vallaki? Is it true there's a lake?"
  },
  "krezk_goatherd/9f6b06a40bc831cf": {
@@ -28999,7 +28999,7 @@
  },
  "krezk_goatherd/db5e1700b5f7edc6": {
   "chars": 156,
-  "direction": "[dry, fond]",
+  "direction": "[dry, wry]",
   "model": "eleven_v3",
   "recipe": "1fae5c6eba",
   "text": "That one's Rodica's, and that one's the Burgomaster's, and the one with the horn is nobody's, because nobody's brave enough. Mind your fingers by the rails."
@@ -71894,14 +71894,14 @@
  },
  "ratatoille/00b08db7a0467323": {
   "chars": 96,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Think first. Be kind second. Fireball third. In that order, always. Nobody listens to the order."
  },
  "ratatoille/017e18a12c2d8953": {
   "chars": 185,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I cooked for the Martikovs because they let me. I used to cook so that people would sit with me. This one I cooked because you're mine. That's different. I didn't know it was different."
  },
  "ratatoille/022127cd12399fc3": {
@@ -71936,8 +71936,8 @@
  },
  "ratatoille/0605a3fc2b7fa04b": {
   "chars": 169,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Just her. Something small. Bread, and the little honey cakes from home, and nobody else allowed to taste them. ...That's a terribly forward thing to do with honey cakes."
  },
  "ratatoille/062744b993b2b4ae": {
@@ -71996,8 +71996,8 @@
  },
  "ratatoille/1034006c69a4de03": {
   "chars": 68,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Very well. I'll say something. I'll prepare remarks. Several drafts."
  },
  "ratatoille/12220c0d7ff279e2": {
@@ -72014,9 +72014,8 @@
  },
  "ratatoille/1912e5e2be2788e5": {
   "chars": 121,
-  "direction": "[humiliated, indignant]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "He said I wished to be taken seriously. Then he had me fold my blanket and walk to him like a waiter with an empty plate."
  },
  "ratatoille/192dfd69ce3ddb45": {
@@ -72045,14 +72044,14 @@
  },
  "ratatoille/1c3796afea023d53": {
   "chars": 127,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Welcome to the Third Circle. You're the first member who isn't me. ...It's mushrooms. It's always mushrooms. Don't tell anyone."
  },
  "ratatoille/1c4d2eff578eefd3": {
   "chars": 118,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "It's how it works with this one. Trust me. I'm a diviner. I can see the future, and in the future you say grace twice."
  },
  "ratatoille/1d04e219be38eeb9": {
@@ -72105,9 +72104,8 @@
  },
  "ratatoille/21b0ea0aa5a8c387": {
   "chars": 94,
-  "direction": "[dry, prim, faintly embarrassed]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I said I'd read of him briefly. I'd like it noted that I was being generous about how briefly."
  },
  "ratatoille/22374b43ca4ae77c": {
@@ -72118,8 +72116,8 @@
  },
  "ratatoille/235750a46d45f835": {
   "chars": 77,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Finally? You knew? Everyone knew? Divination knew. Of course divination knew."
  },
  "ratatoille/23f0e307fe040ea9": {
@@ -72136,8 +72134,8 @@
  },
  "ratatoille/25a85b01d7fb2bd1": {
   "chars": 206,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I've never given anyone a recipe. In my family you inherit them; you don't hand them out. I'm handing it out. To you. Because if anything happens up at that castle, somebody should still be able to make it."
  },
  "ratatoille/26b5773e468176a8": {
@@ -72154,8 +72152,8 @@
  },
  "ratatoille/2ae66a0bd16ccb6c": {
   "chars": 85,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I've made you something. Don't say grace over it yet. Taste it first. Then say grace."
  },
  "ratatoille/2bc0dd8aa4ef76ac": {
@@ -72256,8 +72254,8 @@
  },
  "ratatoille/34ef4ba7628c7e0f": {
   "chars": 68,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I didn't. It was random. The bread was random. Bread is very random."
  },
  "ratatoille/369f42988ef54b0e": {
@@ -72304,8 +72302,8 @@
  },
  "ratatoille/3bbd4a94d67c9e57": {
   "chars": 92,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I prepared remarks. Several drafts. They're all terrible. I'm going to say the shortest one."
  },
  "ratatoille/3bc95941997b48e4": {
@@ -72316,8 +72314,8 @@
  },
  "ratatoille/3c0fb8f250492bc2": {
   "chars": 80,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Isn't it? No. No, it isn't. Nobody ever says that. Everybody says \"only\" a cook."
  },
  "ratatoille/3dde9f84c25f75bf": {
@@ -72346,14 +72344,14 @@
  },
  "ratatoille/419c2cd59d7aa830": {
   "chars": 112,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "You may join, if you like. The entrance requirement is that you eat whatever I cook without asking what's in it."
  },
  "ratatoille/43d3e0e6251b3e6c": {
   "chars": 214,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "May I say something without anyone putting a frog in my soup? Lately I don't like who we're being. It's like a sauce that's split. You keep stirring, and you can't tell when it went wrong, and then it's just wrong."
  },
  "ratatoille/4581e7ce47e46348": {
@@ -72394,8 +72392,8 @@
  },
  "ratatoille/467d6c030bbfbcf0": {
   "chars": 97,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Both. Yes. Ratatouille, Diviner of the... no. Just both. Both is enough. Both is a lot, actually."
  },
  "ratatoille/46f1d50fb308f1e1": {
@@ -72454,8 +72452,8 @@
  },
  "ratatoille/4fb4fcdc820e6327": {
   "chars": 49,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "You always do that. Every time. Even for rations."
  },
  "ratatoille/4ff954f11491ede2": {
@@ -72502,8 +72500,8 @@
  },
  "ratatoille/5468096c1d002d26": {
   "chars": 83,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "It's a beautiful spoon. Lopsided. Lopsided spoons stir better; everyone knows that."
  },
  "ratatoille/5472a5c8fabd9b8f": {
@@ -72550,8 +72548,8 @@
  },
  "ratatoille/59b152d81baa5630": {
   "chars": 125,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "At the academy I kept my head down and agreed with whoever was loudest. I came here to stop doing that. So. I'm not agreeing."
  },
  "ratatoille/59c243e5df52c1e0": {
@@ -72586,8 +72584,8 @@
  },
  "ratatoille/5c4571de2a8cc5bd": {
   "chars": 133,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "The Circles. First Circle: cantrips. Second Circle: anything that explodes. Third Circle: me. I'm establishing them. Somebody has to."
  },
  "ratatoille/5d467c2411b50c82": {
@@ -72598,8 +72596,8 @@
  },
  "ratatoille/5d99ac1c21c67761": {
   "chars": 84,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Non, it's fine. I'm distracted. A chef is permitted to be distracted once a century."
  },
  "ratatoille/5e9044d861bf4930": {
@@ -72676,9 +72674,8 @@
  },
  "ratatoille/6a3bd3711c95c92d": {
   "chars": 50,
-  "direction": "[firm, practical]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Cut it, and it'll only tie itself again. Break it."
  },
  "ratatoille/6a5aabdc73c0fe93": {
@@ -72689,14 +72686,14 @@
  },
  "ratatoille/6ad797bf360e91ea": {
   "chars": 101,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "There is no Fourth Circle. ...There is now. You're it. It's above mine. Don't let it go to your head."
  },
  "ratatoille/6b0cf2d3d7baeb91": {
   "chars": 72,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Tomorrow I'll do the crust my way. I think I know which way is mine now."
  },
  "ratatoille/6c2bb66b3e29d91b": {
@@ -72725,8 +72722,8 @@
  },
  "ratatoille/6d5f8e27b1cc84c3": {
   "chars": 107,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I'm not cooking. Don't ask me to. I can't cook for people when it doesn't taste right in my mouth to do it."
  },
  "ratatoille/6db3f70fb8222f7f": {
@@ -72749,8 +72746,8 @@
  },
  "ratatoille/6f24d0289351aab5": {
   "chars": 142,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "You say grace over my food. Nobody ever did. I think I've been cooking for you since Death House, and I didn't know it until somebody told me."
  },
  "ratatoille/70f0af39283a78c1": {
@@ -72767,8 +72764,8 @@
  },
  "ratatoille/7235dd7b26b6e34e": {
   "chars": 215,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Before I left, I told my whole family I was going to be apprenticed to the greatest wizard of the age. My brothers laughed. My grandmother said, \"He'll be back in the kitchen by spring,\" and they all laughed harder."
  },
  "ratatoille/728961488f25ec84": {
@@ -72809,8 +72806,8 @@
  },
  "ratatoille/7970996caed6c633": {
   "chars": 86,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Oh. I... yes. I will. I'll be insufferable. I'll be extremely insufferable. Thank you."
  },
  "ratatoille/79b618a251f32ec4": {
@@ -72857,8 +72854,8 @@
  },
  "ratatoille/7dd4126833ab9489": {
   "chars": 82,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I'm not. It's the steam. It's a very steamy stew. I've overseasoned it with steam."
  },
  "ratatoille/7e0116253d4af065": {
@@ -72923,8 +72920,8 @@
  },
  "ratatoille/86a24f518cdb4a92": {
   "chars": 74,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Thank you. I accept. Provisionally. Like a soufflé: we'll see if it rises."
  },
  "ratatoille/86db58c01badfd8b": {
@@ -72953,8 +72950,8 @@
  },
  "ratatoille/8a38dd2f4a05220b": {
   "chars": 114,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "She does, though. She decides everything. She decided what I'd be called. ...But not this. You're right. Not this."
  },
  "ratatoille/8aa6716c01ac2e81": {
@@ -73019,9 +73016,8 @@
  },
  "ratatoille/94b1fc0421690a76": {
   "chars": 46,
-  "direction": "[shaken, bitter]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I am a diviner. I saw nothing coming. Nothing."
  },
  "ratatoille/9536da3deacbacf2": {
@@ -73068,14 +73064,14 @@
  },
  "ratatoille/99b1b2f200fd6707": {
   "chars": 177,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "And the thing is, I want to go back to the kitchen. I want to go home and cook. And I'm terrified that means she was right, and I'll only ever be the boy under the pastry table."
  },
  "ratatoille/9b98e5cd8c7a55ea": {
   "chars": 60,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "The Third Circle approves. The Third Circle wrote to say so."
  },
  "ratatoille/9c1c7c107a53d0aa": {
@@ -73104,14 +73100,14 @@
  },
  "ratatoille/9ef2ca19ae8fae9f": {
   "chars": 111,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "After. Yes. In a proper kitchen, with a proper oven, and you'll all do it wrong and I'll fix it. That's a deal."
  },
  "ratatoille/9fe2705b3da3893c": {
   "chars": 115,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Kindness first. Then cleverness. Then fire. That's the correct order of operations. You've been doing it backwards."
  },
  "ratatoille/a06689f7c867c7a4": {
@@ -73194,8 +73190,8 @@
  },
  "ratatoille/a9169c5a8a529b45": {
   "chars": 102,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "You've failed the entrance examination. Wonderful. Nobody's ever failed before. It's very prestigious."
  },
  "ratatoille/a9b84e8456d01a2e": {
@@ -73242,9 +73238,8 @@
  },
  "ratatoille/b2eff5f66061c3c5": {
   "chars": 85,
-  "direction": "[grim, wry resolve]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Next time I sleep with the skillet. I want to see his face when I take him seriously."
  },
  "ratatoille/b31bf51e9f5651f1": {
@@ -73261,8 +73256,8 @@
  },
  "ratatoille/b45e7218942051a0": {
   "chars": 58,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Yes. Of course. Eat. That's what it's for. It's only food."
  },
  "ratatoille/b55b5056c02593f1": {
@@ -73285,21 +73280,20 @@
  },
  "ratatoille/b6f28e9a90d06d89": {
   "chars": 84,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Of course. Stirring. I'm very good at stirring and keeping quiet. I'd hoped to stop."
  },
  "ratatoille/b7444d82106229c6": {
   "chars": 103,
-  "direction": "[bitter, wistful, quiet]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Maman, calling me out of the kitchen. She never once called me out of the kitchen. She needed me in it."
  },
  "ratatoille/b7ddce138fe430b1": {
   "chars": 158,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Liriel. She's a priestess. She's lovely and she talks to a god, and I'm a cook who learned fire so people would sit with him. What would she want with a cook?"
  },
  "ratatoille/b7fb9700c695354f": {
@@ -73328,8 +73322,8 @@
  },
  "ratatoille/ba5a6814854437dd": {
   "chars": 74,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "No. No, of course. I'd thought so. It's a very old order. Very particular."
  },
  "ratatoille/bf9ef19d959a3b41": {
@@ -73352,8 +73346,8 @@
  },
  "ratatoille/c28694785f727534": {
   "chars": 129,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I need a consultation. In confidence. I've tried divination. Divination says \"obviously\", which is very unhelpful, and also rude."
  },
  "ratatoille/c433091e2bb955c1": {
@@ -73382,9 +73376,8 @@
  },
  "ratatoille/c6263baf8234cf21": {
   "chars": 106,
-  "direction": "[forcefully cheerful, bossy]",
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I can foresee breakfast. Breakfast I will foresee, and it will be excellent, and you will all eat it. Sit."
  },
  "ratatoille/c6c06c7873ad6b49": {
@@ -73407,8 +73400,8 @@
  },
  "ratatoille/c7f6ffd3541b1313": {
   "chars": 149,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "I learned magic so people would sit with me. Then I found people who would. And now I look at the table and I don't know whether I want to sit at it."
  },
  "ratatoille/cbc298482c170edc": {
@@ -73557,14 +73550,14 @@
  },
  "ratatoille/dd22ab654557d9bd": {
   "chars": 70,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Tomorrow I'll cook. Something simple. Bread. You can't lie with bread."
  },
  "ratatoille/dd22c6bcbb9d9146": {
   "chars": 179,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "It's my grandmother's. She makes it every feast day, and every feast day she tells me I'm doing the crust wrong. I'm doing it her way tonight. I wanted to see if I could stand it."
  },
  "ratatoille/dfdade033c23b080": {
@@ -73617,14 +73610,14 @@
  },
  "ratatoille/ed5abc1f44dfee9a": {
   "chars": 110,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "Technically, something always happens. But I appreciate the optimism. It's very undercooked. I like it anyway."
  },
  "ratatoille/eee937adf2eb9eaa": {
   "chars": 122,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "A recipe. My best one. My grandmother's, actually, with improvements. Many improvements. She'd be furious. It's the bread."
  },
  "ratatoille/eefc520f6c1d37c8": {
@@ -73683,8 +73676,8 @@
  },
  "ratatoille/f763707f0cdbe87e": {
   "chars": 117,
-  "model": "eleven_v3",
-  "recipe": "45b2eb9c71",
+  "model": "eleven_v4",
+  "recipe": "eaa6a8f9c8",
   "text": "She does, doesn't she. Nobody ever did. Not even Maman. She'd say \"eat it before it goes cold\", which isn't the same."
  },
  "ratatoille/f7ba33eb36dfde21": {
