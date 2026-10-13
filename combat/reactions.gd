@@ -646,6 +646,13 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# Guidance before a party member's skill check outside fights (story/guidance_offer.gd): the caster's standing
+	# answer to its prompt, kept here with the rest.
+	if (c.creature as Character).knows_spell("guidance") and not seen.has("guidance"):
+		seen["guidance"] = true
+		out.append({"id": "guidance", "name": "Guidance before checks", "cost": "Nothing (a cantrip)", "modes": ["ask", "auto", "never"],
+			"default": "ask",
+			"help": "Outside fights, before someone in the party makes a skill check (in a conversation, on something in the world, searching, forcing a lock, haggling). Ask: you're asked whether to cast Guidance on them first (+1d4). Automatic: cast whenever you aren't concentrating on another spell, which it would end. Off: never offered."})
 	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
 	# Repelling Blast (2024: a warlock cantrip's hit "can" push the creature 10 ft): pushing is the default; Off keeps a
 	# foe where it stands (owner, 2026-10-12), changeable on any turn. Not a reaction: its toggle sits on the class tab

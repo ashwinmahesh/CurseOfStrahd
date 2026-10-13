@@ -47,6 +47,8 @@ var cutscene: CutsceneView = null
 var busts: DialogueBusts
 ## The big d20 at the top of the screen while a check's result is up (G11: the emerald die, DiceRoll).
 var d20: DiceRoll = null
+## The Guidance prompt while it's asking (a `guidance` beat), else null.
+var guidance: GuidancePrompt = null
 ## Q13: who speaks for the party, shown while there's a choice to make; it (or Tab) cycles the living party.
 var _speaker_button: Button
 
@@ -321,7 +323,7 @@ func _show(beat: Dictionary) -> void:
 		VoiceOver.say(VoiceOver.beat_voice(beat), str(beat["text"]))
 	else:
 		VoiceOver.stop()
-	if cutscene != null and str(beat["kind"]) in ["line", "notice", "check", "options", "pick_member"]:
+	if cutscene != null and str(beat["kind"]) in ["line", "notice", "check", "options", "pick_member", "guidance"]:
 		# Over a cutscene a line is a caption on the picture; anything to choose or note comes up in the box.
 		var captioned := str(beat["kind"]) == "line"
 		_panel.visible = not captioned
@@ -377,6 +379,11 @@ func _show(beat: Dictionary) -> void:
 				_options.add_child(b)
 		"options":
 			_show_options(beat["options"] as Array)
+		"guidance":
+			# Before the roll, someone could cast Guidance: the prompt over the box, then the check's beat.
+			guidance = GuidancePrompt.ask(self, beat["offer"] as Dictionary, func(index: int, rule: String) -> void:
+				guidance = null
+				_show(runner.answer_guidance(index, rule)))
 		"stage":
 			stage_requested.emit(str(beat["what"]), str(beat["npc"]), str(beat["at"]))
 			_show(runner.next())
