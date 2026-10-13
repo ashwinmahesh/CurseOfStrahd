@@ -295,18 +295,23 @@ func _strike_ft(c: Combatant) -> int:
 
 ## A square within `c`'s Speed that sets up its own turn better than where it stands: more standing foes within its
 ## reach and fewer able to reach it (a reach or ranged fighter steps back out of theirs), or with none in reach, closer
-## to `toward`. Its own square when none is better.
+## to `toward`; clear of the dangerous ground it knows of first, as `_safe_cell` is. Its own square when none is better.
 func _vantage_cell(c: Combatant, toward: Combatant) -> Vector2i:
 	var e := enc()
 	var reach := e.reachable_for(c, c.speed())
+	var hz := e.ai.hazards.read(c)
+	var calm := reach if hz == null else e.reachable_for(c, c.speed(), false, hz.avoid)
+	var here: Array[Vector2i] = [c.cell]
 	var strike := _strike_ft(c)
 	var best := c.cell
-	var best_s := _vantage(c, c.cell, strike, toward)
+	var best_s := _vantage(c, c.cell, strike, toward) - _harm(hz, here)
 	for cell: Vector2i in reach:
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
-		var s := _vantage(c, cell, strike, toward) - int(info["cost"]) * 0.001
+		var way := calm if calm.has(cell) else reach
+		var s := _vantage(c, cell, strike, toward) - int((way[cell] as Dictionary)["cost"]) * 0.001
+		s -= _harm(hz, CombatGrid.path_to(way, cell))
 		if s > best_s + 0.01:
 			best_s = s
 			best = cell
