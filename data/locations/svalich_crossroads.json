@@ -876,6 +876,13 @@
             19,
             23
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            15,
+            21
+          ]
         }
       ],
       "surprise": "",

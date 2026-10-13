@@ -55,7 +55,7 @@ independently; the journal shows whichever were reached.
 
 | id | Trigger | Monsters | XP | Party level | Difficulty (2024 DMG, 4 PCs) |
 |---|---|---|---|---|---|
-| `mists_wolves` | dialogue (failed check or "draw steel") | 3 wolves (two ahead in the narrows, one flanking from the trees behind) | 150 | 1 | Low (budget 200 / 300 / 400) |
+| `mists_wolves` | dialogue (failed check or "draw steel") | a dire wolf leading 6 wolves (the three in the narrows and behind, and four more out of the fog) | 500 | 1 | Above High (budget 200 / 300 / 400); scaled up for 2024 heroes (owner, 2026-10-13), 4 wins in 8 |
 
 Trap: `mists_wolf_trap` [25, 15], detect 11, disarm 11, Dex save 11, 1d6 piercing.
 

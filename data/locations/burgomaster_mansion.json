@@ -479,20 +479,6 @@
       "text": "Past midnight the boards over the windows begin to creak, then to split. Wolves throw themselves at the front door, and in the parlor and the wake room grey hands come through the gaps.",
       "monsters": [
         {
-          "monster": "dire_wolf",
-          "cell": [
-            10,
-            12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             2,
@@ -518,6 +504,13 @@
           "cell": [
             22,
             8
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            12
           ]
         }
       ],
@@ -592,6 +585,21 @@
             4
           ],
           "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            2,
+            4
+          ]
         }
       ],
       "surprise": "",

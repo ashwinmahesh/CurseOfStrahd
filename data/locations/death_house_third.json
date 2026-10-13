@@ -663,20 +663,28 @@
           "name": "Black Armor"
         },
         {
-          "monster": "animated_armor",
+          "monster": "animated_flying_sword",
           "cell": [
             12,
             4
           ],
-          "name": "Black Armor"
+          "name": "Balcony Sword"
         },
         {
-          "monster": "broom_of_animated_attack",
+          "monster": "animated_flying_sword",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "Balcony Sword"
+        },
+        {
+          "monster": "animated_flying_sword",
           "cell": [
             13,
             5
           ],
-          "name": "Hall Broom"
+          "name": "Balcony Sword"
         }
       ],
       "text": "The armor on the landing steps down off its stand."
@@ -738,6 +746,27 @@
             13
           ],
           "name": "Broom"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            14
+          ]
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            13,
+            12
+          ]
         }
       ],
       "text": "The broom against the wall has opinions about visitors."

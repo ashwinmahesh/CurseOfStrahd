@@ -81,12 +81,14 @@ spawn `from_east_road` is where Into the Mists' `into_the_village` exit arrives 
 
 | id | Map | Trigger | Monsters | XP | Band |
 |---|---|---|---|---|---|
-| `mansion_siege` | burgomaster_mansion | `flag:mansion_vigil` (the party chooses to stand watch) | 2 dire wolves, 2 Strahd zombies, 2 zombies | 900 | Moderate |
-| `doru_undercroft` | village_church | dialogue (`combat doru_undercroft`) | Doru (vampire spawn) | 1800 | above High (see note) |
-| `churchyard_dead` | village_of_barovia | dialogue (burial: Strahd defied or attacked, or a hasty burial) | 4 Strahd zombies, 2 zombies | 900 | Moderate |
-| `night_streets_dead` | village_of_barovia | `enter_area:village_square` at night | 2 Strahd zombies, 4 zombies | 600 | Low |
+| `mansion_siege` | burgomaster_mansion | `flag:mansion_vigil` (the party chooses to stand watch) | a vampire spawn leading 2 Strahd zombies and 2 zombies | 2300 | above High |
+| `doru_undercroft` | village_church | dialogue (`combat doru_undercroft`) | Doru (vampire spawn) and 4 swarms of the undercroft's rats | 2000 | above High (see note) |
+| `churchyard_dead` | village_of_barovia | dialogue (burial: Strahd defied or attacked, or a hasty burial) | 6 Strahd zombies, a zombie, 2 ghouls | 1650 | High |
+| `night_streets_dead` | village_of_barovia | `enter_area:village_square` at night | 4 Strahd zombies, 4 zombies, 2 ghouls | 1400 | Moderate+ |
 
-Doru is the adventure's vampire spawn and is deliberately over budget (1800 vs High 1600): the party is warned by
+Scaled up for 2024 heroes (owner, 2026-10-13: 3 wins in 8 at level 3; the level 3 versions above, held by
+tests/integration/test_scaled_fights_barovia.gd). Doru alone was 8 wins in 8; with the rats he has been living on it is
+2 in 8 (three swarms were 5). Doru is the adventure's vampire spawn and is deliberately over budget: the party is warned by
 Donavich, by the screams and by an Insight check, and has two non-violent outs. Donavich gives two flasks of holy water
 if he is friendly or gives his blessing, and the vestry chest holds two more; the narrow stair is a choke point. If
 playtests show it is too punishing, the cleanest fix is an encounter-level HP override ("starved: 60 HP"), which the
