@@ -2,14 +2,21 @@ extends TestCase
 ## Night visitors at camp (F16, data/camp/night_visitors.json): an interrupted night in a risky place brings a fight to
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
 ## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
-## Rest benefits. Every fight finishes, and each group is hard but winnable (the owner's standing rule, and his
-## 2026-10-12 word on easy fights): won at least twice in eight and lost at least twice. The wild's groups are played
-## in an open field; a town's and indoors' in a real village and a real house, from the camp the party makes there.
+## Rest benefits. Every fight finishes, and each group is won exactly as often in the eight as the owner wants for the
+## level it's played at (2026-10-13, target_wins): 4 of 8 at levels 1-2, 3 at levels 3-5, 2 from level 6. The wild's
+## groups are played in an open field; a town's and indoors' in a real village and a real house, from the camp the
+## party makes there.
 
 var root: Node
 const FIELD := "test_night_field"
 ## Where a setting's own groups are played: the camp the party makes on arriving in a real place.
 const PLACES := {"town": "village_of_barovia", "indoors": "burgomaster_mansion"}
+
+
+## How many of seeds 1-8 the party should win against a group played at `level` (the owner, 2026-10-13: harder as the
+## party grows): 4 at levels 1-2, 3 at levels 3-5, 2 from level 6.
+static func target_wins(level: int) -> int:
+	return 4 if level <= 2 else (3 if level <= 5 else 2)
 
 
 func after_each() -> void:
@@ -110,8 +117,8 @@ func _play(group: Dictionary, seed_value: int) -> Dictionary:
 	return res
 
 
-## Plays each of `land`'s groups once per seed 1-8: every fight finishes, and each is won at least twice and lost at
-## least twice.
+## Plays each of `land`'s groups once per seed 1-8: every fight finishes, and each is won target_wins times for the
+## level it's played at.
 func _land(land: String) -> void:
 	for g: Variant in CampSite.visitors()["groups"]:
 		var group := g as Dictionary
@@ -130,8 +137,7 @@ func _land(land: String) -> void:
 			rounds += int(res["rounds"])
 		print("        %s at level %d: %d/8 won, %.1f rounds, %.1f heroes dropped per win" % [group["id"], level, wins,
 			rounds / 8.0, won_downs / float(maxi(1, wins))])
-		assert_true(wins >= 2, "%s is won at least twice in 8 at level %d (%d)" % [group["id"], level, wins])
-		assert_true(wins <= 6, "%s is lost at least twice in 8 at level %d (%d)" % [group["id"], level, wins])
+		assert_eq(wins, target_wins(level), "%s is won %d times in 8 at level %d" % [group["id"], target_wins(level), level])
 
 
 func test_an_interrupted_night_at_camp_brings_its_visitors() -> void:
