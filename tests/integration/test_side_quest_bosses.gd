@@ -26,8 +26,19 @@ func test_the_rag_queen_at_level_9() -> void:
 	await _series("berez", 14, 9, "rag_queen", [1, 2, 3], ["lysaga_guests"])
 
 
+## The four in single file beside the Seventh Row's basket, where the row wakes as they cut into it (the owner's report
+## save, 2026-10-12): she rises right behind it, in reach of them all.
+const SEVENTH_ROW: Array[Vector2i] = [Vector2i(29, 24), Vector2i(28, 24), Vector2i(27, 24), Vector2i(26, 24)]
+
+
+## Hard but winnable (the owner's 2/8 at level 6), with Adrian along or without him.
 func test_the_vine_mother_at_level_6() -> void:
-	await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4], ["winery_reclaimed"])
+	var wins := await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"],
+		["adrian_martikov"], [], SEVENTH_ROW)
+	assert_true(wins >= 2 and wins <= 6, "the Vine Mother falls in 2 to 6 of 8 with Adrian (%d)" % wins)
+	wins = await _series("wizard_of_wines", 1, 6, "vine_mother", [1, 2, 3, 4, 5, 6, 7, 8], ["winery_reclaimed"], [], [],
+		SEVENTH_ROW)
+	assert_true(wins >= 2 and wins <= 6, "and in 2 to 6 of 8 without him (%d)" % wins)
 
 
 ## Hard but winnable: at least two of eight.

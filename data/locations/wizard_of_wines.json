@@ -1217,8 +1217,8 @@
         {
           "monster": "vine_mother",
           "cell": [
-            30,
-            28
+            27,
+            26
           ]
         },
         {
@@ -1330,8 +1330,8 @@
         {
           "monster": "vine_mother",
           "cell": [
-            30,
-            28
+            27,
+            26
           ]
         },
         {
@@ -1428,9 +1428,10 @@
         {
           "monster": "vine_mother",
           "cell": [
-            30,
-            28
-          ]
+            27,
+            26
+          ],
+          "hp": 195
         },
         {
           "monster": "vine_blight",
@@ -1504,10 +1505,10 @@
         {
           "monster": "vine_mother",
           "cell": [
-            30,
-            28
+            27,
+            26
           ],
-          "hp": 150
+          "hp": 110
         },
         {
           "monster": "vine_blight",

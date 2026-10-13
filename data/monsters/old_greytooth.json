@@ -145,6 +145,13 @@
         "cost": 2,
         "action": "bite",
         "summary": "Makes one Bite."
+      },
+      {
+        "id": "lope",
+        "name": "Lope",
+        "cost": 1,
+        "move": true,
+        "summary": "Moves up to its Speed without provoking Opportunity Attacks."
       }
     ]
   },
