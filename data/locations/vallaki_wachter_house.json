@@ -544,6 +544,20 @@
             17
           ],
           "name": "Something from the shrine"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            12,
+            16
+          ]
         }
       ],
       "surprise": "",

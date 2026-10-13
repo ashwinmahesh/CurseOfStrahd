@@ -1733,6 +1733,27 @@
             12
           ],
           "name": "Karl's sword-master"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            12
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            13
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            14
+          ]
         }
       ],
       "surprise": "",
@@ -1875,6 +1896,27 @@
             19
           ],
           "name": "Hired knife"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            32,
+            12
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            32,
+            13
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            32,
+            14
+          ]
         }
       ],
       "surprise": "",

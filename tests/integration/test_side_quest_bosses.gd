@@ -335,12 +335,14 @@ const HOLLOW_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(11, 9), Vector2i
 
 ## The pack's hunters come up the oats at level 2: a werewolf and a wolf.
 func test_the_oat_hunters_at_level_2() -> void:
-	await _series("woodcutters_hollow", 23, 2, "oat_hunters", [1, 2, 3, 4], [], [], [], HOLLOW_DOOR)
+	var wins := await _series("woodcutters_hollow", 23, 2, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOLLOW_DOOR)
+	assert_true(wins >= 2 and wins <= 6, "the pack's hunters fall in 2 to 6 of 8 at level 2 (%d)" % wins)
 
 
 ## At level 3, three wolves with it.
 func test_the_oat_hunters_at_level_3() -> void:
-	await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4], [], [], [], HOLLOW_DOOR)
+	var wins := await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOLLOW_DOOR)
+	assert_true(wins >= 1 and wins <= 5, "the pack's hunters fall in 1 to 5 of 8 at level 3 (%d)" % wins)
 
 
 ## The roc's nest on the Tsolenka shelf.

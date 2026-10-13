@@ -11,6 +11,10 @@ const VILLAGE_SPAWN: Array[Vector2i] = [Vector2i(20, 12), Vector2i(21, 12), Vect
 const BY_THE_GRAVE: Array[Vector2i] = [Vector2i(31, 6), Vector2i(32, 6), Vector2i(30, 6), Vector2i(31, 7)]
 const UNDERCROFT: Array[Vector2i] = [Vector2i(17, 23), Vector2i(18, 23), Vector2i(16, 23), Vector2i(17, 24)]
 const BY_IREENA: Array[Vector2i] = [Vector2i(4, 12), Vector2i(5, 11), Vector2i(6, 11), Vector2i(7, 11)]
+## Ileana's door, where the coachman comes; the well; Grigore's woodpile.
+const ILEANAS_DOOR: Array[Vector2i] = [Vector2i(31, 11), Vector2i(32, 11), Vector2i(30, 11), Vector2i(31, 12)]
+const AT_THE_WELL: Array[Vector2i] = [Vector2i(22, 14), Vector2i(23, 14), Vector2i(22, 15), Vector2i(24, 14)]
+const BY_THE_WOODPILE: Array[Vector2i] = [Vector2i(9, 12), Vector2i(10, 12), Vector2i(8, 12), Vector2i(9, 13)]
 ## The road: where the procession and the hunters meet the party, the ledge over the falls, the Vistani camp, the
 ## gallows and the patrol at the crossroads.
 const PROCESSION: Array[Vector2i] = [Vector2i(15, 9), Vector2i(16, 9), Vector2i(14, 9), Vector2i(15, 10)]
@@ -20,6 +24,9 @@ const CAMP_EDGE: Array[Vector2i] = [Vector2i(21, 22), Vector2i(22, 22), Vector2i
 const BY_THE_FIRE: Array[Vector2i] = [Vector2i(22, 16), Vector2i(23, 16), Vector2i(21, 16), Vector2i(22, 17)]
 const GALLOWS: Array[Vector2i] = [Vector2i(19, 10), Vector2i(20, 10), Vector2i(18, 10), Vector2i(19, 11)]
 const PATROL: Array[Vector2i] = [Vector2i(18, 21), Vector2i(19, 21), Vector2i(17, 21), Vector2i(18, 20)]
+## The milestone where the black carriage comes for Steaua; the falls' offering stone, where the voices call.
+const MILESTONE: Array[Vector2i] = [Vector2i(31, 11), Vector2i(32, 11), Vector2i(30, 11), Vector2i(31, 12)]
+const OFFERING_STONE: Array[Vector2i] = [Vector2i(7, 10), Vector2i(8, 10), Vector2i(9, 10), Vector2i(10, 10)]
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -41,19 +48,19 @@ func test_the_night_streets_at_level_3() -> void:
 
 
 func test_the_coachman_at_level_3() -> void:
-	await _held("village_of_barovia", 22, 3, "teodor_errand", [], 1, 5, ["teodor_vigil", "teodor_met"], ["teodor"])
+	await _held("village_of_barovia", 22, 3, "teodor_errand", ILEANAS_DOOR, 1, 5, ["teodor_vigil", "teodor_met"], ["teodor"])
 
 
 func test_the_coachman_at_level_4() -> void:
-	await _held("village_of_barovia", 22, 4, "teodor_errand", [], 1, 5, ["teodor_vigil", "teodor_met"], ["teodor"])
+	await _held("village_of_barovia", 22, 4, "teodor_errand", ILEANAS_DOOR, 1, 5, ["teodor_vigil", "teodor_met"], ["teodor"])
 
 
 func test_the_bride_in_the_well_at_level_3() -> void:
-	await _held("village_of_barovia", 16, 3, "well_bride", [], 1, 5, ["bride_bones_raised"])
+	await _held("village_of_barovia", 16, 3, "well_bride", AT_THE_WELL, 1, 5, ["bride_bones_raised"])
 
 
 func test_the_bride_in_the_well_at_level_4() -> void:
-	await _held("village_of_barovia", 16, 4, "well_bride", [], 1, 5, ["bride_bones_raised"])
+	await _held("village_of_barovia", 16, 4, "well_bride", AT_THE_WELL, 1, 5, ["bride_bones_raised"])
 
 
 func test_the_churchyard_dead_at_level_3() -> void:
@@ -107,3 +114,15 @@ func test_the_kestrel_patrol_at_level_5() -> void:
 
 func test_the_kestrel_patrol_caught_up_at_level_5() -> void:
 	await _held("svalich_crossroads", 12, 5, "kestrel_patrol_reached", PATROL, 1, 5)
+
+
+func test_the_woodpile_at_level_3() -> void:
+	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 1, 5, ["seedwood_known"])
+
+
+func test_the_carriage_escort_at_level_4() -> void:
+	await _held("svalich_crossroads", 0, 4, "carriage_escort", MILESTONE, 1, 5, ["mare_saved", "carriage_came"])
+
+
+func test_the_wisps_at_the_falls_at_level_4() -> void:
+	await _held("tser_falls", 22, 4, "falls_wisps", OFFERING_STONE, 1, 5, ["wisps_lured"])

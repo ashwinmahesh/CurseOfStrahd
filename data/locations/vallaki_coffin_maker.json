@@ -295,6 +295,13 @@
             17,
             9
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            8
+          ]
         }
       ],
       "surprise": "enemies",
