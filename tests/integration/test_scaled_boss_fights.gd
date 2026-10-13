@@ -111,9 +111,11 @@ func test_the_dens_reckoning_at_level_8() -> void:
 
 ## Baba Lysaga and her creeping hut at the stump, past her scarecrow field.
 func test_lysaga_and_her_hut_at_level_9() -> void:
+	cleared_fights.assign(["berez_scarecrows"])
 	await _held("berez", 9, "lysaga_and_hut", LYSAGAS_STUMP, 1, 3, ["berez_scarecrows_burned"])
 
 
-## Her hut without her, at its book 263 HP, and three swarms of insects out of its eaves.
+## Her hut without her, at its book 263 HP, and three swarms of insects out of its eaves: she was lured to the grave
+## and slain there, so her scarecrows never stood up.
 func test_the_masterless_hut_at_level_9() -> void:
-	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_slain_at_monument", "berez_scarecrows_burned"])
+	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 1, 3, ["lysaga_lured", "lysaga_slain_at_monument"])
