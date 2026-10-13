@@ -278,6 +278,7 @@ var _has_ground: Dictionary = {}     ## wall squares with a ground box of their 
 var _cleared: Dictionary = {}        ## cell -> the floor box put under a wall square a prop took
 var _floors: Dictionary = {}         ## cell -> its floor box (a stairwell down opens it)
 var _wagon_cells := {}      ## camp: '#' blocks inside the map are wagons, cell -> the block's center
+var _town_wall_cells := {}  ## a walled town's wall squares (on ground of their own, but not trees)
 ## Natural ground's corner heights (world units), four per square clockwise from its north-west corner
 ## (_plan_terrain); empty when the map has none.
 var _corner_h := PackedFloat32Array()
@@ -587,7 +588,7 @@ func show_floor(c: Vector2i) -> void:
 
 ## A wall square drawn as a tree or a rock column (it has ground of its own under it).
 func is_tree(c: Vector2i) -> bool:
-	return grid.in_bounds(c) and _has_ground.has(c) and dressing.has(c) and not _wagon_cells.has(c)
+	return grid.in_bounds(c) and _has_ground.has(c) and dressing.has(c) and not _wagon_cells.has(c) and not _town_wall_cells.has(c)
 
 
 ## Puts a square's scenery back (its prop is gone).
@@ -673,6 +674,9 @@ func _wall(c: Vector2i) -> void:
 		return
 	if theme in TOWNS:
 		var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
+		if border and TownBuilder.walled(self):
+			_town_wall(c)   # a walled town (Krezk) is ringed by its wall at the map's edge too, not by forest
+			return
 		if border and theme == "village":
 			_tree(c)   # the village thins into forest at the map's edge
 			return
@@ -686,6 +690,9 @@ func _wall(c: Vector2i) -> void:
 		if house_cells.has(c):
 			return   # part of a house TownBuilder built whole
 		if _yard.has(c):
+			if TownBuilder.walled(self):
+				_town_wall(c)
+				return
 			TownBuilder.yard_wall(self, c, wall_material())
 			return
 		# Houses: plaster-and-timber walls under slate or thatch.
@@ -712,6 +719,17 @@ func _wall(c: Vector2i) -> void:
 		# Shrine pillars and standing stones.
 		_box("Pillar", Vector3(0.9, WALL_H, 0.9), Vector3(c.x + 0.5, WALL_H / 2.0, c.y + 0.5), _wall_tex if _wall_tex != null else Look.cel("pewter"))
 		_box("PillarCap", Vector3(1.0, 0.18, 1.0), Vector3(c.x + 0.5, WALL_H + 0.09, c.y + 0.5), Look.cel("slate"))
+
+
+## A walled town's wall on square `c` (TownBuilder's tall yard wall), on the ground like a tree: a wall half a square
+## thick on a bare square showed the sky at its feet.
+func _town_wall(c: Vector2i) -> void:
+	_ground_box("Ground", c, _floor_mat)
+	_has_ground[c] = true
+	_town_wall_cells[c] = true
+	var first := get_child_count()
+	TownBuilder.yard_wall(self, c, wall_material())
+	_dress(c, first)
 
 
 ## A billboard prop from art/sprites/props (manifest: pixel_size, height): standing on `at`, facing the camera.
@@ -966,12 +984,15 @@ func _ground_box(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	return _box(n, Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), mat)
 
 
-## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be, and
-## anything built once for the whole map while that square was built (InteriorWalls' outside ground, "whole_map").
+## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be,
+## anything built once for the whole map while that square was built (InteriorWalls' outside ground, "whole_map"), and
+## anything its builder already stood on the square's floor ("on_floor": the kit's yard walls and palisade, InteriorWalls'
+## walls, the kit's pillars), which this lifted a second time (owner report 2026-10-13: the Abbey's walls started high in
+## the air).
 func _lift(from: int, dy: float) -> void:
 	for i in range(from, get_child_count()):
 		var n := get_child(i) as Node3D
-		if n != null and not n.has_meta("terrain") and not n.has_meta("whole_map"):
+		if n != null and not n.has_meta("terrain") and not n.has_meta("whole_map") and not n.has_meta("on_floor"):
 			n.position.y += dy
 
 
