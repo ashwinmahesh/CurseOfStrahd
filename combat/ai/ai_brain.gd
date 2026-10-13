@@ -44,8 +44,8 @@ var _enc: WeakRef
 var last_plan: Dictionary = {}
 ## Legendary and lair choices, and the strahd profile (combat/ai/boss_brain.gd).
 var boss: BossBrain
-## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells at Tactician
-## and Honour (combat/ai/ai_spells.gd).
+## How it fights at the playthrough's difficulty (combat/ai/ai_tactics.gd), and its casters' spells on every mode but
+## Story (combat/ai/ai_spells.gd, Difficulty.spells).
 var tactics: AiTactics
 var spells: AiSpells
 ## The dangerous ground each creature knows of (combat/ai/ai_hazards.gd).
@@ -244,8 +244,8 @@ func begin_turn(c: Combatant) -> CombatResult:
 	return null
 
 
-## The turn's plan: {plan: plan_turn's, cast: on Tactician and Honour the best spell of a caster's whole list, or its
-## scroll, when it beats the weapon plan, else {}}. It only reads the fight, so it may run on a worker thread while
+## The turn's plan: {plan: plan_turn's, cast: when the mode's casters weigh their spells (Difficulty.spells: Balanced,
+## Tactician, Honour) the best spell of a caster's whole list, or its scroll, when it beats the weapon plan, else {}}. It only reads the fight, so it may run on a worker thread while
 ## nothing else changes the fight (the combat view's enemy turns, FN-14).
 func think(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -253,7 +253,7 @@ func think(c: Combatant) -> Dictionary:
 	Creature.begin_read()
 	var plan := plan_turn(c)
 	var cast_plan := {}
-	if e.difficulty.tactics in ["sharp", "ruthless"] and c.action_available and AiSpells.casts(c):
+	if e.difficulty.spells and c.action_available and AiSpells.casts(c):
 		cast_plan = spells.plan(c, action_worth(c, plan))
 	# Closing in: the square too (finish_turn drops it if a bonus Dash changes what's in reach).
 	if str(plan["kind"]) == "approach" and cast_plan.is_empty():
@@ -329,8 +329,9 @@ func _pull_back(c: Combatant) -> CombatResult:
 	return CombatResult.new()
 
 
-## A spell worth casting this turn (spellcaster profile): flee through the Ethereal Plane when badly hurt; Phantasmal
-## Killer on the toughest foe while it has uses; otherwise Magic Missile at the weakest foe in range.
+## A spell worth casting this turn (spellcaster profile): flee through the Ethereal Plane when badly hurt; then, where
+## the mode's casters don't weigh their whole list (Story), Phantasmal Killer on the toughest foe while it has uses, or
+## Magic Missile at the weakest foe in range. Where they do, AiSpells weighs those with the rest (think).
 func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 	var e := enc()
 	if not bool(prof.get("caster", false)) or not c.action_available:
@@ -344,7 +345,7 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 			foes.append(h)
 	if c.creature.hp * 4 < c.creature.max_hp() and (known.has("etherealness") or known.has("plane_shift")) and not c.creature.has_flag("no_teleport"):
 		return {"kind": "cast", "spell": "etherealness" if known.has("etherealness") else "plane_shift", "targets": [c], "why": "escape"}
-	if foes.is_empty():
+	if foes.is_empty() or (e.difficulty.spells and AiSpells.casts(c)):
 		return {}
 	if known.has("phantasmal_killer"):
 		var tough: Combatant = null
