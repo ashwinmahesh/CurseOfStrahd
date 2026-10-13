@@ -120,6 +120,10 @@ func test_the_woodpile_at_level_3() -> void:
 	await _held("village_of_barovia", 19, 3, "woodpile_wakes", BY_THE_WOODPILE, 4, 6, ["seedwood_known"])
 
 
+func test_the_woodpile_burning_at_level_4() -> void:
+	await _held("village_of_barovia", 11, 4, "woodpile_burns", BY_THE_WOODPILE, 4, 6, ["seedwood_known", "bildrath_wood_taken"])
+
+
 func test_the_carriage_escort_at_level_4() -> void:
 	await _held("svalich_crossroads", 0, 4, "carriage_escort", MILESTONE, 4, 6, ["mare_saved", "carriage_came"])
 

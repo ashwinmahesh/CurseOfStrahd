@@ -1095,6 +1095,20 @@
             27,
             2
           ]
+        },
+        {
+          "monster": "grick",
+          "cell": [
+            26,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            26,
+            2
+          ]
         }
       ],
       "text": "Part of the wall uncoils."

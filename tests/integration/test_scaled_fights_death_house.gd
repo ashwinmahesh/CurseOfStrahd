@@ -20,6 +20,8 @@ const SHRINE: Array[Vector2i] = [Vector2i(4, 19), Vector2i(3, 18), Vector2i(3, 1
 const DURST_DOOR: Array[Vector2i] = [Vector2i(7, 18), Vector2i(6, 17), Vector2i(5, 16), Vector2i(4, 16)]
 const AT_SUPPER: Array[Vector2i] = [Vector2i(9, 18), Vector2i(8, 18), Vector2i(7, 18), Vector2i(6, 17)]
 const ALTAR: Array[Vector2i] = [Vector2i(25, 14), Vector2i(26, 13), Vector2i(26, 12), Vector2i(26, 11)]
+## In the larder, where walking in sets the gricks off.
+const LARDER: Array[Vector2i] = [Vector2i(26, 4), Vector2i(27, 4), Vector2i(25, 4), Vector2i(26, 3)]
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 const DUNGEON_CLEARED: Array[String] = ["death_house_ghouls_destroyed", "death_house_mimic_slain"]
@@ -55,6 +57,10 @@ func test_the_storage_room_at_level_1() -> void:
 
 func test_elisabeths_crypt_at_level_2() -> void:
 	await _held("death_house_dungeon_1", 2, "crypt_insects", CRYPTS, 4, 6)
+
+
+func test_the_gricks_in_the_larder_at_level_2() -> void:
+	await _held("death_house_dungeon_1", 2, "larder_grick", LARDER, 4, 6)
 
 
 func test_the_ghoul_passage_at_level_2() -> void:

@@ -1234,8 +1234,8 @@
         {
           "monster": "ghoul",
           "cell": [
-            16,
-            8
+            15,
+            9
           ],
           "name": "Drowned of Pescari"
         },
@@ -1244,6 +1244,22 @@
           "cell": [
             16,
             9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            16,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            8
           ],
           "name": "Drowned of Pescari"
         }
