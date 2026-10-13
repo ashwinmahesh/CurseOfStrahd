@@ -39433,6 +39433,12 @@
   "recipe": "dd92281f92",
   "text": "Wren is very calm tonight. No jokes, no handstands, no last word. He sits by the fire and speaks quietly, and that's how you know."
  },
+ "narrator/1afb321b9d9093ce": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Out of the split chest, unfolding, comes a tree that walks, and all round the crown the brush gets up to follow it: creepers, thorn-backs, little men of twigs."
+ },
  "narrator/1afddd429afbd97e": {
   "chars": 287,
   "model": "eleven_v4",
@@ -39726,6 +39732,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "They come over the wall in a bunch: the Abbot's Brutes, hairy and patched, and behind them two tall shapes in rotted wedding white that walk as if they've been stitched to walk. The brides he made before Vasilka. They've come to fetch a stray home."
+ },
+ "narrator/1d3f9f0e0c9892ff": {
+  "chars": 60,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Seven shadows peel off the walls, and none of them is yours."
  },
  "narrator/1d4ac6ea6c1c8d4a": {
   "chars": 122,
@@ -54072,12 +54084,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "She rocks, and mutters to the mud. Whatever she means to do, she hasn't decided, or she isn't telling you first."
- },
- "narrator/85dac2e0281b12c2": {
-  "chars": 59,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Five shadows peel off the walls, and none of them is yours."
  },
  "narrator/85e5b2b5f01996c0": {
   "chars": 162,

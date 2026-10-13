@@ -237,6 +237,25 @@ static func _flush_palisade(board: ArenaBoard) -> void:
 		board.add_child(mi)
 	board.remove_meta("palisade_parts")
 
+const SEE_THROUGH := 0.6   ## how far a building in the way of the party fades (trees go to 0.72)
+
+
+## Fades building `b`'s walls, roof and what hangs on them toward see-through while it stands between the camera and
+## the party, and back when it's clear, a little each frame like the trees (ArenaBoard.fade_occluders).
+static func _see_through(b: Dictionary, in_way: bool, delta: float) -> void:
+	var was := float(b.get("fade", 0.0))
+	var f := move_toward(was, SEE_THROUGH if in_way else 0.0, delta * 4.0)
+	if is_equal_approx(f, was):
+		return
+	b["fade"] = f
+	for key: String in ["walls", "upper"]:
+		if b.has(key) and is_instance_valid(b[key]):
+			ModelPiece.set_fade(b[key] as Node3D, f)
+	for e: Variant in b.get("extras", []):
+		if is_instance_valid(e):
+			ModelPiece.set_fade(e as Node3D, f)
+
+
 ## A house on rectangle `r` of wall block `group`; `joined` is the block's {rects, cells, main, area} when it holds
 ## more than one house (an L-shaped block), else empty.
 static func _house(board: ArenaBoard, r: Rect2i, group: int, joined: Dictionary = {}) -> void:
@@ -765,14 +784,15 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3
 ## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others. Outside,
 ## only while the catalog's building_kit "cut_away" is on: the owner turned it off (2026-10-13: "why do buildings
 ## shrink down ... when I get near them? Same things with walls. Lets disable this effect"), so town houses and Castle
-## Ravenloft's walls and towers stand; an interior's full-height walls still open the room the party is in (W8).
+## Ravenloft's walls and towers stand, and one in the way goes see-through like the trees instead (owner's pick, the
+## same day); an interior's full-height walls still open the room the party is in (W8).
 static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	var outside := bool(BuildingKit.settings().get("cut_away", false))
 	var target := focus + Vector3(0, 0.8, 0)
-	# The parts of an L-shaped building (W7) go down together: one in the way takes the others with it.
+	# The parts of an L-shaped building (W7) go down (or fade) together: one in the way takes the others with it.
 	var joined_hides := {}
 	for b: Dictionary in board.buildings:
-		if outside and b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+		if b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
 			var aabb := b["aabb"] as AABB
 			if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
 				joined_hides[int(b["group"])] = true
@@ -783,6 +803,15 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 			InteriorWalls.cut(board, b, camera_pos, focus, delta)   # an interior's full-height walls (W8)
 			continue
 		if not outside:
+			var in_way := false
+			if b.has("castle"):
+				in_way = CastleBuilder.in_the_way(b, camera_pos, focus)
+			elif b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+				in_way = joined_hides.has(int(b["group"]))
+			else:
+				var box := b["aabb"] as AABB
+				in_way = box.intersects_segment(camera_pos, target) != null and not box.has_point(target)
+			_see_through(b, in_way, delta)
 			continue
 		if b.has("castle"):
 			CastleBuilder.cut(b, camera_pos, focus, delta)   # Castle Ravenloft's walls and towers (W19)

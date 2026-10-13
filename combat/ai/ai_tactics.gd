@@ -333,8 +333,8 @@ static func fearless(c: Combatant) -> bool:
 	return c.creature is Monster and Difficulty.is_boss(c.creature as Monster)
 
 
-## A broken side's turn: away from the nearest foe at a Dash; out of every foe's sight or far enough away, it leaves
-## the fight. Null when it can't flee (nothing to flee from, or no Speed).
+## A broken side's turn: away from the nearest foe at a Dash; out of every foe's sight, far enough away, or somewhere no
+## way leads from its foes (cut_off), it leaves the fight. Null when it can't flee (nothing to flee from, or no Speed).
 func flee_turn(c: Combatant) -> Variant:
 	var e := enc()
 	var near := e.ai._nearest_enemy(c)
@@ -343,7 +343,7 @@ func flee_turn(c: Combatant) -> Variant:
 	e.ai.last_plan = {"kind": "flee", "why": "its side broke"}
 	var r := e.ai._flee(c, near, true)
 	return e.then(r, func() -> CombatResult:
-		if c.is_alive() and c.creature.hp > 0 and _clear_of_foes(c):
+		if c.is_alive() and c.creature.hp > 0 and (_clear_of_foes(c) or cut_off(c)):
 			e.legendary.leave(c, "fled")
 		return CombatResult.new())
 
@@ -356,3 +356,86 @@ func _clear_of_foes(c: Combatant) -> bool:
 		if e.distance(c, h) < ESCAPE_FT and e.can_see(h, c):
 			return false
 	return true
+
+
+# --- Cut off ------------------------------------------------------------------------------------------------------
+
+## Turns in a row each foe has ended cut off from every enemy: creature id -> {n, round}.
+var _cut: Dictionary = {}
+## How many of its turns in a row a foe spends cut off before it gives up the fight.
+const CUT_OFF_TURNS := 2
+
+
+## Whether `c` can't get at any of its enemies however long it walks: no way across the map (its own way of moving:
+## walls, drops and bystanders in the way, but not creatures, nor doors and furniture, which can be opened or broken)
+## ends where one of its attacks reaches a standing enemy, a ranged one with a clear line to it. Stat-block spells
+## count as a 60 ft reach.
+func cut_off(c: Combatant) -> bool:
+	var e := enc()
+	var foes: Array[Combatant] = []
+	for h in e.hostiles_of(c):
+		if not h.is_down() and not h.has_meta("left_fight") and not h.creature.has_flag("surrendered"):
+			foes.append(h)
+	if foes.is_empty():
+		return false
+	var melee := 5
+	var ranged := 0
+	for o in e.ai._usable_options(c):
+		var p := o["profile"] as WeaponProfile
+		if bool(o["melee"]):
+			melee = maxi(melee, p.reach)
+		else:
+			ranged = maxi(ranged, p.long_range if p.long_range > 0 else p.normal_range)
+	if AiSpells.casts(c):
+		ranged = maxi(ranged, 60)
+	var g := e.grid
+	# The squares doors and furniture fill count as open for the walk (their flags go back right after).
+	var kept := {}
+	for o in e.objects.list:
+		if o.destroyed or o.hangs or o.blocks == 0:
+			continue
+		for cell in o.cells:
+			if not kept.has(cell):
+				kept[cell] = g.flags(cell) & (CombatGrid.WALL | CombatGrid.LOW)
+				g.set_flag(cell, CombatGrid.WALL | CombatGrid.LOW, false)
+	var none := func(_x: Vector2i) -> bool: return false
+	var walk := g.reachable(c.cell, c.size_cells, 4000, none, none, none, e.movement.move_mode(c))
+	for cell: Vector2i in kept:
+		g.set_flag(cell, int(kept[cell]), true)
+	# Lines are looked for from at most this many squares; past that it counts as able to get at them.
+	var looks := 400
+	for f in foes:
+		for cell: Vector2i in walk:
+			var d := g.distance_ft(cell, c.size_cells, f.cell, f.size_cells, c.altitude, f.altitude)
+			if d <= melee:
+				return false
+			if d <= ranged:
+				looks -= 1
+				if looks <= 0 or g.can_see(cell, c.size_cells, f.cell, f.size_cells):
+					return false
+	return true
+
+
+## A turn with no attack in it (`plan`, AiBrain.plan_turn): a foe cut off from every enemy (cut_off) for CUT_OFF_TURNS
+## of its turns in a row leaves the fight, in every mode, so a fight nobody can finish ends (the last wolf of a pack on
+## the far side of the narrows when a bystander stood in the gap). Strahd and legendary creatures hold their ground:
+## their fights are the story's. Returns the turn's result when it leaves, else null.
+func stranded_turn(c: Combatant, plan: Dictionary) -> Variant:
+	var e := enc()
+	# Closing in (the square it thought of isn't where it stands) is no stall: only a turn going nowhere is looked at.
+	var going := str(plan.get("kind", "")) == "approach" and plan.has("square") \
+		and ((plan["square"] as Dictionary)["cell"] as Vector2i) != c.cell
+	if going or str(plan.get("kind", "")) == "attack" or c.side != &"enemy" or str(c.ai_profile) == "strahd" \
+			or (c.creature is Monster and (c.creature as Monster).data.has("legendary_actions")) or not cut_off(c):
+		_cut.erase(c.id)
+		return null
+	var was := _cut.get(c.id, {}) as Dictionary
+	var n := int(was.get("n", 0)) + 1 if int(was.get("round", -9)) == e.round_no - 1 else 1
+	_cut[c.id] = {"n": n, "round": e.round_no}
+	if n < CUT_OFF_TURNS:
+		return null
+	_cut.erase(c.id)
+	e.ai.last_plan = {"kind": "flee", "why": "cut off from every enemy"}
+	e.log.add("info", "%s can find no way to reach its foes" % c.name(), c.id)
+	e.legendary.leave(c, "cut off")
+	return CombatResult.new()
