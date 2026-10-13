@@ -269,6 +269,14 @@
             6
           ],
           "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            4,
+            3
+          ],
+          "name": "A Swarm of Spiderlings"
         }
       ],
       "surprise": "party"

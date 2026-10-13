@@ -1593,6 +1593,34 @@
             28,
             8
           ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            2
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            3
+          ]
         }
       ],
       "surprise": "",
@@ -1676,6 +1704,34 @@
           "cell": [
             24,
             17
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            10
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            11
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            16,
+            9
           ]
         }
       ],
@@ -1790,8 +1846,7 @@
             37,
             11
           ],
-          "name": "The Coachman",
-          "hp": 60
+          "name": "The Coachman"
         },
         {
           "monster": "strahd_zombie",
@@ -1812,6 +1867,27 @@
           "cell": [
             34,
             10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            12
           ]
         }
       ],
@@ -2319,6 +2395,20 @@
           "cell": [
             24,
             15
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            22,
+            13
           ]
         }
       ],

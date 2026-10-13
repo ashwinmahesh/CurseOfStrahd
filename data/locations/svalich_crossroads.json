@@ -716,6 +716,22 @@
             7
           ],
           "name": "Hanged dead"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            7
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Hanged dead"
         }
       ],
       "surprise": "",
@@ -753,6 +769,27 @@
             22
           ],
           "name": "Kestrel soldier"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            18,
+            23
+          ]
         }
       ],
       "surprise": "",
@@ -790,6 +827,27 @@
             22
           ],
           "name": "Kestrel soldier"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            22
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            23
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            18,
+            23
+          ]
         }
       ],
       "surprise": "",

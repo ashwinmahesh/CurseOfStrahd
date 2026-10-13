@@ -663,20 +663,12 @@
           "name": "Black Armor"
         },
         {
-          "monster": "animated_flying_sword",
+          "monster": "animated_armor",
           "cell": [
             12,
             4
           ],
-          "name": "Balcony Sword"
-        },
-        {
-          "monster": "animated_flying_sword",
-          "cell": [
-            14,
-            6
-          ],
-          "name": "Balcony Sword"
+          "name": "Black Armor"
         },
         {
           "monster": "broom_of_animated_attack",

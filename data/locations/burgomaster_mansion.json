@@ -626,6 +626,21 @@
             3
           ],
           "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            2,
+            4
+          ]
         }
       ],
       "surprise": "",

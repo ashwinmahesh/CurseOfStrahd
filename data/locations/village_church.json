@@ -514,6 +514,34 @@
             24
           ],
           "name": "Doru"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            17,
+            25
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            18,
+            25
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            19,
+            23
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            19,
+            24
+          ]
         }
       ],
       "surprise": "",

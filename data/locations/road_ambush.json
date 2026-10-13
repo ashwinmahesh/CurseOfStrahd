@@ -296,6 +296,22 @@
             9
           ],
           "name": "Mourner"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            7
+          ],
+          "name": "Mourner in Black"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Mourner in Black"
         }
       ],
       "surprise": "",
