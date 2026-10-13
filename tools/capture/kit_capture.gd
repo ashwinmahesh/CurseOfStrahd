@@ -40,6 +40,13 @@ const SHOTS := {
 	"hall_turned": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]], "yaw": 1},
 	"abbey_l": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[14, 12], [15, 12], [14, 13], [15, 13]],
 		"look": [22, 8], "dist": 20.0},
+	# The Abbey's walls on its shelf 15 ft up (owner report 2026-10-13: they started high in the air): the gate from the
+	# switchback, and the west wall from the courtyard with the camera turned.
+	"abbey_gate": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[9, 22], [10, 22], [9, 23], [10, 23]], "look": [9, 19],
+		"dist": 16.0},
+	"abbey_west_wall": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[8, 11], [9, 11], [8, 12], [9, 12]], "look": [4, 9],
+		"dist": 16.0, "yaw": 1},
+	"amber_doors": {"loc": "amber_temple_entrance", "hour": 12, "dist": 18.0},
 	"argynvostholt_front": {"loc": "argynvostholt", "hour": 12, "cells": [[20, 9], [21, 9], [20, 10], [21, 10]],
 		"look": [20, 4], "dist": 18.0},
 	"argynvostholt_stable": {"loc": "argynvostholt", "hour": 12, "cells": [[30, 22], [31, 22], [30, 23], [31, 23]],
@@ -55,6 +62,18 @@ const SHOTS := {
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
+	# Krezk's wall all round (owner report 2026-10-13: missing inside): the north wall meeting the gate's side, the west
+	# and north walls with the camera turned, the north wall by the pool lane, the south wall with the camera turned
+	# about, the party just inside the south wall, and the gate from the road.
+	"krezk_wall_ne": {"loc": "krezk", "hour": 13, "cells": [[26, 6], [27, 6], [26, 7], [27, 7]], "look": [28, 3], "dist": 16.0},
+	"krezk_wall_nw": {"loc": "krezk", "hour": 13, "cells": [[12, 13], [13, 13], [12, 14], [13, 14]], "look": [6, 8],
+		"dist": 20.0, "yaw": 1},
+	"krezk_wall_n": {"loc": "krezk", "hour": 13, "cells": [[16, 4], [17, 4], [16, 5], [17, 5]], "look": [16, 3], "dist": 14.0},
+	"krezk_wall_s": {"loc": "krezk", "hour": 13, "cells": [[14, 21], [15, 21], [14, 22], [15, 22]], "look": [18, 26],
+		"dist": 16.0, "yaw": 2},
+	"krezk_wall_behind": {"loc": "krezk", "hour": 13, "cells": [[7, 28], [8, 28], [9, 28], [10, 28]], "dist": 12.0},
+	"krezk_gate_out": {"loc": "krezk", "hour": 13, "cells": [[35, 19], [36, 19], [35, 20], [36, 20]], "look": [32, 20],
+		"dist": 14.0},
 	"fire_krezk": {"loc": "krezk", "hour": 21, "cells": [[27, 17], [27, 18], [26, 17], [26, 18]], "look": [28, 17], "dist": 8.0},
 	"fire_camp": {"loc": "vallaki_vistani_camp", "hour": 21, "cells": [[13, 12], [13, 13], [12, 12], [12, 13]],
 		"look": [14, 12], "dist": 8.0},

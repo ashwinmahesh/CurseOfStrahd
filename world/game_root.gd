@@ -14,6 +14,7 @@ var plan_bar: PlanBar                ## turn-based exploring's panel (F7)
 var screen: Node = null              ## the open full-screen panel (sheet, inventory ...), if any
 var dialogue: DialogueUI = null
 var loot: LootWindow = null
+var guidance: GuidancePrompt = null  ## Guidance offered before a check while exploring (ask_guidance), if it's up
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
@@ -143,6 +144,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 			_check_fallen())
 	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
+	view.guidance_asked.connect(_ask_guidance)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		Cursors.show("pointer")
@@ -222,7 +224,7 @@ var _fallen := false
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
-	if moving or view == null or view.in_combat or dialogue != null or ending != null:
+	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null:
 		return
 	if screen != null:
 		if event.is_action_pressed(&"combat_cancel"):
@@ -307,7 +309,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
-		and loot == null and ending == null
+		and loot == null and ending == null and guidance == null
 	if view != null and not view.in_combat:
 		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)
 	if exploring and PadNav.active():
@@ -495,6 +497,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	dialogue.respec_requested.connect(respec)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
+	runner.offer_guidance = true   # Guidance before a check, from whoever can cast it (GuidanceOffer)
 	if not dialogue.play(runner, ref):
 		dialogue.queue_free()
 		dialogue = null
@@ -502,6 +505,13 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		ModeController.force(ModeController.Mode.EXPLORATION)
 	else:
 		TalkCamera.open(view, _npc_id)   # the camera eases in on the leader and the speaker (Visual Polish Plan 7)
+
+
+## Guidance before a check while exploring (LocationView.ask_guidance): the prompt over the place, which waits for it.
+func _ask_guidance(offer: Dictionary, answered: Callable) -> void:
+	guidance = GuidancePrompt.ask(self, offer, func(index: int, rule: String) -> void:
+		guidance = null
+		answered.call(index, rule))
 
 
 func _dialogue_ended(combat: String) -> void:
@@ -963,10 +973,11 @@ func _exit_tree() -> void:
 
 # --- Screens --------------------------------------------------------------------------------------
 
-## The music for where the party is (art/audio.json: the place's own mood, else its map's theme).
+## The music for where the party is (art/audio.json: the place's own mood, else its region's as the story stands, else
+## its map's theme).
 func _place_mood() -> String:
 	var loc := Compendium.shared().get_entry("locations", st.location)
-	return Audio.mood_for(st.location, ArenaBoard.theme_for(loc.get("map", {}) as Dictionary))
+	return Audio.mood_for(st.location, ArenaBoard.theme_for(loc.get("map", {}) as Dictionary), st)
 
 
 func open_screen(kind: String, index: int) -> void:

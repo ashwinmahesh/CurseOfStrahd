@@ -86,3 +86,33 @@ func test_a_warlocks_spell_on_its_turn_uses_its_pact_level() -> void:
 		e.answer_reaction(false)
 	assert_eq(int(ch.pact_magic()["left"]), 1, "a pact slot spent")
 	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("level 3")), "\n".join(e.log.texts().slice(-4)))
+
+
+## A Critical Hit doubles the smite's dice too, so its prompt says so in red and each slot shows its dice doubled (owner,
+## 2026-10-13); an ordinary hit shows neither.
+func test_a_paladins_smite_prompt_says_when_the_hit_is_critical() -> void:
+	for crit: bool in [true, false]:
+		var e := TestCombat.open_field(3)
+		var ch := TestChars.custom("paladin", "human", 5)
+		ch.heroic_inspiration = false
+		var p := e.add(ch, &"party", Vector2i(3, 3))
+		var z := TestCombat.foe(e, "zombie", Vector2i(4, 3))
+		z.creature.hp = 200
+		TestCombat.start_with(e, p)
+		TestCombat.next_d20(e, 20 if crit else 15)
+		e.attack(p, z, str(e.attack_options(p)[0]["id"]))
+		assert_true(e.pending != null and e.pending.kind == "divine_smite", "asked: %s" % [e.pending.kind if e.pending != null else "nothing"])
+		if e.pending == null:
+			return
+		var labels: Array = e.pending.target_choices.map(func(o: Dictionary) -> String: return str(o["label"]))
+		if crit:
+			assert_eq(e.pending.callout, "Critical Hit: the smite's dice are doubled")
+			assert_true(e.pending.text.contains("Critical Hit") and e.pending.text.contains("every die doubled"), e.pending.text)
+			assert_true(str(labels[0]).ends_with("4d8 (2d8 doubled)"), str(labels[0]))
+			assert_true(labels.any(func(l: Variant) -> bool: return str(l).begins_with("Level 2 slot · 6d8 (3d8 doubled)")), str(labels))
+		else:
+			assert_eq(e.pending.callout, "", "no red line on an ordinary hit")
+			assert_false(e.pending.text.contains("Critical"), e.pending.text)
+			assert_true(str(labels[0]).ends_with("2d8"), str(labels[0]))
+		while e.pending != null:
+			e.answer_reaction(false)

@@ -221,6 +221,67 @@ func test_each_town_has_its_style() -> void:
 	k.queue_free()
 
 
+## Owner report (2026-10-13): "The border wall is missing inside Krezk." Its wall rings the village at the map's edge
+## (north, west and south) as it does on the gate's side, not a fringe of pines, and fades as the pines did when it
+## stands between the camera and the party.
+func test_krezk_is_walled_all_round() -> void:
+	var k := _view("krezk")
+	await _frames(2)
+	var g := k.board.grid
+	var edge := 0
+	for z in g.depth:
+		for x in g.width:
+			var c := Vector2i(x, z)
+			if not g.has_flag(c, CombatGrid.WALL) or not (x == 0 or z == 0 or x == g.width - 1 or z == g.depth - 1):
+				continue
+			edge += 1
+			var walls: Array[MeshInstance3D] = []
+			for n: Node3D in k.board.dressing.get(c, []) as Array:
+				assert_false(n in k.board.occluders or n.has_meta("nature"), "no pine at %s" % c)
+				if n is MeshInstance3D and (n as MeshInstance3D).get_aabb().size.y > 2.0:
+					walls.append(n as MeshInstance3D)
+			assert_eq(walls.size(), 1, "the town wall stands tall at %s" % c)
+			for w in walls:
+				assert_true(Rect2(x, z, 1, 1).has_point(Vector2(w.global_position.x, w.global_position.z)), "placed on its square")
+				assert_true(w in k.board.mesh_occluders, "and fading when it hides the party")
+	assert_eq(edge, 91, "the north, west and south walls are all there (the pool lane's gap aside)")
+	# It turns the corners and runs on into the wall on the gate's side.
+	var ne := ((k.board.dressing[Vector2i(31, 0)] as Array)[0] as MeshInstance3D).get_aabb()
+	assert_true(ne.position.x < -0.4 and ne.end.z > 0.4, "the north wall meets the gate's side (%s)" % ne)
+	var se := ((k.board.dressing[Vector2i(31, 29)] as Array)[0] as MeshInstance3D).get_aabb()
+	assert_true(se.position.x < -0.4 and se.position.z < -0.4, "and so does the south wall (%s)" % se)
+	var nw := ((k.board.dressing[Vector2i(0, 0)] as Array)[0] as MeshInstance3D).get_aabb()
+	assert_true(nw.end.x > 0.4 and nw.end.z > 0.4, "the north and west walls meet (%s)" % nw)
+	# Every square of it, the gate's side too, stands on ground of its own (the gate's side showed the sky at its feet),
+	# and none of it counts as a tree (undergrowth, wall decals and big pieces clearing trees leave it be).
+	for c: Vector2i in [Vector2i(31, 10), Vector2i(31, 22), Vector2i(0, 12), Vector2i(8, 29)]:
+		var ground := 0
+		for n in k.board.get_children():
+			var box := (n as MeshInstance3D).mesh as BoxMesh if n is MeshInstance3D else null
+			if box != null and is_equal_approx(box.size.x, 1.0) and is_equal_approx(box.size.z, 1.0) \
+					and Vector2((n as Node3D).position.x, (n as Node3D).position.z).is_equal_approx(Vector2(c) + Vector2(0.5, 0.5)):
+				ground += 1
+		assert_eq(ground, 1, "ground under the wall at %s" % c)
+		assert_false(k.board.is_tree(c), "the wall at %s isn't a tree" % c)
+	# Just inside the south wall, with the camera behind it, the wall fades as the pines there did.
+	var south := (k.board.dressing[Vector2i(8, 29)] as Array)[0] as GeometryInstance3D
+	var inside := k.board.cell_center(Vector2i(8, 27))
+	k.board.fade_occluders(inside + Vector3(-8, 10, 8), inside, 1.0)
+	assert_true(south.transparency > 0.5, "the south wall fades (%.2f)" % south.transparency)
+	k.queue_free()
+	await _frames(1)
+	var v := _view("village_of_barovia")
+	await _frames(2)
+	var trees := 0
+	for c: Vector2i in v.board.dressing:
+		if c.x == 0 or c.y == 0:
+			for n: Node3D in v.board.dressing[c] as Array:
+				if n in v.board.mesh_occluders or n in v.board.occluders:
+					trees += 1
+	assert_true(trees > 0, "an open village still thins into forest at its edge")
+	v.queue_free()
+
+
 ## A lone wall square in a room is a pillar in the place's style: the castle's carved piers, the church's columns.
 func test_lone_wall_squares_are_pillars() -> void:
 	for pair: Array in [["castle_ravenloft_main_floor", Vector2i(22, 5), "castle"], ["village_church", Vector2i(5, 18), "church"],

@@ -423,7 +423,9 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 ## FeatureActions' entries as hotbar actions.
 func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), REACTIONS if fa.has("policy") else tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
+		# A rule goes on the Reactions tab, unless it's a class feature's own switch (Repelling Blast, Grasp of Hadar).
+		var where := REACTIONS if fa.has("policy") and not bool(fa.get("class_tab", false)) else tab
+		var en := _entry(str(fa["id"]), where, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
 			str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
 		# A standing rule's mode (Reactions.list_policies, DamageResponses.list): folded into one toggle slot (slots()).
@@ -924,7 +926,7 @@ const ACTION_TEXT := {
 	"stand": "Standing up costs half your Speed.",
 	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
 	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
-	"utilize": "Use an object, such as a lever or a potion.",
+	"utilize": "Use an object, such as a lever. A potion isn't drunk this way: drinking one, or giving it to a creature within 5 ft, is a Bonus Action on the Items tab.",
 }
 
 
@@ -1454,6 +1456,8 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	elif not dis.is_empty() and adv.is_empty():
 		chance = single * single
 	out["chance"] = chance
+	# Its Hit Points first, as a spell's target tooltip shows them (owner, 2026-10-13), with the AC the roll is against.
+	lines.append("HP %d/%d · AC %d%s" % [t.creature.hp, t.creature.max_hp(), int(hc["ac"]), _known_defenses(t)])
 	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(chance * 100.0), int(hc["needs"])])
 	if hc.has("from"):
 		lines.append("From %s's space" % str(hc["from"]))
@@ -1482,7 +1486,6 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
 	if int(sit.get("height_bonus", 0)) != 0:
 		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
 	for fxm: Effect in t.creature.effects:
 		if fxm.data.has("mark_by"):
 			lines.append(fxm.name + (": your extra damage on a hit" if str(fxm.data["mark_by"]) == c.id else ""))
@@ -1839,6 +1842,33 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		warnings.append("Drags %s along%s" % [held.name(), " (1 extra foot per foot)" if e.grappling.drag_extra(c) > 0 else ""])
 	out["warnings"] = warnings
 	return out
+
+
+## Why none of `c`'s attacks can be made at `t` from where it stands, for the words over a foe and the banner on a click
+## there; "" when one can. The real reason, checked in order (owner, 2026-10-13: out of attacks, it said "out of reach"):
+## the turn, or no Action or attacks left, then the reach or range, then whatever else stops the first attack.
+func attack_blocker(c: Combatant, t: Combatant) -> String:
+	var turn_why := ""
+	var target_whys: Array[String] = []
+	for a in actions_for(c):
+		if str(a["kind"]) != "attack":
+			continue
+		if not bool(a["legal"]):
+			if turn_why == "":
+				turn_why = str(a["reason"])
+			continue
+		var why := target_why(c, a, t)
+		if why == "":
+			return ""
+		target_whys.append(why)
+	if target_whys.is_empty():
+		if turn_why == "":
+			return "No attack to make"
+		return "No Action or attacks left this turn" if turn_why == "Action already used" else turn_why
+	for why in target_whys:
+		if why.begins_with("Out of reach") or why.begins_with("Out of range"):
+			return "Out of reach: move closer, or pick a ranged attack"
+	return target_whys[0]
 
 
 ## A click on a foe with a melee weapon in hand (owner, 2026-10-12: "use the melee weapon by default and automatically

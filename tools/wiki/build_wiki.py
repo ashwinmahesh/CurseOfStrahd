@@ -54,7 +54,8 @@ TALK_SPELLS = {"speak_with_animals": "Speak with Animals", "speak_with_dead": "S
                "speak_with_plants": "Speak with Plants"}
 TAROKKA_TREASURES = {"tome_of_strahd": "tome", "holy_symbol_of_ravenkind": "symbol", "sunsword": "sword"}
 REST_WORDS = {"safe": "Safe: a Long Rest here isn't interrupted.",
-              "risky": "Risky: a rest here can be interrupted.",
+              "risky": "Risky: a Long Rest here makes camp, and the night can be interrupted.",
+              "no": "No sleeping here: a Short Rest only, out of sight of foes.",
               "none": "No resting here.", "unsafe": "Unsafe: resting here is asking for trouble."}
 AUTO_RE = re.compile(r"%% auto:([a-z0-9_]+) %%\n(.*?)%% /auto:\1 %%\n?", re.S)
 TODAY = datetime.date.today().isoformat()
