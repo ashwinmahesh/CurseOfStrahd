@@ -879,8 +879,7 @@
           "cell": [
             18,
             21
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -917,6 +916,13 @@
             16
           ],
           "name": "Szoldar"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            21
+          ]
         }
       ],
       "surprise": "",
@@ -1327,6 +1333,22 @@
           "monster": "will_o_wisp",
           "cell": [
             21,
+            9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            13,
+            9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            23,
             9
           ],
           "name": "A Drowned Light"

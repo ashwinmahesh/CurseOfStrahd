@@ -1,25 +1,36 @@
 extends FightSeriesCase
 ## The side quests' bosses (docs/story/side_quests.md), played to the end by the test autopilot on their own maps at the
 ## level the quest expects: every fight finishes, every boss uses its turns without error, and the party can win but
-## pays for it (hard, per the owner's standing rule).
+## pays for it (hard, per the owner's standing rule). Where a series runs seeds 1-8 with a band, it holds the owner's
+## targets for 2024-rules heroes (2026-10-13): about 3 wins in 8 at levels 3-5 and 2 in 8 from level 6.
 
 
+## Greytooth at his full 171 HP, with Szoldar, two dire wolves and three wolves.
 func test_old_greytooth_at_level_6() -> void:
-	await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
+	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "Greytooth falls in 1 to 4 of 8 (%d)" % wins)
 
 
 func test_the_drowned_of_pescari_at_level_8() -> void:
 	await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3])
 
 
-## Hard but winnable: at least two of eight.
+## The whole column, its two lieutenants at a wight's full Hit Points.
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
 	var wins := await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 2, "the column falls in at least 2 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 4, "the column falls in 1 to 4 of 8 (%d)" % wins)
 
 
+## The riders stood down: the marshal (190 HP at level 8) and three lieutenants.
 func test_the_bone_marshal_duel_at_level_8() -> void:
-	await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8], ["riders_stood_down"])
+	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8], ["riders_stood_down"])
+	assert_true(wins >= 1 and wins <= 4, "the marshal falls in 1 to 4 of 8 (%d)" % wins)
+
+
+## The whole column at level 8, the marshal at 190 HP.
+func test_the_bone_marshal_and_his_column_at_level_8() -> void:
+	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "the column falls in 1 to 4 of 8 (%d)" % wins)
 
 
 func test_the_rag_queen_at_level_9() -> void:
@@ -41,18 +52,22 @@ func test_the_vine_mother_at_level_6() -> void:
 	assert_true(wins >= 2 and wins <= 6, "and in 2 to 6 of 8 without him (%d)" % wins)
 
 
-## Hard but winnable: at least two of eight.
+## Granny Ash at her full 184 HP.
 func test_granny_ash_at_level_6() -> void:
 	var wins := await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
-	assert_true(wins >= 2, "Granny Ash falls in at least 2 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 4, "Granny Ash falls in 1 to 4 of 8 (%d)" % wins)
 
 
+## The huntsman at 240 HP on his mare, with four hounds.
 func test_the_counts_huntsman_at_level_8() -> void:
-	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4])
+	var wins := await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
 
 
+## Called by name, all but three hounds lie down.
 func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
-	await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3], ["hounds_called"])
+	var wins := await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8], ["hounds_called"])
+	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
 
 
 func test_the_squires_vigil_at_level_8() -> void:
@@ -206,9 +221,10 @@ func test_the_robed_ones_come_for_veta_at_level_3() -> void:
 const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2i(17, 11), Vector2i(18, 11)]
 
 
-## The Lantern Girl and two drowned lights, when nobody turned back for her lantern.
+## The Lantern Girl and four drowned lights, when nobody turned back for her lantern.
 func test_the_lantern_girl_at_level_5() -> void:
-	await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4], [], [], [], JETTY_FOOT)
+	var wins := await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], JETTY_FOOT)
+	assert_true(wins >= 1 and wins <= 5, "the Lantern Girl falls in 1 to 5 of 8 (%d)" % wins)
 
 ## Agafia's door in the charcoal-burners' hollow.
 const HOLLOW_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(13, 10)]
@@ -237,9 +253,10 @@ func test_the_falconer_at_level_9() -> void:
 const PAINTERS_STUDIO: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 5), Vector2i(8, 5), Vector2i(9, 5)]
 
 
-## The count's great canvas and six copies come off the walls.
+## The count's great canvas and eight copies (40 HP each) come off the walls.
 func test_the_counts_likeness_at_level_9() -> void:
-	await _series("vallaki_painters_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6], [], [], [], PAINTERS_STUDIO)
+	var wins := await _series("vallaki_painters_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], PAINTERS_STUDIO)
+	assert_true(wins >= 1 and wins <= 4, "the Likeness burns in 1 to 4 of 8 (%d)" % wins)
 
 
 ## The south tower roof of Castle Ravenloft, by the stair up from the rooms, where Escher waits at the parapet.

@@ -1553,7 +1553,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 240
         },
         {
           "monster": "nightmare",
@@ -1578,6 +1579,14 @@
             15
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            13
+          ],
+          "name": "Hound of the Hunt"
         }
       ],
       "surprise": "",
@@ -1598,7 +1607,8 @@
           "cell": [
             33,
             12
-          ]
+          ],
+          "hp": 240
         },
         {
           "monster": "nightmare",

@@ -413,6 +413,68 @@
     {
       "id": "coven_last_stand",
       "trigger": "dialogue",
+      "when": "flag.offalia_in_last_stand and flag.bella_in_last_stand and level >= 6",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror; on the stair, Offalia's heavy tread. Three voices begin to hum the same tune.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha"
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "Bella Sunbane"
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            3,
+            12
+          ],
+          "name": "Offalia Wormwiggle"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            7,
+            8
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            6,
+            4
+          ],
+          "name": "Rats from the grain bins"
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
       "when": "flag.offalia_in_last_stand and flag.bella_in_last_stand",
       "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror; on the stair, Offalia's heavy tread. Three voices begin to hum the same tune.",
       "monsters": [
@@ -643,8 +705,7 @@
             10,
             6
           ],
-          "name": "Bella Sunbane",
-          "hp": 100
+          "name": "Bella Sunbane"
         }
       ],
       "surprise": "",

@@ -528,7 +528,8 @@
           "cell": [
             22,
             15
-          ]
+          ],
+          "hp": 190
         },
         {
           "monster": "wight",
@@ -640,7 +641,8 @@
           "cell": [
             22,
             15
-          ]
+          ],
+          "hp": 190
         },
         {
           "monster": "wight",
@@ -757,8 +759,7 @@
             23,
             14
           ],
-          "name": "Lieutenant of the Vanguard",
-          "hp": 52
+          "name": "Lieutenant of the Vanguard"
         },
         {
           "monster": "wight",
@@ -766,8 +767,7 @@
             23,
             16
           ],
-          "name": "Lieutenant of the Vanguard",
-          "hp": 52
+          "name": "Lieutenant of the Vanguard"
         },
         {
           "monster": "skeleton",

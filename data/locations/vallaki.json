@@ -2065,8 +2065,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 95
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2077,20 +2076,28 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "vallaki_guard",
+          "monster": "warrior_veteran",
           "cell": [
-            19,
-            19
+            27,
+            12
           ],
-          "name": "Town guard"
+          "name": "Sergeant of the watch"
         },
         {
-          "monster": "vallaki_guard",
+          "monster": "warrior_veteran",
           "cell": [
-            29,
-            19
+            26,
+            11
           ],
-          "name": "Town guard"
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            11
+          ],
+          "name": "Sergeant of the watch"
         },
         {
           "monster": "vallaki_guard",
@@ -2409,14 +2416,29 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 95
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
           "cell": [
             27,
             12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            28,
+            11
           ],
           "name": "Sergeant of the watch"
         },
@@ -2649,8 +2671,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 110
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2665,6 +2686,22 @@
           "cell": [
             26,
             11
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            28,
+            11
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            13
           ],
           "name": "Izek's sergeant"
         }

@@ -230,14 +230,21 @@ Izek are `warrior_veteran` (Izek with 95-110 HP), Lady Wachter's sons are `tough
 | `wachter_cellar_cult` | Wachterhaus | enter `cellar` at night, not pledged to her | sons, 4 cultists, 3 hired swords, a shadow (2500, Low) | sons, 4 cultists, 1 hired sword (1000, Low) | sons, 3 cultists |
 | `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek + 2 sergeants (2100, Low) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
 | `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 3 hired swords, 2 captains (3300, Moderate); cult broken: 4 swords, captain, 2 knives (3300) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
-| `festival_loyalists` | town square | dialogue (Wachter path) | Izek, 4 sergeants, 4 guards (3600, Moderate); without Izek (3350) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
-| `festival_izek_rampage` | town square | dialogue (town path) | Izek, 3 sergeants, captain, 2 guards (3300, Moderate); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
-| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek + 2 sergeants (2100, Low) | Izek + sergeant (1400, Low) | Izek at 70 HP |
+| `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 4 sergeants, captain, 2 guards (5,100, above High); without Izek (3350) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
+| `festival_izek_rampage` | town square | dialogue (town path) | Izek (112 HP), 3 sergeants, captain, 2 guards (4,400, High); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
+| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (112 HP) + 4 sergeants (4,600, above High) | Izek + sergeant (1400, Low) | Izek at 70 HP |
 
 The two spawn fights are mutually exclusive (each removes the other), so the region's vampire spawn are fought once.
 The under-4 spawn variants are above High for level 3 even with reduced HP (as Doru was in the village); the party is
 warned by Lucian, Henrik and Rictavio, can fight by day with the spawn surprised, and gets holy water from Lucian,
-Rictavio and the vestry. The festival fights follow the speech with no rest, so they sit at Moderate, not High.
+Rictavio and the vestry. The festival fights follow the speech with no rest, so they sat at Moderate, not High.
+
+Scaled for 2024-rules heroes (owner, 2026-10-13: 3 wins in 8 at level 5): over seeds 1-8 the four pregens on autopilot,
+standing beside Izek when he picks the fight, won the L5 `izek_duel` 8 of 8, `festival_izek_rampage` 8 of 8 and
+`festival_loyalists` 7 of 8. With Izek at his book 112 HP and more sergeants (the High budget, 4,400 at level 5) they win
+2, 3 and 4 of 8 (5 or 6 of 16 over seeds 1-16; tests/integration/test_scaled_boss_fights.gd). `izek_confrontation`
+in the mansion is left as it is for now: half its seeds stall at 30 rounds with a downed hero in the room's one-square
+door, so it waits on the stall fix before it's measured.
 
 ## 8. Milestone
 
