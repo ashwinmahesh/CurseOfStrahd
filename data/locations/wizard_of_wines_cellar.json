@@ -427,6 +427,13 @@
             27,
             6
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            25,
+            11
+          ]
         }
       ],
       "surprise": "",

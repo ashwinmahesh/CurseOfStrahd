@@ -624,6 +624,13 @@
             6
           ],
           "hp": 169
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            5
+          ]
         }
       ],
       "surprise": "",

@@ -901,7 +901,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 100
+          "hp": 90
         },
         {
           "monster": "druid",
@@ -1262,7 +1262,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 140
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -1745,14 +1745,6 @@
           "cell": [
             13,
             10
-          ],
-          "name": "An Ember"
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            18,
-            16
           ],
           "name": "An Ember"
         }
