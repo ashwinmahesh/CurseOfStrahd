@@ -591,6 +591,13 @@
             13,
             6
           ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            4,
+            9
+          ]
         }
       ],
       "surprise": "",

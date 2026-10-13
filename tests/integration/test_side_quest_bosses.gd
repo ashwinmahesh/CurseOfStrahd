@@ -182,9 +182,10 @@ func test_the_ash_effigy_and_zorica_at_level_7() -> void:
 
 
 ## Kostin's tree, and he stands aside: the effigy and its embers. Seeds 1-8 (the owner's series): the effigy spends both
-## legendary uses on a fist now, and four seeds held no win.
+## legendary uses on a fist now, so it stands at 155 HP here, about 2 wins in 8.
 func test_the_ash_effigy_at_level_8() -> void:
-	await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+	var wins := await _series("yester_hill_gulthias_tree", 22, 8, "ash_effigy", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved", "gulthias_tree_burned", "kostin_doubts"], [], [], YESTER_CROWN)
+	assert_true(wins <= 3, "the Ash Effigy stays hard at level 8 (the owner's 2/8): %d/8" % wins)
 
 ## The family crypts under Death House, the four at Walter's crypt.
 const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]
