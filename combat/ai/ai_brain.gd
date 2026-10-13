@@ -4,11 +4,12 @@ extends RefCounted
 ## this only drives creatures the party doesn't.
 ##
 ## Each turn: obey anything that takes the turn away (Turn Undead, Command), then score every attack the creature
-## could make this turn — each visible, standing enemy, from each square it could reach — by expected damage
-## (hit chance with every Advantage source, cover and Pack Tactics included), a bonus for finishing a foe, and a
-## penalty for the Opportunity Attacks the path would provoke. The best plan is a move then an attack; with no
-## attack in reach it Dashes toward its best target, and a foe cut off from every enemy for two turns leaves the
-## fight (AiTactics.stranded_turn). Behavior profiles (monster data "ai_profile") weigh this:
+## could make this turn — each standing enemy it can see, or whose square it knows (not Hidden), from each square it
+## could reach — by expected damage (hit chance with every Advantage source, cover and Pack Tactics included, an unseen
+## target's Disadvantage too), a bonus for finishing a foe, and a penalty for the Opportunity Attacks the path would
+## provoke. The best plan is a move then an attack; with no attack in reach it Dashes toward its best target, and a foe
+## cut off from every enemy for two turns leaves the fight (AiTactics.stranded_turn). Behavior profiles (monster data
+## "ai_profile") weigh this:
 ##   pack_hunter: wolves. Loves Pack Tactics and wounded prey, avoids Opportunity Attacks.
 ##   brute:       goes for the biggest hit, shrugs off Opportunity Attacks.
 ##   mindless:    zombies. Shambles at the nearest enemy, ignores everything else.
@@ -631,7 +632,14 @@ func plan_turn(c: Combatant) -> Dictionary:
 	# Attacks that cost it on dangerous ground, that cost taken off their score: only when no foe can be reached round it.
 	var risky := {"kind": "wait", "score": -1e9}
 	var risky_pet := {"kind": "wait", "score": -1e9}
-	for t in visible:
+	# A foe it can't see but whose square it knows (not Hidden: Invisible, in magical Darkness or a Fog Cloud, past the
+	# light) can be struck there too, at Disadvantage (2024: unseen targets), which _score weighs, as a player can.
+	var strikable: Array[Combatant] = []
+	strikable.append_array(visible)
+	for t in heard:
+		if not t.creature.has_flag("ethereal"):
+			strikable.append(t)
+	for t in strikable:
 		var pet := companion(t)
 		for o in options:
 			var p := o["profile"] as WeaponProfile
@@ -1104,7 +1112,7 @@ func _best_in_reach(c: Combatant) -> Dictionary:
 	var best := {}
 	var best_score := -1e9
 	for t in e.hostiles_of(c):
-		if t.is_down() or not e.can_see(c, t):
+		if t.is_down() or (not e.can_see(c, t) and t.hidden):
 			continue
 		for o in _usable_options(c):
 			if e.attack_legal(c, t, o) != "":
