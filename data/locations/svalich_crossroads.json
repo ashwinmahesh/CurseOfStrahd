@@ -734,7 +734,7 @@
           "name": "Hanged dead"
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "zombie",
           "cell": [
             20,
             9
@@ -742,7 +742,7 @@
           "name": "Hanged dead"
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "zombie",
           "cell": [
             21,
             7
@@ -815,7 +815,7 @@
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "zombie",
           "cell": [
             19,
             23
@@ -884,20 +884,6 @@
           "cell": [
             19,
             22
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            19,
-            23
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            15,
-            21
           ]
         },
         {
@@ -1138,27 +1124,6 @@
           "cell": [
             18,
             11
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            20,
-            10
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            16,
-            12
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            21,
-            13
           ]
         }
       ],
@@ -1456,7 +1421,7 @@
             33,
             12
           ],
-          "hp": 300
+          "hp": 390
         },
         {
           "monster": "nightmare",
@@ -1620,7 +1585,7 @@
             33,
             12
           ],
-          "hp": 250
+          "hp": 290
         },
         {
           "monster": "nightmare",
@@ -1905,7 +1870,7 @@
             16,
             20
           ],
-          "hp": 250
+          "hp": 160
         },
         {
           "monster": "mimic",
@@ -1962,7 +1927,8 @@
           "cell": [
             16,
             20
-          ]
+          ],
+          "hp": 220
         },
         {
           "monster": "mimic",

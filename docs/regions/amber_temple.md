@@ -222,9 +222,13 @@ share an id; the first whose `when` holds is the fight. Guests (Kasimir, Ireena)
 | `hollow_eyed` | great hall | enter `ring_of_amber` | 5 nothics + 3 wraiths (7650, Low+) | 4 nothics + 3 wraiths (7200, Low+ at 9, Moderate at 8) | 4 nothics + wraith (3600) |
 | `patrina_wails` | great hall | dialogue | Patrina (banshee, 110 HP) + 4 specters (1900; her Wail is the danger) | same | same |
 | `library_wardens` | library | open `restricted_case` | 4 flameskulls (4400) | 3 flameskulls (3300) | same |
-| `exethanter_wrath` | library | dialogue (attack him) | Exethanter + 2 flameskulls (8100, Moderate at 9) | same | same |
+| `exethanter_wrath` | library | dialogue (attack him) | Exethanter + 6 flameskulls (12500, High) | same | same |
 | `vault_guardian` | vaults | `flag:honey_door_forced` | amber golem + wraith (7700, Low+) | amber golem (5900) | same |
-| `vosk_unmasked` (climax) | vaults | dialogue | arcanaloth at 104 HP + 2 flameskulls (10600, Moderate+) | arcanaloth at 104 HP + flameskull (9500, Moderate+ at 9, High at 8; Vosk kept at the old 104 HP since the 2025 arcanaloth's 175, 2026-10-06) | arcanaloth at 85 HP; named or weakened: 80 HP alone |
+| `vosk_unmasked` (climax) | vaults | dialogue | arcanaloth at 135 HP + 2 flameskulls (10600, Moderate+) | arcanaloth at 104 HP + flameskull (9500, Moderate+ at 9, High at 8; Vosk kept at the old 104 HP since the 2025 arcanaloth's 175, 2026-10-06) | arcanaloth at 85 HP; named or weakened: 80 HP alone |
+
+Retuned for the sharp test party (owner, 2026-10-13: 5 wins in 8 on Balanced, every caster casting from its whole
+list): at level 10 Exethanter with six of the wardens' skulls and Vosk unmasked at 135 HP each win 5 of 8; named and
+weakened first, Vosk at 80 HP stays the easy fight (8 of 8; tests/integration/test_scaled_boss_fights.gd).
 
 Random (data/random_encounters/amber_temple_road.json, map `amber_temple_road`, 25% day / 45% night): a whiteout
 (Survival 15, else hours lost), the frozen expedition (once: loot or rites), five gargoyles off the cliffs (2250), the

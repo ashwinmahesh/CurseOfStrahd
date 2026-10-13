@@ -804,7 +804,7 @@
               "who",
               "flag"
             ],
-            "description": "A foe leaves the fight (no loot, no death) below `at_hp_below` Hit Points or after `after_rounds` rounds, setting `flag`.",
+            "description": "A foe leaves the fight (no loot, no death) below `at_hp_below` Hit Points or after `after_rounds` rounds, setting `flag`, saying `say` as it goes.",
             "properties": {
               "who": {
                 "$ref": "common.schema.json#/$defs/id"
@@ -819,6 +819,14 @@
               },
               "flag": {
                 "type": "string"
+              },
+              "say": {
+                "type": "string",
+                "description": "A line it speaks as it goes, in the voice of `speaker`; the fight waits for it before it ends."
+              },
+              "speaker": {
+                "type": "string",
+                "description": "Whose voice speaks `say` (an npc id, as in the conversations)."
               }
             }
           },

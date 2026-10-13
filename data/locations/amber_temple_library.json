@@ -639,6 +639,38 @@
             6
           ],
           "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            22,
+            4
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            22,
+            3
+          ],
+          "name": "Warden's skull"
         }
       ],
       "surprise": "",

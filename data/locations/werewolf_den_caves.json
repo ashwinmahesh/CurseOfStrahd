@@ -877,6 +877,27 @@
             21,
             25
           ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            19
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            21
+          ]
         }
       ],
       "surprise": "",
@@ -937,6 +958,41 @@
           "cell": [
             15,
             25
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            19
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            21
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            18,
+            19
           ]
         }
       ],
@@ -1171,6 +1227,20 @@
           "cell": [
             23,
             24
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            18,
+            20
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            19
           ]
         }
       ],

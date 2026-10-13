@@ -1038,14 +1038,15 @@
     {
       "id": "crg_dinner_affront",
       "trigger": "dialogue",
-      "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats.",
+      "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats. Behind his chair, two suits of armour step down off their stands.",
       "surprise": "",
       "flag": "crg_dinner_fight_over",
       "withdraw": {
         "who": "strahd_von_zarovich",
-        "at_hp_below": 100,
-        "after_rounds": 3,
-        "flag": "strahd_withdrew"
+        "at_hp_below": 1,
+        "flag": "strahd_withdrew",
+        "say": "You have spoiled a perfectly good dinner. Do finish your wine. I will be upstairs.",
+        "speaker": "strahd"
       },
       "monsters": [
         {
@@ -1054,7 +1055,8 @@
             5,
             5
           ],
-          "name": "Strahd von Zarovich"
+          "name": "Strahd von Zarovich",
+          "hp": 375
         },
         {
           "monster": "swarm_of_bats",
@@ -1075,6 +1077,20 @@
           "cell": [
             2,
             11
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            4,
+            5
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            5,
+            4
           ]
         }
       ]

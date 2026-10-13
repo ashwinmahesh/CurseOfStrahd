@@ -1,8 +1,8 @@
 extends FightSeriesCase
 ## Death House scaled up for 2024 heroes (owner, 2026-10-13: the book's fights were written for weaker characters). Over
-## seeds 1-8 the four pregens on autopilot, standing where walking in or talking sets each fight off, win about half of
-## them at levels 1 and 2 (his target: 4 of 8). Whoever starts a fight by talking steps aside, as the conversation does
-## in play. The wolves in the narrows on the road there are held here too. The Dursts' robed ones (level 3) are held in
+## seeds 1-8 the four pregens on the sharp autopilot (smiting, opening with Spirit Guardians, as he plays), standing where
+## walking in or talking sets each fight off, win five in eight on Balanced, give or take one (his target, 2026-10-13
+## 18:05). Whoever starts a fight by talking steps aside, as the conversation does in play. The wolves in the narrows on the road there are held here too. The Dursts' robed ones (level 3) are held in
 ## test_side_quest_bosses.gd.
 
 
@@ -20,6 +20,8 @@ const SHRINE: Array[Vector2i] = [Vector2i(4, 19), Vector2i(3, 18), Vector2i(3, 1
 const DURST_DOOR: Array[Vector2i] = [Vector2i(7, 18), Vector2i(6, 17), Vector2i(5, 16), Vector2i(4, 16)]
 const AT_SUPPER: Array[Vector2i] = [Vector2i(9, 18), Vector2i(8, 18), Vector2i(7, 18), Vector2i(6, 17)]
 const ALTAR: Array[Vector2i] = [Vector2i(25, 14), Vector2i(26, 13), Vector2i(26, 12), Vector2i(26, 11)]
+## In the larder, where walking in sets the gricks off.
+const LARDER: Array[Vector2i] = [Vector2i(26, 4), Vector2i(27, 4), Vector2i(25, 4), Vector2i(26, 3)]
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 const DUNGEON_CLEARED: Array[String] = ["death_house_ghouls_destroyed", "death_house_mimic_slain"]
@@ -38,44 +40,48 @@ func _held(location: String, level: int, encounter: String, at: Array[Vector2i],
 
 
 func test_the_wolves_in_the_narrows_at_level_1() -> void:
-	await _held("into_the_mists_road", 1, "mists_wolves", NARROWS, 2, 6)
+	await _held("into_the_mists_road", 1, "mists_wolves", NARROWS, 4, 6)
 
 
 func test_the_black_armor_on_the_balcony_at_level_1() -> void:
-	await _held("death_house_third", 1, "armor_guardian", BALCONY, 2, 6)
+	await _held("death_house_third", 1, "armor_guardian", BALCONY, 4, 6)
 
 
 func test_the_nursemaid_at_level_1() -> void:
-	await _held("death_house_third", 1, "nursery_specter", NURSERY_DOOR, 2, 6, ["death_house_armor_destroyed"])
+	await _held("death_house_third", 1, "nursery_specter", NURSERY_DOOR, 4, 6, ["death_house_armor_destroyed"])
 
 
 func test_the_storage_room_at_level_1() -> void:
-	await _held("death_house_third", 1, "storage_broom", STORAGE_DOOR, 2, 6)
+	await _held("death_house_third", 1, "storage_broom", STORAGE_DOOR, 4, 6)
 
 
 func test_elisabeths_crypt_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "crypt_insects", CRYPTS, 2, 6)
+	await _held("death_house_dungeon_1", 2, "crypt_insects", CRYPTS, 4, 6)
+
+
+func test_the_gricks_in_the_larder_at_level_2() -> void:
+	await _held("death_house_dungeon_1", 2, "larder_grick", LARDER, 4, 6)
 
 
 func test_the_ghoul_passage_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "passage_ghouls", GHOUL_PASSAGE, 2, 6)
+	await _held("death_house_dungeon_1", 2, "passage_ghouls", GHOUL_PASSAGE, 4, 6)
 
 
 func test_the_shrines_shadows_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "shrine_shadows", SHRINE, 2, 6, ["death_house_ghouls_destroyed"])
+	await _held("death_house_dungeon_1", 2, "shrine_shadows", SHRINE, 4, 6, ["death_house_ghouls_destroyed"])
 
 
 func test_the_door_with_teeth_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "den_mimic", DURST_DOOR, 2, 6, ["death_house_ghouls_destroyed"])
+	await _held("death_house_dungeon_1", 2, "den_mimic", DURST_DOOR, 4, 6, ["death_house_ghouls_destroyed"])
 
 
 func test_supper_with_the_dursts_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "durst_reunion", AT_SUPPER, 2, 6, DUNGEON_CLEARED)
+	await _held("death_house_dungeon_1", 2, "durst_reunion", AT_SUPPER, 4, 6, DUNGEON_CLEARED)
 
 
 func test_supper_with_the_dursts_shaken_at_level_2() -> void:
-	await _held("death_house_dungeon_1", 2, "durst_reunion_shaken", AT_SUPPER, 2, 6, DUNGEON_CLEARED)
+	await _held("death_house_dungeon_1", 2, "durst_reunion_shaken", AT_SUPPER, 4, 6, DUNGEON_CLEARED)
 
 
 func test_the_shades_at_the_altar_at_level_2() -> void:
-	await _held("death_house_dungeon_2", 2, "shades_harry", ALTAR, 2, 6, ["death_house_portcullis_raised"])
+	await _held("death_house_dungeon_2", 2, "shades_harry", ALTAR, 4, 6, ["death_house_portcullis_raised"])

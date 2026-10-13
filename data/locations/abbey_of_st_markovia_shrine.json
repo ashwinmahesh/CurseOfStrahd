@@ -450,7 +450,8 @@
           "art": "vasilka",
           "lying": {
             "on": "bride_bier"
-          }
+          },
+          "hp": 160
         },
         {
           "monster": "berserker",
@@ -510,6 +511,45 @@
           "cell": [
             5,
             12
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            15,
+            3
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            2
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            4
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            17,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            15,
+            2
           ],
           "name": "Belview Brute"
         }
@@ -630,7 +670,8 @@
             12,
             3
           ],
-          "name": "The Abbot"
+          "name": "The Abbot",
+          "hp": 250
         },
         {
           "monster": "mongrelfolk",
@@ -651,6 +692,36 @@
           "cell": [
             8,
             6
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            11,
+            3
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            12,
+            2
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            13,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            11,
+            2
           ],
           "name": "Belview Brute"
         }

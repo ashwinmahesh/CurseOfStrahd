@@ -389,6 +389,20 @@
             14
           ],
           "name": "Dead Knight"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            2,
+            15
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            3,
+            14
+          ]
         }
       ]
     },

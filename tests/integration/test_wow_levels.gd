@@ -1,8 +1,8 @@
 extends FightSeriesCase
-## The Wizard of Wines' fights for a party that comes early or late (2026-10-13, the owner's targets over seeds 1-8 for
-## the autopilot's four pregens: 3 wins in 8 at levels 3-5, 2 at level 6 and up), one win either way: the four story
-## fights at levels 5 and 7, the Vine Mother at 5, 7 and 8, and the Ash Effigy at level 8 with a druid beside it.
-## Level 6 is held by test_story_fights.gd, test_side_quest_bosses.gd and test_yester_summit.gd.
+## The Wizard of Wines' fights for a party that comes early or late (2026-10-13 18:05, the owner's target over seeds 1-8:
+## the test party playing as he does wins about 5 times in 8 on Balanced, one either way): the four story fights at
+## levels 5 and 7, the Vine Mother at 5, 7 and 8 with Adrian along and without, and the Ash Effigy at level 8 with a
+## druid beside it. Level 6 is held by test_story_fights.gd, test_side_quest_bosses.gd and test_yester_summit.gd.
 
 const VINE_LANE: Array[Vector2i] = [Vector2i(22, 25), Vector2i(23, 25), Vector2i(22, 26), Vector2i(23, 26)]
 const HALL_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(9, 9), Vector2i(9, 10), Vector2i(10, 10)]
@@ -11,12 +11,12 @@ const SEVENTH_ROW: Array[Vector2i] = [Vector2i(29, 24), Vector2i(28, 24), Vector
 const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
 
 
-func _held(location: String, hour: int, level: int, encounter: String, flags: Array[String], at: Array[Vector2i]) -> void:
+func _held(location: String, hour: int, level: int, encounter: String, flags: Array[String], at: Array[Vector2i],
+		guests: Array[String] = []) -> void:
 	speakers_step_aside = true   # Kostin at the press, Zorica or Ruxandra at the effigy
-	var target := 2 if level >= 6 else 3
-	var wins := await _series(location, hour, level, encounter, [1, 2, 3, 4, 5, 6, 7, 8], flags, [], [], at)
-	assert_true(wins >= target - 1, "%s can be won at level %d (%d/8)" % [encounter, level, wins])
-	assert_true(wins <= target + 1, "%s stays hard at level %d (%d/8)" % [encounter, level, wins])
+	var wins := await _series(location, hour, level, encounter, [1, 2, 3, 4, 5, 6, 7, 8], flags, guests, [], at)
+	assert_true(wins >= 4, "%s can be won at level %d %s (%d/8)" % [encounter, level, guests, wins])
+	assert_true(wins <= 6, "%s stays hard at level %d %s (%d/8)" % [encounter, level, guests, wins])
 
 
 func test_the_story_fights_at_level_5() -> void:
@@ -36,6 +36,7 @@ func test_the_story_fights_at_level_7() -> void:
 func test_the_vine_mother_at_levels_5_7_and_8() -> void:
 	for level: int in [5, 7, 8]:
 		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW)
+		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, ["adrian_martikov"])
 
 
 ## Zorica beside it; Ruxandra (spared) has the same line-up.

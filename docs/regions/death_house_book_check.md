@@ -86,7 +86,7 @@ through the ghouls.
 | 26 Hidden Spiked Pit | `dh_pit_passage` | stone | stone | A concealed spiked pit. | `passage_pit` (now spiked, Perception 15). |
 | 27 Dining Hall | `dh_cult_refectory` | dirt | stone | Plain table, long benches, gnawed bones. | `cult_ledger` (game's), `refectory_bones`. |
 | 28 Larder | `dh_larder` (**new**) | dirt | stone | Dark; the grick; a net of rotted venison. | Grick moved here from the well. |
-| 29 Ghoulish Encounter | `dh_ghoul_passage` (**new**) | stone, old bones | cracked, red-stained stone | Ghouls rise out of the floor (four). | Ghouls moved here from the dormitory (four as in the book, six since 2026-10-13 for 2024 heroes). |
+| 29 Ghoulish Encounter | `dh_ghoul_passage` (**new**) | stone, old bones | cracked, red-stained stone | Ghouls rise out of the floor (four). | Ghouls moved here from the dormitory (four as in the book; five and a rat since 2026-10-13 for 2024 heroes). |
 | 30 Stairs Down | `dh_lower_stair` | stone steps | stone | Chanting below. | Same. |
 | 31 Darklord's Shrine | `dh_shrine` (**new**, was the reliquary) | stone | stone, skeletons in rusty shackles | Painted wooden statue of a gaunt, pale man in a black cloak, hand on a wolf's head, holding a smoky crystal orb (25 gp); take the orb and five shadows peel off the walls. A secret door leads to 32. | `shrine_statue` (new), the shadows (five as in the book, seven since 2026-10-13 for 2024 heroes, on taking the orb), `shrine_shackles` (new). |
 | 32 Hidden Trapdoor | `dh_trapdoor_stair` (**new**) | clay steps | earth | A stair up to a trapdoor bolted from below. | A way out to the village after the sacrifice. |

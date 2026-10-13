@@ -274,7 +274,8 @@
             24,
             4
           ],
-          "name": "Druid overseer"
+          "name": "Druid overseer",
+          "hp": 72
         },
         {
           "monster": "vine_blight",
@@ -395,7 +396,7 @@
             20,
             2
           ],
-          "hp": 55
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -403,7 +404,8 @@
           "cell": [
             20,
             9
-          ]
+          ],
+          "hp": 60
         },
         {
           "monster": "vine_blight",
@@ -425,6 +427,13 @@
             27,
             6
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            25,
+            11
+          ]
         }
       ],
       "surprise": "",
@@ -443,7 +452,8 @@
             24,
             4
           ],
-          "name": "Druid overseer"
+          "name": "Druid overseer",
+          "hp": 70
         },
         {
           "monster": "vine_blight",
@@ -584,7 +594,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 34
+          "hp": 60
         },
         {
           "monster": "vine_blight",

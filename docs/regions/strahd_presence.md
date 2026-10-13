@@ -121,9 +121,9 @@ A bot that skips ahead can set `strahd_watcher_seen` and the party level directl
 
 ## Balance
 
-The test of strength comes at level 7 or later, at night, on the road; he leaves at 100 of 144 Hit Points or when his
-turn comes in round 4. The window fight is shorter (he leaves at 120 HP or in round 3) and has a swarm of bats rather
-than wolves, since a party in Vallaki or Krezk may be level 5. Tuned with the autopilot (four pregens, eight seeds, before the
-withdraw): over his rounds a level 6 party lost two or three members to him and two dire wolves, a level 7 party
-none to two; a level 5 party at the window lost one or two in two rounds. Neither fight gives loot; leaving is not
-dying.
+The test of strength comes at level 7 or later, at night, on the road. Since 2026-10-13 (owner: "let him fight till
+his HP goes to 0, but that's his signal to flee") he fights every visit until he's beaten, then goes with a parting
+line (`withdraw.say`, in his own voice), and the fight waits for the line before it ends. Each is tuned so the sharp
+test party, without the Sunsword, wins 5 of 8 at its level: the test of strength at his book 144 HP with two dire
+wolves (level 7), the window at the Blue Water Inn at 110 HP (level 5) and at the Krezkovs' at 200 HP (level 7), each
+with a swarm of bats (tests/integration/test_scaled_boss_fights.gd). Neither fight gives loot; leaving is not dying.
