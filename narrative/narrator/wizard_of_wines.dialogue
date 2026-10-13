@@ -198,7 +198,7 @@ once
 
 ~ rest:long:wizard_of_wines
 | You sleep with your backs to a winery wall and ravens on the roof above you. Twice in the night a raven calls, and both times nothing comes.
-| [flag.winery_reclaimed] You sleep in the Martikovs' house, under blankets that smell of lavender and old wine. Nobody in Barovia has slept this well in years, and you know it, and it keeps you awake for a while.
+| [flag.winery_reclaimed and indoors] You sleep in the Martikovs' house, under blankets that smell of lavender and old wine. Nobody in Barovia has slept this well in years, and you know it, and it keeps you awake for a while.
 
 ~ combat:start
 | [at:wizard_of_wines_winery and not flag.winery_hall_cleared] The vats boil over, and what climbs out of the mash has opinions about guests.

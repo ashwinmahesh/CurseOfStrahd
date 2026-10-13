@@ -16,27 +16,27 @@
     },
     {
       "id": "asked",
-      "journal": "Davian Martikov, master of the Wizard of Wines, is camped under the trees with his family while druids from Yester Hill hold his winery. Three green stones keep his vines alive in this sunless valley: one was stolen to Berez, one carried to Yester Hill, and one he hid in the founder's cask at the foot of the cellar stair. He asked us to drive the druids out of the winery and the press house and bring the hidden stone up.",
+      "journal": "Davian Martikov, master of the Wizard of Wines, is camped under the trees with his family while druids from Yester Hill hold his winery. Three green stones keep his vines alive in this sunless valley: one was stolen to Berez, one carried to Yester Hill, and one he hid in the founder's cask at the foot of the cellar stair. On Yester Hill the druids are building a giant of earth in the likeness of the lord in the castle, with the stolen stone for its heart; when their chant wakes it, it will walk east and tread the vines flat. He asked us to drive the druids out of the winery and the press house and bring the hidden stone up.",
       "objectives": [
         "Drive the druids out of the winery and the press house",
         "Bring up the stone from the founder's cask in the cellar (third hoop, pull)",
-        "Stop whatever the druids are building on Yester Hill"
+        "Stop the druids waking their earth giant on Yester Hill"
       ],
-      "hint": "Drive the druids out of the winery and press house, fetch the stone from the founder's cask in the cellar, and break the druids' work on Yester Hill.",
+      "hint": "Drive the druids out of the winery and press house, fetch the stone from the founder's cask in the cellar, and stop the druids' ritual on Yester Hill before their giant wakes.",
       "ends": ""
     },
     {
       "id": "reclaimed",
-      "journal": "The druids are gone from the winery, and the Martikovs have moved back into their house. Davian means to plant every stone he gets back.",
+      "journal": "The druids are gone from the winery, and the Martikovs have moved back into their house. Davian means to plant every stone he gets back. On Yester Hill the druids are still singing their earth giant awake, with Davian's second stone in its chest.",
       "objectives": [
-        "Break the druids' ritual on Yester Hill and bring back the stone they took"
+        "Stop the druids' giant waking on Yester Hill and bring back the stone in its chest"
       ],
       "hint": "Go to Yester Hill, west of the winery, break the druids' ritual and bring their stone back to Davian.",
       "ends": ""
     },
     {
       "id": "hill_broken",
-      "journal": "The druids' work on Yester Hill is broken, but their brothers still hold the Martikovs' winery.",
+      "journal": "The druids' giant on Yester Hill is broken, and it will never walk east onto the vines. But their brothers still hold the Martikovs' winery.",
       "objectives": [
         "Drive the druids out of the winery and the press house"
       ],
