@@ -62,20 +62,31 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `waiting: true` (an `enter_area` fight only) puts its foes in plain view before the fight: they show once the party
   can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7). A waiting monster's
   `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group.
+  A monster's `lying` lays it down before its fight (as an NPC entry's, below) and it gets up as the fight opens: the
+  dead sitting up on their pallets, Vasilka coming down off her bier. Its `art` dresses it in another sprite than its
+  stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it.
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md).
-- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6) or `no` (with `rest_text`); default risky.
+- **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6, and makes camp on the map: docs/story/camp.md)
+  or `no` (no Long Rest: its card says `rest_text`); default risky. A Short Rest is taken in any of them, `no`
+  included, unless a fight on the map was begun and not won or foes are in plain view of the party
+  (story/rest_rules.gd).
 - **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
   sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
   the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
-- **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, path, pause}`. The first entry per NPC whose
+- **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, lying, path, pause}`. The first entry per NPC whose
   `when` holds stands there; the game re-checks after every conversation and fight. `approach: n` makes the NPC speak
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
   (Unconscious, so Incapacitated and Prone, as the 2024 rules have a sleeper); the hover hint, Look and the Alt plates
-  say so. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from its cell through each waypoint and back, standing
+  say so. `lying` lays the figure down with no condition (owner 2026-10-13, Vasilka "lies under a sheet, very still"):
+  `true`, or `{on, head, sheet, pose, lift}` (world/exploration/lying_figures.gd). A person lies on their back on
+  their own square, on top of the furniture standing there (a table, a bier, a pallet), or on the prop `on` names
+  beside them; head along the furniture, or toward `head`; `sheet` lays linen over them to the `chest` or over the
+  `face`. A beast or a dragon lies low on its belly (`pose`: back or belly). The hover names them and the menu offers
+  Approach. `path: [[x, y], [x, y, seconds], ...]` walks the NPC from its cell through each waypoint and back, standing
   `pause` seconds (default 3, or a waypoint's own) at each (NpcRoutes): it holds while anyone talks or fights, while
   the leader stands beside it and while its next square is taken, and under turn-based exploring walks only as a
-  round ends; a sleeper never walks. A waypoint may also be `{"at": [x, y], "wait": s, "face": dir, "work": "swing" or "gesture"}`: a stop
+  round ends; a sleeper, or a figure lying there, never walks. A waypoint may also be `{"at": [x, y], "wait": s, "face": dir, "work": "swing" or "gesture"}`: a stop
   where the person turns to their work and swings at it (an axe, a spade: the figure's attack) or gestures over it
   (its spell gesture) every few seconds; an entry's own `work` does the same at its cell, standing or home from its
   path (lane 28). Waypoints must be open floor reachable without opening a door. `hours: [from,
@@ -83,7 +94,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
   while the party is in the location (LocationClock).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
-  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`, and
+  with `search_dc`), `lever` (sets `flag`), `decor` (no interaction). Optional `when`, `dialogue`, `item`, `flag`, `say`
+  (a Narrator trigger tried before `examine:<id>`: a camp's fire indoors says `examine:camp_fire:indoors`), and
   `facing` (north, south, east, west or between: which way the piece's front looks, instead of away from the wall
   beside it or south) and `span` ([across, down] squares, its own cell the north-west one: a wagon stands over the middle
   of its two-by-two block of low cover).

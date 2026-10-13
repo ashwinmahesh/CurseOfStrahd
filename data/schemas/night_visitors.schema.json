@@ -7,6 +7,11 @@
   "properties": {
     "id": {"const": "night_visitors"},
     "summary": {"type": "string"},
+    "settings": {
+      "type": "object",
+      "description": "Where the camp is (CampSite.setting: town or indoors) -> the land a group is for there, over the region's: a town's streets and a roof have their own visitors. The wild goes by the region.",
+      "additionalProperties": {"$ref": "common.schema.json#/$defs/id"}
+    },
     "lands": {
       "type": "object",
       "description": "Region id -> the lie of the land a group is for (forest, marsh, mountain, castle).",

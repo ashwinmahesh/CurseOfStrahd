@@ -289,9 +289,8 @@ def semantic_checks(data):
 
 
 def camp_checks(data, errors):
-    """The camp's night visitors (data/camp/night_visitors.json, F16): every monster exists, every land a region has
-    (and the default) has a group for every party level from 1 to the level cap, and no two of a land's groups
-    overlap."""
+    """The camp's night visitors (data/camp/night_visitors.json, F16): every monster exists, and every land a region
+    or a setting (town, indoors) has, and the default, has a group for every party level from 1 to the level cap."""
     nv = data.get("camp", {}).get("night_visitors")
     if not nv:
         return
@@ -304,7 +303,7 @@ def camp_checks(data, errors):
         lo, hi = g["levels"]
         if lo > hi:
             errors.append(f"{w} {g['id']}: levels {lo} to {hi} run backwards")
-    for land in sorted(set(nv.get("lands", {}).values()) | {nv.get("default_land")}):
+    for land in sorted(set(nv.get("lands", {}).values()) | set(nv.get("settings", {}).values()) | {nv.get("default_land")}):
         for level in range(1, 12):
             n = sum(1 for g in groups if g["land"] == land and g["levels"][0] <= level <= g["levels"][1])
             if n == 0:
@@ -798,6 +797,10 @@ def story_checks(data, errors, need):
         if elevation and (len(elevation) != len(rows) or any(len(e) > len(r) for e, r in zip(elevation, rows))):
             errors.append(f"{w}: map elevation must have a row per map row, none longer than its row")
 
+        def cell_char(rows, cell):
+            x, z = cell
+            return rows[z][x] if 0 <= z < len(rows) and 0 <= x < len(rows[z]) else ""
+
         def on_floor(cell, what, allow_wall=False):
             x, z = cell
             if z >= len(rows) or x >= len(rows[z]):
@@ -880,7 +883,10 @@ def story_checks(data, errors, need):
             if tr.get("flag"):
                 flags_set.setdefault(tr["flag"], []).append(w)
         for n in loc.get("npcs", []):
-            on_floor(n["cell"], f"npc {n['npc']}")
+            # Someone lying on the furniture of a low-cover square (Vasilka on the surgery table) lies on it.
+            lies_on_it = bool(n.get("lying")) and cell_char(rows, n["cell"]) == "="
+            if not lies_on_it:
+                on_floor(n["cell"], f"npc {n['npc']}")
             # A waypoint is [x, y], [x, y, seconds] or {"at": [x, y], ...} (a stop at work, npc_routes.gd).
             stops = [(p["at"] if isinstance(p, dict) else p) for p in n.get("path", [])]
             for p in stops:

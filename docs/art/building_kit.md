@@ -91,7 +91,8 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   leaning out a little as they go; a `bridges` rect (the drawbridge) gets beams and cross-timbers under it instead. On
   the roofs (`cliffs` false) the void is the drop off the roof, the castle's masonry going on down under every square
   beside it.
-- **Cut away**: the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
+- **Cut away** (only with the catalog's `building_kit.cut_away` on; off since the owner's call on 2026-10-13, so the
+  walls stand): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
   party, or of the squares beside it or just past it, squashes down to its foot (1.25, coped) and comes back when it's
   clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
   them (the keep's windows, its crest) hang on their faces and go with them.
@@ -129,8 +130,11 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
 - **Chimney.** The stack is a box (the chimney smoke finds it), the cap and pot are a module.
 - **Merged.** The walls and the roof are each one mesh, one surface per material (`BuildingKit.merge`), so a village
   costs a few dozen draws, not thousands.
-- **Cut away.** A house between the camera and the party squashes down and is replaced by its low band: a ring of
-  wall 0.5 high, capped dark like the cut-away interiors, round a floor of boards, with its footing.
+- **Cut away** (only with the catalog's `building_kit.cut_away` on: the owner turned it off on 2026-10-13, "why do
+  buildings shrink down ... when I get near them? Same things with walls. Lets disable this effect", so houses stand).
+  A house between the camera and the party squashes down and is replaced by its low band: a ring of wall 0.5 high,
+  capped dark like the cut-away interiors, round a floor of boards, with its footing. An interior's full-height walls
+  (above) still open the room the party is in.
 
 **L-shaped buildings** (W7). A block of wall that isn't a rectangle is split into rectangles as before, but they are
 one building: every part takes the main part's height (the biggest), roof and paint and stands on the lowest ground
@@ -142,8 +146,10 @@ two made-up L's.
 
 Yard walls are the kit's too: a stone arm from each square's middle toward each neighbouring wall or gate, a capped
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
-with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons. Vallaki's
-palisade is one mesh for the whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
+with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons; it rings a walled
+town at the map's edge too, where an open village thins into pines (`TownBuilder.walled`, `ArenaBoard._town_wall`),
+stands on ground of its own, and fades like the trees when it hides the party. Vallaki's palisade is one mesh for the
+whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
 ## Making and changing the modules (`blender/building_kit.py`)
 
@@ -158,10 +164,10 @@ and the existing texture sets; the HD surfaces (W4) will give the kit its own pa
 
 Checks: `tests/integration/test_building_kit.gd` (every module TownBuilder asks for exists with real materials, the
 village is built of kit houses with door bays and lit windows, a house cuts away to its footing, the churches are
-stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall, and lone
-wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper floor has
-full walls over the street a storey down, headers over its doorways, and its north wall stands or is cut away as the
-camera turns). Captures, before and after:
+stone with their towers, Vallaki is clapboard behind its palisade and Krezk is stone inside its tall wall all round,
+and lone wall squares are pillars in the castle, the church and the Death House's dungeon; the Death House's upper
+floor has full walls over the street a storey down, headers over its doorways, and its north wall stands or is cut
+away as the camera turns). Captures, before and after:
 
     make capture SCENE=res://tools/capture/kit_capture.tscn NAME=kit/after FRAMES=10   # KIT_SHOTS=village_close,...
 

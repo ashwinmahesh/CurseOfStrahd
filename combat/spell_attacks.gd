@@ -81,6 +81,25 @@ func _take_pre_roll(ctx: Dictionary, t: Combatant) -> Dictionary:
 	return {}
 
 
+## Advantage, Disadvantage and cover for a spell attack roll by `c` at `t` (from the square `origin` when it isn't the
+## caster's own): Encounter.attack_situation for a spell, where Spell Sniper's Casting in Melee and Bypass Cover go by
+## the attack's kind, then the cover a spell ignores (`ignore_partial_cover`; the Wand of the War Mage's Half Cover).
+## The roll and the target tooltip (ActionCatalog.spell_attack_preview) both read it, so the odds shown are the odds
+## rolled.
+func situation(c: Combatant, s: Dictionary, t: Combatant, origin: Variant = null) -> Dictionary:
+	var option := {"melee": str(s["attack"]) == "melee", "profile": WeaponProfile.new(), "kind": "spell"}
+	(option["profile"] as WeaponProfile).normal_range = sp().range_ft(s, c)
+	if origin != null:
+		option["origin_cell"] = origin
+	var sit := enc().attack_situation(c, t, option)
+	if bool(s.get("ignore_partial_cover", false)):
+		sit["cover_bonus"] = 0
+	# Wand of the War Mage: spell attacks ignore Half Cover.
+	if c.creature.has_flag("spell_attacks_ignore_half_cover") and int(sit.get("cover", 0)) == CombatGrid.Cover.HALF:
+		sit["cover_bonus"] = 0
+	return sit
+
+
 ## A spell attack roll at `t`: damage on a hit (with Critical Hits), the spell's hit effects, Chromatic Orb's
 ## leap, Vampiric Touch's drain; half damage on a miss for spells that say so (Melf's Acid Arrow) and for Potent
 ## Cantrip; Ice Knife's burst either way.
@@ -90,23 +109,14 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	var s := ctx["s"] as Dictionary
 	var e := enc()
 	var melee := str(s["attack"]) == "melee"
-	var option := {"melee": melee, "profile": WeaponProfile.new(), "kind": "spell"}
-	(option["profile"] as WeaponProfile).normal_range = spells.range_ft(s, c)
-	if ctx.has("attack_origin"):
-		option["origin_cell"] = ctx["attack_origin"]
 	# Shadow Martyr (Echo Knight) may have sent an echo in before the roll; a roll the spell makes later (a Chromatic
 	# Orb's leap) can't pause, so there the echo takes it only on Automatic.
 	var pre := _take_pre_roll(ctx, t)
 	t = pre["target"] as Combatant if not pre.is_empty() else e.echo_knight.spell_redirect(c, t)
-	var sit := e.attack_situation(c, t, option)
+	var sit := situation(c, s, t, ctx.get("attack_origin"))
 	if not pre.is_empty():
 		(sit["advantage"] as Array[String]).append_array((pre["sit"] as Dictionary)["advantage"] as Array[String])
 		(sit["disadvantage"] as Array[String]).append_array((pre["sit"] as Dictionary)["disadvantage"] as Array[String])
-	if bool(s.get("ignore_partial_cover", false)):
-		sit["cover_bonus"] = 0
-	# Wand of the War Mage: spell attacks ignore Half Cover.
-	if c.creature.has_flag("spell_attacks_ignore_half_cover") and int(sit.get("cover", 0)) == CombatGrid.Cover.HALF:
-		sit["cover_bonus"] = 0
 	e._consume_marks(c, t)
 	spells.specials.duel_check_attack(c, t)
 	spells.trigger_ends(c, "attack_roll")

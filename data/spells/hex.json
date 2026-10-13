@@ -32,7 +32,27 @@
     "count": 1
   },
   "upcast": {
-    "text": "Concentration can last up to 4 hours with a level 2 slot, 8 hours with a level 3-4 slot and 24 hours with a level 5+ slot."
+    "text": "Concentration can last up to 4 hours with a level 2 slot, 8 hours with a level 3-4 slot and 24 hours with a level 5+ slot.",
+    "durations": [
+      {
+        "slot": 2,
+        "kind": "hours",
+        "amount": 4,
+        "concentration": true
+      },
+      {
+        "slot": 3,
+        "kind": "hours",
+        "amount": 8,
+        "concentration": true
+      },
+      {
+        "slot": 5,
+        "kind": "hours",
+        "amount": 24,
+        "concentration": true
+      }
+    ]
   },
   "choice": {
     "kind": "ability",

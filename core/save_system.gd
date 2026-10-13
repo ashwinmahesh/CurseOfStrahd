@@ -220,6 +220,8 @@ func load_from(dir: String, slot: String) -> Error:
 static func upgrade(data: Dictionary) -> Dictionary:
 	var out := data.duplicate(true)
 	swap_withdrawn_items(out)
+	swap_regifted_items(out)
+	top_up_charges(out)
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
@@ -603,15 +605,24 @@ static func _remove_dir(dir: String) -> void:
 
 # --- Items taken out of the game --------------------------------------------------------------------------------
 
-## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn. The Amulet of
-## Proof against Detection and Location did nothing here and turned up far too often (owner, 2026-10-12): each one a
-## save holds, carried, stashed or waiting in a chest, becomes one of these useful uncommons.
+## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn: useful items of
+## the same rarity and price. The Amulet of Proof against Detection and Location did nothing here and turned up far
+## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13).
+## Each one a save holds, carried, stashed or waiting in a chest, becomes the next one on its list.
 const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":
-	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"]}
+	["periapt_of_wound_closure", "cloak_of_protection", "stone_of_good_luck"],
+	"helm_of_telepathy": ["circlet_of_blasting", "headband_of_intellect"],
+	"medallion_of_thoughts": ["eyes_of_minute_seeing", "brooch_of_shielding"],
+	"potion_of_mind_reading": ["potion_of_healing_superior", "potion_of_heroism"],
+	"crystal_ball_of_mind_reading": ["crystal_ball_of_true_seeing", "crystal_ball_of_telepathy"]}
+## What an item entry holds of its own (MagicItems.init_state's charges and the like): the old item's goes with it, so
+## its replacement starts fresh when it's next picked up.
+const ITEM_STATE := ["charges", "max_charges", "gems", "beads", "patches", "stored", "artifact_properties", "made"]
 
 
 ## Swaps every withdrawn item in `save` (in place) for its replacements, whatever the save's version: an item entry
-## takes the new id, off its slot, and an attunement to the old one ends. A save without one is unchanged.
+## takes the new id, off its slot and without the old item's charges, a replacement that stacks (a potion) joins a
+## stack of its kind in the same list, and an attunement to the old one ends. A save without one is unchanged.
 static func swap_withdrawn_items(save: Dictionary) -> void:
 	_swap_in(save, {})
 
@@ -627,11 +638,113 @@ static func _swap_in(v: Variant, seen: Dictionary) -> void:
 			d["id"] = str(subs[n % subs.size()])
 			if d.has("slot"):
 				d["slot"] = ""
+			for k: String in ITEM_STATE:
+				d.erase(k)
 		if d.get("attuned", null) is Array:
 			d["attuned"] = (d["attuned"] as Array).filter(func(a: Variant) -> bool: return not WITHDRAWN.has(str(a)))
 		for k: Variant in d.keys():
 			_swap_in(d[k], seen)
 	elif v is Array:
-		for x: Variant in v as Array:
-			_swap_in(x, seen)
+		var a := v as Array
+		var swapped: Array[int] = []
+		for i in a.size():
+			if a[i] is Dictionary and WITHDRAWN.has(str((a[i] as Dictionary).get("id", ""))):
+				swapped.append(i)
+			_swap_in(a[i], seen)
+		for k in range(swapped.size() - 1, -1, -1):
+			_join_stack(a, swapped[k])
 
+
+## A replacement at `i` in `a` that stacks joins another entry of its kind there: the earlier of the two keeps both.
+static func _join_stack(a: Array, i: int) -> void:
+	var d := a[i] as Dictionary
+	if not d.has("qty") or not bool(Compendium.shared().item_data(str(d["id"])).get("stackable", false)):
+		return
+	for j in a.size():
+		if j != i and a[j] is Dictionary and str((a[j] as Dictionary).get("id", "")) == str(d["id"]) and (a[j] as Dictionary).has("qty"):
+			var keep := a[mini(i, j)] as Dictionary
+			var drop := a[maxi(i, j)] as Dictionary
+			keep["qty"] = int(keep["qty"]) + int(drop["qty"])
+			if bool(drop.get("new", false)):
+				keep["new"] = true
+			a.remove_at(maxi(i, j))
+			return
+
+
+# --- Gifts and items that changed -----------------------------------------------------------------------------------
+
+## Story gifts that became other items after saves already held them. In a save whose `given` flag is set but not its
+## `mark` (the scene sets it now as it hands the new item over), the first copy of `old` the party carries, or else has
+## stashed, becomes `new`; then `mark` is set, so it happens once and a copy found later stays as it is. Mother's eighth
+## gift was Boots of Levitation and is Winged Boots now (owner, 2026-10-13).
+const REGIFTED := [{"given": "mother_flown", "old": "boots_of_levitation", "new": "winged_boots", "mark": "mother_boots_given"}]
+
+## Items that gained charges after saves already held them: a copy made before then has none, so it gets the item's
+## starting count. Winged Boots moved to the 2024 rules' 4 charges (2026-10-13).
+const CHARGED_LATER := ["winged_boots"]
+
+
+## Swaps each changed gift in `save` (in place) for the new item, once per save (REGIFTED). The new item keeps the old
+## one's place: its slot and its attunement.
+static func swap_regifted_items(save: Dictionary) -> void:
+	var story := save.get("story", {}) as Dictionary
+	var flags := story.get("flags", {}) as Dictionary
+	for g: Dictionary in REGIFTED:
+		if bool(flags.get(str(g["given"]), false)) and not bool(flags.get(str(g["mark"]), false)):
+			_regift(story, str(g["old"]), str(g["new"]))
+			flags[str(g["mark"])] = true
+
+
+static func _regift(story: Dictionary, old: String, new: String) -> void:
+	var holders: Array = []
+	holders.append_array(story.get("party", []) as Array)
+	holders.append_array(story.get("bench", []) as Array)
+	for h: Variant in holders:
+		var ch := h as Dictionary
+		for e: Variant in ch.get("inventory", []):
+			if str((e as Dictionary).get("id", "")) == old:
+				_become(e as Dictionary, new)
+				if ch.get("attuned", null) is Array:
+					ch["attuned"] = (ch["attuned"] as Array).map(func(a: Variant) -> String: return new if str(a) == old else str(a))
+				return
+	for e: Variant in story.get("stash", []):
+		if str((e as Dictionary).get("id", "")) == old:
+			_become(e as Dictionary, new)
+			return
+
+
+## An item entry turned into `id`: the old item's spent uses go, the new one's charges come, and it shows as new.
+static func _become(entry: Dictionary, id: String) -> void:
+	entry["id"] = id
+	for k: String in ["uses", "budget_used", "cooldowns", "charges", "max_charges"]:
+		entry.erase(k)
+	_charge(entry)
+	entry["new"] = true
+
+
+## Gives every made copy of a CHARGED_LATER item in `save` (in place) that has no charges its starting count.
+static func top_up_charges(save: Dictionary) -> void:
+	_top_up_in(save)
+
+
+static func _top_up_in(v: Variant) -> void:
+	if v is Dictionary:
+		var d := v as Dictionary
+		if str(d.get("id", "")) in CHARGED_LATER and d.has("made") and not d.has("charges"):
+			_charge(d)
+		for k: Variant in d.keys():
+			_top_up_in(d[k])
+	elif v is Array:
+		for x: Variant in v as Array:
+			_top_up_in(x)
+
+
+## An item entry's starting charges, if its item has any (MagicItems.init_state).
+static func _charge(entry: Dictionary) -> void:
+	var data := Compendium.shared().item_data(str(entry["id"]))
+	if not MagicItems.has_charges(data):
+		return
+	var fresh := MagicItems.init_state(data, DiceRoller.new(hash(str(entry["id"]))))
+	for k: String in ["charges", "max_charges"]:
+		if fresh.has(k):
+			entry[k] = fresh[k]

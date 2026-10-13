@@ -315,9 +315,9 @@ once
 # ---------------------------------------------------------------- Resting
 
 ~ rest:long:argynvostholt
-| You sleep in shifts in a house full of the dead. Every watch hears armour in the corridors and every watch hears it stop outside the door, politely, and move on.
+| [indoors and not flag.argynvost_beacon_lit and not (flag.order_fate == "ride" or flag.order_fate == "grudge")] You sleep in shifts in a house full of the dead. Every watch hears armour in the corridors and every watch hears it stop outside the door, politely, and move on.
 | [flag.argynvost_beacon_lit] You sleep under the beacon's light, and for the first time since the mists closed behind you, nobody has a dream worth mentioning.
-| [flag.order_fate == "ride" or flag.order_fate == "grudge"] You sleep while dead knights stand guard at your door. It is very safe. It is not very restful.
+| [indoors and (flag.order_fate == "ride" or flag.order_fate == "grudge")] You sleep while dead knights stand guard at your door. It is very safe. It is not very restful.
 cooldown 60
 
 # --- Hidden finds (docs/story/found_magic_items.md) ---

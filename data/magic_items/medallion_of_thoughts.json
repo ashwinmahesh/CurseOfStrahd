@@ -1,5 +1,7 @@
 {
   "id": "medallion_of_thoughts",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-13: it casts Detect Thoughts, which left the game; a save's copies become items of the same rarity and price (SaveSystem.WITHDRAWN)",
   "name": "Medallion of Thoughts",
   "source": {
     "book": "DMG2024",

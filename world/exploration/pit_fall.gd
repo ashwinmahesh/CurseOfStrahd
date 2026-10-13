@@ -119,7 +119,7 @@ static func actions_for(view: LocationView, m: Combatant) -> Array[Dictionary]:
 	return out
 
 
-## A climb out for the member standing at `cell`. Returns true if they're out.
+## A climb out for the member standing at `cell`. Returns true if they're out (false while the Guidance prompt asks).
 static func climb_out(view: LocationView, cell: Vector2i) -> bool:
 	var m: Combatant = null
 	for mm in view.members:
@@ -131,18 +131,40 @@ static func climb_out(view: LocationView, cell: Vector2i) -> bool:
 	view.st.advance_minutes(1)
 	if view.st.party_has_item("rope"):
 		view.narration.emit("The party drops a rope over the edge, and %s climbs out of the pit." % first)
-	else:
-		if m.creature.hp <= 0:
-			view.toast.emit("%s can't climb while down: the party needs a rope." % first)
-			return false
-		var ch := m.creature as Character
-		var t := ch.roll_check(view.dice, &"athletics", CLIMB_DC, CheckAids.before_check(ch, &"athletics"), [], "%s climbs the pit wall" % first)
-		view.check_rolled.emit(t.describe())
-		view.big_roll.emit(t, ch.name, "Athletics")
-		if not t.success:
-			view.narration.emit("%s gets halfway up the slick stone and slides back down. (A rope would help.)" % first)
-			return false
-		view.narration.emit("%s finds the cracks in the stone and climbs out of the pit." % first)
+		return _out(view, m)
+	if m.creature.hp <= 0:
+		view.toast.emit("%s can't climb while down: the party needs a rope." % first)
+		return false
+	# Guidance can go on the climb first, from someone who can touch them: whoever's down in the pit with them.
+	var near: Array = []
+	for mm in view.members:
+		if holds(view, mm):
+			near.append(mm.creature)
+	var out := [false]
+	view.ask_guidance(m.creature, &"athletics", CLIMB_DC, func(extra: Array) -> void: out[0] = _climb(view, m, extra), near)
+	return bool(out[0])
+
+
+## `m` climbs the pit wall: Strength (Athletics) DC 12, with Guidance's die if it was cast (`extra`). True if they're
+## out.
+static func _climb(view: LocationView, m: Combatant, extra: Array) -> bool:
+	if not holds(view, m):
+		return false
+	var first := m.name().get_slice(" ", 0)
+	var ch := m.creature as Character
+	var t := ch.roll_check(view.dice, &"athletics", CLIMB_DC, CheckAids.before_check(ch, &"athletics"), [], "%s climbs the pit wall" % first,
+		[], extra)
+	view.check_rolled.emit(t.describe())
+	view.big_roll.emit(t, ch.name, "Athletics")
+	if not t.success:
+		view.narration.emit("%s gets halfway up the slick stone and slides back down. (A rope would help.)" % first)
+		return false
+	view.narration.emit("%s finds the cracks in the stone and climbs out of the pit." % first)
+	return _out(view, m)
+
+
+## `m` stands on the ledge, out of the pit.
+static func _out(view: LocationView, m: Combatant) -> bool:
 	var trap := _trap(view, str(fallen(view)[m.name()]))
 	fallen(view).erase(m.name())
 	m.creature.remove_condition(&"prone", str(trap.get("label", "a pit")))

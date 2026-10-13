@@ -6,6 +6,8 @@ extends CanvasLayer
 ## marked as junk (InventoryScreen) that this merchant buys, from every pack at once. Under the purse, the terms at
 ## this counter (Trade: the merchant's attitude and a haggle won) and the Haggle button, which rolls the chosen
 ## character's Persuasion in the open. The purse counts up or down to its new sum (UiMotion.roll).
+## The pack side has the inventory's filter tabs (InventoryScreen.FILTERS; LB/RB on a pad) and Only what <merchant>
+## buys, which leaves out what this merchant won't take; both are kept for the rest of the play session.
 
 signal closed
 
@@ -16,10 +18,19 @@ var index := 0
 var _frame: VBoxContainer
 var _note := ""
 var _note_colour := "bile"
+## The pack's rows as item ids, in order (sell_ids()).
+var _sell_ids: Array[String] = []
+
+## The pack side's filter tab and whether it shows only what the merchant buys (owner's ask, 2026-10-13; on by
+## default). Static, so the choice holds at every counter, for every character, until the game is closed; not saved.
+static var sell_filter := "All"
+static var only_buys := true
 
 ## The UiMotion.roll key the purse counts from (the services screen shares it).
 const PURSE_KEY := "party_purse"
 const ATTITUDE_COLOURS := {"friendly": "bile", "indifferent": "moonlight", "hostile": "rose"}
+## Words a merchant's name can start with that _who() keeps with the name after them.
+const TITLES := ["Father", "Sir", "Madam", "Lady", "Lord", "Mother", "Brother", "Sister", "Baron", "Baroness"]
 
 
 func _init() -> void:
@@ -93,15 +104,23 @@ func _draw() -> void:
 	if not any:
 		wares.add_child(UiKit.label("Nothing left to sell you.", 15, "bone"))
 	cols.add_child(_side("For sale", wares))
-	# Our pack
+	# Our pack: what the filter tab keeps, and with Only what they buy on, only what this merchant takes.
 	var pack := VBoxContainer.new()
 	pack.add_theme_constant_override("separation", 5)
+	_sell_ids.clear()
+	var hidden := 0
 	for e in ch.inventory:
 		if int(e["qty"]) <= 0:
 			continue
 		var id := str(e["id"])
 		var data := Compendium.shared().item_data(id)
+		if not InventoryScreen.in_filter(sell_filter, MagicItems.shown_data(data, e)):
+			continue
 		var offer := st.shop_offer(npc_id, id)
+		if only_buys and offer < 0.0:
+			hidden += 1
+			continue
+		_sell_ids.append(id)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 10)
 		UiParts.add_icon(row, "item", id)
@@ -124,7 +143,9 @@ func _draw() -> void:
 			b.tooltip_text = "Merchants only buy these %d at a time" % lot
 		row.add_child(b)
 		pack.add_child(UiParts.row(row, LootWindow._item_tip(data)))
-	cols.add_child(_side("%s's pack" % ch.name.get_slice(" ", 0), pack, _junk_button()))
+	if _sell_ids.is_empty():
+		pack.add_child(UiKit.label(_nothing_to_sell(ch, hidden > 0), 15, "bone"))
+	cols.add_child(_sell_side(ch, pack, hidden))
 
 
 ## The terms at this counter and the Haggle button: "Friendly · You pay ×0.9 · they pay ×1.1 ... Haggle (Persuasion
@@ -146,15 +167,26 @@ func _terms_row() -> Control:
 		why = "%s can't speak for the party now" % ch.name.get_slice(" ", 0)
 	b.disabled = why != ""
 	b.tooltip_text = why if why != "" else "One Persuasion check. Win it, and %s gives the party 10%% off and pays 10%% more from now on; lose it, and that's final." % \
-		Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
+		_who()
 	row.add_child(b)
 	return UiParts.row(row)
 
 
-## The chosen character haggles (Trade.haggle); the roll and its result go in the note.
+## The chosen character haggles (Trade.haggle); the roll and its result go in the note. Someone can cast Guidance on
+## them first (GuidanceOffer): asked over the shop (GuidancePrompt), or cast on a caster's Automatic rule.
 func haggle() -> void:
 	var ch := st.party[index]
-	var test := Trade.haggle(st, npc_id, ch, Dice.roller)
+	if ch.hp <= 0 or Trade.why_no_haggle(st, npc_id) != "":
+		return
+	var offer := GuidanceOffer.offer(st, ch, &"persuasion", Trade.haggle_dc(npc_id))
+	if GuidanceOffer.asks(offer):
+		GuidancePrompt.ask(self, offer, func(i: int, rule: String) -> void: _haggle(ch, GuidanceOffer.answer(offer, i, rule)))
+		return
+	_haggle(ch, GuidanceOffer.automatic(offer))
+
+
+func _haggle(ch: Character, extra: Array) -> void:
+	var test := Trade.haggle(st, npc_id, ch, Dice.roller, extra)
 	if test == null:
 		return
 	_note_colour = "bile" if test.success else "rose"
@@ -175,6 +207,78 @@ func _side(title: String, list: VBoxContainer, right: Control = null) -> Control
 	pane.add_child(UiParts.fill_scroll(list))
 	col.add_child(pane)
 	return col
+
+
+## The pack side: its title with Sell all junk, the inventory's filter tabs joined to the pane, and Only what
+## <merchant> buys over the rows.
+func _sell_side(ch: Character, list: VBoxContainer, hidden: int) -> Control:
+	var col := VBoxContainer.new()
+	col.add_theme_constant_override("separation", 6)
+	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	col.add_child(UiParts.section("%s's pack" % ch.name.get_slice(" ", 0), _junk_button()))
+	var tabbed := VBoxContainer.new()
+	tabbed.add_theme_constant_override("separation", 0)
+	tabbed.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	tabbed.add_child(UiParts.tab_strip(Array(InventoryScreen.FILTERS, TYPE_STRING, "", null), sell_filter, pick_filter, {}, 14))
+	var pane := UiParts.pane(10)
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var inner := VBoxContainer.new()
+	inner.add_theme_constant_override("separation", 6)
+	inner.add_child(_buys_row(hidden))
+	inner.add_child(UiParts.fill_scroll(list))
+	pane.add_child(inner)
+	tabbed.add_child(pane)
+	col.add_child(tabbed)
+	return col
+
+
+## Only what <merchant> buys, lit while it's on, and how many things in this tab it leaves out.
+func _buys_row(hidden: int) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var who := _who()
+	var b := UiParts.small_button("Only what %s buys" % who, func() -> void: set_only_buys(not only_buys))
+	b.name = "OnlyBuys"
+	if only_buys:
+		UiParts.light_up(b)
+		b.tooltip_text = "On: what %s won't buy is hidden. Press to show the whole pack." % who
+	else:
+		b.tooltip_text = "Off: the whole pack shows. Press to hide what %s won't buy." % who
+	row.add_child(b)
+	row.add_child(UiParts.gap())
+	if only_buys and hidden > 0:
+		row.add_child(UiParts.caption("Hiding %d they won't buy" % hidden, 11))
+	return row
+
+
+## What the pack side says when it lists nothing: "No weapons in Kip's pack that Gunther buys."
+func _nothing_to_sell(ch: Character, any_hidden: bool) -> String:
+	var what := "Nothing" if sell_filter == "All" else "No %s" % ("magic items" if sell_filter == "Magic" else sell_filter.to_lower())
+	return "%s in %s's pack%s." % [what, ch.name.get_slice(" ", 0), (" that %s buys" % _who()) if any_hidden else ""]
+
+
+## A filter tab on the pack side (InventoryScreen.FILTERS).
+func pick_filter(f: String) -> void:
+	sell_filter = f
+	_draw()
+
+
+## Only what <merchant> buys, on or off.
+func set_only_buys(on: bool) -> void:
+	only_buys = on
+	_draw()
+
+
+## What the pack side lists now, as item ids in order (for tests and captures).
+func sell_ids() -> Array[String]:
+	return _sell_ids.duplicate()
+
+
+## The merchant as this screen names them: the first name, or the title with it (Father Lucian, Sir Godfrey).
+func _who() -> String:
+	var full := Compendium.shared().display_name("npcs", npc_id)
+	var first := full.get_slice(" ", 0)
+	return "%s %s" % [first, full.get_slice(" ", 1)] if first in TITLES and full.get_slice_count(" ") > 1 else first
 
 
 ## The party's junk this merchant buys: [{ch, e (the inventory entry), offer (each sale), qty (sales: pieces, or whole
@@ -202,7 +306,7 @@ func _junk_button() -> Control:
 	var b := UiParts.small_button("Sell all junk · %d for %s gp" % [count, _money(total)] if count > 0 else "Sell all junk",
 		sell_all_junk, "trade")
 	b.disabled = count == 0
-	var who := Compendium.shared().display_name("npcs", npc_id).get_slice(" ", 0)
+	var who := _who()
 	b.tooltip_text = ("Everything the party marked as junk that %s buys, from every pack (equipped things stay)." % who) if count > 0 \
 		else "Nothing marked as junk that %s buys. Mark things as junk in the inventory." % who
 	return b

@@ -1,7 +1,7 @@
 extends TestCase
 ## What lies past a map's edge (Improvement Ideas W13, docs/art/atmosphere.md "Vistas") and the camera that tilts
 ## up to see it: every outdoor place is on the travel art, its mountains are drawn, Castle Ravenloft stands at its true
-## bearing where it can be seen (never from the castle itself), Lake Zarovich only near the lake; past the farthest
+## bearing where it can be seen (never from the castle itself), or as near it as the tilted camera frames, Lake Zarovich only near the lake; past the farthest
 ## zoom the wheel tilts the camera toward the horizon a step at a time and back, never in Classic, and never when a tool
 ## sets the distance itself.
 
@@ -53,9 +53,11 @@ func test_landmarks_stand_where_they_are() -> void:
 	assert_true(castle != null, "Castle Ravenloft seen from the village")
 	var here := Vista.place_at("village_of_barovia") as Vector2
 	var at := (Vista.config()["castle"] as Dictionary)["at"] as Array
-	var want := (Vector2(float(at[0]), float(at[1])) - here).normalized()
+	var truly := Vector2(float(at[0]), float(at[1])) - here
 	var got := Vector2(castle.position.x - vista.centre.x, castle.position.z - vista.centre.z).normalized()
-	assert_true(got.dot(want) > 0.99, "the castle stands toward its bearing on the travel art")
+	assert_true(got.dot(Vector2.from_angle(Vista.on_skyline(truly, []))) > 0.999,
+		"the castle stands toward its bearing on the travel art, where the tilted camera frames it")
+	assert_true(got.dot(truly.normalized()) > 0.99, "a few degrees from its true bearing at most, from the village")
 	assert_true(vista.get_node_or_null("LakeZarovich") == null, "no lake from the village")
 	v.queue_free()
 	var vallaki := _view("vallaki")
@@ -95,6 +97,105 @@ func test_each_region_has_its_landmarks() -> void:
 		assert_true(shoulder.atmosphere.land.vista.get_node_or_null("Landmark_mount_ghakis") == null,
 			"nor Mount Ghakis from its own slopes")
 	shoulder.queue_free()
+
+
+## The Abbey of St. Markovia from Krezk and the Pool of the White Sun (owner ask, 2026-10-13). It is due north of
+## them on the travel art, and the camera only ever looks along a diagonal, so it was never in view: these maps stand
+## it north-north-east, up the mountain Krezk's track climbs, where the camera's first view tilted to the horizon has
+## all of it in frame, even on a 16:10 screen (the narrowest the game's window keeps its height on). From the
+## waystone down the road it keeps its bearing on the travel art.
+func test_the_abbey_is_seen_from_krezk() -> void:
+	Look.set_style("modern", false)
+	for loc_id: String in ["krezk", "krezk_pool_of_the_white_sun"]:
+		var v := _view(loc_id)
+		var abbey := v.atmosphere.land.vista.get_node_or_null("Landmark_abbey") as MeshInstance3D
+		assert_true(abbey != null, "the Abbey on the horizon from %s" % loc_id)
+		if abbey != null:
+			v.rig.distance = v.rig.zoom_max
+			v.rig.horizon = 1.0
+			v.rig.snap_to_target()
+			var cam := v.rig.camera
+			var half_high := cam.fov / 2.0
+			var half_wide := rad_to_deg(atan(tan(deg_to_rad(half_high)) * 1.6))
+			var size := (abbey.mesh as QuadMesh).size
+			for share: float in [0.5, 1.0]:
+				var at := cam.global_transform.affine_inverse() * (abbey.global_position + Vector3(0, size.y * share, 0))
+				var across := rad_to_deg(absf(atan2(at.x, -at.z))) + rad_to_deg(atan2(size.x / 2.0, -at.z))
+				var up := rad_to_deg(atan2(at.y, -at.z))
+				assert_true(at.z < 0.0 and across < half_wide and absf(up) < half_high,
+					"from %s the camera's first view has the Abbey in frame, %s (%.1f degrees across, %.1f up)" % [
+					loc_id, "its tower" if share > 0.9 else "its middle", across, up])
+		v.queue_free()
+	var road := _view("krezk_road_waystone")
+	var vista := road.atmosphere.land.vista
+	var far_abbey := vista.get_node_or_null("Landmark_abbey") as Node3D
+	assert_true(far_abbey != null, "the Abbey seen from the waystone")
+	if far_abbey != null:
+		var here := Vista.place_at("krezk_road_waystone") as Vector2
+		var at := ((Vista.config()["landmarks"] as Dictionary)["abbey"] as Dictionary)["at"] as Array
+		var want := (Vector2(float(at[0]), float(at[1])) - here).normalized()
+		var got := Vector2(far_abbey.position.x - vista.centre.x, far_abbey.position.z - vista.centre.z).normalized()
+		assert_true(got.dot(want) > 0.99, "from the waystone it stands toward its bearing on the travel art")
+	road.queue_free()
+
+
+## How far `way` (an angle, as Vector2.angle) is from the nearest diagonal, where the tilted camera looks.
+func _off_diagonal(way: float) -> float:
+	var diagonal := floorf(way / (PI / 2.0)) * (PI / 2.0) + PI / 4.0
+	return absf(angle_difference(diagonal, way))
+
+
+func _near(actual: float, expected: float, within: float, msg: String) -> void:
+	assert_between(actual, expected - within, expected + within, msg)
+
+
+## A bearing (degrees clockwise from north) as an angle (Vector2.angle: x east, y south) and back.
+func _angle(bearing: float) -> float:
+	return deg_to_rad(bearing - 90.0)
+
+
+func _bearing(way: float) -> float:
+	return fposmod(rad_to_deg(way) + 90.0, 360.0)
+
+
+## The tilted camera only ever looks along a diagonal (2026-10-13): a landmark due north, east, south or west of a
+## place stands turned into the arc the camera frames round the nearest diagonal, on its own side (Vista.on_skyline),
+## and one that would hide another stands just past it. From Krezk, Mount Baratok (14 degrees east of north on the
+## travel art) stands north-east beside the Abbey; from the Abbey, Krezk stands south-south-west, down its switchback;
+## from the forest road the castle, due south, and the windmill, due north, stand where the camera finds them.
+func test_landmarks_stand_where_the_camera_looks() -> void:
+	var toward := func(bearing: float) -> Vector2: return Vector2.from_angle(_angle(bearing))
+	var none: Array[float] = []
+	_near(_bearing(Vista.on_skyline(toward.call(45.0), none)), 45.0, 0.01, "a way the camera frames is kept")
+	_near(_bearing(Vista.on_skyline(toward.call(3.0), none)), 45.0 - rad_to_deg(Vista.IN_VIEW), 0.01,
+		"a landmark just east of north stands north-north-east")
+	_near(_bearing(Vista.on_skyline(toward.call(357.0), none)), 315.0 + rad_to_deg(Vista.IN_VIEW), 0.01,
+		"one just west of north stands north-north-west")
+	_near(_bearing(Vista.on_skyline(toward.call(181.0), none)), 225.0 - rad_to_deg(Vista.IN_VIEW), 0.01,
+		"one just west of south stands south-south-west")
+	var one: Array[float] = [_angle(45.0)]
+	_near(_bearing(Vista.on_skyline(toward.call(40.0), one)), 45.0 - rad_to_deg(Vista.SPREAD), 0.01,
+		"one that would hide another stands just past it, on the side nearer its own way")
+	var full: Array[float] = [_angle(30.0), _angle(45.0), _angle(60.0)]
+	assert_true(is_nan(Vista.on_skyline(toward.call(45.0), full)), "and none stands where there's no room left")
+	Look.set_style("modern", false)
+	for loc_id: String in ["krezk", "abbey_of_st_markovia", "road_forest"]:
+		var v := _view(loc_id)
+		var vista := v.atmosphere.land.vista
+		for n: Node in vista.get_children():
+			if n.name.begins_with("Landmark_") or n.name == "CastleRavenloft":
+				var at := (n as Node3D).position - vista.centre
+				assert_true(_off_diagonal(Vector2(at.x, at.z).angle()) <= Vista.IN_VIEW + 0.001,
+					"from %s, %s stands where the tilted camera looks" % [loc_id, n.name])
+		var want: Dictionary = {"krezk": ["Landmark_mount_baratok", "Landmark_abbey"],
+			"abbey_of_st_markovia": ["Landmark_krezk"], "road_forest": ["CastleRavenloft", "Landmark_bonegrinder"]}
+		for id: String in want[loc_id] as Array:
+			assert_true(vista.get_node_or_null(id) != null, "from %s, %s is on the skyline" % [loc_id, id])
+		var krezk := vista.get_node_or_null("Landmark_krezk") as Node3D
+		if loc_id == "abbey_of_st_markovia" and krezk != null:
+			var down := krezk.position - vista.centre
+			_near(_bearing(Vector2(down.x, down.z).angle()), 213.0, 0.5, "Krezk down the Abbey's switchback")
+		v.queue_free()
 
 
 ## In play the vistas lie past the camera's far plane; they draw after the screen pass, farthest first.

@@ -1,6 +1,6 @@
 extends Node
-## The camp in the wild (F16, LocationCamp) for captures: made in each place named, in the evening (Thistle wants a
-## word, so her mark shows), then the morning after the night by the fire, then broken.
+## The camp (F16, LocationCamp) for captures: made in each place named (the wild, a town, indoors), in the evening
+## (Thistle wants a word, so her mark shows), then the morning after the night by the fire, then broken.
 ## make capture SCENE=res://tools/capture/camp_capture.tscn NAME=camp FRAMES=40 ARGS="--places=road_forest,lake_zarovich"
 
 var root: Node

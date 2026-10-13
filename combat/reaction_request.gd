@@ -15,6 +15,9 @@ var trigger_id: String
 var title: String = ""
 var text: String = ""
 var cost: String = "Reaction"
+## A short line the prompt shows in red under its title, for what mustn't be missed (owner, 2026-10-13: a Critical Hit
+## on Divine Smite's prompt, which doubles its dice). "" for none.
+var callout: String = ""
 var continuation: Callable
 ## Optional multi-selection for triggered effects; a decision need not spend a Reaction.
 var target_choices: Array[Dictionary] = []

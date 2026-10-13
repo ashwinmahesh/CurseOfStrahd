@@ -5,9 +5,10 @@ extends RefCounted
 ## from the building kit (BuildingKit, docs/art/building_kit.md) in the town's style: Barovian timber framing over
 ## plaster under deep thatch, Vallaki's painted clapboard, Krezk's coursed stone; each face of a house is a module
 ## (braced timbers, a casement with its shutters, a door bay where a door hangs), with corner posts or quoins, a stone
-## footing, a roof with eaves and gables, and a chimney. Lines of wall one square thick are low stone yard walls. A
-## building standing between the camera and the party is cut away: its roof and everything on its walls hide and the
-## walls drop to a low band, like the cut-away interiors.
+## footing, a roof with eaves and gables, and a chimney. Lines of wall one square thick are low stone yard walls. With
+## the catalog's building_kit "cut_away" on (off since 2026-10-13, owner), a building standing between the camera and
+## the party is cut away: its roof and everything on its walls hide and the walls drop to a low band, like the cut-away
+## interiors.
 
 const HOUSE_H := 2.2
 const YARD_WALL_H := 1.0
@@ -110,6 +111,11 @@ static func _border(board: ArenaBoard, c: Vector2i) -> bool:
 	return c.x == 0 or c.y == 0 or c.x == board.grid.width - 1 or c.y == board.grid.depth - 1
 
 
+## A walled town (catalog "town_walls": Krezk): its wall rings it at the map's edge too, not a fringe of forest.
+static func walled(board: ArenaBoard) -> bool:
+	return (SetDressing.catalog().get("town_walls", {}) as Dictionary).has(board.place)
+
+
 ## A low stone yard wall on one square: a post in the middle and an arm toward each neighbouring wall.
 static func yard_wall(board: ArenaBoard, c: Vector2i, stone: Material) -> void:
 	var base := Vector3(c.x + 0.5, 0, c.y + 0.5)
@@ -131,7 +137,8 @@ static func yard_wall(board: ArenaBoard, c: Vector2i, stone: Material) -> void:
 
 ## A yard wall square from the kit: an arm of coursed stone from the middle toward each neighbouring wall or door, and
 ## a capped pier where the wall turns, ends or branches (a straight run is one continuous wall). A town wall (Krezk's)
-## is the taller wall with merlons. One mesh per square, so a prop that takes the square hides it.
+## is the taller wall with merlons. One mesh per square, so a prop that takes the square hides it; a town wall's square
+## fades like a tree when it stands between the camera and the party.
 static func _kit_yard(board: ArenaBoard, c: Vector2i, h: float) -> bool:
 	var style := BuildingKit.style_for(board)
 	if style == "":
@@ -150,21 +157,26 @@ static func _kit_yard(board: ArenaBoard, c: Vector2i, h: float) -> bool:
 		if board.grid.in_bounds(n) and (board.grid.has_flag(n, CombatGrid.WALL) or gates.has(n)):
 			dirs.append(d)
 	var stretch := Basis.from_scale(Vector3(1.0, s, 1.0))
+	# Built about the square's middle and placed there, so fading knows where it stands.
 	var parts: Array = []
 	for d in dirs:
-		parts.append([arm, Transform3D(Basis(Vector3.UP, atan2(-float(d.y), float(d.x))) * stretch, base)])
+		parts.append([arm, Transform3D(Basis(Vector3.UP, atan2(-float(d.y), float(d.x))) * stretch, Vector3.ZERO)])
 	if not (dirs.size() == 2 and dirs[0] == -dirs[1]):
-		parts.append([pier, Transform3D(stretch, base)])
+		parts.append([pier, Transform3D(stretch, Vector3.ZERO)])
 	var half := float(((BuildingKit.manifest()[pier] as Dictionary).get("size", [0.66, 1, 0.66]) as Array)[0]) / 2.0
 	for d in dirs:
 		if gates.has(c + d):
 			# A gate pier at the end of the wall, its face on the gateway.
-			parts.append([pier, Transform3D(stretch, base + Vector3(d.x, 0, d.y) * (0.5 - half))])
+			parts.append([pier, Transform3D(stretch, Vector3(d.x, 0, d.y) * (0.5 - half))])
 	var mi := BuildingKit.merge(parts)
 	if mi == null:
 		return false
 	mi.name = "YardWall"
+	mi.position = base
+	mi.set_meta("on_floor", true)   # (on its square's floor already: ArenaBoard._lift leaves it be)
 	board.add_child(mi)
+	if tall:
+		board.mesh_occluders.append(mi)   # three men high: it would hide the party behind it
 	return true
 
 
@@ -200,7 +212,7 @@ static func palisade(board: ArenaBoard, c: Vector2i, ground: Material) -> bool:
 		board.set_meta("palisade_left", count)
 		_flush_palisade.bind(board).call_deferred()   # in case a border square was drawn some other way (rock)
 	var parts := board.get_meta("palisade_parts") as Array
-	var at := Vector3(c.x + 0.5, 0, c.y + 0.5)
+	var at := Vector3(c.x + 0.5, board.floor_y(c), c.y + 0.5)   # on raised ground too (Vallaki's edge sank its logs)
 	var w := board.grid.width
 	var d := board.grid.depth
 	# The module's rails (its -z) face into the town.
@@ -221,6 +233,7 @@ static func _flush_palisade(board: ArenaBoard) -> void:
 	var mi := BuildingKit.merge(board.get_meta("palisade_parts") as Array)
 	if mi != null:
 		mi.name = "Palisade"
+		mi.set_meta("on_floor", true)   # (made while the last border square is built: not lifted to that one's height)
 		board.add_child(mi)
 	board.remove_meta("palisade_parts")
 
@@ -749,13 +762,17 @@ static func _tri(st: SurfaceTool, a: Vector3, b: Vector3, c: Vector3, n: Vector3
 		st.add_vertex(p)
 
 
-## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others.
+## Cuts away the buildings that hide `focus` (the party's leader) from the camera, and restores the others. Outside,
+## only while the catalog's building_kit "cut_away" is on: the owner turned it off (2026-10-13: "why do buildings
+## shrink down ... when I get near them? Same things with walls. Lets disable this effect"), so town houses and Castle
+## Ravenloft's walls and towers stand; an interior's full-height walls still open the room the party is in (W8).
 static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
+	var outside := bool(BuildingKit.settings().get("cut_away", false))
 	var target := focus + Vector3(0, 0.8, 0)
 	# The parts of an L-shaped building (W7) go down together: one in the way takes the others with it.
 	var joined_hides := {}
 	for b: Dictionary in board.buildings:
-		if b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
+		if outside and b.has("kit") and not (b.get("joined", {}) as Dictionary).is_empty():
 			var aabb := b["aabb"] as AABB
 			if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
 				joined_hides[int(b["group"])] = true
@@ -764,6 +781,8 @@ static func cut_away(board: ArenaBoard, camera_pos: Vector3, focus: Vector3, del
 			continue
 		if b.has("interior"):
 			InteriorWalls.cut(board, b, camera_pos, focus, delta)   # an interior's full-height walls (W8)
+			continue
+		if not outside:
 			continue
 		if b.has("castle"):
 			CastleBuilder.cut(b, camera_pos, focus, delta)   # Castle Ravenloft's walls and towers (W19)

@@ -118,17 +118,35 @@ func entries(section: String, id: String) -> Array:
 	return (_data.get(section, {}) as Dictionary).get(id, []) as Array
 
 
-## The mood for a place: its own entry, else its region's theme (art/audio.json "regions", unless its map theme keeps
-## its own mood there, like a tavern, or the region's theme has no music yet), else its map theme's, else "wilds".
-func mood_for(location_id: String, theme: String) -> String:
+## The mood for a place: its own entry, else its region's later theme once the story has moved on there (`st`, see
+## region_turn), else its region's theme (art/audio.json "regions", unless its map theme keeps its own mood there, like
+## a tavern, or the region's theme has no music yet), else its map theme's, else "wilds".
+func mood_for(location_id: String, theme: String, st: StoryState = null) -> String:
 	var places := _data.get("places", {}) as Dictionary
 	if places.has(location_id):
 		return str(places[location_id])
 	var region := str(Compendium.shared().get_entry("locations", location_id).get("region", ""))
+	var turned := region_turn(region, st)
+	if turned != "":
+		return turned
 	var own := str((_data.get("regions", {}) as Dictionary).get(region, ""))
 	if own != "" and not (_data.get("region_keeps", []) as Array).has(theme) and not entries("music", own).is_empty():
 		return own
 	return str((_data.get("themes", {}) as Dictionary).get(theme, "wilds"))
+
+
+## A region's later theme (art/audio.json "region_turns": the first entry whose StoryConditions `when` holds and whose
+## mood has music), or "" with no story to ask. It covers every place in the region, kept themes too, so the Wizard of
+## Wines' winery hall turns cheerful with its vineyard once Yester Hill is broken (owner, 2026-10-13).
+func region_turn(region: String, st: StoryState) -> String:
+	if st == null:
+		return ""
+	for t: Variant in (_data.get("region_turns", {}) as Dictionary).get(region, []):
+		var turn := t as Dictionary
+		var m := str(turn.get("mood", ""))
+		if not entries("music", m).is_empty() and StoryConditions.check(str(turn.get("when", "")), st):
+			return m
+	return ""
 
 
 ## Crossfades to a mood's music; the same mood keeps playing where it is. A fight's mood starts at the fight's own

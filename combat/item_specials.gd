@@ -82,7 +82,7 @@ func _drink(c: Combatant, p: Dictionary, t: Combatant, id: String) -> CombatResu
 	e.log.add("info", "%s %s %s" % [c.name(), "drinks" if t == c else "gives %s" % t.name(), label], c.id)
 	match id:
 		"drink_field_spell":
-			# The effect of an exploring spell (Detect Thoughts, Clairvoyance, Etherealness): noted on the drinker so the
+			# The effect of an exploring spell (Clairvoyance, Etherealness): noted on the drinker so the
 			# story can read it (`spell:<id>`); in a fight it changes nothing.
 			var fx := Effect.new(label, &"item", str(p["item_id"]))
 			fx.lasting({"kind": "minutes", "amount": int(params.get("minutes", 10))})
@@ -1351,9 +1351,8 @@ func wonder(c: Combatant, p: Dictionary, t: Combatant, point: Vector2) -> Combat
 		return CombatResult.new()
 	if roll <= 20:
 		return _wonder_cast(c, "gust_of_wind", [], at, dir, nums)
-	if roll <= 25:
-		e.log.add("info", "%s hears %s's surface thoughts for a moment (Detect Thoughts)" % [c.name(), target.name()], c.id)
-		return CombatResult.new()
+	if roll <= 25:   # Detect Thoughts in the book, out of the game (Ashwin, 2026-10-13): the 2nd-level mind spell instead
+		return _wonder_cast(c, "mind_spike", [target], at, dir, nums)
 	if roll <= 30:
 		return _wonder_cast(c, "stinking_cloud", [], at, dir, nums)
 	if roll <= 33:

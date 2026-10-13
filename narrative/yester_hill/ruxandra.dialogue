@@ -6,6 +6,16 @@
 cutscene yester_effigy
 if flag.yester_sneaked and not flag.yester_struck_first
 Narrator: The whole crown lies before you: druids swaying in a ring round the black tree, an old woman with both hands pressed to the effigy's chest, and nobody, nobody at all, looking your way.
+# What the effigy is for, heard from cover, so a party that strikes first still knows what it stopped.
+set yester_effigy_known
+Narrator: This close, the hum has words in it, the same three lines sung over and over: Rise, Lord-in-the-Land. Walk east. Tread the ravens' vines into the mud.
+if guest:adrian_martikov
+Adrian [angry]: That's Father's stone in its chest. When they stop singing, that thing gets up and walks to our door.
+elif flag.davian_met
+interject tag:blunt: Davian's stone, in the chest of a mud giant with Strahd's face. When the singing stops, it walks to his door.
+else
+interject tag:curious: Ravens' vines. There's a vineyard east of this hill, the Wizard of Wines. Whatever they're waking means to walk there.
+endif
 * Strike now, while they chant. -> strike_first
 * Step out and speak to her. -> speak
 endif
@@ -31,6 +41,13 @@ else
 Ruxandra: Guests. The hill gets so few guests. Mostly it gets offerings.
 endif
 Ruxandra: You've come for the bird-man's stone. It isn't his now. It's the heart of something better. Listen: you can almost hear it beating.
+# What the effigy is for, said plainly on every talking path.
+set yester_effigy_known
+Ruxandra: The lord in the castle and the land are one, children. We have given him a body of the land to walk in. When the song is done he will stand up, and go east, and put his foot down on the ravens' vines.
+Ruxandra: The bird-people have watched him a long time. They will stop.
+if guest:adrian_martikov
+Adrian: She means my family, in case that wasn't clear. She used to pick our grapes.
+endif
 -> summit_menu
 
 ~ summit_menu
@@ -39,11 +56,23 @@ Ruxandra: You've come for the bird-man's stone. It isn't his now. It's the heart
 * [Religion DC 15] Your lord is a man in a castle. The land never needed his permission to grow. -> rux_religion | rux_scorn
 * [if flag.elvir_story_heard and not flag.elvir_truth_known] A raven-man died on this hill last spring. -> rux_elvir
 * [if not flag.ruxandra_asked_tree] What is that tree? -> rux_tree
+* [if not flag.ruxandra_asked_effigy] Why give it his face? -> rux_effigy
 
 ~ rux_tree
 set ruxandra_asked_tree
 Ruxandra: Older than the castle. It grew from a stake pulled out of something that should have stayed dead, far away and long ago, and the mists carried the seed here, as they carry everything. It drinks. We give it to drink.
 interject class:cleric: That isn't a tree. That's a grave that learned to stand up.
+-> summit_menu
+
+~ rux_effigy
+set ruxandra_asked_effigy
+Ruxandra: Whose else? Every root on this hill drinks in his name. We only gave the earth the shape it already has, and a heart to wake it.
+Ruxandra: A god should have a face, children. Otherwise how would you know whom to thank?
+if name:liriel_dawnsong
+interject name:liriel_dawnsong: She has made a god out of mud, and given it the face of the one man who would let her kneel to it. Dawn forgive her.
+else
+interject tag:pious: She's built a god out of mud and given it the face of the one man who'd let her kneel to it.
+endif
 -> summit_menu
 
 ~ rux_elvir

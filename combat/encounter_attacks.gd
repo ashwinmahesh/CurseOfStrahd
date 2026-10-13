@@ -275,7 +275,9 @@ func attack_situation(c: Combatant, target: Combatant, option: Dictionary) -> Di
 		else:
 			dis.append("target Prone beyond 5 ft")
 	if not melee:
-		var sharp := e.features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"]
+		# Sharpshooter's Long Shots and Firing in Melee are for Ranged weapons: not a spell, nor a melee weapon thrown (a
+		# dagger, a Psychic Blade).
+		var sharp := e.features.has_feat(c, "sharpshooter") and not str(option.get("kind", "")) in ["spell", "thrown"] and not p.thrown
 		if p.normal_range > 0 and dist > p.normal_range and not sharp:
 			dis.append("long range")
 		var melee_ok := sharp or (e.features.has_feat(c, "crossbow_expert") and p.item_id.contains("crossbow")) \
@@ -715,8 +717,9 @@ func _after_hit(st: Dictionary) -> CombatResult:
 		parts[ty] = int(parts.get(ty, 0)) + int(rolled["total"])
 		dmg_text.append("%s %s%s: %s" % [entry["label"], entry["dice"], " ×2 (Critical Hit)" if critical else "", rolled["text"]])
 	var bonus := 0 if replaced else p.damage_bonus.total() + e.features.flat_damage_bonus(c, target, option, st, dmg_text)
+	# Crossbow Expert's Dual Wielding: the modifier stays on a Light crossbow's extra attack (a magic Hand Crossbow too).
 	if bool(opts.get("offhand", false)) and bonus > 0 and not c.creature.has_flag("two_weapon_fighting") \
-			and not (e.features.has_feat(c, "crossbow_expert") and p.item_id == "hand_crossbow"):
+			and not (e.features.has_feat(c, "crossbow_expert") and p.base_item.ends_with("crossbow") and "light" in p.properties):
 		bonus = 0
 		dmg_text.append("Light extra attack: no ability modifier to damage")
 	if bool(opts.get("no_mod", false)) and bonus > 0:

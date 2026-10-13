@@ -1024,42 +1024,48 @@
           "cell": [
             5,
             14
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "ghoul",
           "cell": [
             7,
             14
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "ghoul",
           "cell": [
             9,
             14
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "ghoul",
           "cell": [
             11,
             14
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "ghoul",
           "cell": [
             13,
             14
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "ghoul",
           "cell": [
             4,
             14
-          ]
+          ],
+          "lying": true
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."

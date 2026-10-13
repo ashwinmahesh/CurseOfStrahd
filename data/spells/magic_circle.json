@@ -45,7 +45,39 @@
   "save": "cha",
   "save_success": "none",
   "upcast": {
-    "text": "The duration increases by 1 hour for each slot level above 3."
+    "text": "The duration increases by 1 hour for each slot level above 3.",
+    "durations": [
+      {
+        "slot": 4,
+        "kind": "hours",
+        "amount": 2
+      },
+      {
+        "slot": 5,
+        "kind": "hours",
+        "amount": 3
+      },
+      {
+        "slot": 6,
+        "kind": "hours",
+        "amount": 4
+      },
+      {
+        "slot": 7,
+        "kind": "hours",
+        "amount": 5
+      },
+      {
+        "slot": 8,
+        "kind": "hours",
+        "amount": 6
+      },
+      {
+        "slot": 9,
+        "kind": "hours",
+        "amount": 7
+      }
+    ]
   },
   "tags": [
     "defense"

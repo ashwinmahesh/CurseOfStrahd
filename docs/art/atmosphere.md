@@ -254,6 +254,17 @@ What it sees (`Vista`, built with the land in the Modern finish, placed from `ar
   tower, Yester Hill's stones and tree, Old Bonegrinder's windmill and Van Richten's tower on its island (vistas.json
   `landmarks`). A place sees the nearest four within each one's `within`, never one standing in front of another
   (`Vista.SPREAD`), never its own (closer than `near`: a mountain isn't seen from its slopes).
+- **Where the camera looks.** The tilted camera only ever looks along a diagonal (north-east, north-west, south-west,
+  south-east), and its frame reaches about 24 degrees either side on a 16:10 screen (27 on 16:9), so a landmark due
+  north, east, south or west of a place was never in view. Each landmark and the castle stand where they are when the
+  camera frames them there, else turned into the arc it frames round the nearest diagonal (`Vista.IN_VIEW`, 18
+  degrees either side), on their own side of it; one that would stand in front of another stands just past it while
+  room is left in that arc (`Vista.on_skyline`, 2026-10-13). A landmark's `from` lays a place's own `bearing`, `far`,
+  `height` or `sink` over its numbers where that place's map knows better than the travel art (`Vista.seen_from`):
+  the Abbey, due north of Krezk on the travel art, stands north-north-east of Krezk and the Pool of the White Sun, up
+  the mountain Krezk's track climbs, its crag above the far ridges (owner ask, 2026-10-13; right at Krezk's gate the
+  slope hides it), and Krezk south-south-west of the Abbey, down its switchback, lifted a little (`sink` -3) so its
+  walls and roofs show over the rim of the Abbey's land, which would otherwise hide a village lying below it.
 - **Lake Zarovich** stretching away from the places near it (Vallaki, the lake shore, Van Richten's tower, the
   werewolf den, the Wizard of Wines).
 

@@ -1478,8 +1478,19 @@
         7
       ],
       "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
-      "when": "not guest:lupu",
+      "when": "not guest:lupu and night and quest.the_burgomasters_hound != done and quest.the_burgomasters_hound != sealed",
       "facing": "north"
+    },
+    {
+      "npc": "lupu",
+      "cell": [
+        7,
+        7
+      ],
+      "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
+      "when": "not guest:lupu",
+      "facing": "north",
+      "lying": true
     },
     {
       "npc": "ilarion",
