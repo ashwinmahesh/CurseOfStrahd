@@ -70,9 +70,14 @@ Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never 
 the region's land (forest, marsh, mountain, castle). Where none can be placed, the night is just restless, as the
 rest screen's is. Those waiting at camp keep back from the fight. Afterwards the party can try to sleep again. Each
 group is played to the end eight times by the test autopilot at the lowest level it comes for, with the party as an
-interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest): hard but
-winnable, won and lost at least twice in eight (tests/integration/test_night_visitors.gd; the owner wants fights hard,
-2026-10-12). The wild's groups are played in an open field; the town's in the Village of Barovia and the indoor ones
+interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest), and is
+tuned to be won exactly as often in those eight (seeds 1-8) as the owner set for that level on 2026-10-13: 4 of 8 at
+levels 1-2, 3 at levels 3-5, 2 from level 6 (tests/integration/test_night_visitors.gd, `target_wins`; a timeout would
+count as a loss, and fails the test besides). Groups are played at levels 1, 4 and 7, so they're tuned to 4, 3 and 2
+wins. A change to how fights roll their dice can move a count, so the test allows one win either way (`DRIFT`): it
+fails only when a group drifts by two or more, and then the group needs tuning again. Each group is also tuned to
+cost the party 2 to 3 heroes down per win on average (printed by the test, not asserted, like the other fight series). The wild's groups are
+played in an open field; the town's in the Village of Barovia and the indoor ones
 in the burgomaster's mansion, from the camp the party makes on arriving there.
 
 A full night brings back what a Long Rest does. Then the Narrator says the night's line (CampSite.night_keys:
