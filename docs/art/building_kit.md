@@ -92,7 +92,7 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   the roofs (`cliffs` false) the void is the drop off the roof, the castle's masonry going on down under every square
   beside it.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on; off since the owner's call on 2026-10-13, so the
-  walls stand): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
+  walls stand, and a piece in the way goes see-through like a house, below): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
   party, or of the squares beside it or just past it, squashes down to its foot (1.25, coped) and comes back when it's
   clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
   them (the keep's windows, its crest) hang on their faces and go with them.
@@ -131,7 +131,9 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
 - **Merged.** The walls and the roof are each one mesh, one surface per material (`BuildingKit.merge`), so a village
   costs a few dozen draws, not thousands.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on: the owner turned it off on 2026-10-13, "why do
-  buildings shrink down ... when I get near them? Same things with walls. Lets disable this effect", so houses stand).
+  buildings shrink down ... when I get near them? Same things with walls. Lets disable this effect", so houses stand,
+  and one in the way fades see-through like the trees instead, to 0.6, solid again once clear: `TownBuilder.
+  _see_through`, his pick the same day; the ground is drawn under houses for it).
   A house between the camera and the party squashes down and is replaced by its low band: a ring of wall 0.5 high,
   capped dark like the cut-away interiors, round a floor of boards, with its footing. An interior's full-height walls
   (above) still open the room the party is in.

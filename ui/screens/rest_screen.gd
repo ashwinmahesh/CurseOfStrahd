@@ -521,7 +521,7 @@ func _camp_talks() -> void:
 		var ref := str(talk["ref"])
 		var b := UiKit.button(str(talk["label"]), func() -> void:
 			CampTalk.mark(st, ref)
-			queue_free()
+			_close()   # through the game's close_screen, so it doesn't keep a freed screen open
 			root.call("start_dialogue", ref, ""), 15)
 		UiParts.light_up(b)
 		b.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
