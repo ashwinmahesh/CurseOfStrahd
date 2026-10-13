@@ -38,8 +38,8 @@ func begin_reaction_spell(c: Combatant, spell_id: String) -> bool:
 
 
 ## Whether `c` has a free casting of `spell_id` left (a species' or a feat's spell, once a Long Rest without a slot). A
-## Reaction spell cast that way is still a Reaction (2024), and with no slot spent the one-slot-per-turn rule doesn't
-## touch it (coordinator relay 2026-10-13: Kip's tiefling Hellish Rebuke was never cast once his pact slots were gone).
+## Reaction spell cast that way is still a Reaction (2024; coordinator relay 2026-10-13: Kip's tiefling Hellish Rebuke
+## was never cast once his pact slots were gone).
 func free_casting(c: Combatant, spell_id: String) -> bool:
 	var ch := sp().caster_char(c)
 	return ch != null and ch.resource_left("spell:%s" % spell_id) > 0
@@ -47,16 +47,15 @@ func free_casting(c: Combatant, spell_id: String) -> bool:
 
 ## Pays for the Reaction spell `spell_id`: `slot_choice`, what its prompt picked (a slot level, or -1 for the free
 ## casting), else the free casting when one is left, else the lowest slot. As anywhere else (FieldCasting._offer), a
-## warlock's free casting below its pact level waits until the pact slots are spent. {level: the level it's cast at, 0
-## when nothing paid; free: a free casting}.
+## warlock's free casting below its pact level waits until the pact slots are spent. A slot spent on a Reaction isn't
+## the turn's slot spell (owner, 2026-10-13: Reactions don't count towards the one spell slot a turn), so it leaves
+## cast_slot_spell_this_turn alone. {level: the level it's cast at, 0 when nothing paid; free: a free casting}.
 func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
 	var ch := sp().caster_char(c)
 	if ch == null:
 		return {"level": 0, "free": false}
 	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
-	var levels: Array[int] = []
-	if not c.cast_slot_spell_this_turn:
-		levels = slot_levels(ch, level)
+	var levels := slot_levels(ch, level)
 	if free_casting(c, spell_id) and (slot_choice == -1 or not slot_choice in levels) and (slot_choice == -1 or free_first(c, spell_id)):
 		ch.spend_resource("spell:%s" % spell_id)
 		return {"level": free_level(c, spell_id), "free": true}
@@ -64,7 +63,6 @@ func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
 	if slot == 0:
 		return {"level": 0, "free": false}
 	ch.expend_slot(slot)
-	c.cast_slot_spell_this_turn = true
 	return {"level": slot, "free": false}
 
 
@@ -75,10 +73,10 @@ func free_level(c: Combatant, spell_id: String) -> int:
 
 ## Whether `c`'s free casting of `spell_id` goes before its slots: yes, unless only a Pact Magic slot of a higher level
 ## could pay and one is left (a tiefling warlock's level 1 Hellish Rebuke waits for the pact slots, as FieldCasting
-## offers it), or no slot can be spent this turn.
+## offers it).
 func free_first(c: Combatant, spell_id: String) -> bool:
 	var ch := sp().caster_char(c)
-	if ch == null or c.cast_slot_spell_this_turn:
+	if ch == null:
 		return true
 	var pact_at := ch.pact_only_level(maxi(1, int(_comp().spell_data(spell_id).get("level", 1))))
 	return pact_at == 0 or free_level(c, spell_id) >= pact_at
@@ -139,22 +137,22 @@ func answer_incoming_roll(c: Combatant, test: D20Test, spell_id: String) -> bool
 	return not test.success
 
 
-## `one_slot_rule` false leaves out the rule of one spell slot per turn (can_cast_reaction).
-func incoming_roll_responses(c: Combatant, one_slot_rule: bool = true) -> Array[String]:
+func incoming_roll_responses(c: Combatant) -> Array[String]:
 	var spells := sp()
 	var out: Array[String] = []
 	if spells.caster_char(c) == null:
 		return out
 	for known in spells.caster_char(c).known_spells():
 		var id := str(known["id"])
-		if not id in out and (_comp().spell_data(id).get("roll_response", {}) as Dictionary).has("incoming_natural") and can_cast_reaction(c, id, one_slot_rule):
+		if not id in out and (_comp().spell_data(id).get("roll_response", {}) as Dictionary).has("incoming_natural") and can_cast_reaction(c, id):
 			out.append(id)
 	return out
 
 
-## Whether `c` can cast `spell_id` as a Reaction now. `one_slot_rule` false leaves out the 2024 rule of one spell slot per
-## turn (the turn's slot already spent), for note_slot_rule to tell that one apart.
-func can_cast_reaction(c: Combatant, spell_id: String, one_slot_rule: bool = true) -> bool:
+## Whether `c` can cast `spell_id` as a Reaction now: its slots or a free casting, whatever it cast earlier in the turn.
+## Reactions don't count towards the one spell slot a turn (owner, 2026-10-13: Ratatouille cast a level 3 spell on his
+## turn, then wasn't asked about Shield when an Opportunity Attack hit him on the way out).
+func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	var spells := sp()
 	if spells.caster_char(c) == null or not can_react(c):
 		return false
@@ -163,7 +161,7 @@ func can_cast_reaction(c: Combatant, spell_id: String, one_slot_rule: bool = tru
 		return false
 	var s := _comp().spell_data(spell_id)
 	var free := free_casting(c, spell_id)
-	if str(s.get("automation", "")) == "reference" or (one_slot_rule and c.cast_slot_spell_this_turn and not free) or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
+	if str(s.get("automation", "")) == "reference" or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
 		return false
 	if bool((s.get("components", {}) as Dictionary).get("v", false)):
 		if c.creature.has_flag("speechless"):
@@ -181,27 +179,6 @@ func can_cast_reaction(c: Combatant, spell_id: String, one_slot_rule: bool = tru
 		if ch.slots_left(l) > 0:
 			return true
 	return false
-
-
-## Says in the log when only the 2024 rule of one spell slot per turn keeps a hero from casting the Reaction spells
-## `spell_ids` it would be asked about (owner report 2026-10-13: Ratatouille cast a level 3 spell, then an Opportunity
-## Attack hit him on the way out and Shield wasn't offered). The rule holds on any turn, the hero's own included. Once
-## a turn per hero and list.
-func note_slot_rule(c: Combatant, spell_ids: Array[String]) -> void:
-	var e := enc()
-	if not c.is_player_controlled() or not c.cast_slot_spell_this_turn:
-		return
-	var names: Array[String] = []
-	for sid in spell_ids:
-		if e._reaction_decision(c, sid) != "never" and not can_cast_reaction(c, sid) and can_cast_reaction(c, sid, false):
-			names.append(str(_comp().spell_data(sid)["name"]))
-	if names.is_empty():
-		return
-	var key := "%d:%d:%s" % [e.round_no, e.turn_index, ",".join(names)]
-	if str(c.get_meta("slot_rule_noted", "")) == key:
-		return
-	c.set_meta("slot_rule_noted", key)
-	e.log.add("info", "%s can't cast %s: a spell slot was already spent this turn (one per turn)" % [c.name(), " or ".join(names)], c.id)
 
 
 ## Whether `c` can take a Reaction now (it has one, can act, and nothing stops it: Shocking Grasp, Slow).
@@ -290,8 +267,7 @@ func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> C
 	if not spells.casting_gate(c):
 		return CombatResult.new()
 	if slot > 0:
-		ch.expend_slot(slot)
-		c.cast_slot_spell_this_turn = true
+		ch.expend_slot(slot)   # a Reaction: not the turn's slot spell (pay)
 	var used := ch.use_component(s) if ch != null else ""
 	if used != "":
 		e.log.add("info", "%s uses up %s (%s)" % [c.name(), used, s["name"]], c.id)

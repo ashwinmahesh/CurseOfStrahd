@@ -67,15 +67,13 @@ func answer_reaction(use: bool) -> CombatResult:
 ## Hellish Rebuke's prompt (owner report 2026-10-12: a level 6 warlock's looked like a 1st-level cast): the damage at
 ## each slot level `reactor` could spend, picked on the prompt, the lowest first; a warlock's one pact level is named.
 ## A free casting left (a tiefling's, once a Long Rest) is a pick too ("free"), first unless it waits for the pact slots
-## (SpellReactions.free_first); with a slot already spent this turn it's the only way.
+## (SpellReactions.free_first).
 func _rebuke_levels(req: ReactionRequest, reactor: Combatant) -> void:
 	var e := enc()
 	var ch := reactor.creature as Character
 	if ch == null:
 		return
-	var levels: Array[int] = []
-	if not reactor.cast_slot_spell_this_turn:
-		levels = SpellReactions.slot_levels(ch, 1)
+	var levels := SpellReactions.slot_levels(ch, 1)
 	var rs := e.spells.reaction_spells
 	var free_at := rs.free_level(reactor, "hellish_rebuke") if rs.free_casting(reactor, "hellish_rebuke") else 0
 	if levels.is_empty() and free_at == 0:
@@ -129,8 +127,6 @@ func _queue_damage_reactions(source: Combatant, target: Combatant) -> void:
 	for q in e.reaction_queue:
 		if str(q["reactor"]) == target.id:
 			return
-	var rebuke: Array[String] = ["hellish_rebuke"]
-	e.spells.note_slot_rule(target, rebuke)
 	if e.spells.can_cast_reaction(target, "hellish_rebuke"):
 		e.reaction_queue.append({"kind": "hellish_rebuke", "reactor": target.id, "trigger": source.id})
 	elif CombatFeatures.has_feature(target, "storms_thunder") and (target.creature as Character).resource_left("giant_ancestry") > 0 and e.spells.can_react(target):

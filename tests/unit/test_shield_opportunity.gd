@@ -1,8 +1,9 @@
 extends TestCase
 ## Reactions to being hit when the hit is an Opportunity Attack on the hero's own move (owner report 2026-10-13:
-## Ratatouille wasn't asked about Shield). Shield is asked about there as anywhere; after a spell slot was spent on the
-## same turn the 2024 rule of one slot per turn rules it out, and the log says so. A hit Shield can't turn aside says
-## so in its details. The AI and the autopilot (Automatic rules) cast it too.
+## Ratatouille wasn't asked about Shield, after a level 3 spell earlier in his turn). Shield is asked about there as
+## anywhere, and Reactions don't count towards the turn's one spell slot (owner's house rule, 2026-10-13): a slot spell
+## before it doesn't stop it, and it doesn't stop one after it. A hit Shield can't turn aside says so in its details.
+## The AI and the autopilot (Automatic rules) cast it too.
 
 
 ## A hero at (3, 3) beside a dire wolf at (4, 3), on the hero's turn.
@@ -68,17 +69,44 @@ func test_a_cantrip_first_still_leaves_shield() -> void:
 	_decline_rest(e)
 
 
-func test_after_a_slot_spell_the_log_says_why_shield_isnt_asked_about() -> void:
+## Ratatouille's fight: a slot spell first, then the move away.
+func test_shield_is_asked_about_after_a_slot_spell_earlier_in_the_turn() -> void:
 	var f := _beside_wolf(TestChars.pregen("ratatoille", 9))
 	var e := f["e"] as Encounter
 	var h := f["h"] as Combatant
 	var wolf := f["wolf"] as Combatant
 	assert_true(e.spells.cast(h, "magic_missile", 1, [wolf, wolf, wolf]).ok, "Magic Missile")
 	_decline_rest(e)
+	assert_true(h.cast_slot_spell_this_turn, "the turn's slot spell")
+	var slots := (h.creature as Character).slots_left(1)
 	_wolf_rolls(e, h)
 	e.move(h, Vector2i(0, 3))
-	assert_false(_decline_rest(e).has("shield"), "one slot per turn: no Shield")
-	assert_true(_logged(e, "Ratatouille can't cast Shield: a spell slot was already spent this turn"), "and the log says why")
+	assert_true(e.pending != null and e.pending.kind == "shield", "a Reaction isn't the turn's slot spell: %s" % (e.pending.kind if e.pending != null else "nothing"))
+	if e.pending == null:
+		return
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_true(_logged(e, "casts Shield"))
+	assert_eq((h.creature as Character).slots_left(1), slots - 1)
+
+
+## Shield on the way out first: the turn's slot spell is still there to cast.
+func test_a_slot_spent_on_shield_leaves_the_turns_slot_spell() -> void:
+	var f := _beside_wolf(TestChars.pregen("ratatoille", 9))
+	var e := f["e"] as Encounter
+	var h := f["h"] as Combatant
+	var wolf := f["wolf"] as Combatant
+	_wolf_rolls(e, h)
+	e.move(h, Vector2i(0, 3))
+	assert_true(e.pending != null and e.pending.kind == "shield", "asked")
+	if e.pending == null:
+		return
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_false(h.cast_slot_spell_this_turn, "Shield's slot doesn't count")
+	var r := e.spells.cast(h, "magic_missile", 1, [wolf, wolf, wolf])
+	assert_true(r.ok, "Magic Missile after it: %s" % r.reason)
+	_decline_rest(e)
 
 
 func test_a_hit_shield_cant_turn_aside_says_so_in_its_details() -> void:
@@ -133,19 +161,31 @@ func test_hellish_rebuke_answers_an_opportunity_attack_on_the_warlocks_own_move(
 	assert_false(h.reaction_available)
 
 
-func test_after_a_slot_spell_the_log_says_why_hellish_rebuke_isnt_asked_about() -> void:
+## Hex with a pact slot on his turn, then Hellish Rebuke with the other one on the way out.
+func test_hellish_rebuke_takes_a_pact_slot_after_hex_that_turn() -> void:
 	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
 	var e := f["e"] as Encounter
 	var h := f["h"] as Combatant
 	var wolf := f["wolf"] as Combatant
-	(h.creature as Character).spend_resource("spell:hellish_rebuke")   # the tiefling's free casting is gone
-	var hex := e.spells.cast(h, "hex", int((h.creature as Character).pact_magic()["level"]), [wolf])
+	var ch := h.creature as Character
+	ch.spend_resource("spell:hellish_rebuke")   # the tiefling's free casting is gone
+	var hex := e.spells.cast(h, "hex", int(ch.pact_magic()["level"]), [wolf])
 	assert_true(hex.ok, "Hex with a pact slot: %s" % hex.reason)
 	_decline_rest(e)
+	var pact_left := int(ch.pact_magic()["left"])
 	_wolf_rolls(e, h)
 	e.move(h, Vector2i(0, 3))
-	assert_false(_decline_rest(e).has("hellish_rebuke"), "one slot per turn")
-	assert_true(_logged(e, "Kip Smudgewick can't cast Hellish Rebuke: a spell slot was already spent this turn"))
+	var guard := 0
+	while e.pending != null and e.pending.kind != "hellish_rebuke" and guard < 10:
+		e.answer_reaction(false)
+		guard += 1
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked after Hex")
+	if e.pending == null:
+		return
+	e.answer_reaction(true)
+	_decline_rest(e)
+	assert_eq(int(ch.pact_magic()["left"]), pact_left - 1, "the other pact slot")
+	assert_true(wolf.creature.hp < 200, "the wolf burns")
 
 
 # --- Free castings (coordinator relay 2026-10-13: a Reaction spell never used one) ---------------------------------
@@ -175,33 +215,6 @@ func test_a_free_casting_answers_once_the_slots_are_gone() -> void:
 	assert_true(_logged(e, "answers with Hellish Rebuke (free casting"), "cast for free")
 	assert_eq(ch.resource_left("spell:hellish_rebuke"), 0, "the free casting spent")
 	assert_true(wolf.creature.hp < 200, "the wolf burns")
-
-
-## A free casting spends no slot, so the one-slot-per-turn rule leaves it: after Hex on his turn, it still answers.
-func test_a_free_casting_isnt_held_back_by_the_one_slot_rule() -> void:
-	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
-	var e := f["e"] as Encounter
-	var h := f["h"] as Combatant
-	var wolf := f["wolf"] as Combatant
-	var ch := h.creature as Character
-	assert_true(e.spells.cast(h, "hex", int(ch.pact_magic()["level"]), [wolf]).ok, "Hex with a pact slot")
-	_decline_rest(e)
-	var pact_left := int(ch.pact_magic()["left"])
-	_wolf_rolls(e, h)
-	e.move(h, Vector2i(0, 3))
-	var guard := 0
-	while e.pending != null and e.pending.kind != "hellish_rebuke" and guard < 10:
-		e.answer_reaction(false)
-		guard += 1
-	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked: the free casting is still there")
-	if e.pending == null:
-		return
-	assert_true(e.pending.target_choices.is_empty(), "no slot to pick this turn")
-	e.answer_reaction(true)
-	_decline_rest(e)
-	assert_eq(int(ch.pact_magic()["left"]), pact_left, "no pact slot spent")
-	assert_eq(ch.resource_left("spell:hellish_rebuke"), 0)
-	assert_false(_logged(e, "can't cast Hellish Rebuke"))
 
 
 ## With both, a warlock's prompt lists the pact slot first and picks it: the free casting (level 1) waits for the pact

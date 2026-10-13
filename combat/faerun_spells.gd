@@ -230,9 +230,6 @@ func against_damage(st: Dictionary, parts: Dictionary, total: Callable, cut: Cal
 			"cost": "Reaction and a level 4+ spell slot",
 			"still": func() -> bool: return e.spells.can_cast_reaction(target, "backlash") and int(total.call()) > 0,
 			"use": func() -> void: _backlash(target, source, cut)})
-	elif int(total.call()) > 0:
-		var backlash: Array[String] = ["backlash"]
-		e.spells.note_slot_rule(target, backlash)
 	var ty := ""
 	for k: String in parts:
 		if k in FaerunFeatures.ELEMENTS and int(parts[k]) > 0:

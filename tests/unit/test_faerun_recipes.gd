@@ -458,7 +458,7 @@ func test_prescience_replaces_failed_d20_but_twenty_is_not_automatic_save_succes
 	assert_false(test.success)
 	assert_eq(ch.slots_left(8), slots - 1)
 	assert_false(c.reaction_available)
-	assert_true(c.cast_slot_spell_this_turn)
+	assert_false(c.cast_slot_spell_this_turn, "a Reaction isn't the turn's slot spell (owner's house rule, 2026-10-13)")
 
 func test_prescience_can_turn_critical_hit_into_miss_and_never_policy_is_respected() -> void:
 	var e := TestCombat.open_field()
