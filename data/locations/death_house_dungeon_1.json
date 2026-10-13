@@ -1009,6 +1009,20 @@
             15,
             3
           ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            11,
+            2
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            12,
+            1
+          ]
         }
       ],
       "text": "The crypt was full of something, and now the passage is."
@@ -1140,14 +1154,14 @@
           ]
         },
         {
-          "monster": "shadow",
+          "monster": "rat",
           "cell": [
             1,
             17
           ]
         },
         {
-          "monster": "shadow",
+          "monster": "rat",
           "cell": [
             2,
             17
@@ -1270,9 +1284,16 @@
           ]
         },
         {
-          "monster": "swarm_of_rats",
+          "monster": "giant_rat",
           "cell": [
             10,
+            16
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            11,
             16
           ]
         }
@@ -1392,7 +1413,7 @@
           "name": "A Robed One"
         },
         {
-          "monster": "giant_rat",
+          "monster": "rat",
           "cell": [
             7,
             3

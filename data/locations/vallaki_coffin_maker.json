@@ -297,10 +297,24 @@
           ]
         },
         {
-          "monster": "vampire_spawn",
+          "monster": "ghoul",
           "cell": [
             13,
             8
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            9
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            14,
+            10
           ]
         }
       ],

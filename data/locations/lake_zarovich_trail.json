@@ -414,6 +414,22 @@
             18,
             8
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            4
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            5
+          ],
+          "name": "A Fowler"
         }
       ],
       "surprise": "party",

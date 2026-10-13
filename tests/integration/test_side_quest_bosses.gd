@@ -20,8 +20,11 @@ func test_old_greytooth_with_szoldar_turned_at_level_6() -> void:
 	assert_true(wins >= 4 and wins <= 6, "Greytooth falls in 4 to 6 of 8 (%d)" % wins)
 
 
+## The Bellringer (a wraith), the Lake's Undertow (a water elemental) and twelve of the drowned, four of them ghasts.
 func test_the_drowned_of_pescari_at_level_8() -> void:
-	await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3])
+	speakers_step_aside = true
+	var wins := await _series("lake_zarovich", 23, 8, "drowned_landing", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 4 and wins <= 6, "the drowned fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The whole column, the marshal at 170 HP and his two lieutenants at a wight's full Hit Points.
@@ -103,8 +106,11 @@ func test_the_counts_huntsman_at_level_10() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the huntsman falls in 4 to 6 of 8 (%d)" % wins)
 
 
+## The Gate Warden, four knights who forgot (revenants) and four men-at-arms.
 func test_the_squires_vigil_at_level_8() -> void:
-	await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4], ["godfrey_met", "courtyard_phantoms_defeated"])
+	speakers_step_aside = true
+	var wins := await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4, 5, 6, 7, 8], ["godfrey_met", "courtyard_phantoms_defeated"])
+	assert_true(wins >= 4 and wins <= 6, "the vigil is won in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The Penitent at 480 HP with five shadows. What its fists can't reach it pelts with ice, so a hero fallen on the
@@ -130,8 +136,9 @@ func test_the_penitent_at_level_11() -> void:
 
 ## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
 func test_the_tenant_at_level_2() -> void:
+	speakers_step_aside = true
 	var wins := await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4, 5, 6, 7, 8], [], ["lupu"], ["study_door"])
-	assert_true(wins >= 2 and wins <= 6, "the Tenant falls in 2 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the Tenant falls in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The Wagon at 220 HP and one trinket at level 5.
@@ -148,8 +155,11 @@ func test_the_tinkers_wagon_at_level_6() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the Wagon falls in 4 to 6 of 8 (%d)" % wins)
 
 
+## The Count's fowler, three more fowlers (vampire spawn) and three swarms of bats.
 func test_the_raven_trap_at_level_6() -> void:
-	await _series("lake_zarovich_trail", 22, 6, "raven_trap", [1, 2, 3, 4], ["fowlers_ready"])
+	speakers_step_aside = true
+	var wins := await _series("lake_zarovich_trail", 22, 6, "raven_trap", [1, 2, 3, 4, 5, 6, 7, 8], ["fowlers_ready"])
+	assert_true(wins >= 4 and wins <= 6, "the fowlers fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The sim starts at the road gate; in play the party is already by the pens, inside the open gate.
@@ -181,8 +191,11 @@ func test_corvina_named_at_level_10() -> void:
 	assert_true(wins >= 5 and wins <= 7, "Corvina falls in 5 to 7 of 8 (%d)" % wins)
 
 
+## Five wolves and a rat come for Ilarion on the road.
 func test_ilarions_wolves_at_level_1() -> void:
-	await _series("into_the_mists_road", 9, 1, "ilarion_wolves", [1, 2, 3, 4], ["mists_wolves_resolved"])
+	speakers_step_aside = true
+	var wins := await _series("into_the_mists_road", 9, 1, "ilarion_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["mists_wolves_resolved"])
+	assert_true(wins >= 4 and wins <= 6, "the wolves fall in 4 to 6 of 8 (%d)" % wins)
 
 
 
@@ -190,16 +203,22 @@ func test_ilarions_wolves_at_level_1() -> void:
 const HOARD_MOUTH: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vector2i(12, 9), Vector2i(13, 9)]
 
 
-## The count's keepers at the gate on Ghakis, met coming up the path.
+## The count's keepers at the gate on Ghakis, met coming up the path: eight wights, three revenants and the
+## chain-warden (a helmed horror).
 func test_the_keepers_of_ghakis_at_level_10() -> void:
-	await _series("ghakis_shoulder", 12, 10, "ghakis_keepers", [1, 2, 3, 4], [], [], [],
+	speakers_step_aside = true
+	var wins := await _series("ghakis_shoulder", 12, 10, "ghakis_keepers", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [],
 		[Vector2i(8, 14), Vector2i(9, 14), Vector2i(8, 15), Vector2i(9, 15)])
+	assert_true(wins >= 4 and wins <= 6, "the keepers fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## The vent gallery, through the hot door.
+## The vent gallery, through the hot door: the Vent-Fire (a fire elemental), two burnt keepers (flameskulls) and three
+## keepers (wights).
 func test_the_vent_fire_at_level_10() -> void:
-	await _series("ghakis_lair", 12, 10, "vent_fire", [1, 2, 3, 4], [], [], ["ghakis_hot_door"],
+	speakers_step_aside = true
+	var wins := await _series("ghakis_lair", 12, 10, "vent_fire", [1, 2, 3, 4, 5, 6, 7, 8], [], [], ["ghakis_hot_door"],
 		[Vector2i(17, 17), Vector2i(18, 17), Vector2i(18, 18), Vector2i(19, 17)])
+	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
 
 
 ## Sarkhaza as she is, at her stat block's 200 HP: chained, with her lair, nothing done to her first. The hardest way
@@ -228,8 +247,12 @@ const KHAZAN_STAIR: Array[Vector2i] = [Vector2i(14, 17), Vector2i(15, 17), Vecto
 const KHAZAN_DOORS: Array[String] = ["khazan_study_door_w", "khazan_study_door_e"]
 
 
+## The First and Second Visitors (a banshee and a wraith), five remembered knights (ghosts), five visitors (specters) and
+## two more wraiths.
 func test_the_remembered_at_level_10() -> void:
-	await _series("khazan_undercroft", 12, 10, "remembered", [1, 2, 3, 4], [], [], [], KHAZAN_STAIR)
+	speakers_step_aside = true
+	var wins := await _series("khazan_undercroft", 12, 10, "remembered", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], KHAZAN_STAIR)
+	assert_true(wins >= 4 and wins <= 6, "the remembered fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## While his name stands over the door he's at his strongest (210 HP), and the best the party can do is drive him
@@ -260,8 +283,11 @@ const EYE_CHAMBER: Array[Vector2i] = [Vector2i(17, 11), Vector2i(18, 11), Vector
 const EYE_STAIR: Array[Vector2i] = [Vector2i(25, 21), Vector2i(26, 21), Vector2i(25, 22), Vector2i(26, 22)]
 
 
+## Two woken sleepers (amber golems) and ten dream gazers: 4 of 8, the harder side (with four gazers, 6).
 func test_the_hall_of_sleepers_at_level_10() -> void:
-	await _series("amber_deep", 12, 10, "dreamed_eyes", [1, 2, 3, 4], [], [], [], EYE_STAIR)
+	speakers_step_aside = true
+	var wins := await _series("amber_deep", 12, 10, "dreamed_eyes", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], EYE_STAIR)
+	assert_true(wins >= 4 and wins <= 6, "the sleepers fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The Eye Below as it wakes at 135 HP, its dreams coming out of the walls: the hardest way in.
@@ -303,17 +329,19 @@ func test_the_ash_effigy_at_level_8() -> void:
 const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]
 
 
-## The Dursts come for Veta in her son's crypt, with four of their robed ones: about three wins in eight (the owner's
-## level 3 target, 2026-10-13).
+## The Dursts come for Veta in her son's crypt, with three of their robed ones and a giant rat.
 func test_the_dursts_come_for_veta_at_level_3() -> void:
+	speakers_step_aside = true
 	var wins := await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], WALTERS_CRYPT)
-	assert_true(wins >= 1 and wins <= 5, "the Dursts fall in 1 to 5 of 8 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the Dursts fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## With the Dursts already gone, the robed ones come instead, led by the one who carried Walter down.
+## With the Dursts already gone, the robed ones come instead, led by the one who carried Walter down: six and a rat,
+## 4 of 8, the harder side (without the rat, 6).
 func test_the_robed_ones_come_for_veta_at_level_3() -> void:
+	speakers_step_aside = true
 	var wins := await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4, 5, 6, 7, 8], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)
-	assert_true(wins >= 1 and wins <= 5, "the robed ones fall in 1 to 5 of 8 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the robed ones fall in 4 to 6 of 8 (%d)" % wins)
 
 ## The shore of Lake Zarovich at the foot of the fishers' jetty.
 const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2i(17, 11), Vector2i(18, 11)]
@@ -329,25 +357,43 @@ func test_the_lantern_girl_at_level_5() -> void:
 const HOLLOW_DOOR: Array[Vector2i] = [Vector2i(10, 9), Vector2i(11, 9), Vector2i(12, 9), Vector2i(13, 10)]
 
 
-## The pack's hunters come up the oats at level 2: a werewolf and a wolf.
+## The pack's hunters come up the oats at level 2: a werewolf and two wolves.
 func test_the_oat_hunters_at_level_2() -> void:
+	speakers_step_aside = true
 	var wins := await _series("woodcutters_hollow", 23, 2, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOLLOW_DOOR)
-	assert_true(wins >= 2 and wins <= 6, "the pack's hunters fall in 2 to 6 of 8 at level 2 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the pack's hunters fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## At level 3, three wolves with it.
+## At level 3, four wolves with it.
 func test_the_oat_hunters_at_level_3() -> void:
+	speakers_step_aside = true
 	var wins := await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOLLOW_DOOR)
-	assert_true(wins >= 1 and wins <= 5, "the pack's hunters fall in 1 to 5 of 8 at level 3 (%d)" % wins)
+	assert_true(wins >= 4 and wins <= 6, "the pack's hunters fall in 4 to 6 of 8 (%d)" % wins)
+
+
+## Seen coming up the oats at level 2 (the trail read), a werewolf and three wolves.
+func test_the_oat_hunters_seen_coming_at_level_2() -> void:
+	speakers_step_aside = true
+	var wins := await _series("woodcutters_hollow", 23, 2, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], ["oat_trail_seen"], [], [], HOLLOW_DOOR)
+	assert_true(wins >= 4 and wins <= 6, "the pack's hunters fall in 4 to 6 of 8 (%d)" % wins)
+
+
+## Seen coming at level 3: a werewolf, three wolves and a farm dog run with them.
+func test_the_oat_hunters_seen_coming_at_level_3() -> void:
+	speakers_step_aside = true
+	var wins := await _series("woodcutters_hollow", 23, 3, "oat_hunters", [1, 2, 3, 4, 5, 6, 7, 8], ["oat_trail_seen"], [], [], HOLLOW_DOOR)
+	assert_true(wins >= 4 and wins <= 6, "the pack's hunters fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The roc's nest on the Tsolenka shelf.
 const ROC_NEST: Array[Vector2i] = [Vector2i(33, 15), Vector2i(34, 16), Vector2i(33, 16), Vector2i(34, 17)]
 
 
-## The count's falconer, two of his hands and four stone birds come for the roc's chick.
+## The count's falconer, two of his hands and six stone birds come for the roc's chick.
 func test_the_falconer_at_level_9() -> void:
-	await _series("tsolenka_pass", 12, 9, "last_egg", [1, 2, 3, 4], ["roc_driven_off"], [], [], ROC_NEST)
+	speakers_step_aside = true
+	var wins := await _series("tsolenka_pass", 12, 9, "last_egg", [1, 2, 3, 4, 5, 6, 7, 8], ["roc_driven_off"], [], [], ROC_NEST)
+	assert_true(wins >= 4 and wins <= 6, "the falconer falls in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The studio in Haralamb's house, the four by the stair up from the front room.
@@ -396,16 +442,20 @@ const OLD_DEN: Array[Vector2i] = [Vector2i(12, 12), Vector2i(13, 13), Vector2i(1
 
 ## Two vine blights, five needle blights and four twig blights come for the cub's crying.
 func test_the_den_blights_at_level_3() -> void:
-	await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)
+	speakers_step_aside = true
+	var wins := await _series("tser_woods_den", 14, 3, "den_blights", [1, 2, 3, 4, 5, 6, 7, 8], ["bear_path_known"], [], [], OLD_DEN)
+	assert_true(wins >= 4 and wins <= 6, "the blights fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The barrow slope on Yester Hill, below the druids' cairn of skulls.
 const BARROW_SLOPE: Array[Vector2i] = [Vector2i(28, 16), Vector2i(29, 16), Vector2i(27, 17), Vector2i(28, 17)]
 
 
-## Silverjaw, three barrow-wardens and four of the hill's watch, catching the party unawares.
+## Silverjaw, three barrow-wardens, five of the hill's watch and a ghast, catching the party unawares.
 func test_the_hills_watch_at_level_7() -> void:
-	await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)
+	speakers_step_aside = true
+	var wins := await _series("yester_hill", 22, 7, "hill_watch", [1, 2, 3, 4, 5, 6, 7, 8], ["yester_hill_resolved"], [], [], BARROW_SLOPE)
+	assert_true(wins >= 4 and wins <= 6, "the hill's watch falls in 4 to 6 of 8 (%d)" % wins)
 
 
 ## The ring of glass on Mount Baratok, where the party waits for dusk.
@@ -424,9 +474,12 @@ func test_the_forgotten_storm_at_level_8() -> void:
 const AT_THE_STONE: Array[Vector2i] = [Vector2i(12, 7), Vector2i(14, 7), Vector2i(13, 8), Vector2i(15, 8)]
 
 
-## Four of Kiril's hunters and a wolf come down the road for Lark and Yanko.
+## Four of Kiril's hunters, a dire wolf and two wolves come down the road for Lark and Yanko: 4 of 8, the harder side
+## (with one wolf, 6).
 func test_the_waystone_pack_at_level_6() -> void:
-	await _series("krezk_road_waystone", 23, 6, "waystone_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["waystone_lark_met"], [], [], AT_THE_STONE)
+	speakers_step_aside = true
+	var wins := await _series("krezk_road_waystone", 23, 6, "waystone_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["waystone_lark_met"], [], [], AT_THE_STONE)
+	assert_true(wins >= 4 and wins <= 6, "the pack falls in 4 to 6 of 8 (%d)" % wins)
 
 
 ## By the fire at the goat path camp, where the guide pours the tea.
@@ -446,16 +499,20 @@ const ON_THE_SHINGLE: Array[Vector2i] = [Vector2i(11, 11), Vector2i(12, 12), Vec
 
 ## The Boatmaster, two veteran boatmen, four toughs and something in the reeds.
 func test_the_reed_isle_boatmen_at_level_5() -> void:
-	await _series("zarovich_reed_island", 22, 5, "reed_isle_boatmen", [1, 2, 3, 4, 5, 6, 7, 8], ["reed_isle_met"], [], [], ON_THE_SHINGLE)
+	speakers_step_aside = true
+	var wins := await _series("zarovich_reed_island", 22, 5, "reed_isle_boatmen", [1, 2, 3, 4, 5, 6, 7, 8], ["reed_isle_met"], [], [], ON_THE_SHINGLE)
+	assert_true(wins >= 4 and wins <= 6, "the boatmen fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## Behind the Grey Goose's counter, by the trapdoor.
 const BEHIND_THE_COUNTER: Array[Vector2i] = [Vector2i(14, 8), Vector2i(15, 8), Vector2i(16, 8), Vector2i(13, 8)]
 
 
-## The innkeeper's wife and son, and the cellar's rats, at level 2.
+## The innkeeper's wife and son, and the cellar's rats (four giant, two not), at level 2.
 func test_the_grey_goose_cellar_at_level_2() -> void:
-	await _series("svalich_roadhouse", 23, 2, "roadhouse_cellar", [1, 2, 3, 4, 5, 6, 7, 8], ["roadhouse_innkeeper_met"], [], [], BEHIND_THE_COUNTER)
+	speakers_step_aside = true
+	var wins := await _series("svalich_roadhouse", 23, 2, "roadhouse_cellar", [1, 2, 3, 4, 5, 6, 7, 8], ["roadhouse_innkeeper_met"], [], [], BEHIND_THE_COUNTER)
+	assert_true(wins >= 4 and wins <= 6, "the cellar is cleared in 4 to 6 of 8 (%d)" % wins)
 
 
 ## Under the ledge in the Webbed Gully, where Tsura hangs in the web.
@@ -464,7 +521,17 @@ const UNDER_THE_LEDGE: Array[Vector2i] = [Vector2i(12, 4), Vector2i(13, 5), Vect
 
 ## Three giant spiders and two swarms of spiderlings, catching the party unawares.
 func test_the_webbed_gully_at_level_3() -> void:
-	await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
+	speakers_step_aside = true
+	var wins := await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], UNDER_THE_LEDGE)
+	assert_true(wins >= 4 and wins <= 6, "the spiders fall in 4 to 6 of 8 (%d)" % wins)
+
+
+## With the web read first the party isn't caught unawares, and a bat comes down with the spiders: 4 of 8, the
+## harder side (without it, 7).
+func test_the_webbed_gully_read_first_at_level_3() -> void:
+	speakers_step_aside = true
+	var wins := await _series("ivlis_spider_gully", 12, 3, "gully_spiders", [1, 2, 3, 4, 5, 6, 7, 8], ["gully_web_read"], [], [], UNDER_THE_LEDGE)
+	assert_true(wins >= 4 and wins <= 6, "the spiders fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## By the fold on the high pasture, below the mists.
@@ -473,7 +540,9 @@ const AT_THE_FOLD: Array[Vector2i] = [Vector2i(10, 12), Vector2i(11, 12), Vector
 
 ## Six wolves out of the mists at level 1.
 func test_the_mist_wolves_at_level_1() -> void:
-	await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)
+	speakers_step_aside = true
+	var wins := await _series("barovia_high_pasture", 18, 1, "pasture_wolves", [1, 2, 3, 4, 5, 6, 7, 8], ["pasture_erno_met"], [], [], AT_THE_FOLD)
+	assert_true(wins >= 4 and wins <= 6, "the wolves fall in 4 to 6 of 8 (%d)" % wins)
 
 
 ## By the catalogue desk in the middle of the Drowned Library.

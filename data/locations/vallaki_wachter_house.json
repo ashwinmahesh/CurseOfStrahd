@@ -467,7 +467,7 @@
       "trigger": "enter_area:cellar",
       "waiting": true,
       "when": "night and flag.vallaki_pledge != \"wachter\" and not flag.wachter_cult_broken and not flag.festival_climax and level >= 5",
-      "text": "Seven heads turn from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
+      "text": "Every head in the cellar turns from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'",
       "monsters": [
         {
           "monster": "tough",
@@ -749,6 +749,36 @@
             18,
             12
           ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            8
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            9
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            17,
+            9
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            8
+          ]
         }
       ],
       "surprise": "",
@@ -792,6 +822,30 @@
             22,
             8
           ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            8
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            9
+          ],
+          "name": "The Master's Gaze"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            9
+          ],
+          "name": "The Master's Gaze"
         }
       ],
       "surprise": "",

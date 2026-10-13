@@ -3,8 +3,8 @@ extends TestCase
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
 ## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
 ## Rest benefits. Every fight finishes, and each group is tuned to be won exactly as often in the eight as the owner
-## wants for the level it's played at (2026-10-13, target_wins): 4 of 8 at levels 1-2, 3 at levels 3-5, 2 from level 6.
-## The test allows one win either way (DRIFT), so a change to dice or the autopilot elsewhere doesn't turn it red; a
+## wants (2026-10-13 18:05, target_wins): 5 of 8 at every level, for the sharp autopilot that smites, opens with Spirit
+## Guardians and throws Fireball as he plays. The test allows one win either way (DRIFT), so a change to dice or the autopilot elsewhere doesn't turn it red; a
 ## group off by two or more needs tuning again. Each is also tuned so the party pays for its wins: 2 to 3 heroes down
 ## per win on average (the owner's rule), printed with each group but not asserted, as the other fight series
 ## (FightSeriesCase) do. The wild's
@@ -17,10 +17,10 @@ const FIELD := "test_night_field"
 const PLACES := {"town": "village_of_barovia", "indoors": "burgomaster_mansion"}
 
 
-## How many of seeds 1-8 the party should win against a group played at `level` (the owner, 2026-10-13: harder as the
-## party grows): 4 at levels 1-2, 3 at levels 3-5, 2 from level 6.
-static func target_wins(level: int) -> int:
-	return 4 if level <= 2 else (3 if level <= 5 else 2)
+## How many of seeds 1-8 the party should win against a group played at `level` (the owner, 2026-10-13 18:05: 5 in 8 on
+## Balanced at every level, for the sharp autopilot).
+static func target_wins(_level: int) -> int:
+	return 5
 
 
 ## How far a group's wins may drift from target_wins before the test fails (the coordinator, 2026-10-13): each group is

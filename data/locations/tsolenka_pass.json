@@ -931,14 +931,16 @@
           "cell": [
             29,
             12
-          ]
+          ],
+          "name": "A Stone Bird"
         },
         {
           "monster": "gargoyle",
           "cell": [
             29,
             13
-          ]
+          ],
+          "name": "A Stone Bird"
         }
       ],
       "surprise": "",

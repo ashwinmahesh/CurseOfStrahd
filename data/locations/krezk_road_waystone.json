@@ -213,6 +213,20 @@
             16,
             13
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            21,
+            2
+          ]
         }
       ]
     }

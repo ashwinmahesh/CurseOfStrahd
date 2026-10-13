@@ -408,7 +408,7 @@
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "mastiff",
           "cell": [
             6,
             14
@@ -506,13 +506,6 @@
             6,
             13
           ]
-        },
-        {
-          "monster": "wolf",
-          "cell": [
-            6,
-            14
-          ]
         }
       ],
       "surprise": "",
@@ -547,13 +540,6 @@
           "cell": [
             8,
             14
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            6,
-            13
           ]
         }
       ],

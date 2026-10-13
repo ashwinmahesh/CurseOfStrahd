@@ -1,8 +1,9 @@
 extends FightSeriesCase
 ## Vallaki's fights scaled up for 2024 heroes (owner, 2026-10-13: the book's fights were written for weaker characters).
-## Over seeds 1-8 the four pregens on autopilot at level 5, standing where walking in or talking sets each fight off, win
-## about three in eight (his target for levels 3 to 5). Whoever starts a fight by talking steps aside, as the
-## conversation does in play. The named fights (Izek, the Count's likeness) are held in test_scaled_boss_fights.gd.
+## Over seeds 1-8 the four pregens at level 5 on the sharp autopilot (smiting, opening with Spirit Guardians, throwing
+## Fireball, as he plays), standing where walking in or talking sets each fight off, win five in eight on Balanced, give
+## or take one (his target, 2026-10-13 18:05). Whoever starts a fight by talking steps aside, as the conversation does in
+## play. The named fights (Izek, the Count's likeness) are held in test_scaled_boss_fights.gd.
 
 
 ## The festival on the square; the gate and the street for the Ribbons; the graveyard and the lane for the Roses.
@@ -25,11 +26,11 @@ func before_each() -> void:
 	speakers_step_aside = true
 
 
-## Wins over seeds 1-8 at level 5 between 1 and 5 (target 3).
+## Wins over seeds 1-8 at level 5 between 4 and 6 (target 5).
 func _held(location: String, hour: int, encounter: String, at: Array[Vector2i], flags: Array[String] = []) -> void:
 	var wins := await _series(location, hour, 5, encounter, SEEDS, flags, [], [], at)
-	assert_true(wins >= 1, "%s is won at least once in 8 (%d)" % [encounter, wins])
-	assert_true(wins <= 5, "%s is lost at least three times in 8 (%d)" % [encounter, wins])
+	assert_true(wins >= 4, "%s is won at least four times in 8 (%d)" % [encounter, wins])
+	assert_true(wins <= 6, "%s is lost at least twice in 8 (%d)" % [encounter, wins])
 
 
 func test_the_festival_coup() -> void:
@@ -66,6 +67,13 @@ func test_the_siege_of_st_andrals() -> void:
 
 func test_stellas_shadow() -> void:
 	await _held("vallaki_wachter_house", 14, "stella_shadow", STELLAS_ROOM, ["stella_bound_known", "stella_met"])
+
+
+## A level later the Master looks out of more of them: four wraiths and six shadows.
+func test_stellas_shadow_at_level_6() -> void:
+	var wins := await _series("vallaki_wachter_house", 14, 6, "stella_shadow", SEEDS, ["stella_bound_known", "stella_met"],
+		[], [], STELLAS_ROOM)
+	assert_true(wins >= 4 and wins <= 6, "stella_shadow at level 6 is won 4 to 6 times in 8 (%d)" % wins)
 
 
 func test_the_cult_in_the_wachters_cellar() -> void:

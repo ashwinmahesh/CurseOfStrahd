@@ -1728,7 +1728,7 @@
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "zombie",
           "cell": [
             16,
             9
@@ -2050,38 +2050,10 @@
           ]
         },
         {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            11
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            9,
-            10
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            13
-          ]
-        },
-        {
           "monster": "needle_blight",
           "cell": [
             4,
             13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            12
           ]
         }
       ],
@@ -2398,6 +2370,13 @@
           "cell": [
             22,
             13
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            20,
+            12
           ]
         }
       ],

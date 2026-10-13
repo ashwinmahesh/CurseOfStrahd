@@ -588,26 +588,12 @@
           "name": "A Siege-Winter Servant"
         },
         {
-          "monster": "swarm_of_rats",
-          "cell": [
-            2,
-            4
-          ]
-        },
-        {
           "monster": "ghoul",
           "cell": [
             3,
             3
           ],
           "name": "A Siege-Winter Servant"
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            3,
-            5
-          ]
         }
       ],
       "surprise": "",
@@ -644,7 +630,7 @@
           "name": "A Siege-Winter Servant"
         },
         {
-          "monster": "ghoul",
+          "monster": "zombie",
           "cell": [
             2,
             3
