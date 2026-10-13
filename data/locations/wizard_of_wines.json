@@ -964,7 +964,8 @@
           "cell": [
             22,
             18
-          ]
+          ],
+          "hp": 135
         },
         {
           "monster": "needle_blight",
@@ -1080,7 +1081,8 @@
           "cell": [
             22,
             18
-          ]
+          ],
+          "hp": 100
         },
         {
           "monster": "needle_blight",
@@ -1182,7 +1184,7 @@
             22,
             18
           ],
-          "hp": 60
+          "hp": 50
         },
         {
           "monster": "needle_blight",

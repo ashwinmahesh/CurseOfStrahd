@@ -482,14 +482,6 @@
             10,
             1
           ]
-        },
-        {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            13,
-            6
-          ]
         }
       ],
       "surprise": "",
@@ -592,13 +584,6 @@
             13,
             6
           ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            4,
-            9
-          ]
         }
       ],
       "surprise": "",
@@ -625,7 +610,7 @@
             5
           ],
           "name": "The Mash",
-          "hp": 140
+          "hp": 155
         },
         {
           "monster": "vine_blight",
