@@ -284,10 +284,14 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			var wait := RestRules.item_rest_refusal(st)
 			if wait != "":
 				return {"ok": false, "text": wait, "lines": []}
-			# The same Long Rest as anywhere else (LongRest.finish): the guests, the miles walked, the spells cast on waking.
-			var woke := LongRest.finish(st, dice)
+			# The same Long Rest as anywhere else (LongRest.take_safe): the guests, the miles walked, the spells cast on
+			# waking, and Strahd's visit that may come to blows before them (`held`: the rest goes on once he's gone).
+			var res := LongRest.take_safe(st, dice)
+			if str(res["how"]) == LongRest.STRAHD:
+				return {"ok": true, "effect": "long_rest", "held": true, "minutes": int(res["minutes"]),
+					"text": "%s: the party beds down in safety. %s" % [label, res["text"]]}
 			var said := "%s: the party rests in perfect safety and wakes refreshed." % label
-			return {"ok": true, "effect": "long_rest", "text": " ".join([said] + woke)}
+			return {"ok": true, "effect": "long_rest", "minutes": int(res["minutes"]), "text": " ".join([said] + (res["lines"] as Array))}
 		"oil_of_sharpness":
 			var weapon := str(opts.get("choice", ""))
 			if weapon == "":
