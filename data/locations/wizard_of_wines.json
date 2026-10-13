@@ -1102,13 +1102,6 @@
         {
           "monster": "vine_blight",
           "cell": [
-            20,
-            16
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
             25,
             20
           ]
@@ -1182,6 +1175,21 @@
             20,
             24
           ]
+        },
+        {
+          "monster": "tree_blight",
+          "cell": [
+            22,
+            18
+          ],
+          "hp": 60
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            18,
+            24
+          ]
         }
       ],
       "surprise": "party",
@@ -1198,7 +1206,8 @@
           "cell": [
             27,
             26
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "vine_blight",
@@ -1304,7 +1313,8 @@
           "cell": [
             27,
             26
-          ]
+          ],
+          "hp": 212
         },
         {
           "monster": "vine_blight",
@@ -1396,7 +1406,7 @@
             27,
             26
           ],
-          "hp": 195
+          "hp": 215
         },
         {
           "monster": "vine_blight",
@@ -1446,6 +1456,13 @@
             28,
             22
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            38,
+            26
+          ]
         }
       ],
       "surprise": "",
@@ -1466,19 +1483,12 @@
             27,
             26
           ],
-          "hp": 110
+          "hp": 87
         },
         {
           "monster": "vine_blight",
           "cell": [
             26,
-            22
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            36,
             22
           ]
         },
