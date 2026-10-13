@@ -46,3 +46,45 @@ func test_a_map_that_falls_away_has_a_drop_past_its_empty_squares() -> void:
 	assert_true(AtmosphereLand.has_drop("tser_falls"))
 	assert_false(AtmosphereLand.has_drop("krezk"), "Krezk's empty squares are hillside")
 	assert_false(AtmosphereLand.has_drop(""))
+
+
+## Owner report (2026-10-13): "The Abbey walls start high in the air." On every map with natural ground, what a wall
+## square draws stands on that square's ground: the Abbey's and Argynvostholt's walls on their shelves, Barovia's yard
+## walls, the Amber Temple's walls by its doors (all lifted onto their hills twice), not floating over it or sunk in it.
+func test_walls_stand_on_raised_ground() -> void:
+	var problems: Array[String] = []
+	for loc: String in (Compendium.shared().tables["locations"] as Dictionary).keys():
+		var map := Compendium.shared().get_entry("locations", loc).get("map", {}) as Dictionary
+		if (map.get("elevation", []) as Array).is_empty() or str(map.get("theme", "")) in ArenaBoard.WILD:
+			continue   # (the wilds' walls are trees and rocks, which stand on their hills: test_elevation_board)
+		var v := LocationView.create(loc, GameState.story, null, Dice.roller, "default")
+		add_child(v)
+		await get_tree().process_frame
+		var off := 0
+		var sample := ""
+		for c: Vector2i in v.board.dressing:
+			if not v.grid.has_flag(c, CombatGrid.WALL) or v.board.house_cells.has(c) or not v.grid.has_flag(c, CombatGrid.NATURAL):
+				continue
+			for n: Node3D in v.board.dressing[c] as Array:
+				if not n.is_visible_in_tree() or n.has_meta("nature") or n.has_meta("terrain") \
+						or not Rect2(c.x, c.y, 1, 1).has_point(Vector2(n.global_position.x, n.global_position.z)):
+					continue   # (the wall over a doorway beside it stands on the doorway's square, from door height)
+				var box := AABB()
+				var first := true
+				for g: Node in [n] + n.find_children("*", "GeometryInstance3D", true, false):
+					var gi := g as GeometryInstance3D
+					if gi == null or not gi.is_visible_in_tree():
+						continue
+					box = gi.global_transform * gi.get_aabb() if first else box.merge(gi.global_transform * gi.get_aabb())
+					first = false
+				if first or box.size.y < 0.4:
+					continue
+				var d := box.position.y - v.board.floor_y(c)
+				if d > 0.3 or d < -0.6:
+					off += 1
+					sample = "%s %+.1f" % [c, d]
+		if off > 0:
+			problems.append("%s: %d wall pieces off their ground (%s)" % [loc, off, sample])
+		v.queue_free()
+		await get_tree().process_frame
+	assert_eq(problems, [] as Array[String], "walls on their ground")
