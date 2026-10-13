@@ -7,7 +7,8 @@ extends RefCounted
 ## could make this turn — each visible, standing enemy, from each square it could reach — by expected damage
 ## (hit chance with every Advantage source, cover and Pack Tactics included), a bonus for finishing a foe, and a
 ## penalty for the Opportunity Attacks the path would provoke. The best plan is a move then an attack; with no
-## attack in reach it Dashes toward its best target. Behavior profiles (monster data "ai_profile") weigh this:
+## attack in reach it Dashes toward its best target, and a foe cut off from every enemy for two turns leaves the
+## fight (AiTactics.stranded_turn). Behavior profiles (monster data "ai_profile") weigh this:
 ##   pack_hunter: wolves. Loves Pack Tactics and wounded prey, avoids Opportunity Attacks.
 ##   brute:       goes for the biggest hit, shrugs off Opportunity Attacks.
 ##   mindless:    zombies. Shambles at the nearest enemy, ignores everything else.
@@ -271,6 +272,10 @@ func finish_turn(c: Combatant, thought: Dictionary) -> CombatResult:
 		if cr.ok or cr.is_paused():
 			return e.then(cr, func() -> CombatResult: return _after_main(c))
 	last_plan = plan
+	# Cut off from every enemy turn after turn: it gives up the fight (combat/ai/ai_tactics.gd).
+	var stranded: Variant = tactics.stranded_turn(c, plan)
+	if stranded != null:
+		return stranded as CombatResult
 	match str(plan["kind"]):
 		"attack":
 			if bool(plan.get("finish", false)):

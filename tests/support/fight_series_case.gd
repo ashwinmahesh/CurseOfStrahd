@@ -5,6 +5,10 @@ extends TestCase
 ## per the owner's standing rule).
 
 var root: Node
+## Whether a fight a conversation starts has its speakers step aside first, as the conversation does (step_aside). Off,
+## they stand on the board and block their squares, as the series were measured before 2026-10-13 (fight stalls lane):
+## a lane re-measuring its fights turns it on.
+var speakers_step_aside := false
 
 
 func after_each() -> void:
@@ -47,6 +51,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	var v := root.get("view") as LocationView
 	# A party set down inside a fight's trigger area sets it off as it arrives; otherwise it starts here.
 	var started := str((GameState.story.loc_state(location)["encounters"] as Dictionary).get(encounter, "")) == "started"
+	if not started and speakers_step_aside:
+		step_aside(v, encounter)
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)
 	await _frames(2)
 	var e := v.combat_view.e
@@ -59,6 +65,21 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	root = null
 	await _frames(2)
 	return res
+
+
+## The people whose conversation ends in `encounter` step aside before it starts, as they do when it ends in the fight
+## (LocationNpcs.hide_npcs_of): left standing, their squares block the fight (the lead wolf's plugged the narrows on the
+## Old Svalich Road, so the last wolf of the pack could neither reach the party nor be reached).
+static func step_aside(v: LocationView, encounter: String) -> void:
+	for n: Variant in v.loc.get("npcs", []):
+		var ref := str((n as Dictionary).get("dialogue", ""))
+		var file := DialogueFile.load_key(ref.substr(0, ref.rfind(":"))) if ref.contains(":") else null
+		if file == null:
+			continue
+		for node: String in file.nodes:
+			for st: Dictionary in file.nodes[node]:
+				if str(st.get("t", "")) == "combat" and str(st.get("encounter", "")) == encounter:
+					LocationNpcs.hide_npcs_of(v, ref)
 
 
 ## Plays `encounter` once per seed: every fight finishes and at least one is won. Returns the wins, for a test that

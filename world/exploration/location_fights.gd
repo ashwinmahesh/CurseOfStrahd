@@ -371,13 +371,15 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := LocationView.grid_for(view.loc)
 	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
 	g.ceiling_ft = int(view.loc["map"].get("ceiling_ft", 0 if bool(view.loc["map"].get("outdoors", false)) else 20))
-	for d: Variant in view.loc.get("doors", []):
-		var door := d as Dictionary
-		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
-	# A bystander's square blocks in the fight, unless one of the party stands in it (nobody blocks outside fights).
 	var party_at := {}
 	for m in view.members + view.guest_members:
 		party_at[m.cell] = true
+	# A shut door is a wall, unless one of the party stands in its doorway (holding it open: BattleScenery.for_location).
+	for d: Variant in view.loc.get("doors", []):
+		var door := d as Dictionary
+		var cell := LocationView._cell(door["cell"])
+		g.set_flag(cell, CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN and not party_at.has(cell))
+	# A bystander's square blocks in the fight, unless one of the party stands in it (nobody blocks outside fights).
 	for npc: String in view.npc_tokens:
 		var at := (view.npc_tokens[npc] as CombatToken).combatant.cell
 		if (view.npc_tokens[npc] as CombatToken).visible and not party_at.has(at):

@@ -99,6 +99,37 @@ func test_enemy_turns_play_and_prompts_wait() -> void:
 	assert_true(attacked, "enemies attacked")
 
 
+## A foe standing on a body (Scale up book battles, 2026-10-13: the last wolf of a pack on a dead one's square) is what a
+## click on that square picks: the body is an object, and the living foe is struck.
+func test_a_click_on_a_foe_standing_on_a_body_attacks_it() -> void:
+	await _until_player_turn()
+	var e := _enc()
+	assert_eq(e.state, Encounter.State.ACTIVE)
+	var c := e.current()
+	var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down())
+	var body := foes[0] as Combatant
+	var live := foes[1] as Combatant
+	var spot := Vector2i(-1, -1)
+	for d: Vector2i in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+		var cell := c.cell + d
+		if e.grid.in_bounds(cell) and not e.grid.is_solid(cell) and e.occupant_at(cell) == null:
+			spot = cell
+			break
+	assert_true(spot.x >= 0, "a free square beside %s" % c.name())
+	body.cell = spot
+	body.creature.hp = 0
+	body.creature.dead = true
+	live.cell = spot
+	live.creature.name = "The One Standing"
+	_v().set("hover_cell", spot)
+	_v().set("hover_token", null)
+	assert_eq((_v().call("_target_under") as CombatToken).combatant, live, "the click picks the living foe")
+	_v().call("_confirm_at")
+	await _frames(40)
+	assert_true(e.log.texts().any(func(t: String) -> bool: return t.contains("The One Standing") and (t.contains(" hits ") or t.contains(" misses "))),
+		"%s attacked it" % c.name())
+
+
 func test_end_turn_asks_only_with_the_action_unused() -> void:
 	await _until_player_turn()
 	var e := _enc()
