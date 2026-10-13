@@ -183,6 +183,10 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		c.magic_action_used = true
 	if not spells.casting_gate(c):
 		return CombatResult.new()
+	# A foe's Counterspell: Subtle Spell leaves nothing to see unless the spell has a Material component.
+	var comps := s.get("components", {}) as Dictionary
+	if spells.reaction_spells.counterspelled(c, s, not "subtle" in meta or bool(comps.get("m", false))):
+		return CombatResult.new()
 	# A cantrip cast through a feature's uses (Spellfire Spark's Bonus Action Sacred Flame) still spends one.
 	if level == 0 and not resource_recipe.is_empty():
 		ch.spend_resource(str(resource_recipe["resource"]), int(resource_recipe["cost"]))
@@ -353,6 +357,8 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		c.magic_action_used = true
 	var tgt := check["targets"] as Array[Combatant]
 	if not spells.casting_gate(c):
+		return CombatResult.new()
+	if spells.reaction_spells.counterspelled(c, s):
 		return CombatResult.new()
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
