@@ -62,7 +62,8 @@ func ready_spell(c: Combatant, spell_id: String, slot: int, trigger: String = "a
 	var ch := c.creature as Character
 	var level := int(s.get("level", 0))
 	if level > 0:
-		slot = maxi(slot, level)
+		# A warlock readies it at the pact level, as it would cast it (owner, 2026-10-13).
+		slot = maxi(slot, level) if ch.pact_only_level(level) == 0 else ch.pact_only_level(level)
 		if ch.slots_left(slot) <= 0:
 			return CombatResult.fail("No level %d slots left" % slot)
 	e.spend_action(c)
