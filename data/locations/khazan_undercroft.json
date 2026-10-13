@@ -751,7 +751,7 @@
       "flag": "khazan_withdrawn",
       "withdraw": {
         "who": "khazan",
-        "at_hp_below": 60,
+        "at_hp_below": 30,
         "flag": "khazan_withdrawn"
       },
       "quest": {
@@ -827,6 +827,30 @@
             3
           ],
           "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            3,
+            2
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "A Visitor"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            3,
+            6
+          ],
+          "name": "A Remembered Knight"
         }
       ],
       "lair": false,

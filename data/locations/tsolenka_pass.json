@@ -628,7 +628,8 @@
           "cell": [
             9,
             18
-          ]
+          ],
+          "hp": 600
         },
         {
           "monster": "ghast",
@@ -691,6 +692,22 @@
           "cell": [
             6,
             23
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            13,
+            18
+          ],
+          "name": "A Pilgrim's Shadow"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            13,
+            19
           ],
           "name": "A Pilgrim's Shadow"
         }
@@ -767,7 +784,8 @@
           "cell": [
             9,
             18
-          ]
+          ],
+          "hp": 420
         },
         {
           "monster": "ghast",

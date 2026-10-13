@@ -117,6 +117,20 @@ func test_the_penitent_at_level_10() -> void:
 	assert_true(wins >= 1 and wins <= 3, "the Penitent falls in 1 to 3 of 8 (%d)" % wins)
 
 
+## Level 9: the Penitent at 420 HP with four shadows; level 11 at 600 with ten (1 of 8, the harder side of the owner's
+## 2: at 600 with eight she falls in 3, and more Hit Points don't move it).
+func test_the_penitent_at_level_9() -> void:
+	speakers_step_aside = true
+	var wins := await _series("tsolenka_pass", 20, 9, "the_penitent", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 3, "the Penitent falls in 1 to 3 of 8 (%d)" % wins)
+
+
+func test_the_penitent_at_level_11() -> void:
+	speakers_step_aside = true
+	var wins := await _series("tsolenka_pass", 20, 11, "the_penitent", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 3, "the Penitent falls in 1 to 3 of 8 (%d)" % wins)
+
+
 ## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
 func test_the_tenant_at_level_2() -> void:
 	await _series("burgomaster_mansion", 22, 2, "hound_tenant", [1, 2, 3, 4], [], ["lupu"], ["study_door"])
@@ -188,7 +202,9 @@ func test_sarkhaza_with_the_keepers_tricks_at_level_10() -> void:
 
 ## Let off her chain she's at her strongest, even a level later.
 func test_sarkhaza_unchained_at_level_11() -> void:
-	await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_unchained"], [], [], HOARD_MOUTH)
+	speakers_step_aside = true
+	var wins := await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_unchained"], [], [], HOARD_MOUTH)
+	assert_true(wins >= 1 and wins <= 3, "Sarkhaza falls unchained in 1 to 3 of 8 (%d)" % wins)
 
 
 ## Khazan's study, the four just inside its door; the hall of names, the four at the stair foot.
@@ -203,10 +219,12 @@ func test_the_remembered_at_level_10() -> void:
 
 ## While his name stands over the door he's at his strongest, and the best the party can do is drive him back into it.
 func test_khazan_with_his_name_at_level_10() -> void:
-	await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4, 5, 6, 7, 8], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	speakers_step_aside = true
+	var wins := await _series("khazan_undercroft", 12, 10, "khazan_named", [1, 2, 3, 4, 5, 6, 7, 8], [], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_true(wins >= 1 and wins <= 3, "Khazan is driven off in 1 to 3 of 8 (%d)" % wins)
 
 
-## Driven off, not destroyed: he leaves the fight below 60 Hit Points and goes back into his name.
+## Driven off, not destroyed: he leaves the fight below 30 Hit Points and goes back into his name.
 func test_khazan_withdraws_into_his_name() -> void:
 	var res := await _play("khazan_undercroft", 12, 10, "khazan_named", 3, [], [], KHAZAN_DOORS, KHAZAN_STUDY)
 	assert_eq(str(res["outcome"]), "victory", "seed 3 drives him off")
@@ -216,7 +234,9 @@ func test_khazan_withdraws_into_his_name() -> void:
 
 ## With the name unmade, the next body is the last.
 func test_khazan_unmade_at_level_10() -> void:
-	await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	speakers_step_aside = true
+	var wins := await _series("khazan_undercroft", 12, 10, "khazan_unmade", [1, 2, 3, 4, 5, 6, 7, 8], ["khazan_name_broken"], [], KHAZAN_DOORS, KHAZAN_STUDY)
+	assert_true(wins >= 1 and wins <= 3, "Khazan unmade falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The chamber of the Eye, the four at the top of its throat; the hall of sleepers, the four at the stair foot.
@@ -230,12 +250,17 @@ func test_the_hall_of_sleepers_at_level_10() -> void:
 
 ## The Eye Below as it wakes, its dreams coming out of the walls: the hardest way in.
 func test_the_eye_below_at_level_10() -> void:
-	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], [], [], [], EYE_CHAMBER)
+	speakers_step_aside = true
+	var wins := await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], EYE_CHAMBER)
+	assert_true(wins >= 1 and wins <= 3, "the Eye falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## Both the wardens' ways: the mirrors turned on it and the lullaby sung.
 func test_the_eye_below_with_the_wardens_ways_at_level_10() -> void:
-	await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4], ["deep_mirrors_turned", "deep_lullaby_sung"], [], [], EYE_CHAMBER)
+	speakers_step_aside = true
+	var wins := await _series("amber_deep", 12, 10, "the_eye_below", [1, 2, 3, 4, 5, 6, 7, 8], ["deep_mirrors_turned", "deep_lullaby_sung"], [], [], EYE_CHAMBER)
+	# Both ways are the quest's reward: "half back in its amber" (test_side_quests_beholder.gd), so it stays easier.
+	assert_true(wins >= 1, "the Eye falls with the ways (%d)" % wins)
 
 ## The burned crown of Yester Hill, the four at its edge.
 const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vector2i(17, 18), Vector2i(18, 18)]
@@ -364,7 +389,9 @@ const GLASS_RING: Array[Vector2i] = [Vector2i(16, 18), Vector2i(17, 18), Vector2
 
 ## The Forgotten Storm and a squall, with the evening's lightning landing on the ring.
 func test_the_forgotten_storm_at_level_8() -> void:
-	await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
+	speakers_step_aside = true
+	var wins := await _series("mount_baratok", 19, 8, "forgotten_storm", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], GLASS_RING)
+	assert_true(wins >= 1 and wins <= 3, "the storm is laid in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The bend in the Krezk road, by the waystone and its candle.
@@ -382,7 +409,9 @@ const BY_THE_FIRE: Array[Vector2i] = [Vector2i(11, 10), Vector2i(13, 10), Vector
 
 ## The Guide, two of his shadows and two of the ones he led up before.
 func test_the_guide_at_level_10() -> void:
-	await _series("amber_road_camp", 20, 10, "amber_guide", [1, 2, 3, 4, 5, 6, 7, 8], ["amber_camp_met"], [], [], BY_THE_FIRE)
+	speakers_step_aside = true
+	var wins := await _series("amber_road_camp", 20, 10, "amber_guide", [1, 2, 3, 4, 5, 6, 7, 8], ["amber_camp_met"], [], [], BY_THE_FIRE)
+	assert_true(wins >= 1 and wins <= 3, "the guide falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The shingle at the Reed Isle's landing, where the castaways pull people out of the shallows.
@@ -427,7 +456,9 @@ const AT_THE_DESK: Array[Vector2i] = [Vector2i(11, 14), Vector2i(12, 14), Vector
 
 ## The Index and two reading chairs, with the shelves coming down and the lake coming in.
 func test_the_index_at_level_9() -> void:
-	await _series("drowned_library", 14, 9, "the_index", [1, 2, 3, 4, 5, 6, 7, 8], ["xaver_met"], [], [], AT_THE_DESK)
+	speakers_step_aside = true
+	var wins := await _series("drowned_library", 14, 9, "the_index", [1, 2, 3, 4, 5, 6, 7, 8], ["xaver_met"], [], [], AT_THE_DESK)
+	assert_true(wins >= 1 and wins <= 3, "the Index burns in 1 to 3 of 8 (%d)" % wins)
 
 
 ## By the captives' ring in the Ghakis Quarry, between the wagon and the way down.
@@ -436,4 +467,6 @@ const BY_THE_WAGON: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vecto
 
 ## Grandfather Stone alone, with the quarry's faces coming down.
 func test_grandfather_stone_at_level_10() -> void:
-	await _series("ghakis_quarry", 12, 10, "grandfather_stone", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], BY_THE_WAGON)
+	speakers_step_aside = true
+	var wins := await _series("ghakis_quarry", 12, 10, "grandfather_stone", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], BY_THE_WAGON)
+	assert_true(wins >= 1 and wins <= 3, "Grandfather Stone falls in 1 to 3 of 8 (%d)" % wins)
