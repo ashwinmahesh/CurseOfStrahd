@@ -174,6 +174,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		then = func() -> void: LocationChecks.act(view, thing, action_id)
 	if not then.is_valid():
 		return
+	var choice := then
+	then = func() -> void:
+		FoundGlow.used(view, str(thing["kind"]), str(thing.get("id", "")))   # a lock tried, a trap disarmed: no glow
+		choice.call()
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
 		if (action_id == "use" and _seen_from_afar(thing)) or action_id.begins_with("check:"):
@@ -385,6 +389,7 @@ static func _adjacent_free(view: LocationView, cell: Vector2i) -> Vector2i:
 
 static func interact(view: LocationView, thing: Dictionary) -> void:
 	var spec := thing["spec"] as Dictionary
+	FoundGlow.used(view, str(thing["kind"]), str(thing.get("id", "")))   # used: a find's glow goes
 	var who := view.leader()
 	(view.tokens[who.id] as CombatToken).face(Vector2(LocationView._cell(spec.get("cell", [who.cell.x, who.cell.y])) - who.cell), false)
 	match str(thing["kind"]):
