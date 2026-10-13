@@ -765,9 +765,25 @@
       "when": "flag.death_house_refused",
       "monsters": [
         {
+          "monster": "animated_armor",
+          "cell": [
+            13,
+            2
+          ],
+          "name": "Wolf-Helm Armor"
+        },
+        {
           "monster": "animated_flying_sword",
           "cell": [
             11,
+            2
+          ],
+          "name": "Hunting Sword"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            14,
             2
           ],
           "name": "Hunting Sword"
@@ -802,6 +818,30 @@
             8
           ],
           "name": "Cake Knife"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            21,
+            8
+          ],
+          "name": "Bread Knife"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            24,
+            13
+          ],
+          "name": "Fish Knife"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            23,
+            8
+          ],
+          "name": "Cleaver"
         }
       ],
       "text": "The silverware wants a word."

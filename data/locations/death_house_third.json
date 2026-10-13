@@ -661,6 +661,30 @@
             5
           ],
           "name": "Black Armor"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            12,
+            4
+          ],
+          "name": "Balcony Sword"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "Balcony Sword"
+        },
+        {
+          "monster": "broom_of_animated_attack",
+          "cell": [
+            13,
+            5
+          ],
+          "name": "Hall Broom"
         }
       ],
       "text": "The armor on the landing steps down off its stand."
@@ -677,6 +701,27 @@
             9
           ],
           "name": "The Nursemaid"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            24,
+            11
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            20,
+            11
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            13
+          ]
         }
       ],
       "text": "She wants her baby back."
@@ -718,6 +763,30 @@
             10
           ],
           "name": "Dress Sword"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            15,
+            8
+          ],
+          "name": "Ceremonial Blade"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            16,
+            10
+          ],
+          "name": "Dress Sword"
+        },
+        {
+          "monster": "animated_flying_sword",
+          "cell": [
+            13,
+            7
+          ],
+          "name": "Rapier"
         }
       ],
       "text": "Every blade on the floor has woken up."

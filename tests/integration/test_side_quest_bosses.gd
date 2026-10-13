@@ -178,14 +178,17 @@ func test_the_ash_effigy_at_level_8() -> void:
 const WALTERS_CRYPT: Array[Vector2i] = [Vector2i(14, 3), Vector2i(15, 3), Vector2i(14, 2), Vector2i(15, 2)]
 
 
-## The Dursts come for Veta in her son's crypt, with two of their robed ones.
+## The Dursts come for Veta in her son's crypt, with four of their robed ones: about three wins in eight (the owner's
+## level 3 target, 2026-10-13).
 func test_the_dursts_come_for_veta_at_level_3() -> void:
-	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], [], [], [], WALTERS_CRYPT)
+	var wins := await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], WALTERS_CRYPT)
+	assert_true(wins >= 1 and wins <= 5, "the Dursts fall in 1 to 5 of 8 (%d)" % wins)
 
 
 ## With the Dursts already gone, the robed ones come instead, led by the one who carried Walter down.
 func test_the_robed_ones_come_for_veta_at_level_3() -> void:
-	await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)
+	var wins := await _series("death_house_dungeon_1", 22, 3, "nursemaid_keepers", [1, 2, 3, 4, 5, 6, 7, 8], ["death_house_dursts_destroyed"], [], [], WALTERS_CRYPT)
+	assert_true(wins >= 1 and wins <= 5, "the robed ones fall in 1 to 5 of 8 (%d)" % wins)
 
 ## The shore of Lake Zarovich at the foot of the fishers' jetty.
 const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2i(17, 11), Vector2i(18, 11)]
