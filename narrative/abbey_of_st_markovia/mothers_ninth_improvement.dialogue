@@ -116,7 +116,10 @@ Narrator: She comes down in Krezk's goat pens, all at once, in a burst of goats.
 
 ~ gift
 Narrator: Clovin comes up beside you on the wall with a pair of old boots in his hands, soft grey leather, soles worn thin.
-Clovin Belview: She said to give you these. Her eighth gift. Before the wings he tried boots. She floated about on the ceiling for a year, and we used her to fetch things off the top shelf. She said you'd know what to do with them. She said you'd been very kind about the wire.
-give boots_of_levitation
+Clovin Belview: She said to give you these. Her eighth gift. Before the wings he tried boots. An hour up, and then down she'd come, wherever she was, so we used her to fetch things off the top shelf, quick as we could. She said you'd know what to do with them. She said you'd been very kind about the wire.
+if not flag.mother_boots_given
+give winged_boots
+set mother_boots_given
+endif
 approve wren_featherfoot +2 liriel_dawnsong +2 godrick_pendlebrook +2 ratatoille +2 thistle +1 kip_smudgewick +1: You helped Mother fly down to Krezk
 -> END

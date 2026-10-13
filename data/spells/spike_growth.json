@@ -47,7 +47,8 @@
       "per_square"
     ],
     "terrain": "difficult",
-    "once_per_turn": false
+    "once_per_turn": false,
+    "camouflaged": true
   },
   "tags": [
     "damage",

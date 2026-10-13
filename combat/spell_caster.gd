@@ -110,7 +110,7 @@ func caster_char(c: Combatant) -> Character:
 ## Points equal to the spell's level instead of a slot).
 const CLASS_CAST_OPTIONS := ["psychic_spells", "psionic_sorcery"]
 ## Aberrant Sorcery's Psionic Spells.
-const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "detect_thoughts", "dissonant_whispers", "mind_sliver", "hunger_of_hadar",
+const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "dissonant_whispers", "mind_sliver", "mind_spike", "hunger_of_hadar",
 	"sending", "evards_black_tentacles", "summon_aberration", "raris_telepathic_bond", "telekinesis"]
 
 
@@ -419,6 +419,10 @@ func _before_attack_rolls(ctx: Dictionary, tgt: Array[Combatant], r: CombatResul
 
 func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	return attacks.spell_attack(ctx, t, r)
+
+
+func attack_situation(c: Combatant, s: Dictionary, t: Combatant, origin: Variant = null) -> Dictionary:
+	return attacks.situation(c, s, t, origin)
 
 
 func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:

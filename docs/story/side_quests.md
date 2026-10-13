@@ -580,9 +580,12 @@ a guest until Davian's report); otherwise he flies off and the party cuts the ro
   and vine blights, drawn with the tree blight's sprite): Huge plant, AC 15, 210 HP, two branches (reach 15) and a
   grasping vine that drags and crushes, a cone of black wine (recharge 5-6, Poisoned), Legendary Resistance (2/day), a
   lash and a creeping move between turns. CR 8.
-- Fight `vine_mother` at the foot of the row: level 6 the Vine Mother, 4 vine blights and 4 needle blights (4,500 XP; the
-  autopilot wins 2 of 4 and loses three party members a fight); level 7 six vine and six needle blights; level 8 the
-  same and the Sixth Row (a tree blight), 7,700 XP; below 6 the Vine Mother at 150 HP, 2 vine and 3 needle blights.
+- Fight `vine_mother` at the foot of the row: she rises right behind the Seventh Row, her branches in reach of the
+  party at its basket, with the row's vines between them (the heroes reach her round its end, or shoot). Level 6 the
+  Vine Mother at 195 HP, 4 vine blights and 4 needle blights (4,500 XP); level 7 five vine and six needle blights;
+  level 8 six of each and the Sixth Row (a tree blight), 7,700 XP; below 6 the Vine Mother at 110 HP, 2 vine and 3
+  needle blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at level 6 with Adrian or without him, and at
+  levels 7 and 8, two or three heroes down in a win; 3 of 8 at level 5 (the owner's targets, 2026-10-13).
 - Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
 
 ## Vallaki and Castle Ravenloft (level 10)
@@ -679,7 +682,8 @@ thing the Abbot told her that might be true (Persuasion DC 13, Wren's advice, or
 down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
 
 - No fight.
-- Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
+- Her eighth gift, which Clovin brings up to the wall: Winged Boots (uncommon; Boots of Levitation until 2026-10-13,
+  swapped in older saves when they load). Afterwards she lands on Pavel's roof
   on Sundays, and Krezk's watchman has decided to be very calm about it.
 
 ### The Waystone (`the_waystone`, narrative/krezk/the_waystone.dialogue; batch 8, level 6)

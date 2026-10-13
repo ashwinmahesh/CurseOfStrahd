@@ -810,7 +810,7 @@
       "id": "larders_watch_pallet_4",
       "cell": [
         25,
-        19
+        17
       ],
       "kind": "decor",
       "label": "a guard's pallet",
@@ -1077,7 +1077,10 @@
           "cell": [
             17,
             18
-          ]
+          ],
+          "lying": {
+            "on": "larders_watch_pallet_3"
+          }
         },
         {
           "monster": "strahd_zombie",
@@ -1098,7 +1101,10 @@
           "cell": [
             24,
             17
-          ]
+          ],
+          "lying": {
+            "on": "larders_watch_pallet_4"
+          }
         }
       ]
     },

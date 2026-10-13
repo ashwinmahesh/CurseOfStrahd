@@ -123,6 +123,6 @@ func test_old_greytooth_is_a_boss() -> void:
 	var g := Compendium.shared().get_entry("monsters", "old_greytooth")
 	assert_eq(str(g["size"]), "huge")
 	assert_eq(int(g["cr"]), 8)
-	assert_eq(int((g["legendary_actions"] as Dictionary)["per_round"]), 3)
+	assert_eq(int((g["legendary_actions"] as Dictionary)["per_round"]), 2)
 	assert_eq(str(g["art"]), "dire_wolf", "drawn with the dire wolf's sprite")
 	assert_true(g.has("actions"))

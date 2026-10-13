@@ -55,6 +55,9 @@ var boss_bar: BossBar
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
+## The party's and guests' own figures as the fight was handed them (id -> CombatToken): exploring goes on with these
+## after the fight, so a change of shape hides one instead of freeing it (_swap_form_art).
+var _own_tokens: Dictionary = {}
 var mode: Mode = Mode.BUSY
 ## The arena offers R to fight again; in the story the end banner leads back to exploration.
 var restart_allowed := false
@@ -109,6 +112,10 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	board = board_
 	rig = rig_
 	tokens = tokens_
+	for id: Variant in tokens:
+		var own := tokens[id] as CombatToken
+		if own != null and own.combatant != null and own.combatant.side in [&"party", &"guest"]:
+			_own_tokens[id] = own
 	e.shared_turns = GameSettings.shared_turns()
 	_hero_saves()   # what was rolled before the fight showed isn't news
 	catalog = ActionCatalog.new(e)
@@ -1698,28 +1705,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
 		if data.has("attack") and prev.has("attack"):
-			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
-			var sit := e.attack_situation(c, o, opt)
-			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
-			var needs := clampi(ac - to_hit, 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
-			if int(sit.get("height_bonus", 0)) != 0:
-				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-			# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
-			var own := c.creature.d20_sources(["attack", "attack:melee" if bool(opt["melee"]) else "attack:ranged", "attack:spell"])
-			var sa: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
-			var sd: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
-			if not sa.is_empty() and sd.is_empty():
-				tip_title = "%s · ADVANTAGE" % o.name()
-				edge = "advantage"
-			elif not sd.is_empty() and sa.is_empty():
-				tip_title = "%s · DISADVANTAGE" % o.name()
-				edge = "disadvantage"
-			for s: Variant in sa:
-				lines2.append("Advantage: %s" % s)
-			for s: Variant in sd:
-				lines2.append("Disadvantage: %s" % s)
+			# The odds from the situation the roll uses (Spell Sniper, cover a spell ignores), the caster's own edge too.
+			var spv := catalog.spell_attack_preview(c, str(selected["spell_id"]), o, prev["attack"] as Breakdown)
+			lines2.append_array(spv["lines"] as Array)
+			edge = str(spv["edge"])
+			if edge != "":
+				tip_title = "%s · %s" % [o.name(), edge.to_upper()]
 		if data.has("save") and prev.has("save_dc"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()
@@ -2172,21 +2163,37 @@ func _tok(id: Variant) -> CombatToken:
 
 
 ## A Shapechanger took another shape (ADR 0014): its token wears the shape's sprite when it has one (`forms` art),
-## and the stat block's own again in its true form.
+## and the stat block's own again in its true form. A party member's or guest's own figure (a wereraven ally's) is only
+## hidden while it wears another and comes back for its true form, since exploring goes on with it after the fight
+## (owner's report 2026-10-12: Adrian's hybrid left the Vine Mother's fight unable to end).
 func _swap_form_art(id: String, art: String) -> void:
 	var old := _tok(id)
 	if old == null:
 		return
 	var want := art if art != "" and DirectionalSprite.frames_for(art) != null else ""
-	if want == old.art_override:
+	var own: CombatToken = null
+	if is_instance_valid(_own_tokens.get(id)):
+		own = _own_tokens[id] as CombatToken
+	if want == old.art_override or (want == "" and old == own):
 		old.flash(Look.color("lilac"), 0.3)
 		return
-	var nt := CombatToken.create(old.combatant, want)
-	nt.position = old.position
-	add_child(nt)
+	var nt: CombatToken
+	if want == "" and own != null and own != old:
+		nt = own
+		nt.combatant = old.combatant
+		nt.position = old.position
+		nt.visible = true
+		nt.refresh()
+	else:
+		nt = CombatToken.create(old.combatant, want)
+		nt.position = old.position
+		add_child(nt)
 	tokens[id] = nt
 	nt.flash(Look.color("lilac"), 0.4)
-	old.queue_free()
+	if old == own:
+		old.visible = false
+	else:
+		old.queue_free()
 
 
 ## Where a spell goes, as a ground direction from its caster: its first other target, else the middle of its area.

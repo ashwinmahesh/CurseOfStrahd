@@ -435,8 +435,12 @@ func _apply_body(c: Combatant) -> void:
 
 # --- Legendary actions ------------------------------------------------------------------------------------------
 
+## Legendary action uses a round: `per_round`, or `in_lair` in a lair fight (2025 Monster Manual: "3 (4 in Lair)").
 func per_round(c: Combatant) -> int:
-	return int((data_of(c).get("legendary_actions", {}) as Dictionary).get("per_round", 0))
+	var la := data_of(c).get("legendary_actions", {}) as Dictionary
+	if la.has("in_lair") and enc() != null and enc().lair:
+		return int(la["in_lair"])
+	return int(la.get("per_round", 0))
 
 
 func options(c: Combatant) -> Array:
@@ -530,6 +534,10 @@ func use(c: Combatant, opt_id: String, target: Combatant = null, cell: Vector2i 
 func _move(c: Combatant, cell: Vector2i) -> CombatResult:
 	var e := enc()
 	var reach := e.reachable_for(c, c.speed())
+	# Round the dangerous ground the AI knows of, when that way gets there (combat/ai/ai_hazards.gd).
+	var calm := e.ai.hazards.calm_reach(c, c.speed())
+	if calm.has(cell):
+		reach = calm
 	var path := CombatGrid.path_to(reach, cell)
 	var keep_move := c.movement_left
 	var keep_dis := c.disengaged

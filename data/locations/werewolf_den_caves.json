@@ -664,14 +664,16 @@
           "cell": [
             16,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
           "cell": [
             23,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
@@ -692,21 +694,24 @@
           "cell": [
             20,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "dire_wolf",
           "cell": [
             15,
             24
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "dire_wolf",
           "cell": [
             22,
             24
-          ]
+          ],
+          "lying": true
         }
       ],
       "surprise": "",
@@ -724,14 +729,16 @@
           "cell": [
             16,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
           "cell": [
             23,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
@@ -752,14 +759,16 @@
           "cell": [
             15,
             24
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "dire_wolf",
           "cell": [
             22,
             24
-          ]
+          ],
+          "lying": true
         }
       ],
       "surprise": "",
@@ -777,14 +786,16 @@
           "cell": [
             16,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
           "cell": [
             23,
             22
-          ]
+          ],
+          "lying": true
         },
         {
           "monster": "werewolf",
@@ -798,7 +809,8 @@
           "cell": [
             15,
             24
-          ]
+          ],
+          "lying": true
         }
       ],
       "surprise": "",

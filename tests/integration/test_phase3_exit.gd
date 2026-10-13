@@ -127,6 +127,9 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 		return
 	if not _ok(GameState.story.get_flag("death_house_armor_destroyed") == true, "the armor on the balcony"):
 		return
+	# The fight can end with the party spread down the balcony: back to the panel before searching for it.
+	if not _ok(await bot.walk_to(Vector2i(11, 4)), "back at (11, 4)"):
+		return
 	if not _ok(await bot.search_for(Vector2i(11, 3)), "found the panel to the attic stair"):
 		return
 	if not _ok(await bot.go_to("death_house_attic"), "reached death_house_attic"):

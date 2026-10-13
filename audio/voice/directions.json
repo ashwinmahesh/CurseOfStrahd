@@ -60,6 +60,7 @@
   "b0a23d2b0e0097e7": "[fond, faintly dismissive]",
   "b5668fa784ff6182": "[hollow, defeated, turning away]",
   "b98f49e37eccdbda": "[tender, amused]",
+  "bd5d275ae6124e8b": "[serene, gentle, quietly proud]",
   "bd5dcccbcd928a56": "[broken whisper]",
   "c19036475c8741cf": "[gracious, calm]",
   "c2f4e7d303762ba4": "[reverent, tender]",
@@ -601,6 +602,7 @@
   "4ae5d321e8dc7c52": "[grateful, wry, warm]",
   "4e5faa7f2751b229": "[warm, comic, grateful]",
   "524c7c137f24490f": "[gossiping, fond, worried]",
+  "5b1c33574a259e54": "[warm, comic, fond]",
   "6c5e062754e1ec05": "[whispered, nervous]",
   "76a89fd5977a8189": "[cheerful, wry]",
   "773e7c937d224d89": "[overjoyed, amazed, emotional]",
@@ -1403,6 +1405,7 @@
   "c6ff0bbaa4e48a55": "[disgusted, uneasy]",
   "c88f2cbee3eca082": "[furious, shaking]",
   "c91bfbae2238f482": "[earnest, hopeful]",
+  "cb2a1d51c6551ac7": "[afraid, insistent]",
   "ce7487cdfa1deea9": "[bitter, shaken, quiet]",
   "ce8cf1676ecda5b1": "[shaken, relieved, firm]",
   "cecdabd6a01f3089": "[flustered, evasive]",
@@ -1447,6 +1450,7 @@
   "f88a9813292e6cef": "[uneasy, insistent]",
   "f8a1614c8b69ce91": "[shaken, sad]",
   "f8c49b65da6347a3": "[resolute, curious]",
+  "f9c5f4103b42506b": "[guarded, anxious]",
   "fb82ad34d66f23d9": "[cold, defiant]",
   "fec5c736bcda575f": "[haunted, tender, remembering]",
   "ffc80d9892938a00": "[wary, puzzled]"
@@ -1636,7 +1640,7 @@
  "krezk_goatherd": {
   "9f6b06a40bc831cf": "[dry, wry, amused]",
   "a9b199ce4228f24a": "[dry, puzzled, wry]",
-  "db5e1700b5f7edc6": "[dry, fond]"
+  "db5e1700b5f7edc6": "[dry, wry]"
  },
  "krezk_guard": {
   "0046292684ec4004": "[weary, guilty]",
@@ -1886,7 +1890,10 @@
  },
  "madam_eva": {
   "0e37c5f63ec72ec4": "[dry, knowing, ominous]",
-  "280c8cd778f8de6d": "[dry, knowing, unbothered]"
+  "1a434c0edcc07b01": "[low, knowing, warning]",
+  "280c8cd778f8de6d": "[dry, knowing, unbothered]",
+  "42e8278ecdbb1cbd": "[sad, knowing]",
+  "d486384f1c76e796": "[gentle, knowing]"
  },
  "marshal_dragomir": {
   "05b0c0794c46d275": "[cold, dismissive]",
