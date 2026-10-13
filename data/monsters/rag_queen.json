@@ -13,6 +13,7 @@
   ],
   "alignment": "chaotic evil",
   "art": "scarecrow",
+  "art_height": 3.0,
   "ac": 16,
   "initiative": 3,
   "hp": {

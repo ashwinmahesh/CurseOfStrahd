@@ -13,6 +13,7 @@
   ],
   "alignment": "neutral evil",
   "art": "amber_golem",
+  "art_height": 3.0,
   "ac": 16,
   "initiative": 0,
   "hp": {
