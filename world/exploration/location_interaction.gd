@@ -438,8 +438,17 @@ static func _check_tip_after_talk(view: LocationView, spec: Dictionary) -> void:
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:
+	if method == "force" and view._locked(ct):
+		# Guidance can go on forcing it first (LocationLocks.with_guidance).
+		LocationLocks.with_guidance(view, ct, func(extra: Array) -> void: _open_container(view, ct, method, extra))
+		return
+	_open_container(view, ct, method)
+
+
+## Undoes the container's lock if it has one (`extra`: Guidance's die on forcing it), then opens it.
+static func _open_container(view: LocationView, ct: Dictionary, method: String, extra: Array = []) -> void:
 	var id := str(ct["id"])
-	if view._locked(ct) and not LocationLocks._unlock(view, ct, method):
+	if view._locked(ct) and not LocationLocks._unlock(view, ct, method, extra):
 		return
 	view._say("open:" + id)
 	if view._trigger_encounter("open:" + id):

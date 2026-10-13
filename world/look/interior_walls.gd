@@ -133,6 +133,7 @@ static func _room_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: D
 	var node := Node3D.new()
 	node.name = "InteriorWall"
 	node.position = board.cell_center(c)
+	node.set_meta("on_floor", true)   # (standing on its square already: ArenaBoard._lift leaves it be on a hill)
 	board.add_child(node)
 	var full := Node3D.new()
 	full.name = "Full"
@@ -172,6 +173,7 @@ static func _header(board: ArenaBoard, n: Vector2i, along: Vector2i, wall_mat: M
 	var node := Node3D.new()
 	node.name = "InteriorWall"
 	node.position = board.cell_center(n)
+	node.set_meta("on_floor", true)
 	board.add_child(node)
 	var full := Node3D.new()
 	full.name = "Full"
@@ -331,6 +333,7 @@ static func _block(board: ArenaBoard, c: Vector2i, wall_mat: Material, st: Dicti
 	var node := Node3D.new()
 	node.name = "WallBlock"
 	node.position = board.cell_center(c)
+	node.set_meta("on_floor", true)
 	board.add_child(node)
 	_box(node, Vector3(1, CUT, 1), Vector3(0, CUT / 2.0, 0), wall_mat)
 	_box(node, Vector3(1.02, 0.1, 1.02), Vector3(0, CUT + 0.05, 0), Look.cel(ArenaBoard.CUT_FACE))

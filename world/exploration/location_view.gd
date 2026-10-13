@@ -37,6 +37,9 @@ signal banter(lines: Array)
 signal travel_requested
 ## A party member down outside a fight was stabilized or healed from the right-click menu.
 signal party_tended
+## Guidance before a skill check (ask_guidance): the game shows the prompt (GuidancePrompt) and calls `answered` with
+## the caster picked (-1: nobody) and the casters' rule from now on.
+signal guidance_asked(offer: Dictionary, answered: Callable)
 
 ## Seconds a square takes walking (owner 2026-10-07: tokens moved too fast between squares; about 30% slower than
 ## the earlier 0.18 and 0.32).
@@ -366,6 +369,18 @@ static func _pick_bonus(picker: Character, adv: Array[String]) -> Breakdown:
 
 func search() -> void:
 	LocationTraps.search(self)
+
+
+## Before `who` makes a `skill` check against `dc` (0: one the player doesn't see): Guidance from whoever in the party
+## can cast it (GuidanceOffer), asked for when a caster's rule is Ask and something shows the prompt (the game root),
+## cast at once by a caster on Automatic. `then(extra: Array)` gets the dice to add ([] or Guidance's 1d4) and makes the
+## roll, now or once the prompt is answered. `near`: the only ones who can touch `who`, when that isn't everyone.
+func ask_guidance(who: Creature, skill: StringName, dc: int, then: Callable, near: Array = []) -> void:
+	var offer := GuidanceOffer.offer(st, who, skill, dc, near)
+	if GuidanceOffer.asks(offer) and not guidance_asked.get_connections().is_empty():
+		guidance_asked.emit(offer, func(index: int, rule: String) -> void: then.call(GuidanceOffer.answer(offer, index, rule)))
+		return
+	then.call(GuidanceOffer.automatic(offer))
 
 
 func _show_trap(trap: Dictionary) -> void:
