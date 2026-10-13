@@ -19,6 +19,7 @@ func _frames(n: int) -> void:
 
 
 ## Boots `location` at `hour` with the four pregens at `level`, starts `encounter` and plays it with the autopilot.
+## `flags`: story flags set first, each a name (set true) or "name=value".
 ## `at`: where the four stand when it starts (the saved positions a load uses); unset, the location's default spawn.
 func _play(location: String, hour: int, level: int, encounter: String, seed_value: int, flags: Array[String] = [],
 		guests: Array[String] = [], open_doors: Array[String] = [], at: Array[Vector2i] = []) -> Dictionary:
@@ -28,7 +29,9 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 		ch.finish_long_rest()
 		GameState.story.party.append(ch)
 	for f in flags:
-		GameState.story.set_flag(f, true)
+		# "name=value" sets a flag to a value (yester_druids_fate=fled); a bare name sets it true.
+		var kv := f.split("=", true, 1)
+		GameState.story.set_flag(kv[0], true if kv.size() == 1 else kv[1])
 	for g in guests:
 		GameState.story.add_guest(g)
 	for d in open_doors:

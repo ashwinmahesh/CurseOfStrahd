@@ -351,8 +351,10 @@ func _spell_plan(c: Combatant, prof: Dictionary) -> Dictionary:
 	return {}
 
 
-## An action that casts a spell on a Recharge (a vine blight's Entangling Plants), aimed at the nearest pair of foes
-## when two stand close enough to share the area.
+## An action that casts a spell on a Recharge (a vine blight's Entangling Plants), placed where its area catches two
+## foes or more (or the only one in range) and more foes than friends, and never a friend stronger than the caster:
+## Entangle holds whoever stands in it, and a blight that roots its own tree blight in place has done the party's work
+## (2026-10-13, the Yester Hill summit).
 func _recharge_spell_plan(c: Combatant) -> Dictionary:
 	var e := enc()
 	if not c.action_available:
@@ -365,10 +367,41 @@ func _recharge_spell_plan(c: Combatant) -> Dictionary:
 		var s := Compendium.shared().spell_data(spell_id)
 		var reach := int((s.get("range", {}) as Dictionary).get("feet", 60))
 		var foes := e.hostiles_of(c).filter(func(h: Combatant) -> bool: return not h.is_down() and e.distance(c, h) <= reach and not companion(h))
+		var mine := c.creature as Monster
+		var best := Vector2.INF
+		var best_n := 0
+		var best_score := 0
+		var aimed: Combatant = null
 		for f: Combatant in foes:
-			var near := foes.filter(func(g: Combatant) -> bool: return e.distance(f, g) <= 15)
-			if near.size() >= 2 or foes.size() == 1:
-				return {"kind": "cast", "action": act, "spell": spell_id, "point": e.center_of(f), "why": "%s at %s" % [act.get("name", ""), f.name()]}
+			# The area's near edge on the foe or a few squares off it (a placed cube runs 20 ft east from its point), so it
+			# can leave out a friend beside the foe.
+			for dx: int in [0, -1, -2, -3, 1]:
+				for dz: int in [0, -1, 1, -2, 2]:
+					var p := e.center_of(f) + Vector2(dx, dz)
+					var at := Vector2i(floori(p.x), floori(p.y))
+					if not e.grid.in_bounds(at) or e.grid.distance_ft(c.cell, c.size_cells, at, 1) > reach:
+						continue
+					var n := 0
+					var friends := 0
+					var master := false
+					for o in e.spells.creatures_in(e.spells.area_for(c, s, p, Vector2.RIGHT)):
+						if o == c or o.is_down():
+							continue
+						if c.hostile_to(o):
+							n += 1
+						else:
+							friends += 1
+							var om := o.creature as Monster
+							master = master or om == null or mine == null or om.cr > mine.cr
+					if master or n - friends <= 0:
+						continue
+					if n - friends > best_score or (n - friends == best_score and n > best_n):
+						best = p
+						best_n = n
+						best_score = n - friends
+						aimed = f
+		if aimed != null and (best_n >= 2 or foes.size() == 1):
+			return {"kind": "cast", "action": act, "spell": spell_id, "point": best, "why": "%s at %s" % [act.get("name", ""), aimed.name()]}
 	return {}
 
 

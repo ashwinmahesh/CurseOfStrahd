@@ -103,7 +103,7 @@ reclaimed: the **Keepers' oath** (`keepers_allied`). Three: Davian's best scene.
   Stealth 13, or 16 if Kostin ran to warn them, sets `yester_sneaked` (or `yester_heard`).
 - **The crown** (`ruxandra:summit`, approach 10). Sneaked: "Strike now, while they chant" (`yester_struck_first`:
   surprise, Wintersplinter half-made). Otherwise Ruxandra speaks: fight; Intimidation 17 (the circle runs, she follows:
-  `yester_druids_fate = "fled"`, Wintersplinter alone with twig blights); Religion 15 (the circle breaks, she stays:
+  `yester_druids_fate = "fled"`, Wintersplinter with the crown's blights and no druids); Religion 15 (the circle breaks, she stays:
   `yester_circle_broken`); ask about the tree; ask about Elvir (she tells, cruelly). Every branch ends in `summit_ritual`,
   which sets **`yester_hill_resolved`**.
 - **After.** Ruxandra among the roots (`ruxandra:fallen`): spare her (`spared`) or end it (`killed`); she can also tell
@@ -175,13 +175,14 @@ Moderate 5200 / High 6800. XP per block: druid 450, berserker 450, tree blight 2
 | `cellar_dig` (cellar, enter `the_dig`) | tree burned: druid overseer 35 HP (450); L7: 5 druids, 6 vine, 8 needle (3250); L6: 5 druids, 5 vine, 6 needle (3050; two druids and three vines are `unseen` among the cask vaults, out of view until the fight, and rise behind the party; one more vine blight stands at the dig, at (22,5)); under 6: vine, 4 needle (300) | optional |
 | `press_house_mash` (press house, dialogue) | burned+fled: the Mash (1800); burned: Kostin 44 HP + Mash (2250); fled: Mash, 2 vine, 3 needle (2150); L7: Kostin, 5 druids, Mash, 6 vine (5100); L6: Kostin, 4 druids, Mash, 6 vine (4650, between Moderate and High); under 6: Kostin, Mash at 90 HP, vine (2350) | critical path; the Mash is a `shambling_mound` named "The Mash" |
 | `wardens_camp_fight` (hill, enter `wardens_camp`) | L7: 4 berserkers, 4 twig (1900); L6: 3 berserkers, 4 twig (1450, Low); under 6: 2 berserkers, 4 twig (1000) | optional; gone once the hill is broken |
-| `summit_ritual` (crown, dialogue) — **the climax** | fled: Wintersplinter 120 + 6 twig (3050); struck first (enemies surprised): W 100, Ruxandra 55, 2 druids, 4 twig (4350); circle broken: W 140, Ruxandra 60, 6 twig (3500); Kostin warned: W 140, Ruxandra, Kostin, 2 druids, 4 twig (4800, Moderate); L7: W 160, Ruxandra, 2 druids, a warden, 2 vine, 4 twig (5000, Moderate for L7); L6: W 140, Ruxandra 60, 6 twig (3500, Moderate; no extra druids since the 2024 Druid and the 2025 Tree Blight's roots and Gnash, 2026-10-06); under 6: W 110, Ruxandra 50, druid, 4 twig (3900, Moderate for L5) | critical path; Wintersplinter is a Huge `tree_blight` |
+| `summit_ritual` (crown, dialogue) — **the climax** | fled: Wintersplinter 150, 6 twig, 2 vine, 3 needle (3400; the crown's blights rise with the tree); struck first (enemies surprised): W 110, Ruxandra 55, 2 druids, 4 twig (4350), L7 adds a warden (4800); circle broken: W 140, Ruxandra 60, 6 twig (3500); Kostin warned: W 100, Ruxandra, Kostin, 2 druids, 4 twig (4800), L7 W 140; L7: W 160, Ruxandra, a warden, 4 twig (3900); L6: W 140, Ruxandra 60, 6 twig (3500); under 6: W 110, Ruxandra 50, druid, 4 twig (3900, Moderate for L5). Owner 2026-10-13: about 2 wins in 8 at level 6 and up for every version (tests/integration/test_yester_summit.gd) | critical path; Wintersplinter is a Huge `tree_blight` |
 | `vineyard_road` table (map `road_forest`) | hedge blights (550, until the tree burns; party surprised), druid patrol (1150, until the hill is broken), wolves at night (600), the Keepers' leaf (event, once), `druids_return` (1650, once, if spared/fled and the tree stands) | day 15%, night 40% |
 
 The critical path is three fights the party can lose (lane, hall, press; owner 2026-10-12, they were too easy at level 6
 on Balanced: the autopilot's four pregens now win about 3 in 8 of each, the cellar dig 4 in 8, with two or three heroes
-down, tests/integration/test_story_fights.gd) and the crown, which it wins about 4 in 8. Davian or Adrian as guests (a
-wereraven each, 450 XP) can add to the party's side; the summit stays Moderate with one guest. The auto-player has the
+down, tests/integration/test_story_fights.gd) and the crown, which it wins about 2 in 8 however the party gets there
+(owner 2026-10-12: far too easy after driving the druids off, when Wintersplinter came alone with six twig blights).
+Davian or Adrian as guests (a wereraven each, 450 XP) can add to the party's side. The auto-player has the
 Mash (110 HP, engulf) and Wintersplinter (140 HP, AC 15, reach) as the two big bodies at the press and the crown, and a
 shambling mound in the hall and a tree blight in the vines at level 6 and up; neither fight has a rider it can't answer,
 and the party can rest safely in the winery between the press house and the hill.
