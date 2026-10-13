@@ -44,8 +44,12 @@ func test_the_bone_marshal_and_his_column_at_level_8() -> void:
 	assert_true(wins >= 1 and wins <= 4, "the column falls in 1 to 4 of 8 (%d)" % wins)
 
 
+## The Rag Queen at 230 HP (of 260) with her brides and grooms: with an ally's square no longer slowing the party she
+## won 0 of 3 at full HP (2026-10-13).
 func test_the_rag_queen_at_level_9() -> void:
-	await _series("berez", 14, 9, "rag_queen", [1, 2, 3], ["lysaga_guests"])
+	speakers_step_aside = true
+	var wins := await _series("berez", 14, 9, "rag_queen", [1, 2, 3, 4, 5, 6, 7, 8], ["lysaga_guests"])
+	assert_true(wins >= 1 and wins <= 4, "the Rag Queen falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## The four in single file beside the Seventh Row's basket, where the row wakes as they cut into it (the owner's report
@@ -101,8 +105,12 @@ func test_the_squires_vigil_at_level_8() -> void:
 	await _series("argynvostholt", 2, 8, "squires_vigil", [1, 2, 3, 4], ["godfrey_met", "courtyard_phantoms_defeated"])
 
 
+## The Penitent at 340 HP with five shadows: once an ally's square stopped slowing the party and foes in the dark could
+## be struck where they were heard, at 210 HP she fell in most tries (2026-10-13).
 func test_the_penitent_at_level_10() -> void:
-	await _series("tsolenka_pass", 20, 10, "the_penitent", [1, 2, 3, 4])
+	speakers_step_aside = true
+	var wins := await _series("tsolenka_pass", 20, 10, "the_penitent", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "the Penitent falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## Lupu fights beside the party, and the study door is open: the fight starts at the bricks.
@@ -155,7 +163,9 @@ func test_the_vent_fire_at_level_10() -> void:
 
 ## Sarkhaza as she is: chained, with her lair, nothing done to her first. The hardest way in.
 func test_sarkhaza_at_level_10() -> void:
-	await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4], [], [], [], HOARD_MOUTH)
+	speakers_step_aside = true
+	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOARD_MOUTH)
+	assert_true(wins >= 1 and wins <= 4, "Sarkhaza falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## All three of the keepers' tricks: the salted carcass, the chain hauled in and the vents drowned.

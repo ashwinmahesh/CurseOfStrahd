@@ -653,9 +653,10 @@ whether Lysaga's at home or not.
 - **Boss: the Rag Queen** (data/monsters/rag_queen.json, `source.book: custom`): Large construct, AC 16, 260 HP, two
   claws (3d8+6 slashing, Frightened), a glare (recharge 5-6, DC 16, Frightened and Paralyzed), Legendary Resistance
   (2/day), a rake between turns, and Regeneration 15 that fire stops. CR 10.
-- Fight `rag_queen` in the field: level 9 the queen, 2 drowned brides (banshees) and 4 straw grooms (scarecrows), 8,900
-  XP; level 10 a third bride, 2 more grooms and a swarm of insects; below 9 the queen at 200 HP, one bride and 4
-  grooms. The autopilot wins 1 of 3 at level 9 and loses three party members a fight.
+- Fight `rag_queen` in the field: level 9 the queen at 230 HP, 2 drowned brides (banshees) and 4 straw grooms
+  (scarecrows); level 10 a third bride, 2 more grooms and a swarm of insects; below 9 the queen at 200 HP, one bride and
+  4 grooms. The autopilot wins 2 of 8 at level 9 (4 of 16 over seeds 1-16), losing about one party member in a win
+  (2026-10-13: at her full 260 HP, once an ally's square stopped slowing the party, it won none of seeds 1-3).
 - Dragos pays once: 500 gp of brides' dowries and a Dancing Sword (very rare, a longsword) Lysaga took off a knight.
 
 ### Clovin's Audience (`clovins_audience`, narrative/krezk/clovins_audience.dialogue; batch 2)
@@ -729,9 +730,10 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
   giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
   freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
   CR 11.
-- Fight `the_penitent` on the landing: level 10 the Penitent and 5 pilgrims' shadows (ghasts), 9,450 XP (the
-  autopilot wins 2 of 4 and loses three party members a fight); level 11 eight shadows; level 9 four; below 9 the
-  Penitent at 170 HP and three.
+- Fight `the_penitent` on the landing: level 10 the Penitent at 340 HP and 5 pilgrims' shadows (ghasts); level 11 eight
+  shadows; level 9 four; below 9 the Penitent at 170 HP and three. At level 10 the autopilot wins 3 of 8 (4 of 16 over
+  seeds 1-16), two or three party members down in a win (2026-10-13: at 210 HP, once an ally's square stopped slowing
+  the party, it won 7 of 16, and 12 of 16 when foes in the dark can be struck where they're heard).
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
 
@@ -911,7 +913,7 @@ keepers had three ways of going down to her safely, and each one is a lair trick
   200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
   DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
   initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins
-  1 in 4 at level 10 and loses three or four party members a fight; with all three tricks it wins 4 of 4 and loses one
+  3 of 8 at level 10 (4 of 16 over seeds 1-16) and loses three or four party members a fight; with all three tricks it wins 4 of 4 and loses one
   or two; unchained at level 11, 1 in 8.
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
   cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
