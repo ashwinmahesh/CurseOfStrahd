@@ -188,7 +188,9 @@ func test_the_rag_queen_steps_off_her_post() -> void:
 func test_the_seventh_row_stands_up() -> void:
 	for level: int in [5, 6, 7, 8]:
 		var v := await _boot("wizard_of_wines", 1, level, ["winery_reclaimed"])
-		await _fight(v, "vine_mother", ["The Vine Mother", "Vine Blight 1"])
+		var e := await _fight(v, "vine_mother", ["The Vine Mother"])
+		assert_true(e.combatants.any(func(c: Combatant) -> bool: return c.name().begins_with("Vine Blight")),
+				"her vine blights stand up with her (one at level 5, so unnumbered)")
 		await _end(v)
 		assert_eq(GameState.story.quest_stage("the_black_row"), "cut_out")
 		assert_true(bool(GameState.story.get_flag("vine_mother_slain", false)))
