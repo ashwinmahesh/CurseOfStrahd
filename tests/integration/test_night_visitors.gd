@@ -2,8 +2,10 @@ extends TestCase
 ## Night visitors at camp (F16, data/camp/night_visitors.json): an interrupted night in a risky place brings a fight to
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
 ## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
-## Rest benefits. Every fight finishes, and each group is won exactly as often in the eight as the owner wants for the
-## level it's played at (2026-10-13, target_wins): 4 of 8 at levels 1-2, 3 at levels 3-5, 2 from level 6. The wild's
+## Rest benefits. Every fight finishes, and each group is tuned to be won exactly as often in the eight as the owner
+## wants for the level it's played at (2026-10-13, target_wins): 4 of 8 at levels 1-2, 3 at levels 3-5, 2 from level 6.
+## The test allows one win either way (DRIFT), so a change to dice or the autopilot elsewhere doesn't turn it red; a
+## group off by two or more needs tuning again. The wild's
 ## groups are played in an open field; a town's and indoors' in a real village and a real house, from the camp the
 ## party makes there.
 
@@ -17,6 +19,11 @@ const PLACES := {"town": "village_of_barovia", "indoors": "burgomaster_mansion"}
 ## party grows): 4 at levels 1-2, 3 at levels 3-5, 2 from level 6.
 static func target_wins(level: int) -> int:
 	return 4 if level <= 2 else (3 if level <= 5 else 2)
+
+
+## How far a group's wins may drift from target_wins before the test fails (the coordinator, 2026-10-13): each group is
+## tuned to the exact target, and one either way is a change elsewhere (dice, the autopilot), not a mistuned group.
+const DRIFT := 1
 
 
 func after_each() -> void:
@@ -118,7 +125,7 @@ func _play(group: Dictionary, seed_value: int) -> Dictionary:
 
 
 ## Plays each of `land`'s groups once per seed 1-8: every fight finishes, and each is won target_wins times for the
-## level it's played at.
+## level it's played at, give or take DRIFT.
 func _land(land: String) -> void:
 	for g: Variant in CampSite.visitors()["groups"]:
 		var group := g as Dictionary
@@ -137,7 +144,8 @@ func _land(land: String) -> void:
 			rounds += int(res["rounds"])
 		print("        %s at level %d: %d/8 won, %.1f rounds, %.1f heroes dropped per win" % [group["id"], level, wins,
 			rounds / 8.0, won_downs / float(maxi(1, wins))])
-		assert_eq(wins, target_wins(level), "%s is won %d times in 8 at level %d" % [group["id"], target_wins(level), level])
+		assert_true(absi(wins - target_wins(level)) <= DRIFT, "%s is won %d times in 8 at level %d (tuned to %d, %d either way): %d" % [
+			group["id"], target_wins(level), level, target_wins(level), DRIFT, wins])
 
 
 func test_an_interrupted_night_at_camp_brings_its_visitors() -> void:
