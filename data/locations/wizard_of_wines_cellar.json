@@ -275,7 +275,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 65
+          "hp": 72
         },
         {
           "monster": "vine_blight",
@@ -396,7 +396,7 @@
             20,
             2
           ],
-          "hp": 55
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -445,7 +445,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 60
+          "hp": 70
         },
         {
           "monster": "vine_blight",
@@ -586,7 +586,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 50
+          "hp": 60
         },
         {
           "monster": "vine_blight",

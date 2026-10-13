@@ -500,7 +500,7 @@
             4
           ],
           "name": "Druid of Yester Hill",
-          "hp": 55
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -622,7 +622,7 @@
             19,
             6
           ],
-          "hp": 165
+          "hp": 169
         }
       ],
       "surprise": "",
