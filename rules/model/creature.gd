@@ -1186,10 +1186,21 @@ func finish_short_rest() -> void:
 	log_event({"type": "short_rest", "creature": id})
 
 
-## Long Rest (2024 glossary): all HP back, Temporary HP gone, Exhaustion -1, every resource refilled.
+## Sleep, a Long Rest's (2024 glossary "Long Rest": asleep, you have the Unconscious condition): it ends Concentration,
+## unless a Trance keeps the creature conscious (an elf's runs on to the end of its own duration).
+func fall_asleep() -> void:
+	if concentration != null and not has_flag("trance"):
+		concentration.end("fell asleep")
+
+
+## Long Rest (2024 glossary): all HP back, Temporary HP gone, Exhaustion -1, every resource refilled, Concentration
+## ended by the sleep (and a spell the 8-hour house rule held until now, Trance or not).
 func finish_long_rest() -> void:
 	if dead:
 		return
+	fall_asleep()
+	if concentration != null and concentration.until_long_rest:
+		concentration.end("the Long Rest")
 	for res_id: String in resources:
 		(resources[res_id] as Dictionary)["used"] = 0
 	for e: Effect in effects.duplicate():
@@ -1332,7 +1343,8 @@ func state_to_dict() -> Dictionary:
 	return {"hp": hp, "temp_hp": temp_hp, "ward_hp": ward_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
 		"resources_used": res, "effects": fx, "unhealable": unhealable,
-		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
+		"concentration": {"source": concentration.source_id, "name": concentration.name,
+			"rounds_left": concentration.rounds_left} if concentration != null else {}}
 
 
 func state_from_dict(d: Dictionary) -> void:
@@ -1358,6 +1370,13 @@ func state_from_dict(d: Dictionary) -> void:
 		effects.append(Effect.from_dict(ed as Dictionary))
 	var conc := d.get("concentration", {}) as Dictionary
 	concentration = Concentration.new(self, str(conc["source"]), str(conc["name"])) if not conc.is_empty() else null
+	# The time it had left. A save from before kept none and its Concentration never ran out (owner report 2026-10-13:
+	# Kip's Hex through days of Long Rests): the spell's whole duration from the load.
+	if concentration != null:
+		if compendium != null:
+			concentration.set_duration(compendium.spell_data(concentration.source_id).get("duration", {}) as Dictionary)
+		if conc.has("rounds_left"):
+			concentration.rounds_left = int(conc["rounds_left"])
 
 
 ## After loading several creatures: reattaches Concentration links (effects on anyone, cast by these casters).

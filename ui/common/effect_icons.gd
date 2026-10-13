@@ -20,8 +20,10 @@ static func entries(cr: Creature) -> Array[Dictionary]:
 	if conc != null and not conc.ended:
 		var sid := conc.source_id.get_slice(":", 0)
 		var spell := not Compendium.shared().spell_data(sid).is_empty()
-		out.append({"key": "conc:" + sid, "name": conc.name, "concentration": true,
-			"when": "Concentration" + ("" if conc.rounds_left < 0 else " · " + _rounds(conc.rounds_left)),
+		var left := "" if conc.rounds_left < 0 else " · " + _rounds(conc.rounds_left)
+		if conc.until_long_rest:
+			left = " · until a Long Rest"
+		out.append({"key": "conc:" + sid, "name": conc.name, "concentration": true, "when": "Concentration" + left,
 			"icon": Icons.spell(sid) if spell else Icons.feature(sid)})
 		seen["spell:" + sid] = true
 		seen["feature:" + sid] = true
