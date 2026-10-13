@@ -1,9 +1,11 @@
 extends FightSeriesCase
-## The Yester Hill summit, the Wizard of Wines' climax, held to the owner's bar (2026-10-13: 2 wins in 8 for the
-## autopilot's four pregens at level 6 and up, 3 in 8 at levels 3-5, timeouts counted as losses), for each way the party
-## can reach the fight, standing where walking in sets it off, with Ruxandra stepping aside as her conversation ends.
+## The Yester Hill summit, the Wizard of Wines' climax, held to the owner's bar (2026-10-13 18:05: the test party playing
+## as he does, smites, Spirit Guardians and Fireball, wins about 5 times in 8 on Balanced, timeouts counted as losses),
+## for each way the party can reach the fight, standing where walking in sets it off, with Ruxandra stepping aside as her
+## conversation ends. The ways earned with a check are a little easier (6 in 8: the druids scared off, the circle broken,
+## struck first from the gully), Kostin's warning a little harder (4); the tests allow one win either way of 5.
 ## The owner found it far too easy after driving the druids off with Intimidation (2026-10-12): Wintersplinter came
-## alone with six twig blights and fell in two rounds. The broken circle has the plain fight's line-up at every level.
+## alone with six twig blights and fell in two rounds.
 
 
 ## Where Ruxandra speaks first (approach 10): the party up the hill path, or round from the back gully.
@@ -11,13 +13,12 @@ const UP_THE_PATH: Array[Vector2i] = [Vector2i(16, 17), Vector2i(16, 18), Vector
 const FROM_THE_GULLY: Array[Vector2i] = [Vector2i(10, 17), Vector2i(9, 18), Vector2i(8, 19), Vector2i(7, 19)]
 
 
-## About the owner's target for `level` (2 in 8 at 6 and up, 3 at 3-5), one win either way.
+## The owner's 5 wins in 8, one either way.
 func _held(level: int, flags: Array[String], at: Array[Vector2i]) -> void:
 	speakers_step_aside = true
-	var target := 2 if level >= 6 else 3
 	var wins := await _series("yester_hill_gulthias_tree", 12, level, "summit_ritual", [1, 2, 3, 4, 5, 6, 7, 8], flags, [], [], at)
-	assert_true(wins >= target - 1, "the summit can be won at level %d %s (%d/8)" % [level, flags, wins])
-	assert_true(wins <= target + 1, "the summit stays hard at level %d %s (%d/8)" % [level, flags, wins])
+	assert_true(wins >= 4, "the summit can be won at level %d %s (%d/8)" % [level, flags, wins])
+	assert_true(wins <= 6, "the summit stays hard at level %d %s (%d/8)" % [level, flags, wins])
 
 
 ## Walking up the path or round from the gully, the party is where the series starts when Ruxandra turns to speak.
@@ -106,3 +107,9 @@ func test_struck_first_at_level_5() -> void:
 
 func test_kostin_warned_them_at_level_5() -> void:
 	await _held(5, ["kostin_fled"], UP_THE_PATH)
+
+
+## Religion breaks the circle and only Ruxandra stays: a little easier than the plain fight.
+func test_the_circle_broken_at_levels_5_to_7() -> void:
+	for level: int in [5, 6, 7]:
+		await _held(level, ["yester_circle_broken"], UP_THE_PATH)

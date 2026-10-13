@@ -243,3 +243,22 @@ func test_flying_up_can_be_taken_back() -> void:
 	assert_eq(c.altitude, 0)
 	assert_eq(c.movement_left, left)
 	assert_true(e.events.slice(mark).any(func(ev: Dictionary) -> bool: return str(ev["type"]) == "altitude"), "the token comes back down")
+
+
+## A flying foe on the floor with a railing between it and every hero (the roc at the Tsolenka bridge, 2026-10-13: it sat
+## on its side of the chasm until the round cap) rises 5 ft and flies over; one that can walk round doesn't bother.
+func test_a_flying_foe_rises_over_a_railing_to_reach_a_hero() -> void:
+	var e := TestCombat.encounter(["##########", "#........#", "#........#", "#========#", "#........#", "#........#", "##########"], 3)
+	var hero := TestCombat.hero(e, "ilse_varga", Vector2i(6, 5), 5)
+	var griffon := TestCombat.foe(e, "griffon", Vector2i(2, 1))
+	TestCombat.start_with(e, griffon)
+	e.run_ai_turn()
+	assert_true(griffon.altitude > 0, "it took off")
+	assert_true(e.distance(griffon, hero) <= 5, "and came over the railing to the hero: %s" % griffon.cell)
+	var e2 := TestCombat.encounter(["##########", "#........#", "#........#", "#=======.#", "#........#", "#........#", "##########"], 3)
+	TestCombat.hero(e2, "ilse_varga", Vector2i(6, 5), 5)
+	var walker := TestCombat.foe(e2, "griffon", Vector2i(2, 1))
+	TestCombat.start_with(e2, walker)
+	walker.movement_left = 10
+	e2.run_ai_turn()
+	assert_eq(walker.altitude, 0, "a gap in the railing it can reach in time: no need to fly up")

@@ -1511,7 +1511,7 @@
       "trigger": "enter_area:larders_hall_of_bones",
       "final_battle": "castle_ravenloft_hall_of_bones",
       "lair": true,
-      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him.",
+      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him. Four of his spawn take the places at the foot of the table.",
       "surprise": "",
       "monsters": [
         {
@@ -1519,7 +1519,8 @@
           "cell": [
             37,
             18
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "skeleton",
@@ -1566,6 +1567,70 @@
           "cell": [
             32,
             17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            17
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            19
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            17
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            19
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            38,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            38,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            37,
+            16
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            37,
+            20
           ],
           "name": "Guest of Bone"
         }

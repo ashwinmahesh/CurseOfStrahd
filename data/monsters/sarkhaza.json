@@ -20,8 +20,8 @@
   "ac_note": "natural armor, scales gone dull",
   "initiative": 4,
   "hp": {
-    "average": 225,
-    "dice": "18d12+108"
+    "average": 200,
+    "dice": "16d12+96"
   },
   "speed": {
     "walk": 20

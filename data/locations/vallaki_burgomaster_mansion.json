@@ -801,7 +801,8 @@
             3,
             11
           ],
-          "name": "Izek Strazni"
+          "name": "Izek Strazni",
+          "hp": 145
         },
         {
           "monster": "warrior_veteran",

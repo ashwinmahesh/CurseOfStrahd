@@ -57,7 +57,7 @@
     },
     {
       "id": "test_of_strength",
-      "summary": "On a night road, once the party is level 7, he steps out of the fog with wolves to see what they can do, and leaves after a few rounds or when hurt.",
+      "summary": "On a night road, once the party is level 7, he steps out of the fog with wolves to see what they can do, and fights until he's beaten, then goes.",
       "trigger": {
         "on": [
           "travel"
@@ -86,9 +86,10 @@
             ],
             "withdraw": {
               "who": "strahd_von_zarovich",
-              "at_hp_below": 100,
-              "after_rounds": 3,
-              "flag": "strahd_withdrew"
+              "at_hp_below": 1,
+              "flag": "strahd_withdrew",
+              "say": "Enough. You have earned the road tonight. Do not waste it.",
+              "speaker": "strahd"
             },
             "after": "strahd/visits:test_after"
           }
@@ -122,7 +123,8 @@
             "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich"
+                "monster": "strahd_von_zarovich",
+                "hp": 110
               },
               {
                 "monster": "swarm_of_bats"
@@ -130,9 +132,10 @@
             ],
             "withdraw": {
               "who": "strahd_von_zarovich",
-              "at_hp_below": 120,
-              "after_rounds": 2,
-              "flag": "strahd_withdrew"
+              "at_hp_below": 1,
+              "flag": "strahd_withdrew",
+              "say": "Keep her warm for me. I will come back for what is mine.",
+              "speaker": "strahd"
             },
             "after": "strahd/ireena:after_fight"
           }
@@ -166,7 +169,8 @@
             "text": "Strahd steps down from the sill as if onto a stair, and the bats come in behind him.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich"
+                "monster": "strahd_von_zarovich",
+                "hp": 200
               },
               {
                 "monster": "swarm_of_bats"
@@ -174,9 +178,10 @@
             ],
             "withdraw": {
               "who": "strahd_von_zarovich",
-              "at_hp_below": 120,
-              "after_rounds": 2,
-              "flag": "strahd_withdrew"
+              "at_hp_below": 1,
+              "flag": "strahd_withdrew",
+              "say": "Walls and prayers. How touching. I will come back for her.",
+              "speaker": "strahd"
             },
             "after": "strahd/ireena:after_fight"
           }

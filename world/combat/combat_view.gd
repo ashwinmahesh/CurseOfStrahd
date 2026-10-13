@@ -2085,6 +2085,16 @@ func _play_events() -> void:
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
 					_narrate(str(ev["narration"]), null, vt.combatant)
+				if str(ev.get("say", "")) != "":
+					# Its parting line (Strahd leaving a visit, owner 2026-10-13): spoken as it goes, and the fight waits for
+					# it, so it doesn't end on a cut.
+					hud.refresh_log()
+					var secs := VoiceOver.say(str(ev.get("speaker", "")), str(ev["say"]))
+					if secs > 0.0:
+						barks.hush()
+					await get_tree().create_timer(maxf(secs, 2.0) + 0.3).timeout
+					if _closed or not is_inside_tree():
+						return
 				if vt != null and str(ev.get("left", "")) == "fell":
 					# Over the edge: it drops out of sight.
 					var drop := create_tween()
