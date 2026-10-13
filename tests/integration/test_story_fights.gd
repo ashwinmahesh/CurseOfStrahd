@@ -36,7 +36,9 @@ func test_the_cellar_dig_at_level_6() -> void:
 	await _held("wizard_of_wines_cellar", "cellar_dig", DIG_DOOR)
 
 
-## Kostin at the press with the Mash, four druids and six vine blights; the party just inside the door.
+## Kostin at the press with the Mash, three druids and six vine blights; the party just inside the door. 3 in 8, one
+## druid lighter than the exact 2: with four, the phase 5 playthrough's party lost the press house on every reload once
+## an ally's square stopped slowing them (2026-10-13).
 func test_the_press_house_at_level_6() -> void:
 	await _held("wizard_of_wines_press_house", "press_house_mash", [])
 

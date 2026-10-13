@@ -913,11 +913,10 @@ keepers had three ways of going down to her safely, and each one is a lair trick
 
 - **Boss: Sarkhaza** (data/monsters/sarkhaza.json, `source.book: custom`, built down from the 2025 Monster Manual's
   adult red dragon, drawn with the draconic spirit's sprite at her own height, `art_height`): Huge dragon, AC 18,
-  200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
+  225 HP (200 before 2026-10-13), Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
   DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
-  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is (220 HP in this
-  fight, 2026-10-13), the autopilot wins 2 of 8 at level 10 and loses three or four party members a fight; with all
-  three tricks it wins 4 of 4 and loses one or two; unchained at level 11, 4 in 8.
+  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins 2 of 8 at level 10 and loses three or four party members a fight; with all
+  three tricks it wins 4 of 4 and loses one or two; unchained at level 11 (245 HP), 3 in 8.
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
   cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
   sluice). The autopilot wins both at level 10, losing about one party member a fight.
