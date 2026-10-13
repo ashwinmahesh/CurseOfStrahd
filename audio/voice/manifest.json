@@ -6033,13 +6033,6 @@
   "recipe": "efd7d52c86",
   "text": "You again. Gate's open. Everything's open. The Abbot doesn't believe in locks, except on the wards. He believes in those a great deal."
  },
- "clovin_belview/4e5faa7f2751b229": {
-  "chars": 261,
-  "direction": "[warm, comic, grateful]",
-  "model": "eleven_v3",
-  "recipe": "efd7d52c86",
-  "text": "She said to give you these. Her eighth gift. Before the wings he tried boots. She floated about on the ceiling for a year, and we used her to fetch things off the top shelf. She said you'd know what to do with them. She said you'd been very kind about the wire."
- },
  "clovin_belview/51e891ba54ed660a": {
   "chars": 168,
   "model": "eleven_v3",
@@ -6052,6 +6045,13 @@
   "model": "eleven_v3",
   "recipe": "efd7d52c86",
   "text": "And Lark. Little Lark, my cousin's girl, the one with the voice. Every night after the last bell she goes over the wall like a cat, and every morning before the first she's back in her bed with wax on her fingers."
+ },
+ "clovin_belview/5b1c33574a259e54": {
+  "chars": 290,
+  "direction": "[warm, comic, fond]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "She said to give you these. Her eighth gift. Before the wings he tried boots. An hour up, and then down she'd come, wherever she was, so we used her to fetch things off the top shelf, quick as we could. She said you'd know what to do with them. She said you'd been very kind about the wire."
  },
  "clovin_belview/5b483eb02625e2c4": {
   "chars": 107,
@@ -49537,6 +49537,12 @@
   "recipe": "dd92281f92",
   "text": "The billy goat makes his feelings about you known, at speed."
  },
+ "narrator/64ff4322484a9b83": {
+  "chars": 89,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "What is left of Vasilka lies where she fell, in the torn dress, her careful seams undone."
+ },
  "narrator/6501c04db599cb05": {
   "chars": 155,
   "model": "eleven_v4",
@@ -51540,12 +51546,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns."
- },
- "narrator/72eb1a771d0da235": {
-  "chars": 149,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "One board under the card cabinet lifts at a touch. Beneath it, a silver medallion on a chain. Gustav Durst never lost at cards, and now you know why."
  },
  "narrator/72f56292268a2f13": {
   "chars": 109,
@@ -55807,6 +55807,12 @@
   "recipe": "dd92281f92",
   "text": "The names are pilgrims who died on the abbey road, and under the newest stone someone left a ring for the last of them."
  },
+ "narrator/929d8b90d3dcb64d": {
+  "chars": 95,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "She lies on the bier in her wedding dress with her hands folded, and she doesn't open her eyes."
+ },
  "narrator/92a66c41bd97e4d8": {
   "chars": 83,
   "model": "eleven_v4",
@@ -58765,6 +58771,12 @@
   "recipe": "dd92281f92",
   "text": "The walls of this crypt are scratched with sigils from floor to ceiling, as if someone wanted to be very sure about something."
  },
+ "narrator/a86427974f26aa7c": {
+  "chars": 238,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One board under the card cabinet lifts at a touch. Beneath it, a velvet pouch holding two crystal lenses. Through them the faint marks on the backs of Gustav's cards stand out plain. Gustav Durst never lost at cards, and now you know why."
+ },
  "narrator/a88da3fd50674970": {
   "chars": 131,
   "model": "eleven_v4",
@@ -61098,6 +61110,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You push the dust aside with your sleeve. Under it the altar cloth is still white."
+ },
+ "narrator/babbaf87bb37a49c": {
+  "chars": 57,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The sheet lies drawn up over her face, where you left it."
  },
  "narrator/babdf31fa1869508": {
   "chars": 134,
