@@ -1006,7 +1006,7 @@
       "final_battle": "castle_ravenloft_catacombs",
       "lair": true,
       "surprise": "",
-      "text": "The black horse lifts its head from the manger, and the man beside it turns around.",
+      "text": "The black horse lifts its head from the manger, and the man beside it turns around. Two pale shapes step out of the empty stalls behind him.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",

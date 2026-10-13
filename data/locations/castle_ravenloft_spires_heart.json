@@ -176,7 +176,7 @@
       "when": "",
       "final_battle": "castle_ravenloft_heart_of_sorrow",
       "lair": true,
-      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below.",
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
       "surprise": "",
       "flag": "spires_final_battle_fought",
       "monsters": [
@@ -312,14 +312,15 @@
       "id": "heart_strahd_test",
       "trigger": "flag:heart_of_sorrow_shattered",
       "when": "not flag.strahd_heart_tested and not (quest.strahds_lair >= confronted) and not final_room:castle_ravenloft_heart_of_sorrow",
-      "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you.",
+      "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you. On the stair behind him, two empty suits of armour turn their helms toward you.",
       "surprise": "",
       "flag": "strahd_heart_tested",
       "withdraw": {
         "who": "strahd_von_zarovich",
-        "at_hp_below": 110,
-        "after_rounds": 1,
-        "flag": "strahd_heart_tested"
+        "at_hp_below": 1,
+        "flag": "strahd_heart_tested",
+        "say": "You have broken my heart. Come up, then, and let us finish this properly.",
+        "speaker": "strahd"
       },
       "monsters": [
         {
@@ -328,7 +329,22 @@
             8,
             3
           ],
-          "name": "Strahd von Zarovich"
+          "name": "Strahd von Zarovich",
+          "hp": 350
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            7,
+            3
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            8,
+            2
+          ]
         }
       ]
     }

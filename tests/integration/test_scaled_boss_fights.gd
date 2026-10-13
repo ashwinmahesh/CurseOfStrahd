@@ -163,12 +163,14 @@ func test_vladimir_at_strahds_tomb_at_level_10() -> void:
 	await _held("castle_ravenloft_catacombs_strahd", 10, "cat_oathbreakers", STRAHDS_TOMB, 4, 6, ["cat_keepers_defeated"])
 
 
-## Old Bonegrinder's bakery counter; Marina's grave on its island; Lysaga's kitchen; Exethanter's shelves; Vosk's vault.
+## Old Bonegrinder's bakery counter; Marina's grave on its island; Lysaga's kitchen; Exethanter's shelves; Vosk's vault;
+## the west end of the Tsolenka bridge.
 const BAKERY_COUNTER: Array[Vector2i] = [Vector2i(15, 11), Vector2i(14, 12), Vector2i(13, 13), Vector2i(12, 14)]
 const MARINAS_GRAVE: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector2i(8, 15), Vector2i(9, 15)]
 const LYSAGAS_KITCHEN: Array[Vector2i] = [Vector2i(11, 5), Vector2i(10, 6), Vector2i(9, 7), Vector2i(8, 8)]
 const EXETHANTERS_SHELVES: Array[Vector2i] = [Vector2i(23, 5), Vector2i(22, 6), Vector2i(21, 7), Vector2i(20, 8)]
 const VOSKS_VAULT: Array[Vector2i] = [Vector2i(19, 21), Vector2i(19, 20), Vector2i(19, 19), Vector2i(19, 18)]
+const ROC_BRIDGE: Array[Vector2i] = [Vector2i(13, 18), Vector2i(12, 19), Vector2i(11, 20), Vector2i(10, 20)]
 
 
 ## A hag split off from the coven is still about 4 or 5 fights in 8 (owner, 2026-10-13: "should be maybe 4/8 even if
@@ -208,6 +210,12 @@ func test_lysaga_in_her_kitchen_at_level_9() -> void:
 	await _held("berez_baba_lysagas_hut", 9, "lysaga_in_hut", LYSAGAS_KITCHEN, 4, 6)
 
 
+## The roc of Mount Ghakis (190 HP) and its mate (85) on the Tsolenka bridge, the four just onto it from the west: 4 of
+## 8, the harder side (with the mate at 78, 6).
+func test_the_roc_and_its_mate_at_level_9() -> void:
+	await _held("tsolenka_pass", 9, "roc_of_ghakis", ROC_BRIDGE, 4, 6)
+
+
 ## Exethanter among his shelves with six of the wardens' skulls.
 func test_exethanter_at_level_10() -> void:
 	await _held("amber_temple_library", 10, "exethanter_wrath", EXETHANTERS_SHELVES, 4, 6)
@@ -235,6 +243,55 @@ func test_strahd_woken_by_day_with_the_sunsword() -> void:
 	await _held("castle_ravenloft_catacombs_strahd", 10, "cat_daylight_waking", STRAHDS_TOMB, 4, 6)
 	prepare = Callable()
 	cleared_fights.clear()
+
+## At his table, the four where his dinner seats them; at the Heart of Sorrow, at the top of the stair.
+const DINNER_TABLE: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 6), Vector2i(8, 7), Vector2i(9, 8)]
+const HEART_STAIR: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector2i(7, 14), Vector2i(8, 13)]
+
+
+## The party draws on Strahd at his table, carrying the Sunsword: 375 HP, his bats and two suits of his armour; he fights
+## until he's beaten, then flees.
+func test_strahds_dinner_with_the_sunsword() -> void:
+	prepare = _sunsword
+	await _held("castle_ravenloft_main_floor", 10, "crg_dinner_affront", DINNER_TABLE, 4, 6)
+	prepare = Callable()
+
+
+## The heart broken, he comes up the stair at 350 HP with two suits of his armour, fights until he's beaten and flees.
+func test_strahd_at_the_broken_heart_with_the_sunsword() -> void:
+	prepare = _sunsword
+	await _held("castle_ravenloft_spires_heart", 10, "heart_strahd_test", HEART_STAIR, 4, 6)
+	prepare = Callable()
+
+
+## Strahd's visits before the castle (data/strahd/visits.json), played where the game plays them: he fights until he's
+## beaten, then flees with a parting line (owner, 2026-10-13), 5 in 8 for the sharp party without the Sunsword. On a night
+## road at level 7, at his book 144 HP with two dire wolves.
+func test_strahds_test_of_strength_at_level_7() -> void:
+	await _visit("test_of_strength", "road_ambush", 7)
+
+
+## At Ireena's window: the Blue Water Inn at level 5 (110 HP), the Krezkovs' house at level 7 (200 HP), a swarm of bats.
+func test_strahd_at_the_inn_window_at_level_5() -> void:
+	await _visit("ireena_at_the_inn", "vallaki_blue_water_inn", 5)
+
+
+func test_strahd_at_the_krezk_window_at_level_7() -> void:
+	await _visit("ireena_in_krezk", "krezk_burgomaster_house", 7)
+
+
+func _visit(visit_id: String, location: String, level: int) -> void:
+	custom_fight = ((StrahdPresence.visit(visit_id)["then"] as Array)[0] as Dictionary)["encounter"] as Dictionary
+	var wins := await _series(location, 23, level, str(custom_fight["id"]), SEEDS)
+	assert_true(wins >= 4 and wins <= 6, "%s is won 4 to 6 times in 8 (%d)" % [visit_id, wins])
+	custom_fight = {}
+
+
+static func _sunsword(st: StoryState) -> void:
+	var bearer := st.party[0]
+	bearer.add_item("sunsword")
+	bearer.attune("sunsword")
+	bearer.equip("sunsword", "main_hand")
 
 # --- Strahd's final battles -----------------------------------------------------------------------------------------
 

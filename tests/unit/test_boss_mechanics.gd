@@ -372,6 +372,26 @@ func test_a_foe_withdraws_at_its_threshold_without_dying_or_loot() -> void:
 	assert_false(e.legendary.no_loot(), "the wolf died, so there is something to find")
 
 
+## A foe that withdraws with a parting line (Strahd leaving his visits, owner 2026-10-13: "when he leaves, his sound bite
+## should play as the combat ends"): the line is logged and rides on its vanish event with whose voice speaks it.
+func test_a_foe_that_withdraws_says_its_parting_line() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss(), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	e.legendary.set_withdraw({"who": "test_boss", "at_hp_below": 1, "flag": "boss_tested_us", "say": "Until the next time.",
+		"speaker": "strahd"})
+	_order(e, [a, boss], [30, 10])
+	e.deal_damage(a, boss, [{"amount": 99, "type": "force"}], false, "test")
+	assert_false(e.legendary.departed.has(boss.id), "1 Hit Point left: it fights on to the end")
+	e.deal_damage(a, boss, [{"amount": 5, "type": "force"}], false, "test")
+	assert_eq(str(e.legendary.departed.get(boss.id, "")), "withdraw", "at 0 it goes")
+	var vanish := _kinds(e.events, "vanish")
+	assert_eq(vanish.size(), 1)
+	assert_eq(str(vanish[0]["say"]), "Until the next time.")
+	assert_eq(str(vanish[0]["speaker"]), "strahd")
+	assert_true(e.log.entries.any(func(en: Variant) -> bool: return str((en as Dictionary).get("text", "")).contains("Until the next time.")), "and in the log")
+
+
 func test_a_foe_withdraws_after_its_rounds() -> void:
 	var e := _field()
 	var boss := _add_boss(e, _boss(_shapes()), Vector2i(3, 3))

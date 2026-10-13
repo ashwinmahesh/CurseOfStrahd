@@ -85,11 +85,15 @@ gargoyle 450, black pudding 1,100, Barovian witch 100, swarm of bats or ravens 5
 | `spires_stair_watch` | spires | enter `spires_upper_stair` | 4 vampire spawn + 3 bat swarms (7,350) | 3 spawn + 3 swarms (5,550) | 2 spawn + 1 swarm (3,650) |
 | `heart_guardians` | heart | dialogue (striking the heart) | 2 animated armor + 2 helmed horrors (6,800, Low+) | 2 armor + 1 horror (5,700) | 1 armor + 1 horror (3,400) |
 | `heart_of_sorrow_final` | heart | enter `spires_heart_chamber`; `final_battle: castle_ravenloft_heart_of_sorrow`, `lair: true` | Strahd (350 HP) + a helmed horror + 2 of his spawn (17,700: above High; the heart's ward adds 50 HP unless shattered) | same | same |
-| `heart_strahd_test` | heart | `flag:heart_of_sorrow_shattered` | Strahd alone, `withdraw` after 1 round or below 110 HP | same | same |
+| `heart_strahd_test` | heart | `flag:heart_of_sorrow_shattered` | Strahd at 350 HP, `withdraw` when beaten (with a parting line), and 2 suits of his animated armour | same | same |
 | `cauldron_coven` | rooms | enter `spires_cauldron_room` | 8 witches + black pudding (1,900) | 6 witches + pudding (1,700) | 4 witches + pudding |
 | `escher_fight` | rooms | dialogue | Escher + 2 bat swarms (1,900) | same | same |
 | `peak_guardians` | roofs | enter `spires_north_peak` | 8 gargoyles (3,600) | 6 gargoyles (2,700) | 4 gargoyles |
 | `roost_swarm`, `roost_swarm_roused` | roost | open the great nest / the ravens roused in dialogue | 6 raven swarms (300) | same | same |
+
+His visit when the heart breaks is tuned like his other fights (owner, 2026-10-13): Strahd at 350 HP with two suits
+of his armour fights until he's beaten, then flees with a parting line; the sharp test party carrying the Sunsword wins 5
+of 8 (tests/integration/test_scaled_boss_fights.gd).
 
 Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
 wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
@@ -100,7 +104,7 @@ outside it, Charm on its bearer first). Without the Sunsword he stays near-unbea
 The castle is fought as a run without a safe rest, so several fights sit under Low on purpose; the gargoyles fight
 on a windy peak with two-square bridges and drops, the coven's pudding splits, and the witches are mostly a nuisance
 with nasty spells. **Strahd outside the final battle** appears once, in `heart_strahd_test`: he feels his heart break
-and comes up the well as mist to see who did it, fights one round and leaves (`withdraw`, flag
+and comes up the well as mist to see who did it, fights until he's beaten and flees (`withdraw`, flag
 `strahd_heart_tested`); it doesn't fire when the heart room is his drawn room (`final_room:`) or once
 `strahds_lair` is `confronted` or later.
 

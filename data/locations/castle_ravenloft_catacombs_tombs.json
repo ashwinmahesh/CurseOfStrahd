@@ -401,7 +401,7 @@
       "final_battle": "castle_ravenloft_sergeis_tomb",
       "lair": true,
       "surprise": "",
-      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns.",
+      "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns. Three of his spawn wait among the pillars, and wolves pad in out of the dark.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
@@ -509,7 +509,7 @@
       "final_battle": "castle_ravenloft_tomb_of_barov_and_ravenovia",
       "lair": true,
       "surprise": "",
-      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him.",
+      "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him. Two of his spawn come down out of the dark behind the tombs.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
