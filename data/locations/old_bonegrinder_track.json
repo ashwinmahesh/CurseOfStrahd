@@ -216,7 +216,7 @@
       ],
       "kind": "examine",
       "label": "A hut by the millrace",
-      "model": "crate",
+      "model": "cottage",
       "dialogue": "old_bonegrinder/the_fourth_sister:hut_prop",
       "when": "flag.mouse_met"
     },
