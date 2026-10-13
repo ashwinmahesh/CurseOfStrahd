@@ -23,7 +23,7 @@ const SPELLS: Array[String] = [
 	"pass_without_trace", "scorching_ray", "invisibility", "mirror_image", "blur", "suggestion", "heat_metal", "spike_growth",
 	"silence", "darkvision", "see_invisibility", "shining_smite", "summon_beast", "flaming_sphere", "cloud_of_daggers",
 	"magic_weapon", "enhance_ability", "find_steed", "prayer_of_healing", "barkskin", "mind_spike", "warding_bond",
-	"detect_thoughts", "knock", "levitate", "spider_climb", "calm_emotions", "darkness",
+	"knock", "levitate", "spider_climb", "calm_emotions", "darkness",
 	"spirit_guardians", "fireball", "counterspell", "hypnotic_pattern", "haste", "revivify", "daylight", "dispel_magic",
 	"mass_healing_word", "call_lightning", "conjure_animals", "fly", "slow", "remove_curse", "lightning_bolt",
 	"summon_undead", "summon_fey", "crusaders_mantle", "aura_of_vitality", "blinding_smite", "protection_from_energy",

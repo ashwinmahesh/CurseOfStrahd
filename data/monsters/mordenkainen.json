@@ -93,7 +93,7 @@
       "name": "Spellcasting",
       "kind": "spellcasting",
       "summary": "Int, DC 17, +9: a 16th-level wizard's spells, including his own named ones.",
-      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Fire Bolt, Light, Mage Hand, Prestidigitation, Shocking Grasp. 1st level (4 slots): Detect Magic, Identify, Magic Missile, Shield. 2nd level (3 slots): Detect Thoughts, Invisibility, Mirror Image. 3rd level (3 slots): Counterspell, Dispel Magic, Fly, Lightning Bolt. 4th level (3 slots): Mordenkainen's Faithful Hound, Mordenkainen's Private Sanctum, Stoneskin. 5th level (2 slots): Bigby's Hand, Wall of Force. 6th level (1 slot): Globe of Invulnerability, True Seeing. 7th level (1 slot): Mordenkainen's Magnificent Mansion, Mordenkainen's Sword. 8th level (1 slot): Mind Blank, Power Word Stun."
+      "text": "A 16th-level spellcaster using Intelligence (spell save DC 17, +9 to hit). Cantrips: Fire Bolt, Light, Mage Hand, Prestidigitation, Shocking Grasp. 1st level (4 slots): Detect Magic, Identify, Magic Missile, Shield. 2nd level (3 slots): Invisibility, Mirror Image. 3rd level (3 slots): Counterspell, Dispel Magic, Fly, Lightning Bolt. 4th level (3 slots): Mordenkainen's Faithful Hound, Mordenkainen's Private Sanctum, Stoneskin. 5th level (2 slots): Bigby's Hand, Wall of Force. 6th level (1 slot): Globe of Invulnerability, True Seeing. 7th level (1 slot): Mordenkainen's Magnificent Mansion, Mordenkainen's Sword. 8th level (1 slot): Mind Blank, Power Word Stun."
     }
   ],
   "spellcasting": {
@@ -114,7 +114,6 @@
         "shield"
       ],
       "3": [
-        "detect_thoughts",
         "invisibility",
         "mirror_image",
         "counterspell",

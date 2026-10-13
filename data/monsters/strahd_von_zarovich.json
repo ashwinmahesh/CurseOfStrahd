@@ -312,7 +312,7 @@
       "name": "Spellcasting",
       "kind": "spellcasting",
       "summary": "A 9th-level wizard (Int, DC 18, +10): Fog Cloud, Sleep, Mirror Image, Fireball, Animate Dead, Blight, Greater Invisibility, Polymorph, Animate Objects and more.",
-      "text": "Strahd casts spells as a 9th-level wizard, using Intelligence (spell save DC 18, +10 to hit with spell attacks). Cantrips (at will): Mage Hand, Prestidigitation, Ray of Frost. 1st level (4 slots): Comprehend Languages, Fog Cloud, Sleep. 2nd level (3 slots): Detect Thoughts, Gust of Wind, Mirror Image. 3rd level (3 slots): Animate Dead, Fireball, Nondetection. 4th level (3 slots): Blight, Greater Invisibility, Polymorph. 5th level (1 slot): Animate Objects, Scrying."
+      "text": "Strahd casts spells as a 9th-level wizard, using Intelligence (spell save DC 18, +10 to hit with spell attacks). Cantrips (at will): Mage Hand, Prestidigitation, Ray of Frost. 1st level (4 slots): Comprehend Languages, Fog Cloud, Sleep. 2nd level (3 slots): Gust of Wind, Mirror Image. 3rd level (3 slots): Animate Dead, Fireball, Nondetection. 4th level (3 slots): Blight, Greater Invisibility, Polymorph. 5th level (1 slot): Animate Objects, Scrying."
     }
   ],
   "spellcasting": {
@@ -330,7 +330,6 @@
         "sleep"
       ],
       "3": [
-        "detect_thoughts",
         "gust_of_wind",
         "mirror_image",
         "animate_dead",

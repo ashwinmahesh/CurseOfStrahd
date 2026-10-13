@@ -110,7 +110,7 @@ func caster_char(c: Combatant) -> Character:
 ## Points equal to the spell's level instead of a slot).
 const CLASS_CAST_OPTIONS := ["psychic_spells", "psionic_sorcery"]
 ## Aberrant Sorcery's Psionic Spells.
-const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "detect_thoughts", "dissonant_whispers", "mind_sliver", "hunger_of_hadar",
+const PSIONIC_SPELLS := ["arms_of_hadar", "calm_emotions", "dissonant_whispers", "mind_sliver", "mind_spike", "hunger_of_hadar",
 	"sending", "evards_black_tentacles", "summon_aberration", "raris_telepathic_bond", "telekinesis"]
 
 
