@@ -40,7 +40,11 @@ A visit (data/strahd/visits.json) has:
 
 Hooks (small calls into StrahdPresence): `world/game_root.gd` (`enter_location` → arrive, `travel` → each leg,
 `strahd_after_rest`, and the steps after a conversation and after a fight) and `ui/screens/rest_screen.gd` (calls
-`strahd_after_rest` when a Long Rest is done). A visit on the road stops the journey like a road event; the journey
+`strahd_after_rest` when a Long Rest is done). A rest visit that may come to blows (`StrahdPresence.may_fight`: a
+fight of its own or in its `then`) comes before the rest's benefits: story/long_rest.gd asks for it (`find`, which
+doesn't mark it) as the night ends, the rest stays broken while he's there, and once his visit is over (his fight
+won, or his words had without one) the party sleeps on, an hour more for a fight (the owner, 2026-10-13). A visit
+of words only comes after the rest, as before. A visit on the road stops the journey like a road event; the journey
 goes on when it's over (`StoryState.travel_resume`). Memory: `StoryState.flags["_strahd"]` (saved with the game).
 
 ## The visits

@@ -63,13 +63,19 @@ next camp, or the rest screen after a Long Rest elsewhere, for as long as its co
 
 The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
 Rest (story/long_rest.gd, the same rules as the screen's: 16 hours since the last, the place's risk, wards, Alarm).
-An interrupted night gives a Short Rest's benefits, and then the night's visitors come out of the dark, 25 to 40 ft
+An interrupted night (an hour in) brings the night's visitors out of the dark before the rest's benefits: the party
+fights with what it had when it lay down (the owner, 2026-10-13). They come 25 to 40 ft
 from the fire, from more than one side, or 15 to 60 ft off where a cramped house has no room that far
 (data/camp/night_visitors.json): a group for the party's milestone level and the lie of the land, a die picking among
 several. A town's streets and indoors have their own (the file's `settings`: cutthroats, the churchyard's dead and
 Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never a wolf pack in a house); in the wild,
 the region's land (forest, marsh, mountain, castle). Where none can be placed, the night is just restless, as the
-rest screen's is. Those waiting at camp keep back from the fight. Afterwards the party can try to sleep again. Each
+rest screen's is: a Short Rest's benefits for the hour slept, and the party can try to sleep again. Those waiting at
+camp keep back from the fight. Once it's won the party lies down again by itself and sleeps the night out, an hour
+more for the fight (the 2024 rules' resumed rest; the 16 hours since the last don't stop it), and the morning
+follows as after any night; with foes still waiting in the place, nobody sleeps again (story/long_rest.gd,
+`LongRest.resume`; game root `_sleep_again`). A visit of Strahd's that may come to blows comes before the rest's
+benefits too, and the night goes on the same way once he's gone. Each
 group is played to the end eight times by the test autopilot at the lowest level it comes for, with the party as an
 interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest), and is
 tuned to be won exactly as often in those eight (seeds 1-8) as the owner set for that level on 2026-10-13: 4 of 8 at

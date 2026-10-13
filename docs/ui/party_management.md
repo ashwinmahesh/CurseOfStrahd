@@ -123,7 +123,7 @@ prepared spells" button after an uninterrupted Long Rest.
 | Dead | portrait faded, "Dead" and the ways back (Revivify within 1 minute ...) |
 | Guest present | fifth column "Guest: directed by you in combat; level and gear come from the story" |
 | Rest unavailable | on the card that can't be taken, in words: for a Long Rest, the place's own `rest_text` ("Nobody sleeps beside that heartbeat."), "Enemies still prowl this place" or "the next can start in 7 hours 30 minutes"; for a Short Rest, "A fight here isn't over" or "Foes in sight (Ghoul, Ghast)" |
-| Interrupted rest | what was gained (a Short Rest's benefits after 1 hour of a Long Rest) |
+| Interrupted rest | the fight first, with nothing gained yet; once it's won, the rest goes on by itself and its morning follows. Where nothing can be fought or foes remain: what was gained (a Short Rest's benefits after 1 hour of a Long Rest) |
 | Controller | LB/RB tabs, LT/RT character, A on a number opens its breakdown |
 
 ## Acceptance
