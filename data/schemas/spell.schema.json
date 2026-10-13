@@ -627,6 +627,10 @@
         "spare_allies": {
           "type": "boolean"
         },
+        "camouflaged": {
+          "type": "boolean",
+          "description": "The area looks like plain ground (Spike Growth): the AI knows it's there only if it saw the area as it was cast or was hurt by it since (combat/ai/ai_hazards.gd)."
+        },
         "damage_type_choice": {
           "type": "string"
         },
