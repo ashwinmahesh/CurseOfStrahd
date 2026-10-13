@@ -745,6 +745,14 @@
             19,
             6
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            8
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
