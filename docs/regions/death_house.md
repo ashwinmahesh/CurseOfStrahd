@@ -106,8 +106,8 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 |---|---|---|---|---|---|---|
 | third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor"), 2 animated flying swords off the wall, a rat | 310 | 1 | Moderate (5 wins in 8; three swords were 3) |
 | third | `nursery_specter` | dialogue (fail or attack) | 3 specters ("The Nursemaid" and two more of the house's dead), a shadow, a giant rat | 725 | 1 | Above High (avoidable; 5 wins in 8) |
-| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack, an animated armor, 2 animated flying swords | 350 | 1 | Moderate+ (optional room; 5 wins in 8) |
-| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects, 2 bats | 720 | 2 | Moderate+ (optional; 4 wins in 8, the harder side of 5: one bat was 6, an eighth swarm 1) |
+| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack, an animated armor, an animated flying sword, a giant rat | 325 | 1 | Moderate (optional room; 4 wins in 8, the harder side: without the rat, 6; since flyers rise over railings, two swords were 3) |
+| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects, a rat | 710 | 2 | Moderate+ (optional; 5 wins in 8) |
 | dungeon 1 | `larder_grick` | enter `dh_larder` | 2 gricks, a swarm of rats | 950 | 2 | High (optional room; 5 wins in 8: one grick alone was 8, three 0) |
 | dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 5 ghouls, a rat | 1,010 | 2 | Above High (on the way to the shrine and the Dursts, off the way down; 5 wins in 8) |
 | dungeon 1 | `shrine_shadows` | dialogue (take the statue's orb) | 7 shadows, 2 rats | 720 | 2 | Moderate+ (optional; 5 wins in 8) |
@@ -126,7 +126,7 @@ the harder side and the steps either way. The house's rats and bats are the fine
 back to back with no rest, and with five swords on the third floor the Phase 3 playthrough's drained level 2 party lost
 all eight tries.
 
-Critical path at level 1: the armor (310), plus the nursemaid (725, avoidable) and the storage room (350, optional).
+Critical path at level 1: the armor (310), plus the nursemaid (725, avoidable) and the storage room (325, optional).
 Critical path at level 2: no fight, only the spiked pit (stair foot, crypts, well, pit passage, dining hall, stair
 down). The grick, the ghouls, the shrine, the mimic and the Dursts are all off that route, as the book's dungeon is: the
 deadliest rooms are the ones a party chooses to open. The book's creatures are kept and there are more of them now

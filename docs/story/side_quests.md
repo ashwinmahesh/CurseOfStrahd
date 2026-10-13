@@ -203,8 +203,9 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
 
 - Props on the crossroads map: `grey_mare_milestone` (her, until the carriage comes) and `carriage_crossroads` (the
   carriage, until its escort is beaten). The pen's grey horse (`tser_horse_grey`) is gone while she's sold.
-- Fight `carriage_escort` (east of the junction): level 4 the lead horse (nightmare), a wight footman, 2 specters, 4
-  zombies (2,000 XP, High), plus Steaua as a second nightmare if she wasn't saved; level 5 adds a wight and a specter;
+- Fight `carriage_escort` (east of the junction): level 4 the lead horse (nightmare), a wight footman, 2 specters and a
+  zombie (1,850 XP, High; the sharp autopilot wins 5 of 8, 2026-10-13), plus Steaua as a second nightmare and three more
+  zombies if she wasn't saved; level 5 adds a wight and a specter;
   below 4 the lead horse at 50 HP with specters and zombies. An attention mark (`black_carriage`, +1).
 - Back at the camp Radu pays either way (`home` if she lived, given to Radu or Luminita; `mourned` if not): 120 gp of
   the castle's gold and a Rod of the Pact Keeper, +1 (uncommon).

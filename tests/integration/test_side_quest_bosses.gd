@@ -206,7 +206,7 @@ const HOARD_MOUTH: Array[Vector2i] = [Vector2i(12, 10), Vector2i(13, 10), Vector
 ## The count's keepers at the gate on Ghakis, met coming up the path: eight wights, three revenants and the
 ## chain-warden (a helmed horror).
 func test_the_keepers_of_ghakis_at_level_10() -> void:
-	speakers_step_aside = true
+	speakers_step_aside = false
 	var wins := await _series("ghakis_shoulder", 12, 10, "ghakis_keepers", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [],
 		[Vector2i(8, 14), Vector2i(9, 14), Vector2i(8, 15), Vector2i(9, 15)])
 	assert_true(wins >= 4 and wins <= 6, "the keepers fall in 4 to 6 of 8 (%d)" % wins)
@@ -215,7 +215,7 @@ func test_the_keepers_of_ghakis_at_level_10() -> void:
 ## The vent gallery, through the hot door: the Vent-Fire (a fire elemental), two burnt keepers (flameskulls) and three
 ## keepers (wights).
 func test_the_vent_fire_at_level_10() -> void:
-	speakers_step_aside = true
+	speakers_step_aside = false
 	var wins := await _series("ghakis_lair", 12, 10, "vent_fire", [1, 2, 3, 4, 5, 6, 7, 8], [], [], ["ghakis_hot_door"],
 		[Vector2i(17, 17), Vector2i(18, 17), Vector2i(18, 18), Vector2i(19, 17)])
 	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
@@ -250,7 +250,7 @@ const KHAZAN_DOORS: Array[String] = ["khazan_study_door_w", "khazan_study_door_e
 ## The First and Second Visitors (a banshee and a wraith), five remembered knights (ghosts), five visitors (specters) and
 ## two more wraiths.
 func test_the_remembered_at_level_10() -> void:
-	speakers_step_aside = true
+	speakers_step_aside = false
 	var wins := await _series("khazan_undercroft", 12, 10, "remembered", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], KHAZAN_STAIR)
 	assert_true(wins >= 4 and wins <= 6, "the remembered fall in 4 to 6 of 8 (%d)" % wins)
 
@@ -285,7 +285,7 @@ const EYE_STAIR: Array[Vector2i] = [Vector2i(25, 21), Vector2i(26, 21), Vector2i
 
 ## Two woken sleepers (amber golems) and ten dream gazers: 4 of 8, the harder side (with four gazers, 6).
 func test_the_hall_of_sleepers_at_level_10() -> void:
-	speakers_step_aside = true
+	speakers_step_aside = false
 	var wins := await _series("amber_deep", 12, 10, "dreamed_eyes", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], EYE_STAIR)
 	assert_true(wins >= 4 and wins <= 6, "the sleepers fall in 4 to 6 of 8 (%d)" % wins)
 

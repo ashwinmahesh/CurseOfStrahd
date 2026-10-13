@@ -1011,17 +1011,10 @@
           ]
         },
         {
-          "monster": "bat",
+          "monster": "rat",
           "cell": [
             11,
-            2
-          ]
-        },
-        {
-          "monster": "bat",
-          "cell": [
-            12,
-            1
+            3
           ]
         }
       ],

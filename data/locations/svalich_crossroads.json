@@ -1125,27 +1125,6 @@
             18,
             11
           ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            20,
-            10
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            16,
-            12
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            21,
-            13
-          ]
         }
       ],
       "surprise": "",
