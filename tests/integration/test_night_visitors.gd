@@ -5,7 +5,9 @@ extends TestCase
 ## Rest benefits. Every fight finishes, and each group is tuned to be won exactly as often in the eight as the owner
 ## wants for the level it's played at (2026-10-13, target_wins): 4 of 8 at levels 1-2, 3 at levels 3-5, 2 from level 6.
 ## The test allows one win either way (DRIFT), so a change to dice or the autopilot elsewhere doesn't turn it red; a
-## group off by two or more needs tuning again. The wild's
+## group off by two or more needs tuning again. Each is also tuned so the party pays for its wins: 2 to 3 heroes down
+## per win on average (the owner's rule), printed with each group but not asserted, as the other fight series
+## (FightSeriesCase) do. The wild's
 ## groups are played in an open field; a town's and indoors' in a real village and a real house, from the camp the
 ## party makes there.
 

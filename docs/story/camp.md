@@ -75,7 +75,8 @@ tuned to be won exactly as often in those eight (seeds 1-8) as the owner set for
 levels 1-2, 3 at levels 3-5, 2 from level 6 (tests/integration/test_night_visitors.gd, `target_wins`; a timeout would
 count as a loss, and fails the test besides). Groups are played at levels 1, 4 and 7, so they're tuned to 4, 3 and 2
 wins. A change to how fights roll their dice can move a count, so the test allows one win either way (`DRIFT`): it
-fails only when a group drifts by two or more, and then the group needs tuning again. The wild's groups are
+fails only when a group drifts by two or more, and then the group needs tuning again. Each group is also tuned to
+cost the party 2 to 3 heroes down per win on average (printed by the test, not asserted, like the other fight series). The wild's groups are
 played in an open field; the town's in the Village of Barovia and the indoor ones
 in the burgomaster's mansion, from the camp the party makes on arriving there.
 
