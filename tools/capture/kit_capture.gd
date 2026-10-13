@@ -40,6 +40,12 @@ const SHOTS := {
 	"hall_turned": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]], "yaw": 1},
 	"abbey_l": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[14, 12], [15, 12], [14, 13], [15, 13]],
 		"look": [22, 8], "dist": 20.0},
+	# The Abbey's walls on its shelf 15 ft up (owner report 2026-10-13: they started high in the air): the gate from the
+	# switchback, and the west wall from the courtyard with the camera turned.
+	"abbey_gate": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[9, 22], [10, 22], [9, 23], [10, 23]], "look": [9, 19],
+		"dist": 16.0},
+	"abbey_west_wall": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[8, 11], [9, 11], [8, 12], [9, 12]], "look": [4, 9],
+		"dist": 16.0, "yaw": 1},
 	"argynvostholt_front": {"loc": "argynvostholt", "hour": 12, "cells": [[20, 9], [21, 9], [20, 10], [21, 10]],
 		"look": [20, 4], "dist": 18.0},
 	"argynvostholt_stable": {"loc": "argynvostholt", "hour": 12, "cells": [[30, 22], [31, 22], [30, 23], [31, 23]],
