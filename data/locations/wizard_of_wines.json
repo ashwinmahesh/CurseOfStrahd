@@ -1406,7 +1406,7 @@
             27,
             26
           ],
-          "hp": 198
+          "hp": 215
         },
         {
           "monster": "vine_blight",
@@ -1456,6 +1456,13 @@
             28,
             22
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            38,
+            26
+          ]
         }
       ],
       "surprise": "",
@@ -1476,19 +1483,12 @@
             27,
             26
           ],
-          "hp": 110
+          "hp": 95
         },
         {
           "monster": "vine_blight",
           "cell": [
             26,
-            22
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            36,
             22
           ]
         },
@@ -1503,6 +1503,13 @@
           "monster": "needle_blight",
           "cell": [
             34,
+            26
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            40,
             26
           ]
         }

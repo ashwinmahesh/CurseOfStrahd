@@ -746,8 +746,7 @@
           "cell": [
             19,
             6
-          ],
-          "hp": 138
+          ]
         },
         {
           "monster": "needle_blight",
@@ -830,7 +829,14 @@
             19,
             6
           ],
-          "hp": 48
+          "hp": 52
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            24,
+            8
+          ]
         }
       ],
       "surprise": "",

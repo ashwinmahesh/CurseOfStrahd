@@ -584,7 +584,7 @@
             4
           ],
           "name": "Druid overseer",
-          "hp": 40
+          "hp": 38
         },
         {
           "monster": "vine_blight",
@@ -683,13 +683,6 @@
           "cell": [
             22,
             5
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            25,
-            2
           ]
         }
       ],
