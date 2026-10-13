@@ -1263,7 +1263,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 130
+          "hp": 165
         },
         {
           "monster": "druid",
@@ -1514,7 +1514,7 @@
             18,
             12
           ],
-          "hp": 150
+          "hp": 155
         },
         {
           "monster": "druid",
