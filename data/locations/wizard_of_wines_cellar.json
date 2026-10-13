@@ -394,7 +394,8 @@
           "cell": [
             20,
             2
-          ]
+          ],
+          "hp": 55
         },
         {
           "monster": "druid",
@@ -409,6 +410,20 @@
           "cell": [
             22,
             5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            28,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            6
           ]
         }
       ],
@@ -563,6 +578,15 @@
       "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig.",
       "monsters": [
         {
+          "monster": "druid",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "Druid overseer",
+          "hp": 38
+        },
+        {
           "monster": "vine_blight",
           "cell": [
             20,
@@ -595,6 +619,70 @@
           "cell": [
             19,
             11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            23,
+            11
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            3
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            10
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            10,
+            3
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            10
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            6
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            2
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            5
           ]
         }
       ],
