@@ -192,7 +192,8 @@
             20,
             5
           ],
-          "name": "Strahd von Zarovich"
+          "name": "Strahd von Zarovich",
+          "hp": 350
         },
         {
           "monster": "swarm_of_bats",
@@ -214,6 +215,14 @@
             17,
             5
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            5
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     }

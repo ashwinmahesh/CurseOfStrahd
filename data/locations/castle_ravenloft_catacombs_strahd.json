@@ -226,7 +226,8 @@
           "cell": [
             11,
             11
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "vampire_spawn",
@@ -302,7 +303,8 @@
           "cell": [
             11,
             13
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "swarm_of_bats",
@@ -317,6 +319,14 @@
             16,
             9
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            13
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -361,6 +371,14 @@
             15,
             8
           ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            10,
+            9
+          ],
+          "hp": 80
         }
       ]
     }

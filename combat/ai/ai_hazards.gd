@@ -7,6 +7,9 @@ extends RefCounted
 ## Intelligence is above MINDLESS_INT heeds the ones it knows of (AiBrain): it walks round them, attacks from outside
 ## them, leaves one it starts in, and goes in only when no foe can be reached any other way. Zombies, beasts, oozes and
 ## plants walk straight in, and so does anyone made to move (Command, Transfix, Turn Undead).
+## Sunlight is dangerous ground too for a creature it burns (Sunlight Hypersensitivity: Strahd and his spawn, owner
+## 2026-10-13): the squares a Sunsword, a Daylight or a Sunbeam lights brightly, where it would start its turn burning
+## and fight at Disadvantage.
 ## What it knows: an area it can see, or one it stands in. Spike Growth is camouflaged (2024; its zone's `camouflaged`):
 ## only those who could see the area as it was cast, or were hurt by it since, know it's there (SpellZones keeps them
 ## in the area's `known_by`). A trap is known once the party has found it.
@@ -15,6 +18,9 @@ extends RefCounted
 const MINDLESS_INT := 3
 ## A condition the ground would put on a creature (Web's Restrained, Grease's Prone) weighs as this much damage.
 const CONDITION_COST := 5.0
+## Sunlight Hypersensitivity's burn at the start of a turn, and what fighting at Disadvantage in it weighs as.
+const SUNLIGHT_BURN := 20.0
+const SUNLIGHT_DISADVANTAGE := 5.0
 ## A save takes some of the harm away: the expected harm of a hit with a save is the full harm times this.
 const SAVE_SHARE := 0.75
 ## Prismatic Wall's layers, all at once.
@@ -37,7 +43,7 @@ class View:
 	## squares, enter: a hit on stepping in, end: a hit on ending a turn there, hit: that hit's expected harm, once: it
 	## hits at most once a turn, used: it already hit this creature this turn, step: harm for every square walked inside
 	## (Spike Growth), start: harm as its next turn starts there (Hunger of Hadar's cold, a burning web), inside: the
-	## creature stands in it now}.
+	## creature stands in it now, sun: it is sunlight that burns it}.
 	var places: Array[Dictionary] = []
 	## The squares its walk keeps out of: every place it isn't already standing in (EncounterMovement.reachable_for).
 	var avoid: Dictionary = {}
@@ -76,6 +82,14 @@ class View:
 				total += float(p["start"])
 		return total
 
+	## The sunlight burn waiting for it on `cell` as its next turn starts (Sunlight Hypersensitivity), 0 when none.
+	func sun_burn(cell: Vector2i) -> float:
+		var burn := 0.0
+		for p in places:
+			if bool(p.get("sun", false)) and (p["touch"] as Dictionary).has(cell):
+				burn = maxf(burn, float(p["start"]))
+		return burn
+
 	## Whether its space on `cell` touches none of the dangerous ground.
 	func clear(cell: Vector2i) -> bool:
 		for p in places:
@@ -106,6 +120,7 @@ func read(c: Combatant) -> View:
 		_zone(v, c, o, turn)
 	_fires(v, c, turn)
 	_traps(v, c)
+	_sunlight(v, c)
 	if v.places.is_empty():
 		return null
 	for p in v.places:
@@ -236,6 +251,36 @@ func _traps(v: View, c: Combatant) -> void:
 			harm *= SAVE_SHARE
 		if harm > 0.0:
 			_place(v, c, t["cells"] as Array, {"enter": true, "hit": harm})
+
+
+## The bright sunlight that burns `c` (Sunlight Hypersensitivity), from every light source shedding it: none on a sunlit
+## map, where there's nowhere out of it.
+func _sunlight(v: View, c: Combatant) -> void:
+	var e := enc()
+	if e.sunlit or e.monster_actions.sunlight(c) != "hypersensitivity":
+		return
+	for o in e.spells.zones.live():
+		var l := o.rules.get("light", {}) as Dictionary
+		if not bool(l.get("sunlight", false)):
+			continue
+		var src := o.cell
+		if str(o.rule("light_on", "")) == "caster" or o.follows_caster:
+			var cc := e.get_c(o.caster_id)
+			if cc != null:
+				src = cc.cell
+		elif str(o.rule("light_on", "")) == "target":
+			var tt := e.get_c(str(o.rule("light_target", "")))
+			if tt != null:
+				src = tt.cell
+		var k := int(l.get("bright", 0)) / CombatGrid.FEET
+		var lit: Array[Vector2i] = []
+		for dx in range(-k, k + 1):
+			for dy in range(-k, k + 1):
+				var cell := src + Vector2i(dx, dy)
+				if e.grid.in_bounds(cell) and e.grid.distance_ft(src, 1, cell, 1) <= int(l.get("bright", 0)) \
+						and not e.spells.zones.magical_darkness(cell):
+					lit.append(cell)
+		_place(v, c, lit, {"end": true, "hit": SUNLIGHT_DISADVANTAGE, "start": SUNLIGHT_BURN, "sun": true})
 
 
 ## Adds a place on `raw` squares to `v`, with the squares where `c`'s space would touch it.

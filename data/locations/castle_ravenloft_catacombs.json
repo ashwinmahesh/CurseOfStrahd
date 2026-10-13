@@ -1013,7 +1013,8 @@
           "cell": [
             29,
             15
-          ]
+          ],
+          "hp": 375
         },
         {
           "monster": "nightmare",
@@ -1036,6 +1037,22 @@
             30,
             17
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
+            15
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            14
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -1222,6 +1239,22 @@
           "cell": [
             40,
             20
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            22
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            39,
+            21
           ],
           "name": "A Door-Warden"
         }

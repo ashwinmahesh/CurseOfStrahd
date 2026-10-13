@@ -234,13 +234,20 @@ insects 100).
 |---|---|---|---|---|---|---|
 | `berez_scarecrows` | berez | enter `berez_scarecrow_field` (not guests / bargained / after Strahd) | 6 scarecrows, 2 wisps, 2 insect swarms (2300) | 5 scarecrows, wisp, 2 swarms (1650) | 4 scarecrows, 2 swarms (1000) | Low (a skirmish) |
 | `berez_drowned_lights` | berez | enter `berez_drowned_lane` at night | 3 wisps, 2 swarms (1550) | same | 2 wisps, swarm | Low |
-| `lysaga_in_hut` (critical path) | hut | dialogue | Lysaga 120 HP, 2 swarms (7400) | Lysaga 105 HP, 2 swarms | Lysaga 85 HP, swarm | Moderate |
-| `lysaga_at_monument` | berez | dialogue (the grave-lamp) | Lysaga 120, 2 swarms, 2 scarecrows (7800) | Lysaga 105, 2 swarms, scarecrow | Lysaga 85, 2 swarms | Moderate |
-| `creeping_hut_masterless` | berez | enter `berez_hut_stump` after the lure | the hut at its book 263 HP + 3 swarms of insects (7500) | 160 HP | 120 HP | Low-Moderate |
-| `lysaga_and_hut` | berez | dialogue (the challenge) | Lysaga 100 + hut 150 (14400 nominal) | 85 + 120 | 70 + 100 | above High: the very hard way |
+| `lysaga_in_hut` (critical path) | hut | dialogue | Lysaga 400 HP, 6 swarms, 4 scarecrows (8800) | Lysaga 105 HP, 2 swarms | Lysaga 85 HP, swarm | Moderate |
+| `lysaga_at_monument` | berez | dialogue (the grave-lamp) | Lysaga 180, 2 swarms, 4 scarecrows (8200) | Lysaga 105, 2 swarms, scarecrow | Lysaga 85, 2 swarms | Moderate |
+| `creeping_hut_masterless` | berez | enter `berez_hut_stump` after the lure | the hut at 195 HP + 3 swarms of insects (7500) | 160 HP | 120 HP | Low-Moderate |
+| `lysaga_and_hut` | berez | dialogue (the challenge) | Lysaga 100 + hut 110 (14400 nominal) | 85 + 120 | 70 + 100 | above High: the very hard way |
 | `lysaga_scorned` | berez | dialogue (after Strahd) | Lysaga at 60 HP, no hut | same | same | Low in effect |
 | `roc_of_ghakis` | tsolenka_pass | enter `tsolenka_bridge` by day | roc 190 HP (7200) | 160 HP | 130 HP | Low-Moderate |
 | `tsolenka_watch` | tower | dialogue | sergeant + 4 phantom warriors (3500) | same | sergeant + 3 | Low |
+
+Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced; foes with spells now cast their best one on Balanced, so Baba Lysaga
+throws her book spells). At level 9 her kitchen fight (Lysaga at 400 HP with six swarms and four scarecrows), the
+grave (180 HP with four scarecrows), the challenge with her hut (the hut at 110 HP) and the masterless hut (195 HP)
+each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). The roc still wins 8 of 8 at any Hit Points it was tried
+at, so its fight is left for a later pass.
 
 Shaping Baba Lysaga: together with her hut she is 14400 XP, deadly for level 9. The region separates them three
 ways (inside the hut the hut can't fight; the lure pulls her to the monument; Strahd breaks the hut), trims her hit

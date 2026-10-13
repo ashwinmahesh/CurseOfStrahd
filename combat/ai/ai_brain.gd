@@ -57,6 +57,10 @@ var _walks: Dictionary = {}
 ## Creature id -> the round it held back at the edge of dangerous ground with no way round it (_approach_square): the
 ## next round it goes in, so a foe never waits out a whole fight there.
 var _held_back: Dictionary = {}
+## Creature id -> {round, target, gap}: the round it last closed round dangerous ground on a target, and how far off it
+## was. Round after round with the gap no smaller (a cleric who keeps her Spirit Guardians on it as it circles), it
+## stops circling and strikes from in the ground.
+var _rounding: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -295,7 +299,8 @@ func finish_turn(c: Combatant, thought: Dictionary) -> CombatResult:
 	return CombatResult.new()
 
 
-## After the main action: skirmishers pull back (Deathless Agility's Disengage, or Shadow Stealth to hide).
+## After the main action: out of sunlight that burns it (Strahd and his spawn), or skirmishers pull back (Deathless
+## Agility's Disengage, or Shadow Stealth to hide).
 func _after_main(c: Combatant) -> CombatResult:
 	var e := enc()
 	if e.state != Encounter.State.ACTIVE or e.current() != c or not c.can_act():
@@ -310,6 +315,10 @@ func _after_main(c: Combatant) -> CombatResult:
 			if r.is_paused():
 				return e.then(r, func() -> CombatResult: return _pull_back(c))
 		e.monster_actions.bonus_action(c, "vanish")
+	# Out of sunlight that burns it, when no foe can strike it as it goes (combat/ai/boss_brain.gd).
+	var out: Variant = boss.leave_sun(c)
+	if out != null:
+		return out as CombatResult
 	return _pull_back(c)
 
 
@@ -602,7 +611,8 @@ static func companion(t: Combatant) -> bool:
 ## Picks this turn's plan: {kind: attack|approach|search|wait, target, cell, option, score, why}. With dangerous ground
 ## it knows of (combat/ai/ai_hazards.gd): an attack from a square clear of it, walked to round it, comes first; while a
 ## foe can still be reached round it, it closes on that one (or strikes a familiar or a steed in reach) rather than go
-## in; only when none can be does it go in, where the ground costs least. Such a plan carries the ground: `avoid` (the
+## in; only when none can be, or it has circled that one a round already and is no nearer (_circling), does it go in,
+## where the ground costs least. Such a plan carries the ground: `avoid` (the
 ## squares its walk goes round), or for an approach `hazards` (AiHazards.View) and `round` (a way round exists).
 func plan_turn(c: Combatant) -> Dictionary:
 	var e := enc()
@@ -672,8 +682,9 @@ func plan_turn(c: Combatant) -> Dictionary:
 		if foes.is_empty():
 			foes = near
 		round_to = hazards.reachable_foes(c, hz, foes, options, calm)
-		if round_to.is_empty() and str(risky["kind"]) == "attack":
+		if (round_to.is_empty() or _circling(c)) and str(risky["kind"]) == "attack":
 			best = risky
+			round_to = []
 	if str(best["kind"]) != "attack" and str(pet_best["kind"]) == "attack":
 		best = pet_best
 	if hz != null and round_to.is_empty() and str(best["kind"]) != "attack" and str(risky_pet["kind"]) == "attack":
@@ -693,6 +704,9 @@ func plan_turn(c: Combatant) -> Dictionary:
 		# Closing in round the dangerous ground on a foe it can reach that way, or, with none, the way it must.
 		var go0 := _approach_plan(c, round_to if not round_to.is_empty() else foes, prof)
 		go0.merge({"threats": threats, "hazards": hz, "round": not round_to.is_empty()}, true)
+		var gt := go0.get("target") as Combatant
+		if not round_to.is_empty() and gt != null:
+			_rounding[c.id] = {"round": e.round_no, "target": gt.id, "gap": e.distance(c, gt)}
 		return go0
 	if not visible.is_empty():
 		# Towards a hero rather than a familiar or a steed, while there's one in sight.
@@ -942,6 +956,16 @@ static func door_opener(c: Combatant) -> bool:
 	if c.creature.has_flag("swarm") or str(c.creature.creature_type) in ["beast", "ooze", "plant", "construct"]:
 		return false
 	return c.creature.ability_score(&"int") >= 3
+
+
+## Whether `c` closed round dangerous ground on a foe last round too and is no nearer it now (_rounding).
+func _circling(c: Combatant) -> bool:
+	var e := enc()
+	var last := _rounding.get(c.id, {}) as Dictionary
+	if last.is_empty() or int(last["round"]) != e.round_no - 1:
+		return false
+	var t := e.get_c(str(last["target"]))
+	return t != null and not t.is_down() and e.distance(c, t) >= int(last["gap"])
 
 
 ## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the

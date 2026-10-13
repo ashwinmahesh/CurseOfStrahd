@@ -327,9 +327,8 @@ been turned (Intimidation DC 14) or left at the inn.
 - Fight `greytooth_hunt`: level 6 Greytooth (171 HP), 2 dire wolves, 3 wolves; level 7 three dire wolves; level 8 adds
   a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`); with
   Szoldar turned or staying out of it, a castle wolf (werewolf) runs with the level 6 pack instead. The
-  autopilot (tests/integration/test_side_quest_bosses.gd) wins 1 of its eight level 6 tries (4 of 16 over seeds 1-16),
-  losing two party members in a win (2026-10-13, the owner's 2/8 target for 2024-rules heroes: full HP and a third wolf;
-  it won 5 of 8 at 140 HP).
+  autopilot (tests/integration/test_side_quest_bosses.gd) wins 5 of 8 at level 6 with Greytooth at 195 HP, or at 240
+  with Szoldar turned (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
   Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
@@ -367,8 +366,7 @@ count speaks to the party out of the painted woman's mouth.
   fight), a Frame Strike with reach and The Count's Regard (DC 16 Wis, 5d10 Psychic and Frightened), Hypnotic Pattern
   and Hold Person once a day, Legendary Resistance (2/day), and a look between turns. CR 8. Seven copies come off the
   walls with it (guardian portraits at 40 HP).
-- Fight `counts_likeness`. The autopilot wins 2 of 8 at level 9, losing two party members in a win (2026-10-13, the
-  owner's 2/8 target: seven copies at 40 HP instead of six at 30, when it won 5 of 8).
+- Fight `counts_likeness`, the canvas at 245 HP. The autopilot wins 5 of 8 at level 9 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Burned, every copy in Vallaki goes blank. Haralamb scrapes the count's paints into clean pots and prays over them:
   Nolzur's Marvelous Pigments (very rare) and 150 gp. Still: `sq_counts_likeness` (the canvas, first seen).
 
@@ -389,9 +387,8 @@ light, holding Sandu's hand. Somebody can turn back for her: take Bluto's boat o
   Cold Hands, a Lure that pulls a foe 20 ft toward her, Drowning Light (recharge 5-6, a 20-ft emanation, Restrained),
   Legendary Resistance (1/day), and a flicker between turns. CR 5. Four drowned lights (will-o'-wisps) come up with
   her.
-- Fight `lantern_girl` on the jetty (my entries on data/locations/lake_zarovich.json). The autopilot wins 1 of 8 at
-  level 5 (3 of 16 over seeds 1-16), losing two party members in a win (2026-10-13, for the owner's 3/8 target: two
-  more lights; with two it won 5 of 8, with three 10 of 16).
+- Fight `lantern_girl` on the jetty (my entries on data/locations/lake_zarovich.json). The autopilot wins 5 of 8 at
+  level 5 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Sabin's thanks, once Sandu's home: 40 gp and the dream-catcher Liliana made the week before, a Dream Weaver (rare).
   Still: `sq_lantern_girl` (her first meeting).
 
@@ -410,10 +407,9 @@ for seven years. **Escalation:** once something's been seen, go for the chain, a
   Manual's mimic, drawn with its sprite at Huge): Huge monstrosity, AC 14, 171 HP, two sticky pseudopods (reach 10,
   Grappled) and an acid bite, a spray of trinkets (recharge 5-6, Restrained), Legendary Resistance (1/day) and one
   more lash between turns. CR 7.
-- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon and a trinket (a mimic), 3,350 XP (the autopilot wins 3
-  of 8, the owner's target, and loses three party members a fight; with two trinkets it won 1 once an ally's square
-  stopped slowing the party, 2026-10-13); level 6 the Wagon at 250 HP and five trinkets (1 of 8; with three, at
-  its 171, 7); below 5 the Wagon at 110 HP and one.
+- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon at 220 HP and a trinket (a mimic), 3,350 XP; level 6 the
+  Wagon at 160 HP and five trinkets; below 5 the Wagon at 110 HP and one. The autopilot wins 5 of 8 at levels 5 and 6
+  (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - The belly: 300 gp of travellers' money and the gem the thing kept to see with, a Gem of Seeing (rare). Iosif goes
   back to the Tser Pool camp and sits on the ground.
 
@@ -437,10 +433,10 @@ hounds by name, and most of the pack lies down (`hounds_called`).
   spear (reach 10) or black arrows (1d8+5 and 2d8 necrotic), a horn that frightens (recharge 5-6, 60 ft), Legendary
   Resistance (2/day), and a loosed arrow or a step into the trees between turns. CR 9.
 - Fight `the_hunt` on the east road: level 8 the Huntsman at 240 HP, his mare (a nightmare) and 6 hounds (dire
-  wolves), or 3 hounds once they're called (the autopilot wins 2 of 8 either way; 2026-10-13, the owner's 2/8 target:
-  at 165 HP with 4 hounds, 2 called, it won 4 and 3 of 8);
-  level 9 the Huntsman at 250 HP, six hounds (five called); level 10 at 300 HP, eight (five called), each about 2 wins
-  in 8 (they won 6 or 7 of 8 at 165 HP); below 8, the quest's fallback, the Huntsman at 130 HP with 3 hounds (1).
+  wolves), or 3 hounds once they're called (the autopilot wins 5 of 8, and 6 of 8 with the hounds called
+  (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced));
+  level 9 the Huntsman at 290 HP, six hounds (five called); level 10 at 390 HP, eight (five called), each about 5 wins
+  in 8; below 8, the quest's fallback, the Huntsman at 130 HP with 3 hounds (1).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
 - His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
 
@@ -484,9 +480,8 @@ empty harness rises with him. With the dragon's last words from The Squire (`vla
   necrotic cold, a Covetous Glare that paralyzes (recharge 5-6, DC 16 Wis), Regeneration 10 that fire and radiant
   stop, Legendary Resistance (2/day), and a blow or a step between turns. CR 10. Three animated armours come with him
   ("An Escort's Harness").
-- Fight `gilded_knight` in the undercroft. The autopilot wins 2 of 8 at level 9 with the knight at 207 HP in this
-  fight (3 of 8 at his 178; 2026-10-13, the owner's 2/8) and 4 of 8 with the dragon's words, losing two or three party
-  members a fight.
+- Fight `gilded_knight` in the undercroft. The autopilot wins 5 of 8 at level 9 with the knight at 410 HP in this
+  fight (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced); the dragon's words make it easier.
 - In his armour: a Golden Idol of Good Fortunes (very rare). Then the tithe chest: send it down to the valley (the Order
   rides it out at Midwinter, or the party carries it if the knights are at rest; 250 gp, and Godrick, Kip, Liriel,
   Wren and Thistle approve), or keep it (1,200 gp, and they don't).
@@ -541,12 +536,10 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
   sprite): Large undead, AC 18, 150 HP, two grave-blade strokes (1d12+6 slashing and 1d8 necrotic, reach 10), Parry,
   Legendary Resistance (2/day) and a charge (one more stroke) between turns. CR 8.
 - Fight `bone_marshal` at the gate: the whole column (level 6 the marshal at 170 HP, 2 lieutenants as wights at their
-  full 82 HP and 6 skeleton riders; level 8 the marshal at 190 HP, a third wight and 2 phantom warriors; below 6 the
+  full 82 HP and 6 skeleton riders; level 8 the marshal at 270 HP, a third wight and 2 phantom warriors; below 6 the
   marshal at 110 HP, one wight, six riders), or only the marshal and his lieutenants once the riders stand down (level 8:
-  190 HP and three). Over seeds 1-8 the autopilot wins 1 of 8 against each of the column at levels 6 and 8 and the
-  marshal and three lieutenants at level 8, two or three party members down in a win: the harder side of the owner's
-  2/8 for 2024-rules heroes (2026-10-13), as no line-up step between lands on 2 (the column at level 6 won 3 of 8 with
-  the marshal at 150 or 160 HP).
+  190 HP and three). Over seeds 1-8 the autopilot wins 5 of 8 against each of the column at levels 6 and 8 and the
+  marshal and three lieutenants at level 8 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
 ## Old Bonegrinder's lane (level 6)
@@ -567,9 +560,8 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
 - **Boss: Granny Ash** (data/monsters/granny_ash.json, `source.book: custom`, from the 2025 Monster Manual's annis
   hag, drawn with the night hag's sprite): Large fey, AC 17, 184 HP, two iron claws (reach 10) and a bite, a Crushing
   Hug (recharge 5-6) that restrains and crushes, Legendary Resistance (2/day) and a rake between turns. CR 8.
-- Fight `granny_ash` on the lane: level 6 Granny at her full 184 HP, 3 dire wolves ("Granny's Dog") and 4 needle blights
-  (the autopilot wins 1 of 8, 4 of 16 over seeds 1-16, two or three party members down in a win; 2026-10-13 back up
-  from 155 HP, when it won 3 of 8, for the owner's 2/8 target); level 7 adds 2 needle and 2 vine blights; level 8 six needle blights and the hag garden's elm (a tree
+- Fight `granny_ash` on the lane: level 6 Granny at 145 HP, 3 dire wolves ("Granny's Dog") and 4 needle blights
+  (the autopilot wins 5 of 8 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced)); level 7 adds 2 needle and 2 vine blights; level 8 six needle blights and the hag garden's elm (a tree
   blight), 7,700 XP; below 6 Granny at 130 HP, one dog and 3 needle blights.
 - Endings (`mouse_fate`): `home` (named: Zamfira back with her mother, Ilka and Toma, on the step in the village),
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
@@ -597,11 +589,12 @@ a guest until Davian's report); otherwise he flies off and the party cuts the ro
   lash and a creeping move between turns. CR 8.
 - Fight `vine_mother` at the foot of the row: she rises right behind the Seventh Row, her branches in reach of the
   party at its basket, with the row's vines between them (the heroes reach her round its end, or shoot). Level 6 the
-  Vine Mother at 215 HP, 3 vine blights and 5 needle blights (4,450 XP); level 7 at 212 HP, four vine and six needle
-  blights; level 8 at 180 HP, five vine and six needle blights and the Sixth Row (a tree blight), 7,600 XP; below 6
-  the Vine Mother at 87 HP, a vine and 3 needle blights. From the basket (seeds 1-8) the autopilot wins 2 of 8 at levels
-  6 (with Adrian or without him), 7 and 8 and 3 at level 5, about three heroes down in a win (the owner's targets,
-  2026-10-13; measured with the vine blights' new Entangle aim, foes striking unseen heroes and opening doors).
+  Vine Mother at 200 HP, 3 vine blights and 5 needle blights (4,450 XP); level 7 at 136 HP, four vine and five needle
+  blights; level 8 at 200 HP, five vine and six needle blights and the Sixth Row (a tree blight), 7,600 XP; below 6
+  the Vine Mother at 101 HP, a vine and 3 needle blights. From the basket (seeds 1-8) the test party, playing as the
+  owner does (smites, Spirit Guardians, Fireball), wins 5 of 8 at levels 5 to 8 (the owner's 5 in 8 on Balanced,
+  2026-10-13); with Adrian along it wins 6 at levels 5 and 6, 5 at level 8 and 4 at level 7, where no setting made him
+  help.
 - Davian pays once: 250 gp and the wand the Wizard of Wines left in the press-house rack, a Wand of Fireballs (rare).
 
 ## Vallaki and Castle Ravenloft (level 10)
@@ -660,10 +653,9 @@ whether Lysaga's at home or not.
 - **Boss: the Rag Queen** (data/monsters/rag_queen.json, `source.book: custom`): Large construct, AC 16, 260 HP, two
   claws (3d8+6 slashing, Frightened), a glare (recharge 5-6, DC 16, Frightened and Paralyzed), Legendary Resistance
   (2/day), a rake between turns, and Regeneration 15 that fire stops. CR 10.
-- Fight `rag_queen` in the field: level 9 the queen at 230 HP, 2 drowned brides (banshees) and 4 straw grooms
+- Fight `rag_queen` in the field: level 9 the queen at 375 HP, 2 drowned brides (banshees) and 4 straw grooms
   (scarecrows); level 10 a third bride, 2 more grooms and a swarm of insects; below 9 the queen at 200 HP, one bride and
-  4 grooms. The autopilot wins 2 of 8 at level 9 (4 of 16 over seeds 1-16), losing about one party member in a win
-  (2026-10-13: at her full 260 HP, once an ally's square stopped slowing the party, it won none of seeds 1-3).
+  4 grooms. The autopilot wins 5 of 8 at level 9 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Dragos pays once: 500 gp of brides' dowries and a Dancing Sword (very rare, a longsword) Lysaga took off a knight.
 
 ### Clovin's Audience (`clovins_audience`, narrative/krezk/clovins_audience.dialogue; batch 2)
@@ -737,10 +729,10 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
   giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
   freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
   CR 11.
-- Fight `the_penitent` on the landing: level 10 the Penitent at 420 HP and 5 pilgrims' shadows (ghasts); level 11 at 600
-  HP and ten shadows; level 9 at 420 and four; below 9 the Penitent at 170 HP and three. At levels 9 and 10 the
-  autopilot wins 2 of 8 and at 11 1 of 8 (the harder side: with eight shadows it wins 3), three party members down in a win (2026-10-13, the owner's 2/8: at 210 HP, once an ally's square stopped slowing the party and foes
-  in the dark could be struck where they're heard, it won 7 of 8).
+- Fight `the_penitent` on the landing: level 10 the Penitent at 480 HP and 5 pilgrims' shadows (ghasts); level 11 at 590
+  HP and ten shadows; level 9 at 420 and four; below 9 the Penitent at 170 HP and three. What its fists can't reach it
+  pelts with ice torn from itself (Hurled Ice, 60/240 ft), so a hero fallen on the narrow landing no longer strands it.
+  The autopilot wins 5 of 8 at levels 9 and 10 and 4 of 8 at 11 (the harder side: at 575 HP, 6) (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
 
@@ -775,8 +767,8 @@ exchange for the runt (`given`: the quest fails and the companions disapprove), 
   claws, Pack Tactics, a howl that frightens (recharge 5-6), Legendary Resistance (2/day), and a bite or a lope
   between turns. CR 9.
 - Fight `grandsire` in Krezk's square: level 8 the Grandsire, 2 old wolves of the pack (werewolves) and 2 dire wolves,
-  6,800 XP (the autopilot wins 2 of 8 and loses two or three party members a fight); level 9 three werewolves and the
-  Grandsire at 225 HP (2 of 8; at 180 it won 4); level 7
+  6,800 XP, the Grandsire at 165 HP; level 9 three werewolves and the Grandsire at 150 HP (the autopilot wins 5 of 8 at
+  both (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced)); level 7
   one dire wolf fewer; below 7 the Grandsire at 140 HP with one of each.
 - Krezk's bounty, from Dmitri: 300 gp and the iron bands that have hung in the watch house for the wolf that never
   came, Iron Bands of Bilarro (rare).
@@ -798,8 +790,7 @@ never set or read, and The Frozen Pilgrims isn't touched.
   humanoid, AC 16, 135 HP (170 in this fight), an Ice Axe and an Amber Bolt, a Whiteout that blinds (recharge 5-6),
   Hold Person and Cone of Cold once a day, Legendary Resistance (2/day), and a bolt or a step between turns. CR 10.
   Two of his shadows stand up off the snow with him (shadows), and two of the ones he led up before (wraiths).
-- Fight `amber_guide` at the camp, the guide at 250 HP: the autopilot wins 2 of 8 at level 10, losing three party members
-  a fight (2026-10-13, the owner's 2/8: at 170 HP it won 6).
+- Fight `amber_guide` at the camp, the guide at 155 HP: the autopilot wins 5 of 8 at level 10 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Floarea, an herb-wife who smelled the sleep-root and told herself she was wrong, pours out the tea; without it the
   child will wake with only a cough. In the guide's pack: a Rod of Alertness (very rare) and 400 gp.
 
@@ -838,8 +829,8 @@ stays where he is and as he is; nothing here touches find_the_ally or his ally f
   (140 in this fight), two Thunderous Slams with 15-ft reach, Lightning on two creatures (recharge 5-6, DC 16 Dex) and a
   Whirlwind (recharge 4-6), a lair action as the evening's lightning lands, Legendary Resistance (1/day), and a gust
   or a slam between turns. CR 9. A squall comes with it (an air elemental at 60 HP).
-- Fight `forgotten_storm` on the mountain: the autopilot wins 2 of 8 at level 8, losing three party members a fight;
-  sent east first, at 110 HP, 5 of 8.
+- Fight `forgotten_storm` on the mountain, the storm at 240 HP: the autopilot wins 4 of 8 at level 8, the harder side
+  (at 237, 6) (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced); sent east first, at 110 HP, it's the easier fight.
 - In the glass where it stood: the brass censer the mage dropped on the road forty years ago, a Censer of Controlling
   Air Elementals (rare). The mage's thanks: 250 gp.
 
@@ -859,9 +850,8 @@ Lost Pages), made one of the count's spawn for holding the door while her master
   vampire spawn and mage, drawn with the vampire spawn's sprite): Medium undead, AC 16, 165 HP, claws with necrotic
   chill or arcane bolts of force, Slam the Door (recharge 5-6, a 30-ft cone that pushes), Regeneration 10 that radiant
   stops, Legendary Resistance (2/day), and a bolt or a step between turns. CR 12.
-- Fight `corvina` in her crypt: level 10 Corvina and two door-wardens (helmed horrors); named, she's down to 105 HP
-  with four (the autopilot wins 1 of 8 either way, losing three party members a fight: the harder side of the owner's 2,
-  as one door-warden fewer wins 5 and 3; 2026-10-13); level 9 and below, lighter.
+- Fight `corvina` in her crypt: level 10 Corvina and four door-wardens (helmed horrors); named, she's down to 105 HP
+  with four (the autopilot wins 4 of 8 as she is and 6 of 8 named (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced)); level 9 and below, lighter.
 - In her crypt: 500 gp in a currency nobody here has seen, and a Rod of Absorption (very rare). Her name goes on the
   crypt, and Mordenkainen has a line for it.
 
@@ -883,9 +873,8 @@ unawares.
   Chains with 10-ft reach that grapple and a burning Claw, The Chains Answer (recharge 5-6, three creatures within
   30 ft, DC 16 Str, 4d10 and Restrained), Magic Resistance, Legendary Resistance (2/day), and a lash or a wingbeat
   between turns. CR 11. Two of the ones who asked before come with it (wraiths, "One Who Asked").
-- Fight `querreth` on the south tower roof, Querreth at 240 HP: the autopilot wins 2 of 8 at level 10 caught unawares
-  (3 of 8 at 180, 2026-10-13), and 2 of 8 forewarned with him at 280 HP (5 at 180), losing about three party members a
-  fight.
+- Fight `querreth` on the south tower roof, Querreth at 335 HP: the autopilot wins 5 of 8 at level 10 caught unawares,
+  and 7 of 8 forewarned with him at 280 HP (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Then the party sits out the night with him and the sun comes up (`sq_escher_dawn`, a new still). Either he watches it
   and burns, and leaves a red velvet coat on the stones with the count's present in the pocket, or (Persuasion DC 15)
   the party talks him into waiting for a dawn the count isn't in, and he goes back down to his chair. Either way: a
@@ -921,10 +910,10 @@ keepers had three ways of going down to her safely, and each one is a lair trick
 
 - **Boss: Sarkhaza** (data/monsters/sarkhaza.json, `source.book: custom`, built down from the 2025 Monster Manual's
   adult red dragon, drawn with the draconic spirit's sprite at her own height, `art_height`): Huge dragon, AC 18,
-  225 HP (200 before 2026-10-13), Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
+  200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
   DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
-  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins 2 of 8 at level 10 and loses three or four party members a fight; with all
-  three tricks it wins 4 of 4 and loses one or two; unchained at level 11 (265 HP), 2 in 8.
+  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins 5 of 8 at level 10; with all
+  three tricks it wins 4 of 4; unchained at level 11 (212 HP), 4 in 8, the harder side (at 210, 6) (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
   cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
   sluice). The autopilot wins both at level 10, losing about one party member a fight.
@@ -951,7 +940,7 @@ wall, or the party keeps it.
   (185 in this fight), vulnerable to thunder, two Slams (reach 10, 3d10+6), the Ground Shrugs (recharge 5-6, four
   creatures within 30 ft, DC 17 Dex, 4d10 and prone), Legendary Resistance (2/day), a Slam or a burrow between turns,
   and lair actions as the quarry's faces come down and the floor opens round someone's legs. CR 11. He comes alone.
-- Fight `grandfather_stone` in the quarry: the autopilot wins 3 of 8 at level 10, losing three party members a fight.
+- Fight `grandfather_stone` in the quarry, the Stone at 220 HP: the autopilot wins 5 of 8 at level 10 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Rewards: the overseer's pay chest under the wagon, 400 gp, either way. The heart carried home: the captive's
   father's Belt of Giant Strength (Stone Giant) (very rare). The heart kept: it cools into a Stone of Controlling Earth
   Elementals (rare), and the mountain folk leave without a word.
@@ -976,13 +965,12 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
   Touch and a burst, Fireball and Lightning Bolt twice a day, Cone of Cold and Hold Monster once, Disrupt Life,
   Legendary Resistance (3/day), a burst, a step or Disrupt Life between turns, and his undercroft on initiative 20
   (every name he knows, whispered; the cold of the lake overhead). CR 14.
-- **A phased fight.** While the name stands (`khazan_named`): 250 HP, two Visitors (specters), his lair; he can't be
+- **A phased fight.** While the name stands (`khazan_named`): 210 HP, two Visitors (specters), his lair; he can't be
   destroyed, and below 30 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
-  `khazan_withdrawn`). The autopilot drives him off 2 times in 8 at level 10, losing three party members a fight
-  (2026-10-13, the owner's 2/8: going at 60 HP he was driven off 4 times).
+  `khazan_withdrawn`). The autopilot drives him off 5 times in 8 at level 10 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
   Unmade at the door (Athletics DC 16, or chisel it out over a day), he forms again in his chair without it
-  (`khazan_unmade`): 210 HP, four Visitors and a remembered knight (a wraith), no lair, no way back; given his name to
-  die with, he starts the fight surprised. The autopilot wins 2 of 8, losing three a fight (it won 6 with two Visitors). A party that works it out first can unmake the name before
+  (`khazan_unmade`): 125 HP, four Visitors and a remembered knight (a wraith), no lair, no way back; given his name to
+  die with, he starts the fight surprised. The autopilot wins 6 of 8, the easier fight for unmaking him. A party that works it out first can unmake the name before
   they ever fight him.
 - The hall of names (`remembered`): a banshee, two ghosts, five specters and a wraith. The autopilot wins 3 of 4 at level 10.
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
@@ -1005,8 +993,7 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
   Bite and two long Pseudopods that grapple, a Spray of Pages (recharge 5-6, three creatures, DC 15 Dex, acid),
   Legendary Resistance (2/day), a reach or a shift between turns, and lair actions as the shelves come down and the
   lake comes in. CR 9. Two reading chairs come with it (mimics).
-- Fight `the_index` in the library, the Index at 185 HP: the autopilot wins 2 of 8 at level 9, losing three party
-  members a fight (2026-10-13, the owner's 2/8: at 135 HP it won 4).
+- Fight `the_index` in the library, the Index at 185 HP: the autopilot wins 5 of 8 at level 9 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
 - Xaver comes down off his bookcase for the first time in three hundred years and gives the party the one book he
   saved: a Manual of Quickness of Action (very rare). The desk's drawers give up eleven readers' purses, 350 gp.
 
@@ -1033,8 +1020,8 @@ forgets it, it can't remember itself. Everyone who has helped him remember anyth
   from the gazer, the beholder's sprite small with `art_height`).
 - **Lair tricks** from the wardens' book: **the mirrors** in the hall turned toward its chamber, and its dreamed eyes
   fight their reflections (no lair, no gazer beside it); **the lullaby** sung to the end (Performance DC 15, one try),
-  and it starts the fight half back in its amber (surprised, 135 HP). The autopilot wins 2 of 4 against it as it is
-  at level 10 (about three down, 10 rounds), and 3 of 4 with both (about two down).
+  and it starts the fight half back in its amber (surprised, 100 HP). As it is it fights at 135 HP: the autopilot wins
+  5 of 8 at level 10 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced), and more with the wardens' ways.
 - The hall of sleepers (`dreamed_eyes`): a woken amber golem at 130 HP and four dream-gazers. The autopilot wins all
   four at level 10, losing about one.
 - Rewards: its hoard, 700 gp and a Spellguard Shield (very rare), the wardens' shield made against it. Telling
@@ -1055,15 +1042,14 @@ Kostin stands aside (and stays to keep the hill afterwards); Ruxandra fights bes
 down (Persuasion DC 15, one try).
 
 - **Boss: the Ash Effigy** (data/monsters/ash_effigy.json, `source.book: custom`, built up from the tree blight, drawn
-  with its sprite at Huge): Huge plant, AC 15, 175 HP (below level 8, 150, or 140 with Zorica or Ruxandra beside it; at
-  level 8, 270 alone with five embers, 190 with a druid beside it), two Ash Fists (reach 15), Choking Ash (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and
+  with its sprite at Huge): Huge plant, AC 15, 175 HP (below level 8, 150, or 155 with Zorica or Ruxandra beside it; at
+  level 8, 190 alone with four embers, 205 with a druid beside it), two Ash Fists (reach 15), Choking Ash (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and
   Blinded), Regeneration 10 that cold stops, immune to fire and vulnerable to cold, Legendary Resistance (2/day), and
   a fist or a step between turns. CR 8. Embers (twig blights) crawl after it.
-- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 2
-  of 8 at level 7 with Zorica or Ruxandra beside it (five embers), and 2 of 8 at level 8 alone or with either of them
-  (the owner's 2/8, 2026-10-13; it spends both legendary uses on fists since legendary-uses, and foes strike unseen
-  heroes whose squares they know; 2026-10-13 retuned once an ally's square no longer slowed the party, when the lone
-  effigy at 212 HP won 6 of 8), losing three a fight.
+- Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The test party,
+  playing as the owner does, wins 5 of 8 at levels 7 and 8 with Zorica or Ruxandra beside it (five embers at level 7,
+  four at 8), and 6 of 8 at level 8 alone, a little easier as Kostin's doubts earned (the owner's 5 in 8 on Balanced,
+  2026-10-13).
 - Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
 
 ### The Barrow on Yester Hill (`the_barrow_on_yester_hill`, narrative/yester_hill/the_barrow.dialogue; batch 7)

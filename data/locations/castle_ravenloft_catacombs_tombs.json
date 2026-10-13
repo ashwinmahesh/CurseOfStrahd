@@ -408,7 +408,8 @@
           "cell": [
             6,
             5
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "dire_wolf",
@@ -436,6 +437,37 @@
           "cell": [
             9,
             4
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            5
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            6
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            7,
+            5
           ]
         }
       ]
@@ -484,7 +516,8 @@
           "cell": [
             16,
             23
-          ]
+          ],
+          "hp": 400
         },
         {
           "monster": "specter",
@@ -506,6 +539,22 @@
             16,
             21
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            23
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            22
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     }

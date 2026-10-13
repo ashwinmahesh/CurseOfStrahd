@@ -2156,6 +2156,38 @@
             13
           ],
           "name": "Captain of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            22,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            23,
+            12
+          ],
+          "name": "Town guard"
         }
       ],
       "surprise": "",
@@ -2450,7 +2482,8 @@
             22,
             12
           ],
-          "name": "Izek Strazni"
+          "name": "Izek Strazni",
+          "hp": 225
         },
         {
           "monster": "warrior_veteran",
@@ -2697,7 +2730,8 @@
             22,
             12
           ],
-          "name": "Izek Strazni"
+          "name": "Izek Strazni",
+          "hp": 110
         },
         {
           "monster": "warrior_veteran",

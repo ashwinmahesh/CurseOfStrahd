@@ -177,7 +177,7 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 		half = str(s.get("save_success", "none")) == "half"
 	var cond := 0.0
 	for cid: Variant in s.get("conditions", []):
-		if t.creature.is_condition_immune(StringName(str(cid))):
+		if t.creature.is_condition_immune(StringName(str(cid))) or (str(s.get("id", "")) == "sleep" and not sleeps(t)):
 			continue
 		cond = maxf(cond, float(CONDITION_WORTH.get(str(cid), 0.2)))
 	var value := lands * (dmg + cond * _threat(t))
@@ -188,6 +188,12 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 	value += e.ai.tactics.target_adjust(t, value) * 0.5
 	# A familiar or a steed is worth little next to a hero: no area aimed for it, no single target while a hero's in reach.
 	return value * 0.1 if AiBrain.companion(t) else value
+
+
+## Whether Sleep can take `t` (spell_handlers.gd _sleep): not an elf's trance, the undead or a construct.
+static func sleeps(t: Combatant) -> bool:
+	return not (t.creature.is_condition_immune(&"exhaustion") or t.creature.has_flag("trance")
+		or t.creature.creature_type in [&"undead", &"construct"])
 
 
 ## Roughly the damage `t` deals in a turn: what a condition that costs it the turn is worth.

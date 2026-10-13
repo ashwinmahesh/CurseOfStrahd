@@ -186,7 +186,8 @@
             8,
             4
           ],
-          "name": "Strahd von Zarovich"
+          "name": "Strahd von Zarovich",
+          "hp": 350
         },
         {
           "monster": "helmed_horror",
@@ -195,6 +196,22 @@
             8
           ],
           "name": "Heart's Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },

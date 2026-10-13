@@ -12,6 +12,9 @@ var speakers_step_aside := false
 ## Fights at the location already won before this one starts (its loc state's encounters), for a fight the party can only
 ## reach through another (Lysaga's stump inside her scarecrow field): unset, every fight there is still to come.
 var cleared_fights: Array[String] = []
+## Run on the story once the party and flags are set, before the location loads (a Tarokka reading, a quest stage, a
+## treasure in a hero's hands): unset, nothing more.
+var prepare: Callable
 
 
 func after_each() -> void:
@@ -45,6 +48,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 		(GameState.story.loc_state(location)["doors"] as Dictionary)[d] = LocationView.DOOR_OPEN
 	for c in cleared_fights:
 		(GameState.story.loc_state(location)["encounters"] as Dictionary)[c] = true
+	if prepare.is_valid():
+		prepare.call(GameState.story)
 	GameState.story.location = location
 	if at.size() == GameState.story.party.size():
 		GameState.story.positions = at.duplicate()
