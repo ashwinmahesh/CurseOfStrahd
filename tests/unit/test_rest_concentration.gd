@@ -18,13 +18,14 @@ func _effects_of(cr: Creature, spell_id: String) -> Array[Effect]:
 	return out
 
 
-## Kip (a level 5 warlock: level 3 Pact Magic slots) hexes a foe in a fight: [the encounter, Kip, the foe].
+## Kip (a level 1 warlock: a level 1 Pact Magic slot, so an hour's Hex) hexes a foe in a fight: [the encounter, Kip,
+## the foe]. A higher slot lasts longer (test_slot_durations).
 func _kip_hexes() -> Array:
 	var e := TestCombat.open_field(2)
-	var kip := TestCombat.caster_with(e, ["hex"], Vector2i(2, 3), 5, "kip_smudgewick")
+	var kip := TestCombat.caster_with(e, ["hex"], Vector2i(2, 3), 1, "kip_smudgewick")
 	var foe := TestCombat.punching_bag(e, Vector2i(3, 3), 200)
 	TestCombat.start_with(e, kip)
-	var cast := e.spells.cast(kip, "hex", 3, [foe], Vector2.INF, Vector2.ZERO, {"choice": "str"})
+	var cast := e.spells.cast(kip, "hex", 1, [foe], Vector2.INF, Vector2.ZERO, {"choice": "str"})
 	assert_true(cast.ok, cast.reason)
 	assert_eq(kip.creature.concentration.source_id, "hex")
 	return [e, kip, foe]

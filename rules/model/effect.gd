@@ -120,7 +120,10 @@ static func duration_text(duration: Dictionary) -> String:
 	elif kind == "until_dispelled":
 		out = "Until dispelled"
 	if bool(duration.get("concentration", false)):
-		out = "Concentration, up to " + out.to_lower()
+		if until_long_rest(duration):
+			out = "Concentration, until your next Long Rest"
+		else:
+			out = "Concentration, up to " + out.to_lower()
 	return out
 
 

@@ -210,6 +210,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			spells.specials.duel_check_attack(c, tt)
 	var nums := spells.numbers(c, entry)
 	var conc: Concentration = null
+	# A higher slot can make it last longer (Hex, Hunter's Mark, the Dominates) or drop Concentration (Bestow Curse).
+	s = Spellcasting.at_slot(s, slot)
 	# Fey Reinforcements (Fey Wanderer 11): Summon Fey without Concentration, lasting 1 minute.
 	var fey_free := spell_id == "summon_fey" and CombatFeatures.has_feature(c, "fey_reinforcements") and bool(opts.get("no_concentration", true))
 	# Spirits of Ill Omen, Second Skin: some castings need no Concentration (RavenloftFeatures.skips_concentration).
@@ -219,7 +221,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		s["duration"] = unbound
 		e.log.add("info", "%s casts %s without Concentration" % [c.name(), s["name"]], c.id)
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) and not fey_free:
-		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 		spells.zones.prune()
 		spells._prune_sustained()
 	var slot_text := " (level %d slot)" % slot if level > 0 and slot > 0 else (" (free casting)" if use_free else "")
@@ -258,6 +260,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			dd["amount"] = mini(int(dd["amount"]) * 2, 24 * 60 if str(dd.get("kind", "")) == "minutes" else 24)
 		ctx["s"] = s_ext
 		if conc != null:
+			conc.set_duration(dd)
 			var steady := Effect.new("Extended Spell", &"feature", "extended_spell").with_modifier("advantage", {"on": "concentration"})
 			conc.attach(c.creature, steady)
 	var r := CombatResult.new()
@@ -324,7 +327,7 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	var e := enc()
 	if bool(opts.get("splintered", false)):
 		return CombatResult.fail("Splintered Summons requires casting with a spell slot")
-	var s := _comp().spell_data(spell_id)
+	var s := Spellcasting.at_slot(_comp().spell_data(spell_id), level)
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 	var why := "Not automated yet" if str(s.get("automation", "")) == "reference" else spells.economy_block(c, unit)
 	if why == "" and (c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c)):
@@ -344,7 +347,7 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		return CombatResult.new()
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
-		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 	e.log.add("spell", "%s casts %s%s" % [c.name(), s["name"], " (level %d)" % level if level > int(s.get("level", 0)) else ""], c.id)
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
