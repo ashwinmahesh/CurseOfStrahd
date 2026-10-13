@@ -965,7 +965,7 @@
             22,
             18
           ],
-          "hp": 135
+          "hp": 110
         },
         {
           "monster": "needle_blight",
@@ -1082,7 +1082,7 @@
             22,
             18
           ],
-          "hp": 100
+          "hp": 130
         },
         {
           "monster": "needle_blight",
@@ -1209,7 +1209,7 @@
             27,
             26
           ],
-          "hp": 180
+          "hp": 190
         },
         {
           "monster": "vine_blight",
@@ -1316,7 +1316,7 @@
             27,
             26
           ],
-          "hp": 212
+          "hp": 195
         },
         {
           "monster": "vine_blight",
@@ -1408,7 +1408,7 @@
             27,
             26
           ],
-          "hp": 215
+          "hp": 200
         },
         {
           "monster": "vine_blight",
@@ -1485,7 +1485,7 @@
             27,
             26
           ],
-          "hp": 87
+          "hp": 92
         },
         {
           "monster": "vine_blight",

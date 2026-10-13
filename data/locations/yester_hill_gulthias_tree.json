@@ -369,7 +369,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 160
+          "hp": 135
         },
         {
           "monster": "twig_blight",
@@ -472,7 +472,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 120
+          "hp": 100
         },
         {
           "monster": "twig_blight",
@@ -709,7 +709,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 80
+          "hp": 90
         },
         {
           "monster": "druid",
@@ -773,7 +773,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 125
+          "hp": 140
         },
         {
           "monster": "druid",
@@ -901,7 +901,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 170
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -965,7 +965,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 165
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -1035,7 +1035,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 160
+          "hp": 120
         },
         {
           "monster": "druid",
@@ -1116,7 +1116,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 50
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -1181,7 +1181,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 110
+          "hp": 100
         },
         {
           "monster": "druid",
@@ -1262,7 +1262,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 170
+          "hp": 150
         },
         {
           "monster": "druid",
@@ -1326,7 +1326,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 165
+          "hp": 150
         },
         {
           "monster": "druid",
@@ -1395,7 +1395,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 74
+          "hp": 84
         },
         {
           "monster": "druid",
@@ -1450,7 +1450,7 @@
             18,
             12
           ],
-          "hp": 220
+          "hp": 205
         },
         {
           "monster": "druid",
@@ -1582,7 +1582,7 @@
             18,
             12
           ],
-          "hp": 190
+          "hp": 205
         },
         {
           "monster": "druid",
@@ -1644,7 +1644,7 @@
             18,
             12
           ],
-          "hp": 140
+          "hp": 155
         },
         {
           "monster": "druid",
@@ -1714,7 +1714,7 @@
             18,
             12
           ],
-          "hp": 270
+          "hp": 230
         },
         {
           "monster": "twig_blight",
