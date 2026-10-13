@@ -609,20 +609,6 @@
             11
           ],
           "name": "Hooded Shade"
-        },
-        {
-          "monster": "bat",
-          "cell": [
-            26,
-            10
-          ]
-        },
-        {
-          "monster": "bat",
-          "cell": [
-            27,
-            11
-          ]
         }
       ],
       "text": "The shades will not let you leave so easily."

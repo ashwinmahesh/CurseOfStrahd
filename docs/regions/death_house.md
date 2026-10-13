@@ -113,7 +113,7 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 | dungeon 1 | `shrine_shadows` | dialogue (take the statue's orb) | 7 shadows, 2 rats | 720 | 2 | Moderate+ (optional; 5 wins in 8) |
 | dungeon 1 | `den_mimic` | open `durst_door` | 2 mimics ("The Door", "The Chest"), a ghast | 1,350 | 2 | Above High (5 wins in 8) |
 | dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) with a robed one and 2 giant rats from the larder; the "shaken" version 2 robed ones and 2 giant rats, and the Dursts surprised | 1,150 / 1,350 | 2 | Above High (5 wins in 8 each) |
-| dungeon 2 | `shades_harry` | dialogue (failed run) | 7 shadows, 2 bats | 720 | 2 | Moderate+ (5 wins in 8) |
+| dungeon 2 | `shades_harry` | dialogue (failed run) | 7 shadows | 700 | 2 | Moderate+ (6 wins in 8, the easier side: with two bats, 5, the Phase 3 playthrough's created party won but lost a hero every try) |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
 | ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
 | third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 2 animated flying swords (tuned down from 3) | 100 | 2 | Trivial |
