@@ -747,12 +747,11 @@
           ]
         },
         {
-          "monster": "druid",
+          "monster": "needle_blight",
           "cell": [
             15,
             8
-          ],
-          "name": "Druid of Yester Hill"
+          ]
         }
       ],
       "surprise": "",
