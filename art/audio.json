@@ -276,7 +276,8 @@
       "res://art/sourced/kevin_macleod/Duet Musette.mp3"
     ],
     "vineyard_freed": [
-      "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg"
+      "res://art/sourced/kevin_macleod/Lachaim.mp3",
+      "res://art/sourced/kevin_macleod/Bushwick Tarantella.mp3"
     ],
     "wildlands": [
       "res://art/sourced/kevin_macleod/Bump in the Night.mp3",
@@ -1454,6 +1455,8 @@
     "res://art/sourced/scott_buckley/Unraveling.mp3": -4.5,
     "res://art/sourced/kevin_macleod/Duet Musette.mp3": 2.1,
     "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg": -2.6,
+    "res://art/sourced/kevin_macleod/Lachaim.mp3": -2.5,
+    "res://art/sourced/kevin_macleod/Bushwick Tarantella.mp3": -3.6,
     "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3": -2.9,
     "res://art/sourced/kevin_macleod/Darkest Child.mp3": -3.3,
     "res://art/sourced/scott_buckley/Penumbra.mp3": -1.5

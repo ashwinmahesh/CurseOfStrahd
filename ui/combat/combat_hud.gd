@@ -99,6 +99,7 @@ var _odds_damage: Label
 var _tooltip_box: VBoxContainer
 var _prompt: PanelContainer
 var _prompt_title: Label
+var _prompt_callout: Label
 var _prompt_text: Label
 var _prompt_cost: Label
 var _prompt_rule: OptionButton
@@ -706,6 +707,12 @@ func _build_prompt() -> void:
 	box.add_child(_prompt_title)
 	_prompt_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_prompt_title.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
+	# What mustn't be missed, in red under the title (ReactionRequest.callout: a Critical Hit on Divine Smite's prompt).
+	_prompt_callout = _label("", 18, "vampire_red")
+	_prompt_callout.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_prompt_callout.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
+	_prompt_callout.visible = false
+	box.add_child(_prompt_callout)
 	_prompt_text = _label("", 16, "vellum")
 	_prompt_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_prompt_text.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
@@ -1883,6 +1890,8 @@ func show_prompt(req: ReactionRequest) -> void:
 		_refresh_hotbar()
 		_refresh_party()
 	_prompt_title.text = req.title
+	_prompt_callout.text = req.callout
+	_prompt_callout.visible = req.callout != ""
 	_prompt_words(req)
 	_prompt_use.text = "Use Reaction (A / Enter)" if req.spends_reaction else "Confirm (A / Enter)"
 	for child: Node in _prompt_targets.get_children():

@@ -9,6 +9,9 @@ set ireena_saw_marina
 cutscene marina_statue
 Narrator: Ireena stops at the foot of the mound. The statue has her face. Not a likeness: her face, the set of the jaw, the small frown.
 Ireena: I've never been here. I know I've never been here. So why do I know there are nine steps under that plinth?
+elif flag.ireena_met and not guest:ireena
+# The face, for a party that met Ireena but didn't bring her (Narrative Audit batch 3).
+Narrator: You know that face. The set of the jaw, the small frown: it is Ireena Kolyana's, cut in stone a long time before she was born.
 endif
 -> monument_menu
 
@@ -61,6 +64,8 @@ Narrator: She lies on a bier of white stone under a veil of lace, a girl of perh
 if guest:ireena
 Narrator: Ireena stands at the foot of the bier and doesn't move. The girl on it has her face, too.
 Ireena: He keeps finding us. Doesn't he. Over and over, he keeps finding us, and it never ends well for the girl.
+elif flag.ireena_met
+Narrator: Under the lace, the girl has Ireena's face too. Two of them now, a statue and a sleeper, and both of them his.
 endif
 -> bier_menu
 

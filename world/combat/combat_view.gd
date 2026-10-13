@@ -816,7 +816,9 @@ func _confirm_at() -> void:
 				return
 			var a := ma["action"] as Dictionary if bool(ma["ok"]) else _default_attack(c, t.combatant)
 			if a.is_empty():
-				hud.banner("No attack can reach %s from here" % t.combatant.name(), 1.6)
+				# Out of attacks says so, not that the foe is out of reach (owner, 2026-10-13).
+				var why := catalog.attack_blocker(c, t.combatant)
+				hud.banner(why if why != "" and not why.begins_with("Out of reach") else "No attack can reach %s from here" % t.combatant.name(), 1.6)
 				return
 			_perform(a, [t.combatant], Vector2.INF, Vector2.ZERO)
 		else:
@@ -1533,7 +1535,8 @@ func _update_hover() -> void:
 						first = x
 						break
 				var pv0 := catalog.attack_preview(c, first, o) if not first.is_empty() else {"title": o.name(), "lines": []}
-				hud.show_tooltip(str(pv0["title"]), pv0["lines"] as Array, ["Out of reach: move closer, or pick a ranged attack"], at)
+				var why0 := catalog.attack_blocker(c, o)
+				hud.show_tooltip(str(pv0["title"]), pv0["lines"] as Array, [why0 if why0 != "" else "Out of reach: move closer, or pick a ranged attack"], at)
 			else:
 				var pv := catalog.attack_preview(c, a, o)
 				hud.show_tooltip(str(pv["title"]), pv["lines"] as Array, [], at, str(pv.get("edge", "")))
