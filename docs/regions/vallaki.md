@@ -228,7 +228,7 @@ Izek are `warrior_veteran` (Izek with 95-110 HP), Lady Wachter's sons are `tough
 | `storeroom_spawn` | coffin maker | enter `storeroom` (spawn surprised) | 2 vampire spawn (3600, Moderate) | spawn + 2 rat swarms (1900, Moderate) | spawn at 50 HP |
 | `church_siege` | St. Andral's | `flag:church_vigil`, at night, bones missing | 2 vampire spawn + 2 bat swarms (3700, Moderate) | spawn + 2 bat swarms (1900, Moderate) | spawn at 55 HP + 1 swarm |
 | `wachter_cellar_cult` | Wachterhaus | enter `cellar` at night, not pledged to her | sons, 4 cultists, 3 hired swords, a shadow (2500, Low) | sons, 4 cultists, 1 hired sword (1000, Low) | sons, 3 cultists |
-| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek + 2 sergeants (2100, Low) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
+| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek (112 HP) + 3 sergeants (3,900, Moderate+) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
 | `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 3 hired swords, 2 captains (3300, Moderate); cult broken: 4 swords, captain, 2 knives (3300) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
 | `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 4 sergeants, captain, 2 guards (5,100, above High); without Izek (3350) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
 | `festival_izek_rampage` | town square | dialogue (town path) | Izek (112 HP), 3 sergeants, captain, 2 guards (4,400, High); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
@@ -241,10 +241,9 @@ Rictavio and the vestry. The festival fights follow the speech with no rest, so 
 
 Scaled for 2024-rules heroes (owner, 2026-10-13: 3 wins in 8 at level 5): over seeds 1-8 the four pregens on autopilot,
 standing beside Izek when he picks the fight, won the L5 `izek_duel` 8 of 8, `festival_izek_rampage` 8 of 8 and
-`festival_loyalists` 7 of 8. With Izek at his book 112 HP and more sergeants (the High budget, 4,400 at level 5) they win
-2, 3 and 4 of 8 (5 or 6 of 16 over seeds 1-16; tests/integration/test_scaled_boss_fights.gd). `izek_confrontation`
-in the mansion is left as it is for now: half its seeds stall at 30 rounds with a downed hero in the room's one-square
-door, so it waits on the stall fix before it's measured.
+`festival_loyalists` 7 of 8, and `izek_confrontation` in his room 14 of 16 once a downed hero in its one-square door no
+longer stalled it. With Izek at his book 112 HP and more sergeants (about the High budget, 4,400 at level 5) they win
+about 3 in 8 (tests/integration/test_scaled_boss_fights.gd).
 
 ## 8. Milestone
 

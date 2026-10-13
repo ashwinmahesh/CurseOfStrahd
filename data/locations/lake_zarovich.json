@@ -948,8 +948,7 @@
           "cell": [
             18,
             21
-          ],
-          "hp": 140
+          ]
         },
         {
           "monster": "dire_wolf",
@@ -978,6 +977,21 @@
             20,
             22
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            21
+          ],
+          "name": "Castle Wolf"
         }
       ],
       "surprise": "",

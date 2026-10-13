@@ -321,7 +321,8 @@ been turned (Intimidation DC 14) or left at the inn.
   Huge, AC 15, 171 HP, two 2d10+5 bites that knock prone, a recharging howl (DC 15 Wis or Frightened), Legendary
   Resistance (2/day) and one extra bite a round as a legendary action. CR 8.
 - Fight `greytooth_hunt`: level 6 Greytooth (171 HP), 2 dire wolves, 3 wolves; level 7 three dire wolves; level 8 adds
-  a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`). The
+  a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`); with
+  Szoldar turned or staying out of it, a castle wolf (werewolf) runs with the level 6 pack instead. The
   autopilot (tests/integration/test_side_quest_bosses.gd) wins 1 of its eight level 6 tries (4 of 16 over seeds 1-16),
   losing two party members in a win (2026-10-13, the owner's 2/8 target for 2024-rules heroes: full HP and a third wolf;
   it won 5 of 8 at 140 HP).
@@ -432,7 +433,8 @@ hounds by name, and most of the pack lies down (`hounds_called`).
 - Fight `the_hunt` on the east road: level 8 the Huntsman at 240 HP, his mare (a nightmare) and 4 hounds (dire
   wolves), or 3 hounds once they're called (the autopilot wins 3 of 8 against the whole pack and 2 of 8 with the hounds
   called; 2026-10-13, the owner's 2/8 target: at 165 HP with 2 hounds called it won 3 and 7 of 8);
-  level 9 six hounds (three called); level 10 eight (four called); below 8 the Huntsman at 130 HP with 3 hounds (1).
+  level 9 the Huntsman at 250 HP, six hounds (five called); level 10 at 300 HP, eight (five called), each about 2 wins
+  in 8 (they won 6 or 7 of 8 at 165 HP); below 8, the quest's fallback, the Huntsman at 130 HP with 3 hounds (1).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
 - His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
 

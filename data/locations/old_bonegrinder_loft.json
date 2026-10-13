@@ -516,6 +516,72 @@
     {
       "id": "coven_last_stand",
       "trigger": "dialogue",
+      "when": "flag.offalia_in_last_stand and level >= 6",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. Behind you on the stair, a heavy tread: Offalia, licking her fingers, coming up to help Mother.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha"
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            3,
+            12
+          ],
+          "name": "Offalia Wormwiggle"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            5,
+            8
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            12,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
+            4
+          ],
+          "name": "Rats from the grain bins"
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
       "when": "flag.offalia_in_last_stand",
       "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. Behind you on the stair, a heavy tread: Offalia, licking her fingers, coming up to help Mother.",
       "monsters": [
@@ -536,6 +602,72 @@
           ],
           "name": "Offalia Wormwiggle",
           "hp": 60
+        }
+      ],
+      "surprise": "",
+      "flag": "morgantha_slain",
+      "quest": {
+        "id": "children_of_the_mill",
+        "stage": "coven_broken"
+      }
+    },
+    {
+      "id": "coven_last_stand",
+      "trigger": "dialogue",
+      "when": "flag.bella_in_last_stand and level >= 6",
+      "text": "Morgantha stands, and keeps standing, taller than the rafters should allow. In the corner Bella lays down her mirror with a sigh, as if asked to do the washing up.",
+      "monsters": [
+        {
+          "monster": "night_hag",
+          "cell": [
+            10,
+            6
+          ],
+          "name": "Morgantha"
+        },
+        {
+          "monster": "night_hag",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "Bella Sunbane"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            5,
+            8
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            12,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            6,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
+            4
+          ],
+          "name": "Rats from the grain bins"
         }
       ],
       "surprise": "",

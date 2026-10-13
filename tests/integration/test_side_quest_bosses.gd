@@ -7,7 +7,15 @@ extends FightSeriesCase
 
 ## Greytooth at his full 171 HP, with Szoldar, two dire wolves and three wolves.
 func test_old_greytooth_at_level_6() -> void:
+	speakers_step_aside = true
 	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "Greytooth falls in 1 to 4 of 8 (%d)" % wins)
+
+
+## With Szoldar turned, a castle wolf (a werewolf) runs with the pack instead.
+func test_old_greytooth_with_szoldar_turned_at_level_6() -> void:
+	speakers_step_aside = true
+	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8], ["szoldar_turned"])
 	assert_true(wins >= 1 and wins <= 4, "Greytooth falls in 1 to 4 of 8 (%d)" % wins)
 
 
@@ -17,18 +25,21 @@ func test_the_drowned_of_pescari_at_level_8() -> void:
 
 ## The whole column, its two lieutenants at a wight's full Hit Points.
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
+	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 1 and wins <= 4, "the column falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## The riders stood down: the marshal (190 HP at level 8) and three lieutenants.
 func test_the_bone_marshal_duel_at_level_8() -> void:
+	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8], ["riders_stood_down"])
 	assert_true(wins >= 1 and wins <= 4, "the marshal falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## The whole column at level 8, the marshal at 190 HP.
 func test_the_bone_marshal_and_his_column_at_level_8() -> void:
+	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 1 and wins <= 4, "the column falls in 1 to 4 of 8 (%d)" % wins)
 
@@ -54,19 +65,35 @@ func test_the_vine_mother_at_level_6() -> void:
 
 ## Granny Ash at her full 184 HP.
 func test_granny_ash_at_level_6() -> void:
+	speakers_step_aside = true
 	var wins := await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
 	assert_true(wins >= 1 and wins <= 4, "Granny Ash falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## The huntsman at 240 HP on his mare, with four hounds.
 func test_the_counts_huntsman_at_level_8() -> void:
+	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
 
 
 ## Called by name, all but three hounds lie down.
 func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
+	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 23, 8, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8], ["hounds_called"])
+	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
+
+
+## Level 9: the huntsman at 250 HP and six hounds; level 10: 300 HP and eight.
+func test_the_counts_huntsman_at_level_9() -> void:
+	speakers_step_aside = true
+	var wins := await _series("svalich_crossroads", 23, 9, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
+
+
+func test_the_counts_huntsman_at_level_10() -> void:
+	speakers_step_aside = true
+	var wins := await _series("svalich_crossroads", 23, 10, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 1 and wins <= 4, "the huntsman falls in 1 to 4 of 8 (%d)" % wins)
 
 
@@ -224,6 +251,7 @@ const JETTY_FOOT: Array[Vector2i] = [Vector2i(17, 10), Vector2i(18, 10), Vector2
 
 ## The Lantern Girl and four drowned lights, when nobody turned back for her lantern.
 func test_the_lantern_girl_at_level_5() -> void:
+	speakers_step_aside = true
 	var wins := await _series("lake_zarovich", 22, 5, "lantern_girl", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], JETTY_FOOT)
 	assert_true(wins >= 1 and wins <= 5, "the Lantern Girl falls in 1 to 5 of 8 (%d)" % wins)
 
@@ -256,6 +284,7 @@ const PAINTERS_STUDIO: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 5), Vector
 
 ## The count's great canvas and eight copies (40 HP each) come off the walls.
 func test_the_counts_likeness_at_level_9() -> void:
+	speakers_step_aside = true
 	var wins := await _series("vallaki_painters_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], PAINTERS_STUDIO)
 	assert_true(wins >= 1 and wins <= 4, "the Likeness burns in 1 to 4 of 8 (%d)" % wins)
 

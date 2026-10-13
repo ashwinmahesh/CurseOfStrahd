@@ -8,6 +8,8 @@ extends FightSeriesCase
 ## Vallaki's square, beside Izek when he picks his fight; and on the festival ground.
 const IZEK_SQUARE: Array[Vector2i] = [Vector2i(24, 13), Vector2i(25, 14), Vector2i(25, 15), Vector2i(25, 16)]
 const FESTIVAL_GROUND: Array[Vector2i] = [Vector2i(24, 16), Vector2i(24, 17), Vector2i(24, 18), Vector2i(24, 19)]
+## Izek's room in the Burgomaster's mansion, the four in the passage at its door.
+const IZEKS_DOOR: Array[Vector2i] = [Vector2i(4, 11), Vector2i(5, 11), Vector2i(6, 11), Vector2i(7, 11)]
 ## Old Bonegrinder's loft, at Morgantha's elbow.
 const LOFT: Array[Vector2i] = [Vector2i(9, 6), Vector2i(8, 7), Vector2i(7, 8), Vector2i(6, 9)]
 
@@ -17,6 +19,7 @@ const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 ## Wins over seeds 1-8 between `low` and `high`.
 func _held(location: String, level: int, encounter: String, at: Array[Vector2i], low: int, high: int,
 		flags: Array[String] = []) -> void:
+	speakers_step_aside = true
 	var wins := await _series(location, 12, level, encounter, SEEDS, flags, [], [], at)
 	assert_true(wins >= low, "%s is won at least %d times in 8 (%d)" % [encounter, low, wins])
 	assert_true(wins <= high, "%s is lost at least %d times in 8 (%d)" % [encounter, 8 - high, wins])
@@ -37,6 +40,20 @@ func test_the_festival_loyalists_at_level_5() -> void:
 	await _held("vallaki", 5, "festival_loyalists", FESTIVAL_GROUND, 1, 5)
 
 
+## Izek in his room with his dolls, three sergeants of the watch coming in behind the party.
+func test_izek_in_his_room_at_level_5() -> void:
+	await _held("vallaki_burgomaster_mansion", 5, "izek_confrontation", IZEKS_DOOR, 1, 5)
+
+
 ## The coven's last stand: Morgantha and both daughters at their book 112 HP, and the rats from the grain bins.
 func test_the_covens_last_stand_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 1, 4, ["offalia_in_last_stand", "bella_in_last_stand"])
+
+
+## Morgantha and one daughter, the other split off from the coven: the mill's dogs and the grain-bin rats with them.
+func test_morgantha_and_offalia_at_level_6() -> void:
+	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 1, 4, ["offalia_in_last_stand"])
+
+
+func test_morgantha_and_bella_at_level_6() -> void:
+	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 1, 4, ["bella_in_last_stand"])

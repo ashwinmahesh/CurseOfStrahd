@@ -801,8 +801,7 @@
             3,
             11
           ],
-          "name": "Izek Strazni",
-          "hp": 110
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -817,6 +816,14 @@
           "cell": [
             10,
             9
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            9,
+            12
           ],
           "name": "Sergeant of the watch"
         }
