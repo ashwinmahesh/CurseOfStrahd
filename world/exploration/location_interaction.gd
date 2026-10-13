@@ -46,7 +46,8 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
-			out.append({"id": "talk", "label": "Approach" if LocationNpcs.is_asleep(view, str(spec["npc"])) else "Talk", "enabled": str(spec.get("dialogue", "")) != "",
+			var lies := LocationNpcs.is_asleep(view, str(spec["npc"])) or LocationNpcs.is_lying(view, str(spec["npc"]))
+			out.append({"id": "talk", "label": "Approach" if lies else "Talk", "enabled": str(spec.get("dialogue", "")) != "",
 				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
 			if npc.has("shop"):
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))

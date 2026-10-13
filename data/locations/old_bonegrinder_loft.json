@@ -405,7 +405,8 @@
       ],
       "dialogue": "old_bonegrinder/children:start",
       "when": "not flag.children_rescued",
-      "facing": "west"
+      "facing": "west",
+      "asleep": true
     }
   ],
   "encounters": [
