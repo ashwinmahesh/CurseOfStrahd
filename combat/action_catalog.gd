@@ -657,6 +657,7 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
 		a["at_will"] = bool(s.get("at_will", false))
+		a["free"] = bool(s["free"])
 		# The caster's own reach with it (Spell Sniper's +60 ft, Eldritch Spear), as the cast checks it.
 		a["range"] = e.spells.range_ft(data, c)
 		var t := data.get("targets", {}) as Dictionary
@@ -1746,6 +1747,13 @@ func level_choices(c: Combatant, action: Dictionary) -> Array[int]:
 	if bool(action.get("at_will", false)):
 		return []
 	var levels := slot_choices(c, str(action.get("spell_id", "")))
+	# A free casting (Magic Initiate's Sanctuary, an elf's Misty Step) is the spell's own level: offered beside the slot
+	# levels once no slot of that level is left, or the pip went to the next slot up and spent it (2026-10-13). A
+	# warlock's waits for its pact slots instead, the pact level being the only one offered while one is left.
+	var own := int(action.get("slot", 0))
+	if bool(action.get("free", false)) and own > 0 and not levels.is_empty() and not own in levels \
+			and e.spells.caster_char(c).pact_only_level(own) == 0:
+		levels.push_front(own)
 	var opts := action.get("opts", {}) as Dictionary
 	var sequence_id := str(opts.get("spell_sequence", ""))
 	if sequence_id != "":
