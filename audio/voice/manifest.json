@@ -6053,6 +6053,13 @@
   "recipe": "efd7d52c86",
   "text": "And Lark. Little Lark, my cousin's girl, the one with the voice. Every night after the last bell she goes over the wall like a cat, and every morning before the first she's back in her bed with wax on her fingers."
  },
+ "clovin_belview/5b1c33574a259e54": {
+  "chars": 290,
+  "direction": "[warm, comic, fond]",
+  "model": "eleven_v3",
+  "recipe": "efd7d52c86",
+  "text": "She said to give you these. Her eighth gift. Before the wings he tried boots. An hour up, and then down she'd come, wherever she was, so we used her to fetch things off the top shelf, quick as we could. She said you'd know what to do with them. She said you'd been very kind about the wire."
+ },
  "clovin_belview/5b483eb02625e2c4": {
   "chars": 107,
   "model": "eleven_v3",
@@ -58764,6 +58771,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The walls of this crypt are scratched with sigils from floor to ceiling, as if someone wanted to be very sure about something."
+ },
+ "narrator/a86427974f26aa7c": {
+  "chars": 238,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "One board under the card cabinet lifts at a touch. Beneath it, a velvet pouch holding two crystal lenses. Through them the faint marks on the backs of Gustav's cards stand out plain. Gustav Durst never lost at cards, and now you know why."
  },
  "narrator/a88da3fd50674970": {
   "chars": 131,
