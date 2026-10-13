@@ -449,6 +449,13 @@
             6,
             14
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            6,
+            15
+          ]
         }
       ],
       "surprise": "enemies",

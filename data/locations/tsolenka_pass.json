@@ -925,6 +925,20 @@
             12
           ],
           "name": "The Falconer's Hand"
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            12
+          ]
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            13
+          ]
         }
       ],
       "surprise": "",

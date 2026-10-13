@@ -558,6 +558,20 @@
             12,
             16
           ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            13,
+            15
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            13,
+            17
+          ]
         }
       ],
       "surprise": "",

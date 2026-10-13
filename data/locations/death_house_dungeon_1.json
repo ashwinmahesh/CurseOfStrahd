@@ -1058,6 +1058,13 @@
             14
           ],
           "lying": true
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            4,
+            14
+          ]
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."
@@ -1130,6 +1137,20 @@
           "cell": [
             6,
             16
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            1,
+            17
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            2,
+            17
           ]
         }
       ],

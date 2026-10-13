@@ -500,13 +500,6 @@
           ]
         },
         {
-          "monster": "zombie",
-          "cell": [
-            22,
-            8
-          ]
-        },
-        {
           "monster": "vampire_spawn",
           "cell": [
             1,
