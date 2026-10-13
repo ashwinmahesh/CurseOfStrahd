@@ -204,6 +204,9 @@ func _process(_delta: float) -> void:
 	for t in _bench_tokens:
 		if is_instance_valid(t):
 			t.visible = not view.in_combat   # those at camp don't fight: they keep back from it
+	for mark: Variant in _marks.values():
+		if is_instance_valid(mark):
+			(mark as Node3D).visible = not view.in_combat   # no asking for a word in the middle of a fight
 	if view.in_combat:
 		return
 	if _roster_key() != _roster_seen:
@@ -236,6 +239,15 @@ func _refresh_talks() -> void:
 		if tok == null or not is_instance_valid(tok):
 			continue
 		_marks[id] = _mark(tok)
+
+
+## Takes every mark down. Those over the party and the guests hang on the view's own figures, which outlive the camp;
+## the word itself waits, and its mark comes back at the next camp (CampSite.talks).
+func _clear_marks() -> void:
+	for mark: Variant in _marks.values():
+		if is_instance_valid(mark):
+			(mark as Node).queue_free()
+	_marks.clear()
 
 
 ## The speech bubble over someone who wants a word (the talk icon, with a dark rim and an ellipsis in it), bobbing
@@ -426,6 +438,7 @@ func strike() -> void:
 		view.prop_nodes.erase(id)
 	if _flame != null and is_instance_valid(_flame):
 		_flame.queue_free()
+	_clear_marks()
 	for t in _bench_tokens:
 		if is_instance_valid(t):
 			t.queue_free()
@@ -451,6 +464,7 @@ func strike() -> void:
 
 
 func _exit_tree() -> void:
+	_clear_marks()
 	if view != null and is_instance_valid(view) and view.st != null and of(view) == self:
 		view.st.camp_company.clear()
 

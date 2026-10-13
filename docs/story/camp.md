@@ -55,7 +55,8 @@ so one voice clip serves both.
 Anyone who wants a word (`CampSite.talks`, the first talk in their camp file whose condition holds) has a speech bubble
 over them, and the hover hint says "Thistle wants a word". Walking up to them (a click, or Talk in their menu) starts
 it. Each companion has one word in the evening and one after the night. A romance talk is offered by the first of
-the pair its condition names. Anyone else says what they're doing, in the Narrator's words: `camp:<id>`,
+the pair its condition names. The bubbles hide during a fight and go with the camp: a word not heard waits for the
+next camp, or the rest screen after a Long Rest elsewhere, for as long as its condition holds. Anyone else says what they're doing, in the Narrator's words: `camp:<id>`,
 `camp:guest:<npc>`, or `camp:someone` and `camp:guest` for everyone else.
 
 ## The night
