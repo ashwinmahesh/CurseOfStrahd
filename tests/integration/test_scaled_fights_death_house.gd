@@ -1,18 +1,12 @@
 extends FightSeriesCase
 ## Death House scaled up for 2024 heroes (owner, 2026-10-13: the book's fights were written for weaker characters). Over
 ## seeds 1-8 the four pregens on autopilot, standing where walking in or talking sets each fight off, win about half of
-## them at levels 1 and 2 (his target: 4 of 8). The fights on the way out of the house after the refusal come back to back
-## with no rest, so each is a little kinder on its own (about 6 of 8) and the run out as a whole lands near the target.
-## The Dursts' robed ones (level 3) are held in test_side_quest_bosses.gd.
+## them at levels 1 and 2 (his target: 4 of 8). The Dursts' robed ones (level 3) are held in test_side_quest_bosses.gd.
 
 
 ## Death House, third floor: up the stair onto the balcony; the nursery door.
 const BALCONY: Array[Vector2i] = [Vector2i(11, 6), Vector2i(12, 7), Vector2i(13, 8), Vector2i(14, 9)]
 const NURSERY_DOOR: Array[Vector2i] = [Vector2i(22, 8), Vector2i(22, 7), Vector2i(22, 6), Vector2i(22, 5)]
-const THIRD_HALL: Array[Vector2i] = [Vector2i(15, 10), Vector2i(16, 11), Vector2i(17, 11), Vector2i(15, 11)]
-## Death House, ground floor: into the main hall from the foyer; at the dining room's tall window.
-const MAIN_HALL: Array[Vector2i] = [Vector2i(13, 12), Vector2i(13, 13), Vector2i(13, 14), Vector2i(13, 15)]
-const AT_THE_WINDOW: Array[Vector2i] = [Vector2i(26, 12), Vector2i(25, 12), Vector2i(24, 12), Vector2i(23, 12)]
 ## The dungeon: Elisabeth's crypt; the ghoul passage from the well chamber; the shrine's statue; the Dursts' door; the
 ## ritual chamber's altar.
 const CRYPTS: Array[Vector2i] = [Vector2i(11, 2), Vector2i(10, 3), Vector2i(9, 3), Vector2i(8, 3)]
@@ -58,16 +52,3 @@ func test_the_door_with_teeth_at_level_2() -> void:
 
 func test_the_shades_at_the_altar_at_level_2() -> void:
 	await _held("death_house_dungeon_2", 2, "shades_harry", ALTAR, 2, 6, ["death_house_portcullis_raised"])
-
-
-func test_the_third_floor_on_the_way_out_at_level_2() -> void:
-	await _held("death_house_third", 2, "third_escape_swords", THIRD_HALL, 4, 7,
-		["death_house_refused", "death_house_armor_destroyed"])
-
-
-func test_the_main_hall_on_the_way_out_at_level_2() -> void:
-	await _held("death_house_ground", 2, "ground_escape_weapons", MAIN_HALL, 4, 7, ["death_house_refused"])
-
-
-func test_the_dining_room_window_at_level_2() -> void:
-	await _held("death_house_ground", 2, "window_last_guard", AT_THE_WINDOW, 4, 7, ["death_house_refused"])

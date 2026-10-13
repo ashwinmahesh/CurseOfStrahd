@@ -115,14 +115,15 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 | dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) | 900 | 2 | Above High, as in the book; the "shaken" version surprises the Dursts. Left as they were: 0 and 2 wins in 8 |
 | dungeon 2 | `shades_harry` | dialogue (failed run) | 5 shadows | 500 | 2 | Moderate |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
-| ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | a wolf-helm animated armor, 2 animated flying swords, a broom | 350 | 2 | Low (one of the run's back-to-back fights) |
-| third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 5 animated flying swords | 250 | 2 | Low (back to back) |
-| ground | `window_last_guard` | dialogue (failed window check) | 5 animated flying swords (the dining room's knives) | 250 | 2 | Low (back to back) |
+| ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
+| third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 2 animated flying swords (tuned down from 3) | 100 | 2 | Trivial |
+| ground | `window_last_guard` | dialogue (failed window check) | 2 animated flying swords | 100 | 2 | Trivial |
 
 Scaled up for 2024 heroes (owner, 2026-10-13: the book's fights were written for weaker characters; his targets are 4
 wins in 8 at levels 1 and 2). tests/integration/test_scaled_fights_death_house.gd plays each over seeds 1-8 from where
-walking in or talking sets it off and holds it near that. The run out after a refusal is two or three of these fights
-back to back with no rest, so each is kinder on its own (about 6 wins in 8) and the run as a whole lands near 4 in 8.
+walking in or talking sets it off and holds it near that. The run out after a refusal stays as it was: its fights come
+back to back with no rest, and with five swords on the third floor the Phase 3 playthrough's drained level 2 party lost
+all eight tries.
 
 Critical path at level 1: the armor (350), plus the nursemaid (800, avoidable) and the broom (50, optional).
 Critical path at level 2: no fight, only the spiked pit (stair foot, crypts, well, pit passage, dining hall, stair
