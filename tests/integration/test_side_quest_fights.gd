@@ -230,7 +230,8 @@ func test_a_screen_that_frees_itself_is_no_longer_the_open_one() -> void:
 	assert_true(s != null, "the journal is open")
 	s.queue_free()
 	await _frames(3)
-	assert_true(root.get("screen") == null, "nothing is left open")
+	# A freed object reads as null, so the check is that the game holds nothing, not a dead screen.
+	assert_eq(typeof(root.get("screen")), TYPE_NIL, "nothing is left open")
 	assert_false(get_tree().paused)
 
 
