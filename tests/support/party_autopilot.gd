@@ -6,7 +6,8 @@ extends RefCounted
 ## Test-only: in the game the player controls every party member (plan pillar 2).
 ##
 ## Sharp play (owner, 2026-10-13: "Yes they should", "And spellcasters should cast fireball"): the party as the owner
-## plays it, so a fight tuned against it is as hard in his hands. The paladin smites a sturdy foe or on a Critical Hit,
+## plays it, so a fight tuned against it is as hard in his hands. The paladin smites a sturdy foe or on a Critical Hit
+## when the blade alone won't finish it,
 ## the cleric opens with Spirit Guardians once foes close in and keeps near them, and a caster who knows Fireball throws
 ## it whenever it catches two foes. Off by default while the fights are retuned against it: AUTOPILOT_SHARP=1 in the
 ## environment, or `sharp` set by a test, turns it on.
@@ -331,13 +332,30 @@ static func _takes(req: ReactionRequest) -> bool:
 	return req.kind != CombatFeatures.DIVINE_SMITE
 
 
-## Its answer this time: sharp play smites a foe worth a slot (one with SMITE_WORTH_HP left, or on a Critical Hit) with
-## the free use or the lowest slot, as the prompt offers first.
+## Its answer this time: sharp play smites a foe worth a slot (one with SMITE_WORTH_HP left, or on a Critical Hit) that
+## the hit alone likely won't fell, with the free use or the lowest slot, as the prompt offers first. A smite on a wolf
+## the blade kills anyway spends the paladin's last slot for nothing (2026-10-13: such smites cost level 1 camp fights).
 func _answer(req: ReactionRequest) -> bool:
 	if not sharp or req.kind != CombatFeatures.DIVINE_SMITE:
 		return _takes(req)
 	var target := e.get_c(req.trigger_id)
-	return req.callout != "" or (target != null and target.creature.hp >= SMITE_WORTH_HP)
+	var paladin := e.get_c(req.reactor_id)
+	if target == null or paladin == null:
+		return false
+	var crit := req.callout != ""
+	# A Critical Hit doubles the weapon's dice (not its modifier): about 1.6 times its average.
+	if target.creature.hp <= _melee_average(paladin) * (1.6 if crit else 1.0):
+		return false
+	return crit or target.creature.hp >= SMITE_WORTH_HP
+
+
+## The average damage of `c`'s best melee weapon hit (0 when it has none).
+func _melee_average(c: Combatant) -> float:
+	var best := 0.0
+	for o in e.attack_options(c):
+		if bool(o.get("melee", false)) and o.get("profile") is WeaponProfile:
+			best = maxf(best, (o["profile"] as WeaponProfile).average_damage())
+	return best
 
 
 # --- Sharp play -----------------------------------------------------------------------------------
