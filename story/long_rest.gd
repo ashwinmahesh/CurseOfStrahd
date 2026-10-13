@@ -4,8 +4,9 @@ extends RefCounted
 ## place's rest is risky) and the magic items that make a safe place to sleep (FieldItems). A risky place may interrupt it (a d6 shows 1, unless
 ## a ward keeps the rest or Alarm wakes the party first); an interrupted rest gives a Short Rest's benefits after an
 ## hour. A finished one takes eight hours off the clock and brings everything back (Creature.finish_long_rest), for the
-## party and the guests travelling with it. Pure story logic: whoever started it shows what's returned and starts what
-## follows the night (the Narrator's lines, Strahd's visit, a camp's night visitors).
+## party and the guests travelling with it. Either way they slept, which ends Concentration (Creature.fall_asleep).
+## Pure story logic: whoever started it shows what's returned and starts what follows the night (the Narrator's
+## lines, Strahd's visit, a camp's night visitors).
 
 const HOURS := 8
 ## How long after a Long Rest its morning lasts (game minutes): while it does, the rest screen still offers what a
@@ -30,7 +31,11 @@ static func take(st: StoryState, rule: String, dice: DiceRoller) -> Dictionary:
 		st.advance_minutes(60)
 		for ch in st.party:
 			if not ch.dead:
+				ch.fall_asleep()   # they'd slept before it came: Concentration ends
 				ch.finish_short_rest()
+		for g in st.guests:
+			if not g.dead:
+				g.fall_asleep()
 		return {"interrupted": true, "lines": [] as Array[String],
 			"text": "Something moves in the dark, and nobody sleeps again. (Interrupted: a Short Rest's benefits only.)"}
 	var lines := finish(st, dice)

@@ -421,6 +421,10 @@ func spell_attack(ctx: Dictionary, t: Combatant, r: CombatResult) -> D20Test:
 	return attacks.spell_attack(ctx, t, r)
 
 
+func attack_situation(c: Combatant, s: Dictionary, t: Combatant, origin: Variant = null) -> Dictionary:
+	return attacks.situation(c, s, t, origin)
+
+
 func _secondary(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	attacks._secondary(ctx, t, r)
 

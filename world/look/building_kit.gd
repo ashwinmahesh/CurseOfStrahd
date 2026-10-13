@@ -294,11 +294,12 @@ static func pillar(board: ArenaBoard, c: Vector2i, floor: Material) -> bool:
 		if board.grid.has_flag(c + d, CombatGrid.WALL) or board.grid.has_flag(c + d, CombatGrid.VOID):
 			return false
 	var at := board.cell_center(c)
-	board.add_box("Floor", Vector3(1, 0.2, 1), Vector3(at.x, board.floor_y(c) - 0.1, at.z), floor)
+	board.add_box("Floor", Vector3(1, 0.2, 1), Vector3(at.x, board.floor_y(c) - 0.1, at.z), floor).set_meta("on_floor", true)
 	var mi := merge([[id, Transform3D(Basis(), Vector3(at.x, board.floor_y(c), at.z))]])
 	if mi == null:
 		return false
 	mi.name = "Pillar"
+	mi.set_meta("on_floor", true)   # (on the room's floor already: ArenaBoard._lift leaves it be on a hill)
 	board.add_child(mi)
 	ModelPiece.fade_with_trees(board, mi)
 	return true

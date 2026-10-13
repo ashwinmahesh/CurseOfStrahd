@@ -423,7 +423,9 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 ## FeatureActions' entries as hotbar actions.
 func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), REACTIONS if fa.has("policy") else tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
+		# A rule goes on the Reactions tab, unless it's a class feature's own switch (Repelling Blast, Grasp of Hadar).
+		var where := REACTIONS if fa.has("policy") and not bool(fa.get("class_tab", false)) else tab
+		var en := _entry(str(fa["id"]), where, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
 			str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
 		# A standing rule's mode (Reactions.list_policies, DamageResponses.list): folded into one toggle slot (slots()).
@@ -648,7 +650,8 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 				a["help"] = "Arms it for this turn: each melee hit smites, spending a spell slot (the free use first). No Bonus Action, and it isn't a spell cast. Choose it again to disarm, or set it to Ask in the class tab to decide after each hit."
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
-		a["range"] = e.spells.range_ft(data)
+		# The caster's own reach with it (Spell Sniper's +60 ft, Eldritch Spear), as the cast checks it.
+		a["range"] = e.spells.range_ft(data, c)
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
@@ -1454,6 +1457,8 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	elif not dis.is_empty() and adv.is_empty():
 		chance = single * single
 	out["chance"] = chance
+	# Its Hit Points first, as a spell's target tooltip shows them (owner, 2026-10-13), with the AC the roll is against.
+	lines.append("HP %d/%d · AC %d%s" % [t.creature.hp, t.creature.max_hp(), int(hc["ac"]), _known_defenses(t)])
 	lines.append("%s: hit %d%% (needs %d+ on the d20)" % [p.name, roundi(chance * 100.0), int(hc["needs"])])
 	if hc.has("from"):
 		lines.append("From %s's space" % str(hc["from"]))
@@ -1482,7 +1487,6 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
 	if int(sit.get("height_bonus", 0)) != 0:
 		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-	lines.append("AC %d%s" % [int(hc["ac"]), _known_defenses(t)])
 	for fxm: Effect in t.creature.effects:
 		if fxm.data.has("mark_by"):
 			lines.append(fxm.name + (": your extra damage on a hit" if str(fxm.data["mark_by"]) == c.id else ""))
@@ -1491,6 +1495,41 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	if why != "":
 		lines.append("Can't: " + why)
 	return out
+
+
+## A spell attack's part of the target tooltip, as attack_preview is a weapon's: the hit chance and the d20 needed
+## against the AC with cover (`attack`: the caster's spell attack bonus for this cast), every Advantage and Disadvantage
+## source with the caster's own, the cover and the high ground, all from the situation the roll itself uses
+## (SpellAttacks.situation: Spell Sniper's Casting in Melee and Bypass Cover). {lines, edge, chance, needs}
+func spell_attack_preview(c: Combatant, spell_id: String, t: Combatant, attack: Breakdown) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	var sit := e.spells.attack_situation(c, data, t)
+	var ac := t.creature.ac_value() + int(sit["cover_bonus"])
+	var to_hit := attack.total() + int(sit.get("height_bonus", 0))
+	var needs := mini(clampi(ac - to_hit, 2, 20), int(data.get("crit_range", 20)))
+	# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
+	var own := c.creature.d20_sources(["attack", "attack:melee" if str(data["attack"]) == "melee" else "attack:ranged", "attack:spell"])
+	var adv: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+	var dis: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
+	var single := (21 - needs) / 20.0
+	var chance := single
+	var edge := ""
+	if not adv.is_empty() and dis.is_empty():
+		chance = 1.0 - pow(1.0 - single, 2)
+		edge = "advantage"
+	elif not dis.is_empty() and adv.is_empty():
+		chance = single * single
+		edge = "disadvantage"
+	var lines: Array[String] = ["Spell attack %+d vs AC %d: hit %d%% (needs %d+)" % [to_hit, ac, roundi(chance * 100.0), needs]]
+	for s: Variant in adv:
+		lines.append("Advantage: %s" % s)
+	for s: Variant in dis:
+		lines.append("Disadvantage: %s" % s)
+	if int(sit["cover_bonus"]) > 0:
+		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
+	if int(sit.get("height_bonus", 0)) != 0:
+		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
+	return {"lines": lines, "edge": edge, "chance": chance, "needs": needs}
 
 
 ## The Examine card for `t` (Combat HUD plan, owner pick 2026-10-09; Baldur's Gate 3's Examine): what it is, how hurt it
@@ -1839,6 +1878,33 @@ func move_preview(c: Combatant, cell: Vector2i, reach: Dictionary = {}) -> Dicti
 		warnings.append("Drags %s along%s" % [held.name(), " (1 extra foot per foot)" if e.grappling.drag_extra(c) > 0 else ""])
 	out["warnings"] = warnings
 	return out
+
+
+## Why none of `c`'s attacks can be made at `t` from where it stands, for the words over a foe and the banner on a click
+## there; "" when one can. The real reason, checked in order (owner, 2026-10-13: out of attacks, it said "out of reach"):
+## the turn, or no Action or attacks left, then the reach or range, then whatever else stops the first attack.
+func attack_blocker(c: Combatant, t: Combatant) -> String:
+	var turn_why := ""
+	var target_whys: Array[String] = []
+	for a in actions_for(c):
+		if str(a["kind"]) != "attack":
+			continue
+		if not bool(a["legal"]):
+			if turn_why == "":
+				turn_why = str(a["reason"])
+			continue
+		var why := target_why(c, a, t)
+		if why == "":
+			return ""
+		target_whys.append(why)
+	if target_whys.is_empty():
+		if turn_why == "":
+			return "No attack to make"
+		return "No Action or attacks left this turn" if turn_why == "Action already used" else turn_why
+	for why in target_whys:
+		if why.begins_with("Out of reach") or why.begins_with("Out of range"):
+			return "Out of reach: move closer, or pick a ranged attack"
+	return target_whys[0]
 
 
 ## A click on a foe with a melee weapon in hand (owner, 2026-10-12: "use the melee weapon by default and automatically

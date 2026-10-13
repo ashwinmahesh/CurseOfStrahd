@@ -119,6 +119,34 @@ static func heal_dice(spell: Dictionary, slot_level: int) -> String:
 	return _format(count, int(base["sides"]), int(base["modifier"]))
 
 
+## A spell's duration cast with a level `slot_level` slot. A higher slot can make it last longer (2024: Hex 4 hours with
+## a level 2 slot, 8 with 3-4, 24 with 5+) or need no Concentration (Bestow Curse at 5+): data `upcast.durations`,
+## [{slot, kind, amount, concentration}], the step with the highest `slot` up to the one used. The 8-hour house rule
+## (Effect.until_long_rest) reads the result like any other duration.
+static func duration_at(spell: Dictionary, slot_level: int) -> Dictionary:
+	var out := spell.get("duration", {}) as Dictionary
+	var best := 0
+	for d: Variant in (spell.get("upcast", {}) as Dictionary).get("durations", []):
+		var step := d as Dictionary
+		var at := int(step.get("slot", 0))
+		if at <= slot_level and at > best:
+			best = at
+			out = step.duplicate()
+			out.erase("slot")
+	return out
+
+
+## The spell as cast with a level `slot_level` slot: a copy with that slot's duration (duration_at), or the spell itself
+## when the slot changes nothing.
+static func at_slot(spell: Dictionary, slot_level: int) -> Dictionary:
+	var lasting := duration_at(spell, slot_level)
+	if lasting == spell.get("duration", {}):
+		return spell
+	var out := spell.duplicate(true)
+	out["duration"] = lasting
+	return out
+
+
 static func _format(count: int, sides: int, modifier: int) -> String:
 	var s := "%dd%d" % [count, sides] if count > 0 else ""
 	if modifier > 0:

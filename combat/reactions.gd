@@ -34,7 +34,8 @@ func feats() -> CombatFeatures:
 
 ## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about. An offer may
 ## also be `forced` (no choice: it happens when reached), say `ask: false` (never asked: its rule settles it, as
-## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text`, `cost` and
+## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give a `callout` (a line
+## the prompt shows in red: a Critical Hit on Divine Smite's), give `text`, `cost` and
 ## `target_choices` as Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
 ## change the outcome, the player isn't asked (a reroll that can't reach the DC).
 ## `st` is the attack's state when the chain is one of an attack's stages: it holds the Reactions kept for later in it
@@ -63,6 +64,7 @@ func offer(chain: Array, done: Callable, r: CombatResult, st: Dictionary = {}) -
 		req.title = str(o["title"])
 		req.text = _text(o)
 		req.cost = _cost(o)
+		req.callout = str(o.get("callout", ""))
 		req.spends_reaction = bool(o.get("spends_reaction", true))
 		req.target_choices.assign(_own_choices(o))
 		req.selected_ids.assign(o.get("selected_ids", []))
@@ -644,13 +646,28 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			continue
 		seen[str(f["id"])] = true
 		out.append({"id": str(f["id"]), "name": str(f["name"]), "cost": "Reaction and a feature use"})
+	# Guidance before a party member's skill check outside fights (story/guidance_offer.gd): the caster's standing
+	# answer to its prompt, kept here with the rest.
+	if (c.creature as Character).knows_spell("guidance") and not seen.has("guidance"):
+		seen["guidance"] = true
+		out.append({"id": "guidance", "name": "Guidance before checks", "cost": "Nothing (a cantrip)", "modes": ["ask", "auto", "never"],
+			"default": "ask",
+			"help": "Outside fights, before someone in the party makes a skill check (in a conversation, on something in the world, searching, forcing a lock, haggling). Ask: you're asked whether to cast Guidance on them first (+1d4). Automatic: cast whenever you aren't concentrating on another spell, which it would end. Off: never offered."})
 	# Knocking Out a Creature (2024): anyone's melee blow can leave a creature Unconscious at 1 Hit Point instead of 0.
 	# Repelling Blast (2024: a warlock cantrip's hit "can" push the creature 10 ft): pushing is the default; Off keeps a
-	# foe where it stands (owner, 2026-10-12), changeable on any turn from the Reactions tab.
+	# foe where it stands (owner, 2026-10-12), changeable on any turn. Not a reaction: its toggle sits on the class tab
+	# (`class_tab`; Ashwin, 2026-10-13), Grasp of Hadar's beside it.
 	if ClassFeatures.knows_invocation(c, "repelling_blast"):
-		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto",
-			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
+		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto", "class_tab": true,
+			"help": "On: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
 		seen["repelling_blast"] = true
+	# Grasp of Hadar (Ashwin's house rule, 2026-10-13: Repelling Blast's mirror) pulls the creature 10 ft toward you. Beside
+	# Repelling Blast it starts Off, and turning either on turns the other off (set_policy; ClassFeatures.blast_rule).
+	if ClassFeatures.knows_invocation(c, "grasp_of_hadar"):
+		out.append({"id": "grasp_of_hadar", "name": "Grasp of Hadar", "cost": "Nothing", "modes": ["auto", "never"], "class_tab": true,
+			"default": ClassFeatures.blast_rule(c, "grasp_of_hadar"),
+			"help": "On: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pulls a Large or smaller creature 10 ft straight toward you. Off: no pull. With Repelling Blast as well, only one of the two is on at a time."})
+		seen["grasp_of_hadar"] = true
 	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
 		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
 	seen["knock_out"] = true
@@ -663,16 +680,17 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 
 ## One entry per mode of each rule (`feat:reaction_policy:<id>:<mode>`); the hotbar folds a rule's modes into one toggle
 ## slot (ActionCatalog.slots) by `policy`, and `selected` marks the one in force. A rule changes on any turn (`anytime`):
-## nothing is spent.
+## nothing is spent. A class feature's own switch (`class_tab`) reads On / Off.
 func list_policies(c: Combatant, out: Array[Dictionary]) -> void:
 	for policy in configurable_policies(c):
 		var current := str(c.reaction_rules.get(str(policy["id"]), policy["default"])) if policy.has("default") else enc()._reaction_decision(c, str(policy["id"]))
+		var names := {"ask": "Ask", "auto": "On" if bool(policy.get("class_tab", false)) else "Automatic", "never": "Off"}
 		for mode: String in policy.get("modes", ["ask", "auto", "never"]):
 			out.append({"id": "feat:reaction_policy:%s:%s" % [policy["id"], mode],
-				"label": "%s: %s" % [policy["name"], {"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]],
-				"sub": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]) + (" · selected" if current == mode else ""),
-				"policy": str(policy["id"]), "policy_name": str(policy["name"]), "mode": mode, "mode_label": str({"ask": "Ask", "auto": "Automatic", "never": "Off"}[mode]),
-				"selected": current == mode, "anytime": true,
+				"label": "%s: %s" % [policy["name"], names[mode]],
+				"sub": str(names[mode]) + (" · selected" if current == mode else ""),
+				"policy": str(policy["id"]), "policy_name": str(policy["name"]), "mode": mode, "mode_label": str(names[mode]),
+				"selected": current == mode, "anytime": true, "class_tab": bool(policy.get("class_tab", false)),
 				"cost": "free", "why": "", "targeting": "none", "range": 0,
 				"help": str(policy["help"]) if policy.has("help") else ("%s. Automatic: it happens whenever it can. Off: never." % policy["cost"]) if policy.has("default") and not "ask" in (policy.get("modes", []) as Array) else \
 					("%s. Automatic permits spending whenever eligible. Ask prompts where supported; synchronous rolls/spell hits do not spend until you choose Automatic. Off never spends." % policy["cost"])})
@@ -681,5 +699,10 @@ func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:
 	if not mode in ["ask", "auto", "never"] \
 			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id and mode in p.get("modes", ["ask", "auto", "never"])):
 		return CombatResult.fail("Not an available reaction preference")
+	# Repelling Blast and Grasp of Hadar move a creature one way a hit: turning one on turns the other off, and turning one
+	# off leaves the other as it was.
+	var other := str(ClassFeatures.BLAST_PAIR.get(id, ""))
+	if other != "" and ClassFeatures.knows_invocation(c, other):
+		c.reaction_rules[other] = "never" if mode == "auto" else ClassFeatures.blast_rule(c, other)
 	c.reaction_rules[id] = mode
 	return CombatResult.new()

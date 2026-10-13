@@ -73,6 +73,25 @@ func test_attack_preview_shows_odds_and_sources() -> void:
 	assert_true(text.contains("Sneak Attack"), text)
 	assert_true(text.contains("defenses unknown"), text)
 	assert_true(float(pv["chance"]) > 0.8)
+	# Its Hit Points, as a spell's tooltip shows them (owner, 2026-10-13).
+	assert_true(str((pv["lines"] as Array)[0]).begins_with("HP %d/%d · AC" % [w.creature.hp, w.creature.max_hp()]), str((pv["lines"] as Array)[0]))
+
+
+## Out of attacks, a foe's tooltip and a click on it say so, not that it's out of reach (owner, 2026-10-13); out of reach
+## says that; within reach with an attack left, nothing stops it.
+func test_why_no_attack_names_the_real_reason() -> void:
+	var e := TestCombat.encounter([".".repeat(72), ".".repeat(72), ".".repeat(72)])   # 350 ft: past her shortbow's 320
+	var ilse := TestCombat.hero(e, "ilse_varga", Vector2i(1, 1))
+	var near := TestCombat.foe(e, "zombie", Vector2i(2, 1))
+	var far := TestCombat.foe(e, "zombie", Vector2i(71, 1))
+	TestCombat.start_with(e, ilse)
+	var cat := ActionCatalog.new(e)
+	assert_eq(cat.attack_blocker(ilse, near), "")
+	assert_eq(cat.attack_blocker(ilse, far), "Out of reach: move closer, or pick a ranged attack")
+	ilse.action_available = false
+	ilse.attacks_left = 0
+	assert_eq(cat.attack_blocker(ilse, near), "No Action or attacks left this turn")
+	assert_eq(cat.attack_blocker(ilse, far), "No Action or attacks left this turn", "the attacks used up come before the reach")
 
 
 func test_spell_preview_lists_who_is_in_the_area() -> void:
