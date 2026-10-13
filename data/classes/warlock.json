@@ -463,6 +463,17 @@
                 }
               },
               {
+                "id": "grasp_of_hadar",
+                "name": "Grasp of Hadar",
+                "summary": "When a damaging Warlock cantrip with an attack roll hits a Large or smaller creature, pull it up to 10 feet toward you.",
+                "text": "When you hit a Large or smaller creature with a Warlock cantrip you know that requires an attack roll, you can pull the creature up to 10 feet straight toward you. (A house rule: Xanathar's Guide to Everything had it once a turn with Eldritch Blast, and the 2024 book dropped it; here it mirrors Repelling Blast. A warlock with both picks which works on the Reactions tab.)",
+                "implemented": "engine",
+                "prerequisites": {
+                  "level": 2,
+                  "cantrip": "attack"
+                }
+              },
+              {
                 "id": "investment_of_the_chain_master",
                 "name": "Investment of the Chain Master",
                 "summary": "Your familiar gains a Fly or Swim Speed, attacks when you command it as a Bonus Action, deals Necrotic or Radiant damage and uses your save DC.",

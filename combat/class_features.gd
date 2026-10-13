@@ -2144,6 +2144,21 @@ static func at_will(c: Combatant, spell_id: String) -> bool:
 	return AT_WILL_INVOCATIONS.has(spell_id) and knows_invocation(c, str(AT_WILL_INVOCATIONS[spell_id]))
 
 
+## Repelling Blast's push and Grasp of Hadar's pull, each the other's partner (Reactions.set_policy).
+const BLAST_PAIR := {"repelling_blast": "grasp_of_hadar", "grasp_of_hadar": "repelling_blast"}
+
+
+## The rule in force for Repelling Blast or Grasp of Hadar (their toggles on the Reactions tab): "auto" or "never". A
+## warlock with both moves a creature one way a hit, so Grasp of Hadar starts Off while Repelling Blast is on, and turning
+## either on turns the other off (Reactions.set_policy).
+static func blast_rule(c: Combatant, id: String) -> String:
+	if c.reaction_rules.has(id):
+		return str(c.reaction_rules[id])
+	if id == "grasp_of_hadar" and knows_invocation(c, "repelling_blast") and blast_rule(c, "repelling_blast") != "never":
+		return "never"
+	return "auto"
+
+
 ## After a damaging Warlock cantrip hits (Repelling Blast, Grasp of Hadar, Lance of Lethargy).
 func cantrip_hit(ctx: Dictionary, t: Combatant) -> void:
 	var c := ctx["c"] as Combatant
@@ -2151,12 +2166,13 @@ func cantrip_hit(ctx: Dictionary, t: Combatant) -> void:
 	if int(s.get("level", 0)) != 0 or not "warlock" in (s.get("classes", []) as Array) or not t.is_alive():
 		return
 	var e := enc()
-	# Repelling Blast: optional (its rule on the Reactions tab; pushing unless the player set it Off).
-	if knows_invocation(c, "repelling_blast") and Creature.SIZES.find(t.creature.size) <= Creature.SIZES.find(&"large") \
-			and str(c.reaction_rules.get("repelling_blast", "auto")) != "never":
-		e.forced_move(t, e.center_of(c), 10)
-	if knows_invocation(c, "grasp_of_hadar") and _once(c, "grasp_of_hadar"):
-		e.forced_move(t, e.center_of(c), 10, true)
+	# Repelling Blast pushes a Large or smaller creature 10 ft; Grasp of Hadar (Ashwin's house rule, its mirror) pulls it
+	# 10 ft toward the warlock, beam by beam. Each is optional (its rule on the Reactions tab), one at a time.
+	if Creature.SIZES.find(t.creature.size) <= Creature.SIZES.find(&"large"):
+		if knows_invocation(c, "repelling_blast") and blast_rule(c, "repelling_blast") != "never":
+			e.forced_move(t, e.center_of(c), 10)
+		elif knows_invocation(c, "grasp_of_hadar") and blast_rule(c, "grasp_of_hadar") != "never":
+			e.forced_move(t, e.center_of(c), 10, true)
 	if knows_invocation(c, "lance_of_lethargy") and _once(c, "lance_of_lethargy"):
 		var fx := _timed(c, "Lance of Lethargy", "lance_of_lethargy", Effect.Ends.START_OF_TURN, c).with_modifier("speed", {"value": -10})
 		t.creature.add_effect(fx)

@@ -651,6 +651,13 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 		out.append({"id": "repelling_blast", "name": "Repelling Blast", "cost": "Nothing", "modes": ["auto", "never"], "default": "auto",
 			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pushes a Large or smaller creature 10 ft away from you. Off: no push, for when you'd rather it stayed where it is."})
 		seen["repelling_blast"] = true
+	# Grasp of Hadar (Ashwin's house rule, 2026-10-13: Repelling Blast's mirror) pulls the creature 10 ft toward you. Beside
+	# Repelling Blast it starts Off, and turning either on turns the other off (set_policy; ClassFeatures.blast_rule).
+	if ClassFeatures.knows_invocation(c, "grasp_of_hadar"):
+		out.append({"id": "grasp_of_hadar", "name": "Grasp of Hadar", "cost": "Nothing", "modes": ["auto", "never"],
+			"default": ClassFeatures.blast_rule(c, "grasp_of_hadar"),
+			"help": "Automatic: a hit with Eldritch Blast (or another damaging Warlock cantrip's attack) pulls a Large or smaller creature 10 ft straight toward you. Off: no pull. With Repelling Blast as well, only one of the two is on at a time."})
+		seen["grasp_of_hadar"] = true
 	out.append({"id": "knock_out", "name": "Knock Out", "cost": "Nothing", "modes": ["auto", "never"], "default": "never",
 		"help": "Automatic: a melee attack that would drop a creature to 0 Hit Points leaves it at 1 and Unconscious instead, until it finishes a Short Rest, regains Hit Points or gets first aid; a foe knocked out can be taken captive once the fight is won. Off: blows land as usual."})
 	seen["knock_out"] = true
@@ -681,5 +688,10 @@ func set_policy(c: Combatant, id: String, mode: String) -> CombatResult:
 	if not mode in ["ask", "auto", "never"] \
 			or not configurable_policies(c).any(func(p: Dictionary) -> bool: return str(p["id"]) == id and mode in p.get("modes", ["ask", "auto", "never"])):
 		return CombatResult.fail("Not an available reaction preference")
+	# Repelling Blast and Grasp of Hadar move a creature one way a hit: turning one on turns the other off, and turning one
+	# off leaves the other as it was.
+	var other := str(ClassFeatures.BLAST_PAIR.get(id, ""))
+	if other != "" and ClassFeatures.knows_invocation(c, other):
+		c.reaction_rules[other] = "never" if mode == "auto" else ClassFeatures.blast_rule(c, other)
 	c.reaction_rules[id] = mode
 	return CombatResult.new()
