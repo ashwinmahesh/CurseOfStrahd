@@ -4,7 +4,7 @@
   "source": {
     "book": "MM2025",
     "edition": "2024",
-    "note": "The 2024 Vampire (2025 Monster Manual, also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1. The Initiative bonus (+14), Grave Strike's Necrotic dice and the Bite's numbers especially need the check. In its lair it has 4 Legendary Resistances and 4 legendary actions; the engine always gives it 3. Deathless Strike's half-Speed move is left out (it just strikes), and Beguile (Command) is text only. Which actions each shape allows is given only by forms.shapes[].actions. Charm (a Bonus Action Charm Person) is text only until the engine runs bonus-action saves. It has no resting place in this block, so Misty Escape is text only: at 0 Hit Points it dies. The mist shape resists every damage type, sunlight's Radiant included (the book exempts sunlight)."
+    "note": "The 2024 Vampire (2025 Monster Manual, also in SRD 5.2.1), entered from knowledge; not yet compared line by line with SRD 5.2.1. The Initiative bonus (+14), Grave Strike's Necrotic dice and the Bite's numbers especially need the check. In its lair it has 4 Legendary Resistances (the engine always gives it 3) and 4 legendary action uses (`in_lair`). Deathless Strike's half-Speed move is left out (it just strikes), and Beguile (Command) is text only. Which actions each shape allows is given only by forms.shapes[].actions. Charm (a Bonus Action Charm Person) is text only until the engine runs bonus-action saves. It has no resting place in this block, so Misty Escape is text only: at 0 Hit Points it dies. The mist shape resists every damage type, sunlight's Radiant included (the book exempts sunlight)."
   },
   "size": "medium",
   "type": "undead",
@@ -236,6 +236,7 @@
   ],
   "legendary_actions": {
     "per_round": 3,
+    "in_lair": 4,
     "options": [
       {
         "id": "beguile",
