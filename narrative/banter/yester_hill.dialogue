@@ -9,7 +9,7 @@ endif
 -> END
 
 ~ banter_effigy
-if flag.yester_hill_known and not flag.yester_hill_resolved
+if flag.yester_effigy_known and not flag.yester_hill_resolved
 interject tag:cheerful: A forty-foot statue of the man in the castle, made of mud. Does he know? Do you think he's flattered?
 interject tag:pious: Men like him are always flattered. That's the weak joint in them.
 endif

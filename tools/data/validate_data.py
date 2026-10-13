@@ -289,9 +289,8 @@ def semantic_checks(data):
 
 
 def camp_checks(data, errors):
-    """The camp's night visitors (data/camp/night_visitors.json, F16): every monster exists, every land a region has
-    (and the default) has a group for every party level from 1 to the level cap, and no two of a land's groups
-    overlap."""
+    """The camp's night visitors (data/camp/night_visitors.json, F16): every monster exists, and every land a region
+    or a setting (town, indoors) has, and the default, has a group for every party level from 1 to the level cap."""
     nv = data.get("camp", {}).get("night_visitors")
     if not nv:
         return
@@ -304,7 +303,7 @@ def camp_checks(data, errors):
         lo, hi = g["levels"]
         if lo > hi:
             errors.append(f"{w} {g['id']}: levels {lo} to {hi} run backwards")
-    for land in sorted(set(nv.get("lands", {}).values()) | {nv.get("default_land")}):
+    for land in sorted(set(nv.get("lands", {}).values()) | set(nv.get("settings", {}).values()) | {nv.get("default_land")}):
         for level in range(1, 12):
             n = sum(1 for g in groups if g["land"] == land and g["levels"][0] <= level <= g["levels"][1])
             if n == 0:
