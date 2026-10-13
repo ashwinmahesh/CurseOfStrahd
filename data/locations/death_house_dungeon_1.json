@@ -1058,14 +1058,6 @@
             14
           ],
           "lying": true
-        },
-        {
-          "monster": "ghoul",
-          "cell": [
-            4,
-            14
-          ],
-          "lying": true
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."
@@ -1309,6 +1301,13 @@
             4
           ],
           "name": "A Robed One"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            7,
+            3
+          ]
         }
       ],
       "trigger": "dialogue",
@@ -1370,6 +1369,13 @@
             3
           ],
           "name": "A Robed One"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            7,
+            3
+          ]
         }
       ],
       "trigger": "dialogue",

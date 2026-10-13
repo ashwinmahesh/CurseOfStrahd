@@ -174,12 +174,12 @@ The Tser Pool brawl is a choice the party makes, not a test.
 
 | id | Map | Trigger | Monsters | XP | L3 / L4 |
 |---|---|---|---|---|---|
-| `crossroads_hanged_dead` | svalich_crossroads | enter `crossroads_gallows` at night, Nicu not cut down | Nicu + 4 hanged dead (5 Strahd zombies) and 2 hanged men risen as vampire spawn | 4600 | met at level 5 |
+| `crossroads_hanged_dead` | svalich_crossroads | enter `crossroads_gallows` at night, Nicu not cut down | Nicu + 6 hanged dead (7 Strahd zombies) and 2 hanged men risen as vampire spawn | 5000 | met at level 5 |
 | `tser_pool_brawl` | tser_pool | dialogue (Stanimir: "Come and take it") | 2 bandit captains, 2 bandits, 3 scouts (Vistani) | 1250 | met at level 4 |
 | `tser_pool_ambush` | tser_pool | enter `tser_camp` after the party chose to fight Eva's family | the same | 1250 | met at level 4 (party surprised) |
 | `falls_werewolf` | tser_falls | enter `falls_ledge` at night | werewolf, dire wolf, 5 wolves | 1150 | met at level 4 (party surprised; 2 wins in 8, the nearest harder step to 3) |
-| `road_dead_procession` | road_ambush | dialogue (the night procession) | 6 Strahd zombies led by 2 wights ("Mourner in Black") | 2600 | met at level 4 |
-| `road_hunters` | road_forest | dialogue (Grigor's hunters) | 2 warrior veterans, 4 scouts | 1800 | met at level 4 |
+| `road_dead_procession` | road_ambush | dialogue (the night procession) | 7 Strahd zombies led by 2 wights ("Mourner in Black") | 2800 | met at level 4 |
+| `road_hunters` | road_forest | dialogue (Grigor's hunters) | 2 warrior veterans, 3 scouts | 1700 | met at level 4 |
 
 **Road battle grounds** (Ashwin, 2026-10-12; story/road_grounds.gd, docs/contracts/campaign.md): each table's fights
 take turns on a pool of maps from its land, never the same twice running; meetings stay on the table's own map. The

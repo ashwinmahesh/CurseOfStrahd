@@ -724,7 +724,7 @@
           ]
         },
         {
-          "monster": "swarm_of_rats",
+          "monster": "giant_rat",
           "cell": [
             21,
             8
@@ -755,17 +755,24 @@
           ]
         },
         {
-          "monster": "animated_armor",
+          "monster": "animated_flying_sword",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "animated_flying_sword",
           "cell": [
             12,
             14
           ]
         },
         {
-          "monster": "animated_flying_sword",
+          "monster": "giant_rat",
           "cell": [
             13,
-            12
+            14
           ]
         }
       ],

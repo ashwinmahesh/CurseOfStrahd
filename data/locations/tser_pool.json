@@ -1217,13 +1217,6 @@
             25,
             15
           ]
-        },
-        {
-          "monster": "bandit",
-          "cell": [
-            25,
-            16
-          ]
         }
       ],
       "surprise": "party",

@@ -295,6 +295,13 @@
             2
           ],
           "name": "A Mist Wolf"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            3,
+            1
+          ]
         }
       ]
     }

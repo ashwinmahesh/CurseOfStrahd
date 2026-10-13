@@ -64,9 +64,9 @@ with Ileana, the woods, or the party ends him (before the fight or after).
 - Vigil: by day, "wait with her until dark" (`time until 21`); at night Ileana stands at her door and Teodor comes to
   the shutter (approach). After the fight Ileana comes to the party (`polite_caller:dawn`).
 - Fight `teodor_errand` (village map, the east road by the churchyard gate): level 4+ the coachman (vampire spawn), 3
-  Strahd zombies, 5 dire wolves, 2 swarms of bats (3,500 XP); level 3 the coachman at full strength, 2 Strahd zombies,
-  3 dire wolves and a swarm (2,850 XP); below, the coachman at 45 HP with zombies. Scaled up for 2024 heroes
-  (2026-10-13): the autopilot wins 3 of 8 at levels 3 and 4. The coachman is an attention mark (`coachman`, +1).
+  Strahd zombies, 4 dire wolves, 2 swarms of bats (3,300 XP); level 3 the coachman at full strength, 2 Strahd zombies,
+  4 dire wolves and a swarm (3,050 XP); below, the coachman at 45 HP with zombies. Scaled up for 2024 heroes
+  (2026-10-13): the autopilot wins 3 of 8 at level 4 and 2 at level 3 (three dire wolves were 4). The coachman is an attention mark (`coachman`, +1).
 - Rewards: Teodor's grave (container `teodor_grave`, opens once he tells you): 90 gp, 2 Potions of Healing, a Shield,
   +1 (uncommon). Heroic Inspiration for the party if he sees the sunrise.
 
@@ -114,8 +114,8 @@ the siege winter and came back hungry, and his father couldn't end it and walled
 break them open (Athletics DC 11) and face the Tenant with Lupu, who joins the party for the fight.
 
 - Fight `hound_tenant` in the study: level 2 the Tenant (a ghast), three starved servants (ghouls) and a giant rat;
-  level 3 four servants and a swarm of rats; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot wins 4 of 8
-  at level 2 and 3 of 8 at level 3 (2026-10-13). It's the only side quest below level 3.
+  level 3 five servants, a swarm of rats and a giant rat; below 2 the Tenant at 24 HP and one. With Lupu, the autopilot
+  wins 3 of 8 at level 2 and 2 of 8 at level 3 (2026-10-13; the nearest steps to 4 and 3). It's the only side quest below level 3.
 - Opened: 60 gp and the shirt of fine rings Kolyan bought his son before the siege, Mithral Armor (uncommon).
 
 ### The Oat Thief (`the_oat_thief`, narrative/village_of_barovia/the_oat_thief.dialogue; batch 6)
@@ -129,9 +129,9 @@ from the werewolf den when Kiril began taking children for the count's army, and
 on oats so they never learn the taste of meat. **Escalation:** Parriwimple's sack has a hole in it, and the pack's
 hunters come up the trail of oats; spotting it (Survival DC 12) catches them unawares, with a wolf left behind.
 
-- Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter") and two wolves at level 2, five wolves at level 3; with
-  the trail read (the hunters caught unawares), two wolves at level 2 and four at level 3. The autopilot wins 4 of 8 at
-  level 2 and 2 of 8 at level 3 (2026-10-13; one wolf fewer at level 3 was 4).
+- Fight `oat_hunters` at her door: a werewolf ("A Pack Hunter"), two wolves and a giant rat at level 2, five wolves at
+  level 3; with the trail read (the hunters caught unawares), two wolves at level 2 and four at level 3. The autopilot
+  wins 4 of 8 at level 2 and 2 of 8 at level 3 (2026-10-13; one wolf fewer at level 3 was 4).
 - Reward: Agafia's grandmother's bag, a Bag of Tricks (Tan) (uncommon), whose fuzzy balls get up as beasts that fight
   for the party until dawn; and Bildrath decides it's charity.
 
@@ -147,8 +147,9 @@ the robed ones cut his name over a box and gave him to the thing in the pit. Lay
 house's keepers.
 
 - Fight `nursemaid_keepers` in the family crypts (my entries on data/locations/death_house_dungeon_1.json): Gustav and
-  Elisabeth Durst (ghasts) and three robed ones (ghouls), unless the Dursts are already gone; then the robed one who
-  carried Walter down (a ghast) and five more. The autopilot wins 3 of 8 either way at level 3 (2026-10-13).
+  Elisabeth Durst (ghasts), three robed ones (ghouls) and a giant rat, unless the Dursts are already gone; then the robed
+  one who carried Walter down (a ghast), five more and a rat. The autopilot wins 3 of 8 either way at level 3
+  (2026-10-13).
 - Reward: her lucky stone, left on the lid, a Stone of Good Luck (uncommon). No still.
 
 ### The Lantern in the Roadhouse (`the_roadhouse_lantern`, narrative/svalich_road/the_roadhouse_lantern.dialogue; batch 9, level 2)
@@ -179,8 +180,8 @@ for a doctor, fifty years ago (The Last Traveller; with `ilarion_met` the party 
 name). The mists are giving back what they took. **Escalation:** they don't give anything back for nothing, and
 wolves come out of the fog after her.
 
-- Fight `pasture_wolves` on the pasture, in the evening: level 1 six mist wolves (the autopilot wins 3 of 8, losing
-  three party members a fight); level 2 and up two dire wolves and four wolves (3 of 8).
+- Fight `pasture_wolves` on the pasture, in the evening: level 1 seven mist wolves (the autopilot wins 2 of 8, the
+  nearest harder step to 4: six were 5); level 2 and up two dire wolves and four wolves.
 - Snowdrop goes down to Petra's kitchen (with `ilarion_home`, to her father by the fire), or back into the mists. A
   Potion of Animal Friendship (uncommon) and 25 gp either way.
 

@@ -312,6 +312,14 @@
             8
           ],
           "name": "Mourner in Black"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Mourner"
         }
       ],
       "surprise": "",

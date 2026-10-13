@@ -732,6 +732,22 @@
             8
           ],
           "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            20,
+            9
+          ],
+          "name": "Hanged dead"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            21,
+            7
+          ],
+          "name": "Hanged dead"
         }
       ],
       "surprise": "",
@@ -882,6 +898,13 @@
           "cell": [
             15,
             21
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            22
           ]
         }
       ],

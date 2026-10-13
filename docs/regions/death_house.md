@@ -104,16 +104,16 @@ Level 1 budget: Low 200 / Moderate 300 / High 400. Level 2: Low 400 / Moderate 6
 
 | Map | id | Trigger | Monsters | XP | Level | Difficulty |
 |---|---|---|---|---|---|---|
-| third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor"), 3 animated flying swords off the wall | 350 | 1 | Moderate+ (3 wins in 8: the nearest to 4 that the Phase 3 playthrough's created party can still win on the critical path; two armors were 4 in 8 for the pregens but beat it all eight tries) |
-| third | `nursery_specter` | dialogue (fail or attack) | 4 specters ("The Nursemaid" and three more of the house's dead), a swarm of rats | 850 | 1 | Twice High (avoidable) |
-| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack, 2 animated armors, an animated flying sword | 500 | 1 | Above High (optional room; 2 wins in 8, the nearest harder step to 4: one armor and two swords was 5) |
-| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects | 700 | 2 | Moderate+ (optional) |
+| third | `armor_guardian` | enter `dh_attic_landing` | animated armor ("Black Armor"), 3 animated flying swords off the wall | 350 | 1 | Moderate+ (3 wins in 8, the nearest harder step to 4 that the Phase 3 playthrough's created level 1 party can still win: two armors were 4 for the pregens but beat it every try) |
+| third | `nursery_specter` | dialogue (fail or attack) | 4 specters ("The Nursemaid" and three more of the house's dead), a giant rat | 825 | 1 | Twice High (avoidable) |
+| third | `storage_broom` | enter `dh_third_storage` | broom of animated attack, an animated armor, 2 animated flying swords, a giant rat | 375 | 1 | Moderate+ (optional room; 3 wins in 8, the nearest harder step to 4) |
+| dungeon 1 | `crypt_insects` | dialogue (open Elisabeth's crypt) | 7 swarms of insects | 700 | 2 | Moderate+ (optional; 3 wins in 8, the nearest harder step to 4: six swarms were 8) |
 | dungeon 1 | `larder_grick` | enter `dh_larder` | grick | 450 | 2 | Low (optional room; already about 4 wins in 8) |
-| dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 6 ghouls | 1,200 | 2 | Above High (on the way to the shrine and the Dursts, off the way down) |
+| dungeon 1 | `passage_ghouls` | enter `dh_ghoul_passage` | 5 ghouls | 1,000 | 2 | Above High (on the way to the shrine and the Dursts, off the way down) |
 | dungeon 1 | `shrine_shadows` | dialogue (take the statue's orb) | 7 shadows | 700 | 2 | Moderate+ (optional) |
 | dungeon 1 | `den_mimic` | open `durst_door` | 2 mimics ("The Door", "The Chest"), a ghast | 1,350 | 2 | Above High |
-| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) with a robed one and 3 giant rats from the larder; the "shaken" version 2 robed ones and a swarm of rats, and the Dursts surprised | 1,175 / 1,350 | 2 | Above High; 3 and 4 wins in 8 (the plain supper has no line-up between 3 and 5) |
-| dungeon 2 | `shades_harry` | dialogue (failed run) | 6 shadows | 600 | 2 | Moderate |
+| dungeon 1 | `durst_reunion` / `durst_reunion_shaken` | dialogue | 2 ghasts (Gustav, Elisabeth) with a robed one and 2 giant rats from the larder; the "shaken" version 2 robed ones and a swarm of rats, and the Dursts surprised | 1,150 / 1,350 | 2 | Above High |
+| dungeon 2 | `shades_harry` | dialogue (failed run) | 7 shadows | 700 | 2 | Moderate+ (3 wins in 8, the nearest harder step to 4: six were 5) |
 | dungeon 2 | `lorghoth_rises` / `lorghoth_rises_late` | dialogue ("stand and fight") | shambling mound | 1,800 | 2 | **Far beyond High, on purpose.** Only by choice; "run" avoids it. `_late` starts it 4 squares farther away. |
 | ground | `ground_escape_weapons` | enter `dh_main_hall` after a refusal | 1 animated flying sword + broom (tuned down from 2 swords: AC 17 flyers at full speed ground down level 2 parties) | 100 | 2 | Trivial (pressure, not attrition) |
 | third | `third_escape_swords` | enter `dh_third_hall` after a refusal | 2 animated flying swords (tuned down from 3) | 100 | 2 | Trivial |

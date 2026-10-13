@@ -1834,13 +1834,6 @@
           ]
         },
         {
-          "monster": "dire_wolf",
-          "cell": [
-            36,
-            12
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             37,
@@ -1909,6 +1902,13 @@
           "cell": [
             36,
             12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            37,
+            10
           ]
         }
       ],

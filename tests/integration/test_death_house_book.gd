@@ -90,7 +90,7 @@ func test_the_rooms_and_fights_are_the_books() -> void:
 			"dh_larder", "dh_ghoul_passage", "dh_lower_stair", "dh_shrine", "dh_trapdoor_stair", "dh_durst_chambers", "dh_durst_quarters"]:
 		assert_false(_find(d1, "areas", area).is_empty(), "the dungeon has %s" % area)
 	# The book's creatures, more of them since 2026-10-13 for 2024 heroes (owner; docs/regions/death_house.md).
-	var counts := {"larder_grick": 1, "passage_ghouls": 6, "shrine_shadows": 7, "den_mimic": 3, "crypt_insects": 7}
+	var counts := {"larder_grick": 1, "passage_ghouls": 5, "shrine_shadows": 7, "den_mimic": 3, "crypt_insects": 7}
 	for enc_id: String in counts:
 		assert_eq((_find(d1, "encounters", enc_id)["monsters"] as Array).size(), int(counts[enc_id]), enc_id)
 	# Gustav and Elisabeth are both ghasts; since 2026-10-13 their supper has a robed one and the larder's rats too.
