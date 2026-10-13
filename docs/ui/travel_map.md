@@ -131,6 +131,24 @@ the top right of the HUD that moves with the party, and the ways out of an area 
 - A noticed trap's border also shows through a wall in front of it as red hatching (shaders/world/xray_mark.gdshader),
   so a trap in a one-square passage still reads from the diagonal camera.
 
+## What was just found (`world/exploration/found_glow.gd`)
+
+- Owner ask (2026-10-13): "When we find something via a perception check, give that thing a glowing orange outline
+  so we know what was discovered."
+- A hidden find (a search prop), a secret door or a trap that comes to light gets an orange outline
+  (`world/look/found_outline.gd`): on a 2D piece, a line hugging its picture with a dark hairline beyond it and a soft
+  glow (shaders/world/found_outline_sprite.gdshader, drawn as the sprite's overlay on a quad grown past its edges);
+  on a 3D piece, an orange rim over its surfaces and a line round its silhouette (found_rim.gdshader,
+  found_outline_mesh.gdshader). A trap's own pieces glow, not its red border (the border alone when it has no piece).
+  Orange (candle warmed toward flame, its glow candle) so it isn't the gilt hover glow, a spell area's pale gold edge
+  or a fight's rings; drawn after the screen pass, so the classic look's palette snap and ink leave it as it is.
+- It pulses as the thing is found (2.4 s), then stays as a steady outline until the party uses the thing (opens it,
+  takes it, tries its lock, disarms it: LocationInteraction tells it) or deals with it some other way (the door opened,
+  the find taken, the trap sprung or disarmed), or leaves the place. Things found on an earlier visit, or before the
+  party got here (a place hint), don't glow. A fight puts the glow away; it comes back after.
+- FoundGlow watches the place's `found` and trap states rather than each way of finding, so a Search, a check's
+  `reveal`, a conversation and a spell all light what they turn up.
+
 ## Pits (`world/exploration/pit_fall.gd`)
 
 - Owner playtest (2026-10-07): the Death House crypt passage's pit is a 10-foot drop, so show the hole and let the

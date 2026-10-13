@@ -1698,28 +1698,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
 		if data.has("attack") and prev.has("attack"):
-			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
-			var sit := e.attack_situation(c, o, opt)
-			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
-			var needs := clampi(ac - to_hit, 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
-			if int(sit.get("height_bonus", 0)) != 0:
-				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-			# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
-			var own := c.creature.d20_sources(["attack", "attack:melee" if bool(opt["melee"]) else "attack:ranged", "attack:spell"])
-			var sa: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
-			var sd: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
-			if not sa.is_empty() and sd.is_empty():
-				tip_title = "%s · ADVANTAGE" % o.name()
-				edge = "advantage"
-			elif not sd.is_empty() and sa.is_empty():
-				tip_title = "%s · DISADVANTAGE" % o.name()
-				edge = "disadvantage"
-			for s: Variant in sa:
-				lines2.append("Advantage: %s" % s)
-			for s: Variant in sd:
-				lines2.append("Disadvantage: %s" % s)
+			# The odds from the situation the roll uses (Spell Sniper, cover a spell ignores), the caster's own edge too.
+			var spv := catalog.spell_attack_preview(c, str(selected["spell_id"]), o, prev["attack"] as Breakdown)
+			lines2.append_array(spv["lines"] as Array)
+			edge = str(spv["edge"])
+			if edge != "":
+				tip_title = "%s · %s" % [o.name(), edge.to_upper()]
 		if data.has("save") and prev.has("save_dc"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()

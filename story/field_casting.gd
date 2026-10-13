@@ -487,7 +487,7 @@ static func _take_effect(st: StoryState, caster: Character, spell_id: String, da
 	var ct := data.get("casting_time", {}) as Dictionary
 	if own_time and str(ct.get("unit", "")) in ["minute", "hour"]:
 		minutes = int(ct.get("amount", 1)) * (60 if str(ct["unit"]) == "hour" else 1) + (10 if as_ritual else 0)
-	var dur := data.get("duration", {}) as Dictionary
+	var dur := Spellcasting.duration_at(data, level)   # a higher slot can last longer (Magic Circle: an hour a level)
 	var lasting := 0
 	match str(dur.get("kind", "")):
 		"minutes":

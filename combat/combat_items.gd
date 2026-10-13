@@ -610,6 +610,7 @@ func cast(c: Combatant, spell: Dictionary, level: int, targets: Array, point: Ve
 		cost: String, opts: Dictionary, label: String) -> CombatResult:
 	var e := enc()
 	var sp := e.spells
+	spell = Spellcasting.at_slot(spell, level)   # a scroll or wand of a higher level: that slot's duration
 	# A duration rolled when it starts (Potion of Growth: 1d4 hours).
 	var dur := spell.get("duration", {}) as Dictionary
 	if dur.has("dice"):
@@ -626,7 +627,7 @@ func cast(c: Combatant, spell: Dictionary, level: int, targets: Array, point: Ve
 	sp.trigger_ends(c, "cast_spell")
 	var conc: Concentration = null
 	if bool((spell.get("duration", {}) as Dictionary).get("concentration", false)):
-		conc = c.creature.begin_concentration(str(spell["id"]), str(spell["name"]))
+		conc = c.creature.begin_concentration(str(spell["id"]), str(spell["name"]), spell["duration"] as Dictionary)
 		sp.zones.prune()
 		sp._prune_sustained()
 	var choice := SpellCaster.choice_of(spell, opts)

@@ -39,7 +39,13 @@
     "description": "a spot you can see within range"
   },
   "upcast": {
-    "text": "With a level 4+ slot the spell lasts until dispelled and doesn't require Concentration."
+    "text": "With a level 4+ slot the spell lasts until dispelled and doesn't require Concentration.",
+    "durations": [
+      {
+        "slot": 4,
+        "kind": "until_dispelled"
+      }
+    ]
   },
   "tags": [
     "utility"

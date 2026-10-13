@@ -233,7 +233,7 @@ leaves a smaller purse and one find.
 | ✅ | Wards, the instrument cabinet | Periapt of Proof against Poison (rare) | Search (Investigation DC 15) |
 | ✅ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
 | ✅ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
-| ✅ | Mother, on the courtyard wall | Boots of Levitation (rare) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
+| ✅ | Mother, on the courtyard wall | Winged Boots (uncommon) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
 
 ## Argynvostholt (level 8)
 
