@@ -2435,14 +2435,6 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            28,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             26,

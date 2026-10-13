@@ -361,10 +361,10 @@ count speaks to the party out of the painted woman's mouth.
 - **Boss: the Count's Likeness** (data/monsters/the_counts_likeness.json, `source.book: custom`, built up from the
   guardian portrait and drawn with its sprite at Large, `art_height` 2.2): Large construct, AC 13, 181 HP (230 in this
   fight), a Frame Strike with reach and The Count's Regard (DC 16 Wis, 5d10 Psychic and Frightened), Hypnotic Pattern
-  and Hold Person once a day, Legendary Resistance (2/day), and a look between turns. CR 8. Eight copies come off the
+  and Hold Person once a day, Legendary Resistance (2/day), and a look between turns. CR 8. Seven copies come off the
   walls with it (guardian portraits at 40 HP).
-- Fight `counts_likeness`. The autopilot wins 1 of 8 at level 9 (4 of 16 over seeds 1-16), losing two party members in a
-  win (2026-10-13, the owner's 2/8 target: eight copies at 40 HP instead of six at 30, when it won 5 of 8).
+- Fight `counts_likeness`. The autopilot wins 2 of 8 at level 9, losing two party members in a win (2026-10-13, the
+  owner's 2/8 target: seven copies at 40 HP instead of six at 30, when it won 5 of 8).
 - Burned, every copy in Vallaki goes blank. Haralamb scrapes the count's paints into clean pots and prays over them:
   Nolzur's Marvelous Pigments (very rare) and 150 gp. Still: `sq_counts_likeness` (the canvas, first seen).
 
@@ -430,9 +430,9 @@ hounds by name, and most of the pack lies down (`hounds_called`).
   Manual's revenant and wight, drawn with the revenant's sprite): Medium undead, AC 17, 165 HP, two attacks with a boar
   spear (reach 10) or black arrows (1d8+5 and 2d8 necrotic), a horn that frightens (recharge 5-6, 60 ft), Legendary
   Resistance (2/day), and a loosed arrow or a step into the trees between turns. CR 9.
-- Fight `the_hunt` on the east road: level 8 the Huntsman at 240 HP, his mare (a nightmare) and 4 hounds (dire
-  wolves), or 3 hounds once they're called (the autopilot wins 3 of 8 against the whole pack and 2 of 8 with the hounds
-  called; 2026-10-13, the owner's 2/8 target: at 165 HP with 2 hounds called it won 3 and 7 of 8);
+- Fight `the_hunt` on the east road: level 8 the Huntsman at 240 HP, his mare (a nightmare) and 6 hounds (dire
+  wolves), or 3 hounds once they're called (the autopilot wins 2 of 8 either way; 2026-10-13, the owner's 2/8 target:
+  at 165 HP with 4 hounds, 2 called, it won 4 and 3 of 8);
   level 9 the Huntsman at 250 HP, six hounds (five called); level 10 at 300 HP, eight (five called), each about 2 wins
   in 8 (they won 6 or 7 of 8 at 165 HP); below 8, the quest's fallback, the Huntsman at 130 HP with 3 hounds (1).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
@@ -533,12 +533,13 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
 - **Boss: the Bone Marshal** (data/monsters/bone_marshal.json, `source.book: custom`, drawn with the phantom warrior's
   sprite): Large undead, AC 18, 150 HP, two grave-blade strokes (1d12+6 slashing and 1d8 necrotic, reach 10), Parry,
   Legendary Resistance (2/day) and a charge (one more stroke) between turns. CR 8.
-- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal, 2 lieutenants as wights at their full 82 HP
-  and 6 skeleton riders; level 8 the marshal at 190 HP, a third wight and 2 phantom warriors; below 6 the marshal at 110
-  HP, one wight, six riders), or only the marshal and his lieutenants once the riders stand down (level 8: 190 HP and
-  three). Over seeds 1-8 the autopilot wins 1 of 8 against the column at level 6, 1 of 8 against it at level 8 and 1 of
-  8 against the marshal and three lieutenants at level 8 (3 or 4 of 16 over seeds 1-16), two or three party members
-  down in a win (2026-10-13, the owner's 2/8 target for 2024-rules heroes; each won 3 of 8 before).
+- Fight `bone_marshal` at the gate: the whole column (level 6 the marshal at 170 HP, 2 lieutenants as wights at their
+  full 82 HP and 6 skeleton riders; level 8 the marshal at 190 HP, a third wight and 2 phantom warriors; below 6 the
+  marshal at 110 HP, one wight, six riders), or only the marshal and his lieutenants once the riders stand down (level 8:
+  190 HP and three). Over seeds 1-8 the autopilot wins 1 of 8 against each of the column at levels 6 and 8 and the
+  marshal and three lieutenants at level 8, two or three party members down in a win: the harder side of the owner's
+  2/8 for 2024-rules heroes (2026-10-13), as no line-up step between lands on 2 (the column at level 6 won 3 of 8 with
+  the marshal at 150 or 160 HP).
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
 ## Old Bonegrinder's lane (level 6)
@@ -729,10 +730,10 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
   giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
   freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
   CR 11.
-- Fight `the_penitent` on the landing: level 10 the Penitent at 340 HP and 5 pilgrims' shadows (ghasts); level 11 eight
-  shadows; level 9 four; below 9 the Penitent at 170 HP and three. At level 10 the autopilot wins 3 of 8 (4 of 16 over
-  seeds 1-16), two or three party members down in a win (2026-10-13: at 210 HP, once an ally's square stopped slowing
-  the party, it won 7 of 16, and 12 of 16 when foes in the dark can be struck where they're heard).
+- Fight `the_penitent` on the landing: level 10 the Penitent at 420 HP and 5 pilgrims' shadows (ghasts); level 11 eight
+  shadows; level 9 four; below 9 the Penitent at 170 HP and three. At level 10 the autopilot wins 2 of 8, three party
+  members down in a win (2026-10-13, the owner's 2/8: at 210 HP, once an ally's square stopped slowing the party and foes
+  in the dark could be struck where they're heard, it won 7 of 8).
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
 
@@ -911,9 +912,9 @@ keepers had three ways of going down to her safely, and each one is a lair trick
   adult red dragon, drawn with the draconic spirit's sprite at her own height, `art_height`): Huge dragon, AC 18,
   200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
   DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
-  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins
-  3 of 8 at level 10 (4 of 16 over seeds 1-16) and loses three or four party members a fight; with all three tricks it wins 4 of 4 and loses one
-  or two; unchained at level 11, 1 in 8.
+  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is (220 HP in this
+  fight, 2026-10-13), the autopilot wins 2 of 8 at level 10 and loses three or four party members a fight; with all
+  three tricks it wins 4 of 4 and loses one or two; unchained at level 11, 4 in 8.
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
   cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
   sluice). The autopilot wins both at level 10, losing about one party member a fight.
@@ -1042,14 +1043,15 @@ Kostin stands aside (and stays to keep the hill afterwards); Ruxandra fights bes
 down (Persuasion DC 15, one try).
 
 - **Boss: the Ash Effigy** (data/monsters/ash_effigy.json, `source.book: custom`, built up from the tree blight, drawn
-  with its sprite at Huge): Huge plant, AC 15, 175 HP (150 below level 8; 212 at level 8 alone with five embers, 220
-  with a druid beside it), two Ash Fists (reach 15), Choking Ash (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and
+  with its sprite at Huge): Huge plant, AC 15, 175 HP (below level 8, 150, or 140 with Zorica or Ruxandra beside it; at
+  level 8, 270 alone with five embers, 190 with a druid beside it), two Ash Fists (reach 15), Choking Ash (recharge 5-6, a 30-ft cone, DC 16 Con, necrotic and
   Blinded), Regeneration 10 that cold stops, immune to fire and vulnerable to cold, Legendary Resistance (2/day), and
   a fist or a step between turns. CR 8. Embers (twig blights) crawl after it.
 - Fight `ash_effigy` on the crown (my entries on data/locations/yester_hill_gulthias_tree.json). The autopilot wins 2
   of 8 at level 7 with Zorica or Ruxandra beside it (five embers), and 2 of 8 at level 8 alone or with either of them
   (the owner's 2/8, 2026-10-13; it spends both legendary uses on fists since legendary-uses, and foes strike unseen
-  heroes whose squares they know), losing three a fight.
+  heroes whose squares they know; 2026-10-13 retuned once an ally's square no longer slowed the party, when the lone
+  effigy at 212 HP won 6 of 8), losing three a fight.
 - Reward from Davian: 300 gp and Daern's Instant Fortress (rare). Still: `sq_ash_effigy` (it standing up).
 
 ### The Barrow on Yester Hill (`the_barrow_on_yester_hill`, narrative/yester_hill/the_barrow.dialogue; batch 7)

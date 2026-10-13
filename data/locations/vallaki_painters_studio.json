@@ -343,15 +343,6 @@
           ],
           "name": "A Copy",
           "hp": 40
-        },
-        {
-          "monster": "guardian_portrait",
-          "cell": [
-            10,
-            1
-          ],
-          "name": "A Copy",
-          "hp": 40
         }
       ],
       "surprise": "",

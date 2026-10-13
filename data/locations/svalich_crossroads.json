@@ -1677,6 +1677,22 @@
             15
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            11
+          ],
+          "name": "Hound of the Hunt"
         }
       ],
       "surprise": "",

@@ -826,6 +826,14 @@
             12
           ],
           "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            11,
+            11
+          ],
+          "name": "Town guard"
         }
       ],
       "surprise": "",

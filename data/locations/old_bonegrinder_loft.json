@@ -662,12 +662,11 @@
           ]
         },
         {
-          "monster": "swarm_of_rats",
+          "monster": "dire_wolf",
           "cell": [
             11,
             4
-          ],
-          "name": "Rats from the grain bins"
+          ]
         }
       ],
       "surprise": "",
