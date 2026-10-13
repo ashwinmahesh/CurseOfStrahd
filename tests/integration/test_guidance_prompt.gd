@@ -227,6 +227,11 @@ func test_a_check_in_a_place_waits_for_the_answer_and_nothing_moves_meanwhile() 
 	var v := await _place()
 	var rolled: Array[String] = []
 	v.check_rolled.connect(func(t: String) -> void: rolled.append(t))
+	var line: Dictionary = {}
+	for a: Variant in v.actions_at(Vector2i(1, 1))["actions"]:
+		if str((a as Dictionary)["id"]) == "check:read_runes":
+			line = a as Dictionary
+	assert_true("can cast it first" in str(line.get("why", "")), "the menu says Guidance is asked for, not added: %s" % [line])
 	LocationChecks.act(v, v.thing_at(Vector2i(1, 1)), "check:read_runes")
 	await _frames(2)
 	var p := root.get("guidance") as GuidancePrompt

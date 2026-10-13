@@ -146,20 +146,25 @@ static func helper(st: StoryState, check: Dictionary, who: Character) -> Charact
 	return best
 
 
-## Who'd cast Guidance on `who` first (2024 PHB: 1d4 on checks with the chosen skill), for the chance the menu shows,
-## or null: the first offered (GuidanceOffer) who isn't concentrating on another spell, which Guidance would end. Only
-## for skill checks. Whether it's cast is asked before the roll (LocationView.ask_guidance).
+## Who'd cast Guidance on `who` first (2024 PHB: 1d4 on checks with the chosen skill), for the menu, or null: the
+## caster on Automatic, else the first offered (GuidanceOffer) who isn't concentrating on another spell, which Guidance
+## would end. Only for skill checks. Unless it's the Automatic caster, the player is asked before the roll
+## (LocationView.ask_guidance), so the menu's chance leaves it out (Ashwin, 2026-10-13: asked, never added on its own).
 static func guide(st: StoryState, check: Dictionary, who: Character) -> Creature:
 	if not is_skill(check):
 		return null
-	for e: Variant in GuidanceOffer.offer(st, who, skill_of(check))["casters"]:
+	var o := GuidanceOffer.offer(st, who, skill_of(check))
+	if o["auto"] != null:
+		return o["auto"] as Creature
+	for e: Variant in o["casters"]:
 		if str((e as Dictionary)["ends"]) == "":
 			return (e as Dictionary)["caster"] as Creature
 	return null
 
 
-## What the menu shows: {who, helper, guide, bonus, advantage: [sources], disadvantage: [sources], chance}, or {} when
-## nobody's left to try.
+## What the menu shows: {who, helper, guide, guide_sure, bonus, advantage: [sources], disadvantage: [sources], chance},
+## or {} when nobody's left to try. `guide_sure`: Guidance will be cast without asking (its caster is on Automatic), so
+## the chance counts it.
 static func preview(st: StoryState, loc_id: String, check: Dictionary) -> Dictionary:
 	var who := roller(st, loc_id, check)
 	if who == null:
@@ -180,8 +185,9 @@ static func _odds(st: StoryState, loc_id: String, check: Dictionary, who: Charac
 	all_dis.append_array(src["disadvantage"] as Array)
 	all_dis.append_array(dis)
 	var g := guide(st, check, who)
-	return {"who": who, "helper": helper(st, check, who), "guide": g, "bonus": bonus.total(), "advantage": all_adv,
-		"disadvantage": all_dis, "chance": chance(bonus.total(), int(check["dc"]), not all_adv.is_empty(), not all_dis.is_empty(), g != null)}
+	var sure := g != null and GuidanceOffer.rule_of(g) == "auto"
+	return {"who": who, "helper": helper(st, check, who), "guide": g, "guide_sure": sure, "bonus": bonus.total(), "advantage": all_adv,
+		"disadvantage": all_dis, "chance": chance(bonus.total(), int(check["dc"]), not all_adv.is_empty(), not all_dis.is_empty(), sure)}
 
 
 ## Advantage the party brings before the roll: Help. (Helpful Friend spends a use, so it's asked for only when rolling.)

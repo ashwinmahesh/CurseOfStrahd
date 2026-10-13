@@ -52,7 +52,9 @@ static func _why(pv: Dictionary) -> String:
 	for s: Variant in pv["disadvantage"]:
 		parts.append("Disadvantage: %s" % s)
 	if pv["guide"] != null:
-		parts.append("Guidance (%s): +1d4, offered before the roll" % (pv["guide"] as Creature).name.get_slice(" ", 0))
+		var first := (pv["guide"] as Creature).name.get_slice(" ", 0)
+		parts.append(("Guidance (%s): +1d4" % first) if bool(pv["guide_sure"]) else
+			("Guidance: %s can cast it first, +1d4 (you're asked before the roll)" % first))
 	return ". ".join(parts)
 
 

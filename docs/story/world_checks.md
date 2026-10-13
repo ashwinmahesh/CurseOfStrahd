@@ -18,8 +18,9 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 - **Gets the 2024 PHB's help before the roll:** another party member proficient in the skill takes the Help action
   (Advantage) unless the check is `alone`; whoever can cast Guidance is offered to cast it first (+1d4 on a skill check;
   story/guidance_offer.gd, the prompt asks unless the caster's rule is Automatic or Off, and names any spell it would
-  end); Helpful Friend adds its Advantage. The menu's chance counts on Guidance when someone free to cast it would be
-  offered. A plain ability check (`str`, `dex` ...) takes neither Help nor Guidance, since both name a skill.
+  end; Ashwin, 2026-10-13: asked, never added on its own); Helpful Friend adds its Advantage. The menu's chance counts
+  Guidance only when its caster is on Automatic; otherwise the tooltip says who can cast it first. A plain ability
+  check (`str`, `dex` ...) takes neither Help nor Guidance, since both name a skill.
   Perception in fog or a storm outdoors has Disadvantage, as a Search does.
 - **Rolls on the big d20** (DiceRoll), then the Narrator says how it went: `check:<skill>:<check id>:success` or
   `:failure` in narrative/narrator/<region>.dialogue, else the outcome's `text`.

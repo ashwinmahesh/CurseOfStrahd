@@ -98,7 +98,14 @@ func test_guidance_adds_a_d4_from_someone_free_to_concentrate() -> void:
 	var c := _check("investigation", 15)
 	var who := WorldChecks.roller(st, LOC, c)
 	assert_eq(WorldChecks.guide(st, c, who), cleric)
-	assert_eq(WorldChecks.preview(st, LOC, c)["guide"], cleric, "the menu's chance counts on it")
+	var pv := WorldChecks.preview(st, LOC, c)
+	assert_eq(pv["guide"], cleric, "the menu names who could cast it")
+	assert_false(bool(pv["guide_sure"]), "on Ask it's asked for, not added (Ashwin, 2026-10-13)")
+	assert_eq(float(pv["chance"]), WorldChecks.chance(int(pv["bonus"]), 15, not (pv["advantage"] as Array).is_empty(),
+		not (pv["disadvantage"] as Array).is_empty()), "so the chance leaves it out")
+	GuidanceOffer.set_rule(cleric, "auto")
+	assert_true(bool(WorldChecks.preview(st, LOC, c)["guide_sure"]), "on Automatic it's cast unasked and counted")
+	GuidanceOffer.set_rule(cleric, "ask")
 	assert_false("Guidance" in (WorldChecks.attempt(st, LOC, _check("investigation", 15, {"id": "unasked"}), dice)["test"] as D20Test).extra_label,
 		"nothing is cast unless it's asked for or Automatic")
 	# Cast before the roll (the prompt's answer, GuidanceOffer): the d4 rides on the check.
