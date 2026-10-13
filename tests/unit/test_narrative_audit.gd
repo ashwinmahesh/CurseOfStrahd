@@ -65,3 +65,28 @@ func test_the_broken_giant_is_said_to_be_harmless() -> void:
 	st.set_flag("winery_reclaimed")
 	said = SideQuestPlay.text(SideQuestPlay.play(st, "wizard_of_wines/davian:hill_report"))
 	assert_true(said.contains("So it won't walk."), said)
+
+
+# ---------------------------------------------------------------- Batch 2: Krezk and the Abbey
+
+## The Abbot's nature was only told to a cleric, a paladin or a Religion check; now he says he was sent.
+func test_the_abbot_says_he_was_sent() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 7, "abbey_of_st_markovia_shrine", 12)
+	st.set_flag("abbot_met")
+	var beats := SideQuestPlay.play(st, "abbey_of_st_markovia/abbot:start", ["Who are you?", "Goodbye"])
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_true(SideQuestPlay.text(beats).contains("I was sent here, long ago, to keep the faith of this valley"))
+
+
+## Without Stanimir's tale or Tamsin's locket, nobody at the pool said who the young man in the water was.
+func test_the_pool_says_who_sergei_is() -> void:
+	var st := SideQuestPlay.party(["godrick_pendlebrook"], 7, "krezk_pool_of_the_white_sun", 12)
+	assert_true(st.add_guest("ireena"))
+	var beats := SideQuestPlay.play(st, "krezk/pool:the_pool", ["Stay with us"])
+	assert_eq(SideQuestPlay.missing(beats), "")
+	assert_true(SideQuestPlay.text(beats).contains("She was meant to marry this one."))
+	var told := SideQuestPlay.party(["godrick_pendlebrook"], 7, "krezk_pool_of_the_white_sun", 12)
+	assert_true(told.add_guest("ireena"))
+	told.set_flag("stanimir_tale_heard")
+	beats = SideQuestPlay.play(told, "krezk/pool:the_pool", ["Stay with us"])
+	assert_false(SideQuestPlay.text(beats).contains("She was meant to marry this one."), "the tale already said it")
