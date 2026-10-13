@@ -34,7 +34,8 @@ func feats() -> CombatFeatures:
 
 ## Runs the offers in `chain` one after another, then `done`. Pauses on each one the player is asked about. An offer may
 ## also be `forced` (no choice: it happens when reached), say `ask: false` (never asked: its rule settles it, as
-## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give `text`, `cost` and
+## D20Responses.sync_allows does), name the `default` rule its creature has until one is set, give a `callout` (a line
+## the prompt shows in red: a Critical Hit on Divine Smite's), give `text`, `cost` and
 ## `target_choices` as Callables (worded when asked, after earlier offers changed the roll), and give `helps`: when it says the offer can't
 ## change the outcome, the player isn't asked (a reroll that can't reach the DC).
 ## `st` is the attack's state when the chain is one of an attack's stages: it holds the Reactions kept for later in it
@@ -63,6 +64,7 @@ func offer(chain: Array, done: Callable, r: CombatResult, st: Dictionary = {}) -
 		req.title = str(o["title"])
 		req.text = _text(o)
 		req.cost = _cost(o)
+		req.callout = str(o.get("callout", ""))
 		req.spends_reaction = bool(o.get("spends_reaction", true))
 		req.target_choices.assign(_own_choices(o))
 		req.selected_ids.assign(o.get("selected_ids", []))

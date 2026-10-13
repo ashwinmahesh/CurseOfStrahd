@@ -55,6 +55,18 @@ const SHOTS := {
 	"death_house_upper": {"loc": "death_house_upper"},
 	"dungeon": {"loc": "death_house_dungeon_2"},
 	"church": {"loc": "village_church", "cells": [[10, 14], [11, 14], [10, 15], [11, 15]]},
+	# Krezk's wall all round (owner report 2026-10-13: missing inside): the north wall meeting the gate's side, the west
+	# and north walls with the camera turned, the north wall by the pool lane, the south wall with the camera turned
+	# about, the party just inside the south wall, and the gate from the road.
+	"krezk_wall_ne": {"loc": "krezk", "hour": 13, "cells": [[26, 6], [27, 6], [26, 7], [27, 7]], "look": [28, 3], "dist": 16.0},
+	"krezk_wall_nw": {"loc": "krezk", "hour": 13, "cells": [[12, 13], [13, 13], [12, 14], [13, 14]], "look": [6, 8],
+		"dist": 20.0, "yaw": 1},
+	"krezk_wall_n": {"loc": "krezk", "hour": 13, "cells": [[16, 4], [17, 4], [16, 5], [17, 5]], "look": [16, 3], "dist": 14.0},
+	"krezk_wall_s": {"loc": "krezk", "hour": 13, "cells": [[14, 21], [15, 21], [14, 22], [15, 22]], "look": [18, 26],
+		"dist": 16.0, "yaw": 2},
+	"krezk_wall_behind": {"loc": "krezk", "hour": 13, "cells": [[7, 28], [8, 28], [9, 28], [10, 28]], "dist": 12.0},
+	"krezk_gate_out": {"loc": "krezk", "hour": 13, "cells": [[35, 19], [36, 19], [35, 20], [36, 20]], "look": [32, 20],
+		"dist": 14.0},
 	"fire_krezk": {"loc": "krezk", "hour": 21, "cells": [[27, 17], [27, 18], [26, 17], [26, 18]], "look": [28, 17], "dist": 8.0},
 	"fire_camp": {"loc": "vallaki_vistani_camp", "hour": 21, "cells": [[13, 12], [13, 13], [12, 12], [12, 13]],
 		"look": [14, 12], "dist": 8.0},
