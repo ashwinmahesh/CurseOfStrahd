@@ -825,6 +825,10 @@ static func spell_targeting(data: Dictionary) -> String:
 	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
 			or str(data.get("id", "")) in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		return "multi"
+	# A hold on one creature that an unwilling one saves against goes on friend or foe (Polymorph, Otiluke's Resilient
+	# Sphere), though it can help an ally too.
+	if data.has("save") and "control" in tags:
+		return "creature"
 	if "healing" in tags or "buff" in tags or "defense" in tags or "restoration" in tags:
 		return "ally"
 	if str(data.get("id", "")) == "spare_the_dying":
@@ -1686,6 +1690,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			continue
 		caught.append(o)
+	# Who it takes of those (creatures of the caster's choice: Slow's foes, Word of Radiance's), as things stand.
+	var taken := e.spells.targeting._area_victims(c, data, cells, SpellTargeting.choice_of(data, action.get("opts", {}) as Dictionary)) \
+		if data.has("area") else caught
 	# Sculpt Spells: who it would shield as things stand (the caster, then the nearest allies; the player can change the
 	# picks as the spell goes off).
 	var sculpted: Array[String] = []
@@ -1703,6 +1710,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 			row["unaffected"] = true
 		elif bool(row["safe"]):
 			line += ": safe (Sculpt Spells)"
+		elif not o in taken:
+			line += ": not affected"
+			row["unaffected"] = true
 		elif data.has("save"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()
@@ -1718,7 +1728,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 				if avg >= o.creature.hp:
 					row["drops"] = "likely drops" if fail > 0.5 else "may drop"
 					line += " · " + str(row["drops"])
-		if bool(row["ally"]) and o != c and not bool(row["safe"]):
+		if bool(row["ally"]) and o != c and not bool(row["safe"]) and not bool(row["unaffected"]):
 			warnings.append("Friendly fire: %s is in the area" % o.name())
 		row["line"] = line
 		who.append(row)

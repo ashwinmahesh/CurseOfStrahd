@@ -48,7 +48,18 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
 
 - Spells and area attacks preview their template on the grid (sphere, cone, cube, line, emanation) from the spell
   data, with every creature inside listed: save and DC, the chance each fails, expected damage, and whether it would
-  likely drop.
+  likely drop. A creature a spell "of your choice" leaves out (Slow's allies, Word of Radiance's) shows as not affected.
+- **An area placed at a point is centred on the pointer** (owner, 2026-10-13: "the pointer should be at the middle of
+  the area"; `TargetPicker.aim`): a Sphere or Cylinder on the grid intersection nearest it (the DMG's grid rule), a
+  Cube with its middle there and its point of origin on the face toward the caster, where its range is measured (an odd
+  size, such as 15 ft, sits on the middle of the square pointed at), an Emanation from a point on the square pointed
+  at. Pointing at a creature's figure aims at the creature, not the floor behind it. No cursor ring is drawn while
+  placing it: the outline is the cursor. Cones and lines from the caster aim as before.
+- **Up to so many creatures of your choice in the area** (Slow's six, Mass Cure Wounds' six): once the area is
+  placed, the creatures in it can be picked (`TargetPicker` "choose" step), with the ones it would take lit to start
+  (Slow: its foes in it, the hardest hitting first; Mass Cure Wounds: its side's most hurt). A click on a creature adds
+  or drops it, up to the spell's number; a click on the floor or Enter casts. Backspace or right-click places it again.
+  With no one in the area it goes off as placed. The AI and the test autopilot take the ones lit by default.
 - **Friendly fire** is called out in red with what happens to the ally; it never blocks (the player decides).
 - **Walls are drawn** (Wall of Fire, Wind Wall, Wall of Stone, Ice and Force, Wall of Thorns, Blade Barrier, Prismatic
   Wall): click the square where the wall begins, then squares touching the last one (a click further along a

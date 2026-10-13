@@ -624,7 +624,7 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	var s := ctx["s"] as Dictionary
 	var victims: Array[Combatant] = tgt
 	if not cells.is_empty() and not s.has("attack"):
-		victims = spells._area_victims(c, s, cells, str(ctx.get("choice", "")))
+		victims = spells.targeting._area_victims(c, s, cells, str(ctx.get("choice", "")), (ctx.get("opts", {}) as Dictionary).get("chosen"))
 	if s.has("attack"):
 		for t in spells.attack_shots(ctx, tgt):
 			if t.is_alive():

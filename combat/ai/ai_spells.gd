@@ -11,6 +11,9 @@ extends RefCounted
 ## What a condition takes from a creature, as a share of its turn.
 const CONDITION_WORTH := {"paralyzed": 2.0, "stunned": 1.8, "unconscious": 1.8, "petrified": 2.0, "incapacitated": 1.5,
 	"restrained": 0.7, "blinded": 0.6, "frightened": 0.6, "charmed": 0.5, "poisoned": 0.4, "prone": 0.3, "deafened": 0.1}
+## What Polymorph takes from a creature, as a share of its turn: it fights as a harmless Beast (the caster picks the
+## weakest) with no save to end it, until the Beast's Hit Points run out or the caster's Concentration breaks.
+const SHAPE_WORTH := 1.6
 ## A spell is cast only when it beats the weapon plan by this much (a weapon doesn't spend a daily use).
 const OVER_WEAPON := 1.1
 const MIN_WORTH := 3.0
@@ -180,6 +183,8 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 		if t.creature.is_condition_immune(StringName(str(cid))) or (str(s.get("id", "")) == "sleep" and not sleeps(t)):
 			continue
 		cond = maxf(cond, float(CONDITION_WORTH.get(str(cid), 0.2)))
+	if str(s.get("id", "")) == "polymorph" and not e.shapes.is_shaped(t):
+		cond = maxf(cond, SHAPE_WORTH)
 	var value := lands * (dmg + cond * _threat(t))
 	if half:
 		value += (1.0 - lands) * dmg / 2.0
