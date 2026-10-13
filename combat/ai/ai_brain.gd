@@ -7,8 +7,9 @@ extends RefCounted
 ## could make this turn — each visible, standing enemy, from each square it could reach — by expected damage
 ## (hit chance with every Advantage source, cover and Pack Tactics included), a bonus for finishing a foe, and a
 ## penalty for the Opportunity Attacks the path would provoke. The best plan is a move then an attack; with no
-## attack in reach it Dashes toward its best target, and a foe cut off from every enemy for two turns leaves the
-## fight (AiTactics.stranded_turn). Behavior profiles (monster data "ai_profile") weigh this:
+## attack in reach it Dashes toward its best target, opening a shut door on the way if it has the hands and wit for it
+## (_through_door), and a foe cut off from every enemy for two turns leaves the fight (AiTactics.stranded_turn).
+## Behavior profiles (monster data "ai_profile") weigh this:
 ##   pack_hunter: wolves. Loves Pack Tactics and wounded prey, avoids Opportunity Attacks.
 ##   brute:       goes for the biggest hit, shrugs off Opportunity Attacks.
 ##   mindless:    zombies. Shambles at the nearest enemy, ignores everything else.
@@ -890,10 +891,49 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 	var sq := (plan["square"] if plan.has("square") else _approach_square(c, plan)) as Dictionary
 	var best_cell: Vector2i = sq["cell"]
 	if best_cell == c.cell:
-		return CombatResult.new()
+		return _through_door(c, plan)
 	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
 		e.dash(c)
-	return e.move(c, best_cell, sq.get("avoid", {}) as Dictionary)
+	var moved := e.move(c, best_cell, sq.get("avoid", {}) as Dictionary)
+	if not moved.ok:
+		return moved
+	return e.then(moved, func() -> CombatResult: return _through_door(c, plan))
+
+
+## At a shut door on its way to the plan's target (one it can open, door_opener): it opens it with its object
+## interaction (ObjectActions.toggle_door: free, or Utilize once that's spent) and closes in again with the movement
+## it has left. Once a turn; otherwise nothing.
+func _through_door(c: Combatant, plan: Dictionary) -> CombatResult:
+	var e := enc()
+	var target := plan.get("target") as Combatant
+	if plan.has("through_door") or target == null or not door_opener(c) or e.state != Encounter.State.ACTIVE \
+			or e.current() != c or not c.can_act():
+		return CombatResult.new()
+	var walk := _walk_from(target.cell, {}, true)
+	var far := 1 << 30
+	var here := int((walk.get(c.cell, {"cost": far}) as Dictionary)["cost"])
+	for o in e.objects.list:
+		if not o.is_door() or o.open or o.destroyed or o.locked or e.objects.actions.door_why(c, o) != "":
+			continue
+		# A door that leads on: its square nearer the target, going through the doors, than where it stands.
+		if int((walk.get(o.cells[0], {"cost": far}) as Dictionary)["cost"]) >= here:
+			continue
+		if not e.objects.actions.toggle_door(c, o.id).ok:
+			return CombatResult.new()
+		plan.erase("square")
+		plan["through_door"] = true
+		return _approach(c, plan)
+	return CombatResult.new()
+
+
+## Whether `c` opens a door in its way (the object interaction, 2024): a hero or guest, or a foe with hands and the wit
+## for it, not a beast, ooze, plant, construct or swarm, Intelligence 3 or more.
+static func door_opener(c: Combatant) -> bool:
+	if c.creature is Character:
+		return true
+	if c.creature.has_flag("swarm") or str(c.creature.creature_type) in ["beast", "ooze", "plant", "construct"]:
+		return false
+	return c.creature.ability_score(&"int") >= 3
 
 
 ## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the
@@ -913,8 +953,8 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 	var round_it := hz != null and bool(plan.get("round", false))
 	var calm := reach if hz == null else e.reachable_for(c, budget, false, hz.avoid)
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
-	# heads for the door rather than pressing its face to the stones.
-	var walk := _walk_from(target.cell, hz.avoid if round_it else {})
+	# heads for the door rather than pressing its face to the stones, a shut one too when it opens doors (_through_door).
+	var walk := _walk_from(target.cell, hz.avoid if round_it else {}, door_opener(c))
 	var dist := func(cell: Vector2i) -> int:
 		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
@@ -976,17 +1016,21 @@ static func _harm_ft(hz: AiHazards.View, round_it: bool, path: Array[Vector2i], 
 
 
 ## Walking costs from `cell` to every square of the map (no creature in the way: the shape of the walls, doors and
-## ground, and round the `avoid` squares), kept while the map is unchanged: several foes closing on the same hero share
-## one search (FN-14).
-func _walk_from(cell: Vector2i, avoid: Dictionary = {}) -> Dictionary:
+## ground, and round the `avoid` squares; `doors`: shut doors that aren't locked count as open), kept while the map is
+## unchanged: several foes closing on the same hero share one search (FN-14).
+func _walk_from(cell: Vector2i, avoid: Dictionary = {}, doors: bool = false) -> Dictionary:
 	var g := enc().grid
 	var key := "%d|%d|%s" % [hash([g.width, g.depth, g._flags, g._height]), g.raised.size(), cell]
 	if not avoid.is_empty():
 		key += "|%d" % avoid.hash()
+	if doors:
+		key += "|doors"
 	if _walks.has(key):
 		return _walks[key] as Dictionary
 	if _walks.size() > 32:
 		_walks.clear()
+	if doors:
+		g = tactics.open_grid(false, false)
 	var walk := g.reachable(cell, 1, 4000, func(x: Vector2i) -> bool: return avoid.has(x),
 		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
 	_walks[key] = walk
