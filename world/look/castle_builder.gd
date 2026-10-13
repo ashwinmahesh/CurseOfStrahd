@@ -580,18 +580,10 @@ static func _bridge_timbers(r: Rect2i, parts: Array) -> void:
 static func cut(b: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float) -> void:
 	if bool(b["low"]):
 		return
-	var aabb := b["aabb"] as AABB
 	var view := Vector3(focus.x - camera_pos.x, 0, focus.z - camera_pos.z)
 	if view.length() < 0.01:
 		return
-	view = view.normalized()
-	var side := Vector3(-view.z, 0, view.x)
-	var hides := false
-	for off: Vector3 in [Vector3.ZERO, side * LOOK_SIDE, -side * LOOK_SIDE, view * LOOK_PAST]:
-		var target := focus + off + Vector3(0, 0.8, 0)
-		if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
-			hides = true
-			break
+	var hides := in_the_way(b, camera_pos, focus)
 	var h := float(b["height"])
 	var goal := CUT / h if hides else 1.0
 	var walls := b["walls"] as Node3D
@@ -609,6 +601,24 @@ static func cut(b: Dictionary, camera_pos: Vector3, focus: Vector3, delta: float
 		for e: Variant in b["extras"]:
 			if is_instance_valid(e):
 				(e as Node3D).visible = not hides
+
+
+## Whether castle piece `b` stands between the camera and the party at `focus`, or the squares beside it or just past
+## it (a low piece never does).
+static func in_the_way(b: Dictionary, camera_pos: Vector3, focus: Vector3) -> bool:
+	if bool(b["low"]):
+		return false
+	var aabb := b["aabb"] as AABB
+	var view := Vector3(focus.x - camera_pos.x, 0, focus.z - camera_pos.z)
+	if view.length() < 0.01:
+		return false
+	view = view.normalized()
+	var side := Vector3(-view.z, 0, view.x)
+	for off: Vector3 in [Vector3.ZERO, side * LOOK_SIDE, -side * LOOK_SIDE, view * LOOK_PAST]:
+		var target := focus + off + Vector3(0, 0.8, 0)
+		if aabb.intersects_segment(camera_pos, target) != null and not aabb.has_point(target):
+			return true
+	return false
 
 
 ## On a castle place whose walls the board builds as an interior's (the roofs among the spires, a dungeon theme): the

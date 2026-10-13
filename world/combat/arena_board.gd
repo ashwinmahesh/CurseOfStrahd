@@ -688,6 +688,7 @@ func _wall(c: Vector2i) -> void:
 			_box("Palisade", Vector3(1, ph, 1), Vector3(c.x + 0.5, ph / 2.0, c.y + 0.5), _outer_tex)
 			return
 		if house_cells.has(c):
+			_ground_box("Ground", c, _floor_mat)   # (seen when the house goes see-through in the party's way)
 			return   # part of a house TownBuilder built whole
 		if _yard.has(c):
 			if TownBuilder.walled(self):
@@ -705,6 +706,7 @@ func _wall(c: Vector2i) -> void:
 		_box("Roof", Vector3(1.08, 0.24, 1.08), Vector3(c.x + 0.5, hh + 0.12, c.y + 0.5), _roof_tex if _roof_tex != null else Look.cel("blood_deep"))
 		return
 	if house_cells.has(c):
+		_ground_box("Ground", c, _floor_mat)   # (seen when it goes see-through in the party's way)
 		return   # a yard's shed or shrine, built whole by TownBuilder
 	var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 	if border:
