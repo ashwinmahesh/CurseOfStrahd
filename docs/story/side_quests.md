@@ -731,9 +731,9 @@ DC 14, or a cleric's) let all nine go quietly; breaking her out wakes the other 
   giant, drawn with the amber golem's sprite at Huge): Huge undead, AC 16, 210 HP, two frozen fists (reach 10), a
   freezing embrace (recharge 5-6, DC 16, Restrained), Legendary Resistance (2/day), and a fist or a step between turns.
   CR 11.
-- Fight `the_penitent` on the landing: level 10 the Penitent at 420 HP and 5 pilgrims' shadows (ghasts); level 11 eight
-  shadows; level 9 four; below 9 the Penitent at 170 HP and three. At level 10 the autopilot wins 2 of 8, three party
-  members down in a win (2026-10-13, the owner's 2/8: at 210 HP, once an ally's square stopped slowing the party and foes
+- Fight `the_penitent` on the landing: level 10 the Penitent at 420 HP and 5 pilgrims' shadows (ghasts); level 11 at 600
+  HP and ten shadows; level 9 at 420 and four; below 9 the Penitent at 170 HP and three. At levels 9 and 10 the
+  autopilot wins 2 of 8 and at 11 1 of 8 (the harder side: with eight shadows it wins 3), three party members down in a win (2026-10-13, the owner's 2/8: at 210 HP, once an ally's square stopped slowing the party and foes
   in the dark could be struck where they're heard, it won 7 of 8).
 - The rites: 400 gp of the pilgrims' offerings. Breaking her out: 500 gp, and her frosted lamp-pole with all the cold
   in it, a Staff of Frost (very rare).
@@ -792,7 +792,8 @@ never set or read, and The Frozen Pilgrims isn't touched.
   humanoid, AC 16, 135 HP (170 in this fight), an Ice Axe and an Amber Bolt, a Whiteout that blinds (recharge 5-6),
   Hold Person and Cone of Cold once a day, Legendary Resistance (2/day), and a bolt or a step between turns. CR 10.
   Two of his shadows stand up off the snow with him (shadows), and two of the ones he led up before (wraiths).
-- Fight `amber_guide` at the camp: the autopilot wins 3 of 8 at level 10, losing three party members a fight.
+- Fight `amber_guide` at the camp, the guide at 250 HP: the autopilot wins 2 of 8 at level 10, losing three party members
+  a fight (2026-10-13, the owner's 2/8: at 170 HP it won 6).
 - Floarea, an herb-wife who smelled the sleep-root and told herself she was wrong, pours out the tea; without it the
   child will wake with only a cough. In the guide's pack: a Rod of Alertness (very rare) and 400 gp.
 
@@ -915,7 +916,7 @@ keepers had three ways of going down to her safely, and each one is a lair trick
   225 HP (200 before 2026-10-13), Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
   DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
   initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins 2 of 8 at level 10 and loses three or four party members a fight; with all
-  three tricks it wins 4 of 4 and loses one or two; unchained at level 11 (245 HP), 3 in 8.
+  three tricks it wins 4 of 4 and loses one or two; unchained at level 11 (265 HP), 2 in 8.
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: two wights and a helmed horror, waiting by the
   cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP and three flameskulls, the keepers who forgot the
   sluice). The autopilot wins both at level 10, losing about one party member a fight.
@@ -968,11 +969,12 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
   Legendary Resistance (3/day), a burst, a step or Disrupt Life between turns, and his undercroft on initiative 20
   (every name he knows, whispered; the cold of the lake overhead). CR 14.
 - **A phased fight.** While the name stands (`khazan_named`): 250 HP, two Visitors (specters), his lair; he can't be
-  destroyed, and below 60 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
-  `khazan_withdrawn`). The autopilot drives him off 2 times in 4 at level 10, losing three party members a fight.
+  destroyed, and below 30 HP he comes apart into dust that goes up through the ceiling toward the door (`withdraw`,
+  `khazan_withdrawn`). The autopilot drives him off 2 times in 8 at level 10, losing three party members a fight
+  (2026-10-13, the owner's 2/8: going at 60 HP he was driven off 4 times).
   Unmade at the door (Athletics DC 16, or chisel it out over a day), he forms again in his chair without it
-  (`khazan_unmade`): 210 HP and two Visitors, no lair, no way back; given his name to die with, he starts the fight
-  surprised. The autopilot wins 2 of 4, losing three a fight. A party that works it out first can unmake the name before
+  (`khazan_unmade`): 210 HP, four Visitors and a remembered knight (a wraith), no lair, no way back; given his name to
+  die with, he starts the fight surprised. The autopilot wins 2 of 8, losing three a fight (it won 6 with two Visitors). A party that works it out first can unmake the name before
   they ever fight him.
 - The hall of names (`remembered`): a banshee, two ghosts, five specters and a wraith. The autopilot wins 3 of 4 at level 10.
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
@@ -995,7 +997,8 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
   Bite and two long Pseudopods that grapple, a Spray of Pages (recharge 5-6, three creatures, DC 15 Dex, acid),
   Legendary Resistance (2/day), a reach or a shift between turns, and lair actions as the shelves come down and the
   lake comes in. CR 9. Two reading chairs come with it (mimics).
-- Fight `the_index` in the library: the autopilot wins 3 of 8 at level 9, losing three party members a fight.
+- Fight `the_index` in the library, the Index at 185 HP: the autopilot wins 2 of 8 at level 9, losing three party
+  members a fight (2026-10-13, the owner's 2/8: at 135 HP it won 4).
 - Xaver comes down off his bookcase for the first time in three hundred years and gives the party the one book he
   saved: a Manual of Quickness of Action (very rare). The desk's drawers give up eleven readers' purses, 350 gp.
 
