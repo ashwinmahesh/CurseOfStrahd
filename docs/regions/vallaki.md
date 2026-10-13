@@ -228,22 +228,22 @@ Izek are `warrior_veteran` (Izek with 95-110 HP), Lady Wachter's sons are `tough
 | `storeroom_spawn` | coffin maker | enter `storeroom` (spawn surprised) | 2 vampire spawn (3600, Moderate) | spawn + 2 rat swarms (1900, Moderate) | spawn at 50 HP |
 | `church_siege` | St. Andral's | `flag:church_vigil`, at night, bones missing | 2 vampire spawn + 2 bat swarms (3700, Moderate) | spawn + 2 bat swarms (1900, Moderate) | spawn at 55 HP + 1 swarm |
 | `wachter_cellar_cult` | Wachterhaus | enter `cellar` at night, not pledged to her | sons, 4 cultists, 3 hired swords, a shadow (2500, Low) | sons, 4 cultists, 1 hired sword (1000, Low) | sons, 3 cultists |
-| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek (112 HP), 3 sergeants and a guard (3,925, Moderate+) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
+| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek (145 HP), 3 sergeants and a guard (3,925, Moderate+) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
 | `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 3 hired swords, 2 captains (3300, Moderate); cult broken: 4 swords, captain, 2 knives (3300) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
-| `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 3 sergeants, captain, 2 guards (4,400, High); without Izek (3350) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
-| `festival_izek_rampage` | town square | dialogue (town path) | Izek (112 HP), 2 sergeants, captain, 2 guards (3,700, Moderate+); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
-| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (112 HP) + 4 sergeants (4,600, above High) | Izek + sergeant (1400, Low) | Izek at 70 HP |
+| `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 5 sergeants, captain, 4 guards (5,850, above High); without Izek (4800) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
+| `festival_izek_rampage` | town square | dialogue (town path) | Izek (225 HP), 2 sergeants, captain, 2 guards (3,700, Moderate+); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
+| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (110 HP) + 4 sergeants (4,600, High) | Izek + sergeant (1400, Low) | Izek at 70 HP |
 
 The two spawn fights are mutually exclusive (each removes the other), so the region's vampire spawn are fought once.
 The under-4 spawn variants are above High for level 3 even with reduced HP (as Doru was in the village); the party is
 warned by Lucian, Henrik and Rictavio, can fight by day with the spawn surprised, and gets holy water from Lucian,
 Rictavio and the vestry. The festival fights follow the speech with no rest, so they sat at Moderate, not High.
 
-Scaled for 2024-rules heroes (owner, 2026-10-13: 3 wins in 8 at level 5): over seeds 1-8 the four pregens on autopilot,
-standing beside Izek when he picks the fight, won the L5 `izek_duel` 8 of 8, `festival_izek_rampage` 8 of 8 and
-`festival_loyalists` 7 of 8, and `izek_confrontation` in his room 14 of 16 once a downed hero in its one-square door no
-longer stalled it. With Izek at his book 112 HP and more sergeants they win 3, 3, 3 and 2 of 8
-(tests/integration/test_scaled_boss_fights.gd); Izek's room lands on the harder side, as without its guard it wins 4.
+Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced at every level). At level 5, standing beside Izek when he picks the
+fight: `izek_duel` with Izek at 110 HP and four sergeants, `festival_izek_rampage` with Izek at 225 HP,
+`festival_loyalists` with five sergeants and four guards, and `izek_confrontation` with Izek at 145 HP each win 5 of 8
+(tests/integration/test_scaled_boss_fights.gd).
 
 ## 8. Milestone
 

@@ -1059,7 +1059,7 @@
             29,
             13
           ],
-          "hp": 150
+          "hp": 110
         },
         {
           "monster": "baba_lysaga",
@@ -1136,7 +1136,7 @@
             7,
             11
           ],
-          "hp": 120
+          "hp": 180
         },
         {
           "monster": "swarm_of_insects",
@@ -1164,6 +1164,20 @@
           "cell": [
             11,
             16
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            11
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            7,
+            10
           ]
         }
       ],
@@ -1251,7 +1265,8 @@
           "cell": [
             29,
             13
-          ]
+          ],
+          "hp": 195
         },
         {
           "monster": "swarm_of_insects",
@@ -1455,7 +1470,7 @@
             32,
             11
           ],
-          "hp": 230
+          "hp": 375
         },
         {
           "monster": "banshee",

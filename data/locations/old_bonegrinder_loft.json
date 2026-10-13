@@ -422,7 +422,8 @@
             10,
             6
           ],
-          "name": "Morgantha"
+          "name": "Morgantha",
+          "hp": 180
         },
         {
           "monster": "night_hag",
@@ -570,6 +571,30 @@
             4
           ],
           "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            5
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            7
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
+            6
+          ],
+          "name": "Rats from the grain bins"
         }
       ],
       "surprise": "",
@@ -667,6 +692,37 @@
             11,
             4
           ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            5
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            10,
+            7
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
+            6
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            9,
+            5
+          ]
         }
       ],
       "surprise": "",
@@ -721,7 +777,7 @@
             6
           ],
           "name": "Morgantha",
-          "hp": 112
+          "hp": 300
         },
         {
           "monster": "swarm_of_rats",
@@ -746,6 +802,34 @@
             4
           ],
           "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            10,
+            5
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            10,
+            7
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            11,
+            6
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            9,
+            5
+          ]
         }
       ],
       "surprise": "",
@@ -836,7 +920,50 @@
             10,
             6
           ],
-          "name": "Bella Sunbane"
+          "name": "Bella Sunbane",
+          "hp": 250
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            10,
+            5
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            10,
+            7
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            11,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            9,
+            5
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            9,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            11,
+            5
+          ]
         }
       ],
       "surprise": "",

@@ -596,6 +596,57 @@ func test_strahd_takes_mist_form_to_regenerate_when_badly_hurt() -> void:
 	assert_eq(str(e.ai.last_plan.get("kind", "")), "mist")
 
 
+## The Sunsword's sunlight (owner, 2026-10-13: Strahd's finale is tuned for a party carrying it): he keeps a legendary
+## move back while he stands in it, and at the end of the last turn before his own he slips out of it, so his turn
+## starts unburnt.
+func test_strahd_slips_out_of_the_sunswords_light_before_his_turn() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3), 9)
+	var b := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 5), 9)
+	e.items.attach_light(a, "light:sunsword", 15, 15, true)
+	_order(e, [a, b, s], [30, 20, 10])
+	assert_true(e.in_sunlight(s), "beside the bearer, in the light")
+	assert_true(e.ai.boss.in_burning_sun(s))
+	e.end_turn()
+	assert_true(e.legendary.left(s) >= 1, "a move's use kept back from his strikes")
+	e.end_turn()
+	assert_eq(e.current(), s)
+	assert_false(e.in_sunlight(s), "out of the light before his turn")
+	assert_eq(s.creature.hp, s.creature.max_hp(), "so it didn't burn him")
+
+
+## On his own turn, after his action, he walks out of the light when no foe stands beside him to strike as he goes.
+func test_strahd_walks_out_of_the_light_after_acting() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3), 9)
+	e.items.attach_light(a, "light:sunsword", 15, 15, true)
+	_order(e, [s, a], [30, 10])
+	assert_true(e.in_sunlight(s))
+	assert_true(e.ai.boss.leave_sun(s) != null, "nobody beside him: he goes")
+	assert_false(e.in_sunlight(s), "out of the light")
+	var e2 := _field()
+	var s2 := _strahd(e2, Vector2i(3, 3))
+	var a2 := TestCombat.hero(e2, "ilse_varga", Vector2i(4, 3), 9)
+	e2.items.attach_light(a2, "light:sunsword", 15, 15, true)
+	_order(e2, [s2, a2], [30, 10])
+	assert_true(e2.ai.boss.leave_sun(s2) == null, "the bearer beside him would strike as he goes: a legendary move takes him out")
+
+
+## Sleep can't take an elf's trance: a caster doesn't spend its spell on one.
+func test_sleep_is_worth_nothing_on_an_elf() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var elf := TestCombat.hero(e, "liriel_dawnsong", Vector2i(6, 3), 9)
+	var human := TestCombat.hero(e, "ilse_varga", Vector2i(6, 5), 9)
+	var sleep := Compendium.shared().spell_data("sleep")
+	assert_false(AiSpells.sleeps(elf))
+	assert_true(AiSpells.sleeps(human))
+	assert_eq(e.ai.spells.worth(s, sleep, elf), 0.0, "the elf won't sleep")
+	assert_true(e.ai.spells.worth(s, sleep, human) > 0.0)
+
+
 func test_strahd_drops_to_mist_and_the_story_learns_he_is_in_his_coffin() -> void:
 	var e := _field()
 	e.location_id = "castle_ravenloft_audience_hall"

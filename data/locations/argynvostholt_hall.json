@@ -792,6 +792,15 @@
             5
           ],
           "name": "Vladimir's second"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            17,
+            3
+          ],
+          "hp": 80,
+          "name": "Vladimir's second"
         }
       ]
     },

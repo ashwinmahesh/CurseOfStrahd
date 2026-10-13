@@ -144,7 +144,11 @@ pudding 1,100, crawling claw 10, skeleton 50, mongrelfolk 50, Strahd 13,000.
 | `larders_false_brother` | dungeon | dialogue (freed him), party surprised | Brother Anatol + 2 vampire spawn off the ceiling | 5,400 |
 | `larders_false_brother_unmasked` | dungeon | dialogue (unmasked), no surprise | the same | 5,400 |
 | `larders_doru_hunger` | dungeon | dialogue (freed him) | Doru (vampire spawn) | 1,800 |
-| `larders_donjon` | dungeon | enter `larders_hall_of_bones`; `final_battle: castle_ravenloft_hall_of_bones`, `lair: true` | Strahd at the head of the table, 6 skeletons rising from the bone chairs | 13,300 |
+| `larders_donjon` | dungeon | enter `larders_hall_of_bones`; `final_battle: castle_ravenloft_hall_of_bones`, `lair: true` | Strahd at the head of the table (350 HP), 10 skeletons rising from the bone chairs, 4 of his spawn | 20,700 |
+
+Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
+wins in 8 on Balanced: here Strahd at 350 Hit Points with ten skeletons and four of his spawn
+(tests/integration/test_scaled_boss_fights.gd).
 
 The side fights sit at or under Low on purpose: the castle is long, the party rests little, and Strahd waits at the
 end. None is on the way to either Tarokka place. Strahd appears in this part only in the final battle.
