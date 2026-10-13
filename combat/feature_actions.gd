@@ -57,6 +57,20 @@ func _first(a: String, b: String) -> String:
 	return a if a != "" else b
 
 
+## Where `c` grows to Large (Large Form, 2024: "if you're in a big enough space"): the 10-ft square that keeps it on
+## the square it stands on, its own corner first, clear of walls and of anyone else. Vector2i(-1, -1) when there's none.
+func _large_anchor(c: Combatant) -> Vector2i:
+	for d: Vector2i in [Vector2i(0, 0), Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1)]:
+		if room_at(c, c.cell - d, 2):
+			return c.cell - d
+	return Vector2i(-1, -1)
+
+
+## Why `c` can't grow to Large where it stands (no 10-ft square round it is clear), or "".
+func _grow_why(c: Combatant) -> String:
+	return "No room to grow: Large needs a clear 10-ft square" if _large_anchor(c).x < 0 else ""
+
+
 # --- The hotbar ---------------------------------------------------------------------------------
 
 ## Every ability `c` can use as an action this turn: {id, label, sub, cost, why, targeting, help, range}.
@@ -187,7 +201,7 @@ func list(c: Combatant) -> Array[Dictionary]:
 			out.append(_entry("celestial_revelation:" + form, "Celestial Revelation: %s" % form.replace("_", " ").capitalize(), "1 min", "bonus",
 				_first(bw, _res_why(c, "celestial_revelation")), "none", "Bonus Action: transform for 1 minute; once per turn +%d Radiant (Necrotic for the Shroud) damage." % c.creature.proficiency_bonus()))
 	if has(c, "large_form") and c.creature.size == &"medium":
-		out.append(_entry("large_form", "Large Form", "10 min", "bonus", _first(bw, _res_why(c, "large_form")), "none", "Bonus Action: become Large for 10 minutes: Advantage on Strength checks, +10 ft Speed."))
+		out.append(_entry("large_form", "Large Form", "10 min", "bonus", _first(bw, _first(_res_why(c, "large_form"), _grow_why(c))), "none", "Bonus Action: become Large for 10 minutes: Advantage on Strength checks, +10 ft Speed."))
 	if has(c, "draconic_flight"):
 		out.append(_entry("draconic_flight", "Draconic Flight", "Fly = Speed", "bonus", _first(bw, _res_why(c, "draconic_flight")), "none", "Bonus Action: spectral wings give a Fly Speed equal to your Speed for 10 minutes."))
 	if has(c, "clouds_jaunt"):
@@ -648,6 +662,9 @@ func perform(c: Combatant, id: String, t: Combatant, point: Vector2, choice: Str
 			c.creature.add_effect(cr)
 			e.log.add("info", "%s reveals a celestial form" % c.name(), c.id)
 		"large_form":
+			# Grows into the 10-ft square list() found room for (2024: only "in a big enough space"); with none, list()
+			# greys it out and nothing is spent (owner report 2026-10-13: it took his Bonus Action and stayed Medium).
+			c.cell = _large_anchor(c)
 			ch.spend_resource("large_form")
 			c.bonus_available = false
 			var lf := Effect.new("Large Form", &"feature", "large_form").with_modifier("advantage", {"on": "check:str"}).with_modifier("speed", {"value": 10})
@@ -779,10 +796,11 @@ func _teleport(c: Combatant, cell: Vector2i, feet: int) -> CombatResult:
 
 
 ## Whether `c` fits with its corner at `cell`: every square of its footprint on the map, open and free of others (QA
-## FN-19: only the corner was checked, so a Large Otherworldly Steed's Fey Step put half of it in a wall).
-func room_at(c: Combatant, cell: Vector2i) -> bool:
+## FN-19: only the corner was checked, so a Large Otherworldly Steed's Fey Step put half of it in a wall). `cells`: the
+## footprint it would have instead of its own (Large Form's 2).
+func room_at(c: Combatant, cell: Vector2i, cells: int = 0) -> bool:
 	var e := enc()
-	for f in CombatGrid.footprint(cell, c.size_cells):
+	for f in CombatGrid.footprint(cell, cells if cells > 0 else c.size_cells):
 		var o := e.occupant_at(f)
 		if not e.grid.in_bounds(f) or e.grid.is_solid(f) or (o != null and o != c):
 			return false
