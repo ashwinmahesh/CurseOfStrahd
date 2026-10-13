@@ -565,14 +565,6 @@
           ]
         },
         {
-          "monster": "druid",
-          "name": "Druid of Yester Hill",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
           "monster": "vine_blight",
           "cell": [
             11,
@@ -585,6 +577,14 @@
             10,
             1
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            12,
+            10
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
