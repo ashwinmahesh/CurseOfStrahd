@@ -46,6 +46,7 @@ const SHOTS := {
 		"dist": 16.0},
 	"abbey_west_wall": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[8, 11], [9, 11], [8, 12], [9, 12]], "look": [4, 9],
 		"dist": 16.0, "yaw": 1},
+	"amber_doors": {"loc": "amber_temple_entrance", "hour": 12, "dist": 18.0},
 	"argynvostholt_front": {"loc": "argynvostholt", "hour": 12, "cells": [[20, 9], [21, 9], [20, 10], [21, 10]],
 		"look": [20, 4], "dist": 18.0},
 	"argynvostholt_stable": {"loc": "argynvostholt", "hour": 12, "cells": [[30, 22], [31, 22], [30, 23], [31, 23]],
