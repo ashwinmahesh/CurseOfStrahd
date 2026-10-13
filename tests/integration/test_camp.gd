@@ -145,6 +145,33 @@ func test_walking_up_to_someone_who_wants_a_word_starts_their_talk() -> void:
 	assert_true(said[0].contains("Liriel"), said[0])
 
 
+## Thistle walks with the party, so her mark hangs on the view's own figure, which outlives the camp (owner,
+## 2026-10-13: it stayed over her after camp was broken).
+func test_breaking_camp_without_a_word_takes_the_mark_down_and_the_word_waits() -> void:
+	GameState.story.set_flag("strahd_knelt", "thistle")
+	var camp := await _make_camp()
+	var view := _view()
+	assert_eq(str(camp.talks.get("thistle", "")), "camp/thistle:talk_knelt", "Thistle, in the party, wants a word")
+	var tok := view.tokens["thistle"] as Node3D
+	assert_true(tok.has_node("WantsAWord"), "a mark over her")
+	view.in_combat = true
+	await _frames(1)
+	assert_false((tok.get_node("WantsAWord") as Node3D).visible, "no mark in the middle of a fight")
+	view.in_combat = false
+	await _frames(1)
+	assert_true((tok.get_node("WantsAWord") as Node3D).visible, "back once it's over")
+	camp.strike()
+	await _frames(2)
+	assert_false(tok.has_node("WantsAWord"), "the mark goes with the camp")
+	assert_true(view.find_children("WantsAWord", "", true, false).is_empty(), "no mark left over anyone")
+	assert_false(bool(GameState.story.flags.get("_camp/camp/thistle:talk_knelt", false)), "her word still waits")
+	camp = await _make_camp()
+	assert_true(camp != null, "camp again")
+	if camp != null:
+		assert_eq(str(camp.talks.get("thistle", "")), "camp/thistle:talk_knelt", "she asks again at the next camp")
+		assert_true((view.tokens["thistle"] as Node).has_node("WantsAWord"), "with her mark")
+
+
 func test_sleeping_by_the_fire_is_the_long_rest_and_breaking_camp_packs_up() -> void:
 	var godrick := GameState.story.party[0]
 	godrick.hp = 3

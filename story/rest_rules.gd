@@ -13,11 +13,15 @@ extends RefCounted
 ## Leomund's Tiny Hut and Guards and Wards let a Long Rest start with enemies still in the building (story/wards.gd).
 ## A Short Rest (owner, 2026-10-12) is taken anywhere outside a fight, a dungeon and a place that allows no sleep
 ## included, unless a fight on this map was begun and not won (the party ran) or foes awake and in plain view of the
-## party are about (LocationStealth.foes_in_sight). Pure story logic: no nodes.
+## party are about (LocationStealth.foes_in_sight). Neither starts while a Long Rest is broken (LongRest: what came in
+## the night comes first). Pure story logic: no nodes.
 
 const WAIT_MINUTES := 16 * 60
 ## st.flags: the game minute the party last finished a Long Rest (an underscore key: bookkeeping, not story).
 const DONE_AT := "_long_rest_at"
+## Why no rest starts while a Long Rest is broken (LongRest.BROKEN): what woke the party comes first, and the rest
+## goes on by itself once that's over.
+const BROKEN_NIGHT := "Something is out there in the dark. Face it first: the night's rest goes on once it's over."
 ## Triggers of fights that come for the party on their own.
 const SELF_STARTING: Array[String] = ["enter_area", "open", "examine"]
 
@@ -30,6 +34,8 @@ static func long_rest_refusals(st: StoryState) -> Array[String]:
 	if str(loc.get("rest", "risky")) == "no":
 		out.append(str(loc.get("rest_text", "This place won't let anyone sleep.")))
 		return out
+	if LongRest.broken(st):
+		out.append(BROKEN_NIGHT)
 	if not waiting_fights(st, st.location).is_empty() and Wards.shelter(st) == "":
 		out.append("Enemies still prowl this place, on this floor or another. Clear them out, rest somewhere else, or ward the rest (Leomund's Tiny Hut, Guards and Wards).")
 	var wait := minutes_until_long_rest(st)
@@ -43,6 +49,8 @@ static func long_rest_refusals(st: StoryState) -> Array[String]:
 ## LocationStealth.foes_in_sight) about.
 static func short_rest_refusals(st: StoryState, foes: Array[String] = []) -> Array[String]:
 	var out: Array[String] = []
+	if LongRest.broken(st):
+		out.append(BROKEN_NIGHT)
 	if not unfinished_fights(st).is_empty():
 		out.append("A fight here isn't over, and its enemies are still about. Finish it, or get well away first.")
 	if not foes.is_empty():
