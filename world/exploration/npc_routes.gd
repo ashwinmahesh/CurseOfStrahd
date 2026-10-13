@@ -41,8 +41,8 @@ static func of(v: LocationView) -> NpcRoutes:
 static func route_for(v: LocationView, spec: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var stops: Array = (spec.get("path", []) as Array).duplicate()
-	if stops.is_empty() or bool(spec.get("asleep", false)):
-		return out
+	if stops.is_empty() or bool(spec.get("asleep", false)) or spec.has("lying"):
+		return out   # a sleeper, or someone lying there (LyingFigures), goes nowhere
 	var start := LocationView._cell(spec["cell"])
 	# Home again at the end: the entry's own facing and work.
 	stops.append({"at": [start.x, start.y], "face": str(spec.get("facing", "")), "work": str(spec.get("work", ""))})

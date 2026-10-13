@@ -181,6 +181,8 @@ static func _show(view: LocationView, w: Dictionary) -> void:
 	tok.position = view.board.cell_center(foe.cell, foe.size_cells)
 	view.add_child(tok)
 	tok.face(w["facing"] as Vector2, false)   # its sight cone points the way it looks
+	if LyingFigures.of(foe.creature) != null:
+		LyingFigures.lay(view, tok, LyingFigures.of(foe.creature), foe.cell)   # curled in the straw until the fight
 	tok.emerge(0.0, 0.5)
 	w["token"] = tok
 	# Nobody walks through them; the squares go back to how they were with the fight or when they leave.

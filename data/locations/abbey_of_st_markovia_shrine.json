@@ -277,6 +277,17 @@
       "kind": "decor"
     },
     {
+      "id": "bride_bier",
+      "cell": [
+        16,
+        2
+      ],
+      "kind": "decor",
+      "label": "The bier",
+      "model": "table",
+      "when": "flag.wedding_dress_delivered and flag.vasilka_fate != \"sent\""
+    },
+    {
       "id": "sacristy_vestments",
       "cell": [
         22,
@@ -400,6 +411,26 @@
       ],
       "dialogue": "abbey_of_st_markovia/vasilka:abandoned",
       "when": "flag.vasilka_fate == \"abandoned\""
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        16,
+        2
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:at_rest",
+      "when": "flag.vasilka_fate == \"laid_to_rest\"",
+      "lying": true
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        16,
+        3
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:fallen",
+      "when": "flag.bride_defeated",
+      "lying": true
     }
   ],
   "encounters": [
@@ -415,7 +446,11 @@
             16,
             3
           ],
-          "name": "Vasilka"
+          "name": "Vasilka",
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          }
         },
         {
           "monster": "berserker",
@@ -477,7 +512,11 @@
             16,
             3
           ],
-          "name": "Vasilka"
+          "name": "Vasilka",
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          }
         },
         {
           "monster": "berserker",
@@ -531,7 +570,11 @@
             3
           ],
           "name": "Vasilka",
-          "hp": 80
+          "hp": 80,
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          }
         },
         {
           "monster": "mongrelfolk",

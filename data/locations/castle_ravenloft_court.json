@@ -972,7 +972,8 @@
             19,
             4
           ],
-          "name": "Wolf of the dais"
+          "name": "Wolf of the dais",
+          "lying": true
         },
         {
           "monster": "dire_wolf",
@@ -980,7 +981,8 @@
             24,
             4
           ],
-          "name": "Wolf of the dais"
+          "name": "Wolf of the dais",
+          "lying": true
         }
       ],
       "surprise": ""

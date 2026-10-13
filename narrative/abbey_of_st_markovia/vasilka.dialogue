@@ -1,5 +1,6 @@
 # Vasilka, the Abbot's stitched bride (docs/voice/vasilka.md). on_the_table: unwoken, in the surgery at the end of the
 # wards. never_woke: after the Abbot died before the rite. abandoned: left standing in the chapel in her dress.
+# at_rest: lying on her bier in the chapel after she was laid to rest. fallen: where she fell defending her wedding.
 
 ~ on_the_table
 Narrator: At the end of the old surgery, on a long table under a clean linen sheet, lies a young woman. The sheet is turned down to her collarbone, neatly, the way you'd tuck in a child.
@@ -28,11 +29,16 @@ endif
 -> END
 
 ~ never_woke
+if flag.vasilka_face_covered
+Narrator: The sheet lies drawn up over her face, where you left it.
+-> END
+endif
 Narrator: She lies under her linen as she always has. Nobody comes to turn the sheet down now, and dust has begun, very gently, to settle on her eyelashes.
 * Cover her face. -> cover
 * (Leave her.) -> END
 
 ~ cover
+set vasilka_face_covered
 Narrator: You draw the sheet up over her face. It is the first thing in this house that has felt like a funeral.
 approve liriel_dawnsong +1: You covered Vasilka's face
 -> END
@@ -47,4 +53,12 @@ set vasilka_fate = "laid_to_rest"
 Vasilka: Rest. Yes. I was very good at that, before.
 Narrator: She lies down on the altar step and smooths her dress and closes her eyes, and does not open them again.
 approve liriel_dawnsong +2 godrick_pendlebrook +1: You told Vasilka she could rest
+-> END
+
+~ at_rest
+Narrator: She lies on the bier in her wedding dress with her hands folded, and she doesn't open her eyes.
+-> END
+
+~ fallen
+Narrator: What is left of Vasilka lies where she fell, in the torn dress, her careful seams undone.
 -> END
