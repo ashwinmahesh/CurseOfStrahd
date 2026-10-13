@@ -58,5 +58,5 @@ func test_the_bone_marshal_is_a_boss() -> void:
 	var b := Compendium.shared().get_entry("monsters", "bone_marshal")
 	assert_eq(str((b["source"] as Dictionary)["book"]), "custom")
 	assert_eq(int(b["cr"]), 8)
-	assert_eq(int((b["legendary_actions"] as Dictionary)["per_round"]), 3)
+	assert_eq(int((b["legendary_actions"] as Dictionary)["per_round"]), 2)
 	assert_eq(str(b["art"]), "phantom_warrior")

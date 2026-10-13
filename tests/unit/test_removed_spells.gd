@@ -1,6 +1,6 @@
 extends TestCase
-## The 55 spells that left the game (Ashwin, 2026-10-12: the spells that did nothing and couldn't be given a use): their
-## files stay, marked removed and not playable, so they're out of every spell list, picker and scroll, and a saved hero
+## The 56 spells that left the game (Ashwin, 2026-10-12: the spells that did nothing and couldn't be given a use; and
+## Detect Thoughts, 2026-10-13): their files stay, marked removed and not playable, so they're out of every spell list, picker and scroll, and a saved hero
 ## who knew one gets another spell of its level when the save loads (Character.swap_removed_spells).
 
 
@@ -12,9 +12,9 @@ func _removed() -> Array[String]:
 	return out
 
 
-func test_fifty_four_spells_are_out_of_every_list_and_scroll() -> void:
+func test_fifty_six_spells_are_out_of_every_list_and_scroll() -> void:
 	var gone := _removed()
-	assert_eq(gone.size(), 55, "54, and Water Walk: nowhere in the game sits across deep water")
+	assert_eq(gone.size(), 56, "54, Water Walk (nowhere in the game sits across deep water) and Detect Thoughts")
 	for id in gone:
 		assert_false(Compendium.playable(Compendium.shared().spell_data(id)), id)
 	for cls: String in ["bard", "cleric", "druid", "paladin", "ranger", "sorcerer", "warlock", "wizard"]:
@@ -24,7 +24,7 @@ func test_fifty_four_spells_are_out_of_every_list_and_scroll() -> void:
 		for seed_value in 40:
 			var scroll := MagicItems.scroll_of_level(DiceRoller.new(seed_value), lvl, Compendium.shared())
 			assert_false(scroll.get_slice(MagicItems.SEP, 1) in gone, scroll)
-	for sub: String in ["gloom_stalker", "arcana_domain", "trickery_domain", "aberrant_sorcery"]:
+	for sub: String in ["gloom_stalker", "arcana_domain", "trickery_domain", "aberrant_sorcery", "great_old_one_patron", "knowledge_domain"]:
 		for lv: Variant in (Compendium.shared().subclass_data(sub).get("always_prepared", {}) as Dictionary).values():
 			for s: Variant in lv:
 				assert_false(str(s) in gone, "%s still grants %s" % [sub, s])

@@ -126,7 +126,7 @@
           "diviner"
         ],
         "diviner.3.divination_savant": [
-          "detect_thoughts",
+          "mind_spike",
           "see_invisibility"
         ],
         "wizard.spellbook": [

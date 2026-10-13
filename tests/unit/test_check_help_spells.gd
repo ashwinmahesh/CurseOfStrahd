@@ -1,6 +1,6 @@
 extends TestCase
 ## Spells that help a check (Ashwin's answer to the spell audit, 2026-10-12): a cantrip its caster knows gives
-## Advantage on one skill outside fights (CheckAids.CANTRIP_AIDS); Detect Thoughts, the disguises, the illusions and
+## Advantage on one skill outside fights (CheckAids.CANTRIP_AIDS); Zone of Truth, the disguises, the illusions and
 ## the rest give it while they run (FieldCasting.CHECK_AIDS); Zone of Amicability floors a check to influence at 10;
 ## Druidcraft reads tomorrow's weather.
 
@@ -37,14 +37,14 @@ func test_a_known_cantrip_helps_its_skill() -> void:
 	assert_true(CheckAids.before_check(TestChars.pregen("ilse_varga", 5), &"intimidation").is_empty(), "a fighter has no cantrip for it")
 
 
-func test_detect_thoughts_helps_insight_while_it_runs() -> void:
-	var wiz := _caster("wizard", 5, ["detect_thoughts"])
-	var st := _party(wiz)
-	assert_true(bool(FieldCasting.cast_utility(st, wiz, "detect_thoughts", false)["ok"]))
-	var t := wiz.roll_check(DiceRoller.new(4), &"insight", 12)
-	assert_true("Detect Thoughts" in t.advantage_sources, str(t.advantage_sources))
-	st.advance_minutes(5)
-	assert_false("Detect Thoughts" in wiz.roll_check(DiceRoller.new(4), &"insight", 12).advantage_sources, "a minute, and it's gone")
+func test_zone_of_truth_helps_insight_while_it_runs() -> void:
+	var cleric := _caster("cleric", 5, ["zone_of_truth"])
+	var st := _party(cleric)
+	assert_true(bool(FieldCasting.cast_utility(st, cleric, "zone_of_truth", false)["ok"]))
+	var t := cleric.roll_check(DiceRoller.new(4), &"insight", 12)
+	assert_true("Zone of Truth" in t.advantage_sources, str(t.advantage_sources))
+	st.advance_minutes(11)
+	assert_false("Zone of Truth" in cleric.roll_check(DiceRoller.new(4), &"insight", 12).advantage_sources, "ten minutes, and it's gone")
 
 
 func test_seeming_disguises_the_whole_party() -> void:
