@@ -481,6 +481,7 @@ static func _wall_holder(board: ArenaBoard, c: Vector2i, id: String, parent: Nod
 		parent.add_child(holder)   # the parent stands on the square
 	else:
 		holder.position = board.cell_center(c)
+		holder.set_meta("on_floor", true)   # (on its square already: ArenaBoard._lift leaves it be on a hill)
 		board.add_child(holder)
 	return holder
 
