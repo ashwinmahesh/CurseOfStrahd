@@ -87,6 +87,11 @@
       "summary": "Asked Kostin what is on Yester Hill (once)."
     },
     {
+      "id": "yester_effigy_known",
+      "type": "bool",
+      "summary": "The party has been told, or overheard, what the effigy on Yester Hill is for: a giant of earth in the lord's likeness, the stolen stone for its heart, to walk east onto the Martikov vines (Davian, Kostin, the chant, Ruxandra; Narrative Audit batch 1)."
+    },
+    {
       "id": "kostin_fled",
       "type": "bool",
       "summary": "Kostin left the press house before the fight, scared off (Intimidation 15) or talked round (sets kostin_doubts too). Scared: he warns Yester Hill (an extra druid at the summit, a harder gully)."
@@ -260,6 +265,11 @@
       "id": "ruxandra_asked_tree",
       "type": "bool",
       "summary": "Asked Ruxandra about the tree (once)."
+    },
+    {
+      "id": "ruxandra_asked_effigy",
+      "type": "bool",
+      "summary": "Asked Ruxandra why the effigy wears the lord's face (once)."
     },
     {
       "id": "yester_circle_broken",
