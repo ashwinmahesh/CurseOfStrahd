@@ -113,3 +113,20 @@ func test_marinas_face_is_ireenas_without_her_there() -> void:
 	said = SideQuestPlay.text(SideQuestPlay.play(st, "berez/marina:bier", ["Leave her as she is"]))
 	assert_true(said.contains("the girl has Ireena's face too"), said)
 
+
+# ---------------------------------------------------------------- Batch 4: Castle Ravenloft and the roads
+
+func test_breaking_the_heart_says_what_it_was() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 9, "castle_ravenloft_spires_heart", 22)
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "castle_ravenloft/spires_heart:shatter"))
+	assert_true(said.contains("It took every blow meant for the man downstairs."), said)
+	var known := SideQuestPlay.party(["ilse_varga"], 9, "castle_ravenloft_spires_heart", 22)
+	known.set_flag("heart_of_sorrow_known")
+	said = SideQuestPlay.text(SideQuestPlay.play(known, "castle_ravenloft/spires_heart:shatter"))
+	assert_false(said.contains("It took every blow"), "a party that studied it already knows")
+
+
+func test_the_phantom_riders_point_at_the_ridge() -> void:
+	var st := SideQuestPlay.party(["godrick_pendlebrook"], 7, "road_forest", 22)
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "argynvostholt/events:phantom_ride"))
+	assert_true(said.contains("If the Order's anywhere in this valley"), said)
