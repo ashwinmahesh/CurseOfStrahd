@@ -125,10 +125,15 @@ func affects(o: FieldObject, t: Combatant) -> bool:
 
 ## Whether the zone's rules apply to `t` at all: "affects" is all (default), others (not the caster), enemies (the
 ## caster's foes: "creatures of your choice" defaulting to the hostile ones), allies (the caster and its allies).
+## A zone that spares allies (Spirit Guardians) spares everyone on the caster's side as things stand, not only who was
+## there at the cast: creatures summoned or dominated since (owner's playtest, 2026-10-13: the golden lions thrown into
+## the spirits), and an Echo Knight's echo, which is no ally for Pack Tactics or healing but isn't the spirits' prey.
 func _affects(o: FieldObject, t: Combatant) -> bool:
 	if t.id in o.spared:
 		return false
 	var caster := enc().get_c(o.caster_id)
+	if caster != null and bool(o.rule("spare_allies", false)) and caster.allied_with(t):
+		return false
 	match str(o.rule("affects", "all")):
 		"others":
 			return t.id != o.caster_id
