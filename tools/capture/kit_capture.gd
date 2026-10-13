@@ -74,6 +74,10 @@ const SHOTS := {
 	"krezk_wall_behind": {"loc": "krezk", "hour": 13, "cells": [[7, 28], [8, 28], [9, 28], [10, 28]], "dist": 12.0},
 	"krezk_gate_out": {"loc": "krezk", "hour": 13, "cells": [[35, 19], [36, 19], [35, 20], [36, 20]], "look": [32, 20],
 		"dist": 14.0},
+	# A house or a castle wall between the camera and the party (owner 2026-10-13: they no longer collapse).
+	"collapse_krezk": {"loc": "krezk", "hour": 13, "cells": [[5, 23], [6, 23], [5, 22], [6, 22]], "dist": 13.0},
+	"collapse_abbey": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[5, 12], [6, 12], [5, 11], [6, 11]], "dist": 13.0},
+	"collapse_village": {"loc": "village_of_barovia", "hour": 12, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]], "dist": 13.0},
 	"fire_krezk": {"loc": "krezk", "hour": 21, "cells": [[27, 17], [27, 18], [26, 17], [26, 18]], "look": [28, 17], "dist": 8.0},
 	"fire_camp": {"loc": "vallaki_vistani_camp", "hour": 21, "cells": [[13, 12], [13, 13], [12, 12], [12, 13]],
 		"look": [14, 12], "dist": 8.0},

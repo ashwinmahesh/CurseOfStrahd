@@ -4,7 +4,11 @@ extends TestCase
 ## stone. A door hung on a house makes a door bay; a house in the way is cut down to its footing.
 
 
+var _cut_away: Variant = null
+
+
 func before_each() -> void:
+	_cut_away = BuildingKit.settings().get("cut_away")
 	GameState.reset()
 	ModeController.force(ModeController.Mode.EXPLORATION)
 	for id: String in ["ilse_varga", "tamsin_tealeaf", "hedda_ironvow", "silvain_aster"]:
@@ -15,6 +19,13 @@ func before_each() -> void:
 
 func after_each() -> void:
 	Look.set_style(Look.DEFAULT_STYLE, false)
+	BuildingKit.settings()["cut_away"] = _cut_away
+
+
+## The catalog's building_kit "cut_away", on for a test of how a building in the way would cut down (the owner turned
+## it off outside, 2026-10-13).
+func _cutting() -> void:
+	BuildingKit.settings()["cut_away"] = true
 
 
 func _view(loc_id: String) -> LocationView:
@@ -108,8 +119,10 @@ func test_village_houses_are_built_from_the_kit() -> void:
 	v.queue_free()
 
 
-## A house between the camera and the party drops to its footing round a floor; it stands again when it's clear.
+## With cut_away on, a house between the camera and the party drops to its footing round a floor; it stands again when
+## it's clear.
 func test_a_kit_house_cuts_away_to_its_footing() -> void:
+	_cutting()
 	var v := _view("village_of_barovia")
 	await _frames(2)
 	var board := v.board
@@ -124,6 +137,33 @@ func test_a_kit_house_cuts_away_to_its_footing() -> void:
 	board.cut_buildings(behind + Vector3(0, 5, -14), behind, 1.0)
 	assert_true((b0["walls"] as Node3D).visible and not (b0["stub"] as Node3D).visible, "and it stands again")
 	v.queue_free()
+
+
+## Owner decision (2026-10-13: "why do buildings shrink down ... when I get near them? Same things with walls. Lets
+## disable this effect"): outside, a house or Castle Ravenloft's wall between the camera and the party stands, roof and
+## all; trees still fade.
+func test_buildings_and_walls_in_the_way_stand() -> void:
+	assert_false(bool(BuildingKit.settings().get("cut_away", false)), "the catalog's cut_away is off")
+	var v := _view("village_of_barovia")
+	await _frames(2)
+	var b0 := v.board.buildings[0]
+	var aabb := b0["aabb"] as AABB
+	var behind := aabb.get_center() + Vector3(0, -aabb.size.y / 2.0, -aabb.size.z / 2.0 - 1.0)
+	for i in 2:
+		v.board.cut_buildings(behind + Vector3(0, 5, 12), behind, 1.0)
+	assert_true((b0["walls"] as Node3D).visible and is_equal_approx((b0["walls"] as Node3D).scale.y, 1.0), "the house in the way stands")
+	assert_false((b0["stub"] as Node3D).visible, "no footing in its place")
+	assert_true((b0["upper"] as Node3D).visible, "roof and all")
+	v.queue_free()
+	await _frames(1)
+	var c := _view("castle_ravenloft_gates")
+	await _frames(2)
+	var focus := c.board.cell_center(Vector2i(19, 18))
+	var gate_wall := c.board.buildings[int(c.board.house_cells[Vector2i(18, 22)])] as Dictionary
+	for i in 2:
+		c.board.cut_buildings(focus + Vector3(0, 12, 12), focus, 1.0)
+	assert_true((gate_wall["walls"] as Node3D).visible and not (gate_wall["stub"] as Node3D).visible, "the castle wall in the way stands")
+	c.queue_free()
 
 
 ## W7: an L-shaped block of wall is one building: its parts share their height, roof and paint, there's no wall or
@@ -165,7 +205,8 @@ func test_an_l_shaped_block_is_one_building() -> void:
 	for x: int in [5, 6, 7]:
 		assert_false((main1["faces"] as Dictionary).has("%d,4,0,1" % x), "no wall of the main house where the wing joins")
 		assert_false((wing1["faces"] as Dictionary).has("%d,5,0,-1" % x), "nor of the wing")
-	# One part in the way takes the other down with it: the camera west of wing 1, looking past it.
+	# One part in the way takes the other down with it (cut_away on): the camera west of wing 1, looking past it.
+	_cutting()
 	var focus := Vector3(8.5, 0, 6.5)
 	for i in 2:
 		board.cut_buildings(Vector3(0, 8, 6.5), focus, 1.0)
@@ -456,7 +497,9 @@ func test_castle_ravenloft_from_outside() -> void:
 	assert_true(CastleBuilder.frames(board, Vector2i(19, 22)), "the gatehouse is an arch")
 	var chasm := board.get_node_or_null("Chasm") as MeshInstance3D
 	assert_true(chasm != null and chasm.get_aabb().position.y < -15.0, "cliffs fall into the chasm")
-	# The party in the courtyard, the camera to the south: the south wall in the way goes down, the keep stands.
+	# The party in the courtyard, the camera to the south (cut_away on): the south wall in the way goes down, the keep
+	# stands.
+	_cutting()
 	var focus := board.cell_center(Vector2i(19, 18))
 	var gate_wall := board.buildings[int(board.house_cells[Vector2i(18, 22)])] as Dictionary
 	for i in 2:
@@ -518,6 +561,7 @@ func test_the_castle_wall_walk_and_the_keep_roof() -> void:
 	if not roof.is_empty():
 		var mi := (roof["upper"] as Node3D).get_node_or_null("Roof") as MeshInstance3D
 		assert_true(mi != null and mi.get_aabb().end.y > float(keep["height"]) + 2.0, "rising over its battlements")
+		_cutting()
 		var focus := board.cell_center(Vector2i(19, 18))
 		for i in 2:
 			board.cut_buildings(focus + Vector3(0, 12, -12), focus, 1.0)
