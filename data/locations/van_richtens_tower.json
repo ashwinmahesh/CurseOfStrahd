@@ -220,12 +220,12 @@
     {
       "id": "vrt_wagon_note",
       "cell": [
-        5,
-        23
+        7,
+        22
       ],
       "kind": "book",
-      "label": "A note nailed to the wagon",
-      "model": "notice_papers",
+      "label": "A note pinned to a board by the wagon",
+      "model": "notice_board",
       "codex": "ezmerelda_note",
       "flag": "khazan_known",
       "text": "Rudolph. The old lock still opens to the name of the wizard who built this place: KHAZAN. I found it under the moss in an hour. Your new ward opens to nothing, and it bites me. It bites only me. You keyed it to me. I am sitting on your doorstep until you come out and explain that to my face. E."
