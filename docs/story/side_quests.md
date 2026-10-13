@@ -679,7 +679,8 @@ thing the Abbot told her that might be true (Persuasion DC 13, Wren's advice, or
 down onto Pavel's roof; otherwise she lands in Krezk's goat pens.
 
 - No fight.
-- Her eighth gift, which Clovin brings up to the wall: Boots of Levitation (rare). Afterwards she lands on Pavel's roof
+- Her eighth gift, which Clovin brings up to the wall: Winged Boots (uncommon; Boots of Levitation until 2026-10-13,
+  swapped in older saves when they load). Afterwards she lands on Pavel's roof
   on Sundays, and Krezk's watchman has decided to be very calm about it.
 
 ### The Waystone (`the_waystone`, narrative/krezk/the_waystone.dialogue; batch 8, level 6)

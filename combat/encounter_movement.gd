@@ -45,14 +45,19 @@ func in_running_water(c: Combatant) -> bool:
 
 
 ## Squares `c` can reach with its movement (or `budget` feet). A Prone creature crawls (double cost) unless
-## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too.
-func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Dictionary:
+## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too. `avoid`: more
+## squares the walk keeps out of (the AI's way round dangerous ground, AiHazards).
+func reachable_for(c: Combatant, budget: int = -1, standing: bool = false, avoid: Dictionary = {}) -> Dictionary:
 	var e := enc()
 	if budget < 0 and c == e.current():
 		c.regain_speed()   # a hold that ended this turn gives the Speed back
 	var feet := c.movement_left if budget < 0 else budget
 	feet = feet / extra_cost(c, standing)
 	var occ := _move_blocks(c)
+	if not avoid.is_empty():
+		var blocked := (occ["blocked"] as Dictionary).duplicate()
+		blocked.merge(avoid)
+		occ["blocked"] = blocked
 	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(occ["blocked"] as Dictionary),
 		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
 
@@ -202,7 +207,8 @@ static func _value_fn(set: Dictionary) -> Callable:
 ## Moves the current creature to `dest` along the cheapest legal path (safe_path: of those, the one that provokes
 ## least). Leaving a hostile creature's reach provokes an Opportunity Attack unless the mover took Disengage; a
 ## player-controlled reactor is asked first. A Prone mover stands up first if it has the movement for it (half its Speed).
-func move(c: Combatant, dest: Vector2i) -> CombatResult:
+## `avoid`: squares to walk round when `dest` can be reached without them (the AI's dangerous ground, AiHazards).
+func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var why := e._turn_check(c)
 	if why != "":
@@ -239,6 +245,10 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	if c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2:
 		stand_up(c)
 	var reach := reachable_for(c)
+	if not avoid.is_empty():
+		var calm := reachable_for(c, -1, false, avoid)
+		if calm.has(dest) and not bool((calm[dest] as Dictionary)["occupied"]):
+			reach = calm
 	if not reach.has(dest):
 		# Too far: as far along the way as the movement left goes (owner, 2026-10-12: "just move as close as we can").
 		var stop := stop_toward(c, dest, reach)

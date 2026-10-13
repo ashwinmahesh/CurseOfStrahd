@@ -1087,12 +1087,15 @@ func remove_effects_named(effect_name: String) -> void:
 			remove_effect(e as Effect)
 
 
-## Starts Concentration on something new, ending any previous Concentration first.
-func begin_concentration(source_id: String, label: String) -> Concentration:
+## Starts Concentration on something new, ending any previous Concentration first. `duration`: the spell's as cast,
+## when the slot changed it (Spellcasting.duration_at: Hex for 8 hours with a level 3 slot); else the spell data's.
+func begin_concentration(source_id: String, label: String, duration: Dictionary = {}) -> Concentration:
 	var old := concentration
 	var conc := Concentration.new(self, source_id, label)
 	# A spell's Concentration lasts no longer than the spell (Protection from Evil and Good: 10 minutes).
-	if compendium != null:
+	if not duration.is_empty():
+		conc.set_duration(duration)
+	elif compendium != null:
 		var sd := compendium.spell_data(source_id)
 		if not sd.is_empty():
 			conc.set_duration(sd.get("duration", {}) as Dictionary)
@@ -1345,7 +1348,8 @@ func state_to_dict() -> Dictionary:
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
 		"resources_used": res, "effects": fx, "unhealable": unhealable,
 		"concentration": {"source": concentration.source_id, "name": concentration.name,
-			"rounds_left": concentration.rounds_left} if concentration != null else {}}
+			"rounds_left": concentration.rounds_left, "until_long_rest": concentration.until_long_rest}
+			if concentration != null else {}}
 
 
 func state_from_dict(d: Dictionary) -> void:
@@ -1378,6 +1382,7 @@ func state_from_dict(d: Dictionary) -> void:
 			concentration.set_duration(compendium.spell_data(concentration.source_id).get("duration", {}) as Dictionary)
 		if conc.has("rounds_left"):
 			concentration.rounds_left = int(conc["rounds_left"])
+			concentration.until_long_rest = bool(conc.get("until_long_rest", concentration.until_long_rest))
 
 
 ## After loading several creatures: reattaches Concentration links (effects on anyone, cast by these casters).

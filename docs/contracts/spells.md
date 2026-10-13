@@ -97,7 +97,8 @@ its slot spent, held with Concentration, and released at the first enemy to come
   placed at the point).
 - Zones: `per_square` trigger (Spike Growth), `start_damage` (no save, start of turn), `charges` / `charges_per_slot`,
   `damage_cap`, `revive_downed`, `caster_near`, `caster_effects`, `side_ft` (Wall of Fire), `storm_radius`, `terrain_cost`,
-  `deflects_missiles`, `resolve_on_cast`, `caster_turn_ends`, `rounds`.
+  `deflects_missiles`, `resolve_on_cast`, `caster_turn_ends`, `rounds`, `camouflaged` (Spike Growth: the AI knows the
+  area only if it saw it cast or was hurt by it, kept in the live area's `rules.known_by`).
 - Objects: `kind` hound and vine, `reach` (how far it strikes), `rules.bite`.
 - Sustained actions: `disengage`, `compel`, `once_per_turn`, `at_point` with `within_object`.
 - Summons: SummonBlocks builds Find Steed, Summon Beast, Giant Insect, Summon Aberration, Summon Construct and Summon

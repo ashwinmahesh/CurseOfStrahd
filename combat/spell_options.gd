@@ -214,9 +214,10 @@ func precast(c: Combatant, spell_id: String, ritual: bool = false) -> bool:
 		if slot == 0:
 			return false
 		ch.expend_slot(slot)
+	s = Spellcasting.at_slot(s, slot)   # the slot's duration (Hunter's Mark for 8 hours with a level 3 slot)
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
-		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 	enc().log.add("spell", "%s cast %s before the fight%s" % [c.name(), s["name"], " (cast earlier as a Ritual)" if as_ritual else (" (level %d slot)" % slot if slot > 0 else "")], c.id)
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": numbers(c, entry), "conc": conc, "opts": {}, "precast": true,
 		"choice": str(c.get_meta("chain_form", "imp")) if spell_id == "find_familiar" and ClassFeatures.knows_invocation(c, "pact_of_the_chain") else ""}

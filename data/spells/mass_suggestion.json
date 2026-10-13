@@ -39,7 +39,24 @@
     "charmed"
   ],
   "upcast": {
-    "text": "Lasts 10 days with a level 7 slot, 30 days with level 8 and 366 days with level 9."
+    "text": "Lasts 10 days with a level 7 slot, 30 days with level 8 and 366 days with level 9.",
+    "durations": [
+      {
+        "slot": 7,
+        "kind": "days",
+        "amount": 10
+      },
+      {
+        "slot": 8,
+        "kind": "days",
+        "amount": 30
+      },
+      {
+        "slot": 9,
+        "kind": "days",
+        "amount": 366
+      }
+    ]
   },
   "effects": [
     {

@@ -682,6 +682,11 @@
       "summary": "Mother flew down the mountain to Krezk (Mother's Ninth Improvement)."
     },
     {
+      "id": "mother_boots_given",
+      "type": "bool",
+      "summary": "Guard: Mother's eighth gift, her Winged Boots, has been given (mothers_ninth_improvement:gift). A save from before they were Winged Boots swaps her Boots of Levitation when it loads (SaveSystem.REGIFTED)."
+    },
+    {
       "id": "cosmin_met",
       "type": "bool",
       "summary": "The party met Cosmin on the squires' graves at Argynvostholt (The Squire)."

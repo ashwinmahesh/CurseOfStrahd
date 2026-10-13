@@ -97,6 +97,46 @@ func test_each_region_has_its_landmarks() -> void:
 	shoulder.queue_free()
 
 
+## The Abbey of St. Markovia from Krezk and the Pool of the White Sun (owner ask, 2026-10-13). It is due north of
+## them on the travel art, and the camera only ever looks along a diagonal, so it was never in view: these maps stand
+## it north-north-east, up the mountain Krezk's track climbs, where the camera's first view tilted to the horizon has
+## all of it in frame, even on a 16:10 screen (the narrowest the game's window keeps its height on). From the
+## waystone down the road it keeps its bearing on the travel art.
+func test_the_abbey_is_seen_from_krezk() -> void:
+	Look.set_style("modern", false)
+	for loc_id: String in ["krezk", "krezk_pool_of_the_white_sun"]:
+		var v := _view(loc_id)
+		var abbey := v.atmosphere.land.vista.get_node_or_null("Landmark_abbey") as MeshInstance3D
+		assert_true(abbey != null, "the Abbey on the horizon from %s" % loc_id)
+		if abbey != null:
+			v.rig.distance = v.rig.zoom_max
+			v.rig.horizon = 1.0
+			v.rig.snap_to_target()
+			var cam := v.rig.camera
+			var half_high := cam.fov / 2.0
+			var half_wide := rad_to_deg(atan(tan(deg_to_rad(half_high)) * 1.6))
+			var size := (abbey.mesh as QuadMesh).size
+			for share: float in [0.5, 1.0]:
+				var at := cam.global_transform.affine_inverse() * (abbey.global_position + Vector3(0, size.y * share, 0))
+				var across := rad_to_deg(absf(atan2(at.x, -at.z))) + rad_to_deg(atan2(size.x / 2.0, -at.z))
+				var up := rad_to_deg(atan2(at.y, -at.z))
+				assert_true(at.z < 0.0 and across < half_wide and absf(up) < half_high,
+					"from %s the camera's first view has the Abbey in frame, %s (%.1f degrees across, %.1f up)" % [
+					loc_id, "its tower" if share > 0.9 else "its middle", across, up])
+		v.queue_free()
+	var road := _view("krezk_road_waystone")
+	var vista := road.atmosphere.land.vista
+	var far_abbey := vista.get_node_or_null("Landmark_abbey") as Node3D
+	assert_true(far_abbey != null, "the Abbey seen from the waystone")
+	if far_abbey != null:
+		var here := Vista.place_at("krezk_road_waystone") as Vector2
+		var at := ((Vista.config()["landmarks"] as Dictionary)["abbey"] as Dictionary)["at"] as Array
+		var want := (Vector2(float(at[0]), float(at[1])) - here).normalized()
+		var got := Vector2(far_abbey.position.x - vista.centre.x, far_abbey.position.z - vista.centre.z).normalized()
+		assert_true(got.dot(want) > 0.99, "from the waystone it stands toward its bearing on the travel art")
+	road.queue_free()
+
+
 ## In play the vistas lie past the camera's far plane; they draw after the screen pass, farthest first.
 func test_vistas_cost_nothing_in_play() -> void:
 	Look.set_style("modern", false)

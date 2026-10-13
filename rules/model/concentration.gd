@@ -24,8 +24,8 @@ func _init(caster: Creature, source_id_: String, name_: String) -> void:
 
 ## Sets the time limit from a spell's duration ({kind: rounds|minutes|hours|days, amount}).
 func set_duration(duration: Dictionary) -> void:
-	if Effect.until_long_rest(duration):
-		until_long_rest = true
+	until_long_rest = Effect.until_long_rest(duration)
+	if until_long_rest:
 		rounds_left = -1
 		return
 	var amount := int(duration.get("amount", 1))

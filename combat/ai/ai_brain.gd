@@ -16,6 +16,9 @@ extends RefCounted
 ## chained with Encounter.then(), so the turn carries on after the player answers.
 ## The playthrough's difficulty changes how it fights (combat/ai/ai_tactics.gd): spread or focused blows, potions,
 ## fleeing a broken fight, and at Honour cruel foes striking the fallen.
+## Dangerous ground (combat/ai/ai_hazards.gd: Spirit Guardians, Hunger of Hadar, Spike Growth, burning oil, found
+## traps): a creature with an Intelligence above 3 walks round the ground it knows of, attacks from outside it, leaves
+## it, and goes in only when no foe can be reached any other way. The party's autopilot (tests) plays heroes so too.
 
 const PROFILES := {
 	"pack_hunter": {"oa_fear": 1.0, "finish": 1.5, "nearest": false, "flee_bloodied": false},
@@ -43,10 +46,15 @@ var boss: BossBrain
 ## and Honour (combat/ai/ai_spells.gd).
 var tactics: AiTactics
 var spells: AiSpells
+## The dangerous ground each creature knows of (combat/ai/ai_hazards.gd).
+var hazards: AiHazards
 ## The fallen hero this turn's plan strikes (Honour), whom the attack steps keep at although they're down.
 var _finishing: Combatant = null
 ## Walking-cost maps by start square and map shape (_walk_from), shared by every foe closing on that square.
 var _walks: Dictionary = {}
+## Creature id -> the round it held back at the edge of dangerous ground with no way round it (_approach_square): the
+## next round it goes in, so a foe never waits out a whole fight there.
+var _held_back: Dictionary = {}
 
 
 func _init(encounter: Encounter) -> void:
@@ -54,6 +62,7 @@ func _init(encounter: Encounter) -> void:
 	boss = BossBrain.new(encounter)
 	tactics = AiTactics.new(encounter)
 	spells = AiSpells.new(encounter)
+	hazards = AiHazards.new(encounter)
 
 
 func enc() -> Encounter:
@@ -107,7 +116,8 @@ func begin_turn(c: Combatant) -> CombatResult:
 	if fear != null:
 		var by_spell := c.creature.has_flag("fear_flee")
 		last_plan = {"kind": "flee", "why": "Fear" if by_spell else "Turned"}
-		return _flee(c, fear, by_spell)
+		# Fear's "safest available route" goes round dangerous ground; Turn Undead's flight doesn't look.
+		return _flee(c, fear, by_spell, by_spell)
 	if c.creature.has_flag("ethereal"):
 		last_plan = {"kind": "wait", "why": "on the Ethereal Plane"}
 		return CombatResult.new()
@@ -152,7 +162,7 @@ func begin_turn(c: Combatant) -> CombatResult:
 		var caster := _commander(c)
 		if caster != null:
 			last_plan = {"kind": "flee", "why": "Command: Flee"}
-			return _flee(c, caster, true)
+			return _flee(c, caster, true, false)
 	var suggested := _suggested_turn(c)
 	if suggested != null:
 		return suggested
@@ -553,11 +563,19 @@ static func companion(t: Combatant) -> bool:
 	return bool(d.get("familiar", false)) or bool(d.get("steed", false))
 
 
-## Picks this turn's plan: {kind: attack|approach|search|wait, target, cell, option, score, why}.
+## Picks this turn's plan: {kind: attack|approach|search|wait, target, cell, option, score, why}. With dangerous ground
+## it knows of (combat/ai/ai_hazards.gd): an attack from a square clear of it, walked to round it, comes first; while a
+## foe can still be reached round it, it closes on that one (or strikes a familiar or a steed in reach) rather than go
+## in; only when none can be does it go in, where the ground costs least. Such a plan carries the ground: `avoid` (the
+## squares its walk goes round), or for an approach `hazards` (AiHazards.View) and `round` (a way round exists).
 func plan_turn(c: Combatant) -> Dictionary:
 	var e := enc()
 	var prof := profile(c)
 	var reach := e.reachable_for(c)
+	var hz := hazards.read(c)
+	var calm := reach if hz == null else e.reachable_for(c, -1, false, hz.avoid)
+	# The harm it can't walk away from this turn (deep in a wide area, or held fast): that much counts as clear.
+	var unavoidable := 0.0 if hz == null else _least_harm(c, hz, reach, calm)
 	var options := _usable_options(c)
 	var threats := _threats(c)
 	var best := {"kind": "wait", "score": -1e9, "why": "nothing to do"}
@@ -576,26 +594,63 @@ func plan_turn(c: Combatant) -> Dictionary:
 	# A familiar or a steed is struck only when no hero can be reached this turn, moving first included (owner,
 	# 2026-10-12: summoned steeds and familiars rank below the players).
 	var pet_best := {"kind": "wait", "score": -1e9}
+	# Attacks that cost it on dangerous ground, that cost taken off their score: only when no foe can be reached round it.
+	var risky := {"kind": "wait", "score": -1e9}
+	var risky_pet := {"kind": "wait", "score": -1e9}
 	for t in visible:
 		var pet := companion(t)
 		for o in options:
 			var p := o["profile"] as WeaponProfile
 			var cells := _attack_cells(c, t, o, reach)
 			for cell: Vector2i in cells:
-				var cost := 0 if cell == c.cell else int((reach[cell] as Dictionary)["cost"])
-				var score := _score(c, t, o, cell, cost, reach, prof, threats)
+				# The walk there goes round the dangerous ground when that reaches the square.
+				var walk := calm if calm.has(cell) else reach
+				var cost := 0 if cell == c.cell else int((walk[cell] as Dictionary)["cost"])
+				var score := _score(c, t, o, cell, cost, walk, prof, threats)
 				var into := pet_best if pet else best
+				if hz != null:
+					var harm := hz.cost(CombatGrid.path_to(walk, cell))
+					if harm > unavoidable + 0.01:
+						score -= harm
+						into = risky_pet if pet else risky
 				if score > float(into["score"]):
 					into.merge({"kind": "attack", "target": t, "cell": cell, "option": str(o["id"]), "score": score,
 						"why": "%s at %s with %s" % [t.name(), cell, p.name]}, true)
+	# No attack clear of the dangerous ground: the foes it could reach round it, if any (else it goes in).
+	var round_to: Array[Combatant] = []
+	var foes: Array[Combatant] = []
+	if hz != null and str(best["kind"]) != "attack":
+		var near: Array[Combatant] = []
+		near.append_array(visible)
+		near.append_array(heard)
+		for t in near:
+			if not companion(t):
+				foes.append(t)
+		if foes.is_empty():
+			foes = near
+		round_to = hazards.reachable_foes(c, hz, foes, options, calm)
+		if round_to.is_empty() and str(risky["kind"]) == "attack":
+			best = risky
 	if str(best["kind"]) != "attack" and str(pet_best["kind"]) == "attack":
 		best = pet_best
-	# Honour: a cruel foe may strike a hero on 0 Hit Points instead (combat/ai/ai_tactics.gd).
-	var fallen := tactics.fallen_plan(c, options, reach, threats, float(prof["oa_fear"]))
+	if hz != null and round_to.is_empty() and str(best["kind"]) != "attack" and str(risky_pet["kind"]) == "attack":
+		best = risky_pet
+	# Honour: a cruel foe may strike a hero on 0 Hit Points instead (combat/ai/ai_tactics.gd), not from dangerous ground.
+	var fallen := tactics.fallen_plan(c, options, calm, threats, float(prof["oa_fear"]))
+	if not fallen.is_empty() and hz != null \
+			and hz.cost(CombatGrid.path_to(calm, fallen["cell"] as Vector2i)) > unavoidable + 0.01:
+		fallen = {}
 	if not fallen.is_empty() and float(fallen["score"]) > float(best["score"]):
 		best = fallen
 	if str(best["kind"]) == "attack":
+		if hz != null:
+			best["avoid"] = hz.avoid
 		return best
+	if hz != null and not foes.is_empty():
+		# Closing in round the dangerous ground on a foe it can reach that way, or, with none, the way it must.
+		var go0 := _approach_plan(c, round_to if not round_to.is_empty() else foes, prof)
+		go0.merge({"threats": threats, "hazards": hz, "round": not round_to.is_empty()}, true)
+		return go0
 	if not visible.is_empty():
 		# Towards a hero rather than a familiar or a steed, while there's one in sight.
 		var heroes: Array[Combatant] = []
@@ -612,6 +667,19 @@ func plan_turn(c: Combatant) -> Dictionary:
 	if hidden_any and c.action_available:
 		return {"kind": "search", "score": 0.0, "why": "enemies are hidden"}
 	return best
+
+
+## The least harm the dangerous ground does `c` wherever it ends this turn's walk (`reach`, round the ground by `calm`
+## when that gets there), staying put included: 0 unless it can't get out of the ground this turn.
+func _least_harm(c: Combatant, hz: AiHazards.View, reach: Dictionary, calm: Dictionary) -> float:
+	var here: Array[Vector2i] = [c.cell]
+	var least := hz.cost(here)
+	for cell: Vector2i in reach:
+		if least <= 0.0:
+			break
+		if not bool((reach[cell] as Dictionary)["occupied"]):
+			least = minf(least, hz.cost(CombatGrid.path_to(calm if calm.has(cell) else reach, cell)))
+	return least
 
 
 ## Attacks worth considering: the best melee and the best ranged attack by average damage (monsters use their
@@ -791,28 +859,40 @@ func _approach(c: Combatant, plan: Dictionary) -> CombatResult:
 		return CombatResult.new()
 	if bool(sq["dash"]) and int(sq["cost"]) > c.movement_left:
 		e.dash(c)
-	return e.move(c, best_cell)
+	return e.move(c, best_cell, sq.get("avoid", {}) as Dictionary)
 
 
-## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it}. It only
-## looks (one Creature read), so think works it out with the plan.
+## The square `c` closes on the plan's target from: {cell, cost (feet), dash: whether it may Dash for it, avoid: the
+## squares its walk goes round}. It only looks (one Creature read), so think works it out with the plan. With the plan's
+## dangerous ground (`hazards`, plan_turn): while there's a way round it (`round`), only squares walked to round it and
+## clear of it, out of it first; otherwise the squares it costs least to stand on, holding back at its edge one round
+## at most (_held_back).
 func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 	var e := enc()
 	var target := plan["target"] as Combatant
 	# Dash only when the best square needs it: no wasted action when nothing gets closer (a shut door between them).
 	var dash_ok := bool(plan.get("dash", false)) and c.action_available and c.speed() > 0
 	Creature.begin_read()
-	var reach := e.reachable_for(c, c.movement_left + (c.speed() if dash_ok else 0))
+	var budget := c.movement_left + (c.speed() if dash_ok else 0)
+	var reach := e.reachable_for(c, budget)
+	var hz := plan.get("hazards") as AiHazards.View
+	var round_it := hz != null and bool(plan.get("round", false))
+	var calm := reach if hz == null else e.reachable_for(c, budget, false, hz.avoid)
 	# Walking distance to the target (around walls), not the straight line: a creature on the far side of a wall
 	# heads for the door rather than pressing its face to the stones.
-	var walk := _walk_from(target.cell)
+	var walk := _walk_from(target.cell, hz.avoid if round_it else {})
 	var dist := func(cell: Vector2i) -> int:
 		var straight := e.grid.distance_ft(cell, c.size_cells, target.cell, target.size_cells, c.altitude, target.altitude)
 		if straight <= 5 or not walk.has(cell):
 			return straight if walk.has(cell) or straight <= 5 else straight + 1000
 		return int((walk[cell] as Dictionary)["cost"])
+	# With no way round, the ground weighs only until it has held back once (then on in it goes).
+	var weigh := round_it or (hz != null and int(_held_back.get(c.id, -9)) != e.round_no - 1)
 	var best_cell := c.cell
-	var best_d := int(dist.call(c.cell))
+	var here: Array[Vector2i] = [c.cell]
+	var best_base := int(dist.call(c.cell))
+	var nearest := best_base
+	var best_d := best_base + _harm_ft(hz, round_it, here, weigh)
 	var best_cost := 0
 	var prof := profile(c)
 	var threats: Array[Dictionary] = []
@@ -822,35 +902,58 @@ func _approach_square(c: Combatant, plan: Dictionary) -> Dictionary:
 			threats.assign(plan["threats"] as Array)
 		else:
 			threats = _threats(c)
-	for cell: Vector2i in reach:
+	for cell: Vector2i in (calm if round_it else reach):
 		var info := reach[cell] as Dictionary
 		if bool(info["occupied"]):
 			continue
 		var d := int(dist.call(cell))
-		# A square already farther than the best one can't win, whatever its Opportunity Attacks (they only add).
+		# A square already farther than the best one can't win, whatever its Opportunity Attacks or dangerous ground
+		# (they only add).
 		if d > best_d:
 			continue
-		var cost := int(info["cost"])
-		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(reach, cell), threats) > 0.0:
+		var way := calm if calm.has(cell) else reach
+		var cost := int((way[cell] as Dictionary)["cost"])
+		if not threats.is_empty() and _oa_risk(c, CombatGrid.path_to(way, cell), threats) > 0.0:
 			d += 15
+		var base := d
+		nearest = mini(nearest, base)
+		if hz != null:
+			d += _harm_ft(hz, round_it, CombatGrid.path_to(way, cell), weigh)
 		if d < best_d or (d == best_d and cost < best_cost):
 			best_d = d
 			best_cell = cell
 			best_cost = cost
+			best_base = base
+	if hz != null and not round_it and weigh and best_base > nearest:
+		_held_back[c.id] = e.round_no
 	Creature.end_read()
-	return {"cell": best_cell, "cost": best_cost, "dash": dash_ok}
+	return {"cell": best_cell, "cost": best_cost, "dash": dash_ok, "avoid": {} if hz == null else hz.avoid}
+
+
+## Dangerous ground on the walk `path` and where it ends, in feet of approach (_approach_square): any at all rules a
+## square out while there's a way round it; otherwise every point of expected harm weighs 2 ft (nothing unless `weigh`).
+static func _harm_ft(hz: AiHazards.View, round_it: bool, path: Array[Vector2i], weigh: bool = true) -> int:
+	if hz == null or not weigh:
+		return 0
+	var harm := hz.cost(path)
+	if harm <= 0.0:
+		return 0
+	return (1000 if round_it else 0) + int(harm * 2.0)
 
 
 ## Walking costs from `cell` to every square of the map (no creature in the way: the shape of the walls, doors and
-## ground), kept while the map is unchanged: several foes closing on the same hero share one search (FN-14).
-func _walk_from(cell: Vector2i) -> Dictionary:
+## ground, and round the `avoid` squares), kept while the map is unchanged: several foes closing on the same hero share
+## one search (FN-14).
+func _walk_from(cell: Vector2i, avoid: Dictionary = {}) -> Dictionary:
 	var g := enc().grid
 	var key := "%d|%d|%s" % [hash([g.width, g.depth, g._flags, g._height]), g.raised.size(), cell]
+	if not avoid.is_empty():
+		key += "|%d" % avoid.hash()
 	if _walks.has(key):
 		return _walks[key] as Dictionary
 	if _walks.size() > 32:
 		_walks.clear()
-	var walk := g.reachable(cell, 1, 4000, func(_x: Vector2i) -> bool: return false,
+	var walk := g.reachable(cell, 1, 4000, func(x: Vector2i) -> bool: return avoid.has(x),
 		func(_x: Vector2i) -> bool: return false, func(_x: Vector2i) -> bool: return false)
 	_walks[key] = walk
 	return walk
@@ -864,7 +967,7 @@ func _move_then_attack(c: Combatant, plan: Dictionary) -> CombatResult:
 	var after := func() -> CombatResult:
 		return _attack_step(c, target, option_id)
 	if dest != c.cell:
-		var r := e.move(c, dest)
+		var r := e.move(c, dest, plan.get("avoid", {}) as Dictionary)
 		if r.ok:
 			return e.then(r, after)
 	elif c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2 and c.speed() > 0:
@@ -980,24 +1083,32 @@ func _best_in_reach(c: Combatant) -> Dictionary:
 	return best
 
 
-## Moves as far from `from` as it can (Turned creatures can't Dash; Command: Flee and cowards can).
-func _flee(c: Combatant, from: Combatant, may_dash: bool) -> CombatResult:
+## Moves as far from `from` as it can (Turned creatures can't Dash; Command: Flee and cowards can). `heed`: it keeps
+## out of the dangerous ground it knows of where it can (combat/ai/ai_hazards.gd), the least harm first, then the
+## farthest; a flight it's made to take (Turn Undead, Command) doesn't look.
+func _flee(c: Combatant, from: Combatant, may_dash: bool, heed: bool = true) -> CombatResult:
 	var e := enc()
 	if c.speed() <= 0:
 		return CombatResult.new()
 	if may_dash and c.can_act() and c.action_available:
 		e.dash(c)
 	var reach := e.reachable_for(c)
+	var hz := hazards.read(c) if heed else null
+	var calm := reach if hz == null else e.reachable_for(c, -1, false, hz.avoid)
 	var best_cell := c.cell
 	var best_d := e.grid.distance_ft(c.cell, c.size_cells, from.cell, from.size_cells)
+	var here: Array[Vector2i] = [c.cell]
+	var best_harm := 0.0 if hz == null else hz.cost(here)
 	for cell: Vector2i in reach:
 		if bool((reach[cell] as Dictionary)["occupied"]):
 			continue
 		var d := e.grid.distance_ft(cell, c.size_cells, from.cell, from.size_cells)
-		if d > best_d:
+		var harm := 0.0 if hz == null else hz.cost(CombatGrid.path_to(calm if calm.has(cell) else reach, cell))
+		if harm < best_harm or (harm == best_harm and d > best_d):
 			best_d = d
+			best_harm = harm
 			best_cell = cell
 	e.log.add("info", "%s flees from %s" % [c.name(), from.name()], c.id)
 	if best_cell == c.cell:
 		return CombatResult.new()
-	return e.move(c, best_cell)
+	return e.move(c, best_cell, {} if hz == null else hz.avoid)
