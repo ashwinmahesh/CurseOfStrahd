@@ -137,8 +137,19 @@ func test_the_tenant_at_level_2() -> void:
 	assert_true(wins >= 2 and wins <= 6, "the Tenant falls in 2 to 6 of 8 (%d)" % wins)
 
 
+## The Wagon and one trinket at level 5: the owner's 3 in 8 (with two trinkets, once an ally's square stopped slowing
+## the party, it won 1).
 func test_the_tinkers_wagon_at_level_5() -> void:
-	await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4])
+	speakers_step_aside = true
+	var wins := await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 2 and wins <= 4, "the Wagon falls in 2 to 4 of 8 (%d)" % wins)
+
+
+## Level 6: the Wagon at 250 HP and five trinkets: 1 of 8, the harder side of the owner's 2 (with four, 4).
+func test_the_tinkers_wagon_at_level_6() -> void:
+	speakers_step_aside = true
+	var wins := await _series("svalich_crossroads", 12, 6, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
+	assert_true(wins >= 1 and wins <= 3, "the Wagon falls in 1 to 3 of 8 (%d)" % wins)
 
 
 func test_the_raven_trap_at_level_6() -> void:

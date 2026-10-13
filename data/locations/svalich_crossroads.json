@@ -1904,7 +1904,8 @@
           "cell": [
             16,
             20
-          ]
+          ],
+          "hp": 250
         },
         {
           "monster": "mimic",
@@ -1927,6 +1928,22 @@
           "cell": [
             14,
             22
+          ],
+          "name": "A Trinket"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            19,
+            18
+          ],
+          "name": "A Trinket"
+        },
+        {
+          "monster": "mimic",
+          "cell": [
+            12,
+            20
           ],
           "name": "A Trinket"
         }
@@ -1952,14 +1969,6 @@
           "cell": [
             13,
             18
-          ],
-          "name": "A Trinket"
-        },
-        {
-          "monster": "mimic",
-          "cell": [
-            20,
-            22
           ],
           "name": "A Trinket"
         }

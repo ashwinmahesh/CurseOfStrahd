@@ -410,8 +410,10 @@ for seven years. **Escalation:** once something's been seen, go for the chain, a
   Manual's mimic, drawn with its sprite at Huge): Huge monstrosity, AC 14, 171 HP, two sticky pseudopods (reach 10,
   Grappled) and an acid bite, a spray of trinkets (recharge 5-6, Restrained), Legendary Resistance (1/day) and one
   more lash between turns. CR 7.
-- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon and 2 trinkets (mimics), 3,800 XP (the autopilot wins 2
-  of 4 and loses three party members a fight); level 6 three trinkets; below 5 the Wagon at 110 HP and one.
+- Fight `tinkers_wagon` at the crossroads: level 5 the Wagon and a trinket (a mimic), 3,350 XP (the autopilot wins 3
+  of 8, the owner's target, and loses three party members a fight; with two trinkets it won 1 once an ally's square
+  stopped slowing the party, 2026-10-13); level 6 the Wagon at 250 HP and five trinkets (1 of 8; with three, at
+  its 171, 7); below 5 the Wagon at 110 HP and one.
 - The belly: 300 gp of travellers' money and the gem the thing kept to see with, a Gem of Seeing (rare). Iosif goes
   back to the Tser Pool camp and sits on the ground.
 
