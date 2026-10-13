@@ -63,7 +63,7 @@ static func build(board: ArenaBoard, set_id: String) -> Vista:
 	if c_far > 0.02 and c_far < float(castle.get("within", 0.5)) and ResourceLoader.exists("res://" + str(castle["art"])):
 		v._card("CastleRavenloft", castle, c_at - (here as Vector2), c_far)
 		taken.append((c_at - (here as Vector2)).angle())
-	v._landmarks(cfg.get("landmarks", {}) as Dictionary, here as Vector2, taken)
+	v._landmarks(cfg.get("landmarks", {}) as Dictionary, here as Vector2, taken, board.place)
 	var lake := cfg.get("lake", {}) as Dictionary
 	var l_at := Vector2(float((lake["at"] as Array)[0]), float((lake["at"] as Array)[1]))
 	if (here as Vector2).distance_to(l_at) < float(lake.get("within", 0.15)):
@@ -100,16 +100,20 @@ func _ring(style: Dictionary, radius: float) -> void:
 
 ## The regions' landmarks (the vault's Region Variety Plan: a place's own thing on the horizon, not only the castle):
 ## the nearest few within their `within` on the travel art, leaving out a place's own (nearer than `near`) and any
-## that would stand in front of one already shown.
-func _landmarks(all: Dictionary, here: Vector2, taken: Array[float]) -> void:
+## that would stand in front of one already shown. A landmark is placed as seen from this place (seen_from).
+func _landmarks(all: Dictionary, here: Vector2, taken: Array[float], place: String) -> void:
 	var seen: Array = []
 	for id: String in all:
-		var spec := all[id] as Dictionary
+		var spec := seen_from(all[id] as Dictionary, place)
 		var at := Vector2(float((spec["at"] as Array)[0]), float((spec["at"] as Array)[1]))
-		var far := here.distance_to(at)
+		var toward := at - here
+		if spec.has("bearing"):
+			var turn := deg_to_rad(float(spec["bearing"]))
+			toward = Vector2(sin(turn), -cos(turn)) * float(spec.get("far", toward.length()))
+		var far := toward.length()
 		if far > float(spec.get("near", 0.02)) and far < float(spec.get("within", 0.3)) \
 				and ResourceLoader.exists("res://" + str(spec["art"])):
-			seen.append([far, id, at - here])
+			seen.append([far, id, toward, spec])
 	seen.sort_custom(func(a: Array, b: Array) -> bool: return float(a[0]) < float(b[0]))
 	var shown := 0
 	for e: Array in seen:
@@ -123,8 +127,20 @@ func _landmarks(all: Dictionary, here: Vector2, taken: Array[float]) -> void:
 		if not clear:
 			continue
 		taken.append(bearing)
-		_card("Landmark_" + str(e[1]), all[e[1]] as Dictionary, e[2] as Vector2, float(e[0]))
+		_card("Landmark_" + str(e[1]), e[3] as Dictionary, e[2] as Vector2, float(e[0]))
 		shown += 1
+
+
+## A landmark as seen from `place`: its own numbers, with its `from` entry for that place laid over them where a place's
+## own map knows better than the travel art. There `bearing` is the way it stands from that place (degrees clockwise
+## from north) instead of its bearing on the travel art, `far` how far off it seems (travel-art units), and `height`
+## and `sink` its size and how deep its foot sinks. The Abbey of St. Markovia is due north of Krezk on the travel art,
+## but the play camera only ever looks along a diagonal (its frame reaches about 27 degrees either side), so a
+## landmark due north of a place is never in view: from Krezk's maps it stands north-north-east, up the mountain the
+## track to it climbs, where the camera's first view finds it.
+static func seen_from(spec: Dictionary, place: String) -> Dictionary:
+	var from: Variant = (spec.get("from", {}) as Dictionary).get(place, null)
+	return spec.merged(from as Dictionary, true) if from is Dictionary else spec
 
 
 ## A painted landmark (Castle Ravenloft on its crag, a mountain, a town on its cliff), `toward` it on the travel art

@@ -101,6 +101,16 @@ const SHOTS := {
 		"dist": 14.0},
 	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
 		"dist": 16.0},
+	# The Abbey's wards and church (owner reports 2026-10-13): the narrow cells where the Belviews whose gifts didn't
+	# take are kept, from the corridor; the memorial plaque in the church.
+	"wards_cells": {"loc": "abbey_of_st_markovia_wards", "cells": [[19, 6], [20, 6], [19, 7], [20, 7]], "look": [21, 3],
+		"dist": 13.0},
+	"wards_cells_east": {"loc": "abbey_of_st_markovia_wards", "cells": [[25, 6], [26, 6], [25, 7], [26, 7]], "look": [26, 3],
+		"dist": 10.0},
+	"wards_cells_west": {"loc": "abbey_of_st_markovia_wards", "cells": [[15, 6], [16, 6], [15, 7], [16, 7]], "look": [15, 3],
+		"dist": 10.0},
+	"shrine_plaque": {"loc": "abbey_of_st_markovia_shrine", "cells": [[11, 8], [12, 8], [11, 9], [12, 9]], "look": [9, 3],
+		"dist": 14.0},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 

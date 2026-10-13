@@ -10,7 +10,12 @@
   "cost_gp": 400,
   "magic": {
     "rarity": "uncommon",
-    "attunement": true
+    "attunement": true,
+    "charges": {
+      "max": 4,
+      "regain": "1d4",
+      "when": "dawn"
+    }
   },
   "theme": "implements",
   "icon": "boots",
@@ -18,21 +23,22 @@
     {
       "id": "fly",
       "name": "Fly",
-      "cost": "bonus",
+      "cost": "magic",
+      "charges": 1,
       "toggle": true,
-      "off_cost": "bonus",
-      "budget_rounds": 2400,
+      "hours": 1,
+      "off_cost": "free",
       "modifiers": [
         {
           "stat": "speed_set",
           "kind": "fly",
-          "value": "walk"
+          "value": 30
         }
       ],
-      "text": "Bonus Action: a Fly Speed equal to your Speed, up to 4 hours a day."
+      "text": "Magic action, 1 charge: a Fly Speed of 30 ft for 1 hour."
     }
   ],
   "worn": "feet",
-  "summary": "Fly at your Speed for up to 4 hours a day.",
-  "text": "Wearing these boots, you can fly, with a Fly Speed matching your Speed. They hold 4 hours of flight, which you can use in one stretch or split across several flights, though each flight uses up at least 1 minute. If the time runs out while you are airborne, you sink 30 feet each round until you reach the ground. For every 12 hours the boots go unused, they recover 2 hours of flight."
+  "summary": "4 charges, each an hour's flight at 30 ft; 1d4 come back at dawn.",
+  "text": "These boots hold 4 charges. Wearing them, you can take a Magic action and spend 1 charge to gain a Fly Speed of 30 feet for 1 hour. If you are still in the air when the hour is up, you drift down 30 feet each round until you land. Each dawn they regain 1d4 spent charges."
 }
