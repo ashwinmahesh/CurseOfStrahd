@@ -90,3 +90,43 @@ func test_the_pool_says_who_sergei_is() -> void:
 	told.set_flag("stanimir_tale_heard")
 	beats = SideQuestPlay.play(told, "krezk/pool:the_pool", ["Stay with us"])
 	assert_false(SideQuestPlay.text(beats).contains("She was meant to marry this one."), "the tale already said it")
+
+
+# ---------------------------------------------------------------- Batch 3: Ireena and Tatyana
+
+## Ireena goes to Madam Eva to learn what he wants with her; the answer used to cost the party its one question.
+func test_madam_eva_answers_ireenas_own_question() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 3, "tser_pool_eva_tent", 20)
+	assert_true(st.add_guest("ireena"))
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "svalich_road/madam_eva:ireena_seen", ["", "", ""]))
+	assert_true(said.contains("She keeps being born in this valley with the same face"), said)
+	assert_true(bool(st.get_flag("eva_recognized_ireena", false)))
+	said = SideQuestPlay.text(SideQuestPlay.play(st, "svalich_road/madam_eva:q_ireena"))
+	assert_true(said.contains("You have the first of it already."), "the paid question gives the rest: %s" % said)
+
+
+func test_marinas_face_is_ireenas_without_her_there() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 8, "berez_marinas_monument", 20)
+	st.set_flag("ireena_met")
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "berez/marina:monument", ["Leave her in peace"]))
+	assert_true(said.contains("it is Ireena Kolyana's"), said)
+	said = SideQuestPlay.text(SideQuestPlay.play(st, "berez/marina:bier", ["Leave her as she is"]))
+	assert_true(said.contains("the girl has Ireena's face too"), said)
+
+
+# ---------------------------------------------------------------- Batch 4: Castle Ravenloft and the roads
+
+func test_breaking_the_heart_says_what_it_was() -> void:
+	var st := SideQuestPlay.party(["ilse_varga"], 9, "castle_ravenloft_spires_heart", 22)
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "castle_ravenloft/spires_heart:shatter"))
+	assert_true(said.contains("It took every blow meant for the man downstairs."), said)
+	var known := SideQuestPlay.party(["ilse_varga"], 9, "castle_ravenloft_spires_heart", 22)
+	known.set_flag("heart_of_sorrow_known")
+	said = SideQuestPlay.text(SideQuestPlay.play(known, "castle_ravenloft/spires_heart:shatter"))
+	assert_false(said.contains("It took every blow"), "a party that studied it already knows")
+
+
+func test_the_phantom_riders_point_at_the_ridge() -> void:
+	var st := SideQuestPlay.party(["godrick_pendlebrook"], 7, "road_forest", 22)
+	var said := SideQuestPlay.text(SideQuestPlay.play(st, "argynvostholt/events:phantom_ride"))
+	assert_true(said.contains("If the Order's anywhere in this valley"), said)
