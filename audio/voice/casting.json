@@ -226,12 +226,15 @@
       "released": true
     },
     "emil_toranescu": {
-      "voice_id": "zJkooQj8YQ0EJZRwSyY2",
-      "name": "Barovia emil_toranescu",
-      "description": "A big, grey-bearded man with a deep, rumbling, patient voice and a strong, clearly audible Eastern European (Romanian) accent. Slow and steady like a farmer, with a wolf's growl underneath; pained and proud, few words, great weight.",
+      "voice_id": "gYQAHBAv9ixcIPvSwZBJ",
+      "name": "Barovia Emil Toranescu (2026-10-14)",
+      "description": "A big, grey-bearded man in his sixties with a deep, warm, resonant baritone and a strong, clearly audible Romanian accent. Steady, smooth and patient like a farmer, with calm authority and only a hint of a wolf's growl at the edges; pained but proud, few words, great weight. Never gravelly, never hoarse, never breathy, normal speaking volume.",
       "settings": {},
       "model": "eleven_v3",
-      "generated_voice_id": "zJkooQj8YQ0EJZRwSyY2",
+      "generated_voice_id": "gYQAHBAv9ixcIPvSwZBJ",
+      "accent_tag": "[strong Romanian accent]",
+      "earlier_voice_id": "zJkooQj8YQ0EJZRwSyY2",
+      "voice_note": "Owner, 2026-10-14: his old designed voice (deep and rumbling, so rasp was built in; no accent tag; 39 of 49 lines undirected) was grainy and drifted. Recast on a new designed voice (a deep, warm, steady baritone, his pick: voice 1 of 3) with the strong Romanian accent tag and a direction on every line; all 49 lines re-recorded.",
       "released": true
     },
     "stanimir": {
@@ -386,12 +389,16 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "kiril_stoyanovich": {
-      "voice_id": "XaEUesE01wKIKaa0xI0h",
-      "name": "Alexey's English With Russian Accent Professional Male Voice",
-      "description": "A huge man with a rough, mocking, snarling voice and a strong, clearly audible Eastern European (Romanian) accent. A grinning werewolf bully, swaggering and cruel, laughing through his teeth.",
+      "voice_id": "b4hXREv5vd2Pve1NDseW",
+      "name": "Barovia Kiril Stoyanovich (2026-10-14)",
+      "description": "A huge, swaggering man in his forties with a rough, mocking, snarling voice and a strong, clearly audible Romanian accent. A grinning werewolf bully, cruel and amused, laughing through his teeth, loud and sure of himself; clear and forceful, never breathy, normal speaking volume.",
       "settings": {},
-      "library": true,
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "b4hXREv5vd2Pve1NDseW",
+      "earlier_voice_id": "XaEUesE01wKIKaa0xI0h",
+      "voice_note": "Owner, 2026-10-14: his old voice was a library 'Professional Male Voice' with a Russian accent, no accent tag and no mood on any of 29 lines, so he read smoothly instead of snarling. Recast on a new designed voice (a rough, mocking, snarling one, his pick: voice 4 of 4) with the strong Romanian accent tag and a direction on every line; all 29 lines re-recorded.",
+      "released": true
     },
     "rose": {
       "voice_id": "nDJIICjR9zfJExIFeSCN",

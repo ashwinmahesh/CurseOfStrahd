@@ -8570,304 +8570,343 @@
   "chars": 98,
   "direction": "[fond, exasperated]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Zuleika will hold the den till I'm back, and she'll make it plain she never needed me. That woman."
  },
  "emil_toranescu/0ef7dfe898a6f6f3": {
   "chars": 80,
   "direction": "[bitter, determined]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The den. Nineteen winters I kept it. It smells of Kiril now. That will wash out."
  },
  "emil_toranescu/16c9f6a5130098d7": {
   "chars": 101,
+  "direction": "[wry, rueful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The Vistani grandmother and her cards. She told me once I'd die in chains. Funny, how close she came."
  },
  "emil_toranescu/19af3d13928d64b3": {
   "chars": 93,
+  "direction": "[bitter, wry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "You freed me to kill me? Zuleika said you were honest. She was right. You're honest butchers."
  },
  "emil_toranescu/2bbb4e5b8e044aa8": {
   "chars": 45,
+  "direction": "[dry, rueful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I'll be here. The jewellery makes sure of it."
  },
  "emil_toranescu/2c4a380e810061f6": {
   "chars": 76,
   "direction": "[pained, low]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The old wounds pull when I fight. Silver remembers you, even after it's off."
  },
  "emil_toranescu/2e40a729202e2ebd": {
   "chars": 163,
+  "direction": "[dry, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Zuleika has one; Kiril trusted her with it so she could watch. Kiril keeps the other on a peg in his lair, north of the great cave, because he likes to look at it."
  },
  "emil_toranescu/2e7641ddbdf175d1": {
   "chars": 157,
+  "direction": "[grim, relieved]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "It's done. By the old law the pack is mine again. Kiril's favourites are dead or running down the Krezk road with their tails tucked. The rest are listening."
  },
  "emil_toranescu/3176c8751867d6ef": {
   "chars": 86,
   "direction": "[grudging, fair]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Krezk shut its gate on wolves for a hundred years. By the old law, they were right to."
  },
  "emil_toranescu/3386e728dd21b226": {
   "chars": 44,
+  "direction": "[bitter, resigned]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I know it. That's why I'm the one in chains."
  },
  "emil_toranescu/3396ba1fa8e695d5": {
   "chars": 97,
+  "direction": "[grim, dry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "He's not far. He never was, from his supper. Wait for him in the great cave, where he can see us."
  },
  "emil_toranescu/3df98278ec1ca216": {
   "chars": 121,
+  "direction": "[firm, commanding]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Hear me, then. We hunt deer. We keep to the high hills. We don't come when the castle whistles. And the children go home."
  },
  "emil_toranescu/4632d4881a479bc3": {
   "chars": 151,
+  "direction": "[wry, weary]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The Vistani grandmother's cards. She told me once I'd die in chains, and she was nearly right. Now they say I'm to walk with you to the old man's door."
  },
  "emil_toranescu/4d0626087f781649": {
   "chars": 154,
+  "direction": "[grave, regretful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Thank you. Now I have to do something you won't like. A chained wolf who walks free without howling his challenge is a thief, and anyone may kill a thief."
  },
  "emil_toranescu/4d9c0553a2f334de": {
   "chars": 21,
+  "direction": "[resigned, grim]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "So. That's how it is."
  },
  "emil_toranescu/5615c80d7e7e2f11": {
   "chars": 206,
+  "direction": "[proud, pained]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Emil Toranescu. I led this pack nineteen winters. We hunted deer and the odd careless shepherd, kept to the high hills, and left the villages alone. The castle left us alone in return. Then Kiril came home."
  },
  "emil_toranescu/57d65fd9a3fbced5": {
   "chars": 95,
   "direction": "[gruff, warm, practical]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Good hunt. Eat something. A hunter who doesn't eat after a kill is only a thief who works hard."
  },
  "emil_toranescu/5a7bbd7914c2826f": {
   "chars": 109,
   "direction": "[cold, menacing]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Kiril came down from this house with a new law and a sack of children. I'd like to meet the man who wrote it."
  },
  "emil_toranescu/5b008701501d1794": {
   "chars": 129,
   "direction": "[wistful, wry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Some nights I want to run on four legs till my heart gives out. Then I remember I've got people now. Two-legged ones, worse luck."
  },
  "emil_toranescu/5c401a16c13bd2ce": {
   "chars": 59,
+  "direction": "[dry, determined]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Get me out of these, and let's see what else she got wrong."
  },
  "emil_toranescu/66177b81b06c4a8a": {
   "chars": 118,
+  "direction": "[solemn, earnest]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "But if it ever comes to the end with the old man on the hill, and you need teeth at his gates, send word up this hill."
  },
  "emil_toranescu/73bf612faee3a92e": {
   "chars": 136,
+  "direction": "[sombre, ashamed]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Not mine. I wasn't leader then. But I was in those woods that night, and so were wolves that weren't ours: the castle's, big and silent."
  },
  "emil_toranescu/80e88c03a81d22b9": {
   "chars": 80,
   "direction": "[hungry, wry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Full dark. I can smell every rabbit for a mile. Don't mind me. I've got manners."
  },
  "emil_toranescu/833538e3db13b101": {
   "chars": 84,
+  "direction": "[grim, steady]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Kiril will hear it. He'll come. When he does, you'll want to be standing next to me."
  },
  "emil_toranescu/8911897212e1778d": {
   "chars": 74,
+  "direction": "[wry, weary]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "You smell of Zuleika's herbs. She sent you. That woman. I told her not to."
  },
  "emil_toranescu/8a7f672c50eb9b79": {
   "chars": 75,
+  "direction": "[wary, dry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Visitors. Kiril's? No. Kiril's visitors don't look at the chains like that."
  },
  "emil_toranescu/8b8127f092beb4af": {
   "chars": 74,
+  "direction": "[wry, tired]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The pack is quieter without Kiril. Hungrier, too. Deer it is, for a while."
  },
  "emil_toranescu/9a57b5f0ce4437e0": {
   "chars": 26,
+  "direction": "[weary, resigned]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I know. I told you not to."
  },
  "emil_toranescu/9bfa58a62c87504a": {
   "chars": 122,
+  "direction": "[approving, wry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "And the huntress. You killed two of Kiril's on the Krezk road. Good shooting. I'd have done it myself, with my hands free."
  },
  "emil_toranescu/9d131a9030519fe8": {
   "chars": 144,
+  "direction": "[solemn, grateful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "You've given me back my pack. I can't follow you to the castle; they'd be at each other's throats in a week without me, and at Zuleika's in two."
  },
  "emil_toranescu/9f7165706077f504": {
   "chars": 158,
+  "direction": "[wry, tired]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The ones who loved Kiril are dead or gone down the Krezk road. The rest are tired and glad to be. Zuleika has them mending things. Wolves hate mending things."
  },
  "emil_toranescu/a0b0399868178833": {
   "chars": 30,
+  "direction": "[dry, rueful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "She means she never needed me."
  },
  "emil_toranescu/a59ea0516707b3a4": {
   "chars": 52,
+  "direction": "[grim, urgent]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Then stand close, and don't let them get behind you."
  },
  "emil_toranescu/a5d875f61384023d": {
   "chars": 58,
+  "direction": "[warm, gruff]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Go well. Keep to the trail; my wolves know your smell now."
  },
  "emil_toranescu/a860dea8819a3662": {
   "chars": 83,
+  "direction": "[rueful, weary]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I misjudged you. That's my fault, not yours. I always was too quick to like people."
  },
  "emil_toranescu/ac7b481977bf8cd0": {
   "chars": 155,
+  "direction": "[firm, grim]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "And be hunted through the hills by a pack that knows every stone, with five children who can't run? No. We do it the old way, here, with rock at our backs."
  },
  "emil_toranescu/bdfc834112dbd6b5": {
   "chars": 50,
+  "direction": "[dry, proud]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Watch, then, huntress. From a respectful distance."
  },
  "emil_toranescu/befedd8664df81a2": {
   "chars": 22,
+  "direction": "[tense, patient]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Quietly, if you would."
  },
  "emil_toranescu/c131c78eac2038b5": {
   "chars": 124,
+  "direction": "[bitter, grim]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I told him the old law: we don't take pups that aren't ours. He said the old law was dead. Then his favourites held me down."
  },
  "emil_toranescu/ccd0432a61382797": {
   "chars": 129,
   "direction": "[grim, weary]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Kiril's done. The pack will grumble for a season and then forget him. Wolves are good at forgetting. It's the only mercy we have."
  },
  "emil_toranescu/d78fcc34cf16889d": {
   "chars": 144,
+  "direction": "[sombre, haunted]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "There was a boy screaming and a girl with red hair, and a rider in black at the treeline. We ran. I've been ashamed of running for twenty years."
  },
  "emil_toranescu/d9771e68eda034d7": {
   "chars": 153,
+  "direction": "[stubborn, earnest]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Not come. Let the old man on the hill whistle for his dogs. If it ever comes to the end with him, and you need teeth at his gates, send word up the hill."
  },
  "emil_toranescu/db1482a64381ce5b": {
   "chars": 39,
+  "direction": "[grim, resigned]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "The key would be kinder. To both of us."
  },
  "emil_toranescu/e35afea0ed4afaba": {
   "chars": 56,
+  "direction": "[dry, weary]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Still here. Still chained. Neither of us is enjoying it."
  },
  "emil_toranescu/e7677a143b700f6c": {
   "chars": 61,
+  "direction": "[commanding, steely]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I howled the challenge, Kiril. By the old law, you answer it."
  },
  "emil_toranescu/eb6d5a7315c95cd2": {
   "chars": 52,
+  "direction": "[wry, dry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "I always mind the bite. That was the whole argument."
  },
  "emil_toranescu/ee8737f4781b7735": {
   "chars": 92,
   "direction": "[solemn, grateful]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "By the old law, you stood with me. I don't forget that. Wolves forget most things. Not that."
  },
  "emil_toranescu/ef556c51dc16fde1": {
   "chars": 124,
+  "direction": "[approving, gruff]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "You found Kiril's chest. Good. Half of it came off the Krezk road; if you pass anyone who looks robbed, you know what to do."
  },
  "emil_toranescu/f188ca634dc58544": {
   "chars": 199,
+  "direction": "[grave, angry]",
   "model": "eleven_v3",
-  "recipe": "0b5c90a1ab",
+  "recipe": "a48531061f",
   "text": "Kiril went up to the castle and came back with a new law. The master wants an army that runs on four legs. And where do new wolves come from? He came back from the Krezk road with a sack of children."
  },
  "escher/0bc41bf080b1e51b": {
@@ -28548,176 +28587,205 @@
  },
  "kiril_stoyanovich/0999aa35a50ea709": {
   "chars": 96,
+  "direction": "[smug, dismissive]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "A wolf can be bought. A wolf just can't stay bought. Take the pups before I remember I'm hungry."
  },
  "kiril_stoyanovich/1262f3a7fb20404b": {
   "chars": 28,
+  "direction": "[cold, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Pups. The master wants pups."
  },
  "kiril_stoyanovich/1408e8a182cea5f6": {
   "chars": 138,
+  "direction": "[mocking, curious, predatory]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "And you. Yes, you. I smelled you at the bottom of the hill. Pine and smoke and nobody's dog. You weren't raised by people, were you, girl?"
  },
  "kiril_stoyanovich/16ef75b5725cfa00": {
   "chars": 142,
+  "direction": "[swaggering, threatening]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Here's the new law, guests. Stand aside, and you walk out of my hills alive. The master likes his guests unchewed. I'd hate to disappoint him."
  },
  "kiril_stoyanovich/1d995950bb2fba05": {
   "chars": 62,
+  "direction": "[cold, warning]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "No. You've had my generosity. Don't push your luck up my hill."
  },
  "kiril_stoyanovich/22789b5f45b268f9": {
   "chars": 74,
+  "direction": "[mocking, cruel]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "And the Vistani huntress. How's the leg? I kept the boot. It's on my wall."
  },
  "kiril_stoyanovich/2a47e0e745ff2de8": {
   "chars": 89,
+  "direction": "[mocking, greedy]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "A hundred for the pups, fifty for the arithmetic. Take them before I remember I'm hungry."
  },
  "kiril_stoyanovich/396e1bf06dec3ff8": {
   "chars": 55,
+  "direction": "[menacing, cold]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Mind your tongue, meat. I've a good memory for tongues."
  },
  "kiril_stoyanovich/4d4b60a1ff531f31": {
   "chars": 72,
+  "direction": "[mocking, savage]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Pity. You'd have made good company at the master's table. As the dinner."
  },
  "kiril_stoyanovich/4eca2c0636f13e96": {
   "chars": 24,
+  "direction": "[menacing, amused]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Have you. Have you, now."
  },
  "kiril_stoyanovich/532c92971a663d30": {
   "chars": 34,
+  "direction": "[curt, menacing]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Don't come back without a present."
  },
  "kiril_stoyanovich/5b0890d1e5aec867": {
   "chars": 70,
+  "direction": "[mocking, amused]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Back again? You're starting to smell like the den. Careful. It sticks."
  },
  "kiril_stoyanovich/5d9fa3d0aa54c5b6": {
   "chars": 54,
+  "direction": "[delighted, savage]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "There it is. I knew there was a wolf in you somewhere."
  },
  "kiril_stoyanovich/6a97ed28b0621083": {
   "chars": 93,
+  "direction": "[menacing, boastful]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Run along. Tell the valley Kiril Stoyanovich keeps his word. Tell them what else I keep, too."
  },
  "kiril_stoyanovich/6cdf0071e2225b77": {
   "chars": 57,
+  "direction": "[arrogant, amused]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Everything in these hills is mine to raise. Ask the deer."
  },
  "kiril_stoyanovich/6fce9619875223fe": {
   "chars": 14,
+  "direction": "[flat, final]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "The pups stay."
  },
  "kiril_stoyanovich/707541d8ff8aab3b": {
   "chars": 65,
+  "direction": "[dismissive, cruel]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Now. Get out of my hills, guests, and give the master my regards."
  },
  "kiril_stoyanovich/7c5e1c9102997694": {
   "chars": 111,
+  "direction": "[sneering, dismissive]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Serve? The old man on the hill feeds us and looks the other way. One day he'll look the other way for too long."
  },
  "kiril_stoyanovich/83e79cefec7aaa22": {
   "chars": 95,
+  "direction": "[gloating, mocking]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "My favourite customers. Brought another purse? The pups were cheap. Everything else costs more."
  },
  "kiril_stoyanovich/84c5efa7827eae58": {
   "chars": 67,
+  "direction": "[hard, ferocious]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "The old law kept us thin and hiding in the rocks. The new law eats."
  },
  "kiril_stoyanovich/8847a5e64507b786": {
   "chars": 101,
+  "direction": "[smug, cruel]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Sensible meat. I like sensible meat. The silver's too good for him now. He'll go to the moon at dawn."
  },
  "kiril_stoyanovich/9ad06216623b5711": {
   "chars": 210,
+  "direction": "[taunting, persuasive, fierce]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Then what are you doing walking on a lead with these? Run with us. No walls, no forks, no bowing to burgomasters. The night belongs to you and you belong to nobody. You'd be good at it. You'd be the best of us."
  },
  "kiril_stoyanovich/a488e0be548f8e27": {
   "chars": 29,
+  "direction": "[amused, cruel]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Ha! I like these ones. Shame."
  },
  "kiril_stoyanovich/aa9dafff080d2715": {
   "chars": 68,
+  "direction": "[gloating, cruel]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Back for the pups? They're getting fat. Not fat enough. Eleven days."
  },
  "kiril_stoyanovich/b97283e5ba69408e": {
   "chars": 122,
+  "direction": "[smug, menacing]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "The pups? They're pack now, or they will be after the moon. Don't fret. I'll raise them right. Strong and hungry, like me."
  },
  "kiril_stoyanovich/c26d52c016abedc3": {
   "chars": 138,
+  "direction": "[begrudging, amused]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "...Ha. You've got some wolf in you. Fine. Take the pups. They whine all night anyway, and the master can wait for his army till next moon."
  },
  "kiril_stoyanovich/d15c62ab59ce29ca": {
   "chars": 113,
+  "direction": "[jeering, amused]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "Emil! Out of your jewellery. And you've made friends. Meat with swords. The master's guests, if I'm not mistaken."
  },
  "kiril_stoyanovich/e17d4383428c5bba": {
   "chars": 116,
+  "direction": "[gleeful, scheming]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "And the master's red-haired lady, in my den. Oh, he'll want to hear about this. He'll want to hear about it from me."
  },
  "kiril_stoyanovich/f2010216681c5505": {
   "chars": 143,
+  "direction": "[smug, sneering]",
   "model": "eleven_v3",
-  "recipe": "8695ae517d",
+  "recipe": "afb3cf0c07",
   "text": "I counted. Fewer of you than of us, and I've teeth left over. Now the pups cost a hundred and fifty. Fifty for making me do sums in my own den."
  },
  "kolyan_indirovich/06c40a63d61e633f": {
