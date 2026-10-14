@@ -1,0 +1,19 @@
+{
+  "id": "belview_well",
+  "name": "Belview",
+  "title": "By the Well",
+  "summary": "A Belview girl crouched by the courtyard well, picking at the ice on the rope: a girl's face, mostly, with a goat's slotted eyes. She answers you in your own voice, a beat behind you.",
+  "portrait": "belview_well",
+  "sprite": "belview",
+  "attitude": "indifferent",
+  "voice": "docs/voice/belview.md",
+  "monster": "mongrelfolk",
+  "guest": false,
+  "tags": [
+    "mongrelfolk",
+    "belview",
+    "abbey_of_st_markovia"
+  ],
+  "region": "abbey_of_st_markovia",
+  "pronouns": "she/her"
+}
