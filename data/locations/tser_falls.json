@@ -398,7 +398,7 @@
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "rat",
           "cell": [
             5,
             8
@@ -528,17 +528,17 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "shadow",
           "cell": [
             6,
-            15
+            10
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "shadow",
           "cell": [
-            9,
-            16
+            6,
+            11
           ]
         }
       ],

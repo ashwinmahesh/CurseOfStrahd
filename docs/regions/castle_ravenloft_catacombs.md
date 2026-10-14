@@ -88,16 +88,23 @@ revenant 1,800; nightmare 700; gargoyle 450; dire wolf 200; specter 200; swarm o
 
 | id | Map, trigger | Who | XP | Notes |
 |---|---|---|---|---|
-| `cat_horseman_final` | catacombs, enter `cat_beucephalus_crypt` | Strahd, the nightmare Beucephalus, 2 swarms of bats | 13,800 High | `final_battle: castle_ravenloft_catacombs`, `lair` |
+| `cat_horseman_final` | catacombs, enter `cat_beucephalus_crypt` | Strahd (375 HP), the nightmare Beucephalus, 2 swarms of bats, 2 of his spawn | 17,400 above High | `final_battle: castle_ravenloft_catacombs`, `lair` |
 | `cat_sleepers` | catacombs, enter `cat_sleepers_crypt` | night: 3 vampire spawn; day: 2, surprised in their coffins | 5,400 / 3,600 | optional; `cat_sleepers_slain` |
 | `cat_gargoyle_watch` | catacombs, enter `cat_gargoyle_tomb` | 6 gargoyles | 2,700 | guards a treasure place; `cat_gargoyles_slain` |
-| `cat_sergei_final` | tombs, enter `castle_ravenloft_sergeis_tomb` | Strahd, 2 dire wolves, 2 swarms of bats | 13,500 High | `final_battle: castle_ravenloft_sergeis_tomb`, `lair` |
+| `cat_sergei_final` | tombs, enter `castle_ravenloft_sergeis_tomb` | Strahd (350 HP), 3 dire wolves, 2 swarms of bats, 3 of his spawn | 19,100 above High | `final_battle: castle_ravenloft_sergeis_tomb`, `lair` |
 | `cat_guardians` | tombs, enter `cat_guardians_hall` | Strahd's animated armor, 2 helmed horrors | 4,500 | on the way to the royal tomb; `cat_guardians_stilled` |
-| `cat_royal_final` | tombs, enter `castle_ravenloft_tomb_of_barov_and_ravenovia` | Strahd, 3 specters | 13,600 High | `final_battle: castle_ravenloft_tomb_of_barov_and_ravenovia`, `lair` |
-| `cat_darklord_final` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` | Strahd, 2 vampire spawn | 16,600 High+ | `final_battle: castle_ravenloft_strahds_tomb`, `lair`; sets `cat_keepers_defeated` (the spawn are the keepers) |
+| `cat_royal_final` | tombs, enter `castle_ravenloft_tomb_of_barov_and_ravenovia` | Strahd (400 HP), 3 specters, 2 of his spawn | 17,200 above High | `final_battle: castle_ravenloft_tomb_of_barov_and_ravenovia`, `lair` |
+| `cat_darklord_final` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` | Strahd (350 HP), 2 vampire spawn | 16,600 above High | `final_battle: castle_ravenloft_strahds_tomb`, `lair`; sets `cat_keepers_defeated` (the spawn are the keepers) |
 | `cat_tomb_keepers` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` while `not flag.cat_keepers_defeated` | 2 vampire spawn, 3 swarms of bats | 3,750 | the short fight at the tomb while he rests (or is out); `cat_keepers_defeated` |
-| `cat_daylight_waking` | Strahd's tomb, dialogue (the coffin by day) | Strahd, 2 swarms of bats | 13,100 High | `lair`; not a final battle (no parley) |
-| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 4 revenants (1 of 8 at level 10; with 3, 3) | 10,100 High | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` |
+| `cat_daylight_waking` | Strahd's tomb, dialogue (the coffin by day) | Strahd (350 HP), 2 swarms of bats, one of his spawn | 14,900 above High | `lair`; not a final battle (no parley) |
+| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 5 revenants, the fifth at 80 HP (5 of 8 at level 10) | 11,900 High | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` |
+
+Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
+wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
+blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
+outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
+(tests/integration/test_scaled_boss_fights.gd).
+Woken by day in his coffin (`cat_daylight_waking`) he is the same 5 in 8 for a Sunsword party.
 
 The darklord's room is the hardest on purpose ("where he is strongest"). Strahd appears outside a final battle only
 in `cat_daylight_waking`, which is the owner's rule for finding him asleep by day (§5): a hard fight in his own lair,

@@ -188,9 +188,12 @@ Each fight has `level >= 8`, `level >= 7` and fallback variants (same id, first 
 | id | Map | Trigger | L8 | L7 | Fallback |
 |---|---|---|---|---|---|
 | `den_guards` | caves | enter `den_mouth_cave`, not vouched | 5 werewolves + 2 dire wolves (3900, Low) | 4 + 2 (3200, Low) | 3 + 1 (2300) |
-| `pack_challenge` | caves | dialogue (Kiril, Mirela) | Kiril + 4 werewolves + a dire wolf (4100); guards cleared: Kiril + 3 werewolves + 3 dire wolves + a wolf (3850) | Kiril + 3 + 2 (3600, Low); cleared: Kiril + 2 + 2 (2900) | Kiril + 2 + 1 (2700) |
-| `den_reckoning` | caves | dialogue (Kiril) | Kiril, Emil (45 HP), Zuleika (werewolf, 60 HP), 2 werewolves, a dire wolf, a wolf (4150) | 2 werewolves (4300, Low) | 1 werewolf, 1 dire wolf (3400) |
+| `pack_challenge` | caves | dialogue (Kiril, Mirela) | Kiril + 5 werewolves + 5 dire wolves (5600); guards cleared: Kiril + 4 werewolves + 3 dire wolves + 3 wolves (4650) | Kiril + 3 + 2 (3600, Low); cleared: Kiril + 2 + 2 (2900) | Kiril + 2 + 1 (2700) |
+| `den_reckoning` | caves | dialogue (Kiril) | Kiril, Emil (45 HP), Zuleika (werewolf, 60 HP), 3 werewolves, 2 dire wolves, a wolf (5050) | 2 werewolves (4300, Low) | 1 werewolf, 1 dire wolf (3400) |
 | `tower_night_visitors` | tower | enter `vrt_causeway` at night after the casebook | 2 vampire spawn, a wight, 2 bat swarms (4400, Low) | 2 spawn, 2 swarms (3700, Low) | 1 spawn, 2 swarms (1900) |
+
+Retuned for the sharp test party (owner, 2026-10-13: 5 wins in 8 on Balanced): at level 8 both of Kiril's challenges
+and the reckoning win 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
 
 Scaled for 2024-rules heroes (owner, 2026-10-13: 2 wins in 8 at level 8): over seeds 1-8 the four pregens, without Emil
 beside them, won Kiril's challenge 4 of 8 with the guards cleared and none with them standing, and the reckoning none.

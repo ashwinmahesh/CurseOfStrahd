@@ -782,6 +782,9 @@ func _undo_pick() -> bool:
 func _show_pick(view: Dictionary, at: Vector2) -> void:
 	for key: String in ["area", "target", "friendly", "goal", "danger"]:
 		overlay.show_cells(key, view[key] as Array)
+	# A spell's area already placed (Sculpt Spells, Slow's picks): its edge, as while it was aimed.
+	if view.has("outline"):
+		overlay.show_outline(view["outline"] as Dictionary, view.get("outline_cells", []) as Array)
 	overlay.show_trail("path", view["trail"] as Array)
 	hud.show_tooltip(str(view["title"]), view["lines"] as Array, view["warnings"] as Array, at)
 
@@ -1007,11 +1010,13 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				if hover_cell.x >= 0:
 					_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 				return
-			# An Evoker's Evocation spell with its own side in it asks who to shield first (Sculpt Spells, TargetPicker).
-			if picker.sculpt(c, selected, _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()), slot_level):
+			# Slow's creatures in the cube, or who an Evoker's Evocation spell with its own side in it shields, are picked
+			# next (TargetPicker).
+			var aim := _aim()
+			if picker.sculpt(c, selected, aim["point"] as Vector2, aim["dir"] as Vector2, slot_level):
 				_update_hover()
 				return
-			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
+			_perform(selected, [], aim["point"] as Vector2, aim["dir"] as Vector2)
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
 			if t != null and t.combatant != c and c.hostile_to(t.combatant):
@@ -1077,7 +1082,16 @@ func _default_attack(c: Combatant, t: Combatant) -> Dictionary:
 
 
 func _aim_point() -> Vector2:
-	return Vector2(roundf(hover_world.x), roundf(hover_world.z))
+	return _aim()["point"] as Vector2
+
+
+## Where an area placed at a point goes (TargetPicker.aim): {point, dir}, its middle at the floor under the pointer, or
+## at the middle of the figure the pointer is on (the floor behind a tall figure lies farther back).
+func _aim() -> Dictionary:
+	var at := Vector2(hover_world.x, hover_world.z)
+	if hover_token != null and hover_token.combatant.is_alive():
+		at = e.center_of(hover_token.combatant)
+	return TargetPicker.aim(e, _player(), selected, at, slot_level)
 
 
 ## The way an area aimed from the caster points, toward the pointer: a Line at any angle (CombatGrid.line_aim), anything
@@ -1517,7 +1531,9 @@ func _update_hover() -> void:
 	# The crossed swords over a foe (to attack or aim at), the pointer elsewhere.
 	var under := _target_under()
 	Cursors.show("attack" if under != null and c.hostile_to(under.combatant) else "pointer")
-	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 else [])
+	# Aiming an area placed at a point, its outline is the cursor: its middle is under the pointer.
+	var placing := _aiming_area() and str(selected.get("targeting", "")) == "point"
+	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 and not placing else [])
 	var at := get_viewport().get_mouse_position() if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
 	var t := _target_under()
 	if mode == Mode.TARGET:
@@ -1658,9 +1674,10 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Choose a visible space within %d ft" % int(selected.get("range", 0)), "%d of %d spaces chosen" % [picked_points.size(), int(selected.get("count", 2))]] if kind == "points" else ["Choose an empty space or a willing ally to swap with"], [], at)
 		return
 	if kind in ["point", "direction"]:
-		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
-		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
-		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
+		# Placed at a point, its middle under the pointer, as it's cast (TargetPicker.aim: a Cube's face and direction,
+		# a Tsunami's run across the line from the caster).
+		var aim := _aim() if kind == "point" else {"point": _aim_point(), "dir": _aim_dir(c)}
+		var pv := catalog.spell_preview(c, selected, aim["point"] as Vector2, aim["dir"] as Vector2, slot_level)
 		# The area's edge, round for a radius, and no orange squares (owner, 2026-10-12: "for AoE spells, don't make the
 		# floor orange. Instead show a circular border which shows the area that would be affected").
 		overlay.show_outline(pv["outline"] as Dictionary, pv["cells"] as Array)
@@ -2077,6 +2094,16 @@ func _play_events() -> void:
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
 					_narrate(str(ev["narration"]), null, vt.combatant)
+				if str(ev.get("say", "")) != "":
+					# Its parting line (Strahd leaving a visit, owner 2026-10-13): spoken as it goes, and the fight waits for
+					# it, so it doesn't end on a cut.
+					hud.refresh_log()
+					var secs := VoiceOver.say(str(ev.get("speaker", "")), str(ev["say"]))
+					if secs > 0.0:
+						barks.hush()
+					await get_tree().create_timer(maxf(secs, 2.0) + 0.3).timeout
+					if _closed or not is_inside_tree():
+						return
 				if vt != null and str(ev.get("left", "")) == "fell":
 					# Over the edge: it drops out of sight.
 					var drop := create_tween()

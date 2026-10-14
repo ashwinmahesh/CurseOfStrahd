@@ -31,11 +31,55 @@ func begin_reaction_spell(c: Combatant, spell_id: String) -> bool:
 	if not spells.casting_gate(c):
 		return false
 	var s := _comp().spell_data(spell_id)
-	spells.caster_char(c).expend_slot(_lowest_slot(spells.caster_char(c), int(s["level"])))
-	c.cast_slot_spell_this_turn = true
+	var paid := pay(c, spell_id)
 	spells.trigger_ends(c, "cast_spell")
-	enc().log.add("spell", "%s casts %s" % [c.name(), s["name"]], c.id)
+	enc().log.add("spell", "%s casts %s%s" % [c.name(), s["name"], " (free casting)" if bool(paid["free"]) else ""], c.id)
 	return true
+
+
+## Whether `c` has a free casting of `spell_id` left (a species' or a feat's spell, once a Long Rest without a slot). A
+## Reaction spell cast that way is still a Reaction (2024; coordinator relay 2026-10-13: Kip's tiefling Hellish Rebuke
+## was never cast once his pact slots were gone).
+func free_casting(c: Combatant, spell_id: String) -> bool:
+	var ch := sp().caster_char(c)
+	return ch != null and ch.resource_left("spell:%s" % spell_id) > 0
+
+
+## Pays for the Reaction spell `spell_id`: `slot_choice`, what its prompt picked (a slot level, or -1 for the free
+## casting), else the free casting when one is left, else the lowest slot. As anywhere else (FieldCasting._offer), a
+## warlock's free casting below its pact level waits until the pact slots are spent. A slot spent on a Reaction isn't
+## the turn's slot spell (owner, 2026-10-13: Reactions don't count towards the one spell slot a turn), so it leaves
+## cast_slot_spell_this_turn alone. {level: the level it's cast at, 0 when nothing paid; free: a free casting}.
+func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
+	var ch := sp().caster_char(c)
+	if ch == null:
+		return {"level": 0, "free": false}
+	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
+	var levels := slot_levels(ch, level)
+	if free_casting(c, spell_id) and (slot_choice == -1 or not slot_choice in levels) and (slot_choice == -1 or free_first(c, spell_id)):
+		ch.spend_resource("spell:%s" % spell_id)
+		return {"level": free_level(c, spell_id), "free": true}
+	var slot := slot_choice if slot_choice in levels else _lowest_slot(ch, level)
+	if slot == 0:
+		return {"level": 0, "free": false}
+	ch.expend_slot(slot)
+	return {"level": slot, "free": false}
+
+
+## The level a free casting of `spell_id` is cast at: its own, or higher for a feature that says so (Genie Magic).
+func free_level(c: Combatant, spell_id: String) -> int:
+	return maxi(maxi(1, int(_comp().spell_data(spell_id).get("level", 1))), int(sp()._entry_any(c, spell_id).get("free_slot", 0)))
+
+
+## Whether `c`'s free casting of `spell_id` goes before its slots: yes, unless only a Pact Magic slot of a higher level
+## could pay and one is left (a tiefling warlock's level 1 Hellish Rebuke waits for the pact slots, as FieldCasting
+## offers it).
+func free_first(c: Combatant, spell_id: String) -> bool:
+	var ch := sp().caster_char(c)
+	if ch == null:
+		return true
+	var pact_at := ch.pact_only_level(maxi(1, int(_comp().spell_data(spell_id).get("level", 1))))
+	return pact_at == 0 or free_level(c, spell_id) >= pact_at
 
 
 ## Reaction spells that answer a failed d20 roll (Reweave Fate: the roll again with Advantage; Moment of Prescience: a
@@ -105,6 +149,9 @@ func incoming_roll_responses(c: Combatant) -> Array[String]:
 	return out
 
 
+## Whether `c` can cast `spell_id` as a Reaction now: its slots or a free casting, whatever it cast earlier in the turn.
+## Reactions don't count towards the one spell slot a turn (owner, 2026-10-13: Ratatouille cast a level 3 spell on his
+## turn, then wasn't asked about Shield when an Opportunity Attack hit him on the way out).
 func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	var spells := sp()
 	if spells.caster_char(c) == null or not can_react(c):
@@ -113,7 +160,8 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	if not ch.knows_spell(spell_id):
 		return false
 	var s := _comp().spell_data(spell_id)
-	if str(s.get("automation", "")) == "reference" or c.cast_slot_spell_this_turn or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
+	var free := free_casting(c, spell_id)
+	if str(s.get("automation", "")) == "reference" or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
 		return false
 	if bool((s.get("components", {}) as Dictionary).get("v", false)):
 		if c.creature.has_flag("speechless"):
@@ -124,6 +172,8 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	var armor := ch.equipped("armor")
 	if not armor.is_empty() and not ch.trained_for(armor):
 		return false
+	if free:
+		return true
 	var level := int(s.get("level", 1))
 	for l in range(level, 10):
 		if ch.slots_left(l) > 0:
@@ -147,15 +197,11 @@ func _lowest_slot(ch: Character, from_level: int) -> int:
 ## The slot levels `ch` could spend on a spell of `from_level`, lowest first. A warlock's Pact Magic slots are all of
 ## its pact level, so a pure warlock has just that one: its spells are always cast at it.
 static func slot_levels(ch: Character, from_level: int) -> Array[int]:
-	var out: Array[int] = []
-	for l in range(maxi(1, from_level), 10):
-		if ch.slots_left(l) > 0:
-			out.append(l)
-	return out
+	return ch.slot_levels(from_level)
 
 
-## Shield (2024): +5 AC until the start of your next turn, as a Reaction, with a level 1 slot (the lowest
-## available). Also stops Magic Missile.
+## Shield (2024): +5 AC until the start of your next turn, as a Reaction, with its free casting or a level 1 slot (the
+## lowest available). Also stops Magic Missile.
 func cast_shield(c: Combatant) -> bool:
 	var spells := sp()
 	if not can_cast_reaction(c, "shield"):
@@ -163,39 +209,35 @@ func cast_shield(c: Combatant) -> bool:
 	c.reaction_available = false
 	if not spells.casting_gate(c):
 		return false
-	var ch := spells.caster_char(c)
-	var l := _lowest_slot(ch, 1)
-	if l > 0:
-		ch.expend_slot(l)
-	c.cast_slot_spell_this_turn = true
+	var paid := pay(c, "shield")
 	var e := Effect.new("Shield", &"spell", "shield").with_modifier("ac", {"value": 5})
 	e.ends = Effect.Ends.START_OF_TURN
 	e.turn_owner_id = c.id
-	e.spell_level = maxi(1, l)
+	e.spell_level = maxi(1, int(paid["level"]))
 	c.creature.add_effect(e)
-	enc().log.add("spell", "%s casts Shield (+5 AC until its next turn)" % c.name(), c.id)
+	enc().log.add("spell", "%s casts Shield (+5 AC until its next turn%s)" % [c.name(), ", free casting" if bool(paid["free"]) else ""], c.id)
 	return true
 
 
 ## A reaction spell answering `trigger` (Hellish Rebuke against whoever hurt the caster; Counterspell against a
-## caster): the Reaction and a slot are spent (`slot_choice`, the level picked on the prompt, else the lowest; a
-## warlock's is its pact level), then the spell resolves against the trigger at that level.
+## caster): the Reaction and a slot or a free casting are spent (`slot_choice`, the level picked on the prompt, else a
+## free casting, else the lowest slot; a warlock's is its pact level: pay), then the spell resolves against the trigger
+## at that level.
 func cast_reaction_spell(c: Combatant, spell_id: String, trigger: Combatant, slot_choice: int = 0) -> CombatResult:
 	var spells := sp()
 	var e := enc()
 	var ch := spells.caster_char(c)
 	var s := _comp().spell_data(spell_id)
-	var slot := slot_choice if slot_choice in slot_levels(ch, int(s.get("level", 1))) else _lowest_slot(ch, int(s.get("level", 1)))
-	if slot == 0 or not can_react(c):
+	if ch == null or not can_react(c) or (_lowest_slot(ch, int(s.get("level", 1))) == 0 and not free_casting(c, spell_id)):
 		return CombatResult.new()
 	c.reaction_available = false
 	if not spells.casting_gate(c):
 		return CombatResult.new()
-	ch.expend_slot(slot)
-	c.cast_slot_spell_this_turn = true
+	var paid := pay(c, spell_id, slot_choice)
+	var slot := int(paid["level"])
 	var entry := spells._entry_any(c, spell_id)
 	var nums := spells.numbers(c, entry)
-	e.log.add("spell", "%s answers with %s (level %d slot)" % [c.name(), s["name"], slot], c.id)
+	e.log.add("spell", "%s answers with %s (%s)" % [c.name(), s["name"], "free casting, level %d" % slot if bool(paid["free"]) else "level %d slot" % slot], c.id)
 	e.events.append({"type": "spell", "caster": c.id, "spell": spell_id, "cells": [], "targets": [trigger.id]})
 	spells.trigger_ends(c, "cast_spell")
 	var ctx := {"c": c, "s": s, "slot": slot, "nums": nums, "conc": null, "opts": {}, "choice": "", "point": Vector2.INF}
@@ -225,8 +267,7 @@ func cast_reactive_spell(c: Combatant, spell_id: String, target: Combatant) -> C
 	if not spells.casting_gate(c):
 		return CombatResult.new()
 	if slot > 0:
-		ch.expend_slot(slot)
-		c.cast_slot_spell_this_turn = true
+		ch.expend_slot(slot)   # a Reaction: not the turn's slot spell (pay)
 	var used := ch.use_component(s) if ch != null else ""
 	if used != "":
 		e.log.add("info", "%s uses up %s (%s)" % [c.name(), used, s["name"]], c.id)

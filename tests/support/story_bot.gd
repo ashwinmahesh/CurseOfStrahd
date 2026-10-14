@@ -18,6 +18,11 @@ var _chosen := {}
 var defeated := false
 ## How many times a lost fight is played in all (TRIES); a test that expects the party to lose sets 1.
 var fight_tries := TRIES
+## Whether the bot rests like a careful player: a Long Rest after any fight that cost Hit Points or spell slots, waiting
+## out the 16 hours since the last when that is all that stands in the way (the Wizard of Wines' playthrough, 2026-10-13:
+## its fights come back to back in one day, and with each tuned to the owner's 5 wins in 8 for a rested party, a worn
+## party lost the hall, the press house and the road home).
+var waits_for_long_rest := false
 
 
 func _init(test_: Node, root_: Node) -> void:
@@ -643,8 +648,19 @@ func rest_if_needed() -> void:
 	var dry := party.filter(func(c: Character) -> bool:
 		return not c.dead and (c.class_level_of("cleric") > 0 or c.class_level_of("wizard") > 0) and c.slots_left(1) == 0)
 	var spent := party.filter(func(c: Character) -> bool: return not c.dead and _half_spent(c))
-	if not worn.is_empty() or not dry.is_empty() or not spent.is_empty():
+	# A careful player (waits_for_long_rest) takes a Long Rest after any fight that cost Hit Points or spell slots.
+	var touched := party.filter(func(c: Character) -> bool: return not c.dead and (c.hp < c.max_hp() or _any_spent(c)))
+	if not worn.is_empty() or not dry.is_empty() or not spent.is_empty() or (waits_for_long_rest and not touched.is_empty()):
 		await rest(true)
+
+
+## Whether a caster has spent any spell slot.
+static func _any_spent(c: Character) -> bool:
+	var slots := c.spell_slots()
+	for level in range(1, slots.size() + 1):
+		if c.slots_left(level) < slots[level - 1]:
+			return true
+	return false
 
 
 ## Whether a caster has spent half its spell slots or more.
@@ -682,10 +698,16 @@ func rest(long: bool) -> void:
 		root.call("close_screen")
 		return
 	# A Long Rest the rules refuse here (enemies left in the building, or less than 16 hours since the last; RestRules)
-	# becomes a Short Rest, as a player would take.
+	# becomes a Short Rest, as a player would take; with waits_for_long_rest, a refusal for the 16 hours alone is waited
+	# out first.
 	var refused: Array[String] = []
 	if long:
 		refused = RestRules.long_rest_refusals(st())
+		var wait := RestRules.minutes_until_long_rest(st())
+		if waits_for_long_rest and refused.size() == 1 and wait > 0:
+			st().advance_minutes(wait)
+			note("waits %d hours for a long rest" % ceili(wait / 60.0))
+			refused = RestRules.long_rest_refusals(st())
 	if not refused.is_empty():
 		note("no long rest: %s" % " ".join(refused))
 	if long and refused.is_empty():

@@ -1,8 +1,8 @@
 class_name AiSpells
 extends RefCounted
-## Enemy spellcasters at Tactician and Honour (combat/difficulty.gd): each turn the best spell of the stat block's list
-## (or the scroll it carries) against the best weapon attack, weighed in the same units as AiBrain's attack scores,
-## expected damage. Damage counts by the chance to hit or the chance the save fails (half on a success when the spell
+## Enemy spellcasters on Balanced, Tactician and Honour (combat/difficulty.gd, `spells`): each turn the best spell of the
+## stat block's list (or the scroll it carries) against the best weapon attack, weighed in the same units as AiBrain's
+## attack scores, expected damage. Damage counts by the chance to hit or the chance the save fails (half on a success when the spell
 ## says so); a condition counts by what it takes away from the target, a creature's whole turn for Paralyzed or
 ## Unconscious; allies caught in an area count against it. A spell that needs Concentration waits while the caster
 ## keeps another. Spells that summon, place an object or a wall, teleport, buff or heal are left to the stat block's
@@ -11,6 +11,9 @@ extends RefCounted
 ## What a condition takes from a creature, as a share of its turn.
 const CONDITION_WORTH := {"paralyzed": 2.0, "stunned": 1.8, "unconscious": 1.8, "petrified": 2.0, "incapacitated": 1.5,
 	"restrained": 0.7, "blinded": 0.6, "frightened": 0.6, "charmed": 0.5, "poisoned": 0.4, "prone": 0.3, "deafened": 0.1}
+## What Polymorph takes from a creature, as a share of its turn: it fights as a harmless Beast (the caster picks the
+## weakest) with no save to end it, until the Beast's Hit Points run out or the caster's Concentration breaks.
+const SHAPE_WORTH := 1.6
 ## A spell is cast only when it beats the weapon plan by this much (a weapon doesn't spend a daily use).
 const OVER_WEAPON := 1.1
 const MIN_WORTH := 3.0
@@ -113,7 +116,8 @@ func _best_use(c: Combatant, id: String) -> Dictionary:
 			var cells := e.spells.area_for(c, s, point if point != Vector2.INF else e.center_of(c), dir)
 			var score := 0.0
 			for v in e.spells.creatures_in(cells):
-				if v == c:
+				# The caster in its own blast (a Fireball at the foe beside it) counts against it like an ally.
+				if v == c and self_origin:
 					continue
 				var w := worth(c, s, v)
 				score += -1.5 * w if not c.hostile_to(v) else w
@@ -176,9 +180,11 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 		half = str(s.get("save_success", "none")) == "half"
 	var cond := 0.0
 	for cid: Variant in s.get("conditions", []):
-		if t.creature.is_condition_immune(StringName(str(cid))):
+		if t.creature.is_condition_immune(StringName(str(cid))) or (str(s.get("id", "")) == "sleep" and not sleeps(t)):
 			continue
 		cond = maxf(cond, float(CONDITION_WORTH.get(str(cid), 0.2)))
+	if str(s.get("id", "")) == "polymorph" and not e.shapes.is_shaped(t):
+		cond = maxf(cond, SHAPE_WORTH)
 	var value := lands * (dmg + cond * _threat(t))
 	if half:
 		value += (1.0 - lands) * dmg / 2.0
@@ -187,6 +193,12 @@ func worth(c: Combatant, s: Dictionary, t: Combatant) -> float:
 	value += e.ai.tactics.target_adjust(t, value) * 0.5
 	# A familiar or a steed is worth little next to a hero: no area aimed for it, no single target while a hero's in reach.
 	return value * 0.1 if AiBrain.companion(t) else value
+
+
+## Whether Sleep can take `t` (spell_handlers.gd _sleep): not an elf's trance, the undead or a construct.
+static func sleeps(t: Combatant) -> bool:
+	return not (t.creature.is_condition_immune(&"exhaustion") or t.creature.has_flag("trance")
+		or t.creature.creature_type in [&"undead", &"construct"])
 
 
 ## Roughly the damage `t` deals in a turn: what a condition that costs it the turn is worth.

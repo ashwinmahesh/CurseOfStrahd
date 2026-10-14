@@ -423,6 +423,9 @@ func after_hit_target(st: Dictionary, miss: Callable) -> Array:
 			"stop": func() -> CombatResult:
 				st["ac"] = ac + 5
 				return miss.call() as CombatResult})
+	elif target.is_player_controlled() and e.spells.can_cast_reaction(target, "shield") and e._reaction_decision(target, "shield") != "never":
+		# Shield isn't offered against a hit its +5 can't turn aside: the hit's details say so.
+		(st["details"] as Array[String]).append("No Shield: %s" % ("a Critical Hit" if critical else "%d beats AC %d even with +5" % [t.total, ac + 5]))
 	if melee and target.creature is Character and feats().has_feat(target, "defensive_duelist") and feats().holds_finesse(target) \
 			and _react_ok(target) and t.total < ac + target.creature.proficiency_bonus():
 		var pb := target.creature.proficiency_bonus()

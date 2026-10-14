@@ -74,6 +74,23 @@ func test_a_thinking_foe_takes_the_long_way_round() -> void:
 	assert_true(foe.cell.x >= 9, "well along it: %s" % foe.cell)
 
 
+## Circling the ground round after round and no nearer (a cleric who keeps her Spirit Guardians on it as it goes round,
+## or a way round that never opens): the next round it strikes from in it instead of circling on.
+func test_a_foe_circling_no_nearer_goes_in() -> void:
+	var e := TestCombat.encounter(LOOP, 3)
+	var hero := TestCombat.caster_with(e, ["cloud_of_daggers"], Vector2i(9, 3))
+	var foe := TestCombat.foe(e, "berserker", Vector2i(3, 3))
+	TestCombat.start_with(e, foe)
+	_daggers(e, hero, _row(3, 5, 7))
+	var plan := e.ai.plan_turn(foe)
+	assert_eq(str(plan["kind"]), "approach", "the long way round first")
+	assert_true(bool(plan.get("round", false)))
+	e.ai._rounding[foe.id] = {"round": e.round_no - 1, "target": hero.id, "gap": e.distance(foe, hero)}
+	plan = e.ai.plan_turn(foe)
+	assert_eq(str(plan["kind"]), "attack", "circled a round already, no nearer: through the daggers")
+	assert_eq(plan["target"] as Combatant, hero)
+
+
 func test_a_mindless_foe_walks_straight_through() -> void:
 	var e := TestCombat.encounter(LOOP, 3)
 	var hero := TestCombat.caster_with(e, ["cloud_of_daggers"], Vector2i(11, 3))

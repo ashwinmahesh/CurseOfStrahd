@@ -134,5 +134,7 @@ func test_the_escort_is_high_for_its_level() -> void:
 		var total := 0
 		for m: Variant in enc["monsters"]:
 			total += int(XP.get(float(Compendium.shared().get_entry("monsters", str((m as Dictionary)["monster"]))["cr"]), 0))
+		# High by the 2024 budget until the 5 in 8 retune for the sharp test party (owner, 2026-10-13 18:05), which took
+		# three of its zombies away: still above Moderate (1500).
 		if level == 4:
-			assert_true(total >= 2000, "High at level 4: %d" % total)
+			assert_true(total >= 1500, "above Moderate at level 4: %d" % total)

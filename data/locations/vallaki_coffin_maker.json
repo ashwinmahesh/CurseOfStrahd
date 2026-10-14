@@ -295,6 +295,27 @@
             17,
             9
           ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            8
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            9
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            14,
+            10
+          ]
         }
       ],
       "surprise": "enemies",

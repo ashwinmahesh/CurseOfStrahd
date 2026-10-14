@@ -104,6 +104,15 @@ static func times(st: StoryState, id: String) -> int:
 ## {location (default st.location; "" on the road), night (default st.is_night()), outdoors (default the location's
 ## map)}. One visit at a time, in file order; `gap_hours` apart unless the visit is urgent.
 static func due(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
+	var vis := find(st, on, ctx)
+	if not vis.is_empty():
+		_mark(st, vis)
+	return vis
+
+
+## The visit due() would play now, without marking it as happened: a Long Rest asks it before its benefits come, so
+## a visit that may come to blows (may_fight) comes first (LongRest).
+static func find(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 	if not on in EVENTS:
 		return {}
 	var loc_id := str(ctx.get("location", st.location))
@@ -125,9 +134,19 @@ static func due(st: StoryState, on: String, ctx: Dictionary = {}) -> Dictionary:
 		if not bool(vis.get("urgent", false)) and (hidden or now - int(mem["last"]) < gap):
 			continue
 		if fires(vis, st, on, loc_id, region, night, outdoors):
-			_mark(st, vis)
 			return vis
 	return {}
+
+
+## Whether a visit may come to blows: a fight of its own, or one a `then` entry may lead to. One at the end of a Long
+## Rest comes before the rest's benefits (LongRest: the party fights with what it had when it lay down).
+static func may_fight(vis: Dictionary) -> bool:
+	if vis.has("encounter"):
+		return true
+	for e: Variant in vis.get("then", []):
+		if (e as Dictionary).has("encounter"):
+			return true
+	return false
 
 
 ## Whether `vis` happens at this event (its trigger, quiet places, once / cooldown / max, and its condition).
