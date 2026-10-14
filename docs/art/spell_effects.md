@@ -36,6 +36,24 @@ The descriptions live in `art/vfx/effects.json` (`families`); every one is built
 | smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
 | summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Detect Magic |
 
+## A change of shape
+
+Every shapeshifter shows its change the same way (owner ask, 2026-10-14): the creature's old figure gathers and
+flares, then the new one arrives in a flash, with a sound. It covers Polymorph and the other spells (`ShapeChange`'s
+`shape` events: Wild Shape, True Polymorph, Shapechange, Animal Shapes, Boon of Fluid Forms), a Shapechanger's bat, wolf
+and mist (`Legendary._set_form`'s `form` events: Strahd, vampires, Misty Escape) and a lycanthrope's hybrid
+(`MonsterActions.show_form`: Emil and Kiril swap to the werewolf's figure through the stat block's `hybrid_art`; the
+wereraven allies to the wereraven's), in both directions. `CombatView._swap_form_art` is the one place a figure is
+swapped: `SpellFx.shape_gather` (motes spiral up and a circle closes on the old figure, which flares; the change's sound
+starts) and a beat of `FxShapeshift.GATHER` at the combat speed, then the swap and `SpellFx.shape_settle` (a light
+flash, smoke, streaks and glints from the new figure, which fades in). The event's `kind` picks how it looks
+(`FxShapeshift.LOOKS`: werewolf, wereraven, bat, wolf, mist, wild_shape, polymorph, default) and sounds (`combat`
+`shapeshift` in art/audio.json, layered from the repo's own recordings, so the sound slider sets how loud they are). A
+kind with no entry gets the default's, so a new shapeshifter needs only to emit the event. A figure nobody can see (an
+Invisible foe's), and a fight with its effects off, change at once with no effect or sound.
+`make capture SCENE=res://tools/capture/shapeshift_capture.tscn NAME=shapeshift/shot` takes a filmstrip of each.
+`tests/integration/test_shapeshift_effect.gd` checks it.
+
 ## Lingering areas
 
 A spell that leaves an area on the board (Darkness, Wall of Fire, Web, Grease, Spike Growth, Cloudkill, Spirit
