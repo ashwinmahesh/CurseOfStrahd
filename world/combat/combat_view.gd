@@ -158,6 +158,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.radial.picked_item.connect(_wheel_picked)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	hud.square_picked.connect(_square_picked)
+	_restore_forms()   # a fight picked up from a save, with someone mid-shape
 	var fresh := e.state == Encounter.State.SETUP
 	if fresh:
 		if e.title != "":
@@ -2084,9 +2085,12 @@ func _play_events() -> void:
 					nt.position = board.cell_center(sc.cell, sc.size_cells)
 					add_child(nt)
 					tokens[sc.id] = nt
-					nt.flash(Look.color("lilac"), 0.5)
-					if SpellFx.enabled:
-						fx.summoned(nt)
+					if str(ev.get("becomes", "")) != "" and SpellFx.enabled:
+						fx.shape_settle(nt, str(ev["becomes"]))   # a cursed creature's change, begun at its vanishing
+					else:
+						nt.flash(Look.color("lilac"), 0.5)
+						if SpellFx.enabled:
+							fx.summoned(nt)
 			"trait":
 				# A monster trait that just saved it or changed the fight (Undead Fortitude): its name over the token.
 				var trt := _tok(str(ev["id"]))
@@ -2132,7 +2136,15 @@ func _play_events() -> void:
 					await get_tree().create_timer(maxf(secs, 2.0) + 0.3).timeout
 					if _closed or not is_inside_tree():
 						return
-				if vt != null and str(ev.get("left", "")) == "fell":
+				if vt != null and str(ev.get("becomes", "")) != "" and SpellFx.enabled and vt.visible:
+					# It turns into something else (the lycanthropy curse): it changes where it stands, and the new
+					# creature arrives in its place (summon_creature).
+					_stop_walking(walking)
+					await fx.shape_gather(vt, str(ev["becomes"]))
+					if _closed or not is_inside_tree():
+						return
+					vt.hide()
+				elif vt != null and str(ev.get("left", "")) == "fell":
 					# Over the edge: it drops out of sight.
 					var drop := create_tween()
 					drop.tween_property(vt, "position", vt.position + Vector3(0, -6, 0), 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -2233,7 +2245,7 @@ func _tok(id: Variant) -> CombatToken:
 ## (owner ask, 2026-10-14, for every shapeshifter): the old figure gathers and flares, then the new one arrives in a
 ## flash (FxShapeshift; `kind` is how it looks and sounds). A figure nobody can see (an Invisible foe's) changes without
 ## showing where it stands, and so does a fight with its effects off.
-func _swap_form_art(id: String, art: String, kind: String = "") -> void:
+func _swap_form_art(id: String, art: String, kind: String = "", quiet: bool = false) -> void:
 	var old := _tok(id)
 	if old == null:
 		return
@@ -2244,7 +2256,7 @@ func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 	if want == old.art_override or (want == "" and old == own):
 		old.flash(Look.color("lilac"), 0.3)
 		return
-	var shown := SpellFx.enabled and old.visible
+	var shown := SpellFx.enabled and old.visible and not quiet
 	if shown:
 		await fx.shape_gather(old, kind)
 		old = _tok(id)
@@ -2269,8 +2281,29 @@ func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 		old.queue_free()
 	if shown and nt.visible:
 		fx.shape_settle(nt, kind)
-	else:
+	elif not quiet:
 		nt.flash(Look.color("lilac"), 0.4)
+
+
+## A fight picked up from a save (a round-start save) with someone mid-shape: the party and guests come in the figures
+## they walked in with, a foe's is built from its creature (LocationFights._fight_tokens), so a hero or guest wears their
+## own figure under a beast's stat block and a Shapechanger or hybrid wears its true one. Each puts on what it changed
+## into, and the party's own figure waits, hidden, for the shape to end, as _swap_form_art leaves it.
+func _restore_forms() -> void:
+	for c in e.combatants:
+		var tok := _tok(c.id)
+		if tok == null or not c.creature is Monster:
+			continue
+		var art := ""
+		if e.shapes.is_shaped(c):
+			art = CombatToken.monster_art((c.creature as Monster).data)
+			_shape_looks[c.id] = ""
+		else:
+			art = e.legendary.form_art(c) if e.legendary.form_art(c) != "" else e.monster_actions.form_art(c)
+		# Its figure is a swap away from its own, so it can swap back (a foe's drawn from its creature wears the beast
+		# with no `art_override` to go back from).
+		if art != "" and DirectionalSprite.frames_for(art) != null and tok.art_override != art:
+			_swap_form_art(c.id, art, "", true)
 
 
 ## Polymorph, Wild Shape and the other changes of shape (ShapeChange, owner 2026-10-13: "their sprite should reflect
@@ -2283,7 +2316,13 @@ func _swap_shape_art(id: String, art: String, kind: String = "") -> void:
 		return
 	if art != "":
 		if DirectionalSprite.frames_for(art) == null:
-			old.flash(Look.color("lilac"), 0.3)
+			# A shape with no figure to swap to still shows as a change, on the figure it has.
+			if SpellFx.enabled and old.visible:
+				await fx.shape_gather(old, kind)
+				if not _closed and is_instance_valid(old) and old.is_inside_tree():
+					fx.shape_settle(old, kind)
+			else:
+				old.flash(Look.color("lilac"), 0.3)
 			return
 		if not _shape_looks.has(id):
 			_shape_looks[id] = old.art_override

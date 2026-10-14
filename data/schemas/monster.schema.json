@@ -1155,6 +1155,11 @@
       "pattern": "^[a-z0-9_]+$",
       "description": "The sprite (art/sprites/<hybrid_art>/) a lycanthrope's token swaps to for its Shape-Shift hybrid form, and back from: a person drawn as a man in human form (Emil, Kiril) takes the werewolf's. Unset: the figure stays as it is (MonsterActions._hybrid_art)."
     },
+    "reveal": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "How it looks (FxShapeshift.LOOKS) when a person the story showed (an NPC who steps aside as their conversation turns into this fight) turns out to be it: the figure they had changes into this one in front of the party (LocationFights._reveal). Only where a person of the same name stood there with a different figure."
+    },
     "art_height": {
       "type": "number",
       "minimum": 0.5,

@@ -182,5 +182,6 @@
     "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
+  "reveal": "werewolf",
   "summary": "Shoots from cover, then shifts to hybrid form to scratch and bite with its pack; the bite curses."
 }

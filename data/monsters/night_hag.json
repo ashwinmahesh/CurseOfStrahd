@@ -163,5 +163,6 @@
     "old_bonegrinder"
   ],
   "ai_profile": "spellcaster",
+  "reveal": "hag",
   "summary": "Opens with Phantasmal Killer and level 4 Magic Missiles, claws anyone close, and slips away ethereally."
 }
