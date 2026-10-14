@@ -427,6 +427,9 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		out["why"] = "Eldritch Blast has %d beam%s" % [beams, "" if beams == 1 else "s"]
 		return out
 	for t in tgt:
+		if e.sight.unseen_foe(c, t):
+			out["why"] = "You can't see %s" % t.name()
+			return out
 		if bool(s.get("requires_sight", false)) and not e.can_see(from, t) and not e.can_see(c, t):
 			out["why"] = "You must see the target"
 			return out
