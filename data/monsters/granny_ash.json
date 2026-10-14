@@ -168,7 +168,7 @@
       {
         "id": "rake",
         "name": "Rake",
-        "cost": 2,
+        "cost": 1,
         "action": "iron_claw",
         "summary": "Makes one Iron Claw attack."
       }

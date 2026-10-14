@@ -746,6 +746,28 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 	await _frames(3)
 
 
+## A fight of 24 (owner, 2026-10-14): the turn order scrolls inside its panel, with an arrow at the end that has more.
+func test_the_combat_hud_with_a_long_turn_order() -> void:
+	var e := TestCombat.open_field()
+	for k in 4:
+		TestCombat.hero(e, ["ilse_varga", "godrick_pendlebrook", "thistle", "silvain_aster"][k], Vector2i(0, k), 3)
+	for k in 20:
+		TestCombat.foe(e, "zombie", Vector2i(3 + k % 9, int(k / 9.0) * 2 + 1))
+	TestCombat.start_with(e, e.combatants[0])
+	var hud := CombatHud.new()
+	add_child(hud)
+	hud.build(e, ActionCatalog.new(e))
+	hud.refresh()
+	await _check("the combat HUD with a turn order of 24", func() -> Variant:
+		hud.refresh()
+		await _frames(2)
+		var strip := hud.get("_strip_view") as TurnStrip
+		strip.scroll_by(300.0, true)   # both arrows showing
+		return hud)
+	hud.queue_free()
+	await _frames(2)
+
+
 func test_the_boss_plates() -> void:
 	# Three bosses side by side (G3, ui/combat/boss_bar.gd): the longest title and Strahd's Legendary Resistance.
 	var ward := ARENA.duplicate(true)
