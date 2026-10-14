@@ -83,6 +83,7 @@
  "adrian_martikov": {
   "070e0c7af03244d7": "[dry, grim humour]",
   "1028e012c0a14526": "[grieving, stubborn, fond]",
+  "198a5123031350d9": "[urgent, fearful]",
   "1a3840607ed60d22": "[wry, rueful]",
   "1c0d279a323cab93": "[quiet, resolute, shaky]",
   "4a698e213a98d9d4": "[afraid, bitter, defensive]",
@@ -94,6 +95,7 @@
   "9953feb0601685d8": "[rueful, resigned]",
   "b9fb0c28a524b964": "[grieving, raw]",
   "ba7ccfdae866471e": "[tired, wry, relieved]",
+  "c226862248684515": "[dry, bitter]",
   "c5e8ec8664c55fab": "[haunted, ashamed]",
   "d26497ed4c5e9ca4": "[breathless, wry, bitter]",
   "df6112d55a6ea48a": "[disdainful, dry]",
@@ -685,6 +687,7 @@
   "4540aa248de7ea06": "[proud, moved, gruff]",
   "45f43798b7b71c3e": "[dry, sly]",
   "468fcccd31bbb157": "[grim, angry]",
+  "47c8ac28201d6672": "[relieved, weary, gruff]",
   "4d5856e8b79a6105": "[gruff, wry, hopeful]",
   "4df6d5640f3dd541": "[gruff, wary, low]",
   "4fb5a58643bd8552": "[angry, hurt]",
@@ -692,6 +695,7 @@
   "59ede29d685f4250": "[grim, practical]",
   "5bbc454b3d3358e3": "[sly, gruff]",
   "5d3a4576e5431408": "[gruff, fond, dry]",
+  "5dc7a2bb06011f10": "[grave, urgent]",
   "5e055893fd771cf1": "[dry, amused, proud]",
   "61fd1d1f90c91ac6": "[bitter, proud, dry]",
   "6286b12e37972198": "[proud, storytelling]",
@@ -715,6 +719,7 @@
   "8d4054be526c4adf": "[gruff, disgusted]",
   "8da3aa0050b64a48": "[gruff, relieved, wry]",
   "8f615f8ae8811e4d": "[gruff, moved, grateful]",
+  "8f6b1895e2a45e2d": "[grim, bitter]",
   "902f1a22c3f612e7": "[grim, warning]",
   "90e037efa83533db": "[gruff, wary, then confiding]",
   "934bd45451438a99": "[thoughtful, grim, wry]",
@@ -1599,6 +1604,7 @@
   "bfa2b26335de9804": "[quiet, resolute, sad]",
   "cd0dd8f8163d4fa6": "[earnest, hopeful, tired]",
   "d5b70921acc0a1b5": "[hollow, bitter, quiet]",
+  "d9b01afb227e9e2b": "[earnest, stubborn]",
   "dc1bff84c3259a2d": "[stricken, quiet, ashamed]",
   "ecf2be8ba93656e8": "[quiet, stubborn, sad]"
  },
@@ -3123,7 +3129,11 @@
  },
  "ruxandra": {
   "683af5b4249d2166": "[cold, venomous, final]",
-  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]"
+  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]",
+  "a0badcdfb8ba7bd5": "[warm, serene, fervent]",
+  "af603b7f5aaf6e66": "[kindly, amused]",
+  "f8c85861e679e6ec": "[gentle, proud, fervent]",
+  "fb8f1ff0c7f365a5": "[soft, quietly menacing]"
  },
  "sarkhaza": {
   "01a1e5761bb42aa5": "[low, hungry, menacing]",
