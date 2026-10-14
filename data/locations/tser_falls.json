@@ -579,22 +579,22 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            7,
-            11
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
             9,
             12
           ]
         },
         {
+          "monster": "will_o_wisp",
+          "cell": [
+            7,
+            11
+          ]
+        },
+        {
           "monster": "shadow",
           "cell": [
-            6,
-            10
+            14,
+            7
           ]
         }
       ],
