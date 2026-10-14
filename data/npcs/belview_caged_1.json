@@ -3,7 +3,7 @@
   "name": "Belview",
   "title": "In the Cells",
   "summary": "A Belview in one of the abbey's barred cells, all elbows and matted fur, who watches the corridor without blinking and answers footsteps with footsteps.",
-  "portrait": "belview",
+  "portrait": "belview_caged_1",
   "sprite": "belview",
   "attitude": "indifferent",
   "voice": "docs/voice/belview.md",

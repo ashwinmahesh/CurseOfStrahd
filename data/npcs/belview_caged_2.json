@@ -3,7 +3,7 @@
   "name": "Belview",
   "title": "In the Cells",
   "summary": "A thin Belview with legs that bend the wrong way, crouched in the straw of a barred cell, mouthing words in voices that aren't its own.",
-  "portrait": "belview",
+  "portrait": "belview_caged_2",
   "sprite": "belview",
   "attitude": "indifferent",
   "voice": "docs/voice/belview.md",

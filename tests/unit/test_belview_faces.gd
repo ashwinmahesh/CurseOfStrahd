@@ -5,7 +5,7 @@ extends TestCase
 ## talking to (DialogueRunner._face_of) while the voice stays the family's.
 
 const OWN_FACES := ["belview_well", "belview_sweeper", "belview_hauler", "belview_feathers", "belview_gate",
-	"belview_mother", "sorin_krezkov", "waystone_lark"]
+	"belview_mother", "sorin_krezkov", "waystone_lark", "belview_caged_1", "belview_caged_2", "belview_caged_3"]
 const DIALOGUE := "~ a\nBelview: Clean for the Abbot.\nClovin Belview: Mind the ice.\n-> END\n"
 
 
