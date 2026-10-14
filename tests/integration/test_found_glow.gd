@@ -137,8 +137,7 @@ func test_using_a_find_or_opening_the_door_ends_its_glow() -> void:
 
 
 func test_a_checks_reveal_lights_its_find() -> void:
-	var who := GameState.story.party[0] as Character
-	LocationChecks._reveal_here(_view(), "loose_stone", who)
+	LocationChecks._reveal_here(_view(), "loose_stone")
 	await _wait(FoundGlow.CHECK_EVERY * 2.0)
 	assert_true(_glow().is_lit("prop:loose_stone"), "found by a check rather than a Search: it glows all the same")
 
