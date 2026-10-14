@@ -1457,6 +1457,23 @@
       ],
       "prompt": "A village churchyard at night: the iron gate stands empty, a glove-shaped mark of frost on the gatepost and mist curling where someone stood a moment ago. In the arched doorway of the church porch stands one young woman, Ireena of the reference, and she appears only once in the picture: auburn hair loose, eyes closed, breathing out slowly, one hand on the door frame. The bell rope hangs still beside her. {party} stand between the gate and the porch, seen from behind, hooded, faces never visible; no other women in the picture. Cold moonlight, a long held breath released.",
       "use": "a"
+    },
+    "drowned_rise": {
+      "refs": [],
+      "prompt": "Night at the fishers' landing on Lake Zarovich under a rising moon: a long, crooked wooden jetty runs out over flat black water, a small rowing boat tied at its foot, fish-drying racks and two crooked fishermen's shacks on the stony shore. Camera low on the shingle behind {party}, who stand at the water's edge with the lantern held up, looking out past them along the shore. Out of the shallows the drowned of Pescari are standing up out of the lake in a long ragged line, knee- to waist-deep and still rising, lake water pouring off them: a dozen grey, swollen villagers in old-fashioned Sunday best gone black with water and weed, a woman in a lace cap, a man in a waistcoat with a pocket watch, a young bride whose wet veil clings to her face. Behind them, farther out and taller than any of them, a gaunt figure in a sodden black priest's cassock stands chest-deep and lifts one arm high, as if pulling a bell rope. Far out on the lake, rings of ripples spread across the moonlit water from one point. Cold moonlight, blue-violet night, low mist on the water; eerie and dreadful, no gore.",
+      "use": "a"
+    },
+    "drowned_bluto": {
+      "refs": [
+        "bluto"
+      ],
+      "prompt": "The fishers' landing on Lake Zarovich at night, a long crooked wooden jetty over black water with a small rowing boat tied at its foot, a crooked shack and fish-drying racks on the stony shore. Bluto, a starving fisherman, drawn exactly as the reference image shows him, runs headlong down the shingle toward the jetty and his boat, looking back over his shoulder in terror, mouth open; behind him his dropped lantern lies broken on the stones, spilling burning oil in a pool of orange light. Coming up out of the shallows, a crowd of grey, swollen drowned villagers in old-fashioned sodden Sunday clothes, dripping lake water and weed, have all turned toward him at once, every face and reaching hand pointed at him, like a field of grass bending in the wind. Behind them a tall figure in a priest's sodden black cassock stands in the water with one hand raised. {party} at the edge of the frame, small and seen from behind, between the lake and the shacks. Cold moonlight and mist, the only warm light the spilled lantern fire; dread, no gore.",
+      "use": "a"
+    },
+    "drowned_nistor": {
+      "refs": [],
+      "prompt": "The fishers' landing on Lake Zarovich at night, a long crooked wooden jetty over black water, fish-drying racks on the stony shore. On the low wooden step of a crooked fisherman's shack sits Old Nistor, a very old, thin fisherman with a white beard, a grey wool cap and a patched grey-green coat, a fishing net still bunched in his lap and a small lantern on the step beside him; he looks out at the shore, resigned, not running. Up the shingle toward him, slowly, come the drowned of Pescari out of the black water: a crowd of grey, swollen villagers in old-fashioned sodden Sunday clothes, dripping lake water and weed, and behind them a tall figure in a priest's sodden black cassock raising one hand. {party} small and seen from behind at the edge of the frame, between the old man and the lake. Cold moonlight and mist on the water, the lantern the only warm light; quiet dread, no gore.",
+      "use": "a"
     }
   }
 }
