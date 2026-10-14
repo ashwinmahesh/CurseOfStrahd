@@ -2620,10 +2620,17 @@
           ]
         },
         {
-          "monster": "shadow",
+          "monster": "bat",
           "cell": [
             20,
-            8
+            4
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            29,
+            10
           ]
         }
       ],

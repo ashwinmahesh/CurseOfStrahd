@@ -30,30 +30,65 @@
           ]
         },
         {
-          "monster": "dire_wolf",
+          "monster": "werewolf",
           "cell": [
             4,
             7
           ]
         },
         {
-          "monster": "dire_wolf",
+          "monster": "werewolf",
           "cell": [
             24,
             12
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             10,
             6
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             12,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
             11
           ]
         }
@@ -63,7 +98,7 @@
       "id": "ogres",
       "weight": 2,
       "when": "day",
-      "text": "Three ogres sit on the road ahead around a dead goat, arguing about who caught it. They stop arguing when they see you.",
+      "text": "Ogres sit on the road ahead around a dead goat, arguing about who caught it, and something on two legs paces in the pines behind them. They stop arguing when they see you.",
       "monsters": [
         {
           "monster": "ogre",
@@ -85,13 +120,69 @@
             29,
             12
           ]
+        },
+        {
+          "monster": "ogre",
+          "cell": [
+            4,
+            7
+          ]
+        },
+        {
+          "monster": "ogre",
+          "cell": [
+            4,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            25,
+            13
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            28,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            7
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            11
+          ]
         }
       ]
     },
     {
       "id": "spiders",
       "weight": 2,
-      "text": "The pines over the road are hung with grey sheets of web, and the sheets are moving.",
+      "text": "The pines over the road are hung with grey sheets of web, and the sheets are moving. Howls start up behind them.",
       "monsters": [
         {
           "monster": "giant_spider",
@@ -108,17 +199,66 @@
           ]
         },
         {
-          "monster": "giant_spider",
+          "monster": "werewolf",
           "cell": [
             4,
             11
           ]
         },
         {
-          "monster": "giant_spider",
+          "monster": "werewolf",
           "cell": [
             25,
             13
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            7
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            7
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            28,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            6
           ]
         }
       ]
@@ -155,6 +295,34 @@
           "cell": [
             28,
             9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            12
           ]
         }
       ]

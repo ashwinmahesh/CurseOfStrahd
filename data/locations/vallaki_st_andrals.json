@@ -573,29 +573,36 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            5,
-            6
+            14,
+            5
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            7,
-            2
+            10,
+            13
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            5,
-            12
+            21,
+            13
           ]
         },
         {
           "monster": "giant_rat",
           "cell": [
-            9,
-            12
+            8,
+            6
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            15,
+            10
           ]
         }
       ],

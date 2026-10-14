@@ -3291,10 +3291,17 @@
           "hp": 35
         },
         {
-          "monster": "vampire_spawn",
+          "monster": "ghoul",
           "cell": [
-            45,
-            1
+            43,
+            12
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            35,
+            9
           ]
         }
       ],
@@ -3385,36 +3392,50 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            45,
-            12
+            33,
+            11
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            41,
-            15
-          ]
-        },
-        {
-          "monster": "swarm_of_bats",
-          "cell": [
-            43,
+            39,
             19
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            43,
-            23
+            25,
+            11
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            46,
+            36,
             27
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            20
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            9,
+            11
           ]
         }
       ],
@@ -3452,8 +3473,15 @@
         {
           "monster": "giant_rat",
           "cell": [
-            45,
-            1
+            43,
+            12
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            35,
+            9
           ]
         }
       ],
