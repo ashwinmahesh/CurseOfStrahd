@@ -77206,6 +77206,13 @@
   "recipe": "71f51bdb43",
   "text": "You had my letter, I trust. You read it twice. You thought I would not know."
  },
+ "strahd/13c3c38daf02cbac": {
+  "chars": 58,
+  "direction": "[cold, measured]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Enough. You have earned the road tonight. Do not waste it."
+ },
  "strahd/16653043e2159990": {
   "chars": 61,
   "direction": "[courteous, mocking]",
@@ -77646,6 +77653,13 @@
   "recipe": "71f51bdb43",
   "text": "Of course. Walk about; stretch your legs. The table will keep, and so will I."
  },
+ "strahd/64bfd75a17db6059": {
+  "chars": 58,
+  "direction": "[mocking, cold]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Walls and prayers. How touching. I will come back for her."
+ },
  "strahd/64ea66cdbc52ec27": {
   "chars": 87,
   "model": "eleven_v3",
@@ -77695,6 +77709,20 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Ireena. Candlelight suits you. Sit beside me. No? Then sit wherever you like."
+ },
+ "strahd/6e35038b46b8962c": {
+  "chars": 56,
+  "direction": "[silky, possessive, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Keep her warm for me. I will come back for what is mine."
+ },
+ "strahd/6f0a86dfc73cb874": {
+  "chars": 82,
+  "direction": "[cold, wry, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You have spoiled a perfectly good dinner. Do finish your wine. I will be upstairs."
  },
  "strahd/6f1e78e030739f71": {
   "chars": 80,
@@ -78290,6 +78318,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "She sang to me, when I was small. She was the only one who did."
+ },
+ "strahd/f741f92e91786751": {
+  "chars": 73,
+  "direction": "[cold, menacing, intimate]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You have broken my heart. Come up, then, and let us finish this properly."
  },
  "strahd/f9a1d7a48e209f7e": {
   "chars": 41,
