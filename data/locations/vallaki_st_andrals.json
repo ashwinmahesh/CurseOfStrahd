@@ -569,6 +569,34 @@
             1,
             13
           ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            7,
+            2
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            5,
+            12
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            9,
+            12
+          ]
         }
       ],
       "surprise": "",
@@ -596,6 +624,13 @@
           "monster": "swarm_of_bats",
           "cell": [
             1,
+            6
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
             6
           ]
         }

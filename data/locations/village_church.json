@@ -568,6 +568,27 @@
           ],
           "name": "Doru",
           "hp": 45
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            18,
+            20
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            18,
+            16
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            14,
+            16
+          ]
         }
       ],
       "surprise": "",

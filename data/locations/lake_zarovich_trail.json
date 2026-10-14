@@ -366,6 +366,29 @@
             24,
             8
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            16
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            18,
+            12
+          ]
         }
       ],
       "surprise": "party",
@@ -463,6 +486,36 @@
             23,
             5
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            9
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            16
+          ]
         }
       ],
       "surprise": "party",
@@ -506,18 +559,20 @@
           ]
         },
         {
-          "monster": "swarm_of_bats",
+          "monster": "vampire_spawn",
           "cell": [
-            18,
-            8
-          ]
+            22,
+            12
+          ],
+          "name": "A Fowler"
         },
         {
-          "monster": "swarm_of_bats",
+          "monster": "vampire_spawn",
           "cell": [
-            24,
-            8
-          ]
+            21,
+            16
+          ],
+          "name": "A Fowler"
         }
       ],
       "surprise": "",
@@ -554,18 +609,20 @@
           ]
         },
         {
-          "monster": "swarm_of_bats",
+          "monster": "vampire_spawn",
           "cell": [
-            23,
-            5
-          ]
+            20,
+            12
+          ],
+          "name": "A Fowler"
         },
         {
-          "monster": "swarm_of_bats",
+          "monster": "vampire_spawn",
           "cell": [
-            18,
-            8
-          ]
+            21,
+            16
+          ],
+          "name": "A Fowler"
         }
       ],
       "surprise": "",
@@ -599,6 +656,22 @@
             23,
             5
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            9
+          ],
+          "name": "A Fowler"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "A Fowler"
         }
       ],
       "surprise": "",
