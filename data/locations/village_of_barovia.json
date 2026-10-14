@@ -1602,24 +1602,17 @@
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             2
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             3
-          ]
-        },
-        {
-          "monster": "giant_rat",
-          "cell": [
-            28,
-            4
           ]
         }
       ],

@@ -1,8 +1,8 @@
 extends TestCase
 ## Night visitors at camp (F16, data/camp/night_visitors.json): an interrupted night in a risky place brings a fight to
 ## the camp, and every group is played to the end by the test autopilot at the lowest level it comes for, once per
-## seed 1-8, with the party as it really is then: a day's adventuring behind it and only the interrupted hour's Short
-## Rest benefits. Every fight finishes, and each group is tuned to be won exactly as often in the eight as the owner
+## seed 1-8, with the party as it really is then: a day's adventuring behind it, and the fight before the rest's
+## benefits (the owner, 2026-10-13). Every fight finishes, and each group is tuned to be won exactly as often in the eight as the owner
 ## wants (2026-10-13 18:05, target_wins): 5 of 8 at every level, for the sharp autopilot that smites, opens with Spirit
 ## Guardians and throws Fireball as he plays. The test allows one win either way (DRIFT), so a change to dice or the autopilot elsewhere doesn't turn it red; a
 ## group off by two or more needs tuning again. Each is also tuned so the party pays for its wins: 2 to 3 heroes down
@@ -69,14 +69,14 @@ func _camp_in(place: String, level: int) -> LocationCamp:
 
 
 ## A hero as the night's visitors find them: a day's adventuring behind them (half their Hit Points and half of each
-## level's spell slots spent), then the interrupted hour's Short Rest benefits (LongRest.take).
+## level's spell slots spent), and nothing back yet, since the fight comes before the rest's benefits (the owner,
+## 2026-10-13; LongRest.take).
 static func _tired(ch: Character) -> void:
 	ch.hp = maxi(1, ch.max_hp() / 2)
 	var slots := ch.spell_slots()
 	for i in slots.size():
 		for n in slots[i] / 2:
 			ch.expend_slot(i + 1)
-	ch.finish_short_rest()
 
 
 ## A region whose land is `land`.
