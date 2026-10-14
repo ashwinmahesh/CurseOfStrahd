@@ -221,8 +221,8 @@ Thistle's grandda, Kip's Pip, Liriel's old teacher, Ratatouille's maman), and a 
 decides whether someone is lured toward the edge, which starts the fight with the party surprised.
 
 - Fight `falls_wisps` (the west glade): level 4 a will-o'-wisp, a shadow and two bats lured (the party surprised; the
-  sharp autopilot wins 4 of 8, the harder side), two wisps and a shadow unlured (5 of 8); level 5 five wisps and two
-  shadows lured, five and one unlured (5 of 8 each); below four a wisp and two bats (5 of 8). A wisp that vanishes can't
+  sharp autopilot wins 4 of 8, the harder side), two wisps and a shadow unlured, one of them out by the east pines so no Fireball takes all three (5 of 8); level 5 five wisps and two
+  shadows lured, five and one unlured (5 of 8 each); below four a wisp and two bats (4 of 8 lured, 5 unlured). A wisp that vanishes can't
   be targeted but by an area spell (the invisibility rule, 2026-10-14), so there are far fewer than before, and the
   line-ups were chosen from ones that never run out the clock on seeds 1-8 (a lone wisp with nothing else to hit can
   leave the autopilot with no target). tests/integration/test_scaled_fights_barovia.gd holds all six at 4 to 6.
