@@ -1088,7 +1088,49 @@
             21,
             6
           ],
-          "hp": 515
+          "hp": 165
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            6
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            5
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            7
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            22,
+            6
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            5
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            7
+          ]
         }
       ],
       "lair": false,
@@ -1258,8 +1300,49 @@
           ],
           "lying": {
             "head": "west"
-          },
-          "hp": 300
+          }
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            6
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            5
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            7
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            22,
+            6
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            5
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            7
+          ]
         }
       ],
       "lair": true,

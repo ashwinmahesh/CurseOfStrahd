@@ -15,7 +15,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Fight | Level | 5 in 8 line-up (before) | Line-up now | Wins now | Target |
 |---|---|---|---|---|---|
 | Izek's duel | 5 | Izek Strazni (110 HP), 4 Warrior Veterans | Izek Strazni (310 HP), 4 Warrior Veterans | 3/8 | 3 |
-| Izek's festival rampage | 5 | Izek Strazni (225 HP), 2 Warrior Veterans, Bandit Captain, 2 Town Guards | Izek Strazni (225 HP), 5 Warrior Veterans, Bandit Captain, 2 Town Guards | 3/8 | 3 |
+| Izek's festival rampage | 5 | Izek Strazni (225 HP), 2 Warrior Veterans, Bandit Captain, 2 Town Guards | Izek Strazni (225 HP), 2 Warrior Veterans, Bandit Captain, 2 Town Guards | 6/8 | 3 |
 | The festival loyalists | 5 | Izek Strazni, 5 Warrior Veterans, 4 Town Guards, Bandit Captain | Izek Strazni, 5 Warrior Veterans, 4 Town Guards, Bandit Captain | 6/8 | 3 |
 | Izek in his room | 5 | Izek Strazni (145 HP), 3 Warrior Veterans, Town Guard | Izek Strazni (360 HP), 3 Warrior Veterans, Town Guard | 3/8 | 3 |
 | The coven, all three hags | 6 | Night Hag (180 HP), 2 Night Hags, 3 Swarm of Rats | Night Hag (310 HP), 2 Night Hags (195 HP), 3 Swarm of Rats | 3/8 | 3 |
@@ -58,7 +58,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | The Grandsire L9 | 9 | The Grandsire (150 HP), 3 Werewolfs, 2 Dire Wolfs | The Grandsire (270 HP), 3 Werewolfs, 2 Dire Wolfs | 3/8 | 3 |
 | Corvina | 10 | Corvina, the Doorkeeper, 4 Helmed Horrors | Corvina, the Doorkeeper (250 HP), 10 Helmed Horrors | 3/8 | 3 |
 | Corvina, named (reward) | 10 | Corvina, the Doorkeeper (105 HP), 4 Helmed Horrors | Corvina, the Doorkeeper (105 HP), 10 Helmed Horrors | 4/8 | 4 |
-| Sarkhaza as she is | 10 | Sarkhaza | Sarkhaza (300 HP) | 3/8 | 3 |
+| Sarkhaza as she is | 10 | Sarkhaza | Sarkhaza, 6 Wights | 3/8 | 3 |
 | Sarkhaza unchained L11 | 11 | Sarkhaza (212 HP) | Sarkhaza (375 HP) | 3/8 | 3 |
 | Khazan, his name standing | 10 | Khazan (210 HP), 2 Specters | Khazan (315 HP), 2 Specters | 3/8 | 3 |
 | Khazan unmade (reward) | 10 | Khazan (125 HP), 4 Specters, Wraith | Khazan (290 HP), 4 Specters, Wraith | 4/8 | 4 |
@@ -102,7 +102,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Exethanter | 10 | Exethanter, 6 Flameskulls | Exethanter (100 HP), 6 Flameskulls, 8 Wraiths | 3/8 | 3 |
 | Vosk unmasked | 10 | Arcanaloth (135 HP), 2 Flameskulls | Arcanaloth (320 HP), 2 Flameskulls | 3/8 | 3 |
 | Vosk named and weakened (reward) | 10 | Arcanaloth (80 HP) | Arcanaloth (205 HP), 2 Flameskulls | 4/8 | 4 |
-| Sarkhaza, the keepers' three tricks (reward) | 10 | Sarkhaza (125 HP) | Sarkhaza (515 HP) | 4/8 | 4 |
+| Sarkhaza, the keepers' three tricks (reward) | 10 | Sarkhaza (125 HP) | Sarkhaza (165 HP), 6 Wights | 4/8 | 4 |
 | Strahd woken by day (Sunsword) | 10 | Strahd von Zarovich (350 HP), 2 Swarm of Bats, Vampire Spawn | Strahd von Zarovich (455 HP), 2 Swarm of Bats, 7 Vampire Spawns | 3/8 | 3 |
 | Strahd's dinner (Sunsword) | 10 | Strahd von Zarovich (375 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors | Strahd von Zarovich (490 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors, 3 Vampire Spawns | 3/8 | 3 |
 | Strahd at the broken heart (Sunsword) | 10 | Strahd von Zarovich (350 HP), 2 Strahd's Animated Armors | Strahd von Zarovich (455 HP), 2 Strahd's Animated Armors, 6 Vampire Spawns | 3/8 | 3 |
@@ -126,14 +126,18 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 
 ## Where a fight is not at 3 in 8, and why
 
-- **The festival loyalists** keep their old line-up (6 in 8 for the full-ability test party; the test's band is 5-7). The Phase 4 playthrough party
-  (Ilse, Tamsin, Hedda, Silvain) wins it 2 times in 8 as it is, and any harder step won it 0 or 1, so a 3-in-8 line-up would strand the story
-  walk-through there. Izek's duel, the rampage and Izek in his room are at 3.
+- **The festival loyalists and Izek's rampage** keep their old line-ups (6 in 8 for the full-ability test party; the tests' band is 5-7). The Phase 4
+  playthrough party (Ilse, Tamsin, Hedda, Silvain) wins the loyalists 2 times in 8 and the rampage 4 times in 8 as they are, and any harder step won
+  them 0 or 1 (one sergeant more in the rampage: 1 in 8), so a 3-in-8 line-up would strand the story walk-through there. Izek's duel and Izek in his
+  room are at 3.
 - **Strahd's final rooms** each hold two line-ups. The first, measured above, applies when the party carries the Sunsword (`item:sunsword`); the
   second, the old 5-in-8 line-up, is for the Phase 6 coffin playthrough, whose party reaches the chapel without it and cannot win the retuned room.
   Strahd's visits keep their flee-at-0-HP behaviour.
 - **The harder side (2 in 8)**: Morgantha and Offalia, the two brides, all three brides, the Tinker's Wagon at level 6, Old Greytooth with Szoldar turned,
   Bella on the road. No Hit Point step or helper added landed on 3 for these; the 2 is the step below 3.
+- **Sarkhaza and the Eye Below** keep the fiction of their tricks: as she is, Sarkhaza has her book 200 HP and six wights beside her (3 in 8); with the
+  keepers' three tricks she has 165 HP and the same six (4 in 8). The Eye with both wardens' ways taken needs the same 335 HP as the plain Eye (without
+  its dreamed eye and its lair, and surprised), so test_side_quests_beholder now asks that it is no tougher than the plain Eye, not under 180 HP.
 - **Rewards** a quest earns (hounds called, Corvina named, Vosk named, the summit circle broken, the Vine Mother with Adrian along, ...) are one step
   easier (4); Kostin's warning at the summit is one step harder (2).
 - **Hit Points far above the book** (two to four times) are how most bosses reach 3: the full-ability party out-damages the book numbers by a lot. Where a

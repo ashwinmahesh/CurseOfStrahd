@@ -50,7 +50,7 @@ const PENDING := {
 	## The boss fights the 3-in-8 retune (docs/story/boss_fights.md) gave more helpers beside the boss, to spread next.
 	"amber_temple_vault:vosk_unmasked#2": true, "castle_ravenloft_catacombs_strahd:cat_daylight_waking#3": true,
 	"castle_ravenloft_catacombs_tombs:cat_royal_final#3": true, "castle_ravenloft_chapel:crg_chapel_final_battle#0": true,
-	"castle_ravenloft_main_floor:crg_dinner_affront#0": true,
+	"castle_ravenloft_main_floor:crg_dinner_affront#0": true, "ghakis_lair:sarkhaza": true,
 }
 
 

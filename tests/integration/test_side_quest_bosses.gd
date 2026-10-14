@@ -223,14 +223,15 @@ func test_the_vent_fire_at_level_10() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
 
 
-## Sarkhaza at level 10: Sarkhaza (300 HP); 3 in 8.
+## Sarkhaza at level 10: Sarkhaza, 6 Wights; 3 in 8.
 func test_sarkhaza_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOARD_MOUTH)
 	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Sarkhaza with the keepers tricks at level 10: Sarkhaza (300 HP); 3 in 8.
+## Sarkhaza with the keepers' three tricks at level 10: Sarkhaza (165 HP), 6 Wights; 4 in 8 (a reward; played for four seeds,
+## not counted).
 func test_sarkhaza_with_the_keepers_tricks_at_level_10() -> void:
 	await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
 

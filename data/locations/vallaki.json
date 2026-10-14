@@ -2555,30 +2555,6 @@
             13
           ],
           "name": "Town guard"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            21,
-            12
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            22,
-            11
-          ],
-          "name": "Sergeant of the watch"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            22,
-            13
-          ],
-          "name": "Sergeant of the watch"
         }
       ],
       "surprise": "",
