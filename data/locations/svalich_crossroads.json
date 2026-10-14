@@ -965,20 +965,6 @@
             20,
             10
           ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            16,
-            12
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            21,
-            13
-          ]
         }
       ],
       "surprise": "",
@@ -1009,14 +995,6 @@
             15
           ],
           "name": "The Footman"
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            19,
-            14
-          ],
-          "name": "The Second Footman"
         },
         {
           "monster": "specter",
@@ -1149,14 +1127,6 @@
           "name": "The Lead Horse"
         },
         {
-          "monster": "wight",
-          "cell": [
-            24,
-            15
-          ],
-          "name": "The Footman"
-        },
-        {
           "monster": "specter",
           "cell": [
             27,
@@ -1182,20 +1152,6 @@
           "cell": [
             20,
             10
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            16,
-            12
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            21,
-            13
           ]
         },
         {
@@ -1258,10 +1214,10 @@
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "giant_rat",
           "cell": [
-            16,
-            12
+            23,
+            20
           ]
         }
       ],
@@ -1295,31 +1251,10 @@
           ]
         },
         {
-          "monster": "specter",
-          "cell": [
-            30,
-            12
-          ]
-        },
-        {
           "monster": "zombie",
           "cell": [
             18,
             11
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            20,
-            10
-          ]
-        },
-        {
-          "monster": "zombie",
-          "cell": [
-            16,
-            12
           ]
         },
         {

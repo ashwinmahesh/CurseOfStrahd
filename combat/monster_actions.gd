@@ -694,6 +694,9 @@ func turn_start(c: Combatant) -> CombatResult:
 				e.deal_damage(by, c, [{"amount": int(gr["total"]), "type": str(gd["type"])}], false, "%s's grip" % by.name(), [str(gr["text"])])
 		# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
 		for k: String in e.grapples.keys():
+			# An earlier hold's damage can end this one (the held creature died and let go): skip what's gone.
+			if not e.grapples.has(k):
+				continue
 			var held := e.get_c(k)
 			if str(e.grapples[k]) == c.id and held != null and held.is_alive() and held.has_meta("hold_damage"):
 				var hd := held.get_meta("hold_damage") as Dictionary

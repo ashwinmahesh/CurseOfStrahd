@@ -18,87 +18,108 @@
       "when": "not flag.gulthias_tree_burned",
       "monsters": [
         {
-          "monster": "vine_blight",
+          "monster": "druid",
           "cell": [
             13,
             6
           ]
         },
         {
-          "monster": "vine_blight",
+          "monster": "druid",
           "cell": [
             24,
             5
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             4,
             5
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             7,
             8
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             25,
             12
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             24,
             13
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             15,
             4
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             16,
             4
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             5,
             12
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             7,
             13
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             27,
             6
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             25,
             11
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            4,
+            9
           ]
         }
       ],
@@ -127,35 +148,72 @@
           "name": "Druid of Yester Hill"
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             25,
             12
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             4,
             12
           ]
         },
         {
-          "monster": "needle_blight",
+          "monster": "vine_blight",
           "cell": [
             13,
             7
           ]
         },
         {
-          "monster": "vine_blight",
+          "monster": "druid",
           "cell": [
             15,
             15
           ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            15,
+            4
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
-      "text": "Two figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
+      "text": "Figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
     },
     {
       "id": "wolves_on_the_moor",
@@ -170,38 +228,73 @@
           ]
         },
         {
-          "monster": "dire_wolf",
+          "monster": "werewolf",
           "cell": [
             4,
             12
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             13,
             6
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             5,
             6
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             26,
             13
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             24,
             7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            9
           ]
         }
       ],
@@ -260,32 +353,69 @@
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             15,
             4
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             4,
             12
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             6,
             13
           ]
         },
         {
-          "monster": "twig_blight",
+          "monster": "needle_blight",
           "cell": [
             27,
             7
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            22,
+            12
+          ],
+          "name": "Druid of Yester Hill"
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            4,
+            9
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "text": "Green-painted figures step out of the hedgerow on both sides of the road, and at their head walks an old woman you last saw among the roots of a black tree. The tree called her back, as she said it would. You let it keep calling."
@@ -310,38 +440,73 @@
           ]
         },
         {
-          "monster": "dire_wolf",
+          "monster": "werewolf",
           "cell": [
             4,
             12
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             13,
             6
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             5,
             6
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             26,
             13
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
             24,
             7
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            27,
+            9
           ]
         }
       ],

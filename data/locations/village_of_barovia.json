@@ -1645,6 +1645,34 @@
             28,
             8
           ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            30,
+            12
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            14
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            18
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            29,
+            22
+          ]
         }
       ],
       "surprise": "",
@@ -1757,6 +1785,62 @@
           "cell": [
             19,
             9
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            5
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            20,
+            1
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            19,
+            17
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            23,
+            15
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            23,
+            19
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            23,
+            23
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            22,
+            27
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            24,
+            3
           ]
         }
       ],
@@ -1947,6 +2031,41 @@
             26,
             12
           ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            27,
+            8
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            25,
+            16
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            22,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            16
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            18,
+            10
+          ]
         }
       ],
       "surprise": "",
@@ -1985,31 +2104,10 @@
           ]
         },
         {
-          "monster": "needle_blight",
-          "cell": [
-            9,
-            10
-          ]
-        },
-        {
-          "monster": "needle_blight",
+          "monster": "rat",
           "cell": [
             4,
-            13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            12,
-            13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            12
+            14
           ]
         }
       ],
@@ -2111,6 +2209,13 @@
             12,
             13
           ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            8,
+            6
+          ]
         }
       ],
       "surprise": "",
@@ -2272,6 +2377,27 @@
             10,
             13
           ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            9,
+            6
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            6,
+            17
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            8,
+            21
+          ]
         }
       ],
       "surprise": "",
@@ -2320,6 +2446,27 @@
           "cell": [
             12,
             11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            8,
+            6
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            6,
+            17
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            8,
+            21
           ]
         }
       ],
@@ -2470,6 +2617,20 @@
           "cell": [
             18,
             12
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            20,
+            4
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            29,
+            10
           ]
         }
       ],
