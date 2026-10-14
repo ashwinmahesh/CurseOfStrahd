@@ -47,6 +47,10 @@ const PENDING := {
 	"tsolenka_pass:the_penitent": true, "vallaki:izek_duel": true,
 	"werewolf_den_caves:den_reckoning": true,
 	"wizard_of_wines:vine_mother": true, "woodcutters_hollow:oat_hunters": true, "zarovich_reed_island:reed_isle_boatmen": true,
+	## The boss fights the 3-in-8 retune (docs/story/boss_fights.md) gave more helpers beside the boss, to spread next.
+	"amber_temple_vault:vosk_unmasked#2": true, "castle_ravenloft_catacombs_strahd:cat_daylight_waking#3": true,
+	"castle_ravenloft_catacombs_tombs:cat_royal_final#3": true, "castle_ravenloft_chapel:crg_chapel_final_battle#0": true,
+	"castle_ravenloft_main_floor:crg_dinner_affront#0": true,
 }
 
 
