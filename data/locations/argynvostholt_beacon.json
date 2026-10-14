@@ -370,27 +370,6 @@
             3,
             20
           ]
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            12,
-            14
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            11,
-            17
-          ]
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            5,
-            19
-          ]
         }
       ]
     },

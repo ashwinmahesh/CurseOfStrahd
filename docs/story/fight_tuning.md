@@ -127,3 +127,47 @@ table's own map as listed; the first four-or-so squares around the arrival spawn
 | zarovich_shore | `marsh_lights` | 8 | 3 will o wisp | 8 will o wisp, 3 banshee | 5 |
 | zarovich_shore | `shore_wolves` | 8 | 4 dire wolf | 6 dire wolf, 5 werewolf | 5 |
 | zarovich_shore | `the_drowned` | 8 | 4 strahd zombie, 2 ghast | 9 ghast, 2 wight | 5 |
+
+## Fights that had no series test (Argynvostholt, Tsolenka, the Abbey, Krezk, the Amber Temple, Berez, Van Richten's tower, the den guards)
+
+| Fight | Where | Version | Level | Was | Now | Wins |
+|---|---|---|---|---|---|---|
+| `garden_sentry` | abbey_of_st_markovia_garden | L7v0 | 7 | 5 scarecrow | 4 scarecrow, 11 will o wisp | 5 |
+| `bride_defends` | abbey_of_st_markovia_shrine | L5v2 | 5 | flesh golem, 3 mongrelfolk | 4 flesh golem, 6 mongrelfolk | 5 |
+| `bride_defends` | abbey_of_st_markovia_shrine | L6v1 | 6 | flesh golem, berserker, 4 mongrelfolk | 3 flesh golem, 2 berserker, 6 mongrelfolk | 5 |
+| `bride_defends` | abbey_of_st_markovia_shrine | L7v0 | 7 | 2 flesh golem, 9 berserker, 3 mongrelfolk | 3 flesh golem, 9 berserker, 6 mongrelfolk | 6 |
+| `wards_cells` | abbey_of_st_markovia_wards | L6v1 | 6 | berserker, 4 mongrelfolk | 10 berserker, 5 mongrelfolk | 5 |
+| `wards_cells` | abbey_of_st_markovia_wards | L7v0 | 7 | 2 berserker, 6 mongrelfolk | 11 berserker, 16 mongrelfolk | 5 |
+| `frozen_watch` | amber_temple_entrance | L10v0 | 10 | 4 wight | 5 wight, 4 wraith | 4 |
+| `frozen_watch` | amber_temple_entrance | L9v1 | 9 | 3 wight | 3 wight, 4 wraith | 5 |
+| `hollow_eyed` | amber_temple_faceless_god | L10v0 | 10 | 5 nothic, 3 wraith | 6 nothic, 4 wraith | 4 |
+| `hollow_eyed` | amber_temple_faceless_god | L7v2 | 7 | 4 nothic, wraith | 5 nothic, 2 wraith | 5 |
+| `hollow_eyed` | amber_temple_faceless_god | L8v1 | 8 | 4 nothic, 3 wraith | 5 nothic, 3 wraith | 5 |
+| `patrina_wails` | amber_temple_faceless_god | L10v0 | 10 | banshee, 4 specter | 8 banshee, 11 specter | 5 |
+| `courtyard_phantoms` | argynvostholt | L6v2 | 6 | 2 phantom warrior | 14 phantom warrior | 6 |
+| `courtyard_phantoms` | argynvostholt | L7v1 | 7 | 3 phantom warrior | 14 phantom warrior | 5 |
+| `courtyard_phantoms` | argynvostholt | L8v0 | 8 | 4 phantom warrior | 12 phantom warrior, 2 revenant | 5 |
+| `lamp_dark` | argynvostholt_beacon | L6v2 | 6 | wraith, 2 specter | 4 wraith, 6 specter | 5 |
+| `lamp_dark` | argynvostholt_beacon | L7v1 | 7 | wraith, 3 specter | 3 wraith, 5 specter | 6 |
+| `lamp_dark` | argynvostholt_beacon | L8v0 | 8 | 2 wraith, 2 specter | 5 wraith, 4 specter | 5 |
+| `bone_watch` | argynvostholt_mausoleum | L6v2 | 6 | 2 phantom warrior | 11 phantom warrior | 6 |
+| `bone_watch` | argynvostholt_mausoleum | L7v1 | 7 | 3 phantom warrior | 12 phantom warrior | 5 |
+| `bone_watch` | argynvostholt_mausoleum | L8v0 | 8 | 4 phantom warrior | 15 phantom warrior | 5 |
+| `berez_drowned_lights` | berez | L7v1 | 7 | 2 will o wisp, swarm of insects | 9 will o wisp, 7 swarm of insects | 5 |
+| `berez_drowned_lights` | berez | L8v0 | 8 | 3 will o wisp, 2 swarm of insects | 6 will o wisp, 5 swarm of insects | 6 |
+| `berez_scarecrows` | berez | L7v2 | 7 | 4 scarecrow, 2 swarm of insects | 10 scarecrow, 12 swarm of insects, 4 will o wisp | 5 |
+| `berez_scarecrows` | berez | L8v1 | 8 | 5 scarecrow, will o wisp, 2 swarm of insects | 12 scarecrow, 7 will o wisp, 8 swarm of insects | 5 |
+| `berez_scarecrows` | berez | L9v0 | 9 | 6 scarecrow, 2 will o wisp, 2 swarm of insects | 12 scarecrow, 7 will o wisp, 7 swarm of insects | 5 |
+| `gate_wolves` | krezk | L6v1 | 6 | werewolf, 2 dire wolf, wolf | 4 werewolf, 5 dire wolf, 4 wolf | 4 |
+| `gate_wolves` | krezk | L7v0 | 7 | werewolf, 3 dire wolf, 2 wolf | 4 werewolf, 6 dire wolf, 5 wolf | 4 |
+| `sorin_pursuers` | krezk_pool_of_the_white_sun | L6v2 | 6 | flesh golem, 2 berserker, 4 mongrelfolk | 2 flesh golem, 4 berserker, 6 mongrelfolk | 6 |
+| `sorin_pursuers` | krezk_pool_of_the_white_sun | L7v1 | 7 | 2 flesh golem, 3 berserker, 4 mongrelfolk | 3 flesh golem, 3 berserker, 4 mongrelfolk | 4 |
+| `sorin_pursuers` | krezk_pool_of_the_white_sun | L8v0 | 8 | 3 flesh golem, 3 berserker, 4 mongrelfolk | 4 flesh golem, 3 berserker, 4 mongrelfolk | 6 |
+| `tsolenka_watch` | tsolenka_pass_guard_tower | L7v1 | 7 | 4 phantom warrior | 11 phantom warrior | 4 |
+| `tsolenka_watch` | tsolenka_pass_guard_tower | L8v0 | 8 | 5 phantom warrior | 15 phantom warrior | 5 |
+| `tower_night_visitors` | van_richtens_tower | L6v2 | 6 | vampire spawn, 2 swarm of bats | 4 vampire spawn, 6 swarm of bats | 4 |
+| `tower_night_visitors` | van_richtens_tower | L7v1 | 7 | 2 vampire spawn, 2 swarm of bats | 4 vampire spawn, 4 swarm of bats | 5 |
+| `tower_night_visitors` | van_richtens_tower | L8v0 | 8 | 2 vampire spawn, wight, 2 swarm of bats | 3 vampire spawn, wight, 3 swarm of bats | 6 |
+| `den_guards` | werewolf_den_caves | L6v2 | 6 | 3 werewolf, dire wolf | 5 werewolf, 3 dire wolf | 5 |
+| `den_guards` | werewolf_den_caves | L7v1 | 7 | 4 werewolf, 2 dire wolf | 5 werewolf, 3 dire wolf | 5 |
+| `den_guards` | werewolf_den_caves | L8v0 | 8 | 5 werewolf, 2 dire wolf | 7 werewolf, 3 dire wolf | 4 |
