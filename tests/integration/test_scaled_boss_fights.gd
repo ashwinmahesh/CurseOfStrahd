@@ -221,7 +221,7 @@ func test_exethanter_at_level_10() -> void:
 	await _held("amber_temple_library", 10, "exethanter_wrath", EXETHANTERS_SHELVES, 4, 6)
 
 
-## Vosk unmasked at 135 HP with two bound skulls. Named and weakened first, he's the easier fight he was (8 of 8).
+## Vosk unmasked at 175 HP with one bound skull (his Counterspell answers a levelled spell every round). Named and weakened first, he's the easier fight he was (8 of 8).
 func test_vosk_unmasked_at_level_10() -> void:
 	await _held("amber_temple_vault", 10, "vosk_unmasked", VOSKS_VAULT, 4, 6)
 
