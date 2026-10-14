@@ -77,7 +77,7 @@ var art_override := ""
 var mounted := false
 var sneaking := false
 var sprite: DirectionalSprite
-## An Invisible foe the player can't see (EncounterSight.hidden_from_party): the whole figure, ring and bar are off the
+## An Invisible foe the hero the player looks through can't see (EncounterSight.hidden_from_party): the whole figure, ring and bar are off the
 ## map until it's seen again (CombatView._refresh_all).
 var unseen := false
 ## Strahd's dark aura or a paladin's Aura of Protection on the floor (AuraFx), or null.

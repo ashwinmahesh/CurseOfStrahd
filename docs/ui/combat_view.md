@@ -78,12 +78,12 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   Enter (Y) casts. Backspace or right-click aims again; a spell from the caster with no aim (Thunderclap) asks as soon
   as it's chosen, and Esc cancels it.
 - **Invisible foes are off the map** (owner, 2026-10-13: "Creatures that go invisible should disappear from the map
-  unless the player character targeting them has invisibility"): while no one in the party who is up can see it (See
-  Invisibility, Truesight or Blindsight in range, Robe of Eyes, Lantern of Revealing) an Invisible foe's figure, ring
-  and bar, its portrait in the turn order and its row in an area's preview are gone, the pointer and the next-target key
-  skip its square, the camera stays put for its turn and no number floats over it; it's back the moment it's seen or the
-  invisibility ends. Each hero can only target what they see themselves ("You can't see X" on the hotbar), though an
-  area still catches it. An Invisible hero stays on the player's map drawn half there.
+  unless the player character targeting them has invisibility"): while the hero whose turn it is can't see it (See
+  Invisibility, Truesight or Blindsight in range, Robe of Eyes, Lantern of Revealing; through a foe's turn, the hero who
+  had the last one) an Invisible foe's figure, ring and bar, its portrait in the turn order and its row in an area's preview are gone, the pointer and the next-target key
+  skip its square, the camera stays put for its turn and no number floats over it; it's back the moment the turn passes to a hero
+  who sees it or the invisibility ends. Each hero can only target what they see themselves ("You can't see X" on the
+  hotbar), which is what the map shows on their turn, though an area still catches it. An Invisible hero stays on the player's map drawn half there.
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
 

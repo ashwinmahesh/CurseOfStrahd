@@ -1,9 +1,9 @@
 extends TestCase
 ## An Invisible foe leaves the board (owner, 2026-10-13: "Creatures that go invisible should disappear from the map
 ## unless the player character targeting them has invisibility"): its figure, ring and bar are off the map and its
-## portrait off the turn order while no one in the party can see it, it can't be picked with the pointer or the next-target
-## key, an Invisible hero stays for its own player see-through, and it all comes back when the invisibility ends or a hero
-## sees it (CombatToken.set_unseen, CombatView._refresh_all, CombatHud._refresh_strip).
+## portrait off the turn order while the hero whose turn it is can't see it, it can't be picked with the pointer or the
+## next-target key, an Invisible hero stays for its own player see-through, and it all comes back when the invisibility
+## ends or the turn passes to a hero who sees it (CombatToken.set_unseen, CombatView._refresh_all, CombatHud._refresh_strip).
 
 var e: Encounter
 var view: CombatView
@@ -75,16 +75,27 @@ func test_an_invisible_foe_leaves_the_map_and_the_order_bar_until_a_hero_sees_it
 	view.mode = CombatView.Mode.IDLE
 	view._next_target()
 	assert_ne(view.cursor_cell, scout.cell, "the next-target key skips it")
-	# One of the party who can see it puts it back for the player.
+	# Another hero who can see it doesn't show it on the wizard's turn: the map follows whose turn it is.
 	hedda.creature.add_effect(Effect.new("See Invisibility", &"spell", "see_invisibility").with_modifier("flag", {"value": "see_invisibility"}))
 	view._refresh_all()
-	await _frames(2)
-	assert_true(tok.visible and not tok.unseen, "on the map again")
-	assert_eq(_strip_cards(), cards)
-	# It ends: visible for everyone.
-	hedda.creature.effects.clear()
+	assert_true(tok.unseen and not tok.visible, "still gone on the wizard's turn")
+	# Her turn: it's on the map, and on the order bar again.
+	e.turn_index = e.order.find(hedda)
+	e._begin_turn()
 	view._refresh_all()
-	assert_true(tok.unseen)
+	await _frames(2)
+	assert_true(tok.visible and not tok.unseen, "on the map through Hedda's eyes")
+	assert_eq(_strip_cards(), cards)
+	# A foe's turn keeps the last hero's view; the wizard's turn takes it off again.
+	e.turn_index = e.order.find(scout)
+	e._begin_turn()
+	view._refresh_all()
+	assert_true(tok.visible, "a foe's turn keeps Hedda's view")
+	e.turn_index = e.order.find(wizard)
+	e._begin_turn()
+	view._refresh_all()
+	assert_true(tok.unseen, "the wizard's turn takes it off again")
+	hedda.creature.effects.clear()
 	scout.creature.remove_effect(fx)
 	view._refresh_all()
 	assert_true(tok.visible and not tok.unseen, "visible again once the invisibility is gone")

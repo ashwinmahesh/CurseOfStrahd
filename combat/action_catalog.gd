@@ -1692,8 +1692,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	for o in e.spells.creatures_in(cells):
 		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			continue
-		# An Invisible foe nobody sees isn't on the map, so the preview doesn't list it (the spell still catches it).
-		if e.sight.hidden_from_party(o):
+		# An Invisible foe the caster can't see isn't on the map, so the preview doesn't list it (the spell still
+		# catches it).
+		if e.sight.hidden_from_party(o, c):
 			continue
 		caught.append(o)
 	# Who it takes of those (creatures of the caster's choice: Slow's foes, Word of Radiance's), as things stand.

@@ -128,12 +128,15 @@ func unseen_foe(a: Combatant, b: Combatant) -> bool:
 
 
 ## Whether the player can't see `b` on the map (owner, 2026-10-13: "Creatures that go invisible should disappear from the
-## map unless the player character targeting them has invisibility"): a living foe that is Invisible when no one of the
-## party who is up can see it. The party shares what it sees, so one hero with See Invisibility shows it to the player,
-## though each hero can only target what they see themselves (unseen_foe).
-func hidden_from_party(b: Combatant) -> bool:
+## map unless the player character targeting them has invisibility"): a living foe that is Invisible, seen through
+## `viewer`, the hero whose turn it is (on a foe's turn, the one who last had it). With no viewer, when no one of the
+## party who is up can see it. Each hero can only target what they see themselves (unseen_foe), which is what the map
+## shows on their turn.
+func hidden_from_party(b: Combatant, viewer: Combatant = null) -> bool:
 	if b.side != &"enemy" or not b.is_alive() or not truly_invisible(b):
 		return false
+	if viewer != null and viewer.side in [&"party", &"guest"] and viewer.is_alive() and not viewer.is_down():
+		return not sees_invisible(viewer, b)
 	for m in enc().combatants:
 		if m.side in [&"party", &"guest"] and m.is_alive() and not m.is_down() and sees_invisible(m, b):
 			return false
