@@ -32788,6 +32788,7 @@
   "direction": "[dry, wry, weary]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.253,
   "text": "Take my boat if you want to look. It leaks on the left. Everything I own leaks on the left."
  },
  "lz_old_fisher/2e1aa45ebdd58527": {
@@ -32795,6 +32796,7 @@
   "direction": "[weary, gruff, wistful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.369,
   "text": "Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering."
  },
  "lz_old_fisher/30019da825a70812": {
@@ -32802,6 +32804,7 @@
   "direction": "[quiet, moved, grateful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.299,
   "text": "You stood on my step between me and the lake. Forty years I've been waiting for it to come up that shore. I never once thought anybody would stand there."
  },
  "lz_old_fisher/32a7f1aa83a4a971": {
@@ -32809,6 +32812,7 @@
   "direction": "[slow, low, storytelling]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.323,
   "text": "Before the count put the dam on the Luna there was a village where the lake is. Pescari. My grandmother was from there. When the water came up, the folk came up the hill, mostly. The ones who wouldn't leave the chapel stayed in the chapel. The bell's still down there."
  },
  "lz_old_fisher/3887869cedad08ec": {
@@ -32816,6 +32820,7 @@
   "direction": "[slow, troubled, thoughtful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.082,
   "text": "You stood on my landing between the lake and a man who'd put a child in a sack. I've been thinking about that. I don't know what I think yet."
  },
  "lz_old_fisher/38fc71ffcb7c1826": {
@@ -32823,6 +32828,7 @@
   "direction": "[surprised, slow, wry]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.161,
   "text": "You want to know why the fish went deep? Nobody's asked me that in forty years. Sit down, then."
  },
  "lz_old_fisher/3aa66b6cf38b19b7": {
@@ -32830,6 +32836,7 @@
   "direction": "[calm, resigned, quiet]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.132,
   "text": "Well. It was always going to be one of us."
  },
  "lz_old_fisher/424bf74602238405": {
@@ -32837,6 +32844,7 @@
   "direction": "[slow, weary, grim]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.45,
   "text": "After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided."
  },
  "lz_old_fisher/63d947f7662a176f": {
@@ -32844,6 +32852,7 @@
   "direction": "[low, uneasy, grim]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.095,
   "text": "The Reed Isle. (He doesn't look at it.) Nobody fishes near it. Some nights the Baron's boat rows out there from the town end of the lake, with somebody in the bottom of it tied up like washing."
  },
  "lz_old_fisher/6baca514721b5024": {
@@ -32858,6 +32867,7 @@
   "direction": "[quiet, haunted, sad]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.088,
   "text": "Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch."
  },
  "lz_old_fisher/cdb634f5b4996a6e": {
@@ -32865,6 +32875,7 @@
   "direction": "[bitter, quiet, wry]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.405,
   "text": "Somebody who said the festival was a waste of good wicker, maybe. Or laughed at the wrong moment. The boat comes back with nobody in it. We don't ask. Asking's unhappy."
  },
  "lz_old_fisher/d87b59855e04a239": {
@@ -32872,6 +32883,7 @@
   "direction": "[warm, delighted, near tears]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.32,
   "text": "A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it."
  },
  "lz_old_fisher/e9374aa7508b549a": {
@@ -32879,6 +32891,7 @@
   "direction": "[hushed, uneasy, listening]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.45,
   "text": "Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell."
  },
  "lz_old_fisher/eac4d438d7ecfc5c": {
@@ -32886,6 +32899,7 @@
   "direction": "[afraid, bitter, hushed]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.251,
   "text": "Bluto's sacks. You know what he put in them. He wasn't mad. That's the worst of it. He was paying the bell. Now he's stopped paying, and it rings every night, and it's coming up the shore a little further every time."
  },
  "lz_old_fisher/f95ce1fe61fdf85c": {
@@ -32893,6 +32907,7 @@
   "direction": "[low, uneasy warning]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.304,
   "text": "Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks."
  },
  "lzt_hunter/04e6d492bc8b9cc0": {
