@@ -104,12 +104,12 @@ func test_vladimirs_duel_at_level_8() -> void:
 	await _held("argynvostholt_hall", 8, "vladimir_duel", VLADIMIRS_HALL, 2, 4)
 
 
-## Kiril's challenge at level 8: Kiril Stoyanovich (225 HP), 4 Werewolfs (180 HP), 3 Dire Wolfs, 3 Wolfs; 3 in 8.
+## Kiril's challenge at level 8: Kiril Stoyanovich (175 HP), 4 Werewolfs (140 HP), 4 Dire Wolfs, 3 Wolfs; 3 in 8.
 func test_kirils_challenge_at_level_8() -> void:
 	await _held("werewolf_den_caves", 8, "pack_challenge", KIRILS_CAVE, 2, 4, ["den_guards_cleared"])
 
 
-## Kiril's challenge with the guards at level 8: Kiril Stoyanovich (125 HP), 5 Werewolfs (95 HP), 5 Dire Wolfs; 3
+## Kiril's challenge with the guards at level 8: Kiril Stoyanovich (145 HP), 5 Werewolfs (110 HP), 5 Dire Wolfs; 3
 ## in 8.
 func test_kirils_challenge_with_the_guards_at_level_8() -> void:
 	await _held("werewolf_den_caves", 8, "pack_challenge", KIRILS_CAVE, 2, 4, ["zuleika_vouched"])

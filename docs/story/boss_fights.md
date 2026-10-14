@@ -16,7 +16,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 |---|---|---|---|---|---|
 | Izek's duel | 5 | Izek Strazni (110 HP), 4 Warrior Veterans | Izek Strazni (310 HP), 4 Warrior Veterans | 3/8 | 3 |
 | Izek's festival rampage | 5 | Izek Strazni (225 HP), 2 Warrior Veterans, Bandit Captain, 2 Town Guards | Izek Strazni (225 HP), 5 Warrior Veterans, Bandit Captain, 2 Town Guards | 3/8 | 3 |
-| The festival loyalists | 5 | Izek Strazni, 5 Warrior Veterans, 4 Town Guards, Bandit Captain | Izek Strazni (110 HP), 11 Warrior Veterans, 4 Town Guards, Bandit Captain | 3/8 | 3 |
+| The festival loyalists | 5 | Izek Strazni, 5 Warrior Veterans, 4 Town Guards, Bandit Captain | Izek Strazni, 5 Warrior Veterans, 4 Town Guards, Bandit Captain | 6/8 | 3 |
 | Izek in his room | 5 | Izek Strazni (145 HP), 3 Warrior Veterans, Town Guard | Izek Strazni (360 HP), 3 Warrior Veterans, Town Guard | 3/8 | 3 |
 | The coven, all three hags | 6 | Night Hag (180 HP), 2 Night Hags, 3 Swarm of Rats | Night Hag (310 HP), 2 Night Hags (195 HP), 3 Swarm of Rats | 3/8 | 3 |
 | Morgantha and Offalia | 6 | 2 Night Hags, 4 Dire Wolfs, 4 Swarm of Rats | 2 Night Hags (340 HP), 4 Dire Wolfs, 4 Swarm of Rats | 2/8 | 2 |
@@ -25,8 +25,8 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Vasilka defends the Abbot | 7 | Flesh Golem (160 HP), 9 Berserkers, 3 Mongrelfolks, Flesh Golem | Flesh Golem (400 HP), 9 Berserkers, 3 Mongrelfolks, Flesh Golem (320 HP) | 3/8 | 3 |
 | Vladimir at the beacon | 8 | Vladimir Horngaard, 3 Revenants, Phantom Warrior, 2 Wights | Vladimir Horngaard (300 HP), 3 Revenants (195 HP), Phantom Warrior, 2 Wights | 3/8 | 3 |
 | Vladimir's duel | 8 | Vladimir Horngaard, 3 Revenants, Revenant (80 HP) | Vladimir Horngaard (290 HP), 3 Revenants (190 HP), Revenant (80 HP) | 3/8 | 3 |
-| Kiril's challenge, guards cleared | 8 | Kiril Stoyanovich, 4 Werewolfs, 3 Dire Wolfs, 3 Wolfs | Kiril Stoyanovich (225 HP), 4 Werewolfs (180 HP), 3 Dire Wolfs, 3 Wolfs | 3/8 | 3 |
-| Kiril's challenge, Zuleika vouched | 8 | Kiril Stoyanovich, 5 Werewolfs, 5 Dire Wolfs | Kiril Stoyanovich (125 HP), 5 Werewolfs (95 HP), 5 Dire Wolfs | 3/8 | 3 |
+| Kiril's challenge, guards cleared | 8 | Kiril Stoyanovich, 4 Werewolfs, 3 Dire Wolfs, 3 Wolfs | Kiril Stoyanovich (175 HP), 4 Werewolfs (140 HP), 4 Dire Wolfs, 3 Wolfs | 3/8 | 3 |
+| Kiril's challenge, Zuleika vouched | 8 | Kiril Stoyanovich, 5 Werewolfs, 5 Dire Wolfs | Kiril Stoyanovich (145 HP), 5 Werewolfs (110 HP), 5 Dire Wolfs | 3/8 | 3 |
 | The den's reckoning | 8 | Kiril Stoyanovich, Emil Toranescu (45 HP), Werewolf (60 HP), 3 Werewolfs, 2 Dire Wolfs, Wolf | Kiril Stoyanovich (225 HP), Emil Toranescu (45 HP), Werewolf (150 HP), 3 Werewolfs (180 HP), 2 Dire Wolfs, Wolf | 3/8 | 3 |
 | Lysaga and her hut | 9 | Baba Lysaga's Creeping Hut (110 HP), Baba Lysaga (100 HP) | Baba Lysaga's Creeping Hut (160 HP), Baba Lysaga (145 HP) | 3/8 | 3 |
 | The masterless hut | 9 | Baba Lysaga's Creeping Hut (195 HP), 3 Swarm of Insects | Baba Lysaga's Creeping Hut (495 HP), 3 Swarm of Insects | 3/8 | 3 |
@@ -42,7 +42,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Bone marshal, riders stood down (L8) | 8 | The Bone Marshal (190 HP), 3 Wights | The Bone Marshal (380 HP), 3 Wights | 3/8 | 3 |
 | Bone marshal, the column (L8) | 8 | The Bone Marshal (270 HP), 3 Wights, 6 Skeletons, 2 Phantom Warriors | The Bone Marshal (310 HP), 3 Wights, 6 Skeletons, 2 Phantom Warriors | 3/8 | 3 |
 | The Rag Queen | 9 | The Rag Queen (375 HP), 2 Banshees, 4 Scarecrows | The Rag Queen (715 HP), 2 Banshees, 4 Scarecrows | 3/8 | 3 |
-| Vine Mother L6 with Adrian | 6 | The Vine Mother (200 HP), 3 Vine Blights, 5 Needle Blights | The Vine Mother (340 HP), 3 Vine Blights, 5 Needle Blights | 4/8 | 3 |
+| Vine Mother L6 with Adrian | 6 | The Vine Mother (200 HP), 3 Vine Blights, 5 Needle Blights | The Vine Mother (340 HP), 3 Vine Blights, 5 Needle Blights | 4/8 | 4 |
 | Vine Mother L6 | 6 | The Vine Mother (200 HP), 3 Vine Blights, 5 Needle Blights | The Vine Mother (340 HP), 3 Vine Blights, 5 Needle Blights | 3/8 | 3 |
 | Granny Ash | 6 | Granny Ash (145 HP), 3 Dire Wolfs, 4 Needle Blights | Granny Ash (360 HP), 3 Dire Wolfs, 4 Needle Blights | 3/8 | 3 |
 | The Count's Huntsman L8 | 8 | The Count's Huntsman (240 HP), Nightmare, 6 Dire Wolfs | The Count's Huntsman (430 HP), Nightmare, 6 Dire Wolfs | 3/8 | 3 |
@@ -123,3 +123,20 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Summit L5, circle broken (reward) | 5 | Tree Blight (74 HP), Druid (50 HP), 4 Twig Blights | Tree Blight (135 HP), Druid (90 HP), 4 Twig Blights | 4/8 | 4 |
 | Summit L6, circle broken (reward) | 6 | Tree Blight (140 HP), Druid (60 HP), 6 Twig Blights | Tree Blight (215 HP), Druid (60 HP), 6 Twig Blights | 4/8 | 4 |
 | Summit L7, circle broken (reward) | 7 | Tree Blight (100 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | Tree Blight (250 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | 4/8 | 4 |
+
+## Where a fight is not at 3 in 8, and why
+
+- **The festival loyalists** keep their old line-up (6 in 8 for the full-ability test party; the test's band is 5-7). The Phase 4 playthrough party
+  (Ilse, Tamsin, Hedda, Silvain) wins it 2 times in 8 as it is, and any harder step won it 0 or 1, so a 3-in-8 line-up would strand the story
+  walk-through there. Izek's duel, the rampage and Izek in his room are at 3.
+- **Strahd's final rooms** each hold two line-ups. The first, measured above, applies when the party carries the Sunsword (`item:sunsword`); the
+  second, the old 5-in-8 line-up, is for the Phase 6 coffin playthrough, whose party reaches the chapel without it and cannot win the retuned room.
+  Strahd's visits keep their flee-at-0-HP behaviour.
+- **The harder side (2 in 8)**: Morgantha and Offalia, the two brides, all three brides, the Tinker's Wagon at level 6, Old Greytooth with Szoldar turned,
+  Bella on the road. No Hit Point step or helper added landed on 3 for these; the 2 is the step below 3.
+- **Rewards** a quest earns (hounds called, Corvina named, Vosk named, the summit circle broken, the Vine Mother with Adrian along, ...) are one step
+  easier (4); Kostin's warning at the summit is one step harder (2).
+- **Hit Points far above the book** (two to four times) are how most bosses reach 3: the full-ability party out-damages the book numbers by a lot. Where a
+  boss would need more than that, helpers stand beside it instead. Encounter `text` (the voiced narrator line) still names the old counts of spawn.
+- **Fight starts**: boss rooms that gained helpers beside the boss are on `PENDING` in tests/unit/test_fight_spread.gd until the spread lane moves them.
+
