@@ -69,12 +69,14 @@ static func voice_for(ch: Character) -> String:
 	return voice if voice in HERO_VOICES else ""
 
 
-## The voice a dialogue line beat speaks in: its speaker's, or, for a party member's line, theirs (voice_for).
+## The voice a dialogue line beat speaks in: its speaker's, or, for a party member's line, theirs (voice_for). The
+## companions by the fire count too (camp_company): their camp talks are theirs to speak (owner, 2026-10-13: Thistle
+## was silent when he talked to her at camp, out of the party).
 static func beat_voice(beat: Dictionary) -> String:
 	var id := str(beat.get("speaker_id", ""))
 	if not bool(beat.get("party", false)):
 		return id
-	for ch: Character in GameState.story.party:
+	for ch: Character in GameState.story.party + GameState.story.camp_company:
 		if ch.id == id:
 			return voice_for(ch)
 	return ""

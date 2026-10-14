@@ -131,8 +131,11 @@ turn unless hit by fire or radiant: Hedda's radiant spells and Silvain's fire ar
 | `courtyard_phantoms` | grounds | enter `holt_courtyard` at night, after meeting Godfrey, before the Order's fate | 4 phantom warriors (2800) | 3 (2100) | 2 (1400) |
 | `bone_watch` | mausoleum | dialogue (forcing the warden) | the warden + 3 phantom warriors (2800) | warden + 2 (2100) | warden + 1 (1400) |
 | `lamp_dark` | tower | enter `holt_lantern_room` | 2 wraiths + 2 specters (4000, Low) | wraith + 3 specters (2400) | wraith at 50 HP + 2 specters (2200) |
-| `vladimir_duel` | hall | dialogue (the trial of arms) | Vladimir + a revenant second (4700, Low+) | Vladimir alone (2900) | Vladimir at 140 HP |
-| `beacon_stand` | tower | dialogue (the party won't back down, fails to move him, or breaks the pact) | Vladimir + 2 revenants at 110 HP + a phantom warrior (7200, Moderate) | Vladimir at 170 HP + a revenant at 110 HP (4700, Low+) | Vladimir at 150 HP alone |
+| `vladimir_duel` | hall | dialogue (the trial of arms) | Vladimir + 4 revenant seconds, the fourth at 80 HP (10100, above High) | Vladimir alone (2900) | Vladimir at 140 HP |
+| `beacon_stand` | tower | dialogue (the party won't back down, fails to move him, or breaks the pact) | Vladimir + 3 revenants + a phantom warrior + 2 wights (10400, above High) | Vladimir at 170 HP + a revenant at 110 HP (4700, Low+) | Vladimir at 150 HP alone |
+
+Retuned for the sharp test party (owner, 2026-10-13: 5 wins in 8 on Balanced): at level 8 the duel with a fourth
+second and the beacon with two wights each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
 
 Phantom warriors, wraiths and specters resist weapon damage (and fire), so those fights sit under their XP band on
 purpose: Hedda's radiant spells and Silvain's force spells carry them. Critical path fights: `lamp_dark` always (the

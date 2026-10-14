@@ -60,6 +60,7 @@
   "b0a23d2b0e0097e7": "[fond, faintly dismissive]",
   "b5668fa784ff6182": "[hollow, defeated, turning away]",
   "b98f49e37eccdbda": "[tender, amused]",
+  "bd5d275ae6124e8b": "[serene, gentle, quietly proud]",
   "bd5dcccbcd928a56": "[broken whisper]",
   "c19036475c8741cf": "[gracious, calm]",
   "c2f4e7d303762ba4": "[reverent, tender]",
@@ -82,6 +83,7 @@
  "adrian_martikov": {
   "070e0c7af03244d7": "[dry, grim humour]",
   "1028e012c0a14526": "[grieving, stubborn, fond]",
+  "198a5123031350d9": "[urgent, fearful]",
   "1a3840607ed60d22": "[wry, rueful]",
   "1c0d279a323cab93": "[quiet, resolute, shaky]",
   "4a698e213a98d9d4": "[afraid, bitter, defensive]",
@@ -93,6 +95,7 @@
   "9953feb0601685d8": "[rueful, resigned]",
   "b9fb0c28a524b964": "[grieving, raw]",
   "ba7ccfdae866471e": "[tired, wry, relieved]",
+  "c226862248684515": "[dry, bitter]",
   "c5e8ec8664c55fab": "[haunted, ashamed]",
   "d26497ed4c5e9ca4": "[breathless, wry, bitter]",
   "df6112d55a6ea48a": "[disdainful, dry]",
@@ -601,6 +604,7 @@
   "4ae5d321e8dc7c52": "[grateful, wry, warm]",
   "4e5faa7f2751b229": "[warm, comic, grateful]",
   "524c7c137f24490f": "[gossiping, fond, worried]",
+  "5b1c33574a259e54": "[warm, comic, fond]",
   "6c5e062754e1ec05": "[whispered, nervous]",
   "76a89fd5977a8189": "[cheerful, wry]",
   "773e7c937d224d89": "[overjoyed, amazed, emotional]",
@@ -683,6 +687,7 @@
   "4540aa248de7ea06": "[proud, moved, gruff]",
   "45f43798b7b71c3e": "[dry, sly]",
   "468fcccd31bbb157": "[grim, angry]",
+  "47c8ac28201d6672": "[relieved, weary, gruff]",
   "4d5856e8b79a6105": "[gruff, wry, hopeful]",
   "4df6d5640f3dd541": "[gruff, wary, low]",
   "4fb5a58643bd8552": "[angry, hurt]",
@@ -690,6 +695,7 @@
   "59ede29d685f4250": "[grim, practical]",
   "5bbc454b3d3358e3": "[sly, gruff]",
   "5d3a4576e5431408": "[gruff, fond, dry]",
+  "5dc7a2bb06011f10": "[grave, urgent]",
   "5e055893fd771cf1": "[dry, amused, proud]",
   "61fd1d1f90c91ac6": "[bitter, proud, dry]",
   "6286b12e37972198": "[proud, storytelling]",
@@ -713,6 +719,7 @@
   "8d4054be526c4adf": "[gruff, disgusted]",
   "8da3aa0050b64a48": "[gruff, relieved, wry]",
   "8f615f8ae8811e4d": "[gruff, moved, grateful]",
+  "8f6b1895e2a45e2d": "[grim, bitter]",
   "902f1a22c3f612e7": "[grim, warning]",
   "90e037efa83533db": "[gruff, wary, then confiding]",
   "934bd45451438a99": "[thoughtful, grim, wry]",
@@ -1403,6 +1410,7 @@
   "c6ff0bbaa4e48a55": "[disgusted, uneasy]",
   "c88f2cbee3eca082": "[furious, shaking]",
   "c91bfbae2238f482": "[earnest, hopeful]",
+  "cb2a1d51c6551ac7": "[afraid, insistent]",
   "ce7487cdfa1deea9": "[bitter, shaken, quiet]",
   "ce8cf1676ecda5b1": "[shaken, relieved, firm]",
   "cecdabd6a01f3089": "[flustered, evasive]",
@@ -1447,6 +1455,7 @@
   "f88a9813292e6cef": "[uneasy, insistent]",
   "f8a1614c8b69ce91": "[shaken, sad]",
   "f8c49b65da6347a3": "[resolute, curious]",
+  "f9c5f4103b42506b": "[guarded, anxious]",
   "fb82ad34d66f23d9": "[cold, defiant]",
   "fec5c736bcda575f": "[haunted, tender, remembering]",
   "ffc80d9892938a00": "[wary, puzzled]"
@@ -1595,6 +1604,7 @@
   "bfa2b26335de9804": "[quiet, resolute, sad]",
   "cd0dd8f8163d4fa6": "[earnest, hopeful, tired]",
   "d5b70921acc0a1b5": "[hollow, bitter, quiet]",
+  "d9b01afb227e9e2b": "[earnest, stubborn]",
   "dc1bff84c3259a2d": "[stricken, quiet, ashamed]",
   "ecf2be8ba93656e8": "[quiet, stubborn, sad]"
  },
@@ -1636,7 +1646,7 @@
  "krezk_goatherd": {
   "9f6b06a40bc831cf": "[dry, wry, amused]",
   "a9b199ce4228f24a": "[dry, puzzled, wry]",
-  "db5e1700b5f7edc6": "[dry, fond]"
+  "db5e1700b5f7edc6": "[dry, wry]"
  },
  "krezk_guard": {
   "0046292684ec4004": "[weary, guilty]",
@@ -1886,7 +1896,10 @@
  },
  "madam_eva": {
   "0e37c5f63ec72ec4": "[dry, knowing, ominous]",
-  "280c8cd778f8de6d": "[dry, knowing, unbothered]"
+  "1a434c0edcc07b01": "[low, knowing, warning]",
+  "280c8cd778f8de6d": "[dry, knowing, unbothered]",
+  "42e8278ecdbb1cbd": "[sad, knowing]",
+  "d486384f1c76e796": "[gentle, knowing]"
  },
  "marshal_dragomir": {
   "05b0c0794c46d275": "[cold, dismissive]",
@@ -3116,7 +3129,11 @@
  },
  "ruxandra": {
   "683af5b4249d2166": "[cold, venomous, final]",
-  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]"
+  "9ccc7996dda1b48a": "[triumphant, fanatical, rasping]",
+  "a0badcdfb8ba7bd5": "[warm, serene, fervent]",
+  "af603b7f5aaf6e66": "[kindly, amused]",
+  "f8c85861e679e6ec": "[gentle, proud, fervent]",
+  "fb8f1ff0c7f365a5": "[soft, quietly menacing]"
  },
  "sarkhaza": {
   "01a1e5761bb42aa5": "[low, hungry, menacing]",
@@ -3271,6 +3288,7 @@
   "0b46b36fc75cf06d": "[calm, cold, mocking]",
   "0f5e25038c140b4f": "[cold, slow, absolute]",
   "1249e9f743e68b56": "[quiet, knowing, amused]",
+  "13c3c38daf02cbac": "[cold, measured]",
   "16653043e2159990": "[courteous, mocking]",
   "18a10370b192cd62": "[silken contempt]",
   "1c1f484a080b380b": "[gentle, gracious, possessive]",
@@ -3291,8 +3309,11 @@
   "63f5674c666aed37": "[calm, quietly commanding]",
   "6412ec79a9dc9dc8": "[courtly, unhurried, possessive]",
   "64b8cf5947f81fca": "[gracious, mocking, patient]",
+  "64bfd75a17db6059": "[mocking, cold]",
   "671eaa628055719b": "[solicitous, faintly hungry]",
   "699397fff128913d": "[courtly, then intimate and menacing]",
+  "6e35038b46b8962c": "[silky, possessive, menacing]",
+  "6f0a86dfc73cb874": "[cold, wry, contemptuous]",
   "7675f8f71ce241d9": "[calm, commanding, faintly amused]",
   "7a220416eaa457e2": "[soft, amused, threatening]",
   "816daf00c48a3f21": "[approving, possessive, calm]",
@@ -3324,6 +3345,7 @@
   "eb5e32eb7da0574b": "[courtly, warm, insincere]",
   "ebda8d9d52f21219": "[cold, disdainful, unhurried]",
   "f3de91d181fca112": "[soft, indifferent command]",
+  "f741f92e91786751": "[cold, menacing, intimate]",
   "fcbfb8ec0b6b9baf": "[calm, quiet certainty]"
  },
  "szoldar": {

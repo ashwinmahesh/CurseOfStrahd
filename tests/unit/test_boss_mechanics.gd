@@ -97,6 +97,61 @@ func test_a_legendary_move_provokes_no_opportunity_attack() -> void:
 	assert_eq(e.legendary.left(boss), 1)
 
 
+## Three uses, a strike that costs two and a move that costs one (the Vine Mother's shape): the strike lands at the end
+## of the first hero's turn, and the last use isn't wasted: at the end of the last turn before its own, it moves to
+## stand beside both heroes.
+func test_a_use_no_strike_can_take_goes_on_a_move_before_its_own_turn() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 3, "options": [
+		{"id": "claw", "name": "Claw", "cost": 2, "action": "claw", "summary": "x"},
+		{"id": "move", "name": "Move", "cost": 1, "move": true, "summary": "x"}]}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(6, 3), 5)
+	_order(e, [a, b, boss], [30, 25, 10])
+	var hp := a.creature.hp
+	e.end_turn()
+	assert_eq(e.legendary.left(boss), 1, "the claw took two uses at the end of the first hero's turn")
+	assert_true(a.creature.hp < hp, "and struck the hero beside it")
+	assert_eq(boss.cell, Vector2i(3, 3), "the last use waits while another turn is still to come")
+	e.end_turn()
+	assert_eq(e.current(), boss)
+	assert_eq(e.legendary.left(boss), 3, "back to three at the start of its own turn")
+	assert_eq(e.distance(boss, a), 5, "it moved with its last use...")
+	assert_eq(e.distance(boss, b), 5, "...to stand beside both heroes")
+
+
+## A boss with a long reach steps back out of a hero's reach with a use no strike can take, keeping the hero in its own.
+func test_a_reach_boss_steps_back_out_of_reach_with_a_spare_use() -> void:
+	var e := _field()
+	var data := _boss({"legendary_actions": {"per_round": 3, "options": [
+		{"id": "lash", "name": "Lash", "cost": 2, "action": "claw", "summary": "x"},
+		{"id": "creep", "name": "Creep", "cost": 1, "move": true, "summary": "x"}]}})
+	((data["actions"] as Array)[0] as Dictionary)["attack"] = {"bonus": 30, "reach": 15}
+	var boss := _add_boss(e, data, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(11, 7), 5)
+	_order(e, [a, b, boss], [30, 25, 10])
+	e.end_turn()
+	assert_eq(e.legendary.left(boss), 1, "a lash at the end of the first hero's turn")
+	e.end_turn()
+	assert_eq(e.current(), boss)
+	var gap := e.distance(boss, a)
+	assert_true(gap > a.reach_ft() and gap <= 15, "out of the hero's reach, the hero still in its own (%d ft)" % gap)
+
+
+## 2025 Monster Manual: "Legendary Action Uses: 3 (4 in Lair)".
+func test_a_boss_in_its_lair_has_its_lair_uses() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 3, "in_lair": 4, "options": [
+		{"id": "claw", "name": "Claw", "cost": 1, "action": "claw", "summary": "x"}]}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(9, 6), 5)
+	assert_eq(e.legendary.per_round(boss), 3, "three out of its lair")
+	_order(e, [boss, a], [30, 10], true)
+	assert_eq(e.current(), boss)
+	assert_eq(e.legendary.left(boss), 4, "four in its lair, from the start of its turn")
+	assert_eq(e.legendary.pips(boss), "◆◆◆◆")
+
+
 func test_legendary_resistance_turns_failures_into_successes_while_uses_last() -> void:
 	var e := _field()
 	var boss := _add_boss(e, _boss({"legendary_resistance": 1}), Vector2i(3, 3))
@@ -315,6 +370,26 @@ func test_a_foe_withdraws_at_its_threshold_without_dying_or_loot() -> void:
 	e.deal_damage(a, wolf, [{"amount": 50, "type": "force"}], false, "test")
 	assert_true(e.is_over())
 	assert_false(e.legendary.no_loot(), "the wolf died, so there is something to find")
+
+
+## A foe that withdraws with a parting line (Strahd leaving his visits, owner 2026-10-13: "when he leaves, his sound bite
+## should play as the combat ends"): the line is logged and rides on its vanish event with whose voice speaks it.
+func test_a_foe_that_withdraws_says_its_parting_line() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss(), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	e.legendary.set_withdraw({"who": "test_boss", "at_hp_below": 1, "flag": "boss_tested_us", "say": "Until the next time.",
+		"speaker": "strahd"})
+	_order(e, [a, boss], [30, 10])
+	e.deal_damage(a, boss, [{"amount": 99, "type": "force"}], false, "test")
+	assert_false(e.legendary.departed.has(boss.id), "1 Hit Point left: it fights on to the end")
+	e.deal_damage(a, boss, [{"amount": 5, "type": "force"}], false, "test")
+	assert_eq(str(e.legendary.departed.get(boss.id, "")), "withdraw", "at 0 it goes")
+	var vanish := _kinds(e.events, "vanish")
+	assert_eq(vanish.size(), 1)
+	assert_eq(str(vanish[0]["say"]), "Until the next time.")
+	assert_eq(str(vanish[0]["speaker"]), "strahd")
+	assert_true(e.log.entries.any(func(en: Variant) -> bool: return str((en as Dictionary).get("text", "")).contains("Until the next time.")), "and in the log")
 
 
 func test_a_foe_withdraws_after_its_rounds() -> void:
@@ -539,6 +614,57 @@ func test_strahd_takes_mist_form_to_regenerate_when_badly_hurt() -> void:
 	e.run_ai_turn()
 	assert_eq(e.legendary.form(s), "mist", "below a quarter of his Hit Points")
 	assert_eq(str(e.ai.last_plan.get("kind", "")), "mist")
+
+
+## The Sunsword's sunlight (owner, 2026-10-13: Strahd's finale is tuned for a party carrying it): he keeps a legendary
+## move back while he stands in it, and at the end of the last turn before his own he slips out of it, so his turn
+## starts unburnt.
+func test_strahd_slips_out_of_the_sunswords_light_before_his_turn() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(4, 3), 9)
+	var b := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 5), 9)
+	e.items.attach_light(a, "light:sunsword", 15, 15, true)
+	_order(e, [a, b, s], [30, 20, 10])
+	assert_true(e.in_sunlight(s), "beside the bearer, in the light")
+	assert_true(e.ai.boss.in_burning_sun(s))
+	e.end_turn()
+	assert_true(e.legendary.left(s) >= 1, "a move's use kept back from his strikes")
+	e.end_turn()
+	assert_eq(e.current(), s)
+	assert_false(e.in_sunlight(s), "out of the light before his turn")
+	assert_eq(s.creature.hp, s.creature.max_hp(), "so it didn't burn him")
+
+
+## On his own turn, after his action, he walks out of the light when no foe stands beside him to strike as he goes.
+func test_strahd_walks_out_of_the_light_after_acting() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var a := TestCombat.hero(e, "ilse_varga", Vector2i(5, 3), 9)
+	e.items.attach_light(a, "light:sunsword", 15, 15, true)
+	_order(e, [s, a], [30, 10])
+	assert_true(e.in_sunlight(s))
+	assert_true(e.ai.boss.leave_sun(s) != null, "nobody beside him: he goes")
+	assert_false(e.in_sunlight(s), "out of the light")
+	var e2 := _field()
+	var s2 := _strahd(e2, Vector2i(3, 3))
+	var a2 := TestCombat.hero(e2, "ilse_varga", Vector2i(4, 3), 9)
+	e2.items.attach_light(a2, "light:sunsword", 15, 15, true)
+	_order(e2, [s2, a2], [30, 10])
+	assert_true(e2.ai.boss.leave_sun(s2) == null, "the bearer beside him would strike as he goes: a legendary move takes him out")
+
+
+## Sleep can't take an elf's trance: a caster doesn't spend its spell on one.
+func test_sleep_is_worth_nothing_on_an_elf() -> void:
+	var e := _field()
+	var s := _strahd(e, Vector2i(3, 3))
+	var elf := TestCombat.hero(e, "liriel_dawnsong", Vector2i(6, 3), 9)
+	var human := TestCombat.hero(e, "ilse_varga", Vector2i(6, 5), 9)
+	var sleep := Compendium.shared().spell_data("sleep")
+	assert_false(AiSpells.sleeps(elf))
+	assert_true(AiSpells.sleeps(human))
+	assert_eq(e.ai.spells.worth(s, sleep, elf), 0.0, "the elf won't sleep")
+	assert_true(e.ai.spells.worth(s, sleep, human) > 0.0)
 
 
 func test_strahd_drops_to_mist_and_the_story_learns_he_is_in_his_coffin() -> void:

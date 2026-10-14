@@ -233,6 +233,13 @@ func test_the_turn_order_points_the_camera() -> void:
 	await _press(JOY_BUTTON_X)
 	assert_true(cv.rig.follow != rat_tok and cv.rig.follow != null, "X with the radial held: the next in the turn order")
 	assert_eq((cv.rig.follow as CombatToken).combatant, cv.e.order[(cv.e.order.find(rat) + 1) % cv.e.order.size()])
+	# The order on the HUD rings who the camera went to (and scrolls to them, when it is long: test_turn_strip), and the
+	# right bumper with the radial held looks back along it, to the rat again.
+	var strip := cv.hud.get("_strip_view") as TurnStrip
+	assert_eq(strip.looked, (cv.rig.follow as CombatToken).combatant.id, "the turn order rings the creature looked at")
+	await _press(JOY_BUTTON_RIGHT_SHOULDER)
+	assert_eq(cv.rig.follow, rat_tok, "RB with the radial held: back along the turn order")
+	assert_eq(strip.looked, rat.id, "and the ring goes back with it")
 	cv.hud.radial.visible = false
 
 

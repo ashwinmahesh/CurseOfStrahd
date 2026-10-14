@@ -224,7 +224,7 @@
       "id": "markovia_plaque",
       "cell": [
         9,
-        5
+        1
       ],
       "kind": "examine",
       "label": "A memorial plaque",
@@ -275,6 +275,17 @@
       "model": "candle_cluster",
       "when": "flag.abbot_fate != \"broken\"",
       "kind": "decor"
+    },
+    {
+      "id": "bride_bier",
+      "cell": [
+        16,
+        2
+      ],
+      "kind": "decor",
+      "label": "The bier",
+      "model": "table",
+      "when": "flag.wedding_dress_delivered and flag.vasilka_fate != \"sent\""
     },
     {
       "id": "sacristy_vestments",
@@ -400,6 +411,26 @@
       ],
       "dialogue": "abbey_of_st_markovia/vasilka:abandoned",
       "when": "flag.vasilka_fate == \"abandoned\""
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        16,
+        2
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:at_rest",
+      "when": "flag.vasilka_fate == \"laid_to_rest\"",
+      "lying": true
+    },
+    {
+      "npc": "vasilka",
+      "cell": [
+        16,
+        3
+      ],
+      "dialogue": "abbey_of_st_markovia/vasilka:fallen",
+      "when": "flag.bride_defeated",
+      "lying": true
     }
   ],
   "encounters": [
@@ -415,7 +446,12 @@
             16,
             3
           ],
-          "name": "Vasilka"
+          "name": "Vasilka",
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          },
+          "hp": 160
         },
         {
           "monster": "berserker",
@@ -455,11 +491,67 @@
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
-            23,
-            14
+            5,
+            8
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            8
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            5,
+            12
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            15,
+            3
           ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            2
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            4
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            17,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            15,
+            2
+          ],
+          "name": "Belview Brute"
         }
       ],
       "surprise": "",
@@ -477,7 +569,11 @@
             16,
             3
           ],
-          "name": "Vasilka"
+          "name": "Vasilka",
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          }
         },
         {
           "monster": "berserker",
@@ -531,7 +627,11 @@
             3
           ],
           "name": "Vasilka",
-          "hp": 80
+          "hp": 80,
+          "art": "vasilka",
+          "lying": {
+            "on": "bride_bier"
+          }
         },
         {
           "monster": "mongrelfolk",
@@ -571,7 +671,7 @@
             3
           ],
           "name": "The Abbot",
-          "hp": 120
+          "hp": 250
         },
         {
           "monster": "mongrelfolk",
@@ -586,6 +686,44 @@
             17,
             4
           ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
+            6
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            11,
+            3
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            12,
+            2
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            13,
+            3
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            11,
+            2
+          ],
+          "name": "Belview Brute"
         }
       ],
       "surprise": "",

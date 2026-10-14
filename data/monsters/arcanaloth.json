@@ -185,7 +185,7 @@
       "id": "spellcasting",
       "name": "Spellcasting",
       "kind": "spellcasting",
-      "summary": "Intelligence, DC 17: Alter Self, Detect Magic and other small magics at will; Dimension Door, Mind Blank and two divinations once a day."
+      "summary": "Intelligence, DC 17: Alter Self, Detect Magic and other small magics at will; Contact Other Plane, Dimension Door and Mind Blank once a day."
     }
   ],
   "spellcasting": {
@@ -201,7 +201,6 @@
     "per_day": {
       "1": [
         "contact_other_plane",
-        "detect_thoughts",
         "dimension_door",
         "mind_blank"
       ]

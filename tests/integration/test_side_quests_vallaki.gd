@@ -154,8 +154,8 @@ func test_ilies_secret_the_vigil_and_the_grave_by_day() -> void:
 	assert_eq(str(ana[-1].get("combat", "")), "roses_street")
 	assert_eq(_standing(st, "vallaki", "ana"), "", "she's gone from the street")
 	var night := _encounter(st, "vallaki", "roses_street")
-	assert_eq((night["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary)["monster"]) == "vampire_spawn").size(), 2,
-		"Catalina and Irina at level 5")
+	assert_eq((night["monsters"] as Array).filter(func(m: Variant) -> bool: return str((m as Dictionary)["monster"]) == "vampire_spawn").size(), 3,
+		"Catalina and the two girls she calls at level 5")
 	# By day her grave is the easier way; the dig fight starts with the girls asleep.
 	st.minute_of_day = 11 * 60
 	var dig := _play(st, "vallaki/black_roses:grave", ["Dig them up"])

@@ -1478,8 +1478,19 @@
         7
       ],
       "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
-      "when": "not guest:lupu",
+      "when": "not guest:lupu and night and quest.the_burgomasters_hound != done and quest.the_burgomasters_hound != sealed",
       "facing": "north"
+    },
+    {
+      "npc": "lupu",
+      "cell": [
+        7,
+        7
+      ],
+      "dialogue": "village_of_barovia/the_burgomasters_hound:lupu",
+      "when": "not guest:lupu",
+      "facing": "north",
+      "lying": true
     },
     {
       "npc": "ilarion",
@@ -1577,10 +1588,31 @@
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            2
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
           "cell": [
             28,
-            8
+            2
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            3
           ]
         }
       ],
@@ -1665,6 +1697,34 @@
           "cell": [
             24,
             17
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            9
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            15,
+            10
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            16,
+            9
           ]
         }
       ],
@@ -1758,6 +1818,27 @@
             33,
             10
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            11
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            37,
+            10
+          ]
         }
       ],
       "surprise": "",
@@ -1779,8 +1860,7 @@
             37,
             11
           ],
-          "name": "The Coachman",
-          "hp": 60
+          "name": "The Coachman"
         },
         {
           "monster": "strahd_zombie",
@@ -1797,9 +1877,30 @@
           ]
         },
         {
-          "monster": "swarm_of_bats",
+          "monster": "dire_wolf",
           "cell": [
-            34,
+            36,
+            10
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            36,
+            12
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            37,
             10
           ]
         }
@@ -1942,38 +2043,10 @@
           ]
         },
         {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            11
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            9,
-            10
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            13
-          ]
-        },
-        {
           "monster": "needle_blight",
           "cell": [
             4,
             13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            12
           ]
         }
       ],
@@ -2107,6 +2180,27 @@
           "cell": [
             10,
             13
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            4,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            11
           ]
         }
       ],
@@ -2277,6 +2371,27 @@
             24,
             15
           ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            22,
+            13
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            20,
+            12
+          ]
         }
       ],
       "surprise": "",
@@ -2308,6 +2423,27 @@
           "cell": [
             24,
             15
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            22,
+            13
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            20,
+            12
           ]
         }
       ],

@@ -13,8 +13,10 @@ is `combat/ai/ai_tactics.gd`.
 | +2s, like Baldur's Gate 3 | party: attack rolls and saving throws | — | enemies: attack rolls, spell attacks, DCs of spells and actions | as Tactician |
 | Who enemies hit (`tactics`) | `kind`: spread blows, no killing-blow bonus | `standard`: as before | `sharp`: the hurt, the target its side is on, concentrating casters, healers | `ruthless`: sharp, and cruel foes strike heroes at 0 HP |
 | Potion of Healing on armed humanoids | — | — | yes: drunk when Bloodied; badly hurt and pressed, Disengage and step back first; looted if unused | as Tactician |
-| Enemy spellcasters | as before | as before (a few spells) | the best spell of the whole list when it beats the weapon, and a scroll of their strongest harmful spell; an unread scroll is looted | as Tactician |
+| Enemy spellcasters | as before (a few spells) | the best spell of the whole list when it beats the weapon (owner, 2026-10-13: every foe with spells uses them when that's its best option) | as Balanced, and a scroll of their strongest harmful spell; an unread scroll is looted | as Tactician |
 | A broken side flees | — | — (cowards still flee when Bloodied) | yes, except mindless, fearless and bosses | as Tactician |
+| A foe with no way to any enemy, and no enemy with a way to it (walls, drops and bystanders in the way; doors and furniture count as ways through) | leaves after two of its turns in a row, except legendary creatures and Strahd | same | same | same |
+| Shut doors on a foe's way to the party | opened (its object interaction) by any foe with hands and Intelligence 3 or more, not beasts, oozes, plants, constructs or swarms | same | same | same |
 | Death | spared: Unconscious and Stable instead | rules | rules | rules |
 | Long Rests in risky places | never interrupted | 1 in 6 | 1 in 6 | 1 in 6 |
 | Saving | anywhere | anywhere | anywhere | one save (lane 16 builds it) |
@@ -33,10 +35,16 @@ carries on in Tactician (the run stops being an Honour run), and Story heroes ca
   party's Story effect (`fit_party`, which also takes another mode's off). A fight resumed from its round-start save
   calls `arm` with the mode the snapshot kept. Settings should call `fit_party` on each party member after a switch.
 - **The AI** reads `e.difficulty.tactics` through `AiBrain.tactics` (AiTactics): `target_adjust` and `finish_scale`
-  in the attack score, `fallen_plan` for Honour, `potion_turn` and `flee_turn` before the plan. At sharp and ruthless
-  a caster's turn first weighs `AiBrain.spells` (AiSpells): each offensive spell of its list or its scroll, by
-  expected damage plus the turn a condition takes away, against the weapon plan for the whole action. A creature that flees
-  far enough leaves through `Legendary.leave(c, "fled")`: no more turns, no loot from it.
+  in the attack score, `fallen_plan` for Honour, `potion_turn` and `flee_turn` before the plan. Where the mode's
+  `spells` is on (Balanced, Tactician, Honour) a caster's turn first weighs `AiBrain.spells` (AiSpells): each offensive
+  spell of its list or its scroll, by expected damage plus the turn a condition takes away, against the weapon plan for
+  the whole action; the spellcaster profile's own few (Phantasmal Killer, Magic Missile) are weighed with the rest
+  there, and only its escape comes first. A creature that flees
+  far enough leaves through `Legendary.leave(c, "fled")`: no more turns, no loot from it. In every mode, a turn with no
+  attack in it (`finish_turn`) asks `stranded_turn`: a foe `cut_off` from every enemy for two of its turns in a row
+  leaves the same way (`"cut off"`), so a fight nobody can finish ends (fight stalls lane, 2026-10-13). Closing in,
+  a creature that opens doors (`AiBrain.door_opener`) walks round by the shut doors too and opens one it stands beside
+  on its way (`_through_door`); the party's test autopilot does the same (mansion siege, 2026-10-13).
 - **Monster DCs** take the monster's `spell_dc` modifiers (`MonsterActions.dc_bonus` for its save actions, and its
   spells' DC and attack in `MonsterActions.cast`). Lair actions, auras and grapple escape DCs don't yet.
 - **Foes joining mid-fight** (Children of the Night) get the mode's numbers as `Encounter.add` places them.

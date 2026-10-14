@@ -385,7 +385,7 @@
       "id": "offering_urns",
       "cell": [
         17,
-        4
+        1
       ],
       "label": "Sealed urns",
       "model": "jars",
@@ -644,7 +644,7 @@
             22
           ],
           "name": "Vosk, unmasked",
-          "hp": 104
+          "hp": 135
         },
         {
           "monster": "flameskull",

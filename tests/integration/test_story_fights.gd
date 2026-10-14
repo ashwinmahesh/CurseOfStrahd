@@ -1,8 +1,8 @@
 extends FightSeriesCase
-## The story's own fights held to the side-quest bosses' bar where the owner found them too easy (2026-10-12: the Wizard
-## of Wines at level 6 on Balanced, where the autopilot won all eight tries losing at most one hero): over seeds 1-8 the
-## four pregens on autopilot win at least two and lose at least two, standing where walking in sets the fight off.
-## Their level 7 versions carry the same additions.
+## The story's own fights held to the owner's bar where he found them too easy (2026-10-12: the Wizard of Wines at level 6
+## on Balanced, where the autopilot won all eight tries losing at most one hero; 2026-10-13 18:05: the test party playing
+## as he does wins about 5 in 8 on Balanced): over seeds 1-8 the four pregens win four to six, standing where walking in
+## sets the fight off. Their level 5 and 7 versions are held by test_wow_levels.gd.
 
 
 ## Where walking in sets each fight off.
@@ -12,9 +12,10 @@ const DIG_DOOR: Array[Vector2i] = [Vector2i(17, 6), Vector2i(16, 6), Vector2i(15
 
 
 func _held(location: String, encounter: String, at: Array[Vector2i]) -> void:
+	speakers_step_aside = true   # Kostin, before the press house's fight
 	var wins := await _series(location, 12, 6, encounter, [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], at)
-	assert_true(wins >= 2, "%s is won at least twice in 8 (%d)" % [encounter, wins])
-	assert_true(wins <= 6, "%s is lost at least twice in 8 (%d)" % [encounter, wins])
+	assert_true(wins >= 4, "%s can be won (%d/8)" % [encounter, wins])
+	assert_true(wins <= 6, "%s stays hard (%d/8)" % [encounter, wins])
 
 
 ## Up the lane from the road: the vines stand up around them, and an old tree blight with them.
@@ -33,7 +34,9 @@ func test_the_cellar_dig_at_level_6() -> void:
 	await _held("wizard_of_wines_cellar", "cellar_dig", DIG_DOOR)
 
 
-## Kostin at the press with the Mash, four druids and six vine blights; the party just inside the door.
+## Kostin at the press with the Mash, three druids and six vine blights; the party just inside the door. 3 in 8, one
+## druid lighter than the exact 2: with four, the phase 5 playthrough's party lost the press house on every reload once
+## an ally's square stopped slowing them (2026-10-13).
 func test_the_press_house_at_level_6() -> void:
 	await _held("wizard_of_wines_press_house", "press_house_mash", [])
 

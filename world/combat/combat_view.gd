@@ -55,6 +55,12 @@ var boss_bar: BossBar
 var rig: CameraRig
 var hud: CombatHud
 var tokens: Dictionary = {}
+## The party's and guests' own figures as the fight was handed them (id -> CombatToken): exploring goes on with these
+## after the fight, so a change of shape hides one instead of freeing it (_swap_form_art).
+var _own_tokens: Dictionary = {}
+## A foe drawn in someone else's look (a named NPC on a generic stat block) while it wears a Beast's shape: id -> that
+## look, to wear again when the shape ends (_swap_shape_art).
+var _shape_looks: Dictionary = {}
 var mode: Mode = Mode.BUSY
 ## The arena offers R to fight again; in the story the end banner leads back to exploration.
 var restart_allowed := false
@@ -109,6 +115,10 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	board = board_
 	rig = rig_
 	tokens = tokens_
+	for id: Variant in tokens:
+		var own := tokens[id] as CombatToken
+		if own != null and own.combatant != null and own.combatant.side in [&"party", &"guest"]:
+			_own_tokens[id] = own
 	e.shared_turns = GameSettings.shared_turns()
 	_hero_saves()   # what was rolled before the fight showed isn't news
 	catalog = ActionCatalog.new(e)
@@ -549,6 +559,7 @@ func _focus_on(id: String) -> void:
 	if using_pad:
 		cursor_cell = tok.combatant.cell
 		_pad_hover()
+		hud.look_at(id)   # the order scrolls to them and rings them
 	rig.follow = tok
 	for k: String in tokens:
 		(tokens[k] as CombatToken).set_highlight(tokens[k] == tok)
@@ -558,9 +569,9 @@ func _focus_on(id: String) -> void:
 var _looked_at := ""
 
 
-## On a pad (holding the radial, the Next target button): the camera to the next creature in the turn order after the
-## one last looked at, or after whoever's turn it is.
-func _look_along_order() -> void:
+## On a pad (holding the radial, the Next target button; the right bumper goes back): the camera to the next creature in
+## the turn order after the one last looked at, or after whoever's turn it is. The order on the HUD scrolls along.
+func _look_along_order(step: int = 1) -> void:
 	var order: Array[Combatant] = []
 	for c in e.order:
 		var tok := _tok(c.id)
@@ -570,7 +581,10 @@ func _look_along_order() -> void:
 		return
 	var from := e.get_c(_looked_at) if _looked_at != "" else e.current()
 	var i := order.find(from)
-	_focus_on(order[(i + 1) % order.size()].id)
+	if i < 0:
+		_focus_on(order[0 if step > 0 else order.size() - 1].id)   # whoever it was is gone: from the top, or the end
+		return
+	_focus_on(order[posmod(i + step, order.size())].id)
 
 
 ## Takes control of another hero sharing the turn (EncounterTurns.switch_to): a click on their frame or portrait, Tab,
@@ -771,6 +785,9 @@ func _undo_pick() -> bool:
 func _show_pick(view: Dictionary, at: Vector2) -> void:
 	for key: String in ["area", "target", "friendly", "goal", "danger"]:
 		overlay.show_cells(key, view[key] as Array)
+	# A spell's area already placed (Sculpt Spells, Slow's picks): its edge, as while it was aimed.
+	if view.has("outline"):
+		overlay.show_outline(view["outline"] as Dictionary, view.get("outline_cells", []) as Array)
 	overlay.show_trail("path", view["trail"] as Array)
 	hud.show_tooltip(str(view["title"]), view["lines"] as Array, view["warnings"] as Array, at)
 
@@ -996,11 +1013,13 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 				if hover_cell.x >= 0:
 					_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
 				return
-			# An Evoker's Evocation spell with its own side in it asks who to shield first (Sculpt Spells, TargetPicker).
-			if picker.sculpt(c, selected, _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()), slot_level):
+			# Slow's creatures in the cube, or who an Evoker's Evocation spell with its own side in it shields, are picked
+			# next (TargetPicker).
+			var aim := _aim()
+			if picker.sculpt(c, selected, aim["point"] as Vector2, aim["dir"] as Vector2, slot_level):
 				_update_hover()
 				return
-			_perform(selected, [], _aim_point(), TargetPicker.point_dir(e, c, selected, _aim_point()))
+			_perform(selected, [], aim["point"] as Vector2, aim["dir"] as Vector2)
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
 			if t != null and t.combatant != c and c.hostile_to(t.combatant):
@@ -1066,7 +1085,16 @@ func _default_attack(c: Combatant, t: Combatant) -> Dictionary:
 
 
 func _aim_point() -> Vector2:
-	return Vector2(roundf(hover_world.x), roundf(hover_world.z))
+	return _aim()["point"] as Vector2
+
+
+## Where an area placed at a point goes (TargetPicker.aim): {point, dir}, its middle at the floor under the pointer, or
+## at the middle of the figure the pointer is on (the floor behind a tall figure lies farther back).
+func _aim() -> Dictionary:
+	var at := Vector2(hover_world.x, hover_world.z)
+	if hover_token != null and hover_token.combatant.is_alive():
+		at = e.center_of(hover_token.combatant)
+	return TargetPicker.aim(e, _player(), selected, at, slot_level)
 
 
 ## The way an area aimed from the caster points, toward the pointer: a Line at any angle (CombatGrid.line_aim), anything
@@ -1237,6 +1265,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	# While the radial is held, Next target looks along the turn order instead (the portraits' click on a pad).
 	if hud.radial.visible and event.is_action_pressed(&"combat_next_target"):
 		_look_along_order()
+		get_viewport().set_input_as_handled()
+		return
+	# The right bumper, still holding the radial, looks back along it (it uses a hotbar slot otherwise).
+	if hud.radial.visible and event is InputEventJoypadButton and event.is_action_pressed(&"combat_use_slot"):
+		_look_along_order(-1)
 		get_viewport().set_input_as_handled()
 		return
 	# While a wheel of actions is open the D-pad changes its filter (up and down) and its page (left and right).
@@ -1501,7 +1534,9 @@ func _update_hover() -> void:
 	# The crossed swords over a foe (to attack or aim at), the pointer elsewhere.
 	var under := _target_under()
 	Cursors.show("attack" if under != null and c.hostile_to(under.combatant) else "pointer")
-	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 else [])
+	# Aiming an area placed at a point, its outline is the cursor: its middle is under the pointer.
+	var placing := _aiming_area() and str(selected.get("targeting", "")) == "point"
+	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 and not placing else [])
 	var at := get_viewport().get_mouse_position() if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
 	var t := _target_under()
 	if mode == Mode.TARGET:
@@ -1642,9 +1677,10 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		hud.show_tooltip(str(selected["label"]), ["Choose a visible space within %d ft" % int(selected.get("range", 0)), "%d of %d spaces chosen" % [picked_points.size(), int(selected.get("count", 2))]] if kind == "points" else ["Choose an empty space or a willing ally to swap with"], [], at)
 		return
 	if kind in ["point", "direction"]:
-		# A wall at a point (a Tsunami) runs across the line from the caster, as it's cast (TargetPicker.point_dir).
-		var wall_dir := TargetPicker.point_dir(e, c, selected, _aim_point()) if kind == "point" else Vector2.ZERO
-		var pv := catalog.spell_preview(c, selected, _aim_point(), wall_dir if wall_dir != Vector2.ZERO else _aim_dir(c), slot_level)
+		# Placed at a point, its middle under the pointer, as it's cast (TargetPicker.aim: a Cube's face and direction,
+		# a Tsunami's run across the line from the caster).
+		var aim := _aim() if kind == "point" else {"point": _aim_point(), "dir": _aim_dir(c)}
+		var pv := catalog.spell_preview(c, selected, aim["point"] as Vector2, aim["dir"] as Vector2, slot_level)
 		# The area's edge, round for a radius, and no orange squares (owner, 2026-10-12: "for AoE spells, don't make the
 		# floor orange. Instead show a circular border which shows the area that would be affected").
 		overlay.show_outline(pv["outline"] as Dictionary, pv["cells"] as Array)
@@ -1698,28 +1734,12 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 		var data := Compendium.shared().spell_data(str(selected["spell_id"]))
 		var prev := catalog.cast_preview(c, selected, slot_level)
 		if data.has("attack") and prev.has("attack"):
-			var opt := {"melee": str(data["attack"]) == "melee", "profile": WeaponProfile.new()}
-			var sit := e.attack_situation(c, o, opt)
-			var ac := o.creature.ac_value() + int(sit["cover_bonus"])
-			var to_hit := (prev["attack"] as Breakdown).total() + int(sit.get("height_bonus", 0))
-			var needs := clampi(ac - to_hit, 2, 20)
-			lines2.append("Spell attack %+d vs AC %d: needs %d+" % [to_hit, ac, needs])
-			if int(sit.get("height_bonus", 0)) != 0:
-				lines2.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
-			# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
-			var own := c.creature.d20_sources(["attack", "attack:melee" if bool(opt["melee"]) else "attack:ranged", "attack:spell"])
-			var sa: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
-			var sd: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
-			if not sa.is_empty() and sd.is_empty():
-				tip_title = "%s · ADVANTAGE" % o.name()
-				edge = "advantage"
-			elif not sd.is_empty() and sa.is_empty():
-				tip_title = "%s · DISADVANTAGE" % o.name()
-				edge = "disadvantage"
-			for s: Variant in sa:
-				lines2.append("Advantage: %s" % s)
-			for s: Variant in sd:
-				lines2.append("Disadvantage: %s" % s)
+			# The odds from the situation the roll uses (Spell Sniper, cover a spell ignores), the caster's own edge too.
+			var spv := catalog.spell_attack_preview(c, str(selected["spell_id"]), o, prev["attack"] as Breakdown)
+			lines2.append_array(spv["lines"] as Array)
+			edge = str(spv["edge"])
+			if edge != "":
+				tip_title = "%s · %s" % [o.name(), edge.to_upper()]
 		if data.has("save") and prev.has("save_dc"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()
@@ -2073,10 +2093,22 @@ func _play_events() -> void:
 						await fx.cast(lcue, lt, lon, [], board, false)
 			"form":
 				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
+			"shape":
+				_swap_shape_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
 					_narrate(str(ev["narration"]), null, vt.combatant)
+				if str(ev.get("say", "")) != "":
+					# Its parting line (Strahd leaving a visit, owner 2026-10-13): spoken as it goes, and the fight waits for
+					# it, so it doesn't end on a cut.
+					hud.refresh_log()
+					var secs := VoiceOver.say(str(ev.get("speaker", "")), str(ev["say"]))
+					if secs > 0.0:
+						barks.hush()
+					await get_tree().create_timer(maxf(secs, 2.0) + 0.3).timeout
+					if _closed or not is_inside_tree():
+						return
 				if vt != null and str(ev.get("left", "")) == "fell":
 					# Over the edge: it drops out of sight.
 					var drop := create_tween()
@@ -2172,21 +2204,63 @@ func _tok(id: Variant) -> CombatToken:
 
 
 ## A Shapechanger took another shape (ADR 0014): its token wears the shape's sprite when it has one (`forms` art),
-## and the stat block's own again in its true form.
+## and the stat block's own again in its true form. A party member's or guest's own figure (a wereraven ally's) is only
+## hidden while it wears another and comes back for its true form, since exploring goes on with it after the fight
+## (owner's report 2026-10-12: Adrian's hybrid left the Vine Mother's fight unable to end).
 func _swap_form_art(id: String, art: String) -> void:
 	var old := _tok(id)
 	if old == null:
 		return
 	var want := art if art != "" and DirectionalSprite.frames_for(art) != null else ""
-	if want == old.art_override:
+	var own: CombatToken = null
+	if is_instance_valid(_own_tokens.get(id)):
+		own = _own_tokens[id] as CombatToken
+	if want == old.art_override or (want == "" and old == own):
 		old.flash(Look.color("lilac"), 0.3)
 		return
-	var nt := CombatToken.create(old.combatant, want)
-	nt.position = old.position
-	add_child(nt)
+	var nt: CombatToken
+	if want == "" and own != null and own != old:
+		nt = own
+		nt.combatant = old.combatant
+		nt.position = old.position
+		nt.visible = true
+		nt.refresh()
+	else:
+		nt = CombatToken.create(old.combatant, want)
+		nt.position = old.position
+		add_child(nt)
 	tokens[id] = nt
 	nt.flash(Look.color("lilac"), 0.4)
-	old.queue_free()
+	if old == own:
+		old.visible = false
+	else:
+		old.queue_free()
+
+
+## Polymorph, Wild Shape and the other changes of shape (ShapeChange, owner 2026-10-13: "their sprite should reflect
+## their transformed shape"): the token wears the Beast's sprite while the shape lasts, facing the way it faced, and its
+## own figure again after (a hero's or guest's own token, a foe's look, _swap_form_art). A shape with no sprite of its
+## own leaves the figure as it is.
+func _swap_shape_art(id: String, art: String) -> void:
+	var old := _tok(id)
+	if old == null:
+		return
+	if art != "":
+		if DirectionalSprite.frames_for(art) == null:
+			old.flash(Look.color("lilac"), 0.3)
+			return
+		if not _shape_looks.has(id):
+			_shape_looks[id] = old.art_override
+		_swap_form_art(id, art)
+	elif _shape_looks.has(id):
+		_swap_form_art(id, "" if _own_tokens.has(id) else str(_shape_looks[id]))
+		_shape_looks.erase(id)
+	var nt := _tok(id)
+	if nt == null or nt == old:
+		return
+	nt.scale = Vector3.ONE   # built (or, a hero's own figure, first built) at the size it is now
+	if nt.sprite != null and old.sprite != null:
+		nt.sprite.facing = old.sprite.facing
 
 
 ## Where a spell goes, as a ground direction from its caster: its first other target, else the middle of its area.

@@ -169,8 +169,8 @@
     {
       "id": "bonegrinder_hopper",
       "cell": [
-        11,
-        5
+        13,
+        4
       ],
       "kind": "examine",
       "label": "The grain hopper",
@@ -400,7 +400,42 @@
             10
           ],
           "name": "Offalia Wormwiggle",
-          "hp": 100
+          "hp": 300
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            14,
+            10
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            15,
+            9
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            14,
+            9
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            14,
+            11
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            13,
+            10
+          ]
         }
       ],
       "surprise": "",

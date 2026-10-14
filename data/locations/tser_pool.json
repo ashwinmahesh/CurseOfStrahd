@@ -1145,6 +1145,13 @@
             9
           ],
           "name": "Vistana archer"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            25,
+            16
+          ]
         }
       ],
       "surprise": "",
@@ -1203,6 +1210,13 @@
             9
           ],
           "name": "Vistana archer"
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            25,
+            15
+          ]
         }
       ],
       "surprise": "party",

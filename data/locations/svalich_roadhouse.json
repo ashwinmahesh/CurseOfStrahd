@@ -263,6 +263,13 @@
             16,
             6
           ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            10,
+            5
+          ]
         }
       ],
       "when": "level >= 3"
@@ -319,6 +326,20 @@
           "monster": "giant_rat",
           "cell": [
             16,
+            6
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            10,
+            5
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            10,
             6
           ]
         }

@@ -802,7 +802,7 @@
             11
           ],
           "name": "Izek Strazni",
-          "hp": 110
+          "hp": 145
         },
         {
           "monster": "warrior_veteran",
@@ -819,6 +819,22 @@
             9
           ],
           "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            9,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            11,
+            11
+          ],
+          "name": "Town guard"
         }
       ],
       "surprise": "",

@@ -808,6 +808,21 @@
             10
           ],
           "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            27,
+            11
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            27,
+            12
+          ],
+          "name": "The Hill's Watch"
         }
       ]
     },

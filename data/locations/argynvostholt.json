@@ -969,6 +969,22 @@
             26
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            14,
+            20
+          ],
+          "name": "A Knight Who Forgot"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            14,
+            21
+          ],
+          "name": "A Knight Who Forgot"
         }
       ],
       "surprise": "",

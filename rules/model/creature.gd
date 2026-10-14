@@ -503,13 +503,14 @@ func d20_sources(keys: Array[String]) -> Dictionary:
 # --- Rolling D20 Tests ---------------------------------------------------------------------------
 
 ## `extra_keys` name the action the check belongs to ("search", "study") for features that care (Sharp Eye, Watchers).
+## `extra_dice`: dice someone else adds, as roll_d20 takes them (Guidance cast on them before the check).
 func roll_check(dice: DiceRoller, skill_or_ability: StringName, dc: int, extra_adv: Array[String] = [],
-		extra_dis: Array[String] = [], label: String = "", extra_keys: Array[String] = []) -> D20Test:
+		extra_dis: Array[String] = [], label: String = "", extra_keys: Array[String] = [], extra_dice: Array = []) -> D20Test:
 	var bonus := skill_bonus(skill_or_ability) if Abilities.SKILLS.has(skill_or_ability) else ability_check_bonus(skill_or_ability)
 	var text := label if label != "" else "%s (%s)" % [bonus.label, name]
 	var keys := check_keys(skill_or_ability)
 	keys.append_array(extra_keys)
-	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, keys, extra_adv, extra_dis, text)
+	return roll_d20(dice, D20Test.Kind.ABILITY_CHECK, bonus, dc, keys, extra_adv, extra_dis, text, 20, extra_dice)
 
 
 func roll_save(dice: DiceRoller, ab: StringName, dc: int, extra_adv: Array[String] = [],
@@ -1086,12 +1087,15 @@ func remove_effects_named(effect_name: String) -> void:
 			remove_effect(e as Effect)
 
 
-## Starts Concentration on something new, ending any previous Concentration first.
-func begin_concentration(source_id: String, label: String) -> Concentration:
+## Starts Concentration on something new, ending any previous Concentration first. `duration`: the spell's as cast,
+## when the slot changed it (Spellcasting.duration_at: Hex for 8 hours with a level 3 slot); else the spell data's.
+func begin_concentration(source_id: String, label: String, duration: Dictionary = {}) -> Concentration:
 	var old := concentration
 	var conc := Concentration.new(self, source_id, label)
 	# A spell's Concentration lasts no longer than the spell (Protection from Evil and Good: 10 minutes).
-	if compendium != null:
+	if not duration.is_empty():
+		conc.set_duration(duration)
+	elif compendium != null:
 		var sd := compendium.spell_data(source_id)
 		if not sd.is_empty():
 			conc.set_duration(sd.get("duration", {}) as Dictionary)
@@ -1186,10 +1190,21 @@ func finish_short_rest() -> void:
 	log_event({"type": "short_rest", "creature": id})
 
 
-## Long Rest (2024 glossary): all HP back, Temporary HP gone, Exhaustion -1, every resource refilled.
+## Sleep, a Long Rest's (2024 glossary "Long Rest": asleep, you have the Unconscious condition): it ends Concentration,
+## unless a Trance keeps the creature conscious (an elf's runs on to the end of its own duration).
+func fall_asleep() -> void:
+	if concentration != null and not has_flag("trance"):
+		concentration.end("fell asleep")
+
+
+## Long Rest (2024 glossary): all HP back, Temporary HP gone, Exhaustion -1, every resource refilled, Concentration
+## ended by the sleep (and a spell the 8-hour house rule held until now, Trance or not).
 func finish_long_rest() -> void:
 	if dead:
 		return
+	fall_asleep()
+	if concentration != null and concentration.until_long_rest:
+		concentration.end("the Long Rest")
 	for res_id: String in resources:
 		(resources[res_id] as Dictionary)["used"] = 0
 	for e: Effect in effects.duplicate():
@@ -1332,7 +1347,9 @@ func state_to_dict() -> Dictionary:
 	return {"hp": hp, "temp_hp": temp_hp, "ward_hp": ward_hp, "exhaustion": exhaustion, "death_successes": death_successes,
 		"death_failures": death_failures, "stable": stable, "dead": dead, "conditions": conds,
 		"resources_used": res, "effects": fx, "unhealable": unhealable,
-		"concentration": {"source": concentration.source_id, "name": concentration.name} if concentration != null else {}}
+		"concentration": {"source": concentration.source_id, "name": concentration.name,
+			"rounds_left": concentration.rounds_left, "until_long_rest": concentration.until_long_rest}
+			if concentration != null else {}}
 
 
 func state_from_dict(d: Dictionary) -> void:
@@ -1358,6 +1375,14 @@ func state_from_dict(d: Dictionary) -> void:
 		effects.append(Effect.from_dict(ed as Dictionary))
 	var conc := d.get("concentration", {}) as Dictionary
 	concentration = Concentration.new(self, str(conc["source"]), str(conc["name"])) if not conc.is_empty() else null
+	# The time it had left. A save from before kept none and its Concentration never ran out (owner report 2026-10-13:
+	# Kip's Hex through days of Long Rests): the spell's whole duration from the load.
+	if concentration != null:
+		if compendium != null:
+			concentration.set_duration(compendium.spell_data(concentration.source_id).get("duration", {}) as Dictionary)
+		if conc.has("rounds_left"):
+			concentration.rounds_left = int(conc["rounds_left"])
+			concentration.until_long_rest = bool(conc.get("until_long_rest", concentration.until_long_rest))
 
 
 ## After loading several creatures: reattaches Concentration links (effects on anyone, cast by these casters).

@@ -225,19 +225,27 @@ Izek are `warrior_veteran` (Izek with 95-110 HP), Lady Wachter's sons are `tough
 
 | id | Map | Trigger | L5 monsters (XP, band) | L4 monsters (XP, band) | Under 4 |
 |---|---|---|---|---|---|
-| `storeroom_spawn` | coffin maker | enter `storeroom` (spawn surprised) | 2 vampire spawn (3600, Moderate) | spawn + 2 rat swarms (1900, Moderate) | spawn at 50 HP |
-| `church_siege` | St. Andral's | `flag:church_vigil`, at night, bones missing | 2 vampire spawn + 2 bat swarms (3700, Moderate) | spawn + 2 bat swarms (1900, Moderate) | spawn at 55 HP + 1 swarm |
-| `wachter_cellar_cult` | Wachterhaus | enter `cellar` at night, not pledged to her | sons, 4 cultists, 3 hired swords, a shadow (2500, Low) | sons, 4 cultists, 1 hired sword (1000, Low) | sons, 3 cultists |
-| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek + 2 sergeants (2100, Low) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
-| `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 3 hired swords, 2 captains (3300, Moderate); cult broken: 4 swords, captain, 2 knives (3300) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
-| `festival_loyalists` | town square | dialogue (Wachter path) | Izek, 4 sergeants, 4 guards (3600, Moderate); without Izek (3350) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
-| `festival_izek_rampage` | town square | dialogue (town path) | Izek, 3 sergeants, captain, 2 guards (3300, Moderate); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
-| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek + 2 sergeants (2100, Low) | Izek + sergeant (1400, Low) | Izek at 70 HP |
+| `storeroom_spawn` | coffin maker | enter `storeroom` (spawn surprised) | 2 vampire spawn and 3 ghouls (4200, High; 5 wins in 8) | spawn + 2 rat swarms (1900, Moderate) | spawn at 50 HP |
+| `church_siege` | St. Andral's | `flag:church_vigil`, at night, bones missing | 3 vampire spawn + 2 bat swarms (5500, above High; 5 wins in 8) | spawn + 2 bat swarms (1900, Moderate) | spawn at 55 HP + 1 swarm |
+| `wachter_cellar_cult` | Wachterhaus | enter `cellar` at night, not pledged to her | sons, 6 cultists, 5 hired swords, a shadow (3950, Moderate+; 5 wins in 8) | sons, 4 cultists, 1 hired sword (1000, Low) | sons, 3 cultists |
+| `izek_confrontation` | mansion | dialogue (Izek's room, at night) | Izek (145 HP), 3 sergeants and a guard (3,925, Moderate+) | Izek + 1 sergeant (1400, Low) | Izek at 60 HP |
+| `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 4 toughs, 3 hired swords, 2 captains (3700, Moderate+; 5 wins in 8); cult broken: 4 swords, 2 captains, 3 knives (3775; 5 wins in 8) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
+| `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 5 sergeants, captain, 4 guards (5,850, above High); without Izek (4800) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
+| `festival_izek_rampage` | town square | dialogue (town path) | Izek (225 HP), 2 sergeants, captain, 2 guards (3,700, Moderate+); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
+| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (110 HP) + 4 sergeants (4,600, High) | Izek + sergeant (1400, Low) | Izek at 70 HP |
 
 The two spawn fights are mutually exclusive (each removes the other), so the region's vampire spawn are fought once.
 The under-4 spawn variants are above High for level 3 even with reduced HP (as Doru was in the village); the party is
 warned by Lucian, Henrik and Rictavio, can fight by day with the spawn surprised, and gets holy water from Lucian,
-Rictavio and the vestry. The festival fights follow the speech with no rest, so they sit at Moderate, not High.
+Rictavio and the vestry. The festival fights follow the speech with no rest, so they sat at Moderate, not High.
+
+Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced at every level). The L5 storeroom, church siege, cellar cult and coup
+above win 5 of 8 from where walking in or talking sets them off (tests/integration/test_scaled_fights_vallaki.gd, which
+also holds the side quests' Ribbons, Roses and Stella fights; docs/story/side_quests.md). At level 5, standing beside Izek when he picks the
+fight: `izek_duel` with Izek at 110 HP and four sergeants, `festival_izek_rampage` with Izek at 225 HP,
+`festival_loyalists` with five sergeants and four guards, and `izek_confrontation` with Izek at 145 HP each win 5 of 8
+(tests/integration/test_scaled_boss_fights.gd).
 
 ## 8. Milestone
 

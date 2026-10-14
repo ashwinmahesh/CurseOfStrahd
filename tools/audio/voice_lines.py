@@ -7,11 +7,12 @@ gets a new key, so only new or changed lines are generated, and a line written t
 
 Voiced: NPC lines and story allies' interjections in conversations and banter, Madam Eva's Tarokka verses, the
 Narrator's lines in conversations, banter and its trigger variants, the Narrator text in location and travel data
-(first visit, encounter intros, traps, barred exits), and the party's lines: a hero's own (`name:`) lines in that
-hero's voice, and every line any party member could say (`class:`, `species:`, `background:`, `tag:`, "Player:") in
-the voice of each prebuilt hero it fits and in both custom-hero voices (VoiceOver.voice_for picks the one that
-speaks). Not voiced: player options, rolls, notices, book and letter text, and any line holding {name}, {leader} or
-{target} (filled in at run time).
+(first visit, encounter intros, traps, barred exits) and in what comes for a camp in the night, a foe's parting
+line as it leaves a fight (`withdraw`), and the party's lines: a hero's own (`name:`) lines in that hero's voice,
+and every line any party member could say (`class:`, `species:`, `background:`, `tag:`, "Player:") in the voice of
+each prebuilt hero it fits and in both custom-hero voices (VoiceOver.voice_for picks the one that speaks). Not
+voiced: player options, rolls, notices, book and letter text, and any line holding {name}, {leader} or {target}
+(filled in at run time).
 
 In fights (narrative/combat/barks.json): each kind of talking enemy's battle cries, taunts, pain and death lines as
 the speaker bark_<kind>, and each kind of creature's noises as noise_<kind>, where a noise's text is the prompt it is
@@ -150,12 +151,36 @@ def _data_lines():
         for e in d.get("entries", []):
             if e.get("text") and e.get("monsters"):
                 yield NARRATOR, e["text"], f"random_encounters/{f.stem}"
+    visitors = ROOT / "data" / "camp" / "night_visitors.json"
+    if visitors.exists():
+        for g in json.loads(visitors.read_text()).get("groups", []):
+            if g.get("text"):
+                yield NARRATOR, g["text"], f"camp/night_visitors:{g.get('id', '')}"
+    # A foe that leaves a fight with a parting line (an encounter's `withdraw`: Strahd quitting his visits and the castle
+    # fights) speaks it in its `speaker`'s voice when it goes (CombatView).
+    for f in sorted((ROOT / "data" / "locations").glob("*.json")) + [ROOT / "data" / "strahd" / "visits.json"]:
+        if f.exists():
+            for w in _withdrawals(json.loads(f.read_text())):
+                yield w["speaker"], w["say"], f"{f.parent.name}/{f.stem}:withdraw"
     outcomes = json.loads((ROOT / "data" / "tarokka" / "outcomes.json").read_text())
     for slot, cards in outcomes.items():
         if isinstance(cards, dict):
             for card, o in cards.items():
                 if isinstance(o, dict) and o.get("verse"):
                     yield "madam_eva", o["verse"], f"tarokka/{slot}:{card}"
+
+
+def _withdrawals(d):
+    """Every `withdraw` with a line to say ({say, speaker}) anywhere in a data file."""
+    if isinstance(d, dict):
+        w = d.get("withdraw")
+        if isinstance(w, dict) and w.get("say") and w.get("speaker"):
+            yield w
+        for v in d.values():
+            yield from _withdrawals(v)
+    elif isinstance(d, list):
+        for v in d:
+            yield from _withdrawals(v)
 
 
 def _bark_lines():

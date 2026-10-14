@@ -30,6 +30,8 @@ const SHOTS := {
 	"winery": {"loc": "wizard_of_wines"},
 	"yester": {"loc": "yester_hill"},
 	"krezk": {"loc": "krezk"},
+	"krezk_square": {"loc": "krezk", "cells": [[16, 14], [17, 14], [16, 15], [17, 15]]},
+	"white_sun": {"loc": "krezk_pool_of_the_white_sun"},
 	"abbey": {"loc": "abbey_of_st_markovia"},
 	"argynvostholt": {"loc": "argynvostholt"},
 	"den": {"loc": "werewolf_den"},

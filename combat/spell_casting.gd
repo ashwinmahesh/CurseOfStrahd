@@ -106,7 +106,9 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			(s["components"] as Dictionary).erase(key)
 	var ch := spells.caster_char(c)
 	var level := int(s.get("level", 0))
-	var use_free := bool(entry["free"]) and not bool(opts.get("splintered", false)) and str(opts.get("slot_boost", "")) == "" and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta)
+	# An at-will casting (an Eldritch Invocation's) is free whatever slot is named (owner, 2026-10-13: it spent a pact slot).
+	var use_free := bool(entry["free"]) and not bool(opts.get("splintered", false)) and str(opts.get("slot_boost", "")) == "" \
+		and (bool(opts.get("free", false)) or slot <= level or "psionic_sorcery" in meta or bool(entry.get("at_will", false)))
 	# Tome of the Stilled Tongue: the next Wizard spell needs no slot.
 	if level > 0 and c.has_meta("free_wizard_spell") and "wizard" in (s.get("classes", []) as Array):
 		c.remove_meta("free_wizard_spell")
@@ -127,6 +129,11 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		if slot <= 0:
 			var lowest := spells.reaction_spells._lowest_slot(ch, level)
 			slot = lowest if lowest > 0 else level
+		# Only a Pact Magic slot can pay: the pact level, whatever was named (owner, 2026-10-13), so the autopilot's or a
+		# test's "level 1" Hex is a warlock's level 3 one.
+		var pact_at := ch.pact_only_level(level)
+		if pact_at > 0:
+			slot = pact_at
 		slot = maxi(slot, level)
 		if c.cast_slot_spell_this_turn:
 			return CombatResult.fail("Already cast a spell with a slot this turn")
@@ -210,6 +217,8 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			spells.specials.duel_check_attack(c, tt)
 	var nums := spells.numbers(c, entry)
 	var conc: Concentration = null
+	# A higher slot can make it last longer (Hex, Hunter's Mark, the Dominates) or drop Concentration (Bestow Curse).
+	s = Spellcasting.at_slot(s, slot)
 	# Fey Reinforcements (Fey Wanderer 11): Summon Fey without Concentration, lasting 1 minute.
 	var fey_free := spell_id == "summon_fey" and CombatFeatures.has_feature(c, "fey_reinforcements") and bool(opts.get("no_concentration", true))
 	# Spirits of Ill Omen, Second Skin: some castings need no Concentration (RavenloftFeatures.skips_concentration).
@@ -219,10 +228,12 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		s["duration"] = unbound
 		e.log.add("info", "%s casts %s without Concentration" % [c.name(), s["name"]], c.id)
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)) and not fey_free:
-		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 		spells.zones.prune()
 		spells._prune_sustained()
-	var slot_text := " (level %d slot)" % slot if level > 0 and slot > 0 else (" (free casting)" if use_free else "")
+	# A free casting says so, not "level 1 slot" (an at-will Mage Armor read as a slot spent, 2026-10-13).
+	var slot_text := (" (free casting)" if slot <= level else " (level %d, free casting)" % slot) if use_free and level > 0 \
+		and resource_recipe.is_empty() and not "psionic_sorcery" in meta else (" (level %d slot)" % slot if level > 0 and slot > 0 else "")
 	var choice := SpellCaster.choice_of(s, opts)
 	e.log.add("spell", "%s casts %s%s%s" % [c.name(), s["name"], slot_text, (": " + choice.capitalize().replace("_", " ")) if choice != "" else ""], c.id, [
 		"Spell save DC %d · Spell attack %+d" % [(nums["dc"] as Breakdown).total(), (nums["attack"] as Breakdown).total()]])
@@ -258,6 +269,7 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 			dd["amount"] = mini(int(dd["amount"]) * 2, 24 * 60 if str(dd.get("kind", "")) == "minutes" else 24)
 		ctx["s"] = s_ext
 		if conc != null:
+			conc.set_duration(dd)
 			var steady := Effect.new("Extended Spell", &"feature", "extended_spell").with_modifier("advantage", {"on": "concentration"})
 			conc.attach(c.creature, steady)
 	var r := CombatResult.new()
@@ -324,7 +336,7 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	var e := enc()
 	if bool(opts.get("splintered", false)):
 		return CombatResult.fail("Splintered Summons requires casting with a spell slot")
-	var s := _comp().spell_data(spell_id)
+	var s := Spellcasting.at_slot(_comp().spell_data(spell_id), level)
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
 	var why := "Not automated yet" if str(s.get("automation", "")) == "reference" else spells.economy_block(c, unit)
 	if why == "" and (c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c)):
@@ -344,7 +356,7 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		return CombatResult.new()
 	var conc: Concentration = null
 	if bool((s.get("duration", {}) as Dictionary).get("concentration", false)):
-		conc = c.creature.begin_concentration(spell_id, str(s["name"]))
+		conc = c.creature.begin_concentration(spell_id, str(s["name"]), s["duration"] as Dictionary)
 	e.log.add("spell", "%s casts %s%s" % [c.name(), s["name"], " (level %d)" % level if level > int(s.get("level", 0)) else ""], c.id)
 	var cells: Array[Vector2i] = []
 	if s.has("area"):
@@ -606,7 +618,7 @@ func _generic(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r:
 	var s := ctx["s"] as Dictionary
 	var victims: Array[Combatant] = tgt
 	if not cells.is_empty() and not s.has("attack"):
-		victims = spells._area_victims(c, s, cells, str(ctx.get("choice", "")))
+		victims = spells.targeting._area_victims(c, s, cells, str(ctx.get("choice", "")), (ctx.get("opts", {}) as Dictionary).get("chosen"))
 	if s.has("attack"):
 		for t in spells.attack_shots(ctx, tgt):
 			if t.is_alive():

@@ -688,6 +688,7 @@ func _wall(c: Vector2i) -> void:
 			_box("Palisade", Vector3(1, ph, 1), Vector3(c.x + 0.5, ph / 2.0, c.y + 0.5), _outer_tex)
 			return
 		if house_cells.has(c):
+			_ground_box("Ground", c, _floor_mat)   # (seen when the house goes see-through in the party's way)
 			return   # part of a house TownBuilder built whole
 		if _yard.has(c):
 			if TownBuilder.walled(self):
@@ -705,6 +706,7 @@ func _wall(c: Vector2i) -> void:
 		_box("Roof", Vector3(1.08, 0.24, 1.08), Vector3(c.x + 0.5, hh + 0.12, c.y + 0.5), _roof_tex if _roof_tex != null else Look.cel("blood_deep"))
 		return
 	if house_cells.has(c):
+		_ground_box("Ground", c, _floor_mat)   # (seen when it goes see-through in the party's way)
 		return   # a yard's shed or shrine, built whole by TownBuilder
 	var border := c.x == 0 or c.y == 0 or c.x == grid.width - 1 or c.y == grid.depth - 1
 	if border:
@@ -984,12 +986,15 @@ func _ground_box(n: String, c: Vector2i, mat: Material) -> MeshInstance3D:
 	return _box(n, Vector3(1, 0.2 + h, 1), Vector3(c.x + 0.5, (h - 0.2) / 2.0, c.y + 0.5), mat)
 
 
-## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be, and
-## anything built once for the whole map while that square was built (InteriorWalls' outside ground, "whole_map").
+## Raises what was built since child `from` by `dy` (a tree or a rock on a hill), leaving the ground under it be,
+## anything built once for the whole map while that square was built (InteriorWalls' outside ground, "whole_map"), and
+## anything its builder already stood on the square's floor ("on_floor": the kit's yard walls and palisade, InteriorWalls'
+## walls, the kit's pillars), which this lifted a second time (owner report 2026-10-13: the Abbey's walls started high in
+## the air).
 func _lift(from: int, dy: float) -> void:
 	for i in range(from, get_child_count()):
 		var n := get_child(i) as Node3D
-		if n != null and not n.has_meta("terrain") and not n.has_meta("whole_map"):
+		if n != null and not n.has_meta("terrain") and not n.has_meta("whole_map") and not n.has_meta("on_floor"):
 			n.position.y += dy
 
 

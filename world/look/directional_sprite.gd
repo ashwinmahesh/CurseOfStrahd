@@ -24,6 +24,8 @@ const DIRECTIONS: Array[String] = ["s", "se", "e", "ne", "n", "nw", "w", "sw"]
 const CYCLE_SECONDS := 1.0
 const MIN_CELLS_PER_CYCLE := 1.0
 const MAX_CELLS_PER_CYCLE := 4.0
+## How much of its own light a washed figure (`wash`) gives off, against the scene's (the shader's `glow`).
+const WASH_GLOW := 1.5
 
 var facing := Vector3.BACK
 var moving := false
@@ -116,6 +118,8 @@ static func create(frames: SpriteFrames, height_units: float, cell_px: int = -1)
 	s._height = height_units
 	s._breath_phase = _rng.randf() * TAU
 	setup_material(s)
+	if frames.has_meta("wash"):
+		wash(s, str(frames.get_meta("wash")))
 	# Drawn a hair nearer than the figure made before it, and sorted the same way, so two on one square never trade places.
 	(s.material_override as ShaderMaterial).set_shader_parameter("depth_nudge", nudge_for(_figures))
 	s.sorting_offset = nudge_for(_figures)
@@ -185,6 +189,8 @@ static func frames_for(art_id: String) -> SpriteFrames:
 		frames.set_meta("hit_frames", hits)
 		if not mirrored.is_empty():
 			frames.set_meta("mirrored", mirrored)
+		if walk.has_meta("wash"):
+			frames.set_meta("wash", walk.get_meta("wash"))
 	if frames != null:
 		_frames_cache[art_id] = weakref(frames)
 	return frames
@@ -243,6 +249,19 @@ static func setup_material(s: SpriteBase3D) -> void:
 		var anim := a.animation if a.sprite_frames.has_animation(a.animation) else &"idle_s"
 		if a.sprite_frames.has_animation(anim):
 			bind_sheet(s, a.sprite_frames.get_frame_texture(anim, 0))
+
+
+## A figure made of light, not of flesh (the Lantern Girl): its colours washed to one palette colour, as an echo's are
+## washed gray, and lit from within so it stays bright in the dark. A sheet asks for it with `metadata/wash` (the
+## palette colour's name) in its walk.tres, so a figure drawn from a living person's sheets reads as light until its
+## own are made; the sheet's replacement simply leaves the metadata out.
+static func wash(s: SpriteBase3D, colour: String) -> void:
+	var m := s.material_override as ShaderMaterial
+	if m == null:
+		return
+	m.set_shader_parameter("ghost", 1.0)
+	m.set_shader_parameter("ghost_tint", Look.color(colour))
+	m.set_shader_parameter("glow", WASH_GLOW)
 
 
 ## Points the crisp shader at `tex`'s sheet (an atlas frame's whole sheet: the sprite's UVs already address it).

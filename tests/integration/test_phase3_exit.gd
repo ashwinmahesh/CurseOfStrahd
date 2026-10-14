@@ -127,6 +127,9 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 		return
 	if not _ok(GameState.story.get_flag("death_house_armor_destroyed") == true, "the armor on the balcony"):
 		return
+	# The fight can end with the party spread down the balcony: back to the panel before searching for it.
+	if not _ok(await bot.walk_to(Vector2i(11, 4)), "back at (11, 4)"):
+		return
 	if not _ok(await bot.search_for(Vector2i(11, 3)), "found the panel to the attic stair"):
 		return
 	if not _ok(await bot.go_to("death_house_attic"), "reached death_house_attic"):
@@ -186,6 +189,9 @@ func test_create_a_party_survive_death_house_and_meet_ismark_and_ireena() -> voi
 	if not _ok(bool(GameState.story.get_flag("burial_agreed")), "the party agreed to help Ismark"):
 		return
 	await _save_and_reload("after Ismark")
+	# Out of Death House and into the tavern at night: a party rests there before crossing the square, where the dead
+	# walk after dark (night_streets_dead, scaled up 2026-10-13).
+	await bot.rest(true)
 	if not _ok(await bot.go_to("burgomaster_mansion"), "reached burgomaster_mansion"):
 		return
 	if not _ok(await bot.talk("ireena"), "talked to ireena"):

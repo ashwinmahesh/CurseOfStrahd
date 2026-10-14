@@ -423,7 +423,9 @@ func _standard(c: Combatant, out: Array[Dictionary]) -> void:
 ## FeatureActions' entries as hotbar actions.
 func _feature_entries(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 	for fa in e.feature_actions.list(c):
-		var en := _entry(str(fa["id"]), REACTIONS if fa.has("policy") else tab, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
+		# A rule goes on the Reactions tab, unless it's a class feature's own switch (Repelling Blast, Grasp of Hadar).
+		var where := REACTIONS if fa.has("policy") and not bool(fa.get("class_tab", false)) else tab
+		var en := _entry(str(fa["id"]), where, str(fa["label"]), str(fa["sub"]), str(fa["cost"]), str(fa["why"]),
 			str(fa["targeting"]), str(fa["help"]))
 		en["kind"] = "feat"
 		# A standing rule's mode (Reactions.list_policies, DamageResponses.list): folded into one toggle slot (slots()).
@@ -618,11 +620,17 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 		var data := Compendium.shared().spell_data(str(s["id"]))
 		var level := int(s["level"])
 		var cost := "bonus" if str(s["casting"]) == "bonus_action" else ("reaction" if str(s["casting"]) == "reaction" else "action")
-		var sub := "Cantrip" if level == 0 else "Level %d" % level
-		if bool(s["free"]):
+		# A spell only a Pact Magic slot pays for is cast at the pact level (owner, 2026-10-13): the line says so and shows
+		# that level's numbers, and a free casting of it (a tiefling's Darkness) waits until the pact slots are spent. An
+		# at-will casting (an Eldritch Invocation's) takes no slot.
+		var at := level
+		if level > 0 and not bool(s.get("at_will", false)):
+			at = maxi(level, e.spells.caster_char(c).pact_only_level(level))
+		var sub := "Cantrip" if level == 0 else ("Pact level %d" % at if at > level else "Level %d" % level)
+		if bool(s["free"]) and at == level:
 			sub += " · free"
 		# A shape that keeps its spellcasting (Shapechange, Boon of Fluid Forms) previews with the caster's own sheet.
-		var preview := e.spells.caster_char(c).spell_preview(str(s["id"]), level)
+		var preview := e.spells.caster_char(c).spell_preview(str(s["id"]), at)
 		if preview.has("damage_dice"):
 			sub += " · %s" % preview["damage_dice"]
 		elif preview.has("heal_dice"):
@@ -648,7 +656,10 @@ func _spells(c: Combatant, out: Array[Dictionary]) -> void:
 				a["help"] = "Arms it for this turn: each melee hit smites, spending a spell slot (the free use first). No Bonus Action, and it isn't a spell cast. Choose it again to disarm, or set it to Ask in the class tab to decide after each hit."
 		a["spell_id"] = str(s["id"])
 		a["slot"] = level
-		a["range"] = e.spells.range_ft(data)
+		a["at_will"] = bool(s.get("at_will", false))
+		a["free"] = bool(s["free"])
+		# The caster's own reach with it (Spell Sniper's +60 ft, Eldritch Spear), as the cast checks it.
+		a["range"] = e.spells.range_ft(data, c)
 		var t := data.get("targets", {}) as Dictionary
 		a["count"] = int(t.get("count", 1))
 		a["repeat"] = str(s["id"]) in ["magic_missile", "scorching_ray"] or bool(data.get("repeat_targets", false))
@@ -814,6 +825,10 @@ static func spell_targeting(data: Dictionary) -> String:
 	if str(t.get("count", "")) == "any" or int(t.get("count", 1)) > 1 or int((data.get("upcast", {}) as Dictionary).get("targets", 0)) > 0 \
 			or str(data.get("id", "")) in ["magic_missile", "scorching_ray", "eldritch_blast"]:
 		return "multi"
+	# A hold on one creature that an unwilling one saves against goes on friend or foe (Polymorph, Otiluke's Resilient
+	# Sphere), though it can help an ally too.
+	if data.has("save") and "control" in tags:
+		return "creature"
 	if "healing" in tags or "buff" in tags or "defense" in tags or "restoration" in tags:
 		return "ally"
 	if str(data.get("id", "")) == "spare_the_dying":
@@ -1494,6 +1509,41 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	return out
 
 
+## A spell attack's part of the target tooltip, as attack_preview is a weapon's: the hit chance and the d20 needed
+## against the AC with cover (`attack`: the caster's spell attack bonus for this cast), every Advantage and Disadvantage
+## source with the caster's own, the cover and the high ground, all from the situation the roll itself uses
+## (SpellAttacks.situation: Spell Sniper's Casting in Melee and Bypass Cover). {lines, edge, chance, needs}
+func spell_attack_preview(c: Combatant, spell_id: String, t: Combatant, attack: Breakdown) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	var sit := e.spells.attack_situation(c, data, t)
+	var ac := t.creature.ac_value() + int(sit["cover_bonus"])
+	var to_hit := attack.total() + int(sit.get("height_bonus", 0))
+	var needs := mini(clampi(ac - to_hit, 2, 20), int(data.get("crit_range", 20)))
+	# With the caster's own Advantage and Disadvantage (Poisoned...), as the spell attack's roll counts them.
+	var own := c.creature.d20_sources(["attack", "attack:melee" if str(data["attack"]) == "melee" else "attack:ranged", "attack:spell"])
+	var adv: Array = (sit["advantage"] as Array) + (own["advantage"] as Array)
+	var dis: Array = (sit["disadvantage"] as Array) + (own["disadvantage"] as Array)
+	var single := (21 - needs) / 20.0
+	var chance := single
+	var edge := ""
+	if not adv.is_empty() and dis.is_empty():
+		chance = 1.0 - pow(1.0 - single, 2)
+		edge = "advantage"
+	elif not dis.is_empty() and adv.is_empty():
+		chance = single * single
+		edge = "disadvantage"
+	var lines: Array[String] = ["Spell attack %+d vs AC %d: hit %d%% (needs %d+)" % [to_hit, ac, roundi(chance * 100.0), needs]]
+	for s: Variant in adv:
+		lines.append("Advantage: %s" % s)
+	for s: Variant in dis:
+		lines.append("Disadvantage: %s" % s)
+	if int(sit["cover_bonus"]) > 0:
+		lines.append("%s (+%d AC) from %s" % [CombatGrid.COVER_NAMES[int(sit["cover"])], int(sit["cover_bonus"]), sit["cover_by"]])
+	if int(sit.get("height_bonus", 0)) != 0:
+		lines.append(EncounterAttacks.height_line(int(sit.get("height_bonus", 0))))
+	return {"lines": lines, "edge": edge, "chance": chance, "needs": needs}
+
+
 ## The Examine card for `t` (Combat HUD plan, owner pick 2026-10-09; Baldur's Gate 3's Examine): what it is, how hurt it
 ## looks (a foe shows only whether it's Bloodied, as its bar does), its AC and speed, what's working on it, what the party
 ## knows of its defenses and abilities (Study teaches a kind of creature), and, for `c` facing a foe, the odds of `c`'s
@@ -1640,6 +1690,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			continue
 		caught.append(o)
+	# Who it takes of those (creatures of the caster's choice: Slow's foes, Word of Radiance's), as things stand.
+	var taken := e.spells.targeting._area_victims(c, data, cells, SpellTargeting.choice_of(data, action.get("opts", {}) as Dictionary)) \
+		if data.has("area") else caught
 	# Sculpt Spells: who it would shield as things stand (the caster, then the nearest allies; the player can change the
 	# picks as the spell goes off).
 	var sculpted: Array[String] = []
@@ -1657,6 +1710,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 			row["unaffected"] = true
 		elif bool(row["safe"]):
 			line += ": safe (Sculpt Spells)"
+		elif not o in taken:
+			line += ": not affected"
+			row["unaffected"] = true
 		elif data.has("save"):
 			var ab := StringName(str(data["save"]))
 			var bonus := o.creature.save_bonus(ab).total()
@@ -1672,7 +1728,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 				if avg >= o.creature.hp:
 					row["drops"] = "likely drops" if fail > 0.5 else "may drop"
 					line += " · " + str(row["drops"])
-		if bool(row["ally"]) and o != c and not bool(row["safe"]):
+		if bool(row["ally"]) and o != c and not bool(row["safe"]) and not bool(row["unaffected"]):
 			warnings.append("Friendly fire: %s is in the area" % o.name())
 		row["line"] = line
 		who.append(row)
@@ -1697,7 +1753,17 @@ func level_choices(c: Combatant, action: Dictionary) -> Array[int]:
 		for l: Variant in action.get("levels", []):
 			out.append(int(l))
 		return out
+	# An at-will casting (Armor of Shadows' Mage Armor) is free at the spell's own level: no slot to pick.
+	if bool(action.get("at_will", false)):
+		return []
 	var levels := slot_choices(c, str(action.get("spell_id", "")))
+	# A free casting (Magic Initiate's Sanctuary, an elf's Misty Step) is the spell's own level: offered beside the slot
+	# levels once no slot of that level is left, or the pip went to the next slot up and spent it (2026-10-13). A
+	# warlock's waits for its pact slots instead, the pact level being the only one offered while one is left.
+	var own := int(action.get("slot", 0))
+	if bool(action.get("free", false)) and own > 0 and not levels.is_empty() and not own in levels \
+			and e.spells.caster_char(c).pact_only_level(own) == 0:
+		levels.push_front(own)
 	var opts := action.get("opts", {}) as Dictionary
 	var sequence_id := str(opts.get("spell_sequence", ""))
 	if sequence_id != "":
@@ -1729,10 +1795,7 @@ func slot_choices(c: Combatant, spell_id: String) -> Array[int]:
 	var ch := e.spells.caster_char(c)
 	if level == 0 or ch == null:
 		return out
-	for l in range(level, 10):
-		if ch.slots_left(l) > 0:
-			out.append(l)
-	return out
+	return ch.slot_levels(level)
 
 
 ## Squares `c` could move to this turn, as move() would take them (a Prone creature with the movement for it stands

@@ -54,8 +54,13 @@ static func for_location(view: LocationView, e: Encounter) -> void:
 		if secret or not StoryConditions.check(str(door.get("when", "")), view.st):
 			continue
 		var cells: Array[Vector2i] = [LocationView._cell(door["cell"])]
-		var extra := {"door_id": id, "open": LocationLocks._door_state(view, id) == LocationView.DOOR_OPEN,
-			"locked": LocationLocks._locked(view, door)}
+		var open := LocationLocks._door_state(view, id) == LocationView.DOOR_OPEN
+		# Someone standing in the doorway as the fight begins holds the door open: shut, its square stayed a wall round
+		# them, and once they fell nobody could see or pass through it (Death House's nursery and storage doors).
+		if not open and e.occupant_at(cells[0]) != null:
+			open = true
+			e.grid.set_flag(cells[0], CombatGrid.WALL, false)
+		var extra := {"door_id": id, "open": open, "locked": LocationLocks._locked(view, door)}
 		if str(door.get("label", "")) != "":
 			extra["name"] = str(door["label"])
 		e.objects.add(door_kind(door, table), cells, extra)

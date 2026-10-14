@@ -17,7 +17,8 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
 
 1. **Initiative strip** (top center): round number and portraits in turn order; the active creature is larger with a
    candle frame; enemies have red frames, the party gold, guests moonlight blue; a thin HP bar under each (enemies
-   show Bloodied and dead states, not exact HP). Hover a portrait to highlight the creature on the field.
+   show Bloodied and dead states, not exact HP). Hover a portrait to highlight the creature on the field. A long
+   order scrolls sideways inside its panel (see "A long turn order" below).
 2. **Party frames** (left): the four party members and any guest, with HP bars, conditions as named chips (Prone,
    Poisoned, Bless ◎ for Concentration) and the level-up badge. Click or Tab to switch the controlled character on
    their turn or to inspect them otherwise.
@@ -48,7 +49,24 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
 
 - Spells and area attacks preview their template on the grid (sphere, cone, cube, line, emanation) from the spell
   data, with every creature inside listed: save and DC, the chance each fails, expected damage, and whether it would
-  likely drop.
+  likely drop. A creature a spell "of your choice" leaves out (Slow's allies, Word of Radiance's) shows as not affected.
+- **An area placed at a point is centred on the pointer** (owner, 2026-10-13: "the pointer should be at the middle of
+  the area"; `TargetPicker.aim`): a Sphere or Cylinder on the grid intersection nearest it (the DMG's grid rule), a
+  Cube with its middle there and its point of origin on the face toward the caster, where its range is measured (an odd
+  size, such as 15 ft, sits on the middle of the square pointed at), an Emanation from a point on the square pointed
+  at. Pointing at a creature's figure aims at the creature, not the floor behind it. No cursor ring is drawn while
+  placing it: the outline is the cursor. Cones and lines from the caster aim as before.
+- **A creature in another shape wears it** (owner, 2026-10-13: "When an enemy or character is polymorphed, their
+  sprite should reflect their transformed shape"): a Polymorph's, True Polymorph's or Wild Shape's Beast is drawn with
+  that Beast's own sprite, height and base, facing the way the creature faced, its name, health bar and portrait the
+  Beast's; when the shape ends (the spell ends, its Temporary Hit Points run out, it drops, the caster's Concentration
+  breaks) the creature's own figure comes back. A hero's or guest's own figure waits hidden meanwhile, and walks on
+  after the fight even if the shape still holds.
+- **Up to so many creatures of your choice in the area** (Slow's six, Mass Cure Wounds' six): once the area is
+  placed, the creatures in it can be picked (`TargetPicker` "choose" step), with the ones it would take lit to start
+  (Slow: its foes in it, the hardest hitting first; Mass Cure Wounds: its side's most hurt). A click on a creature adds
+  or drops it, up to the spell's number; a click on the floor or Enter casts. Backspace or right-click places it again.
+  With no one in the area it goes off as placed. The AI and the test autopilot take the ones lit by default.
 - **Friendly fire** is called out in red with what happens to the ally; it never blocks (the player decides).
 - **Walls are drawn** (Wall of Fire, Wind Wall, Wall of Stone, Ice and Force, Wall of Thorns, Blade Barrier, Prismatic
   Wall): click the square where the wall begins, then squares touching the last one (a click further along a
@@ -178,9 +196,11 @@ rest of the plan: the vault note Combat HUD Plan.md.
 - **Weapons in hand** (deviations.md, Weapon sets): only the weapons in hand and the second set attack; the second
   set's say "set II", and **Swap weapons** on Common takes that set in hand (free). The pack's spares aren't listed.
 - **Rules as toggles**: each Ask / Automatic / Off rule (Divine Smite, Knock Out, Heroic Inspiration, Shadow Martyr,
-  Repelling Blast's push (owner, 2026-10-12: Off keeps the foe where it stands), Song of Defense's slot levels...) is one slot on the **Reactions** tab, its mode in colour (Ask gilt, Automatic green,
+  Song of Defense's slot levels...) is one slot on the **Reactions** tab, its mode in colour (Ask gilt, Automatic green,
   Off grey) with a pip per mode; a click steps to the next mode, a right-click picks one, on any turn (nothing is
   spent). `ActionCatalog.slots` folds the modes; `CombatView._choose` sets them for whoever the hotbar shows.
+  Repelling Blast's push and Grasp of Hadar's pull aren't reactions: their On / Off switches work the same way from the
+  **Warlock** tab (Ashwin, 2026-10-13; `class_tab` in Reactions.configurable_policies), one of the two on at a time.
 - **Containers**: variants of one action share a slot with a gilt corner (Shove, Cunning, Divine Spark, Haste, Open
   Hand, Cunning Strike, Portent, a spell's other castings, Command's words); a click, its number key or RB opens the
   choices at the slot, each greyed with its reason; a right-click adds the Hotbar choices for the whole slot.
@@ -309,7 +329,19 @@ figure (`CombatHud.focus_requested`, `CombatView._focus_on`; the rig eases after
 turn still takes the turn on a click, and the camera goes along. The next turn, an action, the camera keys or the pad's
 cursor take the camera on from there; a creature nobody can see isn't shown. On a pad, Next target (X) while the radial
 is held steps the camera along the order, one creature a press, the cursor going too (`_look_along_order`); a line under
-the wheel names the button.
+the wheel names the button; the right bumper (RB) with the radial held steps back along it (`_look_along_order(-1)`).
+The creature the camera went to is ringed in white in the order (`CombatHud.look_at`) until the next turn.
+
+## A long turn order (owner, 2026-10-14)
+
+When the portraits are wider than their panel (13 or more at 1600 px) the order scrolls sideways instead of running
+past the window (`TurnStrip`, ui/combat/turn_strip.gd; the cards are still `CombatHud._strip`'s children). At the start
+of the fight and at each new turn the row glides to put the card whose turn it is in the middle, once per turn: a
+refresh within the turn (a hit point lost, a condition) never moves it. Scrolling by hand holds the row where it was put
+until the next turn: the mouse wheel or a trackpad over it, a touch drag, or the arrows at its ends; on a pad, LB held
+with X / RB looks on and back along the order and each creature in turn is brought into view. A fade with an arrow
+marks an end with more beyond it, with how many portraits are wholly out of sight that way. Nothing changes while every
+portrait fits: no fades, no arrows, and the wheel still zooms the camera. The test is tests/unit/test_turn_strip.gd.
 
 ## Moving Hex and Hunter's Mark (owner question, 2026-10-12)
 

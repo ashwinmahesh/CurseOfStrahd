@@ -173,17 +173,23 @@ HP overrides keep each fight inside the band. Ilinca (wereraven, 450 XP) fights 
 
 | id | Map | Trigger | Monsters by variant (HP) | XP, band |
 |---|---|---|---|---|
-| `bakery_offalia` | mill | Offalia's dialogue, or `open:hag_oven` while she's awake | Offalia: L6+ 100, L5 80, lower 60 (oven trigger: 80) | 1,800 nominal (~1,300-1,600 tuned): Low |
-| `coven_last_stand` | loft | Morgantha's dialogue | whole coven (`offalia_in_last_stand` and `bella_in_last_stand`): Morgantha 95, Bella 60, Offalia 60 | 5,400 nominal (~3,900 tuned): High at L5, Moderate at L6. Warned, can be backed out of. |
-| | | | one daughter: Morgantha 95 + Offalia 60 or Bella 60 | 3,600 nominal (~2,600 tuned): Moderate |
-| | | | **alone (critical path)**: L6+ Morgantha 112 + 3 rat swarms; L5 100 + 2; lower 85 + 1 | 1,950 / 1,900 / 1,850: Low (follows the bakery fight) |
-| `bella_betrayed` | loft | Bella's dialogue (after the pact) | Bella: L6+ 100, else 80 | 1,800: Low |
-| `bella_on_the_road` | lane | road dialogue | Bella: L6+ 100, else 80 | 1,800: Low |
-| `offalia_on_the_road` | lane | road dialogue | Offalia: L6+ 100, else 80 | 1,800: Low |
+| `bakery_offalia` | mill | Offalia's dialogue, or `open:hag_oven` while she's awake | Offalia: L6+ 300 with 5 nightmares (a split-off hag still fights, owner 2026-10-13), L5 80, lower 60 (oven trigger: 80) | L6: 5,300, High; lower 1,800: Low |
+| `coven_last_stand` | loft | Morgantha's dialogue | whole coven (`offalia_in_last_stand` and `bella_in_last_stand`): L6+ Morgantha 180, the daughters at 112 (book) + 3 rat swarms; lower Morgantha 95, Bella 60, Offalia 60 | L6: 5,550, High. Lower: 5,400 nominal (~3,900 tuned): High at L5. Warned, can be backed out of. |
+| | | | one daughter: L6+ Morgantha 112 + Offalia 112 with 4 dire wolves (the mill's dogs) and 4 rat swarms, or + Bella 112 with 6 dire wolves and 3 rat swarms; lower Morgantha 95 + the daughter at 60 | L6: 4,600 with Offalia, 4,950 with Bella: between Moderate and High. Lower: 3,600 nominal (~2,600 tuned): Moderate |
+| | | | **alone (critical path)**: L6+ Morgantha 300 + 3 rat swarms and 4 nightmares; L5 100 + 2; lower 85 + 1 | L6: 4,750, Moderate+; 1,900 / 1,850 lower: Low (follows the bakery fight) |
+| `bella_betrayed` | loft | Bella's dialogue (after the pact) | Bella: L6+ 250 with 3 nightmares and 3 of the mill's dogs, else 80 | L6: 4,500, Moderate+; lower 1,800: Low |
+| `bella_on_the_road` | lane | road dialogue | Bella: L6+ 300 with 3 nightmares, else 80 | L6: 3,900, Moderate; lower 1,800: Low |
+| `offalia_on_the_road` | lane | road dialogue | Offalia: L6+ 300 with 4 nightmares, else 80 | L6: 4,600, Moderate+; lower 1,800: Low |
 | lane table `bonegrinder_lane` | lane | travel (day 20%, night 45%) | day: 3 dire wolves + 3 wolves (750); night: a werewolf, 2 dire wolves, 2 wolves (1,200); the dead: 5 Strahd zombies + 2 zombies (1,100); 4 bat swarms + 3 Strahd zombies (800) | under Low: road nuisance |
 
 The critical path fights two lone hags (Offalia, then Morgantha with rats), with a rest possible between them in the
-bakery (risky). Nothing in the region requires a check: every split, the pact, the fight and the rescue have plain
+bakery (risky).
+
+Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced; the coven "should be maybe 4/8 even if split up"). At level 6 the
+whole coven, Morgantha at 180 HP, wins 5 of 8, and Morgantha with one daughter and the mill's dogs 5 of 8. A hag split
+off from the coven comes with the night's mares (nightmares): Offalia in the bakery, Bella or Offalia on the lane and
+Morgantha alone each win 5 of 8, Bella betrayed 4 of 8 (tests/integration/test_scaled_boss_fights.gd). Nothing in the region requires a check: every split, the pact, the fight and the rescue have plain
 options.
 
 ## 8. Milestone

@@ -513,6 +513,34 @@
             26,
             17
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            14
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            15
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            20,
+            13
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            19,
+            13
+          ]
         }
       ],
       "text": "The pack stops pretending."
@@ -528,7 +556,8 @@
           "cell": [
             22,
             15
-          ]
+          ],
+          "hp": 190
         },
         {
           "monster": "wight",
@@ -640,7 +669,8 @@
           "cell": [
             22,
             15
-          ]
+          ],
+          "hp": 270
         },
         {
           "monster": "wight",
@@ -749,7 +779,8 @@
           "cell": [
             22,
             15
-          ]
+          ],
+          "hp": 170
         },
         {
           "monster": "wight",
@@ -757,8 +788,7 @@
             23,
             14
           ],
-          "name": "Lieutenant of the Vanguard",
-          "hp": 52
+          "name": "Lieutenant of the Vanguard"
         },
         {
           "monster": "wight",
@@ -766,8 +796,7 @@
             23,
             16
           ],
-          "name": "Lieutenant of the Vanguard",
-          "hp": 52
+          "name": "Lieutenant of the Vanguard"
         },
         {
           "monster": "skeleton",
@@ -1039,6 +1068,13 @@
           "cell": [
             26,
             17
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            26,
+            15
           ]
         }
       ],

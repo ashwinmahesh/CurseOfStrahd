@@ -70,6 +70,9 @@ stash, attunement and merchants are Phase 3 and 4 engine work; this spec fixes t
 - **Merchant**: Buy and Sell columns; prices change with the NPC's attitude (Hostile/Indifferent/Friendly, 2024
   Influence) and an optional Persuasion haggle that rolls in the open; "Sell all junk" sells everything the party
   marked as junk that this merchant buys, from every pack at once (equipped things stay); quest items can't be sold.
+  The Sell side has the backpack's filter tabs (All, Weapons, Armor, Consumables, Magic, Gear; LB/RB on a pad) and
+  **Only what <merchant> buys**, on at first, which hides what that merchant won't take and says how many it hid.
+  Both choices hold at every counter until the game is closed (owner, 2026-10-13).
 - **Stash** shows under the backpack everywhere; its Take buttons work only at safe places.
 
 ## Combat hooks (Phase 2)

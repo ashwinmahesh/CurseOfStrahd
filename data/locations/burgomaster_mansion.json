@@ -353,7 +353,7 @@
     {
       "id": "study_bricks",
       "cell": [
-        6,
+        7,
         5
       ],
       "kind": "examine",
@@ -479,20 +479,6 @@
       "text": "Past midnight the boards over the windows begin to creak, then to split. Wolves throw themselves at the front door, and in the parlor and the wake room grey hands come through the gaps.",
       "monsters": [
         {
-          "monster": "dire_wolf",
-          "cell": [
-            10,
-            12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            12,
-            10
-          ]
-        },
-        {
           "monster": "strahd_zombie",
           "cell": [
             2,
@@ -514,10 +500,10 @@
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "vampire_spawn",
           "cell": [
-            22,
-            8
+            1,
+            12
           ]
         }
       ],
@@ -592,6 +578,22 @@
             4
           ],
           "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            2,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            3,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
         }
       ],
       "surprise": "",
@@ -626,6 +628,21 @@
             3
           ],
           "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            2,
+            3
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            2,
+            4
+          ]
         }
       ],
       "surprise": "",

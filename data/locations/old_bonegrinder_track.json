@@ -216,7 +216,7 @@
       ],
       "kind": "examine",
       "label": "A hut by the millrace",
-      "model": "crate",
+      "model": "cottage",
       "dialogue": "old_bonegrinder/the_fourth_sister:hut_prop",
       "when": "flag.mouse_met"
     },
@@ -259,7 +259,28 @@
             7
           ],
           "name": "Bella Sunbane",
-          "hp": 100
+          "hp": 300
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            20,
+            7
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            21,
+            6
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            21,
+            8
+          ]
         }
       ],
       "surprise": "",
@@ -296,7 +317,35 @@
             8
           ],
           "name": "Offalia Wormwiggle",
-          "hp": 100
+          "hp": 300
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            20,
+            7
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            20,
+            9
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            21,
+            8
+          ]
         }
       ],
       "surprise": "",
@@ -514,7 +563,7 @@
             26,
             4
           ],
-          "hp": 155
+          "hp": 145
         },
         {
           "monster": "dire_wolf",

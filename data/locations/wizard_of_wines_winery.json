@@ -152,8 +152,8 @@
     {
       "id": "founders_portrait",
       "cell": [
-        2,
-        5
+        6,
+        1
       ],
       "kind": "examine",
       "label": "A portrait over the desk",
@@ -499,7 +499,8 @@
             20,
             4
           ],
-          "name": "Druid of Yester Hill"
+          "name": "Druid of Yester Hill",
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -507,7 +508,8 @@
             25,
             5
           ],
-          "name": "Druid of Yester Hill"
+          "name": "Druid of Yester Hill",
+          "hp": 60
         },
         {
           "monster": "druid",
@@ -620,6 +622,14 @@
           "cell": [
             19,
             6
+          ],
+          "hp": 169
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            5
           ]
         }
       ],
@@ -637,14 +647,6 @@
           "cell": [
             20,
             4
-          ],
-          "name": "Druid of Yester Hill"
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            25,
-            5
           ],
           "name": "Druid of Yester Hill"
         },
@@ -745,6 +747,14 @@
             19,
             6
           ]
+        },
+        {
+          "monster": "druid",
+          "cell": [
+            25,
+            5
+          ],
+          "name": "Druid of Yester Hill"
         }
       ],
       "surprise": "",
@@ -812,6 +822,21 @@
           "cell": [
             12,
             9
+          ]
+        },
+        {
+          "monster": "shambling_mound",
+          "cell": [
+            19,
+            6
+          ],
+          "hp": 40
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            24,
+            8
           ]
         }
       ],

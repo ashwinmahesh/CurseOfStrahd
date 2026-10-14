@@ -168,7 +168,7 @@
       "id": "exethanter_notes",
       "cell": [
         23,
-        3
+        1
       ],
       "kind": "examine",
       "label": "Hundreds of pinned notes",
@@ -637,6 +637,38 @@
           "cell": [
             26,
             6
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            22,
+            4
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            24,
+            3
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            22,
+            3
           ],
           "name": "Warden's skull"
         }

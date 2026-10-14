@@ -10,7 +10,7 @@ extends Node3D
 const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
 	"godrick_pendlebrook": 1.55, "liriel_dawnsong": 1.18, "thistle": 1.22, "ratatoille": 1.24, "wren_featherfoot": 0.74,
 	"kip_smudgewick": 1.28,
-	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35, "ismark": 1.32, "ireena": 1.2, "rose": 0.9, "thorn": 0.75,
+	"zombie": 1.25, "wolf": 0.8, "dire_wolf": 1.35, "ismark": 1.32, "ireena": 1.2, "rose": 0.9, "lantern_girl": 0.9, "thorn": 0.75,
 	"donavich": 1.15, "bildrath": 1.2, "parriwimple": 1.45, "mad_mary": 1.15, "morgantha": 1.1, "strahd": 1.4,
 	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
 	"animated_flying_sword": 0.8, "broom_of_animated_attack": 1.0, "grick": 0.9, "shambling_mound": 1.7,
@@ -81,6 +81,23 @@ var sprite: DirectionalSprite
 var aura: AuraFx
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
 var _lying: Sprite3D
+## A beast lying on its belly (lie_down) sinks this share of its height into the ground, legs under it; a sheet turned
+## down to the chest leaves this share of the lying view's frame showing above its hem, the head and neck.
+const BELLY_SINK := 0.38
+const KEEP_ABOVE_HEM := 0.27
+## A figure lying on furniture is drawn no longer than the furniture and this much more, down to MIN_FIT of its size.
+const FURNITURE_OVERHANG := 0.15
+const MIN_FIT := 0.8
+## The lying view: the front view laid face up, head toward +x; under a sheet its head is tipped up this much.
+const LYING_BASIS := Basis(Vector3(0, 0, 1), Vector3(1, 0, 0), Vector3(0, 1, 0))
+const PILLOW_DEG := 25.0
+## Lying down apart from any condition, until get_up(): a figure the story has lying there (lie_down, LyingFigures).
+var resting := false
+var _rest := {}
+var _rising := false
+## What the lying view and a sheet over it hang from: moved onto what the figure lies on, turned head first along it.
+var _rest_pivot: Node3D
+var _sheet: MeshInstance3D
 var body: Node3D
 var _ring: MeshInstance3D
 var _active_ring: MeshInstance3D
@@ -209,10 +226,12 @@ func _build() -> void:
 		_lying.texture = frames.get_frame_texture(&"idle_s", 0)
 		_lying.pixel_size = sprite.pixel_size
 		DirectionalSprite.setup_material(_lying)
-		_lying.rotation_degrees = Vector3(-90, 0, -90)
-		_lying.position = Vector3(0, 0.03, 0)
+		_lying.transform = Transform3D(LYING_BASIS, Vector3(0, 0.03, 0))
 		_lying.visible = false
-		add_child(_lying)
+		_rest_pivot = Node3D.new()
+		_rest_pivot.name = "Rest"
+		add_child(_rest_pivot)
+		_rest_pivot.add_child(_lying)
 		var aura_style := AuraFx.style_for(c, aid)
 		if aura_style >= 0:
 			aura = AuraFx.create(aura_style, _height(aid), c.size_cells, AuraFx.reach_of(c) if aura_style == AuraFx.Style.HOLY else 0)
@@ -382,8 +401,8 @@ func refresh() -> void:
 	elif cr.hp <= 0:
 		_base_modulate = Color(0.6, 0.55, 0.6, 0.85)
 	if sprite != null:
-		var down := not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone"))
-		_status.position.y = 0.75 if down else _status_y
+		var down: bool = not cr.dead and (cr.hp <= 0 or cr.has_condition(&"prone") or (resting and str(_rest.get("pose")) != "belly"))
+		_status.position.y = 0.75 + float(_rest.get("lift", 0.0)) if down else _status_y
 		if DirectionalSprite.has_anim(sprite.sprite_frames, "down"):
 			# Drawn falls and a drawn lying pose: the figure itself lies down (fall() plays the fall).
 			sprite.visible = true
@@ -394,7 +413,7 @@ func refresh() -> void:
 				sprite.pose = _standing_pose()
 		else:
 			sprite.visible = not down
-			_lying.visible = down
+			_lying.visible = down and str(_rest.get("sheet", "")) != "face"   # a sheet drawn over the face hides it
 		if cr.dead and sprite.modulate.a > 0.01 and is_inside_tree():
 			var tw := create_tween()
 			tw.tween_property(sprite, "modulate", _base_modulate, 0.7)
@@ -402,6 +421,91 @@ func refresh() -> void:
 			sprite.modulate = _faded(_base_modulate)
 	_show_fade()
 
+
+
+## Lies down apart from any condition, as a figure the story has lying there (LyingFigures.lay; owner 2026-10-13:
+## the text has Vasilka lying under a sheet, very still, and she stood beside her table), until get_up(). `how`:
+## `pose` "back" (the lying view: a person on their back) or "belly" (a beast or a dragon: its figure low on the
+## ground, legs under it); `lift` up onto what it lies on and `offset` (x, z) across to it; `head` (x, z) the way its
+## head points (a beast without one looks the way it did); `sheet` "chest" (linen turned down under the collarbone) or
+## "face" (drawn over it), spreading `half` either side and hanging `drop` over the edge of what it lies on. On furniture
+## `long` long, a figure much longer is drawn a little smaller (the game's tables are short for its people).
+func lie_down(how: Dictionary) -> void:
+	resting = true
+	_rest = how
+	if sprite == null or _lying == null:
+		refresh()
+		return
+	var lift := float(how.get("lift", 0.0))
+	var offset := how.get("offset", Vector2.ZERO) as Vector2
+	var head := how.get("head", Vector2(1, 0)) as Vector2
+	if str(how.get("pose", "back")) == "belly":
+		if how.has("head"):
+			face(head, false)   # else the way it already looks
+		var sink := BELLY_SINK * _height(art_override if art_override != "" else art_id(combatant))
+		sprite.position = Vector3(offset.x, lift - sink, offset.y)
+		refresh()
+		return
+	# The lying view is its frame laid flat, centred: the figure's soles 4% of the frame up from its bottom edge and the
+	# figure 1/1.12 of the frame long (DirectionalSprite.create), its head toward +x.
+	var frame := _lying.texture.get_height() * _lying.pixel_size
+	var fit := clampf((float(how.get("long", 99.0)) + FURNITURE_OVERHANG) / (frame / 1.12), MIN_FIT, 1.0)
+	_rest_pivot.position = Vector3(offset.x, lift, offset.y)
+	_rest_pivot.rotation.y = atan2(-head.y, head.x)   # the lying view lies head first along +x
+	_rest_pivot.scale = Vector3.ONE * fit
+	var sheet := str(how.get("sheet", ""))
+	if sheet != "":
+		_sheet = SheetDrape.build(frame / 1.12, -frame * 0.46, sheet == "face", float(how.get("half", 0.34)) / fit,
+			float(how.get("drop", 0.0)) / fit)
+		_rest_pivot.add_child(_sheet)
+		_lying.region_enabled = sheet == "chest"
+		if sheet == "chest":
+			# Only the head and neck show above the hem (the frame's top KEEP_ABOVE_HEM), resting on the hem as on a
+			# pillow, tipped up PILLOW_DEG so the face shows from above.
+			var px := Vector2(_lying.texture.get_width(), _lying.texture.get_height())
+			_lying.region_rect = Rect2(Vector2.ZERO, Vector2(px.x, px.y * KEEP_ABOVE_HEM))
+			_lying.offset = Vector2(0, px.y * KEEP_ABOVE_HEM / 2.0)
+			_lying.position = Vector3(frame * (0.5 - KEEP_ABOVE_HEM), SheetDrape.hem_height(frame / 1.12) * 0.8, 0)
+			_lying.basis = Basis(Vector3.BACK, deg_to_rad(PILLOW_DEG)) * LYING_BASIS
+	refresh()
+
+
+## Gets up from lying down (lie_down) after `delay` seconds: a person rises out of a crouch on its own square as the
+## lying view goes (fall() played backwards), a beast comes up off the ground. A sheet over it is left behind.
+func get_up(delay: float = 0.0) -> void:
+	if not resting or _rising:
+		return
+	_rising = true
+	var tw := create_tween()
+	tw.tween_interval(delay)
+	if sprite == null or _lying == null:
+		tw.tween_callback(_stood)
+	elif str(_rest.get("pose", "back")) == "belly":
+		tw.tween_property(sprite, "position", Vector3.ZERO, 0.45).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+		tw.tween_callback(_stood)
+	else:
+		tw.tween_callback(func() -> void:
+			_stood()
+			sprite.scale = Vector3(1.12, 0.2, 1.0))
+		tw.tween_property(sprite, "scale", Vector3.ONE, 0.35).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+
+
+## Up: the lying view back as fall() wants it, and the figure standing on its own square.
+func _stood() -> void:
+	resting = false
+	_rising = false
+	_rest = {}
+	if _rest_pivot != null:
+		if _sheet != null:
+			_sheet.queue_free()
+			_sheet = null
+		_rest_pivot.transform = Transform3D.IDENTITY
+		_lying.region_enabled = false
+		_lying.offset = Vector2.ZERO
+		_lying.transform = Transform3D(LYING_BASIS, Vector3(0, 0.03, 0))
+	if sprite != null:
+		sprite.position = Vector3.ZERO
+	refresh()
 
 
 func _is_echo() -> bool:

@@ -13,6 +13,7 @@
   ],
   "alignment": "neutral evil",
   "art": "dire_wolf",
+  "art_height": 2.0,
   "ac": 15,
   "initiative": 3,
   "hp": {
@@ -137,7 +138,7 @@
     }
   ],
   "legendary_actions": {
-    "per_round": 3,
+    "per_round": 2,
     "options": [
       {
         "id": "snap",

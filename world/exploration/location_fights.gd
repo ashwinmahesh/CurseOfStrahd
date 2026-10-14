@@ -182,7 +182,12 @@ static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictiona
 	for mo: Variant in spec["monsters"]:
 		var md := mo as Dictionary
 		var data := Compendium.shared().monster_data(str(md["monster"]))
+		if md.has("art"):
+			data = data.duplicate()
+			data["art"] = str(md["art"])   # a named foe drawn as themselves (Vasilka, not any flesh golem)
 		var mon := Monster.from_data(data)
+		if md.has("lying"):
+			mon.set_meta(&"lying", md["lying"])   # lies there until its fight opens (LyingFigures)
 		if md.has("hp"):
 			# A tuned stat block for this fight (docs/contracts/locations.md).
 			mon.hp_max_base = int(md["hp"])
@@ -288,17 +293,22 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		if t != null:
 			ctokens[c.id] = t
 			standing.append(t)
+			t.get_up(0.3)   # one lying in plain view (curled in the straw) gets up
 			continue
 		t = _combat_token(c)
 		t.position = view.board.cell_center(c.cell, c.size_cells)
 		var look := party_mid - t.position
 		t.face(Vector2(look.x, look.z), false)
 		view.add_child(t)
+		if LyingFigures.of(c.creature) != null:
+			LyingFigures.lay(view, t, LyingFigures.of(c.creature), c.cell)
 		ctokens[c.id] = t
 		foes.append(t)
 	foes.sort_custom(func(a: CombatToken, b: CombatToken) -> bool: return a.position.distance_to(party_mid) < b.position.distance_to(party_mid))
 	for i in foes.size():
-		foes[i].emerge(0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0), 0.6)
+		var delay := 0.1 + 0.5 * i / maxf(1.0, foes.size() - 1.0)
+		foes[i].emerge(delay, 0.6)
+		foes[i].get_up(delay + 0.5)   # one lying there gets up as it comes into view (the dead on their pallets)
 	var turn := view.create_tween()
 	turn.tween_interval(LocationView.STEP_TIME + 0.05)
 	var every_foe: Array[CombatToken] = foes.duplicate()
@@ -361,13 +371,15 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 	var g := LocationView.grid_for(view.loc)
 	g.drop_ft = int(view.loc["map"].get("drop_ft", 0))
 	g.ceiling_ft = int(view.loc["map"].get("ceiling_ft", 0 if bool(view.loc["map"].get("outdoors", false)) else 20))
-	for d: Variant in view.loc.get("doors", []):
-		var door := d as Dictionary
-		g.set_flag(LocationView._cell(door["cell"]), CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN)
-	# A bystander's square blocks in the fight, unless one of the party stands in it (nobody blocks outside fights).
 	var party_at := {}
 	for m in view.members + view.guest_members:
 		party_at[m.cell] = true
+	# A shut door is a wall, unless one of the party stands in its doorway (holding it open: BattleScenery.for_location).
+	for d: Variant in view.loc.get("doors", []):
+		var door := d as Dictionary
+		var cell := LocationView._cell(door["cell"])
+		g.set_flag(cell, CombatGrid.WALL, LocationLocks._door_state(view, str(door["id"])) != LocationView.DOOR_OPEN and not party_at.has(cell))
+	# A bystander's square blocks in the fight, unless one of the party stands in it (nobody blocks outside fights).
 	for npc: String in view.npc_tokens:
 		var at := (view.npc_tokens[npc] as CombatToken).combatant.cell
 		if (view.npc_tokens[npc] as CombatToken).visible and not party_at.has(at):

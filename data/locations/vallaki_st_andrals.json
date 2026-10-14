@@ -506,6 +506,13 @@
             22,
             14
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            7
+          ]
         }
       ],
       "surprise": "",

@@ -46,7 +46,8 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 		"npc":
 			var npc := Compendium.shared().get_entry("npcs", str(spec["npc"]))
 			title = str(npc.get("name", spec["npc"]))
-			out.append({"id": "talk", "label": "Approach" if LocationNpcs.is_asleep(view, str(spec["npc"])) else "Talk", "enabled": str(spec.get("dialogue", "")) != "",
+			var lies := LocationNpcs.is_asleep(view, str(spec["npc"])) or LocationNpcs.is_lying(view, str(spec["npc"]))
+			out.append({"id": "talk", "label": "Approach" if lies else "Talk", "enabled": str(spec.get("dialogue", "")) != "",
 				"why": "" if str(spec.get("dialogue", "")) != "" else "Nothing to say"})
 			if npc.has("shop"):
 				var closed := str((npc["shop"] as Dictionary).get("closed", ""))
@@ -174,6 +175,10 @@ static func act(view: LocationView, cell: Vector2i, action_id: String) -> void:
 		then = func() -> void: LocationChecks.act(view, thing, action_id)
 	if not then.is_valid():
 		return
+	var choice := then
+	then = func() -> void:
+		FoundGlow.used(view, str(thing["kind"]), str(thing.get("id", "")))   # a lock tried, a trap disarmed: no glow
+		choice.call()
 	var stand := _adjacent_free(view, cell)
 	if stand == Vector2i(-1, -1):
 		if (action_id == "use" and _seen_from_afar(thing)) or action_id.begins_with("check:"):
@@ -385,6 +390,7 @@ static func _adjacent_free(view: LocationView, cell: Vector2i) -> Vector2i:
 
 static func interact(view: LocationView, thing: Dictionary) -> void:
 	var spec := thing["spec"] as Dictionary
+	FoundGlow.used(view, str(thing["kind"]), str(thing.get("id", "")))   # used: a find's glow goes
 	var who := view.leader()
 	(view.tokens[who.id] as CombatToken).face(Vector2(LocationView._cell(spec.get("cell", [who.cell.x, who.cell.y])) - who.cell), false)
 	match str(thing["kind"]):
@@ -433,8 +439,17 @@ static func _check_tip_after_talk(view: LocationView, spec: Dictionary) -> void:
 
 
 static func _use_container(view: LocationView, ct: Dictionary, method: String = "auto") -> void:
+	if method == "force" and view._locked(ct):
+		# Guidance can go on forcing it first (LocationLocks.with_guidance).
+		LocationLocks.with_guidance(view, ct, func(extra: Array) -> void: _open_container(view, ct, method, extra))
+		return
+	_open_container(view, ct, method)
+
+
+## Undoes the container's lock if it has one (`extra`: Guidance's die on forcing it), then opens it.
+static func _open_container(view: LocationView, ct: Dictionary, method: String, extra: Array = []) -> void:
 	var id := str(ct["id"])
-	if view._locked(ct) and not LocationLocks._unlock(view, ct, method):
+	if view._locked(ct) and not LocationLocks._unlock(view, ct, method, extra):
 		return
 	view._say("open:" + id)
 	if view._trigger_encounter("open:" + id):

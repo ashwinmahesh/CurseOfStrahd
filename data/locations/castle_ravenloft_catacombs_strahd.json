@@ -219,14 +219,15 @@
       "lair": true,
       "surprise": "",
       "flag": "cat_keepers_defeated",
-      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage.",
+      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage. Two of his spawn rise from the niches at his back.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
           "cell": [
             11,
             11
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "vampire_spawn",
@@ -295,14 +296,15 @@
       "lair": true,
       "surprise": "",
       "flag": "strahd_in_coffin",
-      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy.",
+      "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy. In the coffin beside his, one of his spawn sits up.",
       "monsters": [
         {
           "monster": "strahd_von_zarovich",
           "cell": [
             11,
             13
-          ]
+          ],
+          "hp": 350
         },
         {
           "monster": "swarm_of_bats",
@@ -317,6 +319,14 @@
             16,
             9
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            13
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -347,6 +357,28 @@
             13,
             8
           ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            7,
+            8
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            15,
+            8
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            10,
+            9
+          ],
+          "hp": 80
         }
       ]
     }

@@ -588,6 +588,9 @@
             "type": "boolean",
             "description": "The NPC lies asleep here: Unconscious (so Incapacitated and Prone), drawn lying down, and the hover hint, Look and the Alt plates say so."
           },
+          "lying": {
+            "$ref": "#/$defs/lying"
+          },
           "path": {
             "type": "array",
             "minItems": 1,
@@ -710,6 +713,13 @@
                 "unseen": {
                   "type": "boolean",
                   "description": "In a `waiting` fight, a foe not in plain view before it starts (among the casks): no figure, and it notices no one, until the fight puts it on its square."
+                },
+                "lying": {
+                  "$ref": "#/$defs/lying"
+                },
+                "art": {
+                  "type": "string",
+                  "description": "The sprite this foe wears instead of its stat block's: a person fighting on a borrowed block (Vasilka on a flesh golem's)."
                 }
               }
             }
@@ -794,7 +804,7 @@
               "who",
               "flag"
             ],
-            "description": "A foe leaves the fight (no loot, no death) below `at_hp_below` Hit Points or after `after_rounds` rounds, setting `flag`.",
+            "description": "A foe leaves the fight (no loot, no death) below `at_hp_below` Hit Points or after `after_rounds` rounds, setting `flag`, saying `say` as it goes.",
             "properties": {
               "who": {
                 "$ref": "common.schema.json#/$defs/id"
@@ -809,6 +819,14 @@
               },
               "flag": {
                 "type": "string"
+              },
+              "say": {
+                "type": "string",
+                "description": "A line it speaks as it goes, in the voice of `speaker`; the fight waits for it before it ends."
+              },
+              "speaker": {
+                "type": "string",
+                "description": "Whose voice speaks `say` (an npc id, as in the conversations)."
               }
             }
           },
@@ -880,6 +898,49 @@
     }
   },
   "$defs": {
+    "lying": {
+      "description": "Owner 2026-10-13 (the text has Vasilka lying under a sheet, very still; she stood beside her table): the figure lies down here with no condition (LyingFigures), until the entry changes or, for a foe, its fight opens and it gets up. true, or {on, head, sheet, pose, lift}. A person lies on their back on their own square, on top of the furniture standing there, or on the prop `on` names (a bier beside them), head along the furniture or toward `head`; `sheet` lays linen over them to the chest or over the face. A beast or a dragon lies on its belly, low on the ground (`pose` back or belly says otherwise). `lift` sets how high it lies instead of the top of what it lies on.",
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "on": {
+              "type": "string"
+            },
+            "head": {
+              "type": "string",
+              "enum": [
+                "north",
+                "south",
+                "east",
+                "west"
+              ]
+            },
+            "sheet": {
+              "type": "string",
+              "enum": [
+                "chest",
+                "face"
+              ]
+            },
+            "pose": {
+              "type": "string",
+              "enum": [
+                "back",
+                "belly"
+              ]
+            },
+            "lift": {
+              "type": "number"
+            }
+          }
+        }
+      ]
+    },
     "check": {
       "type": "object",
       "description": "A skill check on a thing in the world (story/world_checks.gd): the party's best hand at it who hasn't tried rolls on the big d20; each character gets one try (`once`: one for the party); a party member proficient in the skill Helps (Advantage) unless it's done `alone`; Guidance adds 1d4. The Narrator's line for how it went is `check:<skill>:<id>:success` or `:failure` (else the outcome's `text`). An encounter here whose trigger is `check:<id>:success` or `:failure` starts when it goes that way.",

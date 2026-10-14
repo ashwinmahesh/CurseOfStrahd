@@ -1,7 +1,7 @@
 extends TestCase
 ## Inventory search and junk (U3) and the stash from anywhere (Q7, owner 2026-10-07: things go in from anywhere and
-## come out only at a safe place): the search box, the New and Junk marks and filters, Sell all junk at a merchant,
-## stashing from the pack and the loot window with an item's own state kept.
+## come out only at a safe place): the search box, the New and Junk marks and filters, Sell all junk at a merchant and
+## the shop's filters on the pack side, stashing from the pack and the loot window with an item's own state kept.
 
 var root: Node
 
@@ -30,6 +30,9 @@ func after_each() -> void:
 	# location) never meet them.
 	for id: String in ["junk_inn", "junk_road"]:
 		(Compendium.shared().tables["locations"] as Dictionary).erase(id)
+	# The shop's pack-side choices last the session (static): back to how a new game starts.
+	ShopScreen.sell_filter = "All"
+	ShopScreen.only_buys = true
 
 
 func _frames(n: int) -> void:
@@ -215,3 +218,60 @@ func test_loot_goes_to_the_stash_with_its_state() -> void:
 	assert_eq(found.keys().size(), 3, "all three in the stash: %s" % [found.keys()])
 	assert_eq(int((found["torch"] as Dictionary)["qty"]), 5)
 	assert_eq(int((found["wand_of_secrets"] as Dictionary).get("charges", -1)), 2, "the wand keeps its charges")
+
+
+## The shop's pack side (owner, 2026-10-13): the inventory's filter tabs, and Only what <merchant> buys, on at first,
+## which leaves out what that merchant won't take. Both hold for the rest of the session, at the next counter too, and
+## a pad's LB/RB step the tabs.
+func test_shop_pack_filters_and_only_what_they_buy() -> void:
+	var ch := GameState.story.party[0]
+	ch.add_item("potion_of_healing")
+	ch.add_item("rope")
+	ch.add_item("flail")
+	var shop := ShopScreen.new()
+	root.add_child(shop)
+	shop.open_for(root, GameState.story, "gunther_arasek")   # arms, armor and gear; no potions
+	assert_true(ShopScreen.only_buys, "on at first")
+	var ids := shop.sell_ids()
+	assert_true("flail" in ids and "rope" in ids, "what Gunther buys shows: %s" % str(ids))
+	assert_false("potion_of_healing" in ids, "a potion he won't buy is left out")
+	assert_true(_button(shop, "Won't buy", true) == null, "so no row says Won't buy")
+	var only := _button(shop, "Only what Gunther buys", true)
+	assert_true(only != null, "the switch names him")
+	only.pressed.emit()
+	assert_false(ShopScreen.only_buys)
+	assert_true("potion_of_healing" in shop.sell_ids(), "switched off: the whole pack")
+	assert_true(_button(shop, "Won't buy", true) != null, "with what he won't buy marked")
+	_button(shop, "Weapons", true).pressed.emit()
+	ids = shop.sell_ids()
+	assert_true("flail" in ids and not "rope" in ids and not "potion_of_healing" in ids, "the Weapons tab: %s" % str(ids))
+	for id in ids:
+		assert_true(InventoryScreen.in_filter("Weapons", Compendium.shared().item_data(id)), "%s is a weapon or ammunition" % id)
+	assert_true(PadNav.current.tab(shop, 1), "LB/RB find the tabs")
+	assert_eq(ShopScreen.sell_filter, "Armor", "RB: the next tab")
+	PadNav.current.tab(shop, 1)
+	assert_eq(ShopScreen.sell_filter, "Consumables")
+	assert_true("potion_of_healing" in shop.sell_ids(), "the potion, with the switch off")
+	_button(shop, "Only what Gunther buys", true).pressed.emit()
+	assert_true(shop.sell_ids().is_empty(), "with it on: Gunther buys no consumables")
+	assert_true(_label(shop, "No consumables in %s's pack that Gunther buys." % ch.name.get_slice(" ", 0)) != null, "and the pane says so")
+	shop.queue_free()
+	# The next counter keeps both choices, and names a priest with his title.
+	var temple := ShopScreen.new()
+	root.add_child(temple)
+	temple.open_for(root, GameState.story, "father_lucian")   # potions and scrolls
+	assert_eq(ShopScreen.sell_filter, "Consumables", "the tab holds")
+	assert_true(ShopScreen.only_buys, "and so does the switch")
+	assert_true("potion_of_healing" in temple.sell_ids(), "Father Lucian buys the potion")
+	assert_true(_button(temple, "Only what Father Lucian buys", true) != null)
+	temple.pick_filter("Weapons")
+	assert_true(temple.sell_ids().is_empty(), "he buys no weapons")
+	assert_true(_label(temple, "No weapons in %s's pack that Father Lucian buys." % ch.name.get_slice(" ", 0)) != null, "and the pane says so")
+	temple.queue_free()
+
+
+func _label(n: Node, text: String) -> Label:
+	for l in n.find_children("*", "Label", true, false):
+		if not (l as Node).is_queued_for_deletion() and (l as Label).text == text:
+			return l as Label
+	return null

@@ -546,6 +546,25 @@ func test_a_loot_window() -> void:
 			root.set("loot", null))
 
 
+## Guidance offered before a check (ui/common/guidance_prompt.gd) at its fullest: the whole party could cast it, each
+## keeping the spell with the longest name it would end, before the skill with the longest name.
+func test_the_guidance_prompt() -> void:
+	if not await _game(LATE):
+		return
+	var casters: Array[Dictionary] = []
+	for ch in GameState.story.party:
+		casters.append({"caster": ch, "ends": "Protection from Evil and Good", "rule": "ask"})
+	var offer := {"st": GameState.story, "who": GameState.story.party[0], "skill": &"sleight_of_hand", "dc": 25,
+		"casters": casters, "auto": null}
+	await _check("the Guidance prompt", func() -> Variant:
+		var p := GuidancePrompt.ask(root, offer, func(_i: int, _rule: String) -> void: pass)
+		await _frames(2)
+		return p,
+		func() -> void:
+			for p in root.find_children("GuidancePrompt*", "", false, false):
+				p.queue_free())
+
+
 ## The longest options the game's conversations offer, each with a check's chance after it, the way the cut-off ones
 ## looked (owner report).
 static func longest_options(n: int) -> Array:
@@ -725,6 +744,28 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		return cv.hud)
 	cv.finished.emit("victory")
 	await _frames(3)
+
+
+## A fight of 24 (owner, 2026-10-14): the turn order scrolls inside its panel, with an arrow at the end that has more.
+func test_the_combat_hud_with_a_long_turn_order() -> void:
+	var e := TestCombat.open_field()
+	for k in 4:
+		TestCombat.hero(e, ["ilse_varga", "godrick_pendlebrook", "thistle", "silvain_aster"][k], Vector2i(0, k), 3)
+	for k in 20:
+		TestCombat.foe(e, "zombie", Vector2i(3 + k % 9, int(k / 9.0) * 2 + 1))
+	TestCombat.start_with(e, e.combatants[0])
+	var hud := CombatHud.new()
+	add_child(hud)
+	hud.build(e, ActionCatalog.new(e))
+	hud.refresh()
+	await _check("the combat HUD with a turn order of 24", func() -> Variant:
+		hud.refresh()
+		await _frames(2)
+		var strip := hud.get("_strip_view") as TurnStrip
+		strip.scroll_by(300.0, true)   # both arrows showing
+		return hud)
+	hud.queue_free()
+	await _frames(2)
 
 
 func test_the_boss_plates() -> void:

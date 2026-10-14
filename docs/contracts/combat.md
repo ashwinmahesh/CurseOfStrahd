@@ -176,6 +176,7 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 | teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
 | summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished (left: "fell" when it went into a drop) |
 | resize | id: Enlarge/Reduce or Large Form changed its size |
+| shape | id, art: a creature took a Beast's (or another creature's) shape, Polymorph, Wild Shape and the rest (ShapeChange), after its `resize`: the token wears `art`'s sprite while it lasts, and its own figure again on `art` "" when the shape ends (CombatView._swap_shape_art; a shape with no sprite keeps the figure) |
 | turn | id, round |
 | round | round |
 | over | outcome (victory, defeat) |
@@ -269,7 +270,7 @@ Stat-block fields any monster can use (`data/schemas/monster.schema.json`; Strah
 
 | field | shape | what the engine does |
 |---|---|---|
-| `legendary_actions` | `{per_round, options: [{id, name, cost, action \| move, summary}]}` | `per_round` uses, refreshed at the start of its own turn (full at the start of the fight); one option at the end of each other creature's turn, chosen by the AI. `action` names one of its actions (an attack, or a save action), `move: true` moves up to its Speed without Opportunity Attacks. `cost` defaults to 1. Not while Incapacitated. |
+| `legendary_actions` | `{per_round, in_lair?, options: [{id, name, cost, action \| move, summary}]}` | `per_round` uses (`in_lair` instead in a lair fight, the 2025 Monster Manual's "3 (4 in Lair)"), refreshed at the start of its own turn (full at the start of the fight); one option at the end of each other creature's turn, chosen by the AI (`BossBrain.legendary_plan`: the best strike per use; with none, a move toward the best target while uses remain to strike there; a use no strike can take goes on a move to a better square at the end of the last turn before its own, so none is wasted). `action` names one of its actions (an attack, or a save action), `move: true` moves up to its Speed without Opportunity Attacks. `cost` defaults to 1. Not while Incapacitated. |
 | `legendary_resistance` | uses per day (per fight) | a failed saving throw becomes a success while uses last |
 | `lair_actions` | `[{id, name, kind, summary, ...}]` | with the encounter's `lair: true`: one on initiative count 20, losing ties (after everyone at 20 or more, before the rest), never the same twice in a row, by a lair master that can act. `kind`: `self` (`modifiers` on the master until the next lair turn), `attack` (`attack.bonus`, `damage`, `on_hit` at a foe it can see within `attack.range`, default 120), `save` (`save`, `targets` {range from the master, count, max_size, types}, `damage`, `on_fail` riders, `summon` on a failure: e.g. the target's shadow, acting on initiative 20), `summon` (`summon: {monster, count, max}` beside the master), `text` (told only). |
 | `regenerates` | `{hp, stopped_by: [damage types], running_water: bool, sunlight: bool}` | any monster (Strahd, trolls, vampires): `hp` back at the start of its turn while it has at least 1 Hit Point, unless it took a `stopped_by` type since its last turn, or stands in running water (a `WATER` square it isn't flying over, or the `in_running_water` flag) or sunlight when those are true |

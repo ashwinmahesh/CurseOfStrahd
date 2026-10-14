@@ -266,8 +266,8 @@
     {
       "id": "ghakis_stove",
       "cell": [
-        5,
-        28
+        4,
+        24
       ],
       "kind": "examine",
       "label": "A cold stove",
@@ -327,7 +327,7 @@
       "id": "ghakis_winch",
       "cell": [
         22,
-        15
+        14
       ],
       "kind": "examine",
       "label": "The great drum",
@@ -351,7 +351,7 @@
     {
       "id": "ghakis_brake",
       "cell": [
-        19,
+        18,
         15
       ],
       "kind": "decor",
@@ -362,7 +362,7 @@
       "id": "ghakis_tool_rack",
       "cell": [
         26,
-        15
+        14
       ],
       "kind": "decor",
       "label": "Tools",
@@ -754,7 +754,7 @@
     {
       "id": "ghakis_hall_shackles",
       "cell": [
-        33,
+        34,
         6
       ],
       "kind": "examine",
@@ -893,9 +893,23 @@
         7
       ],
       "dialogue": "mount_ghakis/the_warm_snow:wyrm",
-      "when": "not flag.sarkhaza_slain",
+      "when": "not flag.sarkhaza_slain and flag.wyrm_chain_drawn",
       "facing": "south",
       "approach": 8
+    },
+    {
+      "npc": "sarkhaza",
+      "cell": [
+        22,
+        7
+      ],
+      "dialogue": "mount_ghakis/the_warm_snow:wyrm",
+      "when": "not flag.sarkhaza_slain and not flag.wyrm_chain_drawn",
+      "facing": "south",
+      "approach": 8,
+      "lying": {
+        "head": "west"
+      }
     }
   ],
   "encounters": [
@@ -931,12 +945,28 @@
           "name": "A Burnt Keeper"
         },
         {
-          "monster": "flameskull",
+          "monster": "wight",
           "cell": [
-            9,
-            13
+            7,
+            14
           ],
-          "name": "A Burnt Keeper"
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            7,
+            15
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            7,
+            16
+          ],
+          "name": "A Keeper"
         }
       ],
       "surprise": "",
@@ -954,7 +984,10 @@
             21,
             6
           ],
-          "hp": 170
+          "hp": 195,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": false,
@@ -977,7 +1010,10 @@
             21,
             6
           ],
-          "hp": 170
+          "hp": 195,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": true,
@@ -1000,7 +1036,10 @@
             21,
             6
           ],
-          "hp": 215
+          "hp": 212,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": false,
@@ -1023,7 +1062,10 @@
             21,
             6
           ],
-          "hp": 215
+          "hp": 212,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": true,
@@ -1092,7 +1134,10 @@
             21,
             6
           ],
-          "hp": 155
+          "hp": 155,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": false,
@@ -1115,7 +1160,10 @@
             21,
             6
           ],
-          "hp": 155
+          "hp": 155,
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": true,
@@ -1183,7 +1231,10 @@
           "cell": [
             21,
             6
-          ]
+          ],
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": false,
@@ -1204,7 +1255,10 @@
           "cell": [
             21,
             6
-          ]
+          ],
+          "lying": {
+            "head": "west"
+          }
         }
       ],
       "lair": true,

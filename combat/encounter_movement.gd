@@ -45,14 +45,19 @@ func in_running_water(c: Combatant) -> bool:
 
 
 ## Squares `c` can reach with its movement (or `budget` feet). A Prone creature crawls (double cost) unless
-## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too.
-func reachable_for(c: Combatant, budget: int = -1, standing: bool = false) -> Dictionary:
+## `standing` says it will stand up first; dragging a grappled creature costs 1 extra foot per foot too. `avoid`: more
+## squares the walk keeps out of (the AI's way round dangerous ground, AiHazards).
+func reachable_for(c: Combatant, budget: int = -1, standing: bool = false, avoid: Dictionary = {}) -> Dictionary:
 	var e := enc()
 	if budget < 0 and c == e.current():
 		c.regain_speed()   # a hold that ended this turn gives the Speed back
 	var feet := c.movement_left if budget < 0 else budget
 	feet = feet / extra_cost(c, standing)
 	var occ := _move_blocks(c)
+	if not avoid.is_empty():
+		var blocked := (occ["blocked"] as Dictionary).duplicate()
+		blocked.merge(avoid)
+		occ["blocked"] = blocked
 	return e.grid.reachable(c.cell, c.size_cells, feet, _has_fn(occ["blocked"] as Dictionary),
 		_value_fn(occ["slowed"] as Dictionary), _has_fn(occ["occupied"] as Dictionary), move_mode(c))
 
@@ -135,8 +140,9 @@ func fear_sources(c: Combatant) -> Array[Combatant]:
 
 ## How other creatures' squares affect `c`'s movement: {blocked, slowed, occupied}, each a set of cells.
 ## 2024: you can pass through an ally, an Incapacitated creature, a Tiny creature or one two sizes different
-## (Halfling Nimbleness: any larger creature); another creature's space, an ally's too, is Difficult Terrain unless
-## it's Tiny; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too.
+## (Halfling Nimbleness: any larger creature); another creature's space is Difficult Terrain unless it's Tiny or your
+## ally; you can't end your move in an occupied space. `allies_block` (a place's flag) makes allies block too. A dead
+## creature is an object (its body takes up no space): it's left out.
 ## Cramped rooms (owner, 2026-10-12; deviations.md): a creature the player moves may end its move in an ally's space,
 ## so heroes can share a square; foes the game moves keep to squares of their own.
 func _occupancy_for(c: Combatant) -> Dictionary:
@@ -157,8 +163,9 @@ func _occupancy_for(c: Combatant) -> Dictionary:
 		var ally := c.allied_with(o) and not e.allies_block
 		var passable := ally or o.creature.has_flag("no_actions") or o.creature.size == &"tiny" \
 			or absi(o_size - my_size) >= 2 or (c.creature.has_flag("halfling_nimbleness") and o_size > my_size)
-		# 2024: any other creature's space is Difficult Terrain, an ally's included (a Tiny one excepted).
-		var slows := o.creature.size != &"tiny"
+		# 2024: another creature's space is Difficult Terrain unless it's Tiny or an ally's (BR2024, Moving Around Other
+		# Creatures).
+		var slows := o.creature.size != &"tiny" and not c.allied_with(o)
 		var shares := ally and c.is_player_controlled()
 		for cell in o.footprint():
 			if not shares:
@@ -200,7 +207,8 @@ static func _value_fn(set: Dictionary) -> Callable:
 ## Moves the current creature to `dest` along the cheapest legal path (safe_path: of those, the one that provokes
 ## least). Leaving a hostile creature's reach provokes an Opportunity Attack unless the mover took Disengage; a
 ## player-controlled reactor is asked first. A Prone mover stands up first if it has the movement for it (half its Speed).
-func move(c: Combatant, dest: Vector2i) -> CombatResult:
+## `avoid`: squares to walk round when `dest` can be reached without them (the AI's dangerous ground, AiHazards).
+func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var why := e._turn_check(c)
 	if why != "":
@@ -237,6 +245,10 @@ func move(c: Combatant, dest: Vector2i) -> CombatResult:
 	if c.creature.has_condition(&"prone") and c.movement_left >= c.speed() / 2:
 		stand_up(c)
 	var reach := reachable_for(c)
+	if not avoid.is_empty():
+		var calm := reachable_for(c, -1, false, avoid)
+		if calm.has(dest) and not bool((calm[dest] as Dictionary)["occupied"]):
+			reach = calm
 	if not reach.has(dest):
 		# Too far: as far along the way as the movement left goes (owner, 2026-10-12: "just move as close as we can").
 		var stop := stop_toward(c, dest, reach)

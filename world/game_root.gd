@@ -14,6 +14,7 @@ var plan_bar: PlanBar                ## turn-based exploring's panel (F7)
 var screen: Node = null              ## the open full-screen panel (sheet, inventory ...), if any
 var dialogue: DialogueUI = null
 var loot: LootWindow = null
+var guidance: GuidancePrompt = null  ## Guidance offered before a check while exploring (ask_guidance), if it's up
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
@@ -86,6 +87,8 @@ func _ready() -> void:
 		var snap := GameState.combat_snapshot
 		if not snap.is_empty() and str(snap.get("location", "")) == where:
 			view.resume_encounter.call_deferred(snap)
+		elif LongRest.broken(st):
+			_night_after_load.call_deferred()   # saved with the night's rest broken and no fight under way
 		# A finished game's save plays its ending again.
 		if Endings.reached(st) != "":
 			show_ending.call_deferred())
@@ -143,6 +146,7 @@ func enter_location(location_id: String, spawn: String) -> void:
 			_check_fallen())
 	view.big_roll.connect(func(t: D20Test, who: String, label: String) -> void: DiceRoll.show_roll(self, DiceRoll.from_test(t, who, label)))
 	view.party_tended.connect(_refresh)
+	view.guidance_asked.connect(_ask_guidance)
 	view.loot_opened.connect(_open_loot)
 	view.combat_started.connect(func(cv: CombatView) -> void:
 		Cursors.show("pointer")
@@ -222,7 +226,7 @@ var _fallen := false
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
-	if moving or view == null or view.in_combat or dialogue != null or ending != null:
+	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null:
 		return
 	if screen != null:
 		if event.is_action_pressed(&"combat_cancel"):
@@ -307,7 +311,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
-		and loot == null and ending == null
+		and loot == null and ending == null and guidance == null
 	if view != null and not view.in_combat:
 		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)
 	if exploring and PadNav.active():
@@ -495,6 +499,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	dialogue.respec_requested.connect(respec)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
+	runner.offer_guidance = true   # Guidance before a check, from whoever can cast it (GuidanceOffer)
 	if not dialogue.play(runner, ref):
 		dialogue.queue_free()
 		dialogue = null
@@ -502,6 +507,13 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		ModeController.force(ModeController.Mode.EXPLORATION)
 	else:
 		TalkCamera.open(view, _npc_id)   # the camera eases in on the leader and the speaker (Visual Polish Plan 7)
+
+
+## Guidance before a check while exploring (LocationView.ask_guidance): the prompt over the place, which waits for it.
+func _ask_guidance(offer: Dictionary, answered: Callable) -> void:
+	guidance = GuidancePrompt.ask(self, offer, func(index: int, rule: String) -> void:
+		guidance = null
+		answered.call(index, rule))
 
 
 func _dialogue_ended(combat: String) -> void:
@@ -523,6 +535,8 @@ func _dialogue_ended(combat: String) -> void:
 	if not strahd_next.is_empty():
 		_strahd_step(strahd_next)
 		return
+	if combat == "" and _night_visit_over():
+		_sleep_again()   # his visit broke the night's rest, and he's gone: the party sleeps on
 	if not _road_event.is_empty() and str(_road_event["ref"]) == _dialogue_ref:
 		if combat == "":
 			_give_road_event()
@@ -586,6 +600,8 @@ func _after_combat(outcome: String) -> void:
 	if outcome == "defeat":
 		open_screen("game_over", 0)
 		return
+	if outcome == "victory":
+		LongRest.fought(st)   # a fight that broke the night's rest: an hour more to finish it (2024 PHB)
 	view.refresh_npcs()
 	_refresh()
 	if not _road_event.is_empty() and bool(_road_event["after_fight"]):
@@ -595,8 +611,10 @@ func _after_combat(outcome: String) -> void:
 			_road_event = {}
 	var strahd_after := StrahdPresence.after_encounter(st, outcome)
 	if not strahd_after.is_empty():
-		_strahd_step(strahd_after)   # his parting words; the journey goes on when they're done
+		_strahd_step(strahd_after)   # his parting words; the journey (or the night's rest) goes on when they're done
 		return
+	if LongRest.broken(st):
+		_sleep_again()   # the night's fight is won: the party sleeps on, and the Long Rest's benefits come at last
 	if not st.travel_resume.is_empty():
 		hud.toast("The road is clear. You go on.")
 		_continue_journey.call_deferred()
@@ -721,6 +739,8 @@ func _strahd(on: String, ctx: Dictionary = {}) -> bool:
 		return false
 	var visit := StrahdPresence.due(st, on, ctx)
 	if visit.is_empty():
+		if on == "rest" and LongRest.waits_on_strahd(st):
+			_sleep_again()   # the visit that broke the rest isn't due after all: the party sleeps on
 		return false
 	close_screen()
 	_strahd_step(StrahdPresence.begin(st, visit))
@@ -759,10 +779,57 @@ func _strahd_on_road(leg: Dictionary, to: String) -> bool:
 	return true
 
 
-## A Long Rest is over (the rest screen, a camp's night, a magic item's rest): he may have come in the night, and
-## comes once the screen it was taken from, and any talk started there, are done (_strahd_holds).
+## A Long Rest is over (the rest screen, a camp's night, a magic item's rest; `minutes` since it began): he may have
+## come in the night, and comes once the screen it was taken from, and any talk started there, are done
+## (_strahd_holds). A visit that may come to blows broke the rest before its benefits (LongRest: the rest asked for it
+## by the night it ran through, kept with it); when it's over the party sleeps on (_sleep_again).
 func strahd_after_rest(minutes: int) -> void:
-	_strahd("rest", {"night": StrahdPresence.night_between(st.total_minutes() - minutes, st.total_minutes())})
+	var b := LongRest.broken_rest(st)
+	var night := bool(b["night"]) if LongRest.waits_on_strahd(st) and b.has("night") \
+		else StrahdPresence.night_between(st.total_minutes() - minutes, st.total_minutes())
+	_strahd("rest", {"night": night})
+
+
+## Whether Strahd's visit that broke a Long Rest is over: it came (his memory's last visit is no earlier than the
+## break) and nothing of it is still to play.
+func _night_visit_over() -> bool:
+	if not LongRest.waits_on_strahd(st):
+		return false
+	var mem := StrahdPresence.memory(st)
+	return int(mem["last"]) >= int(LongRest.broken_rest(st).get("at", 0)) and (mem["pending"] as Dictionary).is_empty()
+
+
+## What broke the night's rest is over (its fight won, Strahd's visit done): the party lies down again and finishes
+## the Long Rest by itself (LongRest.resume; the owner, 2026-10-13), unless foes still wait here. At camp the camp's
+## own morning follows (LocationCamp.night); elsewhere the night's lines and the morning's word come over the place,
+## as after a magic item's rest, and Strahd may still come.
+func _sleep_again() -> void:
+	if view == null or not LongRest.broken(st):
+		return
+	var res := LongRest.resume(st, Dice.roller)
+	var camp := LocationCamp.of(view)
+	if camp != null:
+		camp.night(res)
+		return
+	var said: Array[String] = [str(res["text"])]
+	if str(res["how"]) == LongRest.SLEPT:
+		st.morning["prepared"] = PrepareScreen.snapshot(st)
+		for line: String in res["lines"]:
+			said.append(line)
+		said.append_array([RestScreen.night_words(self, st), RestScreen.talk_hint(st)])
+	hud.narrate(" ".join(said.filter(func(t: String) -> bool: return t != "")))
+	_refresh()
+	if str(res["how"]) in [LongRest.SLEPT, LongRest.STRAHD]:
+		strahd_after_rest.call_deferred(int(res["minutes"]))
+
+
+## A save made while the night's rest was broken and no fight was under way: Strahd's visit that broke it comes now,
+## or the party sleeps on.
+func _night_after_load() -> void:
+	if LongRest.waits_on_strahd(st) and not _night_visit_over():
+		strahd_after_rest(0)
+	else:
+		_sleep_again()
 
 
 ## Plays a visit's step: the carriage ride (go), a Narrator line, then a conversation or a fight he leaves.
@@ -1003,6 +1070,14 @@ func open_screen(kind: String, index: int) -> void:
 		_:
 			return
 	add_child(screen)
+	# A screen that frees itself (not through close_screen) isn't left behind as the open one: Esc in a later fight
+	# or a bug report would read a freed screen (owner's reports 2026-10-12 20:06 and 20:08).
+	var opened := screen
+	opened.tree_exited.connect(func() -> void:
+		if screen == opened:
+			screen = null
+			if is_inside_tree():
+				get_tree().paused = false)
 	var fighting := view != null and view.in_combat
 	if screen is CharacterSheetScreen:
 		(screen as CharacterSheetScreen).in_fight = fighting   # view only in a fight (owner, 2026-10-08)

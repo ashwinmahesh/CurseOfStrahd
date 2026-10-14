@@ -96,7 +96,7 @@
     {
       "id": "gully_webs",
       "cell": [
-        6,
+        7,
         5
       ],
       "kind": "decor",
@@ -107,7 +107,7 @@
       "id": "gully_webs_2",
       "cell": [
         19,
-        6
+        4
       ],
       "kind": "decor",
       "label": "Web",
@@ -116,8 +116,8 @@
     {
       "id": "gully_webs_3",
       "cell": [
-        15,
-        9
+        17,
+        8
       ],
       "kind": "decor",
       "label": "Web",
@@ -218,6 +218,13 @@
             6
           ],
           "name": "A Swarm of Spiderlings"
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            4,
+            3
+          ]
         }
       ],
       "when": "flag.gully_web_read",

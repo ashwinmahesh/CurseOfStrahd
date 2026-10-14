@@ -204,10 +204,10 @@
   ],
   "always_prepared": {
     "3": [
+      "augury",
       "command",
       "comprehend_languages",
       "detect_magic",
-      "detect_thoughts",
       "identify",
       "mind_spike"
     ],

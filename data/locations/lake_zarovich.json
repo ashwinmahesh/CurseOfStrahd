@@ -303,8 +303,8 @@
         13
       ],
       "kind": "book",
-      "label": "A notice on a hut door",
-      "model": "notice_papers",
+      "label": "A notice board by a hut door",
+      "model": "notice_board",
       "codex": "lz_fishers_notice",
       "text": "To whoever comes after: the lake has given nothing for a year. We have gone to my sister's in Vallaki. The boats are yours if you want them; the lake is yours if you want it. We don't. - the Petrescus, and Old Toma, and the Brancu boys"
     },
@@ -880,7 +880,7 @@
             18,
             21
           ],
-          "hp": 140
+          "hp": 195
         },
         {
           "monster": "dire_wolf",
@@ -917,6 +917,13 @@
             16
           ],
           "name": "Szoldar"
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            21
+          ]
         }
       ],
       "surprise": "",
@@ -943,7 +950,7 @@
             18,
             21
           ],
-          "hp": 140
+          "hp": 240
         },
         {
           "monster": "dire_wolf",
@@ -972,6 +979,21 @@
             20,
             22
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            12,
+            21
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            21
+          ],
+          "name": "Castle Wolf"
         }
       ],
       "surprise": "",
@@ -1208,6 +1230,38 @@
             10
           ],
           "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            16,
+            9
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            16,
+            10
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            8
+          ],
+          "name": "Drowned of Pescari"
         }
       ],
       "surprise": "",
@@ -1327,6 +1381,22 @@
           "monster": "will_o_wisp",
           "cell": [
             21,
+            9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            13,
+            9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            23,
             9
           ],
           "name": "A Drowned Light"

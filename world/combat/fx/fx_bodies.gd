@@ -202,9 +202,13 @@ static func transform(fx: SpellFx, cue: Dictionary, t: CombatToken) -> void:
 	var puff := FxKit.particles({"amount": 10, "lifetime": 0.9, "emit": "sphere", "radius": 0.4, "speed": Vector2(0.3, 0.8),
 		"size": 0.9, "grow": FxKit.curve(0.4, 1.0, 1.2, 0.3), "fade_in": true,
 		"colours": [Color(cols["edge"], 0.6), Color(cols["smoke"], 0.3)], "material": FxKit.smoke_material(0.5)})
+	# Where it ends, taken now: by then the figure may be the shape's (CombatView._swap_shape_art), the old one gone.
+	var chest := SpellFx.chest(t)
 	fx.get_tree().create_timer(0.45 * fx.pace()).timeout.connect(func() -> void:
-		fx.emit(puff, SpellFx.chest(t))
-		FxKit.flash(fx, SpellFx.chest(t), cols["light"], 3.0, 3.0, 0.03, 0.6))
+		if not is_instance_valid(fx) or not fx.is_inside_tree():
+			return
+		fx.emit(puff, chest)
+		FxKit.flash(fx, chest, cols["light"], 3.0, 3.0, 0.03, 0.6))
 
 
 ## A small working (Detect Magic, Light, Mage Hand): a glimmer in the caster's hand and a few motes.

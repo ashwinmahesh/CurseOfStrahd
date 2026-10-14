@@ -274,7 +274,8 @@
             24,
             4
           ],
-          "name": "Druid overseer"
+          "name": "Druid overseer",
+          "hp": 72
         },
         {
           "monster": "vine_blight",
@@ -394,7 +395,8 @@
           "cell": [
             20,
             2
-          ]
+          ],
+          "hp": 65
         },
         {
           "monster": "druid",
@@ -402,13 +404,35 @@
           "cell": [
             20,
             9
-          ]
+          ],
+          "hp": 60
         },
         {
           "monster": "vine_blight",
           "cell": [
             22,
             5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            28,
+            5
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            25,
+            11
           ]
         }
       ],
@@ -428,7 +452,8 @@
             24,
             4
           ],
-          "name": "Druid overseer"
+          "name": "Druid overseer",
+          "hp": 70
         },
         {
           "monster": "vine_blight",
@@ -543,6 +568,13 @@
             22,
             5
           ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            26,
+            9
+          ]
         }
       ],
       "surprise": "",
@@ -555,6 +587,15 @@
       "when": "not flag.cellar_dig_cleared",
       "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig.",
       "monsters": [
+        {
+          "monster": "druid",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "Druid overseer",
+          "hp": 60
+        },
         {
           "monster": "vine_blight",
           "cell": [
@@ -588,6 +629,70 @@
           "cell": [
             19,
             11
+          ]
+        },
+        {
+          "monster": "needle_blight",
+          "cell": [
+            23,
+            11
+          ]
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            3
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            7,
+            10
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            10,
+            3
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            9,
+            10
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            8,
+            6
+          ],
+          "unseen": true
+        },
+        {
+          "monster": "druid",
+          "name": "Druid of Yester Hill",
+          "cell": [
+            20,
+            2
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            22,
+            5
           ]
         }
       ],

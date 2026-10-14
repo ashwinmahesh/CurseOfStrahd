@@ -81,12 +81,14 @@ spawn `from_east_road` is where Into the Mists' `into_the_village` exit arrives 
 
 | id | Map | Trigger | Monsters | XP | Band |
 |---|---|---|---|---|---|
-| `mansion_siege` | burgomaster_mansion | `flag:mansion_vigil` (the party chooses to stand watch) | 2 dire wolves, 2 Strahd zombies, 2 zombies | 900 | Moderate |
-| `doru_undercroft` | village_church | dialogue (`combat doru_undercroft`) | Doru (vampire spawn) | 1800 | above High (see note) |
-| `churchyard_dead` | village_of_barovia | dialogue (burial: Strahd defied or attacked, or a hasty burial) | 4 Strahd zombies, 2 zombies | 900 | Moderate |
-| `night_streets_dead` | village_of_barovia | `enter_area:village_square` at night | 2 Strahd zombies, 4 zombies | 600 | Low |
+| `mansion_siege` | burgomaster_mansion | `flag:mansion_vigil` (the party chooses to stand watch) | a vampire spawn leading 2 Strahd zombies and a zombie | 2250 | above High (5 wins in 8) |
+| `doru_undercroft` | village_church | dialogue (`combat doru_undercroft`) | Doru (vampire spawn), 3 swarms of the undercroft's rats and 2 giant rats | 2000 | above High (see note) |
+| `churchyard_dead` | village_of_barovia | dialogue (burial: Strahd defied or attacked, or a hasty burial) | 8 Strahd zombies, a zombie | 1650 | High (7 wins in 8, the easier side: the continuity playthrough's party lost the burial at every line-up that won 6, two ghouls among them included) |
+| `night_streets_dead` | village_of_barovia | `enter_area:village_square` at night | 4 Strahd zombies, 5 zombies, a ghoul | 1250 | Moderate+ (5 wins in 8) |
 
-Doru is the adventure's vampire spawn and is deliberately over budget (1800 vs High 1600): the party is warned by
+Scaled up for 2024 heroes (owner, 2026-10-13), then retuned for the sharp test party (owner, 2026-10-13 18:05: the autopilot smites, opens with Spirit Guardians and throws Fireball as he plays, and should win 5 in 8 on Balanced at every level): the level 3 versions above, held at 4 to 6 by
+tests/integration/test_scaled_fights_barovia.gd. Doru alone was 8 wins in 8; with the rats he has been living on it is
+5 in 8. Doru is the adventure's vampire spawn and is deliberately over budget: the party is warned by
 Donavich, by the screams and by an Insight check, and has two non-violent outs. Donavich gives two flasks of holy water
 if he is friendly or gives his blessing, and the vestry chest holds two more; the narrow stair is a choke point. If
 playtests show it is too punishing, the cleanest fix is an encounter-level HP override ("starved: 60 HP"), which the

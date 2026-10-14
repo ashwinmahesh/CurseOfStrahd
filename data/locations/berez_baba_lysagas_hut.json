@@ -150,7 +150,7 @@
       "id": "lysaga_oven",
       "cell": [
         2,
-        2
+        1
       ],
       "kind": "examine",
       "label": "The oven",
@@ -439,7 +439,8 @@
       ],
       "dialogue": "berez/lysaga:last_words",
       "when": "flag.lysaga_slain_in_hut and not flag.lysaga_dead",
-      "approach": 10
+      "approach": 10,
+      "lying": true
     },
     {
       "npc": "baba_lysaga",
@@ -474,7 +475,7 @@
             12,
             2
           ],
-          "hp": 120
+          "hp": 400
         },
         {
           "monster": "swarm_of_insects",
@@ -488,6 +489,76 @@
           "cell": [
             13,
             8
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            11,
+            2
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            12,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            12,
+            3
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            13,
+            2
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            11,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            13,
+            1
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            13,
+            3
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            10,
+            2
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            12,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            14,
+            2
           ]
         }
       ],

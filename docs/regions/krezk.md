@@ -261,12 +261,14 @@ with a name override.
 | `gate_wolves` | krezk | enter `krezk_road` at night while the gate is shut | werewolf, 3 dire wolves, 2 wolves (1400, below Low) | werewolf, 2 dire wolves, wolf (1150) | same |
 | `garden_sentry` | garden | enter `scarecrow_row` | the Stitched Sentry (scarecrow, 60 HP) + 4 scarecrows (1000) | same | same |
 | `wards_cells` | wards | `flag:wards_cells_riot` | 2 Belview Brutes + 6 mongrelfolk (1200) | Brute + 4 mongrelfolk (650) | same |
-| `bride_defends` | church | dialogue (the unveiling, "Stop this") | Vasilka (flesh golem, 127 HP), 2 Brutes, 4 mongrelfolk (2900, Low) | Vasilka, Brute, 4 mongrelfolk (2450, Low) | Vasilka at 80 HP + 3 mongrelfolk (1950) |
-| `abbot_wrath` | church | dialogue ("Attack the Abbot", "Kill him", "Never") | the Abbot (deva at 120 HP of 229) + 2 mongrelfolk (6000, Moderate-High) | the Abbot at 100 HP + 1 mongrelfolk (5950, High) | the Abbot at 85 HP |
+| `bride_defends` | church | dialogue (the unveiling, "Stop this") | Vasilka (flesh golem, 160 HP), a second flesh golem, 9 Brutes, 3 mongrelfolk (7800, High) | Vasilka, Brute, 4 mongrelfolk (2450, Low) | Vasilka at 80 HP + 3 mongrelfolk (1950) |
+| `abbot_wrath` | church | dialogue ("Attack the Abbot", "Kill him", "Never") | the Abbot (deva, 250 HP) + 2 flesh golems, 3 Brutes and 2 mongrelfolk (10950, above High) | the Abbot at 100 HP + 1 mongrelfolk (5950, High) | the Abbot at 85 HP |
 
-The climax fight on the critical path's fighting branch is `bride_defends`, a Low fight the autopilot wins; the Abbot
-himself only fights if the party attacks him or will not give up Ireena, and every warning in the region (Clovin, the
-candles, Insight, Ezmerelda) says not to. His HP is cut to about half so the fight, though High, is winnable at 6-7.
+The climax fight on the critical path's fighting branch is `bride_defends`; the Abbot himself only fights if the party
+attacks him or will not give up Ireena, and every warning in the region (Clovin, the candles, Insight, Ezmerelda) says
+not to. Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
+Fireball as he plays, and wins 5 in 8 on Balanced): at level 7 Fireball and Spirit Guardians cut through crowds, so both
+fights lean on flesh golems; the bride fight and the Abbot's each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
 
 Road table `krezk_road` (map `road_ambush`, 20% by day / 45% by night): 3 dire wolves + 3 wolves (750), 2 druids with
 2 needle and 4 twig blights (1100), Clovin's broken cart (event, once), the White Sun waystone (event, once), 3 werewolves

@@ -41,10 +41,10 @@ const COLUMNS := 6
 const EDGE_COLOURS := {"advantage": "bile", "disadvantage": "vampire_red"}
 ## {action} reads as the player's key for it (InputActions.fill, Settings, Keys).
 const CONTROLS: Array[String] = [
-	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Click a portrait in the turn order to look at that creature. Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
+	"Mouse: hover the floor to see your path and its cost; click to move. Hover an enemy for the odds; click to attack with the best weapon that reaches. Click a portrait in the turn order to look at that creature (a long order follows whose turn it is; scroll it with the wheel over it or the arrows at its ends). Right-click on the field cancels; right-click a hotbar slot for Info, Use and the spell's casting level.",
 	"Keyboard: {combat_toggle_log} minimizes or restores the combat log · {combat_toggle_hud} hides or shows your actions for a clear view (the ▾ on the bar too) · {combat_slot_1}-{combat_slot_10} use hotbar slots · {combat_tab_prev} / {combat_tab_next} change tab · {combat_confirm} confirms (casts early with fewer targets) · Esc cancels · {combat_end_turn} ends the turn · Ctrl+Z takes back the last move · {combat_slot_level_down} and {combat_slot_level_up} change the spell slot · {combat_next_target} jumps to the next target · {cycle_leader} inspects the next party member · C opens the character sheet of the one shown (view only; or click a party portrait) · {quick_save} quicksaves and {quick_load} loads the quicksave (outside a fight; in one, the game saves at each round's start).",
 	"Camera: {walk} pan · {camera_rotate_left} / {camera_rotate_right} rotate · mouse wheel zooms · {camera_tactical} the tactical view from above, and back.",
-	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; {@combat_next_target} while holding it looks along the turn order, the camera going to each in turn, and {@combat_end_turn} hides or shows your actions; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
+	"Controller: left stick moves the cursor (the camera follows) · right stick turns and zooms the camera · {a} confirms · {b} cancels · {@combat_next_target} next target · {@combat_end_turn} ends the turn (while picking targets, casts with those picked) · hold {@combat_radial} for the radial menu (right stick picks, release to choose; {@combat_next_target} / {@combat_use_slot} while holding it look on and back along the turn order, the camera going to each in turn and the order scrolling to show them, and {@combat_end_turn} hides or shows your actions; its Tactical wedge looks from above; Settings, Game, Controller fights: Wheels puts your actions themselves on it, the D-pad changing filter and page) · {@combat_slot_prev} / {@combat_slot_next} pick a hotbar slot · {@combat_use_slot} uses it · {@combat_tab_prev} / {@combat_tab_next} change tab · {@combat_slot_level_down} / {@combat_slot_level_up} change the spell slot · {@combat_undo} takes back the last move · {@combat_square_menu} the square's menu at the cursor · {@combat_controls} these controls · {start} menu. Settings, Keys, Controller moves them.",
 	"Reactions always ask unless you set a rule: in the prompt (Next time: Ask me / Always use it / Never), or on the Reactions tab, where a click on a rule steps it through Ask, Automatic and Off on any turn. A slot with a gilt corner holds choices: click it to pick one.",
 ]
 
@@ -61,6 +61,9 @@ var focus_slot := -1
 var slot_levels: Array[int] = []
 var slot_level := 0
 
+## The turn order: its panel, the scrolling view in it, and the row of portrait cards inside that (TurnStrip).
+var _strip_panel: PanelContainer
+var _strip_view: TurnStrip
 var _strip: HBoxContainer
 var _round_label: Label
 var _party_box: VBoxContainer
@@ -232,9 +235,12 @@ func _build_strip() -> void:
 	PadGlyphs.hint(f1, "F1: controls", "{@combat_controls}: controls")
 	head.add_child(f1)
 	row.add_child(head)
-	_strip = HBoxContainer.new()
+	_strip_panel = panel
+	# A long order scrolls inside the panel and follows the turn (TurnStrip), so it never runs past the window.
+	_strip_view = TurnStrip.new()
+	_strip = _strip_view.strip
 	_strip.add_theme_constant_override("separation", 6)
-	row.add_child(_strip)
+	row.add_child(_strip_view)
 
 
 func _build_party() -> void:
@@ -632,8 +638,7 @@ func _place_area_panel() -> void:
 	if log_minimized:
 		_area_panel.position = Vector2(log_rect.end.x - w, log_rect.end.y + 8.0)
 	else:
-		var strip := _strip.get_parent().get_parent() as Control
-		_area_panel.position = Vector2(log_rect.position.x - 8.0 - w, strip.position.y + strip.size.y + 10.0)
+		_area_panel.position = Vector2(log_rect.position.x - 8.0 - w, _strip_panel.position.y + _strip_panel.size.y + 10.0)
 
 
 func hide_area_saves() -> void:
@@ -832,8 +837,11 @@ func refresh() -> void:
 
 
 func _refresh_strip() -> void:
+	# Out of the row now, not at the end of the frame: the old cards would double its width until then.
 	for ch in _strip.get_children():
+		_strip.remove_child(ch)
 		ch.queue_free()
+	_strip_view.clear_cards()
 	var cur := e.current()
 	# The lair's turn sits at initiative count 20 (ADR 0014); legendary creatures show the actions they have left.
 	var lair_at := e.legendary.lair_slot()
@@ -851,7 +859,9 @@ func _refresh_strip() -> void:
 		var ready := not active and c in sharing
 		if ready:
 			frame = "bile"
-		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else frame, 4 if active else (3 if ready else 2)))
+		# On a pad, the creature the camera was last sent to along the order is ringed in white (look_at).
+		var seen := not active and c.id == _strip_view.looked
+		card.add_theme_stylebox_override("panel", _style("ui_oxblood" if not active else "ui_wine", "gilt_light" if active else ("vellum" if seen else frame), 4 if active or seen else (3 if ready else 2)))
 		if c.id in e.shared_ended:
 			card.modulate = Color(1, 1, 1, 0.55)
 		var v := VBoxContainer.new()
@@ -873,6 +883,8 @@ func _refresh_strip() -> void:
 		# A click takes a shared turn (the camera goes along), or looks at whoever it is: the camera glides over to them.
 		card.tooltip_text = ("%s shares this turn: click to take it" if ready else "Click to look at %s") % c.name()
 		card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		# A card passes what it doesn't use on, so the wheel over a portrait scrolls a long order (TurnStrip).
+		card.mouse_filter = Control.MOUSE_FILTER_PASS
 		card.gui_input.connect(func(ev: InputEvent) -> void:
 			if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed and (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
 				if c in e.shared_heroes() and c != e.current():
@@ -880,8 +892,19 @@ func _refresh_strip() -> void:
 				else:
 					focus_requested.emit(c.id))
 		_strip.add_child(card)
+		_strip_view.register(c.id, card)
 	if lair_at == e.order.size():
 		_strip.add_child(_lair_card())
+	# A long order scrolls to show whose turn it is, once at each turn (and at the start of the fight).
+	if cur != null:
+		_strip_view.follow_turn(cur.id, e.round_no)
+
+
+## On a pad, looking along the turn order (CombatView._look_along_order): the creature the camera went to is ringed in
+## the order, and the order scrolls to put it in the middle. The next turn takes the order back to whose turn it is.
+func look_at(id: String) -> void:
+	_strip_view.look(id)
+	_refresh_strip()
 
 
 ## The lair's turn in the order (initiative count 20): ticked once the lair has acted this round.
@@ -1551,7 +1574,10 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"separator": "Casting level"})
 			var ch := shown.creature as Character
 			for l in levels:
-				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
+				# The spell's own level with a free casting left is that casting (SpellCasting spends it first).
+				var free_cast := bool(action.get("free", false)) and l == int(action.get("slot", 0))
+				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (free casting)" % l if free_cast \
+					else "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
 					"enabled": usable, "why": why})
 	_coach_filter_menu(items)
 	_menu.show_actions(str(action.get("label", "")), items, at)

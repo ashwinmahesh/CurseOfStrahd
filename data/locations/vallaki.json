@@ -1733,6 +1733,50 @@
             12
           ],
           "name": "Karl's sword-master"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            12
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            13
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            14
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            16,
+            14
+          ],
+          "name": "Hired sword"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            17,
+            13
+          ],
+          "name": "Hired sword"
         }
       ],
       "surprise": "",
@@ -1873,6 +1917,35 @@
           "cell": [
             30,
             19
+          ],
+          "name": "Hired knife"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            32,
+            12
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            32,
+            13
+          ]
+        },
+        {
+          "monster": "bandit_captain",
+          "cell": [
+            32,
+            14
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            33,
+            12
           ],
           "name": "Hired knife"
         }
@@ -2065,8 +2138,7 @@
             22,
             12
           ],
-          "name": "Izek Strazni",
-          "hp": 95
+          "name": "Izek Strazni"
         },
         {
           "monster": "warrior_veteran",
@@ -2077,20 +2149,20 @@
           "name": "Sergeant of the watch"
         },
         {
-          "monster": "vallaki_guard",
+          "monster": "warrior_veteran",
           "cell": [
-            19,
-            19
+            27,
+            12
           ],
-          "name": "Town guard"
+          "name": "Sergeant of the watch"
         },
         {
-          "monster": "vallaki_guard",
+          "monster": "warrior_veteran",
           "cell": [
-            29,
-            19
+            26,
+            11
           ],
-          "name": "Town guard"
+          "name": "Sergeant of the watch"
         },
         {
           "monster": "vallaki_guard",
@@ -2115,6 +2187,38 @@
             13
           ],
           "name": "Captain of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            22,
+            13
+          ],
+          "name": "Town guard"
+        },
+        {
+          "monster": "vallaki_guard",
+          "cell": [
+            23,
+            12
+          ],
+          "name": "Town guard"
         }
       ],
       "surprise": "",
@@ -2410,13 +2514,21 @@
             12
           ],
           "name": "Izek Strazni",
-          "hp": 95
+          "hp": 225
         },
         {
           "monster": "warrior_veteran",
           "cell": [
             27,
             12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            11
           ],
           "name": "Sergeant of the watch"
         },
@@ -2667,6 +2779,22 @@
             11
           ],
           "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            28,
+            11
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            25,
+            13
+          ],
+          "name": "Izek's sergeant"
         }
       ],
       "surprise": "",
@@ -2822,6 +2950,28 @@
             8,
             33
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            27
+          ],
+          "name": "Daria"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            11,
+            29
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            12,
+            27
+          ]
         }
       ],
       "surprise": "",
@@ -2973,6 +3123,20 @@
           ],
           "name": "Daria",
           "hp": 45
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            45,
+            6
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            45,
+            7
+          ]
         }
       ],
       "surprise": "enemies",
@@ -3276,6 +3440,21 @@
             21
           ],
           "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            21
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            22,
+            22
+          ]
         }
       ],
       "surprise": "",
@@ -3334,6 +3513,38 @@
             20
           ],
           "name": "Rider's Man"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            21
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            22
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            3,
+            23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            4,
+            21
+          ],
+          "name": "Dobre's lad"
         }
       ],
       "surprise": "",

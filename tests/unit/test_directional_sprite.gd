@@ -357,3 +357,27 @@ func test_figures_made_one_after_another_never_share_a_depth() -> void:
 		assert_true(nudge <= 0.1, "at most a tenth of a square")
 	for s in made:
 		s.free()
+
+
+## A monster drawn on a smaller creature's sprite (Granny Ash, Large, on the Medium night hag's; the Penitent, Huge, on
+## the Large amber golem's) gives its own `art_height`, or it stands no taller than what it borrowed (owner, 2026-10-13:
+## "Granny Ash's combat sprite should be scaled up").
+func test_a_monster_on_a_smaller_creatures_sprite_is_drawn_at_its_size() -> void:
+	var sizes := ["tiny", "small", "medium", "large", "huge", "gargantuan"]
+	var dir := DirAccess.open("res://data/monsters")
+	var short: Array[String] = []
+	for f in dir.get_files():
+		if not f.ends_with(".json"):
+			continue
+		var d := JSON.parse_string(FileAccess.get_file_as_string("res://data/monsters/" + f)) as Dictionary
+		var art := str(d.get("art", d.get("id", "")))
+		var lent := Compendium.shared().monster_data(art)
+		if art == str(d.get("id", "")) or lent.is_empty() or d.has("art_height"):
+			continue
+		if sizes.find(str(d.get("size", "medium"))) > sizes.find(str(lent.get("size", "medium"))):
+			short.append(str(d["id"]))
+	assert_true(short.is_empty(), "drawn at the smaller creature's height: %s" % ", ".join(short))
+	var m := Monster.from_data(Compendium.shared().monster_data("granny_ash"))
+	var e := TestCombat.open_field()
+	var granny := e.add(m, &"enemy", Vector2i(3, 3))
+	assert_eq(CombatToken.height_of(granny), 2.4, "twice a man's height")

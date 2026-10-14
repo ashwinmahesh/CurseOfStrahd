@@ -150,7 +150,7 @@
       "id": "painter_pots",
       "cell": [
         5,
-        4
+        1
       ],
       "kind": "examine",
       "label": "Pots of paint",
@@ -160,7 +160,7 @@
       "id": "painter_sketches",
       "cell": [
         10,
-        4
+        1
       ],
       "kind": "examine",
       "label": "Sketches",
@@ -279,7 +279,7 @@
             7,
             2
           ],
-          "hp": 230
+          "hp": 245
         },
         {
           "monster": "guardian_portrait",
@@ -288,7 +288,7 @@
             2
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
         },
         {
           "monster": "guardian_portrait",
@@ -297,7 +297,7 @@
             2
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
         },
         {
           "monster": "guardian_portrait",
@@ -306,7 +306,7 @@
             5
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
         },
         {
           "monster": "guardian_portrait",
@@ -315,7 +315,7 @@
             4
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
         },
         {
           "monster": "guardian_portrait",
@@ -324,7 +324,7 @@
             1
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
         },
         {
           "monster": "guardian_portrait",
@@ -333,7 +333,16 @@
             5
           ],
           "name": "A Copy",
-          "hp": 30
+          "hp": 40
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            4,
+            4
+          ],
+          "name": "A Copy",
+          "hp": 40
         }
       ],
       "surprise": "",

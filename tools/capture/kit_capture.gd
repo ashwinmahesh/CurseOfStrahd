@@ -40,6 +40,13 @@ const SHOTS := {
 	"hall_turned": {"loc": "death_house_ground", "cells": [[13, 8], [14, 8], [13, 9], [14, 9]], "yaw": 1},
 	"abbey_l": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[14, 12], [15, 12], [14, 13], [15, 13]],
 		"look": [22, 8], "dist": 20.0},
+	# The Abbey's walls on its shelf 15 ft up (owner report 2026-10-13: they started high in the air): the gate from the
+	# switchback, and the west wall from the courtyard with the camera turned.
+	"abbey_gate": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[9, 22], [10, 22], [9, 23], [10, 23]], "look": [9, 19],
+		"dist": 16.0},
+	"abbey_west_wall": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[8, 11], [9, 11], [8, 12], [9, 12]], "look": [4, 9],
+		"dist": 16.0, "yaw": 1},
+	"amber_doors": {"loc": "amber_temple_entrance", "hour": 12, "dist": 18.0},
 	"argynvostholt_front": {"loc": "argynvostholt", "hour": 12, "cells": [[20, 9], [21, 9], [20, 10], [21, 10]],
 		"look": [20, 4], "dist": 18.0},
 	"argynvostholt_stable": {"loc": "argynvostholt", "hour": 12, "cells": [[30, 22], [31, 22], [30, 23], [31, 23]],
@@ -67,6 +74,10 @@ const SHOTS := {
 	"krezk_wall_behind": {"loc": "krezk", "hour": 13, "cells": [[7, 28], [8, 28], [9, 28], [10, 28]], "dist": 12.0},
 	"krezk_gate_out": {"loc": "krezk", "hour": 13, "cells": [[35, 19], [36, 19], [35, 20], [36, 20]], "look": [32, 20],
 		"dist": 14.0},
+	# A house or a castle wall between the camera and the party (owner 2026-10-13: they no longer collapse).
+	"collapse_krezk": {"loc": "krezk", "hour": 13, "cells": [[5, 23], [6, 23], [5, 22], [6, 22]], "dist": 13.0},
+	"collapse_abbey": {"loc": "abbey_of_st_markovia", "hour": 12, "cells": [[5, 12], [6, 12], [5, 11], [6, 11]], "dist": 13.0},
+	"collapse_village": {"loc": "village_of_barovia", "hour": 12, "cells": [[16, 10], [17, 10], [16, 11], [17, 11]], "dist": 13.0},
 	"fire_krezk": {"loc": "krezk", "hour": 21, "cells": [[27, 17], [27, 18], [26, 17], [26, 18]], "look": [28, 17], "dist": 8.0},
 	"fire_camp": {"loc": "vallaki_vistani_camp", "hour": 21, "cells": [[13, 12], [13, 13], [12, 12], [12, 13]],
 		"look": [14, 12], "dist": 8.0},
@@ -94,6 +105,16 @@ const SHOTS := {
 		"dist": 14.0},
 	"castle_roofs": {"loc": "castle_ravenloft_spires_roofs", "hour": 21, "cells": [[8, 6], [9, 6], [8, 7], [9, 7]],
 		"dist": 16.0},
+	# The Abbey's wards and church (owner reports 2026-10-13): the narrow cells where the Belviews whose gifts didn't
+	# take are kept, from the corridor; the memorial plaque in the church.
+	"wards_cells": {"loc": "abbey_of_st_markovia_wards", "cells": [[19, 6], [20, 6], [19, 7], [20, 7]], "look": [21, 3],
+		"dist": 13.0},
+	"wards_cells_east": {"loc": "abbey_of_st_markovia_wards", "cells": [[25, 6], [26, 6], [25, 7], [26, 7]], "look": [26, 3],
+		"dist": 10.0},
+	"wards_cells_west": {"loc": "abbey_of_st_markovia_wards", "cells": [[15, 6], [16, 6], [15, 7], [16, 7]], "look": [15, 3],
+		"dist": 10.0},
+	"shrine_plaque": {"loc": "abbey_of_st_markovia_shrine", "cells": [[11, 8], [12, 8], [11, 9], [12, 9]], "look": [9, 3],
+		"dist": 14.0},
 }
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 

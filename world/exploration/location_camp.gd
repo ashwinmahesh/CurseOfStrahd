@@ -204,6 +204,9 @@ func _process(_delta: float) -> void:
 	for t in _bench_tokens:
 		if is_instance_valid(t):
 			t.visible = not view.in_combat   # those at camp don't fight: they keep back from it
+	for mark: Variant in _marks.values():
+		if is_instance_valid(mark):
+			(mark as Node3D).visible = not view.in_combat   # no asking for a word in the middle of a fight
 	if view.in_combat:
 		return
 	if _roster_key() != _roster_seen:
@@ -236,6 +239,15 @@ func _refresh_talks() -> void:
 		if tok == null or not is_instance_valid(tok):
 			continue
 		_marks[id] = _mark(tok)
+
+
+## Takes every mark down. Those over the party and the guests hang on the view's own figures, which outlive the camp;
+## the word itself waits, and its mark comes back at the next camp (CampSite.talks).
+func _clear_marks() -> void:
+	for mark: Variant in _marks.values():
+		if is_instance_valid(mark):
+			(mark as Node).queue_free()
+	_marks.clear()
 
 
 ## The speech bubble over someone who wants a word (the talk icon, with a dark rim and an ellipsis in it), bobbing
@@ -342,19 +354,40 @@ func sleep_refusal() -> String:
 	return " ".join(why)
 
 
-## Sleeps the night by the fire: the Long Rest (LongRest.take). An interrupted night gives a Short Rest's benefits and
-## the party can try again; a full one brings the morning, with the Narrator's lines for the night, a dream, and
-## perhaps Strahd (game root `strahd_after_rest`).
+## Sleeps the night by the fire: the Long Rest (LongRest.take), and whatever the night brings (night).
 func sleep() -> void:
 	if slept or view.in_combat or sleep_refusal() != "":
 		return
 	Audio.sfx("rest")
-	var res := LongRest.take(view.st, rule, Dice.roller)
-	if bool(res["interrupted"]):
-		_refresh_root()
-		if not _night_visitors():
+	night(LongRest.take(view.st, rule, Dice.roller))
+
+
+## How the night at camp goes on from `res` (LongRest.take, or LongRest.resume once what broke it is over: game root
+## `_sleep_again`). Whatever comes at the camp comes before the rest's benefits (the owner, 2026-10-13): something out
+## of the dark (_night_visitors), or Strahd's visit that may come to blows (game root `strahd_after_rest`); once it's
+## over the party sleeps on by itself. With nothing to fight, or foes still about afterwards, nobody sleeps again (a
+## Short Rest's benefits) and the party can try again later. A full night brings the morning, with the Narrator's
+## lines for the night, a dream, and perhaps Strahd.
+func night(res: Dictionary) -> void:
+	match str(res.get("how", "")):
+		LongRest.DARK:
+			if not _night_visitors():
+				_queue.append(str(LongRest.restless(view.st)["text"]))
+			_refresh_root()
+			return
+		LongRest.STRAHD:
+			_refresh_root()
+			view.narration.emit(str(res["text"]))
+			_strahd_after(int(res["minutes"]))
+			return
+		LongRest.RESTLESS:
+			_refresh_root()
 			_queue.append(str(res["text"]))
-		return
+			return
+		LongRest.SLEPT:
+			pass
+		_:
+			return
 	slept = true
 	had.clear()
 	prepared_before = PrepareScreen.snapshot(view.st)
@@ -368,12 +401,18 @@ func sleep() -> void:
 	_say_keys(CampSite.keys_for("camp:morning", setting))
 	_refresh_root()
 	_refresh_talks()
+	_strahd_after(int(res["minutes"]))   # Strahd may come in the night (ADR 0014)
+
+
+## Strahd's chance at the night just slept (or the visit that broke it): game root `strahd_after_rest`.
+func _strahd_after(minutes: int) -> void:
 	if root != null and root.has_method("strahd_after_rest"):
-		root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)   # Strahd may come in the night (ADR 0014)
+		root.call_deferred("strahd_after_rest", minutes)
 
 
 ## The night interrupted at camp: what comes out of the dark (CampSite.night_fight) falls on the camp, where everyone
-## lies. Afterwards the party can try to sleep again. False if nothing came (the night just wasn't restful).
+## lies, before the rest's benefits. Once it's beaten the party sleeps on (game root `_sleep_again`). False if nothing
+## came (the night just wasn't restful).
 func _night_visitors() -> bool:
 	var spec := CampSite.night_fight(view.grid, center, night_taken(), str(view.loc.get("region", "")), view.st.target_level(),
 		Dice.roller, setting)
@@ -426,6 +465,7 @@ func strike() -> void:
 		view.prop_nodes.erase(id)
 	if _flame != null and is_instance_valid(_flame):
 		_flame.queue_free()
+	_clear_marks()
 	for t in _bench_tokens:
 		if is_instance_valid(t):
 			t.queue_free()
@@ -451,6 +491,7 @@ func strike() -> void:
 
 
 func _exit_tree() -> void:
+	_clear_marks()
 	if view != null and is_instance_valid(view) and view.st != null and of(view) == self:
 		view.st.camp_company.clear()
 

@@ -445,7 +445,7 @@ func _situation(c: Combatant, o: BattleObject, melee: bool, p: WeaponProfile, ki
 	var e := enc()
 	var dist := distance_ft(c, o)
 	if not melee:
-		var sharp := e.features.has_feat(c, "sharpshooter") and not kind in ["spell", "thrown"]
+		var sharp := e.features.has_feat(c, "sharpshooter") and not kind in ["spell", "thrown"] and (p == null or not p.thrown)
 		if p != null and p.normal_range > 0 and dist > p.normal_range and not sharp:
 			dis.append("long range")
 		var close_ok := sharp or (p != null and e.features.has_feat(c, "crossbow_expert") and p.item_id.contains("crossbow")) \

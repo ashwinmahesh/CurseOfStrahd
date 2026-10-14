@@ -22,10 +22,6 @@
     },
     {
       "stat": "flag",
-      "value": "immune_spell:detect_thoughts"
-    },
-    {
-      "stat": "flag",
       "value": "immune_spell:zone_of_truth"
     }
   ],
