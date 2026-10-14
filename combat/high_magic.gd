@@ -596,10 +596,11 @@ func _shape_marker(ctx: Dictionary, t: Combatant, m: Monster, label: String) -> 
 
 
 ## True Polymorph: a creature becomes another creature of Challenge Rating up to its own (or its level), gaining that
-## form's Hit Points as Temporary Hit Points; an unwilling one makes a Wisdom save.
+## form's Hit Points as Temporary Hit Points; an unwilling one makes a Wisdom save. The 2024 text, like Polymorph's,
+## drops the 2014 rule that shapechangers are unaffected.
 func true_polymorph(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var c := ctx["c"] as Combatant
-	if t.creature.hp <= 0 or t.creature.has_flag("shapechanger"):
+	if t.creature.hp <= 0:
 		_log(ctx, "True Polymorph has no effect on %s" % t.name(), t, r, "info")
 		return
 	if c.hostile_to(t) and _save(ctx, t, &"wis"):

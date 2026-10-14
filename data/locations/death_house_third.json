@@ -679,12 +679,11 @@
           "name": "Balcony Sword"
         },
         {
-          "monster": "animated_flying_sword",
+          "monster": "rat",
           "cell": [
-            13,
-            5
-          ],
-          "name": "Balcony Sword"
+            15,
+            4
+          ]
         }
       ],
       "text": "The armor on the landing steps down off its stand."
@@ -717,7 +716,7 @@
           ]
         },
         {
-          "monster": "specter",
+          "monster": "shadow",
           "cell": [
             22,
             13
@@ -762,16 +761,9 @@
           ]
         },
         {
-          "monster": "animated_flying_sword",
-          "cell": [
-            12,
-            14
-          ]
-        },
-        {
           "monster": "giant_rat",
           "cell": [
-            13,
+            12,
             14
           ]
         }

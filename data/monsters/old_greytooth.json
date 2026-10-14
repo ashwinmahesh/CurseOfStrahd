@@ -13,6 +13,7 @@
   ],
   "alignment": "neutral evil",
   "art": "dire_wolf",
+  "art_height": 2.0,
   "ac": 15,
   "initiative": 3,
   "hp": {

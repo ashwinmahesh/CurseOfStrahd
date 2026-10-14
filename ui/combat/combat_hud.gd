@@ -1551,7 +1551,10 @@ func open_slot_menu(action: Dictionary, at: Vector2) -> void:
 			items.append({"separator": "Casting level"})
 			var ch := shown.creature as Character
 			for l in levels:
-				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
+				# The spell's own level with a free casting left is that casting (SpellCasting spends it first).
+				var free_cast := bool(action.get("free", false)) and l == int(action.get("slot", 0))
+				items.append({"id": "cast:%d" % l, "label": "Cast at level %d (free casting)" % l if free_cast \
+					else "Cast at level %d (%d slot%s left)" % [l, ch.slots_left(l), "" if ch.slots_left(l) == 1 else "s"],
 					"enabled": usable, "why": why})
 	_coach_filter_menu(items)
 	_menu.show_actions(str(action.get("label", "")), items, at)

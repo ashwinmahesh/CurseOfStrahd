@@ -132,36 +132,117 @@ func _attach(ctx: Dictionary, t: Combatant, fx: Effect) -> bool:
 
 # --- Polymorph ----------------------------------------------------------------------------------------
 
-## Polymorph: a Wisdom save (allies don't resist; shape-changers and creatures at 0 Hit Points are unaffected), then
-## the target becomes a Beast of Challenge Rating up to its own (or its level): `opts.choice` names the form, else
-## the strongest one for an ally and the weakest for a foe. It gains the Beast's Hit Points as Temporary Hit Points;
-## the spell ends on it when they run out.
+## The prompt (a ReactionRequest kind, and its rule on the Reactions tab) where a player picks the Beast a creature that
+## isn't its ally becomes.
+const POLYMORPH_FORM := "polymorph_form"
+
+
+## Polymorph (2024): a Wisdom save (allies don't resist; a creature at 0 Hit Points is unaffected, deviations.md), then
+## the target becomes a Beast of Challenge Rating up to its own (or its level), the form its caster picks: `opts.choice`
+## names it; without one, a player casting it on a creature that isn't its ally is asked once the save fails, from the
+## forms that fit, weakest first (POLYMORPH_FORM); otherwise the strongest form for an ally and the weakest for anyone
+## else. It gains the Beast's Hit Points as Temporary Hit Points; the spell ends on it when they run out. The 2024 text
+## drops the 2014 rule that shapechangers are unaffected.
 func polymorph(ctx: Dictionary, t: Combatant, r: CombatResult, pausable: bool = false) -> CombatResult:
 	var e := enc()
-	if t.creature.hp <= 0 or t.creature.has_flag("shapechanger"):
+	if t.creature.hp <= 0:
 		r.lines.append(e.log.add("info", "Polymorph has no effect on %s" % t.name(), t.id))
 		return r
 	return _resist_then(ctx, t, &"wis", func(resisted: bool) -> CombatResult:
 		if not resisted:
-			_polymorphed(ctx, t, r)
+			_polymorph_form(ctx, t, r, pausable)
 		return r, r, pausable)
 
 
-func _polymorphed(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
+## The Beasts `t` could become by Polymorph: Challenge Rating up to its own, or its level if it has none (its true
+## self's, under another shape), weakest first.
+func polymorph_forms(t: Combatant) -> Array[Dictionary]:
+	var real := enc().shapes.original(t)
+	return ShapeChange.beast_forms(float(real.character_level()) if real is Character else (real as Monster).cr)
+
+
+## The form Polymorph picks when no one chooses: the strongest for the caster's ally, the weakest for anyone else.
+static func polymorph_default(c: Combatant, t: Combatant, forms: Array[Dictionary]) -> Dictionary:
+	return forms[forms.size() - 1] if c.allied_with(t) else forms[0]
+
+
+func _polymorph_form(ctx: Dictionary, t: Combatant, r: CombatResult, pausable: bool) -> void:
 	var c := ctx["c"] as Combatant
 	var e := enc()
-	var limit := float(t.creature.character_level()) if t.creature is Character else (t.creature as Monster).cr
-	var forms := ShapeChange.beast_forms(limit)
+	var forms := polymorph_forms(t)
 	if forms.is_empty():
 		r.lines.append(e.log.add("info", "No Beast form fits %s" % t.name(), t.id))
 		return
 	var pick := str((ctx["opts"] as Dictionary).get("choice", ""))
-	var form: Dictionary = forms[forms.size() - 1] if c.allied_with(t) else forms[0]
 	for f in forms:
 		if str(f.get("id", "")) == pick:
-			form = f
-	if pick != "" and str(form.get("id", "")) != pick:
+			_polymorphed(ctx, t, f)
+			return
+	var form := polymorph_default(c, t, forms)
+	if pausable and e.pending == null and c.is_player_controlled() and not c.allied_with(t) and e._reaction_decision(c, POLYMORPH_FORM) == "ask":
+		_ask_polymorph_form(ctx, t, forms, form)
+		return
+	if pick != "":
 		e.log.add("info", "That Beast out-ranks %s; Polymorph picks %s instead" % [t.name(), form.get("name", "")], t.id)
+	_polymorphed(ctx, t, form)
+
+
+## The player's pick of the Beast `t` becomes, from `forms` (weakest first, `form` picked to start with). Skip keeps
+## that one.
+func _ask_polymorph_form(ctx: Dictionary, t: Combatant, forms: Array[Dictionary], form: Dictionary) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
+	var real := e.shapes.original(t)
+	var req := ReactionRequest.new(POLYMORPH_FORM, c.id, t.id)
+	req.title = "Polymorph's Beast form"
+	req.text = "%s failed the save. Choose the Beast it becomes (Challenge Rating %s or lower): it keeps its own Hit Points and gains the Beast's as Temporary Hit Points, and changes back when they run out or the spell ends." % [
+		t.name(), _cr_text(float(real.character_level()) if real is Character else (real as Monster).cr)]
+	req.cost = "No action or Reaction"
+	req.spends_reaction = false
+	req.min_targets = 1
+	req.max_targets = 1
+	req.selected_ids.assign([str(form.get("id", ""))])
+	for f in forms:
+		req.target_choices.append({"id": str(f.get("id", "")), "label": polymorph_form_label(f)})
+	# Weakly hold the prompt: the continuation lives on it until the player answers.
+	var request_ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var request := request_ref.get_ref() as ReactionRequest
+		var chosen := form
+		if use and request != null and not request.selected_ids.is_empty():
+			for f in forms:
+				if str(f.get("id", "")) == request.selected_ids[0]:
+					chosen = f
+		_polymorphed(ctx, t, chosen)
+		return CombatResult.new()
+	e.pending = req
+
+
+## A Beast form as the Polymorph prompt lists it: "Rat · CR 0 · 1 HP · AC 10 · Speed 20 ft".
+static func polymorph_form_label(f: Dictionary) -> String:
+	var parts: Array[String] = [str(f.get("name", f.get("id", ""))), "CR " + _cr_text(float(f.get("cr", 0))),
+		"%d HP" % int((f.get("hp", {}) as Dictionary).get("average", 1)), "AC %d" % int(f.get("ac", 10))]
+	var speed := f.get("speed", {}) as Dictionary
+	var moves: Array[String] = []
+	for kind: String in ["walk", "fly", "swim", "climb", "burrow"]:
+		if int(speed.get(kind, 0)) > 0:
+			moves.append(("%d ft" if kind == "walk" else kind + " %d ft") % int(speed[kind]))
+	if not moves.is_empty():
+		parts.append("Speed " + ", ".join(moves))
+	return " · ".join(parts)
+
+
+## A Challenge Rating as the books write it: 0, 1/8, 1/4, 1/2, 1, 2...
+static func _cr_text(cr: float) -> String:
+	for frac: Array in [[0.125, "1/8"], [0.25, "1/4"], [0.5, "1/2"]]:
+		if is_equal_approx(cr, float(frac[0])):
+			return str(frac[1])
+	return str(int(cr))
+
+
+func _polymorphed(ctx: Dictionary, t: Combatant, form: Dictionary) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
 	var beast_hp := int((form.get("hp", {}) as Dictionary).get("average", 1))
 	# Shape Shifter (Transmuter 10): polymorphing yourself once per Long Rest keeps your mind.
 	var keep := t == c and e.faerun.shape_shifter_keeps_mind(c)

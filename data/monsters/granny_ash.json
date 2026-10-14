@@ -13,6 +13,7 @@
   ],
   "alignment": "chaotic evil",
   "art": "night_hag",
+  "art_height": 2.4,
   "ac": 17,
   "initiative": 2,
   "hp": {

@@ -85,3 +85,38 @@ func test_stones_endurance_and_storms_thunder_answer_a_blow() -> void:
 	while e.pending != null:
 		e.answer_reaction(true)
 	assert_true(orc.creature.hp < hp, "Storm's Thunder struck back")
+
+
+## Large Form only in a big enough space (2024; owner report 2026-10-13: with no room to grow it still took his Bonus
+## Action): with no clear 10-ft square it's greyed out with the reason and spends nothing; beside a wall it grows into
+## the free corner that keeps it on its square.
+func test_large_form_needs_room_and_spends_nothing_without_it() -> void:
+	var e := TestCombat.encounter(["#######", "#.....#", "#######"], 4)
+	var g := _goliath(e, "stone_giant", Vector2i(2, 1))
+	TestCombat.foe(e, "zombie", Vector2i(5, 1))
+	TestCombat.start_with(e, g)
+	var cat := ActionCatalog.new(e)
+	var a := cat.find(g, "feat:large_form")
+	assert_false(a.is_empty(), "on the bar")
+	assert_false(bool(a["legal"]), "a corridor 5 ft wide")
+	assert_true(str(a.get("reason", "")).contains("No room to grow"), str(a.get("reason", "")))
+	var ch := g.creature as Character
+	var uses := ch.resource_left("large_form")
+	var speed := g.speed()
+	assert_false(cat.perform(g, a, [], Vector2.INF).ok)
+	assert_eq(ch.resource_left("large_form"), uses, "the use is kept")
+	assert_true(g.bonus_available, "and the Bonus Action")
+	assert_eq(g.creature.size, &"medium")
+	assert_eq(g.speed(), speed, "no +10 ft Speed without the growth")
+	var e2 := TestCombat.open_field(4)
+	var g2 := _goliath(e2, "stone_giant", Vector2i(11, 7))
+	TestCombat.foe(e2, "zombie", Vector2i(1, 1))
+	TestCombat.start_with(e2, g2)
+	var cat2 := ActionCatalog.new(e2)
+	var r := cat2.perform(g2, cat2.find(g2, "feat:large_form"), [], Vector2.INF)
+	assert_true(r.ok, r.reason)
+	assert_eq(g2.creature.size, &"large")
+	assert_eq(g2.cell, Vector2i(10, 6), "grown into the corner of the field, still on its square")
+	assert_true(Vector2i(11, 7) in g2.footprint())
+	assert_false(g2.bonus_available)
+	assert_eq((g2.creature as Character).resource_left("large_form"), 0)

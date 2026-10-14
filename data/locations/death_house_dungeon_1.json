@@ -1009,6 +1009,13 @@
             15,
             3
           ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            11,
+            3
+          ]
         }
       ],
       "text": "The crypt was full of something, and now the passage is."
@@ -1058,6 +1065,13 @@
             14
           ],
           "lying": true
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            4,
+            14
+          ]
         }
       ],
       "text": "The bones in the passage stand up, and some of them still have meat on."
@@ -1072,6 +1086,20 @@
           "monster": "grick",
           "cell": [
             27,
+            2
+          ]
+        },
+        {
+          "monster": "grick",
+          "cell": [
+            26,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            26,
             2
           ]
         }
@@ -1130,6 +1158,20 @@
           "cell": [
             6,
             16
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            1,
+            17
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            2,
+            17
           ]
         }
       ],
@@ -1249,9 +1291,16 @@
           ]
         },
         {
-          "monster": "swarm_of_rats",
+          "monster": "giant_rat",
           "cell": [
             10,
+            16
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            11,
             16
           ]
         }
@@ -1371,7 +1420,7 @@
           "name": "A Robed One"
         },
         {
-          "monster": "giant_rat",
+          "monster": "rat",
           "cell": [
             7,
             3

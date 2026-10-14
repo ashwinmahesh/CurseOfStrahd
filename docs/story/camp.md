@@ -55,26 +55,34 @@ so one voice clip serves both.
 Anyone who wants a word (`CampSite.talks`, the first talk in their camp file whose condition holds) has a speech bubble
 over them, and the hover hint says "Thistle wants a word". Walking up to them (a click, or Talk in their menu) starts
 it. Each companion has one word in the evening and one after the night. A romance talk is offered by the first of
-the pair its condition names. Anyone else says what they're doing, in the Narrator's words: `camp:<id>`,
+the pair its condition names. The bubbles hide during a fight and go with the camp: a word not heard waits for the
+next camp, or the rest screen after a Long Rest elsewhere, for as long as its condition holds. Anyone else says what they're doing, in the Narrator's words: `camp:<id>`,
 `camp:guest:<npc>`, or `camp:someone` and `camp:guest` for everyone else.
 
 ## The night
 
 The camp's panel (ui/exploration/camp_bar.gd) and the rest screen both offer **Sleep (8 hours)**, which is the Long
 Rest (story/long_rest.gd, the same rules as the screen's: 16 hours since the last, the place's risk, wards, Alarm).
-An interrupted night gives a Short Rest's benefits, and then the night's visitors come out of the dark, 25 to 40 ft
+An interrupted night (an hour in) brings the night's visitors out of the dark before the rest's benefits: the party
+fights with what it had when it lay down (the owner, 2026-10-13). They come 25 to 40 ft
 from the fire, from more than one side, or 15 to 60 ft off where a cramped house has no room that far
 (data/camp/night_visitors.json): a group for the party's milestone level and the lie of the land, a die picking among
 several. A town's streets and indoors have their own (the file's `settings`: cutthroats, the churchyard's dead and
 Strahd's spawn in town; rats, shadows and the dead, and a wraith indoors, never a wolf pack in a house); in the wild,
 the region's land (forest, marsh, mountain, castle). Where none can be placed, the night is just restless, as the
-rest screen's is. Those waiting at camp keep back from the fight. Afterwards the party can try to sleep again. Each
+rest screen's is: a Short Rest's benefits for the hour slept, and the party can try to sleep again. Those waiting at
+camp keep back from the fight. Once it's won the party lies down again by itself and sleeps the night out, an hour
+more for the fight (the 2024 rules' resumed rest; the 16 hours since the last don't stop it), and the morning
+follows as after any night; with foes still waiting in the place, nobody sleeps again (story/long_rest.gd,
+`LongRest.resume`; game root `_sleep_again`). A visit of Strahd's that may come to blows comes before the rest's
+benefits too, and the night goes on the same way once he's gone. Each
 group is played to the end eight times by the test autopilot at the lowest level it comes for, with the party as an
-interrupted night finds it (half its Hit Points and half its spell slots spent, then the hour's Short Rest), and is
-tuned to be won exactly as often in those eight (seeds 1-8) as the owner set for that level on 2026-10-13: 4 of 8 at
-levels 1-2, 3 at levels 3-5, 2 from level 6 (tests/integration/test_night_visitors.gd, `target_wins`; a timeout would
-count as a loss, and fails the test besides). Groups are played at levels 1, 4 and 7, so they're tuned to 4, 3 and 2
-wins. A change to how fights roll their dice can move a count, so the test allows one win either way (`DRIFT`): it
+interrupted night finds it (half its Hit Points and half its spell slots spent, and nothing back, since the fight comes before the rest's
+benefits), and is
+tuned to be won exactly as often in those eight (seeds 1-8) as the owner set on 2026-10-13 18:05: 5 of 8 at every
+level, for the sharp test autopilot that smites, opens with Spirit Guardians and throws Fireball as he plays
+(tests/integration/test_night_visitors.gd, `target_wins`; a timeout would count as a loss, and fails the test besides).
+Groups are played at levels 1, 4 and 7, each tuned to 5 wins. A change to how fights roll their dice can move a count, so the test allows one win either way (`DRIFT`): it
 fails only when a group drifts by two or more, and then the group needs tuning again. Each group is also tuned to
 cost the party 2 to 3 heroes down per win on average (printed by the test, not asserted, like the other fight series). The wild's groups are
 played in an open field; the town's in the Village of Barovia and the indoor ones

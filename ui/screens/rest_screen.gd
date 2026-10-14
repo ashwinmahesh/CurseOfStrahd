@@ -431,8 +431,11 @@ func _long_rest(rule: String) -> void:
 		return
 	Audio.sfx("rest")
 	var res := LongRest.take(st, rule, Dice.roller)
+	# Nothing comes at a party sleeping here that it could fight: the night is just broken (LongRest.restless).
+	if str(res["how"]) == LongRest.DARK:
+		res = LongRest.restless(st)
 	_log.text = str(res["text"])
-	if not bool(res["interrupted"]):
+	if str(res["how"]) == LongRest.SLEPT:
 		for line: String in res["lines"]:
 			_log.text += "\n" + line
 		_narrate("rest:long")
@@ -441,9 +444,11 @@ func _long_rest(rule: String) -> void:
 		_long_done = true
 		_prepared_before = PrepareScreen.snapshot(st)
 		st.morning["prepared"] = _prepared_before
-		if root.has_method("strahd_after_rest"):
-			# Strahd may come in the night (ADR 0014): after this screen and any talk started from it.
-			root.call_deferred("strahd_after_rest", LongRest.HOURS * 60)
+	if str(res["how"]) in [LongRest.SLEPT, LongRest.STRAHD] and root.has_method("strahd_after_rest"):
+		# Strahd may come in the night (ADR 0014): after this screen and any talk started from it. A visit that may
+		# come to blows broke the rest before its benefits; it goes on once he's gone (game root).
+		root.call_deferred("strahd_after_rest", int(res["minutes"]))
+	_short_why = _short_refusals()   # no Hit Point Dice while his visit waits (RestRules.BROKEN_NIGHT)
 	_draw()
 	_refresh_long()
 	root.call("_refresh")

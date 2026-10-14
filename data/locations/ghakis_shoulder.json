@@ -586,6 +586,78 @@
           ],
           "name": "A Chain-Warden",
           "facing": "south"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            17,
+            4
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            17,
+            5
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            17,
+            6
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            18,
+            4
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            18,
+            6
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            19,
+            4
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            19,
+            5
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            19,
+            6
+          ],
+          "name": "A Keeper"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            21,
+            7
+          ],
+          "name": "A Keeper"
         }
       ],
       "surprise": "",

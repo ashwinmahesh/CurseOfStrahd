@@ -1602,14 +1602,14 @@
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             2
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             3
@@ -1721,7 +1721,7 @@
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "zombie",
           "cell": [
             16,
             9
@@ -1874,13 +1874,6 @@
           "cell": [
             38,
             13
-          ]
-        },
-        {
-          "monster": "swarm_of_bats",
-          "cell": [
-            34,
-            10
           ]
         },
         {
@@ -2050,38 +2043,10 @@
           ]
         },
         {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            11
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            9,
-            10
-          ]
-        },
-        {
-          "monster": "twig_blight",
-          "cell": [
-            12,
-            13
-          ]
-        },
-        {
           "monster": "needle_blight",
           "cell": [
             4,
             13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            13,
-            12
           ]
         }
       ],
@@ -2215,6 +2180,27 @@
           "cell": [
             10,
             13
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            4,
+            10
+          ]
+        },
+        {
+          "monster": "vine_blight",
+          "cell": [
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "twig_blight",
+          "cell": [
+            5,
+            11
           ]
         }
       ],
@@ -2399,6 +2385,13 @@
             22,
             13
           ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            20,
+            12
+          ]
         }
       ],
       "surprise": "",
@@ -2444,6 +2437,13 @@
           "cell": [
             22,
             13
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            20,
+            12
           ]
         }
       ],

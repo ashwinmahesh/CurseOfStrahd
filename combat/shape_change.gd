@@ -34,7 +34,8 @@ func keeps_spells(c: Combatant) -> bool:
 		and (originals[c.id] as Dictionary)["creature"] is Character
 
 
-## Beasts in the bestiary a creature could become: Challenge Rating at most `max_cr` (swarms excluded).
+## Beasts in the bestiary a creature could become: Challenge Rating at most `max_cr` (swarms excluded), weakest first
+## (by Challenge Rating, then Hit Points, then name, so the same list comes back every time).
 static func beast_forms(max_cr: float) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var table := Compendium.shared().tables.get("monsters", {}) as Dictionary
@@ -43,7 +44,12 @@ static func beast_forms(max_cr: float) -> Array[Dictionary]:
 		if str(d.get("type", "")) != "beast" or float(d.get("cr", 0)) > max_cr + 0.001 or str(id).begins_with("swarm"):
 			continue
 		out.append(d)
-	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a.get("cr", 0)) < float(b.get("cr", 0)))
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		if not is_equal_approx(float(a.get("cr", 0)), float(b.get("cr", 0))):
+			return float(a.get("cr", 0)) < float(b.get("cr", 0))
+		var ha := int((a.get("hp", {}) as Dictionary).get("average", 0))
+		var hb := int((b.get("hp", {}) as Dictionary).get("average", 0))
+		return ha < hb if ha != hb else str(a.get("id", "")) < str(b.get("id", "")))
 	return out
 
 

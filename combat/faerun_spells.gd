@@ -278,16 +278,16 @@ func synchronous_damage(source: Combatant, target: Combatant, parts: Array, deta
 func _backlash(c: Combatant, source: Combatant, cut: Callable) -> void:
 	var e := enc()
 	var ch := _ch(c)
-	var slot := e.spells._lowest_slot(ch, 4)
-	if slot == 0:
+	if e.spells._lowest_slot(ch, 4) == 0 and not e.spells.reaction_spells.free_casting(c, "backlash"):
 		return
 	c.reaction_available = false
-	ch.expend_slot(slot)
+	var paid := e.spells.reaction_spells.pay(c, "backlash")
+	var slot := int(paid["level"])
 	var s := Compendium.shared().spell_data("backlash")
 	var nums := e.spells.numbers(c, e.spells._entry_any(c, "backlash"))
 	var extra := maxi(0, slot - 4)
 	var guard := int(e.dice.roll_expr("%dd6" % (4 + extra), "Backlash")["total"]) + int(nums.get("mod", 0))
-	e.log.add("spell", "%s answers with Backlash (level %d slot)" % [c.name(), slot], c.id)
+	e.log.add("spell", "%s answers with Backlash (%s)" % [c.name(), "free casting" if bool(paid["free"]) else "level %d slot" % slot], c.id)
 	e.events.append({"type": "spell", "caster": c.id, "spell": "backlash", "cells": [], "targets": [source.id] if source != null else []})
 	cut.call(guard, "Backlash")
 	if source == null or not source.is_alive() or e.distance(c, source) > 60:
