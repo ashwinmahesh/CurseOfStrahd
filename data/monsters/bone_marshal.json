@@ -127,7 +127,7 @@
       {
         "id": "charge",
         "name": "Charge",
-        "cost": 2,
+        "cost": 1,
         "action": "grave_blade",
         "summary": "Rides at someone and makes one Grave Blade attack (the engine only strikes)."
       }
