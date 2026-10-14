@@ -37784,12 +37784,6 @@
   "recipe": "dd92281f92",
   "text": "Among Kiril's trophies hangs a sword he took from someone who hurt him. The blade is notched and still somehow wet."
  },
- "narrator/0f1ac121552c81cb": {
-  "chars": 131,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "You edge out along the wet rocks with the gorge breathing below you, and pull the great feather free of the crevice it's caught in."
- },
  "narrator/0f1b03e74a886bff": {
   "chars": 57,
   "model": "eleven_v4",
@@ -41893,12 +41887,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "On a ridge above the trail, a big wolf stands outlined against the sky, watching you. When it sees you looking, it turns and lopes away north, unhurried, toward the rock face above the lake."
- },
- "narrator/2b70beb737beede3": {
-  "chars": 112,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "You warm the fingers one by one until they give, without breaking a single one, and take what they were holding."
  },
  "narrator/2b722c85d2719ef2": {
   "chars": 122,
@@ -54704,6 +54692,12 @@
   "recipe": "dd92281f92",
   "text": "A chair of bones, half made. A label hangs from one arm: a name, and under it, in the same hand, \"rebel\"."
  },
+ "narrator/8a58e0e8edf68e3c": {
+  "chars": 122,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You warm the fingers one by one until they give, without breaking a single one, and the hand opens on what it was holding."
+ },
  "narrator/8a5eb6480ad6cf56": {
   "chars": 76,
   "model": "eleven_v4",
@@ -65521,6 +65515,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A great bowl of yellow bone by the door, with a pole for steering. It is the top of a skull, and the skull was the size of a cart."
+ },
+ "narrator/db76ace1ac025215": {
+  "chars": 132,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "You edge out along the wet rocks with the gorge breathing below you, and work the great feather loose in the crevice it's caught in."
  },
  "narrator/db7c741a8c6304c8": {
   "chars": 137,
