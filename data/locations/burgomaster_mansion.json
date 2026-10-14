@@ -536,6 +536,83 @@
             22,
             8
           ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            14,
+            8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            14,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            5,
+            8
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            1,
+            12
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            17,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            21,
+            11
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            12,
+            10
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            10,
+            10
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            14,
+            10
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            14,
+            14
+          ]
         }
       ],
       "surprise": "",
@@ -667,6 +744,22 @@
           "cell": [
             2,
             5
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            7,
+            4
+          ],
+          "name": "A Siege-Winter Servant"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            11,
+            2
           ],
           "name": "A Siege-Winter Servant"
         }

@@ -903,6 +903,38 @@
             24
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            14,
+            13
+          ],
+          "name": "A Knight Who Forgot"
         }
       ],
       "surprise": "",
@@ -1051,6 +1083,30 @@
             28
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            15,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "Man-at-Arms"
         }
       ],
       "surprise": "",
@@ -1101,6 +1157,38 @@
             26
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            26
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "A Knight Who Forgot"
         }
       ],
       "surprise": "",

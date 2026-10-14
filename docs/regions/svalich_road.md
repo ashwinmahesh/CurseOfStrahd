@@ -211,6 +211,8 @@ raven, lost_pack, strahd_rides (as above), wolf_pack_night (3: 4 dire wolves, 4 
 dire wolf, 2 wolves, 1000), dead_in_the_trees (1: 5 Strahd zombies, 2 zombies, 1100), bats_and_wolves (1: 4 swarms of
 bats, 4 dire wolves, 1000). Every monster cell was checked against its map (open floor, room for Large creatures, no
 overlaps, at least 6 squares from the arrival spawn).
+The fights above are the 2026-10-12 line-ups; since 2026-10-14 every road fight is tuned to 5 wins in 8 for the sharp test
+party at the level its region is travelled at, with the new line-ups in docs/story/fight_tuning.md.
 
 **Monsters I wished for** (not in data/monsters yet): needle blight and twig blight (the woods' signature hazard;
 vine blights lead them), berserker (Barovian hunters and Vallaki deserters), ghost (the road's lost travellers),

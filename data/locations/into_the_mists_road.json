@@ -973,6 +973,27 @@
             24,
             16
           ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            27,
+            9
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            23,
+            8
+          ]
         }
       ],
       "surprise": "",

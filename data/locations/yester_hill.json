@@ -901,6 +901,30 @@
             10
           ],
           "name": "The Hill's Watch"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            20
+          ],
+          "name": "A Barrow-Warden"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            6
+          ],
+          "name": "The Hill's Watch"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            28,
+            2
+          ],
+          "name": "The Hill's Watch"
         }
       ]
     }

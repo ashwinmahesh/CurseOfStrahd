@@ -1348,6 +1348,46 @@
             10
           ],
           "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            17,
+            5
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            17,
+            14
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            18
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            22
+          ],
+          "name": "Drowned of Pescari"
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            21,
+            16
+          ],
+          "name": "Drowned of Pescari"
         }
       ],
       "surprise": "",

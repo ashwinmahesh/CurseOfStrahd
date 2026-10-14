@@ -51,6 +51,20 @@
             24,
             14
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            16,
+            16
+          ]
         }
       ],
       "text": "The wolves that have been pacing you through the fields all morning stop pretending to be shy."
@@ -138,10 +152,10 @@
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "rat",
           "cell": [
-            19,
-            15
+            3,
+            3
           ]
         }
       ],
@@ -188,17 +202,45 @@
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "strahd_zombie",
           "cell": [
             7,
             4
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "strahd_zombie",
           "cell": [
             24,
             4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            15
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            8,
+            12
           ]
         }
       ],
@@ -259,10 +301,31 @@
           ]
         },
         {
-          "monster": "zombie",
+          "monster": "strahd_zombie",
           "cell": [
             28,
             15
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            12,
+            15
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            27,
+            4
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            2,
+            5
           ]
         }
       ],
@@ -374,10 +437,10 @@
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "rat",
           "cell": [
-            19,
-            15
+            3,
+            3
           ]
         }
       ],

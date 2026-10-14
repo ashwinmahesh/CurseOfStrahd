@@ -1851,20 +1851,19 @@
           ]
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            33,
-            13
-          ],
-          "name": "Hired sword"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             28,
             19
           ],
           "name": "Wachter's captain"
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            23
+          ]
         }
       ],
       "surprise": "",
@@ -2010,6 +2009,20 @@
             19
           ],
           "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            31,
+            23
+          ]
+        },
+        {
+          "monster": "scout",
+          "cell": [
+            30,
+            27
+          ]
         }
       ],
       "surprise": "",
@@ -2070,6 +2083,20 @@
           ],
           "name": "Wachter's captain",
           "hp": 40
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            23
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            18,
+            27
+          ]
         }
       ],
       "surprise": "",
@@ -2117,6 +2144,48 @@
             19
           ],
           "name": "Hired knife"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            31,
+            23
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            30,
+            27
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            30,
+            31
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            34,
+            32
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            34,
+            15
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            31,
+            11
+          ]
         }
       ],
       "surprise": "",
@@ -2912,6 +2981,13 @@
             32
           ],
           "name": "Daria"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            14,
+            22
+          ]
         }
       ],
       "surprise": "",
@@ -3004,6 +3080,20 @@
           ],
           "name": "Irina",
           "hp": 55
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            12,
+            22
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            13,
+            18
+          ]
         }
       ],
       "surprise": "",
@@ -3040,6 +3130,13 @@
           "cell": [
             8,
             33
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            11,
+            22
           ]
         }
       ],
@@ -3082,6 +3179,22 @@
           ],
           "name": "Daria",
           "hp": 50
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            48,
+            2
+          ],
+          "name": "Daria"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            40,
+            1
+          ],
+          "name": "Daria"
         }
       ],
       "surprise": "enemies",
@@ -3176,6 +3289,20 @@
           ],
           "name": "Irina",
           "hp": 35
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            43,
+            12
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            35,
+            9
+          ]
         }
       ],
       "surprise": "enemies",
@@ -3213,6 +3340,14 @@
           "cell": [
             46,
             8
+          ],
+          "name": "Daria"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            48,
+            2
           ],
           "name": "Daria"
         }
@@ -3253,6 +3388,55 @@
             41,
             11
           ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            33,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            39,
+            19
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            25,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            36,
+            27
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            20
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            9,
+            11
+          ]
         }
       ],
       "surprise": "",
@@ -3285,6 +3469,20 @@
           ],
           "name": "Irina",
           "hp": 55
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            43,
+            12
+          ]
+        },
+        {
+          "monster": "rat",
+          "cell": [
+            35,
+            9
+          ]
         }
       ],
       "surprise": "",
@@ -3337,6 +3535,14 @@
           "cell": [
             26,
             23
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            17
           ],
           "name": "Dobre's lad"
         }
@@ -3405,6 +3611,28 @@
             20
           ],
           "name": "Rider's Man"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            2,
+            30
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            4,
+            34
+          ]
+        },
+        {
+          "monster": "bandit",
+          "cell": [
+            2,
+            16
+          ]
         }
       ],
       "surprise": "",
@@ -3614,14 +3842,6 @@
           "name": "Dobre's lad"
         },
         {
-          "monster": "warrior_veteran",
-          "cell": [
-            8,
-            25
-          ],
-          "name": "Dobre's lad"
-        },
-        {
           "monster": "bandit_captain",
           "cell": [
             1,
@@ -3636,6 +3856,13 @@
             20
           ],
           "name": "Rider's Man"
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            5,
+            25
+          ]
         }
       ],
       "surprise": "",

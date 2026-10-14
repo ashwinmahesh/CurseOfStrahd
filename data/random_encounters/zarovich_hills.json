@@ -58,6 +58,13 @@
             27,
             11
           ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            27,
+            6
+          ]
         }
       ],
       "text": "A howl goes up close by, then another, and then grey shapes are pouring through the pines on both sides of the trail. Kiril's wolves are hunting, and tonight they've found something better than deer."
@@ -109,9 +116,69 @@
             17,
             12
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            11
+          ],
+          "name": "Pack leader"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            28,
+            10
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            13
+          ],
+          "name": "Pack leader"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            8
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            14
+          ],
+          "name": "Pack leader"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            20,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            12
+          ],
+          "name": "Pack leader"
         }
       ],
-      "text": "Dire wolves, five of them, big as ponies, fanning out across the slope ahead. Behind them a man steps out from the trees, smiling, and starts to change."
+      "text": "Dire wolves, big as ponies, fan out across the slope ahead. Behind them men step out from the trees, smiling, and start to change."
     },
     {
       "id": "hill_ghouls",
@@ -119,28 +186,28 @@
       "when": "night",
       "monsters": [
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
             20,
             5
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
             24,
             8
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
             22,
             11
           ]
         },
         {
-          "monster": "ghoul",
+          "monster": "ghast",
           "cell": [
             26,
             14
@@ -158,6 +225,41 @@
           "cell": [
             28,
             10
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            12
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            10
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            24,
+            13
           ]
         }
       ],

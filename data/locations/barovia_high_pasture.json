@@ -195,12 +195,11 @@
           "name": "The Mist's Old Wolf"
         },
         {
-          "monster": "dire_wolf",
+          "monster": "wolf",
           "cell": [
             19,
             3
-          ],
-          "name": "The Mist's Old Wolf"
+          ]
         },
         {
           "monster": "wolf",
