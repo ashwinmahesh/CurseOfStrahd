@@ -1014,7 +1014,7 @@
             29,
             15
           ],
-          "hp": 375
+          "hp": 565
         },
         {
           "monster": "nightmare",
@@ -1050,6 +1050,30 @@
           "monster": "vampire_spawn",
           "cell": [
             29,
+            14
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            16
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            15
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            28,
             14
           ],
           "name": "One of Strahd's spawn"
@@ -1208,6 +1232,54 @@
             23
           ],
           "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            22
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            39,
+            21
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            39,
+            23
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
+            22
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            21
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            23
+          ],
+          "name": "A Door-Warden"
         }
       ],
       "surprise": "",
@@ -1224,7 +1296,8 @@
           "cell": [
             39,
             22
-          ]
+          ],
+          "hp": 250
         },
         {
           "monster": "helmed_horror",
@@ -1255,6 +1328,54 @@
           "cell": [
             39,
             21
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            39,
+            23
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
+            22
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            21
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            38,
+            23
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
+            21
+          ],
+          "name": "A Door-Warden"
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            40,
+            23
           ],
           "name": "A Door-Warden"
         }

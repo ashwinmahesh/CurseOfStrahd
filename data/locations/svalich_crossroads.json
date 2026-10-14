@@ -1421,7 +1421,7 @@
             33,
             12
           ],
-          "hp": 390
+          "hp": 545
         },
         {
           "monster": "nightmare",
@@ -1494,6 +1494,54 @@
             11
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            33,
+            11
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            34,
+            12
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            11
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            13
+          ],
+          "name": "The Huntsman's Mare"
         }
       ],
       "surprise": "",
@@ -1585,7 +1633,7 @@
             33,
             12
           ],
-          "hp": 290
+          "hp": 520
         },
         {
           "monster": "nightmare",
@@ -1642,6 +1690,54 @@
             11
           ],
           "name": "Hound of the Hunt"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            12
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            33,
+            11
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            33,
+            13
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            34,
+            12
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            11
+          ],
+          "name": "The Huntsman's Mare"
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            32,
+            13
+          ],
+          "name": "The Huntsman's Mare"
         }
       ],
       "surprise": "",
@@ -1663,7 +1759,7 @@
             33,
             12
           ],
-          "hp": 240
+          "hp": 470
         },
         {
           "monster": "nightmare",
@@ -1717,7 +1813,7 @@
             33,
             12
           ],
-          "hp": 240
+          "hp": 430
         },
         {
           "monster": "nightmare",
@@ -1870,7 +1966,7 @@
             16,
             20
           ],
-          "hp": 160
+          "hp": 450
         },
         {
           "monster": "mimic",

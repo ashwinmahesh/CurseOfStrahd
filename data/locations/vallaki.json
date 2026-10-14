@@ -2138,7 +2138,8 @@
             22,
             12
           ],
-          "name": "Izek Strazni"
+          "name": "Izek Strazni",
+          "hp": 110
         },
         {
           "monster": "warrior_veteran",
@@ -2219,6 +2220,54 @@
             12
           ],
           "name": "Town guard"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            13
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            23,
+            13
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            20,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            14
+          ],
+          "name": "Sergeant of the watch"
         }
       ],
       "surprise": "",
@@ -2555,6 +2604,30 @@
             13
           ],
           "name": "Town guard"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            12
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            11
+          ],
+          "name": "Sergeant of the watch"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            13
+          ],
+          "name": "Sergeant of the watch"
         }
       ],
       "surprise": "",
@@ -2762,7 +2835,7 @@
             12
           ],
           "name": "Izek Strazni",
-          "hp": 110
+          "hp": 310
         },
         {
           "monster": "warrior_veteran",

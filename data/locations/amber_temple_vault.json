@@ -621,7 +621,21 @@
             22
           ],
           "name": "Vosk, unmasked",
-          "hp": 80
+          "hp": 205
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            18,
+            22
+          ]
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            19,
+            23
+          ]
         }
       ],
       "surprise": "",
@@ -644,7 +658,7 @@
             22
           ],
           "name": "Vosk, unmasked",
-          "hp": 135
+          "hp": 320
         },
         {
           "monster": "flameskull",

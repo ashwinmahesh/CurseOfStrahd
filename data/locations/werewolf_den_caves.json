@@ -827,28 +827,32 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 225
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "werewolf",
           "cell": [
             17,
             23
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "dire_wolf",
@@ -883,7 +887,8 @@
           "cell": [
             18,
             20
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "wolf",
@@ -923,35 +928,40 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 125
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 95
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             21
-          ]
+          ],
+          "hp": 95
         },
         {
           "monster": "werewolf",
           "cell": [
             17,
             23
-          ]
+          ],
+          "hp": 95
         },
         {
           "monster": "werewolf",
           "cell": [
             22,
             23
-          ]
+          ],
+          "hp": 95
         },
         {
           "monster": "dire_wolf",
@@ -965,7 +975,8 @@
           "cell": [
             18,
             20
-          ]
+          ],
+          "hp": 95
         },
         {
           "monster": "dire_wolf",
@@ -1181,7 +1192,8 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 225
         },
         {
           "monster": "emil_toranescu",
@@ -1199,21 +1211,23 @@
             17
           ],
           "name": "Zuleika",
-          "hp": 60
+          "hp": 150
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "dire_wolf",
@@ -1234,7 +1248,8 @@
           "cell": [
             18,
             20
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "dire_wolf",

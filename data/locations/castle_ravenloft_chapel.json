@@ -350,7 +350,7 @@
             3
           ],
           "name": "Strahd von Zarovich",
-          "hp": 350
+          "hp": 455
         },
         {
           "monster": "vampire_spawn",
@@ -399,6 +399,54 @@
             3
           ],
           "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            2
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            4
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            2
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            4
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            3
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            1
+          ],
+          "name": "A thrall in the pews"
         }
       ]
     }

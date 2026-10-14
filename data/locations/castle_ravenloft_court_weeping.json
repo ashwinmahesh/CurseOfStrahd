@@ -957,7 +957,8 @@
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic"
+          "name": "Ludmilla Vilisevic",
+          "hp": 150
         },
         {
           "monster": "vampire_spawn",
@@ -965,21 +966,24 @@
             9,
             15
           ],
-          "name": "Volenta Popofsky"
+          "name": "Volenta Popofsky",
+          "hp": 150
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             6,
             13
-          ]
+          ],
+          "hp": 185
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             13
-          ]
+          ],
+          "hp": 185
         },
         {
           "monster": "vampire_spawn",
@@ -987,7 +991,8 @@
             2,
             14
           ],
-          "name": "One of Strahd's spawn"
+          "name": "One of Strahd's spawn",
+          "hp": 150
         },
         {
           "monster": "vampire_spawn",
@@ -995,7 +1000,8 @@
             13,
             13
           ],
-          "name": "One of Strahd's spawn"
+          "name": "One of Strahd's spawn",
+          "hp": 150
         }
       ],
       "surprise": "",
@@ -1012,7 +1018,8 @@
             4,
             15
           ],
-          "name": "Ludmilla Vilisevic"
+          "name": "Ludmilla Vilisevic",
+          "hp": 175
         },
         {
           "monster": "vampire_spawn",
@@ -1020,7 +1027,8 @@
             9,
             15
           ],
-          "name": "Volenta Popofsky"
+          "name": "Volenta Popofsky",
+          "hp": 175
         },
         {
           "monster": "vampire_spawn",
@@ -1028,21 +1036,24 @@
             13,
             15
           ],
-          "name": "Anastrasya Karelova"
+          "name": "Anastrasya Karelova",
+          "hp": 175
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             6,
             13
-          ]
+          ],
+          "hp": 215
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             13
-          ]
+          ],
+          "hp": 215
         }
       ],
       "surprise": "",
@@ -1059,28 +1070,32 @@
             32,
             17
           ],
-          "name": "Rahadin"
+          "name": "Rahadin",
+          "hp": 240
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             30,
             17
-          ]
+          ],
+          "hp": 200
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             34,
             17
-          ]
+          ],
+          "hp": 200
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             32,
             15
-          ]
+          ],
+          "hp": 200
         }
       ],
       "surprise": "",
