@@ -6,7 +6,9 @@ extends Node3D
 ## health bar (exact for the party, only Bloodied for enemies, per the combat view spec), its name and its
 ## conditions. It only shows state; the encounter decides everything.
 
-## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height.
+## Sprite height in world units (1 unit = 5 ft) by creature, so a halfling stands half a human's height. A creature
+## is drawn as big as its size's squares ask (DrawnCreatures.BANDS, test_creature_sizes: a Large one at least 1.3, a
+## Huge one 1.95, a Gargantuan one 3.2; owner 2026-10-14, after a Huge snake stood no taller than a man).
 const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.0, "silvain_aster": 1.25,
 	"godrick_pendlebrook": 1.55, "liriel_dawnsong": 1.18, "thistle": 1.22, "ratatoille": 1.24, "wren_featherfoot": 0.74,
 	"kip_smudgewick": 1.28,
@@ -14,7 +16,7 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"donavich": 1.15, "bildrath": 1.2, "parriwimple": 1.45, "mad_mary": 1.15, "morgantha": 1.1, "strahd": 1.4,
 	"ghoul": 1.15, "ghast": 1.2, "specter": 1.25, "shadow": 1.2, "cultist": 1.2, "animated_armor": 1.3,
 	"animated_flying_sword": 0.8, "broom_of_animated_attack": 1.0, "grick": 0.9, "shambling_mound": 1.7,
-	"swarm_of_rats": 0.45, "vampire_spawn": 1.25, "strahd_zombie": 1.25, "commoner": 1.2, "noble": 1.25,
+	"swarm_of_rats": 0.8, "vampire_spawn": 1.25, "strahd_zombie": 1.25, "commoner": 1.2, "noble": 1.25,
 	"villager": 1.2, "madam_eva": 1.05, "baron_vargas": 1.25, "izek": 1.4, "lady_wachter": 1.22, "father_lucian": 1.25,
 	"rictavio": 1.38, "blinsky": 1.2, "urwin_martikov": 1.28, "danika_martikov": 1.2, "arrigal": 1.3,
 	"victor_vallakovich": 1.15, "lydia_petrovna": 1.18, "vallaki_guard": 1.45, "vistana": 1.22, "milivoj": 1.3, "henrik": 1.22,
@@ -30,27 +32,27 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"ilka_sarnov": 0.82, "toma_sarnov": 0.65, "order_knight": 1.32, "phantom_warden": 1.3, "tsolenka_sergeant": 1.3,
 	"tsolenka_watchman": 1.28, "patrina_velikovna": 1.25, "amber_sentinel": 2.3, "argynvost_echo": 1.7,
 	"sergei_von_zarovich": 1.3,
-	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.0, "banshee": 1.25, "deva": 1.45,
+	"amber_golem": 2.0, "arcanaloth": 1.35, "baba_lysagas_creeping_hut": 3.8, "banshee": 1.25, "deva": 1.45,
 	"flameskull": 0.6, "flesh_golem": 1.6, "gargoyle": 1.3, "ghost": 1.25, "giant_spider": 1.3,
 	"mongrelfolk": 1.2, "mummy": 1.3, "needle_blight": 1.2, "night_hag": 1.15, "nothic": 1.0, "ogre": 2.1,
-	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.0, "scarecrow": 1.35, "swarm_of_bats": 1.0,
+	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.8, "scarecrow": 1.35, "swarm_of_bats": 1.5,
 	"swarm_of_insects": 0.6, "swarm_of_ravens": 0.9, "tree_blight": 3.0, "twig_blight": 0.7, "vine_blight": 1.1,
 	"werewolf": 1.45, "wereraven": 1.3, "wight": 1.3, "will_o_wisp": 0.5, "wraith": 1.35, "berserker": 1.3,
 	"raven": 0.35,
 	"air_elemental": 2.0, "ape": 1.2, "axe_beak": 1.7, "baboon": 0.6, "badger": 0.35, "bat": 0.3,
 	"black_bear": 1.0, "boar": 0.8, "brown_bear": 1.4, "djinni": 2.0, "earth_elemental": 2.0, "efreeti": 2.1,
 	"elephant": 2.8, "fire_elemental": 2.0, "giant_badger": 0.7, "giant_boar": 1.3,
-	"giant_constrictor_snake": 1.2, "giant_elk": 2.3, "giant_fly": 1.0, "giant_goat": 1.4, "giant_hyena": 1.2,
+	"giant_constrictor_snake": 2.6, "giant_elk": 2.3, "giant_fly": 1.4, "giant_goat": 1.4, "giant_hyena": 1.45,
 	"giant_owl": 1.6, "giant_rat": 0.5, "giant_weasel": 0.6, "goat": 0.8, "griffon": 1.7, "jackal": 0.55,
-	"lion": 1.1, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
-	"saber_toothed_tiger": 1.2, "tiger": 1.1, "water_elemental": 2.0, "weasel": 0.25,
+	"lion": 1.4, "mastiff": 0.75, "nightmare": 1.7, "owl": 0.35, "panther": 0.8, "rat": 0.25, "rhinoceros": 1.5,
+	"saber_toothed_tiger": 1.5, "tiger": 1.4, "water_elemental": 2.0, "weasel": 0.25,
 	"mimic": 0.9,
 	"apprentice_wizard": 1.2, "bandit": 1.25, "bandit_captain": 1.3, "druid": 1.25, "knight": 1.35, "mage": 1.25,
 	"priest": 1.25, "priest_acolyte": 1.2, "scout": 1.25, "tough": 1.3, "warrior_veteran": 1.3,
 	"severed_arm": 0.35, "severed_head": 0.35, "crawling_claw": 0.3, "skeleton": 1.25, "vampire": 1.35,
-	"barovian_witch": 1.15, "black_pudding": 1.0, "guardian_portrait": 1.4, "helmed_horror": 1.35,
-	"rug_of_smothering": 0.4, "strahds_animated_armor": 1.4, "illusion": 1.3, "bigbys_hand": 1.6,
-	"animated_object": 0.8, "giant_insect": 1.2, "aberrant_spirit": 1.3, "bestial_spirit": 0.8,
+	"barovian_witch": 1.15, "black_pudding": 1.4, "guardian_portrait": 1.4, "helmed_horror": 1.35,
+	"rug_of_smothering": 1.6, "strahds_animated_armor": 1.4, "illusion": 1.3, "bigbys_hand": 1.6,
+	"animated_object": 0.8, "giant_insect": 1.5, "aberrant_spirit": 1.3, "bestial_spirit": 0.8,
 	"celestial_spirit": 1.45, "construct_spirit": 1.4, "draconic_spirit": 1.6, "elemental_spirit": 1.4,
 	"fey_spirit": 0.8, "fiendish_spirit": 1.5, "undead_spirit": 1.25, "otherworldly_steed": 1.7,
 	"primal_beast": 0.9, "imp_familiar": 0.4, "pseudodragon_familiar": 0.45, "quasit_familiar": 0.4,
@@ -72,6 +74,9 @@ static var _looks: Dictionary = {}
 
 var combatant: Combatant
 var art_override := ""
+## How many squares across the creature was when its figure was built: the figure is drawn at that size's height, and
+## Enlarge/Reduce grows or shrinks it from there (size_scale).
+var built_cells := 1
 ## Riding a mount (CombatView sets it from Encounter.mount_of) and sneaking (exploration's sneak mode): with the
 ## fuller animation set they show the riding or crouched pose.
 var mounted := false
@@ -200,6 +205,12 @@ func _height(aid: String) -> float:
 	return height_of(combatant) if art_override == "" or art_override == own else height_for(aid)
 
 
+## The token's scale for the squares its creature holds now: 1 at the size its figure was drawn for, 2 for a Medium
+## hero grown Large, 1.5 for an ogre grown Huge, a half for one shrunk to Medium (Enlarge/Reduce).
+func size_scale() -> Vector3:
+	return Vector3.ONE * (float(combatant.size_cells) / float(maxi(1, built_cells)))
+
+
 ## `art` overrides which sprite to use (NPCs whose stat block is generic, like a commoner).
 static func create(c: Combatant, art: String = "") -> CombatToken:
 	var t := CombatToken.new()
@@ -212,6 +223,7 @@ static func create(c: Combatant, art: String = "") -> CombatToken:
 
 func _build() -> void:
 	var c := combatant
+	built_cells = c.size_cells
 	var aid := art_override if art_override != "" else art_id(c)
 	if c.creature is Character:
 		_looks[c.id] = aid
