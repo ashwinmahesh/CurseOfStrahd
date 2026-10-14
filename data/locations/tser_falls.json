@@ -456,6 +456,13 @@
             6,
             10
           ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
+            11
+          ]
         }
       ],
       "surprise": "party",
@@ -535,17 +542,24 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
-          "cell": [
-            9,
-            12
-          ]
-        },
-        {
           "monster": "shadow",
           "cell": [
             6,
             10
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            6,
+            15
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            9,
+            16
           ]
         }
       ],
@@ -605,17 +619,17 @@
           ]
         },
         {
-          "monster": "rat",
+          "monster": "bat",
           "cell": [
-            6,
-            10
+            10,
+            9
           ]
         },
         {
-          "monster": "rat",
+          "monster": "bat",
           "cell": [
-            6,
-            11
+            5,
+            9
           ]
         }
       ],
@@ -640,17 +654,17 @@
           ]
         },
         {
-          "monster": "rat",
+          "monster": "bat",
           "cell": [
-            6,
-            10
+            10,
+            9
           ]
         },
         {
-          "monster": "rat",
+          "monster": "bat",
           "cell": [
-            6,
-            11
+            5,
+            9
           ]
         }
       ],
