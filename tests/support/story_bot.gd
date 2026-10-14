@@ -150,7 +150,11 @@ func _play_fight(last: bool) -> String:
 	for c in e.combatants:
 		if c.side == &"enemy":
 			foes.append(c.name())
+	# The story bot plays to win: its party uses its skills to the full, as the boss fights are tuned for.
+	var was_full := PartyAutopilot.full
+	PartyAutopilot.full = true
 	var res := PartyAutopilot.new(e).run(40)
+	PartyAutopilot.full = was_full
 	fights.append({"where": v.loc_id, "foes": foes, "outcome": str(res["outcome"]), "rounds": int(res["rounds"]),
 		"downs": int(res["downs"])})
 	note("fight vs %s: %s in %d rounds, %d down" % [", ".join(foes), res["outcome"], int(res["rounds"]), int(res["downs"])])

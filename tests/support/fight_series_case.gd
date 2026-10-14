@@ -19,6 +19,22 @@ var prepare: Callable
 ## location's map, its foes placed as the game places them (custom_start); `encounter` is then its id.
 var custom_fight: Dictionary = {}
 
+## The boss fights (owner, 2026-10-14: 3 wins in 8 for a party that uses its skills to the full): the autopilot plays
+## them at full ability (PartyAutopilot.full); every other fight is still tuned against sharp play alone.
+const BOSS_FIGHTS: Array[String] = [
+	"bone_marshal", "tinkers_wagon", "the_hunt", "izek_duel", "festival_izek_rampage", "festival_loyalists",
+	"izek_confrontation", "counts_likeness", "bakery_offalia", "coven_last_stand", "bella_betrayed", "bella_on_the_road",
+	"offalia_on_the_road", "granny_ash", "grandsire", "abbot_wrath", "bride_defends", "vladimir_duel", "beacon_stand",
+	"gilded_knight", "lantern_girl", "greytooth_hunt", "den_reckoning", "pack_challenge", "lysaga_and_hut",
+	"lysaga_at_monument", "lysaga_scorned", "creeping_hut_masterless", "rag_queen", "lysaga_in_hut", "the_index",
+	"khazan_named", "khazan_unmade", "roc_of_ghakis", "the_penitent", "forgotten_storm", "sarkhaza", "grandfather_stone",
+	"exethanter_wrath", "vosk_unmasked", "the_eye_below", "amber_guide", "court_final_audience_hall", "court_final_study",
+	"court_final_treasury", "crg_chapel_final_battle", "crg_dinner_affront", "crg_overlook_final_battle",
+	"heart_of_sorrow_final", "heart_strahd_test", "cat_horseman_final", "cat_darklord_final", "cat_daylight_waking",
+	"cat_royal_final", "cat_sergei_final", "larders_donjon", "court_rahadin_fight", "court_rahadin_chamber_fight",
+	"court_brides_fight", "cat_oathbreakers", "corvina", "querreth", "summit_ritual", "ash_effigy", "vine_mother",
+	"strahd_test_of_strength", "strahd_at_the_window"]
+
 
 func after_each() -> void:
 	if root != null:
@@ -71,7 +87,10 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)
 	await _frames(2)
 	var e := v.combat_view.e
+	var was_full := PartyAutopilot.full
+	PartyAutopilot.full = PartyAutopilot.full_by_default or encounter in BOSS_FIGHTS
 	var res := PartyAutopilot.new(e).run(30)
+	PartyAutopilot.full = was_full
 	res["story_flags"] = e.legendary.story_flags.duplicate()   # what the fight hands back (a withdrawal's flag)
 	res["departed"] = e.legendary.departed.values()
 	for c in e.combatants:
