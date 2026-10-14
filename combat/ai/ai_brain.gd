@@ -632,8 +632,11 @@ func plan_turn(c: Combatant) -> Dictionary:
 		if t.is_down():
 			continue
 		if not e.can_see(c, t):
-			hidden_any = hidden_any or t.hidden
-			if not t.hidden:
+			# An Invisible foe it can't see is as good as Hidden: no one can pick it out (owner, 2026-10-13), so it isn't
+			# struck, and it's looked for rather than walked up to.
+			var unseen := e.sight.unseen_foe(c, t)
+			hidden_any = hidden_any or t.hidden or unseen
+			if not t.hidden and not unseen:
 				heard.append(t)
 			continue
 		visible.append(t)

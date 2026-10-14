@@ -108,6 +108,8 @@ var _prompt_cost: Label
 var _prompt_rule: OptionButton
 var _prompt_rule_row: HBoxContainer
 var _prompt_targets: VBoxContainer
+## The hero the player is looking through (CombatView.viewer): an Invisible foe it can't see is off the order bar.
+var viewer: Combatant = null
 var _prompt_use: Button
 var _details: PanelContainer
 var _details_box: VBoxContainer
@@ -852,6 +854,9 @@ func _refresh_strip() -> void:
 		if i == lair_at:
 			_strip.add_child(_lair_card())
 		if c.creature.dead and c.side == &"enemy":
+			continue
+		# An Invisible foe the hero whose turn it is can't see is off the order bar as it is off the map.
+		if e.sight.hidden_from_party(c, viewer):
 			continue
 		var active := c == cur
 		var card := PanelContainer.new()

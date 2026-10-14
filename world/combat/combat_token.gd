@@ -77,6 +77,9 @@ var art_override := ""
 var mounted := false
 var sneaking := false
 var sprite: DirectionalSprite
+## An Invisible foe the hero the player looks through can't see (EncounterSight.hidden_from_party): the whole figure, ring and bar are off the
+## map until it's seen again (CombatView._refresh_all).
+var unseen := false
 ## Strahd's dark aura or a paladin's Aura of Protection on the floor (AuraFx), or null.
 var aura: AuraFx
 ## The figure lying on the ground (Prone, or at 0 Hit Points): the front view laid flat.
@@ -392,6 +395,9 @@ func refresh() -> void:
 	_status.text = " · ".join(chips)
 	_label.text = combatant.name()
 	_base_modulate = Color.WHITE
+	# A hero (or an ally) who is Invisible stays on the map for its own player, see-through (owner, 2026-10-13).
+	if combatant.side in [&"party", &"guest"] and EncounterSight.truly_invisible(combatant):
+		_base_modulate = Color(1, 1, 1, 0.5)
 	if _is_echo():
 		# An Echo Knight's echo: a translucent gray image of its knight (the sprite shader washes it gray).
 		_base_modulate = Color(1, 1, 1, 0.6)
@@ -585,6 +591,16 @@ func set_highlight(on: bool) -> void:
 	_label.modulate = Look.color("wick") if on else Look.color("vellum")
 	_label.visible = (_active or _highlight) and not combatant.creature.dead
 	_show_fade()
+
+
+## Takes the figure off the map while it's an Invisible foe nobody on the party can see, and puts it back once it's seen.
+func set_unseen(on: bool) -> void:
+	if on == unseen:
+		return
+	unseen = on
+	visible = not on
+	if not on:
+		_label.visible = (_active or _highlight) and not combatant.creature.dead
 
 
 ## Fades the creature into view over `seconds` after `delay`: a fight's foes stepping out of the dark. Its ring grows

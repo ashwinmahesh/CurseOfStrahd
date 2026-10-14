@@ -84,10 +84,8 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 	var outlined := b.creature.has_flag("no_invisible")
 	if b.hidden and not outlined:
 		return false
-	if b.creature.has_condition(&"invisible") and not outlined:
-		var sees_invisible := a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight) or e.items.reveals_invisible(a, b)
-		if not sees_invisible:
-			return false
+	if b.creature.has_condition(&"invisible") and not outlined and not sees_invisible(a, b):
+		return false
 	# Devil's Sight (invocation): normal sight in Darkness, magical or not, within 120 ft.
 	var devil := (a.creature.has_flag("devils_sight") and dist <= 120) or e.ravenloft.sees_through_darkness(a)
 	if e.spells.zones.line_obscured(a.cell, a.size_cells, b.cell, b.size_cells, devil) and not by_sense:
@@ -99,6 +97,49 @@ func can_see(a: Combatant, b: Combatant) -> bool:
 			return by_sense or devil
 		"dark":
 			return by_sense or devil or (a.creature.darkvision() >= dist and a.creature.darkvision() > 0 and not umbral) or outlined
+	return true
+
+
+## Whether `b` is Invisible by a spell, a feature, an item or its own stat block: the Invisible condition from any
+## source but the Hidden one the Hide action gives (a creature that is only Hidden stays on the map, as it always was).
+static func truly_invisible(b: Combatant) -> bool:
+	return b.creature.has_condition(&"invisible") and b.creature.condition_sources(&"invisible").any(func(src: String) -> bool: return src != "Hidden")
+
+
+## Whether `a` can see an Invisible `b`: See Invisibility and the Robe of Eyes (a flag), Truesight and Blindsight
+## within their range, a Lantern of Revealing's light, a creature marked so it can be seen (Faerie Fire, tracking). Not
+## Devil's Sight: it sees through darkness, not the Invisible.
+func sees_invisible(a: Combatant, b: Combatant) -> bool:
+	var e := enc()
+	if b.creature.has_flag("no_invisible") or b.creature.has_flag("tracked_by:%s" % a.id):
+		return true
+	var dist := e.distance(a, b)
+	var blind := a.creature.sense_range("blindsight")
+	var truesight := a.creature.sense_range("truesight")
+	return a.creature.has_flag("see_invisibility") or (truesight > 0 and dist <= truesight) or (blind > 0 and dist <= blind) \
+		or e.items.reveals_invisible(a, b)
+
+
+## Whether `a` can't pick `b` out as a target: a foe of `a` that is Invisible and `a` can't see it (owner, 2026-10-13:
+## "They shouldn't be targetable outside of AoE spells"). Attacks and spells on one creature, opportunity attacks and
+## every hotbar action refuse it; an area still catches it. Its own side is never unseen (a hero can help an Invisible ally).
+func unseen_foe(a: Combatant, b: Combatant) -> bool:
+	return a != b and a.hostile_to(b) and truly_invisible(b) and not sees_invisible(a, b)
+
+
+## Whether the player can't see `b` on the map (owner, 2026-10-13: "Creatures that go invisible should disappear from the
+## map unless the player character targeting them has invisibility"): a living foe that is Invisible, seen through
+## `viewer`, the hero whose turn it is (on a foe's turn, the one who last had it). With no viewer, when no one of the
+## party who is up can see it. Each hero can only target what they see themselves (unseen_foe), which is what the map
+## shows on their turn.
+func hidden_from_party(b: Combatant, viewer: Combatant = null) -> bool:
+	if b.side != &"enemy" or not b.is_alive() or not truly_invisible(b):
+		return false
+	if viewer != null and viewer.side in [&"party", &"guest"] and viewer.is_alive() and not viewer.is_down():
+		return not sees_invisible(viewer, b)
+	for m in enc().combatants:
+		if m.side in [&"party", &"guest"] and m.is_alive() and not m.is_down() and sees_invisible(m, b):
+			return false
 	return true
 
 
