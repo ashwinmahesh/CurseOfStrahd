@@ -247,7 +247,16 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 	var held := e.d20.collect(target, true)
 	var conc := target.creature.concentration
 	parts = e.objects.adjust_incoming(target, parts)
+	var saves_from := e.events.size()
 	var dr := target.creature.take_damage_parts(parts, critical, e.dice, label)
+	# The Concentration save is rolled inside the damage; the screen shows it after the blow and the damage, so its
+	# mark moves behind the damage event below.
+	var after_damage: Array[Dictionary] = []
+	for i in range(e.events.size() - 1, saves_from - 1, -1):
+		var raw := e.events[i]
+		if str(raw["type"]) == "save" and str(raw["id"]) == target.id:
+			after_damage.push_front(raw)
+			e.events.remove_at(i)
 	var waiting := e.d20.collected(held)
 	if dr.concentration_save != null and dr.concentration_save.awaiting:
 		_hold_concentration(target, conc, dr.concentration_save, waiting)
@@ -322,6 +331,7 @@ func deal_damage(source: Combatant, target: Combatant, parts: Array, critical: b
 		all_details.append(text)
 		e.log.add("hit", headline, source.id if source != null else "", all_details)
 	e.events.append({"type": "damage", "id": target.id, "amount": dr.final, "critical": critical})
+	e.events.append_array(after_damage)
 	if fortitude != null:
 		e.log.add("info", "%s keeps standing at 1 Hit Point (Undead Fortitude)" % target.name(), target.id, [fortitude.describe()])
 		e.events.append({"type": "trait", "id": target.id, "name": "Undead Fortitude"})
