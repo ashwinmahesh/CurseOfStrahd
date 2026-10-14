@@ -28,8 +28,10 @@ func test_the_rumour_the_voices_and_the_way_home() -> void:
 	assert_false(said.contains("Maman"), "only companions in the party hear theirs")
 	assert_eq(SideQuestPlay.combat_of(beats), "falls_wisps")
 	var enc := SideQuestPlay.encounter(st, "tser_falls", "falls_wisps")
-	assert_eq((enc["monsters"] as Array).size(), 4, "four lights at level 4")
-	assert_true(SideQuestPlay.xp(enc) >= 1800, "High for level 4")
+	# Two lights and a shadow since the invisibility rule (2026-10-14: a vanished light can't be targeted but by an area
+	# spell) and the owner's 5 in 8: four lights were 2.
+	assert_eq((enc["monsters"] as Array).size(), 3, "two lights and a shadow at level 4")
+	assert_true(SideQuestPlay.xp(enc) >= 1000, "Low for level 4 at least")
 	assert_eq(str(enc["surprise"]), "party" if bool(st.get_flag("wisps_lured", false)) else "", "a lured party starts surprised")
 	st.set_flag("wisps_beaten")
 	beats = SideQuestPlay.play(st, "svalich_road/called_by_name:falls", ["Rope off a pine"], 5)

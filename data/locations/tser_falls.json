@@ -446,7 +446,14 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            10,
+            11,
+            10
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
             10
           ]
         }
@@ -495,7 +502,14 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            10,
+            11,
+            10
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
             10
           ]
         }
@@ -533,13 +547,6 @@
             6,
             10
           ]
-        },
-        {
-          "monster": "shadow",
-          "cell": [
-            6,
-            11
-          ]
         }
       ],
       "surprise": "party",
@@ -570,17 +577,10 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "shadow",
           "cell": [
             6,
-            15
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
-            9,
-            16
+            10
           ]
         }
       ],
@@ -605,17 +605,17 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "rat",
           "cell": [
-            9,
-            12
+            6,
+            10
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "rat",
           "cell": [
             6,
-            15
+            11
           ]
         }
       ],
@@ -640,17 +640,17 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "rat",
           "cell": [
-            9,
-            12
+            6,
+            10
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "rat",
           "cell": [
             6,
-            15
+            11
           ]
         }
       ],

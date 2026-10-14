@@ -220,8 +220,11 @@ a ledge, and they've been calling his father in Nelu's voice. **Escalation:** at
 Thistle's grandda, Kip's Pip, Liriel's old teacher, Ratatouille's maman), and a Wisdom check (DC 14, the party's best)
 decides whether someone is lured toward the edge, which starts the fight with the party surprised.
 
-- Fight `falls_wisps` (the west glade): level 4 two will-o'-wisps and two shadows (1,100 XP; the sharp autopilot wins 5
-  of 8: three wisps were 3), level 5 five wisps, below three.
+- Fight `falls_wisps` (the west glade): level 4 two will-o'-wisps and a shadow (1,000 XP; the sharp autopilot wins 5 of
+  8), level 5 five wisps and a shadow (5 of 8), below four a wisp and two rats (4 of 8, the harder side). A wisp that
+  vanishes can't be targeted but by an area spell (the invisibility rule, 2026-10-14), which is why there are fewer wisps
+  than before; a lone wisp with one other foe can leave the autopilot with nothing to hit, so each of these line-ups was
+  picked from ones that never ran out the clock on seeds 1-8.
 - Then Nelu comes up (Athletics DC 13 on a rope, Misty Step or Spider Climb), and Tobar pays at the camp: 100 gp and an
   Efficient Quiver (uncommon). Nelu stays by the fire afterwards (`tser_nelu`).
 
