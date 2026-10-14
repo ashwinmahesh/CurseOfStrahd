@@ -1639,7 +1639,8 @@
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
       "generated_voice_id": "zMjh6m7TYXb96Hz1Ah7t",
-      "released": true
+      "released": true,
+      "pace_note": "Owner, 2026-10-14: Old Nistor spoke too slowly (about 1.7 words a second against 2.3 for most NPCs). Fifteen of his 16 clips were time-stretched 1.09-1.45x toward 2.2 words a second at the same pitch, level matched, re-encoded with lame (manifest `stretch`). A --recast re-records them at the voice's own pace."
     },
     "krezk_fence_mender": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",

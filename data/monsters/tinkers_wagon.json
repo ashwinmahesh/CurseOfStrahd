@@ -183,7 +183,7 @@
       {
         "id": "lash",
         "name": "Lash",
-        "cost": 2,
+        "cost": 1,
         "action": "pseudopod",
         "summary": "Makes one Pseudopod attack."
       }

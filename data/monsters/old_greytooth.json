@@ -143,7 +143,7 @@
       {
         "id": "snap",
         "name": "Snap",
-        "cost": 2,
+        "cost": 1,
         "action": "bite",
         "summary": "Makes one Bite."
       }

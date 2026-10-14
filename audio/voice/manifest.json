@@ -590,6 +590,13 @@
   "recipe": "c0fe071a64",
   "text": "Three months ago the druids came up the lane at dusk with half the forest walking behind them. We fought a while. Then Father said fly, so we flew. They've been pulling up our floors ever since."
  },
+ "adrian_martikov/198a5123031350d9": {
+  "chars": 101,
+  "direction": "[urgent, fearful]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "That's Father's stone in its chest. When they stop singing, that thing gets up and walks to our door."
+ },
  "adrian_martikov/1a3840607ed60d22": {
   "chars": 95,
   "direction": "[wry, rueful]",
@@ -792,6 +799,13 @@
   "model": "eleven_v3",
   "recipe": "c0fe071a64",
   "text": "The founder's cask. Of course. He told Stefania and not me. Of course he did."
+ },
+ "adrian_martikov/c226862248684515": {
+  "chars": 76,
+  "direction": "[dry, bitter]",
+  "model": "eleven_v3",
+  "recipe": "c0fe071a64",
+  "text": "She means my family, in case that wasn't clear. She used to pick our grapes."
  },
  "adrian_martikov/c48d27fb91961259": {
   "chars": 200,
@@ -6993,6 +7007,13 @@
   "recipe": "ade4614ea1",
   "text": "One was stolen last autumn. The ravens followed the thief to Berez, the drowned village by the river, to the witch who lives there. One the druids carried off to their hill. The last I hid the night we fled."
  },
+ "davian_martikov/47c8ac28201d6672": {
+  "chars": 171,
+  "direction": "[relieved, weary, gruff]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "So it won't walk. Every night for three months I've stood at the end of the rows and watched that hill, waiting for it to stand up and come down to us. Tonight I'll sleep."
+ },
  "davian_martikov/4d5856e8b79a6105": {
   "chars": 115,
   "direction": "[gruff, wry, hopeful]",
@@ -7041,6 +7062,13 @@
   "model": "eleven_v3",
   "recipe": "ade4614ea1",
   "text": "The Seventh Row's in again. Young vines. Adrian waters them himself and won't let anyone else hold the can. It's a family failing."
+ },
+ "davian_martikov/5dc7a2bb06011f10": {
+  "chars": 202,
+  "direction": "[grave, urgent]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "And there is a great deal to say about it. On Yester Hill, west of here, the druids are heaping up a man of earth forty feet long, in the likeness of the lord in the castle. My stone is to be his heart."
  },
  "davian_martikov/5e055893fd771cf1": {
   "chars": 267,
@@ -7202,6 +7230,13 @@
   "model": "eleven_v3",
   "recipe": "ade4614ea1",
   "text": "You took my son up that hill and brought him back down it. I'll not forget that."
+ },
+ "davian_martikov/8f6b1895e2a45e2d": {
+  "chars": 90,
+  "direction": "[grim, bitter]",
+  "model": "eleven_v3",
+  "recipe": "ade4614ea1",
+  "text": "When they've sung him awake, he walks east. The first thing east of that hill is my vines."
  },
  "davian_martikov/902f1a22c3f612e7": {
   "chars": 111,
@@ -28818,6 +28853,13 @@
   "recipe": "ef36332f2b",
   "text": "I've stood on that hill at midnight with the tree singing. You don't frighten me. You don't even interest me."
  },
+ "kostin/d9b01afb227e9e2b": {
+  "chars": 115,
+  "direction": "[earnest, stubborn]",
+  "model": "eleven_v3",
+  "recipe": "ef36332f2b",
+  "text": "And when the Lord-in-the-Land stands up, he'll walk down off that hill and tread the bird-man's vines into the mud!"
+ },
  "kostin/dc1bff84c3259a2d": {
   "chars": 128,
   "direction": "[stricken, quiet, ashamed]",
@@ -32746,6 +32788,7 @@
   "direction": "[dry, wry, weary]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.253,
   "text": "Take my boat if you want to look. It leaks on the left. Everything I own leaks on the left."
  },
  "lz_old_fisher/2e1aa45ebdd58527": {
@@ -32753,6 +32796,7 @@
   "direction": "[weary, gruff, wistful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.369,
   "text": "Forty years I fished this water. Then the fish went deep and the men went to Vallaki, and here I am, mending nets for a lake that's stopped answering."
  },
  "lz_old_fisher/30019da825a70812": {
@@ -32760,6 +32804,7 @@
   "direction": "[quiet, moved, grateful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.299,
   "text": "You stood on my step between me and the lake. Forty years I've been waiting for it to come up that shore. I never once thought anybody would stand there."
  },
  "lz_old_fisher/32a7f1aa83a4a971": {
@@ -32767,6 +32812,7 @@
   "direction": "[slow, low, storytelling]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.323,
   "text": "Before the count put the dam on the Luna there was a village where the lake is. Pescari. My grandmother was from there. When the water came up, the folk came up the hill, mostly. The ones who wouldn't leave the chapel stayed in the chapel. The bell's still down there."
  },
  "lz_old_fisher/3887869cedad08ec": {
@@ -32774,6 +32820,7 @@
   "direction": "[slow, troubled, thoughtful]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.082,
   "text": "You stood on my landing between the lake and a man who'd put a child in a sack. I've been thinking about that. I don't know what I think yet."
  },
  "lz_old_fisher/38fc71ffcb7c1826": {
@@ -32781,6 +32828,7 @@
   "direction": "[surprised, slow, wry]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.161,
   "text": "You want to know why the fish went deep? Nobody's asked me that in forty years. Sit down, then."
  },
  "lz_old_fisher/3aa66b6cf38b19b7": {
@@ -32788,6 +32836,7 @@
   "direction": "[calm, resigned, quiet]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.132,
   "text": "Well. It was always going to be one of us."
  },
  "lz_old_fisher/424bf74602238405": {
@@ -32795,6 +32844,7 @@
   "direction": "[slow, weary, grim]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.45,
   "text": "After moonrise. Stand on the landing and you'll hear it. Then you'll see them. Then you decide what to do about Bluto. I've had forty years and I haven't decided."
  },
  "lz_old_fisher/63d947f7662a176f": {
@@ -32802,6 +32852,7 @@
   "direction": "[low, uneasy, grim]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.095,
   "text": "The Reed Isle. (He doesn't look at it.) Nobody fishes near it. Some nights the Baron's boat rows out there from the town end of the lake, with somebody in the bottom of it tied up like washing."
  },
  "lz_old_fisher/6baca514721b5024": {
@@ -32816,6 +32867,7 @@
   "direction": "[quiet, haunted, sad]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.088,
   "text": "Bluto's shack is empty. I don't go in. Some nights I think I hear him singing, out on the water, the way he used to when he'd had a catch."
  },
  "lz_old_fisher/cdb634f5b4996a6e": {
@@ -32823,6 +32875,7 @@
   "direction": "[bitter, quiet, wry]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.405,
   "text": "Somebody who said the festival was a waste of good wicker, maybe. Or laughed at the wrong moment. The boat comes back with nobody in it. We don't ask. Asking's unhappy."
  },
  "lz_old_fisher/d87b59855e04a239": {
@@ -32830,6 +32883,7 @@
   "direction": "[warm, delighted, near tears]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.32,
   "text": "A pike this morning. A pike, the length of my arm. First fish in a year that wasn't too small to bother. I nearly wept on it."
  },
  "lz_old_fisher/e9374aa7508b549a": {
@@ -32837,6 +32891,7 @@
   "direction": "[hushed, uneasy, listening]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.45,
   "text": "Listen. There. Every night now, after the moon's up. Under the water. You'd think water would stop a bell."
  },
  "lz_old_fisher/eac4d438d7ecfc5c": {
@@ -32844,6 +32899,7 @@
   "direction": "[afraid, bitter, hushed]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.251,
   "text": "Bluto's sacks. You know what he put in them. He wasn't mad. That's the worst of it. He was paying the bell. Now he's stopped paying, and it rings every night, and it's coming up the shore a little further every time."
  },
  "lz_old_fisher/f95ce1fe61fdf85c": {
@@ -32851,6 +32907,7 @@
   "direction": "[low, uneasy warning]",
   "model": "eleven_v3",
   "recipe": "9121724bb6",
+  "stretch": 1.304,
   "text": "Keep away from the big fellow in the shack. He drinks, and he cries, and he goes out in his boat at night with something in a sack. I don't ask. Nobody asks."
  },
  "lzt_hunter/04e6d492bc8b9cc0": {
@@ -36229,12 +36286,6 @@
   "recipe": "dd92281f92",
   "text": "Behind the festival ledger, a velvet case the Baron must have been saving for the big night: a necklace of small glowing beads, each one hot to the touch."
  },
- "narrator/044bd2a6488d9eb4": {
-  "chars": 155,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Two great wolves rise from the dais steps."
- },
  "narrator/0468377c5cf0ec92": {
   "chars": 143,
   "model": "eleven_v4",
@@ -37278,6 +37329,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The heart rings like a struck bell. Below, armour comes clanking up the last turn of the stair, and something in a great helm floats up the well behind it."
+ },
+ "narrator/0c330617fd19b764": {
+  "chars": 204,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is reading by the fire. He finishes the page before he looks up, and marks it with a ribbon, and the chimney fills with wings. Five of his spawn come in from the gallery and close the doors behind you."
  },
  "narrator/0c3559ec93f4398f": {
   "chars": 84,
@@ -38731,12 +38788,6 @@
   "recipe": "dd92281f92",
   "text": "A black stump in a ring of ash, ticking as it cools. Nothing grows near it. Nothing will, for a good while."
  },
- "narrator/16aa050c383e9d26": {
-  "chars": 179,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you."
- },
  "narrator/16aef4d9bcd3cb91": {
   "chars": 172,
   "model": "eleven_v4",
@@ -39955,12 +40006,6 @@
   "recipe": "dd92281f92",
   "text": "He kneels on the step and takes his hat off for the last time. It's quick. Ileana doesn't look away, and she doesn't say anything at all."
  },
- "narrator/1e9ebd56cccf3c7a": {
-  "chars": 83,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The black horse lifts its head from the manger, and the man beside it turns around."
- },
  "narrator/1e9f4f34422fb23d": {
   "chars": 156,
   "model": "eleven_v4",
@@ -40626,12 +40671,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Baron wants it to burn. If anyone means to spoil it, they'll come in the dark. So should you."
- },
- "narrator/235fd6cac4704672": {
-  "chars": 82,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy."
  },
  "narrator/237ab38aa8b6a138": {
   "chars": 122,
@@ -45559,6 +45598,12 @@
   "recipe": "dd92281f92",
   "text": "The gears turn in a draught that comes from nowhere, and you follow it to an iron plate low in the wall that isn't bolted down."
  },
+ "narrator/48446a7d628ffc8b": {
+  "chars": 259,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Mist pours up out of the stair and stands up in the shape of a tall man in black. He looks at the shards for a long moment before he looks at you, and then he is simply among you. On the stair behind him, two empty suits of armour turn their helms toward you."
+ },
  "narrator/4844b06bb1ea8030": {
   "chars": 42,
   "model": "eleven_v4",
@@ -45738,6 +45783,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Broken stone and empty plinths. Only the guardians that never moved are still on the parapet."
+ },
+ "narrator/4960b2334bec4efa": {
+  "chars": 202,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats. Behind his chair, two suits of armour step down off their stands."
  },
  "narrator/497088ad08f072d5": {
   "chars": 124,
@@ -45948,6 +45999,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Plain pews, worn smooth. Somebody has carved small names into the back of each, generations of them, so the dead can still sit with their families."
+ },
+ "narrator/4b383018cbe1df2a": {
+  "chars": 183,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him. Two of his spawn come down out of the dark behind the tombs."
  },
  "narrator/4b3aa5890740a2ef": {
   "chars": 145,
@@ -46464,6 +46521,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The house is emptier without the coffin in it. Somehow the boards on the windows look less sure of themselves."
+ },
+ "narrator/4eceb653ca0ee405": {
+  "chars": 207,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns. Three of his spawn wait among the pillars, and wolves pad in out of the dark."
  },
  "narrator/4eeb24fcd23813a0": {
   "chars": 187,
@@ -47989,6 +48052,12 @@
   "recipe": "dd92281f92",
   "text": "The tunnel opens on a cavern, and the cavern is full of gold. A long slope of it, coins and cups and crowns, and lying across the slope, with a chain at its neck, a dragon."
  },
+ "narrator/5a1291fb9f5f518b": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage. Two of his spawn rise from the niches at his back."
+ },
  "narrator/5a21fbaafc0f4d77": {
   "chars": 194,
   "model": "eleven_v4",
@@ -48493,12 +48562,6 @@
   "recipe": "dd92281f92",
   "text": "A woodcutters' fire burned down to embers, a pot of something gone cold beside it. They left in the middle of supper, and they left their axes."
  },
- "narrator/5d467dddba173ff2": {
-  "chars": 177,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword."
- },
  "narrator/5d4977774af5a714": {
   "chars": 109,
   "model": "eleven_v4",
@@ -48606,6 +48669,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A black iron pot sits in the coals, and has sat there long enough to have a ring of soot like a tree has rings. It smells of plums and pepper."
+ },
+ "narrator/5ddd14deff053199": {
+  "chars": 159,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him. Four of his spawn take the places at the foot of the table."
  },
  "narrator/5de04d93c0aa4d54": {
   "chars": 132,
@@ -49488,12 +49557,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You put yourself in the window with your faith held up before you. It is a small light, but it is between them."
- },
- "narrator/649e32a8ca2e9a4c": {
-  "chars": 136,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Strahd sets down his glass. At my table, he says, almost fondly. The candles gutter, and the dark above the organ comes apart into bats."
  },
  "narrator/64a8fa83ef96ca5a": {
   "chars": 104,
@@ -51511,6 +51574,12 @@
   "recipe": "dd92281f92",
   "text": "At night the inlet is reeds whispering and water lapping at the jetty, and far out on the lake something large turns over once and goes down again."
  },
+ "narrator/725920f13fd96ff3": {
+  "chars": 212,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Three great wolves rise from the dais steps, and four of his spawn step out from behind the throne."
+ },
  "narrator/72593adda8cee53e": {
   "chars": 126,
   "model": "eleven_v4",
@@ -51541,6 +51610,12 @@
   "recipe": "dd92281f92",
   "text": "The candles gutter as you finish. The altar takes no notice."
  },
+ "narrator/727a71999b75c1c9": {
+  "chars": 129,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Every head in the cellar turns from the shrine at once. 'You're early,' says Nikolai Wachter, drawing, 'and you weren't invited.'"
+ },
  "narrator/727e1e2734a174e0": {
   "chars": 82,
   "model": "eleven_v4",
@@ -51552,12 +51627,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A big raven drops onto your wrist, looks you over, and croaks once. The whole roost settles like a breath let out."
- },
- "narrator/72d2fd545d42c6de": {
-  "chars": 129,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Strahd stands at the foot of his brother's tomb with one hand on the stone. He finishes what he was saying to it before he turns."
  },
  "narrator/72f56292268a2f13": {
   "chars": 109,
@@ -51594,6 +51663,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Godrick has been quiet all evening, which for Godrick is like a mountain being quiet. At last he puts down the sword he's been sharpening and clears his throat."
+ },
+ "narrator/733beb6f560ce4b5": {
+  "chars": 256,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter. One of his spawn drops from the tower onto the wall walk behind you."
  },
  "narrator/733d4c885afa1543": {
   "chars": 179,
@@ -52080,6 +52155,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "By a painted wagon, a woman in a long dark coat sits fixing silver heads to crossbow bolts. Below her right knee, a brace of oak and steel; her left hand is bandaged, and she smells faintly of burnt hair."
+ },
+ "narrator/770415ddde2d08f2": {
+  "chars": 140,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The black horse lifts its head from the manger, and the man beside it turns around. Two pale shapes step out of the empty stalls behind him."
  },
  "narrator/770ac79e19cdb9b5": {
   "chars": 155,
@@ -52843,12 +52924,6 @@
   "recipe": "dd92281f92",
   "text": "She digs in her apron and throws something at your feet without looking: the green stone from the cradle, muddy and still warm."
  },
- "narrator/7cdce92be7fb5142": {
-  "chars": 122,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is sitting on the edge of the dais between his mother and his father, and the shadows of the vault stand up around him."
- },
  "narrator/7ce3a0baf2336e60": {
   "chars": 73,
   "model": "eleven_v4",
@@ -53550,12 +53625,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A big black bird with a big black beak, and opinions. Beyond that it keeps its own counsel."
- },
- "narrator/8293a8eb78383064": {
-  "chars": 129,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is reading by the fire. He finishes the page before he looks up, and marks it with a ribbon, and the chimney fills with wings."
  },
  "narrator/8299707eb9c59430": {
   "chars": 171,
@@ -54901,12 +54970,6 @@
   "recipe": "dd92281f92",
   "text": "Kip has the contract out tonight, unrolled across his knees and over the log and onto the grass. It's longer unrolled than it could possibly be rolled. The ink moves a little in the firelight, like something asleep."
  },
- "narrator/8c5f1ac49f620e59": {
-  "chars": 108,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage."
- },
  "narrator/8c606f0ecaac6713": {
   "chars": 196,
   "model": "eleven_v4",
@@ -55218,6 +55281,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Behind the wizard's casks, in a nest of old corks, a stoppered decanter. Pull the stopper and water runs out of it, and keeps running."
+ },
+ "narrator/8e357a22606722b6": {
+  "chars": 206,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him. All along the pews, more of them get to their feet."
  },
  "narrator/8e3b7eb09a3d6d38": {
   "chars": 67,
@@ -55638,6 +55707,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A wooden box of candle stubs and a flint, for anyone who wants to light one. A slate beside it says, in chalk, TAKE ONE, LEAVE ONE, PRAY FOR KREZK."
+ },
+ "narrator/91600c0f22dae594": {
+  "chars": 236,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door."
  },
  "narrator/91685aec1255689b": {
   "chars": 49,
@@ -58032,12 +58107,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Stone creaks overhead. The gargoyles on the gatehouse unfold, stretch like cats, and drop into the courtyard."
- },
- "narrator/a2f6fd49a2cbfb2e": {
-  "chars": 187,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A tall figure stands at the parapet with his back to you, looking down at the valley. He lets you come quite close before he turns. Below the wall, the cliff starts to squeak and flutter."
  },
  "narrator/a2f901d601806cd7": {
   "chars": 224,
@@ -60457,12 +60526,6 @@
   "recipe": "dd92281f92",
   "text": "Your voice fills the cold nave, and for the length of one hymn the church feels like a church again."
  },
- "narrator/b58fce678edef634": {
-  "chars": 154,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him."
- },
  "narrator/b5a1e01d55c16a29": {
   "chars": 134,
   "model": "eleven_v4",
@@ -60636,12 +60699,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Sorin is still by the stones, rocking slightly, humming in his mother's voice."
- },
- "narrator/b6bf2cf6bf1b5a23": {
-  "chars": 154,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below."
  },
  "narrator/b6defb74395ad39e": {
   "chars": 94,
@@ -60828,12 +60885,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Kiril throws back his head and laughs, and the laugh turns into a howl halfway through, and his loyal wolves come pouring up the passage behind him."
- },
- "narrator/b8853d28398f3b1e": {
-  "chars": 99,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him."
  },
  "narrator/b886bf8f96d21702": {
   "chars": 65,
@@ -61951,6 +62002,12 @@
   "recipe": "dd92281f92",
   "text": "Open the sluice before going down and shut it after, or the cracks will cook you where you stand. Andrei didn't. Andrei's still down there, in a way."
  },
+ "narrator/c10cf8ccf77fc466": {
+  "chars": 167,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A shadow the size of a barn roof slides across the bridge. Then the wind comes, and the scream, and the talons. A second, smaller shadow comes down after it: its mate."
+ },
  "narrator/c118a5c8d9e75b61": {
   "chars": 170,
   "model": "eleven_v4",
@@ -62562,6 +62619,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Names chalked on a slate, a guest list. Most have been wiped away with a thumb. Near the bottom, newer: Nadia, lamplighter. And: the brother."
+ },
+ "narrator/c5635218dc080932": {
+  "chars": 222,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword. Three of his spawn climb up out of the gold."
  },
  "narrator/c56478096c7efe01": {
   "chars": 106,
@@ -70051,6 +70114,12 @@
   "recipe": "dd92281f92",
   "text": "A long corridor of whitewashed stone. On the wall, at a child's height, someone has drawn a line of little suns in charcoal, all the way to the end, as if to light the way."
  },
+ "narrator/fee6fb1519a516b3": {
+  "chars": 134,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "He is out of the coffin before the lid stops rocking, and he is not at all sleepy. In the coffin beside his, one of his spawn sits up."
+ },
  "narrator/fefbebf8b5717b30": {
   "chars": 147,
   "model": "eleven_v4",
@@ -75032,11 +75101,25 @@
   "recipe": "03f2698e6f",
   "text": "I told you. The tree calls us back. It always does. I carried a cutting in my sleeve the night you burned it, against my skin, and it drank from me all the way to the Krezk road and back."
  },
+ "ruxandra/a0badcdfb8ba7bd5": {
+  "chars": 200,
+  "direction": "[warm, serene, fervent]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "The lord in the castle and the land are one, children. We have given him a body of the land to walk in. When the song is done he will stand up, and go east, and put his foot down on the ravens' vines."
+ },
  "ruxandra/aba2cf9921f8dd05": {
   "chars": 81,
   "model": "eleven_v3",
   "recipe": "03f2698e6f",
   "text": "We heard you in the gully, children. The hill hears everything. It's mostly ears."
+ },
+ "ruxandra/af603b7f5aaf6e66": {
+  "chars": 79,
+  "direction": "[kindly, amused]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "A god should have a face, children. Otherwise how would you know whom to thank?"
  },
  "ruxandra/b500006fc6512856": {
   "chars": 88,
@@ -75056,11 +75139,25 @@
   "recipe": "03f2698e6f",
   "text": "You've come for the bird-man's stone. It isn't his now. It's the heart of something better. Listen: you can almost hear it beating."
  },
+ "ruxandra/f8c85861e679e6ec": {
+  "chars": 128,
+  "direction": "[gentle, proud, fervent]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "Whose else? Every root on this hill drinks in his name. We only gave the earth the shape it already has, and a heart to wake it."
+ },
  "ruxandra/f9fb3eaebef59bec": {
   "chars": 160,
   "model": "eleven_v3",
   "recipe": "03f2698e6f",
   "text": "The bird-man's son? He sent his brother away. Ordered him off like a dog. He was proud of it; he told the tree so at the end. The tree didn't care. Trees don't."
+ },
+ "ruxandra/fb8f1ff0c7f365a5": {
+  "chars": 61,
+  "direction": "[soft, quietly menacing]",
+  "model": "eleven_v3",
+  "recipe": "03f2698e6f",
+  "text": "The bird-people have watched him a long time. They will stop."
  },
  "sarkhaza/01a1e5761bb42aa5": {
   "chars": 45,
@@ -77124,6 +77221,13 @@
   "recipe": "71f51bdb43",
   "text": "You had my letter, I trust. You read it twice. You thought I would not know."
  },
+ "strahd/13c3c38daf02cbac": {
+  "chars": 58,
+  "direction": "[cold, measured]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Enough. You have earned the road tonight. Do not waste it."
+ },
  "strahd/16653043e2159990": {
   "chars": 61,
   "direction": "[courteous, mocking]",
@@ -77564,6 +77668,13 @@
   "recipe": "71f51bdb43",
   "text": "Of course. Walk about; stretch your legs. The table will keep, and so will I."
  },
+ "strahd/64bfd75a17db6059": {
+  "chars": 58,
+  "direction": "[mocking, cold]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Walls and prayers. How touching. I will come back for her."
+ },
  "strahd/64ea66cdbc52ec27": {
   "chars": 87,
   "model": "eleven_v3",
@@ -77613,6 +77724,20 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "Ireena. Candlelight suits you. Sit beside me. No? Then sit wherever you like."
+ },
+ "strahd/6e35038b46b8962c": {
+  "chars": 56,
+  "direction": "[silky, possessive, menacing]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "Keep her warm for me. I will come back for what is mine."
+ },
+ "strahd/6f0a86dfc73cb874": {
+  "chars": 82,
+  "direction": "[cold, wry, contemptuous]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You have spoiled a perfectly good dinner. Do finish your wine. I will be upstairs."
  },
  "strahd/6f1e78e030739f71": {
   "chars": 80,
@@ -78208,6 +78333,13 @@
   "model": "eleven_v3",
   "recipe": "71f51bdb43",
   "text": "She sang to me, when I was small. She was the only one who did."
+ },
+ "strahd/f741f92e91786751": {
+  "chars": 73,
+  "direction": "[cold, menacing, intimate]",
+  "model": "eleven_v3",
+  "recipe": "71f51bdb43",
+  "text": "You have broken my heart. Come up, then, and let us finish this properly."
  },
  "strahd/f9a1d7a48e209f7e": {
   "chars": 41,
