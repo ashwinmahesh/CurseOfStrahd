@@ -79,3 +79,13 @@ func test_a_party_line_beat_finds_its_speakers_voice() -> void:
 	assert_eq(VoiceOver.beat_voice({"speaker_id": "ismark", "party": false, "text": "Welcome to Barovia."}), "ismark")
 	assert_eq(VoiceOver.beat_voice({"speaker_id": "nobody", "party": true, "text": "Hm."}), "")
 	GameState.story.party = saved
+
+
+func test_a_companion_by_the_fire_speaks_in_her_own_voice() -> void:
+	# Out of the party but at camp (camp_company): her camp talk is spoken, not silent (owner, 2026-10-13).
+	var saved: Array[Character] = GameState.story.camp_company.duplicate()
+	var thistle := TestChars.pregen("thistle")
+	var company: Array[Character] = [thistle]
+	GameState.story.camp_company = company
+	assert_eq(VoiceOver.beat_voice({"speaker_id": thistle.id, "party": true, "text": "Present."}), "thistle")
+	GameState.story.camp_company = saved

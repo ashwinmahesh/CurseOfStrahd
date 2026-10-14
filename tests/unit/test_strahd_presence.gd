@@ -320,7 +320,8 @@ func test_the_test_of_strength_ends_with_his_withdrawal_and_flag() -> void:
 	assert_eq(str(e.legendary.departed.get(strahd.id, "")), "withdraw", "he leaves the fight (%s)" % res)
 	assert_true(bool(e.legendary.story_flags.get("strahd_withdrew", false)), "and the story learns it")
 	assert_true(strahd.creature.hp > 0, "leaving is not dying")
-	assert_true(e.round_no <= int((placed["withdraw"] as Dictionary)["after_rounds"]) + 1, "within his rounds")
+	# He fights his visits until beaten, with no round limit (owner, 2026-10-13; boss-roc 53664fd9d).
+	assert_false((placed["withdraw"] as Dictionary).has("after_rounds"), "no round limit: he goes when beaten")
 
 
 # --- The game's hooks -------------------------------------------------------------------------------
