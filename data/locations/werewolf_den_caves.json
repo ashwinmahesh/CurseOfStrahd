@@ -827,28 +827,32 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 175
         },
         {
           "monster": "werewolf",
           "cell": [
-            18,
-            21
-          ]
+            16,
+            18
+          ],
+          "hp": 140
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            21
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            17,
+            23,
             23
-          ]
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            18
+          ],
+          "hp": 140
         },
         {
           "monster": "dire_wolf",
@@ -860,43 +864,51 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            23,
-            22
+            28,
+            12
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            18,
-            24
+            13,
+            17
           ]
         },
         {
           "monster": "wolf",
           "cell": [
-            21,
-            25
+            20,
+            15
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
-            20
+            13
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "wolf",
+          "cell": [
+            21,
+            12
           ]
         },
         {
           "monster": "wolf",
           "cell": [
-            19,
-            19
+            22,
+            25
           ]
         },
         {
-          "monster": "wolf",
+          "monster": "dire_wolf",
           "cell": [
-            19,
-            21
+            26,
+            14
           ]
         }
       ],
@@ -923,35 +935,40 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 145
         },
         {
           "monster": "werewolf",
           "cell": [
-            18,
-            21
-          ]
+            16,
+            18
+          ],
+          "hp": 110
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            21
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            17,
+            23,
             23
-          ]
+          ],
+          "hp": 110
         },
         {
           "monster": "werewolf",
           "cell": [
-            22,
-            23
-          ]
+            24,
+            18
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            26,
+            16
+          ],
+          "hp": 110
         },
         {
           "monster": "dire_wolf",
@@ -964,35 +981,36 @@
           "monster": "werewolf",
           "cell": [
             18,
-            20
+            13
+          ],
+          "hp": 110
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            21,
+            12
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            19,
-            19
+            22,
+            25
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            19,
-            21
+            13,
+            17
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            20,
-            20
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            18,
-            19
+            28,
+            12
           ]
         }
       ],
@@ -1024,15 +1042,15 @@
         {
           "monster": "werewolf",
           "cell": [
-            18,
-            21
+            16,
+            18
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            21
+            23,
+            23
           ]
         },
         {
@@ -1045,8 +1063,8 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            23,
-            22
+            28,
+            12
           ]
         }
       ],
@@ -1078,22 +1096,22 @@
         {
           "monster": "werewolf",
           "cell": [
-            18,
-            21
+            16,
+            18
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            21
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            17,
+            23,
             23
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            18
           ]
         },
         {
@@ -1106,8 +1124,8 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            23,
-            22
+            28,
+            12
           ]
         }
       ],
@@ -1139,15 +1157,15 @@
         {
           "monster": "werewolf",
           "cell": [
-            18,
-            21
+            16,
+            18
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            21
+            23,
+            23
           ]
         },
         {
@@ -1181,7 +1199,8 @@
           "cell": [
             19,
             20
-          ]
+          ],
+          "hp": 225
         },
         {
           "monster": "emil_toranescu",
@@ -1199,21 +1218,23 @@
             17
           ],
           "name": "Zuleika",
-          "hp": 60
+          "hp": 150
         },
         {
           "monster": "werewolf",
           "cell": [
             18,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "werewolf",
           "cell": [
             21,
             21
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "dire_wolf",
@@ -1234,7 +1255,8 @@
           "cell": [
             18,
             20
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "dire_wolf",

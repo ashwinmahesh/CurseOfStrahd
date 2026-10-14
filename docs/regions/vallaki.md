@@ -232,7 +232,7 @@ Izek are `warrior_veteran` (Izek with 95-110 HP), Lady Wachter's sons are `tough
 | `festival_coup` | town square | dialogue (Baron path) | sons, 4 cultists, 4 toughs, 3 hired swords, 2 captains (3700, Moderate+; 5 wins in 8); cult broken: 4 swords, 2 captains, 3 knives (3775; 5 wins in 8) | sons, 6 cultists, sword, captain (1500, Moderate); cult broken (1250, Low) | sons, 3 cultists, captain at 40 HP |
 | `festival_loyalists` | town square | dialogue (Wachter path) | Izek (112 HP), 5 sergeants, captain, 4 guards (5,850, above High); without Izek (4800) | Izek, sergeant, 4 guards (1500, Moderate); without Izek (1250) | Izek at 60 HP + 3 guards |
 | `festival_izek_rampage` | town square | dialogue (town path) | Izek (225 HP), 2 sergeants, captain, 2 guards (3,700, Moderate+); without Izek (3300) | Izek, sergeant, 2 guards (1450, Low+); without Izek (1400) | Izek at 60 HP + 2 guards |
-| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (110 HP) + 4 sergeants (4,600, High) | Izek + sergeant (1400, Low) | Izek at 70 HP |
+| `izek_duel` | town square | dialogue (Baron path aftermath) | Izek (110 HP) + 4 sergeants (4,600, High) | Izek + sergeant (1400, Low) | Izek at 70 HP | (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points and helpers in this note are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 The two spawn fights are mutually exclusive (each removes the other), so the region's vampire spawn are fought once.
 The under-4 spawn variants are above High for level 3 even with reduced HP (as Doru was in the village); the party is
@@ -245,7 +245,7 @@ above win 5 of 8 from where walking in or talking sets them off (tests/integrati
 also holds the side quests' Ribbons, Roses and Stella fights; docs/story/side_quests.md). At level 5, standing beside Izek when he picks the
 fight: `izek_duel` with Izek at 110 HP and four sergeants, `festival_izek_rampage` with Izek at 225 HP,
 `festival_loyalists` with five sergeants and four guards, and `izek_confrontation` with Izek at 145 HP each win 5 of 8
-(tests/integration/test_scaled_boss_fights.gd).
+(tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points and helpers in this note are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 ## 8. Milestone
 
