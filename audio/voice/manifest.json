@@ -39106,6 +39106,12 @@
   "recipe": "dd92281f92",
   "text": "You say the oath, and he says it with you, slowly, and on the last line he says it alone."
  },
+ "narrator/17fc8fd61b3ed3d0": {
+  "chars": 96,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
+ },
  "narrator/180901b61463ddbc": {
   "chars": 147,
   "model": "eleven_v4",
@@ -44248,12 +44254,6 @@
   "recipe": "dd92281f92",
   "text": "Gertruda sits on the bed in a new gown, a green one. She smiles at you politely, the way you smile at strangers."
  },
- "narrator/3c970c0e3a018530": {
-  "chars": 193,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Shapes in rusted helmets of an old pattern come up the road in a ragged column, still marching on a house they burned four hundred years ago. Two at the back sniff the air and break into a run."
- },
  "narrator/3c9d6b3bb7867671": {
   "chars": 119,
   "model": "eleven_v4",
@@ -44277,12 +44277,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Vistani clap the time, the fire leaps, and for a little while nobody is thinking about the castle at all."
- },
- "narrator/3cace754ec692f61": {
-  "chars": 134,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two figures on the road ahead, walking upright. Then one of them drops to all fours, and the other one laughs with far too many teeth."
  },
  "narrator/3caf99633179dec3": {
   "chars": 77,
@@ -44859,12 +44853,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Bundles of herbs and feathers and little knotted cords hanging from every beam. Several of the knots are tied around teeth."
- },
- "narrator/415c99ac29012e48": {
-  "chars": 84,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The pines over the road are hung with grey sheets of web, and the sheets are moving."
  },
  "narrator/4164b091c9f92c70": {
   "chars": 80,
@@ -45988,12 +45976,6 @@
   "recipe": "dd92281f92",
   "text": "Three green moss agates wrapped in a handkerchief, worth about thirty gold to the right buyer."
  },
- "narrator/49f1c99b24bd3011": {
-  "chars": 152,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Dire wolves, five of them, big as ponies, fanning out across the slope ahead. Behind them a man steps out from the trees, smiling, and starts to change."
- },
  "narrator/49f6aa8c4fafdebd": {
   "chars": 69,
   "model": "eleven_v4",
@@ -46257,12 +46239,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The vat's hoops go off like pistol shots, one, two, three."
- },
- "narrator/4bda2c4726da538a": {
-  "chars": 137,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The undergrowth at the roadside stands up and walks. Behind it, two figures in bark-dyed robes are chanting, and the trees are listening."
  },
  "narrator/4bdd717cd6790b00": {
   "chars": 158,
@@ -46912,6 +46888,12 @@
   "recipe": "dd92281f92",
   "text": "A little roadside shrine on a post, its painted saint peeling and its tiny roof furred with moss. A traveller's prayer hangs from it on a string, written very small."
  },
+ "narrator/50ca930e0b7aeaaf": {
+  "chars": 171,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Ogres sit on the road ahead around a dead goat, arguing about who caught it, and something on two legs paces in the pines behind them. They stop arguing when they see you."
+ },
  "narrator/50e84b02602528df": {
   "chars": 160,
   "model": "eleven_v4",
@@ -46965,6 +46947,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "On the rise behind the shacks, a bow creaks, as it did for Tudor."
+ },
+ "narrator/5159316792be7846": {
+  "chars": 133,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The undergrowth at the roadside stands up and walks. Behind it, figures in bark-dyed robes are chanting, and the trees are listening."
  },
  "narrator/5159c09ed87b193a": {
   "chars": 72,
@@ -48550,12 +48538,6 @@
   "recipe": "dd92281f92",
   "text": "The humming stops. In the silence, somebody at the back of the church begins, very quietly, to cry."
  },
- "narrator/5c14e0f8174b677c": {
-  "chars": 125,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A howl from up the ridge, answered from below the road, and answered again much closer. The two at the front run on two legs."
- },
  "narrator/5c209267190e24ed": {
   "chars": 114,
   "model": "eleven_v4",
@@ -49287,6 +49269,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You leave it for whoever comes looking. You suspect nobody will."
+ },
+ "narrator/6168cdf9f829be2e": {
+  "chars": 124,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Figures on the road ahead, walking upright. Then one of them drops to all fours, and another laughs with far too many teeth."
  },
  "narrator/61796f27eabbb2c3": {
   "chars": 81,
@@ -51597,6 +51585,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The road runs on between its ditches, open fields on both sides and stone walls tumbled into the grass. Plenty of room to see what's coming. Plenty of room for it to come."
+ },
+ "narrator/712fd81822afab96": {
+  "chars": 182,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Pale lights bob out over the reeds and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them, and something wails under the water."
  },
  "narrator/7131fed96a88ea0d": {
   "chars": 89,
@@ -58294,6 +58288,12 @@
   "recipe": "dd92281f92",
   "text": "The landing is very still. Somebody is standing at the head of the stairs."
  },
+ "narrator/a32f13f0b84e6909": {
+  "chars": 145,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The reeds on both sides start to whine, and then the whine stands up and comes for you in a cloud, with scarecrows in it and pale lights over it."
+ },
  "narrator/a33474a147c48a8b": {
   "chars": 125,
   "model": "eleven_v4",
@@ -58629,12 +58629,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The path above the Tsolenka Pass climbs in switchbacks along a shelf of rock and snow, with the mountain on one side and nothing at all on the other."
- },
- "narrator/a5a14eb5a11cf6e0": {
-  "chars": 119,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Three ogres sit on the road ahead around a dead goat, arguing about who caught it. They stop arguing when they see you."
  },
  "narrator/a5a23aa9e1f653d3": {
   "chars": 114,
@@ -60526,12 +60520,6 @@
   "recipe": "dd92281f92",
   "text": "A crawlway hot as an oven, where a stoker once fed the furnace from behind. He is still here."
  },
- "narrator/b483dd0bbc2324a3": {
-  "chars": 100,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two figures in green-dyed sacking step into the road ahead, and the brush behind them steps out too."
- },
  "narrator/b48c36b10d699dfd": {
   "chars": 182,
   "model": "eleven_v4",
@@ -60856,6 +60844,12 @@
   "recipe": "dd92281f92",
   "text": "A handsome family in oils above the mantel: a broad, smiling man cradling a swaddled baby, a narrow woman looking at that baby the way you'd look at a stain, a girl of ten with her chin up, and a small boy holding a stuffed wolf by one ear."
  },
+ "narrator/b70b8fb2196dfed0": {
+  "chars": 112,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "The pines over the road are hung with grey sheets of web, and the sheets are moving. Howls start up behind them."
+ },
  "narrator/b72a528aaa71822d": {
   "chars": 118,
   "model": "eleven_v4",
@@ -61179,6 +61173,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Dead knights sit along both sides of a long table under rotted banners, armoured and unmoving, as if a feast was called four centuries ago and nobody has been dismissed."
+ },
+ "narrator/b998a4c64549e7b8": {
+  "chars": 123,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "A howl from up the ridge, answered from below the road, and answered again much closer. Those at the front run on two legs."
  },
  "narrator/b9a261d27ee9ae21": {
   "chars": 140,
@@ -61581,12 +61581,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He goes into one of you like breath into a cold mirror; for a moment two sets of eyes look out of the same face, then only one. Somewhere inside, a small boy stops crying."
- },
- "narrator/bdd68dc0984a180d": {
-  "chars": 111,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper."
  },
  "narrator/bdf4a6df00bd7249": {
   "chars": 111,
@@ -62907,6 +62901,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A long trench of torn earth and black splinters where the Seventh Row was. It smells of spilt wine."
+ },
+ "narrator/c6a70a1f47df93d0": {
+  "chars": 194,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Shapes in rusted helmets of an old pattern come up the road in a ragged column, still marching on a house they burned four hundred years ago. Some at the back sniff the air and break into a run."
  },
  "narrator/c6b22a11c2caf294": {
   "chars": 157,
@@ -65734,12 +65734,6 @@
   "recipe": "dd92281f92",
   "text": "A tidy study: a desk, an inkstand, a bookcase of very old and very unread books. One of the shelves has no dust at its edge."
  },
- "narrator/dc6d7df985ed015b": {
-  "chars": 161,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Pale lights bob out over the reeds, three of them, and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them."
- },
  "narrator/dc760fe6cb67544e": {
   "chars": 117,
   "model": "eleven_v4",
@@ -67221,6 +67215,12 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He watches you with yellow eyes and doesn't change. But he doesn't go back into the trees, either. He gets up, stiff, and walks into the light, and lies down at Lark's feet like a dog at a fire."
+ },
+ "narrator/e74f86c428291574": {
+  "chars": 162,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Scarecrows step off the poles along the track, one after another, as if somebody had called them in for supper. Pale lights come with them, and something wailing."
  },
  "narrator/e75268ed842f3366": {
   "chars": 193,
@@ -69124,6 +69124,12 @@
   "recipe": "dd92281f92",
   "text": "You take the knife and the stick and show him: thumb behind the blade, little cuts, away from yourself. He watches with his tongue between his teeth. By the end of the watch the dog is a spoon, and a fairly good one."
  },
+ "narrator/f65488b00e0cfcdb": {
+  "chars": 130,
+  "model": "eleven_v4",
+  "recipe": "dd92281f92",
+  "text": "Dire wolves, big as ponies, fan out across the slope ahead. Behind them men step out from the trees, smiling, and start to change."
+ },
  "narrator/f65f6430405ecc64": {
   "chars": 78,
   "model": "eleven_v4",
@@ -70065,12 +70071,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A brick furnace mouth, its iron door glowing. There is no coal in it and no wood. The fire is simply there."
- },
- "narrator/fd34db48f131ee8a": {
-  "chars": 98,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The reeds on both sides start to whine, and then the whine stands up and comes for you in a cloud."
  },
  "narrator/fd589f3cece19c25": {
   "chars": 190,
