@@ -76,7 +76,10 @@ func play_turn(c: Combatant) -> Variant:
 		var low := c.creature.hp * 4 < c.creature.max_hp()
 		var healed := c.creature.hp * 2 >= c.creature.max_hp()
 		var mist := "mist" if not L.shape(c, "mist").is_empty() else ""
-		if shaped and (healed or L.form(c) != mist):
+		# He doesn't run from foes he can finish: with every hero left standing under a third of their Hit Points the
+		# mist would only let a beaten party's last blades chase him round the room while he regenerates (a stall).
+		var finishing := _can_finish_them(c)
+		if shaped and (healed or finishing or L.form(c) != mist):
 			if L.change_form(c, L.base_form(c)).ok:
 				ai.last_plan = {"kind": "shape", "why": "back to his true form"}
 				if not c.action_available:
@@ -84,7 +87,7 @@ func play_turn(c: Combatant) -> Variant:
 		elif shaped:
 			ai.last_plan = {"kind": "keep_away", "why": "regenerating as mist"}
 			return _keep_away(c)
-		elif low and mist != "" and L.regenerates_now(c) and L.change_why(c, mist) == "":
+		elif low and not finishing and mist != "" and L.regenerates_now(c) and L.change_why(c, mist) == "":
 			L.change_form(c, mist)
 			ai.last_plan = {"kind": "mist", "why": "badly hurt: mist form to regenerate"}
 			return _keep_away(c)
@@ -106,6 +109,18 @@ func play_turn(c: Combatant) -> Variant:
 		e.monster_actions.save_action(c, charm["action"] as Dictionary, charm["target"] as Combatant, r2)
 		return e.then(e.run_reaction_queue(r2), func() -> CombatResult: return _close_in(c))
 	return null
+
+
+## Whether every foe still on its feet is under a third of its Hit Points (and there is one).
+func _can_finish_them(c: Combatant) -> bool:
+	var any := false
+	for h in enc().hostiles_of(c):
+		if h.is_down() or not h.can_act():
+			continue
+		any = true
+		if h.creature.hp * 3 > h.creature.max_hp():
+			return false
+	return any
 
 
 func _foes_seen(c: Combatant) -> Array[Combatant]:

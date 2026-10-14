@@ -1138,7 +1138,10 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 				for alt: Variant in entry.get("or", []):
 					choices.append(str(alt))
 				queue.append("|".join(choices))
-		return _multi_step(c, t, queue)
+		# Nothing in the Multiattack reaches a foe from here (Rahadin's blades, a dart in his hand and a hero across the
+		# room): the plan's own attack is made instead, rather than a turn that does nothing while the party shoots him.
+		if _multi_reaches(c, queue):
+			return _multi_step(c, t, queue)
 	var r: CombatResult
 	tactics.note_strike(t)
 	if c.creature is Monster:
@@ -1151,6 +1154,26 @@ func _attack_step(c: Combatant, target: Combatant, option_id: String) -> CombatR
 	if c.attacks_left > 0:
 		return e.then(r, func() -> CombatResult: return _attack_step(c, t, option_id))
 	return r
+
+
+## Whether any attack in the Multiattack's `queue` (choices joined with "|") can strike a foe from where `c` stands.
+func _multi_reaches(c: Combatant, queue: Array[String]) -> bool:
+	var e := enc()
+	var m := c.creature as Monster
+	for entry in queue:
+		for cid in entry.split("|"):
+			var act := m.action(cid)
+			if str(act.get("kind", "")) == "save" or not act.has("attack") or e.monster_actions.why_not(c, act) != "":
+				if str(act.get("kind", "")) == "save" and e.monster_actions.why_not(c, act) == "":
+					return true
+				continue
+			var option := e.option_by_id(c, "monster:" + cid)
+			if option.is_empty():
+				continue
+			for h in e.hostiles_of(c):
+				if not h.is_down() and e.attack_legal(c, h, option) == "":
+					return true
+	return false
 
 
 func _multi_step(c: Combatant, target: Combatant, queue: Array[String]) -> CombatResult:
