@@ -6,18 +6,20 @@ extends FightSeriesCase
 ## wins about 5 in 8 on Balanced at every level, give or take one, and a quest's reward makes its fight easier.
 
 
-## Greytooth at 195 HP, with Szoldar, two dire wolves and three wolves.
+## Greytooth at 195 HP, with Szoldar, two dire wolves and three wolves, snapping twice a round between turns (owner,
+## 2026-10-13: two legendary strikes, nothing else retuned): 2 of 8.
 func test_old_greytooth_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 4 and wins <= 6, "Greytooth falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 3, "Greytooth falls in 1 to 3 of 8 (%d)" % wins)
 
 
-## With Szoldar turned, a castle wolf (a werewolf) runs with the pack instead, and Greytooth is at 240 HP.
+## With Szoldar turned, a castle wolf (a werewolf) runs with the pack instead, and Greytooth is at 240 HP: 1 of 8 with
+## his two snaps a round.
 func test_old_greytooth_with_szoldar_turned_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8], ["szoldar_turned"])
-	assert_true(wins >= 4 and wins <= 6, "Greytooth falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 3, "Greytooth falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The Bellringer (a wraith), the Lake's Undertow (a water elemental) and twelve of the drowned, four of them ghasts.
@@ -27,25 +29,26 @@ func test_the_drowned_of_pescari_at_level_8() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the drowned fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## The whole column, the marshal at 170 HP and his two lieutenants at a wight's full Hit Points.
+## The whole column, the marshal at 170 HP and his two lieutenants at a wight's full Hit Points; he charges twice a
+## round between turns (owner, 2026-10-13: two legendary strikes, nothing else retuned): 2 of 8.
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 4 and wins <= 6, "the column falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 3, "the column falls in 1 to 3 of 8 (%d)" % wins)
 
 
-## The riders stood down: the marshal (190 HP at level 8) and three lieutenants.
+## The riders stood down: the marshal (190 HP at level 8) and three lieutenants: 4 of 8 with his two charges a round.
 func test_the_bone_marshal_duel_at_level_8() -> void:
 	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8], ["riders_stood_down"])
-	assert_true(wins >= 4 and wins <= 6, "the marshal falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 3 and wins <= 5, "the marshal falls in 3 to 5 of 8 (%d)" % wins)
 
 
-## The whole column at level 8, the marshal at 270 HP.
+## The whole column at level 8, the marshal at 270 HP: 2 of 8 with his two charges a round.
 func test_the_bone_marshal_and_his_column_at_level_8() -> void:
 	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 8, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 4 and wins <= 6, "the column falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 3, "the column falls in 1 to 3 of 8 (%d)" % wins)
 
 
 ## The Rag Queen at 375 HP with her brides and grooms.
@@ -72,11 +75,12 @@ func test_the_vine_mother_at_level_6() -> void:
 	speakers_step_aside = false
 
 
-## Granny Ash at 145 HP with her dogs and needle blights.
+## Granny Ash at 145 HP with her dogs and needle blights, raking twice a round between turns (owner, 2026-10-13: two
+## legendary strikes, nothing else retuned): 4 of 8.
 func test_granny_ash_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("old_bonegrinder_track", 23, 6, "granny_ash", [1, 2, 3, 4, 5, 6, 7, 8], ["morgantha_slain"])
-	assert_true(wins >= 4 and wins <= 6, "Granny Ash falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 3 and wins <= 5, "Granny Ash falls in 3 to 5 of 8 (%d)" % wins)
 
 
 ## The huntsman at 240 HP on his mare, with six hounds.
@@ -141,18 +145,19 @@ func test_the_tenant_at_level_2() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the Tenant falls in 4 to 6 of 8 (%d)" % wins)
 
 
-## The Wagon at 220 HP and one trinket at level 5.
+## The Wagon at 220 HP and one trinket at level 5, lashing twice a round between turns (owner, 2026-10-13: two
+## legendary strikes, nothing else retuned): 2 of 8.
 func test_the_tinkers_wagon_at_level_5() -> void:
 	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 12, 5, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 4 and wins <= 6, "the Wagon falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 1 and wins <= 3, "the Wagon falls in 1 to 3 of 8 (%d)" % wins)
 
 
-## Level 6: the Wagon at 160 HP and five trinkets.
+## Level 6: the Wagon at 160 HP and five trinkets: 4 of 8 with its two lashes a round.
 func test_the_tinkers_wagon_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 12, 6, "tinkers_wagon", [1, 2, 3, 4, 5, 6, 7, 8])
-	assert_true(wins >= 4 and wins <= 6, "the Wagon falls in 4 to 6 of 8 (%d)" % wins)
+	assert_true(wins >= 3 and wins <= 5, "the Wagon falls in 3 to 5 of 8 (%d)" % wins)
 
 
 ## The Count's fowler, three more fowlers (vampire spawn) and three swarms of bats.

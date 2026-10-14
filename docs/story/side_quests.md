@@ -333,7 +333,8 @@ been turned (Intimidation DC 14) or left at the inn.
   a werewolf; Szoldar (bandit captain) on the rise unless dealt with, and he runs below 25 HP (`szoldar_fled`); with
   Szoldar turned or staying out of it, a castle wolf (werewolf) runs with the level 6 pack instead. The
   autopilot (tests/integration/test_side_quest_bosses.gd) wins 5 of 8 at level 6 with Greytooth at 195 HP, or at 240
-  with Szoldar turned (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
+  with Szoldar turned (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced). Since then (owner, 2026-10-13) its legendary strike costs one use, so it strikes twice a round, nothing else retuned: 2 of
+  8, and 1 with Szoldar turned.
   Attention mark `greytooth` (+1).
 - Yevgeni pays the whole bounty, 300 gp, and gives his father's Horn of Valhalla, Silver (rare).
 
@@ -417,7 +418,8 @@ for seven years. **Escalation:** once something's been seen, go for the chain, a
   more lash between turns. CR 7.
 - Fight `tinkers_wagon` at the crossroads: level 5 the Wagon at 220 HP and a trinket (a mimic), 3,350 XP; level 6 the
   Wagon at 160 HP and five trinkets; below 5 the Wagon at 110 HP and one. The autopilot wins 5 of 8 at levels 5 and 6
-  (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
+  (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced); since then it lashes twice a round
+  between turns, nothing else retuned (owner): 2 of 8 at level 5, 4 at level 6.
 - The belly: 300 gp of travellers' money and the gem the thing kept to see with, a Gem of Seeing (rare). Iosif goes
   back to the Tser Pool camp and sits on the ground.
 
@@ -547,6 +549,8 @@ marshal still wants to be beaten, fairly, because only a lost battle can relieve
   marshal at 110 HP, one wight, six riders), or only the marshal and his lieutenants once the riders stand down (level 8:
   190 HP and three). Over seeds 1-8 the autopilot wins 5 of 8 against each of the column at levels 6 and 8 and the
   marshal and three lieutenants at level 8 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
+  Since then (owner) the marshal charges twice a round between turns, nothing else retuned: the column 2 of 8 at levels
+  6 and 8, the marshal and his lieutenants 4.
 - The pay chest: 200 gp and the marshal's blade, a +2 longsword (rare).
 
 ## Old Bonegrinder's lane (level 6)
@@ -568,7 +572,8 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
   hag, drawn with the night hag's sprite): Large fey, AC 17, 184 HP, two iron claws (reach 10) and a bite, a Crushing
   Hug (recharge 5-6) that restrains and crushes, Legendary Resistance (2/day) and a rake between turns. CR 8.
 - Fight `granny_ash` on the lane: level 6 Granny at 145 HP, 3 dire wolves ("Granny's Dog") and 4 needle blights
-  (the autopilot wins 5 of 8 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced)); level 7 adds 2 needle and 2 vine blights; level 8 six needle blights and the hag garden's elm (a tree
+  (the autopilot wins 5 of 8 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced); since
+  then she rakes twice a round between turns, nothing else retuned (owner): 4 of 8); level 7 adds 2 needle and 2 vine blights; level 8 six needle blights and the hag garden's elm (a tree
   blight), 7,700 XP; below 6 Granny at 130 HP, one dog and 3 needle blights.
 - Endings (`mouse_fate`): `home` (named: Zamfira back with her mother, Ilka and Toma, on the step in the village),
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
