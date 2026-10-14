@@ -552,6 +552,34 @@
             2
           ],
           "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            24,
+            14
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            9
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            6
+          ]
         }
       ],
       "surprise": "",
@@ -610,6 +638,44 @@
             23,
             14
           ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            11
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            9,
+            3
+          ],
+          "name": "Vasilka"
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            7
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            19,
+            12
+          ],
+          "name": "Vasilka"
         }
       ],
       "surprise": "",
@@ -653,6 +719,51 @@
             2,
             14
           ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            14,
+            11
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            22,
+            14
+          ],
+          "name": "Vasilka"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            4
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            8,
+            10
+          ],
+          "name": "Vasilka"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            7
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            18,
+            8
+          ],
+          "name": "Vasilka"
         }
       ],
       "surprise": "",

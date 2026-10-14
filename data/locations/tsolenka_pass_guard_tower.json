@@ -396,7 +396,7 @@
       "id": "tsolenka_watch",
       "trigger": "dialogue",
       "when": "level >= 8",
-      "text": "Five grey soldiers draw five grey swords with one sound, the way a drill sergeant would want it.",
+      "text": "Grey soldiers draw grey swords with one sound, the way a drill sergeant would want it.",
       "monsters": [
         {
           "monster": "phantom_warrior",
@@ -437,6 +437,76 @@
             9
           ],
           "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            5
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            2
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            3
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            8,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            9,
+            3
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            16,
+            6
+          ]
         }
       ],
       "surprise": "",
@@ -449,7 +519,7 @@
     {
       "id": "tsolenka_watch",
       "trigger": "dialogue",
-      "text": "Five grey soldiers draw five grey swords with one sound, the way a drill sergeant would want it.",
+      "text": "Grey soldiers draw grey swords with one sound, the way a drill sergeant would want it.",
       "monsters": [
         {
           "monster": "phantom_warrior",
@@ -482,6 +552,55 @@
             7
           ],
           "name": "Phantom Watchman"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            9,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            9,
+            5
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            3
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            8,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            8,
+            3
+          ]
         }
       ],
       "surprise": "",

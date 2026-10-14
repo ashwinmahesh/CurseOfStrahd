@@ -546,6 +546,13 @@
             1,
             11
           ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            11,
+            11
+          ]
         }
       ],
       "surprise": "",
@@ -628,6 +635,13 @@
             1,
             11
           ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            11,
+            11
+          ]
         }
       ],
       "surprise": "",
@@ -694,6 +708,44 @@
             1,
             11
           ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            11,
+            13
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            17,
+            16
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            14,
+            7
+          ],
+          "name": "A Bride Before Vasilka"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            6,
+            15
+          ],
+          "name": "Belview Brute"
         }
       ],
       "surprise": "",
