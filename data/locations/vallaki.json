@@ -2113,7 +2113,7 @@
         {
           "monster": "bandit",
           "cell": [
-            33,
+            36,
             19
           ],
           "name": "Hired knife"
@@ -2962,8 +2962,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            11,
-            29
+            10,
+            32
           ]
         },
         {
@@ -3068,8 +3068,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            45,
-            5
+            44,
+            1
           ],
           "name": "Irina",
           "hp": 50
@@ -3109,8 +3109,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            45,
-            5
+            44,
+            1
           ],
           "name": "Irina",
           "hp": 45
@@ -3127,15 +3127,22 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            45,
-            6
+            47,
+            1
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            45,
-            7
+            41,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            47,
+            11
           ]
         }
       ],
@@ -3196,8 +3203,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            45,
-            5
+            44,
+            1
           ],
           "name": "Irina"
         },
@@ -3235,16 +3242,16 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            45,
-            5
+            44,
+            1
           ],
           "name": "Irina"
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            46,
-            8
+            41,
+            11
           ]
         }
       ],
@@ -3346,7 +3353,7 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            4,
+            9,
             22
           ],
           "name": "Watchman Dobre"
@@ -3362,16 +3369,16 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            5,
-            23
+            8,
+            25
           ],
           "name": "Dobre's lad"
         },
         {
           "monster": "warrior_veteran",
           "cell": [
-            3,
-            24
+            1,
+            26
           ],
           "name": "Dobre's lad"
         },
@@ -3493,8 +3500,8 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            3,
-            24
+            1,
+            28
           ],
           "name": "Dobre's lad"
         },
@@ -3525,8 +3532,16 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            3,
-            22
+            1,
+            15
+          ],
+          "name": "Dobre's lad"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            2,
+            30
           ],
           "name": "Dobre's lad"
         },
@@ -3535,14 +3550,6 @@
           "cell": [
             3,
             23
-          ],
-          "name": "Dobre's lad"
-        },
-        {
-          "monster": "warrior_veteran",
-          "cell": [
-            4,
-            21
           ],
           "name": "Dobre's lad"
         }
@@ -3567,8 +3574,8 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            18,
-            23
+            17,
+            22
           ],
           "name": "Dobre's lad"
         },
@@ -3593,7 +3600,7 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            4,
+            9,
             22
           ],
           "name": "Watchman Dobre"
@@ -3609,8 +3616,8 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            5,
-            23
+            8,
+            25
           ],
           "name": "Dobre's lad"
         },

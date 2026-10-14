@@ -980,7 +980,7 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            15,
+            13,
             14
           ]
         },
@@ -1025,15 +1025,15 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            15,
+            13,
             14
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
-            20,
-            16
+            21,
+            17
           ]
         },
         {
