@@ -631,10 +631,78 @@
       "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
     },
     {
+      "npc": "codruta",
+      "cell": [
+        11,
+        12
+      ],
+      "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
+      "npc": "krezk_petru",
+      "cell": [
+        13,
+        12
+      ],
+      "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
+      "npc": "zamfir",
+      "cell": [
+        12,
+        13
+      ],
+      "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
+      "npc": "ioana",
+      "cell": [
+        11,
+        13
+      ],
+      "when": "(flag.kiril_defeated or flag.den_broken) and not guest:emil_toranescu and not flag.pack_aftermath_done"
+    },
+    {
       "npc": "mirela",
       "cell": [
         5,
         4
+      ],
+      "dialogue": "werewolf_den/children:start",
+      "when": "not flag.den_children_freed"
+    },
+    {
+      "npc": "codruta",
+      "cell": [
+        4,
+        4
+      ],
+      "dialogue": "werewolf_den/children:start",
+      "when": "not flag.den_children_freed"
+    },
+    {
+      "npc": "krezk_petru",
+      "cell": [
+        6,
+        4
+      ],
+      "dialogue": "werewolf_den/children:start",
+      "when": "not flag.den_children_freed"
+    },
+    {
+      "npc": "zamfir",
+      "cell": [
+        5,
+        3
+      ],
+      "dialogue": "werewolf_den/children:start",
+      "when": "not flag.den_children_freed"
+    },
+    {
+      "npc": "ioana",
+      "cell": [
+        6,
+        3
       ],
       "dialogue": "werewolf_den/children:start",
       "when": "not flag.den_children_freed"

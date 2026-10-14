@@ -84,7 +84,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Summit L6, druids fled (reward) | 6 | Tree Blight (135 HP), 6 Twig Blights, 2 Vine Blights, 3 Needle Blights | Tree Blight (200 HP), 6 Twig Blights, 2 Vine Blights, 3 Needle Blights | 4/8 | 4 |
 | Summit L6, struck first (reward) | 6 | Tree Blight (136 HP), Druid (58 HP), 2 Druids, 4 Twig Blights | Tree Blight (285 HP), Druid (58 HP), 2 Druids, 4 Twig Blights | 4/8 | 4 |
 | Summit L6, Kostin warned them (harder) | 6 | Tree Blight (95 HP), Druid (60 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | Tree Blight (210 HP), Druid (130 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | 2/8 | 2 |
-| Summit L7 | 7 | Tree Blight (165 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | Tree Blight (260 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | 3/8 | 3 |
+| Summit L7 | 7 | Tree Blight (165 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | Tree Blight (300 HP), Druid (55 HP), 4 Twig Blights | 3/8 | 3 |
 | Summit L7, druids fled (reward) | 7 | Tree Blight (125 HP), 6 Twig Blights, 3 Vine Blights, 3 Needle Blights | Tree Blight (200 HP), 6 Twig Blights, 3 Vine Blights, 3 Needle Blights | 4/8 | 4 |
 | Summit L7, struck first (reward) | 7 | Tree Blight (125 HP), Druid (55 HP), 2 Druids, Berserker, 4 Twig Blights | Tree Blight (285 HP), Druid (55 HP), 2 Druids, Berserker, 4 Twig Blights | 4/8 | 4 |
 | Summit L7, Kostin warned them (harder) | 7 | Tree Blight (110 HP), Druid (60 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | Tree Blight (220 HP), Druid (60 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | 2/8 | 2 |
@@ -123,6 +123,9 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Summit L5, circle broken (reward) | 5 | Tree Blight (74 HP), Druid (50 HP), 4 Twig Blights | Tree Blight (135 HP), Druid (90 HP), 4 Twig Blights | 4/8 | 4 |
 | Summit L6, circle broken (reward) | 6 | Tree Blight (140 HP), Druid (60 HP), 6 Twig Blights | Tree Blight (215 HP), Druid (60 HP), 6 Twig Blights | 4/8 | 4 |
 | Summit L7, circle broken (reward) | 7 | Tree Blight (100 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | Tree Blight (250 HP), Druid (55 HP), Berserker (40 HP), 4 Twig Blights | 4/8 | 4 |
+| The Amber Temple's sentinel wakes | 10 | Amber Golem, 2 Gargoyles | Amber Golem (395 HP), 2 Gargoyles, 6 Wraiths | 3/8 | 3 |
+| The sentinel stops a party with a dark gift | 10 | Amber Golem | Amber Golem (440 HP), 6 Wraiths | 3/8 | 3 |
+| The vault guardian | 10 | Amber Golem, Wraith | Amber Golem (660 HP), 4 Wraiths | 3/8 | 3 |
 
 ## Where a fight is not at 3 in 8, and why
 
@@ -138,6 +141,9 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 - **Sarkhaza and the Eye Below** keep the fiction of their tricks: as she is, Sarkhaza has her book 200 HP and six wights beside her (3 in 8); with the
   keepers' three tricks she has 165 HP and the same six (4 in 8). The Eye with both wardens' ways taken needs the same 335 HP as the plain Eye (without
   its dreamed eye and its lair, and surprised), so test_side_quests_beholder now asks that it is no tougher than the plain Eye, not under 180 HP.
+- **The Phase 5 playthrough** (test_phase5_exit, the Wizard of Wines) walked home from the retuned Yester Hill summit hurt and at night into a road fight it could not
+  win. Its careful-player bot (`StoryBot.waits_for_long_rest`) now heals with its spells where no rest is allowed and waits for daylight before a road. Random road
+  fights (data/random_encounters/, tuned for the pregens) can still beat the weaker playthrough party on other dice seeds; that is the road tables', not a boss's.
 - **Rewards** a quest earns (hounds called, Corvina named, Vosk named, the summit circle broken, the Vine Mother with Adrian along, ...) are one step
   easier (4); Kostin's warning at the summit is one step harder (2).
 - **Hit Points far above the book** (two to four times) are how most bosses reach 3: the full-ability party out-damages the book numbers by a lot. Where a
