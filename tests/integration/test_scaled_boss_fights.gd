@@ -175,6 +175,9 @@ const MARINAS_GRAVE: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector
 const LYSAGAS_KITCHEN: Array[Vector2i] = [Vector2i(11, 5), Vector2i(10, 6), Vector2i(9, 7), Vector2i(8, 8)]
 const EXETHANTERS_SHELVES: Array[Vector2i] = [Vector2i(23, 5), Vector2i(22, 6), Vector2i(21, 7), Vector2i(20, 8)]
 const VOSKS_VAULT: Array[Vector2i] = [Vector2i(19, 21), Vector2i(19, 20), Vector2i(19, 19), Vector2i(19, 18)]
+## The party on the snow ledge below the sentinel, and just inside the vault's honey door.
+const SENTINEL_LEDGE: Array[Vector2i] = [Vector2i(17, 15), Vector2i(18, 15), Vector2i(19, 15), Vector2i(18, 16)]
+const VAULT_DOOR: Array[Vector2i] = [Vector2i(19, 8), Vector2i(20, 8), Vector2i(21, 8), Vector2i(20, 7)]
 const ROC_BRIDGE: Array[Vector2i] = [Vector2i(13, 18), Vector2i(12, 19), Vector2i(11, 20), Vector2i(10, 20)]
 
 
@@ -224,6 +227,23 @@ func test_exethanter_at_level_10() -> void:
 ## Vosk unmasked at level 10: Arcanaloth (320 HP), 2 Flameskulls; 3 in 8.
 func test_vosk_unmasked_at_level_10() -> void:
 	await _held("amber_temple_vault", 10, "vosk_unmasked", VOSKS_VAULT, 2, 4)
+
+
+## The Amber Temple's sentinel wakes at level 10: Amber Golem (395 HP), 2 Gargoyles, 6 Wraiths; 3 in 8.
+func test_the_amber_sentinel_wakes_at_level_10() -> void:
+	await _held("amber_temple_entrance", 10, "sentinel_wakes", SENTINEL_LEDGE, 2, 4)
+
+
+## The sentinel stops a party carrying a dark gift at level 10: Amber Golem (440 HP), 6 Wraiths; 3 in 8.
+func test_the_sentinel_stops_a_party_with_a_dark_gift_at_level_10() -> void:
+	await _held("amber_temple_entrance", 10, "sentinel_stops_you", SENTINEL_LEDGE, 2, 4, ["amber_temple_arrived", "dark_gifts_taken=1"])
+
+
+## The vault guardian at level 10: Amber Golem (660 HP), 4 Wraiths; 3 in 8.
+func test_the_vault_guardian_at_level_10() -> void:
+	await _held("amber_temple_vault", 10, "vault_guardian", VAULT_DOOR, 2, 4)
+
+
 ## Vosk named and weakened at level 10: Arcanaloth (205 HP), 2 Flameskulls; 4 in 8.
 func test_vosk_named_and_weakened_at_level_10() -> void:
 	await _held("amber_temple_vault", 10, "vosk_unmasked", VOSKS_VAULT, 3, 5, ["vosk_named", "vosk_weakened"])

@@ -576,13 +576,38 @@
             23,
             10
           ],
-          "name": "The Vault Guardian"
+          "name": "The Vault Guardian",
+          "hp": 660
         },
         {
           "monster": "wraith",
           "cell": [
             17,
             12
+          ],
+          "name": "Warden's wraith"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            10
+          ],
+          "name": "Warden's wraith"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            9
+          ],
+          "name": "Warden's wraith"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            11
           ],
           "name": "Warden's wraith"
         }

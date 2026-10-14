@@ -51,6 +51,7 @@ const PENDING := {
 	"amber_temple_vault:vosk_unmasked#2": true, "castle_ravenloft_catacombs_strahd:cat_daylight_waking#3": true,
 	"castle_ravenloft_catacombs_tombs:cat_royal_final#3": true, "castle_ravenloft_chapel:crg_chapel_final_battle#0": true,
 	"castle_ravenloft_main_floor:crg_dinner_affront#0": true, "ghakis_lair:sarkhaza": true,
+	"amber_temple_entrance:sentinel_wakes": true, "amber_temple_entrance:sentinel_stops_you": true, "amber_temple_vault:vault_guardian": true,
 }
 
 
