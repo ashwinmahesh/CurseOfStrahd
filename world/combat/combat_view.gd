@@ -58,6 +58,9 @@ var tokens: Dictionary = {}
 ## The party's and guests' own figures as the fight was handed them (id -> CombatToken): exploring goes on with these
 ## after the fight, so a change of shape hides one instead of freeing it (_swap_form_art).
 var _own_tokens: Dictionary = {}
+## A foe drawn in someone else's look (a named NPC on a generic stat block) while it wears a Beast's shape: id -> that
+## look, to wear again when the shape ends (_swap_shape_art).
+var _shape_looks: Dictionary = {}
 var mode: Mode = Mode.BUSY
 ## The arena offers R to fight again; in the story the end banner leads back to exploration.
 var restart_allowed := false
@@ -2081,6 +2084,8 @@ func _play_events() -> void:
 						await fx.cast(lcue, lt, lon, [], board, false)
 			"form":
 				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
+			"shape":
+				_swap_shape_art(str(ev["id"]), str(ev.get("art", "")))
 			"vanish":
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
@@ -2221,6 +2226,32 @@ func _swap_form_art(id: String, art: String) -> void:
 		old.visible = false
 	else:
 		old.queue_free()
+
+
+## Polymorph, Wild Shape and the other changes of shape (ShapeChange, owner 2026-10-13: "their sprite should reflect
+## their transformed shape"): the token wears the Beast's sprite while the shape lasts, facing the way it faced, and its
+## own figure again after (a hero's or guest's own token, a foe's look, _swap_form_art). A shape with no sprite of its
+## own leaves the figure as it is.
+func _swap_shape_art(id: String, art: String) -> void:
+	var old := _tok(id)
+	if old == null:
+		return
+	if art != "":
+		if DirectionalSprite.frames_for(art) == null:
+			old.flash(Look.color("lilac"), 0.3)
+			return
+		if not _shape_looks.has(id):
+			_shape_looks[id] = old.art_override
+		_swap_form_art(id, art)
+	elif _shape_looks.has(id):
+		_swap_form_art(id, "" if _own_tokens.has(id) else str(_shape_looks[id]))
+		_shape_looks.erase(id)
+	var nt := _tok(id)
+	if nt == null or nt == old:
+		return
+	nt.scale = Vector3.ONE   # built (or, a hero's own figure, first built) at the size it is now
+	if nt.sprite != null and old.sprite != null:
+		nt.sprite.facing = old.sprite.facing
 
 
 ## Where a spell goes, as a ground direction from its caster: its first other target, else the middle of its area.

@@ -102,6 +102,9 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 	c.movement_left = mini(c.movement_left, c.speed())
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
+	# The board draws it as the Beast (owner, 2026-10-13: "their sprite should reflect their transformed shape"), after
+	# the resize so the new figure is built at the shape's size.
+	e.events.append({"type": "shape", "id": c.id, "art": str(beast.get("art", beast.get("id", "")))})
 	e.log.add("condition", "%s becomes a %s (%s)" % [orig.name, str(beast.get("name", "Beast")), opts.get("label", "Shape")], c.id)
 	return m
 
@@ -164,6 +167,7 @@ func revert(c: Combatant, why: String) -> void:
 			orig.dead = true
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
+	e.events.append({"type": "shape", "id": c.id, "art": ""})
 	e.log.add("condition", "%s returns to its true form (%s)" % [orig.name, why], c.id)
 
 
