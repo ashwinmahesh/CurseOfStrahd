@@ -670,7 +670,7 @@
         {
           "monster": "werewolf",
           "cell": [
-            23,
+            24,
             22
           ],
           "lying": true
@@ -678,22 +678,22 @@
         {
           "monster": "werewolf",
           "cell": [
-            19,
-            20
+            18,
+            17
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            20
+            22,
+            17
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
             20,
-            22
+            20
           ],
           "lying": true
         },
@@ -701,7 +701,7 @@
           "monster": "dire_wolf",
           "cell": [
             15,
-            24
+            25
           ],
           "lying": true
         },
@@ -709,7 +709,7 @@
           "monster": "dire_wolf",
           "cell": [
             22,
-            24
+            25
           ],
           "lying": true
         }
@@ -735,7 +735,7 @@
         {
           "monster": "werewolf",
           "cell": [
-            23,
+            24,
             22
           ],
           "lying": true
@@ -743,22 +743,22 @@
         {
           "monster": "werewolf",
           "cell": [
-            19,
-            20
+            18,
+            17
           ]
         },
         {
           "monster": "werewolf",
           "cell": [
-            21,
-            20
+            22,
+            17
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
             15,
-            24
+            25
           ],
           "lying": true
         },
@@ -766,7 +766,7 @@
           "monster": "dire_wolf",
           "cell": [
             22,
-            24
+            25
           ],
           "lying": true
         }
@@ -792,7 +792,7 @@
         {
           "monster": "werewolf",
           "cell": [
-            23,
+            24,
             22
           ],
           "lying": true
@@ -800,15 +800,15 @@
         {
           "monster": "werewolf",
           "cell": [
-            19,
-            20
+            18,
+            17
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
             15,
-            24
+            25
           ],
           "lying": true
         }

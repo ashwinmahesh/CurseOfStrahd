@@ -66,7 +66,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   dead sitting up on their pallets, Vasilka coming down off her bier. Its `art` dresses it in another sprite than its
   stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it.
   `surprise`: `party`, `enemies` or
-  empty; `when` is a condition (docs/contracts/dialogue.md).
+  empty; `when` is a condition (docs/contracts/dialogue.md). Foes start spread out (owner, 2026-10-14): of three or
+  more, no 20 ft burst catches them all, nor more than three quarters of eight or more, and none starts on a wall, low
+  cover or another foe (tests/unit/test_fight_spread.gd, which lists the rooms too small for it). Road fights are held
+  to the same on every ground they can play out on.
 - **Rest:** `safe`, `risky` (a Long Rest is interrupted on a 1 in 6, and makes camp on the map: docs/story/camp.md)
   or `no` (no Long Rest: its card says `rest_text`); default risky. A Short Rest is taken in any of them, `no`
   included, unless a fight on the map was begun and not won or foes are in plain view of the party

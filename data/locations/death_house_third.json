@@ -673,8 +673,8 @@
         {
           "monster": "animated_flying_sword",
           "cell": [
-            14,
-            6
+            17,
+            10
           ],
           "name": "Balcony Sword"
         },
@@ -704,15 +704,15 @@
         {
           "monster": "specter",
           "cell": [
-            24,
-            11
+            25,
+            14
           ]
         },
         {
           "monster": "specter",
           "cell": [
-            20,
-            11
+            19,
+            8
           ]
         },
         {
