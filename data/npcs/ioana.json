@@ -1,0 +1,19 @@
+{
+  "id": "ioana",
+  "name": "Ioana",
+  "title": "A Child Taken from Krezk",
+  "summary": "One of the twins among the five children the pack carried off from the farms below Krezk, sister to Zamfir, who keeps close to her brother.",
+  "portrait": "ilka_sarnov",
+  "sprite": "ilka_sarnov",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "krezk",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "she/her"
+}

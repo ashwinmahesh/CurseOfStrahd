@@ -573,7 +573,7 @@
             14
           ],
           "name": "The Roc of Mount Ghakis",
-          "hp": 190
+          "hp": 285
         },
         {
           "monster": "roc",
@@ -638,7 +638,7 @@
             9,
             18
           ],
-          "hp": 590
+          "hp": 780
         },
         {
           "monster": "ghast",
@@ -736,7 +736,7 @@
             9,
             18
           ],
-          "hp": 480
+          "hp": 625
         },
         {
           "monster": "ghast",
@@ -794,7 +794,7 @@
             9,
             18
           ],
-          "hp": 420
+          "hp": 645
         },
         {
           "monster": "ghast",

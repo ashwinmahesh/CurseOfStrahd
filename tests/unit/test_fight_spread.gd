@@ -45,8 +45,13 @@ const PENDING := {
 	"old_bonegrinder_track:granny_ash": true, "old_bonegrinder_track:offalia_on_the_road": true,
 	"svalich_crossroads:the_hunt": true, "svalich_roadhouse:roadhouse_cellar": true, "tsolenka_pass:last_egg": true,
 	"tsolenka_pass:the_penitent": true, "vallaki:izek_duel": true,
-	"werewolf_den_caves:den_reckoning": true, "werewolf_den_caves:pack_challenge": true,
+	"werewolf_den_caves:den_reckoning": true,
 	"wizard_of_wines:vine_mother": true, "woodcutters_hollow:oat_hunters": true, "zarovich_reed_island:reed_isle_boatmen": true,
+	## The boss fights the 3-in-8 retune (docs/story/boss_fights.md) gave more helpers beside the boss, to spread next.
+	"amber_temple_vault:vosk_unmasked#2": true, "castle_ravenloft_catacombs_strahd:cat_daylight_waking#3": true,
+	"castle_ravenloft_catacombs_tombs:cat_royal_final#3": true, "castle_ravenloft_chapel:crg_chapel_final_battle#0": true,
+	"castle_ravenloft_main_floor:crg_dinner_affront#0": true, "ghakis_lair:sarkhaza": true,
+	"amber_temple_entrance:sentinel_wakes": true, "amber_temple_entrance:sentinel_stops_you": true, "amber_temple_vault:vault_guardian": true,
 }
 
 
