@@ -6155,6 +6155,20 @@
       "sprite_flags": [
         "BODY=float"
       ]
+    },
+    {
+      "id": "lantern_girl",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/lantern_girl_turnaround.png",
+      "sprites": "art/sprites/lantern_girl/walk.tres",
+      "portrait": "art/portraits/lantern_girl.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Liliana, the Lantern Girl, the drowned ghost of a girl of about nine, slight and child-sized (not chibi), floating a little above the ground with her feet hidden by a wet hem that fades into a single wisp of light: long wet hair clinging in two long locks, a small sad face with dark hollow eyes, a wet old-fashioned festival dress with puffed sleeves, a big ribbon sash tied in a bow at the back and ribbons at the hem and in her hair; in her right hand, raised to the height of her head, she holds a lit paper lantern on a short string, its glow the colour of a candle seen through paper; her whole figure, skin, hair and dress is drawn as pale glowing light in candle-gold, cream and pale amber tones with deeper amber-brown shading (no blue, no violet, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright, same scale, evenly spaced with wide clear gaps so no view touches another, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "The Lantern Girl (owner report 2026-10-13, 'doesn't have a sprite'; yes to her own art 2026-10-14): Liliana, Old Sabin's drowned daughter, a girl of candle-gold light holding up a paper lantern (Gemini drew it in her left hand in every view). 5-view turnaround (art/prompts/character_turnaround.txt, 16:9) -> make sprite BODY=float -> walk sheet; attack sheet from art/anim/animations.json (make anims); portrait from lantern_girl_portrait.png (--ref the turnaround). Replaces the stand-ins (art/sprites/lantern_girl read Rose's sheets, washed by metadata/wash; portrait tools/art/wash_portrait.py). Height 0.9 in CombatToken.HEIGHTS.",
+      "sprite_flags": [
+        "BODY=float"
+      ]
     }
   ],
   "image_provider": "gemini"

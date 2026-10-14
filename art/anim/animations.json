@@ -957,5 +957,9 @@
   "beholder": {"who": "a beholder, a floating many-eyed orb",
     "attack": "eye rays",
     "windup": "the great body drawn back and tilted up, all ten eyestalks rearing and its central eye opening wide",
-    "strike": "lunging forward with its jagged mouth open and three eyestalks thrust straight at the enemy, each shooting a thin coloured ray"}
+    "strike": "lunging forward with its jagged mouth open and three eyestalks thrust straight at the enemy, each shooting a thin coloured ray"},
+  "lantern_girl": {"who": "Liliana, the Lantern Girl, a golden ghost girl in a wet festival dress with a ribbon sash, holding a lit paper lantern by its string in her left hand, all pale candle-gold, cream and amber in every frame (dress, hair, hands, face and lantern; no blue or violet)",
+    "attack": "drowning light",
+    "windup": "drawn back and rising, the lantern lifted high above her head in her left hand so its glow swells, her right hand pulled back beside her face, mouth open in a thin cry",
+    "strike": "surging forward with the lantern swung down and out toward the enemy at arm's length, a burst of pale light leaving it, her right hand thrust straight out with the fingers spread, hair and dress streaming back"}
 }
