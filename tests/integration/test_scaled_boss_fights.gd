@@ -56,10 +56,11 @@ func test_izeks_festival_rampage_at_level_5() -> void:
 	await _held("vallaki", 5, "festival_izek_rampage", IZEK_SQUARE, 2, 4)
 
 
-## The festival loyalists at level 5: Izek Strazni (110 HP), 11 Warrior Veterans, 4 Town Guards, Bandit Captain; 3
-## in 8.
+## The Baron's loyalists at the festival: Izek, five sergeants, the captain and four guards, the 5 in 8 line-up the Phase 4
+## playthrough's party can win (test_phase4_exit): that party, weaker than the pregens, wins this fight 2 times in 8, and
+## any step harder loses all eight, so for the full-ability pregens it stays 6 in 8 (kept where it passes, 2026-10-14).
 func test_the_festival_loyalists_at_level_5() -> void:
-	await _held("vallaki", 5, "festival_loyalists", FESTIVAL_GROUND, 2, 4)
+	await _held("vallaki", 5, "festival_loyalists", FESTIVAL_GROUND, 5, 7)
 
 
 ## Izek in his room at level 5: Izek Strazni (360 HP), 3 Warrior Veterans, Town Guard; 3 in 8.

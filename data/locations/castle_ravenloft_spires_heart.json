@@ -264,6 +264,51 @@
       ]
     },
     {
+      "id": "heart_of_sorrow_final",
+      "trigger": "enter_area:spires_heart_chamber",
+      "when": "",
+      "final_battle": "castle_ravenloft_heart_of_sorrow",
+      "lair": true,
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
+      "surprise": "",
+      "flag": "spires_final_battle_fought",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            8,
+            4
+          ],
+          "name": "Strahd von Zarovich",
+          "hp": 350
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Heart's Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        }
+      ]
+    },
+    {
       "id": "heart_guardians",
       "trigger": "dialogue",
       "when": "not flag.heart_guardians_beaten and level >= 11",

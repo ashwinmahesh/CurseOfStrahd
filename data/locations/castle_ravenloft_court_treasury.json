@@ -208,6 +208,7 @@
     {
       "id": "court_final_treasury",
       "trigger": "enter_area:court_treasury",
+      "when": "item:sunsword",
       "final_battle": "castle_ravenloft_treasury",
       "lair": true,
       "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword. Three of his spawn climb up out of the gold.",
@@ -298,6 +299,57 @@
           "cell": [
             5,
             6
+          ],
+          "name": "One of Strahd's spawn"
+        }
+      ],
+      "surprise": ""
+    },
+    {
+      "id": "court_final_treasury",
+      "trigger": "enter_area:court_treasury",
+      "final_battle": "castle_ravenloft_treasury",
+      "lair": true,
+      "text": "He sits on his hoard in a chair that has sunk to its knees in gold, turning one coin over and over in his fingers. Behind him a suit of armour with no one in it draws its sword. Three of his spawn climb up out of the gold.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            7,
+            6
+          ],
+          "name": "Strahd von Zarovich",
+          "hp": 400
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            4,
+            8
+          ],
+          "name": "The vault's warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            6
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            5
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            7
           ],
           "name": "One of Strahd's spawn"
         }

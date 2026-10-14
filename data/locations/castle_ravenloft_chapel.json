@@ -338,6 +338,7 @@
     {
       "id": "crg_chapel_final_battle",
       "trigger": "enter_area:crg_chapel_nave",
+      "when": "item:sunsword",
       "final_battle": "castle_ravenloft_chapel",
       "lair": true,
       "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him. All along the pews, more of them get to their feet.",
@@ -447,6 +448,73 @@
             1
           ],
           "name": "A thrall in the pews"
+        }
+      ]
+    },
+    {
+      "id": "crg_chapel_final_battle",
+      "trigger": "enter_area:crg_chapel_nave",
+      "final_battle": "castle_ravenloft_chapel",
+      "lair": true,
+      "text": "Someone is kneeling at the altar. He finishes whatever he was saying, rises, and turns. In the front pews, two figures who were praying stand up with him. All along the pews, more of them get to their feet.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            9,
+            3
+          ],
+          "name": "Strahd von Zarovich",
+          "hp": 350
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            5
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            3
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     }

@@ -6,19 +6,39 @@ extends TestCase
 ## plays as it did on 2026-10-13.
 
 
+## The encounters this test built, wound down after it.
+var _fights: Array[Encounter] = []
+
+
 func before_each() -> void:
 	PartyAutopilot.full = true
 
 
 func after_each() -> void:
 	PartyAutopilot.full = PartyAutopilot.full_by_default
+	for e: Encounter in _fights:
+		_wind_down(e)
+	_fights.clear()
 
 
-static func _field() -> Encounter:
+func _field() -> Encounter:
 	var rows: Array[String] = []
 	for z in 12:
 		rows.append("....................")
-	return TestCombat.encounter(rows)
+	var e := TestCombat.encounter(rows)
+	_fights.append(e)
+	return e
+
+
+## Ends everything still running on the fighters (a Sacred Weapon, a Concentration) so a test that leaves its fight half
+## played frees its creatures: an Effect and the Concentration holding it point at each other.
+static func _wind_down(e: Encounter) -> void:
+	for c in e.combatants:
+		var conc := c.creature.concentration
+		if conc != null and not conc.ended:
+			conc.end("the test is over")
+		for fx: Effect in c.creature.effects.duplicate():
+			c.creature.remove_effect(fx)
 
 
 ## Burns every slot of the levels from `from` up (so a spell of that level can't be cast).
@@ -69,7 +89,10 @@ func test_the_paladin_lays_hands_on_the_fallen_beside_him() -> void:
 		e.deal_damage(null, rat, [{"amount": rat.creature.hp, "type": "force"}], false, "test")
 		assert_eq(rat.creature.hp, 0, "Ratatouille is down")
 		TestCombat.start_with(e, godrick)
-		PartyAutopilot.new(e).play(godrick)
+		# The paladin's first steps of the turn (his blade then follows): Lay On Hands is part of full play only.
+		var pilot := PartyAutopilot.new(e)
+		if pilot._on("lay_on_hands"):
+			pilot._lay_on_hands(godrick)
 		assert_eq(rat.creature.hp > 0, on, "Lay On Hands lifts him only at full ability (full %s)" % on)
 
 
@@ -79,17 +102,21 @@ func test_the_paladin_brings_out_his_sacred_weapon_and_blesses_when_nothing_can_
 		var e := _field()
 		var godrick := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(2, 5), 6)
 		TestCombat.hero(e, "liriel_dawnsong", Vector2i(3, 6), 6)
-		TestCombat.foe(e, "ogre", Vector2i(19, 5))
+		var ogre := TestCombat.foe(e, "ogre", Vector2i(19, 5))
 		TestCombat.start_with(e, godrick)
-		PartyAutopilot.new(e).play(godrick)
+		var pilot := PartyAutopilot.new(e)
+		var foes: Array[Combatant] = [ogre]
+		if pilot._on("bless"):
+			pilot._bless(godrick, foes)
 		var conc := godrick.creature.concentration
 		assert_eq(conc != null and conc.source_id == "bless", on, "Bless with the foe out of reach (full %s)" % on)
 	PartyAutopilot.full = true
 	var e2 := _field()
 	var g2 := TestCombat.hero(e2, "godrick_pendlebrook", Vector2i(5, 5), 6)
-	TestCombat.foe(e2, "ogre", Vector2i(8, 5))
+	var ogre2 := TestCombat.foe(e2, "ogre", Vector2i(8, 5))
 	TestCombat.start_with(e2, g2)
-	PartyAutopilot.new(e2).play(g2)
+	var foes2: Array[Combatant] = [ogre2]
+	PartyAutopilot.new(e2)._sacred_weapon(g2, foes2)
 	assert_true(g2.creature.has_flag("sacred_weapon"), "Sacred Weapon with an ogre a step away")
 
 

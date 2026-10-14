@@ -267,6 +267,40 @@
       ]
     },
     {
+      "id": "cat_darklord_final",
+      "trigger": "enter_area:castle_ravenloft_strahds_tomb",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_strahds_tomb",
+      "lair": true,
+      "surprise": "",
+      "flag": "cat_keepers_defeated",
+      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage. Two of his spawn rise from the niches at his back.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            11,
+            11
+          ],
+          "hp": 350
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            12
+          ]
+        }
+      ]
+    },
+    {
       "id": "cat_tomb_keepers",
       "trigger": "enter_area:castle_ravenloft_strahds_tomb",
       "when": "not flag.cat_keepers_defeated",
