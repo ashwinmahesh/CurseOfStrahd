@@ -1474,6 +1474,13 @@
       "refs": [],
       "prompt": "The fishers' landing on Lake Zarovich at night, a long crooked wooden jetty over black water, fish-drying racks on the stony shore. On the low wooden step of a crooked fisherman's shack sits Old Nistor, a very old, thin fisherman with a white beard, a grey wool cap and a patched grey-green coat, a fishing net still bunched in his lap and a small lantern on the step beside him; he looks out at the shore, resigned, not running. Up the shingle toward him, slowly, come the drowned of Pescari out of the black water: a crowd of grey, swollen villagers in old-fashioned sodden Sunday clothes, dripping lake water and weed, and behind them a tall figure in a priest's sodden black cassock raising one hand. {party} small and seen from behind at the edge of the frame, between the old man and the lake. Cold moonlight and mist on the water, the lantern the only warm light; quiet dread, no gore.",
       "use": "a"
+    },
+    "abbot_bride_wards": {
+      "refs": [
+        "abbot"
+      ],
+      "prompt": "Inside a cold abbey chapel, its tall arched side door stands open on an empty snowy courtyard at dusk. The serene golden-haired young monk of the reference stands in the doorway, calm and quietly pleased, one hand opened toward a long, low stone building across the courtyard: the wards. Only one of its windows glows warm, and through that window, indoors, small and far, a still shape lies on a long table under a clean white linen sheet; nothing lies out in the snow. {party} stand beside him in the doorway, looking out. Candlelight and a gilded sunburst glow in the chapel behind them; outside, cold blue snow light and falling snow. Quiet dread.",
+      "use": "b"
     }
   }
 }

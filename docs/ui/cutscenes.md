@@ -15,7 +15,9 @@ A long conversation over one picture gets more pictures where the scene changes 
 boring looking at the same image for multiple phases of dialogue, especially if the scene is evolving"). Each beat is a
 `cutscene <id>` statement placed just before the line where something new happens (the dead knights stand, the wolf
 comes out of the trapper, the organ bench is empty), so the next picture fades over the last. The first round,
-2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest. The second round, the same night: 12 beats in the next-longest ones.
+2026-10-12: 42 beats (44 pictures) in the 28 conversations whose picture stayed up longest. The second round, the same night: 12 beats in the next-longest ones. The Abbot's first visit got its third picture on 2026-10-13 (owner: it stayed on one too long): his
+bride, shown across the courtyard as he says he is making Strahd a wife; it stays up through the wedding-dress request and the
+rest of the visit.
 
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
@@ -100,6 +102,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 |---|---|---|---|
 | abbey_bride | The Bride Opens Her Eyes | `abbey_of_st_markovia/unveiling` | 1 |
 | abbey_shelf | The Abbey on Its Shelf | `enter:abbey_of_st_markovia` | 1 |
+| abbot_bride_wards | Making Him a Wife | `abbey_of_st_markovia/abbot` (a later beat, ~ bride) | 1 |
 | abbot_candles | The Abbot Lights the Candles | `abbey_of_st_markovia/abbot` | 1 |
 | abbot_holds_hand | He Is Holding Her Hand | `abbey_of_st_markovia/unveiling` | 1 |
 | abbot_ireena_candles | The Candles Lean to Her | `abbey_of_st_markovia/abbot` (a later beat, ~ first) | 1 |

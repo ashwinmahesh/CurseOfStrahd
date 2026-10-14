@@ -220,6 +220,23 @@ func test_doru_meets_you_once_then_picks_up_where_you_left_him() -> void:
 	assert_true(again.any(func(x: String) -> bool: return x.contains("Doru still clings")), "he's where you left him: %s" % [again])
 
 
+## Owner report (2026-10-13): the Abbot's first visit stayed on the candle picture through his whole bride speech. The
+## wards come into view as he says he is making Strahd a wife, and the picture stays through the dress request.
+func test_the_abbot_shows_his_bride_across_the_courtyard_when_he_says_what_she_is() -> void:
+	var r := DialogueRunner.new(_story(false), DiceRoller.new(3))
+	assert_true(r.start("abbey_of_st_markovia/abbot:bride"))
+	var seen: Array[String] = []
+	for i in 6:
+		var b := r.next()
+		if str(b["kind"]) == "cutscene":
+			assert_eq(str(b["image"]), "res://art/cutscenes/abbot_bride_wards.jpg")
+			seen.append("picture")
+		elif str(b["kind"]) == "line":
+			seen.append(str(b["text"]).get_slice(".", 0))
+	assert_eq(seen.slice(0, 3), ["This valley has a sickness, and the sickness has a name", "picture", "So I am making him a wife"] as Array[String],
+		"his first line, then the picture, then the line that explains it: %s" % [seen])
+
+
 ## Storyline QA (SL-11): Ireena's window picture shows Ismark asleep by the door, so that take shows only where he is: the
 ## inn, with him guarding her. In Krezk, or at the inn without him, the room behind her is empty (Ashwin's yes,
 ## 2026-10-09: a take without him).
