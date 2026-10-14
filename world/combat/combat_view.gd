@@ -326,7 +326,9 @@ func _advance() -> void:
 		hud.show_prompt(e.pending)
 		return
 	var c := e.current()
-	rig.follow = tokens[c.id] as Node3D
+	# The camera stays where it is for an Invisible foe's turn: going to it would show where it is.
+	if not (_tok(c.id) != null and _tok(c.id).unseen):
+		rig.follow = tokens[c.id] as Node3D
 	_looked_at = ""
 	if not c.is_player_controlled() or e.compelled(c):
 		mode = Mode.BUSY
@@ -415,6 +417,7 @@ func _refresh_all() -> void:
 		t.mounted = e.mount_of(t.combatant) != null
 		t.refresh()
 		t.set_active(cur != null and t.combatant == cur and e.state == Encounter.State.ACTIVE)
+		t.set_unseen(e.sight.hidden_from_party(t.combatant))
 	hud.refresh()
 	if boss_bar != null:
 		boss_bar.refresh()
@@ -1382,6 +1385,8 @@ func _next_target() -> void:
 			continue
 		if mode != Mode.TARGET and not c.hostile_to(o):
 			continue
+		if e.sight.hidden_from_party(o):
+			continue
 		list.append(o)
 	if list.is_empty():
 		return
@@ -1478,7 +1483,7 @@ func _token_on_ray(origin: Vector3, dir: Vector3) -> CombatToken:
 	var best_t := INF
 	for id: String in tokens:
 		var tok := tokens[id] as CombatToken
-		if not tok.combatant.is_alive():
+		if not tok.combatant.is_alive() or tok.unseen:
 			continue
 		var base := tok.global_position
 		var height := CombatToken.height_of(tok.combatant)
@@ -1502,7 +1507,7 @@ func _target_under() -> CombatToken:
 		return hover_token
 	if hover_cell.x >= 0:
 		var o := e.occupant_at(hover_cell)
-		if o != null:
+		if o != null and not e.sight.hidden_from_party(o):
 			return tokens.get(o.id) as CombatToken
 	return null
 
@@ -1938,6 +1943,7 @@ func _play_events() -> void:
 				var tc := _tok(str(ev["id"]))
 				if tc != null:
 					tc.refresh()
+					tc.set_unseen(e.sight.hidden_from_party(tc.combatant))   # an Invisibility cast or broken
 					if kind in ["down", "death"]:
 						_concentration_kept(tc.combatant)
 					if ev_at == final_fall and not final_played:
@@ -2216,6 +2222,7 @@ func _swap_form_art(id: String, art: String) -> void:
 		nt.position = old.position
 		add_child(nt)
 	tokens[id] = nt
+	nt.set_unseen(e.sight.hidden_from_party(nt.combatant))   # an Invisible foe's new figure stays off the map too
 	nt.flash(Look.color("lilac"), 0.4)
 	if old == own:
 		old.visible = false
@@ -2322,6 +2329,8 @@ func _stop_walking(walking: Dictionary) -> void:
 
 ## A number or word rising over a creature: stays readable for about 2 seconds, then fades (damage a little bigger).
 func _float(t: CombatToken, text: String, colour: String, size: int = 52) -> void:
+	if t.unseen:
+		return   # a number over an Invisible foe nobody sees would show where it stands
 	var l := Label3D.new()
 	l.text = text
 	l.font_size = size

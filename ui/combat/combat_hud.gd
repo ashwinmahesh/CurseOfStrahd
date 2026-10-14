@@ -845,6 +845,9 @@ func _refresh_strip() -> void:
 			_strip.add_child(_lair_card())
 		if c.creature.dead and c.side == &"enemy":
 			continue
+		# An Invisible foe nobody on the party can see is off the order bar as it is off the map.
+		if e.sight.hidden_from_party(c):
+			continue
 		var active := c == cur
 		var card := PanelContainer.new()
 		var frame := "gilt_light" if c.side == &"party" else ("moonlight" if c.side == &"guest" else "crimson")

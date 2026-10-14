@@ -1366,6 +1366,9 @@ func _weapon_cell(_c: Combatant, t: Combatant, from: Vector2i) -> Vector2i:
 func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 	if t == null:
 		return "No creature there"
+	# An Invisible foe can't be picked out (owner, 2026-10-13); an area spell still catches it.
+	if e.sight.unseen_foe(c, t):
+		return "You can't see %s" % t.name()
 	# An attack (a weapon, an Unarmed Strike, an attack-roll spell like Fire Bolt) never targets its own user.
 	if t == c and _is_attack(c, action):
 		return "Can't attack yourself"
@@ -1688,6 +1691,9 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 	var caught: Array[Combatant] = []
 	for o in e.spells.creatures_in(cells):
 		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
+			continue
+		# An Invisible foe nobody sees isn't on the map, so the preview doesn't list it (the spell still catches it).
+		if e.sight.hidden_from_party(o):
 			continue
 		caught.append(o)
 	# Who it takes of those (creatures of the caster's choice: Slow's foes, Word of Radiance's), as things stand.
