@@ -1,0 +1,15 @@
+{
+  "id": "drowned_nistor",
+  "title": "One of Us",
+  "summary": "With Bluto gone, the drowned come up the shingle for Old Nistor, who sits down on his step with his net still in his hands.",
+  "images": [
+    {
+      "image": "drowned_nistor",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.4,
+    0.5
+  ]
+}

@@ -161,6 +161,9 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | dinner_toast | Strahd's Table | `castle_ravenloft/gates_dinner` (a later beat, ~ table) | 1 |
 | doru_ceiling | The Face on the Ceiling | `village_of_barovia/doru` (the first meeting only) | 1 |
 | doru_rest | Doru at Rest | `castle_ravenloft/larders_cells` | 1 |
+| drowned_bluto | They Turn to Bluto | `lake_zarovich/bell_under_the_lake` (a later beat, ~ water, with Bluto alive) | 1 |
+| drowned_nistor | One of Us | `lake_zarovich/bell_under_the_lake` (a later beat, ~ water, with Bluto gone) | 1 |
+| drowned_rise | The Drowned Rise | `lake_zarovich/bell_under_the_lake` (~ water, after moonrise) | 1 |
 | durst_supper | Supper with the Dursts | `death_house/dursts` | 1 |
 | egg_carried | Down with the Chick | `tsolenka_pass/the_last_egg` (a later beat, ~ take) | 1 |
 | egg_sold | The Stone Birds Take It | `tsolenka_pass/the_last_egg` (a later beat, ~ sold) | 1 |
