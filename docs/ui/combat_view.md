@@ -55,6 +55,12 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   size, such as 15 ft, sits on the middle of the square pointed at), an Emanation from a point on the square pointed
   at. Pointing at a creature's figure aims at the creature, not the floor behind it. No cursor ring is drawn while
   placing it: the outline is the cursor. Cones and lines from the caster aim as before.
+- **A creature in another shape wears it** (owner, 2026-10-13: "When an enemy or character is polymorphed, their
+  sprite should reflect their transformed shape"): a Polymorph's, True Polymorph's or Wild Shape's Beast is drawn with
+  that Beast's own sprite, height and base, facing the way the creature faced, its name, health bar and portrait the
+  Beast's; when the shape ends (the spell ends, its Temporary Hit Points run out, it drops, the caster's Concentration
+  breaks) the creature's own figure comes back. A hero's or guest's own figure waits hidden meanwhile, and walks on
+  after the fight even if the shape still holds.
 - **Up to so many creatures of your choice in the area** (Slow's six, Mass Cure Wounds' six): once the area is
   placed, the creatures in it can be picked (`TargetPicker` "choose" step), with the ones it would take lit to start
   (Slow: its foes in it, the hardest hitting first; Mass Cure Wounds: its side's most hurt). A click on a creature adds
