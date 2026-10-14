@@ -279,7 +279,7 @@
             7,
             2
           ],
-          "hp": 200
+          "hp": 245
         },
         {
           "monster": "guardian_portrait",
@@ -322,6 +322,24 @@
           "cell": [
             4,
             1
+          ],
+          "name": "A Copy",
+          "hp": 40
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            11,
+            5
+          ],
+          "name": "A Copy",
+          "hp": 40
+        },
+        {
+          "monster": "guardian_portrait",
+          "cell": [
+            4,
+            4
           ],
           "name": "A Copy",
           "hp": 40

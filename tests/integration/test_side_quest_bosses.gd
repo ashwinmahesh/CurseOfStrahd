@@ -400,7 +400,7 @@ func test_the_falconer_at_level_9() -> void:
 const PAINTERS_STUDIO: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 5), Vector2i(8, 5), Vector2i(9, 5)]
 
 
-## The count's great canvas (200 HP) and five copies (40 HP each), each able to Counterspell, come off the walls.
+## The count's great canvas (245 HP) and seven copies (40 HP each) come off the walls.
 func test_the_counts_likeness_at_level_9() -> void:
 	speakers_step_aside = true
 	var wins := await _series("vallaki_painters_studio", 20, 9, "counts_likeness", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], PAINTERS_STUDIO)

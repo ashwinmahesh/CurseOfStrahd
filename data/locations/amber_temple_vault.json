@@ -644,12 +644,20 @@
             22
           ],
           "name": "Vosk, unmasked",
-          "hp": 175
+          "hp": 135
         },
         {
           "monster": "flameskull",
           "cell": [
             12,
+            22
+          ],
+          "name": "Bound skull"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            27,
             22
           ],
           "name": "Bound skull"
