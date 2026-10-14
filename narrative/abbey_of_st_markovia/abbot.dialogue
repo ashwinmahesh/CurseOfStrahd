@@ -165,6 +165,7 @@ Narrator: He's kind to her. Kind to everyone. If there's anything else in it, it
 ~ bride
 set abbot_bride_revealed
 Abbot: This valley has a sickness, and the sickness has a name. Loneliness. Its lord has been alone for four hundred years. A lonely man does terrible things. A loved man does not.
+cutscene abbot_bride_wards
 Abbot: So I am making him a wife.
 Narrator: He says it the way a carpenter says he is making a chair.
 Abbot: Vasilka. She waits in the wards, across the courtyard. Go and see her, if you wish. Be gentle. She is not awake.

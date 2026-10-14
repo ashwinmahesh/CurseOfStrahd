@@ -1457,6 +1457,13 @@
       ],
       "prompt": "A village churchyard at night: the iron gate stands empty, a glove-shaped mark of frost on the gatepost and mist curling where someone stood a moment ago. In the arched doorway of the church porch stands one young woman, Ireena of the reference, and she appears only once in the picture: auburn hair loose, eyes closed, breathing out slowly, one hand on the door frame. The bell rope hangs still beside her. {party} stand between the gate and the porch, seen from behind, hooded, faces never visible; no other women in the picture. Cold moonlight, a long held breath released.",
       "use": "a"
+    },
+    "abbot_bride_wards": {
+      "refs": [
+        "abbot"
+      ],
+      "prompt": "Inside a cold abbey chapel, its tall arched side door stands open on an empty snowy courtyard at dusk. The serene golden-haired young monk of the reference stands in the doorway, calm and quietly pleased, one hand opened toward a long, low stone building across the courtyard: the wards. Only one of its windows glows warm, and through that window, indoors, small and far, a still shape lies on a long table under a clean white linen sheet; nothing lies out in the snow. {party} stand beside him in the doorway, looking out. Candlelight and a gilded sunburst glow in the chapel behind them; outside, cold blue snow light and falling snow. Quiet dread.",
+      "use": "b"
     }
   }
 }
