@@ -633,6 +633,60 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 	return r
 
 
+## A monster's spell save DC from its Spellcasting block, with the bonuses to its own DCs (Tactician's +2).
+func spell_dc(c: Combatant) -> int:
+	var sc := data_of(c).get("spellcasting", {}) as Dictionary
+	var ab := StringName(str(sc.get("ability", "int")))
+	var dc := int(sc.get("dc", 8 + c.creature.ability_mod(ab) + c.creature.proficiency_bonus()))
+	var ctx := c.creature.formula_context()
+	for m in c.creature.modifiers_for(&"spell_dc"):
+		dc += c.creature.mod_value(m, ctx)
+	return dc
+
+
+## How a monster could cast the Reaction spell `spell_id` now (Shield, Counterspell): "spellcasting" for a use of its
+## Spellcasting block (at will or N/day), a Reaction that casts it by that Reaction's id (the mage's Protective Magic,
+## 3/day: Counterspell or Shield), or "" when it can't (none left, Antimagic, can't cast).
+func reaction_spell_source(c: Combatant, spell_id: String) -> String:
+	if not c.creature is Monster:
+		return ""
+	for sp in spells_now(c):
+		if str(sp["id"]) == spell_id:
+			return "spellcasting"
+	if c.creature.has_flag("cant_cast") or enc().spells.specials.high.in_antimagic(c):
+		return ""
+	for raw: Variant in data_of(c).get("reactions", []):
+		var act := raw as Dictionary
+		if spell_id in (act.get("cast", []) as Array) and _reaction_uses_left(c, act) > 0:
+			return str(act["id"])
+	return ""
+
+
+func _reaction_uses_left(c: Combatant, act: Dictionary) -> int:
+	var uses := act.get("uses", {}) as Dictionary
+	if uses.is_empty():
+		return 99
+	return int(uses.get("count", 1)) - int(c.get_meta("react_%s" % act["id"], 0))
+
+
+## Spends the use reaction_spell_source finds for `spell_id` (an N/day casting, or one of the Reaction's uses; the
+## Reaction itself is the caller's). The level it's cast at (the block's `levels`, else the spell's own), 0 if none.
+func spend_reaction_spell(c: Combatant, spell_id: String) -> int:
+	var src := reaction_spell_source(c, spell_id)
+	if src == "":
+		return 0
+	var sc := data_of(c).get("spellcasting", {}) as Dictionary
+	if src == "spellcasting":
+		var per_day := sc.get("per_day", {}) as Dictionary
+		for n: String in per_day:
+			if spell_id in (per_day[n] as Array):
+				c.set_meta("cast_%s" % spell_id, int(c.get_meta("cast_%s" % spell_id, 0)) + 1)
+				break
+	else:
+		c.set_meta("react_%s" % src, int(c.get_meta("react_%s" % src, 0)) + 1)
+	return int((sc.get("levels", {}) as Dictionary).get(spell_id, maxi(1, int(Compendium.shared().spell_data(spell_id).get("level", 1)))))
+
+
 # --- Turn hooks -----------------------------------------------------------------------------------
 
 ## Start of `c`'s turn: Recharge, auras of nearby monsters (Stench, Festering Aura), Engulf damage, Sunlight
