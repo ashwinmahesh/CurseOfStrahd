@@ -55,13 +55,6 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   size, such as 15 ft, sits on the middle of the square pointed at), an Emanation from a point on the square pointed
   at. Pointing at a creature's figure aims at the creature, not the floor behind it. No cursor ring is drawn while
   placing it: the outline is the cursor. Cones and lines from the caster aim as before.
-- **Invisible foes are off the map** (owner, 2026-10-13: "Creatures that go invisible should disappear from the map
-  unless the player character targeting them has invisibility"): while no one in the party who is up can see it (See
-  Invisibility, Truesight or Blindsight in range, Robe of Eyes, Lantern of Revealing) an Invisible foe's figure, ring
-  and bar, its portrait in the turn order and its row in an area's preview are gone, the pointer and the next-target key
-  skip its square, the camera stays put for its turn and no number floats over it; it's back the moment it's seen or the
-  invisibility ends. Each hero can only target what they see themselves ("You can't see X" on the hotbar), though an
-  area still catches it. An Invisible hero stays on the player's map drawn half there.
 - **Up to so many creatures of your choice in the area** (Slow's six, Mass Cure Wounds' six): once the area is
   placed, the creatures in it can be picked (`TargetPicker` "choose" step), with the ones it would take lit to start
   (Slow: its foes in it, the hardest hitting first; Mass Cure Wounds: its side's most hurt). A click on a creature adds
@@ -84,6 +77,13 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   up to 1 + the spell's level; a click (A, or the next-target key to move between them) shields one or takes it back,
   Enter (Y) casts. Backspace or right-click aims again; a spell from the caster with no aim (Thunderclap) asks as soon
   as it's chosen, and Esc cancels it.
+- **Invisible foes are off the map** (owner, 2026-10-13: "Creatures that go invisible should disappear from the map
+  unless the player character targeting them has invisibility"): while no one in the party who is up can see it (See
+  Invisibility, Truesight or Blindsight in range, Robe of Eyes, Lantern of Revealing) an Invisible foe's figure, ring
+  and bar, its portrait in the turn order and its row in an area's preview are gone, the pointer and the next-target key
+  skip its square, the camera stays put for its turn and no number floats over it; it's back the moment it's seen or the
+  invisibility ends. Each hero can only target what they see themselves ("You can't see X" on the hotbar), though an
+  area still catches it. An Invisible hero stays on the player's map drawn half there.
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
 
