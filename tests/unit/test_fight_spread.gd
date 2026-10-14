@@ -23,8 +23,10 @@ const CRAMPED := {
 	"vallaki_coffin_maker:storeroom_spawn": "the storeroom is 6 by 6",
 	"vallaki_wachter_house:stella_shadow": "Stella's room is 7 by 5 with its door shut",
 }
-## Fights other lanes are retuning now (coordinator, 2026-10-14): the boss fights going to 3 in 8, and the Tser Falls
-## wisps. Each is spread once its retune lands, and leaves this list then.
+## Fights waiting on another lane (coordinator, 2026-10-14): the boss fights going to 3 in 8, spread once that retune
+## lands; and the Tser Falls wisps at level 4 unlured (variant #4), whose two vanishing lights hold 4-6 wins only
+## bunched by the offering stone (spread out, 1-3 of 8), back to the Scale up book battles lane. A key with "#n" holds
+## that one entry of the location's encounters.
 const PENDING := {
 	"abbey_of_st_markovia_shrine:abbot_wrath": true, "amber_temple_library:exethanter_wrath": true,
 	"argynvostholt:squires_vigil": true, "argynvostholt_beacon:beacon_stand": true, "argynvostholt_hall:vladimir_duel": true,
@@ -44,10 +46,14 @@ const PENDING := {
 	"old_bonegrinder_loft:coven_last_stand": true, "old_bonegrinder_track:bella_on_the_road": true,
 	"old_bonegrinder_track:granny_ash": true, "old_bonegrinder_track:offalia_on_the_road": true,
 	"svalich_crossroads:the_hunt": true, "svalich_roadhouse:roadhouse_cellar": true, "tsolenka_pass:last_egg": true,
-	"tsolenka_pass:the_penitent": true, "tser_falls:falls_wisps": true, "vallaki:izek_duel": true,
+	"tsolenka_pass:the_penitent": true, "tser_falls:falls_wisps#4": true, "vallaki:izek_duel": true,
 	"werewolf_den_caves:den_reckoning": true, "werewolf_den_caves:pack_challenge": true,
 	"wizard_of_wines:vine_mother": true, "woodcutters_hollow:oat_hunters": true, "zarovich_reed_island:reed_isle_boatmen": true,
 }
+
+
+func _pending(key: String, index: int) -> bool:
+	return PENDING.has(key) or PENDING.has("%s#%d" % [key, index])
 
 
 func _cell(v: Variant) -> Vector2i:
@@ -136,7 +142,7 @@ func test_no_location_fight_starts_under_one_fireball() -> void:
 			var e := encounters[i] as Dictionary
 			var key := "%s:%s" % [id, e["id"]]
 			var n := _foes(e["monsters"] as Array)
-			if n < 3 or CRAMPED.has(key) or PENDING.has(key):
+			if n < 3 or CRAMPED.has(key) or _pending(key, i):
 				continue
 			checked += 1
 			var most := most_caught(grid, e["monsters"] as Array)
@@ -206,7 +212,7 @@ func test_no_foe_starts_in_a_wall_or_on_another() -> void:
 		var encounters := loc.get("encounters", []) as Array
 		for i in encounters.size():
 			var e := encounters[i] as Dictionary
-			if PENDING.has("%s:%s" % [id, e["id"]]):
+			if _pending("%s:%s" % [id, e["id"]], i):
 				continue
 			var taken := {}
 			for m: Variant in e["monsters"]:
