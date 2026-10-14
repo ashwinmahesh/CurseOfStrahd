@@ -176,6 +176,7 @@ that Dictionary, so an Automatic or Off chosen in one fight holds in the next.
 | teleport | id, from, to (Misty Step, Bait and Switch, Engulf) |
 | summon_creature / vanish | id: a summoned creature (Summon Undead, a severed limb) joined; a creature vanished (left: "fell" when it went into a drop) |
 | resize | id: Enlarge/Reduce or Large Form changed its size |
+| shape | id, art: a creature took a Beast's (or another creature's) shape, Polymorph, Wild Shape and the rest (ShapeChange), after its `resize`: the token wears `art`'s sprite while it lasts, and its own figure again on `art` "" when the shape ends (CombatView._swap_shape_art; a shape with no sprite keeps the figure) |
 | turn | id, round |
 | round | round |
 | over | outcome (victory, defeat) |

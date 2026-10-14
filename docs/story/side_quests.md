@@ -388,7 +388,10 @@ light, holding Sandu's hand. Somebody can turn back for her: take Bluto's boat o
 (Athletics DC 13), and she goes out of her own accord; miss the dive, or plead, or draw, and she fights.
 
 - **Boss: the Lantern Girl** (data/monsters/lantern_girl.json, `source.book: custom`, from the will-o'-wisp and the
-  ghost, drawn with the wisp's sprite at a child's height, `art_height` 0.9): Small undead, AC 15, 90 HP, flies, two
+  ghost, drawn as a girl of light: owner report 2026-10-13, "doesn't have a sprite", she had been the wisp's skull orb.
+  She has her own sprite and portrait ids now, stand-ins until her own art is drawn: `art/sprites/lantern_girl/` reads
+  Rose's sheets and its walk.tres washes them to candlelight (`metadata/wash`), and `art/portraits/lantern_girl.png` is
+  Rose's face washed by tools/art/wash_portrait.py; a child's height, 0.9): Small undead, AC 15, 90 HP, flies, two
   Cold Hands, a Lure that pulls a foe 20 ft toward her, Drowning Light (recharge 5-6, a 20-ft emanation, Restrained),
   Legendary Resistance (1/day), and a flicker between turns. CR 5. Four drowned lights (will-o'-wisps) come up with
   her.

@@ -3,7 +3,7 @@ extends Control
 ## The controller's radial menu (cb_03): hold LB, point the right stick at a wedge, release (or press A) to pick.
 ## The bar scheme's eight wedges: Attacks, Spells, Class, Items, Common, Tactical (the camera from above; it was Move,
 ## which B already does), End Turn, Inspect. Under either wheel, a line names the buttons that work while it's held:
-## looking along the turn order, and hiding or showing the action bar. The wheels scheme
+## looking on and back along the turn order, and hiding or showing the action bar. The wheels scheme
 ## (Settings, Game, Controller fights: Wheels; owner pick 2026-10-09, after Baldur's Gate 3 on console) holds the actual
 ## actions instead: the hotbar filter's slots, an icon and a name a wedge, up to PAGE at a time (open_items).
 
@@ -118,7 +118,7 @@ func _draw() -> void:
 		draw_string(font, c - Vector2(sw / 2.0, -16), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Look.color("gilt_dark"))
 	# Under the wheel: the button that looks along the turn order while it's held (owner, 2026-10-12;
 	# CombatView._look_along_order).
-	var look := PadGlyphs.names("{@combat_next_target}: look along the turn order · {@combat_end_turn}: hide or show your actions")
+	var look := PadGlyphs.names("{@combat_next_target} / {@combat_use_slot}: look on / back along the turn order · {@combat_end_turn}: hide or show your actions")
 	var lw := font.get_string_size(look, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
 	var at := Vector2(c.x - lw / 2.0, c.y + RADIUS + 36)
 	draw_rect(Rect2(at - Vector2(8, 15), Vector2(lw + 16, 21)), Color(Look.color("ui_black"), 0.85))

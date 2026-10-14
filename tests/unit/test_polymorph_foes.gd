@@ -186,3 +186,28 @@ func test_the_ai_leaves_a_hero_already_in_a_shape_alone() -> void:
 	var before := e.ai.spells.worth(hag, s, hero)
 	e.shapes.transform(hero, ShapeChange.beast_forms(0.0)[0], {"temp_hp": 1, "ends_without_temp_hp": true, "label": "Polymorph"})
 	assert_true(e.ai.spells.worth(hag, s, hero) < before, "nothing more to take from a Beast")
+
+
+func _shapes(e: Encounter, c: Combatant) -> Array:
+	return e.events.filter(func(ev: Dictionary) -> bool: return str(ev.get("type", "")) == "shape" and str(ev.get("id", "")) == c.id)
+
+
+## The board is told to draw the Beast (owner, 2026-10-13: "their sprite should reflect their transformed shape"),
+## after the resize so the figure is built at the Beast's size, and to draw the creature again when the shape ends.
+func test_a_change_of_shape_tells_the_board_which_figure_to_wear() -> void:
+	var e := _field()
+	var c := TestCombat.high_caster(e, ["polymorph"], Vector2i(2, 3))
+	var t := TestCombat.foe(e, "scout", Vector2i(5, 3))
+	TestCombat.start_with(e, c)
+	e.events.clear()
+	TestCombat.next_d20(e, 1)
+	assert_true(e.spells.cast(c, "polymorph", 4, [t], Vector2.INF, Vector2.ZERO, {"choice": "rat"}).ok)
+	var shapes := _shapes(e, t)
+	assert_eq(shapes.size(), 1)
+	assert_eq(str((shapes[0] as Dictionary)["art"]), "rat")
+	var types := e.events.map(func(ev: Dictionary) -> String: return str(ev["type"]) + ":" + str(ev.get("id", "")))
+	assert_true(types.find("resize:" + t.id) < types.find("shape:" + t.id), "after the resize")
+	e.events.clear()
+	c.creature.concentration.end("test")
+	shapes = _shapes(e, t)
+	assert_true(shapes.size() == 1 and str((shapes[0] as Dictionary)["art"]) == "", "its own figure again")
