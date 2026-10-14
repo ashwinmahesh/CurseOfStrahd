@@ -3,7 +3,7 @@
   "name": "Belview",
   "title": "In the Cells",
   "summary": "A Belview the Abbot's gifts didn't take, pressed to the bars of the last cell, a paw that was once a hand curled round the iron.",
-  "portrait": "belview",
+  "portrait": "belview_caged_3",
   "sprite": "belview",
   "attitude": "indifferent",
   "voice": "docs/voice/belview.md",

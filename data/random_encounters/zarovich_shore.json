@@ -74,22 +74,22 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            20,
-            6
+            11,
+            4
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
-            25,
-            8
+            22,
+            11
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
-            23,
-            12
+            10,
+            14
           ]
         }
       ],

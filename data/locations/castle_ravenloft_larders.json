@@ -1061,7 +1061,7 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            18,
+            17,
             14
           ]
         },
@@ -1069,7 +1069,7 @@
           "monster": "helmed_horror",
           "cell": [
             23,
-            14
+            13
           ]
         },
         {
@@ -1085,8 +1085,8 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            19,
-            20
+            18,
+            22
           ]
         },
         {

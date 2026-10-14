@@ -1181,8 +1181,8 @@
         {
           "monster": "strahds_animated_armor",
           "cell": [
-            14,
-            18
+            10,
+            17
           ],
           "name": "The count's armour"
         },
@@ -1196,8 +1196,8 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            16,
-            21
+            17,
+            22
           ]
         },
         {
@@ -1310,7 +1310,7 @@
           "monster": "rug_of_smothering",
           "cell": [
             4,
-            20
+            21
           ],
           "name": "The rug"
         },
@@ -1331,8 +1331,8 @@
         {
           "monster": "crawling_claw",
           "cell": [
-            7,
-            18
+            8,
+            15
           ]
         }
       ],

@@ -55,11 +55,16 @@
       "model": "eleven_v3"
     },
     "ezmerelda": {
-      "voice_id": "cwrfPUlbf5fNAZi1O1Dw",
-      "name": "Barovia Ezmerelda d'Avenir",
-      "description": "A woman in her thirties with a sharp, confident, slightly husky voice and a light Eastern European accent. Quick, practical and impatient, a monster hunter's dry humour; clipped sentences, a hint of a smirk, steel underneath.",
+      "voice_id": "B0LZgLouwEAUa0n4x2tJ",
+      "name": "Barovia Ezmerelda d'Avenir (2026-10-14)",
+      "description": "A tough woman in her mid-thirties, a seasoned monster hunter, with a low, husky, rough-edged voice and a strong, clearly audible Romanian accent. Hard, blunt and unimpressed, with dry gallows humour, clipped sentences and a smirk in the voice; steel underneath, never soft, never breathy, normal speaking volume.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "B0LZgLouwEAUa0n4x2tJ",
+      "earlier_voice_id": "cwrfPUlbf5fNAZi1O1Dw",
+      "voice_note": "Owner, 2026-10-14: her old designed voice (light accent, no accent tag, 85 of 100 lines undirected) drifted from line to line and wasn't tough enough. Recast on a new designed voice (a tougher one, his pick: voice 2 of 3) with the strong Romanian accent tag and a direction on every line; all 100 lines re-recorded.",
+      "released": true
     },
     "baron_vargas": {
       "voice_id": "pgQrrxrvRHxS13dQlEKa",
@@ -1470,13 +1475,14 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "tser_dorina": {
-      "name": "Barovia tser_dorina",
-      "description": "An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, crackly, bossy grandmother's voice, dry and wry, who feeds everyone at the camp's stewpot.",
+      "voice_id": "G0q9AYE8QsarSbMtaIEu",
+      "name": "Library voice: Elettra - Mature actress",
+      "description": "Library voice chosen for tser_dorina (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A warm, crackly, bossy grandmother's voice, dry and wry, who feeds everyone at the camp's stewpot.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "voice_id": "oBXs98GUf3oHsSdPIKdZ",
-      "released": true
+      "earlier_voice_id": "oBXs98GUf3oHsSdPIKdZ"
     },
     "tser_petru": {
       "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
@@ -1496,22 +1502,24 @@
       "released": true
     },
     "barovia_widow": {
-      "voice_id": "PEdmeSfgivOOnj0TPTei",
-      "name": "Barovia barovia_widow (2026-10-08)",
-      "description": "An old Barovian widow in her sixties speaking English with a very strong, thick Romanian accent. A soft, dry, wry voice with a tremor of grief, gentle and plain-spoken.",
-      "model": "eleven_v3",
-      "accent_tag": "[strong Romanian accent]",
-      "released": true
-    },
-    "barovia_gravedigger": {
-      "voice_id": "msk7qjLdTUv4S1ivjDS0",
-      "name": "Barovia barovia_gravedigger (2026-10-08)",
-      "description": "A big, slow Barovian sexton in his sixties speaking English with a very strong, thick Romanian accent. A deep, gravelly, unhurried voice, matter-of-fact about the dead, oddly courteous.",
+      "voice_id": "kkPJzQOWz2Oz9cUaEaQd",
+      "name": "Library voice: Beatrice - Mature, Gentle and Engaging",
+      "description": "Library voice chosen for barovia_widow (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Barovian widow in her sixties speaking English with a very strong, thick Romanian accent. A soft, dry, wry voice with a tremor of grief, gentle and plain-spoken.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "msk7qjLdTUv4S1ivjDS0",
-      "released": true
+      "earlier_voice_id": "PEdmeSfgivOOnj0TPTei"
+    },
+    "barovia_gravedigger": {
+      "voice_id": "PerZoH0r6nxBZXCoIPpv",
+      "name": "Library voice: Michael Moody - Grandfatherly warm and deep",
+      "description": "Library voice chosen for barovia_gravedigger (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: A big, slow Barovian sexton in his sixties speaking English with a very strong, thick Romanian accent. A deep, gravelly, unhurried voice, matter-of-fact about the dead, oddly courteous.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "earlier_voice_id": "msk7qjLdTUv4S1ivjDS0"
     },
     "barovia_vasile": {
       "voice_id": "UfHihqapkic3hrQMcWhO",
@@ -1563,14 +1571,14 @@
       "shared_with": "sorvia"
     },
     "camp_cook": {
-      "voice_id": "d90np8fxRBxUcXZAKL70",
-      "name": "Barovia Old Paraschiva",
-      "description": "An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tart, crackly, bossy old cook's voice with a sly humour.",
+      "voice_id": "5u41aNhyCU6hXOcjPPv0",
+      "name": "Library voice: Carol - Relatable, Real, Likeable Grandma",
+      "description": "Library voice chosen for camp_cook (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Vistani woman in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A tart, crackly, bossy old cook's voice with a sly humour.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "d90np8fxRBxUcXZAKL70",
-      "released": true
+      "earlier_voice_id": "d90np8fxRBxUcXZAKL70"
     },
     "pool_mourner": {
       "voice_id": "wEJjJg8SheKHTwm83mZY",
@@ -1632,15 +1640,15 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "lz_old_fisher": {
-      "voice_id": "zMjh6m7TYXb96Hz1Ah7t",
-      "name": "Barovia Old Nistor",
-      "description": "An old Barovian fisherman in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, weathered, gravelly old voice, weary and wistful.",
+      "voice_id": "TTyZrDYo6LQowrH8mixJ",
+      "name": "Library voice: Joseph Ortman - Deep & Raspy",
+      "description": "Library voice chosen for lz_old_fisher (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Barovian fisherman in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, weathered, gravelly old voice, weary and wistful.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "zMjh6m7TYXb96Hz1Ah7t",
-      "released": true,
-      "pace_note": "Owner, 2026-10-14: Old Nistor spoke too slowly (about 1.7 words a second against 2.3 for most NPCs). Fifteen of his 16 clips were time-stretched 1.09-1.45x toward 2.2 words a second at the same pitch, level matched, re-encoded with lame (manifest `stretch`). A --recast re-records them at the voice's own pace."
+      "earlier_voice_id": "zMjh6m7TYXb96Hz1Ah7t",
+      "pace_note": "Owner, 2026-10-14: Old Nistor was too slow. His library voice Joseph Ortman ran about 2.8 words a second, so 12 of his 16 clips were slowed 0.82-0.86x toward 2.4 at the same pitch, level matched (manifest `stretch`). A --recast re-records them at the voice's own pace."
     },
     "krezk_fence_mender": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",
@@ -1722,14 +1730,14 @@
       "shared_with": "krezk_guard"
     },
     "tser_marin": {
-      "voice_id": "YIgX8Hligdg1Bc44qEcW",
-      "name": "Barovia Old Marin",
-      "description": "An old Vistani hunter in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, grumbling, gruff but kindly old voice.",
+      "voice_id": "jn6ifzU1eO5tfUZ2ZJVg",
+      "name": "Library voice: Bogdan - Melodic and Calm",
+      "description": "Library voice chosen for tser_marin (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Vistani hunter in his sixties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A rough, grumbling, gruff but kindly old voice.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "YIgX8Hligdg1Bc44qEcW",
-      "released": true
+      "earlier_voice_id": "YIgX8Hligdg1Bc44qEcW"
     },
     "wine_woodsplitter": {
       "voice_id": "AEPS4amQpAYS3CULyGRe",
@@ -1809,14 +1817,14 @@
       "released": true
     },
     "barovia_worshipper_mihai": {
-      "voice_id": "GaE126iVJzF6zd29rX3G",
-      "name": "Barovia Old Florin",
-      "description": "An old Barovian man in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, dry, cracked voice, sad and wry, a churchgoer with no illusions.",
+      "voice_id": "BBfN7Spa3cqLPH1xAS22",
+      "name": "Library voice: Beezle Wheezelby",
+      "description": "Library voice chosen for barovia_worshipper_mihai (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Barovian man in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, dry, cracked voice, sad and wry, a churchgoer with no illusions.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "GaE126iVJzF6zd29rX3G",
-      "released": true
+      "earlier_voice_id": "GaE126iVJzF6zd29rX3G"
     },
     "barovia_worshipper_sorina": {
       "voice_id": "dd0PByHmASFtIDUDBAsf",
@@ -1829,14 +1837,14 @@
       "released": true
     },
     "vallaki_herbwife": {
-      "voice_id": "TDFj1ooIYqzqhbK7aGnW",
-      "name": "Barovia Old Smaranda",
-      "description": "A bent old Vallaki herbwife in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cracked, sweet, conspiratorial old voice, smiling hard and talking low.",
+      "voice_id": "7NsaqHdLuKNFvEfjpUno",
+      "name": "Library voice: Seer Morganna - Intimidating, and Clear",
+      "description": "Library voice chosen for vallaki_herbwife (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: A bent old Vallaki herbwife in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cracked, sweet, conspiratorial old voice, smiling hard and talking low.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "TDFj1ooIYqzqhbK7aGnW",
-      "released": true
+      "earlier_voice_id": "TDFj1ooIYqzqhbK7aGnW"
     },
     "vallaki_cloth_merchant": {
       "voice_id": "eQvqrV02SmhuXXk8kzNY",
@@ -2030,24 +2038,24 @@
       "released": true
     },
     "krezk_carver": {
-      "voice_id": "qOlJ4mDyGxGrbIKwDKI7",
-      "name": "Barovia Old Pavel",
-      "description": "An old hooded Krezk carver in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, patient, devout old voice.",
+      "voice_id": "2V7k6GOisfFlHlBdz8ec",
+      "name": "Library voice: Leon Ciobanu - Nostalgic and Reflective",
+      "description": "Library voice chosen for krezk_carver (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old hooded Krezk carver in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A thin, patient, devout old voice.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "qOlJ4mDyGxGrbIKwDKI7",
-      "released": true
+      "earlier_voice_id": "qOlJ4mDyGxGrbIKwDKI7"
     },
     "pool_grave_keeper": {
-      "voice_id": "bibCOmvSPMG5s0GGK2QB",
-      "name": "Barovia Old Simion",
-      "description": "An old Krezk grave-keeper in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A slow, dry, kindly, creaking old voice.",
+      "voice_id": "Lx8FLpMdqPr5gyGNDtNf",
+      "name": "Library voice: Mortimer - Quiet and Mysterious",
+      "description": "Library voice chosen for pool_grave_keeper (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Krezk grave-keeper in his seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A slow, dry, kindly, creaking old voice.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "bibCOmvSPMG5s0GGK2QB",
-      "released": true
+      "earlier_voice_id": "bibCOmvSPMG5s0GGK2QB"
     },
     "bonegrinder_mouse": {
       "voice_id": "MIl0Flub6Sc9KSkX2A42",
@@ -2265,14 +2273,14 @@
       "shared_with": "krezk_petru"
     },
     "vallaki_sabin": {
-      "voice_id": "aWs8fz4m3vKL1N0spA53",
-      "name": "Barovia Old Sabin",
-      "description": "An old Barovian lantern-maker in his seventies from Vallaki, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, cracked, gentle old man's voice, tired and grieving, trembling with worry for his grandson, tender and bewildered.",
+      "voice_id": "ppLqTilh7rH7fbUVlXsf",
+      "name": "Library voice: David - Documentary",
+      "description": "Library voice chosen for vallaki_sabin (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: An old Barovian lantern-maker in his seventies from Vallaki, speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A soft, cracked, gentle old man's voice, tired and grieving, trembling with worry for his grandson, tender and bewildered.",
       "settings": {},
       "model": "eleven_v3",
+      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "aWs8fz4m3vKL1N0spA53",
-      "released": true
+      "earlier_voice_id": "aWs8fz4m3vKL1N0spA53"
     },
     "hollow_agafia": {
       "voice_id": "9qBU8mZvPtQvuku5HHoD",

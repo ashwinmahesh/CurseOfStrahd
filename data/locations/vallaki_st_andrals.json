@@ -497,14 +497,14 @@
           "monster": "swarm_of_bats",
           "cell": [
             1,
-            14
+            12
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            22,
-            14
+            21,
+            12
           ]
         },
         {
@@ -512,6 +512,27 @@
           "cell": [
             1,
             7
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            1,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            21,
+            9
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            10,
+            12
           ]
         }
       ],
@@ -546,7 +567,7 @@
           "monster": "swarm_of_bats",
           "cell": [
             1,
-            14
+            13
           ]
         }
       ],

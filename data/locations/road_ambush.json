@@ -252,47 +252,47 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            21,
-            8
-          ],
-          "name": "Mourner"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            22,
-            9
-          ],
-          "name": "Mourner"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            24,
-            8
-          ],
-          "name": "Pallbearer"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            24,
-            9
-          ],
-          "name": "Pallbearer"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
-            26,
-            8
-          ],
-          "name": "Mourner"
-        },
-        {
-          "monster": "strahd_zombie",
-          "cell": [
             27,
+            8
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            28,
+            9
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            8
+          ],
+          "name": "Pallbearer"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            24,
+            9
+          ],
+          "name": "Pallbearer"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            30,
+            8
+          ],
+          "name": "Mourner"
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            30,
             9
           ],
           "name": "Mourner"

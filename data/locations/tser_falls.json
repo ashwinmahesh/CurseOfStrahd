@@ -446,8 +446,22 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            10,
+            11,
             10
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
+            11
           ]
         }
       ],
@@ -495,7 +509,14 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            10,
+            11,
+            10
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            6,
             10
           ]
         }
@@ -521,13 +542,6 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
-          "cell": [
-            9,
-            12
-          ]
-        },
-        {
           "monster": "shadow",
           "cell": [
             6,
@@ -535,10 +549,17 @@
           ]
         },
         {
-          "monster": "shadow",
+          "monster": "bat",
           "cell": [
             6,
-            11
+            15
+          ]
+        },
+        {
+          "monster": "bat",
+          "cell": [
+            9,
+            16
           ]
         }
       ],
@@ -558,13 +579,6 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            7,
-            11
-          ]
-        },
-        {
-          "monster": "will_o_wisp",
-          "cell": [
             9,
             12
           ]
@@ -572,15 +586,15 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            6,
-            15
+            7,
+            11
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "shadow",
           "cell": [
-            9,
-            16
+            14,
+            7
           ]
         }
       ],
@@ -605,17 +619,17 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "bat",
           "cell": [
-            9,
-            12
+            10,
+            9
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "bat",
           "cell": [
-            6,
-            15
+            15,
+            13
           ]
         }
       ],
@@ -640,17 +654,17 @@
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "bat",
           "cell": [
-            9,
-            12
+            16,
+            9
           ]
         },
         {
-          "monster": "will_o_wisp",
+          "monster": "bat",
           "cell": [
-            6,
-            15
+            5,
+            9
           ]
         }
       ],

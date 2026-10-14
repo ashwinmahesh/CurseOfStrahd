@@ -521,15 +521,15 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            15,
-            16
+            14,
+            10
           ]
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            17,
-            16
+            18,
+            18
           ]
         }
       ]

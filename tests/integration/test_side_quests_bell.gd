@@ -1,7 +1,8 @@
 extends TestCase
 ## The Bell Under the Lake (docs/story/side_quests.md): Old Nistor's story once Bluto's sacks have stopped, the bell
 ## after moonrise, the drowned coming for Bluto (defend him or stand aside) or for Nistor, and the bell silenced for
-## the staff and the chapel silver, paid once.
+## the staff and the chapel silver, paid once. The drowned rising is a two-stage cutscene (docs/ui/cutscenes.md): the
+## water standing up, then the drowned turning on Bluto, or on Old Nistor when Bluto is gone.
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 
@@ -23,10 +24,13 @@ func test_defending_bluto_and_ringing_the_bell_for_the_dead() -> void:
 	assert_true(SideQuestPlay.shown(st, "lake_zarovich", "bell_water"))
 	beats = SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water")
 	assert_eq(SideQuestPlay.combat_of(beats), "", "nothing by day")
+	assert_eq(_pictures(beats), [] as Array[String], "and no picture")
 	st.minute_of_day = 23 * 60
 	beats = SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water", ["Stand in front of him"])
 	assert_eq(SideQuestPlay.missing(beats), "")
 	assert_true(SideQuestPlay.text(beats).contains("I paid you"), "Bluto knows what's come for him")
+	assert_eq(_pictures(beats), ["drowned_rise", "drowned_bluto"] as Array[String], "they rise, then turn on Bluto")
+	assert_eq(_caption_after(beats, "drowned_rise").get_slice(".", 0), "Then the water along the shore starts to stand up in the shape of people")
 	assert_eq(SideQuestPlay.combat_of(beats), "drowned_landing")
 	var enc := SideQuestPlay.encounter(st, "lake_zarovich", "drowned_landing")
 	assert_true(SideQuestPlay.has_foe(enc, "The Bellringer of Pescari"))
@@ -45,6 +49,7 @@ func test_defending_bluto_and_ringing_the_bell_for_the_dead() -> void:
 	assert_true(st.party_has_item("staff_of_healing"))
 	SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water")
 	assert_eq(roundi(st.gold), 200, "paid once")
+	assert_eq(_pictures(SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water")), [] as Array[String], "they rise once")
 	beats = SideQuestPlay.play(st, "lake_zarovich/old_fisher:start")
 	assert_true(SideQuestPlay.text(beats).contains("pike"))
 	assert_true(SideQuestPlay.text(beats).contains("child in a sack"))
@@ -57,6 +62,7 @@ func test_standing_aside_gives_them_bluto_and_they_rise_anyway() -> void:
 	st.set_quest_stage("bell_under_the_lake", "asked")
 	var beats := SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water", ["Stand aside"])
 	assert_eq(SideQuestPlay.combat_of(beats), "drowned_landing", "they were never coming for just one")
+	assert_eq(_pictures(beats), ["drowned_rise", "drowned_bluto"] as Array[String])
 	assert_eq(str(st.get_flag("bluto_fate", "")), "drowned")
 	assert_eq(SideQuestPlay.standing(st, "lake_zarovich", "bluto"), "", "Bluto is gone")
 
@@ -68,4 +74,22 @@ func test_without_bluto_they_come_for_nistor() -> void:
 	st.set_quest_stage("bell_under_the_lake", "asked")
 	var beats := SideQuestPlay.play(st, "lake_zarovich/bell_under_the_lake:water", ["Stand in front of him"])
 	assert_true(SideQuestPlay.text(beats).contains("one of us"), "Old Nistor sits down on his step")
+	assert_eq(_pictures(beats), ["drowned_rise", "drowned_nistor"] as Array[String], "no Bluto in the picture")
 	assert_eq(SideQuestPlay.combat_of(beats), "drowned_landing")
+
+
+## The cutscenes a conversation showed, in order.
+func _pictures(beats: Array[Dictionary]) -> Array[String]:
+	var out: Array[String] = []
+	for b in beats:
+		if str(b["kind"]) == "cutscene" and str(b.get("image", "")) != "":
+			out.append(str(b["id"]))
+	return out
+
+
+## The line read as the first caption over cutscene `id`.
+func _caption_after(beats: Array[Dictionary], id: String) -> String:
+	for i in beats.size() - 1:
+		if str(beats[i]["kind"]) == "cutscene" and str(beats[i].get("id", "")) == id:
+			return str(beats[i + 1].get("text", ""))
+	return ""

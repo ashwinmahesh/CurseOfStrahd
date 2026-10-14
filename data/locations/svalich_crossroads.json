@@ -773,15 +773,15 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            16,
-            22
+            13,
+            23
           ],
           "name": "Kestrel soldier"
         },
         {
           "monster": "strahd_zombie",
           "cell": [
-            20,
+            23,
             22
           ],
           "name": "Kestrel soldier"
@@ -789,35 +789,35 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            17,
-            22
+            14,
+            23
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            17,
-            23
+            13,
+            19
           ]
         },
         {
           "monster": "strahd_zombie",
           "cell": [
-            18,
-            23
+            17,
+            25
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            19,
-            22
+            23,
+            20
           ]
         },
         {
           "monster": "zombie",
           "cell": [
-            19,
+            22,
             23
           ]
         }
@@ -853,8 +853,8 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            20,
-            22
+            23,
+            21
           ],
           "name": "Kestrel soldier"
         },
@@ -868,15 +868,15 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            17,
-            23
+            13,
+            20
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            18,
-            23
+            22,
+            22
           ]
         },
         {
@@ -889,7 +889,7 @@
         {
           "monster": "strahd_zombie",
           "cell": [
-            15,
+            12,
             22
           ]
         }

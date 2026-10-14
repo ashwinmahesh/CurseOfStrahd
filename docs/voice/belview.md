@@ -13,6 +13,15 @@ kept starving in barred cells along the wards' corridor.
 - **Fear:** Krezk's stones; the Abbot's kindness; the cells.
 - **Secret:** they don't remember what they looked like before, and argue about it at night.
 
+## Faces
+Every named Belview wears a face of their own in conversation (owner, 2026-10-13), each showing their own "improvement";
+they share the one `belview` walking sprite. The generic `belview` portrait stays for the kitchen crowd and the ones you
+fight. Their lines all say `Belview:` in the family's voice; the portrait is the face of the Belview you're talking to
+(DialogueRunner._face_of): `belview_well` (the courtyard girl with goat's eyes), `belview_sweeper` (a dog's muzzle, a woman's hands),
+`belview_hauler` (a bull's shoulders), `belview_feathers` (a bird's crest), `belview_gate` (a heron's neck), `belview_mother`
+(cat's eyes, wings wired shut), `sorin_krezkov`, `waystone_lark`, and the three in the cells, `belview_caged_1` to `_3`.
+Take 'a' of each is in art/generated/portraits/; tests/unit/test_belview_faces.gd.
+
 ## How they talk
 
 Mimicry: they repeat your words in your own voice, a beat behind, and doubled ("Hello. Hello."). Childlike, sing-song,

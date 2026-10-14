@@ -581,7 +581,8 @@ func _line_beat(speaker_name: String, mood: String, text: String) -> Dictionary:
 		return _party_line(speaker, text)
 	var npc := _npc_for(low)
 	var nid := str(npc.get("id", low))
-	var portrait := NpcLooks.portrait(npc, st) if not npc.is_empty() else nid   # Rictavio becomes Van Richten
+	var face := _face_of(npc)
+	var portrait := NpcLooks.portrait(face, st) if not face.is_empty() else nid   # Rictavio becomes Van Richten
 	if mood != "" and mood != "neutral" and ResourceLoader.exists("res://art/portraits/%s_%s.png" % [portrait, mood]):
 		portrait = "%s_%s" % [portrait, mood]
 	return {"kind": "line", "speaker_id": nid, "name": str(npc.get("name", speaker_name)), "portrait": portrait, "mood": mood,
@@ -599,6 +600,17 @@ func _party_line(who: Character, text: String) -> Dictionary:
 static func portrait_of(who: Character) -> String:
 	var look := str((who.build.get("appearance", {}) as Dictionary).get("art", ""))
 	return look if look != "" else Character.id_for_name(who.name)
+
+
+## Whose face a speaker's line shows: the one being spoken to when they share the speaker's name, else the speaker.
+## Every Belview says "Belview:" in one voice, but the sweeper wears the sweeper's portrait (owner, 2026-10-13).
+func _face_of(npc: Dictionary) -> Dictionary:
+	if npc_id == "" or npc.is_empty() or str(npc.get("id", "")) == npc_id:
+		return npc
+	var spoken_to := Compendium.shared().get_entry("npcs", npc_id)
+	if not spoken_to.is_empty() and str(spoken_to.get("name", "")) == str(npc.get("name", "")):
+		return spoken_to
+	return npc
 
 
 static func _npc_for(low: String) -> Dictionary:

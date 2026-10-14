@@ -252,7 +252,7 @@
         {
           "monster": "wraith",
           "cell": [
-            4,
+            3,
             17
           ]
         },
@@ -290,7 +290,7 @@
         {
           "monster": "specter",
           "cell": [
-            4,
+            3,
             17
           ]
         },
@@ -329,7 +329,7 @@
         {
           "monster": "specter",
           "cell": [
-            10,
+            11,
             19
           ]
         },

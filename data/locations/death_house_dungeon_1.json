@@ -985,7 +985,7 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            16,
+            20,
             2
           ]
         },
@@ -999,15 +999,15 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            17,
-            3
+            19,
+            4
           ]
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
-            15,
-            3
+            18,
+            2
           ]
         },
         {

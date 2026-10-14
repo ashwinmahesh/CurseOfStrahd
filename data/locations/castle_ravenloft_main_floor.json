@@ -1308,7 +1308,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            5,
+            1,
             2
           ],
           "name": "Private Venn"
@@ -1316,8 +1316,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
-            2
+            10,
+            1
           ],
           "name": "Private Corrin"
         }
@@ -1342,16 +1342,16 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            7,
-            1
+            1,
+            2
           ],
           "name": "Private Corrin"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
-            2
+            10,
+            1
           ],
           "name": "Private Ash"
         }
@@ -1437,7 +1437,7 @@
           "monster": "vampire_spawn",
           "cell": [
             1,
-            6
+            4
           ],
           "name": "Private Hale"
         },

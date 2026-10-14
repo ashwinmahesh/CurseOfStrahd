@@ -387,6 +387,9 @@ func save_targets(c: Combatant, act: Dictionary) -> Array[Combatant]:
 	for t in e.hostiles_of(c):
 		if t.is_down() and not "incapacitated" in (tg.get("requires", []) as Array):
 			continue
+		# An Invisible hero it can't see isn't one it can pick (EncounterSight.unseen_foe).
+		if e.sight.unseen_foe(c, t):
+			continue
 		if bool(tg.get("in_space", false)):
 			var shares := false
 			for cell in t.footprint():

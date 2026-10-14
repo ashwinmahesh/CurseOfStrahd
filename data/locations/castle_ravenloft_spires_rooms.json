@@ -635,15 +635,15 @@
         {
           "monster": "barovian_witch",
           "cell": [
-            2,
+            1,
             16
           ]
         },
         {
           "monster": "barovian_witch",
           "cell": [
-            8,
-            16
+            9,
+            17
           ]
         },
         {
@@ -677,8 +677,8 @@
         {
           "monster": "black_pudding",
           "cell": [
-            6,
-            15
+            5,
+            16
           ]
         }
       ]
@@ -709,15 +709,15 @@
         {
           "monster": "barovian_witch",
           "cell": [
-            2,
+            1,
             16
           ]
         },
         {
           "monster": "barovian_witch",
           "cell": [
-            8,
-            16
+            9,
+            17
           ]
         },
         {
@@ -737,8 +737,8 @@
         {
           "monster": "black_pudding",
           "cell": [
-            6,
-            15
+            5,
+            16
           ]
         }
       ]
@@ -769,22 +769,22 @@
         {
           "monster": "barovian_witch",
           "cell": [
-            2,
+            1,
             16
           ]
         },
         {
           "monster": "barovian_witch",
           "cell": [
-            8,
-            16
+            9,
+            17
           ]
         },
         {
           "monster": "black_pudding",
           "cell": [
-            6,
-            15
+            5,
+            16
           ]
         }
       ]

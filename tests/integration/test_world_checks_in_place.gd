@@ -86,6 +86,9 @@ func before_each() -> void:
 func after_each() -> void:
 	if is_instance_valid(root):
 		root.queue_free()
+	# The village's arrival picture pauses the game until it's closed (GameRoot.play_cutscene); freed with the root
+	# under it, it would leave the next test's place standing still.
+	get_tree().paused = false
 	await _frames(1)
 	# The fixtures aren't real content (test_set_dressing checks every location's props for art).
 	(Compendium.shared().tables["locations"] as Dictionary).erase("test_checks")
@@ -165,12 +168,12 @@ func test_walking_up_and_trying_reveals_teaches_and_hints() -> void:
 	assert_true(said.has("The runes point to a niche."), str(said))
 	assert_true(bool(_states("found").get("hidden_cache", false)), "the niche is found")
 	assert_false(v.thing_at(Vector2i(2, 1)).is_empty(), "and on the board")
-	var roller := rolls[0].get_slice("|", 0)
-	var taker: Character = null
-	for ch in GameState.story.party:
-		if ch.name == roller:
-			taker = ch
-	assert_true(taker != null and taker.carries("potion_of_healing_greater"), "and what's in it goes to whoever read the runes (%s)" % roller)
+	# Owner, 2026-10-14: what a check reveals keeps its item until someone takes it from there.
+	assert_false(GameState.story.party.any(func(ch: Character) -> bool: return ch.carries("potion_of_healing_greater")),
+		"reading the runes only shows where the niche is: nobody has its potion yet")
+	assert_false(bool(_states("props").get("hidden_cache", false)), "the niche still holds it")
+	v.interact(v.thing_at(Vector2i(2, 1)))
+	assert_true((v.leader().creature as Character).carries("potion_of_healing_greater"), "searching the niche hands it over")
 	assert_true(bool(_states("props").get("hidden_cache", false)), "taken: the niche is empty now")
 	assert_true((root.get("notices") as ItemNotices).shown().size() >= 1, "and the find is announced on the side")
 	assert_true(said.any(func(s: String) -> bool: return s.begins_with("Now you know where to look: A far cache (Elsewhere)")), str(said))
@@ -324,24 +327,29 @@ func test_a_failure_can_set_off_a_fight() -> void:
 	assert_true(v.in_combat, "the runes' guardian comes for whoever woke them")
 
 
-## A save from before checks handed their finds over: the check passed and its niche was found, but nobody took what was
-## in it. On arriving, it goes to the leader.
-func test_an_older_save_gets_its_find_on_arriving() -> void:
+## A check passed and its niche was found, but nobody took what's in it (a save from any time, before or after checks
+## handed their finds over): arriving hands nothing over, and the niche is there to take it from, once.
+func test_a_find_a_check_reached_waits_to_be_taken() -> void:
 	WorldChecks.records(GameState.story, "test_checks")["read_runes"] = "done"
 	_states("found")["hidden_cache"] = true
 	root.call("enter_location", "test_checks", "")
 	await _frames(2)
-	var leader := _view().leader().creature as Character
-	assert_true(leader.carries("potion_of_healing_greater"), "the niche's potion comes with the party now")
-	assert_true(bool(_states("props").get("hidden_cache", false)))
+	var v := _view()
+	var leader := v.leader().creature as Character
+	assert_false(leader.carries("potion_of_healing_greater"), "nothing comes with the party on arriving")
+	assert_false(v.thing_at(Vector2i(2, 1)).is_empty(), "the niche is on the board")
+	v.interact(v.thing_at(Vector2i(2, 1)))
+	assert_true(leader.carries("potion_of_healing_greater"), "taking it from there hands the potion over")
+	v.interact(v.thing_at(Vector2i(2, 1)))
 	root.call("enter_location", "test_checks", "")
 	await _frames(2)
 	assert_eq(leader.inventory.filter(func(e: Dictionary) -> bool: return str(e["id"]) == "potion_of_healing_greater").size(), 1, "and only once")
 
 
-## The owner's report (2026-10-12): at the Wizard of Wines, passing the well's Athletics check hands over the rope tied off
-## below its lip, and says so.
-func test_the_wizard_of_wines_well_hands_over_its_rope() -> void:
+## The owner's report (2026-10-12): at the Wizard of Wines, passing the well's Athletics check showed the rope tied off
+## below its lip and nothing more. Since 2026-10-14 (owner) the rope stays where the check showed it, glowing until it's
+## taken: walking up to it and using it hands over the Rope of Climbing, and says so.
+func test_the_wizard_of_wines_well_shows_its_rope_to_take() -> void:
 	root.call("enter_location", "wizard_of_wines", "")
 	await _frames(2)
 	var v := _view()
@@ -351,7 +359,25 @@ func test_the_wizard_of_wines_well_hands_over_its_rope() -> void:
 			spec = p as Dictionary
 	var climber := v.leader().creature as Character
 	LocationChecks._resolve(v, spec, WorldChecks.find(spec, "winery_well_climb"), climber, true)
-	assert_true(climber.carries("rope_of_climbing"), "the climber comes up with the Rope of Climbing")
+	assert_false(GameState.story.party.any(func(ch: Character) -> bool: return ch.carries("rope_of_climbing")),
+		"the climb shows the rope; nobody has it yet")
+	for i in 30:   # FoundGlow looks a few times a second; a busy machine's first frames here are long
+		if FoundGlow.of(v).is_lit("prop:winery_well_rope"):
+			break
+		await get_tree().create_timer(FoundGlow.CHECK_EVERY).timeout
+	assert_true(FoundGlow.of(v).is_lit("prop:winery_well_rope"), "it glows where it's tied off")
+	var rope := {}
+	for p: Variant in v.loc["props"]:
+		if str((p as Dictionary)["id"]) == "winery_well_rope":
+			rope = p as Dictionary
+	LocationChecks._move_party(v, LocationView._cell(rope["cell"]) + Vector2i(1, 0))   # beside it (the gate is a walk away)
+	v.click(LocationView._cell(rope["cell"]))   # and take it, as the player would
+	assert_true((v.leader().creature as Character).carries("rope_of_climbing"), "using it hands over the Rope of Climbing")
+	for i in 30:
+		if not FoundGlow.of(v).lit.has("prop:winery_well_rope"):
+			break
+		await get_tree().create_timer(FoundGlow.CHECK_EVERY).timeout
+	assert_false(FoundGlow.of(v).lit.has("prop:winery_well_rope"), "and it stops glowing")
 	var notices := root.get("notices") as ItemNotices
 	assert_true(notices.shown().any(func(p: PanelContainer) -> bool:
 		return p.find_children("ItemName", "Label", true, false).any(func(l: Node) -> bool: return (l as Label).text == "Rope of Climbing")),

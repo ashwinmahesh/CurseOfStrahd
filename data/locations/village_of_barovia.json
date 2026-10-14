@@ -1788,55 +1788,55 @@
           "monster": "strahd_zombie",
           "cell": [
             38,
-            13
+            14
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            35,
+            21,
             10
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            38,
-            10
+            37,
+            18
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
             34,
-            13
+            14
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            33,
-            10
+            22,
+            12
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            36,
-            10
+            35,
+            18
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            36,
+            17,
             11
           ]
         },
         {
           "monster": "strahd_zombie",
           "cell": [
-            37,
+            38,
             10
           ]
         }
@@ -1873,35 +1873,35 @@
           "monster": "strahd_zombie",
           "cell": [
             38,
-            13
+            14
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            36,
+            33,
             10
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            36,
-            11
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            36,
-            12
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
             37,
-            10
+            18
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            35,
+            18
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            26,
+            13
           ]
         }
       ],
@@ -1937,15 +1937,15 @@
         {
           "monster": "zombie",
           "cell": [
-            38,
-            13
+            37,
+            17
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            34,
-            10
+            26,
+            12
           ]
         }
       ],
@@ -2045,8 +2045,8 @@
         {
           "monster": "needle_blight",
           "cell": [
-            4,
-            13
+            6,
+            18
           ]
         }
       ],
@@ -2347,28 +2347,28 @@
         {
           "monster": "specter",
           "cell": [
-            17,
-            15
+            15,
+            16
           ]
         },
         {
           "monster": "specter",
           "cell": [
-            23,
-            12
+            27,
+            11
           ]
         },
         {
           "monster": "shadow",
           "cell": [
-            18,
-            12
+            16,
+            11
           ]
         },
         {
           "monster": "shadow",
           "cell": [
-            24,
+            26,
             15
           ]
         },
@@ -2376,7 +2376,7 @@
           "monster": "specter",
           "cell": [
             22,
-            12
+            8
           ]
         },
         {
@@ -2390,7 +2390,7 @@
           "monster": "shadow",
           "cell": [
             20,
-            12
+            10
           ]
         }
       ],
@@ -2414,36 +2414,36 @@
         {
           "monster": "shadow",
           "cell": [
-            18,
-            12
-          ]
-        },
-        {
-          "monster": "shadow",
-          "cell": [
-            24,
-            15
-          ]
-        },
-        {
-          "monster": "specter",
-          "cell": [
-            22,
-            12
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            22,
+            17,
             13
           ]
         },
         {
           "monster": "shadow",
           "cell": [
-            20,
+            25,
+            17
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            25,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            22,
             12
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            18,
+            10
           ]
         }
       ],
