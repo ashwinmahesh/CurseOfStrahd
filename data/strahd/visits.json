@@ -75,7 +75,8 @@
             "text": "Strahd lets the wolves go first, and watches how you meet them.",
             "monsters": [
               {
-                "monster": "strahd_von_zarovich"
+                "monster": "strahd_von_zarovich",
+                "hp": 355
               },
               {
                 "monster": "dire_wolf"
@@ -124,7 +125,7 @@
             "monsters": [
               {
                 "monster": "strahd_von_zarovich",
-                "hp": 110
+                "hp": 170
               },
               {
                 "monster": "swarm_of_bats"
@@ -170,7 +171,7 @@
             "monsters": [
               {
                 "monster": "strahd_von_zarovich",
-                "hp": 200
+                "hp": 360
               },
               {
                 "monster": "swarm_of_bats"

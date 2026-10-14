@@ -81,11 +81,14 @@
       "multiattack": [
         {
           "action": "frozen_fist",
-          "count": 2
+          "count": 2,
+          "or": [
+            "hurled_ice"
+          ]
         }
       ],
-      "summary": "Two Frozen Fists.",
-      "text": "The Penitent makes two Frozen Fist attacks."
+      "summary": "Two Frozen Fists, or Hurled Ice when no one is in reach.",
+      "text": "The Penitent makes two Frozen Fist attacks, or tears off slabs of ice and hurls them when no one is within its reach."
     },
     {
       "id": "frozen_fist",

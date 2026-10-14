@@ -290,7 +290,7 @@
             11,
             3
           ],
-          "hp": 410
+          "hp": 710
         },
         {
           "monster": "animated_armor",
@@ -313,6 +313,78 @@
           "cell": [
             18,
             7
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            10,
+            3
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            11,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            3
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            10,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            10,
+            4
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            2
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            12,
+            4
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            9,
+            3
+          ],
+          "name": "An Escort's Harness"
+        },
+        {
+          "monster": "animated_armor",
+          "cell": [
+            11,
+            1
           ],
           "name": "An Escort's Harness"
         }

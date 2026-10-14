@@ -190,7 +190,7 @@ Fireball as he plays, and wins 5 in 8 on Balanced; the coven "should be maybe 4/
 whole coven, Morgantha at 180 HP, wins 5 of 8, and Morgantha with one daughter and the mill's dogs 5 of 8. A hag split
 off from the coven comes with the night's mares (nightmares): Offalia in the bakery, Bella or Offalia on the lane and
 Morgantha alone each win 5 of 8, Bella betrayed 4 of 8 (tests/integration/test_scaled_boss_fights.gd). Nothing in the region requires a check: every split, the pact, the fight and the rescue have plain
-options.
+options. (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 ## 8. Milestone
 

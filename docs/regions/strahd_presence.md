@@ -130,4 +130,4 @@ his HP goes to 0, but that's his signal to flee") he fights every visit until he
 line (`withdraw.say`, in his own voice), and the fight waits for the line before it ends. Each is tuned so the sharp
 test party, without the Sunsword, wins 5 of 8 at its level: the test of strength at his book 144 HP with two dire
 wolves (level 7), the window at the Blue Water Inn at 110 HP (level 5) and at the Krezkovs' at 200 HP (level 7), each
-with a swarm of bats (tests/integration/test_scaled_boss_fights.gd). Neither fight gives loot; leaving is not dying.
+with a swarm of bats (tests/integration/test_scaled_boss_fights.gd). Neither fight gives loot; leaving is not dying. (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)

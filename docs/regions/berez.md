@@ -249,7 +249,7 @@ grave (180 HP with four scarecrows), the challenge with her hut (the hut at 110 
 each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). The roc on its own lost 8 of 8 at any
 Hit Points (and once the party fell back over the bridge it sat out the fight on its own side of the chasm, behind
 the railings, until the round cap: a flying foe now rises over a railing to reach a foe); with its mate at 85 HP it
-wins 4 of 8 at level 9, the harder side (with the mate at 78, 6).
+wins 4 of 8 at level 9, the harder side (with the mate at 78, 6). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Shaping Baba Lysaga: together with her hut she is 14400 XP, deadly for level 9. The region separates them three
 ways (inside the hut the hut can't fight; the lure pulls her to the monument; Strahd breaks the hut), trims her hit

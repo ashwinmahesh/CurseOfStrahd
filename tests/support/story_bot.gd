@@ -21,7 +21,8 @@ var fight_tries := TRIES
 ## Whether the bot rests like a careful player: a Long Rest after any fight that cost Hit Points or spell slots, waiting
 ## out the 16 hours since the last when that is all that stands in the way (the Wizard of Wines' playthrough, 2026-10-13:
 ## its fights come back to back in one day, and with each tuned to the owner's 5 wins in 8 for a rested party, a worn
-## party lost the hall, the press house and the road home).
+## party lost the hall, the press house and the road home). Where no rest is allowed it heals with its spells, and it
+## waits for daylight rather than walk a road by night (2026-10-14: the retuned summit sent it home hurt at 3 am).
 var waits_for_long_rest := false
 
 
@@ -150,7 +151,11 @@ func _play_fight(last: bool) -> String:
 	for c in e.combatants:
 		if c.side == &"enemy":
 			foes.append(c.name())
+	# The story bot plays to win: its party uses its skills to the full, as the boss fights are tuned for.
+	var was_full := PartyAutopilot.full
+	PartyAutopilot.full = true
 	var res := PartyAutopilot.new(e).run(40)
+	PartyAutopilot.full = was_full
 	fights.append({"where": v.loc_id, "foes": foes, "outcome": str(res["outcome"]), "rounds": int(res["rounds"]),
 		"downs": int(res["downs"])})
 	note("fight vs %s: %s in %d rounds, %d down" % [", ".join(foes), res["outcome"], int(res["rounds"]), int(res["downs"])])
@@ -548,6 +553,12 @@ func _go_by_map_once(location_id: String) -> bool:
 		return false
 	# Rested before the road, where the place allows it: a journey can meet a fight with no rest before it.
 	await rest_if_needed()
+	# A careful player (waits_for_long_rest) doesn't walk the road by night: the night tables are the worst ones.
+	if waits_for_long_rest and st().is_night():
+		var minute := st().minute_of_day
+		var wait := 6 * 60 - minute if minute < 6 * 60 else 24 * 60 - minute + 6 * 60
+		st().advance_minutes(wait)
+		note("waits %d hours for daylight" % ceili(wait / 60.0))
 	note("setting out for %s" % target)
 	if not await walk_to(_cell(out_exit["cell"])):
 		return false
@@ -633,6 +644,8 @@ func recover() -> void:
 			continue
 		_heal_with_spells(ch)
 	await rest_if_needed()
+	if waits_for_long_rest:
+		_mend_the_hurt()
 	await level_up()
 
 
@@ -674,7 +687,7 @@ static func _half_spent(c: Character) -> bool:
 	return total > 0 and left * 2 <= total
 
 
-func _heal_with_spells(target: Character) -> void:
+func _heal_with_spells(target: Character) -> bool:
 	for healer in st().party:
 		if healer.dead or healer.hp <= 0:
 			continue
@@ -684,7 +697,21 @@ func _heal_with_spells(target: Character) -> void:
 				var r := FieldCasting.cast(st().party, healer, str(o["id"]), 0, t, Dice.roller)
 				if bool(r["ok"]):
 					note("%s heals %s: %s" % [healer.name, target.name, r["text"]])
-					return
+					return true
+	return false
+
+
+## Where no rest was allowed (Yester Hill's summit) a careful player (waits_for_long_rest) has the healers spend their slots on
+## whoever is under 60% of their Hit Points before walking on, rather than set out for the road worn (2026-10-14: the retuned
+## summit leaves the party hurt, and the night road home met eleven wolves).
+func _mend_the_hurt() -> void:
+	for pass_no in 12:
+		var hurt := st().party.filter(func(c: Character) -> bool: return not c.dead and c.hp > 0 and c.hp * 10 < c.max_hp() * 6)
+		if hurt.is_empty():
+			return
+		hurt.sort_custom(func(a: Character, b: Character) -> bool: return a.hp * b.max_hp() < b.hp * a.max_hp())
+		if not _heal_with_spells(hurt[0]):
+			return
 
 
 func rest(long: bool) -> void:
