@@ -53,7 +53,7 @@ func free_casting(c: Combatant, spell_id: String) -> bool:
 func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
 	var ch := sp().caster_char(c)
 	if ch == null:
-		return {"level": 0, "free": false}
+		return {"level": enc().monster_actions.spend_reaction_spell(c, spell_id), "free": false}
 	var level := maxi(1, int(_comp().spell_data(spell_id).get("level", 1)))
 	var levels := slot_levels(ch, level)
 	if free_casting(c, spell_id) and (slot_choice == -1 or not slot_choice in levels) and (slot_choice == -1 or free_first(c, spell_id)):
@@ -152,23 +152,24 @@ func incoming_roll_responses(c: Combatant) -> Array[String]:
 ## Whether `c` can cast `spell_id` as a Reaction now: its slots or a free casting, whatever it cast earlier in the turn.
 ## Reactions don't count towards the one spell slot a turn (owner, 2026-10-13: Ratatouille cast a level 3 spell on his
 ## turn, then wasn't asked about Shield when an Opportunity Attack hit him on the way out).
+## A monster casts one from its stat block: a use of its Spellcasting or a Reaction that casts it (the mage's Protective
+## Magic; MonsterActions.reaction_spell_source).
 func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 	var spells := sp()
-	if spells.caster_char(c) == null or not can_react(c):
+	if not can_react(c):
 		return false
 	var ch := spells.caster_char(c)
+	var s := _comp().spell_data(spell_id)
+	if ch == null:
+		return c.creature is Monster and str(s.get("automation", "")) != "reference" and _voice_ok(c, s) \
+			and enc().monster_actions.reaction_spell_source(c, spell_id) != ""
 	if not ch.knows_spell(spell_id):
 		return false
-	var s := _comp().spell_data(spell_id)
 	var free := free_casting(c, spell_id)
 	if str(s.get("automation", "")) == "reference" or c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c):
 		return false
-	if bool((s.get("components", {}) as Dictionary).get("v", false)):
-		if c.creature.has_flag("speechless"):
-			return false
-		for cell in c.footprint():
-			if spells.zones.silenced(cell):
-				return false
+	if not _voice_ok(c, s):
+		return false
 	var armor := ch.equipped("armor")
 	if not armor.is_empty() and not ch.trained_for(armor):
 		return false
@@ -179,6 +180,57 @@ func can_cast_reaction(c: Combatant, spell_id: String) -> bool:
 		if ch.slots_left(l) > 0:
 			return true
 	return false
+
+
+## Whether `c` can give spell `s` its Verbal component: not speechless, not in Silence.
+func _voice_ok(c: Combatant, s: Dictionary) -> bool:
+	if not bool((s.get("components", {}) as Dictionary).get("v", false)):
+		return true
+	if c.creature.has_flag("speechless"):
+		return false
+	for cell in c.footprint():
+		if sp().zones.silenced(cell):
+			return false
+	return true
+
+
+## Counterspell (2024) from a creature the AI plays: `c` is casting `s` (`seen`: with Verbal, Somatic or Material
+## components left) and a creature hostile to it within 60 ft that sees it can cast Counterspell (a mage's Protective
+## Magic, Kasimir's or Mordenkainen's Spellcasting, an enemy wizard's slot). It does when the spell is a levelled one
+## (coordinator relay 2026-10-13: foes never cast Shield or Counterspell; the owner's rule is that foes use their spells
+## when best). `c` makes a Constitution save against its spell save DC; on a failure the spell dissipates with no
+## effect: its action is spent, a slot isn't. Heroes and the guests the player runs don't counter here (asking them
+## would have to pause the cast). True when the spell is countered.
+func counterspelled(c: Combatant, s: Dictionary, seen: bool = true) -> bool:
+	var e := enc()
+	if not seen or int(s.get("level", 0)) < 1:
+		return false
+	for o in e.living():
+		if o == c or o.is_player_controlled() or not o.hostile_to(c) or e.distance(o, c) > 60 or not e.can_see(o, c):
+			continue
+		if not can_cast_reaction(o, "counterspell") or e._reaction_decision(o, "counterspell") == "never":
+			continue
+		o.reaction_available = false
+		if not sp().casting_gate(o):
+			continue
+		pay(o, "counterspell")
+		var dc := reaction_dc(o, "counterspell")
+		e.log.add("spell", "%s casts Counterspell at %s" % [o.name(), c.name()], o.id)
+		e.events.append({"type": "spell", "caster": o.id, "spell": "counterspell", "cells": [], "targets": [c.id]})
+		var test := c.creature.roll_save(e.dice, &"con", dc, [], [], "Constitution save vs Counterspell (%s)" % c.name(), SpellCaster.spell_save_keys(o.id))
+		if test.success:
+			e.log.add("save", "%s's %s gets through the Counterspell" % [c.name(), s["name"]], c.id, [test.describe()])
+			return false
+		e.log.add("spell", "%s's %s dissipates (Counterspell): the action is spent, the spell slot kept" % [c.name(), s["name"]], c.id, [test.describe()])
+		return true
+	return false
+
+
+## The spell save DC `c` casts the Reaction spell `spell_id` with: its stat block's (a monster) or its class's.
+func reaction_dc(c: Combatant, spell_id: String) -> int:
+	if sp().caster_char(c) == null:
+		return enc().monster_actions.spell_dc(c)
+	return (sp().numbers(c, sp()._entry_any(c, spell_id))["dc"] as Breakdown).total()
 
 
 ## Whether `c` can take a Reaction now (it has one, can act, and nothing stops it: Shocking Grasp, Slow).

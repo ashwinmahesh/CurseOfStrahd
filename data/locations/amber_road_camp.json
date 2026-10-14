@@ -223,6 +223,30 @@
             10
           ],
           "name": "One of His Shadows"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            14,
+            6
+          ],
+          "name": "One He Led Up"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "One He Led Up"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            6
+          ],
+          "name": "One He Led Up"
         }
       ]
     }

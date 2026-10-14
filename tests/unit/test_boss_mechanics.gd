@@ -751,3 +751,19 @@ func test_strahds_shapes_wear_their_sprites() -> void:
 	assert_eq(art.get("mist"), "strahd_mist")
 	for id: String in ["bat", "wolf", "mist"]:
 		assert_true(DirectionalSprite.has_attack(DirectionalSprite.frames_for(str(art[id]))), "%s has a sheet" % id)
+
+
+## Strahd takes mist form below a quarter of his Hit Points to regenerate out of reach, but not from a party he can
+## finish: with every hero left standing under a third of their Hit Points the mist only let the last blades chase him
+## round the room while he mended, and a boss-HP retune of his fights ended in the round limit (2026-10-14).
+func test_strahd_does_not_run_to_mist_from_a_party_he_can_finish() -> void:
+	for beaten: bool in [false, true]:
+		var e := _field()
+		var s := _strahd(e, Vector2i(3, 3))
+		var godrick := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(4, 3), 7)
+		s.creature.hp = 10   # he regenerates 20 as his turn starts and is still under a quarter
+		if beaten:
+			godrick.creature.hp = godrick.creature.max_hp() / 4
+		TestCombat.start_with(e, s)
+		e.ai.play_turn(s)
+		assert_eq(e.legendary.form(s) == "mist", not beaten, "mist form only against a party that can still hurt him (beaten %s)" % beaten)

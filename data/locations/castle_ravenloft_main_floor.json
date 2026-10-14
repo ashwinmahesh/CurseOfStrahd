@@ -1056,7 +1056,7 @@
             5
           ],
           "name": "Strahd von Zarovich",
-          "hp": 375
+          "hp": 490
         },
         {
           "monster": "swarm_of_bats",
@@ -1091,6 +1091,27 @@
           "cell": [
             5,
             4
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            6
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            4
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            6
           ]
         }
       ]
@@ -1176,6 +1197,30 @@
             35,
             8
           ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            49,
+            7
+          ],
+          "hp": 125
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            40,
+            6
+          ],
+          "hp": 125
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            48,
+            8
+          ],
+          "hp": 125
         }
       ]
     },
@@ -1213,6 +1258,30 @@
             42,
             7
           ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            49,
+            7
+          ],
+          "hp": 95
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            40,
+            6
+          ],
+          "hp": 95
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            48,
+            8
+          ],
+          "hp": 95
         }
       ]
     },

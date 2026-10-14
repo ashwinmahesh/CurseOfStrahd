@@ -66,7 +66,9 @@ func test_the_wardens_book_and_the_tricks() -> void:
 	st.set_flag("deep_lullaby_sung")
 	var sung := SideQuestPlay.encounter(st, "amber_deep", "the_eye_below")
 	assert_eq(str(sung.get("surprise", "")), "enemies")
-	assert_true(int(_eye(sung).get("hp", 999)) < 180, "half back in its amber")
+	# 2026-10-14, the boss fights at 3 in 8: the Eye plain needs 335 HP and a dreamed eye to be a fair fight for a full-ability
+	# party; with both ways taken it still wants those 335 HP, so the reward is the choked, lairless, surprised fight alone.
+	assert_true(int(_eye(sung).get("hp", 999)) <= int(_eye(plain).get("hp", 0)), "no tougher than the plain Eye")
 
 
 func test_meeting_the_eye_and_the_lullaby() -> void:

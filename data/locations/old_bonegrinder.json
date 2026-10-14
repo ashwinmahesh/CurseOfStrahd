@@ -400,7 +400,7 @@
             10
           ],
           "name": "Offalia Wormwiggle",
-          "hp": 300
+          "hp": 285
         },
         {
           "monster": "nightmare",
@@ -435,6 +435,27 @@
           "cell": [
             13,
             10
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            15,
+            8
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            15,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            13,
+            9
           ]
         }
       ],
