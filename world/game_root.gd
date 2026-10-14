@@ -1100,14 +1100,14 @@ func close_screen() -> void:
 	_refresh()
 
 
-## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
-## stands in for a full-screen panel and pauses the game until it closes, so nothing moves under it (a fight that an
-## area starts waits for it too).
+## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption, and
+## the scene after it, if it has one (data `then`). It stands in for a full-screen panel and pauses the game until it
+## closes, so nothing moves under it (a fight that an area starts waits for it too).
 func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 	close_screen()
 	var player := CutscenePlayer.new()
 	add_child(player)
-	if not player.play(id, [caption] as Array[String], st):
+	if not player.play_scenes(Cutscenes.scenes(id, caption, st, narrator, st.leader_character()), st):
 		player.queue_free()
 		hud.narrate(caption)
 		return null

@@ -666,7 +666,8 @@ def schedule_checks(data, errors, cond, flags_set, dialogue_refs):
 
 def cutscene_checks(data, parsed, errors):
     """Story cutscenes (story/cutscenes.gd, docs/ui/cutscenes.md): every picture is in art/cutscenes, every trigger is a
-    Narrator key some narrator file has, and every `cutscene <id>` in a conversation names one (or is `end`)."""
+    Narrator key some narrator file has, every `then` names a scene with a `caption` Narrator key some file has, and every
+    `cutscene <id>` in a conversation names one (or is `end`)."""
     narrator_keys = {n for key, p in parsed.items() if key.startswith("narrator/") for n in p["nodes"]}
     for cid, c in data.get("cutscenes", {}).items():
         w = f"data/cutscenes/{cid}.json"
@@ -679,6 +680,17 @@ def cutscene_checks(data, parsed, errors):
                 errors.append(f"{w}: trigger '{trig}' names no magic item")
         elif trig and trig not in narrator_keys:
             errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
+        nxt = c.get("then", "")
+        if nxt:
+            if nxt not in data.get("cutscenes", {}):
+                errors.append(f"{w}: then '{nxt}' isn't a cutscene")
+            elif not data["cutscenes"][nxt].get("caption"):
+                errors.append(f"{w}: then '{nxt}' has no `caption` Narrator key to read over its picture")
+        cap = c.get("caption", "")
+        if cap and cap not in narrator_keys:
+            errors.append(f"{w}: caption '{cap}' isn't a node in any narrative/narrator file")
+        if cap and trig:
+            errors.append(f"{w}: a scene with a `caption` follows another (`then`) and has no trigger of its own")
     for key, p in parsed.items():
         for cid, where in p["cutscenes"]:
             if cid != "end" and cid not in data.get("cutscenes", {}):

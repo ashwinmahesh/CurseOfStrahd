@@ -36,6 +36,13 @@ rest of the visit.
   chest's or a fight's spoils it shows before the loot window opens.
 - `once`: the picture shows only the first time its trigger fires (`_cutscene/<id>` in the story's flags). Every
   `enter:` and `find:` trigger has it.
+- `then`, `caption`: the scene after this one (owner rule, 2026-10-14: every cutscene is at least two scenes). `then`
+  names another cutscene, with its own picture and a `caption`, a Narrator key (`scene:<id>`, in the narrator file of
+  that region) whose line reads over it. When a trigger plays the first scene, the second fades in after its last
+  caption, and so on down a chain; Skip leaves them all. A scene with no picture for the story now, or a key with no
+  line, ends the chain there, so a game with no Narrator plays the first scene alone. A treasure found in a
+  conversation plays its next scenes after the notices (each picture with the Narrator's line over it) and then takes
+  the picture away, so the talk goes on as it did.
 
 `make validate` checks every picture exists, every trigger is a node in a `narrative/narrator/` file (or a
 `find:` names a magic item), and every `cutscene <id>` in a conversation names a cutscene.
@@ -73,12 +80,14 @@ line, so the picture shows with it before the fight begins (Wintersplinter, the 
 area starts (the gallows field at night) takes the area's `enter:` trigger; the game waits under the picture.
 
 ## Code
-- `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`.
+- `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
+  `scenes` (a trigger's scenes in order, from `then` and `caption`).
 - `ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture (whole, letterboxed in black) and its fade, the caption, Skip and the pause
   card. Motion is off in headless runs and still captures (UiMotion).
 - `ui/cutscene/cutscene_player.gd` (`CutscenePlayer`): a place's cutscene while exploring, opened by
-  `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested`. It stands in as the open screen, so
-  nothing in the world moves under it.
+  `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested` (a fight's narrator key opens it from
+  `world/combat/combat_view.gd`). It stands in as the open screen, so nothing in the world moves under it. It plays
+  `Cutscenes.scenes`: each scene's captions, then the next picture.
 - `ui/dialogue/dialogue_ui.gd`: the `cutscene` beat, captions and Skip in a conversation.
 
 ## Art
