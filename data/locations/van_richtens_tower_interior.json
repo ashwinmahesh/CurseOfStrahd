@@ -146,7 +146,7 @@
     {
       "id": "vrt_stairs_up_1",
       "cell": [
-        10,
+        9,
         1
       ],
       "to": "van_richtens_tower_interior",
@@ -156,7 +156,7 @@
     {
       "id": "vrt_stairs_down_2",
       "cell": [
-        10,
+        9,
         13
       ],
       "to": "van_richtens_tower_interior",
@@ -166,7 +166,7 @@
     {
       "id": "vrt_stairs_up_2",
       "cell": [
-        3,
+        4,
         13
       ],
       "to": "van_richtens_tower_interior",
@@ -176,7 +176,7 @@
     {
       "id": "vrt_stairs_down_3",
       "cell": [
-        3,
+        4,
         25
       ],
       "to": "van_richtens_tower_interior",

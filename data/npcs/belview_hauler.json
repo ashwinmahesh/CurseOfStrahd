@@ -3,7 +3,7 @@
   "name": "Belview",
   "title": "Carrying Wood to the Wards",
   "summary": "A hunched Belview with a bull's shoulders who carries wood from the pile to the wards all day, and hums a hymn in three different voices.",
-  "portrait": "belview",
+  "portrait": "belview_hauler",
   "sprite": "belview",
   "attitude": "indifferent",
   "voice": "docs/voice/belview.md",

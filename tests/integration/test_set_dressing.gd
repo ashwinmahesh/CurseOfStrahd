@@ -42,6 +42,26 @@ func test_every_prop_and_container_has_art() -> void:
 	assert_eq(missing, [] as Array[String], "no art for")
 
 
+## Owner report (2026-10-13): Van Richten's Tower had no stairs up on screen. Its four stair exits stood on wall squares, so
+## the flight was buried in the wall block. A stair stands on an open square, where the party walks onto it. The cave
+## mouth's two stairs, at the south edge of the Werewolf Den caves, are the only ones set into a (cut-away) wall.
+func test_stairs_stand_on_open_squares() -> void:
+	var edge := ["den_caves_out", "den_caves_out_2"]
+	var buried: Array[String] = []
+	var locs := Compendium.shared().tables["locations"] as Dictionary
+	for loc_id: String in locs:
+		var loc := locs[loc_id] as Dictionary
+		var rows := (loc.get("map", {}) as Dictionary).get("rows", []) as Array
+		for e: Variant in loc.get("exits", []):
+			var ex := e as Dictionary
+			if not SetDressing.exit_look(ex, false) in ["stair_riser", "stair_down"] or str(ex["id"]) in edge:
+				continue
+			var c := ex["cell"] as Array
+			if str((rows[int(c[1])] as String)[int(c[0])]) == "#":
+				buried.append("%s/%s" % [loc_id, ex["id"]])
+	assert_eq(buried, [] as Array[String], "stairs set into a wall")
+
+
 func test_catalog_names_only_art_that_exists() -> void:
 	var cat := SetDressing.catalog()
 	var named: Array[String] = [str(cat.get("container_default", ""))]
