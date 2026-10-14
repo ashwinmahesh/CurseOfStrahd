@@ -1339,7 +1339,7 @@
         {
           "monster": "flameskull",
           "cell": [
-            36,
+            38,
             6
           ]
         },
@@ -1445,7 +1445,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
+            10,
             12
           ]
         },
@@ -1476,7 +1476,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
+            10,
             12
           ]
         },

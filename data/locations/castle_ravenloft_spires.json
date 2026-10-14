@@ -448,8 +448,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            30,
-            4
+            29,
+            3
           ]
         },
         {
@@ -503,8 +503,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            30,
-            4
+            29,
+            3
           ]
         },
         {
@@ -535,8 +535,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            28,
-            13
+            25,
+            17
           ],
           "name": "Stair Warden"
         },

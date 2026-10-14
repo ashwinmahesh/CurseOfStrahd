@@ -1075,22 +1075,22 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            43,
+            42,
             18
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            43,
-            22
+            42,
+            21
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
             32,
-            18
+            20
           ]
         },
         {
@@ -1127,15 +1127,15 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            43,
+            42,
             18
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            43,
-            22
+            42,
+            21
           ]
         },
         {
