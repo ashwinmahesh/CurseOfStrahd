@@ -1,0 +1,15 @@
+{
+  "id": "cairn_open",
+  "title": "Under the Last Stone",
+  "summary": "At the warded cairn on the summit, the last stone lifted away, an oilcloth bundle holds a grey spellbook and two scrolls.",
+  "images": [
+    {
+      "image": "cairn_open",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

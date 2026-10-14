@@ -124,6 +124,7 @@ endif
 * (Draw your weapons.) -> fight
 
 ~ eye_what
+cutscene eye_watches_gods
 The Eye Below: The only thing in this temple that sees. The dead gods in their little boxes lie; I watched them lie for a thousand years, until the wardens put me to sleep for seeing it. I was a debt they paid with sleep.
 The Eye Below: The warden paid the last of it with his memory. And someone has been giving it back to him, a little at a time. Thank you for that. I've so looked forward to looking at things again.
 -> eye_menu

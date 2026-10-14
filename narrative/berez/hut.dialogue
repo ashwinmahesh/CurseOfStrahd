@@ -24,6 +24,7 @@ Narrator: Red hair. An M. A thorn through the heart, and the cloth worn soft fro
 -> poppet_truth
 
 ~ poppet_truth
+cutscene whoever_m_was
 set marina_truth_known
 if not quest.the_witch_of_berez >= truth
 quest the_witch_of_berez truth

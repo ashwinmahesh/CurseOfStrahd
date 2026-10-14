@@ -142,6 +142,7 @@ mad_mage: Goodbye! Mind the birds. Don't believe a word they say.
 
 ~ restored
 cutscene end
+cutscene mordenkainen_returns
 set mordenkainen_restored
 quest the_mad_mage restored
 Narrator: He sits very still. The snow stops. Something comes back into his face, one piece at a time, like furniture being carried into an empty house: a hard mouth, a scholar's frown, an old and specific anger.

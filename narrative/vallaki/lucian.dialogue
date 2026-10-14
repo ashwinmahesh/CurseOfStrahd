@@ -110,6 +110,7 @@ take st_andrals_bones
 set bones_returned
 quest bones_of_st_andral bones_returned
 attitude father_lucian friendly
+cutscene bones_home
 Narrator: Lucian carries the bundle down to the crypt himself, holding it the way you would hold a sleeping child. You hear the lid of the sarcophagus grind home, and then his voice, saying the old words. Something in the air of the church settles, like a held breath let out.
 Father Lucian [smile]: Welcome home. Welcome home, old man.
 if name:hedda_ironvow and quest.cold_prayers

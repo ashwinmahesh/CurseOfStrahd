@@ -1,0 +1,15 @@
+{
+  "id": "yester_planting",
+  "title": "Something Planted on the Crown",
+  "summary": "A hooded figure kneels on the burned crown by lantern light, pressing earth round a thin black shoot as the ash drifts toward it.",
+  "images": [
+    {
+      "image": "yester_planting",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

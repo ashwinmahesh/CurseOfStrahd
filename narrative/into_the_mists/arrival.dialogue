@@ -61,6 +61,7 @@ endif
 if name:silvain_aster
 quest aurels_last_chapter the_letter
 endif
+cutscene mists_wolves_watch
 if not name:godrick_pendlebrook
   interject class:fighter: Road goes one way. So do we.
 endif

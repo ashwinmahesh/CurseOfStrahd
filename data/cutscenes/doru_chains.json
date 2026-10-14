@@ -1,0 +1,15 @@
+{
+  "id": "doru_chains",
+  "title": "In Silvered Chains",
+  "summary": "Doru hangs in silvered chains in his cell, starving, and knows them at once.",
+  "images": [
+    {
+      "image": "doru_chains",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

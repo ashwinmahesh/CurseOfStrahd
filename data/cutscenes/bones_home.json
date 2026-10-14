@@ -1,0 +1,15 @@
+{
+  "id": "bones_home",
+  "title": "Welcome Home, Old Man",
+  "summary": "Father Lucian carries the bundle of St. Andral's bones down to the crypt like a sleeping child, and the church settles.",
+  "images": [
+    {
+      "image": "bones_home",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -3,6 +3,7 @@
 
 ~ start
 Narrator: The thing in the coffin goes still, and stays still. Far above you, stone groans, as if the whole castle has let out a breath.
+cutscene stair_out
 Narrator: You climb out of the dark by the long stair. Torches gutter as you pass, like servants who no longer know whom they serve.
 if guest:ireena
 Ireena: Is it over? Truly? I keep waiting to hear his voice behind me.
