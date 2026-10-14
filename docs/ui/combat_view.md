@@ -17,7 +17,8 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
 
 1. **Initiative strip** (top center): round number and portraits in turn order; the active creature is larger with a
    candle frame; enemies have red frames, the party gold, guests moonlight blue; a thin HP bar under each (enemies
-   show Bloodied and dead states, not exact HP). Hover a portrait to highlight the creature on the field.
+   show Bloodied and dead states, not exact HP). Hover a portrait to highlight the creature on the field. A long
+   order scrolls sideways inside its panel (see "A long turn order" below).
 2. **Party frames** (left): the four party members and any guest, with HP bars, conditions as named chips (Prone,
    Poisoned, Bless ◎ for Concentration) and the level-up badge. Click or Tab to switch the controlled character on
    their turn or to inspect them otherwise.
@@ -311,7 +312,19 @@ figure (`CombatHud.focus_requested`, `CombatView._focus_on`; the rig eases after
 turn still takes the turn on a click, and the camera goes along. The next turn, an action, the camera keys or the pad's
 cursor take the camera on from there; a creature nobody can see isn't shown. On a pad, Next target (X) while the radial
 is held steps the camera along the order, one creature a press, the cursor going too (`_look_along_order`); a line under
-the wheel names the button.
+the wheel names the button; the right bumper (RB) with the radial held steps back along it (`_look_along_order(-1)`).
+The creature the camera went to is ringed in white in the order (`CombatHud.look_at`) until the next turn.
+
+## A long turn order (owner, 2026-10-14)
+
+When the portraits are wider than their panel (13 or more at 1600 px) the order scrolls sideways instead of running
+past the window (`TurnStrip`, ui/combat/turn_strip.gd; the cards are still `CombatHud._strip`'s children). At the start
+of the fight and at each new turn the row glides to put the card whose turn it is in the middle, once per turn: a
+refresh within the turn (a hit point lost, a condition) never moves it. Scrolling by hand holds the row where it was put
+until the next turn: the mouse wheel or a trackpad over it, a touch drag, or the arrows at its ends; on a pad, LB held
+with X / RB looks on and back along the order and each creature in turn is brought into view. A fade with an arrow
+marks an end with more beyond it, with how many portraits are wholly out of sight that way. Nothing changes while every
+portrait fits: no fades, no arrows, and the wheel still zooms the camera. The test is tests/unit/test_turn_strip.gd.
 
 ## Moving Hex and Hunter's Mark (owner question, 2026-10-12)
 

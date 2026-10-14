@@ -556,6 +556,7 @@ func _focus_on(id: String) -> void:
 	if using_pad:
 		cursor_cell = tok.combatant.cell
 		_pad_hover()
+		hud.look_at(id)   # the order scrolls to them and rings them
 	rig.follow = tok
 	for k: String in tokens:
 		(tokens[k] as CombatToken).set_highlight(tokens[k] == tok)
@@ -565,9 +566,9 @@ func _focus_on(id: String) -> void:
 var _looked_at := ""
 
 
-## On a pad (holding the radial, the Next target button): the camera to the next creature in the turn order after the
-## one last looked at, or after whoever's turn it is.
-func _look_along_order() -> void:
+## On a pad (holding the radial, the Next target button; the right bumper goes back): the camera to the next creature in
+## the turn order after the one last looked at, or after whoever's turn it is. The order on the HUD scrolls along.
+func _look_along_order(step: int = 1) -> void:
 	var order: Array[Combatant] = []
 	for c in e.order:
 		var tok := _tok(c.id)
@@ -577,7 +578,10 @@ func _look_along_order() -> void:
 		return
 	var from := e.get_c(_looked_at) if _looked_at != "" else e.current()
 	var i := order.find(from)
-	_focus_on(order[(i + 1) % order.size()].id)
+	if i < 0:
+		_focus_on(order[0 if step > 0 else order.size() - 1].id)   # whoever it was is gone: from the top, or the end
+		return
+	_focus_on(order[posmod(i + step, order.size())].id)
 
 
 ## Takes control of another hero sharing the turn (EncounterTurns.switch_to): a click on their frame or portrait, Tab,
@@ -1244,6 +1248,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	# While the radial is held, Next target looks along the turn order instead (the portraits' click on a pad).
 	if hud.radial.visible and event.is_action_pressed(&"combat_next_target"):
 		_look_along_order()
+		get_viewport().set_input_as_handled()
+		return
+	# The right bumper, still holding the radial, looks back along it (it uses a hotbar slot otherwise).
+	if hud.radial.visible and event is InputEventJoypadButton and event.is_action_pressed(&"combat_use_slot"):
+		_look_along_order(-1)
 		get_viewport().set_input_as_handled()
 		return
 	# While a wheel of actions is open the D-pad changes its filter (up and down) and its page (left and right).
