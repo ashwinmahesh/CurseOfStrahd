@@ -55,11 +55,16 @@
       "model": "eleven_v3"
     },
     "ezmerelda": {
-      "voice_id": "cwrfPUlbf5fNAZi1O1Dw",
-      "name": "Barovia Ezmerelda d'Avenir",
-      "description": "A woman in her thirties with a sharp, confident, slightly husky voice and a light Eastern European accent. Quick, practical and impatient, a monster hunter's dry humour; clipped sentences, a hint of a smirk, steel underneath.",
+      "voice_id": "B0LZgLouwEAUa0n4x2tJ",
+      "name": "Barovia Ezmerelda d'Avenir (2026-10-14)",
+      "description": "A tough woman in her mid-thirties, a seasoned monster hunter, with a low, husky, rough-edged voice and a strong, clearly audible Romanian accent. Hard, blunt and unimpressed, with dry gallows humour, clipped sentences and a smirk in the voice; steel underneath, never soft, never breathy, normal speaking volume.",
       "settings": {},
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "B0LZgLouwEAUa0n4x2tJ",
+      "earlier_voice_id": "cwrfPUlbf5fNAZi1O1Dw",
+      "voice_note": "Owner, 2026-10-14: her old designed voice (light accent, no accent tag, 85 of 100 lines undirected) drifted from line to line and wasn't tough enough. Recast on a new designed voice (a tougher one, his pick: voice 2 of 3) with the strong Romanian accent tag and a direction on every line; all 100 lines re-recorded.",
+      "released": true
     },
     "baron_vargas": {
       "voice_id": "pgQrrxrvRHxS13dQlEKa",
