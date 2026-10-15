@@ -51,8 +51,19 @@ flash, smoke, streaks and glints from the new figure, which fades in). The event
 `shapeshift` in art/audio.json, layered from the repo's own recordings, so the sound slider sets how loud they are). A
 kind with no entry gets the default's, so a new shapeshifter needs only to emit the event. A figure nobody can see (an
 Invisible foe's), and a fight with its effects off, change at once with no effect or sound.
+
+The same effect covers the other routes to a new figure (the audit, owner ask 2026-10-14): the lycanthropy curse (the
+cursed creature gathers and changes where it fell, then the werewolf arrives in a flash: the `vanish` and
+`summon_creature` events' `becomes`); a shape with no sprite of its own (it still shows on the figure it has: every
+monster has a sprite today, and a test keeps it so); a fight picked up from a save with someone mid-shape
+(`CombatView._restore_forms` puts each in the figure it was in, so it can still change back); and a person the story
+showed who turns out to be something else when their conversation ends in a fight (`LocationNpcs.hide_npcs_of` keeps who
+stepped aside; a foe of the same name whose stat block has a `reveal`, a kind from `FxShapeshift.LOOKS`, changes in
+front of the party: Offalia and the other hags, Vosk, the Abbot, the vampire spawn Anatol, Doru, Escher and the brides,
+Patrina, Zuleika; `LocationFights._reveal`).
 `make capture SCENE=res://tools/capture/shapeshift_capture.tscn NAME=shapeshift/shot` takes a filmstrip of each.
-`tests/integration/test_shapeshift_effect.gd` checks it.
+`tests/integration/test_shapeshift_effect.gd` and `test_shapeshift_audit.gd` check it; `reveal_capture.tscn` takes the
+story reveal.
 
 ## Lingering areas
 

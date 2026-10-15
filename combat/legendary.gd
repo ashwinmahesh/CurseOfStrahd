@@ -321,6 +321,14 @@ func form(c: Combatant) -> String:
 	return str(c.get_meta("form", base_form(c)))
 
 
+## The sprite of the shape `c` is in now, or "" in its true form or a shape with no figure of its own: what a fight picked
+## up from a save draws it as (CombatView._restore_forms).
+func form_art(c: Combatant) -> String:
+	if forms_of(c).is_empty() or form(c) == base_form(c):
+		return ""
+	return str(shape(c, form(c)).get("art", ""))
+
+
 func shape(c: Combatant, id: String) -> Dictionary:
 	for s: Variant in forms_of(c).get("shapes", []):
 		if str((s as Dictionary).get("id", "")) == id:

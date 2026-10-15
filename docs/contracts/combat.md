@@ -319,7 +319,8 @@ away until he is back over half. Withdrawing turns him to mist (or a bat) as he 
 Events: `legendary` (id, option, name, left), `lair` (id, action, name, targets), `form` (id, form, art: the token wears the
 shape's sprite when it exists, kind: how the change looks and sounds), `vanish` (id, left: mist or withdraw, narration)
 for a creature leaving the fight. A change of shape (`form`, and `shape` for Polymorph and Wild Shape: id, art, kind)
-is shown the same way whoever changes: FxShapeshift and its sound (docs/art/spell_effects.md, "A change of shape").
+is shown the same way whoever changes: FxShapeshift and its sound (docs/art/spell_effects.md, "A change of shape"). A
+`vanish` and `summon_creature` carrying `becomes` (a kind) are one creature turning into another (the lycanthropy curse).
 The initiative tracker shows a legendary creature's actions left (◆◇) and the lair's card at count 20.
 
 ## Reusable feature and spell responses

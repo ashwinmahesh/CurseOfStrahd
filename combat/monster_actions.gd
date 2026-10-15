@@ -1014,10 +1014,12 @@ func lycanthrope(t: Combatant) -> bool:
 	m.name = "%s (%s)" % [t.name(), kind]
 	m.hp = 10
 	t.creature.dead = true
-	e.events.append({"type": "vanish", "id": t.id})
+	# `becomes` is how the change looks and sounds (FxShapeshift): the creature changes where it fell, and the werewolf
+	# stands up in its place.
+	e.events.append({"type": "vanish", "id": t.id, "becomes": kind})
 	var w := e.add(m, &"enemy", t.cell)
 	e.insert_after(t, w)
-	e.events.append({"type": "summon_creature", "id": w.id, "cell": w.cell, "caster": t.id})
+	e.events.append({"type": "summon_creature", "id": w.id, "cell": w.cell, "caster": t.id, "becomes": kind})
 	e.log.add("death", "%s changes into a %s!" % [t.name(), kind], w.id)
 	return true
 
@@ -1028,7 +1030,12 @@ func shift(c: Combatant) -> void:
 	var e := enc()
 	var back := str(c.get_meta("form", "humanoid")) == "hybrid"
 	c.set_meta("form", "humanoid" if back else "hybrid")
-	e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	# Only a lycanthrope's other form is a hybrid; a Mimic's or a Night Hag's Shape-Shift is its own change of shape.
+	var lycan := c.creature is Monster and "lycanthrope" in ((c.creature as Monster).data.get("tags", []) as Array)
+	if lycan:
+		e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	else:
+		e.log.add("info", ("%s returns to its true form" if back else "%s changes shape") % c.name(), c.id)
 	show_form(c, back)
 
 
@@ -1040,6 +1047,12 @@ func show_form(c: Combatant, back: bool) -> void:
 	if art != "":
 		enc().events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art,
 			"kind": "wereraven" if art.contains("raven") else "werewolf"})
+
+
+## The sprite `c` wears in the form it is in now (its hybrid's), or "" in its own: what a fight picked up from a save
+## draws it as (CombatView._restore_forms).
+func form_art(c: Combatant) -> String:
+	return _hybrid_art(c) if str(c.get_meta("form", "humanoid")) == "hybrid" else ""
 
 
 ## The figure a lycanthrope takes on in its hybrid form, or "" to keep its own: the stat block's `hybrid_art` (Emil and

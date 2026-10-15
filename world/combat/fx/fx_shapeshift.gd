@@ -23,6 +23,11 @@ const LOOKS := {
 	"mist": {"flavour": "cold", "tint": "mist_blue", "shards": 0, "puffs": 22, "density": 0.9, "shake": 0.0},
 	"wild_shape": {"flavour": "nature", "tint": "bile", "shards": 22, "puffs": 8, "density": 0.5, "shake": 0.03},
 	"polymorph": {"flavour": "arcane", "tint": "lilac", "shards": 22, "puffs": 8, "density": 0.5, "shake": 0.0},
+	# A person the story showed turning out to be something else (LocationFights._reveal; a stat block's `reveal`).
+	"hag": {"flavour": "poison", "tint": "sickly", "shards": 18, "puffs": 14, "density": 0.6, "shake": 0.03},
+	"undead": {"flavour": "necrotic", "tint": "bile", "shards": 16, "puffs": 14, "density": 0.65, "shake": 0.02},
+	"fiend": {"flavour": "fire", "tint": "ember", "shards": 26, "puffs": 12, "density": 0.6, "shake": 0.05},
+	"celestial": {"flavour": "radiant", "tint": "wick", "shards": 28, "puffs": 8, "density": 0.4, "shake": 0.03},
 	"default": {"flavour": "arcane", "tint": "lilac", "shards": 20, "puffs": 8, "density": 0.5, "shake": 0.0},
 }
 
