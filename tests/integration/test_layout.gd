@@ -706,6 +706,26 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		assert_true((cv.hud.get("_prompt_callout") as Label).visible, "the Critical Hit line shows")
 		return cv.hud,
 		func() -> void: cv.hud.hide_prompt())
+	# Preserve Life (owner question 2026-10-14): a slider for each Bloodied creature in reach, long names wrapping, and the
+	# count of what is left to share, with as many creatures as a party and its companions can bring.
+	var share := ReactionRequest.new("preserve_life", party.id, party.id)
+	share.title = "Preserve Life"
+	share.text = "Share 45 Hit Points among the Bloodied creatures within 30 feet, yourself included. No one rises above half their Hit Point maximum, and the points you don't give out are lost."
+	share.cost = "Magic action and a Channel Divinity use (2 left)"
+	share.spends_reaction = false
+	share.pool = 45
+	for k in 6:
+		var id := "creature%d" % k
+		share.target_choices.append({"id": id, "name": "Knight %d" % k, "room": 18 + k,
+			"label": "%s the Very Long-Named Knight of the Silver Dragon %d · %d of 60 Hit Points · up to %d" % [party.name(), k, 6 + k, 18 + k]})
+		share.amounts[id] = 8 if k < 5 else 5
+	await _check("Preserve Life's prompt", func() -> Variant:
+		cv.hud.show_prompt(share)
+		await _frames(1)
+		assert_true((cv.hud.get("_prompt_pool") as Label).text.contains("Left to share: 0") or (cv.hud.get("_prompt_pool") as Label).text.contains("All 45"), (cv.hud.get("_prompt_pool") as Label).text)
+		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no standing rule for a division")
+		return cv.hud,
+		func() -> void: cv.hud.hide_prompt())
 	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.
 	var rows: Array = []
 	for k in 12:

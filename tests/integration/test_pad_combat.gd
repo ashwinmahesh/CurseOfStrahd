@@ -285,6 +285,65 @@ func test_the_action_bar_hides_and_comes_back() -> void:
 	CombatHud.actions_hidden = false
 
 
+## Preserve Life's prompt on a pad: the D-pad reaches each creature's slider, left and right give and take points, the
+## count of what is left follows, and Heal (A) confirms.
+func test_dividing_a_pool_on_the_pad() -> void:
+	if not _ready_for_input():
+		return
+	var who := cv.e.current()
+	var req := ReactionRequest.new("preserve_life", who.id, who.id)
+	req.title = "Preserve Life"
+	req.text = "Share 20 Hit Points."
+	req.spends_reaction = false
+	req.pool = 20
+	req.target_choices.assign([{"id": "a", "name": "Ilse", "label": "Ilse · 4 of 40 Hit Points · up to 16", "room": 16},
+		{"id": "b", "name": "Tamsin", "label": "Tamsin · 6 of 30 Hit Points · up to 9", "room": 9}])
+	req.amounts = {"a": 0, "b": 0}
+	var got: Array = []
+	var ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		if use:
+			got.append((ref.get_ref() as ReactionRequest).amounts.duplicate())
+		return CombatResult.new()
+	cv.e.pending = req
+	cv.mode = CombatView.Mode.PROMPT
+	cv.hud.show_prompt(req)
+	await _frames(2)
+	var box := cv.hud.get("_prompt") as Control
+	assert_eq(nav.scope_now(), box, "the prompt takes the pad alone")
+	assert_eq(PadNav.choices(box).filter(func(c: Control) -> bool: return c is HSlider).size(), 2, "a slider for each creature can be reached")
+	var sliders := cv.hud.get("_prompt_sliders") as Dictionary
+	var on := func(id: String) -> bool: return get_viewport().gui_get_focus_owner() == sliders[id]
+	for i in 6:
+		if on.call("b"):
+			break
+		await _press(JOY_BUTTON_DPAD_UP)
+	assert_true(on.call("b"), "up from Heal to Tamsin's slider (on %s)" % get_viewport().gui_get_focus_owner())
+	for i in 3:
+		await _press(JOY_BUTTON_DPAD_RIGHT)
+	assert_eq(int(req.amounts["b"]), 3, "right gives a point at a time")
+	assert_eq(req.unspent(), 17, "and the count goes down")
+	assert_true((cv.hud.get("_prompt_pool") as Label).text.contains("17 of 20"), (cv.hud.get("_prompt_pool") as Label).text)
+	await _press(JOY_BUTTON_DPAD_LEFT)
+	assert_eq(int(req.amounts["b"]), 2, "left takes one back")
+	for i in 6:
+		if on.call("a"):
+			break
+		await _press(JOY_BUTTON_DPAD_UP)
+	assert_true(on.call("a"), "up again to Ilse's slider")
+	for i in 5:
+		await _press(JOY_BUTTON_DPAD_RIGHT)
+	assert_eq(int(req.amounts["a"]), 5)
+	assert_eq(req.unspent(), 13)
+	var use := cv.hud.get("_prompt_use") as Control
+	use.grab_focus()
+	await _press(JOY_BUTTON_A)
+	await _frames(2)
+	assert_eq(got.size(), 1, "A on Heal confirms")
+	assert_eq(int((got[0] as Dictionary)["a"]), 5)
+	assert_eq(int((got[0] as Dictionary)["b"]), 2)
+
+
 ## A hero's Reactions on one prompt (owner report 2026-10-12): the D-pad reaches each of them, A picks one and goes on
 ## to Use Reaction, and A there takes it.
 func test_a_list_of_reactions_on_the_pad() -> void:
