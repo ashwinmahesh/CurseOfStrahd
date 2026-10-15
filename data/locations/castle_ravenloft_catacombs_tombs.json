@@ -587,7 +587,7 @@
       "trigger": "enter_area:cat_guardians_hall",
       "surprise": "",
       "flag": "cat_guardians_stilled",
-      "text": "Three of the stone knights were never stone. They step off their plinths into the aisle, visors turning together.",
+      "text": "Some of the stone knights were never stone. They step off their plinths into the aisle, visors turning together.",
       "monsters": [
         {
           "monster": "strahds_animated_armor",
@@ -608,6 +608,27 @@
           "cell": [
             18,
             18
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            16,
+            1
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            13,
+            6
           ]
         }
       ]

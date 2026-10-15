@@ -1328,7 +1328,7 @@
     {
       "id": "court_post_watch",
       "trigger": "enter_area:court_guard_post",
-      "text": "The armour on its stand turns its helm toward the door. Behind it, three more suits step down from the wall pegs with nobody inside them.",
+      "text": "The armour on its stand turns its helm toward the door. Behind it, more suits step down from the wall pegs with nobody inside them.",
       "monsters": [
         {
           "monster": "strahds_animated_armor",
@@ -1336,28 +1336,40 @@
             10,
             17
           ],
-          "name": "The count's armour"
+          "name": "The count's armour",
+          "hp": 190
         },
         {
           "monster": "helmed_horror",
           "cell": [
             12,
             21
-          ]
+          ],
+          "hp": 102
         },
         {
           "monster": "helmed_horror",
           "cell": [
             17,
             22
-          ]
+          ],
+          "hp": 102
         },
         {
           "monster": "helmed_horror",
           "cell": [
             16,
             18
-          ]
+          ],
+          "hp": 102
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            26,
+            21
+          ],
+          "hp": 102
         }
       ],
       "surprise": "",
@@ -1456,7 +1468,7 @@
     {
       "id": "court_accountant_rug",
       "trigger": "dialogue",
-      "text": "The rug lifts off the floor like a sheet in the wind and comes for you, and from the ledger shelves something small and pale scuttles out on its fingers.",
+      "text": "The rug lifts off the floor like a sheet in the wind and comes for you, and from the ledger shelves something small and pale scuttles out on its fingers. The suits of armour by the desk turn to face you.",
       "monsters": [
         {
           "monster": "rug_of_smothering",
@@ -1464,28 +1476,56 @@
             4,
             21
           ],
-          "name": "The rug"
+          "name": "The rug",
+          "hp": 57
         },
         {
           "monster": "crawling_claw",
           "cell": [
             2,
             20
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             6,
             20
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             8,
             15
-          ]
+          ],
+          "hp": 4
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            8,
+            19
+          ],
+          "hp": 235
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            6,
+            22
+          ],
+          "hp": 235
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            8,
+            21
+          ],
+          "hp": 235
         }
       ],
       "surprise": "",

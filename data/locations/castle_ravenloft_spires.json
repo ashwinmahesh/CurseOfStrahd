@@ -402,7 +402,7 @@
       "id": "spires_stair_watch",
       "trigger": "enter_area:spires_upper_stair",
       "when": "not flag.spires_stair_watch_cleared and level >= 11",
-      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "text": "Shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
       "surprise": "",
       "flag": "spires_stair_watch_cleared",
       "monsters": [
@@ -458,6 +458,74 @@
             29,
             9
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            17
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            19,
+            2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            24,
+            18
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            3
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            24,
+            2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            13
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            28,
+            15
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            26,
+            17
+          ],
+          "name": "Stair Warden"
         }
       ]
     },
@@ -465,7 +533,7 @@
       "id": "spires_stair_watch",
       "trigger": "enter_area:spires_upper_stair",
       "when": "not flag.spires_stair_watch_cleared and level >= 10",
-      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "text": "Shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
       "surprise": "",
       "flag": "spires_stair_watch_cleared",
       "monsters": [
@@ -513,6 +581,81 @@
             29,
             9
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            3
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            20,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            17
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            25,
+            18
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            3
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            24,
+            2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            17,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            23,
+            17
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            28,
+            15
+          ]
         }
       ]
     },
@@ -520,7 +663,7 @@
       "id": "spires_stair_watch",
       "trigger": "enter_area:spires_upper_stair",
       "when": "not flag.spires_stair_watch_cleared",
-      "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
+      "text": "Shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats.",
       "surprise": "",
       "flag": "spires_stair_watch_cleared",
       "monsters": [
@@ -545,6 +688,66 @@
           "cell": [
             29,
             9
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            17
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            24,
+            1
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            3
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            20,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            19,
+            3
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            29,
+            15
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            29,
+            19
+          ],
+          "name": "Stair Warden"
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            23,
+            17
           ]
         }
       ]
