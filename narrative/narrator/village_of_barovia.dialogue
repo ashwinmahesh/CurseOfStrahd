@@ -588,3 +588,9 @@ once
 
 ~ check:nature:herbs_name:failure
 | Leaves, and more leaves, and one of them makes your fingers itch for an hour.
+
+~ scene:castle_windows_lit
+| While you watch, a second window lights, then a third, high up in the cloud, as if the house were counting its guests.
+
+~ scene:village_square_empty
+| The square is empty. The church door stands open a finger's width, and inside, where nobody lives, a candle is lit.

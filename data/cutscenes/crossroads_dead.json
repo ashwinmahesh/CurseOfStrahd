@@ -8,5 +8,6 @@
       "when": "night and not flag.nicu_cut_down and not flag.crossroads_dead_cleared"
     }
   ],
-  "trigger": "enter:crossroads_gallows"
+  "trigger": "enter:crossroads_gallows",
+  "then": "gallows_dead_turn"
 }

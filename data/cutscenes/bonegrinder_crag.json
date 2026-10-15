@@ -17,5 +17,6 @@
     0.45
   ],
   "trigger": "enter:hill_lookout",
-  "once": true
+  "once": true,
+  "then": "bonegrinder_far_castle"
 }

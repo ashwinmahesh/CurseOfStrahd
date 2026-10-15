@@ -1,0 +1,16 @@
+{
+  "id": "abbey_gate_light",
+  "title": "One Window Lit",
+  "summary": "Up close the abbey's walls are only walls; one high chapel window is lit, with a small figure at it.",
+  "images": [
+    {
+      "image": "abbey_gate_light",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:abbey_gate_light"
+}

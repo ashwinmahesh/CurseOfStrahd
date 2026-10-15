@@ -107,6 +107,66 @@ static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoll
 	return test
 
 
+# --- Magic stock ----------------------------------------------------------------------------------
+
+## How many of a magic item a shop keeps (Ashwin, 2026-10-14): one of anything lasting, three of a potion, scroll or
+## other consumable, twenty pieces of ammunition (sold a piece at a time, StoryState.shop_lot). What the party buys
+## stays bought (StoryState.shops).
+const MAGIC_QTY := {"lasting": 1, "consumable": 3, "ammunition": 20}
+## Rarities in the order a shop lists its magic stock.
+const RARITY_ORDER: Array[String] = ["common", "uncommon", "rare", "very_rare", "legendary"]
+
+
+## The party's milestone level a merchant shows an item of `rarity` from (data/treasure/levels.json `shop_levels`,
+## the same tiers found treasure follows: rare from 5, very rare from 9, legendary from 10). Common and uncommon: 1.
+static func magic_level(rarity: String) -> int:
+	return int((Treasure.config().get("shop_levels", {}) as Dictionary).get(rarity, 1))
+
+
+## A shop's magic stock as it stands (its `magic` list; Ashwin, 2026-10-14: every magic item the story doesn't need is
+## for sale somewhere): each item that's playable and whose rarity the party's milestone level has reached, while the
+## shop's `magic_if` holds, sold at its own price (cost_gp, Sane Magical Prices: data/treasure/magic_prices.json)
+## whatever the shop marks up its other goods by, rarest last. An item built on a weapon or armor ("Flame Tongue")
+## comes with `bases`, the mundane items it can be made on, and the party picks one (StoryState.shop_wares prices each);
+## one with a single base is sold as that item ("Javelin of Lightning", "+1 Shield").
+static func magic_stock(st: StoryState, npc_id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var sh := shop(npc_id)
+	if not StoryConditions.check(str(sh.get("magic_if", "")), st):
+		return out
+	var comp := Compendium.shared()
+	for v: Variant in sh.get("magic", []):
+		var id := str(v)
+		var data := comp.item_data(id)
+		if data.is_empty() or not Compendium.playable(data) or st.target_level() < magic_level(MagicItems.rarity(data)):
+			continue
+		var line := {"id": id, "qty": magic_qty(data), "markup": 1.0, "magic": true}
+		if MagicItems.is_template(data):
+			var bases := comp.template_bases(id)
+			if bases.is_empty() or str((data["template"] as Dictionary).get("on", "")) == "spell":
+				continue
+			if bases.size() == 1:
+				line["id"] = "%s%s%s" % [id, MagicItems.SEP, bases[0]]
+				line["stock_id"] = id
+			else:
+				line["bases"] = bases
+		out.append(line)
+	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ra := RARITY_ORDER.find(MagicItems.rarity(comp.item_data(str(a["id"]))))
+		var rb := RARITY_ORDER.find(MagicItems.rarity(comp.item_data(str(b["id"]))))
+		if ra != rb:
+			return ra < rb
+		return comp.display_name("items", str(a["id"])) < comp.display_name("items", str(b["id"])))
+	return out
+
+
+## How many of `data` a shop's magic stock holds (MAGIC_QTY).
+static func magic_qty(data: Dictionary) -> int:
+	if str(data.get("category", "")) == "ammunition":
+		return int(MAGIC_QTY["ammunition"])
+	return int(MAGIC_QTY["consumable" if MagicItems.is_consumable(data) else "lasting"])
+
+
 # --- Stock that changes ---------------------------------------------------------------------------
 
 ## A shop's `rotating` stock as it stands this stretch of days: `count` things from its `pool`, one of each, picked

@@ -242,11 +242,14 @@ func test_shop_pack_filters_and_only_what_they_buy() -> void:
 	assert_false(ShopScreen.only_buys)
 	assert_true("potion_of_healing" in shop.sell_ids(), "switched off: the whole pack")
 	assert_true(_button(shop, "Won't buy", true) != null, "with what he won't buy marked")
-	_button(shop, "Weapons", true).pressed.emit()
+	# The pack side's tabs (the wares side has its own, ShopScreen.WARE_FILTERS).
+	_button(shop.find_child("PackTabs", true, false), "Weapons", true).pressed.emit()
 	ids = shop.sell_ids()
 	assert_true("flail" in ids and not "rope" in ids and not "potion_of_healing" in ids, "the Weapons tab: %s" % str(ids))
 	for id in ids:
 		assert_true(InventoryScreen.in_filter("Weapons", Compendium.shared().item_data(id)), "%s is a weapon or ammunition" % id)
+	# LB/RB step the tabs on the side the focus is on: here the pack's.
+	(_button(shop, "Only what Gunther buys", true) as Control).grab_focus()
 	assert_true(PadNav.current.tab(shop, 1), "LB/RB find the tabs")
 	assert_eq(ShopScreen.sell_filter, "Armor", "RB: the next tab")
 	PadNav.current.tab(shop, 1)

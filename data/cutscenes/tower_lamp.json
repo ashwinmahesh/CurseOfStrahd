@@ -1,0 +1,16 @@
+{
+  "id": "tower_lamp",
+  "title": "Someone Waiting Up",
+  "summary": "The topmost window of Van Richten's tower burns steady over the black water.",
+  "images": [
+    {
+      "image": "tower_lamp",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tower_lamp"
+}

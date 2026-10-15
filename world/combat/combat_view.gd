@@ -1816,7 +1816,9 @@ func _token_spot(c: Combatant, cell: Vector2i) -> Vector3:
 	var p := board.cell_center(cell, c.size_cells) + _share_offset(c, cell)
 	var m := e.mount_of(c)
 	if m != null:
-		var h := CombatToken.height_of(m) * (m.size_cells if m.size_cells > 1 else 1)
+		# The mount's figure as drawn: its height is already its size's (a Large horse 1.7), grown or shrunk by a spell.
+		var mt := tokens.get(m.id) as CombatToken
+		var h := CombatToken.height_of(m) * (mt.size_scale().y if mt != null else 1.0)
 		p = board.cell_center(m.cell, m.size_cells) + Vector3(0, h * 0.8, 0)
 	return p + Vector3(0, c.altitude / float(CombatGrid.FEET), 0)
 
@@ -2070,7 +2072,7 @@ func _play_events() -> void:
 					# Back from Banishment: the token shows again.
 					if not tt.visible:
 						tt.show()
-						tt.scale = Vector3.ONE * (float(tt.combatant.size_cells) if tt.combatant.size_cells > 1 else 1.0)
+						tt.scale = tt.size_scale()
 					tt.flash(Look.color("lilac"), 0.3)
 					var was := tt.global_position
 					tt.position = _token_spot(tt.combatant, ev["to"] as Vector2i)
@@ -2159,9 +2161,8 @@ func _play_events() -> void:
 			"resize":
 				var rt := _tok(str(ev["id"]))
 				if rt != null:
-					var k := float(rt.combatant.size_cells)
 					var tw4 := create_tween()
-					tw4.tween_property(rt, "scale", Vector3(k, k, k) if rt.combatant.size_cells > 1 else Vector3.ONE, 0.3)
+					tw4.tween_property(rt, "scale", rt.size_scale(), 0.3)
 					rt.position = board.cell_center(rt.combatant.cell, rt.combatant.size_cells)
 			"turn":
 				cast_by = ""
@@ -2382,7 +2383,7 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 		if cut != "":
 			var player := CutscenePlayer.new()
 			add_child(player)
-			if player.play(cut, [text] as Array[String], story):
+			if player.play_scenes(Cutscenes.scenes(cut, text, story, narrator, who), story):
 				Cutscenes.mark_played(cut, story)
 				return
 			player.queue_free()

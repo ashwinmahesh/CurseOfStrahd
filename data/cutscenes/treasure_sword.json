@@ -13,5 +13,6 @@
     0.5
   ],
   "trigger": "find:sunsword",
-  "once": true
+  "once": true,
+  "then": "sunsword_light"
 }

@@ -532,6 +532,35 @@ func test_a_shop() -> void:
 				s.queue_free())
 
 
+## The merchant with the most magic (Xaver, Khazan's stores) on each of his tabs, and the stockyard with a
+## made-to-order ware's weapons open (Ashwin, 2026-10-14: every magic item the story doesn't need is for sale).
+func test_a_magic_shop() -> void:
+	if not await _game(LATE):
+		return
+	GameState.story.milestones = 20   # every rarity on the shelves
+	var open := func(npc: String, bases: String) -> Variant:
+		root.call("open_shop", npc)
+		await _frames(2)
+		var shops := root.find_children("*", "ShopScreen", false, false)
+		if shops.is_empty():
+			return null
+		if bases != "":
+			(shops.back() as ShopScreen).toggle_bases(bases)
+			await _frames(1)
+		return shops.back()
+	var close := func() -> void:
+		for s in root.find_children("*", "ShopScreen", false, false):
+			s.queue_free()
+	var tabs := ShopScreen.ware_tabs(GameState.story.shop_wares("library_xaver"))
+	assert_true(tabs.size() >= 4, "his wares under several tabs: %s" % str(tabs))
+	for tab in tabs:
+		ShopScreen.ware_filter = tab
+		await _check("Xaver's shop (%s)" % tab, open.bind("library_xaver", ""), close)
+	ShopScreen.ware_filter = "Weapons"
+	await _check("the stockyard with a +1 weapon's choices open", open.bind("gunther_arasek", "weapon_plus_1"), close)
+	ShopScreen.ware_filter = "All"
+
+
 func test_a_temple_with_a_hero_to_raise() -> void:
 	if not await _game(LATE):
 		return

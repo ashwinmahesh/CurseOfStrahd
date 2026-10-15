@@ -1,0 +1,15 @@
+{
+  "id": "ending_carriage",
+  "title": "The Carriage Sent",
+  "summary": "Strahd's black carriage draws up before a candlelit window in the village at night.",
+  "images": [
+    {
+      "image": "ending_carriage",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

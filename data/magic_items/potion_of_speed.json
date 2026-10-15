@@ -7,7 +7,7 @@
   },
   "category": "potion",
   "weight_lb": 0.5,
-  "cost_gp": 20000.0,
+  "cost_gp": 400,
   "magic": {
     "rarity": "very_rare",
     "attunement": false

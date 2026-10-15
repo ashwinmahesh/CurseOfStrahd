@@ -1,0 +1,16 @@
+{
+  "id": "strahd_mist_coffin",
+  "title": "The Lid Slides Shut",
+  "summary": "Deep in the crypt, grey mist pours into a stone coffin as its lid slides shut.",
+  "images": [
+    {
+      "image": "strahd_mist_coffin",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:strahd_mist_coffin"
+}
