@@ -1555,21 +1555,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
@@ -1586,21 +1589,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
@@ -1608,7 +1614,7 @@
       "id": "larders_doru_hunger",
       "trigger": "dialogue",
       "flag": "larders_doru_destroyed",
-      "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first.",
+      "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first, and down the row the other cells begin to rattle.",
       "surprise": "",
       "monsters": [
         {
@@ -1617,7 +1623,56 @@
             9,
             9
           ],
-          "name": "Doru"
+          "name": "Doru",
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            10
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            10
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            10
+          ],
+          "hp": 104
         }
       ]
     },

@@ -1276,16 +1276,137 @@
       "id": "larders_cyrus_fight",
       "trigger": "dialogue",
       "flag": "larders_cyrus_slain",
-      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping.",
+      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping, and the Belview cooks come out of the pantries with knives.",
       "surprise": "",
       "monsters": [
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             26,
             5
           ],
-          "name": "Cyrus Belview"
+          "name": "Cyrus Belview",
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            5
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            26,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            22,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            2
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            29,
+            3
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            29,
+            6
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            24,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            3
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            5
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            7
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            28,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            7
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            4
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            22,
+            2
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            23,
+            1
+          ],
+          "hp": 80
         }
       ]
     }

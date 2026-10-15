@@ -1614,6 +1614,20 @@
             28,
             3
           ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            28,
+            4
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            37,
+            3
+          ]
         }
       ],
       "surprise": "",
