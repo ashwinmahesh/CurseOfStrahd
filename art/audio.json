@@ -225,9 +225,9 @@
       "res://art/sourced/scott_buckley/EyesInTheVoid.mp3"
     ],
     "castle": [
-      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3",
+      "res://art/sourced/scott_buckley/Anabasis_I.mp3",
       "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
-      "res://art/sourced/wikimedia_commons/Johann_Sebastian_Bach_BWV_542_fugue_Reinhardtsgrimma_Herbert_Collum.ogg",
+      "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
       "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3"
     ],
     "ending": [
@@ -1505,7 +1505,6 @@
     "res://art/sourced/kevin_macleod/Nightmare Machine.mp3": 4.0,
     "res://art/sourced/scott_buckley/EyesInTheVoid.mp3": 1.0,
     "res://art/sourced/kevin_macleod/Danse Macabre.mp3": -2.9,
-    "res://art/sourced/wikimedia_commons/Johann_Sebastian_Bach_BWV_542_fugue_Reinhardtsgrimma_Herbert_Collum.ogg": 8.0,
     "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3": -7.5,
     "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg": 4.4,
     "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg": 4.1,
