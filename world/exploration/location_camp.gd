@@ -150,6 +150,8 @@ func _seat(seats: Array[Vector2i], cook: Vector2i) -> void:
 			return view.leader().cell
 		return spots.pop_front() as Vector2i
 	for m in view.members:
+		if m.creature.dead:
+			continue   # the dead aren't up by the fire: no seat, and nobody to talk to
 		var cell := next.call(m.id) as Vector2i
 		_place(m, cell)
 		people[m.id] = {"character": m.creature, "token": view.tokens[m.id], "cell": cell, "kind": "party"}
@@ -438,12 +440,26 @@ func night_taken() -> Dictionary:
 	return taken
 
 
-## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with.
+## Whether the camp's bar offers a change of prepared spells now: the morning's (as the rest screen offers it), or
+## before the night the spells a Long Rest lets you change, any time outside a fight.
+func can_prepare() -> bool:
+	if view == null or view.in_combat:
+		return false
+	if slept:
+		return not PrepareScreen.preparable(view.st).is_empty()
+	return not PrepareScreen.preparable(view.st, PrepareScreen.ANYTIME).is_empty()
+
+
+## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with;
+## before the night, the spells a Long Rest lets you change, as many as you like (PrepareScreen ANYTIME).
 func prepare() -> void:
-	if not slept or PrepareScreen.preparable(view.st).is_empty():
+	if not can_prepare():
 		return
 	var ps := PrepareScreen.new()
-	ps.earlier = prepared_before
+	if slept:
+		ps.earlier = prepared_before
+	else:
+		ps.rest_kind = PrepareScreen.ANYTIME
 	bar.add_child(ps)
 	ps.open(root, view.st, 0)
 

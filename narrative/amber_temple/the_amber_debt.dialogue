@@ -165,5 +165,6 @@ Narrator: A beholder collects what it looks at, and this one has had its dreams 
 gold +700
 Narrator: And at the bottom, face down, a round shield whose face is a single great eye worked in silver, shut. The wardens must have made it to stand against the thing. It's warm. When you turn it over the eye stays shut, as though it's sleeping, and as though it would rather not be woken.
 give spellguard_shield
+give ring_of_spell_turning
 approve godrick_pendlebrook +2 liriel_dawnsong +2 thistle +2 wren_featherfoot +1 ratatoille +2: You put out the Eye Below
 -> END

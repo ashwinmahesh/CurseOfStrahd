@@ -406,10 +406,80 @@
           ]
         },
         {
-          "monster": "scarecrow",
+          "monster": "will_o_wisp",
           "cell": [
             4,
             4
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            14
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            1,
+            13
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            16,
+            10
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            22,
+            6
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            11,
+            9
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            16,
+            6
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            6,
+            11
           ]
         }
       ],

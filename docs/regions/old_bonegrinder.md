@@ -253,7 +253,7 @@ All 33 flags are registered, set and read. The ones for other regions:
 | `bonegrinder_pantry_shelf` | pantry | potion of healing, herbalism kit, 3 rations, basic poison |
 | `bonegrinder_flour_bin` | grindstone | 2 sacks, 22 gp |
 | `bonegrinder_pastry_cart` | hill shed | 4 dream pastries, a basket, 9 gp (sets `pastry_cart_raided`; Morgantha notices) |
-| `bonegrinder_hag_hoard` | loft nest, lock 15 | 140 gp, 2 perfume, fine clothes, a level 1 spell scroll |
+| `bonegrinder_hag_hoard` | loft nest, lock 15 | 140 gp, 2 perfume, fine clothes, a level 1 spell scroll, a Staff of Charming (rare), a Wand of Wonder (rare) |
 | `bonegrinder_bella_drawer` | loft, Bella's jewel box | a mirror, perfume, 35 gp |
 | search `bonegrinder_bone_heap` (DC 13) | hill | a holy symbol amulet (Brother Kesten's) |
 | search `bonegrinder_pantry_jars` (DC 12) | pantry | antitoxin |

@@ -957,7 +957,12 @@
       ],
       "label": "An iron strongbox",
       "model": "strongbox",
-      "items": [],
+      "items": [
+        {
+          "id": "animated_shield__shield",
+          "qty": 1
+        }
+      ],
       "gold": 320,
       "flag": "crg_hoard_opened"
     }

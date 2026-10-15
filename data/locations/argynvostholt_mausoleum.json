@@ -269,6 +269,83 @@
             12,
             9
           ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            3,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            2,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            2
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            5
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            4,
+            4
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            4
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            3
+          ]
         }
       ]
     },
@@ -301,6 +378,69 @@
             12,
             13
           ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            2,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            16
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            4,
+            7
+          ]
         }
       ]
     },
@@ -324,6 +464,69 @@
           "cell": [
             12,
             13
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            9,
+            1
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            2
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            6,
+            16
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            12,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            2,
+            7
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            12
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            2
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            7,
+            6
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            5,
+            2
           ]
         }
       ]

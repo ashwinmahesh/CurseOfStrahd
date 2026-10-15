@@ -146,6 +146,32 @@ func test_the_sheet_tabs() -> void:
 		await _reach("the sheet's %s tab" % t)
 
 
+## Prepare Spells on a pad (any time outside a fight): from a caster's sheet, every spell and the Done button are in the
+## D-pad's reach, and B goes back to the sheet, not out of it.
+func test_prepare_spells_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	var who := -1
+	for i in st.party.size():
+		if who < 0 and not PrepareScreen.preparable(st, PrepareScreen.ANYTIME, st.party[i]).is_empty():
+			who = i
+	assert_true(who >= 0, "a caster in the party")
+	root.call("open_screen", "sheet", who)
+	await _frames(2)
+	var sheet := root.get("screen") as CharacterSheetScreen
+	sheet.show_tab("Spells")
+	await _frames(2)
+	await _reach("the sheet's Spells tab with Prepare spells")
+	sheet.call("_open_prepare", st.party[who])
+	await _frames(3)
+	await _reach("the Prepare Spells screen")
+	await _back("the Prepare Spells screen", func() -> bool:
+		return sheet.find_children("*", "PrepareScreen", true, false).filter(func(n: Node) -> bool: return not n.is_queued_for_deletion()).is_empty())
+	assert_true(root.get("screen") == sheet, "B leaves Prepare Spells and keeps the sheet")
+	await _back("the sheet", _screen_gone)
+
+
 func test_the_settings_pages() -> void:
 	if not await _game(LATE):
 		return

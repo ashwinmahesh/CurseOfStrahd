@@ -511,7 +511,7 @@
       "trigger": "enter_area:vrt_causeway",
       "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten and level >= 8",
-      "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
+      "text": "Something is waiting where the causeway meets the shore: pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -548,6 +548,20 @@
             20,
             22
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            22
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            12
+          ]
         }
       ],
       "surprise": "",
@@ -567,7 +581,7 @@
       "trigger": "enter_area:vrt_causeway",
       "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten and level >= 7",
-      "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
+      "text": "Something is waiting where the causeway meets the shore: pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -596,6 +610,34 @@
             20,
             22
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            1,
+            22
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            14,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            21
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            21,
+            9
+          ]
         }
       ],
       "surprise": "",
@@ -615,7 +657,7 @@
       "trigger": "enter_area:vrt_causeway",
       "waiting": true,
       "when": "night and flag.van_richten_notes_read and not flag.tower_visitors_beaten",
-      "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
+      "text": "Something is waiting where the causeway meets the shore: pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -636,6 +678,55 @@
           "cell": [
             20,
             22
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            1,
+            22
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            30,
+            22
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            15,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            15,
+            29
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            11,
+            5
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            28
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            21,
+            9
           ]
         }
       ],

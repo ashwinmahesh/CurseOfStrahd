@@ -551,6 +551,14 @@
         {
           "id": "fine_clothes",
           "qty": 1
+        },
+        {
+          "id": "boots_of_levitation",
+          "qty": 1
+        },
+        {
+          "id": "philter_of_love",
+          "qty": 1
         }
       ],
       "gold": 180

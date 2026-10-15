@@ -304,8 +304,9 @@ func _draw_content() -> void:
 			_content.draw_circle(at, 2.8, Look.color("moonlight"), true, -1.0, true)
 	for g in view.guest_members:
 		_dot(view.tokens.get(g.id) as Node3D, 3.6, Look.color("mist_blue"))
-	for i in range(view.members.size() - 1, -1, -1):
-		_dot(view.tokens.get(view.members[i].id) as Node3D, 5.5 if i == 0 else 3.8,
+	var shown := party_shown()
+	for i in range(shown.size() - 1, -1, -1):
+		_dot(view.tokens.get(shown[i].id) as Node3D, 5.5 if i == 0 else 3.8,
 			Look.color("gilt_light") if i == 0 else Look.color("vellum"))
 	# A soft shadow inside the rim.
 	for i in 6:
@@ -322,6 +323,17 @@ func _talk_mark(at: Vector2) -> void:
 	_content.draw_circle(at, 5.5, Look.color("ink"), true, -1.0, true)
 	_content.draw_circle(at, 4.2, Look.color("bile"), true, -1.0, true)
 	_content.draw_circle(at, 6.5, Look.color("sickly"), false, 1.5, true)
+
+
+## The party members the map marks, leader first: the dead are no longer out walking, so they have no dot.
+func party_shown() -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	if view == null or not is_instance_valid(view):
+		return out
+	for m in view.members:
+		if not m.creature.dead:
+			out.append(m)
+	return out
 
 
 func _dot(tok: Node3D, r: float, colour: Color) -> void:

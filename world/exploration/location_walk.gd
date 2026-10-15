@@ -133,13 +133,20 @@ static func _advance_party(view: LocationView, next: Vector2i) -> void:
 	_move_member(view, 0, next)
 	if view.solo or LocationCamp.of(view) != null:
 		return   # split, or at camp: the others stay where they are (by the fire)
+	# Each follower steps into the square of the one ahead of it; a dead or downed hero stays where they fell and the
+	# line closes up past them (the next follower takes the square that one would have left).
+	var ahead_i := 0
 	for i in range(1, view.members.size()):
-		if view.members[i].creature.hp <= 0 or PitFall.holds(view, view.members[i]):
+		if view.members[i].creature.hp <= 0:
 			continue
-		if old[i - 1] != view.members[i].cell:
-			_move_member(view, i, old[i - 1])
+		var from := ahead_i
+		ahead_i = i
+		if PitFall.holds(view, view.members[i]):
+			continue
+		if old[from] != view.members[i].cell:
+			_move_member(view, i, old[from])
 	# Guests walk at the back of the line.
-	var ahead := old[old.size() - 1] if not old.is_empty() else next
+	var ahead := old[ahead_i] if not old.is_empty() else next
 	for g in view.guest_members:
 		if g.creature.hp <= 0 or g.cell == ahead:
 			continue

@@ -452,7 +452,8 @@ hounds by name, and most of the pack lies down (`hounds_called`).
   level 9 the Huntsman at 290 HP, six hounds (five called); level 10 at 390 HP, eight (five called), each about 5 wins
   in 8; below 8, the quest's fallback, the Huntsman at 130 HP with 3 hounds (1).
 - Beating him is a mark on Strahd's attention (`huntsman`, 1 point).
-- His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare).
+- His saddlebag: 300 gp of quarry's purses and the iron ring he called the pack with, a Ring of Animal Influence (rare);
+  across the saddle, the black bow he shot with, an Oathbow (very rare).
 
 ## Argynvostholt (level 8)
 
@@ -936,7 +937,7 @@ keepers had three ways of going down to her safely, and each one is a lair trick
 - Rewards: a Potion of Fire Resistance in the drivers' box and one in the slush by the cart (Perception DC 14); the
   keepers' strongbox, 300 gp and two more; the captain's rack, the Dragon Slayer the count gave his keepers in case
   (rare); her hoard, 900 gp of real coin from forty years of tithes in among the lead, and the silver's Dragon Scale
-  Mail (very rare). Stills: `ghakis_shoulder` (the loading card) and `sq_sarkhaza` (her first meeting).
+  Mail (very rare); in the tithes, an Ioun Stone (Mastery) (legendary). Stills: `ghakis_shoulder` (the loading card) and `sq_sarkhaza` (her first meeting).
 
 ### The Mountain's Heart (`the_mountains_heart`, narrative/mount_ghakis/the_mountains_heart.dialogue; batch 10, level 10)
 
@@ -991,7 +992,7 @@ works it out. **Second twist:** without his name he doesn't know who he is, and 
 - The hall of names (`remembered`): a banshee, five ghosts, five specters and three wraiths. The sharp autopilot wins 5
   of 8 at level 10.
 - Rewards: Bracers of Defense (rare) in the drowned crypt's silt (Investigation DC 16); his coffer, once he's gone,
-  800 gp and a Wand of the War Mage, +3 (very rare). Still: `sq_khazan` (his first meeting).
+  800 gp, a Wand of the War Mage, +3 (very rare) and his Robe of the Archmagi (legendary). Still: `sq_khazan` (his first meeting).
 
 ### The Drowned Library (`the_drowned_library`, narrative/van_richtens_tower/the_drowned_library.dialogue; batch 10, level 9)
 
@@ -1041,7 +1042,8 @@ forgets it, it can't remember itself. Everyone who has helped him remember anyth
   5 of 8 at level 10 (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced), and more with the wardens' ways.
 - The hall of sleepers (`dreamed_eyes`): two woken amber golems (one at 130 HP) and ten
   dream-gazers. The sharp autopilot wins 4 of 8 at level 10, the harder side (with four gazers, 6).
-- Rewards: its hoard, 700 gp and a Spellguard Shield (very rare), the wardens' shield made against it. Telling
+- Rewards: its hoard, 700 gp, a Spellguard Shield (very rare), the wardens' shield made against it, and a
+  warden's Ring of Spell Turning (legendary). Telling
   Exethanter it's dead lets him burn the old note. Still: `sq_eye_below` (its first meeting).
 
 ## Yester Hill (level 7)

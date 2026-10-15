@@ -26,6 +26,11 @@ var spends_reaction: bool = true
 var min_targets: int = 0
 var max_targets: int = 0
 var validate_selected: Callable
+## A pool of points to divide among the listed creatures (Preserve Life): `pool` is how many there are in all, and
+## `amounts` (id -> points) what each creature is given so far. Each `target_choices` entry's "room" is the most it can
+## take. Nothing happens until the player confirms, and the points left over are lost; a prompt with no pool is 0.
+var pool: int = 0
+var amounts: Dictionary = {}
 
 
 ## The listed option with this id ({} if none). The options of a prompt listing several Reactions (Reactions.CHOICE)
@@ -37,7 +42,37 @@ func choice(choice_id: String) -> Dictionary:
 	return {}
 
 
+## Points of the pool handed out so far.
+func shared() -> int:
+	var total := 0
+	for id: Variant in amounts:
+		total += int(amounts[id])
+	return total
+
+
+## Points of the pool still to give.
+func unspent() -> int:
+	return pool - shared()
+
+
+## What's wrong with how the pool is divided, in words for the prompt ("" when it can be confirmed).
+func pool_error() -> String:
+	for t in target_choices:
+		var give := int(amounts.get(str(t["id"]), 0))
+		if give < 0 or give > int(t.get("room", 0)):
+			return "%s can regain at most %d" % [t.get("name", "They"), int(t.get("room", 0))]
+	if shared() > pool:
+		return "Only %d Hit Points to share" % pool
+	if shared() <= 0:
+		return "Give someone at least 1 Hit Point"
+	return ""
+
+
 func selection_error() -> String:
+	if pool > 0:
+		var why := pool_error()
+		if why != "":
+			return why
 	if selected_ids.size() < min_targets or (max_targets > 0 and selected_ids.size() > max_targets):
 		return "Choose exactly %d option%s" % [min_targets, "" if min_targets == 1 else "s"]
 	if max_targets > 0:

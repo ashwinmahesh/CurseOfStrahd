@@ -315,6 +315,37 @@ func test_the_xp_levelling_screens() -> void:
 		return root.get("screen"), _close_screen)
 
 
+## Prepare Spells (any time outside a fight, and the screen a finished rest offers) for a level 9 party whose casters
+## have the longest lists, from the rest screen's way in and from one hero's sheet.
+func test_the_prepare_spells_screen() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	assert_false(PrepareScreen.preparable(st, PrepareScreen.ANYTIME).is_empty(), "the party has casters to prepare")
+	for kind: String in [PrepareScreen.ANYTIME, "long_rest"]:
+		await _check("the Prepare Spells screen (%s)" % kind, func() -> Variant:
+			var ps := PrepareScreen.new()
+			ps.rest_kind = kind
+			root.add_child(ps)
+			ps.open(root, st, 0)
+			await _frames(2)
+			return ps, func() -> void:
+				for n in root.find_children("*", "PrepareScreen", true, false):
+					n.free())
+	for i in st.party.size():
+		if PrepareScreen.preparable(st, PrepareScreen.ANYTIME, st.party[i]).is_empty():
+			continue
+		await _check("%s's Prepare Spells (any time)" % st.party[i].name, func() -> Variant:
+			root.call("open_screen", "sheet", i)
+			await _frames(1)
+			var sheet := root.get("screen") as CharacterSheetScreen
+			sheet.show_tab("Spells")
+			await _frames(1)
+			sheet.call("_open_prepare", st.party[i])
+			await _frames(2)
+			return sheet, _close_screen)
+
+
 ## Settings' three pages in the pause menu's arch (lane 13: Game, Display and the Keys list).
 func test_the_settings_pages() -> void:
 	if not await _game(LATE):
@@ -762,6 +793,26 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		cv.hud.show_prompt(smite)
 		await _frames(1)
 		assert_true((cv.hud.get("_prompt_callout") as Label).visible, "the Critical Hit line shows")
+		return cv.hud,
+		func() -> void: cv.hud.hide_prompt())
+	# Preserve Life (owner question 2026-10-14): a slider for each Bloodied creature in reach, long names wrapping, and the
+	# count of what is left to share, with as many creatures as a party and its companions can bring.
+	var share := ReactionRequest.new("preserve_life", party.id, party.id)
+	share.title = "Preserve Life"
+	share.text = "Share 45 Hit Points among the Bloodied creatures within 30 feet, yourself included. No one rises above half their Hit Point maximum, and the points you don't give out are lost."
+	share.cost = "Magic action and a Channel Divinity use (2 left)"
+	share.spends_reaction = false
+	share.pool = 45
+	for k in 6:
+		var id := "creature%d" % k
+		share.target_choices.append({"id": id, "name": "Knight %d" % k, "room": 18 + k,
+			"label": "%s the Very Long-Named Knight of the Silver Dragon %d · %d of 60 Hit Points · up to %d" % [party.name(), k, 6 + k, 18 + k]})
+		share.amounts[id] = 8 if k < 5 else 5
+	await _check("Preserve Life's prompt", func() -> Variant:
+		cv.hud.show_prompt(share)
+		await _frames(1)
+		assert_true((cv.hud.get("_prompt_pool") as Label).text.contains("Left to share: 0") or (cv.hud.get("_prompt_pool") as Label).text.contains("All 45"), (cv.hud.get("_prompt_pool") as Label).text)
+		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no standing rule for a division")
 		return cv.hud,
 		func() -> void: cv.hud.hide_prompt())
 	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.
