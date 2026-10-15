@@ -1,0 +1,53 @@
+{
+  "$id": "xp.schema.json",
+  "title": "Experience-point levelling (docs/plans/xp_mode.md)",
+  "type": "object",
+  "required": ["id", "summary", "thresholds", "budgets", "foe_share", "split", "awards", "withdraw_pays", "milestone_quests", "no_xp_quests"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"const": "xp"},
+    "summary": {"type": "string"},
+    "thresholds": {
+      "type": "array",
+      "minItems": 12,
+      "items": {"type": "integer", "minimum": 0},
+      "description": "XP to reach each level, from level 1 (0): the 2024 PHB's Character Advancement table. The game stops at StoryState.LEVEL_CAP; the entry after it is the ceiling arithmetic's, not a level the party reaches."
+    },
+    "budgets": {
+      "type": "array",
+      "minItems": 11,
+      "items": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "integer", "minimum": 1}},
+      "description": "The 2024 DMG's XP budget per character at each level from 1: [Low, Moderate, High]."
+    },
+    "foe_share": {"type": "number", "minimum": 0, "maximum": 1, "description": "The share of a foe's stat-block XP the party earns (the game's fights field far more foes than the book's)."},
+    "split": {"type": "integer", "minimum": 1, "description": "What a fight's XP divides by: a party of four, whoever travels."},
+    "awards": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["budget", "times"],
+        "additionalProperties": false,
+        "properties": {
+          "budget": {"enum": ["low", "moderate", "high"]},
+          "times": {"type": "number", "minimum": 0}
+        }
+      },
+      "description": "What each kind of award is worth to each hero: `times` the budget column at the party's level."
+    },
+    "withdraw_pays": {
+      "type": "object",
+      "additionalProperties": {"$ref": "common.schema.json#/$defs/id"},
+      "description": "A monster id -> the award that pays when it leaves a fight alive (Strahd withdraws; his stat block's XP waits for his end)."
+    },
+    "milestone_quests": {
+      "type": "array",
+      "items": {"$ref": "common.schema.json#/$defs/id"},
+      "description": "Quests whose success is a region's milestone: the milestone pays for them, so their own ending pays nothing more."
+    },
+    "no_xp_quests": {
+      "type": "array",
+      "items": {"$ref": "common.schema.json#/$defs/id"},
+      "description": "Quests that never pay (the walk out of the mists)."
+    }
+  }
+}

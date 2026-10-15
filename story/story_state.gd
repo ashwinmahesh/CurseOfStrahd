@@ -29,7 +29,11 @@ var attitudes: Dictionary = {}             ## npc id -> hostile | indifferent | 
 var visited: Dictionary = {}               ## location or area id -> true
 var codex: Array[String] = []              ## lore read (book props, letters)
 var narrator: Dictionary = {}              ## trigger key -> {played: [variant indexes], last_minute, done}
-var milestones: int = 0                    ## story milestones reached (milestone levelling)
+var milestones: int = 0                    ## story milestones reached (milestone levelling; XP levelling counts them too, for its floor)
+## The party's experience points (Xp, XP levelling): one pool, each hero's share. Not counted in milestone mode.
+var xp: int = 0
+## XP earned past the ceiling, waiting for the next milestone to pay it out (Xp.gain).
+var xp_reserve: int = 0
 var start_level: int = 1
 var day: int = 1
 var minute_of_day: int = 18 * 60           ## the party arrives at dusk
@@ -53,8 +57,9 @@ var shops: Dictionary = {}
 var travel_resume: Dictionary = {}
 ## Miles travelled since the party's last Long Rest (Mist Walker, a Ravenloft Dark Gift).
 var miles_since_long_rest: float = 0.0
-## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva.
-var options: Dictionary = {"respec": true}
+## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva. `levelling` is how heroes grow, picked at a
+## new game and never changed: "milestone" (every save before XP levelling) or "xp" (story/xp.gd).
+var options: Dictionary = {"respec": true, "levelling": "milestone"}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
 var active_spells: Dictionary = {}
 ## How each of the six companions feels about the party's choices (story/approval.gd): id -> {score, memories}.
@@ -67,6 +72,16 @@ var bestiary: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
+
+## Adds `entry` to the codex (lore read: a book, a letter, a lore check, the Tome of Strahd). Returns -1 if the party
+## already had it, else the XP the lore earned (Experience mode; 0 in milestone mode), for the caller to add to its
+## notice (Xp.tag).
+func add_codex(entry: String) -> int:
+	if entry in codex:
+		return -1
+	codex.append(entry)
+	return Xp.award(self, "lore", entry)
+
 
 func get_flag(id: String, default: Variant = false) -> Variant:
 	return flags.get(id, default)
@@ -103,6 +118,8 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	entry["history"] = hist
 	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
+	if str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == "success":
+		Xp.quest_done(self, quest_id)   # XP levelling: a quest finished is worth XP (nothing in milestone mode)
 	if quest_id == "find_the_ally":
 		_settle_ally()
 	return true
@@ -300,9 +317,22 @@ func take_item(item_id: String, qty: int) -> int:
 const LEVEL_CAP := 11
 
 
-## Milestone levelling (plan §5.6): the level the party may reach now.
-func target_level() -> int:
+## The level the story gives the party now: where it starts plus the milestones it has reached (plan §5.6).
+func story_level() -> int:
 	return mini(LEVEL_CAP, start_level + milestones)
+
+
+## The level the party may reach now. Milestone levelling: the story's. XP levelling (story/xp.gd): the XP pool's, which
+## the floor and the ceiling keep within a level of the story's.
+func target_level() -> int:
+	if Xp.active(self):
+		return mini(LEVEL_CAP, maxi(start_level, Xp.level_for(xp)))
+	return story_level()
+
+
+## Experience (Xp.gain, quests, places, finds, milestones) said something the player should see: "Quest complete: The
+## Grey Mare, +125 XP". The game shows it as a notice.
+signal xp_gained(text: String)
 
 
 func can_level_up(ch: Character) -> bool:
@@ -727,7 +757,7 @@ func to_dict() -> Dictionary:
 		benched.append(ch.to_dict())
 	return {"party": members, "bench": benched, "leader": leader, "gold": gold, "stash": stash.duplicate(true), "flags": flags.duplicate(true),
 		"quests": quests.duplicate(true), "attitudes": attitudes.duplicate(true), "visited": visited.duplicate(true),
-		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
+		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "xp": xp, "xp_reserve": xp_reserve, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
@@ -785,6 +815,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 		st.codex.append(str(c))
 	st.narrator = (d.get("narrator", {}) as Dictionary).duplicate(true)
 	st.milestones = int(d.get("milestones", 0))
+	st.xp = int(d.get("xp", 0))
+	st.xp_reserve = int(d.get("xp_reserve", 0))
 	st.start_level = int(d.get("start_level", 1))
 	st.day = int(d.get("day", 1))
 	st.minute_of_day = int(d.get("minute_of_day", 18 * 60))

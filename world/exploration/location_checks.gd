@@ -137,13 +137,22 @@ static func _resolve(view: LocationView, spec: Dictionary, check: Dictionary, wh
 	var res := WorldChecks.apply(view.st, outcome, who, view.dice, str(check.get("label", "")))
 	if not (res["lines"] as Array).is_empty():
 		view.check_rolled.emit(" · ".join(res["lines"] as Array))
+	# XP levelling (story/xp.gd): a check passed is worth a little, and so is each hiding place, secret door or trap it
+	# brings to light (_reveal_here). The XP rides on the notice the thing already has.
+	var passed := Xp.award(view.st, "check", "%s:%s" % [view.loc_id, check["id"]]) if success else 0
+	var xp_before := view.st.xp
 	var found := _reach_into(view, outcome)
+	var finds_xp := view.st.xp - xp_before
 	var gains: Array[String] = []
 	gains.assign(res["gains"] as Array)
 	if not gains.is_empty():
-		view.toast.emit("%s: %s" % [who.name.get_slice(" ", 0), ", ".join(gains)])
+		view.toast.emit("%s: %s%s" % [who.name.get_slice(" ", 0), ", ".join(gains), Xp.tag(passed)])
+		passed = 0
 	if not found.is_empty():
-		view.toast.emit("Found: " + ", ".join(found))
+		view.toast.emit("Found: " + ", ".join(found) + Xp.tag(finds_xp + passed))
+		passed = 0
+	if passed > 0:
+		view.check_rolled.emit("+%s XP" % Xp.fmt(passed))
 	if str(outcome.get("flag", "")) != "":
 		_show_new_things(view)
 	view.refresh_party()
@@ -191,16 +200,19 @@ static func _reveal_here(view: LocationView, id: String) -> String:
 		(states["found"] as Dictionary)[id] = true
 		if StoryConditions.check(str(prop.get("when", "")), view.st) and not view.prop_nodes.has(id):
 			view.prop_nodes[id] = LocationBuilder._prop_node(view, prop)
+		Xp.award(view.st, "find", "%s:%s" % [view.loc_id, id])
 		return str(prop.get("label", "something"))
 	var door := _spec("doors", view, id)
 	if not door.is_empty() and int(door.get("secret_dc", 0)) > 0 and not bool((states["found"] as Dictionary).get(id, false)):
 		(states["found"] as Dictionary)[id] = true
 		SetDressing.reveal_door(view.door_nodes[id] as Node3D)
+		Xp.award(view.st, "find", "%s:%s" % [view.loc_id, id])
 		return str(door.get("label", "a hidden door"))
 	var trap := _spec("traps", view, id)
 	if not trap.is_empty() and str((states["traps"] as Dictionary).get(id, "")) == "":
 		(states["traps"] as Dictionary)[id] = "found"
 		view._show_trap(trap)
+		Xp.award(view.st, "trap_noticed", "%s:%s" % [view.loc_id, id])
 		return str(trap.get("label", "a trap"))
 	return ""
 

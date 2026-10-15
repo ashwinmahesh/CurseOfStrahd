@@ -59,7 +59,13 @@ give item_id [qty]                 Puts items in the speaking character's pack (
 take item_id [qty]                 Removes items.
 gold +25 / gold -10                Party money in gp.
 attitude npc_id friendly           Sets an NPC's attitude (hostile, indifferent, friendly; 2024 Influence).
-xp milestone                       Milestone advancement: every party member may level up (plan §5.6).
+xp milestone                       Milestone advancement: every party member may level up (plan §5.6). In XP levelling it
+                                   also pays the High award, lifts the party to the story's level and pays what the ceiling
+                                   held back (story/xp.gd).
+xp fight <encounter id>            A fight a conversation put an end to for good (talked down, tricked, bargained away):
+                                   in XP levelling it pays what winning that fight would, once. Put it before any `set`
+                                   that changes which version of the fight the party would have met (its `when`). Nothing
+                                   in milestone mode.
 sacrifice                          The player picks a living party member, who dies for good and leaves the
                                    party (StoryState.fallen keeps their name). Skipped if only one is alive. The
                                    last option backs out ("No one. Not this."): check.last is false after it, true

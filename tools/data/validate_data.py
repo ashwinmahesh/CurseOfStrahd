@@ -33,6 +33,7 @@ FOLDERS = {
     "objects": {"kinds": "object_kinds"},
     "weather": "weather",
     "camp": {"night_visitors": "night_visitors"},
+    "progression": {"xp": "xp"},
 }
 
 TYPES = {
@@ -242,7 +243,9 @@ def semantic_checks(data):
                 errors.append(f"items/{iid}: spellbook spell '{sp}' isn't in data/spells")
     # Encounters: who's in it exists, everyone stands on open floor inside the map, nobody overlaps, and the
     # difficulty matches the 2024 DMG XP budget for the party.
-    budget = {1: (50, 75, 100), 2: (100, 150, 200), 3: (150, 225, 400), 4: (250, 375, 500), 5: (500, 750, 1100)}
+    # The budgets are data/progression/xp.json's (the same table XP levelling reads); the arena encounters stop at level 5.
+    xp_rows = data.get("progression", {}).get("xp", {}).get("budgets", [])
+    budget = {i + 1: tuple(row) for i, row in enumerate(xp_rows[:5])}
     sizes = {"tiny": 1, "small": 1, "medium": 1, "large": 2, "huge": 3, "gargantuan": 4}
     for eid, enc in data["encounters"].items():
         rows = enc["map"]["rows"]
@@ -282,10 +285,44 @@ def semantic_checks(data):
     story_checks(data, errors, need)
     object_checks(data, errors)
     camp_checks(data, errors)
+    xp_checks(data, errors)
     pending.extend(pending_list)
     pending_list.clear()
     campaign_checks(data, errors, pending)
     return errors, pending
+
+
+def xp_checks(data, errors):
+    """Experience-point levelling (data/progression/xp.json, docs/plans/xp_mode.md): the tables run in order, every quest
+    and monster it names exists, every award the game asks for is there, and a milestone quest does end in success."""
+    xp = data.get("progression", {}).get("xp")
+    if not xp:
+        return
+    w = "progression/xp.json"
+    th = xp["thresholds"]
+    if th[0] != 0 or any(b <= a for a, b in zip(th, th[1:])):
+        errors.append(f"{w}: thresholds must start at 0 and rise")
+    for i, (lo, mo, hi) in enumerate(xp["budgets"]):
+        if not lo < mo < hi:
+            errors.append(f"{w}: the level {i + 1} budget should run Low < Moderate < High")
+    if len(xp["budgets"]) < 11:
+        errors.append(f"{w}: budgets must reach the level cap (11)")
+    for kind in ("milestone", "main_quest", "side_quest", "place", "location", "find", "check", "trap_noticed", "trap_disarmed", "lore",
+                 "strahd_withdraws"):
+        if kind not in xp["awards"]:
+            errors.append(f"{w}: no award for '{kind}'")
+    for mon, award in xp["withdraw_pays"].items():
+        if mon not in data["monsters"]:
+            errors.append(f"{w}: withdraw_pays names unknown monster '{mon}'")
+        if award not in xp["awards"]:
+            errors.append(f"{w}: withdraw_pays names unknown award '{award}'")
+    for key in ("milestone_quests", "no_xp_quests"):
+        for qid in xp[key]:
+            q = data["quests"].get(qid)
+            if q is None:
+                errors.append(f"{w}: {key} names unknown quest '{qid}'")
+            elif key == "milestone_quests" and not any(s.get("ends") == "success" for s in q["stages"]):
+                errors.append(f"{w}: milestone quest '{qid}' has no stage that ends in success")
 
 
 def camp_checks(data, errors):
@@ -981,6 +1018,9 @@ def story_checks(data, errors, need):
         for enc, where in p["encounters"]:
             if enc not in encounter_ids:
                 errors.append(f"narrative/{where}: combat '{enc}' isn't an encounter in any location")
+        for enc, where in p.get("xp_fights", []):
+            if enc not in encounter_ids:
+                errors.append(f"narrative/{where}: xp fight '{enc}' isn't an encounter in any location")
         for sid, where in p.get("casts", []):
             if sid not in data["spells"]:
                 errors.append(f"narrative/{where}: cast '{sid}' isn't a spell")
