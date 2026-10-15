@@ -258,7 +258,7 @@ All 33 flags are registered, set and read. The ones for other regions:
 | search `bonegrinder_bone_heap` (DC 13) | hill | a holy symbol amulet (Brother Kesten's) |
 | search `bonegrinder_pantry_jars` (DC 12) | pantry | antitoxin |
 
-The lane's Keepers leave a potion of healing (road `raven_flight`) after Ilinca vouches.
+The lane's Keepers leave a Potion of Healing (Greater) (road `raven_flight`) after Ilinca vouches.
 
 **Fixed Curse of Strahd items:** none needed for this chapter beyond the Tarokka treasure (the coven's soul bags
 are story props, not items). **For the DMG magic-item thread:** `bonegrinder_hag_hoard` (the coven's hoard; a good
