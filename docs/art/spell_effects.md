@@ -61,6 +61,19 @@ showed who turns out to be something else when their conversation ends in a figh
 stepped aside; a foe of the same name whose stat block has a `reveal`, a kind from `FxShapeshift.LOOKS`, changes in
 front of the party: Offalia and the other hags, Vosk, the Abbot, the vampire spawn Anatol, Doru, Escher and the brides,
 Patrina, Zuleika; `LocationFights._reveal`).
+
+More shapes (the forms branch): a Werewolf's wolf and a Wereraven's raven (`forms` in their stat blocks, taken with
+`MonsterActions.shift(c, "wolf")`; an ally the player runs sees a hotbar entry for each), Baba Lysaga's swarm of insects
+and a Night Hag's disguise (`art_from_npc`: the figure of the NPC the creature is named for, `Legendary.shape_art`) are
+all `Legendary` shapes, so they size, speed, save, load and show like Strahd's. The AI shifts only a lycanthrope into its
+hybrid (`MonsterActions.bonus_action`). Starry Form, Celestial Revelation, Disguise Self and Seeming, which change how
+someone looks but swap no figure, show the transform cue (`features` and `spells` in art/vfx/effects.json) and sound
+(`keys` in art/audio.json), like Alter Self, Gaseous Form and Enlarge/Reduce already did.
+
+A Werewolf or Wereraven foe walks in as a person (`human_art`: werewolf_human, wereraven_human, drawn 2026-10-15) and
+changes into its hybrid (`art`) when the AI shifts it on its first turn, with the same effect and sound; a named one the
+story showed (Zuleika) wears that NPC's figure, an ally (Davian) keeps their own face, and the turn bar keeps the
+creature's portrait (`CombatToken.human_figure`, `true_figure`, `portrait_id`).
 `make capture SCENE=res://tools/capture/shapeshift_capture.tscn NAME=shapeshift/shot` takes a filmstrip of each.
 `tests/integration/test_shapeshift_effect.gd` and `test_shapeshift_audit.gd` check it; `reveal_capture.tscn` takes the
 story reveal.

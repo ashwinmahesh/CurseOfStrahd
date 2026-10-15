@@ -358,15 +358,7 @@ static func _reveal_of(view: LocationView, c: Combatant) -> Dictionary:
 
 ## Whether a foe's name is an NPC's ("Vosk, unmasked" is Vosk, "The Abbot" is the Abbot).
 static func _same_person(npc_name: String, foe_name: String) -> bool:
-	var strip := func(n: String) -> String:
-		var out := n.to_lower().replace(",", "").strip_edges()
-		for title: String in ["the ", "master ", "brother ", "lady ", "sir ", "mother ", "father "]:
-			if out.begins_with(title):
-				out = out.trim_prefix(title)
-		return out
-	var a: String = strip.call(npc_name)
-	var b: String = strip.call(foe_name)
-	return a != "" and b != "" and (a == b or a.begins_with(b) or b.begins_with(a))
+	return Legendary.same_person(npc_name, foe_name)
 
 
 ## `t`, a foe that was a person a moment ago, stands there in `reveal`'s figure and changes into itself: the same effect
@@ -383,16 +375,16 @@ static func _reveal(view: LocationView, t: CombatToken, reveal: Dictionary) -> v
 	var fx := SpellFx.new()
 	view.add_child(fx)
 	fx.shape_gather(ghost, kind)
-	var tree := view.get_tree()
-	tree.create_timer(FxShapeshift.GATHER * GameSettings.combat_pace()).timeout.connect(func() -> void:
-		if is_instance_valid(ghost):
-			ghost.queue_free()
-		if is_instance_valid(t) and is_instance_valid(fx):
-			t.visible = true
-			fx.shape_settle(t, kind))
-	tree.create_timer(3.0).timeout.connect(func() -> void:
-		if is_instance_valid(fx):
-			fx.queue_free())
+	# On a tween of the effect's own, so a scene that goes away mid-change takes it along (a timer's lambda that captured
+	# the freed nodes would be called all the same, with an error).
+	var tw := fx.create_tween()
+	tw.tween_interval(FxShapeshift.GATHER * GameSettings.combat_pace())
+	tw.tween_callback(func() -> void:
+		ghost.queue_free()
+		t.visible = true
+		fx.shape_settle(t, kind))
+	tw.tween_interval(3.0)
+	tw.tween_callback(fx.queue_free)
 
 
 ## A fight's token: guests wear their NPC sprite rather than their stat block's.

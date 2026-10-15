@@ -83,15 +83,24 @@ func test_every_shape_a_creature_can_take_has_a_figure_and_every_change_a_look()
 	for id: String in c.table("monsters"):
 		var d := c.monster_data(id)
 		for sh: Variant in ((d.get("forms", {}) as Dictionary).get("shapes", []) as Array):
-			var art := str((sh as Dictionary).get("art", ""))
+			var shape := sh as Dictionary
+			var art := str(shape.get("art", ""))
 			checked += 1
-			assert_true(art != "" and DirectionalSprite.frames_for(art) != null, "%s's %s form has a figure (%s)" % [id, (sh as Dictionary).get("id", ""), art])
+			if bool(shape.get("art_from_npc", false)):
+				# A figure the story's person has: every NPC a stat block is named for has one.
+				for npc_id: String in c.table("npcs"):
+					var npc := c.table("npcs")[npc_id] as Dictionary
+					if str(npc.get("monster", "")) == id:
+						assert_true(DirectionalSprite.frames_for(str(npc.get("sprite", npc_id))) != null, "%s's disguise as %s has a figure" % [id, npc_id])
+			else:
+				assert_true(art != "" and DirectionalSprite.frames_for(art) != null, "%s's %s form has a figure (%s)" % [id, shape.get("id", ""), art])
+			assert_true(FxShapeshift.LOOKS.has(str(shape.get("kind", shape.get("id", "")))) or not shape.has("kind"), "%s's %s change has a look" % [id, shape.get("id", "")])
 		if d.has("hybrid_art"):
 			assert_true(DirectionalSprite.frames_for(str(d["hybrid_art"])) != null, "%s's hybrid has a figure" % id)
 		if d.has("reveal"):
 			assert_true(FxShapeshift.LOOKS.has(str(d["reveal"])), "%s's reveal has a look (%s)" % [id, d["reveal"]])
 			assert_false(CombatSfx.shapeshift_ids(str(d["reveal"])).is_empty())
-	assert_true(checked >= 5, "Strahd's and the vampires' shapes were checked (%d)" % checked)
+	assert_true(checked >= 10, "every shape of Strahd, the vampires, the lycanthropes, Lysaga and the hag was checked (%d)" % checked)
 	# Polymorph, Wild Shape and the high spells: every creature one can become wears its own sprite.
 	var forms: Array[Dictionary] = []
 	forms.append_array(ShapeChange.beast_forms(30.0))

@@ -178,6 +178,25 @@
       ]
     }
   },
+  "forms": {
+    "base": "humanoid",
+    "change": "action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "swarm",
+        "name": "Swarm of insects",
+        "size": "medium",
+        "speed": {
+          "walk": 5,
+          "fly": 30
+        },
+        "art": "swarm_of_insects",
+        "kind": "swarm",
+        "summary": "A swarm of insects (Speed 5 ft., Fly 30 ft.): what she wears changes with her."
+      }
+    ]
+  },
   "regions": [
     "berez"
   ],

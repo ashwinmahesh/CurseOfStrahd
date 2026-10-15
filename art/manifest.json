@@ -6155,6 +6155,28 @@
       "sprite_flags": [
         "BODY=float"
       ]
+    },
+    {
+      "id": "werewolf_human",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/werewolf_human_turnaround.png",
+      "sprites": "art/sprites/werewolf_human/walk.tres",
+      "portrait": "art/portraits/werewolf_human.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a werewolf pack member in human form, a lean, wiry, feral-looking Barovian hill-man in his thirties with shaggy dark grey-brown hair, rough stubble, pale yellow wolf's eyes and long dirty nails, a ragged dark leather vest over a bare scarred chest, torn dark trousers tied with rope at the waist, bare feet, a longbow slung across his back. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
+    },
+    {
+      "id": "wereraven_human",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/wereraven_human_turnaround.png",
+      "sprites": "art/sprites/wereraven_human/walk.tres",
+      "portrait": "art/portraits/wereraven_human.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of a wereraven in human form, a gaunt, stoop-shouldered Barovian man in his forties with slicked-back black hair streaked with iron grey, a normal straight human nose, a lined stern face, hooded dark bright eyes and plain round human ears; a mantle of glossy black raven feathers over the shoulders of a dark blue travelling coat, a leather belt with a shortsword at his hip, dark trousers and worn boots. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk, 384 px cells; attack from art/anim/animations.json (docs/art/animation.md); turn-bar portrait (BG=ash_violet). Phase 5 creature pass (2026-10-06). Needs art QA before final."
     }
   ],
   "image_provider": "gemini"
