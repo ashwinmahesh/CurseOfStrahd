@@ -518,22 +518,22 @@
         {
           "monster": "swarm_of_rats",
           "cell": [
-            17,
-            25
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            18,
-            25
+            9,
+            24
           ]
         },
         {
           "monster": "swarm_of_rats",
           "cell": [
             19,
-            23
+            19
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            12,
+            18
           ]
         },
         {
@@ -546,8 +546,8 @@
         {
           "monster": "giant_rat",
           "cell": [
-            16,
-            24
+            12,
+            22
           ]
         }
       ],
@@ -568,6 +568,27 @@
           ],
           "name": "Doru",
           "hp": 45
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            18,
+            20
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            18,
+            16
+          ]
+        },
+        {
+          "monster": "giant_rat",
+          "cell": [
+            14,
+            16
+          ]
         }
       ],
       "surprise": "",

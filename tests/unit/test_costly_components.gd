@@ -97,3 +97,68 @@ func test_pregens_start_with_incense_for_a_familiar() -> void:
 	var liriel := Pregens.build("liriel_dawnsong", 9)
 	assert_true(liriel.knows_spell("revivify"))
 	assert_ne(liriel.component_why(Compendium.shared().spell_data("revivify")), "", "Revivify's diamonds are bought")
+
+
+## Diamonds and the other components spells use up, for sale from the start (Ashwin, 2026-10-15: no diamonds turned
+## up, so Revivify couldn't be cast): every one sold, without running out, at its own price by a merchant who never
+## joins the party; diamonds at a church in each town; and diamonds among a fight's finds from level 5.
+func test_every_used_up_component_is_always_for_sale() -> void:
+	var st := StoryState.new()
+	st.party.append(Pregens.build("liriel_dawnsong", 1))
+	st.gold = 10000.0
+	var materials := {}
+	for f in DirAccess.get_files_at("res://data/spells"):
+		if f.ends_with(".json"):
+			var spell := Compendium.shared().spell_data(f.get_basename())
+			var cc := Character.costly_component(spell)
+			if not cc.is_empty() and Compendium.playable(spell):
+				materials[str(cc["material"])] = true
+	assert_true(materials.has("diamond") and materials.has("onyx"), str(materials.keys()))
+	for m: String in materials:
+		var sellers: Array[String] = []
+		for npc: String in Compendium.shared().table("npcs"):
+			var data := Compendium.shared().get_entry("npcs", npc)
+			if bool(data.get("guest", false)) or not data.has("shop"):
+				continue
+			for w in st.shop_wares(npc):
+				var item := Compendium.shared().item_data(m)
+				if str(w["id"]) == m and int(w["qty"]) < 0 \
+						and float(w["price"]) == Trade.buy_price(st, npc, float(item["cost_gp"]) * StoryState.shop_lot(item)):
+					sellers.append(npc)
+		assert_false(sellers.is_empty(), "%s is always for sale at its price somewhere" % m)
+	for npc: String in ["donavich", "father_lucian", "kasha_varo"]:
+		st.attitudes[npc] = "indifferent"
+		var diamond := st.shop_wares(npc).filter(func(w: Dictionary) -> bool: return str(w["id"]) == "diamond")
+		assert_eq(diamond.size(), 1, "%s sells diamonds" % npc)
+		assert_eq(int((diamond[0] as Dictionary)["qty"]), -1, "%s never runs out" % npc)
+		assert_eq(float((diamond[0] as Dictionary)["price"]), 100.0, "at 100 gp each")
+	var regions := ["donavich", "father_lucian", "kasha_varo"].map(func(n: String) -> String:
+		return str(Compendium.shared().get_entry("npcs", n)["region"]))
+	assert_eq(regions, ["village_of_barovia", "vallaki", "krezk"], "one in each town")
+	var liriel := st.party[0]
+	for i in 3:
+		assert_eq(st.shop_buy("donavich", "diamond", liriel), "")
+	assert_eq(liriel.component_why(Compendium.shared().spell_data("revivify")), "", "three diamonds: a Revivify")
+	assert_eq(st.gold, 9700.0)
+
+
+func test_the_dead_can_be_raised_in_every_town() -> void:
+	var st := StoryState.new()
+	st.party.append(Pregens.build("liriel_dawnsong", 3))
+	for npc: String in ["donavich", "father_lucian", "kasha_varo"]:
+		st.attitudes[npc] = "indifferent"   # a friendly priest takes 10% off the fee
+		var raise := Services.offered(st, npc).filter(func(l: Dictionary) -> bool: return str(l["id"]) == "raise_dead")
+		assert_eq(raise.size(), 1, "%s raises the dead" % npc)
+		assert_eq(Services.cost(raise[0] as Dictionary), 2500.0, "the 2024 PHB's 2,000 gp and the 500 gp diamond")
+
+
+func test_fights_turn_up_diamonds_from_level_5() -> void:
+	var found := {}
+	for level: int in [3, 5, 8, 10]:
+		for i in 200:
+			var it := RoadSpoils.find(DiceRoller.new(i), level, false)
+			if str(it["id"]) in ["onyx", "pearl", "diamond"]:
+				found["%d:%s" % [level, it["id"]]] = true
+	assert_true(found.has("3:pearl") and not found.has("3:diamond"), "pearls before: %s" % str(found.keys()))
+	for level: int in [5, 8, 10]:
+		assert_true(found.has("%d:diamond" % level), "a diamond at level %d" % level)

@@ -5,8 +5,8 @@ extends RefCounted
 ## line for how it went (`check:<skill>:<check id>:success` or `:failure`, else the outcome's `text`), and the parts of
 ## an outcome that reach into the place: hidden things revealed (here, or `<location>:<id>` somewhere else), traps found
 ## or disarmed, locks undone, a door opened, the party across to another square, and what a flag just brought into view.
-## A hiding place a check reaches here that holds an item hands it to whoever rolled (owner, 2026-10-12: the well at the
-## Wizard of Wines showed its rope and nothing more); ItemNotices says so.
+## A hiding place a check reaches here keeps its item until someone takes it from there (owner, 2026-10-14): the check
+## only shows where it is, and the hiding place glows orange (FoundGlow) until the party uses it.
 ## A fight a check sets off is an encounter here whose trigger is `check:<check id>:success` or `:failure`.
 
 ## The view's memory of the last failed check, for the aids still to spend on it: {check, spec, test, who}.
@@ -137,21 +137,30 @@ static func _resolve(view: LocationView, spec: Dictionary, check: Dictionary, wh
 	var res := WorldChecks.apply(view.st, outcome, who, view.dice, str(check.get("label", "")))
 	if not (res["lines"] as Array).is_empty():
 		view.check_rolled.emit(" · ".join(res["lines"] as Array))
-	var found := _reach_into(view, outcome, who)
+	# XP levelling (story/xp.gd): a check passed is worth a little, and so is each hiding place, secret door or trap it
+	# brings to light (_reveal_here). The XP rides on the notice the thing already has.
+	var passed := Xp.award(view.st, "check", "%s:%s" % [view.loc_id, check["id"]]) if success else 0
+	var xp_before := view.st.xp
+	var found := _reach_into(view, outcome)
+	var finds_xp := view.st.xp - xp_before
 	var gains: Array[String] = []
 	gains.assign(res["gains"] as Array)
 	if not gains.is_empty():
-		view.toast.emit("%s: %s" % [who.name.get_slice(" ", 0), ", ".join(gains)])
+		view.toast.emit("%s: %s%s" % [who.name.get_slice(" ", 0), ", ".join(gains), Xp.tag(passed)])
+		passed = 0
 	if not found.is_empty():
-		view.toast.emit("Found: " + ", ".join(found))
+		view.toast.emit("Found: " + ", ".join(found) + Xp.tag(finds_xp + passed))
+		passed = 0
+	if passed > 0:
+		view.check_rolled.emit("+%s XP" % Xp.fmt(passed))
 	if str(outcome.get("flag", "")) != "":
 		_show_new_things(view)
 	view.refresh_party()
 	view._trigger_encounter("check:%s:%s" % [check["id"], result])
 
 
-## Reveals, traps, locks, a door and a move (`who` rolled). Returns the names of what came to light here, for a toast.
-static func _reach_into(view: LocationView, outcome: Dictionary, who: Character) -> Array[String]:
+## Reveals, traps, locks, a door and a move. Returns the names of what came to light here, for a toast.
+static func _reach_into(view: LocationView, outcome: Dictionary) -> Array[String]:
 	var found: Array[String] = []
 	var states := view.st.loc_state(view.loc_id)
 	for r: Variant in outcome.get("reveal", []):
@@ -161,7 +170,7 @@ static func _reach_into(view: LocationView, outcome: Dictionary, who: Character)
 			(view.st.loc_state(ref.get_slice(":", 0))["found"] as Dictionary)[ref.get_slice(":", 1)] = true
 			view.toast.emit(_hint_words(ref))
 			continue
-		var name := _reveal_here(view, ref, who)
+		var name := _reveal_here(view, ref)
 		if name != "":
 			found.append(name)
 	for tr: Variant in outcome.get("disarm", []):
@@ -183,39 +192,29 @@ static func _reach_into(view: LocationView, outcome: Dictionary, who: Character)
 
 
 ## Brings hidden thing `id` here to light: a hiding place (a search prop), a secret door or a trap. Its name, or "".
-## A hiding place holding an item (and no conversation of its own) hands it to `who`.
-static func _reveal_here(view: LocationView, id: String, who: Character) -> String:
+## A hiding place holding an item keeps it: whoever uses it takes it (LocationInteraction._use_prop).
+static func _reveal_here(view: LocationView, id: String) -> String:
 	var states := view.st.loc_state(view.loc_id)
 	var prop := _spec("props", view, id)
 	if not prop.is_empty() and not bool((states["found"] as Dictionary).get(id, false)):
 		(states["found"] as Dictionary)[id] = true
 		if StoryConditions.check(str(prop.get("when", "")), view.st) and not view.prop_nodes.has(id):
 			view.prop_nodes[id] = LocationBuilder._prop_node(view, prop)
-		_take(view, prop, who)
+		Xp.award(view.st, "find", "%s:%s" % [view.loc_id, id])
 		return str(prop.get("label", "something"))
 	var door := _spec("doors", view, id)
 	if not door.is_empty() and int(door.get("secret_dc", 0)) > 0 and not bool((states["found"] as Dictionary).get(id, false)):
 		(states["found"] as Dictionary)[id] = true
 		SetDressing.reveal_door(view.door_nodes[id] as Node3D)
+		Xp.award(view.st, "find", "%s:%s" % [view.loc_id, id])
 		return str(door.get("label", "a hidden door"))
 	var trap := _spec("traps", view, id)
 	if not trap.is_empty() and str((states["traps"] as Dictionary).get(id, "")) == "":
 		(states["traps"] as Dictionary)[id] = "found"
 		view._show_trap(trap)
+		Xp.award(view.st, "trap_noticed", "%s:%s" % [view.loc_id, id])
 		return str(trap.get("label", "a trap"))
 	return ""
-
-
-## The item in hiding place `prop` goes to `who` (the leader when null), as if they'd taken it by hand: once, and its
-## flag set. Not a hiding place with a conversation of its own (that says what's found).
-static func _take(view: LocationView, prop: Dictionary, who: Character) -> void:
-	var used := view.st.loc_state(view.loc_id)["props"] as Dictionary
-	if not prop.has("item") or str(prop.get("dialogue", "")) != "" or bool(used.get(str(prop["id"]), false)):
-		return
-	view.st.gain_item(str(prop["item"]), 1, who if who != null else view.leader().creature as Character)
-	used[str(prop["id"])] = true
-	if prop.has("flag"):
-		view.st.set_flag(str(prop["flag"]))
 
 
 ## A place hint's toast: "Now you know where to look: a hunter's boots in the mud (The Hills above Lake Zarovich)".
@@ -226,25 +225,6 @@ static func _hint_words(ref: String) -> String:
 		if str((p as Dictionary)["id"]) == label:
 			label = str((p as Dictionary).get("label", label))
 	return "Now you know where to look: %s (%s)" % [label, loc.get("name", ref.get_slice(":", 0))]
-
-
-## On arriving: a hiding place a passed check here reached, whose item nobody took (a save from before checks handed
-## their finds over), hands it to the leader now.
-static func settle(view: LocationView) -> void:
-	if view.members.is_empty():
-		return
-	var records := view.st.loc_state(view.loc_id).get("checks", {}) as Dictionary   # read only: no record made here
-	if records.is_empty():
-		return
-	var found := view.st.loc_state(view.loc_id)["found"] as Dictionary
-	for c in WorldChecks.all_in(view.loc):
-		var check := c["check"] as Dictionary
-		if str(records.get(str(check["id"]), "")) != "done":
-			continue
-		for r: Variant in (check.get("success", {}) as Dictionary).get("reveal", []):
-			var prop := _spec("props", view, str(r))
-			if not prop.is_empty() and bool(found.get(str(r), false)):
-				_take(view, prop, null)
 
 
 static func _spec(list: String, view: LocationView, id: String) -> Dictionary:

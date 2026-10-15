@@ -822,6 +822,148 @@
             28,
             7
           ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            12,
+            6
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            16
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            2,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            15
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            6,
+            20
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            17,
+            20
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            7,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            1,
+            19
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            11
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            16
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            14,
+            19
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            18
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            17
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            6,
+            17
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            15,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            13
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            17,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            14,
+            16
+          ],
+          "name": "Belview Brute"
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            14,
+            9
+          ]
         }
       ],
       "surprise": "",
@@ -841,31 +983,108 @@
           "name": "Belview Brute"
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             15,
             5
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             15,
             7
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             27,
             5
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             27,
             7
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            6
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            16
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            2,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            20,
+            15
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            6,
+            20
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            17,
+            20
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            7,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            1,
+            19
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            12,
+            9
           ]
         }
       ],

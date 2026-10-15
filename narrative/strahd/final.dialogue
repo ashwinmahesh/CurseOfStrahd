@@ -83,6 +83,7 @@ approve godrick_pendlebrook -4 thistle -4 wren_featherfoot -3 liriel_dawnsong -3
 
 ~ answered
 if flag.strahd_parley == "fight"
+cutscene strahd_begins
 Strahd [smile]: Good. I should have been so disappointed. Begin.
 elif flag.strahd_parley == "yield"
 Strahd: Kneel, then. There. You see how easy it is? Everyone kneels in the end. You have only done it sooner.

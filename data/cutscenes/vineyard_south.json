@@ -1,0 +1,15 @@
+{
+  "id": "vineyard_south",
+  "title": "The Vineyard Gone Quiet",
+  "summary": "South of Vallaki, the Wizard of Wines' vineyard in grey light, one warm window in the winery and ravens wheeling over it.",
+  "images": [
+    {
+      "image": "vineyard_south",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

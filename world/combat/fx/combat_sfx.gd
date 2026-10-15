@@ -49,6 +49,18 @@ static func concentration(started: bool) -> void:
 		sound(id)
 
 
+## A creature changes shape (SpellFx.shape_gather): the sounds of its kind of change (FxShapeshift.LOOKS), else the
+## default's.
+static func shapeshift(kind: String) -> void:
+	for id in shapeshift_ids(kind):
+		sound(id)
+
+
+static func shapeshift_ids(kind: String) -> Array[String]:
+	var table := data().get("shapeshift", {}) as Dictionary
+	return _list(table.get(kind, table.get("default", [])))
+
+
 ## A spell's, feature's or monster action's own sounds (`keys`): its id's, else its kind's for an id with a choice in
 ## it ("wild_shape:wolf" plays wild_shape's).
 static func own(key: String) -> Dictionary:

@@ -180,6 +180,7 @@ interject tag:blunt: Six of them. None of them breathing.
 * Stand and fight. -> dp_fight
 
 ~ dp_hidden
+xp fight road_dead_procession
 Narrator: They pass so close you could touch the coffin. The one at the front stops beside your ditch, lifts his face, breathes in where breathing does no good, and walks on.
 -> END
 
@@ -188,6 +189,7 @@ Narrator: The lantern swings toward the ditch and stops. The lead mourner says t
 combat road_dead_procession
 
 ~ dp_turned
+xp fight road_dead_procession
 set dead_procession_turned
 Narrator: The light of your faith hits them like a wind. They set the empty coffin down in the middle of the road, turn together, and walk off into the fields toward wherever they were buried.
 interject tag:cheerful: We're just going to leave the coffin there? In the road? All right.
@@ -281,6 +283,7 @@ Narrator: You walk past slowly. The arrows follow you all the way to the bend in
 -> END
 
 ~ h_scared
+xp fight road_hunters
 Narrator: He lowers the bow. In the trees, the other bows lower too, one by one.
 Grigor: Fine. Go on, then. And may the wolves find you before you find us again.
 -> END
@@ -289,6 +292,7 @@ Grigor: Fine. Go on, then. And may the wolves find you before you find us again.
 combat road_hunters
 
 ~ hunters_friends
+xp fight road_hunters
 set hunters_befriended
 Narrator: The bow comes down. A whistle, and three young men drop out of the trees, all with the same nose.
 Grigor: The wolves took my brother off this road a month back. We've been taking them back since, one pelt at a time.

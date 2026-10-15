@@ -752,6 +752,76 @@
             28,
             15
           ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            37,
+            5
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            4,
+            10
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            23,
+            21
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            21,
+            31
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            11,
+            25
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            33,
+            25
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            1,
+            22
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            3,
+            30
+          ]
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            40,
+            27
+          ]
         }
       ]
     },
@@ -783,6 +853,83 @@
             20,
             15
           ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
+            25
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            30,
+            19
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            19
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            30,
+            29
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            10,
+            29
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            34,
+            8
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
+            31
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            20
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            23,
+            20
+          ]
         }
       ]
     },
@@ -805,6 +952,90 @@
           "monster": "phantom_warrior",
           "cell": [
             27,
+            9
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            23,
+            18
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            21
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            23,
+            28
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            33,
+            19
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            33,
+            29
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            14,
+            30
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            5,
+            30
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            5,
+            10
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            5,
+            21
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            34,
+            8
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            16,
+            15
+          ]
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            20,
             9
           ]
         }
@@ -903,6 +1134,38 @@
             24
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            14,
+            13
+          ],
+          "name": "A Knight Who Forgot"
         }
       ],
       "surprise": "",
@@ -1051,6 +1314,30 @@
             28
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            15,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            16
+          ],
+          "name": "Man-at-Arms"
         }
       ],
       "surprise": "",
@@ -1101,6 +1388,38 @@
             26
           ],
           "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            13,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            17,
+            30
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "phantom_warrior",
+          "cell": [
+            18,
+            26
+          ],
+          "name": "Man-at-Arms"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            19,
+            20
+          ],
+          "name": "A Knight Who Forgot"
         }
       ],
       "surprise": "",

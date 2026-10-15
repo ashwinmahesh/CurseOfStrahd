@@ -7,7 +7,7 @@
   },
   "category": "wondrous",
   "weight_lb": 0,
-  "cost_gp": 200.0,
+  "cost_gp": 300,
   "magic": {
     "rarity": "uncommon",
     "attunement": false

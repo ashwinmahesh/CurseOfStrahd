@@ -113,6 +113,17 @@
             }
           }
         },
+        "magic": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "description": "Magic items for sale (Ashwin, 2026-10-14; story/trade.gd magic_stock): each at its own price (Sane Magical Prices) whatever the shop's markup, shown once the party's milestone level reaches its rarity's (data/treasure/levels.json shop_levels). A template on a weapon or armor ('flame_tongue') lets the party pick the base."
+        },
+        "magic_if": {
+          "type": "string",
+          "description": "A story condition the magic stock waits for (the Keepers' stores)."
+        },
         "buys": {
           "type": "array",
           "items": {

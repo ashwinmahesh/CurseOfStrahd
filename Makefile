@@ -108,6 +108,11 @@ lfs-quiet:
 cheat-codes:
 	python3 tools/data/cheat_codes.py
 
+## Magic item prices from Sane Magical Prices (data/treasure/magic_prices.json) written into the items' cost_gp.
+.PHONY: magic-prices
+magic-prices:
+	python3 tools/data/magic_prices.py --apply
+
 ## The spoiler wiki in the vault (Wiki/), rebuilt from the game's data (tools/wiki/build_wiki.py). What people wrote on
 ## its pages outside the generated blocks is kept. wiki-shots first takes its screenshots in one off-screen run
 ## (tools/wiki/wiki_shots.gd; shots already in captures/wiki are kept, so delete one to retake it).
@@ -134,6 +139,14 @@ lint: import
 balance:
 	@$(FRESH)
 	$(G) --headless --script res://tools/balance/balance_sim.gd -- $(if $(ENC),--encounter=$(ENC),) $(if $(LOCATION),--location=$(LOCATION),) $(if $(FIGHT),--fight=$(FIGHT),) $(if $(LEVEL),--level=$(LEVEL),) $(if $(PARTY),"--party=$(PARTY)",) $(if $(MODES),"--modes=$(MODES)",) $(if $(RUNS),--runs=$(RUNS),) $(if $(JSON),--json=$(JSON),) $(if $(NO_WARD),--no_ward,) 2>&1 | $(LOGCHK)
+
+## XP levelling's simulator (tools/balance/xp_sim.py, docs/plans/xp_mode.md §5): replays the awards in data/progression/
+## xp.json against the fight data and prints the party's level at every story gate for five kinds of player (under a
+## minute, no Godot). Re-run it after retuning an award or a fight. RULES=build (default: what story/xp.gd does) | plan
+## (the plan's model, which reproduces its tables) | literal.
+.PHONY: xp-sim
+xp-sim:
+	python3 tools/balance/xp_sim.py . --tables --rules $(or $(RULES),build)
 
 ## Local CI: everything main must pass before a merge (plan §4, ADR 0001).
 ci: validate lint test

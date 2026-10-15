@@ -533,7 +533,7 @@ once
 | The dice go cold in your hand, and the watchmen's pale faces turn to you all at once. You lose, and you are glad to.
 
 ~ check:acrobatics:gorge_rocks:success
-| You edge out along the wet rocks with the gorge breathing below you, and pull the great feather free of the crevice it's caught in.
+| You edge out along the wet rocks with the gorge breathing below you, and work the great feather loose in the crevice it's caught in.
 
 ~ check:acrobatics:gorge_rocks:failure
 | Your foot finds ice where there should be rock, and the slide ends a long, painful way down.

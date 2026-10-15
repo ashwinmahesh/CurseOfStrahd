@@ -64,6 +64,7 @@ Narrator: Trodden earth and fallen leaves. Pickers, probably.
 
 ~ stakeout
 time until 1
+cutscene adrian_picks
 Narrator: An hour past midnight a raven comes down into the Seventh Row, and shakes itself, and is Adrian Martikov in his shirtsleeves, with his hat in his hand.
 Narrator: He picks the black grapes by feel, without looking, a whole hat full. He eats them standing there, one after another, with his eyes shut.
 if flag.elvir_buried

@@ -73,6 +73,7 @@ var _sun: DirectionalLight3D
 var atmosphere: Atmosphere
 var guest_members: Array[Combatant] = []   ## story allies following the party (StoryState.guests)
 var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
+var _stepped_aside: Array[Dictionary] = []   ## [{name, art}] the people a conversation ended in a fight just stepped away from (LocationNpcs.hide_npcs_of): the fight's _reveal
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
 var prop_nodes: Dictionary = {}
@@ -147,7 +148,6 @@ func _ready() -> void:
 	LocationNpcs._build_npcs(self)
 	LocationParty._place_party(self)
 	LocationTraps._mark_found_traps(self)
-	LocationChecks.settle(self)   # a find a passed skill check reached but nobody took (saves from before it was handed over)
 	rig = CameraRig.new()
 	add_child(rig)
 	rig.zoom_max = 30.0
@@ -162,6 +162,8 @@ func _ready() -> void:
 	st.location = loc_id
 	var first := not st.visited.has(loc_id)
 	st.visited[loc_id] = true
+	if first:
+		Xp.arrive(st, loc_id)   # XP levelling: a place found on the travel map, or a new location (milestone mode: nothing)
 	_say(str((loc.get("narration", {}) as Dictionary).get("enter", "enter:" + loc_id)))
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
@@ -176,6 +178,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if LocationParty.ensure_living_leader(self):
+		party_tended.emit()   # the dead don't lead: the next hero took over, and the party panel shows it
 	LocationStealth.show_crouch(self)
 	_exit_check -= delta
 	if _exit_check <= 0.0:
@@ -277,6 +281,11 @@ func place_guests() -> void:
 
 func set_leader(index: int) -> void:
 	LocationParty.set_leader(self, index)
+
+
+## Who leads next going `step` round the marching order, passing over the dead (-1: nobody else can).
+func next_leader_index(step: int) -> int:
+	return LocationParty.next_leader(self, step)
 
 
 func _save_positions() -> void:

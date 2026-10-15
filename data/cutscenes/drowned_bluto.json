@@ -1,0 +1,15 @@
+{
+  "id": "drowned_bluto",
+  "title": "They Turn to Bluto",
+  "summary": "Bluto drops his lantern and runs for the jetty, and every one of the drowned turns toward him at once.",
+  "images": [
+    {
+      "image": "drowned_bluto",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.45,
+    0.5
+  ]
+}

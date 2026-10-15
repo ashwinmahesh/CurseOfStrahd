@@ -55,11 +55,13 @@ if not flag.death_house_dursts_confessed
   set death_house_dursts_confessed
   set death_house_lore += 1
 endif
+cutscene durst_table
 Narrator: Gustav dabs his mouth with a napkin and stands. Supper, it seems, is over.
 combat durst_reunion
 
 ~ bristle
 Gustav [angry]: Manners. In my own house.
+cutscene durst_table
 Narrator: Elisabeth is already over the table.
 combat durst_reunion
 
@@ -71,5 +73,6 @@ Narrator: Then the hunger comes back. But you have the moment, and you use it.
 combat durst_reunion_shaken
 
 ~ fight
+cutscene durst_table
 Narrator: Gustav sighs, the way a host sighs at a broken glass.
 combat durst_reunion

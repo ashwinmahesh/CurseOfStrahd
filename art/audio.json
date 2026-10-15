@@ -940,7 +940,7 @@
     ]
   },
   "combat": {
-    "_note": "What a fight sounds like (world/combat/fx/combat_sfx.gd, docs/art/spell_effects.md). Each entry names effects in sfx. families: a spell or ability's sounds by its look's family (art/vfx/effects.json), at each moment its effect shows: cast (the effect begins), launch (a missile leaves the hand), impact (it lands or bursts), arrive (a jump's far end); an entry starting with @ is the flavour's sound for that moment (flavours). keys: a spell's, feature's or monster action's own sounds, over its family's. A family with no entry plays the plain spell sound. hits: a weapon, claw or bite landing, by what struck (blade: slashing, blunt: bludgeoning, point: a melee pierce, shot: an arrow, bolt or throw) and how hard (light, heavy, critical).",
+    "_note": "What a fight sounds like (world/combat/fx/combat_sfx.gd, docs/art/spell_effects.md). Each entry names effects in sfx. families: a spell or ability's sounds by its look's family (art/vfx/effects.json), at each moment its effect shows: cast (the effect begins), launch (a missile leaves the hand), impact (it lands or bursts), arrive (a jump's far end); an entry starting with @ is the flavour's sound for that moment (flavours). keys: a spell's, feature's or monster action's own sounds, over its family's. A family with no entry plays the plain spell sound. hits: a weapon, claw or bite landing, by what struck (blade: slashing, blunt: bludgeoning, point: a melee pierce, shot: an arrow, bolt or throw) and how hard (light, heavy, critical). shapeshift: a creature changing shape, by how the change looks (the kinds of FxShapeshift.LOOKS: werewolf, wereraven, bat, wolf, mist, wild_shape, polymorph, swarm, disguise, and a reveal's hag, undead, fiend, celestial; default for a kind with none), played as its figure is swapped (SpellFx.shape_gather); an entry ending @<seconds> comes in that long after the others.",
     "families": {
       "bolt": {
         "launch": [
@@ -1181,6 +1181,24 @@
       }
     },
     "keys": {
+      "starry_form": {
+        "cast": [
+          "arcane_glint",
+          "blessing@0.1"
+        ]
+      },
+      "celestial_revelation": {
+        "cast": [
+          "radiant_burst",
+          "radiant_chime@0.1"
+        ]
+      },
+      "celestial_revelation:necrotic_shroud": {
+        "cast": [
+          "necrotic_pull",
+          "curse@0.1"
+        ]
+      },
       "hold_person": {
         "cast": [
           "hold_chains",
@@ -1314,6 +1332,75 @@
       "break": [
         "concentration_break_1",
         "concentration_break_2@0.05"
+      ]
+    },
+    "shapeshift": {
+      "werewolf": [
+        "bone_crack",
+        "flesh_wet@0.12",
+        "wild_shape_2@0.3"
+      ],
+      "wereraven": [
+        "bone_crack",
+        "air_rush@0.1",
+        "crow@0.25",
+        "swing@0.3"
+      ],
+      "bat": [
+        "arcane_glint",
+        "air_rush@0.08",
+        "swing@0.2",
+        "swing@0.32"
+      ],
+      "wolf": [
+        "bone_crack",
+        "flesh_wet@0.1",
+        "wild_shape_2@0.28"
+      ],
+      "mist": [
+        "air_rush",
+        "arcane_glint@0.1",
+        "air_rush@0.25"
+      ],
+      "wild_shape": [
+        "flesh_wet",
+        "bone_snap@0.1",
+        "swing@0.22"
+      ],
+      "polymorph": [
+        "flesh_wet",
+        "bone_snap@0.1",
+        "arcane_glint@0.2"
+      ],
+      "swarm": [
+        "air_rush",
+        "swing@0.1",
+        "swing@0.25"
+      ],
+      "disguise": [
+        "arcane_glint",
+        "mind_shimmer@0.1"
+      ],
+      "hag": [
+        "flesh_wet",
+        "bone_snap@0.1",
+        "curse@0.2"
+      ],
+      "undead": [
+        "necrotic_pull",
+        "bone_crack@0.12"
+      ],
+      "fiend": [
+        "fire_whoosh",
+        "rumble@0.1"
+      ],
+      "celestial": [
+        "radiant_burst",
+        "radiant_chime@0.1"
+      ],
+      "default": [
+        "arcane_glint",
+        "air_rush@0.12"
       ]
     }
   },

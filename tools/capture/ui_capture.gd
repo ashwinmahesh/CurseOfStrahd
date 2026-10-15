@@ -1,11 +1,12 @@
 extends Node
 ## Every party screen for captures: the four pregens at level 5 with some wear on them (a Bloodied cleric, a spent
 ## Second Wind and spell slot, Shield of Faith, Poisoned), then the sheet's tabs, party, inventory, level up, rests,
-## spell preparation (after a rest and after an item's Long Rest), journal, loot, shop, pause menu and character creation,
+## spell preparation (after a rest, after an item's Long Rest and any time outside a fight: UI_ONLY=prepare_anytime), journal, loot, shop, pause menu and character creation,
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
 ## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
-## screen (UI_ONLY=wait) and the journal's quests: Other, Main and a search (UI_ONLY=journal_quests).
+## screen (UI_ONLY=wait), the journal's quests: Other, Main and a search (UI_ONLY=journal_quests), and XP levelling's strip,
+## and level-up line (UI_ONLY=xp).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -128,7 +129,7 @@ func capture_shots(tool: Node, out: String) -> void:
 		ps.open(root, GameState.story, 0)
 		await _shoot(tool, "%s_prepare.png" % out)
 		ps.free()
-		# After a Long Rest Silvain has swapped Fire Bolt for another cantrip: the Wizard's one swap is used.
+		# After a Long Rest Silvain has swapped a cantrip for another; spells hold no limit there, so nothing is locked.
 		var before := PrepareScreen.snapshot(GameState.story)
 		var cantrips := silvain.choice("wizard.cantrips")
 		ChoiceOptions.populate(cantrips, silvain)
@@ -148,6 +149,20 @@ func capture_shots(tool: Node, out: String) -> void:
 			(sc as ScrollContainer).scroll_vertical = 100000
 		await _shoot(tool, "%s_prepare_swapped.png" % out)
 		ps2.queue_free()
+	if _wants("prepare_anytime"):
+		# Any time outside a fight, no rest taken: the whole party's lists, then Hedda's from her own sheet's Spells tab.
+		var pa := PrepareScreen.new()
+		pa.rest_kind = PrepareScreen.ANYTIME
+		add_child(pa)
+		pa.open(root, GameState.story, 0)
+		await _shoot(tool, "%s_prepare_anytime.png" % out)
+		pa.free()
+		root.call("open_screen", "sheet", 2)
+		(root.get("screen") as CharacterSheetScreen).show_tab("Spells")
+		await _shoot(tool, "%s_prepare_anytime_button.png" % out)
+		root.get("screen").call("_open_prepare", hedda)
+		await _shoot(tool, "%s_prepare_anytime_sheet.png" % out)
+		root.call("close_screen")
 	if _wants("item_rest"):
 		# Daern's Instant Fortress gives a Long Rest from the inventory, which then offers Change prepared spells.
 		ilse.add_item("daerns_instant_fortress")
@@ -176,6 +191,25 @@ func capture_shots(tool: Node, out: String) -> void:
 		root.call("open_screen", "level_up", 2)
 		await _shoot(tool, "%s_level_up.png" % out)
 		root.call("close_screen")
+	if _wants("xp"):
+		# XP levelling (story/xp.gd): the experience strip on the party screen and the sheet (the pool partway through level 5,
+		# some held for the next milestone) and the level-up screen when the party has taken every level it has.
+		var xs := GameState.story
+		xs.options[Xp.OPTION] = Xp.EXPERIENCE
+		xs.xp = 9420
+		xs.xp_reserve = 1240
+		root.call("open_screen", "party", 0)
+		await _shoot(tool, "%s_xp_party.png" % out)
+		root.call("close_screen")
+		root.call("open_screen", "sheet", 0)
+		await _shoot(tool, "%s_xp_sheet.png" % out)
+		root.call("close_screen")
+		root.call("open_screen", "level_up", 0)
+		await _shoot(tool, "%s_xp_level_up.png" % out)
+		root.call("close_screen")
+		xs.options[Xp.OPTION] = Xp.MILESTONE
+		xs.xp = 0
+		xs.xp_reserve = 0
 	if _wants("level_up_fighter"):
 		# Ilse's Fighter 6: her Fighting Style may change though the level brings no new one.
 		GameState.story.milestones = 10

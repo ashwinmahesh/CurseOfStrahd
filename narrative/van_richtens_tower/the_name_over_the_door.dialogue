@@ -109,6 +109,7 @@ Narrator: There's a great deal of old magic down here, and none of it is in any 
 -> khazan_menu
 
 ~ threaten
+cutscene khazan_writes
 Khazan: (The lights in his eyes go very small.) No. No, I don't think you are. I think you're going to stay down here, and I'll write you out properly, in the good ink.
 -> fight
 

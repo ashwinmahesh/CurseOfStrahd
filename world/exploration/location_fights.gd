@@ -303,6 +303,12 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		if LyingFigures.of(c.creature) != null:
 			LyingFigures.lay(view, t, LyingFigures.of(c.creature), c.cell)
 		ctokens[c.id] = t
+		# A person the conversation showed who turns out to be this (Offalia a hag, Vosk unmasked) changes where it stands.
+		var reveal := _reveal_of(view, c)
+		if not reveal.is_empty() and SpellFx.enabled:
+			_reveal(view, t, reveal)
+			standing.append(t)
+			continue
 		foes.append(t)
 	foes.sort_custom(func(a: CombatToken, b: CombatToken) -> bool: return a.position.distance_to(party_mid) < b.position.distance_to(party_mid))
 	for i in foes.size():
@@ -333,6 +339,52 @@ static func _face_nearest_foe(ours: Array[CombatToken], foes: Array[CombatToken]
 					best_d = d
 					best = f.position - tok.position
 		tok.face(Vector2(best.x, best.z), false)
+
+
+## The look of a person who has just turned out to be foe `c` (a stat block's `reveal`): {art: the figure they had, kind:
+## how the change looks (FxShapeshift)}, or {} when `c` isn't someone who stepped aside from the conversation that led
+## here, in a different figure. Each person changes once.
+static func _reveal_of(view: LocationView, c: Combatant) -> Dictionary:
+	var kind := str((c.creature as Monster).data.get("reveal", "")) if c.creature is Monster else ""
+	if kind == "":
+		return {}
+	for aside: Dictionary in view._stepped_aside:
+		var art := str(aside["art"])
+		if _same_person(str(aside["name"]), c.name()) and art != CombatToken.art_id(c) and DirectionalSprite.frames_for(art) != null:
+			view._stepped_aside.erase(aside)
+			return {"art": art, "kind": kind}
+	return {}
+
+
+## Whether a foe's name is an NPC's ("Vosk, unmasked" is Vosk, "The Abbot" is the Abbot).
+static func _same_person(npc_name: String, foe_name: String) -> bool:
+	return Legendary.same_person(npc_name, foe_name)
+
+
+## `t`, a foe that was a person a moment ago, stands there in `reveal`'s figure and changes into itself: the same effect
+## and sound as any change of shape (FxShapeshift), played on a stand-in wearing the person's figure, then `t` comes
+## into view in a flash. Doesn't wait: the fight's opening plays meanwhile.
+static func _reveal(view: LocationView, t: CombatToken, reveal: Dictionary) -> void:
+	var kind := str(reveal["kind"])
+	var ghost := CombatToken.create(t.combatant, str(reveal["art"]))
+	ghost.position = t.position
+	if ghost.sprite != null and t.sprite != null:
+		ghost.sprite.facing = t.sprite.facing
+	view.add_child(ghost)
+	t.visible = false
+	var fx := SpellFx.new()
+	view.add_child(fx)
+	fx.shape_gather(ghost, kind)
+	# On a tween of the effect's own, so a scene that goes away mid-change takes it along (a timer's lambda that captured
+	# the freed nodes would be called all the same, with an error).
+	var tw := fx.create_tween()
+	tw.tween_interval(FxShapeshift.GATHER * GameSettings.combat_pace())
+	tw.tween_callback(func() -> void:
+		ghost.queue_free()
+		t.visible = true
+		fx.shape_settle(t, kind))
+	tw.tween_interval(3.0)
+	tw.tween_callback(fx.queue_free)
 
 
 ## A fight's token: guests wear their NPC sprite rather than their stat block's.
@@ -387,6 +439,23 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 	return g
 
 
+## A foe's token when the fight is over: one still up fades away and frees itself at the end of its half second, which is
+## after the fight's view (`playing`) has freed itself (a third of a second after it closes); a fallen one is hidden at
+## once and freed when the view has gone. That view can still be mid-beat on any of them: the story takes a fight back, and a
+## story bot plays the whole fight on the encounter and ends it, while the view plays; an attack's lunge resumes with
+## the blow's two tokens, and a fallen one freed under it was a script error (batch 291's logcheck, test_phase4_exit's
+## Vallaki fight). The beat stops with its view.
+static func _drop_token(tok: CombatToken, playing: CombatView) -> void:
+	if tok.visible and tok.combatant.is_alive():
+		tok.fade_away(0.5)
+		return
+	tok.hide()
+	if playing != null and is_instance_valid(playing) and playing.is_inside_tree():
+		playing.tree_exited.connect(tok.queue_free, CONNECT_ONE_SHOT)
+	else:
+		tok.queue_free()
+
+
 static func _end_encounter(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	view.last_encounter = spec
 	Bestiary.after_fight(view.st, e)   # who fell and what was studied, for the journal's Bestiary (U8)
@@ -407,10 +476,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		var tok := ctokens[id] as CombatToken
 		if ours.has(tok):
 			continue
-		if tok.visible and tok.combatant.is_alive():
-			tok.fade_away(0.5)
-		else:
-			tok.queue_free()
+		_drop_token(tok, view.combat_view)
 	if view.combat_view != null:
 		view.combat_view.close_softly()
 		view.combat_view = null
@@ -443,6 +509,11 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	LocationParty.refresh_familiars(view)
 	if outcome == "victory":
 		(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = true
+		# XP levelling: the foes overcome are worth XP, a road meeting, a night at camp or Strahd's visit (custom) every time
+		# but lost over the ceiling (story/xp.gd).
+		var earned := Xp.fight(view.st, e, encounter_id, bool(spec.get("custom", false)))
+		if earned != "":
+			view.toast.emit(earned)
 		if spec.has("flag"):
 			view.st.set_flag(str(spec["flag"]))
 		if spec.has("quest"):

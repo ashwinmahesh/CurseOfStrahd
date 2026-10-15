@@ -79,9 +79,51 @@
             24,
             5
           ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            9
+          ]
         }
       ],
-      "text": "A howl from up the ridge, answered from below the road, and answered again much closer. The two at the front run on two legs."
+      "text": "A howl from up the ridge, answered from below the road, and answered again much closer. Those at the front run on two legs."
     },
     {
       "id": "the_conquerors_dead",
@@ -89,63 +131,98 @@
       "when": "night and not flag.argynvost_beacon_lit and not flag.vladimir_pact",
       "monsters": [
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             27,
             4
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             28,
             7
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             26,
             13
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             4,
             8
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             5,
             6
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             6,
             13
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "wight",
           "cell": [
             23,
             8
           ]
         },
         {
-          "monster": "ghast",
+          "monster": "wight",
           "cell": [
             8,
             11
           ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            16,
+            16
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            15,
+            4
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            3,
+            14
+          ]
         }
       ],
-      "text": "Shapes in rusted helmets of an old pattern come up the road in a ragged column, still marching on a house they burned four hundred years ago. Two at the back sniff the air and break into a run."
+      "text": "Shapes in rusted helmets of an old pattern come up the road in a ragged column, still marching on a house they burned four hundred years ago. Some at the back sniff the air and break into a run."
     },
     {
       "id": "dire_wolves_day",
@@ -192,6 +269,41 @@
           "cell": [
             25,
             12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            8
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            4,
+            9
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            27,
+            9
           ]
         }
       ],

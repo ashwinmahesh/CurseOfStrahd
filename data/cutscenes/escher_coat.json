@@ -1,0 +1,15 @@
+{
+  "id": "escher_coat",
+  "title": "A Good Red Coat",
+  "summary": "On the parapet at sunrise lie Escher's empty red coat, a drift of ash blowing away, and a helm that throws sparks of daylight.",
+  "images": [
+    {
+      "image": "escher_coat",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

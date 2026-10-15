@@ -217,11 +217,15 @@ func load_from(dir: String, slot: String) -> Error:
 ## the Dursts' book) stay in StoryState.from_dict; a name spelled differently now (RESPELLED) is mended here, so the
 ## saves lists show it too. What only the saves lists read (the player's "note", a finished
 ## game's "finished", a beside save's "home_slot") is no part of the game and needs no step: a save without one has none.
+## A field added with a default needs no version either (the bestiary, the run's record, XP levelling's `story.xp`,
+## `story.xp_reserve` and `story.options.levelling`): StoryState.from_dict reads what's there, and pin_levelling names the
+## older saves' milestone levelling.
 static func upgrade(data: Dictionary) -> Dictionary:
 	var out := data.duplicate(true)
 	swap_withdrawn_items(out)
 	swap_regifted_items(out)
 	top_up_charges(out)
+	pin_levelling(out)
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
@@ -233,6 +237,20 @@ static func upgrade(data: Dictionary) -> Dictionary:
 		if k != "note":
 			out[k] = _respelled(out[k])
 	return out
+
+
+## A save that never picked how heroes grow (every save before XP levelling) levels by milestones, as it always did
+## (story/xp.gd). Runs on every save whatever its version, as the other mends do, so no SAVE_VERSION step is needed.
+static func pin_levelling(save: Dictionary) -> void:
+	var story: Variant = save.get("story")
+	if not story is Dictionary:
+		return   # Phase 0's saves held no story
+	var options: Variant = (story as Dictionary).get("options")
+	if not options is Dictionary:
+		options = {}
+		(story as Dictionary)["options"] = options
+	if not (options as Dictionary).has(Xp.OPTION):
+		(options as Dictionary)[Xp.OPTION] = Xp.MILESTONE
 
 
 ## `v` with each old spelling in RESPELLED replaced, a dictionary or array in place (upgrade's own copy).
@@ -606,7 +624,8 @@ static func _remove_dir(dir: String) -> void:
 # --- Items taken out of the game --------------------------------------------------------------------------------
 
 ## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn: useful items of
-## the same rarity and price. The Amulet of Proof against Detection and Location did nothing here and turned up far
+## the same rarity (and the same price by the 2024 DMG's table; Sane Magical Prices prices each its own way since
+## 2026-10-14). The Amulet of Proof against Detection and Location did nothing here and turned up far
 ## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13).
 ## Each one a save holds, carried, stashed or waiting in a chest, becomes the next one on its list.
 const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":

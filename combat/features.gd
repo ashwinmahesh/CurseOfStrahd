@@ -342,9 +342,11 @@ func fleeing_from(c: Combatant) -> Combatant:
 	return null
 
 
-## Preserve Life (Life Domain 3): restore 5 × Cleric level Hit Points, divided among Bloodied creatures within
-## 30 ft (you included), none raised above half its Hit Point maximum. `allocation` maps creature id -> HP; empty
-## spreads it to the most hurt first.
+## Preserve Life (Life Domain 3, 2024): one Magic action and one use of Channel Divinity restore 5 × Cleric level Hit
+## Points in all, divided as the cleric chooses among Bloodied creatures within 30 ft (themselves included), none raised
+## above half its Hit Point maximum. An Undead or a Construct can't be healed this way. The pool is new with each use,
+## never carried from turn to turn or between uses, and what isn't shared out is lost. `allocation` maps creature id ->
+## Hit Points (what the player divided, preserve_life_prompt); empty spreads the pool to the most hurt first.
 func preserve_life(c: Combatant, allocation: Dictionary = {}) -> CombatResult:
 	var e := enc()
 	var why := _channel_check(c)
@@ -352,52 +354,127 @@ func preserve_life(c: Combatant, allocation: Dictionary = {}) -> CombatResult:
 		return CombatResult.fail(why)
 	if not has_feature(c, "preserve_life"):
 		return CombatResult.fail("%s doesn't have Preserve Life" % c.name())
-	var pool := 5 * c.creature.class_level_of("cleric")
+	var pool := preserve_life_pool(c)
 	var room := preserve_life_room(c)
 	if room.is_empty():
 		return CombatResult.fail("No Bloodied creatures within 30 ft")
 	var plan := {}
 	if allocation.is_empty():
-		var ids: Array = room.keys()
-		ids.sort_custom(func(a: String, b: String) -> bool:
-			var ca := e.get_c(a).creature
-			var cb := e.get_c(b).creature
-			return float(ca.hp) / maxi(1, ca.max_hp()) < float(cb.hp) / maxi(1, cb.max_hp()))
-		var left := pool
-		for id: String in ids:
-			var give := mini(left, int(room[id]))
-			if give > 0:
-				plan[id] = give
-				left -= give
+		plan = preserve_life_spread(room, pool)
 	else:
 		var total := 0
 		for id: String in allocation:
+			if int(allocation[id]) <= 0:
+				continue
 			if not room.has(id):
 				return CombatResult.fail("%s isn't a Bloodied creature within 30 ft" % e.get_c(id).name())
 			if int(allocation[id]) > int(room[id]):
 				return CombatResult.fail("%s can regain at most %d (half its maximum)" % [e.get_c(id).name(), room[id]])
 			total += int(allocation[id])
+			plan[id] = int(allocation[id])
 		if total > pool:
 			return CombatResult.fail("Preserve Life has %d Hit Points to share" % pool)
-		plan = allocation
+		if total <= 0:
+			return CombatResult.fail("Give someone at least 1 Hit Point")
 	_spend_channel(c)
 	var r := CombatResult.new()
 	var parts: Array[String] = []
+	var given := 0
 	for id: String in plan:
 		var t := e.get_c(id)
 		var healed := t.creature.heal(int(plan[id]), "Preserve Life")
+		given += healed
 		parts.append("%s +%d" % [t.name(), healed])
 		e.events.append({"type": "heal", "id": t.id, "amount": healed})
-	r.lines.append(e.log.add("heal", "%s uses Preserve Life: %s" % [c.name(), ", ".join(parts)], c.id,
-		["Pool 5 × Cleric level = %d; nobody above half their Hit Point maximum" % pool]))
+	r.lines.append(e.log.add("heal", "%s uses Preserve Life: %s (%d of %d Hit Points shared%s)" % [c.name(), ", ".join(parts), given, pool,
+		"" if given >= pool else ", %d unspent and lost" % (pool - given)], c.id,
+		["Pool 5 × Cleric level = %d per use of Channel Divinity; nobody above half their Hit Point maximum" % pool]))
 	return r
 
 
-## Bloodied creatures within 30 ft and how much each can regain from Preserve Life: id -> HP.
+## The Hit Points one use of Preserve Life has to share out: 5 × the cleric's level, however many times it was used before.
+func preserve_life_pool(c: Combatant) -> int:
+	return 5 * c.creature.class_level_of("cleric")
+
+
+## `pool` Hit Points spread to the most hurt first (by share of their maximum), each up to its `room` (id -> HP).
+func preserve_life_spread(room: Dictionary, pool: int) -> Dictionary:
+	var plan := {}
+	var left := pool
+	for id: String in _most_hurt_first(room):
+		var give := mini(left, int(room[id]))
+		if give > 0:
+			plan[id] = give
+			left -= give
+	return plan
+
+
+## The ids of `room` (id -> HP), those with the smallest share of their Hit Point maximum left first.
+func _most_hurt_first(room: Dictionary) -> Array:
+	var e := enc()
+	var ids: Array = room.keys()
+	ids.sort_custom(func(a: String, b: String) -> bool:
+		var ca := e.get_c(a).creature
+		var cb := e.get_c(b).creature
+		return float(ca.hp) / maxi(1, ca.max_hp()) < float(cb.hp) / maxi(1, cb.max_hp()))
+	return ids
+
+
+## Preserve Life from the hotbar: asks how to divide the pool before anything is spent (Skip spends nothing). The
+## prompt lists each Bloodied creature in reach with the most it can take, starts from the most-hurt-first spread, and
+## counts what is left to share as the player moves points about; confirming runs preserve_life with that division.
+func preserve_life_prompt(c: Combatant) -> CombatResult:
+	var e := enc()
+	var why := _channel_check(c)
+	if why != "":
+		return CombatResult.fail(why)
+	if not has_feature(c, "preserve_life"):
+		return CombatResult.fail("%s doesn't have Preserve Life" % c.name())
+	var room := preserve_life_room(c)
+	if room.is_empty():
+		return CombatResult.fail("No Bloodied creatures within 30 ft")
+	var pool := preserve_life_pool(c)
+	var req := ReactionRequest.new("preserve_life", c.id, "")
+	req.title = "Preserve Life"
+	req.text = "Share %d Hit Points among the Bloodied creatures within 30 feet, yourself included, up to half their maximum each. Points you don't give out are lost." % pool
+	req.cost = "Magic action and a Channel Divinity use (%d left)" % (c.creature as Character).resource_left("channel_divinity")
+	req.spends_reaction = false
+	req.pool = pool
+	var spread := preserve_life_spread(room, pool)
+	for id: String in _most_hurt_first(room):
+		var o := e.get_c(id)
+		req.target_choices.append({"id": id, "name": o.name(), "room": int(room[id]),
+			"label": "%s · %d of %d Hit Points · up to %d" % [o.name(), o.creature.hp, o.creature.max_hp(), int(room[id])]})
+		req.amounts[id] = int(spread.get(id, 0))
+	# Weakly hold the prompt: the continuation lives on it until the player responds.
+	var request_ref: WeakRef = weakref(req)
+	req.continuation = func(use: bool) -> CombatResult:
+		var request := request_ref.get_ref() as ReactionRequest
+		if not use or request == null:
+			return CombatResult.new()
+		# The view's effect for the feature plays when it is used, ahead of the heals (ActionCatalog.perform leaves it
+		# out while the prompt is open). The encounter is asked for here, not held: the prompt would keep it alive.
+		var now := enc()
+		var mark := now.events.size()
+		var done := preserve_life(c, request.amounts)
+		if done.ok and mark <= now.events.size():
+			now.events.insert(mark, {"type": "ability", "source": "feature", "by": c.id, "key": "preserve_life",
+				"targets": request.amounts.keys().filter(func(id: Variant) -> bool: return int(request.amounts[id]) > 0), "cells": []})
+		return done
+	e.pending = req
+	var r := CombatResult.new()
+	r.pending = req
+	return r
+
+
+## Bloodied creatures within 30 ft and how much each can regain from Preserve Life: id -> HP. Undead and Constructs
+## can't be healed by it.
 func preserve_life_room(c: Combatant) -> Dictionary:
 	var out := {}
 	for o in enc().combatants:
 		if o.creature.dead or not (o == c or c.allied_with(o)) or enc().distance(c, o) > 30:
+			continue
+		if str(o.creature.creature_type) in ["undead", "construct"]:
 			continue
 		if not o.creature.is_bloodied():
 			continue

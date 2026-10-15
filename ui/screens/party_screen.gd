@@ -34,6 +34,9 @@ func _draw() -> void:
 	var page := VBoxContainer.new()
 	page.add_theme_constant_override("separation", 12)
 	_frame.add_child(_top_bar())
+	var xp := XpStrip.build(st, 420.0)   # XP levelling: the party's experience (nothing in milestone mode)
+	if xp != null:
+		_frame.add_child(xp)
 	_frame.add_child(UiParts.fill_scroll(page))
 	var cols := HBoxContainer.new()
 	cols.add_theme_constant_override("separation", 12)

@@ -217,14 +217,34 @@ static func _save_positions(view: LocationView) -> void:
 		view.st.positions.append(m.cell)
 
 
-## Sets who leads (and speaks): moves them to the front of the marching order.
+## Whether `cr` can lead the party and be walked about: not the dead (they stay on the roster and can be revived) and not
+## anyone down at 0 Hit Points, who lies where they fell until tended (owner, 2026-10-14: a dead hero was still playable).
+static func can_lead(cr: Creature) -> bool:
+	return not cr.dead and cr.hp > 0
+
+
+## The marching-order index of whoever leads next, going `step` (1 forward, -1 back) round the line from the leader and
+## passing over the dead and the downed; -1 when nobody else can lead.
+static func next_leader(view: LocationView, step: int) -> int:
+	var n := view.members.size()
+	for k in range(1, n):
+		var i := k if step > 0 else n - k
+		if can_lead(view.members[i].creature):
+			return i
+	return -1
+
+
+## Sets who leads (and speaks): moves them to the front of the marching order. A dead or downed hero can't be picked.
 static func set_leader(view: LocationView, index: int) -> void:
 	if index <= 0 or index >= view.members.size() or view.in_combat:
 		return
 	var m := view.members[index]
+	var ch := view.st.party[index]
+	if not can_lead(ch):
+		view.toast.emit("%s is %s and can't lead" % [ch.name, "dead" if ch.dead else "down"])
+		return
 	view.members.remove_at(index)
 	view.members.insert(0, m)
-	var ch := view.st.party[index]
 	view.st.party.remove_at(index)
 	view.st.party.insert(0, ch)
 	view.st.leader = 0
@@ -232,6 +252,18 @@ static func set_leader(view: LocationView, index: int) -> void:
 	if view.lantern != null:
 		view.lantern.reparent(view.tokens[m.id] as Node3D, false)
 	view.toast.emit("%s leads" % ch.name)
+
+
+## Hands the lead on to the next hero who can act when the leader is dead or down (fallen in a fight or to a trap, or a
+## save that put them first). Nothing changes when nobody can: that is the game over's business. True if it moved.
+static func ensure_living_leader(view: LocationView) -> bool:
+	if view.in_combat or view.members.is_empty() or can_lead(view.members[0].creature):
+		return false
+	var next := next_leader(view, 1)
+	if next < 0:
+		return false
+	set_leader(view, next)
+	return true
 
 
 static func _best(view: LocationView, skill: StringName) -> Character:

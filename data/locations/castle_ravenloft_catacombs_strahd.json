@@ -185,6 +185,10 @@
         {
           "id": "potion_of_healing_supreme",
           "qty": 2
+        },
+        {
+          "id": "nine_lives_stealer__longsword",
+          "qty": 1
         }
       ],
       "gold": 150
@@ -211,6 +215,61 @@
     }
   ],
   "encounters": [
+    {
+      "id": "cat_darklord_final",
+      "trigger": "enter_area:castle_ravenloft_strahds_tomb",
+      "when": "not flag.strahd_in_coffin",
+      "final_battle": "castle_ravenloft_strahds_tomb",
+      "lair": true,
+      "surprise": "",
+      "flag": "cat_keepers_defeated",
+      "text": "He is standing beside his own coffin with his hands behind his back, like a man waiting for a late carriage. Two of his spawn rise from the niches at his back.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            11,
+            11
+          ],
+          "hp": 410
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            11
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            10
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            12
+          ]
+        }
+      ]
+    },
     {
       "id": "cat_darklord_final",
       "trigger": "enter_area:castle_ravenloft_strahds_tomb",
@@ -304,7 +363,7 @@
             11,
             13
           ],
-          "hp": 350
+          "hp": 455
         },
         {
           "monster": "swarm_of_bats",
@@ -327,6 +386,54 @@
             13
           ],
           "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            12
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            11,
+            14
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            12,
+            13
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            12
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            14
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            12,
+            12
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },
@@ -342,35 +449,40 @@
           "cell": [
             11,
             9
-          ]
+          ],
+          "hp": 275
         },
         {
           "monster": "revenant",
           "cell": [
             9,
             8
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "revenant",
           "cell": [
             13,
             8
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "revenant",
           "cell": [
             7,
             8
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "revenant",
           "cell": [
             15,
             8
-          ]
+          ],
+          "hp": 180
         },
         {
           "monster": "revenant",

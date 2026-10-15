@@ -193,6 +193,8 @@ func attack_legal(c: Combatant, target: Combatant, option: Dictionary) -> String
 		return "No target"
 	if target == c:
 		return "Can't attack yourself"
+	if e.sight.unseen_foe(c, target):
+		return "Can't see the target"
 	if e.spells.specials.sphere_blocks(c, target):
 		return "A sphere of force is in the way"
 	if e.spells.specials.high.box_between(c, target) or e.spells.specials.mid.wall_between(c, target):

@@ -36,6 +36,48 @@ The descriptions live in `art/vfx/effects.json` (`families`); every one is built
 | smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
 | summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Detect Magic |
 
+## A change of shape
+
+Every shapeshifter shows its change the same way (owner ask, 2026-10-14): the creature's old figure gathers and
+flares, then the new one arrives in a flash, with a sound. It covers Polymorph and the other spells (`ShapeChange`'s
+`shape` events: Wild Shape, True Polymorph, Shapechange, Animal Shapes, Boon of Fluid Forms), a Shapechanger's bat, wolf
+and mist (`Legendary._set_form`'s `form` events: Strahd, vampires, Misty Escape) and a lycanthrope's hybrid
+(`MonsterActions.show_form`: Emil and Kiril swap to the werewolf's figure through the stat block's `hybrid_art`; the
+wereraven allies to the wereraven's), in both directions. `CombatView._swap_form_art` is the one place a figure is
+swapped: `SpellFx.shape_gather` (motes spiral up and a circle closes on the old figure, which flares; the change's sound
+starts) and a beat of `FxShapeshift.GATHER` at the combat speed, then the swap and `SpellFx.shape_settle` (a light
+flash, smoke, streaks and glints from the new figure, which fades in). The event's `kind` picks how it looks
+(`FxShapeshift.LOOKS`: werewolf, wereraven, bat, wolf, mist, wild_shape, polymorph, default) and sounds (`combat`
+`shapeshift` in art/audio.json, layered from the repo's own recordings, so the sound slider sets how loud they are). A
+kind with no entry gets the default's, so a new shapeshifter needs only to emit the event. A figure nobody can see (an
+Invisible foe's), and a fight with its effects off, change at once with no effect or sound.
+
+The same effect covers the other routes to a new figure (the audit, owner ask 2026-10-14): the lycanthropy curse (the
+cursed creature gathers and changes where it fell, then the werewolf arrives in a flash: the `vanish` and
+`summon_creature` events' `becomes`); a shape with no sprite of its own (it still shows on the figure it has: every
+monster has a sprite today, and a test keeps it so); a fight picked up from a save with someone mid-shape
+(`CombatView._restore_forms` puts each in the figure it was in, so it can still change back); and a person the story
+showed who turns out to be something else when their conversation ends in a fight (`LocationNpcs.hide_npcs_of` keeps who
+stepped aside; a foe of the same name whose stat block has a `reveal`, a kind from `FxShapeshift.LOOKS`, changes in
+front of the party: Offalia and the other hags, Vosk, the Abbot, the vampire spawn Anatol, Doru, Escher and the brides,
+Patrina, Zuleika; `LocationFights._reveal`).
+
+More shapes (the forms branch): a Werewolf's wolf and a Wereraven's raven (`forms` in their stat blocks, taken with
+`MonsterActions.shift(c, "wolf")`; an ally the player runs sees a hotbar entry for each), Baba Lysaga's swarm of insects
+and a Night Hag's disguise (`art_from_npc`: the figure of the NPC the creature is named for, `Legendary.shape_art`) are
+all `Legendary` shapes, so they size, speed, save, load and show like Strahd's. The AI shifts only a lycanthrope into its
+hybrid (`MonsterActions.bonus_action`). Starry Form, Celestial Revelation, Disguise Self and Seeming, which change how
+someone looks but swap no figure, show the transform cue (`features` and `spells` in art/vfx/effects.json) and sound
+(`keys` in art/audio.json), like Alter Self, Gaseous Form and Enlarge/Reduce already did.
+
+A Werewolf or Wereraven foe walks in as a person (`human_art`: werewolf_human, wereraven_human, drawn 2026-10-15) and
+changes into its hybrid (`art`) when the AI shifts it on its first turn, with the same effect and sound; a named one the
+story showed (Zuleika) wears that NPC's figure, an ally (Davian) keeps their own face, and the turn bar keeps the
+creature's portrait (`CombatToken.human_figure`, `true_figure`, `portrait_id`).
+`make capture SCENE=res://tools/capture/shapeshift_capture.tscn NAME=shapeshift/shot` takes a filmstrip of each.
+`tests/integration/test_shapeshift_effect.gd` and `test_shapeshift_audit.gd` check it; `reveal_capture.tscn` takes the
+story reveal.
+
 ## Lingering areas
 
 A spell that leaves an area on the board (Darkness, Wall of Fire, Web, Grease, Spike Growth, Cloudkill, Spirit

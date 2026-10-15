@@ -53,6 +53,12 @@ static func beast_forms(max_cr: float) -> Array[Dictionary]:
 	return out
 
 
+## How a change of shape looks and sounds (FxShapeshift): the Druid's Wild Shape is nature's; Polymorph and the other
+## spells and boons are a spell's.
+static func look_of(label: String) -> String:
+	return "wild_shape" if label == "Wild Shape" else "polymorph"
+
+
 ## Turns `c` into the Beast `beast` (monster data). opts: temp_hp (Temporary Hit Points it gains), keep_mind (Wild
 ## Shape: keeps Int, Wis, Cha and Proficiency Bonus), ends_without_temp_hp (Polymorph), label (what changed it),
 ## ac_floor (Circle of the Moon's 13 + Wisdom modifier).
@@ -104,7 +110,7 @@ func transform(c: Combatant, beast: Dictionary, opts: Dictionary = {}) -> Monste
 	e.events.append({"type": "condition", "id": c.id})
 	# The board draws it as the Beast (owner, 2026-10-13: "their sprite should reflect their transformed shape"), after
 	# the resize so the new figure is built at the shape's size.
-	e.events.append({"type": "shape", "id": c.id, "art": str(beast.get("art", beast.get("id", "")))})
+	e.events.append({"type": "shape", "id": c.id, "art": str(beast.get("art", beast.get("id", ""))), "kind": look_of(str(opts.get("label", "Shape")))})
 	e.log.add("condition", "%s becomes a %s (%s)" % [orig.name, str(beast.get("name", "Beast")), opts.get("label", "Shape")], c.id)
 	return m
 
@@ -167,7 +173,7 @@ func revert(c: Combatant, why: String) -> void:
 			orig.dead = true
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
-	e.events.append({"type": "shape", "id": c.id, "art": ""})
+	e.events.append({"type": "shape", "id": c.id, "art": "", "kind": look_of(str(info.get("label", "Shape")))})
 	e.log.add("condition", "%s returns to its true form (%s)" % [orig.name, why], c.id)
 
 

@@ -1457,6 +1457,382 @@
       ],
       "prompt": "A village churchyard at night: the iron gate stands empty, a glove-shaped mark of frost on the gatepost and mist curling where someone stood a moment ago. In the arched doorway of the church porch stands one young woman, Ireena of the reference, and she appears only once in the picture: auburn hair loose, eyes closed, breathing out slowly, one hand on the door frame. The bell rope hangs still beside her. {party} stand between the gate and the porch, seen from behind, hooded, faces never visible; no other women in the picture. Cold moonlight, a long held breath released.",
       "use": "a"
+    },
+    "drowned_rise": {
+      "refs": [],
+      "prompt": "Night at the fishers' landing on Lake Zarovich under a rising moon: a long, crooked wooden jetty runs out over flat black water, a small rowing boat tied at its foot, fish-drying racks and two crooked fishermen's shacks on the stony shore. Camera low on the shingle behind {party}, who stand at the water's edge with the lantern held up, looking out past them along the shore. Out of the shallows the drowned of Pescari are standing up out of the lake in a long ragged line, knee- to waist-deep and still rising, lake water pouring off them: a dozen grey, swollen villagers in old-fashioned Sunday best gone black with water and weed, a woman in a lace cap, a man in a waistcoat with a pocket watch, a young bride whose wet veil clings to her face. Behind them, farther out and taller than any of them, a gaunt figure in a sodden black priest's cassock stands chest-deep and lifts one arm high, as if pulling a bell rope. Far out on the lake, rings of ripples spread across the moonlit water from one point. Cold moonlight, blue-violet night, low mist on the water; eerie and dreadful, no gore.",
+      "use": "a"
+    },
+    "drowned_bluto": {
+      "refs": [
+        "bluto"
+      ],
+      "prompt": "The fishers' landing on Lake Zarovich at night, a long crooked wooden jetty over black water with a small rowing boat tied at its foot, a crooked shack and fish-drying racks on the stony shore. Bluto, a starving fisherman, drawn exactly as the reference image shows him, runs headlong down the shingle toward the jetty and his boat, looking back over his shoulder in terror, mouth open; behind him his dropped lantern lies broken on the stones, spilling burning oil in a pool of orange light. Coming up out of the shallows, a crowd of grey, swollen drowned villagers in old-fashioned sodden Sunday clothes, dripping lake water and weed, have all turned toward him at once, every face and reaching hand pointed at him, like a field of grass bending in the wind. Behind them a tall figure in a priest's sodden black cassock stands in the water with one hand raised. {party} at the edge of the frame, small and seen from behind, between the lake and the shacks. Cold moonlight and mist, the only warm light the spilled lantern fire; dread, no gore.",
+      "use": "a"
+    },
+    "drowned_nistor": {
+      "refs": [],
+      "prompt": "The fishers' landing on Lake Zarovich at night, a long crooked wooden jetty over black water, fish-drying racks on the stony shore. On the low wooden step of a crooked fisherman's shack sits Old Nistor, a very old, thin fisherman with a white beard, a grey wool cap and a patched grey-green coat, a fishing net still bunched in his lap and a small lantern on the step beside him; he looks out at the shore, resigned, not running. Up the shingle toward him, slowly, come the drowned of Pescari out of the black water: a crowd of grey, swollen villagers in old-fashioned sodden Sunday clothes, dripping lake water and weed, and behind them a tall figure in a priest's sodden black cassock raising one hand. {party} small and seen from behind at the edge of the frame, between the old man and the lake. Cold moonlight and mist on the water, the lantern the only warm light; quiet dread, no gore.",
+      "use": "a"
+    },
+    "abbot_bride_wards": {
+      "refs": [
+        "abbot"
+      ],
+      "prompt": "Inside a cold abbey chapel, its tall arched side door stands open on an empty snowy courtyard at dusk. The serene golden-haired young monk of the reference stands in the doorway, calm and quietly pleased, one hand opened toward a long, low stone building across the courtyard: the wards. Only one of its windows glows warm, and through that window, indoors, small and far, a still shape lies on a long table under a clean white linen sheet; nothing lies out in the snow. {party} stand beside him in the doorway, looking out. Candlelight and a gilded sunburst glow in the chapel behind them; outside, cold blue snow light and falling snow. Quiet dread.",
+      "use": "b"
+    },
+    "mother_lands": {
+      "refs": [],
+      "prompt": "High on the wall of the Abbey of St. Markovia at dawn, looking down a long mountain slope of snow and cloud to the walled town of Krezk far below: on one snowy rooftop among the town's roofs stands a small figure with huge grey wings half open and one long thin heron leg lifted, tiny townsfolk gathered round looking up, a little shrine bell in a tower at the town's edge. In the foreground on the abbey wall, seen from behind, a young man in a patched habit holds a pair of worn soft grey leather boots against his chest, and {party} stand beside him, hooded, faces never visible. Pale gold morning light breaking through cloud, fresh snow; tender and a little funny, no gore.",
+      "use": "a"
+    },
+    "eye_watches_gods": {
+      "refs": [],
+      "prompt": "A vast round vault under the Amber Temple: a beholder floats above a huge block of amber split open like an egg, a round body as wide as a cart of mottled grey-green hide with ten small eyes on stalks, its great central eye still filmed with amber and turned up toward a long gallery that climbs the walls in tiers, lined with sealed amber sarcophagi that glow faintly gold, as though watching the dead gods in their little boxes. {party} small in the foreground, seen from behind, hooded, looking up. Golden amber light against cold black shadow; awe and unease, no gore.",
+      "use": "a"
+    },
+    "argynvost_last_breath": {
+      "refs": [],
+      "prompt": "A memory of long ago: the snowy courtyard of a mountain manor at dusk. A huge silver dragon lies dying on the flagstones, its enormous head resting on the ground, eyes half closed, the silver light fading from its scales. Kneeling at its jaw with both arms round its head, a young knight in battered silver plate armour, bareheaded, seen from behind and a little to one side, his forehead pressed to the dragon's brow. Around them a ring of armoured knights stand with bowed heads and guttering torches, a torn banner hanging. Cold blue-violet dusk with silver and torch-orange highlights, snow falling; sorrowful and quiet, no gore, no frame or border.",
+      "use": "a"
+    },
+    "hall_stirs": {
+      "refs": [],
+      "prompt": "The long dining hall of a ruined mountain manor at night: a very long table laid with rotted plates, and along both sides a dozen pale, ghostly knights in tarnished silver plate, seated and frozen mid-motion; at the head of the table one tall empty chair pushed back, and one knight halfway rising and turning his helmeted head toward the doorway behind the viewer, where a cold silver glow spills across the dusty floor. Cobwebs, broken stained glass, moonlight; the knights glow faintly blue-white. {party} in the doorway in the foreground, seen from behind, hooded, one holding a torch that burns silver. Quiet dread, no gore.",
+      "use": "a"
+    },
+    "whoever_m_was": {
+      "refs": [],
+      "prompt": "A candlemaker's daughter's small bedroom in a Barovian village long ago, at night: a girl of about sixteen with long red hair lies asleep in a narrow bed, one hand on the blanket, peaceful. At the open window above the bed, in silhouette against the moon, an old woman's gnarled hands hold a small rag doll with a tuft of the girl's red hair and press a long black thorn toward the doll's chest, and on the sleeping girl's nightgown over her heart a faint pale glow shows where a scratch would be. One burnt-down candle on the sill, cold moonlight and a little warm light; quiet and terrible, no blood, no gore.",
+      "use": "a"
+    },
+    "lysaga_supper": {
+      "refs": [
+        "baba_lysaga"
+      ],
+      "prompt": "Inside Baba Lysaga's cluttered swamp hut: a low stone hearth with an iron pot over a green fire, the room hung with dried herbs, jars, straw dolls and root-like beams that look faintly alive. Baba Lysaga, a gaunt old woman in a black headscarf with a hooked nose and a wide smile of sharp teeth, drawn exactly as the reference image shows her, ladles stew into wooden bowls. {party} sit on a rough bench in the foreground, seen from behind, hooded, faces never visible, bowls in their hands; the floorboards under the bench bulge faintly like a tongue. Eerie green firelight against deep brown shadow; hospitable and menacing, no gore.",
+      "use": "a"
+    },
+    "kip_nobody_there": {
+      "refs": [],
+      "prompt": "A campfire in a dark Barovian wood at night, burning low: the circle of firelight ends in an unnaturally straight edge on the ground, as if painted on a floor, and just beyond that line the dark is empty except for a faint grey outline like a coat dissolving into mist and a single sheet of paper drifting down. Close to the fire, a small figure in a straw hat pulled down over little horns, seen from behind, hunched, holding an apricot in a shaking hand. {party} sit round the fire, hooded, from behind. Warm orange fire against deep blue-black forest and ground mist; uneasy, no gore.",
+      "use": "a"
+    },
+    "brides_rise": {
+      "refs": [
+        "volenta_popofsky",
+        "ludmilla_vilisevic",
+        "anastrasya_karelova"
+      ],
+      "prompt": "A faded velvet lounge in Castle Ravenloft, torn apart in a heartbeat: three vampire brides in old-fashioned gowns burst up from their seats. Volenta leaps over a tipped patience table in a shower of cards with her fangs bared in a delighted grin; Ludmilla rises with a closed book of poetry in one hand and the other hand clawed; Anastrasya stands pale and still at a bricked-up window, turning to look. Their eyes burn cold red, their hair drifts as if underwater. Draw each exactly as her reference sheet shows her. {party} in the foreground, seen from behind, hooded, weapons drawn. Dim candles and moonlight, deep reds and violets; elegant menace, no gore.",
+      "use": "a"
+    },
+    "gertruda_beads": {
+      "refs": [
+        "mad_mary",
+        "gertruda"
+      ],
+      "prompt": "The inside of a small, poor Barovian cottage on a bright morning, the front door standing wide open on a sunlit garden. At the table Mad Mary, a woman in her fifties with grey-streaked hair, presses a string of worn wooden prayer beads into the cupped hands of her teenage daughter Gertruda, who sits across from her with a blanket round her shoulders, dark hair loose and tears on her face; mending is laid out on the table. Draw them exactly as the reference sheets show them. {party} stand small at the edge of the doorway, seen from behind, hooded, as quiet witnesses. Warm morning gold and soft shadow; tender, no gore.",
+      "use": "a"
+    },
+    "rahadin_draws": {
+      "refs": [
+        "rahadin"
+      ],
+      "prompt": "The long torchlit King's Hall of Castle Ravenloft. Rahadin, a small, straight-backed pale elf in black, drawn exactly as the reference image shows him, draws two long curved swords in one smooth motion with a perfectly calm face, while dozens of pale, translucent, screaming faces stream out of the air round him and spiral into the steel of the blades, which glow cold blue-white. {party} in the foreground, seen from behind, hooded, weapons ready. Cold blue light on black stone and dark red banners; calm menace, no gore.",
+      "use": "a"
+    },
+    "escher_coat": {
+      "refs": [],
+      "prompt": "The weathered stone parapet at the top of a castle tower at sunrise: an empty red velvet coat lies on the stones with its collar still turned up, a small drift of pale ash lifting from it and blowing away over the battlements, and beside it a helm of dark steel set with many gems that catch the first sun and throw tiny rainbow sparks across the stones. Far below, the Barovian valley and mountains lit gold. {party} stand a little way off, seen from behind, hooded, heads bowed. Warm gold light over cold blue stone; quiet and sad, no gore.",
+      "use": "a"
+    },
+    "doru_chains": {
+      "refs": [
+        "doru"
+      ],
+      "prompt": "A stone cell in the larders under Castle Ravenloft: a thin young man in a torn linen shirt, drawn exactly as the reference image shows him, hangs by his wrists from silvered chains with his toes just clear of the floor, head lifted, lips cracked back from his teeth, hungry eyes catching the light. A single barred slit of moonlight, damp straw, an old bucket, more empty chains on the wall. {party} stand in the doorway, seen from behind, hooded, one holding a lantern high. Cold greys with warm lantern light; pity and menace, no gore.",
+      "use": "a"
+    },
+    "corvina_coat": {
+      "refs": [],
+      "prompt": "A small crypt at the end of a row in the catacombs of Castle Ravenloft: the plain black stone lid slid aside, and on the edge of the open crypt a scholar's worn, ink-stained coat lies empty with a slip of paper in its pocket and a drift of pale dust, while inside the crypt rest a short black rod with a brass cap and an old leather purse. A single lit candle stands on the lid. {party} stand in the foreground, seen from behind, hooded, one holding up a lantern. Cold stone and shadow with a small warm candle glow; gentle and sad, no gore, no writing.",
+      "use": "a"
+    },
+    "durst_table": {
+      "refs": [
+        "gustav_durst",
+        "elisabeth_durst"
+      ],
+      "prompt": "A dungeon supper room under Death House: Gustav and Elisabeth Durst, two gaunt grey ghasts in once-fine clothes with long grey fingers and mouths open too wide, spring over a long laid supper table, plates, silverware and a toppling candlestick flying, the single candle's flame streaking sideways. Draw each exactly as the reference sheets show them. {party} in the foreground, seen from behind, hooded, weapons raised, one holding a lantern. Sickly candle-orange against black stone; sudden violent motion, no gore.",
+      "use": "a"
+    },
+    "pool_sergei_face": {
+      "refs": [
+        "ireena",
+        "sergei_von_zarovich"
+      ],
+      "prompt": "The Pool of the White Sun in Krezk at first light: a round pool of still, silver-white water in a stone-ringed garden, snow dusting the ground. Ireena Kolyana, with wavy auburn hair, a cream scarf and a dark plum cloak, kneels at the pool's edge seen from the side and a little behind; in the still water her reflection is not her own but that of a kind-eyed young man in an old-fashioned white officer's uniform looking up at her, and a soft white glow rises from the pool. Draw Ireena and Sergei exactly as the reference sheets show them. {party} stand back by the garden wall, hooded, seen from behind. Cool dawn blues and a warm white glow; quiet and tender, no gore.",
+      "use": "a"
+    },
+    "ending_arm": {
+      "refs": [
+        "strahd",
+        "ireena"
+      ],
+      "prompt": "The long torchlit King's Hall of Castle Ravenloft: at the far end Strahd von Zarovich, pale and gaunt with slicked black hair, in black and dark red with a high collar, offers his arm; Ireena Kolyana, with wavy auburn hair, a cream scarf and a dark plum cloak, takes it with a composed, sad face, not looking back; behind them the great double doors are swinging shut by themselves. Draw both exactly as the reference sheets show them. {party} stand aside in the foreground, small, seen from behind, hooded, heads down. Deep reds and black with cold torchlight, no gore.",
+      "use": "a"
+    },
+    "thirst_passes": {
+      "refs": [],
+      "prompt": "Inside Strahd's burial crypt: the great stone coffin lies open and crumbling to ash, and from it a stream of dark red shadow flows low across the stone floor toward one hooded figure seen from behind, who stands with one bare hand held out in front, black veins spreading up the wrist like ink; the rest of {party} stand back, seen from behind, hooded, watching. Cold torchlight with red-black shadow; ominous and quiet, no gore.",
+      "use": "a"
+    },
+    "stair_out": {
+      "refs": [],
+      "prompt": "The long wide stair of Castle Ravenloft climbing out of the dark: {party}, weary, seen from behind and hooded, climb toward a tall doorway at the top that is filled with thin grey daylight, while the torches in the wall brackets behind and beside them gutter and go out one by one like servants who no longer know whom they serve. Cold blue-grey light ahead with the last warm torches below; weary relief, no gore.",
+      "use": "a"
+    },
+    "yielded_road": {
+      "refs": [],
+      "prompt": "A dark, narrow mountain road winding down from a castle on a cliff into a valley full of mist: {party}, seen from behind, hooded and unarmed with their weapons sheathed, walk slowly down it, and the mist closes in behind them like a curtain, hiding the castle above; black dead trees on either side. Deep blue-purple dusk, a few distant lights in the valley; defeat and quiet, no gore.",
+      "use": "a"
+    },
+    "mists_wolves_watch": {
+      "refs": [],
+      "prompt": "The Old Svalich Road just past the white wall of mist, seen from low down: {party}, from behind and hooded, one holding up a lantern, stand on a muddy road between black dead trees, and along both edges of the road in the fog a long line of a dozen wolves stands perfectly still and silent, spaced like sentries, their eyes catching the lantern light like coins. Behind the party the mist is a solid white wall. Cold grey-green fog with a small warm lantern glow; watchful and ominous, no gore.",
+      "use": "a"
+    },
+    "dragos_unwound": {
+      "refs": [],
+      "prompt": "A rough goat pen in the walled town of Krezk on a cold morning: where a one-horned billy goat stood in the gap of the pen, a big bearded ferryman now kneels in the straw on his hands and knees, wrapped only in straw and a scrap of sacking, shaking, with a horn-shaped scar on his forehead and a silver ring clutched in his fist; the goats around him stare, a farmer in an apron has dropped his crook, and townsfolk lean over the wall. {party} stand near, seen from behind, hooded. Pale morning light on snowy roofs; shock and relief, no gore.",
+      "use": "a"
+    },
+    "petru_morning": {
+      "refs": [],
+      "prompt": "A goat pen in the walled village of Krezk the morning after a night of fighting: a small boy of about eight is curled asleep against a brown goat in the straw, one hand in its wool; his mother, a worn woman in a headscarf and apron, has put a wicker basket down and takes the hand of one of {party} in both of hers, with tired tears, the others waiting their turn (the party seen from behind, hooded). Pale morning sun on snowy rooftops and the town wall; tender and quiet, no gore.",
+      "use": "a"
+    },
+    "cairn_open": {
+      "refs": [],
+      "prompt": "The windswept summit of Mount Baratok in snow: a waist-high cairn of flat grey stones with its top stones lifted aside, a perfect ring of frost on the ground round it, and in the hollow beneath it an oilcloth bundle unwrapped to show a fat spellbook bound in grey leather with two loose scrolls tucked inside the cover; snow melts as it lands on the warm stones. {party} kneel and crouch round the cairn, seen from behind, hooded, one holding the book open. A grey sky with torn cloud and the far valley below; quiet discovery, no gore.",
+      "use": "a"
+    },
+    "mordenkainen_returns": {
+      "refs": [
+        "mordenkainen"
+      ],
+      "prompt": "The inside of a small, cramped frost-rimed stone hut on Mount Baratok, seen from just inside its low doorway: rough stone walls furred with frost, a narrow bed of furs, a cold hearth, shelves of old books and bottles, one lantern. An ordinary-sized old wizard with a long grey beard in a ragged robe, drawn exactly as the reference image shows his face and beard, sits on a low stool at a small stone table with a chessboard of all-black pieces, no taller than the people who stand a few paces from him. As his face sharpens into a hard scholar's frown and an old specific anger, the frost on the board melts and runs, and through the small window beside him the snow outside has stopped falling. {party} stand just inside the doorway, seen from behind, hooded, about the same size as him. Cold blue stone with the lantern's gold glow on his face; awe and relief, no gore.",
+      "use": "c"
+    },
+    "souls_go_home": {
+      "refs": [],
+      "prompt": "The loft of Old Bonegrinder windmill in cold grey daylight: a dozen split leather bags hang from hooks with their hair ribbons still tied on, and out of each rises a small, pale, translucent glowing figure like a candle flame shaped like a sleeper, all streaming out of the open loft door into the grey sky over the hills like paper lanterns. In the lower corner one of {party} holds a knife, seen from behind, hooded. Cool grey light with pale gold lights; release and wonder, no gore.",
+      "use": "a"
+    },
+    "hags_three_faces": {
+      "refs": [],
+      "prompt": "Old Bonegrinder windmill at night on its crag, seen across a clearing from the foot of a huge dead oak with ravens perched in it: three lit windows, each showing a different kind face. In the ground-floor window a large young woman in an apron eats beside the oven; in the loft window a pretty young woman smooths her hair at a mirror; at the door an old woman in a flour-dusted shawl pushes a pastry cart. On the wall behind each of them the shadow is a gaunt, horned, clawed night hag, grinning far too wide. {party} crouch among the oak's roots in the foreground, seen from behind, hooded. Warm window light against cold blue night; creeping dread, no gore.",
+      "use": "a"
+    },
+    "morgantha_keys": {
+      "refs": [
+        "morgantha"
+      ],
+      "prompt": "The loft of Old Bonegrinder windmill with warm oven glow rising through the floorboards: Morgantha, in her kind little old woman's shape with a flour-dusted shawl, drawn exactly as the reference image shows her in that shape, unhooks a ring of iron keys from her apron with a cheerful smile, humming; behind her two iron cages hang open on their chains, and a thin fierce ten-year-old girl in a ragged dress holds her sleepy little brother, both unmoving and watching her. {party} stand at the top of the stair, seen from behind, hooded. Orange oven glow and deep violet shadow; cheerful menace, no gore.",
+      "use": "a"
+    },
+    "zamfira_wrist": {
+      "refs": [],
+      "prompt": "The step of a narrow house in the village of Barovia in the grey before dawn: a worn woman in a dark shawl kisses the inside of the left wrist of a thin twelve-year-old girl in a clean apron who holds out her arm, a mark like a thumbprint of jam on the pale skin; behind them an open door spills warm light, and a boy and a girl watch from it. {party} stand at the edge of the lane, seen from behind, hooded. Cold grey dawn with warm doorway light; tender and quiet, no gore.",
+      "use": "a"
+    },
+    "strahd_begins": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A vaulted hall of black stone lit by guttering candles: Strahd von Zarovich, drawn exactly as the reference image shows him, spreads his arms with a delighted smile as bats and a rolling dark mist pour out of his cloak across the floor and up the walls, the candle flames bending away from him. {party} in the foreground, seen from behind, hooded, weapons drawn, one holding a lantern. Deep reds and black with cold candlelight; terrifying and elegant, no gore.",
+      "use": "a"
+    },
+    "hunt_begins": {
+      "refs": [],
+      "prompt": "A moonlit crossroads in the Svalich woods with a gallows silhouette and a snow-dusted road: a pack of tall, silent grey hounds with pale almost-human eyes surges down the east road toward the viewer in a river of grey bodies, and behind them the Huntsman, a long grey man in a weathered black hunting coat, lifts a curved horn to his lips with a boar spear in his other hand. {party} in the foreground at the crossroads, seen from behind, hooded, weapons drawn, one holding a lantern. Cold moonlight and mist; terrifying speed, no gore.",
+      "use": "a"
+    },
+    "bear_blights": {
+      "refs": [],
+      "prompt": "A forest clearing below grey rocks at dusk: a big brown bear stands over a small cub whose leg has just come free of an iron trap, both facing outward; from every side the trees themselves come toward them: knotted twig blights like walking bundles of sticks, scuttling heaps of pine needles with glinting eyes, vines dragging themselves over the roots. {party} stand in front of the bear and cub, seen from behind, hooded, weapons drawn. Deep green and grey with cold dusk light; tense, no gore.",
+      "use": "a"
+    },
+    "tinker_freed": {
+      "refs": [],
+      "prompt": "A muddy crossroads by an old stone bridge on a grey morning: a tinker's green wagon has collapsed into a heap of grey flesh and green paint beside the road, already going soft, with pots and boots spilling from its torn belly; a chain like a dead eel lies in the mud; Iosif, a thin unshaven Vistani tinker in a bright patched waistcoat, sits in the road holding his ankle in both hands, staring at it in disbelief. {party} stand near, seen from behind, hooded, one lowering a weapon. Cold dawn light; relief and pity, no gore.",
+      "use": "a"
+    },
+    "roc_looks_down": {
+      "refs": [],
+      "prompt": "A mountain road winding along a cliff in swirling cloud, seen from the road with the valley open beyond it: a roc, a giant bird of prey with dark brown and grey feathers, a pale head and a huge hooked yellow beak, flies over the ridge across the valley, clearly colossal, its body as big as a watchtower and its wings spread wider than a barn roof, banking low with its head turned down to look at the road, its wingspan about a third of the picture's width, overlapping the mountain behind it. {party} stand on the road in the foreground, three small hooded figures seen strictly from behind with their hoods up so no face is visible, one holding a lantern, looking up at it. Cold mountain light, drifting cloud; awe and dread, no gore.",
+      "use": "c"
+    },
+    "penitent_stands": {
+      "refs": [],
+      "prompt": "A snowy ledge landing in a gorge below the Tsolenka Pass: out of a cracked ice wall, eight kneeling pilgrims fused together in grey ice rise into a single kneeling giant three times the height of a man, many faces turned outward, frosted hands lifting; in the foreground a small woman in a threadbare pilgrim's robe, light as a bundle of sticks, is held up in the arms of one of {party} (seen from behind, hooded), while a tin lamp rolls away across the snow, still lit. Pale blue light and white snow with a touch of warm lamp glow; awe and sorrow, no gore.",
+      "use": "a"
+    },
+    "watch_halt": {
+      "refs": [],
+      "prompt": "The cold guardroom of the Tsolenka tower: five grey soldiers in old mail stand at their posts, colourless and blurred at the edges like breath on a cold window, and in the middle of the floor their sergeant, with sergeant's knots on his shoulder, steps forward with one palm raised in a halt; a table with a ledger, a dead hearth, thin grey light through arrow-slits. {party} stand just inside the doorway, seen from behind, hooded. Grey and blue with no colour in the dead men; stern and sad, no gore.",
+      "use": "a"
+    },
+    "baron_overthrown": {
+      "refs": [
+        "baron_vargas",
+        "lady_wachter"
+      ],
+      "prompt": "The festival square of Vallaki at midday: a raised dais hung with bunting and a painted wicker sun, and on it Baron Vargas Vallakovich, a plump man in a gaudy festival sash worn crooked, standing alone and bewildered while two of Lady Wachter's men take him by the arms; around the foot of the dais the Baron's watchmen are laying down their spears one by one, and Lady Wachter, a severe woman in dark dress, watches with a thin smile. Draw them as the reference sheets show them. The crowd is silent and does not cheer. {party} stand in the foreground, seen from behind, hooded. Flat grey light, gaudy colours gone limp; tense, no gore.",
+      "use": "a"
+    },
+    "vallaki_smiles": {
+      "refs": [],
+      "prompt": "A muddy street just inside the sharpened-log palisade of Vallaki: strings of festival bunting and little painted suns hang between the houses, and townsfolk in shabby clothes stand along the street each holding a wide, fixed smile with frightened eyes; in the foreground a watchman with a festival ribbon on his spear points to his own grin with a bright, empty smile. {party} stand at the gate behind him, seen from behind, hooded. Flat grey daylight, forced cheerful colours; unsettling, no gore.",
+      "use": "a"
+    },
+    "bones_home": {
+      "refs": [
+        "father_lucian"
+      ],
+      "prompt": "The crypt under St. Andral's church in Vallaki: Father Lucian, an elderly priest in dark vestments, drawn exactly as the reference image shows him, carries a long bundle of cloth down the last stone steps cradled in both arms the way you would hold a sleeping child, toward a stone sarcophagus with its lid slid aside, candles burning along the walls and a warm gold light slowly returning to the vault. {party} stand on the stair behind him, seen from behind, hooded, heads bowed. Warm candlelight against cool stone; reverent and quiet, no gore.",
+      "use": "a"
+    },
+    "vineyard_south": {
+      "refs": [],
+      "prompt": "A hillside vineyard south of Vallaki in the flat grey light of Barovia: long rows of vines on a slope above a long low stone winery with one warm lit window, barrels stacked by its doors, the vines at the far edges of the field dark and blighted, and a dozen ravens wheeling over the roof. A muddy road leads toward it between low stone walls. No people. Muted green and grey with one warm window; quiet and uneasy, no gore.",
+      "use": "a"
+    },
+    "portraits_turn": {
+      "refs": [],
+      "prompt": "An attic painter's studio in Vallaki at night: dozens of canvases lean against the walls and hang from the rafters, every one a portrait of the same young woman in white, and every painted head is turning toward the viewer at once with a rustle like pages; at the far wall a great gilt-framed canvas taller than a door leans out of its frame, the painted woman's hands unfolding and her dark eyes wet and moving. {party} in the foreground, seen from behind, hooded, one holding up a burning torch. Red-gold paint glints in the torchlight; eerie and tense, no gore.",
+      "use": "a"
+    },
+    "arabelle_shore": {
+      "refs": [
+        "arabelle"
+      ],
+      "prompt": "The reedy shore of Lake Zarovich at dusk: a small girl of about nine with black hair plastered over a solemn, furious face sits up out of a soaked sacking bag on the stones, wrapped in a hooded cloak, drawn exactly as the reference image shows her; {party} kneel round her with their backs to the viewer, hoods up and faces turned away so no face is visible, one cutting the cord with a knife; in the background a thin man's silhouette crashes away into the reeds, and far down the shore the lamps of painted Vistani wagons glow. Cool blues with a lantern's warm light; relief, no gore.",
+      "use": "b"
+    },
+    "khazan_writes": {
+      "refs": [],
+      "prompt": "A scholar's undercroft study under a lake tower: a lich in a scholar's robe, parchment-skinned with two small cold lights in his eye sockets, rises from a high chair on a step with a great open book floating before him, one skeletal hand writing glowing names in the air with a quill of light, pages flying, every candle in the room leaning toward him and a spiral of glowing names rising around him. {party} in the foreground, seen from behind, hooded, weapons drawn. Cold blue-green light with warm candle flames bending; eerie and elegant, no gore.",
+      "use": "a"
+    },
+    "van_richten_workroom": {
+      "refs": [
+        "rictavio"
+      ],
+      "prompt": "The workroom of a lakeside tower under a single lamp: a thin old man in shirtsleeves, drawn as the reference image shows his face and build but without the showman's costume, sits at a table with burn-scarred hands spread flat on a map of the valley, tired and unmoving; on a peg on the wall hang a feathered hat and a bright showman's coat, and racks along the walls hold wooden stakes, a crossbow and glass bottles. {party} stand in the doorway, seen from behind, hooded. Warm lamplight and deep shadow; lonely and quiet, no gore.",
+      "use": "a"
+    },
+    "doru_dessert": {
+      "refs": [
+        "strahd",
+        "doru"
+      ],
+      "prompt": "A memory: the great hall of Castle Ravenloft, a long table where a dozen villagers in their Sunday best sit eating, nervous but polite, their torches laid on the floor; at the head of the table Strahd in a beautiful dark coat smiles and raises a glass, drawn exactly as the reference sheet shows him; among the villagers a young man in a plain black priest's-son coat, Doru, drawn exactly as his reference sheet shows him, looks up uneasily as the nearest candle flame gutters and bends. Warm candlelight with shadow creeping over the table; elegant dread, no gore, no frame or border.",
+      "use": "a"
+    },
+    "adrian_picks": {
+      "refs": [],
+      "prompt": "A vineyard at night under a full moon: down the last row of vines hung with heavy black grapes, a raven has just landed and is turning into a young man in shirtsleeves, his hat in his hand, who picks the black grapes by feel with his eyes shut and eats one, the veins on the backs of his hands dark and branching like leaves; black feathers lie in the furrow. {party} crouch hidden among the vines in the foreground, seen from behind, hooded. Deep blue moonlight with a faint black-purple sheen on the vines; strange and sad, no gore.",
+      "use": "a"
+    },
+    "blights_fall": {
+      "refs": [],
+      "prompt": "The long slope of Yester Hill at night looking down from near the crown: behind and above, the black Gulthias tree burns tall and bright with sparks streaming up, and all down the slope below, dozens of blights made of twigs, thorn and vine are folding up where they stand and collapsing into heaps of dry brush, the ground dotted with the fallen heaps, smoke drifting toward the dark Martikov vineyards far below. {party} stand in the foreground in the glow, seen from behind, hooded. Orange firelight against deep blue night; quiet release, no gore.",
+      "use": "a"
+    },
+    "yester_planting": {
+      "refs": [],
+      "prompt": "The burned crown of Yester Hill at night, a wide ring of black ash round a charred stump where the great tree stood. In the middle distance a single figure in a grey druid's robe, hood up and seen from behind, an ordinary adult size and clearly smaller in the frame than the people in the foreground, kneels beside a small lantern pressing earth down round a thin black shoot with leaves like little hands, and across the crown the ash drifts along the ground toward the shoot in thin grey streams. {party} stand in the near foreground, seen from behind, hooded, larger in the frame than the kneeling figure, watching. Warm lantern light against deep blue night and grey ash; quiet and uneasy, no gore.",
+      "use": "b"
+    },
+    "abbey_gate_light": {
+      "refs": [],
+      "prompt": "The great gate of a snowbound mountain abbey at dusk, seen from the road below its shelf: grey stone walls, a bell tower and slate roofs furred with snow, a heavy gate, and high in the chapel wall one tall window glowing warm, a small dark figure in silhouette at it, a lamp hung unlit at the gate, fresh snow on the ground. {party} at the foot of the road, seen from behind, hooded, one holding a lantern. Cold blue dusk with one warm window; quiet menace, no gore.",
+      "use": "a"
+    },
+    "bonegrinder_far_castle": {
+      "refs": [],
+      "prompt": "Looking out from a high crag at night over the whole sunless valley of Barovia with cloud drifting between the ridges: far off on its pillar of rock, Castle Ravenloft with a single tall window glowing gold, a thin road winding through dark pines, a few tiny windows of a village in the distance. In the foreground the crag's edge with {party}, small hooded figures seen from behind, one holding a lantern. Deep blues and purples with one gold window; vast and lonely, no gore.",
+      "use": "a"
+    },
+    "castle_drawbridge": {
+      "refs": [],
+      "prompt": "Close on the drawbridge of Castle Ravenloft at night: huge iron chains running up to the gatehouse arch move by themselves, links catching a cold moon, the old planks black over a bottomless chasm of mist, the great gate beyond with its portcullis half raised into darkness and one window lit above it. {party} at the near end of the bridge, seen from behind, hooded and tiny against the gate, a lantern held up. Deep blue-violet night, cold moonlight, a single warm window; ominous, no gore.",
+      "use": "a"
+    },
+    "castle_windows_lit": {
+      "refs": [],
+      "prompt": "Castle Ravenloft on its pillar of rock seen from the village of Barovia far below at dusk, its towers lost in cloud, and now many of its tall windows lighting one after another in a slow diagonal climbing the walls like a held breath let out. In the foreground, the muddy lane between grey village roofs with {party} seen from behind, hooded, looking up. Cold blue-grey dusk with warm gold windows; foreboding, no gore.",
+      "use": "a"
+    },
+    "gallows_dead_turn": {
+      "refs": [],
+      "prompt": "The gallows field at a crossroads at night: grey figures half risen out of split grave mounds all across the field, dozens of them, their sunken faces turned the same way toward the road, mist at their knees, the gallows with its empty noose above them. On the road {party} seen from behind, hooded, a lantern raised, outnumbered. Cold moonlight and blue-grey mist; grim and shadowed, no gore.",
+      "use": "a"
+    },
+    "krezk_gate_lamps": {
+      "refs": [],
+      "prompt": "The black oak gate in the great grey stone wall of Krezk with the mountain rising behind: two watchmen in sheepskin with lanterns and spears stand at the gate looking suspiciously down the road, a goat's head showing over a pen inside the wall. {party} at the gate's foot, seen from behind, hooded and small. Grey dusk with warm lantern light; guarded and wary, no gore.",
+      "use": "a"
+    },
+    "strahd_mist_coffin": {
+      "refs": [],
+      "prompt": "A deep crypt at the bottom of Castle Ravenloft: a stone coffin with its lid half slid shut, and a stream of grey mist pouring in through cracks in the vaulted ceiling and flowing down into it like water, cold blue light, a few candle flames bending toward it, a long row of other coffins in the shadows; nobody present. Cold blue-grey with one warm candle; eerie and quiet, no gore.",
+      "use": "a"
+    },
+    "sunsword_light": {
+      "refs": [],
+      "prompt": "A dim stone room where {party}, hooded figures seen from behind, stand with their backs to the viewer, hoods up, faces hidden, and the hero in front of them, also seen from behind with a hood, holds up a bladeless hilt from which a blade of pure golden sunlight has sprung, the light so strong that every shadow in the room vanishes and the walls glow warm gold, dust motes sparkling, cloaks edged with gold light. Warm gold against the cold blue of the doorway behind; awe, no gore.",
+      "use": "b"
+    },
+    "symbol_dawn": {
+      "refs": [],
+      "prompt": "A dark crypt floor with a platinum sunburst holy symbol with a raven at its heart held out in a gloved hand of one of {party} (hooded, seen from behind), and a circle of warm white morning light spreading from it across the dark flagstones and up the walls, shadows retreating, mist burning off, small motes drifting. Cold blue-black at the edges to white-gold at the centre; hope, no gore.",
+      "use": "a"
+    },
+    "tome_page": {
+      "refs": [],
+      "prompt": "A great dark leather book lying open on a stone lectern in a candlelit chamber, its first page showing neat dense script (no readable words), a tall candle beside it leaning toward the page, a faint violet glow rising from the lettering. {party} stand round it, seen from behind, hooded, one reaching to turn the page. Warm candlelight with deep purple shadow; unease, no gore.",
+      "use": "a"
+    },
+    "tser_tent_music": {
+      "refs": [],
+      "prompt": "Inside the great patched Vistani tent at Tser Pool: lamps hung from the poles, a fiddler on a crate playing with eyes closed, dancers in bright patched skirts and waistcoats turning, a long table of food, warm gold light and rich colours, fabric patterns everywhere. {party} at the tent flap, seen from behind, hooded and small, one holding a lantern. Warm and joyful against the cold blue night outside the flap; the first warmth in the valley, no gore.",
+      "use": "a"
+    },
+    "village_square_empty": {
+      "refs": [],
+      "prompt": "The empty muddy square of the village of Barovia in steady rain: grey houses with nailed shutters round it, a dry well, the church at the far side with its door open a finger's width and a single candle glowing within, rain streaking the lantern light. {party} at the edge of the square, seen from behind, hooded and small. Grey rain and cold blue with one warm candle; a held breath, no gore.",
+      "use": "a"
+    },
+    "tower_lamp": {
+      "refs": [],
+      "prompt": "Van Richten's round black tower on its rock in the still black water of Lake Baratok at night, seen low from the shore: the tower's topmost window glows a steady yellow, its reflection a long line on the water, a rowboat tied at a small jetty at the rock's foot, dark mountains behind. {party} on the shore in the foreground, seen from behind, hooded and small, one holding a lantern. Cold blue-black with one warm window; quiet and lonely, no gore.",
+      "use": "a"
+    },
+    "ending_carriage": {
+      "refs": [],
+      "prompt": "The muddy lane of the village of Barovia at night, thick mist round the feet of the houses: a black carriage drawn by two black horses with red lamps rolls up to stop before an inn with one candlelit upstairs window, its door open on an empty seat of black velvet. {party} stand at the roadside, seen from behind, hooded, not moving. A dark church tower in the fog, no other people; deep blue-violet night with the one warm window and the red lamps; dread and shame, no gore.",
+      "use": "a"
+    },
+    "fallen_halls": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A great hall of Castle Ravenloft at dusk with candles burning and tall windows showing only night: several new figures in adventurers' clothes (hooded cloaks, a breastplate, a staff) walk its length slowly and stiffly, seen from behind, their skin pale and their bearing wrong, like {party} now turned; at the far end Strahd von Zarovich sits at the organ, drawn exactly as the reference sheet shows him, watching them over his shoulder. Dim reds and violets with long shadows; quiet horror, no gore.",
+      "use": "a"
     }
   }
 }

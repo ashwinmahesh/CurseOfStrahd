@@ -537,11 +537,15 @@
           "qty": 1
         },
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_greater",
           "qty": 1
         },
         {
           "id": "weapon_plus_2__greatsword",
+          "qty": 1
+        },
+        {
+          "id": "ioun_stone_agility",
           "qty": 1
         }
       ],
@@ -573,7 +577,7 @@
             14
           ],
           "name": "The Roc of Mount Ghakis",
-          "hp": 190
+          "hp": 285
         },
         {
           "monster": "roc",
@@ -638,7 +642,7 @@
             9,
             18
           ],
-          "hp": 590
+          "hp": 780
         },
         {
           "monster": "ghast",
@@ -736,7 +740,7 @@
             9,
             18
           ],
-          "hp": 480
+          "hp": 625
         },
         {
           "monster": "ghast",
@@ -794,7 +798,7 @@
             9,
             18
           ],
-          "hp": 420
+          "hp": 645
         },
         {
           "monster": "ghast",

@@ -131,6 +131,7 @@ interject guest:kasimir_velikov: My sister asked for far less than this, once. L
 ~ accept
 dark_gift gift_of_the_hollow
 if gift:gift_of_the_hollow
+xp fight vosk_unmasked
 set vosk_fate = "paid"
 set dark_gifts_taken += 1
 approve liriel_dawnsong -5 kip_smudgewick -5 godrick_pendlebrook -4 wren_featherfoot -3 thistle -2 ratatoille -2: You let one of us lie down in Vosk's amber
@@ -182,6 +183,7 @@ Vosk: But since you ask, under compulsion: the Thirst holds him to the valley an
 -> named_menu
 
 ~ banish
+xp fight vosk_unmasked
 set vosk_fate = "banished"
 quest the_amber_temple broker_banished
 Vosk: Never? That is a very long word for a mortal to use. ...Agreed. Bound and agreed.

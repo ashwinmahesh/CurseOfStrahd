@@ -20,6 +20,9 @@ const FAMILIES: Array[String] = ["bolt", "beam", "ray", "touch", "drain", "shot"
 ## Damage types that take a magical look on a monster's attack (a Fire Ray is a bolt of fire; a Claw is a slash).
 const MAGIC_TYPES: Array[String] = ["fire", "cold", "lightning", "thunder", "acid", "poison", "necrotic", "radiant", "force", "psychic"]
 
+## A creature's change of shape is being shown (shape_gather): `kind` is how it looks and sounds.
+signal shape_shown(id: String, kind: String)
+
 ## Captures turn the effects off for their "before" shots (tools/capture/vfx_capture.gd).
 static var enabled := true
 static var _data: Dictionary = {}
@@ -60,6 +63,9 @@ static func spell_cue(spell_id: String) -> Dictionary:
 static func ability_cue(source: String, key: String, by: Combatant) -> Dictionary:
 	var table := "features" if source == "feature" else "monsters"
 	var spec := _spec((data().get(table, {}) as Dictionary).get(key, ""))
+	# A feature with a choice in it ("starry_form:archer", "celestial_revelation:heavenly_wings") looks as its kind does.
+	if spec.is_empty() and source == "feature" and key.contains(":"):
+		spec = _spec((data().get(table, {}) as Dictionary).get(key.get_slice(":", 0), ""))
 	var act := _monster_action(by, key.get_slice(".", 1)) if source == "monster" else {}
 	if str(spec.get("family", "")) == "" and not act.is_empty():
 		spec["family"] = _derive_action_family(act)
@@ -428,6 +434,24 @@ func jumped(from: Vector3, to: Vector3) -> void:
 	FxBodies.blink(self, cue, from, false)
 	FxBodies.blink(self, cue, to, true)
 	CombatSfx.arrive(cue)
+
+
+## A creature is about to change shape (`kind`: how the change looks and sounds, FxShapeshift.LOOKS): motes gather round
+## it, it flares and the change's sound begins. Returns after the beat the view waits before it swaps the figure
+## (FxShapeshift.GATHER at the combat speed): a timer like every other beat of a fight's events, so nothing is held but
+## the next event.
+func shape_gather(t: CombatToken, kind: String) -> void:
+	FxShapeshift.gather(self, t, kind)
+	CombatSfx.shapeshift(kind)
+	shape_shown.emit(t.combatant.id, kind)
+	# A timer that runs through a pause, like the other beats of a fight's events: wait() stops with the tree, and a
+	# tree left paused (a cutscene's, a test's freed scene) would hold the swap, and the fight with it, for good.
+	await get_tree().create_timer(FxShapeshift.GATHER * pace(), true).timeout
+
+
+## The new figure `t` is in place after a change of shape: a flash and a burst as it comes into view.
+func shape_settle(t: CombatToken, kind: String) -> void:
+	FxShapeshift.settle(self, t, kind)
 
 
 # --- Helpers the families share -----------------------------------------------------------------------

@@ -62,6 +62,7 @@ func collected(col: Dictionary) -> Array:
 ## The hook every creature's d20_after leads to (FeatureActions.after_d20): the offers go to a roll that can pause, or
 ## are settled now.
 func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
+	mark_save(c, t)
 	var offers := offers_for(c, t, keys)
 	if not _open.is_empty():
 		var top := _open.back() as Dictionary
@@ -82,6 +83,14 @@ func after_d20(c: Combatant, t: D20Test, keys: Array[String]) -> void:
 					(o["use"] as Callable).call()
 			return
 	run_now(offers)
+
+
+## A hero's saving throw takes its place in the encounter's events, so the screen shows its big d20 where the save came
+## in the action (after the blow and its damage, not before the swing) instead of ahead of everything. The test is the
+## same object the creature's own d20 event holds (CombatView._dice_moments shows each roll once).
+func mark_save(c: Combatant, t: D20Test) -> void:
+	if t.kind == D20Test.Kind.SAVING_THROW and c.is_player_controlled() and c.side in [&"party", &"guest"]:
+		enc().events.append({"type": "save", "id": c.id, "test": t})
 
 
 ## Settles offers where the roll can't wait: each by its `sync` rule (see above).

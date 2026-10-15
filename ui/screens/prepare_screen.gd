@@ -1,17 +1,28 @@
 class_name PrepareScreen
 extends CanvasLayer
-## Changing prepared spells after a Long Rest (2024 PHB): Clerics, Druids and Wizards (from the spellbook) may change
-## any number, Paladins and Rangers one spell, and a Wizard one cantrip too (a High Elf their lineage's); Bards, Sorcerers and Warlocks change one
-## when they gain a level (LevelUpController). Weapon Mastery too: Barbarians and Fighters swap one kind, Paladins,
-## Rangers and Rogues any; a Druid one Wild Shape form. One choice box per caster, the same widget character creation uses;
-## each change rebuilds the character at once. The limits count from the list the rest ended with (`earlier`), so
-## closing and reopening the screen doesn't give a second swap.
+## Changing spells, and what a rest lets you change. The 2024 PHB has Clerics, Druids and Wizards (from the spellbook)
+## change any number of prepared spells after a Long Rest, Paladins and Rangers one spell, and a Wizard one cantrip (a
+## High Elf their lineage's); Bards, Sorcerers and Warlocks change one when they gain a level (LevelUpController). The
+## house rule (owner, deviations.md) lets those casters change their spells in any number, with no rest, any time
+## outside a fight: `rest_kind` ANYTIME offers only spells (prepared lists, a Wizard's or High Elf's cantrip, the Circle
+## of the Land's land), from the character sheet, the rest screen and the camp's bar, and the screen a finished rest
+## offers holds spells to no limit either (spell_choice()).
+## What only a rest changes keeps its swap limit: Weapon Mastery (Barbarians and Fighters one kind, Paladins, Rangers and
+## Rogues any), a Druid's Wild Shape form, a Transmuter's stone. One choice box per caster, the same widget character
+## creation uses; each change rebuilds the character at once. Those limits count from the list the rest ended with
+## (`earlier`), so closing and reopening the screen doesn't give a second swap.
+
+## `rest_kind` for the swap any time outside a fight (see the top).
+const ANYTIME := "anytime"
+const INTRO_ANYTIME := "Between fights you can change what each caster has ready, no rest needed: Clerics, Druids, Wizards, Paladins and Rangers their prepared spells, Wizards and High Elves a cantrip, a Circle of the Land Druid their land. Spell slots already spent stay spent, and spells already cast keep going. Always-prepared spells (a domain's, an oath's) can't change. Hover a spell for what it does."
 
 var root: Node
 var st: StoryState
 var _box: VBoxContainer
-## Which rest just ended: "long_rest" or "short_rest" (see preparable()).
+## Which rest just ended: "long_rest" or "short_rest" (see preparable()), or ANYTIME for no rest at all.
 var rest_kind := "long_rest"
+## ANYTIME only: the one character the screen is for (opened from their sheet), or null for the whole party.
+var only: Character = null
 ## snapshot() of the party's picks when the rest ended; taken at open() when the opener leaves it empty.
 var earlier: Dictionary = {}
 
@@ -29,7 +40,10 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	var clear := Control.new()
 	clear.custom_minimum_size = Vector2(0, 8)
 	frame.add_child(clear)
-	frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards and High Elves one cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Druids swap one Wild Shape form. Always-prepared spells (a domain's, an oath's) don't count. Hover a spell for what it does.", 15, "parchment", 1220))
+	if rest_kind == ANYTIME:
+		frame.add_child(UiKit.label(INTRO_ANYTIME, 15, "parchment", 1220))
+	else:
+		frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids, Wizards, Paladins and Rangers can change any number of theirs, and Wizards and High Elves a cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Druids swap one Wild Shape form. Always-prepared spells (a domain's, an oath's) don't count. Spells can be changed any time outside a fight, from the character sheet, too. Hover a spell for what it does.", 15, "parchment", 1220))
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 14)
 	var pane := UiParts.pane(14)
@@ -37,18 +51,23 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	pane.add_child(UiParts.fill_scroll(_box))
 	frame.add_child(pane)
 	frame.add_child(UiParts.primary_button("Done", func() -> void: queue_free()))
-	if earlier.is_empty():
+	if rest_kind != ANYTIME and earlier.is_empty():
 		earlier = PrepareScreen.snapshot(st, rest_kind)
 	_draw()
 
 
 ## The choices this party can change after a rest: [{ch, choice}]. After a Long Rest, prepared spells and choices
 ## a Long Rest lets you swap (Weapon Mastery, Echoing Soul's Expertise); after either rest, those a Short Rest lets you
-## swap (Whispers of the Dead). `rest` is "long_rest" or "short_rest".
-static func preparable(state: StoryState, rest: String = "long_rest") -> Array[Dictionary]:
+## swap (Whispers of the Dead). `rest` is "long_rest" or "short_rest", or ANYTIME: only the spells a Long Rest lets you
+## change, with no rest needed (see the top). `who` limits the list to one character.
+static func preparable(state: StoryState, rest: String = "long_rest", who: Character = null) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for ch in state.party:
-		if ch.dead:
+		if ch.dead or (who != null and ch != who):
+			continue
+		if rest == ANYTIME:
+			for c in anytime_choices(ch):
+				out.append({"ch": ch, "choice": c})
 			continue
 		for rc in ch.choice_defs:
 			if rc.key.ends_with(".prepared") or rc.kind in ["spell", "cantrip", "spellbook"]:
@@ -57,21 +76,74 @@ static func preparable(state: StoryState, rest: String = "long_rest") -> Array[D
 				out.append({"ch": ch, "choice": rc})
 		if rest != "long_rest":
 			continue
-		# The class lists a Long Rest lets you change: prepared spells (Cleric, Druid, Paladin, Ranger, Wizard), then
-		# cantrips (Wizard), then other spells a Long Rest lets you swap (a High Elf's cantrip).
-		var lists: Array[Choice] = []
-		for e in ch.spellcasting:
-			for list: String in ["prepared", "cantrips"]:
-				var c := ch.choice("%s.%s" % [e["class_id"], list])
-				if c != null:
-					lists.append(c)
-		for rc2 in ch.choice_defs:
-			if rc2.kind in ["spell", "cantrip"] and not rc2 in lists:
-				lists.append(rc2)
-		for c in lists:
+		for c in PrepareScreen._spell_lists(ch):
 			if c.replaceable == "long_rest":
 				out.append({"ch": ch, "choice": c})
 	return out
+
+
+## The class lists a Long Rest lets you change: prepared spells (Cleric, Druid, Paladin, Ranger, Wizard), then cantrips
+## (Wizard), then other spells a Long Rest lets you swap (a High Elf's cantrip). Whatever else holds spell picks comes
+## after, so a caller keeps those that are `replaceable` on a Long Rest.
+static func _spell_lists(ch: Character) -> Array[Choice]:
+	var lists: Array[Choice] = []
+	for e in ch.spellcasting:
+		for list: String in ["prepared", "cantrips"]:
+			var c := ch.choice("%s.%s" % [e["class_id"], list])
+			if c != null:
+				lists.append(c)
+	for rc in ch.choice_defs:
+		if rc.kind in ["spell", "cantrip"] and not rc in lists:
+			lists.append(rc)
+	return lists
+
+
+## What `ch` can change any time outside a fight: each spell list a Long Rest lets them change (Bards, Sorcerers and
+## Warlocks change theirs at a level up, so they have none), and a feature whose Long Rest choice grants spells
+## (the Circle of the Land's land, a Scion of the Three's allegiance). A domain's or oath's always-prepared spells
+## aren't picks, so they never appear here.
+static func anytime_choices(ch: Character) -> Array[Choice]:
+	var out: Array[Choice] = []
+	if ch.dead:
+		return out
+	for c in PrepareScreen._spell_lists(ch):
+		if c.replaceable == "long_rest":
+			out.append(c)
+	for rc in ch.choice_defs:
+		if rc.kind == "option" and rc.replaceable == "long_rest" and PrepareScreen._grants_spells(rc):
+			out.append(rc)
+	return out
+
+
+## Whether any of the choice's options grants a spell (a `spell` modifier).
+static func _grants_spells(c: Choice) -> bool:
+	for o in c.inline_options:
+		for m: Variant in o.get("modifiers", []):
+			if str((m as Dictionary).get("stat", "")) == "spell":
+				return true
+	return false
+
+
+## Whether `c` holds spells: a spell or cantrip list, or a feature choice that grants spells. These change freely, on the
+## screen a rest offers and any time outside a fight; what a rest alone changes (Weapon Mastery, Wild Shape forms) keeps
+## its swap limit.
+static func spell_choice(c: Choice) -> bool:
+	return c.kind in ["spell", "cantrip", "spellbook"] or PrepareScreen._grants_spells(c)
+
+
+## Why spells can't be changed now ("" when they can): not in a fight.
+static func refusal(in_fight: bool) -> String:
+	return "Prepared spells can't be changed in a fight." if in_fight else ""
+
+
+## Whether a fight is on in the location `root` (the game) shows.
+static func fighting(root_: Node) -> bool:
+	if root_ == null or not "view" in root_:
+		return false
+	var view: Variant = root_.get("view")
+	if not is_instance_valid(view):
+		return false
+	return view is LocationView and (view as LocationView).in_combat
 
 
 ## Every preparable() choice's picks right now, keyed "<character id>/<choice key>": the list a swap limit counts from.
@@ -86,15 +158,25 @@ static func snapshot(state: StoryState, rest: String = "long_rest") -> Dictionar
 func _draw() -> void:
 	for c in _box.get_children():
 		c.queue_free()
-	var list := PrepareScreen.preparable(st, rest_kind)
-	if list.is_empty():
-		_box.add_child(UiKit.label("Nobody in the party prepares spells after a rest.", 15, "parchment"))
+	var anytime := rest_kind == ANYTIME
+	var why := PrepareScreen.refusal(PrepareScreen.fighting(root)) if anytime else ""
+	var list := PrepareScreen.preparable(st, rest_kind, only) if why == "" else ([] as Array[Dictionary])
+	if why != "":
+		_box.add_child(UiKit.label(why, 15, "rose"))
+	elif list.is_empty():
+		var nobody := "Nobody in the party prepares spells after a rest."
+		if anytime:
+			nobody = "%s prepares no spells." % only.name.get_slice(" ", 0) if only != null else "Nobody in the party prepares spells."
+		_box.add_child(UiKit.label(nobody, 15, "parchment"))
 	for entry in list:
 		var ch := entry["ch"] as Character
 		var c := entry["choice"] as Choice
-		var from: Array[String] = []
-		from.assign(earlier.get("%s/%s" % [ch.id, c.key], c.picks) as Array)
-		ChoiceOptions.open_swap(c, from, rest_kind)
+		if anytime or PrepareScreen.spell_choice(c):
+			ChoiceOptions.close_swap(c)   # spells change in any number: no limit to count from
+		else:
+			var from: Array[String] = []
+			from.assign(earlier.get("%s/%s" % [ch.id, c.key], c.picks) as Array)
+			ChoiceOptions.open_swap(c, from, rest_kind)
 		ChoiceOptions.populate(c, ch)
 		var what := Compendium.shared().display_name("classes", c.class_id) if c.key.ends_with(".prepared") else c.label
 		var head := HBoxContainer.new()
@@ -118,7 +200,7 @@ func _draw() -> void:
 func _exit_tree() -> void:
 	if st == null:
 		return
-	for entry in PrepareScreen.preparable(st, rest_kind):
+	for entry in PrepareScreen.preparable(st, rest_kind, only):
 		ChoiceOptions.close_swap(entry["choice"] as Choice)
 
 

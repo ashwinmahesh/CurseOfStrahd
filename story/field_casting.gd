@@ -186,6 +186,46 @@ static func _revive_cost_why(st: StoryState, caster: Character, spell_id: String
 	return ""
 
 
+## The dead party members `spell_id` can bring back now (revive_why), for an item that casts it (a scroll, the Rod of
+## Resurrection) and the inventory's "<power> on <hero>" buttons.
+static func revivable(st: StoryState, spell_id: String) -> Array[Character]:
+	var out: Array[Character] = []
+	for ch in st.party:
+		if ch.dead and revive_why(st, spell_id, ch) == "":
+			out.append(ch)
+	return out
+
+
+## An item's casting of a revival spell on dead party member `target`, outside a fight (Ashwin, 2026-10-15: a Spell
+## Scroll of Revivify or Raise Dead and the Rod of Resurrection did nothing there): as revive() does, with no slot and no
+## costly component (2024 DMG: a Spell Scroll's spell needs no Material components; the Rod's charges are its cost) and
+## no rare oils. The item's use (the scroll, the charges) is the caller's. {ok, text}.
+static func revive_with_item(st: StoryState, reader: Character, spell_id: String, target: Character) -> Dictionary:
+	var data := Compendium.shared().spell_data(spell_id)
+	if data.is_empty() or not REVIVAL.has(spell_id):
+		return {"ok": false, "text": "Not a spell that brings back the dead"}
+	var why := revive_why(st, spell_id, target)
+	if why != "":
+		return {"ok": false, "text": why}
+	var rule := REVIVAL[spell_id] as Dictionary
+	var ct := data.get("casting_time", {}) as Dictionary
+	var minutes := int(ct.get("amount", 1)) * 60 if str(ct.get("unit", "")) == "hour" else 1
+	var who := reader.name.get_slice(" ", 0)
+	var them := target.name.get_slice(" ", 0)
+	var text := ""
+	if spell_id == "gentle_repose":
+		Services.repose(st, target, REPOSE_MINUTES)
+		text = "%s casts Gentle Repose on %s's body: for 10 days it won't decay, and those days don't count against raising them." % [who, them]
+	else:
+		Services.bring_back(st, target, bool(rule["full_hp"]), bool(rule["ordeal"]), str(data["name"]))
+		text = "%s casts %s, and %s breathes again%s." % [who, data["name"], them,
+			" with every Hit Point" if bool(rule["full_hp"]) else ", with 1 Hit Point"]
+		if bool(rule["ordeal"]):
+			text += " The journey back leaves them -4 on D20 Tests for 10 days."
+	st.advance_minutes(minutes)
+	return {"ok": true, "text": text}
+
+
 ## Casts a revival spell on dead party member `target`: the slot (`slot` 0: the lowest; Gentle Repose without a slot is
 ## a Ritual), the component and the casting time are spent, and the hero comes back (Services.bring_back) or, for
 ## Gentle Repose, their body keeps for 10 days. {ok, text}.

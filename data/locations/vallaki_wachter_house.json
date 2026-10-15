@@ -639,6 +639,20 @@
             16
           ],
           "name": "Hired sword"
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            15,
+            18
+          ]
+        },
+        {
+          "monster": "tough",
+          "cell": [
+            18,
+            15
+          ]
         }
       ],
       "surprise": "",
@@ -691,6 +705,28 @@
             17,
             17
           ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            21,
+            16
+          ]
+        },
+        {
+          "monster": "cultist",
+          "cell": [
+            15,
+            18
+          ]
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            18,
+            15
+          ],
+          "name": "Hired sword"
         }
       ],
       "surprise": "",
@@ -790,6 +826,34 @@
           "cell": [
             21,
             11
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            18,
+            4
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            18,
+            1
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            21,
+            1
+          ]
+        },
+        {
+          "monster": "shadow",
+          "cell": [
+            19,
+            6
           ]
         }
       ],
@@ -947,6 +1011,27 @@
             22,
             12
           ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            19,
+            5
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            19,
+            1
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            15,
+            2
+          ]
         }
       ],
       "surprise": "",
@@ -983,6 +1068,13 @@
           "cell": [
             22,
             8
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            18,
+            5
           ]
         }
       ],

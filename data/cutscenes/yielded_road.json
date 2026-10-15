@@ -1,0 +1,15 @@
+{
+  "id": "yielded_road",
+  "title": "The Road Down",
+  "summary": "The party walks unarmed down the road from the castle as the mist closes behind them and hides it.",
+  "images": [
+    {
+      "image": "yielded_road",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "roc_looks_down",
+  "title": "Too Small to Bother With",
+  "summary": "From the road, the roc's huge golden eye looks down and decides the travellers are too small to bother with, today.",
+  "images": [
+    {
+      "image": "roc_looks_down",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

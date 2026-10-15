@@ -2,7 +2,7 @@ class_name DeckOfManyThings
 extends RefCounted
 ## The Deck of Many Things (2024 DMG, the 22-card deck): each card drawn takes hold at once. What the game can play
 ## happens to the drawer, the party's purse or the story; the rest is told and flagged for the story to read
-## (deviations.md: the game uses milestones, so experience cards become levels or nothing).
+## (deviations.md: the game uses milestones, so experience cards become a milestone level or, in XP mode, a level's XP).
 
 const CARDS: Array[String] = ["balance", "comet", "donjon", "euryale", "fates", "flames", "fool", "gem", "idiot", "jester", "key",
 	"knight", "moon", "rogue", "ruin", "skull", "star", "sun", "talons", "throne", "vizier", "void"]
@@ -104,7 +104,10 @@ static func _card(st: StoryState, ch: Character, card: String, dice: DiceRoller)
 			_boon(ch, best, 2, 4, "Star (Deck of Many Things)")
 			return {"text": "Star: %s's %s rises by 2." % [nm, Creature.ABILITY_NAMES[StringName(best)]]}
 		"sun":
-			st.milestones += 1
+			if Xp.active(st):
+				Xp.sun(st)   # XP levelling: experience for the next level, not a milestone (the ceiling holds any excess)
+			else:
+				st.milestones += 1
 			var item := _random_wondrous(dice)
 			if item != "":
 				ch.add_item(item)

@@ -29,7 +29,11 @@ var attitudes: Dictionary = {}             ## npc id -> hostile | indifferent | 
 var visited: Dictionary = {}               ## location or area id -> true
 var codex: Array[String] = []              ## lore read (book props, letters)
 var narrator: Dictionary = {}              ## trigger key -> {played: [variant indexes], last_minute, done}
-var milestones: int = 0                    ## story milestones reached (milestone levelling)
+var milestones: int = 0                    ## story milestones reached (milestone levelling; XP levelling counts them too, for its floor)
+## The party's experience points (Xp, XP levelling): one pool, each hero's share. Not counted in milestone mode.
+var xp: int = 0
+## XP earned past the ceiling, waiting for the next milestone to pay it out (Xp.gain).
+var xp_reserve: int = 0
 var start_level: int = 1
 var day: int = 1
 var minute_of_day: int = 18 * 60           ## the party arrives at dusk
@@ -53,8 +57,9 @@ var shops: Dictionary = {}
 var travel_resume: Dictionary = {}
 ## Miles travelled since the party's last Long Rest (Mist Walker, a Ravenloft Dark Gift).
 var miles_since_long_rest: float = 0.0
-## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva.
-var options: Dictionary = {"respec": true}
+## Playthrough options the owner can switch (plan §5.6): respec at Madam Eva. `levelling` is how heroes grow, picked at a
+## new game and never changed: "milestone" (every save before XP levelling) or "xp" (story/xp.gd).
+var options: Dictionary = {"respec": true, "levelling": "milestone"}
 ## Exploring spells still running: spell id -> {until: total minute, caster} (Light, Detect Magic, Speak with Dead).
 var active_spells: Dictionary = {}
 ## How each of the six companions feels about the party's choices (story/approval.gd): id -> {score, memories}.
@@ -67,6 +72,16 @@ var bestiary: Dictionary = {}
 
 
 # --- Flags, quests, attitudes ---------------------------------------------------------------------
+
+## Adds `entry` to the codex (lore read: a book, a letter, a lore check, the Tome of Strahd). Returns -1 if the party
+## already had it, else the XP the lore earned (Experience mode; 0 in milestone mode), for the caller to add to its
+## notice (Xp.tag).
+func add_codex(entry: String) -> int:
+	if entry in codex:
+		return -1
+	codex.append(entry)
+	return Xp.award(self, "lore", entry)
+
 
 func get_flag(id: String, default: Variant = false) -> Variant:
 	return flags.get(id, default)
@@ -103,6 +118,8 @@ func set_quest_stage(quest_id: String, stage: String) -> bool:
 	entry["history"] = hist
 	entry["at"] = total_minutes()   # when it last moved: the recap's road ahead names the newest first (Q3, lane 16)
 	quests[quest_id] = entry
+	if str(((q["stages"] as Array)[at] as Dictionary).get("ends", "")) == "success":
+		Xp.quest_done(self, quest_id)   # XP levelling: a quest finished is worth XP (nothing in milestone mode)
 	if quest_id == "find_the_ally":
 		_settle_ally()
 	return true
@@ -300,9 +317,22 @@ func take_item(item_id: String, qty: int) -> int:
 const LEVEL_CAP := 11
 
 
-## Milestone levelling (plan §5.6): the level the party may reach now.
-func target_level() -> int:
+## The level the story gives the party now: where it starts plus the milestones it has reached (plan §5.6).
+func story_level() -> int:
 	return mini(LEVEL_CAP, start_level + milestones)
+
+
+## The level the party may reach now. Milestone levelling: the story's. XP levelling (story/xp.gd): the XP pool's, which
+## the floor and the ceiling keep within a level of the story's.
+func target_level() -> int:
+	if Xp.active(self):
+		return mini(LEVEL_CAP, maxi(start_level, Xp.level_for(xp)))
+	return story_level()
+
+
+## Experience (Xp.gain, quests, places, finds, milestones) said something the player should see: "Quest complete: The
+## Grey Mare, +125 XP". The game shows it as a notice.
+signal xp_gained(text: String)
 
 
 func can_level_up(ch: Character) -> bool:
@@ -327,21 +357,23 @@ func roster() -> Array[Character]:
 	return out
 
 
-## `incoming` (at camp) takes `outgoing`'s place in the party and marching order; `outgoing` goes to camp.
+## `incoming` (at camp) takes `outgoing`'s place in the party and marching order; `outgoing` goes to camp. A dead
+## hero stays with the party, to be brought back (Ashwin, 2026-10-15): one can't go to camp, and one left there by an
+## older save can be fetched.
 func swap_members(outgoing: Character, incoming: Character) -> bool:
 	var i := party.find(outgoing)
 	var j := bench.find(incoming)
-	if i < 0 or j < 0 or incoming.dead:
+	if i < 0 or j < 0 or outgoing.dead:
 		return false
 	party[i] = incoming
 	bench[j] = outgoing
 	return true
 
 
-## Someone at camp joins the party at the back, while there's room.
+## Someone at camp joins the party at the back, while there's room (a dead hero too: the body comes back to be raised).
 func bring_along(ch: Character) -> bool:
 	var j := bench.find(ch)
-	if j < 0 or party.size() >= PARTY_CAP or ch.dead:
+	if j < 0 or party.size() >= PARTY_CAP:
 		return false
 	bench.remove_at(j)
 	party.append(ch)
@@ -391,10 +423,11 @@ func recruit(ch: Character) -> bool:
 	return false
 
 
-## A party member goes to camp; the party never goes below one.
+## A party member goes to camp; the party never goes below one. A dead one stays with the party, so they can be brought
+## back (Ashwin, 2026-10-15: a body left at camp could never be raised).
 func send_to_camp(ch: Character) -> bool:
 	var i := party.find(ch)
-	if i < 0 or party.size() <= 1:
+	if i < 0 or party.size() <= 1 or ch.dead:
 		return false
 	party.remove_at(i)
 	if positions.size() > i:
@@ -519,13 +552,18 @@ func lose_member(ch: Character, how: String) -> void:
 
 # --- Shops (ADR 0010) -----------------------------------------------------------------------------
 
-## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts}], at the prices the
-## merchant's attitude and a haggle make (Trade), with any stock that changes with the days.
+## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts, rarity}], at the prices the
+## merchant's attitude and a haggle make (Trade): the magic stock the party's level has opened (Trade.magic_stock),
+## then the shop's own lines and any stock that changes with the days. An item made on a base the party picks ("Flame Tongue") has `bases`:
+## [{id, name, lot, price}], one for each weapon or armor it can be, and `price` is the cheapest of them.
 func shop_wares(npc_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var stock := shops.get(npc_id, {}) as Dictionary
-	var lines: Array = (shop.get("sells", []) as Array).duplicate()
+	# The magic first (rarest last), so a long counter's few special things aren't under its rope and nails.
+	var lines: Array = []
+	lines.append_array(Trade.magic_stock(self, npc_id))
+	lines.append_array(shop.get("sells", []) as Array)
 	lines.append_array(Trade.rotation(self, npc_id))
 	for e: Variant in lines:
 		var w := e as Dictionary
@@ -540,19 +578,40 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
+		var markup := float(w.get("markup", shop.get("markup", 1.0)))
+		if w.has("bases"):
+			var options: Array[Dictionary] = []
+			for b: Variant in w["bases"]:
+				var made := "%s%s%s" % [id, MagicItems.SEP, str(b)]
+				var md := Compendium.shared().item_data(made)
+				if md.is_empty():
+					continue
+				var mlot := StoryState.shop_lot(md)
+				options.append({"id": made, "name": str(md.get("name", made)) + (" ×%d" % mlot if mlot > 1 else ""), "lot": mlot,
+					"price": Trade.buy_price(self, npc_id, float(md.get("cost_gp", 0)) * mlot * markup)})
+			if options.is_empty():
+				continue
+			var cheapest := options.reduce(func(m: Dictionary, o: Dictionary) -> Dictionary: return o if float(o["price"]) < float(m["price"]) else m) as Dictionary
+			out.append({"id": id, "name": str(data.get("name", id)), "lot": 1, "price": float(cheapest["price"]), "qty": qty,
+				"stock_id": stock_id, "sets": "", "counts": "", "rarity": MagicItems.rarity(data), "bases": options})
+			continue
 		# Ammunition comes by its bundle (20 Arrows for 1 gp, as the PHB prices them), not a piece at a time.
 		var lot := StoryState.shop_lot(data)
-		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * float(w.get("markup", shop.get("markup", 1.0)))
+		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * markup
 		# A pair (Sending Stones) sells whole, both pieces for the item's price.
 		out.append({"id": id, "name": str(data.get("name", id)) + (" ×%d" % lot if lot > 1 else ""), "lot": 2 if bool(data.get("pair", false)) else lot,
 			"price": Trade.buy_price(self, npc_id, base), "qty": qty,
-			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
+			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", "")), "rarity": MagicItems.rarity(data)})
 	return out
 
 
 ## How many pieces a shop deals in at once: a bundle of ammunition (20 Arrows, 50 Blowgun Needles: the item's
 ## `bundle`), anything else one at a time (QA FN-03: a 0.05 gp arrow rounded up to a whole 1 gp each way).
+## Magic ammunition goes a piece at a time, as Sane Magical Prices prices it (+1 Arrows at 25 gp each; Ashwin,
+## 2026-10-14).
 static func shop_lot(data: Dictionary) -> int:
+	if MagicItems.is_magic(data):
+		return 1
 	return maxi(1, int(data.get("bundle", 1))) if bool(data.get("stackable", false)) else 1
 
 
@@ -572,15 +631,22 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * pieces * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
-## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`. Returns "" or why not.
+## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`: a ware's id, or one of a made-to-order ware's
+## `bases` ("flame_tongue__rapier"). Returns "" or why not.
 func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 	for w in shop_wares(npc_id):
-		if str(w["id"]) != item_id:
+		var pick := w
+		if w.has("bases"):
+			var found := (w["bases"] as Array).filter(func(o: Dictionary) -> bool: return str(o["id"]) == item_id)
+			if found.is_empty():
+				continue
+			pick = found[0] as Dictionary
+		elif str(w["id"]) != item_id:
 			continue
-		if gold < float(w["price"]):
+		if gold < float(pick["price"]):
 			return "Not enough gold"
-		gold -= float(w["price"])
-		ch.add_item(item_id, int(w.get("lot", 1)))
+		gold -= float(pick["price"])
+		ch.add_item(item_id, int(pick.get("lot", 1)))
 		if int(w["qty"]) > 0:
 			if not shops.has(npc_id):
 				shops[npc_id] = {}
@@ -727,7 +793,7 @@ func to_dict() -> Dictionary:
 		benched.append(ch.to_dict())
 	return {"party": members, "bench": benched, "leader": leader, "gold": gold, "stash": stash.duplicate(true), "flags": flags.duplicate(true),
 		"quests": quests.duplicate(true), "attitudes": attitudes.duplicate(true), "visited": visited.duplicate(true),
-		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "start_level": start_level,
+		"codex": codex.duplicate(), "narrator": narrator.duplicate(true), "milestones": milestones, "xp": xp, "xp_reserve": xp_reserve, "start_level": start_level,
 		"day": day, "minute_of_day": minute_of_day, "location": location, "positions": pos,
 		"location_states": location_states.duplicate(true), "last_check": last_check, "fallen": fallen.duplicate(true),
 		"seed": playthrough_seed, "tarokka": tarokka.duplicate(), "guests": _guests_to_dict(), "shops": shops.duplicate(true),
@@ -785,6 +851,8 @@ static func from_dict(d: Dictionary) -> StoryState:
 		st.codex.append(str(c))
 	st.narrator = (d.get("narrator", {}) as Dictionary).duplicate(true)
 	st.milestones = int(d.get("milestones", 0))
+	st.xp = int(d.get("xp", 0))
+	st.xp_reserve = int(d.get("xp_reserve", 0))
 	st.start_level = int(d.get("start_level", 1))
 	st.day = int(d.get("day", 1))
 	st.minute_of_day = int(d.get("minute_of_day", 18 * 60))

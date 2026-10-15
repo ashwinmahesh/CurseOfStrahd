@@ -1,0 +1,15 @@
+{
+  "id": "bear_blights",
+  "title": "The Trees Come for the Crying",
+  "summary": "As the trap opens and the cub screams, twig, needle and vine blights close in on the clearing from every side.",
+  "images": [
+    {
+      "image": "bear_blights",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

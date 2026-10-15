@@ -317,7 +317,10 @@ legendary strikes otherwise; below a quarter of his Hit Points with Regeneration
 away until he is back over half. Withdrawing turns him to mist (or a bat) as he goes.
 
 Events: `legendary` (id, option, name, left), `lair` (id, action, name, targets), `form` (id, form, art: the token wears the
-shape's sprite when it exists), `vanish` (id, left: mist or withdraw, narration) for a creature leaving the fight.
+shape's sprite when it exists, kind: how the change looks and sounds), `vanish` (id, left: mist or withdraw, narration)
+for a creature leaving the fight. A change of shape (`form`, and `shape` for Polymorph and Wild Shape: id, art, kind)
+is shown the same way whoever changes: FxShapeshift and its sound (docs/art/spell_effects.md, "A change of shape"). A
+`vanish` and `summon_creature` carrying `becomes` (a kind) are one creature turning into another (the lycanthropy curse).
 The initiative tracker shows a legendary creature's actions left (◆◇) and the lair's card at count 20.
 
 ## Reusable feature and spell responses
@@ -390,6 +393,16 @@ Immunity/Resistance/Vulnerability calculation without changing HP or rolling sav
 Reaction offers may supply `target_choices`, `selected_ids`, `min_targets`, `max_targets`, `validate_selected`,
 and `select`. A bounded single selection uses radio behavior in the HUD. The encounter validates again before
 clearing `pending`; an invalid or exhausted selection costs nothing and leaves the decision open.
+
+A prompt can divide a pool (`ReactionRequest.pool` > 0, kind `preserve_life`; owner question 2026-10-14): each
+`target_choices` entry gives a creature (`id`, `name`, `label`) and the most it can take (`room`), `amounts` (id ->
+points) is the division so far, and `shared()`, `unspent()` and `pool_error()` read it. The HUD shows a slider for each
+creature and counts the points left to share as the player moves them; `selection_error()` refuses a division that
+passes a creature's `room` or the pool or gives nothing. `features.preserve_life_prompt(c)` asks for Preserve Life's
+division (the hotbar's way: nothing is spent until the prompt is confirmed, Skip spends nothing), and
+`features.preserve_life(c, allocation)` carries it out: one Channel Divinity use and one Magic action for a pool of
+5 x Cleric level that is new each use, shared among Bloodied creatures within 30 ft, up to half their maximum each, no
+Undead or Construct; points not given are lost.
 
 Weapon attacks offer a slot-selection prompt. Synchronous damage cannot pause yet: its default Ask policy
 spends nothing. The class abilities tab provides Ask, Off, and Auto at an **exact slot level**. Only explicit Auto

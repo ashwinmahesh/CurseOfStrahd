@@ -190,7 +190,7 @@ Fireball as he plays, and wins 5 in 8 on Balanced; the coven "should be maybe 4/
 whole coven, Morgantha at 180 HP, wins 5 of 8, and Morgantha with one daughter and the mill's dogs 5 of 8. A hag split
 off from the coven comes with the night's mares (nightmares): Offalia in the bakery, Bella or Offalia on the lane and
 Morgantha alone each win 5 of 8, Bella betrayed 4 of 8 (tests/integration/test_scaled_boss_fights.gd). Nothing in the region requires a check: every split, the pact, the fight and the rescue have plain
-options.
+options. (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 ## 8. Milestone
 
@@ -253,12 +253,12 @@ All 33 flags are registered, set and read. The ones for other regions:
 | `bonegrinder_pantry_shelf` | pantry | potion of healing, herbalism kit, 3 rations, basic poison |
 | `bonegrinder_flour_bin` | grindstone | 2 sacks, 22 gp |
 | `bonegrinder_pastry_cart` | hill shed | 4 dream pastries, a basket, 9 gp (sets `pastry_cart_raided`; Morgantha notices) |
-| `bonegrinder_hag_hoard` | loft nest, lock 15 | 140 gp, 2 perfume, fine clothes, a level 1 spell scroll |
+| `bonegrinder_hag_hoard` | loft nest, lock 15 | 140 gp, 2 perfume, fine clothes, a level 1 spell scroll, a Staff of Charming (rare), a Wand of Wonder (rare) |
 | `bonegrinder_bella_drawer` | loft, Bella's jewel box | a mirror, perfume, 35 gp |
 | search `bonegrinder_bone_heap` (DC 13) | hill | a holy symbol amulet (Brother Kesten's) |
 | search `bonegrinder_pantry_jars` (DC 12) | pantry | antitoxin |
 
-The lane's Keepers leave a potion of healing (road `raven_flight`) after Ilinca vouches.
+The lane's Keepers leave a Potion of Healing (Greater) (road `raven_flight`) after Ilinca vouches.
 
 **Fixed Curse of Strahd items:** none needed for this chapter beyond the Tarokka treasure (the coven's soul bags
 are story props, not items). **For the DMG magic-item thread:** `bonegrinder_hag_hoard` (the coven's hoard; a good

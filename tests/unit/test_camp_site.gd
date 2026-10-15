@@ -23,7 +23,7 @@ func test_camp_is_made_wherever_the_places_own_rest_is_risky() -> void:
 	for id: String in ["vallaki_blue_water_inn", "blood_of_the_vine", "wizard_of_wines_winery", "krezk_burgomaster_house",
 			"mount_baratok_hut", "van_richtens_tower_interior", "tser_pool", "krezk_pool_of_the_white_sun"]:
 		assert_false(CampSite.makes_camp(_loc(id)), "%s is safe: the rest screen" % id)
-	assert_false(CampSite.makes_camp(_loc("yester_hill")), "a place that allows no rest")
+	assert_false(CampSite.makes_camp(_loc("yester_hill_gulthias_tree")), "a place that allows no rest")
 
 
 func test_where_a_camp_is() -> void:

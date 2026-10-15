@@ -170,7 +170,7 @@ flag is read by the heart room's Narrator, Escher, Pidlwick and the banter.
 | `spires_keeper_trunk` | rooms | rope, 2 vials, 30 gp |
 | `spires_stillroom_cabinet` | rooms | 2 potions of healing, 2 alchemist's fire, acid, 3 vials |
 | `spires_witch_shelf` | rooms | herbalism kit, basic poison, 4 candles, 25 gp |
-| `spires_escher_dressing` | rooms | perfume, fine clothes, 180 gp |
+| `spires_escher_dressing` | rooms | perfume, fine clothes, 180 gp, Boots of Levitation (rare), a Philter of Love |
 | `spires_hollow_guardian` | roofs | 60 gp (old coins); the Tarokka treasure when the reading puts one here |
 | `spires_great_nest` | roost | 35 gp of bright odds and ends, a mirror; the Tarokka treasure when the reading puts one here |
 

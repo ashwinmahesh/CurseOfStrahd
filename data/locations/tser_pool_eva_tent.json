@@ -406,7 +406,12 @@
       ],
       "label": "Madam Eva's painted chest",
       "model": "chest_painted",
-      "items": [],
+      "items": [
+        {
+          "id": "potion_of_clairvoyance",
+          "qty": 1
+        }
+      ],
       "gold": 0
     }
   ],

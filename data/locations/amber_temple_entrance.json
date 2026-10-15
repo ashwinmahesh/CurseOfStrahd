@@ -593,7 +593,8 @@
             18,
             10
           ],
-          "name": "The Amber Sentinel"
+          "name": "The Amber Sentinel",
+          "hp": 395
         },
         {
           "monster": "gargoyle",
@@ -610,6 +611,48 @@
             12
           ],
           "name": "Facade gargoyle"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            10
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            19,
+            10
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            19,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            10
+          ]
         }
       ],
       "surprise": "",
@@ -663,7 +706,50 @@
             18,
             10
           ],
-          "name": "The Amber Sentinel"
+          "name": "The Amber Sentinel",
+          "hp": 440
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            10
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            19,
+            10
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            19,
+            11
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            10
+          ]
         }
       ],
       "surprise": "",
@@ -707,6 +793,46 @@
             6
           ],
           "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            4
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            5
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            8
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            14,
+            8
+          ],
+          "name": "Frozen warden-guard"
         }
       ],
       "surprise": "",
@@ -740,6 +866,38 @@
           "cell": [
             28,
             6
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            4
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            5
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            8
           ],
           "name": "Frozen warden-guard"
         }

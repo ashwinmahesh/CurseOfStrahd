@@ -848,6 +848,118 @@
             35,
             14
           ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            31,
+            31
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            21,
+            31
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            41,
+            31
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            44,
+            13
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            44,
+            20
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            19,
+            15
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            29,
+            23
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            36,
+            29
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            24,
+            26
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            19,
+            21
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            26,
+            31
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            42,
+            25
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            19,
+            26
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            30,
+            19
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            31,
+            15
+          ]
         }
       ],
       "surprise": "",
@@ -914,6 +1026,139 @@
             35,
             14
           ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            39,
+            28
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            29,
+            31
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            19,
+            31
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            44,
+            19
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            44,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            30,
+            24
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            19,
+            15
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            38,
+            23
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            34,
+            29
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            26
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            19,
+            21
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            20,
+            26
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            24,
+            32
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            44,
+            24
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            39,
+            33
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            44,
+            29
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            20,
+            10
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            31,
+            20
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            31,
+            16
+          ]
         }
       ],
       "surprise": "",
@@ -966,6 +1211,146 @@
             35,
             14
           ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            31,
+            28
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            41,
+            28
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            21,
+            30
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            44,
+            19
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            44,
+            11
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            19,
+            19
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            25,
+            24
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            19,
+            13
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            31,
+            20
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            30,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            38,
+            23
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            36,
+            29
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            26,
+            29
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            20,
+            25
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            31,
+            16
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            30,
+            24
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            40,
+            19
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            31,
+            32
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            42,
+            23
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            40,
+            15
+          ]
         }
       ],
       "surprise": "",
@@ -980,7 +1365,7 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            15,
+            13,
             14
           ]
         },
@@ -1011,6 +1396,48 @@
             21,
             13
           ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            31,
+            17
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            20,
+            3
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            31,
+            7
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            28,
+            27
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            37,
+            26
+          ]
         }
       ],
       "surprise": "",
@@ -1025,15 +1452,15 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            15,
+            13,
             14
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
-            20,
-            16
+            21,
+            17
           ]
         },
         {
@@ -1041,6 +1468,97 @@
           "cell": [
             18,
             18
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            17,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            31,
+            13
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            31,
+            23
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            13,
+            28
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            26,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            8,
+            5
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            35,
+            4
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            21,
+            26
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            11,
+            21
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            19,
+            10
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            25,
+            10
+          ]
+        },
+        {
+          "monster": "swarm_of_insects",
+          "cell": [
+            37,
+            14
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            37,
+            20
           ]
         }
       ],
@@ -1059,7 +1577,7 @@
             29,
             13
           ],
-          "hp": 110
+          "hp": 160
         },
         {
           "monster": "baba_lysaga",
@@ -1067,7 +1585,7 @@
             33,
             17
           ],
-          "hp": 100
+          "hp": 145
         }
       ],
       "surprise": "",
@@ -1136,7 +1654,7 @@
             7,
             11
           ],
-          "hp": 180
+          "hp": 440
         },
         {
           "monster": "swarm_of_insects",
@@ -1178,6 +1696,48 @@
           "cell": [
             7,
             10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            7,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            12
           ]
         }
       ],
@@ -1266,7 +1826,7 @@
             29,
             13
           ],
-          "hp": 195
+          "hp": 495
         },
         {
           "monster": "swarm_of_insects",
@@ -1470,7 +2030,7 @@
             32,
             11
           ],
-          "hp": 375
+          "hp": 715
         },
         {
           "monster": "banshee",

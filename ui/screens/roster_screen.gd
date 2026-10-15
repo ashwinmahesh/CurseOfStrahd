@@ -91,13 +91,15 @@ func _card(ch: Character, travelling: bool) -> Control:
 				if st.swap_members(ch, incoming):
 					_changed())
 			UiParts.light_up(swap)
+			swap.disabled = ch.dead
+			swap.tooltip_text = _body_stays(ch)
 			col.add_child(swap)
 		else:
 			var camp := UiParts.small_button("Send to camp", func() -> void:
 				if st.send_to_camp(ch):
 					_changed())
-			camp.disabled = st.party.size() <= 1
-			camp.tooltip_text = "" if st.party.size() > 1 else "Somebody has to stay on the road."
+			camp.disabled = st.party.size() <= 1 or ch.dead
+			camp.tooltip_text = _body_stays(ch) if ch.dead else ("" if st.party.size() > 1 else "Somebody has to stay on the road.")
 			col.add_child(camp)
 	else:
 		var buttons := HBoxContainer.new()
@@ -111,7 +113,6 @@ func _card(ch: Character, travelling: bool) -> Control:
 			_draw())
 		if _picked == ch:
 			UiParts.light_up(pick)
-		pick.disabled = ch.dead
 		buttons.add_child(pick)
 		col.add_child(buttons)
 	var card := UiParts.card("ui_black" if travelling else "ui_oxblood", "gilt" if travelling else "gilt_dark", 0.85, 10)
@@ -119,11 +120,17 @@ func _card(ch: Character, travelling: bool) -> Control:
 	return card
 
 
-## Picks someone at camp to take a party member's place (a character just made with the party full).
+## Picks someone at camp to take a party member's place (a character just made with the party full, or a fallen hero's
+## body left there, to bring back and raise).
 func pick(ch: Character) -> void:
-	if ch in st.bench and not ch.dead:
+	if ch in st.bench:
 		_picked = ch
 		_draw()
+
+
+## Why a dead hero can't leave the party, for the buttons that would send them to camp.
+static func _body_stays(ch: Character) -> String:
+	return "%s's body stays with the party until they're brought back." % ch.name.get_slice(" ", 0) if ch.dead else ""
 
 
 ## The party changed: the world swaps the figures, and the screen redraws.

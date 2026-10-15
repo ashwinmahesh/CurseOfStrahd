@@ -63,10 +63,10 @@ func test_the_bride_in_the_well_at_level_4() -> void:
 	await _held("village_of_barovia", 16, 4, "well_bride", AT_THE_WELL, 4, 6, ["bride_bones_raised"])
 
 
-## Seven in eight, the easier side: the burial in test_storyqa_continuity's playthrough lost at every line-up that won
-## six (the owner's rule: playthroughs stay winnable).
+## Five in eight with two more zombies (the burial in test_storyqa_continuity's playthrough still wins it: the owner's
+## rule that playthroughs stay winnable).
 func test_the_churchyard_dead_at_level_3() -> void:
-	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 7)
+	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 6)
 
 
 func test_doru_in_the_undercroft_at_level_3() -> void:
@@ -132,3 +132,25 @@ func test_the_carriage_escort_at_level_4() -> void:
 
 func test_the_wisps_at_the_falls_at_level_4() -> void:
 	await _held("tser_falls", 22, 4, "falls_wisps", OFFERING_STONE, 4, 6, ["wisps_lured"])
+
+
+## The other ways into the same fight. A wisp that vanishes can only be hit by an area spell (2026-10-14), so how many
+## lights come is tuned against the real fight: every one of these finishes on seeds 1-8.
+func test_the_wisps_at_the_falls_at_level_4_unlured() -> void:
+	await _held("tser_falls", 22, 4, "falls_wisps", OFFERING_STONE, 4, 6)
+
+
+func test_the_wisps_at_the_falls_at_level_5() -> void:
+	await _held("tser_falls", 22, 5, "falls_wisps", OFFERING_STONE, 4, 6, ["wisps_lured"])
+
+
+func test_the_wisps_at_the_falls_at_level_5_unlured() -> void:
+	await _held("tser_falls", 22, 5, "falls_wisps", OFFERING_STONE, 4, 6)
+
+
+func test_the_wisps_at_the_falls_at_level_3() -> void:
+	await _held("tser_falls", 22, 3, "falls_wisps", OFFERING_STONE, 4, 6, ["wisps_lured"])
+
+
+func test_the_wisps_at_the_falls_at_level_3_unlured() -> void:
+	await _held("tser_falls", 22, 3, "falls_wisps", OFFERING_STONE, 4, 6)

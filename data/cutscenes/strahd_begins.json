@@ -1,0 +1,15 @@
+{
+  "id": "strahd_begins",
+  "title": "Begin",
+  "summary": "Strahd spreads his arms, delighted, as bats and mist pour from his cloak and the candle flames bend away.",
+  "images": [
+    {
+      "image": "strahd_begins",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

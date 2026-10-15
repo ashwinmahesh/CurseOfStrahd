@@ -24,6 +24,7 @@ interject tag:blunt: So getting in is the easy part.
 -> END
 
 ~ lintel_ok
+xp fight sentinel_wakes
 set lintel_read_attempted
 set warden_word_known
 set sentinel_stilled
@@ -63,6 +64,7 @@ amber_sentinel: SPEAK THE WORD.
 * (Draw steel and strike it.) -> attack
 
 ~ stilled
+xp fight sentinel_wakes
 set sentinel_stilled
 Narrator: You say the word the wardens chose. The colossus lowers its head, and the light in its eyes sinks to an ember. Somewhere deep in the amber, something settles.
 -> END
@@ -77,6 +79,7 @@ interject guest:kasimir_velikov: It knows. Of course it knows. It was built for 
 * (Draw steel and strike it.) -> attack
 
 ~ departure_ward_ok
+xp fight sentinel_wakes
 set sentinel_stilled
 Narrator: You find the place where the ward turns back on itself and pull. The colossus freezes mid-turn, head cocked, and stays that way.
 -> END

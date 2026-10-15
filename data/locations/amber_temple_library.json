@@ -428,11 +428,15 @@
       "model": "case",
       "items": [
         {
-          "id": "spell_scroll_level_1",
-          "qty": 2
+          "id": "book",
+          "qty": 1
         },
         {
-          "id": "book",
+          "id": "spell_scroll__circle_of_death",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__harm",
           "qty": 1
         }
       ],
@@ -539,7 +543,7 @@
       "id": "library_wardens",
       "trigger": "open:restricted_case",
       "when": "not flag.library_wardens_cleared and level >= 10",
-      "text": "Four skulls rise from the top shelves, each wearing a crown of green fire. They were wardens once, and they still are.",
+      "text": "Skulls rise from the top shelves, each wearing a crown of green fire. They were wardens once, and they still are.",
       "monsters": [
         {
           "monster": "flameskull",
@@ -558,7 +562,7 @@
           "name": "Warden's skull"
         },
         {
-          "monster": "flameskull",
+          "monster": "wraith",
           "cell": [
             13,
             11
@@ -566,10 +570,42 @@
           "name": "Warden's skull"
         },
         {
-          "monster": "flameskull",
+          "monster": "wraith",
           "cell": [
             17,
             11
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            1
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            3
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            2
+          ],
+          "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            1
           ],
           "name": "Warden's skull"
         }
@@ -622,7 +658,8 @@
             23,
             4
           ],
-          "name": "Exethanter"
+          "name": "Exethanter",
+          "hp": 100
         },
         {
           "monster": "flameskull",
@@ -671,6 +708,62 @@
             3
           ],
           "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            5
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            24,
+            5
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            4
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            2
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            6
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            25,
+            4
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            3
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            5
+          ]
         }
       ],
       "surprise": "",

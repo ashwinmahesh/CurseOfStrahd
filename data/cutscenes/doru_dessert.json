@@ -1,0 +1,15 @@
+{
+  "id": "doru_dessert",
+  "title": "Dessert",
+  "summary": "Doru's memory: villagers with torches laid aside at Strahd's long table, and every candle about to go out.",
+  "images": [
+    {
+      "image": "doru_dessert",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

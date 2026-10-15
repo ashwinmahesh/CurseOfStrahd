@@ -244,11 +244,15 @@
           "qty": 1
         },
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_superior",
           "qty": 2
         },
         {
           "id": "druidic_focus_staff",
+          "qty": 1
+        },
+        {
+          "id": "staff_of_the_woodlands__quarterstaff",
           "qty": 1
         }
       ],
@@ -369,7 +373,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 125
+          "hp": 200
         },
         {
           "monster": "twig_blight",
@@ -472,7 +476,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 135
         },
         {
           "monster": "twig_blight",
@@ -533,7 +537,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 135
+          "hp": 200
         },
         {
           "monster": "twig_blight",
@@ -629,7 +633,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 125
+          "hp": 285
         },
         {
           "monster": "druid",
@@ -709,7 +713,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 90
+          "hp": 180
         },
         {
           "monster": "druid",
@@ -773,7 +777,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 136
+          "hp": 285
         },
         {
           "monster": "druid",
@@ -845,7 +849,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 74
+          "hp": 135
         },
         {
           "monster": "druid",
@@ -854,7 +858,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 50
+          "hp": 90
         },
         {
           "monster": "twig_blight",
@@ -901,7 +905,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 100
+          "hp": 250
         },
         {
           "monster": "druid",
@@ -966,7 +970,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 140
+          "hp": 215
         },
         {
           "monster": "druid",
@@ -1036,7 +1040,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 110
+          "hp": 220
         },
         {
           "monster": "druid",
@@ -1117,7 +1121,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 65
+          "hp": 120
         },
         {
           "monster": "druid",
@@ -1126,7 +1130,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 50
+          "hp": 90
         },
         {
           "monster": "druid",
@@ -1182,7 +1186,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 95
+          "hp": 210
         },
         {
           "monster": "druid",
@@ -1191,7 +1195,7 @@
             10
           ],
           "name": "Mother Ruxandra",
-          "hp": 60
+          "hp": 130
         },
         {
           "monster": "druid",
@@ -1263,7 +1267,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 165
+          "hp": 300
         },
         {
           "monster": "druid",
@@ -1273,15 +1277,6 @@
           ],
           "name": "Mother Ruxandra",
           "hp": 55
-        },
-        {
-          "monster": "berserker",
-          "cell": [
-            5,
-            6
-          ],
-          "name": "Warden of the hill",
-          "hp": 40
         },
         {
           "monster": "twig_blight",
@@ -1328,7 +1323,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 158
+          "hp": 270
         },
         {
           "monster": "druid",
@@ -1397,7 +1392,7 @@
             9
           ],
           "name": "Wintersplinter",
-          "hp": 84
+          "hp": 155
         },
         {
           "monster": "druid",
@@ -1584,7 +1579,7 @@
             18,
             12
           ],
-          "hp": 205
+          "hp": 480
         },
         {
           "monster": "druid",
@@ -1646,7 +1641,7 @@
             18,
             12
           ],
-          "hp": 155
+          "hp": 355
         },
         {
           "monster": "druid",
@@ -1716,7 +1711,7 @@
             18,
             12
           ],
-          "hp": 190
+          "hp": 430
         },
         {
           "monster": "twig_blight",

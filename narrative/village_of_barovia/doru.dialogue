@@ -34,6 +34,7 @@ Doru: Doru. The priest's son. I rang the bell on holy days, before. I was going 
 -> menu
 
 ~ castle
+cutscene doru_dessert
 Doru [sad]: We went up the road with torches, singing. The gates were open. He met us in the hall in a beautiful coat and said we must be hungry after such a climb.
 Doru [afraid]: He fed us. He let us talk about killing him all through the meal, smiling. Then the candles went out. I was dessert, he said. The others weren't so lucky. Or they were.
 -> menu
@@ -59,6 +60,7 @@ interject tag:blunt: He's a hungry wolf asking us to open the pen.
 * On second thought, no. -> menu
 
 ~ free
+xp fight doru_undercroft
 set doru_freed
 quest the_priests_son doru_freed
 Narrator: He's past you before the words are finished, a rush of cold air up the stair. Somewhere above, a door bangs, and the bell rope thrums once, as if something brushed it going over the wall.

@@ -1,0 +1,15 @@
+{
+  "id": "hunt_begins",
+  "title": "The Hunt Runs",
+  "summary": "The silent hounds pour down the east road at the crossroads as the Huntsman lifts his horn.",
+  "images": [
+    {
+      "image": "hunt_begins",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

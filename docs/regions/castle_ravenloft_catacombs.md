@@ -61,7 +61,7 @@ should arrive at `from_larders`.
 | `castle_ravenloft_gargoyle_tomb` | catacombs | container `cat_champion_slab` (39, 9) | |
 | `castle_ravenloft_sergeis_tomb` (broken_one, innocent) | tombs | dialogue `castle_ravenloft/catacombs_sergei:take_treasure` | `cat_sergei_final` |
 | `castle_ravenloft_tomb_of_barov_and_ravenovia` (ghost, raven) | tombs | container `cat_ravenovia_sarcophagus` (18, 22) | `cat_royal_final` |
-| `castle_ravenloft_strahds_tomb` (darklord) | Strahd's tomb | container `cat_tomb_chest` (11, 16) | `cat_darklord_final` |
+| `castle_ravenloft_strahds_tomb` (darklord) | Strahd's tomb | container `cat_tomb_chest` (11, 16): 150 gp, 3 candles, 2 Potions of Healing (Supreme), the Nine Lives Stealer longsword he carried when he took the valley (very rare) | `cat_darklord_final` |
 
 - **The Mad Dog** (book: General Kroval "Mad Dog" Grislek, a K84 crypt). The gate is chained (lock 15). A scything
   blade waits in front of the sarcophagus (`cat_mad_dog_blade`, detect 15, DEX 15, 4d10). The reading's treasure is
@@ -97,14 +97,14 @@ revenant 1,800; nightmare 700; gargoyle 450; dire wolf 200; specter 200; swarm o
 | `cat_darklord_final` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` | Strahd (350 HP), 2 vampire spawn | 16,600 above High | `final_battle: castle_ravenloft_strahds_tomb`, `lair`; sets `cat_keepers_defeated` (the spawn are the keepers) |
 | `cat_tomb_keepers` | Strahd's tomb, enter `castle_ravenloft_strahds_tomb` while `not flag.cat_keepers_defeated` | 2 vampire spawn, 3 swarms of bats | 3,750 | the short fight at the tomb while he rests (or is out); `cat_keepers_defeated` |
 | `cat_daylight_waking` | Strahd's tomb, dialogue (the coffin by day) | Strahd (350 HP), 2 swarms of bats, one of his spawn | 14,900 above High | `lair`; not a final battle (no parley) |
-| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 5 revenants, the fifth at 80 HP (5 of 8 at level 10) | 11,900 High | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` |
+| `cat_oathbreakers` | Strahd's tomb, dialogue (the coffin, Vladimir's pact) | Vladimir Horngaard, 5 revenants, the fifth at 80 HP (5 of 8 at level 10) | 11,900 High | only if the party swore Vladimir's pact (Argynvostholt) and breaks it; `cat_oathbreakers_beaten` | (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points and helpers in this note are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
 wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
 blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
 outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
 (tests/integration/test_scaled_boss_fights.gd).
-Woken by day in his coffin (`cat_daylight_waking`) he is the same 5 in 8 for a Sunsword party.
+Woken by day in his coffin (`cat_daylight_waking`) he is the same 5 in 8 for a Sunsword party. (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points and helpers in this note are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 The darklord's room is the hardest on purpose ("where he is strongest"). Strahd appears outside a final battle only
 in `cat_daylight_waking`, which is the owner's rule for finding him asleep by day (§5): a hard fight in his own lair,

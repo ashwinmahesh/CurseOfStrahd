@@ -54,6 +54,7 @@ func _ready() -> void:
 	hud = ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
+	st.xp_gained.connect(hud.toast)   # XP levelling: a quest finished, a place found, a milestone (story/xp.gd)
 	D20Die.warm.call_deferred(hud)   # the big d20's shader and numerals, ready before its first roll
 	hud.leader_picked.connect(func(i: int) -> void:
 		if view != null:
@@ -301,7 +302,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F9:
 				_quick_load()
 	if event.is_action_pressed(&"cycle_leader"):
-		view.set_leader(1)
+		view.set_leader(view.next_leader_index(1))   # the next hero, passing over the dead
 		_refresh()
 	for i in 4:
 		if event.is_action_pressed(StringName("select_member_%d" % (i + 1))):
@@ -1026,6 +1027,8 @@ func _exit_tree() -> void:
 		st.time_passed.disconnect(_on_time_passed)
 	if st != null and st.item_gained.is_connected(notices.show_item):
 		st.item_gained.disconnect(notices.show_item)
+	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
+		st.xp_gained.disconnect(hud.toast)
 
 
 # --- Screens --------------------------------------------------------------------------------------
@@ -1100,14 +1103,14 @@ func close_screen() -> void:
 	_refresh()
 
 
-## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
-## stands in for a full-screen panel and pauses the game until it closes, so nothing moves under it (a fight that an
-## area starts waits for it too).
+## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption, and
+## the scene after it, if it has one (data `then`). It stands in for a full-screen panel and pauses the game until it
+## closes, so nothing moves under it (a fight that an area starts waits for it too).
 func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 	close_screen()
 	var player := CutscenePlayer.new()
 	add_child(player)
-	if not player.play(id, [caption] as Array[String], st):
+	if not player.play_scenes(Cutscenes.scenes(id, caption, st, narrator, st.leader_character()), st):
 		player.queue_free()
 		hud.narrate(caption)
 		return null

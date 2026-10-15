@@ -177,9 +177,28 @@
       "do": "shape_shift"
     }
   ],
+  "forms": {
+    "base": "humanoid",
+    "change": "bonus_action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "wolf",
+        "name": "Wolf",
+        "size": "medium",
+        "speed": {
+          "walk": 40
+        },
+        "art": "wolf",
+        "kind": "werewolf",
+        "summary": "A Medium wolf (Speed 40 ft.): the Bite, no bow. Its other statistics stay the same."
+      }
+    ]
+  },
   "regions": [
     "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
+  "hybrid_art": "werewolf",
   "summary": "A captive werewolf who wants the pack's leadership: longbow and claws as a man, a cursing bite as a wolf."
 }

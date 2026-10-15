@@ -252,7 +252,7 @@
         {
           "monster": "wraith",
           "cell": [
-            4,
+            3,
             17
           ]
         },
@@ -267,6 +267,41 @@
           "monster": "specter",
           "cell": [
             9,
+            14
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            6,
+            17
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            7,
+            20
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            6,
+            14
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            3,
+            20
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            12,
             14
           ]
         }
@@ -290,7 +325,7 @@
         {
           "monster": "specter",
           "cell": [
-            4,
+            3,
             17
           ]
         },
@@ -306,6 +341,34 @@
           "cell": [
             9,
             14
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            6,
+            17
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            7,
+            20
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            6,
+            14
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            3,
+            20
           ]
         }
       ]
@@ -329,7 +392,7 @@
         {
           "monster": "specter",
           "cell": [
-            10,
+            11,
             19
           ]
         },
@@ -338,6 +401,55 @@
           "cell": [
             3,
             19
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            8,
+            12
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            4,
+            15
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            6,
+            18
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            12,
+            16
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            1,
+            16
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            7,
+            16
           ]
         }
       ]
@@ -356,7 +468,8 @@
             3,
             15
           ],
-          "name": "Vladimir Horngaard"
+          "name": "Vladimir Horngaard",
+          "hp": 300
         },
         {
           "monster": "revenant",
@@ -364,7 +477,8 @@
             2,
             17
           ],
-          "name": "Dead Knight"
+          "name": "Dead Knight",
+          "hp": 195
         },
         {
           "monster": "revenant",
@@ -372,7 +486,8 @@
             4,
             13
           ],
-          "name": "Dead Knight"
+          "name": "Dead Knight",
+          "hp": 195
         },
         {
           "monster": "phantom_warrior",
@@ -388,7 +503,8 @@
             6,
             14
           ],
-          "name": "Dead Knight"
+          "name": "Dead Knight",
+          "hp": 195
         },
         {
           "monster": "wight",

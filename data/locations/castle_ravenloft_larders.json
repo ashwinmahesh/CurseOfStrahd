@@ -1039,7 +1039,7 @@
       "id": "larders_guardroom",
       "trigger": "enter_area:larders_guardroom",
       "when": "not flag.larders_watch_beaten",
-      "text": "Dead men in the castle's livery sit up on their pallets. Two suits of armour by the door turn their empty helms toward you. The watch was never relieved.",
+      "text": "Dead men in the castle's livery sit up on their pallets. The suits of armour along the walls turn their empty helms toward you. The watch was never relieved.",
       "surprise": "",
       "flag": "larders_watch_beaten",
       "monsters": [
@@ -1061,7 +1061,7 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            18,
+            17,
             14
           ]
         },
@@ -1069,11 +1069,11 @@
           "monster": "helmed_horror",
           "cell": [
             23,
-            14
+            13
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             17,
             18
@@ -1083,21 +1083,21 @@
           }
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
-            19,
-            20
+            18,
+            22
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             21,
             20
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             24,
             17
@@ -1105,6 +1105,55 @@
           "lying": {
             "on": "larders_watch_pallet_4"
           }
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            18
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            22,
+            17
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            18,
+            16
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            23,
+            15
+          ]
         }
       ]
     },
@@ -1122,56 +1171,104 @@
             24,
             2
           ],
-          "name": "Sergeant of the Watch"
+          "name": "Sergeant of the Watch",
+          "hp": 102
         },
         {
           "monster": "wight",
           "cell": [
             20,
             6
-          ]
+          ],
+          "hp": 102
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             2
-          ]
+          ],
+          "hp": 75
         },
         {
           "monster": "helmed_horror",
           "cell": [
             26,
             2
-          ]
+          ],
+          "hp": 75
         },
         {
           "monster": "strahd_zombie",
           "cell": [
             19,
             6
-          ]
+          ],
+          "hp": 38
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             22,
             6
-          ]
+          ],
+          "hp": 45
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             25,
             7
-          ]
+          ],
+          "hp": 45
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             28,
             6
-          ]
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            29,
+            3
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            4
+          ],
+          "hp": 102
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            19,
+            4
+          ],
+          "hp": 75
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            19,
+            2
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            1
+          ],
+          "hp": 102
         }
       ]
     },
@@ -1179,16 +1276,137 @@
       "id": "larders_cyrus_fight",
       "trigger": "dialogue",
       "flag": "larders_cyrus_slain",
-      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping.",
+      "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping, and the Belview cooks come out of the pantries with knives.",
       "surprise": "",
       "monsters": [
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             26,
             5
           ],
-          "name": "Cyrus Belview"
+          "name": "Cyrus Belview",
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            5
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            26,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            22,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            2
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            29,
+            3
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            29,
+            6
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            24,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            3
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            5
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            7
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            28,
+            1
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            7
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            21,
+            4
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            22,
+            2
+          ],
+          "hp": 80
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            23,
+            1
+          ],
+          "hp": 80
         }
       ]
     }

@@ -1,0 +1,16 @@
+{
+  "id": "tser_tent_music",
+  "title": "One Song Long",
+  "summary": "Inside the great tent a fiddle starts and the dancers turn in the lamplight.",
+  "images": [
+    {
+      "image": "tser_tent_music",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tser_tent_music"
+}

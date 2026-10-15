@@ -223,6 +223,16 @@ func _draw() -> void:
 		UiParts.light_up(swap)
 		swap.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(swap)
+	if not _long_done and not PrepareScreen.preparable(st, PrepareScreen.ANYTIME).is_empty():
+		# No rest needed (owner's house rule): the same spells, changed any time outside a fight.
+		var any := UiKit.button("Prepare spells", func() -> void:
+			var ps3 := PrepareScreen.new()
+			ps3.rest_kind = PrepareScreen.ANYTIME
+			add_child(ps3)
+			ps3.open(root, st, 0), 15, "spells")
+		any.tooltip_text = "Change which spells each caster has ready. No rest needed outside a fight."
+		any.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		_box.add_child(any)
 	_camp_talks()
 	# One click for the usual Short Rest chore: everyone hurt spends dice until a roll would mostly go to waste.
 	var anyone := false

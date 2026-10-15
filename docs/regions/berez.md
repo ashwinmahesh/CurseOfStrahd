@@ -249,7 +249,7 @@ grave (180 HP with four scarecrows), the challenge with her hut (the hut at 110 
 each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). The roc on its own lost 8 of 8 at any
 Hit Points (and once the party fell back over the bridge it sat out the fight on its own side of the chasm, behind
 the railings, until the round cap: a flying foe now rises over a railing to reach a foe); with its mate at 85 HP it
-wins 4 of 8 at level 9, the harder side (with the mate at 78, 6).
+wins 4 of 8 at level 9, the harder side (with the mate at 78, 6). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Shaping Baba Lysaga: together with her hut she is 14400 XP, deadly for level 9. The region separates them three
 ways (inside the hut the hut can't fight; the lure pulls her to the monument; Strahd breaks the hut), trims her hit
@@ -296,14 +296,14 @@ with no setup; setup if needed: `mordenkainen_memory_jar_taken: true`.
 | `berez_fisher_locker` | by the jetty | 8 gp, net |
 | search prop `berez_sunken_purse` (DC 14) | reeds | antitoxin |
 | `lysagas_pantry` (Tarokka spot) | hut kitchen | 3 rations, 12 gp |
-| `lysagas_jar_shelf` | hut kitchen | 2 potions of healing, antitoxin (the labelled jar beside it is a prop) |
+| `lysagas_jar_shelf` | hut kitchen | 2 Potions of Healing (Greater), a Potion of Flying (very rare), a Potion of Invulnerability (rare), antitoxin (the labelled jar beside it is a prop) |
 | prop `lysaga_cradle` | hut nursery | **the Wizard of Wines gem** (dialogue: `winery_gem_berez_found`, `the_third_stone found`) |
 | `marinas_dowry_chest` (Tarokka spot) | vault | 150 gp |
 | `berez_vault_niche` | vault | 30 gp (Strahd's offerings; taking them is noticed by no one, yet) |
 | prop `baratok_cairn` (warded) | Baratok summit | 2 level 1 spell scrolls (given in the dialogue); `mordenkainen_spellbook_found` |
 | `baratok_summit_cache` | a cleft below the summit | 15 gp, potion of healing |
-| `baratok_hut_pack` | Mad Mage's hut | rations, component pouch |
-| `roc_nest` | the roc's crag | 140 gp, chain shirt, longsword, potion of healing |
+| `baratok_hut_pack` | Mad Mage's hut | rations, component pouch, a Spell Scroll of Mordenkainen's Sword (very rare) |
+| `roc_nest` | the roc's crag | 140 gp, chain shirt, longsword, a Potion of Healing (Greater), +2 Greatsword (rare), an Ioun Stone (Agility) (very rare) |
 | `tower_footlocker` | barracks | 20 gp, crossbow bolts, a blanket |
 | `captains_strongbox` (lock 15, Tarokka spot) | captain's room | 90 gp, potion of healing |
 

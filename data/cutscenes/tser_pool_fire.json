@@ -9,5 +9,6 @@
     }
   ],
   "trigger": "enter:tser_pool",
-  "once": true
+  "once": true,
+  "then": "tser_tent_music"
 }

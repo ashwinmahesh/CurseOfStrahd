@@ -397,11 +397,19 @@
       "model": "jars",
       "items": [
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_greater",
           "qty": 2
         },
         {
           "id": "antitoxin",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_flying",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_invulnerability",
           "qty": 1
         }
       ],
@@ -475,7 +483,7 @@
             12,
             2
           ],
-          "hp": 400
+          "hp": 600
         },
         {
           "monster": "swarm_of_insects",
@@ -558,6 +566,62 @@
           "monster": "scarecrow",
           "cell": [
             14,
+            2
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            10,
+            1
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            11,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            13,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            14,
+            1
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            14,
+            3
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            10,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            14,
+            4
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            9,
             2
           ]
         }

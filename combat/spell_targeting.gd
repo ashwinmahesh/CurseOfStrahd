@@ -427,12 +427,21 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		out["why"] = "Eldritch Blast has %d beam%s" % [beams, "" if beams == 1 else "s"]
 		return out
 	for t in tgt:
+		if e.sight.unseen_foe(c, t):
+			out["why"] = "You can't see %s" % t.name()
+			return out
 		if bool(s.get("requires_sight", false)) and not e.can_see(from, t) and not e.can_see(c, t):
 			out["why"] = "You must see the target"
 			return out
 		if id == "revivify":
 			if not t.creature.dead:
 				out["why"] = "%s isn't dead" % t.name()
+				return out
+			# 2024 PHB: a creature that has died within the last minute (10 rounds). Asked here, before the slot and the
+			# diamonds (or the scroll) are spent on someone it can't bring back.
+			var why_not := SpellHandlers.revivify_why(e, t)
+			if why_not != "":
+				out["why"] = why_not
 				return out
 		elif t.creature.dead:
 			out["why"] = "%s is dead" % t.name()

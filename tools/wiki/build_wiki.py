@@ -954,6 +954,9 @@ class Wiki:
             for grp in (shop.get("rotating") or {}).get("groups", []):
                 for iid in grp.get("pool", []):
                     out[iid].append({"kind": "shop", "npc": nid, "rotating": True})
+            for iid in shop.get("magic", []):
+                out[iid].append({"kind": "shop", "npc": nid, "magic": True, "if": shop.get("magic_if", ""),
+                                 "level": self.magic_shop_level(iid)})
         for iid in list(out):
             if not self.g.item_data(iid).get("playable", True):
                 del out[iid]   # taken out of play (hidden in the game)
@@ -1034,7 +1037,8 @@ class Wiki:
             if src.get("rotating"):
                 return f"Sometimes in {s.npc(src['npc'])}'s changing stock ({s.link('page/merchants', 'Merchants')})"
             cond = f", only when {human_cond(src['if'])}" if src.get("if") else ""
-            return f"Sold by {s.npc(src['npc'])}{cond}"
+            lvl = f" from party level {src['level']}" if src.get("magic") and src.get("level", 1) > 1 else ""
+            return f"Sold by {s.npc(src['npc'])}{lvl}{cond}"
         return k
 
     # Shared bits ----------------------------------------------------------------------------------------------------
@@ -1045,13 +1049,17 @@ class Wiki:
         groups = OrderedDict()
         for m in monsters:
             mid = m.get("monster", "")
-            key = (mid, m.get("name", ""))
+            key = (mid, m.get("name", ""), m.get("hp"))
             groups[key] = groups.get(key, 0) + 1
         parts = []
-        for (mid, name), n in groups.items():
+        for (mid, name, hp), n in groups.items():
             link = s.mon(mid)
+            # A fight's own Hit Points for a creature (bosses scaled by level), when they differ from its stat block.
+            own = hp if hp and int(hp) != int((g.monsters.get(mid, {}).get("hp") or {}).get("average", 0) or 0) else None
             if name and name != g.monster_name(mid):
-                link = f"{name} ({link})"
+                link = f"{name} ({link}" + (f", {own} HP)" if own else ")")
+            elif own:
+                link = f"{link} ({own} HP)"
             parts.append(f"{n} × {link}" if n > 1 else link)
         return ", ".join(parts)
 
@@ -1075,6 +1083,8 @@ class Wiki:
             for m in e.get("monsters", []):
                 who.setdefault(m.get("monster", ""), m.get("name", ""))
         names = ", ".join(s.mon(mid) for mid in who if mid)
+        if len(placements) == 1:   # one version: who comes, how many, and any Hit Points of the fight's own
+            names = self.monsters_line(e0.get("monsters", []))
         scales = " Scales with your level." if len(placements) > 1 else ""
         return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
 
@@ -1827,6 +1837,18 @@ class Wiki:
             if m.get("languages"):
                 facts.append("**Languages:** " + ", ".join(m["languages"]))
             lines += [f"- {f}" for f in facts] + [""]
+            # The shapes it can take in a fight (its `forms`: a werewolf's wolf, Strahd's bat and mist, Lysaga's swarm).
+            forms = m.get("forms") or {}
+            if forms.get("shapes"):
+                how = {"action": "an action", "bonus_action": "a Bonus Action"}.get(str(forms.get("change", "")), "")
+                where = " or ".join(str(x).replace("_", " ") for x in forms.get("blocked_in") or [])
+                note = (f"It changes shape as {how}" if how else "It changes shape") + (f", but not in {where}" if where else "")
+                if m.get("human_art"):
+                    note += "; it comes into a fight looking human and changes in front of you"
+                lines += ["### Changing shape", "", f"*{note}.*", ""]
+                for sh in forms["shapes"]:
+                    lines.append(f"- **{sh.get('name', title_id(sh.get('id', '')))}.** {sh.get('summary', '')}")
+                lines.append("")
             for k, label in (("traits", "Traits"), ("actions", "Actions"), ("bonus_actions", "Bonus actions"),
                              ("reactions", "Reactions"), ("legendary_actions", "Legendary actions"),
                              ("lair_actions", "Lair actions")):
@@ -1903,8 +1925,10 @@ class Wiki:
             lines = lines[:12] + [f"- …and {len(lines) - 12} more places"]
         if shops:
             names = list(dict.fromkeys(shops))
+            lvls = {x.get("level", 1) for _, x in srcs if x["kind"] == "shop" and x.get("magic")}
+            when = f" from party level {min(lvls)}" if lvls and min(lvls) > 1 else ""
             lines.append("- Sold by " + ", ".join(s.npc(next(k for k, v in g.npcs.items() if v['name'] == n), n) for n in names)
-                         + f" ({s.link('page/merchants', 'prices')})")
+                         + when + f" ({s.link('page/merchants', 'prices')})")
         if rot:
             lines.append("- Sometimes in the changing stock of " + ", ".join(dict.fromkeys(rot)))
         return lines
@@ -2071,6 +2095,17 @@ class Wiki:
         self.w.write("page/random_treasure", "Items/Random Treasure", "Random Treasure", [auto("list", "\n".join(lines))],
                      tags=["wiki", "items"], meta={"type": "guide"})
 
+    def shop_levels(self):
+        """Rarity -> the party's milestone level shops show it from (data/treasure/levels.json, as Trade.magic_level)."""
+        if not hasattr(self, "_shop_levels"):
+            path = self.g.root / "data" / "treasure" / "levels.json"
+            self._shop_levels = (json.loads(path.read_text()).get("shop_levels") or {}) if path.exists() else {}
+        return self._shop_levels
+
+    def magic_shop_level(self, iid):
+        rarity = str((self.g.item_data(iid).get("magic") or {}).get("rarity", "common"))
+        return int(self.shop_levels().get(rarity, 1))
+
     @staticmethod
     def gp(v):
         if v in (None, ""):
@@ -2113,6 +2148,13 @@ class Wiki:
                  "the shop says otherwise. Win and that merchant gives you a further 10% both ways for good; lose and "
                  "they never haggle with you again.",
                  "- Some merchants close at night or until something happens; some stock only appears after a quest.",
+                 "- **Magic items** are sold at the Sane Magical Prices guide's price whatever the merchant's markup "
+                 "(attitude and haggling still count): one of anything lasting, three of a potion, scroll or other "
+                 "consumable, and twenty pieces of magic ammunition, sold a piece at a time. What you buy stays bought. "
+                 "Uncommon and common items are there from the start; "
+                 + ", ".join(f"{r.replace('_', ' ')} items from party level {lv}" for r, lv in self.shop_levels().items())
+                 + ". An item made on a weapon or armor (a Flame Tongue, +1 Armor) lets you pick which, and its price "
+                 "adds the mundane item's.",
                  ""]
         services = self._services()
         for nid, n in g.npcs.items():
@@ -2150,6 +2192,23 @@ class Wiki:
                 lines.append(f"| {s.item(it['id'])} | {'free' if price == 0 else str(price) + ' gp'} | {qty} | "
                              f"{esc(human_cond(it.get('if', '')))} |")
             lines.append("")
+            magic = [iid for iid in shop.get("magic", []) if g.item_data(iid).get("playable", True)]
+            if magic:
+                order = ["common", "uncommon", "rare", "very_rare", "legendary"]
+                def rarity(iid):
+                    return str((g.item_data(iid).get("magic") or {}).get("rarity", "common"))
+                magic.sort(key=lambda iid: (order.index(rarity(iid)) if rarity(iid) in order else 9, g.item_name(iid)))
+                rows = ["| Item | Rarity | Price | From party level |", "|---|---|---|---|"]
+                for iid in magic:
+                    d = g.item_data(iid)
+                    on = str((d.get("template") or {}).get("on", ""))
+                    cost = int(-(-float(d.get("cost_gp", 0) or 0) // 1))
+                    price = f"{cost:,} gp" + (f" + the {on}" if on in ("weapon", "armor") else "")
+                    lines_r = rarity(iid).replace("_", " ")
+                    rows.append(f"| {s.item(iid)} | {lines_r} | {price} | {self.magic_shop_level(iid)} |")
+                when = f", only when {human_cond(shop['magic_if'])}" if shop.get("magic_if") else ""
+                lines.append(collapsed("example", f"Magic items ({len(magic)}{when})", rows))
+                lines.append("")
             rot = shop.get("rotating")
             if rot:
                 lines.append(f"**Changing stock:** every {rot.get('days', 1)} days the stock is redrawn:")
@@ -2176,7 +2235,9 @@ class Wiki:
     def checks_page(self):
         g, s = self.g, self.site
         lines = ["Skill checks you can try out in the world, by place. Walk up to the thing and pick the check from "
-                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final.", ""]
+                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final. A check "
+                 "that finds a hiding place shows where it is, and the spot glows until you use it: what's hidden there "
+                 "comes out when you do.", ""]
         total = 0
         for rid in sorted(self.regions, key=lambda r: (g.region_level(r) or 99)):
             rows = []
@@ -2635,7 +2696,7 @@ class Wiki:
         self.w.write("page/difficulty", "Rules/Difficulty", "Difficulty", ["%% default %%\n", auto("modes", self.difficulty_lines())],
                      tags=["wiki", "rules"])
         # Pages people write by hand: the generator only makes sure they exist and keeps them linked.
-        for key in ("page/magic", "page/stealth", "page/resting"):
+        for key in ("page/magic", "page/stealth", "page/resting", "page/revival"):
             self.w.write(key, s.paths[key], s.titles[key], ["%% default %%\n"], tags=["wiki", "rules"])
 
     def difficulty_lines(self):
@@ -2745,6 +2806,7 @@ class Wiki:
                                   s.link("page/dark_gifts", "Dark Gifts") + ": the Amber Temple's bargains"]),
             ("Rules and play", [s.link("page/magic", "How Magic Works") + ", " + s.link("page/stealth") + " and " +
                                 s.link("page/resting"),
+                                s.link("page/revival", "Reviving the Dead") + ": dying, Death Saving Throws and every way back",
                                 s.link("page/house_rules", "House Rules") + ": where the game differs from the 2024 books",
                                 s.link("page/difficulty", "Difficulty") + " and " + s.link("page/controls", "Controls"),
                                 s.link("page/conditions", "Conditions") + " and the " + s.link("page/glossary", "Glossary"),
@@ -2865,6 +2927,7 @@ class Wiki:
                                 ("page/magic", "Rules/How Magic Works", "How Magic Works"),
                                 ("page/stealth", "Rules/Sneaking, Stealing and the Watch", "Sneaking, Stealing and the Watch"),
                                 ("page/resting", "Rules/Resting and Saving", "Resting and Saving"),
+                                ("page/revival", "Rules/Reviving the Dead", "Reviving the Dead"),
                                  ("page/controls", "Rules/Controls", "Controls"),
                                  ("page/conditions", "Rules/Conditions", "Conditions"),
                                  ("page/glossary", "Rules/Glossary", "Glossary"),

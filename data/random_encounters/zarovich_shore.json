@@ -17,7 +17,7 @@
       "when": "night",
       "monsters": [
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             20,
             5
@@ -25,7 +25,7 @@
           "name": "Drowned fisher"
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             24,
             8
@@ -33,7 +33,7 @@
           "name": "Drowned fisher"
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             22,
             11
@@ -41,7 +41,7 @@
           "name": "Drowned fisher"
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             26,
             14
@@ -61,6 +61,44 @@
             28,
             10
           ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            17,
+            12
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            23,
+            4
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            21,
+            14
+          ],
+          "name": "Drowned fisher"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            25,
+            10
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            24,
+            13
+          ],
+          "name": "Drowned fisher"
         }
       ],
       "text": "Figures are wading up out of the reeds, streaming lake water, with weed in their hair and their eyes gone white. The lake is giving back what it took, and it wants something in exchange."
@@ -74,26 +112,82 @@
         {
           "monster": "will_o_wisp",
           "cell": [
-            20,
-            6
+            11,
+            4
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
-            25,
-            8
+            22,
+            11
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            10,
+            14
           ]
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             23,
+            4
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            28,
+            10
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            17,
             12
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            26,
+            14
+          ]
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            27,
+            6
+          ]
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            21,
+            14
+          ]
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            24,
+            8
           ]
         }
       ],
-      "text": "Pale lights bob out over the reeds, three of them, and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them."
+      "text": "Pale lights bob out over the reeds and drift toward you, swaying, the way a lantern sways in the hand of someone walking. Nobody is holding them, and something wails under the water."
     },
     {
       "id": "shore_wolves",
@@ -125,6 +219,55 @@
           "monster": "dire_wolf",
           "cell": [
             28,
+            13
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            6
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            17,
+            12
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            22,
+            11
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            25,
+            10
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            28,
+            10
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
+            8
+          ]
+        },
+        {
+          "monster": "werewolf",
+          "cell": [
+            24,
             13
           ]
         }

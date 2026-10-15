@@ -63,13 +63,16 @@ Narrator: Flat grey water. From the jetty's end you can see, far down, the pale 
 endif
 quest bell_under_the_lake the_bell
 Narrator: Out on the black water, a long way under it, a bell rings. Once. Again. Each time a little louder, as if it were coming up the slope of the lakebed toward you.
+cutscene drowned_rise
 Narrator: Then the water along the shore starts to stand up in the shape of people.
 if flag.bluto_fate == "saved" or flag.bluto_fate == "left"
+cutscene drowned_bluto
 Narrator: Bluto comes out of his shack with a lantern and sees them, and drops it, and runs for the jetty, for the boat, for anywhere. They turn toward him all together, the way a field of grass turns in the wind.
 Bluto [afraid]: No. No, no, I paid. I paid you. I paid you every month!
 * Stand in front of him. -> defend
 * (Stand aside. Let them have what they came for.) -> aside
 else
+cutscene drowned_nistor
 Narrator: Old Nistor comes out with his net still in his hands and sees them, and sees which way they're turning, and sits down on his step.
 Old Nistor: Well. It was always going to be one of us.
 * Stand in front of him. -> defend

@@ -665,6 +665,15 @@
         },
         "summary": {
           "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$",
+          "description": "How the change into this shape looks and sounds (FxShapeshift.LOOKS), when it isn't named by the shape's id (a werewolf's wolf is a werewolf's change, not Strahd's)."
+        },
+        "art_from_npc": {
+          "type": "boolean",
+          "description": "The figure is the NPC this creature is named for (a Night Hag's disguise is the old woman the story showed: Legendary.shape_art)."
         }
       }
     },
@@ -1150,6 +1159,16 @@
       "pattern": "^[a-z0-9_]+$",
       "description": "Sprite and portrait id when it isn't the block's own id (art/sprites/<art>/), e.g. a named NPC's block."
     },
+    "hybrid_art": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "The sprite (art/sprites/<hybrid_art>/) a lycanthrope's token swaps to for its Shape-Shift hybrid form, and back from: a person drawn as a man in human form (Emil, Kiril) takes the werewolf's. Unset: the figure stays as it is (MonsterActions._hybrid_art)."
+    },
+    "reveal": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "How it looks (FxShapeshift.LOOKS) when a person the story showed (an NPC who steps aside as their conversation turns into this fight) turns out to be it: the figure they had changes into this one in front of the party (LocationFights._reveal). Only where a person of the same name stood there with a different figure."
+    },
     "art_height": {
       "type": "number",
       "minimum": 0.5,
@@ -1300,6 +1319,11 @@
           "$ref": "common.schema.json#/$defs/id"
         }
       }
+    },
+    "human_art": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "The figure a lycanthrope drawn as its hybrid (`art`) wears in its human form: it walks in as a person and changes into its `art` when it shifts (CombatToken.human_figure; MonsterActions._hybrid_art). A named one the story shows (Zuleika) wears that NPC's figure instead."
     }
   }
 }

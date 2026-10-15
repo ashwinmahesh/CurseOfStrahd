@@ -553,6 +553,10 @@
         {
           "id": "wand_of_the_war_mage_plus_3",
           "qty": 1
+        },
+        {
+          "id": "robe_of_the_archmagi",
+          "qty": 1
         }
       ],
       "gold": 800
@@ -765,7 +769,7 @@
             9,
             2
           ],
-          "hp": 210
+          "hp": 315
         },
         {
           "monster": "specter",
@@ -848,7 +852,7 @@
             9,
             2
           ],
-          "hp": 125
+          "hp": 290
         },
         {
           "monster": "specter",

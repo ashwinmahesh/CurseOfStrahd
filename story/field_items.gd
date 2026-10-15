@@ -41,6 +41,14 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 			if why == "" and (o["choices"] as Array).is_empty():
 				o["legal"] = false
 				o["reason"] = "No gemstones to change"
+		# A power that brings back the dead (a Spell Scroll of Revivify, the Rod of Resurrection) is aimed at a dead party
+		# member (the inventory's "<power> on <hero>"), legal while there's one it can reach.
+		if FieldCasting.REVIVAL.has(spell_id):
+			o["revive"] = true
+			o["targeting"] = "dead"
+			if why == "" and party.all(func(m: Character) -> bool: return not m.dead):
+				o["legal"] = false
+				o["reason"] = "Nobody in the party is dead"
 		if str(power.get("custom", "")) == "ring_store":
 			o["store"] = store_options(party, p)
 			if why == "" and (o["store"] as Array).is_empty():
@@ -137,6 +145,29 @@ static func use(st: StoryState, ch: Character, item_id: String, power_id: String
 		return fres
 	var spell_id := CombatItems.power_spell(item_id, power)
 	var spell := Compendium.shared().spell_data(spell_id) if spell_id != "" else {}
+	# A power that brings back the dead (Ashwin, 2026-10-15): a Spell Scroll of Revivify or Raise Dead, the Rod of
+	# Resurrection, on a dead party member, for as long after the death as the spell allows (FieldCasting.revive_with_item).
+	# A scroll above the reader's levels needs its check first and is used up either way; nothing is spent on someone it
+	# can't bring back.
+	if FieldCasting.REVIVAL.has(spell_id):
+		var dead := target as Character if target is Character else null
+		if dead == null or not dead.dead or not dead in st.party:
+			return {"ok": false, "text": "Choose a fallen party member to use it on", "lines": []}
+		var rwhy := FieldCasting.revive_why(st, spell_id, dead)
+		if rwhy != "":
+			return {"ok": false, "text": rwhy, "lines": []}
+		var lvl := int(power.get("level", spell.get("level", 0)))
+		if bool(power.get("scroll", false)):
+			var sfail := e.items.scroll_check(c, spell)
+			e.items._after_use(c, p, spell, lvl)
+			if sfail != "":
+				st.advance_minutes(1)
+				return {"ok": false, "text": sfail, "lines": [], "spent": true}
+		else:
+			e.items._after_use(c, p, spell, lvl)
+		var rv := FieldCasting.revive_with_item(st, ch, spell_id, dead)
+		rv["lines"] = []
+		return rv
 	# Catnap from an item (the Wand of Slumber): outside a fight its user and up to two companions sleep ten minutes and
 	# wake with a Short Rest's benefits.
 	if spell_id == "catnap" and not bool(power.get("scroll", false)):
@@ -240,13 +271,13 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			return {"ok": true, "text": "%s's %s %s." % [nm, label, params.get("text", "does something harmless")]}
 		"read_tome":
 			# The Tome of Strahd (Curse of Strahd): its history goes into the codex; the vampire knows it was read.
-			var first := not "tome_of_strahd" in st.codex
+			var lore := st.add_codex("tome_of_strahd")
+			var first := lore >= 0
 			if first:
-				st.codex.append("tome_of_strahd")
 				st.advance_minutes(3 * 60)
 			st.set_flag("tome_of_strahd_read", true)
 			st.set_flag("strahd_knows_tome_read", true)
-			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly." % [nm, label] if first
+			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly.%s" % [nm, label, Xp.tag(lore)] if first
 				else "%s turns the pages again. The ending hasn't changed." % nm}
 		"drink_field_spell":
 			var mins := int(params.get("minutes", 10))

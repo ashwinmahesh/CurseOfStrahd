@@ -302,7 +302,7 @@ once
 | The ice is older than the temple's last visitors, and harder.
 
 ~ check:medicine:frozen_hand_open:success
-| You warm the fingers one by one until they give, without breaking a single one, and take what they were holding.
+| You warm the fingers one by one until they give, without breaking a single one, and the hand opens on what it was holding.
 
 ~ check:medicine:frozen_hand_open:failure
 | The hand is frozen past opening. You'd have to break it, and you won't.

@@ -11,11 +11,29 @@ extends RefCounted
 ## and a caster who knows Fireball throws it whenever it catches two foes. On by default since the fights were retuned
 ## against it (the owner's 5 wins in 8 on Balanced); AUTOPILOT_SHARP=0 in the environment, or `sharp` set by a test,
 ## plays the party plain as before.
+##
+## Full play (owner, 2026-10-14: "the players using their skills to their full abilities (smites, spirit guardians, AoE
+## spells, other class features)"): the rest of the kit as he uses it. The cleric heals a friend before they drop and
+## unleashes the Radiance of the Dawn on a crowd, the paladin lays hands on the fallen, brings out his Sacred Weapon and
+## blesses the party when no foe can be reached, the ranger marks her target and calls down a barrage, and the wizard
+## throws Cone of Cold with the Fireball. (Haste on the paladin was tried and left out: over eight bosses it cost the party
+## six wins in all, since the wizard's Concentration breaks and the paladin loses a turn to lethargy.) It is the bosses' party: the
+## boss fights (FightSeriesCase.BOSS_FIGHTS) and the story bot play it, the rest of the fights are still tuned against
+## sharp play alone. `full` set by a test, or AUTOPILOT_FULL=1 in the environment, turns it on everywhere, and
+## AUTOPILOT_OFF=radiance,cone,... switches single parts off to measure what each one adds (names are the `_on` calls).
 
 ## Whether the party plays sharp unless a test says otherwise (see above).
 static var sharp_by_default: bool = OS.get_environment("AUTOPILOT_SHARP") != "0"
 ## Whether the party plays sharp now.
 static var sharp: bool = sharp_by_default
+## Whether the party plays at full ability unless a test says otherwise (see above).
+static var full_by_default: bool = sharp_by_default and OS.get_environment("AUTOPILOT_FULL") == "1"
+## Whether the party plays at full ability now.
+static var full: bool = full_by_default
+## Parts of full play switched off by name (AUTOPILOT_OFF), to measure what each adds.
+static var off: Dictionary = _off_from_env()
+## A foe with this many Hit Points is something tough: worth a Channel Divinity on its own (half as many, left).
+const TOUGH_HP := 100
 ## A smite is worth its slot on a hit against a foe with at least this many Hit Points left (or on a Critical Hit).
 const SMITE_WORTH_HP := 20
 
@@ -36,9 +54,9 @@ func play(c: Combatant) -> CombatResult:
 	# A weapon it dropped (falling Unconscious, a Disarming Attack) lying within reach: back in hand first.
 	e.ground.ai_pick_up(c)
 	if sharp:
-		var fireball := _sharp_fireball(c)
-		if fireball != null:
-			return fireball
+		var crowd := _sharp_crowd(c)
+		if crowd != null:
+			return crowd
 	if ch.class_level_of("cleric") > 0:
 		return _cleric(c)
 	if ch.class_level_of("wizard") > 0:
@@ -49,6 +67,8 @@ func play(c: Combatant) -> CombatResult:
 		return _warlock(c)
 	if ch.class_level_of("ranger") > 0:
 		return _ranger(c)
+	if ch.class_level_of("paladin") > 0:
+		return _paladin(c)
 	return _fighter(c)
 
 
@@ -80,6 +100,40 @@ func _weakest(list: Array[Combatant]) -> Combatant:
 		if best == null or t.creature.hp < best.creature.hp:
 			best = t
 	return best
+
+
+static func _off_from_env() -> Dictionary:
+	var out := {}
+	for part: String in OS.get_environment("AUTOPILOT_OFF").split(",", false):
+		out[part.strip_edges()] = true
+	return out
+
+
+## Whether the part of full play called `part` is in use.
+func _on(part: String) -> bool:
+	return full and not off.has(part)
+
+
+var _catalog_of: ActionCatalog
+
+
+## `c` and everyone allied with it.
+func _friends(c: Combatant) -> Array[Combatant]:
+	var out: Array[Combatant] = [c]
+	out.append_array(e.allies_of(c))
+	return out
+
+
+## The hotbar's action `id` on `targets`, when it can be used now (a class feature or spell as the player clicks it):
+## its result, or null when it isn't available or didn't go off.
+func _use(c: Combatant, id: String, targets: Array = [], opts: Dictionary = {}) -> CombatResult:
+	if _catalog_of == null:
+		_catalog_of = ActionCatalog.new(e)
+	var action := _catalog_of.find(c, id)
+	if action.is_empty() or str(action.get("why", "")) != "":
+		return null
+	var r := _catalog_of.perform(c, action, targets, Vector2.INF, Vector2.ZERO, 0, opts)
+	return r if r.ok else null
 
 
 func _melee_turn(c: Combatant) -> CombatResult:
@@ -118,6 +172,70 @@ func _fighter(c: Combatant) -> CombatResult:
 				e.features.action_surge(c)
 				return e.ai._attack_step(c, near, "weapon:greatsword")
 		return CombatResult.new())
+
+
+## The paladin's turn: Lay On Hands, Sacred Weapon and Bless first (the first two cost no action), then the blade.
+func _paladin(c: Combatant) -> CombatResult:
+	var foes := _enemies(c)
+	if not foes.is_empty():
+		if _on("lay_on_hands"):
+			_lay_on_hands(c)
+		_sacred_weapon(c, foes)
+		var blessing := _bless(c, foes)
+		if blessing != null:
+			return blessing
+	return _fighter(c)
+
+
+## Lay On Hands (a Bonus Action) on the fallen friend beside him, or on himself or a friend within reach under a third
+## of their Hit Points: what it takes to stand, not the pool.
+func _lay_on_hands(c: Combatant) -> void:
+	var ch := c.creature as Character
+	var pool := ch.resource_left("lay_on_hands")
+	if not c.bonus_available or pool <= 0:
+		return
+	var pick: Combatant = null
+	var pick_ratio := 1.0
+	for a in _friends(c):
+		if a.creature.dead or (a != c and e.distance(c, a) > 5):
+			continue
+		var ratio := -1.0 if a.creature.hp <= 0 else float(a.creature.hp) / float(a.creature.max_hp())
+		if ratio < 0.34 and ratio < pick_ratio:
+			pick = a
+			pick_ratio = ratio
+	if pick == null:
+		return
+	var amount := 8 if pick.creature.hp <= 0 else maxi(8, (pick.creature.max_hp() - pick.creature.hp) / 2)
+	_use(c, "feat:cf:lay_on_hands", [pick], {"choice": str(mini(pool, amount))})
+
+
+## Sacred Weapon (Oath of Devotion's Channel Divinity) once a foe is within a move and a blow.
+func _sacred_weapon(c: Combatant, foes: Array[Combatant]) -> void:
+	var ch := c.creature as Character
+	if not _on("sacred_weapon") or ch.resource_left("paladin_channel_divinity") <= 0 or c.creature.has_flag("sacred_weapon"):
+		return
+	var near := _nearest(c, foes)
+	if near != null and e.distance(c, near) <= c.movement_left + 5:
+		_use(c, "feat:cf:sacred_weapon")
+
+
+## Bless on up to three friends within 30 ft when no foe can be reached this turn (so the Action is free anyway).
+func _bless(c: Combatant, foes: Array[Combatant]) -> CombatResult:
+	var ch := c.creature as Character
+	if not _on("bless") or not c.action_available or c.cast_slot_spell_this_turn or _concentrating_on_anything(c) \
+			or ch.slots_left(1) <= 0 or not ch.knows_spell("bless") or e.round_no > 2:
+		return null
+	var near := _nearest(c, foes)
+	if near == null or e.distance(c, near) <= c.movement_left + 5:
+		return null
+	var picks: Array = [c]
+	for a in e.allies_of(c):
+		if picks.size() < 3 and a.can_act() and a.creature is Character and e.distance(c, a) <= 30:
+			picks.append(a)
+	if picks.size() < 2:
+		return null
+	var r := _cast(c, "bless", 1, picks)
+	return r if r.ok else null
 
 
 func _rogue(c: Combatant) -> CombatResult:
@@ -176,11 +294,18 @@ func _cleric(c: Combatant) -> CombatResult:
 	if c.action_available and ch.resource_left("channel_divinity") > 0 and e.features.preserve_life_room(c).size() >= 2:
 		e.features.preserve_life(c)
 	var foes := _enemies(c)
+	if _on("heal"):
+		_mend(c)
 	# Sharp: Spirit Guardians once foes close in, and the cleric stays near them while it lasts.
 	if sharp:
 		var guardians := _sharp_guardians(c, foes)
 		if guardians != null:
 			return guardians
+	# Full: the Radiance of the Dawn on a crowd (or one big foe) within 30 ft.
+	if _on("radiance") and c.action_available:
+		var radiance := _radiance(c, foes)
+		if radiance != null:
+			return radiance
 	# 4. Spiritual Weapon, then its Bonus Action attacks (not over Spirit Guardians: both need Concentration).
 	if c.bonus_available and not foes.is_empty() and not _concentrating_on(c, "spirit_guardians"):
 		var near := _nearest(c, foes)
@@ -213,6 +338,40 @@ func _cleric(c: Combatant) -> CombatResult:
 			if r.ok:
 				return r
 	return _melee_turn(c)
+
+
+## Healing Word (a Bonus Action, 60 ft) on a friend under a third of their Hit Points, before they drop.
+func _mend(c: Combatant) -> void:
+	var ch := c.creature as Character
+	if not c.bonus_available or c.cast_slot_spell_this_turn or ch.slots_left(1) <= 0:
+		return
+	var worst: Combatant = null
+	var worst_ratio := 0.34
+	for a in _friends(c):
+		if a.creature.hp <= 0 or a.creature.dead or e.distance(c, a) > 60:
+			continue
+		var ratio := float(a.creature.hp) / float(a.creature.max_hp())
+		if ratio < worst_ratio:
+			worst = a
+			worst_ratio = ratio
+	if worst != null:
+		_cast(c, "healing_word", 1, [worst])
+
+
+## The Radiance of the Dawn (a Channel Divinity) on two foes or more within 30 ft, or one with plenty of Hit Points left.
+func _radiance(c: Combatant, foes: Array[Combatant]) -> CombatResult:
+	var ch := c.creature as Character
+	if ch.resource_left("channel_divinity") <= 0:
+		return null
+	var n := 0
+	var hp := 0
+	for f in foes:
+		if e.distance(c, f) <= 30:
+			n += 1
+			hp += f.creature.hp
+	if n >= 2 or (n == 1 and hp >= TOUGH_HP / 2):
+		return _use(c, "feat:radiance_of_the_dawn")
+	return null
 
 
 func _wizard(c: Combatant) -> CombatResult:
@@ -304,11 +463,27 @@ func _ranger(c: Combatant) -> CombatResult:
 		if e.distance(c, f) <= 5:
 			return _melee_turn(c)
 	var target := _weakest(foes)
+	if _on("hunters_mark"):
+		target = _hunters_mark(c, foes, target)
 	for id: String in ["weapon:longbow", "weapon:shortbow"]:
 		var bow := e.option_by_id(c, id)
 		if not bow.is_empty() and e.attack_legal(c, target, bow) == "":
 			return e.attack(c, target, id)
 	return _melee_turn(c)
+
+
+## Hunter's Mark (a Bonus Action) on the foe about to be shot, again on the next when it falls; she keeps shooting the
+## marked one. The foe to shoot.
+func _hunters_mark(c: Combatant, foes: Array[Combatant], fallback: Combatant) -> Combatant:
+	var ch := c.creature as Character
+	for f in foes:
+		for fx in f.creature.effects:
+			if fx.source_id == "hunters_mark" and fx.caster_id == c.id:
+				return f
+	if c.bonus_available and not c.cast_slot_spell_this_turn and ch.slots_left(1) > 0 and ch.knows_spell("hunters_mark") \
+			and (not _concentrating_on_anything(c) or _concentrating_on(c, "hunters_mark")):
+		_cast(c, "hunters_mark", 1, [fallback])
+	return fallback
 
 
 func _warlock(c: Combatant) -> CombatResult:
@@ -362,20 +537,71 @@ func _melee_average(c: Combatant) -> float:
 
 # --- Sharp play -----------------------------------------------------------------------------------
 
-## Fireball from any caster who knows it, with the lowest slot that casts it, when it catches two foes or more (or one
-## with a big one) and no ally Sculpt Spells can't spare. Null when it isn't cast.
-func _sharp_fireball(c: Combatant) -> CombatResult:
+## Area spells at a crowd, with the lowest slot that casts each: Fireball from any caster who knows it when it catches two
+## foes or more (or one with a big one) and no ally Sculpt Spells can't spare; in full play also the wizard's Cone of Cold
+## on three (or two with a big one) and the ranger's Conjure Barrage on two. Null when none is cast.
+func _sharp_crowd(c: Combatant) -> CombatResult:
 	var ch := c.creature as Character
-	if not c.action_available or c.cast_slot_spell_this_turn or not ch.knows_spell("fireball"):
+	if not c.action_available or c.cast_slot_spell_this_turn:
 		return null
-	var point := _fireball_point(c, _enemies(c), 2)
+	var foes := _enemies(c)
+	if _on("cone") and ch.knows_spell("cone_of_cold") and ch.slots_left(5) > 0:
+		var cone := _cone_dir(c, foes, "cone_of_cold", false)
+		if not cone.is_empty() and (int(cone["n"]) >= 3 or (int(cone["n"]) >= 2 and bool(cone["big"]))):
+			var r := _cast(c, "cone_of_cold", 5, [], Vector2.INF, cone["dir"] as Vector2)
+			if r.ok:
+				return r
+	if _on("barrage") and ch.knows_spell("conjure_barrage"):
+		var barrage := _cone_dir(c, foes, "conjure_barrage", true)
+		if not barrage.is_empty() and (int(barrage["n"]) >= 3 or (int(barrage["n"]) >= 2 and bool(barrage["big"]))):
+			for slot: int in [3, 4, 5]:
+				if ch.slots_left(slot) > 0:
+					var r2 := _cast(c, "conjure_barrage", slot, [], Vector2.INF, barrage["dir"] as Vector2)
+					if r2.ok:
+						return r2
+					break
+	if not ch.knows_spell("fireball"):
+		return null
+	var point := _fireball_point(c, foes, 2)
 	if point == Vector2.INF:
 		return null
-	for slot: int in [3, 4, 5]:
-		if ch.slots_left(slot) > 0:
-			var r := _cast(c, "fireball", slot, [], point)
-			return r if r.ok else null
+	for slot2: int in [3, 4, 5]:
+		if ch.slots_left(slot2) > 0:
+			var r3 := _cast(c, "fireball", slot2, [], point)
+			return r3 if r3.ok else null
 	return null
+
+
+## The direction from `c` along which the self-origin cone `spell_id` catches the most foes: {dir, n, big} or {} when it
+## catches none (or an ally, unless the spell spares them).
+func _cone_dir(c: Combatant, foes: Array[Combatant], spell_id: String, allies_safe: bool) -> Dictionary:
+	var s := Compendium.shared().spell_data(spell_id)
+	var origin := e.center_of(c)
+	var best := {}
+	var best_score := 0.0
+	for f in foes:
+		var dir := e.center_of(f) - origin
+		if dir.length() < 0.01:
+			continue
+		dir = dir.normalized()
+		var n := 0
+		var big := false
+		var allies := 0
+		for o in e.spells.creatures_in(e.spells.area_for(c, s, origin, dir)):
+			if o == c or o.is_down():
+				continue
+			if c.hostile_to(o):
+				n += 1
+				big = big or o.creature.hp >= 40
+			else:
+				allies += 1
+		if allies > 0 and not allies_safe:
+			continue
+		var score := float(n) + (1.0 if big else 0.0)
+		if score > best_score:
+			best_score = score
+			best = {"dir": dir, "n": n, "big": big}
+	return best
 
 
 ## Spirit Guardians, with the lowest slot that casts it, once a foe is within 20 ft or two within 40 ft; while it lasts
@@ -415,6 +641,11 @@ func _close_in(c: Combatant, foes: Array[Combatant]) -> void:
 	if near == null or e.distance(c, near) <= 10 or c.movement_left <= 0:
 		return
 	e.ai._approach(c, {"kind": "approach", "target": near, "score": 0.0, "dash": false})
+
+
+func _concentrating_on_anything(c: Combatant) -> bool:
+	var conc := c.creature.concentration
+	return conc != null and not conc.ended
 
 
 func _concentrating_on(c: Combatant, spell_id: String) -> bool:

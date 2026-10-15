@@ -133,13 +133,13 @@ guardian portrait 200, crawling claw 10, dire wolf 200, swarm of bats 50.
 
 Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
 Fireball as he plays, and wins 5 in 8 on Balanced at every level): at level 10 Rahadin on the stair, in the hall and in
-his chamber and both brides fights win 4 or 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
+his chamber and both brides fights win 4 or 5 of 8 (tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
 wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
 blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
 outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
-(tests/integration/test_scaled_boss_fights.gd).
+(tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 The engine plays the parley first and moves `strahds_lair` to `confronted` when a final battle starts; dropping
 Strahd to 0 there turns him to mist and sends him to his coffin (catacombs). Strahd appears in this part only in the
@@ -188,18 +188,18 @@ Flags read from others: `gertruda_search_promised` (village_of_barovia: Mary's m
 | `court_tax_strongbox` (lock 15) | court | 220 gp (a year of Vallaki's tithe) |
 | `court_post_rack` | court | longsword, shield, light crossbow, 20 bolts |
 | `court_strahd_wardrobe` | weeping | fine clothes x2 |
-| `court_strahd_jewel_box` (lock 17) | weeping | 300 gp in rings and pins |
+| `court_strahd_jewel_box` (lock 17) | weeping | 300 gp in rings and pins, a Ring of Shooting Stars (very rare) |
 | `court_bath_cabinet` | weeping | perfume x2 |
 | `court_gallery_cabinet` | weeping | potion of healing x2 |
 | `court_guest_wardrobe` | weeping | fine clothes x3 (gowns, all one size) |
-| `court_ludmilla_shelf` | weeping | book x2, perfume |
-| `court_anastrasya_trunk` | weeping | travelers' clothes, 3 gp in Krezk copper |
-| `court_volenta_trunk` | weeping | dagger, playing cards, 45 gp |
+| `court_ludmilla_shelf` | weeping | book x2, perfume, an Ioun Stone (Reserve) (rare) |
+| `court_anastrasya_trunk` | weeping | travelers' clothes, 3 gp in Krezk copper, a Figurine of Wondrous Power (Onyx Dog) (rare) |
+| `court_volenta_trunk` | weeping | dagger, playing cards, 45 gp, a Mace of Terror (rare) |
 | `court_rahadin_rack` | weeping | scimitar x2, dagger |
-| `court_rahadin_footlocker` (lock 17) | weeping | 150 gp, potion of healing |
+| `court_rahadin_footlocker` (lock 17) | weeping | 150 gp, a Potion of Healing (Greater), a Scimitar of Speed (very rare), a Ring of X-ray Vision (rare) |
 | `court_treasury_hoard` | treasury | 1200 gp; the Tarokka treasure when the reading puts one here |
-| `court_treasury_strongbox` (lock 18) | treasury | 600 gp |
-| `court_treasury_jewels` | treasury | 400 gp in gems |
+| `court_treasury_strongbox` (lock 18) | treasury | 600 gp, the Manual of Gainful Exercise (very rare), the Rod of Lordly Might (legendary) |
+| `court_treasury_jewels` | treasury | 400 gp in gems, an Ioun Stone (Absorption) (very rare) |
 
 The random magic-item system (ADR 0012) adds items to these containers; no story item is placed here besides the
 Tarokka treasures.

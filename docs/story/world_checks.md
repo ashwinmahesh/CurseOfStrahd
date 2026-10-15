@@ -42,7 +42,7 @@ A prop, door or chest in a location can carry `checks` (data/schemas/location.sc
 | `heal`, `temp_hp` | Dice of healing for each hurt party member, or Temporary Hit Points for each. |
 | `damage`, `damage_type` | Dice of damage to whoever rolled: a fall, a shock, a bite. |
 | `minutes` | Time lost on top of the try (a try takes `minutes` on the check, 1 by default). |
-| `reveal` | Hidden things found: a search prop, secret door or trap here, or `<location>:<search prop>` elsewhere (a place hint: the hiding place is waiting when the party gets there, and a toast says where). A hiding place here that holds an item hands it to whoever rolled, announced on the side like every item the party comes by (owner, 2026-10-12: the well at the Wizard of Wines showed its rope and nothing more); a save from before that hands it to the leader on arriving. |
+| `reveal` | Hidden things found: a search prop, secret door or trap here, or `<location>:<search prop>` elsewhere (a place hint: the hiding place is waiting when the party gets there, and a toast says where). A hiding place that holds an item keeps it until someone takes it from there (owner, 2026-10-14): the check only shows where it is, the hiding place glows orange until the party uses it (FoundGlow), and using it hands the item over, announced on the side like every item the party comes by. Saves need nothing: a hiding place a check reached whose item is still in it is taken from the same way. |
 | `disarm` | Traps here made safe without thieves' tools (a glyph read and unpicked, a wire wedged). |
 | `unlock`, `open` | Locks undone; doors opened (a bar lifted from the far side: a shortcut back). |
 | `move` | The party crosses to a square: a climb, a leap, a squeeze. |

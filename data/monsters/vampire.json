@@ -274,6 +274,7 @@
         "actions": [
           "bite"
         ],
+        "art": "bat",
         "summary": "A Tiny bat (Speed 5 ft., Fly 30 ft.): can bite, can't speak."
       },
       {
@@ -304,6 +305,7 @@
         "flags": [
           "enters_spaces"
         ],
+        "art": "strahd_mist",
         "summary": "A drifting cloud (Fly 30 ft., hovering): can't act or speak, can enter enemies' spaces, resists all damage."
       }
     ]

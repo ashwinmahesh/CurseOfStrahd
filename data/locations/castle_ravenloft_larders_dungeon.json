@@ -1294,7 +1294,7 @@
       "id": "larders_jailers",
       "trigger": "enter_area:larders_jailers_post",
       "when": "not flag.larders_jailers_beaten",
-      "text": "Three suits of armour stand at the jailers' table as if waiting for a fourth hand. They are empty, and they draw.",
+      "text": "Suits of armour stand round the jailers' table as if waiting for another hand. They are empty, and they draw.",
       "surprise": "",
       "flag": "larders_jailers_beaten",
       "monsters": [
@@ -1318,6 +1318,41 @@
             24,
             4
           ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            14,
+            2
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            21,
+            9
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            21,
+            13
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            21,
+            6
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            16,
+            5
+          ]
         }
       ]
     },
@@ -1325,7 +1360,7 @@
       "id": "larders_furnace",
       "trigger": "enter_area:larders_furnace_room",
       "when": "not flag.larders_furnace_beaten",
-      "text": "Two burning skulls rise from the coal heaps, and the fire in the furnace stands up on legs of its own.",
+      "text": "Burning skulls rise from the coal heaps, and the fire in the furnace stands up on legs of its own.",
       "surprise": "",
       "flag": "larders_furnace_beaten",
       "monsters": [
@@ -1339,7 +1374,7 @@
         {
           "monster": "flameskull",
           "cell": [
-            36,
+            38,
             6
           ]
         },
@@ -1350,6 +1385,13 @@
             3
           ],
           "name": "The Bound Fire"
+        },
+        {
+          "monster": "flameskull",
+          "cell": [
+            38,
+            1
+          ]
         }
       ]
     },
@@ -1357,73 +1399,146 @@
       "id": "larders_questioner",
       "trigger": "enter_area:larders_torture_chamber",
       "when": "not flag.larders_questioner_beaten",
-      "text": "A grey figure at the rack looks up, pleased. Hands scuttle out of every corner, and the drain begins to rise.",
+      "text": "Grey figures at the rack look up, pleased. Hands scuttle out of every corner, and the drain begins to rise.",
       "surprise": "",
       "flag": "larders_questioner_beaten",
       "monsters": [
         {
-          "monster": "wight",
+          "monster": "wraith",
           "cell": [
             6,
             21
           ],
-          "name": "The Questioner"
+          "name": "The Questioner",
+          "hp": 151
         },
         {
           "monster": "black_pudding",
           "cell": [
             7,
             24
-          ]
+          ],
+          "hp": 153
         },
         {
           "monster": "black_pudding",
           "cell": [
             10,
             24
-          ]
+          ],
+          "hp": 153
         },
         {
           "monster": "crawling_claw",
           "cell": [
             3,
             21
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             4,
             23
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             11,
             21
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             12,
             24
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             10,
             23
-          ]
+          ],
+          "hp": 4
         },
         {
           "monster": "crawling_claw",
           "cell": [
             2,
             24
-          ]
+          ],
+          "hp": 4
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            14,
+            21
+          ],
+          "hp": 4
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            8,
+            20
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            8,
+            22
+          ],
+          "hp": 151
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            5,
+            25
+          ],
+          "hp": 4
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            22
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            14,
+            23
+          ],
+          "hp": 151
+        },
+        {
+          "monster": "crawling_claw",
+          "cell": [
+            14,
+            25
+          ],
+          "hp": 4
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            11,
+            22
+          ],
+          "hp": 153
         }
       ]
     },
@@ -1440,21 +1555,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
+            10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
@@ -1471,21 +1589,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
+            10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
@@ -1493,7 +1614,7 @@
       "id": "larders_doru_hunger",
       "trigger": "dialogue",
       "flag": "larders_doru_destroyed",
-      "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first.",
+      "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first, and down the row the other cells begin to rattle.",
       "surprise": "",
       "monsters": [
         {
@@ -1502,7 +1623,235 @@
             9,
             9
           ],
-          "name": "Doru"
+          "name": "Doru",
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            9
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            10
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            10
+          ],
+          "hp": 104
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            17,
+            10
+          ],
+          "hp": 104
+        }
+      ]
+    },
+    {
+      "id": "larders_donjon",
+      "trigger": "enter_area:larders_hall_of_bones",
+      "when": "item:sunsword",
+      "final_battle": "castle_ravenloft_hall_of_bones",
+      "lair": true,
+      "text": "At the head of the table of bones, your host rises. Along both sides, the chairs stand up with him. Four of his spawn take the places at the foot of the table.",
+      "surprise": "",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            37,
+            18
+          ],
+          "hp": 520
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            31,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            33,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            31,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            32,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            17
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            37,
+            19
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            17
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            19
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            38,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            38,
+            19
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            37,
+            16
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            37,
+            20
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            16
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            36,
+            20
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            38,
+            16
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            38,
+            20
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            35,
+            16
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            35,
+            20
+          ],
+          "name": "One of Strahd's spawn"
         }
       ]
     },

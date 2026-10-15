@@ -1,0 +1,15 @@
+{
+  "id": "pool_sergei_face",
+  "title": "The Face in the Water",
+  "summary": "Ireena kneels at the Pool of the White Sun in Krezk and the face in the water is Sergei's.",
+  "images": [
+    {
+      "image": "pool_sergei_face",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -351,6 +351,13 @@
             17,
             12
           ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            13,
+            7
+          ]
         }
       ],
       "surprise": "enemies",
@@ -373,6 +380,34 @@
             9
           ],
           "hp": 50
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            13,
+            7
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            15,
+            7
+          ]
+        },
+        {
+          "monster": "ghoul",
+          "cell": [
+            17,
+            7
+          ]
         }
       ],
       "surprise": "enemies",

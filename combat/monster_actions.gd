@@ -387,6 +387,9 @@ func save_targets(c: Combatant, act: Dictionary) -> Array[Combatant]:
 	for t in e.hostiles_of(c):
 		if t.is_down() and not "incapacitated" in (tg.get("requires", []) as Array):
 			continue
+		# An Invisible hero it can't see isn't one it can pick (EncounterSight.unseen_foe).
+		if e.sight.unseen_foe(c, t):
+			continue
 		if bool(tg.get("in_space", false)):
 			var shares := false
 			for cell in t.footprint():
@@ -633,6 +636,60 @@ func cast(c: Combatant, spell_id: String, targets: Array, point: Vector2 = Vecto
 	return r
 
 
+## A monster's spell save DC from its Spellcasting block, with the bonuses to its own DCs (Tactician's +2).
+func spell_dc(c: Combatant) -> int:
+	var sc := data_of(c).get("spellcasting", {}) as Dictionary
+	var ab := StringName(str(sc.get("ability", "int")))
+	var dc := int(sc.get("dc", 8 + c.creature.ability_mod(ab) + c.creature.proficiency_bonus()))
+	var ctx := c.creature.formula_context()
+	for m in c.creature.modifiers_for(&"spell_dc"):
+		dc += c.creature.mod_value(m, ctx)
+	return dc
+
+
+## How a monster could cast the Reaction spell `spell_id` now (Shield, Counterspell): "spellcasting" for a use of its
+## Spellcasting block (at will or N/day), a Reaction that casts it by that Reaction's id (the mage's Protective Magic,
+## 3/day: Counterspell or Shield), or "" when it can't (none left, Antimagic, can't cast).
+func reaction_spell_source(c: Combatant, spell_id: String) -> String:
+	if not c.creature is Monster:
+		return ""
+	for sp in spells_now(c):
+		if str(sp["id"]) == spell_id:
+			return "spellcasting"
+	if c.creature.has_flag("cant_cast") or enc().spells.specials.high.in_antimagic(c):
+		return ""
+	for raw: Variant in data_of(c).get("reactions", []):
+		var act := raw as Dictionary
+		if spell_id in (act.get("cast", []) as Array) and _reaction_uses_left(c, act) > 0:
+			return str(act["id"])
+	return ""
+
+
+func _reaction_uses_left(c: Combatant, act: Dictionary) -> int:
+	var uses := act.get("uses", {}) as Dictionary
+	if uses.is_empty():
+		return 99
+	return int(uses.get("count", 1)) - int(c.get_meta("react_%s" % act["id"], 0))
+
+
+## Spends the use reaction_spell_source finds for `spell_id` (an N/day casting, or one of the Reaction's uses; the
+## Reaction itself is the caller's). The level it's cast at (the block's `levels`, else the spell's own), 0 if none.
+func spend_reaction_spell(c: Combatant, spell_id: String) -> int:
+	var src := reaction_spell_source(c, spell_id)
+	if src == "":
+		return 0
+	var sc := data_of(c).get("spellcasting", {}) as Dictionary
+	if src == "spellcasting":
+		var per_day := sc.get("per_day", {}) as Dictionary
+		for n: String in per_day:
+			if spell_id in (per_day[n] as Array):
+				c.set_meta("cast_%s" % spell_id, int(c.get_meta("cast_%s" % spell_id, 0)) + 1)
+				break
+	else:
+		c.set_meta("react_%s" % src, int(c.get_meta("react_%s" % src, 0)) + 1)
+	return int((sc.get("levels", {}) as Dictionary).get(spell_id, maxi(1, int(Compendium.shared().spell_data(spell_id).get("level", 1)))))
+
+
 # --- Turn hooks -----------------------------------------------------------------------------------
 
 ## Start of `c`'s turn: Recharge, auras of nearby monsters (Stench, Festering Aura), Engulf damage, Sunlight
@@ -691,6 +748,9 @@ func turn_start(c: Combatant) -> CombatResult:
 				e.deal_damage(by, c, [{"amount": int(gr["total"]), "type": str(gd["type"])}], false, "%s's grip" % by.name(), [str(gr["text"])])
 		# Whelm (water elemental): each creature it holds takes damage at the start of its turn.
 		for k: String in e.grapples.keys():
+			# An earlier hold's damage can end this one (the held creature died and let go): skip what's gone.
+			if not e.grapples.has(k):
+				continue
 			var held := e.get_c(k)
 			if str(e.grapples[k]) == c.id and held != null and held.is_alive() and held.has_meta("hold_damage"):
 				var hd := held.get_meta("hold_damage") as Dictionary
@@ -954,33 +1014,84 @@ func lycanthrope(t: Combatant) -> bool:
 	m.name = "%s (%s)" % [t.name(), kind]
 	m.hp = 10
 	t.creature.dead = true
-	e.events.append({"type": "vanish", "id": t.id})
+	# `becomes` is how the change looks and sounds (FxShapeshift): the creature changes where it fell, and the werewolf
+	# stands up in its place.
+	e.events.append({"type": "vanish", "id": t.id, "becomes": kind})
 	var w := e.add(m, &"enemy", t.cell)
 	e.insert_after(t, w)
-	e.events.append({"type": "summon_creature", "id": w.id, "cell": w.cell, "caster": t.id})
+	e.events.append({"type": "summon_creature", "id": w.id, "cell": w.cell, "caster": t.id, "becomes": kind})
 	e.log.add("death", "%s changes into a %s!" % [t.name(), kind], w.id)
 	return true
 
 
-## Shape-Shift (no cost here): a lycanthrope between its true form and the hybrid it fights in. The AI only ever goes
-## into the hybrid; an ally the player runs (FeatureActions) can go back.
-func shift(c: Combatant) -> void:
+## Shape-Shift (no cost here): a lycanthrope between its true form and the hybrid it fights in, or the animal `to` its
+## block's `forms` list (a werewolf's "wolf", a wereraven's "raven": an ally the player runs picks it). With no `to` it
+## goes into the hybrid, and back to human from any other form. The AI only ever goes into the hybrid; an ally the
+## player runs (FeatureActions) can go back.
+func shift(c: Combatant, to: String = "") -> void:
 	var e := enc()
-	var back := str(c.get_meta("form", "humanoid")) == "hybrid"
+	var now := str(c.get_meta("form", "humanoid"))
+	if to != "" and to != now and not e.legendary.shape(c, to).is_empty():
+		e.legendary._set_form(c, to)   # logs the change and shows the animal
+		return
+	if not e.legendary.shape(c, now).is_empty():
+		force_true_form(c)   # back from an animal form
+		return
+	var back := now == "hybrid"
 	c.set_meta("form", "humanoid" if back else "hybrid")
-	e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	# Only a lycanthrope's other form is a hybrid; a Mimic's or a Night Hag's Shape-Shift is its own change of shape.
+	if is_lycanthrope(c):
+		e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	else:
+		e.log.add("info", ("%s returns to its true form" if back else "%s changes shape") % c.name(), c.id)
+	show_form(c, back)
+
+
+## Whether `c` is a lycanthrope (its stat block says so): Shape-Shift takes it into a hybrid and its animal.
+func is_lycanthrope(c: Combatant) -> bool:
+	return c.creature is Monster and "lycanthrope" in ((c.creature as Monster).data.get("tags", []) as Array)
+
+
+## `c` is put back in its true form by something other than its own Shape-Shift (Moonbeam): out of an animal shape or
+## its hybrid, with the board following.
+func force_true_form(c: Combatant) -> void:
+	var e := enc()
+	if not e.legendary.shape(c, str(c.get_meta("form", "humanoid"))).is_empty():
+		e.legendary._set_form(c, e.legendary.base_form(c))
+		return
+	c.set_meta("form", "humanoid")
+	show_form(c, true)
+
+
+## The board follows a lycanthrope's change of form (`back`: into its human form): its token swaps to the hybrid figure,
+## or back. `kind` is how the change looks and sounds (FxShapeshift, CombatSfx.shapeshift): a raven's feathers or a
+## wolf's fur. Nothing for a creature with no figure to swap to. Also for a change something else forces (Moonbeam).
+func show_form(c: Combatant, back: bool) -> void:
 	var art := _hybrid_art(c)
 	if art != "":
-		e.events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art})
+		enc().events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art,
+			"kind": "wereraven" if art.contains("raven") else "werewolf"})
 
 
-## The figure a story ally takes on in their hybrid form, or "" to keep their own. Davian, Adrian and Ilinca fight in
-## their own clothes under the wereraven's stat block, so their hybrid is the wereraven's; someone whose stat block is
-## their own (Emil) keeps the figure they have.
+## The sprite `c` wears in the form it is in now (its hybrid's), or "" in its own: what a fight picked up from a save
+## draws it as (CombatView._restore_forms).
+func form_art(c: Combatant) -> String:
+	return _hybrid_art(c) if str(c.get_meta("form", "humanoid")) == "hybrid" else ""
+
+
+## The figure a lycanthrope takes on in its hybrid form, or "" to keep its own: the stat block's `hybrid_art` (Emil and
+## Kiril are drawn as men, so the werewolf's figure is theirs for the change, as a foe or an ally). Davian, Adrian and
+## Ilinca fight in their own clothes under the wereraven's stat block, so their hybrid is the wereraven's. A foe drawn as
+## its hybrid with no `human_art` has nothing to swap; one with it walks in as a person and changes into `art`.
 func _hybrid_art(c: Combatant) -> String:
-	if not c.creature.id.begins_with("guest_") or not c.creature is Monster:
+	if not c.creature is Monster:
 		return ""
 	var data := (c.creature as Monster).data
+	if str(data.get("hybrid_art", "")) != "":
+		return str(data["hybrid_art"])
+	if not c.creature.id.begins_with("guest_"):
+		# A foe that walks in as a person (`human_art`) changes into the figure it is drawn as.
+		return str(data.get("art", data.get("id", ""))) if data.has("human_art") else ""
 	var art := str(data.get("art", data.get("id", "")))
 	var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
 	return "" if art == str(npc.get("sprite", npc.get("id", ""))) else art
@@ -1029,7 +1140,7 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 						e.log.add("info", "%s melts into the shadows (Stealth %d)" % [c.name(), t.total], c.id)
 				return CombatResult.new()
 			"shape_shift":
-				if plan == "shift" and str(c.get_meta("form", "humanoid")) == "humanoid":
+				if plan == "shift" and str(c.get_meta("form", "humanoid")) == "humanoid" and is_lycanthrope(c):
 					c.bonus_available = false
 					shift(c)
 				return CombatResult.new()

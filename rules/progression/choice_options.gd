@@ -248,6 +248,9 @@ static func _swap_noun(c: Choice) -> String:
 static func _swap_when(c: Choice) -> String:
 	match c.replaceable:
 		"long_rest":
+			# Spells a Long Rest lets you change can be changed any time outside a fight (deviations.md).
+			if c.kind in ["spell", "cantrip"]:
+				return "change after a Long Rest, or any time outside a fight"
 			return "change after a Long Rest"
 		"level_up":
 			return "change when this class gains a level"
