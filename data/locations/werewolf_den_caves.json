@@ -498,8 +498,16 @@
       "flag": "kiril_hoard_opened",
       "items": [
         {
-          "id": "potion_of_healing",
-          "qty": 2
+          "id": "ring_of_regeneration",
+          "qty": 1
+        },
+        {
+          "id": "wand_of_enemy_detection",
+          "qty": 1
+        },
+        {
+          "id": "ring_of_animal_influence",
+          "qty": 1
         },
         {
           "id": "perfume",
