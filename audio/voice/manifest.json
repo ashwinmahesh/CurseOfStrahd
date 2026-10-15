@@ -72830,170 +72830,198 @@
  },
  "rahadin/03f9451a0bdddf90": {
   "chars": 108,
+  "direction": "[grave, weary, matter-of-fact menace]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Everyone I have killed in his service. They do not leave me. It is the price of a long career, and I pay it."
  },
  "rahadin/1a7992ed12daa83d": {
   "chars": 98,
+  "direction": "[grave, deliberate, cold warning]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "There are three rules. Go where you like. Take nothing that is not offered. Do not touch the girl."
  },
  "rahadin/1a7dbb4d581dc3a4": {
   "chars": 39,
+  "direction": "[weary, grave, quiet]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "I was. I am Rahadin. I keep this house."
  },
  "rahadin/1cf507d3d96917ab": {
   "chars": 81,
+  "direction": "[low, slow, ominous courtesy]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Guests do not usually come this far along the corridor. Those who do, I remember."
  },
  "rahadin/212efa5e9490340c": {
   "chars": 46,
+  "direction": "[cold courtesy, clipped]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "As you wish. He will want to hear how it went."
  },
  "rahadin/24413991626dddb8": {
   "chars": 24,
+  "direction": "[flat, chilling, curt]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "I do not ask their ages."
  },
  "rahadin/259e04d531a3327e": {
   "chars": 93,
+  "direction": "[dry, cold amusement, slow]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "The master will be amused. She will come back on her own; they generally do. Mind the stairs."
  },
  "rahadin/26145a41f08e8b1b": {
   "chars": 74,
+  "direction": "[cold, proprietary, low]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "They are mine. I have collected them for a long time. You need not listen."
  },
  "rahadin/3873274664ab3eee": {
   "chars": 90,
+  "direction": "[flat, exact, grave]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "In the house. He is always in the house, even when he is not. He receives when he chooses."
  },
  "rahadin/4754171eb5d6b9d4": {
   "chars": 93,
+  "direction": "[formal, measured, quietly imposing]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "You came up the grand stair, so you are the master's guests. I am Rahadin. I keep this house."
  },
  "rahadin/48cdac7153862eba": {
   "chars": 127,
+  "direction": "[calm, cool, deliberate]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "She rang for him an hour ago and told him what you said. He asked me to see her safely back upstairs. I always do what he asks."
  },
  "rahadin/5a37e9e5e836a614": {
   "chars": 72,
+  "direction": "[quiet, firm, warning]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "A guest of the master, in the rooms above. She is content. Leave her so."
  },
  "rahadin/5ff57dccc0f57c2a": {
   "chars": 81,
+  "direction": "[courteous, dry, dismissive]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Then I will not keep you. Supper is at dusk, if the master remembers to serve it."
  },
  "rahadin/603a5eaacb79d072": {
   "chars": 68,
+  "direction": "[dry, precise, cold]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "I keep accounts. Lipsiege keeps the master's money. I keep the rest."
  },
  "rahadin/777c18ff4785429a": {
   "chars": 69,
+  "direction": "[dry, cold, warning]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "He wants to be amused. Amuse him, and you will live longer than most."
  },
  "rahadin/8b33e22a50da5f9a": {
   "chars": 16,
+  "direction": "[cold, final, quiet menace]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "No. I think not."
  },
  "rahadin/a3975eaec99406d4": {
   "chars": 75,
+  "direction": "[dry, grave, cold]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "The youngest son ran. I let him. It was an oversight. I have not made many."
  },
  "rahadin/a8dbbf58ad4f6f77": {
   "chars": 69,
+  "direction": "[cold courtesy, quietly menacing, slow]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "You are still here. Good. The master dislikes guests who leave early."
  },
  "rahadin/b3cf2a013ceadd04": {
   "chars": 126,
+  "direction": "[guarded, cold, measured]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "If an old woman has turned cards for you, you know more than I am permitted to say. Her cards are seldom wrong. It annoys him."
  },
  "rahadin/bc574a5f3e7fb934": {
   "chars": 15,
+  "direction": "[cold fury held low, curt]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Leave my sight."
  },
  "rahadin/bfc4b38eda3edba3": {
   "chars": 9,
+  "direction": "[dry, curt, deadpan]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Punctual."
  },
  "rahadin/c235ba415bf76a0a": {
   "chars": 207,
+  "direction": "[flat, bleak, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "The Velikovs. The mother, I think. She asked me to spare the children. I explained that there were no children, only the master's tenants, and that tenants who stone the master's guest are no longer tenants."
  },
  "rahadin/d7a115f7f2a5e3a3": {
   "chars": 116,
+  "direction": "[proud, formal, immovable]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "Since before this valley had his name. I served the man; I serve what he became. The house needs keeping either way."
  },
  "rahadin/e225f1648d2ea2a9": {
   "chars": 114,
+  "direction": "[dry, courteous, faintly menacing]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "You found my room before you found me. Most guests manage it the other way round. I am Rahadin. I keep this house."
  },
  "rahadin/ebade3cbe94608a7": {
   "chars": 48,
+  "direction": "[formal, cold, courteous]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "The master thanks you for returning what is his."
  },
  "rahadin/f520d1942c11b622": {
   "chars": 103,
+  "direction": "[low, guarded, quietly ominous]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "I know the face. Everyone in this house knows the face. Her rooms have been ready for a very long time."
  },
  "rahadin/f6440bb429cf9df8": {
   "chars": 55,
+  "direction": "[formal, level, imposing]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "I am Rahadin. I keep this house, and I keep its guests."
  },
  "rahadin/fd9110d9094e2a6a": {
   "chars": 42,
+  "direction": "[firm, low, absolute]",
   "model": "eleven_v3",
-  "recipe": "299cfbf6e9",
+  "recipe": "a893168d86",
   "text": "The girl is the master's guest. She stays."
  },
  "ratatoille/00b08db7a0467323": {
