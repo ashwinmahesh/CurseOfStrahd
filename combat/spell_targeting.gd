@@ -298,16 +298,18 @@ func point_distance_ft(who: Combatant, point: Vector2) -> int:
 
 
 ## Why `ally` can't go along when the caster teleports with a spell that takes one willing creature (`bring_along`:
-## Thunder Step); "" when it can. It must be willing (on the caster's side and able to agree), no larger than the
-## caster and within the spell's distance of it. Whether there is room beside the landing is settled as it lands.
+## Dimension Door, Thunder Step); "" when it can. It must be willing (on the caster's side and able to agree), within
+## the spell's distance of the caster and, when the spell says `max_size: caster` (Thunder Step), no larger than it.
+## Whether there is room beside the landing is settled as it lands.
 func companion_why(c: Combatant, s: Dictionary, ally: Combatant) -> String:
 	if ally == null or ally == c or not ally.is_alive():
 		return "Choose a creature to bring along"
 	if not c.allied_with(ally) or not ally.can_act():
 		return "%s isn't willing to go along" % ally.name()
-	if Creature.SIZES.find(ally.creature.size) > Creature.SIZES.find(c.creature.size):
+	var along := s.get("bring_along", {}) as Dictionary
+	if str(along.get("max_size", "")) == "caster" and Creature.SIZES.find(ally.creature.size) > Creature.SIZES.find(c.creature.size):
 		return "%s is larger than you: only your size or smaller can come along" % ally.name()
-	var within := int((s.get("bring_along", {}) as Dictionary).get("within", 5))
+	var within := int(along.get("within", 5))
 	if enc().distance(c, ally) > within:
 		return "%s is more than %d ft away" % [ally.name(), within]
 	return ""

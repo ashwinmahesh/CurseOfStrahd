@@ -104,8 +104,8 @@ its slot spent, held with Concentration, and released at the first enemy to come
 - Summons: SummonBlocks builds Find Steed, Summon Beast, Giant Insect, Summon Aberration, Summon Construct and Summon
   Elemental from the slot level and the cast-time choice.
 - Teleports (`SpellTargeting.TELEPORTS`: Misty Step, Dimension Door, Thunder Step, Far Step) ask the hotbar for a square (`place`), whatever area the
-  spell has; `bring_along: {within}` lets one willing creature of the caster's size or smaller go too (`opts.with`, `SpellTargeting.companion_why`;
-  the combat view asks after the square, TargetPicker `companion`).
+  spell has; `bring_along: {within, max_size}` lets one willing creature go too (Dimension Door: any size; Thunder Step: `max_size: caster`, the caster's size or smaller;
+  `opts.with`, `SpellTargeting.companion_why`; the combat view asks after the square, TargetPicker `companion`).
 - Code handlers (combat/spell_specials.gd): Polymorph (combat/shape_change.gd), Banishment, Otiluke's Resilient Sphere,
   Dimension Door, Thunder Step, Far Step, Heat Metal, Confusion, Compelled Duel, Compulsion, Dominate Beast, Dissonant Whispers, Eldritch Blast's
   beams, Sorcerous Burst.

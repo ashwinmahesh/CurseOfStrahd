@@ -558,3 +558,53 @@ func test_an_antimagic_field_stops_a_teleport_into_it_and_the_repeat_teleport_in
 	var r := e.spells.use_sustained(c, id, [], Vector2(12.5, 2.5))
 	assert_false(r.ok)
 	assert_true(r.reason.contains("Antimagic"), r.reason)
+
+
+# --- Dimension Door's companion, picked the same way ----------------------------------------------------
+
+func test_dimension_door_asks_who_comes_along_and_any_size_may() -> void:
+	var e := _hall()
+	var c := _caster(e, Vector2i(2, 2))
+	var ogre_ally := e.add(TestCombat.monster("ogre"), &"party", Vector2i(2, 1))
+	var foe := _soft(e, Vector2i(2, 3))
+	TestCombat.start_with(e, c)
+	var cat := ActionCatalog.new(e)
+	var dd := Compendium.shared().spell_data("dimension_door")
+	assert_eq(int((dd["bring_along"] as Dictionary)["within"]), 5)
+	assert_false((dd["bring_along"] as Dictionary).has("max_size"), "no size limit in the 2024 text")
+	assert_eq(e.spells.targeting.companions_for(c, dd), [ogre_ally] as Array[Combatant], "a Large ally can come; a foe can't")
+	var a := cat.find(c, "spell:dimension_door")
+	assert_true(bool(a["legal"]), str(a["reason"]))
+	var picker := TargetPicker.new(e)
+	picker.begin(c, a, 4)
+	assert_true(picker.bring_along(c, a, Vector2(14.5, 2.5), 4))
+	assert_true(picker.candidate(ogre_ally))
+	assert_false(picker.candidate(foe))
+	var view := picker.show(Vector2i(2, 1), ogre_ally)
+	assert_true(str(view["title"]).contains("Dimension Door"), str(view["title"]))
+	assert_false(view.has("outline"), "no boom to draw")
+	assert_false(str((view["lines"] as Array)[1]).contains("size or smaller"), "the Thunder Step hint is not shown here")
+	var go := picker.pick(Vector2i(2, 1), ogre_ally)
+	assert_eq(str(go["do"]), "perform")
+	var r := cat.perform(c, go["action"] as Dictionary, go["targets"] as Array, go["point"] as Vector2, go["dir"] as Vector2, 4)
+	assert_true(r.ok, r.reason)
+	while e.pending != null:
+		e.answer_reaction(true)
+	assert_eq(c.cell, Vector2i(14, 2))
+	assert_true(e.distance(c, ogre_ally) <= 5, "the ogre arrived beside")
+	# And Thunder Step still keeps to the caster's size.
+	var ts := Compendium.shared().spell_data("thunder_step")
+	assert_ne(e.spells.targeting.companion_why(c, ts, ogre_ally), "")
+
+
+func test_dimension_door_with_a_companion_who_cannot_come_is_refused_before_anything_is_spent() -> void:
+	var e := _hall()
+	var c := _caster(e, Vector2i(2, 2))
+	var foe := _soft(e, Vector2i(2, 3))
+	TestCombat.start_with(e, c)
+	var slots := (c.creature as Character).slots_left(4)
+	var r := e.spells.cast(c, "dimension_door", 4, [], Vector2(14.5, 2.5), Vector2.ZERO, {"with": foe.id})
+	assert_false(r.ok)
+	assert_true(r.reason.contains("willing"), r.reason)
+	assert_eq((c.creature as Character).slots_left(4), slots)
+	assert_eq(c.cell, Vector2i(2, 2))

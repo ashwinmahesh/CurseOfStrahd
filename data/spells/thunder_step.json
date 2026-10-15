@@ -37,7 +37,8 @@
   },
   "area_targets": "others",
   "bring_along": {
-    "within": 5
+    "within": 5,
+    "max_size": "caster"
   },
   "save": "con",
   "save_success": "half",

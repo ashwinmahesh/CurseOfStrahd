@@ -370,6 +370,8 @@ func dimension_door(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		var spot := sp()._free_cell_near(cell, ally.size_cells)
 		if e.grid.distance_ft(cell, c.size_cells, spot, ally.size_cells) <= 5:
 			sp()._teleport(ally, spot, r)
+		else:
+			r.lines.append(e.log.add("info", "No room beside the landing: %s is left behind" % ally.name(), ally.id))
 
 
 # --- Thunder Step and Far Step ------------------------------------------------------------------------

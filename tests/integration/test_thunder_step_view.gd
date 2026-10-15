@@ -115,3 +115,18 @@ func test_with_nobody_to_bring_there_is_nobody_to_ask() -> void:
 	view._cancel_targeting()
 	_root.queue_free()
 	await _frames(1)
+
+
+func test_dimension_door_asks_the_same_way() -> void:
+	await _board()
+	_aim("dimension_door")
+	_point_at(Vector2i(12, 3))
+	view._confirm_target(wizard, null)
+	assert_true(view.picker.active(), "a willing ally beside the caster: asked")
+	assert_eq(view.picker.step, "companion")
+	view._next_target()
+	assert_eq(view.cursor_cell, buddy.cell, "the ally")
+	assert_true(view._undo_pick())
+	view._cancel_targeting()
+	_root.queue_free()
+	await _frames(1)

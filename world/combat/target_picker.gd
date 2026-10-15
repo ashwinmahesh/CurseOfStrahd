@@ -5,7 +5,7 @@ extends RefCounted
 ## creature Crown of Madness's victim must attack (or no one), the ally Maneuvering Attack lets move, with its square,
 ## who an Evoker's Evocation spell shields (Sculpt Spells), which creatures in a spell's area it takes when it takes
 ## up to so many of the caster's choice (Slow, Mass Cure Wounds), and the willing creature a teleport takes along
-## (Thunder Step). It keeps what has been picked, says what the floor and
+## (Dimension Door, Thunder Step). It keeps what has been picked, says what the floor and
 ## the tooltip show, and builds the command; the engine checks every pick (SpellTargeting, SpellPlacement,
 ## EncounterWeapons, EncounterMovement, SpellSaves). It also says where an area placed at a point goes (aim).
 
@@ -555,20 +555,24 @@ func _show_choose(out: Dictionary, who: Combatant) -> void:
 func _show_companion(out: Dictionary, who: Combatant) -> void:
 	var s := _spell(action)
 	var landing := Vector2i(floori(_point.x), floori(_point.y))
-	out["outline"] = e.spells.targeting.area_outline(c, s, _point, Vector2.ZERO, slot)
-	out["outline_cells"] = e.spells.area_for(c, s, _point, Vector2.ZERO, slot)
+	# A boom round the space left (Thunder Step) keeps its edge on the floor; a teleport with no area (Dimension Door) has none.
+	var boom := s.has("area")
+	if boom:
+		out["outline"] = e.spells.targeting.area_outline(c, s, _point, Vector2.ZERO, slot)
+		out["outline_cells"] = e.spells.area_for(c, s, _point, Vector2.ZERO, slot)
 	out["goal"] = [landing]
-	var chosen := e.spells.targeting.companions_for(c, s)
-	for o in chosen:
+	for o in e.spells.targeting.companions_for(c, s):
 		(out["friendly"] as Array).append_array(o.footprint())
+	var smaller := str((s.get("bring_along", {}) as Dictionary).get("max_size", "")) == "caster"
 	out["title"] = "%s: bring someone along?" % s.get("name", "")
-	var lines: Array = ["Click an ally beside you to bring along (it must be your size or smaller)",
+	var lines: Array = ["Click an ally beside you to bring along%s" % (" (it must be your size or smaller)" if smaller else ""),
 		"Enter or click the landing square: go alone · Backspace or right-click: another square"]
 	var warnings: Array = []
 	var caught: Array = []
-	for o in e.spells.creatures_in(out["outline_cells"] as Array[Vector2i]):
-		if o != c and o != who:
-			caught.append(o.name())
+	if boom:
+		for o in e.spells.creatures_in(out["outline_cells"] as Array[Vector2i]):
+			if o != c and o != who:
+				caught.append(o.name())
 	if who != null and who != c:
 		var why := e.spells.targeting.companion_why(c, s, who)
 		if why != "":
@@ -577,7 +581,7 @@ func _show_companion(out: Dictionary, who: Combatant) -> void:
 			lines.push_front("%s comes along" % who.name())
 			var spot := e.spells._free_cell_near(landing, who.size_cells)
 			if e.grid.distance_ft(landing, c.size_cells, spot, who.size_cells) > 5 or not e.spells._room_for(spot, who.size_cells):
-				warnings.append("No room beside the landing: %s would be left behind, in the boom" % who.name())
+				warnings.append("No room beside the landing: %s would be left behind%s" % [who.name(), ", in the boom" if boom else ""])
 	if not caught.is_empty():
 		lines.append("In the boom: %s" % ", ".join(caught))
 	out["lines"] = lines
