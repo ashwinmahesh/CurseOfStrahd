@@ -177,6 +177,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if LocationParty.ensure_living_leader(self):
+		party_tended.emit()   # the dead don't lead: the next hero took over, and the party panel shows it
 	LocationStealth.show_crouch(self)
 	_exit_check -= delta
 	if _exit_check <= 0.0:
@@ -278,6 +280,11 @@ func place_guests() -> void:
 
 func set_leader(index: int) -> void:
 	LocationParty.set_leader(self, index)
+
+
+## Who leads next going `step` round the marching order, passing over the dead (-1: nobody else can).
+func next_leader_index(step: int) -> int:
+	return LocationParty.next_leader(self, step)
 
 
 func _save_positions() -> void:
