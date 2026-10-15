@@ -1,0 +1,15 @@
+{
+  "id": "mother_lands",
+  "title": "Mother Comes Down in Krezk",
+  "summary": "From the abbey wall, a small figure with great grey wings stands on a snowy roof in Krezk far below, and Clovin holds her old boots.",
+  "images": [
+    {
+      "image": "mother_lands",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

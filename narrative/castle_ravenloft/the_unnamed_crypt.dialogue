@@ -63,6 +63,7 @@ Corvina: Corvina. Put it on the box. Everybody has a name on their box.
 else
 Narrator: She falls the way his spawn fall, all at once, into dust and an old scholar's coat. In the coat there's a slip of paper with a few lines of small, slanted handwriting and a name at the bottom: Corvina.
 endif
+cutscene corvina_coat
 Narrator: In the crypt, under where she lay, are the things the count let her keep: a purse of old coins in a currency nobody in this valley has seen, and a short black rod with a brass cap, warm to the touch, that drinks the magic out of the air near it.
 gold +500
 give rod_of_absorption

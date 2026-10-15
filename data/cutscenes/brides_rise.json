@@ -1,0 +1,15 @@
+{
+  "id": "brides_rise",
+  "title": "The Brides Rise",
+  "summary": "The three brides spring up from their velvet lounge: cards scatter, the book is closed, and the figure at the window turns.",
+  "images": [
+    {
+      "image": "brides_rise",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -18,6 +18,7 @@ set mordenkainen_spellbook_found
 if not quest.the_mad_mage >= book_found
 quest the_mad_mage book_found
 endif
+cutscene cairn_open
 Narrator: Under the last stone, wrapped in oilcloth gone stiff with cold, lies a fat spellbook bound in grey leather, and tucked inside its cover two loose scrolls, written fast. The hand is strong and impatient. The capital letters all have a little hook.
 give spell_scroll_level_1 2
 interject name:ratatoille: That is a master's book. Not a clever student's. A master's. Somebody else hold it, my hands are shaking.
