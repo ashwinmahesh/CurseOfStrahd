@@ -1440,21 +1440,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
@@ -1471,21 +1474,24 @@
             5,
             16
           ],
-          "name": "Brother Anatol"
+          "name": "Brother Anatol",
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             10,
             12
-          ]
+          ],
+          "hp": 315
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             2,
             13
-          ]
+          ],
+          "hp": 315
         }
       ]
     },
