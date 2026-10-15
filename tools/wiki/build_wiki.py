@@ -1045,13 +1045,17 @@ class Wiki:
         groups = OrderedDict()
         for m in monsters:
             mid = m.get("monster", "")
-            key = (mid, m.get("name", ""))
+            key = (mid, m.get("name", ""), m.get("hp"))
             groups[key] = groups.get(key, 0) + 1
         parts = []
-        for (mid, name), n in groups.items():
+        for (mid, name, hp), n in groups.items():
             link = s.mon(mid)
+            # A fight's own Hit Points for a creature (bosses scaled by level), when they differ from its stat block.
+            own = hp if hp and int(hp) != int((g.monsters.get(mid, {}).get("hp") or {}).get("average", 0) or 0) else None
             if name and name != g.monster_name(mid):
-                link = f"{name} ({link})"
+                link = f"{name} ({link}" + (f", {own} HP)" if own else ")")
+            elif own:
+                link = f"{link} ({own} HP)"
             parts.append(f"{n} × {link}" if n > 1 else link)
         return ", ".join(parts)
 
@@ -1075,6 +1079,8 @@ class Wiki:
             for m in e.get("monsters", []):
                 who.setdefault(m.get("monster", ""), m.get("name", ""))
         names = ", ".join(s.mon(mid) for mid in who if mid)
+        if len(placements) == 1:   # one version: who comes, how many, and any Hit Points of the fight's own
+            names = self.monsters_line(e0.get("monsters", []))
         scales = " Scales with your level." if len(placements) > 1 else ""
         return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
 
@@ -2176,7 +2182,9 @@ class Wiki:
     def checks_page(self):
         g, s = self.g, self.site
         lines = ["Skill checks you can try out in the world, by place. Walk up to the thing and pick the check from "
-                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final.", ""]
+                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final. A check "
+                 "that finds a hiding place shows where it is, and the spot glows until you use it: what's hidden there "
+                 "comes out when you do.", ""]
         total = 0
         for rid in sorted(self.regions, key=lambda r: (g.region_level(r) or 99)):
             rows = []
