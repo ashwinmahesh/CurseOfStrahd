@@ -339,7 +339,13 @@ func shape_art(c: Combatant, sh: Dictionary) -> String:
 
 ## The sprite of the NPC `c` is (a stat block's creature named for them: Offalia on a Night Hag's), or "".
 func npc_figure(c: Combatant) -> String:
-	var mid := str(data_of(c).get("id", ""))
+	return npc_figure_of(c)
+
+
+static func npc_figure_of(c: Combatant) -> String:
+	if not c.creature is Monster:
+		return ""
+	var mid := str((c.creature as Monster).data.get("id", ""))
 	var table := Compendium.shared().table("npcs")
 	for id: String in table:
 		var npc := table[id] as Dictionary

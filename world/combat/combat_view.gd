@@ -2270,7 +2270,8 @@ func _swap_form_art(id: String, art: String, kind: String = "", quiet: bool = fa
 		nt.visible = true
 		nt.refresh()
 	else:
-		nt = CombatToken.create(old.combatant, want)
+		# Its own figure again is its true one, even when what it is now says otherwise (a Werewolf's person).
+		nt = CombatToken.create(old.combatant, want if want != "" else CombatToken.true_figure(old.combatant))
 		nt.position = old.position
 		add_child(nt)
 	tokens[id] = nt

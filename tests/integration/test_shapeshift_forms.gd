@@ -81,7 +81,8 @@ func test_a_hybrid_can_go_straight_to_the_wolf_and_a_foe_werewolf_wears_the_wolf
 	e.events.clear()
 	e.monster_actions.bonus_action(w, "shift")
 	assert_eq(str(w.get_meta("form", "")), "hybrid", "the AI goes into the hybrid, as before")
-	assert_true(_forms(w).is_empty(), "which it already looks")
+	assert_eq(_forms(w).size(), 1, "from the person it walked in as")
+	e.events.clear()
 	e.monster_actions.shift(w, "wolf")
 	var forms := _forms(w)
 	assert_true(forms.size() == 1 and str((forms[0] as Dictionary).get("art", "")) == "wolf", "and a wolf it can be")
@@ -239,3 +240,93 @@ func test_starry_form_celestial_revelation_and_the_disguise_spells_show_and_soun
 	for spell: String in ["disguise_self", "seeming", "alter_self", "gaseous_form", "enlarge_reduce"]:
 		assert_eq(str(SpellFx.spell_cue(spell).get("family", "")), "transform", "%s changes how someone looks" % spell)
 	assert_true(CombatSfx.own("celestial_revelation:heavenly_wings").has("cast"), "its own sound")
+
+
+# --- Lycanthropes that walk in as people ------------------------------------------------------------------------------
+
+func test_every_human_figure_has_sheets_a_height_and_its_hybrid() -> void:
+	var c := Compendium.shared()
+	var seen := 0
+	for id: String in c.table("monsters"):
+		var d := c.monster_data(id)
+		if not d.has("human_art"):
+			continue
+		seen += 1
+		var human := str(d["human_art"])
+		assert_true(DirectionalSprite.frames_for(human) != null, "%s's human figure %s has a walk sheet" % [id, human])
+		assert_true(DirectionalSprite.has_attack(DirectionalSprite.frames_for(human)), "and an attack sheet")
+		assert_true(CombatToken.HEIGHTS.has(human), "and a height")
+		assert_true(DirectionalSprite.frames_for(str(d.get("art", id))) != null, "and the hybrid it changes into")
+		assert_true("lycanthrope" in (d.get("tags", []) as Array), "only a lycanthrope walks in as a person")
+	assert_true(seen >= 1, "a Werewolf does (%d)" % seen)
+
+
+func test_a_foe_werewolf_walks_in_as_a_person_and_changes_into_the_werewolf() -> void:
+	e = TestCombat.open_field()
+	var w := TestCombat.foe(e, "werewolf", Vector2i(9, 4))
+	var named := TestCombat.foe(e, "werewolf", Vector2i(9, 6))
+	named.creature.name = "Zuleika"
+	var hedda := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 5))
+	TestCombat.start_with(e, hedda)
+	assert_eq(CombatToken.art_id(w), "werewolf_human", "a pack werewolf as a person")
+	assert_eq(CombatToken.portrait_id(w), "werewolf", "on the turn bar it is the werewolf")
+	assert_eq(CombatToken.art_id(named), "zuleika_toranescu", "Zuleika as herself")
+	await _show()
+	assert_true(_wears(view.tokens[w.id] as CombatToken, "werewolf_human"), "on the board a person")
+	w.bonus_available = true
+	e.monster_actions.bonus_action(w, "shift")
+	await view._play_events()
+	assert_true(_wears(view.tokens[w.id] as CombatToken, "werewolf"), "then the werewolf, with the effect")
+	assert_true([w.id, "werewolf"] in _shown, "shown")
+	assert_eq(CombatToken.art_id(w), "werewolf", "in the hybrid it is the werewolf's own figure")
+	# The save: a hybrid in the saved fight is drawn the hybrid and goes back to a person.
+	e.monster_actions.shift(w)
+	await view._play_events()
+	assert_true(_wears(view.tokens[w.id] as CombatToken, "werewolf_human"), "and a person again")
+	e.monster_actions.shift(w)
+	await view._play_events()
+	e.monster_actions.shift(w, "wolf")
+	await view._play_events()
+	assert_true(_wears(view.tokens[w.id] as CombatToken, "wolf"), "or a wolf")
+	e.monster_actions.shift(w)
+	await view._play_events()
+	assert_true(_wears(view.tokens[w.id] as CombatToken, "werewolf_human"), "and back to the person")
+	await get_tree().create_timer(0.7).timeout
+	_root.queue_free()
+	await _frames(1)
+
+
+func test_a_resumed_fight_draws_a_werewolf_in_the_form_it_was_in_and_it_can_change_back() -> void:
+	e = TestCombat.open_field()
+	var w := TestCombat.foe(e, "werewolf", Vector2i(9, 4))
+	var hedda := TestCombat.hero(e, "hedda_ironvow", Vector2i(3, 5))
+	TestCombat.start_with(e, hedda)
+	e.monster_actions.shift(w)
+	var saved := EncounterSnapshot.capture(e)
+	e = EncounterSnapshot.restore(saved, DiceRoller.new(4), [] as Array[Character])
+	e.events.clear()
+	var w2 := e.get_c(w.id)
+	assert_eq(str(w2.get_meta("form", "")), "hybrid", "still shifted in the save")
+	await _show()
+	assert_true(_wears(view.tokens[w2.id] as CombatToken, "werewolf"), "drawn the werewolf")
+	e.monster_actions.shift(w2)
+	await view._play_events()
+	assert_true(_wears(view.tokens[w2.id] as CombatToken, "werewolf_human"), "and a person once it changes back")
+	await get_tree().create_timer(0.7).timeout
+	_root.queue_free()
+	await _frames(1)
+
+
+func test_a_foe_wereraven_walks_in_as_a_person_too_and_an_allied_one_keeps_their_own_face() -> void:
+	e = TestCombat.open_field()
+	var w := TestCombat.foe(e, "wereraven", Vector2i(9, 4))
+	var davian := e.add(StoryState.make_guest("davian_martikov"), &"guest", Vector2i(3, 3))
+	TestCombat.start_with(e, davian)
+	assert_eq(CombatToken.art_id(w), "wereraven_human", "a pack wereraven as a person")
+	assert_eq(CombatToken.portrait_id(w), "wereraven")
+	assert_eq(CombatToken.art_id(davian), "davian_martikov", "Davian is Davian, in any form")
+	e.events.clear()
+	w.bonus_available = true
+	e.monster_actions.bonus_action(w, "shift")
+	var forms := _forms(w)
+	assert_true(forms.size() == 1 and str((forms[0] as Dictionary).get("art", "")) == "wereraven" and str((forms[0] as Dictionary).get("kind", "")) == "wereraven", "into the wereraven, with a wereraven's change")

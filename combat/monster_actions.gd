@@ -1027,8 +1027,8 @@ func form_art(c: Combatant) -> String:
 
 ## The figure a lycanthrope takes on in its hybrid form, or "" to keep its own: the stat block's `hybrid_art` (Emil and
 ## Kiril are drawn as men, so the werewolf's figure is theirs for the change, as a foe or an ally). Davian, Adrian and
-## Ilinca fight in their own clothes under the wereraven's stat block, so their hybrid is the wereraven's. A werewolf
-## already drawn as one has nothing to swap.
+## Ilinca fight in their own clothes under the wereraven's stat block, so their hybrid is the wereraven's. A foe drawn as
+## its hybrid with no `human_art` has nothing to swap; one with it walks in as a person and changes into `art`.
 func _hybrid_art(c: Combatant) -> String:
 	if not c.creature is Monster:
 		return ""
@@ -1036,7 +1036,8 @@ func _hybrid_art(c: Combatant) -> String:
 	if str(data.get("hybrid_art", "")) != "":
 		return str(data["hybrid_art"])
 	if not c.creature.id.begins_with("guest_"):
-		return ""
+		# A foe that walks in as a person (`human_art`) changes into the figure it is drawn as.
+		return str(data.get("art", data.get("id", ""))) if data.has("human_art") else ""
 	var art := str(data.get("art", data.get("id", "")))
 	var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
 	return "" if art == str(npc.get("sprite", npc.get("id", ""))) else art

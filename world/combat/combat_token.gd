@@ -59,7 +59,8 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"rahadin": 1.2, "ludmilla_vilisevic": 1.22, "anastrasya_karelova": 1.18, "volenta_popofsky": 1.12,
 	"escher": 1.3, "pidlwick_ii": 0.85, "cyrus_belview": 1.35, "gertruda": 1.15, "brother_anatol": 1.25,
 	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4,
-	"beholder": 1.9}
+	"beholder": 1.9,
+	"werewolf_human": 1.3, "wereraven_human": 1.25}
 
 ## Stat blocks that wear another creature's sprite: a named villain's block and the person drawn for them, or a
 ## familiar and the animal it looks like.
@@ -124,17 +125,40 @@ var _fade := 1.0
 
 
 static func art_id(c: Combatant) -> String:
-	return art_for(c.creature)
+	var human := human_figure(c)
+	return human if human != "" else art_for(c.creature)
 
 
-## The portrait the combat HUD shows for `c`: as art_id, except a story ally whose face the story changed
-## (NpcLooks: Rictavio shows Van Richten's once unmasked, while his figure on the board stays Rictavio's).
+## A lycanthrope drawn as its hybrid (a Werewolf's `art`) walks in as a person and changes into the hybrid when it shifts
+## (MonsterActions._hybrid_art): its figure in its human form, "" when it isn't in human form or has none. A story ally
+## already wears their own (Davian), and a named one the story showed (Zuleika) wears that NPC's.
+static func human_figure(c: Combatant) -> String:
+	if str(c.get_meta("form", "humanoid")) != "humanoid":
+		return ""
+	return true_figure(c)
+
+
+## The figure of `c` in its true (human) form whatever form it is in now, "" for a creature with no figure of its own for
+## it (a stat block's `human_art`).
+static func true_figure(c: Combatant) -> String:
+	if not c.creature is Monster or c.creature.id.begins_with("guest_") or not (c.creature as Monster).data.has("human_art"):
+		return ""
+	var npc := Legendary.npc_figure_of(c)
+	if npc != "" and DirectionalSprite.frames_for(npc) != null:
+		return npc
+	var art := str((c.creature as Monster).data["human_art"])
+	return art if DirectionalSprite.frames_for(art) != null else ""
+
+
+## The portrait the combat HUD shows for `c`: its creature's, except a story ally whose face the story changed
+## (NpcLooks: Rictavio shows Van Richten's once unmasked, while his figure on the board stays Rictavio's). A Werewolf's
+## stays the werewolf's while it walks in as a person.
 static func portrait_id(c: Combatant) -> String:
 	if c.creature.id.begins_with("guest_"):
 		var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
 		if npc.has("looks"):
 			return NpcLooks.portrait(npc, GameState.story)
-	return art_id(c)
+	return art_for(c.creature)
 
 
 ## The sprite and portrait id for a monster's stat block `data`: a hero's look it borrows (`look_of`), its own `art`,

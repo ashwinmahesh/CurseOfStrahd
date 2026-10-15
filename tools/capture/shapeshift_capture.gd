@@ -17,6 +17,8 @@ var strahd: Combatant
 var hedda: Combatant
 var lysaga: Combatant
 var hag: Combatant
+var pack_wolf: Combatant
+var pack_raven: Combatant
 var _focus: Node3D
 
 
@@ -34,6 +36,8 @@ func _ready() -> void:
 	lysaga = TestCombat.foe(e, "baba_lysaga", Vector2i(12, 9))
 	hag = TestCombat.foe(e, "night_hag", Vector2i(8, 9))
 	hag.creature.name = "Morgantha"
+	pack_wolf = TestCombat.foe(e, "werewolf", Vector2i(14, 3))
+	pack_raven = TestCombat.foe(e, "wereraven", Vector2i(14, 9))
 	TestCombat.start_with(e, emil)
 	board = ArenaBoard.build(e.grid)
 	add_child(board)
@@ -117,3 +121,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await _strip(tool, out, "swarm_back", lysaga)
 	e.legendary._set_form(hag, "disguise")
 	await _strip(tool, out, "disguise", hag)
+	# Foes that walk in as people (human_art) and change on their first turn.
+	e.monster_actions.shift(pack_wolf)
+	await _strip(tool, out, "packwolf", pack_wolf)
+	e.monster_actions.shift(pack_raven)
+	await _strip(tool, out, "packraven", pack_raven)
