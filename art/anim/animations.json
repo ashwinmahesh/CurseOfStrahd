@@ -965,5 +965,9 @@
   "wereraven_human": {"who": "a wereraven in human form",
     "attack": "shortsword slash",
     "windup": "the shortsword drawn and raised high over his shoulder, coat flaring",
-    "strike": "the shortsword slashed down and forward at the enemy at full arm's length, lunging"}
+    "strike": "the shortsword slashed down and forward at the enemy at full arm's length, lunging"},
+  "lantern_girl": {"who": "Liliana, the Lantern Girl, a golden ghost girl in a wet festival dress with a ribbon sash, holding a lit paper lantern by its string in her left hand, all pale candle-gold, cream and amber in every frame (dress, hair, hands, face and lantern; no blue or violet)",
+    "attack": "drowning light",
+    "windup": "drawn back and rising, the lantern lifted high above her head in her left hand so its glow swells, her right hand pulled back beside her face, mouth open in a thin cry",
+    "strike": "surging forward with the lantern swung down and out toward the enemy at arm's length, a burst of pale light leaving it, her right hand thrust straight out with the fingers spread, hair and dress streaming back"}
 }
