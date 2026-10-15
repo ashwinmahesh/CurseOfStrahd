@@ -932,6 +932,6 @@
   "narration": {
     "enter": "enter:yester_hill"
   },
-  "rest": "no",
+  "rest": "risky",
   "rest_text": "Not on this hill. The ground hums under you, and something on the crown is listening for sleepers."
 }
