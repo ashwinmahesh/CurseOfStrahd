@@ -15,7 +15,7 @@
     {
       "id": "hedgerow_blights",
       "weight": 3,
-      "when": "not flag.gulthias_tree_burned",
+      "when": "not flag.gulthias_tree_burned and not flag.yester_hill_resolved",
       "monsters": [
         {
           "monster": "druid",
