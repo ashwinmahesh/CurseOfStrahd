@@ -553,6 +553,10 @@
         {
           "id": "wand_of_the_war_mage_plus_3",
           "qty": 1
+        },
+        {
+          "id": "robe_of_the_archmagi",
+          "qty": 1
         }
       ],
       "gold": 800

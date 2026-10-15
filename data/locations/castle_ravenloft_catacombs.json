@@ -1166,6 +1166,55 @@
             40,
             17
           ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            14
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            18
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            15
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            18
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            17
+          ]
         }
       ]
     },
@@ -1175,7 +1224,7 @@
       "when": "day",
       "surprise": "enemies",
       "flag": "cat_sleepers_slain",
-      "text": "Two of the coffins are not empty. The things in them open their eyes slowly, sick with the day.",
+      "text": "Some of the coffins are not empty. The things in them open their eyes slowly, sick with the day.",
       "monsters": [
         {
           "monster": "vampire_spawn",
@@ -1189,6 +1238,62 @@
           "cell": [
             41,
             16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            14
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            18
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            15
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            41,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            16
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            15
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            42,
+            18
           ]
         }
       ]
@@ -1205,42 +1310,128 @@
           "cell": [
             38,
             7
-          ]
+          ],
+          "hp": 134
         },
         {
           "monster": "gargoyle",
           "cell": [
             41,
             7
-          ]
+          ],
+          "hp": 134
         },
         {
           "monster": "gargoyle",
           "cell": [
             38,
             11
-          ]
+          ],
+          "hp": 134
         },
         {
           "monster": "gargoyle",
           "cell": [
             41,
             11
-          ]
+          ],
+          "hp": 134
         },
         {
           "monster": "gargoyle",
           "cell": [
             40,
             6
-          ]
+          ],
+          "hp": 134
         },
         {
           "monster": "gargoyle",
           "cell": [
             39,
             12
-          ]
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            9
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            42,
+            9
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            8
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            41,
+            9
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            10
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            41,
+            8
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            41,
+            10
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            7
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            40,
+            11
+          ],
+          "hp": 134
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            42,
+            8
+          ],
+          "hp": 134
         }
       ]
     },

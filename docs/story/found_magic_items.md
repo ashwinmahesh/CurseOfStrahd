@@ -8,7 +8,9 @@ you find or are given.
 Rules for this list:
 - 2024 DMG items only (the PHB's potions too). Rarity follows the party's level in each region
   (data/treasure/levels.json): uncommon up to level 4, rare from level 5, very rare from level 9. Legendary stays
-  with the story's artifacts. tests/integration/test_found_items.gd checks the hidden finds against this.
+  with the story's artifacts, except in the hoards of the four deadliest villains, met at level 10 (Strahd,
+  Khazan, the Eye Below, Sarkhaza; Hoard upgrades, Ashwin 2026-10-15). tests/integration/test_found_items.gd checks the
+  hidden finds against this.
 - Most finds sit behind a hidden search or a conversation, fewer in plain chests.
 - **Search (Perception DC n)**: a hidden spot the Search button can turn up within 15 ft. **Search (Investigation
   DC n)**: a hidden compartment you have to work out; the same Search rolls Investigation as well when one is near.
@@ -95,6 +97,7 @@ Already there: Cloak of Protection (Durst footlocker), three Spell Scrolls (stud
 | ✅ | Tser Pool, in the reeds | Elemental Gem, Yellow Diamond (uncommon) | Search (Perception DC 12): a gambler's stake in a bag of dice (lane 28's spot; was a Stone of Good Luck, now Veta's in The Nursemaid's Grave) |
 | ✅ | Tser Pool, a hollow stump | Potion of Fire Breath (uncommon) | Search (Perception DC 14): a flask hidden from Stanimir (lane 28's spot); or a Tip from the camp dog (Speak with Animals) |
 | ✅ | Big Tobar, Tser Pool | Efficient Quiver (uncommon) | Gift: once his son is home (Called by Name, docs/story/side_quests.md) |
+| ✅ | Tser Pool, Madam Eva's painted chest | Potion of Clairvoyance (rare) | Hoard: a seer's own (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Radu, Tser Pool | Rod of the Pact Keeper, +1 (uncommon) | Gift: once the carriage's escort is beaten (The Grey Mare, docs/story/side_quests.md) |
 
 ## The roads (random encounters)
@@ -127,6 +130,7 @@ leaves a smaller purse and one find.
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | The River Ivlis crossroads, the Huntsman's saddlebag | Ring of Animal Influence (rare) | Hoard: once the Huntsman is beaten (The Count's Huntsman, docs/story/side_quests.md) |
+| ✅ | The River Ivlis crossroads, across the Huntsman's saddle | Oathbow (very rare) | Hoard: the black bow he hunted with, once he's beaten (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Vallaki (level 5)
 
@@ -139,6 +143,7 @@ leaves a smaller purse and one find.
 | ✅ | Burgomaster's mansion, Victor's attic | +1 Wand of the War Mage (uncommon) | Search (Investigation DC 15): under the chalk circle's loose board |
 | ✅ | Burgomaster's mansion, the Baron's study | Necklace of Fireballs (rare) | Search (Investigation DC 15): behind the festival ledger |
 | ✅ | Burgomaster's mansion, Izek's chest | Potion of Hill Giant Strength (uncommon) | Hoard |
+| ✅ | Burgomaster's mansion, Izek's chest | Potion of Fire Giant Strength (rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Blue Water Inn, the rooms upstairs | Gloves of Thievery (uncommon) | Search (Perception DC 15): a loose board under a bed |
 | ✅ | Blue Water Inn, the taproom hearth | Bead of Force (rare) | Search (Investigation DC 15): a loose brick |
 | ✅ | Rictavio (Van Richten) | Hat of Disguise (uncommon) | Gift: when you unmask him |
@@ -174,6 +179,7 @@ leaves a smaller purse and one find.
 | ✅ | The crag, the dead oak | Figurine of Wondrous Power, Silver Raven (uncommon) | Search (Perception DC 14): a raven's hoard in the hollow; or a Tip from the ravens themselves (Speak with Animals) |
 | ✅ | The hill, the ditch by the track | Vicious Dagger (rare) | Search (Perception DC 13): a knife dropped in a hurry (lane 28's spot, from the miller's lane, 2026-10-09) |
 | ✅ | The track, Granny Ash's basket | Robe of Eyes (rare) | Hoard: once Granny Ash is dead (The Fourth Sister, docs/story/side_quests.md) |
+| ✅ | Loft, the chest under the straw | Staff of Charming (rare), Wand of Wonder (rare) | Hoard: the coven's (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## The Wizard of Wines (level 6)
 
@@ -199,6 +205,7 @@ leaves a smaller purse and one find.
 | ✅ | The hill, a barrow mound | Amulet of the Devout +2 (rare) | Search (Perception DC 14): buried with a believer (lane 28's spot) |
 | ✅ | Gulthias Tree, the splintered heartwood | Staff of Withering (rare) | Search (Investigation DC 16) |
 | ✅ | The wardens' hoard | Berserker Axe (rare, cursed) | Hoard |
+| ✅ | Gulthias Tree, the druids' offerings | Staff of the Woodlands (rare), two Potions of Healing (Superior) (rare) | Hoard: Ruxandra's, at the crown (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Yester Hill (side quest, level 7)
 
@@ -234,6 +241,7 @@ leaves a smaller purse and one find.
 | ✅ | Church, the Abbot's cot | Ioun Stone of Protection (rare) | Search (Investigation DC 16) |
 | ✅ | Garden, the tool shed | Bag of Beans (rare) | Search (Investigation DC 13) |
 | ✅ | Mother, on the courtyard wall | Winged Boots (uncommon) | Gift: her eighth gift, once she flies (Mother's Ninth Improvement, docs/story/side_quests.md) |
+| ✅ | Church, the sacristy's vestment chest | Mace of Smiting (rare) | Hoard: the Abbot's; he tells you to take it in the repentant ending (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Argynvostholt (level 8)
 
@@ -248,6 +256,7 @@ leaves a smaller purse and one find.
 | ✅ | Argynvost's mausoleum | +2 Shield (rare) | Tip: once the beacon is lit, a niche at the bier opens |
 | ✅ | Sir Godfrey | +1 Plate Armor (rare) | Gift: if he takes up the Order's oath again |
 | ✅ | Sir Godfrey, at the squires' graves | Arrow-Catching Shield (rare) | Gift: Ioan's shield, once Cosmin stands the vigil (The Squire, docs/story/side_quests.md) |
+| ✅ | Upper floor, the commander's strongbox | Ioun Stone (Leadership) (very rare), Potion of Heroism (rare) | Hoard: Vladimir's (lock 18) (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Van Richten's Tower and the Werewolf Den (level 8)
 
@@ -257,11 +266,14 @@ leaves a smaller purse and one find.
 | ✅ | Van Richten's tower, the wall of trophies | Wand of Binding (rare) | Search (Investigation DC 16) |
 | ✅ | Van Richten's tower, the jars and bottles | Oil of Etherealness (rare) | Search (Investigation DC 15) |
 | ✅ | Ezmerelda | Glamoured Studded Leather (rare) | Gift: once she trusts you |
+| ✅ | Van Richten's tower, his strongbox | Arrow of Undead Slaying, two (very rare) | Hoard: the hunter's own (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Werewolf den slope, something in the mud | Boots of Speed (rare) | Search (Perception DC 13): a hunter's boots; or a Tip from Mircea, whose they were, in the bone midden (Speak with Dead) |
 | ✅ | Werewolf caves, Kiril's trophies | Sword of Wounding (rare) | Search (Perception DC 15) |
 | ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
 | ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14); or a Tip from the wolfsbane at the den's door (Speak with Plants) |
 | ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
+| ✅ | Zuleika | Potion of Healing (Supreme), two (very rare) | Gift: if Emil stays with his pack after the pack challenge (Ashwin, 2026-10-14: Supreme, not plain Healing) |
+| ✅ | Kiril's hoard (locked chest, DC 15) | Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare) | Hoard: a pack leader's spoils from the Krezk road (Ashwin, 2026-10-14: replaces the two Potions of Healing) |
 
 ## Under Van Richten's Tower (side quest, level 10)
 
@@ -269,6 +281,7 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | Khazan's undercroft, the drowned crypt | Bracers of Defense (rare) | Search (Investigation DC 16): a drowned apprentice's, in the silt |
 | ✅ | Khazan's study, his coffer | Wand of the War Mage, +3 (very rare) | Hoard: once he's gone for good (The Name Over the Door, docs/story/side_quests.md) |
+| ✅ | Khazan's study, his coffer | Robe of the Archmagi (legendary) | Hoard: his own robe, once he's gone for good (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Berez, Mount Baratok, the Tsolenka Pass (level 9)
 
@@ -296,6 +309,9 @@ leaves a smaller purse and one find.
 | ✅ | Tsolenka Pass, the roc's nest | +2 Greatsword (rare) | Hoard |
 | ✅ | Tsolenka guard tower, the rack of old mail | +2 Chain Mail (very rare) | Search (Investigation DC 16): a hauberk that never rusted |
 | ✅ | Tsolenka guard tower | Horn of Blasting (rare) | Search (Perception DC 14): the watch horn behind the winch |
+| ✅ | Baba Lysaga's hut, the shelf of humming jars | Potion of Flying (very rare), Potion of Invulnerability (rare) | Hoard: once she's dead, bargained with or broken (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | The Mad Mage's hut, his travelling satchel | Spell Scroll of Mordenkainen's Sword (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Tsolenka Pass, the roc's nest | Ioun Stone (Agility) (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Mount Ghakis (side quest, level 10)
 
@@ -303,6 +319,7 @@ leaves a smaller purse and one find.
 |---|---|---|---|
 | ✅ | The keepers' post under Ghakis, the captain's rack | Dragon Slayer (rare) | Hoard: the count's insurance against his own dragon (The Warm Snow, docs/story/side_quests.md) |
 | ✅ | Sarkhaza's cavern, under the hoard | Dragon Scale Mail, silver (very rare) | Gift: the dead silver's own scales, under the red once she's dead (The Warm Snow, docs/story/side_quests.md) |
+| ✅ | Sarkhaza's cavern, in the tithes | Ioun Stone (Mastery) (legendary) | Hoard: once she's dead (The Warm Snow; Hoard upgrades, Ashwin 2026-10-15) |
 
 ## The Amber Temple (level 10)
 
@@ -316,12 +333,14 @@ leaves a smaller purse and one find.
 | ✅ | Library, the books in chains | Tome of Clear Thought (very rare) | Search (Investigation DC 18): a book chained shut that isn't what its spine says |
 | ✅ | Vault, the heap of offerings | Staff of Power (very rare) | Search (Perception DC 16) |
 | ✅ | Exethanter | Robe of Stars (very rare) | Gift: if you help him remember |
+| ✅ | Library, the chained case | Spell Scrolls of Circle of Death and Harm (very rare) | Hoard: behind the flameskulls (Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Under the Amber Temple's vaults (side quest, level 10)
 
 | | Where | Item | How |
 |---|---|---|---|
 | ✅ | The chamber of the Eye, its hoard | Spellguard Shield (very rare) | Hoard: once the Eye Below is dead (The Amber Debt, docs/story/side_quests.md) |
+| ✅ | The chamber of the Eye, its hoard | Ring of Spell Turning (legendary) | Hoard: a warden's ring, once the Eye Below is dead (The Amber Debt; Hoard upgrades, Ashwin 2026-10-15) |
 
 ## Castle Ravenloft (level 10)
 
@@ -334,6 +353,14 @@ leaves a smaller purse and one find.
 | ✅ | Court, the trophy room | Longsword of Sharpness (very rare) | Search (Perception DC 15): the sword that took the dragon's head, above its skull (was a Dragon Slayer; The Warm Snow has that one) |
 | ✅ | Blinsky Toys, Vallaki, once Pidlwick II is brought down from the high tower | Figurine of Wondrous Power, Obsidian Steed (very rare) | Gift: Blinsky's masterwork (The Toymaker's Masterpiece, docs/story/side_quests.md) |
 | ✅ | Treasury | Manual of Gainful Exercise (very rare) | Hoard |
+| ✅ | Treasury, the iron strongbox | Rod of Lordly Might (legendary) | Hoard: the von Zarovich kings' sceptre (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Treasury, the casket of gems | Ioun Stone (Absorption) (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Count's floor, Strahd's jewel box | Ring of Shooting Stars (very rare) | Hoard (lock 17) (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Count's floor, Rahadin's footlocker | Scimitar of Speed (very rare), Ring of X-ray Vision (rare) | Hoard (lock 17, or Stealth while his back is turned) (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Count's floor, the brides' things | Mace of Terror (rare; Volenta's chest), Figurine of Wondrous Power, Onyx Dog (rare; Anastrasya's trunk), Ioun Stone (Reserve) (rare; Ludmilla's books) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Tower rooms, Escher's dressing table | Boots of Levitation (rare), Philter of Love (uncommon) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Main floor, the hidden vault behind the hearth | Animated Shield (very rare) | Hoard (Hoard upgrades, Ashwin 2026-10-15) |
+| ✅ | Strahd's tomb, the chest at the dais | Nine Lives Stealer longsword (very rare) | Hoard: the sword he carried when he took the valley (Hoard upgrades, Ashwin 2026-10-15) |
 | ✅ | Count's floor, the tall mirror | Cloak of Displacement (rare) | Search (Investigation DC 17): behind a mirror that shows no one |
 | ✅ | Count's floor, Ludmilla's books | +3 Arcane Grimoire (very rare) | Search (Investigation DC 17) |
 | ✅ | Tower rooms, the witches' cauldron | Wand of Fear (rare) | Search (Perception DC 15) |

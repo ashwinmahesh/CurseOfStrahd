@@ -7,7 +7,7 @@
   },
   "category": "ammunition",
   "weight_lb": 0,
-  "cost_gp": 100,
+  "cost_gp": 6.25,
   "magic": {
     "rarity": "common",
     "attunement": false

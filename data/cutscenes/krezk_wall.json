@@ -9,5 +9,6 @@
     }
   ],
   "trigger": "enter:krezk",
-  "once": true
+  "once": true,
+  "then": "krezk_gate_lamps"
 }

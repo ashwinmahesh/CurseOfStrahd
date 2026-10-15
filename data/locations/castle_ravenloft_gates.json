@@ -710,42 +710,128 @@
           "cell": [
             10,
             10
-          ]
+          ],
+          "hp": 77
         },
         {
           "monster": "gargoyle",
           "cell": [
             29,
             10
-          ]
+          ],
+          "hp": 77
         },
         {
           "monster": "gargoyle",
           "cell": [
             15,
             13
-          ]
+          ],
+          "hp": 77
         },
         {
           "monster": "gargoyle",
           "cell": [
             24,
             13
-          ]
+          ],
+          "hp": 77
         },
         {
           "monster": "gargoyle",
           "cell": [
             11,
             19
-          ]
+          ],
+          "hp": 77
         },
         {
           "monster": "gargoyle",
           "cell": [
             28,
             19
-          ]
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            19,
+            21
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            19,
+            8
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            19,
+            16
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            23,
+            17
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            17
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            11,
+            15
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            9
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            21
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            15
+          ],
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            23,
+            9
+          ],
+          "hp": 77
         }
       ]
     },
@@ -762,28 +848,112 @@
           "cell": [
             10,
             10
-          ]
+          ],
+          "hp": 84
         },
         {
           "monster": "gargoyle",
           "cell": [
             29,
             10
-          ]
+          ],
+          "hp": 84
         },
         {
           "monster": "gargoyle",
           "cell": [
             11,
             19
-          ]
+          ],
+          "hp": 84
         },
         {
           "monster": "gargoyle",
           "cell": [
             28,
             19
-          ]
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            19,
+            8
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            19,
+            16
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            14
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            20,
+            21
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            9
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            14
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            14
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            24,
+            18
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            18
+          ],
+          "hp": 84
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            11,
+            15
+          ],
+          "hp": 84
         }
       ]
     }

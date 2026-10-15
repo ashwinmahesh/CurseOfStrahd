@@ -23,6 +23,8 @@ Owner rule (2026-10-14): every cutscene is at least two scenes. A conversation t
 later beat (a fight about to start, the aftermath, the memory a line brings up), with a caption line after it so it shows
 before the fight begins. A place's trigger cutscene follows the same rule, but needs a small change to the player first.
 The third round, 2026-10-14: 47 pictures, one more in each of the 47 conversations that had only one.
+Two more for the endings that differ by path (2026-10-15): `ending_carriage` in `endings/ireena_given_up` ~ told and
+`fallen_halls` in `endings/strahd_triumphant` ~ fallen, so each ending has a second picture on both of its paths.
 The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `drowned_nistor`) came first.
 
 ## Data
@@ -42,6 +44,13 @@ The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `dr
   chest's or a fight's spoils it shows before the loot window opens.
 - `once`: the picture shows only the first time its trigger fires (`_cutscene/<id>` in the story's flags). Every
   `enter:` and `find:` trigger has it.
+- `then`, `caption`: the scene after this one (owner rule, 2026-10-14: every cutscene is at least two scenes). `then`
+  names another cutscene, with its own picture and a `caption`, a Narrator key (`scene:<id>`, in the narrator file of
+  that region) whose line reads over it. When a trigger plays the first scene, the second fades in after its last
+  caption, and so on down a chain; Skip leaves them all. A scene with no picture for the story now, or a key with no
+  line, ends the chain there, so a game with no Narrator plays the first scene alone. A treasure found in a
+  conversation plays its next scenes after the notices (each picture with the Narrator's line over it) and then takes
+  the picture away, so the talk goes on as it did.
 
 `make validate` checks every picture exists, every trigger is a node in a `narrative/narrator/` file (or a
 `find:` names a magic item), and every `cutscene <id>` in a conversation names a cutscene.
@@ -79,12 +88,14 @@ line, so the picture shows with it before the fight begins (Wintersplinter, the 
 area starts (the gallows field at night) takes the area's `enter:` trigger; the game waits under the picture.
 
 ## Code
-- `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`.
+- `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
+  `scenes` (a trigger's scenes in order, from `then` and `caption`).
 - `ui/cutscene/cutscene_view.gd` (`CutsceneView`): the picture (whole, letterboxed in black) and its fade, the caption, Skip and the pause
   card. Motion is off in headless runs and still captures (UiMotion).
 - `ui/cutscene/cutscene_player.gd` (`CutscenePlayer`): a place's cutscene while exploring, opened by
-  `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested`. It stands in as the open screen, so
-  nothing in the world moves under it.
+  `world/game_root.gd play_cutscene` from `LocationView.cutscene_requested` (a fight's narrator key opens it from
+  `world/combat/combat_view.gd`). It stands in as the open screen, so nothing in the world moves under it. It plays
+  `Cutscenes.scenes`: each scene's captions, then the next picture.
 - `ui/dialogue/dialogue_ui.gd`: the `cutscene` beat, captions and Skip in a conversation.
 
 ## Art
@@ -107,6 +118,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | Cutscene | Title | Plays from | Takes |
 |---|---|---|---|
 | abbey_bride | The Bride Opens Her Eyes | `abbey_of_st_markovia/unveiling` | 1 |
+| abbey_gate_light | One Window Lit | the scene after `abbey_shelf` (`then`) | 1 |
 | abbey_shelf | The Abbey on Its Shelf | `enter:abbey_of_st_markovia` | 1 |
 | abbot_bride_wards | Making Him a Wife | `abbey_of_st_markovia/abbot` (a later beat, ~ bride) | 1 |
 | abbot_candles | The Abbot Lights the Candles | `abbey_of_st_markovia/abbot` | 1 |
@@ -138,6 +150,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | blights_fall | The Slope Goes Quiet | `yester_hill/summit` (a later beat, ~ burn) | 1 |
 | bonegrinder_burns | Old Bonegrinder Burns | `old_bonegrinder/mill` | 1 |
 | bonegrinder_crag | The View from the Crag | `enter:hill_lookout` | 2 |
+| bonegrinder_far_castle | The Castle Holds Still | the scene after `bonegrinder_crag`, `bonegrinder_view` (`then`) | 1 |
 | bonegrinder_hag | Morgantha Stands | `old_bonegrinder/morgantha` | 1 |
 | bonegrinder_loft | Cages and a Rocking Chair | `old_bonegrinder/children` | 1 |
 | bonegrinder_view | The View from the Crag | `examine:bonegrinder_lookout` | 2 |
@@ -156,8 +169,10 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | carriage_ride | Up into the Cloud | `strahd/letters` | 1 |
 | carriage_turns | The Carriage Goes Back | `strahd/letters` (a later beat, ~ decline) | 1 |
 | castle_chasm | The Castle Across the Chasm | `enter:castle_ravenloft_gates` | 2 |
+| castle_drawbridge | No One at the Winch | the scene after `castle_chasm` (`then`) | 1 |
 | castle_glimpse | The Castle on Its Pillar | `examine:castle_glimpse` | 1 |
 | castle_road_west | The Castle on Its Pillar | `village_of_barovia/road_west` (the first try at the west posts, alone; once) | 1 |
+| castle_windows_lit | The House Counts Its Guests | the scene after `castle_glimpse` (`then`) | 1 |
 | chapel_dawn | Dawn in the Chapel | `castle_ravenloft/personal_prayers`, `companions/dawn` | 1 |
 | children_freed | Five Children Walk Past the Wolves | `werewolf_den/kiril` | 1 |
 | children_wave | Thorn Waves | `death_house/dungeon` (a later beat, ~ lay_to_rest) | 1 |
@@ -193,6 +208,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | elvir_burial | Elvir Comes Home | `wizard_of_wines/davian` | 1 |
 | ending_arm | He Offers His Arm | `endings/ireena_given_up` (a later beat, ~ handed_over) | 1 |
 | ending_bride | The Bride of Ravenloft | `endings/ireena_given_up` | 1 |
+| ending_carriage | The Carriage Sent | `endings/ireena_given_up` (a later beat, ~ told) | 1 |
 | ending_darklord | The Second Thirst | `endings/new_darklord` | 1 |
 | ending_dawn | Dawn over Barovia | `endings/strahd_destroyed` | 1 |
 | ending_mists | The Mists Remain | `endings/strahd_triumphant` | 1 |
@@ -201,6 +217,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | eva_candles_lean | The Candles Lean | `svalich_road/madam_eva` (a later beat, ~ ally_seen) | 1 |
 | eva_chest | The Bundle in the Chest | `svalich_road/madam_eva` (a later beat, ~ treasure_here) | 1 |
 | eye_watches_gods | A Thousand Years of Lies | `amber_temple/the_amber_debt` (a later beat, ~ eye_what) | 1 |
+| fallen_halls | New Faces in the Halls | `endings/strahd_triumphant` (a later beat, ~ fallen) | 1 |
 | feast_gift | The Thing He Kept | `argynvostholt/vladimir` (a later beat, ~ keeping) | 1 |
 | feast_pact | The Order Stands | `argynvostholt/vladimir` (a later beat, ~ pact) | 1 |
 | fen_chains | Grandda | `companions/fen` | 1 |
@@ -214,6 +231,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | forty_chairs | Forty Chairs | `castle_ravenloft/personal_kestrel` | 1 |
 | forty_fall_in | The Company Falls In | `castle_ravenloft/personal_kestrel` (a later beat, ~ merrow_counted) | 1 |
 | forty_roll | Roll Call | `castle_ravenloft/personal_kestrel` (a later beat, ~ roll) | 1 |
+| gallows_dead_turn | Every Head Turns | the scene after `crossroads_dead` (`then`) | 1 |
 | gallows_grave | The Horse Thief's Grave | `svalich_road/crossroads` (a later beat, ~ buried) | 1 |
 | gertruda_beads | Her Mother's Beads | `castle_ravenloft/court_gertruda` (a later beat, ~ homecoming) | 1 |
 | gertruda_home | Gertruda Comes Home | `castle_ravenloft/court_gertruda` | 1 |
@@ -243,6 +261,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | kiril_eyes | Eyes Behind Kiril | `werewolf_den/kiril` | 1 |
 | knighting_sword | Sir Aldric's Sword | `companions/ladle` (a later beat, ~ knighting_fellowship) | 1 |
 | knights_at_the_stair | The Order at the Stair | `castle_ravenloft/catacombs_coffin` (a later beat, ~ the_end) | 3 |
+| krezk_gate_lamps | The Watch at the Gate | the scene after `krezk_wall` (`then`) | 1 |
 | krezk_reflection | The Second Reflection | `krezk/pool` | 1 |
 | krezk_wall | The Wall of Krezk | `enter:krezk` | 1 |
 | lantern_light | She Takes the Light | `vallaki/one_lantern_too_many` (a later beat, ~ girl_lantern) | 1 |
@@ -296,25 +315,32 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | strahd_camp | Someone Is Watching the Camp | `strahd/visits` | 2 |
 | strahd_end | Like Old Paper | `castle_ravenloft/catacombs_coffin` | 2 |
 | strahd_letter | A Letter in His Own Hand | `strahd/letters` | 1 |
+| strahd_mist_coffin | The Lid Slides Shut | the scene after `strahd_mist_flight` (`then`) | 1 |
 | strahd_mist_flight | He Goes Home to His Coffin | `strahd:fled_to_coffin` | 1 |
 | strahd_resting | Strahd, Beaten | `castle_ravenloft/catacombs_coffin` | 1 |
 | strahd_rides | The Rider Out of the Fog | `svalich_road/events` | 2 |
 | strahd_waiting | He Is Waiting for You | `strahd/final` | 12 |
 | strahd_watcher | The Rider on the Ridge | `strahd/visits` | 2 |
 | strahd_watcher_gone | The Empty Ridge | `strahd/visits` | 1 |
+| sunsword_light | A Room Without Shadows | the scene after `treasure_sword` (`then`) | 1 |
+| symbol_dawn | The Cold Takes a Step Back | the scene after `treasure_symbol` (`then`) | 1 |
 | thirst_passes | Where the Thirst Goes | `endings/new_darklord` (a later beat, ~ start) | 1 |
 | three_brides | Three Brides | `castle_ravenloft/court_brides` | 1 |
 | tinker_freed | Seven Years at the Front of That Thing | `svalich_road/the_tinkers_wagon` (a later beat, ~ freed) | 1 |
+| tome_page | The First Page | the scene after `treasure_tome` (`then`) | 1 |
+| tower_lamp | Someone Waiting Up | the scene after `vr_tower` (`then`) | 1 |
 | treasure_sword | The Sunsword | `find:sunsword` | 1 |
 | treasure_symbol | The Holy Symbol of Ravenkind | `find:holy_symbol_of_ravenkind` | 1 |
 | treasure_tome | The Tome of Strahd | `find:tome_of_strahd` | 1 |
 | tser_falls | Tser Falls | `svalich_road/tser_falls` | 1 |
 | tser_falls_ireena | At the Lip | `svalich_road/tser_falls` | 1 |
 | tser_pool_fire | Firelight at Tser Pool | `enter:tser_pool` | 1 |
+| tser_tent_music | One Song Long | the scene after `tser_pool_fire` (`then`) | 1 |
 | vallaki_palisade | The Palisade | `vallaki/gate` | 1 |
 | vallaki_smiles | Smile, It's the Law | `vallaki/gate` (a later beat, ~ rules) | 1 |
 | van_richten_workroom | Without His Feathers | `van_richtens_tower/van_richten` (a later beat, ~ start) | 1 |
 | village_rain | The Village in the Rain | `enter:village_of_barovia` | 1 |
+| village_square_empty | A Candle in the Church | the scene after `village_rain` (`then`) | 1 |
 | vines_feast | A Cask from Before | `wizard_of_wines/davian` (a later beat, ~ milestone) | 1 |
 | vines_gem | The Vines Remember | `wizard_of_wines/davian` | 1 |
 | vines_planted | The Gem in the Soil | `wizard_of_wines/davian` (a later beat, ~ return_cellar) | 1 |

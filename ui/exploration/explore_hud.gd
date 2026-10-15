@@ -410,7 +410,7 @@ func _card_button(ch: Character, idx: int) -> Button:
 	btn.focus_mode = Control.FOCUS_NONE
 	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
-	btn.tooltip_text = "%s · %s\nClick: lead · Right-click: sheet" % [ch.name, ch.class_summary()]
+	btn.tooltip_text = "%s · %s\n%s · Right-click: sheet" % [ch.name, ch.class_summary(), "Dead: can't lead" if ch.dead else ("Down: can't lead" if ch.hp <= 0 else "Click: lead")]
 	btn.gui_input.connect(func(ev: InputEvent) -> void:
 		if ev is InputEventMouseButton and (ev as InputEventMouseButton).pressed:
 			if (ev as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:

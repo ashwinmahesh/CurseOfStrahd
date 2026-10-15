@@ -216,7 +216,7 @@ if flag.ezmerelda_trust >= 2 and not flag.ezmerelda_gift_given
 set ezmerelda_gift_given
 Ezmerelda: Here. You've earned better than thanks. Silver-headed bolts, holy water and my last good potion. Don't waste them on anything that doesn't deserve them.
 give holy_water 2
-give potion_of_healing 1
+give potion_of_healing_greater 1
 give crossbow_bolt 10
 Ezmerelda: And this. My second-best armour. It can look like a ball gown or a beggar's coat when you need it to, and it has turned more claws than I can count.
 give glamoured_studded_leather__studded_leather_armor

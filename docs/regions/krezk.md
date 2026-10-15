@@ -227,7 +227,7 @@ her too (it reads `guest:ezmerelda` and `ezmerelda_met`).
 | How | "It's your abbey..."; or fleeing with Ireena | the letter, the pool, or a won Persuasion/Religion appeal | Vasilka destroyed, then "Leave him..." (or a failed appeal) | "Kill him." after the bride fight, or `abbot_wrath` won |
 | Vasilka | `sent` to the castle | `laid_to_rest` (he unmakes her) | `destroyed` | `destroyed`, `laid_to_rest`, `abandoned` or `never_woke` |
 | Ilya | healed (not if fled) | healed | healed (he goes down once, silently) | not by him |
-| Reward | 2 potions of healing | 2 potions of healing, the sacristy | | |
+| Reward | 2 Potions of Healing (Greater) | 2 Potions of Healing (Greater), the sacristy | | |
 | Krezk after | a black ribbon on the gate; Dmitri furious (worse in Anna's dress) | a light walked off the mountain; Dmitri doesn't know whom to hate | the Belviews come down for bread | the bell rung for him; the abbey quiet |
 | Abbey after | the Abbot glowing in his church; bell ringing with nobody in the tower | dark window; Belviews in daylight | a mute figure on the altar step | washing on a line |
 | Phase 6 hook | Vasilka arrives at the castle; `abbot_told_strahd` | none | none | none |
@@ -336,14 +336,14 @@ sunburst shows a thin line of light round its edge, and Kasha mentions the shine
 | `anna_chest` | Krezkovs' house | perfume, 4 candles, blanket, 15 gp | locked DC 15; robbing it sets `krezkov_chest_robbed` (Anna notices) |
 | `krezkov_larder` | Krezkovs' house | 4 rations, jug | |
 | `cart_shed_crate` | abbey grounds | 2 sacks, rope, 2 jugs, 6 gp | Clovin's handcart |
-| `sacristy_chest` | church | 2 holy water, 6 candles, robe, 22 gp | the Abbot says to take it in the repentant ending |
+| `sacristy_chest` | church | 2 holy water, 6 candles, robe, 22 gp, the Abbot's Mace of Smiting (rare) | the Abbot says to take it in the repentant ending |
 | `foundling_locker` | wards | blanket, 2 candles, 3 gp | Tarokka spot |
 | `bridal_trunk` | wards (matron's room) | fine clothes, perfume, 12 gp | sets `wards_dress_found` (the matron's wedding dress) |
 | `surgery_cabinet` | wards | healer's kit, 3 vials, antitoxin | |
 | `belview_pot` | wards | 2 rations, 2 gp | |
 | `garden_shed` | garden | sickle, shovel, rope, 2 sacks | |
 
-Given in dialogue: 2 holy water (the pool, once), 2 potions of healing (the Abbot: wedding or repentant), 40 gp (Anna,
+Given in dialogue: 2 holy water (the pool, once), 2 Potions of Healing (Greater) (the Abbot: wedding or repentant), 40 gp (Anna,
 for a cleric's cure), 9 gp (the stolen wishes).
 
 **Curse of Strahd fixed items:** chapter 8 needs none beyond the three Tarokka treasures, which the spots hand over

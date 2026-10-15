@@ -1,0 +1,15 @@
+{
+  "id": "fallen_halls",
+  "title": "New Faces in the Halls",
+  "summary": "By the next nightfall the party walks the castle's halls, pale and stiff, under Strahd's eye.",
+  "images": [
+    {
+      "image": "fallen_halls",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -537,11 +537,15 @@
           "qty": 1
         },
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_greater",
           "qty": 1
         },
         {
           "id": "weapon_plus_2__greatsword",
+          "qty": 1
+        },
+        {
+          "id": "ioun_stone_agility",
           "qty": 1
         }
       ],

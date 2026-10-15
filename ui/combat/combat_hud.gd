@@ -105,6 +105,10 @@ var _prompt_title: Label
 var _prompt_callout: Label
 var _prompt_text: Label
 var _prompt_cost: Label
+## A pool prompt's count of the points left to share (Preserve Life), and its rows' sliders by creature id.
+var _prompt_pool: Label
+var _prompt_sliders: Dictionary = {}
+var _prompt_again: Button = null
 var _prompt_rule: OptionButton
 var _prompt_rule_row: HBoxContainer
 var _prompt_targets: VBoxContainer
@@ -726,6 +730,11 @@ func _build_prompt() -> void:
 	box.add_child(_prompt_text)
 	_prompt_cost = _label("", 15, "parchment")
 	box.add_child(_prompt_cost)
+	_prompt_pool = _label("", 18, "gilt_light")
+	_prompt_pool.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_prompt_pool.custom_minimum_size = Vector2(PROMPT_WIDTH - 28, 0)
+	_prompt_pool.visible = false
+	box.add_child(_prompt_pool)
 	var target_scroll := ScrollContainer.new()
 	target_scroll.custom_minimum_size.y = 120
 	target_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -1924,36 +1933,46 @@ func show_prompt(req: ReactionRequest) -> void:
 	_prompt_callout.text = req.callout
 	_prompt_callout.visible = req.callout != ""
 	_prompt_words(req)
-	_prompt_use.text = "Use Reaction (A / Enter)" if req.spends_reaction else "Confirm (A / Enter)"
+	_prompt_use.text = "Use Reaction (A / Enter)" if req.spends_reaction else ("Heal (A / Enter)" if req.pool > 0 else "Confirm (A / Enter)")
 	for child: Node in _prompt_targets.get_children():
 		_prompt_targets.remove_child(child)
 		child.queue_free()
+	if _prompt_again != null and is_instance_valid(_prompt_again):
+		_prompt_again.queue_free()
+	_prompt_again = null
 	_prompt_targets.get_parent().visible = not req.target_choices.is_empty()
+	var pooled := req.pool > 0
+	_prompt_pool.visible = pooled
+	_prompt_sliders.clear()
+	(_prompt_targets.get_parent() as ScrollContainer).custom_minimum_size.y = 120.0
 	var group := ButtonGroup.new() if req.max_targets == 1 else null
 	_prompt_use.disabled = req.selection_error() != ""
-	for choice in req.target_choices:
-		var target_id := str(choice["id"])
-		var check := CheckButton.new()
-		check.text = str(choice["label"])
-		check.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # a long name wraps inside the prompt's width
-		check.button_group = group
-		check.button_pressed = target_id in req.selected_ids
-		check.toggled.connect(func(on: bool) -> void:
-			if on and not target_id in req.selected_ids:
-				req.selected_ids.append(target_id)
-			elif not on:
-				req.selected_ids.erase(target_id)
-			_prompt_use.disabled = req.selection_error() != ""
-			if on and choice.has("text"):
-				_prompt_words(req)
-				_prompt.offset_top = PROMPT_BOTTOM
-			# On a pad, picking an option goes on to Use Reaction (down from the list would land on Skip).
-			if on and req.max_targets == 1 and check.has_focus() and PadNav.current != null and PadNav.current.pad:
-				PadNav.current.focus_on(_prompt_use))
-		_prompt_targets.add_child(check)
+	if pooled:
+		_show_pool(req)
+	else:
+		for choice in req.target_choices:
+			var target_id := str(choice["id"])
+			var check := CheckButton.new()
+			check.text = str(choice["label"])
+			check.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # a long name wraps inside the prompt's width
+			check.button_group = group
+			check.button_pressed = target_id in req.selected_ids
+			check.toggled.connect(func(on: bool) -> void:
+				if on and not target_id in req.selected_ids:
+					req.selected_ids.append(target_id)
+				elif not on:
+					req.selected_ids.erase(target_id)
+				_prompt_use.disabled = req.selection_error() != ""
+				if on and choice.has("text"):
+					_prompt_words(req)
+					_prompt.offset_top = PROMPT_BOTTOM
+				# On a pad, picking an option goes on to Use Reaction (down from the list would land on Skip).
+				if on and req.max_targets == 1 and check.has_focus() and PadNav.current != null and PadNav.current.pad:
+					PadNav.current.focus_on(_prompt_use))
+			_prompt_targets.add_child(check)
 	_prompt_rule.select(0)
 	# A list of Reactions has no one rule to set: each keeps its own (the Reactions tab).
-	_prompt_rule_row.visible = req.kind != Reactions.CHOICE
+	_prompt_rule_row.visible = req.kind != Reactions.CHOICE and not pooled
 	# Its height follows what it holds this time, grown up from just above the hotbar (grow_vertical).
 	_prompt.offset_top = PROMPT_BOTTOM
 	_prompt.offset_bottom = PROMPT_BOTTOM
@@ -1966,6 +1985,83 @@ func _prompt_words(req: ReactionRequest) -> void:
 	var picked := req.choice(req.selected_ids[0]) if not req.selected_ids.is_empty() else {}
 	_prompt_text.text = "%s\n%s" % [picked["text"], req.text] if picked.has("text") else req.text
 	_prompt_cost.text = "Costs: " + str(picked.get("cost", req.cost))
+
+
+## A prompt that divides a pool of points (ReactionRequest.pool: Preserve Life): a slider for each creature in reach,
+## from none to the most it can take, and a count of what is left to share that goes down as points are given. A slider
+## stops where the pool runs out; "Most hurt first" puts the default division back. The points left over are lost.
+func _show_pool(req: ReactionRequest) -> void:
+	var counts: Dictionary = {}
+	var refresh := func() -> void:
+		var left := req.unspent()
+		_prompt_pool.text = "All %d Hit Points shared" % req.pool if left <= 0 \
+			else "Left to share: %d of %d Hit Points" % [left, req.pool]
+		for id: String in counts:
+			(counts[id] as Label).text = str(int(req.amounts.get(id, 0)))
+		_prompt_use.disabled = req.selection_error() != ""
+	for choice in req.target_choices:
+		var id := str(choice["id"])
+		var room := int(choice.get("room", 0))
+		var row := VBoxContainer.new()
+		row.add_theme_constant_override("separation", -2)
+		var head := HBoxContainer.new()
+		head.add_theme_constant_override("separation", 8)
+		var who := _label(str(choice["label"]), 15, "vellum")
+		who.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART   # a long name wraps inside the prompt's width
+		who.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		who.custom_minimum_size = Vector2(PROMPT_WIDTH - 100, 0)
+		head.add_child(who)
+		var count := _label("0", 20, "gilt_light")
+		count.custom_minimum_size = Vector2(38, 0)
+		count.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		head.add_child(count)
+		counts[id] = count
+		row.add_child(head)
+		var slider := HSlider.new()
+		slider.min_value = 0
+		slider.max_value = room
+		slider.step = 1
+		slider.custom_minimum_size = Vector2(0, 24)
+		slider.set_value_no_signal(float(int(req.amounts.get(id, 0))))
+		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		slider.value_changed.connect(func(v: float) -> void:
+			# Never past what is left of the pool: the slider stops where the points run out.
+			var most := int(req.amounts.get(id, 0)) + req.unspent()
+			var given := mini(int(v), most)
+			if given != int(v):
+				slider.set_value_no_signal(float(given))
+			req.amounts[id] = given
+			refresh.call())
+		_prompt_sliders[id] = slider
+		row.add_child(slider)
+		_prompt_targets.add_child(row)
+	# Under the list, so it stays in view however many creatures the list scrolls.
+	var again := Button.new()
+	again.text = "Most hurt first"
+	again.tooltip_text = "Share the points out to the most hurt first, as far as each can take."
+	again.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	again.pressed.connect(func() -> void:
+		var spread := e.features.preserve_life_spread(_pool_room(req), req.pool)
+		for choice in req.target_choices:
+			var id := str(choice["id"])
+			req.amounts[id] = int(spread.get(id, 0))
+			(_prompt_sliders[id] as HSlider).set_value_no_signal(float(int(req.amounts[id])))
+		refresh.call())
+	var scroll := _prompt_targets.get_parent() as ScrollContainer
+	var box := scroll.get_parent() as VBoxContainer
+	box.add_child(again)
+	box.move_child(again, scroll.get_index() + 1)
+	_prompt_again = again
+	scroll.custom_minimum_size.y = clampf(float(req.target_choices.size()) * 50.0 + 6.0, 100.0, 210.0)
+	refresh.call()
+
+
+## The most each of a pool prompt's creatures can take, as id -> points (its listed `room`s).
+func _pool_room(req: ReactionRequest) -> Dictionary:
+	var out := {}
+	for choice in req.target_choices:
+		out[str(choice["id"])] = int(choice.get("room", 0))
+	return out
 
 
 func hide_prompt() -> void:

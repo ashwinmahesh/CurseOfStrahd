@@ -255,6 +255,15 @@ func next() -> Dictionary:
 					if cut != "":
 						Cutscenes.mark_played(cut, st)
 						_queued.push_front(found)
+						# The scenes after it (data `then`) once the notices are read: each picture with the Narrator's
+						# line over it, then taken away so the talk goes on as it did.
+						var later: Array[Dictionary] = Cutscenes.scenes(cut, "", st, narrator, st.leader_character()).slice(1)
+						for sc: Dictionary in later:
+							var sid := str(sc["id"])
+							_queued.append({"kind": "cutscene", "id": sid, "image": Cutscenes.image(sid, st), "focus": Cutscenes.focus(sid)})
+							_queued.append(_line_beat("Narrator", "", str((sc["lines"] as Array[String])[0])))
+						if not later.is_empty():
+							_queued.append({"kind": "cutscene", "id": "", "image": "", "focus": Cutscenes.focus("")})
 						return {"kind": "cutscene", "id": cut, "image": Cutscenes.image(cut, st), "focus": Cutscenes.focus(cut)}
 				return found
 			"dark_gift":

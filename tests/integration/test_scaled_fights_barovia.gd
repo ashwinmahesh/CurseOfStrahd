@@ -63,10 +63,10 @@ func test_the_bride_in_the_well_at_level_4() -> void:
 	await _held("village_of_barovia", 16, 4, "well_bride", AT_THE_WELL, 4, 6, ["bride_bones_raised"])
 
 
-## Seven in eight, the easier side: the burial in test_storyqa_continuity's playthrough lost at every line-up that won
-## six (the owner's rule: playthroughs stay winnable).
+## Five in eight with two more zombies (the burial in test_storyqa_continuity's playthrough still wins it: the owner's
+## rule that playthroughs stay winnable).
 func test_the_churchyard_dead_at_level_3() -> void:
-	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 7)
+	await _held("village_of_barovia", 12, 3, "churchyard_dead", BY_THE_GRAVE, 4, 6)
 
 
 func test_doru_in_the_undercroft_at_level_3() -> void:

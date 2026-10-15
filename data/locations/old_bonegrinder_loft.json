@@ -276,6 +276,14 @@
         {
           "id": "spell_scroll_level_1",
           "qty": 1
+        },
+        {
+          "id": "staff_of_charming__quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "wand_of_wonder",
+          "qty": 1
         }
       ],
       "gold": 140

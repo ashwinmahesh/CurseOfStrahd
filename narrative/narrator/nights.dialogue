@@ -34,6 +34,9 @@
 ~ rest:long:castle_ravenloft
 | You sleep in shifts in a castle that belongs to someone else. Every watch hears music, very faint, from far above, and nobody on watch feels like dancing.
 
+~ rest:long:yester_hill
+| You sleep at the foot of the barrow hill, in the lee of a standing stone. Far above, the druids' fires burn on the crown without a sound, and all night you have the feeling of being counted.
+
 # ---------------------------------------------------------------- Dreams
 
 ~ dream:into_the_mists

@@ -17,5 +17,6 @@
     0.35
   ],
   "trigger": "enter:castle_ravenloft_gates",
-  "once": true
+  "once": true,
+  "then": "castle_drawbridge"
 }

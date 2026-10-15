@@ -23,6 +23,7 @@ Strahd: Brave. They are always brave. It never changes how the story ends.
 if guest:ireena
 Narrator: He steps over you to reach her. Ireena does not run. There is nowhere left in Barovia to run to.
 endif
+cutscene fallen_halls
 Narrator: By the next nightfall there are new faces in the castle's halls. They are pale, and they do not remember the sun.
 -> after
 

@@ -7,7 +7,7 @@
   },
   "category": "shield",
   "weight_lb": 0,
-  "cost_gp": 40000,
+  "cost_gp": 6000,
   "magic": {
     "rarity": "very_rare",
     "attunement": true

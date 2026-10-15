@@ -191,6 +191,7 @@ quest the_warm_snow done
 Narrator: Up close the hoard is a hoax: gilt lead by the cartload, cups that bend in the hand, crowns of painted tin.
 Narrator: But forty years of the count's tithes left more than bones here. Purses, rings, a soldier's pay, a christening spoon: whatever was in their pockets, real, in the ash and her leavings.
 gold +900
+give ioun_stone_mastery
 Narrator: And under the heap, where her belly lay, pressed into the rock by her weight: a coat of armour, every scale a hand across and silver, cold to touch in a cavern that's still warm.
 Narrator: Silver dragon scales, shed and gathered and made into a knight's coat. The silver's own. The count put it under her so she'd lie on her enemy forever and never know it.
 give dragon_scale_mail_silver

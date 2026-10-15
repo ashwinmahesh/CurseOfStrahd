@@ -501,7 +501,9 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 			var pw := cw
 			if pw == "" and e.features.preserve_life_room(c).is_empty():
 				pw = "No Bloodied allies within 30 ft"
-			out.append(_entry("preserve_life", tab, "Preserve Life", "%d HP to share" % (5 * ch.class_level_of("cleric")), "action", pw, "none"))
+			var pool := e.features.preserve_life_pool(c)
+			out.append(_entry("preserve_life", tab, "Preserve Life", "%d HP per use" % pool, "action", pw, "none",
+				"Spend a Channel Divinity use to share %d Hit Points among the Bloodied creatures within 30 ft, up to half their maximum each. You divide them first; points you leave are lost, and the next use has a new %d." % [pool, pool]))
 	_effect_actions(c, out, tab)
 	_feature_entries(c, out, tab)
 	for ro in e.features.rider_options(c):
@@ -1196,7 +1198,9 @@ func perform(c: Combatant, action: Dictionary, targets: Array = [], point: Vecto
 		key = MonsterActions.action_key(c, {"id": key.substr(9)})
 	# A feature that already told the view itself (a save action's own event, Turn Undead's spell event) needs no more.
 	var told := e.events.slice(mark).any(func(ev: Variant) -> bool: return str((ev as Dictionary).get("type", "")) in ["ability", "spell"])
-	if key != "" and r.ok and mark <= e.events.size() and not told:
+	# Preserve Life's effect waits for the player to share the points out (its prompt plays it when it's confirmed).
+	var waits := key == "preserve_life" and e.pending != null
+	if key != "" and r.ok and mark <= e.events.size() and not told and not waits:
 		e.events.insert(mark, {"type": "ability", "source": source, "by": c.id, "key": key,
 			"targets": targets.map(func(x: Variant) -> String: return (x as Combatant).id), "cells": []})
 	return r
@@ -1336,7 +1340,7 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"turn_undead":
 			return e.features.turn_undead(c)
 		"preserve_life":
-			return e.features.preserve_life(c)
+			return e.features.preserve_life_prompt(c)
 		"wake":
 			return e.wake(c, t)
 		"jump":

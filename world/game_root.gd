@@ -302,7 +302,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F9:
 				_quick_load()
 	if event.is_action_pressed(&"cycle_leader"):
-		view.set_leader(1)
+		view.set_leader(view.next_leader_index(1))   # the next hero, passing over the dead
 		_refresh()
 	for i in 4:
 		if event.is_action_pressed(StringName("select_member_%d" % (i + 1))):
@@ -1103,14 +1103,14 @@ func close_screen() -> void:
 	_refresh()
 
 
-## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption. It
-## stands in for a full-screen panel and pauses the game until it closes, so nothing moves under it (a fight that an
-## area starts waits for it too).
+## A place's cutscene (story/cutscenes.gd): its picture over everything with the narrator's line as the caption, and
+## the scene after it, if it has one (data `then`). It stands in for a full-screen panel and pauses the game until it
+## closes, so nothing moves under it (a fight that an area starts waits for it too).
 func play_cutscene(id: String, caption: String) -> CutscenePlayer:
 	close_screen()
 	var player := CutscenePlayer.new()
 	add_child(player)
-	if not player.play(id, [caption] as Array[String], st):
+	if not player.play_scenes(Cutscenes.scenes(id, caption, st, narrator, st.leader_character()), st):
 		player.queue_free()
 		hud.narrate(caption)
 		return null

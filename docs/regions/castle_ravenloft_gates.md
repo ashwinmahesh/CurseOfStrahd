@@ -180,7 +180,7 @@ Cyrus) belong to the other parts.
 | `crg_dining_sideboard` | main floor | 2 glass bottles (old wine), 25 gp of silver plate |
 | `crg_guests_wardrobe` | main floor | fine clothes, perfume |
 | `crg_turret_rack` | main floor | halberd, shield, 20 crossbow bolts |
-| `crg_hearth_hoard` | main floor | 320 gp in old crowns; the Tarokka treasure when the reading puts one here |
+| `crg_hearth_hoard` | main floor | 320 gp in old crowns, an Animated Shield (very rare); the Tarokka treasure when the reading puts one here |
 | `crg_chapel_altar` | chapel | 4 candles, 2 holy water, a reliquary holy symbol; the Tarokka treasure when the reading puts one here |
 | `crg_poor_box` | chapel | 7 gp |
 

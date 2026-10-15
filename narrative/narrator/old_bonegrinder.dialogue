@@ -315,3 +315,6 @@ once
 
 ~ check:religion:lane_shrine_pray:failure
 | The words don't come. The mill's sails creak on behind you, keeping time.
+
+~ scene:bonegrinder_far_castle
+| As the cloud shifts, the castle's one high window brightens, and for a moment, from up here, the whole sunless valley seems to hold still around it.

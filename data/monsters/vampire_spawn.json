@@ -182,5 +182,6 @@
     "village_of_barovia"
   ],
   "ai_profile": "skirmisher",
+  "reveal": "undead",
   "summary": "Grabs a victim with its claws, bites to heal itself, and disengages freely; shuns sunlight."
 }

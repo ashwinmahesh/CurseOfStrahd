@@ -146,6 +146,32 @@ func test_the_sheet_tabs() -> void:
 		await _reach("the sheet's %s tab" % t)
 
 
+## Prepare Spells on a pad (any time outside a fight): from a caster's sheet, every spell and the Done button are in the
+## D-pad's reach, and B goes back to the sheet, not out of it.
+func test_prepare_spells_on_a_pad() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	var who := -1
+	for i in st.party.size():
+		if who < 0 and not PrepareScreen.preparable(st, PrepareScreen.ANYTIME, st.party[i]).is_empty():
+			who = i
+	assert_true(who >= 0, "a caster in the party")
+	root.call("open_screen", "sheet", who)
+	await _frames(2)
+	var sheet := root.get("screen") as CharacterSheetScreen
+	sheet.show_tab("Spells")
+	await _frames(2)
+	await _reach("the sheet's Spells tab with Prepare spells")
+	sheet.call("_open_prepare", st.party[who])
+	await _frames(3)
+	await _reach("the Prepare Spells screen")
+	await _back("the Prepare Spells screen", func() -> bool:
+		return sheet.find_children("*", "PrepareScreen", true, false).filter(func(n: Node) -> bool: return not n.is_queued_for_deletion()).is_empty())
+	assert_true(root.get("screen") == sheet, "B leaves Prepare Spells and keeps the sheet")
+	await _back("the sheet", _screen_gone)
+
+
 func test_the_settings_pages() -> void:
 	if not await _game(LATE):
 		return
@@ -174,6 +200,30 @@ func test_the_travel_map_shop_temple_and_loot() -> void:
 	await _reach("a shop")
 	await _back("a shop", func() -> bool: return root.find_children("*", "ShopScreen", false, false).filter(
 		func(s: Node) -> bool: return not s.is_queued_for_deletion() and s.process_mode != Node.PROCESS_MODE_DISABLED).is_empty())
+	# A merchant's magic (Ashwin, 2026-10-14): the wares' tabs on LB/RB from the wares side, and a made-to-order
+	# ware's weapons open under it, every one reachable.
+	GameState.story.milestones = 20
+	root.call("open_shop", "gunther_arasek")
+	await _frames(3)
+	var smith := root.find_children("*", "ShopScreen", false, false).back() as ShopScreen
+	smith.toggle_bases("weapon_plus_1")
+	await _frames(2)
+	await _reach("a shop with a +1 weapon's choices open")
+	var bases := smith.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text.begins_with("Buy for") and smith.find_child("WaresSide", true, false).is_ancestor_of(b))
+	(bases.back() as Control).grab_focus()
+	var before := ShopScreen.ware_filter
+	await _press(JOY_BUTTON_RIGHT_SHOULDER)
+	assert_ne(ShopScreen.ware_filter, before, "RB with the focus on the wares steps the wares' tabs")
+	await _press(JOY_BUTTON_LEFT_SHOULDER)
+	assert_eq(ShopScreen.ware_filter, before, "and LB steps back")
+	# Closed by hand: B going back is the first shop's check above. Here the pointer, following the focus over Buy
+	# buttons whose tooltips say "Not enough gold", can have a tooltip up, and a tooltip is a popup that takes B for itself
+	# (a slow run showed it), which isn't what this part tests.
+	for s in root.find_children("*", "ShopScreen", false, false):
+		s.queue_free()
+	await _frames(2)
+	ShopScreen.ware_filter = "All"
 	root.call("open_services", "father_lucian")
 	await _frames(3)
 	await _reach("St. Andral's services")

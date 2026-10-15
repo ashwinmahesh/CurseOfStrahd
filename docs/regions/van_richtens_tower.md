@@ -89,7 +89,7 @@ Six maps (data/locations/). Map themes are existing ones; §13 lists the themes 
   - **"We stand with Emil."** → `pack_challenge` (Kiril and his loyalists; Emil fights on the party's side). Victory:
     Zuleika's aftermath (`aftermath:emil_wins`): `wolf_pack_leader = "emil"`, the children go home with Zuleika at
     first light, she treats Mirela's bite (`mirela_cured`), the milestone. If the Tarokka named Emil (the Beast) he stays
-    (`find_the_ally found`); otherwise he stays with his pack (`leave emil_toranescu`) and Zuleika gives two potions.
+    (`find_the_ally found`); otherwise he stays with his pack (`leave emil_toranescu`) and Zuleika gives two Potions of Healing (Supreme).
   - **"This is pack business. Settle it between the two of you."** → the duel by pack law; Emil, weak from a month in
     silver, dies (`emil_dead`). **"Take him back, Kiril."** → the same, plus `emil_betrayed`. Then Kiril's terms:
     the children stay unless the party wins them (Persuasion 15, Intimidation 15, or a purse of 100 gp:
@@ -157,7 +157,7 @@ Six maps (data/locations/). Map themes are existing ones; §13 lists the themes 
 | Fight | `pack_challenge`, Emil beside the party | none (or `pack_challenge` to take the children) | `den_reckoning` (or `pack_challenge`) |
 | Emil | leads the pack; the ally if the Beast | dead (`emil_dead`) | dead |
 | Kiril | dead (`kiril_defeated`) | leads, for the castle | dead |
-| Zuleika | the den-mother; potions | keens and is gone | dead in the reckoning, fled otherwise |
+| Zuleika | the den-mother; Potions of Healing (Supreme) | keens and is gone | dead in the reckoning, fled otherwise |
 | Children | home, Mirela cured | home if won or bought, else left (`den_children_left`) | home |
 | The hills after | Emil's wolves dip their heads (event); no werewolf random fights | `pack_hunt` by night, Kiril's `after` scene | no pack; dire wolves and the dead only |
 | Ezmerelda | +1, +1 children | -1 | +1, +1 children |
@@ -270,12 +270,12 @@ Test setup for the Phase 5 exit (SETUP): `emil_toranescu`: `{"emil_key_found": t
 | `ezmerelda_wagon` (lock 16, tripwire 3d10 fire) | her camp | 30 gp, 2 holy water, alchemist's fire, 20 bolts, a potion (theft costs her trust) |
 | `vrt_supply_crate` | tower hall | 2 holy water, 3 torches, 2 oil, 4 rations |
 | `vrt_workroom_cabinet` | workroom | healer's kit, 2 potions of healing, antitoxin |
-| `van_richten_strongbox` | lantern room | 120 gp, 3 holy water, 2 potions, a level 1 spell scroll; Tarokka spot |
+| `van_richten_strongbox` | lantern room | 120 gp, 3 holy water, 2 Potions of Healing (Greater), a level 1 spell scroll, 2 Arrows of Undead Slaying (very rare); Tarokka spot |
 | `den_hunter_pack` | hillside | 8 gp, longbow, 20 arrows, 2 rations |
 | `mother_night_offerings` | shrine | 35 gp, 3 candles; Tarokka spot |
-| `kiril_hoard` (lock 15) | Kiril's lair | 140 gp, 2 potions, perfume, fine clothes, dice |
+| `kiril_hoard` (lock 15) | Kiril's lair | 140 gp, Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare), perfume, fine clothes, dice |
 | fight loot | `pack_challenge`, `den_reckoning`, `tower_night_visitors` | 30 / 30 / 25 gp and a potion each |
-| gifts | Zuleika (Emil path), Ezmerelda (trust 2) | 2 potions; 2 holy water, a potion, 10 bolts |
+| gifts | Zuleika (Emil path), Ezmerelda (trust 2) | 2 Potions of Healing (Supreme); 2 holy water, a Potion of Healing (Greater), 10 bolts |
 
 **Fixed magic items:** none of the adventure's named items lives in these chapters in our version; the Tarokka
 treasures are the story items. **Containers for the DMG-items thread:** `van_richten_strongbox` (a hunter's item:
@@ -349,7 +349,7 @@ the casebook says."; the lantern room's strongbox at (7, 33). By day, to skip th
   counted as reads by the validator (every flag used there is also read in dialogue here). (4) `rope` used as an
   invisible model for the silver chains.
 - **Items:** silvered weapons and silver-headed bolts (Ezmerelda's gift is plain `crossbow_bolt` until one exists);
-  a `wolfsbane` item (Zuleika's brewing is two `potion_of_healing`).
+  a `wolfsbane` item (Zuleika's brewing is two `potion_of_healing_supreme`).
 - **Monsters:** none new; all ids used exist (`kiril_stoyanovich`, `emil_toranescu`, `werewolf`, `dire_wolf`, `wolf`,
   `vampire_spawn`, `wight`, `swarm_of_bats`, `ghoul`, `ghast`, `strahd_zombie`, `will_o_wisp`, `commoner`).
 

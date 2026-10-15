@@ -772,6 +772,46 @@
             6
           ],
           "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            16,
+            4
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            5
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            8
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            14,
+            8
+          ],
+          "name": "Frozen warden-guard"
         }
       ],
       "surprise": "",
@@ -805,6 +845,38 @@
           "cell": [
             28,
             6
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            17,
+            4
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            9,
+            5
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "Frozen warden-guard"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            18,
+            8
           ],
           "name": "Frozen warden-guard"
         }

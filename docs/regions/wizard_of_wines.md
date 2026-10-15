@@ -226,7 +226,7 @@ davian_martikov` and `quest find_the_ally found`, with lines for reconciliation 
 | `kostin_satchel` | press house (after the fight, if Kostin stayed) | herbalism kit, potion of healing, 18 gp | no |
 | `wardens_hoard` | wardens' camp | greataxe, 2 handaxes, 4 rations, hide armor, 34 gp | yes (a weapon or armour) |
 | `gulthias_roots` | the crown | dagger, shortsword, 41 gp (+ Tarokka treasure) | yes (what the tree swallowed) |
-| `ritual_offerings` | the crown | herbalism kit, 2 potions of healing, druidic staff, 25 gp | yes (a druid's staff or a periapt) |
+| `ritual_offerings` | the crown | herbalism kit, 2 Potions of Healing (Superior), druidic staff, Ruxandra's Staff of the Woodlands (rare), 25 gp | yes (a druid's staff or a periapt) |
 
 **Fixed Curse of Strahd items of these chapters:** the three magic gems (the vine stones). There is no gem item in
 data/items or data/magic_items, so the package tracks them with flags (§4.2) and asks for an item (§15). No other fixed

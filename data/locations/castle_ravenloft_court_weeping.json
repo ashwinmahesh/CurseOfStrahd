@@ -617,7 +617,12 @@
       ],
       "label": "A jewel box",
       "model": "jewel_box",
-      "items": [],
+      "items": [
+        {
+          "id": "ring_of_shooting_stars",
+          "qty": 1
+        }
+      ],
       "gold": 300,
       "lock_dc": 17
     },
@@ -685,6 +690,10 @@
         {
           "id": "perfume",
           "qty": 1
+        },
+        {
+          "id": "ioun_stone_reserve",
+          "qty": 1
         }
       ],
       "gold": 0
@@ -700,6 +709,10 @@
       "items": [
         {
           "id": "travelers_clothes",
+          "qty": 1
+        },
+        {
+          "id": "figurine_of_wondrous_power_onyx_dog",
           "qty": 1
         }
       ],
@@ -720,6 +733,10 @@
         },
         {
           "id": "playing_card_set",
+          "qty": 1
+        },
+        {
+          "id": "mace_of_terror__mace",
           "qty": 1
         }
       ],
@@ -755,7 +772,15 @@
       "model": "footlocker",
       "items": [
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_greater",
+          "qty": 1
+        },
+        {
+          "id": "scimitar_of_speed__scimitar",
+          "qty": 1
+        },
+        {
+          "id": "ring_of_x_ray_vision",
           "qty": 1
         }
       ],

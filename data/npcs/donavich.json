@@ -90,7 +90,44 @@
       {
         "id": "spell_scroll__warding_bond",
         "qty": -1
+      },
+      {
+        "id": "diamond",
+        "qty": -1
+      },
+      {
+        "id": "diamond_dust",
+        "qty": -1
+      },
+      {
+        "id": "silver_dust",
+        "qty": -1
+      },
+      {
+        "id": "ruby_dust",
+        "qty": -1
       }
+    ],
+    "magic": [
+      "potion_of_healing_superior",
+      "potion_of_healing_supreme",
+      "potion_of_vitality",
+      "elixir_of_health",
+      "restorative_ointment",
+      "potion_of_resistance_necrotic",
+      "potion_of_resistance_radiant",
+      "periapt_of_wound_closure",
+      "periapt_of_health",
+      "periapt_of_proof_against_poison",
+      "amulet_of_the_devout_plus_1",
+      "amulet_of_the_devout_plus_2",
+      "amulet_of_the_devout_plus_3",
+      "amulet_of_health",
+      "scroll_of_protection_undead",
+      "scroll_of_protection_fiend",
+      "candle_of_the_deep",
+      "bead_of_nourishment",
+      "bead_of_refreshment"
     ],
     "buys": [
       "potion",
@@ -98,5 +135,11 @@
     ],
     "markup": 1.0,
     "sell_rate": 0.4
-  }
+  },
+  "services": [
+    {
+      "id": "raise_dead",
+      "scroll": true
+    }
+  ]
 }

@@ -1,0 +1,16 @@
+{
+  "id": "bonegrinder_far_castle",
+  "title": "The Castle Holds Still",
+  "summary": "As the cloud shifts, the castle's one high window brightens and the whole sunless valley seems to hold still round it.",
+  "images": [
+    {
+      "image": "bonegrinder_far_castle",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:bonegrinder_far_castle"
+}

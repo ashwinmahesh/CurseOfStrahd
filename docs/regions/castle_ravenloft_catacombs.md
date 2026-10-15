@@ -61,7 +61,7 @@ should arrive at `from_larders`.
 | `castle_ravenloft_gargoyle_tomb` | catacombs | container `cat_champion_slab` (39, 9) | |
 | `castle_ravenloft_sergeis_tomb` (broken_one, innocent) | tombs | dialogue `castle_ravenloft/catacombs_sergei:take_treasure` | `cat_sergei_final` |
 | `castle_ravenloft_tomb_of_barov_and_ravenovia` (ghost, raven) | tombs | container `cat_ravenovia_sarcophagus` (18, 22) | `cat_royal_final` |
-| `castle_ravenloft_strahds_tomb` (darklord) | Strahd's tomb | container `cat_tomb_chest` (11, 16) | `cat_darklord_final` |
+| `castle_ravenloft_strahds_tomb` (darklord) | Strahd's tomb | container `cat_tomb_chest` (11, 16): 150 gp, 3 candles, 2 Potions of Healing (Supreme), the Nine Lives Stealer longsword he carried when he took the valley (very rare) | `cat_darklord_final` |
 
 - **The Mad Dog** (book: General Kroval "Mad Dog" Grislek, a K84 crypt). The gate is chained (lock 15). A scything
   blade waits in front of the sarcophagus (`cat_mad_dog_blade`, detect 15, DEX 15, 4d10). The reading's treasure is

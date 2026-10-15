@@ -162,6 +162,10 @@
         {
           "id": "manual_of_gainful_exercise",
           "qty": 1
+        },
+        {
+          "id": "rod_of_lordly_might__mace",
+          "qty": 1
         }
       ],
       "gold": 600,
@@ -175,7 +179,12 @@
       ],
       "label": "A casket of gems",
       "model": "jewel_box",
-      "items": [],
+      "items": [
+        {
+          "id": "ioun_stone_absorption",
+          "qty": 1
+        }
+      ],
       "gold": 400
     }
   ],

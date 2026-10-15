@@ -33,7 +33,7 @@ Narrator: One has a journal open on his knee. The last page reads: "Tomorrow the
 * Leave them in peace. -> END
 
 ~ expedition_take
-give potion_of_healing 2
+give potion_of_healing_greater 2
 give climbers_kit
 gold +30
 Narrator: You take their potions, their purse and their ropes, and you tell them, out loud, that you'll put it all to good use. It seems only polite.

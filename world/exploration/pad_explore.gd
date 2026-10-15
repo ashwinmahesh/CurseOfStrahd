@@ -85,10 +85,11 @@ func rotate_leader(step: int) -> void:
 	var n := view.members.size()
 	if n < 2 or view.in_combat:
 		return
-	if step < 0:
-		view.set_leader(n - 1)   # the last leads, the rest keep their order behind
-	else:
-		view.set_leader(1)
+	var next := view.next_leader_index(step)   # passing over the dead
+	if next < 0:
+		return
+	view.set_leader(next)   # backwards the last living hero leads and the rest keep their order behind
+	if step > 0:
 		# The one who led goes to the back, so the order goes round.
 		view.members.append(view.members.pop_at(1))
 		view.st.party.append(view.st.party.pop_at(1))

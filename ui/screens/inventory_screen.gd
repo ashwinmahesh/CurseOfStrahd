@@ -879,12 +879,15 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 		if opt.has("store") or not (opt.get("choices", []) as Array).is_empty():
 			continue   # a pick to make first: the item card's buttons
 		var pid := str(opt["power_id"])
-		out.append({"label": InventoryScreen.power_label(opt), "use": true, "disabled": not bool(opt["legal"]), "tooltip": str(opt["reason"]),
-			"call": func() -> void:
-				_pick(e)
-				_use_power(pid, {})})
+		if not bool(opt.get("revive", false)):   # one that brings back the dead is aimed at them (_guest_uses)
+			out.append({"label": InventoryScreen.power_label(opt), "use": true, "disabled": not bool(opt["legal"]), "tooltip": str(opt["reason"]),
+				"call": func() -> void:
+					_pick(e)
+					_use_power(pid, {})})
 		for gu in _guest_uses(data, opt):
-			out.append({"label": str(gu["label"]), "use": true, "disabled": not bool(opt["legal"]), "tooltip": str(opt["reason"]),
+			var gwhy := str(gu.get("why", ""))
+			out.append({"label": str(gu["label"]), "use": true, "disabled": not bool(opt["legal"]) or gwhy != "",
+				"tooltip": gwhy if gwhy != "" else str(opt["reason"]),
 				"call": func() -> void:
 					_pick(e)
 					_use_on_guest(pid, gu)})
@@ -1279,14 +1282,19 @@ func _draw_card() -> void:
 		if opt.has("store"):
 			_store_picker(acts, opt)
 		elif choices.is_empty():
-			var ub := UiKit.button(label, func() -> void: _use_power(pid, {}), 14)
-			ub.disabled = not bool(opt["legal"])
-			ub.tooltip_text = str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
-			acts.add_child(ub)
+			var tip := str(opt["reason"]) if not bool(opt["legal"]) else str(opt.get("text", ""))
+			# One that brings back the dead is aimed at them: a button for each fallen hero (_guest_uses) instead, or this
+			# one, greyed, saying why while nobody is dead.
+			if not bool(opt.get("revive", false)) or not bool(opt["legal"]):
+				var ub := UiKit.button(label, func() -> void: _use_power(pid, {}), 14)
+				ub.disabled = not bool(opt["legal"])
+				ub.tooltip_text = tip
+				acts.add_child(ub)
 			for gu in _guest_uses(data, opt):
+				var gwhy := str(gu.get("why", ""))
 				var gb := UiKit.button(str(gu["label"]), func() -> void: _use_on_guest(pid, gu), 14)
-				gb.disabled = not bool(opt["legal"])
-				gb.tooltip_text = ub.tooltip_text
+				gb.disabled = not bool(opt["legal"]) or gwhy != ""
+				gb.tooltip_text = gwhy if gwhy != "" else tip
 				acts.add_child(gb)
 		else:
 			for chv: Variant in choices:
@@ -1650,6 +1658,14 @@ func _open_prepare() -> void:
 func _guest_uses(data: Dictionary, opt: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	if opt.has("store") or not (opt.get("choices", []) as Array).is_empty():
+		return out
+	# A power that brings back the dead (a Spell Scroll of Revivify, the Rod of Resurrection): one for each fallen party
+	# member, with why it can't reach one who has been dead too long (Ashwin, 2026-10-15).
+	if bool(opt.get("revive", false)):
+		for m in st.party:
+			if m.dead:
+				out.append({"label": "%s on %s" % [InventoryScreen.power_label(opt), m.name.get_slice(" ", 0)], "guest": m, "potion": false,
+					"why": FieldCasting.revive_why(st, str(opt.get("spell_id", "")), m)})
 		return out
 	var potion := str(data.get("category", "")) == "potion"
 	if not potion and str(opt.get("targeting", "")) != "ally":

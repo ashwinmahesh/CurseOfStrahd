@@ -447,7 +447,7 @@ static func animated_object(slot: int, size: String, atk: int, mod: int) -> Dict
 	var up := maxi(0, slot - 5)
 	var hp := {"large": 20, "huge": 40}.get(size, 10) as int
 	var dice := {"large": "%dd6" % (2 + up), "huge": "%dd12" % (2 + up)}.get(size, "%dd4" % (1 + up)) as String
-	return {
+	var block := {
 		"id": "animated_object", "name": "Animated Object", "size": size if size in ["large", "huge"] else "small", "type": "construct",
 		"ac": 15, "hp": {"average": hp, "dice": str(hp)}, "speed": {"walk": 30},
 		"abilities": {"str": 16, "dex": 10, "con": 10, "int": 3, "wis": 3, "cha": 1}, "senses": {"blindsight": 30},
@@ -456,6 +456,10 @@ static func animated_object(slot: int, size: String, atk: int, mod: int) -> Dict
 		"actions": [{"id": "slam", "name": "Slam", "kind": "melee", "attack": {"bonus": atk, "reach": 5}, "damage": [{"dice": "%s+%d" % [dice, 3 + mod], "type": "force"}], "summary": "Force damage."}],
 		"ai_profile": "brute", "summary": "An animated object.", "text": "Animate Objects.",
 	}
+	# One sprite for every size: a Large or Huge object is drawn as big as its squares (DrawnCreatures.BANDS).
+	if size in ["large", "huge"]:
+		block["art_height"] = {"large": 1.6, "huge": 2.4}[size]
+	return block
 
 
 ## Pact of the Chain's special familiar forms (2024 PHB): Imp, Pseudodragon, Quasit, Skeleton, Slaad Tadpole, Sphinx

@@ -12,5 +12,6 @@
     0.6,
     0.35
   ],
-  "trigger": "examine:castle_glimpse"
+  "trigger": "examine:castle_glimpse",
+  "then": "castle_windows_lit"
 }
