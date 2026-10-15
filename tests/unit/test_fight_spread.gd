@@ -3,8 +3,9 @@ extends TestCase
 ## a single fireball"). For every fight of three foes or more, as a location's data sets them out and as RoadGrounds
 ## puts a road fight down on each ground it may play out on, no point a 20 ft sphere can be centred on (a grid corner,
 ## as CombatGrid.area_cells measures it, walls stopping it) catches every foe, nor more than three quarters of a band of
-## eight or more. Fights in rooms smaller than one burst are listed in CRAMPED with why; boss fights wait in PENDING
-## until their retune lands. No foe starts on a wall, in the void or in another foe's space.
+## eight or more. Fights in rooms smaller than one burst are listed in CRAMPED with why; a fight whose rework waits on another lane
+## goes in PENDING (nothing does now: the boss fights were spread and retuned to 3 in 8, 2026-10-15). No foe starts on a
+## wall, in the void, on a low wall or in another foe's space.
 
 const BURST_FT := 20
 ## Fights whose whole room is about the size of one burst: no spread without moving the fight out of its room.
@@ -23,36 +24,8 @@ const CRAMPED := {
 	"vallaki_coffin_maker:storeroom_spawn": "the storeroom is 6 by 6",
 	"vallaki_wachter_house:stella_shadow": "Stella's room is 7 by 5 with its door shut",
 }
-## Fights waiting on another lane (coordinator, 2026-10-14): the boss fights going to 3 in 8, spread once that retune
-## lands. A key with "#n" holds that one entry of the location's encounters.
-const PENDING := {
-	"abbey_of_st_markovia_shrine:abbot_wrath": true, "amber_temple_library:exethanter_wrath": true,
-	"argynvostholt:squires_vigil": true, "argynvostholt_beacon:beacon_stand": true, "argynvostholt_hall:vladimir_duel": true,
-	"berez:creeping_hut_masterless": true, "berez:lysaga_at_monument": true, "berez:rag_queen": true,
-	"berez_baba_lysagas_hut:lysaga_in_hut": true, "burgomaster_mansion:hound_tenant": true,
-	"castle_ravenloft_catacombs:cat_horseman_final": true, "castle_ravenloft_catacombs:corvina": true,
-	"castle_ravenloft_catacombs_tombs:cat_sergei_final": true, "castle_ravenloft_court:court_final_audience_hall": true,
-	"castle_ravenloft_court:court_final_study": true, "castle_ravenloft_court:court_rahadin_fight": true,
-	"castle_ravenloft_court_treasury:court_final_treasury": true,
-	"castle_ravenloft_court_weeping:court_rahadin_chamber_fight": true, "castle_ravenloft_larders_dungeon:larders_donjon": true,
-	"castle_ravenloft_overlook:crg_overlook_final_battle": true, "castle_ravenloft_spires_heart:heart_of_sorrow_final": true,
-	"castle_ravenloft_spires_heart:heart_strahd_test": true, "castle_ravenloft_spires_roofs:querreth": true,
-	"amber_deep:dreamed_eyes": true, "ghakis_lair:vent_fire": true, "ghakis_shoulder:ghakis_keepers": true,
-	"into_the_mists_road:bone_marshal": true, "into_the_mists_road:ilarion_wolves": true, "krezk:grandsire": true,
-	"krezk_road_waystone:waystone_wolves": true, "lake_zarovich:greytooth_hunt": true, "lake_zarovich:drowned_landing": true,
-	"lake_zarovich_trail:raven_trap": true, "old_bonegrinder:bakery_offalia": true, "old_bonegrinder_loft:bella_betrayed": true,
-	"old_bonegrinder_loft:coven_last_stand": true, "old_bonegrinder_track:bella_on_the_road": true,
-	"old_bonegrinder_track:granny_ash": true, "old_bonegrinder_track:offalia_on_the_road": true,
-	"svalich_crossroads:the_hunt": true, "svalich_roadhouse:roadhouse_cellar": true, "tsolenka_pass:last_egg": true,
-	"tsolenka_pass:the_penitent": true, "vallaki:izek_duel": true,
-	"werewolf_den_caves:den_reckoning": true,
-	"wizard_of_wines:vine_mother": true, "woodcutters_hollow:oat_hunters": true, "zarovich_reed_island:reed_isle_boatmen": true,
-	## The boss fights the 3-in-8 retune (docs/story/boss_fights.md) gave more helpers beside the boss, to spread next.
-	"amber_temple_vault:vosk_unmasked#2": true, "castle_ravenloft_catacombs_strahd:cat_daylight_waking#3": true,
-	"castle_ravenloft_catacombs_tombs:cat_royal_final#3": true, "castle_ravenloft_chapel:crg_chapel_final_battle#0": true,
-	"castle_ravenloft_main_floor:crg_dinner_affront#0": true, "ghakis_lair:sarkhaza": true,
-	"amber_temple_entrance:sentinel_wakes": true, "amber_temple_entrance:sentinel_stops_you": true, "amber_temple_vault:vault_guardian": true,
-}
+## Fights waiting on another lane (none now). A key with "#n" holds that one entry of the location's encounters.
+const PENDING := {}
 
 
 func _pending(key: String, index: int) -> bool:

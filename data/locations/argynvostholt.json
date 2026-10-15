@@ -973,7 +973,7 @@
         {
           "monster": "phantom_warrior",
           "cell": [
-            12,
+            11,
             20
           ],
           "name": "Man-at-Arms"
@@ -998,7 +998,7 @@
           "monster": "phantom_warrior",
           "cell": [
             14,
-            26
+            28
           ],
           "name": "Man-at-Arms"
         },

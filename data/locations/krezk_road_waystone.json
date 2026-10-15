@@ -178,8 +178,8 @@
         {
           "monster": "werewolf",
           "cell": [
-            22,
-            2
+            27,
+            8
           ],
           "name": "A Pack Hunter"
         },
@@ -224,8 +224,8 @@
         {
           "monster": "wolf",
           "cell": [
-            21,
-            2
+            16,
+            4
           ]
         }
       ]

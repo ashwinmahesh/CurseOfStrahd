@@ -475,7 +475,7 @@
             12,
             2
           ],
-          "hp": 600
+          "hp": 510
         },
         {
           "monster": "swarm_of_insects",
@@ -522,7 +522,7 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            11,
+            6,
             1
           ]
         },
@@ -543,7 +543,7 @@
         {
           "monster": "scarecrow",
           "cell": [
-            10,
+            4,
             2
           ]
         },
@@ -599,8 +599,8 @@
         {
           "monster": "scarecrow",
           "cell": [
-            10,
-            4
+            4,
+            3
           ]
         },
         {
@@ -613,8 +613,8 @@
         {
           "monster": "scarecrow",
           "cell": [
-            9,
-            2
+            5,
+            1
           ]
         }
       ],
@@ -638,8 +638,8 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            9,
-            6
+            4,
+            3
           ]
         },
         {

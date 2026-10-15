@@ -255,23 +255,23 @@
         {
           "monster": "night_hag",
           "cell": [
-            21,
-            7
+            17,
+            1
           ],
           "name": "Bella Sunbane",
-          "hp": 300
+          "hp": 610
         },
         {
           "monster": "nightmare",
           "cell": [
-            20,
-            7
+            15,
+            13
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            21,
+            22,
             6
           ]
         },
@@ -285,8 +285,8 @@
         {
           "monster": "nightmare",
           "cell": [
-            22,
-            7
+            28,
+            11
           ]
         },
         {
@@ -328,7 +328,7 @@
           "monster": "night_hag",
           "cell": [
             20,
-            8
+            13
           ],
           "name": "Offalia Wormwiggle",
           "hp": 300
@@ -336,34 +336,34 @@
         {
           "monster": "nightmare",
           "cell": [
-            19,
+            13,
+            13
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            25,
+            2
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            23,
+            10
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            22,
             8
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            20,
-            7
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            20,
-            9
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            21,
-            8
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
             19,
             7
           ]
@@ -373,13 +373,6 @@
           "cell": [
             19,
             9
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            21,
-            7
           ]
         }
       ],
@@ -445,7 +438,7 @@
           "monster": "needle_blight",
           "cell": [
             10,
-            3
+            2
           ]
         },
         {

@@ -389,7 +389,7 @@
           "monster": "vampire_spawn",
           "cell": [
             9,
-            4
+            9
           ],
           "name": "One of Strahd's spawn"
         },
@@ -420,32 +420,16 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            10,
-            2
-          ],
-          "name": "A thrall in the pews"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            10,
-            4
-          ],
-          "name": "A thrall in the pews"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            3
-          ],
-          "name": "A thrall in the pews"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
+            11,
             1
+          ],
+          "name": "A thrall in the pews"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            4
           ],
           "name": "A thrall in the pews"
         }

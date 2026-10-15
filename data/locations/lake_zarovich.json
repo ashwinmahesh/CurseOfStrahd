@@ -667,8 +667,8 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            22,
+            15
           ]
         },
         {
@@ -730,8 +730,8 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            22,
+            15
           ]
         },
         {
@@ -780,8 +780,8 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            23,
+            15
           ]
         },
         {
@@ -835,8 +835,8 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            23,
+            15
           ]
         },
         {
@@ -877,10 +877,10 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            22,
+            15
           ],
-          "hp": 290
+          "hp": 435
         },
         {
           "monster": "dire_wolf",
@@ -906,7 +906,7 @@
         {
           "monster": "wolf",
           "cell": [
-            20,
+            23,
             22
           ]
         },
@@ -947,10 +947,10 @@
         {
           "monster": "old_greytooth",
           "cell": [
-            18,
-            21
+            22,
+            15
           ],
-          "hp": 310
+          "hp": 420
         },
         {
           "monster": "dire_wolf",
@@ -976,7 +976,7 @@
         {
           "monster": "wolf",
           "cell": [
-            20,
+            23,
             22
           ]
         },
@@ -1029,7 +1029,7 @@
           "monster": "water_elemental",
           "cell": [
             12,
-            9
+            11
           ],
           "name": "The Lake's Undertow"
         },

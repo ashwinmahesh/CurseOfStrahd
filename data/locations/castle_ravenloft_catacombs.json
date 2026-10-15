@@ -1002,7 +1002,7 @@
     {
       "id": "cat_horseman_final",
       "trigger": "enter_area:cat_beucephalus_crypt",
-      "when": "not flag.strahd_in_coffin",
+      "when": "not flag.strahd_in_coffin and item:sunsword",
       "final_battle": "castle_ravenloft_catacombs",
       "lair": true,
       "surprise": "",
@@ -1014,7 +1014,7 @@
             29,
             15
           ],
-          "hp": 565
+          "hp": 355
         },
         {
           "monster": "nightmare",
@@ -1027,15 +1027,15 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            31,
-            17
+            34,
+            19
           ]
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            30,
-            17
+            34,
+            21
           ]
         },
         {
@@ -1108,8 +1108,8 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            31,
-            17
+            34,
+            19
           ]
         },
         {
@@ -1256,12 +1256,12 @@
             39,
             22
           ],
-          "hp": 105
+          "hp": 305
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            38,
+            35,
             20
           ],
           "name": "A Door-Warden"
@@ -1277,8 +1277,8 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            37,
-            22
+            35,
+            21
           ],
           "name": "A Door-Warden"
         },
@@ -1321,22 +1321,6 @@
             22
           ],
           "name": "A Door-Warden"
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            38,
-            21
-          ],
-          "name": "A Door-Warden"
-        },
-        {
-          "monster": "helmed_horror",
-          "cell": [
-            38,
-            23
-          ],
-          "name": "A Door-Warden"
         }
       ],
       "surprise": "",
@@ -1354,13 +1338,13 @@
             39,
             22
           ],
-          "hp": 250
+          "hp": 360
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            38,
-            20
+            35,
+            21
           ],
           "name": "A Door-Warden"
         },
@@ -1407,8 +1391,8 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            38,
-            21
+            35,
+            20
           ],
           "name": "A Door-Warden"
         },

@@ -396,8 +396,8 @@
         {
           "monster": "night_hag",
           "cell": [
-            15,
-            10
+            9,
+            5
           ],
           "name": "Offalia Wormwiggle",
           "hp": 285
@@ -405,57 +405,36 @@
         {
           "monster": "nightmare",
           "cell": [
-            14,
+            3,
             10
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            15,
-            9
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            14,
-            9
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            14,
-            11
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            13,
-            10
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            15,
+            1,
             8
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            15,
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            3,
             12
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            13,
-            9
+            5,
+            8
           ]
         }
       ],
@@ -520,11 +499,53 @@
         {
           "monster": "night_hag",
           "cell": [
-            15,
-            10
+            9,
+            5
           ],
           "name": "Offalia Wormwiggle",
-          "hp": 80
+          "hp": 200
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            3,
+            10
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            1,
+            8
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            8,
+            3
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            3,
+            12
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            5,
+            8
+          ]
+        },
+        {
+          "monster": "nightmare",
+          "cell": [
+            17,
+            7
+          ]
         }
       ],
       "surprise": "",

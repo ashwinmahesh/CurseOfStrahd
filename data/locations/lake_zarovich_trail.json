@@ -449,8 +449,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            20,
-            5
+            23,
+            3
           ],
           "name": "A Fowler"
         }
@@ -514,7 +514,7 @@
           "monster": "swarm_of_bats",
           "cell": [
             17,
-            16
+            15
           ]
         }
       ],

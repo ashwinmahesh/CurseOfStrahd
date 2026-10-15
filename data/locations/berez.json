@@ -1136,12 +1136,12 @@
             7,
             11
           ],
-          "hp": 440
+          "hp": 460
         },
         {
           "monster": "swarm_of_insects",
           "cell": [
-            5,
+            1,
             12
           ]
         },
@@ -1257,7 +1257,7 @@
         {
           "monster": "scarecrow",
           "cell": [
-            3,
+            2,
             16
           ]
         }
@@ -1281,7 +1281,7 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            5,
+            1,
             12
           ]
         },
@@ -1308,7 +1308,7 @@
             29,
             13
           ],
-          "hp": 495
+          "hp": 520
         },
         {
           "monster": "swarm_of_insects",
@@ -1320,7 +1320,7 @@
         {
           "monster": "swarm_of_insects",
           "cell": [
-            33,
+            34,
             14
           ]
         },
@@ -1409,8 +1409,8 @@
         {
           "monster": "rag_queen",
           "cell": [
-            32,
-            11
+            36,
+            12
           ]
         },
         {
@@ -1449,7 +1449,7 @@
           "monster": "scarecrow",
           "cell": [
             34,
-            13
+            14
           ],
           "name": "A Straw Groom"
         },
@@ -1509,8 +1509,8 @@
         {
           "monster": "rag_queen",
           "cell": [
-            32,
-            11
+            36,
+            12
           ],
           "hp": 715
         },
@@ -1541,8 +1541,8 @@
         {
           "monster": "scarecrow",
           "cell": [
-            34,
-            13
+            35,
+            14
           ],
           "name": "A Straw Groom"
         },
@@ -1579,8 +1579,8 @@
         {
           "monster": "rag_queen",
           "cell": [
-            32,
-            11
+            36,
+            12
           ],
           "hp": 200
         },

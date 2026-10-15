@@ -962,11 +962,11 @@
         {
           "monster": "strahd_von_zarovich",
           "cell": [
-            22,
+            28,
             2
           ],
           "name": "Strahd von Zarovich",
-          "hp": 635
+          "hp": 310
         },
         {
           "monster": "dire_wolf",
@@ -989,7 +989,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            21,
+            16,
             2
           ],
           "name": "One of Strahd's spawn"
@@ -997,7 +997,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            22,
+            16,
             1
           ],
           "name": "One of Strahd's spawn"
@@ -1087,7 +1087,7 @@
         {
           "monster": "strahd_von_zarovich",
           "cell": [
-            22,
+            28,
             2
           ],
           "name": "Strahd von Zarovich",
@@ -1114,7 +1114,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            21,
+            16,
             2
           ],
           "name": "One of Strahd's spawn"
@@ -1122,8 +1122,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            22,
-            1
+            16,
+            6
           ],
           "name": "One of Strahd's spawn"
         },
@@ -1169,7 +1169,7 @@
             3
           ],
           "name": "Strahd von Zarovich",
-          "hp": 635
+          "hp": 605
         },
         {
           "monster": "swarm_of_bats",
@@ -1212,15 +1212,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            6,
-            3
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            4,
+            12,
             2
           ],
           "name": "One of Strahd's spawn"
@@ -1228,23 +1220,15 @@
         {
           "monster": "vampire_spawn",
           "cell": [
+            10,
+            7
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
             4,
-            4
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            6,
-            2
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            6,
             4
           ],
           "name": "One of Strahd's spawn"
@@ -1309,16 +1293,16 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            6,
-            3
+            12,
+            2
           ],
           "name": "One of Strahd's spawn"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
-            4,
-            2
+            10,
+            7
           ],
           "name": "One of Strahd's spawn"
         }
@@ -1376,12 +1360,12 @@
             21
           ],
           "name": "Rahadin",
-          "hp": 690
+          "hp": 795
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
-            20,
+            16,
             21
           ]
         },
@@ -1423,7 +1407,7 @@
             13
           ],
           "name": "Rahadin",
-          "hp": 265
+          "hp": 325
         },
         {
           "monster": "strahds_animated_armor",
@@ -1431,15 +1415,15 @@
             20,
             12
           ],
-          "hp": 220
+          "hp": 270
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
-            24,
+            28,
             12
           ],
-          "hp": 220
+          "hp": 270
         },
         {
           "monster": "strahds_animated_armor",
@@ -1447,7 +1431,7 @@
             22,
             12
           ],
-          "hp": 175
+          "hp": 215
         }
       ],
       "surprise": "",

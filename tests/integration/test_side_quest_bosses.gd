@@ -9,14 +9,14 @@ extends FightSeriesCase
 ## line-ups are in docs/story/boss_fights.md.
 
 
-## Old Greytooth at level 6: Old Greytooth (290 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain; 3 in 8.
+## Old Greytooth at level 6: Old Greytooth (435 HP), 2 Dire Wolfs, 3 Wolfs, Bandit Captain; 3 in 8.
 func test_old_greytooth_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("lake_zarovich", 19, 6, "greytooth_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 2 and wins <= 4, "Greytooth falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Old Greytooth with Szoldar turned at level 6: Old Greytooth (310 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf; 2 in 8,
+## Old Greytooth with Szoldar turned at level 6: Old Greytooth (420 HP), 2 Dire Wolfs, 3 Wolfs, Werewolf; 2 in 8,
 ## the harder side (no step lands on 3).
 func test_old_greytooth_with_szoldar_turned_at_level_6() -> void:
 	speakers_step_aside = true
@@ -31,7 +31,7 @@ func test_the_drowned_of_pescari_at_level_8() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the drowned fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## The bone marshal and his column at level 6: The Bone Marshal (235 HP), 2 Wights, 6 Skeletons; 3 in 8.
+## The bone marshal and his column at level 6: The Bone Marshal (200 HP), 2 Wights, 4 Skeletons; 3 in 8.
 func test_the_bone_marshal_and_his_column_at_level_6() -> void:
 	speakers_step_aside = true
 	var wins := await _series("into_the_mists_road", 23, 6, "bone_marshal", [1, 2, 3, 4, 5, 6, 7, 8])
@@ -45,7 +45,7 @@ func test_the_bone_marshal_duel_at_level_8() -> void:
 	assert_true(wins >= 2 and wins <= 4, "the marshal falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## The bone marshal and his column at level 8: The Bone Marshal (310 HP), 3 Wights, 6 Skeletons, 2 Phantom
+## The bone marshal and his column at level 8: The Bone Marshal (150 HP), 3 Wights, 6 Skeletons, 2 Phantom
 ## Warriors; 3 in 8.
 func test_the_bone_marshal_and_his_column_at_level_8() -> void:
 	speakers_step_aside = true
@@ -91,7 +91,7 @@ func test_the_counts_huntsman_at_level_8() -> void:
 	assert_true(wins >= 2 and wins <= 4, "the huntsman falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## The Count's huntsman with his hounds called at level 8: The Count's Huntsman (470 HP), Nightmare, 3 Dire Wolfs;
+## The Count's huntsman with his hounds called at level 8: The Count's Huntsman (400 HP), Nightmare, 3 Dire Wolfs;
 ## 4 in 8.
 func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
 	speakers_step_aside = true
@@ -99,12 +99,12 @@ func test_the_counts_huntsman_with_his_hounds_called_at_level_8() -> void:
 	assert_true(wins >= 3 and wins <= 5, "the huntsman falls in 3 to 5 of 8 (%d)" % wins)
 
 
-## The Count's huntsman at level 9: The Count's Huntsman (520 HP), 7 Nightmares, 6 Dire Wolfs; 3 in 8.
+## The Count's huntsman at level 9: The Count's Huntsman (520 HP), 5 Nightmares, 5 Dire Wolfs; 3 in 8.
 func test_the_counts_huntsman_at_level_9() -> void:
 	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 23, 9, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 2 and wins <= 4, "the huntsman falls in 2 to 4 of 8 (%d)" % wins)
-## The Count's huntsman at level 10: The Count's Huntsman (545 HP), 7 Nightmares, 8 Dire Wolfs; 3 in 8.
+## The Count's huntsman at level 10: The Count's Huntsman (380 HP), 7 Nightmares, 8 Dire Wolfs; 3 in 8.
 func test_the_counts_huntsman_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("svalich_crossroads", 23, 10, "the_hunt", [1, 2, 3, 4, 5, 6, 7, 8])
@@ -130,7 +130,7 @@ func test_the_penitent_at_level_9() -> void:
 	speakers_step_aside = true
 	var wins := await _series("tsolenka_pass", 20, 9, "the_penitent", [1, 2, 3, 4, 5, 6, 7, 8])
 	assert_true(wins >= 2 and wins <= 4, "the Penitent falls in 2 to 4 of 8 (%d)" % wins)
-## The Penitent at level 11: The Penitent (780 HP), 10 Ghasts; 3 in 8.
+## The Penitent at level 11: The Penitent (920 HP), 10 Ghasts; 3 in 8.
 func test_the_penitent_at_level_11() -> void:
 	speakers_step_aside = true
 	var wins := await _series("tsolenka_pass", 20, 11, "the_penitent", [1, 2, 3, 4, 5, 6, 7, 8])
@@ -165,28 +165,28 @@ func test_the_raven_trap_at_level_6() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the fowlers fall in 4 to 6 of 8 (%d)" % wins)
 
 
-## The Grandsire at level 8: The Grandsire (410 HP), 2 Werewolfs, 2 Dire Wolfs; 3 in 8.
+## The Grandsire at level 8: The Grandsire (330 HP), 2 Werewolfs, 2 Dire Wolfs; 3 in 8.
 func test_the_grandsire_at_level_8() -> void:
 	speakers_step_aside = true
 	var wins := await _series("krezk", 23, 8, "grandsire", [1, 2, 3, 4, 5, 6, 7, 8], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
 	assert_true(wins >= 2 and wins <= 4, "the Grandsire falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## The Grandsire at level 9: The Grandsire (270 HP), 3 Werewolfs, 2 Dire Wolfs; 3 in 8.
+## The Grandsire at level 9: The Grandsire (310 HP), 3 Werewolfs, 2 Dire Wolfs; 3 in 8.
 func test_the_grandsire_at_level_9() -> void:
 	speakers_step_aside = true
 	var wins := await _series("krezk", 23, 9, "grandsire", [1, 2, 3, 4, 5, 6, 7, 8], ["krezk_gate_open", "den_children_freed"], [], ["krezk_gate"])
 	assert_true(wins >= 2 and wins <= 4, "the Grandsire falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Corvina at level 10: Corvina, the Doorkeeper (250 HP), 10 Helmed Horrors; 3 in 8.
+## Corvina at level 10: Corvina, the Doorkeeper (360 HP), 10 Helmed Horrors; 3 in 8.
 func test_corvina_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4, 5, 6, 7, 8], [], [], ["cat_e3_gate"])
 	assert_true(wins >= 2 and wins <= 4, "Corvina falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Corvina named at level 10: Corvina, the Doorkeeper (105 HP), 10 Helmed Horrors; 4 in 8.
+## Corvina named at level 10: Corvina, the Doorkeeper (305 HP), 8 Helmed Horrors; 4 in 8.
 func test_corvina_named_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("castle_ravenloft_catacombs", 23, 10, "corvina", [1, 2, 3, 4, 5, 6, 7, 8], ["corvina_named"], [], ["cat_e3_gate"])
@@ -223,7 +223,7 @@ func test_the_vent_fire_at_level_10() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
 
 
-## Sarkhaza at level 10: Sarkhaza, 6 Wights; 3 in 8.
+## Sarkhaza at level 10: Sarkhaza (85 HP), 6 Wights; 3 in 8.
 func test_sarkhaza_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOARD_MOUTH)
@@ -410,14 +410,14 @@ func test_the_counts_likeness_at_level_9() -> void:
 const SOUTH_TOWER: Array[Vector2i] = [Vector2i(7, 20), Vector2i(8, 20), Vector2i(7, 21), Vector2i(8, 21)]
 
 
-## Querreth at level 10: Querreth (545 HP), 2 Wraiths; 3 in 8.
+## Querreth at level 10: Querreth (520 HP), 2 Wraiths; 3 in 8.
 func test_querreth_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], SOUTH_TOWER)
 	assert_true(wins >= 2 and wins <= 4, "Querreth falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Querreth forewarned at level 10: Querreth (590 HP), 2 Wraiths; 4 in 8.
+## Querreth forewarned at level 10: Querreth (570 HP), 2 Wraiths; 4 in 8.
 func test_querreth_forewarned_at_level_10() -> void:
 	speakers_step_aside = true
 	var wins := await _series("castle_ravenloft_spires_roofs", 22, 10, "querreth", [1, 2, 3, 4, 5, 6, 7, 8], ["escher_note_read"], [], [], SOUTH_TOWER)

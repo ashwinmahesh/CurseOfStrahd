@@ -234,7 +234,7 @@
         {
           "monster": "tough",
           "cell": [
-            11,
+            7,
             14
           ],
           "name": "A Boatman"
@@ -258,7 +258,7 @@
         {
           "monster": "giant_constrictor_snake",
           "cell": [
-            19,
+            18,
             10
           ],
           "name": "Something in the Reeds"

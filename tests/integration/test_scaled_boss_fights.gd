@@ -45,7 +45,7 @@ func _held(location: String, level: int, encounter: String, at: Array[Vector2i],
 	assert_true(wins <= high, "%s is lost at least %d times in 8 (%d)" % [encounter, 8 - high, wins])
 
 
-## Izek's duel at level 5: Izek Strazni (310 HP), 4 Warrior Veterans; 3 in 8.
+## Izek's duel at level 5: Izek Strazni (280 HP), 6 Warrior Veterans; 3 in 8.
 func test_izeks_duel_at_level_5() -> void:
 	await _held("vallaki", 5, "izek_duel", IZEK_SQUARE, 2, 4)
 
@@ -78,12 +78,12 @@ func test_the_covens_last_stand_at_level_6() -> void:
 ## (no step lands on 3).
 func test_morgantha_and_offalia_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 2, 4, ["offalia_in_last_stand"])
-## Morgantha and Bella at level 6: 2 Night Hags (220 HP), 12 Dire Wolfs, 3 Swarm of Rats; 3 in 8.
+## Morgantha and Bella at level 6: 2 Night Hags (110 HP), 12 Dire Wolfs, 3 Swarm of Rats; 3 in 8.
 func test_morgantha_and_bella_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 2, 4, ["bella_in_last_stand"])
 
 
-## The Abbot's wrath at level 7: Deva (500 HP), 2 Mongrelfolks, 3 Berserkers, 2 Flesh Golems; 3 in 8.
+## The Abbot's wrath at level 7: Deva (350 HP), 2 Mongrelfolks, 3 Berserkers, 2 Flesh Golems; 3 in 8.
 func test_the_abbots_wrath_at_level_7() -> void:
 	await _held("abbey_of_st_markovia_shrine", 7, "abbot_wrath", CHANCEL, 2, 4)
 
@@ -94,8 +94,8 @@ func test_vasilka_defends_the_abbot_at_level_7() -> void:
 	await _held("abbey_of_st_markovia_shrine", 7, "bride_defends", CHANCEL, 2, 4)
 
 
-## Vladimir at the beacon at level 8: Vladimir Horngaard (300 HP), 3 Revenants (195 HP), Phantom Warrior, 2 Wights;
-## 3 in 8.
+## Vladimir at the beacon at level 8: Vladimir Horngaard (340 HP), 3 Revenants (220 HP), Phantom Warrior, Wight; 3
+## in 8.
 func test_vladimir_at_the_beacon_at_level_8() -> void:
 	await _held("argynvostholt_beacon", 8, "beacon_stand", LANTERN_LANDING, 2, 4, ["lamp_dark_cleared"])
 
@@ -116,8 +116,8 @@ func test_kirils_challenge_with_the_guards_at_level_8() -> void:
 	await _held("werewolf_den_caves", 8, "pack_challenge", KIRILS_CAVE, 2, 4, ["zuleika_vouched"])
 
 
-## The den's reckoning at level 8: Kiril Stoyanovich (225 HP), Emil Toranescu (45 HP), Werewolf (150 HP), 3
-## Werewolfs (180 HP), 2 Dire Wolfs, Wolf; 3 in 8.
+## The den's reckoning at level 8: Kiril Stoyanovich (185 HP), Emil Toranescu (45 HP), Werewolf (125 HP), 3
+## Werewolfs (150 HP), 2 Dire Wolfs, Wolf; 3 in 8.
 func test_the_dens_reckoning_at_level_8() -> void:
 	await _held("werewolf_den_caves", 8, "den_reckoning", KIRILS_CAVE, 2, 4, ["den_guards_cleared"])
 
@@ -128,7 +128,7 @@ func test_lysaga_and_her_hut_at_level_9() -> void:
 	await _held("berez", 9, "lysaga_and_hut", LYSAGAS_STUMP, 2, 4, ["berez_scarecrows_burned"])
 
 
-## The masterless hut at level 9: Baba Lysaga's Creeping Hut (495 HP), 3 Swarm of Insects; 3 in 8.
+## The masterless hut at level 9: Baba Lysaga's Creeping Hut (520 HP), 3 Swarm of Insects; 3 in 8.
 func test_the_masterless_hut_at_level_9() -> void:
 	await _held("berez", 9, "creeping_hut_masterless", BELOW_THE_STUMP, 2, 4, ["lysaga_lured", "lysaga_slain_at_monument"])
 
@@ -139,15 +139,23 @@ func test_rahadin_on_the_stair_at_level_10() -> void:
 	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_STAIR, 2, 4, [], ["gertruda"])
 
 
-## Rahadin in the hall at level 10: Rahadin (265 HP), 2 Strahd's Animated Armors (220 HP), Strahd's Animated Armor
-## (175 HP); 3 in 8.
+## Rahadin in the hall at level 10: Rahadin (325 HP), 2 Strahd's Animated Armors (270 HP), Strahd's Animated Armor
+## (215 HP); 3 in 8.
 func test_rahadin_in_the_hall_at_level_10() -> void:
 	await _held("castle_ravenloft_court", 10, "court_rahadin_fight", RAHADINS_HALL, 2, 4)
 
 
-## Rahadin in his chamber at level 10: Rahadin (240 HP), 3 Strahd's Animated Armors (200 HP); 3 in 8.
+## Rahadin in his chamber at level 10: Rahadin (265 HP), 3 Strahd's Animated Armors (220 HP); 3 in 8.
 func test_rahadin_in_his_chamber_at_level_10() -> void:
 	await _held("castle_ravenloft_court_weeping", 10, "court_rahadin_chamber_fight", RAHADINS_CHAMBER, 2, 4)
+
+
+## Rahadin when the footlocker's lock defeats the party at level 10 (the check:rahadin_footlocker:failure version of the chamber
+## fight): Rahadin (325 HP), 3 Strahd's Animated Armors (220 HP); 3 in 8.
+func test_rahadin_at_the_failed_footlocker_at_level_10() -> void:
+	fire_trigger = "check:rahadin_footlocker:failure"
+	await _held("castle_ravenloft_court_weeping", 10, "court_rahadin_chamber_fight", RAHADINS_CHAMBER, 2, 4)
+	fire_trigger = ""
 
 
 ## Two brides at level 10: 4 Vampire Spawns (150 HP), 2 Strahd's Animated Armors (185 HP); 2 in 8, the harder side
@@ -181,35 +189,82 @@ const VAULT_DOOR: Array[Vector2i] = [Vector2i(19, 8), Vector2i(20, 8), Vector2i(
 const ROC_BRIDGE: Array[Vector2i] = [Vector2i(13, 18), Vector2i(12, 19), Vector2i(11, 20), Vector2i(10, 20)]
 
 
-## Offalia in the bakery at level 6: Night Hag (285 HP), 8 Nightmares; 3 in 8.
+## Offalia in the bakery at level 6: Night Hag (285 HP), 5 Nightmares; 3 in 8.
 func test_offalia_in_the_bakery_at_level_6() -> void:
 	await _held("old_bonegrinder", 6, "bakery_offalia", BAKERY_COUNTER, 2, 4)
 
 
-## Bella betrayed at level 6: Night Hag (250 HP), 6 Nightmares, 3 Dire Wolfs; 3 in 8.
+## Offalia in her oven at level 6 (the open:hag_oven version of the bakery fight): Night Hag (200 HP), 6 Nightmares; 3 in 8.
+func test_offalia_in_her_oven_at_level_6() -> void:
+	fire_trigger = "open:hag_oven"
+	await _held("old_bonegrinder", 6, "bakery_offalia", BAKERY_COUNTER, 2, 4)
+	fire_trigger = ""
+
+
+## A trigger starts its own version of an encounter, not the first version of the same id whose condition holds (2026-10-15:
+## the oven's Offalia and Rahadin at the failed footlocker never ran behind the dialogue versions).
+func test_a_trigger_starts_its_own_version_of_a_fight() -> void:
+	var oven := await _fired("old_bonegrinder", 6, "open:hag_oven", BAKERY_COUNTER)
+	assert_true(bool(oven["started"]), "the oven's trigger starts a fight")
+	assert_eq(int(oven["foes"]), 7, "Offalia and six nightmares, not the dialogue's five")
+	assert_eq(int(oven["hp"]), 200, "Offalia at the oven has 200 HP")
+	var locker := await _fired("castle_ravenloft_court_weeping", 10, "check:rahadin_footlocker:failure", RAHADINS_CHAMBER)
+	assert_true(bool(locker["started"]), "the footlocker's failure starts a fight")
+	assert_eq(int(locker["hp"]), 325, "Rahadin at the footlocker has 325 HP")
+
+
+## The foes a trigger starts at `location` for the four pregens at `level`, standing at `at`: {started, foes, hp (the toughest)}.
+func _fired(location: String, level: int, trigger: String, at: Array[Vector2i]) -> Dictionary:
+	GameState.reset()
+	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
+		var ch := Pregens.build(id, level)
+		ch.finish_long_rest()
+		GameState.story.party.append(ch)
+	GameState.story.location = location
+	GameState.story.positions = at.duplicate()
+	GameState.story.minute_of_day = 12 * 60
+	Dice.reseed(1)
+	root = (load("res://scenes/game.tscn") as PackedScene).instantiate()
+	add_child(root)
+	await _frames(3)
+	var v := root.get("view") as LocationView
+	var out := {"started": LocationFights._trigger_encounter(v, trigger), "foes": 0, "hp": 0}
+	await _frames(2)
+	if bool(out["started"]):
+		for c in v.combat_view.e.combatants:
+			if c.side == &"enemy":
+				out["foes"] = int(out["foes"]) + 1
+				out["hp"] = maxi(int(out["hp"]), c.creature.max_hp())
+	root.queue_free()
+	root = null
+	await _frames(2)
+	return out
+
+
+## Bella betrayed at level 6: Night Hag (300 HP), 6 Nightmares, 2 Dire Wolfs; 3 in 8.
 func test_bella_betrayed_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "bella_betrayed", LOFT, 2, 4)
 
 
-## Bella on the road at level 6: Night Hag (300 HP), 5 Nightmares; 2 in 8, the harder side (no step lands on 3).
+## Bella on the road at level 6: Night Hag (610 HP), 5 Nightmares; 2 in 8, the harder side (no step lands on 3).
 func test_bella_on_the_road_at_level_6() -> void:
 	await _held("old_bonegrinder_track", 6, "bella_on_the_road", [], 2, 4)
-## Offalia on the road at level 6: Night Hag (300 HP), 7 Nightmares; 3 in 8.
+## Offalia on the road at level 6: Night Hag (300 HP), 6 Nightmares; 3 in 8.
 func test_offalia_on_the_road_at_level_6() -> void:
 	await _held("old_bonegrinder_track", 6, "offalia_on_the_road", [], 2, 4)
 
 
-## Morgantha alone at level 6: Night Hag (300 HP), 3 Swarm of Rats, 7 Nightmares; 3 in 8.
+## Morgantha alone at level 6: Night Hag (300 HP), 3 Swarm of Rats, 6 Nightmares; 3 in 8.
 func test_morgantha_alone_at_level_6() -> void:
 	await _held("old_bonegrinder_loft", 6, "coven_last_stand", LOFT, 2, 4)
 
 
-## Lysaga at the grave at level 9: Baba Lysaga (440 HP), 2 Swarm of Insects, 10 Scarecrows; 3 in 8.
+## Lysaga at the grave at level 9: Baba Lysaga (460 HP), 2 Swarm of Insects, 10 Scarecrows; 3 in 8.
 func test_lysaga_at_the_grave_at_level_9() -> void:
 	await _held("berez", 9, "lysaga_at_monument", MARINAS_GRAVE, 2, 4)
 
 
-## Lysaga in her kitchen at level 9: Baba Lysaga (600 HP), 8 Swarm of Insects, 12 Scarecrows; 3 in 8.
+## Lysaga in her kitchen at level 9: Baba Lysaga (510 HP), 8 Swarm of Insects, 12 Scarecrows; 3 in 8.
 func test_lysaga_in_her_kitchen_at_level_9() -> void:
 	await _held("berez_baba_lysagas_hut", 9, "lysaga_in_hut", LYSAGAS_KITCHEN, 2, 4)
 
@@ -219,7 +274,7 @@ func test_the_roc_and_its_mate_at_level_9() -> void:
 	await _held("tsolenka_pass", 9, "roc_of_ghakis", ROC_BRIDGE, 2, 4)
 
 
-## Exethanter at level 10: Exethanter (100 HP), 6 Flameskulls, 8 Wraiths; 3 in 8.
+## Exethanter at level 10: Exethanter (130 HP), 6 Flameskulls, 8 Wraiths (85 HP); 3 in 8.
 func test_exethanter_at_level_10() -> void:
 	await _held("amber_temple_library", 10, "exethanter_wrath", EXETHANTERS_SHELVES, 2, 4)
 
@@ -244,12 +299,12 @@ func test_the_vault_guardian_at_level_10() -> void:
 	await _held("amber_temple_vault", 10, "vault_guardian", VAULT_DOOR, 2, 4)
 
 
-## Vosk named and weakened at level 10: Arcanaloth (205 HP), 2 Flameskulls; 4 in 8.
+## Vosk named and weakened at level 10: Arcanaloth (330 HP), 2 Flameskulls; 4 in 8.
 func test_vosk_named_and_weakened_at_level_10() -> void:
 	await _held("amber_temple_vault", 10, "vosk_unmasked", VOSKS_VAULT, 3, 5, ["vosk_named", "vosk_weakened"])
 
 
-## Strahd woken by day with the Sunsword: Strahd von Zarovich (455 HP), 2 Swarm of Bats, 7 Vampire Spawns; 3 in 8.
+## Strahd woken by day with the Sunsword: Strahd von Zarovich (270 HP), 2 Swarm of Bats, 7 Vampire Spawns; 3 in 8.
 func test_strahd_woken_by_day_with_the_sunsword() -> void:
 	cleared_fights.assign(["cat_tomb_keepers"])
 	prepare = func(st: StoryState) -> void:
@@ -267,7 +322,7 @@ const DINNER_TABLE: Array[Vector2i] = [Vector2i(6, 5), Vector2i(7, 6), Vector2i(
 const HEART_STAIR: Array[Vector2i] = [Vector2i(8, 14), Vector2i(9, 14), Vector2i(7, 14), Vector2i(8, 13)]
 
 
-## Strahd's dinner with the Sunsword: Strahd von Zarovich (490 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors, 3
+## Strahd's dinner with the Sunsword: Strahd von Zarovich (605 HP), 3 Swarm of Bats, 2 Strahd's Animated Armors, 3
 ## Vampire Spawns; 3 in 8.
 func test_strahds_dinner_with_the_sunsword() -> void:
 	prepare = _sunsword
@@ -275,7 +330,7 @@ func test_strahds_dinner_with_the_sunsword() -> void:
 	prepare = Callable()
 
 
-## Strahd at the broken Heart with the Sunsword: Strahd von Zarovich (455 HP), 2 Strahd's Animated Armors, 6
+## Strahd at the broken Heart with the Sunsword: Strahd von Zarovich (455 HP), 2 Strahd's Animated Armors, 5
 ## Vampire Spawns; 3 in 8.
 func test_strahd_at_the_broken_heart_with_the_sunsword() -> void:
 	prepare = _sunsword
@@ -343,7 +398,7 @@ func _final(location: String, encounter: String, card: String, at: Array[Vector2
 	prepare = Callable()
 
 
-## Strahd in the horseman's crypt with the Sunsword: Strahd von Zarovich (565 HP), Nightmare, 2 Swarm of Bats, 5
+## Strahd in the horseman's crypt with the Sunsword: Strahd von Zarovich (355 HP), Nightmare, 2 Swarm of Bats, 5
 ## Vampire Spawns; 3 in 8.
 func test_strahd_in_the_horsemans_crypt_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_catacombs", "cat_horseman_final", "horseman", HORSEMANS_CRYPT)
@@ -354,7 +409,7 @@ func test_strahd_in_his_tomb_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_catacombs_strahd", "cat_darklord_final", "darklord", DARKLORDS_TOMB)
 
 
-## Strahd at the royal tomb with the Sunsword: Strahd von Zarovich (495 HP), 3 Specters, 8 Vampire Spawns; 3 in 8.
+## Strahd at the royal tomb with the Sunsword: Strahd von Zarovich (345 HP), 3 Specters, 8 Vampire Spawns; 3 in 8.
 func test_strahd_at_the_royal_tomb_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_catacombs_tombs", "cat_royal_final", "ghost", ROYAL_TOMB)
 
@@ -365,38 +420,38 @@ func test_strahd_at_sergeis_tomb_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_catacombs_tombs", "cat_sergei_final", "broken_one", SERGEIS_TOMB)
 
 
-## Strahd in the chapel with the Sunsword: Strahd von Zarovich (455 HP), 12 Vampire Spawns; 3 in 8.
+## Strahd in the chapel with the Sunsword: Strahd von Zarovich (455 HP), 10 Vampire Spawns; 3 in 8.
 func test_strahd_in_the_chapel_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_chapel", "crg_chapel_final_battle", "artifact", CHAPEL_NAVE)
 
 
-## Strahd in the audience hall with the Sunsword: Strahd von Zarovich (635 HP), 3 Dire Wolfs, 10 Vampire Spawns; 3
+## Strahd in the audience hall with the Sunsword: Strahd von Zarovich (310 HP), 3 Dire Wolfs, 10 Vampire Spawns; 3
 ## in 8.
 func test_strahd_in_the_audience_hall_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_court", "court_final_audience_hall", "beast", AUDIENCE_HALL)
 
 
-## Strahd in his study with the Sunsword: Strahd von Zarovich (635 HP), 2 Swarm of Bats, 8 Vampire Spawns; 3 in 8.
+## Strahd in his study with the Sunsword: Strahd von Zarovich (605 HP), 2 Swarm of Bats, 6 Vampire Spawns; 3 in 8.
 func test_strahd_in_his_study_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_court", "court_final_study", "seer", STRAHDS_STUDY)
 
 
-## Strahd in the treasury with the Sunsword: Strahd von Zarovich (600 HP), Helmed Horror, 9 Vampire Spawns; 3 in 8.
+## Strahd in the treasury with the Sunsword: Strahd von Zarovich (660 HP), Helmed Horror, 9 Vampire Spawns; 3 in 8.
 func test_strahd_in_the_treasury_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_court_treasury", "court_final_treasury", "tempter", TREASURY)
 
 
-## Strahd in the donjon with the Sunsword: Strahd von Zarovich (520 HP), 10 Skeletons, 10 Vampire Spawns; 3 in 8.
+## Strahd in the donjon with the Sunsword: Strahd von Zarovich (500 HP), 10 Skeletons, 10 Vampire Spawns; 3 in 8.
 func test_strahd_in_the_donjon_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_larders_dungeon", "larders_donjon", "donjon", DONJON)
 
 
-## Strahd on the overlook with the Sunsword: Strahd von Zarovich (590 HP), 3 Swarm of Bats, 4 Vampire Spawns; 3 in 8.
+## Strahd on the overlook with the Sunsword: Strahd von Zarovich (765 HP), 3 Swarm of Bats, 4 Vampire Spawns; 3 in 8.
 func test_strahd_on_the_overlook_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_overlook", "crg_overlook_final_battle", "executioner", OVERLOOK)
 
 
-## Strahd by the Heart of Sorrow with the Sunsword: Strahd von Zarovich (455 HP), Helmed Horror, 8 Vampire Spawns;
+## Strahd by the Heart of Sorrow with the Sunsword: Strahd von Zarovich (590 HP), Helmed Horror, 8 Vampire Spawns;
 ## 3 in 8.
 func test_strahd_by_the_heart_of_sorrow_with_the_sunsword() -> void:
 	await _final("castle_ravenloft_spires_heart", "heart_of_sorrow_final", "marionette", HEART_OF_SORROW)

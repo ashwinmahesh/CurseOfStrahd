@@ -931,7 +931,7 @@
         {
           "monster": "flameskull",
           "cell": [
-            5,
+            4,
             18
           ],
           "name": "A Burnt Keeper"
@@ -1107,15 +1107,15 @@
         {
           "monster": "wight",
           "cell": [
-            21,
-            7
+            25,
+            11
           ]
         },
         {
           "monster": "wight",
           "cell": [
-            22,
-            6
+            26,
+            2
           ]
         },
         {
@@ -1300,7 +1300,8 @@
           ],
           "lying": {
             "head": "west"
-          }
+          },
+          "hp": 85
         },
         {
           "monster": "wight",
@@ -1319,15 +1320,15 @@
         {
           "monster": "wight",
           "cell": [
-            21,
-            7
+            25,
+            11
           ]
         },
         {
           "monster": "wight",
           "cell": [
-            22,
-            6
+            26,
+            2
           ]
         },
         {

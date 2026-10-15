@@ -173,7 +173,7 @@
     {
       "id": "heart_of_sorrow_final",
       "trigger": "enter_area:spires_heart_chamber",
-      "when": "",
+      "when": "item:sunsword",
       "final_battle": "castle_ravenloft_heart_of_sorrow",
       "lair": true,
       "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
@@ -187,12 +187,12 @@
             4
           ],
           "name": "Strahd von Zarovich",
-          "hp": 455
+          "hp": 590
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            12,
+            13,
             8
           ],
           "name": "Heart's Warden"
@@ -240,8 +240,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            7,
-            5
+            3,
+            8
           ],
           "name": "One of Strahd's spawn"
         },
@@ -285,8 +285,8 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            12,
-            8
+            13,
+            9
           ],
           "name": "Heart's Warden"
         },
@@ -449,7 +449,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            9,
+            15,
             3
           ]
         },
@@ -463,8 +463,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            7,
-            4
+            3,
+            7
           ]
         },
         {
@@ -472,13 +472,6 @@
           "cell": [
             9,
             2
-          ]
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            9,
-            4
           ]
         }
       ]

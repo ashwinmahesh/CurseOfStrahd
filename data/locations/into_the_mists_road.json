@@ -570,8 +570,8 @@
         {
           "monster": "wight",
           "cell": [
-            23,
-            16
+            28,
+            20
           ],
           "name": "Lieutenant of the Vanguard"
         },
@@ -615,8 +615,8 @@
         {
           "monster": "wight",
           "cell": [
-            23,
-            16
+            28,
+            20
           ],
           "name": "Lieutenant of the Vanguard"
         }
@@ -670,12 +670,12 @@
             22,
             15
           ],
-          "hp": 310
+          "hp": 150
         },
         {
           "monster": "wight",
           "cell": [
-            23,
+            20,
             14
           ],
           "name": "Lieutenant of the Vanguard"
@@ -683,7 +683,7 @@
         {
           "monster": "wight",
           "cell": [
-            23,
+            20,
             16
           ],
           "name": "Lieutenant of the Vanguard"
@@ -699,8 +699,8 @@
         {
           "monster": "skeleton",
           "cell": [
-            25,
-            13
+            23,
+            11
           ],
           "name": "Rider of the Last Muster"
         },
@@ -780,7 +780,7 @@
             22,
             15
           ],
-          "hp": 235
+          "hp": 200
         },
         {
           "monster": "wight",
@@ -793,7 +793,7 @@
         {
           "monster": "wight",
           "cell": [
-            23,
+            20,
             16
           ],
           "name": "Lieutenant of the Vanguard"
@@ -801,8 +801,8 @@
         {
           "monster": "skeleton",
           "cell": [
-            25,
-            13
+            23,
+            11
           ],
           "name": "Rider of the Last Muster"
         },
@@ -827,22 +827,6 @@
           "cell": [
             25,
             17
-          ],
-          "name": "Rider of the Last Muster"
-        },
-        {
-          "monster": "skeleton",
-          "cell": [
-            28,
-            14
-          ],
-          "name": "Rider of the Last Muster"
-        },
-        {
-          "monster": "skeleton",
-          "cell": [
-            29,
-            16
           ],
           "name": "Rider of the Last Muster"
         }
@@ -872,15 +856,15 @@
           "monster": "wight",
           "cell": [
             23,
-            14
+            11
           ],
           "name": "Lieutenant of the Vanguard"
         },
         {
           "monster": "skeleton",
           "cell": [
-            25,
-            13
+            23,
+            10
           ],
           "name": "Rider of the Last Muster"
         },
@@ -1043,8 +1027,8 @@
         {
           "monster": "wolf",
           "cell": [
-            23,
-            14
+            22,
+            13
           ]
         }
       ],
@@ -1066,8 +1050,8 @@
         {
           "monster": "wolf",
           "cell": [
-            25,
-            13
+            23,
+            12
           ]
         },
         {
