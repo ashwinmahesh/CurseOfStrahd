@@ -131,6 +131,12 @@ func test_regions_play_their_theme() -> void:
 	for path in Audio.files("music", "tavern"):
 		assert_true(vine.has(path), "and still the regular tavern tune %s" % path)
 	assert_false(Audio.files("music", "tavern").has(spinning), "no other tavern plays it")
+	# The title screen opens on Bach's Toccata (owner, 2026-10-15); Skeleton Waltz Theme plays among the haunted tracks.
+	var toccata := "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+	var waltz := "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg"
+	var title := Audio.files("music", "title")
+	assert_true(title.size() == 1 and title.has(toccata), "the title screen plays the Toccata alone")
+	assert_true(Audio.files("music", "haunted").has(waltz), "Skeleton Waltz Theme plays in the haunted mood")
 
 
 ## The Wizard of Wines turns cheerful once Yester Hill is broken (owner, 2026-10-13): every one of its places, the
