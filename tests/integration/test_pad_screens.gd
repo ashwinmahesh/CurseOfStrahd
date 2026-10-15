@@ -174,6 +174,26 @@ func test_the_travel_map_shop_temple_and_loot() -> void:
 	await _reach("a shop")
 	await _back("a shop", func() -> bool: return root.find_children("*", "ShopScreen", false, false).filter(
 		func(s: Node) -> bool: return not s.is_queued_for_deletion() and s.process_mode != Node.PROCESS_MODE_DISABLED).is_empty())
+	# A merchant's magic (Ashwin, 2026-10-14): the wares' tabs on LB/RB from the wares side, and a made-to-order
+	# ware's weapons open under it, every one reachable.
+	GameState.story.milestones = 20
+	root.call("open_shop", "gunther_arasek")
+	await _frames(3)
+	var smith := root.find_children("*", "ShopScreen", false, false).back() as ShopScreen
+	smith.toggle_bases("weapon_plus_1")
+	await _frames(2)
+	await _reach("a shop with a +1 weapon's choices open")
+	var bases := smith.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text.begins_with("Buy for") and smith.find_child("WaresSide", true, false).is_ancestor_of(b))
+	(bases.back() as Control).grab_focus()
+	var before := ShopScreen.ware_filter
+	await _press(JOY_BUTTON_RIGHT_SHOULDER)
+	assert_ne(ShopScreen.ware_filter, before, "RB with the focus on the wares steps the wares' tabs")
+	await _press(JOY_BUTTON_LEFT_SHOULDER)
+	assert_eq(ShopScreen.ware_filter, before, "and LB steps back")
+	await _back("a shop with magic", func() -> bool: return root.find_children("*", "ShopScreen", false, false).filter(
+		func(s: Node) -> bool: return not s.is_queued_for_deletion() and s.process_mode != Node.PROCESS_MODE_DISABLED).is_empty())
+	ShopScreen.ware_filter = "All"
 	root.call("open_services", "father_lucian")
 	await _frames(3)
 	await _reach("St. Andral's services")
