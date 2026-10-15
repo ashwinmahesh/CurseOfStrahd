@@ -2113,9 +2113,11 @@ func _play_events() -> void:
 								lon.append(lo)
 						await fx.cast(lcue, lt, lon, [], board, false)
 			"form":
-				_swap_form_art(str(ev["id"]), str(ev.get("art", "")))
+				_stop_walking(walking)   # its figure is about to be swapped, and a freed token can't be told to stand
+				await _swap_form_art(str(ev["id"]), str(ev.get("art", "")), str(ev.get("kind", "")))
 			"shape":
-				_swap_shape_art(str(ev["id"]), str(ev.get("art", "")))
+				_stop_walking(walking)
+				await _swap_shape_art(str(ev["id"]), str(ev.get("art", "")), str(ev.get("kind", "")))
 			"vanish":
 				var vt := _tok(str(ev["id"]))
 				if str(ev.get("narration", "")) != "" and vt != null:
@@ -2227,8 +2229,11 @@ func _tok(id: Variant) -> CombatToken:
 ## A Shapechanger took another shape (ADR 0014): its token wears the shape's sprite when it has one (`forms` art),
 ## and the stat block's own again in its true form. A party member's or guest's own figure (a wereraven ally's) is only
 ## hidden while it wears another and comes back for its true form, since exploring goes on with it after the fight
-## (owner's report 2026-10-12: Adrian's hybrid left the Vine Mother's fight unable to end).
-func _swap_form_art(id: String, art: String) -> void:
+## (owner's report 2026-10-12: Adrian's hybrid left the Vine Mother's fight unable to end). The change is seen and heard
+## (owner ask, 2026-10-14, for every shapeshifter): the old figure gathers and flares, then the new one arrives in a
+## flash (FxShapeshift; `kind` is how it looks and sounds). A figure nobody can see (an Invisible foe's) changes without
+## showing where it stands, and so does a fight with its effects off.
+func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 	var old := _tok(id)
 	if old == null:
 		return
@@ -2239,6 +2244,12 @@ func _swap_form_art(id: String, art: String) -> void:
 	if want == old.art_override or (want == "" and old == own):
 		old.flash(Look.color("lilac"), 0.3)
 		return
+	var shown := SpellFx.enabled and old.visible
+	if shown:
+		await fx.shape_gather(old, kind)
+		old = _tok(id)
+		if _closed or not is_inside_tree() or old == null:
+			return
 	var nt: CombatToken
 	if want == "" and own != null and own != old:
 		nt = own
@@ -2252,18 +2263,21 @@ func _swap_form_art(id: String, art: String) -> void:
 		add_child(nt)
 	tokens[id] = nt
 	nt.set_unseen(e.sight.hidden_from_party(nt.combatant, viewer))   # an Invisible foe's new figure stays off the map too
-	nt.flash(Look.color("lilac"), 0.4)
 	if old == own:
 		old.visible = false
 	else:
 		old.queue_free()
+	if shown and nt.visible:
+		fx.shape_settle(nt, kind)
+	else:
+		nt.flash(Look.color("lilac"), 0.4)
 
 
 ## Polymorph, Wild Shape and the other changes of shape (ShapeChange, owner 2026-10-13: "their sprite should reflect
 ## their transformed shape"): the token wears the Beast's sprite while the shape lasts, facing the way it faced, and its
 ## own figure again after (a hero's or guest's own token, a foe's look, _swap_form_art). A shape with no sprite of its
 ## own leaves the figure as it is.
-func _swap_shape_art(id: String, art: String) -> void:
+func _swap_shape_art(id: String, art: String, kind: String = "") -> void:
 	var old := _tok(id)
 	if old == null:
 		return
@@ -2273,9 +2287,9 @@ func _swap_shape_art(id: String, art: String) -> void:
 			return
 		if not _shape_looks.has(id):
 			_shape_looks[id] = old.art_override
-		_swap_form_art(id, art)
+		await _swap_form_art(id, art, kind)
 	elif _shape_looks.has(id):
-		_swap_form_art(id, "" if _own_tokens.has(id) else str(_shape_looks[id]))
+		await _swap_form_art(id, "" if _own_tokens.has(id) else str(_shape_looks[id]), kind)
 		_shape_looks.erase(id)
 	var nt := _tok(id)
 	if nt == null or nt == old:

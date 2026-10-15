@@ -34,6 +34,7 @@ approve godrick_pendlebrook +1 liriel_dawnsong +1 thistle +2 wren_featherfoot +1
 
 ~ ruxandra
 quest the_druid_who_came_back found
+cutscene yester_planting
 Narrator: An old woman kneels on the burned crown in the lantern light, where the black tree stood, pressing earth down round something with both hands.
 Ruxandra: I told you. The tree calls us back. It always does. I carried a cutting in my sleeve the night you burned it, against my skin, and it drank from me all the way to the Krezk road and back.
 Narrator: In the turned earth beside her stands a thin black shoot as high as her shoulder, with leaves like little hands. The ash round it is moving, very slightly, toward it.
@@ -46,6 +47,7 @@ Ruxandra: You spared me. I'll spare you nothing.
 if not flag.kostin_planting_seen
 set kostin_planting_seen
 quest the_druid_who_came_back found
+cutscene yester_planting
 Narrator: On the burned crown a young man with a lantern kneels by a sapling, watering it from his own flask. It's Kostin. His feet are wrapped in strips of his robe again, worn through.
 Kostin: You. I hoped it would be you, if anyone came. I found where the trees only drink rain, three weeks past the Krezk road. I brought one back.
 Kostin: The hill can't stay a grave. Something has to grow here that isn't hers. A month ago it was a switch you could snap. Look at it.
@@ -90,6 +92,7 @@ Kostin: No... no. I'm sorry. I'm so sorry. (He doesn't know whether he's saying 
 if not flag.zorica_met
 set zorica_met
 quest the_druid_who_came_back found
+cutscene yester_planting
 Narrator: A girl of about sixteen in a druid's grey robe much too big for her is planting something on the burned crown by lantern light, and singing to it under her breath.
 if flag.yester_druids_fate == "spared" or flag.yester_druids_fate == "fled"
 Zorica: You burned it. You burned Mother's tree, and Mother's gone where none of us can find her. I was on the Krezk road for herbs. I came back and the hill was black.

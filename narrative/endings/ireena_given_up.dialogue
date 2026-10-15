@@ -11,6 +11,7 @@ endif
 Narrator: You step aside. Ireena looks at you once, and then she stops looking at you at all.
 Ireena: I am not a coin to be paid over. But I see you have already spent me.
 Strahd: Come, my dear. This house has waited a very long time to hear your step.
+cutscene ending_arm
 Narrator: She crosses the hall to him. He offers his arm, she takes it, and the doors close behind them without a sound.
 -> after
 

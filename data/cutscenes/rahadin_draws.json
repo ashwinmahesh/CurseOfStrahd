@@ -1,0 +1,15 @@
+{
+  "id": "rahadin_draws",
+  "title": "Rahadin Draws",
+  "summary": "Rahadin draws two curved swords as the screaming faces of everyone he has killed pour into the steel.",
+  "images": [
+    {
+      "image": "rahadin_draws",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

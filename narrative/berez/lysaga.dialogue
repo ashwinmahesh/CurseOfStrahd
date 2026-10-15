@@ -111,6 +111,7 @@ endif
 
 ~ supper
 set lysaga_supper_eaten
+cutscene lysaga_supper
 Narrator: She ladles stew into wooden bowls from a pot that has never once been empty. It smells of onions and thyme and something underneath, sweet and dark, that you decide not to name.
 Baba Lysaga: Eat, eat. You're all too thin to be any use. Sit where the hut can see you.
 if attitude.baba_lysaga == hostile

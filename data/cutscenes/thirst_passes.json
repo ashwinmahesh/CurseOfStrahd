@@ -1,0 +1,15 @@
+{
+  "id": "thirst_passes",
+  "title": "Where the Thirst Goes",
+  "summary": "In the crypt, a low stream of red shadow runs from the crumbling coffin to one hand, and black veins climb the wrist.",
+  "images": [
+    {
+      "image": "thirst_passes",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

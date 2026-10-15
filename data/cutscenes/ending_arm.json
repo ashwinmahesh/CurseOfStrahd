@@ -1,0 +1,15 @@
+{
+  "id": "ending_arm",
+  "title": "He Offers His Arm",
+  "summary": "Ireena crosses the hall and takes Strahd's arm, and the great doors close behind them.",
+  "images": [
+    {
+      "image": "ending_arm",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

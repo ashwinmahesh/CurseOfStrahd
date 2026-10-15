@@ -92,6 +92,7 @@ The Huntsman: (Very quietly.) Nobody's ever said them.
 -> stand_menu
 
 ~ fight
+cutscene hunt_begins
 The Huntsman: Run if you like. It's better sport. (He doesn't wait to see if you will.)
 combat the_hunt
 

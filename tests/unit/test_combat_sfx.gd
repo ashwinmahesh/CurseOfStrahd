@@ -19,6 +19,8 @@ func _named_ids() -> Array[String]:
 						out.append(id)
 	for moment: String in d.get("concentration", {}) as Dictionary:
 		out.append_array(CombatSfx._list((d["concentration"] as Dictionary)[moment]))
+	for kind: String in d.get("shapeshift", {}) as Dictionary:
+		out.append_array(CombatSfx._list((d["shapeshift"] as Dictionary)[kind]))
 	for table: String in ["flavours", "hits"]:
 		for k: String in d.get(table, {}) as Dictionary:
 			for moment: String in (d[table] as Dictionary)[k] as Dictionary:

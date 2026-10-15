@@ -3,6 +3,7 @@
 
 ~ start
 Narrator: The thing in the coffin goes still. For one long breath the castle is silent, waiting.
+cutscene thirst_passes
 Narrator: Then {name} feels it. The thirst that filled him has nowhere left to go, except into the one who already carries a piece of it.
 if guest:ireena
 Ireena: Your eyes. They have gone so dark. Tell me I am wrong.

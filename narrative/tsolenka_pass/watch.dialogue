@@ -8,6 +8,7 @@ endif
 if not flag.tsolenka_watch_met
 set tsolenka_watch_met
 quest the_tsolenka_gate reached
+cutscene watch_halt
 Narrator: Five soldiers in old mail stand at their posts around the guardroom, grey as the stone behind them and a little blurred at the edges, like breath on a cold window. One of them steps out into the middle of the floor. He has sergeant's knots on his shoulder and no colour in him anywhere.
 tsolenka_sergeant: Halt. Watchword.
 else

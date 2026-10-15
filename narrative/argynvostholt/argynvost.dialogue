@@ -52,6 +52,7 @@ Argynvost: And I'm held with them, I think. You can't leave a house while everyo
 
 ~ last_words
 set vladimir_last_words_known
+cutscene argynvost_last_breath
 Argynvost: I asked him to let them go. "Let them go home. Don't keep them for me." I said it plainly. I had very little breath left for poetry.
 Argynvost [sad]: He heard me. He held my head and heard me, and then he stood up and swore them all to vengeance in my name. I don't blame him. He was a boy, really. I would like him to stop.
 interject name:wren_featherfoot: He couldn't go home without you. So he made sure nobody did.

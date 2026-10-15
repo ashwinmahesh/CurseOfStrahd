@@ -113,6 +113,7 @@ combat grandsire
 
 ~ after
 quest the_packs_runt done
+cutscene petru_morning
 Narrator: In the morning Petru's mother comes down from the south row with a basket on her arm and nothing to say. She stands in front of you for a long while. Then she puts the basket down and holds your hands, one after the other, all of you.
 if not flag.petru_cured
 Little Petru: (He's asleep against a goat, and wakes when the basket goes down.) Is he gone? The big one? (He sniffs.) He's gone. I can still smell the rain. I don't mind.

@@ -76,6 +76,7 @@ set dragos_freed
 if not quest.one_horned_billy >= dragos
 quest one_horned_billy dragos
 endif
+cutscene dragos_unwound
 Narrator: The curse comes off him like a wet coat. One moment there's a goat in the gap of the pen; the next there's a big bearded man on his hands and knees in the straw, naked and shaking.
 Narrator: He has a scar on his forehead the shape of a horn, and a silver ring in his fist.
 Narrator: Stelian drops his crook. Somebody in the south row screams, and then laughs, and then can't stop.
