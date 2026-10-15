@@ -86,7 +86,11 @@ A road the story-bot playthroughs walk has to stay winnable by their weaker part
 region's level, no retry: a road fight lost is the walk lost). `baratok_slopes:spiders` was 2 giant spiders and 9 werewolves
 (the sharp party 5 in 8, the playthrough party two in 8 even at level 9, and `test_phase5_exit` at seeds 19 and 31 lost to it); it
 is now 2 giant spiders and 4 werewolves, the sharp party 6 in 8 (the top of the band, as a playthrough road may be) and the
-playthrough party at level 8 seven in 8, and the Berez, Baratok and Tsolenka walk holds at seeds 7, 11, 19 and 31.
+playthrough party at level 8 seven in 8, and the Berez, Baratok and Tsolenka walk holds at seeds 7, 11, 19 and 31. The same easing, one table at a time until the
+sharp party sat at 5 or 6 and the playthrough party at 6 or more, was done for the other tables those walks can meet:
+Baratok `dire_wolves` and `ogres` and the vineyard road's `hedgerow_blights` and `druid_patrol` (a road's sharp-party band
+stays 4 to 6; the playthrough party scores are measured on `test_zz`-style runs of ilse_varga, tamsin_tealeaf, hedda_ironvow
+and silvain_aster at the playthrough's own level).
 
 | Table | Entry | Level | Was | Now | Wins |
 |---|---|---|---|---|---|
@@ -95,8 +99,8 @@ playthrough party at level 8 seven in 8, and the Berez, Baratok and Tsolenka wal
 | argynvostholt_road | `dire_wolves_day` | 8 | 6 dire wolf | 6 dire wolf, 5 werewolf | 6 |
 | argynvostholt_road | `the_conquerors_dead` | 8 | 6 strahd zombie, 2 ghast | 8 ghast, 4 wight, ghoul | 4 |
 | argynvostholt_road | `werewolf_hunters` | 8 | 2 werewolf, 3 dire wolf | 5 werewolf, 6 dire wolf | 5 |
-| baratok_slopes | `dire_wolves` | 9 | 4 dire wolf, 2 wolf | 6 dire wolf, 5 werewolf | 6 |
-| baratok_slopes | `ogres` | 9 | 3 ogre | 5 ogre, 6 werewolf | 5 |
+| baratok_slopes | `dire_wolves` | 9 | 4 dire wolf, 2 wolf | 6 dire wolf, 4 werewolf | 6 |
+| baratok_slopes | `ogres` | 9 | 3 ogre | 2 ogre, 5 werewolf | 6 |
 | baratok_slopes | `spiders` | 9 | 4 giant spider | 2 giant spider, 4 werewolf | 6 |
 | baratok_slopes | `werewolves_ridge` | 9 | 3 werewolf, dire wolf | 5 werewolf, 3 dire wolf | 5 |
 | berez_marsh | `insect_cloud` | 9 | 4 swarm of insects, 3 scarecrow | 6 scarecrow, 6 will o wisp, 4 banshee | 5 |
@@ -122,9 +126,9 @@ playthrough party at level 8 seven in 8, and the Berez, Baratok and Tsolenka wal
 | svalich_woods | `werewolves` | 4 | werewolf, dire wolf, 2 wolf | werewolf, 2 dire wolf, 2 wolf | 5 |
 | svalich_woods | `wolf_pack_night` | 4 | 4 dire wolf, 4 wolf | 4 dire wolf, 4 wolf, rat | 5 |
 | svalich_woods | `wolves_in_the_pines` | 4 | 3 dire wolf, 2 wolf | 5 dire wolf, 3 wolf | 6 |
-| vineyard_road | `druid_patrol` | 6 | 2 druid, 3 needle blight, vine blight | 6 druid, 5 vine blight | 4 |
+| vineyard_road | `druid_patrol` | 6 | 2 druid, 3 needle blight, vine blight | 6 druid, 4 vine blight | 5 |
 | vineyard_road | `druids_return` | 6 | 3 druid, 2 vine blight, 4 twig blight | 5 druid, 3 vine blight, 6 needle blight | 5 |
-| vineyard_road | `hedgerow_blights` | 6 | 2 vine blight, 4 needle blight, 6 twig blight | 4 druid, 4 vine blight, 6 needle blight, werewolf | 4 |
+| vineyard_road | `hedgerow_blights` | 6 | 2 vine blight, 4 needle blight, 6 twig blight | 2 druid, 4 vine blight, 3 needle blight, werewolf | 6 |
 | vineyard_road | `strahds_wolves` | 6 | 2 dire wolf, 4 wolf | 8 dire wolf, 3 werewolf | 6 |
 | vineyard_road | `wolves_on_the_moor` | 6 | 2 dire wolf, 4 wolf | 8 dire wolf, 3 werewolf | 6 |
 | zarovich_hills | `dire_wolves` | 8 | werewolf, 5 dire wolf | 5 werewolf, 9 dire wolf | 5 |

@@ -84,13 +84,6 @@
             22,
             4
           ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            26,
-            11
-          ]
         }
       ]
     },
@@ -112,27 +105,6 @@
           "cell": [
             27,
             6
-          ]
-        },
-        {
-          "monster": "ogre",
-          "cell": [
-            29,
-            12
-          ]
-        },
-        {
-          "monster": "ogre",
-          "cell": [
-            4,
-            7
-          ]
-        },
-        {
-          "monster": "ogre",
-          "cell": [
-            4,
-            12
           ]
         },
         {
@@ -168,13 +140,6 @@
           "cell": [
             24,
             7
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            26,
-            11
           ]
         }
       ]
