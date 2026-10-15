@@ -17,6 +17,7 @@ Narrator: She crosses the hall to him. He offers his arm, she takes it, and the 
 
 ~ told
 Narrator: You tell him where she is. He smiles like a man who already knew, and only wanted to hear you say it.
+cutscene ending_carriage
 Strahd: Then I will send my carriage for her tonight. Go home, if you can still remember where that is.
 -> after
 

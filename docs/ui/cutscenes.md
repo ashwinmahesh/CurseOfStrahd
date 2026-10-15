@@ -23,6 +23,8 @@ Owner rule (2026-10-14): every cutscene is at least two scenes. A conversation t
 later beat (a fight about to start, the aftermath, the memory a line brings up), with a caption line after it so it shows
 before the fight begins. A place's trigger cutscene follows the same rule, but needs a small change to the player first.
 The third round, 2026-10-14: 47 pictures, one more in each of the 47 conversations that had only one.
+Two more for the endings that differ by path (2026-10-15): `ending_carriage` in `endings/ireena_given_up` ~ told and
+`fallen_halls` in `endings/strahd_triumphant` ~ fallen, so each ending has a second picture on both of its paths.
 The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `drowned_nistor`) came first.
 
 ## Data
@@ -206,6 +208,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | elvir_burial | Elvir Comes Home | `wizard_of_wines/davian` | 1 |
 | ending_arm | He Offers His Arm | `endings/ireena_given_up` (a later beat, ~ handed_over) | 1 |
 | ending_bride | The Bride of Ravenloft | `endings/ireena_given_up` | 1 |
+| ending_carriage | The Carriage Sent | `endings/ireena_given_up` (a later beat, ~ told) | 1 |
 | ending_darklord | The Second Thirst | `endings/new_darklord` | 1 |
 | ending_dawn | Dawn over Barovia | `endings/strahd_destroyed` | 1 |
 | ending_mists | The Mists Remain | `endings/strahd_triumphant` | 1 |
@@ -214,6 +217,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | eva_candles_lean | The Candles Lean | `svalich_road/madam_eva` (a later beat, ~ ally_seen) | 1 |
 | eva_chest | The Bundle in the Chest | `svalich_road/madam_eva` (a later beat, ~ treasure_here) | 1 |
 | eye_watches_gods | A Thousand Years of Lies | `amber_temple/the_amber_debt` (a later beat, ~ eye_what) | 1 |
+| fallen_halls | New Faces in the Halls | `endings/strahd_triumphant` (a later beat, ~ fallen) | 1 |
 | feast_gift | The Thing He Kept | `argynvostholt/vladimir` (a later beat, ~ keeping) | 1 |
 | feast_pact | The Order Stands | `argynvostholt/vladimir` (a later beat, ~ pact) | 1 |
 | fen_chains | Grandda | `companions/fen` | 1 |
