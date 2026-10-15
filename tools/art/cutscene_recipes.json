@@ -385,11 +385,9 @@
       "use": "a"
     },
     "roc_shadow": {
-      "refs": [
-        "roc"
-      ],
-      "prompt": "A high mountain road along a cliff above a sea of cloud, a narrow stone bridge over a gorge. A colossal bird of prey fills the whole upper half of the sky, so huge that the travellers on the road below are tiny specks beside one of its talons: dark brown and grey feathers, a pale head, a huge hooked yellow beak, wings wider than a barn roof, banking low over the ridge and turning its head to look down. Its vast shadow covers the road and the bridge, where {party} crouch flat on the stones. Cold thin sunlight, snow streaming off the ridge.",
-      "use": "b"
+      "refs": [],
+      "prompt": "A high mountain road along a cliff above a sea of cloud, a narrow stone bridge over a gorge, seen from along the bridge. Out over the gorge, well away from the bridge, a roc, a giant bird of prey with dark brown and grey feathers, a pale head and a huge hooked yellow beak, banks low above the cloud with its head turned down toward the bridge, as big as a ship's sail, its wingspan about a third of the picture's width and clearly smaller in the frame than the bridge and the cliffs. Its vast shadow slides across the gorge and over the bridge. {party} crouch flat on the stones of the bridge in the near foreground, hooded figures seen strictly from behind with their faces hidden, much larger in the frame than the bird. Cold thin sunlight, snow streaming off the ridge; dread, no gore.",
+      "use": "a"
     },
     "amber_sentinels": {
       "refs": [
