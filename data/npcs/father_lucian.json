@@ -43,11 +43,11 @@
       },
       {
         "id": "diamond",
-        "qty": 3
+        "qty": -1
       },
       {
         "id": "diamond_dust",
-        "qty": 6
+        "qty": -1
       },
       {
         "id": "potion_of_healing",
@@ -119,6 +119,14 @@
       },
       {
         "id": "spell_scroll__warding_bond",
+        "qty": -1
+      },
+      {
+        "id": "silver_dust",
+        "qty": -1
+      },
+      {
+        "id": "ruby_dust",
         "qty": -1
       }
     ],

@@ -89,6 +89,26 @@
       {
         "id": "spell_scroll__see_invisibility",
         "qty": -1
+      },
+      {
+        "id": "pearl",
+        "qty": -1
+      },
+      {
+        "id": "onyx",
+        "qty": -1
+      },
+      {
+        "id": "ruby_dust",
+        "qty": -1
+      },
+      {
+        "id": "diamond_dust",
+        "qty": -1
+      },
+      {
+        "id": "incense",
+        "qty": -1
       }
     ],
     "magic": [

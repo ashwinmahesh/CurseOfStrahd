@@ -217,9 +217,12 @@ func test_the_travel_map_shop_temple_and_loot() -> void:
 	assert_ne(ShopScreen.ware_filter, before, "RB with the focus on the wares steps the wares' tabs")
 	await _press(JOY_BUTTON_LEFT_SHOULDER)
 	assert_eq(ShopScreen.ware_filter, before, "and LB steps back")
-	await _frames(3)   # the redraw settles and the focus finds its way back before B
-	await _back("a shop with magic", func() -> bool: return root.find_children("*", "ShopScreen", false, false).filter(
-		func(s: Node) -> bool: return not s.is_queued_for_deletion() and s.process_mode != Node.PROCESS_MODE_DISABLED).is_empty())
+	# Closed by hand: B going back is the first shop's check above. Here the pointer, following the focus over Buy
+	# buttons whose tooltips say "Not enough gold", can have a tooltip up, and a tooltip is a popup that takes B for itself
+	# (a slow run showed it), which isn't what this part tests.
+	for s in root.find_children("*", "ShopScreen", false, false):
+		s.queue_free()
+	await _frames(2)
 	ShopScreen.ware_filter = "All"
 	root.call("open_services", "father_lucian")
 	await _frames(3)

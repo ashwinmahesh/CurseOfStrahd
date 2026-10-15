@@ -86,6 +86,26 @@
       {
         "id": "spell_scroll__warding_bond",
         "qty": -1
+      },
+      {
+        "id": "diamond",
+        "qty": -1
+      },
+      {
+        "id": "diamond_dust",
+        "qty": -1
+      },
+      {
+        "id": "incense",
+        "qty": -1
+      },
+      {
+        "id": "holy_water",
+        "qty": -1
+      },
+      {
+        "id": "silver_dust",
+        "qty": -1
       }
     ],
     "magic": [
@@ -145,5 +165,11 @@
     ],
     "markup": 1.0,
     "sell_rate": 0.4
-  }
+  },
+  "services": [
+    {
+      "id": "raise_dead",
+      "scroll": true
+    }
+  ]
 }

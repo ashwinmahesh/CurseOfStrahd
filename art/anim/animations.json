@@ -957,5 +957,13 @@
   "beholder": {"who": "a beholder, a floating many-eyed orb",
     "attack": "eye rays",
     "windup": "the great body drawn back and tilted up, all ten eyestalks rearing and its central eye opening wide",
-    "strike": "lunging forward with its jagged mouth open and three eyestalks thrust straight at the enemy, each shooting a thin coloured ray"}
+    "strike": "lunging forward with its jagged mouth open and three eyestalks thrust straight at the enemy, each shooting a thin coloured ray"},
+  "werewolf_human": {"who": "a werewolf in human form",
+    "attack": "clawed swipe",
+    "windup": "drawing one hand back beside his head with the long dirty nails crooked like claws, crouched",
+    "strike": "lunging forward low, the clawed hand raking down and across at the enemy"},
+  "wereraven_human": {"who": "a wereraven in human form",
+    "attack": "shortsword slash",
+    "windup": "the shortsword drawn and raised high over his shoulder, coat flaring",
+    "strike": "the shortsword slashed down and forward at the enemy at full arm's length, lunging"}
 }

@@ -366,14 +366,20 @@ static func _npc_token(cb: Combatant, art: String) -> CombatToken:
 
 
 ## When a conversation ends in a fight, the people in it step aside: the encounter places its own monsters (a
-## talking wolf pack, the Dursts as ghouls). Their entries' `when` decides whether they come back afterwards.
+## talking wolf pack, the Dursts as ghouls). Their entries' `when` decides whether they come back afterwards. Who
+## stepped aside is kept for the fight to start with (`_stepped_aside`): a foe of the same name that turns out to be
+## something else (a hag, a vampire spawn) changes in front of the party (LocationFights._reveal).
 static func hide_npcs_of(view: LocationView, dialogue_ref: String) -> void:
 	var file_key := dialogue_ref.substr(0, dialogue_ref.rfind(":"))
+	view._stepped_aside.clear()
 	for shown in view._npc_shown:
 		var ref := str((shown["spec"] as Dictionary).get("dialogue", ""))
 		if ref.substr(0, ref.rfind(":")) != file_key:
 			continue
 		(shown["token"] as Node3D).visible = false
+		var npc := Compendium.shared().get_entry("npcs", str((shown["spec"] as Dictionary).get("npc", "")))
+		if not npc.is_empty():
+			view._stepped_aside.append({"name": str(npc.get("name", "")), "art": str(npc.get("sprite", npc.get("id", "")))})
 		if not bool(shown["low_before"]):
 			view.grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
 

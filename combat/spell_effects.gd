@@ -535,9 +535,8 @@ func _custom(ctx: Dictionary, t: Combatant, params: Dictionary, r: CombatResult)
 			# Moonbeam: a shape-shifted creature reverts to its true form.
 			if e.shapes.is_shaped(t):
 				e.shapes.revert(t, s["name"])
-			elif t.has_meta("form") and str(t.get_meta("form")) != "humanoid":
-				t.set_meta("form", "humanoid")
-				e.monster_actions.show_form(t, true)
+			elif t.has_meta("form") and str(t.get_meta("form")) != e.legendary.base_form(t):
+				e.monster_actions.force_true_form(t)
 				r.lines.append(e.log.add("info", "%s is forced back into its true form (%s)" % [t.name(), s["name"]], t.id))
 		"goodberry":
 			if spells.caster_char(c) != null:

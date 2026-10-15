@@ -357,21 +357,23 @@ func roster() -> Array[Character]:
 	return out
 
 
-## `incoming` (at camp) takes `outgoing`'s place in the party and marching order; `outgoing` goes to camp.
+## `incoming` (at camp) takes `outgoing`'s place in the party and marching order; `outgoing` goes to camp. A dead
+## hero stays with the party, to be brought back (Ashwin, 2026-10-15): one can't go to camp, and one left there by an
+## older save can be fetched.
 func swap_members(outgoing: Character, incoming: Character) -> bool:
 	var i := party.find(outgoing)
 	var j := bench.find(incoming)
-	if i < 0 or j < 0 or incoming.dead:
+	if i < 0 or j < 0 or outgoing.dead:
 		return false
 	party[i] = incoming
 	bench[j] = outgoing
 	return true
 
 
-## Someone at camp joins the party at the back, while there's room.
+## Someone at camp joins the party at the back, while there's room (a dead hero too: the body comes back to be raised).
 func bring_along(ch: Character) -> bool:
 	var j := bench.find(ch)
-	if j < 0 or party.size() >= PARTY_CAP or ch.dead:
+	if j < 0 or party.size() >= PARTY_CAP:
 		return false
 	bench.remove_at(j)
 	party.append(ch)
@@ -421,10 +423,11 @@ func recruit(ch: Character) -> bool:
 	return false
 
 
-## A party member goes to camp; the party never goes below one.
+## A party member goes to camp; the party never goes below one. A dead one stays with the party, so they can be brought
+## back (Ashwin, 2026-10-15: a body left at camp could never be raised).
 func send_to_camp(ch: Character) -> bool:
 	var i := party.find(ch)
-	if i < 0 or party.size() <= 1:
+	if i < 0 or party.size() <= 1 or ch.dead:
 		return false
 	party.remove_at(i)
 	if positions.size() > i:

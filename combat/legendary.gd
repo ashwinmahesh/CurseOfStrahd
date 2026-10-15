@@ -321,6 +321,53 @@ func form(c: Combatant) -> String:
 	return str(c.get_meta("form", base_form(c)))
 
 
+## The sprite of the shape `c` is in now, or "" in its true form or a shape with no figure of its own: what a fight picked
+## up from a save draws it as (CombatView._restore_forms).
+func form_art(c: Combatant) -> String:
+	if forms_of(c).is_empty() or form(c) == base_form(c):
+		return ""
+	return shape_art(c, shape(c, form(c)))
+
+
+## The sprite a shape wears: its `art`, or for a shape drawn as the person the story showed (`art_from_npc`: a Night Hag's
+## disguise) the figure of the NPC `c` is named for ("" for a hag no story person plays).
+func shape_art(c: Combatant, sh: Dictionary) -> String:
+	if bool(sh.get("art_from_npc", false)):
+		return npc_figure(c)
+	return str(sh.get("art", ""))
+
+
+## The sprite of the NPC `c` is (a stat block's creature named for them: Offalia on a Night Hag's), or "".
+func npc_figure(c: Combatant) -> String:
+	return npc_figure_of(c)
+
+
+static func npc_figure_of(c: Combatant) -> String:
+	if not c.creature is Monster:
+		return ""
+	var mid := str((c.creature as Monster).data.get("id", ""))
+	var table := Compendium.shared().table("npcs")
+	for id: String in table:
+		var npc := table[id] as Dictionary
+		if str(npc.get("monster", "")) == mid and same_person(str(npc.get("name", "")), c.name()):
+			return str(npc.get("sprite", id))
+	return ""
+
+
+## Whether a creature's name is an NPC's ("Vosk, unmasked" is Vosk, "The Abbot" is the Abbot, "Zuleika" is Zuleika
+## Toranescu).
+static func same_person(npc_name: String, foe_name: String) -> bool:
+	var strip := func(n: String) -> String:
+		var out := n.to_lower().replace(",", "").strip_edges()
+		for title: String in ["the ", "master ", "brother ", "lady ", "sir ", "mother ", "father "]:
+			if out.begins_with(title):
+				out = out.trim_prefix(title)
+		return out
+	var a: String = strip.call(npc_name)
+	var b: String = strip.call(foe_name)
+	return a != "" and b != "" and (a == b or a.begins_with(b) or b.begins_with(a))
+
+
 func shape(c: Combatant, id: String) -> Dictionary:
 	for s: Variant in forms_of(c).get("shapes", []):
 		if str((s as Dictionary).get("id", "")) == id:
@@ -395,8 +442,9 @@ func _set_form(c: Combatant, to: String) -> void:
 			c.creature.remove_effect(fx)
 	var base := to == base_form(c) or shape(c, to).is_empty()
 	var sh := {} if base else shape(c, to)
-	# How the change looks and sounds (FxShapeshift): the shape it takes, or the one it leaves when it changes back.
-	var look := form(c) if base else to
+	# How the change looks and sounds (FxShapeshift): the shape it takes, or the one it leaves when it changes back (a
+	# shape's `kind` when its id isn't how it looks: a werewolf's wolf is a werewolf's change).
+	var look := str(shape(c, form(c)).get("kind", form(c))) if base else str(sh.get("kind", to))
 	c.set_meta("form", base_form(c) if base else to)
 	_apply_body(c)
 	if not base:
@@ -422,7 +470,7 @@ func _set_form(c: Combatant, to: String) -> void:
 			c.creature.add_effect(fx)
 	c.movement_left = mini(c.movement_left, c.speed())
 	_log("condition", ("%s returns to its true form" % c.name()) if base else ("%s becomes a %s" % [c.name(), str(sh.get("name", to)).to_lower()]), c)
-	e.events.append({"type": "form", "id": c.id, "form": form(c), "art": str(sh.get("art", "")), "kind": look})
+	e.events.append({"type": "form", "id": c.id, "form": form(c), "art": shape_art(c, sh), "kind": look})
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
 
