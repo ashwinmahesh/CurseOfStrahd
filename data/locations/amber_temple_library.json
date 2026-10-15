@@ -622,7 +622,8 @@
             23,
             4
           ],
-          "name": "Exethanter"
+          "name": "Exethanter",
+          "hp": 100
         },
         {
           "monster": "flameskull",
@@ -671,6 +672,62 @@
             3
           ],
           "name": "Warden's skull"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            22,
+            5
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            24,
+            5
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            4
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            2
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            6
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            25,
+            4
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            3
+          ]
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            21,
+            5
+          ]
         }
       ],
       "surprise": "",

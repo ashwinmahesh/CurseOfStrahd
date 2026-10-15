@@ -592,7 +592,9 @@ def castle_checks(data, parsed, errors, cond, flags_set, dialogue_refs):
                     errors.append(f"{w}: withdraw names '{en['withdraw'].get('who')}', who isn't in the fight")
             if not room:
                 continue
-            finals.setdefault(room, []).append(w)
+            # Variants of one encounter (the same id, picked by their `when`: the Sunsword's line-up and the plain one) are one battle.
+            if w not in finals.setdefault(room, []):
+                finals[room].append(w)
             if room not in rooms:
                 errors.append(f"{w}: final_battle '{room}' isn't an enemy room in data/tarokka/outcomes.json")
             if not en.get("lair"):

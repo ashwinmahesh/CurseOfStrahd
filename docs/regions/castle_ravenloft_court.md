@@ -133,13 +133,13 @@ guardian portrait 200, crawling claw 10, dire wolf 200, swarm of bats 50.
 
 Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
 Fireball as he plays, and wins 5 in 8 on Balanced at every level): at level 10 Rahadin on the stair, in the hall and in
-his chamber and both brides fights win 4 or 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
+his chamber and both brides fights win 4 or 5 of 8 (tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Strahd's final battles are tuned for a party carrying the Sunsword (owner, 2026-10-13), at the sharp test party's 5
 wins in 8 on Balanced: Strahd at 350 or 375 Hit Points with one to five of his spawn beside him, and he keeps out of the
 blade's sunlight where he can (a legendary move held back to slip out of it before his turn, his spells cast from
 outside it, Charm on its bearer first). Without the Sunsword he stays near-unbeatable, as in the book
-(tests/integration/test_scaled_boss_fights.gd).
+(tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points, helpers and win counts in this paragraph are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 The engine plays the parley first and moves `strahds_lair` to `confronted` when a final battle starts; dropping
 Strahd to 0 there turns him to mist and sends him to his coffin (catacombs). Strahd appears in this part only in the

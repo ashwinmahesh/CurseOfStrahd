@@ -1,6 +1,7 @@
 extends FightSeriesCase
-## The Wizard of Wines' fights for a party that comes early or late (2026-10-13 18:05, the owner's target over seeds 1-8:
-## the test party playing as he does wins about 5 times in 8 on Balanced, one either way): the four story fights at
+## The Wizard of Wines' fights for a party that comes early or late (the owner's target over seeds 1-8: the sharp test
+## party wins about 5 times in 8 on Balanced, one either way; the Vine Mother and the Ash Effigy, bosses, are played by
+## the party at full ability and won about 3 times in 8, 2026-10-14): the four story fights at
 ## levels 5 and 7, the Vine Mother at 5, 7 and 8 with Adrian along and without, and the Ash Effigy at level 8 with a
 ## druid beside it. Level 6 is held by test_story_fights.gd, test_side_quest_bosses.gd and test_yester_summit.gd.
 
@@ -12,11 +13,11 @@ const YESTER_CROWN: Array[Vector2i] = [Vector2i(15, 18), Vector2i(16, 18), Vecto
 
 
 func _held(location: String, hour: int, level: int, encounter: String, flags: Array[String], at: Array[Vector2i],
-		guests: Array[String] = []) -> void:
+		guests: Array[String] = [], low: int = 4, high: int = 6) -> void:
 	speakers_step_aside = true   # Kostin at the press, Zorica or Ruxandra at the effigy
 	var wins := await _series(location, hour, level, encounter, [1, 2, 3, 4, 5, 6, 7, 8], flags, guests, [], at)
-	assert_true(wins >= 4, "%s can be won at level %d %s (%d/8)" % [encounter, level, guests, wins])
-	assert_true(wins <= 6, "%s stays hard at level %d %s (%d/8)" % [encounter, level, guests, wins])
+	assert_true(wins >= low, "%s can be won at level %d %s (%d/8)" % [encounter, level, guests, wins])
+	assert_true(wins <= high, "%s stays hard at level %d %s (%d/8)" % [encounter, level, guests, wins])
 
 
 func test_the_story_fights_at_level_5() -> void:
@@ -35,10 +36,10 @@ func test_the_story_fights_at_level_7() -> void:
 
 func test_the_vine_mother_at_levels_5_7_and_8() -> void:
 	for level: int in [5, 7, 8]:
-		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW)
-		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, ["adrian_martikov"])
+		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, [], 2, 4)
+		await _held("wizard_of_wines", 1, level, "vine_mother", ["winery_reclaimed"], SEVENTH_ROW, ["adrian_martikov"], 2, 5)
 
 
-## Zorica beside it; Ruxandra (spared) has the same line-up.
+## The Ash Effigy with a druid at level 8: The Ash Effigy (480 HP), Druid, 4 Twig Blights; 3 in 8.
 func test_the_ash_effigy_with_a_druid_at_level_8() -> void:
-	await _held("yester_hill_gulthias_tree", 22, 8, "ash_effigy", ["yester_hill_resolved", "gulthias_tree_burned"], YESTER_CROWN)
+	await _held("yester_hill_gulthias_tree", 22, 8, "ash_effigy", ["yester_hill_resolved", "gulthias_tree_burned"], YESTER_CROWN, [], 2, 4)

@@ -880,7 +880,7 @@
             18,
             21
           ],
-          "hp": 195
+          "hp": 290
         },
         {
           "monster": "dire_wolf",
@@ -950,7 +950,7 @@
             18,
             21
           ],
-          "hp": 240
+          "hp": 310
         },
         {
           "monster": "dire_wolf",
@@ -1407,7 +1407,8 @@
           "cell": [
             18,
             4
-          ]
+          ],
+          "hp": 90
         },
         {
           "monster": "will_o_wisp",
@@ -1438,6 +1439,38 @@
           "cell": [
             23,
             9
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            17,
+            4
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            18,
+            3
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            18,
+            5
+          ],
+          "name": "A Drowned Light"
+        },
+        {
+          "monster": "will_o_wisp",
+          "cell": [
+            17,
+            3
           ],
           "name": "A Drowned Light"
         }
