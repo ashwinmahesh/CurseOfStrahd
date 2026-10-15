@@ -158,6 +158,24 @@
     },
     "attack": 6
   },
+  "forms": {
+    "base": "true",
+    "change": "bonus_action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "disguise",
+        "name": "Disguise",
+        "size": "medium",
+        "speed": {
+          "walk": 30
+        },
+        "art_from_npc": true,
+        "kind": "disguise",
+        "summary": "The Humanoid she passes as (a Small or Medium woman): her statistics stay the same."
+      }
+    ]
+  },
   "regions": [
     "svalich_road",
     "old_bonegrinder"

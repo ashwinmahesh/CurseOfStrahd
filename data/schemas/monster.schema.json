@@ -665,6 +665,15 @@
         },
         "summary": {
           "type": "string"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$",
+          "description": "How the change into this shape looks and sounds (FxShapeshift.LOOKS), when it isn't named by the shape's id (a werewolf's wolf is a werewolf's change, not Strahd's)."
+        },
+        "art_from_npc": {
+          "type": "boolean",
+          "description": "The figure is the NPC this creature is named for (a Night Hag's disguise is the old woman the story showed: Legendary.shape_art)."
         }
       }
     },

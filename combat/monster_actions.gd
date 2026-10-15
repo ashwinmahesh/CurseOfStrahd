@@ -970,19 +970,43 @@ func lycanthrope(t: Combatant) -> bool:
 	return true
 
 
-## Shape-Shift (no cost here): a lycanthrope between its true form and the hybrid it fights in. The AI only ever goes
-## into the hybrid; an ally the player runs (FeatureActions) can go back.
-func shift(c: Combatant) -> void:
+## Shape-Shift (no cost here): a lycanthrope between its true form and the hybrid it fights in, or the animal `to` its
+## block's `forms` list (a werewolf's "wolf", a wereraven's "raven": an ally the player runs picks it). With no `to` it
+## goes into the hybrid, and back to human from any other form. The AI only ever goes into the hybrid; an ally the
+## player runs (FeatureActions) can go back.
+func shift(c: Combatant, to: String = "") -> void:
 	var e := enc()
-	var back := str(c.get_meta("form", "humanoid")) == "hybrid"
+	var now := str(c.get_meta("form", "humanoid"))
+	if to != "" and to != now and not e.legendary.shape(c, to).is_empty():
+		e.legendary._set_form(c, to)   # logs the change and shows the animal
+		return
+	if not e.legendary.shape(c, now).is_empty():
+		force_true_form(c)   # back from an animal form
+		return
+	var back := now == "hybrid"
 	c.set_meta("form", "humanoid" if back else "hybrid")
 	# Only a lycanthrope's other form is a hybrid; a Mimic's or a Night Hag's Shape-Shift is its own change of shape.
-	var lycan := c.creature is Monster and "lycanthrope" in ((c.creature as Monster).data.get("tags", []) as Array)
-	if lycan:
+	if is_lycanthrope(c):
 		e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
 	else:
 		e.log.add("info", ("%s returns to its true form" if back else "%s changes shape") % c.name(), c.id)
 	show_form(c, back)
+
+
+## Whether `c` is a lycanthrope (its stat block says so): Shape-Shift takes it into a hybrid and its animal.
+func is_lycanthrope(c: Combatant) -> bool:
+	return c.creature is Monster and "lycanthrope" in ((c.creature as Monster).data.get("tags", []) as Array)
+
+
+## `c` is put back in its true form by something other than its own Shape-Shift (Moonbeam): out of an animal shape or
+## its hybrid, with the board following.
+func force_true_form(c: Combatant) -> void:
+	var e := enc()
+	if not e.legendary.shape(c, str(c.get_meta("form", "humanoid"))).is_empty():
+		e.legendary._set_form(c, e.legendary.base_form(c))
+		return
+	c.set_meta("form", "humanoid")
+	show_form(c, true)
 
 
 ## The board follows a lycanthrope's change of form (`back`: into its human form): its token swaps to the hybrid figure,
@@ -1061,7 +1085,7 @@ func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 						e.log.add("info", "%s melts into the shadows (Stealth %d)" % [c.name(), t.total], c.id)
 				return CombatResult.new()
 			"shape_shift":
-				if plan == "shift" and str(c.get_meta("form", "humanoid")) == "humanoid":
+				if plan == "shift" and str(c.get_meta("form", "humanoid")) == "humanoid" and is_lycanthrope(c):
 					c.bonus_available = false
 					shift(c)
 				return CombatResult.new()

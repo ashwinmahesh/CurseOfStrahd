@@ -295,10 +295,16 @@ func _creature_actions(c: Combatant, out: Array[Dictionary], aw: String, bw: Str
 					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), str(act.get("heal", "")), cost, why, "ally",
 						str(act.get("summary", "")), int(act.get("range", 5))))
 				"shape_shift":
-					# A lycanthrope ally (the Martikovs and Ilinca as wereravens, Emil): into the hybrid and back.
-					var hybrid := str(c.get_meta("form", "humanoid")) == "hybrid"
-					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), "human form" if hybrid else "hybrid", cost, why, "none",
-						"Return to your human form." if hybrid else "Take your hybrid form, and the attacks that come with it."))
+					# A lycanthrope ally (the Martikovs and Ilinca as wereravens, Emil): into the hybrid or the animal its
+					# block lists, and back to human from either.
+					var human := str(c.get_meta("form", "humanoid")) == "humanoid"
+					out.append(_entry("creature:" + str(act["id"]), str(act["name"]), "hybrid" if human else "human form", cost, why, "none",
+						"Take your hybrid form, and the attacks that come with it." if human else "Return to your human form."))
+					if human:
+						for sh: Variant in enc().legendary.forms_of(c).get("shapes", []) as Array:
+							var shape := sh as Dictionary
+							out.append(_entry("creature:%s:%s" % [act["id"], shape["id"]], str(act["name"]), str(shape["id"]), cost, why, "none",
+								"Take the form of a %s: %s" % [str(shape.get("name", shape["id"])).to_lower(), str(shape.get("summary", ""))]))
 
 
 func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2i) -> CombatResult:
@@ -306,6 +312,10 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 	var ma := e.monster_actions
 	var act := {}
 	var cost := "action"
+	# "shape_shift:wolf": the same Bonus Action, into the animal.
+	var animal := act_id.get_slice(":", 1) if act_id.begins_with("shape_shift:") else ""
+	if animal != "":
+		act_id = "shape_shift"
 	for group: String in ["actions", "bonus_actions"]:
 		for raw: Variant in MonsterActions.data_of(c).get(group, []):
 			if str((raw as Dictionary).get("id", "")) == act_id:
@@ -315,7 +325,7 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 		return CombatResult.fail("Not available")
 	var r := CombatResult.new()
 	if str(act.get("do", "")) == "shape_shift":
-		ma.shift(c)
+		ma.shift(c, animal)
 	elif act.has("teleport"):
 		r = _teleport(c, cell, int(act["teleport"]))
 		if not r.ok:
