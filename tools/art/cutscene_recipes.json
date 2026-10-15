@@ -1623,8 +1623,8 @@
       "refs": [
         "mordenkainen"
       ],
-      "prompt": "A frost-rimed stone shelter on Mount Baratok, seen from a medium distance so that everyone is the right size: an ordinary-sized old wizard with a long grey beard in a ragged robe, drawn exactly as the reference image shows his face and beard, sits on a low stool at a small stone table with a chessboard of all-black pieces, no taller than the people who stand a few paces from him. As his face sharpens into a hard scholar's frown and an old specific anger, the snow stops falling in a ring round the table, the frost on the board melts and runs, and the wild light in his eyes becomes a sharp one. {party} stand watching on the near side of the table, seen from behind, hooded, about the same size as him. Cold blue with a gold glow about his face; awe and relief, no gore.",
-      "use": "b"
+      "prompt": "The inside of a small, cramped frost-rimed stone hut on Mount Baratok, seen from just inside its low doorway: rough stone walls furred with frost, a narrow bed of furs, a cold hearth, shelves of old books and bottles, one lantern. An ordinary-sized old wizard with a long grey beard in a ragged robe, drawn exactly as the reference image shows his face and beard, sits on a low stool at a small stone table with a chessboard of all-black pieces, no taller than the people who stand a few paces from him. As his face sharpens into a hard scholar's frown and an old specific anger, the frost on the board melts and runs, and through the small window beside him the snow outside has stopped falling. {party} stand just inside the doorway, seen from behind, hooded, about the same size as him. Cold blue stone with the lantern's gold glow on his face; awe and relief, no gore.",
+      "use": "c"
     },
     "souls_go_home": {
       "refs": [],
