@@ -384,6 +384,15 @@ static func hide_npcs_of(view: LocationView, dialogue_ref: String) -> void:
 			view.grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
 
 
+## People whose entry says `steps_aside` keep out of every fight on the map (Castle Ravenloft's household: a ghost
+## steward, the dead watch on its rounds, a broom at its sweeping): their figures leave the board as a fight begins, so
+## they never stand in its way, and come back with the rebuild after it (refresh_npcs).
+static func clear_for_fight(view: LocationView) -> void:
+	for shown in view._npc_shown:
+		if bool((shown["spec"] as Dictionary).get("steps_aside", false)):
+			(shown["token"] as Node3D).visible = false
+
+
 ## An NPC entry with `approach: n` speaks first, once, when the leader comes within n squares and can see them.
 static func _check_approach(view: LocationView) -> bool:
 	for shown in view._npc_shown:

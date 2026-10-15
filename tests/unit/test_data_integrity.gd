@@ -159,7 +159,7 @@ func test_monster_stat_blocks_are_self_consistent() -> void:
 ## A speaker's name picks its NPC (DialogueRunner._npc_for), so two NPCs with one display name share a portrait and a
 ## voice. Only interchangeable extras may share one.
 func test_npc_display_names_are_unique() -> void:
-	const SHARED := ["A Goat", "Belview", "A Camp Dog", "A Raven"]
+	const SHARED := ["A Goat", "Belview", "A Camp Dog", "A Raven", "A Pale Courtier", "A Dead Guard", "A Dead Servant"]
 	var seen := {}
 	for n in Compendium.shared().all("npcs"):
 		var name := str(n["name"])

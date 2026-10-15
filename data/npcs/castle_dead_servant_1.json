@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_servant_1",
+  "name": "A Dead Servant",
+  "title": "Of the Kitchens",
+  "summary": "A kitchen hand who died below stairs three hundred years ago and still goes about the work, with a pail that holds nothing.",
+  "portrait": "zombie",
+  "sprite": "zombie",
+  "attitude": "indifferent",
+  "monster": "zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "it/its",
+  "pockets": false
+}

@@ -1032,6 +1032,53 @@
       "when": "not flag.larders_cyrus_slain",
       "facing": "west",
       "approach": 5
+    },
+    {
+      "npc": "castle_dead_servant_1",
+      "cell": [
+        21,
+        2
+      ],
+      "dialogue": "castle_ravenloft/household:dead_servant",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            28,
+            2
+          ],
+          "wait": 4
+        },
+        {
+          "at": [
+            21,
+            6
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_dead_servant_2",
+      "cell": [
+        3,
+        9
+      ],
+      "dialogue": "castle_ravenloft/household:dead_servant",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            36,
+            9
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

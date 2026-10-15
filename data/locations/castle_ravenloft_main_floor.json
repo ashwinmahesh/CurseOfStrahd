@@ -1037,6 +1037,189 @@
       "when": "name:ilse_varga and quest.kestrel_company >= the_deserter and not flag.kestrel_merrow_counted and not flag.kestrel_merrow_fallen and (flag.strahd_invitation != \"accepted\" or flag.castle_dinner == \"dined\" or flag.crg_dinner_fight_over)",
       "facing": "east",
       "approach": 10
+    },
+    {
+      "npc": "castle_steward",
+      "cell": [
+        11,
+        12
+      ],
+      "dialogue": "castle_ravenloft/gates_household:steward",
+      "facing": "west",
+      "path": [
+        {
+          "at": [
+            11,
+            6
+          ],
+          "wait": 6,
+          "face": "west"
+        }
+      ],
+      "pause": 8,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_dead_sentry",
+      "cell": [
+        31,
+        12
+      ],
+      "dialogue": "castle_ravenloft/gates_household:sentry",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            31,
+            2
+          ],
+          "wait": 4,
+          "face": "south"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_hall_broom",
+      "cell": [
+        14,
+        11
+      ],
+      "dialogue": "castle_ravenloft/gates_household:broom",
+      "facing": "north",
+      "work": "swing",
+      "path": [
+        {
+          "at": [
+            14,
+            2
+          ],
+          "wait": 5,
+          "work": "swing"
+        },
+        {
+          "at": [
+            17,
+            5
+          ],
+          "wait": 4,
+          "work": "swing"
+        },
+        {
+          "at": [
+            17,
+            12
+          ],
+          "wait": 5,
+          "work": "swing"
+        }
+      ],
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_1",
+      "cell": [
+        24,
+        7
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            27,
+            7
+          ],
+          "wait": 4
+        },
+        {
+          "at": [
+            27,
+            12
+          ],
+          "wait": 3
+        },
+        {
+          "at": [
+            24,
+            12
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_2",
+      "cell": [
+        35,
+        8
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            41,
+            7
+          ],
+          "wait": 4,
+          "face": "north"
+        },
+        {
+          "at": [
+            48,
+            8
+          ],
+          "wait": 5,
+          "face": "north"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_ghost_servant",
+      "cell": [
+        40,
+        14
+      ],
+      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            40,
+            21
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_dead_guard_1",
+      "cell": [
+        23,
+        17
+      ],
+      "dialogue": "castle_ravenloft/household:dead_guard",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            23,
+            22
+          ],
+          "wait": 4,
+          "face": "east"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

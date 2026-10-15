@@ -139,7 +139,8 @@ static func waiting_fights(st: StoryState, location_id: String) -> Array[Diction
 	var out: Array[Dictionary] = []
 	for loc_id in building_of(location_id):
 		var states := (st.location_states.get(loc_id, {}) as Dictionary).get("encounters", {}) as Dictionary
-		for en: Variant in Compendium.shared().get_entry("locations", loc_id).get("encounters", []):
+		var loc := Compendium.shared().get_entry("locations", loc_id)
+		for en: Variant in loc.get("encounters", []):
 			var spec := en as Dictionary
 			var state: Variant = states.get(str(spec.get("id", "")), false)
 			if state is bool and bool(state):
@@ -147,7 +148,8 @@ static func waiting_fights(st: StoryState, location_id: String) -> Array[Diction
 			var begun := str(state) == "started"
 			if not begun and not str(spec.get("trigger", "")).get_slice(":", 0) in SELF_STARTING:
 				continue
-			if not StoryConditions.check(StoryConditions.encounter_when(spec), st):
+			# One not begun yet waits out the region's truce (Strahd's dinner guests) like the fight itself.
+			if not StoryConditions.check(StoryConditions.encounter_when(spec, "" if begun else str(loc.get("region", ""))), st):
 				continue
 			out.append({"location": loc_id, "id": str(spec.get("id", ""))})
 	return out

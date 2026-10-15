@@ -1,0 +1,20 @@
+{
+  "id": "castle_ghost_servant",
+  "name": "A Ghostly Servant",
+  "title": "Of the Household",
+  "summary": "A servant of the count's household who died with the rest on the night of the wedding, still in grey livery, still lighting candles that are already lit.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "indifferent",
+  "monster": "ghost",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "undead",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

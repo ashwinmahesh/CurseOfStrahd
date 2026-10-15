@@ -137,6 +137,8 @@ encounter each as above. The `mists` card may pick either.
 - Endings: **thank him** (`castle_dinner = "dined"`, quest `dined`): he leaves the party the run of the house for the
   night, and goes; or **draw on him** (`castle_dinner = "affront"`, quest `affront`, `combat crg_dinner_affront`).
 - No menu depends on a roll; leaving is always there.
+- While the invitation is open and dinner isn't over, the castle's walk-in fights wait (the dinner truce, §8); the
+  Steward stands in the hall.
 - Uninvited: no host. The table is laid for exactly as many as the party; the organ plays a few bars by itself when
   they come in (Narrator).
 
@@ -155,6 +157,7 @@ encounter each as above. The `mists` card may pick either.
 | `crg_altar_opened` | bool | container `crg_chapel_altar` | Narrator (the nave) |
 | `crg_gargoyles_broken` | bool | `crg_courtyard_gargoyles` won | Narrator (the courtyard) |
 | `crg_turret_guard_broken` | bool | `crg_turret_guard` won | Narrator (the turret post) |
+| `castle_truce_over` | bool | the engine, as the party leaves the castle with the invitation open and no dinner yet (StoryConditions.note_departure) | the castle's truce (StoryConditions.TRUCES) |
 
 Read from elsewhere: `strahd_invitation`, `strahd_test`, `ireena_held_by_strahd` (presence, P6-03; the dinner fight's
 withdraw sets the presence package's `strahd_withdrew`, which the parley reads);
@@ -167,8 +170,47 @@ withdraw sets the presence package's `strahd_withdrew`, which the parley reads);
 
 ## 8. NPCs
 
-No new NPCs. Strahd (`strahd`, voice docs/voice/strahd.md) hosts the dinner. The castle's people (Rahadin, the brides,
-Cyrus) belong to the other parts.
+Strahd (`strahd`, voice docs/voice/strahd.md) hosts the dinner. The castle's named people (Rahadin, the brides, Cyrus)
+belong to the other parts.
+
+**The household** (owner, 2026-10-15: "Is Castle Ravenloft supposed to be empty when you walk through it? Should there
+be servants?"). The book keeps its living staff to Cyrus and Rahadin and fills the rooms with the dead and the
+animated; the main floor now has three of them walking it, each with a short conversation
+(narrative/castle_ravenloft/gates_household.dialogue) that sets nothing and can always be left. Each entry has
+`steps_aside`, so they leave the board for every fight on the map (the tuned fights are played as before).
+
+| Who | Id (stat block, art) | Where | What they do |
+|---|---|---|---|
+| The Steward | `castle_steward` (`ghost`; his own art, owner's yes 2026-10-15) | dining hall, from the sideboard (11,12) up the east side to (11,6) | the ghost of the last steward, straightening places that are already straight; he can't carry a dish, and the dishes arrive anyway (the dinner's "nobody carries it in" stands). His lines follow the dinner: expecting the master's guests, after a thank-you, after steel at the table. Voice: docs/voice/castle_steward.md |
+| The Dead Sentry | `castle_dead_sentry` (`strahd_zombie`) | great entry, east side, (31,12) to (31,2) | a castle guard dead since the wedding night, on the round nobody relieved; Narrator lines only |
+| The Hall Broom | `castle_hall_broom` (`broom_of_animated_attack`) | guests' hall, sweeping from (14,11) round the room | an animated broom at its sweeping (`work: swing`); Narrator lines only |
+
+**The court and the rest of the household** (owner, same day: "fill Castle Ravenloft with generic NPCs who act as the
+servants or Strahd's court (it could be vampires) ... make sure they have paths which they walk around"). Shared
+extras, each kind with one shared conversation in narrative/castle_ravenloft/household.dialogue, every one walking a
+route and stepping aside for fights; their display names are interchangeable extras' (test_data_integrity's SHARED).
+
+| Who (name) | Ids (art) | Walks |
+|---|---|---|
+| A Pale Courtier | `castle_courtier_1`, `castle_courtier_2` (`vampire_spawn`): guests who came up for dinner and never went home | main floor: a loop round the great entry's middle (24,7)-(27,12), and the hall of faces (35,8) to (48,8); the court: the audience hall, waiting to be received (14,5) to (29,5), and the trophy room |
+| A Ghostly Servant | `castle_ghost_servant` (`ghost`), lighting candles that are lit | main floor: the chapel passage (40,14) to (40,21); the court's study; the count's bedroom upstairs; the foot of the high tower |
+| A Dead Guard | `castle_dead_guard_1`, `castle_dead_guard_2` (`strahd_zombie`) | the courtyard: before the keep (9,9) to (30,9) and inside the gatehouse wall (11,20) to (28,20); main floor: the entry hall (23,17) to (23,22); the dungeon's cell passage, as its turnkey |
+| A Dead Servant | `castle_dead_servant_1`, `castle_dead_servant_2` (`zombie`) | the larders: the kitchen round Cyrus, and the guards' run end to end |
+
+**The dinner truce** (owner, 2026-10-15: the castle's fights shouldn't be there until the dinner sequence is
+complete, unless the book says so; it doesn't say the guardians stand down for guests, so the owner's word decides).
+While `strahd_invitation == "accepted"` and `castle_dinner` is unset, every castle fight that starts as the party walks
+into a room waits (StoryConditions.TRUCES, read by `encounter_when` with the map's region): the turret guard, the
+gargoyles' and guardians' halls, the larders' dead watch, the spires' sentries, the cauldron coven (not shown waiting
+either), and Strahd's final battles (he is at the organ). Fights the party starts itself still come: talking one
+into being (Rahadin, the brides, Cyrus, the dinner affront), putting out the hearth the loud way (`crg_faces_wake`),
+robbing the ravens' nest, a failed check on Rahadin's footlocker, breaking the Heart of Sorrow. A Long Rest under the
+truce is a safe one (the rest screen). Once dinner ends, thanked or affronted, every held fight is back as it was and
+starts the next time the party walks in. A party that excuses itself from the table is still a guest, so the truce
+holds while it walks about the castle; leaving the castle ends it for good (owner, 2026-10-15: "end it once they leave
+Castle Ravenloft ... when they return, it's back to how it was"): arriving at any place outside the region sets
+`castle_truce_over` (StoryConditions.note_departure, from LocationView), and a party that comes back finds every fight
+as it was, while Strahd's table still waits if dinner never happened (tests/integration/test_castle_household.gd).
 
 ## 9. Loot
 
@@ -241,5 +283,9 @@ None beyond data/monsters and the Phase 6 list: `strahd_von_zarovich`, `strahds_
 - Travel: data/travel/castle_ravenloft.json (place `castle_ravenloft`, road from the Ivlis crossroads, table
   `svalich_woods`)
 - Flags: data/flags/castle_ravenloft_gates.json; quest data/quests/dinner_at_castle_ravenloft.json
-- Dialogue: narrative/castle_ravenloft/{gates_dinner, gates_hearth, gates_castle}.dialogue;
+- NPCs (the household): data/npcs/{castle_steward, castle_dead_sentry, castle_hall_broom}.json, and the shared extras
+  data/npcs/{castle_courtier_1, castle_courtier_2, castle_ghost_servant, castle_dead_guard_1, castle_dead_guard_2,
+  castle_dead_servant_1, castle_dead_servant_2}.json (narrative/castle_ravenloft/household.dialogue); voice
+  docs/voice/castle_steward.md
+- Dialogue: narrative/castle_ravenloft/{gates_dinner, gates_hearth, gates_castle, gates_household}.dialogue;
   narrative/narrator/castle_ravenloft_gates.dialogue; narrative/banter/castle_ravenloft_gates.dialogue
