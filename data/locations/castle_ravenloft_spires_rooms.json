@@ -631,63 +631,136 @@
           "cell": [
             2,
             12
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             8,
             12
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             1,
             16
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             9,
             17
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             4,
             11
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             7,
             17
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             3,
             17
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "barovian_witch",
           "cell": [
             9,
             14
-          ]
+          ],
+          "hp": 64
         },
         {
           "monster": "black_pudding",
           "cell": [
             5,
             16
-          ]
+          ],
+          "hp": 272
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            5,
+            14
+          ],
+          "hp": 64
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            7,
+            15
+          ],
+          "hp": 272
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            15
+          ],
+          "hp": 64
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            12
+          ],
+          "hp": 272
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            10,
+            12
+          ],
+          "hp": 64
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            1,
+            14
+          ],
+          "hp": 272
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            7
+          ],
+          "hp": 64
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            11,
+            7
+          ],
+          "hp": 272
         }
       ]
     },
@@ -705,49 +778,152 @@
           "cell": [
             2,
             12
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "barovian_witch",
           "cell": [
             8,
             12
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "barovian_witch",
           "cell": [
             1,
             16
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "barovian_witch",
           "cell": [
             9,
             17
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "barovian_witch",
           "cell": [
             4,
             11
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "barovian_witch",
           "cell": [
             7,
             17
-          ]
+          ],
+          "hp": 74
         },
         {
           "monster": "black_pudding",
           "cell": [
             5,
             16
-          ]
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            5,
+            14
+          ],
+          "hp": 74
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            7,
+            14
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            10,
+            14
+          ],
+          "hp": 74
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            6,
+            12
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            14
+          ],
+          "hp": 74
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            3,
+            16
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            2,
+            18
+          ],
+          "hp": 74
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            1,
+            14
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            5,
+            18
+          ],
+          "hp": 74
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            9,
+            15
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            4,
+            12
+          ],
+          "hp": 313
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            9,
+            12
+          ],
+          "hp": 313
         }
       ]
     },
@@ -765,35 +941,128 @@
           "cell": [
             2,
             12
-          ]
+          ],
+          "hp": 36
         },
         {
           "monster": "barovian_witch",
           "cell": [
             8,
             12
-          ]
+          ],
+          "hp": 36
         },
         {
           "monster": "barovian_witch",
           "cell": [
             1,
             16
-          ]
+          ],
+          "hp": 36
         },
         {
           "monster": "barovian_witch",
           "cell": [
             9,
             17
-          ]
+          ],
+          "hp": 36
         },
         {
           "monster": "black_pudding",
           "cell": [
             5,
             16
-          ]
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            5,
+            13
+          ],
+          "hp": 36
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            7,
+            14
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            14
+          ],
+          "hp": 36
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            7,
+            16
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            10,
+            12
+          ],
+          "hp": 36
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            9,
+            14
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            3,
+            7
+          ],
+          "hp": 36
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            10,
+            7
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            20,
+            8
+          ],
+          "hp": 36
+        },
+        {
+          "monster": "black_pudding",
+          "cell": [
+            15,
+            7
+          ],
+          "hp": 153
+        },
+        {
+          "monster": "barovian_witch",
+          "cell": [
+            10,
+            10
+          ],
+          "hp": 36
         }
       ]
     },
@@ -825,6 +1094,83 @@
           "cell": [
             18,
             17
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            12,
+            10
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            18
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            18,
+            10
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            15
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            12,
+            13
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            16,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            15,
+            10
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            18,
+            12
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            12,
+            17
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            13,
+            12
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            14,
+            11
           ]
         }
       ]

@@ -343,6 +343,20 @@
             14,
             9
           ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            9,
+            1
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            3,
+            3
+          ]
         }
       ]
     },
@@ -359,21 +373,40 @@
           "cell": [
             6,
             11
-          ]
+          ],
+          "hp": 140
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             11,
             11
-          ]
+          ],
+          "hp": 140
         },
         {
           "monster": "helmed_horror",
           "cell": [
             14,
             9
-          ]
+          ],
+          "hp": 75
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            5,
+            2
+          ],
+          "hp": 140
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            12,
+            2
+          ],
+          "hp": 75
         }
       ]
     },
@@ -397,6 +430,27 @@
           "cell": [
             14,
             9
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            5,
+            2
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            12,
+            2
+          ]
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            1,
+            7
           ]
         }
       ]

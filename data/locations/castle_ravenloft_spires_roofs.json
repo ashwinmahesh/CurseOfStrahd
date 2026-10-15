@@ -348,7 +348,8 @@
             28,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -356,7 +357,8 @@
             30,
             1
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -364,7 +366,8 @@
             33,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -372,7 +375,8 @@
             34,
             7
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -380,7 +384,8 @@
             32,
             10
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -388,7 +393,8 @@
             28,
             10
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -396,7 +402,8 @@
             25,
             6
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
         },
         {
           "monster": "gargoyle",
@@ -404,7 +411,80 @@
             29,
             6
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            15,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            20,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            2
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            9
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            4
+          ],
+          "name": "Stone Guardian",
+          "hp": 100
         }
       ]
     },
@@ -422,7 +502,8 @@
             28,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
         },
         {
           "monster": "gargoyle",
@@ -430,7 +511,8 @@
             30,
             1
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
         },
         {
           "monster": "gargoyle",
@@ -438,7 +520,8 @@
             33,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
         },
         {
           "monster": "gargoyle",
@@ -446,7 +529,8 @@
             34,
             7
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
         },
         {
           "monster": "gargoyle",
@@ -454,7 +538,8 @@
             32,
             10
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
         },
         {
           "monster": "gargoyle",
@@ -462,7 +547,98 @@
             28,
             10
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            18,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            6
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            14,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            2
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            9
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            21,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            4
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 87
         }
       ]
     },
@@ -480,7 +656,8 @@
             28,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 77
         },
         {
           "monster": "gargoyle",
@@ -488,7 +665,8 @@
             30,
             1
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 77
         },
         {
           "monster": "gargoyle",
@@ -496,7 +674,8 @@
             33,
             2
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 77
         },
         {
           "monster": "gargoyle",
@@ -504,7 +683,116 @@
             34,
             7
           ],
-          "name": "Stone Guardian"
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            18,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            26,
+            10
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            10,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            6
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            30,
+            10
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            14,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            25,
+            2
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            21,
+            5
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            33,
+            10
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            28,
+            8
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
+        },
+        {
+          "monster": "gargoyle",
+          "cell": [
+            29,
+            4
+          ],
+          "name": "Stone Guardian",
+          "hp": 77
         }
       ]
     },

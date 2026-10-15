@@ -1039,7 +1039,7 @@
       "id": "larders_guardroom",
       "trigger": "enter_area:larders_guardroom",
       "when": "not flag.larders_watch_beaten",
-      "text": "Dead men in the castle's livery sit up on their pallets. Two suits of armour by the door turn their empty helms toward you. The watch was never relieved.",
+      "text": "Dead men in the castle's livery sit up on their pallets. The suits of armour along the walls turn their empty helms toward you. The watch was never relieved.",
       "surprise": "",
       "flag": "larders_watch_beaten",
       "monsters": [
@@ -1073,7 +1073,7 @@
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             17,
             18
@@ -1083,21 +1083,21 @@
           }
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             18,
             22
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             21,
             20
           ]
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             24,
             17
@@ -1105,6 +1105,55 @@
           "lying": {
             "on": "larders_watch_pallet_4"
           }
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            25,
+            20
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            20,
+            18
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            22,
+            17
+          ]
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            19,
+            20
+          ]
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            18,
+            16
+          ]
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            20,
+            22
+          ]
+        },
+        {
+          "monster": "strahd_zombie",
+          "cell": [
+            23,
+            15
+          ]
         }
       ]
     },
@@ -1122,56 +1171,104 @@
             24,
             2
           ],
-          "name": "Sergeant of the Watch"
+          "name": "Sergeant of the Watch",
+          "hp": 102
         },
         {
           "monster": "wight",
           "cell": [
             20,
             6
-          ]
+          ],
+          "hp": 102
         },
         {
           "monster": "helmed_horror",
           "cell": [
             21,
             2
-          ]
+          ],
+          "hp": 75
         },
         {
           "monster": "helmed_horror",
           "cell": [
             26,
             2
-          ]
+          ],
+          "hp": 75
         },
         {
           "monster": "strahd_zombie",
           "cell": [
             19,
             6
-          ]
+          ],
+          "hp": 38
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             22,
             6
-          ]
+          ],
+          "hp": 45
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             25,
             7
-          ]
+          ],
+          "hp": 45
         },
         {
-          "monster": "strahd_zombie",
+          "monster": "ghast",
           "cell": [
             28,
             6
-          ]
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            29,
+            3
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            21,
+            4
+          ],
+          "hp": 102
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            19,
+            4
+          ],
+          "hp": 75
+        },
+        {
+          "monster": "ghast",
+          "cell": [
+            19,
+            2
+          ],
+          "hp": 45
+        },
+        {
+          "monster": "wight",
+          "cell": [
+            28,
+            1
+          ],
+          "hp": 102
         }
       ]
     },
