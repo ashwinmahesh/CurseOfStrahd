@@ -774,8 +774,7 @@
           "cell": [
             24,
             10
-          ],
-          "name": "Warden's wraith"
+          ]
         }
       ],
       "surprise": "",
@@ -840,8 +839,7 @@
           "cell": [
             20,
             25
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -856,8 +854,7 @@
           "cell": [
             9,
             21
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -872,8 +869,7 @@
           "cell": [
             9,
             8
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -888,8 +884,7 @@
           "cell": [
             20,
             21
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -904,8 +899,7 @@
           "cell": [
             13,
             18
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -920,8 +914,7 @@
           "cell": [
             20,
             18
-          ],
-          "name": "Patrina Velikovna"
+          ]
         },
         {
           "monster": "specter",
@@ -936,8 +929,7 @@
           "cell": [
             9,
             16
-          ],
-          "name": "Patrina Velikovna"
+          ]
         }
       ],
       "surprise": "",

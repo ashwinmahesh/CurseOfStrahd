@@ -136,7 +136,7 @@ table's own map as listed; the first four-or-so squares around the arrival spawn
 | `bride_defends` | abbey_of_st_markovia_shrine | L5v2 | 5 | flesh golem, 3 mongrelfolk | 4 flesh golem, 6 mongrelfolk | 5 |
 | `bride_defends` | abbey_of_st_markovia_shrine | L6v1 | 6 | flesh golem, berserker, 4 mongrelfolk | 3 flesh golem, 2 berserker, 6 mongrelfolk | 5 |
 | `bride_defends` | abbey_of_st_markovia_shrine | L7v0 | 7 | 2 flesh golem, 9 berserker, 3 mongrelfolk | 3 flesh golem, 9 berserker, 6 mongrelfolk | 6 |
-| `wards_cells` | abbey_of_st_markovia_wards | L6v1 | 6 | berserker, 4 mongrelfolk | 10 berserker, 5 mongrelfolk | 5 |
+| `wards_cells` | abbey_of_st_markovia_wards | L6v1 | 6 | berserker, 4 mongrelfolk | 15 berserker, mongrelfolk | 5 |
 | `wards_cells` | abbey_of_st_markovia_wards | L7v0 | 7 | 2 berserker, 6 mongrelfolk | 11 berserker, 16 mongrelfolk | 5 |
 | `frozen_watch` | amber_temple_entrance | L10v0 | 10 | 4 wight | 5 wight, 4 wraith | 4 |
 | `frozen_watch` | amber_temple_entrance | L9v1 | 9 | 3 wight | 3 wight, 4 wraith | 5 |

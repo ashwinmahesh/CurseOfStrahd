@@ -651,16 +651,14 @@
           "cell": [
             9,
             3
-          ],
-          "name": "Vasilka"
+          ]
         },
         {
           "monster": "berserker",
           "cell": [
             12,
             7
-          ],
-          "name": "Belview Brute"
+          ]
         },
         {
           "monster": "mongrelfolk",
@@ -674,8 +672,7 @@
           "cell": [
             19,
             12
-          ],
-          "name": "Vasilka"
+          ]
         }
       ],
       "surprise": "",
@@ -732,8 +729,7 @@
           "cell": [
             22,
             14
-          ],
-          "name": "Vasilka"
+          ]
         },
         {
           "monster": "mongrelfolk",
@@ -747,8 +743,7 @@
           "cell": [
             8,
             10
-          ],
-          "name": "Vasilka"
+          ]
         },
         {
           "monster": "mongrelfolk",
@@ -762,8 +757,7 @@
           "cell": [
             18,
             8
-          ],
-          "name": "Vasilka"
+          ]
         }
       ],
       "surprise": "",
