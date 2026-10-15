@@ -218,7 +218,7 @@ static func _repose_key(ch: Character) -> String:
 ## Notes the time for any dead party member not yet noted (StoryState.advance_minutes calls this with the time before
 ## the clock moved, so a death in a fight is noted at about the time it happened).
 static func note_deaths(st: StoryState, at: int) -> void:
-	for ch in st.party:
+	for ch in st.roster():   # one left at camp by an older save keeps counting too
 		if ch.dead and not st.flags.has(_died_key(ch)):
 			st.flags[_died_key(ch)] = at
 		elif not ch.dead and st.flags.has(_died_key(ch)):
