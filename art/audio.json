@@ -166,7 +166,7 @@
   },
   "music": {
     "title": [
-      "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+      "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg"
     ],
     "church": [
       "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3",
@@ -195,7 +195,8 @@
       "res://art/sourced/kevin_macleod/Folk Round.mp3",
       "res://art/sourced/kevin_macleod/Minstrel Guild.mp3",
       "res://art/sourced/kevin_macleod/The Britons.mp3",
-      "res://art/sourced/kevin_macleod/Midnight Tale.mp3"
+      "res://art/sourced/kevin_macleod/Midnight Tale.mp3",
+      "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3"
     ],
     "camp": [
       "res://art/sourced/wikimedia_commons/USAFB_Czardas.ogg",
@@ -211,7 +212,8 @@
     "haunted": [
       "res://art/sourced/kevin_macleod/Darkest Child.mp3",
       "res://art/sourced/scott_buckley/Anabasis_I.mp3",
-      "res://art/sourced/oga_of_far_different_nature/Of Far Different Nature - In Darkness (CC-BY)_0.mp3"
+      "res://art/sourced/oga_of_far_different_nature/Of Far Different Nature - In Darkness (CC-BY)_0.mp3",
+      "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3"
     ],
     "combat": [
       "res://art/sourced/kevin_macleod/Darkling.mp3",
@@ -230,7 +232,8 @@
       "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
       "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
       "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3",
-      "res://art/sourced/oga_tausdei/stronghold.mp3"
+      "res://art/sourced/oga_tausdei/stronghold.mp3",
+      "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3"
     ],
     "ending": [
       "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
@@ -1550,7 +1553,11 @@
     "res://art/sourced/kevin_macleod/Darkest Child.mp3": -3.3,
     "res://art/sourced/scott_buckley/Penumbra.mp3": -1.5,
     "res://art/sourced/oga_matthew_pablo/Dark Descent_0.mp3": -2.5,
-    "res://art/sourced/oga_tausdei/stronghold.mp3": -3.2
+    "res://art/sourced/oga_tausdei/stronghold.mp3": -3.2,
+    "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg": -0.8,
+    "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3": -3.0,
+    "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3": -5.1,
+    "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3": -8.9
   },
   "regions": {
     "vallaki": "town",
