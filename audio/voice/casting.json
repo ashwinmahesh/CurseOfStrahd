@@ -972,11 +972,12 @@
     },
     "rahadin": {
       "settings": {},
-      "description": "Library voice chosen for Rahadin: Maksim - Deep Calm.",
-      "voice_id": "e5A3tSm7sjA7Sbiz2Qac",
-      "name": "Maksim - Deep Calm",
-      "library": true,
-      "model": "eleven_v3"
+      "description": "Rahadin, the count's chamberlain: a dusk elf, centuries old. A low, resonant male voice with cold, quiet authority and menace under perfect courtesy; slow and exact, never raises his voice; a strong, clearly audible Eastern European (Romanian) accent. Designed 2026-10-15 (voice D, Ashwin's pick).",
+      "voice_id": "jByyV8xtbb3De1KFFoVD",
+      "name": "Barovia Rahadin",
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "escher": {
       "settings": {},
