@@ -380,6 +380,8 @@ this game.
 - "Dark Gothic Haunted Masquerade", "Dark Solemn Choral with Organ" and "Final Boss Appearance Dark Fantasy" by ISAo
   (airyluvs.com). OGA-BY 3.0, via OpenGameArt.org.
 - "In Darkness" by Of Far Different Nature (fardifferent.carrd.co). CC BY 4.0, via OpenGameArt.org.
+- "Dark Descent" by Matthew Pablo (matthewpablo.com). CC BY 3.0, via OpenGameArt.org.
+- "Stronghold" by Tausdei. CC BY 4.0, via OpenGameArt.org.
 - "Fanfares" (victory and defeat) by Spring Spring. CC BY 4.0, via OpenGameArt.org.
 
 **Sound effects.**

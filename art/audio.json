@@ -222,13 +222,15 @@
     "boss": [
       "res://art/sourced/kevin_macleod/Unholy Knight.mp3",
       "res://art/sourced/kevin_macleod/Final Count.mp3",
-      "res://art/sourced/scott_buckley/EyesInTheVoid.mp3"
+      "res://art/sourced/scott_buckley/EyesInTheVoid.mp3",
+      "res://art/sourced/oga_matthew_pablo/Dark Descent_0.mp3"
     ],
     "castle": [
       "res://art/sourced/scott_buckley/Anabasis_I.mp3",
       "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
       "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
-      "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3"
+      "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3",
+      "res://art/sourced/oga_tausdei/stronghold.mp3"
     ],
     "ending": [
       "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
@@ -240,7 +242,8 @@
       "res://art/sourced/kevin_macleod/Clash Defiant.mp3",
       "res://art/sourced/kevin_macleod/Black Vortex.mp3",
       "res://art/sourced/kevin_macleod/Death and Axes.mp3",
-      "res://art/sourced/kevin_macleod/Volatile Reaction.mp3"
+      "res://art/sourced/kevin_macleod/Volatile Reaction.mp3",
+      "res://art/sourced/oga_matthew_pablo/Dark Descent_0.mp3"
     ],
     "strahd": [
       "res://art/sourced/wikimedia_commons/Modest_Mussorgsky_-_night_on_bald_mountain.ogg",
@@ -1545,7 +1548,9 @@
     "res://art/sourced/kevin_macleod/Bushwick Tarantella.mp3": -3.6,
     "res://art/sourced/kevin_macleod/Gypsy Shoegazer.mp3": -2.9,
     "res://art/sourced/kevin_macleod/Darkest Child.mp3": -3.3,
-    "res://art/sourced/scott_buckley/Penumbra.mp3": -1.5
+    "res://art/sourced/scott_buckley/Penumbra.mp3": -1.5,
+    "res://art/sourced/oga_matthew_pablo/Dark Descent_0.mp3": -2.5,
+    "res://art/sourced/oga_tausdei/stronghold.mp3": -3.2
   },
   "regions": {
     "vallaki": "town",
