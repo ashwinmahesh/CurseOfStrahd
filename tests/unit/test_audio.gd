@@ -123,6 +123,12 @@ func test_regions_play_their_theme() -> void:
 	assert_true(checked > 0, "some region has a theme")
 	assert_eq(Audio.mood_for("vallaki_blue_water_inn", "tavern"), "tavern", "an inn keeps its tavern music")
 	assert_eq(Audio.mood_for("vallaki_st_andrals", "church"), "church", "St. Andral's keeps the church's")
+	# Spinning Tavern is Blood of the Vine's own tune (owner, 2026-10-15), so the other taverns never play it.
+	var spinning := "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3"
+	assert_eq(Audio.mood_for("blood_of_the_vine", "tavern"), "blood_of_the_vine", "Blood of the Vine has its own music")
+	var vine := Audio.files("music", "blood_of_the_vine")
+	assert_true(vine.size() == 1 and vine[0] == spinning, "which is Spinning Tavern alone")
+	assert_false(Audio.files("music", "tavern").has(spinning), "no other tavern plays it")
 
 
 ## The Wizard of Wines turns cheerful once Yester Hill is broken (owner, 2026-10-13): every one of its places, the
