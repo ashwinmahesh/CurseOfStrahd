@@ -15,6 +15,10 @@ signal menu_requested
 signal sheet_requested(who: Character)
 ## An observed copy after normal presentation, for guided practice.
 signal events_presented(events: Array[Dictionary])
+## A beat of an action reached the screen: "damage" (the blow's number floated), "save" (a hero's big d20 for a saving
+## throw, shown after the blow and damage that called for it) or "concentration" (the sound of a spell breaking).
+## `id` is the creature it happened to.
+signal moment_shown(kind: String, id: String)
 
 ## Seconds per square for a token moving on the board (owner 2026-10-06: half the old speed, it read unnaturally fast).
 const STEP_TIME := 0.37   # seconds a square (owner 2026-10-07: about 30% slower than 0.26)
@@ -47,6 +51,9 @@ var fx: SpellFx
 var barks: CombatBarks
 ## Who is concentrating on what (combatant id -> spell id), for the sound when a blow breaks it.
 var _concentrating: Dictionary = {}
+## True while _play_events plays an action: the combat log doesn't flush early on a narration, or it would give away
+## a save, a failed Concentration or a fall the screen hasn't shown yet.
+var _log_held := false
 ## Heavy hits, crits, killing blows, the last foe and big spells landing with weight (G2, world/combat/combat_impact.gd).
 var impact: CombatImpact
 ## Strahd's and the other bosses' name plates and health bars, and their entrance (G3, ui/combat/boss_bar.gd); null
@@ -158,6 +165,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.radial.picked_item.connect(_wheel_picked)
 	hud.cast_at_level.connect(func(action: Dictionary, level: int) -> void: _choose(action, level))
 	hud.square_picked.connect(_square_picked)
+	_restore_forms()   # a fight picked up from a save, with someone mid-shape
 	var fresh := e.state == Encounter.State.SETUP
 	if fresh:
 		if e.title != "":
@@ -1808,6 +1816,7 @@ func _concentration_kept(c: Combatant) -> void:
 		return
 	_concentrating.erase(c.id)
 	CombatSfx.concentration(false)
+	moment_shown.emit("concentration", c.id)
 
 
 ## Where a token stands: its square's centre (a little to one side when heroes share it), raised onto the mount's back
@@ -1849,10 +1858,11 @@ func _settle_shared() -> void:
 
 
 func _play_events() -> void:
-	await _dice_moments()
+	var events := e.drain_events()
+	await _dice_moments(events)
 	if _closed or not is_inside_tree():
 		return
-	var events := e.drain_events()
+	_log_held = true
 	var walking: Dictionary = {}
 	# Who just played their attack as a spell gesture: the spell's own attack rolls that follow don't replay it.
 	var cast_by := ""
@@ -1958,8 +1968,12 @@ func _play_events() -> void:
 					t.refresh()
 					if t.combatant.creature.hp > 0 and CombatSfx.heavy(int(ev["amount"]), t.combatant.creature.max_hp()):
 						barks.bark(t.combatant, "hurt")
-					_concentration_kept(t.combatant)
 					await get_tree().create_timer(0.35 * GameSettings.combat_pace()).timeout
+					moment_shown.emit("damage", t.combatant.id)
+					# A hero's Concentration save shows after the damage (the "save" event next), and settles then;
+					# a foe's, which has no roll to show, is told by the sound once the number has been seen.
+					if not _save_follows(events, ev_at, t.combatant.id):
+						_concentration_kept(t.combatant)
 			"heal":
 				var th := _tok(str(ev["id"]))
 				if th != null:
@@ -2084,9 +2098,12 @@ func _play_events() -> void:
 					nt.position = board.cell_center(sc.cell, sc.size_cells)
 					add_child(nt)
 					tokens[sc.id] = nt
-					nt.flash(Look.color("lilac"), 0.5)
-					if SpellFx.enabled:
-						fx.summoned(nt)
+					if str(ev.get("becomes", "")) != "" and SpellFx.enabled:
+						fx.shape_settle(nt, str(ev["becomes"]))   # a cursed creature's change, begun at its vanishing
+					else:
+						nt.flash(Look.color("lilac"), 0.5)
+						if SpellFx.enabled:
+							fx.summoned(nt)
 			"trait":
 				# A monster trait that just saved it or changed the fight (Undead Fortitude): its name over the token.
 				var trt := _tok(str(ev["id"]))
@@ -2132,7 +2149,15 @@ func _play_events() -> void:
 					await get_tree().create_timer(maxf(secs, 2.0) + 0.3).timeout
 					if _closed or not is_inside_tree():
 						return
-				if vt != null and str(ev.get("left", "")) == "fell":
+				if vt != null and str(ev.get("becomes", "")) != "" and SpellFx.enabled and vt.visible:
+					# It turns into something else (the lycanthropy curse): it changes where it stands, and the new
+					# creature arrives in its place (summon_creature).
+					_stop_walking(walking)
+					await fx.shape_gather(vt, str(ev["becomes"]))
+					if _closed or not is_inside_tree():
+						return
+					vt.hide()
+				elif vt != null and str(ev.get("left", "")) == "fell":
 					# Over the edge: it drops out of sight.
 					var drop := create_tween()
 					drop.tween_property(vt, "position", vt.position + Vector3(0, -6, 0), 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
@@ -2184,9 +2209,16 @@ func _play_events() -> void:
 				round_started.emit(int(ev["round"]))
 			"over":
 				_refresh_all()
+			"save":
+				# A hero's saving throw, where it came in the action: after the blow and damage before it.
+				_stop_walking(walking)
+				await _show_save(ev)
+				if _closed or not is_inside_tree():
+					return
 	impact.spell_landed()
 	_stop_walking(walking)
 	_settle_shared()
+	_log_held = false
 	_refresh_all()
 	if not _closed and is_inside_tree() and events_presented.has_connections():
 		events_presented.emit(events.duplicate(true))
@@ -2196,13 +2228,13 @@ func _play_events() -> void:
 
 ## The saving throws the party's heroes rolled since the last look (their creatures' d20 events, Creature.roll_d20),
 ## each marked so it shows once: [{who: Combatant, test: D20Test}].
-func _hero_saves() -> Array[Dictionary]:
+func _hero_saves(in_events: Dictionary = {}) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for c in e.combatants:
 		if not c.is_player_controlled() or not c.side in [&"party", &"guest"]:
 			continue
 		for ev in c.creature.events:
-			if str(ev.get("type", "")) != "d20" or bool(ev.get("shown", false)):
+			if str(ev.get("type", "")) != "d20" or bool(ev.get("shown", false)) or in_events.has(ev.get("test")):
 				continue
 			ev["shown"] = true
 			if int(ev.get("kind", -1)) == D20Test.Kind.SAVING_THROW and ev.get("test") is D20Test:
@@ -2210,14 +2242,52 @@ func _hero_saves() -> Array[Dictionary]:
 	return out
 
 
-## Before an action's events play: the dice lane's big emerald d20 (DiceRoll) for each saving throw a hero just made, a
-## death save included, one after another; it returns once the roll has gone (any press skips it; fast combat plays it
-## quicker; headless runs and captures go straight on).
-func _dice_moments() -> void:
-	for s in _hero_saves():
-		var t := s["test"] as D20Test
-		var kind := "death_save" if t.label.begins_with("Death save") else "save"
-		await DiceRoll.show_roll(self, DiceRoll.from_test(t, (s["who"] as Combatant).name(), t.label, kind))
+## Before an action's events play: the dice lane's big emerald d20 (DiceRoll) for each saving throw a hero just made that
+## has no "save" event among `events` to show it in its place, a death save included, one after another; it returns once
+## the roll has gone (any press skips it; fast combat plays it quicker; headless runs and captures go straight on).
+## The saves with a "save" event wait for it (_show_save): the d20 of a Concentration save or a hit's rider shows after
+## the blow and its damage have, and the prompt that may follow it comes after that.
+func _dice_moments(events: Array = []) -> void:
+	var marked := {}
+	for ev: Variant in events:
+		if str((ev as Dictionary)["type"]) == "save":
+			marked[(ev as Dictionary)["test"]] = true
+	for s in _hero_saves(marked):
+		await _show_roll(s["who"] as Combatant, s["test"] as D20Test)
+
+
+func _show_roll(who: Combatant, t: D20Test) -> void:
+	var kind := "death_save" if t.label.begins_with("Death save") else "save"
+	await DiceRoll.show_roll(self, DiceRoll.from_test(t, who.name(), t.label, kind))
+	moment_shown.emit("save", who.id)
+
+
+## A "save" event (EncounterDamage / D20Responses.mark_save): the hero's roll, once, then whether it broke the
+## Concentration it was for. A roll the creature's events show as seen already (it came before the fight showed) isn't
+## replayed.
+func _show_save(ev: Dictionary) -> void:
+	var who := e.get_c(str(ev["id"]))
+	var t := ev["test"] as D20Test
+	if who == null or t == null:
+		return
+	for own in who.creature.events:
+		if own.get("test") == t:
+			if bool(own.get("shown", false)):
+				return
+			own["shown"] = true
+	await _show_roll(who, t)
+	if _closed or not is_inside_tree():
+		return
+	_concentration_kept(who)
+
+
+## Whether a "save" event for `id` follows the event at `at` in the same blow, spell or move.
+static func _save_follows(events: Array, at: int, id: String) -> bool:
+	for i in range(at + 1, CombatImpact.window_end(events, at)):
+		var ev := events[i] as Dictionary
+		if str(ev["type"]) == "save" and str(ev["id"]) == id:
+			return true
+	return false
 
 
 ## The token shown for a creature, or null (none, or freed once the story took the fight back).
@@ -2233,7 +2303,7 @@ func _tok(id: Variant) -> CombatToken:
 ## (owner ask, 2026-10-14, for every shapeshifter): the old figure gathers and flares, then the new one arrives in a
 ## flash (FxShapeshift; `kind` is how it looks and sounds). A figure nobody can see (an Invisible foe's) changes without
 ## showing where it stands, and so does a fight with its effects off.
-func _swap_form_art(id: String, art: String, kind: String = "") -> void:
+func _swap_form_art(id: String, art: String, kind: String = "", quiet: bool = false) -> void:
 	var old := _tok(id)
 	if old == null:
 		return
@@ -2244,7 +2314,7 @@ func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 	if want == old.art_override or (want == "" and old == own):
 		old.flash(Look.color("lilac"), 0.3)
 		return
-	var shown := SpellFx.enabled and old.visible
+	var shown := SpellFx.enabled and old.visible and not quiet
 	if shown:
 		await fx.shape_gather(old, kind)
 		old = _tok(id)
@@ -2258,7 +2328,8 @@ func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 		nt.visible = true
 		nt.refresh()
 	else:
-		nt = CombatToken.create(old.combatant, want)
+		# Its own figure again is its true one, even when what it is now says otherwise (a Werewolf's person).
+		nt = CombatToken.create(old.combatant, want if want != "" else CombatToken.true_figure(old.combatant))
 		nt.position = old.position
 		add_child(nt)
 	tokens[id] = nt
@@ -2269,8 +2340,29 @@ func _swap_form_art(id: String, art: String, kind: String = "") -> void:
 		old.queue_free()
 	if shown and nt.visible:
 		fx.shape_settle(nt, kind)
-	else:
+	elif not quiet:
 		nt.flash(Look.color("lilac"), 0.4)
+
+
+## A fight picked up from a save (a round-start save) with someone mid-shape: the party and guests come in the figures
+## they walked in with, a foe's is built from its creature (LocationFights._fight_tokens), so a hero or guest wears their
+## own figure under a beast's stat block and a Shapechanger or hybrid wears its true one. Each puts on what it changed
+## into, and the party's own figure waits, hidden, for the shape to end, as _swap_form_art leaves it.
+func _restore_forms() -> void:
+	for c in e.combatants:
+		var tok := _tok(c.id)
+		if tok == null or not c.creature is Monster:
+			continue
+		var art := ""
+		if e.shapes.is_shaped(c):
+			art = CombatToken.monster_art((c.creature as Monster).data)
+			_shape_looks[c.id] = ""
+		else:
+			art = e.legendary.form_art(c) if e.legendary.form_art(c) != "" else e.monster_actions.form_art(c)
+		# Its figure is a swap away from its own, so it can swap back (a foe's drawn from its creature wears the beast
+		# with no `art_override` to go back from).
+		if art != "" and DirectionalSprite.frames_for(art) != null and tok.art_override != art:
+			_swap_form_art(c.id, art, "", true)
 
 
 ## Polymorph, Wild Shape and the other changes of shape (ShapeChange, owner 2026-10-13: "their sprite should reflect
@@ -2283,7 +2375,13 @@ func _swap_shape_art(id: String, art: String, kind: String = "") -> void:
 		return
 	if art != "":
 		if DirectionalSprite.frames_for(art) == null:
-			old.flash(Look.color("lilac"), 0.3)
+			# A shape with no figure to swap to still shows as a change, on the figure it has.
+			if SpellFx.enabled and old.visible:
+				await fx.shape_gather(old, kind)
+				if not _closed and is_instance_valid(old) and old.is_inside_tree():
+					fx.shape_settle(old, kind)
+			else:
+				old.flash(Look.color("lilac"), 0.3)
 			return
 		if not _shape_looks.has(id):
 			_shape_looks[id] = old.art_override
@@ -2376,7 +2474,8 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 		"target": target.name() if target != null else ""})
 	if text != "":
 		e.log.add("narr", text, "")
-		hud.refresh_log()
+		if not _log_held:
+			hud.refresh_log()
 		# A story cutscene for this moment (story/cutscenes.gd): its picture over the fight, the line as its caption.
 		var cut := Cutscenes.for_trigger(key, story)
 		if cut != "":

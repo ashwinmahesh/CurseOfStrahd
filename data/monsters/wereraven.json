@@ -166,10 +166,30 @@
       "do": "shape_shift"
     }
   ],
+  "forms": {
+    "base": "humanoid",
+    "change": "bonus_action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "raven",
+        "name": "Raven",
+        "size": "small",
+        "speed": {
+          "walk": 30,
+          "fly": 50
+        },
+        "art": "raven",
+        "kind": "wereraven",
+        "summary": "A Small raven: the Beak, no bow. Its other statistics stay the same."
+      }
+    ]
+  },
   "regions": [
     "vallaki",
     "wizard_of_wines"
   ],
   "ai_profile": "skirmisher",
+  "human_art": "wereraven_human",
   "summary": "A Keeper of the Feather: crossbow and shortsword as a human, wings and a cursing beak as a hybrid."
 }

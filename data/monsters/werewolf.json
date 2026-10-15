@@ -177,10 +177,30 @@
       "do": "shape_shift"
     }
   ],
+  "forms": {
+    "base": "humanoid",
+    "change": "bonus_action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "wolf",
+        "name": "Wolf",
+        "size": "medium",
+        "speed": {
+          "walk": 40
+        },
+        "art": "wolf",
+        "kind": "werewolf",
+        "summary": "A Medium wolf (Speed 40 ft.): the Bite, no bow. Its other statistics stay the same."
+      }
+    ]
+  },
   "regions": [
     "svalich_road",
     "werewolf_den"
   ],
   "ai_profile": "pack_hunter",
+  "reveal": "werewolf",
+  "human_art": "werewolf_human",
   "summary": "Shoots from cover, then shifts to hybrid form to scratch and bite with its pack; the bite curses."
 }

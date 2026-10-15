@@ -73,6 +73,7 @@ var _sun: DirectionalLight3D
 var atmosphere: Atmosphere
 var guest_members: Array[Combatant] = []   ## story allies following the party (StoryState.guests)
 var _npc_shown: Array[Dictionary] = []   ## [{spec, token, cell, low_before}] for the NPC entries standing here now
+var _stepped_aside: Array[Dictionary] = []   ## [{name, art}] the people a conversation ended in a fight just stepped away from (LocationNpcs.hide_npcs_of): the fight's _reveal
 var door_nodes: Dictionary = {}      ## door id -> Node3D
 var container_nodes: Dictionary = {}
 var prop_nodes: Dictionary = {}

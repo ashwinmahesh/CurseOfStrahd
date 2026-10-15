@@ -303,6 +303,12 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		if LyingFigures.of(c.creature) != null:
 			LyingFigures.lay(view, t, LyingFigures.of(c.creature), c.cell)
 		ctokens[c.id] = t
+		# A person the conversation showed who turns out to be this (Offalia a hag, Vosk unmasked) changes where it stands.
+		var reveal := _reveal_of(view, c)
+		if not reveal.is_empty() and SpellFx.enabled:
+			_reveal(view, t, reveal)
+			standing.append(t)
+			continue
 		foes.append(t)
 	foes.sort_custom(func(a: CombatToken, b: CombatToken) -> bool: return a.position.distance_to(party_mid) < b.position.distance_to(party_mid))
 	for i in foes.size():
@@ -333,6 +339,52 @@ static func _face_nearest_foe(ours: Array[CombatToken], foes: Array[CombatToken]
 					best_d = d
 					best = f.position - tok.position
 		tok.face(Vector2(best.x, best.z), false)
+
+
+## The look of a person who has just turned out to be foe `c` (a stat block's `reveal`): {art: the figure they had, kind:
+## how the change looks (FxShapeshift)}, or {} when `c` isn't someone who stepped aside from the conversation that led
+## here, in a different figure. Each person changes once.
+static func _reveal_of(view: LocationView, c: Combatant) -> Dictionary:
+	var kind := str((c.creature as Monster).data.get("reveal", "")) if c.creature is Monster else ""
+	if kind == "":
+		return {}
+	for aside: Dictionary in view._stepped_aside:
+		var art := str(aside["art"])
+		if _same_person(str(aside["name"]), c.name()) and art != CombatToken.art_id(c) and DirectionalSprite.frames_for(art) != null:
+			view._stepped_aside.erase(aside)
+			return {"art": art, "kind": kind}
+	return {}
+
+
+## Whether a foe's name is an NPC's ("Vosk, unmasked" is Vosk, "The Abbot" is the Abbot).
+static func _same_person(npc_name: String, foe_name: String) -> bool:
+	return Legendary.same_person(npc_name, foe_name)
+
+
+## `t`, a foe that was a person a moment ago, stands there in `reveal`'s figure and changes into itself: the same effect
+## and sound as any change of shape (FxShapeshift), played on a stand-in wearing the person's figure, then `t` comes
+## into view in a flash. Doesn't wait: the fight's opening plays meanwhile.
+static func _reveal(view: LocationView, t: CombatToken, reveal: Dictionary) -> void:
+	var kind := str(reveal["kind"])
+	var ghost := CombatToken.create(t.combatant, str(reveal["art"]))
+	ghost.position = t.position
+	if ghost.sprite != null and t.sprite != null:
+		ghost.sprite.facing = t.sprite.facing
+	view.add_child(ghost)
+	t.visible = false
+	var fx := SpellFx.new()
+	view.add_child(fx)
+	fx.shape_gather(ghost, kind)
+	# On a tween of the effect's own, so a scene that goes away mid-change takes it along (a timer's lambda that captured
+	# the freed nodes would be called all the same, with an error).
+	var tw := fx.create_tween()
+	tw.tween_interval(FxShapeshift.GATHER * GameSettings.combat_pace())
+	tw.tween_callback(func() -> void:
+		ghost.queue_free()
+		t.visible = true
+		fx.shape_settle(t, kind))
+	tw.tween_interval(3.0)
+	tw.tween_callback(fx.queue_free)
 
 
 ## A fight's token: guests wear their NPC sprite rather than their stat block's.

@@ -63,6 +63,9 @@ static func spell_cue(spell_id: String) -> Dictionary:
 static func ability_cue(source: String, key: String, by: Combatant) -> Dictionary:
 	var table := "features" if source == "feature" else "monsters"
 	var spec := _spec((data().get(table, {}) as Dictionary).get(key, ""))
+	# A feature with a choice in it ("starry_form:archer", "celestial_revelation:heavenly_wings") looks as its kind does.
+	if spec.is_empty() and source == "feature" and key.contains(":"):
+		spec = _spec((data().get(table, {}) as Dictionary).get(key.get_slice(":", 0), ""))
 	var act := _monster_action(by, key.get_slice(".", 1)) if source == "monster" else {}
 	if str(spec.get("family", "")) == "" and not act.is_empty():
 		spec["family"] = _derive_action_family(act)
