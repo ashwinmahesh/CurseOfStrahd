@@ -2,7 +2,7 @@ extends Node3D
 ## make capture SCENE=res://tools/capture/shapeshift_capture.tscn NAME=shapeshift/shot FRAMES=10
 ## A creature changing shape (owner ask, 2026-10-14: a visible effect on the sprite and a sound for every shapeshifter): a
 ## filmstrip of Emil becoming the werewolf (<out>_emil_<n>.png, one shot every FRAME_STEP frames from the moment he starts
-## to change), the same for Strahd's bat (<out>_bat_<n>.png), a Druid's Wild Shape (<out>_wild_<n>.png) and Strahd's mist
+## to change), Emil's wolf, Lysaga's swarm and Morgantha's disguise too, the same for Strahd's bat (<out>_bat_<n>.png), a Druid's Wild Shape (<out>_wild_<n>.png) and Strahd's mist
 ## (<out>_mist_<n>.png), and each changing back (<out>_<name>_back_<n>.png). tools/capture/apng.py joins a strip.
 
 const FRAME_STEP := 4
@@ -15,6 +15,8 @@ var board: ArenaBoard
 var emil: Combatant
 var strahd: Combatant
 var hedda: Combatant
+var lysaga: Combatant
+var hag: Combatant
 var _focus: Node3D
 
 
@@ -29,6 +31,9 @@ func _ready() -> void:
 	emil = e.add(StoryState.make_guest("emil_toranescu"), &"guest", Vector2i(4, 6))
 	hedda = TestCombat.hero(e, "hedda_ironvow", Vector2i(8, 6))
 	strahd = TestCombat.foe(e, "strahd_von_zarovich", Vector2i(12, 6))
+	lysaga = TestCombat.foe(e, "baba_lysaga", Vector2i(12, 9))
+	hag = TestCombat.foe(e, "night_hag", Vector2i(8, 9))
+	hag.creature.name = "Morgantha"
 	TestCombat.start_with(e, emil)
 	board = ArenaBoard.build(e.grid)
 	add_child(board)
@@ -100,3 +105,15 @@ func capture_shots(tool: Node, out: String) -> void:
 	await _strip(tool, out, "wild", hedda)
 	e.shapes.revert(hedda, "capture")
 	await _strip(tool, out, "wild_back", hedda)
+	# The forms of the forms branch: Emil's wolf, Lysaga's swarm and Morgantha's disguise, each and back.
+	emil.bonus_available = true
+	e.monster_actions.shift(emil, "wolf")
+	await _strip(tool, out, "wolf", emil)
+	e.monster_actions.shift(emil)
+	await _strip(tool, out, "wolf_back", emil)
+	e.legendary._set_form(lysaga, "swarm")
+	await _strip(tool, out, "swarm", lysaga)
+	e.legendary._set_form(lysaga, e.legendary.base_form(lysaga))
+	await _strip(tool, out, "swarm_back", lysaga)
+	e.legendary._set_form(hag, "disguise")
+	await _strip(tool, out, "disguise", hag)
