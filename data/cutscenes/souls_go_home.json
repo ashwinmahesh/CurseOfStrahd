@@ -1,0 +1,15 @@
+{
+  "id": "souls_go_home",
+  "title": "The Souls Go Home",
+  "summary": "The stolen souls rise out of the split leather bags in the loft and stream out of the loft door like paper lanterns.",
+  "images": [
+    {
+      "image": "souls_go_home",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

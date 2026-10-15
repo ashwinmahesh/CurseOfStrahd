@@ -1,0 +1,15 @@
+{
+  "id": "lysaga_supper",
+  "title": "Supper at the Green Fire",
+  "summary": "Baba Lysaga ladles stew over a green fire in her crowded hut while the party sits on the bench.",
+  "images": [
+    {
+      "image": "lysaga_supper",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -337,6 +337,28 @@ func test_every_cutscene_statement_names_a_cutscene_with_a_picture() -> void:
 			assert_true(not Cutscenes.get_cutscene(id).is_empty(), "%s names cutscene %s" % [named[id], id])
 
 
+## Owner rule (2026-10-14): every cutscene is at least two scenes. A conversation that plays a picture names a second one
+## at a later beat (docs/ui/cutscenes.md); a place's trigger cutscene is the other half of the rule.
+func test_every_conversation_that_plays_a_cutscene_plays_at_least_two() -> void:
+	var lonely: Array[String] = []
+	var stack: Array[String] = ["res://narrative/"]
+	while not stack.is_empty():
+		var d: String = stack.pop_back()
+		for sub in DirAccess.get_directories_at(d):
+			stack.append(d.path_join(sub))
+		for f in DirAccess.get_files_at(d):
+			if not f.ends_with(".dialogue"):
+				continue
+			var ids := {}
+			for line in FileAccess.get_file_as_string(d.path_join(f)).split("\n"):
+				var t := line.strip_edges()
+				if t.begins_with("cutscene ") and t != "cutscene end":
+					ids[t.substr(9)] = true
+			if ids.size() == 1:
+				lonely.append(d.path_join(f))
+	assert_eq(lonely, [] as Array[String], "these conversations play one picture only: %s" % [lonely])
+
+
 # --- In a conversation ----------------------------------------------------------------------------
 
 func test_a_conversation_reads_its_lines_over_the_picture_and_brings_the_box_back_for_options() -> void:

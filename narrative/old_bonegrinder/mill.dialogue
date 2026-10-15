@@ -12,6 +12,7 @@ endif
 
 ~ free
 set soul_bag_freed
+cutscene souls_go_home
 Narrator: The bags split under the knife like overripe plums, and something goes out of the loft past you, many somethings, all in a hurry to be elsewhere. The air is lighter afterwards, as if someone had opened a window.
 if flag.bonegrinder_bargain == "dream"
 Narrator: Something small and warm comes home. Whichever of you paid Morgantha with a dream remembers it, all at once, and has to sit down.

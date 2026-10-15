@@ -1,0 +1,15 @@
+{
+  "id": "hall_stirs",
+  "title": "A Chair Scrapes Back",
+  "summary": "In the long hall behind, the dead knights stir at their table as one chair scrapes back, and a silver glow spills in from the door.",
+  "images": [
+    {
+      "image": "hall_stirs",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

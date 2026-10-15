@@ -80,6 +80,7 @@ interject guest:ireena: Then they can stay empty.
 -> menu
 
 ~ fight
+cutscene rahadin_draws
 Rahadin: As you wish. He will want to hear how it went.
 if at:castle_ravenloft_court_weeping
 combat court_rahadin_chamber_fight

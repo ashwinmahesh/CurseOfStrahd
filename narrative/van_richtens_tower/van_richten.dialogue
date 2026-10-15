@@ -5,6 +5,7 @@
 ~ start
 if not flag.van_richten_met_at_tower
 set van_richten_met_at_tower
+cutscene van_richten_workroom
 Narrator: At the workroom table, under a lamp, sits the showman from the Blue Water Inn without his feathers or his voice: a thin old man in shirtsleeves, burn-scarred hands spread flat on a map of the valley.
 Rictavio: You. How did you... Khazan. Of course. She found the name, and you walked in on it. I taught her to find things. I should have taught her to stop.
 else

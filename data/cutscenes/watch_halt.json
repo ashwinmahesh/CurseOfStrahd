@@ -1,0 +1,15 @@
+{
+  "id": "watch_halt",
+  "title": "Halt. Watchword.",
+  "summary": "Five grey soldiers at their posts in the guardroom, blurred like breath on glass, and the sergeant stepping out to halt the party.",
+  "images": [
+    {
+      "image": "watch_halt",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}
