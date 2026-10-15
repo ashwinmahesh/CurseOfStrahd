@@ -1150,6 +1150,11 @@
       "pattern": "^[a-z0-9_]+$",
       "description": "Sprite and portrait id when it isn't the block's own id (art/sprites/<art>/), e.g. a named NPC's block."
     },
+    "hybrid_art": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "description": "The sprite (art/sprites/<hybrid_art>/) a lycanthrope's token swaps to for its Shape-Shift hybrid form, and back from: a person drawn as a man in human form (Emil, Kiril) takes the werewolf's. Unset: the figure stays as it is (MonsterActions._hybrid_art)."
+    },
     "art_height": {
       "type": "number",
       "minimum": 0.5,
