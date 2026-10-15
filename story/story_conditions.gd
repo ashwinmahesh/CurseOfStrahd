@@ -33,13 +33,29 @@ static func final_battle_condition(room: String) -> String:
 	return "final_room:%s and quest.strahds_lair >= foretold and not flag.strahd_destroyed and not flag.strahd_in_coffin" % room
 
 
-## A location encounter's full condition: its `when`, and for a `final_battle` the final battle's own.
-static func encounter_when(spec: Dictionary) -> String:
+## A region's truce (owner, 2026-10-15): while it holds, the region's fights that start on their own as the party walks
+## into a room wait, and come back once it ends. Fights the party starts (by a word, by opening or breaking something,
+## a check gone wrong) still come. Castle Ravenloft: Strahd's invited guests are not set on by his house until dinner
+## is over, thanked or affronted (docs/regions/castle_ravenloft_gates.md §5).
+const TRUCES := {"castle_ravenloft": "flag.strahd_invitation == \"accepted\" and not flag.castle_dinner"}
+
+
+## Whether `region`'s truce holds now.
+static func truce_holds(region: String, state: StoryState) -> bool:
+	return TRUCES.has(region) and check(str(TRUCES[region]), state)
+
+
+## A location encounter's full condition: its `when`, and for a `final_battle` the final battle's own. Given the
+## location's `region`, a fight that starts as the party walks in also waits out the region's truce (TRUCES); without
+## it, the condition picks which of a fight's entries is the one, as before.
+static func encounter_when(spec: Dictionary, region: String = "") -> String:
 	var when := str(spec.get("when", "")).strip_edges()
 	var room := str(spec.get("final_battle", ""))
-	if room == "":
-		return when
-	return final_battle_condition(room) if when == "" else "(%s) and %s" % [when, final_battle_condition(room)]
+	if room != "":
+		when = final_battle_condition(room) if when == "" else "(%s) and %s" % [when, final_battle_condition(room)]
+	if TRUCES.has(region) and str(spec.get("trigger", "")).begins_with("enter_area:"):
+		when = "not (%s)" % TRUCES[region] if when == "" else "(%s) and not (%s)" % [when, TRUCES[region]]
+	return when
 
 
 static func check(expr: String, state: StoryState, who: Character = null) -> bool:

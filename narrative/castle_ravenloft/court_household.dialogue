@@ -1,0 +1,65 @@
+# The castle's household on the upper floors (docs/regions/castle_ravenloft_court.md §8): the dead watchman on his round
+# of the King's Hall, and Helga Ruvak, the maid of the count's private floor (docs/voice/helga_ruvak.md), a vampire
+# spawn who keeps up the part of a frightened servant. Neither fights or sets anything, they keep out of every fight on
+# the map (`steps_aside`), and every conversation can be walked away from.
+
+~ watchman
+Narrator: A dead guardsman paces the King's Hall, halberd sloped on his shoulder, boots ringing on the stone. At the throne room doors he stops, turns, and brings the halberd up in salute to nobody. Then he walks on.
+* (Salute him back.) -> watchman_salute
+* Who do you serve? -> watchman_serves
+* (Let him pass.) -> END
+
+~ watchman_salute
+Narrator: For a moment his dead eyes find yours. The halberd dips, very slightly, as it would to an officer. Then he is walking again.
+-> END
+
+~ watchman_serves
+Narrator: He doesn't break step. At the throne room doors he salutes again. That is your answer.
+-> END
+
+~ helga
+if guest:gertruda
+Narrator: The maid dusting the frames in the corridor sees who is with you, and her duster stops.
+Helga Ruvak: Miss Gertruda. Out of your room. I won't say anything. I never say anything.
+interject guest:gertruda: That's Helga. She brings my breakfast up. She's nice. Mostly.
+else
+Narrator: A maid in a plain grey dress and apron is dusting the frames along the corridor. She starts when she sees you, and drops a curtsy with her eyes on the floor.
+Helga Ruvak: Oh! I didn't hear you on the stair. Will you be staying the night? I can air a room.
+endif
+-> helga_menu
+
+~ helga_menu
+* Who are you? -> helga_who
+* Who lives on this floor? -> helga_floor
+* [if not flag.gertruda_rescued] Is there a girl from the village up here? -> helga_girl
+* [Insight DC 14] (Watch her. Is she as frightened as she looks?) -> helga_seen | helga_unseen
+* We won't be staying. -> helga_bye
+
+~ helga_who
+Helga Ruvak: Helga, if you please. Helga Ruvak. I keep the master's floor: the dusting, the linen, the ladies' rooms. Somebody has to.
+Helga Ruvak: I came up from the valley in service. That was a long time ago. It's a good place. The master is very kind to me.
+-> helga_menu
+
+~ helga_floor
+Helga Ruvak: The master's rooms, at the end. They're locked, and I'd leave them that way. The ladies, in the lounge. Master Rahadin, who doesn't sleep. And the young lady in the yellow room.
+Helga Ruvak: I wouldn't go in to the ladies without knocking. I wouldn't go in at all.
+-> helga_menu
+
+~ helga_girl
+Helga Ruvak: Miss Gertruda, in the yellow room. She has three gowns, and the master sits with her every evening, and she is very happy.
+Narrator: She says "very happy" the way this house says everything: as if somebody told it to.
+-> helga_menu
+
+~ helga_seen
+Narrator: She isn't frightened at all. She is standing closer than a maid should, and she is listening. Not to you: to the pulse in your throat.
+Helga Ruvak: You're very warm. I only mean the room is very cold.
+Narrator: The meekness comes down over her face again like a dust sheet. She curtsies, and goes back to the frames, and doesn't turn her back on you.
+-> helga_menu
+
+~ helga_unseen
+Narrator: A frightened girl in a cold house, as far as you can tell. She keeps her eyes down and her duster moving.
+-> helga_menu
+
+~ helga_bye
+Helga Ruvak: Not tonight, then. Mind the stair going down. It's darker than it looks.
+-> END

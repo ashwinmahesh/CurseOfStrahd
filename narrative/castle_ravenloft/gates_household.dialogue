@@ -1,0 +1,87 @@
+# The castle's household on the main floor (docs/regions/castle_ravenloft_gates.md §8): the ghost steward in the dining
+# hall (docs/voice/castle_steward.md), the dead sentry on his round of the great entry and the broom that sweeps the
+# guests' hall. None of them fights or sets anything, they keep out of every fight on the map (`steps_aside`), and
+# every conversation can be walked away from.
+
+~ steward
+if flag.castle_dinner == "affront"
+Narrator: The old man in the black coat is at the table, laying a fresh cloth over the place where the wine went. The candlelight goes through him and out the other side.
+The Steward: Someone drew steel at the master's table. I have had the cloth changed. I would ask that it not happen again while I am on duty.
+elif flag.castle_dinner == "dined"
+Narrator: The old man in the black coat is clearing nothing from the table, slowly, plate by plate. His hands go through the plates. They clear themselves a moment after.
+The Steward: The master enjoyed his evening. He so seldom does. Thank you for that, my lords.
+elif flag.strahd_invitation == "accepted"
+Narrator: An old man in a black coat stands at the sideboard, straightening a fork that is already straight. The candlelight goes through him and out the other side.
+The Steward: The master's guests. You are expected. The master is at the organ; he will not keep you waiting long.
+else
+Narrator: An old man in a black coat stands at the sideboard, straightening a fork that is already straight. The candlelight goes through him and out the other side.
+The Steward: Good evening, my lords. The table is laid. It is always laid. Whether anyone comes down to it is not my department.
+endif
+-> steward_menu
+
+~ steward_menu
+* Who are you? -> steward_who
+* Who lays the table? -> steward_table
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Where should we sit? -> steward_seat
+* Where are the rest of the staff? -> steward_staff
+* (Leave him to his table.) -> END
+
+~ steward_who
+The Steward: The steward of this house. The cellar, the silver, the seating. I had twenty under me once, and not one of them ever laid a fork crooked twice.
+The Steward: I would take your coats, but I find I cannot take anything any more. Forgive me.
+-> steward_menu
+
+~ steward_table
+The Steward: The places are laid and the dishes come up hot. I could not tell you who carries them, and I would ask you not to ask.
+Narrator: He looks down at his hands, which the candlelight goes straight through, and puts them behind his back.
+-> steward_menu
+
+~ steward_seat
+The Steward: Wherever you like. The master sits where he pleases. The chair at his right hand is kept for a lady who has not come down to dinner in a very long time. I would leave that one.
+interject guest:ireena: Don't worry. I won't be sitting in it.
+-> steward_menu
+
+~ steward_staff
+The Steward: Below stairs. Their table is laid every night.
+Narrator: He says it pleasantly, without looking at you, and straightens the fork again.
+The Steward: The cook comes up the back stair now and then. Belview. He is not staff. He is the master's.
+interject class:cleric: When did you last sit down yourself?
+The Steward: The night before the wedding. Nobody has told me I may, since.
+-> steward_menu
+
+~ sentry
+Narrator: A guard in a dented helmet and the house's black tabard walks his round of the great entry, grey-skinned and three centuries dead. He doesn't look at you. His eyes are on something just past your shoulder.
+* Ask him what he guards. -> sentry_ask
+* [Religion DC 13] (Work out what keeps him walking.) -> sentry_known | sentry_unknown
+* (Leave him to his round.) -> END
+
+~ sentry_ask
+Narrator: His jaw works. What comes out isn't a word, only the shape of one: a sentry asked for the watchword who has forgotten it. Then he turns smartly about and goes on with his round.
+-> END
+
+~ sentry_known
+Narrator: One of the count's own dead, raised to keep the house: a body bound to the last order it was given. Nobody has told him to fight you. Until somebody does, he walks.
+interject class:paladin: Rest easy, soldier. One day soon.
+-> END
+
+~ sentry_unknown
+Narrator: Dead, walking and in livery. That much anyone can see. What keeps him on his feet is beyond you.
+-> END
+
+~ broom
+Narrator: A broom is sweeping the guests' hall. Nobody is holding it. It works along the skirting in short, fussy strokes, and when it reaches your boots it sweeps carefully round them.
+* (Step out of its way.) -> broom_step
+* [Arcana DC 12] (Look at the charm that moves it.) -> broom_charm | broom_stare
+* (Leave it to its sweeping.) -> END
+
+~ broom_step
+Narrator: You step aside. The broom sweeps the square you were standing on, twice, pointedly, and goes on.
+-> END
+
+~ broom_charm
+Narrator: An old household charm, the kind great houses once bought by the dozen: sweep the floors, mind the guests' feet. It has swept this hall for three hundred years, and the dust it moves is back every morning.
+-> END
+
+~ broom_stare
+Narrator: Magic, plainly. It doesn't care to be stared at, and sweeps a little dust over your boots.
+-> END

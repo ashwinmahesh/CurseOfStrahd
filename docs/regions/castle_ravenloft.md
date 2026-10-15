@@ -78,6 +78,11 @@ The card `mists` sends Strahd roaming (ADR 0014): one of the enemy rooms, picked
 | pidlwick_ii | spires | the clockwork jester, the marionette card's ally (guest, join scene) |
 | cyrus_belview | larders | the mongrelfolk cook |
 | sergei_von_zarovich (exists) | catacombs | the spirit at his brother's tomb; Ireena's story |
+| castle_steward, castle_dead_sentry, castle_hall_broom | gates | the household on the main floor (owner, 2026-10-15): a ghost steward, a dead sentry, an animated broom; `steps_aside` |
+| helga_ruvak, castle_dead_watchman | court | the book's vampire maid on the Rooms of Weeping, a dead watchman in the King's Hall; `steps_aside` |
+
+While Strahd's dinner invitation is open, the whole castle keeps a truce: its walk-in fights wait until dinner is over
+(castle_ravenloft_gates.md §8, StoryConditions.TRUCES).
 
 ## Levels and balance
 

@@ -630,6 +630,10 @@
             "minimum": 0,
             "description": "Seconds the NPC stands at each waypoint of its path (default 3)."
           },
+          "steps_aside": {
+            "type": "boolean",
+            "description": "The figure keeps out of every fight on the map: it leaves the board as a fight begins and comes back after (a house's servants, who never stand in anyone's way: LocationNpcs.clear_for_fight)."
+          },
           "hours": {
             "type": "array",
             "minItems": 2,

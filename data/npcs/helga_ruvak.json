@@ -1,0 +1,21 @@
+{
+  "id": "helga_ruvak",
+  "name": "Helga Ruvak",
+  "title": "Maid of the Upper Floors",
+  "summary": "A maid in a plain dress and apron who keeps the count's private floor dusted and his brides' rooms aired, and asks every guest whether they will be staying the night. She is a vampire spawn, and has not seen her own face in a mirror for years.",
+  "portrait": "commoner",
+  "sprite": "commoner",
+  "attitude": "indifferent",
+  "voice": "docs/voice/helga_ruvak.md",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire_spawn",
+    "undead",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "she/her",
+  "pockets": false
+}

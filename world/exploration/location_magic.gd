@@ -172,7 +172,7 @@ static func _creatures_near(view: LocationView) -> Array[Dictionary]:
 		var spec := LocationFights.spec_for(view, id)
 		var trigger := str(spec["trigger"])
 		if done.has(id) or not (trigger.begins_with("enter_area:") or trigger.begins_with("open:")) \
-				or not StoryConditions.check(StoryConditions.encounter_when(spec), view.st):
+				or not StoryConditions.check(StoryConditions.encounter_when(spec, str(view.loc.get("region", ""))), view.st):
 			continue
 		for m: Dictionary in LocationFights.monsters_for(view, spec):
 			var cell := m["cell"] as Vector2i

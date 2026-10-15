@@ -14,8 +14,9 @@ static func _trigger_encounter(view: LocationView, trigger: String) -> bool:
 		if (view.st.loc_state(view.loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false) is bool \
 				and bool((view.st.loc_state(view.loc_id)["encounters"] as Dictionary).get(str(spec["id"]), false)):
 			continue
-		# A final battle's `when` also needs Strahd waiting in its room (StoryConditions.encounter_when, ADR 0014).
-		if not StoryConditions.check(StoryConditions.encounter_when(spec), view.st):
+		# A final battle's `when` also needs Strahd waiting in its room (StoryConditions.encounter_when, ADR 0014), and a
+		# fight set off by walking in waits out the region's truce (Strahd's dinner guests).
+		if not StoryConditions.check(StoryConditions.encounter_when(spec, str(view.loc.get("region", ""))), view.st):
 			continue
 		if str(spec.get("final_battle", "")) != "":
 			return _begin_final_battle(view, str(spec["id"]))
@@ -103,6 +104,7 @@ static func start_encounter(view: LocationView, encounter_id: String) -> bool:
 	view._on_arrive = Callable()
 	view.in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
+	LocationNpcs.clear_for_fight(view)   # the house's people keep out of it (`steps_aside`)
 	var e := Encounter.new(_combat_grid(view), view.dice)
 	e.title = str(spec.get("text", ""))
 	# Bosses (ADR 0014): the place (a Misty Escape's resting place), the lair's actions, a foe that withdraws.

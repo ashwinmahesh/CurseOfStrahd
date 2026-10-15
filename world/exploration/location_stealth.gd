@@ -92,7 +92,7 @@ static func waiting_specs(view: LocationView) -> Array[Dictionary]:
 			continue
 		if str(spec.get("surprise", "")) == "party" or str(spec.get("final_battle", "")) != "":
 			continue
-		if done.has(id) or not StoryConditions.check(StoryConditions.encounter_when(spec), view.st):
+		if done.has(id) or not StoryConditions.check(StoryConditions.encounter_when(spec, str(view.loc.get("region", ""))), view.st):
 			continue
 		out.append(spec)
 	return out

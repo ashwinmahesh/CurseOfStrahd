@@ -948,6 +948,34 @@
       "when": "name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page) and not (final_room:castle_ravenloft_study and quest.strahds_lair == foretold)",
       "facing": "east",
       "approach": 9
+    },
+    {
+      "npc": "castle_dead_watchman",
+      "cell": [
+        6,
+        11
+      ],
+      "dialogue": "castle_ravenloft/court_household:watchman",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            22,
+            11
+          ],
+          "wait": 4,
+          "face": "north"
+        },
+        {
+          "at": [
+            38,
+            11
+          ],
+          "wait": 3,
+          "face": "west"
+        }
+      ],
+      "steps_aside": true
     }
   ],
   "encounters": [
