@@ -29,13 +29,12 @@ its manifest `sprite_flags`), add an entry to `animations.json` (copy a similar 
 `strike`, and `casts` for a spell gesture), then `make anims ONLY=<id> GENERATE=1`, then look at
 `art/sprites/<id>/attack.png`.
 
-## Figures of light (`wash`)
+## Figures of light (`CombatToken.OWN_LIGHT`)
 
-A walk.tres with `metadata/wash = "<palette colour>"` is drawn washed to that colour and lit from within
-(`DirectionalSprite.wash`: the shader's `ghost` and `glow`, as an echo's gray is): a figure made of light, not flesh.
-The Lantern Girl's stand-in sheets (art/sprites/lantern_girl: Rose's images under a sheet of her own, washed to `wick`,
-the pale gold of a candle through paper) use it until a girl of her own is drawn; drop the metadata when the sheets
-are replaced. Her portrait is tools/art/wash_portrait.py's.
+A sprite id in `CombatToken.OWN_LIGHT` gives off its own light, by the amount named (`DirectionalSprite.glow`: the shader's
+`glow`, how much of its colours it shows whatever the scene's lights), so it stays bright in the dark: the Lantern Girl,
+a girl of candle-gold light (a 5-view turnaround, a floating `BODY=float` walk, a lantern-swing attack; her portrait is
+from the same turnaround). Until her own art was drawn (2026-10-14) she stood on Rose's sheets washed to candlelight.
 
 ## Attack keyframes
 

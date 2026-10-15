@@ -61,6 +61,10 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4,
 	"beholder": 1.9}
 
+## Figures that are their own light, by art id: how much of their colours they show whatever the scene's lights
+## (DirectionalSprite.glow). The Lantern Girl is made of the light she held up.
+const OWN_LIGHT := {"lantern_girl": 1.0}
+
 ## Stat blocks that wear another creature's sprite: a named villain's block and the person drawn for them, or a
 ## familiar and the animal it looks like.
 const ART_ALIASES := {"strahd_von_zarovich": "strahd", "izek_strazni": "izek", "ezmerelda_davenir": "ezmerelda",
@@ -217,6 +221,9 @@ func _build() -> void:
 	if frames != null:
 		sprite = DirectionalSprite.create(frames, _height(aid))
 		sprite.play(&"idle_s")
+		if OWN_LIGHT.has(aid):
+			DirectionalSprite.glow(sprite, float(OWN_LIGHT[aid]))
+			sprite.reflection.copy_look()
 		if _is_echo() and sprite.material_override is ShaderMaterial:
 			(sprite.material_override as ShaderMaterial).set_shader_parameter("ghost", 1.0)
 			(sprite.material_override as ShaderMaterial).set_shader_parameter("ghost_tint", Look.color("silver"))
