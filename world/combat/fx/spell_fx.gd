@@ -444,7 +444,9 @@ func shape_gather(t: CombatToken, kind: String) -> void:
 	FxShapeshift.gather(self, t, kind)
 	CombatSfx.shapeshift(kind)
 	shape_shown.emit(t.combatant.id, kind)
-	await wait(FxShapeshift.GATHER)
+	# A timer that runs through a pause, like the other beats of a fight's events: wait() stops with the tree, and a
+	# tree left paused (a cutscene's, a test's freed scene) would hold the swap, and the fight with it, for good.
+	await get_tree().create_timer(FxShapeshift.GATHER * pace(), true).timeout
 
 
 ## The new figure `t` is in place after a change of shape: a flash and a burst as it comes into view.

@@ -232,3 +232,27 @@ func test_polymorph_and_a_vampires_bat_use_the_same_effect() -> void:
 	assert_true(_wears(view.tokens[strahd.id] as CombatToken, CombatToken.art_id(strahd)), "and himself again")
 	assert_true([strahd.id, "bat"] in _shown and _shown.count([strahd.id, "bat"]) == 2, "which is shown too")
 	await _done()
+
+
+func _play_then(done: Array) -> void:
+	await view._play_events()
+	done[0] = true
+
+
+## A paused tree (a cutscene, the pause menu, or one a test's freed scene left paused: play_cutscene pauses and only its
+## player unpauses) never holds a change of shape: the beat waits on a timer that runs through a pause, as the other beats
+## of a fight's events do. test_side_quest_fights stopped for good on one (its process ran out its frames).
+func test_a_paused_tree_does_not_hold_a_change_of_shape() -> void:
+	_field()
+	var emil := _guest("emil_toranescu", Vector2i(3, 6))
+	TestCombat.foe(e, "zombie", Vector2i(9, 6))
+	await _show(emil)
+	assert_true(e.feature_actions.perform(emil, "creature:shape_shift", null, Vector2.INF).ok)
+	var done := [false]
+	_play_then(done)
+	get_tree().paused = true
+	await get_tree().create_timer(1.2, true).timeout
+	get_tree().paused = false
+	assert_true(bool(done[0]), "the swap went on under the pause")
+	assert_true(_wears(view.tokens[emil.id] as CombatToken, "werewolf"), "and Emil is the werewolf")
+	await _done()
