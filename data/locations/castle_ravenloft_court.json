@@ -978,12 +978,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_courtier_1",
+      "npc": "castle_courtier_3",
       "cell": [
         14,
         5
       ],
-      "dialogue": "castle_ravenloft/household:courtier",
+      "dialogue": "castle_ravenloft/household:crainic",
       "facing": "east",
       "path": [
         {
@@ -1006,12 +1006,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_courtier_2",
+      "npc": "castle_courtier_4",
       "cell": [
         35,
         7
       ],
-      "dialogue": "castle_ravenloft/household:courtier",
+      "dialogue": "castle_ravenloft/household:brandt",
       "facing": "north",
       "path": [
         {
@@ -1027,12 +1027,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_ghost_servant",
+      "npc": "castle_ghost_servant_3",
       "cell": [
         5,
         8
       ],
-      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "dialogue": "castle_ravenloft/household:daskal",
       "facing": "north",
       "path": [
         {

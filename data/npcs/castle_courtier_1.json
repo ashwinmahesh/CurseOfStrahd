@@ -1,8 +1,8 @@
 {
   "id": "castle_courtier_1",
-  "name": "A Pale Courtier",
+  "name": "Lord Aubrey Thale",
   "title": "Of the Count's Court",
-  "summary": "One of the guests who came up to Castle Ravenloft over the centuries and never went home: a vampire spawn in finery gone grey with dust, attending a court that is never called to order.",
+  "summary": "A gentleman traveller who came through the mists in his own carriage a hundred and ninety years ago, dined with the count and stayed the night. He has been leaving in the morning ever since: a vampire spawn in a velvet coat gone grey with dust, who drifts about the great entry greeting guests as if the house were his.",
   "portrait": "vampire_spawn",
   "sprite": "vampire_spawn",
   "attitude": "indifferent",

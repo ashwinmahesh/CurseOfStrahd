@@ -1039,7 +1039,7 @@
         21,
         2
       ],
-      "dialogue": "castle_ravenloft/household:dead_servant",
+      "dialogue": "castle_ravenloft/household:scullion",
       "facing": "east",
       "path": [
         {
@@ -1066,7 +1066,7 @@
         3,
         9
       ],
-      "dialogue": "castle_ravenloft/household:dead_servant",
+      "dialogue": "castle_ravenloft/household:torchbearer",
       "facing": "east",
       "path": [
         {

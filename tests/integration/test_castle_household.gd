@@ -3,34 +3,42 @@ extends TestCase
 ## "When Strahd invites the party over for dinner, the combats throughout the castle shouldn't be present until that
 ## sequence is complete." and "Fill Castle Ravenloft with generic NPCs who act as the servants or Strahd's court ... make
 ## sure they have paths which they walk around." The castle's household walks its rooms (a ghost steward, the dead watch
-## on its rounds, a broom at its sweeping, Helga the maid, pale courtiers, a ghostly servant, the dead kitchen hands) and
-## keeps out of every fight; while the party is Strahd's invited guest and dinner isn't over, the castle's fights that
-## start as the party walks in wait (StoryConditions.TRUCES), and come back after.
+## on its rounds, a broom at its sweeping, Helga the maid, four courtiers, four ghosts of the household, the dead kitchen
+## hands, each their own person) and keeps out of every fight; while the party is Strahd's invited guest and dinner
+## isn't over, the castle's fights that start as the party walks in wait (StoryConditions.TRUCES), and come back after.
 
 const MAIN := "castle_ravenloft_main_floor"
 const CASTLE := "castle_ravenloft"
-## The household: who, where each walks, and their conversation.
+## The household: who, where each walks, and their conversation. Each walks one map, under a name of their own.
 const HOUSEHOLD: Array = [
 	["castle_steward", MAIN, "castle_ravenloft/gates_household:steward"],
 	["castle_dead_sentry", MAIN, "castle_ravenloft/gates_household:sentry"],
 	["castle_hall_broom", MAIN, "castle_ravenloft/gates_household:broom"],
-	["castle_courtier_1", MAIN, "castle_ravenloft/household:courtier"],
-	["castle_courtier_2", MAIN, "castle_ravenloft/household:courtier"],
-	["castle_ghost_servant", MAIN, "castle_ravenloft/household:ghost_servant"],
-	["castle_dead_guard_1", MAIN, "castle_ravenloft/household:dead_guard"],
+	["castle_courtier_1", MAIN, "castle_ravenloft/household:thale"],
+	["castle_courtier_2", MAIN, "castle_ravenloft/household:celestine"],
+	["castle_ghost_servant_2", MAIN, "castle_ravenloft/household:nicodim"],
+	["castle_dead_guard_3", MAIN, "castle_ravenloft/household:doorward"],
 	["castle_dead_watchman", "castle_ravenloft_court", "castle_ravenloft/court_household:watchman"],
-	["castle_courtier_1", "castle_ravenloft_court", "castle_ravenloft/household:courtier"],
-	["castle_courtier_2", "castle_ravenloft_court", "castle_ravenloft/household:courtier"],
-	["castle_ghost_servant", "castle_ravenloft_court", "castle_ravenloft/household:ghost_servant"],
+	["castle_courtier_3", "castle_ravenloft_court", "castle_ravenloft/household:crainic"],
+	["castle_courtier_4", "castle_ravenloft_court", "castle_ravenloft/household:brandt"],
+	["castle_ghost_servant_3", "castle_ravenloft_court", "castle_ravenloft/household:daskal"],
 	["helga_ruvak", "castle_ravenloft_court_weeping", "castle_ravenloft/court_household:helga"],
-	["castle_ghost_servant", "castle_ravenloft_court_weeping", "castle_ravenloft/household:ghost_servant"],
-	["castle_dead_guard_1", "castle_ravenloft_gates", "castle_ravenloft/household:dead_guard"],
-	["castle_dead_guard_2", "castle_ravenloft_gates", "castle_ravenloft/household:dead_guard"],
-	["castle_dead_servant_1", "castle_ravenloft_larders", "castle_ravenloft/household:dead_servant"],
-	["castle_dead_servant_2", "castle_ravenloft_larders", "castle_ravenloft/household:dead_servant"],
-	["castle_dead_guard_1", "castle_ravenloft_larders_dungeon", "castle_ravenloft/household:dead_guard"],
-	["castle_ghost_servant", "castle_ravenloft_spires", "castle_ravenloft/household:ghost_servant"],
+	["castle_ghost_servant_4", "castle_ravenloft_court_weeping", "castle_ravenloft/household:ghenadie"],
+	["castle_dead_guard_1", "castle_ravenloft_gates", "castle_ravenloft/household:halberdier"],
+	["castle_dead_guard_2", "castle_ravenloft_gates", "castle_ravenloft/household:archer"],
+	["castle_dead_servant_1", "castle_ravenloft_larders", "castle_ravenloft/household:scullion"],
+	["castle_dead_servant_2", "castle_ravenloft_larders", "castle_ravenloft/household:torchbearer"],
+	["castle_dead_guard_4", "castle_ravenloft_larders_dungeon", "castle_ravenloft/household:turnkey"],
+	["castle_ghost_servant", "castle_ravenloft_spires", "castle_ravenloft/household:vlaicu"],
 ]
+## Who in the household talks about the castle's truce while it holds: the question, and words from the answer.
+const TRUCE_TALK: Dictionary = {
+	"castle_ravenloft/household:thale": ["Will anyone in this house trouble us tonight?", "the courtesy ends"],
+	"castle_ravenloft/household:celestine": ["Any advice for dinner?", "Nothing in this house will touch you"],
+	"castle_ravenloft/household:crainic": ["Is it safe to walk the house tonight?", "nobody's guest at all"],
+	"castle_ravenloft/household:brandt": ["Will his house leave us be tonight?", "every dog is off its chain"],
+	"castle_ravenloft/household:ghenadie": ["We're his guests tonight.", "by his order"],
+}
 
 var root: Node
 
@@ -266,3 +274,48 @@ func test_the_household_has_a_word_and_a_way_out() -> void:
 	var text := SideQuestPlay.text(SideQuestPlay.play(invited, "castle_ravenloft/gates_household:steward", ["Where should we sit?"]))
 	assert_true(text.contains("You are expected"), "the steward expects the master's guests: " + text)
 	assert_true(text.contains("chair at his right hand"), text)
+
+
+## Owner, 2026-10-15: "In Castle Ravenloft all the pale courtiers have the same lines, and that shouldn't be the case."
+## Each of the household walks one map under a name of their own, has a conversation nobody else uses, opens it with
+## words nobody else says, and speaks in it as themselves.
+func test_each_of_the_household_is_their_own_person() -> void:
+	var maps := {}
+	var names := {}
+	var refs := {}
+	var openings := {}
+	for row: Array in HOUSEHOLD:
+		var id := str(row[0])
+		var ref := str(row[2])
+		assert_false(maps.has(id), "%s walks one map, not %s and %s" % [id, maps.get(id, ""), row[1]])
+		maps[id] = str(row[1])
+		var name := str(Compendium.shared().get_entry("npcs", id).get("name", ""))
+		assert_false(names.has(name), "%s and %s are both called %s" % [names.get(name, ""), id, name])
+		names[name] = id
+		assert_false(refs.has(ref), "%s and %s share %s" % [refs.get(ref, ""), id, ref])
+		refs[ref] = id
+		for st: StoryState in [_party(), _invited()]:
+			var beats := SideQuestPlay.play(st, ref)
+			var opening := SideQuestPlay.text(beats)
+			assert_true(str(openings.get(opening, id)) == id, "%s opens as %s does: %s" % [id, openings.get(opening, ""), opening])
+			openings[opening] = id
+			for b: Dictionary in beats:
+				if str(b.get("kind", "")) == "line" and not bool(b.get("narrator", false)) and not bool(b.get("party", false)):
+					assert_eq(str(b["speaker_id"]), id, "%s speaks as themselves in %s" % [id, ref])
+	for ref: String in TRUCE_TALK:
+		var ask := str((TRUCE_TALK[ref] as Array)[0])
+		var text := SideQuestPlay.text(SideQuestPlay.play(_invited(), ref, [ask]))
+		assert_true(text.contains(str((TRUCE_TALK[ref] as Array)[1])), "%s talks about the truce while it holds: %s" % [ref, text])
+		for done: Dictionary in [{"castle_dinner": "dined"}, {"castle_dinner": "affront"}, {}]:
+			var after := _invited() if not done.is_empty() else _party()
+			for f: String in done:
+				after.set_flag(f, done[f])
+			var beats := SideQuestPlay.play(after, ref, [ask])
+			assert_ne(SideQuestPlay.missing(beats), "", "%s doesn't offer it without the truce (%s)" % [ref, done])
+
+
+## The castle's band, invited to dinner and not yet seated.
+static func _invited() -> StoryState:
+	var st := _party()
+	st.set_flag("strahd_invitation", "accepted")
+	return st

@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_guard_3",
+  "name": "The Dead Doorward",
+  "title": "Of the Castle Watch",
+  "summary": "The doorward of the castle's entry hall, dead since the night of the wedding, who stands by the archway and holds out his hands for the guests' weapons, as guests once left their swords at the door of a great house. He stops nobody.",
+  "portrait": "strahd_zombie",
+  "sprite": "strahd_zombie",
+  "attitude": "indifferent",
+  "monster": "strahd_zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

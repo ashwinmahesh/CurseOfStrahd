@@ -969,7 +969,7 @@
         9,
         9
       ],
-      "dialogue": "castle_ravenloft/household:dead_guard",
+      "dialogue": "castle_ravenloft/household:halberdier",
       "facing": "east",
       "path": [
         {
@@ -990,7 +990,7 @@
         11,
         20
       ],
-      "dialogue": "castle_ravenloft/household:dead_guard",
+      "dialogue": "castle_ravenloft/household:archer",
       "facing": "east",
       "path": [
         {

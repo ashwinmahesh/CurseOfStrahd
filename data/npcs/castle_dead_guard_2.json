@@ -1,8 +1,8 @@
 {
   "id": "castle_dead_guard_2",
-  "name": "A Dead Guard",
+  "name": "The Dead Archer",
   "title": "Of the Castle Watch",
-  "summary": "One of the castle's watch, dead since the night of the wedding, walking a beat in the house's black tabard because nobody has told him to stop.",
+  "summary": "An archer of the castle's watch, three centuries dead, walking the inside of the gatehouse wall with an empty quiver and his fingers still crooked for a bowstring. The castle's archers shot the count on the night of the wedding; he has kept them on their rounds ever since.",
   "portrait": "strahd_zombie",
   "sprite": "strahd_zombie",
   "attitude": "indifferent",

@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_guard_4",
+  "name": "The Dead Turnkey",
+  "title": "Of the Castle Watch",
+  "summary": "The dungeon's turnkey, dead since the night of the wedding, who walks the passage between the cells with a great ring of keys at his belt, shaking every gate as he passes to be sure it is locked.",
+  "portrait": "strahd_zombie",
+  "sprite": "strahd_zombie",
+  "attitude": "indifferent",
+  "monster": "strahd_zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

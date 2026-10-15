@@ -186,16 +186,31 @@ animated; the main floor now has three of them walking it, each with a short con
 | The Hall Broom | `castle_hall_broom` (`broom_of_animated_attack`) | guests' hall, sweeping from (14,11) round the room | an animated broom at its sweeping (`work: swing`); Narrator lines only |
 
 **The court and the rest of the household** (owner, same day: "fill Castle Ravenloft with generic NPCs who act as the
-servants or Strahd's court (it could be vampires) ... make sure they have paths which they walk around"). Shared
-extras, each kind with one shared conversation in narrative/castle_ravenloft/household.dialogue, every one walking a
-route and stepping aside for fights; their display names are interchangeable extras' (test_data_integrity's SHARED).
+servants or Strahd's court (it could be vampires) ... make sure they have paths which they walk around"; and that
+evening: "all the pale courtiers have the same lines, and that shouldn't be the case"). Fourteen more, each their own
+person: a name nobody else in the game has, one map, a route, and a conversation of their own in
+narrative/castle_ravenloft/household.dialogue that sets nothing and can always be left. Every one steps aside for
+fights. The courtiers and ghosts talk; the dead watch and kitchen hands have Narrator lines only. The courtiers' and
+the ghosts' greetings follow the dinner (invited, dined, affront, or uninvited), and while the truce holds five of them
+explain it in their own words (test_castle_household checks each walks one map, under their own name, opening with
+words nobody else says).
 
-| Who (name) | Ids (art) | Walks |
-|---|---|---|
-| A Pale Courtier | `castle_courtier_1`, `castle_courtier_2` (`vampire_spawn`): guests who came up for dinner and never went home | main floor: a loop round the great entry's middle (24,7)-(27,12), and the hall of faces (35,8) to (48,8); the court: the audience hall, waiting to be received (14,5) to (29,5), and the trophy room |
-| A Ghostly Servant | `castle_ghost_servant` (`ghost`), lighting candles that are lit | main floor: the chapel passage (40,14) to (40,21); the court's study; the count's bedroom upstairs; the foot of the high tower |
-| A Dead Guard | `castle_dead_guard_1`, `castle_dead_guard_2` (`strahd_zombie`) | the courtyard: before the keep (9,9) to (30,9) and inside the gatehouse wall (11,20) to (28,20); main floor: the entry hall (23,17) to (23,22); the dungeon's cell passage, as its turnkey |
-| A Dead Servant | `castle_dead_servant_1`, `castle_dead_servant_2` (`zombie`) | the larders: the kitchen round Cyrus, and the guards' run end to end |
+| Who (id; art) | Walks | Who they are | Manner, and their secret or complaint |
+|---|---|---|---|
+| Lord Aubrey Thale (`castle_courtier_1`; `vampire_spawn`) | main floor: a loop round the great entry's middle (24,7)-(27,12) | a gentleman traveller who came through the mists in his own carriage 190 years ago, dined and stayed the night | languid, dry, the court's gossip; his carriage still waits in the carriage house, and he is leaving in the morning |
+| Lady Celestine Morrow (`castle_courtier_2`; the `vampire` art, also Corvina's) | main floor: the hall of faces (35,8) to (48,8) | a lady of fashion from beyond the mists who came up for a ball and danced the last dance with the host | vain, flirtatious, wistful; no glass shows her face, and she is forgetting it (the party can describe it to her) |
+| Boyar Vintila Crainic (`castle_courtier_3`; `noble`) | the court: the audience hall (14,5) to (29,5) | a boyar of the orchards above the Ivlis, 206 years waiting to present a petition about a moved boundary stone | pompous, punctilious, comic; won't let anyone carry his petition for him; afraid of Rahadin's list |
+| Sir Lothar Brandt (`castle_courtier_4`; `vampire_spawn`) | the court: the trophy room (35,7) to (41,4) | a hunter of the dead who came up the road 90 years ago to end the count and was made one of his court | bitter, wry; one of the wolves on the wall is his own kill, hung where he'd see it; he can't say how to kill his master ("listen to what I'm not saying") |
+| Nicodim the Verger (`castle_ghost_servant_2`; `ghost`) | main floor: the chapel passage (40,14) to (40,21) | the chapel's verger, who believes it is still the night before Sergei and Tatyana's wedding | fussy, kind, devout; takes Ireena for the bride (her interject) |
+| Anghel Daskal (`castle_ghost_servant_3`; `ghost`) | the court: the study (5,8) to (9,6) | the count's secretary, who wrote his letters and kept his day-book | precise, proud, a little jealous that the count writes his own letters now; won't look at the portrait over the mantel, having written out the wedding's banns |
+| Ghenadie the Valet (`castle_ghost_servant_4`; `ghost`) | the Rooms of Weeping: the count's bedroom (3,6) to (10,2) | the count's valet, turning down a bed the master hasn't slept in since the wedding | discreet, devoted, hurt not to be needed; warns of the three ladies and of Helga |
+| Vlaicu the Lamplighter (`castle_ghost_servant`; `ghost`) | the spires: the foot of the high tower (2,6) to (5,18) | the castle's lamplighter, who died on the 209th step | tired, plain-spoken, grumbles about the stair; warns of the little wooden man who pushes; the tower is lit to make travellers think someone's home |
+| The Dead Halberdier (`castle_dead_guard_1`; `strahd_zombie`) | the courtyard before the keep (9,9) to (30,9) | one of the watch | knocks three times at the great doors on every round, for carriages that stopped coming |
+| The Dead Archer (`castle_dead_guard_2`; `strahd_zombie`) | the courtyard inside the gatehouse wall (11,20) to (28,20) | one of the archers who shot the count on the wedding night (History 13) | draws and looses an empty bow, and looks for where it landed |
+| The Dead Doorward (`castle_dead_guard_3`; `strahd_zombie`) | main floor: the entry hall (23,17) to (23,22) | the entry hall's doorward | holds out his hands for the guests' swords, and stops nobody |
+| The Dead Turnkey (`castle_dead_guard_4`; `strahd_zombie`) | the dungeon: the passage between the cells (3,13) to (23,12) | the dungeon's turnkey | shakes every cell gate on his round; catches a wrist that reaches for his keys, and lets it go |
+| The Dead Scullion (`castle_dead_servant_1`; `zombie`) | the larders: the kitchen round Cyrus (21,2)-(28,2)-(21,6) | a scullion | scours the same clean pot all night while Cyrus praises him (or waits by Cyrus's empty stool) |
+| The Dead Torchbearer (`castle_dead_servant_2`; `zombie`) | the larders: the guards' run end to end (3,9) to (36,9) | a drudge of the lower floors | lights torches that are already burning; his sleeve is scorched and he hasn't noticed |
 
 **The dinner truce** (owner, 2026-10-15: the castle's fights shouldn't be there until the dinner sequence is
 complete, unless the book says so; it doesn't say the guardians stand down for guests, so the owner's word decides).
@@ -283,9 +298,9 @@ None beyond data/monsters and the Phase 6 list: `strahd_von_zarovich`, `strahds_
 - Travel: data/travel/castle_ravenloft.json (place `castle_ravenloft`, road from the Ivlis crossroads, table
   `svalich_woods`)
 - Flags: data/flags/castle_ravenloft_gates.json; quest data/quests/dinner_at_castle_ravenloft.json
-- NPCs (the household): data/npcs/{castle_steward, castle_dead_sentry, castle_hall_broom}.json, and the shared extras
-  data/npcs/{castle_courtier_1, castle_courtier_2, castle_ghost_servant, castle_dead_guard_1, castle_dead_guard_2,
-  castle_dead_servant_1, castle_dead_servant_2}.json (narrative/castle_ravenloft/household.dialogue); voice
-  docs/voice/castle_steward.md
+- NPCs (the household): data/npcs/{castle_steward, castle_dead_sentry, castle_hall_broom}.json, and the court and
+  the rest of the household, data/npcs/{castle_courtier_1..4, castle_ghost_servant, castle_ghost_servant_2..4,
+  castle_dead_guard_1..4, castle_dead_servant_1, castle_dead_servant_2}.json (narrative/castle_ravenloft/
+  household.dialogue); voice docs/voice/castle_steward.md
 - Dialogue: narrative/castle_ravenloft/{gates_dinner, gates_hearth, gates_castle, gates_household}.dialogue;
   narrative/narrator/castle_ravenloft_gates.dialogue; narrative/banter/castle_ravenloft_gates.dialogue

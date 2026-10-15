@@ -1289,12 +1289,12 @@
       "approach": 3
     },
     {
-      "npc": "castle_dead_guard_1",
+      "npc": "castle_dead_guard_4",
       "cell": [
         3,
         13
       ],
-      "dialogue": "castle_ravenloft/household:dead_guard",
+      "dialogue": "castle_ravenloft/household:turnkey",
       "facing": "east",
       "path": [
         {

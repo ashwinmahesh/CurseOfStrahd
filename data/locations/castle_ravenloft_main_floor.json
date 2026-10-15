@@ -1123,7 +1123,7 @@
         24,
         7
       ],
-      "dialogue": "castle_ravenloft/household:courtier",
+      "dialogue": "castle_ravenloft/household:thale",
       "facing": "east",
       "path": [
         {
@@ -1157,7 +1157,7 @@
         35,
         8
       ],
-      "dialogue": "castle_ravenloft/household:courtier",
+      "dialogue": "castle_ravenloft/household:celestine",
       "facing": "east",
       "path": [
         {
@@ -1181,12 +1181,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_ghost_servant",
+      "npc": "castle_ghost_servant_2",
       "cell": [
         40,
         14
       ],
-      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "dialogue": "castle_ravenloft/household:nicodim",
       "facing": "south",
       "path": [
         {
@@ -1201,12 +1201,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_dead_guard_1",
+      "npc": "castle_dead_guard_3",
       "cell": [
         23,
         17
       ],
-      "dialogue": "castle_ravenloft/household:dead_guard",
+      "dialogue": "castle_ravenloft/household:doorward",
       "facing": "south",
       "path": [
         {

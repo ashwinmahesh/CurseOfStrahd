@@ -1,8 +1,8 @@
 {
   "id": "castle_dead_servant_2",
-  "name": "A Dead Servant",
+  "name": "The Dead Torchbearer",
   "title": "Of the Kitchens",
-  "summary": "A kitchen hand who died below stairs three hundred years ago and still goes about the work, with a pail that holds nothing.",
+  "summary": "A drudge of the lower floors, three centuries dead, who walks the guards' run end to end with a taper, touching it to torches that are already burning. His sleeve is scorched to the elbow, and he hasn't noticed.",
   "portrait": "zombie",
   "sprite": "zombie",
   "attitude": "indifferent",
@@ -15,6 +15,6 @@
     "castle_ravenloft"
   ],
   "region": "castle_ravenloft",
-  "pronouns": "it/its",
+  "pronouns": "he/him",
   "pockets": false
 }
