@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). talk_moods: per place mood, the mood a conversation plays (mood) while one of these NPCs (npcs) is spoken to or speaks; the place's music returns when it ends (GameRoot._talk_music). A mood with several recordings plays each once in a shuffled round and never the same twice in a row (Audio._pick_entry); a mood with one recording repeats it. steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -132,6 +132,7 @@
     "waterfall": -6.0,
     "combat_hard": -4.0,
     "strahd": -2.0,
+    "dread": -4.0,
     "rage_1": -5.3,
     "rage_2": -1.1,
     "rage_3": -6.3,
@@ -242,6 +243,12 @@
       "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3",
       "res://art/sourced/oga_tausdei/stronghold.mp3",
       "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3"
+    ],
+    "dread": [
+      "res://art/sourced/kevin_macleod/Inner Sanctum.mp3",
+      "res://art/sourced/kevin_macleod/Shadowlands 1 - Horizon.mp3",
+      "res://art/sourced/kevin_macleod/Echoes of Time.mp3",
+      "res://art/sourced/kevin_macleod/Come Play with Me.mp3"
     ],
     "ending": [
       "res://art/sourced/kevin_macleod/Ossuary 6 - Air.mp3",
@@ -1594,5 +1601,18 @@
         "mood": "vineyard_freed"
       }
     ]
+  },
+  "talk_moods": {
+    "castle": {
+      "mood": "dread",
+      "npcs": [
+        "strahd",
+        "rahadin",
+        "volenta_popofsky",
+        "ludmilla_vilisevic",
+        "escher",
+        "kestrel_merrow"
+      ]
+    }
   }
 }

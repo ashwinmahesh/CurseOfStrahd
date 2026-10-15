@@ -106,6 +106,122 @@ func test_every_track_level_names_a_listed_recording() -> void:
 		assert_true(listed.has(path), "track_levels names %s, which no mood plays" % path)
 
 
+# --- A mood plays all its recordings (owner, 2026-10-15: one castle song seemed to go on repeating) -------------------
+
+## A mood with several recordings plays each once in a round, in an order that changes from round to round, before any
+## comes round again, and never the one just heard.
+func test_a_mood_plays_every_recording_before_one_repeats() -> void:
+	var saved := [Audio._data, Audio._bags, Audio._last_track]
+	Audio._data = {"music": {"m": ["a.ogg", "b.ogg", "c.ogg", "d.ogg"], "pair": ["x.ogg", "y.ogg"], "one": ["z.ogg"]}}
+	Audio._bags = {}
+	Audio._last_track = ""
+	var heard: Array[String] = []
+	for i in 40:
+		heard.append(str(Audio._pick_entry("m", Audio.entries("music", "m"))))
+	for r in 10:
+		var round_heard := heard.slice(r * 4, r * 4 + 4)
+		round_heard.sort()
+		assert_eq(round_heard, ["a.ogg", "b.ogg", "c.ogg", "d.ogg"], "round %d heard each one once: %s" % [r, heard.slice(r * 4, r * 4 + 4)])
+	for i in range(1, heard.size()):
+		assert_ne(heard[i], heard[i - 1], "pick %d is not the one before it" % i)
+	var pair: Array[String] = []
+	for i in 12:
+		pair.append(str(Audio._pick_entry("pair", Audio.entries("music", "pair"))))
+	for i in range(1, pair.size()):
+		assert_ne(pair[i], pair[i - 1], "two recordings take turns")
+	for i in 4:
+		assert_eq(str(Audio._pick_entry("one", Audio.entries("music", "one"))), "z.ogg", "a mood with one has only that one")
+	Audio._data = saved[0]
+	Audio._bags = saved[1]
+	Audio._last_track = saved[2]
+
+
+## When a recording ends the mood goes on with another of its own; a conversation's mood in between doesn't throw the
+## round off, and the one just heard never opens the next mood.
+func test_a_mood_goes_on_with_another_recording_when_one_ends() -> void:
+	var saved := [Audio._data, Audio._bags, Audio._last_track, Audio.mood, Audio.intensity, Audio.playing_id, Audio.playing_track]
+	Audio._data = {"music": {"castle": ["a.ogg", "b.ogg", "c.ogg"], "dread": ["d.ogg", "e.ogg"], "title": ["t.ogg"]}}
+	Audio._bags = {}
+	Audio._last_track = ""
+	Audio.mood = ""
+	Audio.play_music("castle")
+	var seen: Array[String] = [Audio.playing_track]
+	assert_true(seen[0] in ["a.ogg", "b.ogg", "c.ogg"], "the castle's own music starts")
+	for i in 8:
+		Audio._next_track()
+		assert_eq(Audio.playing_id, "castle", "it stays the castle's music")
+		assert_ne(Audio.playing_track, seen[-1], "the next recording is another one")
+		seen.append(Audio.playing_track)
+	for i in 6:
+		Audio.play_music("dread")
+		assert_true(Audio.playing_track in ["d.ogg", "e.ogg"], "a conversation plays the dread: %s" % Audio.playing_track)
+		Audio.play_music("castle")
+		assert_true(Audio.playing_track in ["a.ogg", "b.ogg", "c.ogg"], "and the castle's own comes back: %s" % Audio.playing_track)
+	Audio.play_music("title")
+	assert_eq(Audio.playing_track, "t.ogg")
+	Audio.play_music("")
+	assert_eq(Audio.playing_track, "", "no music, no recording")
+	Audio._data = saved[0]
+	Audio._bags = saved[1]
+	Audio._last_track = saved[2]
+	Audio.mood = saved[3]
+	Audio.intensity = saved[4]
+	Audio.playing_id = saved[5]
+	Audio.playing_track = saved[6]
+
+
+func test_a_recording_repeats_by_itself_only_when_asked() -> void:
+	var s := AudioStreamMP3.new()
+	Audio._set_loop(s, true)
+	assert_true(s.loop, "a mood with one recording repeats it")
+	Audio._set_loop(s, false)
+	assert_false(s.loop, "a mood with several lets it end and moves on")
+	var w := AudioStreamWAV.new()
+	Audio._set_loop(w, false)
+	assert_eq(w.loop_mode, AudioStreamWAV.LOOP_DISABLED)
+
+
+## Only the title screen deliberately repeats a single recording; every other mood has several to play through. A new
+## mood with one recording goes in the list, on purpose.
+func test_every_mood_but_the_title_has_several_recordings() -> void:
+	var repeats_one := ["title"]
+	for id: String in (Audio._data["music"] as Dictionary):
+		if id in repeats_one:
+			assert_eq(Audio.entries("music", id).size(), 1, "%s repeats its one recording" % id)
+		else:
+			assert_true(Audio.entries("music", id).size() >= 2, "%s has one recording, so it would repeat it: add more, or list it here" % id)
+
+
+## The castle's music turns to dread for the few in it who frighten it (art/audio.json talk_moods), and only there.
+func test_the_castle_turns_to_dread_for_its_menacing_few() -> void:
+	for npc: String in ["strahd", "rahadin", "volenta_popofsky", "ludmilla_vilisevic", "escher", "kestrel_merrow"]:
+		assert_eq(Audio.talk_mood("castle", npc), "dread", "%s brings the dread" % npc)
+	for npc: String in ["", "castle_steward", "helga_ruvak", "castle_ghost_servant", "castle_courtier_1", "gertruda", "lief_lipsiege",
+			"anastrasya_karelova", "pidlwick_ii", "ireena"]:
+		assert_eq(Audio.talk_mood("castle", npc), "", "%s leaves the castle's music alone" % npc)
+	assert_eq(Audio.talk_mood("town", "strahd"), "", "only the castle's music turns")
+	assert_eq(Audio.talk_mood("haunted", "rahadin"), "")
+	assert_false(Audio.is_fight_mood("dread"), "a conversation's music is not a fight's")
+
+
+func test_every_talk_mood_is_complete() -> void:
+	var talk := Audio._data.get("talk_moods", {}) as Dictionary
+	assert_false(talk.is_empty(), "some place's music turns for a conversation")
+	var places := {}
+	for k: Variant in (Audio._data["places"] as Dictionary).values() + (Audio._data["themes"] as Dictionary).values() \
+			+ (Audio._data["regions"] as Dictionary).values():
+		places[str(k)] = true
+	for place_mood: String in talk:
+		var entry := talk[place_mood] as Dictionary
+		var m := str(entry.get("mood", ""))
+		assert_true(places.has(place_mood), "%s is the music of some place" % place_mood)
+		assert_true(Audio.files("music", m).size() >= 2, "%s has several recordings to play" % m)
+		assert_false(places.has(m), "%s is for a conversation, not a place" % m)
+		assert_false((entry.get("npcs", []) as Array).is_empty(), "%s names who brings it" % m)
+		for npc: Variant in entry.get("npcs", []):
+			assert_false(Compendium.shared().get_entry("npcs", str(npc)).is_empty(), "%s is an NPC" % npc)
+
+
 ## Region themes (A1, lane 11): a region's places play its theme, but taverns and the like keep their own mood.
 func test_regions_play_their_theme() -> void:
 	var c := Compendium.shared()

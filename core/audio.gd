@@ -31,6 +31,8 @@ var _deck := 0
 var _deck_tweens: Array[Tween] = [null, null]
 ## The music id on the current deck: the mood's own, or at full intensity the harder mood "rises" names for it.
 var playing_id := ""
+## The recording on the current deck (an intensity-version list counts as its first file), "" with none.
+var playing_track := ""
 ## The current deck's volume: its music id's level plus its recording's own ("track_levels").
 var _playing_db := 0.0
 ## The current recording's intensity versions playing in step, when it was recorded at several intensities.
@@ -39,6 +41,11 @@ var _swell_tween: Tween = null
 var _fight: WeakRef = null
 var _fight_timer: Timer
 var _calm_checks := 0
+## Recordings of each music id not yet heard this round, in the order they come (_pick_entry), and the last one heard.
+var _bags: Dictionary = {}
+var _last_track := ""
+## Fires a crossfade before a recording of a mood with several ends, so the next one follows without a gap.
+var _track_timer: Timer
 var _sfx: Array[AudioStreamPlayer] = []
 var _streams: Dictionary = {}
 var _rng := RandomNumberGenerator.new()  # cosmetic: which of several takes plays, when ambience sounds
@@ -59,6 +66,7 @@ func _ready() -> void:
 		var p := AudioStreamPlayer.new()
 		p.bus = &"Music"
 		p.volume_db = -80.0
+		p.finished.connect(_deck_finished.bind(i))
 		add_child(p)
 		_decks.append(p)
 	for i in 8:
@@ -72,6 +80,10 @@ func _ready() -> void:
 	_ambience.one_shot = true
 	_ambience.timeout.connect(_ambient)
 	add_child(_ambience)
+	_track_timer = Timer.new()
+	_track_timer.one_shot = true
+	_track_timer.timeout.connect(_next_track)
+	add_child(_track_timer)
 	_fight_timer = Timer.new()
 	_fight_timer.wait_time = FIGHT_CHECK
 	_fight_timer.timeout.connect(_check_fight)
@@ -133,6 +145,17 @@ func mood_for(location_id: String, theme: String, st: StoryState = null) -> Stri
 	if own != "" and not (_data.get("region_keeps", []) as Array).has(theme) and not entries("music", own).is_empty():
 		return own
 	return str((_data.get("themes", {}) as Dictionary).get(theme, "wilds"))
+
+
+## The music for a conversation with `speaker_id` (an NPC id) where the place's music is `place_mood`, or "" to keep the
+## place's own (art/audio.json "talk_moods": per place mood, the mood to play and the NPCs who bring it). The castle's
+## music turns to dread when Strahd, Rahadin or another of the castle's menacing few speaks.
+func talk_mood(place_mood: String, speaker_id: String) -> String:
+	var talk := (_data.get("talk_moods", {}) as Dictionary).get(place_mood, {}) as Dictionary
+	var m := str(talk.get("mood", ""))
+	if speaker_id != "" and (talk.get("npcs", []) as Array).has(speaker_id) and not entries("music", m).is_empty():
+		return m
+	return ""
 
 
 ## A region's later theme (art/audio.json "region_turns": the first entry whose StoryConditions `when` holds and whose
@@ -265,10 +288,13 @@ func _check_fight() -> void:
 		set_intensity(level)
 
 
-## Crossfades from the current deck to music `id`.
+## Crossfades from the current deck to music `id`. A mood with several recordings plays each once and moves on to
+## another when it ends (`_next_track`); a mood with one repeats it.
 func _crossfade_to(id: String) -> void:
 	playing_id = id
+	playing_track = ""
 	_versions = null
+	_track_timer.stop()
 	if _swell_tween != null:
 		_swell_tween.kill()
 	var choices := entries("music", id)
@@ -279,17 +305,59 @@ func _crossfade_to(id: String) -> void:
 	var tw := _deck_tween(old_index)
 	tw.tween_property(old, "volume_db", -80.0, FADE)
 	tw.tween_callback(old.stop)
-	if choices.is_empty() or _silent:
+	if choices.is_empty():
 		return
-	var entry: Variant = choices[_rng.randi_range(0, choices.size() - 1)]
-	var stream := _music_stream(entry)
+	var entry: Variant = _pick_entry(id, choices)
+	playing_track = _track_key(entry)
+	if _silent:
+		return
+	var rolling := choices.size() > 1
+	var stream := _music_stream(entry, not rolling)
 	if stream == null:
 		return
-	_playing_db = level_db(id) + track_level(str((entry as Array)[0]) if entry is Array else str(entry))
+	_playing_db = level_db(id) + track_level(playing_track)
 	new.stream = stream
 	new.volume_db = -30.0
 	new.play()
 	_deck_tween(_deck).tween_property(new, "volume_db", _playing_db, FADE)
+	# The next one fades in as this one fades out; the deck's own `finished` is the fallback for a length that is unknown.
+	if rolling and stream.get_length() > FADE * 4.0:
+		_track_timer.start(stream.get_length() - FADE)
+
+
+## Which of a mood's recordings plays next: every one once, in an order that changes each round, before any comes
+## round again, and never the one just heard (so nothing plays twice in a row, even across moods).
+func _pick_entry(id: String, choices: Array) -> Variant:
+	var bag := (_bags.get(id, []) as Array).filter(func(e: Variant) -> bool: return choices.has(e))
+	if bag.is_empty():
+		bag = choices.duplicate()
+		for i in range(bag.size() - 1, 0, -1):
+			var j := _rng.randi_range(0, i)
+			var held: Variant = bag[i]
+			bag[i] = bag[j]
+			bag[j] = held
+		if bag.size() > 1 and _track_key(bag[0]) == _last_track:
+			bag.push_back(bag.pop_front())
+	var entry: Variant = bag.pop_front()
+	_bags[id] = bag
+	_last_track = _track_key(entry)
+	return entry
+
+
+## A music entry's recording: its path, or the first of an intensity-version list.
+static func _track_key(entry: Variant) -> String:
+	return str((entry as Array)[0]) if entry is Array else str(entry)
+
+
+## The recording playing is ending, or ended: the mood goes on with another of its recordings.
+func _next_track() -> void:
+	if playing_id != "":
+		_crossfade_to(playing_id)
+
+
+func _deck_finished(index: int) -> void:
+	if index == _deck:   # the deck that is fading out ends nothing
+		_next_track()
 
 
 ## A deck's fresh tween, replacing whatever fade or dip it had running.
@@ -311,11 +379,13 @@ func level_db(id: String) -> float:
 	return float((_data.get("levels", {}) as Dictionary).get(id, 0.0))
 
 
-## One music entry as a stream: a path loops on its own; a list of intensity versions loops in step, with only the
-## version for the current intensity heard.
-func _music_stream(entry: Variant) -> AudioStream:
+## One music entry as a stream: a path repeats on its own if `looped`; a list of intensity versions plays in step, with
+## only the version for the current intensity heard.
+func _music_stream(entry: Variant, looped: bool = true) -> AudioStream:
 	if not entry is Array:
-		return _stream(str(entry), true)
+		var one := _stream(str(entry), true)
+		_set_loop(one, looped)
+		return one
 	var parts := entry as Array
 	var sync := AudioStreamSynchronized.new()
 	sync.stream_count = parts.size()
@@ -324,6 +394,7 @@ func _music_stream(entry: Variant) -> AudioStream:
 		var s := _stream(str(parts[i]), true)
 		if s == null:
 			return null
+		_set_loop(s, looped)
 		sync.set_sync_stream(i, s)
 		sync.set_sync_stream_volume(i, 0.0 if i == on else SILENT_DB)
 	_versions = sync
@@ -408,23 +479,29 @@ func _stream(path: String, looped: bool) -> AudioStream:
 		return null
 	var s := load(path) as AudioStream
 	if s != null and looped:
-		if s is AudioStreamOggVorbis:
-			(s as AudioStreamOggVorbis).loop = true
-		elif s is AudioStreamMP3:
-			(s as AudioStreamMP3).loop = true
-		elif s is AudioStreamWAV:
-			var w := s as AudioStreamWAV
-			w.loop_mode = AudioStreamWAV.LOOP_FORWARD
-			if w.loop_end <= w.loop_begin:   # imported without loop points: loop the whole recording
-				w.loop_end = int(w.get_length() * w.mix_rate)
+		_set_loop(s, true)
 	_streams[path] = s
 	return s
+
+
+## Makes a recording repeat when it ends, or not (a recording is cached, so a mood sets it each time it plays one).
+static func _set_loop(s: AudioStream, on: bool) -> void:
+	if s is AudioStreamOggVorbis:
+		(s as AudioStreamOggVorbis).loop = on
+	elif s is AudioStreamMP3:
+		(s as AudioStreamMP3).loop = on
+	elif s is AudioStreamWAV:
+		var w := s as AudioStreamWAV
+		w.loop_mode = AudioStreamWAV.LOOP_FORWARD if on else AudioStreamWAV.LOOP_DISABLED
+		if on and w.loop_end <= w.loop_begin:   # imported without loop points: loop the whole recording
+			w.loop_end = int(w.get_length() * w.mix_rate)
 
 
 ## Players still sounding at quit would hold their streams past shutdown.
 func _exit_tree() -> void:
 	_ambience.stop()
 	_fight_timer.stop()
+	_track_timer.stop()
 	_versions = null
 	for p in _decks:
 		p.stop()

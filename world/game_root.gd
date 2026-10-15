@@ -18,6 +18,8 @@ var guidance: GuidancePrompt = null  ## Guidance offered before a check while ex
 var _hover := Vector2i(-1, -1)
 var _move_repeat := 0.0
 var _dialogue_ref := ""
+## The music a conversation turned the place's to (_talk_music), "" while the place's own plays.
+var _talk_mood := ""
 ## Banter that came while the Narrator was speaking; it plays a moment after the box clears (_process).
 var _banter_waiting: Array = []
 var _banter_quiet_since := -1   ## msec ticks since the box cleared, while banter waits
@@ -484,6 +486,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	Cursors.show("pointer")
 	glow.clear()
 	_dialogue_ref = ref
+	_talk_mood = ""
 	hud.visible = false
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
@@ -498,6 +501,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		else:
 			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
+	dialogue.spoke.connect(_talk_music)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
 	runner.offer_guidance = true   # Guidance before a check, from whoever can cast it (GuidanceOffer)
@@ -508,6 +512,18 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 		ModeController.force(ModeController.Mode.EXPLORATION)
 	else:
 		TalkCamera.open(view, _npc_id)   # the camera eases in on the leader and the speaker (Visual Polish Plan 7)
+		if dialogue != null:
+			_talk_music(_npc_id)   # the one who was clicked, before they have spoken
+
+
+## A conversation with someone the place's music turns for (art/audio.json "talk_moods": Strahd, Rahadin and the others
+## the castle itself fears) plays that music until it ends; _dialogue_ended brings the place's own back. `speaker_id`
+## is whoever was spoken to, or whose line is showing.
+func _talk_music(speaker_id: String) -> void:
+	var m := Audio.talk_mood(_place_mood(), speaker_id)
+	if m != "":
+		_talk_mood = m
+		Audio.play_music(m)
 
 
 ## Guidance before a check while exploring (LocationView.ask_guidance): the prompt over the place, which waits for it.
@@ -527,6 +543,10 @@ func _dialogue_ended(combat: String) -> void:
 		show_ending()
 		return
 	hud.visible = true
+	if _talk_mood != "":
+		_talk_mood = ""
+		if combat == "":
+			Audio.play_music(_place_mood())   # a fight brings its own music
 	if view.guest_members.filter(func(g: Combatant) -> bool: return not LocationParty.is_follower(g)).size() != st.guests.size():
 		view.place_guests()
 	ModeController.force(ModeController.Mode.EXPLORATION)

@@ -9,6 +9,9 @@ extends CanvasLayer
 ## for anything to choose or note.
 
 signal ended(combat: String)
+## A line is showing, said by `speaker_id` (an NPC's id, "narrator", or a party member's): the game's music can turn for
+## who is speaking (Audio.talk_mood).
+signal spoke(speaker_id: String)
 ## A `shop` line: the game opens the shop for `npc` and calls resume() when it closes.
 signal shop_requested(npc: String)
 signal services_requested(npc: String)
@@ -341,6 +344,7 @@ func _show(beat: Dictionary) -> void:
 			ended.emit(str(beat.get("combat", "")))
 			queue_free()
 		"line":
+			spoke.emit(str(beat.get("speaker_id", "")))
 			_line(beat)
 			busts.line(beat, DialogueRunner.portrait_of(runner.speaker) if runner != null and runner.speaker != null else "")
 			_waiting_continue = true
