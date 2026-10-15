@@ -150,6 +150,8 @@ func _seat(seats: Array[Vector2i], cook: Vector2i) -> void:
 			return view.leader().cell
 		return spots.pop_front() as Vector2i
 	for m in view.members:
+		if m.creature.dead:
+			continue   # the dead aren't up by the fire: no seat, and nobody to talk to
 		var cell := next.call(m.id) as Vector2i
 		_place(m, cell)
 		people[m.id] = {"character": m.creature, "token": view.tokens[m.id], "cell": cell, "kind": "party"}

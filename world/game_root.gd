@@ -301,7 +301,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F9:
 				_quick_load()
 	if event.is_action_pressed(&"cycle_leader"):
-		view.set_leader(1)
+		view.set_leader(view.next_leader_index(1))   # the next hero, passing over the dead
 		_refresh()
 	for i in 4:
 		if event.is_action_pressed(StringName("select_member_%d" % (i + 1))):

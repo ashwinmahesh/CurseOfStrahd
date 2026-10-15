@@ -20,8 +20,8 @@ static func actions_at(view: LocationView, cell: Vector2i) -> Dictionary:
 			# Party members share squares outside a fight, so the leader can walk onto anyone's.
 			if i != 0:
 				out.append({"id": "walk", "label": "Walk here"})
-			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0,
-				"why": "Already leading" if i == 0 else ("Can't lead while down" if ch.hp <= 0 else "")})
+			out.append({"id": "lead:%d" % i, "label": "Lead the party", "enabled": i != 0 and ch.hp > 0 and not ch.dead,
+				"why": "Already leading" if i == 0 else ("Dead heroes can't lead" if ch.dead else ("Can't lead while down" if ch.hp <= 0 else ""))})
 			out.append({"id": "sheet:%d" % i, "label": "Character sheet"})
 			out.append({"id": "inventory:%d" % i, "label": "Inventory"})
 			out.append({"id": "spells:%d" % i, "label": "Cast a spell...", "enabled": not ch.known_spells().is_empty(),
