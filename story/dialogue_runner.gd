@@ -637,11 +637,15 @@ static func _npc_for(low: String) -> Dictionary:
 	var direct := comp.get_entry("npcs", low.replace(" ", "_"))
 	if not direct.is_empty():
 		return direct
+	# Of the NPCs a name fits, the one with the lowest id: all() sorts by name only, so which of two "A Pale Courtier"s
+	# came first was luck, and tools/audio/voice_lines.py voices a line under the lowest id (the order of the files),
+	# so a line spoken as the other one found no clip and stayed silent.
+	var best := {}
 	for n in comp.all("npcs"):
 		var name := str(n.get("name", "")).to_lower()
-		if name == low or name.get_slice(" ", 0) == low:
-			return n
-	return {}
+		if (name == low or name.get_slice(" ", 0) == low) and (best.is_empty() or str(n.get("id", "")) < str(best.get("id", ""))):
+			best = n
+	return best
 
 
 func _fill(text: String) -> String:
