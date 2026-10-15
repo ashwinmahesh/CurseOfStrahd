@@ -1,0 +1,15 @@
+{
+  "id": "hags_three_faces",
+  "title": "Three Faces at the Mill",
+  "summary": "Through the mill's windows at night, three kind faces, and the three hags their shadows really are.",
+  "images": [
+    {
+      "image": "hags_three_faces",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

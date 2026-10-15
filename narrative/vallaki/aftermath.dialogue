@@ -115,6 +115,7 @@ endif
 if flag.festival_over or not flag.baron_overthrown
 -> END
 endif
+cutscene baron_overthrown
 Narrator: The Baron's watch throws down its spears one by one. Vargas Vallakovich stands alone on his dais with his sash crooked, until two of Lady Wachter's men take him by the arms.
 if not flag.izek_dead and not flag.izek_told_truth
 set izek_dead

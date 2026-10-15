@@ -1,0 +1,15 @@
+{
+  "id": "baron_overthrown",
+  "title": "The Spears Go Down",
+  "summary": "The Baron's watch lays down its spears one by one and Vargas stands alone on his dais with his sash crooked.",
+  "images": [
+    {
+      "image": "baron_overthrown",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

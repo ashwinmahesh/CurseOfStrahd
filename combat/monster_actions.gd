@@ -1029,18 +1029,31 @@ func shift(c: Combatant) -> void:
 	var back := str(c.get_meta("form", "humanoid")) == "hybrid"
 	c.set_meta("form", "humanoid" if back else "hybrid")
 	e.log.add("info", ("%s returns to human form" if back else "%s twists into a snarling hybrid form") % c.name(), c.id)
+	show_form(c, back)
+
+
+## The board follows a lycanthrope's change of form (`back`: into its human form): its token swaps to the hybrid figure,
+## or back. `kind` is how the change looks and sounds (FxShapeshift, CombatSfx.shapeshift): a raven's feathers or a
+## wolf's fur. Nothing for a creature with no figure to swap to. Also for a change something else forces (Moonbeam).
+func show_form(c: Combatant, back: bool) -> void:
 	var art := _hybrid_art(c)
 	if art != "":
-		e.events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art})
+		enc().events.append({"type": "form", "id": c.id, "form": str(c.get_meta("form")), "art": "" if back else art,
+			"kind": "wereraven" if art.contains("raven") else "werewolf"})
 
 
-## The figure a story ally takes on in their hybrid form, or "" to keep their own. Davian, Adrian and Ilinca fight in
-## their own clothes under the wereraven's stat block, so their hybrid is the wereraven's; someone whose stat block is
-## their own (Emil) keeps the figure they have.
+## The figure a lycanthrope takes on in its hybrid form, or "" to keep its own: the stat block's `hybrid_art` (Emil and
+## Kiril are drawn as men, so the werewolf's figure is theirs for the change, as a foe or an ally). Davian, Adrian and
+## Ilinca fight in their own clothes under the wereraven's stat block, so their hybrid is the wereraven's. A werewolf
+## already drawn as one has nothing to swap.
 func _hybrid_art(c: Combatant) -> String:
-	if not c.creature.id.begins_with("guest_") or not c.creature is Monster:
+	if not c.creature is Monster:
 		return ""
 	var data := (c.creature as Monster).data
+	if str(data.get("hybrid_art", "")) != "":
+		return str(data["hybrid_art"])
+	if not c.creature.id.begins_with("guest_"):
+		return ""
 	var art := str(data.get("art", data.get("id", "")))
 	var npc := Compendium.shared().get_entry("npcs", c.creature.id.trim_prefix("guest_"))
 	return "" if art == str(npc.get("sprite", npc.get("id", ""))) else art

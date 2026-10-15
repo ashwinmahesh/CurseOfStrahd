@@ -395,6 +395,8 @@ func _set_form(c: Combatant, to: String) -> void:
 			c.creature.remove_effect(fx)
 	var base := to == base_form(c) or shape(c, to).is_empty()
 	var sh := {} if base else shape(c, to)
+	# How the change looks and sounds (FxShapeshift): the shape it takes, or the one it leaves when it changes back.
+	var look := form(c) if base else to
 	c.set_meta("form", base_form(c) if base else to)
 	_apply_body(c)
 	if not base:
@@ -420,7 +422,7 @@ func _set_form(c: Combatant, to: String) -> void:
 			c.creature.add_effect(fx)
 	c.movement_left = mini(c.movement_left, c.speed())
 	_log("condition", ("%s returns to its true form" % c.name()) if base else ("%s becomes a %s" % [c.name(), str(sh.get("name", to)).to_lower()]), c)
-	e.events.append({"type": "form", "id": c.id, "form": form(c), "art": str(sh.get("art", ""))})
+	e.events.append({"type": "form", "id": c.id, "form": form(c), "art": str(sh.get("art", "")), "kind": look})
 	e.events.append({"type": "resize", "id": c.id})
 	e.events.append({"type": "condition", "id": c.id})
 

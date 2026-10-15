@@ -1,0 +1,15 @@
+{
+  "id": "blights_fall",
+  "title": "The Slope Goes Quiet",
+  "summary": "Down the whole slope of Yester Hill every blight folds up and falls into dry brush as the tree burns on the crown.",
+  "images": [
+    {
+      "image": "blights_fall",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

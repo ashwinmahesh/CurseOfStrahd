@@ -196,6 +196,7 @@ Narrator: She doesn't have to go far. Goodwife Sarnov is already coming up the l
 else
 Narrator: You walk her down to the village in the grey before morning. Goodwife Sarnov is on her step, waiting for nothing, the way she has waited every morning for twelve years.
 endif
+cutscene zamfira_wrist
 Narrator: Nobody says anything clever. The girl holds out her left wrist, and her mother kisses it.
 if flag.bonegrinder_children_fate == "home"
 Narrator: Ilka comes to the door and looks at the girl for a long time, and says, "You've got Toma's ears." Toma says he has his own ears.

@@ -153,6 +153,7 @@ Narrator: A hunter's iron trap, well kept and oiled. Somebody comes up here ofte
 -> blights
 
 ~ blights
+cutscene bear_blights
 Narrator: You get your fingers under the jaws. The cub screams. In the trees all round the clearing, things that aren't trees start toward the sound: knots of twigs, a scuttle of needles, vines dragging themselves over the roots.
 interject name:thistle: They come for whatever's crying. Not this one. Stand in front of it.
 combat den_blights

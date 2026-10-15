@@ -1,0 +1,15 @@
+{
+  "id": "corvina_coat",
+  "title": "A Candle on the Box",
+  "summary": "Corvina's empty scholar's coat on the edge of the open crypt, a rod and a purse inside, and a candle someone has left.",
+  "images": [
+    {
+      "image": "corvina_coat",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}
