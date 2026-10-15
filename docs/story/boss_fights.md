@@ -80,7 +80,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 | Summit L5, druids fled (reward) | 5 | Tree Blight (90 HP), 6 Twig Blights | Tree Blight (135 HP), 6 Twig Blights | 4/8 | 4 |
 | Summit L5, struck first (reward) | 5 | Tree Blight (90 HP), Druid (45 HP), Druid, 4 Twig Blights | Tree Blight (180 HP), Druid (45 HP), Druid, 4 Twig Blights | 4/8 | 4 |
 | Summit L5, Kostin warned them (harder) | 5 | Tree Blight (65 HP), Druid (50 HP), Druid (30 HP), 4 Twig Blights | Tree Blight (120 HP), Druid (90 HP), Druid (30 HP), 4 Twig Blights | 2/8 | 2 |
-| Summit L6 | 6 | Tree Blight (158 HP), Druid (60 HP), 6 Twig Blights | Tree Blight (270 HP), Druid (60 HP), 6 Twig Blights | 3/8 | 3 |
+| Summit L6 | 6 | Tree Blight (158 HP), Druid (60 HP), 6 Twig Blights | Tree Blight (200 HP), Druid (60 HP), 6 Twig Blights | 4/8 | 4 |
 | Summit L6, druids fled (reward) | 6 | Tree Blight (135 HP), 6 Twig Blights, 2 Vine Blights, 3 Needle Blights | Tree Blight (200 HP), 6 Twig Blights, 2 Vine Blights, 3 Needle Blights | 4/8 | 4 |
 | Summit L6, struck first (reward) | 6 | Tree Blight (136 HP), Druid (58 HP), 2 Druids, 4 Twig Blights | Tree Blight (285 HP), Druid (58 HP), 2 Druids, 4 Twig Blights | 4/8 | 4 |
 | Summit L6, Kostin warned them (harder) | 6 | Tree Blight (95 HP), Druid (60 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | Tree Blight (210 HP), Druid (130 HP), Druid (44 HP), 2 Druids, 4 Twig Blights | 2/8 | 2 |
@@ -143,6 +143,7 @@ Bands in the tests: 2-4 (rewards 3-5, Kostin 1-3). Measured over seeds 1-8 on 20
 - **Sarkhaza and the Eye Below** keep the fiction of their tricks: as she is, Sarkhaza has her book 200 HP and six wights beside her (3 in 8); with the
   keepers' three tricks she has 165 HP and the same six (4 in 8). The Eye with both wardens' ways taken needs the same 335 HP as the plain Eye (without
   its dreamed eye and its lair, and surprised), so test_side_quests_beholder now asks that it is no tougher than the plain Eye, not under 180 HP.
+- **Summit L6 (Wintersplinter, default)** is held at 4 in 8 for the pregens (200 HP), the top of the 2-4 band: the weaker Phase 5 playthrough party needs a clean win within eight tries and wins 6 in 8 against 200 HP (5 against 240, 3 with 2 clean against 270; the Wizard of Wines playthrough passes on probe seeds 2, 4, 5, 6 and 7 at 200).
 - **The Phase 5 playthrough** (test_phase5_exit, the Wizard of Wines) walked home from the retuned Yester Hill summit hurt and at night into a road fight it could not
   win. Its careful-player bot (`StoryBot.waits_for_long_rest`) now heals with its spells where no rest is allowed and waits for daylight before a road. Random road
   fights (data/random_encounters/, tuned for the pregens) can still beat the weaker playthrough party on other dice seeds; that is the road tables', not a boss's.
