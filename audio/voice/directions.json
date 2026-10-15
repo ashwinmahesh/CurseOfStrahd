@@ -592,6 +592,31 @@
  "camp_lookout": {
   "d6565abd9726a895": "[tense, watchful, low]"
  },
+ "castle_courtier_1": {
+  "21473e3d55460553": "[wry, wistful, languid]",
+  "5796955d52fbfc18": "[dry, grim, warning]",
+  "8e1f72f42783ae1c": "[dry, ominous, quiet]",
+  "9931bb26d36195cd": "[languid, sardonic, amused]",
+  "a31a7c7f2948b296": "[weary, dry, wry]",
+  "d68bacf4f4bfa4a5": "[weary, bleak, resigned]"
+ },
+ "castle_ghost_servant": {
+  "68dcc9f70c6e0d01": "[quiet, hollow, patient]",
+  "f0897c7c2db83c82": "[meek, apologetic, vague]"
+ },
+ "castle_steward": {
+  "12a1ec57a747fef7": "[quiet, grave, warning]",
+  "4920b67bdf431c32": "[low, wary, deferential]",
+  "5d472e4757f94078": "[gentle, rueful, apologetic]",
+  "60ca1a6b74793fb9": "[formal, dry, weary]",
+  "6983aa93cc101be3": "[uneasy, hushed, evasive]",
+  "8b4ab61d4b2b6b11": "[pleasant, hollow, quiet]",
+  "981797774346ae40": "[formal, hushed, courteous]",
+  "ab2203a493698c57": "[proud, formal, wistful]",
+  "af06fc9d79247a5d": "[quiet, wistful, grateful]",
+  "d11e459e4542609a": "[stiff, reproachful, formal]",
+  "f5128bf61c90e5bc": "[quiet, grieving, resigned]"
+ },
  "clovin_belview": {
   "0bc6d48454990d53": "[sly, conspiratorial]",
   "180f71f838d74a6c": "[quiet, moved, tender]",
@@ -1150,6 +1175,7 @@
  },
  "gertruda": {
   "04c375e79e9b912b": "[delighted, awed]",
+  "0570a7379608d3a5": "[timid, uncertain]",
   "29f85edb7db2cfdb": "[awed, nervous]",
   "2d0eeda6f14a7444": "[nervous, breathless]",
   "32f9a04ef5cdd3c3": "[nervous, hopeful, tearful]",
@@ -1227,6 +1253,17 @@
  },
  "gunther_arasek": {
   "c991f2adc54ba877": "[blunt, low warning]"
+ },
+ "helga_ruvak": {
+  "3f98dd520a5dbefe": "[bright, brittle, rehearsed]",
+  "56c8c9a94cf93d5e": "[soft, dutiful, hollow]",
+  "8409f3202f04acdd": "[meek, quiet, faintly menacing]",
+  "a1cc478c898a50a2": "[hushed, nervous, pointed]",
+  "a3000f4bb7f48173": "[meek, hurried, knowing]",
+  "a9b41ccc2156df17": "[amused, low, hungry]",
+  "baca3864f7c5d520": "[meek, polite, tired]",
+  "d41ab6beecdf4759": "[quick, meek, wary]",
+  "f6e10087b528b191": "[startled, meek, eager]"
  },
  "henrik": {
   "0c05235fc99de270": "[terrified, whispering, rushing]",
@@ -1377,6 +1414,7 @@
   "214eca98a3b03623": "[firm, grieving]",
   "214ff2ed4c91c9cb": "[wry, wistful]",
   "2319c548c52bf79e": "[firm, then grateful]",
+  "2551873f7c03f5c3": "[dry, defiant, cold]",
   "25f406f50dfe66f3": "[firm, fond]",
   "27ad7c9afcbd1e05": "[furious, shouting]",
   "28675b7df3d2b3a5": "[tender, at peace]",
