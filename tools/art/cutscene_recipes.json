@@ -1754,8 +1754,8 @@
     },
     "yester_planting": {
       "refs": [],
-      "prompt": "The burned crown of Yester Hill at night, a ring of black ash where the great tree stood: a figure in a grey druid's robe, hood up and seen from behind, kneels by a lantern pressing earth down round a thin black shoot with leaves like little hands, and all across the crown the ash is drifting along the ground toward the shoot in thin grey streams. {party} stand a little way off, seen from behind, hooded. Warm lantern light against deep blue night and grey ash; quiet and uneasy, no gore.",
-      "use": "a"
+      "prompt": "The burned crown of Yester Hill at night, a wide ring of black ash round a charred stump where the great tree stood. In the middle distance a single figure in a grey druid's robe, hood up and seen from behind, an ordinary adult size and clearly smaller in the frame than the people in the foreground, kneels beside a small lantern pressing earth down round a thin black shoot with leaves like little hands, and across the crown the ash drifts along the ground toward the shoot in thin grey streams. {party} stand in the near foreground, seen from behind, hooded, larger in the frame than the kneeling figure, watching. Warm lantern light against deep blue night and grey ash; quiet and uneasy, no gore.",
+      "use": "b"
     }
   }
 }
