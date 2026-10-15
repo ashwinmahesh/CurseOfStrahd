@@ -187,12 +187,16 @@ func test_magic_is_priced_by_the_guide_whatever_the_markup() -> void:
 	assert_false(by.has("ring_of_protection"), "a rare ring waits for level 5")
 	assert_true(by.has("javelin_of_lightning__javelin"), "an item with one base is sold as that item")
 	assert_true(by.has("ammunition_plus_1"), "ammunition with a choice of arrows, bolts, bullets and needles")
-	assert_eq(str((by["ammunition_plus_1"] as Dictionary)["bases"][0]["name"]).contains("×20"), true, "by the bundle")
+	var arrow := ((by["ammunition_plus_1"] as Dictionary)["bases"] as Array).filter(func(o: Dictionary) -> bool:
+		return str(o["id"]) == "ammunition_plus_1__arrow")[0] as Dictionary
+	assert_eq(int(arrow["lot"]), 1, "a piece at a time, as the guide prices it")
+	assert_eq(float(arrow["price"]), Trade.whole_gp(25.0 + 0.05), "25 gp a +1 Arrow, and the arrow")
+	assert_eq(int((by["ammunition_plus_1"] as Dictionary)["qty"]), 20, "twenty of them")
 	assert_false(by.has("flame_tongue"), "rare")
 	var names: Array[String] = []
 	for w in wares:
 		names.append(str(w["id"]))
-	assert_true(names.find("rope") < names.find("bag_of_holding"), "the merchant's own goods first: %s" % str(names))
+	assert_true(names.find("bag_of_holding") < names.find("rope"), "the magic first, then the merchant's own goods: %s" % str(names))
 
 
 func test_a_made_to_order_ware_sells_the_base_the_party_picks() -> void:

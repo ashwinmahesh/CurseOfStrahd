@@ -110,8 +110,9 @@ static func haggle(st: StoryState, npc_id: String, ch: Character, dice: DiceRoll
 # --- Magic stock ----------------------------------------------------------------------------------
 
 ## How many of a magic item a shop keeps (Ashwin, 2026-10-14): one of anything lasting, three of a potion, scroll or
-## other consumable, two bundles of ammunition. What the party buys stays bought (StoryState.shops).
-const MAGIC_QTY := {"lasting": 1, "consumable": 3, "ammunition": 2}
+## other consumable, twenty pieces of ammunition (sold a piece at a time, StoryState.shop_lot). What the party buys
+## stays bought (StoryState.shops).
+const MAGIC_QTY := {"lasting": 1, "consumable": 3, "ammunition": 20}
 ## Rarities in the order a shop lists its magic stock.
 const RARITY_ORDER: Array[String] = ["common", "uncommon", "rare", "very_rare", "legendary"]
 

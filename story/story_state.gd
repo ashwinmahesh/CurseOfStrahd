@@ -520,16 +520,18 @@ func lose_member(ch: Character, how: String) -> void:
 # --- Shops (ADR 0010) -----------------------------------------------------------------------------
 
 ## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts, rarity}], at the prices the
-## merchant's attitude and a haggle make (Trade), with any stock that changes with the days and the magic stock the
-## party's level has opened (Trade.magic_stock). An item made on a base the party picks ("Flame Tongue") has `bases`:
+## merchant's attitude and a haggle make (Trade): the magic stock the party's level has opened (Trade.magic_stock),
+## then the shop's own lines and any stock that changes with the days. An item made on a base the party picks ("Flame Tongue") has `bases`:
 ## [{id, name, lot, price}], one for each weapon or armor it can be, and `price` is the cheapest of them.
 func shop_wares(npc_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var stock := shops.get(npc_id, {}) as Dictionary
-	var lines: Array = (shop.get("sells", []) as Array).duplicate()
-	lines.append_array(Trade.rotation(self, npc_id))
+	# The magic first (rarest last), so a long counter's few special things aren't under its rope and nails.
+	var lines: Array = []
 	lines.append_array(Trade.magic_stock(self, npc_id))
+	lines.append_array(shop.get("sells", []) as Array)
+	lines.append_array(Trade.rotation(self, npc_id))
 	for e: Variant in lines:
 		var w := e as Dictionary
 		if not StoryConditions.check(str(w.get("if", "")), self):
@@ -572,7 +574,11 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 
 ## How many pieces a shop deals in at once: a bundle of ammunition (20 Arrows, 50 Blowgun Needles: the item's
 ## `bundle`), anything else one at a time (QA FN-03: a 0.05 gp arrow rounded up to a whole 1 gp each way).
+## Magic ammunition goes a piece at a time, as Sane Magical Prices prices it (+1 Arrows at 25 gp each; Ashwin,
+## 2026-10-14).
 static func shop_lot(data: Dictionary) -> int:
+	if MagicItems.is_magic(data):
+		return 1
 	return maxi(1, int(data.get("bundle", 1))) if bool(data.get("stackable", false)) else 1
 
 

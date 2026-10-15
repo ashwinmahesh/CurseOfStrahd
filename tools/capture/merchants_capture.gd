@@ -1,7 +1,8 @@
 extends Node
 ## Lane 23 for captures (U11's trading half, F14): Bildrath's shop with its terms and a haggle won, St. Andral's
 ## services with a hero to raise, the Blue Water Inn's rooms, the Vistani trader and the book's other merchants. The
-## party is four pregens at level 5 with gold to spend. LANE_ONLY=shop,haggle,services,rooms,trader,merchants,unlocked limits it.
+## party is four pregens at level 5 with gold to spend. LANE_ONLY=shop,haggle,services,rooms,trader,merchants,unlocked,magic
+## limits it (magic: merchants' magic stock, Ashwin 2026-10-14).
 ## make capture SCENE=res://tools/capture/merchants_capture.tscn NAME=lane23/after FRAMES=10
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -49,6 +50,33 @@ func _close(kind: String) -> void:
 
 func capture_shots(tool: Node, out: String) -> void:
 	var st := GameState.story
+	if _wants("magic"):
+		# Magic for sale (Ashwin, 2026-10-14): the stockyard's weapons with a +1 weapon's choices open, Kasha's potions,
+		# and Khazan's stores at level 10 (every rarity). The party's milestone level, not its heroes', opens the stock.
+		st.milestones = 4
+		ShopScreen.ware_filter = "Weapons"
+		root.call("open_shop", "gunther_arasek")
+		var smith := root.find_child("ShopScreen", true, false) as ShopScreen
+		if smith != null:
+			smith.toggle_bases("weapon_plus_1")
+			await tool.call("wait_frames", 3)
+			# Scroll the open ware to the top of the list.
+			for b in smith.find_children("*", "Button", true, false):
+				if (b as Button).text == "Close":
+					var sc := smith.find_child("WaresSide", true, false).find_children("*", "ScrollContainer", true, false)[0] as ScrollContainer
+					sc.scroll_vertical = int((b as Control).global_position.y - sc.global_position.y) - 12
+		await _shoot(tool, "%s_magic_smith.png" % out)
+		_close("ShopScreen")
+		ShopScreen.ware_filter = "Consumables"
+		root.call("open_shop", "kasha_varo")
+		await _shoot(tool, "%s_magic_potions.png" % out)
+		_close("ShopScreen")
+		st.milestones = 9
+		ShopScreen.ware_filter = "All"
+		root.call("open_shop", "library_xaver")
+		await _shoot(tool, "%s_magic_xaver.png" % out)
+		_close("ShopScreen")
+		st.milestones = 0
 	if _wants("shop"):
 		root.call("open_shop", "bildrath")
 		await _shoot(tool, "%s_shop_bildrath.png" % out)
