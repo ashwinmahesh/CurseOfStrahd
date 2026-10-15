@@ -2635,7 +2635,7 @@ class Wiki:
         self.w.write("page/difficulty", "Rules/Difficulty", "Difficulty", ["%% default %%\n", auto("modes", self.difficulty_lines())],
                      tags=["wiki", "rules"])
         # Pages people write by hand: the generator only makes sure they exist and keeps them linked.
-        for key in ("page/magic", "page/stealth", "page/resting"):
+        for key in ("page/magic", "page/stealth", "page/resting", "page/revival"):
             self.w.write(key, s.paths[key], s.titles[key], ["%% default %%\n"], tags=["wiki", "rules"])
 
     def difficulty_lines(self):
@@ -2745,6 +2745,7 @@ class Wiki:
                                   s.link("page/dark_gifts", "Dark Gifts") + ": the Amber Temple's bargains"]),
             ("Rules and play", [s.link("page/magic", "How Magic Works") + ", " + s.link("page/stealth") + " and " +
                                 s.link("page/resting"),
+                                s.link("page/revival", "Reviving the Dead") + ": dying, Death Saving Throws and every way back",
                                 s.link("page/house_rules", "House Rules") + ": where the game differs from the 2024 books",
                                 s.link("page/difficulty", "Difficulty") + " and " + s.link("page/controls", "Controls"),
                                 s.link("page/conditions", "Conditions") + " and the " + s.link("page/glossary", "Glossary"),
@@ -2865,6 +2866,7 @@ class Wiki:
                                 ("page/magic", "Rules/How Magic Works", "How Magic Works"),
                                 ("page/stealth", "Rules/Sneaking, Stealing and the Watch", "Sneaking, Stealing and the Watch"),
                                 ("page/resting", "Rules/Resting and Saving", "Resting and Saving"),
+                                ("page/revival", "Rules/Reviving the Dead", "Reviving the Dead"),
                                  ("page/controls", "Rules/Controls", "Controls"),
                                  ("page/conditions", "Rules/Conditions", "Conditions"),
                                  ("page/glossary", "Rules/Glossary", "Glossary"),
