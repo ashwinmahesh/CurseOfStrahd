@@ -22785,3 +22785,24 @@
 {"time": "2026-10-14T21:49:49", "speaker": "ilya_krezkov", "key": "9d5191538c6c58cd", "chars": 148, "voice_id": "bA58y3FqVI6b6gTNh0oT", "model": "eleven_v3", "format": "mp3_44100_64", "accent_tag": "[strong Romanian accent]", "direction": "[excited, bursting]", "usd_est": 0.01184, "billed_chars": "85", "request_id": "uGd5AyUTcNHFmqJs1PzR"}
 {"time": "2026-10-14T21:49:52", "speaker": "ilya_krezkov", "key": "1b25f0be3373b9db", "chars": 139, "voice_id": "bA58y3FqVI6b6gTNh0oT", "model": "eleven_v3", "format": "mp3_44100_64", "accent_tag": "[strong Romanian accent]", "direction": "[wondering, hushed]", "usd_est": 0.01112, "billed_chars": "81", "request_id": "3FcUKYGmzqRkgloQ4VyV"}
 {"time": "2026-10-14T21:49:53", "speaker": "ilya_krezkov", "key": "99c526f7a6d37907", "chars": 79, "voice_id": "bA58y3FqVI6b6gTNh0oT", "model": "eleven_v3", "format": "mp3_44100_64", "accent_tag": "[strong Romanian accent]", "direction": "[curious, eager]", "usd_est": 0.00632, "billed_chars": "53", "request_id": "F5Q3XXXbwvqe10xuvVZe"}
+{"time": "2026-10-08T04:15:49", "audition": "design", "speaker": "zinaida", "chars": 222, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:15:58", "audition": "design", "speaker": "wine_watch", "chars": 227, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:16:05", "audition": "design", "speaker": "wine_washer", "chars": 154, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:16:13", "audition": "design", "speaker": "wine_woodsplitter", "chars": 184, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:16:21", "audition": "design", "speaker": "wine_pruner", "chars": 208, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:16:29", "audition": "design", "speaker": "wine_picker", "chars": 158, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:16:37", "audition": "design", "speaker": "wine_cooper", "chars": 160, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:17:06", "audition": "design", "speaker": "sorin_krezkov", "chars": 184, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:17:10", "audition": "sample", "speaker": "sorin_krezkov", "voice_id": "kZXTQfulCLOSFsxuZQHx", "chars": 177, "model": "eleven_v3", "request_id": "OTV1Ru5bom7XEuVYwecM"}
+{"time": "2026-10-08T04:01:00", "audition": "design", "speaker": "stella_wachter", "chars": 222, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:01:13", "audition": "design", "speaker": "vallaki_chandler", "chars": 183, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:01:28", "audition": "design", "speaker": "tser_lavinia", "chars": 185, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:01:44", "audition": "design", "speaker": "tser_iancu", "chars": 161, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:02:01", "audition": "design", "speaker": "tser_marin", "chars": 192, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:02:16", "audition": "design", "speaker": "camp_cook", "chars": 165, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:02:33", "audition": "design", "speaker": "camp_fisher", "chars": 170, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:02:48", "audition": "design", "speaker": "camp_groom", "chars": 218, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:03:01", "audition": "design", "speaker": "camp_lookout", "chars": 146, "model": "eleven_ttv_v3", "previews": 3}
+{"time": "2026-10-08T04:03:24", "audition": "sample", "speaker": "ana", "voice_id": "bICR68fw9p7rUiAEAgn6", "chars": 219, "model": "eleven_v3", "request_id": "MHonlCOfLCba9BkSOgJQ"}
+{"time": "2026-10-08T04:03:30", "audition": "sample", "speaker": "ana", "voice_id": "znn3xedzq0kO6JXbSRB6", "chars": 219, "model": "eleven_v3", "request_id": "c11zqFf5bgIuLG9PHqAS"}
+{"time": "2026-10-08T04:03:39", "audition": "sample", "speaker": "ana", "voice_id": "6tPpQd1OMENsZ3qD7FSl", "chars": 219, "model": "eleven_v3", "request_id": "emRaJWtF6si9hGk8l2nd"}
