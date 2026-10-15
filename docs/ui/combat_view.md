@@ -79,6 +79,11 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   no one), and the same pick on the keep-control action; after a Maneuvering Attack hit, the ally that moves (skipped
   when only one can) and its square, with the path and any other enemy's Opportunity Attack shown. Backspace or
   right-click goes back a step; Esc cancels (and passes on the maneuver's move).
+- **Thunder Step** (a teleport that can take one willing creature along): the hover shows the boom's edge round the space you
+  would leave and, in the area panel, who it would catch and their Con saves (friends too); once the square is picked, the allies
+  who could come (willing, your size or smaller, within 5 ft) light green: a click (A, or the next-target key to move between them)
+  brings one, Enter (Y) or a click on the landing square goes alone, Backspace or right-click picks another square, Esc cancels. With
+  nobody able to come it casts at once.
 - **Sculpt Spells** (an Evoker's Evocation spell with the caster or its allies caught in it): once the spell is aimed,
   the creatures in it show green when shielded and red when not, starting from the caster and its allies nearest it,
   up to 1 + the spell's level; a click (A, or the next-target key to move between them) shields one or takes it back,

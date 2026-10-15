@@ -1048,7 +1048,14 @@ func _confirm_target(c: Combatant, t: CombatToken) -> void:
 			_perform(selected, [], aim["point"] as Vector2, aim["dir"] as Vector2)
 		"place":
 			# A square for the object (or teleport), or a creature to put it beside.
-			if t != null and t.combatant != c and c.hostile_to(t.combatant):
+			var beside := t != null and t.combatant != c and c.hostile_to(t.combatant)
+			# A teleport that can take a willing creature along (Thunder Step) asks who, once the square is picked.
+			if str(selected.get("kind", "")) == "spell" and (beside or hover_cell.x >= 0):
+				var landing := e.spells._beside(c, t.combatant) if beside else hover_cell
+				if picker.bring_along(c, selected, Vector2(landing.x + 0.5, landing.y + 0.5), slot_level):
+					_update_hover()
+					return
+			if beside:
 				_perform(selected, [t.combatant], Vector2.INF, Vector2.ZERO)
 			elif hover_cell.x >= 0:
 				_perform(selected, [], Vector2(hover_cell.x + 0.5, hover_cell.y + 0.5), Vector2.ZERO)
@@ -1680,7 +1687,16 @@ func _aiming_area() -> bool:
 	if mode != Mode.TARGET or picker.active() or str(selected.get("kind", "")) in ["long_jump", "jump"]:
 		return false
 	var kind := str(selected.get("targeting", ""))
-	return kind == "direction" or (kind == "point" and str(selected.get("kind", "")) != "feat")
+	return kind == "direction" or (kind == "point" and str(selected.get("kind", "")) != "feat") or _boom_round_leaving()
+
+
+## Whether the teleport being aimed leaves an area behind it (Thunder Step's boom round the space it leaves): the area
+## panel then shows who the boom would catch.
+func _boom_round_leaving() -> bool:
+	if str(selected.get("targeting", "")) != "place" or str(selected.get("kind", "")) != "spell":
+		return false
+	var data := Compendium.shared().spell_data(str(selected.get("spell_id", "")))
+	return data.has("area") and SpellTargeting.area_from_caster(data)
 
 
 func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
@@ -1729,7 +1745,16 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			src = c
 		var ok := hover_cell.x >= 0 and e.grid.distance_ft(src.cell, src.size_cells, hover_cell, 1) <= rng
 		overlay.show_cells("area", [hover_cell] if hover_cell.x >= 0 else [])
-		hud.show_tooltip(str(selected["label"]), ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng], [], at)
+		var place_lines: Array = ["Click a square to place it (or an enemy to put it beside them)" if ok else "Out of range (%d ft)" % rng]
+		# The boom round the space it leaves (Thunder Step): its edge, and who it catches in the area panel.
+		if _boom_round_leaving():
+			var boom := catalog.spell_preview(c, selected, Vector2.INF, Vector2.ZERO, slot_level)
+			overlay.show_outline(boom["outline"] as Dictionary, boom["cells"] as Array)
+			var caught_by := boom["creatures"] as Array
+			var boom_title := "%s · slot level %d" % [selected["label"], int(boom["slot"])]
+			place_lines.append(("%d caught in the boom" % caught_by.size()) if not caught_by.is_empty() else "No one near enough to hear it")
+			hud.show_area_saves(boom_title, ("%s save DC %d" % [boom["save"], int(boom["dc"])]) if str(boom["save"]) != "" else "", caught_by, boom["warnings"] as Array)
+		hud.show_tooltip(str(selected["label"]), place_lines, [], at)
 		return
 	if t == null:
 		# An object's square: the chosen attack or spell aimed at it (EncounterObjects.redirect).

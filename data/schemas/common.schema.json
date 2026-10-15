@@ -139,6 +139,7 @@
             "FRAiF",
             "AU",
             "TCoE",
+            "XGtE",
             "EGtW"
           ]
         },
@@ -166,7 +167,7 @@
             "2024",
             "2014"
           ],
-          "description": "Monsters: which rules edition the stat block follows. 2024 = the 2025 Monster Manual (preferred); 2014 = the older block, used only where no 2024 version exists (CoS-only creatures and NPCs). Spells: 2014 = a spell no 2024 book reprints, added by the owner (TCoE = Tasha's Cauldron of Everything: Booming Blade, Green-Flame Blade)."
+          "description": "Monsters: which rules edition the stat block follows. 2024 = the 2025 Monster Manual (preferred); 2014 = the older block, used only where no 2024 version exists (CoS-only creatures and NPCs). Spells: 2014 = a spell no 2024 book reprints, added by the owner (TCoE = Tasha's Cauldron of Everything: Booming Blade, Green-Flame Blade; XGtE = Xanathar's Guide to Everything: Thunder Step, Far Step)."
         },
         "note": {
           "type": "string"

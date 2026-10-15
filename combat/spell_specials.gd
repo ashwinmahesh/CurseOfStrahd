@@ -1,10 +1,10 @@
 class_name SpellSpecials
 extends RefCounted
 ## Spells whose fight rules need code of their own beyond the data recipe (docs/contracts/spells.md), the ones the
-## Phase 4 classes brought: Polymorph, Banishment, Otiluke's Resilient Sphere, Dimension Door, Confusion, Compelled
-## Duel, Dissonant Whispers' flight, Heat Metal, Call Lightning's storm, Cordon of Arrows, Mordenkainen's Faithful
-## Hound, Conjure Animals' pack, Eldritch Blast's beams and Sorcerous Burst's exploding dice. SpellCaster hands a
-## cast here first; `resolve` returns true when it handled it.
+## Phase 4 classes brought: Polymorph, Banishment, Otiluke's Resilient Sphere, Dimension Door, Thunder Step and Far
+## Step, Confusion, Compelled Duel, Dissonant Whispers' flight, Heat Metal, Call Lightning's storm, Cordon of Arrows,
+## Mordenkainen's Faithful Hound, Conjure Animals' pack, Eldritch Blast's beams and Sorcerous Burst's exploding dice.
+## SpellCaster hands a cast here first; `resolve` returns true when it handled it.
 
 var _enc: WeakRef
 var high: HighMagic
@@ -29,14 +29,14 @@ func sp() -> SpellCaster:
 const BANISHED_CELL := Vector2i(-1000, -1000)
 
 ## Spells handled here.
-const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimension_door", "heat_metal"]
+const HANDLED := ["polymorph", "banishment", "otilukes_resilient_sphere", "dimension_door", "thunder_step", "far_step", "heat_metal"]
 
 
 ## Spells with code of their own. True when `ctx`'s spell is one of them (it's resolved). `pausable`: their targets'
 ## saves stop for the choices after each roll (Polymorph, Banishment, Resilient Sphere); a pause leaves `pending` set
 ## for the caller's Encounter.then.
-func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> bool:
-	if high.resolve(ctx, tgt, _cells, r) or mid.resolve(ctx, tgt, _cells, r):
+func resolve(ctx: Dictionary, tgt: Array[Combatant], cells: Array[Vector2i], r: CombatResult, pausable: bool = false) -> bool:
+	if high.resolve(ctx, tgt, cells, r) or mid.resolve(ctx, tgt, cells, r):
 		return true
 	var s := ctx["s"] as Dictionary
 	var none := func() -> CombatResult: return r
@@ -54,6 +54,13 @@ func resolve(ctx: Dictionary, tgt: Array[Combatant], _cells: Array[Vector2i], r:
 		"dimension_door":
 			if not high.teleport_blocked(ctx, ctx["c"] as Combatant):
 				dimension_door(ctx, ctx["cell"] as Vector2i, r)
+			return true
+		"thunder_step":
+			if not high.teleport_blocked(ctx, ctx["c"] as Combatant):
+				thunder_step(ctx, ctx["cell"] as Vector2i, cells, r, pausable)
+			return true
+		"far_step":
+			far_step(ctx, ctx["cell"] as Vector2i, r)
 			return true
 		"heat_metal":
 			for t in tgt:
@@ -363,6 +370,53 @@ func dimension_door(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
 		var spot := sp()._free_cell_near(cell, ally.size_cells)
 		if e.grid.distance_ft(cell, c.size_cells, spot, ally.size_cells) <= 5:
 			sp()._teleport(ally, spot, r)
+
+
+# --- Thunder Step and Far Step ------------------------------------------------------------------------
+
+## Thunder Step: the caster teleports to the square picked, with one willing creature of its size or smaller from
+## within 5 ft (`opts.with`, checked in SpellTargeting.companion_why) that lands beside it if there is room, else is left
+## behind. Every other creature within 10 ft of the space the caster left (`cells`, laid when the spell went off) then
+## makes a Constitution save against the boom: 3d10 Thunder, half on a success, more with a higher slot. A teleport
+## that can't happen (Dimensional Shackles) makes no boom.
+func thunder_step(ctx: Dictionary, cell: Vector2i, cells: Array[Vector2i], r: CombatResult, pausable: bool) -> void:
+	var c := ctx["c"] as Combatant
+	var e := enc()
+	if c.creature.has_flag("no_teleport"):
+		sp()._teleport(c, cell, r)   # says why it can't, and the spell is spent
+		return
+	# Who may come is settled where the caster stands now: it is within 5 ft of it before it goes.
+	var with_id := str((ctx["opts"] as Dictionary).get("with", ""))
+	var ally := e.get_c(with_id) if with_id != "" else null
+	if ally != null and sp().targeting.companion_why(c, ctx["s"] as Dictionary, ally) != "":
+		ally = null
+	sp()._teleport(c, cell, r)
+	var gone: Array[Combatant] = [c]
+	if ally != null:
+		var spot := sp()._free_cell_near(cell, ally.size_cells)
+		if e.grid.distance_ft(cell, c.size_cells, spot, ally.size_cells) <= 5 and sp()._room_for(spot, ally.size_cells):
+			sp()._teleport(ally, spot, r)
+			gone.append(ally)
+		else:
+			r.lines.append(e.log.add("info", "No room beside the landing: %s is left behind" % ally.name(), ally.id))
+	r.lines.append(e.log.add("spell", "Thunder booms where %s stood" % c.name(), c.id))
+	# Who is near the space that was left as it stands now: those who went are gone from it.
+	var victims: Array[Combatant] = []
+	for v in sp()._area_victims(c, ctx["s"] as Dictionary, cells):
+		if not v in gone:
+			victims.append(v)
+	sp()._save_spell(ctx, victims, r, pausable)
+
+
+## Far Step: the caster teleports to the square picked, and for as long as it concentrates a Bonus Action on each of its
+## turns teleports it again (the `teleport` sustained action: SpellSustained.use_sustained). The spell and its
+## Concentration stand even when the first teleport can't happen (a Forcecage, Dimensional Shackles).
+func far_step(ctx: Dictionary, cell: Vector2i, r: CombatResult) -> void:
+	var c := ctx["c"] as Combatant
+	if not high.teleport_blocked(ctx, c):
+		sp()._teleport(c, cell, r)
+	var none: Array[Combatant] = []
+	sp()._grant_sustained(ctx, none)
 
 
 # --- Turn hooks ---------------------------------------------------------------------------------------
