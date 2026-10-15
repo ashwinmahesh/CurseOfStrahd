@@ -393,6 +393,16 @@ Reaction offers may supply `target_choices`, `selected_ids`, `min_targets`, `max
 and `select`. A bounded single selection uses radio behavior in the HUD. The encounter validates again before
 clearing `pending`; an invalid or exhausted selection costs nothing and leaves the decision open.
 
+A prompt can divide a pool (`ReactionRequest.pool` > 0, kind `preserve_life`; owner question 2026-10-14): each
+`target_choices` entry gives a creature (`id`, `name`, `label`) and the most it can take (`room`), `amounts` (id ->
+points) is the division so far, and `shared()`, `unspent()` and `pool_error()` read it. The HUD shows a slider for each
+creature and counts the points left to share as the player moves them; `selection_error()` refuses a division that
+passes a creature's `room` or the pool or gives nothing. `features.preserve_life_prompt(c)` asks for Preserve Life's
+division (the hotbar's way: nothing is spent until the prompt is confirmed, Skip spends nothing), and
+`features.preserve_life(c, allocation)` carries it out: one Channel Divinity use and one Magic action for a pool of
+5 x Cleric level that is new each use, shared among Bloodied creatures within 30 ft, up to half their maximum each, no
+Undead or Construct; points not given are lost.
+
 Weapon attacks offer a slot-selection prompt. Synchronous damage cannot pause yet: its default Ask policy
 spends nothing. The class abilities tab provides Ask, Off, and Auto at an **exact slot level**. Only explicit Auto
 spends against synchronous damage, and it never substitutes another slot level if that pool is exhausted.
