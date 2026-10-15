@@ -439,6 +439,23 @@ static func _combat_grid(view: LocationView) -> CombatGrid:
 	return g
 
 
+## A foe's token when the fight is over: one still up fades away and frees itself at the end of its half second, which is
+## after the fight's view (`playing`) has freed itself (a third of a second after it closes); a fallen one is hidden at
+## once and freed when the view has gone. That view can still be mid-beat on any of them: the story takes a fight back, and a
+## story bot plays the whole fight on the encounter and ends it, while the view plays; an attack's lunge resumes with
+## the blow's two tokens, and a fallen one freed under it was a script error (batch 291's logcheck, test_phase4_exit's
+## Vallaki fight). The beat stops with its view.
+static func _drop_token(tok: CombatToken, playing: CombatView) -> void:
+	if tok.visible and tok.combatant.is_alive():
+		tok.fade_away(0.5)
+		return
+	tok.hide()
+	if playing != null and is_instance_valid(playing) and playing.is_inside_tree():
+		playing.tree_exited.connect(tok.queue_free, CONNECT_ONE_SHOT)
+	else:
+		tok.queue_free()
+
+
 static func _end_encounter(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, outcome: String) -> void:
 	view.last_encounter = spec
 	Bestiary.after_fight(view.st, e)   # who fell and what was studied, for the journal's Bestiary (U8)
@@ -459,10 +476,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		var tok := ctokens[id] as CombatToken
 		if ours.has(tok):
 			continue
-		if tok.visible and tok.combatant.is_alive():
-			tok.fade_away(0.5)
-		else:
-			tok.queue_free()
+		_drop_token(tok, view.combat_view)
 	if view.combat_view != null:
 		view.combat_view.close_softly()
 		view.combat_view = null
