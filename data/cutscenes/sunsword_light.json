@@ -1,0 +1,16 @@
+{
+  "id": "sunsword_light",
+  "title": "A Room Without Shadows",
+  "summary": "The party stands in the Sunsword's light, every shadow gone from the room.",
+  "images": [
+    {
+      "image": "sunsword_light",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:sunsword_light"
+}

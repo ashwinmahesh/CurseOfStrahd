@@ -13,5 +13,6 @@
     0.5
   ],
   "trigger": "find:tome_of_strahd",
-  "once": true
+  "once": true,
+  "then": "tome_page"
 }

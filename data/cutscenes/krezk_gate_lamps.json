@@ -1,0 +1,16 @@
+{
+  "id": "krezk_gate_lamps",
+  "title": "The Watch at the Gate",
+  "summary": "Two watchmen with lanterns look you over at Krezk's black oak gate, then the road behind you.",
+  "images": [
+    {
+      "image": "krezk_gate_lamps",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:krezk_gate_lamps"
+}

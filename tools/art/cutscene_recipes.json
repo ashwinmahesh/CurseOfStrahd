@@ -1481,6 +1481,71 @@
       ],
       "prompt": "Inside a cold abbey chapel, its tall arched side door stands open on an empty snowy courtyard at dusk. The serene golden-haired young monk of the reference stands in the doorway, calm and quietly pleased, one hand opened toward a long, low stone building across the courtyard: the wards. Only one of its windows glows warm, and through that window, indoors, small and far, a still shape lies on a long table under a clean white linen sheet; nothing lies out in the snow. {party} stand beside him in the doorway, looking out. Candlelight and a gilded sunburst glow in the chapel behind them; outside, cold blue snow light and falling snow. Quiet dread.",
       "use": "b"
+    },
+    "abbey_gate_light": {
+      "refs": [],
+      "prompt": "The great gate of a snowbound mountain abbey at dusk, seen from the road below its shelf: grey stone walls, a bell tower and slate roofs furred with snow, a heavy gate, and high in the chapel wall one tall window glowing warm, a small dark figure in silhouette at it, a lamp hung unlit at the gate, fresh snow on the ground. {party} at the foot of the road, seen from behind, hooded, one holding a lantern. Cold blue dusk with one warm window; quiet menace, no gore.",
+      "use": "a"
+    },
+    "bonegrinder_far_castle": {
+      "refs": [],
+      "prompt": "Looking out from a high crag at night over the whole sunless valley of Barovia with cloud drifting between the ridges: far off on its pillar of rock, Castle Ravenloft with a single tall window glowing gold, a thin road winding through dark pines, a few tiny windows of a village in the distance. In the foreground the crag's edge with {party}, small hooded figures seen from behind, one holding a lantern. Deep blues and purples with one gold window; vast and lonely, no gore.",
+      "use": "a"
+    },
+    "castle_drawbridge": {
+      "refs": [],
+      "prompt": "Close on the drawbridge of Castle Ravenloft at night: huge iron chains running up to the gatehouse arch move by themselves, links catching a cold moon, the old planks black over a bottomless chasm of mist, the great gate beyond with its portcullis half raised into darkness and one window lit above it. {party} at the near end of the bridge, seen from behind, hooded and tiny against the gate, a lantern held up. Deep blue-violet night, cold moonlight, a single warm window; ominous, no gore.",
+      "use": "a"
+    },
+    "castle_windows_lit": {
+      "refs": [],
+      "prompt": "Castle Ravenloft on its pillar of rock seen from the village of Barovia far below at dusk, its towers lost in cloud, and now many of its tall windows lighting one after another in a slow diagonal climbing the walls like a held breath let out. In the foreground, the muddy lane between grey village roofs with {party} seen from behind, hooded, looking up. Cold blue-grey dusk with warm gold windows; foreboding, no gore.",
+      "use": "a"
+    },
+    "gallows_dead_turn": {
+      "refs": [],
+      "prompt": "The gallows field at a crossroads at night: grey figures half risen out of split grave mounds all across the field, dozens of them, their sunken faces turned the same way toward the road, mist at their knees, the gallows with its empty noose above them. On the road {party} seen from behind, hooded, a lantern raised, outnumbered. Cold moonlight and blue-grey mist; grim and shadowed, no gore.",
+      "use": "a"
+    },
+    "krezk_gate_lamps": {
+      "refs": [],
+      "prompt": "The black oak gate in the great grey stone wall of Krezk with the mountain rising behind: two watchmen in sheepskin with lanterns and spears stand at the gate looking suspiciously down the road, a goat's head showing over a pen inside the wall. {party} at the gate's foot, seen from behind, hooded and small. Grey dusk with warm lantern light; guarded and wary, no gore.",
+      "use": "a"
+    },
+    "strahd_mist_coffin": {
+      "refs": [],
+      "prompt": "A deep crypt at the bottom of Castle Ravenloft: a stone coffin with its lid half slid shut, and a stream of grey mist pouring in through cracks in the vaulted ceiling and flowing down into it like water, cold blue light, a few candle flames bending toward it, a long row of other coffins in the shadows; nobody present. Cold blue-grey with one warm candle; eerie and quiet, no gore.",
+      "use": "a"
+    },
+    "sunsword_light": {
+      "refs": [],
+      "prompt": "A dim stone room where {party}, hooded figures seen from behind, stand with their backs to the viewer, hoods up, faces hidden, and the hero in front of them, also seen from behind with a hood, holds up a bladeless hilt from which a blade of pure golden sunlight has sprung, the light so strong that every shadow in the room vanishes and the walls glow warm gold, dust motes sparkling, cloaks edged with gold light. Warm gold against the cold blue of the doorway behind; awe, no gore.",
+      "use": "b"
+    },
+    "symbol_dawn": {
+      "refs": [],
+      "prompt": "A dark crypt floor with a platinum sunburst holy symbol with a raven at its heart held out in a gloved hand of one of {party} (hooded, seen from behind), and a circle of warm white morning light spreading from it across the dark flagstones and up the walls, shadows retreating, mist burning off, small motes drifting. Cold blue-black at the edges to white-gold at the centre; hope, no gore.",
+      "use": "a"
+    },
+    "tome_page": {
+      "refs": [],
+      "prompt": "A great dark leather book lying open on a stone lectern in a candlelit chamber, its first page showing neat dense script (no readable words), a tall candle beside it leaning toward the page, a faint violet glow rising from the lettering. {party} stand round it, seen from behind, hooded, one reaching to turn the page. Warm candlelight with deep purple shadow; unease, no gore.",
+      "use": "a"
+    },
+    "tser_tent_music": {
+      "refs": [],
+      "prompt": "Inside the great patched Vistani tent at Tser Pool: lamps hung from the poles, a fiddler on a crate playing with eyes closed, dancers in bright patched skirts and waistcoats turning, a long table of food, warm gold light and rich colours, fabric patterns everywhere. {party} at the tent flap, seen from behind, hooded and small, one holding a lantern. Warm and joyful against the cold blue night outside the flap; the first warmth in the valley, no gore.",
+      "use": "a"
+    },
+    "village_square_empty": {
+      "refs": [],
+      "prompt": "The empty muddy square of the village of Barovia in steady rain: grey houses with nailed shutters round it, a dry well, the church at the far side with its door open a finger's width and a single candle glowing within, rain streaking the lantern light. {party} at the edge of the square, seen from behind, hooded and small. Grey rain and cold blue with one warm candle; a held breath, no gore.",
+      "use": "a"
+    },
+    "tower_lamp": {
+      "refs": [],
+      "prompt": "Van Richten's round black tower on its rock in the still black water of Lake Baratok at night, seen low from the shore: the tower's topmost window glows a steady yellow, its reflection a long line on the water, a rowboat tied at a small jetty at the rock's foot, dark mountains behind. {party} on the shore in the foreground, seen from behind, hooded and small, one holding a lantern. Cold blue-black with one warm window; quiet and lonely, no gore.",
+      "use": "a"
     }
   }
 }

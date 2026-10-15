@@ -1,0 +1,16 @@
+{
+  "id": "symbol_dawn",
+  "title": "The Cold Takes a Step Back",
+  "summary": "Light from the Holy Symbol spreads over the dark floor in a slow circle and the shadows retreat.",
+  "images": [
+    {
+      "image": "symbol_dawn",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:symbol_dawn"
+}

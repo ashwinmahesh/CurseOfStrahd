@@ -445,6 +445,24 @@ func test_a_places_second_scene_follows_the_first() -> void:
 	assert_true(not get_tree().paused, "and the world is back")
 
 
+## Owner rule (2026-10-14): every cutscene is at least two scenes. The pictures a trigger plays (a place, a treasure, a
+## fight's narrator key) each name a second scene with `then`, and a Narrator line to read over it.
+func test_every_trigger_cutscene_has_a_second_scene_with_a_narrator_line() -> void:
+	Cutscenes.clear_cache()
+	var narrator := Narrator.new(1)
+	var checked := 0
+	for c in Cutscenes.all():
+		if str(c.get("trigger", "")) == "":
+			continue
+		checked += 1
+		var next := str(c.get("then", ""))
+		assert_ne(next, "", "%s has a second scene" % c["id"])
+		var scene := Cutscenes.get_cutscene(next)
+		assert_true(not scene.is_empty(), "%s: the scene after it, %s, exists" % [c["id"], next])
+		assert_true(narrator.has_trigger(str(scene.get("caption", ""))), "%s has a Narrator line over it" % next)
+	assert_true(checked >= 14, "the triggers are checked (%d)" % checked)
+
+
 func test_skip_in_the_first_scene_closes_the_second_too() -> void:
 	await _game(false)
 	var narrator := root.get("narrator") as Narrator

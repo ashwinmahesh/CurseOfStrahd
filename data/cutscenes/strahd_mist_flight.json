@@ -13,5 +13,6 @@
     0.45
   ],
   "trigger": "strahd:fled_to_coffin",
-  "once": true
+  "once": true,
+  "then": "strahd_mist_coffin"
 }

@@ -9,5 +9,6 @@
     }
   ],
   "trigger": "enter:van_richtens_tower",
-  "once": true
+  "once": true,
+  "then": "tower_lamp"
 }

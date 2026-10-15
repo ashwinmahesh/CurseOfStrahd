@@ -1,0 +1,16 @@
+{
+  "id": "gallows_dead_turn",
+  "title": "Every Head Turns",
+  "summary": "Across the gallows field the risen dead all turn toward the road.",
+  "images": [
+    {
+      "image": "gallows_dead_turn",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:gallows_dead_turn"
+}
