@@ -32,7 +32,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 
 - **Map rows** use the combat legend: `.` floor, `#` wall, `=` low obstacle (furniture, Half Cover), `~` Difficult
   Terrain, `1`-`4` raised floor 5 ft a step (a walk, a ledge, a stair), `_` a low dais 2 ft (a podium, a stage, an
-  altar's step, a porch, a jetty: owner 2026-10-12, no climb and no high ground), `w` deep water (not walkable, doesn't block sight), space = void. Doors are cells listed in `doors` (drawn as a closed door; a closed
+  altar's step, a porch, a jetty: owner 2026-10-12, no climb and no high ground), `w` deep water (not walkable, doesn't block sight), space = void.
+  In Castle Ravenloft each 5 ft rise between two walkable built floors is drawn with a short flight of small steps in
+  the lower square against the face (owner 2026-10-15, Stairs.flight; ArenaBoard._flights, and CastleBuilder for the
+  gates' wall walk): drawing only, the rules still have a 5 ft step up. Doors are cells listed in `doors` (drawn as a closed door; a closed
   door blocks movement and sight until opened).
 - **Doors:** `locked` or a `lock_dc` makes a lock, opened by its `key`, by picking (thieves' tools, `lock_dc`), forcing
   (Athletics, `lock_dc` + 2) or Knock; `secret_dc` hides the door until it's found. `when` is a condition the door
