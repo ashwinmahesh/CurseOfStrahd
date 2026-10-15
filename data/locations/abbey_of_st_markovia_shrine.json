@@ -451,7 +451,7 @@
           "lying": {
             "on": "bride_bier"
           },
-          "hp": 160
+          "hp": 400
         },
         {
           "monster": "berserker",
@@ -519,7 +519,8 @@
           "cell": [
             15,
             3
-          ]
+          ],
+          "hp": 320
         },
         {
           "monster": "berserker",
@@ -776,7 +777,7 @@
             3
           ],
           "name": "The Abbot",
-          "hp": 250
+          "hp": 500
         },
         {
           "monster": "mongrelfolk",

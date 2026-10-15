@@ -954,6 +954,132 @@
     {
       "id": "court_final_audience_hall",
       "trigger": "enter_area:court_audience_hall",
+      "when": "item:sunsword",
+      "final_battle": "castle_ravenloft_audience_hall",
+      "lair": true,
+      "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Three great wolves rise from the dais steps, and four of his spawn step out from behind the throne.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            22,
+            2
+          ],
+          "name": "Strahd von Zarovich",
+          "hp": 635
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            19,
+            4
+          ],
+          "name": "Wolf of the dais",
+          "lying": true
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            24,
+            4
+          ],
+          "name": "Wolf of the dais",
+          "lying": true
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            22,
+            1
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            22,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            23,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            21,
+            1
+          ],
+          "name": "Wolf of the dais"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            21,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            23,
+            1
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            23,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            20,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            22,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            24,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        }
+      ],
+      "surprise": ""
+    },
+    {
+      "id": "court_final_audience_hall",
+      "trigger": "enter_area:court_audience_hall",
       "final_battle": "castle_ravenloft_audience_hall",
       "lair": true,
       "text": "He is on the throne, one leg over the arm of it, as if he has been waiting a long time and enjoyed every minute. Three great wolves rise from the dais steps, and four of his spawn step out from behind the throne.",
@@ -1024,6 +1150,104 @@
             1
           ],
           "name": "Wolf of the dais"
+        }
+      ],
+      "surprise": ""
+    },
+    {
+      "id": "court_final_study",
+      "trigger": "enter_area:court_study",
+      "when": "item:sunsword",
+      "final_battle": "castle_ravenloft_study",
+      "lair": true,
+      "text": "He is reading by the fire. He finishes the page before he looks up, and marks it with a ribbon, and the chimney fills with wings. Five of his spawn come in from the gallery and close the doors behind you.",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            5,
+            3
+          ],
+          "name": "Strahd von Zarovich",
+          "hp": 635
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            3,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_bats",
+          "cell": [
+            8,
+            1
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            5,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            4,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            2
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            6,
+            4
+          ],
+          "name": "One of Strahd's spawn"
         }
       ],
       "surprise": ""
@@ -1152,7 +1376,7 @@
             21
           ],
           "name": "Rahadin",
-          "hp": 300
+          "hp": 690
         },
         {
           "monster": "strahds_animated_armor",
@@ -1175,6 +1399,13 @@
             19
           ],
           "hp": 50
+        },
+        {
+          "monster": "strahds_animated_armor",
+          "cell": [
+            21,
+            21
+          ]
         }
       ],
       "surprise": "",
@@ -1191,21 +1422,24 @@
             22,
             13
           ],
-          "name": "Rahadin"
+          "name": "Rahadin",
+          "hp": 265
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             20,
             12
-          ]
+          ],
+          "hp": 220
         },
         {
           "monster": "strahds_animated_armor",
           "cell": [
             24,
             12
-          ]
+          ],
+          "hp": 220
         },
         {
           "monster": "strahds_animated_armor",
@@ -1213,7 +1447,7 @@
             22,
             12
           ],
-          "hp": 90
+          "hp": 175
         }
       ],
       "surprise": "",

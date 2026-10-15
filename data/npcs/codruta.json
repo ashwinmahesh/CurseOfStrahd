@@ -1,0 +1,19 @@
+{
+  "id": "codruta",
+  "name": "Codruta",
+  "title": "A Child Taken from Krezk",
+  "summary": "The youngest of the five children the pack carried off from the farms below Krezk: six years old, and lost without the rag doll she dropped on the hillside.",
+  "portrait": "ilka_sarnov",
+  "sprite": "ilka_sarnov",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "child",
+    "krezk",
+    "werewolf_den"
+  ],
+  "region": "werewolf_den",
+  "pronouns": "she/her"
+}

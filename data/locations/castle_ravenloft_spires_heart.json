@@ -187,6 +187,99 @@
             4
           ],
           "name": "Strahd von Zarovich",
+          "hp": 455
+        },
+        {
+          "monster": "helmed_horror",
+          "cell": [
+            12,
+            8
+          ],
+          "name": "Heart's Warden"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            5
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            5
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            3
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            5
+          ],
+          "name": "One of Strahd's spawn"
+        }
+      ]
+    },
+    {
+      "id": "heart_of_sorrow_final",
+      "trigger": "enter_area:spires_heart_chamber",
+      "when": "",
+      "final_battle": "castle_ravenloft_heart_of_sorrow",
+      "lair": true,
+      "text": "He is standing beside the heart with one hand resting on the glass, as a man rests a hand on a horse he is fond of. Every beat lights his face from below. Two of his spawn and an empty suit of armour step out of the shadows by the door.",
+      "surprise": "",
+      "flag": "spires_final_battle_fought",
+      "monsters": [
+        {
+          "monster": "strahd_von_zarovich",
+          "cell": [
+            8,
+            4
+          ],
+          "name": "Strahd von Zarovich",
           "hp": 350
         },
         {
@@ -330,7 +423,7 @@
             3
           ],
           "name": "Strahd von Zarovich",
-          "hp": 350
+          "hp": 455
         },
         {
           "monster": "strahds_animated_armor",
@@ -344,6 +437,48 @@
           "cell": [
             8,
             2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            8,
+            4
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            3
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            7,
+            4
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            2
+          ]
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            9,
+            4
           ]
         }
       ]

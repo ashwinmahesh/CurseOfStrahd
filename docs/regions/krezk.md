@@ -268,7 +268,7 @@ The climax fight on the critical path's fighting branch is `bride_defends`; the 
 attacks him or will not give up Ireena, and every warning in the region (Clovin, the candles, Insight, Ezmerelda) says
 not to. Retuned for the sharp test party (owner, 2026-10-13: the autopilot smites, opens with Spirit Guardians and throws
 Fireball as he plays, and wins 5 in 8 on Balanced): at level 7 Fireball and Spirit Guardians cut through crowds, so both
-fights lean on flesh golems; the bride fight and the Abbot's each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd).
+fights lean on flesh golems; the bride fight and the Abbot's each win 5 of 8 (tests/integration/test_scaled_boss_fights.gd). (Retuned again on 2026-10-14: the boss fights are now 3 in 8 for the test party at full ability, so the Hit Points and helpers in this note are the 5 in 8 ones; the current line-ups are in docs/story/boss_fights.md.)
 
 Road table `krezk_road` (map `road_ambush`, 20% by day / 45% by night): 3 dire wolves + 3 wolves (750), 2 druids with
 2 needle and 4 twig blights (1100), Clovin's broken cart (event, once), the White Sun waystone (event, once), 3 werewolves

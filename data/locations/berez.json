@@ -1577,7 +1577,7 @@
             29,
             13
           ],
-          "hp": 110
+          "hp": 160
         },
         {
           "monster": "baba_lysaga",
@@ -1585,7 +1585,7 @@
             33,
             17
           ],
-          "hp": 100
+          "hp": 145
         }
       ],
       "surprise": "",
@@ -1654,7 +1654,7 @@
             7,
             11
           ],
-          "hp": 180
+          "hp": 440
         },
         {
           "monster": "swarm_of_insects",
@@ -1696,6 +1696,48 @@
           "cell": [
             7,
             10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            7,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            11
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            6,
+            12
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            10
+          ]
+        },
+        {
+          "monster": "scarecrow",
+          "cell": [
+            8,
+            12
           ]
         }
       ],
@@ -1784,7 +1826,7 @@
             29,
             13
           ],
-          "hp": 195
+          "hp": 495
         },
         {
           "monster": "swarm_of_insects",
@@ -1988,7 +2030,7 @@
             32,
             11
           ],
-          "hp": 375
+          "hp": 715
         },
         {
           "monster": "banshee",
