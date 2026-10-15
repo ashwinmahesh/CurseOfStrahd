@@ -784,13 +784,15 @@
       "released": true
     },
     "ilya_krezkov": {
-      "voice_id": "tJHJUEHzOkMoPmJJ5jo2",
-      "name": "Ryan Quin",
-      "description": "A boy of eight with a hoarse, feverish but lively, curious child's voice and a strong, clearly audible Eastern European (Romanian) accent.",
+      "voice_id": "bA58y3FqVI6b6gTNh0oT",
+      "name": "Library voice: Kavya - Cute & Engaging Character",
+      "description": "A boy of eight with a hoarse, feverish but lively, curious child's voice and a strong, clearly audible Eastern European (Romanian) accent. Owner 2026-10-15: Ryan Quin sounded too old for him, so he takes the library child's voice Kavya, which Dumitru had before (also Thorn's, in Death House).",
       "settings": {},
       "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "shared_with": "thorn",
+      "earlier_voice_id": "tJHJUEHzOkMoPmJJ5jo2"
     },
     "thorn": {
       "voice_id": "bA58y3FqVI6b6gTNh0oT",
@@ -2146,12 +2148,11 @@
     "bray_martikov": {
       "voice_id": "tJHJUEHzOkMoPmJJ5jo2",
       "name": "Library voice: Ryan Quin",
-      "description": "Bray Martikov, ten, a wereraven boy of the Blue Water Inn: a child's library voice (also Ilya Krezkov's, in Krezk), chosen by Claude on the owner's go-ahead while credits were short (2026-10-08).",
+      "description": "Bray Martikov, ten, a wereraven boy of the Blue Water Inn: a child's library voice, chosen by Claude on the owner's go-ahead while credits were short (2026-10-08). Ilya Krezkov shared this voice until 2026-10-15.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
-      "accent_tag": "[strong Romanian accent]",
-      "shared_with": "ilya_krezkov"
+      "accent_tag": "[strong Romanian accent]"
     },
     "count_fowler": {
       "voice_id": "kwajW3Xh5svCeKU5ky2S",
