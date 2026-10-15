@@ -642,7 +642,7 @@
             9,
             18
           ],
-          "hp": 780
+          "hp": 920
         },
         {
           "monster": "ghast",
@@ -655,7 +655,7 @@
         {
           "monster": "ghast",
           "cell": [
-            11,
+            14,
             19
           ],
           "name": "A Pilgrim's Shadow"
@@ -753,8 +753,8 @@
         {
           "monster": "ghast",
           "cell": [
-            11,
-            19
+            12,
+            20
           ],
           "name": "A Pilgrim's Shadow"
         },
@@ -811,8 +811,8 @@
         {
           "monster": "ghast",
           "cell": [
-            11,
-            19
+            12,
+            20
           ],
           "name": "A Pilgrim's Shadow"
         },
@@ -860,7 +860,7 @@
         {
           "monster": "ghast",
           "cell": [
-            11,
+            13,
             19
           ],
           "name": "A Pilgrim's Shadow"
@@ -894,7 +894,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            28,
+            27,
             18
           ],
           "name": "The Falconer's Hand"
@@ -918,7 +918,7 @@
         {
           "monster": "gargoyle",
           "cell": [
-            29,
+            28,
             19
           ],
           "name": "A Stone Bird"

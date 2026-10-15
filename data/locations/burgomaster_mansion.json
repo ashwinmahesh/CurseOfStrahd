@@ -630,7 +630,8 @@
             3,
             4
           ],
-          "name": "The Tenant"
+          "name": "The Tenant",
+          "hp": 55
         },
         {
           "monster": "ghoul",
@@ -638,15 +639,17 @@
             2,
             5
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 35
         },
         {
           "monster": "ghoul",
           "cell": [
-            5,
+            9,
             3
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 35
         },
         {
           "monster": "ghoul",
@@ -654,7 +657,8 @@
             1,
             4
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 35
         },
         {
           "monster": "ghoul",
@@ -662,7 +666,8 @@
             2,
             3
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 35
         },
         {
           "monster": "ghoul",
@@ -670,7 +675,8 @@
             3,
             3
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 35
         }
       ],
       "surprise": "",
@@ -688,7 +694,8 @@
             3,
             4
           ],
-          "name": "The Tenant"
+          "name": "The Tenant",
+          "hp": 70
         },
         {
           "monster": "ghoul",
@@ -696,15 +703,17 @@
             2,
             5
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 45
         },
         {
           "monster": "ghoul",
           "cell": [
-            5,
+            9,
             3
           ],
-          "name": "A Siege-Winter Servant"
+          "name": "A Siege-Winter Servant",
+          "hp": 45
         },
         {
           "monster": "zombie",

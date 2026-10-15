@@ -18,6 +18,9 @@ var prepare: Callable
 ## A fight that isn't in the place's data (Strahd's visits, data/strahd/visits.json): set, the series plays it on the
 ## location's map, its foes placed as the game places them (custom_start); `encounter` is then its id.
 var custom_fight: Dictionary = {}
+## A trigger to fire to start the fight (open:hag_oven, check:rahadin_footlocker:failure), for an encounter whose versions have
+## different triggers: that trigger starts its own version (LocationFights._trigger_encounter).
+var fire_trigger := ""
 
 ## The boss fights (owner, 2026-10-14: 3 wins in 8 for a party that uses its skills to the full): the autopilot plays
 ## them at full ability (PartyAutopilot.full); every other fight is still tuned against sharp play alone.
@@ -82,6 +85,8 @@ func _play(location: String, hour: int, level: int, encounter: String, seed_valu
 	var started := str((GameState.story.loc_state(location)["encounters"] as Dictionary).get(encounter, "")) == "started"
 	if not started and not custom_fight.is_empty():
 		started = custom_start(v, custom_fight)
+	if not started and fire_trigger != "":
+		started = LocationFights._trigger_encounter(v, fire_trigger)
 	if not started and speakers_step_aside:
 		step_aside(v, encounter)
 	assert_true(started or v.start_encounter(encounter), "%s starts" % encounter)

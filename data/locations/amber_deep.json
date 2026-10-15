@@ -564,7 +564,7 @@
         {
           "monster": "amber_golem",
           "cell": [
-            17,
+            18,
             16
           ],
           "name": "A Sleeper Woken",
@@ -609,8 +609,8 @@
         {
           "monster": "dream_gazer",
           "cell": [
-            16,
-            16
+            12,
+            13
           ]
         },
         {
@@ -624,7 +624,7 @@
           "monster": "dream_gazer",
           "cell": [
             17,
-            15
+            10
           ]
         },
         {
@@ -644,8 +644,8 @@
         {
           "monster": "dream_gazer",
           "cell": [
-            18,
-            16
+            23,
+            13
           ]
         }
       ],

@@ -813,12 +813,12 @@
             7,
             16
           ],
-          "hp": 545
+          "hp": 520
         },
         {
           "monster": "wraith",
           "cell": [
-            3,
+            2,
             17
           ],
           "name": "One Who Asked"
@@ -849,12 +849,12 @@
             7,
             16
           ],
-          "hp": 590
+          "hp": 570
         },
         {
           "monster": "wraith",
           "cell": [
-            3,
+            2,
             17
           ],
           "name": "One Who Asked"

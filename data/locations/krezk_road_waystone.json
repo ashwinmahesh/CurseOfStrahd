@@ -178,10 +178,11 @@
         {
           "monster": "werewolf",
           "cell": [
-            22,
-            2
+            27,
+            8
           ],
-          "name": "A Pack Hunter"
+          "name": "A Pack Hunter",
+          "hp": 55
         },
         {
           "monster": "werewolf",
@@ -189,7 +190,8 @@
             24,
             4
           ],
-          "name": "A Pack Hunter"
+          "name": "A Pack Hunter",
+          "hp": 55
         },
         {
           "monster": "werewolf",
@@ -197,7 +199,8 @@
             4,
             4
           ],
-          "name": "A Pack Hunter"
+          "name": "A Pack Hunter",
+          "hp": 55
         },
         {
           "monster": "werewolf",
@@ -205,7 +208,8 @@
             10,
             13
           ],
-          "name": "A Pack Hunter"
+          "name": "A Pack Hunter",
+          "hp": 55
         },
         {
           "monster": "wolf",
@@ -224,8 +228,8 @@
         {
           "monster": "wolf",
           "cell": [
-            21,
-            2
+            16,
+            4
           ]
         }
       ]

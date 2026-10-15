@@ -577,7 +577,7 @@
             10
           ],
           "name": "The Vault Guardian",
-          "hp": 660
+          "hp": 460
         },
         {
           "monster": "wraith",
@@ -606,8 +606,8 @@
         {
           "monster": "wraith",
           "cell": [
-            23,
-            11
+            25,
+            13
           ],
           "name": "Warden's wraith"
         }
@@ -646,7 +646,7 @@
             22
           ],
           "name": "Vosk, unmasked",
-          "hp": 205
+          "hp": 330
         },
         {
           "monster": "flameskull",
@@ -658,8 +658,8 @@
         {
           "monster": "flameskull",
           "cell": [
-            19,
-            23
+            23,
+            28
           ]
         }
       ],

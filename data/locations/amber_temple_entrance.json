@@ -590,8 +590,8 @@
         {
           "monster": "amber_golem",
           "cell": [
-            18,
-            10
+            24,
+            15
           ],
           "name": "The Amber Sentinel",
           "hp": 395
@@ -623,34 +623,13 @@
           "monster": "wraith",
           "cell": [
             18,
-            11
+            8
           ]
         },
         {
           "monster": "wraith",
           "cell": [
             19,
-            10
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            17,
-            11
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            19,
-            11
-          ]
-        },
-        {
-          "monster": "wraith",
-          "cell": [
-            16,
             10
           ]
         }
@@ -703,11 +682,11 @@
         {
           "monster": "amber_golem",
           "cell": [
-            18,
-            10
+            24,
+            14
           ],
           "name": "The Amber Sentinel",
-          "hp": 440
+          "hp": 375
         },
         {
           "monster": "wraith",
@@ -720,13 +699,13 @@
           "monster": "wraith",
           "cell": [
             18,
-            11
+            8
           ]
         },
         {
           "monster": "wraith",
           "cell": [
-            19,
+            24,
             10
           ]
         },

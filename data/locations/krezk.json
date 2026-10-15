@@ -1311,7 +1311,7 @@
             16,
             19
           ],
-          "hp": 270
+          "hp": 310
         },
         {
           "monster": "werewolf",
@@ -1333,7 +1333,7 @@
           "monster": "werewolf",
           "cell": [
             20,
-            17
+            16
           ],
           "name": "An Old Wolf of the Pack"
         },
@@ -1367,7 +1367,7 @@
             16,
             19
           ],
-          "hp": 410
+          "hp": 330
         },
         {
           "monster": "werewolf",
@@ -1388,7 +1388,7 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            20,
+            21,
             19
           ]
         },
@@ -1419,7 +1419,7 @@
         {
           "monster": "werewolf",
           "cell": [
-            14,
+            12,
             17
           ],
           "name": "An Old Wolf of the Pack"
@@ -1459,7 +1459,7 @@
         {
           "monster": "werewolf",
           "cell": [
-            14,
+            12,
             17
           ],
           "name": "An Old Wolf of the Pack"

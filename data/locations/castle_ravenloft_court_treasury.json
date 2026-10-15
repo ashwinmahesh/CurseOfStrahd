@@ -229,13 +229,13 @@
             6
           ],
           "name": "Strahd von Zarovich",
-          "hp": 600
+          "hp": 660
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            4,
-            8
+            2,
+            10
           ],
           "name": "The vault's warden"
         },
@@ -266,7 +266,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            8,
+            13,
             6
           ],
           "name": "One of Strahd's spawn"
@@ -333,8 +333,8 @@
         {
           "monster": "helmed_horror",
           "cell": [
-            4,
-            8
+            1,
+            10
           ],
           "name": "The vault's warden"
         },

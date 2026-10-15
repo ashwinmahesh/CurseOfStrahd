@@ -558,8 +558,8 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            12,
-            10
+            13,
+            11
           ]
         },
         {
@@ -657,11 +657,11 @@
         {
           "monster": "night_hag",
           "cell": [
-            10,
-            6
+            4,
+            8
           ],
           "name": "Morgantha",
-          "hp": 220
+          "hp": 110
         },
         {
           "monster": "night_hag",
@@ -670,7 +670,7 @@
             3
           ],
           "name": "Bella Sunbane",
-          "hp": 220
+          "hp": 110
         },
         {
           "monster": "dire_wolf",
@@ -696,38 +696,38 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            3,
+            4,
+            11
+          ]
+        },
+        {
+          "monster": "dire_wolf",
+          "cell": [
+            12,
+            1
+          ]
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
+            3
+          ],
+          "name": "Rats from the grain bins"
+        },
+        {
+          "monster": "swarm_of_rats",
+          "cell": [
+            11,
             12
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            11,
-            4
-          ]
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            10,
-            5
           ],
           "name": "Rats from the grain bins"
         },
         {
           "monster": "swarm_of_rats",
           "cell": [
-            10,
-            7
-          ],
-          "name": "Rats from the grain bins"
-        },
-        {
-          "monster": "swarm_of_rats",
-          "cell": [
-            11,
-            6
+            15,
+            2
           ],
           "name": "Rats from the grain bins"
         },
@@ -755,29 +755,29 @@
         {
           "monster": "dire_wolf",
           "cell": [
-            11,
-            7
+            14,
+            9
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            8,
+            2,
             6
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            10,
-            4
+            9,
+            3
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
             10,
-            8
+            9
           ]
         }
       ],
@@ -829,8 +829,8 @@
         {
           "monster": "night_hag",
           "cell": [
-            10,
-            6
+            12,
+            2
           ],
           "name": "Morgantha",
           "hp": 300
@@ -862,15 +862,15 @@
         {
           "monster": "nightmare",
           "cell": [
-            10,
-            5
+            13,
+            1
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            10,
-            7
+            11,
+            11
           ]
         },
         {
@@ -883,8 +883,8 @@
         {
           "monster": "nightmare",
           "cell": [
-            9,
-            5
+            4,
+            1
           ]
         },
         {
@@ -897,15 +897,8 @@
         {
           "monster": "nightmare",
           "cell": [
-            11,
+            15,
             5
-          ]
-        },
-        {
-          "monster": "nightmare",
-          "cell": [
-            11,
-            7
           ]
         }
       ],
@@ -942,8 +935,8 @@
         {
           "monster": "swarm_of_rats",
           "cell": [
-            12,
-            10
+            14,
+            12
           ],
           "name": "Rats from the grain bins"
         }
@@ -994,11 +987,11 @@
         {
           "monster": "night_hag",
           "cell": [
-            10,
-            6
+            7,
+            1
           ],
           "name": "Bella Sunbane",
-          "hp": 250
+          "hp": 300
         },
         {
           "monster": "nightmare",
@@ -1010,43 +1003,36 @@
         {
           "monster": "nightmare",
           "cell": [
-            10,
-            7
+            11,
+            11
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            11,
-            6
+            15,
+            8
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            9,
-            5
+            4,
+            1
           ]
         },
         {
           "monster": "dire_wolf",
           "cell": [
-            9,
-            7
-          ]
-        },
-        {
-          "monster": "dire_wolf",
-          "cell": [
-            11,
-            5
+            13,
+            11
           ]
         },
         {
           "monster": "nightmare",
           "cell": [
-            11,
-            7
+            13,
+            9
           ]
         },
         {
@@ -1059,8 +1045,8 @@
         {
           "monster": "nightmare",
           "cell": [
-            10,
-            4
+            12,
+            1
           ]
         }
       ],

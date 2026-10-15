@@ -1337,9 +1337,9 @@
           "monster": "kiril_stoyanovich",
           "cell": [
             19,
-            20
+            17
           ],
-          "hp": 225
+          "hp": 185
         },
         {
           "monster": "emil_toranescu",
@@ -1357,7 +1357,7 @@
             17
           ],
           "name": "Zuleika",
-          "hp": 150
+          "hp": 125
         },
         {
           "monster": "werewolf",
@@ -1365,7 +1365,7 @@
             18,
             21
           ],
-          "hp": 180
+          "hp": 150
         },
         {
           "monster": "werewolf",
@@ -1373,7 +1373,7 @@
             21,
             21
           ],
-          "hp": 180
+          "hp": 150
         },
         {
           "monster": "dire_wolf",
@@ -1395,7 +1395,7 @@
             18,
             20
           ],
-          "hp": 180
+          "hp": 150
         },
         {
           "monster": "dire_wolf",

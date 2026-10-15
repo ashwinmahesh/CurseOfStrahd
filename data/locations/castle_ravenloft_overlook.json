@@ -194,12 +194,12 @@
             5
           ],
           "name": "Strahd von Zarovich",
-          "hp": 590
+          "hp": 765
         },
         {
           "monster": "swarm_of_bats",
           "cell": [
-            14,
+            12,
             2
           ]
         },
@@ -213,7 +213,7 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            17,
+            12,
             5
           ]
         },
@@ -271,7 +271,7 @@
         {
           "monster": "swarm_of_bats",
           "cell": [
-            14,
+            12,
             2
           ]
         },

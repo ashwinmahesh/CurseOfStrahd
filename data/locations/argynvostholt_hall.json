@@ -791,8 +791,8 @@
         {
           "monster": "revenant",
           "cell": [
-            21,
-            5
+            23,
+            8
           ],
           "name": "Vladimir's second",
           "hp": 190

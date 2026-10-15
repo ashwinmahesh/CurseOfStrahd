@@ -760,13 +760,13 @@
             3
           ],
           "name": "The Abbot",
-          "hp": 500
+          "hp": 350
         },
         {
           "monster": "mongrelfolk",
           "cell": [
-            7,
-            4
+            5,
+            6
           ]
         },
         {

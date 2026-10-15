@@ -1217,7 +1217,7 @@
             27,
             26
           ],
-          "hp": 340
+          "hp": 255
         },
         {
           "monster": "vine_blight",
@@ -1299,8 +1299,8 @@
         {
           "monster": "tree_blight",
           "cell": [
-            33,
-            20
+            35,
+            26
           ],
           "name": "The Sixth Row"
         }

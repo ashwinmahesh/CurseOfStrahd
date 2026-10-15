@@ -1712,7 +1712,7 @@
             37,
             18
           ],
-          "hp": 520
+          "hp": 500
         },
         {
           "monster": "skeleton",
@@ -1725,23 +1725,23 @@
         {
           "monster": "skeleton",
           "cell": [
-            33,
-            19
-          ],
-          "name": "Guest of Bone"
-        },
-        {
-          "monster": "skeleton",
-          "cell": [
-            35,
-            17
-          ],
-          "name": "Guest of Bone"
-        },
-        {
-          "monster": "skeleton",
-          "cell": [
             31,
+            21
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            35,
+            17
+          ],
+          "name": "Guest of Bone"
+        },
+        {
+          "monster": "skeleton",
+          "cell": [
+            30,
             19
           ],
           "name": "Guest of Bone"
@@ -1757,7 +1757,7 @@
         {
           "monster": "skeleton",
           "cell": [
-            32,
+            30,
             17
           ],
           "name": "Guest of Bone"
@@ -1861,8 +1861,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            35,
-            16
+            34,
+            13
           ],
           "name": "One of Strahd's spawn"
         },
@@ -1895,7 +1895,7 @@
         {
           "monster": "skeleton",
           "cell": [
-            31,
+            30,
             17
           ],
           "name": "Guest of Bone"
@@ -1919,7 +1919,7 @@
         {
           "monster": "skeleton",
           "cell": [
-            31,
+            30,
             19
           ],
           "name": "Guest of Bone"
@@ -1935,8 +1935,8 @@
         {
           "monster": "skeleton",
           "cell": [
-            32,
-            17
+            31,
+            15
           ],
           "name": "Guest of Bone"
         },

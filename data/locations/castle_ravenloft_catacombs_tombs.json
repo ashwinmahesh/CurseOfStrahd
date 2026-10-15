@@ -397,7 +397,7 @@
     {
       "id": "cat_sergei_final",
       "trigger": "enter_area:castle_ravenloft_sergeis_tomb",
-      "when": "not flag.strahd_in_coffin",
+      "when": "not flag.strahd_in_coffin and item:sunsword",
       "final_battle": "castle_ravenloft_sergeis_tomb",
       "lair": true,
       "surprise": "",
@@ -473,24 +473,16 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            5,
-            4
+            2,
+            2
           ],
           "name": "One of Strahd's spawn"
         },
         {
           "monster": "vampire_spawn",
           "cell": [
-            5,
-            6
-          ],
-          "name": "One of Strahd's spawn"
-        },
-        {
-          "monster": "vampire_spawn",
-          "cell": [
-            7,
-            4
+            2,
+            10
           ],
           "name": "One of Strahd's spawn"
         },
@@ -498,7 +490,15 @@
           "monster": "vampire_spawn",
           "cell": [
             7,
-            6
+            4
+          ],
+          "name": "One of Strahd's spawn"
+        },
+        {
+          "monster": "vampire_spawn",
+          "cell": [
+            10,
+            10
           ],
           "name": "One of Strahd's spawn"
         }
@@ -552,8 +552,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            5,
-            5
+            2,
+            2
           ],
           "name": "One of Strahd's spawn"
         },
@@ -568,8 +568,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            6,
-            6
+            2,
+            9
           ],
           "name": "One of Strahd's spawn"
         },
@@ -636,7 +636,7 @@
     {
       "id": "cat_royal_final",
       "trigger": "enter_area:castle_ravenloft_tomb_of_barov_and_ravenovia",
-      "when": "not flag.strahd_in_coffin",
+      "when": "not flag.strahd_in_coffin and item:sunsword",
       "final_battle": "castle_ravenloft_tomb_of_barov_and_ravenovia",
       "lair": true,
       "surprise": "",
@@ -648,7 +648,7 @@
             16,
             23
           ],
-          "hp": 495
+          "hp": 345
         },
         {
           "monster": "specter",
@@ -674,7 +674,7 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            15,
+            9,
             23
           ],
           "name": "One of Strahd's spawn"
@@ -706,8 +706,8 @@
         {
           "monster": "vampire_spawn",
           "cell": [
-            15,
-            22
+            10,
+            20
           ],
           "name": "One of Strahd's spawn"
         },

@@ -469,7 +469,7 @@
             15
           ],
           "name": "Vladimir Horngaard",
-          "hp": 300
+          "hp": 340
         },
         {
           "monster": "revenant",
@@ -478,7 +478,7 @@
             17
           ],
           "name": "Dead Knight",
-          "hp": 195
+          "hp": 220
         },
         {
           "monster": "revenant",
@@ -487,7 +487,7 @@
             13
           ],
           "name": "Dead Knight",
-          "hp": 195
+          "hp": 220
         },
         {
           "monster": "phantom_warrior",
@@ -500,24 +500,17 @@
         {
           "monster": "revenant",
           "cell": [
-            6,
-            14
+            7,
+            13
           ],
           "name": "Dead Knight",
-          "hp": 195
+          "hp": 220
         },
         {
           "monster": "wight",
           "cell": [
             2,
             15
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            3,
-            14
           ]
         }
       ]

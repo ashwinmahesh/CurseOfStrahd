@@ -20,7 +20,7 @@ static func _trigger_encounter(view: LocationView, trigger: String) -> bool:
 			continue
 		if str(spec.get("final_battle", "")) != "":
 			return _begin_final_battle(view, str(spec["id"]))
-		start_encounter(view, str(spec["id"]))
+		start_encounter(view, str(spec["id"]), spec)
 		return true
 	return false
 
@@ -92,10 +92,11 @@ static func ward_for(data: Dictionary, location: Dictionary, state: StoryState) 
 
 ## The fight happens here, on the same grid: the party where it stands, the monsters where the data puts them.
 ## Surprise (2024, LocationStealth): a sneaking party surprises each foe that hasn't noticed any of them.
-static func start_encounter(view: LocationView, encounter_id: String) -> bool:
+static func start_encounter(view: LocationView, encounter_id: String, chosen: Dictionary = {}) -> bool:
 	# Several entries may share an id with different `when` conditions (e.g. a lighter version for a lower-level
-	# party): the first whose condition holds is the fight.
-	var spec := spec_for(view, encounter_id)
+	# party): the first whose condition holds is the fight. A trigger that starts its own entry (`chosen`: the oven
+	# Offalia's open:hag_oven, Rahadin's failed footlocker) starts that version, not another of the same id.
+	var spec := chosen if not chosen.is_empty() else spec_for(view, encounter_id)
 	if spec.is_empty() or view.in_combat:
 		return false
 	if view._pending_final == encounter_id:

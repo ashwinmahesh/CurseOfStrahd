@@ -2831,7 +2831,7 @@
             12
           ],
           "name": "Izek Strazni",
-          "hp": 310
+          "hp": 280
         },
         {
           "monster": "warrior_veteran",
@@ -2852,7 +2852,7 @@
         {
           "monster": "warrior_veteran",
           "cell": [
-            28,
+            30,
             11
           ],
           "name": "Izek's sergeant"
@@ -2862,6 +2862,22 @@
           "cell": [
             25,
             13
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            21,
+            12
+          ],
+          "name": "Izek's sergeant"
+        },
+        {
+          "monster": "warrior_veteran",
+          "cell": [
+            22,
+            11
           ],
           "name": "Izek's sergeant"
         }

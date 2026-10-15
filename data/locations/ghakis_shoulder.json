@@ -567,16 +567,18 @@
             5
           ],
           "name": "A Keeper",
-          "facing": "south"
+          "facing": "south",
+          "hp": 60
         },
         {
           "monster": "wight",
           "cell": [
             22,
-            7
+            8
           ],
           "name": "A Keeper",
-          "facing": "south"
+          "facing": "south",
+          "hp": 60
         },
         {
           "monster": "helmed_horror",
@@ -593,7 +595,8 @@
             17,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -601,15 +604,17 @@
             17,
             5
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
           "cell": [
-            17,
-            6
+            13,
+            9
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -617,7 +622,8 @@
             18,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -625,7 +631,8 @@
             18,
             6
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -633,7 +640,8 @@
             19,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "revenant",
@@ -641,7 +649,8 @@
             19,
             5
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         },
         {
           "monster": "revenant",
@@ -649,15 +658,17 @@
             19,
             6
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         },
         {
           "monster": "revenant",
           "cell": [
-            21,
-            7
+            23,
+            9
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         }
       ],
       "surprise": "",
