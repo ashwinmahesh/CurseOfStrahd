@@ -969,5 +969,13 @@
   "lantern_girl": {"who": "Liliana, the Lantern Girl, a golden ghost girl in a wet festival dress with a ribbon sash, holding a lit paper lantern by its string in her left hand, all pale candle-gold, cream and amber in every frame (dress, hair, hands, face and lantern; no blue or violet)",
     "attack": "drowning light",
     "windup": "drawn back and rising, the lantern lifted high above her head in her left hand so its glow swells, her right hand pulled back beside her face, mouth open in a thin cry",
-    "strike": "surging forward with the lantern swung down and out toward the enemy at arm's length, a burst of pale light leaving it, her right hand thrust straight out with the fingers spread, hair and dress streaming back"}
+    "strike": "surging forward with the lantern swung down and out toward the enemy at arm's length, a burst of pale light leaving it, her right hand thrust straight out with the fingers spread, hair and dress streaming back"},
+  "castle_steward": {"who": "the Steward, the ghost of a tall, thin old castle steward in a long-tailed high-collared coat with a ring of keys at his belt and a napkin over his left forearm, his legs fading into mist, all pale moonlit grey-green and silver in every frame (no blue or violet)",
+    "attack": "chilling touch",
+    "windup": "drawn up tall and rising, his long right hand raised high beside his face with the fingers spread, mouth open in a soundless reproach, coat-tails lifting",
+    "strike": "surging forward with his right hand reaching straight out at the enemy at full arm's length, the cold flaring from his fingertips, coat-tails streaming back"},
+  "helga_ruvak": {"who": "Helga Ruvak, a pale blonde housemaid in a white cap, charcoal-grey dress and long white apron, a feather duster in her right hand, secretly a vampire",
+    "attack": "vampire's lunge",
+    "windup": "the meek pose gone: crouched and drawn back, her left hand raised high with the nails out like claws, fangs bared, the duster flung back in her right hand",
+    "strike": "lunging forward with the clawed left hand raking at the enemy at full arm's length, fangs bared, apron and skirt flaring"}
 }

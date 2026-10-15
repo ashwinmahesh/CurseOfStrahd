@@ -976,6 +976,76 @@
         }
       ],
       "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_1",
+      "cell": [
+        14,
+        5
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            21,
+            5
+          ],
+          "wait": 5,
+          "face": "north"
+        },
+        {
+          "at": [
+            29,
+            5
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_2",
+      "cell": [
+        35,
+        7
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            41,
+            4
+          ],
+          "wait": 5,
+          "face": "north"
+        }
+      ],
+      "pause": 5,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_ghost_servant",
+      "cell": [
+        5,
+        8
+      ],
+      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            9,
+            6
+          ],
+          "wait": 4,
+          "face": "north"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

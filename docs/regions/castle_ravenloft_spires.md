@@ -33,7 +33,8 @@ spires is someone Strahd has set aside.
 | Escher, a cast-off consort | `escher` (`vampire_spawn`, named) | Out of the castle; to matter again; Strahd hurt | Strahd; the sun; being forgotten | Strahd once took him up to see the heart, as one shows a lover a scar | Arch, vain, bitter wit; drawls; calls Strahd "our host" |
 | Strahd | `strahd` (`strahd_von_zarovich`) | His heart whole; to know who broke it | (never shows it) | | docs/voice/strahd.md |
 
-Voice bibles: docs/voice/escher.md, docs/voice/pidlwick_ii.md. Casting note: Pidlwick II never speaks aloud; his lines
+Voice bibles: docs/voice/escher.md, docs/voice/pidlwick_ii.md. A ghostly servant (`castle_ghost_servant`, the shared
+household extras, castle_ravenloft_gates.md §8) walks the foot of the tower; up the stair it stays lonely. Casting note: Pidlwick II never speaks aloud; his lines
 are his slate in capitals (voice them as a small tinny whisper, or leave him silent).
 
 ## 3. Maps, areas and seams

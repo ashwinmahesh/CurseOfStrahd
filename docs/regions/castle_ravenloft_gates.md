@@ -180,9 +180,21 @@ animated; the main floor now has three of them walking it, each with a short con
 
 | Who | Id (stat block, art) | Where | What they do |
 |---|---|---|---|
-| The Steward | `castle_steward` (`ghost`, the `ghost` art for now) | dining hall, from the sideboard (11,12) up the east side to (11,6) | the ghost of the last steward, straightening places that are already straight; he can't carry a dish, and the dishes arrive anyway (the dinner's "nobody carries it in" stands). His lines follow the dinner: expecting the master's guests, after a thank-you, after steel at the table. Voice: docs/voice/castle_steward.md |
+| The Steward | `castle_steward` (`ghost`; his own art, owner's yes 2026-10-15) | dining hall, from the sideboard (11,12) up the east side to (11,6) | the ghost of the last steward, straightening places that are already straight; he can't carry a dish, and the dishes arrive anyway (the dinner's "nobody carries it in" stands). His lines follow the dinner: expecting the master's guests, after a thank-you, after steel at the table. Voice: docs/voice/castle_steward.md |
 | The Dead Sentry | `castle_dead_sentry` (`strahd_zombie`) | great entry, east side, (31,12) to (31,2) | a castle guard dead since the wedding night, on the round nobody relieved; Narrator lines only |
 | The Hall Broom | `castle_hall_broom` (`broom_of_animated_attack`) | guests' hall, sweeping from (14,11) round the room | an animated broom at its sweeping (`work: swing`); Narrator lines only |
+
+**The court and the rest of the household** (owner, same day: "fill Castle Ravenloft with generic NPCs who act as the
+servants or Strahd's court (it could be vampires) ... make sure they have paths which they walk around"). Shared
+extras, each kind with one shared conversation in narrative/castle_ravenloft/household.dialogue, every one walking a
+route and stepping aside for fights; their display names are interchangeable extras' (test_data_integrity's SHARED).
+
+| Who (name) | Ids (art) | Walks |
+|---|---|---|
+| A Pale Courtier | `castle_courtier_1`, `castle_courtier_2` (`vampire_spawn`): guests who came up for dinner and never went home | main floor: a loop round the great entry's middle (24,7)-(27,12), and the hall of faces (35,8) to (48,8); the court: the audience hall, waiting to be received (14,5) to (29,5), and the trophy room |
+| A Ghostly Servant | `castle_ghost_servant` (`ghost`), lighting candles that are lit | main floor: the chapel passage (40,14) to (40,21); the court's study; the count's bedroom upstairs; the foot of the high tower |
+| A Dead Guard | `castle_dead_guard_1`, `castle_dead_guard_2` (`strahd_zombie`) | the courtyard: before the keep (9,9) to (30,9) and inside the gatehouse wall (11,20) to (28,20); main floor: the entry hall (23,17) to (23,22); the dungeon's cell passage, as its turnkey |
+| A Dead Servant | `castle_dead_servant_1`, `castle_dead_servant_2` (`zombie`) | the larders: the kitchen round Cyrus, and the guards' run end to end |
 
 **The dinner truce** (owner, 2026-10-15: the castle's fights shouldn't be there until the dinner sequence is
 complete, unless the book says so; it doesn't say the guardians stand down for guests, so the owner's word decides).
@@ -267,7 +279,9 @@ None beyond data/monsters and the Phase 6 list: `strahd_von_zarovich`, `strahds_
 - Travel: data/travel/castle_ravenloft.json (place `castle_ravenloft`, road from the Ivlis crossroads, table
   `svalich_woods`)
 - Flags: data/flags/castle_ravenloft_gates.json; quest data/quests/dinner_at_castle_ravenloft.json
-- NPCs (the household): data/npcs/{castle_steward, castle_dead_sentry, castle_hall_broom}.json; voice
+- NPCs (the household): data/npcs/{castle_steward, castle_dead_sentry, castle_hall_broom}.json, and the shared extras
+  data/npcs/{castle_courtier_1, castle_courtier_2, castle_ghost_servant, castle_dead_guard_1, castle_dead_guard_2,
+  castle_dead_servant_1, castle_dead_servant_2}.json (narrative/castle_ravenloft/household.dialogue); voice
   docs/voice/castle_steward.md
 - Dialogue: narrative/castle_ravenloft/{gates_dinner, gates_hearth, gates_castle, gates_household}.dialogue;
   narrative/narrator/castle_ravenloft_gates.dialogue; narrative/banter/castle_ravenloft_gates.dialogue

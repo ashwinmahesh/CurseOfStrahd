@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_guard_1",
+  "name": "A Dead Guard",
+  "title": "Of the Castle Watch",
+  "summary": "One of the castle's watch, dead since the night of the wedding, walking a beat in the house's black tabard because nobody has told him to stop.",
+  "portrait": "strahd_zombie",
+  "sprite": "strahd_zombie",
+  "attitude": "indifferent",
+  "monster": "strahd_zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

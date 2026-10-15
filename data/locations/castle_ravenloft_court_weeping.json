@@ -947,6 +947,26 @@
       ],
       "pause": 5,
       "steps_aside": true
+    },
+    {
+      "npc": "castle_ghost_servant",
+      "cell": [
+        3,
+        6
+      ],
+      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            10,
+            2
+          ],
+          "wait": 5
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

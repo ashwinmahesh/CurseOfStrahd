@@ -1,0 +1,61 @@
+# The castle's court and household, the extras on every floor (owner, 2026-10-15: "fill Castle Ravenloft with generic
+# NPCs who act as the servants or Strahd's court ... so it doesn't look as empty", each walking a route): pale courtiers
+# (vampire spawn, guests who never went home), a ghostly servant, the dead watch and the dead kitchen hands. Each line
+# here is shared by everyone of that kind; none of them fights or sets anything, they keep out of every fight on the map
+# (`steps_aside`), and every conversation can be walked away from.
+
+~ courtier
+if flag.strahd_invitation == "accepted" and not flag.castle_dinner
+Narrator: A pale man in a velvet coat gone grey with dust turns from the wall to look at you, slowly, the way a cat looks at something small. His eyes are red at the rims, and he isn't breathing.
+A Pale Courtier: The master's dinner guests. How thrilling. Do eat well tonight. You'll want your strength.
+elif flag.castle_dinner
+Narrator: A pale man in a velvet coat gone grey with dust looks you over. His eyes are red at the rims, and he isn't breathing.
+A Pale Courtier: He let you up from his table. He liked you, then. That is very rarely good news.
+else
+Narrator: A pale man in a velvet coat gone grey with dust stands as if waiting to be called in to an audience. His eyes are red at the rims, and he isn't breathing.
+A Pale Courtier: Visitors. Nobody announced you. Nobody announces anyone any more.
+endif
+-> courtier_menu
+
+~ courtier_menu
+* Who are you? -> courtier_who
+* What is everyone waiting for? -> courtier_wait
+* (Leave him to his waiting.) -> END
+
+~ courtier_who
+A Pale Courtier: A guest. I came up the road in a carriage, like you, and the dinner was excellent, and I stayed. We all stayed.
+A Pale Courtier: The master keeps a court. We are it. Do try not to join it.
+-> courtier_menu
+
+~ courtier_wait
+A Pale Courtier: To be received. The throne room receives no one, and has not for a very long time. We are very patient. Patience is all he left us.
+-> courtier_menu
+
+~ ghost_servant
+Narrator: A servant in old grey livery goes about the room with a taper, lighting candles that are already lit. You can see the wall through him.
+A Ghostly Servant: Begging your pardon. Mind the wax. The master likes the candles lit.
+* Who do you serve? -> ghost_servant_serves
+* (Let him get on.) -> END
+
+~ ghost_servant_serves
+A Ghostly Servant: The house. There's only the house to serve now. The steward downstairs will tell you where you may go.
+Narrator: He bows, a moment late, as if he had only just remembered how, and goes back to his candles.
+-> END
+
+~ dead_guard
+Narrator: A dead guardsman in the house's black tabard walks his beat, halberd on his shoulder, eyes on nothing. He was told to keep the watch three centuries ago, and nobody has told him to stop.
+* (Stand in his way.) -> dead_guard_way
+* (Let him pass.) -> END
+
+~ dead_guard_way
+Narrator: He stops a pace from you and waits, swaying a little, until you step aside. He doesn't look at you once. Then he walks on.
+-> END
+
+~ dead_servant
+Narrator: A dead kitchen hand in a stained apron shuffles past with a pail that holds nothing, toward a task that was finished three hundred years ago.
+* (Watch where it goes.) -> dead_servant_watch
+* (Let it be.) -> END
+
+~ dead_servant_watch
+Narrator: To the far wall, where it sets the pail down, picks it up again and turns back. Somewhere behind you Cyrus is humming, and doesn't seem to find any of this strange.
+-> END

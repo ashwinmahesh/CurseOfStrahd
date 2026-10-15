@@ -1,20 +1,36 @@
 extends TestCase
 ## Owner, 2026-10-15: "Is Castle Ravenloft supposed to be empty when you walk through it? Should there be servants?" and
 ## "When Strahd invites the party over for dinner, the combats throughout the castle shouldn't be present until that
-## sequence is complete." The castle's household walks its rooms (a ghost steward, the dead watch on its rounds, a broom
-## at its sweeping, Helga the maid) and keeps out of every fight; while the party is Strahd's invited guest and dinner
-## isn't over, the castle's fights that start as the party walks in wait (StoryConditions.TRUCES), and come back after.
+## sequence is complete." and "Fill Castle Ravenloft with generic NPCs who act as the servants or Strahd's court ... make
+## sure they have paths which they walk around." The castle's household walks its rooms (a ghost steward, the dead watch
+## on its rounds, a broom at its sweeping, Helga the maid, pale courtiers, a ghostly servant, the dead kitchen hands) and
+## keeps out of every fight; while the party is Strahd's invited guest and dinner isn't over, the castle's fights that
+## start as the party walks in wait (StoryConditions.TRUCES), and come back after.
 
 const MAIN := "castle_ravenloft_main_floor"
 const CASTLE := "castle_ravenloft"
-## The household: where each stands, and its conversation.
-const HOUSEHOLD := {
-	"castle_steward": [MAIN, "castle_ravenloft/gates_household:steward"],
-	"castle_dead_sentry": [MAIN, "castle_ravenloft/gates_household:sentry"],
-	"castle_hall_broom": [MAIN, "castle_ravenloft/gates_household:broom"],
-	"castle_dead_watchman": ["castle_ravenloft_court", "castle_ravenloft/court_household:watchman"],
-	"helga_ruvak": ["castle_ravenloft_court_weeping", "castle_ravenloft/court_household:helga"],
-}
+## The household: who, where each walks, and their conversation.
+const HOUSEHOLD: Array = [
+	["castle_steward", MAIN, "castle_ravenloft/gates_household:steward"],
+	["castle_dead_sentry", MAIN, "castle_ravenloft/gates_household:sentry"],
+	["castle_hall_broom", MAIN, "castle_ravenloft/gates_household:broom"],
+	["castle_courtier_1", MAIN, "castle_ravenloft/household:courtier"],
+	["castle_courtier_2", MAIN, "castle_ravenloft/household:courtier"],
+	["castle_ghost_servant", MAIN, "castle_ravenloft/household:ghost_servant"],
+	["castle_dead_guard_1", MAIN, "castle_ravenloft/household:dead_guard"],
+	["castle_dead_watchman", "castle_ravenloft_court", "castle_ravenloft/court_household:watchman"],
+	["castle_courtier_1", "castle_ravenloft_court", "castle_ravenloft/household:courtier"],
+	["castle_courtier_2", "castle_ravenloft_court", "castle_ravenloft/household:courtier"],
+	["castle_ghost_servant", "castle_ravenloft_court", "castle_ravenloft/household:ghost_servant"],
+	["helga_ruvak", "castle_ravenloft_court_weeping", "castle_ravenloft/court_household:helga"],
+	["castle_ghost_servant", "castle_ravenloft_court_weeping", "castle_ravenloft/household:ghost_servant"],
+	["castle_dead_guard_1", "castle_ravenloft_gates", "castle_ravenloft/household:dead_guard"],
+	["castle_dead_guard_2", "castle_ravenloft_gates", "castle_ravenloft/household:dead_guard"],
+	["castle_dead_servant_1", "castle_ravenloft_larders", "castle_ravenloft/household:dead_servant"],
+	["castle_dead_servant_2", "castle_ravenloft_larders", "castle_ravenloft/household:dead_servant"],
+	["castle_dead_guard_1", "castle_ravenloft_larders_dungeon", "castle_ravenloft/household:dead_guard"],
+	["castle_ghost_servant", "castle_ravenloft_spires", "castle_ravenloft/household:ghost_servant"],
+]
 
 var root: Node
 
@@ -162,7 +178,8 @@ func test_walking_into_the_turret_post_waits_for_dinner() -> void:
 func test_the_household_walks_the_main_floor_and_keeps_out_of_its_fights() -> void:
 	var v: LocationView = await _boot(MAIN, Vector2i(28, 20))
 	var cells := {}
-	for id: String in ["castle_steward", "castle_dead_sentry", "castle_hall_broom"]:
+	for row: Array in HOUSEHOLD.filter(func(r: Array) -> bool: return str(r[1]) == MAIN):
+		var id := str(row[0])
 		assert_true(v.npc_tokens.has(id), "%s is on the main floor" % id)
 		var tok := v.npc_tokens[id] as CombatToken
 		assert_true(tok.visible, "%s shows" % id)
@@ -181,26 +198,31 @@ func test_the_household_walks_the_main_floor_and_keeps_out_of_its_fights() -> vo
 ## Each of the household stands where its map puts it, with art to show and a conversation that can always be left,
 ## and talking to them changes nothing in the story.
 func test_the_household_has_a_word_and_a_way_out() -> void:
-	for id: String in HOUSEHOLD:
+	var maps := {}
+	for row: Array in HOUSEHOLD:
+		var id := str(row[0])
+		var loc := str(row[1])
+		var ref := str(row[2])
+		maps[loc] = true
 		var npc := Compendium.shared().get_entry("npcs", id)
 		assert_false(npc.is_empty(), "%s has an NPC entry" % id)
-		var where := HOUSEHOLD[id] as Array
 		var st := _party()
-		st.location = str(where[0])
-		assert_eq(SideQuestPlay.standing(st, str(where[0]), id), str(where[1]), "%s stands in %s" % [id, where[0]])
+		st.location = loc
+		assert_eq(SideQuestPlay.standing(st, loc, id), ref, "%s stands in %s" % [id, loc])
 		var spec := {}
-		for n: Variant in Compendium.shared().get_entry("locations", str(where[0]))["npcs"]:
+		for n: Variant in Compendium.shared().get_entry("locations", loc)["npcs"]:
 			if str((n as Dictionary)["npc"]) == id:
 				spec = n as Dictionary
-		assert_true(bool(spec.get("steps_aside", false)), "%s keeps out of fights" % id)
-		assert_true(spec.has("path"), "%s walks a round" % id)
+		assert_true(bool(spec.get("steps_aside", false)), "%s keeps out of fights in %s" % [id, loc])
+		assert_false((spec.get("path", []) as Array).is_empty(), "%s walks a route in %s" % [id, loc])
 		var flags := st.flags.duplicate(true)
 		var quests := st.quests.duplicate(true)
-		var beats := SideQuestPlay.play(st, str(where[1]))
+		var beats := SideQuestPlay.play(st, ref)
 		assert_eq(str(beats[-1].get("kind", "")), "end", "%s's conversation ends" % id)
 		assert_eq(SideQuestPlay.combat_of(beats), "", "and starts no fight")
 		assert_eq(st.flags, flags, "%s sets nothing" % id)
 		assert_eq(st.quests, quests, "nor moves a quest")
+	assert_true(maps.size() >= 7, "the household walks seven of the castle's maps (%d)" % maps.size())
 	var invited := _party()
 	invited.set_flag("strahd_invitation", "accepted")
 	var text := SideQuestPlay.text(SideQuestPlay.play(invited, "castle_ravenloft/gates_household:steward", ["Where should we sit?"]))
