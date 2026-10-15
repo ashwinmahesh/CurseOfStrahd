@@ -29,6 +29,8 @@ needs a data format the validator can check, and the engine reads.
   Their level and gear are set by the story, not built by the player.
 - **Shops are NPC data.** An NPC with a `shop` block sells and buys; the dialogue statement `shop` opens the shop
   screen for the speaker. Prices come from item `cost_gp` times the shop's markup; selling pays a share.
+  A shop's `magic` list (Ashwin, 2026-10-14) sells magic items at their own `cost_gp` (Sane Magical Prices) whatever
+  the markup, once the party's milestone level reaches the item's rarity (story/trade.gd magic_stock).
 
 ## Consequences
 

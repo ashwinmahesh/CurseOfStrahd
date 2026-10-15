@@ -1,0 +1,16 @@
+{
+  "id": "castle_drawbridge",
+  "title": "No One at the Winch",
+  "summary": "The drawbridge's iron chains move by themselves over the chasm, the great gate waiting beyond.",
+  "images": [
+    {
+      "image": "castle_drawbridge",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:castle_drawbridge"
+}

@@ -8,6 +8,11 @@ extends CanvasLayer
 ## character's Persuasion in the open. The purse counts up or down to its new sum (UiMotion.roll).
 ## The pack side has the inventory's filter tabs (InventoryScreen.FILTERS; LB/RB on a pad) and Only what <merchant>
 ## buys, which leaves out what this merchant won't take; both are kept for the rest of the play session.
+## The wares side has tabs of its own (WARE_FILTERS, only the kinds this merchant has; LB/RB step whichever side the
+## focus is on), so a merchant with a hundred magic items (Ashwin, 2026-10-14: every one the story doesn't need is for
+## sale somewhere) is a few short lists. A magic item's name is in its rarity's colour with the rarity beside it. One
+## made on a weapon or armor the party picks ("Flame Tongue", StoryState.shop_wares `bases`) shows its lowest price and
+## Choose, which opens a row for each weapon or armor it can be, at that one's price.
 
 signal closed
 
@@ -25,6 +30,20 @@ var _sell_ids: Array[String] = []
 ## default). Static, so the choice holds at every counter, for every character, until the game is closed; not saved.
 static var sell_filter := "All"
 static var only_buys := true
+
+## The wares side's tab (static, as the pack side's: kept for the play session) and the made-to-order ware whose bases
+## are open ("" = none).
+static var ware_filter := "All"
+var _open_bases := ""
+## Which side's tabs LB/RB step when nothing has focus ("PackSide" or "WaresSide"; pad_tab).
+var _tab_side := "PackSide"
+## The wares side's tabs and the item categories each keeps; Consumables also takes anything used up (a bead, a
+## dust), Wondrous any other magic item, Gear the rest. "All" and the tabs this merchant has wares in are shown.
+const WARE_FILTERS: Array[String] = ["All", "Weapons", "Armor", "Consumables", "Wands", "Wondrous", "Gear"]
+const WARE_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
+	"Consumables": ["potion", "scroll", "consumable"], "Wands": ["wand", "rod", "staff", "focus"]}
+## The wares side lists what this tab keeps, as item ids in order (ware_ids()).
+var _ware_ids: Array[String] = []
 
 ## The UiMotion.roll key the purse counts from (the services screen shares it).
 const PURSE_KEY := "party_purse"
@@ -75,35 +94,27 @@ func _draw() -> void:
 	cols.add_theme_constant_override("separation", 18)
 	cols.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_frame.add_child(cols)
-	# Their wares
+	# Their wares: the tab's, each with its price and Buy (or Choose, for one made on the party's pick of base).
 	var wares := VBoxContainer.new()
 	wares.add_theme_constant_override("separation", 5)
 	var ch := st.party[index]
-	var any := false
-	for w in st.shop_wares(npc_id):
-		any = true
-		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 10)
+	var all_wares := st.shop_wares(npc_id)
+	var tabs := ware_tabs(all_wares)
+	if not ware_filter in tabs:
+		ware_filter = "All"
+	_ware_ids.clear()
+	for w in all_wares:
+		if not ware_in_filter(ware_filter, w):
+			continue
 		var id := str(w["id"])
-		UiParts.add_icon(row, "item", id)
-		var n := UiKit.label(str(w["name"]), 15, "vellum")
-		n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		row.add_child(n)
-		if int(w["qty"]) >= 0:
-			row.add_child(UiKit.label("%d left" % int(w["qty"]), 12, "bone"))
-		var price := UiParts.figure("%s gp" % _money(float(w["price"])), 16, "gilt_light")
-		price.custom_minimum_size = Vector2(72, 0)
-		price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		row.add_child(price)
-		var b := UiParts.small_button("Buy for %s" % ch.name.get_slice(" ", 0), func() -> void: _buy(id))
-		b.disabled = st.gold < float(w["price"])
-		if b.disabled:
-			b.tooltip_text = "Not enough gold"
-		row.add_child(b)
-		wares.add_child(UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id))))
-	if not any:
+		_ware_ids.append(id)
+		wares.add_child(_ware_row(w, ch))
+		if w.has("bases") and _open_bases == id:
+			for o: Dictionary in w["bases"]:
+				wares.add_child(_base_row(o, ch))
+	if all_wares.is_empty():
 		wares.add_child(UiKit.label("Nothing left to sell you.", 15, "bone"))
-	cols.add_child(_side("For sale", wares))
+	cols.add_child(_wares_side(wares, tabs))
 	# Our pack: what the filter tab keeps, and with Only what they buy on, only what this merchant takes.
 	var pack := VBoxContainer.new()
 	pack.add_theme_constant_override("separation", 5)
@@ -197,15 +208,156 @@ func _haggle(ch: Character, extra: Array) -> void:
 	_note_colour = "bile"
 
 
-func _side(title: String, list: VBoxContainer, right: Control = null) -> Control:
+## One ware: its icon, its name (a magic item's in its rarity's colour, the rarity beside it), how many are left, its
+## price and Buy; a made-to-order one shows its lowest price and Choose (or Close once its bases are open).
+func _ware_row(w: Dictionary, ch: Character) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var id := str(w["id"])
+	var made := w.has("bases")
+	var rarity := str(w.get("rarity", ""))
+	UiParts.add_icon(row, "item", id)
+	var n := UiKit.label(str(w["name"]), 15, str(ItemNotices.RARITY_COLOURS.get(rarity, "vellum")) if rarity != "" else "vellum")
+	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	row.add_child(n)
+	if rarity != "":
+		row.add_child(UiParts.pill(rarity.replace("_", " ").capitalize(), str(ItemNotices.RARITY_COLOURS.get(rarity, "vellum")), 11))
+	if int(w["qty"]) >= 0:
+		row.add_child(UiKit.label("%d left" % int(w["qty"]), 12, "bone"))
+	var price := UiParts.figure(("from %s gp" if made else "%s gp") % _money(float(w["price"])), 16, "gilt_light")
+	price.custom_minimum_size = Vector2(72, 0)
+	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(price)
+	var b: Button
+	if made:
+		var open := _open_bases == id
+		b = UiParts.small_button("Close" if open else "Choose", func() -> void: toggle_bases(id))
+		b.tooltip_text = "Hide the choices" if open else "Pick the %s it's made on" % _base_kind(w)
+		if open:
+			UiParts.light_up(b)
+	else:
+		b = UiParts.small_button("Buy for %s" % ch.name.get_slice(" ", 0), func() -> void: _buy(id))
+		b.disabled = st.gold < float(w["price"])
+		if b.disabled:
+			b.tooltip_text = "Not enough gold"
+	row.add_child(b)
+	return UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id)), made and _open_bases == id)
+
+
+## One base of an open made-to-order ware ("Flame Tongue Rapier"), set in under it, with its own price and Buy.
+func _base_row(o: Dictionary, ch: Character) -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var indent := Control.new()
+	indent.custom_minimum_size = Vector2(28, 0)
+	row.add_child(indent)
+	var id := str(o["id"])
+	var n := UiKit.label(str(o["name"]), 14, "vellum")
+	n.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	n.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	row.add_child(n)
+	var price := UiParts.figure("%s gp" % _money(float(o["price"])), 15, "gilt_light")
+	price.custom_minimum_size = Vector2(72, 0)
+	price.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(price)
+	var b := UiParts.small_button("Buy for %s" % ch.name.get_slice(" ", 0), func() -> void: _buy(id))
+	b.disabled = st.gold < float(o["price"])
+	if b.disabled:
+		b.tooltip_text = "Not enough gold"
+	row.add_child(b)
+	return UiParts.row(row, LootWindow._item_tip(Compendium.shared().item_data(id)), false, 5)
+
+
+## "weapon", "armor" or "ammunition": what a made-to-order ware's bases are, for Choose's tip.
+static func _base_kind(w: Dictionary) -> String:
+	var on := str((Compendium.shared().item_data(str(w["id"])).get("template", {}) as Dictionary).get("on", "weapon"))
+	return "ammunition" if on == "ammunition" else ("armor" if on == "armor" else "weapon")
+
+
+## A made-to-order ware's bases, open or closed (one open at a time).
+func toggle_bases(id: String) -> void:
+	_open_bases = "" if _open_bases == id else id
+	_draw()
+
+
+## The wares side's tab a ware is under (WARE_CATEGORIES); an item made on a base goes by what it was made as (a Staff
+## of Fire is a staff, though it's built on a quarterstaff).
+static func ware_kind(w: Dictionary) -> String:
+	var comp := Compendium.shared()
+	var data := comp.item_data(str(w["id"]))
+	var cat := str(data.get("category", ""))
+	if data.has("template_id"):
+		cat = str(comp.get_entry("magic_items", str(data["template_id"])).get("category", cat))
+	for f: String in WARE_CATEGORIES:
+		if cat in (WARE_CATEGORIES[f] as Array):
+			return f
+	if MagicItems.is_consumable(data):
+		return "Consumables"
+	return "Wondrous" if MagicItems.is_magic(data) else "Gear"
+
+
+static func ware_in_filter(f: String, w: Dictionary) -> bool:
+	return f == "All" or ware_kind(w) == f
+
+
+## "All" and the tabs `wares` has something under, in WARE_FILTERS' order.
+static func ware_tabs(wares: Array[Dictionary]) -> Array[String]:
+	var kinds := {}
+	for w in wares:
+		kinds[ware_kind(w)] = true
+	var out: Array[String] = []
+	for f in WARE_FILTERS:
+		if f == "All" or kinds.has(f):
+			out.append(f)
+	return out
+
+
+## A tab on the wares side (WARE_FILTERS).
+func pick_ware_filter(f: String) -> void:
+	ware_filter = f
+	_draw()
+
+
+## What the wares side lists now, as item ids in order (for tests and captures).
+func ware_ids() -> Array[String]:
+	return _ware_ids.duplicate()
+
+
+## LB/RB on a pad (PadNav): the tabs on the side the focus is in, else the side they last stepped (the pack's at
+## first, as before the wares had tabs), so a redraw that drops the focus keeps them on the same side.
+func pad_tab(step: int) -> void:
+	var f := get_viewport().gui_get_focus_owner() if get_viewport() != null else null
+	for side: String in ["WaresSide", "PackSide"]:
+		var col := find_child(side, true, false) as Control
+		if f != null and col != null and col.is_ancestor_of(f):
+			_tab_side = side
+	var tabs := ware_tabs(st.shop_wares(npc_id))
+	if _tab_side == "WaresSide" and tabs.size() > 1:
+		pick_ware_filter(tabs[posmod(tabs.find(ware_filter) + step, tabs.size())])
+		return
+	pick_filter(str(InventoryScreen.FILTERS[posmod(InventoryScreen.FILTERS.find(sell_filter) + step, InventoryScreen.FILTERS.size())]))
+
+
+## The wares side: For sale, the tabs this merchant has wares under joined to the pane, and the rows.
+func _wares_side(list: VBoxContainer, tabs: Array[String]) -> Control:
 	var col := VBoxContainer.new()
+	col.name = "WaresSide"
 	col.add_theme_constant_override("separation", 6)
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	col.add_child(UiParts.section(title, right))
+	col.add_child(UiParts.section("For sale"))
+	var tabbed := VBoxContainer.new()
+	tabbed.add_theme_constant_override("separation", 0)
+	tabbed.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	if tabs.size() > 1:
+		var strip := UiParts.tab_strip(tabs, ware_filter, pick_ware_filter, {}, 13)
+		strip.name = "WareTabs"
+		tabbed.add_child(strip)
 	var pane := UiParts.pane(10)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pane.add_child(UiParts.fill_scroll(list))
-	col.add_child(pane)
+	tabbed.add_child(pane)
+	col.add_child(tabbed)
 	return col
 
 
@@ -213,13 +365,16 @@ func _side(title: String, list: VBoxContainer, right: Control = null) -> Control
 ## <merchant> buys over the rows.
 func _sell_side(ch: Character, list: VBoxContainer, hidden: int) -> Control:
 	var col := VBoxContainer.new()
+	col.name = "PackSide"
 	col.add_theme_constant_override("separation", 6)
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.add_child(UiParts.section("%s's pack" % ch.name.get_slice(" ", 0), _junk_button()))
 	var tabbed := VBoxContainer.new()
 	tabbed.add_theme_constant_override("separation", 0)
 	tabbed.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	tabbed.add_child(UiParts.tab_strip(Array(InventoryScreen.FILTERS, TYPE_STRING, "", null), sell_filter, pick_filter, {}, 14))
+	var strip := UiParts.tab_strip(Array(InventoryScreen.FILTERS, TYPE_STRING, "", null), sell_filter, pick_filter, {}, 14)
+	strip.name = "PackTabs"
+	tabbed.add_child(strip)
 	var pane := UiParts.pane(10)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var inner := VBoxContainer.new()

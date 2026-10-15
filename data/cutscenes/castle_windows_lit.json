@@ -1,0 +1,16 @@
+{
+  "id": "castle_windows_lit",
+  "title": "The House Counts Its Guests",
+  "summary": "Window after window lights up the castle's walls in a slow climb, high in the cloud.",
+  "images": [
+    {
+      "image": "castle_windows_lit",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:castle_windows_lit"
+}

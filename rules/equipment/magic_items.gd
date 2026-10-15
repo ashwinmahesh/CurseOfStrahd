@@ -22,6 +22,9 @@ const SCROLL_DC: Array[int] = [13, 13, 13, 15, 15, 17, 17, 18, 18, 19]
 ## Spell Scroll rarity by the spell's level.
 const SCROLL_RARITY: Array[String] = ["common", "common", "uncommon", "uncommon", "rare", "rare", "very_rare", "very_rare",
 	"very_rare", "legendary"]
+## Spell Scroll price by the spell's level: Sane Magical Prices, the guide Ashwin picked for magic item prices
+## (2026-10-14; data/treasure/magic_prices.json `scrolls`, which tools/data/magic_prices.py writes into other items).
+const SCROLL_PRICE: Array[float] = [10.0, 60.0, 120.0, 200.0, 320.0, 640.0, 1280.0, 2560.0, 5120.0, 10240.0]
 const SPECIES: Array[String] = ["aasimar", "dragonborn", "dwarf", "elf", "gnome", "goliath", "halfling", "human", "orc",
 	"tiefling"]
 
@@ -72,7 +75,8 @@ static func is_consumable(item: Dictionary) -> bool:
 	return str(item.get("category", "")) in ["potion", "scroll"]
 
 
-## Price in gp for a rarity (half for consumables); a spell scroll's level decides its rarity.
+## The 2024 DMG's price in gp for a rarity (half for consumables). The game prices its magic items by Sane Magical
+## Prices instead (each item's cost_gp, data/treasure/magic_prices.json; a Spell Scroll by SCROLL_PRICE).
 static func price_for(rarity_: String, consumable: bool) -> float:
 	var p := float(PRICE.get(rarity_, 0))
 	return p / 2.0 if consumable else p
@@ -424,7 +428,7 @@ static func combine_scroll(t: Dictionary, spell: Dictionary, id: String) -> Dict
 	out["scroll_spell"] = str(spell["id"])
 	var rar := SCROLL_RARITY[lvl]
 	out["magic"] = {"rarity": rar, "attunement": false}
-	out["cost_gp"] = price_for(rar, true)
+	out["cost_gp"] = SCROLL_PRICE[lvl]
 	out["summary"] = "A level %d spell, %s: read it to cast it if it's on your class's spell list (DC %d, %+d)." % [lvl,
 		spell.get("name", ""), SCROLL_DC[lvl], SCROLL_DC[lvl] - 8] if lvl > 0 else "The %s cantrip: read it to cast it if it's on your class's spell list (DC 13, +5)." % spell.get("name", "")
 	return out

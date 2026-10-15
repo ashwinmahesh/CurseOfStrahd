@@ -172,6 +172,16 @@
         "markup": 1.0
       }
     ],
+    "magic": [
+      "feather_token_anchor",
+      "feather_token_bird",
+      "feather_token_fan",
+      "feather_token_swan_boat",
+      "feather_token_tree",
+      "feather_token_whip",
+      "cloak_of_the_bat"
+    ],
+    "magic_if": "flag.keepers_allied",
     "buys": [
       "consumable",
       "gear",
