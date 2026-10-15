@@ -1837,6 +1837,18 @@ class Wiki:
             if m.get("languages"):
                 facts.append("**Languages:** " + ", ".join(m["languages"]))
             lines += [f"- {f}" for f in facts] + [""]
+            # The shapes it can take in a fight (its `forms`: a werewolf's wolf, Strahd's bat and mist, Lysaga's swarm).
+            forms = m.get("forms") or {}
+            if forms.get("shapes"):
+                how = {"action": "an action", "bonus_action": "a Bonus Action"}.get(str(forms.get("change", "")), "")
+                where = " or ".join(str(x).replace("_", " ") for x in forms.get("blocked_in") or [])
+                note = (f"It changes shape as {how}" if how else "It changes shape") + (f", but not in {where}" if where else "")
+                if m.get("human_art"):
+                    note += "; it comes into a fight looking human and changes in front of you"
+                lines += ["### Changing shape", "", f"*{note}.*", ""]
+                for sh in forms["shapes"]:
+                    lines.append(f"- **{sh.get('name', title_id(sh.get('id', '')))}.** {sh.get('summary', '')}")
+                lines.append("")
             for k, label in (("traits", "Traits"), ("actions", "Actions"), ("bonus_actions", "Bonus actions"),
                              ("reactions", "Reactions"), ("legendary_actions", "Legendary actions"),
                              ("lair_actions", "Lair actions")):
