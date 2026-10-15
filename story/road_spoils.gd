@@ -13,8 +13,9 @@ extends RefCounted
 ## A healing potion by the party's level: [up to level, item id].
 const POTIONS := [[4, "potion_of_healing"], [10, "potion_of_healing_greater"], [16, "potion_of_healing_superior"],
 	[20, "potion_of_healing_supreme"]]
-## Gems by the party's level: [up to level, item id, how many].
-const GEMS := [[4, "onyx", 1], [10, "pearl", 1], [16, "diamond", 2], [20, "diamond", 4]]
+## Gems by the party's level: [up to level, item id, how many]. Diamonds from level 5, when a cleric first casts
+## Revivify (its 300 gp is three of them; Ashwin, 2026-10-15: the party never found one before level 11).
+const GEMS := [[2, "onyx", 1], [4, "pearl", 1], [10, "diamond", 1], [16, "diamond", 2], [20, "diamond", 4]]
 ## The 2024 DMG's XP budget per character for a Moderate encounter, levels 1 to 20: a fight that spends it all is as
 ## hard as an ordinary day's main fight.
 const MODERATE_XP := [75, 150, 225, 375, 750, 900, 1100, 1400, 1600, 1900, 2400, 3000, 3400, 3800, 4300, 4800, 5600,

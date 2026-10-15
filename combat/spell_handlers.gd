@@ -275,15 +275,23 @@ func free_on_teleport(c: Combatant) -> void:
 		e.events.append({"type": "condition", "id": c.id})
 
 
+## Why Revivify can't bring `t` back ("" when it can): dead for more than a minute (10 rounds), or Undead or a Construct.
+## The spell's targeting asks before anything is spent (SpellTargeting).
+static func revivify_why(e: Encounter, t: Combatant) -> String:
+	var died := int(t.get_meta("died_round", e.round_no)) if t.has_meta("died_round") else e.round_no
+	if e.round_no - died > 10:
+		return "%s has been dead too long for Revivify" % t.name()
+	if t.creature.creature_type in [&"undead", &"construct"]:
+		return "Revivify can't restore %s" % t.name()
+	return ""
+
+
 ## Revivify: a creature that died within the last minute returns with 1 Hit Point.
 func _revivify(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	var e := enc()
-	var died := int(t.get_meta("died_round", e.round_no)) if t.has_meta("died_round") else e.round_no
-	if e.round_no - died > 10:
-		r.lines.append(e.log.add("info", "%s has been dead too long for Revivify" % t.name(), t.id))
-		return
-	if t.creature.creature_type in [&"undead", &"construct"]:
-		r.lines.append(e.log.add("info", "Revivify can't restore %s" % t.name(), t.id))
+	var why := SpellHandlers.revivify_why(e, t)
+	if why != "":
+		r.lines.append(e.log.add("info", why, t.id))
 		return
 	t.creature.dead = false
 	t.creature.death_failures = 0
