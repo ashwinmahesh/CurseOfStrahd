@@ -77,3 +77,21 @@ func test_the_free_casting_can_be_picked_over_the_pact_slot() -> void:
 	var e := r[0] as Encounter
 	assert_eq(_dice(e), "2d10")
 	assert_eq(((r[1] as Combatant).creature as Character).pact_magic()["left"], 2, "no pact slot spent")
+
+
+## Automatic still asks when there is a choice of how to cast it (owner, 2026-10-15), and only then.
+func test_on_automatic_it_asks_when_there_is_more_than_one_way_to_cast_it() -> void:
+	var e := TestCombat.open_field(5)
+	var kip := TestCombat.hero(e, "kip_smudgewick", Vector2i(2, 2), 9)
+	var ogre := TestCombat.foe(e, "ogre", Vector2i(3, 2))
+	ogre.creature.hp = 5000
+	TestCombat.start_with(e, ogre)
+	kip.reaction_rules["hellish_rebuke"] = "auto"
+	e.deal_damage(ogre, kip, [{"amount": 3, "type": "bludgeoning"}], false, "A shove")
+	e.run_reaction_queue(CombatResult.new())
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked: a pact slot or the free casting")
+	if e.pending == null:
+		return
+	assert_eq(e.pending.target_choices.size(), 2)
+	while e.pending != null:
+		e.answer_reaction(false)
