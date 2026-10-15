@@ -68,7 +68,8 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md). A region may keep a truce (StoryConditions.TRUCES): while
   it holds, its `enter_area` fights wait as if their `when` were false, and are back as they were once it ends (Castle
-  Ravenloft while Strahd's dinner invitation is open, docs/regions/castle_ravenloft_gates.md §8). Foes start spread out (owner, 2026-10-14): of three or
+  Ravenloft while Strahd's dinner invitation is open and the party hasn't left the castle since, docs/regions/
+  castle_ravenloft_gates.md §8): leaving the region ends a truce for good (its `over` flag, StoryConditions.note_departure). Foes start spread out (owner, 2026-10-14): of three or
   more, no 20 ft burst catches them all, nor more than three quarters of eight or more, and none starts on a wall, low
   cover or another foe (tests/unit/test_fight_spread.gd, which lists the rooms too small for it). Road fights are held
   to the same on every ground they can play out on.

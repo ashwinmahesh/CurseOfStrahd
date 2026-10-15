@@ -157,6 +157,7 @@ encounter each as above. The `mists` card may pick either.
 | `crg_altar_opened` | bool | container `crg_chapel_altar` | Narrator (the nave) |
 | `crg_gargoyles_broken` | bool | `crg_courtyard_gargoyles` won | Narrator (the courtyard) |
 | `crg_turret_guard_broken` | bool | `crg_turret_guard` won | Narrator (the turret post) |
+| `castle_truce_over` | bool | the engine, as the party leaves the castle with the invitation open and no dinner yet (StoryConditions.note_departure) | the castle's truce (StoryConditions.TRUCES) |
 
 Read from elsewhere: `strahd_invitation`, `strahd_test`, `ireena_held_by_strahd` (presence, P6-03; the dinner fight's
 withdraw sets the presence package's `strahd_withdrew`, which the parley reads);
@@ -206,7 +207,10 @@ into being (Rahadin, the brides, Cyrus, the dinner affront), putting out the hea
 robbing the ravens' nest, a failed check on Rahadin's footlocker, breaking the Heart of Sorrow. A Long Rest under the
 truce is a safe one (the rest screen). Once dinner ends, thanked or affronted, every held fight is back as it was and
 starts the next time the party walks in. A party that excuses itself from the table is still a guest, so the truce
-holds while it walks about (tests/integration/test_castle_household.gd).
+holds while it walks about the castle; leaving the castle ends it for good (owner, 2026-10-15: "end it once they leave
+Castle Ravenloft ... when they return, it's back to how it was"): arriving at any place outside the region sets
+`castle_truce_over` (StoryConditions.note_departure, from LocationView), and a party that comes back finds every fight
+as it was, while Strahd's table still waits if dinner never happened (tests/integration/test_castle_household.gd).
 
 ## 9. Loot
 

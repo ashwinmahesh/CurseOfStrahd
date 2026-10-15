@@ -119,6 +119,44 @@ func test_strahd_still_waits_at_the_table_through_the_truce() -> void:
 	assert_false(StoryConditions.truce_holds(CASTLE, st), "dinner over: the house is itself again")
 
 
+## Owner, 2026-10-15: "End it once they leave Castle Ravenloft. So when they return, it's back to how it was." Walking
+## between the castle's maps keeps it; arriving anywhere outside ends it for good, and coming back finds the castle's
+## fights as they were, while Strahd's table still waits for the dinner.
+func test_leaving_the_castle_ends_the_truce_for_good() -> void:
+	var st := _party()
+	st.set_flag("strahd_invitation", "accepted")
+	st.location = "svalich_crossroads"
+	StoryConditions.note_departure(st, st.location, CASTLE)
+	assert_true(StoryConditions.truce_holds(CASTLE, st), "arriving by the black carriage begins it")
+	st.location = MAIN
+	StoryConditions.note_departure(st, st.location, CASTLE)
+	assert_true(StoryConditions.truce_holds(CASTLE, st), "the castle's own stairs and doors keep it")
+	# Leaving: the place outside is built as the game builds it (LocationView sets the party's new location).
+	var outside := LocationView.create("svalich_crossroads", st, Narrator.new(), Dice.roller, "default")
+	add_child(outside)
+	await _frames(1)
+	assert_eq(st.location, "svalich_crossroads")
+	assert_true(bool(st.get_flag("castle_truce_over", false)), "leaving the castle ends it")
+	outside.queue_free()
+	await _frames(1)
+	var back := LocationView.create(MAIN, st, Narrator.new(), Dice.roller, "from_gates")
+	add_child(back)
+	await _frames(1)
+	assert_false(StoryConditions.truce_holds(CASTLE, st), "coming back, the castle is as it was")
+	var turret := SideQuestPlay.encounter(st, MAIN, "crg_turret_guard")
+	assert_true(_live(turret, st), "the turret's guard waits again")
+	assert_eq(SideQuestPlay.standing(st, MAIN, "strahd"), "castle_ravenloft/gates_dinner:start", "and the table still keeps")
+	for f: Dictionary in _castle_fights():
+		var spec := f["spec"] as Dictionary
+		assert_eq(_live(spec, st), _live(spec, st, ""), "back in the castle, %s is as it was" % spec["id"])
+	back.queue_free()
+	await _frames(1)
+	var excused := _party()
+	excused.set_flag("strahd_invitation", "accepted")
+	SideQuestPlay.play(excused, "castle_ravenloft/gates_dinner:start", ["Excuse yourselves"])
+	assert_true(StoryConditions.truce_holds(CASTLE, excused), "getting up from the table alone doesn't end it")
+
+
 ## The truce holds for resting too: no walk-in fight keeps the party awake, and its fights come back after dinner.
 func test_a_waiting_castle_fight_counts_again_after_dinner() -> void:
 	var st := _party()

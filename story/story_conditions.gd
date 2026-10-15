@@ -35,14 +35,33 @@ static func final_battle_condition(room: String) -> String:
 
 ## A region's truce (owner, 2026-10-15): while it holds, the region's fights that start on their own as the party walks
 ## into a room wait, and come back once it ends. Fights the party starts (by a word, by opening or breaking something,
-## a check gone wrong) still come. Castle Ravenloft: Strahd's invited guests are not set on by his house until dinner
-## is over, thanked or affronted (docs/regions/castle_ravenloft_gates.md §5).
-const TRUCES := {"castle_ravenloft": "flag.strahd_invitation == \"accepted\" and not flag.castle_dinner"}
+## a check gone wrong) still come. Each truce holds `while` its condition does, until the party leaves the region
+## (note_departure sets its `over` flag, for good). Castle Ravenloft: Strahd's invited guests are not set on by his
+## house until dinner is over, thanked or affronted, or until they leave the castle (owner, 2026-10-15: "end it once
+## they leave Castle Ravenloft ... when they return, it's back to how it was"; docs/regions/castle_ravenloft_gates.md §8).
+const TRUCES := {"castle_ravenloft": {"while": "flag.strahd_invitation == \"accepted\" and not flag.castle_dinner",
+	"over": "castle_truce_over"}}
+
+
+## The condition `region`'s truce holds under ("" for a region without one).
+static func truce_condition(region: String) -> String:
+	if not TRUCES.has(region):
+		return ""
+	var t := TRUCES[region] as Dictionary
+	return "(%s) and not flag.%s" % [t["while"], t["over"]]
 
 
 ## Whether `region`'s truce holds now.
 static func truce_holds(region: String, state: StoryState) -> bool:
-	return TRUCES.has(region) and check(str(TRUCES[region]), state)
+	return TRUCES.has(region) and check(truce_condition(region), state)
+
+
+## The party moves from location `from_id` to a location in `region`: leaving a region whose truce holds ends that
+## truce for good (its `over` flag), so coming back finds the place's fights as they were.
+static func note_departure(state: StoryState, from_id: String, region: String) -> void:
+	var from_region := str(Compendium.shared().get_entry("locations", from_id).get("region", "")) if from_id != "" else ""
+	if from_region != region and truce_holds(from_region, state):
+		state.set_flag(str((TRUCES[from_region] as Dictionary)["over"]), true)
 
 
 ## A location encounter's full condition: its `when`, and for a `final_battle` the final battle's own. Given the
@@ -54,7 +73,8 @@ static func encounter_when(spec: Dictionary, region: String = "") -> String:
 	if room != "":
 		when = final_battle_condition(room) if when == "" else "(%s) and %s" % [when, final_battle_condition(room)]
 	if TRUCES.has(region) and str(spec.get("trigger", "")).begins_with("enter_area:"):
-		when = "not (%s)" % TRUCES[region] if when == "" else "(%s) and not (%s)" % [when, TRUCES[region]]
+		var truce := truce_condition(region)
+		when = "not (%s)" % truce if when == "" else "(%s) and not (%s)" % [when, truce]
 	return when
 
 

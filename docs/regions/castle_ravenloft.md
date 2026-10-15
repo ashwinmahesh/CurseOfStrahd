@@ -83,6 +83,7 @@ The card `mists` sends Strahd roaming (ADR 0014): one of the enemy rooms, picked
 | castle_courtier_1/2, castle_ghost_servant, castle_dead_guard_1/2, castle_dead_servant_1/2 | gates (shared by all parts) | the court and household extras on the courtyard, main floor, court, Rooms of Weeping, larders, dungeon and high tower, each walking a route (household.dialogue; gates doc §8) |
 
 While Strahd's dinner invitation is open, the whole castle keeps a truce: its walk-in fights wait until dinner is over
+or the party leaves the castle (for good)
 (castle_ravenloft_gates.md §8, StoryConditions.TRUCES).
 
 ## Levels and balance
