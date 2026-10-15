@@ -5,7 +5,8 @@ extends Node
 ## one shot each, plus sample tooltips, the sheet for a level 7 warlock, monk and druid, and creating a character from the
 ## party screen (UI_ONLY=create), Madam Eva's rebuild (UI_ONLY=rebuild), a sheet opened in a fight (UI_ONLY=fight_sheet),
 ## a cutscene still (UI_ONLY=cutscene), busts before and after they face each other (UI_ONLY=busts), the Wait
-## screen (UI_ONLY=wait) and the journal's quests: Other, Main and a search (UI_ONLY=journal_quests).
+## screen (UI_ONLY=wait), the journal's quests: Other, Main and a search (UI_ONLY=journal_quests), and XP levelling's strip,
+## and level-up line (UI_ONLY=xp).
 ## make capture SCENE=res://tools/capture/ui_capture.tscn NAME=ui FRAMES=10 [UI_ONLY=party,loot] (env: only those)
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
@@ -176,6 +177,25 @@ func capture_shots(tool: Node, out: String) -> void:
 		root.call("open_screen", "level_up", 2)
 		await _shoot(tool, "%s_level_up.png" % out)
 		root.call("close_screen")
+	if _wants("xp"):
+		# XP levelling (story/xp.gd): the experience strip on the party screen and the sheet (the pool partway through level 5,
+		# some held for the next milestone) and the level-up screen when the party has taken every level it has.
+		var xs := GameState.story
+		xs.options[Xp.OPTION] = Xp.EXPERIENCE
+		xs.xp = 9420
+		xs.xp_reserve = 1240
+		root.call("open_screen", "party", 0)
+		await _shoot(tool, "%s_xp_party.png" % out)
+		root.call("close_screen")
+		root.call("open_screen", "sheet", 0)
+		await _shoot(tool, "%s_xp_sheet.png" % out)
+		root.call("close_screen")
+		root.call("open_screen", "level_up", 0)
+		await _shoot(tool, "%s_xp_level_up.png" % out)
+		root.call("close_screen")
+		xs.options[Xp.OPTION] = Xp.MILESTONE
+		xs.xp = 0
+		xs.xp_reserve = 0
 	if _wants("level_up_fighter"):
 		# Ilse's Fighter 6: her Fighting Style may change though the level brings no new one.
 		GameState.story.milestones = 10

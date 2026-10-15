@@ -11,6 +11,8 @@ var _picked: Array[String] = []
 var _hero: Character = null
 ## The new game's difficulty (combat/difficulty.gd), picked on the page after the party.
 var _difficulty := Difficulty.DEFAULT
+## How heroes grow in the new game, picked on the same page: "milestone" or "xp" (story/xp.gd).
+var _levelling := Xp.MILESTONE
 var _box: VBoxContainer
 ## Which page of the title is showing ("title", "new_game", "difficulty"): Escape steps back a page. The saves open
 ## on a page of their own (ui/screens/saves_screen.gd), which takes its own Escape.
@@ -233,9 +235,17 @@ func _pick_difficulty() -> void:
 	_view = "difficulty"
 	for c in _box.get_children():
 		c.queue_free()
-	DifficultyPage.build(_box, _difficulty, func(id: String) -> void:
-		_difficulty = id
-		_pick_difficulty(), _new_game, _offer_tutorial)
+	DifficultyPage.build(_box, _difficulty, _set_difficulty, _new_game, _offer_tutorial, _levelling, _set_levelling)
+
+
+func _set_difficulty(id: String) -> void:
+	_difficulty = id
+	_pick_difficulty()
+
+
+func _set_levelling(id: String) -> void:
+	_levelling = id
+	_pick_difficulty()
 
 
 ## Teach in a disposable practice scene before the existing campaign-start path touches any saves or characters.
@@ -341,6 +351,7 @@ func _start(party: Array[Character], bench: Array[Character] = []) -> void:
 		st.bench.append(ch)
 	st.gold = 10.0
 	st.options["difficulty"] = _difficulty
+	st.options[Xp.OPTION] = _levelling
 	st.location = ""
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
@@ -392,6 +403,12 @@ func capture_shots(tool: Node, out: String) -> void:
 	_pick_difficulty()
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_3_difficulty.png")
+	_levelling = Xp.EXPERIENCE   # the same page with Experience picked
+	_pick_difficulty()
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_3b_difficulty_xp.png")
+	_levelling = Xp.MILESTONE
+	_pick_difficulty()
 	_open_hero()
 	var b := _creation.b()
 	b.set_class("fighter")

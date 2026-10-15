@@ -1,0 +1,44 @@
+{
+  "id": "xp",
+  "summary": "Experience-point levelling (docs/plans/xp_mode.md; picked at a new game, milestone levelling stays the default). The 2024 PHB's level table, the 2024 DMG's XP budget per character, and how much each thing the party does is worth. Read by story/xp.gd; tools/balance/xp_sim.py replays it against the fight data.",
+  "thresholds": [0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000],
+  "budgets": [
+    [50, 75, 100],
+    [100, 150, 200],
+    [150, 225, 400],
+    [250, 375, 500],
+    [500, 750, 1100],
+    [600, 1000, 1400],
+    [750, 1300, 1700],
+    [1000, 1700, 2100],
+    [1300, 2000, 2600],
+    [1600, 2300, 3100],
+    [1900, 2900, 4100],
+    [2200, 3700, 4700]
+  ],
+  "foe_share": 0.4,
+  "split": 4,
+  "awards": {
+    "milestone": {"budget": "high", "times": 1.0},
+    "main_quest": {"budget": "moderate", "times": 1.0},
+    "side_quest": {"budget": "low", "times": 0.5},
+    "place": {"budget": "low", "times": 0.5},
+    "location": {"budget": "low", "times": 0.1},
+    "find": {"budget": "low", "times": 0.05},
+    "check": {"budget": "low", "times": 0.05},
+    "trap_noticed": {"budget": "low", "times": 0.05},
+    "trap_disarmed": {"budget": "low", "times": 0.05},
+    "lore": {"budget": "low", "times": 0.025},
+    "strahd_withdraws": {"budget": "high", "times": 1.0}
+  },
+  "withdraw_pays": {
+    "strahd_von_zarovich": "strahd_withdraws"
+  },
+  "milestone_quests": [
+    "death_house", "bury_the_burgomaster", "bones_of_st_andral", "children_of_the_mill", "wizard_of_wines",
+    "the_abbots_bride", "wolves_in_the_hills", "the_dark_beacon", "the_witch_of_berez", "the_amber_temple"
+  ],
+  "no_xp_quests": [
+    "into_the_mists"
+  ]
+}

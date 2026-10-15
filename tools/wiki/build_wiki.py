@@ -1045,13 +1045,17 @@ class Wiki:
         groups = OrderedDict()
         for m in monsters:
             mid = m.get("monster", "")
-            key = (mid, m.get("name", ""))
+            key = (mid, m.get("name", ""), m.get("hp"))
             groups[key] = groups.get(key, 0) + 1
         parts = []
-        for (mid, name), n in groups.items():
+        for (mid, name, hp), n in groups.items():
             link = s.mon(mid)
+            # A fight's own Hit Points for a creature (bosses scaled by level), when they differ from its stat block.
+            own = hp if hp and int(hp) != int((g.monsters.get(mid, {}).get("hp") or {}).get("average", 0) or 0) else None
             if name and name != g.monster_name(mid):
-                link = f"{name} ({link})"
+                link = f"{name} ({link}" + (f", {own} HP)" if own else ")")
+            elif own:
+                link = f"{link} ({own} HP)"
             parts.append(f"{n} × {link}" if n > 1 else link)
         return ", ".join(parts)
 
@@ -1075,6 +1079,8 @@ class Wiki:
             for m in e.get("monsters", []):
                 who.setdefault(m.get("monster", ""), m.get("name", ""))
         names = ", ".join(s.mon(mid) for mid in who if mid)
+        if len(placements) == 1:   # one version: who comes, how many, and any Hit Points of the fight's own
+            names = self.monsters_line(e0.get("monsters", []))
         scales = " Scales with your level." if len(placements) > 1 else ""
         return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
 
@@ -2176,7 +2182,9 @@ class Wiki:
     def checks_page(self):
         g, s = self.g, self.site
         lines = ["Skill checks you can try out in the world, by place. Walk up to the thing and pick the check from "
-                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final.", ""]
+                 "its menu; the hero you have selected rolls. Most can be tried once: a failed check is final. A check "
+                 "that finds a hiding place shows where it is, and the spot glows until you use it: what's hidden there "
+                 "comes out when you do.", ""]
         total = 0
         for rid in sorted(self.regions, key=lambda r: (g.region_level(r) or 99)):
             rows = []
@@ -2635,7 +2643,7 @@ class Wiki:
         self.w.write("page/difficulty", "Rules/Difficulty", "Difficulty", ["%% default %%\n", auto("modes", self.difficulty_lines())],
                      tags=["wiki", "rules"])
         # Pages people write by hand: the generator only makes sure they exist and keeps them linked.
-        for key in ("page/magic", "page/stealth", "page/resting"):
+        for key in ("page/magic", "page/stealth", "page/resting", "page/revival"):
             self.w.write(key, s.paths[key], s.titles[key], ["%% default %%\n"], tags=["wiki", "rules"])
 
     def difficulty_lines(self):
@@ -2745,6 +2753,7 @@ class Wiki:
                                   s.link("page/dark_gifts", "Dark Gifts") + ": the Amber Temple's bargains"]),
             ("Rules and play", [s.link("page/magic", "How Magic Works") + ", " + s.link("page/stealth") + " and " +
                                 s.link("page/resting"),
+                                s.link("page/revival", "Reviving the Dead") + ": dying, Death Saving Throws and every way back",
                                 s.link("page/house_rules", "House Rules") + ": where the game differs from the 2024 books",
                                 s.link("page/difficulty", "Difficulty") + " and " + s.link("page/controls", "Controls"),
                                 s.link("page/conditions", "Conditions") + " and the " + s.link("page/glossary", "Glossary"),
@@ -2865,6 +2874,7 @@ class Wiki:
                                 ("page/magic", "Rules/How Magic Works", "How Magic Works"),
                                 ("page/stealth", "Rules/Sneaking, Stealing and the Watch", "Sneaking, Stealing and the Watch"),
                                 ("page/resting", "Rules/Resting and Saving", "Resting and Saving"),
+                                ("page/revival", "Rules/Reviving the Dead", "Reviving the Dead"),
                                  ("page/controls", "Rules/Controls", "Controls"),
                                  ("page/conditions", "Rules/Conditions", "Conditions"),
                                  ("page/glossary", "Rules/Glossary", "Glossary"),

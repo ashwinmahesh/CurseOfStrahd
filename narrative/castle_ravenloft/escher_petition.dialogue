@@ -97,6 +97,7 @@ set escher_saw_dawn
 quest escher_petition done
 Narrator: He doesn't step back. The light comes over the mountains and finds him, and he smokes, and then he burns, quietly, the way paper burns, with his face turned up to it the whole time.
 Escher: (At the very end, hardly a sound.) Worth it. Tell him it was worth it.
+cutscene escher_coat
 Narrator: When it's over there is a good red velvet coat on the stones and a little ash, and the wind takes the ash. In the coat's pocket is a purse, and a helm of dark steel set with gems that each hold a little captured light: a crown full of daylight, given to a man who could never wear it.
 give helm_of_brilliance
 gold +250

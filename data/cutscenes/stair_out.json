@@ -1,0 +1,15 @@
+{
+  "id": "stair_out",
+  "title": "Up the Long Stair",
+  "summary": "The party climbs the long stair out of the dark as the torches go out behind them and grey daylight shows ahead.",
+  "images": [
+    {
+      "image": "stair_out",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

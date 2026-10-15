@@ -107,6 +107,7 @@ Narrator: Brick, garlic and dust. Whoever laid this wanted it to stay laid.
 
 ~ seal
 quest the_burgomasters_hound sealed
+xp fight hound_tenant
 Narrator: You say the words over the bricks, and push fresh garlic into every crack, and plaster over all of it. The scratching stops. Outside, for the first time in a long while, the dog stops howling.
 Narrator: In the desk drawer, under the complaints, a purse the burgomaster kept for the day he could bear to do it properly.
 gold +60

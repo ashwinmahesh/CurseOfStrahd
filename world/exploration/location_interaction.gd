@@ -485,10 +485,9 @@ static func _use_prop(view: LocationView, prop: Dictionary) -> void:
 	var used := view.st.loc_state(view.loc_id)["props"] as Dictionary
 	match kind:
 		"book":
-			var codex := str(prop.get("codex", id))
-			if not codex in view.st.codex:
-				view.st.codex.append(codex)
-				view.toast.emit("Added to the codex: %s" % prop.get("label", id))
+			var lore := view.st.add_codex(str(prop.get("codex", id)))
+			if lore >= 0:
+				view.toast.emit("Added to the codex: %s%s" % [prop.get("label", id), Xp.tag(lore)])
 		"lever":
 			Audio.sfx("lever")
 			if prop.has("flag"):

@@ -1,0 +1,15 @@
+{
+  "id": "portraits_turn",
+  "title": "Every Portrait Turns",
+  "summary": "In the studio every painted head turns toward the party at once and the great canvas leans out of its frame.",
+  "images": [
+    {
+      "image": "portraits_turn",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

@@ -125,6 +125,7 @@ set vasilka_fate = "laid_to_rest"
 -> repent
 
 ~ repent
+xp fight bride_defends
 set abbot_fate = "repentant"
 quest the_abbots_bride repented
 Abbot: Bury her by the pool, with the others she was made from. Let Kasha sing over her. She sings badly, and with love, which is the right way.
@@ -145,6 +146,7 @@ approve liriel_dawnsong +5 godrick_pendlebrook +2 wren_featherfoot +1 kip_smudge
 -> the_end
 
 ~ wedding
+xp fight bride_defends
 set abbot_fate = "wedding"
 set vasilka_fate = "sent"
 quest the_abbots_bride wedding
@@ -246,6 +248,7 @@ Abbot: She chose the brother. Twice. Then it was never loneliness he suffered fr
 -> repent_unmake
 
 ~ fled
+xp fight bride_defends
 set abbot_fate = "wedding"
 set vasilka_fate = "sent"
 set abbot_told_strahd

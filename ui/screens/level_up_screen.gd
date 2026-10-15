@@ -31,7 +31,7 @@ func open(root_: Node, state: StoryState, index: int) -> void:
 	ch = st.party[clampi(index, 0, st.party.size() - 1)]
 	var frame := UiKit.screen_frame(self, "Level Up", Vector2(1500, 840))
 	if not st.can_level_up(ch):
-		frame.add_child(UiKit.label("%s has reached the level the story allows (%d). Milestones raise it." % [ch.name, st.target_level()], 17, "parchment", 1400))
+		frame.add_child(UiKit.label(_blocked_line(), 17, "parchment", 1400))
 		return
 	ctl = LevelUpController.new(ch)
 	var main_class := ch.class_order[0] if not ch.class_order.is_empty() else ""
@@ -52,6 +52,17 @@ func open(root_: Node, state: StoryState, index: int) -> void:
 	side.size_flags_horizontal = Control.SIZE_FILL
 	row.add_child(side)
 	_redraw()
+
+
+## Why there's no level to take: the party is at the level the story allows (milestones raise it), or, in XP levelling,
+## the XP it still needs for the next (story/xp.gd).
+func _blocked_line() -> String:
+	if not Xp.active(st):
+		return "%s has reached the level the story allows (%d). Milestones raise it." % [ch.name, st.target_level()]
+	if st.target_level() >= StoryState.LEVEL_CAP:
+		return "%s has reached the highest level the story takes the party to (%d)." % [ch.name, st.target_level()]
+	return "%s has reached the party's level (%d). It needs %s more XP for level %d." % [ch.name, st.target_level(),
+		Xp.fmt(Xp.to_next(st.xp)), st.target_level() + 1]
 
 
 func _redraw() -> void:

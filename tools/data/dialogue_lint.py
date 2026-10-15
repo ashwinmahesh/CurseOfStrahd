@@ -44,6 +44,7 @@ RE_IF = re.compile(r"^(if|elif)\s+(.+)$")
 RE_VARIANT = re.compile(r"^\|\s*(?:\[([^\]]+)\]\s*)?(.+)$")
 RE_COOLDOWN = re.compile(r"^(cooldown\s+\d+|once)$")
 RE_XP = re.compile(r"^xp\s+milestone$")
+RE_XP_FIGHT = re.compile(rf"^xp\s+fight\s+({ID})$")
 RE_SACRIFICE = re.compile(r"^sacrifice$")
 RE_TAROKKA_GIVE = re.compile(r"^tarokka\s+give\s+([a-z][a-z0-9_]*(?::[a-z][a-z0-9_]*)?)$")
 RE_DARK_GIFT = re.compile(r"^dark_gift\s+([a-z][a-z0-9_]*)$")
@@ -245,6 +246,10 @@ def parse_file(path):
         m = RE_COMBAT.match(line)
         if m:
             out["encounters"].append((m.group(1), where))
+            continue
+        m = RE_XP_FIGHT.match(line)
+        if m:
+            out.setdefault("xp_fights", []).append((m.group(1), where))   # a fight talked or tricked away pays its XP (story/xp.gd)
             continue
         m = RE_NARRATE.match(line)
         if m:

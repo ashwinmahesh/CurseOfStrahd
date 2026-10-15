@@ -40,6 +40,7 @@ approve liriel_dawnsong +2 godrick_pendlebrook +1: You talked a grieving ghost i
 
 ~ calmed
 set death_house_nursemaid_calmed
+xp fight nursery_specter
 if not flag.death_house_learned_walter
   set death_house_learned_walter
   set death_house_lore += 1

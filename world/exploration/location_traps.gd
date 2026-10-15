@@ -157,6 +157,7 @@ static func _search(view: LocationView, who: Character, extra: Array) -> void:
 	var found: Array[String] = []
 	var found_ids: Array[String] = []
 	var missed_ids: Array[String] = []   # their own failure lines' keys
+	var earned := 0   # XP levelling: what the finds were worth (story/xp.gd), shown on the "Found" toast
 	show_reach(view, c, SEARCH_FT)
 	for tr: Variant in view.loc.get("traps", []):
 		var trap := tr as Dictionary
@@ -168,6 +169,7 @@ static func _search(view: LocationView, who: Character, extra: Array) -> void:
 				(states["traps"] as Dictionary)[str(trap["id"])] = "found"
 				_show_trap(view, trap)
 				found.append(str(trap.get("label", "a trap")))
+				earned += Xp.award(view.st, "trap_noticed", "%s:%s" % [view.loc_id, trap["id"]])
 				break
 	for prop in hidden_within(view, c, SEARCH_FT, who):
 		var roll := study if search_skill(prop) == &"investigation" else t
@@ -176,6 +178,7 @@ static func _search(view: LocationView, who: Character, extra: Array) -> void:
 			view.prop_nodes[str(prop["id"])] = LocationBuilder._prop_node(view, prop)
 			found.append(str(prop.get("label", "something")))
 			found_ids.append(str(prop["id"]))
+			earned += Xp.award(view.st, "find", "%s:%s" % [view.loc_id, prop["id"]])
 		elif prop.has("item"):
 			(states["found"] as Dictionary)[_missed_key(prop, who)] = true
 			missed_ids.append("check:%s:%s:failure" % [search_skill(prop), prop["id"]])
@@ -187,6 +190,7 @@ static func _search(view: LocationView, who: Character, extra: Array) -> void:
 			(states["found"] as Dictionary)[str(door["id"])] = true
 			SetDressing.reveal_door(view.door_nodes[str(door["id"])] as Node3D)
 			found.append(str(door.get("label", "a hidden door")))
+			earned += Xp.award(view.st, "find", "%s:%s" % [view.loc_id, door["id"]])
 	view.st.last_check = not found.is_empty()
 	if found.is_empty() and sharp_eye:
 		who.restore_resource("sharp_eye")
@@ -206,7 +210,7 @@ static func _search(view: LocationView, who: Character, extra: Array) -> void:
 				said = view._say("search:" + id, who) or view._say("check:perception:%s:success" % id, who)
 		if not said:
 			view._say("check:perception:success", who, "")
-		view.toast.emit("Found: " + ", ".join(found))
+		view.toast.emit("Found: " + ", ".join(found) + Xp.tag(earned))
 
 
 ## The hidden things (search props) within `ft` of `cell` that a search could still turn up: not found yet, their
@@ -252,6 +256,9 @@ static func _disarm(view: LocationView, trap: Dictionary) -> void:
 		(view.st.loc_state(view.loc_id)["traps"] as Dictionary)[str(trap["id"])] = "disarmed"
 		_clear_marks(view, str(trap["id"]))
 		view._say("trap:%s:disarmed" % trap["id"], who, "Disarmed.")
+		var earned := Xp.award(view.st, "trap_disarmed", "%s:%s" % [view.loc_id, trap["id"]])
+		if earned > 0:
+			view.toast.emit("Disarmed" + Xp.tag(earned))
 	elif t.total <= int(trap.get("disarm_dc", 15)) - 5:
 		var m: Combatant = null
 		for mm in view.members:

@@ -76,6 +76,7 @@ if quest.escort_ireena
 quest escort_ireena arrived
 endif
 endif
+cutscene vallaki_smiles
 Town Guard: The rules, quick. The Festival of the Blazing Sun is in the square; the Baron lights the sun at noon and everyone attends. Lamps out at the second bell. Nobody frowns at the Baron.
 Town Guard: If you've a grievance, keep it indoors. If you've a dead relative, Father Lucian at St. Andral's. If you've a live one who frowns, keep them indoors as well.
 if name:godrick_pendlebrook

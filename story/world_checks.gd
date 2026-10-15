@@ -272,9 +272,10 @@ static func apply(st: StoryState, outcome: Dictionary, who: Character, dice: Dic
 	if str(outcome.get("flag", "")) != "":
 		st.set_flag(str(outcome["flag"]))
 	var codex := outcome.get("codex", {}) as Dictionary
-	if not codex.is_empty() and not str(codex["id"]) in st.codex:
-		st.codex.append(str(codex["id"]))
-		gains.append("Added to the codex: %s" % codex.get("title", codex["id"]))
+	if not codex.is_empty():
+		var lore := st.add_codex(str(codex["id"]))
+		if lore >= 0:
+			gains.append("Added to the codex: %s%s" % [codex.get("title", codex["id"]), Xp.tag(lore)])
 	if bool(outcome.get("inspiration", false)):
 		var said := _inspire(st, who)
 		if said != "":

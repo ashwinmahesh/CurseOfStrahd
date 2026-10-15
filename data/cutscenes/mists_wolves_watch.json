@@ -1,0 +1,15 @@
+{
+  "id": "mists_wolves_watch",
+  "title": "Wolves Along the Road",
+  "summary": "A line of silent wolves stands along the Old Svalich Road in the fog, watching the party like a picket.",
+  "images": [
+    {
+      "image": "mists_wolves_watch",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

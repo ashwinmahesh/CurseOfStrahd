@@ -122,6 +122,7 @@ Doru [sad]: Still here. Still hungry. Have you come to watch?
 
 ~ doru_first
 set larders_doru_met
+cutscene doru_chains
 Narrator: A thin young man hangs in silvered chains, his toes just clear of the floor. His lips are cracked back to the gums. He knows you at once.
 Doru: You. You opened the door under the church. I remember how you smelled. Rain and roads.
 Doru [sad]: I went home to him, to the castle. I thought he'd give me a seat at the table. He gave me this, for coming back with nothing.
