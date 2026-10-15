@@ -89,3 +89,18 @@ func test_a_companion_by_the_fire_speaks_in_her_own_voice() -> void:
 	GameState.story.camp_company = company
 	assert_eq(VoiceOver.beat_voice({"speaker_id": thistle.id, "party": true, "text": "Present."}), "thistle")
 	GameState.story.camp_company = saved
+
+
+func test_a_shared_name_speaks_as_the_lowest_id() -> void:
+	# Two NPCs that share a display name (a pale courtier, a goat) are one speaker, the lowest id, which is the one
+	# tools/audio/voice_lines.py records under. all() sorts by name only, so the game once took either, and when it
+	# took the other one the recorded lines were silent (castle_courtier_2, 2026-10-15).
+	var lowest := {}   # lower-cased name or first word -> lowest id
+	for n: Dictionary in Compendium.shared().all("npcs"):
+		var name := str(n.get("name", "")).to_lower()
+		for q: String in [name, name.get_slice(" ", 0)]:
+			if q != "" and (not lowest.has(q) or str(n["id"]) < str(lowest[q])):
+				lowest[q] = str(n["id"])
+	for q: String in lowest:
+		if Compendium.shared().get_entry("npcs", q.replace(" ", "_")).is_empty():
+			assert_eq(str(DialogueRunner._npc_for(q).get("id", "")), lowest[q], "a line spoken by '%s'" % q)
