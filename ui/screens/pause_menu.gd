@@ -427,7 +427,18 @@ func _difficulty_row(y: float) -> void:
 		if d.switchable:
 			tip.append("%s: %s" % [d.name, d.summary])
 	tip.append("Honour (one life, one save) is chosen when a new game begins.")
+	tip.append(_levelling_words())
 	_choice_row(y, "Difficulty", names, ids.find(now), func(i: int) -> void: _pick_difficulty(ids[i]), "\n".join(tip))
+	# How heroes grow is shown, not offered: it is chosen when a game begins (story/xp.gd).
+	if _note != null and _note.text == "":
+		_note.text = _levelling_words()
+
+
+## How this game's heroes grow, as Settings says it: chosen at the start, never changed.
+func _levelling_words() -> String:
+	if Xp.active(st):
+		return "Levelling: Experience. Chosen when this game began; it can't be changed."
+	return "Levelling: Milestones. Chosen when this game began; it can't be changed."
 
 
 ## A difficulty picked on the row: at once, unless it leaves Honour, which asks first.

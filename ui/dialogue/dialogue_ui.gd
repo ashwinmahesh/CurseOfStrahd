@@ -360,7 +360,7 @@ func _show(beat: Dictionary) -> void:
 			_name.text = str(beat["who"])
 			_text.text = "%s[color=#%s]%s rolls %s: %d vs DC %d, %s[/color]\n[font_size=14][color=#%s]%s[/color][/font_size]" % [
 				("[i]\"%s\"[/i]\n" % _esc(said)) if said != "" else "", Look.color(colour).to_html(false), beat["who"], beat["skill"],
-				int(beat["total"]), int(beat["dc"]), "success" if bool(beat["success"]) else "failure",
+				int(beat["total"]), int(beat["dc"]), ("success" + Xp.tag(int(beat.get("xp", 0)))) if bool(beat["success"]) else "failure",
 				Look.color("parchment").to_html(false), _esc(str(beat["detail"]))]
 			_remember(_text.text)
 			_waiting_continue = true

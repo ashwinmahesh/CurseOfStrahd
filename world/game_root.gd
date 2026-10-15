@@ -54,6 +54,7 @@ func _ready() -> void:
 	hud = ExploreHud.new()
 	add_child(hud)
 	hud.build(st)
+	st.xp_gained.connect(hud.toast)   # XP levelling: a quest finished, a place found, a milestone (story/xp.gd)
 	D20Die.warm.call_deferred(hud)   # the big d20's shader and numerals, ready before its first roll
 	hud.leader_picked.connect(func(i: int) -> void:
 		if view != null:
@@ -1026,6 +1027,8 @@ func _exit_tree() -> void:
 		st.time_passed.disconnect(_on_time_passed)
 	if st != null and st.item_gained.is_connected(notices.show_item):
 		st.item_gained.disconnect(notices.show_item)
+	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
+		st.xp_gained.disconnect(hud.toast)
 
 
 # --- Screens --------------------------------------------------------------------------------------

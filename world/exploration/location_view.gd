@@ -161,6 +161,8 @@ func _ready() -> void:
 	st.location = loc_id
 	var first := not st.visited.has(loc_id)
 	st.visited[loc_id] = true
+	if first:
+		Xp.arrive(st, loc_id)   # XP levelling: a place found on the travel map, or a new location (milestone mode: nothing)
 	_say(str((loc.get("narration", {}) as Dictionary).get("enter", "enter:" + loc_id)))
 	if first and str(loc.get("text", "")) != "":
 		narration.emit(str(loc["text"]))
