@@ -277,6 +277,24 @@ func test_quests_pay_by_kind_and_a_region_climax_is_paid_by_its_milestone() -> v
 	assert_eq(st.xp, before, "the milestone pays for the climax; the mists pay nothing")
 
 
+func test_reaching_a_level_is_said_at_once_but_a_milestone_says_it_in_its_own_notice() -> void:
+	var st := _xp_state(250)
+	var said: Array[String] = []
+	st.xp_gained.connect(func(t: String) -> void: said.append(t))
+	Xp.award(st, "find", "a")   # 3 XP: no level
+	assert_eq(said.size(), 0)
+	Xp.gain(st, 100)
+	assert_eq(said, ["The party reaches level 2"] as Array[String])
+	Xp.gain(st, 10)
+	assert_eq(said.size(), 1, "only a level reached is said")
+	var other := _xp_state(50)
+	var again: Array[String] = []
+	other.xp_gained.connect(func(t: String) -> void: again.append(t))
+	other.milestones += 1
+	Xp.milestone(other)
+	assert_eq(again.size(), 0, "a milestone's own notice says it (Milestone: +250 XP, the party reaches level 2)")
+
+
 func test_a_quest_notice_says_what_it_paid() -> void:
 	var st := _xp_state(Xp.threshold(5), 4)
 	var said: Array[String] = []

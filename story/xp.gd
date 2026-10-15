@@ -106,10 +106,14 @@ static func ceiling(st: StoryState) -> int:
 
 ## Puts `amount` into the pool under the ceiling. What doesn't fit waits in the reserve for the next milestone, or, when
 ## `repeatable` (the road, the camp, Strahd's visits: things that can be had again) or the story has reached the cap,
-## is lost. Returns {gained, held, lost}.
-static func gain(st: StoryState, amount: int, repeatable: bool = false) -> Dictionary:
+## is lost. Returns {gained, held, lost}. A level the pool reaches is said at once (StoryState.xp_gained), unless the caller
+## says it in its own notice (`announce` false: a milestone).
+static func gain(st: StoryState, amount: int, repeatable: bool = false, announce: bool = true) -> Dictionary:
+	var before := level_for(st.xp)
 	var take := mini(maxi(0, ceiling(st) - st.xp), maxi(0, amount))
 	st.xp += take
+	if announce and level_for(st.xp) > before:
+		st.xp_gained.emit("The party reaches level %d" % level_for(st.xp))
 	var rest := maxi(0, amount) - take
 	var held := 0
 	var lost := 0
@@ -163,7 +167,7 @@ static func fmt(n: int) -> String:
 static func milestone(st: StoryState) -> String:
 	var before := level_for(st.xp)
 	var start := st.xp
-	gain(st, amount_for(st, "milestone"))
+	gain(st, amount_for(st, "milestone"), false, false)   # the notice below says if a level came of it
 	var s := st.story_level()
 	if st.xp < threshold(s):
 		st.xp = threshold(s)

@@ -403,6 +403,12 @@ func capture_shots(tool: Node, out: String) -> void:
 	_pick_difficulty()
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_3_difficulty.png")
+	_levelling = Xp.EXPERIENCE   # the same page with Experience picked
+	_pick_difficulty()
+	await tool.call("wait_frames", 10)
+	tool.call("_shot", out + "_3b_difficulty_xp.png")
+	_levelling = Xp.MILESTONE
+	_pick_difficulty()
 	_open_hero()
 	var b := _creation.b()
 	b.set_class("fighter")

@@ -153,7 +153,7 @@ func _hero(ch: Character) -> VBoxContainer:
 	var origin := UiKit.label("%s · %s" % [sp, bg], 14, "parchment")
 	origin.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(origin)
-	var xp := XpStrip.build(st, HERO_W)   # XP levelling: the party's experience (nothing in milestone mode)
+	var xp := XpStrip.build(st, HERO_W, true)   # XP levelling: the party's experience (nothing in milestone mode)
 	if xp != null:
 		col.add_child(xp)
 	col.add_child(_hit_points(ch))

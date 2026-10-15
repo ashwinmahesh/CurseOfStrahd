@@ -120,6 +120,22 @@ func test_every_golden_save_upgrades_to_this_version() -> void:
 		assert_true(data.has("story"), "%s keeps its story" % f)
 
 
+## XP levelling (story/xp.gd) came after every save kept here: each loads as it always played, by milestones, with no XP.
+func test_every_golden_save_levels_by_milestones() -> void:
+	for f in saves():
+		var up := SaveSystem.upgrade(read(f))
+		var story: Variant = up.get("story")
+		if story is Dictionary:
+			assert_eq(((story as Dictionary).get("options", {}) as Dictionary).get("levelling"), "milestone", "%s is pinned to milestones" % f)
+		if not _load(f):
+			continue
+		var st := GameState.story
+		assert_false(Xp.active(st), "%s levels by milestones" % f)
+		assert_eq(st.xp, 0, "%s has no XP" % f)
+		assert_eq(st.xp_reserve, 0)
+		assert_eq(st.target_level(), mini(StoryState.LEVEL_CAP, st.start_level + st.milestones), "%s: the story's level" % f)
+
+
 func test_every_golden_save_names_things_that_exist() -> void:
 	var comp := Compendium.shared()
 	for f in saves():

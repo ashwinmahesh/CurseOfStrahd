@@ -6,7 +6,9 @@ Engine: `LevelUpController` (rules/progression/level_up_controller.gd), `ChoiceO
 ## What this screen must do
 
 - Let the player level any party member any time out of combat, with milestone leveling by default (XP as an
-  option): a ⬆ badge appears on the portrait when a level is available.
+  option picked at a new game, story/xp.gd): a ⬆ badge appears on the portrait when a level is available. In XP
+  levelling the party's XP sets that level ("Level 6 · 15,240 / 23,000 XP" on the Party screen and the sheet), and the
+  screen says what is still needed, "needs 7,760 more XP for level 7", when there's none to take.
 - Make every 2024 rule visible: multiclass prerequisites, Hit Points by roll or fixed value, every new feature with
   full text, every choice the level grants, and a before/after summary. Nothing changes until Confirm.
 

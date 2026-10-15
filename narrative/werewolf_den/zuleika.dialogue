@@ -70,6 +70,7 @@ Narrator: Her hands never stop working, stripping leaves from stalks, and her fa
 -> menu
 
 ~ pact
+xp fight den_guards
 set zuleika_vouched
 set emil_key_found
 attitude zuleika_toranescu friendly

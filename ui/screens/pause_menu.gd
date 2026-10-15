@@ -429,12 +429,10 @@ func _difficulty_row(y: float) -> void:
 	tip.append("Honour (one life, one save) is chosen when a new game begins.")
 	tip.append(_levelling_words())
 	_choice_row(y, "Difficulty", names, ids.find(now), func(i: int) -> void: _pick_difficulty(ids[i]), "\n".join(tip))
-	# How heroes grow is shown, not offered: it is chosen when a game begins (story/xp.gd).
-	if _note != null and _note.text == "":
-		_note.text = _levelling_words()
 
 
-## How this game's heroes grow, as Settings says it: chosen at the start, never changed.
+## How this game's heroes grow (story/xp.gd), as the Difficulty row's tip says it: shown, not offered, because it is chosen
+## when a game begins and never changed. The page has no room for a row of its own.
 func _levelling_words() -> String:
 	if Xp.active(st):
 		return "Levelling: Experience. Chosen when this game began; it can't be changed."

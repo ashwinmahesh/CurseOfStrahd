@@ -27,6 +27,9 @@ static func build(box: VBoxContainer, picked: String, on_pick: Callable, on_back
 	if on_levelling.is_valid():
 		var head := UiKit.header("How do heroes grow?")
 		head.name = "GrowthHeader"
+		var above := Control.new()
+		above.custom_minimum_size = Vector2(0, 4)
+		box.add_child(above)
 		box.add_child(head)
 		for g in GROWTH:
 			box.add_child(_growth_row(g, str(g["id"]) == levelling, on_levelling))

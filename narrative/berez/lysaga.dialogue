@@ -251,6 +251,7 @@ Baba Lysaga [sly]: The jar stays. A woman needs a little conversation in the eve
 -> bargain_struck
 
 ~ bargain_struck
+xp fight lysaga_in_hut
 set lysaga_bargained
 set lysaga_fate = "bargained"
 set winery_gem_berez_found

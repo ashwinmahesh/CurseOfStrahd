@@ -356,3 +356,60 @@ Sources for §1: the 2024 Free Rules' Character Advancement table
 (https://www.dndbeyond.com/sources/dnd/free-rules/creating-a-character) and the 2024 DMG's Character Advancement
 section as Roll20's 2024 compendium gives it (https://roll20.net/compendium/dnd5e/Rules:Character%20Advancement?expansion=33359).
 The budget table for levels 3-10 is the one the region docs already quote.
+
+## 9. Build notes (the build lane, 2026-10-14)
+
+Built as §7 describes, with the calls below. Everything that touches a fight, a quest or a level checks `Xp.active(st)` first,
+so milestone mode and every save made before this behave as they always did (the golden saves are asserted to).
+
+**One clarification to §3, re-validated.** §3 pays the High award at each of the 11 `xp milestone` beats. Taken literally that
+adds High at the hidden stair, the altar and the burial (which the simulator's §5 model did not pay) and, at the beats that
+end a region's climax quest, the quest's own award on top; the average player then runs about +0.3 levels over the milestones
+from the burial on (`make xp-sim RULES=literal`: 30% of critical-path fights met one level up, against the validated 4%).
+So **the milestone pays for the quest that ends at it**: `data/progression/xp.json` `milestone_quests` (Death House, the
+burial, the bones, the children, the winery, the Abbot's bride, the pack, the beacon, the witch, the Amber Temple) pay nothing
+for their own success. The festival, a main quest, still pays Moderate (the simulator has it so). `no_xp_quests` holds the
+walk out of the mists, a `kind: main` quest §3's list leaves out and the simulator never paid. Re-run with `make xp-sim`
+(`RULES=build`, what the game does; `RULES=plan` still reproduces §5 to the number):
+
+| Route six, average player | L2 | L3 | L4 | L5 | 6th | 7th | 8th | 9th | 10th | 11th |
+|---|---|---|---|---|---|---|---|---|---|---|
+| arrival minus milestone level, as §5 | -0.14 | +0.02 | +0.11 | +0.03 | +0.13 | 0.00 | +0.02 | -0.24 | +0.08 | 0.00 |
+| arrival minus milestone level, as built | -0.14 | -0.08 | +0.07 | +0.01 | +0.17 | -0.02 | -0.06 | -0.36 | -0.05 | -0.05 |
+
+Critical-path fights met at the milestone level: average 91% (9% one above, never two), minimal 100%, fighter 74%, explorer
+96%, thorough 25% (one level ahead from Vallaki on, as in §5). On the other two routes the average is 93% and 100%. A
+bare-minimum player is still held at the milestone level and nobody is ever two ahead.
+
+**Where it lives.** `story/xp.gd` (rules, pure), `data/progression/xp.json` + `data/schemas/xp.schema.json` (tables, award
+sizes, `withdraw_pays`, the two quest lists; `validate_data.py` checks them and reads the encounter budgets from it),
+`StoryState` (`xp`, `xp_reserve`, `story_level()`, `target_level()`, `add_codex()`, the `xp_gained` signal),
+`ui/common/xp_strip.gd` (the line and bar), `tools/balance/xp_sim.py` (`make xp-sim`).
+
+**Hooks** (each a line asking `Xp`): `LocationFights._end_encounter` (a won fight; `custom` fights are the repeatable ones),
+`DialogueRunner` (`xp milestone`, the new `xp fight <id>`, and passed `check` lines and options), `StoryState.set_quest_stage`
+(success endings), `LocationView` (first visit), `LocationTraps` (search finds, secret doors, traps noticed, traps
+disarmed), `LocationChecks` (a passed world check and what it reveals), `LocationLocks` (a lock picked or forced),
+`StoryState.add_codex` (the book props, lore checks and the Tome of Strahd), `DeckOfManyThings` (the Sun card).
+
+**Choices made (no cost, no story effect).**
+- Notices: a quest finished, a place found and a milestone use the existing toasts (`StoryState.xp_gained` into the HUD's
+  toast queue); a won fight is "+555 XP"; small awards ride on the notice the thing already had ("Found: … (+25 XP)",
+  "success (+8 XP)" on a dialogue check, "Unlocked (+8 XP)"). A new location is quiet.
+- The strip sits once under the Party screen's top bar and, compact (the held XP on the same line), in the sheet's left
+  column, which has no height to spare. The XP is one pool, so it is not repeated per hero.
+- Settings: the Game page has no room for another row (its note line already overlaps the last rows), so the Difficulty row's
+  tip says how heroes grow, read-only. The New game page's second question is `DifficultyPage` (two rows, tips); the Esc and
+  tutorial paths are unchanged.
+- A fight talked away is keyed `_xp/fight/<id>`, the same as a fight won, so avoiding a fight and fighting it later pays once.
+  The 12 outs of §6 are `xp fight` lines in the narrative files (before any `set` that would change the fight's version).
+  Not marked, being delays: Doru left locked, the road hunters' failed Persuasion, backing away from the specter.
+- `SAVE_VERSION` stays 2: `story.xp`, `story.xp_reserve` and `options.levelling` are read with defaults, as the bestiary and
+  the run's record were, and `SaveSystem.pin_levelling` (always run, like `swap_withdrawn_items`) names older saves
+  `milestone`. CLAUDE.md's "a change to what a save holds bumps SAVE_VERSION" and that practice disagree; no check
+  requires a bump (`make golden-saves` needs nothing new).
+
+**Open.** The real level-up screen spills at a level 10 party (a fighter's and a wizard's panel grow past the frame; a
+cleric's cantrip buttons cut their text short): `test_the_level_up_screen` never reaches it because its golden save has no
+level to take. It is the same in milestone mode, and nothing here changed it. The fights without a version above their
+milestone level (§5.7) are still a gap for the fight-tuning lanes.

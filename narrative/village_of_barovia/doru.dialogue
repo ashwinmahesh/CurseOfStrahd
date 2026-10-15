@@ -59,6 +59,7 @@ interject tag:blunt: He's a hungry wolf asking us to open the pen.
 * On second thought, no. -> menu
 
 ~ free
+xp fight doru_undercroft
 set doru_freed
 quest the_priests_son doru_freed
 Narrator: He's past you before the words are finished, a rush of cold air up the stair. Somewhere above, a door bangs, and the bell rope thrums once, as if something brushed it going over the wall.
