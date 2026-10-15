@@ -275,7 +275,7 @@ Test setup for the Phase 5 exit (SETUP): `emil_toranescu`: `{"emil_key_found": t
 | `mother_night_offerings` | shrine | 35 gp, 3 candles; Tarokka spot |
 | `kiril_hoard` (lock 15) | Kiril's lair | 140 gp, Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare), perfume, fine clothes, dice |
 | fight loot | `pack_challenge`, `den_reckoning`, `tower_night_visitors` | 30 / 30 / 25 gp and a potion each |
-| gifts | Zuleika (Emil path), Ezmerelda (trust 2) | 2 Potions of Healing (Supreme); 2 holy water, a potion, 10 bolts |
+| gifts | Zuleika (Emil path), Ezmerelda (trust 2) | 2 Potions of Healing (Supreme); 2 holy water, a Potion of Healing (Greater), 10 bolts |
 
 **Fixed magic items:** none of the adventure's named items lives in these chapters in our version; the Tarokka
 treasures are the story items. **Containers for the DMG-items thread:** `van_richten_strongbox` (a hunter's item:

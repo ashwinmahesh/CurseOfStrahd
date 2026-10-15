@@ -141,7 +141,7 @@ interject guest:ezmerelda: I came up here to kill you. I'm still not sure I shou
 Abbot: Nor am I, hunter. Let us both live with not being sure.
 endif
 Abbot: Take what is in the sacristy. Keep this house open for the Belviews, if you can. They did not ask for any of it.
-give potion_of_healing 2
+give potion_of_healing_greater 2
 approve liriel_dawnsong +5 godrick_pendlebrook +2 wren_featherfoot +1 kip_smudgewick +1 ratatoille +1: You brought an angel back to himself
 -> the_end
 
@@ -156,7 +156,7 @@ Abbot: And a bargain is a bargain. I will go down to Krezk at dawn and lay my ha
 set ilya_fate = "healed"
 quest the_burgomasters_son healed
 endif
-give potion_of_healing 2
+give potion_of_healing_greater 2
 if class:cleric
 interject class:cleric: We just helped dress a corpse for the devil and called it a wedding. I'll be praying about this for the rest of my life. However long that is.
 endif
