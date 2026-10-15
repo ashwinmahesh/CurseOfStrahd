@@ -196,6 +196,44 @@ func test_sleeping_by_the_fire_is_the_long_rest_and_breaking_camp_packs_up() -> 
 	assert_ne(thistle.cell, before, "the party follows its leader again")
 
 
+## The bar's "Change prepared spells" shows before the night too (owner's house rule, deviations.md: the spells a Long
+## Rest lets casters change, any time outside a fight) and opens the any-time screen; in the morning it is the night's
+## own, counted from the list the night ended with.
+func test_the_camp_changes_prepared_spells_before_the_night_and_in_the_morning() -> void:
+	var camp := await _make_camp()
+	await _frames(3)
+	var prepare := _visible_button(camp.bar, "Change prepared spells")
+	assert_true(prepare != null, "offered at camp before sleeping")
+	assert_true(camp.can_prepare())
+	prepare.pressed.emit()
+	await _frames(2)
+	var screens := camp.bar.find_children("*", "PrepareScreen", true, false)
+	assert_eq(screens.size(), 1)
+	var ps := screens[0] as PrepareScreen
+	assert_eq(ps.rest_kind, PrepareScreen.ANYTIME, "no rest needed")
+	assert_true(ps.only == null, "for the whole party")
+	assert_false(ps.find_children("*", "ChoiceWidget", true, false).is_empty(), "their lists")
+	ps.free()
+	camp.sleep()
+	await _frames(3)
+	prepare = _visible_button(camp.bar, "Change prepared spells")
+	assert_true(prepare != null, "and in the morning")
+	prepare.pressed.emit()
+	await _frames(2)
+	screens = camp.bar.find_children("*", "PrepareScreen", true, false)
+	assert_eq(screens.size(), 1)
+	assert_eq((screens[0] as PrepareScreen).rest_kind, "long_rest", "the morning's change is counted from the night's list")
+	assert_false((screens[0] as PrepareScreen).earlier.is_empty())
+	screens[0].free()
+
+
+func _visible_button(screen: Node, text: String) -> Button:
+	for b in screen.find_children("*", "Button", true, false):
+		if (b as Button).text == text and (b as Button).is_visible_in_tree() and not b.is_queued_for_deletion():
+			return b as Button
+	return null
+
+
 func test_a_safe_place_or_a_room_booked_for_the_night_keeps_the_rest_screen() -> void:
 	(Compendium.shared().tables["locations"][FIELD] as Dictionary)["rest"] = "safe"
 	root.call("open_screen", "rest", 0)

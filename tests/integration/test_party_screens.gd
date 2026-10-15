@@ -381,6 +381,60 @@ func test_preparing_spells_after_a_long_rest() -> void:
 	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)
 
 
+## The rest screen offers the spells a Long Rest lets casters change before any rest (owner's house rule, deviations.md):
+## "Prepare spells" for the whole party, any number at once, until a Long Rest brings its own button.
+func test_the_rest_screen_prepares_spells_without_a_rest() -> void:
+	var silvain := GameState.story.party[3]
+	root.call("open_screen", "rest", 0)
+	await _frames(1)
+	var rest := root.get("screen") as RestScreen
+	assert_true(_button(rest, "Change prepared spells") == null, "no Long Rest taken yet")
+	var any := _button(rest, "Prepare spells")
+	assert_true(any != null and not any.disabled, "Prepare spells is offered without a rest")
+	any.pressed.emit()
+	await _frames(2)
+	var screens := rest.find_children("*", "PrepareScreen", true, false)
+	assert_eq(screens.size(), 1)
+	var ps := screens[0] as PrepareScreen
+	assert_eq(ps.rest_kind, PrepareScreen.ANYTIME)
+	assert_true(ps.only == null, "the whole party's")
+	var keys: Array = ps.find_children("*", "ChoiceWidget", true, false).map(func(w: Node) -> String: return (w as ChoiceWidget).choice.key)
+	assert_true("cleric.prepared" in keys and "wizard.prepared" in keys and "wizard.cantrips" in keys, str(keys))
+	assert_eq(keys.size(), PrepareScreen.preparable(GameState.story, PrepareScreen.ANYTIME).size(), "one for each caster's list")
+	# Two cantrips at once: after a Long Rest a Wizard swaps one, here nothing counts.
+	var earlier := silvain.picks_for("wizard.cantrips")
+	var w := await _widget_in(ps, "wizard.cantrips")
+	var fresh: Array[String] = []
+	for o in w.choice.options:
+		if o.legal and not o.id in earlier and fresh.size() < 2:
+			fresh.append(o.id)
+	assert_eq(fresh.size(), 2)
+	for id: String in [earlier[0], earlier[1]]:
+		w.call("_toggle", id, false)
+		await _frames(2)
+		w = await _widget_in(ps, "wizard.cantrips")
+	for id: String in fresh:
+		w.call("_toggle", id, true)
+		await _frames(2)
+		w = await _widget_in(ps, "wizard.cantrips")
+	var now := silvain.picks_for("wizard.cantrips")
+	assert_true(fresh[0] in now and fresh[1] in now and not earlier[0] in now and not earlier[1] in now, "two cantrips swapped: %s -> %s" % [earlier, now])
+	ps.free()
+	# A Long Rest brings its own button, with its own limits, and this one steps aside.
+	rest.call("_long_rest", "safe")
+	await _frames(1)
+	assert_true(_button(rest, "Prepare spells") == null, "the rest's own button takes over")
+	assert_true(_button(rest, "Change prepared spells") != null)
+
+
+## The widget for `key` on an open Prepare Spells screen, as it stands after the last redraw.
+func _widget_in(ps: PrepareScreen, key: String) -> ChoiceWidget:
+	for w in ps.find_children("*", "ChoiceWidget", true, false):
+		if (w as ChoiceWidget).choice.key == key and not (w as Node).is_queued_for_deletion():
+			return w as ChoiceWidget
+	return null
+
+
 ## The Prepare Spells widget for `key` inside the rest screen's open PrepareScreen (opened with its button).
 func _prepare_widget(rest: RestScreen, key: String) -> ChoiceWidget:
 	for ps in rest.find_children("*", "PrepareScreen", true, false):

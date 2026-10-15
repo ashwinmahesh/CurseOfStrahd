@@ -161,3 +161,101 @@ func test_outside_a_fight_the_sheet_is_as_before() -> void:
 	assert_false(get_tree().paused)
 	assert_true("Level up" in _texts(sheet), "levelling is offered outside a fight")
 	root.call("close_screen")
+
+
+## The Spells tab's "Prepare spells" (owner's house rule, deviations.md): a caster whose spells a Long Rest lets them
+## change gets it on the sheet. In a fight it is off, with the reason beside it, and the screen it opens refuses too.
+func test_prepare_spells_is_off_in_a_fight_and_says_why() -> void:
+	var cv := await _fight()
+	var before := _turn(cv)
+	var liriel := GameState.story.party[1]
+	cv.hud.sheet_requested.emit(liriel.id)
+	await _frames(2)
+	var sheet := root.get("screen") as CharacterSheetScreen
+	assert_true(sheet != null and sheet.in_fight, "a view-only sheet")
+	sheet.show_tab("Spells")
+	await _frames(2)
+	var prepare := sheet.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Prepare spells")
+	assert_eq(prepare.size(), 1, "a Cleric has the button: %s" % str(_texts(sheet)))
+	assert_true((prepare[0] as Button).disabled, "off in a fight")
+	assert_true(sheet.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text.contains("can't be changed in a fight")), "and the sheet says why")
+	(prepare[0] as Button).pressed.emit()   # a press past the disabled look still opens nothing
+	await _frames(2)
+	assert_true(sheet.find_children("*", "PrepareScreen", true, false).is_empty(), "no Prepare Spells screen in a fight")
+	# The screen itself, asked for in a fight, shows only the reason.
+	var ps := PrepareScreen.new()
+	ps.rest_kind = PrepareScreen.ANYTIME
+	root.add_child(ps)
+	ps.open(root, GameState.story, 0)
+	await _frames(2)
+	assert_true(ps.find_children("*", "ChoiceWidget", true, false).is_empty(), "no spells to change")
+	assert_true(ps.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text.contains("can't be changed in a fight")), "it says why")
+	ps.free()
+	(sheet.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
+		return (b as Button).text == "Back to the fight")[0] as Button).pressed.emit()
+	await _frames(2)
+	assert_eq(_turn(cv), before, "nothing spent, the same turn")
+	cv.finished.emit("victory")
+	await _frames(3)
+
+
+func test_outside_a_fight_the_sheet_prepares_spells_at_any_time() -> void:
+	var liriel := GameState.story.party[1]
+	root.call("open_screen", "sheet", 1)
+	await _frames(2)
+	var sheet := root.get("screen") as CharacterSheetScreen
+	sheet.show_tab("Spells")
+	await _frames(2)
+	var prepare := sheet.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Prepare spells")
+	assert_eq(prepare.size(), 1, "Liriel's sheet has the button")
+	assert_false((prepare[0] as Button).disabled, "on outside a fight, no rest needed")
+	var earlier := liriel.picks_for("cleric.prepared")
+	(prepare[0] as Button).pressed.emit()
+	await _frames(2)
+	var screens := sheet.find_children("*", "PrepareScreen", true, false)
+	assert_eq(screens.size(), 1, "the Prepare Spells screen opens over the sheet")
+	var ps := screens[0] as PrepareScreen
+	assert_eq(ps.rest_kind, PrepareScreen.ANYTIME)
+	assert_true(ps.only == liriel, "for her alone")
+	var widgets := ps.find_children("*", "ChoiceWidget", true, false)
+	assert_false(widgets.is_empty(), "her spells to change")
+	var hers: Array = PrepareScreen.preparable(GameState.story, PrepareScreen.ANYTIME, liriel).map(
+		func(e: Dictionary) -> String: return (e["choice"] as Choice).key)
+	assert_true("cleric.prepared" in hers and "species.lineage.high_elf_lineage.cantrip" in hers, "a High Elf Cleric's: %s" % [hers])
+	for w in widgets:
+		assert_true(str((w as ChoiceWidget).choice.key) in hers, "only Liriel's: %s" % (w as ChoiceWidget).choice.key)
+	assert_eq(widgets.size(), hers.size(), "one for each")
+	# Three at once, as a Cleric may after a Long Rest, with no rest taken.
+	var w0 := widgets.filter(func(w: Node) -> bool: return (w as ChoiceWidget).choice.key == "cleric.prepared")[0] as ChoiceWidget
+	var fresh: Array[String] = []
+	for o in w0.choice.options:
+		if o.legal and not o.id in earlier and fresh.size() < 2:
+			fresh.append(o.id)
+	assert_eq(fresh.size(), 2)
+	for id: String in [earlier[0], earlier[1]]:
+		w0.call("_toggle", id, false)
+		await _frames(2)
+		for w2 in ps.find_children("*", "ChoiceWidget", true, false):
+			if (w2 as ChoiceWidget).choice.key == "cleric.prepared" and not (w2 as Node).is_queued_for_deletion():
+				w0 = w2 as ChoiceWidget
+	for id: String in fresh:
+		w0.call("_toggle", id, true)
+		await _frames(2)
+		for w3 in ps.find_children("*", "ChoiceWidget", true, false):
+			if (w3 as ChoiceWidget).choice.key == "cleric.prepared" and not (w3 as Node).is_queued_for_deletion():
+				w0 = w3 as ChoiceWidget
+	var now := liriel.picks_for("cleric.prepared")
+	assert_true(fresh[0] in now and fresh[1] in now, "the new spells are in: %s" % [now])
+	assert_false(earlier[0] in now or earlier[1] in now, "two went, with no limit: %s" % [now])
+	var known := liriel.known_spells().map(func(k: Dictionary) -> String: return str(k["id"]))
+	assert_true(fresh[0] in known and fresh[1] in known, "prepared now")
+	# Done goes back to the sheet, drawn again with the new list.
+	(ps.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Done")[0] as Button).pressed.emit()
+	await _frames(3)
+	assert_true(sheet.find_children("*", "PrepareScreen", true, false).filter(func(n: Node) -> bool: return not n.is_queued_for_deletion()).is_empty(), "closed")
+	assert_true(root.get("screen") == sheet, "the sheet is still up")
+	assert_true(sheet.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
+		return (l as Label).text == str(Compendium.shared().spell_data(fresh[0]).get("name", ""))), "the sheet lists the new spell")
+	root.call("close_screen")
