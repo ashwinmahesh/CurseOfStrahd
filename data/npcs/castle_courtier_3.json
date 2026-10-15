@@ -1,0 +1,20 @@
+{
+  "id": "castle_courtier_3",
+  "name": "Boyar Vintila Crainic",
+  "title": "Of the Count's Court",
+  "summary": "A boyar of the valley's orchards who came up two hundred and six years ago with a petition about a boundary stone and is still waiting to be received: a vampire spawn in a fur-trimmed coat, pacing the audience hall with a sealed scroll he will not let go of.",
+  "portrait": "noble",
+  "sprite": "noble",
+  "attitude": "indifferent",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire_spawn",
+    "undead",
+    "court",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

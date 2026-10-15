@@ -1,0 +1,20 @@
+{
+  "id": "castle_ghost_servant_2",
+  "name": "Nicodim the Verger",
+  "title": "Of the Household",
+  "summary": "The verger of the castle's chapel, who died with the household on the night of the wedding and still believes it is the night before: a ghost in a grey cassock, lighting candles in the chapel passage for a ceremony three hundred years over.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "indifferent",
+  "monster": "ghost",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "undead",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

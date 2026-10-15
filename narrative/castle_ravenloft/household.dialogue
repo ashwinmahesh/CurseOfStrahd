@@ -1,61 +1,438 @@
-# The castle's court and household, the extras on every floor (owner, 2026-10-15: "fill Castle Ravenloft with generic
-# NPCs who act as the servants or Strahd's court ... so it doesn't look as empty", each walking a route): pale courtiers
-# (vampire spawn, guests who never went home), a ghostly servant, the dead watch and the dead kitchen hands. Each line
-# here is shared by everyone of that kind; none of them fights or sets anything, they keep out of every fight on the map
-# (`steps_aside`), and every conversation can be walked away from.
+# The castle's court and the rest of its household on every floor (owner, 2026-10-15: "fill Castle Ravenloft with
+# generic NPCs who act as the servants or Strahd's court ... so it doesn't look as empty", each walking a route; and
+# the same evening: "all the pale courtiers have the same lines, and that shouldn't be the case"). Each of them is their
+# own person, with a name, a manner and lines of their own: four courtiers (vampire spawn, guests who came up to dinner
+# and never went home), four ghosts of the household, four of the dead watch and two dead kitchen hands (Narrator
+# lines only). Who walks where: docs/regions/castle_ravenloft_gates.md §8. None of them fights or sets anything, they
+# keep out of every fight on their map (`steps_aside`), and every conversation can be walked away from. The truce
+# lines (StoryConditions.TRUCES) read the invitation and the dinner, as the steward's do (castle_truce_over is set
+# only by the engine, which make validate doesn't see, so no conversation reads it).
 
-~ courtier
-if flag.strahd_invitation == "accepted" and not flag.castle_dinner
-Narrator: A pale man in a velvet coat gone grey with dust turns from the wall to look at you, slowly, the way a cat looks at something small. His eyes are red at the rims, and he isn't breathing.
-A Pale Courtier: The master's dinner guests. How thrilling. Do eat well tonight. You'll want your strength.
-elif flag.castle_dinner
-Narrator: A pale man in a velvet coat gone grey with dust looks you over. His eyes are red at the rims, and he isn't breathing.
-A Pale Courtier: He let you up from his table. He liked you, then. That is very rarely good news.
+# --- The court ---------------------------------------------------------------------------------------------------
+
+# Lord Aubrey Thale, the great entry: languid, dry, the court's gossip; leaving in the morning for 190 years.
+~ thale
+Narrator: A pale gentleman in a velvet coat gone grey with dust drifts across the great entry to meet you, as if the house were his. His eyes are red at the rims, and he isn't breathing.
+if flag.castle_dinner == "affront"
+Lord Aubrey Thale: Steel at the master's table! The whole house heard it. I haven't been so entertained in a century.
+elif flag.castle_dinner == "dined"
+Lord Aubrey Thale: You dined with him and you're still standing. He must have enjoyed you. Do be careful; he likes to finish what he enjoys.
+elif flag.strahd_invitation == "accepted"
+Lord Aubrey Thale: Dinner guests! How lovely. Aubrey Thale. I'd shake your hand, but you'd only notice how cold mine is.
 else
-Narrator: A pale man in a velvet coat gone grey with dust stands as if waiting to be called in to an audience. His eyes are red at the rims, and he isn't breathing.
-A Pale Courtier: Visitors. Nobody announced you. Nobody announces anyone any more.
+Lord Aubrey Thale: Visitors, and unannounced. How brave. How very brief.
 endif
--> courtier_menu
+-> thale_menu
 
-~ courtier_menu
-* Who are you? -> courtier_who
-* What is everyone waiting for? -> courtier_wait
+~ thale_menu
+* Who are you? -> thale_who
+* What does the court talk about? -> thale_gossip
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Will anyone in this house trouble us tonight? -> thale_truce
+* [Insight DC 13] (He keeps glancing at the great doors. Watch him.) -> thale_doors | thale_doors_missed
+* (Bow, and leave him to his hall.) -> END
+
+~ thale_who
+Lord Aubrey Thale: Aubrey Thale, of nowhere you'd have heard of. I came through the mists in my own carriage, dined with the count and stayed the night.
+Lord Aubrey Thale: That was a hundred and ninety years ago. I'm leaving in the morning.
+-> thale_menu
+
+~ thale_gossip
+Lord Aubrey Thale: The ladies upstairs aren't speaking to one another, and Rahadin isn't speaking to anyone. Lady Celestine, in the hall of faces, is speaking to everyone, which is worse.
+Lord Aubrey Thale: And never ask the boyar in the audience hall about his petition. He'll tell you.
+-> thale_menu
+
+~ thale_truce
+Lord Aubrey Thale: Not while you're his guests. He was very clear: nothing in this house lays a finger on the master's guests until the master is done with them.
+Lord Aubrey Thale: Finish your dinner, or step outside his gates, and the courtesy ends. I'd eat slowly.
+-> thale_menu
+
+~ thale_doors
+Narrator: Every time the great doors catch his eye he straightens his coat, as if he were about to go through them.
+Lord Aubrey Thale: My carriage is still in the carriage house. Some nights I go down and sit in it. I'm leaving in the morning.
+Narrator: There is no morning a creature like him can travel in, and he knows it better than you do.
+-> thale_menu
+
+~ thale_doors_missed
+Narrator: He catches you watching him and smiles with his mouth closed.
+-> thale_menu
+
+# Lady Celestine Morrow, the hall of faces: vain, flirtatious, wistful; looking for her own face among the carvings.
+~ celestine
+Narrator: A lady in a red gown walks the gallery slowly, looking up into each carved face she passes, as if one of them might be hers. She turns to you with a smile that shows no teeth.
+if flag.castle_dinner == "affront"
+Lady Celestine Morrow: You drew on him at dinner? At dinner. If I'd known there was going to be a scene, I'd have worn something better.
+elif flag.castle_dinner == "dined"
+Lady Celestine Morrow: So you sat at his table and got up again. Did he laugh? He has a lovely laugh. He never spends it on us any more.
+elif flag.strahd_invitation == "accepted"
+Lady Celestine Morrow: New faces! Oh, let me look at you. Warm ones. I'd almost forgotten the colour.
+else
+Lady Celestine Morrow: Callers, uninvited and unfed. You'll forgive me if I don't come any closer. Or if I do.
+endif
+-> celestine_menu
+
+~ celestine_menu
+* Who are you? -> celestine_who
+* What are you looking for? -> celestine_face
+* What's the talk of the court? -> celestine_gossip
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Any advice for dinner? -> celestine_dinner
+* (Leave her to the faces.) -> END
+
+~ celestine_who
+Lady Celestine Morrow: Celestine Morrow. Lady Morrow, if you're being correct, and nobody here ever is. I came up the road for a ball.
+Lady Celestine Morrow: The music was divine. So was the host. I danced the last dance with him, and the dancing went on rather longer than I'd planned.
+-> celestine_menu
+
+~ celestine_face
+Lady Celestine Morrow: My face. One of the carvers was very taken with me, I'm told. It must be here somewhere.
+Lady Celestine Morrow: No glass has shown it to me since the ball, you see. One forgets. One forgets the nose first, oddly.
+* (Describe her face to her.) -> celestine_described
+* (Say nothing.) -> celestine_menu
+
+~ celestine_described
+Narrator: You tell her what you see: black hair, a fine straight nose, a mouth that is used to being looked at. You leave out the eyes. She closes them while you talk, the way someone listens to music.
+Lady Celestine Morrow: Thank you. I shan't remember it by morning. But thank you.
+-> celestine_menu
+
+~ celestine_gossip
+Lady Celestine Morrow: Rahadin, always. They say he hears the screams of everyone he ever killed, every hour of every night. It explains why he never laughs at my jokes.
+Lady Celestine Morrow: And Lord Thale is leaving in the morning. Do ask him when. He's been at it for nearly two hundred years.
+-> celestine_menu
+
+~ celestine_dinner
+Lady Celestine Morrow: Praise the organ, never the wine; he knows the wine is good. And don't sit in the chair at his right hand. That one isn't for you.
+Lady Celestine Morrow: Nothing in this house will touch you while you're his guests. After that, I'd run. Prettily, if you can manage it.
+-> celestine_menu
+
+# Boyar Vintila Crainic, the audience hall: pompous, punctilious; 206 years waiting to present a petition.
+~ crainic
+Narrator: A heavy man in a fur-trimmed coat gone grey with dust paces the length of the hall, a sealed scroll held to his chest in both hands. He stops when he sees you, and looks you over the way one petitioner sizes up another.
+if flag.castle_dinner == "affront"
+Boyar Vintila Crainic: You drew steel at his table, and you still haven't been received. I take a certain comfort in that.
+elif flag.castle_dinner == "dined"
+Boyar Vintila Crainic: You dined with him? Two hundred and six years I have waited, and dinner guests walk in ahead of me.
+elif flag.strahd_invitation == "accepted"
+Boyar Vintila Crainic: Guests. Guests are not petitioners. You are not ahead of me, and I want that clear from the start.
+else
+Boyar Vintila Crainic: Have you an appointment? No. Nobody has. I have had one for two hundred and six years.
+endif
+-> crainic_menu
+
+~ crainic_menu
+* Who are you? -> crainic_who
+* What's in the petition? -> crainic_petition
+* Who decides who is received? -> crainic_list
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Is it safe to walk the house tonight? -> crainic_truce
+* We could put your petition to the count for you. -> crainic_offer
 * (Leave him to his waiting.) -> END
 
-~ courtier_who
-A Pale Courtier: A guest. I came up the road in a carriage, like you, and the dinner was excellent, and I stayed. We all stayed.
-A Pale Courtier: The master keeps a court. We are it. Do try not to join it.
--> courtier_menu
+~ crainic_who
+Boyar Vintila Crainic: Vintila Crainic, boyar of the orchards above the Ivlis, and a loyal subject of the house of von Zarovich.
+Boyar Vintila Crainic: I came up the hill on a small matter. I was told the count would see me shortly.
+-> crainic_menu
 
-~ courtier_wait
-A Pale Courtier: To be received. The throne room receives no one, and has not for a very long time. We are very patient. Patience is all he left us.
--> courtier_menu
+~ crainic_petition
+Narrator: He unrolls it a hand's width for you, no more. It is in a very good hand, and it is about a boundary stone.
+Boyar Vintila Crainic: My neighbour moved it eleven paces in the night. Eleven. He is dead now, of course, and so are the orchards. The principle remains.
+-> crainic_menu
 
-~ ghost_servant
-Narrator: A servant in old grey livery goes about the room with a taper, lighting candles that are already lit. You can see the wall through him.
-A Ghostly Servant: Begging your pardon. Mind the wax. The master likes the candles lit.
-* Who do you serve? -> ghost_servant_serves
-* (Let him get on.) -> END
+~ crainic_list
+Boyar Vintila Crainic: Rahadin keeps the list. I am on it. I asked him once how far down. He looked at me, and I heard people, a great many people, screaming.
+Boyar Vintila Crainic: I have not asked him since. A gentleman knows when to wait.
+-> crainic_menu
 
-~ ghost_servant_serves
-A Ghostly Servant: The house. There's only the house to serve now. The steward downstairs will tell you where you may go.
-Narrator: He bows, a moment late, as if he had only just remembered how, and goes back to his candles.
--> END
+~ crainic_truce
+Boyar Vintila Crainic: For the master's guests? Perfectly. This house keeps its orders to the letter. I should know; I have read them.
+Boyar Vintila Crainic: They hold while you are his guests. Finish your dinner, or go out of his gates, and you are nobody's guest at all. Like me.
+-> crainic_menu
 
-~ dead_guard
-Narrator: A dead guardsman in the house's black tabard walks his beat, halberd on his shoulder, eyes on nothing. He was told to keep the watch three centuries ago, and nobody has told him to stop.
-* (Stand in his way.) -> dead_guard_way
+~ crainic_offer
+Boyar Vintila Crainic: Certainly not. A petition is presented by the petitioner, in person, in the proper form. I have not waited this long to have it spoiled by irregularity.
+Narrator: He holds the scroll a little tighter, and goes back to his pacing.
+-> crainic_menu
+
+# Sir Lothar Brandt, the trophy room: a hunter of the dead made one of the court; bitter, wry, bound to silence.
+~ brandt
+Narrator: A lean man in a hunting coat stands before the trophy wall with his hands clasped behind him, studying a wolf's head the way a connoisseur studies a painting. He doesn't turn round.
+if flag.castle_dinner == "affront"
+Sir Lothar Brandt: You drew on him at his own table. Good form, bad timing. I know a little about both.
+elif flag.castle_dinner == "dined"
+Sir Lothar Brandt: You ate with him and walked away from the table. That's more than I managed. Don't mistake it for winning.
+elif flag.strahd_invitation == "accepted"
+Sir Lothar Brandt: Dinner guests. I came up as a dinner guest too, once. I brought stakes. He thought that was charming.
+else
+Sir Lothar Brandt: Hunters. I can always tell. You stand like people who think they've come to the right house.
+endif
+-> brandt_menu
+
+~ brandt_menu
+* Who are you? -> brandt_who
+* (Look at the wolf he's studying.) -> brandt_wolf
+* Can you tell us how to kill him? -> brandt_kill
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Will his house leave us be tonight? -> brandt_truce
+* (Leave him to the trophies.) -> END
+
+~ brandt_who
+Sir Lothar Brandt: Lothar Brandt. I hunted the dead across three kingdoms, and came through the mists to hunt the last one.
+Sir Lothar Brandt: I had a good crossbow, a good plan and a priest who knew his business. The priest is in the crypts. I'm in the court.
+-> brandt_menu
+
+~ brandt_wolf
+Sir Lothar Brandt: That one's mine. I shot it on the road up, the night I came. He had it mounted with the rest, and hung it where I'd see it.
+Sir Lothar Brandt: He has a sense of humour, the master. It's the worst thing about him.
+-> brandt_menu
+
+~ brandt_kill
+Narrator: His jaw works. Something stops the words before they reach his mouth, and he hates it; you can watch him hating it.
+Sir Lothar Brandt: No. I'm his now, all of me, even the parts that would like to. Listen to what I'm not saying.
+interject class:paladin: Then we'll finish what you started.
+-> brandt_menu
+
+~ brandt_truce
+Sir Lothar Brandt: While you're his guests, nothing here will touch you. He keeps his word to the letter. It's the letter you have to watch.
+Sir Lothar Brandt: The night dinner's done, or the night you leave his house, every door is shut again and every dog is off its chain.
+-> brandt_menu
+
+# --- The household's ghosts --------------------------------------------------------------------------------------
+
+# Nicodim the Verger, the chapel passage: fussy, kind, devout; it is still the night before the wedding.
+~ nicodim
+Narrator: An old man in a grey cassock goes along the passage with a taper, lighting candles that are already lit. You can see the saint in the niche through him.
+if guest:ireena
+Narrator: He sees Ireena, and the taper falls through his fingers, through the floor, and is back in his hand.
+Nicodim the Verger: My lady! You shouldn't be down here tonight, of all nights. Back to your rooms, please. Tomorrow you'll have the whole chapel to yourself.
+interject guest:ireena: He thinks I'm someone else. They all do, in this house.
+else
+Nicodim the Verger: Mind the wax, if you please. Everything has to be ready by morning. The young master is to be married.
+endif
+-> nicodim_menu
+
+~ nicodim_menu
+* Who is to be married? -> nicodim_wedding
+* (Tell him the wedding was three hundred years ago.) -> nicodim_told
+* [Religion DC 13] (Work out what keeps him here.) -> nicodim_known | nicodim_unknown
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] We're the count's dinner guests. -> nicodim_guests
+* (Let him get on with his candles.) -> END
+
+~ nicodim_wedding
+Nicodim the Verger: Master Sergei, the count's brother, to the Lady Tatyana. Tomorrow, in the chapel, before the whole house.
+Nicodim the Verger: The count has given them everything. A fine thing in an elder brother. He isn't a warm man, but he has given them everything.
+Narrator: He says it with real fondness. Nobody has told him.
+-> nicodim_menu
+
+~ nicodim_told
+Nicodim the Verger: Over? No, no. Tomorrow. I have the candles still to do.
+Narrator: He goes back to them as if you hadn't spoken, a little faster than before.
+-> nicodim_menu
+
+~ nicodim_known
+Narrator: A spirit held by a duty it never finished: a wedding it was charged to make ready, which never came. Ghosts like him rest when the business is done or put right. The bride and the groom are three centuries gone.
+-> nicodim_menu
+
+~ nicodim_unknown
+Narrator: A ghost, plainly, and a gentle one. What keeps him from his rest is between him and his god.
+-> nicodim_menu
+
+~ nicodim_guests
+Nicodim the Verger: Then you're very welcome. The family dine tonight, and tomorrow the whole house feasts. You'll stay for the wedding? Everyone is staying for the wedding.
+Narrator: Everyone did.
+-> nicodim_menu
+
+# Anghel Daskal, the study: the count's secretary; precise, proud, a little jealous of his master's hand.
+~ daskal
+Narrator: A thin man in ink-stained grey is squaring the papers on the count's desk. They will not stay square, and his fingers pass through them every time he tries.
+if flag.castle_dinner
+Anghel Daskal: Dinner is done, I'm told. I shall enter it in the day-book, when I find the day-book.
+elif flag.strahd_invitation == "accepted"
+Anghel Daskal: The guests. I wrote your invitation. No, I didn't. He writes them himself now. I like to think I blotted it.
+else
+Anghel Daskal: You have no appointment. His Excellency sees nobody without an appointment, and he makes no appointments. Good evening.
+endif
+-> daskal_menu
+
+~ daskal_menu
+* Who are you? -> daskal_who
+* Who does he write to? -> daskal_letters
+* (Square the papers for him.) -> daskal_papers
+* [Insight DC 12] (He never looks at the portrait over the mantel. Why not?) -> daskal_portrait | daskal_portrait_missed
+* (Leave him to his papers.) -> END
+
+~ daskal_who
+Anghel Daskal: Anghel Daskal, secretary to His Excellency: his letters, his seals, his day-book. For nine years everything that left this room went out in my hand.
+Anghel Daskal: Then one night I put down my pen, and I have not been able to pick it up since.
+-> daskal_menu
+
+~ daskal_letters
+Anghel Daskal: Everyone, now. Burgomasters, priests, girls in the village. Guests like you.
+Anghel Daskal: He used to dictate. These days he writes them himself, in that hand of his. He enjoys it too much to share.
+-> daskal_menu
+
+~ daskal_papers
+Narrator: You square the pile. He watches your hands with a look you can't name, then nods once, very formally, the way one clerk thanks another.
+Anghel Daskal: Thank you. That will last until midnight.
+-> daskal_menu
+
+~ daskal_portrait
+Narrator: When your eyes go to the young woman over the mantel, his go to the floor.
+Anghel Daskal: I wrote out the banns. The marriage lines. The guest list, every name in my best hand. I would rather not look at her, if it's all the same to you.
+-> daskal_menu
+
+~ daskal_portrait_missed
+Narrator: He sees you studying him and moves the inkwell an inch to the left. It doesn't move.
+-> daskal_menu
+
+# Ghenadie the Valet, the count's bedroom: discreet, devoted, hurt that he isn't needed; wary of the ladies and Helga.
+~ ghenadie
+Narrator: A neat ghost in grey livery is turning down the great bed, folding the black coverlet back just so and smoothing it flat. He steps back, considers it, and begins again.
+if guest:gertruda
+Ghenadie the Valet: Miss Gertruda, out of the yellow room at last. Good. Don't stop on the stair, miss, and don't look back.
+elif flag.castle_dinner
+Ghenadie the Valet: You've dined, I hear. The master won't want his bed tonight either. He never does.
+elif flag.strahd_invitation == "accepted"
+Ghenadie the Valet: The master's guests, in the master's bedchamber. That is very irregular. I shall not mention it, and nor, I hope, will you.
+else
+Ghenadie the Valet: This is the master's bedchamber. You will not find him in it. Nobody has, for three hundred years.
+endif
+-> ghenadie_menu
+
+~ ghenadie_menu
+* Who are you? -> ghenadie_who
+* Doesn't he sleep here? -> ghenadie_bed
+* Who else lives on this floor? -> ghenadie_floor
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] We're his guests tonight. -> ghenadie_truce
+* (Leave him to the bed.) -> END
+
+~ ghenadie_who
+Ghenadie the Valet: Ghenadie, the master's valet. I dressed him for his battles, his councils and his brother's wedding.
+Ghenadie the Valet: For the wedding he asked for the black coat. I remember thinking it an odd choice.
+-> ghenadie_menu
+
+~ ghenadie_bed
+Ghenadie the Valet: Not since the wedding. He keeps a bed below now, somewhere cold, I'm told. I have never been asked to turn that one down.
+-> ghenadie_menu
+
+~ ghenadie_floor
+Ghenadie the Valet: The ladies, three of them in three rooms, and not one speaks to the others. Knock and wait, and if nobody answers, go away quickly.
+Ghenadie the Valet: And Helga. She came up from the valley a good plain girl. She is not a girl from anywhere now. If she offers to air you a room, decline.
+-> ghenadie_menu
+
+~ ghenadie_truce
+Ghenadie the Valet: Then nothing on this floor may lay a hand on you, by his order. The ladies included, though it pains them.
+-> ghenadie_menu
+
+# Vlaicu the Lamplighter, the foot of the high tower: tired, plain-spoken, grumbling about the stair.
+~ vlaicu
+Narrator: A stooped ghost in a grey smock stands at the foot of the stair with a cold lamp in each hand, looking up into the dark the way a man looks up a hill at the end of a long day.
+if flag.strahd_invitation == "accepted" and not flag.castle_dinner
+Vlaicu the Lamplighter: Guests, is it? Then he'll want the tower lit. He always wants the tower lit for guests.
+else
+Vlaicu the Lamplighter: Evening. If you're going up, go up. If you're coming down, mind the lamps.
+endif
+-> vlaicu_menu
+
+~ vlaicu_menu
+* Who are you? -> vlaicu_who
+* What's up the tower? -> vlaicu_tower
+* Why light lamps in a house of the dead? -> vlaicu_why
+* (Let him get on with his climb.) -> END
+
+~ vlaicu_who
+Vlaicu the Lamplighter: Vlaicu. I light the lamps, every one in this tower, every night, from the closet to the top.
+Vlaicu the Lamplighter: I counted the steps once. Then I died on the two hundred and ninth, and I haven't had the heart to count them since.
+-> vlaicu_menu
+
+~ vlaicu_tower
+Vlaicu the Lamplighter: Rooms. Wind. A pretty young gentleman who doesn't like the light and doesn't like company.
+Vlaicu the Lamplighter: And the little wooden fellow. Mind him on the stair. He likes to walk up behind you, and he likes to give a push.
+-> vlaicu_menu
+
+~ vlaicu_why
+Vlaicu the Lamplighter: The dead don't need them. The living do, coming up the road at night. He likes them to see the tower lit from the valley.
+Vlaicu the Lamplighter: Makes them think somebody's home.
+-> vlaicu_menu
+
+# --- The dead watch (Narrator lines only) ------------------------------------------------------------------------
+
+# The Dead Halberdier, the courtyard before the keep: knocks at the great doors on every round.
+~ halberdier
+Narrator: A dead guardsman in the house's black tabard paces the courtyard before the keep, halberd on his shoulder. At the great doors he stops, raps the butt of the halberd on the step three times, and waits. Nobody opens them. He turns and walks back.
+* (Knock with him, next time round.) -> halberdier_knock
+* [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] (Tell him you are the master's guests.) -> halberdier_guests
 * (Let him pass.) -> END
 
-~ dead_guard_way
-Narrator: He stops a pace from you and waits, swaying a little, until you step aside. He doesn't look at you once. Then he walks on.
+~ halberdier_knock
+Narrator: You knock beside him, three times. He turns his head, very slowly, and looks at your hand. Then he goes back to his round, a little straighter than before.
 -> END
 
-~ dead_servant
-Narrator: A dead kitchen hand in a stained apron shuffles past with a pail that holds nothing, toward a task that was finished three hundred years ago.
-* (Watch where it goes.) -> dead_servant_watch
-* (Let it be.) -> END
+~ halberdier_guests
+Narrator: He brings the halberd down from his shoulder to the upright, the way a guard salutes guests at a great house's door, and holds it there a long moment. Then he shoulders it again and walks on.
+-> END
 
-~ dead_servant_watch
-Narrator: To the far wall, where it sets the pail down, picks it up again and turns back. Somewhere behind you Cyrus is humming, and doesn't seem to find any of this strange.
+# The Dead Archer, inside the gatehouse wall: one of the guards who shot the count on the wedding night.
+~ archer
+Narrator: A dead archer in the house's black tabard walks the inside of the gatehouse wall, an empty quiver on his back and the fingers of his right hand still curled for a bowstring.
+* (Watch his hand.) -> archer_hand
+* [History DC 13] (Remember what the castle's archers did on the night of the wedding.) -> archer_known | archer_unknown
+* (Let him pass.) -> END
+
+~ archer_hand
+Narrator: Every few paces his right hand comes back to his ear, draws on nothing and looses at nothing. Then he walks on, looking for where it landed.
+-> END
+
+~ archer_known
+Narrator: Every telling of that night agrees on the arrows: when the count chased his brother's bride along the walls, his own guards shot him full of them. He didn't stay down. Neither, it seems, did they.
+-> END
+
+~ archer_unknown
+Narrator: A dead archer on his round. Whatever he did in life, he isn't telling.
+-> END
+
+# The Dead Doorward, the entry hall: holds out his hands for the guests' swords, and stops nobody.
+~ doorward
+Narrator: A dead guard stands by the archway into the great entry. As you come near he turns, stiffly, and holds out both grey hands, palms up, the way a doorward once asked guests for their swords.
+* (Show him your empty hands.) -> doorward_empty
+* (Walk past him with your weapons.) -> doorward_armed
+* (Let him be.) -> END
+
+~ doorward_empty
+Narrator: He looks at your hands for a long moment. Then he steps back against the wall and lets you by, satisfied with something.
+-> END
+
+~ doorward_armed
+Narrator: He doesn't stop you. He watches your weapons go by, and his hands stay out long after you've passed, waiting for a sword nobody gives him.
+-> END
+
+# The Dead Turnkey, the passage between the cells: tries every gate on his round.
+~ turnkey
+Narrator: A dead guard with a great ring of keys at his belt walks the passage between the cells. At every gate he stops, takes the bars in both hands and shakes them once, locked or not, and moves on to the next.
+* (Reach for his keys.) -> turnkey_keys
+* (Let him pass.) -> END
+
+~ turnkey_keys
+Narrator: Before your fingers touch the ring, his hand closes on your wrist, cold and hard as a manacle. He holds it there, looking at nothing, then lets go and goes on to the next gate.
+-> END
+
+# --- The dead kitchen hands (Narrator lines only) ----------------------------------------------------------------
+
+# The Dead Scullion, the kitchen: scours the same clean pot all night; Cyrus talks to him.
+~ scullion
+if flag.larders_cyrus_slain
+Narrator: A dead scullion goes round the cold kitchen scouring a pot that is already clean. Now and then he stops by the empty stool where the cook used to sit, waits, and goes on scouring.
+else
+Narrator: A dead scullion in a stained apron goes round the kitchen scouring a pot that is already clean, while Cyrus hums over the cauldron and tells him now and then what a lovely job he's doing.
+endif
+* (Take the pot from him.) -> scullion_pot
+* (Let him scour.) -> END
+
+~ scullion_pot
+Narrator: He lets it go without a struggle and stands there scouring the air. When you set the pot down he takes it up again and carries on exactly where he left off.
+-> END
+
+# The Dead Torchbearer, the guards' run: lights torches that are already burning.
+~ torchbearer
+Narrator: A dead drudge shuffles the length of the guards' run with a lit taper, stopping at every bracket to touch it to a torch that is already burning. His sleeve is scorched to the elbow. He hasn't noticed.
+* (Blow out his taper.) -> torchbearer_out
+* (Let him shuffle on.) -> END
+
+~ torchbearer_out
+Narrator: The flame goes out. He looks at the dead wick for a long while. Then he turns and shuffles back the way he came, to wherever he lights it, to begin the run again.
 -> END

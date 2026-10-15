@@ -1,8 +1,8 @@
 {
   "id": "castle_dead_guard_1",
-  "name": "A Dead Guard",
+  "name": "The Dead Halberdier",
   "title": "Of the Castle Watch",
-  "summary": "One of the castle's watch, dead since the night of the wedding, walking a beat in the house's black tabard because nobody has told him to stop.",
+  "summary": "One of the castle's watch, dead since the night of the wedding, who walks the courtyard before the keep with his halberd and stops at the great doors on every round to knock for them, as he did for every carriage that came up the road.",
   "portrait": "strahd_zombie",
   "sprite": "strahd_zombie",
   "attitude": "indifferent",

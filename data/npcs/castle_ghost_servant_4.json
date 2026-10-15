@@ -1,0 +1,20 @@
+{
+  "id": "castle_ghost_servant_4",
+  "name": "Ghenadie the Valet",
+  "title": "Of the Household",
+  "summary": "The count's valet in life, who laid out his clothes and turned down his bed for twenty years: a ghost in grey livery, turning down a bed the master has not slept in since the night of the wedding.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "indifferent",
+  "monster": "ghost",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "undead",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

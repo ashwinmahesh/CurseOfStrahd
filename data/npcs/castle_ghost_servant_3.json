@@ -1,0 +1,20 @@
+{
+  "id": "castle_ghost_servant_3",
+  "name": "Anghel Daskal",
+  "title": "Of the Household",
+  "summary": "The count's secretary in life, who wrote out his letters and kept his seals and day-book, and died at his desk on the night of the wedding: a ghost in ink-stained grey, squaring papers in the study that will not stay square.",
+  "portrait": "ghost",
+  "sprite": "ghost",
+  "attitude": "indifferent",
+  "monster": "ghost",
+  "guest": false,
+  "tags": [
+    "ghost",
+    "undead",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

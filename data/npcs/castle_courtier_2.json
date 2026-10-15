@@ -1,10 +1,10 @@
 {
   "id": "castle_courtier_2",
-  "name": "A Pale Courtier",
+  "name": "Lady Celestine Morrow",
   "title": "Of the Count's Court",
-  "summary": "One of the guests who came up to Castle Ravenloft over the centuries and never went home: a vampire spawn in finery gone grey with dust, attending a court that is never called to order.",
-  "portrait": "vampire_spawn",
-  "sprite": "vampire_spawn",
+  "summary": "A lady of fashion from beyond the mists who came up to the castle for a ball two hundred years ago and danced the last dance with the host: a vampire spawn in a red gown, who walks the hall of faces looking for her own among the carvings, since no glass will show it to her.",
+  "portrait": "vampire",
+  "sprite": "vampire",
   "attitude": "indifferent",
   "monster": "vampire_spawn",
   "guest": false,
@@ -15,6 +15,6 @@
     "castle_ravenloft"
   ],
   "region": "castle_ravenloft",
-  "pronouns": "he/him",
+  "pronouns": "she/her",
   "pockets": false
 }

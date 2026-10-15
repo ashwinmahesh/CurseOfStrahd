@@ -1,0 +1,20 @@
+{
+  "id": "castle_courtier_4",
+  "name": "Sir Lothar Brandt",
+  "title": "Of the Count's Court",
+  "summary": "A hunter of the dead from beyond the mists who came up the road ninety years ago with stakes, a crossbow and a priest to end the count, and was made one of his court instead: a vampire spawn in a hunting coat, who spends his nights in the trophy room admiring the work.",
+  "portrait": "vampire_spawn",
+  "sprite": "vampire_spawn",
+  "attitude": "indifferent",
+  "monster": "vampire_spawn",
+  "guest": false,
+  "tags": [
+    "vampire_spawn",
+    "undead",
+    "court",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

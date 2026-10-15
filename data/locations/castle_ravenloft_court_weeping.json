@@ -949,12 +949,12 @@
       "steps_aside": true
     },
     {
-      "npc": "castle_ghost_servant",
+      "npc": "castle_ghost_servant_4",
       "cell": [
         3,
         6
       ],
-      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "dialogue": "castle_ravenloft/household:ghenadie",
       "facing": "north",
       "path": [
         {

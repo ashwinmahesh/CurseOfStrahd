@@ -1,8 +1,8 @@
 {
   "id": "castle_dead_servant_1",
-  "name": "A Dead Servant",
+  "name": "The Dead Scullion",
   "title": "Of the Kitchens",
-  "summary": "A kitchen hand who died below stairs three hundred years ago and still goes about the work, with a pail that holds nothing.",
+  "summary": "A scullion who died below stairs on the night of the wedding and still scours the kitchen's pots, the same three pots, all night long. Cyrus Belview talks to him while he cooks.",
   "portrait": "zombie",
   "sprite": "zombie",
   "attitude": "indifferent",
@@ -15,6 +15,6 @@
     "castle_ravenloft"
   ],
   "region": "castle_ravenloft",
-  "pronouns": "it/its",
+  "pronouns": "he/him",
   "pockets": false
 }

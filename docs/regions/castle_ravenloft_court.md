@@ -37,8 +37,10 @@ The household (owner, 2026-10-15, "should there be servants?"): Helga walks the 
 (10, 10), dusting the frames at (4, 9) and (27, 9); the watchman walks the King's Hall from (6, 11) to the throne room
 doors (22, 11) and on to (38, 11). Their conversations (narrative/castle_ravenloft/court_household.dialogue) set
 nothing and can always be left, and their entries have `steps_aside`, so neither stands in any fight on these maps.
-Voice: docs/voice/helga_ruvak.md. Two pale courtiers (vampire spawn) walk the audience hall and the trophy room, and a
-ghostly servant the study and the count's bedroom (the shared extras, castle_ravenloft_gates.md §8).
+Voice: docs/voice/helga_ruvak.md. Two courtiers (vampire spawn) walk the audience hall and the trophy room, Boyar
+Vintila Crainic with his petition and Sir Lothar Brandt among the trophies; two ghosts of the household walk the study
+and the count's bedroom, Anghel Daskal the secretary and Ghenadie the valet (household.dialogue; who they are:
+castle_ravenloft_gates.md §8).
 
 Voice bibles: docs/voice/{rahadin, ludmilla_vilisevic, anastrasya_karelova, volenta_popofsky, lief_lipsiege,
 gertruda}.md. Strahd (`strahd`) speaks in this part only through the final battles' parley (presence package); his

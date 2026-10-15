@@ -1,8 +1,8 @@
 {
   "id": "castle_ghost_servant",
-  "name": "A Ghostly Servant",
+  "name": "Vlaicu the Lamplighter",
   "title": "Of the Household",
-  "summary": "A servant of the count's household who died with the rest on the night of the wedding, still in grey livery, still lighting candles that are already lit.",
+  "summary": "The castle's lamplighter, who died on the night of the wedding halfway up the high tower's stair with a lit lamp in his hand: a stooped ghost in a grey smock who still climbs it every night to light lamps that went cold three hundred years ago.",
   "portrait": "ghost",
   "sprite": "ghost",
   "attitude": "indifferent",
