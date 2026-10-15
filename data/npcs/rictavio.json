@@ -121,6 +121,20 @@
         "qty": -1
       }
     ],
+    "magic": [
+      "sun_blade",
+      "holy_avenger",
+      "scroll_of_protection_undead",
+      "scroll_of_protection_fiend",
+      "ammunition_of_slaying_undead",
+      "ammunition_of_slaying_fiend",
+      "ammunition_of_slaying_monstrosity",
+      "potion_of_resistance_necrotic",
+      "periapt_of_wound_closure",
+      "lantern_of_revealing",
+      "dust_of_disappearance",
+      "mace_of_disruption"
+    ],
     "buys": [
       "potion",
       "scroll",

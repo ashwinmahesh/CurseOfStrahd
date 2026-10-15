@@ -13,5 +13,6 @@
     0.5
   ],
   "trigger": "find:holy_symbol_of_ravenkind",
-  "once": true
+  "once": true,
+  "then": "symbol_dawn"
 }

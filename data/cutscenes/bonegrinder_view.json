@@ -16,5 +16,6 @@
     0.55,
     0.45
   ],
-  "trigger": "examine:bonegrinder_lookout"
+  "trigger": "examine:bonegrinder_lookout",
+  "then": "bonegrinder_far_castle"
 }

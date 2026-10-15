@@ -108,6 +108,11 @@ lfs-quiet:
 cheat-codes:
 	python3 tools/data/cheat_codes.py
 
+## Magic item prices from Sane Magical Prices (data/treasure/magic_prices.json) written into the items' cost_gp.
+.PHONY: magic-prices
+magic-prices:
+	python3 tools/data/magic_prices.py --apply
+
 ## The spoiler wiki in the vault (Wiki/), rebuilt from the game's data (tools/wiki/build_wiki.py). What people wrote on
 ## its pages outside the generated blocks is kept. wiki-shots first takes its screenshots in one off-screen run
 ## (tools/wiki/wiki_shots.gd; shots already in captures/wiki are kept, so delete one to retake it).

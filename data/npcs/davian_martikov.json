@@ -38,6 +38,35 @@
         "qty": -1
       }
     ],
+    "magic": [
+      "staff_of_the_woodlands",
+      "staff_of_swarming_insects",
+      "staff_of_the_python",
+      "staff_of_flowers",
+      "staff_of_birdcalls",
+      "moon_sickle_plus_1",
+      "moon_sickle_plus_2",
+      "moon_sickle_plus_3",
+      "budding_blossom_rod",
+      "flowering_blossom_rod",
+      "somniferous_blossom_rod",
+      "ring_of_animal_influence",
+      "potion_of_animal_friendship",
+      "pot_of_awakening",
+      "evergreen_fertilizer",
+      "bowl_of_commanding_water_elementals",
+      "brazier_of_commanding_fire_elementals",
+      "censer_of_controlling_air_elementals",
+      "stone_of_controlling_earth_elementals",
+      "elemental_gem_blue_sapphire",
+      "elemental_gem_emerald",
+      "elemental_gem_red_corundum",
+      "elemental_gem_yellow_diamond",
+      "alchemy_jug",
+      "tankard_of_sobriety",
+      "decanter_of_endless_water",
+      "bag_of_beans"
+    ],
     "buys": [
       "consumable"
     ],

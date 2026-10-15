@@ -1,0 +1,11 @@
+# Narrator: the treasures' second scenes (docs/ui/cutscenes.md): the line over the picture that follows each Tarokka
+# treasure's own, when it is found. Second person, present tense, one or two sentences.
+
+~ scene:sunsword_light
+| Where the blade passes, the room has no shadows left to hide in. Everyone looks a little braver, and a little more tired.
+
+~ scene:symbol_dawn
+| The light spreads from it in a slow circle, over the floor and up the walls, and wherever it goes the cold takes a step back.
+
+~ scene:tome_page
+| The first page is in a hand you know from his letters. The candle beside you leans toward it, as if it, too, wanted to be read.

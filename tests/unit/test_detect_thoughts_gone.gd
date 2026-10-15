@@ -63,7 +63,10 @@ func test_a_saves_items_become_ones_of_the_same_rarity_and_price() -> void:
 			var data := comp.item_data(str(sub))
 			assert_true(Compendium.playable(data), str(sub))
 			assert_eq(MagicItems.rarity(data), MagicItems.rarity(old), "%s for %s" % [sub, id])
-			assert_eq(float(data.get("cost_gp", 0)), float(old.get("cost_gp", 0)), "%s for %s" % [sub, id])
+			# The same price when the 2024 DMG priced by rarity; since Ashwin's Sane Magical Prices (2026-10-14) each
+			# item has its own (data/treasure/magic_prices.json), and the withdrawn ones, out of play, kept the book's.
+			assert_eq(MagicItems.price_for(MagicItems.rarity(data), MagicItems.is_consumable(data)), float(old.get("cost_gp", 0)),
+				"%s for %s: the book's price for its rarity" % [sub, id])
 	var save := {"version": GameState.SAVE_VERSION, "story": {
 		"location_states": {"abbey_of_st_markovia_wards": {"treasure": {"surgery_cabinet": [{"id": "potion_of_mind_reading", "qty": 1}]}}},
 		"party": [{"id": "ratatoille", "attuned": ["medallion_of_thoughts"], "inventory": [

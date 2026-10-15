@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dialogue_lint  # noqa: E402
+import magic_prices  # noqa: E402
 import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -703,7 +704,8 @@ def schedule_checks(data, errors, cond, flags_set, dialogue_refs):
 
 def cutscene_checks(data, parsed, errors):
     """Story cutscenes (story/cutscenes.gd, docs/ui/cutscenes.md): every picture is in art/cutscenes, every trigger is a
-    Narrator key some narrator file has, and every `cutscene <id>` in a conversation names one (or is `end`)."""
+    Narrator key some narrator file has, every `then` names a scene with a `caption` Narrator key some file has, and every
+    `cutscene <id>` in a conversation names one (or is `end`)."""
     narrator_keys = {n for key, p in parsed.items() if key.startswith("narrator/") for n in p["nodes"]}
     for cid, c in data.get("cutscenes", {}).items():
         w = f"data/cutscenes/{cid}.json"
@@ -716,6 +718,17 @@ def cutscene_checks(data, parsed, errors):
                 errors.append(f"{w}: trigger '{trig}' names no magic item")
         elif trig and trig not in narrator_keys:
             errors.append(f"{w}: trigger '{trig}' isn't a node in any narrative/narrator file")
+        nxt = c.get("then", "")
+        if nxt:
+            if nxt not in data.get("cutscenes", {}):
+                errors.append(f"{w}: then '{nxt}' isn't a cutscene")
+            elif not data["cutscenes"][nxt].get("caption"):
+                errors.append(f"{w}: then '{nxt}' has no `caption` Narrator key to read over its picture")
+        cap = c.get("caption", "")
+        if cap and cap not in narrator_keys:
+            errors.append(f"{w}: caption '{cap}' isn't a node in any narrative/narrator file")
+        if cap and trig:
+            errors.append(f"{w}: a scene with a `caption` follows another (`then`) and has no trigger of its own")
     for key, p in parsed.items():
         for cid, where in p["cutscenes"]:
             if cid != "end" and cid not in data.get("cutscenes", {}):
@@ -1133,6 +1146,8 @@ def main():
     # read, and quest content only a random road encounter opens (tools/data/story_reach.py, Storyline QA).
     if not errors:
         errors.extend(story_reach.findings(ROOT))
+    # Magic item prices follow Sane Magical Prices (data/treasure/magic_prices.json, tools/data/magic_prices.py).
+    errors.extend(magic_prices.findings())
     for e in errors:
         print("  FAIL ", e)
     if pending and "--pending" in sys.argv:

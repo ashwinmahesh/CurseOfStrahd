@@ -1,0 +1,16 @@
+{
+  "id": "tome_page",
+  "title": "The First Page",
+  "summary": "The Tome of Strahd lies open at its first page while the candle beside it leans toward it.",
+  "images": [
+    {
+      "image": "tome_page",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tome_page"
+}

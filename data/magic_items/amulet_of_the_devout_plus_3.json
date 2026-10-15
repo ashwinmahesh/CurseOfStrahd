@@ -7,7 +7,7 @@
   },
   "category": "wondrous",
   "weight_lb": 1,
-  "cost_gp": 40000,
+  "cost_gp": 28000,
   "magic": {
     "rarity": "very_rare",
     "attunement": "by a Cleric or Paladin"

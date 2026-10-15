@@ -71,6 +71,37 @@ static func for_trigger(key: String, st: StoryState) -> String:
 	return ""
 
 
+## The scene that follows `id` (data `then`: a cutscene with its own picture and a `caption` Narrator key), or "".
+static func then_of(id: String) -> String:
+	return str(get_cutscene(id).get("then", ""))
+
+
+## The Narrator key whose line reads over a follow-on scene's picture (data `caption`), or "".
+static func caption_key(id: String) -> String:
+	return str(get_cutscene(id).get("caption", ""))
+
+
+## What a trigger plays, in order (owner rule, 2026-10-14: every cutscene is at least two scenes): `id` with
+## `first_caption` over it, then each scene that follows it (data `then`, chained) that has a picture for this story now
+## and a Narrator line to read over it. Each is {id, lines}. A follow-on with no picture or no line ends the chain, so
+## without a Narrator (tests, tools) it is the first scene alone.
+static func scenes(id: String, first_caption: String, st: StoryState, narrator: Narrator, actor: Character = null) -> Array[Dictionary]:
+	var out: Array[Dictionary] = [{"id": id, "lines": [first_caption] as Array[String]}]
+	var seen := {id: true}
+	var next := then_of(id)
+	while next != "" and not seen.has(next) and narrator != null:
+		seen[next] = true
+		var key := caption_key(next)
+		if key == "" or image(next, st) == "":
+			break
+		var text := narrator.line(key, st, actor)
+		if text == "":
+			break
+		out.append({"id": next, "lines": [text] as Array[String]})
+		next = then_of(next)
+	return out
+
+
 ## The caption under a treasure's picture (`find:<item>`), in our own words.
 static func found_line(item_id: String) -> String:
 	var name := Compendium.shared().display_name("magic_items", item_id)

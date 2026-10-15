@@ -9,5 +9,6 @@
     }
   ],
   "trigger": "enter:village_of_barovia",
-  "once": true
+  "once": true,
+  "then": "village_square_empty"
 }
