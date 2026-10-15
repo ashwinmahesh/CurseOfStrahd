@@ -164,6 +164,10 @@
           "type": "integer",
           "minimum": 5,
           "description": "A wall's ring choice: its radius in feet (10 when left out, as Wall of Fire's 20-ft ring; Blade Barrier's is 30)."
+        },
+        "from_caster": {
+          "type": "boolean",
+          "description": "An Emanation laid round the caster's own space as it stands when the spell is cast, though the spell's range is not Self (Thunder Step: the boom round the space it leaves)."
         }
       }
     },
@@ -510,6 +514,21 @@
     "willing_skip_save": {
       "type": "boolean",
       "description": "Allies (willing creatures) don't make the save (Enlarge/Reduce, Levitate)."
+    },
+    "bring_along": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A teleport that can carry one willing creature along (Dimension Door, Thunder Step; opts.with names it, the hotbar asks): it must be within `within` feet of the caster, no larger than the caster when `max_size` is \"caster\" (Thunder Step), and an unoccupied space within 5 feet of the landing is needed, else it is left behind.",
+      "properties": {
+        "within": {
+          "type": "integer",
+          "minimum": 5
+        },
+        "max_size": {
+          "enum": ["caster"],
+          "description": "The caster's size or smaller. Left out: any size."
+        }
+      }
     },
     "living_only": {
       "type": "boolean",
@@ -860,6 +879,7 @@
               "eyebite",
               "repeat",
               "bigby",
+              "teleport",
               "faerun"
             ]
           },

@@ -11,7 +11,7 @@ nothing. `make test` casts every combat spell (tests/unit/test_spell_sweep.gd) a
 | `targets.kind` | `self` (the caster, no picking), `creature`, `ally`, `enemy`, `point`, `area` |
 | `targets.count` | creatures to pick (99 = any number); `upcast.targets` adds more per slot level (the hotbar offers several picks) |
 | `targets.creature_type` | only creatures of this type (Hold Person: `humanoid`) |
-| `area` | shape and size; a Self-range area is aimed from the caster (`direction`), any other at a point |
+| `area` | shape and size; a Self-range area is aimed from the caster (`direction`), any other at a point; `from_caster: true` lays an Emanation round the caster's own space as it stands at the cast although the range isn't Self (Thunder Step's boom round the space it leaves) |
 | `area_targets` | `all` (default for a point), `others` (default from Self), `enemies` ("creatures of your choice"), `allies` |
 | `area_max_targets` | at most this many in the area (Slow: 6) |
 | `upcast.area` | feet added to the area per slot level (Fog Cloud) |
@@ -77,7 +77,7 @@ A FieldObject on the cells the area covers, kept by Concentration (or the durati
 save_success, heal, owner: target, not_this_turn, upkeep}`. `do`: `attack` (Spiritual Weapon, Vampiric Touch,
 Produce Flame), `damage` (Witch Bolt), `area` (Dragon's Breath), `move_object` (Flaming Sphere, Cloud of Daggers,
 Dancing Lights, Mage Hand), `dash` (Expeditious Retreat), `heal_one` (Aura of Vitality), `aim` (Gust of Wind),
-`maintain` (Crown of Madness, which ends without it). They appear on the hotbar while the spell lasts.
+`maintain` (Crown of Madness, which ends without it), `teleport` (Far Step: a Bonus Action to teleport again, to a square checked like the cast's: `range`, in sight, unoccupied, outside an Antimagic Field). They appear on the hotbar while the spell lasts.
 
 ## Reactions and readied spells
 
@@ -103,8 +103,11 @@ its slot spent, held with Concentration, and released at the first enemy to come
 - Sustained actions: `disengage`, `compel`, `once_per_turn`, `at_point` with `within_object`.
 - Summons: SummonBlocks builds Find Steed, Summon Beast, Giant Insect, Summon Aberration, Summon Construct and Summon
   Elemental from the slot level and the cast-time choice.
+- Teleports (`SpellTargeting.TELEPORTS`: Misty Step, Dimension Door, Thunder Step, Far Step) ask the hotbar for a square (`place`), whatever area the
+  spell has; `bring_along: {within, max_size}` lets one willing creature go too (Dimension Door: any size; Thunder Step: `max_size: caster`, the caster's size or smaller;
+  `opts.with`, `SpellTargeting.companion_why`; the combat view asks after the square, TargetPicker `companion`).
 - Code handlers (combat/spell_specials.gd): Polymorph (combat/shape_change.gd), Banishment, Otiluke's Resilient Sphere,
-  Dimension Door, Heat Metal, Confusion, Compelled Duel, Compulsion, Dominate Beast, Dissonant Whispers, Eldritch Blast's
+  Dimension Door, Thunder Step, Far Step, Heat Metal, Confusion, Compelled Duel, Compulsion, Dominate Beast, Dissonant Whispers, Eldritch Blast's
   beams, Sorcerous Burst.
 
 ## Supplemental spell recipes

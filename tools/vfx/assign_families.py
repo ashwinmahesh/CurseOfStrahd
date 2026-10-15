@@ -66,7 +66,8 @@ SPELL_LOOKS = {
     "etherealness": "teleport@illusion", "blink": "teleport", "otilukes_resilient_sphere": "ward@force",
     "forcecage": "wall@force", "maze": "teleport", "banishment": "teleport@ward", "imprisonment": "teleport@ward",
     # going places
-    "misty_step": "teleport", "dimension_door": "teleport", "teleport": "teleport", "plane_shift": "teleport",
+    "misty_step": "teleport", "dimension_door": "teleport", "far_step": "teleport", "thunder_step": "nova",
+    "teleport": "teleport", "plane_shift": "teleport",
     "word_of_recall": "teleport", "tree_stride": "teleport@nature", "transport_via_plants": "teleport@nature",
     "arcane_gate": "summon", "gate": "summon", "teleportation_circle": "summon", "wind_walk": "transform@thunder",
     # defence

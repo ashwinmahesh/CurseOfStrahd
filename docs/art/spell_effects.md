@@ -30,11 +30,11 @@ The descriptions live in `art/vfx/effects.json` (`families`); every one is built
 |---|---|---|
 | bolt, ray, beam, shot | caster to each target (FxMissiles), one per attack roll; a miss sails past; a beam can chain | Fire Bolt, Scorching Ray, Eldritch Blast, an arrow |
 | touch, drain | a hand's touch; life streaming back to the caster | Shocking Grasp, Vampiric Touch, a vampire's bite |
-| burst, cone, line, nova | over the spell's squares (FxAreas): explosion, spray, bolt along a line, shockwave from the caster | Fireball, Burning Hands, Lightning Bolt, Thunderwave |
+| burst, cone, line, nova | over the spell's squares (FxAreas): explosion, spray, bolt along a line, shockwave from the caster | Fireball, Burning Hands, Lightning Bolt, Thunderwave, Thunder Step (round the space it leaves, ahead of the jump) |
 | strike, cloud, wall, ground, aura | from the sky, billowing, rising, erupting, settling round the caster | Flame Strike, Cloudkill, Wall of Fire, Entangle, Spirit Guardians |
 | heal, buff, debuff, psychic, ward, transform | on each creature (FxBodies) | Cure Wounds, Bless, Hex, Vicious Mockery, Shield of Faith, Polymorph |
 | smite, slash | on a blow that lands | Divine Smite, a zombie's slam, a longsword |
-| summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Detect Magic |
+| summon, teleport, glimmer | where a creature appears, both ends of a jump, a small working | Summon Undead, Misty Step, Far Step, Detect Magic |
 
 ## A change of shape
 

@@ -3,15 +3,17 @@ extends RefCounted
 ## The combat view's picks beyond the first click (docs/ui/combat_view.md, docs/contracts/combat.md): a wall drawn
 ## square by square and the side a drawn Wall of Fire burns on, the creature Commander's Strike's ally attacks, the
 ## creature Crown of Madness's victim must attack (or no one), the ally Maneuvering Attack lets move, with its square,
-## who an Evoker's Evocation spell shields (Sculpt Spells), and which creatures in a spell's area it takes when it takes
-## up to so many of the caster's choice (Slow, Mass Cure Wounds). It keeps what has been picked, says what the floor and
+## who an Evoker's Evocation spell shields (Sculpt Spells), which creatures in a spell's area it takes when it takes
+## up to so many of the caster's choice (Slow, Mass Cure Wounds), and the willing creature a teleport takes along
+## (Dimension Door, Thunder Step). It keeps what has been picked, says what the floor and
 ## the tooltip show, and builds the command; the engine checks every pick (SpellTargeting, SpellPlacement,
 ## EncounterWeapons, EncounterMovement, SpellSaves). It also says where an area placed at a point goes (aim).
 
 ## What is being picked: "" (nothing), "wall" (the wall's squares), "side" (the side a drawn Wall of Fire burns on),
 ## "strike" (the creature Commander's Strike's ally attacks), "victim" (the creature the crowned one must attack),
-## "mover" (the ally Maneuvering Attack moves), "square" (where that ally goes), "sculpt" (who Sculpt Spells shields)
-## or "choose" (the creatures in the area a spell of the caster's choice takes).
+## "mover" (the ally Maneuvering Attack moves), "square" (where that ally goes), "sculpt" (who Sculpt Spells shields),
+## "choose" (the creatures in the area a spell of the caster's choice takes) or "companion" (who a teleport takes along,
+## after the square it lands on).
 var step := ""
 var e: Encounter
 ## Who acts, the hotbar action being aimed, and its spell slot.
@@ -27,7 +29,8 @@ var _pointed := Vector2i(-1, -1)
 ## Squares the moving ally can reach (the square step), and whether it was the only one who could move.
 var _reach: Dictionary = {}
 var _only_mover := false
-## The sculpt and choose steps: the creatures to pick from, those picked, the spell's squares, and where it goes off.
+## The sculpt and choose steps: the creatures to pick from, those picked, the spell's squares, and where it goes off
+## (the companion step keeps the square the teleport lands on in `_point`).
 ## `_sculpt_self`: a spell from the caster with no aim of its own (Thunderclap), so Backspace has no aim to go back to.
 ## `_choose_cap`: how many creatures the spell of the caster's choice takes.
 var _sculpt_all: Array[Combatant] = []
@@ -165,6 +168,25 @@ func second(who: Combatant, a: Dictionary, t: Combatant, slot_: int) -> bool:
 	return false
 
 
+## The square a teleport lands on is picked (`point`): a teleport that can take one willing creature along (Thunder
+## Step: `bring_along` in the spell's data) with someone able to come asks who first. True when that pick starts; false
+## when the cast goes ahead as it is (nobody to bring, or the square is no good: the cast says why).
+func bring_along(who: Combatant, a: Dictionary, point: Vector2, slot_: int) -> bool:
+	if who == null or not str(a.get("kind", "")) in ["spell", "item_spell"]:
+		return false
+	var s := _spell(a)
+	if e.spells.targeting.companions_for(who, s).is_empty():
+		return false
+	var opts := (a.get("opts", {}) as Dictionary).duplicate()
+	if "distant" in (opts.get("metamagic", []) as Array):
+		opts["range_mult"] = true
+	if str(e.spells._check_targets(who, s, slot_, [], point, opts)["why"]) != "":
+		return false
+	_start(who, a, slot_, "companion")
+	_point = point
+	return true
+
+
 ## Maneuvering Attack just hit for `who`: the ally that moves (or the only one who can), then its square. False when
 ## nothing was offered or no one can take it (the offer is then passed on).
 func begin_move(who: Combatant) -> bool:
@@ -249,6 +271,13 @@ func pick(cell: Vector2i, who: Combatant) -> Dictionary:
 				return _refuse("Sculpt Spells shields up to %d creatures" % _sculpt_cap())
 			_sculpt_picks.append(who)
 			return {}
+		"companion":
+			if who != null and who != c:
+				var why_not := e.spells.targeting.companion_why(c, _spell(action), who)
+				return _refuse(why_not) if why_not != "" else _cast_with(who)
+			if _square(cell, who) == Vector2i(floori(_point.x), floori(_point.y)):
+				return _cast_with(null)
+			return _refuse("Click an ally beside you to bring along · Enter or click the landing square: go alone")
 		"choose":
 			if who == null:
 				return _cast_chosen()
@@ -280,6 +309,8 @@ func confirm() -> Dictionary:
 			return _cast_sculpted()
 		"choose":
 			return _cast_chosen()
+		"companion":
+			return _cast_with(null)
 	return {}
 
 
@@ -314,7 +345,7 @@ func undo() -> bool:
 				return false
 			reset()
 			return true
-		"choose":
+		"choose", "companion":
 			reset()
 			return true
 	return false
@@ -331,6 +362,8 @@ func candidate(o: Combatant) -> bool:
 			return o.is_player_controlled() and e.movement.reaction_mover_why(o) == ""
 		"sculpt", "choose":
 			return o in _sculpt_all
+		"companion":
+			return o != c and e.spells.targeting.companion_why(c, _spell(action), o) == ""
 	return false
 
 
@@ -360,6 +393,8 @@ func show(cell: Vector2i, who: Combatant) -> Dictionary:
 			_show_sculpt(out, who)
 		"choose":
 			_show_choose(out, who)
+		"companion":
+			_show_companion(out, who)
 	return out
 
 
@@ -517,6 +552,42 @@ func _show_choose(out: Dictionary, who: Combatant) -> void:
 		out["warnings"] = ["Choose at least one creature"]
 
 
+func _show_companion(out: Dictionary, who: Combatant) -> void:
+	var s := _spell(action)
+	var landing := Vector2i(floori(_point.x), floori(_point.y))
+	# A boom round the space left (Thunder Step) keeps its edge on the floor; a teleport with no area (Dimension Door) has none.
+	var boom := s.has("area")
+	if boom:
+		out["outline"] = e.spells.targeting.area_outline(c, s, _point, Vector2.ZERO, slot)
+		out["outline_cells"] = e.spells.area_for(c, s, _point, Vector2.ZERO, slot)
+	out["goal"] = [landing]
+	for o in e.spells.targeting.companions_for(c, s):
+		(out["friendly"] as Array).append_array(o.footprint())
+	var smaller := str((s.get("bring_along", {}) as Dictionary).get("max_size", "")) == "caster"
+	out["title"] = "%s: bring someone along?" % s.get("name", "")
+	var lines: Array = ["Click an ally beside you to bring along%s" % (" (it must be your size or smaller)" if smaller else ""),
+		"Enter or click the landing square: go alone · Backspace or right-click: another square"]
+	var warnings: Array = []
+	var caught: Array = []
+	if boom:
+		for o in e.spells.creatures_in(out["outline_cells"] as Array[Vector2i]):
+			if o != c and o != who:
+				caught.append(o.name())
+	if who != null and who != c:
+		var why := e.spells.targeting.companion_why(c, s, who)
+		if why != "":
+			warnings.append(why)
+		else:
+			lines.push_front("%s comes along" % who.name())
+			var spot := e.spells._free_cell_near(landing, who.size_cells)
+			if e.grid.distance_ft(landing, c.size_cells, spot, who.size_cells) > 5 or not e.spells._room_for(spot, who.size_cells):
+				warnings.append("No room beside the landing: %s would be left behind%s" % [who.name(), ", in the boom" if boom else ""])
+	if not caught.is_empty():
+		lines.append("In the boom: %s" % ", ".join(caught))
+	out["lines"] = lines
+	out["warnings"] = warnings
+
+
 ## The placed spell's edge, as it showed while aimed.
 func _show_edge(out: Dictionary) -> void:
 	out["outline"] = e.spells.targeting.area_outline(c, _spell(action), _point if _point != Vector2.INF else e.center_of(c), _dir, slot)
@@ -631,6 +702,17 @@ func _cast_chosen() -> Dictionary:
 	opts["chosen"] = _sculpt_picks.map(func(o: Combatant) -> String: return o.id)
 	cast["opts"] = opts
 	return {"do": "perform", "action": cast, "targets": [], "point": _point, "dir": _dir}
+
+
+## The teleport goes ahead to the square picked, with `ally` along (opts.with, read by SpellTargeting.companion_why and
+## the spell's handler) or alone.
+func _cast_with(ally: Combatant) -> Dictionary:
+	var cast := action.duplicate(true)
+	if ally != null:
+		var opts := (cast.get("opts", {}) as Dictionary).duplicate()
+		opts["with"] = ally.id
+		cast["opts"] = opts
+	return {"do": "perform", "action": cast, "targets": [], "point": _point, "dir": Vector2.ZERO}
 
 
 ## Who an Evoker's Evocation spell aimed so could shield, when the caster or one of its allies is among them; else

@@ -599,6 +599,8 @@ func _sustained(c: Combatant, out: Array[Dictionary]) -> void:
 				targeting = "direction"
 			"move_object":
 				targeting = "point"
+			"teleport":
+				targeting = "place"
 			"move_mark":
 				targeting = "enemy"
 			"heal_one":
@@ -801,14 +803,15 @@ func _spell_targeting(data: Dictionary) -> String:
 
 ## How the hotbar targets a spell: none, direction, point, wall, place, enemy, ally, dying, dead, multi or creature.
 static func spell_targeting(data: Dictionary) -> String:
+	# A teleport asks for the square the caster lands on, whatever area the spell also has (Thunder Step's boom).
+	if str(data.get("id", "")) in SpellTargeting.TELEPORTS:
+		return "place"
 	if data.has("area"):
 		if str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
 			return "none" if str((data["area"] as Dictionary).get("shape", "")) == "emanation" else "direction"
 		# A wall drawn square by square (its ring, globe or dome choice is placed at a point instead).
 		return "wall" if SpellTargeting.drawn_wall(data) else "point"
 	var t := data.get("targets", {}) as Dictionary
-	if str(data.get("id", "")) in ["misty_step", "dimension_door"]:
-		return "place"
 	if str(t.get("kind", "creature")) == "self":
 		return "none"
 	if str(t.get("kind", "")) == "enemy":
@@ -820,7 +823,7 @@ static func spell_targeting(data: Dictionary) -> String:
 	var tags := data.get("tags", []) as Array
 	if bool((data.get("object", {}) as Dictionary).get("pick_attack_targets", false)):
 		return "multi"
-	if data.has("object") or str(data.get("id", "")) in ["misty_step", "dimension_door"] or str(data.get("id", "")) in SpellCaster.SUMMON_SPELLS:
+	if data.has("object") or str(data.get("id", "")) in SpellCaster.SUMMON_SPELLS:
 		return "place"
 	if str(data.get("id", "")) == "revivify":
 		return "dead"
@@ -1694,7 +1697,7 @@ func spell_preview(c: Combatant, action: Dictionary, point: Vector2, dir: Vector
 		dc = (e.spells.numbers(c, entry)["dc"] as Breakdown).total() if not entry.is_empty() else 0
 	var caught: Array[Combatant] = []
 	for o in e.spells.creatures_in(cells):
-		if o == c and str((data.get("range", {}) as Dictionary).get("kind", "")) == "self":
+		if o == c and SpellTargeting.area_from_caster(data):
 			continue
 		# An Invisible foe the caster can't see isn't on the map, so the preview doesn't list it (the spell still
 		# catches it).

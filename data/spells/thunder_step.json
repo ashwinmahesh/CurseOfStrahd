@@ -1,0 +1,60 @@
+{
+  "id": "thunder_step",
+  "name": "Thunder Step",
+  "source": {
+    "book": "XGtE",
+    "edition": "2014",
+    "note": "Entered from knowledge of Xanathar's Guide to Everything, a 2014-rules spell the owner added on 2026-10-15; no 2024 book reprints it. Check every number against the owner's copy."
+  },
+  "level": 3,
+  "school": "conjuration",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "action"
+  },
+  "range": {
+    "kind": "feet",
+    "feet": 90
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "instantaneous"
+  },
+  "targets": {
+    "kind": "point",
+    "description": "an unoccupied space you can see within 90 feet, plus one willing creature of your size or smaller within 5 feet of you"
+  },
+  "area": {
+    "shape": "emanation",
+    "size": 10,
+    "from_caster": true
+  },
+  "area_targets": "others",
+  "bring_along": {
+    "within": 5,
+    "max_size": "caster"
+  },
+  "save": "con",
+  "save_success": "half",
+  "damage": [
+    {
+      "dice": "3d10",
+      "type": "thunder"
+    }
+  ],
+  "upcast": {
+    "damage": "1d10"
+  },
+  "tags": [
+    "damage",
+    "movement"
+  ],
+  "summary": "Teleport up to 90 ft to a space you can see, taking along one willing creature of your size or smaller; thunder booms where you stood (Con save: 3d10 Thunder to all within 10 ft, half on a success).",
+  "text": "You vanish and reappear in an unoccupied space you can see within 90 feet. A thunderclap bursts from the space you left: every creature within 10 feet of it makes a Constitution saving throw, taking 3d10 Thunder damage on a failed save or half as much on a success. The boom can be heard from 300 feet away. You carry along whatever you could normally carry, and you can bring one willing creature of your size or smaller that stands within 5 feet of you and carries no more than it can bear; it arrives in an unoccupied space within 5 feet of your destination, or is left behind if there is none, and then it is caught in the boom like anyone else near the space you left. The damage increases by 1d10 for each spell slot level above 3."
+}

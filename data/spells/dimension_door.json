@@ -30,6 +30,9 @@
     "kind": "self",
     "description": "you, plus one willing creature within 5 feet of you"
   },
+  "bring_along": {
+    "within": 5
+  },
   "tags": [
     "movement"
   ],

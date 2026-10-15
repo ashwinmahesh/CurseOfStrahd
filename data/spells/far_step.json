@@ -1,0 +1,51 @@
+{
+  "id": "far_step",
+  "name": "Far Step",
+  "source": {
+    "book": "XGtE",
+    "edition": "2014",
+    "note": "Entered from knowledge of Xanathar's Guide to Everything, a 2014-rules spell the owner added on 2026-10-15; no 2024 book reprints it. Check every number against the owner's copy."
+  },
+  "level": 5,
+  "school": "conjuration",
+  "classes": [
+    "sorcerer",
+    "warlock",
+    "wizard"
+  ],
+  "casting_time": {
+    "unit": "bonus_action"
+  },
+  "range": {
+    "kind": "self"
+  },
+  "components": {
+    "v": true
+  },
+  "duration": {
+    "kind": "minutes",
+    "amount": 1,
+    "concentration": true
+  },
+  "targets": {
+    "kind": "self",
+    "within": 60,
+    "description": "an unoccupied space you can see within 60 feet"
+  },
+  "tags": [
+    "movement"
+  ],
+  "summary": "Bonus Action: teleport up to 60 ft to a space you can see, and again with a Bonus Action on each of your turns while you concentrate.",
+  "text": "You teleport up to 60 feet to an unoccupied space that you can see. For as long as you concentrate on the spell, you can use a Bonus Action on each of your turns to teleport in the same way again.",
+  "sustain": [
+    {
+      "do": "teleport",
+      "cost": "bonus_action",
+      "range": 60,
+      "label": "Far Step",
+      "sub": "teleport 60 ft",
+      "help": "A Bonus Action: teleport up to 60 ft to an unoccupied space you can see.",
+      "not_this_turn": false
+    }
+  ]
+}

@@ -15,6 +15,13 @@ const STRAIGHT_WALLS := ["blade_barrier", "prismatic_wall"]
 ## of the others (on a surface "within range", or appearing "within range") must be.
 const FROM_A_POINT := ["wind_wall", "wall_of_stone", "wall_of_force"]
 
+## Spells that teleport their caster to a square it picks: Misty Step, Dimension Door, Thunder Step and Far Step (and
+## Far Step's later teleports). The square is in range, unoccupied, with room for the caster and outside an Antimagic
+## Field; the hotbar asks for a square ("place") whatever the spell's area.
+const TELEPORTS := ["misty_step", "dimension_door", "thunder_step", "far_step"]
+## Of those, the ones whose square the caster must be able to see (Dimension Door's can be pictured or described).
+const TELEPORTS_SEEN := ["misty_step", "thunder_step", "far_step"]
+
 var _enc: WeakRef
 
 
@@ -32,6 +39,12 @@ func sp() -> SpellCaster:
 
 func _comp() -> Compendium:
 	return Compendium.shared()
+
+
+## Whether the spell's area is laid round the caster: a Self-range spell's, or one marked `area.from_caster` (Thunder
+## Step's boom round the space the caster leaves, though the spell reaches 90 ft).
+static func area_from_caster(s: Dictionary) -> bool:
+	return str((s.get("range", {}) as Dictionary).get("kind", "")) == "self" or bool((s.get("area", {}) as Dictionary).get("from_caster", false))
 
 
 ## Range in feet. A Self-range spell that still targets a creature (Vampiric Touch) reaches as far as a melee
@@ -119,7 +132,7 @@ func _area_spec(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2,
 	var shape := str(area["shape"])
 	var size := int(area["size"]) + int((s.get("upcast", {}) as Dictionary).get("area", 0)) * maxi(0, slot - int(s.get("level", 0)))
 	var center := enc().center_of(c)
-	var self_origin := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var self_origin := area_from_caster(s)
 	var spec := {"shape": shape, "size": size, "origin": point, "dir": direction, "width": int(area.get("width", 5)),
 		"cell": Vector2i(-1, -1), "cells": 1}
 	if shape == "emanation" and self_origin:
@@ -169,7 +182,7 @@ func _area_victims(c: Combatant, s: Dictionary, cells: Array[Vector2i], choice: 
 		var picked: Array[Combatant] = []
 		picked.assign(all.filter(func(v: Combatant) -> bool: return v.id in (chosen as Array)))
 		return picked.slice(0, cap)
-	var self_area := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var self_area := area_from_caster(s)
 	var mode := str(s.get("area_targets", "others" if self_area else "all"))
 	mode = str((s.get("area_targets_by_choice", {}) as Dictionary).get(choice, mode))
 	var out: Array[Combatant] = []
@@ -235,7 +248,7 @@ func reaches_height(c: Combatant, s: Dictionary, v: Combatant) -> bool:
 		return true
 	var area := s.get("area", {}) as Dictionary
 	var size := int(area.get("size", 0))
-	var from_caster := str((s.get("range", {}) as Dictionary).get("kind", "")) == "self"
+	var from_caster := area_from_caster(s)
 	var gap := v.altitude - (c.altitude if from_caster else 0)
 	match str(area.get("shape", "")):
 		"sphere":
@@ -284,6 +297,37 @@ func point_distance_ft(who: Combatant, point: Vector2) -> int:
 	return best
 
 
+## Why `ally` can't go along when the caster teleports with a spell that takes one willing creature (`bring_along`:
+## Dimension Door, Thunder Step); "" when it can. It must be willing (on the caster's side and able to agree), within
+## the spell's distance of the caster and, when the spell says `max_size: caster` (Thunder Step), no larger than it.
+## Whether there is room beside the landing is settled as it lands.
+func companion_why(c: Combatant, s: Dictionary, ally: Combatant) -> String:
+	if ally == null or ally == c or not ally.is_alive():
+		return "Choose a creature to bring along"
+	if not c.allied_with(ally) or not ally.can_act():
+		return "%s isn't willing to go along" % ally.name()
+	var along := s.get("bring_along", {}) as Dictionary
+	if str(along.get("max_size", "")) == "caster" and Creature.SIZES.find(ally.creature.size) > Creature.SIZES.find(c.creature.size):
+		return "%s is larger than you: only your size or smaller can come along" % ally.name()
+	var within := int(along.get("within", 5))
+	if enc().distance(c, ally) > within:
+		return "%s is more than %d ft away" % [ally.name(), within]
+	return ""
+
+
+## Who could go along with `c` on a teleport of spell `s` that takes a willing creature (`bring_along`): the creatures
+## companion_why allows, nearest first.
+func companions_for(c: Combatant, s: Dictionary) -> Array[Combatant]:
+	var out: Array[Combatant] = []
+	if not s.has("bring_along"):
+		return out
+	for o in enc().living():
+		if companion_why(c, s, o) == "":
+			out.append(o)
+	out.sort_custom(func(a: Combatant, b: Combatant) -> bool: return enc().distance(c, a) < enc().distance(c, b))
+	return out
+
+
 ## Validates targets, range and line of effect. {why, targets: Array[Combatant], cell: Vector2i}
 func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, point: Vector2, opts: Dictionary) -> Dictionary:
 	var spells := sp()
@@ -324,7 +368,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 				out["why"] = "%s needs a Long Rest before benefiting from Catnap again" % t.name()
 				return out
 	var tkind := str((s.get("targets", {}) as Dictionary).get("kind", "creature"))
-	var placed := s.has("object") or id in ["misty_step", "dimension_door"] or id in SpellCaster.SUMMON_SPELLS
+	var placed := s.has("object") or id in TELEPORTS or id in SpellCaster.SUMMON_SPELLS
 	if placed:
 		var cell: Vector2i = opts.get("cell", Vector2i(-1, -1))
 		if cell.x < 0 and point != Vector2.INF:
@@ -340,19 +384,25 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if e.grid.distance_ft(c.cell, c.size_cells, cell, 1) > rng:
 			out["why"] = "That square is out of range (%d ft)" % rng
 			return out
-		if (id in ["misty_step", "dimension_door", "flaming_sphere"] or id in SpellCaster.SUMMON_SPELLS) and e.occupant_at(cell) != null:
+		if (id in TELEPORTS or id == "flaming_sphere" or id in SpellCaster.SUMMON_SPELLS) and e.occupant_at(cell) != null:
 			out["why"] = "That square is occupied"
 			return out
 		# A caster bigger than a square (Enlarge, a goliath's Large Form) needs room for all of it where it lands.
-		if id in ["misty_step", "dimension_door"] and c.size_cells > 1 and not e.feature_actions.room_at(c, cell):
+		if id in TELEPORTS and c.size_cells > 1 and not e.feature_actions.room_at(c, cell):
 			out["why"] = "There isn't room for you there"
 			return out
-		if spells.specials.high.antimagic_at(cell) and (id in ["misty_step", "dimension_door"] or id in SpellCaster.SUMMON_SPELLS):
+		if spells.specials.high.antimagic_at(cell) and (id in TELEPORTS or id in SpellCaster.SUMMON_SPELLS):
 			out["why"] = "Magic can't reach into the Antimagic Field"
 			return out
-		if id == "misty_step" and not e.can_see_space(c, cell):
+		if id in TELEPORTS_SEEN and not e.can_see_space(c, cell):
 			out["why"] = "You must see the square you teleport to"
 			return out
+		# Thunder Step's companion (opts.with): checked before anything is spent.
+		if s.has("bring_along") and str(opts.get("with", "")) != "":
+			var companion_block := companion_why(c, s, e.get_c(str(opts["with"])))
+			if companion_block != "":
+				out["why"] = companion_block
+				return out
 		if id in SpellCaster.SUMMON_SPELLS:
 			var block := SummonBlocks.for_spell(id, slot, choice_of(s, opts), {})
 			var footprint := CombatGrid.size_cells_for(StringName(str(block.get("size", "medium"))))

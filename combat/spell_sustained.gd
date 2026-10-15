@@ -259,6 +259,12 @@ func use_sustained(c: Combatant, action_id: String, targets: Array = [], point: 
 					s3.erase("effects")
 					sub3["s"] = s3
 					spells._save_spell(sub3, victims, r)
+		"teleport":
+			# Far Step's later teleports: the same square rules as the cast (SpellTargeting.TELEPORTS), checked in _sustained_check.
+			var landing := spells._check_targets(c, s, int(a["slot"]), targets, point, {})
+			e.log.add("spell", "%s: %s" % [c.name(), a["label"]], c.id)
+			if not spells.specials.high.teleport_blocked(ctx, c):
+				spells._teleport(c, landing["cell"] as Vector2i, r)
 		"dash":
 			c.movement_left += c.speed()
 			e.log.add("info", "%s Dashes (+%d ft, %s)" % [c.name(), c.speed(), s["name"]], c.id)
@@ -412,6 +418,10 @@ func _sustained_check(c: Combatant, a: Dictionary, d: Dictionary, t: Combatant, 
 				return "Can't go there"
 			if e.grid.distance_ft(obj2.cell, 1, to2, 1) > int(d.get("move", 30)):
 				return "It moves at most %d ft" % int(d.get("move", 30))
+		"teleport":
+			if spells.specials.high.in_antimagic(c):
+				return "Magic can't work inside the Antimagic Field"
+			return str(spells._check_targets(c, _comp().spell_data(str(a["spell_id"])), int(a["slot"]), [t] if t != null else [], point, {})["why"])
 		"heal_one":
 			if t != null and e.distance(c, t) > int(d.get("range", 30)):
 				return "Out of the aura"
