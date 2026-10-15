@@ -101,7 +101,9 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   a walk 30 ft up that the rules stand on, reached from the courtyard by stairs of 5 ft steps: built raised squares
   in the map (raised floor digits with elevation stacked on them, so Classic draws them as raised floor). In the
   Modern look the castle draws them in its own stone, a paved top with a coping on each edge over lower ground, no
-  face between the walk and the wall top beside it, and they cut away with the wall pieces they belong to.
+  face between the walk and the wall top beside it, and they cut away with the wall pieces they belong to. Each 5 ft
+  step of the stairs has a short flight of small steps up its face from the square below (owner 2026-10-15,
+  Stairs.flight), part of the same cut-away piece.
 - **The keep's roof** (W7): a steep slated roof inside the battlements, the kit's stone roof along the keep's long
   side half a square in from its faces, with an ashlar gable at each end; it hides with the keep when the keep is in
   the way.
