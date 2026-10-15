@@ -1672,8 +1672,8 @@
     },
     "roc_looks_down": {
       "refs": [],
-      "prompt": "Looking straight up from a mountain road in swirling cloud at a colossal roc, a bird the size of a ship's sail with wings spread wide against grey cloud, its huge head turned down so that one golden eye as big as a cartwheel regards the road; far below, {party} are a few small hooded specks on the road, seen from behind. Cold mountain light, drifting cloud; awe and dread, no gore.",
-      "use": "a"
+      "prompt": "A mountain road winding along a cliff in swirling cloud, seen from the road with the valley open beyond it: a roc, a giant bird of prey with dark brown and grey feathers, a pale head and a huge hooked yellow beak, flies over the ridge across the valley, clearly colossal, its body as big as a watchtower and its wings spread wider than a barn roof, banking low with its head turned down to look at the road, its wingspan about a third of the picture's width, overlapping the mountain behind it. {party} stand on the road in the foreground, three small hooded figures seen strictly from behind with their hoods up so no face is visible, one holding a lantern, looking up at it. Cold mountain light, drifting cloud; awe and dread, no gore.",
+      "use": "c"
     },
     "penitent_stands": {
       "refs": [],
