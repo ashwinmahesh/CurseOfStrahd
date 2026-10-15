@@ -1305,22 +1305,15 @@
         {
           "monster": "wight",
           "cell": [
-            20,
+            19,
             6
           ]
         },
         {
           "monster": "wight",
           "cell": [
-            21,
-            5
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
             25,
-            11
+            1
           ]
         }
       ],
