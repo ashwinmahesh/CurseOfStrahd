@@ -185,6 +185,10 @@
         {
           "id": "potion_of_healing_supreme",
           "qty": 2
+        },
+        {
+          "id": "nine_lives_stealer__longsword",
+          "qty": 1
         }
       ],
       "gold": 150

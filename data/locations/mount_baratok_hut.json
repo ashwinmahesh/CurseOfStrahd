@@ -238,6 +238,10 @@
         {
           "id": "component_pouch",
           "qty": 1
+        },
+        {
+          "id": "spell_scroll__mordenkainens_sword",
+          "qty": 1
         }
       ],
       "gold": 0

@@ -296,14 +296,14 @@ with no setup; setup if needed: `mordenkainen_memory_jar_taken: true`.
 | `berez_fisher_locker` | by the jetty | 8 gp, net |
 | search prop `berez_sunken_purse` (DC 14) | reeds | antitoxin |
 | `lysagas_pantry` (Tarokka spot) | hut kitchen | 3 rations, 12 gp |
-| `lysagas_jar_shelf` | hut kitchen | 2 potions of healing, antitoxin (the labelled jar beside it is a prop) |
+| `lysagas_jar_shelf` | hut kitchen | 2 Potions of Healing (Greater), a Potion of Flying (very rare), a Potion of Invulnerability (rare), antitoxin (the labelled jar beside it is a prop) |
 | prop `lysaga_cradle` | hut nursery | **the Wizard of Wines gem** (dialogue: `winery_gem_berez_found`, `the_third_stone found`) |
 | `marinas_dowry_chest` (Tarokka spot) | vault | 150 gp |
 | `berez_vault_niche` | vault | 30 gp (Strahd's offerings; taking them is noticed by no one, yet) |
 | prop `baratok_cairn` (warded) | Baratok summit | 2 level 1 spell scrolls (given in the dialogue); `mordenkainen_spellbook_found` |
 | `baratok_summit_cache` | a cleft below the summit | 15 gp, potion of healing |
-| `baratok_hut_pack` | Mad Mage's hut | rations, component pouch |
-| `roc_nest` | the roc's crag | 140 gp, chain shirt, longsword, potion of healing |
+| `baratok_hut_pack` | Mad Mage's hut | rations, component pouch, a Spell Scroll of Mordenkainen's Sword (very rare) |
+| `roc_nest` | the roc's crag | 140 gp, chain shirt, longsword, a Potion of Healing (Greater), +2 Greatsword (rare), an Ioun Stone (Agility) (very rare) |
 | `tower_footlocker` | barracks | 20 gp, crossbow bolts, a blanket |
 | `captains_strongbox` (lock 15, Tarokka spot) | captain's room | 90 gp, potion of healing |
 

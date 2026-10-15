@@ -428,11 +428,15 @@
       "model": "case",
       "items": [
         {
-          "id": "spell_scroll_level_1",
-          "qty": 2
+          "id": "book",
+          "qty": 1
         },
         {
-          "id": "book",
+          "id": "spell_scroll__circle_of_death",
+          "qty": 1
+        },
+        {
+          "id": "spell_scroll__harm",
           "qty": 1
         }
       ],

@@ -109,6 +109,8 @@ Narrator: Where the hounds fell there's nothing left but grey mist lying low in 
 Narrator: The Huntsman's coat lies in the road with nothing in it. His saddlebag holds four hundred years of quarry's purses, and a plain iron ring he called the pack with.
 gold +300
 give ring_of_animal_influence
+Narrator: Across the saddle, still strung after four hundred years of weather, is the black bow he shot his arrows from.
+give oathbow__longbow
 if flag.hunt_quarry == "gavril"
 Gavril: I stood. I actually stood. (He sits down in the road very suddenly.) Don't tell Paraschiva I'm sitting.
 endif

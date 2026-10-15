@@ -328,6 +328,10 @@
         {
           "id": "robe",
           "qty": 1
+        },
+        {
+          "id": "mace_of_smiting__mace",
+          "qty": 1
         }
       ],
       "gold": 22,

@@ -207,7 +207,7 @@ All flags are registered, set and read in this package. The ones later content s
 | `holt_dormitory_footlocker` | upper | playing cards, dice, 24 gp | |
 | `holt_dragon_desk` | upper | ink, ink pen, parchment, 35 gp | yes (the dragon's study) |
 | `holt_godfrey_chest` | upper | 9 gp, a book | |
-| `holt_commanders_chest` (lock 18) | upper | 120 gp, a level 1 spell scroll | yes (the commander's strongbox) |
+| `holt_commanders_chest` (lock 18) | upper | 120 gp, a level 1 spell scroll, an Ioun Stone (Leadership) (very rare), a Potion of Heroism (rare) | yes (the commander's strongbox) |
 | `holt_lampkeeper_locker` | tower | 2 torches, oil, tinderbox, 15 gp; the Tarokka treasure when the reading puts one here | yes |
 | `holt_offering_niches` | mausoleum | 30 gp in silver, 4 candles | yes (an offering to a dragon) |
 

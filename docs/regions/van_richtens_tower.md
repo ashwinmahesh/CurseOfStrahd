@@ -270,7 +270,7 @@ Test setup for the Phase 5 exit (SETUP): `emil_toranescu`: `{"emil_key_found": t
 | `ezmerelda_wagon` (lock 16, tripwire 3d10 fire) | her camp | 30 gp, 2 holy water, alchemist's fire, 20 bolts, a potion (theft costs her trust) |
 | `vrt_supply_crate` | tower hall | 2 holy water, 3 torches, 2 oil, 4 rations |
 | `vrt_workroom_cabinet` | workroom | healer's kit, 2 potions of healing, antitoxin |
-| `van_richten_strongbox` | lantern room | 120 gp, 3 holy water, 2 potions, a level 1 spell scroll; Tarokka spot |
+| `van_richten_strongbox` | lantern room | 120 gp, 3 holy water, 2 Potions of Healing (Greater), a level 1 spell scroll, 2 Arrows of Undead Slaying (very rare); Tarokka spot |
 | `den_hunter_pack` | hillside | 8 gp, longbow, 20 arrows, 2 rations |
 | `mother_night_offerings` | shrine | 35 gp, 3 candles; Tarokka spot |
 | `kiril_hoard` (lock 15) | Kiril's lair | 140 gp, Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare), perfume, fine clothes, dice |

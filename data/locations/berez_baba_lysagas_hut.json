@@ -397,11 +397,19 @@
       "model": "jars",
       "items": [
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_greater",
           "qty": 2
         },
         {
           "id": "antitoxin",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_flying",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_invulnerability",
           "qty": 1
         }
       ],

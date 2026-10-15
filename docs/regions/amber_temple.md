@@ -291,7 +291,7 @@ Mundane loot and gold in every container (cold-weather gear, potions, holy water
 Fixed Curse of Strahd items: none placed as story items here beyond the Tarokka treasures (the three treasure items
 already exist). **For the DMG-items thread** (containers that should receive the chapter's magic): `watch_chest`
 (doors, east guardroom, locked 15), `warden_cell_locker` (great hall, locked 14), `restricted_case` (library, guarded by
-the flameskulls: the place for spell scrolls of levels 3 to 6 and a wizard's item), `gift_heap` and `offering_urns`
+the flameskulls: the place for spell scrolls of levels 3 to 6 and a wizard's item; it holds Circle of Death and Harm, both very rare), `gift_heap` and `offering_urns`
 (vault of offerings: the richest hoard, an offering from every century), `statue_offerings`. **Item needs**: spell
 scrolls above level 1 (only `spell_scroll_cantrip` and `_level_1` exist; the restricted case and the wardens' locker
 hold level 1 scrolls as stand-ins), gems and art objects as items (gold stands in), and the copper pact ledger as a
