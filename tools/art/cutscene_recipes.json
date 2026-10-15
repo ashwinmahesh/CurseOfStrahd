@@ -1821,6 +1821,18 @@
       "refs": [],
       "prompt": "Van Richten's round black tower on its rock in the still black water of Lake Baratok at night, seen low from the shore: the tower's topmost window glows a steady yellow, its reflection a long line on the water, a rowboat tied at a small jetty at the rock's foot, dark mountains behind. {party} on the shore in the foreground, seen from behind, hooded and small, one holding a lantern. Cold blue-black with one warm window; quiet and lonely, no gore.",
       "use": "a"
+    },
+    "ending_carriage": {
+      "refs": [],
+      "prompt": "The muddy lane of the village of Barovia at night, thick mist round the feet of the houses: a black carriage drawn by two black horses with red lamps rolls up to stop before an inn with one candlelit upstairs window, its door open on an empty seat of black velvet. {party} stand at the roadside, seen from behind, hooded, not moving. A dark church tower in the fog, no other people; deep blue-violet night with the one warm window and the red lamps; dread and shame, no gore.",
+      "use": "a"
+    },
+    "fallen_halls": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A great hall of Castle Ravenloft at dusk with candles burning and tall windows showing only night: several new figures in adventurers' clothes (hooded cloaks, a breastplate, a staff) walk its length slowly and stiffly, seen from behind, their skin pale and their bearing wrong, like {party} now turned; at the far end Strahd von Zarovich sits at the organ, drawn exactly as the reference sheet shows him, watching them over his shoulder. Dim reds and violets with long shadows; quiet horror, no gore.",
+      "use": "a"
     }
   }
 }

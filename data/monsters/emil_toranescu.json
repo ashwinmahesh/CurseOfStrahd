@@ -177,6 +177,24 @@
       "do": "shape_shift"
     }
   ],
+  "forms": {
+    "base": "humanoid",
+    "change": "bonus_action",
+    "blocked_in": [],
+    "shapes": [
+      {
+        "id": "wolf",
+        "name": "Wolf",
+        "size": "medium",
+        "speed": {
+          "walk": 40
+        },
+        "art": "wolf",
+        "kind": "werewolf",
+        "summary": "A Medium wolf (Speed 40 ft.): the Bite, no bow. Its other statistics stay the same."
+      }
+    ]
+  },
   "regions": [
     "werewolf_den"
   ],

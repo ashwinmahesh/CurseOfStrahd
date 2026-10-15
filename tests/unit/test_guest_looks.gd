@@ -134,4 +134,5 @@ func test_an_enemy_lycanthrope_still_changes_on_its_own() -> void:
 	e.events.clear()
 	e.monster_actions.bonus_action(w, "shift")
 	assert_eq(str(w.get_meta("form", "")), "hybrid")
-	assert_true(_forms(e, w).is_empty(), "it already looks the part")
+	var forms := _forms(e, w)
+	assert_true(forms.size() == 1 and str((forms[0] as Dictionary).get("art", "")) == "werewolf", "it walked in as a person and is the werewolf now")
