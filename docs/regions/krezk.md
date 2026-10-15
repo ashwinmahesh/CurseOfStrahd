@@ -336,7 +336,7 @@ sunburst shows a thin line of light round its edge, and Kasha mentions the shine
 | `anna_chest` | Krezkovs' house | perfume, 4 candles, blanket, 15 gp | locked DC 15; robbing it sets `krezkov_chest_robbed` (Anna notices) |
 | `krezkov_larder` | Krezkovs' house | 4 rations, jug | |
 | `cart_shed_crate` | abbey grounds | 2 sacks, rope, 2 jugs, 6 gp | Clovin's handcart |
-| `sacristy_chest` | church | 2 holy water, 6 candles, robe, 22 gp | the Abbot says to take it in the repentant ending |
+| `sacristy_chest` | church | 2 holy water, 6 candles, robe, 22 gp, the Abbot's Mace of Smiting (rare) | the Abbot says to take it in the repentant ending |
 | `foundling_locker` | wards | blanket, 2 candles, 3 gp | Tarokka spot |
 | `bridal_trunk` | wards (matron's room) | fine clothes, perfume, 12 gp | sets `wards_dress_found` (the matron's wedding dress) |
 | `surgery_cabinet` | wards | healer's kit, 3 vials, antitoxin | |

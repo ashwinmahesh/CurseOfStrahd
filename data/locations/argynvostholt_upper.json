@@ -637,6 +637,14 @@
         {
           "id": "spell_scroll_level_1",
           "qty": 1
+        },
+        {
+          "id": "ioun_stone_leadership",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_heroism",
+          "qty": 1
         }
       ],
       "gold": 120,

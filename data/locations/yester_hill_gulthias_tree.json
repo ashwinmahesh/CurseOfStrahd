@@ -244,11 +244,15 @@
           "qty": 1
         },
         {
-          "id": "potion_of_healing",
+          "id": "potion_of_healing_superior",
           "qty": 2
         },
         {
           "id": "druidic_focus_staff",
+          "qty": 1
+        },
+        {
+          "id": "staff_of_the_woodlands__quarterstaff",
           "qty": 1
         }
       ],
