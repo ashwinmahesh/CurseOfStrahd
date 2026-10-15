@@ -38,7 +38,7 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"phantom_warrior": 1.35, "revenant": 1.3, "roc": 3.8, "scarecrow": 1.35, "swarm_of_bats": 1.5,
 	"swarm_of_insects": 0.6, "swarm_of_ravens": 0.9, "tree_blight": 3.0, "twig_blight": 0.7, "vine_blight": 1.1,
 	"werewolf": 1.45, "wereraven": 1.3, "wight": 1.3, "will_o_wisp": 0.5, "wraith": 1.35, "berserker": 1.3,
-	"raven": 0.35,
+	"raven": 0.5,
 	"air_elemental": 2.0, "ape": 1.2, "axe_beak": 1.7, "baboon": 0.6, "badger": 0.35, "bat": 0.3,
 	"black_bear": 1.0, "boar": 0.8, "brown_bear": 1.4, "djinni": 2.0, "earth_elemental": 2.0, "efreeti": 2.1,
 	"elephant": 2.8, "fire_elemental": 2.0, "giant_badger": 0.7, "giant_boar": 1.3,
