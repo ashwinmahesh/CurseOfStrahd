@@ -64,7 +64,8 @@
       "elemental_gem_yellow_diamond",
       "alchemy_jug",
       "tankard_of_sobriety",
-      "decanter_of_endless_water"
+      "decanter_of_endless_water",
+      "bag_of_beans"
     ],
     "buys": [
       "consumable"

@@ -2,9 +2,10 @@ extends TestCase
 ## Magic items for sale (Ashwin, 2026-10-14): every magic item the story doesn't need is sold by a merchant somewhere,
 ## at its price in Sane Magical Prices, the guide he picked (data/treasure/magic_prices.json, written into each item's
 ## cost_gp by tools/data/magic_prices.py), and a merchant shows an item once the party's milestone level reaches its
-## rarity's (data/treasure/levels.json shop_levels). Story items, artifacts, cursed or disguised items and what the guide
-## won't price are never sold. A merchant's magic stock (`magic` in their shop) is priced the guide's way whatever they
-## mark their other goods up by, and an item made on a weapon or armor lets the party pick which.
+## rarity's (data/treasure/levels.json shop_levels). Story items, artifacts and cursed or disguised items are never
+## sold; what the guide won't price is, priced like the items it doesn't list (Ashwin, 2026-10-15). A merchant's magic
+## stock (`magic` in their shop) is priced the guide's way whatever they mark their other goods up by, and an item made
+## on a weapon or armor lets the party pick which.
 
 const TABLE := "res://data/treasure/magic_prices.json"
 
@@ -79,16 +80,21 @@ func test_every_magic_item_the_story_doesnt_need_is_for_sale() -> void:
 		var stays := (sold.get(id, []) as Array).filter(func(n: String) -> bool:
 			return not bool(Compendium.shared().get_entry("npcs", n).get("guest", false)))
 		assert_false(stays.is_empty(), "%s is sold by someone who stays put, not only %s" % [id, sold.get(id, [])])
-	assert_true(count > 450, "the playable magic items: %d" % count)
+	assert_true(count > 500, "the playable magic items: %d" % count)
 	for lvl in 10:
 		assert_true(scroll_levels.has(lvl), "a level %d Spell Scroll is for sale somewhere" % lvl)
 
 
-func test_no_story_item_artifact_cursed_or_unpriced_item_is_sold() -> void:
+func test_no_story_item_artifact_or_cursed_item_is_sold() -> void:
 	var excluded := _table()["excluded"] as Dictionary
 	for id: String in ["sunsword", "holy_symbol_of_ravenkind", "tome_of_strahd", "wave", "blackrazor", "berserker_axe",
-			"potion_of_poison", "deck_of_many_things", "luck_blade"]:
+			"potion_of_poison"]:
 		assert_true(excluded.has(id), "%s stays off the shelves" % id)
+	# What the guide won't price is for sale all the same (Ashwin, 2026-10-15).
+	for id: String in ["deck_of_many_things", "luck_blade", "manual_of_bodily_health", "potion_of_giant_strength_storm"]:
+		assert_false(excluded.has(id), "%s is for sale" % id)
+	assert_eq(float(Compendium.shared().item_data("potion_of_giant_strength_storm")["cost_gp"]),
+		float(Compendium.shared().item_data("belt_of_giant_strength_storm")["cost_gp"]) / 10.0, "a tenth of its Belt")
 	for npc: String in _shops():
 		for id in _names(_shops()[npc] as Dictionary):
 			var data := Compendium.shared().item_data(id)

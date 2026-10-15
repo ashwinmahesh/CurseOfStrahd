@@ -176,7 +176,10 @@
       "spell_scroll__sunburst",
       "spell_scroll__mass_heal",
       "spell_scroll__true_resurrection",
-      "spell_scroll__power_word_heal"
+      "spell_scroll__power_word_heal",
+      "candle_of_invocation",
+      "rod_of_resurrection",
+      "manual_of_quickness_of_action"
     ],
     "buys": [
       "potion",

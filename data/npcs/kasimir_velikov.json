@@ -151,7 +151,8 @@
       "spell_scroll__greater_invisibility",
       "spell_scroll__polymorph",
       "spell_scroll__cone_of_cold",
-      "spell_scroll__wall_of_force"
+      "spell_scroll__wall_of_force",
+      "wand_of_wonder"
     ],
     "buys": [
       "scroll"

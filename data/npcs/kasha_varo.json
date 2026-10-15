@@ -131,7 +131,13 @@
       "sovereign_glue",
       "perfume_of_bewitching",
       "lucky_foot",
-      "evergreen_fertilizer"
+      "evergreen_fertilizer",
+      "potion_of_giant_strength_hill",
+      "potion_of_giant_strength_frost",
+      "potion_of_giant_strength_stone",
+      "potion_of_giant_strength_fire",
+      "potion_of_giant_strength_cloud",
+      "potion_of_giant_strength_storm"
     ],
     "buys": [
       "potion",

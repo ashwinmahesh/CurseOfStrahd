@@ -296,7 +296,14 @@
       "ammunition_of_slaying_ooze",
       "ammunition_of_slaying_plant",
       "ammunition_of_slaying_undead",
-      "oil_of_sharpness"
+      "oil_of_sharpness",
+      "belt_of_giant_strength_hill",
+      "belt_of_giant_strength_frost",
+      "belt_of_giant_strength_stone",
+      "belt_of_giant_strength_fire",
+      "belt_of_giant_strength_cloud",
+      "belt_of_giant_strength_storm",
+      "luck_blade"
     ],
     "buys": [
       "weapon",
