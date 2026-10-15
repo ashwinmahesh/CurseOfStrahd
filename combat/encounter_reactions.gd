@@ -327,9 +327,24 @@ func _queued_pick(q: Dictionary, picked: Array[String], trigger: Combatant) -> v
 
 ## A queued Reaction's fate: the one a hero kept their Reaction for in the attack that queued it is taken, their others
 ## aren't (`plan`, keep_reserved); otherwise the creature's rule, or the AI.
+## A hero's Hellish Rebuke on Automatic is still asked about when there is more than one way to cast it (owner,
+## 2026-10-15: a pact slot or the free casting, which is level 1: he saw 9 damage, not the 6d10 he expected).
 func _queued_decision(q: Dictionary, reactor: Combatant) -> String:
 	var plan := str(q.get("plan", ""))
-	return plan if plan in ["auto", "never"] else _reaction_decision(reactor, str(q["kind"]))
+	if plan in ["auto", "never"]:
+		return plan
+	var decision := _reaction_decision(reactor, str(q["kind"]))
+	if decision == "auto" and str(q["kind"]) == "hellish_rebuke" and reactor.is_player_controlled() and _rebuke_ways(reactor) > 1:
+		return "ask"
+	return decision
+
+
+## How many ways `reactor` could pay for Hellish Rebuke now: each slot level and a free casting left.
+func _rebuke_ways(reactor: Combatant) -> int:
+	var ch := reactor.creature as Character
+	if ch == null:
+		return 0
+	return SpellReactions.slot_levels(ch, 1).size() + (1 if enc().spells.reaction_spells.free_casting(reactor, "hellish_rebuke") else 0)
 
 
 ## In an attack (its state `st`) where heroes kept their Reaction for something later on a prompt listing their
