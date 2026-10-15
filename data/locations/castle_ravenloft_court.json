@@ -948,6 +948,104 @@
       "when": "name:silvain_aster and not (quest.aurels_last_chapter >= the_last_page) and not (final_room:castle_ravenloft_study and quest.strahds_lair == foretold)",
       "facing": "east",
       "approach": 9
+    },
+    {
+      "npc": "castle_dead_watchman",
+      "cell": [
+        6,
+        11
+      ],
+      "dialogue": "castle_ravenloft/court_household:watchman",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            22,
+            11
+          ],
+          "wait": 4,
+          "face": "north"
+        },
+        {
+          "at": [
+            38,
+            11
+          ],
+          "wait": 3,
+          "face": "west"
+        }
+      ],
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_1",
+      "cell": [
+        14,
+        5
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            21,
+            5
+          ],
+          "wait": 5,
+          "face": "north"
+        },
+        {
+          "at": [
+            29,
+            5
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_courtier_2",
+      "cell": [
+        35,
+        7
+      ],
+      "dialogue": "castle_ravenloft/household:courtier",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            41,
+            4
+          ],
+          "wait": 5,
+          "face": "north"
+        }
+      ],
+      "pause": 5,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_ghost_servant",
+      "cell": [
+        5,
+        8
+      ],
+      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "facing": "north",
+      "path": [
+        {
+          "at": [
+            9,
+            6
+          ],
+          "wait": 4,
+          "face": "north"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

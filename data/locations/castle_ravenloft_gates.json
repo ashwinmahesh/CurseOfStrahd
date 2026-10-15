@@ -961,5 +961,49 @@
   "narration": {
     "enter": "enter:castle_ravenloft_gates"
   },
-  "rest": "risky"
+  "rest": "risky",
+  "npcs": [
+    {
+      "npc": "castle_dead_guard_1",
+      "cell": [
+        9,
+        9
+      ],
+      "dialogue": "castle_ravenloft/household:dead_guard",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            30,
+            9
+          ],
+          "wait": 4,
+          "face": "south"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    },
+    {
+      "npc": "castle_dead_guard_2",
+      "cell": [
+        11,
+        20
+      ],
+      "dialogue": "castle_ravenloft/household:dead_guard",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            28,
+            20
+          ],
+          "wait": 4,
+          "face": "north"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
+    }
+  ]
 }

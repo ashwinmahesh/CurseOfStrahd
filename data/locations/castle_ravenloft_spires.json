@@ -395,6 +395,26 @@
       "when": "not guest:pidlwick_ii and not flag.pidlwick_with_blinsky",
       "facing": "south",
       "approach": 5
+    },
+    {
+      "npc": "castle_ghost_servant",
+      "cell": [
+        2,
+        6
+      ],
+      "dialogue": "castle_ravenloft/household:ghost_servant",
+      "facing": "south",
+      "path": [
+        {
+          "at": [
+            5,
+            18
+          ],
+          "wait": 4
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

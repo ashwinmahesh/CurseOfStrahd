@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_sentry",
+  "name": "The Dead Sentry",
+  "title": "Of the Great Entry",
+  "summary": "One of the castle guards who died on the night of the wedding, three centuries ago, still walking his round of the great entry in his helmet and the house's black tabard. He keeps the watch nobody relieved.",
+  "portrait": "strahd_zombie",
+  "sprite": "strahd_zombie",
+  "attitude": "indifferent",
+  "monster": "strahd_zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

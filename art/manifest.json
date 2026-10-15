@@ -6191,6 +6191,31 @@
       "sprite_flags": [
         "BODY=float"
       ]
+    },
+    {
+      "id": "castle_steward",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/castle_steward_turnaround.png",
+      "sprites": "art/sprites/castle_steward/walk.tres",
+      "portrait": "art/portraits/castle_steward.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of the Steward, the ghost of an elderly castle steward from a gothic Barovian household, tall and thin and very upright, with a long solemn face, a bald crown and neat white side-whiskers, hollow dark eyes; he wears an old-fashioned long-tailed steward's coat with a high collar and a row of small buttons over a waistcoat, a ring of old iron keys on a chain at his belt, and a folded napkin over his left forearm, his arms at his sides; below the knees his figure fades into a ragged wisp of mist instead of feet, floating a little above the ground; his whole figure, skin, hair and clothes, is drawn as a ghost in pale moonlit grey-green and silver tones with deeper slate-grey shading (no blue, no violet, no pure white areas), fully opaque flat colours. Exactly five full views of the same ghost in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Floating upright, same scale, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "The Steward, Castle Ravenloft's ghost steward in the dining hall (owner 2026-10-15: yes to his own art, about $0.50; he stood on the roadhouse innkeeper's 'ghost' sheets until then). 5-view turnaround (21:9) -> make sprite BODY=float -> walk sheet; attack from art/anim/animations.json (make anims); portrait from castle_steward_portrait.png (--ref the turnaround), make portrait SAT=0.5 (the palette snap mottled his grey-green waistcoat ochre at full saturation).",
+      "sprite_flags": [
+        "BODY=float"
+      ]
+    },
+    {
+      "id": "helga_ruvak",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/helga_ruvak_turnaround.png",
+      "sprites": "art/sprites/helga_ruvak/walk.tres",
+      "portrait": "art/portraits/helga_ruvak.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Helga Ruvak, a young Barovian housemaid of about twenty who is secretly a vampire spawn: slender, with very pale skin with a faint grey tinge, fair blonde hair pinned up under a small white maid's cap, a pretty but tired face with faint dark shadows under pale, red-rimmed eyes and lips a little too red; she wears a plain long-sleeved charcoal-grey servant's dress to the ankles, a long white apron tied in a bow at the back, and sturdy black shoes, and holds a feather duster loosely in her right hand at her side. Exactly five full-body views of the same character in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
+      "notes": "Helga Ruvak, the book's vampire maid on Castle Ravenloft's private floor (owner 2026-10-15: yes to her own art, about $0.50; she wore the commoner's look until then). 5-view turnaround (21:9) -> make sprite -> walk sheet; attack from art/anim/animations.json (make anims); portrait from helga_ruvak_portrait.png (--ref the turnaround)."
     }
   ],
   "image_provider": "gemini"

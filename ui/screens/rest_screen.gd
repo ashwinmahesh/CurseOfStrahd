@@ -46,6 +46,9 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	# Story difficulty: a Long Rest in a risky place is never interrupted (combat/difficulty.gd).
 	if rule == "risky" and Difficulty.of_options(st.options).safe_rests:
 		rule = "safe"
+	# Nor while the region's truce holds: Strahd's dinner guests sleep unbothered under his roof (StoryConditions.TRUCES).
+	if rule == "risky" and StoryConditions.truce_holds(str(loc.get("region", "")), st):
+		rule = "safe"
 	var kinds := HBoxContainer.new()
 	kinds.add_theme_constant_override("separation", 12)
 	_short_why = _short_refusals()

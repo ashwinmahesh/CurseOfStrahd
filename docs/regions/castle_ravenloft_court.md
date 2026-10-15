@@ -30,6 +30,15 @@ are the comedy; the guest room is where it stops being funny.
 | Volenta Popofsky, the third bride | `volenta_popofsky` (`vampire_spawn`) | Games; fear she can taste | Boredom | She keeps a tally on her coffin lid of how many nights each new guest lasted | Giggling, teasing questions, nursery rhymes turned wrong |
 | Lief Lipsiege, the count's accountant | `lief_lipsiege` (`commoner`) | The books balanced; to be left alone with them | Rahadin; the rug; the outside | He tried to leave once, forty years ago, and the chain is the result | Fussy, numerical, gallows-dry; talks in sums and percentages |
 | Gertruda, Mad Mary's daughter | `gertruda` (`commoner`, guest) | The love story she was promised | Her mother's anger; that the love story isn't true | Under the dreaming she is frightened, and hums when she is | Breathless, sheltered, fairy-tale words; braver than she sounds once the spell cracks |
+| Helga Ruvak, the maid of the private floor (the book's) | `helga_ruvak` (`vampire_spawn`; her own art, owner's yes 2026-10-15) | To be thought harmless; to be the one the master sends for | The brides; being seen through too early | She is a vampire spawn keeping up the part of a frightened maid (Insight 14 sees it) | Meek, quick "if you please", always asks whether the guests are staying the night; amused, not angry, once seen through |
+| The Dead Watchman | `castle_dead_watchman` (`strahd_zombie`) | The watch kept | | | Narrator lines only: he paces the King's Hall and salutes the throne room doors |
+
+The household (owner, 2026-10-15, "should there be servants?"): Helga walks the Rooms of Weeping's corridor from
+(10, 10), dusting the frames at (4, 9) and (27, 9); the watchman walks the King's Hall from (6, 11) to the throne room
+doors (22, 11) and on to (38, 11). Their conversations (narrative/castle_ravenloft/court_household.dialogue) set
+nothing and can always be left, and their entries have `steps_aside`, so neither stands in any fight on these maps.
+Voice: docs/voice/helga_ruvak.md. Two pale courtiers (vampire spawn) walk the audience hall and the trophy room, and a
+ghostly servant the study and the count's bedroom (the shared extras, castle_ravenloft_gates.md §8).
 
 Voice bibles: docs/voice/{rahadin, ludmilla_vilisevic, anastrasya_karelova, volenta_popofsky, lief_lipsiege,
 gertruda}.md. Strahd (`strahd`) speaks in this part only through the final battles' parley (presence package); his

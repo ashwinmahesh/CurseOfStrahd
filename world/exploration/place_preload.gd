@@ -94,7 +94,7 @@ static func foe_art_ids(loc_id: String, loc: Dictionary, st: StoryState) -> Arra
 		var spec := en as Dictionary
 		if begun.has(str(spec["id"])):
 			continue
-		if foes_mode == "when" and not StoryConditions.check(StoryConditions.encounter_when(spec), st):
+		if foes_mode == "when" and not StoryConditions.check(StoryConditions.encounter_when(spec, str(loc.get("region", ""))), st):
 			continue
 		if foes_mode == "possible" and not could_happen(spec, st):
 			continue

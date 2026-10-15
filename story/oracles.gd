@@ -104,14 +104,16 @@ static func cast(st: StoryState, caster: Character, spell_id: String, choice: St
 static func waiting(st: StoryState, location_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var states := st.loc_state(location_id)["encounters"] as Dictionary
-	for en: Variant in Compendium.shared().get_entry("locations", location_id).get("encounters", []):
+	var loc := Compendium.shared().get_entry("locations", location_id)
+	for en: Variant in loc.get("encounters", []):
 		var spec := en as Dictionary
 		var state: Variant = states.get(str(spec.get("id", "")), false)
 		if state is bool and bool(state):
 			continue
-		if not str(spec.get("trigger", "")).get_slice(":", 0) in SELF_STARTING and str(state) != "started":
+		var begun := str(state) == "started"
+		if not str(spec.get("trigger", "")).get_slice(":", 0) in SELF_STARTING and not begun:
 			continue
-		if not StoryConditions.check(StoryConditions.encounter_when(spec), st):
+		if not StoryConditions.check(StoryConditions.encounter_when(spec, "" if begun else str(loc.get("region", ""))), st):
 			continue
 		var foes := {}
 		for m: Variant in spec.get("monsters", []):
