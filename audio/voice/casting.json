@@ -2480,6 +2480,43 @@
       "accent_tag": "[strong Eastern European accent]",
       "generated_voice_id": "L9gzyC5trkjr79CYkFvA",
       "released": true
+    },
+    "castle_steward": {
+      "voice_id": "fvmkmNaIvqNTpXkcg7GK",
+      "name": "Library voice: Bernd - Calm & Friendly Narrator",
+      "description": "The Steward, ghost of Castle Ravenloft's last steward (docs/voice/castle_steward.md): an old man with a formal, quiet, unhurried voice, a good servant's voice pitched for one listener, faded at the edges, and a strong, clearly audible Eastern European (Romanian) accent. Library voice picked 2026-10-15 from a short take (123 Hz median, 2.0 words/s).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "helga_ruvak": {
+      "voice_id": "85xci5bgwOrimRmBcbA1",
+      "name": "Library voice: Emese",
+      "description": "Helga Ruvak, maid of the count's private floor and a vampire spawn (docs/voice/helga_ruvak.md): a woman with a meek, quick, polite voice, eyes down, and a strong, clearly audible Eastern European (Romanian) accent; under the meekness a little too interested. Library voice picked 2026-10-15 from a short take (177 Hz median, 2.0 words/s).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "castle_courtier_1": {
+      "voice_id": "8DuGkCxTvcIIAe89cGqN",
+      "name": "Library voice: Marcus - Grounded & Conversational",
+      "description": "A Pale Courtier (every courtier in the castle speaks as this speaker): a vampire spawn guest who never went home, with a weary, dry, languid voice and a strong, clearly audible Eastern European (Romanian) accent. Library voice picked 2026-10-15 from two short takes (Marcus 135 Hz, tight spread; Rafe was 94 Hz, too close to Strahd).",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]"
+    },
+    "castle_ghost_servant": {
+      "voice_id": "NKQBjfoAhInP7Bjx6P7l",
+      "name": "Library voice: Bogdan  Gamaleț",
+      "description": "A Ghostly Servant of Castle Ravenloft: a generic minor part on a shared voice, the Vallaki lamplighter's thin, quiet, careful old voice (also Ignat's). Owner rule 2026-10-08: minor characters share voices.",
+      "settings": {},
+      "model": "eleven_v3",
+      "library": true,
+      "accent_tag": "[strong Romanian accent]",
+      "shared_with": "vallaki_lamplighter"
     }
   },
   "sfx": {
