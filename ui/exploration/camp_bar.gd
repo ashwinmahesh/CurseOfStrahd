@@ -1,7 +1,8 @@
 class_name CampBar
 extends CanvasLayer
 ## The camp's panel at the top of the exploring screen (F16, LocationCamp): where the party is, what to do there (walk
-## up to someone to talk, then sleep; in the morning, change prepared spells and break camp), and the buttons for it.
+## up to someone to talk, then sleep; change prepared spells, any time before the night or in the morning; break camp),
+## and the buttons for it.
 ## It shows while the exploring HUD does, and watches the camp rather than being told. The rest screen offers the same
 ## (Sleep, Break camp) for the keyboard and the controller.
 
@@ -76,7 +77,7 @@ func _process(_delta: float) -> void:
 		_shown = ""
 		return
 	var why := camp.sleep_refusal()
-	var prep := camp.slept and not PrepareScreen.preparable(view.st).is_empty()
+	var prep := camp.can_prepare()
 	var sig := "%s|%s|%s|%d" % [camp.slept, why, prep, camp.talks.size()]
 	if sig == _shown:
 		return
@@ -86,8 +87,10 @@ func _process(_delta: float) -> void:
 	_sleep.disabled = why != ""
 	_sleep.tooltip_text = why if why != "" else "The Long Rest: everyone sleeps by the fire, and all Hit Points, spell slots and features come back."
 	_prepare.visible = prep
-	if prep:
-		UiParts.light_up(_prepare)
+	_prepare.tooltip_text = "Change prepared spells, counted from the list the night ended with." if camp.slept \
+		else "Change which spells each caster has ready. No rest needed outside a fight."
+	if prep and camp.slept:
+		UiParts.light_up(_prepare)   # the morning's chance, counted from the night's list
 	var asking := camp.talks.size()
 	if camp.slept:
 		_hint.text = "Walk up to anyone to talk. Break camp when you're ready to go on." if asking == 0 \

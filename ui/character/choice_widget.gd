@@ -95,6 +95,9 @@ func _build() -> void:
 		# Long option lists read better in the book face's plainer companion.
 		b.add_theme_font_override("font", ThemeDB.fallback_font)
 		b.clip_text = true
+		# A long spell name ("Protection from Evil and Good") beside its icon is trimmed with an ellipsis rather than cut;
+		# the tooltip has it in full.
+		b.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.disabled = not o.legal and not picked
 		var pressed := UiKit.button_style("hover")

@@ -4,8 +4,8 @@ extends CanvasLayer
 ## - left, the hero: portrait, name, class and origin, the Hit Points bar, the Armor Class shield and plaques for
 ##   Initiative, Speed and Proficiency Bonus, then Hit Point Dice, passive scores, senses and load;
 ## - middle, the six abilities as medallions with their saving throws, and the 18 skills with proficiency marks;
-## - right, tabs: Actions (attacks, spellcasting, slots, resources), Features, Spells (and casting outside a fight),
-##   Equipment, Effects and Notes.
+## - right, tabs: Actions (attacks, spellcasting, slots, resources), Features, Spells (casting, and Prepare spells for
+##   a caster who changes spells after a Long Rest, outside a fight), Equipment, Effects and Notes.
 ## Every number's tooltip lays its Breakdown out line by line, and long rules text lives in tooltips, not on the page.
 ## Left/right arrows (or the portrait chips) switch character, Q/E switch tab; Level up opens from here when a
 ## milestone allows it.
@@ -41,6 +41,8 @@ var _drawn := ""
 var _cast_note := ""           ## what the last cast did, shown above the spell list
 ## Opened in a fight: view only (see the top).
 var in_fight := false
+## The Prepare Spells screen opened from the Spells tab, while it's up.
+var _prepare: PrepareScreen = null
 
 
 func _init() -> void:
@@ -684,6 +686,9 @@ func _spells(ch: Character) -> VBoxContainer:
 	if _cast_note != "":
 		var note := UiKit.label(_cast_note, 15, "bile", PANE_W - 20.0)
 		box.add_child(_row(note))
+	var prepare := _prepare_row(ch)
+	if prepare != null:
+		box.add_child(prepare)
 	for e in ch.spellcasting:
 		box.add_child(_caster_row(ch, str(e["class_id"])))
 	var known := ch.known_spells()
@@ -718,6 +723,39 @@ func _spells(ch: Character) -> VBoxContainer:
 			var s := Compendium.shared().spell_data(str(k["id"]))
 			box.add_child(_spell_row(ch, k, s, casts.get(str(k["id"]), {}) as Dictionary, utility.get(str(k["id"]), {}) as Dictionary))
 	return box
+
+
+## "Prepare spells" for a caster whose spells a Long Rest lets them change: any time outside a fight, no rest needed
+## (PrepareScreen ANYTIME). In a fight the button is off and the line beside it says why. Null for anyone with nothing
+## to prepare.
+func _prepare_row(ch: Character) -> Control:
+	if PrepareScreen.preparable(st, PrepareScreen.ANYTIME, ch).is_empty():
+		return null
+	var why := PrepareScreen.refusal(in_fight)
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 12)
+	row.add_theme_constant_override("v_separation", 4)
+	var b := UiKit.button("Prepare spells", _open_prepare.bind(ch), 14, "spells")
+	b.disabled = why != ""
+	b.tooltip_text = why if why != "" else "Change which spells %s has ready. No rest needed outside a fight." % ch.name.get_slice(" ", 0)
+	row.add_child(b)
+	var note := why if why != "" else "Change what's ready, any time outside a fight."
+	row.add_child(UiKit.label(note, 13, "rose" if why != "" else "parchment", PANE_W - 190.0))
+	return _row(row)
+
+
+## Opens the Prepare Spells screen for `ch` over the sheet; the Spells tab is drawn again when it closes.
+func _open_prepare(ch: Character) -> void:
+	if in_fight or (_prepare != null and is_instance_valid(_prepare)):
+		return
+	_prepare = PrepareScreen.new()
+	_prepare.rest_kind = PrepareScreen.ANYTIME
+	_prepare.only = ch
+	add_child(_prepare)
+	_prepare.open(root, st, index)
+	_prepare.tree_exited.connect(func() -> void:
+		if is_inside_tree():
+			_draw.call_deferred())
 
 
 func _spell_row(ch: Character, k: Dictionary, s: Dictionary, cast: Dictionary, util: Dictionary) -> Control:
@@ -1239,6 +1277,8 @@ func _close() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _prepare != null and is_instance_valid(_prepare) and not _prepare.is_queued_for_deletion():
+		return   # the Prepare Spells screen over the sheet has the keys
 	if in_fight and (event.is_action_pressed(&"combat_cancel") or event is InputEventKey \
 			and (event as InputEventKey).pressed and not (event as InputEventKey).echo and (event as InputEventKey).physical_keycode == KEY_C):
 		# In a fight the world's input waits (the tree is paused), so the sheet closes itself.
