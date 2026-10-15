@@ -81,45 +81,10 @@
           ]
         },
         {
-          "monster": "needle_blight",
-          "cell": [
-            7,
-            13
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            27,
-            6
-          ]
-        },
-        {
-          "monster": "needle_blight",
-          "cell": [
-            25,
-            11
-          ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            16,
-            16
-          ]
-        },
-        {
           "monster": "werewolf",
           "cell": [
             23,
             8
-          ]
-        },
-        {
-          "monster": "druid",
-          "cell": [
-            4,
-            9
           ]
         }
       ],
@@ -195,13 +160,6 @@
           "cell": [
             4,
             9
-          ]
-        },
-        {
-          "monster": "vine_blight",
-          "cell": [
-            23,
-            8
           ]
         },
         {

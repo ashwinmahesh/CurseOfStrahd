@@ -620,6 +620,22 @@
             13
           ],
           "name": "Warden's wraith"
+        },
+        {
+          "monster": "nothic",
+          "cell": [
+            23,
+            14
+          ],
+          "name": "Hollow-eyed seeker"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            23,
+            24
+          ],
+          "name": "Warden's wraith"
         }
       ],
       "surprise": "",
@@ -686,6 +702,14 @@
             13
           ],
           "name": "Warden's wraith"
+        },
+        {
+          "monster": "nothic",
+          "cell": [
+            23,
+            13
+          ],
+          "name": "Hollow-eyed seeker"
         }
       ],
       "surprise": "",
@@ -736,6 +760,21 @@
             14
           ],
           "name": "Warden's wraith"
+        },
+        {
+          "monster": "nothic",
+          "cell": [
+            25,
+            20
+          ],
+          "name": "Hollow-eyed seeker"
+        },
+        {
+          "monster": "wraith",
+          "cell": [
+            24,
+            10
+          ]
         }
       ],
       "surprise": "",
@@ -786,6 +825,111 @@
             16
           ],
           "name": "Frozen student"
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            17,
+            17
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            20,
+            25
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            12,
+            15
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            9,
+            21
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            4,
+            21
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            9,
+            8
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            16,
+            21
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            20,
+            21
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            1,
+            8
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            13,
+            18
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            1,
+            19
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            20,
+            18
+          ]
+        },
+        {
+          "monster": "specter",
+          "cell": [
+            6,
+            6
+          ],
+          "name": "Frozen student"
+        },
+        {
+          "monster": "banshee",
+          "cell": [
+            9,
+            16
+          ]
         }
       ],
       "surprise": "",

@@ -596,23 +596,65 @@
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             23,
             6
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             2,
             14
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             23,
+            14
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            15,
+            11
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            9,
+            3
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            12,
+            7
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            19,
+            8
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            19,
+            12
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
             14
           ]
         }
@@ -657,6 +699,48 @@
           "cell": [
             2,
             14
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            14,
+            11
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            22,
+            14
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            9,
+            4
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            8,
+            10
+          ]
+        },
+        {
+          "monster": "mongrelfolk",
+          "cell": [
+            13,
+            7
+          ]
+        },
+        {
+          "monster": "flesh_golem",
+          "cell": [
+            18,
+            8
           ]
         }
       ],
