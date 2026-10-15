@@ -198,7 +198,7 @@ func test_sleeping_by_the_fire_is_the_long_rest_and_breaking_camp_packs_up() -> 
 
 ## The bar's "Change prepared spells" shows before the night too (owner's house rule, deviations.md: the spells a Long
 ## Rest lets casters change, any time outside a fight) and opens the any-time screen; in the morning it is the night's
-## own, counted from the list the night ended with.
+## own, which also holds spells to no limit.
 func test_the_camp_changes_prepared_spells_before_the_night_and_in_the_morning() -> void:
 	var camp := await _make_camp()
 	await _frames(3)
@@ -222,9 +222,26 @@ func test_the_camp_changes_prepared_spells_before_the_night_and_in_the_morning()
 	await _frames(2)
 	screens = camp.bar.find_children("*", "PrepareScreen", true, false)
 	assert_eq(screens.size(), 1)
-	assert_eq((screens[0] as PrepareScreen).rest_kind, "long_rest", "the morning's change is counted from the night's list")
-	assert_false((screens[0] as PrepareScreen).earlier.is_empty())
-	screens[0].free()
+	var morning := screens[0] as PrepareScreen
+	assert_eq(morning.rest_kind, "long_rest", "the morning's screen is the night's own")
+	assert_false(morning.earlier.is_empty(), "with the list the night ended with")
+	# Its spells hold no limit (house rule): Godrick, a Paladin, changes two at once, where the book has him change one.
+	var godrick := GameState.story.party[0]
+	var before := godrick.picks_for("paladin.prepared")
+	var w: ChoiceWidget = null
+	for cw in morning.find_children("*", "ChoiceWidget", true, false):
+		if (cw as ChoiceWidget).choice.key == "paladin.prepared":
+			w = cw as ChoiceWidget
+	assert_true(w != null, "the Paladin's prepared spells are on it")
+	assert_false(ChoiceOptions.swap_open(w.choice), "no limit of one")
+	for id: String in [before[0], before[1]]:
+		w.call("_toggle", id, false)
+		await _frames(2)
+		for cw in morning.find_children("*", "ChoiceWidget", true, false):
+			if (cw as ChoiceWidget).choice.key == "paladin.prepared" and not (cw as Node).is_queued_for_deletion():
+				w = cw as ChoiceWidget
+	assert_false(before[0] in godrick.picks_for("paladin.prepared") or before[1] in godrick.picks_for("paladin.prepared"), "both went")
+	morning.free()
 
 
 func _visible_button(screen: Node, text: String) -> Button:

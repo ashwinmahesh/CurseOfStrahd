@@ -121,12 +121,22 @@ func test_any_number_of_spells_change_at_once_for_a_paladin_too() -> void:
 	for id in fresh:
 		assert_true(id in known, "%s is prepared now" % id)
 	assert_false(earlier[0] in known and not earlier[0] in swapped, "%s went" % earlier[0])
-	# The screen a finished rest offers still holds a Paladin to one: the Long Rest path is as it was.
+	# The rules library still has the Long Rest's one-spell swap for a Paladin; the Prepare Spells screen no longer uses it
+	# for spells, after a rest or not (Weapon Mastery and the other rest-only choices keep theirs).
 	var rest := PrepareScreen.preparable(st).filter(func(e: Dictionary) -> bool: return (e["choice"] as Choice).key == key)[0]["choice"] as Choice
-	ChoiceOptions.open_swap(rest, earlier, "long_rest")
-	ChoiceOptions.populate(rest, ch)
-	assert_eq(rest.swap_max, 1, "one spell after a Long Rest")
-	assert_eq(ChoiceOptions.errors(rest, ch).size(), 1, "three changed is too many there: %s" % [ChoiceOptions.errors(rest, ch)])
+	assert_true(PrepareScreen.spell_choice(rest), "the Paladin's list is a spell choice on the screen a rest offers too")
+	assert_eq(rest.replace_max, 1, "the data still says one after a Long Rest")
+
+
+func test_what_only_a_rest_changes_keeps_its_swap_limit() -> void:
+	var fighter := TestChars.custom("fighter", "human", 3)
+	var picks := PrepareScreen.preparable(_state([fighter])).filter(func(e: Dictionary) -> bool: return (e["choice"] as Choice).kind == "weapon_mastery")
+	assert_false(picks.is_empty(), "a Fighter swaps a Weapon Mastery after a Long Rest")
+	assert_false(PrepareScreen.spell_choice(picks[0]["choice"] as Choice), "and that isn't a spell: its limit stays")
+	var druid := TestChars.custom("druid", "human", 3)
+	var forms := PrepareScreen.preparable(_state([druid])).filter(func(e: Dictionary) -> bool: return (e["choice"] as Choice).kind == "beast_form")
+	assert_false(forms.is_empty(), "a Druid swaps a Wild Shape form after a Long Rest")
+	assert_false(PrepareScreen.spell_choice(forms[0]["choice"] as Choice), "and that keeps its limit too")
 
 
 func test_always_prepared_spells_stay_when_the_list_changes() -> void:

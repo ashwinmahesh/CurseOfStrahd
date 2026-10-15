@@ -128,7 +128,7 @@ func capture_shots(tool: Node, out: String) -> void:
 		ps.open(root, GameState.story, 0)
 		await _shoot(tool, "%s_prepare.png" % out)
 		ps.free()
-		# After a Long Rest Silvain has swapped Fire Bolt for another cantrip: the Wizard's one swap is used.
+		# After a Long Rest Silvain has swapped a cantrip for another; spells hold no limit there, so nothing is locked.
 		var before := PrepareScreen.snapshot(GameState.story)
 		var cantrips := silvain.choice("wizard.cantrips")
 		ChoiceOptions.populate(cantrips, silvain)

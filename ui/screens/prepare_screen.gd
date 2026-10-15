@@ -1,16 +1,16 @@
 class_name PrepareScreen
 extends CanvasLayer
-## Changing prepared spells after a Long Rest (2024 PHB): Clerics, Druids and Wizards (from the spellbook) may change
-## any number, Paladins and Rangers one spell, and a Wizard one cantrip too (a High Elf their lineage's); Bards, Sorcerers and Warlocks change one
-## when they gain a level (LevelUpController). Weapon Mastery too: Barbarians and Fighters swap one kind, Paladins,
-## Rangers and Rogues any; a Druid one Wild Shape form. One choice box per caster, the same widget character creation uses;
-## each change rebuilds the character at once. The limits count from the list the rest ended with (`earlier`), so
-## closing and reopening the screen doesn't give a second swap.
-##
-## Outside a fight (owner's house rule, deviations.md) the spells a Long Rest lets a caster change can be changed at any
-## time, no rest needed: `rest_kind` ANYTIME. The Prepare Spells screen then offers only spells (prepared lists, a
-## Wizard's or High Elf's cantrip, the Circle of the Land's land), any number at once, from the character sheet, the
-## rest screen and the camp's bar. Weapon Mastery and the other rest-only choices wait for a rest.
+## Changing spells, and what a rest lets you change. The 2024 PHB has Clerics, Druids and Wizards (from the spellbook)
+## change any number of prepared spells after a Long Rest, Paladins and Rangers one spell, and a Wizard one cantrip (a
+## High Elf their lineage's); Bards, Sorcerers and Warlocks change one when they gain a level (LevelUpController). The
+## house rule (owner, deviations.md) lets those casters change their spells in any number, with no rest, any time
+## outside a fight: `rest_kind` ANYTIME offers only spells (prepared lists, a Wizard's or High Elf's cantrip, the Circle
+## of the Land's land), from the character sheet, the rest screen and the camp's bar, and the screen a finished rest
+## offers holds spells to no limit either (spell_choice()).
+## What only a rest changes keeps its swap limit: Weapon Mastery (Barbarians and Fighters one kind, Paladins, Rangers and
+## Rogues any), a Druid's Wild Shape form, a Transmuter's stone. One choice box per caster, the same widget character
+## creation uses; each change rebuilds the character at once. Those limits count from the list the rest ended with
+## (`earlier`), so closing and reopening the screen doesn't give a second swap.
 
 ## `rest_kind` for the swap any time outside a fight (see the top).
 const ANYTIME := "anytime"
@@ -43,7 +43,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	if rest_kind == ANYTIME:
 		frame.add_child(UiKit.label(INTRO_ANYTIME, 15, "parchment", 1220))
 	else:
-		frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids and Wizards can change any of theirs, Paladins and Rangers one, and Wizards and High Elves one cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Druids swap one Wild Shape form. Always-prepared spells (a domain's, an oath's) don't count. You can also change your spells at any time outside a fight, from the character sheet. Hover a spell for what it does.", 15, "parchment", 1220))
+		frame.add_child(UiKit.label("After a Long Rest, choose which spells each caster has ready: Clerics, Druids, Wizards, Paladins and Rangers can change any number of theirs, and Wizards and High Elves a cantrip too. Barbarians and Fighters swap one Weapon Mastery; Paladins, Rangers and Rogues any. Druids swap one Wild Shape form. Always-prepared spells (a domain's, an oath's) don't count. Spells can be changed any time outside a fight, from the character sheet, too. Hover a spell for what it does.", 15, "parchment", 1220))
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 14)
 	var pane := UiParts.pane(14)
@@ -124,6 +124,13 @@ static func _grants_spells(c: Choice) -> bool:
 	return false
 
 
+## Whether `c` holds spells: a spell or cantrip list, or a feature choice that grants spells. These change freely, on the
+## screen a rest offers and any time outside a fight; what a rest alone changes (Weapon Mastery, Wild Shape forms) keeps
+## its swap limit.
+static func spell_choice(c: Choice) -> bool:
+	return c.kind in ["spell", "cantrip", "spellbook"] or PrepareScreen._grants_spells(c)
+
+
 ## Why spells can't be changed now ("" when they can): not in a fight.
 static func refusal(in_fight: bool) -> String:
 	return "Prepared spells can't be changed in a fight." if in_fight else ""
@@ -164,8 +171,8 @@ func _draw() -> void:
 	for entry in list:
 		var ch := entry["ch"] as Character
 		var c := entry["choice"] as Choice
-		if anytime:
-			ChoiceOptions.close_swap(c)   # no rest to count from: any number can change
+		if anytime or PrepareScreen.spell_choice(c):
+			ChoiceOptions.close_swap(c)   # spells change in any number: no limit to count from
 		else:
 			var from: Array[String] = []
 			from.assign(earlier.get("%s/%s" % [ch.id, c.key], c.picks) as Array)
