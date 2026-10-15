@@ -66,6 +66,15 @@ func _kill(i: int) -> Character:
 	return ch
 
 
+## Drops party member `i` to 0 Hit Points the way a fight does (Unconscious, dying), not dead.
+func _down(i: int) -> Character:
+	var ch := GameState.story.party[i]
+	ch.take_damage(ch.hp, &"slashing")
+	assert_eq(ch.hp, 0)
+	assert_false(ch.dead)
+	return ch
+
+
 func _press(action: StringName) -> void:
 	var ev := InputEventAction.new()
 	ev.action = action
@@ -231,3 +240,55 @@ func test_the_whole_party_dead_changes_nothing() -> void:
 	await _frames(3)
 	assert_eq(GameState.story.party, order, "the game over's business, not the lead's")
 	assert_eq(GameState.story.party.size(), 4)
+
+
+# --- Down at 0 Hit Points (not dead): the same, until someone tends them ------------------------------------------
+
+func test_a_downed_hero_is_passed_over_and_cannot_be_picked() -> void:
+	var v := _view()
+	var lead := v.leader().creature
+	var down := _down(1)
+	var third := GameState.story.party[2]
+	_press(&"select_member_2")
+	v.set_leader(1)
+	await _frames(1)
+	assert_eq(v.leader().creature, lead, "number keys, the party panel and the menu refuse a downed hero")
+	_press(&"cycle_leader")
+	await _frames(1)
+	assert_eq(v.leader().creature, third, "Tab goes on to the next who can act")
+	assert_true(down in GameState.story.party)
+	# Healed, they can lead again.
+	down.heal(5, "test")
+	var idx := GameState.story.party.find(down)
+	v.set_leader(idx)
+	assert_eq(v.leader().creature, down, "back on their feet, they can lead")
+
+
+func test_a_downed_leader_hands_over() -> void:
+	var v := _view()
+	var down := _down(0)
+	await _frames(3)
+	assert_ne(v.leader().creature, down)
+	assert_true(v.leader().creature.hp > 0)
+	assert_eq(GameState.story.leader_character(), v.leader().creature)
+	assert_true(down in GameState.story.party and GameState.story.party.size() == 4, "they stay in the party")
+	assert_eq(v.rig.follow, v.tokens[v.leader().id], "the camera follows the new leader")
+
+
+func test_the_line_keeps_following_past_a_downed_hero() -> void:
+	var v := _view()
+	_down(1)
+	var down_cell := v.members[1].cell
+	await _walk(v, Vector2i(7, 2))
+	assert_eq(v.members[1].cell, down_cell, "the downed hero stays where they fell")
+	assert_true(v.members[2].cell.distance_to(Vector2(v.leader().cell)) <= 2.0, "the next hero follows (at %s)" % v.members[2].cell)
+	assert_true(v.members[3].cell.distance_to(Vector2(v.leader().cell)) <= 3.0, "and the last (at %s)" % v.members[3].cell)
+
+
+func test_everyone_downed_changes_nothing() -> void:
+	var v := _view()
+	for i in 4:
+		_down(i)
+	var order: Array = GameState.story.party.duplicate()
+	await _frames(3)
+	assert_eq(GameState.story.party, order, "the game over's business, not the lead's")
