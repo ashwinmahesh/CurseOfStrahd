@@ -3201,16 +3201,14 @@
           "cell": [
             48,
             2
-          ],
-          "name": "Daria"
+          ]
         },
         {
           "monster": "vampire_spawn",
           "cell": [
             40,
             1
-          ],
-          "name": "Daria"
+          ]
         }
       ],
       "surprise": "enemies",
@@ -3364,8 +3362,7 @@
           "cell": [
             48,
             2
-          ],
-          "name": "Daria"
+          ]
         }
       ],
       "surprise": "",
