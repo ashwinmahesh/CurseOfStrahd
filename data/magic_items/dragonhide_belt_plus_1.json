@@ -7,7 +7,7 @@
   },
   "category": "wondrous",
   "weight_lb": 1,
-  "cost_gp": 400,
+  "cost_gp": 12000,
   "magic": {
     "rarity": "uncommon",
     "attunement": "by a Monk"

@@ -519,13 +519,18 @@ func lose_member(ch: Character, how: String) -> void:
 
 # --- Shops (ADR 0010) -----------------------------------------------------------------------------
 
-## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts}], at the prices the
-## merchant's attitude and a haggle make (Trade), with any stock that changes with the days.
+## What `npc_id` sells now: [{id, name, price, qty (-1 = always), stock_id, sets, counts, rarity}], at the prices the
+## merchant's attitude and a haggle make (Trade): the magic stock the party's level has opened (Trade.magic_stock),
+## then the shop's own lines and any stock that changes with the days. An item made on a base the party picks ("Flame Tongue") has `bases`:
+## [{id, name, lot, price}], one for each weapon or armor it can be, and `price` is the cheapest of them.
 func shop_wares(npc_id: String) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var shop := Compendium.shared().get_entry("npcs", npc_id).get("shop", {}) as Dictionary
 	var stock := shops.get(npc_id, {}) as Dictionary
-	var lines: Array = (shop.get("sells", []) as Array).duplicate()
+	# The magic first (rarest last), so a long counter's few special things aren't under its rope and nails.
+	var lines: Array = []
+	lines.append_array(Trade.magic_stock(self, npc_id))
+	lines.append_array(shop.get("sells", []) as Array)
 	lines.append_array(Trade.rotation(self, npc_id))
 	for e: Variant in lines:
 		var w := e as Dictionary
@@ -540,19 +545,40 @@ func shop_wares(npc_id: String) -> Array[Dictionary]:
 			qty = int(stock.get(stock_id, qty))
 		if qty == 0:
 			continue
+		var markup := float(w.get("markup", shop.get("markup", 1.0)))
+		if w.has("bases"):
+			var options: Array[Dictionary] = []
+			for b: Variant in w["bases"]:
+				var made := "%s%s%s" % [id, MagicItems.SEP, str(b)]
+				var md := Compendium.shared().item_data(made)
+				if md.is_empty():
+					continue
+				var mlot := StoryState.shop_lot(md)
+				options.append({"id": made, "name": str(md.get("name", made)) + (" ×%d" % mlot if mlot > 1 else ""), "lot": mlot,
+					"price": Trade.buy_price(self, npc_id, float(md.get("cost_gp", 0)) * mlot * markup)})
+			if options.is_empty():
+				continue
+			var cheapest := options.reduce(func(m: Dictionary, o: Dictionary) -> Dictionary: return o if float(o["price"]) < float(m["price"]) else m) as Dictionary
+			out.append({"id": id, "name": str(data.get("name", id)), "lot": 1, "price": float(cheapest["price"]), "qty": qty,
+				"stock_id": stock_id, "sets": "", "counts": "", "rarity": MagicItems.rarity(data), "bases": options})
+			continue
 		# Ammunition comes by its bundle (20 Arrows for 1 gp, as the PHB prices them), not a piece at a time.
 		var lot := StoryState.shop_lot(data)
-		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * float(w.get("markup", shop.get("markup", 1.0)))
+		var base := float(w["price"]) if w.has("price") else float(data.get("cost_gp", 0)) * lot * markup
 		# A pair (Sending Stones) sells whole, both pieces for the item's price.
 		out.append({"id": id, "name": str(data.get("name", id)) + (" ×%d" % lot if lot > 1 else ""), "lot": 2 if bool(data.get("pair", false)) else lot,
 			"price": Trade.buy_price(self, npc_id, base), "qty": qty,
-			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", ""))})
+			"stock_id": stock_id, "sets": str(w.get("sets", "")), "counts": str(w.get("counts", "")), "rarity": MagicItems.rarity(data)})
 	return out
 
 
 ## How many pieces a shop deals in at once: a bundle of ammunition (20 Arrows, 50 Blowgun Needles: the item's
 ## `bundle`), anything else one at a time (QA FN-03: a 0.05 gp arrow rounded up to a whole 1 gp each way).
+## Magic ammunition goes a piece at a time, as Sane Magical Prices prices it (+1 Arrows at 25 gp each; Ashwin,
+## 2026-10-14).
 static func shop_lot(data: Dictionary) -> int:
+	if MagicItems.is_magic(data):
+		return 1
 	return maxi(1, int(data.get("bundle", 1))) if bool(data.get("stackable", false)) else 1
 
 
@@ -572,15 +598,22 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * pieces * float(shop.get("sell_rate", 0.5)), 0.01))
 
 
-## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`. Returns "" or why not.
+## Buys one `item_id` (a bundle of ammunition) from `npc_id` for `ch`: a ware's id, or one of a made-to-order ware's
+## `bases` ("flame_tongue__rapier"). Returns "" or why not.
 func shop_buy(npc_id: String, item_id: String, ch: Character) -> String:
 	for w in shop_wares(npc_id):
-		if str(w["id"]) != item_id:
+		var pick := w
+		if w.has("bases"):
+			var found := (w["bases"] as Array).filter(func(o: Dictionary) -> bool: return str(o["id"]) == item_id)
+			if found.is_empty():
+				continue
+			pick = found[0] as Dictionary
+		elif str(w["id"]) != item_id:
 			continue
-		if gold < float(w["price"]):
+		if gold < float(pick["price"]):
 			return "Not enough gold"
-		gold -= float(w["price"])
-		ch.add_item(item_id, int(w.get("lot", 1)))
+		gold -= float(pick["price"])
+		ch.add_item(item_id, int(pick.get("lot", 1)))
 		if int(w["qty"]) > 0:
 			if not shops.has(npc_id):
 				shops[npc_id] = {}

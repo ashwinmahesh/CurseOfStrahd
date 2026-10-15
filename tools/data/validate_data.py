@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import dialogue_lint  # noqa: E402
+import magic_prices  # noqa: E402
 import story_reach  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -1105,6 +1106,8 @@ def main():
     # read, and quest content only a random road encounter opens (tools/data/story_reach.py, Storyline QA).
     if not errors:
         errors.extend(story_reach.findings(ROOT))
+    # Magic item prices follow Sane Magical Prices (data/treasure/magic_prices.json, tools/data/magic_prices.py).
+    errors.extend(magic_prices.findings())
     for e in errors:
         print("  FAIL ", e)
     if pending and "--pending" in sys.argv:

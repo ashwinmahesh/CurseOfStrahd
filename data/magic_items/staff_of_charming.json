@@ -7,7 +7,7 @@
   },
   "category": "staff",
   "weight_lb": 4,
-  "cost_gp": 4000,
+  "cost_gp": 12000,
   "magic": {
     "rarity": "rare",
     "attunement": "by a Bard, Cleric, Druid, Sorcerer, Warlock, or Wizard",

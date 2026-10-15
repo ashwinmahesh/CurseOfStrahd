@@ -606,7 +606,8 @@ static func _remove_dir(dir: String) -> void:
 # --- Items taken out of the game --------------------------------------------------------------------------------
 
 ## Magic items taken out of the game (hidden, playable false) -> what a save's copies become, in turn: useful items of
-## the same rarity and price. The Amulet of Proof against Detection and Location did nothing here and turned up far
+## the same rarity (and the same price by the 2024 DMG's table; Sane Magical Prices prices each its own way since
+## 2026-10-14). The Amulet of Proof against Detection and Location did nothing here and turned up far
 ## too often (owner, 2026-10-12); the four items that cast Detect Thoughts left with the spell (Ashwin, 2026-10-13).
 ## Each one a save holds, carried, stashed or waiting in a chest, becomes the next one on its list.
 const WITHDRAWN := {"amulet_of_proof_against_detection_and_location":

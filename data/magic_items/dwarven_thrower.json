@@ -7,7 +7,7 @@
   },
   "category": "weapon",
   "weight_lb": 0,
-  "cost_gp": 40000,
+  "cost_gp": 18000,
   "magic": {
     "rarity": "very_rare",
     "attunement": "by a Dwarf or a creature attuned to a Belt of Dwarvenkind"
