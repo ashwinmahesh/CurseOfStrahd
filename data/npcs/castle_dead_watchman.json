@@ -1,0 +1,20 @@
+{
+  "id": "castle_dead_watchman",
+  "name": "The Dead Watchman",
+  "title": "Of the King's Hall",
+  "summary": "A guardsman who died with the rest of the castle's watch on the night of the wedding, walking the length of the King's Hall and back with his halberd at the slope. He salutes the throne room doors every time he passes them.",
+  "portrait": "strahd_zombie",
+  "sprite": "strahd_zombie",
+  "attitude": "indifferent",
+  "monster": "strahd_zombie",
+  "guest": false,
+  "tags": [
+    "undead",
+    "zombie",
+    "servant",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him",
+  "pockets": false
+}

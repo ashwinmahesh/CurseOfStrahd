@@ -159,6 +159,7 @@ func _ready() -> void:
 	atmosphere.attach(rig, post)
 	rig.follow = tokens[members[0].id] as Node3D if not members.is_empty() else null
 	rig.snap_to_target()
+	StoryConditions.note_departure(st, st.location, str(loc.get("region", "")))   # leaving Castle Ravenloft ends its truce
 	st.location = loc_id
 	var first := not st.visited.has(loc_id)
 	st.visited[loc_id] = true

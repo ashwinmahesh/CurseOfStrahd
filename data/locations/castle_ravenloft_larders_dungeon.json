@@ -1287,6 +1287,27 @@
       "when": "not flag.larders_anatol_destroyed and flag.larders_anatol_fate != \"freed\"",
       "facing": "north",
       "approach": 3
+    },
+    {
+      "npc": "castle_dead_guard_1",
+      "cell": [
+        3,
+        13
+      ],
+      "dialogue": "castle_ravenloft/household:dead_guard",
+      "facing": "east",
+      "path": [
+        {
+          "at": [
+            23,
+            12
+          ],
+          "wait": 4,
+          "face": "west"
+        }
+      ],
+      "pause": 4,
+      "steps_aside": true
     }
   ],
   "encounters": [

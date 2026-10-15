@@ -31,6 +31,7 @@ Tone: a kitchen comedy that keeps tipping into horror. Cyrus is funny until you 
 | Doru, a prisoner (only if the party let him out of the undercroft) | `doru` (exists, `vampire_spawn`) | an end, or blood; his father | the hunger winning | Strahd chained him for coming home with nothing | docs/voice/doru.md |
 | "Brother Anatol", a prisoner who isn't | `brother_anatol` (`vampire_spawn`, named in fights) | to be rescued, so the rescuers walk him to his master's table | being found out too soon | a vampire spawn; the shackle was never locked | gentle, pious, a shade too smooth; turns cold and amused when unmasked |
 | The dead watch | (`wight`, `helmed_horror`, `strahd_zombie`) | to keep a watch nobody relieved | | | (no lines) |
+| Two dead kitchen hands, a dead turnkey | `castle_dead_servant_1`, `castle_dead_servant_2` (`zombie`), `castle_dead_guard_1` (`strahd_zombie`) | the work, done over | | | Narrator lines (household.dialogue); they walk the kitchen, the guards' run and the cell passage and step aside for fights (castle_ravenloft_gates.md §8) |
 | The jailers | (`helmed_horror`) | to keep the keys | | | (no lines) |
 | The Questioner | (`wight`, named) | answers | | | (no lines) |
 | The furnace's keepers | (`flameskull`, `fire_elemental`) | the green fire fed | | | (no lines) |

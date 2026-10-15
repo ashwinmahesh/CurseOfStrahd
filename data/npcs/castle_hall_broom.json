@@ -1,0 +1,19 @@
+{
+  "id": "castle_hall_broom",
+  "name": "The Hall Broom",
+  "title": "Of the Guests' Hall",
+  "summary": "A broom that sweeps the guests' hall by itself, up one side and down the other, round the feet of anyone standing in its way. The floor is spotless. The dust it sweeps is always back by morning.",
+  "portrait": "broom_of_animated_attack",
+  "sprite": "broom_of_animated_attack",
+  "attitude": "indifferent",
+  "monster": "broom_of_animated_attack",
+  "guest": false,
+  "tags": [
+    "construct",
+    "animated_object",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "it/its",
+  "pockets": false
+}

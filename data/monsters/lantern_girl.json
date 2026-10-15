@@ -3,7 +3,7 @@
   "name": "The Lantern Girl",
   "source": {
     "book": "custom",
-    "note": "A side quest boss of our own (One Lantern Too Many, docs/story/side_quests.md), built from the will-o'-wisp and the ghost: a drowned child's spirit made of the light she held up, with a cold touch, a drowning light and a lure. Drawn as a girl of light: her own sprite and portrait ids (art/sprites/lantern_girl, art/portraits/lantern_girl), stand-ins drawn from the girl in art/sprites/rose and washed to candlelight until her own are made."
+    "note": "A side quest boss of our own (One Lantern Too Many, docs/story/side_quests.md), built from the will-o'-wisp and the ghost: a drowned child's spirit made of the light she held up, with a cold touch, a drowning light and a lure. Drawn as a girl of light: her own sprite and portrait (art/sprites/lantern_girl, art/portraits/lantern_girl), lit from within (CombatToken.OWN_LIGHT)."
   },
   "size": "small",
   "type": "undead",

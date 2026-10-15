@@ -12,6 +12,11 @@
       "summary": "The party excused themselves from Strahd's table before the meal ended; he greets them back to it."
     },
     {
+      "id": "castle_truce_over",
+      "type": "bool",
+      "summary": "The party left Castle Ravenloft while Strahd's dinner invitation was open and dinner wasn't over: the castle's truce (StoryConditions.TRUCES, its walk-in fights held for his guests) is over for good, and its fights are back as they were. Set by the engine on leaving the region (StoryConditions.note_departure)."
+    },
+    {
       "id": "crg_dinner_stared",
       "type": "bool",
       "summary": "A failed Insight at dinner: Strahd caught the party studying him and says so when he leaves."

@@ -220,6 +220,9 @@ func test_hellish_rebuke_answers_damage() -> void:
 		TestCombat.next_d20(e, 19)
 		e.monster_attack(z, c, "slam")
 		break
+	# Several slot levels to cast it at: even on Automatic the hero is asked which (the lowest is the prompt's first pick).
+	assert_true(e.pending != null and e.pending.kind == "hellish_rebuke", "asked which slot")
+	e.answer_reaction(true)
 	assert_false(c.reaction_available, "the Reaction went on Hellish Rebuke")
 	assert_true(z.creature.hp < 100)
 
