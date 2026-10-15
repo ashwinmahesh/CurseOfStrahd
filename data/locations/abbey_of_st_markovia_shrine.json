@@ -553,34 +553,6 @@
             2
           ],
           "name": "Belview Brute"
-        },
-        {
-          "monster": "flesh_golem",
-          "cell": [
-            9,
-            2
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
-            24,
-            14
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
-            13,
-            9
-          ]
-        },
-        {
-          "monster": "mongrelfolk",
-          "cell": [
-            9,
-            6
-          ]
         }
       ],
       "surprise": "",
@@ -620,28 +592,28 @@
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             23,
             6
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             2,
             14
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             23,
             14
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             15,
             11
@@ -662,7 +634,7 @@
           ]
         },
         {
-          "monster": "mongrelfolk",
+          "monster": "berserker",
           "cell": [
             19,
             8
@@ -673,6 +645,13 @@
           "cell": [
             19,
             12
+          ]
+        },
+        {
+          "monster": "berserker",
+          "cell": [
+            8,
+            14
           ]
         }
       ],

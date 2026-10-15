@@ -225,41 +225,6 @@
             24,
             7
           ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            28,
-            9
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            9
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            26,
-            11
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            12
-          ]
-        },
-        {
-          "monster": "werewolf",
-          "cell": [
-            24,
-            6
-          ]
         }
       ]
     },

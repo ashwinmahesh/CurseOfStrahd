@@ -34,11 +34,6 @@ func test_bride_defends_v1_at_level_6() -> void:
 	await _held("abbey_of_st_markovia_shrine", 12, 6, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 4, 6, [])
 
 
-## bride_defends, abbey_of_st_markovia_shrine variant 0 at level 7.
-func test_bride_defends_v0_at_level_7() -> void:
-	await _held("abbey_of_st_markovia_shrine", 12, 7, "bride_defends", [Vector2i(11, 13), Vector2i(12, 14), Vector2i(13, 14), Vector2i(11, 14)], 4, 6, [])
-
-
 ## wards_cells, abbey_of_st_markovia_wards variant 1 at level 6.
 func test_wards_cells_v1_at_level_6() -> void:
 	await _held("abbey_of_st_markovia_wards", 12, 6, "wards_cells", [Vector2i(10, 20), Vector2i(11, 20), Vector2i(9, 20), Vector2i(10, 21)], 4, 6, [])

@@ -82,6 +82,12 @@ The level is the one its region is travelled at (Svalich Road and woods 4, Boneg
 Krezk road 7, Argynvostholt and the lake 8, Mount Baratok and Berez 9, the Amber Temple road 10). Foes sit on the
 table's own map as listed; the first four-or-so squares around the arrival spawn stay clear.
 
+A road the story-bot playthroughs walk has to stay winnable by their weaker party too (the playthrough heroes at the
+region's level, no retry: a road fight lost is the walk lost). `baratok_slopes:spiders` was 2 giant spiders and 9 werewolves
+(the sharp party 5 in 8, the playthrough party two in 8 even at level 9, and `test_phase5_exit` at seeds 19 and 31 lost to it); it
+is now 2 giant spiders and 4 werewolves, the sharp party 6 in 8 (the top of the band, as a playthrough road may be) and the
+playthrough party at level 8 seven in 8, and the Berez, Baratok and Tsolenka walk holds at seeds 7, 11, 19 and 31.
+
 | Table | Entry | Level | Was | Now | Wins |
 |---|---|---|---|---|---|
 | amber_temple_road | `cliff_gargoyles` | 10 | 5 gargoyle | 13 gargoyle | 5 |
@@ -91,7 +97,7 @@ table's own map as listed; the first four-or-so squares around the arrival spawn
 | argynvostholt_road | `werewolf_hunters` | 8 | 2 werewolf, 3 dire wolf | 5 werewolf, 6 dire wolf | 5 |
 | baratok_slopes | `dire_wolves` | 9 | 4 dire wolf, 2 wolf | 6 dire wolf, 5 werewolf | 6 |
 | baratok_slopes | `ogres` | 9 | 3 ogre | 5 ogre, 6 werewolf | 5 |
-| baratok_slopes | `spiders` | 9 | 4 giant spider | 2 giant spider, 9 werewolf | 5 |
+| baratok_slopes | `spiders` | 9 | 4 giant spider | 2 giant spider, 4 werewolf | 6 |
 | baratok_slopes | `werewolves_ridge` | 9 | 3 werewolf, dire wolf | 5 werewolf, 3 dire wolf | 5 |
 | berez_marsh | `insect_cloud` | 9 | 4 swarm of insects, 3 scarecrow | 6 scarecrow, 6 will o wisp, 4 banshee | 5 |
 | berez_marsh | `marsh_lights` | 9 | 3 will o wisp, 2 swarm of insects | 7 will o wisp, 5 swarm of insects | 5 |
@@ -134,8 +140,7 @@ table's own map as listed; the first four-or-so squares around the arrival spawn
 |---|---|---|---|---|---|---|
 | `garden_sentry` | abbey_of_st_markovia_garden | L7v0 | 7 | 5 scarecrow | 4 scarecrow, 11 will o wisp | 5 |
 | `bride_defends` | abbey_of_st_markovia_shrine | L5v2 | 5 | flesh golem, 3 mongrelfolk | 4 flesh golem, 6 mongrelfolk | 5 |
-| `bride_defends` | abbey_of_st_markovia_shrine | L6v1 | 6 | flesh golem, berserker, 4 mongrelfolk | 3 flesh golem, 2 berserker, 6 mongrelfolk | 5 |
-| `bride_defends` | abbey_of_st_markovia_shrine | L7v0 | 7 | 2 flesh golem, 9 berserker, 3 mongrelfolk | 3 flesh golem, 9 berserker, 6 mongrelfolk | 6 |
+| `bride_defends` | abbey_of_st_markovia_shrine | L6v1 | 6 | flesh golem, berserker, 4 mongrelfolk | 3 flesh golem, 8 berserker, mongrelfolk | 5 |
 | `wards_cells` | abbey_of_st_markovia_wards | L6v1 | 6 | berserker, 4 mongrelfolk | 15 berserker, mongrelfolk | 5 |
 | `wards_cells` | abbey_of_st_markovia_wards | L7v0 | 7 | 2 berserker, 6 mongrelfolk | 11 berserker, 16 mongrelfolk | 5 |
 | `frozen_watch` | amber_temple_entrance | L10v0 | 10 | 4 wight | 5 wight, 4 wraith | 4 |
