@@ -5948,61 +5948,565 @@
   "recipe": "db24af9d10",
   "text": "Keep to the fire, stranger. I watch the road so you don't have to. And so I see who comes down it."
  },
- "castle_courtier_1/21473e3d55460553": {
-  "chars": 111,
-  "direction": "[wry, wistful, languid]",
+ "castle_courtier_1/41d33d83f838d2e5": {
+  "chars": 101,
+  "direction": "[charming, wry, courteous]",
   "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "A guest. I came up the road in a carriage, like you, and the dinner was excellent, and I stayed. We all stayed."
+  "recipe": "0686c56fda",
+  "text": "Dinner guests! How lovely. Aubrey Thale. I'd shake your hand, but you'd only notice how cold mine is."
  },
- "castle_courtier_1/5796955d52fbfc18": {
-  "chars": 59,
-  "direction": "[dry, grim, warning]",
+ "castle_courtier_1/47c427158795a5be": {
+  "chars": 133,
+  "direction": "[courteous, languid, wry]",
   "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "The master keeps a court. We are it. Do try not to join it."
+  "recipe": "0686c56fda",
+  "text": "Aubrey Thale, of nowhere you'd have heard of. I came through the mists in my own carriage, dined with the count and stayed the night."
  },
- "castle_courtier_1/8e1f72f42783ae1c": {
+ "castle_courtier_1/4d5f54a60feede31": {
+  "chars": 98,
+  "direction": "[delighted, languid, amused]",
+  "model": "eleven_v3",
+  "recipe": "0686c56fda",
+  "text": "Steel at the master's table! The whole house heard it. I haven't been so entertained in a century."
+ },
+ "castle_courtier_1/5edcb35f8e44fdf4": {
+  "chars": 121,
+  "direction": "[dry, knowing, warning]",
+  "model": "eleven_v3",
+  "recipe": "0686c56fda",
+  "text": "You dined with him and you're still standing. He must have enjoyed you. Do be careful; he likes to finish what he enjoys."
+ },
+ "castle_courtier_1/6f097344716bc292": {
+  "chars": 53,
+  "direction": "[sardonic, languid, amused]",
+  "model": "eleven_v3",
+  "recipe": "0686c56fda",
+  "text": "Visitors, and unannounced. How brave. How very brief."
+ },
+ "castle_courtier_1/7819197f53baf499": {
+  "chars": 168,
+  "direction": "[droll, conspiratorial, dry]",
+  "model": "eleven_v3",
+  "recipe": "0686c56fda",
+  "text": "The ladies upstairs aren't speaking to one another, and Rahadin isn't speaking to anyone. Lady Celestine, in the hall of faces, is speaking to everyone, which is worse."
+ },
+ "castle_courtier_1/a5cc166a533bb13e": {
+  "chars": 108,
+  "direction": "[wistful, hollow, quiet]",
+  "model": "eleven_v3",
+  "recipe": "0686c56fda",
+  "text": "My carriage is still in the carriage house. Some nights I go down and sit in it. I'm leaving in the morning."
+ },
+ "castle_courtier_1/c733b47c7e182694": {
   "chars": 80,
-  "direction": "[dry, ominous, quiet]",
+  "direction": "[dry, warning, wry]",
   "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "He let you up from his table. He liked you, then. That is very rarely good news."
+  "recipe": "0686c56fda",
+  "text": "And never ask the boyar in the audience hall about his petition. He'll tell you."
  },
- "castle_courtier_1/9931bb26d36195cd": {
-  "chars": 90,
-  "direction": "[languid, sardonic, amused]",
+ "castle_courtier_1/cc8d88d06d12c835": {
+  "chars": 85,
+  "direction": "[dry, ominous, wry]",
   "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "The master's dinner guests. How thrilling. Do eat well tonight. You'll want your strength."
+  "recipe": "0686c56fda",
+  "text": "Finish your dinner, or step outside his gates, and the courtesy ends. I'd eat slowly."
  },
- "castle_courtier_1/a31a7c7f2948b296": {
-  "chars": 65,
-  "direction": "[weary, dry, wry]",
+ "castle_courtier_1/ed867c4ba9db3630": {
+  "chars": 142,
+  "direction": "[serious, measured, cautionary]",
   "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "Visitors. Nobody announced you. Nobody announces anyone any more."
+  "recipe": "0686c56fda",
+  "text": "Not while you're his guests. He was very clear: nothing in this house lays a finger on the master's guests until the master is done with them."
  },
- "castle_courtier_1/d68bacf4f4bfa4a5": {
-  "chars": 131,
-  "direction": "[weary, bleak, resigned]",
-  "model": "eleven_v3",
-  "recipe": "eb2964a206",
-  "text": "To be received. The throne room receives no one, and has not for a very long time. We are very patient. Patience is all he left us."
- },
- "castle_ghost_servant/68dcc9f70c6e0d01": {
-  "chars": 102,
-  "direction": "[quiet, hollow, patient]",
-  "model": "eleven_v3",
-  "recipe": "5c319ee602",
-  "text": "The house. There's only the house to serve now. The steward downstairs will tell you where you may go."
- },
- "castle_ghost_servant/f0897c7c2db83c82": {
+ "castle_courtier_1/f6ee4c07d430f0fc": {
   "chars": 68,
-  "direction": "[meek, apologetic, vague]",
+  "direction": "[wistful, hollow, resigned]",
   "model": "eleven_v3",
-  "recipe": "5c319ee602",
-  "text": "Begging your pardon. Mind the wax. The master likes the candles lit."
+  "recipe": "0686c56fda",
+  "text": "That was a hundred and ninety years ago. I'm leaving in the morning."
+ },
+ "castle_courtier_2/25e8bd41346895d6": {
+  "chars": 146,
+  "direction": "[gossipy, wry, amused]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Rahadin, always. They say he hears the screams of everyone he ever killed, every hour of every night. It explains why he never laughs at my jokes."
+ },
+ "castle_courtier_2/26683f2a61c74c60": {
+  "chars": 113,
+  "direction": "[wistful, curious, languid]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "So you sat at his table and got up again. Did he laugh? He has a lovely laugh. He never spends it on us any more."
+ },
+ "castle_courtier_2/2dc21d000f3a2f1e": {
+  "chars": 78,
+  "direction": "[delighted, hungry, flirtatious]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "New faces! Oh, let me look at you. Warm ones. I'd almost forgotten the colour."
+ },
+ "castle_courtier_2/42be134378f2086a": {
+  "chars": 113,
+  "direction": "[amused, vain, teasing]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "You drew on him at dinner? At dinner. If I'd known there was going to be a scene, I'd have worn something better."
+ },
+ "castle_courtier_2/5013907ca6570d86": {
+  "chars": 114,
+  "direction": "[sweet, arch, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Nothing in this house will touch you while you're his guests. After that, I'd run. Prettily, if you can manage it."
+ },
+ "castle_courtier_2/5d86cf631423f873": {
+  "chars": 128,
+  "direction": "[dreamy, wistful, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "The music was divine. So was the host. I danced the last dance with him, and the dancing went on rather longer than I'd planned."
+ },
+ "castle_courtier_2/6edf02bb02487207": {
+  "chars": 104,
+  "direction": "[teasing, droll, gossipy]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "And Lord Thale is leaving in the morning. Do ask him when. He's been at it for nearly two hundred years."
+ },
+ "castle_courtier_2/6ff14b44bb02cdab": {
+  "chars": 87,
+  "direction": "[teasing, flirtatious, dangerous]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Callers, uninvited and unfed. You'll forgive me if I don't come any closer. Or if I do."
+ },
+ "castle_courtier_2/bb94e3ee3c0bde1c": {
+  "chars": 111,
+  "direction": "[arch, charming, proud]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Celestine Morrow. Lady Morrow, if you're being correct, and nobody here ever is. I came up the road for a ball."
+ },
+ "castle_courtier_2/e4931cd1ae59d201": {
+  "chars": 130,
+  "direction": "[confiding, arch, warning]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Praise the organ, never the wine; he knows the wine is good. And don't sit in the chair at his right hand. That one isn't for you."
+ },
+ "castle_courtier_2/eb86c771b965545e": {
+  "chars": 88,
+  "direction": "[vain, wistful, dreamy]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "My face. One of the carvers was very taken with me, I'm told. It must be here somewhere."
+ },
+ "castle_courtier_2/fb51ff2854d0a7c6": {
+  "chars": 58,
+  "direction": "[soft, wistful, grateful]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "Thank you. I shan't remember it by morning. But thank you."
+ },
+ "castle_courtier_2/ff6cab8a161f0e1d": {
+  "chars": 100,
+  "direction": "[wistful, hollow, faintly sad]",
+  "model": "eleven_v3",
+  "recipe": "f00227db6e",
+  "text": "No glass has shown it to me since the ball, you see. One forgets. One forgets the nose first, oddly."
+ },
+ "castle_courtier_3/0d6ef0cbca0ed7bb": {
+  "chars": 152,
+  "direction": "[outraged, pedantic, haughty]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "Certainly not. A petition is presented by the petitioner, in person, in the proper form. I have not waited this long to have it spoiled by irregularity."
+ },
+ "castle_courtier_3/12c308d24387757f": {
+  "chars": 99,
+  "direction": "[pompous, dry, bitter]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "You drew steel at his table, and you still haven't been received. I take a certain comfort in that."
+ },
+ "castle_courtier_3/46755c84b06f43bc": {
+  "chars": 131,
+  "direction": "[aggrieved, pompous, bitter]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "My neighbour moved it eleven paces in the night. Eleven. He is dead now, of course, and so are the orchards. The principle remains."
+ },
+ "castle_courtier_3/5a6f0b7c8dd76c67": {
+  "chars": 99,
+  "direction": "[indignant, pompous, aggrieved]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "You dined with him? Two hundred and six years I have waited, and dinner guests walk in ahead of me."
+ },
+ "castle_courtier_3/6e712d83b09969e2": {
+  "chars": 123,
+  "direction": "[grim, bitter, dignified]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "They hold while you are his guests. Finish your dinner, or go out of his gates, and you are nobody's guest at all. Like me."
+ },
+ "castle_courtier_3/a0dbb60b34b99d5b": {
+  "chars": 98,
+  "direction": "[haughty, pedantic, firm]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "Guests. Guests are not petitioners. You are not ahead of me, and I want that clear from the start."
+ },
+ "castle_courtier_3/bc5a86762f9b58f1": {
+  "chars": 135,
+  "direction": "[stiff, uneasy, shaken]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "Rahadin keeps the list. I am on it. I asked him once how far down. He looked at me, and I heard people, a great many people, screaming."
+ },
+ "castle_courtier_3/cce74779d6df2537": {
+  "chars": 86,
+  "direction": "[pompous, sour, aggrieved]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "Have you an appointment? No. Nobody has. I have had one for two hundred and six years."
+ },
+ "castle_courtier_3/d2a40b26bf9172ed": {
+  "chars": 105,
+  "direction": "[proud, pompous, formal]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "Vintila Crainic, boyar of the orchards above the Ivlis, and a loyal subject of the house of von Zarovich."
+ },
+ "castle_courtier_3/e3aae45be2ba3d6a": {
+  "chars": 80,
+  "direction": "[stiff, wistful, aggrieved]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "I came up the hill on a small matter. I was told the count would see me shortly."
+ },
+ "castle_courtier_3/e9cbccd27f3c8f5e": {
+  "chars": 59,
+  "direction": "[stiff, dignified, resigned]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "I have not asked him since. A gentleman knows when to wait."
+ },
+ "castle_courtier_3/f0132e6382583103": {
+  "chars": 111,
+  "direction": "[pompous, smug, formal]",
+  "model": "eleven_v3",
+  "recipe": "ef30c76401",
+  "text": "For the master's guests? Perfectly. This house keeps its orders to the letter. I should know; I have read them."
+ },
+ "castle_courtier_4/0d05b64a193781c2": {
+  "chars": 92,
+  "direction": "[curt, wary, knowing]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "Hunters. I can always tell. You stand like people who think they've come to the right house."
+ },
+ "castle_courtier_4/21c820b22661e641": {
+  "chars": 115,
+  "direction": "[low, grim, warning]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "The night dinner's done, or the night you leave his house, every door is shut again and every dog is off its chain."
+ },
+ "castle_courtier_4/2611082c53a71935": {
+  "chars": 84,
+  "direction": "[bitter, clipped, dry]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "You drew on him at his own table. Good form, bad timing. I know a little about both."
+ },
+ "castle_courtier_4/4c75ede350cbaf33": {
+  "chars": 104,
+  "direction": "[proud, bitter, clipped]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "Lothar Brandt. I hunted the dead across three kingdoms, and came through the mists to hunt the last one."
+ },
+ "castle_courtier_4/4fd080c9b1f415e3": {
+  "chars": 101,
+  "direction": "[bitter, dry, rueful]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "Dinner guests. I came up as a dinner guest too, once. I brought stakes. He thought that was charming."
+ },
+ "castle_courtier_4/5551e985f9e44e6a": {
+  "chars": 69,
+  "direction": "[dry, bitter, weary]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "He has a sense of humour, the master. It's the worst thing about him."
+ },
+ "castle_courtier_4/5e7dc1570dee202d": {
+  "chars": 121,
+  "direction": "[grim, clipped, cautionary]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "While you're his guests, nothing here will touch you. He keeps his word to the letter. It's the letter you have to watch."
+ },
+ "castle_courtier_4/7d2ec7b8d44f315e": {
+  "chars": 123,
+  "direction": "[bitter, quiet, controlled]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "That one's mine. I shot it on the road up, the night I came. He had it mounted with the rest, and hung it where I'd see it."
+ },
+ "castle_courtier_4/8c16b94ec2375872": {
+  "chars": 93,
+  "direction": "[low, bleak, meaningful]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "No. I'm his now, all of me, even the parts that would like to. Listen to what I'm not saying."
+ },
+ "castle_courtier_4/94d7fda92c441f76": {
+  "chars": 106,
+  "direction": "[grim, clipped, warning]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "You ate with him and walked away from the table. That's more than I managed. Don't mistake it for winning."
+ },
+ "castle_courtier_4/ce559755b5823954": {
+  "chars": 117,
+  "direction": "[flat, bitter, rueful]",
+  "model": "eleven_v3",
+  "recipe": "ce8f00a3c4",
+  "text": "I had a good crossbow, a good plan and a priest who knew his business. The priest is in the crypts. I'm in the court."
+ },
+ "castle_ghost_servant/764831803ca03cce": {
+  "chars": 116,
+  "direction": "[wistful, weary, hollow]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "I counted the steps once. Then I died on the two hundred and ninth, and I haven't had the heart to count them since."
+ },
+ "castle_ghost_servant/83586acecdcf00f0": {
+  "chars": 90,
+  "direction": "[low, uneasy, confiding]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "Rooms. Wind. A pretty young gentleman who doesn't like the light and doesn't like company."
+ },
+ "castle_ghost_servant/8c85b8c014f01256": {
+  "chars": 113,
+  "direction": "[wary, hushed, warning]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "And the little wooden fellow. Mind him on the stair. He likes to walk up behind you, and he likes to give a push."
+ },
+ "castle_ghost_servant/8e2b6c6082bc881e": {
+  "chars": 33,
+  "direction": "[soft, wistful, rueful]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "Makes them think somebody's home."
+ },
+ "castle_ghost_servant/a7093bf50a128b1c": {
+  "chars": 92,
+  "direction": "[proud, quiet, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "Vlaicu. I light the lamps, every one in this tower, every night, from the closet to the top."
+ },
+ "castle_ghost_servant/e1d43ca11bf5dc79": {
+  "chars": 121,
+  "direction": "[quiet, thoughtful, matter-of-fact]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "The dead don't need them. The living do, coming up the road at night. He likes them to see the tower lit from the valley."
+ },
+ "castle_ghost_servant/e3d2afd9d35828fe": {
+  "chars": 87,
+  "direction": "[gruff, wry, mild]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "Guests, is it? Then he'll want the tower lit. He always wants the tower lit for guests."
+ },
+ "castle_ghost_servant/e675cb11a57c18ac": {
+  "chars": 74,
+  "direction": "[quiet, dry, patient]",
+  "model": "eleven_v3",
+  "recipe": "e440ec2d98",
+  "text": "Evening. If you're going up, go up. If you're coming down, mind the lamps."
+ },
+ "castle_ghost_servant_2/134c16b78eaabf4c": {
+  "chars": 125,
+  "direction": "[quiet, careful, reverent]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "The count has given them everything. A fine thing in an elder brother. He isn't a warm man, but he has given them everything."
+ },
+ "castle_ghost_servant_2/57397f5e98e40852": {
+  "chars": 105,
+  "direction": "[devout, warm, proud]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "Master Sergei, the count's brother, to the Lady Tatyana. Tomorrow, in the chapel, before the whole house."
+ },
+ "castle_ghost_servant_2/a47ce6b16e7d2060": {
+  "chars": 55,
+  "direction": "[puzzled, gentle, insistent]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "Over? No, no. Tomorrow. I have the candles still to do."
+ },
+ "castle_ghost_servant_2/d9bda511146af84b": {
+  "chars": 102,
+  "direction": "[fussy, busy, gentle]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "Mind the wax, if you please. Everything has to be ready by morning. The young master is to be married."
+ },
+ "castle_ghost_servant_2/f21411465508ef12": {
+  "chars": 138,
+  "direction": "[flustered, kind, fussy]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "My lady! You shouldn't be down here tonight, of all nights. Back to your rooms, please. Tomorrow you'll have the whole chapel to yourself."
+ },
+ "castle_ghost_servant_2/f7743e9a5e859857": {
+  "chars": 153,
+  "direction": "[warm, hospitable, pleased]",
+  "model": "eleven_v3",
+  "recipe": "84e0ddcd00",
+  "text": "Then you're very welcome. The family dine tonight, and tomorrow the whole house feasts. You'll stay for the wedding? Everyone is staying for the wedding."
+ },
+ "castle_ghost_servant_3/122ae60f6e093f9a": {
+  "chars": 147,
+  "direction": "[stiff, pained, precise]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "I wrote out the banns. The marriage lines. The guest list, every name in my best hand. I would rather not look at her, if it's all the same to you."
+ },
+ "castle_ghost_servant_3/13426a44fc31809e": {
+  "chars": 79,
+  "direction": "[hollow, quiet, haunted]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "Then one night I put down my pen, and I have not been able to pick it up since."
+ },
+ "castle_ghost_servant_3/1b5d365cc40680e4": {
+  "chars": 107,
+  "direction": "[dry, resentful, thin]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "He used to dictate. These days he writes them himself, in that hand of his. He enjoys it too much to share."
+ },
+ "castle_ghost_servant_3/37e60aad9dcb9176": {
+  "chars": 76,
+  "direction": "[flat, grim, precise]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "Everyone, now. Burgomasters, priests, girls in the village. Guests like you."
+ },
+ "castle_ghost_servant_3/6de92d9f2f2e58dd": {
+  "chars": 41,
+  "direction": "[quiet, formal, grateful]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "Thank you. That will last until midnight."
+ },
+ "castle_ghost_servant_3/78aa333ee4692790": {
+  "chars": 148,
+  "direction": "[formal, proud, thin]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "Anghel Daskal, secretary to His Excellency: his letters, his seals, his day-book. For nine years everything that left this room went out in my hand."
+ },
+ "castle_ghost_servant_3/b0aa31ae5c376767": {
+  "chars": 108,
+  "direction": "[thin, dry, wry]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "The guests. I wrote your invitation. No, I didn't. He writes them himself now. I like to think I blotted it."
+ },
+ "castle_ghost_servant_3/b618475449572855": {
+  "chars": 85,
+  "direction": "[precise, dry, vague]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "Dinner is done, I'm told. I shall enter it in the day-book, when I find the day-book."
+ },
+ "castle_ghost_servant_3/fd9e667551acc97c": {
+  "chars": 119,
+  "direction": "[stiff, formal, curt]",
+  "model": "eleven_v3",
+  "recipe": "37439bfa6a",
+  "text": "You have no appointment. His Excellency sees nobody without an appointment, and he makes no appointments. Good evening."
+ },
+ "castle_ghost_servant_4/103cd78537f5e8db": {
+  "chars": 98,
+  "direction": "[quiet, formal, solemn]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "This is the master's bedchamber. You will not find him in it. Nobody has, for three hundred years."
+ },
+ "castle_ghost_servant_4/45a65c77ba564d24": {
+  "chars": 131,
+  "direction": "[hushed, discreet, cautionary]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "The ladies, three of them in three rooms, and not one speaks to the others. Knock and wait, and if nobody answers, go away quickly."
+ },
+ "castle_ghost_servant_4/4acf0bad62c36391": {
+  "chars": 82,
+  "direction": "[discreet, dry, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "You've dined, I hear. The master won't want his bed tonight either. He never does."
+ },
+ "castle_ghost_servant_4/9097ea84658dff3b": {
+  "chars": 100,
+  "direction": "[proud, formal, devoted]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "Ghenadie, the master's valet. I dressed him for his battles, his councils and his brother's wedding."
+ },
+ "castle_ghost_servant_4/d0ffc8b73fc584e2": {
+  "chars": 123,
+  "direction": "[prim, discreet, scandalised]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "The master's guests, in the master's bedchamber. That is very irregular. I shall not mention it, and nor, I hope, will you."
+ },
+ "castle_ghost_servant_4/deecf1b9e032e4ec": {
+  "chars": 82,
+  "direction": "[quiet, rueful, hollow]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "For the wedding he asked for the black coat. I remember thinking it an odd choice."
+ },
+ "castle_ghost_servant_4/eacdb1c71762e116": {
+  "chars": 121,
+  "direction": "[wistful, devoted, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "Not since the wedding. He keeps a bed below now, somewhere cold, I'm told. I have never been asked to turn that one down."
+ },
+ "castle_ghost_servant_4/f46507f7a9ac648e": {
+  "chars": 106,
+  "direction": "[formal, reassuring, quiet]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "Then nothing on this floor may lay a hand on you, by his order. The ladies included, though it pains them."
+ },
+ "castle_ghost_servant_4/f9e380ff2c24b5c4": {
+  "chars": 136,
+  "direction": "[low, grave, warning]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "And Helga. She came up from the valley a good plain girl. She is not a girl from anywhere now. If she offers to air you a room, decline."
+ },
+ "castle_ghost_servant_4/fa7ff4922d2f9f03": {
+  "chars": 104,
+  "direction": "[urgent, kind, discreet]",
+  "model": "eleven_v3",
+  "recipe": "3622dd4677",
+  "text": "Miss Gertruda, out of the yellow room at last. Good. Don't stop on the stair, miss, and don't look back."
  },
  "castle_steward/12a1ec57a747fef7": {
   "chars": 176,
@@ -36634,12 +37138,6 @@
   "recipe": "dd92281f92",
   "text": "You say the words over the bricks, and push fresh garlic into every crack, and plaster over all of it. The scratching stops. Outside, for the first time in a long while, the dog stops howling."
  },
- "narrator/03e32bde04a52d6a": {
-  "chars": 186,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A dead guardsman in the house's black tabard walks his beat, halberd on his shoulder, eyes on nothing. He was told to keep the watch three centuries ago, and nobody has told him to stop."
- },
  "narrator/03ee9b7a384fb548": {
   "chars": 186,
   "model": "eleven_v4",
@@ -39724,12 +40222,6 @@
   "recipe": "dd92281f92",
   "text": "The watch roster, names chalked in a grid of days. The chalk is fresh. Every name has been marked present every day for longer than chalk lasts."
  },
- "narrator/19f78d604d488060": {
-  "chars": 96,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Five grey soldiers draw five grey swords with one sound, the way a drill sergeant would want it."
- },
  "narrator/19fcf0484bcb7ec0": {
   "chars": 137,
   "model": "eleven_v4",
@@ -40150,12 +40642,6 @@
   "recipe": "dd92281f92",
   "text": "The pool lies still as glass, and the sky in it is a little brighter than the sky above it, as if someone down there were keeping a lamp lit."
  },
- "narrator/1ce0548afef0ad7b": {
-  "chars": 176,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Something is waiting where the causeway meets the shore: two pale figures standing very still, and above them the air full of wings. The castle has heard what you were reading."
- },
  "narrator/1cf5b3e318a74524": {
   "chars": 145,
   "model": "eleven_v4",
@@ -40438,12 +40924,6 @@
   "recipe": "dd92281f92",
   "text": "A pine with a hunter's stand lashed into it ten feet up: a few planks and a ladder of nailed rungs. From up there you'd see the lake, and anything coming along the path."
  },
- "narrator/1e8b24530102d841": {
-  "chars": 153,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The rug lifts off the floor like a sheet in the wind and comes for you, and from the ledger shelves something small and pale scuttles out on its fingers."
- },
  "narrator/1e8b69b1a280539f": {
   "chars": 132,
   "model": "eleven_v4",
@@ -40504,12 +40984,6 @@
   "recipe": "dd92281f92",
   "text": "The watch changes in the small hours, and there's a light burning in Liriel's bedroll: a tiny one, the size of a candle flame, cupped against her chest. Her eyes are open."
  },
- "narrator/1ed1389e42696791": {
-  "chars": 113,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Three suits of armour stand at the jailers' table as if waiting for a fourth hand. They are empty, and they draw."
- },
  "narrator/1ef0b69c86f1d064": {
   "chars": 53,
   "model": "eleven_v4",
@@ -40563,12 +41037,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A study buried in paper. Notes are pinned to every surface: the walls, the shelves, the desk, the chair, and the warden sitting in it."
- },
- "narrator/1f4cd74991420aa6": {
-  "chars": 154,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A pale man in a velvet coat gone grey with dust stands as if waiting to be called in to an audience. His eyes are red at the rims, and he isn't breathing."
  },
  "narrator/1f4f69bfbe3725cb": {
   "chars": 88,
@@ -42736,12 +43204,6 @@
   "recipe": "dd92281f92",
   "text": "A coil of good rope on a peg, labelled ROPE. Whoever lives here labels everything, and takes nothing for granted."
  },
- "narrator/2f356f29a59b64e8": {
-  "chars": 74,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Cyrus snatches up a cleaver in one hand and a ladle in the other, weeping."
- },
  "narrator/2f5f347782780eb1": {
   "chars": 99,
   "model": "eleven_v4",
@@ -43119,12 +43581,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The Huntsman's coat lies in the road with nothing in it. His saddlebag holds four hundred years of quarry's purses, and a plain iron ring he called the pack with."
- },
- "narrator/31b7b69752235518": {
-  "chars": 164,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "To the far wall, where it sets the pail down, picks it up again and turns back. Somewhere behind you Cyrus is humming, and doesn't seem to find any of this strange."
  },
  "narrator/31b93412b5e25e38": {
   "chars": 77,
@@ -43995,12 +44451,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Needle blights are scraping at the earth floor with their claws, and a vine blight is hissing at them where to dig."
- },
- "narrator/38507f476e554479": {
-  "chars": 153,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Dead men in the castle's livery sit up on their pallets. Two suits of armour by the door turn their empty helms toward you. The watch was never relieved."
  },
  "narrator/385412f2e8181515": {
   "chars": 151,
@@ -45117,12 +45567,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The undercroft is only a cellar now: cold, wet, full of old books. Nothing turns a page."
- },
- "narrator/40985217645bc8cb": {
-  "chars": 141,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A dead kitchen hand in a stained apron shuffles past with a pail that holds nothing, toward a task that was finished three hundred years ago."
  },
  "narrator/40a966c1bd56a416": {
   "chars": 126,
@@ -48538,12 +48982,6 @@
   "recipe": "dd92281f92",
   "text": "The dumbwaiter's shaft goes up into the dark. Soot comes down it. Nothing else does."
  },
- "narrator/5a2de4402003b966": {
-  "chars": 110,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two shapes unfold from the underside of the stair above and drop onto the steps, and the well fills with bats."
- },
  "narrator/5a42de0f595f51b2": {
   "chars": 172,
   "model": "eleven_v4",
@@ -49618,12 +50056,6 @@
   "recipe": "dd92281f92",
   "text": "Tucked up under the wagon's step on a nail: a deck of playing cards. Run a thumb along the edges and some of them are a little rougher than the rest."
  },
- "narrator/61140caefc2bd781": {
-  "chars": 135,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A servant in old grey livery goes about the room with a taper, lighting candles that are already lit. You can see the wall through him."
- },
  "narrator/612be3e7d181a18e": {
   "chars": 87,
   "model": "eleven_v4",
@@ -49671,12 +50103,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A young woman with a horse brush in her fist looks up from the pen, sees that you are not who she hoped, and goes back to brushing harder than the horse needs."
- },
- "narrator/618f1be77756c022": {
-  "chars": 95,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two of the coffins are not empty. The things in them open their eyes slowly, sick with the day."
  },
  "narrator/6192f10659cfcc5f": {
   "chars": 111,
@@ -52161,12 +52587,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "He holds the doll up and smiles. His eyes, over the top of it, don't smile at all."
- },
- "narrator/729781b6d488889d": {
-  "chars": 185,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A pale man in a velvet coat gone grey with dust turns from the wall to look at you, slowly, the way a cat looks at something small. His eyes are red at the rims, and he isn't breathing."
  },
  "narrator/72c87550db3aed7c": {
   "chars": 114,
@@ -55024,12 +55444,6 @@
   "recipe": "dd92281f92",
   "text": "The bags split under the knife like overripe plums, and something goes out of the loft past you, many somethings, all in a hurry to be elsewhere. The air is lighter afterwards, as if someone had opened a window."
  },
- "narrator/894469ee9b1b68c2": {
-  "chars": 152,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Up the servants' stair comes Corporal Vell, two of the company at his back. 'Sergeant,' he says. 'You're late.' Then the hunger turns over in all three."
- },
  "narrator/896c493f755ec520": {
   "chars": 153,
   "model": "eleven_v4",
@@ -55077,12 +55491,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "Kip folds the letter into the band of his straw hat. For a while it's warm against his horns. Then, oddly, it isn't."
- },
- "narrator/89d9641b3c7b41bc": {
-  "chars": 92,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He bows, a moment late, as if he had only just remembered how, and goes back to his candles."
  },
  "narrator/89dd20c56a8185da": {
   "chars": 119,
@@ -55569,12 +55977,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "A little shrine of stone at the top of the square, crowded with wooden suns, each carved by the same patient hand. The candle stubs in front of it are never all out at once."
- },
- "narrator/8c84d39aefdd636b": {
-  "chars": 109,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A grey figure at the rack looks up, pleased. Hands scuttle out of every corner, and the drain begins to rise."
  },
  "narrator/8c85cd131178535b": {
   "chars": 122,
@@ -56079,12 +56481,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "It could be anything. In Barovia, it usually is."
- },
- "narrator/8ff338106be4a0a7": {
-  "chars": 113,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Three of the stone knights were never stone. They step off their plinths into the aisle, visors turning together."
  },
  "narrator/8ff69692b8e5f7dc": {
   "chars": 87,
@@ -57111,12 +57507,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "In the bones under the edge of the nest, things she carried off years ago with whoever was carrying them: a purse gone green, and a wide leather belt with a buckle like a giant's fist, still strong enough to lift a cart."
- },
- "narrator/97aa09fb40e5cef9": {
-  "chars": 85,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The chain falls. For a breath he is only grateful. Then the hunger reaches you first."
  },
  "narrator/97bac42675cd009c": {
   "chars": 158,
@@ -60160,12 +60550,6 @@
   "recipe": "dd92281f92",
   "text": "At the head, in a chair carved with a dragon's folded wings, sits the only one who turns his head."
  },
- "narrator/adf91916788841a1": {
-  "chars": 122,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "He stops a pace from you and waits, swaying a little, until you step aside. He doesn't look at you once. Then he walks on."
- },
  "narrator/ae068ed2edb87fd3": {
   "chars": 136,
   "model": "eleven_v4",
@@ -60892,12 +61276,6 @@
   "recipe": "dd92281f92",
   "text": "Chalk lines, sigils and a smell of burned hair. The circle means something, and is very sure of it."
  },
- "narrator/b3e2a01be8435d82": {
-  "chars": 85,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A suit of black armour steps down from its stand, as if someone had called the watch."
- },
  "narrator/b3edebe36bfee106": {
   "chars": 131,
   "model": "eleven_v4",
@@ -61113,12 +61491,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The silver light runs out from the tower across the trees to the castle on its rock. Up there, a single window that was lit goes dark."
- },
- "narrator/b5a393c824eac03e": {
-  "chars": 137,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "The armour on its stand turns its helm toward the door. Behind it, three more suits step down from the wall pegs with nobody inside them."
  },
  "narrator/b5aacf7cf78c4980": {
   "chars": 182,
@@ -63370,12 +63742,6 @@
   "recipe": "dd92281f92",
   "text": "A footpath climbs north through the pines to the lip of a gorge. The river goes over the edge in one long white rope of water, and the roar fills everything."
  },
- "narrator/c6c58f3addaf482b": {
-  "chars": 117,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "A pale man in a velvet coat gone grey with dust looks you over. His eyes are red at the rims, and he isn't breathing."
- },
  "narrator/c6e0f2fa6b2ccb35": {
   "chars": 62,
   "model": "eleven_v4",
@@ -63633,12 +63999,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The grey sergeant reads your names, nods once, and lays the captain's key on the table. Relieved, at last."
- },
- "narrator/c8f10dfbb8c070ba": {
-  "chars": 142,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Up the servants' stair from the cellars come three of Kestrel Company, grey under crimson, keeping step. They know Ilse. It doesn't stop them."
  },
  "narrator/c8f46c8b9872be75": {
   "chars": 104,
@@ -65547,12 +65907,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "The stairs bring you up into a corridor of closed doors. Somewhere along it, always just out of sight, someone is crying very quietly."
- },
- "narrator/d6dd483e0bb2f278": {
-  "chars": 102,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two burning skulls rise from the coal heaps, and the fire in the furnace stands up on legs of its own."
  },
  "narrator/d6df23f9ddcd2443": {
   "chars": 115,
@@ -68740,12 +69094,6 @@
   "recipe": "dd92281f92",
   "text": "Your footsteps come back from the vault overhead a little late, as if the hall were checking them."
  },
- "narrator/ef0e5583621973d5": {
-  "chars": 118,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Four skulls rise from the top shelves, each wearing a crown of green fire. They were wardens once, and they still are."
- },
  "narrator/ef0fb2da8257147d": {
   "chars": 128,
   "model": "eleven_v4",
@@ -68787,12 +69135,6 @@
   "model": "eleven_v4",
   "recipe": "dd92281f92",
   "text": "You sing the fourth line to the end, and it's held. Just. Something in the dark of its throat is laughing, very low, and the amber is already softening."
- },
- "narrator/ef405e176ebc2306": {
-  "chars": 98,
-  "model": "eleven_v4",
-  "recipe": "dd92281f92",
-  "text": "Two suits of black armour step down from their stands at once, as if someone had called the watch."
  },
  "narrator/ef4db036438bdf14": {
   "chars": 214,

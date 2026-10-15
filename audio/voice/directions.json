@@ -593,16 +593,100 @@
   "d6565abd9726a895": "[tense, watchful, low]"
  },
  "castle_courtier_1": {
-  "21473e3d55460553": "[wry, wistful, languid]",
-  "5796955d52fbfc18": "[dry, grim, warning]",
-  "8e1f72f42783ae1c": "[dry, ominous, quiet]",
-  "9931bb26d36195cd": "[languid, sardonic, amused]",
-  "a31a7c7f2948b296": "[weary, dry, wry]",
-  "d68bacf4f4bfa4a5": "[weary, bleak, resigned]"
+  "41d33d83f838d2e5": "[charming, wry, courteous]",
+  "47c427158795a5be": "[courteous, languid, wry]",
+  "4d5f54a60feede31": "[delighted, languid, amused]",
+  "5edcb35f8e44fdf4": "[dry, knowing, warning]",
+  "6f097344716bc292": "[sardonic, languid, amused]",
+  "7819197f53baf499": "[droll, conspiratorial, dry]",
+  "a5cc166a533bb13e": "[wistful, hollow, quiet]",
+  "c733b47c7e182694": "[dry, warning, wry]",
+  "cc8d88d06d12c835": "[dry, ominous, wry]",
+  "ed867c4ba9db3630": "[serious, measured, cautionary]",
+  "f6ee4c07d430f0fc": "[wistful, hollow, resigned]"
+ },
+ "castle_courtier_2": {
+  "25e8bd41346895d6": "[gossipy, wry, amused]",
+  "26683f2a61c74c60": "[wistful, curious, languid]",
+  "2dc21d000f3a2f1e": "[delighted, hungry, flirtatious]",
+  "42be134378f2086a": "[amused, vain, teasing]",
+  "5013907ca6570d86": "[sweet, arch, ominous]",
+  "5d86cf631423f873": "[dreamy, wistful, ominous]",
+  "6edf02bb02487207": "[teasing, droll, gossipy]",
+  "6ff14b44bb02cdab": "[teasing, flirtatious, dangerous]",
+  "bb94e3ee3c0bde1c": "[arch, charming, proud]",
+  "e4931cd1ae59d201": "[confiding, arch, warning]",
+  "eb86c771b965545e": "[vain, wistful, dreamy]",
+  "fb51ff2854d0a7c6": "[soft, wistful, grateful]",
+  "ff6cab8a161f0e1d": "[wistful, hollow, faintly sad]"
+ },
+ "castle_courtier_3": {
+  "0d6ef0cbca0ed7bb": "[outraged, pedantic, haughty]",
+  "12c308d24387757f": "[pompous, dry, bitter]",
+  "46755c84b06f43bc": "[aggrieved, pompous, bitter]",
+  "5a6f0b7c8dd76c67": "[indignant, pompous, aggrieved]",
+  "6e712d83b09969e2": "[grim, bitter, dignified]",
+  "a0dbb60b34b99d5b": "[haughty, pedantic, firm]",
+  "bc5a86762f9b58f1": "[stiff, uneasy, shaken]",
+  "cce74779d6df2537": "[pompous, sour, aggrieved]",
+  "d2a40b26bf9172ed": "[proud, pompous, formal]",
+  "e3aae45be2ba3d6a": "[stiff, wistful, aggrieved]",
+  "e9cbccd27f3c8f5e": "[stiff, dignified, resigned]",
+  "f0132e6382583103": "[pompous, smug, formal]"
+ },
+ "castle_courtier_4": {
+  "0d05b64a193781c2": "[curt, wary, knowing]",
+  "21c820b22661e641": "[low, grim, warning]",
+  "2611082c53a71935": "[bitter, clipped, dry]",
+  "4c75ede350cbaf33": "[proud, bitter, clipped]",
+  "4fd080c9b1f415e3": "[bitter, dry, rueful]",
+  "5551e985f9e44e6a": "[dry, bitter, weary]",
+  "5e7dc1570dee202d": "[grim, clipped, cautionary]",
+  "7d2ec7b8d44f315e": "[bitter, quiet, controlled]",
+  "8c16b94ec2375872": "[low, bleak, meaningful]",
+  "94d7fda92c441f76": "[grim, clipped, warning]",
+  "ce559755b5823954": "[flat, bitter, rueful]"
  },
  "castle_ghost_servant": {
-  "68dcc9f70c6e0d01": "[quiet, hollow, patient]",
-  "f0897c7c2db83c82": "[meek, apologetic, vague]"
+  "764831803ca03cce": "[wistful, weary, hollow]",
+  "83586acecdcf00f0": "[low, uneasy, confiding]",
+  "8c85b8c014f01256": "[wary, hushed, warning]",
+  "8e2b6c6082bc881e": "[soft, wistful, rueful]",
+  "a7093bf50a128b1c": "[proud, quiet, matter-of-fact]",
+  "e1d43ca11bf5dc79": "[quiet, thoughtful, matter-of-fact]",
+  "e3d2afd9d35828fe": "[gruff, wry, mild]",
+  "e675cb11a57c18ac": "[quiet, dry, patient]"
+ },
+ "castle_ghost_servant_2": {
+  "134c16b78eaabf4c": "[quiet, careful, reverent]",
+  "57397f5e98e40852": "[devout, warm, proud]",
+  "a47ce6b16e7d2060": "[puzzled, gentle, insistent]",
+  "d9bda511146af84b": "[fussy, busy, gentle]",
+  "f21411465508ef12": "[flustered, kind, fussy]",
+  "f7743e9a5e859857": "[warm, hospitable, pleased]"
+ },
+ "castle_ghost_servant_3": {
+  "122ae60f6e093f9a": "[stiff, pained, precise]",
+  "13426a44fc31809e": "[hollow, quiet, haunted]",
+  "1b5d365cc40680e4": "[dry, resentful, thin]",
+  "37e60aad9dcb9176": "[flat, grim, precise]",
+  "6de92d9f2f2e58dd": "[quiet, formal, grateful]",
+  "78aa333ee4692790": "[formal, proud, thin]",
+  "b0aa31ae5c376767": "[thin, dry, wry]",
+  "b618475449572855": "[precise, dry, vague]",
+  "fd9e667551acc97c": "[stiff, formal, curt]"
+ },
+ "castle_ghost_servant_4": {
+  "103cd78537f5e8db": "[quiet, formal, solemn]",
+  "45a65c77ba564d24": "[hushed, discreet, cautionary]",
+  "4acf0bad62c36391": "[discreet, dry, quiet]",
+  "9097ea84658dff3b": "[proud, formal, devoted]",
+  "d0ffc8b73fc584e2": "[prim, discreet, scandalised]",
+  "deecf1b9e032e4ec": "[quiet, rueful, hollow]",
+  "eacdb1c71762e116": "[wistful, devoted, quiet]",
+  "f46507f7a9ac648e": "[formal, reassuring, quiet]",
+  "f9e380ff2c24b5c4": "[low, grave, warning]",
+  "fa7ff4922d2f9f03": "[urgent, kind, discreet]"
  },
  "castle_steward": {
   "12a1ec57a747fef7": "[quiet, grave, warning]",
