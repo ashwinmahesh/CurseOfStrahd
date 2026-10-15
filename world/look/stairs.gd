@@ -10,6 +10,32 @@ const RISE := 1.5      ## a flight up: 7.5 ft
 const DROP := 1.4      ## a stairwell down: 7 ft
 const WIDTH := 0.9
 const WOODEN := ["manor", "townhouse", "house", "attic", "tavern", "inn", "shop", "tent"]
+## A short flight up a 5 ft rise between two floors (owner, 2026-10-15: "we shouldn't just be stepping straight up
+## onto 5ft bricks. There should be small steps leading to it"): FLIGHT_STEPS steps in the lower square's half against
+## the higher square's face, the higher floor the last step. Where: the regions in FLIGHT_REGIONS (ArenaBoard, and
+## CastleBuilder for the gates' wall walk). The rules grid is unchanged: a 5 ft step up is still one.
+const FLIGHT_STEPS := 5
+const FLIGHT_DEPTH := 0.5
+const FLIGHT_REGIONS: Array[String] = ["castle_ravenloft"]
+
+
+## Whether two floors `rise` apart (world units) are one 5 ft step, which a flight dresses.
+static func flight_rise(rise: float) -> bool:
+	return rise > 0.6 and rise < 1.4
+
+
+## The boxes of a flight ([{size, at}], world units): `edge` is the middle of the edge the two squares share at the
+## lower floor's height, `d` points from the lower square to the higher, `rise` is how far up the higher floor is. Each
+## step is solid down to the floor, and a little below it, so it sits on uneven ground too.
+static func flight(edge: Vector3, d: Vector2i, rise: float) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var tread := FLIGHT_DEPTH / FLIGHT_STEPS
+	var back := Vector3(-d.x, 0, -d.y)
+	for i in FLIGHT_STEPS:
+		var h := rise * (FLIGHT_STEPS - i) / float(FLIGHT_STEPS + 1)   # the tallest against the face
+		var size := Vector3(1.0 if d.x == 0 else tread, h + 0.2, tread if d.x == 0 else 1.0)
+		out.append({"size": size, "at": edge + back * (tread * (i + 0.5)) + Vector3(0, (h - 0.2) / 2.0, 0)})
+	return out
 
 
 ## The side of `cell` the party comes in from: an open neighbour, the ones the opening camera faces first.

@@ -272,6 +272,13 @@ static func _walk(board: ArenaBoard, st: Dictionary, c: Vector2i, h: float, part
 		var nv := Vector3(d.x, 0, d.y)
 		var edge := Vector3(1.0 if d.x == 0 else 0.14, 0.09, 0.14 if d.x == 0 else 1.0)
 		parts.append(_box(edge, centre + nv * 0.46 + Vector3(0, h + 0.045, 0), COPING))
+		# A step of the stair 5 ft above the square below it gets a short flight up from there, in the castle's stone
+		# (Stairs.flight; owner 2026-10-15), cut away with the walk.
+		if not cells.has(n) and _passable(board, n):
+			var below := float(walks[n]) if walks.has(n) else board.floor_y(n)
+			if Stairs.flight_rise(h - below):
+				for step: Dictionary in Stairs.flight(centre + nv * 0.5 + Vector3(0, below, 0), -d, h - below):
+					parts.append(_box(step["size"] as Vector3, step["at"] as Vector3, CORE))
 		if h >= LOW and nh <= 0.0 and board.grid.in_bounds(n) and not board.grid.has_flag(n, CombatGrid.VOID):
 			parts.append(["kit_castle_wall_foot", BuildingKit.face_xf(centre + nv * 0.5, atan2(nv.x, nv.z))])
 

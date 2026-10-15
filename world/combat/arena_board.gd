@@ -231,6 +231,7 @@ func _build() -> void:
 			if (f & CombatGrid.LOW) != 0:
 				_low_cover(c)
 			_dress(c, dressed)
+	_flights(dais)
 	if theme == "shrine_yard" and place == "":
 		_lanterns()   # the arena's lit pillars
 	if not wall_styles.is_empty():
@@ -240,6 +241,46 @@ func _build() -> void:
 	Clutter.dress(self)   # decals: cracks, stains, moss, mud fringes ... (docs/art/decals.md)
 
 
+## Short flights of steps (Stairs.flight) up each 5 ft rise between two walkable built floors, in the regions that
+## have them (Stairs.FLIGHT_REGIONS, Castle Ravenloft: owner 2026-10-15, no stepping straight up onto 5 ft blocks), in
+## the raised floor's own stone. The gates' wall walk and its stairs are CastleBuilder's, which steps them itself.
+func _flights(dais: Material) -> void:
+	if place == "" or not Compendium.shared().has("locations", place) \
+			or not str(Compendium.shared().get_entry("locations", place).get("region", "")) in Stairs.FLIGHT_REGIONS:
+		return
+	for z in grid.depth:
+		for x in grid.width:
+			var c := Vector2i(x, z)
+			if not _walked_floor(c) or grid.has_flag(c, CombatGrid.NATURAL) or CastleBuilder.walk_at(self, c):
+				continue
+			var top := floor_y(c)
+			var mat: Material = (_floors[c] as MeshInstance3D).material_override if _floors.has(c) else dais
+			for d: Vector2i in _SIDES:
+				var n := c + d
+				if not _walked_floor(n) or not Stairs.flight_rise(top - floor_y(n)):
+					continue
+				var edge := Vector3(n.x + 0.5 - d.x * 0.5, floor_y(n), n.y + 0.5 - d.y * 0.5)
+				var holder := Node3D.new()
+				holder.name = "Flight_%d_%d_%d_%d" % [n.x, n.y, c.x, c.y]
+				add_child(holder)
+				for step: Dictionary in Stairs.flight(edge, -d, top - floor_y(n)):
+					var mi := MeshInstance3D.new()
+					var bm := BoxMesh.new()
+					bm.size = step["size"] as Vector3
+					mi.mesh = bm
+					mi.position = step["at"] as Vector3
+					mi.material_override = mat
+					holder.add_child(mi)
+				flights.append(holder)
+
+
+## A square the party walks on (not a wall, the void or deep water).
+func _walked_floor(c: Vector2i) -> bool:
+	return grid.in_bounds(c) and (grid.flags(c) & (CombatGrid.WALL | CombatGrid.VOID | CombatGrid.WATER)) == 0
+
+
+## The flights of steps the board drew (_flights), each a node of step boxes named Flight_<lower x>_<lower z>_<upper x>_<upper z>.
+var flights: Array[Node3D] = []
 ## Tall billboards (trees) that fade when they stand between the camera and the party.
 var occluders: Array[Sprite3D] = []
 ## 3D trees (ModelPiece) and rock columns (place_looks "rock_walls") that fade the same way.

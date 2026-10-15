@@ -123,6 +123,20 @@ func test_regions_play_their_theme() -> void:
 	assert_true(checked > 0, "some region has a theme")
 	assert_eq(Audio.mood_for("vallaki_blue_water_inn", "tavern"), "tavern", "an inn keeps its tavern music")
 	assert_eq(Audio.mood_for("vallaki_st_andrals", "church"), "church", "St. Andral's keeps the church's")
+	# Spinning Tavern is Blood of the Vine's own tune beside the regular tavern ones (owner, 2026-10-15); no other tavern plays it.
+	var spinning := "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3"
+	assert_eq(Audio.mood_for("blood_of_the_vine", "tavern"), "blood_of_the_vine", "Blood of the Vine has its own music")
+	var vine := Audio.files("music", "blood_of_the_vine")
+	assert_true(vine.has(spinning), "it plays Spinning Tavern")
+	for path in Audio.files("music", "tavern"):
+		assert_true(vine.has(path), "and still the regular tavern tune %s" % path)
+	assert_false(Audio.files("music", "tavern").has(spinning), "no other tavern plays it")
+	# The title screen opens on Bach's Toccata (owner, 2026-10-15); Skeleton Waltz Theme plays among the haunted tracks.
+	var toccata := "res://art/sourced/wikimedia_commons/Bach,_Toccata_und_Fuge_d-moll_BWV_565,_Norbert_Schenk.mp3"
+	var waltz := "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg"
+	var title := Audio.files("music", "title")
+	assert_true(title.size() == 1 and title.has(toccata), "the title screen plays the Toccata alone")
+	assert_true(Audio.files("music", "haunted").has(waltz), "Skeleton Waltz Theme plays in the haunted mood")
 
 
 ## The Wizard of Wines turns cheerful once Yester Hill is broken (owner, 2026-10-13): every one of its places, the
