@@ -7,7 +7,8 @@ extends RefCounted
 ## Temple spells use the 2024 PHB's spellcasting-service prices (level 1: 50 gp, level 2: 200 gp, level 3: 300 gp,
 ## levels 4 and 5: 2,000 gp), plus a material the spell uses up. St. Andral's keeps scrolls of the spells Father
 ## Lucian can't cast himself and reads them for the party (owner, 2026-10-07): Raise Dead, for its fee and the 500 gp
-## diamond. A hero raised comes back with 1 Hit Point and -4 on D20 Tests for 10 days (owner's call; the book's
+## diamond. The village church (Father Donavich) and Krezk's shrine (Kasha Varo) read Raise Dead too, so every town has
+## a way back for the dead (Ashwin, 2026-10-15). A hero raised comes back with 1 Hit Point and -4 on D20 Tests for 10 days (owner's call; the book's
 ## penalty shrinks by 1 with each Long Rest instead, docs/rules/deviations.md), if they died within the last 10 days.
 ## When each hero died is noted as the clock moves on (note_deaths), in the flags.
 ##

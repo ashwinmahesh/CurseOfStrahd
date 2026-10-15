@@ -56,6 +56,26 @@
         "id": "potion_of_healing",
         "qty": 2,
         "price": 75
+      },
+      {
+        "id": "diamond",
+        "qty": -1,
+        "markup": 1.0
+      },
+      {
+        "id": "pearl",
+        "qty": -1,
+        "markup": 1.0
+      },
+      {
+        "id": "onyx",
+        "qty": -1,
+        "markup": 1.0
+      },
+      {
+        "id": "ruby_dust",
+        "qty": -1,
+        "markup": 1.0
       }
     ],
     "magic": [
