@@ -2383,7 +2383,7 @@ func _narrate(key: String, actor: Combatant, target: Combatant) -> void:
 		if cut != "":
 			var player := CutscenePlayer.new()
 			add_child(player)
-			if player.play(cut, [text] as Array[String], story):
+			if player.play_scenes(Cutscenes.scenes(cut, text, story, narrator, who), story):
 				Cutscenes.mark_played(cut, story)
 				return
 			player.queue_free()

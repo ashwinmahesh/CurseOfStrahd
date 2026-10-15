@@ -555,3 +555,9 @@ cooldown 0
 
 ~ examine:graves_lantern
 | A lantern on a post at the burial ground's gate, kept trimmed and kept full. Somebody walks up here every evening to see to it, and walks back down before dark.
+
+~ scene:gallows_dead_turn
+| Every head on the field turns the same way, toward the road, toward you. They do not hurry. They have all night, and the night is theirs.
+
+~ scene:tser_tent_music
+| Inside the great tent a fiddle starts up, the dancers turn in the lamplight, and for the length of one song nobody remembers what valley this is.

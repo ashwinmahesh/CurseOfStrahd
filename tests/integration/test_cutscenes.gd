@@ -60,7 +60,9 @@ func before_each() -> void:
 	Cutscenes.register({"id": "test_ridge", "title": "Test", "summary": "A fixture.", "images": [TAKE],
 		"focus": [0.5, 0.3]})
 	Cutscenes.register({"id": "test_view", "title": "Test view", "summary": "A fixture.",
-		"images": [{"image": "strahd_watcher", "when": ""}], "trigger": "examine:test_lookout"})
+		"images": [{"image": "strahd_watcher", "when": ""}], "trigger": "examine:test_lookout", "then": "test_view_2"})
+	Cutscenes.register({"id": "test_view_2", "title": "Test view, later", "summary": "A fixture.",
+		"images": [{"image": "vosk_unmasked", "when": ""}], "caption": "scene:test_view_2"})
 	Cutscenes.register({"id": "test_once", "title": "Test once", "summary": "A fixture.",
 		"images": [{"image": "strahd_watcher", "when": ""}], "trigger": "enter:test_ledge", "once": true})
 	DialogueFile.register(DialogueFile.parse(DIALOGUE, "test/cut"))
@@ -439,6 +441,83 @@ func test_looking_at_a_places_trigger_shows_its_picture_with_the_narrators_words
 	assert_true(not get_tree().paused, "unpaused")
 
 
+## Owner rule (2026-10-14): every cutscene is at least two scenes. A trigger's picture is followed by the scene its `then`
+## names, with a Narrator line over it; it fades in after the first one's last caption, and Skip closes both.
+func test_a_places_second_scene_follows_the_first() -> void:
+	await _game(false)
+	var narrator := root.get("narrator") as Narrator
+	narrator.add_file(DialogueFile.parse("~ examine:test_lookout\n| The whole valley lies open below.\n\n~ scene:test_view_2\n| And far off, one light.", "test/narr"))
+	var v := root.get("view") as LocationView
+	v.interact(v.thing_at(Vector2i(1, 1)))
+	await _frames(2)
+	var player := root.get("screen") as CutscenePlayer
+	assert_true(player != null, "the cutscene opens")
+	assert_eq(player.scene_id, "test_view")
+	assert_eq(player.view.image_path, "res://art/cutscenes/strahd_watcher.jpg")
+	assert_eq(player.view.caption_text(), "The whole valley lies open below.")
+	player.advance()
+	assert_true(not player.done, "a second scene follows the last caption")
+	assert_eq(player.scene_id, "test_view_2")
+	assert_eq(player.id, "test_view", "the cutscene that was triggered stays its first scene")
+	assert_eq(player.view.image_path, "res://art/cutscenes/vosk_unmasked.jpg", "its own picture")
+	assert_eq(player.view.caption_text(), "And far off, one light.", "the Narrator's line over it")
+	player.advance()
+	assert_true(player.done, "closed after the last scene")
+	await _frames(2)
+	assert_true(not get_tree().paused, "and the world is back")
+
+
+## Owner rule (2026-10-14): every cutscene is at least two scenes. The pictures a trigger plays (a place, a treasure, a
+## fight's narrator key) each name a second scene with `then`, and a Narrator line to read over it.
+func test_every_trigger_cutscene_has_a_second_scene_with_a_narrator_line() -> void:
+	Cutscenes.clear_cache()
+	var narrator := Narrator.new(1)
+	var checked := 0
+	for c in Cutscenes.all():
+		if str(c.get("trigger", "")) == "":
+			continue
+		checked += 1
+		var next := str(c.get("then", ""))
+		assert_ne(next, "", "%s has a second scene" % c["id"])
+		var scene := Cutscenes.get_cutscene(next)
+		assert_true(not scene.is_empty(), "%s: the scene after it, %s, exists" % [c["id"], next])
+		assert_true(narrator.has_trigger(str(scene.get("caption", ""))), "%s has a Narrator line over it" % next)
+	assert_true(checked >= 14, "the triggers are checked (%d)" % checked)
+
+
+func test_skip_in_the_first_scene_closes_the_second_too() -> void:
+	await _game(false)
+	var narrator := root.get("narrator") as Narrator
+	narrator.add_file(DialogueFile.parse("~ examine:test_lookout\n| One.\n\n~ scene:test_view_2\n| Two.", "test/narr"))
+	var v := root.get("view") as LocationView
+	v.interact(v.thing_at(Vector2i(1, 1)))
+	await _frames(2)
+	var player := root.get("screen") as CutscenePlayer
+	player.view.skip_requested.emit()
+	assert_true(player.done, "Skip leaves the whole cutscene")
+	assert_eq(player.scene_id, "test_view", "without playing the second scene")
+
+
+func test_the_scenes_after_a_trigger_need_a_picture_and_a_narrator_line() -> void:
+	var st := _story(false)
+	var n := Narrator.new(1)
+	assert_eq(Cutscenes.scenes("test_view", "First.", st, null).size(), 1, "no Narrator: the first scene alone")
+	assert_eq(Cutscenes.scenes("test_view", "First.", st, n).size(), 1, "no line for the second: the first alone")
+	n.add_file(DialogueFile.parse("~ scene:test_view_2\n| Second.", "test/narr"))
+	var steps := Cutscenes.scenes("test_view", "First.", st, n)
+	assert_eq(steps.size(), 2)
+	assert_eq(str(steps[0]["id"]), "test_view")
+	assert_eq((steps[0]["lines"] as Array[String])[0], "First.")
+	assert_eq(str(steps[1]["id"]), "test_view_2")
+	assert_eq((steps[1]["lines"] as Array[String])[0], "Second.")
+	Cutscenes.register({"id": "test_loop", "title": "Loop", "summary": "A fixture.", "images": [{"image": "vosk_unmasked", "when": ""}],
+		"caption": "scene:test_view_2", "then": "test_loop"})
+	var looping := Cutscenes.get_cutscene("test_view_2").duplicate(true)
+	looping["then"] = "test_loop"
+	Cutscenes.register(looping)
+	assert_eq(Cutscenes.scenes("test_view", "First.", st, n).size(), 3, "a chain goes on, once through each scene")
+
+
 func test_an_ending_shows_its_picture_behind_the_narration() -> void:
 	await _game(false)
 	var screen := EndingScreen.new()
@@ -472,6 +551,27 @@ func test_a_treasure_shows_its_picture_once_in_a_conversation() -> void:
 	assert_eq(Cutscenes.for_trigger("find:tome_of_strahd", st), "")
 
 
+func test_a_treasure_in_a_conversation_then_shows_its_next_scene_and_takes_it_away() -> void:
+	var st := _story(false)
+	st.tarokka = {"tome": "swords_1"}
+	var tome := Cutscenes.get_cutscene("treasure_tome").duplicate(true)
+	tome["then"] = "test_view_2"
+	Cutscenes.register(tome)
+	var n := Narrator.new(1)
+	n.add_file(DialogueFile.parse("~ scene:test_view_2\n| The first page, open.", "test/narr"))
+	var r := DialogueRunner.new(st, DiceRoller.new(3), n)
+	assert_true(r.start("test/cut:treasure"))
+	assert_eq(str(r.next()["id"]), "treasure_tome", "its picture first")
+	assert_true(str(r.next()["text"]).contains("Tome of Strahd"), "the notice over it")
+	var second := r.next()
+	assert_eq(str(second["kind"]), "cutscene")
+	assert_eq(str(second["id"]), "test_view_2", "then the next scene")
+	assert_eq(str(r.next()["text"]), "The first page, open.", "with the Narrator's line over it")
+	var end := r.next()
+	assert_eq(str(end["kind"]), "cutscene")
+	assert_eq(str(end["image"]), "", "and it is taken away")
+
+
 func test_a_treasure_in_the_spoils_shows_its_picture_before_the_loot_window() -> void:
 	await _game(false)
 	root.call("_open_loot", "test_chest", [{"id": "sunsword", "qty": 1}], 0.0)
@@ -480,6 +580,9 @@ func test_a_treasure_in_the_spoils_shows_its_picture_before_the_loot_window() ->
 	assert_true(player != null and player.id == "treasure_sword", "the Sunsword's picture")
 	assert_true(root.get("loot") == null, "the loot window waits for it")
 	assert_true(player.view.caption_text().begins_with("The Sunsword"), player.view.caption_text())
+	player.advance()
+	assert_eq(player.scene_id, "sunsword_light", "its second scene follows the first")
+	assert_true(root.get("loot") == null, "the loot window waits for that too")
 	player.advance()
 	await _frames(3)
 	assert_true(root.get("loot") != null, "then the loot window opens")

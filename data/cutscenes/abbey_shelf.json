@@ -9,5 +9,6 @@
     }
   ],
   "trigger": "enter:abbey_of_st_markovia",
-  "once": true
+  "once": true,
+  "then": "abbey_gate_light"
 }

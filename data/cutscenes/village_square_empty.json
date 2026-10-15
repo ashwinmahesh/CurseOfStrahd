@@ -1,0 +1,16 @@
+{
+  "id": "village_square_empty",
+  "title": "A Candle in the Church",
+  "summary": "The village square is empty in the rain and the church door stands open a finger's width on one lit candle.",
+  "images": [
+    {
+      "image": "village_square_empty",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:village_square_empty"
+}

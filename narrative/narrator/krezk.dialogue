@@ -254,3 +254,6 @@ once
 
 ~ check:stealth:krezkov_listen:failure
 | A board creaks under your boot, and the voices inside stop. The shutters close.
+
+~ scene:krezk_gate_lamps
+| At the black oak gate two watchmen with lanterns look you over, then the road behind you, and then, with great care, you again.
