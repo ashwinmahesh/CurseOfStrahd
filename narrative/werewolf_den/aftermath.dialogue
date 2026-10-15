@@ -50,7 +50,7 @@ Emil: You've given me back my pack. I can't follow you to the castle; they'd be 
 Emil: But if it ever comes to the end with the old man on the hill, and you need teeth at his gates, send word up this hill.
 leave emil_toranescu
 Zuleika: Here. My own brewing: the same thing that keeps the pack sleepy when I want them sleepy. Don't ask what's in it. Drink it when you're bleeding.
-give potion_of_healing 2
+give potion_of_healing_supreme 2
 -> END
 
 ~ no_emil

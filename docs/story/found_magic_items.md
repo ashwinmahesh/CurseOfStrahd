@@ -262,6 +262,8 @@ leaves a smaller purse and one find.
 | ✅ | Werewolf caves, the shrine of Mother Night | +2 Moon Sickle (rare) | Search (Perception DC 15): an offering hidden under the shrine |
 | ✅ | Werewolf caves, the drying herbs | Elixir of Health (rare) | Search (Investigation DC 14); or a Tip from the wolfsbane at the den's door (Speak with Plants) |
 | ✅ | Zuleika | Ring of Free Action (rare) | Gift: once Emil is free of his chains |
+| ✅ | Zuleika | Potion of Healing (Supreme), two (very rare) | Gift: if Emil stays with his pack after the pack challenge (Ashwin, 2026-10-14: Supreme, not plain Healing) |
+| ✅ | Kiril's hoard (locked chest, DC 15) | Ring of Regeneration (very rare), Wand of Enemy Detection (rare), Ring of Animal Influence (rare) | Hoard: a pack leader's spoils from the Krezk road (Ashwin, 2026-10-14: replaces the two Potions of Healing) |
 
 ## Under Van Richten's Tower (side quest, level 10)
 
