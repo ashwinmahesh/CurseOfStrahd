@@ -114,6 +114,9 @@ static func _unlock(view: LocationView, spec: Dictionary, method: String = "auto
 		(view.st.loc_state(view.loc_id)["doors"] as Dictionary)[id] = "unlocked"
 		Audio.sfx("unlock")
 		view._say("check:unlock:success", who)
+		var earned := Xp.award(view.st, "check", "lock:%s:%s" % [view.loc_id, id])   # XP levelling: a lock picked or forced
+		if earned > 0:
+			view.toast.emit("Unlocked" + Xp.tag(earned))
 		return true
 	view._say("check:unlock:failure", who, "It holds.")
 	view.st.advance_minutes(1)

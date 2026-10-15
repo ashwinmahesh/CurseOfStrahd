@@ -14,6 +14,7 @@ make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
 make cheat-codes (rewrites Cheat Codes.md in the vault from the item data; story/cheat_codes.gd makes the codes)
 make magic-prices (writes data/treasure/magic_prices.json, Sane Magical Prices, into the magic items' cost_gp; make validate checks it)
+make xp-sim [RULES=build|plan|literal] (XP levelling's simulator: the party's level at every story gate, docs/plans/xp_mode.md)
 make wiki (rewrites the vault's spoiler wiki, Wiki/, from the data; prose outside its %% auto %% blocks is kept) · make wiki-shots (its screenshots)
 make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines, ADR 0013)
 

@@ -149,6 +149,7 @@ approve kip_smudgewick -6 godrick_pendlebrook -6 liriel_dawnsong -5 thistle -5 w
 
 ~ release
 cutscene morgantha_keys
+xp fight coven_last_stand
 Narrator: Morgantha unhooks a ring of iron keys from her apron and opens both cages, humming. The children don't move until she has sat back down.
 Morgantha [smile]: Off you go, ducklings. Mind the stairs. Give your mother Morgantha's love; she'll be wanting another basket soon.
 -> old_bonegrinder/children:freed

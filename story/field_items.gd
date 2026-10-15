@@ -240,13 +240,13 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			return {"ok": true, "text": "%s's %s %s." % [nm, label, params.get("text", "does something harmless")]}
 		"read_tome":
 			# The Tome of Strahd (Curse of Strahd): its history goes into the codex; the vampire knows it was read.
-			var first := not "tome_of_strahd" in st.codex
+			var lore := st.add_codex("tome_of_strahd")
+			var first := lore >= 0
 			if first:
-				st.codex.append("tome_of_strahd")
 				st.advance_minutes(3 * 60)
 			st.set_flag("tome_of_strahd_read", true)
 			st.set_flag("strahd_knows_tome_read", true)
-			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly." % [nm, label] if first
+			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly.%s" % [nm, label, Xp.tag(lore)] if first
 				else "%s turns the pages again. The ending hasn't changed." % nm}
 		"drink_field_spell":
 			var mins := int(params.get("minutes", 10))

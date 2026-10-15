@@ -191,15 +191,24 @@ func next() -> Dictionary:
 				if not st.flags.has(key):
 					st.flags[key] = true
 					st.milestones += 1
+					if Xp.active(st):
+						return {"kind": "notice", "text": Xp.milestone(st)}   # the High award, the floor, the reserve paid
 					return {"kind": "notice", "text": "Milestone: the party can advance to level %d" % st.target_level()}
+			"xp_fight":
+				pc += 1
+				var avoided := Xp.talked_away(st, str(s["encounter"]))   # a fight talked or tricked away pays what winning would
+				if avoided != "":
+					return {"kind": "notice", "text": avoided}
 			"check":
 				pc += 1
 				var who2 := _best_for(str(s["skill"]))
 				var ok := str(s["ok"])
 				var fail := str(s["fail"])
+				var line_key := "%s:%s:%d" % [file.key, node, int(s["n"])]
 				return _check(who2, str(s["skill"]), int(s["dc"]), "", func(beat: Dictionary) -> Dictionary:
 					_check_jumps = [ok, fail]
 					_pending_jump = ok if bool(beat["success"]) or fail == "" else fail
+					_pay_check(beat, line_key)
 					return beat)
 			"combat":
 				combat = str(s["encounter"])
@@ -412,6 +421,7 @@ func choose(i: int) -> Dictionary:
 		return _check(speaker, str(check["skill"]), int(check["dc"]), str(opt["text"]), func(beat: Dictionary) -> Dictionary:
 			_check_jumps = [str(opt["ok"]), str(opt["fail"])]
 			_pending_jump = str(opt["ok"]) if bool(beat["success"]) or str(opt["fail"]) == "" else str(opt["fail"])
+			_pay_check(beat, str(opt["xp_key"]))
 			# Owner rule (2026-10-06): a failed Persuasion, Intimidation, Deception, Performance or Insight attempt is
 			# spent; the option doesn't come back (they won't fall for it twice, and a read face doesn't change).
 			_last_option_key = _spent_key(str(opt["text"])) if _social(str(check["skill"])) else ""
@@ -466,7 +476,7 @@ func _collect_options() -> void:
 				label = (label + " [%d gp]" % roundi(price)).strip_edges()
 			_options.append({"text": str(s["text"]), "label": label.strip_edges(), "ok": str(s["ok"]), "fail": str(s["fail"]),
 				"check": check, "check_info": info, "who": who, "enabled": enabled,
-				"reason": "" if enabled else "Not enough gold"})
+				"reason": "" if enabled else "Not enough gold", "xp_key": "%s:%s:%d" % [file.key, node, int(s["n"])]})
 		elif t in ["if", "elif", "else", "endif"]:
 			if t == "if":
 				if StoryConditions.check(str(s["cond"]), st):
@@ -792,6 +802,20 @@ func _check_beat() -> Dictionary:
 		"auto_failed": test.auto_failed}
 
 
+## XP levelling (story/xp.gd): a check passed is worth a little, once for each line that asks it (`key`: file:node:line).
+## The beat carries what it earned for the screen to show (Xp.tag); failures give nothing.
+func _pay_check(beat: Dictionary, key: String) -> void:
+	_xp_key = key
+	if bool(beat["success"]):
+		var n := Xp.award(st, "check", key)
+		if n > 0:
+			beat["xp"] = n
+
+
+## The key of the check just rolled, for an aid that turns it into a success (use_aid).
+var _xp_key := ""
+
+
 ## Spends an aid on the last (failed) check: Heroic Inspiration or Tactical Mind. The branch follows the new result.
 func use_aid(id: String) -> Dictionary:
 	if _last_check.is_empty():
@@ -802,4 +826,6 @@ func use_aid(id: String) -> Dictionary:
 		st.flags.erase(_last_option_key)
 	if _check_jumps.size() == 2:
 		_pending_jump = str(_check_jumps[0]) if test.success or str(_check_jumps[1]) == "" else str(_check_jumps[1])
-	return _check_beat()
+	var beat := _check_beat()
+	_pay_check(beat, _xp_key)   # the aid turned a failure round
+	return beat

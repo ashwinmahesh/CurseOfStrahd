@@ -42,6 +42,7 @@ endif
 * (Lower the flame.) We'll leave it dark. -> back_down
 
 ~ words
+xp fight beacon_stand
 Narrator: The point of the sword drops an inch. Then another.
 Vladimir: He told you. Of course he told you. He never could keep a thing to himself.
 Vladimir: I held his head and he said it, and I could not bear to go where he was going and tell him I had lost his house. So I kept them here, so that none of us would have to.
@@ -51,6 +52,7 @@ approve godrick_pendlebrook +2 wren_featherfoot +2 liriel_dawnsong +1: You made 
 -> light
 
 ~ persuaded
+xp fight beacon_stand
 Vladimir: Company. ...Four hundred years in the front row, and he has never once looked up at us.
 Vladimir: Light it, then. Quickly, before I remember why not.
 set vladimir_fate = "made_peace"

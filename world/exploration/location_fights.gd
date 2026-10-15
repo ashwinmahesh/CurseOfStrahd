@@ -443,6 +443,11 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 	LocationParty.refresh_familiars(view)
 	if outcome == "victory":
 		(view.st.loc_state(view.loc_id)["encounters"] as Dictionary)[encounter_id] = true
+		# XP levelling: the foes overcome are worth XP, a road meeting, a night at camp or Strahd's visit (custom) every time
+		# but lost over the ceiling (story/xp.gd).
+		var earned := Xp.fight(view.st, e, encounter_id, bool(spec.get("custom", false)))
+		if earned != "":
+			view.toast.emit(earned)
 		if spec.has("flag"):
 			view.st.set_flag(str(spec["flag"]))
 		if spec.has("quest"):

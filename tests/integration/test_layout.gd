@@ -286,6 +286,35 @@ func test_the_party_screens() -> void:
 		await _check("the %s" % kind, _screen(kind, 0), _close_screen)
 
 
+## XP levelling's rows (story/xp.gd): the experience strip on the Party screen and the sheet at its longest (a level 10 pool a
+## point short of 11 with a big reserve held), the level-up screen when there's no level to take, and Settings' Game page
+## saying how heroes grow.
+func test_the_xp_levelling_screens() -> void:
+	if not await _game(LATE):
+		return
+	var st := GameState.story
+	st.options[Xp.OPTION] = Xp.EXPERIENCE
+	var lowest := 20
+	for ch in st.party:
+		lowest = mini(lowest, ch.character_level())
+	# The longest line: a pool a point short of the next level, with a big reserve held for the next milestone.
+	st.xp = Xp.threshold(lowest + 1) - 1
+	st.xp_reserve = 94000
+	await _check("the party (XP levelling)", _screen("party", 0), _close_screen)
+	await _check("%s's sheet (XP levelling)" % st.party[0].name, _screen("sheet", 0), _close_screen)
+	# A pool that has taken every level the story gives: nobody can level up, and the line says what is still needed.
+	st.xp = Xp.threshold(lowest)
+	for i in st.party.size():
+		if not st.can_level_up(st.party[i]):
+			await _check("%s's level up (XP levelling, XP short)" % st.party[i].name, _screen("level_up", i), _close_screen)
+	await _check("the settings (Game, XP levelling)", func() -> Variant:
+		root.call("open_screen", "menu", 0)
+		await _frames(1)
+		root.get("screen").call("_show_settings", "Game")
+		await _frames(2)
+		return root.get("screen"), _close_screen)
+
+
 ## Settings' three pages in the pause menu's arch (lane 13: Game, Display and the Keys list).
 func test_the_settings_pages() -> void:
 	if not await _game(LATE):
