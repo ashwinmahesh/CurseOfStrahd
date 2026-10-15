@@ -245,19 +245,20 @@ func test_a_warlocks_prompt_lists_the_pact_slot_then_the_free_casting() -> void:
 	assert_true(_logged(e, "answers with Hellish Rebuke (free casting"))
 
 
-## On Automatic (the AI's way too) the warlock spends its pact slot first and keeps the free casting.
-func test_on_automatic_a_warlock_spends_the_pact_slot_first() -> void:
+## On Automatic with the pact slot the only way left (the free casting spent), the warlock casts without asking. With
+## the free casting left too it is asked which (test_hellish_rebuke_upcast).
+func test_on_automatic_a_warlock_with_one_way_to_cast_spends_the_pact_slot() -> void:
 	var f := _beside_wolf(TestChars.pregen("kip_smudgewick", 5))
 	var e := f["e"] as Encounter
 	var h := f["h"] as Combatant
 	var ch := h.creature as Character
+	ch.spend_resource("spell:hellish_rebuke")
 	e.default_player_reaction = "auto"
 	var pact_left := int(ch.pact_magic()["left"])
 	_wolf_rolls(e, h)
 	e.move(h, Vector2i(0, 3))
-	_decline_rest(e)
+	assert_false(_decline_rest(e).has("hellish_rebuke"), "nothing asked")
 	assert_eq(int(ch.pact_magic()["left"]), pact_left - 1, "a pact slot")
-	assert_eq(ch.resource_left("spell:hellish_rebuke"), 1, "the free casting kept")
 
 
 ## Shield from a free casting (Magic Initiate's, say) with no slots left.
