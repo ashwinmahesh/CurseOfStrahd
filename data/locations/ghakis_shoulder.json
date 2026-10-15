@@ -567,7 +567,8 @@
             5
           ],
           "name": "A Keeper",
-          "facing": "south"
+          "facing": "south",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -576,7 +577,8 @@
             8
           ],
           "name": "A Keeper",
-          "facing": "south"
+          "facing": "south",
+          "hp": 60
         },
         {
           "monster": "helmed_horror",
@@ -593,7 +595,8 @@
             17,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -601,7 +604,8 @@
             17,
             5
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -609,7 +613,8 @@
             13,
             9
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -617,7 +622,8 @@
             18,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -625,7 +631,8 @@
             18,
             6
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "wight",
@@ -633,7 +640,8 @@
             19,
             4
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 60
         },
         {
           "monster": "revenant",
@@ -641,7 +649,8 @@
             19,
             5
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         },
         {
           "monster": "revenant",
@@ -649,7 +658,8 @@
             19,
             6
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         },
         {
           "monster": "revenant",
@@ -657,7 +667,8 @@
             23,
             9
           ],
-          "name": "A Keeper"
+          "name": "A Keeper",
+          "hp": 95
         }
       ],
       "surprise": "",

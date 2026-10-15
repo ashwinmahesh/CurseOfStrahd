@@ -230,10 +230,13 @@ func test_sarkhaza_at_level_10() -> void:
 	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls in 2 to 4 of 8 (%d)" % wins)
 
 
-## Sarkhaza with the keepers' three tricks at level 10: Sarkhaza (165 HP), 6 Wights; 4 in 8 (a reward; played for four seeds,
-## not counted).
+## Sarkhaza with the keepers' three tricks at level 10: Sarkhaza (165 HP), 6 Wights; 4 in 8 (a reward). Counted over all eight
+## seeds with the speakers stepped aside like her other fights (2026-10-15: it played four seeds uncounted, and which squares she
+## started from depended on the test that ran before).
 func test_sarkhaza_with_the_keepers_tricks_at_level_10() -> void:
-	await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
+	speakers_step_aside = true
+	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
+	assert_true(wins >= 3 and wins <= 5, "Sarkhaza falls to the keepers' tricks in 3 to 5 of 8 (%d)" % wins)
 
 
 ## Sarkhaza unchained at level 11: Sarkhaza (375 HP); 3 in 8.

@@ -829,6 +829,20 @@
             17
           ],
           "name": "Rider of the Last Muster"
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            9,
+            10
+          ]
+        },
+        {
+          "monster": "zombie",
+          "cell": [
+            9,
+            19
+          ]
         }
       ],
       "surprise": "",

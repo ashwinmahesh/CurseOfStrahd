@@ -1300,8 +1300,7 @@
           ],
           "lying": {
             "head": "west"
-          },
-          "hp": 85
+          }
         },
         {
           "monster": "wight",
@@ -1322,27 +1321,6 @@
           "cell": [
             25,
             11
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            26,
-            2
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            5
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            7
           ]
         }
       ],
