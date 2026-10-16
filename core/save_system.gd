@@ -152,13 +152,9 @@ func _write_beside(slot: String) -> Error:
 
 
 func _write(slot: String, data: Dictionary) -> Error:
-	DirAccess.make_dir_recursive_absolute(save_dir)
-	var f := FileAccess.open(slot_path(slot), FileAccess.WRITE)
-	if f == null:
-		return FileAccess.get_open_error()
-	f.store_string(JSON.stringify(data, "\t"))
-	f.close()
-	return OK
+	if slot.is_empty() or slot != slot.get_file() or slot in [".", ".."]:
+		return ERR_INVALID_PARAMETER
+	return AtomicJson.write(slot_path(slot), data)
 
 
 ## The campaign's end (ADR 0014): the game's own slot (a new one if it has none) is written one last time, marked
@@ -187,12 +183,11 @@ func load_slot(slot: String) -> Error:
 ## game's own). One from anywhere else (a backup) is a game without a slot until its first save.
 func load_from(dir: String, slot: String) -> Error:
 	var path := dir.path_join(slot + ".json")
-	if not FileAccess.file_exists(path):
+	if not FileAccess.file_exists(path) and not FileAccess.file_exists(path + ".bak"):
 		return ERR_FILE_NOT_FOUND
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-	if not data is Dictionary:
+	var dict := AtomicJson.read(path)
+	if dict.is_empty():
 		return ERR_PARSE_ERROR
-	var dict := data as Dictionary
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
 	dict = upgrade(dict)
@@ -344,10 +339,7 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 
 ## A save file as a dictionary ({} when it's missing or not JSON).
 static func _read(path: String) -> Dictionary:
-	if not FileAccess.file_exists(path):
-		return {}
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-	return data as Dictionary if data is Dictionary else {}
+	return AtomicJson.read(path)
 
 
 ## The player deletes a save (the saves page): it and its picture go, and the game's own slot with it, so the next save
@@ -362,8 +354,10 @@ func delete_save(slot: String) -> bool:
 
 
 func delete_slot(slot: String) -> void:
-	if has_slot(slot):
-		DirAccess.remove_absolute(slot_path(slot))
+	for suffix: String in ["", ".bak", ".tmp", ".bak.tmp"]:
+		var path := slot_path(slot) + suffix
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(path)
 	if FileAccess.file_exists(thumb_path(slot)):
 		DirAccess.remove_absolute(thumb_path(slot))
 
