@@ -24,7 +24,7 @@ func test_every_shipped_campaign_save_can_be_reviewed_without_loading() -> void:
 	var before := GameState.to_dict()
 	var dice := Dice.roller.get_state()
 	for file in DirAccess.get_files_at("res://tests/saves"):
-		if not file.begins_with("v2_") or not file.ends_with(".json"):
+		if not file.begins_with("v") or not file.ends_with(".json"):
 			continue
 		var review := SaveTransfer.inspect("res://tests/saves/" + file)
 		assert_false(review.has("error"), file + ": " + str(review.get("error", "")))
@@ -88,3 +88,46 @@ func test_nested_import_shapes_are_rejected_before_any_campaign_is_loaded() -> v
 	for data in variants:
 		assert_eq(AtomicJson.write(test_dir + "incoming.json", data), OK)
 		assert_true(SaveTransfer.inspect(test_dir + "incoming.json").has("error"))
+
+
+func test_mobile_recovery_uses_the_existing_combat_slot_and_rejects_damaged_imports() -> void:
+	var before := GameState.to_dict()
+	var old_dice := Dice.roller.get_state()
+	var e := TestCombat.open_field(92)
+	var hero := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(e, "zombie", Vector2i(9, 6))
+	GameState.reset()
+	GameState.story.party.append(hero.creature as Character)
+	GameState.story.location = "into_the_mists_road"
+	var journal := CombatJournal.begin(e)
+	journal.append(e, "start", {"surprised": []})
+	GameState.combat_snapshot = {"location": "into_the_mists_road", "encounter": "wolves", "data": EncounterSnapshot.capture(e), "journal": journal.data}
+	SaveSystem.current_slot = "my_campaign"
+	assert_eq(SaveSystem.save_combat_recovery(), OK)
+	assert_eq(SaveSystem.current_slot, "my_campaign")
+	var review := SaveTransfer.inspect(SaveSystem.slot_path(SaveSystem.ROUND_START))
+	assert_false(review.has("error"), str(review.get("error", "")))
+	assert_eq(SaveSystem.load_slot(SaveSystem.ROUND_START), OK)
+	assert_eq(SaveSystem.current_slot, "my_campaign")
+	var stored := CombatJournal.new()
+	stored.data = GameState.combat_snapshot["journal"]
+	var recovered := stored.restore(Dice.roller, GameState.story.party)
+	assert_eq(recovered.state, Encounter.State.ACTIVE)
+	assert_true(recovered.get_c(hero.id).creature == GameState.story.party[0])
+	var malformed := (review["data"] as Dictionary).duplicate(true)
+	malformed["combat"]["journal"]["commands"][0]["args"]["surprised"] = "bad"
+	assert_eq(AtomicJson.write(test_dir + "broken.json", malformed), OK)
+	assert_true(SaveTransfer.inspect(test_dir + "broken.json").has("error"))
+	var state := GameState.story.to_dict()
+	assert_eq(SaveSystem.load_slot("broken"), ERR_FILE_CORRUPT)
+	assert_eq(GameState.story.to_dict(), state, "a rejected ledger never changes the current campaign")
+	GameState.story.options["difficulty"] = "honour"
+	var honour := SaveSystem.honour_slot()
+	assert_eq(SaveSystem.save_combat_recovery(), OK)
+	assert_true(SaveSystem.has_slot(honour))
+	assert_eq(SaveSystem.current_slot, honour)
+	if recovered.pending != null:
+		recovered.pending.continuation = Callable()
+		recovered.pending = null
+	GameState.from_dict(before)
+	Dice.roller.set_state(old_dice)

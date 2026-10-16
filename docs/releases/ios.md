@@ -2,7 +2,7 @@
 
 The branch includes universal landscape iPhone/iPad builds, touch controls and mobile UI compositions, native
 Files/share integration, accessibility semantics, and interruption handling. Qualification is still in progress:
-full-game native journeys, committed-action combat recovery, physical-device performance and signed distribution
+full-game native journeys, physical-device performance and signed distribution
 remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.md).
 
 ## What this build changes
@@ -16,7 +16,7 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
 - Mobile pages use safe areas, larger controls, preview/confirmation, searchable choices, and persistent Back
   navigation. Dense campaign screens and Skirmish have separate mobile compositions.
 - Saves use native Files import/share, validation before import, atomic writes and backups. Exploration checkpoints
-  run proactively outside open transactions. Combat recovery currently remains at the start of a round.
+  run proactively outside open transactions. Campaign combat writes a command journal before executing each action. A restart replays the ledger through the rules engine, including pending reactions, exact RNG states and resource costs. An unwritable save holds the action behind Retry. The existing round-start slot is used, and Honour continues to use its single slot. Ordinary desktop saves retain their round-start and fresh-load-dice behavior.
 - iOS ignores external executable PCK patches; script updates arrive in signed app releases.
 
 Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.

@@ -6,6 +6,7 @@ extends Node3D
 ## the rules. Emits finished(outcome) when the player leaves the end-of-fight banner.
 
 signal finished(outcome: String)
+signal recovery_retry
 ## A new round is about to begin (round 1 right after Initiative): the moment the game may save a fight.
 signal round_started(round: int)
 ## Escape with nothing to cancel: the game opens its pause menu (the arena has none).
@@ -35,6 +36,10 @@ const CLEAR_VIEW := Vector3(0.5, 0.55, -0.4)
 const BOSS_CLEAR_BOTTOM := -0.25
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
+
+var recovery: CombatJournal
+var recovery_writer: Callable
+var recovery_error: CanvasLayer
 
 var e: Encounter
 var catalog: ActionCatalog
@@ -173,6 +178,9 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 			e.log.add("turn", e.title, "")
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
+		if recovery == null and recovery_writer.is_valid():
+			recovery = CombatJournal.begin(e)
+		await _record_command("start", {"surprised": surprised})
 		e.start(surprised)
 	# Bosses (G3): a name plate and health bar for each above the hotbar, and for a fight that's just starting, an
 	# entrance on the greatest of them before the opening beat.
@@ -356,6 +364,7 @@ func _advance() -> void:
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
+		await _record_command("ai")
 		var r: CombatResult = opponent_turn.call(c) as CombatResult if opponent_turn.is_valid() else e.begin_ai_turn()
 		if r == null:
 			var thought: Dictionary = await _think(c)
@@ -513,6 +522,7 @@ func _end_turn() -> void:
 	_confirmed_end = false
 	mode = Mode.BUSY
 	_cancel_targeting()
+	await _record_command("end")
 	var r := e.end_turn()
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -530,6 +540,7 @@ func _undo_move() -> void:
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
+	await _record_command("undo", {"actor": c.id})
 	var r := e.undo_move(c)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
@@ -545,6 +556,7 @@ func _death_save() -> void:
 	var c := _player()
 	if c == null:
 		return
+	await _record_command("death", {"actor": c.id})
 	var r := e.death_save(c)
 	await _play_events()
 	_refresh_all()
@@ -620,6 +632,7 @@ func _switch(c: Combatant) -> void:
 	if not _command_allowed("switch", {"target": c}):
 		return
 	_cancel_targeting()
+	await _record_command("switch", {"actor": c.id})
 	var r := e.switch_to(c)
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -654,6 +667,7 @@ func _answer(use: bool, rule: String) -> void:
 	if e.pending == null:
 		return
 	var req := e.pending
+	await _record_command("answer", {"use": use, "rule": rule, "selected": req.selected_ids, "amounts": req.amounts})
 	var reactor := e.get_c(req.reactor_id)
 	if reactor != null and rule != "ask":
 		reactor.reaction_rules[req.kind] = rule
@@ -678,6 +692,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 	# A standing rule (Ask / Automatic / Off) changes on any turn for whoever the hotbar shows: nothing is spent.
 	if action.has("policy"):
 		if hud.shown != null:
+			await _record_command("policy", {"actor": hud.shown.id, "action": action})
 			var rr := catalog.set_rule(hud.shown, action)
 			if not rr.ok:
 				hud.banner(rr.reason, 1.4)
@@ -761,6 +776,7 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("perform", {"actor": c.id, "action": action, "targets": targets, "point": point, "direction": dir, "slot": slot_level})
 	var r := catalog.perform(c, action, targets, point, dir, slot_level)
 	slot_level = 0
 	selected = {}
@@ -826,6 +842,7 @@ func _reaction_move(ally: Combatant, cell: Vector2i) -> void:
 	hud.hide_tooltip()
 	selected = {}
 	picker.reset()
+	await _record_command("reaction_move", {"actor": ally.id, "cell": cell})
 	var r := e.reaction_move(ally, cell)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
@@ -877,6 +894,7 @@ func _confirm_at() -> void:
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("move", {"actor": c.id, "cell": mp["dest"]})
 	var r := e.move(c, mp["dest"] as Vector2i)   # a square too far: as far toward it as the movement goes
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -902,6 +920,7 @@ func _walk_and_strike(c: Combatant, plan: Dictionary, t: Combatant) -> void:
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("move", {"actor": c.id, "cell": plan["dest"], "strike": {"id": c.id, "target": t.id, "dest": plan["dest"], "action": str((plan["action"] as Dictionary)["id"])}})
 	var r := e.move(c, plan["dest"] as Vector2i)
 	if r.ok:
 		_strike_after_walk = {"id": c.id, "target": t.id, "dest": plan["dest"], "action": str((plan["action"] as Dictionary)["id"])}
@@ -2794,3 +2813,25 @@ func _autoplay_turn(pilot: PartyAutopilot) -> void:
 
 func _command_allowed(command: String, data: Dictionary = {}) -> bool:
 	return not command_filter.is_valid() or bool(command_filter.call(command, data))
+
+
+## The command reaches durable storage before the engine executes it. Storage failure holds that one command
+## behind a retry screen; it cannot spend resources, roll dice or enqueue itself twice while waiting.
+func _record_command(kind: String, args: Dictionary = {}) -> void:
+	if recovery == null or not recovery_writer.is_valid():
+		return
+	recovery.append(e, kind, args)
+	while int(recovery_writer.call()) != OK:
+		recovery_error = CanvasLayer.new()
+		recovery_error.layer = 115
+		recovery_error.process_mode = Node.PROCESS_MODE_ALWAYS
+		add_child(recovery_error)
+		var body := MobilePage.build(recovery_error, "Recovery save unavailable", func() -> void: recovery_retry.emit())
+		(recovery_error.find_child("MobileBack", true, false) as Button).text = "Retry"
+		(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		body.add_child(MobileUi.text("This action is waiting because its recovery save could not be written. Free storage on your device, then retry. Nothing has been spent for this action."))
+		body.add_child(MobileUi.button("Retry save and continue", func() -> void: recovery_retry.emit()))
+		await recovery_retry
+		recovery_error.hide()
+		recovery_error.queue_free()
+		recovery_error = null

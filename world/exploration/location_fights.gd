@@ -216,6 +216,14 @@ static func spec_for(view: LocationView, encounter_id: String) -> Dictionary:
 
 
 static func _run_combat(view: LocationView, encounter_id: String, spec: Dictionary, e: Encounter, ctokens: Dictionary, surprised: Array[String]) -> void:
+	if MobileDevice.enabled() or view.combat_view.recovery != null:
+		view.combat_view.recovery_writer = func() -> Error:
+			view._save_positions()
+			var journal := view.combat_view.recovery
+			GameState.combat_snapshot = {"location": view.loc_id, "encounter": encounter_id,
+				"data": e.round_snapshot if not e.round_snapshot.is_empty() else EncounterSnapshot.capture(e),
+				"journal": journal.data.duplicate(true)}
+			return SaveSystem.save_combat_recovery()
 	e.keep_round_snapshots = true   # the round-start save, taken as each round begins (_save_round)
 	Bestiary.before_fight(view.st, e)   # creatures met, and those already studied show their defenses (U8)
 	view.combat_view.finished.connect(func(outcome: String) -> void: _end_encounter(view, encounter_id, spec, e, ctokens, outcome))
@@ -226,7 +234,7 @@ static func _run_combat(view: LocationView, encounter_id: String, spec: Dictiona
 
 ## Saves the fight as the round begins: the party (in the story), the location, and the encounter's state.
 static func _save_round(view: LocationView, encounter_id: String, e: Encounter) -> void:
-	if e.state != Encounter.State.ACTIVE:
+	if e.state != Encounter.State.ACTIVE or view.combat_view.recovery != null:
 		return
 	view._save_positions()
 	# The fight as its round began, before the lair or the first turn acted (the view hears of the round after).
@@ -251,13 +259,34 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 		return false
 	view.in_combat = true
 	ModeController.force(ModeController.Mode.COMBAT)
-	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)
+	var journal: CombatJournal
+	var e: Encounter
+	if snapshot.has("journal"):
+		journal = CombatJournal.new()
+		journal.data = (snapshot["journal"] as Dictionary).duplicate(true)
+		e = journal.restore(view.dice, view.st.party)
+	elif MobileDevice.enabled():
+		var base := snapshot["data"] as Dictionary
+		var before := EncounterSnapshot.restore(base, view.dice, view.st.party, false)
+		before.shared_turns = GameSettings.shared_turns()
+		before.flanking = GameSettings.flanking()
+		journal = CombatJournal.begin(before, base)
+		e = journal.restore(view.dice, view.st.party)
+	else:
+		e = EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)
+	if e == null:
+		view.in_combat = false
+		ModeController.force(ModeController.Mode.EXPLORATION)
+		return false
 	var ctokens := _fight_tokens(view, e)
 	view.combat_view = CombatView.new()
 	view.combat_view.input_locked = view.input_locked
 	view.combat_view.narrator = view.narrator
 	view.combat_view.story = view.st
 	view.add_child(view.combat_view)
+	view.combat_view.recovery = journal
+	if journal != null:
+		view.combat_view._strike_after_walk = journal.walk_plan(e)
 	var none: Array[String] = []
 	_run_combat(view, encounter_id, spec, e, ctokens, none)
 	return true

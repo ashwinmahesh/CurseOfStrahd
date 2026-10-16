@@ -1,7 +1,7 @@
 class_name MobileLifecycle
 extends Node
 ## iOS interruption ownership. Suspension never releases a held input into the world on return.
-## Exploration checkpoints are proactive; combat continues to use the encounter's round checkpoints.
+## Exploration checkpoints are proactive; combat records durable commands before executing them.
 
 var interrupted := false
 var was_paused := false

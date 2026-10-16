@@ -589,3 +589,58 @@ func test_accessibility_scroll_revision_and_readonly_slider_are_enforced() -> vo
 	assert_eq(slider.value, 50.0, "activation does not silently increment a slider")
 	access.activate("access_increment", command)
 	assert_true(slider.value > 50.0)
+
+
+func _recovery_move(view: CombatView, hero: Combatant, done: Array) -> void:
+	await view._record_command("move", {"actor": hero.id, "cell": hero.cell + Vector2i.LEFT})
+	view.e.move(hero, hero.cell + Vector2i.LEFT)
+	done[0] = true
+
+
+func test_combat_recovery_waits_for_storage_and_retries_one_command_once() -> void:
+	var e := TestCombat.open_field(42)
+	var hero := TestCombat.hero(e, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(e, "zombie", Vector2i(11, 7))
+	e.default_player_reaction = "never"
+	var journal := CombatJournal.begin(e)
+	journal.append(e, "start", {"surprised": []})
+	e.start()
+	while e.current() != hero:
+		journal.append(e, "ai")
+		e.run_ai_turn()
+	var view := CombatView.new()
+	view.process_mode = Node.PROCESS_MODE_DISABLED
+	add_child(view)
+	view.e = e
+	view.recovery = journal
+	var failure := [true]
+	var durable := [{}]
+	view.recovery_writer = func() -> Error:
+		if bool(failure[0]):
+			return ERR_FILE_CANT_WRITE
+		durable[0] = journal.data.duplicate(true)
+		return OK
+	var done := [false]
+	var before := hero.cell
+	var dice := e.dice.get_state()
+	_recovery_move(view, hero, done)
+	await _frames()
+	assert_false(bool(done[0]))
+	assert_eq(hero.cell, before)
+	assert_eq(e.dice.get_state(), dice)
+	assert_true(is_instance_valid(view.recovery_error))
+	var problems := LayoutCheck.problems(view.recovery_error, Rect2(Vector2.ZERO, MobileDevice.logical_size()))
+	assert_true(problems.is_empty(), str(problems))
+	var count := (journal.data["commands"] as Array).size()
+	failure[0] = false
+	view.recovery_retry.emit()
+	await _frames()
+	assert_true(bool(done[0]))
+	assert_eq((journal.data["commands"] as Array).size(), count, "retry never appends a duplicate command")
+	assert_eq(hero.cell, before + Vector2i.LEFT)
+	var restored := CombatJournal.new()
+	restored.data = durable[0]
+	var resumed := restored.restore(DiceRoller.new(1))
+	assert_eq(resumed.get_c(hero.id).cell, hero.cell, "a termination immediately after the write executes the move once")
+	view.queue_free()
+	await _frames()

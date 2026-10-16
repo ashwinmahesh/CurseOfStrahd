@@ -456,6 +456,8 @@ static func kind_of(s: Dictionary) -> String:
 	match str(s.get("kind", "")):
 		"autosave":
 			return "Autosave"
+		"recovery":
+			return "Fight, continue last action"
 		"round":
 			return "Fight, round start"
 	if str(s.get("finished", "")) != "":

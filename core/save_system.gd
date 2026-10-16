@@ -114,6 +114,11 @@ func save_round(slot: String = ROUND_START) -> Error:
 	return _write_beside(slot)
 
 
+## Mobile continuation uses the same combat slot (and the same single Honour slot), without per-command images.
+func save_combat_recovery() -> Error:
+	return _save(honour_slot(), null, false, false) if honour() else _write_beside(ROUND_START)
+
+
 ## The autosave (AUTOSAVE): anywhere a save is allowed, without making it the game's slot. The ones before it move one
 ## along (autosave_2 ...), and the oldest goes.
 func autosave() -> Error:
@@ -199,6 +204,9 @@ func load_from(dir: String, slot: String) -> Error:
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
 	dict = upgrade(dict)
+	var combat := dict.get("combat", {}) as Dictionary
+	if combat.has("journal") and not CombatJournal.valid(combat["journal"]):
+		return ERR_FILE_CORRUPT
 	GameState.from_dict(dict)
 	# A fight's round start is a retry, not a return: no recap.
 	_recap_due = slot != ROUND_START and minutes_since(str(dict.get("saved_at", ""))) >= RECAP_AFTER
@@ -232,6 +240,8 @@ static func upgrade(data: Dictionary) -> Dictionary:
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
+			2:
+				pass   # Mobile command journals are optional; existing round-start saves retain their behavior.
 			1:
 				pass   # Phase 0 saves held no story: the game starts them on the mists road as a new game does
 		v += 1
@@ -339,7 +349,7 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 	return {"slot": slot, "dir": from, "saved_at": str(d.get("saved_at", "")), "location": place,
 		"location_id": str(story.get("location", "")), "level": level,
 		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
-		"kind": "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
+		"kind": "recovery" if (d.get("combat", {}) as Dictionary).has("journal") else "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
 		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else "",
 		"mode": Difficulty.named(mode).name if mode != Difficulty.DEFAULT else "",
 		"newer": int(raw.get("version", 0)) > GameState.SAVE_VERSION}

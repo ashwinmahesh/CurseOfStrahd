@@ -25,6 +25,9 @@ static func inspect(path: String) -> Dictionary:
 		return {"error": "That save has no readable campaign."}
 	if not _shape(data, GameState.to_dict()) or not _points(data.get("party_positions", []), 3) or not _story(data["story"] as Dictionary):
 		return {"error": "That save contains invalid campaign data."}
+	var combat := data.get("combat", {}) as Dictionary
+	if combat.has("journal") and not CombatJournal.valid(combat["journal"]):
+		return {"error": "That save has an incompatible or damaged combat recovery record."}
 	var story := data["story"] as Dictionary
 	var names: Array[String] = []
 	for member: Dictionary in story["party"]:

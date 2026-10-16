@@ -968,7 +968,7 @@ func _mobile_menu() -> void:
 	save.disabled = not SaveSystem.can_save()
 	_mobile_body.add_child(save)
 	if not SaveSystem.can_save():
-		_mobile_body.add_child(MobileUi.text("Combat is saved at the start of each round."))
+		_mobile_body.add_child(MobileUi.text("Campaign combat is saved before each action. A recovery save continues your last committed action."))
 	var load := MobileUi.button("Load a save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty() or SaveSystem.honour()
 	_mobile_body.add_child(load)
