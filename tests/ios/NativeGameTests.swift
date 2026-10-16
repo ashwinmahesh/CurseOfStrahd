@@ -23,7 +23,10 @@ final class NativeGameTests: XCTestCase {
     func tap(_ label: String, scroll: Bool = true) -> XCUIElement {
         let button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
         for attempt in 0..<(scroll ? 32 : 1) {
-            if button.waitForExistence(timeout: attempt == 0 ? 10 : 1) && button.isHittable {
+            // World rendering in the software simulator can delay the semantic page update by several
+            // frames. Fixed navigation waits for that transition; offscreen page items can still scroll.
+            let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true AND hittable == true"), object: button)
+            if XCTWaiter.wait(for: [ready], timeout: scroll ? (attempt == 0 ? 10 : 1) : 60) == .completed {
                 XCTAssertTrue(button.isEnabled, app.debugDescription)
                 button.tap()
                 return button
@@ -64,7 +67,7 @@ final class NativeGameTests: XCTestCase {
         capture("campaign")
         tap("Actions", scroll: false)
         tap("Inventory")
-        XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 10), app.debugDescription)
+        XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 60), app.debugDescription)
         capture("inventory")
         tap("Equipment", scroll: false)
         capture("equipment")
@@ -138,13 +141,13 @@ final class NativeGameTests: XCTestCase {
         waitForWorld()
         capture("battlefield")
         tap("Actions", scroll: false)
-        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 15), app.debugDescription)
+        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 60), app.debugDescription)
         capture("combat-actions")
         tap("Close", scroll: false)
         let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.buttons["Common"])
-        XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 15), .completed, "Actions must not cover the battlefield after closing")
+        XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 60), .completed, "Actions must not cover the battlefield after closing")
         tap("Actions", scroll: false)
-        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 60))
         tap("Close", scroll: false)
         tap("More", scroll: false)
         tap("Choose a creature to target")
