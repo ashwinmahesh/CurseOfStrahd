@@ -25,7 +25,7 @@ def run(output: Path, device: str) -> None:
     stage = output / 'project'
     stage.mkdir()
     shutil.copy2(ROOT / 'tests/ios/probe.gd', stage / 'main.gd')
-    shutil.copy2(ROOT / 'art/ui/app_icon.png', stage / 'icon.png')
+    shutil.copy2(ROOT / 'art/ui/app_icon_ios.png', stage / 'icon.png')
     (stage / 'main.tscn').write_text('[gd_scene load_steps=2 format=3]\n[ext_resource type="Script" path="res://main.gd" id="1"]\n[node name="NativeProbe" type="Control"]\nscript=ExtResource("1")\n')
     (stage / 'project.godot').write_text('''config_version=5
 [application]

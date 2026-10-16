@@ -81,6 +81,12 @@ ios-report:
 ios-test:
 	python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
 
+## Reuse the macOS icon artwork in an opaque iOS canvas; requires Pillow only when regenerating.
+.PHONY: ios-icon
+ICON_PYTHON ?= python3
+ios-icon:
+	$(ICON_PYTHON) tools/release/make_icon.py --ios-only
+
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
 	@$(FRESH)
