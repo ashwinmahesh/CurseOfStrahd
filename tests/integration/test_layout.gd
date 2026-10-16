@@ -1773,3 +1773,129 @@ func _mobile_check(node: Node, title: String) -> void:
 			issues.append_array(LayoutCheck.problems(node, MobileDevice.safe_rect()))
 		scroll.scroll_vertical = previous
 	assert_true(issues.is_empty(), "%s %s: %s" % [MobileDevice.test_size, title, "\n".join(issues)])
+
+
+func test_mobile_skirmish_setup_results_achievements_and_guidance_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	var old_setup := SkirmishScreen.current
+	var old_tab := SkirmishScreen.kept_tab
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834), Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		SkirmishScreen.current = SkirmishSetup.new()
+		SkirmishScreen.kept_tab = "Party"
+		var setup := SkirmishScreen.new()
+		add_child(setup)
+		await _mobile_check(setup, "skirmish add hero")
+		setup.setup.add_hero(Pregens.build("godrick_pendlebrook", 5))
+		setup.setup.add_foe("zombie")
+		setup._select_hero(0)
+		for tab_: String in SkirmishScreen.TABS:
+			setup.tab = tab_
+			setup._redraw()
+			await _mobile_check(setup, "skirmish " + tab_)
+		setup.tab = "Field"
+		for section: String in ["Maps", "Add foes", "Conditions", "Placement"]:
+			setup.mobile.field_section = section
+			setup._redraw()
+			await _mobile_check(setup, "field " + section)
+		setup.mobile._fight_review()
+		await _mobile_check(setup.mobile.modal, "fight review")
+		setup.queue_free()
+		await _frames(2)
+		var achievements := AchievementsPanel.open(self)
+		await _mobile_check(achievements, "achievements")
+		achievements.queue_free()
+		await _frames(2)
+		var encounter := TestCombat.open_field()
+		var hero := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+		TestCombat.foe(encounter, "zombie", Vector2i(5, 2))
+		TestCombat.start_with(encounter, hero)
+		var results := SkirmishResults.new()
+		add_child(results)
+		results.show_for(encounter, "The field", ["A difficult victory"])
+		await _mobile_check(results, "skirmish results")
+		results.queue_free()
+		await _frames(2)
+		var prompt := GuidancePrompt.ask(self, {"who": hero.creature, "skill": &"perception", "dc": 15, "casters": [{"caster": hero.creature, "ends": "Protection from Evil and Good"}]}, func(_index: int, _rule: String) -> void: pass)
+		await _mobile_check(prompt, "guidance")
+		prompt.queue_free()
+		await _frames(2)
+	SkirmishScreen.current = old_setup
+	SkirmishScreen.kept_tab = old_tab
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_cinematics_loading_ending_and_tutorial_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834), Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var view := CutsceneView.new()
+		layer.add_child(view)
+		view.show_caption(true)
+		view.caption("Narrator", "A long caption with readable words and plenty of detail. ".repeat(12))
+		await _mobile_check(layer, "cutscene reading")
+		view.set_paused(true)
+		await _mobile_check(layer, "cutscene paused")
+		layer.queue_free()
+		await _frames(2)
+		var card := LoadingCard.new()
+		card.location = {"name": "The steep approach to Castle Ravenloft", "region": "castle_ravenloft"}
+		card.tip = "A long loading tip about how to play. ".repeat(6)
+		card.hold = 120
+		add_child(card)
+		await _mobile_check(card, "loading")
+		card.queue_free()
+		await _frames(2)
+		var coach := TutorialCoach.new()
+		add_child(coach)
+		coach.present({"title": "Your first adventure", "body": "Read this lesson, then try its controls. ".repeat(10), "objective": "Learn at your own pace.", "details": "Detailed instructions. ".repeat(10)}, 0, 10)
+		coach.set_action("Try this lesson", func() -> void: pass)
+		await _mobile_check(coach, "tutorial practice")
+		coach.toggle_details()
+		await _mobile_check(coach, "tutorial explanation")
+		coach.set_complete("Ready to continue.")
+		await _mobile_check(coach, "tutorial completed")
+		coach.show_menu()
+		await _mobile_check(coach, "tutorial menu")
+		coach.queue_free()
+		await _frames(2)
+		var state := StoryState.from_dict(AtomicJson.read("res://tests/saves/" + LATE)["story"] as Dictionary)
+		var ending := EndingScreen.new()
+		ending.to_title = false
+		ending.save_on_finish = false
+		add_child(ending)
+		ending.play(state, Endings.all()[0])
+		await _mobile_check(ending, "ending title")
+		ending._show_beat({"kind": "line", "narrator": true, "text": "The mist lifts over Barovia. ".repeat(20)})
+		await _mobile_check(ending, "ending narration")
+		ending._to_slides()
+		await _mobile_check(ending, "ending epilogue")
+		ending._to_end()
+		await _mobile_check(ending, "ending summary")
+		ending.show_tally()
+		await _mobile_check(ending.tally, "ending tally")
+		ending.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

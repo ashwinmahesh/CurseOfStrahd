@@ -13,10 +13,9 @@ var _turn := 0.0
 
 func press(index: int, at: Vector2, owner: String, now: int) -> void:
 	contacts[index] = {"start": at, "at": at, "owner": owner, "time": now, "dragged": false, "multiple": false}
-	var world := _world()
-	if world.size() > 1:
+	if contacts.size() > 1:
 		_turn = 0.0
-		for id: int in world:
+		for id: int in contacts:
 			(contacts[id] as Dictionary)["multiple"] = true
 
 

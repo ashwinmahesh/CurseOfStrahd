@@ -441,3 +441,151 @@ func test_mobile_map_pan_pinch_and_route_review_never_travel_until_commit() -> v
 	screen._mobile_depart(destination)
 	assert_eq(departures, [destination], "only explicit confirmation departs, once")
 	await _frames()
+
+
+func test_mobile_skirmish_placement_preview_apply_erase_and_undo() -> void:
+	var old_setup := SkirmishScreen.current
+	var old_tab := SkirmishScreen.kept_tab
+	SkirmishScreen.current = SkirmishSetup.new()
+	SkirmishScreen.current.add_hero(Pregens.build("godrick_pendlebrook", 3))
+	SkirmishScreen.kept_tab = "Field"
+	var screen := SkirmishScreen.new()
+	add_child(screen)
+	await _frames()
+	var grid := screen.setup.grid()
+	var cell := Vector2i(-1, -1)
+	for y in grid.depth:
+		for x in grid.width:
+			var at := Vector2i(x, y)
+			if screen.setup.place_problem(grid, "foe", -1, at, "zombie") == "" and screen.setup.piece_at(screen.setup.placements(grid), at).is_empty():
+				cell = at
+				break
+		if cell.x >= 0:
+			break
+	assert_true(cell.x >= 0)
+	screen.brush = {"kind": "new", "monster": "zombie"}
+	var before := screen.setup.to_dict()
+	screen.mobile.pick_cell(cell)
+	assert_eq(screen.setup.to_dict(), before, "tapping a square only previews")
+	screen.mobile.commit_cell()
+	screen.mobile.commit_cell()
+	assert_eq(screen.setup.foes.size(), 1, "one Apply adds exactly one foe")
+	screen.mobile.erase = true
+	screen.mobile.pick_cell(cell)
+	assert_eq(screen.setup.foes.size(), 1, "erase also requires Apply")
+	screen.mobile.commit_cell()
+	assert_true(screen.setup.foes.is_empty())
+	screen.mobile.undo_edit()
+	assert_eq(screen.setup.foes.size(), 1, "undo restores the removed piece and its square")
+	screen.mobile.undo_edit()
+	assert_eq(screen.setup.to_dict(), before, "undo restores the complete pre-edit setup")
+	screen.queue_free()
+	await _frames()
+	SkirmishScreen.current = old_setup
+	SkirmishScreen.kept_tab = old_tab
+
+
+func test_mobile_tutorial_sheet_and_combat_keep_real_progress_and_command_guards() -> void:
+	var controls := MobileControls.new()
+	UiFeel.add_child(controls)
+	UiFeel.mobile_controls = controls
+	var campaign_dice := Dice.roller
+	var dice_state := campaign_dice.get_state()
+	var session := TutorialSession.new()
+	add_child(session)
+	await _frames()
+	session.start_lesson(TutorialSession.EXPLORATION_IDS.find("sheet"))
+	await _frames()
+	session.coach.action_button.pressed.emit()
+	await _frames()
+	assert_true(session.screen is CharacterSheetScreen)
+	assert_true(session._guide_close != null)
+	session._guide_close.pressed.emit()
+	await _frames()
+	assert_eq((session.screen as CharacterSheetScreen).mobile_section, "Abilities")
+	session._guide_close.pressed.emit()
+	await _frames()
+	session._guide_close.pressed.emit()
+	await _frames()
+	assert_true(session.lesson_complete, "the mobile reading steps finish the same sheet lesson")
+	session.start_lesson(TutorialSession.EXPLORATION_IDS.size() + TutorialCombat.LESSON_IDS.find("combat_move"))
+	var deadline := Time.get_ticks_msec() + 15000
+	while Time.get_ticks_msec() < deadline and (session.combat.view.mode != CombatView.Mode.IDLE or session.combat.e.current() != session.combat.hero):
+		await get_tree().process_frame
+	var fight := session.combat.view
+	assert_true(fight.touch_ready(), "guided combat accepts touch previews without an absent key event")
+	var before := session.combat.hero.cell
+	fight.hover_cell = Vector2i(7, 7)
+	fight.hover_token = null
+	fight._confirm_at()
+	assert_eq(session.combat.hero.cell, before, "touch readiness does not bypass the lesson's command guard")
+	fight.touch_tap(session.combat.rig.camera.unproject_position(session.combat.board.cell_center(Vector2i(4, 3))), false)
+	assert_eq(fight.hover_cell, Vector2i(4, 3), "the ground tap previews the intended square")
+	assert_eq(session.combat.hero.cell, before, "touch preview does not move")
+	fight.touch_confirm()
+	deadline = Time.get_ticks_msec() + 15000
+	while not session.lesson_complete and Time.get_ticks_msec() < deadline:
+		await get_tree().process_frame
+	assert_true(session.lesson_complete, "Confirm completes the actual movement exercise")
+	assert_eq(session.combat.hero.cell, Vector2i(4, 3))
+	session.queue_free()
+	controls.queue_free()
+	UiFeel.mobile_controls = null
+	await _frames()
+	assert_true(Dice.roller == campaign_dice)
+	assert_eq(campaign_dice.get_state(), dice_state, "mobile practice leaves campaign dice unchanged")
+
+
+func test_two_fingers_on_buttons_cancel_both_activations() -> void:
+	var count := [0]
+	var body := MobilePage.build(root, "Two contacts", func() -> void: pass)
+	var first := MobileUi.button("First action", func() -> void: count[0] = int(count[0]) + 1)
+	var second := MobileUi.button("Second action", func() -> void: count[0] = int(count[0]) + 1)
+	body.add_child(first)
+	body.add_child(second)
+	await _frames()
+	_touch(first.get_global_rect().get_center(), true)
+	await _frames()
+	var finger := InputEventScreenTouch.new()
+	finger.index = 1
+	finger.position = second.get_global_rect().get_center()
+	finger.pressed = true
+	get_tree().root.push_input(finger, true)
+	await _frames()
+	finger.pressed = false
+	get_tree().root.push_input(finger, true)
+	_touch(first.get_global_rect().get_center(), false)
+	await _frames()
+	assert_eq(int(count[0]), 0, "neither contact can activate a button after a second finger joins")
+
+
+func test_accessibility_scroll_revision_and_readonly_slider_are_enforced() -> void:
+	var body := MobilePage.build(root, "Reading", func() -> void: pass)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	var slider := HSlider.new()
+	slider.tooltip_text = "Text size"
+	slider.custom_minimum_size = Vector2(200, 48)
+	slider.value = 50
+	slider.editable = false
+	body.add_child(slider)
+	for i in 20:
+		body.add_child(MobileUi.text("Reading paragraph %d" % i))
+	await _frames()
+	var access := MobileAccessibility.new()
+	var projection := access.snapshot(get_tree().root)
+	var command := str(projection["revision"]) + ":" + str(slider.get_instance_id())
+	access.activate("access_increment", command)
+	assert_eq(slider.value, 50.0, "read-only values cannot be adjusted by VoiceOver")
+	access.activate("access_scroll", "0:down")
+	assert_eq(page.scroll.scroll_vertical, 0, "stale native scrolling cannot affect the new page")
+	access.activate("access_scroll", str(projection["revision"]) + ":down")
+	assert_true(page.scroll.scroll_vertical > 0)
+	page.scroll.scroll_vertical = 0
+	slider.editable = true
+	await _frames()
+	projection = access.snapshot(get_tree().root)
+	command = str(projection["revision"]) + ":" + str(slider.get_instance_id())
+	access.activate("access_activate", command)
+	assert_eq(slider.value, 50.0, "activation does not silently increment a slider")
+	access.activate("access_increment", command)
+	assert_true(slider.value > 50.0)

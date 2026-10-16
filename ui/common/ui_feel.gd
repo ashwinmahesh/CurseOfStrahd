@@ -12,6 +12,7 @@ const JOURNAL_EVERY := 0.4
 var cards: TipCards
 var pad: PadNav
 var touch: TouchRouter
+var mobile_controls: MobileControls
 ## Report a bug, in dev builds only (null in an exported game).
 var bug_reports: BugReports = null
 var _last_hover: Control = null
@@ -31,7 +32,8 @@ func _ready() -> void:
 	touch = TouchRouter.new()
 	add_child(touch)
 	if MobileDevice.enabled():
-		add_child(MobileControls.new())
+		mobile_controls = MobileControls.new()
+		add_child(mobile_controls)
 		add_child(MobileNative.new())
 		add_child(MobileLifecycle.new())
 	if BugReports.enabled():

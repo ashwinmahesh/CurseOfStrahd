@@ -22,6 +22,7 @@ var compact_button: Button
 var menu_open := false
 var complete := false
 var compact := false
+var _mobile_scroll: ScrollContainer
 var _panel: PanelContainer
 var _paint: Control
 var _shield: Control
@@ -152,6 +153,16 @@ func _build() -> void:
 	_hint = _reading_label("", 12, "parchment")
 	column.add_child(_hint)
 	PadGlyphs.hint(_hint, "Esc: tutorial menu", "{start}: tutorial menu")
+	if MobileDevice.enabled():
+		_mobile_scroll = ScrollContainer.new()
+		_mobile_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_panel.add_child(_mobile_scroll)
+		column.reparent(_mobile_scroll)
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_body_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_body_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_hint.text = "Use Tutorial menu to repeat, skip or leave."
+		MobileUi.fit(column)
 	_refresh_visibility()
 
 
@@ -179,7 +190,7 @@ func present(lesson: Dictionary, index: int, total: int) -> void:
 	_action_scope = false
 	_chrome_visible = true
 	_step_hint = ""
-	_free_practice = bool(lesson.get("free_practice", false))
+	_free_practice = MobileDevice.enabled() or bool(lesson.get("free_practice", false))
 	_progress.text = "LESSON %d OF %d" % [index + 1, total]
 	_title.text = str(lesson.get("title", "Learn to play"))
 	_set_copy(_body, str(lesson.get("body", "")), str(lesson.get("body_pad", lesson.get("body", ""))))
@@ -392,7 +403,22 @@ func _reflow() -> void:
 	_last_size = viewport
 	_last_text_scale = GameSettings.text_scale()
 	for item: Array in [[_title, 21], [_body, 16], [_objective, 16], [_feedback, 16], [_details, 15], [_hint, 12]]:
-		(item[0] as Label).add_theme_font_size_override("font_size", UiScale.text(int(item[1])))
+		(item[0] as Label).add_theme_font_size_override("font_size", UiScale.text(maxi(18, int(item[1])) if MobileDevice.enabled() else int(item[1])))
+	if MobileDevice.enabled():
+		var safe := MobileDevice.safe_rect().grow(-6)
+		var modal := menu_open or complete or _finished or bool(_lesson.get("read_only", false))
+		var width := minf(540 if modal else 420, safe.size.x)
+		_body_scroll.custom_minimum_size.y = 0
+		_panel.custom_minimum_size = Vector2.ZERO
+		_panel.size = Vector2(width, safe.size.y if modal else minf(220, safe.size.y * 0.55))
+		_panel.position = safe.position + (safe.size - _panel.size) / 2.0 if modal else safe.position
+		if not modal and _target.has_area() and _panel.get_global_rect().intersects(_target):
+			_panel.position = safe.end - _panel.size
+		_last_card_size = _panel.size
+		_last_min_size = _panel.get_combined_minimum_size()
+		_sync_masks()
+		_paint.queue_redraw()
+		return
 	var width := minf(CARD_WIDTH, viewport.x - MARGIN * 2.0)
 	_panel.custom_minimum_size.x = width
 	var body_height := minf(210.0 if _details_open else 174.0, viewport.y * 0.24)

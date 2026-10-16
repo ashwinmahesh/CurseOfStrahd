@@ -33,8 +33,9 @@ func test_ui_contact_does_not_join_world_camera_gesture() -> void:
 	var gesture := TouchGesture.new()
 	gesture.press(0, Vector2.ZERO, "world", 0)
 	gesture.press(1, Vector2(100, 0), "button", 10)
-	assert_eq(str(gesture.move(0, Vector2(40, 0))["kind"]), "pan")
-	assert_eq(str(gesture.release(1, Vector2(100, 0), 90)["owner"]), "button")
+	assert_true(gesture.move(0, Vector2(40, 0)).is_empty(), "mixed ownership cannot become a camera gesture")
+	assert_true(gesture.release(1, Vector2(100, 0), 90).is_empty(), "a second finger cancels UI activation")
+	assert_true(gesture.release(0, Vector2(40, 0), 100).is_empty())
 
 
 func test_hold_offers_context_and_background_cancels_every_contact() -> void:

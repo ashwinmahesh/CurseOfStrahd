@@ -68,11 +68,13 @@ static StrahdDocumentDelegate *documents;
 - (void)accessibilityDecrement { event(@"access_decrement", self.command); }
 @end
 @interface StrahdAccessibilityView : UIView
+@property(nonatomic, copy) NSString *revision;
 @end
 @implementation StrahdAccessibilityView
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event { return nil; }
 - (BOOL)accessibilityScroll:(UIAccessibilityScrollDirection)direction {
-    event(@"access_scroll", direction == UIAccessibilityScrollDirectionUp ? @"up" : @"down");
+    if (direction != UIAccessibilityScrollDirectionUp && direction != UIAccessibilityScrollDirectionDown) return NO;
+    event(@"access_scroll", [NSString stringWithFormat:@"%@:%@", self.revision, direction == UIAccessibilityScrollDirectionUp ? @"up" : @"down"]);
     return YES;
 }
 @end
@@ -149,6 +151,7 @@ public:
                 accessibilityItems = [NSMutableDictionary dictionary];
             }
             accessibilityView.hidden = NO;
+            accessibilityView.revision = snapshot[@"revision"];
             NSMutableArray *order = [NSMutableArray array];
             NSMutableArray *elements = [NSMutableArray array];
             NSMutableDictionary *next = [NSMutableDictionary dictionary];

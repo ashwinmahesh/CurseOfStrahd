@@ -64,6 +64,7 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 			label = control.tooltip_text if control.tooltip_text != "" else "Adjust value"
 			value = str((control as Slider).value)
 			role = "slider"
+			disabled = not (control as Slider).editable
 		if label != "" and rect.size.x >= 1 and rect.size.y >= 1:
 			var id := str(control.get_instance_id())
 			var size := Vector2(control.get_window().size)
@@ -82,11 +83,12 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 
 
 func activate(kind: String, command: String) -> void:
-	if kind == "access_scroll":
-		if is_instance_valid(scroll):
-			scroll.scroll_vertical += roundi(scroll.size.y * (0.8 if command == "down" else -0.8))
-		return
 	if command.get_slice(":", 0) != str(revision):
+		return
+	if kind == "access_scroll":
+		var direction := command.get_slice(":", 1)
+		if is_instance_valid(scroll) and direction in ["up", "down"]:
+			scroll.scroll_vertical += roundi(scroll.size.y * (0.8 if direction == "down" else -0.8))
 		return
 	var ref := controls.get(command.get_slice(":", 1)) as WeakRef
 	var control := ref.get_ref() as Control if ref != null else null
@@ -98,6 +100,8 @@ func activate(kind: String, command: String) -> void:
 		return
 	if control is Slider:
 		var slider := control as Slider
+		if not slider.editable or kind not in ["access_increment", "access_decrement"]:
+			return
 		slider.value += maxf(slider.step, (slider.max_value - slider.min_value) / 20.0) * (-1 if kind == "access_decrement" else 1)
 	elif kind != "access_activate":
 		return

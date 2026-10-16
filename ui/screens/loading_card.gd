@@ -29,6 +29,7 @@ var hold := HOLD_SECONDS
 var _closing := false
 var _lifted := false
 var _root: Control
+var _mobile_scroll: ScrollContainer
 var _since := 0
 
 
@@ -143,6 +144,17 @@ func _ready() -> void:
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(hint)
+	if MobileDevice.enabled():
+		var scroll := ScrollContainer.new()
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_root.add_child(scroll)
+		col.reparent(scroll)
+		col.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		col.grow_vertical = Control.GROW_DIRECTION_END
+		MobileUi.fit(col)
+		_mobile_scroll = scroll
+		get_viewport().size_changed.connect(_mobile_reflow)
+		_mobile_reflow()
 	_root.modulate.a = 0.0
 	_since = Time.get_ticks_msec()
 	var tw := UiMotion.tween_for(_root)
@@ -176,3 +188,9 @@ func _input(event: InputEvent) -> void:
 	get_viewport().set_input_as_handled()
 	if _can_close():
 		close()
+
+
+func _mobile_reflow() -> void:
+	var safe := MobileDevice.safe_rect().grow(-12)
+	_mobile_scroll.position = safe.position + Vector2(0, safe.size.y * 0.4)
+	_mobile_scroll.size = Vector2(safe.size.x, safe.size.y * 0.6)

@@ -16,6 +16,8 @@ The native utility batch adds UIKit Files/share integration, semantic accessibil
 
 The next screen batch adds mobile loot, service purchase review, searchable choice inspection, spell preparation, party and roster sections, wait controls, journal list-to-detail navigation, and travel pan/pinch with a searchable destination list and explicit departure. Large-text layout checks include middle/end scroll positions; raw-touch tests cover map ownership and preview/commit, stale choices, and exactly-once purchases. `make check` passes 81 focused tests, including desktop layouts. Phone/tablet captures cover these pages.
 
+The Skirmish/secondary batch adds touch setup, reviewed field edits with undo, results, achievements, guidance, scrolling cutscene captions, endings/tallies, loading cards, and mobile tutorial navigation. Tutorial sheet and combat movement tests preserve command restrictions and campaign dice. Desktop tutorial, Skirmish, cutscene and guidance regressions pass 83 tests. The corresponding `make check` passes 87 tests, including multi-contact cancellation, stale native scrolling and read-only accessibility controls. Phone/tablet captures include map placement, captions, loading cards and ending/tally screens. The latest iPad native utility fixture passes both Files cancellation and export/import round-trip tests.
+
 Stages 1–4 remain in progress. Full-game simulator qualification, remaining screens, physical accessibility validation, inventory performance, and committed-action combat recovery still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
 
 ## Desktop remains unchanged

@@ -42,6 +42,7 @@ var saved := false
 var tally: CanvasLayer = null
 
 var _tone: Array = []
+var _mobile_art_path := BACKDROP
 var _art: TextureRect
 var _shade: TextureRect
 var _card: VBoxContainer
@@ -139,6 +140,9 @@ func _next_beat() -> void:
 ## A `cutscene` in the ending's narration (docs/ui/cutscenes.md): its picture replaces the castle behind the words, in
 ## full colour under a lighter shade, and stays for the slides.
 func _cutscene(path: String) -> void:
+	if MobileDevice.enabled() and path != "" and ResourceLoader.exists(path):
+		_mobile_art_path = path
+		return
 	if _art == null or path == "" or not ResourceLoader.exists(path):
 		return
 	_art.texture = load(path) as Texture2D
@@ -172,6 +176,18 @@ func _to_end() -> void:
 # --- Building -------------------------------------------------------------------------------------
 
 func _build() -> void:
+	if MobileDevice.enabled():
+		_card = MobilePage.build(self, "Epilogue", skip)
+		var page := _card.get_parent().get_parent().get_parent() as MobilePage
+		page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_footer = HBoxContainer.new()
+		page.toolbar.add_child(_footer)
+		_count = MobileUi.text("")
+		_footer.add_child(_count)
+		_go = MobileUi.button("Continue", advance)
+		_go.name = "Continue"
+		_footer.add_child(_go)
+		return
 	var back := ColorRect.new()
 	back.color = Look.color("void")
 	back.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -245,6 +261,13 @@ func _clear() -> void:
 	for c in _card.get_children():
 		_card.remove_child(c)
 		c.queue_free()
+	if MobileDevice.enabled() and ResourceLoader.exists(_mobile_art_path):
+		var picture := TextureRect.new()
+		picture.texture = load(_mobile_art_path) as Texture2D
+		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		picture.custom_minimum_size.y = 140
+		_card.add_child(picture)
 	_card.modulate.a = 0.0
 	var tw := create_tween()
 	tw.tween_property(_card, "modulate:a", 1.0, 0.6)
@@ -302,6 +325,9 @@ func _display(text: String, size: int, colour: String) -> Label:
 
 
 func _footer_for(count: String, button: String) -> void:
+	if MobileDevice.enabled():
+		MobileUi.fit(_card)
+		(_card.get_parent() as ScrollContainer).scroll_vertical = 0
 	_count.text = count
 	_count.visible = count != ""
 	_go.text = button
@@ -333,7 +359,7 @@ func _show_beat(b: Dictionary) -> void:
 		VoiceOver.say(VoiceOver.beat_voice(b), text)
 		var art := str(b.get("portrait", ""))
 		if art != "" and ResourceLoader.exists("res://art/portraits/%s.png" % art):
-			_card.add_child(UiParts.framed_portrait(art, 220.0))
+			_card.add_child(UiParts.framed_portrait(art, 88.0 if MobileDevice.enabled() else 220.0))
 		_card.add_child(_display(str(b.get("name", "")), 28, "gilt_light"))
 		var colour := "moonlight" if bool(b.get("party", false)) else "vellum"
 		_card.add_child(_prose("[center][color=#%s]“%s”[/color][/center]" % [Look.color(colour).to_html(false), _esc(text)], 28, 960.0))
@@ -352,14 +378,14 @@ func _show_slide() -> void:
 	panel.add_theme_stylebox_override("panel", style)
 	panel.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	UiKit.trim(panel, 84.0)
-	var row := HBoxContainer.new()
+	var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 	row.add_theme_constant_override("separation", 26)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	panel.add_child(row)
 	var art := str(s.get("portrait", ""))
 	var has_art := art != "" and ResourceLoader.exists("res://art/portraits/%s.png" % art)
 	if has_art:
-		var pic := UiParts.framed_portrait(art, 230.0)
+		var pic := UiParts.framed_portrait(art, 88.0 if MobileDevice.enabled() else 230.0)
 		pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(pic)
 	var body := _esc(str(s.get("text", "")))
@@ -389,7 +415,7 @@ func _show_end() -> void:
 		for id: Variant in earned:
 			pills.add_child(UiParts.pill(Achievements.name_of(str(id)), "gilt_light", 14))
 		_card.add_child(pills)
-	var row := HBoxContainer.new()
+	var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	row.add_theme_constant_override("separation", 16)
 	var home := UiParts.primary_button("Return to the title", leave)
@@ -401,6 +427,8 @@ func _show_end() -> void:
 	_card.add_child(row)
 	home.grab_focus.call_deferred()
 	_footer.visible = false
+	if MobileDevice.enabled():
+		MobileUi.fit(_card)
 
 
 # --- The company's tally (N8) ---------------------------------------------------------------------
@@ -418,6 +446,9 @@ func show_tally() -> void:
 	tally.name = "CompanyTally"
 	tally.layer = 55
 	add_child(tally)
+	if MobileDevice.enabled():
+		_mobile_tally()
+		return
 	var frame := UiKit.screen_frame(tally, "The Company's Tally", Vector2(1480, 820))
 	var under_crest := Control.new()
 	under_crest.custom_minimum_size = Vector2(0, 12)
@@ -488,6 +519,8 @@ func close_tally() -> void:
 # --- Input ----------------------------------------------------------------------------------------
 
 func _clicked(event: InputEvent) -> void:
+	if MobileDevice.enabled():
+		return
 	var mb := event as InputEventMouseButton
 	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
 		return
@@ -590,3 +623,26 @@ static func capture(game: Node, tool: Node, out: String, id: String) -> void:
 	screen.show_tally()
 	await tool.call("wait_frames", 30)
 	tool.call("_shot", out + "_7_tally.png")
+
+
+func _mobile_tally() -> void:
+	var body := MobilePage.build(tally, "The Company's Tally", close_tally)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	for hero in RunStats.hero_rows(st, CombatToken.art_for):
+		body.add_child(MobileUi.text(str(hero.get("name", "")) + " · " + str(hero.get("status", "")), "gilt_light"))
+		var values: Array[String] = []
+		for column in TALLY_COLUMNS:
+			values.append("%s: %d" % [column[1], int(hero.get(str(column[0]), 0))])
+		body.add_child(MobileUi.text(" · ".join(values)))
+	var stats := st.run_stats
+	body.add_child(MobileUi.text("The road", "gilt_light"))
+	body.add_child(MobileUi.text("%d fights · %d victories · %d rounds" % [stats.get("fights", 0), stats.get("won", 0), stats.get("rounds", 0)]))
+	body.add_child(MobileUi.text("Gold: %d gp found · %d gp spent · %d gp remaining" % [roundi(float(stats.get("gold_found", 0))), roundi(float(stats.get("gold_spent", 0))), roundi(st.gold)]))
+	var best := stats.get("best_hit", {}) as Dictionary
+	if not best.is_empty():
+		body.add_child(MobileUi.text("Hardest blow: %d damage by %s" % [best["amount"], best["name"]]))
+	body.add_child(MobileUi.text("Defeated most: " + ", ".join(RunStats.top_kills(st))))
+	for fallen: Dictionary in st.fallen:
+		body.add_child(MobileUi.text("Lost for good: " + str(fallen.get("name", ""))))
+	body.add_child(AchievementsPanel.list(0.0))
+	MobileUi.fit(body)

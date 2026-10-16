@@ -37,6 +37,9 @@ var _text: RichTextLabel
 var _hint: Label
 var _skip: Button
 var _pause: PanelContainer
+var _mobile_scroll: ScrollContainer
+var _mobile_next: Button
+var _mobile_pause: Button
 
 
 func _init() -> void:
@@ -106,6 +109,26 @@ func _ready() -> void:
 	_place(_skip, Vector2(1.0, 0.0), Rect2(-150, 28, 118, 32))
 	add_child(_skip)
 	_build_pause()
+	if MobileDevice.enabled():
+		_mobile_scroll = ScrollContainer.new()
+		_mobile_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		add_child(_mobile_scroll)
+		_caption.reparent(_mobile_scroll)
+		_caption.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_caption.alignment = BoxContainer.ALIGNMENT_BEGIN
+		_caption.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_caption.grow_vertical = Control.GROW_DIRECTION_END
+		MobileUi.fit(_caption)
+		_mobile_next = MobileUi.button("Continue", func() -> void:
+			if not paused:
+				clicked.emit())
+		add_child(_mobile_next)
+		_mobile_pause = MobileUi.button("Pause", func() -> void: set_paused(true))
+		add_child(_mobile_pause)
+		MobileUi.fit(_pause)
+		move_child(_pause, -1)
+		get_viewport().size_changed.connect(_mobile_reflow)
+		_mobile_reflow()
 	show_caption(false)
 
 
@@ -193,6 +216,8 @@ func _put(tex: Texture2D) -> void:
 
 ## The caption under the picture: `speaker` over `bbcode` ("" for the narrator, whose words are already italic).
 func caption(speaker: String, bbcode: String) -> void:
+	if _mobile_scroll != null:
+		_mobile_scroll.scroll_vertical = 0
 	_name.text = speaker
 	_name.visible = speaker != ""
 	_text.text = "[center]%s[/center]" % bbcode
@@ -202,7 +227,11 @@ func caption(speaker: String, bbcode: String) -> void:
 func show_caption(on: bool) -> void:
 	captioning = on
 	_caption.visible = on
-	_hint.visible = on
+	_hint.visible = on and not MobileDevice.enabled()
+	if _mobile_scroll != null:
+		_mobile_scroll.visible = on
+		_mobile_next.visible = on
+		_mobile_pause.visible = on
 	_skip.visible = on
 	if not on and paused:
 		set_paused(false)
@@ -246,6 +275,8 @@ func caption_text() -> String:
 
 
 func _on_gui_input(event: InputEvent) -> void:
+	if MobileDevice.enabled():
+		return
 	var mb := event as InputEventMouseButton
 	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
 		return
@@ -288,3 +319,20 @@ static func _place(c: Control, anchor: Vector2, r: Rect2) -> void:
 	c.offset_bottom = r.end.y
 	c.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	c.grow_vertical = Control.GROW_DIRECTION_BOTH
+
+
+func _mobile_reflow() -> void:
+	var safe := MobileDevice.safe_rect().grow(-8)
+	_hint.hide()
+	_mobile_scroll.position = safe.position + Vector2(0, safe.size.y * 0.4)
+	_mobile_scroll.size = Vector2(safe.size.x, safe.size.y * 0.6 - 56)
+	_mobile_next.position = Vector2(safe.position.x, safe.end.y - 48)
+	_mobile_next.size = Vector2(safe.size.x, 48)
+	_skip.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	_skip.position = Vector2(safe.end.x - 140, safe.position.y)
+	_skip.size = Vector2(140, 48)
+	_mobile_pause.position = safe.position
+	_mobile_pause.size = Vector2(140, 48)
+	_pause.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	_pause.size = Vector2(minf(380, safe.size.x), 220)
+	_pause.position = safe.position + (safe.size - _pause.size) / 2.0

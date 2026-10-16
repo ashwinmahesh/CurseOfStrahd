@@ -1,27 +1,25 @@
 # iOS development builds
 
-This is the export and rendering foundation for the landscape iPad prototype. It does not establish device
-compatibility or complete touch support. The staged project has its own mobile texture imports and signing
-configuration; desktop exports continue to use their existing settings. The remaining milestones are in
-[the iOS plan](../plans/ios_support.md).
+The branch includes universal landscape iPhone/iPad builds, touch controls and mobile UI compositions, native
+Files/share integration, accessibility semantics, and interruption handling. Qualification is still in progress:
+full-game native journeys, committed-action combat recovery, physical-device performance and signed distribution
+remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.md).
 
 ## What this build changes
 
-- iOS selects the Mobile renderer on Metal, caps at 30 fps, and allows both landscape orientations.
-- The export preset targets iPad and provisionally uses iOS 16.0. This is a development deployment target,
-  not a tested minimum-device promise. Its default bundle ID is `app.curseofstrahd.game`; set the final ID before
-  registering the app or distributing builds.
-- Mobile starts with Low graphics. All quality settings and both Classic/Modern finishes disable SSAO, SSIL,
-  volumetric fog, screen-space reflections, and directional soft shadows. Shadow maps are capped at 2048 and
-  shadow-casting lamps at two. High can still increase resolution and antialiasing.
-- The post shader keeps depth silhouettes, palette/grade, and artistic mist. Mobile omits normal-based crease
-  lines, ground variation and caustics. Without a roughness mask, water receives the scene's grade/mist. Sprite
-  reflections are hidden, and their preloaded shader remains compilable without the normal/roughness buffer.
-- iOS ignores external executable PCK patches. Updates to scripts must arrive in signed app releases.
+- iOS selects Mobile rendering on Metal, caps at 30 fps, and supports both landscape orientations. Simulator
+  builds use Compatibility because Godot's simulator does not support Metal.
+- The universal export provisionally targets iOS 16.0. This is a deployment setting, not a tested minimum-device
+  promise. The default bundle ID is `app.curseofstrahd.game`.
+- Mobile starts with Low graphics. Quality settings disable unsupported SSAO/SSIL, volumetric fog, reflections,
+  and directional soft shadows; shadow maps and shadow-casting lamps are capped.
+- Mobile pages use safe areas, larger controls, preview/confirmation, searchable choices, and persistent Back
+  navigation. Dense campaign screens and Skirmish have separate mobile compositions.
+- Saves use native Files import/share, validation before import, atomic writes and backups. Exploration checkpoints
+  run proactively outside open transactions. Combat recovery currently remains at the start of a round.
+- iOS ignores external executable PCK patches; script updates arrive in signed app releases.
 
-Desktop Forward+ behavior is retained. This does not yet introduce touch gestures, adaptive layouts, native
-save transfer, app lifecycle recovery, or App Store content delivery. Existing combat recovery remains at the
-start of a round.
+Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.
 
 ## Prerequisites
 
@@ -75,7 +73,7 @@ The output directory must be new and outside the source checkout. It contains `p
 raw generation inputs, and detects unexpanded Git LFS pointers. Files use APFS copy-on-write when available.
 The import cache is never copied. Imported resources and all `.import` edits stay in the stage.
 
-`project/override.cfg` enables ETC2/ASTC imports, disables desktop S3TC/BPTC imports, and supplies the app version.
+The isolated `project/project.godot` enables ETC2/ASTC imports, disables desktop S3TC/BPTC imports, and supplies the app version.
 `project/export_presets.cfg` contains only the iOS preset. Optional signing/version environment variables affect
 the staged preset only. The inventory records source revision, dirty status, relative paths, sizes and SHA-256
 hashes. It measures **source resources**, not the final PCK, app size or device memory.
@@ -97,7 +95,7 @@ reports errors, matching the project's existing importer approach. Export errors
 The import/export logs remain in the output directory.
 
 The generated project is `xcode/CurseOfStrahd.xcodeproj`. Open it in Xcode, verify signing and provisioning, select
-the connected iPad, and build/run. Use the Debug scheme configuration for development installation as needed.
+the connected iPhone or iPad, and build/run. Use the Debug scheme configuration for development installation as needed.
 Capture the physical model, OS, build number and renderer with each test result.
 
 To archive the generated Release configuration after signing has been configured:

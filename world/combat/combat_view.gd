@@ -1239,7 +1239,7 @@ func _cycle_inspect() -> void:
 
 func touch_ready() -> bool:
 	return not input_locked and e != null and mode in [Mode.IDLE, Mode.TARGET, Mode.OVER] \
-		and not hud.prompt_open() and not hud.confirm_open() and _command_allowed("input", {})
+		and not hud.prompt_open() and not hud.confirm_open()
 
 
 func touch_confirm() -> void:

@@ -43,7 +43,7 @@ func _init() -> void:
 func _ready() -> void:
 	var casters := offer.get("casters", []) as Array
 	var who := offer["who"] as Creature
-	var box := UiKit.screen_frame(self, "Guidance", Vector2(WIDTH, 180.0 + 54.0 * (casters.size() + 1)))
+	var box := MobilePage.build(self, "Guidance", func() -> void: _answer(-1)) if MobileDevice.enabled() else UiKit.screen_frame(self, "Guidance", Vector2(WIDTH, 180.0 + 54.0 * (casters.size() + 1)))
 	_rename_escape()
 	var dc := int(offer.get("dc", 0))
 	var about := UiKit.label("%s is about to try %s%s." % [who.name.get_slice(" ", 0), GuidanceOffer.skill_name(offer["skill"] as StringName),
@@ -82,6 +82,9 @@ func _ready() -> void:
 	row.add_child(rule_button)
 	box.add_child(row)
 	_show_rule()
+	if MobileDevice.enabled():
+		(box.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		MobileUi.fit(box)
 	if not choices.is_empty():
 		choices[0].grab_focus.call_deferred()
 
