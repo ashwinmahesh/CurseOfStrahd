@@ -68,6 +68,14 @@ func suspend() -> void:
 	Audio.process_mode = Node.PROCESS_MODE_DISABLED
 	_pause_players(get_tree().root)
 	get_tree().paused = true
+	# iOS delivers suspension while SceneTree is propagating a notification, which locks children.
+	# Freeze gameplay immediately, but attach the resume UI only after that traversal finishes.
+	_show_resume_page.call_deferred()
+
+
+func _show_resume_page() -> void:
+	if not interrupted or not is_inside_tree() or is_instance_valid(resume_layer):
+		return
 	resume_layer = CanvasLayer.new()
 	resume_layer.layer = 120
 	resume_layer.process_mode = Node.PROCESS_MODE_ALWAYS

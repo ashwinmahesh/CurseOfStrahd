@@ -13,7 +13,8 @@ final class NativeGameTests: XCTestCase {
 
     func capture(_ name: String) {
         XCTAssertFalse(app.staticTexts["Something went wrong"].exists, app.debugDescription)
-        let attachment = XCTAttachment(screenshot: app.screenshot())
+        // Capture the display: the Godot host's app crop can retain portrait bounds after rotation.
+        let attachment = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)

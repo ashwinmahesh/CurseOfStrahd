@@ -348,11 +348,13 @@ func test_mobile_interruption_preserves_prior_pause_and_cancels_input() -> void:
 	for paused: bool in [false, true]:
 		get_tree().paused = paused
 		VoiceOver.set_paused(paused)
-		lifecycle.suspend()
+		# Like native notifications, propagation locks children while invoking the callback.
+		lifecycle.propagate_call("suspend")
 		lifecycle.suspend()
 		assert_true(get_tree().paused)
 		assert_true(VoiceOver.is_paused())
 		assert_eq(Audio.process_mode, Node.PROCESS_MODE_DISABLED)
+		await _frames()
 		assert_true(is_instance_valid(lifecycle.resume_layer))
 		lifecycle.resume_play()
 		lifecycle.resume_play()
@@ -361,6 +363,10 @@ func test_mobile_interruption_preserves_prior_pause_and_cancels_input() -> void:
 		assert_eq(Audio.process_mode, prior_audio)
 	get_tree().paused = false
 	VoiceOver.set_paused(false)
+	lifecycle.suspend()
+	lifecycle.resume_play()
+	await _frames()
+	assert_false(is_instance_valid(lifecycle.resume_layer), "a cancelled interruption cannot attach a stale page")
 	lifecycle.queue_free()
 	await _frames()
 
