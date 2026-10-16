@@ -1,8 +1,13 @@
 # iOS support implementation
 
-The rollout starts with a landscape iPad prototype, followed by complete iPad support and a dedicated compact
-iPhone layout pass. Keep the existing rules, combat and campaign code shared across platforms. The detailed
+The rollout starts with a landscape iPad technical prototype. Design and verify compact iPhone and regular iPad
+interfaces together throughout implementation, with full support for both required for completion. Keep desktop
+layouts and behavior unchanged and the existing rules, combat and campaign code shared across platforms. The detailed
 design is in the owner's Obsidian note `CurseOfStrahd/iOS Support Plan.md` (2026-10-16).
+
+The [iOS interface and utility plan](ios_ui_and_utility.md) specifies the mobile combat action panel, targeting,
+inventory, every secondary screen, native utility, accessibility, and desktop regression gates. It supersedes
+the earlier sequencing that postponed compact UI design until the end of the tablet implementation.
 
 ## Current milestone
 
@@ -24,7 +29,7 @@ source-tree tests are evidence for the foundation, not a device qualification or
 | P4 Recovery | Atomic save replacement, lifecycle handling, committed combat checkpoints and migrations | Fault injection, interruption/relaunch, deterministic RNG and Honour-mode checks |
 | P5 iPad feature coverage | Inventory, shops, creation, progression, travel, Skirmish, save transfer and accessibility | Every feature reachable by touch, screen and campaign checklist complete |
 | P6 Qualification | Device performance, thermals, CI archives, upgrades and eligible beta distribution | Minimum device/OS matrix, sustained play, clean upgrade/recovery and campaign QA |
-| P7 iPhone | Compact interface, finger occlusion fixes and smaller-device tuning | Complete phone interaction/campaign pass on the chosen minimum hardware |
+| P7 iPhone qualification | Qualify compact layouts developed throughout P2–P5; finish finger occlusion and smaller-device tuning | Complete phone interaction/campaign pass on the chosen minimum hardware |
 
 ## Decisions to settle through the prototype
 
