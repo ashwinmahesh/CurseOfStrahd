@@ -30,7 +30,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ios-release
+  group: ios-${{ github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
   cancel-in-progress: false
 
 env:
@@ -43,6 +43,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools/release
+            tests/tools
       - run: python3 -m unittest discover -s tests/tools -p 'test_ios_*.py' -v
   archive:
     if: github.event_name == 'workflow_dispatch'
@@ -62,12 +66,17 @@ jobs:
         with:
           lfs: false
           path: pipeline
+          sparse-checkout: |
+            tools/release
+            tests/tools
 
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source_ref || github.sha }}
           lfs: false
           path: game
+          sparse-checkout: ${{ inputs.build_kind == 'smoke' && 'art/ui/app_icon.png' || '' }}
+          sparse-checkout-cone-mode: false
 
       - name: Record source commit
         run: |
