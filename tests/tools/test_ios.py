@@ -42,8 +42,8 @@ class IosBuildTests(unittest.TestCase):
             self.assertTrue((stage / path).is_file(), path)
         for path in [".godot", "tools", "art/generated"]:
             self.assertFalse((stage / path).exists(), path)
-        self.assertIn("import_etc2_astc=true", (stage / "override.cfg").read_text())
-        self.assertIn("import_s3tc_bptc=false", (stage / "override.cfg").read_text())
+        self.assertIn("import_etc2_astc=true", (stage / "project.godot").read_text())
+        self.assertIn("import_s3tc_bptc=false", (stage / "project.godot").read_text())
         options = ios.config(stage / "export_presets.cfg")["preset.0.options"]
         self.assertEqual(options["application/app_store_team_id"], '"ABCDEFGHIJ"')
         self.assertEqual(options["application/version"], '"7"')
@@ -55,7 +55,7 @@ class IosBuildTests(unittest.TestCase):
     def test_simulator_stage_is_unsigned_universal_and_uses_compatibility_only_in_stage(self):
         original = (self.source / "project.godot").read_bytes()
         stage = self.prepare(team="", simulator=True)
-        overrides = (stage / "override.cfg").read_text()
+        overrides = (stage / "project.godot").read_text()
         self.assertIn('renderer/rendering_method.ios="gl_compatibility"', overrides)
         self.assertEqual((self.source / "project.godot").read_bytes(), original)
         options = ios.config(stage / "export_presets.cfg")["preset.0.options"]
@@ -63,6 +63,17 @@ class IosBuildTests(unittest.TestCase):
         self.assertTrue(json.loads((self.output / "source-inventory.json").read_text())["simulator"])
         with patch.object(ios, "probe", return_value=""), patch.object(ios, "template_dir", return_value=self.root):
             self.assertFalse(any("TEAM_ID" in f for f in ios.preflight("no-godot", "", simulator=True)))
+
+    def test_stage_configuration_preserves_multiline_input_dictionaries(self):
+        original = '[input]\nattack={\n"events": [Object(InputEventKey,"physical_keycode":65)]\n}\n\n[rendering]\nrenderer/rendering_method="mobile"\n'
+        path = self.source / 'project.godot'
+        path.write_text(original)
+        stage = self.prepare(simulator=True)
+        actual = (stage / 'project.godot').read_text()
+        self.assertIn(original.split('[rendering]')[0].strip(), actual)
+        self.assertEqual(actual.count('renderer/rendering_method='), 1)
+        self.assertIn('renderer/rendering_method="gl_compatibility"', actual)
+        self.assertEqual(path.read_text(), original)
 
     def test_simulator_build_rejects_device_stage_before_xcode_runs(self):
         self.prepare()

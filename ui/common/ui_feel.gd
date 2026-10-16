@@ -32,6 +32,8 @@ func _ready() -> void:
 	add_child(touch)
 	if MobileDevice.enabled():
 		add_child(MobileControls.new())
+		add_child(MobileNative.new())
+		add_child(MobileLifecycle.new())
 	if BugReports.enabled():
 		bug_reports = BugReports.new()
 		add_child(bug_reports)

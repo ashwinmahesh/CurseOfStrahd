@@ -239,3 +239,39 @@ Mobile/Metal. Device stages retain Mobile/Metal, and the desktop checkout is nev
 iPhone and iPad. Install the resulting `derived/Build/Products/Release-iphonesimulator/CurseOfStrahd.app` with
 `xcrun simctl install <device-id> <app-path>`. An installed runtime may support only a subset of devices; check
 `xcrun simctl list runtimes -j` before selecting an iPhone or iPad. Simulator results do not qualify Metal performance.
+
+
+## Native services and reproducible simulator utility tests
+
+Export builds the iOS-only GDExtension in `tools/native_ios` from checksum-pinned godot-cpp sources. The isolated
+stage receives the device/ARM64-simulator XCFramework, export plugin and an editor-only macOS stub. None are
+loaded by desktop gameplay. UIKit provides Files import, save sharing (including iPad popovers), optional touch
+haptics, and the accessibility projection of the active Godot page. Import reviews a bounded JSON file before
+creating a new slot; sharing copies the chosen save instead of exposing its live file to another app.
+
+`native-inventory.json` records dependency/source hashes and generated products. `IOS_NATIVE_CACHE` optionally
+relocates the reusable native build cache. It contains no signing credentials. SCons is pinned in a dedicated
+Python virtual environment. The standard tools required are Python 3, full Xcode, and the matching Godot editor
+and export templates.
+
+The downloaded 4.7.2 template's simulator library was Intel-only despite its universal manifest. The simulator
+build helper checks the actual architectures and, only when ARM64 is missing, verifies and builds the pinned
+4.7.2 engine source, then combines the two simulator slices in the generated project. It does not alter installed
+templates or the device engine. `simulator-engine.json` records this provenance; `IOS_ENGINE_CACHE` relocates
+the reusable engine cache. Compatibility/software rendering remains separate from device Metal qualification.
+
+A small fixture runs real native utility UI tests without waiting for all campaign textures to import:
+
+```sh
+make ios-native-test IOS_OUT=/absolute/fresh/output IOS_DEVICE=<existing-simulator-uuid>
+```
+
+The helper creates a generated Xcode project and XCTest target, builds the extension and simulator engine,
+boots the specified simulator, and tests share/picker cancellation plus JSON export/import through Files.
+`tests.xcresult` retains test screenshots. It does not erase simulator data. Use a dedicated QA simulator.
+This fixture qualifies the bridge, not a campaign playthrough. Full-game journeys, physical VoiceOver/Switch
+Control interaction, device rendering/performance and signed distribution remain separate acceptance gates.
+
+Local evidence, 2026-10-16: Xcode 27.1; native utility cancellation on iPhone Duo/iOS 27.1 and iPad Pro 11 M4/iOS
+27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The full campaign's first ASTC import is still running.
+Desktop/mobile headless checks passed 77 tests, and native build/signing tooling passed 24 Python tests.

@@ -52,9 +52,24 @@ static func tabs(values: Array[String], selected: String, pick: Callable) -> Scr
 	var row := HBoxContainer.new()
 	scroll.add_child(row)
 	for value in values:
-		var tab := button(value, func() -> void: pick.call(value))
+		var tab := button(value, func() -> void:
+			select_tab(scroll, value)
+			pick.call(value))
+		tab.set_meta(&"tab_value", value)
+		tab.toggle_mode = true
+		tab.button_pressed = value == selected
 		tab.autowrap_mode = TextServer.AUTOWRAP_OFF
 		if value == selected:
 			UiParts.light_up(tab)
 		row.add_child(tab)
 	return scroll
+
+
+static func select_tab(scroll: ScrollContainer, selected: String) -> void:
+	for tab: Button in scroll.get_child(0).get_children():
+		tab.button_pressed = str(tab.get_meta(&"tab_value", "")) == selected
+		if tab.button_pressed:
+			UiParts.light_up(tab)
+		else:
+			tab.add_theme_stylebox_override("normal", UiKit.button_style("normal"))
+			tab.remove_theme_color_override("font_color")

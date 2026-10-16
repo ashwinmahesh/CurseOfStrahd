@@ -23,6 +23,7 @@ func before_each() -> void:
 func after_each() -> void:
 	UiFeel.touch.cancel()
 	root.queue_free()
+	MobileDevice.test_keyboard_height = 0.0
 	MobileDevice.test_size = Vector2.ZERO
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
@@ -246,3 +247,74 @@ func test_mobile_option_picker_uses_touch_and_keeps_disabled_options_disabled() 
 	assert_eq(option.selected, 1)
 	assert_eq(chosen.size(), 1)
 	assert_true(UiFeel.touch.selection_sheet == null)
+
+
+func test_accessibility_only_activates_current_visible_enabled_controls() -> void:
+	var body := MobilePage.build(root, "Accessible controls", func() -> void: pass)
+	var count := [0]
+	var enabled := MobileUi.button("Commit action", func() -> void: count[0] = int(count[0]) + 1)
+	body.add_child(enabled)
+	var disabled := MobileUi.button("Unavailable action", func() -> void: count[0] = 999)
+	disabled.disabled = true
+	body.add_child(disabled)
+	await _frames()
+	var access := MobileAccessibility.new()
+	var projection := access.snapshot(get_tree().root)
+	assert_false(projection.is_empty())
+	var command := str(projection["revision"]) + ":" + str(enabled.get_instance_id())
+	access.activate("access_activate", str(projection["revision"]) + ":" + str(disabled.get_instance_id()))
+	assert_eq(int(count[0]), 0)
+	access.activate("access_activate", command)
+	assert_eq(int(count[0]), 1)
+	enabled.text = "Changed action"
+	access.snapshot(get_tree().root)
+	access.activate("access_activate", command)
+	assert_eq(int(count[0]), 1, "a native action from the previous UI revision is discarded")
+	enabled.hide()
+	access.snapshot(get_tree().root)
+	assert_false(access.controls.has(str(enabled.get_instance_id())))
+
+
+func test_mobile_keyboard_avoidance_preserves_text_and_returns_page_geometry() -> void:
+	var body := MobilePage.build(root, "Name", func() -> void: pass)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	var input := LineEdit.new()
+	input.text = "My adventurer"
+	body.add_child(input)
+	await _frames()
+	var original := page.get_global_rect()
+	MobileDevice.test_keyboard_height = 170
+	page.reflow()
+	await _frames()
+	assert_true(page.keyboard_done.visible)
+	assert_true(page.get_global_rect().end.y <= MobileDevice.logical_size().y - 170)
+	assert_eq(input.text, "My adventurer")
+	MobileDevice.test_keyboard_height = 0
+	page.reflow()
+	await _frames()
+	assert_false(page.keyboard_done.visible)
+	assert_eq(page.get_global_rect(), original)
+
+
+func test_mobile_interruption_preserves_prior_pause_and_cancels_input() -> void:
+	var lifecycle := MobileLifecycle.new()
+	add_child(lifecycle)
+	var prior_audio := Audio.process_mode
+	for paused: bool in [false, true]:
+		get_tree().paused = paused
+		VoiceOver.set_paused(paused)
+		lifecycle.suspend()
+		lifecycle.suspend()
+		assert_true(get_tree().paused)
+		assert_true(VoiceOver.is_paused())
+		assert_eq(Audio.process_mode, Node.PROCESS_MODE_DISABLED)
+		assert_true(is_instance_valid(lifecycle.resume_layer))
+		lifecycle.resume_play()
+		lifecycle.resume_play()
+		assert_eq(get_tree().paused, paused, "resuming does not dismiss a pre-existing pause menu")
+		assert_eq(VoiceOver.is_paused(), paused)
+		assert_eq(Audio.process_mode, prior_audio)
+	get_tree().paused = false
+	VoiceOver.set_paused(false)
+	lifecycle.queue_free()
+	await _frames()

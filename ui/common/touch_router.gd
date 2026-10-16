@@ -89,6 +89,8 @@ func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:
 		var hit := get_viewport().gui_get_hovered_control()
 		if hit != control and (hit == null or not control.is_ancestor_of(hit)):
 			return
+		if control is BaseButton and not (control as BaseButton).disabled:
+			MobileNative.feedback()
 		if explain_next and PadNav.current != null:
 			explain_next = false
 			PadNav.current.explain(control)

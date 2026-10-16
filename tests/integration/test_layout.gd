@@ -1600,3 +1600,55 @@ func test_mobile_creation_level_up_rest_and_shop_fit() -> void:
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_save_rows_chapters_and_confirmations_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		for mode_: int in [SavesScreen.Mode.SAVE, SavesScreen.Mode.LOAD]:
+			var page := SavesScreen.open_on(self, mode_ as SavesScreen.Mode, Callable())
+			for tab_: String in ["Your Saves", "Chapters", "Backups"]:
+				page._tab = tab_
+				page._fill()
+				await _frames(8)
+				var issues := LayoutCheck.problems(page, MobileDevice.safe_rect())
+				assert_true(issues.is_empty(), "%s saves %s: %s" % [size_, tab_, "\n".join(issues)])
+			page._question({"location": "Village of Barovia", "day": 12, "party": "Godrick, Thistle and Liriel"}, "Import save?", "A long save note. ".repeat(8), "Import creates a new local save.", "Import", func() -> void: pass)
+			await _frames(8)
+			var issues := LayoutCheck.problems(page._ask, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s save review: %s" % [size_, "\n".join(issues)])
+			page.queue_free()
+			await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_interruption_page_fits_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var lifecycle := MobileLifecycle.new()
+		add_child(lifecycle)
+		lifecycle.checkpoint_error = ERR_FILE_CANT_WRITE
+		lifecycle.suspend()
+		await _frames(8)
+		var issues := LayoutCheck.problems(lifecycle.resume_layer, MobileDevice.safe_rect())
+		lifecycle.resume_play()
+		assert_true(issues.is_empty(), "%s interruption: %s" % [size_, "\n".join(issues)])
+		lifecycle.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

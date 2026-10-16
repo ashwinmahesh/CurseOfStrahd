@@ -121,9 +121,17 @@ func autosave() -> Error:
 		return ERR_UNAVAILABLE
 	if honour():
 		return _save(honour_slot(), null, true)
-	delete_slot(autosave_slot(AUTOSAVES))
+	var paths: Array[String] = []
+	for n in range(1, AUTOSAVES + 1):
+		paths.append(slot_path(autosave_slot(n)))
+	var rotated := AtomicJson.rotate(paths)
+	if rotated != OK:
+		return rotated
 	for n in range(AUTOSAVES - 1, 0, -1):
-		_move(autosave_slot(n), autosave_slot(n + 1))
+		var source := thumb_path(autosave_slot(n))
+		var destination := thumb_path(autosave_slot(n + 1))
+		if FileAccess.file_exists(source) and DirAccess.copy_absolute(source, destination + ".tmp") == OK:
+			DirAccess.rename_absolute(destination + ".tmp", destination)
 	var err := _write_beside(AUTOSAVE)
 	if err == OK:
 		_thumb_later(AUTOSAVE)

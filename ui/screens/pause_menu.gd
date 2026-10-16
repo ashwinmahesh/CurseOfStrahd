@@ -968,7 +968,7 @@ func _mobile_menu() -> void:
 	save.disabled = not SaveSystem.can_save()
 	_mobile_body.add_child(save)
 	if not SaveSystem.can_save():
-		_mobile_body.add_child(MobileUi.text("Combat progress is saved automatically."))
+		_mobile_body.add_child(MobileUi.text("Combat is saved at the start of each round."))
 	var load := MobileUi.button("Load a save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty() or SaveSystem.honour()
 	_mobile_body.add_child(load)
@@ -992,6 +992,12 @@ func _mobile_settings(page: String) -> void:
 		"Game": _game_rows()
 		"Display": _display_rows()
 		"Keys":
+			var feedback := CheckButton.new()
+			feedback.text = "Touch haptics"
+			feedback.button_pressed = bool(GameSettings.value("ios_haptics", true))
+			feedback.toggled.connect(func(on: bool) -> void: GameSettings.set_value("ios_haptics", on))
+			MobileUi.fit(feedback)
+			_mobile_body.add_child(feedback)
 			_mobile_body.add_child(MobileUi.text("Touch: tap to select, drag to pan, pinch to zoom, twist to turn. More offers camera buttons and context actions. External keyboards and controllers use the bindings below."))
 			var keys := KeysPage.new()
 			keys.custom_minimum_size = Vector2(0, 460)

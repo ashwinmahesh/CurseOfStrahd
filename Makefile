@@ -50,7 +50,10 @@ release:
 
 # Native iPhone/iPad build (docs/releases/ios.md). Imports into a fresh, separate staging project only.
 IOS_OUT ?= $(abspath ../strahd-builds/ios)
-.PHONY: ios-check ios-prepare ios-export ios-archive ios-report ios-test ios-simulator-export ios-simulator-build
+.PHONY: ios-native-test ios-check ios-prepare ios-export ios-archive ios-report ios-test ios-simulator-export ios-simulator-build
+ios-native-test:
+	GODOT="$(GODOT)" python3 tools/release/ios_probe.py --output "$(IOS_OUT)" --device "$(IOS_DEVICE)"
+
 ios-check:
 	GODOT="$(GODOT)" python3 tools/release/ios.py check
 

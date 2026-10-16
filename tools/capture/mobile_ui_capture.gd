@@ -111,3 +111,25 @@ func capture_shots(tool: Node, out: String) -> void:
 	creator.open_with([])
 	await tool.call("wait_frames", 12)
 	tool.call("_shot", out + "_creator.png")
+
+	creator.queue_free()
+	await tool.call("wait_frames", 2)
+	var prior_dir := SaveSystem.save_dir
+	SaveSystem.save_dir = "user://mobile_capture_saves/"
+	var saves := SavesScreen.open_on(self, SavesScreen.Mode.LOAD, Callable())
+	saves._tab = "Chapters"
+	saves._fill()
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_saves.png")
+	saves._question({"location": "Village of Barovia", "day": 12, "party": "Godrick, Thistle and Liriel"}, "Import save?", "An adventure shared from a computer.", "Import creates a new local save.", "Import", func() -> void: pass)
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_import.png")
+	saves.queue_free()
+	SaveSystem.save_dir = prior_dir
+	await tool.call("wait_frames", 2)
+	var lifecycle := MobileLifecycle.new()
+	add_child(lifecycle)
+	lifecycle.suspend()
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_resume.png")
+	lifecycle.resume_play()

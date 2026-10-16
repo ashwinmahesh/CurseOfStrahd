@@ -39,6 +39,32 @@ def write_config(path: Path, data: configparser.ConfigParser) -> None:
         data.write(stream, space_around_delimiters=False)
 
 
+def project_values(path: Path, section: str, values: dict[str, str]) -> None:
+    """Change only scalar settings in the isolated project, preserving Godot's multiline dictionaries.
+
+    The editor deliberately ignores override.cfg, so import/export settings must live in project.godot.
+    """
+    text = path.read_text()
+    header = re.search(r'^\[' + re.escape(section) + r'\]\s*$', text, re.MULTILINE)
+    if header:
+        start = header.end()
+        following = re.search(r'^\[[^\]\n]+\]\s*$', text[start:], re.MULTILINE)
+        end = start + following.start() if following else len(text)
+        body = text[start:end]
+    else:
+        text += '\n[' + section + ']\n'
+        start = end = len(text)
+        body = ''
+    for key, value in values.items():
+        pattern = r'^' + re.escape(key) + r'=.*$'
+        entry = key + '=' + value
+        if re.search(pattern, body, re.MULTILINE):
+            body = re.sub(pattern, lambda _: entry, body, count=1, flags=re.MULTILINE)
+        else:
+            body = body.rstrip() + '\n' + entry + '\n'
+    path.write_text(text[:start] + body.rstrip() + '\n\n' + text[end:])
+
+
 def validate_identity(team: str, bundle: str, version: str, build: str) -> None:
     if team and not re.fullmatch(r"[A-Z0-9]{10}", team):
         raise ValueError("IOS_TEAM_ID must be the ten-character Apple team ID")
@@ -126,17 +152,13 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
             (stage / name).parent.mkdir(parents=True, exist_ok=True)
             copy_resource(str(path), str(stage / name))
     shutil.copy2(source / "project.godot", stage / "project.godot")
-    # ConfigFile's multiline dictionaries must stay in Godot syntax: use an override file for stage-only imports.
-    (stage / "override.cfg").write_text(
-        '[application]\nconfig/version=' + json.dumps(version) + '\n\n'
-        '[rendering]\ntextures/vram_compression/import_etc2_astc=true\n'
-        'textures/vram_compression/import_s3tc_bptc=false\n', encoding="utf-8")
+    project_values(stage / "project.godot", "application", {"config/version": json.dumps(version)})
+    settings = {"textures/vram_compression/import_etc2_astc": "true",
+                "textures/vram_compression/import_s3tc_bptc": "false"}
     if simulator:
-        # Godot's simulator template supports Compatibility only. Device exports keep Mobile/Metal.
-        with (stage / "override.cfg").open("a", encoding="utf-8") as stream:
-            stream.write('renderer/rendering_method="gl_compatibility"\n'
-                         'renderer/rendering_method.mobile="gl_compatibility"\n'
-                         'renderer/rendering_method.ios="gl_compatibility"\n')
+        for key in ["renderer/rendering_method", "renderer/rendering_method.mobile", "renderer/rendering_method.ios"]:
+            settings[key] = '"gl_compatibility"'
+    project_values(stage / "project.godot", "rendering", settings)
     presets = config(source / "export_presets.cfg")
     section = next((s for s in presets.sections() if presets.get(s, "name", fallback="") == '"iOS"'), None)
     if section is None:
@@ -200,6 +222,8 @@ def export(source: Path, output: Path, godot: str, team: str, bundle: str, versi
     if shutil.disk_usage(ancestor).free < 20 * 1024 ** 3:
         raise ValueError("A fresh iOS import requires at least 20 GiB free")
     stage = prepare(source, output, team, bundle, version, build, simulator)
+    from ios_native import build as build_native
+    build_native(stage, output / "native-build.log")
     command = [godot, "--headless", "--path", str(stage), "--editor", "--import"]
     try:
         logged(command, output / "import.log", check_errors=True)
@@ -226,6 +250,8 @@ def simulator_build(output: Path) -> Path:
     inventory = json.loads((output / "source-inventory.json").read_text())
     if not inventory.get("simulator"):
         raise ValueError("Use a simulator stage; device Metal exports cannot run in the simulator")
+    from ios_simulator import ensure_arm64
+    ensure_arm64(output)
     logged(["xcodebuild", "-project", str(project), "-scheme", "CurseOfStrahd", "-configuration", "Release",
             "-sdk", "iphonesimulator", "-destination", "generic/platform=iOS Simulator",
             "-derivedDataPath", str(output / "derived"), "CODE_SIGNING_ALLOWED=NO",

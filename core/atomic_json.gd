@@ -54,3 +54,16 @@ static func write(path: String, data: Dictionary, fault: Callable = Callable()) 
 
 static func _fails(fault: Callable, step: String) -> bool:
 	return fault.is_valid() and bool(fault.call(step))
+
+
+## Copy older generations before publishing a new primary. Failure can duplicate a generation, but never
+## removes the newest committed save. Paths are newest first. Call write(paths[0], ...) only after success.
+static func rotate(paths: Array[String], fault: Callable = Callable()) -> Error:
+	for index in range(paths.size() - 1, 0, -1):
+		var data := read(paths[index - 1])
+		if data.is_empty():
+			continue
+		var err := write(paths[index], data, fault)
+		if err != OK:
+			return err
+	return OK
