@@ -644,3 +644,100 @@ func test_combat_recovery_waits_for_storage_and_retries_one_command_once() -> vo
 	assert_eq(resumed.get_c(hero.id).cell, hero.cell, "a termination immediately after the write executes the move once")
 	view.queue_free()
 	await _frames()
+
+
+func test_large_mobile_inventory_keeps_rows_bounded_and_searches_every_item() -> void:
+	var state := StoryState.new()
+	var hero := Pregens.build("godrick_pendlebrook", 5)
+	hero.inventory.clear()
+	for item in Compendium.shared().all("items"):
+		if hero.inventory.size() >= 350:
+			break
+		hero.inventory.append({"id": str(item["id"]), "qty": 1, "slot": ""})
+	state.party.append(hero)
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	var started := Time.get_ticks_usec()
+	inventory.open(self, state, 0)
+	await _frames()
+	print("  mobile inventory: 350 items, first page %.1f ms" % ((Time.get_ticks_usec() - started) / 1000.0))
+	assert_eq(inventory.shown_ids().size(), MobileInventory.LIST_PAGE_SIZE)
+	var first := inventory.shown_ids()
+	inventory.mobile.turn_page(1)
+	await _frames()
+	assert_eq(inventory.shown_ids().size(), MobileInventory.LIST_PAGE_SIZE)
+	assert_ne(inventory.shown_ids(), first)
+	inventory.mobile.turn_page(-1)
+	await _frames()
+	assert_eq(inventory.shown_ids(), first)
+	var last := str(hero.inventory.back()["id"])
+	inventory.search = str(Compendium.shared().item_data(last)["name"])
+	started = Time.get_ticks_usec()
+	inventory._fill_list()
+	await _frames()
+	print("  mobile inventory: search %.1f ms" % ((Time.get_ticks_usec() - started) / 1000.0))
+	assert_true(last in inventory.shown_ids(), "search covers the entire bag, including later pages")
+	assert_eq(inventory.mobile.list_page, 0)
+	inventory.queue_free()
+	await _frames()
+
+
+func test_accessibility_selection_cards_are_named_buttons_with_current_selection() -> void:
+	var body := MobilePage.build(root, "Choose", func() -> void: pass)
+	var content := VBoxContainer.new()
+	content.add_child(MobileUi.text("Godrick Pendlebrook"))
+	content.add_child(MobileUi.text("Paladin · ready to travel"))
+	var calls := [0]
+	var card := UiParts.click_row(content, func() -> void: calls[0] = int(calls[0]) + 1, true)
+	body.add_child(card)
+	await _frames()
+	var access := MobileAccessibility.new()
+	var projection := access.snapshot(get_tree().root)
+	var choices: Array = (projection["items"] as Array).filter(func(item: Dictionary) -> bool: return str(item["label"]) == "Godrick Pendlebrook")
+	assert_eq(choices.size(), 1, "one semantic control represents the whole selection card")
+	assert_eq(str(choices[0]["role"]), "button")
+	assert_true(bool(choices[0]["selected"]))
+	access.activate("access_activate", str(projection["revision"]) + ":" + str(choices[0]["id"]))
+	assert_eq(int(calls[0]), 1)
+
+
+func test_combat_action_popup_closes_from_review_and_before_targeting() -> void:
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "ilse_varga", Vector2i(2, 2), 3)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var catalog := ActionCatalog.new(encounter)
+	var aimed: Dictionary = {}
+	for action in catalog.actions_for(actor):
+		if bool(action.get("legal", false)) and str(action.get("targeting", "none")) != "none" and not action.has("choices"):
+			aimed = action
+			break
+	assert_false(aimed.is_empty())
+	var before := encounter.dice.get_state()
+	var closed := [0]
+	var commands := [0]
+	for choose: bool in [false, true]:
+		var popup := MobileActions.new()
+		add_child(popup)
+		popup.open(catalog, actor)
+		popup.closed.connect(func() -> void: closed[0] = int(closed[0]) + 1)
+		popup.chosen.connect(func(_action: Dictionary, _level: int) -> void:
+			assert_false(popup.visible, "targeting begins with the popup already hidden")
+			commands[0] = int(commands[0]) + 1)
+		popup.inspect(aimed)
+		await _frames()
+		if choose:
+			popup.commit()
+		else:
+			var close := popup.find_children("*", "Button", true, false).filter(func(node: Node) -> bool: return (node as Button).text == "Close")
+			assert_eq(close.size(), 1)
+			var at := (close[0] as Button).get_global_rect().get_center()
+			_touch(at, true)
+			await _frames()
+			_touch(at, false)
+		await _frames()
+		assert_false(is_instance_valid(popup), "no action panel remains over the battlefield")
+	assert_eq(int(closed[0]), 2)
+	assert_eq(int(commands[0]), 1)
+	assert_eq(encounter.dice.get_state(), before, "opening, closing and aiming never roll dice")
+	assert_true(actor.action_available)

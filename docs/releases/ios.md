@@ -17,6 +17,8 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
   navigation. Dense campaign screens and Skirmish have separate mobile compositions.
 - Saves use native Files import/share, validation before import, atomic writes and backups. Exploration checkpoints
   run proactively outside open transactions. Campaign combat writes a command journal before executing each action. A restart replays the ledger through the rules engine, including pending reactions, exact RNG states and resource costs. An unwritable save holds the action behind Retry. The existing round-start slot is used, and Honour continues to use its single slot. Ordinary desktop saves retain their round-start and fresh-load-dice behavior.
+- Practice combat has its own recovery file and a Resume practice battle entry, separate from campaign slots.
+- Combat Actions opens only on demand. Close is always available, and aiming hides the popup before targeting.
 - iOS ignores external executable PCK patches; script updates arrive in signed app releases.
 
 Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.
@@ -271,5 +273,5 @@ This fixture qualifies the bridge, not a campaign playthrough. Full-game journey
 Control interaction, device rendering/performance and signed distribution remain separate acceptance gates.
 
 Local evidence, 2026-10-16: Xcode 27.1; native utility cancellation on iPhone Duo/iOS 27.1 and iPad Pro 11 M4/iOS
-27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The full campaign's first ASTC import is still running.
-Desktop/mobile headless checks passed 77 tests, and native build/signing tooling passed 24 Python tests.
+27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The first complete ASTC import and refreshed game export have finished; full-game native qualification is in progress.
+Desktop/mobile `make check` passes 109 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 24 Python tests.

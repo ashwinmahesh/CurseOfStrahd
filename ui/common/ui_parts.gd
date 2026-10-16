@@ -623,6 +623,18 @@ static func click_row(content: Control, on_press: Callable, lit: bool = false, t
 	b.pressed.connect(func() -> void: Audio.sfx("click"))
 	b.pressed.connect(on_press)
 	b.tip = tip
+	if MobileDevice.enabled():
+		var labels := content.find_children("*", "Label", true, false)
+		if content is Label:
+			labels.push_front(content)
+		var words: Array[String] = []
+		for label: Label in labels:
+			if label.text != "":
+				words.append(label.text)
+		b.set_meta(&"access_label", words[0] if not words.is_empty() else "Choose")
+		b.set_meta(&"access_hint", " · ".join(words.slice(1)))
+		b.set_meta(&"access_selected", lit)
+		c.set_meta(&"access_row_button", weakref(b))
 	c.add_child(b)
 	return c
 

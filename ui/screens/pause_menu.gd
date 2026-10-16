@@ -955,6 +955,7 @@ func _mobile_menu() -> void:
 		["Voices", VoiceOver.volume(), VoiceOver.set_volume]]:
 		_mobile_body.add_child(MobileUi.text(str(spec[0])))
 		var slider := HSlider.new()
+		slider.tooltip_text = str(spec[0])
 		slider.max_value = 1.0
 		slider.step = 0.05
 		slider.value = float(spec[1])
@@ -968,7 +969,7 @@ func _mobile_menu() -> void:
 	save.disabled = not SaveSystem.can_save()
 	_mobile_body.add_child(save)
 	if not SaveSystem.can_save():
-		_mobile_body.add_child(MobileUi.text("Campaign combat is saved before each action. A recovery save continues your last committed action."))
+		_mobile_body.add_child(MobileUi.text("Combat is saved before each action. Continue the campaign from its recovery save, or use Resume practice battle on the title screen."))
 	var load := MobileUi.button("Load a save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty() or SaveSystem.honour()
 	_mobile_body.add_child(load)

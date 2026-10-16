@@ -11,12 +11,12 @@ the earlier sequencing that postponed compact UI design until the end of the tab
 
 ## Current milestone
 
-The implementation includes an iPad export preset, isolated mobile asset preparation, prerequisite checks,
+The implementation includes a universal iPhone/iPad export preset, isolated mobile asset preparation, prerequisite checks,
 Xcode export/archive commands, source and app-size reports, a Mobile renderer profile and shader fallbacks,
 protection against loading external executable patches on iOS, atomic save replacement, and a manual signed
 archive/TestFlight workflow. See [the runbook](../releases/ios.md).
 
-The first UI batch adds touch routing, safe-area navigation, mobile inventory views, and a combat action browser.
+The UI implements touch routing, safe-area navigation, separate mobile campaign and Skirmish screens, inventory paging, and a dismissible combat action popup. Native Files/share, accessibility projection, interruption handling, and write-ahead campaign/practice battle recovery are implemented. Xcode, templates and simulator runtimes are installed; native Files utility tests pass on iPhone and iPad.
 See the [UI progress and remaining work](ios_ui_and_utility.md#implementation-progress). Native simulator and
 physical-device qualification remain open; offscreen desktop previews do not satisfy those gates.
 
@@ -27,7 +27,7 @@ source-tree tests are evidence for the foundation, not a device qualification or
 
 | Milestone | Next deliverable | Completion evidence |
 | --- | --- | --- |
-| P0 Device build | Install Xcode/templates, configure signing, export and run the game | Named iPad/OS, successful exploration/dialogue/combat/save/reload, actual bundle size |
+| P0 Device build | Configure iOS distribution signing and qualify the exported game | Named iPad/OS, successful exploration/dialogue/combat/save/reload, actual bundle size |
 | P1 Rendering and assets | Profile real hardware, optimize textures and costly effects, decide bundle/content delivery | Matched visual captures, memory and frame-time budgets, full export inventory |
 | P2 Input and layout | Touch modality, gesture arbitration, safe areas, logical point sizing, native keyboard | No duplicate input, correct modal ownership, readable compact/regular layouts |
 | P3 Touch gameplay | Exploration, camera, combat preview/confirmation, targeting and reactions | Touch-only route through a demanding battle and conversation |

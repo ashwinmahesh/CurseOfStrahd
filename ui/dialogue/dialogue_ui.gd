@@ -369,7 +369,11 @@ func _show(beat: Dictionary) -> void:
 	if str(beat["kind"]) == "check":
 		if d20 == null:
 			d20 = DiceRoll.new()
-			add_child(d20)
+			if _mobile_page != null:
+				_mobile_page.body.add_child(d20)
+				_mobile_page.body.move_child(d20, 0)
+			else:
+				add_child(d20)
 		d20.roll(DiceRoll.from_beat(beat))
 	elif d20 != null and str(beat["kind"]) not in ["stage", "cutscene"]:
 		d20.queue_free()

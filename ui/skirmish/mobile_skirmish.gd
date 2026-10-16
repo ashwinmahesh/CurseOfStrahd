@@ -32,6 +32,10 @@ func build() -> void:
 		candidate = Vector2i(-1, -1)
 		draw())
 	page.toolbar.add_child(tabs)
+	if not MobilePracticeRecovery.read().is_empty():
+		page.toolbar.add_child(MobileUi.button("Resume practice battle", func() -> void:
+			if MobilePracticeRecovery.request():
+				host.get_tree().change_scene_to_file(SkirmishScreen.ARENA_SCENE)))
 	status = MobileUi.text("")
 	host._note = status
 	page.toolbar.add_child(status)
@@ -342,6 +346,7 @@ func undo_edit() -> void:
 
 func _saved() -> void:
 	var name := LineEdit.new()
+	name.placeholder_text = "Setup name"
 	name.text = host.setup.title
 	name.custom_minimum_size.y = 48
 	name.text_changed.connect(func(value: String) -> void: host.setup.title = value.strip_edges() if value.strip_edges() != "" else "Skirmish")
@@ -375,6 +380,8 @@ func _fight_review() -> void:
 	if problem != "":
 		host.say(problem)
 		return
+	if not MobilePracticeRecovery.read().is_empty():
+		text += "\nStarting this fight replaces the paused practice battle."
 	_confirm("Start this fight?", text, "Fight", host._fight)
 
 

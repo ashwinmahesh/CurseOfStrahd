@@ -34,6 +34,11 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 		var control := node as Control
 		if not control.is_visible_in_tree():
 			return
+		if control.has_meta(&"access_row_button"):
+			var button := (control.get_meta(&"access_row_button") as WeakRef).get_ref() as Control
+			if is_instance_valid(button):
+				_collect(button, clip, items)
+			return
 		if control is ScrollContainer:
 			var candidate := control as ScrollContainer
 			if candidate.get_v_scroll_bar().max_value > candidate.size.y:
@@ -47,9 +52,9 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 		var selected := false
 		if control is Button:
 			var button := control as Button
-			label = button.text
+			label = str(button.get_meta(&"access_label", button.text if button.text != "" else button.tooltip_text))
 			disabled = button.disabled
-			selected = button.button_pressed if button.toggle_mode else false
+			selected = bool(button.get_meta(&"access_selected", button.button_pressed if button.toggle_mode else false))
 			role = "button"
 		elif control is Label:
 			label = (control as Label).text
@@ -57,11 +62,12 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 			label = (control as RichTextLabel).get_parsed_text()
 		elif control is LineEdit:
 			var input := control as LineEdit
-			label = input.placeholder_text
+			label = _input_label(control, input.placeholder_text, "Text field")
+			disabled = not input.editable
 			value = "Hidden text" if input.secret else input.text
 			role = "input"
 		elif control is Slider:
-			label = control.tooltip_text if control.tooltip_text != "" else "Adjust value"
+			label = _input_label(control, control.tooltip_text, "Adjust value")
 			value = str((control as Slider).value)
 			role = "slider"
 			disabled = not (control as Slider).editable
@@ -73,7 +79,7 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 			rect = transform * rect
 			rect.position -= Vector2(control.get_window().position)
 			items.append({"id": id, "label": label, "value": value, "role": role, "disabled": disabled,
-				"selected": selected, "hint": control.tooltip_text,
+				"selected": selected, "hint": str(control.get_meta(&"access_hint", control.tooltip_text)),
 				"frame": [rect.position.x / size.x, rect.position.y / size.y, rect.size.x / size.x, rect.size.y / size.y]})
 			controls[id] = weakref(control)
 			if control is BaseButton or control is LineEdit:
@@ -113,5 +119,18 @@ func activate(kind: String, command: String) -> void:
 		if button.toggle_mode:
 			button.button_pressed = not button.button_pressed
 		button.pressed.emit()
-	elif control is LineEdit:
+	elif control is LineEdit and (control as LineEdit).editable:
 		control.grab_focus()
+
+
+func _input_label(control: Control, explicit: String, fallback: String) -> String:
+	if control.has_meta(&"access_label"):
+		return str(control.get_meta(&"access_label"))
+	if explicit != "":
+		return explicit
+	var parent := control.get_parent()
+	for index in range(control.get_index() - 1, -1, -1):
+		var sibling := parent.get_child(index)
+		if sibling is Label and (sibling as Label).text != "":
+			return (sibling as Label).text
+	return fallback

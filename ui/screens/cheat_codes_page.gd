@@ -22,7 +22,7 @@ var _icon_box: Control
 var _name: Label
 var _kind: Label
 var _summary: Label
-var _pick_row: HBoxContainer
+var _pick_row: BoxContainer
 var _pick_word: Label
 var _pick: OptionButton
 var _give: Button
@@ -55,6 +55,9 @@ static func open_on(parent: Node, state: StoryState, hide: CanvasItem = null) ->
 
 
 func _build() -> void:
+	if MobileDevice.enabled():
+		_build_mobile()
+		return
 	var box := UiKit.screen_frame(self, "Cheat Codes", SIZE)
 	# Clear of the title's arch, whose point hangs into the frame.
 	var clear := Control.new()
@@ -286,3 +289,49 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"combat_cancel") or event.is_action_pressed(&"ui_cancel"):
 		get_viewport().set_input_as_handled()
 		close()
+
+
+func _build_mobile() -> void:
+	var body := MobilePage.build(self, "Cheat codes", close)
+	body.add_child(MobileUi.text("Enter an item code, inspect the item and choose who receives it. Give adds one bundle each time you tap it."))
+	_chips = VBoxContainer.new()
+	body.add_child(_chips)
+	_draw_chips()
+	_code = LineEdit.new()
+	_code.name = "Code"
+	_code.placeholder_text = "Six-character item code"
+	_code.max_length = 12
+	MobileUi.fit(_code)
+	_code.text_changed.connect(_typed)
+	# Return/Done dismisses the keyboard; only the explicit Give button commits on touch devices.
+	_code.text_submitted.connect(func(_text: String) -> void:
+		_code.release_focus()
+		DisplayServer.virtual_keyboard_hide())
+	body.add_child(_code)
+	_icon_box = Control.new()
+	_icon_box.custom_minimum_size = Vector2(ICON, ICON)
+	body.add_child(_icon_box)
+	_name = MobileUi.text("", "gilt_light")
+	_kind = MobileUi.text("")
+	_summary = MobileUi.text("")
+	body.add_child(_name)
+	body.add_child(_kind)
+	body.add_child(_summary)
+	_pick_row = VBoxContainer.new()
+	_pick_word = MobileUi.text("")
+	_pick_row.add_child(_pick_word)
+	_pick = OptionButton.new()
+	_pick.name = "Base"
+	_pick.fit_to_longest_item = false
+	_pick.clip_text = true
+	MobileUi.fit(_pick)
+	UiKit.button_look(_pick)
+	_pick.item_selected.connect(func(_index: int) -> void: _show_item())
+	_pick_row.add_child(_pick)
+	body.add_child(_pick_row)
+	_give = MobileUi.button("Give", _give_now)
+	_give.name = "Give"
+	body.add_child(_give)
+	_status = MobileUi.text("", "gilt_light")
+	body.add_child(_status)
+	_typed("")

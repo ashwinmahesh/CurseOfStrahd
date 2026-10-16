@@ -1899,3 +1899,71 @@ func test_mobile_cinematics_loading_ending_and_tutorial_fit() -> void:
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_new_game_roster_difficulty_and_tutorial_offer_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834), Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var menu := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(menu)
+		for method: String in ["_title", "_new_game", "_pick_difficulty", "_offer_tutorial"]:
+			menu.call(method)
+			await _mobile_check(menu, "new game " + method)
+		menu.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_credits_updates_codes_and_dice_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var menu := (load("res://scenes/main_menu.tscn") as PackedScene).instantiate()
+		add_child(menu)
+		menu.call("_credits")
+		await _mobile_check(menu, "credits")
+		menu.queue_free()
+		await _frames(2)
+		var updates := WhatsNew.open(self)
+		await _mobile_check(updates, "updates")
+		updates.queue_free()
+		var state := StoryState.new()
+		state.party.append(Pregens.build("godrick_pendlebrook", 5))
+		var cheats := CheatCodesPage.open_on(self, state)
+		for code: String in ["", "359A02", CheatCodes.code_of("weapon_plus_1")]:
+			cheats.type_code(code)
+			await _mobile_check(cheats, "cheat code " + code)
+		cheats.queue_free()
+		await _frames(2)
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var dice := DiceRoll.new()
+		layer.add_child(dice)
+		dice.place_for_screen()
+		dice.roll({"who": "Godrick Pendlebrook", "label": "Wisdom saving throw", "kind": "save", "natural": 20,
+			"rolls": [20, 8], "advantage": true, "total": 24, "target": 18, "success": true, "critical": true})
+		await _mobile_check(layer, "dice result")
+		layer.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

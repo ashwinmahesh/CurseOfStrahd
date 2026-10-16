@@ -30,6 +30,9 @@ func open(catalog_: ActionCatalog, actor_: Combatant) -> void:
 	var body := MobilePage.build(self, "Actions · %s" % actor.name(), back)
 	page = body.get_parent().get_parent().get_parent() as MobilePage
 	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var close_button := MobileUi.button("Close", dismiss)
+	close_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	page.heading.get_parent().add_child(close_button)
 	browse()
 
 
@@ -38,8 +41,15 @@ func back() -> void:
 		selected = {}
 		browse()
 	else:
-		closed.emit()
-		queue_free()
+		dismiss()
+
+
+func dismiss() -> void:
+	if is_queued_for_deletion():
+		return
+	hide()
+	closed.emit()
+	queue_free()
 
 
 func browse() -> void:

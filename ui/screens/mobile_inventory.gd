@@ -10,6 +10,9 @@ var filters_open := false
 var party_open := false
 var positions: Dictionary = {}
 var compact := true
+const LIST_PAGE_SIZE := 40
+var list_page := 0
+var list_key := ""
 var _redrawing := false
 var _bag_scroll: ScrollContainer
 
@@ -300,3 +303,37 @@ func fit_details() -> void:
 			if control.disabled and control.tooltip_text != "" and not control.has_meta(&"mobile_reason"):
 				control.set_meta(&"mobile_reason", true)
 				control.text += "\n" + control.tooltip_text
+
+
+## Search and sorting inspect the whole bag, while each mobile page builds at most forty interactive rows.
+## Paging keeps the large inventory responsive and preserves the selected page when returning from details.
+func visible_rows(rows: Array[Dictionary]) -> Array[Dictionary]:
+	var key := "%s|%s|%s|%s|%s" % [screen._ch().id, screen.filter, screen.sort_by, screen.marks, screen.search]
+	if key != list_key:
+		list_key = key
+		list_page = 0
+	list_page = clampi(list_page, 0, maxi(0, (rows.size() - 1) / LIST_PAGE_SIZE))
+	return rows.slice(list_page * LIST_PAGE_SIZE, (list_page + 1) * LIST_PAGE_SIZE)
+
+
+func paging(total: int) -> void:
+	if total <= LIST_PAGE_SIZE:
+		return
+	screen._list_foot.add_child(MobileUi.text("Items %d–%d of %d" % [list_page * LIST_PAGE_SIZE + 1, mini(total, (list_page + 1) * LIST_PAGE_SIZE), total]))
+	var buttons := HBoxContainer.new()
+	screen._list_foot.add_child(buttons)
+	var previous := MobileUi.button("Previous items", func() -> void: turn_page(-1))
+	previous.disabled = list_page == 0
+	buttons.add_child(previous)
+	var next := MobileUi.button("Next items", func() -> void: turn_page(1))
+	next.disabled = (list_page + 1) * LIST_PAGE_SIZE >= total
+	buttons.add_child(next)
+
+
+func turn_page(direction: int) -> void:
+	list_page += direction
+	screen._fill_list()
+	page.scroll.scroll_vertical = 0
+	if is_instance_valid(_bag_scroll):
+		_bag_scroll.scroll_vertical = 0
+	positions[_key()] = 0
