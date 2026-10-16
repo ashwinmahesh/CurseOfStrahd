@@ -43,6 +43,27 @@ Keep at least 20 GiB free for a fresh mobile import; actual capacity needs depen
 
 ## Prepare a project without Xcode
 
+### Installing the local toolchain
+
+Install Xcode from the Mac App Store or [Apple Developer downloads](https://developer.apple.com/download/).
+Open it once, complete first-launch setup, and install iOS support and an iOS Simulator runtime under
+Settings → Components (called Platforms in some Xcode versions). Then select the full tools:
+
+```sh
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -runFirstLaunch
+xcodebuild -version
+xcrun --sdk iphoneos --show-sdk-version
+xcrun simctl list devices available
+```
+
+In Godot 4.7.2, choose **Editor → Manage Export Templates → Download and Install**. This installs matching
+templates under `~/Library/Application Support/Godot/export_templates/4.7.2.stable/`, including `ios.zip`.
+Alternatively download the matching `Godot_v4.7.2-stable_export_templates.tpz` from the official release and
+choose **Install from File** in that dialog. The CI workflow installs and verifies these files automatically.
+
+### Inspecting a stage
+
 This optional inspection step works before signing or the iOS toolchain is configured:
 
 ```sh
@@ -136,10 +157,69 @@ record startup/transition times and peak memory, and exercise interruption/relau
 complete touch and layout coverage, safe-area handling, reliable checkpointing, device performance, upgrade
 tests, and the distribution requirements in the plan.
 
+## GitHub signing and release pipeline
+
+`.github/workflows/ios.yml` adds **iOS builds** alongside the desktop release workflows. It runs on a hosted
+macOS runner with full Xcode, installs checksum-pinned Godot 4.7.2 and its iOS template, validates signing,
+imports into an isolated stage, archives, checks the actual app size, and exports an IPA. Private keys and
+provisioning profiles are removed in an `always()` cleanup step. Signing never runs for pull requests.
+
+Configure these in the repository's **Settings → Secrets and variables → Actions**:
+
+| Kind | Name | Value |
+| --- | --- | --- |
+| Variable | `IOS_BUNDLE_ID` | The explicit identifier registered for this app, such as `app.curseofstrahd.game` |
+| Secret | `IOS_SIGNING_P12` | Base64 of an exported Apple Distribution certificate **with its private key**, or Apple Development for development installs |
+| Secret | `IOS_SIGNING_P12_PASSWORD` | The password used when exporting that `.p12` |
+| Secret | `IOS_PROVISIONING_PROFILE` | Base64 of the matching `.mobileprovision` for that bundle, certificate and distribution method |
+
+The team ID is read from the validated provisioning profile, so no extra team secret is necessary in CI.
+The existing `APPLE_DEVELOPER_ID_P12` and password continue to sign the Mac download; Developer ID cannot sign
+iOS apps. The existing `APPLE_API_KEY_ID`, `APPLE_API_ISSUER_ID` and `APPLE_API_KEY_P8` are reused only when
+TestFlight upload is selected. Their App Store Connect role and app access must permit uploads.
+
+To prepare the iOS credentials, register the explicit App ID in the Apple Developer account, create/select an
+Apple Distribution certificate, and export it with its private key from Keychain Access as a password-protected
+`.p12`. Create an App Store Connect distribution provisioning profile for that App ID and certificate, and
+download it. For direct device installation, use a Development or Ad Hoc profile containing the device UDIDs
+instead, and select the corresponding workflow method. Do not revoke existing Mac certificates.
+
+From a trusted local terminal, set secrets without pasting their values into chat or committing them:
+
+```sh
+gh variable set IOS_BUNDLE_ID --body 'app.curseofstrahd.game'
+base64 -i /path/to/ios-signing.p12 | tr -d '\n' | gh secret set IOS_SIGNING_P12
+gh secret set IOS_SIGNING_P12_PASSWORD
+base64 -i /path/to/profile.mobileprovision | tr -d '\n' | gh secret set IOS_PROVISIONING_PROFILE
+```
+
+The password command prompts interactively. Replace the example bundle ID if the registered identifier differs.
+Create the matching iOS app record in App Store Connect before uploading. The upload action does not create
+that record, assign testers, submit review, or release the app publicly.
+
+After the workflow is merged onto the default branch, run **Actions → iOS builds → Run workflow** with `upload`
+off for the first signed build. Choose the method matching the provisioned profile; mismatches and expired
+profiles fail before asset import. The build number is the workflow run number. Dispatch a new run for a new
+upload; rerunning a successfully uploaded run would reuse its build number.
+
+```sh
+gh workflow run ios.yml -f version=1.0.0 -f method=app-store -f upload=false
+# Once the signed candidate and App Store Connect app are ready:
+gh workflow run ios.yml -f version=1.0.0 -f method=app-store -f upload=true
+```
+
+Each run retains the IPA, zipped archive (including symbols), toolchain/source inventories, app-size report and
+logs as a GitHub artifact for 14 days. Download release candidates for longer retention. The app's distribution
+profile is embedded in the signed app as normal; certificate private keys, API keys and the signing directory
+are excluded from artifacts. A successful upload means Apple accepted it for processing, not that beta review
+or public release has passed. Device qualification remains required before a supported release.
+
 ## References
 
 - [Godot iOS export](https://docs.godotengine.org/en/stable/tutorials/export/exporting_for_ios.html)
 - [Godot renderer capabilities](https://docs.godotengine.org/en/stable/tutorials/rendering/renderers.html)
 - [Apple build size limits](https://developer.apple.com/help/app-store-connect/reference/app-uploads/maximum-build-file-sizes/)
+- [GitHub macOS signing setup](https://docs.github.com/en/actions/how-tos/deploy/deploy-to-third-party-platforms/sign-xcode-applications)
+- [Apple Xcode components](https://developer.apple.com/documentation/Xcode/downloading-and-installing-additional-xcode-components)
 - [Apple review guidelines](https://developer.apple.com/app-store/review/guidelines/), including executable updates
   and third-party content rights before public distribution.

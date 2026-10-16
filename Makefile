@@ -67,7 +67,7 @@ ios-report:
 	python3 tools/release/ios.py report --app "$(IOS_APP)"
 
 ios-test:
-	python3 -m unittest discover -s tests/tools -p 'test_ios.py' -v
+	python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
 
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:

@@ -219,8 +219,17 @@ def archive(output: Path) -> None:
         raise ValueError("Run ios-export successfully before ios-archive")
     if destination.exists():
         raise ValueError("Archive already exists; use a fresh output to preserve the previous build")
+    signing = []
+    if os.environ.get("IOS_PROVISIONING_UUID"):
+        required = ["IOS_TEAM_ID", "IOS_SIGNING_IDENTITY", "IOS_KEYCHAIN"]
+        if any(not os.environ.get(key) for key in required):
+            raise ValueError("Manual signing requires IOS_TEAM_ID, IOS_SIGNING_IDENTITY and IOS_KEYCHAIN")
+        signing = ["CODE_SIGN_STYLE=Manual", "DEVELOPMENT_TEAM=" + os.environ["IOS_TEAM_ID"],
+                   "PROVISIONING_PROFILE_SPECIFIER=" + os.environ["IOS_PROVISIONING_UUID"],
+                   "CODE_SIGN_IDENTITY=" + os.environ["IOS_SIGNING_IDENTITY"],
+                   'OTHER_CODE_SIGN_FLAGS=--keychain "' + os.environ["IOS_KEYCHAIN"] + '"']
     logged(["xcodebuild", "-project", str(project), "-scheme", "CurseOfStrahd", "-configuration", "Release",
-            "-destination", "generic/platform=iOS", "-archivePath", str(destination), "archive"],
+            "-destination", "generic/platform=iOS", "-archivePath", str(destination), *signing, "archive"],
            output / "archive.log")
     apps = list((destination / "Products/Applications").glob("*.app"))
     if len(apps) != 1:

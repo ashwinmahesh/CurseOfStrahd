@@ -1,0 +1,167 @@
+name: iOS builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: App version (major.minor.patch)
+        required: true
+        default: '1.0.0'
+      method:
+        description: Must match the installed provisioning profile
+        type: choice
+        options: [app-store, ad-hoc, development]
+        default: app-store
+      upload:
+        description: Upload to App Store Connect for TestFlight processing (app-store only)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-release
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: '4.7.2'
+  GODOT_MAC_SHA512: 38aa16e5bba2083941fc5b3e54be0089bd4cc35e32415f5b9fd9a8a6a7b9818255d44532ea8ef94b5aef56c4b407c2d634fa4f657e4ebe681ebbf59b7bac69ca
+  TEMPLATES_SHA512: ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079
+
+jobs:
+  archive:
+    runs-on: macos-15
+    timeout-minutes: 350
+    env:
+      VERSION: ${{ inputs.version }}
+      IOS_BUILD: ${{ github.run_number }}
+      IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
+      EXPORT_METHOD: ${{ inputs.method }}
+      UPLOAD: ${{ inputs.upload }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - name: Check configuration before downloading assets
+        env:
+          IOS_SIGNING_P12: ${{ secrets.IOS_SIGNING_P12 }}
+          IOS_SIGNING_P12_PASSWORD: ${{ secrets.IOS_SIGNING_P12_PASSWORD }}
+          IOS_PROVISIONING_PROFILE: ${{ secrets.IOS_PROVISIONING_PROFILE }}
+          KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          echo "IOS_OUT=$RUNNER_TEMP/ios-build" >> "$GITHUB_ENV"
+          python3 - <<'PY'
+          import os, re
+          required = ['IOS_BUNDLE_ID', 'IOS_SIGNING_P12', 'IOS_SIGNING_P12_PASSWORD', 'IOS_PROVISIONING_PROFILE']
+          if os.environ['UPLOAD'] == 'true':
+              assert os.environ['EXPORT_METHOD'] == 'app-store', 'TestFlight requires app-store signing'
+              required += ['KEY_ID', 'ISSUER_ID', 'KEY_P8']
+          missing = [key for key in required if not os.environ.get(key)]
+          assert not missing, 'Missing GitHub configuration: ' + ', '.join(missing)
+          assert re.fullmatch(r'\d+\.\d+\.\d+', os.environ['VERSION']), 'Version must be major.minor.patch'
+          PY
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+
+      - name: Install iOS signing identity in a temporary keychain
+        env:
+          IOS_SIGNING_P12: ${{ secrets.IOS_SIGNING_P12 }}
+          IOS_SIGNING_P12_PASSWORD: ${{ secrets.IOS_SIGNING_P12_PASSWORD }}
+          IOS_PROVISIONING_PROFILE: ${{ secrets.IOS_PROVISIONING_PROFILE }}
+        run: python3 tools/release/ios_signing.py install --directory "$RUNNER_TEMP/ios-signing" --method "$EXPORT_METHOD"
+
+      - name: Fetch runtime LFS assets
+        run: git lfs pull -X 'art/generated/**'
+
+      - name: Cache engine downloads (separate from desktop imports)
+        id: engine
+        uses: actions/cache@v4
+        with:
+          path: ~/godot-ios-downloads
+          key: godot-ios-mac-${{ env.GODOT_VERSION }}-${{ env.GODOT_MAC_SHA512 }}-${{ env.TEMPLATES_SHA512 }}
+
+      - name: Download pinned Godot and templates
+        if: steps.engine.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$HOME/godot-ios-downloads"
+          cd "$HOME/godot-ios-downloads"
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl --retry 3 -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_macos.universal.zip"
+          curl --retry 3 -fsSLO "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+
+      - name: Verify and install toolchain
+        run: |
+          cd "$HOME/godot-ios-downloads"
+          echo "${GODOT_MAC_SHA512}  Godot_v${GODOT_VERSION}-stable_macos.universal.zip" | shasum -a 512 -c -
+          echo "${TEMPLATES_SHA512}  Godot_v${GODOT_VERSION}-stable_export_templates.tpz" | shasum -a 512 -c -
+          ditto -x -k "Godot_v${GODOT_VERSION}-stable_macos.universal.zip" "$RUNNER_TEMP/godot"
+          templates="$HOME/Library/Application Support/Godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$templates"
+          unzip -o -q -j "Godot_v${GODOT_VERSION}-stable_export_templates.tpz" templates/ios.zip templates/version.txt -d "$templates"
+          echo "GODOT=$RUNNER_TEMP/godot/Godot.app/Contents/MacOS/Godot" >> "$GITHUB_ENV"
+
+      - name: Test build tooling
+        run: make ios-test
+
+      - name: Import mobile assets and export Xcode project
+        run: make ios-export IOS_OUT="$IOS_OUT"
+
+      - name: Archive and enforce application size limit
+        run: make ios-archive IOS_OUT="$IOS_OUT"
+
+      - name: Export signed IPA
+        run: |
+          xcodebuild -exportArchive -archivePath "$IOS_OUT/CurseOfStrahd.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ios-signing/ExportOptions.plist" \
+            -exportPath "$IOS_OUT/ipa" > "$IOS_OUT/ipa-export.log" 2>&1
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          assert len(list((Path(os.environ['IOS_OUT']) / 'ipa').glob('*.ipa'))) == 1, 'Expected one IPA'
+          PY
+          ditto -c -k --keepParent "$IOS_OUT/CurseOfStrahd.xcarchive" "$IOS_OUT/CurseOfStrahd.xcarchive.zip"
+
+      - name: Upload build for TestFlight processing
+        if: inputs.upload
+        env:
+          KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          cd "$RUNNER_TEMP/ios-signing"
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          assert re.fullmatch(r'[A-Z0-9]+', os.environ['KEY_ID']), 'Invalid API key ID'
+          Path('private_keys').mkdir(mode=0o700)
+          key = Path('private_keys') / ('AuthKey_' + os.environ['KEY_ID'] + '.p8')
+          key.write_text(os.environ['KEY_P8'])
+          key.chmod(0o600)
+          PY
+          xcrun altool --upload-app --type ios --file "$IOS_OUT"/ipa/*.ipa --apiKey "$KEY_ID" --apiIssuer "$ISSUER_ID"
+          echo 'Uploaded to App Store Connect for processing. This does not submit an App Store release or assign testers.' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Preserve build and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-${{ inputs.version }}-${{ github.run_number }}-${{ github.run_attempt }}
+          retention-days: 14
+          compression-level: 0
+          if-no-files-found: warn
+          path: |
+            ${{ runner.temp }}/ios-build/*.log
+            ${{ runner.temp }}/ios-build/*-inventory.json
+            ${{ runner.temp }}/ios-build/toolchain.json
+            ${{ runner.temp }}/ios-build/app-size.json
+            ${{ runner.temp }}/ios-build/*.xcarchive.zip
+            ${{ runner.temp }}/ios-build/ipa/*.ipa
+            ${{ runner.temp }}/ios-build/ipa/*.plist
+
+      - name: Remove signing credentials and provisioning profiles
+        if: always()
+        run: python3 tools/release/ios_signing.py cleanup --directory "$RUNNER_TEMP/ios-signing"
