@@ -440,6 +440,7 @@ static func make_post_process() -> MeshInstance3D:
 	quad.material = mat
 	var mi := MeshInstance3D.new()
 	mi.name = "PostProcess"
+	mi.visible = not Graphics.software_simulator()
 	mi.mesh = quad
 	mi.extra_cull_margin = 16384.0
 	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

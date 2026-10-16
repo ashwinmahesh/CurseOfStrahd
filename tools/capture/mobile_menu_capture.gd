@@ -8,6 +8,10 @@ func capture_shots(tool: Node, out: String) -> void:
 		menu.call(method)
 		await tool.call("wait_frames", 12)
 		tool.call("_shot", out + method + ".png")
+		if method == "_new_game":
+			(menu.get("_mobile_scroll") as ScrollContainer).scroll_vertical = 99999
+			await tool.call("wait_frames", 12)
+			tool.call("_shot", out + "_new_game_continue.png")
 	menu.call("_credits")
 	await tool.call("wait_frames", 12)
 	tool.call("_shot", out + "_credits.png")

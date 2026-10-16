@@ -246,6 +246,7 @@ func _make_hero_card() -> Control:
 func _roster_card(key: String, art: String, title: String, line: String, hook: String) -> Control:
 	if MobileDevice.enabled():
 		var row := HBoxContainer.new()
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_theme_constant_override("separation", 12)
 		row.add_child(UiParts.framed_portrait(art, 80))
 		var body := VBoxContainer.new()
@@ -494,6 +495,7 @@ func _mobile_finish() -> void:
 		elif control is Button:
 			var button := control as Button
 			button.custom_minimum_size = Vector2(0, maxf(48, button.custom_minimum_size.y))
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 			button.add_theme_font_size_override("font_size", UiScale.text(18))
 

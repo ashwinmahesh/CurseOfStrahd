@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import struct
 import subprocess
 import sys
 
@@ -144,6 +145,8 @@ def mobile_texture_imports(stage: Path, simulator: bool = False) -> list[dict]:
             values = {"detect_3d/compress_to": "0"}
             if family == "sprites":
                 values.update({"compress/mode": "4", "compress/uastc_level": "0", "compress/rdo_quality_loss": "1.0"})
+                if simulator and simulator_sprite_size(path):
+                    values["process/size_limit"] = "4096"
             else:
                 values.update({"compress/mode": "1", "compress/lossy_quality": "0.85", "mipmaps/generate": "false", "process/size_limit": "2048"})
             project_values(path, "params", values)
@@ -157,6 +160,46 @@ def mobile_texture_imports(stage: Path, simulator: bool = False) -> list[dict]:
                 values = {"compress/high_quality": "false", "detect_3d/compress_to": "0"}
                 project_values(path, "params", values)
                 changed.append({"path": path.relative_to(stage).as_posix(), "parameters": values})
+    return changed
+
+
+def simulator_sprite_size(import_path: Path) -> tuple[int, int] | None:
+    """The software GLES simulator reports GL_MAX_TEXTURE_SIZE=4096; device Metal is unaffected."""
+    source = import_path.with_suffix("")
+    if source.suffix != ".png" or not source.is_file():
+        return None
+    with source.open("rb") as stream:
+        header = stream.read(24)
+    if len(header) != 24 or header[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+    size = struct.unpack(">II", header[16:24])
+    return size if max(size) > 4096 else None
+
+
+def simulator_atlas_dimensions(stage: Path) -> list[dict]:
+    """Restore logical source sizes after import, keeping atlas regions on the original coordinate grid.
+
+    Godot's size_limit resizes before writing GST2's logical dimensions. Its pinned v1 format supports
+    logical dimensions independent of the compressed image payload (CompressedTexture2D::load).
+    Only the isolated simulator cache is patched; fail closed if the engine changes that format.
+    """
+    changed = []
+    for path in sorted((stage / "art/sprites").rglob("*.png.import")):
+        size = simulator_sprite_size(path)
+        if not size or not re.search(r'^process/size_limit=4096$', path.read_text(), re.MULTILINE):
+            continue
+        destinations = re.findall(r'^path(?:\.\w+)?="res://([^"]+\.ctex)"$', path.read_text(), re.MULTILINE)
+        if not destinations:
+            raise ValueError(f"Missing imported simulator sprite: {path}")
+        for relative in destinations:
+            texture = stage / relative
+            with texture.open("r+b") as stream:
+                header = stream.read(16)
+                if header[:8] != b"GST2\x01\x00\x00\x00":
+                    raise ValueError(f"Unsupported Godot texture header: {texture}")
+                stream.seek(8)
+                stream.write(struct.pack("<II", *size))
+            changed.append({"path": relative, "logical_size": list(size), "pixel_limit": 4096})
     return changed
 
 
@@ -273,6 +316,9 @@ def export(source: Path, output: Path, godot: str, team: str, bundle: str, versi
     except RuntimeError:
         # As tools/import.sh does: one retry after the first pass has registered all script classes/resources.
         logged(command, output / "import-retry.log", check_errors=True)
+    if simulator:
+        adjusted = simulator_atlas_dimensions(stage)
+        (output / "simulator-atlas-dimensions.json").write_text(json.dumps(adjusted, indent=2) + "\n")
     xcode = output / "xcode"
     xcode.mkdir()
     logged([godot, "--headless", "--path", str(stage), "--export-release", "iOS",

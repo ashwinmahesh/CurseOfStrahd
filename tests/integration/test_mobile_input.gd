@@ -91,6 +91,26 @@ func test_modal_change_cancels_the_old_contact() -> void:
 	assert_eq(int(count[0]), 0)
 
 
+func test_held_navigation_button_activates_once_on_release() -> void:
+	var count := [0]
+	var button := UiKit.button("More", func() -> void: count[0] = int(count[0]) + 1)
+	button.position = Vector2(100, 100)
+	root.add_child(button)
+	await _frames()
+	var at := button.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	# Model a stalled frame without sleeping or changing the world's hold-to-context semantics.
+	(UiFeel.touch.gestures.contacts[0] as Dictionary)["time"] = Time.get_ticks_msec() - TouchGesture.HOLD_MS - 1
+	assert_eq(int(count[0]), 0)
+	_touch(at, false)
+	await _frames()
+	assert_eq(int(count[0]), 1)
+	_touch(at, false)
+	await _frames()
+	assert_eq(int(count[0]), 1)
+
+
 func test_vertical_swipes_over_horizontal_tabs_scroll_the_enclosing_page() -> void:
 	var body := MobilePage.build(root, "Nested scrolling")
 	var page := body.get_parent().get_parent().get_parent() as MobilePage
@@ -466,6 +486,47 @@ func test_mobile_map_pan_pinch_and_route_review_never_travel_until_commit() -> v
 	screen._mobile_depart(destination)
 	assert_eq(departures, [destination], "only explicit confirmation departs, once")
 	await _frames()
+
+
+func test_mobile_skirmish_empty_and_cleared_searches_show_heroes_and_foes() -> void:
+	var old_setup := SkirmishScreen.current
+	var old_tab := SkirmishScreen.kept_tab
+	SkirmishScreen.current = SkirmishSetup.new()
+	SkirmishScreen.kept_tab = "Party"
+	var screen := SkirmishScreen.new()
+	add_child(screen)
+	await _frames()
+	assert_true(screen.mobile.list.get_child_count() >= Pregens.roster_ids().size(), "an empty search shows available heroes")
+	screen._filter = "Godrick"
+	screen.mobile._fill_heroes()
+	assert_eq(screen.mobile.list.get_child_count(), 1)
+	assert_eq((screen.mobile.list.get_child(0) as Button).text, "Godrick Pendlebrook")
+	screen._filter = "   "
+	screen.mobile._fill_heroes()
+	assert_true(screen.mobile.list.get_child_count() > 1, "clearing or blanking the search restores the list")
+	await _frames()
+	var page := screen.mobile.body.get_parent().get_parent().get_parent() as MobilePage
+	page.scroll.scroll_vertical = 500
+	await _frames()
+	for button: Button in screen.mobile.tabs.find_children("*", "Button", true, false):
+		if button.text == "Foes":
+			var at := button.get_global_rect().get_center()
+			_touch(at, true)
+			await _frames()
+			_touch(at, false)
+			await _frames()
+	assert_eq(screen.tab, "Foes")
+	assert_eq(page.scroll.scroll_vertical, 0, "a new tab starts at its search and summary, not the old tab's scroll offset")
+	assert_true(screen.mobile.list.get_child_count() > 0, "available monsters appear without typing")
+	screen._filter = "zombie"
+	screen.mobile._fill_foes()
+	assert_true(screen.mobile.list.get_child_count() > 0)
+	for button: Button in screen.mobile.list.get_children():
+		assert_true(button.text.to_lower().contains("zombie"))
+	screen.queue_free()
+	await _frames()
+	SkirmishScreen.current = old_setup
+	SkirmishScreen.kept_tab = old_tab
 
 
 func test_mobile_skirmish_placement_preview_apply_erase_and_undo() -> void:

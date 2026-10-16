@@ -254,7 +254,14 @@ The software simulator renders at logical-point resolution; physical-device expo
 Both iOS paths default to Low graphics. Mobile Low uses static title artwork to avoid the title's costly
 fullscreen animated effects. Simulator VRAM textures use ETC2 instead of unsupported ASTC, and particle
 turbulence is disabled to avoid a software OpenGL shader-compiler stall. Other particle motion remains;
-physical devices and desktop retain turbulence. Error capture retains Godot's known initial unsupported mouse-position probe
+physical devices and desktop retain turbulence. The simulator also omits real-time shadows and draws the 3D
+world at half the logical-point resolution with bilinear upscaling; UI stays at logical resolution. It uses
+the existing simpler tree presentation instead of dense procedural flora, and omits bloom and the fullscreen
+atmospheric post-process pass. A native GLES probe reports a 4096-pixel texture limit. Oversized simulator sprite
+sheets are imported within that limit, then their pinned Godot GST2 v1 logical-size headers are restored to the
+source dimensions so existing animation atlas regions remain correct. `simulator-atlas-dimensions.json` records
+the adjustments; physical-device sprite textures retain their original resolution. These are simulator execution
+accommodations, not the physical-device quality settings. Error capture retains Godot's known initial unsupported mouse-position probe
 in the raw log but suppresses that one exact startup notification; later errors still produce a readable
 mobile notice and shareable diagnostics.
 
@@ -305,4 +312,4 @@ Control interaction, device rendering/performance and signed distribution remain
 
 Local evidence, 2026-10-16: Xcode 27.1; native utility cancellation on iPhone Duo/iOS 27.1 and iPad Pro 11 M4/iOS
 27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The complete mobile import and refreshed game export have finished; full-game native qualification is in progress.
-Desktop/mobile `make check` passes 134 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 26 Python tests.
+Desktop/mobile `make check` passes 136 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 27 Python tests.

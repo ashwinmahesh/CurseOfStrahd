@@ -1,6 +1,7 @@
 """Build-boundary tests: staging isolation, artifact accounting, and honest failure reporting."""
 import importlib.util
 import json
+import struct
 from pathlib import Path
 import tempfile
 import unittest
@@ -76,6 +77,26 @@ class IosBuildTests(unittest.TestCase):
         self.assertIn('compress/high_quality=false', target.read_text())
         self.assertIn('mipmaps/generate=true', target.read_text())
         self.assertEqual(texture.read_text(), original)
+
+    def test_oversized_simulator_sprite_preserves_logical_atlas_and_compressed_payload(self):
+        sprite = self.source / "art/sprites/hero.png"
+        sprite.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 5508, 5528))
+        sprite.with_suffix(".png.import").write_text('[remap]\nimporter="texture"\npath="res://.godot/imported/hero.ctex"\n[params]\ncompress/mode=2\nprocess/size_limit=0\n')
+        stage = self.prepare(simulator=True)
+        self.assertIn("process/size_limit=4096", (stage / "art/sprites/hero.png.import").read_text())
+        texture = stage / ".godot/imported/hero.ctex"
+        texture.parent.mkdir(parents=True)
+        payload = b"compressed image payload is unchanged"
+        texture.write_bytes(b"GST2" + struct.pack("<III", 1, 4081, 4096) + payload)
+        records = ios.simulator_atlas_dimensions(stage)
+        self.assertEqual(records[0]["logical_size"], [5508, 5528])
+        self.assertEqual(struct.unpack("<II", texture.read_bytes()[8:16]), (5508, 5528))
+        self.assertEqual(texture.read_bytes()[16:], payload)
+        self.assertEqual(ios.simulator_atlas_dimensions(stage), records)
+        self.assertIn("process/size_limit=0", sprite.with_suffix(".png.import").read_text())
+        texture.write_bytes(b"unknown format")
+        with self.assertRaisesRegex(ValueError, "Unsupported Godot texture header"):
+            ios.simulator_atlas_dimensions(stage)
 
     def test_stage_keeps_dynamic_resources_but_not_desktop_cache_or_generation_inputs(self):
         stage = self.prepare()

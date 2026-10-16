@@ -9,6 +9,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	add_child(setup)
 	await tool.call("wait_frames", 12)
 	tool.call("_shot", out + "_add_hero.png")
+	var picker := setup.mobile.body.get_parent().get_parent().get_parent() as MobilePage
+	picker.scroll.ensure_control_visible(setup.mobile.list.get_child(0) as Control)
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_hero_choices.png")
 	setup.setup.add_hero(Pregens.build("godrick_pendlebrook", 5))
 	setup.setup.add_foe("zombie")
 	setup._select_hero(0)
@@ -82,7 +86,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 2)
 	var card := LoadingCard.new()
 	card.location = {"name": "Castle Ravenloft", "region": "castle_ravenloft"}
-	card.tip = "Inspect an action before confirming it. You can pan the battlefield and read its targets without spending your turn."
+	card.tip = str(LoadingCard.tips()[0])
 	card.hold = 120
 	add_child(card)
 	await tool.call("wait_frames", 12)

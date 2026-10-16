@@ -89,7 +89,13 @@ static func spec() -> Dictionary:
 	if Look.modern() and not overrides.is_empty():
 		s = s.duplicate()
 		s.merge(overrides, true)
-	return for_renderer(s, true) if mobile_renderer() else s
+	if mobile_renderer():
+		s = for_renderer(s, true)
+	if software_simulator():
+		s = s.duplicate()
+		s.merge({"scale": 0.5, "msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPACE_AA_DISABLED,
+			"sun_map": 256, "lamp_atlas": 256, "lamp_shadows": 0, "sprite_shadows": false}, true)
+	return s
 
 
 ## iOS includes the simulator's Compatibility fallback. Desktop Mobile captures exercise the device limits too.
@@ -100,7 +106,11 @@ static func mobile_renderer() -> bool:
 ## Godot's iOS simulator uses Apple's software OpenGL driver, whose turbulence shader compilation stalls.
 ## Physical iOS devices use Metal and keep turbulence, as do ordinary desktop builds.
 static func particle_turbulence() -> bool:
-	return not (OS.has_feature("ios") and RenderingServer.get_current_rendering_method() == "gl_compatibility")
+	return not software_simulator()
+
+
+static func software_simulator() -> bool:
+	return OS.has_feature("ios") and RenderingServer.get_current_rendering_method() == "gl_compatibility"
 
 
 ## Capability limits apply after user settings and capture overrides, in both visual finishes. Never mutate
@@ -124,7 +134,7 @@ static func apply(vp: Viewport) -> void:
 	vp.screen_space_aa = s["edge_aa"] as Viewport.ScreenSpaceAA
 	var scale := float(s["scale"])
 	vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
-	if scale < 1.0:
+	if scale < 1.0 and not software_simulator():
 		var metal := RenderingServer.get_current_rendering_driver_name() == "metal"
 		vp.scaling_3d_mode = Viewport.SCALING_3D_MODE_METALFX_SPATIAL if metal else Viewport.SCALING_3D_MODE_FSR
 	vp.scaling_3d_scale = scale

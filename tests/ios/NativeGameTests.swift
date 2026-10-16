@@ -110,7 +110,19 @@ final class NativeGameTests: XCTestCase {
         }
         XCTAssertTrue(search.exists, app.debugDescription)
         search.tap()
-        app.typeText("Zombie")
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5), app.debugDescription)
+        let keyboardIntroduction = app.otherElements["UIContinuousPathIntroductionView"]
+        if keyboardIntroduction.waitForExistence(timeout: 1) {
+            keyboardIntroduction.buttons["Continue"].tap()
+        }
+        capture("creature-search-keyboard")
+        // Godot's text editor uses a UIKit input responder behind the semantic game view. Touch the real
+        // keyboard keys, as a player does, instead of requiring XCTest's native text-field focus metadata.
+        for character in "zombie" {
+            let key = app.keyboards.keys.matching(NSPredicate(format: "label ==[c] %@", String(character))).firstMatch
+            XCTAssertTrue(key.waitForExistence(timeout: 5), app.debugDescription)
+            key.tap()
+        }
         if app.buttons["Done"].waitForExistence(timeout: 5) { tap("Done", scroll: false) }
         let zombie = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Zombie · CR")).firstMatch
         for _ in 0..<8 {

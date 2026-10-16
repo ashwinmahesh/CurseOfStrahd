@@ -109,7 +109,9 @@ func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:
 		return
 	if update.is_empty():
 		return
-	var context := context_next or str(update["kind"]) == "context"
+	# Ordinary buttons activate on release even after a slow frame or a deliberate hold. Turning a held
+	# button into a right click silently discards navigation; contextual world gestures remain available.
+	var context := context_next or (str(update["kind"]) == "context" and not control is BaseButton)
 	context_next = false
 	if str(update["owner"]) == "ui":
 		if control == null or not control.is_visible_in_tree():

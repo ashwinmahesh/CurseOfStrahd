@@ -30,7 +30,8 @@ func build() -> void:
 		host.tab = value
 		host._filter = ""
 		candidate = Vector2i(-1, -1)
-		draw())
+		draw()
+		page.scroll.set_deferred("scroll_vertical", 0))
 	page.toolbar.add_child(tabs)
 	if not MobilePracticeRecovery.read().is_empty():
 		page.toolbar.add_child(MobileUi.button("Resume practice battle", func() -> void:
@@ -125,7 +126,8 @@ func _search(placeholder: String, fill: Callable) -> void:
 
 
 func _matches(text: String) -> bool:
-	return text.to_lower().contains(host._filter.strip_edges().to_lower())
+	var query := host._filter.strip_edges().to_lower()
+	return query.is_empty() or text.to_lower().contains(query)
 
 
 func _fill_heroes() -> void:

@@ -219,7 +219,7 @@ func _build() -> void:
 	add_child(we)
 	sun = DirectionalLight3D.new()
 	sun.name = "Sun"
-	sun.shadow_enabled = true
+	sun.shadow_enabled = not Graphics.software_simulator()
 	sun.shadow_opacity = float(mood.get("shadow_opacity", 1.0))
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	sun.directional_shadow_max_distance = 60.0
@@ -263,7 +263,7 @@ func _modern_finish() -> void:
 	env.tonemap_mode = MODERN_TONEMAP
 	env.tonemap_exposure = MODERN_EXPOSURE
 	env.tonemap_white = 6.0
-	env.glow_enabled = true
+	env.glow_enabled = not Graphics.software_simulator()
 	env.glow_intensity = 0.7
 	env.glow_strength = 1.0
 	env.glow_bloom = 0.02
@@ -1491,7 +1491,7 @@ func _window_shaft(l: OmniLight3D) -> void:
 	spot.spot_range = 8.0
 	spot.spot_angle = 14.0
 	spot.spot_attenuation = 0.6
-	spot.shadow_enabled = true
+	spot.shadow_enabled = not Graphics.software_simulator()
 	spot.light_size = 0.3
 	spot.distance_fade_enabled = true
 	spot.distance_fade_begin = 40.0

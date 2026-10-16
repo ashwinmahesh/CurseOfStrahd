@@ -1916,6 +1916,14 @@ func test_mobile_new_game_roster_difficulty_and_tutorial_offer_fit() -> void:
 		for method: String in ["_title", "_new_game", "_pick_difficulty", "_offer_tutorial"]:
 			menu.call(method)
 			await _mobile_check(menu, "new game " + method)
+			if method == "_new_game":
+				for grid: GridContainer in menu.find_children("*", "GridContainer", true, false):
+					if grid.columns == 2:
+						for card: Control in grid.get_children():
+							assert_true(card.size.x > grid.size.x * 0.4, "both iPad roster columns retain readable widths")
+				for button: Button in menu.find_children("*", "Button", true, false):
+					if button.text == "Back" or button.text.begins_with("Go on"):
+						assert_true(button.size.x >= 100, "mobile navigation must reserve room for its label")
 		menu.queue_free()
 		await _frames(2)
 	GameSettings.set_text_scale(old_text)

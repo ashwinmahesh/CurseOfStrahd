@@ -41,7 +41,7 @@ static var off := false
 
 ## True where the Modern look's plants are drawn.
 static func enabled() -> bool:
-	return Look.modern() and not off and FileAccess.file_exists(MANIFEST_JSON)
+	return Look.modern() and not off and not Graphics.software_simulator() and FileAccess.file_exists(MANIFEST_JSON)
 
 
 static func manifest() -> Dictionary:
