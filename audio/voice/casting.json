@@ -2483,22 +2483,22 @@
       "released": true
     },
     "castle_steward": {
-      "voice_id": "fvmkmNaIvqNTpXkcg7GK",
-      "name": "Library voice: Bernd - Calm & Friendly Narrator",
-      "description": "The Steward, ghost of Castle Ravenloft's last steward (docs/voice/castle_steward.md): an old man with a formal, quiet, unhurried voice, a good servant's voice pitched for one listener, faded at the edges, and a strong, clearly audible Eastern European (Romanian) accent. Library voice picked 2026-10-15 from a short take (123 Hz median, 2.0 words/s).",
+      "voice_id": "4QOwu2Y4Xg8xoWicV16r",
+      "name": "Barovia Steward",
+      "description": "The Steward, ghost of Castle Ravenloft's last steward: an old, formal, dry male voice with the precise diction of a man who ran a great household; courteous, exact and quietly grave; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, voice C).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "helga_ruvak": {
-      "voice_id": "85xci5bgwOrimRmBcbA1",
-      "name": "Library voice: Emese",
-      "description": "Helga Ruvak, maid of the count's private floor and a vampire spawn (docs/voice/helga_ruvak.md): a woman with a meek, quick, polite voice, eyes down, and a strong, clearly audible Eastern European (Romanian) accent; under the meekness a little too interested. Library voice picked 2026-10-15 from a short take (177 Hz median, 2.0 words/s).",
+      "voice_id": "fgzAoeuDFvWiSceZwSmx",
+      "name": "Barovia Helga",
+      "description": "Helga Ruvak, maid of the count's private floor and a vampire spawn: a soft, polite, servile woman's voice with a sinister, patient, predatory undertone; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, sinister voice F).",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "castle_courtier_1": {
       "settings": {},
@@ -2529,12 +2529,12 @@
     },
     "castle_courtier_3": {
       "settings": {},
-      "description": "Boyar Vintila Crainic: a pompous, aggrieved Barovian boyar waiting two hundred and six years to present a petition; comic and stiff. Library voice picked 2026-10-15 (an elderly aristocratic, theatrical voice).",
-      "voice_id": "tUVMjP56ZNYXlKLsRXbo",
-      "name": "Library voice: Monty - Theatrical Aristocratic Villain",
-      "library": true,
+      "description": "Boyar Vintila Crainic, a nobleman waiting two centuries in a vampire's court: a smooth, unctuous, sinister and conniving voice, a smile that schemes; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, voice A).",
+      "voice_id": "l6WsdsXXZCCtYDLeGLZM",
+      "name": "Barovia Crainic",
       "model": "eleven_v3",
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "castle_courtier_4": {
       "settings": {},

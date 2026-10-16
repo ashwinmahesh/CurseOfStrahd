@@ -6118,86 +6118,86 @@
  },
  "castle_courtier_3/0d6ef0cbca0ed7bb": {
   "chars": 152,
-  "direction": "[outraged, pedantic, haughty]",
+  "direction": "[icy, pedantic, sinister]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "Certainly not. A petition is presented by the petitioner, in person, in the proper form. I have not waited this long to have it spoiled by irregularity."
  },
  "castle_courtier_3/12c308d24387757f": {
   "chars": 99,
-  "direction": "[pompous, dry, bitter]",
+  "direction": "[sly, smooth, conniving]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "You drew steel at his table, and you still haven't been received. I take a certain comfort in that."
  },
  "castle_courtier_3/46755c84b06f43bc": {
   "chars": 131,
-  "direction": "[aggrieved, pompous, bitter]",
+  "direction": "[bitter, calculating, vindictive]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "My neighbour moved it eleven paces in the night. Eleven. He is dead now, of course, and so are the orchards. The principle remains."
  },
  "castle_courtier_3/5a6f0b7c8dd76c67": {
   "chars": 99,
-  "direction": "[indignant, pompous, aggrieved]",
+  "direction": "[sour, insinuating, scheming]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "You dined with him? Two hundred and six years I have waited, and dinner guests walk in ahead of me."
  },
  "castle_courtier_3/6e712d83b09969e2": {
   "chars": 123,
-  "direction": "[grim, bitter, dignified]",
+  "direction": "[cold, sly, menacing]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "They hold while you are his guests. Finish your dinner, or go out of his gates, and you are nobody's guest at all. Like me."
  },
  "castle_courtier_3/a0dbb60b34b99d5b": {
   "chars": 98,
-  "direction": "[haughty, pedantic, firm]",
+  "direction": "[cold, smooth, menacing courtesy]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "Guests. Guests are not petitioners. You are not ahead of me, and I want that clear from the start."
  },
  "castle_courtier_3/bc5a86762f9b58f1": {
   "chars": 135,
-  "direction": "[stiff, uneasy, shaken]",
+  "direction": "[low, sly, sinister]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "Rahadin keeps the list. I am on it. I asked him once how far down. He looked at me, and I heard people, a great many people, screaming."
  },
  "castle_courtier_3/cce74779d6df2537": {
   "chars": 86,
-  "direction": "[pompous, sour, aggrieved]",
+  "direction": "[sly, mocking, conniving]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "Have you an appointment? No. Nobody has. I have had one for two hundred and six years."
  },
  "castle_courtier_3/d2a40b26bf9172ed": {
   "chars": 105,
-  "direction": "[proud, pompous, formal]",
+  "direction": "[oily, formal, scheming]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "Vintila Crainic, boyar of the orchards above the Ivlis, and a loyal subject of the house of von Zarovich."
  },
  "castle_courtier_3/e3aae45be2ba3d6a": {
   "chars": 80,
-  "direction": "[stiff, wistful, aggrieved]",
+  "direction": "[soft, insinuating, patient menace]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "I came up the hill on a small matter. I was told the count would see me shortly."
  },
  "castle_courtier_3/e9cbccd27f3c8f5e": {
   "chars": 59,
-  "direction": "[stiff, dignified, resigned]",
+  "direction": "[patient, calculating, sly]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "I have not asked him since. A gentleman knows when to wait."
  },
  "castle_courtier_3/f0132e6382583103": {
   "chars": 111,
-  "direction": "[pompous, smug, formal]",
+  "direction": "[smug, smooth, conniving]",
   "model": "eleven_v3",
-  "recipe": "ef30c76401",
+  "recipe": "0b509079e0",
   "text": "For the master's guests? Perfectly. This house keeps its orders to the letter. I should know; I have read them."
  },
  "castle_courtier_4/0d05b64a193781c2": {
@@ -6512,77 +6512,77 @@
   "chars": 176,
   "direction": "[quiet, grave, warning]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "Wherever you like. The master sits where he pleases. The chair at his right hand is kept for a lady who has not come down to dinner in a very long time. I would leave that one."
  },
  "castle_steward/4920b67bdf431c32": {
   "chars": 92,
   "direction": "[low, wary, deferential]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The cook comes up the back stair now and then. Belview. He is not staff. He is the master's."
  },
  "castle_steward/5d472e4757f94078": {
   "chars": 80,
   "direction": "[gentle, rueful, apologetic]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "I would take your coats, but I find I cannot take anything any more. Forgive me."
  },
  "castle_steward/60ca1a6b74793fb9": {
   "chars": 115,
   "direction": "[formal, dry, weary]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "Good evening, my lords. The table is laid. It is always laid. Whether anyone comes down to it is not my department."
  },
  "castle_steward/6983aa93cc101be3": {
   "chars": 118,
   "direction": "[uneasy, hushed, evasive]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The places are laid and the dishes come up hot. I could not tell you who carries them, and I would ask you not to ask."
  },
  "castle_steward/8b4ab61d4b2b6b11": {
   "chars": 46,
   "direction": "[pleasant, hollow, quiet]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "Below stairs. Their table is laid every night."
  },
  "castle_steward/981797774346ae40": {
   "chars": 101,
   "direction": "[formal, hushed, courteous]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The master's guests. You are expected. The master is at the organ; he will not keep you waiting long."
  },
  "castle_steward/ab2203a493698c57": {
   "chars": 143,
   "direction": "[proud, formal, wistful]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The steward of this house. The cellar, the silver, the seating. I had twenty under me once, and not one of them ever laid a fork crooked twice."
  },
  "castle_steward/af06fc9d79247a5d": {
   "chars": 80,
   "direction": "[quiet, wistful, grateful]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The master enjoyed his evening. He so seldom does. Thank you for that, my lords."
  },
  "castle_steward/d11e459e4542609a": {
   "chars": 128,
   "direction": "[stiff, reproachful, formal]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "Someone drew steel at the master's table. I have had the cloth changed. I would ask that it not happen again while I am on duty."
  },
  "castle_steward/f5128bf61c90e5bc": {
   "chars": 62,
   "direction": "[quiet, grieving, resigned]",
   "model": "eleven_v3",
-  "recipe": "f67da6ae69",
+  "recipe": "95b99a3139",
   "text": "The night before the wedding. Nobody has told me I may, since."
  },
  "clovin_belview/0bc6d48454990d53": {
@@ -14594,65 +14594,65 @@
  },
  "helga_ruvak/3f98dd520a5dbefe": {
   "chars": 122,
-  "direction": "[bright, brittle, rehearsed]",
+  "direction": "[bright, brittle, rehearsed, unsettling]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "Miss Gertruda, in the yellow room. She has three gowns, and the master sits with her every evening, and she is very happy."
  },
  "helga_ruvak/56c8c9a94cf93d5e": {
   "chars": 113,
-  "direction": "[soft, dutiful, hollow]",
+  "direction": "[soft, hollow, cold]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "I came up from the valley in service. That was a long time ago. It's a good place. The master is very kind to me."
  },
  "helga_ruvak/8409f3202f04acdd": {
   "chars": 72,
-  "direction": "[meek, quiet, faintly menacing]",
+  "direction": "[soft, polite, faintly menacing]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "Not tonight, then. Mind the stair going down. It's darker than it looks."
  },
  "helga_ruvak/a1cc478c898a50a2": {
   "chars": 73,
-  "direction": "[hushed, nervous, pointed]",
+  "direction": "[hushed, pointed, sinister]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "I wouldn't go in to the ladies without knocking. I wouldn't go in at all."
  },
  "helga_ruvak/a3000f4bb7f48173": {
   "chars": 76,
-  "direction": "[meek, hurried, knowing]",
+  "direction": "[soft, knowing, conspiratorial, sinister]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "Miss Gertruda. Out of your room. I won't say anything. I never say anything."
  },
  "helga_ruvak/a9b41ccc2156df17": {
   "chars": 52,
-  "direction": "[amused, low, hungry]",
+  "direction": "[amused, low, hungry, predatory]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "You're very warm. I only mean the room is very cold."
  },
  "helga_ruvak/baca3864f7c5d520": {
   "chars": 121,
-  "direction": "[meek, polite, tired]",
+  "direction": "[polite, patient, quietly sinister]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "Helga, if you please. Helga Ruvak. I keep the master's floor: the dusting, the linen, the ladies' rooms. Somebody has to."
  },
  "helga_ruvak/d41ab6beecdf4759": {
   "chars": 177,
-  "direction": "[quick, meek, wary]",
+  "direction": "[low, quick, ominous warning]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "The master's rooms, at the end. They're locked, and I'd leave them that way. The ladies, in the lounge. Master Rahadin, who doesn't sleep. And the young lady in the yellow room."
  },
  "helga_ruvak/f6e10087b528b191": {
   "chars": 84,
-  "direction": "[startled, meek, eager]",
+  "direction": "[sweet, startled, too interested, sinister]",
   "model": "eleven_v3",
-  "recipe": "c86af03571",
+  "recipe": "dbf892eae5",
   "text": "Oh! I didn't hear you on the stair. Will you be staying the night? I can air a room."
  },
  "henrik/0c05235fc99de270": {

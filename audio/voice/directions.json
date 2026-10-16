@@ -621,18 +621,18 @@
   "ff6cab8a161f0e1d": "[wistful, hollow, faintly sad]"
  },
  "castle_courtier_3": {
-  "0d6ef0cbca0ed7bb": "[outraged, pedantic, haughty]",
-  "12c308d24387757f": "[pompous, dry, bitter]",
-  "46755c84b06f43bc": "[aggrieved, pompous, bitter]",
-  "5a6f0b7c8dd76c67": "[indignant, pompous, aggrieved]",
-  "6e712d83b09969e2": "[grim, bitter, dignified]",
-  "a0dbb60b34b99d5b": "[haughty, pedantic, firm]",
-  "bc5a86762f9b58f1": "[stiff, uneasy, shaken]",
-  "cce74779d6df2537": "[pompous, sour, aggrieved]",
-  "d2a40b26bf9172ed": "[proud, pompous, formal]",
-  "e3aae45be2ba3d6a": "[stiff, wistful, aggrieved]",
-  "e9cbccd27f3c8f5e": "[stiff, dignified, resigned]",
-  "f0132e6382583103": "[pompous, smug, formal]"
+  "0d6ef0cbca0ed7bb": "[icy, pedantic, sinister]",
+  "12c308d24387757f": "[sly, smooth, conniving]",
+  "46755c84b06f43bc": "[bitter, calculating, vindictive]",
+  "5a6f0b7c8dd76c67": "[sour, insinuating, scheming]",
+  "6e712d83b09969e2": "[cold, sly, menacing]",
+  "a0dbb60b34b99d5b": "[cold, smooth, menacing courtesy]",
+  "bc5a86762f9b58f1": "[low, sly, sinister]",
+  "cce74779d6df2537": "[sly, mocking, conniving]",
+  "d2a40b26bf9172ed": "[oily, formal, scheming]",
+  "e3aae45be2ba3d6a": "[soft, insinuating, patient menace]",
+  "e9cbccd27f3c8f5e": "[patient, calculating, sly]",
+  "f0132e6382583103": "[smug, smooth, conniving]"
  },
  "castle_courtier_4": {
   "0d05b64a193781c2": "[curt, wary, knowing]",
@@ -1339,15 +1339,15 @@
   "c991f2adc54ba877": "[blunt, low warning]"
  },
  "helga_ruvak": {
-  "3f98dd520a5dbefe": "[bright, brittle, rehearsed]",
-  "56c8c9a94cf93d5e": "[soft, dutiful, hollow]",
-  "8409f3202f04acdd": "[meek, quiet, faintly menacing]",
-  "a1cc478c898a50a2": "[hushed, nervous, pointed]",
-  "a3000f4bb7f48173": "[meek, hurried, knowing]",
-  "a9b41ccc2156df17": "[amused, low, hungry]",
-  "baca3864f7c5d520": "[meek, polite, tired]",
-  "d41ab6beecdf4759": "[quick, meek, wary]",
-  "f6e10087b528b191": "[startled, meek, eager]"
+  "3f98dd520a5dbefe": "[bright, brittle, rehearsed, unsettling]",
+  "56c8c9a94cf93d5e": "[soft, hollow, cold]",
+  "8409f3202f04acdd": "[soft, polite, faintly menacing]",
+  "a1cc478c898a50a2": "[hushed, pointed, sinister]",
+  "a3000f4bb7f48173": "[soft, knowing, conspiratorial, sinister]",
+  "a9b41ccc2156df17": "[amused, low, hungry, predatory]",
+  "baca3864f7c5d520": "[polite, patient, quietly sinister]",
+  "d41ab6beecdf4759": "[low, quick, ominous warning]",
+  "f6e10087b528b191": "[sweet, startled, too interested, sinister]"
  },
  "henrik": {
   "0c05235fc99de270": "[terrified, whispering, rushing]",
