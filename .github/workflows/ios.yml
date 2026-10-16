@@ -87,9 +87,9 @@ jobs:
           # The port exporter accepts integer build numbers; reserve room for reruns.
           IOS_BUILD="$((GITHUB_RUN_NUMBER * 100 + GITHUB_RUN_ATTEMPT))"
           echo "IOS_BUILD=$IOS_BUILD" >> "$GITHUB_ENV"
-          mkdir -p "$RUNNER_TEMP/ios-build"
-          git -C game rev-parse HEAD > "$RUNNER_TEMP/ios-build/source-commit.txt"
-          echo "Source commit: $(cat "$RUNNER_TEMP/ios-build/source-commit.txt")" >> "$GITHUB_STEP_SUMMARY"
+          # Keep this outside IOS_OUT: the full-port exporter requires a fresh output directory.
+          git -C game rev-parse HEAD > "$RUNNER_TEMP/ios-source-commit.txt"
+          echo "Source commit: $(cat "$RUNNER_TEMP/ios-source-commit.txt")" >> "$GITHUB_STEP_SUMMARY"
           echo "Build kind: $BUILD_KIND; version $VERSION ($IOS_BUILD)" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Check configuration before downloading assets
@@ -248,7 +248,7 @@ jobs:
           if-no-files-found: warn
           path: |
             ${{ runner.temp }}/ios-build/*.log
-            ${{ runner.temp }}/ios-build/source-commit.txt
+            ${{ runner.temp }}/ios-source-commit.txt
             ${{ runner.temp }}/ios-build/app-store-build.json
             ${{ runner.temp }}/ios-build/*-inventory.json
             ${{ runner.temp }}/ios-build/toolchain.json

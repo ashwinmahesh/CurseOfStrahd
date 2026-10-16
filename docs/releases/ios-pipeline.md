@@ -47,3 +47,12 @@ marketing version. Full imports can take hours and need sufficient runner disk s
 The artifact retains the IPA, zipped archive, logs, source commit and Apple processing response for 14 days.
 To run local tooling tests: `make ios-pipeline-test`. A dry run still validates real signing and exports an
 IPA; leave `upload` disabled to avoid contacting App Store Connect for an upload.
+
+## Verified deployment
+
+On 2026-10-16, [run 38982130266](https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/38982130266)
+successfully signed, archived, exported and uploaded the deployment check as **1.0.0 (601)** for
+`app.curseofstrahd.game`, App Store app `6823801189`. Apple's API reported **VALID**, build
+`be8c399a-5652-4285-9c16-8f171cc04d5e`. The source was port commit
+`456a2d4e57c9369890309b5d9dd8c1a6a7280163`; the uncompressed fixture was 68,854,620 bytes.
+This validates signing and distribution, not full-game size, performance, or mobile gameplay.
