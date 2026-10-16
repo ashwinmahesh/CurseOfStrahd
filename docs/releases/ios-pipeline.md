@@ -38,9 +38,9 @@ profiles and require a matching certificate/private key. An ephemeral keychain h
 checksum-pinned WWDR intermediate. Cleanup runs even after failure. API preflight checks app access and
 Bundle ID before importing assets. Secrets are never saved in artifacts.
 
-Godot 4.7.2 and its templates use pinned SHA-512 checksums. Xcode comes from the hosted `macos-15` image;
-its version and SDK are printed on each run. Build numbers are `run_number.run_attempt`, so reruns use a new
-number. If another pipeline has already used that number for this version, start a new run or choose a new
+Godot 4.7.2 and its templates use pinned SHA-512 checksums. Xcode 26.3 is selected on the hosted `macos-15` image;
+its version and SDK are printed on each run. Build numbers are `100 * run_number + run_attempt`, so reruns use a new
+integer accepted by the port exporter (start a new run before 100 reruns). If another pipeline has already used that number for this version, start a new run or choose a new
 marketing version. Full imports can take hours and need sufficient runner disk space; the IPA is capped at
 4 GB uncompressed. Desktop import caches and signing workflows are not changed.
 

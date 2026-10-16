@@ -29,6 +29,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 concurrency:
   group: ios-${{ github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
   cancel-in-progress: false
@@ -37,6 +41,7 @@ env:
   GODOT_VERSION: '4.7.2'
   GODOT_MAC_SHA512: 38aa16e5bba2083941fc5b3e54be0089bd4cc35e32415f5b9fd9a8a6a7b9818255d44532ea8ef94b5aef56c4b407c2d634fa4f657e4ebe681ebbf59b7bac69ca
   TEMPLATES_SHA512: ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079
+  DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
 
 jobs:
   tooling:
@@ -54,7 +59,6 @@ jobs:
     timeout-minutes: 350
     env:
       VERSION: ${{ inputs.version }}
-      IOS_BUILD: ${{ github.run_number }}.${{ github.run_attempt }}
       IOS_BUNDLE_ID: ${{ vars.IOS_BUNDLE_ID }}
       EXPORT_METHOD: app-store
       APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
@@ -80,6 +84,9 @@ jobs:
 
       - name: Record source commit
         run: |
+          # The port exporter accepts integer build numbers; reserve room for reruns.
+          IOS_BUILD="$((GITHUB_RUN_NUMBER * 100 + GITHUB_RUN_ATTEMPT))"
+          echo "IOS_BUILD=$IOS_BUILD" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/ios-build"
           git -C game rev-parse HEAD > "$RUNNER_TEMP/ios-build/source-commit.txt"
           echo "Source commit: $(cat "$RUNNER_TEMP/ios-build/source-commit.txt")" >> "$GITHUB_STEP_SUMMARY"
