@@ -9,6 +9,7 @@ static var current: MobileDevice
 static var profile := _argument_profile()
 static var test_size := Vector2.ZERO
 static var test_safe := Rect2()
+static var test_keyboard_height := 0.0
 var modality := "touch"
 var _configuring := false
 
@@ -96,3 +97,14 @@ func _input(event: InputEvent) -> void:
 	if mode != modality:
 		modality = mode
 		modality_changed.emit(mode)
+
+
+## UIKit reports keyboard height in physical pixels, just like window size. Only pages avoid the keyboard;
+## the battlefield retains its geometry while a search or name field is edited.
+static func keyboard_height() -> float:
+	if test_keyboard_height > 0:
+		return test_keyboard_height
+	if not OS.has_feature("ios"):
+		return 0.0
+	var pixels := maxf(1.0, DisplayServer.window_get_size().y)
+	return DisplayServer.virtual_keyboard_get_height() * logical_size().y / pixels

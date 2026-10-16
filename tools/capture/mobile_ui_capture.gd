@@ -43,3 +43,71 @@ func capture_shots(tool: Node, out: String) -> void:
 			break
 	await tool.call("wait_frames", 12)
 	tool.call("_shot", out + "_review.png")
+
+	actions.queue_free()
+	await tool.call("wait_frames", 2)
+	var hud := CombatHud.new()
+	add_child(hud)
+	hud.build(encounter, catalog)
+	hud.refresh()
+	hud.show_tooltip("Zombie · preview", ["Attack with your longsword", "Use Confirm to commit"], [], Vector2.ZERO)
+	hud.show_odds(0.65, "8–15", "", Vector2.ZERO)
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_battle_hud.png")
+	var req := ReactionRequest.new("shield", actor.id, "foe")
+	req.title = "Reaction: protect your companion?"
+	req.text = "A zombie attacks your companion. Choose who receives your protection before confirming."
+	req.cost = "Reaction"
+	req.min_targets = 1
+	req.max_targets = 1
+	for n in 5:
+		req.target_choices.append({"id": str(n), "label": "Companion %d · within reach" % n})
+	hud.show_prompt(req)
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_reaction.png")
+	hud.queue_free()
+	await tool.call("wait_frames", 2)
+	var pause := PauseMenu.new()
+	add_child(pause)
+	pause.open(self, state, 0)
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_menu.png")
+	pause._show_settings("Game")
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_settings.png")
+	pause.queue_free()
+	await tool.call("wait_frames", 2)
+	var exploration := ExploreHud.new()
+	add_child(exploration)
+	exploration.build(state)
+	exploration.refresh("Village of Barovia", true, false, false)
+	exploration.narrate("Mist curls around the village houses. A light burns in the tavern window, and the sound of quiet conversation reaches the road.")
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_exploration.png")
+	exploration.queue_free()
+	await tool.call("wait_frames", 2)
+	var conversation := DialogueUI.new()
+	add_child(conversation)
+	conversation._text.text = "The innkeeper watches you for a moment, then nods toward the fire. Outside, the mist presses against the windows."
+	conversation._show({"kind": "options", "options": [
+		{"text": "Ask about the strange mist around the village.", "label": "", "check": {}},
+		{"text": "Offer to help the villagers.", "label": "Persuasion", "check": {"who": "Godrick", "bonus": 5, "chance": 0.65}},
+		{"text": "Leave the inn and explore the village.", "label": "", "check": {}}]})
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_conversation.png")
+	conversation.queue_free()
+	await tool.call("wait_frames", 2)
+	var sheet := CharacterSheetScreen.new()
+	add_child(sheet)
+	sheet.open(self, state, 0)
+	sheet.mobile_section = "Abilities"
+	sheet._draw()
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_character.png")
+	sheet.queue_free()
+	await tool.call("wait_frames", 2)
+	var creator := CreationScreen.new()
+	add_child(creator)
+	creator.open_with([])
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_creator.png")

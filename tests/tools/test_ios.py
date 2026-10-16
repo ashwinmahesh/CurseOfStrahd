@@ -33,7 +33,7 @@ class IosBuildTests(unittest.TestCase):
     def prepare(self, **options):
         with patch.object(ios, "probe", return_value=""):
             return ios.prepare(self.source, self.output, options.get("team", "ABCDEFGHIJ"),
-                               "app.example.game", "1.2.3", "7")
+                               "app.example.game", "1.2.3", "7", options.get("simulator", False))
 
     def test_stage_keeps_dynamic_resources_but_not_desktop_cache_or_generation_inputs(self):
         stage = self.prepare()
@@ -51,6 +51,28 @@ class IosBuildTests(unittest.TestCase):
         manifest = json.loads((self.output / "source-inventory.json").read_text())
         self.assertEqual(manifest["source_bytes"], sum(f["bytes"] for f in manifest["files"]))
         self.assertTrue(all(len(f["sha256"]) == 64 for f in manifest["files"]))
+
+    def test_simulator_stage_is_unsigned_universal_and_uses_compatibility_only_in_stage(self):
+        original = (self.source / "project.godot").read_bytes()
+        stage = self.prepare(team="", simulator=True)
+        overrides = (stage / "override.cfg").read_text()
+        self.assertIn('renderer/rendering_method.ios="gl_compatibility"', overrides)
+        self.assertEqual((self.source / "project.godot").read_bytes(), original)
+        options = ios.config(stage / "export_presets.cfg")["preset.0.options"]
+        self.assertEqual(options["application/targeted_device_family"], "2")
+        self.assertTrue(json.loads((self.output / "source-inventory.json").read_text())["simulator"])
+        with patch.object(ios, "probe", return_value=""), patch.object(ios, "template_dir", return_value=self.root):
+            self.assertFalse(any("TEAM_ID" in f for f in ios.preflight("no-godot", "", simulator=True)))
+
+    def test_simulator_build_rejects_device_stage_before_xcode_runs(self):
+        self.prepare()
+        project = self.output / "xcode/CurseOfStrahd.xcodeproj"
+        project.mkdir(parents=True)
+        (project / "project.pbxproj").write_text("project")
+        with patch.object(ios, "logged") as build:
+            with self.assertRaisesRegex(ValueError, "device Metal"):
+                ios.simulator_build(self.output)
+            build.assert_not_called()
 
     def test_staging_does_not_mutate_source_even_when_clone_is_rewritten(self):
         original = (self.source / "export_presets.cfg").read_bytes()

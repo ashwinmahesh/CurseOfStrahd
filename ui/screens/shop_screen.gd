@@ -16,6 +16,9 @@ extends CanvasLayer
 
 signal closed
 
+var mobile_side := "Buy"
+var mobile_item: Dictionary = {}
+
 var root: Node
 var st: StoryState
 var npc_id := ""
@@ -67,6 +70,9 @@ func open_for(root_: Node, state: StoryState, npc: String) -> void:
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_draw_mobile()
+		return
 	while _frame.get_child_count() > 0:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
@@ -514,3 +520,81 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"combat_cancel"):
 		get_viewport().set_input_as_handled()
 		_close()
+
+
+func _draw_mobile() -> void:
+	MobileUi.clear(_frame)
+	var page := _frame.get_parent().get_parent().get_parent() as MobilePage
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	page.back_action = func() -> void:
+		if not mobile_item.is_empty():
+			mobile_item = {}
+			_draw()
+		else:
+			_close()
+	MobileUi.clear(page.toolbar)
+	page.toolbar.add_child(UiParts.party_chips(st.party, index, func(i: int) -> void:
+		index = i
+		mobile_item = {}
+		_draw()))
+	page.toolbar.add_child(MobileUi.tabs(["Buy", "Sell", "Terms"], mobile_side, func(value: String) -> void:
+		mobile_side = value
+		mobile_item = {}
+		_draw()))
+	_frame.add_child(MobileUi.text("Purse: %s gp" % _money(st.gold), "gilt_light"))
+	if _note != "":
+		_frame.add_child(MobileUi.text(_note, _note_colour))
+	var ch := st.party[index]
+	if mobile_side == "Terms":
+		var terms := _terms_row()
+		MobileUi.fit(terms)
+		_frame.add_child(terms)
+		_frame.add_child(MobileUi.button("Sell all marked junk · review", func() -> void:
+			MobileUi.clear(_frame)
+			for entry in junk_for_sale():
+				_frame.add_child(MobileUi.text("%s ×%d" % [Compendium.shared().display_name("items", str((entry["e"] as Dictionary)["id"])), entry["qty"]]))
+			_frame.add_child(MobileUi.button("Confirm sale of all marked junk", sell_all_junk))))
+		return
+	if not mobile_item.is_empty():
+		var id := str(mobile_item["id"])
+		var data := Compendium.shared().item_data(id)
+		var detail := LootWindow._item_tip(data).call() as Control
+		MobileUi.fit(detail)
+		_frame.add_child(detail)
+		if mobile_side == "Buy" and mobile_item.has("bases"):
+			for base: Dictionary in mobile_item["bases"]:
+				_frame.add_child(MobileUi.button("%s · %s gp" % [base["name"], _money(float(base["price"]))], func() -> void:
+					mobile_item = base
+					_draw()))
+		else:
+			var price := float(mobile_item.get("price", st.shop_offer(npc_id, id)))
+			var commit := MobileUi.button("%s for %s gp" % [mobile_side, _money(price)], func() -> void:
+				mobile_item = {}
+				if mobile_side == "Buy":
+					_buy(id)
+				else:
+					_sell(id))
+			commit.disabled = st.gold < price if mobile_side == "Buy" else price < 0 or ch.part_blocker(id) != ""
+			page.toolbar.add_child(commit)
+		return
+	if mobile_side == "Buy":
+		var wares := st.shop_wares(npc_id)
+		_frame.add_child(MobileUi.tabs(ware_tabs(wares), ware_filter, pick_ware_filter))
+		_ware_ids.clear()
+		for ware in wares:
+			if not ware_in_filter(ware_filter, ware):
+				continue
+			_ware_ids.append(str(ware["id"]))
+			_frame.add_child(MobileUi.button("%s · %s%s gp" % [ware["name"], "from " if ware.has("bases") else "", _money(float(ware["price"]))], func() -> void:
+				mobile_item = ware
+				_draw()))
+	else:
+		_sell_ids.clear()
+		for item in ch.inventory:
+			var id := str(item["id"])
+			if int(item["qty"]) <= 0:
+				continue
+			_sell_ids.append(id)
+			_frame.add_child(MobileUi.button("%s ×%d" % [Compendium.shared().display_name("items", id), item["qty"]], func() -> void:
+				mobile_item = item
+				_draw()))

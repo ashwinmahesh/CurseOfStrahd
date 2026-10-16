@@ -48,9 +48,9 @@ release:
 	rm -f "$(RELEASE_OUT)/CurseOfStrahd-windows.zip"
 	cd "$(RELEASE_OUT)/windows" && zip -q -6 -r ../CurseOfStrahd-windows.zip CurseOfStrahd.exe CurseOfStrahd.pck
 
-# Native iPad prototype (docs/releases/ios.md). Imports into a fresh, separate staging project only.
+# Native iPhone/iPad build (docs/releases/ios.md). Imports into a fresh, separate staging project only.
 IOS_OUT ?= $(abspath ../strahd-builds/ios)
-.PHONY: ios-check ios-prepare ios-export ios-archive ios-report ios-test
+.PHONY: ios-check ios-prepare ios-export ios-archive ios-report ios-test ios-simulator-export ios-simulator-build
 ios-check:
 	GODOT="$(GODOT)" python3 tools/release/ios.py check
 
@@ -59,6 +59,12 @@ ios-prepare:
 
 ios-export:
 	GODOT="$(GODOT)" python3 tools/release/ios.py export --output "$(IOS_OUT)"
+
+ios-simulator-export:
+	GODOT="$(GODOT)" python3 tools/release/ios.py export --simulator --output "$(IOS_OUT)"
+
+ios-simulator-build:
+	python3 tools/release/ios.py simulator-build --output "$(IOS_OUT)"
 
 ios-archive:
 	python3 tools/release/ios.py archive --output "$(IOS_OUT)"

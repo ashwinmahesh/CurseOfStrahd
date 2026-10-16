@@ -21,6 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 ENGINE_VERSION = "4.7.2"
 RUNTIME_DIRS = ("core", "rules", "combat", "story", "world", "ui", "scenes", "skirmish",
                 "data", "narrative", "shaders", "audio", "art", "addons", "tests/saves")
+RUNTIME_FILES = ("tests/support/party_autopilot.gd", "tests/support/party_autopilot.gd.uid")
 OMIT = {"art/generated", "art/prompts", "art/sourced/game_icons"}
 ERRORS = re.compile(r"SCRIPT ERROR|ERROR:|Parse Error|Failed loading")
 APP_LIMIT = 4_000_000_000
@@ -65,7 +66,7 @@ def probe(command: list[str]) -> str:
         return ""
 
 
-def preflight(godot: str, team: str) -> list[str]:
+def preflight(godot: str, team: str, simulator: bool = False) -> list[str]:
     failures = []
     if sys.platform != "darwin":
         failures.append("Export/archive requires macOS with full Xcode")
@@ -78,7 +79,7 @@ def preflight(godot: str, team: str) -> list[str]:
         failures.append("Install/select full Xcode and its iOS SDK (CommandLineTools alone is insufficient)")
     if not probe(["xcodebuild", "-version"]):
         failures.append("Complete Xcode first launch and license setup; verify xcodebuild -version")
-    if not team:
+    if not team and not simulator:
         failures.append("Set IOS_TEAM_ID to your Apple team ID before exporting")
     return failures
 
@@ -96,7 +97,7 @@ def copy_resource(source: str, destination: str) -> str:
     return shutil.copy2(source, destination)
 
 
-def prepare(source: Path, output: Path, team: str, bundle: str, version: str, build: str) -> Path:
+def prepare(source: Path, output: Path, team: str, bundle: str, version: str, build: str, simulator: bool = False) -> Path:
     validate_identity(team, bundle, version, build)
     source, output = source.resolve(), output.resolve()
     if output == source or source in output.parents or output in source.parents:
@@ -118,12 +119,24 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
         path = source / directory
         if path.exists():
             shutil.copytree(path, stage / directory, copy_function=copy_resource, ignore=ignore)
+    # CombatView's development-only autoplay is statically typed, so its script is needed even in release builds.
+    for name in RUNTIME_FILES:
+        path = source / name
+        if path.exists():
+            (stage / name).parent.mkdir(parents=True, exist_ok=True)
+            copy_resource(str(path), str(stage / name))
     shutil.copy2(source / "project.godot", stage / "project.godot")
     # ConfigFile's multiline dictionaries must stay in Godot syntax: use an override file for stage-only imports.
     (stage / "override.cfg").write_text(
         '[application]\nconfig/version=' + json.dumps(version) + '\n\n'
         '[rendering]\ntextures/vram_compression/import_etc2_astc=true\n'
         'textures/vram_compression/import_s3tc_bptc=false\n', encoding="utf-8")
+    if simulator:
+        # Godot's simulator template supports Compatibility only. Device exports keep Mobile/Metal.
+        with (stage / "override.cfg").open("a", encoding="utf-8") as stream:
+            stream.write('renderer/rendering_method="gl_compatibility"\n'
+                         'renderer/rendering_method.mobile="gl_compatibility"\n'
+                         'renderer/rendering_method.ios="gl_compatibility"\n')
     presets = config(source / "export_presets.cfg")
     section = next((s for s in presets.sections() if presets.get(s, "name", fallback="") == '"iOS"'), None)
     if section is None:
@@ -137,6 +150,10 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
     for key, value in {"app_store_team_id": team, "bundle_identifier": bundle,
                        "short_version": version, "version": build}.items():
         options["application/" + key] = json.dumps(value)
+    options["application/targeted_device_family"] = "2"  # Universal iPhone + iPad.
+    if simulator:
+        # Exporter's required syntax placeholder; never used for signing or device distribution.
+        options["application/app_store_team_id"] = '"SIMULATOR0"'
     write_config(stage / "export_presets.cfg", selected)
     files = []
     for path in sorted(stage.rglob("*")):
@@ -154,7 +171,7 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
                       "sha256": digest.hexdigest()})
     metadata = {"source_revision": probe(["git", "-C", str(source), "rev-parse", "HEAD"]),
                 "source_dirty": bool(probe(["git", "-C", str(source), "status", "--porcelain"])),
-                "engine": ENGINE_VERSION, "bundle_identifier": bundle, "version": version, "build": build,
+                "engine": ENGINE_VERSION, "simulator": simulator, "bundle_identifier": bundle, "version": version, "build": build,
                 "inventory_kind": "source resources, not exported bundle or device memory",
                 "source_bytes": sum(f["bytes"] for f in files), "files": files}
     (output / "source-inventory.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
@@ -172,8 +189,8 @@ def logged(command: list[str], log: Path, check_errors: bool = False) -> None:
         raise RuntimeError(f"{Path(command[0]).name} failed; full log: {log}")
 
 
-def export(source: Path, output: Path, godot: str, team: str, bundle: str, version: str, build: str) -> None:
-    failures = preflight(godot, team)
+def export(source: Path, output: Path, godot: str, team: str, bundle: str, version: str, build: str, simulator: bool = False) -> None:
+    failures = preflight(godot, team, simulator)
     if failures:
         raise ValueError("\n".join(failures))
     # Fail before allocating/importing a second asset cache on a nearly full volume.
@@ -182,7 +199,7 @@ def export(source: Path, output: Path, godot: str, team: str, bundle: str, versi
         ancestor = ancestor.parent
     if shutil.disk_usage(ancestor).free < 20 * 1024 ** 3:
         raise ValueError("A fresh iOS import requires at least 20 GiB free")
-    stage = prepare(source, output, team, bundle, version, build)
+    stage = prepare(source, output, team, bundle, version, build, simulator)
     command = [godot, "--headless", "--path", str(stage), "--editor", "--import"]
     try:
         logged(command, output / "import.log", check_errors=True)
@@ -200,6 +217,25 @@ def export(source: Path, output: Path, godot: str, team: str, bundle: str, versi
         "sdk": probe(["xcrun", "--sdk", "iphoneos", "--show-sdk-version"])
     }, indent=2) + "\n", encoding="utf-8")
     print(f"Xcode project: {xcode / 'CurseOfStrahd.xcodeproj'}")
+
+
+def simulator_build(output: Path) -> Path:
+    project = output / "xcode/CurseOfStrahd.xcodeproj"
+    if not (project / "project.pbxproj").is_file():
+        raise ValueError("Run ios-simulator-export before ios-simulator-build")
+    inventory = json.loads((output / "source-inventory.json").read_text())
+    if not inventory.get("simulator"):
+        raise ValueError("Use a simulator stage; device Metal exports cannot run in the simulator")
+    logged(["xcodebuild", "-project", str(project), "-scheme", "CurseOfStrahd", "-configuration", "Release",
+            "-sdk", "iphonesimulator", "-destination", "generic/platform=iOS Simulator",
+            "-derivedDataPath", str(output / "derived"), "CODE_SIGNING_ALLOWED=NO",
+            "CODE_SIGNING_REQUIRED=NO", "CODE_SIGN_IDENTITY=", "DEVELOPMENT_TEAM=", "build"],
+           output / "simulator-build.log")
+    app = output / "derived/Build/Products/Release-iphonesimulator/CurseOfStrahd.app"
+    sizes = report(app)
+    (output / "simulator-size.json").write_text(json.dumps(sizes, indent=2) + "\n")
+    print(f"Unsigned simulator application: {app}")
+    return app
 
 
 def report(app: Path) -> dict:
@@ -243,10 +279,11 @@ def archive(output: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["check", "prepare", "export", "archive", "report"])
+    parser.add_argument("action", choices=["check", "prepare", "export", "archive", "report", "simulator-build"])
     parser.add_argument("--output", type=Path, default=ROOT.parent / "strahd-builds/ios")
     parser.add_argument("--godot", default=os.environ.get("GODOT", "/Applications/Godot.app/Contents/MacOS/Godot"))
     parser.add_argument("--app", type=Path)
+    parser.add_argument("--simulator", action="store_true", help="unsigned Compatibility build for simulator only")
     args = parser.parse_args()
     output = args.output.expanduser().resolve()
     team = os.environ.get("IOS_TEAM_ID", "")
@@ -256,16 +293,18 @@ def main() -> int:
     try:
         validate_identity(team, bundle, version, build)
         if args.action == "check":
-            failures = preflight(args.godot, team)
+            failures = preflight(args.godot, team, args.simulator)
             for failure in failures:
                 print(f"MISSING: {failure}")
             if not failures:
                 print("iOS export prerequisites found. Device signing is validated by Xcode during build.")
             return int(bool(failures))
         if args.action == "prepare":
-            prepare(ROOT, output, team, bundle, version, build)
+            prepare(ROOT, output, team, bundle, version, build, args.simulator)
         elif args.action == "export":
-            export(ROOT, output, args.godot, team, bundle, version, build)
+            export(ROOT, output, args.godot, team, bundle, version, build, args.simulator)
+        elif args.action == "simulator-build":
+            simulator_build(output)
         elif args.action == "archive":
             archive(output)
         elif args.action == "report":

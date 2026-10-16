@@ -166,3 +166,83 @@ func test_interruption_discards_already_queued_touch_events() -> void:
 	UiFeel.touch.cancel()
 	await _frames()
 	assert_eq(int(count[0]), 0, "deferred events from the old screen or focus epoch cannot activate a new screen")
+
+
+func test_mobile_reaction_only_commits_after_valid_selection_once() -> void:
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var hud := CombatHud.new()
+	root.add_child(hud)
+	hud.build(encounter, ActionCatalog.new(encounter))
+	hud.refresh()
+	var answers: Array = []
+	hud.reaction_answered.connect(func(use: bool, rule: String) -> void: answers.append([use, rule]))
+	var req := ReactionRequest.new("shield", actor.id, "foe")
+	req.title = "Choose a target"
+	req.min_targets = 1
+	req.max_targets = 1
+	req.target_choices = [{"id": actor.id, "label": actor.name()}]
+	hud.show_prompt(req)
+	await _frames()
+	hud.answer_prompt(true)
+	assert_true(answers.is_empty(), "invalid selection cannot commit")
+	var check := hud._prompt_targets.get_child(0) as CheckButton
+	(hud._prompt_targets.get_parent() as ScrollContainer).ensure_control_visible(check)
+	hud.mobile.page.scroll.ensure_control_visible(hud._prompt_targets.get_parent() as Control)
+	await _frames()
+	var at := check.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	_touch(at, false)
+	await _frames()
+	assert_eq(req.selected_ids.size(), 1)
+	assert_true(answers.is_empty(), "selection itself spends no reaction")
+	at = hud._prompt_use.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	_touch(at, false)
+	await _frames()
+	assert_eq(answers.size(), 1)
+	assert_eq(answers[0], [true, "ask"])
+	hud.answer_prompt(true)
+	assert_eq(answers.size(), 1, "duplicate confirmation cannot spend twice")
+	assert_false(hud.prompt_open())
+	assert_true(hud.mobile.sheet == null)
+
+
+func test_mobile_option_picker_uses_touch_and_keeps_disabled_options_disabled() -> void:
+	var option := OptionButton.new()
+	option.position = Vector2(100, 100)
+	option.size = Vector2(240, 48)
+	option.add_item("First")
+	option.add_item("Second")
+	option.add_item("Unavailable")
+	option.set_item_disabled(2, true)
+	root.add_child(option)
+	var chosen: Array[int] = []
+	option.item_selected.connect(func(i: int) -> void: chosen.append(i))
+	await _frames()
+	var at := option.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	_touch(at, false)
+	await _frames()
+	assert_true(UiFeel.touch.selection_sheet != null)
+	var second: Button
+	for node in UiFeel.touch.selection_sheet.find_children("*", "Button", true, false):
+		var button := node as Button
+		if button.text == "Second":
+			second = button
+		if button.text == "Unavailable":
+			assert_true(button.disabled)
+	assert_true(second != null)
+	at = second.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	_touch(at, false)
+	await _frames()
+	assert_eq(option.selected, 1)
+	assert_eq(chosen.size(), 1)
+	assert_true(UiFeel.touch.selection_sheet == null)

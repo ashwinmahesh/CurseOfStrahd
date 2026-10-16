@@ -14,13 +14,11 @@ func _ready() -> void:
 	bar = HBoxContainer.new()
 	bar.add_theme_constant_override("separation", 6)
 	add_child(bar)
-	bar.add_child(UiKit.button("Menu", _menu))
-	bar.add_child(UiKit.button("Actions", _actions))
-	confirm = UiKit.button("Confirm", _confirm)
+	bar.add_child(MobileUi.button("Menu", _menu))
+	bar.add_child(MobileUi.button("Actions", _actions))
+	confirm = MobileUi.button("Confirm", _confirm)
 	bar.add_child(confirm)
-	bar.add_child(UiKit.button("Context", func() -> void: UiFeel.touch.context_next = true))
-	bar.add_child(UiKit.button("Info", func() -> void: UiFeel.touch.explain_next = true))
-	bar.add_child(UiKit.button("Camera", _camera))
+	bar.add_child(MobileUi.button("More", _more))
 
 
 func _process(_delta: float) -> void:
@@ -29,6 +27,9 @@ func _process(_delta: float) -> void:
 	if not visible:
 		return
 	confirm.visible = target is CombatView
+	if target is CombatView:
+		var fight := target as CombatView
+		confirm.text = "Continue" if fight.mode == CombatView.Mode.OVER else ("Death save" if fight.hud.death_save_shown() else "Confirm")
 	var safe := MobileDevice.safe_rect().grow(-4)
 	bar.position = Vector2(safe.position.x, safe.end.y - 48)
 	bar.size = Vector2(safe.size.x, 44)
@@ -45,10 +46,11 @@ func _menu() -> void:
 func _confirm() -> void:
 	var target := UiFeel.touch.world_target() as CombatView
 	if target != null and target.touch_ready():
-		target._confirm_at()
+		target.touch_confirm()
 
 
 func _page(title: String) -> VBoxContainer:
+	_close()
 	drawer = CanvasLayer.new()
 	drawer.layer = 40
 	drawer.set_meta(&"pad_scope", true)
@@ -58,8 +60,10 @@ func _page(title: String) -> VBoxContainer:
 
 func _close() -> void:
 	if drawer != null:
+		drawer.hide()
 		drawer.queue_free()
 		drawer = null
+		UiFeel.touch.cancel()
 
 
 func _input(event: InputEvent) -> void:
@@ -91,25 +95,60 @@ func _actions() -> void:
 		var body := _page("Actions")
 		for spec: Array in ExploreHud.BUTTONS:
 			var command := str(spec[2])
-			body.add_child(UiKit.button(str(spec[0]), func() -> void:
+			body.add_child(MobileUi.button(str(spec[0]), func() -> void:
 				_close()
 				target.call("_command", command)))
-		body.add_child(UiKit.button("End exploration round", func() -> void:
+		body.add_child(MobileUi.button("End exploration round", func() -> void:
 			_close()
 			target.call("_command", "plan_round")))
 
 
-func _camera() -> void:
-	var target := UiFeel.touch.world_target()
+func _camera(target: Node = null) -> void:
+	if target == null:
+		target = UiFeel.touch.world_target()
 	if target == null:
 		return
 	var rig := (target as CombatView).rig if target is CombatView else (target.get("view") as LocationView).rig
 	var body := _page("Camera")
 	for spec: Array in [["Turn left", -1], ["Turn right", 1]]:
 		var step := int(spec[1])
-		body.add_child(UiKit.button(str(spec[0]), func() -> void: rig.rotate_step(step)))
+		body.add_child(MobileUi.button(str(spec[0]), func() -> void: rig.rotate_step(step)))
 	for spec: Array in [["Zoom in", 1.2], ["Zoom out", 0.8]]:
 		var scale_ := float(spec[1])
-		body.add_child(UiKit.button(str(spec[0]), func() -> void: rig.touch_camera({"kind": "camera", "scale": scale_})))
-	body.add_child(UiKit.button("Tactical view", func() -> void: rig.tactical = not rig.tactical))
-	body.add_child(UiKit.button("Recenter", func() -> void: rig.touch_offset = Vector3.ZERO))
+		body.add_child(MobileUi.button(str(spec[0]), func() -> void: rig.touch_camera({"kind": "camera", "scale": scale_})))
+	body.add_child(MobileUi.button("Tactical view", func() -> void: rig.tactical = not rig.tactical))
+	body.add_child(MobileUi.button("Recenter", func() -> void: rig.touch_offset = Vector3.ZERO))
+
+
+func _more() -> void:
+	var target := UiFeel.touch.world_target()
+	if target == null:
+		return
+	var body := _page("More controls")
+	body.add_child(MobileUi.button("Context · choose a square", func() -> void:
+		_close()
+		UiFeel.touch.context_next = true))
+	body.add_child(MobileUi.button("Explain · choose a control", func() -> void:
+		_close()
+		UiFeel.touch.explain_next = true))
+	body.add_child(MobileUi.button("Camera", func() -> void: _camera(target)))
+	if target is CombatView:
+		var fight := target as CombatView
+		body.add_child(MobileUi.button("Choose a creature to target", func() -> void: _targets(fight)))
+		for command: String in ["Cancel targeting", "Undo move", "End turn"]:
+			body.add_child(MobileUi.button(command, func() -> void:
+				_close()
+				fight.touch_command(command)))
+		body.add_child(MobileUi.button("Touch controls", func() -> void:
+			_close()
+			fight.hud.toggle_controls()))
+
+
+func _targets(fight: CombatView) -> void:
+	var body := _page("Choose a creature · preview only")
+	for creature in fight.e.combatants:
+		if fight.viewer != null and not fight.e.can_see(fight.viewer, creature):
+			continue
+		body.add_child(MobileUi.button(creature.name(), func() -> void:
+			_close()
+			fight.touch_select(creature.id)))

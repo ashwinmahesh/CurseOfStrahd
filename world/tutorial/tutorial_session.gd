@@ -400,7 +400,7 @@ func _tutorial_menu() -> void:
 	if _leaving:
 		return
 	if combat != null and combat.view.hud.menu_open():
-		combat.view.hud._menu.hide()
+		combat.view.hud._menu.close()
 	if coach.menu_open:
 		coach.close_menu()
 	else:

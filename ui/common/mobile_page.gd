@@ -8,6 +8,8 @@ var scroll: ScrollContainer
 var heading: Label
 var toolbar: VBoxContainer
 var back_action: Callable
+var keyboard_done: Button
+var _keyboard_height := 0.0
 
 
 static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -> VBoxContainer:
@@ -32,6 +34,14 @@ static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -
 	page.heading.clip_text = true
 	page.heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	bar.add_child(page.heading)
+	page.keyboard_done = MobileUi.button("Done", func() -> void:
+		var focus := page.get_viewport().gui_get_focus_owner()
+		if focus != null:
+			focus.release_focus()
+		DisplayServer.virtual_keyboard_hide())
+	page.keyboard_done.size_flags_horizontal = Control.SIZE_SHRINK_END
+	page.keyboard_done.hide()
+	bar.add_child(page.keyboard_done)
 	page.toolbar = VBoxContainer.new()
 	column.add_child(page.toolbar)
 	page.scroll = ScrollContainer.new()
@@ -72,8 +82,23 @@ func _input(event: InputEvent) -> void:
 
 func reflow() -> void:
 	var rect := MobileDevice.safe_rect().grow(-4)
+	_keyboard_height = MobileDevice.keyboard_height()
+	if _keyboard_height > 0:
+		rect.size.y = maxf(96.0, minf(rect.end.y, MobileDevice.logical_size().y - _keyboard_height) - rect.position.y)
+	if keyboard_done != null:
+		keyboard_done.visible = _keyboard_height > 0
 	position = rect.position
 	size = rect.size
 	custom_minimum_size = Vector2.ZERO
 	if scroll != null:
 		scroll.custom_minimum_size = Vector2.ZERO
+
+
+func _process(_delta: float) -> void:
+	if not is_visible_in_tree():
+		return
+	if not is_equal_approx(_keyboard_height, MobileDevice.keyboard_height()):
+		reflow()
+		var focus := get_viewport().gui_get_focus_owner()
+		if focus != null and body.is_ancestor_of(focus):
+			scroll.ensure_control_visible.call_deferred(focus)

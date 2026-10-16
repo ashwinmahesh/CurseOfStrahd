@@ -8,6 +8,7 @@ var owners: Dictionary = {}
 var context_next := false
 var explain_next := false
 var _epoch := 0
+var selection_sheet: CanvasLayer
 
 
 func _ready() -> void:
@@ -91,6 +92,8 @@ func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:
 		if explain_next and PadNav.current != null:
 			explain_next = false
 			PadNav.current.explain(control)
+		elif control is OptionButton and not context:
+			_show_selection(control as OptionButton)
 		else:
 			var button := MOUSE_BUTTON_RIGHT if context else MOUSE_BUTTON_LEFT
 			_button(at, button, true)
@@ -154,3 +157,40 @@ func _button(at: Vector2, button: MouseButton, pressed: bool) -> void:
 	event.set_meta(&"touch_synthetic", true)
 	event.set_meta(&"touch_gui", true)
 	get_viewport().push_input(event, true)
+
+
+## Stock OptionButton popups live in a different viewport. Present their exact options in the same touch path
+## instead of sending synthetic mouse events to the wrong viewport or depending on tiny native popup rows.
+func _show_selection(option: OptionButton) -> void:
+	if option.disabled:
+		return
+	_close_selection()
+	selection_sheet = CanvasLayer.new()
+	selection_sheet.layer = 90
+	selection_sheet.set_meta(&"pad_scope", true)
+	add_child(selection_sheet)
+	var body := MobilePage.build(selection_sheet, option.tooltip_text if option.tooltip_text != "" else "Choose", _close_selection)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var source: WeakRef = weakref(option)
+	for i in option.item_count:
+		if option.is_item_separator(i):
+			continue
+		var button := MobileUi.button(option.get_item_text(i), func() -> void:
+			var current := source.get_ref() as OptionButton
+			_close_selection()
+			if current == null or not current.is_inside_tree() or current.disabled or i >= current.item_count or current.is_item_disabled(i):
+				return
+			current.select(i)
+			current.item_selected.emit(i))
+		button.disabled = option.is_item_disabled(i)
+		if i == option.selected:
+			UiParts.light_up(button)
+		body.add_child(button)
+
+
+func _close_selection() -> void:
+	if selection_sheet != null:
+		selection_sheet.hide()
+		selection_sheet.queue_free()
+		selection_sheet = null
+	cancel()

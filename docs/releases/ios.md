@@ -223,3 +223,19 @@ or public release has passed. Device qualification remains required before a sup
 - [Apple Xcode components](https://developer.apple.com/documentation/Xcode/downloading-and-installing-additional-xcode-components)
 - [Apple review guidelines](https://developer.apple.com/app-store/review/guidelines/), including executable updates
   and third-party content rights before public distribution.
+
+
+## Unsigned simulator checks
+
+Full Xcode and a compatible iOS simulator runtime are required; these builds do not require signing credentials:
+
+```sh
+make ios-simulator-export IOS_OUT=/absolute/path/outside/the/checkout
+make ios-simulator-build IOS_OUT=/absolute/path/outside/the/checkout
+```
+
+The isolated simulator stage uses Compatibility rendering because the Godot simulator template does not support
+Mobile/Metal. Device stages retain Mobile/Metal, and the desktop checkout is never rewritten. Both stages target
+iPhone and iPad. Install the resulting `derived/Build/Products/Release-iphonesimulator/CurseOfStrahd.app` with
+`xcrun simctl install <device-id> <app-path>`. An installed runtime may support only a subset of devices; check
+`xcrun simctl list runtimes -j` before selecting an iPhone or iPad. Simulator results do not qualify Metal performance.

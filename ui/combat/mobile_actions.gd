@@ -14,6 +14,8 @@ var query := ""
 var selected: Dictionary = {}
 var level := 0
 var choice := -1
+var metamagic := ""
+var ready_trigger := ""
 var _list: VBoxContainer
 var _origin_turn: Combatant
 var _committed := false
@@ -65,7 +67,7 @@ func browse() -> void:
 	strip.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	strip.add_child(tabs)
 	page.toolbar.add_child(strip)
-	var categories: Array[String] = ["All"]
+	var categories: Array[String] = ["All", ActionCatalog.FAVOURITES, ActionCatalog.HIDDEN]
 	categories.append_array(catalog.tabs_for(actor))
 	for value in categories:
 		var tab := MobileUi.button(value, func() -> void:
@@ -118,6 +120,8 @@ func fill() -> void:
 func inspect(action: Dictionary) -> void:
 	selected = action.duplicate(true)
 	choice = -1
+	metamagic = ""
+	ready_trigger = ""
 	var levels := catalog.level_choices(actor, selected)
 	level = levels[0] if not levels.is_empty() else 0
 	review()
@@ -153,7 +157,34 @@ func review() -> void:
 				UiParts.light_up(control)
 			control.autowrap_mode = TextServer.AUTOWRAP_OFF
 			row.add_child(control)
-	var immediate := str(selected.get("targeting", "none")) == "none"
+	var magic := selected.get("metamagic", []) as Array
+	if not magic.is_empty():
+		page.body.add_child(MobileUi.text("Spell shaping", "gilt_light"))
+		page.body.add_child(MobileUi.button("Without Metamagic" + (" ✓" if metamagic == "" else ""), func() -> void:
+			metamagic = ""
+			review()))
+		for option: Dictionary in magic:
+			page.body.add_child(MobileUi.button(str(option["label"]) + (" ✓" if metamagic == str(option["id"]) else ""), func() -> void:
+				metamagic = str(option["id"])
+				ready_trigger = ""
+				review()))
+	if str(selected.get("kind", "")) == "spell" and str(selected.get("cost", "")) == "action" and str((selected.get("opts", {}) as Dictionary).get("resource_cast", "")) == "":
+		page.body.add_child(MobileUi.text("Cast now or Ready", "gilt_light"))
+		for trigger: String in ["", "approach", "attack", "spell"]:
+			var labels := {"": "Cast now", "approach": "Ready: enemy enters range", "attack": "Ready: enemy attacks", "spell": "Ready: enemy casts a spell"}
+			page.body.add_child(MobileUi.button(str(labels[trigger]) + (" ✓" if ready_trigger == trigger else ""), func() -> void:
+				ready_trigger = trigger
+				metamagic = ""
+				review()))
+	if actor.creature is Character:
+		var id := str(selected["id"])
+		page.body.add_child(MobileUi.button("Remove from Favourites" if catalog.is_favourite(actor, id) else "Add to Favourites", func() -> void:
+			catalog.set_favourite(actor, id, not catalog.is_favourite(actor, id))
+			review()))
+		page.body.add_child(MobileUi.button("Show in category" if catalog.is_hidden(actor, id) else "Move to Hidden", func() -> void:
+			catalog.set_hidden(actor, id, not catalog.is_hidden(actor, id))
+			review()))
+	var immediate := str(selected.get("targeting", "none")) == "none" or ready_trigger != ""
 	var confirm := MobileUi.button(("Use " if immediate else "Aim ") + str(selected.get("label", "action")), commit)
 	confirm.name = "MobileActionCommit"
 	confirm.disabled = not bool(selected.get("legal", false)) or (not choices.is_empty() and choice < 0)
@@ -188,6 +219,24 @@ func commit() -> void:
 		if not levels.is_empty() and not level in levels:
 			inspect(fresh)
 			return
+		if metamagic != "":
+			var allowed := fresh.get("metamagic", []) as Array
+			if not allowed.any(func(option: Dictionary) -> bool: return str(option["id"]) == metamagic):
+				inspect(fresh)
+				return
+			var opts := (fresh.get("opts", {}) as Dictionary).duplicate(true)
+			opts["metamagic"] = [metamagic]
+			fresh["opts"] = opts
+			if metamagic == "quickened":
+				fresh["cost"] = "bonus"
+		if ready_trigger != "":
+			if str(fresh["kind"]) != "spell" or str(fresh["cost"]) != "action" or not ready_trigger in ["approach", "attack", "spell"]:
+				return
+			fresh["kind"] = "ready_spell"
+			fresh["targeting"] = "none"
+			var opts := (fresh.get("opts", {}) as Dictionary).duplicate(true)
+			opts["trigger"] = ready_trigger
+			fresh["opts"] = opts
 		# Remove input ownership before emitting, so synchronous reaction prompts become the active modal.
 		_committed = true
 		hide()

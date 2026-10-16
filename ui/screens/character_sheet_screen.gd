@@ -31,6 +31,8 @@ const MID_W := 424.0
 ## Text width inside the tab pane (the pane minus its margins and scroll bar).
 const PANE_W := 570.0
 
+var mobile_section := "Overview"
+
 var root: Node
 var st: StoryState
 var index := 0
@@ -62,6 +64,8 @@ func open(root_: Node, state: StoryState, index_: int) -> void:
 func show_tab(title: String) -> void:
 	var t := str(TAB_ALIASES.get(title, title))
 	tab = t if t in TABS else TABS[0]
+	if MobileDevice.enabled():
+		mobile_section = tab
 	_draw()
 
 
@@ -70,6 +74,9 @@ func _ch() -> Character:
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_draw_mobile()
+		return
 	# Keep the scroll position when redrawing the same page (after casting a spell), not after switching.
 	var key := "%d:%s" % [index, tab]
 	var keep := _scroll.scroll_vertical if _scroll != null and is_instance_valid(_scroll) and key == _drawn else 0
@@ -1299,3 +1306,77 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_Q:
 				tab = TABS[posmod(TABS.find(tab) - 1, TABS.size())]
 				_draw()
+
+
+func _draw_mobile() -> void:
+	MobileUi.clear(_frame)
+	var page := _frame.get_parent().get_parent().get_parent() as MobilePage
+	page.back_action = _close
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	MobileUi.clear(page.toolbar)
+	var ch := _ch()
+	var members := HBoxContainer.new()
+	page.toolbar.add_child(members)
+	members.add_child(MobileUi.button("Previous", func() -> void:
+		index = posmod(index - 1, st.party.size())
+		_draw()))
+	members.add_child(MobileUi.button(ch.name, func() -> void:
+		mobile_section = "Overview"
+		_draw()))
+	members.add_child(MobileUi.button("Next", func() -> void:
+		index = posmod(index + 1, st.party.size())
+		_draw()))
+	var sections: Array[String] = ["Overview", "Abilities"]
+	sections.append_array(TABS)
+	page.toolbar.add_child(MobileUi.tabs(sections, mobile_section, func(value: String) -> void:
+		mobile_section = value
+		_draw()))
+	var content: Control
+	match mobile_section:
+		"Overview": content = _hero(ch)
+		"Abilities": content = _mobile_abilities(ch)
+		"Features": content = _features(ch)
+		"Spells": content = _spells(ch)
+		"Equipment": content = _equipment(ch)
+		"Effects": content = _effects(ch)
+		"Notes": content = _notes(ch)
+		_: content = _actions(ch)
+	MobileUi.fit(content)
+	_frame.add_child(content)
+	if not in_fight and st.can_level_up(ch):
+		_frame.add_child(MobileUi.button("Level up", func() -> void: root.call("open_screen", "level_up", index)))
+	if in_fight:
+		_frame.add_child(MobileUi.text("View only during combat"))
+	page.scroll.scroll_vertical = 0
+
+
+func _mobile_abilities(ch: Character) -> VBoxContainer:
+	var body := VBoxContainer.new()
+	for ability: StringName in Abilities.ALL:
+		var full := str(Creature.ABILITY_NAMES[ability])
+		var save := ch.save_bonus(ability)
+		body.add_child(UiParts.tip_button("%s · %d (%s) · Save %s" % [full, ch.ability_score(ability), UiKit.signed(ch.ability_mod(ability)), save.signed()], func() -> void:
+			_mobile_breakdown(ch.ability_breakdown(ability), full), func() -> Control:
+			return UiParts.breakdown_tip(ch.ability_breakdown(ability), full)))
+		body.add_child(MobileUi.button(full + " saving throw · Details", func() -> void:
+			_mobile_breakdown(save, full + " saving throw")))
+	body.add_child(MobileUi.text("Skills", "gilt_light"))
+	var skills: Array = Abilities.SKILLS.keys()
+	skills.sort()
+	for skill: StringName in skills:
+		var bonus := ch.skill_bonus(skill)
+		var rank := ch.skill_rank(skill)
+		var title := str(skill).replace("_", " ").capitalize()
+		body.add_child(MobileUi.button("%s · %s · %s" % [title, bonus.signed(), "Expertise" if rank >= 2 else "Proficient" if rank == 1 else "Untrained"], func() -> void:
+			_mobile_breakdown(bonus, title)))
+	return body
+
+
+func _mobile_breakdown(value: Breakdown, title: String) -> void:
+	var layer_ := CanvasLayer.new()
+	layer_.layer = layer + 1
+	add_child(layer_)
+	var body := MobilePage.build(layer_, title, func() -> void: layer_.queue_free())
+	var content := UiParts.breakdown_tip(value, title)
+	MobileUi.fit(content)
+	body.add_child(content)

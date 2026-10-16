@@ -22,6 +22,8 @@ const TAGS: Array[String] = ["blunt", "loyal", "veteran", "pious", "curious", "s
 ## Text width inside the step panel.
 const BODY_W := 820.0
 
+var _mobile_page: MobilePage
+
 var builders: Array[CharacterBuilder] = []
 var confirmed: Array[bool] = []
 var slot := 0
@@ -159,6 +161,35 @@ func _free_portrait(app: Dictionary) -> Dictionary:
 
 
 func _build_frame(title: String) -> void:
+	if MobileDevice.enabled():
+		var frame := MobilePage.build(self, title, func() -> void: cancelled.emit())
+		_mobile_page = frame.get_parent().get_parent().get_parent() as MobilePage
+		_mobile_page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_strip = HBoxContainer.new()
+		var strip_scroll := ScrollContainer.new()
+		strip_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		strip_scroll.add_child(_strip)
+		_mobile_page.toolbar.add_child(strip_scroll)
+		var navigation := HBoxContainer.new()
+		_mobile_page.toolbar.add_child(navigation)
+		_rail = VBoxContainer.new()
+		_rail.hide()
+		_body = VBoxContainer.new()
+		_sheet = VBoxContainer.new()
+		_sheet.hide()
+		frame.add_child(_rail)
+		frame.add_child(_body)
+		frame.add_child(_sheet)
+		navigation.add_child(MobileUi.button("Steps", func() -> void:
+			_rail.visible = not _rail.visible
+			_body.visible = not _rail.visible
+			_sheet.hide()))
+		navigation.add_child(MobileUi.button("Character preview", func() -> void:
+			_sheet.visible = not _sheet.visible
+			_body.visible = not _sheet.visible
+			_rail.hide()))
+		_draw()
+		return
 	var frame := UiKit.screen_frame(self, title, Vector2(1540, 830))
 	_strip = HBoxContainer.new()
 	_strip.add_theme_constant_override("separation", 8)
@@ -192,6 +223,13 @@ func b() -> CharacterBuilder:
 func _draw() -> void:
 	_draw_strip()
 	_draw_rest()
+	if _mobile_page != null:
+		MobileUi.fit(_body)
+		MobileUi.fit(_rail)
+		MobileUi.fit(_sheet)
+		_rail.hide()
+		_sheet.hide()
+		_body.show()
 
 
 func _draw_strip() -> void:
@@ -352,7 +390,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _class_step() -> void:
 	_body.add_child(UiParts.section("Class"))
 	var grid := GridContainer.new()
-	grid.columns = 6
+	grid.columns = 3 if MobileDevice.enabled() else 6
 	grid.add_theme_constant_override("h_separation", 6)
 	grid.add_theme_constant_override("v_separation", 6)
 	for o in b().available_classes():
@@ -401,7 +439,7 @@ func _class_step() -> void:
 func _origin_step() -> void:
 	_body.add_child(UiParts.section("Background"))
 	var grid := GridContainer.new()
-	grid.columns = 4
+	grid.columns = 3 if MobileDevice.enabled() else 4
 	grid.add_theme_constant_override("h_separation", 6)
 	grid.add_theme_constant_override("v_separation", 6)
 	for o in b().available_backgrounds():
@@ -418,7 +456,7 @@ func _origin_step() -> void:
 	_body.add_child(grid)
 	_body.add_child(UiParts.section("Species"))
 	var grid2 := GridContainer.new()
-	grid2.columns = 5
+	grid2.columns = 3 if MobileDevice.enabled() else 5
 	grid2.add_theme_constant_override("h_separation", 6)
 	grid2.add_theme_constant_override("v_separation", 6)
 	for o in b().available_species():
@@ -469,9 +507,17 @@ func _ability_step() -> void:
 		for v: Variant in b().build.get("rolled_scores", []):
 			pool.append(int(v))
 	var ch := b().preview()
-	var cols := HBoxContainer.new()
-	cols.add_theme_constant_override("separation", 10)
-	cols.alignment = BoxContainer.ALIGNMENT_CENTER
+	var cols: Container
+	if MobileDevice.enabled():
+		var grid := GridContainer.new()
+		grid.columns = 3
+		grid.add_theme_constant_override("h_separation", 10)
+		cols = grid
+	else:
+		var row_ := HBoxContainer.new()
+		row_.add_theme_constant_override("separation", 10)
+		row_.alignment = BoxContainer.ALIGNMENT_CENTER
+		cols = row_
 	for ab: StringName in Abilities.ALL:
 		var col := VBoxContainer.new()
 		col.add_theme_constant_override("separation", 4)
@@ -712,7 +758,7 @@ func _identity_step() -> void:
 	_body.add_child(UiKit.label("Personality tags (two or three): the story reads these for party interjections.", 14, "parchment", BODY_W))
 	var tags := identity.get("tags", []) as Array
 	var grid := GridContainer.new()
-	grid.columns = 6
+	grid.columns = 3 if MobileDevice.enabled() else 6
 	for t in TAGS:
 		var cb := CheckBox.new()
 		cb.text = t

@@ -654,6 +654,10 @@ static func small_button(text: String, on_press: Callable, icon_id: String = "")
 
 
 static func compact(b: Button) -> void:
+	if MobileDevice.enabled():
+		b.custom_minimum_size.y = 48
+		b.add_theme_font_size_override("font_size", UiScale.text(18))
+		return
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var s := UiKit.button_style(state)
 		s.content_margin_top = 3
@@ -746,6 +750,16 @@ static func chip(ch: Character, lit: bool, on_press: Callable, width: float = 13
 ## Portrait chips for the whole party; `on_pick(i)` when one is pressed.
 static func party_chips(party: Array[Character], index: int, on_pick: Callable) -> HBoxContainer:
 	var strip := HBoxContainer.new()
+	if MobileDevice.enabled() and not party.is_empty():
+		strip.add_child(MobileUi.button("‹", func() -> void: on_pick.call(posmod(index - 1, party.size()))))
+		var member := MobileUi.button(party[index].name, func() -> void: on_pick.call(posmod(index + 1, party.size())))
+		member.clip_text = true
+		member.autowrap_mode = TextServer.AUTOWRAP_OFF
+		member.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		strip.add_child(member)
+		strip.add_child(MobileUi.button("›", func() -> void: on_pick.call(posmod(index + 1, party.size()))))
+		strip.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		return strip
 	strip.add_theme_constant_override("separation", 8)
 	for i in party.size():
 		strip.add_child(chip(party[i], i == index, func() -> void: on_pick.call(i)))
@@ -758,6 +772,11 @@ static func party_chips(party: Array[Character], index: int, on_pick: Callable) 
 static func tab_strip(names: Array[String], current: String, on_pick: Callable, icons: Dictionary = {},
 		size: int = 15) -> HBoxContainer:
 	var strip := HBoxContainer.new()
+	if MobileDevice.enabled():
+		var tabs := MobileUi.tabs(names, current, on_pick)
+		tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		strip.add_child(tabs)
+		return strip
 	strip.add_theme_constant_override("separation", 3)
 	for t in names:
 		var b := UiKit.button(t, func() -> void: on_pick.call(t), size, str(icons.get(t, "")))

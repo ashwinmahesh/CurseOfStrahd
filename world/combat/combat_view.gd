@@ -1238,8 +1238,35 @@ func _cycle_inspect() -> void:
 # --- Input ----------------------------------------------------------------------------------------
 
 func touch_ready() -> bool:
-	return not input_locked and e != null and mode in [Mode.IDLE, Mode.TARGET] \
+	return not input_locked and e != null and mode in [Mode.IDLE, Mode.TARGET, Mode.OVER] \
 		and not hud.prompt_open() and not hud.confirm_open() and _command_allowed("input", {})
+
+
+func touch_confirm() -> void:
+	if not touch_ready():
+		return
+	if mode == Mode.OVER:
+		if restart_allowed:
+			get_tree().reload_current_scene()
+		else:
+			hud.banner("", 0.0)
+			finished.emit(e.outcome)
+	elif hud.death_save_shown():
+		hud.death_save_pressed.emit()
+	else:
+		_confirm_at()
+
+
+func touch_select(id: String) -> void:
+	if not touch_ready() or mode == Mode.OVER:
+		return
+	var creature := e.get_c(id)
+	if creature == null or (viewer != null and not e.can_see(viewer, creature)):
+		return
+	using_pad = true
+	cursor_cell = creature.cell
+	_pad_hover()
+	_update_hover()
 
 
 ## Touch first previews a square; the visible Confirm control commits it. No resource is spent by previewing.
@@ -2643,7 +2670,7 @@ func capture_shots(tool: Node, out: String) -> void:
 				hud.open_square_menu(near.name(), shown, spot)
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_2b_square_menu.png")
-				hud._menu.hide()
+				hud._menu.close()
 				near.creature.remove_condition(&"prone", "Capture")
 				break
 		await _autoplay_turn(pilot)

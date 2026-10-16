@@ -20,6 +20,8 @@ signal stage_requested(what: String, npc: String, at: String)
 ## A `respec` pick: the game rebuilds party member `index` and calls resume() when it's done.
 signal respec_requested(index: int)
 
+var _mobile_page: MobilePage
+
 var runner: DialogueRunner
 var _panel: PanelContainer
 var _portrait: TextureRect
@@ -198,6 +200,36 @@ func _ready() -> void:
 	_spread.offset_top = 60
 	_spread.alignment = BoxContainer.ALIGNMENT_CENTER
 	add_child(_spread)
+	if MobileDevice.enabled():
+		var body := MobilePage.build(self, "Conversation", toggle_history)
+		_mobile_page = body.get_parent().get_parent().get_parent() as MobilePage
+		_mobile_page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		(_mobile_page.find_child("MobileBack", true, false) as Button).text = "History"
+		var hidden := Control.new()
+		hidden.hide()
+		add_child(hidden)
+		_panel.reparent(hidden)
+		busts.hide()
+		_name.reparent(body)
+		_name.custom_minimum_size.x = 0
+		_text.reparent(body)
+		_text.custom_minimum_size.x = 0
+		_options_scroll.reparent(body)
+		_continue_row.reparent(_mobile_page.toolbar)
+		_hint.hide()
+		_speaker_button.reparent(body)
+		MobileUi.fit(_continue_row)
+		MobileUi.fit(_speaker_button)
+		var cards := ScrollContainer.new()
+		cards.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		body.add_child(cards)
+		_spread.reparent(cards)
+		_spread.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_spread.custom_minimum_size.x = 0
+		# History is above the full-screen conversation, with independent scrolling.
+		move_child(_history_panel, get_child_count() - 1)
+		MobileUi.fit(_history_panel)
+		_history_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 
 
 ## The scroll-back panel over the scene, above the box: every line of this conversation so far, newest at the bottom.
@@ -238,6 +270,9 @@ func _build_history() -> void:
 
 
 func toggle_history() -> void:
+	if _mobile_page != null:
+		_history_panel.position = MobileDevice.safe_rect().grow(-4).position
+		_history_panel.size = MobileDevice.safe_rect().grow(-4).size
 	_history_panel.visible = not _history_panel.visible
 	if _history_panel.visible:
 		_history_text.text = "\n\n".join(_history) if not _history.is_empty() else "[i]Nothing said yet.[/i]"
@@ -328,7 +363,7 @@ func _show(beat: Dictionary) -> void:
 		VoiceOver.stop()
 	if cutscene != null and str(beat["kind"]) in ["line", "notice", "check", "options", "pick_member", "guidance"]:
 		# Over a cutscene a line is a caption on the picture; anything to choose or note comes up in the box.
-		var captioned := str(beat["kind"]) == "line"
+		var captioned := str(beat["kind"]) == "line" and _mobile_page == null
 		_panel.visible = not captioned
 		cutscene.show_caption(captioned)
 	if str(beat["kind"]) == "check":
@@ -504,6 +539,8 @@ func _fit_options() -> void:
 ## Options read as lines of text; the one under the mouse or keyboard gets a crimson band with pointed ends and a
 ## fine gilt edge, like the menu's buttons.
 func _option_look(b: Button) -> void:
+	if MobileDevice.enabled():
+		b.custom_minimum_size.y = 48
 	var plain := StyleBoxEmpty.new()
 	plain.content_margin_left = 20
 	plain.content_margin_top = 4
@@ -587,6 +624,8 @@ func _clear_options() -> void:
 
 ## A left click on the box or anywhere around it.
 func _clicked(event: InputEvent) -> void:
+	if MobileDevice.enabled():
+		return
 	var mb := event as InputEventMouseButton
 	if mb == null or not mb.pressed or mb.button_index != MOUSE_BUTTON_LEFT:
 		return
@@ -664,7 +703,7 @@ func _cutscene_beat(beat: Dictionary) -> void:
 	if cutscene == null:
 		cutscene = CutsceneView.new()
 		add_child(cutscene)
-		move_child(cutscene, _panel.get_index())   # over the scene's dim, under the box and the History
+		move_child(cutscene, 1 if _mobile_page != null else _panel.get_index())   # over the scene's dim, under the box and the History
 		cutscene.clicked.connect(func() -> void:
 			if _waiting_continue and not history_open() and not cutscene.paused:
 				_advance())

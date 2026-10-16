@@ -6,6 +6,8 @@ extends PopupMenu
 
 signal picked(id: String)
 
+var mobile_sheet: CanvasLayer
+
 var _ids: Array[String] = []
 
 ## Which icon (art/ui/icons) goes with an action, by the part of its id before any ":".
@@ -37,6 +39,9 @@ func _init() -> void:
 
 ## `actions`: [{id, label, enabled = true, why = ""}] or {separator: "Heading"}.
 func show_actions(title: String, actions: Array[Dictionary], at: Vector2) -> void:
+	if MobileDevice.enabled():
+		_show_mobile(title, actions)
+		return
 	clear()
 	_ids.clear()
 	if title != "":
@@ -62,3 +67,46 @@ func show_actions(title: String, actions: Array[Dictionary], at: Vector2) -> voi
 	reset_size()
 	position = Vector2i(at)
 	popup()
+
+
+func is_open() -> bool:
+	return mobile_sheet != null or visible
+
+
+func close() -> void:
+	hide()
+	if mobile_sheet != null:
+		mobile_sheet.hide()
+		mobile_sheet.queue_free()
+		mobile_sheet = null
+	if MobileDevice.enabled() and UiFeel.touch != null:
+		UiFeel.touch.cancel()
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(mobile_sheet):
+		mobile_sheet.queue_free()
+
+
+func _show_mobile(title: String, actions: Array[Dictionary]) -> void:
+	close()
+	mobile_sheet = CanvasLayer.new()
+	mobile_sheet.layer = 50
+	mobile_sheet.set_meta(&"pad_scope", true)
+	# This PopupMenu is a separate viewport: the sheet belongs to the game's viewport instead.
+	get_parent().add_child(mobile_sheet)
+	var body := MobilePage.build(mobile_sheet, title, close)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	for action in actions:
+		if action.has("separator"):
+			body.add_child(MobileUi.text(str(action["separator"]), "gilt_light"))
+			continue
+		var id := str(action["id"])
+		var button := MobileUi.button(str(action["label"]), func() -> void:
+			close()
+			Audio.sfx("click")
+			picked.emit(id))
+		button.disabled = not bool(action.get("enabled", true))
+		body.add_child(button)
+		if str(action.get("why", "")) != "":
+			body.add_child(MobileUi.text(str(action["why"]), "parchment"))

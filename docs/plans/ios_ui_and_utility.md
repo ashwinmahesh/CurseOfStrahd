@@ -10,7 +10,9 @@ The first UI batch implements safe-area pages with persistent navigation, gestur
 
 Verification includes raw-touch integration tests, compact/regular layout tests, the largest existing text/interface settings, desktop inventory/controller regressions, and offscreen phone/tablet previews. These previews run on macOS; they are not native simulator or physical-device qualification.
 
-Stages 1–3 remain in progress. The battlefield HUD, reaction dialogs, advanced targeting and action variants, remaining screens, native keyboard/files, accessibility integration, inventory performance, and lifecycle recovery still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
+The second UI batch adds a separate mobile battlefield HUD, reaction and confirmation sheets, turn order/log/party pages, target lists, advanced spell configuration, mobile exploration notices and party controls, conversations, character-sheet sections, creation/level-up navigation, shop inspection, rest and settings layouts. Stock option selectors and context menus now stay within the touch viewport. Keyboard avoidance and an explicit Done control are implemented. The universal iPhone/iPad export has an unsigned simulator build path; dedicated simulator runtimes and QA devices are installed. Focused checks currently pass 66 tests, including desktop layouts and mobile touch/layout cases; phone/tablet captures are recorded locally.
+
+Stages 1–3 remain in progress. Native simulator qualification, remaining screens, native files, accessibility integration, inventory performance, and lifecycle recovery still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
 
 ## Desktop remains unchanged
 
