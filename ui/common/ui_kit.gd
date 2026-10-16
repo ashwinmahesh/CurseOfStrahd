@@ -115,6 +115,8 @@ static func divider(width: float = 360.0, colour: String = "gilt") -> TextureRec
 ## A full-screen frame for a screen: dimmed backdrop and a centered panel. Returns the panel's content box.
 static func screen_frame(root: CanvasLayer, title_text: String, size: Vector2 = Vector2(1400, 800)) -> VBoxContainer:
 	UiScale.full_screen(root)   # a full screen keeps its design size whatever the interface size (Settings, U4)
+	if MobileDevice.enabled():
+		return MobilePage.build(root, title_text)
 	var dim := ColorRect.new()
 	dim.color = Color(Look.color("void"), 0.78)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -217,6 +219,8 @@ static func button(text: String, on_press: Callable, size: int = 16, icon_id: St
 
 ## Crimson-black faces with gilt edges; the icon takes the gilt tint (white silhouettes multiply to the colour).
 static func button_look(b: Button) -> void:
+	if MobileDevice.enabled():
+		b.custom_minimum_size = Vector2(maxf(b.custom_minimum_size.x, 44), maxf(b.custom_minimum_size.y, 44))
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		b.add_theme_stylebox_override(state, button_style(state))
 	b.add_theme_font_override("font", display_font())

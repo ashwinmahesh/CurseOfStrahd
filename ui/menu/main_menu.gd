@@ -73,7 +73,22 @@ func _ready() -> void:
 	_box.offset_right = 110 + 560
 	_box.offset_top = -340
 	_box.add_theme_constant_override("separation", 12)
-	add_child(_box)
+	if MobileDevice.enabled():
+		var scroll := ScrollContainer.new()
+		var area := MobileDevice.safe_rect().grow(-12)
+		scroll.position = area.position
+		scroll.size = area.size
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		add_child(scroll)
+		_box.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scroll.add_child(_box)
+		get_viewport().size_changed.connect(func() -> void:
+			var safe := MobileDevice.safe_rect().grow(-12)
+			scroll.position = safe.position
+			scroll.size = safe.size)
+	else:
+		add_child(_box)
 	_title()
 	(func() -> void: WhatsNew.show_if_new(self)).call_deferred()   # what changed since the last play (Q2)
 
@@ -82,7 +97,7 @@ func _title() -> void:
 	_view = "title"
 	for c in _box.get_children():
 		c.queue_free()
-	var t := UiKit.label("Curse of Strahd", 72, "vampire_red")
+	var t := UiKit.label("Curse of Strahd", 42 if MobileDevice.enabled() else 72, "vampire_red")
 	t.add_theme_font_override("font", UiKit.display_font())
 	t.add_theme_constant_override("outline_size", 10)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -113,7 +128,8 @@ func _title() -> void:
 	if WhatsNew.available():
 		_box.add_child(UiKit.button("What's new", func() -> void: WhatsNew.open(self), 18))
 	_box.add_child(UiKit.button("Credits", _credits, 18))
-	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
+	if not MobileDevice.enabled():
+		_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
 
 
 ## Who made what (art/credits.json): the SRD's attribution, the art, and every credited track and sound.
@@ -156,9 +172,11 @@ func _new_game() -> void:
 			if _picked.size() < StoryState.PARTY_CAP:
 				_picked.append(id)
 	_box.add_child(UiKit.title("Who goes into the mists?"))
-	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", 560))
+	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", minf(560, MobileDevice.safe_rect().size.x - 28) if MobileDevice.enabled() else 560))
 	var grid := GridContainer.new()
 	grid.columns = 4
+	if MobileDevice.enabled():
+		grid.columns = clampi(int((MobileDevice.safe_rect().size.x - 28) / 144), 2, 4)
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 8)
 	for id in roster:

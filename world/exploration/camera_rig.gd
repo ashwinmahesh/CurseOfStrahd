@@ -54,6 +54,7 @@ var _shake_rng := RandomNumberGenerator.new()
 var _far := 120.0
 var _yaw_steps := 0
 var _yaw := 0.0
+var touch_offset := Vector3.ZERO
 
 
 func _init() -> void:
@@ -88,7 +89,21 @@ func snap_to_target() -> void:
 	_apply()
 
 
+func touch_camera(update: Dictionary) -> void:
+	if str(update.get("kind", "")) == "camera":
+		distance = clampf(distance / maxf(float(update.get("scale", 1.0)), 0.1), zoom_min, zoom_max)
+		rotate_step(int(update.get("steps", 0)))
+	var delta := update.get("delta", Vector2.ZERO) as Vector2
+	var axes := ground_basis()
+	var units := distance / maxf(get_viewport().get_visible_rect().size.y, 1.0)
+	touch_offset += (-axes[1] * delta.x + axes[0] * delta.y) * units
+	touch_offset = touch_offset.limit_length(24.0)
+	horizon = 0.0
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if event.has_meta(&"touch_gui"):
+		return
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
 		var mb := event as InputEventMouseButton
 		if mb.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -122,7 +137,7 @@ func _process(delta: float) -> void:
 	if pad_look:
 		_look(delta)
 	if follow:
-		global_position = global_position.lerp(follow.global_position, clampf(delta * 6.0, 0.0, 1.0))
+		global_position = global_position.lerp(follow.global_position + touch_offset, clampf(delta * 6.0, 0.0, 1.0))
 	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0
 	_yaw = lerp_angle(_yaw, goal, clampf(delta * 9.0, 0.0, 1.0))
 	horizon_shown = move_toward(horizon_shown, horizon, delta * 1.6)

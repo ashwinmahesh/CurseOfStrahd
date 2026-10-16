@@ -171,7 +171,7 @@ func _use_pad(on: bool, device: int) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.has_meta(&"pad_synthetic"):
+	if event.has_meta(&"pad_synthetic") or event.has_meta(&"touch_synthetic"):
 		return   # this tracker's own pointer moves and clicks
 	var joy := event is InputEventJoypadButton or event is InputEventJoypadMotion
 	if event is InputEventJoypadButton or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > STICK_ON:

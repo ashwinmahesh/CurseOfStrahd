@@ -11,9 +11,14 @@ the earlier sequencing that postponed compact UI design until the end of the tab
 
 ## Current milestone
 
-The first implementation adds an iPad export preset, isolated mobile asset preparation, prerequisite checks,
-Xcode export/archive commands, source and app-size reports, a Mobile renderer profile and shader fallbacks, and
-protection against loading external executable patches on iOS. See [the runbook](../releases/ios.md).
+The implementation includes an iPad export preset, isolated mobile asset preparation, prerequisite checks,
+Xcode export/archive commands, source and app-size reports, a Mobile renderer profile and shader fallbacks,
+protection against loading external executable patches on iOS, atomic save replacement, and a manual signed
+archive/TestFlight workflow. See [the runbook](../releases/ios.md).
+
+The first UI batch adds touch routing, safe-area navigation, mobile inventory views, and a combat action browser.
+See the [UI progress and remaining work](ios_ui_and_utility.md#implementation-progress). Native simulator and
+physical-device qualification remain open; offscreen desktop previews do not satisfy those gates.
 
 P0 remains open until a signed build is installed and exercised on a physical iPad. Desktop rendering and
 source-tree tests are evidence for the foundation, not a device qualification or a full mobile release.

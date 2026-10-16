@@ -43,6 +43,34 @@ func before_each() -> void:
 	_window = get_tree().root.size
 
 
+func test_mobile_page_keeps_navigation_in_iphone_and_ipad_safe_areas() -> void:
+	var original_canvas := get_tree().root.content_scale_size
+	var original_factor := get_tree().root.content_scale_factor
+	for points: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = points
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), points - Vector2(94, 29))
+		get_tree().root.size = Vector2i(points)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var body := UiKit.screen_frame(layer, "Inventory")
+		for i in 30:
+			body.add_child(UiKit.button("Item %d" % i, func() -> void: pass))
+		await _frames(3)
+		var safe := MobileDevice.safe_rect()
+		for problem: String in LayoutCheck.problems(layer, safe):
+			fail("Mobile page at %s: %s" % [points, problem])
+		var back := layer.find_child("MobileBack", true, false) as Button
+		assert_true(back != null and back.size.y >= 44, "Back stays a finger-sized target")
+		assert_true(safe.encloses(back.get_global_rect()), "Back stays within the safe area")
+		layer.queue_free()
+		await _frames(1)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = original_canvas
+	get_tree().root.content_scale_factor = original_factor
+
+
 func after_each() -> void:
 	(Compendium.shared().tables["locations"] as Dictionary).erase(str(ARENA["id"]))
 	for i in KNOWN.size():
@@ -1283,3 +1311,115 @@ func test_the_tutorial_coach() -> void:
 						root = null)
 	GameSettings.set_ui_scale(previous_ui)
 	GameSettings.set_text_scale(previous_text)
+
+
+func test_mobile_inventory_sections_and_item_details_fit_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var state := StoryState.new()
+	for id: String in ["godrick_pendlebrook", "thistle", "liriel_dawnsong", "ratatoille"]:
+		state.party.append(Pregens.build(id, 5))
+	state.party[0].add_item("potion_of_healing", 4)
+	for size_: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var inventory := InventoryScreen.new()
+		add_child(inventory)
+		inventory.open(self, state, 0)
+		for section: String in ["Bag", "Equipment", "Stash", "Filters", "Party", "Details"]:
+			inventory.mobile.section = section if section in ["Bag", "Equipment", "Stash"] else "Bag"
+			inventory.mobile.filters_open = section == "Filters"
+			inventory.mobile.party_open = section == "Party"
+			inventory.mobile.detail = section == "Details"
+			inventory.selected = "potion_of_healing" if section == "Details" else ""
+			inventory._draw()
+			await _frames(8)
+			var issues := LayoutCheck.problems(inventory, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, section, "\n".join(issues)])
+			assert_eq(inventory.mobile.page.scroll.horizontal_scroll_mode, ScrollContainer.SCROLL_MODE_DISABLED)
+		inventory.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_action_browser_and_review_fit_phone_and_tablet() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var catalog := ActionCatalog.new(encounter)
+	for size_: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var actions := MobileActions.new()
+		add_child(actions)
+		actions.open(catalog, actor)
+		await _frames(8)
+		assert_true(LayoutCheck.problems(actions, MobileDevice.safe_rect()).is_empty(), "%s action browser" % size_)
+		for action in catalog.actions_for(actor):
+			actions.inspect(action)
+			await _frames(4)
+			var issues := LayoutCheck.problems(actions, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, action["id"], "\n".join(issues)])
+		actions.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_largest_text_and_interface_keep_navigation_and_details_reachable() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_ui := GameSettings.ui_scale()
+	var old_text := GameSettings.text_scale()
+	MobileDevice.test_size = Vector2(667, 375)
+	MobileDevice.test_safe = Rect2(47, 8, 573, 346)
+	get_tree().root.size = Vector2i(MobileDevice.test_size)
+	GameSettings.set_ui_scale(GameSettings.UI_SCALES.back())
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	MobileDevice.current.configure()
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 5))
+	state.party[0].add_item("potion_of_healing", 4)
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	inventory.open(self, state, 0)
+	for section: String in ["Bag", "Equipment", "Details"]:
+		inventory.mobile.section = section if section != "Details" else "Bag"
+		inventory.mobile.detail = section == "Details"
+		inventory.selected = "potion_of_healing" if section == "Details" else ""
+		inventory._draw()
+		await _frames(8)
+		var issues := LayoutCheck.problems(inventory, MobileDevice.safe_rect())
+		assert_true(issues.is_empty(), "largest sizes %s: %s" % [section, "\n".join(issues)])
+	inventory.queue_free()
+	await _frames(2)
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.foe(encounter, "zombie", Vector2i(6, 2))
+	TestCombat.start_with(encounter, actor)
+	var actions := MobileActions.new()
+	add_child(actions)
+	actions.open(ActionCatalog.new(encounter), actor)
+	await _frames(8)
+	var issues := LayoutCheck.problems(actions, MobileDevice.safe_rect())
+	assert_true(issues.is_empty(), "largest sizes action browser: " + "\n".join(issues))
+	actions.queue_free()
+	await _frames(2)
+	GameSettings.set_ui_scale(old_ui)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

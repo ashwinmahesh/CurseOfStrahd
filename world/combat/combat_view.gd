@@ -117,6 +117,7 @@ var _thinker: Thread = null
 ## encounter (rolling Initiative) unless it's already running.
 func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: Dictionary, surprised: Array[String] = []) -> void:
 	name = "CombatView"
+	add_to_group(&"touch_world")
 	InputActions.ensure()   # the camera keys and the pad cursor, wherever the fight is shown from
 	e = encounter
 	board = board_
@@ -1236,7 +1237,42 @@ func _cycle_inspect() -> void:
 
 # --- Input ----------------------------------------------------------------------------------------
 
+func touch_ready() -> bool:
+	return not input_locked and e != null and mode in [Mode.IDLE, Mode.TARGET] \
+		and not hud.prompt_open() and not hud.confirm_open() and _command_allowed("input", {})
+
+
+## Touch first previews a square; the visible Confirm control commits it. No resource is spent by previewing.
+func touch_tap(at: Vector2, context: bool) -> void:
+	if not touch_ready():
+		return
+	using_pad = false
+	_pick_from_mouse(at)
+	_update_hover()
+	if context:
+		if mode == Mode.IDLE:
+			_open_square_menu(at)
+		else:
+			_examine_at(at)
+
+
+func touch_camera(update: Dictionary) -> void:
+	if touch_ready():
+		rig.touch_camera(update)
+
+
+func touch_command(command: String) -> void:
+	if not touch_ready():
+		return
+	match command:
+		"Cancel targeting": _cancel_targeting()
+		"Undo move": _undo_move()
+		"End turn": _end_turn()
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if event.has_meta(&"touch_gui"):
+		return
 	if input_locked:
 		return
 	if not _command_allowed("input", {"event": event}):

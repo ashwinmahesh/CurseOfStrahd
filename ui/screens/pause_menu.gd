@@ -82,7 +82,14 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_frame.offset_right = size.x / 2.0
 	_frame.offset_top = -size.y / 2.0 - 8.0
 	_frame.offset_bottom = size.y / 2.0 - 8.0
-	add_child(_frame)
+	if MobileDevice.enabled():
+		var body := MobilePage.build(self, "Menu")
+		_frame.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_frame.custom_minimum_size = size + Vector2(0, 28)
+		_frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		body.add_child(_frame)
+	else:
+		add_child(_frame)
 	# The arch is this screen's frame: closing, it sinks away like a framed screen's panel (UiMotion.dismiss).
 	set_meta(&"frame_panel", _frame)
 	var art := UiParts.drawn(size, _paint_frame)

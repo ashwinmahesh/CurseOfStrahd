@@ -38,6 +38,7 @@ var notices := ItemNotices.new()     ## items the party comes by outside loot an
 
 
 func _ready() -> void:
+	add_to_group(&"touch_world")
 	InputActions.ensure()
 	UiScale.playing(self)   # the interface takes the player's size (Settings, Interface) while a game is on screen
 	Cursors.install()
@@ -229,6 +230,8 @@ var _fallen := false
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.has_meta(&"touch_gui"):
+		return
 	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null:
 		return
 	if screen != null:
@@ -310,6 +313,28 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed(StringName("select_member_%d" % (i + 1))):
 			view.set_leader(i)
 			_refresh()
+
+
+func touch_ready() -> bool:
+	return not moving and view != null and not view.in_combat and dialogue == null and screen == null \
+		and loot == null and ending == null and guidance == null and not view.input_locked
+
+
+func touch_tap(at: Vector2, context: bool) -> void:
+	if not touch_ready():
+		return
+	var cell := view.pick_cell(view.rig.camera, at)
+	if cell.x < 0:
+		return
+	if context:
+		open_world_menu(cell, at)
+	else:
+		view.click(cell)
+
+
+func touch_camera(update: Dictionary) -> void:
+	if touch_ready():
+		view.rig.touch_camera(update)
 
 
 func _process(delta: float) -> void:

@@ -4,6 +4,14 @@ Status: proposed implementation specification, 2026-10-16. Applies to the ongoin
 
 The iOS game will expose the complete campaign and Skirmish through an interface designed for fingers, small displays, and interrupted sessions. iPhone and iPad layouts must be designed together. Every screen receives a mobile review, including secondary dialogs and error states. Enlarging the desktop canvas or placing it inside a scroll view is insufficient.
 
+## Implementation progress
+
+The first UI batch implements safe-area pages with persistent navigation, gesture ownership and cancellation, visible world controls, a mobile inventory composition, and a combat action browser. The inventory keeps a list with larger rows, separate equipment/stash views, phone detail navigation, and independently scrolling tablet panes. The action browser provides categories, search, readable details, variant and casting-level selection, explicit commitment, and a fresh legality check. Desktop builders remain selected on computers.
+
+Verification includes raw-touch integration tests, compact/regular layout tests, the largest existing text/interface settings, desktop inventory/controller regressions, and offscreen phone/tablet previews. These previews run on macOS; they are not native simulator or physical-device qualification.
+
+Stages 1–3 remain in progress. The battlefield HUD, reaction dialogs, advanced targeting and action variants, remaining screens, native keyboard/files, accessibility integration, inventory performance, and lifecycle recovery still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
+
 ## Desktop remains unchanged
 
 This is a release requirement, not a preference:

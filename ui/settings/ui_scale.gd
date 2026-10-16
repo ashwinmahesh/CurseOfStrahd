@@ -36,6 +36,8 @@ static func _hold(list: Array[Node], node: Node) -> void:
 
 ## The interface's scale right now.
 static func factor() -> float:
+	if MobileDevice.enabled():
+		return maxf(1.0, GameSettings.ui_scale())
 	return GameSettings.ui_scale() if not _playing.is_empty() and _full.is_empty() else 1.0
 
 
