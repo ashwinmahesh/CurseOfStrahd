@@ -48,6 +48,46 @@ var _time := 0.0
 var _at := ""
 ## Places where someone the tracked quest needs talking to is (QuestGuide.targets): place id -> [their names].
 var talk_places: Dictionary = {}
+var _mobile_body: VBoxContainer
+var _mobile_places: VBoxContainer
+var _mobile_tabs: ScrollContainer
+var _departed := false
+
+
+## A UI-owned surface has its own contacts. Pinching it cannot move the world camera or activate a place.
+class TouchMap extends Control:
+	var gestures := TouchGesture.new()
+	var screen: TravelScreen
+
+	func touch_surface_press(index: int, at: Vector2) -> void:
+		gestures.press(index, at, "world", Time.get_ticks_msec())
+
+	func touch_surface_drag(index: int, at: Vector2) -> void:
+		var update := gestures.move(index, at)
+		if update.is_empty():
+			return
+		var transform := get_global_transform_with_canvas().affine_inverse()
+		var delta := update.get("delta", Vector2.ZERO) as Vector2
+		screen.pan += transform.basis_xform(delta)
+		if str(update.get("kind", "")) == "camera":
+			var centre := Vector2.ZERO
+			for contact: Dictionary in gestures.contacts.values():
+				centre += contact["at"] as Vector2
+			centre /= gestures.contacts.size()
+			screen.zoom_at(transform * centre, float(update["scale"]))
+		screen._clamp()
+		screen._redraw()
+
+	func touch_surface_release(index: int, at: Vector2, canceled: bool) -> void:
+		var update := gestures.release(index, at, Time.get_ticks_msec(), canceled)
+		if update.is_empty():
+			return
+		var id := screen._place_at(get_global_transform_with_canvas().affine_inverse() * at)
+		if id != "":
+			screen.select(id)
+
+	func touch_surface_cancel() -> void:
+		gestures.cancel()
 
 
 func _init() -> void:
@@ -60,8 +100,11 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	here = from_place
 	setting_out = can_travel
 	_at = here if here != "" else _place_of_region(st.location)
-	var frame := UiKit.screen_frame(self, "Barovia", Vector2(1540, 840))
-	var row := HBoxContainer.new()
+	var frame := MobilePage.build(self, "Barovia", _mobile_close) if MobileDevice.enabled() else UiKit.screen_frame(self, "Barovia", Vector2(1540, 840))
+	_mobile_body = frame if MobileDevice.enabled() else null
+	var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
+	if MobileDevice.enabled():
+		(frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	row.add_theme_constant_override("separation", 16)
 	frame.add_child(row)
 	# The map sits in a gilt rule with the wrought-iron corners laid over it.
@@ -70,7 +113,9 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	hs.set_content_margin_all(2)
 	holder.add_theme_stylebox_override("panel", hs)
 	row.add_child(holder)
-	_map = Control.new()
+	_map = TouchMap.new() if MobileDevice.enabled() else Control.new()
+	if _map is TouchMap:
+		(_map as TouchMap).screen = self
 	_map.name = "Map"
 	_map.custom_minimum_size = MAP_SIZE
 	_map.clip_contents = true
@@ -84,7 +129,22 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	_map.set_meta(&"pad_target", true)
 	_map.set_meta(&"pad_first", true)
 	_map.set_meta(&"pad_accept", _pad_pick)
-	holder.add_child(_map)
+	if MobileDevice.enabled():
+		var wrapper := Control.new()
+		wrapper.custom_minimum_size.y = clampf(MobileDevice.safe_rect().size.y * 0.6, 180, 480)
+		holder.add_child(wrapper)
+		wrapper.add_child(_map)
+		_map.size = MAP_SIZE
+		wrapper.resized.connect(func() -> void:
+			var factor := minf(wrapper.size.x / MAP_SIZE.x, wrapper.size.y / MAP_SIZE.y)
+			_map.scale = Vector2.ONE * maxf(factor, 0.01)
+			_map.position = (wrapper.size - MAP_SIZE * factor) / 2.0)
+		var page := frame.get_parent().get_parent().get_parent() as MobilePage
+		_mobile_tabs = MobileUi.tabs(["Map", "Places", "Route"], "Map", func(value: String) -> void:
+			_mobile_jump(wrapper if value == "Map" else (_mobile_places if value == "Places" else _info)))
+		page.toolbar.add_child(_mobile_tabs)
+	else:
+		holder.add_child(_map)
 	_fog = ColorRect.new()
 	_fog.name = "Fog"
 	_fog.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -107,9 +167,13 @@ func open_map(state: StoryState, from_place: String, can_travel: bool) -> void:
 	holder.add_child(corners)
 	UiKit.trim(corners, 60.0)
 	_info = VBoxContainer.new()
-	_info.custom_minimum_size = Vector2(296, 0)
+	_info.custom_minimum_size = Vector2.ZERO if MobileDevice.enabled() else Vector2(296, 0)
 	_info.add_theme_constant_override("separation", 8)
+	if MobileDevice.enabled():
+		_mobile_controls(row)
 	row.add_child(_info)
+	if MobileDevice.enabled():
+		_mobile_destinations(row)
 	_frame_known()
 	_find_talk_places()
 	_build_reveal()
@@ -191,7 +255,7 @@ func zoom_at(at: Vector2, factor: float) -> void:
 
 func _place_at(at: Vector2) -> String:
 	var best := ""
-	var best_d := 26.0
+	var best_d := 26.0 / maxf(_map.scale.x, 0.1) if MobileDevice.enabled() else 26.0
 	for p in Travel.known(st):
 		var d := _pos(p).distance_to(at)
 		if d < best_d:
@@ -367,6 +431,8 @@ func _draw_map() -> void:
 		tags.append([pts[pts.size() / 2], "%s h" % _hours_text(float(road["hours"])), on_route])
 	var tag_boxes: Array[Rect2] = []
 	for t: Array in tags:
+		if MobileDevice.enabled():
+			continue
 		tag_boxes.append(_tag(t[0] as Vector2, str(t[1]), bool(t[2])))
 	# Marks first, then names placed clear of the marks and of each other; zoomed in, only the places in view.
 	var view := Rect2(Vector2.ZERO, MAP_SIZE).grow(-4.0)
@@ -378,7 +444,7 @@ func _draw_map() -> void:
 			_mark(at, id)
 	for id: String in places:
 		var at := _pos(places[id] as Dictionary)
-		if view.has_point(at):
+		if view.has_point(at) and (not MobileDevice.enabled() or id in [_at, _target]):
 			_place_name(font, at, str((places[id] as Dictionary)["name"]), id, taken)
 
 
@@ -409,6 +475,8 @@ func _mark(at: Vector2, id: String) -> void:
 ## mark, wherever it's clear. The chosen destination's name sits on a small crimson plaque.
 func _place_name(font: Font, at: Vector2, text: String, id: String, taken: Array[Rect2]) -> void:
 	var size := 21 if id == _at or id == _target else 19
+	if MobileDevice.enabled():
+		size = roundi(UiScale.text(18) / maxf(_map.scale.x, 0.1))
 	var inside := Rect2(Vector2(6, 6), MAP_SIZE - Vector2(12, 12))
 	var box := Rect2()
 	var least := INF
@@ -524,6 +592,9 @@ func select(place_id: String) -> void:
 		_clamp()
 	_redraw()
 	_show_info()
+	if _mobile_body != null:
+		MobileUi.select_tab(_mobile_tabs, "Route")
+		_mobile_jump.call_deferred(_info)
 
 
 func _process(delta: float) -> void:
@@ -642,14 +713,23 @@ func _show_info() -> void:
 				16, "gilt_light", 290))
 			if night:
 				_info.add_child(UiKit.label("After dark: the roads are worse at night.", 14, "rose", 290))
+			var destination := _target
 			var go := UiKit.button("Set out", func() -> void:
-				travel_chosen.emit(_target)
-				queue_free(), 18, "map")
+				if MobileDevice.enabled():
+					_mobile_depart(destination)
+				else:
+					travel_chosen.emit(_target)
+					queue_free(), 18, "map")
 			go.name = "SetOut"
 			go.disabled = not setting_out
 			if not setting_out:
 				go.tooltip_text = "Set out from a road out of town."
 			_info.add_child(go)
+	if MobileDevice.enabled():
+		if not setting_out:
+			_info.add_child(MobileUi.text("To travel, open the map from a road out of town."))
+		MobileUi.fit(_info)
+		return
 	var spacer := Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_info.add_child(spacer)
@@ -714,3 +794,70 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		closed.emit()
 		queue_free()
+
+
+func _mobile_controls(row: BoxContainer) -> void:
+	row.add_child(MobileUi.text("Drag the map to pan. Pinch to zoom. Tap a place or choose it from Places to review its route."))
+	var zooms := HBoxContainer.new()
+	zooms.add_child(MobileUi.button("Zoom out", func() -> void: zoom_at(MAP_SIZE / 2.0, 1.0 / 1.25)))
+	zooms.add_child(MobileUi.button("Zoom in", func() -> void: zoom_at(MAP_SIZE / 2.0, 1.25)))
+	zooms.add_child(MobileUi.button("Recenter", func() -> void:
+		_frame_known()
+		_redraw()))
+	row.add_child(zooms)
+	var directions := HBoxContainer.new()
+	for direction: String in ["West", "North", "South", "East"]:
+		var offset: Vector2 = {"West": Vector2(-180, 0), "North": Vector2(0, -180), "South": Vector2(0, 180), "East": Vector2(180, 0)}[direction]
+		directions.add_child(MobileUi.button(direction, func() -> void: pad_scroll(offset)))
+	row.add_child(directions)
+
+
+func _mobile_destinations(row: BoxContainer) -> void:
+	_mobile_places = VBoxContainer.new()
+	_mobile_places.add_child(MobileUi.text("Known places", "gilt_light"))
+	row.add_child(_mobile_places)
+	var search := LineEdit.new()
+	search.placeholder_text = "Search destinations"
+	search.custom_minimum_size.y = 48
+	_mobile_places.add_child(search)
+	var list := VBoxContainer.new()
+	_mobile_places.add_child(list)
+	var fill := func(value: String) -> void:
+		MobileUi.clear(list)
+		for place in Travel.known(st):
+			var id := str(place["id"])
+			var title := str(place["name"])
+			if not title.to_lower().contains(value.to_lower()):
+				continue
+			list.add_child(MobileUi.button(title + (" · You are here" if id == _at else ""), func() -> void: select(id)))
+			if talk_places.has(id):
+				list.add_child(MobileUi.text("Tracked quest: talk to " + " or ".join(talk_places[id] as Array), "bile"))
+		if list.get_child_count() == 0:
+			list.add_child(MobileUi.text("No known destinations match."))
+	search.text_changed.connect(fill)
+	_find_talk_places()
+	fill.call("")
+
+
+func _mobile_depart(destination: String) -> void:
+	if _departed or not setting_out or destination != _target or _at == "" or Travel.route(_at, destination, st).is_empty():
+		return
+	_departed = true
+	hide()
+	UiFeel.touch.cancel()
+	travel_chosen.emit(destination)
+	queue_free()
+
+
+func _mobile_close() -> void:
+	if _departed:
+		return
+	_departed = true
+	hide()
+	UiFeel.touch.cancel()
+	closed.emit()
+	queue_free()
+
+
+func _mobile_jump(control: Control) -> void:
+	(_mobile_body.get_parent() as ScrollContainer).scroll_vertical = roundi(control.global_position.y - _mobile_body.global_position.y)

@@ -32,6 +32,9 @@ var _frame: VBoxContainer
 ## The quest page's parts that redraw as the search changes, so the search box keeps its focus and caret.
 var _quest_tabs: HBoxContainer
 var _quest_body: HBoxContainer
+var _mobile_content: VBoxContainer
+var _mobile_reading := ""
+var _mobile_scroll := 0
 
 
 func _init() -> void:
@@ -42,11 +45,16 @@ func _init() -> void:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
-	_frame = UiKit.screen_frame(self, "Journal", Vector2(1200, 780))
+	_frame = MobilePage.build(self, "Journal", _mobile_back) if MobileDevice.enabled() else UiKit.screen_frame(self, "Journal", Vector2(1200, 780))
+	if MobileDevice.enabled():
+		(_frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_draw()
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_mobile_build()
+		return
 	while _frame.get_child_count() > 0:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
@@ -73,8 +81,10 @@ func _draw() -> void:
 func _turn_to(t: String) -> void:
 	var forward := TABS.find(t) > TABS.find(tab)
 	tab = t
+	_mobile_reading = ""
 	_draw()
-	UiMotion.turn_page(_frame.get_child(1) as Control, forward)
+	if not MobileDevice.enabled():
+		UiMotion.turn_page(_frame.get_child(1) as Control, forward)
 
 
 ## LB/RB: the journal's pages (its own, so the Main and Other tabs under them don't take the shoulders).
@@ -136,6 +146,7 @@ func _pick_quest_tab(t: String) -> void:
 		return
 	quest_tab = t
 	picked = ""
+	_mobile_reading = ""
 	_fill_quests()
 
 
@@ -192,6 +203,9 @@ func _shown(all: Array[Dictionary], t: String) -> Array[Dictionary]:
 
 
 func _fill_quests() -> void:
+	if MobileDevice.enabled():
+		_mobile_fill()
+		return
 	for holder: Control in [_quest_tabs, _quest_body]:
 		for c in holder.get_children():
 			holder.remove_child(c)
@@ -409,3 +423,83 @@ static func _codex_entry(id: String) -> Dictionary:
 	if item.has("codex"):
 		return (item["codex"] as Dictionary).duplicate()
 	return {"title": id.replace("_", " ").capitalize(), "text": ""}
+
+
+func _mobile_build() -> void:
+	MobileUi.clear(_frame)
+	_frame.add_child(MobileUi.tabs(TABS, tab, _turn_to))
+	var input := LineEdit.new()
+	input.placeholder_text = "Search " + tab.to_lower()
+	input.text = search
+	input.custom_minimum_size.y = 48
+	input.text_changed.connect(func(value: String) -> void:
+		search = value
+		_mobile_reading = ""
+		_mobile_fill())
+	_frame.add_child(input)
+	_mobile_content = VBoxContainer.new()
+	_mobile_content.add_theme_constant_override("separation", 10)
+	_frame.add_child(_mobile_content)
+	_mobile_fill()
+
+
+func _mobile_fill() -> void:
+	MobileUi.clear(_mobile_content)
+	if _mobile_reading != "":
+		_mobile_content.add_child(MobileUi.button("Back to " + tab.to_lower(), _mobile_back))
+		match tab:
+			"Quests":
+				for quest in QuestLog.journal(st):
+					if str(quest["id"]) == _mobile_reading:
+						_mobile_content.add_child(_quest_card(quest))
+			"Codex":
+				var entry := _codex_entry(_mobile_reading)
+				_mobile_content.add_child(MobileUi.text(str(entry["title"]), "gilt_light"))
+				_mobile_content.add_child(TermText.make(str(entry["text"]), UiScale.text(18)))
+			"Bestiary": _mobile_content.add_child(BestiaryPage.entry(st, _mobile_reading))
+		MobileUi.fit(_mobile_content)
+		return
+	match tab:
+		"Quests":
+			if quest_tab == "":
+				quest_tab = _opening_tab()
+			_mobile_content.add_child(MobileUi.tabs(QUEST_TABS, quest_tab, _pick_quest_tab))
+			var quests := _shown(QuestLog.journal(st), quest_tab)
+			for quest in quests:
+				var id := str(quest["id"])
+				_mobile_content.add_child(MobileUi.button(str(quest["name"]) + (" · tracked" if bool(quest["tracked"]) else ""), func() -> void: _mobile_read(id)))
+				_mobile_content.add_child(MobileUi.text(str(quest["status"]).capitalize() + " · " + str(quest["summary"])))
+			if quests.is_empty():
+				_mobile_content.add_child(MobileUi.text("No quests match this view."))
+		"Codex":
+			for id in st.codex:
+				var entry := _codex_entry(id)
+				if search != "" and not (str(entry["title"]) + " " + str(entry["text"])).to_lower().contains(search.to_lower()):
+					continue
+				_mobile_content.add_child(MobileUi.button(str(entry["title"]), func() -> void: _mobile_read(id)))
+			if _mobile_content.get_child_count() == 0:
+				_mobile_content.add_child(MobileUi.text("No books or notes match this view."))
+		"Bestiary":
+			for id in Bestiary.met(st):
+				var label := str(Compendium.shared().monster_data(id).get("name", id))
+				if search != "" and not label.to_lower().contains(search.to_lower()):
+					continue
+				_mobile_content.add_child(MobileUi.button(label, func() -> void: _mobile_read(id)))
+			if _mobile_content.get_child_count() == 0:
+				_mobile_content.add_child(MobileUi.text("No known creatures match this view."))
+
+
+func _mobile_read(id: String) -> void:
+	_mobile_scroll = (_frame.get_parent() as ScrollContainer).scroll_vertical
+	_mobile_reading = id
+	_mobile_fill()
+	(_frame.get_parent() as ScrollContainer).scroll_vertical = 0
+
+
+func _mobile_back() -> void:
+	if _mobile_reading == "":
+		root.call("close_screen")
+		return
+	_mobile_reading = ""
+	_mobile_fill()
+	(_frame.get_parent() as ScrollContainer).set_deferred("scroll_vertical", _mobile_scroll)

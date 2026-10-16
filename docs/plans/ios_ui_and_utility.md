@@ -14,6 +14,8 @@ The second UI batch adds a separate mobile battlefield HUD, reaction and confirm
 
 The native utility batch adds UIKit Files/share integration, semantic accessibility elements with current-surface validation, keyboard avoidance, mobile save review, atomic autosave rotation, optional haptics, interruption pause/resume and proactive exploration checkpoints. Native utility XCTest cancellation and Files round-trip journeys run in a dedicated fixture; these are distinct from full-game journeys.
 
+The next screen batch adds mobile loot, service purchase review, searchable choice inspection, spell preparation, party and roster sections, wait controls, journal list-to-detail navigation, and travel pan/pinch with a searchable destination list and explicit departure. Large-text layout checks include middle/end scroll positions; raw-touch tests cover map ownership and preview/commit, stale choices, and exactly-once purchases. `make check` passes 81 focused tests, including desktop layouts. Phone/tablet captures cover these pages.
+
 Stages 1–4 remain in progress. Full-game simulator qualification, remaining screens, physical accessibility validation, inventory performance, and committed-action combat recovery still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
 
 ## Desktop remains unchanged

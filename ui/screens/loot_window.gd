@@ -14,6 +14,8 @@ var items: Array = []
 var gold := 0.0
 var _list: VBoxContainer
 var _to: OptionButton
+var _mobile_detail: CanvasLayer
+var _closed := false
 
 
 func _init() -> void:
@@ -27,6 +29,9 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 	items = its
 	gold = g
 	view = v
+	if MobileDevice.enabled():
+		_mobile_build()
+		return
 	# As tall as what's inside (owner, docs/plans/ui_polish.md: a purse of coins sat in a frame built for twenty
 	# items), from a small box for a few things up to the old size for a full chest.
 	var lines := its.size() + (1 if g > 0.0 else 0)
@@ -62,6 +67,9 @@ func show_loot(state: StoryState, cid: String, its: Array, g: float, v: Location
 
 
 func _redraw() -> void:
+	if MobileDevice.enabled():
+		_mobile_rows()
+		return
 	for c in _list.get_children():
 		c.queue_free()
 	if gold > 0.0:
@@ -190,6 +198,12 @@ func _take_gold() -> void:
 
 
 func _close() -> void:
+	if MobileDevice.enabled():
+		if _closed:
+			return
+		_closed = true
+		hide()
+		UiFeel.touch.cancel()
 	if items.is_empty() and gold <= 0.0 and view != null:
 		view.mark_looted(container_id)
 	else:
@@ -216,3 +230,67 @@ func _unhandled_input(event: InputEvent) -> void:
 			and (event as InputEventKey).physical_keycode == KEY_SPACE:
 		get_viewport().set_input_as_handled()
 		_take_all()
+
+
+func _mobile_build() -> void:
+	var body := MobilePage.build(self, "Loot", _close)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(MobileUi.text("Give items to"))
+	_to = OptionButton.new()
+	for ch in st.party:
+		_to.add_item(ch.name)
+	MobileUi.fit(_to)
+	body.add_child(_to)
+	_list = VBoxContainer.new()
+	_list.add_theme_constant_override("separation", 12)
+	body.add_child(_list)
+	body.add_child(MobileUi.button("Take all", _take_all))
+	body.add_child(MobileUi.button("Distribute to the party", _send_all))
+	body.add_child(MobileUi.button("Send all to stash", stash_all))
+	_redraw()
+
+
+func _mobile_rows() -> void:
+	MobileUi.clear(_list)
+	if gold > 0:
+		_list.add_child(MobileUi.button("Take %d gold for the party" % int(gold), take_coins))
+	if items.is_empty() and gold <= 0:
+		_list.add_child(MobileUi.text("Empty."))
+	for i in items.size():
+		var item := items[i] as Dictionary
+		var data := MagicItems.shown_data(Compendium.shared().item_data(str(item["id"])), item)
+		var card := VBoxContainer.new()
+		card.add_child(MobileUi.text("%s ×%d" % [data.get("name", item["id"]), int(item.get("qty", 1))], "gilt_light"))
+		card.add_child(MobileUi.text("%s lb · %s gp each" % [data.get("weight_lb", 0), data.get("cost_gp", 0)]))
+		var row := HBoxContainer.new()
+		row.add_child(MobileUi.button("Inspect", func() -> void: _mobile_inspect(data)))
+		row.add_child(MobileUi.button("Take one", func() -> void:
+			if i < items.size() and items[i] == item:
+				_take(i, 1)))
+		var stash := MobileUi.button("Stash", func() -> void:
+			if i < items.size() and items[i] == item:
+				_stash(i))
+		stash.disabled = InventoryScreen.is_quest(data)
+		row.add_child(stash)
+		card.add_child(row)
+		_list.add_child(card)
+
+
+func _mobile_inspect(data: Dictionary) -> void:
+	_mobile_close_detail()
+	_mobile_detail = CanvasLayer.new()
+	_mobile_detail.layer = layer + 1
+	add_child(_mobile_detail)
+	var body := MobilePage.build(_mobile_detail, str(data.get("name", "Item")), _mobile_close_detail)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(MobileUi.text(str(data.get("text", data.get("summary", "")))))
+	if InventoryScreen.is_quest(data):
+		body.add_child(MobileUi.text("Quest item: keep this with a party member."))
+
+
+func _mobile_close_detail() -> void:
+	if is_instance_valid(_mobile_detail):
+		_mobile_detail.hide()
+		_mobile_detail.queue_free()
+	_mobile_detail = null
+	UiFeel.touch.cancel()

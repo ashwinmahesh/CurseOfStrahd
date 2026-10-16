@@ -1652,3 +1652,124 @@ func test_mobile_interruption_page_fits_phone_and_tablet() -> void:
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_loot_services_preparation_party_roster_and_wait_fit() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	GameSettings.set_text_scale(GameSettings.TEXT_SCALES.back())
+	var state := StoryState.from_dict(AtomicJson.read("res://tests/saves/" + LATE)["story"] as Dictionary)
+	state.party[0].hp = 1
+	for quest: Dictionary in Compendium.shared().all("quests"):
+		state.set_quest_stage(str(quest["id"]), str((quest["stages"][0] as Dictionary)["id"]))
+	state.codex.append("tome_of_strahd")
+	Bestiary.learn(state, "zombie")
+	for size_: Vector2 in [Vector2(667, 375), Vector2(1194, 834), Vector2(600, 900)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var loot := LootWindow.new()
+		add_child(loot)
+		loot.show_loot(state, "mobile_test", [{"id": "potion_of_healing", "qty": 3}, {"id": "longsword", "qty": 2}], 300, null)
+		await _mobile_check(loot, "loot")
+		loot._mobile_inspect(Compendium.shared().item_data("potion_of_healing"))
+		await _mobile_check(loot._mobile_detail, "loot details")
+		loot.queue_free()
+		await _frames(2)
+		var service := ServicesScreen.new()
+		add_child(service)
+		service.open_for(self, state, "father_lucian")
+		await _mobile_check(service, "services")
+		service._mobile_confirm(Services.offered(state, "father_lucian")[0])
+		await _mobile_check(service._mobile_review, "service review")
+		service.queue_free()
+		await _frames(2)
+		var prepare := PrepareScreen.new()
+		add_child(prepare)
+		prepare.open(self, state, 0)
+		await _mobile_check(prepare, "preparation")
+		var choices := prepare.find_children("*", "ChoiceWidget", true, false)
+		for widget: ChoiceWidget in choices:
+			if widget.choice.kind != "ability_increase" and not widget.choice.options.is_empty():
+				widget._mobile_inspect(widget.choice.options[0].id)
+				await _mobile_check(widget._mobile_sheet, "choice inspection")
+				widget._mobile_close()
+				break
+		prepare.queue_free()
+		await _frames(2)
+		var party := PartyScreen.new()
+		add_child(party)
+		party.open(self, state, 0)
+		for section: String in ["Heroes", "Marching order", "Skills", "Companions"]:
+			party.mobile_section = section
+			party._draw()
+			await _mobile_check(party, "party " + section)
+		party.queue_free()
+		await _frames(2)
+		var roster := RosterScreen.new()
+		add_child(roster)
+		roster.open(self, state, 0)
+		await _mobile_check(roster, "roster")
+		roster.queue_free()
+		await _frames(2)
+		var wait := WaitScreen.new()
+		add_child(wait)
+		wait.build(self, state, "")
+		wait.set_hours(24)
+		await _mobile_check(wait, "wait")
+		wait.queue_free()
+		await _frames(2)
+		var journal := JournalScreen.new()
+		add_child(journal)
+		journal.open(self, state, 0)
+		for tab_: String in JournalScreen.TABS:
+			journal._turn_to(tab_)
+			await _mobile_check(journal, "journal " + tab_)
+			if tab_ == "Quests":
+				for quest in QuestLog.journal(state):
+					journal._mobile_read(str(quest["id"]))
+					await _mobile_check(journal, "quest reading")
+					break
+			elif tab_ == "Codex" and not state.codex.is_empty():
+				journal._mobile_read(state.codex[0])
+				await _mobile_check(journal, "codex reading")
+			elif tab_ == "Bestiary" and not Bestiary.met(state).is_empty():
+				journal._mobile_read(Bestiary.met(state)[0])
+				await _mobile_check(journal, "bestiary reading")
+		journal.queue_free()
+		await _frames(2)
+		var travel := TravelScreen.new()
+		add_child(travel)
+		state.visited["village_of_barovia"] = true
+		travel.open_map(state, "village_of_barovia", true)
+		await _mobile_check(travel, "travel map and destinations")
+		for place in Travel.known(state):
+			if not Travel.route("village_of_barovia", str(place["id"]), state).is_empty():
+				travel.select(str(place["id"]))
+				await _mobile_check(travel, "travel route review")
+				break
+		travel.queue_free()
+		await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor
+
+
+func _mobile_check(node: Node, title: String) -> void:
+	await _frames(8)
+	var issues := LayoutCheck.problems(node, MobileDevice.safe_rect())
+	for scroll: ScrollContainer in node.find_children("*", "ScrollContainer", true, false):
+		if scroll.vertical_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED:
+			continue
+		var previous := scroll.scroll_vertical
+		var maximum := scroll.get_v_scroll_bar().max_value - scroll.get_v_scroll_bar().page
+		for fraction: float in [0.5, 1.0]:
+			scroll.scroll_vertical = roundi(maximum * fraction)
+			await _frames(3)
+			issues.append_array(LayoutCheck.problems(node, MobileDevice.safe_rect()))
+		scroll.scroll_vertical = previous
+	assert_true(issues.is_empty(), "%s %s: %s" % [MobileDevice.test_size, title, "\n".join(issues)])

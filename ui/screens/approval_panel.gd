@@ -22,7 +22,7 @@ static func build(st: StoryState) -> Control:
 	box.add_theme_constant_override("separation", 8)
 	box.add_child(UiParts.section("How the company feels about you"))
 	var grid := GridContainer.new()
-	grid.columns = 3
+	grid.columns = 1 if MobileDevice.enabled() else 3
 	grid.add_theme_constant_override("h_separation", 12)
 	grid.add_theme_constant_override("v_separation", 12)
 	for ch in who:
@@ -65,7 +65,7 @@ static func _card(st: StoryState, ch: Character, travelling: bool) -> Control:
 	var mem := Approval.memories(st, ch.id)
 	if mem.is_empty():
 		col.add_child(UiKit.label("Nothing you've done has stayed with them yet.", 13, "bone", CARD_WIDTH - 30.0))
-	for m: Dictionary in mem.slice(0, SHOWN):
+	for m: Dictionary in mem.slice(0, mem.size() if MobileDevice.enabled() else SHOWN):
 		col.add_child(_memory(m))
 	var card := UiParts.card("ui_oxblood", "gilt_dark", 0.5, 10)
 	card.custom_minimum_size = Vector2(CARD_WIDTH, 0)

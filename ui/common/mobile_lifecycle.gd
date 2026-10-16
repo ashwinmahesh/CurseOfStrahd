@@ -40,6 +40,9 @@ func checkpoint() -> void:
 	var scene := get_tree().current_scene
 	if scene == null or scene.scene_file_path != "res://scenes/game.tscn" or ModeController.mode != ModeController.Mode.EXPLORATION:
 		return
+	# Screens can hold edits whose world counterpart commits on close (for example a loot container).
+	if PadNav.current != null and PadNav.current.scope_now() != null:
+		return
 	if GameState.story.party.is_empty() or GameState.story.location == "":
 		return
 	var key := hash(GameState.story.to_dict())

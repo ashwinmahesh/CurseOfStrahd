@@ -36,7 +36,9 @@ func build(root_: Node, state: StoryState, reason: String) -> void:
 	root = root_
 	st = state
 	blocked = reason
-	var box := UiKit.screen_frame(self, "Wait", Vector2(820, 360))
+	var box := MobilePage.build(self, "Wait", func() -> void: root.call("close_screen")) if MobileDevice.enabled() else UiKit.screen_frame(self, "Wait", Vector2(820, 360))
+	if MobileDevice.enabled():
+		(box.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	box.add_theme_constant_override("separation", 14)
 	var clear := Control.new()   # clear of the title's crest
 	clear.custom_minimum_size = Vector2(0, 16)
@@ -46,6 +48,8 @@ func build(root_: Node, state: StoryState, reason: String) -> void:
 	if blocked != "":
 		box.add_child(UiKit.label(blocked, 18, "gilt_light", 740))
 		box.add_child(_buttons(false))
+		if MobileDevice.enabled():
+			MobileUi.fit(box)
 		return
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -71,6 +75,8 @@ func build(root_: Node, state: StoryState, reason: String) -> void:
 	box.add_child(_until)
 	box.add_child(_buttons(true))
 	set_hours(hours)
+	if MobileDevice.enabled():
+		MobileUi.fit(box)
 
 
 ## Why the party can't wait now, or "": in a fight, a conversation or a cutscene, or with foes in sight.

@@ -318,3 +318,126 @@ func test_mobile_interruption_preserves_prior_pause_and_cancels_input() -> void:
 	VoiceOver.set_paused(false)
 	lifecycle.queue_free()
 	await _frames()
+
+
+func test_mobile_choice_inspection_rechecks_legality_and_commits_once() -> void:
+	var choice := Choice.new()
+	choice.key = "test.skill"
+	choice.kind = "skill"
+	choice.label = "Choose a skill"
+	choice.options = [ChoiceOption.make("athletics", "Athletics", "Climb and swim.")]
+	var body := MobilePage.build(root, "Choose", func() -> void: pass)
+	var widget := ChoiceWidget.create(choice)
+	body.add_child(widget)
+	var changes: Array = []
+	widget.picks_changed.connect(func(_key: String, picks: Array) -> void: changes.append(picks))
+	await _frames()
+	var button := widget._mobile_list.get_child(0) as Button
+	_touch(button.get_global_rect().get_center(), true)
+	await _frames()
+	_touch(button.get_global_rect().get_center(), false)
+	await _frames()
+	assert_true(is_instance_valid(widget._mobile_sheet))
+	assert_true(changes.is_empty(), "opening details cannot change a build")
+	var confirm: Button
+	for candidate: Button in widget._mobile_sheet.find_children("*", "Button", true, false):
+		if candidate.text == "Choose":
+			confirm = candidate
+	assert_true(confirm != null)
+	choice.options[0].legal = false
+	confirm.pressed.emit()
+	assert_true(changes.is_empty(), "a choice invalidated while inspected cannot commit")
+	choice.options[0].legal = true
+	confirm.pressed.emit()
+	confirm.pressed.emit()
+	assert_eq(changes.size(), 1, "a stale double activation cannot toggle the choice twice")
+	assert_eq(changes[0], ["athletics"])
+
+
+func test_mobile_service_review_cannot_spend_and_purchase_is_once() -> void:
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 5))
+	state.party[0].hp = 1
+	state.gold = 1000
+	var screen := ServicesScreen.new()
+	add_child(screen)
+	screen.open_for(self, state, "father_lucian")
+	var line := Services.offered(state, "father_lucian")[0]
+	var before := state.to_dict()
+	var rng := Dice.roller.get_state()
+	screen._mobile_confirm(line)
+	await _frames()
+	assert_eq(state.to_dict(), before, "reviewing does not heal or charge")
+	assert_eq(Dice.roller.get_state(), rng, "inspection never rolls")
+	var confirm: Button
+	for candidate: Button in screen._mobile_review.find_children("*", "Button", true, false):
+		if candidate.text.begins_with("Buy for"):
+			confirm = candidate
+	assert_true(confirm != null)
+	confirm.pressed.emit()
+	confirm.pressed.emit()
+	assert_eq(state.gold, 1000.0 - Services.cost(line))
+	assert_true(state.party[0].hp > 1)
+	screen.queue_free()
+	await _frames()
+
+
+func test_mobile_map_pan_pinch_and_route_review_never_travel_until_commit() -> void:
+	var state := StoryState.from_dict(AtomicJson.read("res://tests/saves/v2_amber_temple.json")["story"] as Dictionary)
+	var screen := TravelScreen.new()
+	add_child(screen)
+	state.visited["village_of_barovia"] = true
+	screen.open_map(state, "village_of_barovia", true)
+	var departures: Array[String] = []
+	screen.travel_chosen.connect(func(id: String) -> void: departures.append(id))
+	await _frames()
+	screen.zoom = 2.0
+	screen.pan = -TravelScreen.MAP_SIZE / 2.0
+	var before := state.to_dict()
+	var at := screen._map.get_global_rect().intersection(MobileDevice.safe_rect()).get_center()
+	var pan_before := screen.pan
+	_touch(at, true)
+	await _frames()
+	var drag := InputEventScreenDrag.new()
+	drag.position = at + Vector2(40, 0)
+	drag.relative = Vector2(40, 0)
+	get_tree().root.push_input(drag, true)
+	await _frames()
+	_touch(drag.position, false)
+	await _frames()
+	assert_true(screen.pan != pan_before, "a map-owned drag pans the map")
+	assert_eq(screen._target, "", "a drag cannot select a destination")
+	_touch(at - Vector2(30, 0), true)
+	await _frames()
+	var second := InputEventScreenTouch.new()
+	second.index = 1
+	second.position = at + Vector2(30, 0)
+	second.pressed = true
+	get_tree().root.push_input(second, true)
+	await _frames()
+	drag.index = 1
+	drag.position = at + Vector2(60, 0)
+	drag.relative = Vector2(30, 0)
+	get_tree().root.push_input(drag, true)
+	await _frames()
+	assert_true(screen.zoom > 2.0, "a two-finger map gesture zooms")
+	second.pressed = false
+	second.position = drag.position
+	get_tree().root.push_input(second, true)
+	_touch(at - Vector2(30, 0), false)
+	await _frames()
+	assert_eq(screen._target, "", "pinch release cannot choose a destination")
+	var destination := ""
+	for place in Travel.known(state):
+		if not Travel.route("village_of_barovia", str(place["id"]), state).is_empty():
+			destination = str(place["id"])
+			break
+	assert_true(destination != "")
+	screen.select(destination)
+	await _frames()
+	assert_true(departures.is_empty(), "route inspection cannot travel")
+	assert_eq(state.to_dict(), before)
+	screen._mobile_depart(destination)
+	screen._mobile_depart(destination)
+	assert_eq(departures, [destination], "only explicit confirmation departs, once")
+	await _frames()

@@ -39,9 +39,16 @@ func _press(index: int, at: Vector2, epoch: int) -> void:
 		PadNav.current._use_pad(false, -1)
 	_point(at)
 	var control := get_viewport().gui_get_hovered_control()
+	var surface: Node = control
+	while surface != null and not surface.has_method("touch_surface_press"):
+		surface = surface.get_parent()
+	if surface is Control:
+		control = surface as Control
 	owners[index] = weakref(control) if control != null else null
 	gestures.press(index, at, "ui" if control != null else "world", Time.get_ticks_msec())
-	if control is Slider:
+	if control != null and control.has_method("touch_surface_press"):
+		control.call("touch_surface_press", index, at)
+	elif control is Slider:
 		_button(at, MOUSE_BUTTON_LEFT, true)
 
 
@@ -50,6 +57,9 @@ func _drag(drag: InputEventScreenDrag, epoch: int) -> void:
 		return
 	var update := gestures.move(drag.index, drag.position)
 	var control := _owner(drag.index)
+	if control != null and control.has_method("touch_surface_drag"):
+		control.call("touch_surface_drag", drag.index, drag.position)
+		return
 	if control is Slider:
 		_point(drag.position, drag.relative, MOUSE_BUTTON_MASK_LEFT)
 		return
@@ -75,6 +85,9 @@ func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:
 	var control := _owner(index)
 	var update := gestures.release(index, at, Time.get_ticks_msec(), canceled)
 	owners.erase(index)
+	if control != null and control.has_method("touch_surface_release"):
+		control.call("touch_surface_release", index, at, canceled or not control.is_visible_in_tree())
+		return
 	if control is Slider:
 		_button(at, MOUSE_BUTTON_LEFT, false)
 		return
@@ -126,7 +139,10 @@ func world_target() -> Node:
 func cancel() -> void:
 	_epoch += 1
 	for index: int in owners:
-		if _owner(index) is Slider:
+		var control := _owner(index)
+		if control != null and control.has_method("touch_surface_cancel"):
+			control.call("touch_surface_cancel")
+		elif control is Slider:
 			_button(Vector2(-100, -100), MOUSE_BUTTON_LEFT, false)
 	owners.clear()
 	gestures.cancel()
