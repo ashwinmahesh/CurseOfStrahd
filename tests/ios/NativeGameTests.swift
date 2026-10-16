@@ -21,12 +21,12 @@ final class NativeGameTests: XCTestCase {
 
     @discardableResult
     func tap(_ label: String, scroll: Bool = true) -> XCUIElement {
-        let button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
-        for attempt in 0..<(scroll ? 32 : 1) {
-            // World rendering in the software simulator can delay the semantic page update by several
-            // frames. Fixed navigation waits for that transition; offscreen page items can still scroll.
-            let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == true AND hittable == true"), object: button)
-            if XCTWaiter.wait(for: [ready], timeout: scroll ? (attempt == 0 ? 10 : 1) : 60) == .completed {
+        var button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+        for _ in 0..<(scroll ? 32 : 30) {
+            // Resolve afresh after scrolling or a modal transition: UIKit's semantic elements move while
+            // Godot draws, and a retained XCTest element can keep its earlier clipped hit rectangle.
+            button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+            if button.waitForExistence(timeout: scroll ? 1 : 2) && button.isHittable {
                 XCTAssertTrue(button.isEnabled, app.debugDescription)
                 button.tap()
                 return button
