@@ -203,6 +203,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Night sky, fog and moonlight for a fight outdoors.
 static func build_environment(root: Node) -> void:
+	# Standalone arenas have no Atmosphere node to apply the native graphics budget.
+	if OS.has_feature("ios"):
+		Graphics.apply(root.get_viewport())
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.background_color = Look.color("night_deep")
@@ -220,7 +223,7 @@ static func build_environment(root: Node) -> void:
 	moon.name = "Moonlight"
 	moon.light_color = Look.color("moonlight")
 	moon.light_energy = 0.85
-	moon.shadow_enabled = true
+	moon.shadow_enabled = not Graphics.software_simulator()
 	moon.rotation_degrees = Vector3(-55, 35, 0)
 	root.add_child(moon)
 

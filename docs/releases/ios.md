@@ -257,7 +257,8 @@ turbulence is disabled to avoid a software OpenGL shader-compiler stall. Other p
 physical devices and desktop retain turbulence. The simulator also omits real-time shadows and draws the 3D
 world at half the logical-point resolution with bilinear upscaling; UI stays at logical resolution. It uses
 the existing simpler tree presentation instead of dense procedural flora, and omits bloom and the fullscreen
-atmospheric post-process pass. World surfaces use the existing simpler cel shader with the same geometry and
+atmospheric post-process pass. Standalone practice arenas apply this same iOS graphics budget even without a
+campaign Atmosphere node. World surfaces use the existing simpler cel shader with the same geometry and
 textures, avoiding the software driver's costly layered relief/weather fragment shader. Simulator character art
 uses one texture sample without the device shader's supersampling, ink rim or scene lighting; billboarding,
 motion, atlas frames and ghost tint remain. A native GLES probe reports a 4096-pixel texture limit. Oversized simulator sprite

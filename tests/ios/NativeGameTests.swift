@@ -22,8 +22,8 @@ final class NativeGameTests: XCTestCase {
     @discardableResult
     func tap(_ label: String, scroll: Bool = true) -> XCUIElement {
         let button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
-        for _ in 0..<(scroll ? 32 : 1) {
-            if button.waitForExistence(timeout: 1) && button.isHittable {
+        for attempt in 0..<(scroll ? 32 : 1) {
+            if button.waitForExistence(timeout: attempt == 0 ? 10 : 1) && button.isHittable {
                 XCTAssertTrue(button.isEnabled, app.debugDescription)
                 button.tap()
                 return button
@@ -138,10 +138,11 @@ final class NativeGameTests: XCTestCase {
         waitForWorld()
         capture("battlefield")
         tap("Actions", scroll: false)
+        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 15), app.debugDescription)
         capture("combat-actions")
-        XCTAssertTrue(app.buttons["Common"].exists, app.debugDescription)
         tap("Close", scroll: false)
-        XCTAssertFalse(app.buttons["Common"].exists, "Actions must not cover the battlefield after closing")
+        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.buttons["Common"])
+        XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 15), .completed, "Actions must not cover the battlefield after closing")
         tap("Actions", scroll: false)
         XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 10))
         tap("Close", scroll: false)
