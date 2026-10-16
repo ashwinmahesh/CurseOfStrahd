@@ -2492,9 +2492,9 @@
       "released": true
     },
     "helga_ruvak": {
-      "voice_id": "CFOQvtE86ct52CkSQQ2J",
+      "voice_id": "fgzAoeuDFvWiSceZwSmx",
       "name": "Barovia Helga",
-      "description": "Helga Ruvak, maid of the count's private floor and a vampire spawn: a meek, quick, polite woman's voice, eyes down, under the meekness a little too interested; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, voice B).",
+      "description": "Helga Ruvak, maid of the count's private floor and a vampire spawn: a soft, polite, servile woman's voice with a sinister, patient, predatory undertone; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, sinister voice F).",
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
@@ -2529,12 +2529,12 @@
     },
     "castle_courtier_3": {
       "settings": {},
-      "description": "Boyar Vintila Crainic: a pompous, aggrieved Barovian boyar waiting two hundred and six years to present a petition; comic and stiff. Library voice picked 2026-10-15 (an elderly aristocratic, theatrical voice).",
-      "voice_id": "tUVMjP56ZNYXlKLsRXbo",
-      "name": "Library voice: Monty - Theatrical Aristocratic Villain",
-      "library": true,
+      "description": "Boyar Vintila Crainic, a nobleman waiting two centuries in a vampire's court: a smooth, unctuous, sinister and conniving voice, a smile that schemes; a strong Eastern European (Romanian) accent. Designed 2026-10-16 (Ashwin's pick, voice A).",
+      "voice_id": "l6WsdsXXZCCtYDLeGLZM",
+      "name": "Barovia Crainic",
       "model": "eleven_v3",
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "castle_courtier_4": {
       "settings": {},
