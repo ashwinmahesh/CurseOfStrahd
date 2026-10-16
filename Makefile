@@ -39,7 +39,10 @@ play:
 ## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.
 ## Needs the 4.7.2 export templates installed. make release [OUT=<folder>] [VERSION=1.0.0]; OUT defaults to ../strahd-builds.
 RELEASE_OUT = $(abspath $(or $(OUT),../strahd-builds))
-.PHONY: release
+.PHONY: release ios-pipeline-test
+ios-pipeline-test:
+	python3 -m unittest discover -s tests/tools -p 'test_ios_*.py' -v
+
 release:
 	@$(FRESH)
 	mkdir -p "$(RELEASE_OUT)/windows" "$(RELEASE_OUT)/macos"
