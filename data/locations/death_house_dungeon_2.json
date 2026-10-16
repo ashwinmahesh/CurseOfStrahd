@@ -529,7 +529,8 @@
             16,
             15
           ],
-          "name": "Lorghoth the Decayer"
+          "name": "Lorghoth the Decayer",
+          "hp": 135
         }
       ],
       "text": "Lorghoth the Decayer wakes."
@@ -545,7 +546,8 @@
             12,
             19
           ],
-          "name": "Lorghoth the Decayer"
+          "name": "Lorghoth the Decayer",
+          "hp": 134
         }
       ],
       "text": "Lorghoth the Decayer wakes, slowly. You saw it coming."

@@ -186,7 +186,25 @@ const VOSKS_VAULT: Array[Vector2i] = [Vector2i(19, 21), Vector2i(19, 20), Vector
 ## The party on the snow ledge below the sentinel, and just inside the vault's honey door.
 const SENTINEL_LEDGE: Array[Vector2i] = [Vector2i(17, 15), Vector2i(18, 15), Vector2i(19, 15), Vector2i(18, 16)]
 const VAULT_DOOR: Array[Vector2i] = [Vector2i(19, 8), Vector2i(20, 8), Vector2i(21, 8), Vector2i(20, 7)]
+const LORGHOTHS_ALTAR: Array[Vector2i] = [Vector2i(25, 14), Vector2i(26, 13), Vector2i(26, 12), Vector2i(26, 11)]
+const LYSAGAS_MUD: Array[Vector2i] = [Vector2i(33, 21), Vector2i(34, 21), Vector2i(33, 22), Vector2i(34, 22)]
 const ROC_BRIDGE: Array[Vector2i] = [Vector2i(13, 18), Vector2i(12, 19), Vector2i(11, 20), Vector2i(10, 20)]
+
+
+## Lorghoth the Decayer wakes at the altar at level 2: Lorghoth, a Shambling Mound (135 HP); 3 in 8.
+func test_lorghoth_rises_at_level_2() -> void:
+	await _held("death_house_dungeon_2", 2, "lorghoth_rises", LORGHOTHS_ALTAR, 2, 4, ["death_house_portcullis_raised"])
+
+
+## Lorghoth wakes slowly, seen coming, at level 2: Lorghoth, a Shambling Mound (134 HP); 3 in 8.
+func test_lorghoth_rises_late_at_level_2() -> void:
+	await _held("death_house_dungeon_2", 2, "lorghoth_rises_late", LORGHOTHS_ALTAR, 2, 4, ["death_house_portcullis_raised"])
+
+
+## Baba Lysaga comes up out of the mud when Strahd has broken her hut, at level 9: Baba Lysaga (475 HP); 3 in 8.
+func test_lysaga_scorned_at_level_9() -> void:
+	cleared_fights.assign(["berez_scarecrows"])
+	await _held("berez", 9, "lysaga_scorned", LYSAGAS_MUD, 2, 4)
 
 
 ## Offalia in the bakery at level 6: Night Hag (285 HP), 5 Nightmares; 3 in 8.
