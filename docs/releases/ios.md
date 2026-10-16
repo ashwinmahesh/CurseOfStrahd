@@ -257,7 +257,8 @@ turbulence is disabled to avoid a software OpenGL shader-compiler stall. Other p
 physical devices and desktop retain turbulence. The simulator also omits real-time shadows and draws the 3D
 world at half the logical-point resolution with bilinear upscaling; UI stays at logical resolution. It uses
 the existing simpler tree presentation instead of dense procedural flora, and omits bloom and the fullscreen
-atmospheric post-process pass. A native GLES probe reports a 4096-pixel texture limit. Oversized simulator sprite
+atmospheric post-process pass. World surfaces use the existing simpler cel shader with the same geometry and
+textures, avoiding the software driver's costly layered relief/weather fragment shader. A native GLES probe reports a 4096-pixel texture limit. Oversized simulator sprite
 sheets are imported within that limit, then their pinned Godot GST2 v1 logical-size headers are restored to the
 source dimensions so existing animation atlas regions remain correct. `simulator-atlas-dimensions.json` records
 the adjustments; physical-device sprite textures retain their original resolution. These are simulator execution

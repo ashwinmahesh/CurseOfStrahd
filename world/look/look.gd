@@ -68,7 +68,7 @@ static func palette_size() -> int:
 ## own roughness and metal (COLOUR_MATERIALS).
 static func cel(albedo_name: String) -> ShaderMaterial:
 	var m := ShaderMaterial.new()
-	m.shader = LIT_SHADER if modern() else CEL_SHADER
+	m.shader = LIT_SHADER if modern() and not Graphics.software_simulator() else CEL_SHADER
 	m.set_shader_parameter("albedo", color(albedo_name))
 	if modern():
 		var spec := COLOUR_MATERIALS.get(albedo_name, {}) as Dictionary
@@ -169,7 +169,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	if modern() and info.has("hd_file") and ResourceLoader.exists("res://" + str(info["hd_file"])):
 		path = "res://" + str(info["hd_file"])
 	var m := ShaderMaterial.new()
-	m.shader = LIT_WORLD_SHADER if modern() else CEL_WORLD_SHADER
+	m.shader = LIT_WORLD_SHADER if modern() and not Graphics.software_simulator() else CEL_WORLD_SHADER
 	m.set_shader_parameter("albedo_tex", load(path) as Texture2D)
 	m.set_shader_parameter("tile_units", float(info.get("tile_world_units", 2.0)))
 	m.set_shader_parameter("wall_band", str(info.get("wrap", "xy")) == "x")
@@ -178,7 +178,7 @@ static func cel_textured(surface: String, grid: float = 0.0) -> ShaderMaterial:
 	m.set_meta("surface", surface)   # what the ground is, for footprints (Atmosphere)
 	if _surface_tints.has(surface):
 		m.set_shader_parameter("tint", surface_tint(surface))
-	if modern():
+	if modern() and not Graphics.software_simulator():
 		var spec := material_for(surface)
 		var relief := MODERN_RELIEF * float(spec.get("relief", 1.0))
 		var nm: Texture2D = null
