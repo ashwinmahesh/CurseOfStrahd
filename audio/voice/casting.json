@@ -997,9 +997,9 @@
     },
     "pidlwick_ii": {
       "settings": {},
-      "description": "Library voice chosen for Pidlwick Ii: Gert - High and Childlike Clown.",
-      "voice_id": "PtJWpiWfVrCfOmNdkFpr",
-      "name": "Gert - High and Childlike Clown",
+      "description": "Pidlwick II, the clockwork jester the height of a child: a tiny, peppy small-creature voice. Library voice Peanut, picked by Ashwin in the casting room 2026-10-16 (was Gert).",
+      "voice_id": "rBkiq5ZQ43ogwd6i4uIQ",
+      "name": "Library voice: Peanut - Tiny & Peppy",
       "library": true,
       "sentence_case": true,
       "model": "eleven_v3"
@@ -2502,9 +2502,9 @@
     },
     "castle_courtier_1": {
       "settings": {},
-      "description": "Lord Aubrey Thale (docs/regions/castle_ravenloft_gates.md household): a gentleman traveller who came through the mists a hundred and ninety years ago; languid, dry, amused, hollow underneath. Library voice picked 2026-10-15 (123 Hz, polished British drawl).",
-      "voice_id": "agL69Vji082CshT65Tcy",
-      "name": "Library voice: Lance Blackwood - Sinister, Posh & British",
+      "description": "Lord Aubrey Thale: a gentleman traveller who came through the mists a hundred and ninety years ago; languid, dry, amused, hollow underneath. Library voice Rafe (about 94 Hz), picked by Ashwin in the casting room 2026-10-16.",
+      "voice_id": "BJHw6P7SnhyScYuI5AW5",
+      "name": "Library voice: Rafe",
       "library": true,
       "model": "eleven_v3",
       "accent_tag": "[refined upper-class English accent]"
