@@ -63,8 +63,9 @@ const CLASSIC := {"msaa": Viewport.MSAA_DISABLED, "edge_aa": Viewport.SCREEN_SPA
 
 
 static func preset() -> String:
-	var p := str(GameSettings.value("graphics", DEFAULT_PRESET))
-	return p if p in PRESETS else DEFAULT_PRESET
+	var fallback := "low" if mobile_renderer() else DEFAULT_PRESET
+	var p := str(GameSettings.value("graphics", fallback))
+	return p if p in PRESETS else fallback
 
 
 ## `save` false changes it for this run only (captures). The window changes now, and so does the place on screen.
@@ -84,12 +85,28 @@ static var overrides: Dictionary = {}
 
 ## The settings in force: the preset's in the Modern finish, Classic's own otherwise.
 static func spec() -> Dictionary:
-	if not Look.modern():
-		return CLASSIC
-	if overrides.is_empty():
-		return SPECS[preset()] as Dictionary
-	var s := (SPECS[preset()] as Dictionary).duplicate()
-	s.merge(overrides, true)
+	var s: Dictionary = SPECS[preset()] as Dictionary if Look.modern() else CLASSIC
+	if Look.modern() and not overrides.is_empty():
+		s = s.duplicate()
+		s.merge(overrides, true)
+	return for_renderer(s, true) if mobile_renderer() else s
+
+
+## The actual renderer, so desktop captures with --rendering-method mobile exercise the device path too.
+static func mobile_renderer() -> bool:
+	return RenderingServer.get_current_rendering_method() == "mobile"
+
+
+## Capability limits apply after user settings and capture overrides, in both visual finishes. Never mutate
+## the shared presets: switching back to Forward+ must keep the desktop's settings.
+static func for_renderer(source: Dictionary, mobile: bool) -> Dictionary:
+	var s := source.duplicate()
+	if mobile:
+		s.merge({"ao": -1, "bounce": -1, "haze": 0, "reflections": 0, "sun_soft": false}, true)
+		s["sun_map"] = mini(int(s["sun_map"]), 2048)
+		s["lamp_atlas"] = mini(int(s["lamp_atlas"]), 2048)
+		s["lamp_shadows"] = mini(int(s["lamp_shadows"]), 2)
+		s["swaying"] = 0
 	return s
 
 
@@ -110,8 +127,9 @@ static func apply(vp: Viewport) -> void:
 	RenderingServer.directional_shadow_atlas_set_size(int(s["sun_map"]), true)
 	RenderingServer.directional_soft_shadow_filter_set_quality(s["filter"] as RenderingServer.ShadowQuality)
 	RenderingServer.positional_soft_shadow_filter_set_quality(s["filter"] as RenderingServer.ShadowQuality)
-	RenderingServer.environment_set_ssao_quality(s["ao"] as RenderingServer.EnvironmentSSAOQuality, bool(s["ao_half"]),
-		0.5, 2, 50.0, 300.0)
+	if int(s["ao"]) >= 0:
+		RenderingServer.environment_set_ssao_quality(s["ao"] as RenderingServer.EnvironmentSSAOQuality, bool(s["ao_half"]),
+			0.5, 2, 50.0, 300.0)
 	if int(s["bounce"]) >= 0:
 		RenderingServer.environment_set_ssil_quality(s["bounce"] as RenderingServer.EnvironmentSSILQuality, true, 0.5, 4,
 			50.0, 300.0)

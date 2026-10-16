@@ -207,7 +207,7 @@ func _build() -> void:
 	env.fog_density = haze
 	# Contact shadows where things meet the ground and walls meet floors (the palette snap makes them flat bands).
 	var ao := float(mood.get("ambient_occlusion", 0.0))
-	env.ssao_enabled = ao > 0.0
+	env.ssao_enabled = ao > 0.0 and not Graphics.mobile_renderer()
 	env.ssao_radius = 0.9
 	env.ssao_intensity = ao
 	env.ssao_power = 1.4
@@ -274,7 +274,7 @@ func _modern_finish() -> void:
 	# Traveler 2): the broad levels on as well as the near ones, each softer as it widens.
 	for level: int in GLOW_LEVELS:
 		env.set_glow_level(level, float(GLOW_LEVELS[level]))
-	env.ssao_enabled = true
+	env.ssao_enabled = not Graphics.mobile_renderer()
 	env.ssao_radius = 1.1
 	env.ssao_intensity = maxf(float(mood.get("ambient_occlusion", 0.0)), 1.8)
 	env.ssao_power = 1.5

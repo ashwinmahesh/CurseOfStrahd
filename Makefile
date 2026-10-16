@@ -48,6 +48,27 @@ release:
 	rm -f "$(RELEASE_OUT)/CurseOfStrahd-windows.zip"
 	cd "$(RELEASE_OUT)/windows" && zip -q -6 -r ../CurseOfStrahd-windows.zip CurseOfStrahd.exe CurseOfStrahd.pck
 
+# Native iPad prototype (docs/releases/ios.md). Imports into a fresh, separate staging project only.
+IOS_OUT ?= $(abspath ../strahd-builds/ios)
+.PHONY: ios-check ios-prepare ios-export ios-archive ios-report ios-test
+ios-check:
+	GODOT="$(GODOT)" python3 tools/release/ios.py check
+
+ios-prepare:
+	python3 tools/release/ios.py prepare --output "$(IOS_OUT)"
+
+ios-export:
+	GODOT="$(GODOT)" python3 tools/release/ios.py export --output "$(IOS_OUT)"
+
+ios-archive:
+	python3 tools/release/ios.py archive --output "$(IOS_OUT)"
+
+ios-report:
+	python3 tools/release/ios.py report --app "$(IOS_APP)"
+
+ios-test:
+	python3 -m unittest discover -s tests/tools -p 'test_ios.py' -v
+
 ## Phase 2 exit: the combat arena (party of four level 3 pregens vs wolves and zombies).
 arena:
 	@$(FRESH)
