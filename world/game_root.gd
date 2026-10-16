@@ -49,7 +49,7 @@ func _ready() -> void:
 	st = GameState.story
 	st.time_passed.connect(_on_time_passed)
 	add_child(notices)
-	st.item_gained.connect(notices.show_item)   # an item come by outside loot and shops, on the side
+	st.item_gained.connect(_item_gained)
 	narrator = Narrator.new()
 	banter = Banter.new()
 	if st.party.is_empty():
@@ -96,6 +96,15 @@ func _ready() -> void:
 		# A finished game's save plays its ending again.
 		if Endings.reached(st) != "":
 			show_ending.call_deferred())
+
+
+func _item_gained(item_id: String, qty: int, who: String) -> void:
+	if MobileDevice.enabled() and is_instance_valid(hud):
+		var words := ItemNotices.words(item_id, qty, who)
+		hud.toast("%s · %s" % [words["name"], words["who"]])
+		Audio.sfx("arcane_glint" if bool(words["magic"]) else "rummage")
+	else:
+		notices.show_item(item_id, qty, who)
 
 
 ## A quick start: four of the six at level 1 travelling, the other two at camp (plan §5.6 Start step). The menu's
@@ -1070,8 +1079,8 @@ func _exit_tree() -> void:
 		_preload = null
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
-	if st != null and st.item_gained.is_connected(notices.show_item):
-		st.item_gained.disconnect(notices.show_item)
+	if st != null and st.item_gained.is_connected(_item_gained):
+		st.item_gained.disconnect(_item_gained)
 	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
 		st.xp_gained.disconnect(hud.toast)
 

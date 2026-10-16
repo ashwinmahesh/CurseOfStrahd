@@ -11,6 +11,9 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
   builds use Compatibility because Godot's simulator does not support Metal.
 - The universal export provisionally targets iOS 16.0. This is a deployment setting, not a tested minimum-device
   promise. The default bundle ID is `app.curseofstrahd.game`.
+- iOS uses the macOS castle-and-moon icon artwork and gold frame. `art/ui/app_icon_ios.png` reuses the Mac tile
+  in an opaque 1024-pixel canvas without desktop padding or shadow; iOS supplies the outer mask. Regenerate it
+  with `make ios-icon` (Pillow required; `ICON_PYTHON` selects its Python). Existing desktop icons are unchanged.
 - Mobile starts with Low graphics. Quality settings disable unsupported SSAO/SSIL, volumetric fog, reflections,
   and directional soft shadows; shadow maps and shadow-casting lamps are capped.
 - Mobile pages use safe areas, larger controls, preview/confirmation, searchable choices, and persistent Back
@@ -19,6 +22,12 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
   run proactively outside open transactions. Campaign combat writes a command journal before executing each action. A restart replays the ledger through the rules engine, including pending reactions, exact RNG states and resource costs. An unwritable save holds the action behind Retry. The existing round-start slot is used, and Honour continues to use its single slot. Ordinary desktop saves retain their round-start and fresh-load-dice behavior.
 - Practice combat has its own recovery file and a Resume practice battle entry, separate from campaign slots.
 - Combat Actions opens only on demand. Close is always available, and aiming hides the popup before targeting.
+- Exploration on iPhone shows the world, top-right minimap and one Menu button. Regular iPad layouts add Party
+  and Inventory shortcuts. Menu contains location/objective details, narration history, planning, camera and
+  Save and settings. Desktop retains its existing exploration HUD.
+- The combat popup works, but its current header/footer and browser remain oversized. The
+  [combat redesign specification](../plans/ios_combat_ux.md) describes compact turn/resources, contextual
+  confirmation and a temporary side sheet. That replacement is a proposal, not a shipped runtime change.
 - iOS ignores external executable PCK patches; script updates arrive in signed app releases.
 
 Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.
@@ -80,7 +89,7 @@ Sprite atlases use Basis Universal compression with their dimensions and mip set
 coordinates and world scale remain unchanged. Fullscreen cutscene stills use 85% WebP and a 2048-pixel size
 limit. Creator alpha-key inputs retain their original imports. These policies modify only staged `.import`
 files and are recorded in the inventory; desktop artwork and imports are unchanged. The measured complete
-simulator app is 2.93 GB uncompressed, down from the initial 9.8 GB ASTC export. Device archives still require
+simulator app is 2.99 GB uncompressed, down from the initial 9.8 GB ASTC export. Device archives still require
 their own size report and visual/performance qualification.
 `project/export_presets.cfg` contains only the iOS preset. Optional signing/version environment variables affect
 the staged preset only. The inventory records source revision, dirty status, relative paths, sizes and SHA-256
@@ -280,7 +289,24 @@ The runner attaches a test target to the generated Xcode project and drives the 
 creation, inventory, camera, saving/relaunch and interruption, plus Skirmish creation, combat Actions opening
 and closing, target navigation and practice recovery. Results and screenshots are retained in the `.xcresult`.
 An existing result is never overwritten and simulator data is never erased. Use a dedicated QA device because
-the journeys create saves and practice setups.
+the journeys create saves and practice setups. Screenshots capture the full display to avoid stale portrait
+crop bounds in the game host after landscape rotation.
+
+The 2026-10-16 native runs use Xcode 27.1 and iOS 27.0 on iPhone 16 Pro and iPad Pro 11 M4 simulators.
+Both devices pass Skirmish creation through the real software keyboard, combat Actions opening/closing/reopening,
+target-list navigation, and practice recovery after terminating and relaunching the app. The separate native
+utility fixture passes Files JSON export/import and picker/share cancellation on both devices. These are
+bounded journeys, not a complete campaign or physical-device qualification.
+
+The campaign journeys also report passing new-game creation, inventory/equipment, camera, journal,
+save/Continue and background/resume on both devices. Those runs predate the quiet exploration HUD. The iPhone
+result bundle exports screenshots; the iPad log reports two passing tests, but its result bundle did not
+finalize with a readable Info.plist. Do not describe that bundle as an exportable screenshot record.
+
+Native campaign testing also caught a lifecycle error when backgrounding: Godot locks child lists while
+propagating application notifications. Suspension now pauses play and audio immediately, then defers attaching
+the resume page until notification traversal finishes. A regression invokes suspension under that same child-list
+lock and verifies preservation of an existing pause and cancellation of stale deferred UI.
 
 
 ## Native services and reproducible simulator utility tests

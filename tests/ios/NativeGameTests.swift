@@ -51,7 +51,7 @@ final class NativeGameTests: XCTestCase {
                 XCTFail("Game reported an error during the world transition\n\(app.debugDescription)")
                 return
             }
-            if app.buttons["Actions"].waitForExistence(timeout: 2) { return }
+            if app.buttons["Menu"].waitForExistence(timeout: 2) { return }
             let skip = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Skip")).firstMatch
             if skip.exists && skip.isHittable { skip.tap() }
         }
@@ -66,25 +66,26 @@ final class NativeGameTests: XCTestCase {
         tap("Start campaign")
         waitForWorld()
         capture("campaign")
-        tap("Actions", scroll: false)
+        tap("Menu", scroll: false)
         tap("Inventory")
         XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 60), app.debugDescription)
         capture("inventory")
         tap("Equipment", scroll: false)
         capture("equipment")
         tap("Back", scroll: false)
-        tap("More", scroll: false)
+        tap("Menu", scroll: false)
         tap("Camera")
         tap("Zoom in")
         tap("Turn right")
         tap("Recenter")
         capture("camera-controls")
         tap("Back", scroll: false)
-        tap("Actions", scroll: false)
+        tap("Menu", scroll: false)
         tap("Journal")
         capture("journal")
         tap("Back", scroll: false)
         tap("Menu", scroll: false)
+        tap("Save and settings")
         tap("Save game")
         tap("New save")
         capture("saved")
@@ -98,8 +99,34 @@ final class NativeGameTests: XCTestCase {
         app.activate()
         XCTAssertTrue(app.staticTexts["Ready when you are"].waitForExistence(timeout: 15), app.debugDescription)
         tap("Continue", scroll: false)
-        XCTAssertTrue(app.buttons["Actions"].waitForExistence(timeout: 15), app.debugDescription)
+        XCTAssertTrue(app.buttons["Menu"].waitForExistence(timeout: 60), app.debugDescription)
         capture("campaign-after-interruption")
+    }
+
+    func testExplorationMenuKeepsWorldClear() throws {
+        // This continuation journey uses the campaign created by the campaign test (or an existing QA save).
+        tap("Continue")
+        waitForWorld()
+        XCTAssertFalse(app.buttons["Actions"].exists, "Exploration must not retain the combat action bar")
+        XCTAssertFalse(app.buttons["More"].exists, "Secondary controls belong inside Menu")
+        let frame = app.windows.firstMatch.frame
+        let regular = max(frame.width, frame.height) >= 900 && min(frame.width, frame.height) >= 600
+        XCTAssertEqual(app.buttons["Party"].exists, regular)
+        XCTAssertEqual(app.buttons["Inventory"].exists, regular)
+        capture("exploration-quiet")
+        tap("Menu", scroll: false)
+        XCTAssertTrue(app.buttons["Inventory"].waitForExistence(timeout: 60))
+        capture("exploration-menu")
+        tap("Inventory")
+        XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 60))
+        tap("Back", scroll: false)
+        tap("Menu", scroll: false)
+        tap("Messages and narration")
+        capture("exploration-messages")
+        tap("Back", scroll: false)
+        XCTAssertTrue(app.buttons["Menu"].waitForExistence(timeout: 60))
+        XCTAssertFalse(app.buttons["Actions"].exists)
+        capture("exploration-after-menu")
     }
 
     func testBattlefieldActionsAndPracticeRecovery() throws {

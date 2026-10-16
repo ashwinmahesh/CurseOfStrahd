@@ -843,3 +843,51 @@ func test_mobile_pointer_tracks_touch_without_querying_a_desktop_mouse() -> void
 	_touch(point, false)
 	await _frames()
 	assert_eq(PadNav.pointer(get_viewport()), point)
+
+
+func test_exploration_keeps_phone_clear_and_tablet_shortcuts_compact() -> void:
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 1))
+	for size_: Vector2 in [Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(8, 8), size_ - Vector2(16, 16))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var hud := ExploreHud.new()
+		add_child(hud)
+		hud.build(state)
+		hud.refresh("A long location name that belongs inside the menu", false, false, false)
+		hud.narrate("This narration remains available without covering the world.")
+		await _frames()
+		var visible_buttons := hud.find_children("*", "Button", true, false).filter(func(node: Node) -> bool: return (node as Button).is_visible_in_tree())
+		assert_eq(visible_buttons.size(), 1 if MobileDevice.compact() else 3)
+		assert_true(hud.minimap.visible)
+		assert_true(MobileDevice.safe_rect().encloses(hud.minimap.get_global_rect()))
+		assert_true(hud.mobile.shortcuts.size.x < MobileDevice.safe_rect().size.x * 0.4)
+		assert_eq(hud.mobile.messages.size(), 1)
+		var commands: Array[String] = []
+		hud.command.connect(func(command: String) -> void: commands.append(command))
+		var at := hud.mobile.menu_button.get_global_rect().get_center()
+		_touch(at, true)
+		await _frames()
+		_touch(at, false)
+		await _frames()
+		assert_true(is_instance_valid(hud.mobile.sheet))
+		var inventory: Button
+		for button: Button in hud.mobile.sheet.find_children("*", "Button", true, false):
+			if button.text == "Inventory":
+				inventory = button
+		assert_true(inventory != null)
+		var page := hud.mobile.sheet.find_children("*", "MobilePage", true, false)[0] as MobilePage
+		page.scroll.ensure_control_visible(inventory)
+		await _frames()
+		at = inventory.get_global_rect().get_center()
+		_touch(at, true)
+		await _frames()
+		assert_true(commands.is_empty(), "pressing a menu option is still only a pending tap")
+		_touch(at, false)
+		await _frames()
+		assert_eq(commands, ["inventory"])
+		assert_false(is_instance_valid(hud.mobile.sheet))
+		hud.queue_free()
+		await _frames()

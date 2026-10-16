@@ -1004,8 +1004,8 @@ func _exploration_lesson(id: String) -> Dictionary:
 		return lesson
 	match id:
 		"explore":
-			lesson["body"] = "Tap the highlighted square to walk there. Your companions follow the leader. Drag to pan and pinch to zoom; More also has camera controls."
-			lesson["details"] = "There are no movement costs while freely exploring. In combat, tap to preview and use Confirm to commit. Use Party to choose the leader."
+			lesson["body"] = "Tap the highlighted square to walk there. Your companions follow the leader. Drag to pan and pinch to zoom; Menu also has camera controls."
+			lesson["details"] = "There are no movement costs while freely exploring. In combat, tap to preview and use Confirm to commit. Use Menu → Party to choose the leader."
 		"sheet":
 			lesson["details"] = "Use the sheet's sections to read abilities and skills. Tap a derived value to read its calculation. Back returns to practice."
 		"inventory":
@@ -1044,6 +1044,7 @@ func _mobile_guidance() -> void:
 		return
 	var controls := UiFeel.mobile_controls
 	var overlay := controls != null and controls.drawer != null
+	overlay = overlay or (hud != null and hud.mobile != null and hud.mobile.sheet != null)
 	if dialogue != null or loot != null or overlay or (combat != null and combat.view.hud.mobile.sheet != null):
 		coach.set_chrome_visible(false)
 		return

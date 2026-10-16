@@ -544,6 +544,8 @@ func _fit_where(text: String) -> void:
 ## A new location: the minimap and the signs at its ways out.
 func show_location(view: LocationView) -> void:
 	if mobile != null:
+		minimap.show_location(view)
+		minimap.tooltip_text = "Minimap · tap a point to move"
 		return
 	minimap.show_location(view)
 	exit_signs.show_location(view)
@@ -587,7 +589,6 @@ func narration_showing() -> bool:
 func close_narration() -> void:
 	if mobile != null:
 		mobile.narration = ""
-		mobile.notice.hide()
 		VoiceOver.stop()
 		return
 	VoiceOver.stop()

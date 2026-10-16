@@ -23,7 +23,8 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var target := UiFeel.touch.world_target() if MobileDevice.enabled() else null
-	visible = target != null and drawer == null
+	# Exploration owns its quiet minimap/menu chrome. This command bar belongs only to combat.
+	visible = target is CombatView and drawer == null
 	if not visible:
 		return
 	confirm.visible = target is CombatView
@@ -120,8 +121,9 @@ func _camera(target: Node = null) -> void:
 	body.add_child(MobileUi.button("Recenter", func() -> void: rig.touch_offset = Vector3.ZERO))
 
 
-func _more() -> void:
-	var target := UiFeel.touch.world_target()
+func _more(target: Node = null) -> void:
+	if target == null:
+		target = UiFeel.touch.world_target()
 	if target == null:
 		return
 	var body := _page("More controls")
