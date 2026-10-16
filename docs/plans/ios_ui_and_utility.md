@@ -4,6 +4,11 @@ Status: implemented mobile screen groups; native qualification in progress, 2026
 
 The iOS game will expose the complete campaign and Skirmish through an interface designed for fingers, small displays, and interrupted sessions. iPhone and iPad layouts must be designed together. Every screen receives a mobile review, including secondary dialogs and error states. Enlarging the desktop canvas or placing it inside a scroll view is insufficient.
 
+Latest direction, 2026-10-16: phone exploration now keeps only the world, top-right minimap and Menu;
+regular tablets add compact Party/Inventory shortcuts. The combat popup works, but the current stretched
+bars and crowded action browser are a baseline awaiting the [combat HUD redesign](ios_combat_ux.md).
+That specification defines the next mobile composition and state transitions, not a completed runtime change.
+
 ## Implementation progress
 
 The first UI batch implements safe-area pages with persistent navigation, gesture ownership and cancellation, visible world controls, a mobile inventory composition, and a combat action browser. The inventory keeps a list with larger rows, separate equipment/stash views, phone detail navigation, and independently scrolling tablet panes. The action browser provides categories, search, readable details, variant and casting-level selection, explicit commitment, and a fresh legality check. Desktop builders remain selected on computers.
@@ -24,7 +29,10 @@ The menu/performance batch adds readable mobile new-game choices and difficulty 
 
 The native runtime batch adds mobile error recovery and diagnostic sharing, mouse-free touch tracking, correct modal accessibility scope, nested scrolling, touch loading hints, smaller mobile texture packaging, and reproducible shipping-game XCTest journeys. Simulator-specific texture and particle fallbacks address Apple's software OpenGL limitations; physical-device Metal and desktop rendering retain their paths.
 
-Stages 1–4 remain under qualification. Full-game simulator journeys, physical accessibility validation, native inventory performance, signed distribution, and physical-device recovery/performance are acceptance gates. The iOS signing workflow is implemented and its bundle variable is configured; distribution credentials are not present in the repository secrets or local keychain. Full iOS release qualification is not yet complete.
+Stages 1–4 remain under qualification. Native campaign/combat journeys report passing on both QA devices;
+broader gameplay, physical accessibility, performance and a full-game signed archive remain acceptance gates.
+Distribution credentials are now configured. PR #6's separate deployment-check app reached Apple VALID;
+its finalized workflow/helper must be reconciled into this branch. Full iOS release qualification is not complete.
 
 ## Desktop remains unchanged
 
@@ -63,7 +71,10 @@ Support both landscape directions for gameplay. iPad window layouts must remain 
 
 ## Navigation and touch behavior
 
-Use a small persistent navigation strip with the current character, Actions, Party or Inventory, Journal, and Menu as appropriate to the scene. Keep frequently used functions within thumb reach and allow the main action side to be mirrored. Avoid filling the bottom edge with every command. A second-level menu holds less frequent functions.
+Exploration uses the minimap and one Menu button on phone; regular tablets can add Party and Inventory
+shortcuts. Journal, narration, camera, planning and save/settings live inside Menu. Combat uses the separate
+compact actor/resources and contextual controls defined in the combat redesign. Keep frequently used functions
+within thumb reach and allow the main action side to be mirrored. Do not fill the bottom edge with every command.
 
 Every page and sheet has a visible Back or Close action. Maintain a navigation stack: closing item details returns to the same item and scroll position; closing inventory returns to the same world selection. Back cancels the innermost transient operation first. Switching characters preserves sensible filters but clears actions that no longer apply.
 

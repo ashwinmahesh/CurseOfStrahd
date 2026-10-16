@@ -174,6 +174,19 @@ tests, and the distribution requirements in the plan.
 
 ## GitHub signing and release pipeline
 
+The finalized pipeline is owned by [PR #6](https://github.com/ashwinmahesh/CurseOfStrahd/pull/6), commit
+`5a84719d5`. Its deployment-check upload reached Apple **VALID** in
+[run 38982130266](https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/38982130266), version 1.0.0 (601).
+That diagnostic app excludes campaign assets; the full game has not yet been uploaded through it.
+
+Retain that PR's workflow, signing helper and `docs/releases/ios-pipeline.md` when reconciling branches.
+It uses the configured `IOS_DISTRIBUTION_P12_BASE64`, optional `IOS_DISTRIBUTION_P12_PASSWORD`,
+`IOS_PROVISIONING_PROFILE_BASE64`, `IOS_APPLE_API_KEY_ID`, `IOS_APPLE_API_KEY_P8` and shared
+`APPLE_API_ISSUER_ID`. The earlier foundation workflow still present in this branch uses the names below;
+these are not the current repository credential contract. Do not reconfigure secrets from the legacy example.
+
+### Earlier foundation workflow (pending replacement by PR #6)
+
 `.github/workflows/ios.yml` adds **iOS builds** alongside the desktop release workflows. It runs on a hosted
 macOS runner with full Xcode, installs checksum-pinned Godot 4.7.2 and its iOS template, validates signing,
 imports into an isolated stage, archives, checks the actual app size, and exports an IPA. Private keys and
