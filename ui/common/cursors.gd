@@ -22,7 +22,7 @@ static var _current := "pointer"
 
 ## Sets the cursors once (no window in a headless run, so nothing to set there).
 static func install() -> void:
-	if _installed or DisplayServer.get_name() == "headless":
+	if _installed or DisplayServer.get_name() == "headless" or not DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE):
 		return
 	_installed = true
 	for name: String in SLOTS:
@@ -46,7 +46,7 @@ static func uninstall() -> void:
 
 ## The cursor over the world (where no control asks for its own): one of SLOTS' names.
 static func show(name: String) -> void:
-	if name == _current or not SLOTS.has(name):
+	if name == _current or not SLOTS.has(name) or not DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE):
 		return
 	_current = name
 	Input.set_default_cursor_shape(int((SLOTS[name] as Array)[0]) as Input.CursorShape)

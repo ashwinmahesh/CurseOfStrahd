@@ -49,3 +49,9 @@ func capture_shots(tool: Node, out: String) -> void:
 		"rolls": [20, 8], "advantage": true, "total": 24, "target": 18, "success": true, "critical": true})
 	await tool.call("wait_frames", 12)
 	tool.call("_shot", out + "_dice.png")
+
+	layer.queue_free()
+	ErrorWatch.show_notice({"text": "The saved game could not be opened. Your previous save is still available.", "where": "save_loader"})
+	await tool.call("wait_frames", 12)
+	tool.call("_shot", out + "_error.png")
+	ErrorWatch.dismiss()

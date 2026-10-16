@@ -10,6 +10,7 @@ static var profile := _argument_profile()
 static var test_size := Vector2.ZERO
 static var test_safe := Rect2()
 static var test_keyboard_height := 0.0
+static var pointer := Vector2.ZERO
 var modality := "touch"
 var _configuring := false
 
@@ -88,6 +89,12 @@ func _input(event: InputEvent) -> void:
 	if not enabled() or event.has_meta(&"touch_synthetic") or event.has_meta(&"pad_synthetic"):
 		return
 	var mode := modality
+	if event is InputEventScreenTouch:
+		pointer = (event as InputEventScreenTouch).position
+	elif event is InputEventScreenDrag:
+		pointer = (event as InputEventScreenDrag).position
+	elif event is InputEventMouseMotion:
+		pointer = (event as InputEventMouseMotion).position
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		mode = "touch"
 	elif event is InputEventJoypadButton or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > 0.5:

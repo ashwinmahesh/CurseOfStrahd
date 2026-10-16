@@ -35,6 +35,48 @@ class IosBuildTests(unittest.TestCase):
             return ios.prepare(self.source, self.output, options.get("team", "ABCDEFGHIJ"),
                                "app.example.game", "1.2.3", "7", options.get("simulator", False))
 
+    def test_mobile_texture_policy_preserves_atlas_geometry_and_creator_alpha_keys(self):
+        sprite = self.source / "art/sprites/hero.png.import"
+        original = '[remap]\nimporter="texture"\nmetadata={\n"vram_texture": true\n}\n[params]\ncompress/mode=2\nprocess/size_limit=0\nmipmaps/generate=false\n'
+        sprite.write_text(original)
+        cinematic = self.source / 'art/cutscenes/scene.jpg.import'
+        cinematic.parent.mkdir(parents=True)
+        cinematic.write_text(original)
+        creator = self.source / 'art/creator/keyed.png.import'
+        creator.parent.mkdir(parents=True)
+        creator.write_text('[remap]\nimporter="keep"\n')
+        stage = self.prepare()
+        imported = (stage / 'art/sprites/hero.png.import').read_text()
+        self.assertIn('compress/mode=4', imported)
+        self.assertIn('process/size_limit=0', imported)
+        self.assertIn('mipmaps/generate=false', imported)
+        self.assertIn('"vram_texture": true', imported)
+        cutscene = (stage / 'art/cutscenes/scene.jpg.import').read_text()
+        self.assertIn('compress/mode=1', cutscene)
+        self.assertIn('process/size_limit=2048', cutscene)
+        self.assertEqual((stage / 'art/creator/keyed.png.import').read_text(), creator.read_text())
+        self.assertEqual(sprite.read_text(), original)
+        self.assertEqual(cinematic.read_text(), original)
+        inventory = json.loads((self.output / 'source-inventory.json').read_text())
+        self.assertEqual(len(inventory['mobile_texture_imports']), 2)
+
+    def test_simulator_uses_etc2_without_changing_device_texture_quality(self):
+        texture = self.source / 'art/textures/floor.png.import'
+        texture.parent.mkdir(parents=True)
+        original = '[remap]\nimporter="texture"\n[params]\ncompress/mode=2\ncompress/high_quality=true\nmipmaps/generate=true\n'
+        texture.write_text(original)
+        stage = self.prepare()
+        self.assertEqual((stage / texture.relative_to(self.source)).read_text(), original)
+        simulator = self.root / 'simulator-textures'
+        simulator.mkdir()
+        target = simulator / texture.relative_to(self.source)
+        target.parent.mkdir(parents=True)
+        target.write_text(original)
+        ios.mobile_texture_imports(simulator, simulator=True)
+        self.assertIn('compress/high_quality=false', target.read_text())
+        self.assertIn('mipmaps/generate=true', target.read_text())
+        self.assertEqual(texture.read_text(), original)
+
     def test_stage_keeps_dynamic_resources_but_not_desktop_cache_or_generation_inputs(self):
         stage = self.prepare()
         for path in ["narrative/story.dialogue", "audio/voice/clip.mp3", "tests/saves/chapter.json",
@@ -57,6 +99,7 @@ class IosBuildTests(unittest.TestCase):
         stage = self.prepare(team="", simulator=True)
         overrides = (stage / "project.godot").read_text()
         self.assertIn('renderer/rendering_method.ios="gl_compatibility"', overrides)
+        self.assertIn('window/stretch/mode="viewport"', overrides)
         self.assertEqual((self.source / "project.godot").read_bytes(), original)
         options = ios.config(stage / "export_presets.cfg")["preset.0.options"]
         self.assertEqual(options["application/targeted_device_family"], "2")

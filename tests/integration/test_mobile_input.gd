@@ -91,6 +91,31 @@ func test_modal_change_cancels_the_old_contact() -> void:
 	assert_eq(int(count[0]), 0)
 
 
+func test_vertical_swipes_over_horizontal_tabs_scroll_the_enclosing_page() -> void:
+	var body := MobilePage.build(root, "Nested scrolling")
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	var names: Array[String] = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"]
+	var tabs := MobileUi.tabs(names, "First", func(_value: String) -> void: pass)
+	body.add_child(tabs)
+	for i in 20:
+		body.add_child(MobileUi.button("Row %d" % i, func() -> void: pass))
+	await _frames()
+	var button := (tabs.get_child(0) as Control).get_child(0) as Control
+	var at := button.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	var drag := InputEventScreenDrag.new()
+	drag.position = at - Vector2(0, 40)
+	drag.relative = Vector2(0, -40)
+	get_tree().root.push_input(drag, true)
+	await _frames()
+	_touch(drag.position, false)
+	await _frames()
+	assert_true(page.scroll.scroll_vertical > 0, "a horizontal strip must not trap vertical page gestures")
+	assert_eq(tabs.scroll_vertical, 0)
+	assert_eq(tabs.scroll_horizontal, 0, "a vertical gesture does not move the tabs sideways")
+
+
 func test_inventory_touch_opens_details_without_using_the_item_and_back_preserves_search() -> void:
 	var state := StoryState.new()
 	state.party.append(Pregens.build("godrick_pendlebrook", 3))
@@ -741,3 +766,13 @@ func test_combat_action_popup_closes_from_review_and_before_targeting() -> void:
 	assert_eq(int(commands[0]), 1)
 	assert_eq(encounter.dice.get_state(), before, "opening, closing and aiming never roll dice")
 	assert_true(actor.action_available)
+
+
+func test_mobile_pointer_tracks_touch_without_querying_a_desktop_mouse() -> void:
+	var point := Vector2(240, 120)
+	_touch(point, true)
+	await _frames()
+	assert_eq(PadNav.pointer(get_viewport()), point)
+	_touch(point, false)
+	await _frames()
+	assert_eq(PadNav.pointer(get_viewport()), point)

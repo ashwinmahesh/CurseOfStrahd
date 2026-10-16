@@ -20,12 +20,14 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventScreenTouch:
 		var touch := event as InputEventScreenTouch
+		MobileDevice.pointer = touch.position
 		if touch.pressed:
 			_press.call_deferred(touch.index, touch.position, _epoch)
 		else:
 			_release.call_deferred(touch.index, touch.position, touch.canceled, _epoch)
 		get_viewport().set_input_as_handled()
 	elif event is InputEventScreenDrag:
+		MobileDevice.pointer = (event as InputEventScreenDrag).position
 		_drag.call_deferred(event as InputEventScreenDrag, _epoch)
 		get_viewport().set_input_as_handled()
 
@@ -65,18 +67,32 @@ func _drag(drag: InputEventScreenDrag, epoch: int) -> void:
 		return
 	match str(update.get("kind", "")):
 		"scroll":
-			var node: Node = control
-			while node != null and not node is ScrollContainer:
-				node = node.get_parent()
-			if node is ScrollContainer:
-				var scroll := node as ScrollContainer
-				var delta := update["delta"] as Vector2
-				scroll.scroll_vertical -= roundi(delta.y)
-				scroll.scroll_horizontal -= roundi(delta.x)
+			_scroll(control, update["delta"] as Vector2)
 		"pan", "camera":
 			var target := world_target()
 			if target != null:
 				target.call("touch_camera", update)
+
+
+## A vertical swipe over a horizontal tab strip belongs to the enclosing page. At a nested list's edge,
+## continue through its parent rather than trapping the player's finger in a container that cannot move.
+func _scroll(control: Control, delta: Vector2) -> void:
+	var vertical := absf(delta.y) >= absf(delta.x)
+	var amount := roundi(delta.y if vertical else delta.x)
+	var node: Node = control
+	while node != null:
+		if node is ScrollContainer:
+			var scroll := node as ScrollContainer
+			var mode := scroll.vertical_scroll_mode if vertical else scroll.horizontal_scroll_mode
+			var bar: ScrollBar = scroll.get_v_scroll_bar() if vertical else scroll.get_h_scroll_bar()
+			var limit := maxf(0.0, bar.max_value - bar.page)
+			if mode != ScrollContainer.SCROLL_MODE_DISABLED and limit > 0 and (amount < 0 and bar.value < limit or amount > 0 and bar.value > 0):
+				if vertical:
+					scroll.scroll_vertical -= amount
+				else:
+					scroll.scroll_horizontal -= amount
+				return
+		node = node.get_parent()
 
 
 func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:

@@ -32,6 +32,7 @@ func open(catalog_: ActionCatalog, actor_: Combatant) -> void:
 	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var close_button := MobileUi.button("Close", dismiss)
 	close_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	close_button.autowrap_mode = TextServer.AUTOWRAP_OFF
 	page.heading.get_parent().add_child(close_button)
 	browse()
 

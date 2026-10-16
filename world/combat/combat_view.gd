@@ -1654,7 +1654,7 @@ func _update_hover() -> void:
 	# Aiming an area placed at a point, its outline is the cursor: its middle is under the pointer.
 	var placing := _aiming_area() and str(selected.get("targeting", "")) == "point"
 	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 and not placing else [])
-	var at := get_viewport().get_mouse_position() if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
+	var at := PadNav.pointer(get_viewport()) if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
 	var t := _target_under()
 	if mode == Mode.TARGET:
 		_target_hover(c, t, at)

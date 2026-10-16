@@ -1960,6 +1960,10 @@ func test_mobile_credits_updates_codes_and_dice_fit() -> void:
 		dice.roll({"who": "Godrick Pendlebrook", "label": "Wisdom saving throw", "kind": "save", "natural": 20,
 			"rolls": [20, 8], "advantage": true, "total": 24, "target": 18, "success": true, "critical": true})
 		await _mobile_check(layer, "dice result")
+		ErrorWatch.show_notice({"text": "The saved game could not be opened. Your previous save is still available.", "where": "save_loader"})
+		await _mobile_check(ErrorWatch, "error notice")
+		assert_eq(PadNav.current.scope_now(), ErrorWatch.get("_notice"), "high-priority error pages own input and accessibility")
+		ErrorWatch.dismiss()
 		layer.queue_free()
 		await _frames(2)
 	GameSettings.set_text_scale(old_text)

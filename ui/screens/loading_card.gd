@@ -12,6 +12,19 @@ signal closed
 const DATA := "res://data/loading/cards.json"
 const HOLD_SECONDS := 2.4
 const FADE_SECONDS := 0.6
+const TOUCH_TIPS := [
+	"Actions opens your choices. Close returns to the battlefield without spending anything.",
+	"Choose an action, then a target. Review the result before you confirm.",
+	"Drag an empty part of the battlefield to pan. More opens the camera controls.",
+	"Pinch with two fingers to zoom. The camera controls offer the same choices as buttons.",
+	"The target list helps you choose creatures that overlap on the battlefield.",
+	"Inspect an inventory item before choosing Equip, Use or Give.",
+	"Search checks your whole inventory, including items on other pages.",
+	"Back returns to the previous page. Close dismisses the combat action popup from any step.",
+	"Menu opens Settings and your saves. Export a save through Files to keep another copy.",
+	"An interrupted fight resumes from its recorded commands, including pending reactions.",
+	"A failed check can sometimes be saved: Heroic Inspiration rerolls the d20.",
+]
 ## Seconds the card takes to come up.
 const FADE_IN := 0.25
 ## A covering card goes after this many seconds whatever happens, so it can never stay up.
@@ -54,7 +67,7 @@ static func picture_for(region: String) -> String:
 
 
 static func tips() -> Array:
-	return data().get("tips", []) as Array
+	return TOUCH_TIPS if MobileDevice.enabled() else data().get("tips", []) as Array
 
 
 ## Shows the card for `loc` on `parent`, unless motion is off (tests, captures). Returns it, or null.

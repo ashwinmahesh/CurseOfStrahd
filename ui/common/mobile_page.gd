@@ -13,6 +13,7 @@ var _keyboard_height := 0.0
 
 
 static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -> VBoxContainer:
+	layer.set_meta(&"pad_scope", true)
 	var dim := ColorRect.new()
 	dim.color = Color(Look.color("void"), 0.9)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)

@@ -102,12 +102,16 @@ func _title() -> void:
 	t.add_theme_constant_override("outline_size", 10)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(t)
-	_box.add_child(UiKit.divider(460.0))
+	var ornament := UiKit.divider(220.0 if MobileDevice.enabled() else 460.0)
+	if MobileDevice.enabled():
+		ornament.custom_minimum_size.y = 28
+		ornament.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_box.add_child(ornament)
 	var sub := UiKit.label("The mists are rising.", 22, "parchment")
 	sub.add_theme_font_override("font", UiKit.display_font())
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(sub)
-	_box.add_child(_gap(14))
+	_box.add_child(_gap(4 if MobileDevice.enabled() else 14))
 	var slots := SaveSystem.list_slots()
 	var cont := UiKit.button("Continue", func() -> void: _load(str(slots[0]["slot"])), 24)
 	cont.disabled = slots.is_empty()

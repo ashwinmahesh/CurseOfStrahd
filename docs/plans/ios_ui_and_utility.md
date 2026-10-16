@@ -1,6 +1,6 @@
 # iOS interface and utility plan
 
-Status: proposed implementation specification, 2026-10-16. Applies to the ongoing iOS support branch and PR. This extends [the platform plan](ios_support.md) and the existing desktop UI contracts; it does not replace the desktop designs or claim that mobile qualification is complete.
+Status: implemented mobile screen groups; native qualification in progress, 2026-10-16. Applies to the ongoing iOS support branch and PR. This extends [the platform plan](ios_support.md) and the existing desktop UI contracts; it does not replace the desktop designs or claim that mobile qualification is complete.
 
 The iOS game will expose the complete campaign and Skirmish through an interface designed for fingers, small displays, and interrupted sessions. iPhone and iPad layouts must be designed together. Every screen receives a mobile review, including secondary dialogs and error states. Enlarging the desktop canvas or placing it inside a scroll view is insufficient.
 
@@ -22,7 +22,9 @@ The recovery batch adds save format 3 with a write-ahead combat command journal.
 
 The menu/performance batch adds readable mobile new-game choices and difficulty rules, Credits and update pages, a keyboard-safe cheat-code page, compact dice results, and semantic selection-card labels. Large inventories render at most 40 rows while search covers the entire bag. Skirmish and arena recovery use a separate durable practice file. Combat Actions is a temporary popup with Back and an always-visible Close button; it hides before targeting. `make check` passes 109 tests, additional desktop menu/dice regressions pass 20 tests, and native build tooling passes 24 Python tests. Native utility cancellation and Files round trips pass on both iPhone 16 Pro and iPad Pro 11 M4.
 
-Stages 1–4 remain in progress. Full-game simulator qualification, physical accessibility validation, native inventory performance, and full-game recovery qualification still require implementation and qualification. The generic mobile page used by unconverted screens is temporary. Full iOS support is not yet complete.
+The native runtime batch adds mobile error recovery and diagnostic sharing, mouse-free touch tracking, correct modal accessibility scope, nested scrolling, touch loading hints, smaller mobile texture packaging, and reproducible shipping-game XCTest journeys. Simulator-specific texture and particle fallbacks address Apple's software OpenGL limitations; physical-device Metal and desktop rendering retain their paths.
+
+Stages 1–4 remain under qualification. Full-game simulator journeys, physical accessibility validation, native inventory performance, signed distribution, and physical-device recovery/performance are acceptance gates. The iOS signing workflow is implemented and its bundle variable is configured; distribution credentials are not present in the repository secrets or local keychain. Full iOS release qualification is not yet complete.
 
 ## Desktop remains unchanged
 
@@ -35,7 +37,7 @@ This is a release requirement, not a preference:
 - Do not change global theme constants or existing preferences to make mobile fit. Mobile spacing, typography, hit areas, and graphics overrides need their own scope. Imported saves must not carry device UI settings onto another platform.
 - Capture the existing desktop baseline before changing shared UI, and compare representative screens at identical resolution, UI scale, game state, and camera. Any unexplained visual or interaction difference blocks the mobile change.
 
-The current branch already has experimental touch routing, mobile pages, and a command drawer. These are scaffolding. A generic drawer listing every action and a horizontally scrolling desktop panel do not satisfy this specification.
+Mobile pages now have dedicated compositions around shared game commands. A generic drawer listing every action and a horizontally scrolling desktop panel do not satisfy this specification.
 
 ## Layout and visual language
 
@@ -81,7 +83,7 @@ Touch rules:
 
 Keep the battlefield visible with a compact turn strip, active hero summary, action economy, and an Actions button. Collapse the combat log to a clearly labeled button with recent-event feedback. Party portraits and conditions open readable detail panels. Keep End Turn separate from the primary action confirmation to reduce mistakes.
 
-Actions opens an expandable panel with large labeled buttons. On iPhone, use a compact drawer when it fits and a full-height selection sheet for a large catalog. On iPad, use a wider bottom or side panel that can remain open if sufficient battlefield space remains. Avoid a centered popup that permanently covers the target area.
+Actions opens a temporary popup with large labeled buttons on both iPhone and iPad. Keep it closed during ordinary battlefield play. An always-visible Close button dismisses it from both browsing and action review; Back moves within the popup or dismisses its root. Selecting a targeted action hides the popup before targeting. It must never automatically remain open over the battlefield between actions.
 
 The panel offers Common, Class, Spells, Items, and Reactions categories, with text search for long lists. Show action or bonus-action cost, remaining resource, range, and a concise effect on each card. Disabled choices remain inspectable and state why they cannot be used. Group variants and upcast levels in a readable second step. Preserve the chosen category and scroll position per character. Support optional favorites without hiding the complete catalog.
 

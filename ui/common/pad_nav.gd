@@ -157,10 +157,10 @@ func _use_pad(on: bool, device: int) -> void:
 	PadGlyphs.refresh_hints()
 	if on:
 		# Only a window the player is in hides the pointer (a capture's window never has focus).
-		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
+		if DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE) and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	else:
-		if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
+		if DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE) and Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		# A control that only the pad gives focus to lets it go, so a later Space or Enter isn't sent to it.
 		var vp := get_viewport()
@@ -686,7 +686,7 @@ static func pointer(vp: Viewport) -> Vector2:
 		var f := vp.gui_get_focus_owner()
 		if f != null and f.is_visible_in_tree():
 			return rect_of(f).get_center()
-	return vp.get_mouse_position()
+	return MobileDevice.pointer if MobileDevice.enabled() else vp.get_mouse_position()
 
 
 ## Whether the pad is the device in use now.

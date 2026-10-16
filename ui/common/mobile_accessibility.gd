@@ -41,7 +41,7 @@ func _collect(node: Node, clip: Rect2, items: Array[Dictionary]) -> void:
 			return
 		if control is ScrollContainer:
 			var candidate := control as ScrollContainer
-			if candidate.get_v_scroll_bar().max_value > candidate.size.y:
+			if candidate.vertical_scroll_mode != ScrollContainer.SCROLL_MODE_DISABLED and candidate.get_v_scroll_bar().max_value > candidate.get_v_scroll_bar().page:
 				scroll = candidate
 			clip = clip.intersection(control.get_global_rect())
 		var rect := clip.intersection(control.get_global_rect())

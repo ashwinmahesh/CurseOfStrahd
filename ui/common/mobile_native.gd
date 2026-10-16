@@ -38,14 +38,22 @@ func import_save() -> void:
 
 
 func share_save(path: String) -> Error:
+	return _share_json(path, SHARE)
+
+
+func share_report(path: String) -> Error:
+	return _share_json(path, "user://transfers/CurseOfStrahd-diagnostics.json")
+
+
+func _share_json(path: String, destination: String) -> Error:
 	if not available() or pending:
 		return ERR_BUSY
-	var err := SaveTransfer.share_copy(path, SHARE)
+	var err := SaveTransfer.share_copy(path, destination)
 	if err != OK:
 		return err
 	pending = true
 	UiFeel.touch.cancel()
-	bridge.call("share_save", ProjectSettings.globalize_path(SHARE))
+	bridge.call("share_save", ProjectSettings.globalize_path(destination))
 	return OK
 
 

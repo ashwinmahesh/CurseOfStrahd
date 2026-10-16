@@ -92,9 +92,15 @@ static func spec() -> Dictionary:
 	return for_renderer(s, true) if mobile_renderer() else s
 
 
-## The actual renderer, so desktop captures with --rendering-method mobile exercise the device path too.
+## iOS includes the simulator's Compatibility fallback. Desktop Mobile captures exercise the device limits too.
 static func mobile_renderer() -> bool:
-	return RenderingServer.get_current_rendering_method() == "mobile"
+	return OS.has_feature("ios") or RenderingServer.get_current_rendering_method() == "mobile"
+
+
+## Godot's iOS simulator uses Apple's software OpenGL driver, whose turbulence shader compilation stalls.
+## Physical iOS devices use Metal and keep turbulence, as do ordinary desktop builds.
+static func particle_turbulence() -> bool:
+	return not (OS.has_feature("ios") and RenderingServer.get_current_rendering_method() == "gl_compatibility")
 
 
 ## Capability limits apply after user settings and capture overrides, in both visual finishes. Never mutate

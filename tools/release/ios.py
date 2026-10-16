@@ -62,7 +62,9 @@ def project_values(path: Path, section: str, values: dict[str, str]) -> None:
             body = re.sub(pattern, lambda _: entry, body, count=1, flags=re.MULTILINE)
         else:
             body = body.rstrip() + '\n' + entry + '\n'
-    path.write_text(text[:start] + body.rstrip() + '\n\n' + text[end:])
+    updated = text[:start] + body + text[end:]
+    if updated != path.read_text():
+        path.write_text(updated)
 
 
 def validate_identity(team: str, bundle: str, version: str, build: str) -> None:
@@ -123,6 +125,41 @@ def copy_resource(source: str, destination: str) -> str:
     return shutil.copy2(source, destination)
 
 
+def mobile_texture_imports(stage: Path, simulator: bool = False) -> list[dict]:
+    """Keep atlas coordinates intact while reducing package size in the isolated iOS stage.
+
+    Basis Universal stores sprite sheets compactly and transcodes to GPU compression at load. Full-screen
+    cinematics are streamed one at a time as lossy textures; they do not need a GPU-compressed mip chain.
+    Raw creator pieces (alpha palette keys) and UI artwork retain their original import settings.
+    """
+    changed = []
+    for family in ["sprites", "cutscenes"]:
+        for path in sorted((stage / "art" / family).rglob("*.import")):
+            original = path.read_text()
+            if not re.search(r'^importer="texture"$', original, re.MULTILINE):
+                continue
+            mode = re.search(r'^compress/mode=(\d+)$', original, re.MULTILINE)
+            if not mode or int(mode[1]) not in [2, 4] and family != "cutscenes":
+                continue
+            values = {"detect_3d/compress_to": "0"}
+            if family == "sprites":
+                values.update({"compress/mode": "4", "compress/uastc_level": "0", "compress/rdo_quality_loss": "1.0"})
+            else:
+                values.update({"compress/mode": "1", "compress/lossy_quality": "0.85", "mipmaps/generate": "false", "process/size_limit": "2048"})
+            project_values(path, "params", values)
+            changed.append({"path": path.relative_to(stage).as_posix(), "parameters": values})
+    if simulator:
+        # Apple's software GLES driver supports ETC2, not ASTC. Godot 4.7.2's CPU ASTC decompressor also
+        # rejects some mip offsets, so avoid that fallback without changing physical-device texture quality.
+        for path in sorted((stage / "art").rglob("*.import")):
+            original = path.read_text()
+            if re.search(r'^importer="texture"$', original, re.MULTILINE) and re.search(r'^compress/mode=2$', original, re.MULTILINE):
+                values = {"compress/high_quality": "false", "detect_3d/compress_to": "0"}
+                project_values(path, "params", values)
+                changed.append({"path": path.relative_to(stage).as_posix(), "parameters": values})
+    return changed
+
+
 def prepare(source: Path, output: Path, team: str, bundle: str, version: str, build: str, simulator: bool = False) -> Path:
     validate_identity(team, bundle, version, build)
     source, output = source.resolve(), output.resolve()
@@ -151,11 +188,16 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
         if path.exists():
             (stage / name).parent.mkdir(parents=True, exist_ok=True)
             copy_resource(str(path), str(stage / name))
+    texture_policy = mobile_texture_imports(stage, simulator)
     shutil.copy2(source / "project.godot", stage / "project.godot")
     project_values(stage / "project.godot", "application", {"config/version": json.dumps(version)})
     settings = {"textures/vram_compression/import_etc2_astc": "true",
-                "textures/vram_compression/import_s3tc_bptc": "false"}
+                "textures/vram_compression/import_s3tc_bptc": "false",
+                "textures/basis_universal/zstd_supercompression": "true"}
     if simulator:
+        # Apple's simulator Compatibility driver renders in software. Draw at logical points while keeping
+        # native layout, UIKit coordinates and touch semantics; device Metal exports retain Retina rendering.
+        project_values(stage / "project.godot", "display", {"window/stretch/mode": '"viewport"'})
         for key in ["renderer/rendering_method", "renderer/rendering_method.mobile", "renderer/rendering_method.ios"]:
             settings[key] = '"gl_compatibility"'
     project_values(stage / "project.godot", "rendering", settings)
@@ -195,6 +237,7 @@ def prepare(source: Path, output: Path, team: str, bundle: str, version: str, bu
                 "source_dirty": bool(probe(["git", "-C", str(source), "status", "--porcelain"])),
                 "engine": ENGINE_VERSION, "simulator": simulator, "bundle_identifier": bundle, "version": version, "build": build,
                 "inventory_kind": "source resources, not exported bundle or device memory",
+                "mobile_texture_imports": texture_policy,
                 "source_bytes": sum(f["bytes"] for f in files), "files": files}
     (output / "source-inventory.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     print(f"Prepared isolated project: {stage}")
@@ -264,6 +307,31 @@ def simulator_build(output: Path) -> Path:
     return app
 
 
+def simulator_test(output: Path, device: str, result: Path) -> None:
+    if not device:
+        raise ValueError("Set IOS_DEVICE to an existing dedicated QA simulator UUID")
+    if result.exists():
+        raise ValueError("Test results already exist; choose a fresh IOS_RESULT to preserve the evidence")
+    inventory = json.loads((output / "source-inventory.json").read_text())
+    if not inventory.get("simulator") or inventory.get("bundle_identifier") != "app.curseofstrahd.game":
+        raise ValueError("Full-game journeys require a simulator stage with bundle app.curseofstrahd.game")
+    from ios_simulator import ensure_arm64
+    from ios_ui_tests import attach
+    ensure_arm64(output)
+    project = output / "xcode/CurseOfStrahd.xcodeproj"
+    attach(project, ROOT / "tests/ios/NativeGameTests.swift")
+    boot = subprocess.run(["xcrun", "simctl", "boot", device], capture_output=True, text=True)
+    if boot.returncode and "Booted" not in boot.stderr:
+        raise RuntimeError(boot.stderr)
+    subprocess.run(["xcrun", "simctl", "bootstatus", device, "-b"], check=True)
+    logged(["xcodebuild", "-project", str(project), "-scheme", "NativeQA",
+            "-destination", "platform=iOS Simulator,id=" + device,
+            "-derivedDataPath", str(output / "derived"), "-resultBundlePath", str(result),
+            "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO", "CODE_SIGN_IDENTITY=", "DEVELOPMENT_TEAM=", "test"],
+           result.with_suffix(".log"))
+    print("Full-game simulator results: " + str(result))
+
+
 def report(app: Path) -> dict:
     if not app.is_dir() or app.suffix != ".app":
         raise ValueError("IOS_APP must name the built .app directory, not an IPA, PCK or source stage")
@@ -305,10 +373,12 @@ def archive(output: Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["check", "prepare", "export", "archive", "report", "simulator-build"])
+    parser.add_argument("action", choices=["check", "prepare", "export", "archive", "report", "simulator-build", "simulator-test"])
     parser.add_argument("--output", type=Path, default=ROOT.parent / "strahd-builds/ios")
     parser.add_argument("--godot", default=os.environ.get("GODOT", "/Applications/Godot.app/Contents/MacOS/Godot"))
     parser.add_argument("--app", type=Path)
+    parser.add_argument("--device", default="")
+    parser.add_argument("--result", type=Path)
     parser.add_argument("--simulator", action="store_true", help="unsigned Compatibility build for simulator only")
     args = parser.parse_args()
     output = args.output.expanduser().resolve()
@@ -331,6 +401,8 @@ def main() -> int:
             export(ROOT, output, args.godot, team, bundle, version, build, args.simulator)
         elif args.action == "simulator-build":
             simulator_build(output)
+        elif args.action == "simulator-test":
+            simulator_test(output, args.device, args.result or output / "game-tests.xcresult")
         elif args.action == "archive":
             archive(output)
         elif args.action == "report":

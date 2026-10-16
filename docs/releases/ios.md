@@ -76,6 +76,12 @@ raw generation inputs, and detects unexpanded Git LFS pointers. Files use APFS c
 The import cache is never copied. Imported resources and all `.import` edits stay in the stage.
 
 The isolated `project/project.godot` enables ETC2/ASTC imports, disables desktop S3TC/BPTC imports, and supplies the app version.
+Sprite atlases use Basis Universal compression with their dimensions and mip settings preserved, so frame
+coordinates and world scale remain unchanged. Fullscreen cutscene stills use 85% WebP and a 2048-pixel size
+limit. Creator alpha-key inputs retain their original imports. These policies modify only staged `.import`
+files and are recorded in the inventory; desktop artwork and imports are unchanged. The measured complete
+simulator app is 2.93 GB uncompressed, down from the initial 9.8 GB ASTC export. Device archives still require
+their own size report and visual/performance qualification.
 `project/export_presets.cfg` contains only the iOS preset. Optional signing/version environment variables affect
 the staged preset only. The inventory records source revision, dirty status, relative paths, sizes and SHA-256
 hashes. It measures **source resources**, not the final PCK, app size or device memory.
@@ -178,6 +184,10 @@ The existing `APPLE_DEVELOPER_ID_P12` and password continue to sign the Mac down
 iOS apps. The existing `APPLE_API_KEY_ID`, `APPLE_API_ISSUER_ID` and `APPLE_API_KEY_P8` are reused only when
 TestFlight upload is selected. Their App Store Connect role and app access must permit uploads.
 
+The repository variable `IOS_BUNDLE_ID` is configured as `app.curseofstrahd.game`. As of 2026-10-16 the three
+iOS signing secrets above are absent, and the local keychain has only the Mac Developer ID identity. The
+workflow is implemented but has not produced a signed iOS archive or a TestFlight upload.
+
 To prepare the iOS credentials, register the explicit App ID in the Apple Developer account, create/select an
 Apple Distribution certificate, and export it with its private key from Keychain Access as a password-protected
 `.p12`. Create an App Store Connect distribution provisioning profile for that App ID and certificate, and
@@ -240,6 +250,27 @@ iPhone and iPad. Install the resulting `derived/Build/Products/Release-iphonesim
 `xcrun simctl install <device-id> <app-path>`. An installed runtime may support only a subset of devices; check
 `xcrun simctl list runtimes -j` before selecting an iPhone or iPad. Simulator results do not qualify Metal performance.
 
+The software simulator renders at logical-point resolution; physical-device exports retain Retina rendering.
+Both iOS paths default to Low graphics. Mobile Low uses static title artwork to avoid the title's costly
+fullscreen animated effects. Simulator VRAM textures use ETC2 instead of unsupported ASTC, and particle
+turbulence is disabled to avoid a software OpenGL shader-compiler stall. Other particle motion remains;
+physical devices and desktop retain turbulence. Error capture retains Godot's known initial unsupported mouse-position probe
+in the raw log but suppresses that one exact startup notification; later errors still produce a readable
+mobile notice and shareable diagnostics.
+
+Run the shipping game's XCTest journeys after building:
+
+```sh
+make ios-game-test IOS_OUT=/absolute/path/outside/the/checkout IOS_DEVICE=<existing-qa-simulator-uuid> \
+  IOS_RESULT=/absolute/path/to/a-new-result.xcresult
+```
+
+The runner attaches a test target to the generated Xcode project and drives the public UI. It covers campaign
+creation, inventory, camera, saving/relaunch and interruption, plus Skirmish creation, combat Actions opening
+and closing, target navigation and practice recovery. Results and screenshots are retained in the `.xcresult`.
+An existing result is never overwritten and simulator data is never erased. Use a dedicated QA device because
+the journeys create saves and practice setups.
+
 
 ## Native services and reproducible simulator utility tests
 
@@ -273,5 +304,5 @@ This fixture qualifies the bridge, not a campaign playthrough. Full-game journey
 Control interaction, device rendering/performance and signed distribution remain separate acceptance gates.
 
 Local evidence, 2026-10-16: Xcode 27.1; native utility cancellation on iPhone Duo/iOS 27.1 and iPad Pro 11 M4/iOS
-27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The first complete ASTC import and refreshed game export have finished; full-game native qualification is in progress.
-Desktop/mobile `make check` passes 109 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 24 Python tests.
+27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The complete mobile import and refreshed game export have finished; full-game native qualification is in progress.
+Desktop/mobile `make check` passes 134 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 26 Python tests.
