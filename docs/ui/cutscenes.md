@@ -87,6 +87,15 @@ A fight that a conversation starts gets its picture from that conversation: the 
 line, so the picture shows with it before the fight begins (Wintersplinter, the Abbot's wings, the hut). A fight an
 area starts (the gallows field at night) takes the area's `enter:` trigger; the game waits under the picture.
 
+## Music
+A conversation plays its place's music, or the castle's `dread` while one of its menacing few speaks. A cutscene whose
+scene would clash with that (Strahd at the window of a lively inn, a burial to the freed vineyard's dance) names its
+own mood in `art/audio.json` `scenes` (cutscene id: mood). It plays from the picture to the end of the conversation,
+over whoever speaks after, and the place's own music comes back when the conversation ends (`DialogueUI.scene_shown`,
+`GameRoot._scene_music`). A fight the conversation starts brings its own. The owner's music audit (2026-10-17,
+`docs/assets/music_audit.md`) picked them, from recordings already in the game. Place cutscenes (`enter:`, `examine:`)
+keep the place's music.
+
 ## Code
 - `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
   `scenes` (a trigger's scenes in order, from `then` and `caption`).

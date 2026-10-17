@@ -6,7 +6,7 @@
   "when": "flag.strahd_destroyed",
   "narration": "endings/strahd_destroyed:start",
   "tone": "dawn",
-  "music": "ending",
+  "music": "dawn",
   "epilogue": [
     {
       "topic": "land",

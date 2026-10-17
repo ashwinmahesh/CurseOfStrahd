@@ -20,6 +20,8 @@ var _move_repeat := 0.0
 var _dialogue_ref := ""
 ## The music a conversation turned the place's to (_talk_music), "" while the place's own plays.
 var _talk_mood := ""
+## The music a cutscene in the conversation brought (_scene_music); it holds over whoever speaks until the end.
+var _scene_mood := ""
 ## Banter that came while the Narrator was speaking; it plays a moment after the box clears (_process).
 var _banter_waiting: Array = []
 var _banter_quiet_since := -1   ## msec ticks since the box cleared, while banter waits
@@ -487,6 +489,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 	glow.clear()
 	_dialogue_ref = ref
 	_talk_mood = ""
+	_scene_mood = ""
 	hud.visible = false
 	dialogue = DialogueUI.new()
 	add_child(dialogue)
@@ -502,6 +505,7 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 			view.unstage_npc(npc))
 	dialogue.respec_requested.connect(respec)
 	dialogue.spoke.connect(_talk_music)
+	dialogue.scene_shown.connect(_scene_music)
 	var runner := DialogueRunner.new(st, Dice.roller, narrator)
 	runner.npc_id = _npc_id
 	runner.offer_guidance = true   # Guidance before a check, from whoever can cast it (GuidanceOffer)
@@ -520,8 +524,21 @@ func start_dialogue(ref: String, _npc_id: String) -> void:
 ## the castle itself fears) plays that music until it ends; _dialogue_ended brings the place's own back. `speaker_id`
 ## is whoever was spoken to, or whose line is showing.
 func _talk_music(speaker_id: String) -> void:
+	if _scene_mood != "":
+		return   # the scene's own music holds
 	var m := Audio.talk_mood(_place_mood(), speaker_id)
 	if m != "":
+		_talk_mood = m
+		Audio.play_music(m)
+
+
+## A cutscene whose scene has its own music (art/audio.json "scenes": Strahd at the window of a lively inn, a burial in
+## the vineyard) plays it from its picture to the conversation's end, over any speaker's; _dialogue_ended brings the
+## place's own back.
+func _scene_music(cutscene_id: String) -> void:
+	var m := Audio.scene_mood(cutscene_id)
+	if m != "":
+		_scene_mood = m
 		_talk_mood = m
 		Audio.play_music(m)
 
@@ -535,6 +552,7 @@ func _ask_guidance(offer: Dictionary, answered: Callable) -> void:
 
 func _dialogue_ended(combat: String) -> void:
 	dialogue = null
+	_scene_mood = ""
 	if view != null:
 		view.clear_staged()   # whoever stepped into the scene leaves with it
 		TalkCamera.close(view, combat != "")
