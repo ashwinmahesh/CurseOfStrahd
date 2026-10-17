@@ -176,12 +176,26 @@ def save_report(output, name, value):
 def wait_asset(api, collection, asset, seconds=900):
     import time
     deadline = time.monotonic() + seconds
-    while asset['attributes']['state'] in ['UPLOAD_COMPLETE', 'UPLOADING', 'PROCESSING']:
+    while True:
+        attrs = asset['attributes']
+        state = attrs['state']
+        ready = state in ['COMPLETE', 'PREPARE_FOR_SUBMISSION', 'APPROVED']
+        if not ready and state not in ['UPLOAD_COMPLETE', 'UPLOADING', 'PROCESSING']:
+            return asset
+        # The live API can report COMPLETE before it publishes the transcoded
+        # video, specification and poster. Wait for those processed resources too.
+        poster = attrs.get('previewFrameImage') or {}
+        poster_state = (poster.get('state') or {}).get('state')
+        if poster_state == 'FAILED':
+            raise RuntimeError('Apple preview frame processing failed: ' + asset['id'])
+        video_ready = collection != 'appAssetLibraryVideos' or (
+            attrs.get('videoAsset') and poster_state == 'COMPLETE' and poster.get('image'))
+        if ready and attrs.get('specId') and video_ready:
+            return asset
         if time.monotonic() >= deadline:
-            raise TimeoutError('Apple asset processing timed out: ' + asset['id'])
+            raise TimeoutError('Apple asset processing timed out: ' + asset['id'] + ' (' + state + ')')
         time.sleep(10)
         asset = api.call(collection + '/' + asset['id'])['data']
-    return asset
 
 
 def order_placements(api, locale_id, receipts):
@@ -266,7 +280,7 @@ def apply_listing(api, app_id, version, manifest, output):
         asset = wait_asset(api, collection, asset)
         record['asset'] = sanitized(asset)
         save_report(output, 'receipts.json', receipts)
-        if asset['attributes']['state'] not in ['PREPARE_FOR_SUBMISSION', 'APPROVED']:
+        if asset['attributes']['state'] not in ['COMPLETE', 'PREPARE_FOR_SUBMISSION', 'APPROVED']:
             raise RuntimeError('Asset not ready: ' + file.name + ' (' + asset['attributes']['state'] + ') ' + json.dumps(asset['attributes'].get('stateDetails')))
         if asset['attributes']['specId'] not in spec_for(item, refdata, file):
             raise ValueError('Apple processed asset at an unexpected specification')

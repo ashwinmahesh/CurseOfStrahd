@@ -14,13 +14,30 @@ class StoreTests(unittest.TestCase):
     def test_uploaded_asset_waits_for_apple_processing(self):
         from unittest.mock import Mock
         api = Mock()
-        ready = {'id': 'video-1', 'attributes': {'state': 'PREPARE_FOR_SUBMISSION'}}
+        ready = {'id': 'video-1', 'attributes': {'state': 'PREPARE_FOR_SUBMISSION', 'specId': 'spec', 'videoAsset': {'url': 'video'}, 'previewFrameImage': {'state': {'state': 'COMPLETE'}, 'image': {'templateUrl': 'poster'}}}}
         api.call.return_value = {'data': ready}
         with patch('time.sleep'):
             actual = ios_store.wait_asset(api, 'appAssetLibraryVideos',
                 {'id': 'video-1', 'attributes': {'state': 'UPLOAD_COMPLETE'}})
         self.assertEqual(actual, ready)
         api.call.assert_called_once_with('appAssetLibraryVideos/video-1')
+
+    def test_complete_upload_waits_for_transcode_and_poster_resources(self):
+        from unittest.mock import Mock
+        api = Mock()
+        ready = {'id': 'video-1', 'attributes': {'state': 'COMPLETE', 'specId': 'spec',
+            'videoAsset': {'url': 'video'}, 'previewFrameImage': {
+                'state': {'state': 'COMPLETE'}, 'image': {'templateUrl': 'poster'}}}}
+        api.call.side_effect = [
+            {'data': {'id': 'video-1', 'attributes': {'state': 'COMPLETE', 'specId': 'spec',
+                'videoAsset': {'url': 'video'}, 'previewFrameImage': {'state': {'state': 'PROCESSING'}}}}},
+            {'data': ready}]
+        with patch('time.sleep'):
+            actual = ios_store.wait_asset(api, 'appAssetLibraryVideos',
+                {'id': 'video-1', 'attributes': {'state': 'COMPLETE', 'specId': None,
+                    'videoAsset': None, 'previewFrameImage': {'state': {'state': 'PROCESSING'}}}})
+        self.assertEqual(actual, ready)
+        self.assertEqual(api.call.call_count, 2)
 
     def test_ordering_keeps_existing_placements_and_verifies_new_sequence(self):
         from unittest.mock import Mock
