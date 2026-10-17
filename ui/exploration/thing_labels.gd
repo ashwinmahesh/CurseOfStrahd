@@ -71,7 +71,7 @@ func plates() -> Array[Dictionary]:
 			continue
 		var name_and_dim := _name(thing)
 		out.append({"text": name_and_dim[0], "kind": kind, "at": at, "dim": name_and_dim[1],
-			"depth": cam.global_position.distance_to(w)})
+			"depth": cam.global_position.distance_to(w), "cell": cell, "id": str(thing.get("id", ""))})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["depth"]) > float(b["depth"]))
 	return out
 

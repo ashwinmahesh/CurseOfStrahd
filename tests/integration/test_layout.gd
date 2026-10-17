@@ -2070,3 +2070,38 @@ func test_mobile_contextual_combat_controls_fit_without_overlapping_end_turn() -
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_nearby_objects_and_search_recovery_fit_small_phone_and_tablet() -> void:
+	InputActions.ensure()
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	var old_text := GameSettings.text_scale()
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	for text_scale: float in [1.0, GameSettings.TEXT_SCALES.back()]:
+		GameSettings.set_text_scale(text_scale)
+		for size_: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+			MobileDevice.test_size = size_
+			MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+			get_tree().root.size = Vector2i(size_)
+			MobileDevice.current.configure()
+			var hud := ExploreHud.new()
+			add_child(hud)
+			hud.build(state)
+			hud.mobile.nearby()
+			await _mobile_check(hud, "nearby empty")
+			for i in 24:
+				hud.mobile._nearby_entries.append({"text": "A weathered chest beneath the overgrown watchtower · Investigation", "kind": "container", "id": str(i), "cell": Vector2i(i, 1), "feet": i * 5})
+			hud.mobile._fill_nearby()
+			await _mobile_check(hud, "nearby long list")
+			hud.mobile.nearby_query = "nothing matches this query"
+			hud.mobile._fill_nearby()
+			await _mobile_check(hud, "nearby search recovery")
+			hud.queue_free()
+			await _frames(2)
+	GameSettings.set_text_scale(old_text)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

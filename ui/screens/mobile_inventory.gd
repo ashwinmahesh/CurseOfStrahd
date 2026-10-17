@@ -218,6 +218,10 @@ func _bag(body: Container) -> void:
 	search.clear_button_enabled = true
 	search.text_changed.connect(func(value: String) -> void:
 		screen.search = value
+		positions[_key()] = 0
+		page.scroll.scroll_vertical = 0
+		if is_instance_valid(_bag_scroll):
+			_bag_scroll.scroll_vertical = 0
 		screen._fill_list())
 	row.add_child(search)
 	var filter_button := MobileUi.button("Filters", func() -> void:
@@ -352,3 +356,13 @@ func turn_page(direction: int) -> void:
 	if is_instance_valid(_bag_scroll):
 		_bag_scroll.scroll_vertical = 0
 	positions[_key()] = 0
+
+
+## Recover from a filtered empty bag without changing items, marks or sort order.
+func reset_filters() -> void:
+	screen.search = ""
+	screen.filter = "All"
+	screen.marks = ""
+	positions[_key()] = 0
+	list_page = 0
+	draw()

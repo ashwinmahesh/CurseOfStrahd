@@ -415,3 +415,15 @@ The two former Documents paths are compatibility symlinks. The worktree is locke
 unmounted. Default native/engine caches follow the checkout's sibling `strahd-builds` directory; explicit
 `IOS_NATIVE_CACHE` and `IOS_ENGINE_CACHE` overrides still work. Virtualenv commands use their interpreter
 so moving the cache does not leave executable shebangs pointing at its former location.
+
+## Discovery and search recovery — 2026-10-17
+
+The mobile exploration menu now offers a searchable Nearby objects list using the desktop Reveal eligibility.
+Rows revalidate the active location and input state before opening existing context actions, without interacting.
+Held Reveal has pressed feedback and optional haptics. Inventory and combat Actions have actionable empty
+search/filter states and reset list position when typing. Desktop presentation remains unchanged.
+
+`make check` passed 165 tests plus compilation, lint and validation. Sixteen prepared phone/tablet screenshots
+were captured offscreen and visually reviewed; Obsidian's “iOS UX Research and Improvements” note contains
+the comparison, gallery and hashes. These are not native simulator E2E evidence and are not in Apple build 1201.
+See [research and remaining qualification](../plans/ios_ux_research.md).

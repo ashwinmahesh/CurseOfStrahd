@@ -71,8 +71,13 @@ func browse() -> void:
 	var filters := HBoxContainer.new()
 	page.toolbar.add_child(filters)
 	filters.add_child(MobileUi.button(category + " ▾", choose_category))
-	filters.add_child(MobileUi.button("Search", func() -> void:
-		search_open = not search_open
+	filters.add_child(MobileUi.button("Cancel search" if search_open or query != "" else "Search", func() -> void:
+		if search_open or query != "":
+			query = ""
+			search_open = false
+		else:
+			search_open = true
+		browse_scroll = 0
 		browse()))
 	if search_open or query != "":
 		var search := LineEdit.new()
@@ -84,6 +89,8 @@ func browse() -> void:
 		search.clear_button_enabled = true
 		search.text_changed.connect(func(value: String) -> void:
 			query = value
+			browse_scroll = 0
+			page.scroll.scroll_vertical = 0
 			fill())
 		page.toolbar.add_child(search)
 	_list = VBoxContainer.new()
@@ -155,7 +162,24 @@ func fill() -> void:
 		card.set_meta(&"action_id", str(action["id"]))
 		_list.add_child(card)
 	if _list.get_child_count() == 0:
-		_list.add_child(MobileUi.text("No matching actions. Try another category or search."))
+		var message := "No matching actions."
+		if query.strip_edges() == "":
+			if category == ActionCatalog.FAVOURITES:
+				message = "No favourites yet. Open an action and choose Add to Favourites to keep it here."
+			elif category == ActionCatalog.HIDDEN:
+				message = "No hidden actions."
+		_list.add_child(MobileUi.text(message))
+		if query != "":
+			_list.add_child(MobileUi.button("Clear search", func() -> void:
+				query = ""
+				browse_scroll = 0
+				browse()))
+		if category != "All":
+			_list.add_child(MobileUi.button("Show all actions", func() -> void:
+				category = "All"
+				query = ""
+				browse_scroll = 0
+				browse()))
 
 
 func inspect(action: Dictionary) -> void:

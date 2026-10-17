@@ -1116,6 +1116,8 @@ func _fill_list() -> void:
 		if mobile != null and marks == "junk" and search.strip_edges() == "":
 			why = "Nothing marked as junk. Open an item and choose Mark as junk."
 		_list_foot.add_child(MobileUi.text(why, "bone") if mobile != null else UiKit.label(why, 15, "bone", 540))
+		if mobile != null and (search != "" or filter != "All" or marks != ""):
+			_list_foot.add_child(MobileUi.button("Show all items", mobile.reset_filters))
 	var shown := mobile.visible_rows(rows) if mobile != null else rows
 	for r in shown:
 		_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))

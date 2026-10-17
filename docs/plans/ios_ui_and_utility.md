@@ -238,3 +238,7 @@ Updated exploration/combat help describes the two-hand gesture. Mobile conversat
 busts beside the text/choice column, including speaker emphasis and moods, with a portrait fallback.
 Phone/tablet offscreen captures and raw viewport/layout tests cover the update, including large text; native
 qualification and a new Apple upload remain separate from the already processed build 1201.
+
+## Research follow-up — 2026-10-17
+
+See [iOS UX research and improvements](ios_ux_research.md) for the official-source comparison, implemented nearby-object list and search recovery, screenshot evidence, and remaining native/hardware qualification.

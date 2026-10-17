@@ -1065,9 +1065,11 @@ func test_reveal_is_held_only_and_cancels_on_drag_modal_and_interruption() -> vo
 	_touch(at, true)
 	await _frames()
 	assert_true(hud.thing_labels.showing, "holding Reveal shows existing interactable labels")
+	assert_true(hud.mobile.reveal_button.button_pressed, "Reveal visibly stays pressed during the hold")
 	_touch(at, false)
 	await _frames()
 	assert_false(hud.thing_labels.showing)
+	assert_false(hud.mobile.reveal_button.button_pressed)
 	assert_eq(world.taps, 0, "releasing Reveal never activates the world")
 	_touch(at, true)
 	await _frames()
@@ -1149,4 +1151,75 @@ func test_mobile_outline_tracks_animated_people_atlas_frames() -> void:
 	FoundOutline.refit(effect.pieces)
 	assert_true(is_equal_approx(float(material.get_shader_parameter("figure_push")), 0.15), "outline follows character motion")
 	actor.queue_free()
+	await _frames()
+
+
+func _press_named(node: Node, caption: String) -> void:
+	var found: Button
+	for button: Button in node.find_children("*", "Button", true, false):
+		if not button.is_queued_for_deletion() and button.is_visible_in_tree() and button.text == caption:
+			found = button
+			break
+	assert_true(found != null, "button exists: " + caption)
+	if found != null:
+		var at := found.get_global_rect().get_center()
+		_touch(at, true)
+		await _frames()
+		_touch(at, false)
+		await _frames()
+
+
+func test_mobile_search_recovery_never_uses_items_or_commits_actions() -> void:
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	state.party[0].add_item("potion_of_healing", 3)
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	inventory.open(self, state, 0)
+	inventory.search = "nothing matches this"
+	inventory.filter = "Weapons"
+	inventory.marks = "junk"
+	inventory.sort_by = "weight"
+	inventory._draw()
+	await _frames()
+	var before := state.to_dict()
+	assert_true(inventory.shown_ids().is_empty())
+	await _press_named(inventory, "Show all items")
+	assert_true(inventory.shown_ids().has("potion_of_healing"))
+	assert_eq(inventory.search, "")
+	assert_eq(inventory.filter, "All")
+	assert_eq(inventory.marks, "")
+	assert_eq(inventory.sort_by, "weight", "recovery keeps the sort choice")
+	assert_eq(state.to_dict(), before, "clearing filters does not mark, use or transfer items")
+	inventory.queue_free()
+	await _frames()
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.start_with(encounter, actor)
+	var catalog := ActionCatalog.new(encounter)
+	catalog.set_hidden(actor, "dodge", true)
+	var actions := MobileActions.new()
+	add_child(actions)
+	actions.query = "no such action"
+	actions.open(catalog, actor)
+	var commits := [0]
+	actions.chosen.connect(func(_action: Dictionary, _level: int) -> void: commits[0] = int(commits[0]) + 1)
+	var rng := encounter.dice.get_state()
+	await _frames()
+	await _press_named(actions, "Clear search")
+	assert_eq(actions.query, "")
+	assert_true(actions._list.get_child_count() > 1)
+	assert_false(actions._list.get_children().any(func(node: Node) -> bool: return str(node.get_meta(&"action_id", "")) == "dodge"), "clearing search does not unhide actions")
+	actions.category = ActionCatalog.HIDDEN
+	actions.query = "no such action"
+	actions.browse()
+	await _frames()
+	await _press_named(actions, "Show all actions")
+	assert_eq(actions.category, "All")
+	assert_eq(actions.query, "")
+	assert_true(catalog.is_hidden(actor, "dodge"))
+	assert_eq(int(commits[0]), 0)
+	assert_eq(encounter.dice.get_state(), rng)
+	assert_true(actor.action_available)
+	actions.queue_free()
 	await _frames()

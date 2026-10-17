@@ -65,6 +65,7 @@ func _ready() -> void:
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
+	hud.interactable_requested.connect(_mobile_context)
 	plan_bar = PlanBar.new()
 	plan_bar.hud = hud
 	plan_bar.command.connect(_command)
@@ -327,6 +328,14 @@ func _unhandled_input(event: InputEvent) -> void:
 func touch_ready() -> bool:
 	return not moving and view != null and not view.in_combat and dialogue == null and screen == null \
 		and loot == null and ending == null and guidance == null and not view.input_locked
+
+
+## A named alternative to precise world taps. Revalidate against the active location before opening options.
+func _mobile_context(source: LocationView, cell: Vector2i) -> void:
+	if not MobileDevice.enabled() or not touch_ready() or source != view or view.busy or view.thing_at(cell).is_empty():
+		return
+	TouchOutline.at(view, cell)
+	open_world_menu(cell, MobileDevice.safe_rect().get_center())
 
 
 func touch_tap(at: Vector2, context: bool) -> void:

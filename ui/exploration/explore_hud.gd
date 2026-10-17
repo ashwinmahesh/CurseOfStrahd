@@ -8,6 +8,7 @@ extends CanvasLayer
 signal leader_picked(index: int)
 signal sheet_requested(index: int)
 signal command(name: String)
+signal interactable_requested(source: LocationView, cell: Vector2i)
 
 var mobile: MobileExploreHud
 

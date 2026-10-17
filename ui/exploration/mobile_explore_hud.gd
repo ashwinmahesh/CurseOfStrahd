@@ -14,6 +14,10 @@ var messages: Array[String] = []
 var narration := ""
 var sheet: CanvasLayer
 var kind := ""
+var nearby_query := ""
+var _nearby_view: LocationView
+var _nearby_rows: VBoxContainer
+var _nearby_entries: Array[Dictionary] = []
 
 
 func setup(owner_: ExploreHud) -> void:
@@ -28,6 +32,7 @@ func setup(owner_: ExploreHud) -> void:
 	add_child(shortcuts)
 	reveal_button = RevealButton.new()
 	reveal_button.text = "Reveal"
+	reveal_button.toggle_mode = true
 	reveal_button.tooltip_text = "Hold to show interactable names"
 	MobileUi.fit(reveal_button)
 	menu_button = MobileUi.button("Menu", menu)
@@ -56,6 +61,7 @@ class RevealButton extends Button:
 			finger = index
 			held = true
 			set_pressed_no_signal(true)
+			MobileNative.feedback()
 
 	func touch_surface_drag(index: int, at: Vector2) -> void:
 		if index == finger and not get_global_rect().has_point(at):
@@ -121,6 +127,7 @@ func menu() -> void:
 	choices.add_theme_constant_override("h_separation", 10)
 	choices.add_theme_constant_override("v_separation", 8)
 	body.add_child(choices)
+	choices.add_child(MobileUi.button("Nearby objects", nearby))
 	choices.add_child(MobileUi.button("Party", party))
 	for spec: Array in ExploreHud.BUTTONS:
 		var command := str(spec[2])
@@ -172,7 +179,7 @@ func information() -> void:
 	body.add_child(MobileUi.button("Map", func() -> void:
 		close()
 		hud.command.emit("map")))
-	body.add_child(MobileUi.text("Tap the ground to move or an object to interact. Drag to pan, pinch to zoom, and twist two fingers clockwise or counterclockwise to rotate. Menu → Camera also has buttons. Menu → More controls → Context shows an object's other actions."))
+	body.add_child(MobileUi.text("Tap the ground to move or an object to interact. Drag to pan, pinch to zoom, and twist two fingers clockwise or counterclockwise to rotate. Menu → Camera also has buttons. Menu → Nearby objects lists visible interactables without precision tapping. Hold Reveal to see their names in the world. Menu → More controls → Context shows an object's other actions."))
 	body.add_child(MobileUi.text(PadGlyphs.names("Controller: left stick walks; right stick turns and zooms. {@mark_prev}/{@mark_next} select nearby objects; {@use_marked} interacts; {@marked_menu} opens their options; {@search} searches. {@leader_prev}/{@leader_next} change leader. {@hud_bar} opens this exploration menu; {start} opens pause/settings. {b} goes back. Settings → Keys → Controller changes bindings.")))
 
 
@@ -213,3 +220,93 @@ func history() -> void:
 		narration = ""
 		VoiceOver.stop()
 		close()))
+
+
+## A list alternative to tiny/overlapping world targets and a sustained Reveal hold. Opening it does not act.
+func nearby(note: String = "") -> void:
+	var body := open_page("Nearby objects", "nearby")
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	page.centered_width = 720
+	page.centered_height = 520
+	page.back_action = menu
+	page.reflow()
+	var done := MobileUi.button("Close", close)
+	done.size_flags_horizontal = Control.SIZE_SHRINK_END
+	done.autowrap_mode = TextServer.AUTOWRAP_OFF
+	page.heading.get_parent().add_child(done)
+	_nearby_view = hud.minimap.view
+	_nearby_entries = nearby_entries()
+	var tools := HBoxContainer.new()
+	page.toolbar.add_child(tools)
+	var search := LineEdit.new()
+	search.placeholder_text = "Search nearby objects"
+	search.text = nearby_query
+	search.clear_button_enabled = true
+	search.custom_minimum_size.y = 48
+	search.add_theme_font_size_override("font_size", UiScale.text(18))
+	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	search.text_changed.connect(func(value: String) -> void:
+		nearby_query = value
+		_fill_nearby()
+		page.scroll.scroll_vertical = 0)
+	tools.add_child(search)
+	var refresh_button := MobileUi.button("Refresh", func() -> void: nearby())
+	refresh_button.size_flags_horizontal = Control.SIZE_SHRINK_END
+	refresh_button.autowrap_mode = TextServer.AUTOWRAP_OFF
+	tools.add_child(refresh_button)
+	body.add_child(MobileUi.text(note if note != "" else "Choose an object to see its actions. Nothing happens until you choose an action.", "parchment"))
+	_nearby_rows = VBoxContainer.new()
+	_nearby_rows.add_theme_constant_override("separation", 6)
+	body.add_child(_nearby_rows)
+	_fill_nearby()
+
+
+func nearby_entries() -> Array[Dictionary]:
+	var entries: Array[Dictionary] = []
+	var view := hud.minimap.view
+	if not is_instance_valid(view) or view.busy or view.input_locked or view.in_combat:
+		return entries
+	# Reuse the desktop reveal eligibility: no hidden rooms, undiscovered secrets, offscreen targets or party.
+	entries = hud.thing_labels.plates()
+	for entry in entries:
+		var offset := (entry["cell"] as Vector2i) - view.leader().cell
+		entry["feet"] = maxi(absi(offset.x), absi(offset.y)) * 5
+	entries.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		return int(a["feet"]) < int(b["feet"]) if a["feet"] != b["feet"] else str(a["text"]).naturalnocasecmp_to(str(b["text"])) < 0)
+	return entries
+
+
+func _fill_nearby() -> void:
+	MobileUi.clear(_nearby_rows)
+	var words := nearby_query.strip_edges().to_lower()
+	var count := 0
+	for entry in _nearby_entries:
+		var text := str(entry["text"])
+		if words != "" and not text.to_lower().contains(words):
+			continue
+		var category := str({"npc": "Person", "prop": "Object"}.get(str(entry["kind"]), str(entry["kind"]).capitalize()))
+		var caption := "%s\n%s · %d ft away" % [text, category, int(entry["feet"])]
+		var button := MobileUi.button(caption, func() -> void: _pick_nearby(entry))
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.set_meta(&"nearby_entry", entry)
+		_nearby_rows.add_child(button)
+		count += 1
+	if count == 0:
+		_nearby_rows.add_child(MobileUi.text("No matching nearby objects." if words != "" else "No visible interactables nearby. Close this list and move or pan the camera, then try again."))
+		if words != "":
+			_nearby_rows.add_child(MobileUi.button("Clear search", func() -> void:
+				nearby_query = ""
+				nearby()))
+
+
+func _pick_nearby(entry: Dictionary) -> void:
+	if kind != "nearby" or not is_instance_valid(_nearby_view):
+		return
+	if _nearby_view == hud.minimap.view:
+		for fresh in nearby_entries():
+			if fresh["kind"] == entry["kind"] and fresh["id"] == entry["id"] and fresh["cell"] == entry["cell"]:
+				var view := _nearby_view
+				close()
+				hud.interactable_requested.emit(view, fresh["cell"] as Vector2i)
+				return
+	nearby("That object is no longer available. The list has been refreshed.")
