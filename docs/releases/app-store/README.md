@@ -6,7 +6,7 @@ Run the existing iOS workflow on `codex/ios-support-foundation` with operation `
 
 ## Preview provenance
 
-The source is the website’s current `media/trailer-v4.mp4`, referenced by its checked-in page. A 27-second cut retains 0–5, 8.4–23.6 and 69.2–76 seconds, omitting desktop HUDs and the desktop download card. Original art, narration and music remain. Both encodes preserve the image proportions with letterboxing; the last second fades to black. Phone: 1920×886. Tablet: 1600×1200. H.264, 30 fps, stereo AAC, 48 kHz. The preview is website promotional footage, not a native mobile recording. Source and edit hashes are in `trailer-provenance.json`.
+The source is the website’s current `media/trailer-v4.mp4`, referenced by its checked-in page. A 30-second cut retains 0–23.2 and 69.2–76 seconds, omitting desktop HUDs and the desktop download card. Original art, narration and music remain. Both encodes preserve the image proportions with letterboxing; the last 0.8 seconds fade to black after the final narration line ends. Phone: 1920×886. Tablet: 1600×1200. H.264, 30 fps, stereo AAC, 48 kHz. The preview is website promotional footage, not a native mobile recording. Source and edit hashes are in `trailer-provenance.json`.
 
 Music: “Dark Gothic Haunted Masquerade” by ISAo, OGA-BY 3.0. This is a shortened edit. Existing source attribution is retained in the app description.
 

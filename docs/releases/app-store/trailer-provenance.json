@@ -6,17 +6,13 @@
   "segments": [
     [
       0,
-      5
-    ],
-    [
-      8.4,
-      23.6
+      23.2
     ],
     [
       69.2,
       76
     ]
   ],
-  "duration": 27,
-  "reason": "Apple 15\u201330 second limit; retain website narration/world footage and exclude desktop control layouts and desktop download end card. Aspect-fit letterboxing preserves the frame."
+  "duration": 30,
+  "reason": "Apple 15\u201330 second limit; preserve complete website narration lines 01\u201304 and 08, world footage and artwork, excluding desktop control layouts and download card. End fade starts after the last included narration ends. Aspect-fit letterboxing preserves the frame."
 }

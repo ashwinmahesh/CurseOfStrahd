@@ -8,7 +8,7 @@
   "assets": [
     {
       "file": "assets/trailer-preview-iphone.mp4",
-      "sha256": "3370d4741a6c26a0bea8c364fad4ff432532edfe69cef4d232b50b97aaf331d3",
+      "sha256": "10aee8916130c2dbd16d27c9236c675988693b9a3126a7c84b6c250454733de1",
       "kind": "video",
       "title": "Website promo \u2014 iphone App Store preview",
       "width": 1920,
@@ -16,14 +16,14 @@
       "groups": [
         "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE"
       ],
-      "duration": 27,
+      "duration": 30,
       "fps": 30,
       "has_audio": true,
-      "poster_timecode": "00:00:23:00"
+      "poster_timecode": "00:00:26:00"
     },
     {
       "file": "assets/trailer-preview-ipad.mp4",
-      "sha256": "1158525f617922ae3e536756f3f895bb4082da5668680a8ce94023a18f26fe6b",
+      "sha256": "6b093abc2b9fca71d6c60d1a9e1e2af57dc323cbbdc6933434836b802130f49d",
       "kind": "video",
       "title": "Website promo \u2014 ipad App Store preview",
       "width": 1600,
@@ -31,10 +31,10 @@
       "groups": [
         "IPAD_13_PROFILE"
       ],
-      "duration": 27,
+      "duration": 30,
       "fps": 30,
       "has_audio": true,
-      "poster_timecode": "00:00:23:00"
+      "poster_timecode": "00:00:26:00"
     }
   ],
   "build_number": "2001"

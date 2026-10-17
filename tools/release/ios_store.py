@@ -173,8 +173,40 @@ def save_report(output, name, value):
     (output / name).write_text(json.dumps(sanitized(value), indent=2) + '\n')
 
 
-def apply_listing(api, app_id, version, manifest, output):
+def wait_asset(api, collection, asset, seconds=900):
     import time
+    deadline = time.monotonic() + seconds
+    while asset['attributes']['state'] in ['UPLOAD_COMPLETE', 'UPLOADING', 'PROCESSING']:
+        if time.monotonic() >= deadline:
+            raise TimeoutError('Apple asset processing timed out: ' + asset['id'])
+        time.sleep(10)
+        asset = api.call(collection + '/' + asset['id'])['data']
+    return asset
+
+
+def order_placements(api, locale_id, receipts):
+    groups = {}
+    for receipt in receipts:
+        for placement in receipt['placements']:
+            groups.setdefault(placement['attributes']['placementGroup'], []).append(placement['id'])
+    for group, wanted in groups.items():
+        path = 'appStoreVersionLocalizations/' + locale_id + '/placements'
+        parameters = {'filter[placementGroup]': group, 'sort': 'placementGroupPosition', 'limit': 200}
+        existing = [p['id'] for p in all_data(api, path, parameters)]
+        ordered = wanted + [identity for identity in existing if identity not in wanted]
+        if existing != ordered:
+            request = payload('appAssetLibraryPlacementOrderingRequests', {'placementGroup': group},
+                              {'appStoreVersionLocalization': ('appStoreVersionLocalizations', locale_id)})
+            request['data']['relationships']['orderedPlacements'] = {'data': [
+                {'type': 'appAssetLibraryPlacements', 'id': identity} for identity in ordered]}
+            api.call('appAssetLibraryPlacementOrderingRequests', method='POST', data=request)
+        actual = [p['id'] for p in all_data(api, path, parameters)]
+        if actual != ordered:
+            raise RuntimeError('Apple listing order does not match the reviewed media order: ' + group)
+    return groups
+
+
+def apply_listing(api, app_id, version, manifest, output):
     metadata = validate_manifest(manifest, version)
     before = inspect(api, app_id, version)
     save_report(output, 'before.json', before)
@@ -231,14 +263,11 @@ def apply_listing(api, app_id, version, manifest, output):
         record = {'file': item['file'], 'sha256': item['sha256'], 'asset': sanitized(asset), 'placements': []}
         receipts.append(record)
         save_report(output, 'receipts.json', receipts)
-        deadline = time.monotonic() + 900
-        while asset['attributes']['state'] in ['UPLOADING', 'PROCESSING'] and time.monotonic() < deadline:
-            time.sleep(10)
-            asset = api.call(collection + '/' + asset['id'])['data']
+        asset = wait_asset(api, collection, asset)
         record['asset'] = sanitized(asset)
         save_report(output, 'receipts.json', receipts)
         if asset['attributes']['state'] not in ['PREPARE_FOR_SUBMISSION', 'APPROVED']:
-            raise RuntimeError('Asset not ready: ' + file.name + ' ' + json.dumps(asset['attributes'].get('stateDetails')))
+            raise RuntimeError('Asset not ready: ' + file.name + ' (' + asset['attributes']['state'] + ') ' + json.dumps(asset['attributes'].get('stateDetails')))
         if asset['attributes']['specId'] not in spec_for(item, refdata, file):
             raise ValueError('Apple processed asset at an unexpected specification')
         placement_type = 'APP_PREVIEW' if video else 'APP_SCREENSHOT'
@@ -254,6 +283,7 @@ def apply_listing(api, app_id, version, manifest, output):
             record['placements'].append(sanitized(placement))
             save_report(output, 'receipts.json', receipts)
         print('Processed and placed ' + file.name, flush=True)
+    save_report(output, 'ordering.json', order_placements(api, locale['id'], receipts))
     build_number = metadata.get('build_number')
     if build_number:
         builds = api.call('builds', {'filter[app]': app_id, 'filter[version]': build_number,

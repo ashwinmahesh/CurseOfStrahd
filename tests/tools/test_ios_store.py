@@ -11,6 +11,30 @@ import ios_store
 
 
 class StoreTests(unittest.TestCase):
+    def test_uploaded_asset_waits_for_apple_processing(self):
+        from unittest.mock import Mock
+        api = Mock()
+        ready = {'id': 'video-1', 'attributes': {'state': 'PREPARE_FOR_SUBMISSION'}}
+        api.call.return_value = {'data': ready}
+        with patch('time.sleep'):
+            actual = ios_store.wait_asset(api, 'appAssetLibraryVideos',
+                {'id': 'video-1', 'attributes': {'state': 'UPLOAD_COMPLETE'}})
+        self.assertEqual(actual, ready)
+        api.call.assert_called_once_with('appAssetLibraryVideos/video-1')
+
+    def test_ordering_keeps_existing_placements_and_verifies_new_sequence(self):
+        from unittest.mock import Mock
+        api = Mock()
+        api.call.side_effect = [
+            {'data': [{'id': 'older'}, {'id': 'second'}, {'id': 'first'}]}, {},
+            {'data': [{'id': 'first'}, {'id': 'second'}, {'id': 'older'}]}]
+        receipts = [{'placements': [{'id': i, 'attributes': {'placementGroup': 'phone'}}]}
+                    for i in ['first', 'second']]
+        ios_store.order_placements(api, 'locale', receipts)
+        request = api.call.call_args_list[1].kwargs['data']
+        order = request['data']['relationships']['orderedPlacements']['data']
+        self.assertEqual([p['id'] for p in order], ['first', 'second', 'older'])
+
     def test_reports_never_preserve_signed_upload_urls(self):
         report = {'data': [{'attributes': {'uploadOperations': [{'url': 'secret'}], 'state': 'UPLOADING'}}]}
         self.assertNotIn('secret', json.dumps(ios_store.sanitized(report)))
