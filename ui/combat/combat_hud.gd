@@ -11,9 +11,14 @@ var coach_guided := false
 var coach_action_id := ""
 var _prompt_skip: Button
 var _confirm_yes: Button
+var _confirm_no: Button
+## What the check in the middle of the screen asks: "end_turn" (the Action is unused) or "drop_concentration".
+var _confirm_kind := "end_turn"
 
 signal action_chosen(action: Dictionary)
 signal end_turn_pressed
+## The check "Stop concentrating on ...?" was answered yes (CombatView._drop_concentration).
+signal drop_concentration_confirmed
 ## Undo move (or Ctrl+Z): take back the current creature's last move (Encounter.undo_move).
 signal undo_move_pressed
 signal reaction_answered(use: bool, rule: String)
@@ -803,8 +808,12 @@ func _build_confirm() -> void:
 	yes.set_meta(&"pad_first", true)
 	yes.pressed.connect(func() -> void:
 		_confirm.visible = false
-		end_turn_pressed.emit())
+		if _confirm_kind == "drop_concentration":
+			drop_concentration_confirmed.emit()
+		else:
+			end_turn_pressed.emit())
 	var no := Button.new()
+	_confirm_no = no
 	PadGlyphs.hint(no, "Keep going (Esc)", "Keep going ({b})")
 	no.pressed.connect(func() -> void: _confirm.visible = false)
 	row.add_child(yes)
@@ -2104,8 +2113,25 @@ func answer_prompt(use: bool) -> void:
 
 
 func confirm_end_turn(text: String) -> void:
+	_confirm_kind = "end_turn"
+	PadGlyphs.hint(_confirm_yes, "End turn (%s)" % InputActions.key_text(&"combat_end_turn"), "End turn ({a})")
+	PadGlyphs.hint(_confirm_no, "Keep going (Esc)", "Keep going ({b})")
 	_confirm_text.text = text
 	_confirm.visible = true
+
+
+## "Stop concentrating on ...?": dropping it can't be taken back, so it asks first, with the same buttons and keys.
+func confirm_drop_concentration(text: String) -> void:
+	_confirm_kind = "drop_concentration"
+	PadGlyphs.hint(_confirm_yes, "Drop it (%s)" % InputActions.key_text(&"combat_confirm"), "Drop it ({a})")
+	PadGlyphs.hint(_confirm_no, "Keep it (Esc)", "Keep it ({b})")
+	_confirm_text.text = text
+	_confirm.visible = true
+
+
+## What the open check asks: "end_turn" or "drop_concentration".
+func confirm_kind() -> String:
+	return _confirm_kind
 
 
 func confirm_open() -> bool:

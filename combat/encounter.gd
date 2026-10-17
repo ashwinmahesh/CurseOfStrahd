@@ -784,6 +784,10 @@ func haste_action_use(c: Combatant, what: String, target: Combatant, option_id: 
 	return actions.haste_action_use(c, what, target, option_id)
 
 
+func drop_concentration(c: Combatant) -> CombatResult:
+	return actions.drop_concentration(c)
+
+
 func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
 	return actions.dash(c, use_bonus)
 

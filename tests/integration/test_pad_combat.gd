@@ -150,6 +150,81 @@ func test_the_end_turn_check_takes_the_pad() -> void:
 	assert_eq(cv.mode, CombatView.Mode.IDLE, "still this hero's turn")
 
 
+## Gives the hero whose turn it is Concentration on a spell and asks to drop it from the hotbar: {c, box}.
+func _ask_to_drop() -> Dictionary:
+	var c := cv.e.current()
+	c.creature.begin_concentration("bless", "Bless")
+	cv.hud.refresh()
+	var slot := cv.catalog.find(c, "drop_concentration")
+	assert_false(slot.is_empty(), "the hotbar offers it")
+	cv._choose(slot)
+	await _frames(2)
+	return {"c": c, "box": cv.hud.get("_confirm") as Control}
+
+
+func test_dropping_concentration_asks_first_and_b_keeps_the_spell() -> void:
+	if not _ready_for_input():
+		return
+	var d := await _ask_to_drop()
+	var c := d["c"] as Combatant
+	assert_true(cv.hud.confirm_open(), "it asks before letting go")
+	assert_eq(cv.hud.confirm_kind(), "drop_concentration")
+	assert_true((cv.hud.get("_confirm_text") as Label).text.contains("Bless"), "naming the spell")
+	assert_eq(nav.scope_now(), d["box"], "the check takes the pad alone")
+	await _press(JOY_BUTTON_B)
+	assert_false(cv.hud.confirm_open(), "B keeps it")
+	assert_true(c.creature.concentration != null and not c.creature.concentration.ended, "the spell goes on")
+	assert_eq(cv.mode, CombatView.Mode.IDLE, "still this hero's turn")
+
+
+func test_dropping_concentration_with_a_lets_go_and_costs_nothing() -> void:
+	if not _ready_for_input():
+		return
+	await _press(JOY_BUTTON_X)   # the pad is in use
+	var d := await _ask_to_drop()
+	var c := d["c"] as Combatant
+	var action := c.action_available
+	var bonus := c.bonus_available
+	await _frames(1)
+	var f := get_viewport().gui_get_focus_owner()
+	assert_true(f != null and (d["box"] as Control).is_ancestor_of(f), "the pad is on Drop it")
+	await _press(JOY_BUTTON_A)
+	await _frames(10)
+	assert_false(cv.hud.confirm_open())
+	assert_true(c.creature.concentration == null, "A lets it go")
+	assert_eq(c.action_available, action, "the Action is as it was")
+	assert_eq(c.bonus_available, bonus, "and the Bonus Action")
+	assert_true(cv.catalog.find(c, "drop_concentration").is_empty(), "the slot is gone")
+	assert_eq(cv.mode, CombatView.Mode.IDLE, "still this hero's turn")
+
+
+func test_the_keyboard_answers_the_drop_check_with_enter_and_esc_not_space() -> void:
+	if not _ready_for_input():
+		return
+	var d := await _ask_to_drop()
+	var c := d["c"] as Combatant
+	for name: StringName in [&"combat_end_turn", &"combat_cancel"]:
+		var ev := InputEventAction.new()
+		ev.action = name
+		ev.pressed = true
+		cv._unhandled_input(ev)
+		if name == &"combat_end_turn":
+			assert_true(cv.hud.confirm_open(), "Space is not a yes to this one")
+			assert_true(c.creature.concentration != null, "the spell is kept")
+		else:
+			assert_false(cv.hud.confirm_open(), "Esc keeps it")
+			assert_true(c.creature.concentration != null)
+	cv._choose(cv.catalog.find(c, "drop_concentration"))
+	await _frames(1)
+	var enter := InputEventAction.new()
+	enter.action = &"combat_confirm"
+	enter.pressed = true
+	cv._unhandled_input(enter)
+	await _frames(10)
+	assert_true(c.creature.concentration == null, "Enter lets it go")
+	assert_eq(cv.mode, CombatView.Mode.IDLE)
+
+
 func test_r3_opens_the_squares_menu() -> void:
 	if not _ready_for_input():
 		return

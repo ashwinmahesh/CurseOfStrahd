@@ -894,6 +894,22 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no standing rule for a division")
 		return cv.hud,
 		func() -> void: cv.hud.hide_prompt())
+	# Dropping Concentration (owner, 2026-10-17): its slot on the Common tab named for a long-named spell, and the check
+	# that asks before letting go of it.
+	var held := party.creature.begin_concentration("otilukes_resilient_sphere", "Otiluke's Resilient Sphere of the Very Long Name")
+	cv.hud.shown = party
+	cv.hud.set_tab(ActionCatalog.COMMON)
+	await _check("the combat HUD with Drop Concentration on its hotbar", func() -> Variant:
+		cv.hud.refresh()
+		await _frames(1)
+		return cv.hud)
+	await _check("the check before dropping a spell", func() -> Variant:
+		cv.hud.confirm_drop_concentration("Stop concentrating on %s?" % held.name)
+		await _frames(1)
+		return cv.hud,
+		func() -> void: cv.hud.close_confirm())
+	held.end("test")
+	cv.hud.refresh()
 	# The area panel at the top left (owner, 2026-10-12): more creatures than it lists, long names, warnings.
 	var rows: Array = []
 	for k in 12:

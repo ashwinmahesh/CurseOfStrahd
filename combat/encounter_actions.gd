@@ -281,6 +281,28 @@ func haste_action_use(c: Combatant, what: String, target: Combatant, option_id: 
 	return CombatResult.new()
 
 
+## Ends the Concentration `c` keeps, at will (2024 glossary "Concentration": you can end it at any time, no action
+## needed): the spell it holds ends with everything it keeps going (a Banished creature comes back, a Polymorph
+## wears off, a zone or a sustained strike goes), and nothing is spent.
+func drop_concentration(c: Combatant) -> CombatResult:
+	var e := enc()
+	if e.state != Encounter.State.ACTIVE:
+		return CombatResult.fail("Combat is over")
+	if e.pending != null:
+		return CombatResult.fail("Answer the reaction prompt first")
+	var conc := c.creature.concentration
+	if conc == null or conc.ended:
+		return CombatResult.fail("%s isn't concentrating on anything" % c.name())
+	e.log.add("info", "%s stops concentrating on %s" % [c.name(), conc.name], c.id)
+	conc.end("let go")
+	e.spells.zones.prune()
+	e.spells._prune_sustained()
+	e.spells.check_tethers()
+	e.events.append({"type": "condition", "id": c.id})
+	e._check_over()
+	return CombatResult.new()
+
+
 func dash(c: Combatant, use_bonus: bool = false) -> CombatResult:
 	var e := enc()
 	if c.creature.has_flag("cannot_dash"):

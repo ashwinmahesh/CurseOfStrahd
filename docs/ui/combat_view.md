@@ -104,6 +104,10 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   hotbar), which is what the map shows on their turn, though an area still catches it. An Invisible hero stays on the player's map drawn half there.
 - Upcasting: the slot pips beside the tooltip pick the slot level and update the numbers (Fireball 8d6 → 9d6).
 - Concentration: casting a second Concentration spell warns that the first one ends, naming it.
+- **Drop Concentration** (owner, 2026-10-17: end it at will): while a creature holds a spell, a free slot on its Common
+  tab, named for the spell, lets go of it. It asks "Stop concentrating on ...?" first (Enter or A drops it, Esc or B
+  keeps it; Space doesn't answer it) and costs no Action, Bonus Action, Reaction or movement; the spell ends with
+  everything it keeps going. On the creature's own turn, as every slot (deviations.md).
 
 ## Reactions, roll details and the controller (`cb_03_reactions_and_controls`)
 ![Reactions and controls](wireframes/cb_03_reactions_and_controls.svg)

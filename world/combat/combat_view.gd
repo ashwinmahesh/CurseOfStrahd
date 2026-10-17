@@ -152,6 +152,7 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 	hud.build(e, catalog)
 	hud.action_chosen.connect(_choose)
 	hud.end_turn_pressed.connect(_end_turn)
+	hud.drop_concentration_confirmed.connect(_drop_concentration)
 	hud.undo_move_pressed.connect(_undo_move)
 	hud.reaction_answered.connect(_answer)
 	hud.inspect_requested.connect(_inspect)
@@ -510,6 +511,8 @@ func _end_turn() -> void:
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
+	if hud.confirm_open() and hud.confirm_kind() == "drop_concentration":
+		hud.close_confirm()   # ending the turn gives the check about a spell no answer: it is closed, the spell kept
 	if hud.confirm_open():
 		hud.close_confirm()
 	elif c.can_act() and c.action_available and not _confirmed_end:
@@ -528,6 +531,24 @@ func _end_turn() -> void:
 
 
 var _confirmed_end := false
+
+
+## The player said yes to "Stop concentrating on ...?": the spell ends at no cost, and its cue (the sound of a spell
+## breaking after a blow) doesn't sound for it later.
+func _drop_concentration() -> void:
+	var c := _player()
+	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
+		return
+	var held := c.creature.concentration
+	var action := catalog.find(c, "drop_concentration")
+	if action.is_empty() or not bool(action["legal"]):
+		hud.banner(str(action.get("reason", "Not concentrating")), 1.4)
+		return
+	_cancel_targeting()
+	_concentrating.erase(c.id)
+	if held != null:
+		hud.banner("Stopped concentrating on %s" % held.name, 1.4)
+	_perform(action, [], Vector2.INF, Vector2.ZERO)
 
 
 ## Takes back the current creature's last move (the HUD's Undo move, or Ctrl+Z): it goes back with its movement.
@@ -705,6 +726,10 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 		levels = catalog.level_choices(c, action)
 		if not levels.is_empty():
 			slot_level = level if level in levels else levels[0]
+	# Letting go of a spell can't be taken back: it asks first (_drop_concentration answers).
+	if str(action["kind"]) == "drop_concentration":
+		hud.confirm_drop_concentration("Stop concentrating on %s?" % (c.creature.concentration.name if c.creature.concentration != null else "it"))
+		return
 	if str(action["targeting"]) == "none" and not picker.takes(c, action):
 		_perform(action, [], Vector2.INF, Vector2.ZERO)
 		return
@@ -1279,7 +1304,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	if hud.confirm_open():
-		if event.is_action_pressed(&"combat_end_turn") or event.is_action_pressed(&"combat_confirm"):
+		if hud.confirm_kind() == "drop_concentration":
+			# Enter lets go; Space (End Turn) is not a yes to this one; Esc keeps the spell.
+			if event.is_action_pressed(&"combat_confirm"):
+				hud.close_confirm()
+				_drop_concentration()
+			elif event.is_action_pressed(&"combat_cancel"):
+				hud.close_confirm()
+		elif event.is_action_pressed(&"combat_end_turn") or event.is_action_pressed(&"combat_confirm"):
 			hud.close_confirm()
 			_end_turn()
 		elif event.is_action_pressed(&"combat_cancel"):

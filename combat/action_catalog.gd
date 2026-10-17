@@ -261,6 +261,7 @@ func actions_for(c: Combatant) -> Array[Dictionary]:
 	_class_actions(c, out)
 	_spells(c, out)
 	_sustained(c, out)
+	_concentration(c, out)
 	_items(c, out)
 	_quick(c, out)
 	_passives(c, out)
@@ -586,6 +587,17 @@ func _effect_actions(c: Combatant, out: Array[Dictionary], tab: String) -> void:
 			out.append(ha)
 		if best.is_empty():
 			pass
+
+
+## Letting go of the Concentration a creature keeps (2024 glossary "Concentration": no action needed): a free slot on the
+## Common tab for as long as it holds one, on its own turn.
+func _concentration(c: Combatant, out: Array[Dictionary]) -> void:
+	var conc := c.creature.concentration
+	if conc == null or conc.ended:
+		return
+	var why := e._turn_check(c)
+	out.append(_entry("drop_concentration", COMMON, "Drop Concentration", conc.name, "free", why, "none",
+		"End your Concentration on %s now. It costs nothing, and the spell ends with everything it was keeping going." % conc.name))
 
 
 ## Actions a spell keeps granting while it lasts (Spiritual Weapon's strike, Witch Bolt's arc, Flaming Sphere's
@@ -948,6 +960,7 @@ const ACTION_TEXT := {
 	"shove_push": "One of your attacks: the target makes a Strength or Dexterity save or is pushed 5 ft away.",
 	"escape": "A Strength (Athletics) or Dexterity (Acrobatics) check against the grapple's DC to break free.",
 	"douse": "Drop Prone and roll on the ground to put out the flames burning you.",
+	"drop_concentration": "End the Concentration you are keeping on a spell, whenever you like and at no cost: a creature banished by it comes back, a Polymorph wears off, and so on. You can't take it back, and casting another Concentration spell ends the first anyway.",
 	"stand": "Standing up costs half your Speed.",
 	"drop_prone": "Drop Prone for free: ranged attacks against you have Disadvantage, melee attacks from within 5 ft have Advantage.",
 	"influence": "Try to change a creature's attitude with words. Nothing here will listen.",
@@ -1293,6 +1306,8 @@ func _perform(c: Combatant, action: Dictionary, targets: Array, point: Vector2, 
 		"jump_down":
 			return e.movement.jump_down(c, Vector2i(int(id.get_slice(":", 1)), int(id.get_slice(":", 2))))
 	match id:
+		"drop_concentration":
+			return e.drop_concentration(c)
 		"grapple":
 			return e.unarmed_special(c, t, "grapple")
 		"shove_prone":
