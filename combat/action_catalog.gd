@@ -297,18 +297,24 @@ func _attacks(c: Combatant, out: Array[Dictionary]) -> void:
 	var why := _attack_why(c)
 	var cost := "attack" if c.attacks_left > 0 else "action"
 	var per := e.attacks_per_action(c)
+	# With the Attack action spent, a hasted creature's weapon slots still strike: Haste's extra action (one attack),
+	# so nobody has to hunt for the separate Haste slots.
+	var haste := why == "Action already used" and c.haste_attack_ready()
+	var weapon_why := "" if haste else why
+	var weapon_cost := "free" if haste else cost
 	for o in e.attack_options(c):
 		var p := o["profile"] as WeaponProfile
 		if str(o["kind"]) == "unarmed":
 			continue
-		var w := why
+		var w := weapon_why
 		if w == "" and not e.has_ammo_for(c, o):
 			w = "No ammunition"
 		var dmg := "%s%s" % [p.damage_dice, ("%+d" % p.damage_bonus.total()) if p.damage_bonus.total() != 0 else ""]
 		var other_set := int(o.get("set", 1)) == 2
-		var a := _entry("attack:" + str(o["id"]), COMMON, p.name, "%+d · %s%s" % [p.attack.total(), dmg, " · set II" if other_set else ""], cost, w, "enemy",
-			"Attack%s. %s%s" % [(" (%d attacks per Attack action)" % per) if per > 1 else "", p.describe(),
-				" From your other weapon set: attacking with it takes that set in hand (free)." if other_set else ""])
+		var a := _entry("attack:" + str(o["id"]), COMMON, p.name, "%+d · %s%s%s" % [p.attack.total(), dmg, " · Haste" if haste else "", " · set II" if other_set else ""], weapon_cost, w, "enemy",
+			"Attack%s. %s%s%s" % [(" (%d attacks per Attack action)" % per) if per > 1 else "", p.describe(),
+				" From your other weapon set: attacking with it takes that set in hand (free)." if other_set else "",
+				" Haste's extra action: one attack." if haste else ""])
 		a["option_id"] = str(o["id"])
 		a["range"] = p.reach if bool(o["melee"]) else (p.long_range if p.long_range > 0 else p.normal_range)
 		# Everything thrown shares one Throw slot (Baldur's Gate 3's Throw): a thrown weapon, a chair, a crate.

@@ -125,7 +125,9 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var check := e.echo_knight.attack_why(c, target, option, true)
 	if check != "":
 		return CombatResult.fail(check)
-	if c.attacks_left <= 0 and not c.action_available:
+	# Haste's extra action (2024) takes one more attack once the Attack action and its attacks are used.
+	var via_haste := c.haste_attack_ready()
+	if c.attacks_left <= 0 and not c.action_available and not via_haste:
 		return CombatResult.fail("No attacks left this turn")
 	if e.rider_of(c) != null and c.allied_with(e.rider_of(c)):
 		return CombatResult.fail("A controlled mount can only Dash, Disengage or Dodge")
@@ -150,6 +152,10 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		if c.creature is Monster:
 			c.attacks_left = 0
 		e.echo_knight.attack_action_taken(c)
+	elif via_haste:
+		c.haste_action = false
+		e.echo_knight.attack_action_taken(c)
+		e.log.add("info", "%s attacks with Haste's extra action" % c.name(), c.id)
 	else:
 		return CombatResult.fail("No attacks left this turn")
 	var p := option["profile"] as WeaponProfile

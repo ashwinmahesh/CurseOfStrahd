@@ -32,6 +32,9 @@ top, party on the left, hotbar and End Turn at the bottom, log on the right), dr
    Every PHB action is on Common: Attack, Dash, Disengage, Dodge, Help, Hide, Influence, Magic, Ready, Search,
    Study, Utilize, plus Grapple and Shove (Unarmed Strike options) and Jump. Extra Attack shows "2 attacks per
    Attack action".
+   **Haste** (2024): a hasted creature's weapon slots (and a click on a foe) make its additional action's one attack
+   once the Attack action and its attacks are spent: the slot reads "free", with "Haste" beside its numbers, so nobody
+   has to look for the separate "Haste:" slots (Dash, Disengage, Hide, and an attack to make before the Action).
 5. **End Turn**: a large round button (Space, or hold Y). If the character still has their Action, the first press
    shows "End turn with your Action unused?". Leftover movement doesn't ask (owner feedback 2026-10-06).
    **Undo move** under it (Ctrl+Z) takes back the last move while nothing came of it (no dice, no reaction, nothing

@@ -173,6 +173,12 @@ func regain_speed() -> void:
 		turn_speed = now
 
 
+## Whether one more attack now would be Haste's extra action: hasted, that action still unspent, and no Attack action or
+## attacks of it left to make first.
+func haste_attack_ready() -> bool:
+	return haste_action and creature.has_flag("hasted") and attacks_left <= 0 and not action_available
+
+
 func reset_turn() -> void:
 	remove_meta("attack_cantrip_used")
 	remove_meta("sequence_attacks")
