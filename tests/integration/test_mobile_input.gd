@@ -112,6 +112,24 @@ func test_held_navigation_button_activates_once_on_release() -> void:
 	assert_eq(int(count[0]), 1)
 
 
+func test_slow_search_field_tap_focuses_without_opening_desktop_context_menu() -> void:
+	var field := LineEdit.new()
+	field.position = Vector2(100, 100)
+	field.size = Vector2(280, 48)
+	field.text = "Existing query"
+	root.add_child(field)
+	await _frames()
+	var at := field.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	(UiFeel.touch.gestures.contacts[0] as Dictionary)["time"] = Time.get_ticks_msec() - TouchGesture.HOLD_MS - 1
+	_touch(at, false)
+	await _frames()
+	assert_false(field.get_menu().visible, "a slow mobile field tap must not cover the software keyboard with a desktop menu")
+	assert_true(field.has_focus())
+	assert_eq(field.text, "Existing query")
+
+
 func test_vertical_swipes_over_horizontal_tabs_scroll_the_enclosing_page() -> void:
 	var body := MobilePage.build(root, "Nested scrolling")
 	var page := body.get_parent().get_parent().get_parent() as MobilePage

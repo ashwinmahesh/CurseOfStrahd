@@ -48,6 +48,8 @@ final class NativeGameTests: XCTestCase {
             XCTAssertTrue(key.waitForExistence(timeout: 5), app.debugDescription)
             key.tap()
         }
+        let queryEntered = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value ==[c] %@", text), object: app.buttons[label])
+        XCTAssertEqual(XCTWaiter.wait(for: [queryEntered], timeout: 60), .completed, "The search field must receive every software-keyboard character")
     }
 
     func scrollBody() {
@@ -90,7 +92,10 @@ final class NativeGameTests: XCTestCase {
         XCTAssertTrue(app.buttons["Show all items"].waitForExistence(timeout: 10), app.debugDescription)
         capture("inventory-search-rotated")
         tap("Show all items", scroll: false)
-        XCTAssertFalse(app.buttons["Show all items"].exists)
+        // UIKit idleness does not imply Godot has processed the deferred touch and semantic snapshot.
+        let filtersCleared = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.buttons["Show all items"])
+        XCTAssertEqual(XCTWaiter.wait(for: [filtersCleared], timeout: 60), .completed, "Clearing filters must restore the inventory after rotation")
+        capture("inventory-search-cleared")
         XCUIDevice.shared.orientation = .landscapeLeft
         tap("Equipment", scroll: false)
         capture("equipment")

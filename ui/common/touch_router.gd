@@ -110,9 +110,11 @@ func _release(index: int, at: Vector2, canceled: bool, epoch: int) -> void:
 		return
 	if update.is_empty():
 		return
-	# Ordinary buttons activate on release even after a slow frame or a deliberate hold. Turning a held
-	# button into a right click silently discards navigation; contextual world gestures remain available.
-	var context := context_next or (str(update["kind"]) == "context" and not control is BaseButton)
+	# Buttons and text fields use their primary action even after a slow frame or deliberate hold. A
+	# synthesized right click on a field opens Godot's desktop menu over the native software keyboard.
+	# Explicit alternate actions and held world gestures retain their context behavior.
+	var primary_control := control is BaseButton or control is LineEdit or control is TextEdit
+	var context := context_next or (str(update["kind"]) == "context" and not primary_control)
 	context_next = false
 	if str(update["owner"]) == "ui":
 		if control == null or not control.is_visible_in_tree():
