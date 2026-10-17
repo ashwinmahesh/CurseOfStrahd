@@ -35,6 +35,72 @@
       "fps": 30,
       "has_audio": true,
       "poster_timecode": "00:00:26:00"
+    },
+    {
+      "file": "assets/iphone-03-mobile_dialogue_npc.jpg",
+      "sha256": "c68f2ab7b84926ad99f07fd70da5f456a4455a2cd325a1225fa49d1f33820488",
+      "kind": "image",
+      "title": "Conversations in Barovia \u2014 iphone",
+      "width": 2868,
+      "height": 1320,
+      "groups": [
+        "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE"
+      ]
+    },
+    {
+      "file": "assets/iphone-05-mobile_battle_actions.jpg",
+      "sha256": "f2fe04b8597d63087ad69e4ac6772ea317a753e88d8832e904583838dd87bb06",
+      "kind": "image",
+      "title": "Tactical combat Actions \u2014 iphone",
+      "width": 2868,
+      "height": 1320,
+      "groups": [
+        "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE"
+      ]
+    },
+    {
+      "file": "assets/iphone-09-mobile_ui_bag.jpg",
+      "sha256": "b44d4cc7e95d9fd300137a0208244e0b67fac9ebcbd5becc939e32e90afb4a67",
+      "kind": "image",
+      "title": "Party inventory \u2014 iphone",
+      "width": 2868,
+      "height": 1320,
+      "groups": [
+        "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE"
+      ]
+    },
+    {
+      "file": "assets/ipad-03-mobile_dialogue_npc.jpg",
+      "sha256": "69b65cdb8fb1f4ddb904d210d5dfabedac8d220f164ac1af4c947e90221e94c5",
+      "kind": "image",
+      "title": "Conversations in Barovia \u2014 ipad",
+      "width": 2752,
+      "height": 2064,
+      "groups": [
+        "IPAD_13_PROFILE"
+      ]
+    },
+    {
+      "file": "assets/ipad-05-mobile_battle_actions.jpg",
+      "sha256": "d4e4011fd3cf02ad901eae68d3adc6316d0653bc072610b18cd9e1bfd792380b",
+      "kind": "image",
+      "title": "Tactical combat Actions \u2014 ipad",
+      "width": 2752,
+      "height": 2064,
+      "groups": [
+        "IPAD_13_PROFILE"
+      ]
+    },
+    {
+      "file": "assets/ipad-09-mobile_ui_bag.jpg",
+      "sha256": "69645d73b33931b35d2ef0987c4a2073350672ac33feddad233d8755642fae1b",
+      "kind": "image",
+      "title": "Party inventory \u2014 ipad",
+      "width": 2752,
+      "height": 2064,
+      "groups": [
+        "IPAD_13_PROFILE"
+      ]
     }
   ],
   "build_number": "2001"

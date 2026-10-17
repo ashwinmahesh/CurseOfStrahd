@@ -1,0 +1,73 @@
+{
+  "production_game_commit": "3d44e2ea1bcf6a3efa7713e57aa98af856d8c502",
+  "evidence": "Native iOS Simulator screenshots of prepared game states. Not gameplay E2E or physical-device evidence.",
+  "native_capture": "xcrun simctl io DEVICE screenshot --type=jpeg --mask=ignored OUTPUT",
+  "renderer": "OpenGL ES 3 compatibility in Simulator; mobile graphics defaults. Device Metal performance is not represented.",
+  "orientation": "Native XCTest XCUIDevice.shared.orientation = .landscapeLeft. Images are not rotated, cropped or resized after capture.",
+  "composition_reference": "https://curseofstrahd.app; website tools/godot/site_world.gd",
+  "world_setup": "Website scene locations, weather and camera framing, with zoom clamped to runtime maximum 22 and actual mobile exploration HUD. Website desktop High preset is not applied.",
+  "qa_overlay": "Isolated gallery bundle and save container; scene preparation, shortened frame waits, screenshot handshake, and combat drawer cleanup only. No production code changes.",
+  "source_root": "/Volumes/StrahdLanes/strahd-builds/app-store-listing-20261017",
+  "screenshots": [
+    {
+      "file": "assets/iphone-03-mobile_dialogue_npc.jpg",
+      "sha256": "c68f2ab7b84926ad99f07fd70da5f456a4455a2cd325a1225fa49d1f33820488",
+      "source": "native/iphone/mobile_dialogue_npc.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 3,
+      "location_or_view": "Conversations in Barovia"
+    },
+    {
+      "file": "assets/iphone-05-mobile_battle_actions.jpg",
+      "sha256": "f2fe04b8597d63087ad69e4ac6772ea317a753e88d8832e904583838dd87bb06",
+      "source": "native/iphone/mobile_battle_actions.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 5,
+      "location_or_view": "Tactical combat Actions"
+    },
+    {
+      "file": "assets/iphone-09-mobile_ui_bag.jpg",
+      "sha256": "b44d4cc7e95d9fd300137a0208244e0b67fac9ebcbd5becc939e32e90afb4a67",
+      "source": "native/iphone/mobile_ui_bag.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 9,
+      "location_or_view": "Party inventory"
+    },
+    {
+      "file": "assets/ipad-03-mobile_dialogue_npc.jpg",
+      "sha256": "69b65cdb8fb1f4ddb904d210d5dfabedac8d220f164ac1af4c947e90221e94c5",
+      "source": "native/ipad/mobile_dialogue_npc.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 3,
+      "location_or_view": "Conversations in Barovia"
+    },
+    {
+      "file": "assets/ipad-05-mobile_battle_actions.jpg",
+      "sha256": "d4e4011fd3cf02ad901eae68d3adc6316d0653bc072610b18cd9e1bfd792380b",
+      "source": "native/ipad/mobile_battle_actions.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 5,
+      "location_or_view": "Tactical combat Actions"
+    },
+    {
+      "file": "assets/ipad-09-mobile_ui_bag.jpg",
+      "sha256": "69645d73b33931b35d2ef0987c4a2073350672ac33feddad233d8755642fae1b",
+      "source": "native/ipad/mobile_ui_bag.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 9,
+      "location_or_view": "Party inventory"
+    }
+  ]
+}
