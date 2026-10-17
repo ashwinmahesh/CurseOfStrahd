@@ -12,6 +12,7 @@ var resume_layer: CanvasLayer
 var elapsed := 0.0
 var last_checkpoint := 0
 var checkpoint_error := OK
+var pause_reason := "The game is paused. Continue when you're ready."
 
 
 func _ready() -> void:
@@ -53,10 +54,13 @@ func checkpoint() -> void:
 		last_checkpoint = key
 
 
-func suspend() -> void:
+func suspend(reason: String = "The game is paused. Continue when you're ready.") -> void:
 	if interrupted:
 		return
 	checkpoint()
+	pause_reason = reason
+	if PadNav.current != null:
+		PadNav.current.clear_held()
 	interrupted = true
 	was_paused = get_tree().paused
 	voice_paused = VoiceOver.is_paused()
@@ -82,7 +86,7 @@ func _show_resume_page() -> void:
 	add_child(resume_layer)
 	var body := MobilePage.build(resume_layer, "Ready when you are", resume_play)
 	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	body.add_child(MobileUi.text("The game is paused. Continue when you're ready."))
+	body.add_child(MobileUi.text(pause_reason))
 	if checkpoint_error != OK:
 		body.add_child(MobileUi.text("The latest exploration checkpoint couldn't be saved. Free storage, then save from the menu.", "rose"))
 	body.add_child(MobileUi.button("Continue", resume_play))

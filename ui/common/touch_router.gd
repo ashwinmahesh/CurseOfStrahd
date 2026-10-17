@@ -36,8 +36,9 @@ func _press(index: int, at: Vector2, epoch: int) -> void:
 	if epoch != _epoch:
 		return
 	if MobileDevice.current != null:
-		MobileDevice.current.modality = "touch"
+		MobileDevice.current.set_modality("touch")
 	if PadNav.current != null:
+		PadNav.current.clear_held()
 		PadNav.current._use_pad(false, -1)
 	_point(at)
 	var control := get_viewport().gui_get_hovered_control()

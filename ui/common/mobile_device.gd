@@ -101,6 +101,10 @@ func _input(event: InputEvent) -> void:
 		mode = "controller"
 	elif event is InputEventKey or event is InputEventMouseButton:
 		mode = "pointer"
+	set_modality(mode)
+
+
+func set_modality(mode: String) -> void:
 	if mode != modality:
 		modality = mode
 		modality_changed.emit(mode)

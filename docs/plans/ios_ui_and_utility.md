@@ -212,3 +212,20 @@ Run native iPhone and iPad simulator journeys through new game, creation, explor
 Proposed usability targets: common commands reachable within two navigation steps, no horizontally scrolling forms, no essential hover-only information, no clipped primary action at maximum supported text, and no accidental gameplay commitment during scrolling. Aim for responsive 300-item inventories and smooth UI while AI is thinking. Measure frame times and input latency in release builds; keep a 30-minute mixed-play performance and interruption run on the eventual minimum supported devices.
 
 Full iOS support means all shipped features are reachable by touch, every screen has passed compact and regular review, interruptions preserve the promised committed state, native utility flows work, and a campaign coverage pass plus demanding Skirmish cases have completed. It also means the desktop baseline and interaction checks show no changes from this UI work. A successful export, a scalable wrapper, or one playable encounter does not establish completion.
+
+## Controller support on iOS
+
+Controller support is required alongside touch on both iPhone and iPad. The implementation reuses shared
+exploration/combat commands while keeping mobile layouts. D-pad Up opens the quiet exploration Menu; LB opens
+combat Actions as a dismissible popup, with no action on release. Bumpers navigate mobile categories/tabs, A
+selects and confirms, and B backs out. Controller text entry uses a safe-area scrolling keyboard. Page hints
+follow the controller button family without adding a persistent desktop overlay to the world.
+
+Nonzero/reassigned device IDs are accepted on iOS, including remapped and built-in UI actions. Touch takeover
+clears controller holds; controller takeover cancels unfinished gestures. Mobile modals block continuous cursor,
+movement and camera input underneath them. Disconnecting the active controller pauses and clears held input;
+reconnecting leaves the explicit Continue screen in place. The same page can be dismissed using touch or a pad.
+
+The iOS export declares optional ExtendedGamepad support. No controller is required, and desktop layouts/bindings
+retain their prior behavior. See `docs/ui/controller.md` for controls, automated coverage and the physical-device
+matrix. Synthetic input and simulator renders cannot certify Bluetooth pairing or hardware latency.

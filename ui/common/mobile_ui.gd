@@ -72,6 +72,19 @@ static func tabs(values: Array[String], selected: String, pick: Callable) -> Scr
 		if value == selected:
 			UiParts.light_up(tab)
 		row.add_child(tab)
+	scroll.set_meta(&"pad_tabs", func(step: int) -> void:
+		var buttons := row.get_children()
+		var current := 0
+		for i in buttons.size():
+			if (buttons[i] as Button).button_pressed:
+				current = i
+		for i in range(1, buttons.size() + 1):
+			var next := buttons[posmod(current + step * i, buttons.size())] as Button
+			if not next.disabled:
+				next.pressed.emit()
+				if is_instance_valid(next) and not next.is_queued_for_deletion() and next.is_inside_tree():
+					scroll.ensure_control_visible.call_deferred(next)
+				break)
 	return scroll
 
 

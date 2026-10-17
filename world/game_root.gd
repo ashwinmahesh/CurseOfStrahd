@@ -347,7 +347,8 @@ func touch_camera(update: Dictionary) -> void:
 
 
 func _process(delta: float) -> void:
-	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
+	var mobile_modal := MobileDevice.enabled() and PadNav.current != null and PadNav.current.scope_now() != null
+	var exploring := not mobile_modal and not moving and view != null and not view.in_combat and dialogue == null and screen == null \
 		and loot == null and ending == null and guidance == null
 	if view != null and not view.in_combat:
 		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)

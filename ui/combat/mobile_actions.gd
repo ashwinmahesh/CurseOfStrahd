@@ -1,6 +1,6 @@
 class_name MobileActions
 extends CanvasLayer
-## Touch-only action browser. Inspection never emits a game command; only the explicit review button does.
+## Mobile touch/controller action browser. Inspection never emits a game command; only the explicit review button does.
 
 signal chosen(action: Dictionary, level: int)
 signal closed
@@ -92,6 +92,15 @@ func browse() -> void:
 	_list.add_theme_constant_override("separation", 8)
 	page.body.add_child(_list)
 	fill()
+
+
+func pad_tab(step: int) -> void:
+	if not selected.is_empty():
+		return
+	var categories: Array[String] = ["All", ActionCatalog.FAVOURITES, ActionCatalog.HIDDEN]
+	categories.append_array(catalog.tabs_for(actor))
+	category = categories[posmod(categories.find(category) + step, categories.size())]
+	browse()
 
 
 func turn_options() -> void:

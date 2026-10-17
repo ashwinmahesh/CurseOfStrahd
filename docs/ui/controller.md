@@ -150,3 +150,38 @@ resets the list shown. The buttons are kept in `user://settings.cfg` as "pad" (a
 `InputActions.PAD_TRIGGER` + its axis), only where they differ; `InputActions.apply_pad` puts them in the InputMap.
 The prompt bar and the controls cards name each command's button as it is now (`PadGlyphs.place_for`, and
 `{@action}` in `PadGlyphs.names`).
+
+## iPhone and iPad
+
+The iOS build uses Godot 4.7.2's SDL controller driver, backed by Apple's GameController integration. Its export
+plugin declares optional `ExtendedGamepad` support and `GCSupportsControllerUserInteraction`; touch remains a
+complete alternative. Reconnecting may assign a different device ID, so iOS bindings accept all device IDs,
+including built-in menu actions and user remaps. Desktop binding/layout behavior is unchanged.
+
+Mobile keeps its own presentation when a controller is connected:
+
+- Exploration retains the quiet HUD. D-pad Up opens the exploration Menu; Start opens pause/settings. Shared
+  movement, object selection/interactions, camera, leader, map and planning bindings remain available.
+- In combat, LB opens the mobile Actions popup. Releasing LB does not select or commit. Hidden desktop hotbar
+  shortcuts also open the browser; they do not execute an invisible slot. Within the popup, LB/RB change categories,
+  A inspects then confirms Aim/Use, B returns from review and then closes. Targeting uses the shared cursor,
+  next-target, confirm/cancel and end-turn commands. Touch and controller controls are listed in the combat help.
+- Mobile tabs expose bumper navigation. Pages keep focus/scrolling and show button-family hints within the safe
+  area. The desktop prompt overlay is suppressed on mobile to preserve the battlefield and quiet exploration.
+- A on a text field opens a safe-area controller keyboard. Start/Done submits; B/Cancel preserves the original.
+- Switching to touch clears held controller repeats/actions. Switching to a controller cancels unfinished touch
+  gestures. An open mobile page blocks continuous world/camera/cursor input beneath it.
+- Disconnecting the actively used pad clears held input without emitting a release/command, pauses play behind
+  a touch/controller-accessible resume page, and retains the underlying screen/target selection. Reconnecting
+  alone never resumes. Another unused controller disconnecting does not interrupt play.
+
+`test_mobile_controller.gd` covers nonzero device IDs, raw viewport button input, phone/tablet tab navigation,
+activation, touch takeover, keyboard submit/cancel, disconnect/reconnect/resume, combat popup review/cancel,
+modal cursor blocking and the exploration Menu. `test_layout.gd` checks the controller keyboard and hints at
+phone/tablet safe sizes, including 667×375 points. These automated events do not establish physical pairing,
+latency, controller firmware compatibility or system-menu interception. Qualify Xbox, PlayStation and an MFi/
+attached extended controller on physical iPhone and iPad, including cold launch, reconnect with a new ID,
+background/resume, search typing, reaction prompts, targeting and remapped controls before release.
+
+Apple references: [supported controller profiles](https://developer.apple.com/documentation/bundleresources/information-property-list/gcsupportedgamecontrollers)
+and [controller support declaration](https://developer.apple.com/documentation/bundleresources/information-property-list/gcsupportscontrolleruserinteraction).

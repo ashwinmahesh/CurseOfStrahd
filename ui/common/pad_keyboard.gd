@@ -40,6 +40,9 @@ func _ready() -> void:
 	dim.mouse_filter = Control.MOUSE_FILTER_STOP
 	dim.set_meta(&"pad_skip", true)
 	add_child(dim)
+	if MobileDevice.enabled():
+		_mobile_board()
+		return
 	var plate := PanelContainer.new()
 	plate.name = "Board"
 	var s := UiKit.style("ui_black", "gilt", 2, 0.97)
@@ -82,6 +85,36 @@ func _ready() -> void:
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(hint)
 	_keys[ROWS[0].length()].set_meta(&"pad_first", true)   # the board opens on the letters (q)
+	_refresh()
+
+
+func _mobile_board() -> void:
+	if OS.has_feature("ios"):
+		DisplayServer.virtual_keyboard_hide()
+	var body := MobilePage.build(self, "Type", _close)
+	_shown = UiKit.label("", 20, "vellum")
+	_shown.clip_text = true
+	_shown.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	body.add_child(_shown)
+	var keys := GridContainer.new()
+	keys.columns = 10
+	keys.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(keys)
+	for row in ROWS:
+		for ch in row:
+			var key := _key(ch, func() -> void: type(_cased(ch)))
+			key.custom_minimum_size = Vector2(44, 44)
+			key.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			keys.add_child(key)
+	var controls := GridContainer.new()
+	controls.columns = 3
+	body.add_child(controls)
+	for spec: Array in [["Caps", toggle_caps], ["Space", func() -> void: type(" ")], ["Delete", erase],
+			["Done", finish], ["Cancel", _close]]:
+		controls.add_child(MobileUi.button(str(spec[0]), spec[1] as Callable))
+	if field is TextEdit:
+		controls.add_child(MobileUi.button("New line", func() -> void: type("\n")))
+	_keys[ROWS[0].length()].set_meta(&"pad_first", true)
 	_refresh()
 
 

@@ -13,7 +13,7 @@ func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(directory)
 	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
 	await wait_frames(30)
-	for fixture: String in ["mobile_menu", "mobile_ui", "mobile_secondary", "mobile_recovery"]:
+	for fixture: String in ["mobile_menu", "mobile_ui", "mobile_secondary", "mobile_recovery", "mobile_controller"]:
 		var scene := (load("res://tools/capture/%s_capture.tscn" % fixture) as PackedScene).instantiate()
 		add_child(scene)
 		await wait_frames(4)

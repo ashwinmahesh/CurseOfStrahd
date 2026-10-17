@@ -691,6 +691,12 @@ func _plate(content: Control, margin: int) -> PanelContainer:
 ## D-pad up while exploring (PadExplore): the bar's buttons take the pad, as a screen's would, until B, D-pad down or
 ## a button pressed.
 func pad_bar(on: bool) -> void:
+	if mobile != null:
+		if on:
+			mobile.menu()
+		else:
+			mobile.close()
+		return
 	if on == pad_bar_on():
 		return
 	if on:

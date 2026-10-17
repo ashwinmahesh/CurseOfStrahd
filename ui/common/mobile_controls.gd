@@ -69,12 +69,19 @@ func _close() -> void:
 
 func _input(event: InputEvent) -> void:
 	if drawer != null and event.is_action_pressed(&"ui_cancel"):
-		_close()
+		if PadNav.current != null and PadNav.current.scope_now() != drawer:
+			return
+		if drawer is MobileActions:
+			(drawer as MobileActions).back()
+		else:
+			_close()
 		get_viewport().set_input_as_handled()
 
 
-func _actions() -> void:
-	var target := UiFeel.touch.world_target()
+func _actions(fight_target: CombatView = null) -> void:
+	if drawer != null:
+		return
+	var target: Node = fight_target if fight_target != null else UiFeel.touch.world_target()
 	if target == null:
 		return
 	if target is CombatView:
@@ -141,7 +148,7 @@ func _more(target: Node = null) -> void:
 			body.add_child(MobileUi.button(command, func() -> void:
 				_close()
 				fight.touch_command(command)))
-		body.add_child(MobileUi.button("Touch controls", func() -> void:
+		body.add_child(MobileUi.button("Touch and controller controls", func() -> void:
 			_close()
 			fight.hud.toggle_controls()))
 

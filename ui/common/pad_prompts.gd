@@ -114,6 +114,10 @@ static func _has_marked(root: Node, key: StringName) -> bool:
 
 
 func _process(_delta: float) -> void:
+	if MobileDevice.enabled():
+		visible = false
+		world_rect = Rect2()
+		return   # mobile pages own safe-area hints; the world keeps its quiet HUD
 	var nav := PadNav.current
 	var scope := nav.scope if nav != null and nav.pad else null
 	# Over the world (or a HUD's own buttons) the bar stands above the command bar; over a screen, in the corner.

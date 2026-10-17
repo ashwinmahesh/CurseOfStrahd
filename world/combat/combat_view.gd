@@ -1370,6 +1370,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and hud.hide_details():
 		return
+	if MobileDevice.enabled() and event.is_action(&"combat_radial"):
+		return   # mobile uses a dismissible Actions page; releasing LB never picks a hidden radial item
 	if event.is_action_pressed(&"combat_radial"):
 		if GameSettings.pad_wheels():
 			_wheel_page = 0
@@ -1523,6 +1525,9 @@ func _next_target() -> void:
 
 
 func _process(delta: float) -> void:
+	if MobileDevice.enabled() and PadNav.current != null and PadNav.current.scope_now() != null:
+		rig.pad_look = false
+		return
 	if input_locked:
 		return
 	if hud.radial.visible:

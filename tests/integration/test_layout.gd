@@ -1983,3 +1983,30 @@ func test_mobile_credits_updates_codes_and_dice_fit() -> void:
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_controller_keyboard_and_hints_fit_safe_areas() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for points: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = points
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), points - Vector2(94, 29))
+		get_tree().root.size = Vector2i(points)
+		MobileDevice.current.configure()
+		var layer := CanvasLayer.new()
+		add_child(layer)
+		var body := MobilePage.build(layer, "Controller keyboard")
+		var field := LineEdit.new()
+		field.text = "A very long character name to verify scrolling and clipping"
+		body.add_child(field)
+		var keyboard := PadKeyboard.open_for(field)
+		PadNav.current._use_pad(true, -1)
+		await _mobile_check(keyboard, "controller keyboard and footer")
+		keyboard.queue_free()
+		layer.queue_free()
+		PadNav.current.reset()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

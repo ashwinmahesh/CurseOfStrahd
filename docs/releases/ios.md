@@ -394,3 +394,24 @@ Control interaction, device rendering/performance and signed distribution remain
 Local evidence, 2026-10-16: Xcode 27.1; native utility cancellation on iPhone Duo/iOS 27.1 and iPad Pro 11 M4/iOS
 27.0; successful JSON Files round trips on iPhone 16 Pro and iPad Pro 11 M4, both on iOS 27.0. The complete mobile import and refreshed game export have finished; full-game native qualification is in progress.
 Desktop/mobile `make check` passes 136 tests, additional menu/dice desktop regressions pass 20 tests, and native build/signing tooling passes 27 Python tests.
+
+## Controller support on iOS
+
+Controller support is required alongside touch on both iPhone and iPad. The implementation reuses shared
+exploration/combat commands while keeping mobile layouts. D-pad Up opens the quiet exploration Menu; LB opens
+combat Actions as a dismissible popup, with no action on release. Bumpers navigate mobile categories/tabs, A
+selects and confirms, and B backs out. Controller text entry uses a safe-area scrolling keyboard. Page hints
+follow the controller button family without adding a persistent desktop overlay to the world.
+
+Nonzero/reassigned device IDs are accepted on iOS, including remapped and built-in UI actions. Touch takeover
+clears controller holds; controller takeover cancels unfinished gestures. Mobile modals block continuous cursor,
+movement and camera input underneath them. Disconnecting the active controller pauses and clears held input;
+reconnecting leaves the explicit Continue screen in place. The same page can be dismissed using touch or a pad.
+
+The iOS export declares optional ExtendedGamepad support. No controller is required, and desktop layouts/bindings
+retain their prior behavior. See `docs/ui/controller.md` for controls, automated coverage and the physical-device
+matrix. Synthetic input and simulator renders cannot certify Bluetooth pairing or hardware latency.
+
+Controller validation on 2026-10-16: repository `make check` passes 143 tests; the separate desktop controller
+regression run passes 66 tests; iOS tooling passes 27 Python tests. The mobile input tests include a controller
+with device ID 7 to exercise reconnect-safe mappings, plus mixed touch/controller and disconnect paths.

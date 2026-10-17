@@ -10,6 +10,7 @@ var toolbar: VBoxContainer
 var back_action: Callable
 var keyboard_done: Button
 var _keyboard_height := 0.0
+var controller_hint: Label
 
 
 static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -> VBoxContainer:
@@ -53,6 +54,11 @@ static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -
 	page.body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page.body.add_theme_constant_override("separation", 10)
 	page.scroll.add_child(page.body)
+	page.controller_hint = UiKit.label("", 14, "parchment")
+	page.controller_hint.clip_text = true
+	page.controller_hint.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	page.controller_hint.hide()
+	column.add_child(page.controller_hint)
 	page.reflow()
 	return page.body
 
@@ -98,6 +104,9 @@ func reflow() -> void:
 func _process(_delta: float) -> void:
 	if not is_visible_in_tree():
 		return
+	if controller_hint != null:
+		controller_hint.visible = PadNav.active()
+		controller_hint.text = PadGlyphs.names("{a}: Choose · {b}: Back · {lb}/{rb}: Tabs · Right stick: Scroll")
 	if not is_equal_approx(_keyboard_height, MobileDevice.keyboard_height()):
 		reflow()
 		var focus := get_viewport().gui_get_focus_owner()

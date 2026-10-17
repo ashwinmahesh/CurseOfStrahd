@@ -79,6 +79,7 @@ class NativeExport extends EditorExportPlugin:
         return "StrahdIOS"
     func _export_begin(_features: PackedStringArray, _debug: bool, _path: String, _flags: int) -> void:
         add_ios_linker_flags("-framework UniformTypeIdentifiers")
+        add_ios_plist_content('<key>GCSupportsControllerUserInteraction</key><true/><key>GCSupportedGameControllers</key><array><dict><key>ProfileName</key><string>ExtendedGamepad</string></dict></array>')
 var exporter := NativeExport.new()
 func _enter_tree() -> void:
     add_export_plugin(exporter)
