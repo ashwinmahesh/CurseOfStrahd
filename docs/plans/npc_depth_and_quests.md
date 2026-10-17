@@ -9,7 +9,8 @@ Branch `npc-plan`. The per-NPC table is in [npc_depth_roster.md](npc_depth_roste
    secret. Not all of it needs a side quest or big drama.
 2. Side quests feel the same: talk to someone, wait somewhere at night, fight something. Make them more diverse.
 3. More comic-relief characters and lines; failure dialogues (not everything a success); not everything should give
-   information, as long as a failed check never locks us out of a quest. Comic lines are drafted with Gemini.
+   information, as long as a failed check never locks us out of a quest. Ten comic NPCs in all. Every new line is
+   drafted with Gemini on his subscription (not the API key).
 4. Give the Sunsword lines, and a voice.
 
 ## What the audit found (origin/main bd316c714)
@@ -68,20 +69,27 @@ Rules for this work:
    Rewards don't change.
 5. **New NPCs reuse existing sprites and portraits** (169 NPCs share a portrait today), so no art is spent. Own art for
    the comic characters is optional and would need Ashwin's yes (Gemini spend).
-6. **Comic lines are drafted in the Gemini app** (Gemini Argon 4, Medium effort, on Ashwin's subscription, not an API
-   key) from a brief per character; I review and edit every line for canon, tone, the rules above and voice safety
-   before it goes into game data. The Gemini CLI on the Mac is set to API-key sign-in, so I'll drive the app, which
-   may need a computer-use permission prompt on his Mac when we get there.
+6. **Every new line is drafted in the Gemini app** (Gemini Argon 4, Medium effort, on Ashwin's subscription, never
+   the API key; owner, 2026-10-17): the NPCs' flavour lines and hooks from the roster row and the NPC's existing lines,
+   the comic characters' from a brief per character, every reshaped and new side quest's from a brief per scene (who
+   speaks, what happens, which flags and checks, the exits), and the Sunsword's from Part D. I write the briefs and the
+   dialogue file's logic (nodes, checks, flags, exits), then review and edit every drafted line for canon, tone, the
+   rules above and voice safety before it goes into game data. How: Gemini on the web (gemini.google.com, the same
+   service and model picker as the Mac app) in the Claude app's built-in browser, signed in by Ashwin once; I pick
+   the model and effort, paste each brief, and read the reply back as page text. The native Gemini.app has no
+   scripting, and this session can't drive the screen; the Gemini CLI is signed in with an API key, so it's not used
+   unless Ashwin switches it to his Google sign-in. I keep each brief and Gemini's raw reply, so what it wrote and
+   what I changed can be compared.
 
 ## Part A: NPCs
 
-The [roster](npc_depth_roster.md) gives every speaking NPC a trait, a want and a secret, region by region (171 rows).
+The [roster](npc_depth_roster.md) gives every speaking NPC a trait, a want and a secret, region by region (176 rows).
 94 rows already have all three, from the book or a side quest, and the row only names them. The rest get one of:
 
-- **Flavour** (49 rows, 2–5 lines each): the trait shows in the greeting, the want is an answer when asked ("What
+- **Flavour** (52 rows, 2–5 lines each): the trait shows in the greeting, the want is an answer when asked ("What
   would make your day?" in that NPC's own words), and the secret sits behind something: an Insight check (failing
   it gets nothing), a second visit, another NPC's gossip or a companion's interject.
-- **Hook** (7 rows, 6–15 lines): a small errand with a small reward and no fight. For example, Anca the acolyte wants
+- **Hook** (9 rows, 6–15 lines): a small errand with a small reward and no fight. For example, Anca the acolyte wants
   to learn her letters at St. Andral's; the party carries her letter to Father Lucian, and his answer comes back.
   Goodwife Viorica wants one candle at last spring's price; give her a copper. Codruta in the den wants the rag doll
   she hid on the hillside.
@@ -289,9 +297,21 @@ level 4, rare from 5), smaller than a fight quest's.
 The valley stays a horror story. The comedy is dry, character-based and short, and it never makes a serious
 scene's NPC ridiculous.
 
-New comic characters (all on existing sprites): **Ambrose Fennimore** (the travel writer), **Emanoil** (the
-would-be vampire), **Leontina** (the Baron's cook), **Piccolo** (Blinsky's monkey, Narrator lines only), **the
-Well-Travelled Goat** (Narrator and Speak with Animals), and **the Sunsword** (Part D).
+Ten new comic characters, all on existing sprites, at least one in every stretch of the valley (owner, 2026-10-17:
+"maybe 10 in total"), plus the Sunsword (Part D):
+
+| Who | Where | The joke | Want | Secret | Lines |
+|---|---|---|---|---|---|
+| **The Well-Travelled Goat** | Everywhere (batches 1–6) | Turns up in impossible places, eating them | Everything | It has been everywhere, and with Speak with Animals it has opinions about all of it | ~25 (Narrator) |
+| **Ambrose Fennimore** | Roads, every region (2–6) | A travel writer from beyond the mists rating the valley ("The Blue Water Inn: two stars. Wolves.") | To finish the book and go home | Eleven years here, nine hundred pages, no way out | ~60 |
+| **Costică** | The Svalich road and the crossroads (2) | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | ~35 |
+| **Piccolo** | Blinsky's shop, Vallaki (3) | Blinsky's monkey, a critic who charges admission | Your coins, one at a time | Everything he's taken is in the jester's hat on the top shelf | ~10 (Narrator) |
+| **Emanoil** | Vallaki (3) | A clerk who writes poems to the castle and sleeps in a coffin from Henrik's | To be chosen and bitten | He's afraid of the dark and sleeps with a candle in the coffin | ~40 |
+| **Leontina** | Vallaki (3) | The Baron's cook: four hundred and thirteen sun-shaped dishes | One dish that isn't round | She trained in a great kitchen beyond the mists, and nobody here believes her | ~35 |
+| **Madam Profira** | Krezk (4) | Krezk's matchmaker, who has been trying to marry the same three people for thirty years, and starts on the party (always the wrong pairs) | One wedding in Krezk this year | The watchman's grandfather jilted her, and she's matched out of spite ever since | ~25 |
+| **Sprig** | The winery (4) | A twig blight from Yester Hill that won't fight and has decided it's a dog | To be patted | The druids sent it to spy, and it is very bad at it | ~10 (Narrator) |
+| **Sir Ottokar the Late** | Argynvostholt (5) | A dead knight who arrived late to the last battle and has been late to everything since ("Did I miss it?") | To be on time once | He was late because he stopped to help a farmer's wife with her cart, and he'd do it again | ~20 |
+| **Gogu** | Castle Ravenloft's roofs (6) | A gargoyle on the highest ledge who's afraid of heights | A lower ledge | He's the one who drops things on guests, and blames the ravens | ~20 |
 
 Existing characters given recurring comic beats: Vasile and Petre as a double act, Mirabel's nicknames for each
 hero, Parriwimple's counting, Arik's one-word "no"s, the Baron's decree of the day, Anton in the stocks (who likes
@@ -302,7 +322,8 @@ Companions: Kip, Ratatouille and Wren get comic interjects in the new scenes (`n
 line where it fits, as the side quests already do.
 
 Running gags, each paying off late: the Fourth Rumour coming back garbled; the Goat's sightings; Fennimore's
-ratings; Piccolo's coin-stealing (catch him to get your coins back).
+ratings; Piccolo's coin-stealing (catch him to get your coins back); Costică's robberies; Ottokar arriving after
+every fight at Argynvostholt.
 
 ### Failure that isn't a dead end
 
@@ -372,11 +393,11 @@ are estimates; every one is unvoiced until the voice thread records it.
 | Batch | Region (levels) | What's in it | New lines |
 |---|---|---|---|
 | **1** | The Village of Barovia and the road in (1–3) | The `fail_routes` check; the village's rumour-givers get "nothing new", a wrong rumour and a refusal; trait, want and secret for about 30 villagers, with hooks for Anca, Viorica and Parriwimple; The Oat Thief and The Goatherd's Count reshaped; The Fourth Rumour; the Goat's first sightings; Mirabel's nicknames | ~290 |
-| 2 | Tser Pool, the Svalich road and the crossroads (3–5) | ~20 NPCs; Called by Name and The Grey Mare reshaped; Stanimir's Fire; Radu's Unsellable Horse; Fennimore arrives; Old Dorina's stew | ~260 |
+| 2 | Tser Pool, the Svalich road and the crossroads (3–5) | ~20 NPCs; Called by Name and The Grey Mare reshaped; Stanimir's Fire; Radu's Unsellable Horse; Fennimore arrives; Costică; Old Dorina's stew | ~295 |
 | 3 | Vallaki and the Vistani camp (5–6) | ~45 NPCs; Ribbons and The Count's Portraitist reshaped; Florin's Grandson; Emanoil; The Sun-Cake; Piccolo, the Baron's decrees, Anton, Smaranda | ~450 |
-| 4 | Krezk, the abbey, the lake, the winery, the den, Yester Hill (6–8) | ~40 NPCs; The Baron's Island, The Waystone and The Fourth Sister reshaped; Dumitru's Visitor; Old Silviu's Wedding Cask; the watchman, the Belviews | ~370 |
-| 5 | Argynvostholt, Berez, the mountains, the Amber Temple (8–10) | ~25 NPCs; The Squire reshaped; Exethanter's Notes | ~140 |
-| 6 | Castle Ravenloft (10) | ~25 NPCs; The Boyar's Petition; the Goat's and Fennimore's last chapters | ~175 |
+| 4 | Krezk, the abbey, the lake, the winery, the den, Yester Hill (6–8) | ~40 NPCs; The Baron's Island, The Waystone and The Fourth Sister reshaped; Dumitru's Visitor; Old Silviu's Wedding Cask; Madam Profira; Sprig; the watchman, the Belviews | ~405 |
+| 5 | Argynvostholt, Berez, the mountains, the Amber Temple (8–10) | ~25 NPCs; The Squire reshaped; Exethanter's Notes; Sir Ottokar the Late | ~160 |
+| 6 | Castle Ravenloft (10) | ~25 NPCs; The Boyar's Petition; Gogu; the Goat's and Fennimore's last chapters | ~195 |
 | S | The Sunsword (any time; its own files) | Part D | ~82 |
 
 **Batch 1 in detail** (what lands when Ashwin says go):
@@ -392,7 +413,7 @@ are estimates; every one is unvoiced until the voice thread records it.
 5. The Fourth Rumour (its echoes in later regions arrive with those batches).
 6. The Goat's first three sightings (church roof, Bildrath's shop, the Death House gate), with Speak with Animals
    answers.
-7. Comic lines (The Fourth Rumour, the Goat, Vasile and Petre, Mirabel) drafted in the Gemini app, then edited.
+7. Every new line drafted in the Gemini app, then edited.
 8. `docs/story/side_quests.md` and the flags files updated; `make check` green; handed off by branch name.
 
 ## Voice cost
@@ -403,17 +424,18 @@ the Narrator since the sale ended).
 | | Lines | Credits |
 |---|---|---|
 | Batch 1 | ~290 | ~14,500 |
-| Batch 2 | ~260 | ~13,000 |
+| Batch 2 | ~295 | ~14,750 |
 | Batch 3 | ~450 | ~22,500 |
-| Batch 4 | ~370 | ~18,500 |
-| Batch 5 | ~140 | ~7,000 |
-| Batch 6 | ~175 | ~8,750 |
+| Batch 4 | ~405 | ~20,250 |
+| Batch 5 | ~160 | ~8,000 |
+| Batch 6 | ~195 | ~9,750 |
 | The Sunsword | ~82 | ~4,100 |
-| Designed voices (Fennimore, Emanoil, Leontina, the Sunsword; Tudorel and the rest share townsfolk voices) | | ~1,200 |
-| **Total** | **~1,770** | **~89,500** |
+| Designed voices (the Sunsword and the seven speaking comic characters; Tudorel and the rest share townsfolk voices) | | ~2,400 |
+| **Total** | **~1,880** | **~96,250** |
 
-The account had 49,021 credits on 2026-10-17 (29 of 30 voice slots used; the count resets 2026-11-06), so batches 1
-to 3 fit before the reset if nothing else spends. Every recording waits for Ashwin's typed yes in this thread.
+The account had 49,021 credits early on 2026-10-17; Ashwin topped it up the same evening, and the voice lane read
+about 159,000 (limit 873,500; 29 of 30 voice slots used; the count resets 2026-11-06), so the whole plan fits if
+nothing else spends. Every recording waits for Ashwin's typed yes in this thread.
 
 ## What I need from Ashwin
 

@@ -77,6 +77,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | The camp dog (Tser Pool) | 0 | Steals from everyone equally | Your sausage | It has a stash under Madam Eva's wagon of everything it's stolen | flavour (Narrator), comic |
 | Bujor | 0 | (The Dancing Bear) | | | has |
 | Ambrose Fennimore (new) | – | A traveller from beyond the mists writing a guidebook to the valley, rating everything | To finish the book and go home | He has been here eleven years; the book is nine hundred pages and he has never found the way out | quest: Fennimore's Guide, comic |
+| Costică (new) | – | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | hook: help him rob someone who deserves it, comic |
 
 ## Vallaki and the Vistani camp (batch 3)
 
@@ -147,6 +148,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | Cezar | 1 | Mends rails the billy breaks | The billy gone | He's fond of it | flavour, comic |
 | Goodwife Rodica | 1 | A prayer over every bucket | A well that doesn't freeze | She waters the well with a pinch of salt for luck, which is why it tastes like that | flavour, comic |
 | Widow Catrina | 1 | Says her husband's name to the pool | An answer | The answer came once, in a voice she didn't know (Sergei's), and she hasn't told anyone | flavour |
+| Madam Profira (new) | – | Krezk's matchmaker, thirty years on the same three people; starts pairing the party, always wrongly | One wedding in Krezk this year | The watchman's grandfather jilted her, and she's matched out of spite ever since | flavour, comic (reads the companion romances' flags for lines, never sets them) |
 | Lark, Yanko | 11/1 | (The Waystone) | | | quest: The Waystone (reshaped) |
 | The Abbot, Vasilka, Mother | 80/7/9 | (The Abbot's Bride, Mother's Ninth Improvement) | | | has |
 | Clovin Belview | 63 | (Clovin's Audience) | | | has, comic |
@@ -163,6 +165,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | Tereza | 1 | Keeps the washing and the tempers | To go home to Vallaki | She's sweet on Horia and pretends to be cross with him | flavour |
 | Ionel | 1 | Hasn't slept a whole night since the druids came | A whole night's sleep | The crossbow isn't loaded; he lost the bolts | flavour, comic |
 | Horia | 1 | Splits wood for the fire | To split staves for casks again | Sweet on Tereza | flavour |
+| Sprig (new) | – | A twig blight from Yester Hill that won't fight and has decided it's a dog | To be patted | The druids sent it to spy, and it is very bad at it | flavour (Narrator), comic |
 | Mother Ruxandra, Zorica | 20/5 | (Yester Hill, The Druid Who Came Back) | | | has |
 | Freydis, Silverjaw | 15/1 | (The Barrow, The Mountain's Heart) | | | has |
 | Emil, Zuleika, Kiril, the Grandsire | 39/38/29/4 | (Wolves in the Hills) | | | has |
@@ -178,6 +181,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | Sir Godfrey, Vladimir, Argynvost, the knights | 97/72/34/15 | (The Order of the Silver Dragon) | | | has |
 | Cosmin | 11 | (The Squire) | | | quest: The Squire (reshaped) |
 | Phantom Warden | 7 | Keeps a gate that fell | Relief at his post | He opened the gate for the count's herald the night it fell, believing the flag of truce | flavour |
+| Sir Ottokar the Late (new) | – | Arrived late to the last battle, late to everything since: turns up after every fight, "Did I miss it?" | To be on time once | He was late because he stopped to help a farmer's wife with her cart, and he'd do it again | flavour, comic |
 | The Gilded Knight | 6 | (The Silver Hoard) | | | has |
 | Baba Lysaga | 53 | (The Witch of Berez) | | | has |
 | Mordenkainen, the Mad Mage | 52/24 | (The Mad Mage, The Mage's Lost Pages) | | | has |
@@ -207,6 +211,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | The Steward | 11 | Sets the chairs square | The dishes to stop arriving | He laid a place for himself once, and was punished for it | flavour |
 | Ghenadie, Anghel, Nicodim, Vlaicu (ghost servants) | 10/9/6/8 | Each at a task the wedding night stopped | Each a small want (a bed slept in, a seal, a ceremony, a lit lamp) | Each saw one thing on the wedding night | quest parts: The Boyar's Petition needs their seals |
 | Helga Ruvak | 9 | Asks if you're staying the night | A mirror that works | She tells the brides what guests say about them, for a price | flavour |
+| Gogu (new) | – | A gargoyle on the highest ledge, afraid of heights | A lower ledge | He drops things on guests and blames the ravens | hook: carry him down to the gatehouse (heavy), comic |
 | Captain Merrow, Corporal Vell, Aurel (retired companions' quests) | | | | | has; no change |
 | Corvina, Querreth | 4/1 | (The Unnamed Crypt, Escher's Petition) | | | has |
 | The dead servants and guards, the Hall Broom | 0 | Silent | | | no change, except the Hall Broom sweeps round the Goat (comic, Narrator) |
