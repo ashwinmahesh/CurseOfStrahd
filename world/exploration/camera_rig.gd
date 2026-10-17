@@ -165,6 +165,8 @@ func _look(delta: float) -> void:
 
 ## The shake's jolt for this frame, on the camera's own offsets so the rig's point and the shot stay put.
 func _shake(delta: float) -> void:
+	if MobileNative.reduced_motion():
+		shake = 0.0
 	if shake <= 0.0:
 		if camera.h_offset != 0.0 or camera.v_offset != 0.0:
 			camera.h_offset = 0.0
@@ -180,11 +182,12 @@ func _apply() -> void:
 	rotation = Vector3(0, _yaw, 0)
 	var k := smoothstep(0.0, 1.0, horizon_shown)
 	var kt := smoothstep(0.0, 1.0, tactical_shown)
-	var pitch := lerpf(PITCH_DEG, TACTICAL_PITCH_DEG, kt) + shot_pitch
+	var reduce := MobileNative.reduced_motion()
+	var pitch := lerpf(PITCH_DEG, TACTICAL_PITCH_DEG, kt) + (0.0 if reduce else shot_pitch)
 	var play := deg_to_rad(pitch)
-	var d := distance * shot_zoom * lerpf(1.0, TACTICAL_ZOOM, kt)
+	var d := distance * (1.0 if reduce else shot_zoom) * lerpf(1.0, TACTICAL_ZOOM, kt)
 	var at := Vector3(0, -sin(play) * d, cos(play) * d) + Vector3(0, 0.6, 0)
-	if shot_weight > 0.0:
+	if shot_weight > 0.0 and not reduce:
 		at += Basis(Vector3.UP, -_yaw) * ((shot_focus - global_position) * shot_weight)
 	camera.position = at.lerp(Vector3(0, HORIZON_HEIGHT, HORIZON_BACK), k)
 	camera.rotation = Vector3(deg_to_rad(lerpf(pitch, HORIZON_PITCH_DEG, k)), 0, 0)

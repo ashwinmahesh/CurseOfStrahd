@@ -6,7 +6,7 @@ extends RefCounted
 ## off in headless runs (tests) and in still captures, where every frame has to show the finished screen; a capture
 ## that wants it passes --motion.
 
-## Off: everything snaps to its end at once. A later Settings switch for reduced motion can set it.
+## Tests/captures can suppress animation independently of the mobile/system preference.
 static var reduced := false
 static var _checked := false
 ## The last value shown for each rolling number, by its key.
@@ -23,7 +23,7 @@ static func on() -> bool:
 				still = true
 		if DisplayServer.get_name() == "headless" or (still and not "--motion" in args):
 			reduced = true
-	return not reduced
+	return not reduced and not MobileNative.reduced_motion()
 
 
 ## A tween on the scene tree that keeps running while the game is paused and dies with `node`.

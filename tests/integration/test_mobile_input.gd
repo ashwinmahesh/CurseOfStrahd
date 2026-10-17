@@ -8,6 +8,7 @@ var old_factor: float
 
 
 func before_each() -> void:
+	InputActions.ensure()
 	old_size = get_tree().root.size
 	old_canvas = get_tree().root.content_scale_size
 	old_factor = get_tree().root.content_scale_factor
@@ -1222,4 +1223,143 @@ func test_mobile_search_recovery_never_uses_items_or_commits_actions() -> void:
 	assert_eq(encounter.dice.get_state(), rng)
 	assert_true(actor.action_available)
 	actions.queue_free()
+	await _frames()
+
+
+func test_geometry_changes_cancel_contacts_and_reflow_without_losing_search() -> void:
+	var commits := [0]
+	var body := MobilePage.build(root, "Geometry test", func() -> void: commits[0] = int(commits[0]) + 1)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	var field := LineEdit.new()
+	field.text = "healing"
+	body.add_child(field)
+	var action := MobileUi.button("Use item", func() -> void: commits[0] = int(commits[0]) + 1)
+	body.add_child(action)
+	await _frames()
+	var at := action.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	assert_false(UiFeel.touch.gestures.contacts.is_empty())
+	# Landscape flips can change the safe area without changing the window dimensions.
+	MobileDevice.test_safe = Rect2(8, 8, 750, 361)
+	await _frames()
+	assert_true(UiFeel.touch.gestures.contacts.is_empty())
+	assert_eq(page.position.x, 12.0, "page follows the shifted safe area")
+	_touch(at, false)
+	await _frames()
+	assert_eq(int(commits[0]), 0, "old release cannot activate an item in the new geometry")
+	assert_eq(field.text, "healing")
+	at = action.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	MobileDevice.test_keyboard_height = 170
+	await _frames()
+	assert_true(UiFeel.touch.gestures.contacts.is_empty(), "keyboard appearance cancels contacts too")
+	assert_true(page.keyboard_done.visible)
+	assert_true(page.get_global_rect().end.y <= 220)
+	_touch(at, false)
+	await _frames()
+	assert_eq(int(commits[0]), 0)
+	MobileDevice.test_keyboard_height = 0
+	await _frames()
+	assert_false(page.keyboard_done.visible)
+	assert_eq(field.text, "healing", "keyboard/rotation never clears a search")
+	await _press_named(root, "Use item")
+	assert_eq(int(commits[0]), 1, "a fresh tap still works after reflow")
+
+
+func test_mobile_reduced_motion_stops_cinematics_without_changing_camera_controls_or_desktop() -> void:
+	var previous_native := MobileNative.current
+	var previous_preference := bool(GameSettings.value("ios_reduce_motion", false))
+	var previous_reduced := UiMotion.reduced
+	var previous_headless := CombatImpact.headless_too
+	var previous_profile := MobileDevice.profile
+	var native := MobileNative.new()
+	add_child(native)
+	native.set_process(false)
+	GameSettings.set_value("ios_reduce_motion", false, false)
+	UiMotion.on()
+	UiMotion.reduced = false
+	CombatImpact.headless_too = true
+	assert_true(UiMotion.on())
+	var rig := CameraRig.new()
+	add_child(rig)
+	rig.set_process(false)
+	var target := Node3D.new()
+	add_child(target)
+	var impact := CombatImpact.new(rig)
+	add_child(impact)
+	var time := Engine.time_scale
+	var rng := Dice.roller.get_state()
+	impact.hit(target, 20, 20, true, true, true)
+	assert_true(Engine.time_scale < time, "cinematic began before preference changed")
+	native.system_reduced_motion = true
+	assert_false(UiMotion.on(), "iOS preference disables decorative UI motion")
+	assert_false(CombatImpact.on())
+	assert_false(ScreenPulse.on())
+	impact._process(0)
+	assert_eq(Engine.time_scale, time, "changing preference during a cinematic restores time")
+	assert_eq(rig.shot_zoom, 1.0)
+	rig.shake = 1.0
+	rig.camera.h_offset = 0.2
+	rig.camera.v_offset = 0.2
+	rig._shake(0.01)
+	assert_eq(rig.shake, 0.0)
+	assert_eq(rig.camera.h_offset, 0.0)
+	assert_eq(rig.camera.v_offset, 0.0)
+	var initial_distance := rig.distance
+	rig.touch_camera({"kind": "camera", "scale": 1.2, "rotation": 0.3, "delta": Vector2(10, 10)})
+	assert_true(rig.distance < initial_distance, "intentional zoom stays available")
+	assert_true(is_equal_approx(rig._touch_yaw, 0.3), "intentional rotation stays available")
+	assert_true(rig.touch_offset != Vector3.ZERO, "intentional pan stays available")
+	assert_eq(Dice.roller.get_state(), rng)
+	native.system_reduced_motion = false
+	GameSettings.set_value("ios_reduce_motion", true, false)
+	assert_true(MobileNative.reduced_motion(), "in-game preference works independently")
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.profile = ""
+	assert_false(MobileNative.reduced_motion(), "mobile preference does not affect desktop")
+	assert_true(UiMotion.on())
+	assert_true(CombatImpact.on())
+	MobileDevice.test_size = Vector2(844, 390)
+	MobileDevice.profile = previous_profile
+	GameSettings.set_value("ios_reduce_motion", previous_preference, false)
+	UiMotion.reduced = previous_reduced
+	CombatImpact.headless_too = previous_headless
+	impact.queue_free()
+	rig.queue_free()
+	target.queue_free()
+	native.queue_free()
+	await _frames()
+	MobileNative.current = previous_native
+
+
+func test_mobile_inventory_typing_keeps_field_and_done_visible_above_keyboard() -> void:
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	inventory.open(self, state, 0)
+	await _frames()
+	var search: LineEdit
+	for field: LineEdit in inventory.find_children("*", "LineEdit", true, false):
+		if field.placeholder_text == "Search items":
+			search = field
+	assert_true(search != null)
+	if search != null:
+		search.grab_focus()
+		MobileDevice.test_keyboard_height = 170
+		await _frames()
+		for query: String in ["h", "he", "healing"]:
+			search.text = query
+			search.text_changed.emit(query)
+			await _frames()
+			assert_true(inventory.mobile.page.scroll.get_global_rect().encloses(search.get_global_rect()), "typing keeps the entire field visible")
+			assert_true(search.get_global_rect().end.y <= 220)
+		var done := inventory.mobile.page.keyboard_done
+		assert_true(done.visible)
+		assert_eq(done.autowrap_mode, TextServer.AUTOWRAP_OFF, "Done never becomes an unreadable vertical word")
+		assert_true(done.size.x >= done.get_minimum_size().x)
+		assert_eq(inventory.search, "healing")
+	inventory.queue_free()
 	await _frames()

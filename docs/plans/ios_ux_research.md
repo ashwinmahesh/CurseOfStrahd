@@ -44,3 +44,18 @@ Next acceptance work, in order:
 4. Recheck long item/spell names, maximum text, crowded encounters and long conversations against the latest native build. Keep the desktop comparison and compact HUD requirements in the release gate.
 
 The PR stays draft until the native and hardware qualification gaps in the main iOS plan are resolved.
+
+
+## Polish cycle: keyboard, rotation and motion comfort
+
+The owner requested an ongoing improvement loop, with a polished mobile experience as the priority. This cycle focuses on completing ordinary interactions reliably rather than expanding the permanent HUD.
+
+| Evidence | Gap found in our app | Change |
+| --- | --- | --- |
+| Apple's [Reduced Motion evaluation criteria](https://developer.apple.com/help/app-store-connect/manage-app-accessibility/reduced-motion-evaluation-criteria) recommend respecting system preferences and reducing decorative spinning, scaling and depth effects while preserving useful feedback. | The game had a test/capture motion switch, but iOS preferences did not reach cosmetic camera effects. | Observe the iOS setting and offer **Reduce extra motion** in mobile Display settings. Suppress cinematic zoom/lean/shake, impact time effects, radial screen pulses and new decorative UI animations; stop existing bust breathing. Intentional camera pan, zoom, rotation and tactical view remain available. Desktop behavior is unchanged. This is scoped improvement, not certification of all Reduced Motion criteria. |
+| Feral's [June 2026 XCOM 2 update](https://www.feralinteractive.com/en/news/update-1-6-has-a-100-percent-chance-to-hit-the-xcom-2-collection-for-ios-and-android-today/) added screen rotation and Bluetooth mouse/keyboard controls. | Our safe-area updates depended largely on window size. A same-size landscape flip or keyboard appearance could leave an old contact active. | Track safe area, logical size and keyboard geometry; cancel unfinished contacts and reflow mobile pages, dialogue and HUDs. Preserve the open page, search text and game state. This is our design inference from the comparison, not a claim about Feral's implementation. |
+| Actual offscreen review of our inventory with keyboard geometry active. | Done wrapped into an unreadable narrow button. Filtering returned the scroll position to the top, hiding the active field. | Keep Done unwrapped and keep the focused field visible after filtering, including nested tablet scrolling. Add a regression that types successive queries with the phone keyboard open. |
+
+The native gameplay suite now addresses the current combat HUD rather than obsolete Common/More/Round buttons. Its campaign journey includes inventory search, keyboard dismissal, landscape rotation and the motion preference; exploration includes Nearby objects search. Native results are recorded separately when the run finishes. Six prepared offscreen screenshots show Display settings and keyboard/safe-area layouts on phone and tablet; the blank keyboard reservation in those captures is not a rendered UIKit keyboard.
+
+Remaining: real-device comfort, assistive-technology and performance qualification; broader Reduce Motion coverage beyond these effects; native acceptance of the current revision; no new Apple upload is implied.

@@ -4,6 +4,7 @@ extends Node
 ## the same UI on a desktop, without claiming to be an iOS simulator or changing persisted player settings.
 
 signal modality_changed(mode: String)
+signal geometry_changed
 
 static var current: MobileDevice
 static var profile := _argument_profile()
@@ -13,6 +14,9 @@ static var test_keyboard_height := 0.0
 static var pointer := Vector2.ZERO
 var modality := "touch"
 var _configuring := false
+var _last_safe := Rect2()
+var _last_size := Vector2.ZERO
+var _last_keyboard := 0.0
 
 
 static func _argument_profile() -> String:
@@ -83,6 +87,27 @@ func configure() -> void:
 	window.content_scale_size = Vector2i(points)
 	window.content_scale_factor = maxf(1.0, GameSettings.ui_scale())
 	_configuring = false
+	_refresh_geometry()
+
+
+func _process(_delta: float) -> void:
+	if enabled():
+		_refresh_geometry()
+
+
+## A contact belongs to the geometry where it began, including keyboard and same-size landscape flips.
+func _refresh_geometry() -> void:
+	var area := safe_rect()
+	var points := logical_size()
+	var keyboard := keyboard_height()
+	if area == _last_safe and points == _last_size and is_equal_approx(keyboard, _last_keyboard):
+		return
+	_last_safe = area
+	_last_size = points
+	_last_keyboard = keyboard
+	if UiFeel.touch != null:
+		UiFeel.touch.cancel()
+	geometry_changed.emit()
 
 
 func _input(event: InputEvent) -> void:

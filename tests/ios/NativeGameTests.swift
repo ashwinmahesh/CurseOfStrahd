@@ -38,6 +38,18 @@ final class NativeGameTests: XCTestCase {
         return button
     }
 
+    func enterSearch(_ label: String, text: String) {
+        tap(label)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10), app.debugDescription)
+        let introduction = app.otherElements["UIContinuousPathIntroductionView"]
+        if introduction.waitForExistence(timeout: 1) { introduction.buttons["Continue"].tap() }
+        for character in text {
+            let key = app.keyboards.keys.matching(NSPredicate(format: "label ==[c] %@", String(character))).firstMatch
+            XCTAssertTrue(key.waitForExistence(timeout: 5), app.debugDescription)
+            key.tap()
+        }
+    }
+
     func scrollBody() {
         // Start inside the page body, below fixed headers and horizontal tab strips.
         let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.84))
@@ -51,7 +63,7 @@ final class NativeGameTests: XCTestCase {
                 XCTFail("Game reported an error during the world transition\n\(app.debugDescription)")
                 return
             }
-            if app.buttons["Menu"].waitForExistence(timeout: 2) { return }
+            if app.buttons["Menu"].waitForExistence(timeout: 1) || app.buttons["Battle Menu"].waitForExistence(timeout: 1) { return }
             let skip = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Skip")).firstMatch
             if skip.exists && skip.isHittable { skip.tap() }
         }
@@ -70,6 +82,16 @@ final class NativeGameTests: XCTestCase {
         tap("Inventory")
         XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 60), app.debugDescription)
         capture("inventory")
+        enterSearch("Search items", text: "zzzz")
+        capture("inventory-search-keyboard")
+        tap("Done", scroll: false)
+        XCTAssertTrue(app.buttons["Show all items"].waitForExistence(timeout: 10), app.debugDescription)
+        XCUIDevice.shared.orientation = .landscapeRight
+        XCTAssertTrue(app.buttons["Show all items"].waitForExistence(timeout: 10), app.debugDescription)
+        capture("inventory-search-rotated")
+        tap("Show all items", scroll: false)
+        XCTAssertFalse(app.buttons["Show all items"].exists)
+        XCUIDevice.shared.orientation = .landscapeLeft
         tap("Equipment", scroll: false)
         capture("equipment")
         tap("Back", scroll: false)
@@ -86,6 +108,17 @@ final class NativeGameTests: XCTestCase {
         tap("Back", scroll: false)
         tap("Menu", scroll: false)
         tap("Save and settings")
+        tap("Settings")
+        tap("Display", scroll: false)
+        let motion = app.buttons["Reduce extra motion"]
+        XCTAssertTrue(motion.waitForExistence(timeout: 15), app.debugDescription)
+        let wasReduced = motion.isSelected
+        motion.tap()
+        let changed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "selected == %@", NSNumber(value: !wasReduced)), object: motion)
+        XCTAssertEqual(XCTWaiter.wait(for: [changed], timeout: 10), .completed)
+        capture("mobile-display-preferences")
+        motion.tap()
+        tap("Back", scroll: false)
         tap("Save game")
         tap("New save")
         capture("saved")
@@ -117,6 +150,13 @@ final class NativeGameTests: XCTestCase {
         tap("Menu", scroll: false)
         XCTAssertTrue(app.buttons["Inventory"].waitForExistence(timeout: 60))
         capture("exploration-menu")
+        tap("Nearby objects")
+        capture("nearby-objects")
+        enterSearch("Search nearby objects", text: "zzzz")
+        capture("nearby-search-keyboard")
+        tap("Done", scroll: false)
+        tap("Clear search")
+        tap("Back", scroll: false)
         tap("Inventory")
         XCTAssertTrue(app.buttons["Equipment"].waitForExistence(timeout: 60))
         tap("Back", scroll: false)
@@ -169,19 +209,20 @@ final class NativeGameTests: XCTestCase {
         waitForWorld()
         capture("battlefield")
         tap("Actions", scroll: false)
-        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 60), app.debugDescription)
+        XCTAssertTrue(app.buttons["All ▾"].waitForExistence(timeout: 60), app.debugDescription)
         capture("combat-actions")
         tap("Close", scroll: false)
-        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.buttons["Common"])
+        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.buttons["All ▾"])
         XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 60), .completed, "Actions must not cover the battlefield after closing")
         tap("Actions", scroll: false)
-        XCTAssertTrue(app.buttons["Common"].waitForExistence(timeout: 60))
+        XCTAssertTrue(app.buttons["All ▾"].waitForExistence(timeout: 60))
         tap("Close", scroll: false)
-        tap("More", scroll: false)
+        tap("Battle Menu", scroll: false)
+        tap("More controls")
         tap("Choose a creature to target")
         capture("target-list")
         tap("Back", scroll: false)
-        let round = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Round ")).firstMatch
+        let round = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", " · Round ")).firstMatch
         XCTAssertTrue(round.waitForExistence(timeout: 10))
         let turnBeforeRelaunch = round.label
         app.terminate()

@@ -1002,7 +1002,15 @@ func _mobile_settings(page: String) -> void:
 		tabs.add_child(MobileUi.button(tab, func() -> void: _show_settings(tab)))
 	match page:
 		"Game": _game_rows()
-		"Display": _display_rows()
+		"Display":
+			var motion := CheckButton.new()
+			motion.text = "Reduce extra motion"
+			motion.button_pressed = bool(GameSettings.value("ios_reduce_motion", false))
+			motion.toggled.connect(func(on: bool) -> void: GameSettings.set_value("ios_reduce_motion", on))
+			MobileUi.fit(motion)
+			_mobile_body.add_child(motion)
+			_mobile_body.add_child(MobileUi.text("Suppresses camera shakes, cinematic zooms and decorative menu motion. Your camera controls still work. iOS Reduce Motion is also respected, even when this switch is off."))
+			_display_rows()
 		"Keys":
 			var feedback := CheckButton.new()
 			feedback.text = "Touch haptics"
@@ -1010,7 +1018,7 @@ func _mobile_settings(page: String) -> void:
 			feedback.toggled.connect(func(on: bool) -> void: GameSettings.set_value("ios_haptics", on))
 			MobileUi.fit(feedback)
 			_mobile_body.add_child(feedback)
-			_mobile_body.add_child(MobileUi.text("Touch: tap to select, drag to pan, pinch to zoom, twist to turn. More offers camera buttons and context actions. External keyboards and controllers use the bindings below."))
+			_mobile_body.add_child(MobileUi.text("Touch: tap to select, drag to pan, pinch to zoom, twist to turn. Menu offers camera buttons and Nearby objects. External keyboards and controllers use the bindings below."))
 			var keys := KeysPage.new()
 			keys.custom_minimum_size = Vector2(0, 460)
 			_mobile_body.add_child(keys)

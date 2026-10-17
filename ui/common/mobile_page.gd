@@ -51,6 +51,7 @@ static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -
 			focus.release_focus()
 		DisplayServer.virtual_keyboard_hide())
 	page.keyboard_done.size_flags_horizontal = Control.SIZE_SHRINK_END
+	page.keyboard_done.autowrap_mode = TextServer.AUTOWRAP_OFF
 	page.keyboard_done.hide()
 	bar.add_child(page.keyboard_done)
 	page.toolbar = VBoxContainer.new()
@@ -85,6 +86,9 @@ static func cancel() -> void:
 
 func _ready() -> void:
 	get_viewport().size_changed.connect(reflow)
+	get_viewport().gui_focus_changed.connect(_focus_changed)
+	if MobileDevice.current != null:
+		MobileDevice.current.geometry_changed.connect(_geometry_changed)
 	if UiFeel.touch != null:
 		UiFeel.touch.cancel()
 
@@ -146,8 +150,34 @@ func _process(_delta: float) -> void:
 			if PadNav.scroller(scope) != null:
 				hints.append("Right stick: Scroll")
 			controller_hint.text = " · ".join(hints)
-	if not is_equal_approx(_keyboard_height, MobileDevice.keyboard_height()):
-		reflow()
-		var focus := get_viewport().gui_get_focus_owner()
-		if focus != null and body.is_ancestor_of(focus):
-			scroll.ensure_control_visible.call_deferred(focus)
+
+
+func _geometry_changed() -> void:
+	reflow()
+	_keep_input_visible.call_deferred()
+
+
+func _focus_changed(control: Control) -> void:
+	if control is LineEdit and body != null and body.is_ancestor_of(control):
+		var input := control as LineEdit
+		if not input.text_changed.is_connected(_text_changed):
+			input.text_changed.connect(_text_changed)
+		_keep_input_visible.call_deferred()
+
+
+func _text_changed(_value: String) -> void:
+	_keep_input_visible.call_deferred()
+
+
+## Filtering often rebuilds rows and resets scrolling. Keep the active field visible after that layout settles.
+func _keep_input_visible() -> void:
+	if _keyboard_height <= 0 or body == null:
+		return
+	var focus := get_viewport().gui_get_focus_owner()
+	if focus == null or not body.is_ancestor_of(focus):
+		return
+	var ancestor := focus.get_parent()
+	while ancestor != null and ancestor != self:
+		if ancestor is ScrollContainer:
+			(ancestor as ScrollContainer).ensure_control_visible(focus)
+		ancestor = ancestor.get_parent()

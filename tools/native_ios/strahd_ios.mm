@@ -81,6 +81,7 @@ static StrahdDocumentDelegate *documents;
 static StrahdAccessibilityView *accessibilityView;
 static NSMutableDictionary<NSString *, StrahdAccessibilityElement *> *accessibilityItems;
 static NSArray<NSString *> *accessibilityOrder;
+static id motionObserver;
 
 
 class StrahdIOS : public RefCounted {
@@ -91,6 +92,7 @@ protected:
         ClassDB::bind_method(D_METHOD("import_save", "destination"), &StrahdIOS::import_save);
         ClassDB::bind_method(D_METHOD("share_save", "path"), &StrahdIOS::share_save);
         ClassDB::bind_method(D_METHOD("haptic"), &StrahdIOS::haptic);
+        ClassDB::bind_method(D_METHOD("observe_motion"), &StrahdIOS::observe_motion);
         ClassDB::bind_method(D_METHOD("set_accessibility", "json"), &StrahdIOS::set_accessibility);
     }
 public:
@@ -187,6 +189,17 @@ public:
             if (changed && UIAccessibilityIsVoiceOverRunning()) UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
         });
     }
+    void observe_motion() {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!motionObserver) {
+                motionObserver = [NSNotificationCenter.defaultCenter addObserverForName:UIAccessibilityReduceMotionStatusDidChangeNotification
+                    object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *notification) {
+                        event(@"reduce_motion", UIAccessibilityIsReduceMotionEnabled() ? @"1" : @"0");
+                    }];
+            }
+            event(@"reduce_motion", UIAccessibilityIsReduceMotionEnabled() ? @"1" : @"0");
+        });
+    }
     void haptic() {
         dispatch_async(dispatch_get_main_queue(), ^{ [[[UISelectionFeedbackGenerator alloc] init] selectionChanged]; });
     }
@@ -197,7 +210,11 @@ static void initialize(ModuleInitializationLevel level) {
     documents = [[StrahdDocumentDelegate alloc] init];
     GDREGISTER_CLASS(StrahdIOS);
 }
-static void terminate(ModuleInitializationLevel level) {}
+static void terminate(ModuleInitializationLevel level) {
+    if (level != MODULE_INITIALIZATION_LEVEL_SCENE) return;
+    if (motionObserver) [NSNotificationCenter.defaultCenter removeObserver:motionObserver];
+    motionObserver = nil;
+}
 extern "C" GDExtensionBool GDE_EXPORT strahd_ios_init(GDExtensionInterfaceGetProcAddress address, GDExtensionClassLibraryPtr library, GDExtensionInitialization *initialization) {
     GDExtensionBinding::InitObject init(address, library, initialization);
     init.register_initializer(initialize);

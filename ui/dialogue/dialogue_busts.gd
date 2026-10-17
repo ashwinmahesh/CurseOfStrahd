@@ -38,6 +38,7 @@ var lit := ""
 ## Whether each side has turned its back on the other (the `[away]` cue).
 var left_away := false
 var right_away := false
+var _breaths: Array[Tween] = []
 
 
 func _init() -> void:
@@ -185,6 +186,7 @@ func _side(on_left: bool) -> TextureRect:
 	if UiMotion.on():
 		# A slow breath, the two sides out of step.
 		var tw := UiMotion.tween_for(t).set_loops().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_breaths.append(tw)
 		if not on_left:
 			tw.tween_interval(BREATH_SECONDS / 2.0)
 		tw.tween_property(t, "scale", Vector2(1.0, 1.0 + BREATH), BREATH_SECONDS / 2.0)
@@ -205,3 +207,13 @@ func _layout() -> void:
 		else:
 			t.position = Vector2(-w * 0.04 if bool(pair[1]) else size.x - w * 0.96, size.y - h)
 		t.pivot_offset = Vector2(w / 2.0, h)
+
+
+func _process(_delta: float) -> void:
+	if MobileNative.reduced_motion() and not _breaths.is_empty():
+		for breath in _breaths:
+			if breath.is_valid():
+				breath.kill()
+		_breaths.clear()
+		left.scale = Vector2.ONE
+		right.scale = Vector2.ONE

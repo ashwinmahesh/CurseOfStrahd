@@ -215,6 +215,8 @@ func _ready() -> void:
 		move_child(busts, _mobile_page.get_index() - 1)
 		busts.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 		get_viewport().size_changed.connect(_mobile_layout)
+		if MobileDevice.current != null:
+			MobileDevice.current.geometry_changed.connect(_mobile_layout)
 		_mobile_layout()
 		var bar := _mobile_page.heading.get_parent()
 		_mobile_page.heading.hide()

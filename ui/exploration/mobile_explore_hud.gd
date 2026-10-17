@@ -43,6 +43,8 @@ func setup(owner_: ExploreHud) -> void:
 		button.custom_minimum_size.x = 96
 		shortcuts.add_child(button)
 	get_viewport().size_changed.connect(reflow)
+	if MobileDevice.current != null:
+		MobileDevice.current.geometry_changed.connect(reflow)
 	reflow()
 
 

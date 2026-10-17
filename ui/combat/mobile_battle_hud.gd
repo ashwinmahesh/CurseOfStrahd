@@ -50,6 +50,8 @@ func setup(owner_: CombatHud, desktop_: Control) -> void:
 	preview.visible = false
 	add_child(preview)
 	get_viewport().size_changed.connect(reflow)
+	if MobileDevice.current != null:
+		MobileDevice.current.geometry_changed.connect(reflow)
 	reflow()
 
 

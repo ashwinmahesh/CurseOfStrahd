@@ -6,6 +6,7 @@ signal file_result(kind: String, value: String)
 static var current: MobileNative
 var bridge: Object
 var pending := false
+var system_reduced_motion := false
 var accessibility := MobileAccessibility.new()
 var access_time := 0.0
 const IMPORT := "user://transfers/incoming.json"
@@ -17,6 +18,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if OS.has_feature("ios") and ClassDB.class_exists(&"StrahdIOS"):
 		bridge = ClassDB.instantiate(&"StrahdIOS")
+		bridge.call("observe_motion")
 
 
 func _exit_tree() -> void:
@@ -71,6 +73,8 @@ func _process(delta: float) -> void:
 		return
 	for message: Dictionary in messages:
 		var kind := str(message.get("kind", ""))
+		if kind == "reduce_motion":
+			system_reduced_motion = str(message.get("value", "")) == "1"
 		if kind.begins_with("access_") and not pending:
 			# Revalidate the surface before accepting an accessibility action queued by UIKit.
 			accessibility.snapshot(get_tree().root)
@@ -84,3 +88,9 @@ func _process(delta: float) -> void:
 static func feedback() -> void:
 	if current != null and current.available() and not current.pending and bool(GameSettings.value("ios_haptics", true)):
 		current.bridge.call("haptic")
+
+
+## Mobile preference only; desktop keeps its existing animation and camera behavior.
+static func reduced_motion() -> bool:
+	return MobileDevice.enabled() and (bool(GameSettings.value("ios_reduce_motion", false))
+		or current != null and current.system_reduced_motion)
