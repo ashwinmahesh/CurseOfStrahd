@@ -95,6 +95,7 @@ static var _figures := 0
 ## character sprite now draws through shaders/world/sprite_crisp.gdshader: a 4x4 grid of samples over each screen
 ## pixel on the full sheet (sharp without jaggies) and an ink outline round the figure at any zoom.
 const CRISP := preload("res://shaders/world/sprite_crisp.gdshader")
+const SIMULATOR := preload("res://shaders/world/sprite_simulator.gdshader")
 
 
 ## The `n`th figure's step toward the camera (NUDGE): no two of NUDGE_STEPS figures made one after another share one.
@@ -225,7 +226,7 @@ static func setup_material(s: SpriteBase3D) -> void:
 	s.render_priority = RENDER_PRIORITY
 	s.shaded = false
 	var m := ShaderMaterial.new()
-	m.shader = CRISP
+	m.shader = SIMULATOR if Graphics.software_simulator() else CRISP
 	m.render_priority = RENDER_PRIORITY
 	m.set_shader_parameter("ink", Look.color("void"))
 	# A sprite laid flat (the lying view) keeps its rotation; the walking figures billboard round the Y axis.

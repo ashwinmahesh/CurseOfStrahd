@@ -44,6 +44,8 @@ static func build(box: VBoxContainer, picked: String, on_pick: Callable, on_back
 
 
 static func _growth_row(g: Dictionary, lit: bool, on_pick: Callable) -> Control:
+	if MobileDevice.enabled():
+		return _mobile_choice(str(g["name"]), str(g["id"]), str(g["tip"]), lit, on_pick)
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 2)
 	var head := HBoxContainer.new()
@@ -64,6 +66,8 @@ static func _growth_row(g: Dictionary, lit: bool, on_pick: Callable) -> Control:
 
 
 static func _mode_row(d: Difficulty, lit: bool, on_pick: Callable) -> Control:
+	if MobileDevice.enabled():
+		return _mobile_choice(d.name, d.id, d.summary + "\n" + "\n".join(d.describe()), lit, on_pick)
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 2)
 	var head := HBoxContainer.new()
@@ -79,3 +83,15 @@ static func _mode_row(d: Difficulty, lit: bool, on_pick: Callable) -> Control:
 	var lines := d.describe()
 	return UiParts.click_row(col, on_pick.bind(d.id), lit, func() -> Control:
 		return UiParts.rules_tip(d.name, d.tagline, "\n".join(lines.map(func(l: String) -> String: return "• " + l))))
+
+
+static func _mobile_choice(title: String, id: String, description: String, lit: bool, pick: Callable) -> Control:
+	var column := VBoxContainer.new()
+	var choose := MobileUi.button(title, pick.bind(id))
+	choose.toggle_mode = true
+	choose.button_pressed = lit
+	if lit:
+		UiParts.light_up(choose)
+	column.add_child(choose)
+	column.add_child(MobileUi.text(description))
+	return column

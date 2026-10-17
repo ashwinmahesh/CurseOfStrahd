@@ -52,8 +52,9 @@ jobs:
           sparse-checkout: |
             tools/release
             tests/tools
-      - run: python3 -m unittest discover -s tests/tools -p 'test_ios_*.py' -v
+      - run: python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
   archive:
+    needs: tooling
     if: github.event_name == 'workflow_dispatch'
     runs-on: macos-15
     timeout-minutes: 350
@@ -187,11 +188,14 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="$IOS_PROVISIONING_UUID" CODE_SIGN_IDENTITY="$IOS_SIGNING_IDENTITY" \
             "OTHER_CODE_SIGN_FLAGS=--keychain $IOS_KEYCHAIN" archive 2>&1 | tee "$IOS_OUT/archive.log"
           python3 - <<'PYCODE'
-          import os
+          import json, os
           from pathlib import Path
           apps = list((Path(os.environ['IOS_OUT']) / 'CurseOfStrahd.xcarchive/Products/Applications').glob('*.app'))
           assert len(apps) == 1, 'Expected one archived app'
           size = sum(p.stat().st_size for p in apps[0].rglob('*') if p.is_file())
+          (Path(os.environ['IOS_OUT']) / 'app-size.json').write_text(json.dumps({
+              'app': apps[0].name, 'uncompressed_bytes': size, 'limit_bytes': 4_000_000_000,
+              'within_limit': size <= 4_000_000_000}, indent=2) + '\n')
           assert size <= 4_000_000_000, f'App exceeds 4 GB: {size} bytes'
           print(f'Uncompressed app size: {size:,} bytes')
           PYCODE

@@ -19,6 +19,9 @@ const SPLIT_HEIGHT := 470.0
 var _detail: VBoxContainer
 var _detail_scroll: ScrollContainer
 var _shown := ""
+var _mobile_list: VBoxContainer
+var _mobile_sheet: CanvasLayer
+var _mobile_search := ""
 
 
 static func create(c: Choice) -> ChoiceWidget:
@@ -29,6 +32,9 @@ static func create(c: Choice) -> ChoiceWidget:
 
 
 func _build() -> void:
+	if MobileDevice.enabled():
+		_mobile_build()
+		return
 	add_theme_constant_override("separation", 6)
 	var head := HBoxContainer.new()
 	head.add_theme_constant_override("separation", 10)
@@ -256,7 +262,7 @@ func _toggle(id: String, on: bool) -> void:
 ## Ability score increases: a button per ability adds +1 there (up to per_ability on one ability); when all are
 ## placed, the oldest moves. Clear starts over.
 func _ability_rows() -> void:
-	var row := HBoxContainer.new()
+	var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
 	for o in choice.options:
 		var times := choice.picks.count(o.id)
@@ -278,3 +284,103 @@ func _ability_rows() -> void:
 		row.add_child(b)
 	row.add_child(UiKit.button("Clear", func() -> void: picks_changed.emit(choice.key, []), 14))
 	add_child(row)
+
+
+func _mobile_build() -> void:
+	add_child(MobileUi.text(_title() + " · " + _status_text().strip_edges(), "gilt_light"))
+	var note := ChoiceOptions.swap_note(choice)
+	if note != "":
+		add_child(MobileUi.text(note))
+	if choice.kind == "ability_increase":
+		_ability_rows()
+		MobileUi.fit(self)
+		return
+	if choice.options.size() > 8:
+		var search := LineEdit.new()
+		search.placeholder_text = "Search choices"
+		search.custom_minimum_size.y = 48
+		search.text_changed.connect(func(value: String) -> void:
+			_mobile_search = value
+			_mobile_rows())
+		add_child(search)
+	_mobile_list = VBoxContainer.new()
+	_mobile_list.add_theme_constant_override("separation", 8)
+	add_child(_mobile_list)
+	_mobile_rows()
+
+
+func _mobile_rows() -> void:
+	MobileUi.clear(_mobile_list)
+	var options: Array = SpellGroups.sorted(choice.options, func(o: ChoiceOption) -> String: return o.id) if choice.kind in SPELL_KINDS else choice.options
+	for option: ChoiceOption in options:
+		if _mobile_search != "" and not (option.label + " " + option.summary).to_lower().contains(_mobile_search.to_lower()):
+			continue
+		var picked := choice.picks.has(option.id)
+		var button := MobileUi.button(("Selected · " if picked else "") + option.label, func() -> void: _mobile_inspect(option.id))
+		if choice.kind in SPELL_KINDS:
+			UiParts.icon_on_button(button, "spell", option.id, 28)
+		elif choice.kind == "weapon_mastery":
+			UiParts.icon_on_button(button, "item", option.id, 28)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		if picked:
+			UiParts.light_up(button)
+		_mobile_list.add_child(button)
+		if not option.legal and not picked:
+			_mobile_list.add_child(MobileUi.text(option.reason, "rose"))
+	if _mobile_list.get_child_count() == 0:
+		_mobile_list.add_child(MobileUi.text("No choices match your search."))
+
+
+func _mobile_inspect(id: String) -> void:
+	_mobile_close()
+	var option := choice.option(id)
+	if option == null:
+		return
+	_mobile_sheet = CanvasLayer.new()
+	_mobile_sheet.layer = 92
+	add_child(_mobile_sheet)
+	var body := MobilePage.build(_mobile_sheet, option.label, _mobile_close)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	if choice.kind in SPELL_KINDS:
+		UiParts.add_icon(page.heading.get_parent() as Container, "spell", id, 32)
+	elif choice.kind == "weapon_mastery":
+		UiParts.add_icon(page.heading.get_parent() as Container, "item", id, 32)
+	if choice.kind in SPLIT_KINDS:
+		_detail = body
+		_detail_scroll = page.scroll
+		_shown = ""
+		show_detail(id)
+		MobileUi.fit(body)
+	else:
+		body.add_child(MobileUi.text(option.summary))
+		if choice.kind in SPELL_KINDS:
+			var spell := Compendium.shared().spell_data(id)
+			var text := str(spell.get("text", ""))
+			if text != "" and text != option.summary:
+				body.add_child(MobileUi.text(text))
+		if not option.legal or option.locked:
+			body.add_child(MobileUi.text(option.reason, "rose"))
+		if option.warning != "":
+			body.add_child(MobileUi.text(option.warning, "gilt"))
+	var picked := choice.picks.has(id)
+	var confirm := MobileUi.button("Remove selection" if picked else "Choose", func() -> void:
+		if _mobile_sheet == null:
+			return
+		var current := choice.option(id)
+		if current == null or current.locked or (not current.legal and not choice.picks.has(id)):
+			return
+		_mobile_close()
+		_toggle(id, not choice.picks.has(id)))
+	confirm.disabled = option.locked or (not option.legal and not picked)
+	page.toolbar.add_child(confirm)
+
+
+func _mobile_close() -> void:
+	if is_instance_valid(_mobile_sheet):
+		_mobile_sheet.hide()
+		_mobile_sheet.queue_free()
+	_mobile_sheet = null
+	_detail = null
+	_detail_scroll = null
+	UiFeel.touch.cancel()

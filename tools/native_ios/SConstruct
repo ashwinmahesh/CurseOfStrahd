@@ -1,0 +1,8 @@
+import os
+from pathlib import Path
+bindings = os.environ['GODOT_CPP']
+env = SConscript(str(Path(bindings) / 'SConstruct'), {'api_version': '4.7'})
+env.Append(CXXFLAGS=['-fobjc-arc'])
+lib = env.StaticLibrary('bin/strahd' + env['suffix'], source=['strahd_ios.mm'])
+Default(lib)
+Default(env['LIBS'])

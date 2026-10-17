@@ -81,7 +81,7 @@ static func capture(e: Encounter) -> Dictionary:
 
 
 ## Rebuilds the fight; `party` supplies the party's Character objects (from the loaded story) by id when present.
-static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = []) -> Encounter:
+static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [], begin_round: bool = true, full_party: bool = false) -> Encounter:
 	var e := Encounter.new(CombatGrid.from_rows(d["rows"] as Array, d.get("elevation", []) as Array), dice)
 	e.grid.drop_ft = int(d.get("drop_ft", 0))
 	e.grid.ceiling_ft = int(d.get("ceiling_ft", 0))
@@ -100,6 +100,16 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 			var cid := str((cd["character"] as Dictionary).get("id", ""))
 			creature = by_id[cid] as Character if by_id.has(cid) else Character.from_dict(cd["character"] as Dictionary)
 			if by_id.has(cid):
+				if full_party:
+					# A command replay starts from complete character state, including inventory and spent slots.
+					var target := creature as Character
+					var initial := Character.from_dict(cd["character"] as Dictionary)
+					target.build = initial.build
+					target.refresh()
+					for key: String in ["inventory", "currency", "hit_dice_spent", "slots_used", "pact_slots_used",
+						"heroic_inspiration", "id", "attuned", "familiar", "steed", "weapon_set_2", "quick_slots",
+						"reaction_rules", "rest_casts", "hotbar"]:
+						target.set(key, initial.get(key))
 				creature.state_from_dict((cd["character"] as Dictionary)["state"] as Dictionary)
 			saved[cid] = (cd["character"] as Dictionary)["state"]
 		else:
@@ -175,5 +185,6 @@ static func restore(d: Dictionary, dice: DiceRoller, party: Array[Character] = [
 	e.shared_ended.clear()
 	while e.turn_index < e.order.size() and not e.order[e.turn_index].is_alive():
 		e.turn_index += 1
-	e._lair_then_begin()
+	if begin_round:
+		e._lair_then_begin()
 	return e

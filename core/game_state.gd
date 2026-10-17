@@ -2,7 +2,7 @@ extends Node
 ## The single source of truth for a playthrough (plan §4.3). Everything that matters lives here and
 ## serializes to one save file; scenes only read and display it.
 
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 
 var party: Array[Dictionary] = []
 var leader_index: int = 0

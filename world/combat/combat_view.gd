@@ -6,6 +6,7 @@ extends Node3D
 ## the rules. Emits finished(outcome) when the player leaves the end-of-fight banner.
 
 signal finished(outcome: String)
+signal recovery_retry
 ## A new round is about to begin (round 1 right after Initiative): the moment the game may save a fight.
 signal round_started(round: int)
 ## Escape with nothing to cancel: the game opens its pause menu (the arena has none).
@@ -35,6 +36,10 @@ const CLEAR_VIEW := Vector3(0.5, 0.55, -0.4)
 const BOSS_CLEAR_BOTTOM := -0.25
 
 enum Mode { BUSY, IDLE, TARGET, PROMPT, OVER }
+
+var recovery: CombatJournal
+var recovery_writer: Callable
+var recovery_error: CanvasLayer
 
 var e: Encounter
 var catalog: ActionCatalog
@@ -117,6 +122,7 @@ var _thinker: Thread = null
 ## encounter (rolling Initiative) unless it's already running.
 func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: Dictionary, surprised: Array[String] = []) -> void:
 	name = "CombatView"
+	add_to_group(&"touch_world")
 	InputActions.ensure()   # the camera keys and the pad cursor, wherever the fight is shown from
 	e = encounter
 	board = board_
@@ -172,6 +178,9 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 			e.log.add("turn", e.title, "")
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
+		if recovery == null and recovery_writer.is_valid():
+			recovery = CombatJournal.begin(e)
+		await _record_command("start", {"surprised": surprised})
 		e.start(surprised)
 	# Bosses (G3): a name plate and health bar for each above the hotbar, and for a fight that's just starting, an
 	# entrance on the greatest of them before the opening beat.
@@ -355,6 +364,7 @@ func _advance() -> void:
 		if e.state != Encounter.State.ACTIVE or e.current() != c or e.pending != null:
 			_advance()
 			return
+		await _record_command("ai")
 		var r: CombatResult = opponent_turn.call(c) as CombatResult if opponent_turn.is_valid() else e.begin_ai_turn()
 		if r == null:
 			var thought: Dictionary = await _think(c)
@@ -512,6 +522,7 @@ func _end_turn() -> void:
 	_confirmed_end = false
 	mode = Mode.BUSY
 	_cancel_targeting()
+	await _record_command("end")
 	var r := e.end_turn()
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -529,6 +540,7 @@ func _undo_move() -> void:
 	var c := _player()
 	if c == null or mode not in [Mode.IDLE, Mode.TARGET]:
 		return
+	await _record_command("undo", {"actor": c.id})
 	var r := e.undo_move(c)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
@@ -544,6 +556,7 @@ func _death_save() -> void:
 	var c := _player()
 	if c == null:
 		return
+	await _record_command("death", {"actor": c.id})
 	var r := e.death_save(c)
 	await _play_events()
 	_refresh_all()
@@ -619,6 +632,7 @@ func _switch(c: Combatant) -> void:
 	if not _command_allowed("switch", {"target": c}):
 		return
 	_cancel_targeting()
+	await _record_command("switch", {"actor": c.id})
 	var r := e.switch_to(c)
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -653,6 +667,7 @@ func _answer(use: bool, rule: String) -> void:
 	if e.pending == null:
 		return
 	var req := e.pending
+	await _record_command("answer", {"use": use, "rule": rule, "selected": req.selected_ids, "amounts": req.amounts})
 	var reactor := e.get_c(req.reactor_id)
 	if reactor != null and rule != "ask":
 		reactor.reaction_rules[req.kind] = rule
@@ -677,6 +692,7 @@ func _choose(action: Dictionary, level: int = 0) -> void:
 	# A standing rule (Ask / Automatic / Off) changes on any turn for whoever the hotbar shows: nothing is spent.
 	if action.has("policy"):
 		if hud.shown != null:
+			await _record_command("policy", {"actor": hud.shown.id, "action": action})
 			var rr := catalog.set_rule(hud.shown, action)
 			if not rr.ok:
 				hud.banner(rr.reason, 1.4)
@@ -760,6 +776,7 @@ func _perform(action: Dictionary, targets: Array, point: Vector2, dir: Vector2) 
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("perform", {"actor": c.id, "action": action, "targets": targets, "point": point, "direction": dir, "slot": slot_level})
 	var r := catalog.perform(c, action, targets, point, dir, slot_level)
 	slot_level = 0
 	selected = {}
@@ -825,6 +842,7 @@ func _reaction_move(ally: Combatant, cell: Vector2i) -> void:
 	hud.hide_tooltip()
 	selected = {}
 	picker.reset()
+	await _record_command("reaction_move", {"actor": ally.id, "cell": cell})
 	var r := e.reaction_move(ally, cell)
 	if not r.ok:
 		hud.banner(r.reason, 1.6)
@@ -876,6 +894,7 @@ func _confirm_at() -> void:
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("move", {"actor": c.id, "cell": mp["dest"]})
 	var r := e.move(c, mp["dest"] as Vector2i)   # a square too far: as far toward it as the movement goes
 	if not r.ok:
 		hud.banner(r.reason, 1.4)
@@ -901,6 +920,7 @@ func _walk_and_strike(c: Combatant, plan: Dictionary, t: Combatant) -> void:
 	mode = Mode.BUSY
 	overlay.clear_all()
 	hud.hide_tooltip()
+	await _record_command("move", {"actor": c.id, "cell": plan["dest"], "strike": {"id": c.id, "target": t.id, "dest": plan["dest"], "action": str((plan["action"] as Dictionary)["id"])}})
 	var r := e.move(c, plan["dest"] as Vector2i)
 	if r.ok:
 		_strike_after_walk = {"id": c.id, "target": t.id, "dest": plan["dest"], "action": str((plan["action"] as Dictionary)["id"])}
@@ -1236,7 +1256,132 @@ func _cycle_inspect() -> void:
 
 # --- Input ----------------------------------------------------------------------------------------
 
+func touch_ready() -> bool:
+	return not input_locked and e != null and mode in [Mode.IDLE, Mode.TARGET, Mode.OVER] \
+		and not hud.prompt_open() and not hud.confirm_open()
+
+
+## Read-only mobile presentation. Execution still goes through the existing command and journal gates.
+func mobile_command_state() -> Dictionary:
+	var state := {"label": "", "enabled": false, "cancel": false, "actions": false, "end": false, "targets": false, "finish": false}
+	if not touch_ready():
+		return state
+	if mode == Mode.OVER:
+		state.merge({"label": "Play again" if restart_allowed else "Continue", "enabled": true}, true)
+		return state
+	var c := _player()
+	if c == null:
+		return state
+	if hud.death_save_shown():
+		state.merge({"label": "Roll death save", "enabled": true}, true)
+		return state
+	state["actions"] = true
+	state["end"] = mode == Mode.IDLE
+	state["targets"] = mode == Mode.TARGET
+	var t := _target_under()
+	state["cancel"] = mode == Mode.TARGET or hover_cell.x >= 0 and hover_cell != c.cell
+	if mode == Mode.TARGET:
+		state["finish"] = not picked.is_empty() or picker.step in ["side", "strike", "victim", "sculpt", "choose", "companion"] or picker.step == "wall" and not picker.path.is_empty()
+		if picker.active():
+			state["label"] = "Choose " + (t.combatant.name().get_slice(" ", 0) if t != null else "square")
+			state["enabled"] = t != null or hover_cell.x >= 0
+			return state
+		var kind := str(selected.get("targeting", ""))
+		var verb := "Cast " if str(selected.get("kind", "")) in ["spell", "item_spell"] else "Use "
+		state["label"] = verb + str(selected.get("label", "action"))
+		if kind in ["point", "points", "place", "direction"]:
+			state["enabled"] = hover_cell.x >= 0
+			if kind == "points":
+				state["label"] = "Choose square"
+		elif t != null:
+			state["enabled"] = catalog.target_why(c, selected, t.combatant) == ""
+			if kind == "multi":
+				state["label"] = "Choose " + t.combatant.name().get_slice(" ", 0)
+			elif str(selected.get("kind", "")) in ["attack", "offhand"]:
+				state["label"] = "Attack " + t.combatant.name().get_slice(" ", 0)
+		else:
+			var redirected := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+			state["enabled"] = bool(redirected.get("legal", false))
+		return state
+	if t != null and t.combatant != c:
+		if c.hostile_to(t.combatant):
+			var approach := catalog.melee_approach(c, t.combatant, _reach)
+			state["label"] = ("Move & attack " if bool(approach.get("walk", false)) else "Attack ") + t.combatant.name().get_slice(" ", 0)
+			state["enabled"] = bool(approach["ok"]) or not _default_attack(c, t.combatant).is_empty()
+		else:
+			state["label"] = "Inspect " + t.combatant.name().get_slice(" ", 0)
+			state["enabled"] = true
+	elif hover_cell.x >= 0 and hover_cell != c.cell:
+		var movement := catalog.move_preview(c, hover_cell, _reach)
+		state["label"] = "Move %d ft" % int(movement["cost"]) if bool(movement["ok"]) else "Cannot move"
+		state["enabled"] = bool(movement["ok"])
+	return state
+
+
+func touch_confirm() -> void:
+	if not touch_ready():
+		return
+	if mode == Mode.OVER:
+		if restart_allowed:
+			get_tree().reload_current_scene()
+		else:
+			hud.banner("", 0.0)
+			finished.emit(e.outcome)
+	elif hud.death_save_shown():
+		hud.death_save_pressed.emit()
+	else:
+		_confirm_at()
+
+
+func touch_select(id: String) -> void:
+	if not touch_ready() or mode == Mode.OVER:
+		return
+	var creature := e.get_c(id)
+	if creature == null or (viewer != null and not e.can_see(viewer, creature)):
+		return
+	using_pad = true
+	cursor_cell = creature.cell
+	_pad_hover()
+	_update_hover()
+
+
+## Touch first previews a square; the visible Confirm control commits it. No resource is spent by previewing.
+func touch_tap(at: Vector2, context: bool) -> void:
+	if not touch_ready():
+		return
+	using_pad = false
+	_pick_from_mouse(at)
+	_update_hover()
+	if hover_token != null:
+		TouchOutline.flash(hover_token._lying if hover_token._lying != null and hover_token._lying.visible else hover_token.body)
+	if context:
+		if mode == Mode.IDLE:
+			_open_square_menu(at)
+		else:
+			_examine_at(at)
+
+
+func touch_camera(update: Dictionary) -> void:
+	if touch_ready():
+		rig.touch_camera(update)
+
+
+func touch_command(command: String) -> void:
+	if not touch_ready():
+		return
+	match command:
+		"Cancel targeting":
+			_cancel_targeting()
+			hover_cell = Vector2i(-1, -1)
+			hover_token = null
+		"Finish selection": confirm_early()
+		"Undo move": _undo_move()
+		"End turn": _end_turn()
+
+
 func _unhandled_input(event: InputEvent) -> void:
+	if event.has_meta(&"touch_gui"):
+		return
 	if input_locked:
 		return
 	if not _command_allowed("input", {"event": event}):
@@ -1288,6 +1433,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event is InputEventMouseButton and (event as InputEventMouseButton).pressed and hud.hide_details():
 		return
+	if MobileDevice.enabled() and event.is_action(&"combat_radial"):
+		return   # mobile uses a dismissible Actions page; releasing LB never picks a hidden radial item
 	if event.is_action_pressed(&"combat_radial"):
 		if GameSettings.pad_wheels():
 			_wheel_page = 0
@@ -1441,6 +1588,9 @@ func _next_target() -> void:
 
 
 func _process(delta: float) -> void:
+	if MobileDevice.enabled() and PadNav.current != null and PadNav.current.scope_now() != null:
+		rig.pad_look = false
+		return
 	if input_locked:
 		return
 	if hud.radial.visible:
@@ -1572,7 +1722,7 @@ func _update_hover() -> void:
 	# Aiming an area placed at a point, its outline is the cursor: its middle is under the pointer.
 	var placing := _aiming_area() and str(selected.get("targeting", "")) == "point"
 	overlay.show_cells("cursor", [hover_cell] if hover_cell.x >= 0 and not placing else [])
-	var at := get_viewport().get_mouse_position() if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
+	var at := PadNav.pointer(get_viewport()) if not using_pad else rig.camera.unproject_position(hover_world + Vector3(0, 0.5, 0))
 	var t := _target_under()
 	if mode == Mode.TARGET:
 		_target_hover(c, t, at)
@@ -2607,7 +2757,7 @@ func capture_shots(tool: Node, out: String) -> void:
 				hud.open_square_menu(near.name(), shown, spot)
 				await tool.call("wait_frames", 10)
 				tool.call("_shot", out + "_2b_square_menu.png")
-				hud._menu.hide()
+				hud._menu.close()
 				near.creature.remove_condition(&"prone", "Capture")
 				break
 		await _autoplay_turn(pilot)
@@ -2731,3 +2881,25 @@ func _autoplay_turn(pilot: PartyAutopilot) -> void:
 
 func _command_allowed(command: String, data: Dictionary = {}) -> bool:
 	return not command_filter.is_valid() or bool(command_filter.call(command, data))
+
+
+## The command reaches durable storage before the engine executes it. Storage failure holds that one command
+## behind a retry screen; it cannot spend resources, roll dice or enqueue itself twice while waiting.
+func _record_command(kind: String, args: Dictionary = {}) -> void:
+	if recovery == null or not recovery_writer.is_valid():
+		return
+	recovery.append(e, kind, args)
+	while int(recovery_writer.call()) != OK:
+		recovery_error = CanvasLayer.new()
+		recovery_error.layer = 115
+		recovery_error.process_mode = Node.PROCESS_MODE_ALWAYS
+		add_child(recovery_error)
+		var body := MobilePage.build(recovery_error, "Recovery save unavailable", func() -> void: recovery_retry.emit())
+		(recovery_error.find_child("MobileBack", true, false) as Button).text = "Retry"
+		(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		body.add_child(MobileUi.text("This action is waiting because its recovery save could not be written. Free storage on your device, then retry. Nothing has been spent for this action."))
+		body.add_child(MobileUi.button("Retry save and continue", func() -> void: recovery_retry.emit()))
+		await recovery_retry
+		recovery_error.hide()
+		recovery_error.queue_free()
+		recovery_error = null

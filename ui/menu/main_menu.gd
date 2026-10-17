@@ -13,6 +13,7 @@ var _hero: Character = null
 var _difficulty := Difficulty.DEFAULT
 ## How heroes grow in the new game, picked on the same page: "milestone" or "xp" (story/xp.gd).
 var _levelling := Xp.MILESTONE
+var _mobile_scroll: ScrollContainer
 var _box: VBoxContainer
 ## Which page of the title is showing ("title", "new_game", "difficulty"): Escape steps back a page. The saves open
 ## on a page of their own (ui/screens/saves_screen.gd), which takes its own Escape.
@@ -56,7 +57,7 @@ func _ready() -> void:
 	var shade := TextureRect.new()
 	var grad := Gradient.new()
 	grad.set_color(0, Color(Look.color("void"), 0.92))
-	grad.set_color(1, Color(Look.color("void"), 0.0))
+	grad.set_color(1, Color(Look.color("void"), 0.85 if MobileDevice.enabled() else 0.0))
 	grad.set_offset(1, 0.62)
 	var gt := GradientTexture2D.new()
 	gt.gradient = grad
@@ -73,26 +74,44 @@ func _ready() -> void:
 	_box.offset_right = 110 + 560
 	_box.offset_top = -340
 	_box.add_theme_constant_override("separation", 12)
-	add_child(_box)
+	if MobileDevice.enabled():
+		var scroll := ScrollContainer.new()
+		var area := MobileDevice.safe_rect().grow(-12)
+		scroll.position = area.position
+		scroll.size = area.size
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		add_child(scroll)
+		_box.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scroll.add_child(_box)
+		_mobile_scroll = scroll
+		get_viewport().size_changed.connect(_mobile_reflow)
+	else:
+		add_child(_box)
 	_title()
 	(func() -> void: WhatsNew.show_if_new(self)).call_deferred()   # what changed since the last play (Q2)
 
 
 func _title() -> void:
+	_mobile_finish.call_deferred()
 	_view = "title"
 	for c in _box.get_children():
 		c.queue_free()
-	var t := UiKit.label("Curse of Strahd", 72, "vampire_red")
+	var t := UiKit.label("Curse of Strahd", 42 if MobileDevice.enabled() else 72, "vampire_red")
 	t.add_theme_font_override("font", UiKit.display_font())
 	t.add_theme_constant_override("outline_size", 10)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(t)
-	_box.add_child(UiKit.divider(460.0))
+	var ornament := UiKit.divider(220.0 if MobileDevice.enabled() else 460.0)
+	if MobileDevice.enabled():
+		ornament.custom_minimum_size.y = 28
+		ornament.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_box.add_child(ornament)
 	var sub := UiKit.label("The mists are rising.", 22, "parchment")
 	sub.add_theme_font_override("font", UiKit.display_font())
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_box.add_child(sub)
-	_box.add_child(_gap(14))
+	_box.add_child(_gap(4 if MobileDevice.enabled() else 14))
 	var slots := SaveSystem.list_slots()
 	var cont := UiKit.button("Continue", func() -> void: _load(str(slots[0]["slot"])), 24)
 	cont.disabled = slots.is_empty()
@@ -103,6 +122,10 @@ func _title() -> void:
 		cont.free()
 		cont = prime
 	_box.add_child(cont)
+	if MobileDevice.enabled() and not MobilePracticeRecovery.read().is_empty():
+		_box.add_child(MobileUi.button("Resume practice battle", func() -> void:
+			if MobilePracticeRecovery.request():
+				get_tree().change_scene_to_file("res://scenes/combat/arena.tscn")))
 	_box.add_child(UiKit.button("New game", _new_game, 24))
 	_box.add_child(UiKit.button("Learn to play", _launch_tutorial.bind(false), 20))
 	var load := UiKit.button("Load", _show_loads, 24)
@@ -113,7 +136,8 @@ func _title() -> void:
 	if WhatsNew.available():
 		_box.add_child(UiKit.button("What's new", func() -> void: WhatsNew.open(self), 18))
 	_box.add_child(UiKit.button("Credits", _credits, 18))
-	_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
+	if not MobileDevice.enabled():
+		_box.add_child(UiKit.button("Quit", func() -> void: get_tree().quit(), 18))
 
 
 ## Who made what (art/credits.json): the SRD's attribution, the art, and every credited track and sound.
@@ -122,7 +146,7 @@ func _credits() -> void:
 	layer.layer = 30
 	layer.name = "Credits"
 	add_child(layer)
-	var frame := UiKit.screen_frame(layer, "Credits", Vector2(1100, 760))
+	var frame := MobilePage.build(layer, "Credits", layer.queue_free) if MobileDevice.enabled() else UiKit.screen_frame(layer, "Credits", Vector2(1100, 760))
 	var body := VBoxContainer.new()
 	body.add_theme_constant_override("separation", 8)
 	var data := JSON.parse_string(FileAccess.get_file_as_string("res://art/credits.json")) as Dictionary
@@ -132,7 +156,10 @@ func _credits() -> void:
 			continue
 		body.add_child(UiParts.section(str((sec as Dictionary)["title"])))
 		for line: Variant in lines:
-			body.add_child(UiKit.label(str(line), 15, "vellum", 1000))
+			body.add_child(MobileUi.text(str(line)) if MobileDevice.enabled() else UiKit.label(str(line), 15, "vellum", 1000))
+	if MobileDevice.enabled():
+		frame.add_child(body)
+		return
 	var pane := UiParts.pane(14)
 	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	pane.add_child(UiParts.fill_scroll(body))
@@ -147,6 +174,7 @@ func _gap(h: float) -> Control:
 
 
 func _new_game() -> void:
+	_mobile_finish.call_deferred()
 	_view = "new_game"
 	for c in _box.get_children():
 		c.queue_free()
@@ -156,9 +184,11 @@ func _new_game() -> void:
 			if _picked.size() < StoryState.PARTY_CAP:
 				_picked.append(id)
 	_box.add_child(UiKit.title("Who goes into the mists?"))
-	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", 560))
+	_box.add_child(UiKit.label("Choose up to four to travel. The rest wait at camp, and you can swap them in on the road. Or make a hero of your own.", 15, "parchment", minf(560, MobileDevice.safe_rect().size.x - 28) if MobileDevice.enabled() else 560))
 	var grid := GridContainer.new()
 	grid.columns = 4
+	if MobileDevice.enabled():
+		grid.columns = 1 if MobileDevice.compact() else 2
 	grid.add_theme_constant_override("h_separation", 8)
 	grid.add_theme_constant_override("v_separation", 8)
 	for id in roster:
@@ -197,6 +227,8 @@ static func _class_line(summary: String) -> String:
 
 ## The card that opens the hero creator, shown until a hero is made.
 func _make_hero_card() -> Control:
+	if MobileDevice.enabled():
+		return MobileUi.button("Create your own hero", _open_hero)
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 3)
 	col.add_child(UiParts.framed_portrait("hero_01", 110.0))
@@ -212,6 +244,26 @@ func _make_hero_card() -> Control:
 
 ## One roster member as a card the player clicks to choose (lit) or leave at camp.
 func _roster_card(key: String, art: String, title: String, line: String, hook: String) -> Control:
+	if MobileDevice.enabled():
+		var row := HBoxContainer.new()
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_theme_constant_override("separation", 12)
+		row.add_child(UiParts.framed_portrait(art, 80))
+		var body := VBoxContainer.new()
+		body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(body)
+		var choose := MobileUi.button(title, func() -> void:
+			if key in _picked:
+				_picked.erase(key)
+			elif _picked.size() < StoryState.PARTY_CAP:
+				_picked.append(key)
+			_new_game())
+		choose.toggle_mode = true
+		choose.button_pressed = key in _picked
+		body.add_child(choose)
+		body.add_child(MobileUi.text("Travelling" if key in _picked else "At camp", "gilt_light"))
+		body.add_child(MobileUi.text(hook))
+		return row
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 3)
 	col.add_child(UiParts.framed_portrait(art, 110.0))
@@ -232,6 +284,7 @@ func _roster_card(key: String, art: String, title: String, line: String, hook: S
 
 ## How hard Barovia is (F1): the last page before the game begins (ui/menu/difficulty_page.gd).
 func _pick_difficulty() -> void:
+	_mobile_finish.call_deferred()
 	_view = "difficulty"
 	for c in _box.get_children():
 		c.queue_free()
@@ -250,6 +303,7 @@ func _set_levelling(id: String) -> void:
 
 ## Teach in a disposable practice scene before the existing campaign-start path touches any saves or characters.
 func _offer_tutorial() -> void:
+	_mobile_finish.call_deferred()
 	_view = "tutorial_offer"
 	for c in _box.get_children():
 		c.queue_free()
@@ -426,3 +480,28 @@ func capture_shots(tool: Node, out: String) -> void:
 	_creation.call("_draw")
 	await tool.call("wait_frames", 10)
 	tool.call("_shot", out + "_5_review.png")
+
+
+func _mobile_finish() -> void:
+	if not MobileDevice.enabled() or not is_instance_valid(_box):
+		return
+	for control: Control in _box.find_children("*", "Control", true, false):
+		if control is Label:
+			var label := control as Label
+			label.custom_minimum_size.x = 0
+			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.add_theme_font_size_override("font_size", UiScale.text(36 if label.text == "Curse of Strahd" else 18))
+		elif control is Button:
+			var button := control as Button
+			button.custom_minimum_size = Vector2(0, maxf(48, button.custom_minimum_size.y))
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			button.add_theme_font_size_override("font_size", UiScale.text(18))
+
+
+func _mobile_reflow() -> void:
+	if is_instance_valid(_mobile_scroll):
+		var safe := MobileDevice.safe_rect().grow(-12)
+		_mobile_scroll.position = safe.position
+		_mobile_scroll.size = safe.size

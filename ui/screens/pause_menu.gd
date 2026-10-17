@@ -24,6 +24,9 @@ const BUTTON_PITCH := 46.0
 const TITLE_SCENE := "res://scenes/main_menu.tscn"
 const GAME_SCENE := "res://scenes/game.tscn"
 
+var _mobile_page: MobilePage
+var _mobile_body: VBoxContainer
+
 var game_over := false
 ## Tests swap in their own scene change (the test runner is the current scene).
 var scene_changer: Callable
@@ -68,6 +71,20 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	UiScale.full_screen(self)   # the arch fills the screen at its design size, whatever the interface size
 	# The world as the menu opens over it: the picture for a save made from its pages (lane 16, Q9).
 	SaveSystem.hold_view(self)
+	if MobileDevice.enabled():
+		_mobile_body = MobilePage.build(self, "Menu", func() -> void:
+			if _on_settings:
+				_show_menu()
+			elif not game_over and root != null:
+				root.call("close_screen"))
+		_mobile_page = _mobile_body.get_parent().get_parent().get_parent() as MobilePage
+		_mobile_page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_frame = _mobile_page
+		if game_over:
+			_mobile_game_over()
+		else:
+			_show_menu()
+		return
 	var dim := ColorRect.new()
 	dim.color = Color(_c("arch_back"), 0.86)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -82,7 +99,14 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	_frame.offset_right = size.x / 2.0
 	_frame.offset_top = -size.y / 2.0 - 8.0
 	_frame.offset_bottom = size.y / 2.0 - 8.0
-	add_child(_frame)
+	if MobileDevice.enabled():
+		var body := MobilePage.build(self, "Menu")
+		_frame.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_frame.custom_minimum_size = size + Vector2(0, 28)
+		_frame.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		body.add_child(_frame)
+	else:
+		add_child(_frame)
 	# The arch is this screen's frame: closing, it sinks away like a framed screen's panel (UiMotion.dismiss).
 	set_meta(&"frame_panel", _frame)
 	var art := UiParts.drawn(size, _paint_frame)
@@ -177,6 +201,11 @@ func _clear() -> void:
 
 
 func _place(c: Control) -> Control:
+	if _mobile_body != null:
+		_mobile_body.add_child(c)
+		MobileUi.fit(c)
+		_items.append(c)
+		return c
 	_frame.add_child(c)
 	_items.append(c)
 	return c
@@ -215,6 +244,9 @@ func _title(text: String) -> void:
 
 
 func _show_menu() -> void:
+	if _mobile_body != null:
+		_mobile_menu()
+		return
 	_clear()
 	_title("Paused")
 	_slider_row(SLIDER_Y[0], "Music", Audio.music_volume, func(v: float) -> void: Audio.set_volumes(v, Audio.sfx_volume))
@@ -297,6 +329,9 @@ const ROW_PITCH := 34.0
 
 
 func _show_settings(page: String = "Game") -> void:
+	if _mobile_body != null:
+		_mobile_settings(page)
+		return
 	_clear()
 	_on_settings = true
 	_settings_page = page
@@ -444,7 +479,7 @@ func _pick_difficulty(to: String) -> void:
 	var from := Difficulty.of_options(st.options).id
 	if _confirm != null and is_instance_valid(_confirm):
 		_items.erase(_confirm)
-		_frame.remove_child(_confirm)
+		_confirm.get_parent().remove_child(_confirm)
 		_confirm.queue_free()
 	_confirm = null
 	if to == from:
@@ -543,6 +578,19 @@ func _set_look(style: String) -> void:
 ## A row of the settings page at concept y: the label at x 30 (Georgia 14) and, where the sliders' tracks are, the
 ## current choice between gilt arrows; a click moves to the next choice, or back one on the left arrow.
 func _choice_row(y: float, text: String, options: Array[String], current: int, on_change: Callable, tip: String) -> void:
+	if _mobile_body != null:
+		if text == "Window":
+			return
+		_mobile_body.add_child(MobileUi.text(text, "gilt_light"))
+		var at := [maxi(0, current)]
+		var button := MobileUi.button(options[at[0]], func() -> void: pass)
+		button.pressed.connect(func() -> void:
+			at[0] = posmod(int(at[0]) + 1, options.size())
+			button.text = options[at[0]]
+			on_change.call(at[0]))
+		_mobile_body.add_child(button)
+		_mobile_body.add_child(MobileUi.text(tip, "parchment"))
+		return
 	var l := _text(text, 14.0, _c("arch_text"))
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.position = _u(30, y - 10.0)
@@ -587,6 +635,8 @@ func _choice_row(y: float, text: String, options: Array[String], current: int, o
 
 ## A small centred text button in the arch's gold (the menu's way to Settings).
 func _link(text: String, on_press: Callable) -> Button:
+	if _mobile_body != null:
+		return _place(MobileUi.button(text, on_press)) as Button
 	var b := Button.new()
 	b.text = text
 	b.focus_mode = Control.FOCUS_NONE
@@ -881,3 +931,107 @@ func _unhandled_input(event: InputEvent) -> void:
 			_show_menu()
 		else:
 			root.call("close_screen")
+
+
+func _mobile_clear(title: String) -> void:
+	MobileUi.clear(_mobile_body)
+	MobileUi.clear(_mobile_page.toolbar)
+	_mobile_page.heading.text = title
+	_mobile_page.scroll.scroll_vertical = 0
+	_items.clear()
+	_buttons.clear()
+	_confirm = null
+	_note = MobileUi.text("", "gilt_light")
+	_mobile_page.toolbar.add_child(_note)
+
+
+func _mobile_menu() -> void:
+	_mobile_clear("Paused")
+	_on_settings = false
+	var actions := GridContainer.new()
+	actions.columns = 2
+	actions.add_theme_constant_override("h_separation", 8)
+	actions.add_theme_constant_override("v_separation", 6)
+	_mobile_body.add_child(actions)
+	actions.add_child(MobileUi.button("Resume", func() -> void: root.call("close_screen")))
+	actions.add_child(MobileUi.button("Settings", _show_settings))
+	for spec: Array in [["Music", Audio.music_volume, func(v: float) -> void: Audio.set_volumes(v, Audio.sfx_volume)],
+		["Effects", Audio.sfx_volume, func(v: float) -> void: Audio.set_volumes(Audio.music_volume, v)],
+		["Voices", VoiceOver.volume(), VoiceOver.set_volume]]:
+		var row := HBoxContainer.new()
+		var label := MobileUi.text(str(spec[0]))
+		label.custom_minimum_size.x = 80
+		label.size_flags_horizontal = Control.SIZE_FILL
+		row.add_child(label)
+		var slider := HSlider.new()
+		slider.tooltip_text = str(spec[0])
+		slider.max_value = 1.0
+		slider.step = 0.05
+		slider.value = float(spec[1])
+		slider.custom_minimum_size.y = 48
+		slider.value_changed.connect(spec[2] as Callable)
+		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(slider)
+		_mobile_body.add_child(row)
+	var quick := MobileUi.button("Quicksave", _quick_save)
+	quick.disabled = not SaveSystem.can_save()
+	actions.add_child(quick)
+	var save := MobileUi.button("Save game", func() -> void: _open_saves(SavesScreen.Mode.SAVE))
+	save.disabled = not SaveSystem.can_save()
+	actions.add_child(save)
+	if not SaveSystem.can_save():
+		_mobile_body.add_child(MobileUi.text("Combat is saved before each action. Continue the campaign from its recovery save, or use Resume practice battle on the title screen."))
+	var load := MobileUi.button("Load a save", _show_saves)
+	load.disabled = SaveSystem.list_slots().is_empty() or SaveSystem.honour()
+	actions.add_child(load)
+	if CheatCodesPage.can_open(st):
+		actions.add_child(MobileUi.button("Cheat codes", _open_cheats))
+	actions.add_child(MobileUi.button("Return to title", func() -> void:
+		if SaveSystem.honour():
+			SaveSystem.autosave()
+		leave_to(TITLE_SCENE)))
+
+
+func _mobile_settings(page: String) -> void:
+	_mobile_clear("Settings · " + page)
+	_on_settings = true
+	_settings_page = page
+	var tabs := HBoxContainer.new()
+	_mobile_page.toolbar.add_child(tabs)
+	for tab: String in SETTINGS_PAGES:
+		tabs.add_child(MobileUi.button(tab, func() -> void: _show_settings(tab)))
+	match page:
+		"Game": _game_rows()
+		"Display":
+			var motion := CheckButton.new()
+			motion.text = "Reduce extra motion"
+			motion.button_pressed = bool(GameSettings.value("ios_reduce_motion", false))
+			motion.toggled.connect(func(on: bool) -> void: GameSettings.set_value("ios_reduce_motion", on))
+			MobileUi.fit(motion)
+			_mobile_body.add_child(motion)
+			_mobile_body.add_child(MobileUi.text("Suppresses camera shakes, cinematic zooms and decorative menu motion. Your camera controls still work. iOS Reduce Motion is also respected, even when this switch is off."))
+			_display_rows()
+		"Keys":
+			var feedback := CheckButton.new()
+			feedback.text = "Touch haptics"
+			feedback.button_pressed = bool(GameSettings.value("ios_haptics", true))
+			feedback.toggled.connect(func(on: bool) -> void: GameSettings.set_value("ios_haptics", on))
+			MobileUi.fit(feedback)
+			_mobile_body.add_child(feedback)
+			_mobile_body.add_child(MobileUi.text("Touch: tap to select, drag to pan, pinch to zoom, twist to turn. Menu offers camera buttons and Nearby objects. External keyboards and controllers use the bindings below."))
+			var keys := KeysPage.new()
+			keys.custom_minimum_size = Vector2(0, 460)
+			_mobile_body.add_child(keys)
+			MobileUi.fit(keys)
+			keys.noted.connect(func(value: String) -> void: _note.text = value)
+			_mobile_body.add_child(MobileUi.button("Reset bindings", func() -> void: _note.text = keys.reset_view()))
+
+
+func _mobile_game_over() -> void:
+	_mobile_clear("The party has fallen")
+	_mobile_body.add_child(MobileUi.text("Barovia keeps what it takes. Load a save to try again."))
+	if SaveSystem.honour():
+		SaveSystem.end_honour()
+		_mobile_body.add_child(MobileUi.text("The Honour run ends here. Its save carries on in Tactician."))
+	_mobile_body.add_child(MobileUi.button("Load a save", func() -> void: _open_saves(SavesScreen.Mode.LOAD)))
+	_mobile_body.add_child(MobileUi.button("Return to title", func() -> void: leave_to(TITLE_SCENE)))

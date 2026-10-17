@@ -108,7 +108,7 @@ func _leaves(spec: Dictionary) -> void:
 	pm.angle_max = 180.0
 	pm.scale_min = 0.8
 	pm.scale_max = 1.3
-	pm.turbulence_enabled = true
+	pm.turbulence_enabled = Graphics.particle_turbulence()
 	pm.turbulence_noise_strength = 0.6
 	pm.turbulence_noise_scale = 4.0
 	pm.turbulence_influence_min = 0.05
@@ -195,7 +195,7 @@ func _snow(spec: Dictionary) -> void:
 	pm.gravity = Vector3(0, -0.15, 0)
 	pm.scale_min = 0.7
 	pm.scale_max = 1.3
-	pm.turbulence_enabled = true
+	pm.turbulence_enabled = Graphics.particle_turbulence()
 	pm.turbulence_noise_strength = 0.5
 	pm.turbulence_noise_scale = 3.0
 	pm.turbulence_influence_min = 0.03
@@ -222,7 +222,7 @@ func _wisps(spec: Dictionary) -> void:
 	pm.initial_velocity_min = 0.05
 	pm.initial_velocity_max = 0.2
 	pm.spread = 180.0
-	pm.turbulence_enabled = true
+	pm.turbulence_enabled = Graphics.particle_turbulence()
 	pm.turbulence_noise_strength = 1.2
 	pm.turbulence_noise_scale = 2.5
 	pm.turbulence_influence_min = 0.1
@@ -255,7 +255,7 @@ func _dust(spec: Dictionary) -> void:
 	pm.initial_velocity_min = 0.02
 	pm.initial_velocity_max = 0.08
 	pm.spread = 180.0
-	pm.turbulence_enabled = true
+	pm.turbulence_enabled = Graphics.particle_turbulence()
 	pm.turbulence_noise_strength = 0.3
 	pm.turbulence_noise_scale = 2.0
 	pm.turbulence_influence_min = 0.02
@@ -425,7 +425,7 @@ func _embers(view: Node) -> void:
 		pm.initial_velocity_min = 0.6
 		pm.initial_velocity_max = 1.2
 		pm.gravity = Vector3(_wind.x * 0.3, 0.2, _wind.y * 0.3)
-		pm.turbulence_enabled = true
+		pm.turbulence_enabled = Graphics.particle_turbulence()
 		pm.turbulence_noise_strength = 1.0
 		pm.turbulence_noise_scale = 1.5
 		pm.scale_curve = _fade_curve()

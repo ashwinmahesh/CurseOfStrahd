@@ -12,7 +12,9 @@ render_mode unshaded, fog_disabled, cull_disabled, depth_test_disabled, depth_dr
 
 uniform sampler2D screen_tex : hint_screen_texture, filter_nearest;
 uniform sampler2D depth_tex : hint_depth_texture, filter_nearest;
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 uniform sampler2D normal_tex : hint_normal_roughness_texture, filter_nearest;
+#endif
 // N x 1 strip from art/palette/strahd_palette.png, read raw (sRGB values).
 uniform sampler2D palette_tex : filter_nearest;
 uniform int palette_size = 46;
@@ -152,7 +154,12 @@ float linear_depth(vec2 uv, mat4 inv_proj) {
 }
 
 vec3 normal_at(vec2 uv) {
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 	return texture(normal_tex, uv).xyz * 2.0 - 1.0;
+#else
+	// Mobile has no normal buffer. Zero also omits the orientation-dependent ground/caustic passes.
+	return vec3(0.0);
+#endif
 }
 
 vec3 to_srgb(vec3 c) {
@@ -314,9 +321,11 @@ void fragment() {
 			if ((d - d0) / max(d0, 0.001) > depth_threshold) {
 				edge = 1.0;
 			}
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 			if (outline_creases && dot(n0, normal_at(uv + offs[i])) < normal_threshold && d0 < 60.0) {
 				edge = max(edge, 0.85);
 			}
+#endif
 		}
 		col = mix(col, to_srgb(outline_color), edge * outline_strength);
 	}
@@ -337,7 +346,12 @@ void fragment() {
 	float sky_amount = (sky_on && empty) ? smoothstep(-0.02, 0.1, sky_dir.y) : 0.0;
 
 	// Water marks itself with zero roughness: it keeps its own colours through the grade and the ground patches.
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 	float own_colour = empty ? 0.0 : 1.0 - step(0.08, texture(normal_tex, uv).a);
+#else
+	// Until a mobile material mask exists, water follows the scene's grade and mist like other surfaces.
+	float own_colour = 0.0;
+#endif
 
 	// Light on the surfaces first (patches of light and shade, cloud shadows, the grade), then what hangs in the air
 	// in its own palette colours (the land fading into the sky, the mist), then the vignette.
@@ -352,6 +366,7 @@ void fragment() {
 		}
 	}
 
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 	if (caustics > 0.0 && !empty && own_colour < 0.5) {
 		// Bright wavering threads of light on what stands beside moving water, strongest just above the surface and on
 		// faces turned toward it, fading within a square or so of the shore and a couple of units up.
@@ -371,6 +386,7 @@ void fragment() {
 		}
 	}
 
+#endif
 	if (cloud_strength > 0.0 && !empty) {
 		// Domain-warped, so the shadows have ragged cloud edges rather than round blots.
 		vec2 cp = wpos.xz * cloud_scale + cloud_wind * atmo_time * cloud_scale;

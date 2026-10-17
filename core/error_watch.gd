@@ -47,6 +47,7 @@ var _palette: Dictionary = {}
 class Catcher extends Logger:
 	const KINDS := {ERROR_TYPE_ERROR: "ERROR", ERROR_TYPE_WARNING: "WARNING", ERROR_TYPE_SCRIPT: "SCRIPT ERROR",
 		ERROR_TYPE_SHADER: "SHADER ERROR"}
+	var ios_window_probe_pending := OS.has_feature("ios")
 	var queue: Array[Dictionary] = []
 	var tail := PackedStringArray()
 	var mutex := Mutex.new()
@@ -55,6 +56,12 @@ class Catcher extends Logger:
 			error_type: int, script_backtraces: Array[ScriptBacktrace]) -> void:
 		_keep("%s: %s at %s:%d" % [KINDS.get(error_type, "ERROR"), code if rationale == "" else "%s (%s)" % [rationale, code],
 			file, line])
+		# Godot 4.7.2 Window::_notification probes mouse_get_position unconditionally while entering the root
+		# window. iOS has no mouse display feature. Keep that one startup diagnostic in the raw log without
+		# presenting a game failure; later mouse errors and all script failures remain actionable.
+		if ios_window_probe_pending and startup_mouse_probe(function, file, rationale, Engine.get_process_frames()):
+			ios_window_probe_pending = false
+			return
 		if error_type != ERROR_TYPE_ERROR and error_type != ERROR_TYPE_SCRIPT:
 			return
 		var trace := ""
@@ -75,6 +82,11 @@ class Catcher extends Logger:
 
 	func _log_message(message: String, _error: bool) -> void:
 		_keep(message.strip_edges(false, true))
+
+	static func startup_mouse_probe(function: String, file: String, rationale: String, frame: int) -> bool:
+		return frame <= 1 and function == "mouse_get_position" and file.ends_with("servers/display/display_server.cpp") \
+			and rationale == "Mouse is not supported by this display server."
+
 
 	## One line into the tail, the oldest dropped past TAIL_LINES.
 	func _keep(text: String) -> void:
@@ -125,7 +137,7 @@ func _process(delta: float) -> void:
 		return
 	for e in queued:
 		report(e)
-	if _notice != null and get_tree().current_scene != null:
+	if _notice != null and get_tree().current_scene != null and not MobileDevice.enabled():
 		_age += delta
 		if _age > NOTICE_SECONDS:
 			dismiss()
@@ -288,6 +300,9 @@ func _build_notice() -> void:
 	_notice.layer = 120
 	_notice.name = "ErrorNotice"
 	add_child(_notice)
+	if MobileDevice.enabled():
+		_build_mobile_notice()
+		return
 	var p := PanelContainer.new()
 	var s := StyleBoxFlat.new()
 	s.bg_color = Color(_colour("ui_black", Color(0.06, 0.04, 0.05)), 0.96)
@@ -379,3 +394,30 @@ func _colour(name: String, fallback: Color) -> Color:
 			if data is Dictionary:
 				_palette.merge(data as Dictionary)
 	return Color(str(_palette[name])) if _palette.has(name) else fallback
+
+
+func _build_mobile_notice() -> void:
+	var body := MobilePage.build(_notice, "Something went wrong", dismiss)
+	_notice_text = MobileUi.text("")
+	body.add_child(_notice_text)
+	_notice_more = MobileUi.text("", "parchment")
+	_notice_more.hide()
+	body.add_child(_notice_more)
+	body.add_child(MobileUi.text("The error was recorded with a copy of your newest save."))
+	body.add_child(MobileUi.button("Dismiss", dismiss))
+	if MobileNative.current != null and MobileNative.current.available():
+		body.add_child(MobileUi.button("Share diagnostic report", _share_mobile_report))
+	body.add_child(MobileUi.button("Back to the title", func() -> void:
+		get_tree().paused = false
+		dismiss()
+		get_tree().change_scene_to_file(str(ProjectSettings.get_setting("application/run/main_scene")))))
+
+
+func _share_mobile_report() -> void:
+	var path := "user://transfers/diagnostics.json"
+	var err := AtomicJson.write(path, {"kind": "diagnostic_report", "errors": recent, "log": Array(log_tail())})
+	if err == OK:
+		err = MobileNative.current.share_report(path)
+	if err != OK and is_instance_valid(_notice_more):
+		_notice_more.text = "The report couldn't be shared. Free some storage and try again."
+		_notice_more.show()

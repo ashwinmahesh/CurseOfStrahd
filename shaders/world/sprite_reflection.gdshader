@@ -12,7 +12,9 @@ render_mode cull_disabled, depth_test_disabled, depth_draw_never, shadows_disabl
 
 uniform sampler2D texture_albedo : source_color, filter_linear, repeat_disable;
 uniform sampler2D depth_tex : hint_depth_texture, filter_nearest;
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 uniform sampler2D surface_tex : hint_normal_roughness_texture, filter_nearest;
+#endif
 uniform bool billboard = true;
 uniform vec3 face = vec3(0.0);
 uniform vec2 squash = vec2(1.0);
@@ -67,6 +69,7 @@ void vertex() {
 }
 
 void fragment() {
+#if CURRENT_RENDERER == RENDERER_FORWARD_PLUS
 	// Derivatives first (before any discard): a screen pixel's step across the sheet.
 	vec2 dx = dFdx(UV);
 	vec2 dy = dFdy(UV);
@@ -120,6 +123,10 @@ void fragment() {
 		ALBEDO = vec3(0.0);
 		EMISSION = col * COLOR.rgb;
 	}
+#else
+	// Graphics hides these on Mobile. Keep the preloaded resource compilable there as well.
+	ALPHA = 0.0;
+#endif
 }
 
 void light() {

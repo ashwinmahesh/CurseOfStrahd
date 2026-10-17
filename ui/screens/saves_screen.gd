@@ -43,6 +43,8 @@ var _tabs: Control
 var _hint: Label
 var _note_edit: LineEdit           ## the player's note for the save about to be made
 var _sort: Button
+var _import_waiting := false
+var _share_waiting := false
 
 
 func _init() -> void:
@@ -65,6 +67,9 @@ static func open_on(parent: Node, mode_: Mode, after_load_: Callable, hide: Canv
 
 
 func _build() -> void:
+	if MobileDevice.enabled():
+		_build_mobile()
+		return
 	var box := UiKit.screen_frame(self, "Save Game" if mode == Mode.SAVE else "Load a Save", SIZE)
 	# Clear of the title's arch, whose point hangs into the frame.
 	var clear := Control.new()
@@ -209,6 +214,8 @@ func _fill() -> void:
 	if _closing:
 		return
 	_sort.visible = true
+	if MobileDevice.enabled() and _tabs is ScrollContainer:
+		MobileUi.select_tab(_tabs as ScrollContainer, _tab)
 	# Out of the list at once, so the new rows can take their slots' names.
 	for c in _list.get_children():
 		_list.remove_child(c)
@@ -248,6 +255,11 @@ func _fill_chapters() -> void:
 
 
 func _chapter_row(s: Dictionary) -> Control:
+	if MobileDevice.enabled():
+		var body := VBoxContainer.new()
+		body.add_child(MobileUi.text("Chapter %d · %s · Level %d" % [int(s["number"]), s["title"], int(s["level"])]))
+		body.add_child(MobileUi.button("Begin chapter", func() -> void: _begin(s)))
+		return body
 	var line := HBoxContainer.new()
 	line.add_theme_constant_override("separation", 14)
 	line.add_child(picture(s))
@@ -317,6 +329,8 @@ func _grab_focus() -> void:
 ## One save: its picture, its place, what kind of save it is with the day and when, the party, the player's note, and
 ## the page's button.
 func _row(s: Dictionary) -> Control:
+	if MobileDevice.enabled():
+		return _mobile_row(s)
 	var slot := str(s["slot"])
 	var home := _in_saves(s)
 	var line := HBoxContainer.new()
@@ -442,6 +456,8 @@ static func kind_of(s: Dictionary) -> String:
 	match str(s.get("kind", "")):
 		"autosave":
 			return "Autosave"
+		"recovery":
+			return "Fight, continue last action"
 		"round":
 			return "Fight, round start"
 	if str(s.get("finished", "")) != "":
@@ -541,6 +557,9 @@ func _delete(s: Dictionary) -> void:
 ## runs `on_yes`) or Cancel. Escape cancels.
 func _question(s: Dictionary, title: String, note: String, warn_text: String, yes_text: String, on_yes: Callable) -> void:
 	_close_confirm()
+	if MobileDevice.enabled():
+		_mobile_question(s, title, note, warn_text, yes_text, on_yes)
+		return
 	_ask = Control.new()
 	_ask.name = "Confirm"
 	_ask.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -603,6 +622,12 @@ func confirm_open() -> bool:
 
 func _close_confirm() -> void:
 	if _ask != null:
+		_ask.hide()
+		for child in _ask.get_children():
+			if child is CanvasLayer:
+				(child as CanvasLayer).hide()
+		if MobileDevice.enabled() and UiFeel.touch != null:
+			UiFeel.touch.cancel()
 		_ask.queue_free()
 		_ask = null
 		_focus()
@@ -627,3 +652,118 @@ func _unhandled_input(event: InputEvent) -> void:
 			_close_confirm()
 		else:
 			close()
+
+
+func _build_mobile() -> void:
+	var body := MobilePage.build(self, "Save game" if mode == Mode.SAVE else "Load game", close)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_back = page.find_child("MobileBack", true, false) as Button
+	_status = MobileUi.text("")
+	body.add_child(_status)
+	_hint = MobileUi.text("")
+	body.add_child(_hint)
+	_sort = MobileUi.button(_sort_words(), _next_sort)
+	body.add_child(_sort)
+	if mode == Mode.SAVE:
+		_note_edit = LineEdit.new()
+		_note_edit.placeholder_text = "Save note (optional)"
+		_note_edit.max_length = 60
+		_note_edit.custom_minimum_size.y = 48
+		body.add_child(_note_edit)
+		_new = MobileUi.button("New save", _save_new)
+		body.add_child(_new)
+	else:
+		_tabs = MobileUi.tabs(TABS, _tab, func(tab_: String) -> void:
+			_tab = tab_
+			_fill())
+		body.add_child(_tabs)
+		if MobileNative.current != null and MobileNative.current.available():
+			body.add_child(MobileUi.button("Import from Files", func() -> void:
+				if not MobileNative.current.pending:
+					_import_waiting = true
+					MobileNative.current.import_save()))
+	if MobileNative.current != null and MobileNative.current.available():
+		MobileNative.current.file_result.connect(_native_result)
+	_list = VBoxContainer.new()
+	_list.add_theme_constant_override("separation", 16)
+	body.add_child(_list)
+	_fill()
+	EventBus.game_saved.connect(func(_slot: String) -> void:
+		if not _closing:
+			_fill.call_deferred())
+
+
+func _mobile_row(s: Dictionary) -> Control:
+	var body := VBoxContainer.new()
+	body.add_child(MobileUi.text(str(s["location"]), "gilt_light"))
+	body.add_child(MobileUi.text("%s · Day %d · %s" % [kind_of(s), int(s["day"]), when(s)]))
+	body.add_child(MobileUi.text(str(s["party"])))
+	if str(s.get("note", "")) != "":
+		body.add_child(MobileUi.text(str(s["note"])))
+	var actions := HBoxContainer.new()
+	body.add_child(actions)
+	var slot := str(s["slot"])
+	var act := MobileUi.button("Save here" if mode == Mode.SAVE else "Load", func() -> void:
+		if mode == Mode.SAVE:
+			_confirm(s)
+		else:
+			_question(s, "Load this save?", str(s.get("note", "")), "Unsaved progress in the current game will be replaced.", "Load", func() -> void: _load(s)))
+	act.name = "Act"
+	actions.add_child(act)
+	if MobileNative.current != null and MobileNative.current.available():
+		actions.add_child(MobileUi.button("Share", func() -> void:
+			var path := str(s.get("dir", SaveSystem.save_dir)).path_join(slot + ".json")
+			if MobileNative.current.share_save(path) != OK:
+				_status.text = "That save couldn't be shared. Close any system window and try again."
+			else:
+				_share_waiting = true))
+	if _in_saves(s) and not _live_honour(slot):
+		actions.add_child(MobileUi.button("Delete", func() -> void: _confirm_delete(s)))
+	return body
+
+
+func _mobile_question(s: Dictionary, title: String, note: String, warning: String, yes: String, action: Callable) -> void:
+	_ask = Control.new()
+	add_child(_ask)
+	var modal := CanvasLayer.new()
+	modal.layer = layer + 1
+	_ask.add_child(modal)
+	var body := MobilePage.build(modal, title, _close_confirm)
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(MobileUi.text(str(s["location"]), "gilt_light"))
+	body.add_child(MobileUi.text("Day %d · %s" % [int(s["day"]), s["party"]]))
+	if note != "":
+		body.add_child(MobileUi.text(note))
+	body.add_child(MobileUi.text(warning))
+	page.toolbar.add_child(MobileUi.button(yes, func() -> void:
+		_close_confirm()
+		action.call()))
+
+
+func _native_result(kind: String, value: String) -> void:
+	if _closing:
+		return
+	if _share_waiting:
+		_share_waiting = false
+		_status.text = value if kind == "file_error" else "Shared." if kind == "file_shared" else ""
+		return
+	if not _import_waiting:
+		return
+	_import_waiting = false
+	if kind == "file_cancelled":
+		return
+	if kind == "file_error":
+		_status.text = value
+		return
+	if kind != "file_imported":
+		return
+	var review := SaveTransfer.inspect(MobileNative.IMPORT)
+	if review.has("error"):
+		_status.text = str(review["error"])
+		return
+	_question(review, "Import this save?", "", "Import creates a new local save. Your existing saves stay as they are.", "Import", func() -> void:
+		var result := SaveTransfer.commit(review)
+		_status.text = str(result.get("error", "Imported. Select Load to continue that game."))
+		_fill())

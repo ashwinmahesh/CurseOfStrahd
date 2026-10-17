@@ -52,6 +52,7 @@ var _side: VBoxContainer
 var _note: Label
 var _list: VBoxContainer = null
 var _filter := ""
+var mobile: MobileSkirmish
 
 
 func _ready() -> void:
@@ -70,6 +71,12 @@ func _ready() -> void:
 	layer = CanvasLayer.new()
 	layer.layer = 10
 	add_child(layer)
+	if MobileDevice.enabled():
+		mobile = MobileSkirmish.new(self)
+		mobile.build()
+		_select_hero(hero_index)
+		_redraw()
+		return
 	_frame = UiKit.screen_frame(layer, "Skirmish", FRAME)
 	var under_crest := Control.new()
 	under_crest.custom_minimum_size = Vector2(0, 14)
@@ -127,6 +134,9 @@ func say(text: String) -> void:
 # --- Drawing --------------------------------------------------------------------------------------
 
 func _redraw() -> void:
+	if mobile != null:
+		mobile.draw()
+		return
 	kept_tab = tab
 	for c in _tabs_row.get_children():
 		c.queue_free()
@@ -157,6 +167,8 @@ func _redraw() -> void:
 
 ## The fight at a glance, always beside the tabs: the map, the heroes, the foes and how hard it is, and Fight.
 func _draw_side() -> void:
+	if mobile != null:
+		return
 	for c in _side.get_children():
 		_side.remove_child(c)
 		c.queue_free()
@@ -965,6 +977,9 @@ func _sketch_clicked(cell: Vector2i, button: int) -> void:
 
 ## After an edit on the map: the sketch, the chips, the hint and the summary, leaving the list where it was.
 func _refresh_field() -> void:
+	if mobile != null:
+		mobile.draw()
+		return
 	if _hint != null:
 		_hint.text = _brush_hint()
 	if _strip_box != null:

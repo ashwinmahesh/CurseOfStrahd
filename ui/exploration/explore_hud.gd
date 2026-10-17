@@ -8,6 +8,9 @@ extends CanvasLayer
 signal leader_picked(index: int)
 signal sheet_requested(index: int)
 signal command(name: String)
+signal interactable_requested(source: LocationView, cell: Vector2i)
+
+var mobile: MobileExploreHud
 
 var st: StoryState
 var _party_box: VBoxContainer
@@ -72,6 +75,12 @@ func _init() -> void:
 
 func build(state: StoryState) -> void:
 	st = state
+	if MobileDevice.enabled():
+		mobile = MobileExploreHud.new()
+		add_child(mobile)
+		mobile.setup(self)
+		mobile.refresh("", false, false, false)
+		return
 	exit_signs = ExitSigns.new()
 	add_child(exit_signs)
 	thing_labels = ThingLabels.new()
@@ -294,6 +303,9 @@ func build(state: StoryState) -> void:
 
 
 func refresh(location_name: String = "", sneaking: bool = false, solo: bool = false, planning: bool = false) -> void:
+	if mobile != null:
+		mobile.refresh(location_name, sneaking, solo, planning)
+		return
 	if st == null:
 		return
 	for c in _party_box.get_children():
@@ -532,6 +544,11 @@ func _fit_where(text: String) -> void:
 
 ## A new location: the minimap and the signs at its ways out.
 func show_location(view: LocationView) -> void:
+	if mobile != null:
+		minimap.show_location(view)
+		thing_labels.show_location(view)
+		minimap.tooltip_text = "Minimap · tap a point to move"
+		return
 	minimap.show_location(view)
 	exit_signs.show_location(view)
 	thing_labels.show_location(view, exit_signs.signs)
@@ -540,6 +557,11 @@ func show_location(view: LocationView) -> void:
 ## Shows a passage in the Narrator's box, with `portrait` (art/portraits/<id>.png; the Narrator's by default, ""
 ## for none) beside it. It fades on its own after a while, or goes at a click on it or Esc.
 func narrate(text: String, portrait: String = DialogueRunner.NARRATOR_PORTRAIT) -> void:
+	if mobile != null:
+		mobile.narration = text
+		mobile.message(text)
+		VoiceOver.say(VoiceOver.NARRATOR, text)
+		return
 	var box := get_node("NarratorBox") as PanelContainer
 	box.visible = true
 	for c in _narr_face.get_children():
@@ -561,16 +583,24 @@ func hold_narration(seconds: float) -> void:
 
 
 func narration_showing() -> bool:
+	if mobile != null:
+		return mobile.narration != ""
 	return (get_node("NarratorBox") as PanelContainer).visible
 
 
 func close_narration() -> void:
+	if mobile != null:
+		mobile.narration = ""
+		VoiceOver.stop()
+		return
 	VoiceOver.stop()
 	_narr_time = 0.0
 	(get_node("NarratorBox") as PanelContainer).visible = false
 
 
 func hint(text: String, at: Vector2) -> void:
+	if mobile != null:
+		return
 	_hint.text = (text + "\n" + PadGlyphs.words("Right-click: more", "{a}: this · {y}: more")) if text != "" else ""
 	_hint_panel.visible = text != ""
 	_hint_panel.reset_size()
@@ -578,6 +608,9 @@ func hint(text: String, at: Vector2) -> void:
 
 
 func toast(text: String) -> void:
+	if mobile != null:
+		mobile.message(text)
+		return
 	# Another message is still being read: this one waits its turn (unless it's the same again).
 	if _toast_time > 1.0 and text != "" and text != _toast.text:
 		if not text in _toast_queue:
@@ -593,6 +626,9 @@ func toast(text: String) -> void:
 
 
 func toggle_controls() -> void:
+	if mobile != null:
+		mobile.information()
+		return
 	_controls.visible = not _controls.visible
 
 
@@ -613,17 +649,25 @@ func _show_keys(on: Dictionary = {}) -> void:
 
 
 func controls_showing() -> bool:
+	if mobile != null:
+		return mobile.sheet != null
 	return _controls.visible
 
 
 ## The game just saved itself: a note at the bottom right that fades.
 func saved_note() -> void:
+	if mobile != null:
+		mobile.message("Saved.")
+		return
 	_saved_time = 2.5
 	_saved.visible = true
 	_saved.modulate.a = 1.0
 
 
 func roll(text: String) -> void:
+	if mobile != null:
+		mobile.message(text)
+		return
 	_roll.text = text
 	_roll_time = 8.0
 	_roll_panel.visible = text != ""
@@ -649,6 +693,12 @@ func _plate(content: Control, margin: int) -> PanelContainer:
 ## D-pad up while exploring (PadExplore): the bar's buttons take the pad, as a screen's would, until B, D-pad down or
 ## a button pressed.
 func pad_bar(on: bool) -> void:
+	if mobile != null:
+		if on:
+			mobile.menu()
+		else:
+			mobile.close()
+		return
 	if on == pad_bar_on():
 		return
 	if on:
@@ -688,6 +738,8 @@ func pad_prompts() -> Array:
 
 
 func _process(delta: float) -> void:
+	if mobile != null:
+		return
 	if pad_bar_on() and not PadNav.active():
 		pad_bar(false)   # the mouse took over
 	if _narr_time > 0.0:

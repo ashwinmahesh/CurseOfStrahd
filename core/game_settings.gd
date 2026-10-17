@@ -54,6 +54,10 @@ static func set_fullscreen(on: bool) -> void:
 
 ## Puts the window in the mode the player picked (the title screen calls it once at start).
 static func apply_display() -> void:
+	if MobileDevice.enabled():
+		if MobileDevice.current != null:
+			MobileDevice.current.configure()
+		return
 	var want := DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen() else DisplayServer.WINDOW_MODE_WINDOWED
 	if DisplayServer.window_get_mode() != want:
 		DisplayServer.window_set_mode(want)

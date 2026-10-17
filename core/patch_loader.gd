@@ -18,6 +18,9 @@ static var skipped := ""
 
 func _init() -> void:
 	version = str(ProjectSettings.get_setting("application/config/version", ""))
+	# iOS updates come with the signed app, never from a downloaded script/resource patch.
+	if OS.has_feature("ios"):
+		return
 	if version == "" or not FileAccess.file_exists(DIR + "patch.json"):
 		return
 	var info := read_info(DIR + "patch.json")

@@ -16,6 +16,12 @@ func _init() -> void:
 static func open(parent: Node) -> AchievementsPanel:
 	var p := AchievementsPanel.new()
 	parent.add_child(p)
+	if MobileDevice.enabled():
+		var body := MobilePage.build(p, "Achievements", p.close)
+		(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		body.add_child(list(0.0))
+		MobileUi.fit(body)
+		return p
 	var frame := UiKit.screen_frame(p, "Achievements", Vector2(1000, 760))
 	var under_crest := Control.new()
 	under_crest.custom_minimum_size = Vector2(0, 14)
@@ -43,7 +49,7 @@ static func list(width: float, only: Array = []) -> VBoxContainer:
 		if not only.is_empty() and not str(a["id"]) in only:
 			continue
 		var got := str(a["earned"]) != ""
-		var row := HBoxContainer.new()
+		var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 		row.add_theme_constant_override("separation", 12)
 		row.add_child(UiParts.drawn(Vector2(22, 22), func(c: Control) -> void:
 			UiParts.diamond(c, c.size / 2.0, 10.0, Look.color("void"), true)

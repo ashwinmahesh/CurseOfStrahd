@@ -12,6 +12,7 @@ const COLUMNS: Array[Array] = [["damage_dealt", "Dealt"], ["damage_taken", "Take
 	["crits", "Crits"], ["hits", "Hits"], ["misses", "Misses"], ["nat20", "20s"], ["nat1", "1s"], ["downs", "Falls"]]
 
 var tally: Dictionary = {}
+var _mobile_done := false
 
 
 func _init() -> void:
@@ -27,6 +28,9 @@ func show_for(e: Encounter, title: String, earned: Array[String] = []) -> void:
 	var head := e.legendary.end_title()
 	if head == "":
 		head = "Victory" if won else "The party has fallen"
+	if MobileDevice.enabled():
+		_mobile_show(e, title, head, earned)
+		return
 	var frame := UiKit.screen_frame(self, head, Vector2(1160, 700))
 	var sub := UiKit.label("%s · %d round%s" % [title, e.round_no, "" if e.round_no == 1 else "s"], 17, "parchment")
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -102,3 +106,37 @@ static func _combatant(e: Encounter, nm: String) -> Combatant:
 		if c.name() == nm:
 			return c
 	return null
+
+
+func _mobile_show(e: Encounter, title: String, head: String, earned: Array[String]) -> void:
+	var body := MobilePage.build(self, head, func() -> void: _mobile_finish("setup"))
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(MobileUi.text("%s · %d rounds" % [title, e.round_no]))
+	if not earned.is_empty():
+		body.add_child(MobileUi.text("Achievements: " + ", ".join(earned), "gilt_light"))
+	body.add_child(MobileUi.button("Fight again", func() -> void: _mobile_finish("again")))
+	body.add_child(MobileUi.button("Change setup", func() -> void: _mobile_finish("setup")))
+	body.add_child(MobileUi.button("Back to title", func() -> void: _mobile_finish("title")))
+	for side: String in ["party", "enemy"]:
+		body.add_child(MobileUi.text("The party" if side == "party" else "The foes", "gilt_light"))
+		for row in FightTally.side_rows(e, tally, side):
+			body.add_child(MobileUi.text(str(row["name"]), "gilt_light"))
+			var combatant := _combatant(e, str(row["name"]))
+			if combatant != null:
+				body.add_child(MobileUi.text("%d / %d HP%s" % [combatant.creature.hp, combatant.creature.max_hp(), " · dead" if combatant.creature.dead else ""]))
+			var stats: Array[String] = []
+			for column in COLUMNS:
+				stats.append("%s: %d" % [column[1], int(row[column[0]])])
+			body.add_child(MobileUi.text(" · ".join(stats)))
+
+
+func _mobile_finish(action: String) -> void:
+	if _mobile_done:
+		return
+	_mobile_done = true
+	hide()
+	UiFeel.touch.cancel()
+	match action:
+		"again": again.emit()
+		"setup": change_setup.emit()
+		"title": to_title.emit()

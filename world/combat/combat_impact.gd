@@ -55,7 +55,7 @@ func _init(rig_: CameraRig = null) -> void:
 
 ## Whether the moments play now.
 static func on() -> bool:
-	return enabled and (headless_too or DisplayServer.get_name() != "headless")
+	return enabled and not MobileNative.reduced_motion() and (headless_too or DisplayServer.get_name() != "headless")
 
 
 ## A blow landed on `target` (an attack's hit, or the spell or effect that just hit it): `amount` damage of its
@@ -110,7 +110,7 @@ func spell_landed() -> void:
 ## A boss's entrance (G3, ui/combat/boss_bar.gd): the camera comes in close and low on whoever it follows, and holds
 ## there until boss_shot_done(). Played whenever the boss bar asks, not only where the moments above are on.
 func boss_shot() -> void:
-	if rig == null:
+	if rig == null or MobileNative.reduced_motion():
 		return
 	_turned = false
 	var tw := _shot()
@@ -245,8 +245,20 @@ func _shot() -> Tween:
 
 
 ## The view closed mid-moment: time and the camera go back at once.
+func _process(_delta: float) -> void:
+	if MobileNative.reduced_motion() and (_base >= 0.0 or _shot_tw != null and _shot_tw.is_valid()):
+		_reset_motion()
+
+
 func _exit_tree() -> void:
+	_reset_motion()
+
+
+func _reset_motion() -> void:
 	_time_back()
+	if _shot_tw != null and _shot_tw.is_valid():
+		_shot_tw.kill()
+	_turned = false
 	if is_instance_valid(rig):
 		rig.shot_zoom = 1.0
 		rig.shot_weight = 0.0

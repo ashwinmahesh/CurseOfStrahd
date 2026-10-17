@@ -21,11 +21,16 @@ func _init() -> void:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
-	_frame = UiKit.screen_frame(self, "Who travels", Vector2(1320, 780))
+	_frame = MobilePage.build(self, "Who travels", func() -> void: root.call("close_screen")) if MobileDevice.enabled() else UiKit.screen_frame(self, "Who travels", Vector2(1320, 780))
+	if MobileDevice.enabled():
+		(_frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_draw()
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_mobile_draw()
+		return
 	for c in _frame.get_children():
 		c.queue_free()
 	_frame.add_child(UiParts.section("In the party (%d of %d)" % [st.party.size(), StoryState.PARTY_CAP]))
@@ -140,3 +145,22 @@ func _changed() -> void:
 	if view != null and (view as Object).has_method("rebuild_party"):
 		(view as Object).call("rebuild_party")
 	_draw()
+
+
+func _mobile_draw() -> void:
+	MobileUi.clear(_frame)
+	if _picked != null:
+		_frame.add_child(MobileUi.text("Choose whose place %s takes." % _picked.name, "gilt_light"))
+	_frame.add_child(MobileUi.text("Travelling party (%d of %d)" % [st.party.size(), StoryState.PARTY_CAP], "gilt_light"))
+	for ch in st.party:
+		var card := _card(ch, true)
+		MobileUi.fit(card)
+		_frame.add_child(card)
+	_frame.add_child(MobileUi.text("At camp", "gilt_light"))
+	if st.bench.is_empty():
+		_frame.add_child(MobileUi.text("Everyone is on the road."))
+	for ch in st.bench:
+		var card := _card(ch, false)
+		MobileUi.fit(card)
+		_frame.add_child(card)
+	_frame.add_child(MobileUi.text("Those at camp don't fight, speak or level. Missed levels wait for them when they rejoin."))

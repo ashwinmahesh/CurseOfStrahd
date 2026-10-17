@@ -43,11 +43,11 @@ static func apply(root: Node3D, see_through: bool = true) -> Array[Dictionary]:
 	var mesh_mat: ShaderMaterial = null
 	for n: Node in [root] + root.find_children("*", "GeometryInstance3D", true, false):
 		var geo := n as GeometryInstance3D
-		if geo == null or geo.is_queued_for_deletion() or _in_flame(geo, root):
+		if geo == null or geo is SpriteReflection or geo.is_queued_for_deletion() or _in_flame(geo, root):
 			continue
 		if geo.material_overlay != null and geo.material_overlay != HoverGlow._rim:
 			continue   # someone else's overlay (the hover glow's rim gives way: this one says more)
-		if geo is Sprite3D:
+		if geo is SpriteBase3D:
 			var mat := _sprite_material(see_through)
 			var entry := {"geo": geo, "mat": mat, "tex": null, "px": 0.0}
 			_fit(entry)
@@ -73,10 +73,12 @@ static func glow(lit: Array[Dictionary], k: float) -> void:
 ## Keeps each sprite's outline on its picture when the picture changes (a PropView turns to show its back).
 static func refit(lit: Array[Dictionary]) -> void:
 	for entry in lit:
-		if not is_instance_valid(entry["geo"]) or not entry["geo"] is Sprite3D:
+		if not is_instance_valid(entry["geo"]) or not entry["geo"] is SpriteBase3D:
 			continue
-		var sp := entry["geo"] as Sprite3D
-		if sp.texture != entry["tex"] or sp.pixel_size != float(entry["px"]):
+		var sp := entry["geo"] as SpriteBase3D
+		_motion(sp, entry["mat"] as ShaderMaterial)
+		if _texture(sp) != entry["tex"] or sp.pixel_size != float(entry["px"]) \
+			or sp.flip_h != bool(entry.get("flip_h", false)) or sp.flip_v != bool(entry.get("flip_v", false)):
 			_fit(entry)
 
 
@@ -160,20 +162,49 @@ static func _set_all(mat: ShaderMaterial, param: String, value: Variant) -> void
 
 ## The sprite outline's quad and picture for the sprite as it is now (Sprite3D draws its quad from get_item_rect, in
 ## the plane its axis gives: x, y for z; x, -y on x and z for y; -x, y on z and y for x).
+static func _texture(sp: SpriteBase3D) -> Texture2D:
+	if sp is Sprite3D:
+		return (sp as Sprite3D).texture
+	var animated := sp as AnimatedSprite3D
+	if animated != null and animated.sprite_frames != null and animated.sprite_frames.has_animation(animated.animation) \
+			and animated.sprite_frames.get_frame_count(animated.animation) > 0:
+		return animated.sprite_frames.get_frame_texture(animated.animation, animated.frame)
+	return null
+
+
 static func _fit(entry: Dictionary) -> void:
-	var sp := entry["geo"] as Sprite3D
+	var sp := entry["geo"] as SpriteBase3D
 	var mat := entry["mat"] as ShaderMaterial
-	entry["tex"] = sp.texture
+	var texture := _texture(sp)
+	entry["tex"] = texture
 	entry["px"] = sp.pixel_size
-	if sp.texture == null:
+	entry["flip_h"] = sp.flip_h
+	entry["flip_v"] = sp.flip_v
+	if texture == null:
 		return
-	var tex_size := sp.texture.get_size()
-	var frame := tex_size / Vector2(sp.hframes, sp.vframes)
-	var src := sp.region_rect if sp.region_enabled else Rect2(Vector2(sp.frame_coords) * frame, frame)
-	_set_all(mat, "sprite_tex", sp.texture)
+	var src := Rect2(Vector2.ZERO, texture.get_size())
+	if sp is Sprite3D:
+		var still := sp as Sprite3D
+		var frame := texture.get_size() / Vector2(still.hframes, still.vframes)
+		src = still.region_rect if still.region_enabled else Rect2(Vector2(still.frame_coords) * frame, frame)
+	var rect := sp.get_item_rect()
+	if texture is AtlasTexture:
+		var atlas := texture as AtlasTexture
+		# Packed animation frames trim transparent margins. The drawn quad/UVs cover only the region.
+		src = atlas.region
+		var margin := atlas.margin
+		var offset := Vector2(margin.position.x, margin.size.y - margin.position.y)
+		if sp.flip_h:
+			offset.x = margin.size.x - margin.position.x
+		if sp.flip_v:
+			offset.y = margin.position.y
+		rect.position += offset
+		rect.size = atlas.region.size
+		texture = atlas.atlas
+	var tex_size := texture.get_size()
+	_set_all(mat, "sprite_tex", texture)
 	_set_all(mat, "uv_rect", Vector4(src.position.x / tex_size.x, src.position.y / tex_size.y, src.size.x / tex_size.x,
 		src.size.y / tex_size.y))
-	var rect := sp.get_item_rect()
 	var size := rect.size * sp.pixel_size
 	var c := (rect.position + rect.size / 2.0) * sp.pixel_size
 	var plane := 0 if sp.axis == Vector3.AXIS_Z else (1 if sp.axis == Vector3.AXIS_Y else 2)
@@ -188,6 +219,7 @@ static func _fit(entry: Dictionary) -> void:
 			billboard = 2
 	_set_all(mat, "billboard", billboard)
 	_set_all(mat, "alpha_cut", sp.alpha_scissor_threshold)
+	_motion(sp, mat)
 
 
 ## A fire's flame (SetDressing.flame, its pieces named Flame) isn't the thing found.
@@ -198,3 +230,17 @@ static func _in_flame(geo: Node, root: Node) -> bool:
 			return true
 		n = n.get_parent()
 	return false
+
+
+## Follow the same billboard and pose deformation as character art; static props keep identity defaults.
+static func _motion(sp: SpriteBase3D, mat: ShaderMaterial) -> void:
+	if not sp is DirectionalSprite:
+		return
+	var source := sp.material_override as ShaderMaterial
+	if source == null:
+		return
+	for key: String in ["face", "depth_nudge"]:
+		_set_all(mat, "figure_" + key, source.get_shader_parameter(key))
+	if source.shader == DirectionalSprite.CRISP:
+		for key: String in ["squash", "lean", "lift", "push"]:
+			_set_all(mat, "figure_" + key, source.get_shader_parameter(key))

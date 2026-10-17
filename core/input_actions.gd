@@ -226,6 +226,14 @@ static func ensure() -> void:
 		if not InputMap.action_has_event(action, jm):
 			InputMap.action_add_event(action, jm)
 	apply_pad()   # the player's own buttons over the defaults (Settings, Keys, Controller)
+	if MobileDevice.enabled():
+		# Reconnecting on iOS can assign a new device ID. Built-in UI actions must follow it too.
+		for action in InputMap.get_actions():
+			for event in InputMap.action_get_events(action):
+				if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+					InputMap.action_erase_event(action, event)
+					event.device = -1
+					InputMap.action_add_event(action, event)
 
 
 ## Puts each action's current keys in the InputMap (the controller's buttons and sticks stay).
@@ -562,10 +570,12 @@ static func _set_pad(action: StringName, code: int) -> void:
 			InputMap.action_erase_event(action, ev)
 	if code >= PAD_TRIGGER:
 		var m := InputEventJoypadMotion.new()
+		m.device = -1 if MobileDevice.enabled() else 0
 		m.axis = (code - PAD_TRIGGER) as JoyAxis
 		m.axis_value = 1.0
 		InputMap.action_add_event(action, m)
 	elif code >= 0:
 		var b := InputEventJoypadButton.new()
+		b.device = -1 if MobileDevice.enabled() else 0
 		b.button_index = code as JoyButton
 		InputMap.action_add_event(action, b)

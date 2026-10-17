@@ -111,7 +111,7 @@ func _input(event: InputEvent) -> void:
 		return
 	var vp := get_viewport()
 	var hovered := vp.gui_get_hovered_control()
-	if _card_under(hovered, vp.get_mouse_position()) != null:
+	if _card_under(hovered, PadNav.pointer(vp)) != null:
 		return
 	var showing := _card_for(source_at(hovered))
 	if showing != null:
@@ -212,7 +212,7 @@ func pin_term(term: String, from: Control) -> TipCard:
 		if c.term == term and c.source == from and not c.pinned:
 			toggle_pin(c)
 			return c
-	var card := open_card({"key": "term:" + term, "control": from, "term": term}, get_viewport().get_mouse_position())
+	var card := open_card({"key": "term:" + term, "control": from, "term": term}, PadNav.pointer(get_viewport()))
 	if card != null:
 		toggle_pin(card)
 	return card

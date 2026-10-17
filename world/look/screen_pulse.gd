@@ -40,7 +40,7 @@ static func set_enabled(on: bool) -> void:
 
 ## Whether pulses play now.
 static func on() -> bool:
-	return enabled and (headless_too or DisplayServer.get_name() != "headless")
+	return enabled and not MobileNative.reduced_motion() and (headless_too or DisplayServer.get_name() != "headless")
 
 
 ## Plays pulse `kind` (KINDS) toward `at` in the world (the middle of the screen when it's off screen or not given),
@@ -86,6 +86,13 @@ func _ready() -> void:
 	if not _pending.is_empty():
 		_play(_pending[0] as Dictionary, _pending[1] as Vector3)
 		_pending = []
+
+
+func _process(_delta: float) -> void:
+	if visible and MobileNative.reduced_motion():
+		if _tw != null and _tw.is_valid():
+			_tw.kill()
+		visible = false
 
 
 func _exit_tree() -> void:

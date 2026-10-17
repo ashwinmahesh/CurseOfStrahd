@@ -38,6 +38,7 @@ var notices := ItemNotices.new()     ## items the party comes by outside loot an
 
 
 func _ready() -> void:
+	add_to_group(&"touch_world")
 	InputActions.ensure()
 	UiScale.playing(self)   # the interface takes the player's size (Settings, Interface) while a game is on screen
 	Cursors.install()
@@ -48,7 +49,7 @@ func _ready() -> void:
 	st = GameState.story
 	st.time_passed.connect(_on_time_passed)
 	add_child(notices)
-	st.item_gained.connect(notices.show_item)   # an item come by outside loot and shops, on the side
+	st.item_gained.connect(_item_gained)
 	narrator = Narrator.new()
 	banter = Banter.new()
 	if st.party.is_empty():
@@ -64,6 +65,7 @@ func _ready() -> void:
 		_refresh())
 	hud.sheet_requested.connect(func(i: int) -> void: open_screen("sheet", i))
 	hud.command.connect(_command)
+	hud.interactable_requested.connect(_mobile_context)
 	plan_bar = PlanBar.new()
 	plan_bar.hud = hud
 	plan_bar.command.connect(_command)
@@ -95,6 +97,15 @@ func _ready() -> void:
 		# A finished game's save plays its ending again.
 		if Endings.reached(st) != "":
 			show_ending.call_deferred())
+
+
+func _item_gained(item_id: String, qty: int, who: String) -> void:
+	if MobileDevice.enabled() and is_instance_valid(hud):
+		var words := ItemNotices.words(item_id, qty, who)
+		hud.toast("%s · %s" % [words["name"], words["who"]])
+		Audio.sfx("arcane_glint" if bool(words["magic"]) else "rummage")
+	else:
+		notices.show_item(item_id, qty, who)
 
 
 ## A quick start: four of the six at level 1 travelling, the other two at camp (plan §5.6 Start step). The menu's
@@ -229,6 +240,8 @@ var _fallen := false
 # --- Input ----------------------------------------------------------------------------------------
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.has_meta(&"touch_gui"):
+		return
 	if moving or view == null or view.in_combat or dialogue != null or ending != null or guidance != null:
 		return
 	if screen != null:
@@ -312,8 +325,40 @@ func _unhandled_input(event: InputEvent) -> void:
 			_refresh()
 
 
+func touch_ready() -> bool:
+	return not moving and view != null and not view.in_combat and dialogue == null and screen == null \
+		and loot == null and ending == null and guidance == null and not view.input_locked
+
+
+## A named alternative to precise world taps. Revalidate against the active location before opening options.
+func _mobile_context(source: LocationView, cell: Vector2i) -> void:
+	if not MobileDevice.enabled() or not touch_ready() or source != view or view.busy or view.thing_at(cell).is_empty():
+		return
+	TouchOutline.at(view, cell)
+	open_world_menu(cell, MobileDevice.safe_rect().get_center())
+
+
+func touch_tap(at: Vector2, context: bool) -> void:
+	if not touch_ready():
+		return
+	var cell := view.pick_cell(view.rig.camera, at)
+	if cell.x < 0:
+		return
+	TouchOutline.at(view, cell)
+	if context:
+		open_world_menu(cell, at)
+	else:
+		view.click(cell)
+
+
+func touch_camera(update: Dictionary) -> void:
+	if touch_ready():
+		view.rig.touch_camera(update)
+
+
 func _process(delta: float) -> void:
-	var exploring := not moving and view != null and not view.in_combat and dialogue == null and screen == null \
+	var mobile_modal := MobileDevice.enabled() and PadNav.current != null and PadNav.current.scope_now() != null
+	var exploring := not mobile_modal and not moving and view != null and not view.in_combat and dialogue == null and screen == null \
 		and loot == null and ending == null and guidance == null
 	if view != null and not view.in_combat:
 		view.rig.pad_look = exploring   # the right stick turns and zooms the camera (a fight sets its own)
@@ -1045,8 +1090,8 @@ func _exit_tree() -> void:
 		_preload = null
 	if st != null and st.time_passed.is_connected(_on_time_passed):
 		st.time_passed.disconnect(_on_time_passed)
-	if st != null and st.item_gained.is_connected(notices.show_item):
-		st.item_gained.disconnect(notices.show_item)
+	if st != null and st.item_gained.is_connected(_item_gained):
+		st.item_gained.disconnect(_item_gained)
 	if st != null and is_instance_valid(hud) and st.xp_gained.is_connected(hud.toast):
 		st.xp_gained.disconnect(hud.toast)
 

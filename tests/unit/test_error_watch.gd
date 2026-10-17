@@ -129,3 +129,10 @@ func test_a_dev_builds_notice_offers_to_report_it() -> void:
 	reports.screen.close()
 	await get_tree().process_frame
 	assert_false(get_tree().paused, "closing it lets the game go on")
+
+
+func test_only_the_known_ios_root_window_probe_is_nonactionable() -> void:
+	assert_true(WATCH.Catcher.startup_mouse_probe("mouse_get_position", "servers/display/display_server.cpp", "Mouse is not supported by this display server.", 0))
+	assert_false(WATCH.Catcher.startup_mouse_probe("mouse_get_position", "servers/display/display_server.cpp", "Mouse is not supported by this display server.", 10))
+	assert_false(WATCH.Catcher.startup_mouse_probe("script_call", "servers/display/display_server.cpp", "Mouse is not supported by this display server.", 0))
+	assert_false(WATCH.Catcher.startup_mouse_probe("mouse_get_position", "res://game.gd", "Mouse is not supported by this display server.", 0))
