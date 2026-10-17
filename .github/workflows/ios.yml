@@ -8,6 +8,11 @@ on:
       - tests/tools/test_ios*.py
   workflow_dispatch:
     inputs:
+      operation:
+        description: Build the app or inspect its App Store listing
+        type: choice
+        options: [build, inspect-listing]
+        default: build
       version:
         description: App version (major.minor.patch)
         required: true
@@ -34,7 +39,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ios-${{ github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
+  group: ios-${{ inputs.operation == 'inspect-listing' && 'listing' || github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
   cancel-in-progress: false
 
 env:
@@ -55,7 +60,7 @@ jobs:
       - run: python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
   archive:
     needs: tooling
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.operation != 'inspect-listing'
     runs-on: macos-15
     timeout-minutes: 350
     env:
@@ -264,3 +269,28 @@ jobs:
       - name: Remove signing credentials and provisioning profiles
         if: always()
         run: python3 pipeline/tools/release/ios_signing.py cleanup --directory "$RUNNER_TEMP/ios-signing"
+
+  listing:
+    needs: tooling
+    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'inspect-listing'
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            tools/release
+      - name: Inspect App Store listing and build icons
+        env:
+          APP_STORE_APP_ID: ${{ vars.APP_STORE_APP_ID }}
+          KEY_ID: ${{ secrets.IOS_APPLE_API_KEY_ID }}
+          ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
+          KEY_P8: ${{ secrets.IOS_APPLE_API_KEY_P8 }}
+          VERSION: ${{ inputs.version }}
+        run: python3 tools/release/ios_store.py inspect --version "$VERSION" --output "$RUNNER_TEMP/ios-listing"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-listing-${{ github.run_number }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/ios-listing/
+          retention-days: 14
