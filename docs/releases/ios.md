@@ -316,6 +316,10 @@ save/Continue and background/resume on both devices. Those runs predate the quie
 result bundle exports screenshots; the iPad log reports two passing tests, but its result bundle did not
 finalize with a readable Info.plist. Do not describe that bundle as an exportable screenshot record.
 
+The subsequent quiet exploration journey passes on both devices: Continue, verify the appropriate shortcuts,
+Menu, Inventory, narration history, then return to the unobstructed world. Both `quiet-iphone-19.xcresult` and
+`quiet-ipad-19.xcresult` finalize successfully; their native screenshots were exported and inspected.
+
 Native campaign testing also caught a lifecycle error when backgrounding: Godot locks child lists while
 propagating application notifications. Suspension now pauses play and audio immediately, then defers attaching
 the resume page until notification traversal finishes. A regression invokes suspension under that same child-list
