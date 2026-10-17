@@ -13,6 +13,7 @@ import subprocess
 import tarfile
 import urllib.request
 
+ROOT = Path(__file__).resolve().parents[2]
 VERSION = '4.7.2'
 SOURCE_SHA256 = 'e954996374cbd1cb5d72e0e3781cc537408e6ce73b010b12c6c2f308a820690a'
 
@@ -27,7 +28,7 @@ def ensure_arm64(output: Path) -> None:
         return
     if architectures != ['x86_64']:
         raise ValueError('Unexpected simulator library architecture: ' + ', '.join(architectures))
-    cache = Path(os.environ.get('IOS_ENGINE_CACHE', Path.home() / 'Library/Caches/CurseOfStrahd/ios-engine'))
+    cache = Path(os.environ.get('IOS_ENGINE_CACHE', ROOT.parent / 'strahd-builds/ios-engine-source'))
     cache.mkdir(parents=True, exist_ok=True)
     archive = cache / f'godot-{VERSION}.tar.gz'
     if not archive.exists():
@@ -50,9 +51,9 @@ def ensure_arm64(output: Path) -> None:
         venv = cache / 'venv'
         if not (venv / 'bin/scons').exists():
             run(['python3', '-m', 'venv', venv])
-            run([venv / 'bin/pip', 'install', 'scons==4.9.1'])
+            run([venv / 'bin/python3', '-m', 'pip', 'install', 'scons==4.9.1'])
         print('Building missing ARM64 simulator engine; log: ' + str(output / 'simulator-engine.log'), flush=True)
-        run([venv / 'bin/scons', 'platform=ios', 'target=template_release', 'arch=arm64', 'simulator=yes',
+        run([venv / 'bin/python3', '-m', 'SCons', 'platform=ios', 'target=template_release', 'arch=arm64', 'simulator=yes',
              'metal=no', 'vulkan=no', 'production=yes', 'debug_symbols=no', '-j4'])
         arm = source / 'bin/libgodot.ios.template_release.arm64.simulator.a'
         run(['xcrun', 'lipo', arm, '-verify_arch', 'arm64'])

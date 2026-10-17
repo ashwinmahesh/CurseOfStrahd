@@ -16,7 +16,7 @@ SHA256 = '30da4ac295997061a6af81ae531510efd4e6a86e506eb4466edc0898ef3fe048'
 
 
 def build(stage: Path, log: Path) -> None:
-    cache = Path(os.environ.get('IOS_NATIVE_CACHE', Path.home() / 'Library/Caches/CurseOfStrahd/ios-native'))
+    cache = Path(os.environ.get('IOS_NATIVE_CACHE', ROOT.parent / 'strahd-builds/ios-native-toolchain'))
     cache.mkdir(parents=True, exist_ok=True)
     archive = cache / 'godot-cpp.tar.gz'
     if not archive.exists():
@@ -44,10 +44,10 @@ def build(stage: Path, log: Path) -> None:
         venv = cache / 'venv'
         if not (venv / 'bin/scons').exists():
             run(['python3', '-m', 'venv', venv])
-            run([venv / 'bin/pip', 'install', 'scons==4.9.1'])
+            run([venv / 'bin/python3', '-m', 'pip', 'install', 'scons==4.9.1'])
         products = []
         for simulator in [False, True]:
-            run([venv / 'bin/scons', 'platform=ios', 'arch=arm64', 'target=template_release',
+            run([venv / 'bin/python3', '-m', 'SCons', 'platform=ios', 'arch=arm64', 'target=template_release',
                  'ios_simulator=' + ('yes' if simulator else 'no'), 'ios_min_version=16.0',
                  'build_profile=' + str(work / 'profile.json'), '-j4'])
             suffix = '.ios.template_release.arm64' + ('.simulator' if simulator else '')
