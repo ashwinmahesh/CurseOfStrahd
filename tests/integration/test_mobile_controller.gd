@@ -102,6 +102,11 @@ func test_mobile_tabs_bumpers_focus_and_touch_takeover() -> void:
 		assert_eq(nav._dpad_held, Vector2i.ZERO, "touch cancels repeat even without a D-pad release")
 		assert_eq(MobileDevice.current.modality, "touch")
 		assert_eq(count[0], 2, "touch still activates once after controller input")
+		direction.pressed = false
+		get_viewport().push_input(direction, true)
+		await _frames()
+		assert_false(nav.active(), "releasing an old controller hold cannot steal the current touch session")
+		assert_eq(MobileDevice.current.modality, "touch")
 		MobileUi.clear(layer)
 		nav.reset()
 		await _frames()
@@ -120,6 +125,10 @@ func test_controller_keyboard_commits_and_cancels_without_closing_the_underlying
 	assert_true(keyboard != null)
 	if keyboard == null:
 		return
+	var page := keyboard.find_children("*", "MobilePage", true, false)[0] as MobilePage
+	assert_true(page.controller_hint.text.contains("Capitals"))
+	assert_true(page.controller_hint.text.contains("Done"))
+	assert_false(page.controller_hint.text.contains("Tabs"), "keyboard hints describe its actual bumper action")
 	await _press(JOY_BUTTON_A)
 	await _press(JOY_BUTTON_START)
 	assert_true(field.text.length() > "Original".length())
@@ -217,3 +226,26 @@ func test_exploration_controller_opens_mobile_menu_without_desktop_hud_scope() -
 	assert_true(hud.mobile.sheet == null)
 	nav.prompts._process(0.0)
 	assert_false(nav.prompts.visible, "controller input does not add a persistent overlay to the quiet world")
+
+
+func test_inventory_bumpers_switch_real_mobile_sections_without_changing_items() -> void:
+	var state := StoryState.new()
+	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	state.party[0].add_item("potion_of_healing", 2)
+	var inventory := InventoryScreen.new()
+	add_child(inventory)
+	inventory.open(self, state, 0)
+	await _press(JOY_BUTTON_DPAD_DOWN)
+	await _press(JOY_BUTTON_RIGHT_SHOULDER)
+	assert_eq(inventory.mobile.section, "Equipment")
+	await _press(JOY_BUTTON_RIGHT_SHOULDER)
+	assert_eq(inventory.mobile.section, "Stash")
+	await _press(JOY_BUTTON_LEFT_SHOULDER)
+	assert_eq(inventory.mobile.section, "Equipment")
+	assert_eq(int(state.party[0].entry_of("potion_of_healing")["qty"]), 2)
+	inventory.queue_free()
+	await _frames()
+
+
+func close_screen() -> void:
+	pass

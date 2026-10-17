@@ -97,7 +97,8 @@ func _input(event: InputEvent) -> void:
 		pointer = (event as InputEventMouseMotion).position
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
 		mode = "touch"
-	elif event is InputEventJoypadButton or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > 0.5:
+	elif event is InputEventJoypadButton and (event as InputEventJoypadButton).pressed \
+			or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > PadNav.STICK_ON:
 		mode = "controller"
 	elif event is InputEventKey or event is InputEventMouseButton:
 		mode = "pointer"

@@ -345,12 +345,12 @@ environment variables as the source build. The output must be fresh and outside 
 
 The app writes `Documents/gallery/manifest.json` and PNGs to its data container. Wait for `complete: true`,
 check `native_ios: true`, and copy that folder before uninstalling the gallery. The 2026-10-16 run completed
-80 representative UI states on each of the iPhone 16 Pro and iPad Pro 11 M4 simulators. These are actual native
+84 representative UI states on each of the iPhone 16 Pro and iPad Pro 11 M4 simulators. These are actual native
 viewport renders using game screen classes with prepared state, **not gameplay E2E or physical-device evidence**.
 Images use the app's logical render resolution; XCTest gameplay images capture the full simulator display.
 Some fixtures intentionally show empty, invalid, loading or error states, and HUD-only fixtures omit the world.
 
-The Obsidian project note `iOS Screenshot Gallery.md` indexes all 198 native images: 160 UI fixture images and
+The Obsidian project note `iOS Screenshot Gallery.md` indexes all 206 native images: 168 UI fixture images and
 38 gameplay images. The paired HTML gallery supports category/evidence filters and original-PNG links; six
 superseded exploration HUD images are archived separately. The current quiet exploration screenshots come from
 the later `quiet-*-19.xcresult` runs. Combat screenshots show the current HUD, not the proposed redesign.
@@ -412,6 +412,11 @@ The iOS export declares optional ExtendedGamepad support. No controller is requi
 retain their prior behavior. See `docs/ui/controller.md` for controls, automated coverage and the physical-device
 matrix. Synthetic input and simulator renders cannot certify Bluetooth pairing or hardware latency.
 
-Controller validation on 2026-10-16: repository `make check` passes 143 tests; the separate desktop controller
+Controller validation on 2026-10-16: repository `make check` passes 144 tests; the separate desktop controller
 regression run passes 66 tests; iOS tooling passes 27 Python tests. The mobile input tests include a controller
 with device ID 7 to exercise reconnect-safe mappings, plus mixed touch/controller and disconnect paths.
+
+The refreshed native gallery adds controller focus/hints, the safe-area controller keyboard, bumper category
+navigation (empty Favourites state) and the disconnect/resume page. These are native UI renders with synthetic
+controller input, not paired-controller hardware tests. The built simulator app's Info.plist was checked for the
+optional ExtendedGamepad profile and controller-support declaration.

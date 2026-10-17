@@ -208,7 +208,8 @@ func _input(event: InputEvent) -> void:
 		clear_held()
 		_use_pad(false, -1)
 	var joy := event is InputEventJoypadButton or event is InputEventJoypadMotion
-	if event is InputEventJoypadButton or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > STICK_ON:
+	if event is InputEventJoypadButton and ((event as InputEventJoypadButton).pressed or not MobileDevice.enabled()) \
+			or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > STICK_ON:
 		_use_pad(true, event.device)
 	elif event is InputEventKey and (event as InputEventKey).pressed or event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
 		_use_pad(false, -1)

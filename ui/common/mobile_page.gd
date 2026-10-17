@@ -105,8 +105,19 @@ func _process(_delta: float) -> void:
 	if not is_visible_in_tree():
 		return
 	if controller_hint != null:
-		controller_hint.visible = PadNav.active()
-		controller_hint.text = PadGlyphs.names("{a}: Choose · {b}: Back · {lb}/{rb}: Tabs · Right stick: Scroll")
+		var nav := PadNav.current
+		var scope := nav.scope_now() if PadNav.active() else null
+		controller_hint.visible = scope != null and (PadNav.inside(self, scope) or PadNav.inside(scope, self))
+		if controller_hint.visible:
+			var hints: Array[String] = []
+			for prompt: Array in PadPrompts.prompts_for(scope, nav.focus_in(scope)):
+				var buttons: Array[String] = []
+				for place in str(prompt[0]).split("+"):
+					buttons.append(PadGlyphs.names("{%s}" % place))
+				hints.append("%s: %s" % ["/".join(buttons), str(prompt[1])])
+			if PadNav.scroller(scope) != null:
+				hints.append("Right stick: Scroll")
+			controller_hint.text = " · ".join(hints)
 	if not is_equal_approx(_keyboard_height, MobileDevice.keyboard_height()):
 		reflow()
 		var focus := get_viewport().gui_get_focus_owner()

@@ -75,6 +75,14 @@ func draw() -> void:
 	var navigation := HBoxContainer.new()
 	navigation.add_theme_constant_override("separation", 8)
 	page.toolbar.add_child(navigation)
+	navigation.set_meta(&"pad_tabs", func(step: int) -> void:
+		remember()
+		var sections: Array[String] = ["Bag", "Equipment", "Stash"]
+		section = sections[posmod(sections.find(section) + step, sections.size())]
+		detail = false
+		filters_open = false
+		party_open = false
+		draw())
 	navigation.add_child(MobileUi.button("Party", func() -> void:
 		remember()
 		party_open = true
