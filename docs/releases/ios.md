@@ -446,3 +446,6 @@ xcrun simctl launch <qa-device-uuid> app.curseofstrahd.uigallery -- --gallery-fi
 ```
 
 This captures short narration, a named speaker, long narration, its scrolled end, and Pause. Use a fresh gallery container or copy only the current manifest's files, since a focused run does not delete historical screenshots. Confirm `complete: true`, `native_ios: true`, the source inventory and all listed image hashes. It is a prepared UI fixture, not a touch playthrough. Do not run it on a device occupied by an active campaign test.
+
+
+The October 17 focused caption gallery completed all five states on iPhone Duo (iOS 27.1) and iPad mini A17 Pro (iOS 27.0), from clean `3d44e2ea1`. All ten native images were reviewed and published with source inventory, complete device manifests and image hashes in Obsidian `iOS Caption Polish - 2026-10-17`. Ten matching offscreen-profile images are separately labeled. Required checks pass 172 tests. The separate gameplay run still has failed native state-observation assertions; this caption gallery is not campaign acceptance or an Apple upload.
