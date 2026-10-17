@@ -158,6 +158,14 @@ func talk_mood(place_mood: String, speaker_id: String) -> String:
 	return ""
 
 
+## The music a cutscene's scene brings to its conversation (art/audio.json "scenes": cutscene id -> mood), or "" to leave
+## the music as it is. Strahd at Ireena's window plays the dread over a lively inn's tunes, a burial in the vineyard the
+## sorrow (owner's music audit, 2026-10-17: docs/assets/music_audit.md).
+func scene_mood(cutscene_id: String) -> String:
+	var m := str((_data.get("scenes", {}) as Dictionary).get(cutscene_id, ""))
+	return m if not entries("music", m).is_empty() else ""
+
+
 ## A region's later theme (art/audio.json "region_turns": the first entry whose StoryConditions `when` holds and whose
 ## mood has music), or "" with no story to ask. It covers every place in the region, kept themes too, so the Wizard of
 ## Wines' winery hall turns cheerful with its vineyard once Yester Hill is broken (owner, 2026-10-13).

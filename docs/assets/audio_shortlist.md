@@ -39,3 +39,25 @@ Larger alternative for the title: Kevin MacLeod's Toccata and Fugue in D Minor (
 
 **Total: about 68 MB** (music 60 MB, effects 8 MB), 30 files from incompetech.com, Wikimedia Commons, opengameart.org
 and kenney.nl.
+
+## Lonely piano, like the castle's Marche funèbre (2026-10-17, for approval)
+
+The owner's favourite in the castle is the Chopin funeral march (Musopen's piano recording); these are more like it.
+Nothing is downloaded. Descriptions are from the composers' or hosts' own notes, not from listening.
+
+| Track | By | Licence | Credit as | Source | Size |
+|---|---|---|---|---|---|
+| Prelude in E minor, Op. 28 No. 4 (Chopin): a sighing melody over slow falling chords; played at Chopin's own funeral; 1:50 | Ivan Ilić | CC BY 3.0 | Prelude in E minor, Op. 28 No. 4 (Chopin), played by Ivan Ilić. CC BY 3.0, via Wikimedia Commons. | Wikimedia Commons: `Ivan_Ilić-Chopin_Prelude_Opus_28_n.4.ogg` | 1.4 MB |
+| Nocturne in C minor, Op. 48 No. 1 (Chopin): grave and march-like, a chorale in the middle; the nearest in mood to the Marche funèbre; 6:19 | Luke Faulkner (Musopen) | CC0 | Nocturne in C minor, Op. 48 No. 1 (Chopin), Luke Faulkner, Musopen. CC0, via Wikimedia Commons. | Wikimedia Commons: `Chopin_Nocturne_in_C_minor_Op._48_no._1_Luke_Faulkner.ogg` | 4.4 MB |
+| Nocturne in C-sharp minor, Op. posth. (Chopin): "Lento con gran espressione", lonely and yearning; 4:12 | Musopen | CC BY 3.0 | Nocturne in C-sharp minor, Op. posth. (Chopin), Musopen. CC BY 3.0, via Wikimedia Commons. | Wikimedia Commons: `Chopin,_Nocturne_in_C-sharp_minor,_Op._Posth.ogg` | 5.3 MB |
+| Nocturne in E minor, Op. 72 No. 1 (Chopin): a slow, rocking lament; 4:33 | Luke Faulkner (Musopen) | Public domain | Nocturne in E minor, Op. 72 No. 1 (Chopin), Luke Faulkner, Musopen. Public domain, via Wikimedia Commons. | Wikimedia Commons: `Chopin_-_Nocturne_No._19_in_E_minor,_Op._72_No._1_(Luke_Faulkner).flac` | 12.5 MB (flac; would ship as ogg) |
+| Moonlight Sonata, first movement (Beethoven): slow, hollow, still; 5:36 | Paul Pitman (Musopen) | Public domain | Sonata No. 14 "Moonlight", I. Adagio sostenuto (Beethoven), Paul Pitman, Musopen. Public domain, via Wikimedia Commons. | Wikimedia Commons: `Ludwig_van_Beethoven_-_sonata_no._14_in_c_sharp_minor_'moonlight',_op._27_no._2_-_i._adagio_sostenuto.ogg` | 10.9 MB |
+| Gymnopédie No. 1 (Satie): "lent et douloureux", a sparse, lonely waltz; 3:04 | Robin Alciatore (Musopen) | Public domain | Gymnopédie No. 1 (Satie), Robin Alciatore, Musopen. Public domain, via Wikimedia Commons. | Wikimedia Commons: `Erik_Satie_-_gymnopedies_-_la_1_ere._lent_et_douloureux.ogg` | 3.7 MB |
+| Wounded: piano and strings, "rain outside the window on the day of your husband's funeral"; 3:21 | Kevin MacLeod | CC BY 4.0 | "Wounded" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 | incompetech.com: `Wounded.mp3` | about 8 MB |
+| Cryptic Sorrow: sad solo piano in uneven meters; 8:00 | Kevin MacLeod | CC BY 4.0 | "Cryptic Sorrow" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 | incompetech.com: `Cryptic Sorrow.mp3` | about 18 MB |
+| Loss: a dirge, very slow, quiet, ornamented; 2:14 | Kevin MacLeod | CC BY 4.0 | "Loss" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 | incompetech.com: `Loss.mp3` | about 5 MB |
+| Quinn's Song: First Night: a theme borrowed from Chopin set among disturbing chords, piano and synths; 5:12 | Kevin MacLeod | CC BY 4.0 | "Quinn's Song: First Night" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 | incompetech.com: `Quinns Song-First Night.mp3` | about 12 MB |
+
+The Musopen and Commons licences are as each Commons file page states them (checked 2026-10-17 through the Commons
+API); Kevin MacLeod's are his site's standard CC BY 4.0, as for his pieces already in the game. Their sizes are
+estimated from each piece's length at his 320 kbit/s.
