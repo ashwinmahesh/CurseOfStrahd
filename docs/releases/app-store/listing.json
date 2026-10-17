@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "locale": "en-US",
+  "description": "The mists have closed behind you. Somewhere above the valley, Castle Ravenloft waits.\n\nLead a party of four into Barovia in Curse of Strahd, a single-player tactical role-playing game of dangerous journeys, uneasy alliances and turn-based battles. Explore haunted villages, candlelit interiors and forgotten ruins as you uncover the secrets of a land ruled by a vampire.\n\nBUILD YOUR PARTY\nChoose from six voiced companions or create a hero of your own. Shape your characters through classes, backgrounds, spells, equipment and level-up choices. You control every party member, in exploration and in combat.\n\nMAKE EVERY TURN COUNT\nPosition your party, weigh the odds and combine attacks, spells and reactions on a tactical grid. Preview your choices before committing, watch for allies caught in area effects, and inspect the rolls and bonuses behind the outcome.\n\nFOLLOW THE CARDS\nTravel from the mist-shrouded roads to Castle Ravenloft through a campaign of conversations, discoveries and consequential decisions. A Tarokka reading changes the path of each adventure, with multiple endings to discover.\n\nEXPLORE AT YOUR OWN PACE\nSpeak with the people of Barovia, investigate strange objects, manage your equipment and follow your journal across the valley. Storybook artwork, expressive character portraits and voiced dialogue bring its inhabitants to life.\n\nPLAY YOUR WAY\nUse touch controls designed for iPhone and iPad, or play with a compatible controller. Keep the world in view with a quiet exploration interface and combat actions that open when you need them. Save locally and import or export adventures through Files. Try party builds and battles in Skirmish mode.\n\nCurse of Strahd is a free, non-commercial, unofficial fan project. It is not affiliated with, endorsed or sponsored by Wizards of the Coast LLC or Hasbro, Inc. Dungeons & Dragons, D&D, Curse of Strahd and Ravenloft are trademarks of Wizards of the Coast LLC. The original adventure's characters, places and story belong to their respective rights holders.\n\nPreview music: \"Dark Gothic Haunted Masquerade\" by ISAo, licensed under OGA-BY 3.0. The App Store preview is a shortened edit of the website trailer.",
+  "promotionalText": "Enter the mists of Barovia. Build a party, uncover its secrets and face tactical battles in a gothic adventure designed for iPhone and iPad.",
+  "marketingUrl": "https://curseofstrahd.app",
+  "supportUrl": "https://github.com/ashwinmahesh/CurseOfStrahd/issues",
+  "assets": [
+    {
+      "file": "assets/trailer-preview-iphone.mp4",
+      "sha256": "3370d4741a6c26a0bea8c364fad4ff432532edfe69cef4d232b50b97aaf331d3",
+      "kind": "video",
+      "title": "Website promo \u2014 iphone App Store preview",
+      "width": 1920,
+      "height": 886,
+      "groups": [
+        "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE"
+      ],
+      "duration": 27,
+      "fps": 30,
+      "has_audio": true,
+      "poster_timecode": "00:00:23:00"
+    },
+    {
+      "file": "assets/trailer-preview-ipad.mp4",
+      "sha256": "1158525f617922ae3e536756f3f895bb4082da5668680a8ce94023a18f26fe6b",
+      "kind": "video",
+      "title": "Website promo \u2014 ipad App Store preview",
+      "width": 1600,
+      "height": 1200,
+      "groups": [
+        "IPAD_13_PROFILE"
+      ],
+      "duration": 27,
+      "fps": 30,
+      "has_audio": true,
+      "poster_timecode": "00:00:23:00"
+    }
+  ],
+  "build_number": "2001"
+}

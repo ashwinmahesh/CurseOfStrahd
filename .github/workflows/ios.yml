@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       operation:
-        description: Build the app or inspect its App Store listing
+        description: Build the app, inspect the listing, or upload reviewed listing assets
         type: choice
-        options: [build, inspect-listing]
+        options: [build, inspect-listing, update-listing]
         default: build
       version:
         description: App version (major.minor.patch)
@@ -39,7 +39,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ios-${{ inputs.operation == 'inspect-listing' && 'listing' || github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
+  group: ios-${{ contains(inputs.operation, 'listing') && 'listing' || github.event_name == 'workflow_dispatch' && 'release' || github.ref }}
   cancel-in-progress: false
 
 env:
@@ -60,7 +60,7 @@ jobs:
       - run: python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
   archive:
     needs: tooling
-    if: github.event_name == 'workflow_dispatch' && inputs.operation != 'inspect-listing'
+    if: github.event_name == 'workflow_dispatch' && !contains(inputs.operation, 'listing')
     runs-on: macos-15
     timeout-minutes: 350
     env:
@@ -272,22 +272,30 @@ jobs:
 
   listing:
     needs: tooling
-    if: github.event_name == 'workflow_dispatch' && inputs.operation == 'inspect-listing'
+    if: github.event_name == 'workflow_dispatch' && contains(inputs.operation, 'listing')
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             tools/release
-      - name: Inspect App Store listing and build icons
+            docs/releases/app-store
+          lfs: true
+      - name: Inspect or update the authorized App Store listing
         env:
           APP_STORE_APP_ID: ${{ vars.APP_STORE_APP_ID }}
           KEY_ID: ${{ secrets.IOS_APPLE_API_KEY_ID }}
           ISSUER_ID: ${{ secrets.APPLE_API_ISSUER_ID }}
           KEY_P8: ${{ secrets.IOS_APPLE_API_KEY_P8 }}
           VERSION: ${{ inputs.version }}
-        run: python3 tools/release/ios_store.py inspect --version "$VERSION" --output "$RUNNER_TEMP/ios-listing"
+          OPERATION: ${{ inputs.operation }}
+        run: |
+          if [ "$OPERATION" = update-listing ]; then
+            python3 tools/release/ios_store.py apply --version "$VERSION" --manifest docs/releases/app-store/listing.json --output "$RUNNER_TEMP/ios-listing"
+          else
+            python3 tools/release/ios_store.py inspect --version "$VERSION" --output "$RUNNER_TEMP/ios-listing"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
