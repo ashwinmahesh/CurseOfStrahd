@@ -622,12 +622,19 @@ func shop_offer(npc_id: String, item_id: String) -> float:
 	var data := Compendium.shared().item_data(item_id)
 	if data.is_empty() or str(data.get("category", "")) == "quest":
 		return -1.0
+	# One piece of a pair is half the pair's price.
+	var pieces := 0.5 if bool(data.get("pair", false)) else float(StoryState.shop_lot(data))
+	# A merchant who sells magic items buys them, at half price, whatever else they buy (Ashwin, 2026-10-17); never a
+	# story item or an artifact, which have no price.
+	if MagicItems.is_magic(data) and Trade.buys_magic(self, npc_id):
+		if float(data.get("cost_gp", 0)) <= 0.0 or bool(data.get("quest_locked", false)):
+			return -1.0
+		var rate := float(shop.get("magic_sell_rate", Trade.MAGIC_SELL_RATE))
+		return Trade.sell_price(self, npc_id, snappedf(float(data["cost_gp"]) * pieces * rate, 0.01))
 	var buys := shop.get("buys", []) as Array
 	# No `buys`: anything; an empty list: nothing (the Order of the Silver Dragon has no use for coin).
 	if (shop.has("buys") and buys.is_empty()) or (not buys.is_empty() and not str(data.get("category", "")) in buys):
 		return -1.0
-	# One piece of a pair is half the pair's price.
-	var pieces := 0.5 if bool(data.get("pair", false)) else float(StoryState.shop_lot(data))
 	return Trade.sell_price(self, npc_id, snappedf(float(data.get("cost_gp", 0)) * pieces * float(shop.get("sell_rate", 0.5)), 0.01))
 
 

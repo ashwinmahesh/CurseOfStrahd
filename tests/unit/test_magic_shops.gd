@@ -1,7 +1,8 @@
 extends TestCase
 ## Magic items for sale (Ashwin, 2026-10-14): every magic item the story doesn't need is sold by a merchant somewhere,
-## at its price in Sane Magical Prices, the guide he picked (data/treasure/magic_prices.json, written into each item's
-## cost_gp by tools/data/magic_prices.py), and a merchant shows an item once the party's milestone level reaches its
+## at its price in Sane Magical Prices, the guide he picked, held inside its rarity's band around the 2024 DMG's value
+## (Ashwin, 2026-10-17: a 60,000 gp Handaxe of Warning was insane; data/treasure/magic_prices.json, written into each
+## item's cost_gp by tools/data/magic_prices.py), and a merchant shows an item once the party's milestone level reaches its
 ## rarity's (data/treasure/levels.json shop_levels). Story items, artifacts and cursed or disguised items are never
 ## sold; what the guide won't price is, priced like the items it doesn't list (Ashwin, 2026-10-15). A merchant's magic
 ## stock (`magic` in their shop) is priced the guide's way whatever they mark their other goods up by, and an item made
@@ -93,8 +94,10 @@ func test_no_story_item_artifact_or_cursed_item_is_sold() -> void:
 	# What the guide won't price is for sale all the same (Ashwin, 2026-10-15).
 	for id: String in ["deck_of_many_things", "luck_blade", "manual_of_bodily_health", "potion_of_giant_strength_storm"]:
 		assert_false(excluded.has(id), "%s is for sale" % id)
-	assert_eq(float(Compendium.shared().item_data("potion_of_giant_strength_storm")["cost_gp"]),
-		float(Compendium.shared().item_data("belt_of_giant_strength_storm")["cost_gp"]) / 10.0, "a tenth of its Belt")
+	# A tenth of the guide's price for its Belt (the guide's rule for consumables), then held in its rarity's band: the
+	# least a very rare or a legendary potion costs.
+	assert_eq(float(Compendium.shared().item_data("potion_of_giant_strength_cloud")["cost_gp"]), 6250.0, "a very rare potion")
+	assert_eq(float(Compendium.shared().item_data("potion_of_giant_strength_storm")["cost_gp"]), 45000.0, "a legendary potion")
 	for npc: String in _shops():
 		for id in _names(_shops()[npc] as Dictionary):
 			var data := Compendium.shared().item_data(id)
@@ -105,9 +108,28 @@ func test_no_story_item_artifact_or_cursed_item_is_sold() -> void:
 			assert_false(data.is_empty(), "%s sells %s, which is a real item" % [npc, id])
 
 
-## The table's own arithmetic, done again here: the guide's row (times a count), its median for the rarity, or the
-## 2024 DMG's price for a common item the guide has nothing like.
-func _expected(item: Dictionary, how: Dictionary, guide: Dictionary) -> float:
+## The table's own arithmetic, done again here: a 2024 book's own price where it prints one, else the guide's (_guide)
+## held inside the band for the item's rarity (half for a consumable, ammunition by the stack of ten).
+func _expected(item: Dictionary, how: Dictionary, t: Dictionary) -> float:
+	var book := t["book"] as Dictionary
+	if how.get("guide", null) is String and book.has(str(how["guide"])) and int(how.get("times", 1)) == 1:
+		return float(book[str(how["guide"])])
+	var ammo := str(item.get("category", "")) == "ammunition"
+	var share := (0.5 if MagicItems.is_consumable(item) or ammo else 1.0) / (float(t["ammunition_stack"]) if ammo else 1.0)
+	return _banded(_guide(item, how, t["guide"] as Dictionary), MagicItems.rarity(item), share, t)
+
+
+## `gp` held inside the band for `rarity` (the table's `bands`), each end times `share`.
+func _banded(gp: float, rarity: String, share: float, t: Dictionary) -> float:
+	var band := (t["bands"] as Dictionary).get(rarity, []) as Array
+	if band.is_empty():
+		return gp
+	return clampf(gp, float(band[0]) * share, float(band[1]) * share)
+
+
+## The guide's price before the bands: its row (times a count), its median for the rarity, or the 2024 DMG's price
+## for a common item the guide has nothing like.
+func _guide(item: Dictionary, how: Dictionary, guide: Dictionary) -> float:
 	if how.has("gp"):
 		return float(how["gp"])
 	if how.has("guide") or how.has("like"):
@@ -140,13 +162,20 @@ func test_prices_are_the_guides() -> void:
 	for id: String in t["items"]:
 		var item := Compendium.shared().item_data(id)
 		assert_false(item.is_empty(), id)
-		assert_eq(float(item.get("cost_gp", -1)), snappedf(_expected(item, t["items"][id] as Dictionary, guide), 0.01), "%s's price" % id)
+		assert_eq(float(item.get("cost_gp", -1)), snappedf(_expected(item, t["items"][id] as Dictionary, t), 0.01), "%s's price" % id)
 	for lvl in 10:
-		assert_eq(MagicItems.SCROLL_PRICE[lvl], float((t["scrolls"] as Array)[lvl]), "a level %d scroll" % lvl)
+		var want := float((t["book"] as Dictionary).get("Spell Scroll Level %d" % lvl,
+			_banded(float((t["scrolls"] as Array)[lvl]), MagicItems.SCROLL_RARITY[lvl], 0.5, t)))
+		assert_eq(MagicItems.SCROLL_PRICE[lvl], want, "a level %d scroll" % lvl)
+	assert_eq(float(Compendium.shared().item_data("spell_scroll__fire_bolt")["cost_gp"]), 30.0, "a cantrip, the PHB's price")
 	assert_eq(float(Compendium.shared().item_data("spell_scroll__fireball")["cost_gp"]), 200.0, "level 3")
-	assert_eq(float(Compendium.shared().item_data("spell_scroll__meteor_swarm")["cost_gp"]), 10240.0, "level 9")
+	assert_eq(float(Compendium.shared().item_data("spell_scroll__meteor_swarm")["cost_gp"]), 45000.0, "level 9, legendary")
 	# Spot checks against the PDF: an item the guide lists, one made on a base (its cost added), one by count.
-	assert_eq(float(Compendium.shared().item_data("alchemy_jug")["cost_gp"]), 6000.0)
+	assert_eq(float(Compendium.shared().item_data("ring_of_protection")["cost_gp"]), 3500.0)
+	# And the bands: the guide's 60,000 gp Weapon of Warning is an uncommon item's 1,250, its base's cost on top;
+	# its 24,000 gp Vorpal Sword, a legendary item's 90,000.
+	assert_eq(float(Compendium.shared().item_data("weapon_of_warning__handaxe")["cost_gp"]), 1250.0 + 5.0, "a Handaxe of Warning")
+	assert_eq(float(Compendium.shared().item_data("vorpal_sword__longsword")["cost_gp"]), 90000.0 + 15.0)
 	assert_eq(float(Compendium.shared().item_data("flame_tongue__rapier")["cost_gp"]), 5000.0 + 25.0, "a Flame Tongue Rapier")
 	assert_eq(float(Compendium.shared().item_data("restorative_ointment")["cost_gp"]), 420.0, "3.5 doses at 120 gp")
 	assert_eq(float(Compendium.shared().item_data("weapon_plus_1__longsword")["cost_gp"]), 1015.0)
@@ -187,7 +216,7 @@ func test_magic_is_priced_by_the_guide_whatever_the_markup() -> void:
 	for w in wares:
 		by[str(w["id"])] = w
 	assert_eq(float((by["rope"] as Dictionary)["price"]), Trade.whole_gp(1.0 * 3.0), "mundane goods at the markup")
-	assert_eq(float((by["bag_of_holding"] as Dictionary)["price"]), 4000.0, "the guide's Bag of Holding, not three times it")
+	assert_eq(float((by["bag_of_holding"] as Dictionary)["price"]), 1250.0, "the Bag of Holding's price, not three times it")
 	assert_eq(int((by["bag_of_holding"] as Dictionary)["qty"]), 1, "one of anything lasting")
 	assert_eq(int((by["potion_of_climbing"] as Dictionary)["qty"]), 3, "three of a potion")
 	assert_false(by.has("ring_of_protection"), "a rare ring waits for level 5")
@@ -248,6 +277,11 @@ func test_the_merchants_open_as_the_story_lets_them() -> void:
 ## and sell high (at the best terms anywhere: friendly and haggled).
 func test_nothing_bought_sells_back_for_more() -> void:
 	var st := _party(11)
+	# Every merchant who sells magic items buys them too (Ashwin, 2026-10-17), and these buy some besides.
+	var buyers: Array[String] = ["vadoma", "urwin_martikov", "bildrath"]
+	for npc: String in _shops():
+		if not ((_shops()[npc] as Dictionary).get("magic", []) as Array).is_empty():
+			buyers.append(npc)
 	st.set_flag("keepers_allied")
 	for npc: String in _shops():
 		st.attitudes[npc] = "friendly"
@@ -260,7 +294,36 @@ func test_nothing_bought_sells_back_for_more() -> void:
 				continue
 			var picks: Array = w["bases"] if w.has("bases") else [w]
 			for p: Variant in picks:
-				for buyer: String in ["vadoma", "rictavio", "urwin_martikov", "stanimir", "father_lucian", "kasha_varo"]:
+				for buyer: String in buyers:
 					var offer := st.shop_offer(buyer, str((p as Dictionary)["id"]))
 					assert_true(offer <= float((p as Dictionary)["price"]), "%s sells %s for %s gp, %s pays %s" % [seller,
 						(p as Dictionary)["id"], (p as Dictionary)["price"], buyer, offer])
+
+
+## A merchant who sells magic items buys them too (Ashwin, 2026-10-17), at half price, whatever else they buy: Xaver,
+## who has no use for rope, and Gunther, who otherwise buys arms and gear. Never a story item or an artifact; never a
+## merchant with no magic stock, or one whose magic stock isn't open yet.
+func test_magic_sellers_buy_magic_items() -> void:
+	var st := _party(5)
+	var bag := float(Compendium.shared().item_data("bag_of_holding")["cost_gp"])
+	assert_eq(st.shop_offer("library_xaver", "bag_of_holding"), Trade.sell_price(st, "library_xaver", bag * Trade.MAGIC_SELL_RATE), "Xaver buys a Bag of Holding")
+	assert_eq(st.shop_offer("library_xaver", "rope"), -1.0, "but still no rope")
+	assert_eq(st.shop_offer("gunther_arasek", "cloak_of_protection"),
+		Trade.sell_price(st, "gunther_arasek", float(Compendium.shared().item_data("cloak_of_protection")["cost_gp"]) * 0.5),
+		"Gunther buys a cloak, being a magic seller")
+	assert_eq(st.shop_offer("gunther_arasek", "fine_clothes"), -1.0, "and still no clothes")
+	var flame := float(Compendium.shared().item_data("flame_tongue__longsword")["cost_gp"])
+	assert_eq(st.shop_offer("gunther_arasek", "flame_tongue__longsword"), Trade.sell_price(st, "gunther_arasek", flame * 0.5), "a magic sword at half, not his arms rate")
+	for story: String in ["sunsword", "holy_symbol_of_ravenkind", "tome_of_strahd"]:
+		assert_eq(st.shop_offer("library_xaver", story), -1.0, "never %s" % story)
+	assert_eq(st.shop_offer("bildrath", "cloak_of_protection"), -1.0, "Bildrath sells no magic, so he buys none")
+	assert_eq(st.shop_offer("urwin_martikov", "cloak_of_protection"), -1.0, "the Keepers' stores are shut to strangers")
+	st.set_flag("keepers_allied")
+	assert_true(st.shop_offer("urwin_martikov", "cloak_of_protection") > 0.0, "and open to their allies")
+	# Selling it: the gold comes in, the cloak goes.
+	var ch := st.party[0]
+	ch.add_item("cloak_of_protection", 1)
+	var gold := st.gold
+	assert_eq(st.shop_sell("library_xaver", "cloak_of_protection", ch), "")
+	assert_eq(st.gold, gold + st.shop_offer("library_xaver", "cloak_of_protection"))
+	assert_false(ch.inventory.any(func(e: Dictionary) -> bool: return str(e["id"]) == "cloak_of_protection"), "sold")
