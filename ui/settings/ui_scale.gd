@@ -53,4 +53,4 @@ static func apply() -> void:
 
 ## A reading text's font size at the player's text size.
 static func text(size: int) -> int:
-	return roundi(size * GameSettings.text_scale())
+	return roundi(maxf(12.0, size * 0.88) * GameSettings.text_scale()) if MobileDevice.enabled() else roundi(size * GameSettings.text_scale())

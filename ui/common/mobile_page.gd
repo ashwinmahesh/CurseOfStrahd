@@ -7,6 +7,10 @@ extends PanelContainer
 var side_sheet := false
 ## Optional left/right art gutters, used by mobile conversations only.
 var side_gutters := Vector2.ZERO
+## Optional bottom conversation panel; zero keeps the normal page.
+var bottom_height := 0.0
+var centered_width := 0.0
+var centered_height := 0.0
 var body: VBoxContainer
 var scroll: ScrollContainer
 var heading: Label
@@ -36,6 +40,7 @@ static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -
 	back.name = "MobileBack"
 	bar.add_child(back)
 	page.heading = UiKit.title(title)
+	page.heading.add_theme_font_size_override("font_size", UiScale.text(24))
 	page.heading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	page.heading.clip_text = true
 	page.heading.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -56,7 +61,7 @@ static func build(layer: CanvasLayer, title: String, close: Callable = cancel) -
 	column.add_child(page.scroll)
 	page.body = VBoxContainer.new()
 	page.body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	page.body.add_theme_constant_override("separation", 10)
+	page.body.add_theme_constant_override("separation", 6)
 	page.scroll.add_child(page.body)
 	page.controller_hint = UiKit.label("", 14, "parchment")
 	page.controller_hint.clip_text = true
@@ -105,6 +110,18 @@ func reflow() -> void:
 		var width := minf(520.0, rect.size.x * 0.60)
 		rect.position.x = rect.end.x - width
 		rect.size.x = width
+	if centered_width > 0:
+		var width := minf(centered_width, rect.size.x)
+		rect.position.x += (rect.size.x - width) / 2.0
+		rect.size.x = width
+	if centered_height > 0:
+		var height := minf(centered_height, rect.size.y)
+		rect.position.y += (rect.size.y - height) / 2.0
+		rect.size.y = height
+	if bottom_height > 0:
+		var height := minf(bottom_height, rect.size.y)
+		rect.position.y = rect.end.y - height
+		rect.size.y = height
 	position = rect.position
 	size = rect.size
 	custom_minimum_size = Vector2.ZERO

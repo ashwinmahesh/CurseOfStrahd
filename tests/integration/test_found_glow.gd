@@ -159,3 +159,30 @@ func test_a_fight_puts_the_glow_away_and_it_comes_back() -> void:
 	_view().in_combat = false
 	await _wait(FoundGlow.CHECK_EVERY * 2.0)
 	assert_false(_outlines(stone).is_empty(), "after the fight it glows again")
+
+
+func test_mobile_world_tap_outlines_objects_and_people_without_changing_desktop() -> void:
+	var previous := MobileDevice.profile
+	var view := _view()
+	var prop := view.prop_nodes["old_satchel"] as Node3D
+	TouchOutline.at(view, Vector2i(4, 1))
+	assert_true(prop.get_node_or_null("TouchOutline") == null, "desktop does not get tap feedback")
+	MobileDevice.profile = "iphone"
+	assert_true(bool(root.call("touch_ready")))
+	view.rig.snap_to_target()
+	var at := view.rig.camera.unproject_position(view.board.cell_center(Vector2i(4, 1)) + Vector3(0, 0.25, 0))
+	assert_eq(view.pick_cell(view.rig.camera, at), Vector2i(4, 1), "tap hits the visible satchel")
+	root.call("touch_tap", at, true)
+	assert_true(prop.get_node_or_null("TouchOutline") != null, "real world tap routes to the object outline")
+	(root.get("menu") as ContextMenu).hide()
+	var token := view.tokens[view.leader().id] as CombatToken
+	at = view.rig.camera.unproject_position(view.board.cell_center(view.leader().cell))
+	root.call("touch_tap", at, true)
+	assert_true(token.body.get_node_or_null("TouchOutline") != null, "party members also acknowledge touch")
+	(root.get("menu") as ContextMenu).hide()
+	await _wait(0.55)
+	assert_true(prop.get_node_or_null("TouchOutline") == null)
+	assert_true(token.body.get_node_or_null("TouchOutline") == null)
+	TouchOutline.at(view, Vector2i(7, 2))
+	assert_true(view.find_children("TouchOutline", "", true, false).is_empty(), "bare ground does not glow")
+	MobileDevice.profile = previous

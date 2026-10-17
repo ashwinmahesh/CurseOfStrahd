@@ -387,7 +387,31 @@ centroid pan remain available, closely meeting fingers suppress unstable angular
 cannot rotate the world, and releasing a gesture never activates a square. Quarter-turn keyboard/controller
 commands remain independent. Raw viewport tests exercise both directions on phone and tablet layouts.
 
-Mobile conversations retain party and NPC busts in left/right safe-area gutters, with readable, scrollable
-dialogue and choices in the center. Existing lighting, moods and facing apply; missing busts use portrait art.
+Mobile conversations retain nearly full-height party and NPC busts at left/right, behind a smaller bottom
+reading panel with a speaker portrait, scrollable dialogue and choices. Existing lighting, moods and facing apply; missing busts use portrait art.
 `mobile_dialogue_capture.tscn` captures NPC, party, Narrator, choices and history on phone/tablet desktop mobile
 profiles. These new changes are not included in Apple build 1201 and have not yet been qualified natively.
+
+## Mobile UI polish and external storage — 2026-10-17
+
+Mobile-only typography is smaller while touch targets stay 44–48 points. Loot retains the desktop-style
+recipient, icon/name/weight/action rows, coins and transfer controls. Inventory, shops, spell choices and
+combat actions retain their art. Pause and battle menus use compact command grids. Hold Reveal beside Menu
+to show eligible interactable labels; release, drag-out and interruptions clear it. Tapping an interactable
+outlines its model or animated sprite orange for 0.5 seconds, and repeated taps renew the timer.
+
+The offscreen audit covers 84 prepared states on each mobile profile (168 renders). These are layout/art
+checks, not native simulator or gameplay E2E evidence. Latest screenshots and review notes are in the vault's
+`iOS Mobile UI Audit.md` and paired HTML gallery. Apple build 1201 predates this polish.
+
+Local iOS work now lives in the existing APFS sparsebundle
+`/Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle`, mounted at `/Volumes/StrahdLanes`:
+
+- Worktree: `/Volumes/StrahdLanes/CurseOfStrahdGame-ios-support`
+- Build outputs and toolchains: `/Volumes/StrahdLanes/strahd-builds`
+
+Mount with `hdiutil attach /Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle` before using these paths.
+The two former Documents paths are compatibility symlinks. The worktree is locked against pruning while
+unmounted. Default native/engine caches follow the checkout's sibling `strahd-builds` directory; explicit
+`IOS_NATIVE_CACHE` and `IOS_ENGINE_CACHE` overrides still work. Virtualenv commands use their interpreter
+so moving the cache does not leave executable shebangs pointing at its former location.

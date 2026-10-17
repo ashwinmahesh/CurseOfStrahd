@@ -226,7 +226,10 @@ func _mobile_draw() -> void:
 	if recipient.dead:
 		_frame.add_child(MobileUi.text("Dead", "rose"))
 	for line in Services.offered(st, npc_id):
-		_frame.add_child(MobileUi.text(str(line["name"]) + " · " + coins(Services.cost(line)), "gilt_light"))
+		var title := HBoxContainer.new()
+		UiParts.add_icon(title, "spell" if line.has("spell") else "item", str(line.get("spell", "bedroll")), 28)
+		title.add_child(MobileUi.text(str(line["name"]) + " · " + coins(Services.cost(line)), "gilt_light"))
+		_frame.add_child(title)
 		_frame.add_child(MobileUi.text(str(line["text"])))
 		var why := Services.why_not(st, line, st.party[index])
 		if why != "":
@@ -244,6 +247,7 @@ func _mobile_confirm(line: Dictionary) -> void:
 	add_child(_mobile_review)
 	var body := MobilePage.build(_mobile_review, str(line["name"]), _mobile_cancel)
 	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	UiParts.add_icon(body, "spell" if line.has("spell") else "item", str(line.get("spell", "bedroll")), 36)
 	body.add_child(MobileUi.text("For the party" if str(line["for"]) == "party" else "For " + recipient.name))
 	body.add_child(MobileUi.text(str(line["text"])))
 	body.add_child(MobileUi.button("Buy for " + coins(Services.cost(line)), func() -> void:

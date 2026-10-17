@@ -14,9 +14,9 @@ portrait in the box stays as it was, so anyone without a bust still has a face. 
 
 ## iPhone and iPad conversations
 
-Mobile dialogue keeps both participants visible in reserved safe-area columns beside the reading panel:
-the party speaker on the left, the NPC on the right. Dialogue, choices and Continue occupy the center and
-scroll independently of the artwork. Speaker lighting, moods, facing and Narrator dimming use the same
+Mobile dialogue keeps the party speaker on the left and the NPC on the right. Busts fill 96% of the
+safe-area height behind a compact bottom reading panel, with the speaker portrait retained in its header.
+Short lines shrink the panel; long text and choices scroll. The overworld stays visible above the panel. Speaker lighting, moods, facing and Narrator dimming use the same
 presentation as desktop. When a character lacks bust art, their portrait fills that side instead. History
 opens above the conversation; returning restores the same participants. The mobile composition leaves the
 desktop dialogue layout intact. Offscreen phone/tablet evidence lives in the Obsidian iOS support note; native

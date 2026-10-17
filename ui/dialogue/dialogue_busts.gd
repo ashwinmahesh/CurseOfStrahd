@@ -25,7 +25,7 @@ static var _facing: Dictionary = {}
 ## False draws every bust as it was drawn, never mirrored: the "before" picture in captures (tools/capture/ui_capture.gd).
 static var mirror := true
 
-## Reserved width per side on mobile. Zero retains the desktop composition.
+## Mobile composition flag/gutter. Mobile art fills almost the safe height behind the lower dialogue panel.
 var mobile_gutter := 0.0
 
 var left: TextureRect
@@ -195,7 +195,7 @@ func _side(on_left: bool) -> TextureRect:
 func _layout() -> void:
 	var h := size.y * HEIGHT_SHARE
 	if mobile_gutter > 0:
-		h = minf(h, maxf(1, mobile_gutter - 12) / 0.66)
+		h = size.y * 0.96
 	var w := h * 0.66
 	for pair: Array in [[left, true], [right, false]]:
 		var t := pair[0] as TextureRect

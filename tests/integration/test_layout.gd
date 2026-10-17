@@ -1428,7 +1428,7 @@ func test_mobile_largest_text_and_interface_keep_navigation_and_details_reachabl
 	assert_true(issues.is_empty(), "largest sizes dialogue with busts: " + "\n".join(issues))
 	for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
 		assert_true(bust.is_visible_in_tree())
-		assert_false(bust.get_global_rect().intersects(dialogue._mobile_page.get_global_rect()))
+		assert_true(bust.size.y >= dialogue.busts.size.y * 0.95)
 	dialogue.queue_free()
 	await _frames(2)
 	GameSettings.set_ui_scale(old_ui)
@@ -1531,8 +1531,12 @@ func test_mobile_exploration_menu_settings_and_conversation_fit() -> void:
 		var issues := LayoutCheck.problems(dialogue, MobileDevice.safe_rect())
 		assert_true(issues.is_empty(), "%s dialogue: %s" % [size_, "\n".join(issues)])
 		assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree(), "both conversation busts remain visible")
+		assert_true(dialogue.busts.get_index() < dialogue._mobile_page.get_index(), "large art stays behind readable dialogue")
+		assert_true(dialogue._portrait.is_visible_in_tree() and dialogue._portrait.texture != null, "speaker portrait remains in the panel")
 		for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
-			assert_false(bust.get_global_rect().intersects(dialogue._mobile_page.get_global_rect()), "art does not cover text, choices or Continue")
+			assert_true(bust.size.y >= dialogue.busts.size.y * 0.95, "mobile busts almost fill the safe height")
+			assert_true(dialogue._mobile_page.position.y > bust.global_position.y + bust.size.y * 0.35, "faces stay above the reading panel")
+		assert_true(dialogue._mobile_page.size.y < MobileDevice.safe_rect().size.y * 0.65, "world remains visible above the lower panel")
 		dialogue.queue_free()
 		await _frames(2)
 	MobileDevice.test_size = Vector2.ZERO
@@ -1698,6 +1702,9 @@ func test_mobile_loot_services_preparation_party_roster_and_wait_fit() -> void:
 		add_child(loot)
 		loot.show_loot(state, "mobile_test", [{"id": "potion_of_healing", "qty": 3}, {"id": "longsword", "qty": 2}], 300, null)
 		await _mobile_check(loot, "loot")
+		for row: Control in loot._list.get_children():
+			assert_true(row is HBoxContainer, "loot retains desktop horizontal item rows")
+			assert_true(row.size.y <= 100, "loot rows stay compact even with large text")
 		loot._mobile_inspect(Compendium.shared().item_data("potion_of_healing"))
 		await _mobile_check(loot._mobile_detail, "loot details")
 		loot.queue_free()

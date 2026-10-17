@@ -6,6 +6,7 @@ var hud: ExploreHud
 
 
 func _ready() -> void:
+	InputActions.ensure()
 	var state := StoryState.new()
 	for id: String in ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]:
 		state.party.append(Pregens.build(id, 1))

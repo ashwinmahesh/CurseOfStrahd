@@ -492,7 +492,8 @@ func _ability_step() -> void:
 		if method == str(m[0]):
 			UiParts.light_up(mb)
 		row.add_child(mb)
-	row.add_child(UiParts.gap())
+	if not MobileDevice.enabled():
+		row.add_child(UiParts.gap())
 	row.add_child(UiKit.button("Recommended", func() -> void:
 		b().apply_recommended_scores()
 		_changed(), 15))

@@ -214,7 +214,7 @@ func _bag(body: Container) -> void:
 	search.text = screen.search
 	search.custom_minimum_size.y = 48
 	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	search.add_theme_font_size_override("font_size", 18)
+	search.add_theme_font_size_override("font_size", UiScale.text(18))
 	search.clear_button_enabled = true
 	search.text_changed.connect(func(value: String) -> void:
 		screen.search = value
@@ -247,6 +247,8 @@ func _stash(body: Container) -> void:
 		var take := MobileUi.button("Take %s ×%d" % [MagicItems.display_name(data, entry), int(entry.get("qty", 1))], func() -> void:
 			screen._take_from_stash(entry, screen._ch())
 			draw())
+		UiParts.icon_on_button(take, "item", str(data.get("id", entry["id"])), 28)
+		take.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		take.disabled = not allowed
 		body.add_child(take)
 
@@ -273,8 +275,13 @@ func item_line(ch: Character, entry: Dictionary, data: Dictionary) -> Control:
 		marks.append("Quest")
 	if str(entry["id"]) in ch.attuned:
 		marks.append("Attuned")
-	marks.append("%s lb" % str(data.get("weight_lb", 0)))
-	column.add_child(MobileUi.text(" · ".join(marks), "parchment"))
+	if not marks.is_empty():
+		var note := MobileUi.text(" · ".join(marks), "parchment")
+		note.add_theme_font_size_override("font_size", UiScale.text(15))
+		column.add_child(note)
+	var weight := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), UiScale.text(15), "parchment")
+	weight.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(weight)
 	return row
 
 
@@ -298,7 +305,7 @@ func fit_details() -> void:
 			label.custom_minimum_size.x = 0
 			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			var base := int(label.get_meta(&"mobile_base_font", maxi(17, label.get_theme_font_size("font_size"))))
+			var base := int(label.get_meta(&"mobile_base_font", clampi(label.get_theme_font_size("font_size"), 14, 24)))
 			label.set_meta(&"mobile_base_font", base)
 			label.add_theme_font_size_override("font_size", UiScale.text(base))
 		elif node is Button:

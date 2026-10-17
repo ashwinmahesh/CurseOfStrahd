@@ -201,7 +201,9 @@ func _ready() -> void:
 	_spread.alignment = BoxContainer.ALIGNMENT_CENTER
 	add_child(_spread)
 	if MobileDevice.enabled():
-		var body := MobilePage.build(self, "Conversation", toggle_history)
+		dim.color.a = 0.12
+		var body := MobilePage.build(self, "", toggle_history)
+		(get_child(get_child_count() - 2) as ColorRect).color.a = 0.0
 		_mobile_page = body.get_parent().get_parent().get_parent() as MobilePage
 		_mobile_page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 		(_mobile_page.find_child("MobileBack", true, false) as Button).text = "History"
@@ -209,17 +211,28 @@ func _ready() -> void:
 		hidden.hide()
 		add_child(hidden)
 		_panel.reparent(hidden)
-		# Busts sit above the page dimmer in reserved gutters, beside the reading column.
-		move_child(busts, _mobile_page.get_index())
+		# Tall busts sit above the dimmer and behind the compact bottom reading panel.
+		move_child(busts, _mobile_page.get_index() - 1)
 		busts.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 		get_viewport().size_changed.connect(_mobile_layout)
 		_mobile_layout()
-		_name.reparent(body)
+		var bar := _mobile_page.heading.get_parent()
+		_mobile_page.heading.hide()
+		_portrait.reparent(bar)
+		_portrait.custom_minimum_size = Vector2(44, 44)
+		_portrait.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		_portrait.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		_name.reparent(bar)
+		_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_name.add_theme_font_size_override("font_size", UiScale.text(18))
 		_name.custom_minimum_size.x = 0
 		_text.reparent(body)
-		_text.custom_minimum_size.x = 0
+		_text.custom_minimum_size = Vector2.ZERO
+		_text.add_theme_font_size_override("normal_font_size", UiScale.text(17))
+		_text.add_theme_font_size_override("italics_font_size", UiScale.text(17))
+		body.add_theme_constant_override("separation", 6)
 		_options_scroll.reparent(body)
-		_continue_row.reparent(_mobile_page.toolbar)
+		_continue_row.reparent(bar)
 		_hint.hide()
 		_speaker_button.reparent(body)
 		MobileUi.fit(_continue_row)
@@ -234,6 +247,8 @@ func _ready() -> void:
 		move_child(_history_panel, get_child_count() - 1)
 		MobileUi.fit(_history_panel)
 		_history_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		body.minimum_size_changed.connect(func() -> void: _mobile_layout.call_deferred())
+		_mobile_layout.call_deferred()
 
 
 ## The scroll-back panel over the scene, above the box: every line of this conversation so far, newest at the bottom.
@@ -277,8 +292,10 @@ func _mobile_layout() -> void:
 	if _mobile_page == null:
 		return
 	var safe := MobileDevice.safe_rect().grow(-4)
-	var gutter := clampf(safe.size.x * 0.19, 80, 240)
-	_mobile_page.side_gutters = Vector2(gutter, gutter)
+	var gutter := safe.size.y * 0.96 * 0.66
+	_mobile_page.centered_width = minf(720, safe.size.x * 0.76)
+	var content_height := _mobile_page.body.get_combined_minimum_size().y + 88
+	_mobile_page.bottom_height = minf(safe.size.y * 0.58, maxf(124, content_height))
 	_mobile_page.reflow()
 	busts.mobile_gutter = gutter
 	busts.position = safe.position
@@ -513,7 +530,7 @@ func _show_options(options: Array) -> void:
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		# A long option wraps onto more lines inside the box instead of widening it past the screen's edge.
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		b.add_theme_font_size_override("font_size", UiScale.text(17))
+		b.add_theme_font_size_override("font_size", UiScale.text(16 if MobileDevice.enabled() else 17))
 		var label := str(opt["label"])
 		var check := opt["check"] as Dictionary
 		var extra := ""

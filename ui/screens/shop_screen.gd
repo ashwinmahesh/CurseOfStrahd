@@ -585,9 +585,12 @@ func _draw_mobile() -> void:
 			if not ware_in_filter(ware_filter, ware):
 				continue
 			_ware_ids.append(str(ware["id"]))
-			_frame.add_child(MobileUi.button("%s · %s%s gp" % [ware["name"], "from " if ware.has("bases") else "", _money(float(ware["price"]))], func() -> void:
+			var buy := MobileUi.button("%s · %s%s gp" % [ware["name"], "from " if ware.has("bases") else "", _money(float(ware["price"]))], func() -> void:
 				mobile_item = ware
-				_draw()))
+				_draw())
+			UiParts.icon_on_button(buy, "item", str(ware["id"]), 28)
+			buy.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			_frame.add_child(buy)
 	else:
 		_sell_ids.clear()
 		for item in ch.inventory:
@@ -595,6 +598,9 @@ func _draw_mobile() -> void:
 			if int(item["qty"]) <= 0:
 				continue
 			_sell_ids.append(id)
-			_frame.add_child(MobileUi.button("%s ×%d" % [Compendium.shared().display_name("items", id), item["qty"]], func() -> void:
+			var sell := MobileUi.button("%s ×%d" % [Compendium.shared().display_name("items", id), item["qty"]], func() -> void:
 				mobile_item = item
-				_draw()))
+				_draw())
+			UiParts.icon_on_button(sell, "item", id, 28)
+			sell.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			_frame.add_child(sell)

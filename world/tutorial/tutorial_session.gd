@@ -1025,6 +1025,7 @@ func touch_tap(at: Vector2, context: bool) -> void:
 		return
 	var target := _practice_cell_rect(EXPLORE_TARGET) if lesson_id() == "explore" else _exploration_anchor()
 	if target.has_point(at):
+		TouchOutline.at(location, location.pick_cell(location.rig.camera, at))
 		_guided_world_action()
 
 

@@ -93,7 +93,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	add_child(conversation)
 	conversation.busts.party_speaker("godrick_pendlebrook")
 	conversation.busts.line({"portrait": "ireena", "party": false, "narrator": false}, "godrick_pendlebrook")
-	conversation._text.text = "The innkeeper watches you for a moment, then nods toward the fire. Outside, the mist presses against the windows."
+	conversation._show({"kind": "line", "name": "Ireena", "speaker_id": "ireena", "portrait": "ireena", "party": false, "narrator": false,
+		"text": "Outside, the mist presses against the windows. We should leave before nightfall."})
 	conversation._show({"kind": "options", "options": [
 		{"text": "Ask about the strange mist around the village.", "label": "", "check": {}},
 		{"text": "Offer to help the villagers.", "label": "Persuasion", "check": {"who": "Godrick", "bonus": 5, "chance": 0.65}},

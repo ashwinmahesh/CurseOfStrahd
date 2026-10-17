@@ -149,7 +149,9 @@ func fill() -> void:
 		if not bool(action.get("legal", false)):
 			caption += "\n" + str(action.get("reason", "Unavailable"))
 		var card := MobileUi.button(caption, func() -> void: inspect(action))
-		card.custom_minimum_size.y = 64
+		UiParts.texture_on_button(card, UiParts.action_icon(action), 32)
+		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		card.custom_minimum_size.y = 48
 		card.set_meta(&"action_id", str(action["id"]))
 		_list.add_child(card)
 	if _list.get_child_count() == 0:
@@ -173,7 +175,16 @@ func review() -> void:
 	MobileUi.clear(page.body)
 	page.scroll.scroll_vertical = 0
 	var details := catalog.details(actor, selected)
-	page.body.add_child(MobileUi.text(str(details.get("title", selected.get("label", ""))), "gilt_light"))
+	var title := HBoxContainer.new()
+	var icon := TextureRect.new()
+	icon.texture = UiParts.action_icon(selected)
+	icon.custom_minimum_size = Vector2(36, 36)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.visible = icon.texture != null
+	title.add_child(icon)
+	title.add_child(MobileUi.text(str(details.get("title", selected.get("label", ""))), "gilt_light"))
+	page.body.add_child(title)
 	for line: Variant in details.get("lines", []):
 		page.body.add_child(MobileUi.text(str(line)))
 	var choices := selected.get("choices", []) as Array

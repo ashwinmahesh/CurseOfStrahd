@@ -545,6 +545,7 @@ func _fit_where(text: String) -> void:
 func show_location(view: LocationView) -> void:
 	if mobile != null:
 		minimap.show_location(view)
+		thing_labels.show_location(view)
 		minimap.tooltip_text = "Minimap · tap a point to move"
 		return
 	minimap.show_location(view)

@@ -1,9 +1,10 @@
 class_name MobileExploreHud
 extends Control
-## Quiet exploration: minimap and Menu on phones, with two small shortcuts on regular tablets.
+## Quiet exploration: minimap, Reveal and Menu on phones, with two small shortcuts on regular tablets.
 
 var hud: ExploreHud
 var shortcuts: HBoxContainer
+var reveal_button: RevealButton
 var menu_button: Button
 var party_button: Button
 var inventory_button: Button
@@ -18,20 +19,56 @@ var kind := ""
 func setup(owner_: ExploreHud) -> void:
 	hud = owner_
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hud.thing_labels = ThingLabels.new()
+	add_child(hud.thing_labels)
 	hud.minimap = Minimap.new()
 	add_child(hud.minimap)
 	shortcuts = HBoxContainer.new()
 	shortcuts.add_theme_constant_override("separation", 6)
 	add_child(shortcuts)
+	reveal_button = RevealButton.new()
+	reveal_button.text = "Reveal"
+	reveal_button.tooltip_text = "Hold to show interactable names"
+	MobileUi.fit(reveal_button)
 	menu_button = MobileUi.button("Menu", menu)
 	party_button = MobileUi.button("Party", party)
 	inventory_button = MobileUi.button("Inventory", func() -> void: hud.command.emit("inventory"))
-	for button: Button in [party_button, inventory_button, menu_button]:
+	for button: Button in [party_button, inventory_button, reveal_button, menu_button]:
 		button.autowrap_mode = TextServer.AUTOWRAP_OFF
 		button.custom_minimum_size.x = 96
 		shortcuts.add_child(button)
 	get_viewport().size_changed.connect(reflow)
 	reflow()
+
+
+func _process(_delta: float) -> void:
+	if reveal_button.held and (not is_visible_in_tree() or UiFeel.touch.world_target() == null):
+		reveal_button.touch_surface_cancel()
+	hud.thing_labels.mobile_held = reveal_button.held and is_visible_in_tree()
+
+
+class RevealButton extends Button:
+	var held := false
+	var finger := -1
+
+	func touch_surface_press(index: int, _at: Vector2) -> void:
+		if finger < 0:
+			finger = index
+			held = true
+			set_pressed_no_signal(true)
+
+	func touch_surface_drag(index: int, at: Vector2) -> void:
+		if index == finger and not get_global_rect().has_point(at):
+			touch_surface_cancel()
+
+	func touch_surface_release(index: int, _at: Vector2, _canceled: bool) -> void:
+		if index == finger:
+			touch_surface_cancel()
+
+	func touch_surface_cancel() -> void:
+		finger = -1
+		held = false
+		set_pressed_no_signal(false)
 
 
 func reflow() -> void:

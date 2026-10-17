@@ -948,12 +948,21 @@ func _mobile_clear(title: String) -> void:
 func _mobile_menu() -> void:
 	_mobile_clear("Paused")
 	_on_settings = false
-	_mobile_body.add_child(MobileUi.button("Resume", func() -> void: root.call("close_screen")))
-	_mobile_body.add_child(MobileUi.button("Settings", _show_settings))
+	var actions := GridContainer.new()
+	actions.columns = 2
+	actions.add_theme_constant_override("h_separation", 8)
+	actions.add_theme_constant_override("v_separation", 6)
+	_mobile_body.add_child(actions)
+	actions.add_child(MobileUi.button("Resume", func() -> void: root.call("close_screen")))
+	actions.add_child(MobileUi.button("Settings", _show_settings))
 	for spec: Array in [["Music", Audio.music_volume, func(v: float) -> void: Audio.set_volumes(v, Audio.sfx_volume)],
 		["Effects", Audio.sfx_volume, func(v: float) -> void: Audio.set_volumes(Audio.music_volume, v)],
 		["Voices", VoiceOver.volume(), VoiceOver.set_volume]]:
-		_mobile_body.add_child(MobileUi.text(str(spec[0])))
+		var row := HBoxContainer.new()
+		var label := MobileUi.text(str(spec[0]))
+		label.custom_minimum_size.x = 80
+		label.size_flags_horizontal = Control.SIZE_FILL
+		row.add_child(label)
 		var slider := HSlider.new()
 		slider.tooltip_text = str(spec[0])
 		slider.max_value = 1.0
@@ -961,21 +970,23 @@ func _mobile_menu() -> void:
 		slider.value = float(spec[1])
 		slider.custom_minimum_size.y = 48
 		slider.value_changed.connect(spec[2] as Callable)
-		_mobile_body.add_child(slider)
+		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(slider)
+		_mobile_body.add_child(row)
 	var quick := MobileUi.button("Quicksave", _quick_save)
 	quick.disabled = not SaveSystem.can_save()
-	_mobile_body.add_child(quick)
+	actions.add_child(quick)
 	var save := MobileUi.button("Save game", func() -> void: _open_saves(SavesScreen.Mode.SAVE))
 	save.disabled = not SaveSystem.can_save()
-	_mobile_body.add_child(save)
+	actions.add_child(save)
 	if not SaveSystem.can_save():
 		_mobile_body.add_child(MobileUi.text("Combat is saved before each action. Continue the campaign from its recovery save, or use Resume practice battle on the title screen."))
 	var load := MobileUi.button("Load a save", _show_saves)
 	load.disabled = SaveSystem.list_slots().is_empty() or SaveSystem.honour()
-	_mobile_body.add_child(load)
+	actions.add_child(load)
 	if CheatCodesPage.can_open(st):
-		_mobile_body.add_child(MobileUi.button("Cheat codes", _open_cheats))
-	_mobile_body.add_child(MobileUi.button("Return to title", func() -> void:
+		actions.add_child(MobileUi.button("Cheat codes", _open_cheats))
+	actions.add_child(MobileUi.button("Return to title", func() -> void:
 		if SaveSystem.honour():
 			SaveSystem.autosave()
 		leave_to(TITLE_SCENE)))

@@ -36,7 +36,9 @@ static func fit(node: Node) -> void:
 	if node is Label:
 		var label := node as Label
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		label.add_theme_font_size_override("font_size", UiScale.text(18))
+		var base := int(label.get_meta(&"mobile_base_font", clampi(label.get_theme_font_size("font_size"), 14, 24)))
+		label.set_meta(&"mobile_base_font", base)
+		label.add_theme_font_size_override("font_size", UiScale.text(base))
 	elif node is RichTextLabel:
 		var rich := node as RichTextLabel
 		for font_size: String in ["normal_font_size", "bold_font_size", "italics_font_size", "bold_italics_font_size"]:
@@ -49,6 +51,9 @@ static func fit(node: Node) -> void:
 		button_.custom_minimum_size.y = 48
 		button_.add_theme_font_size_override("font_size", UiScale.text(18))
 		button_.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		if button_.get_parent() is FlowContainer:
+			button_.autowrap_mode = TextServer.AUTOWRAP_OFF
+			button_.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	elif node is Slider:
 		(node as Slider).custom_minimum_size.y = 48
 	for child in node.get_children():

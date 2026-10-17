@@ -4,10 +4,11 @@ Status: implemented mobile screen groups; native qualification in progress, 2026
 
 The iOS game will expose the complete campaign and Skirmish through an interface designed for fingers, small displays, and interrupted sessions. iPhone and iPad layouts must be designed together. Every screen receives a mobile review, including secondary dialogs and error states. Enlarging the desktop canvas or placing it inside a scroll view is insufficient.
 
-Latest direction, 2026-10-16: phone exploration now keeps only the world, top-right minimap and Menu;
-regular tablets add compact Party/Inventory shortcuts. The combat popup works, but the current stretched
-bars and crowded action browser are a baseline awaiting the [combat HUD redesign](ios_combat_ux.md).
-That specification defines the next mobile composition and state transitions, not a completed runtime change.
+Latest direction, 2026-10-17: phone exploration keeps the world, top-right minimap, Menu and hold-to-Reveal;
+regular tablets add compact Party/Inventory shortcuts. The [compact combat HUD](ios_combat_ux.md) is implemented,
+with a dismissible Actions popup that closes before targeting. The latest polish reduces mobile text, restores
+computer-style loot rows and item/spell icons, and puts near-full-height dialogue busts behind a smaller bottom
+reading panel. All 84 prepared audit states have phone/tablet captures; native qualification remains separate.
 
 ## Implementation progress
 
@@ -58,8 +59,8 @@ The following are starting design tokens to tune on devices, not measurements of
 | Interactive hit area | At least 44 × 44 logical points; usually 48–56 points for important buttons |
 | List rows and action cards | 56–72 points high, increasing for wrapped labels |
 | Separation | Usually 8–12 points between adjacent controls; extra separation around destructive actions |
-| Body text | Approximately 17–20 points at the default setting |
-| Supporting text | Approximately 15–17 points; no essential information relegated to tiny captions |
+| Body text | Approximately 15–16 points at the default setting |
+| Supporting text | Approximately 12–14 points, with user text scaling preserved |
 | Large text | Default, Large, and Extra Large presets, tested through approximately 150% body text |
 | Feedback | Immediate pressed/selected state; ordinary input feedback target under 100 ms |
 

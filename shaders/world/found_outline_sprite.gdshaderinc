@@ -19,6 +19,13 @@ uniform int plane = 0;
 // The sprite's billboard: 0 none, 1 facing the camera, 2 turning about y.
 uniform int billboard = 0;
 uniform float alpha_cut = 0.5;
+// Optional character pose, matching sprite_crisp / sprite_simulator. Identity for ordinary props.
+uniform vec3 figure_face = vec3(0.0);
+uniform vec2 figure_squash = vec2(1.0);
+uniform float figure_lean = 0.0;
+uniform float figure_lift = 0.0;
+uniform float figure_push = 0.0;
+uniform float figure_depth_nudge = 0.0;
 uniform vec4 line_color : source_color = vec4(0.95, 0.6, 0.2, 1.0);
 uniform vec4 halo_color : source_color = vec4(0.85, 0.45, 0.12, 1.0);
 uniform vec4 edge_color : source_color = vec4(0.05, 0.04, 0.07, 1.0);
@@ -56,6 +63,8 @@ void vertex() {
 		d.y *= grow.y;
 	}
 	VERTEX = quad_center + d;
+	VERTEX = vec3(VERTEX.x * figure_squash.x + figure_lean * VERTEX.y + figure_push,
+		VERTEX.y * figure_squash.y + figure_lift, VERTEX.z);
 	vec2 uc = uv_rect.xy + uv_rect.zw * 0.5;
 	UV = uc + (UV - uc) * grow;
 	// The sprite's own material turns it to the camera (BaseMaterial3D's billboard, keeping its scale): do the same.
@@ -63,14 +72,16 @@ void vertex() {
 		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(MAIN_CAM_INV_VIEW_MATRIX[0], MAIN_CAM_INV_VIEW_MATRIX[1],
 			MAIN_CAM_INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
 	} else if (billboard == 2) {
-		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(vec4(normalize(cross(vec3(0.0, 1.0, 0.0), MAIN_CAM_INV_VIEW_MATRIX[2].xyz)), 0.0),
-			vec4(0.0, 1.0, 0.0, 0.0), vec4(normalize(cross(MAIN_CAM_INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0))), 0.0),
-			MODEL_MATRIX[3]);
+		vec3 z = length(figure_face) > 0.5 ? normalize(vec3(figure_face.x, 0.0, figure_face.z))
+			: normalize(cross(MAIN_CAM_INV_VIEW_MATRIX[0].xyz, vec3(0.0, 1.0, 0.0)));
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(vec4(normalize(cross(vec3(0.0, 1.0, 0.0), z)), 0.0),
+			vec4(0.0, 1.0, 0.0, 0.0), vec4(z, 0.0), MODEL_MATRIX[3]);
 	}
 	if (billboard != 0) {
 		MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),
 			vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0),
 			vec4(0.0, 0.0, 0.0, 1.0));
+		MODELVIEW_MATRIX[3].z += figure_depth_nudge;
 		MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
 	}
 	vec4 view_pos = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);

@@ -335,6 +335,7 @@ func touch_tap(at: Vector2, context: bool) -> void:
 	var cell := view.pick_cell(view.rig.camera, at)
 	if cell.x < 0:
 		return
+	TouchOutline.at(view, cell)
 	if context:
 		open_world_menu(cell, at)
 	else:

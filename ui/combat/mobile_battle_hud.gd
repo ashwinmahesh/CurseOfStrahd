@@ -101,19 +101,24 @@ func _process(delta: float) -> void:
 func menu() -> void:
 	var target := UiFeel.touch.world_target()
 	var body := open_page("Battle Menu", "menu")
-	body.add_child(MobileUi.button("Party and resources", overview))
-	body.add_child(MobileUi.button("Turn order", order))
-	body.add_child(MobileUi.button("Combat log", log_page))
-	body.add_child(MobileUi.button("Controls and help", func() -> void: hud.toggle_controls()))
+	var choices := GridContainer.new()
+	choices.columns = 2
+	choices.add_theme_constant_override("h_separation", 8)
+	choices.add_theme_constant_override("v_separation", 6)
+	body.add_child(choices)
+	choices.add_child(MobileUi.button("Party and resources", overview))
+	choices.add_child(MobileUi.button("Turn order", order))
+	choices.add_child(MobileUi.button("Combat log", log_page))
+	choices.add_child(MobileUi.button("Controls and help", func() -> void: hud.toggle_controls()))
 	if UiFeel.mobile_controls != null:
 		var controls := UiFeel.mobile_controls
-		body.add_child(MobileUi.button("Camera", func() -> void:
+		choices.add_child(MobileUi.button("Camera", func() -> void:
 			close()
 			controls._camera(target)))
-		body.add_child(MobileUi.button("More controls", func() -> void:
+		choices.add_child(MobileUi.button("More controls", func() -> void:
 			close()
 			controls._more(target)))
-	body.add_child(MobileUi.button("Pause and settings", func() -> void:
+	choices.add_child(MobileUi.button("Pause and settings", func() -> void:
 		close()
 		if UiFeel.mobile_controls != null:
 			UiFeel.mobile_controls._menu()))

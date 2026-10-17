@@ -1352,6 +1352,8 @@ func touch_tap(at: Vector2, context: bool) -> void:
 	using_pad = false
 	_pick_from_mouse(at)
 	_update_hover()
+	if hover_token != null:
+		TouchOutline.flash(hover_token._lying if hover_token._lying != null and hover_token._lying.visible else hover_token.body)
 	if context:
 		if mode == Mode.IDLE:
 			_open_square_menu(at)

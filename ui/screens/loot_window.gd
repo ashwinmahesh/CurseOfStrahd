@@ -234,46 +234,81 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _mobile_build() -> void:
 	var body := MobilePage.build(self, "Loot", _close)
-	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	body.add_child(MobileUi.text("Give items to"))
+	var page := body.get_parent().get_parent().get_parent() as MobilePage
+	page.centered_width = 860
+	page.centered_height = clampf(170 + 52 * (items.size() + int(gold > 0)), 280, 540)
+	page.reflow()
+	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	page.scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	(page.find_child("MobileBack", true, false) as Button).text = "Close"
+	var recipient := HBoxContainer.new()
+	recipient.add_child(MobileUi.text("Give to"))
 	_to = OptionButton.new()
 	for ch in st.party:
 		_to.add_item(ch.name)
 	MobileUi.fit(_to)
-	body.add_child(_to)
+	recipient.add_child(_to)
+	page.toolbar.add_child(recipient)
 	_list = VBoxContainer.new()
-	_list.add_theme_constant_override("separation", 12)
-	body.add_child(_list)
-	body.add_child(MobileUi.button("Take all", _take_all))
-	body.add_child(MobileUi.button("Distribute to the party", _send_all))
-	body.add_child(MobileUi.button("Send all to stash", stash_all))
+	_list.add_theme_constant_override("separation", 4)
+	var pane := UiParts.fill_scroll(_list)
+	pane.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	pane.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	body.add_child(pane)
+	var buttons := HFlowContainer.new()
+	buttons.add_theme_constant_override("h_separation", 6)
+	buttons.add_theme_constant_override("v_separation", 4)
+	for spec: Array in [["Distribute", _send_all], ["All to stash", stash_all], ["Take all", _take_all]]:
+		var button := MobileUi.button(str(spec[0]), spec[1] as Callable)
+		button.autowrap_mode = TextServer.AUTOWRAP_OFF
+		buttons.add_child(button)
+		if str(spec[0]) == "Take all":
+			UiParts.light_up(button)
+	body.add_child(buttons)
 	_redraw()
 
 
 func _mobile_rows() -> void:
 	MobileUi.clear(_list)
 	if gold > 0:
-		_list.add_child(MobileUi.button("Take %d gold for the party" % int(gold), take_coins))
+		var coins := HBoxContainer.new()
+		coins.add_child(MobileUi.text("%d gold · Party purse" % int(gold), "gilt_light"))
+		var take := MobileUi.button("Take gold", take_coins)
+		take.size_flags_horizontal = Control.SIZE_SHRINK_END
+		take.autowrap_mode = TextServer.AUTOWRAP_OFF
+		coins.add_child(take)
+		_list.add_child(coins)
 	if items.is_empty() and gold <= 0:
 		_list.add_child(MobileUi.text("Empty."))
 	for i in items.size():
 		var item := items[i] as Dictionary
 		var data := MagicItems.shown_data(Compendium.shared().item_data(str(item["id"])), item)
-		var card := VBoxContainer.new()
-		card.add_child(MobileUi.text("%s ×%d" % [data.get("name", item["id"]), int(item.get("qty", 1))], "gilt_light"))
-		card.add_child(MobileUi.text("%s lb · %s gp each" % [data.get("weight_lb", 0), data.get("cost_gp", 0)]))
 		var row := HBoxContainer.new()
-		row.add_child(MobileUi.button("Inspect", func() -> void: _mobile_inspect(data)))
-		row.add_child(MobileUi.button("Take one", func() -> void:
+		row.add_theme_constant_override("separation", 6)
+		UiParts.add_icon(row, "item", str(data.get("id", item["id"])), 28)
+		var name_button := MobileUi.button("%s%s" % [data.get("name", item["id"]),
+			" ×%d" % int(item["qty"]) if int(item.get("qty", 1)) > 1 else ""], func() -> void: _mobile_inspect(data))
+		name_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		row.add_child(name_button)
+		var weight := MobileUi.text("%s lb" % str(data.get("weight_lb", 0)), "parchment")
+		weight.size_flags_horizontal = Control.SIZE_SHRINK_END
+		weight.autowrap_mode = TextServer.AUTOWRAP_OFF
+		row.add_child(weight)
+		var take := MobileUi.button("Take one", func() -> void:
 			if i < items.size() and items[i] == item:
-				_take(i, 1)))
+				_take(i, 1))
+		take.size_flags_horizontal = Control.SIZE_SHRINK_END
+		take.autowrap_mode = TextServer.AUTOWRAP_OFF
+		row.add_child(take)
 		var stash := MobileUi.button("Stash", func() -> void:
 			if i < items.size() and items[i] == item:
 				_stash(i))
 		stash.disabled = InventoryScreen.is_quest(data)
+		stash.size_flags_horizontal = Control.SIZE_SHRINK_END
+		stash.autowrap_mode = TextServer.AUTOWRAP_OFF
 		row.add_child(stash)
-		card.add_child(row)
-		_list.add_child(card)
+		_list.add_child(row)
 
 
 func _mobile_inspect(data: Dictionary) -> void:
@@ -283,6 +318,7 @@ func _mobile_inspect(data: Dictionary) -> void:
 	add_child(_mobile_detail)
 	var body := MobilePage.build(_mobile_detail, str(data.get("name", "Item")), _mobile_close_detail)
 	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	UiParts.add_icon(body, "item", str(data.get("id", "")), 40)
 	body.add_child(MobileUi.text(str(data.get("text", data.get("summary", "")))))
 	if InventoryScreen.is_quest(data):
 		body.add_child(MobileUi.text("Quest item: keep this with a party member."))

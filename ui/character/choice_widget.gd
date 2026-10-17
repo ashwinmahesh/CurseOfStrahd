@@ -317,6 +317,11 @@ func _mobile_rows() -> void:
 			continue
 		var picked := choice.picks.has(option.id)
 		var button := MobileUi.button(("Selected · " if picked else "") + option.label, func() -> void: _mobile_inspect(option.id))
+		if choice.kind in SPELL_KINDS:
+			UiParts.icon_on_button(button, "spell", option.id, 28)
+		elif choice.kind == "weapon_mastery":
+			UiParts.icon_on_button(button, "item", option.id, 28)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		if picked:
 			UiParts.light_up(button)
 		_mobile_list.add_child(button)
@@ -337,6 +342,10 @@ func _mobile_inspect(id: String) -> void:
 	var body := MobilePage.build(_mobile_sheet, option.label, _mobile_close)
 	var page := body.get_parent().get_parent().get_parent() as MobilePage
 	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	if choice.kind in SPELL_KINDS:
+		UiParts.add_icon(page.heading.get_parent() as Container, "spell", id, 32)
+	elif choice.kind == "weapon_mastery":
+		UiParts.add_icon(page.heading.get_parent() as Container, "item", id, 32)
 	if choice.kind in SPLIT_KINDS:
 		_detail = body
 		_detail_scroll = page.scroll

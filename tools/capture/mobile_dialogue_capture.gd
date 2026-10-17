@@ -5,6 +5,10 @@ func capture_shots(tool: Node, out: String) -> void:
 	DialogueFile.register(DialogueFile.parse("~ start\nIreena [sad]: My father is three days dead. The mist presses against the windows, and I fear what waits outside.\nPlayer: We will help you. Tell us what happened.\nNarrator: She turns toward the fire, searching for the words.\n-> END\n", "capture/mobile_busts"))
 	var state := StoryState.new()
 	state.party.append(Pregens.build("godrick_pendlebrook", 3))
+	state.minute_of_day = 12 * 60
+	var view := LocationView.create("into_the_mists_road", state, Narrator.new(), DiceRoller.new(42))
+	add_child(view)
+	await tool.call("wait_frames", 30)
 	var dialogue := DialogueUI.new()
 	add_child(dialogue)
 	dialogue.play(DialogueRunner.new(state, DiceRoller.new(2)), "capture/mobile_busts:start")

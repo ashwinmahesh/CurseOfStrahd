@@ -860,7 +860,7 @@ func test_exploration_keeps_phone_clear_and_tablet_shortcuts_compact() -> void:
 		hud.narrate("This narration remains available without covering the world.")
 		await _frames()
 		var visible_buttons := hud.find_children("*", "Button", true, false).filter(func(node: Node) -> bool: return (node as Button).is_visible_in_tree())
-		assert_eq(visible_buttons.size(), 1 if MobileDevice.compact() else 3)
+		assert_eq(visible_buttons.size(), 2 if MobileDevice.compact() else 4)
 		assert_true(hud.minimap.visible)
 		assert_true(MobileDevice.safe_rect().encloses(hud.minimap.get_global_rect()))
 		assert_true(hud.mobile.shortcuts.size.x < MobileDevice.safe_rect().size.x * 0.4)
@@ -1048,4 +1048,105 @@ func test_mobile_conversation_retains_both_busts_through_lines_options_and_histo
 	dialogue.toggle_history()
 	assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree())
 	dialogue.queue_free()
+	await _frames()
+
+
+func test_reveal_is_held_only_and_cancels_on_drag_modal_and_interruption() -> void:
+	var world := CameraWorld.new()
+	root.add_child(world)
+	world.add_to_group(&"touch_world")
+	var hud := ExploreHud.new()
+	add_child(hud)
+	var story := StoryState.new()
+	story.party.append(Pregens.build("godrick_pendlebrook", 1))
+	hud.build(story)
+	await _frames()
+	var at := hud.mobile.reveal_button.get_global_rect().get_center()
+	_touch(at, true)
+	await _frames()
+	assert_true(hud.thing_labels.showing, "holding Reveal shows existing interactable labels")
+	_touch(at, false)
+	await _frames()
+	assert_false(hud.thing_labels.showing)
+	assert_eq(world.taps, 0, "releasing Reveal never activates the world")
+	_touch(at, true)
+	await _frames()
+	var drag := InputEventScreenDrag.new()
+	drag.position = at - Vector2(200, 100)
+	drag.relative = Vector2(-200, -100)
+	get_tree().root.push_input(drag, true)
+	await _frames()
+	assert_false(hud.thing_labels.showing, "dragging off releases Reveal")
+	_touch(drag.position, false)
+	_touch(at, true)
+	await _frames()
+	UiFeel.touch.cancel()
+	await _frames()
+	assert_false(hud.thing_labels.showing, "interruption cannot leave labels stuck on")
+	_touch(at, true)
+	await _frames()
+	hud.mobile.menu()
+	await _frames()
+	assert_false(hud.thing_labels.showing, "opening a modal releases Reveal")
+	hud.queue_free()
+	world.queue_free()
+	await _frames()
+
+
+func test_mobile_outline_expires_renews_and_preserves_other_overlays() -> void:
+	var target := MeshInstance3D.new()
+	target.mesh = BoxMesh.new()
+	root.add_child(target)
+	TouchOutline.flash(target)
+	var effect := target.get_node("TouchOutline") as TouchOutline
+	effect.set_process(false)
+	assert_true(target.material_overlay is ShaderMaterial)
+	effect._process(0.49)
+	assert_true(target.material_overlay != null, "orange lasts the whole half second")
+	TouchOutline.flash(target)
+	assert_eq(effect.remaining, 0.5, "a second tap renews the same effect")
+	effect._process(0.49)
+	assert_true(target.material_overlay != null)
+	effect._process(0.02)
+	assert_true(target.material_overlay == null, "outline clears after half a second")
+	await _frames()
+	var own := StandardMaterial3D.new()
+	target.material_overlay = own
+	TouchOutline.flash(target)
+	effect = target.get_node("TouchOutline") as TouchOutline
+	effect._process(0.51)
+	assert_eq(target.material_overlay, own, "tap cleanup preserves an existing effect")
+	target.queue_free()
+	await _frames()
+
+
+func test_mobile_outline_tracks_animated_people_atlas_frames() -> void:
+	var actor := CombatToken.create(Combatant.new(Pregens.build("godrick_pendlebrook", 1), &"party", Vector2i(2, 2)))
+	root.add_child(actor)
+	await _frames()
+	TouchOutline.flash(actor.body)
+	var effect := actor.body.get_node("TouchOutline") as TouchOutline
+	assert_false(effect.pieces.is_empty(), "people get an orange silhouette too")
+	var material := actor.sprite.material_overlay as ShaderMaterial
+	assert_eq(material.shader, FoundOutline.SPRITE_SHADER)
+	var frame := actor.sprite.sprite_frames.get_frame_texture(actor.sprite.animation, actor.sprite.frame) as AtlasTexture
+	assert_eq(material.get_shader_parameter("sprite_tex"), frame.atlas)
+	actor.sprite.frame = 1
+	FoundOutline.refit(effect.pieces)
+	var changed := actor.sprite.sprite_frames.get_frame_texture(actor.sprite.animation, 1) as AtlasTexture
+	var uv := material.get_shader_parameter("uv_rect") as Vector4
+	assert_true(is_equal_approx(uv.x, changed.region.position.x / changed.atlas.get_width()))
+	assert_true(is_equal_approx(uv.z, changed.region.size.x / changed.atlas.get_width()), "UV width excludes packed margins")
+	assert_true(is_equal_approx(uv.w, changed.region.size.y / changed.atlas.get_height()), "UV height excludes packed margins")
+	assert_true(actor.sprite.reflection.material_overlay == null, "the reflection is not a second interactable")
+	var center := material.get_shader_parameter("quad_center") as Vector3
+	actor.sprite.flip_h = not actor.sprite.flip_h
+	FoundOutline.refit(effect.pieces)
+	var mirrored := material.get_shader_parameter("quad_center") as Vector3
+	assert_true(is_equal_approx(center.x, -mirrored.x), "mirrored packed frames keep their outline centered")
+	var source := actor.sprite.material_override as ShaderMaterial
+	source.set_shader_parameter("push", 0.15)
+	FoundOutline.refit(effect.pieces)
+	assert_true(is_equal_approx(float(material.get_shader_parameter("figure_push")), 0.15), "outline follows character motion")
+	actor.queue_free()
 	await _frames()
