@@ -18,7 +18,9 @@ import argparse
 import datetime
 import json
 import os
+import difflib
 import re
+import unicodedata
 import shutil
 import subprocess
 import sys
@@ -2095,6 +2097,164 @@ class Wiki:
         self.w.write("page/random_treasure", "Items/Random Treasure", "Random Treasure", [auto("list", "\n".join(lines))],
                      tags=["wiki", "items"], meta={"type": "guide"})
 
+    # Soundtrack and voice cast ------------------------------------------------------------------------------------
+
+    MOOD_WORDS = {"title": "the title screen", "combat": "fights", "boss": "fights with a foe that has Legendary Actions",
+                  "ending": "the endings"}
+
+    def soundtrack_page(self):
+        """Which music plays where (art/audio.json, as core/audio.gd picks it) and who made each piece
+        (art/credits.json's Music section)."""
+        g, s = self.g, self.site
+        audio = load_json(g.root / "art" / "audio.json")
+        credits = load_json(g.root / "art" / "credits.json")
+        music = audio.get("music") or {}
+        if not music:
+            return
+        lines_c = next((sec.get("lines", []) for sec in credits.get("sections", []) if sec.get("title") == "Music"), [])
+
+        def toks(t):
+            t = unicodedata.normalize("NFKD", str(t)).encode("ascii", "ignore").decode().lower()
+            t = re.sub(r"([a-z])([A-Z])", r"\1 \2", t)
+            return {w for w in re.split(r"[^a-z0-9]+", t) if len(w) > 2 and w not in
+                    {"mp3", "ogg", "the", "and", "demo", "master", "short", "loopable", "oga", "dova", "of"}}
+        works = []   # (title, artist)
+        for ln in lines_c:
+            quoted = re.findall(r'"([^"]+)"', ln)
+            if quoted:
+                tail = ln[ln.rfind('"') + 1:]
+                artist = re.search(r"(?:Composed by|by)\s+([^.(]+)", tail)
+                artist = artist[1].strip(" ,") if artist else re.split(r"\s+\(|\.\s|\s+Licensed", tail.strip(" ,"))[0]
+                works += [(t, artist) for t in quoted]
+                continue
+            m = re.match(r"'([^']+)' by ([^-.]+)", ln)
+            if m:
+                works.append((m[1], m[2].strip()))
+                continue
+            played = re.search(r"played by ([^.]+)", ln)
+            for t, who in re.findall(r"([A-Z][^(,]*?(?:, BWV \d+)?) \(([^)]+)\)", ln):
+                works.append((t.strip(), who + (f", played by {played[1]}" if played else "")))
+
+        def credit_for(path):
+            base = Path(path).stem
+            pack = Path(path).parent.name
+            tb = toks(base)
+            best, score = None, 0
+            for t, a in works:
+                tt = toks(t)
+                # Exact words count double; a near spelling (Czardas, Csárdás) once, and only for longer words.
+                sc = sum(2 if w in tt else (1 if len(w) >= 5 and any(
+                    difflib.SequenceMatcher(None, w, x).ratio() >= 0.85 for x in tt if len(x) >= 5) else 0) for w in tb)
+                if sc > score:
+                    best, score = (t, a), sc
+            if best:
+                return best
+            name = re.sub(r"^(demo|short|dova|sb)_", "", base)
+            name = re.sub(r"(_master)?_0$|\s*-\s*(MP3|Loopable)$|\s*\(CC-BY\)", "", name).replace("_", " ")
+            name = re.sub(r"([a-z])([A-Z])", r"\1 \2", name.split(" - ")[-1]).strip()
+            name = name.title() if name.islower() else name
+            tp = toks(pack.replace("oga_", ""))
+            artist = next((a for _, a in works if tp & toks(a)), "")
+            if artist and sum(1 for _, a in works if a == artist) > 1:
+                return ("", artist)   # one of several pieces credited to them, the file's name not among the titles
+            return (name, artist)
+
+        where = defaultdict(list)
+        by_region = defaultdict(lambda: defaultdict(list))
+        for lid, m in (audio.get("places") or {}).items():
+            if lid in g.locations:
+                by_region[m][g.locations[lid].get("region", "")].append(lid)
+        for m, regs in by_region.items():
+            for rid, lids in regs.items():
+                if len(lids) > 3:
+                    where[m].append(f"{len(lids)} places in {g.region_name(rid)}")
+                else:
+                    where[m] += [s.loc(lid) for lid in lids]
+        for rid, m in (audio.get("regions") or {}).items():
+            where[m].append(f"anywhere in {g.region_name(rid)}")
+        kinds = defaultdict(list)
+        for th, m in (audio.get("themes") or {}).items():
+            kinds[m].append(th.replace("_", " "))
+        for m, ths in kinds.items():
+            where[m].append(f"maps of the kind {', '.join(ths)}")
+        for rid, turns in (audio.get("region_turns") or {}).items():
+            for t in turns:
+                where[t.get("mood", "")].append(f"{g.region_name(rid)} once {human_cond(t.get('when', ''))}")
+        for mid, m in (audio.get("boss_music") or {}).items():
+            where[m].append(f"fights with {s.mon(mid)}")
+        for place_mood, talk in (audio.get("talk_moods") or {}).items():
+            who = ", ".join(s.npc(n) if n in g.npcs else title_id(n) for n in talk.get("npcs", []))
+            where[talk.get("mood", "")].append(f"in place of the {place_mood} music while {who} "
+                                               + ("speak" if len(talk.get("npcs", [])) > 1 else "speaks"))
+        for m, harder in (audio.get("rises") or {}).items():
+            where[harder].append(f"{self.MOOD_WORDS.get(m, m)} at full danger (a boss on the field, or someone Bloodied)")
+        for m, words in self.MOOD_WORDS.items():
+            where[m].insert(0, words)
+        lines = ["The music follows where you are: each place has a mood, and a mood plays its pieces one after another, "
+                 "every one before any repeats. A place's own mood comes first, then its region's (taverns, inns and "
+                 "camps keep their own), then the mood of the kind of place it is. Fights switch to fight music, which "
+                 "swells to a harder piece when a boss is on the field or someone is Bloodied.", "",
+                 "| Mood | Where it plays | Music |", "|---|---|---|"]
+        for mood, files in music.items():
+            pieces = []
+            for f in files:
+                path = f[0] if isinstance(f, list) else f
+                t, a = credit_for(str(path).replace("res://", ""))
+                pieces.append(f"*{t}*" + (f" ({a})" if a else "") if t else f"a piece by {a}")
+            places = where.get(mood, [])
+            shown = "; ".join(places[:8]) + (f"; and {len(places) - 8} more places" if len(places) > 8 else "")
+            lines.append(f"| {title_id(mood)} | {esc(shown)} | {esc(', '.join(pieces))} |")
+        lines += ["", "## Credits", "", "The music's own credit lines, as the game's Credits screen gives them:", ""]
+        lines += [f"- {ln}" for ln in lines_c] + [""]
+        self.w.write("page/soundtrack", "World/Soundtrack", "Soundtrack", [auto("list", "\n".join(lines))],
+                     tags=["wiki", "world"])
+
+    def hero_names(self):
+        """Pregen hero id -> name (data/pregens)."""
+        if not hasattr(self, "_hero_names"):
+            self._hero_names = {}
+            for f in sorted((self.g.root / "data" / "pregens").glob("*.json")):
+                d = load_json(f)
+                self._hero_names[f.stem] = d.get("name", title_id(f.stem))
+        return self._hero_names
+
+    def cast_page(self):
+        """Every voiced speaker and how they sound (docs/voice/casting.md, the casting sheet made from
+        audio/voice/casting.json)."""
+        g, s = self.g, self.site
+        path = g.root / "docs" / "voice" / "casting.md"
+        if not path.exists():
+            return
+        rows = []
+        for ln in path.read_text().split("\n"):
+            m = re.match(r"\|\s*`([a-z0-9_]+)`\s*\|\s*([\d,]+)\s*\|\s*[\d,]+\s*\|\s*(.*?)\s*\|\s*.*?\s*\|\s*(.*)\|\s*$", ln)
+            if not m:
+                continue
+            sid, n, voice, desc = m[1], int(m[2].replace(",", "")), m[3], m[4].strip()
+            if n <= 0:
+                continue
+            stock = desc.startswith("Library voice chosen for")
+            if stock:
+                was = re.search(r"Was:\s*(.*)$", desc)
+                desc = was[1].strip() if was else ""
+            desc = re.sub(r"\s*\(?\b(?:owner|Owner|Ashwin),? \d{4}-\d{2}-\d{2}[^)]*\)?", "", desc).strip()
+            if sid in g.npcs:
+                who = s.npc(sid)
+            else:
+                own = {"narrator": "The Narrator", "hero_female": "A custom hero (a woman's voice)",
+                       "hero_male": "A custom hero (a man's voice)"}
+                who = str(self.hero_names().get(sid) or own.get(sid) or title_id(sid))
+            rows.append((n, who, plain(desc, 260) + (" *(a stock voice picked to fit)*" if stock else "")))
+        if not rows:
+            return
+        rows.sort(key=lambda r: -r[0])
+        lines = ["Every speaker in the game who has a voice, most lines first, with how they sound. The heroes' lines, "
+                 "the Narrator's and everyone the party meets are spoken; a few speakers share a voice with others like "
+                 "them (the town guards, plain townsfolk).", "",
+                 "| Speaker | Lines | How they sound |", "|---|---|---|"]
+        lines += [f"| {who} | {n:,} | {esc(desc)} |" for n, who, desc in rows]
+        self.w.write("page/cast", "World/Voice Cast", "Voice Cast", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
+
     def shop_levels(self):
         """Rarity -> the party's milestone level shops show it from (data/treasure/levels.json, as Trade.magic_level)."""
         if not hasattr(self, "_shop_levels"):
@@ -2664,6 +2824,8 @@ class Wiki:
                                                                 else "" for k in kinds) +
                              f" | {', '.join(where.get(name, [])) or ('everywhere else' if name == w.get('default_climate') else '')} |")
         self.w.write("page/weather", "World/Weather", "Weather", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
+        self.soundtrack_page()
+        self.cast_page()
         src = (g.root / "core" / "achievements.gd").read_text()
         ach = re.findall(r'"([a-z_0-9]+)": \["([^"]+)", "([^"]+)"\]', src)
         lines = ["| Achievement | How |", "|---|---|"] + [f"| {n} | {t} |" for _, n, t in ach]
@@ -2789,7 +2951,9 @@ class Wiki:
                            s.link("page/checks", "World Skill Checks") + ": everything in the world you can try a check on",
                            s.link("page/talking", "Talking Creatures") + ": animals, the dead and plants that talk to a spell",
                            s.link("page/random_encounters", "Random Encounters") + ": what the roads can throw at you",
-                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits")]),
+                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits"),
+                           s.link("page/soundtrack", "Soundtrack") + ": the music for each place and fight, and who made it",
+                           s.link("page/cast", "Voice Cast") + ": who speaks, and how they sound"]),
             ("Items and money", [s.link("page/item_sources", "Where to Find Items") + ": every item with a fixed home, A to Z",
                                  s.link("page/magic_items", "Magic Items") + f": all {n_magic}, with where they are and their codes",
                                  s.link("page/equipment", "Equipment") + ": weapons, armor and gear",
@@ -2915,6 +3079,8 @@ class Wiki:
                                  ("page/talking", "World/Talking Creatures", "Talking Creatures"),
                                  ("page/random_encounters", "World/Random Encounters", "Random Encounters"),
                                  ("page/weather", "World/Weather", "Weather"),
+                                 ("page/soundtrack", "World/Soundtrack", "Soundtrack"),
+                                 ("page/cast", "World/Voice Cast", "Voice Cast"),
                                  ("page/achievements", "World/Achievements", "Achievements"),
                                  ("page/heroes", "Characters/Heroes", "Heroes"),
                                  ("page/approval", "Characters/Companion Approval", "Companion Approval"),
