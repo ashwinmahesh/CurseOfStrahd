@@ -16,6 +16,22 @@ class StoreTests(unittest.TestCase):
         self.assertNotIn('secret', json.dumps(ios_store.sanitized(report)))
         self.assertEqual(ios_store.sanitized(report)['data'][0]['attributes']['state'], 'UPLOADING')
 
+    def test_inspection_includes_equivalent_initial_draft_version(self):
+        from unittest.mock import Mock
+        api = Mock()
+        def call(path, parameters=None):
+            if path == 'apps/1':
+                return {'data': {'id': '1', 'attributes': {'bundleId': 'app.curseofstrahd.game'}}}
+            if path == 'apps/1/appStoreVersions':
+                self.assertNotIn('filter[versionString]', parameters)
+                return {'data': [{'id': 'draft', 'attributes': {'versionString': '1.0'}},
+                                 {'id': 'unrelated', 'attributes': {'versionString': '2.0'}}]}
+            return {'data': []}
+        api.call.side_effect = call
+        result = ios_store.inspect(api, '1', '1.0.0')
+        self.assertEqual([v['id'] for v in result['versions']], ['draft'])
+        self.assertEqual(len(result['allVersions']), 2)
+
     def test_api_rejects_other_hosts_and_parent_paths(self):
         api = ios_store.StoreAPI(Path('unused'))
         for path in ['https://example.com/apps', '../apps/1', 'apps/1?token=bad']:

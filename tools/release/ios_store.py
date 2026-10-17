@@ -50,8 +50,12 @@ def inspect(api, app_id, version):
     app = api.call('apps/' + app_id)['data']
     if app['attributes']['bundleId'] != 'app.curseofstrahd.game':
         raise ValueError('Unexpected app Bundle ID')
-    result = {'app': app, 'versions': api.call('apps/' + app_id + '/appStoreVersions',
-        {'filter[platform]': 'IOS', 'filter[versionString]': version, 'limit': 20})['data']}
+    versions = api.call('apps/' + app_id + '/appStoreVersions',
+        {'filter[platform]': 'IOS', 'limit': 200})['data']
+    # Connect creates an initial draft as 1.0; build marketing versions use 1.0.0.
+    labels = {version, version[:-2]} if version.endswith('.0') else {version}
+    result = {'app': app, 'allVersions': versions,
+              'versions': [v for v in versions if v['attributes']['versionString'] in labels]}
     for item in result['versions']:
         item['localizations'] = api.call('appStoreVersions/' + item['id'] + '/appStoreVersionLocalizations')['data']
         for loc in item['localizations']:
@@ -187,6 +191,9 @@ def apply_listing(api, app_id, version, manifest, output):
     else:
         current = api.call('appStoreVersions', method='POST', data=payload('appStoreVersions',
             {'platform': 'IOS', 'versionString': version, 'releaseType': 'MANUAL'}, {'app': ('apps', app_id)}))['data']
+    if current['attributes']['versionString'] != version:
+        current = api.call('appStoreVersions/' + current['id'], method='PATCH',
+            data=payload('appStoreVersions', {'versionString': version}, identity=current['id']))['data']
     locales = all_data(api, 'appStoreVersions/' + current['id'] + '/appStoreVersionLocalizations')
     locale = next((x for x in locales if x['attributes']['locale'] == metadata['locale']), None)
     fields = {key: metadata[key] for key in ['description', 'promotionalText', 'marketingUrl', 'supportUrl'] if key in metadata}
