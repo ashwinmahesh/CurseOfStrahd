@@ -83,6 +83,9 @@ ios-archive:
 ios-report:
 	python3 tools/release/ios.py report --app "$(IOS_APP)"
 
+.PHONY: ios-pipeline-test
+ios-pipeline-test: ios-test
+
 ios-test:
 	python3 -m unittest discover -s tests/tools -p 'test_ios*.py' -v
 

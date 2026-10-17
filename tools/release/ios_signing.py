@@ -13,6 +13,8 @@ import secrets
 import shutil
 import subprocess
 
+WWDR_SHA256 = 'dcf21878c77f4198e4b4614f03d696d89c66c66008d4244e1b99161aac91601f'
+
 
 def run(args):
     result = subprocess.run(args, capture_output=True)
@@ -47,7 +49,7 @@ def validate_profile(profile, bundle, method, now=None):
 
 
 def install(directory, bundle, method):
-    required = ['IOS_SIGNING_P12', 'IOS_SIGNING_P12_PASSWORD', 'IOS_PROVISIONING_PROFILE']
+    required = ['IOS_SIGNING_P12', 'IOS_PROVISIONING_PROFILE', 'APPLE_TEAM_ID']
     missing = [key for key in required if not os.environ.get(key)]
     if missing:
         raise ValueError('Missing GitHub secrets: ' + ', '.join(missing))
@@ -61,6 +63,8 @@ def install(directory, bundle, method):
     mobile.write_bytes(base64.b64decode(os.environ['IOS_PROVISIONING_PROFILE'], validate=True))
     profile = plistlib.loads(run(['security', 'cms', '-D', '-i', str(mobile)]))
     team, uuid = validate_profile(profile, bundle, method)
+    if team != os.environ['APPLE_TEAM_ID']:
+        raise ValueError('Provisioning profile does not match APPLE_TEAM_ID')
     keychain = directory / 'signing.keychain-db'
     password = secrets.token_urlsafe(32)
     old = run(['security', 'list-keychains', '-d', 'user']).decode()
@@ -74,8 +78,16 @@ def install(directory, bundle, method):
     run(['security', 'create-keychain', '-p', password, str(keychain)])
     run(['security', 'set-keychain-settings', '-lut', '21600', str(keychain)])
     run(['security', 'unlock-keychain', '-p', password, str(keychain)])
-    run(['security', 'import', str(p12), '-k', str(keychain), '-P', os.environ['IOS_SIGNING_P12_PASSWORD'],
+    run(['security', 'import', str(p12), '-k', str(keychain), '-P', os.environ.get('IOS_SIGNING_P12_PASSWORD', ''),
          '-T', '/usr/bin/codesign', '-T', '/usr/bin/security'])
+    # Apple Distribution chains to WWDR G3. Import the pinned intermediate into this keychain only.
+    import urllib.request
+    intermediate = urllib.request.urlopen('https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer', timeout=60).read()
+    if hashlib.sha256(intermediate).hexdigest() != WWDR_SHA256:
+        raise ValueError('Unexpected Apple WWDR G3 certificate checksum')
+    ca = directory / 'wwdr.cer'
+    ca.write_bytes(intermediate)
+    run(['security', 'import', str(ca), '-k', str(keychain)])
     run(['security', 'set-key-partition-list', '-S', 'apple-tool:,apple:,codesign:', '-s', '-k', password, str(keychain)])
     run(['security', 'list-keychains', '-d', 'user', '-s', str(keychain), *previous])
     identities = run(['security', 'find-identity', '-v', '-p', 'codesigning', str(keychain)]).decode()

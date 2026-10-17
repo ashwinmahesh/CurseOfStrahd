@@ -3,6 +3,11 @@ import datetime as dt
 import importlib.util
 from pathlib import Path
 import unittest
+import base64
+import os
+import plistlib
+import tempfile
+from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location('ios_signing', Path(__file__).resolve().parents[2] / 'tools/release/ios_signing.py')
 signing = importlib.util.module_from_spec(SPEC)
@@ -52,6 +57,15 @@ class SigningTests(unittest.TestCase):
         self.profile['Entitlements']['com.apple.developer.team-identifier'] = 'OTHERTEAM1'
         with self.assertRaisesRegex(ValueError, 'disagree'):
             self.validate()
+
+    def test_empty_password_is_allowed_and_configured_team_is_checked(self):
+        profile = dict(self.profile, ExpirationDate=dt.datetime(2099, 1, 1))
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {
+                'IOS_SIGNING_P12': base64.b64encode(b'fixture').decode(),
+                'IOS_PROVISIONING_PROFILE': base64.b64encode(b'fixture').decode(),
+                'APPLE_TEAM_ID': 'OTHERTEAM1'}, clear=True), patch.object(signing, 'run', return_value=plistlib.dumps(profile)):
+            with self.assertRaisesRegex(ValueError, 'does not match APPLE_TEAM_ID'):
+                signing.install(Path(folder) / 'signing', 'app.example.game', 'app-store')
 
 
 if __name__ == '__main__':

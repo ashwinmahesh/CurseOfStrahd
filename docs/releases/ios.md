@@ -174,77 +174,27 @@ tests, and the distribution requirements in the plan.
 
 ## GitHub signing and release pipeline
 
-The finalized pipeline is owned by [PR #6](https://github.com/ashwinmahesh/CurseOfStrahd/pull/6), commit
-`5a84719d5`. Its deployment-check upload reached Apple **VALID** in
+The signing and TestFlight workflow from [PR #6](https://github.com/ashwinmahesh/CurseOfStrahd/pull/6)
+(commit `5a84719d5`) is integrated into this iOS branch. See [pipeline configuration](ios-pipeline.md) for
+current secrets, variables, signing validation and retained artifacts. The macOS workflow is unchanged.
+
+Dispatch **iOS builds** on `codex/ios-support-foundation` with `build_kind=game`, `version=1.0.0` and
+`upload=true` to build the full game from this branch. Leave `source_ref` blank to use the workflow commit,
+or pin an exact source SHA. The pipeline tests its tooling, validates credentials, imports mobile assets into
+an isolated stage, archives the device app, checks the 4 GB size limit, exports the IPA and uploads to
+App Store Connect. It waits for Apple's processing result; a successful upload receipt alone is insufficient.
+
+```sh
+gh workflow run ios.yml --ref codex/ios-support-foundation -f version=1.0.0 -f build_kind=game -f upload=true
+```
+
+The earlier deployment-check upload reached Apple **VALID** in
 [run 38982130266](https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/38982130266), version 1.0.0 (601).
-That diagnostic app excludes campaign assets; the full game has not yet been uploaded through it.
+That diagnostic app excludes campaign assets. Full-game upload is being qualified separately and does not
+close the documented combat UI, Level Up layout or physical-device acceptance work.
 
-Retain that PR's workflow, signing helper and `docs/releases/ios-pipeline.md` when reconciling branches.
-It uses the configured `IOS_DISTRIBUTION_P12_BASE64`, optional `IOS_DISTRIBUTION_P12_PASSWORD`,
-`IOS_PROVISIONING_PROFILE_BASE64`, `IOS_APPLE_API_KEY_ID`, `IOS_APPLE_API_KEY_P8` and shared
-`APPLE_API_ISSUER_ID`. The earlier foundation workflow still present in this branch uses the names below;
-these are not the current repository credential contract. Do not reconfigure secrets from the legacy example.
-
-### Earlier foundation workflow (pending replacement by PR #6)
-
-`.github/workflows/ios.yml` adds **iOS builds** alongside the desktop release workflows. It runs on a hosted
-macOS runner with full Xcode, installs checksum-pinned Godot 4.7.2 and its iOS template, validates signing,
-imports into an isolated stage, archives, checks the actual app size, and exports an IPA. Private keys and
-provisioning profiles are removed in an `always()` cleanup step. Signing never runs for pull requests.
-
-Configure these in the repository's **Settings → Secrets and variables → Actions**:
-
-| Kind | Name | Value |
-| --- | --- | --- |
-| Variable | `IOS_BUNDLE_ID` | The explicit identifier registered for this app, such as `app.curseofstrahd.game` |
-| Secret | `IOS_SIGNING_P12` | Base64 of an exported Apple Distribution certificate **with its private key**, or Apple Development for development installs |
-| Secret | `IOS_SIGNING_P12_PASSWORD` | The password used when exporting that `.p12` |
-| Secret | `IOS_PROVISIONING_PROFILE` | Base64 of the matching `.mobileprovision` for that bundle, certificate and distribution method |
-
-The team ID is read from the validated provisioning profile, so no extra team secret is necessary in CI.
-The existing `APPLE_DEVELOPER_ID_P12` and password continue to sign the Mac download; Developer ID cannot sign
-iOS apps. The existing `APPLE_API_KEY_ID`, `APPLE_API_ISSUER_ID` and `APPLE_API_KEY_P8` are reused only when
-TestFlight upload is selected. Their App Store Connect role and app access must permit uploads.
-
-The repository variable `IOS_BUNDLE_ID` is configured as `app.curseofstrahd.game`. As of 2026-10-16 the three
-iOS signing secrets above are absent, and the local keychain has only the Mac Developer ID identity. The
-workflow is implemented but has not produced a signed iOS archive or a TestFlight upload.
-
-To prepare the iOS credentials, register the explicit App ID in the Apple Developer account, create/select an
-Apple Distribution certificate, and export it with its private key from Keychain Access as a password-protected
-`.p12`. Create an App Store Connect distribution provisioning profile for that App ID and certificate, and
-download it. For direct device installation, use a Development or Ad Hoc profile containing the device UDIDs
-instead, and select the corresponding workflow method. Do not revoke existing Mac certificates.
-
-From a trusted local terminal, set secrets without pasting their values into chat or committing them:
-
-```sh
-gh variable set IOS_BUNDLE_ID --body 'app.curseofstrahd.game'
-base64 -i /path/to/ios-signing.p12 | tr -d '\n' | gh secret set IOS_SIGNING_P12
-gh secret set IOS_SIGNING_P12_PASSWORD
-base64 -i /path/to/profile.mobileprovision | tr -d '\n' | gh secret set IOS_PROVISIONING_PROFILE
-```
-
-The password command prompts interactively. Replace the example bundle ID if the registered identifier differs.
-Create the matching iOS app record in App Store Connect before uploading. The upload action does not create
-that record, assign testers, submit review, or release the app publicly.
-
-After the workflow is merged onto the default branch, run **Actions → iOS builds → Run workflow** with `upload`
-off for the first signed build. Choose the method matching the provisioned profile; mismatches and expired
-profiles fail before asset import. The build number is the workflow run number. Dispatch a new run for a new
-upload; rerunning a successfully uploaded run would reuse its build number.
-
-```sh
-gh workflow run ios.yml -f version=1.0.0 -f method=app-store -f upload=false
-# Once the signed candidate and App Store Connect app are ready:
-gh workflow run ios.yml -f version=1.0.0 -f method=app-store -f upload=true
-```
-
-Each run retains the IPA, zipped archive (including symbols), toolchain/source inventories, app-size report and
-logs as a GitHub artifact for 14 days. Download release candidates for longer retention. The app's distribution
-profile is embedded in the signed app as normal; certificate private keys, API keys and the signing directory
-are excluded from artifacts. A successful upload means Apple accepted it for processing, not that beta review
-or public release has passed. Device qualification remains required before a supported release.
+Uploads do not submit App Store review, assign testers or publish publicly. Keys are removed after every run
+and excluded from retained artifacts. Signing and uploads occur only on manual dispatch, never on PR checks.
 
 ## References
 
