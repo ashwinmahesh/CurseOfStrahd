@@ -21,3 +21,7 @@ Eight screenshots per device show Tser Pool camp, rain over Vallaki, dialogue, c
 The images are unaltered `simctl` JPEG screenshots: iPhone 18 Pro Max at 2868×1320 and iPad Pro 13-inch (M5) at 2752×2064, both iOS 27.0. Native XCTest sets landscape orientation. The capture-only gallery loads real game/UI states in an isolated app and save container; it does not change production gameplay. SHA-256 hashes, source commit, device IDs, ordering and capture provenance are in `screenshot-provenance.json`.
 
 These are native simulator presentation captures, not touch E2E or physical-device evidence. The shipping simulator compatibility fallback uses half-resolution 3D, reduced shadows and no antialiasing; physical devices use the Metal renderer. The native screenshot dimensions are retained without cropping, resizing, compositing or adding marketing overlays.
+
+## Verified delivery
+
+[Workflow 39080588776](https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/39080588776) completed successfully. Apple read-back confirms eight screenshots and one processed preview per device group, the intended screenshot order, the saved description and selected VALID build 2001. `listing-verification.json` records the asset/placement IDs and reviewed hashes. The App Store version remains PREPARE_FOR_SUBMISSION; no App Review submission or public release was performed.

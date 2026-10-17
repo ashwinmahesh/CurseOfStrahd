@@ -1,0 +1,210 @@
+{
+  "app_id": "6823801189",
+  "version_id": "ae62b535-2301-4832-8be3-66f6fa3cc4ea",
+  "version": "1.0.0",
+  "state": "PREPARE_FOR_SUBMISSION",
+  "build_id": "5611bb86-a304-4d17-9a3a-c6efd441f166",
+  "build_number": "2001",
+  "build_processing_state": "VALID",
+  "workflow_url": "https://github.com/ashwinmahesh/CurseOfStrahd/actions/runs/39080588776",
+  "verified_at": "2026-10-17T23:54:20Z",
+  "description_sha256": "a0a48bd393d0604c2e6d6df769ef059693ed5c5bb4117d59530fa9a8b9b297ee",
+  "groups": {
+    "IPHONE_DYNAMIC_ISLAND_LARGE_PROFILE": {
+      "APP_SCREENSHOT": [
+        {
+          "file": "assets/iphone-02-store_world_tser_pool_camp.jpg",
+          "sha256": "3b84b90c028887e53f376e7f0a52cda9c14a0109e8dffff631a0b5a24aa55f0e",
+          "asset_id": "a2c00019-6baf-8165-801e-22acad5e5a5e",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "b1800019-6baf-8165-8f33-34eec1698dd2"
+          ]
+        },
+        {
+          "file": "assets/iphone-04-store_world_vallaki_rain.jpg",
+          "sha256": "0c4eb887b366fd24e0f66e94f259df3b2ed6276833b7cc732a1807389e8a1f45",
+          "asset_id": "37400019-6baf-8165-8008-d9438b001ca8",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "fb800019-6baf-8165-8f30-f5c0a414b9f5"
+          ]
+        },
+        {
+          "file": "assets/iphone-03-mobile_dialogue_npc.jpg",
+          "sha256": "c68f2ab7b84926ad99f07fd70da5f456a4455a2cd325a1225fa49d1f33820488",
+          "asset_id": "15800019-6baf-8165-800b-b6036c53ac03",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "3a800019-6baf-8165-8f0d-a23758b991a0"
+          ]
+        },
+        {
+          "file": "assets/iphone-05-mobile_battle_actions.jpg",
+          "sha256": "f2fe04b8597d63087ad69e4ac6772ea317a753e88d8832e904583838dd87bb06",
+          "asset_id": "10000019-6baf-8165-8020-9dfde3573fb8",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "9cc00019-6baf-8165-8f22-1f3024360d41"
+          ]
+        },
+        {
+          "file": "assets/iphone-06-store_world_krezk_snow.jpg",
+          "sha256": "c154efdb4dcedd238eda8222ad8aebabe7853efdd40ba0f7afe502cdff1e7323",
+          "asset_id": "cf800019-6baf-8165-803c-6a2dfe759e61",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "7f800019-6baf-8165-8f1d-fc97fc261425"
+          ]
+        },
+        {
+          "file": "assets/iphone-08-store_world_blue_water_inn.jpg",
+          "sha256": "ba96320dd041b1f1cd517add96ebc821bbfc1b0e1932e6b492c82f787688fdd9",
+          "asset_id": "41400019-6baf-8165-802f-33b0ce25d651",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "ae000019-6baf-8165-8f1f-aa0a7a56b06a"
+          ]
+        },
+        {
+          "file": "assets/iphone-10-mobile_exploration_world.jpg",
+          "sha256": "5818d8b3eab468b2a734bbdd3e6c9d5602f3201c2c85ef2b2532ae2771ac7e77",
+          "asset_id": "52000019-6baf-8165-8032-11d223d652d0",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "0b400019-6baf-8165-8f3f-6f698ae75592"
+          ]
+        },
+        {
+          "file": "assets/iphone-09-mobile_ui_bag.jpg",
+          "sha256": "b44d4cc7e95d9fd300137a0208244e0b67fac9ebcbd5becc939e32e90afb4a67",
+          "asset_id": "06800019-6baf-8165-803b-b5b4ab20f7c8",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "38e4b05b-3e42-563f-83ed-58f9ac76069e",
+          "placement_ids": [
+            "0c800019-6baf-8165-8f24-512af15e9ca2"
+          ]
+        }
+      ],
+      "APP_PREVIEW": [
+        {
+          "file": "assets/trailer-preview-iphone.mp4",
+          "sha256": "10aee8916130c2dbd16d27c9236c675988693b9a3126a7c84b6c250454733de1",
+          "asset_id": "69800019-6baf-8165-8111-0b7d04f20661",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "1861fdcb-eb99-59e6-8c6c-5a07479d9a84",
+          "placement_ids": [
+            "10c00019-6baf-8165-8f22-e54b75998ad5"
+          ]
+        }
+      ]
+    },
+    "IPAD_13_PROFILE": {
+      "APP_SCREENSHOT": [
+        {
+          "file": "assets/ipad-02-store_world_tser_pool_camp.jpg",
+          "sha256": "0f9986b186c2314094b49ff7ed1514b7cf6d523b1d8018264b188a00cdde8870",
+          "asset_id": "81800019-6baf-8165-8025-ba5dd5a92752",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "2c800019-6baf-8165-8f3a-8ed9a9766081"
+          ]
+        },
+        {
+          "file": "assets/ipad-04-store_world_vallaki_rain.jpg",
+          "sha256": "766b4b81e0cfaca0a78065315bf48249598da81fcaddf4f399120e2fa1ba25e0",
+          "asset_id": "12800019-6baf-8165-8015-adf26f8f63cc",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "76400019-6baf-8165-8f25-c9f091390a2f"
+          ]
+        },
+        {
+          "file": "assets/ipad-03-mobile_dialogue_npc.jpg",
+          "sha256": "69b65cdb8fb1f4ddb904d210d5dfabedac8d220f164ac1af4c947e90221e94c5",
+          "asset_id": "e8400019-6baf-8165-801c-dbc4e47303fd",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "d1000019-6baf-8165-8f23-d3a585e7c49f"
+          ]
+        },
+        {
+          "file": "assets/ipad-05-mobile_battle_actions.jpg",
+          "sha256": "d4e4011fd3cf02ad901eae68d3adc6316d0653bc072610b18cd9e1bfd792380b",
+          "asset_id": "57800019-6baf-8165-800a-4a6f5310f75c",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "5a400019-6baf-8165-8f12-b29c1ba42f6a"
+          ]
+        },
+        {
+          "file": "assets/ipad-06-store_world_krezk_snow.jpg",
+          "sha256": "98a61601f6bb22b57eaa1cb83a8dda1db62af350e8aae65b605f47292d4ca5d1",
+          "asset_id": "d9800019-6baf-8165-8034-807d4be58779",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "2dc00019-6baf-8165-8f11-cfb85e206998"
+          ]
+        },
+        {
+          "file": "assets/ipad-08-store_world_blue_water_inn.jpg",
+          "sha256": "4c5afdf2b3b1469da8a326454181c6cf9fc289a42b06faf1041e8c747b55ff63",
+          "asset_id": "19000019-6baf-8165-8038-4f1bb015f165",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "11800019-6baf-8165-8f1a-3409dfeba328"
+          ]
+        },
+        {
+          "file": "assets/ipad-10-mobile_exploration_world.jpg",
+          "sha256": "11cf0cd0d24c027e85ac42d3d93ac22e017258b83131b94d6bbdc70231f949fb",
+          "asset_id": "52c00019-6baf-8165-8000-13ee25c21f54",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "81800019-6baf-8165-8f14-e668c0675537"
+          ]
+        },
+        {
+          "file": "assets/ipad-09-mobile_ui_bag.jpg",
+          "sha256": "69645d73b33931b35d2ef0987c4a2073350672ac33feddad233d8755642fae1b",
+          "asset_id": "a3c00019-6baf-8165-801d-1dd92264d49f",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "91f7a113-9ce7-5ccc-a265-ac752da04d85",
+          "placement_ids": [
+            "3f000019-6baf-8165-8f38-8be4d4cbfaed"
+          ]
+        }
+      ],
+      "APP_PREVIEW": [
+        {
+          "file": "assets/trailer-preview-ipad.mp4",
+          "sha256": "6b093abc2b9fca71d6c60d1a9e1e2af57dc323cbbdc6933434836b802130f49d",
+          "asset_id": "5c400019-6baf-8165-8117-f1e2c299da26",
+          "state": "PREPARE_FOR_SUBMISSION",
+          "spec_id": "baf53ff6-a9b2-5fe0-ad1e-e1d1bd1740b7",
+          "placement_ids": [
+            "93000019-6baf-8165-8f22-58e09cd663f8"
+          ]
+        }
+      ]
+    }
+  },
+  "icon": {
+    "verified": "Visually compared Apple masked and unmasked 1024x1024 build 2001 icons with art/ui/app_icon_ios.png; same castle-and-moon artwork."
+  },
+  "public_review_submission": false
+}
