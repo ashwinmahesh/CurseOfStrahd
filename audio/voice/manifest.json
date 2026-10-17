@@ -6377,65 +6377,65 @@
  },
  "castle_ghost_servant_3/122ae60f6e093f9a": {
   "chars": 147,
-  "direction": "[stiff, pained, precise]",
+  "direction": "[ghostly, pained, precise]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "I wrote out the banns. The marriage lines. The guest list, every name in my best hand. I would rather not look at her, if it's all the same to you."
  },
  "castle_ghost_servant_3/13426a44fc31809e": {
   "chars": 79,
-  "direction": "[hollow, quiet, haunted]",
+  "direction": "[hollow, haunted, eerie]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Then one night I put down my pen, and I have not been able to pick it up since."
  },
  "castle_ghost_servant_3/1b5d365cc40680e4": {
   "chars": 107,
-  "direction": "[dry, resentful, thin]",
+  "direction": "[ghostly, resentful, thin]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "He used to dictate. These days he writes them himself, in that hand of his. He enjoys it too much to share."
  },
  "castle_ghost_servant_3/37e60aad9dcb9176": {
   "chars": 76,
-  "direction": "[flat, grim, precise]",
+  "direction": "[flat, eerie, precise]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Everyone, now. Burgomasters, priests, girls in the village. Guests like you."
  },
  "castle_ghost_servant_3/6de92d9f2f2e58dd": {
   "chars": 41,
-  "direction": "[quiet, formal, grateful]",
+  "direction": "[hollow, formal, grateful]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Thank you. That will last until midnight."
  },
  "castle_ghost_servant_3/78aa333ee4692790": {
   "chars": 148,
-  "direction": "[formal, proud, thin]",
+  "direction": "[ghostly, formal, thin]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Anghel Daskal, secretary to His Excellency: his letters, his seals, his day-book. For nine years everything that left this room went out in my hand."
  },
  "castle_ghost_servant_3/b0aa31ae5c376767": {
   "chars": 108,
-  "direction": "[thin, dry, wry]",
+  "direction": "[eerie, dry, wry]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "The guests. I wrote your invitation. No, I didn't. He writes them himself now. I like to think I blotted it."
  },
  "castle_ghost_servant_3/b618475449572855": {
   "chars": 85,
-  "direction": "[precise, dry, vague]",
+  "direction": "[ghostly, precise, vague]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Dinner is done, I'm told. I shall enter it in the day-book, when I find the day-book."
  },
  "castle_ghost_servant_3/fd9e667551acc97c": {
   "chars": 119,
-  "direction": "[stiff, formal, curt]",
+  "direction": "[cold, formal, ghostly]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "You have no appointment. His Excellency sees nobody without an appointment, and he makes no appointments. Good evening."
  },
  "castle_ghost_servant_4/103cd78537f5e8db": {
