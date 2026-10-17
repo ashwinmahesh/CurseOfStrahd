@@ -312,9 +312,9 @@ utility fixture passes Files JSON export/import and picker/share cancellation on
 bounded journeys, not a complete campaign or physical-device qualification.
 
 The campaign journeys also report passing new-game creation, inventory/equipment, camera, journal,
-save/Continue and background/resume on both devices. Those runs predate the quiet exploration HUD. The iPhone
-result bundle exports screenshots; the iPad log reports two passing tests, but its result bundle did not
-finalize with a readable Info.plist. Do not describe that bundle as an exportable screenshot record.
+save/Continue and background/resume on both devices. Those runs predate the quiet exploration HUD. Both `game-iphone-18.xcresult` and `game-ipad-18.xcresult` are now finalized and exportable, with
+two passing tests and 15 screenshot attachments per device. The iPad bundle was initially incomplete while
+finalization was pending; its screenshots have since been recovered.
 
 The subsequent quiet exploration journey passes on both devices: Continue, verify the appropriate shortcuts,
 Menu, Inventory, narration history, then return to the unobstructed world. Both `quiet-iphone-19.xcresult` and
@@ -324,6 +324,40 @@ Native campaign testing also caught a lifecycle error when backgrounding: Godot 
 propagating application notifications. Suspension now pauses play and audio immediately, then defers attaching
 the resume page until notification traversal finishes. A regression invokes suspension under that same child-list
 lock and verifies preservation of an existing pause and cancellation of stale deferred UI.
+
+
+## Native UI screenshot gallery
+
+`make ios-gallery` builds a separate simulator app from an existing prepared full-game simulator stage:
+
+```sh
+make ios-gallery IOS_OUT=/absolute/path/to/prepared-simulator-output \
+  IOS_GALLERY_OUT=/absolute/path/to/fresh-gallery-output
+xcrun simctl install <qa-device-uuid> /absolute/path/to/fresh-gallery-output/derived/Build/Products/Release-iphonesimulator/CurseOfStrahd.app
+xcrun simctl launch <qa-device-uuid> app.curseofstrahd.uigallery
+xcrun simctl get_app_container <qa-device-uuid> app.curseofstrahd.uigallery data
+```
+
+The gallery clones the stage, adds only the capture fixtures and support classes, and builds under the isolated
+`app.curseofstrahd.uigallery` identifier. It does not replace game saves or change the production bundle ID.
+Source hashes, inherited stage provenance and build logs remain in its output. Use the same engine/native cache
+environment variables as the source build. The output must be fresh and outside the checkout/source output.
+
+The app writes `Documents/gallery/manifest.json` and PNGs to its data container. Wait for `complete: true`,
+check `native_ios: true`, and copy that folder before uninstalling the gallery. The 2026-10-16 run completed
+80 representative UI states on each of the iPhone 16 Pro and iPad Pro 11 M4 simulators. These are actual native
+viewport renders using game screen classes with prepared state, **not gameplay E2E or physical-device evidence**.
+Images use the app's logical render resolution; XCTest gameplay images capture the full simulator display.
+Some fixtures intentionally show empty, invalid, loading or error states, and HUD-only fixtures omit the world.
+
+The Obsidian project note `iOS Screenshot Gallery.md` indexes all 198 native images: 160 UI fixture images and
+38 gameplay images. The paired HTML gallery supports category/evidence filters and original-PNG links; six
+superseded exploration HUD images are archived separately. The current quiet exploration screenshots come from
+the later `quiet-*-19.xcresult` runs. Combat screenshots show the current HUD, not the proposed redesign.
+This pass exposed a still-open Level Up class-picker layout issue: all classes share one row, causing vertical
+letter wrapping on iPhone and broken labels on iPad. Capture completion is not visual acceptance.
+This collection does not claim every gameplay state or include the native Files/share sheet. Original images,
+source attachment manifests and SHA-256 provenance are retained in the vault's dated attachment directory.
 
 
 ## Native services and reproducible simulator utility tests
