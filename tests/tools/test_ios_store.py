@@ -45,12 +45,33 @@ class StoreTests(unittest.TestCase):
         api.call.side_effect = [
             {'data': [{'id': 'older'}, {'id': 'second'}, {'id': 'first'}]}, {},
             {'data': [{'id': 'first'}, {'id': 'second'}, {'id': 'older'}]}]
-        receipts = [{'placements': [{'id': i, 'attributes': {'placementGroup': 'phone'}}]}
+        receipts = [{'placements': [{'id': i, 'attributes': {'placementGroup': 'phone', 'placementType': 'APP_SCREENSHOT'}}]}
                     for i in ['first', 'second']]
         ios_store.order_placements(api, 'locale', receipts)
         request = api.call.call_args_list[1].kwargs['data']
         order = request['data']['relationships']['orderedPlacements']['data']
         self.assertEqual([p['id'] for p in order], ['first', 'second', 'older'])
+
+    def test_screenshot_order_never_mixes_in_preview_placements(self):
+        from unittest.mock import Mock
+        api = Mock()
+        state = {'APP_PREVIEW': ['preview'], 'APP_SCREENSHOT': ['second', 'first']}
+        def call(path, parameters=None, method='GET', data=None):
+            if method == 'GET':
+                self.assertEqual(parameters['filter[placementGroup]'], 'phone')
+                return {'data': [{'id': i} for i in state[parameters['filter[placementType]']]]}
+            ordered = [p['id'] for p in data['data']['relationships']['orderedPlacements']['data']]
+            self.assertEqual(ordered, ['first', 'second'])
+            state['APP_SCREENSHOT'] = ordered
+            return {}
+        api.call.side_effect = call
+        receipts = [{'placements': [{'id': identity, 'attributes': {
+            'placementGroup': 'phone', 'placementType': kind}}]}
+            for identity, kind in [('preview', 'APP_PREVIEW'), ('first', 'APP_SCREENSHOT'), ('second', 'APP_SCREENSHOT')]]
+        result = ios_store.order_placements(api, 'locale', receipts)
+        self.assertEqual(state['APP_PREVIEW'], ['preview'])
+        self.assertEqual(state['APP_SCREENSHOT'], ['first', 'second'])
+        json.dumps(result)  # The saved ordering receipt must stay JSON-serializable.
 
     def test_reports_never_preserve_signed_upload_urls(self):
         report = {'data': [{'attributes': {'uploadOperations': [{'url': 'secret'}], 'state': 'UPLOADING'}}]}
@@ -67,11 +88,14 @@ class StoreTests(unittest.TestCase):
                 self.assertNotIn('filter[versionString]', parameters)
                 return {'data': [{'id': 'draft', 'attributes': {'versionString': '1.0'}},
                                  {'id': 'unrelated', 'attributes': {'versionString': '2.0'}}]}
+            if path == 'appStoreVersions/draft/build':
+                return {'data': {'type': 'builds', 'id': 'selected-build'}}
             return {'data': []}
         api.call.side_effect = call
         result = ios_store.inspect(api, '1', '1.0.0')
         self.assertEqual([v['id'] for v in result['versions']], ['draft'])
         self.assertEqual(len(result['allVersions']), 2)
+        self.assertEqual(result['versions'][0]['selectedBuild']['id'], 'selected-build')
 
     def test_api_rejects_other_hosts_and_parent_paths(self):
         api = ios_store.StoreAPI(Path('unused'))

@@ -57,6 +57,7 @@ def inspect(api, app_id, version):
     result = {'app': app, 'allVersions': versions,
               'versions': [v for v in versions if v['attributes']['versionString'] in labels]}
     for item in result['versions']:
+        item['selectedBuild'] = api.call('appStoreVersions/' + item['id'] + '/build')['data']
         item['localizations'] = api.call('appStoreVersions/' + item['id'] + '/appStoreVersionLocalizations')['data']
         for loc in item['localizations']:
             loc['placements'] = api.call('appStoreVersionLocalizations/' + loc['id'] + '/placements',
@@ -202,10 +203,12 @@ def order_placements(api, locale_id, receipts):
     groups = {}
     for receipt in receipts:
         for placement in receipt['placements']:
-            groups.setdefault(placement['attributes']['placementGroup'], []).append(placement['id'])
-    for group, wanted in groups.items():
+            key = (placement['attributes']['placementGroup'], placement['attributes']['placementType'])
+            groups.setdefault(key, []).append(placement['id'])
+    for (group, placement_type), wanted in groups.items():
         path = 'appStoreVersionLocalizations/' + locale_id + '/placements'
-        parameters = {'filter[placementGroup]': group, 'sort': 'placementGroupPosition', 'limit': 200}
+        parameters = {'filter[placementGroup]': group, 'filter[placementType]': placement_type,
+                      'sort': 'placementGroupPosition', 'limit': 200}
         existing = [p['id'] for p in all_data(api, path, parameters)]
         ordered = wanted + [identity for identity in existing if identity not in wanted]
         if existing != ordered:
@@ -217,7 +220,7 @@ def order_placements(api, locale_id, receipts):
         actual = [p['id'] for p in all_data(api, path, parameters)]
         if actual != ordered:
             raise RuntimeError('Apple listing order does not match the reviewed media order: ' + group)
-    return groups
+    return [{'group': key[0], 'type': key[1], 'placements': value} for key, value in groups.items()]
 
 
 def apply_listing(api, app_id, version, manifest, output):
@@ -311,6 +314,9 @@ def apply_listing(api, app_id, version, manifest, output):
             save_report(output, 'pending-build.json', {'build_number': build_number, 'status': 'Awaiting Apple VALID'})
     after = inspect(api, app_id, version)
     save_report(output, 'listing.json', after)
+    selected_version = next(v for v in after['versions'] if v['id'] == current['id'])
+    if build_number and len(ready) == 1 and (selected_version.get('selectedBuild') or {}).get('id') != ready[0]['id']:
+        raise RuntimeError('Saved App Store build selection does not match the validated build')
     actual = next(l for v in after['versions'] for l in v['localizations'] if l['id'] == locale['id'])
     if any(actual['attributes'].get(k) != v for k, v in fields.items()):
         raise RuntimeError('Saved listing copy does not match requested metadata')
