@@ -5,6 +5,8 @@ extends PanelContainer
 
 ## Opt-in bounded combat sheet. Other mobile pages retain their full safe-area layout.
 var side_sheet := false
+## Optional left/right art gutters, used by mobile conversations only.
+var side_gutters := Vector2.ZERO
 var body: VBoxContainer
 var scroll: ScrollContainer
 var heading: Label
@@ -96,6 +98,9 @@ func reflow() -> void:
 		rect.size.y = maxf(96.0, minf(rect.end.y, MobileDevice.logical_size().y - _keyboard_height) - rect.position.y)
 	if keyboard_done != null:
 		keyboard_done.visible = _keyboard_height > 0
+	if side_gutters != Vector2.ZERO:
+		rect.position.x += side_gutters.x
+		rect.size.x -= side_gutters.x + side_gutters.y
 	if side_sheet and rect.size.x >= 700 and UiScale.text(18) <= 22:
 		var width := minf(520.0, rect.size.x * 0.60)
 		rect.position.x = rect.end.x - width

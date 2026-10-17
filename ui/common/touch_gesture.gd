@@ -5,16 +5,15 @@ extends RefCounted
 
 const SLOP := 12.0
 const HOLD_MS := 500
-const TURN_RADIANS := PI / 4.0
+## Ignore angular/zoom changes when fingers meet: the line between them has no stable direction.
+const CAMERA_MIN_SPAN := 32.0
 
 var contacts: Dictionary = {}
-var _turn := 0.0
 
 
 func press(index: int, at: Vector2, owner: String, now: int) -> void:
 	contacts[index] = {"start": at, "at": at, "owner": owner, "time": now, "dragged": false, "multiple": false}
 	if contacts.size() > 1:
-		_turn = 0.0
 		for id: int in contacts:
 			(contacts[id] as Dictionary)["multiple"] = true
 
@@ -31,13 +30,11 @@ func move(index: int, at: Vector2) -> Dictionary:
 		contact["dragged"] = true
 	if str(contact["owner"]) != "world":
 		return {"kind": "scroll", "delta": at - before, "owner": contact["owner"]} if bool(contact["dragged"]) else {}
-	if world.size() == 2:
+	if world.size() == 2 and contacts.size() == 2:
 		var pair := _pair(world)
-		_turn += old_pair.angle_to(pair)
-		var steps := int(_turn / TURN_RADIANS)
-		_turn -= steps * TURN_RADIANS
-		return {"kind": "camera", "scale": pair.length() / maxf(old_pair.length(), 1.0),
-			"steps": steps, "delta": (at - before) / 2.0}
+		var stable := old_pair.length() >= CAMERA_MIN_SPAN and pair.length() >= CAMERA_MIN_SPAN
+		return {"kind": "camera", "scale": pair.length() / old_pair.length() if stable else 1.0,
+			"rotation": old_pair.angle_to(pair) if stable else 0.0, "delta": (at - before) / 2.0}
 	if world.size() == 1 and bool(contact["dragged"]) and not bool(contact["multiple"]):
 		return {"kind": "pan", "delta": at - before}
 	return {}
@@ -56,7 +53,6 @@ func release(index: int, at: Vector2, now: int, canceled: bool = false) -> Dicti
 
 func cancel() -> void:
 	contacts.clear()
-	_turn = 0.0
 
 
 func _world() -> Array[int]:

@@ -55,6 +55,8 @@ var _far := 120.0
 var _yaw_steps := 0
 var _yaw := 0.0
 var touch_offset := Vector3.ZERO
+## Continuous mobile twist; keyboard/controller quarter-turn counts remain independent.
+var _touch_yaw := 0.0
 
 
 func _init() -> void:
@@ -84,7 +86,7 @@ func ground_basis() -> Array[Vector3]:
 func snap_to_target() -> void:
 	if follow:
 		global_position = follow.global_position
-	_yaw = deg_to_rad(45.0) + _yaw_steps * PI / 2.0
+	_yaw = deg_to_rad(45.0) + _yaw_steps * PI / 2.0 + _touch_yaw
 	horizon_shown = horizon
 	_apply()
 
@@ -92,7 +94,8 @@ func snap_to_target() -> void:
 func touch_camera(update: Dictionary) -> void:
 	if str(update.get("kind", "")) == "camera":
 		distance = clampf(distance / maxf(float(update.get("scale", 1.0)), 0.1), zoom_min, zoom_max)
-		rotate_step(int(update.get("steps", 0)))
+		# Screen-space positive angles are clockwise; positive camera yaw makes the ground follow the fingers.
+		_touch_yaw = wrapf(_touch_yaw + float(update.get("rotation", 0.0)), -PI, PI)
 	var delta := update.get("delta", Vector2.ZERO) as Vector2
 	var axes := ground_basis()
 	var units := distance / maxf(get_viewport().get_visible_rect().size.y, 1.0)
@@ -138,7 +141,7 @@ func _process(delta: float) -> void:
 		_look(delta)
 	if follow:
 		global_position = global_position.lerp(follow.global_position + touch_offset, clampf(delta * 6.0, 0.0, 1.0))
-	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0
+	var goal := deg_to_rad(45.0) + _yaw_steps * PI / 2.0 + _touch_yaw
 	_yaw = lerp_angle(_yaw, goal, clampf(delta * 9.0, 0.0, 1.0))
 	horizon_shown = move_toward(horizon_shown, horizon, delta * 1.6)
 	tactical_shown = move_toward(tactical_shown, 1.0 if tactical else 0.0, delta * 3.0)

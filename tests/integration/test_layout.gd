@@ -1417,6 +1417,20 @@ func test_mobile_largest_text_and_interface_keep_navigation_and_details_reachabl
 	assert_true(issues.is_empty(), "largest sizes action browser: " + "\n".join(issues))
 	actions.queue_free()
 	await _frames(2)
+	var dialogue := DialogueUI.new()
+	add_child(dialogue)
+	dialogue.busts.party_speaker("godrick_pendlebrook")
+	dialogue._show({"kind": "line", "name": "Ireena", "speaker_id": "ireena", "portrait": "ireena", "narrator": false, "party": false,
+		"text": "The mist surrounds the village. We should speak with the innkeeper before we travel. ".repeat(3)})
+	dialogue._show({"kind": "options", "options": longest_options(6)})
+	await _frames(8)
+	issues = LayoutCheck.problems(dialogue, MobileDevice.safe_rect())
+	assert_true(issues.is_empty(), "largest sizes dialogue with busts: " + "\n".join(issues))
+	for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
+		assert_true(bust.is_visible_in_tree())
+		assert_false(bust.get_global_rect().intersects(dialogue._mobile_page.get_global_rect()))
+	dialogue.queue_free()
+	await _frames(2)
 	GameSettings.set_ui_scale(old_ui)
 	GameSettings.set_text_scale(old_text)
 	MobileDevice.test_size = Vector2.ZERO
@@ -1509,10 +1523,16 @@ func test_mobile_exploration_menu_settings_and_conversation_fit() -> void:
 		await _frames(2)
 		var dialogue := DialogueUI.new()
 		add_child(dialogue)
+		dialogue.busts.party_speaker("godrick_pendlebrook")
+		dialogue._show({"kind": "line", "name": "Ireena", "speaker_id": "ireena", "portrait": "ireena", "narrator": false, "party": false,
+			"text": "The mist surrounds the village. We should speak with the innkeeper before we travel."})
 		dialogue._show({"kind": "options", "options": longest_options(6)})
 		await _frames(8)
 		var issues := LayoutCheck.problems(dialogue, MobileDevice.safe_rect())
 		assert_true(issues.is_empty(), "%s dialogue: %s" % [size_, "\n".join(issues)])
+		assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree(), "both conversation busts remain visible")
+		for bust: TextureRect in [dialogue.busts.left, dialogue.busts.right]:
+			assert_false(bust.get_global_rect().intersects(dialogue._mobile_page.get_global_rect()), "art does not cover text, choices or Continue")
 		dialogue.queue_free()
 		await _frames(2)
 	MobileDevice.test_size = Vector2.ZERO

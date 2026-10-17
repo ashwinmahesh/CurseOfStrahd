@@ -135,7 +135,7 @@ func information() -> void:
 	body.add_child(MobileUi.button("Map", func() -> void:
 		close()
 		hud.command.emit("map")))
-	body.add_child(MobileUi.text("Tap the ground to move or an object to interact. Drag to pan, pinch to zoom, or use Menu → Camera. Menu → More controls → Context shows an object's other actions."))
+	body.add_child(MobileUi.text("Tap the ground to move or an object to interact. Drag to pan, pinch to zoom, and twist two fingers clockwise or counterclockwise to rotate. Menu → Camera also has buttons. Menu → More controls → Context shows an object's other actions."))
 	body.add_child(MobileUi.text(PadGlyphs.names("Controller: left stick walks; right stick turns and zooms. {@mark_prev}/{@mark_next} select nearby objects; {@use_marked} interacts; {@marked_menu} opens their options; {@search} searches. {@leader_prev}/{@leader_next} change leader. {@hud_bar} opens this exploration menu; {start} opens pause/settings. {b} goes back. Settings → Keys → Controller changes bindings.")))
 
 

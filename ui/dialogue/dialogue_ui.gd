@@ -209,7 +209,11 @@ func _ready() -> void:
 		hidden.hide()
 		add_child(hidden)
 		_panel.reparent(hidden)
-		busts.hide()
+		# Busts sit above the page dimmer in reserved gutters, beside the reading column.
+		move_child(busts, _mobile_page.get_index())
+		busts.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		get_viewport().size_changed.connect(_mobile_layout)
+		_mobile_layout()
 		_name.reparent(body)
 		_name.custom_minimum_size.x = 0
 		_text.reparent(body)
@@ -267,6 +271,19 @@ func _build_history() -> void:
 	_history_text.add_theme_color_override("default_color", Look.color("vellum"))
 	col.add_child(_history_text)
 	add_child(_history_panel)
+
+
+func _mobile_layout() -> void:
+	if _mobile_page == null:
+		return
+	var safe := MobileDevice.safe_rect().grow(-4)
+	var gutter := clampf(safe.size.x * 0.19, 80, 240)
+	_mobile_page.side_gutters = Vector2(gutter, gutter)
+	_mobile_page.reflow()
+	busts.mobile_gutter = gutter
+	busts.position = safe.position
+	busts.size = safe.size
+	busts._layout()
 
 
 func toggle_history() -> void:

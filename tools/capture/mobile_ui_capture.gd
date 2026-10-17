@@ -91,6 +91,8 @@ func capture_shots(tool: Node, out: String) -> void:
 	await tool.call("wait_frames", 2)
 	var conversation := DialogueUI.new()
 	add_child(conversation)
+	conversation.busts.party_speaker("godrick_pendlebrook")
+	conversation.busts.line({"portrait": "ireena", "party": false, "narrator": false}, "godrick_pendlebrook")
 	conversation._text.text = "The innkeeper watches you for a moment, then nods toward the fire. Outside, the mist presses against the windows."
 	conversation._show({"kind": "options", "options": [
 		{"text": "Ask about the strange mist around the village.", "label": "", "check": {}},

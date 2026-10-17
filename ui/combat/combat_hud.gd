@@ -227,7 +227,7 @@ func toggle_controls() -> void:
 	if mobile != null:
 		mobile.details("Touch and controller controls", ["Tap a square or creature to preview. The named Move, Attack or Cast button commits it. Cancel spends nothing.",
 			"Actions opens the action browser. Review an action before choosing Aim or Use.",
-			"Drag the battlefield to pan; pinch to zoom and twist to rotate. Camera offers buttons for these controls.",
+			"Drag the battlefield to pan. Put one finger from each hand on the battlefield and twist clockwise or counterclockwise to rotate smoothly; pinch to zoom. Battle Menu → Camera also has buttons.",
 			"Context then a square opens its available commands. Info then a control explains it.",
 			"Tap the actor card for party resources and character sheets. Battle Menu contains turn order, log, camera and settings.",
 			PadGlyphs.names("Controller: left stick moves the square cursor; right stick turns and zooms. {a} confirms; {b} cancels. {@combat_next_target} selects the next target; {@combat_end_turn} ends the turn or finishes target selection."),

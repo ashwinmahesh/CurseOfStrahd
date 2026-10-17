@@ -378,3 +378,16 @@ bounded dismissible Actions sheet are now implemented. See [combat UX](../plans/
 acceptance work. `mobile_battle_capture.tscn` captures prepared battlefield states through `make capture` on
 phone/tablet desktop mobile profiles; these must not be labelled native simulator E2E. The already-dispatched
 TestFlight run at `291d4350a` predates these changes.
+
+## Two-hand camera twist and dialogue art — 2026-10-17
+
+Two world contacts now rotate the camera continuously by their signed angular change. Clockwise and
+counterclockwise twists no longer wait for a 45-degree threshold and snap by 90 degrees. Pinch zoom and
+centroid pan remain available, closely meeting fingers suppress unstable angular/zoom deltas, a third contact
+cannot rotate the world, and releasing a gesture never activates a square. Quarter-turn keyboard/controller
+commands remain independent. Raw viewport tests exercise both directions on phone and tablet layouts.
+
+Mobile conversations retain party and NPC busts in left/right safe-area gutters, with readable, scrollable
+dialogue and choices in the center. Existing lighting, moods and facing apply; missing busts use portrait art.
+`mobile_dialogue_capture.tscn` captures NPC, party, Narrator, choices and history on phone/tablet desktop mobile
+profiles. These new changes are not included in Apple build 1201 and have not yet been qualified natively.

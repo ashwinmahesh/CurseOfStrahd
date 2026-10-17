@@ -25,6 +25,9 @@ static var _facing: Dictionary = {}
 ## False draws every bust as it was drawn, never mirrored: the "before" picture in captures (tools/capture/ui_capture.gd).
 static var mirror := true
 
+## Reserved width per side on mobile. Zero retains the desktop composition.
+var mobile_gutter := 0.0
+
 var left: TextureRect
 var right: TextureRect
 ## The bust each side shows now (its path, "" for none).
@@ -137,6 +140,10 @@ func party_speaker(art_id: String) -> void:
 func _show_side(on_left: bool, art_id: String, mood: String) -> void:
 	var rect := left if on_left else right
 	var path := path_for(art_id, mood)
+	if path == "" and mobile_gutter > 0 and art_id != "":
+		var portrait := "res://art/portraits/%s.png" % art_id
+		if ResourceLoader.exists(portrait):
+			path = portrait
 	var key := path
 	if key == (left_id if on_left else right_id):
 		return
@@ -187,9 +194,14 @@ func _side(on_left: bool) -> TextureRect:
 
 func _layout() -> void:
 	var h := size.y * HEIGHT_SHARE
+	if mobile_gutter > 0:
+		h = minf(h, maxf(1, mobile_gutter - 12) / 0.66)
 	var w := h * 0.66
 	for pair: Array in [[left, true], [right, false]]:
 		var t := pair[0] as TextureRect
 		t.size = Vector2(w, h)
-		t.position = Vector2(-w * 0.04 if bool(pair[1]) else size.x - w * 0.96, size.y - h)
+		if mobile_gutter > 0:
+			t.position = Vector2(6 if bool(pair[1]) else size.x - w - 6, size.y - h)
+		else:
+			t.position = Vector2(-w * 0.04 if bool(pair[1]) else size.x - w * 0.96, size.y - h)
 		t.pivot_offset = Vector2(w / 2.0, h)

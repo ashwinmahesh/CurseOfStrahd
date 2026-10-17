@@ -229,3 +229,11 @@ reconnecting leaves the explicit Continue screen in place. The same page can be 
 The iOS export declares optional ExtendedGamepad support. No controller is required, and desktop layouts/bindings
 retain their prior behavior. See `docs/ui/controller.md` for controls, automated coverage and the physical-device
 matrix. Synthetic input and simulator renders cannot certify Bluetooth pairing or hardware latency.
+
+## Camera and conversation refinement — 2026-10-17
+
+Implemented continuous two-finger twist rotation in both directions, alongside existing pan and pinch zoom.
+Updated exploration/combat help describes the two-hand gesture. Mobile conversations preserve participant
+busts beside the text/choice column, including speaker emphasis and moods, with a portrait fallback.
+Phone/tablet offscreen captures and raw viewport/layout tests cover the update, including large text; native
+qualification and a new Apple upload remain separate from the already processed build 1201.

@@ -960,3 +960,92 @@ func test_mobile_actions_sheet_category_back_and_hidden_choices() -> void:
 	actions.browse()
 	assert_true(actions._list.get_children().any(func(child: Node) -> bool: return str(child.get_meta(&"action_id", "")) == "dodge"), "hidden choices retain an explicit route")
 	actions.dismiss()
+
+
+class CameraWorld extends Node3D:
+	var rig: CameraRig
+	var taps := 0
+
+	func touch_ready() -> bool:
+		return true
+
+	func touch_camera(update: Dictionary) -> void:
+		rig.touch_camera(update)
+
+	func touch_tap(_at: Vector2, _context: bool) -> void:
+		taps += 1
+
+
+func test_two_hand_twist_rotates_real_camera_in_both_directions_without_tapping() -> void:
+	for size_: Vector2 in [Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		for direction: float in [-1.0, 1.0]:
+			var world := CameraWorld.new()
+			root.add_child(world)
+			world.add_to_group(&"touch_world")
+			world.rig = CameraRig.new()
+			world.add_child(world.rig)
+			world.rig.set_process(false)
+			var center := size_ / 2
+			var radius := Vector2(150, 0)
+			var angle := direction * deg_to_rad(20)
+			for index in 2:
+				var touch := InputEventScreenTouch.new()
+				touch.index = index
+				touch.position = center + radius * (-1 if index == 0 else 1)
+				touch.pressed = true
+				get_viewport().push_input(touch, true)
+			await _frames()
+			for index in 2:
+				var drag := InputEventScreenDrag.new()
+				drag.index = index
+				drag.position = center + radius.rotated(angle) * (-1 if index == 0 else 1)
+				get_viewport().push_input(drag, true)
+			await _frames()
+			world.rig._process(1.0)
+			var expected := deg_to_rad(45) + angle
+			assert_between(world.rig.rotation.y, expected - 0.001, expected + 0.001, "twist direction reaches the real camera below the former 45-degree threshold")
+			assert_between(world.rig.distance, 12.999, 13.001)
+			assert_eq(world.rig._yaw_steps, 0, "touch does not change keyboard/controller quarter-turn counts")
+			for index in 2:
+				var release := InputEventScreenTouch.new()
+				release.index = index
+				release.position = center + radius.rotated(angle) * (-1 if index == 0 else 1)
+				get_viewport().push_input(release, true)
+			await _frames()
+			assert_eq(world.taps, 0, "releasing the camera gesture cannot move or activate a target")
+			world.rig.rotate_step(1)
+			world.rig._process(1.0)
+			assert_between(world.rig.rotation.y, expected + PI / 2 - 0.001, expected + PI / 2 + 0.001)
+			world.queue_free()
+			await _frames()
+
+
+func test_mobile_conversation_retains_both_busts_through_lines_options_and_history() -> void:
+	DialogueFile.register(DialogueFile.parse("~ start\nIreena [sad]: The mist surrounds the village.\nPlayer: We will help you.\nNarrator: The fire cracks.\n-> END\n", "test_mobile/busts"))
+	var story := StoryState.new()
+	story.party.append(Pregens.build("godrick_pendlebrook", 3))
+	var dialogue := DialogueUI.new()
+	root.add_child(dialogue)
+	assert_true(dialogue.play(DialogueRunner.new(story, DiceRoller.new(2)), "test_mobile/busts:start"))
+	await _frames()
+	assert_eq(dialogue.busts.left_id, "res://art/busts/godrick_pendlebrook.webp")
+	assert_eq(dialogue.busts.right_id, "res://art/busts/ireena_sad.webp")
+	assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree())
+	assert_eq(dialogue.busts.lit, "right")
+	dialogue._advance()
+	assert_eq(dialogue.busts.lit, "left")
+	dialogue._advance()
+	assert_eq(dialogue.busts.lit, "")
+	dialogue._show({"kind": "options", "options": [{"text": "Ask about the village", "label": "", "check": {}}]})
+	await _frames()
+	assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree(), "choices retain both participants")
+	dialogue.toggle_history()
+	assert_true(dialogue.history_open())
+	dialogue.toggle_history()
+	assert_true(dialogue.busts.left.is_visible_in_tree() and dialogue.busts.right.is_visible_in_tree())
+	dialogue.queue_free()
+	await _frames()
