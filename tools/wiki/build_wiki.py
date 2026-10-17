@@ -1088,6 +1088,98 @@ class Wiki:
         scales = " Scales with your level." if len(placements) > 1 else ""
         return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
 
+    def trigger_words(self, lid, e):
+        """How a fight in place `lid` starts, in words ("" when nothing more needs saying)."""
+        loc = self.g.locations.get(lid, {})
+        kind, _, arg = str(e.get("trigger", "")).partition(":")
+
+        def soft(name):
+            first = name.split(" ", 1)[0]
+            return name[0].lower() + name[1:] if first in ("The", "A", "An") else name
+        if kind == "enter_area":
+            name = next((a.get("name", "") for a in loc.get("areas", []) if a.get("id") == arg), "")
+            if not name:
+                return "when you get there"
+            first = name.split(" ", 1)[0]
+            if first in ("Before", "Beyond", "Behind", "Under", "Outside", "Inside"):
+                return f"when you come {name[0].lower() + name[1:]}"
+            if first in ("The", "A", "An") or "'" in first:
+                return f"when you reach {soft(name)}"
+            return f"when you reach the {name.lower()}"   # a plain place name: "Main Hall", "Village square"
+        if kind == "dialogue":
+            return "from a conversation"
+        if kind == "flag":
+            return "when the story sets it off"
+        if kind == "open":
+            shut = loc.get("containers", []) + loc.get("doors", [])
+            name = next((t.get("label", "") for t in shut if t.get("id") == arg), "")
+            if name:
+                return f"when you open {soft(name)}"
+            name = next((t.get("label", "") for t in loc.get("props", []) if t.get("id") == arg), "")
+            return f"when you use {soft(name)}" if name else "when you open something"
+        if kind == "check":
+            return "after a check"
+        return ""
+
+    def camp_lines(self, loc):
+        """A place's night visitors at camp (data/camp/night_visitors.json, as story/camp_site.gd picks them): the
+        group for its setting (a town's streets, indoors) or its region's land, by the party's level."""
+        g, s = self.g, self.site
+        nv = g.night_visitors
+        if not nv.get("groups") or not loc.get("map") or str(loc.get("rest", "risky")) != "risky":
+            return []
+        mp = loc.get("map") or {}
+        theme = str(mp.get("theme", ""))
+        if not mp.get("outdoors") or theme == "dungeon":
+            where = "indoors"
+        else:
+            where = "wild" if theme in self.wild_themes() else "town"
+        land = (nv.get("settings") or {}).get(where) or (nv.get("lands") or {}).get(loc.get("region", ""),
+                                                                                   nv.get("default_land", ""))
+        rows = []
+        for gr in nv["groups"]:
+            if gr.get("land") != land:
+                continue
+            lv = gr.get("levels") or []
+            mons = [{"monster": m} if isinstance(m, str) else m for m in gr.get("monsters", [])]
+            rows.append(f"| {lv[0]}–{lv[1]} | {self.monsters_line(mons)} | {self.xp_of(mons)} |" if len(lv) == 2 else
+                        f"| | {self.monsters_line(mons)} | {self.xp_of(mons)} |")
+        if not rows:
+            return []
+        return ["### At camp here", "",
+                f"A Long Rest here makes camp, and 1 night in 6 is interrupted (never on Story difficulty). Then the "
+                f"{land} night visitors for your level come out of the dark "
+                f"({s.link('page/random_encounters', 'Random Encounters')}):", "",
+                "| Party level | What comes | XP |", "|---|---|---|"] + rows + [""]
+
+    def road_lines(self, lid):
+        """The random encounter tables whose fights can play out on place `lid` (its `map` or one of its grounds)."""
+        g, s = self.g, self.site
+        names = [s.page(f"{s.paths['page/random_encounters']}#{title_id(rid)}", title_id(rid))
+                 for rid, r in g.random_encounters.items() if lid == r.get("map") or lid in (r.get("grounds") or [])]
+        if not names:
+            return []
+        return ["### On the road", "",
+                f"Random encounters met on {', '.join(names)} can be fought here. What comes, and how likely each is, "
+                f"is on {s.link('page/random_encounters', 'Random Encounters')}.", ""]
+
+    def wild_themes(self):
+        """The map themes a camp counts as the wild (story/camp_site.gd WILD_THEMES)."""
+        if not hasattr(self, "_wild_themes"):
+            src = (self.g.root / "story" / "camp_site.gd").read_text()
+            m = re.search(r"const WILD_THEMES: Array\[String\] = \[(.*?)\]", src)
+            self._wild_themes = re.findall(r'"([a-z_]+)"', m[1]) if m else []
+        return self._wild_themes
+
+    def event_words(self, ref):
+        """A road meeting's opening line, from its dialogue node ("file:node")."""
+        key, _, node = str(ref).partition(":")
+        dlg = self.g.dialogues.get(key)
+        for st in (dlg.nodes.get(node, []) if dlg else []):
+            if st.get("t") == "line":
+                return plain(st.get("text", ""), 110)
+        return title_id(node)
+
     def xp_of(self, monsters):
         return sum(int(self.g.monsters.get(m.get("monster", ""), {}).get("xp", 0) or 0) for m in monsters)
 
@@ -1313,7 +1405,7 @@ class Wiki:
                     continue
                 fl.append(self.fight_summary(pl, quest=False))
                 if len(pl) > 1:
-                    fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                    fl.append(collapsed("example", "Every version (the first whose condition holds is the fight you get)",
                                         self.fight_block(eid, pl)))
                 fl.append("")
             if fl:
@@ -1610,19 +1702,26 @@ class Wiki:
             encs = OrderedDict()
             for e in loc.get("encounters", []):
                 encs.setdefault(e["id"], []).append((lid, e))
-            if encs:
+            camp = self.camp_lines(loc)
+            road = self.road_lines(lid)
+            if encs or camp or road:
                 fl = []
                 for eid, pl in encs.items():
                     q = pl[0][1].get("quest") or {}
                     line = self.fight_summary(pl, quest=False)
+                    starts = list(dict.fromkeys(w for w in (self.trigger_words(lid, e) for _, e in pl) if w))
+                    if starts:
+                        line += f" Starts {' or '.join(starts)}."
                     if q.get("id") in g.quests:
                         line += f" Part of {s.quest(q['id'])}."
                     fl.append(line)
                     if len(pl) > 1:
-                        fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                        fl.append(collapsed("example", "Every version (the first whose condition holds is the fight you get)",
                                             self.fight_block(eid, pl)))
                     fl.append("")
-                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl)))
+                if not encs:
+                    fl += ["No fights of its own.", ""]
+                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl + camp + road)))
             ql = []
             if qs:
                 ql += [f"- {s.quest(x)}: {plain(g.quests[x].get('summary', ''), 140)}" for x in qs] + [""]
@@ -1877,14 +1976,21 @@ class Wiki:
             self.w.write(f"monster/{mid}", s.paths[f"monster/{mid}"], m["name"], parts, tags=["wiki", "monster"],
                          meta={"type": "creature", "creature": m.get("type", ""), "cr": self.cr(m.get("cr")), "image": pic,
                                "summary": plain(m.get("summary", ""), 200)})
-        lines = [f"Every creature the party can fight: {len(g.monsters)} of them. The journal's Bestiary tab fills in "
-                 "as you meet, fell and Study them.", "", "| | Creature | Type | CR | XP | AC | HP |",
-                 "|---|---|---|---|---|---|---|"]
+        lines = [f"Every creature the party can fight: {len(g.monsters)} of them, with their stat blocks' numbers. A fight "
+                 "can give a boss Hit Points of its own (its page's fight lists say so). The journal's Bestiary tab fills "
+                 "in as you meet, fell and Study them.", "",
+                 "| | Creature | Type | Size | CR | XP | AC | HP | Speed | Str | Dex | Con | Int | Wis | Cha |",
+                 "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for mid, m in sorted(g.monsters.items(), key=lambda kv: (float(kv[1].get("cr", 0) or 0), kv[1]["name"])):
             pic = self.img.portrait(m.get("art", mid))
+            sp = m.get("speed") or {}
+            speed = (", ".join((f"{v} ft" if k == "walk" else f"{k} {v} ft") for k, v in sp.items()
+                               if isinstance(v, (int, float)) and v) if isinstance(sp, dict) else str(sp))
+            ab = m.get("abilities") or {}
             lines.append(f"| {embed(pic, 48).replace('|', chr(92) + '|') if pic else ''} | {s.mon(mid)} | "
-                         f"{m.get('type', '')} | {self.cr(m.get('cr'))} | {m.get('xp', '')} | {m.get('ac', '')} | "
-                         f"{(m.get('hp') or {}).get('average', '')} |")
+                         f"{m.get('type', '')} | {str(m.get('size', '')).replace('_', ' ')} | {self.cr(m.get('cr'))} | "
+                         f"{m.get('xp', '')} | {m.get('ac', '')} | {(m.get('hp') or {}).get('average', '')} | {speed} | "
+                         + " | ".join(str(ab.get(k, "")) for k in ("str", "dex", "con", "int", "wis", "cha")) + " |")
         self.w.write("page/bestiary", "Bestiary/All Creatures", "Bestiary", [auto("list", "\n".join(lines))],
                      tags=["wiki", "index"])
 
@@ -2605,16 +2711,56 @@ class Wiki:
             lines.append("")
         self.w.write("page/strahd", "Story/Strahd's Visits", "Strahd's Visits", [auto("list", "\n".join(lines))],
                      tags=["wiki", "story"])
-        lines = ["Travelling between places on the map can be interrupted. Each road has a chance by day and by night, "
-                 "and a weighted table of what comes.", ""]
+        places, roads = {}, defaultdict(list)
+        for f in g.travel.values():
+            for pl in f.get("places", []):
+                places[pl["id"]] = pl.get("name", title_id(pl["id"]))
+        for f in g.travel.values():
+            for rd in f.get("roads", []):
+                if rd.get("table"):
+                    roads[rd["table"]].append(rd)
+
+        def at(e, time):
+            for neg, word in re.findall(r"(not\s+)?\b(day|night)\b", str(e.get("when", ""))):
+                if (word == time) == bool(neg):
+                    return False
+            return True
+
+        def pct(v):
+            return "" if v is None else (f"{v:.0f}%" if v >= 10 else f"{v:.1f}%")
+        lines = ["Travelling between places on the map can be interrupted. Each leg of a journey (one road between two "
+                 "places) rolls its road's chance, by day or by night; if something comes, a weighted pick among the "
+                 "entries whose condition holds decides what.", "",
+                 "The **By day** and **By night** columns are the chance of meeting that entry on one leg, counting every "
+                 "entry that can happen at that time. A story condition that rules some out, or a one-time meeting you've "
+                 "already had, makes the rest more likely; what raises the odds is at the end of the page.", ""]
         for rid, r in g.random_encounters.items():
-            lines += [f"## {title_id(rid)}", r.get("summary", ""), "",
-                      f"Chance per journey: {int(float(r.get('chance_day', 0)) * 100)}% by day, "
-                      f"{int(float(r.get('chance_night', 0)) * 100)}% by night.", "",
-                      "| Weight | When | What | XP |", "|---|---|---|---|"]
-            for e in r.get("entries", []):
-                lines.append(f"| {e.get('weight', 1)} | {esc(human_cond(e.get('when', '')))} | "
-                             f"{self.monsters_line(e.get('monsters', []))} | {self.xp_of(e.get('monsters', []))} |")
+            day, night = float(r.get("chance_day", 0)), float(r.get("chance_night", 0))
+            ents = r.get("entries", [])
+            wd = sum(int(e.get("weight", 1)) for e in ents if at(e, "day"))
+            wn = sum(int(e.get("weight", 1)) for e in ents if at(e, "night"))
+            lines += [f"## {title_id(rid)}", r.get("summary", ""), ""]
+            rl = list(dict.fromkeys(f"{places.get(rd.get('from'), title_id(str(rd.get('from'))))} to "
+                                    f"{places.get(rd.get('to'), title_id(str(rd.get('to'))))}" for rd in roads.get(rid, [])))
+            if rl:
+                lines += [f"**Roads:** {'; '.join(rl)}.", ""]
+            grounds = [x for x in [r.get("map")] + list(r.get("grounds") or []) if x in g.locations]
+            if grounds:
+                lines += [f"**Fought on:** {', '.join(s.loc(x) for x in dict.fromkeys(grounds))}.", ""]
+            lines += [f"Something happens on {int(round(day * 100))}% of legs by day and {int(round(night * 100))}% by night.", "",
+                      "| What | When | By day | By night | XP |", "|---|---|---|---|---|"]
+            for e in ents:
+                w = int(e.get("weight", 1))
+                pd = day * w / wd * 100 if at(e, "day") and wd else None
+                pn = night * w / wn * 100 if at(e, "night") and wn else None
+                if e.get("monsters"):
+                    what = self.monsters_line(e["monsters"])
+                else:
+                    what = f"*{esc(self.event_words(e.get('dialogue', '')))}* (a meeting)"
+                if e.get("once"):
+                    what += " Once only."
+                lines.append(f"| {what} | {esc(human_cond(e.get('when', '')))} | {pct(pd) or '—'} | {pct(pn) or '—'} | "
+                             f"{self.xp_of(e.get('monsters', [])) or ''} |")
             lines.append("")
         nv = g.night_visitors
         if nv.get("groups"):
@@ -2639,6 +2785,17 @@ class Wiki:
                     lines.append(f"| {lvl} | *{esc(plain(gr.get('text', ''), 120))}* {self.monsters_line(mons)} | "
                                  f"{self.xp_of(mons)} |")
                 lines.append("")
+        att = load_json(g.root / "data" / "strahd" / "attention.json")
+        tiers = [t for t in att.get("tiers", []) if t.get("road_day") or t.get("road_night")]
+        wx = [(k.get("label", kid), k.get("road_day", 0), k.get("road_night", 0))
+              for kid, k in (g.weather.get("kinds") or {}).items() if k.get("road_day") or k.get("road_night")]
+        lines += ["## What raises the odds", "",
+                  "- **Strahd's attention.** The more he has noticed the party, the more of his eyes are on the roads: "
+                  + "; ".join(f"{str(t.get('id', '')).replace('_', ' ')}, +{round(float(t.get('road_day', 0)) * 100)}% by day "
+                              f"and +{round(float(t.get('road_night', 0)) * 100)}% by night" for t in tiers) + ".",
+                  "- **Weather.** " + "; ".join(f"{lbl}, +{round(float(d) * 100)}% by day and +{round(float(n) * 100)}% by night"
+                                                for lbl, d, n in wx) + f" ({s.link('page/weather', 'Weather')}).",
+                  "- The chance never goes above 95%, and Find the Path keeps every road quiet for a day.", ""]
         self.w.write("page/random_encounters", "World/Random Encounters", "Random Encounters",
                      [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         w = g.weather
