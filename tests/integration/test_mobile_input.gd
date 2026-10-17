@@ -339,6 +339,81 @@ func test_accessibility_only_activates_current_visible_enabled_controls() -> voi
 	assert_false(access.controls.has(str(enabled.get_instance_id())))
 
 
+class RecordingNativeBridge extends RefCounted:
+	var snapshots: Array[Dictionary] = []
+	var messages: Array[Dictionary] = []
+
+	func set_accessibility(value: String) -> void:
+		snapshots.append(JSON.parse_string(value) as Dictionary)
+
+	func take_events() -> String:
+		var result := JSON.stringify(messages)
+		messages.clear()
+		return result
+
+
+func test_accessibility_action_validation_publishes_changed_snapshot() -> void:
+	var body := MobilePage.build(root, "Queued native input", func() -> void: pass)
+	var field := LineEdit.new()
+	field.placeholder_text = "Search value"
+	field.text = "before"
+	field.custom_minimum_size.y = 48
+	body.add_child(field)
+	var activations := [0]
+	var button := MobileUi.button("Old action", func() -> void: activations[0] = int(activations[0]) + 1)
+	body.add_child(button)
+	await _frames()
+	var previous_service := MobileNative.current
+	var service := MobileNative.new()
+	root.add_child(service)
+	service.set_process(false)
+	var bridge := RecordingNativeBridge.new()
+	service.bridge = bridge
+	service.accessibility = MobileAccessibility.new()
+	service.access_time = 0
+	service._process(0)
+	var old_revision := service.accessibility.revision
+	field.text = "zzzz"
+	bridge.messages.append({"kind": "access_activate", "value": "%d:%d" % [old_revision, button.get_instance_id()]})
+	service._process(0)
+	service._process(1)
+	var latest: Dictionary = bridge.snapshots.back()
+	var value := "missing"
+	for item: Dictionary in latest["items"]:
+		if str(item["id"]) == str(field.get_instance_id()):
+			value = str(item["value"])
+	assert_eq(value, "zzzz", "validation must not consume the new state without publishing it to UIKit")
+	assert_eq(int(activations[0]), 0, "the stale action remains rejected")
+	service.free()
+	MobileNative.current = previous_service
+
+
+func test_accessibility_refreshes_existing_input_values_and_geometry() -> void:
+	var body := MobilePage.build(root, "Editable value", func() -> void: pass)
+	var field := LineEdit.new()
+	field.placeholder_text = "Search value"
+	field.custom_minimum_size.y = 48
+	body.add_child(field)
+	await _frames()
+	var access := MobileAccessibility.new()
+	var before := access.snapshot(get_tree().root)
+	var id := str(field.get_instance_id())
+	field.text = "zzzz"
+	var after := access.snapshot(get_tree().root)
+	assert_false(after.is_empty(), "an existing field's new text must reach native clients")
+	assert_true(int(after["revision"]) > int(before["revision"]))
+	for item: Dictionary in after["items"]:
+		if str(item["id"]) == id:
+			assert_eq(str(item["value"]), "zzzz")
+	var old_revision := access.revision
+	MobileDevice.test_safe = Rect2(8, 8, 750, 361)
+	MobileDevice.current._refresh_geometry()
+	await _frames()
+	var moved := access.snapshot(get_tree().root)
+	assert_false(moved.is_empty(), "safe-area changes must update existing semantic hit frames")
+	assert_true(access.revision > old_revision)
+
+
 func test_mobile_keyboard_avoidance_preserves_text_and_returns_page_geometry() -> void:
 	var body := MobilePage.build(root, "Name", func() -> void: pass)
 	var page := body.get_parent().get_parent().get_parent() as MobilePage

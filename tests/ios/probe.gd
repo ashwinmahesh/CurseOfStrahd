@@ -3,6 +3,7 @@ var native: Object
 var status: Label
 var controls: Dictionary = {}
 var frames := 0
+var access_value := "before"
 var save_name := "test-save-%d" % Time.get_unix_time_from_system()
 func _ready() -> void:
     var marker := FileAccess.open("user://ready.txt", FileAccess.WRITE)
@@ -21,7 +22,7 @@ func _ready() -> void:
     status.text = "Native bridge ready" if native != null else "Native bridge MISSING"
     status.add_theme_font_size_override("font_size", 24)
     box.add_child(status)
-    for label: String in ["Import JSON from Files", "Share test save"]:
+    for label: String in ["Import JSON from Files", "Share test save", "Update search value"]:
         var button := Button.new()
         button.text = label
         button.custom_minimum_size = Vector2(600, 60)
@@ -30,6 +31,8 @@ func _ready() -> void:
         button.pressed.connect(func() -> void:
             if label.begins_with("Import"):
                 native.call("import_save", ProjectSettings.globalize_path("user://import.json"))
+            elif label == "Update search value":
+                access_value = "zzzz"
             else:
                 var file := FileAccess.open("user://" + save_name + ".json", FileAccess.WRITE)
                 file.store_string("{\"test\":true}")
@@ -46,7 +49,7 @@ func _process(_delta: float) -> void:
             var size_ := Vector2(get_window().size)
             rect = (control.get_viewport().get_screen_transform() * control.get_global_transform_with_canvas() * control.get_global_transform().affine_inverse()) * rect
             rect.position -= Vector2(get_window().position)
-            items.append({"id": label, "label": label, "value": "", "hint": "", "role": "button", "frame": [rect.position.x / size_.x, rect.position.y / size_.y, rect.size.x / size_.x, rect.size.y / size_.y]})
+            items.append({"id": label, "label": label, "value": access_value if label == "Update search value" else "", "hint": "", "role": "button", "frame": [rect.position.x / size_.x, rect.position.y / size_.y, rect.size.x / size_.x, rect.size.y / size_.y]})
         native.call("set_accessibility", JSON.stringify({"revision": "1", "items": items}))
     var messages: Array = JSON.parse_string(native.call("take_events"))
     for message: Dictionary in messages:

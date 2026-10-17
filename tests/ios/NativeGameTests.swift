@@ -23,7 +23,7 @@ final class NativeGameTests: XCTestCase {
     @discardableResult
     func tap(_ label: String, scroll: Bool = true) -> XCUIElement {
         var button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
-        for _ in 0..<(scroll ? 32 : 30) {
+        for attempt in 0..<(scroll ? 32 : 30) {
             // Resolve afresh after scrolling or a modal transition: UIKit's semantic elements move while
             // Godot draws, and a retained XCTest element can keep its earlier clipped hit rectangle.
             button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
@@ -32,7 +32,9 @@ final class NativeGameTests: XCTestCase {
                 button.tap()
                 return button
             }
-            if scroll { scrollBody() }
+            // A page may retain its position, or arrive after the first swipe. Search both
+            // directions so a control above the current viewport remains reachable.
+            if scroll { scrollBody(upward: attempt % 16 >= 8) }
         }
         XCTFail("Missing button: \(label)\n\(app.debugDescription)")
         return button
@@ -52,10 +54,10 @@ final class NativeGameTests: XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for: [queryEntered], timeout: 60), .completed, "The search field must receive every software-keyboard character")
     }
 
-    func scrollBody() {
+    func scrollBody(upward: Bool = false) {
         // Start inside the page body, below fixed headers and horizontal tab strips.
-        let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.84))
-        let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: 0.34))
+        let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: upward ? 0.34 : 0.84))
+        let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.7, dy: upward ? 0.84 : 0.34))
         start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0)
     }
 

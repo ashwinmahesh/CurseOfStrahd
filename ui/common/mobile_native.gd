@@ -65,9 +65,7 @@ func _process(delta: float) -> void:
 	access_time -= delta
 	if access_time <= 0 and not pending:
 		access_time = 0.25
-		var snapshot := accessibility.snapshot(get_tree().root)
-		if not snapshot.is_empty():
-			bridge.call("set_accessibility", JSON.stringify(snapshot))
+		_sync_accessibility()
 	var messages: Variant = JSON.parse_string(str(bridge.call("take_events")))
 	if not messages is Array:
 		return
@@ -76,13 +74,20 @@ func _process(delta: float) -> void:
 		if kind == "reduce_motion":
 			system_reduced_motion = str(message.get("value", "")) == "1"
 		if kind.begins_with("access_") and not pending:
-			# Revalidate the surface before accepting an accessibility action queued by UIKit.
-			accessibility.snapshot(get_tree().root)
+			# Revalidate queued actions and publish any changed state to UIKit. A snapshot
+			# advances the cached revision, so discarding it would strand native clients.
+			_sync_accessibility()
 			accessibility.activate(kind, str(message.get("value", "")))
 		if kind.begins_with("file_"):
 			pending = false
 			accessibility.snapshot_key = 0
 			file_result.emit(kind, str(message.get("value", "")))
+
+
+func _sync_accessibility() -> void:
+	var snapshot := accessibility.snapshot(get_tree().root)
+	if not snapshot.is_empty():
+		bridge.call("set_accessibility", JSON.stringify(snapshot))
 
 
 static func feedback() -> void:

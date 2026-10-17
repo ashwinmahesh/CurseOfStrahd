@@ -1,6 +1,19 @@
 import XCTest
 
 final class NativeUtilityTests: XCTestCase {
+    func testSemanticValuesRefreshOnExistingElement() throws {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let app = XCUIApplication(bundleIdentifier: "app.curseofstrahd.nativeprobe")
+        app.launch()
+        let field = app.buttons["Update search value"]
+        XCTAssertTrue(field.waitForExistence(timeout: 20), app.debugDescription)
+        XCTAssertEqual(field.value as? String, "before", app.debugDescription)
+        field.tap()
+        let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "zzzz"), object: field)
+        XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 10), .completed, app.debugDescription)
+    }
+
     func testFilesPickerAndShareSheetCanBeCancelled() throws {
         continueAfterFailure = false
         XCUIDevice.shared.orientation = .landscapeLeft
