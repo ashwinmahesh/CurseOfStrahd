@@ -435,3 +435,14 @@ Clean source `fdc4ba08d` produced 84 native UI fixture renders each on iPhone 16
 Required checks at `0b284ea49`: 171 passed. Its accessibility-state regression fails before the fix and passes afterward. The native utility fixture passes three tests, including an existing semantic value update. At `fdc4ba08d`, both combat journeys and iPad exploration passed, but iPad campaign search timed out; iPhone campaign passed keyboard/rotation/filter clearing and reached Journal before a scrolling stall toward Save and settings prompted interruption. Those runs are not overall green. Fresh campaign qualification of the accessibility fix and corrected test navigation is pending. See the research report for findings and remaining physical-device acceptance. No new Apple build is claimed.
 
 The subsequent clean `0b284ea49` runtime passes the stricter combat journey on both simulators, with test harness `5833363c2`. Its campaign and exploration tests remain running; current-source full-suite acceptance is still open.
+
+
+### Focused native caption gallery
+
+After preparing a fresh source stage and building `make ios-gallery`, launch the isolated gallery with:
+
+```sh
+xcrun simctl launch <qa-device-uuid> app.curseofstrahd.uigallery -- --gallery-fixture=mobile_caption
+```
+
+This captures short narration, a named speaker, long narration, its scrolled end, and Pause. Use a fresh gallery container or copy only the current manifest's files, since a focused run does not delete historical screenshots. Confirm `complete: true`, `native_ios: true`, the source inventory and all listed image hashes. It is a prepared UI fixture, not a touch playthrough. Do not run it on a device occupied by an active campaign test.

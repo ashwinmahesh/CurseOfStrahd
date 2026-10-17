@@ -45,7 +45,7 @@ def build(source: Path, output: Path) -> None:
     subprocess.run(['cp', '-cR', str(source / 'project'), str(stage)], check=True)
     fixtures = stage / 'tools/capture'
     fixtures.mkdir(parents=True, exist_ok=True)
-    for name in ['mobile_ui', 'mobile_menu', 'mobile_secondary', 'mobile_recovery', 'mobile_controller']:
+    for name in ['mobile_ui', 'mobile_menu', 'mobile_secondary', 'mobile_recovery', 'mobile_controller', 'mobile_caption']:
         for suffix in ['.gd', '.tscn']:
             shutil.copy2(ROOT / 'tools/capture' / (name + '_capture' + suffix), fixtures)
     support = stage / 'tests/support'

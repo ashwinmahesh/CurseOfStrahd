@@ -12,15 +12,27 @@ func _ready() -> void:
 	GameSettings.path = "user://gallery_settings.cfg"
 	DirAccess.make_dir_recursive_absolute(directory)
 	DirAccess.make_dir_recursive_absolute(SaveSystem.save_dir)
+	_write_manifest(false)
 	await wait_frames(30)
-	for fixture: String in ["mobile_menu", "mobile_ui", "mobile_secondary", "mobile_recovery", "mobile_controller"]:
+	var fixtures: Array[String] = ["mobile_menu", "mobile_ui", "mobile_secondary", "mobile_recovery", "mobile_controller", "mobile_caption"]
+	var focused := false
+	for argument: String in OS.get_cmdline_user_args():
+		if argument.begins_with("--gallery-fixture="):
+			var selected := argument.get_slice("=", 1)
+			if selected not in fixtures:
+				push_error("Unknown gallery fixture: " + selected)
+				return
+			fixtures.assign([selected])
+			focused = true
+	for fixture: String in fixtures:
 		var scene := (load("res://tools/capture/%s_capture.tscn" % fixture) as PackedScene).instantiate()
 		add_child(scene)
 		await wait_frames(4)
 		await scene.call("capture_shots", self, directory + fixture)
 		scene.queue_free()
 		await wait_frames(4)
-	await _additional_pages()
+	if not focused:
+		await _additional_pages()
 	_write_manifest(true)
 	print("IOS_GALLERY_COMPLETE: %d" % shots.size())
 	var done := Label.new()
