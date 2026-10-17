@@ -3,6 +3,8 @@ extends PanelContainer
 ## A safe-area page with a permanent Back control and a scrolling body. Existing wide details remain scrollable
 ## while individual screens reflow their primary columns; the title and Back never scroll out of reach.
 
+## Opt-in bounded combat sheet. Other mobile pages retain their full safe-area layout.
+var side_sheet := false
 var body: VBoxContainer
 var scroll: ScrollContainer
 var heading: Label
@@ -94,6 +96,10 @@ func reflow() -> void:
 		rect.size.y = maxf(96.0, minf(rect.end.y, MobileDevice.logical_size().y - _keyboard_height) - rect.position.y)
 	if keyboard_done != null:
 		keyboard_done.visible = _keyboard_height > 0
+	if side_sheet and rect.size.x >= 700 and UiScale.text(18) <= 22:
+		var width := minf(520.0, rect.size.x * 0.60)
+		rect.position.x = rect.end.x - width
+		rect.size.x = width
 	position = rect.position
 	size = rect.size
 	custom_minimum_size = Vector2.ZERO

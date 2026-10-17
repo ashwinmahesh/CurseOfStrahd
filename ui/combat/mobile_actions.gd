@@ -19,6 +19,9 @@ var ready_trigger := ""
 var _list: VBoxContainer
 var _origin_turn: Combatant
 var _committed := false
+var search_open := false
+var browse_scroll := 0
+var categories_open := false
 
 
 func open(catalog_: ActionCatalog, actor_: Combatant) -> void:
@@ -27,9 +30,12 @@ func open(catalog_: ActionCatalog, actor_: Combatant) -> void:
 	_origin_turn = catalog.e.current()
 	layer = 40
 	set_meta(&"pad_scope", true)
-	var body := MobilePage.build(self, "Actions · %s" % actor.name(), back)
+	var body := MobilePage.build(self, "Actions", back)
 	page = body.get_parent().get_parent().get_parent() as MobilePage
+	page.side_sheet = true
+	page.reflow()
 	page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	(page.get_parent().get_child(0) as ColorRect).color.a = 0.35
 	var close_button := MobileUi.button("Close", dismiss)
 	close_button.size_flags_horizontal = Control.SIZE_SHRINK_END
 	close_button.autowrap_mode = TextServer.AUTOWRAP_OFF
@@ -38,6 +44,10 @@ func open(catalog_: ActionCatalog, actor_: Combatant) -> void:
 
 
 func back() -> void:
+	if categories_open:
+		categories_open = false
+		browse()
+		return
 	if not selected.is_empty():
 		selected = {}
 		browse()
@@ -56,42 +66,47 @@ func dismiss() -> void:
 func browse() -> void:
 	MobileUi.clear(page.toolbar)
 	MobileUi.clear(page.body)
-	var search := LineEdit.new()
-	search.placeholder_text = "Search actions"
-	search.text = query
-	search.custom_minimum_size.y = 48
-	search.add_theme_font_size_override("font_size", 18)
-	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	search.clear_button_enabled = true
-	search.text_changed.connect(func(value: String) -> void:
-		query = value
-		fill())
-	var search_row := HBoxContainer.new()
-	page.toolbar.add_child(search_row)
-	search_row.add_child(search)
-	var turn := MobileUi.button("Turn options", turn_options)
-	turn.autowrap_mode = TextServer.AUTOWRAP_OFF
-	turn.size_flags_horizontal = Control.SIZE_SHRINK_END
-	search_row.add_child(turn)
-	var tabs := HBoxContainer.new()
-	var strip := ScrollContainer.new()
-	strip.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	strip.add_child(tabs)
-	page.toolbar.add_child(strip)
-	var categories: Array[String] = ["All", ActionCatalog.FAVOURITES, ActionCatalog.HIDDEN]
-	categories.append_array(catalog.tabs_for(actor))
-	for value in categories:
-		var tab := MobileUi.button(value, func() -> void:
-			category = value
-			browse())
-		if category == value:
-			UiParts.light_up(tab)
-		tab.autowrap_mode = TextServer.AUTOWRAP_OFF
-		tabs.add_child(tab)
+	(page.find_child("MobileBack", true, false) as Button).hide()
+	page.heading.text = "Actions"
+	var filters := HBoxContainer.new()
+	page.toolbar.add_child(filters)
+	filters.add_child(MobileUi.button(category + " ▾", choose_category))
+	filters.add_child(MobileUi.button("Search", func() -> void:
+		search_open = not search_open
+		browse()))
+	if search_open or query != "":
+		var search := LineEdit.new()
+		search.placeholder_text = "Search actions"
+		search.text = query
+		search.custom_minimum_size.y = 48
+		search.add_theme_font_size_override("font_size", UiScale.text(18))
+		search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		search.clear_button_enabled = true
+		search.text_changed.connect(func(value: String) -> void:
+			query = value
+			fill())
+		page.toolbar.add_child(search)
 	_list = VBoxContainer.new()
 	_list.add_theme_constant_override("separation", 8)
 	page.body.add_child(_list)
 	fill()
+	page.scroll.set_deferred("scroll_vertical", browse_scroll)
+
+
+func choose_category() -> void:
+	browse_scroll = page.scroll.scroll_vertical
+	categories_open = true
+	MobileUi.clear(page.toolbar)
+	MobileUi.clear(page.body)
+	(page.find_child("MobileBack", true, false) as Button).show()
+	var categories: Array[String] = ["All", ActionCatalog.FAVOURITES, ActionCatalog.HIDDEN]
+	categories.append_array(catalog.tabs_for(actor))
+	for value in categories:
+		page.body.add_child(MobileUi.button(value, func() -> void:
+			category = value
+			categories_open = false
+			browse_scroll = 0
+			browse()))
 
 
 func pad_tab(step: int) -> void:
@@ -99,6 +114,8 @@ func pad_tab(step: int) -> void:
 		return
 	var categories: Array[String] = ["All", ActionCatalog.FAVOURITES, ActionCatalog.HIDDEN]
 	categories.append_array(catalog.tabs_for(actor))
+	categories_open = false
+	browse_scroll = 0
 	category = categories[posmod(categories.find(category) + step, categories.size())]
 	browse()
 
@@ -121,6 +138,8 @@ func fill() -> void:
 	if category != "All":
 		actions = catalog.arranged(actor, category, actions)
 	for action in actions:
+		if category == "All" and catalog.is_hidden(actor, str(action["id"])):
+			continue
 		var words := "%s %s %s" % [action.get("label", ""), action.get("sub", ""), action.get("help", "")]
 		if query.strip_edges() != "" and not words.to_lower().contains(query.strip_edges().to_lower()):
 			continue
@@ -138,6 +157,7 @@ func fill() -> void:
 
 
 func inspect(action: Dictionary) -> void:
+	browse_scroll = page.scroll.scroll_vertical
 	selected = action.duplicate(true)
 	choice = -1
 	metamagic = ""
@@ -148,6 +168,7 @@ func inspect(action: Dictionary) -> void:
 
 
 func review() -> void:
+	(page.find_child("MobileBack", true, false) as Button).show()
 	MobileUi.clear(page.toolbar)
 	MobileUi.clear(page.body)
 	page.scroll.scroll_vertical = 0
@@ -205,7 +226,7 @@ func review() -> void:
 			catalog.set_hidden(actor, id, not catalog.is_hidden(actor, id))
 			review()))
 	var immediate := str(selected.get("targeting", "none")) == "none" or ready_trigger != ""
-	var confirm := MobileUi.button(("Use " if immediate else "Aim ") + str(selected.get("label", "action")), commit)
+	var confirm := MobileUi.button(("Use " if immediate else "Choose target · ") + str(selected.get("label", "action")), commit)
 	confirm.name = "MobileActionCommit"
 	confirm.disabled = not bool(selected.get("legal", false)) or (not choices.is_empty() and choice < 0)
 	page.toolbar.add_child(confirm)

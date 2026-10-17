@@ -1,8 +1,18 @@
 # Mobile combat UX redesign
 
-Updated 2026-10-16. Status: design specification, not an implemented replacement.
+Updated 2026-10-16. Status: first implementation pass; native gameplay qualification and the remaining acceptance items are open.
 
-The mobile action popup already opens, closes and reopens; choosing a targeted action dismisses it before aiming. Native iPhone and iPad tests cover this and practice recovery. The current visual composition is still a first functional port: full-width header/footer controls, truncated actor identity, permanently visible generic Confirm, and a nearly full-screen action browser with too much navigation above too few rows. These are the baseline, not the intended final experience.
+The first replacement is implemented: a compact actor/resource card, Battle Menu, separate End Turn, contextual
+Move/Attack/Cast controls, explicit Cancel and Targets, and a bounded Actions side sheet on sufficient safe areas.
+The root browser has Close, a category chooser and optional search; review retains Back and Close. Category,
+query and scroll survive reopening for the same actor. Hidden actions have an explicit category and are excluded
+from All. Tablet layouts add upcoming turns. Notifications no longer replace the actor/resource card.
+
+Phone and tablet offscreen captures show the actual battlefield using prepared states. These are desktop mobile
+profiles, not native simulator screenshots or E2E. Existing native screenshots show the previous composition.
+The native gameplay journeys and screenshot gallery must be refreshed before calling the redesign qualified.
+Remaining design work includes the richer tablet party context, more thorough area/multi-target commitment
+presentation and uncovered-region camera framing. The sections below remain the full acceptance target.
 
 ## Player needs and design rules
 

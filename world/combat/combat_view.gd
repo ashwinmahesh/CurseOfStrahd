@@ -1261,6 +1261,63 @@ func touch_ready() -> bool:
 		and not hud.prompt_open() and not hud.confirm_open()
 
 
+## Read-only mobile presentation. Execution still goes through the existing command and journal gates.
+func mobile_command_state() -> Dictionary:
+	var state := {"label": "", "enabled": false, "cancel": false, "actions": false, "end": false, "targets": false, "finish": false}
+	if not touch_ready():
+		return state
+	if mode == Mode.OVER:
+		state.merge({"label": "Play again" if restart_allowed else "Continue", "enabled": true}, true)
+		return state
+	var c := _player()
+	if c == null:
+		return state
+	if hud.death_save_shown():
+		state.merge({"label": "Roll death save", "enabled": true}, true)
+		return state
+	state["actions"] = true
+	state["end"] = mode == Mode.IDLE
+	state["targets"] = mode == Mode.TARGET
+	var t := _target_under()
+	state["cancel"] = mode == Mode.TARGET or hover_cell.x >= 0 and hover_cell != c.cell
+	if mode == Mode.TARGET:
+		state["finish"] = not picked.is_empty() or picker.step in ["side", "strike", "victim", "sculpt", "choose", "companion"] or picker.step == "wall" and not picker.path.is_empty()
+		if picker.active():
+			state["label"] = "Choose " + (t.combatant.name().get_slice(" ", 0) if t != null else "square")
+			state["enabled"] = t != null or hover_cell.x >= 0
+			return state
+		var kind := str(selected.get("targeting", ""))
+		var verb := "Cast " if str(selected.get("kind", "")) in ["spell", "item_spell"] else "Use "
+		state["label"] = verb + str(selected.get("label", "action"))
+		if kind in ["point", "points", "place", "direction"]:
+			state["enabled"] = hover_cell.x >= 0
+			if kind == "points":
+				state["label"] = "Choose square"
+		elif t != null:
+			state["enabled"] = catalog.target_why(c, selected, t.combatant) == ""
+			if kind == "multi":
+				state["label"] = "Choose " + t.combatant.name().get_slice(" ", 0)
+			elif str(selected.get("kind", "")) in ["attack", "offhand"]:
+				state["label"] = "Attack " + t.combatant.name().get_slice(" ", 0)
+		else:
+			var redirected := e.objects.redirect(c, selected, hover_cell) if hover_cell.x >= 0 else {}
+			state["enabled"] = bool(redirected.get("legal", false))
+		return state
+	if t != null and t.combatant != c:
+		if c.hostile_to(t.combatant):
+			var approach := catalog.melee_approach(c, t.combatant, _reach)
+			state["label"] = ("Move & attack " if bool(approach.get("walk", false)) else "Attack ") + t.combatant.name().get_slice(" ", 0)
+			state["enabled"] = bool(approach["ok"]) or not _default_attack(c, t.combatant).is_empty()
+		else:
+			state["label"] = "Inspect " + t.combatant.name().get_slice(" ", 0)
+			state["enabled"] = true
+	elif hover_cell.x >= 0 and hover_cell != c.cell:
+		var movement := catalog.move_preview(c, hover_cell, _reach)
+		state["label"] = "Move %d ft" % int(movement["cost"]) if bool(movement["ok"]) else "Cannot move"
+		state["enabled"] = bool(movement["ok"])
+	return state
+
+
 func touch_confirm() -> void:
 	if not touch_ready():
 		return
@@ -1311,7 +1368,11 @@ func touch_command(command: String) -> void:
 	if not touch_ready():
 		return
 	match command:
-		"Cancel targeting": _cancel_targeting()
+		"Cancel targeting":
+			_cancel_targeting()
+			hover_cell = Vector2i(-1, -1)
+			hover_token = null
+		"Finish selection": confirm_early()
 		"Undo move": _undo_move()
 		"End turn": _end_turn()
 

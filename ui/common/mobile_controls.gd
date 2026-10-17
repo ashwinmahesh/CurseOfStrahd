@@ -5,35 +5,85 @@ extends CanvasLayer
 var bar: HBoxContainer
 var confirm: Button
 var drawer: CanvasLayer
+var action_button: Button
+var cancel_button: Button
+var target_button: Button
+var end_button: Button
+var _finish_selection := false
+var _refresh_elapsed := 0.0
+var _action_context := {}
+var _action_actor: Combatant
 
 
 func _ready() -> void:
 	layer = 18
-	EventBus.scene_changed.connect(func(_path: String) -> void: _close())
+	EventBus.scene_changed.connect(func(_path: String) -> void:
+		_close()
+		_action_actor = null
+		_action_context.clear())
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	bar = HBoxContainer.new()
 	bar.add_theme_constant_override("separation", 6)
 	add_child(bar)
-	bar.add_child(MobileUi.button("Menu", _menu))
-	bar.add_child(MobileUi.button("Actions", _actions))
-	confirm = MobileUi.button("Confirm", _confirm)
+	action_button = MobileUi.button("Actions", _actions)
+	bar.add_child(action_button)
+	target_button = MobileUi.button("Targets", func() -> void:
+		var fight := UiFeel.touch.world_target() as CombatView
+		if fight != null:
+			_targets(fight))
+	bar.add_child(target_button)
+	confirm = MobileUi.button("", _confirm)
 	bar.add_child(confirm)
-	bar.add_child(MobileUi.button("More", _more))
+	cancel_button = MobileUi.button("Cancel", func() -> void: _command("Cancel targeting"))
+	bar.add_child(cancel_button)
+	end_button = MobileUi.button("End Turn", func() -> void: _command("Finish selection" if _finish_selection else "End turn"))
+	end_button.autowrap_mode = TextServer.AUTOWRAP_OFF
+	add_child(end_button)
+	for button: Button in [action_button, target_button, confirm, cancel_button, end_button]:
+		button.autowrap_mode = TextServer.AUTOWRAP_OFF
+		button.clip_text = true
+		button.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 
 
-func _process(_delta: float) -> void:
+func _command(command: String) -> void:
+	var fight := UiFeel.touch.world_target() as CombatView
+	if fight != null:
+		fight.touch_command(command)
+
+
+func _process(delta: float) -> void:
 	var target := UiFeel.touch.world_target() if MobileDevice.enabled() else null
-	# Exploration owns its quiet minimap/menu chrome. This command bar belongs only to combat.
 	visible = target is CombatView and drawer == null
 	if not visible:
 		return
-	confirm.visible = target is CombatView
-	if target is CombatView:
-		var fight := target as CombatView
-		confirm.text = "Continue" if fight.mode == CombatView.Mode.OVER else ("Death save" if fight.hud.death_save_shown() else "Confirm")
+	_refresh_elapsed -= delta
+	if _refresh_elapsed > 0:
+		return
+	_refresh_elapsed = 0.1
+	show_commands((target as CombatView).mobile_command_state())
+
+
+func show_commands(state: Dictionary) -> void:
+	confirm.text = str(state["label"])
+	confirm.tooltip_text = confirm.text
+	confirm.visible = confirm.text != ""
+	confirm.disabled = not bool(state["enabled"])
+	action_button.visible = bool(state["actions"])
+	action_button.text = "Change action" if bool(state["targets"]) else "Actions"
+	cancel_button.visible = bool(state["cancel"])
+	target_button.visible = bool(state["targets"])
+	_finish_selection = bool(state.get("finish", false))
+	end_button.text = "Finish" if _finish_selection else "End Turn"
+	end_button.visible = bool(state["end"]) or _finish_selection
 	var safe := MobileDevice.safe_rect().grow(-4)
-	bar.position = Vector2(safe.position.x, safe.end.y - 48)
-	bar.size = Vector2(safe.size.x, 44)
+	end_button.size = Vector2(132, 48)
+	end_button.position = Vector2(safe.position.x, safe.end.y - end_button.size.y)
+	var count := 0
+	for child: Control in bar.get_children():
+		if child.visible:
+			count += 1
+	bar.size = Vector2(minf(safe.size.x - (144 if end_button.visible else 0), count * 150), 48)
+	bar.position = Vector2(safe.end.x - bar.size.x, safe.end.y - maxf(48, bar.get_combined_minimum_size().y))
 
 
 func _menu() -> void:
@@ -91,13 +141,20 @@ func _actions(fight_target: CombatView = null) -> void:
 		var actions := MobileActions.new()
 		drawer = actions
 		add_child(actions)
-		actions.closed.connect(func() -> void: drawer = null)
+		actions.closed.connect(func() -> void:
+			_action_actor = actions.actor
+			_action_context = {"category": actions.category, "query": actions.query, "scroll": actions.page.scroll.scroll_vertical if actions.selected.is_empty() else actions.browse_scroll}
+			drawer = null)
 		actions.command_requested.connect(func(command: String) -> void:
 			if is_instance_valid(fight):
 				fight.touch_command(command))
 		actions.chosen.connect(func(action: Dictionary, level: int) -> void:
 			if is_instance_valid(fight) and fight.touch_ready():
 				fight.hud.cast_at_level.emit(action, level))
+		if _action_actor == fight.hud.shown:
+			actions.category = str(_action_context.get("category", "All"))
+			actions.query = str(_action_context.get("query", ""))
+			actions.browse_scroll = int(_action_context.get("scroll", 0))
 		actions.open(fight.catalog, fight.hud.shown)
 	else:
 		var body := _page("Actions")

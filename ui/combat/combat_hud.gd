@@ -225,11 +225,11 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 
 func toggle_controls() -> void:
 	if mobile != null:
-		mobile.details("Touch and controller controls", ["Tap a square to preview. Confirm commits the selected move or action.",
+		mobile.details("Touch and controller controls", ["Tap a square or creature to preview. The named Move, Attack or Cast button commits it. Cancel spends nothing.",
 			"Actions opens the action browser. Review an action before choosing Aim or Use.",
 			"Drag the battlefield to pan; pinch to zoom and twist to rotate. Camera offers buttons for these controls.",
 			"Context then a square opens its available commands. Info then a control explains it.",
-			"Tap the status bar for party resources and character sheets. Order focuses creatures; Log shows rolls.",
+			"Tap the actor card for party resources and character sheets. Battle Menu contains turn order, log, camera and settings.",
 			PadGlyphs.names("Controller: left stick moves the square cursor; right stick turns and zooms. {a} confirms; {b} cancels. {@combat_next_target} selects the next target; {@combat_end_turn} ends the turn or finishes target selection."),
 			PadGlyphs.names("{@combat_radial} opens Actions. Release does not choose anything. {lb}/{rb} change categories; {a} inspects, then confirms Aim or Use. {b} returns from review, then closes the popup. {start} opens the menu.")])
 		return
@@ -2191,7 +2191,7 @@ func close_confirm() -> void:
 
 func banner(text: String, seconds: float = 1.6) -> void:
 	if mobile != null:
-		mobile.status.text = text if text != "" else mobile.status.text
+		mobile.announce(text, seconds)
 	_banner.text = text
 	_banner_time = seconds
 	_banner.modulate.a = 1.0

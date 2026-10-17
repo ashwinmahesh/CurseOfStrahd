@@ -6,6 +6,10 @@ var hud: CombatHud
 var desktop: Control
 var header: HBoxContainer
 var status: Button
+var battle_menu: Button
+var upcoming: Button
+var notice: Label
+var notice_time := 0.0
 var preview: Button
 var preview_title := ""
 var preview_lines: Array = []
@@ -27,11 +31,18 @@ func setup(owner_: CombatHud, desktop_: Control) -> void:
 	add_child(header)
 	status = MobileUi.button("Battle", overview)
 	status.clip_text = true
-	status.autowrap_mode = TextServer.AUTOWRAP_OFF
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	header.add_child(status)
-	header.add_child(MobileUi.button("Order", order))
-	header.add_child(MobileUi.button("Log", log_page))
+	battle_menu = MobileUi.button("Battle Menu", menu)
+	battle_menu.autowrap_mode = TextServer.AUTOWRAP_OFF
+	add_child(battle_menu)
+	upcoming = MobileUi.button("", order)
+	add_child(upcoming)
+	notice = MobileUi.text("")
+	notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	notice.hide()
+	add_child(notice)
 	preview = MobileUi.button("", preview_page)
 	preview.autowrap_mode = TextServer.AUTOWRAP_OFF
 	preview.clip_text = true
@@ -45,15 +56,67 @@ func setup(owner_: CombatHud, desktop_: Control) -> void:
 func reflow() -> void:
 	var safe := MobileDevice.safe_rect().grow(-4)
 	header.position = safe.position
-	header.size = Vector2(safe.size.x, 48)
-	preview.position = Vector2(safe.position.x, safe.position.y + 54)
-	preview.size = Vector2(safe.size.x, 48)
+	header.size = Vector2(minf(370.0, safe.size.x - 180.0), 0)
+	battle_menu.size = Vector2(164, 48)
+	battle_menu.position = Vector2(safe.end.x - battle_menu.size.x, safe.position.y)
+	upcoming.visible = not MobileDevice.compact()
+	upcoming.position = Vector2(safe.end.x - 250, safe.position.y + 56)
+	upcoming.size = Vector2(250, 0)
+	notice.position = Vector2(safe.position.x, safe.position.y + 104)
+	notice.size = Vector2(minf(460, safe.size.x), 0)
+	preview.size = Vector2(minf(460, safe.size.x), 48)
+	preview.position = Vector2(safe.get_center().x - preview.size.x / 2, safe.end.y - 108)
 
 
 func refresh() -> void:
 	var c := hud.e.current()
-	status.text = "Round %d · %s" % [hud.e.round_no, c.name() if c != null else "Battle"]
-	status.tooltip_text = "Party, resources and turn options"
+	if c == null:
+		status.text = "Battle"
+		return
+	status.text = "%s · Round %d\nHP %d/%d · Move %d ft\nAction %s · Bonus %s · Reaction %s" % [
+		c.name().get_slice(" ", 0), hud.e.round_no, c.creature.hp, c.creature.max_hp(), c.movement_left,
+		"✓" if c.action_available else "—", "✓" if c.bonus_available else "—", "✓" if c.reaction_available else "—"]
+	status.tooltip_text = c.name() + " · Party, conditions and resources"
+	var next_names: Array[String] = []
+	for offset in range(1, mini(4, hud.e.order.size())):
+		var next := hud.e.order[posmod(hud.e.order.find(c) + offset, hud.e.order.size())]
+		if hud.viewer == null or hud.e.can_see(hud.viewer, next):
+			next_names.append(next.name())
+	upcoming.text = "Upcoming\n" + " · ".join(next_names)
+
+
+func announce(text: String, seconds: float) -> void:
+	notice.text = text
+	notice.visible = text != ""
+	notice_time = seconds
+
+
+func _process(delta: float) -> void:
+	if notice_time > 0:
+		notice_time -= delta
+		if notice_time <= 0:
+			notice.hide()
+
+
+func menu() -> void:
+	var target := UiFeel.touch.world_target()
+	var body := open_page("Battle Menu", "menu")
+	body.add_child(MobileUi.button("Party and resources", overview))
+	body.add_child(MobileUi.button("Turn order", order))
+	body.add_child(MobileUi.button("Combat log", log_page))
+	body.add_child(MobileUi.button("Controls and help", func() -> void: hud.toggle_controls()))
+	if UiFeel.mobile_controls != null:
+		var controls := UiFeel.mobile_controls
+		body.add_child(MobileUi.button("Camera", func() -> void:
+			close()
+			controls._camera(target)))
+		body.add_child(MobileUi.button("More controls", func() -> void:
+			close()
+			controls._more(target)))
+	body.add_child(MobileUi.button("Pause and settings", func() -> void:
+		close()
+		if UiFeel.mobile_controls != null:
+			UiFeel.mobile_controls._menu()))
 
 
 func open_page(title: String, page_kind: String = "details", back: Callable = close) -> VBoxContainer:

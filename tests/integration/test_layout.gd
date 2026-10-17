@@ -2010,3 +2010,36 @@ func test_mobile_controller_keyboard_and_hints_fit_safe_areas() -> void:
 	MobileDevice.test_safe = Rect2()
 	get_tree().root.content_scale_size = old_canvas
 	get_tree().root.content_scale_factor = old_factor
+
+
+func test_mobile_contextual_combat_controls_fit_without_overlapping_end_turn() -> void:
+	var old_canvas := get_tree().root.content_scale_size
+	var old_factor := get_tree().root.content_scale_factor
+	for size_: Vector2 in [Vector2(667, 375), Vector2(844, 390), Vector2(1194, 834)]:
+		MobileDevice.test_size = size_
+		MobileDevice.test_safe = Rect2(Vector2(47, 8), size_ - Vector2(94, 29))
+		get_tree().root.size = Vector2i(size_)
+		MobileDevice.current.configure()
+		var controls := MobileControls.new()
+		add_child(controls)
+		controls.set_process(false)
+		for state: Dictionary in [
+			{"label": "", "enabled": false, "cancel": false, "actions": true, "end": true, "targets": false},
+			{"label": "Move 25 ft", "enabled": true, "cancel": true, "actions": true, "end": true, "targets": false},
+			{"label": "Cast Mordenkainen's Magnificent Mansion", "enabled": true, "cancel": true, "actions": true, "end": false, "targets": true},
+			{"label": "Choose square", "enabled": true, "cancel": true, "actions": true, "end": false, "targets": true, "finish": true}]:
+			controls.show_commands(state)
+			await _frames(8)
+			controls.show_commands(state)
+			await _frames(4)
+			var issues := LayoutCheck.problems(controls, MobileDevice.safe_rect())
+			assert_true(issues.is_empty(), "%s %s: %s" % [size_, state["label"], "\n".join(issues)])
+			if controls.end_button.visible:
+				assert_false(controls.end_button.get_global_rect().intersects(controls.bar.get_global_rect()), "End Turn and targeting controls remain separate")
+			assert_true(controls.bar.size.y <= 60, "the command row must not grow into a tall screen-blocking panel")
+		controls.queue_free()
+		await _frames(2)
+	MobileDevice.test_size = Vector2.ZERO
+	MobileDevice.test_safe = Rect2()
+	get_tree().root.content_scale_size = old_canvas
+	get_tree().root.content_scale_factor = old_factor

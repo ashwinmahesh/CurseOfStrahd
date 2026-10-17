@@ -891,3 +891,72 @@ func test_exploration_keeps_phone_clear_and_tablet_shortcuts_compact() -> void:
 		assert_false(is_instance_valid(hud.mobile.sheet))
 		hud.queue_free()
 		await _frames()
+
+
+func test_mobile_combat_commands_are_contextual_and_read_only() -> void:
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	var foe := TestCombat.foe(encounter, "zombie", Vector2i(3, 2))
+	TestCombat.start_with(encounter, actor)
+	var fight := CombatView.new()
+	fight.e = encounter
+	fight.catalog = ActionCatalog.new(encounter)
+	fight.picker = TargetPicker.new(encounter)
+	fight.hud = CombatHud.new()
+	root.add_child(fight.hud)
+	fight.hud.build(encounter, fight.catalog)
+	fight.hud.refresh()
+	fight.mode = CombatView.Mode.IDLE
+	var dice_before := encounter.dice.get_state()
+	var idle := fight.mobile_command_state()
+	assert_eq(str(idle["label"]), "", "there is no generic Confirm on the idle battlefield")
+	assert_true(bool(idle["actions"]) and bool(idle["end"]))
+	fight.hover_cell = Vector2i(2, 3)
+	var movement := fight.mobile_command_state()
+	assert_eq(str(movement["label"]), "Move 5 ft")
+	assert_true(bool(movement["enabled"]))
+	assert_eq(actor.cell, Vector2i(2, 2), "reading the movement presentation cannot move")
+	var token := CombatToken.new()
+	token.combatant = foe
+	fight.hover_token = token
+	fight.hover_cell = foe.cell
+	var attack := fight.mobile_command_state()
+	assert_true(str(attack["label"]).begins_with("Attack "))
+	assert_true(bool(attack["enabled"]))
+	for action in fight.catalog.actions_for(actor):
+		if str(action["kind"]) == "attack" and bool(action["legal"]):
+			fight.selected = action
+			break
+	fight.mode = CombatView.Mode.TARGET
+	token.combatant = actor
+	var invalid := fight.mobile_command_state()
+	assert_false(bool(invalid["enabled"]), "an attack cannot commit against its own actor")
+	assert_false(bool(invalid["end"]), "End Turn is not adjacent to targeting confirmation")
+	fight.mode = CombatView.Mode.BUSY
+	assert_eq(str(fight.mobile_command_state()["label"]), "")
+	assert_eq(encounter.dice.get_state(), dice_before)
+	assert_true(actor.action_available)
+	token.free()
+	fight.free()
+
+
+func test_mobile_actions_sheet_category_back_and_hidden_choices() -> void:
+	var encounter := TestCombat.open_field()
+	var actor := TestCombat.hero(encounter, "godrick_pendlebrook", Vector2i(2, 2), 5)
+	TestCombat.start_with(encounter, actor)
+	var catalog := ActionCatalog.new(encounter)
+	catalog.set_hidden(actor, "dodge", true)
+	var actions := MobileActions.new()
+	root.add_child(actions)
+	actions.open(catalog, actor)
+	await _frames()
+	assert_true(actions.page.size.x < MobileDevice.safe_rect().size.x * 0.7, "the phone sheet leaves the battlefield visible")
+	assert_false((actions.page.find_child("MobileBack", true, false) as Button).visible, "root has Close without redundant Back")
+	assert_false(actions._list.get_children().any(func(child: Node) -> bool: return str(child.get_meta(&"action_id", "")) == "dodge"))
+	actions.choose_category()
+	actions.back()
+	assert_true(actions.visible, "Back from categories returns to choices")
+	actions.category = ActionCatalog.HIDDEN
+	actions.browse()
+	assert_true(actions._list.get_children().any(func(child: Node) -> bool: return str(child.get_meta(&"action_id", "")) == "dodge"), "hidden choices retain an explicit route")
+	actions.dismiss()

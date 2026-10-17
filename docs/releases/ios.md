@@ -25,9 +25,9 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
 - Exploration on iPhone shows the world, top-right minimap and one Menu button. Regular iPad layouts add Party
   and Inventory shortcuts. Menu contains location/objective details, narration history, planning, camera and
   Save and settings. Desktop retains its existing exploration HUD.
-- The combat popup works, but its current header/footer and browser remain oversized. The
-  [combat redesign specification](../plans/ios_combat_ux.md) describes compact turn/resources, contextual
-  confirmation and a temporary side sheet. That replacement is a proposal, not a shipped runtime change.
+- The first [combat redesign](../plans/ios_combat_ux.md) is implemented: compact actor/resources, Battle Menu,
+  contextual confirmation, separate End Turn and a temporary side sheet. Native qualification and the
+  remaining tablet/targeting/camera acceptance work are still open.
 - iOS ignores external executable PCK patches; script updates arrive in signed app releases.
 
 Desktop Forward+ rendering, layouts, input bindings and saved preferences retain their existing paths.
@@ -303,7 +303,7 @@ Some fixtures intentionally show empty, invalid, loading or error states, and HU
 The Obsidian project note `iOS Screenshot Gallery.md` indexes all 206 native images: 168 UI fixture images and
 38 gameplay images. The paired HTML gallery supports category/evidence filters and original-PNG links; six
 superseded exploration HUD images are archived separately. The current quiet exploration screenshots come from
-the later `quiet-*-19.xcresult` runs. Combat screenshots show the current HUD, not the proposed redesign.
+the later `quiet-*-19.xcresult` runs. Those native combat screenshots show the earlier HUD. The compact replacement has newer offscreen phone/tablet evidence; native screenshots and gameplay journeys still need refreshing.
 This pass exposed a still-open Level Up class-picker layout issue: all classes share one row, causing vertical
 letter wrapping on iPhone and broken labels on iPad. Capture completion is not visual acceptance.
 This collection does not claim every gameplay state or include the native Files/share sheet. Original images,
@@ -370,3 +370,11 @@ The refreshed native gallery adds controller focus/hints, the safe-area controll
 navigation (empty Favourites state) and the disconnect/resume page. These are native UI renders with synthetic
 controller input, not paired-controller hardware tests. The built simulator app's Info.plist was checked for the
 optional ExtendedGamepad profile and controller-support declaration.
+
+## Combat presentation replacement — first implementation
+
+The compact actor card, Battle Menu, contextual commands, separated End Turn, tablet upcoming turns and
+bounded dismissible Actions sheet are now implemented. See [combat UX](../plans/ios_combat_ux.md) for remaining
+acceptance work. `mobile_battle_capture.tscn` captures prepared battlefield states through `make capture` on
+phone/tablet desktop mobile profiles; these must not be labelled native simulator E2E. The already-dispatched
+TestFlight run at `291d4350a` predates these changes.
