@@ -248,7 +248,7 @@ def apply_listing(api, app_id, version, manifest, output):
         asset = next((x for x in existing if x['attributes']['fileName'] == name), None)
         if not asset:
             attrs = {'fileName': name, 'fileSize': file.stat().st_size,
-                     'category': 'APP_SCREENSHOTS_AND_PREVIEWS', 'referenceName': item['title']}
+                     'category': 'APP_SCREENSHOTS_AND_PREVIEWS', 'referenceName': item['title'] + ' ' + item['sha256'][:12]}
             if video:
                 attrs['previewFrameTimeCode'] = item.get('poster_timecode', '00:00:05:00')
             asset = api.call(collection, method='POST', data=payload(collection, attrs,
