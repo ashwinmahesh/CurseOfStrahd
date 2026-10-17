@@ -2,7 +2,7 @@
   "production_game_commit": "3d44e2ea1bcf6a3efa7713e57aa98af856d8c502",
   "evidence": "Native iOS Simulator screenshots of prepared game states. Not gameplay E2E or physical-device evidence.",
   "native_capture": "xcrun simctl io DEVICE screenshot --type=jpeg --mask=ignored OUTPUT",
-  "renderer": "OpenGL ES 3 compatibility in Simulator; mobile graphics defaults. Device Metal performance is not represented.",
+  "renderer": "OpenGL ES 3 compatibility in Simulator; the shipping software-simulator fallback renders the 3D layer at 0.5 scale with reduced shadows and no antialiasing. Device Metal performance is not represented.",
   "orientation": "Native XCTest XCUIDevice.shared.orientation = .landscapeLeft. Images are not rotated, cropped or resized after capture.",
   "composition_reference": "https://curseofstrahd.app; website tools/godot/site_world.gd",
   "world_setup": "Website scene locations, weather and camera framing, with zoom clamped to runtime maximum 22 and actual mobile exploration HUD. Website desktop High preset is not applied.",
@@ -10,34 +10,24 @@
   "source_root": "/Volumes/StrahdLanes/strahd-builds/app-store-listing-20261017",
   "screenshots": [
     {
-      "file": "assets/iphone-03-mobile_dialogue_npc.jpg",
-      "sha256": "c68f2ab7b84926ad99f07fd70da5f456a4455a2cd325a1225fa49d1f33820488",
-      "source": "native/iphone/mobile_dialogue_npc.jpg",
-      "device": "iPhone 18 Pro Max",
-      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "file": "assets/ipad-02-store_world_tser_pool_camp.jpg",
+      "sha256": "0f9986b186c2314094b49ff7ed1514b7cf6d523b1d8018264b188a00cdde8870",
+      "source": "native-world/ipad/store_world_tser_pool_camp.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
       "runtime": "iOS 27.0",
-      "order": 3,
-      "location_or_view": "Conversations in Barovia"
+      "order": 1,
+      "location_or_view": "Tser Pool camp"
     },
     {
-      "file": "assets/iphone-05-mobile_battle_actions.jpg",
-      "sha256": "f2fe04b8597d63087ad69e4ac6772ea317a753e88d8832e904583838dd87bb06",
-      "source": "native/iphone/mobile_battle_actions.jpg",
-      "device": "iPhone 18 Pro Max",
-      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "file": "assets/ipad-04-store_world_vallaki_rain.jpg",
+      "sha256": "766b4b81e0cfaca0a78065315bf48249598da81fcaddf4f399120e2fa1ba25e0",
+      "source": "native-world/ipad/store_world_vallaki_rain.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
       "runtime": "iOS 27.0",
-      "order": 5,
-      "location_or_view": "Tactical combat Actions"
-    },
-    {
-      "file": "assets/iphone-09-mobile_ui_bag.jpg",
-      "sha256": "b44d4cc7e95d9fd300137a0208244e0b67fac9ebcbd5becc939e32e90afb4a67",
-      "source": "native/iphone/mobile_ui_bag.jpg",
-      "device": "iPhone 18 Pro Max",
-      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
-      "runtime": "iOS 27.0",
-      "order": 9,
-      "location_or_view": "Party inventory"
+      "order": 2,
+      "location_or_view": "Rain over Vallaki"
     },
     {
       "file": "assets/ipad-03-mobile_dialogue_npc.jpg",
@@ -56,8 +46,38 @@
       "device": "iPad Pro 13-inch (M5)",
       "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
       "runtime": "iOS 27.0",
-      "order": 5,
+      "order": 4,
       "location_or_view": "Tactical combat Actions"
+    },
+    {
+      "file": "assets/ipad-06-store_world_krezk_snow.jpg",
+      "sha256": "98a61601f6bb22b57eaa1cb83a8dda1db62af350e8aae65b605f47292d4ca5d1",
+      "source": "native-world/ipad/store_world_krezk_snow.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 5,
+      "location_or_view": "Snow in Krezk"
+    },
+    {
+      "file": "assets/ipad-08-store_world_blue_water_inn.jpg",
+      "sha256": "4c5afdf2b3b1469da8a326454181c6cf9fc289a42b06faf1041e8c747b55ff63",
+      "source": "native-world/ipad/store_world_blue_water_inn.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 6,
+      "location_or_view": "Inside the Blue Water Inn"
+    },
+    {
+      "file": "assets/ipad-10-mobile_exploration_world.jpg",
+      "sha256": "11cf0cd0d24c027e85ac42d3d93ac22e017258b83131b94d6bbdc70231f949fb",
+      "source": "native/ipad/mobile_exploration_world.jpg",
+      "device": "iPad Pro 13-inch (M5)",
+      "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
+      "runtime": "iOS 27.0",
+      "order": 7,
+      "location_or_view": "The misty Old Svalich Road"
     },
     {
       "file": "assets/ipad-09-mobile_ui_bag.jpg",
@@ -66,8 +86,93 @@
       "device": "iPad Pro 13-inch (M5)",
       "udid": "4B1CA945-7A37-4240-8C62-F93196695A5A",
       "runtime": "iOS 27.0",
-      "order": 9,
+      "order": 8,
+      "location_or_view": "Party inventory"
+    },
+    {
+      "file": "assets/iphone-02-store_world_tser_pool_camp.jpg",
+      "sha256": "3b84b90c028887e53f376e7f0a52cda9c14a0109e8dffff631a0b5a24aa55f0e",
+      "source": "native-world/iphone/store_world_tser_pool_camp.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 1,
+      "location_or_view": "Tser Pool camp"
+    },
+    {
+      "file": "assets/iphone-04-store_world_vallaki_rain.jpg",
+      "sha256": "0c4eb887b366fd24e0f66e94f259df3b2ed6276833b7cc732a1807389e8a1f45",
+      "source": "native-world/iphone/store_world_vallaki_rain.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 2,
+      "location_or_view": "Rain over Vallaki"
+    },
+    {
+      "file": "assets/iphone-03-mobile_dialogue_npc.jpg",
+      "sha256": "c68f2ab7b84926ad99f07fd70da5f456a4455a2cd325a1225fa49d1f33820488",
+      "source": "native/iphone/mobile_dialogue_npc.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 3,
+      "location_or_view": "Conversations in Barovia"
+    },
+    {
+      "file": "assets/iphone-05-mobile_battle_actions.jpg",
+      "sha256": "f2fe04b8597d63087ad69e4ac6772ea317a753e88d8832e904583838dd87bb06",
+      "source": "native/iphone/mobile_battle_actions.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 4,
+      "location_or_view": "Tactical combat Actions"
+    },
+    {
+      "file": "assets/iphone-06-store_world_krezk_snow.jpg",
+      "sha256": "c154efdb4dcedd238eda8222ad8aebabe7853efdd40ba0f7afe502cdff1e7323",
+      "source": "native-world/iphone/store_world_krezk_snow.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 5,
+      "location_or_view": "Snow in Krezk"
+    },
+    {
+      "file": "assets/iphone-08-store_world_blue_water_inn.jpg",
+      "sha256": "ba96320dd041b1f1cd517add96ebc821bbfc1b0e1932e6b492c82f787688fdd9",
+      "source": "native-world/iphone/store_world_blue_water_inn.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 6,
+      "location_or_view": "Inside the Blue Water Inn"
+    },
+    {
+      "file": "assets/iphone-10-mobile_exploration_world.jpg",
+      "sha256": "5818d8b3eab468b2a734bbdd3e6c9d5602f3201c2c85ef2b2532ae2771ac7e77",
+      "source": "native/iphone/mobile_exploration_world.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 7,
+      "location_or_view": "The misty Old Svalich Road"
+    },
+    {
+      "file": "assets/iphone-09-mobile_ui_bag.jpg",
+      "sha256": "b44d4cc7e95d9fd300137a0208244e0b67fac9ebcbd5becc939e32e90afb4a67",
+      "source": "native/iphone/mobile_ui_bag.jpg",
+      "device": "iPhone 18 Pro Max",
+      "udid": "CF8113DA-E616-4F53-A7B7-B747349E2976",
+      "runtime": "iOS 27.0",
+      "order": 8,
       "location_or_view": "Party inventory"
     }
-  ]
+  ],
+  "discarded_candidates": {
+    "store_world_castle_vista": "Foreground roof dominates the frame and obscures the vista.",
+    "store_world_berez_marsh": "The simulator capture is too dark and sparse for the product-page gallery.",
+    "mobile_ui_party": "Unlabeled resource markers in the capture; investigate with longer settling waits before classifying as a game defect."
+  }
 }
