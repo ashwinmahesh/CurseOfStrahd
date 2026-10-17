@@ -22,7 +22,7 @@ remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.
   run proactively outside open transactions. Campaign combat writes a command journal before executing each action. A restart replays the ledger through the rules engine, including pending reactions, exact RNG states and resource costs. An unwritable save holds the action behind Retry. The existing round-start slot is used, and Honour continues to use its single slot. Ordinary desktop saves retain their round-start and fresh-load-dice behavior.
 - Practice combat has its own recovery file and a Resume practice battle entry, separate from campaign slots.
 - Combat Actions opens only on demand. Close is always available, and aiming hides the popup before targeting.
-- Exploration on iPhone shows the world, top-right minimap and one Menu button. Regular iPad layouts add Party
+- Exploration on iPhone shows the world, top-right minimap, Menu and hold-to-Reveal buttons. Regular iPad layouts add Party
   and Inventory shortcuts. Menu contains location/objective details, narration history, planning, camera and
   Save and settings. Desktop retains its existing exploration HUD.
 - The first [combat redesign](../plans/ios_combat_ux.md) is implemented: compact actor/resources, Battle Menu,
@@ -427,3 +427,9 @@ search/filter states and reset list position when typing. Desktop presentation r
 were captured offscreen and visually reviewed; Obsidian's “iOS UX Research and Improvements” note contains
 the comparison, gallery and hashes. These are not native simulator E2E evidence and are not in Apple build 1201.
 See [research and remaining qualification](../plans/ios_ux_research.md).
+
+## Native polish refresh — October 17, 2026
+
+Clean source `fdc4ba08d` produced 84 native UI fixture renders each on iPhone 16 Pro and iPad Pro 11-inch (M4), iOS 27.0. Both gallery manifests report complete/native iOS. The Obsidian note `iOS Native UI Gallery - 2026-10-17.md` and paired searchable HTML gallery contain all 168 screenshots, source inventory and SHA-256 hashes. They show the compact loot rows, large dialogue busts/portraits, smaller text, current Actions popup, and fixed Level Up wrapping. The original October 16 gallery remains historical evidence. HUD-only fixtures omit the world and separate command bar; they do not establish gameplay E2E.
+
+Required checks at `0b284ea49`: 171 passed. Its accessibility-state regression fails before the fix and passes afterward. The native utility fixture passes three tests, including an existing semantic value update. At `fdc4ba08d`, both combat journeys and iPad exploration passed, but iPad campaign search timed out; iPhone campaign passed keyboard/rotation/filter clearing before a one-direction test-navigation problem prompted interruption. Those runs are not overall green. Fresh campaign qualification of the accessibility fix and corrected test navigation is pending. See the research report for findings and remaining physical-device acceptance. No new Apple build is claimed.
