@@ -67,6 +67,9 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   (Slow: its foes in it, the hardest hitting first; Mass Cure Wounds: its side's most hurt). A click on a creature adds
   or drops it, up to the spell's number; a click on the floor or Enter casts. Backspace or right-click places it again.
   With no one in the area it goes off as placed. The AI and the test autopilot take the ones lit by default.
+- **Up to so many enemies of your choice** (Steel Wind Strike's five): choosing the spell lights the foes in range; a
+  click (A, or the next-target key to move between them) adds or drops one, a friend is refused ("Choose an enemy"),
+  and a click on the fifth, or Enter (Y), casts with however many are picked. A melee spell attack goes at each, once.
 - **Friendly fire** is called out in red with what happens to the ally; it never blocks (the player decides).
 - **Walls are drawn** (Wall of Fire, Wind Wall, Wall of Stone, Ice and Force, Wall of Thorns, Blade Barrier, Prismatic
   Wall): click the square where the wall begins, then squares touching the last one (a click further along a

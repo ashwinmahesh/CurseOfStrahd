@@ -81,6 +81,17 @@ func range_ft(s: Dictionary, caster: Combatant = null) -> int:
 	return 9999
 
 
+## Whether an attack spell makes one attack roll for each ray or beam (Scorching Ray, Eldritch Blast), so they may all
+## go at one creature; Steel Wind Strike's five attacks go at five different ones.
+static func fires_per_projectile(s: Dictionary) -> bool:
+	if not s.has("attack"):
+		return false
+	for part: Variant in s.get("damage", []):
+		if str((part as Dictionary).get("per", "")) in ["ray", "beam"]:
+			return true
+	return false
+
+
 func target_count(s: Dictionary, slot: int) -> int:
 	var t := s.get("targets", {}) as Dictionary
 	if str(t.get("count", "")) == "any":
@@ -337,7 +348,7 @@ func _check_targets(c: Combatant, s: Dictionary, slot: int, targets: Array, poin
 		if t is Combatant:
 			tgt.append(t as Combatant)
 	var out := {"why": "", "targets": tgt, "cell": Vector2i(-1, -1)}
-	if not s.has("attack") and str(s["id"]) != "magic_missile" and not bool(s.get("repeat_targets", false)):
+	if not fires_per_projectile(s) and str(s["id"]) != "magic_missile" and not bool(s.get("repeat_targets", false)):
 		var seen_targets: Array[String] = []
 		for target in tgt:
 			if target.id in seen_targets:

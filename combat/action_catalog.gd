@@ -815,7 +815,8 @@ static func spell_targeting(data: Dictionary) -> String:
 	if str(t.get("kind", "creature")) == "self":
 		return "none"
 	if str(t.get("kind", "")) == "enemy":
-		return "enemy"
+		# Up to so many enemies of the caster's choice (Steel Wind Strike's five) are picked one by one, then cast.
+		return "multi" if int(t.get("count", 1)) > 1 else "enemy"
 	if str(t.get("kind", "")) == "ally" and int(t.get("count", 1)) <= 1 and int((data.get("upcast", {}) as Dictionary).get("targets", 0)) == 0:
 		return "ally"
 	if str(data.get("id", "")) == "spare_the_dying":
@@ -1391,6 +1392,11 @@ func target_why(c: Combatant, action: Dictionary, t: Combatant) -> String:
 		"ally":
 			if c.hostile_to(t):
 				return "Choose an ally"
+		"multi":
+			# A spell on up to so many enemies (Steel Wind Strike) takes no friend.
+			if str(action.get("kind", "")) == "spell" and not c.hostile_to(t) \
+					and str((Compendium.shared().spell_data(str(action.get("spell_id", ""))).get("targets", {}) as Dictionary).get("kind", "")) == "enemy":
+				return "Choose an enemy"
 		"dying":
 			if (t.creature.hp > 0 and not t.creature.has_flag("knocked_out")) or t.creature.dead:
 				return "Choose a dying creature (or one knocked out)"
