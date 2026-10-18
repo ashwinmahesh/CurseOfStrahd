@@ -38,6 +38,12 @@
       "journal": "Ilya Krezkov is well. He is out at the well shouting his own name down it, and threatening to climb the wall.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "recovering",
+      "journal": "The White Sun's water broke Ilya's fever, and no cleric and no Abbot came to finish it. He is mending slowly in Krezk under Anna's hands, a spoonful of broth at a time.",
+      "objectives": [],
+      "ends": "success"
     }
   ]
 }

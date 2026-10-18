@@ -12,6 +12,12 @@ if flag.ilya_fate == "healed"
 Anna Krezkova [smile]: Look at him. No, don't, he'll show off. He's eaten three bowls of porridge and asked to see the abbey. I said yes. I said yes to everything today.
 -> menu
 elif flag.ilya_fate == "frail"
+# A cleric's prayer or the Abbot's hands finish what the White Sun began. With nobody to pray and the Abbot gone (slain, or
+# the party fled and left him), nothing could ever move this quest on: Ilya mends slowly instead (sq-stuck-2). A party
+# with a Cleric keeps the prayer; ilya_fate stays frail for the endings and for Dmitri.
+if quest.the_burgomasters_son == frail and not class:cleric and (flag.abbot_fate == "slain" or quest.the_abbots_bride == fled)
+-> recovering
+endif
 Anna Krezkova: He sleeps like a child sleeps now, not like a candle going out. Thin as a reed, but he sleeps. The White Sun did that. And you.
 -> menu
 endif
@@ -26,6 +32,20 @@ endif
 else
 Anna Krezkova: Come in. Quietly. He's sleeping, or something like it.
 endif
+-> menu
+
+~ recovering
+if flag.abbot_fate == "slain"
+Anna Krezkova [weary]: They say the thing on the mountain is dead. Good. I've stopped watching the road for a brown habit to come down it.
+else
+Anna Krezkova [weary]: Whatever's up in that abbey has its eyes on the castle now, not on us. I've stopped leaving the latch off for a blessing from the mountain.
+endif
+quest the_burgomasters_son recovering
+Anna Krezkova: There'll be no sudden grace for him, only the slow way back. He took three spoonfuls of Kasha's barley broth at noon and complained it needed salt, which is prayer enough for this house.
+Anna Krezkova [weary]: Nobody is coming down that hill to lay hands on him, and I'm done waiting on miracles. The White Sun broke the fire in him; I can do the rest with wool blankets and boiled water.
+gold +40
+Anna Krezkova: (She presses a small linen pouch into your palm.) Take it and don't argue. We set it aside for his stone, and I'll not have stone-money sitting in a cupboard while the boy breathes.
+Anna Krezkova [smile]: Come back in a month and he'll be pestering you for stories at the well, thin as a switch and twice as stubborn.
 -> menu
 
 ~ menu
