@@ -153,7 +153,7 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		e.spend_action(c)
 		c.took_attack_action = true
 		c.attacks_left = e.attacks_per_action(c) - 1
-		# A stat-block creature goes on only with the attacks its Multiattack lists (a bandit captain's Pistol is one).
+		# A stat-block creature goes on only with the attacks its Multiattack lists (an Ape's Rock is one).
 		if c.creature is Monster and not in_multiattack(c, str(option.get("action_id", ""))):
 			c.attacks_left = 0
 		e.echo_knight.attack_action_taken(c)
