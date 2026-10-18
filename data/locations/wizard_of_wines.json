@@ -650,8 +650,8 @@
     {
       "npc": "sprig",
       "cell": [
-        24,
-        24
+        40,
+        14
       ],
       "dialogue": "wizard_of_wines/sprig:start",
       "facing": "east",

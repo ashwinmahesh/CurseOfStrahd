@@ -722,8 +722,8 @@
     {
       "npc": "ioana",
       "cell": [
-        14,
-        18
+        22,
+        23
       ],
       "dialogue": "krezk/vadu_children:ioana",
       "facing": "east",
@@ -736,8 +736,8 @@
     {
       "npc": "zamfir",
       "cell": [
-        15,
-        18
+        21,
+        23
       ],
       "dialogue": "krezk/vadu_children:zamfir",
       "facing": "west",
@@ -750,8 +750,8 @@
     {
       "npc": "codruta",
       "cell": [
-        16,
-        19
+        21,
+        22
       ],
       "dialogue": "krezk/vadu_children:codruta",
       "facing": "south",
@@ -1037,8 +1037,8 @@
     {
       "npc": "madam_profira",
       "cell": [
-        20,
-        19
+        23,
+        17
       ],
       "dialogue": "krezk/profira:start",
       "facing": "south",
