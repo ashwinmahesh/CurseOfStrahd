@@ -102,6 +102,12 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		bank.position = board.cell_center(cell)
 		root.add_child(bank)
 		return root
+	if art == "amber_case":
+		# The Amber Temple's amber (AmberGlow): built in code and lit from inside in the Modern finish; Classic keeps the
+		# lying box it was frozen with (the catalog entry's `classic`).
+		if Look.modern():
+			return AmberGlow.place(board, root, cell, look)
+		art = str(look.get("classic", "amber_sarcophagus"))
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])

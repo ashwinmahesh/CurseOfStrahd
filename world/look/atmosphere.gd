@@ -1407,6 +1407,8 @@ func _light_kind(l: OmniLight3D) -> String:
 		return "lantern"
 	if str(l.name).begins_with("WindowLight"):
 		return "lit_window"
+	if l.has_meta("amber"):
+		return "amber"   # the light inside a block of the temple's amber (AmberGlow)
 	var c := Vector2i(floori(l.global_position.x), floori(l.global_position.z))
 	if _data_lights.has(c):
 		var k := str(_data_lights[c])

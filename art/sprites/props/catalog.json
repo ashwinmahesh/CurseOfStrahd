@@ -164,24 +164,96 @@
     },
     "standing_stones": "standing_stones",
     "ritual_offerings": "offering_circle",
-    "sarc_khirad": "amber_sarcophagus",
-    "sarc_norganas": "amber_sarcophagus",
-    "sarc_savnok": "amber_sarcophagus",
-    "sarc_seriach": "amber_sarcophagus",
-    "sarc_sykane": "amber_sarcophagus",
-    "sarc_tarakamedes": "amber_sarcophagus",
-    "sarc_tenebrous": "amber_sarcophagus",
-    "sarc_yrrga": "amber_sarcophagus",
-    "sarc_zhudun": "amber_sarcophagus",
-    "sarc_dahlver_nar": "amber_sarcophagus",
-    "cracked_sarcophagus": "amber_sarcophagus",
-    "hollow_sarcophagus": "amber_sarcophagus",
-    "sarc_zantras": "amber_sarcophagus",
-    "sarc_fekre": "amber_sarcophagus",
-    "sarc_taar_haak": "amber_sarcophagus",
-    "sarc_shami_amourae": "amber_sarcophagus",
-    "sarc_yog": "amber_sarcophagus",
-    "sarc_drizlash": "amber_sarcophagus",
+    "sarc_khirad": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_norganas": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_savnok": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_seriach": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_sykane": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_tarakamedes": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_tenebrous": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_yrrga": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_zhudun": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_dahlver_nar": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "cracked_sarcophagus": {
+      "art": "amber_case",
+      "case": "cracked",
+      "classic": "amber_sarcophagus"
+    },
+    "hollow_sarcophagus": {
+      "art": "amber_case",
+      "case": "hollow",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_zantras": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_fekre": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_taar_haak": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_shami_amourae": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_yog": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
+    "sarc_drizlash": {
+      "art": "amber_case",
+      "case": "vestige",
+      "classic": "amber_sarcophagus"
+    },
     "cracked_colossus": {
       "art": "colossus",
       "see_through": true
@@ -352,6 +424,56 @@
     "ambush_lookout_tree": {
       "art": "hunters_tree_stand",
       "fade": true
+    },
+    "empty_plinth": {
+      "art": "amber_case",
+      "case": "plinth",
+      "classic": "altar_stone"
+    },
+    "sleeper_1": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_2": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_3": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_4": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_5": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_6": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_7": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "sleeper_8": {
+      "art": "amber_case",
+      "case": "sleeper",
+      "classic": "amber_sarcophagus"
+    },
+    "eye_block": {
+      "art": "amber_case",
+      "case": "block",
+      "classic": "rubble"
     }
   },
   "low_cover": {

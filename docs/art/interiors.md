@@ -251,6 +251,22 @@ braziers burning in the antechamber and either side of the altar.
   shelves (`chained_bookcase`); the warden's study is buried in pinned notes (set `buried_study`); the wardens' cells
   each hold a cot; the vault of offerings is heaped with coins, crowns, swords and toys (`offering_pile`, set
   `offerings`); the guardroom and the sanctum have cold braziers (`brazier_cold`; the sanctum's had been lit green).
+- The Look Plan (vault "Amber Temple Look Plan.md", 2026-10-18), built in steps:
+  - Each room has its own light by colour (frost-blue vestibule, guardrooms, cells and sanctum, a violet fill in the great
+    hall, honey at its pillars and down the nave, green flameskull points in the library) and the halls hold no snow lumps
+    or statue heads; the vestibule, guardrooms, cells and hall of echoes lie on frosted flags (an area's `floor` with
+    `raised: true`, since the doors' ledge stands 25 ft up); rock, not a snowfield, lies round the three inside maps
+    (building_kit `ground.amber`; the doors keep their snow); the library and the vaults have their own moods and dust.
+  - The black stone is polished: its texture-manifest `material` has a `gloss` (a cap on roughness after the ORM map),
+    so the party and the glow mirror in it.
+  - The temple's lights are the `amber` kind (Atmosphere.LIGHT_KINDS, LightFlicker.STYLES): one slow swell about every
+    five seconds, no flutter, no shadow.
+  - The amber is `AmberGlow` (world/look/amber_glow.gd, shaders/world/amber.gdshader), built in code in the Modern finish
+    (Classic keeps the lying box): the catalog id's `case` picks `vestige` (upright, two squares tall, lit from inside by
+    a light that breathes and the glass follows), `cracked`, `sleeper` (lying, under the vaults), `hollow` (the Thirst's
+    empty sarcophagus, lying across the squares of cover it covers, the largest block of all), `plinth` (the empty
+    plinth, frost ring, scrape marks toward the nearest exit) and `block` (the cottage-sized block of amber in the Eye's
+    chamber, broken open from the inside). A case stands on its prop's '=' squares and changes no rule.
 
 ### Castle Ravenloft
 

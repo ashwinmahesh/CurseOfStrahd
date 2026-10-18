@@ -4,7 +4,7 @@
   python3 tools/perf/perf_run.py [--out DIR] [--frames N] [--warm N] [--passes N]
                                  [--only title,newgame,places,saveload,combat,transitions,fights,foemem,screens] [--places id,id]
                                  [--encounters id,id] [--settle S] [--profile]
-                                 [--effects msaa,ssr,SpriteReflection]
+                                 [--effects msaa,ssr,SpriteReflection] [--effect-places vallaki@day,amber_temple_vault]
                                  [--headless] [--cover] [--timeout S]
 
 --effects picks the effects phases' list: the probe's own names, or a class with a `static func set_enabled(on)` (an
@@ -307,6 +307,7 @@ def main():
     ap.add_argument("--pairs", type=int, default=0)
     ap.add_argument("--cycles", type=int, default=0)
     ap.add_argument("--effects", default="")
+    ap.add_argument("--effect-places", default="")
     ap.add_argument("--port", type=int, default=0)
     ap.add_argument("--timeout", type=int, default=1800)
     ap.add_argument("--headless", action="store_true")
@@ -333,6 +334,8 @@ def main():
         user.append("--cycles=%d" % args.cycles)
     if args.effects:
         user.append("--effects=" + args.effects)
+    if args.effect_places:
+        user.append("--effect_places=" + args.effect_places)
     if args.cover:
         user.append("--cover=1")
     cmd = [os.path.join(ROOT, "tools", "godot"), "--path", ROOT, "--resolution", "1x1", "--position", "100000,100000",
