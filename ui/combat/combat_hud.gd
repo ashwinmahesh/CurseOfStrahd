@@ -48,6 +48,8 @@ const CONTROLS: Array[String] = [
 	"Reactions always ask unless you set a rule: in the prompt (Next time: Ask me / Always use it / Never), or on the Reactions tab, where a click on a rule steps it through Ask, Automatic and Off on any turn. A slot with a gilt corner holds choices: click it to pick one.",
 ]
 
+var mobile: MobileBattleHud
+
 var e: Encounter
 var catalog: ActionCatalog
 ## The party member whose hotbar is shown (the active one on their turn, or whoever the player inspects).
@@ -208,9 +210,29 @@ func build(encounter: Encounter, catalog_: ActionCatalog) -> void:
 		l.custom_minimum_size = Vector2(800, 0)
 		cbox.add_child(l)
 	add_child(_controls)
+	if MobileDevice.enabled():
+		var desktop := Control.new()
+		desktop.name = "DesktopPresentation"
+		desktop.hide()
+		add_child(desktop)
+		for child in get_children():
+			if child is Control and child != desktop and child != radial:
+				child.reparent(desktop)
+		mobile = MobileBattleHud.new()
+		add_child(mobile)
+		mobile.setup(self, desktop)
 
 
 func toggle_controls() -> void:
+	if mobile != null:
+		mobile.details("Touch and controller controls", ["Tap a square or creature to preview. The named Move, Attack or Cast button commits it. Cancel spends nothing.",
+			"Actions opens the action browser. Review an action before choosing Aim or Use.",
+			"Drag the battlefield to pan. Put one finger from each hand on the battlefield and twist clockwise or counterclockwise to rotate smoothly; pinch to zoom. Battle Menu → Camera also has buttons.",
+			"Context then a square opens its available commands. Info then a control explains it.",
+			"Tap the actor card for party resources and character sheets. Battle Menu contains turn order, log, camera and settings.",
+			PadGlyphs.names("Controller: left stick moves the square cursor; right stick turns and zooms. {a} confirms; {b} cancels. {@combat_next_target} selects the next target; {@combat_end_turn} ends the turn or finishes target selection."),
+			PadGlyphs.names("{@combat_radial} opens Actions. Release does not choose anything. {lb}/{rb} change categories; {a} inspects, then confirms Aim or Use. {b} returns from review, then closes the popup. {start} opens the menu.")])
+		return
 	_controls.visible = not _controls.visible
 
 
@@ -331,6 +353,9 @@ func _apply_actions_state() -> void:
 
 ## Minimizes the log to its title bar (showing the latest line) or restores it. Remembered for the session.
 func toggle_log() -> void:
+	if mobile != null:
+		mobile.log_page()
+		return
 	log_minimized = not log_minimized
 	_apply_log_state()
 
@@ -594,6 +619,25 @@ func _build_area_saves() -> void:
 ## ActionCatalog.spell_preview's creatures (friends first, each with a portrait, friend or foe, and its chance to save or
 ## why it's safe), `warnings` (friendly fire, Concentration). Rebuilt only when something in it changed.
 func show_area_saves(title: String, sub: String, rows: Array, warnings: Array) -> void:
+	if mobile != null:
+		mobile.area_lines = [title, sub]
+		for row: Dictionary in rows:
+			var effect := ""
+			if bool(row["safe"]):
+				effect = "safe (Sculpt Spells)"
+			elif bool(row["unaffected"]):
+				effect = "unaffected"
+			elif float(row["save_chance"]) >= 0:
+				effect = "%d%% to save" % roundi(float(row["save_chance"]) * 100)
+			if int(row["damage"]) >= 0:
+				effect += " · ~%d damage" % int(row["damage"])
+			if str(row["drops"]) != "":
+				effect += " · " + str(row["drops"])
+			mobile.area_lines.append("%s (%s): %s" % [row["name"], "friend" if bool(row["ally"]) else "foe", effect])
+		mobile.area_lines.append_array(warnings)
+		mobile.preview.text = "%s · %d creatures · Details" % [title, rows.size()]
+		mobile.preview.show()
+		return
 	var key := hash([title, sub, rows, warnings])
 	if _area_panel.visible and key == _area_key:
 		return
@@ -648,11 +692,13 @@ func _place_area_panel() -> void:
 
 
 func hide_area_saves() -> void:
+	if mobile != null:
+		mobile.area_lines.clear()
 	_area_panel.visible = false
 
 
 func area_saves_shown() -> bool:
-	return _area_panel.visible
+	return not mobile.area_lines.is_empty() if mobile != null else _area_panel.visible
 
 
 ## One creature in the area panel: its portrait, its name, friend or foe, and its chance to save (or safe, unaffected),
@@ -802,11 +848,11 @@ func _build_confirm() -> void:
 	PadGlyphs.hint(yes, "End turn (%s)" % InputActions.key_text(&"combat_end_turn"), "End turn ({a})")
 	yes.set_meta(&"pad_first", true)
 	yes.pressed.connect(func() -> void:
-		_confirm.visible = false
+		close_confirm()
 		end_turn_pressed.emit())
 	var no := Button.new()
 	PadGlyphs.hint(no, "Keep going (Esc)", "Keep going ({b})")
-	no.pressed.connect(func() -> void: _confirm.visible = false)
+	no.pressed.connect(close_confirm)
 	row.add_child(yes)
 	row.add_child(no)
 	box.add_child(row)
@@ -845,6 +891,8 @@ func refresh() -> void:
 	_refresh_hotbar()
 	Creature.end_read()
 	refresh_log()
+	if mobile != null:
+		mobile.refresh()
 
 
 func _refresh_strip() -> void:
@@ -1675,7 +1723,7 @@ func _arrange(action: Dictionary, what: String) -> void:
 
 
 func menu_open() -> bool:
-	return _menu.visible
+	return _menu.is_open()
 
 
 static func _cost_word(cost: String) -> String:
@@ -1815,6 +1863,9 @@ func _on_log_meta(meta: Variant) -> void:
 
 
 func show_details(title: String, lines: Array) -> void:
+	if mobile != null:
+		mobile.details(title, lines)
+		return
 	for ch in _details_box.get_children():
 		ch.queue_free()
 	_details_box.add_child(_label(title, 18, "gilt_light"))
@@ -1832,6 +1883,9 @@ func show_details(title: String, lines: Array) -> void:
 ## line about it, then its sections (Condition, On it, Defenses, Abilities, Your odds) under small-caps headings. It
 ## closes as the roll details do (a click anywhere, Esc or B).
 func show_examine(card: Dictionary, t: Combatant) -> void:
+	if mobile != null:
+		mobile.examine(card, t)
+		return
 	for ch in _details_box.get_children():
 		ch.queue_free()
 	var head := HBoxContainer.new()
@@ -1865,6 +1919,9 @@ func show_examine(card: Dictionary, t: Combatant) -> void:
 
 
 func hide_details() -> bool:
+	if mobile != null and mobile.kind == "details":
+		mobile.close()
+		return true
 	if _details.visible:
 		_details.visible = false
 		return true
@@ -1876,6 +1933,9 @@ func hide_details() -> bool:
 ## The box beside the pointer. `edge` outlines it for an attack with "advantage" (green) or "disadvantage" (red), as
 ## the roll would be made (both at once cancel and leave the gilt edge).
 func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edge: String = "") -> void:
+	if mobile != null:
+		mobile.set_preview(title, lines, warnings)
+		return
 	_odds.visible = false   # show_odds after this puts them back for an attack
 	var box := _tooltip.get_theme_stylebox("panel") as StyleBoxFlat
 	box.border_color = Look.color(EDGE_COLOURS.get(edge, "gilt") as String)
@@ -1897,6 +1957,9 @@ func show_tooltip(title: String, lines: Array, warnings: Array, at: Vector2, edg
 
 
 func hide_tooltip() -> void:
+	if mobile != null:
+		mobile.preview.hide()
+		mobile.area_lines.clear()
 	_tooltip.visible = false
 	_odds.visible = false
 	hide_area_saves()
@@ -1906,6 +1969,9 @@ func hide_tooltip() -> void:
 ## in large figures, edged green or red for Advantage or Disadvantage, and the damage a hit does under it. `at` is the
 ## head's place on screen. Any other tooltip, or none, takes it away.
 func show_odds(chance: float, damage: String, edge: String, at: Vector2) -> void:
+	if mobile != null:
+		mobile.preview.text = "%s · %d%% hit · %s damage · Details" % [mobile.preview_title, roundi(chance * 100), damage]
+		return
 	_odds_chance.text = "%d%%" % roundi(chance * 100.0)
 	_odds_chance.add_theme_color_override("font_color", Look.color("bile" if chance >= 0.65 else ("gilt_light" if chance >= 0.35 else "rose")))
 	_odds_damage.text = damage + " dmg" if damage != "" else ""
@@ -1977,6 +2043,23 @@ func show_prompt(req: ReactionRequest) -> void:
 	_prompt.offset_top = PROMPT_BOTTOM
 	_prompt.offset_bottom = PROMPT_BOTTOM
 	_prompt.visible = true
+	if mobile != null:
+		_prompt_use.text = "Use reaction" if req.spends_reaction else ("Heal" if req.pool > 0 else "Confirm")
+		_prompt_skip.text = "Skip"
+		mobile.open_panel(_prompt, req.title, "reaction", func() -> void: answer_prompt(false), _prompt_use.get_parent() as Control)
+		_prompt_title.hide()
+		# A native PopupMenu has a separate viewport; use a touch button for the three policy choices.
+		_prompt_rule.hide()
+		for child in _prompt_rule_row.get_children():
+			if child.has_meta(&"mobile_rule"):
+				_prompt_rule_row.remove_child(child)
+				child.queue_free()
+		var policy := MobileUi.button("Ask me", func() -> void: pass)
+		policy.set_meta(&"mobile_rule", true)
+		policy.pressed.connect(func() -> void:
+			_prompt_rule.select((_prompt_rule.selected + 1) % 3)
+			policy.text = _prompt_rule.get_item_text(_prompt_rule.selected))
+		_prompt_rule_row.add_child(policy)
 
 
 ## The prompt's words: a list of Reactions (Reactions.CHOICE) shows what the picked one does and costs, then how to
@@ -2066,6 +2149,8 @@ func _pool_room(req: ReactionRequest) -> Dictionary:
 
 func hide_prompt() -> void:
 	_prompt.visible = false
+	if mobile != null and mobile.kind == "reaction":
+		mobile.close()
 
 
 func prompt_open() -> bool:
@@ -2081,7 +2166,7 @@ func prompt_option_focused() -> bool:
 func answer_prompt(use: bool) -> void:
 	if not _prompt.visible or (use and _prompt_use.disabled):
 		return
-	_prompt.visible = false
+	hide_prompt()
 	var rule := ["ask", "auto", "never"][_prompt_rule.selected] as String
 	reaction_answered.emit(use, rule)
 
@@ -2089,6 +2174,9 @@ func answer_prompt(use: bool) -> void:
 func confirm_end_turn(text: String) -> void:
 	_confirm_text.text = text
 	_confirm.visible = true
+	if mobile != null:
+		mobile.open_panel(_confirm, "End turn?", "confirm", close_confirm)
+		_confirm_yes.text = "End turn"
 
 
 func confirm_open() -> bool:
@@ -2097,9 +2185,13 @@ func confirm_open() -> bool:
 
 func close_confirm() -> void:
 	_confirm.visible = false
+	if mobile != null and mobile.kind == "confirm":
+		mobile.close()
 
 
 func banner(text: String, seconds: float = 1.6) -> void:
+	if mobile != null:
+		mobile.announce(text, seconds)
 	_banner.text = text
 	_banner_time = seconds
 	_banner.modulate.a = 1.0
@@ -2236,7 +2328,7 @@ func coach_anchor(key: String, action_id: String = "") -> Rect2:
 		"end_turn": control = _end_turn
 		"reaction": control = _prompt
 		"action":
-			if _menu != null and _menu.visible:
+			if _menu != null and _menu.is_open():
 				return Rect2(Vector2(_menu.position), Vector2(_menu.size)).intersection(get_viewport().get_visible_rect())
 			for i in _slot_actions.size():
 				var action := _slot_actions[i]
@@ -2293,7 +2385,7 @@ func coach_controls(key: String, action_id: String = "") -> Array[Control]:
 
 func coach_rects(key: String, action_id: String = "") -> Array[Rect2]:
 	var rects: Array[Rect2] = []
-	if key == "action" and _menu != null and _menu.visible:
+	if key == "action" and _menu != null and _menu.is_open():
 		rects.append(Rect2(Vector2(_menu.position), Vector2(_menu.size)).intersection(get_viewport().get_visible_rect()))
 		return rects
 	for control in coach_controls(key, action_id):

@@ -75,7 +75,7 @@ func _button(text: String, cmd: String, tip: String) -> Button:
 
 
 func _process(_delta: float) -> void:
-	var on := view != null and is_instance_valid(view) and view.planning and not view.in_combat and (hud == null or hud.visible)
+	var on := not MobileDevice.enabled() and view != null and is_instance_valid(view) and view.planning and not view.in_combat and (hud == null or hud.visible)
 	_panel.visible = on
 	if not on:
 		_shown = ""

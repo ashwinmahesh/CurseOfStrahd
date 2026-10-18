@@ -81,6 +81,7 @@ var _axis_down: Dictionary = {}
 ## The trigger action the event being handled leaned past halfway (_leans), or &"".
 var _lean := &""
 var _mouse_travel := 0.0
+var active_device := -1
 
 
 func _init() -> void:
@@ -98,6 +99,7 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
+	Input.joy_connection_changed.connect(_connection_changed)
 	ring = FocusRing.new()
 	add_child(ring)
 	prompts = PadPrompts.new()
@@ -119,13 +121,36 @@ func _on_node_added(n: Node) -> void:
 ## Back to the mouse and keyboard with nothing held (tests call it between cases).
 func reset() -> void:
 	_use_pad(false, -1)
+	clear_held()
+	_remember.clear()
+	scope = null
+
+
+## Clear repeats and latched actions without dispatching releases (a release can commit a radial choice).
+func clear_held() -> void:
 	_held = Vector2i.ZERO
 	_dpad_held = Vector2i.ZERO
 	_stick = Vector2.ZERO
 	_stick_dir = Vector2i.ZERO
 	_axis_down.clear()
-	_remember.clear()
-	scope = null
+	if MobileDevice.enabled():
+		for action in InputMap.get_actions():
+			for event in InputMap.action_get_events(action):
+				if event is InputEventJoypadButton or event is InputEventJoypadMotion:
+					Input.action_release(action)
+					break
+
+
+func _connection_changed(device: int, connected: bool) -> void:
+	if not MobileDevice.enabled() or connected or device != active_device or not pad:
+		return
+	reset()
+	if MobileDevice.current != null:
+		MobileDevice.current.set_modality("touch")
+	for child in UiFeel.get_children():
+		if child is MobileLifecycle:
+			(child as MobileLifecycle).suspend("Controller disconnected. Reconnect it or use touch, then Continue.")
+			break
 
 
 # --- Which device ---------------------------------------------------------------------------------
@@ -144,6 +169,7 @@ static func family_of(joy_name: String, vendor: int = 0) -> String:
 
 
 func _use_pad(on: bool, device: int) -> void:
+	active_device = device if on else -1
 	if on and device in Input.get_connected_joypads():
 		var info := Input.get_joy_info(device)
 		var was := family
@@ -154,13 +180,18 @@ func _use_pad(on: bool, device: int) -> void:
 	if on == pad:
 		return
 	pad = on
+	if MobileDevice.enabled() and on:
+		if MobileDevice.current != null:
+			MobileDevice.current.set_modality("controller")
+		if UiFeel.touch != null:
+			UiFeel.touch.cancel()
 	PadGlyphs.refresh_hints()
 	if on:
 		# Only a window the player is in hides the pointer (a capture's window never has focus).
-		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
+		if DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE) and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE and get_window() != null and get_window().has_focus():
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	else:
-		if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
+		if DisplayServer.has_feature(DisplayServer.FEATURE_MOUSE) and Input.mouse_mode == Input.MOUSE_MODE_HIDDEN:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		# A control that only the pad gives focus to lets it go, so a later Space or Enter isn't sent to it.
 		var vp := get_viewport()
@@ -171,10 +202,14 @@ func _use_pad(on: bool, device: int) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.has_meta(&"pad_synthetic"):
+	if event.has_meta(&"pad_synthetic") or event.has_meta(&"touch_synthetic"):
 		return   # this tracker's own pointer moves and clicks
+	if MobileDevice.enabled() and event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed:
+		clear_held()
+		_use_pad(false, -1)
 	var joy := event is InputEventJoypadButton or event is InputEventJoypadMotion
-	if event is InputEventJoypadButton or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > STICK_ON:
+	if event is InputEventJoypadButton and ((event as InputEventJoypadButton).pressed or not MobileDevice.enabled()) \
+			or event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > STICK_ON:
 		_use_pad(true, event.device)
 	elif event is InputEventKey and (event as InputEventKey).pressed or event is InputEventMouseButton and (event as InputEventMouseButton).pressed:
 		_use_pad(false, -1)
@@ -686,7 +721,7 @@ static func pointer(vp: Viewport) -> Vector2:
 		var f := vp.gui_get_focus_owner()
 		if f != null and f.is_visible_in_tree():
 			return rect_of(f).get_center()
-	return vp.get_mouse_position()
+	return MobileDevice.pointer if MobileDevice.enabled() else vp.get_mouse_position()
 
 
 ## Whether the pad is the device in use now.

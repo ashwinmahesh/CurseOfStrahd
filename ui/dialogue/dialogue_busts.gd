@@ -25,6 +25,9 @@ static var _facing: Dictionary = {}
 ## False draws every bust as it was drawn, never mirrored: the "before" picture in captures (tools/capture/ui_capture.gd).
 static var mirror := true
 
+## Mobile composition flag/gutter. Mobile art fills almost the safe height behind the lower dialogue panel.
+var mobile_gutter := 0.0
+
 var left: TextureRect
 var right: TextureRect
 ## The bust each side shows now (its path, "" for none).
@@ -35,6 +38,7 @@ var lit := ""
 ## Whether each side has turned its back on the other (the `[away]` cue).
 var left_away := false
 var right_away := false
+var _breaths: Array[Tween] = []
 
 
 func _init() -> void:
@@ -137,6 +141,10 @@ func party_speaker(art_id: String) -> void:
 func _show_side(on_left: bool, art_id: String, mood: String) -> void:
 	var rect := left if on_left else right
 	var path := path_for(art_id, mood)
+	if path == "" and mobile_gutter > 0 and art_id != "":
+		var portrait := "res://art/portraits/%s.png" % art_id
+		if ResourceLoader.exists(portrait):
+			path = portrait
 	var key := path
 	if key == (left_id if on_left else right_id):
 		return
@@ -178,6 +186,7 @@ func _side(on_left: bool) -> TextureRect:
 	if UiMotion.on():
 		# A slow breath, the two sides out of step.
 		var tw := UiMotion.tween_for(t).set_loops().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		_breaths.append(tw)
 		if not on_left:
 			tw.tween_interval(BREATH_SECONDS / 2.0)
 		tw.tween_property(t, "scale", Vector2(1.0, 1.0 + BREATH), BREATH_SECONDS / 2.0)
@@ -187,9 +196,24 @@ func _side(on_left: bool) -> TextureRect:
 
 func _layout() -> void:
 	var h := size.y * HEIGHT_SHARE
+	if mobile_gutter > 0:
+		h = size.y * 0.96
 	var w := h * 0.66
 	for pair: Array in [[left, true], [right, false]]:
 		var t := pair[0] as TextureRect
 		t.size = Vector2(w, h)
-		t.position = Vector2(-w * 0.04 if bool(pair[1]) else size.x - w * 0.96, size.y - h)
+		if mobile_gutter > 0:
+			t.position = Vector2(6 if bool(pair[1]) else size.x - w - 6, size.y - h)
+		else:
+			t.position = Vector2(-w * 0.04 if bool(pair[1]) else size.x - w * 0.96, size.y - h)
 		t.pivot_offset = Vector2(w / 2.0, h)
+
+
+func _process(_delta: float) -> void:
+	if MobileNative.reduced_motion() and not _breaths.is_empty():
+		for breath in _breaths:
+			if breath.is_valid():
+				breath.kill()
+		_breaths.clear()
+		left.scale = Vector2.ONE
+		right.scale = Vector2.ONE

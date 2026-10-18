@@ -11,6 +11,8 @@ const JOURNAL_EVERY := 0.4
 
 var cards: TipCards
 var pad: PadNav
+var touch: TouchRouter
+var mobile_controls: MobileControls
 ## Report a bug, in dev builds only (null in an exported game).
 var bug_reports: BugReports = null
 var _last_hover: Control = null
@@ -22,16 +24,26 @@ var _journal_count := -1
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(MobileDevice.new())
 	cards = TipCards.new()
 	add_child(cards)
 	pad = PadNav.new()
 	add_child(pad)
+	touch = TouchRouter.new()
+	add_child(touch)
+	if MobileDevice.enabled():
+		mobile_controls = MobileControls.new()
+		add_child(mobile_controls)
+		add_child(MobileNative.new())
+		add_child(MobileLifecycle.new())
 	if BugReports.enabled():
 		bug_reports = BugReports.new()
 		add_child(bug_reports)
 	EventBus.game_loaded.connect(func(_slot: String) -> void: _journal_count = -1)
 	# Pinned cards belong to what you were reading: leaving for another scene (the title, a new game) clears them.
-	EventBus.scene_changed.connect(func(_path: String) -> void: cards.clear())
+	EventBus.scene_changed.connect(func(_path: String) -> void:
+		cards.clear()
+		touch.cancel())
 
 
 func _process(delta: float) -> void:

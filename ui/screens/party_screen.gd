@@ -12,6 +12,8 @@ extends CanvasLayer
 var root: Node
 var st: StoryState
 var _frame: VBoxContainer
+var mobile_section := "Heroes"
+var mobile_index := 0
 
 
 func _init() -> void:
@@ -22,11 +24,16 @@ func _init() -> void:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
-	_frame = UiKit.screen_frame(self, "Party", Vector2(1500, 850))
+	_frame = MobilePage.build(self, "Party", func() -> void: root.call("close_screen")) if MobileDevice.enabled() else UiKit.screen_frame(self, "Party", Vector2(1500, 850))
+	if MobileDevice.enabled():
+		(_frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_draw()
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_mobile_draw()
+		return
 	while _frame.get_child_count() > 0:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
@@ -66,7 +73,7 @@ func _guests() -> Control:
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 6)
 	box.add_child(UiKit.header("Guests"))
-	var row := HBoxContainer.new()
+	var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	box.add_child(row)
 	var calm := ModeController.mode == ModeController.Mode.EXPLORATION
@@ -250,6 +257,19 @@ func _column(ch: Character, i: int) -> Control:
 
 ## A small number with its caption above: "AC 16". Hover: its Breakdown.
 func _tile(caption: String, value: String, b: Breakdown, title: String) -> Control:
+	if MobileDevice.enabled():
+		return MobileUi.button(caption + " " + value, func() -> void:
+			var detail := CanvasLayer.new()
+			detail.layer = layer + 1
+			add_child(detail)
+			var body := MobilePage.build(detail, title, func() -> void:
+				detail.hide()
+				detail.queue_free()
+				if UiFeel.touch != null:
+					UiFeel.touch.cancel())
+			(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+			body.add_child(UiParts.breakdown_tip(b, title, value))
+			MobileUi.fit(body))
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", -2)
 	var cap := UiParts.caption(caption, 10)
@@ -333,7 +353,7 @@ func _skill_table() -> Control:
 	box.add_child(UiParts.section("Best at each skill"))
 	var cov := PartyCoverage.analyze(st.party)
 	var grid := GridContainer.new()
-	grid.columns = 3
+	grid.columns = 1 if MobileDevice.enabled() else 3
 	grid.add_theme_constant_override("h_separation", 22)
 	grid.add_theme_constant_override("v_separation", 0)
 	var table := cov["skills"] as Dictionary
@@ -371,3 +391,59 @@ func _move(i: int, step: int) -> void:
 	if root.has_method("rebuild"):
 		root.call("rebuild")
 	_draw()
+
+
+func _mobile_draw() -> void:
+	MobileUi.clear(_frame)
+	_frame.add_child(MobileUi.tabs(["Heroes", "Marching order", "Skills", "Companions"], mobile_section, func(value: String) -> void:
+		mobile_section = value
+		_mobile_draw()))
+	match mobile_section:
+		"Heroes":
+			var xp := XpStrip.build(st, 320.0)
+			if xp != null:
+				_frame.add_child(xp)
+			var names: Array[String] = []
+			for ch in st.party:
+				names.append(ch.name)
+			if names.is_empty():
+				_frame.add_child(MobileUi.text("No travelling heroes."))
+				return
+			mobile_index = clampi(mobile_index, 0, st.party.size() - 1)
+			_frame.add_child(MobileUi.tabs(names, names[mobile_index], func(value: String) -> void:
+				mobile_index = names.find(value)
+				_mobile_draw()))
+			_frame.add_child(_column(st.party[mobile_index], mobile_index))
+			var calm := ModeController.mode == ModeController.Mode.EXPLORATION
+			var roster := MobileUi.button("Change who travels", func() -> void: root.call("open_screen", "roster", 0))
+			roster.disabled = not calm
+			_frame.add_child(roster)
+			var create := MobileUi.button("Create a character", func() -> void: root.call("open_screen", "create", 0))
+			var why := st.create_blocker()
+			create.disabled = not calm or why != ""
+			_frame.add_child(create)
+			if why != "":
+				_frame.add_child(MobileUi.text(why, "rose"))
+		"Marching order":
+			for i in st.party.size():
+				var ch := st.party[i]
+				_frame.add_child(MobileUi.text("%d · %s" % [i + 1, ch.name], "gilt_light"))
+				_frame.add_child(MobileUi.text("Perception %d · Stealth %s · Darkvision %d ft" % [ch.passive_score(&"perception").total(), ch.skill_bonus(&"stealth").signed(), ch.darkvision()]))
+				var row := HBoxContainer.new()
+				var up := MobileUi.button("Walk earlier", func() -> void: _move(i, -1))
+				up.disabled = i == 0
+				row.add_child(up)
+				var down := MobileUi.button("Walk later", func() -> void: _move(i, 1))
+				down.disabled = i == st.party.size() - 1
+				row.add_child(down)
+				_frame.add_child(row)
+		"Skills": _frame.add_child(_skill_table())
+		"Companions":
+			var feelings := ApprovalPanel.build(st)
+			if feelings != null:
+				_frame.add_child(feelings)
+			if not st.guests.is_empty():
+				_frame.add_child(_guests())
+			for fallen: Dictionary in st.fallen:
+				_frame.add_child(MobileUi.text("Remembered: %s, who %s (day %d)" % [fallen["name"], fallen["how"], int(fallen["day"])]))
+	MobileUi.fit(_frame)

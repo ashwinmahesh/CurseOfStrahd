@@ -32,10 +32,25 @@ func open(root_: Node, state: StoryState, index: int) -> void:
 	var frame := UiKit.screen_frame(self, "Level Up", Vector2(1500, 840))
 	if not st.can_level_up(ch):
 		frame.add_child(UiKit.label(_blocked_line(), 17, "parchment", 1400))
+		if MobileDevice.enabled():
+			MobileUi.fit(frame)
 		return
 	ctl = LevelUpController.new(ch)
 	var main_class := ch.class_order[0] if not ch.class_order.is_empty() else ""
 	ctl.choose_class(main_class)
+	if MobileDevice.enabled():
+		var page := frame.get_parent().get_parent().get_parent() as MobilePage
+		page.scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_body = VBoxContainer.new()
+		_sheet = VBoxContainer.new()
+		_sheet.hide()
+		frame.add_child(_body)
+		frame.add_child(_sheet)
+		page.toolbar.add_child(MobileUi.button("Preview / choices", func() -> void:
+			_sheet.visible = not _sheet.visible
+			_body.visible = not _sheet.visible))
+		_redraw()
+		return
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 18)
 	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -164,6 +179,9 @@ func _redraw() -> void:
 	var confirm := UiParts.primary_button("Confirm level %d" % (ch.character_level() + 1), _confirm)
 	confirm.disabled = not errs.is_empty()
 	_body.add_child(confirm)
+	if MobileDevice.enabled():
+		MobileUi.fit(_body)
+		MobileUi.fit(_sheet)
 
 
 ## The recommended picks as a card over the choices: where they come from, then each choice and what was picked.

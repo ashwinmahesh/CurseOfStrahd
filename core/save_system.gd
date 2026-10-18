@@ -114,6 +114,11 @@ func save_round(slot: String = ROUND_START) -> Error:
 	return _write_beside(slot)
 
 
+## Mobile continuation uses the same combat slot (and the same single Honour slot), without per-command images.
+func save_combat_recovery() -> Error:
+	return _save(honour_slot(), null, false, false) if honour() else _write_beside(ROUND_START)
+
+
 ## The autosave (AUTOSAVE): anywhere a save is allowed, without making it the game's slot. The ones before it move one
 ## along (autosave_2 ...), and the oldest goes.
 func autosave() -> Error:
@@ -121,9 +126,17 @@ func autosave() -> Error:
 		return ERR_UNAVAILABLE
 	if honour():
 		return _save(honour_slot(), null, true)
-	delete_slot(autosave_slot(AUTOSAVES))
+	var paths: Array[String] = []
+	for n in range(1, AUTOSAVES + 1):
+		paths.append(slot_path(autosave_slot(n)))
+	var rotated := AtomicJson.rotate(paths)
+	if rotated != OK:
+		return rotated
 	for n in range(AUTOSAVES - 1, 0, -1):
-		_move(autosave_slot(n), autosave_slot(n + 1))
+		var source := thumb_path(autosave_slot(n))
+		var destination := thumb_path(autosave_slot(n + 1))
+		if FileAccess.file_exists(source) and DirAccess.copy_absolute(source, destination + ".tmp") == OK:
+			DirAccess.rename_absolute(destination + ".tmp", destination)
 	var err := _write_beside(AUTOSAVE)
 	if err == OK:
 		_thumb_later(AUTOSAVE)
@@ -152,13 +165,9 @@ func _write_beside(slot: String) -> Error:
 
 
 func _write(slot: String, data: Dictionary) -> Error:
-	DirAccess.make_dir_recursive_absolute(save_dir)
-	var f := FileAccess.open(slot_path(slot), FileAccess.WRITE)
-	if f == null:
-		return FileAccess.get_open_error()
-	f.store_string(JSON.stringify(data, "\t"))
-	f.close()
-	return OK
+	if slot.is_empty() or slot != slot.get_file() or slot in [".", ".."]:
+		return ERR_INVALID_PARAMETER
+	return AtomicJson.write(slot_path(slot), data)
 
 
 ## The campaign's end (ADR 0014): the game's own slot (a new one if it has none) is written one last time, marked
@@ -187,15 +196,17 @@ func load_slot(slot: String) -> Error:
 ## game's own). One from anywhere else (a backup) is a game without a slot until its first save.
 func load_from(dir: String, slot: String) -> Error:
 	var path := dir.path_join(slot + ".json")
-	if not FileAccess.file_exists(path):
+	if not FileAccess.file_exists(path) and not FileAccess.file_exists(path + ".bak"):
 		return ERR_FILE_NOT_FOUND
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-	if not data is Dictionary:
+	var dict := AtomicJson.read(path)
+	if dict.is_empty():
 		return ERR_PARSE_ERROR
-	var dict := data as Dictionary
 	if int(dict.get("version", 0)) > GameState.SAVE_VERSION:
 		return ERR_FILE_UNRECOGNIZED
 	dict = upgrade(dict)
+	var combat := dict.get("combat", {}) as Dictionary
+	if combat.has("journal") and not CombatJournal.valid(combat["journal"]):
+		return ERR_FILE_CORRUPT
 	GameState.from_dict(dict)
 	# A fight's round start is a retry, not a return: no recap.
 	_recap_due = slot != ROUND_START and minutes_since(str(dict.get("saved_at", ""))) >= RECAP_AFTER
@@ -229,6 +240,8 @@ static func upgrade(data: Dictionary) -> Dictionary:
 	var v := int(out.get("version", 1))
 	while v < GameState.SAVE_VERSION:
 		match v:
+			2:
+				pass   # Mobile command journals are optional; existing round-start saves retain their behavior.
 			1:
 				pass   # Phase 0 saves held no story: the game starts them on the mists road as a new game does
 		v += 1
@@ -336,7 +349,7 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 	return {"slot": slot, "dir": from, "saved_at": str(d.get("saved_at", "")), "location": place,
 		"location_id": str(story.get("location", "")), "level": level,
 		"day": int(story.get("day", 1)), "party": ", ".join(names), "finished": ended,
-		"kind": "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
+		"kind": "recovery" if (d.get("combat", {}) as Dictionary).has("journal") else "autosave" if is_autosave(slot) else ("round" if slot == ROUND_START else ""),
 		"note": str(d.get("note", "")), "thumb": thumb if FileAccess.file_exists(thumb) else "",
 		"mode": Difficulty.named(mode).name if mode != Difficulty.DEFAULT else "",
 		"newer": int(raw.get("version", 0)) > GameState.SAVE_VERSION}
@@ -344,10 +357,7 @@ func describe(slot: String, dir: String = "") -> Dictionary:
 
 ## A save file as a dictionary ({} when it's missing or not JSON).
 static func _read(path: String) -> Dictionary:
-	if not FileAccess.file_exists(path):
-		return {}
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-	return data as Dictionary if data is Dictionary else {}
+	return AtomicJson.read(path)
 
 
 ## The player deletes a save (the saves page): it and its picture go, and the game's own slot with it, so the next save
@@ -362,8 +372,10 @@ func delete_save(slot: String) -> bool:
 
 
 func delete_slot(slot: String) -> void:
-	if has_slot(slot):
-		DirAccess.remove_absolute(slot_path(slot))
+	for suffix: String in ["", ".bak", ".tmp", ".bak.tmp"]:
+		var path := slot_path(slot) + suffix
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(path)
 	if FileAccess.file_exists(thumb_path(slot)):
 		DirAccess.remove_absolute(thumb_path(slot))
 

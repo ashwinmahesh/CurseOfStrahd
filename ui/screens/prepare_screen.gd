@@ -35,6 +35,9 @@ func _init() -> void:
 func open(root_: Node, state: StoryState, _index: int) -> void:
 	root = root_
 	st = state
+	if MobileDevice.enabled():
+		_mobile_build()
+		return
 	var frame := UiKit.screen_frame(self, "Prepare Spells", Vector2(1300, 820))
 	# The intro runs the frame's full width, so it starts below the crest hanging under the title.
 	var clear := Control.new()
@@ -194,6 +197,8 @@ func _draw() -> void:
 			ch.refresh()
 			_draw.call_deferred())
 		_box.add_child(w)
+	if MobileDevice.enabled():
+		MobileUi.fit(_box)
 
 
 ## The swap chance closes with the screen, so the characters' own choices go back to free picks.
@@ -208,3 +213,18 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"combat_cancel"):
 		get_viewport().set_input_as_handled()
 		queue_free()
+
+
+func _mobile_build() -> void:
+	var body := MobilePage.build(self, "Prepare spells", func() -> void:
+		hide()
+		UiFeel.touch.cancel()
+		queue_free())
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	body.add_child(MobileUi.text("Choose what each hero has ready. Changes apply immediately; spent spell slots stay spent. Tap a spell's details to read its effects."))
+	_box = VBoxContainer.new()
+	_box.add_theme_constant_override("separation", 14)
+	body.add_child(_box)
+	if rest_kind != ANYTIME and earlier.is_empty():
+		earlier = PrepareScreen.snapshot(st, rest_kind)
+	_draw()

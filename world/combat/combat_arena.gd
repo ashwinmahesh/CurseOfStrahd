@@ -44,8 +44,21 @@ func _ready() -> void:
 	var surprised: Array[String] = []
 	played = skirmish
 	skirmish = null
+	var recovery: CombatJournal
+	var saved := MobilePracticeRecovery.take() if MobileDevice.enabled() and not capture else {}
+	if not saved.is_empty():
+		played = SkirmishSetup.from_dict(saved["setup"] as Dictionary) if str(saved["kind"]) == "skirmish" else null
+		if played != null:
+			SkirmishScreen.current = played.duplicate_setup()
+		recovery = CombatJournal.new()
+		recovery.data = saved["journal"] as Dictionary
+		e = recovery.restore(Dice.roller)
+		if e == null:
+			get_tree().change_scene_to_file.call_deferred(SKIRMISH_SCENE)
+			return
 	if played != null:
-		e = played.build(Dice.roller, errors)
+		if recovery == null:
+			e = played.build(Dice.roller, errors)
 		if e == null:
 			push_warning("Skirmish: %s" % ", ".join(errors))
 			get_tree().change_scene_to_file.call_deferred(SKIRMISH_SCENE)
@@ -60,7 +73,8 @@ func _ready() -> void:
 		surprised = played.surprised_ids(e)
 	else:
 		build_environment(self)
-		e = EncounterSetup.load_id(ENCOUNTER_ID, Dice.roller, errors)
+		if recovery == null:
+			e = EncounterSetup.load_id(ENCOUNTER_ID, Dice.roller, errors)
 		assert(e != null, str(errors))
 		board = ArenaBoard.build(e.grid)
 		add_child(board)
@@ -88,6 +102,15 @@ func _ready() -> void:
 	add_child(view)
 	if played != null:
 		view.finished.connect(_skirmish_over)
+	if MobileDevice.enabled() and not capture:
+		view.recovery = recovery
+		view.recovery_writer = func() -> Error: return MobilePracticeRecovery.write(view.recovery, played)
+		if recovery != null:
+			view._strike_after_walk = recovery.walk_plan(e)
+		if played == null:
+			view.finished.connect(func(_outcome: String) -> void:
+				MobilePracticeRecovery.finish()
+				get_tree().change_scene_to_file(TITLE_SCENE))
 	view.begin(e, board, rig, tokens, surprised)
 	view.menu_requested.connect(toggle_menu)
 	view.sheet_requested.connect(open_sheet)
@@ -114,6 +137,8 @@ func _carry_lantern() -> void:
 func _skirmish_over(_outcome: String) -> void:
 	if results != null:
 		return
+	if view.recovery != null:
+		MobilePracticeRecovery.finish()
 	results = SkirmishResults.new()
 	add_child(results)
 	var earned: Array[String] = []
@@ -178,6 +203,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Night sky, fog and moonlight for a fight outdoors.
 static func build_environment(root: Node) -> void:
+	# Standalone arenas have no Atmosphere node to apply the native graphics budget.
+	if OS.has_feature("ios"):
+		Graphics.apply(root.get_viewport())
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.background_color = Look.color("night_deep")
@@ -195,7 +223,7 @@ static func build_environment(root: Node) -> void:
 	moon.name = "Moonlight"
 	moon.light_color = Look.color("moonlight")
 	moon.light_energy = 0.85
-	moon.shadow_enabled = true
+	moon.shadow_enabled = not Graphics.software_simulator()
 	moon.rotation_degrees = Vector3(-55, 35, 0)
 	root.add_child(moon)
 

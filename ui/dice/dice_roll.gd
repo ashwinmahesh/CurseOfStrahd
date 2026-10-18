@@ -44,6 +44,7 @@ var _parts: Label
 var _total: Label
 var _verdict: Label
 var _tag: Label
+var _mobile_scroll: ScrollContainer
 var _held := 0.0
 var _closing := false
 var _shake := 0.0
@@ -120,6 +121,30 @@ func _init() -> void:
 	_tag.add_theme_font_override("font", UiParts.caps_font())
 	_tag.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	line.add_child(_tag)
+	if MobileDevice.enabled():
+		_mobile_scroll = ScrollContainer.new()
+		_mobile_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		remove_child(row)
+		add_child(_mobile_scroll)
+		_mobile_scroll.add_child(row)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_theme_constant_override("separation", 8)
+		_slot.custom_minimum_size = Vector2(80, 80)
+		_slot.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+		_slot.clip_contents = true
+		line.remove_child(_total)
+		line.remove_child(_verdict)
+		line.remove_child(_tag)
+		col.remove_child(line)
+		line.free()
+		col.add_child(_total)
+		col.add_child(_verdict)
+		col.add_child(_tag)
+		for label: Label in [_title, _parts, _total, _verdict, _tag]:
+			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.custom_minimum_size.x = 0
+			label.add_theme_font_size_override("font_size", UiScale.text(18))
+		custom_minimum_size.y = 180
 	set_process(false)
 
 
@@ -211,6 +236,13 @@ static func from_beat(b: Dictionary) -> Dictionary:
 
 ## Puts show_roll's panel across the top third of the screen, never wider than it.
 func place_for_screen() -> void:
+	if MobileDevice.enabled():
+		var safe := MobileDevice.safe_rect().grow(-4)
+		set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+		position = safe.position
+		size = Vector2(safe.size.x, minf(260, safe.size.y))
+		custom_minimum_size.y = minf(180, safe.size.y)
+		return
 	var screen := get_viewport_rect().size
 	var w := minf(WIDTH, screen.x - 32.0)
 	offset_left = -w / 2.0
@@ -248,7 +280,8 @@ func roll(roll_: Dictionary) -> void:
 	var other := 0
 	if rolls.size() == 2:
 		other = int(rolls[1]) if int(rolls[0]) == kept else int(rolls[0])
-	_slot.custom_minimum_size = Vector2(DIE * (D20Die.TWO_WIDE if other > 0 else 1.0), DIE)
+	var die_size := 80.0 if MobileDevice.enabled() else DIE
+	_slot.custom_minimum_size = Vector2(die_size * (D20Die.TWO_WIDE if other > 0 else 1.0), die_size)
 	die.tone = tone
 	die.dim = failed
 	die.pace = pace

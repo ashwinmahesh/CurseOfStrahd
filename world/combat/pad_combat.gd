@@ -30,11 +30,23 @@ func _mode() -> int:
 
 ## A pad button the fight's own input doesn't cover. True when it was used here.
 func handle(event: InputEvent) -> bool:
+	if MobileDevice.enabled() and event is InputEventJoypadMotion:
+		for action: StringName in [&"combat_slot_prev", &"combat_slot_next"]:
+			if event.is_action(action) and event.get_action_strength(action) >= 0.5:
+				if UiFeel.mobile_controls != null:
+					UiFeel.mobile_controls._actions(view as CombatView)
+				return true
 	var jb := event as InputEventJoypadButton
 	if jb == null or not jb.pressed:
 		return false
 	var hud := _hud()
-	if event.is_action_pressed(&"pause_menu"):
+	if MobileDevice.enabled() and (event.is_action_pressed(&"combat_radial") or event.is_action_pressed(&"combat_use_slot")
+			or event.is_action_pressed(&"combat_tab_prev") or event.is_action_pressed(&"combat_tab_next")
+			or event.is_action_pressed(&"combat_slot_prev") or event.is_action_pressed(&"combat_slot_next")
+			or event.is_action_pressed(&"combat_slot_level_down") or event.is_action_pressed(&"combat_slot_level_up")):
+		if UiFeel.mobile_controls != null:
+			UiFeel.mobile_controls._actions(view as CombatView)
+	elif event.is_action_pressed(&"pause_menu"):
 		view.emit_signal(&"menu_requested")
 	elif event.is_action_pressed(&"combat_controls"):
 		hud.toggle_controls()

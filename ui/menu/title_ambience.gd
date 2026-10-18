@@ -74,6 +74,10 @@ func _init() -> void:
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	# The mobile Low preset keeps the key art without full-screen noise shaders or large animated sheets.
+	if MobileDevice.enabled() and (Graphics.preset() == "low" or not UiMotion.on()):
+		set_process(false)
+		return
 	_rng.randomize()
 	# Back to front: the crimson cloud veil, the moon's glow, the valley mist, the lamp, the bats, then the flash.
 	add_child(_mist_layer(Look.color("blood"), 0.30, Vector2(0.006, 0.0), 2.2, Vector2(0.12, 0.44), 0.14, 0.50, 3.0))

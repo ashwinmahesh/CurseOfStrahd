@@ -11,8 +11,9 @@ not be submitted for public release. A successful run waits for Apple's processi
 and preserves that API response in `app-store-build.json`. Tester assignment and export-compliance answers
 may still be required in App Store Connect.
 
-`game` uses the iOS port's `make ios-export` target. Until the port is merged, set `source_ref` to an exact
-commit from `codex/ios-support-foundation` in this repository. Blank means the pipeline's own commit.
+`game` uses the iOS port's `make ios-export` target. The workflow and full port are integrated on
+`codex/ios-support-foundation`; dispatch that branch with `source_ref` blank to use its workflow commit.
+An optional exact `source_ref` selects another game commit from this repository.
 The resolved source SHA is recorded in the job summary and artifact. The pipeline uses its own signing
 and upload helpers regardless of the game source selected. The small native fixture in that branch is for
 simulator utility tests, so this pipeline's deployment check uses the real device template instead.

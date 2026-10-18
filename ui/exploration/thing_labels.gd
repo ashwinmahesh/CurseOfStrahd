@@ -12,6 +12,8 @@ var signed := {}
 ## On while the names key is held (or `pinned` for captures and tests).
 var showing := false
 var pinned := false
+## Separate from keyboard/controller actions: canceled with the mobile hold surface.
+var mobile_held := false
 const FONT_SIZE := 14
 const PAD := Vector2(8, 3)
 ## Only things this near the leader (squares), like a torch's reach and a bit: the far dark stays unknown.
@@ -35,7 +37,7 @@ func show_location(v: LocationView, signs: Array[Dictionary] = []) -> void:
 
 
 func _process(_delta: float) -> void:
-	var on := pinned or (Input.is_action_pressed(&"show_names") and is_visible_in_tree())
+	var on := pinned or ((Input.is_action_pressed(&"show_names") or mobile_held) and is_visible_in_tree())
 	if on != showing or on:
 		showing = on
 		queue_redraw()
@@ -69,7 +71,7 @@ func plates() -> Array[Dictionary]:
 			continue
 		var name_and_dim := _name(thing)
 		out.append({"text": name_and_dim[0], "kind": kind, "at": at, "dim": name_and_dim[1],
-			"depth": cam.global_position.distance_to(w)})
+			"depth": cam.global_position.distance_to(w), "cell": cell, "id": str(thing.get("id", ""))})
 	out.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return float(a["depth"]) > float(b["depth"]))
 	return out
 

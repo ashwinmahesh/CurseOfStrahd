@@ -9,7 +9,10 @@ Writes:
 - art/ui/app_icon.ico: the Windows .exe's icon, 16 to 256 px (the Windows export preset's application/icon).
 - tools/release/app_icon.icns: the Mac app's icon, on Apple's icon grid (an 824 px rounded square with a shadow in a
   1024 px canvas), which tools/release/mac_app.py puts in the bundle.
+- art/ui/app_icon_ios.png: the same Mac tile, opaque and edge to edge for iOS's system mask.
+  Use --ios-only to regenerate it without touching desktop assets.
 """
+import argparse
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter
@@ -69,12 +72,26 @@ def mac_icon() -> Image.Image:
 	return canvas
 
 
+def ios_icon() -> Image.Image:
+	"""Reuse the Mac tile without desktop padding/shadow; extend its art beneath iOS's corner mask."""
+	icon = castle(824).convert("RGBA")
+	icon.alpha_composite(mac_tile())
+	return icon.convert("RGB").resize((1024, 1024), Image.LANCZOS)
+
+
 def main() -> None:
+	parser = argparse.ArgumentParser(description=__doc__)
+	parser.add_argument("--ios-only", action="store_true")
+	args = parser.parse_args()
+	ios_icon().save(ROOT / "art/ui/app_icon_ios.png")
+	if args.ios_only:
+		print("make_icon: art/ui/app_icon_ios.png (macOS artwork, opaque iOS canvas)")
+		return
 	full = tile(1024)
 	full.save(ROOT / "art/ui/app_icon.png")
 	full.save(ROOT / "art/ui/app_icon.ico", sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)])
 	mac_icon().save(ROOT / "tools/release/app_icon.icns")
-	print("make_icon: art/ui/app_icon.png, art/ui/app_icon.ico, tools/release/app_icon.icns")
+	print("make_icon: art/ui/app_icon.png, art/ui/app_icon.ico, tools/release/app_icon.icns, art/ui/app_icon_ios.png")
 
 
 if __name__ == "__main__":

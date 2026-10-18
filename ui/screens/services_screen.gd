@@ -13,6 +13,7 @@ var npc_id := ""
 var index := 0
 var _frame: VBoxContainer
 var _note := ""
+var _mobile_review: CanvasLayer
 ## Opened from the world rather than a conversation: a room bought goes straight to the rest screen.
 var rest_after := false
 
@@ -32,7 +33,9 @@ func open_for(root_: Node, state: StoryState, npc: String) -> void:
 			index = i
 			break
 	var title := "%s: %s" % [Compendium.shared().display_name("npcs", npc), "rooms" if rooms_only() else "services"]
-	_frame = UiKit.screen_frame(self, title, Vector2(1400, 820))
+	_frame = MobilePage.build(self, title, _close) if MobileDevice.enabled() else UiKit.screen_frame(self, title, Vector2(1400, 820))
+	if MobileDevice.enabled():
+		(_frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_draw()
 
 
@@ -44,6 +47,9 @@ func rooms_only() -> bool:
 
 
 func _draw() -> void:
+	if MobileDevice.enabled():
+		_mobile_draw()
+		return
 	while _frame.get_child_count() > 0:
 		var c := _frame.get_child(0)
 		_frame.remove_child(c)
@@ -201,3 +207,60 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"combat_cancel"):
 		get_viewport().set_input_as_handled()
 		_close()
+
+
+func _mobile_draw() -> void:
+	MobileUi.clear(_frame)
+	var names: Array[String] = []
+	for ch in st.party:
+		names.append(ch.name)
+	_frame.add_child(MobileUi.tabs(names, st.party[index].name, func(value: String) -> void:
+		index = names.find(value)
+		_note = ""
+		_mobile_draw()))
+	_frame.add_child(MobileUi.text("Party purse: " + coins(st.gold), "gilt_light"))
+	if _note != "":
+		_frame.add_child(MobileUi.text(_note, "bile"))
+	var recipient := st.party[index]
+	_frame.add_child(MobileUi.text("%s · %d / %d HP" % [recipient.name, recipient.hp, recipient.max_hp()]))
+	if recipient.dead:
+		_frame.add_child(MobileUi.text("Dead", "rose"))
+	for line in Services.offered(st, npc_id):
+		var title := HBoxContainer.new()
+		UiParts.add_icon(title, "spell" if line.has("spell") else "item", str(line.get("spell", "bedroll")), 28)
+		title.add_child(MobileUi.text(str(line["name"]) + " · " + coins(Services.cost(line)), "gilt_light"))
+		_frame.add_child(title)
+		_frame.add_child(MobileUi.text(str(line["text"])))
+		var why := Services.why_not(st, line, st.party[index])
+		if why != "":
+			_frame.add_child(MobileUi.text(why, "rose"))
+		var choose := MobileUi.button("Review purchase", func() -> void: _mobile_confirm(line))
+		choose.disabled = why != ""
+		_frame.add_child(choose)
+
+
+func _mobile_confirm(line: Dictionary) -> void:
+	_mobile_cancel()
+	var recipient := st.party[index]
+	_mobile_review = CanvasLayer.new()
+	_mobile_review.layer = layer + 1
+	add_child(_mobile_review)
+	var body := MobilePage.build(_mobile_review, str(line["name"]), _mobile_cancel)
+	(body.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	UiParts.add_icon(body, "spell" if line.has("spell") else "item", str(line.get("spell", "bedroll")), 36)
+	body.add_child(MobileUi.text("For the party" if str(line["for"]) == "party" else "For " + recipient.name))
+	body.add_child(MobileUi.text(str(line["text"])))
+	body.add_child(MobileUi.button("Buy for " + coins(Services.cost(line)), func() -> void:
+		if _mobile_review == null:
+			return
+		_mobile_cancel()
+		if index < st.party.size() and st.party[index] == recipient:
+			buy(str(line["id"]))))
+
+
+func _mobile_cancel() -> void:
+	if is_instance_valid(_mobile_review):
+		_mobile_review.hide()
+		_mobile_review.queue_free()
+	_mobile_review = null
+	UiFeel.touch.cancel()

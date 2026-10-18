@@ -199,7 +199,7 @@ static func particles(o: Dictionary) -> GPUParticles3D:
 		pm.orbit_velocity_min = orb.x
 		pm.orbit_velocity_max = orb.y
 	if float(o.get("turbulence", 0.0)) > 0.0:
-		pm.turbulence_enabled = true
+		pm.turbulence_enabled = Graphics.particle_turbulence()
 		pm.turbulence_noise_strength = float(o["turbulence"])
 		pm.turbulence_noise_scale = 2.5
 		pm.turbulence_influence_min = 0.05

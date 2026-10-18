@@ -36,6 +36,8 @@ static func _hold(list: Array[Node], node: Node) -> void:
 
 ## The interface's scale right now.
 static func factor() -> float:
+	if MobileDevice.enabled():
+		return maxf(1.0, GameSettings.ui_scale())
 	return GameSettings.ui_scale() if not _playing.is_empty() and _full.is_empty() else 1.0
 
 
@@ -51,4 +53,4 @@ static func apply() -> void:
 
 ## A reading text's font size at the player's text size.
 static func text(size: int) -> int:
-	return roundi(size * GameSettings.text_scale())
+	return roundi(maxf(12.0, size * 0.88) * GameSettings.text_scale()) if MobileDevice.enabled() else roundi(size * GameSettings.text_scale())

@@ -91,6 +91,18 @@ static func open(parent: Node) -> CanvasLayer:
 	var esc := _EscCloses.new()
 	esc.close = close
 	layer.add_child(esc)
+	if MobileDevice.enabled():
+		var mobile := MobilePage.build(layer, "What's new", close)
+		mobile.add_child(MobileUi.text("The latest changes"))
+		var last_day := ""
+		for change in list:
+			var date := str(change.get("date", ""))
+			if date != last_day:
+				mobile.add_child(MobileUi.text(_day_name(date), "gilt_light"))
+				last_day = date
+			for line: Variant in change.get("lines", []):
+				mobile.add_child(MobileUi.text("• " + str(line)))
+		return layer
 	var frame := UiKit.screen_frame(layer, "What's new", Vector2(980, 720))
 	var lead := "Since you last played" if not fresh.is_empty() and not first else \
 		"The latest changes" if fresh.is_empty() else "The last few days' changes"

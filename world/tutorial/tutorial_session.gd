@@ -53,6 +53,8 @@ var _opened_inventory := false
 
 func _ready() -> void:
 	name = "TutorialSession"
+	if MobileDevice.enabled():
+		add_to_group(&"touch_world")
 	InputActions.ensure()
 	UiScale.playing(self)
 	_saved_dice = Dice.roller
@@ -272,7 +274,7 @@ func _build_exploration() -> void:
 	_refresh()
 
 
-func _exploration_lesson(id: String) -> Dictionary:
+func _desktop_exploration_lesson(id: String) -> Dictionary:
 	match id:
 		"welcome":
 			return {"read_only": true, "title": "Your first adventure", "body": "You choose what the heroes try; the game rolls dice when the outcome is uncertain. A party is your team, and you control every member.",
@@ -400,7 +402,7 @@ func _tutorial_menu() -> void:
 	if _leaving:
 		return
 	if combat != null and combat.view.hud.menu_open():
-		combat.view.hud._menu.hide()
+		combat.view.hud._menu.close()
 	if coach.menu_open:
 		coach.close_menu()
 	else:
@@ -662,6 +664,24 @@ func _practice_cell_rect(cell: Vector2i, height: float = 0.1) -> Rect2:
 
 
 func _add_guided_close() -> void:
+	if MobileDevice.enabled():
+		for page: MobilePage in screen.find_children("*", "MobilePage", true, false):
+			_guide_close = MobileUi.button("Back to practice", close_screen)
+			_guide_close.name = "TutorialBack"
+			if screen is CharacterSheetScreen and lesson_id() == "sheet" and _sheet_step < 2:
+				_guide_close.text = "Continue: abilities and skills" if _sheet_step == 0 else "Continue: return to practice"
+				_guide_close.pressed.disconnect(close_screen)
+				_guide_close.pressed.connect(func() -> void:
+					advance_sheet_step()
+					_guide_close.queue_free()
+					_guide_close = null
+					if _sheet_step == 1:
+						(screen as CharacterSheetScreen).mobile_section = "Abilities"
+						screen.call("_draw")
+					_add_guided_close())
+			page.toolbar.add_child(_guide_close)
+			return
+		return
 	var panel := screen.get_meta(&"frame_panel", null) as PanelContainer
 	if panel == null:
 		return
@@ -750,6 +770,9 @@ func _guide_focus_scope(owner: Node, allowed: Array[Control]) -> void:
 
 
 func _update_guidance() -> void:
+	if MobileDevice.enabled():
+		_mobile_guidance()
+		return
 	_sync_modal_menu()
 	if coach.menu_open or lesson_complete:
 		if lesson_complete and lesson_id() == "combat_orientation" and combat != null:
@@ -812,6 +835,8 @@ func _update_guidance() -> void:
 
 
 func _guide_input(event: InputEvent) -> bool:
+	if MobileDevice.enabled() and (event is InputEventScreenTouch or event is InputEventScreenDrag or event.has_meta(&"touch_synthetic")):
+		return not _leaving
 	if _leaving:
 		return false
 	if event is InputEventMouseMotion or event is InputEventJoypadMotion:
@@ -971,3 +996,95 @@ func _dialogue_read_rects() -> Array[Rect2]:
 		if rect.has_area():
 			regions.append(rect.grow(4.0))
 	return regions
+
+
+func _exploration_lesson(id: String) -> Dictionary:
+	var lesson := _desktop_exploration_lesson(id)
+	if not MobileDevice.enabled():
+		return lesson
+	match id:
+		"explore":
+			lesson["body"] = "Tap the highlighted square to walk there. Your companions follow the leader. Drag to pan and pinch to zoom; Menu also has camera controls."
+			lesson["details"] = "There are no movement costs while freely exploring. In combat, tap to preview and use Confirm to commit. Use Menu → Party to choose the leader."
+		"sheet":
+			lesson["details"] = "Use the sheet's sections to read abilities and skills. Tap a derived value to read its calculation. Back returns to practice."
+		"inventory":
+			lesson["body"] = "Tap the highlighted chest, take its supplies, then open Inventory. Tap an item to inspect it; its details show the available actions."
+			lesson["details"] = "Items belong to individual heroes; gold belongs to the party. Choose the recipient in Loot. Inventory has Bag, Equipment and Stash sections, with explicit item actions."
+		"conversation":
+			lesson["details"] = "Use Speaker to change who talks before a check. Scroll through replies, then tap one. Success and failure both finish this lesson."
+	return lesson
+
+
+func touch_ready() -> bool:
+	return not _leaving and not _changing and location != null and combat == null and screen == null and loot == null and dialogue == null and not coach.interaction_blocked()
+
+
+func touch_tap(at: Vector2, context: bool) -> void:
+	if not touch_ready() or context:
+		return
+	var target := _practice_cell_rect(EXPLORE_TARGET) if lesson_id() == "explore" else _exploration_anchor()
+	if target.has_point(at):
+		TouchOutline.at(location, location.pick_cell(location.rig.camera, at))
+		_guided_world_action()
+
+
+func touch_camera(update: Dictionary) -> void:
+	if touch_ready():
+		location.rig.touch_camera(update)
+
+
+func _mobile_guidance() -> void:
+	_sync_modal_menu()
+	if coach.menu_open or lesson_complete:
+		return
+	if screen != null:
+		if not is_instance_valid(_guide_close):
+			_add_guided_close()
+		coach.set_chrome_visible(false)
+		return
+	var controls := UiFeel.mobile_controls
+	var overlay := controls != null and controls.drawer != null
+	overlay = overlay or (hud != null and hud.mobile != null and hud.mobile.sheet != null)
+	if dialogue != null or loot != null or overlay or (combat != null and combat.view.hud.mobile.sheet != null):
+		coach.set_chrome_visible(false)
+		return
+	coach.set_chrome_visible(true)
+	coach.set_action_scope(false)
+	coach.set_read_regions([])
+	if combat == null:
+		coach.set_highlight(_practice_cell_rect(EXPLORE_TARGET) if lesson_id() == "explore" else _exploration_anchor())
+		return
+	var state := combat.guide_state()
+	var step := str(state["step"])
+	if step == _guide_step:
+		return
+	_guide_step = step
+	coach.set_spotlights(state["rects"] as Array[Rect2])
+	coach.clear_action()
+	match step:
+		"action", "menu":
+			coach.set_step_hint(step, "Open Actions, inspect the required action, then choose it. Targets are previewed before Confirm.")
+			coach.set_action("Open the lesson's action", func() -> void:
+				if controls == null:
+					return
+				controls._actions()
+				if controls.drawer is MobileActions:
+					(controls.drawer as MobileActions).inspect(combat.view.catalog.find(combat.hero, combat._guided_action_id())))
+		"move":
+			coach.set_step_hint(step, "Tap the highlighted square to preview it, then use Confirm to move.")
+			coach.set_action("Preview the highlighted square", func() -> void:
+				combat.view.touch_tap(combat.rig.camera.unproject_position(combat.board.cell_center(Vector2i(4, 3))), false)
+				coach.toggle_compact())
+		"target":
+			coach.set_step_hint(step, "Preview the highlighted target, then use Confirm.")
+			coach.set_action("Preview " + combat._guided_target().name(), func() -> void:
+				combat.view.touch_select(combat._guided_target().id)
+				coach.toggle_compact())
+		"confirm_spell":
+			coach.set_step_hint(step, "The target is selected. Confirm to cast the spell.")
+			coach.set_action("Cast Bless on Liriel", combat.confirm_guided_cast)
+		"end_turn":
+			coach.set_step_hint(step, "End the current turn. Any warning asks for confirmation.")
+			coach.set_action("End turn", func() -> void: combat.view.hud.end_turn_pressed.emit())
+		_: coach.set_step_hint(step, str(state["hint"]))

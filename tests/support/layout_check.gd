@@ -33,6 +33,7 @@ static func problems(node: Node, screen: Rect2) -> Array[String]:
 		if not _matters(c) or not c.is_visible_in_tree() or c.size.x < 1.0 or c.size.y < 1.0 or _hidden_by_scroll(c):
 			continue
 		var r := c.get_global_rect()
+		var visible := _visible_rect(c)
 		var name := _name(c, node)
 		var scroll := _scroller(c)
 		if scroll == null:
@@ -45,12 +46,12 @@ static func problems(node: Node, screen: Rect2) -> Array[String]:
 			if scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED:
 				if r.position.x < box.position.x - SLACK or r.end.x > box.end.x + SLACK:
 					out.append("%s is wider than its list %s (%s in %s)" % [name, _name(scroll, node), _rect(r), _rect(box)])
-				elif r.position.x < screen.position.x - SLACK or r.end.x > screen.end.x + SLACK:
+				elif visible.position.x < screen.position.x - SLACK or visible.end.x > screen.end.x + SLACK:
 					out.append("%s reaches past the window's edge in its list (%s in %s)" % [name, _rect(r), _rect(screen)])
 			if scroll.vertical_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED:
 				if r.position.y < box.position.y - SLACK or r.end.y > box.end.y + SLACK:
 					out.append("%s is taller than its list %s (%s in %s)" % [name, _name(scroll, node), _rect(r), _rect(box)])
-				elif r.position.y < screen.position.y - SLACK or r.end.y > screen.end.y + SLACK:
+				elif visible.position.y < screen.position.y - SLACK or visible.end.y > screen.end.y + SLACK:
 					out.append("%s reaches past the window's edge in its list (%s in %s)" % [name, _rect(r), _rect(screen)])
 		var cut := _cut_text(c)
 		if cut != "":
@@ -78,8 +79,19 @@ static func _scroller(c: Control) -> ScrollContainer:
 
 ## A control scrolled out of its list's view isn't on screen to spill.
 static func _hidden_by_scroll(c: Control) -> bool:
-	var s := _scroller(c)
-	return s != null and not s.get_global_rect().intersects(c.get_global_rect())
+	return not _visible_rect(c).has_area()
+
+
+## Nested horizontal tabs can scroll out of their outer vertical page. All scroll ancestors clip pixels;
+## checking only the nearest one incorrectly reports invisible tabs above the window as overflowing.
+static func _visible_rect(c: Control) -> Rect2:
+	var visible := c.get_global_rect()
+	var parent := c.get_parent()
+	while parent != null and not parent is CanvasLayer and not parent is Window:
+		if parent is ScrollContainer:
+			visible = visible.intersection((parent as ScrollContainer).get_global_rect())
+		parent = parent.get_parent()
+	return visible
 
 
 ## The text a label or button shows cut short with no ellipsis to say so, or "".

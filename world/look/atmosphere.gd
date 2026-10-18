@@ -207,7 +207,7 @@ func _build() -> void:
 	env.fog_density = haze
 	# Contact shadows where things meet the ground and walls meet floors (the palette snap makes them flat bands).
 	var ao := float(mood.get("ambient_occlusion", 0.0))
-	env.ssao_enabled = ao > 0.0
+	env.ssao_enabled = ao > 0.0 and not Graphics.mobile_renderer()
 	env.ssao_radius = 0.9
 	env.ssao_intensity = ao
 	env.ssao_power = 1.4
@@ -219,7 +219,7 @@ func _build() -> void:
 	add_child(we)
 	sun = DirectionalLight3D.new()
 	sun.name = "Sun"
-	sun.shadow_enabled = true
+	sun.shadow_enabled = not Graphics.software_simulator()
 	sun.shadow_opacity = float(mood.get("shadow_opacity", 1.0))
 	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
 	sun.directional_shadow_max_distance = 60.0
@@ -263,7 +263,7 @@ func _modern_finish() -> void:
 	env.tonemap_mode = MODERN_TONEMAP
 	env.tonemap_exposure = MODERN_EXPOSURE
 	env.tonemap_white = 6.0
-	env.glow_enabled = true
+	env.glow_enabled = not Graphics.software_simulator()
 	env.glow_intensity = 0.7
 	env.glow_strength = 1.0
 	env.glow_bloom = 0.02
@@ -274,7 +274,7 @@ func _modern_finish() -> void:
 	# Traveler 2): the broad levels on as well as the near ones, each softer as it widens.
 	for level: int in GLOW_LEVELS:
 		env.set_glow_level(level, float(GLOW_LEVELS[level]))
-	env.ssao_enabled = true
+	env.ssao_enabled = not Graphics.mobile_renderer()
 	env.ssao_radius = 1.1
 	env.ssao_intensity = maxf(float(mood.get("ambient_occlusion", 0.0)), 1.8)
 	env.ssao_power = 1.5
@@ -1491,7 +1491,7 @@ func _window_shaft(l: OmniLight3D) -> void:
 	spot.spot_range = 8.0
 	spot.spot_angle = 14.0
 	spot.spot_attenuation = 0.6
-	spot.shadow_enabled = true
+	spot.shadow_enabled = not Graphics.software_simulator()
 	spot.light_size = 0.3
 	spot.distance_fade_enabled = true
 	spot.distance_fade_begin = 40.0

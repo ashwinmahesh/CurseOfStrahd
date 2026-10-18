@@ -49,7 +49,7 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	# Nor while the region's truce holds: Strahd's dinner guests sleep unbothered under his roof (StoryConditions.TRUCES).
 	if rule == "risky" and StoryConditions.truce_holds(str(loc.get("region", "")), st):
 		rule = "safe"
-	var kinds := HBoxContainer.new()
+	var kinds: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 	kinds.add_theme_constant_override("separation", 12)
 	_short_why = _short_refusals()
 	var short := UiKit.button("Finish the Short Rest (1 hour)", _finish_short, 16, "rest")
@@ -65,8 +65,10 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 	frame.add_child(kinds)
 	_box = VBoxContainer.new()
 	_box.add_theme_constant_override("separation", 6)
-	var scroll := UiParts.fill_scroll(_box)
-	frame.add_child(scroll)
+	if MobileDevice.enabled():
+		frame.add_child(_box)
+	else:
+		frame.add_child(UiParts.fill_scroll(_box))
 	_log = UiKit.label("", 15, "gilt_light", 1040)
 	_log_card = UiParts.card("ui_black", "gilt_dark", 0.85, 10)
 	_log_card.custom_minimum_size = Vector2(0, 64)
@@ -79,6 +81,9 @@ func open(root_: Node, state: StoryState, _index: int) -> void:
 		_long_done = true
 		_prepared_before = st.morning.get("prepared", {}) as Dictionary
 	_draw()
+	if MobileDevice.enabled():
+		MobileUi.fit(frame)
+		(frame.get_parent() as ScrollContainer).horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 
 
 ## A rest's card: its name, how long it takes and how risky, what it gives, why it can't start now (each reason a line
@@ -135,6 +140,9 @@ func _refresh_long() -> void:
 		strike.tooltip_text = "Pack up and walk on."
 		strike.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_long_slot.add_child(strike)
+
+	if MobileDevice.enabled():
+		MobileUi.fit(_long_slot)
 
 
 ## Why a Short Rest can't be taken here now: a fight here begun and not won, or foes in plain view of the party.
@@ -252,7 +260,7 @@ func _draw() -> void:
 	for ch in st.party:
 		_arcane_recovery_row(ch)
 		_slot_exchange_row(ch)
-		var row := HBoxContainer.new()
+		var row: BoxContainer = VBoxContainer.new() if MobileDevice.enabled() else HBoxContainer.new()
 		row.add_theme_constant_override("separation", 12)
 		row.add_child(UiParts.framed_portrait(CombatToken.art_for(ch), 52.0, ch.hp <= 0, ch.dead))
 		var who := VBoxContainer.new()
@@ -280,6 +288,8 @@ func _draw() -> void:
 		_box.add_child(UiParts.row(row))
 		_study_row(ch)
 		_rest_cast_row(ch)
+	if MobileDevice.enabled():
+		MobileUi.fit(_box)
 
 
 ## Spells the hero casts on itself as each Long Rest ends, if the player wants (story/rest_casts.gd): Mage Armor.
