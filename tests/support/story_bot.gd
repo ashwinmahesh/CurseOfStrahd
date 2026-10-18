@@ -249,11 +249,6 @@ func converse() -> void:
 		if root.get("dialogue") == null:
 			return
 		d = root.get("dialogue") as DialogueUI   # one conversation can hand straight on to the next (QA travel sweep)
-		var ref := str(root.get("_dialogue_ref"))
-		var ally := StrahdPresence.ally_playing(st(), ref)
-		if not ally.is_empty() and ref != _ally_ref:
-			_ally_ref = ref
-			ally_visits.append(str(ally["id"]))
 		# A merchant's shop or someone's services opened from the talk: look, buy nothing, close it (the talk resumes).
 		for n in root.get_children():
 			if n is ShopScreen:
@@ -262,6 +257,11 @@ func converse() -> void:
 			elif n is ServicesScreen:
 				(n as ServicesScreen).call("_close")
 				await frames(1)
+		var ref := str(root.get("_dialogue_ref"))
+		var ally := StrahdPresence.ally_playing(st(), ref)
+		if not ally.is_empty() and ref != _ally_ref:
+			_ally_ref = ref
+			ally_visits.append(str(ally["id"]))
 		if bool(d.get("_waiting_continue")):
 			d.call("_advance")
 			await frames(1)
