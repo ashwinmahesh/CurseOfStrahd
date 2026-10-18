@@ -289,10 +289,43 @@ def semantic_checks(data):
     object_checks(data, errors)
     camp_checks(data, errors)
     xp_checks(data, errors)
+    waiting_checks(data, errors)
     pending.extend(pending_list)
     pending_list.clear()
     campaign_checks(data, errors, pending)
     return errors, pending
+
+
+# The fights that wait in plain view (F7) from before every one of them said which way it faces: their foes face the middle
+# of their group (docs/contracts/locations.md). Every fight made `waiting` since (overworld stealth, docs/design/
+# overworld_stealth.md) gives each foe in view a `facing`, so its sight cone points where the room's design wants it.
+LEGACY_WAITING = {"frozen_watch", "cat_sleepers", "cauldron_coven", "ghakis_keepers", "wachter_cellar_cult",
+                  "tower_night_visitors", "night_streets_dead", "den_guards", "cellar_dig"}
+
+
+def waiting_checks(data, errors):
+    """A fight that waits in plain view: every variant of its id waits, each has a foe in view (not `unseen`: a fight of
+    unseen foes only can't be slipped past), and every foe in view has a `facing`."""
+    for lid, loc in data["locations"].items():
+        variants = {}
+        for en in loc.get("encounters", []):
+            variants.setdefault(en["id"], []).append(en)
+        for eid, entries in variants.items():
+            if eid in LEGACY_WAITING or not any(e.get("waiting") for e in entries):
+                continue
+            where = f"locations/{lid}: encounter {eid}"
+            if not all(e.get("waiting") for e in entries):
+                errors.append(f"{where}: some variants wait in plain view and some don't (a variant is picked by its `when`, "
+                              "so every variant of the id must say `waiting`)")
+            for i, e in enumerate(entries):
+                if not e.get("waiting"):
+                    continue
+                in_view = [m for m in e["monsters"] if not m.get("unseen")]
+                if not in_view:
+                    errors.append(f"{where} (variant {i}): every foe is `unseen`: nothing to see before the fight, nothing to slip past")
+                for m in in_view:
+                    if "facing" not in m:
+                        errors.append(f"{where} (variant {i}): {m['monster']} at {m['cell']} has no `facing` (or `unseen`)")
 
 
 def xp_checks(data, errors):

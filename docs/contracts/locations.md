@@ -72,7 +72,11 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   moves `quest: {id, stage}` along. A monster entry may carry `hp` to tune that stat block for this fight.
   `waiting: true` (an `enter_area` fight only) puts its foes in plain view before the fight: they show once the party
   can see them, can notice the party, and can be attacked first (docs/rules/stealth.md, F7). A waiting monster's
-  `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group.
+  `facing` (north, south, east, west or between) points its sight cone; unset, it faces the middle of its group. A foe
+  with `unseen: true` isn't in plain view (a trap's, an ambush's): no figure, and it notices no one, until the fight puts
+  it on its square. `make validate` asks every variant of a waiting fight to wait, to have a foe in view, and each foe in
+  view to say its `facing` (the nine fights that waited before facings, tools/data/validate_data.py LEGACY_WAITING,
+  keep facing the middle of their group).
   A monster's `lying` lays it down before its fight (as an NPC entry's, below) and it gets up as the fight opens: the
   dead sitting up on their pallets, Vasilka coming down off her bier. Its `art` dresses it in another sprite than its
   stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it.
