@@ -30,6 +30,17 @@ static func apply_spell_effect(view: LocationView, spell_id: String) -> void:
 			view.toast.emit("%s opens %s" % [Compendium.shared().display_name("spells", spell_id), str(door.get("label", "the way"))])
 		"light":
 			view.update_daylight()
+		"fortress_raise":
+			# Daern's Instant Fortress was just set down (FieldItems): the tower grows on the plot it recorded.
+			FortressSite.overlay(view.loc, view.st)
+			LocationFortress.stand(view, true)
+			Audio.sfx("rumble")
+			Audio.sfx("arcane_glint")
+			view._say("item:fortress:rise", view.leader().creature as Character)
+		"fortress_fold":
+			LocationFortress.unstand(view)
+			Audio.sfx("rumble")
+			view._say("item:fortress:fold", view.leader().creature as Character)
 		"find_familiar", "find_steed":
 			LocationParty.refresh_familiars(view)   # it appears beside the party and follows from now on
 		"knock":

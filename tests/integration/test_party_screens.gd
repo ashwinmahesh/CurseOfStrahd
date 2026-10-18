@@ -491,17 +491,17 @@ func _live_widget(n: Node, key: String) -> ChoiceWidget:
 
 
 func test_an_items_long_rest_offers_prepared_spells_too() -> void:
-	# Daern's Instant Fortress gives the party a Long Rest from the inventory: the same chance follows it.
+	# The Rod of Security gives the party a Long Rest from the inventory: the same chance follows it.
 	var ilse := GameState.story.party[0]
-	ilse.add_item("daerns_instant_fortress")
+	ilse.add_item("rod_of_security")
 	root.call("open_screen", "inventory", 0)
 	await _frames(1)
 	var inv := root.get("screen") as InventoryScreen
 	var prep := func() -> Array: return inv.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
 		return (b as Button).text == "Change prepared spells" and not b.is_queued_for_deletion())
 	assert_eq((prep.call() as Array).size(), 0, "no rest yet")
-	inv.selected = "daerns_instant_fortress"
-	inv.call("_use_power", "fortress", {})
+	inv.selected = "rod_of_security"
+	inv.call("_use_power", "paradise", {})
 	await _frames(1)
 	var btn := prep.call() as Array
 	assert_eq(btn.size(), 1, "offered after the item's Long Rest")

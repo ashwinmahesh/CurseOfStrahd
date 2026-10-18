@@ -1142,6 +1142,20 @@
     "tsolenka_pass_guard_tower": {
       "floor": "church/frosted_flags"
     },
+    "daerns_fortress": {
+      "floor": "castle/flagstones",
+      "wall": "castle/flagstones",
+      "keep": true
+    },
+    "daerns_fortress_upper": {
+      "floor": "castle/flagstones",
+      "wall": "castle/flagstones",
+      "keep": true
+    },
+    "daerns_fortress_roof": {
+      "floor": "castle/flagstones",
+      "keep": true
+    },
     "vallaki_blue_water_inn": {
       "wall": "interior/blue_panelling"
     }
@@ -2281,6 +2295,12 @@
               "spire": "needle"
             }
           ]
+        },
+        "daerns_fortress_roof": {
+          "wall": 1.3,
+          "keep": 1.3,
+          "cliffs": false,
+          "below": 6.0
         }
       }
     }

@@ -43,7 +43,9 @@ static func config() -> Dictionary:
 
 ## Where a place lies on the travel art (x east, y south, fractions), or null if it isn't on it.
 static func place_at(place: String) -> Variant:
-	var at: Variant = (config().get("places", {}) as Dictionary).get(place, null)
+	# Daern's Instant Fortress's roof looks out from wherever the tower stands.
+	var outside := FortressSite.outside_of(place, GameState.story) if GameState.story != null else ""
+	var at: Variant = (config().get("places", {}) as Dictionary).get(outside if outside != "" else place, null)
 	if at == null:
 		return null
 	return Vector2(float((at as Array)[0]), float((at as Array)[1]))

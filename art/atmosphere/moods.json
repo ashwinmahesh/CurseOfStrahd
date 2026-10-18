@@ -3099,8 +3099,8 @@
           }
         ],
         "flame_tint": {
-          "colour": "wick",
-          "mix": 0.15,
+          "colour": "frost",
+          "mix": 0.55,
           "energy": 1.0
         }
       }

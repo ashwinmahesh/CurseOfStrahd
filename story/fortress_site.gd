@@ -6,8 +6,8 @@ extends RefCounted
 ## daerns_fortress_roof: the battlement behind the trapdoor), whose way out leads back to the map the tower stands on.
 ## The second power shrinks it back into the statuette, which works only when nobody is inside (the item's text).
 ## What stands is kept in StoryState.flags[FLAG] (an underscore key: bookkeeping, so it survives saves without a new
-## save version). The view reads it through overlay() and stand() (LocationView), the way out through overlay() too.
-## Pure story logic apart from stand(), which dresses a view.
+## save version). The view reads it through overlay() (LocationView.create) and LocationFortress.stand().
+## Pure story logic: dressing a view with it is LocationFortress (world/exploration/location_fortress.gd).
 
 const FLAG := "_fortress"
 const ITEM := "daerns_instant_fortress"
@@ -24,6 +24,8 @@ const SIDE := 4
 ## How far from the leader a plot is looked for, in squares, and how far it may sit from the party to be "where the
 ## party stands".
 const REACH := 5
+## How uneven the ground under a tower may be, in feet: its footing (FortressTower) makes up the difference.
+const SLOPE_FT := 10
 ## Which way a door looks (the direction from the tower to the square in front of its door). The opening camera looks
 ## north from the south, so a door that looks south shows best.
 const LOOKS := {"south": Vector2i(0, 1), "east": Vector2i(1, 0), "west": Vector2i(-1, 0), "north": Vector2i(0, -1)}
@@ -48,6 +50,11 @@ static func inside(st: StoryState) -> bool:
 	return st.location in INTERIORS
 
 
+## The map the tower stands on, for one of the tower's own maps (the roof's view of the valley), else "".
+static func outside_of(place: String, st: StoryState) -> String:
+	return str(state(st).get("at", "")) if place in INTERIORS else ""
+
+
 ## The name of the map the tower stands on, for what the item says.
 static func where(st: StoryState) -> String:
 	var at := str(state(st).get("at", ""))
@@ -63,7 +70,7 @@ static func footprint(cell: Vector2i) -> Array[Vector2i]:
 	return out
 
 
-static func _cell(v: Variant) -> Vector2i:
+static func cell_of(v: Variant) -> Vector2i:
 	var a := v as Array
 	return Vector2i(int(a[0]), int(a[1]))
 
@@ -117,11 +124,12 @@ static func open_air(loc: Dictionary) -> bool:
 
 ## Where a tower goes on the map `loc` for a party whose leader stands at `leader`, `party` being every square a
 ## character of the party or its guests stands on and `people` the squares others stand on: a plot of SIDE x SIDE
-## open, level squares clear of the place's things, with the square in front of the door open and the way to the
-## rest of the map kept (nothing the party could reach before is cut off). The nearest plot to the leader, a door
-## that looks south first. {cell, door, front, looks}, or {} when there is no room.
+## open squares on ground that is level or at most SLOPE_FT out (the tower's footing makes up the difference), clear of
+## the place's things, with a square in front of the door that is open and no more than a step from the door's, and
+## the way to the rest of the map kept (nothing the party could reach before is cut off). The nearest plot to the
+## leader, flatter ground and a door that looks south first. {cell, door, front, looks}, or {} when there is no room.
 static func plan(loc: Dictionary, grid: CombatGrid, leader: Vector2i, party: Array[Vector2i], people: Array[Vector2i] = []) -> Dictionary:
-	var taken := CampSite.things_at(loc)
+	var taken := CampSite.things_at(loc, false)   # not the fights' areas: the tower is walls, and no one walks into them
 	for c in people:
 		taken[c] = true
 	var before := _reach(grid, leader)
@@ -130,48 +138,59 @@ static func plan(loc: Dictionary, grid: CombatGrid, leader: Vector2i, party: Arr
 	for y in range(leader.y - REACH - SIDE, leader.y + REACH + 1):
 		for x in range(leader.x - REACH - SIDE, leader.x + REACH + 1):
 			var origin := Vector2i(x, y)
-			if not _plot_ok(grid, origin, taken, party):
+			var spread := _spread(grid, origin, taken, party)
+			if spread < 0:
 				continue
 			for looks: String in LOOKS:
-				var door := _door_for(origin, looks, leader)
-				var front := door + (LOOKS[looks] as Vector2i)
-				if not _front_ok(grid, front, taken, origin):
-					continue
-				var score := _distance(leader, front) * 10 + int(LOOK_COST[looks])
-				if score >= best_score:
-					continue
-				if not _keeps_the_way(grid, origin, before, leader):
-					continue
-				best_score = score
-				best = {"cell": [origin.x, origin.y], "door": [door.x, door.y], "front": [front.x, front.y], "looks": looks}
+				for door in _doors_for(origin, looks, leader):
+					var front := door + (LOOKS[looks] as Vector2i)
+					if not _front_ok(grid, front, taken, origin) or absi(grid.height(front) - grid.height(door)) > CombatGrid.FEET:
+						continue
+					var score := _distance(leader, front) * 10 + int(LOOK_COST[looks]) + spread / CombatGrid.FEET * 2
+					if score >= best_score or not _keeps_the_way(grid, origin, before, leader):
+						continue
+					best_score = score
+					best = {"cell": [origin.x, origin.y], "door": [door.x, door.y], "front": [front.x, front.y], "looks": looks}
 	return best
 
 
-## The nearest square of the tower's `looks` face to `leader` that can hold the door (not a corner).
-static func _door_for(origin: Vector2i, looks: String, leader: Vector2i) -> Vector2i:
-	match looks:
-		"south":
-			return Vector2i(clampi(leader.x, origin.x + 1, origin.x + SIDE - 2), origin.y + SIDE - 1)
-		"north":
-			return Vector2i(clampi(leader.x, origin.x + 1, origin.x + SIDE - 2), origin.y)
-		"east":
-			return Vector2i(origin.x + SIDE - 1, clampi(leader.y, origin.y + 1, origin.y + SIDE - 2))
-	return Vector2i(origin.x, clampi(leader.y, origin.y + 1, origin.y + SIDE - 2))
+## How far apart the heights of the plot's squares are, in feet (0: level), or -1 when it won't do: a square off the map,
+## closed, under a character of the party or the place's things, ground that is partly natural, or too uneven (SLOPE_FT).
+static func _spread(grid: CombatGrid, origin: Vector2i, taken: Dictionary, party: Array[Vector2i]) -> int:
+	if not grid.in_bounds(origin):
+		return -1
+	var lo := 1 << 20
+	var hi := -(1 << 20)
+	var natural := grid.has_flag(origin, CombatGrid.NATURAL)
+	for c in footprint(origin):
+		if not grid.in_bounds(c) or grid.flags(c) & CampSite.ROUGH != 0 or taken.has(c) or c in party \
+				or grid.has_flag(c, CombatGrid.NATURAL) != natural:
+			return -1
+		lo = mini(lo, grid.height(c))
+		hi = maxi(hi, grid.height(c))
+	return hi - lo if hi - lo <= SLOPE_FT else -1
+
+
+## The two squares of the tower's `looks` face that can hold the door (the corners can't), nearest `leader` first.
+static func _doors_for(origin: Vector2i, looks: String, leader: Vector2i) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for k: int in [1, SIDE - 2]:
+		match looks:
+			"south":
+				out.append(Vector2i(origin.x + k, origin.y + SIDE - 1))
+			"north":
+				out.append(Vector2i(origin.x + k, origin.y))
+			"east":
+				out.append(Vector2i(origin.x + SIDE - 1, origin.y + k))
+			_:
+				out.append(Vector2i(origin.x, origin.y + k))
+	if _distance(leader, out[1]) < _distance(leader, out[0]):
+		out.reverse()
+	return out
 
 
 static func _distance(a: Vector2i, b: Vector2i) -> int:
 	return maxi(absi(a.x - b.x), absi(a.y - b.y))
-
-
-## Every square of the plot open and level, none under a character of the party or something of the place's.
-static func _plot_ok(grid: CombatGrid, origin: Vector2i, taken: Dictionary, party: Array[Vector2i]) -> bool:
-	var h := grid.height(origin) if grid.in_bounds(origin) else -1
-	for c in footprint(origin):
-		if not grid.in_bounds(c) or grid.flags(c) & CampSite.ROUGH != 0 or taken.has(c) or c in party:
-			return false
-		if grid.height(c) != h or grid.has_flag(c, CombatGrid.NATURAL) != grid.has_flag(origin, CombatGrid.NATURAL):
-			return false
-	return true
 
 
 static func _front_ok(grid: CombatGrid, front: Vector2i, taken: Dictionary, origin: Vector2i) -> bool:
@@ -226,78 +245,15 @@ static func overlay(loc: Dictionary, st: StoryState) -> void:
 			loc["region"] = str(out.get("region", loc.get("region", "")))
 
 
-## Builds the tower on `view` (LocationView._ready, after the doors; LocationMagic when it has just been raised): its
-## squares become walls to walking, sight and the fights on the map, the map's rows show them, and the tower is drawn
-## over them, rising out of the ground when `rising`.
-static func stand(view: LocationView, rising: bool = false) -> void:
-	var fs := view.loc.get("fortress", {}) as Dictionary
-	if fs.is_empty() or view.board == null:
-		return
-	var origin := _cell(fs["cell"])
-	var rows := (view.loc["map"] as Dictionary)["rows"] as Array
-	var was: Array[String] = []
-	for dy in SIDE:
-		var row := str(rows[origin.y + dy])
-		was.append(row.substr(origin.x, SIDE))
-		rows[origin.y + dy] = row.substr(0, origin.x) + "#".repeat(SIDE) + row.substr(origin.x + SIDE)
-	fs["was"] = was
-	for c in footprint(origin):
-		view.grid.set_flag(c, CombatGrid.WALL, true)
-	var tower := FortressTower.build(view.board.cell_center(origin, SIDE), str(fs["looks"]))
-	view.add_child(tower)
-	view.exit_nodes[ENTRY] = tower
-	ModelPiece.fade_with_trees(view.board, tower)
-	if rising:
-		FortressTower.rise(tower)
-
-
-## Takes the tower off `view` again (it has been folded): the squares open as they were, the door goes, and the tower
-## sinks into the ground.
-static func unstand(view: LocationView) -> void:
-	var fs := view.loc.get("fortress", {}) as Dictionary
-	if fs.is_empty():
-		return
-	var origin := _cell(fs["cell"])
-	var rows := (view.loc["map"] as Dictionary)["rows"] as Array
-	var was := fs.get("was", []) as Array
-	for dy in SIDE:
-		if dy < was.size():
-			var row := str(rows[origin.y + dy])
-			rows[origin.y + dy] = row.substr(0, origin.x) + str(was[dy]) + row.substr(origin.x + SIDE)
-	for c in footprint(origin):
-		view.grid.set_flag(c, CombatGrid.WALL, false)
-	var exits := view.loc.get("exits", []) as Array
-	for i in range(exits.size() - 1, -1, -1):
-		if str((exits[i] as Dictionary).get("id", "")) == ENTRY:
-			exits.remove_at(i)
-	(view.loc.get("spawns", {}) as Dictionary).erase(FRONT)
-	var tower := view.exit_nodes.get(ENTRY, null) as Node3D
-	view.exit_nodes.erase(ENTRY)
-	view.loc.erase("fortress")
-	if tower != null and is_instance_valid(tower):
-		FortressTower.sink(tower)
-
-
-## A plot for the party on the live map `view` (the same as plot_for, with the map's people and any camp counted):
-## {} when there is none.
-static func plot_in(view: LocationView) -> Dictionary:
-	var party: Array[Vector2i] = []
-	for m in view.members + view.guest_members:
-		party.append(m.cell)
-	var people: Array[Vector2i] = []
-	for shown in view._npc_shown:
-		people.append(shown["cell"] as Vector2i)
-	return plan(view.loc, view.grid, view.leader().cell, party, people)
-
-
 ## A plot for the party from the saved state alone: the map's data and the squares the party stands on. What the
 ## inventory uses when it has no live map to ask (tests).
 static func plot_for(st: StoryState) -> Dictionary:
 	var loc := Compendium.shared().get_entry("locations", st.location)
 	if loc.is_empty() or not open_air(loc):
 		return {}
-	var grid := LocationView.grid_for(loc)
+	var map := loc["map"] as Dictionary
+	var grid := CombatGrid.from_rows(map["rows"] as Array, map.get("elevation", []) as Array)
 	var spawn := (loc.get("spawns", {}) as Dictionary).get("default", [1, 1]) as Array
 	var party: Array[Vector2i] = st.positions.duplicate() if st.positions.size() == st.party.size() else []
-	var leader := party[0] if not party.is_empty() else _cell(spawn)
+	var leader := party[0] if not party.is_empty() else cell_of(spawn)
 	return plan(loc, grid, leader, party)

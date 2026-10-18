@@ -4,7 +4,8 @@ extends RefCounted
 ## the combat engine on FieldCasting's peaceful board, so charges, DCs and lasting effects behave as in a fight;
 ## exploring spells (Detect Magic from a wand, Comprehend Languages from a helm) are recorded like FieldCasting's
 ## utility spells; the rest are the exploring and story powers only items have: a Manual's study, a Bag of Beans, an
-## Alchemy Jug, a Robe of Useful Items' patches, Daern's Instant Fortress, a Deck of Many Things.
+## Alchemy Jug, a Robe of Useful Items' patches, Daern's Instant Fortress (a tower on the map: FortressSite), a Deck of Many
+## Things.
 
 
 ## Copying a Spell Scroll into a Wizard's spellbook (Ashwin, 2026-10-18; 2024 PHB Wizard, "Copying a Spell into the
@@ -56,8 +57,9 @@ static func copy_scroll(st: StoryState, holder: Character, scroll_id: String, wi
 
 
 ## What `ch` can do with `item_id` right now: [{power_id, label, legal, reason, targeting, spell_id}] for powers marked
-## `field` (or potions and scrolls, which are field powers by nature).
-static func options(party: Array[Character], ch: Character, item_id: String, dice: DiceRoller) -> Array[Dictionary]:
+## `field` (or potions and scrolls, which are field powers by nature). `st`, when given, lets a power whose use depends on
+## the story's state say why it can't be used now (Daern's Instant Fortress: one standing already, nobody to fold).
+static func options(party: Array[Character], ch: Character, item_id: String, dice: DiceRoller, st: StoryState = null) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	var e := FieldCasting._board(party, ch, dice)
 	var c := e.get_c(ch.id)
@@ -102,6 +104,12 @@ static func options(party: Array[Character], ch: Character, item_id: String, dic
 			if why == "" and (o["store"] as Array).is_empty():
 				o["legal"] = false
 				o["reason"] = "Nobody can cast a spell that fits"
+		# Daern's Instant Fortress: raise it in the open air, fold it from outside with nobody in it.
+		if str(power.get("custom", "")) == "instant_fortress" and st != null and why == "":
+			var fwhy := FortressSite.why_not_fold(st) if _fortress_mode(power) == "fold" else FortressSite.why_not_raise(st)
+			if fwhy != "":
+				o["legal"] = false
+				o["reason"] = fwhy
 		out.append(o)
 	return out
 
@@ -360,7 +368,9 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			return {"ok": true, "text": "The jug fills with %s." % liquid.replace("_", " ")}
 		"manual_study", "exalted_deeds", "vile_darkness":
 			return _study(st, ch, p, opts)
-		"instant_fortress", "rod_of_security":
+		"instant_fortress":
+			return _fortress(st, ch, power, opts)
+		"rod_of_security":
 			# A safe place to sleep wherever the party is, but still not within 16 hours of the last Long Rest (RestRules).
 			var wait := RestRules.item_rest_refusal(st)
 			if wait != "":
@@ -409,6 +419,35 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 			# The world finds the nearest secret door or trap (LocationView.apply_spell_effect("secrets")).
 			return {"ok": true, "effect": "secrets", "text": "%s waves the Wand of Secrets." % nm}
 	return {"ok": false, "text": "Not built yet"}
+
+
+## Which of Daern's Instant Fortress's two powers `power` is: "raise" or "fold".
+static func _fortress_mode(power: Dictionary) -> String:
+	return str((power.get("params", {}) as Dictionary).get("mode", "raise"))
+
+
+## Daern's Instant Fortress (story/fortress_site.gd): the first power sets the tower down in the open where the party
+## stands, the second folds it back into the statuette. The world dresses the map (`effect`: fortress_raise or
+## fortress_fold, LocationMagic). `opts.plot` is the plot the live map found (FortressSite.plot_in); without one it is
+## worked out from the saved state.
+static func _fortress(st: StoryState, ch: Character, power: Dictionary, opts: Dictionary) -> Dictionary:
+	var nm := ch.name.get_slice(" ", 0)
+	if _fortress_mode(power) == "fold":
+		var fold_why := FortressSite.why_not_fold(st)
+		if fold_why != "":
+			return {"ok": false, "text": fold_why, "lines": []}
+		FortressSite.fold(st)
+		return {"ok": true, "effect": "fortress_fold", "lines": [],
+			"text": "%s speaks the word again, and the tower shrinks back into the statuette." % nm}
+	var why := FortressSite.why_not_raise(st)
+	if why != "":
+		return {"ok": false, "text": why, "lines": []}
+	var plot: Dictionary = opts["plot"] as Dictionary if opts.has("plot") else FortressSite.plot_for(st)
+	if plot.is_empty():
+		return {"ok": false, "text": FortressSite.NO_ROOM, "lines": []}
+	FortressSite.raise(st, plot, ch)
+	return {"ok": true, "effect": "fortress_raise", "lines": [],
+		"text": "%s sets the statuette down and speaks the word: a tower grows where the party stands, its door facing it." % nm}
 
 
 ## A manual or tome studied: +2 to a score and its maximum, for good; the book's magic is spent.

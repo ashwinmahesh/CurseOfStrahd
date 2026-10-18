@@ -56,8 +56,9 @@ static func take(st: StoryState, rule: String, dice: DiceRoller) -> Dictionary:
 	return _sleep_on(st, dice, start, HOURS * 60, true, warned)
 
 
-## A safe place's rest from a magic item (Daern's Instant Fortress, the Rod of Security): never interrupted, but Strahd
-## may still come in the night, and a visit that may come to blows comes before the benefits, as anywhere.
+## A safe place's rest from a magic item (the Rod of Security; Daern's Instant Fortress is a place now, so its rest is
+## take() in a `safe` map): never interrupted, but Strahd may still come in the night, and a visit that may come to
+## blows comes before the benefits, as anywhere.
 static func take_safe(st: StoryState, dice: DiceRoller) -> Dictionary:
 	return _sleep_on(st, dice, st.total_minutes(), HOURS * 60, true)
 

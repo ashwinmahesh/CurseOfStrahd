@@ -136,6 +136,7 @@ static func create(location_id: String, state: StoryState, narrator_: Narrator, 
 	v.loc_id = location_id
 	# A copy: random encounters on the road add fights to it for the length of a visit.
 	v.loc = Compendium.shared().get_entry("locations", location_id).duplicate(true)
+	FortressSite.overlay(v.loc, state)   # Daern's Instant Fortress, if one stands here or this is the tower's inside
 	v.st = state
 	v.narrator = narrator_
 	v.dice = dice_
@@ -150,6 +151,7 @@ func _ready() -> void:
 	add_child(board)
 	LocationBuilder._build_environment(self)
 	LocationBuilder._build_doors(self)
+	LocationFortress.stand(self)   # the tower, if one stands on this map: walls to walk and sight, and drawn over its squares
 	LocationBuilder._build_props(self)
 	LocationBuilder.open_small_decor(self)
 	LocationBuilder._build_lights(self)

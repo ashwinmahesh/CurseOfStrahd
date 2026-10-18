@@ -81,7 +81,7 @@ func test_closing_with_a_word_waiting_says_where_to_hear_it() -> void:
 func test_a_magic_items_safe_rest_is_a_full_long_rest() -> void:
 	var st := GameState.story
 	var thistle := st.party[0]
-	thistle.add_item("daerns_instant_fortress")
+	thistle.add_item("rod_of_security")
 	st.add_guest("ismark")
 	var ismark := st.guests[0]
 	ismark.hp = 1
@@ -89,8 +89,8 @@ func test_a_magic_items_safe_rest_is_a_full_long_rest() -> void:
 	root.call("open_screen", "inventory", 0)
 	await _frames(1)
 	var inv := root.get("screen") as InventoryScreen
-	inv.selected = "daerns_instant_fortress"
-	inv.call("_use_power", "fortress", {})
+	inv.selected = "rod_of_security"
+	inv.call("_use_power", "paradise", {})
 	await _frames(1)
 	assert_eq(ismark.hp, ismark.max_hp(), "the guest slept too")
 	assert_eq(st.miles_since_long_rest, 0.0, "the miles walked since are behind them")

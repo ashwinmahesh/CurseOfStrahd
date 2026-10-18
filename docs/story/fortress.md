@@ -14,14 +14,16 @@ only if nobody is inside. Ashwin's todo (2026-10-17): "It should spin up a fortr
 
 - **Raise the fortress** (the item's first power; story/field_items.gd `instant_fortress`, story/fortress_site.gd): out of
   doors only (a map with `outdoors` that isn't a dungeon's open-air stonework: not a castle's roofs, nothing under a
-  roof). The plot is the nearest 4 x 4 block of open, level squares to the leader that holds none of the place's things
-  (props, containers, doors, exits, lights, people, traps, the areas a fight starts in) and no one's feet, with the square in
-  front of the door free and nothing the party could reach cut off. The door looks south when it can (the opening camera
-  looks north), else east or west, else north. No such plot: the card says there is no clear ground. This is the book's
-  push-clear rule made a plot choice, so nobody stands where it grows.
+  roof). The plot is the nearest 4 x 4 block of open squares to the leader on level ground or a gentle slope (at most
+  10 ft across; the tower's footing makes up the difference and the door is a step at most from the ground in front of
+  it), clear of the place's things (props, containers, doors, exits, lights, people, traps) and of anyone's feet, with
+  the square in front of the door free and nothing the party could reach cut off. A fight's start area doesn't count:
+  the tower is only walls. The door looks south when it can (the opening camera looks north), else east or west,
+  else north. No such plot (a lane three squares wide, a hillside, a crowded square): the card says there is no clear
+  ground. This is the book's push-clear rule made a plot choice, so nobody stands where it grows.
 - **It stands on the map**: the squares are walls to walking, sight and the fights on that map; the tower is drawn over
   them (world/look/fortress_tower.gd), dark adamantine plates, arrow slits, a toothed battlement and the door lit along its
-  seam, and it fades like a tree when it hides the party. It rises out of the ground when raised. It is kept in
+  seam, and it opens a round window onto the party when it stands between them and the camera, as the walls do (SeeThrough). It rises out of the ground when raised. It is kept in
   `StoryState.flags["_fortress"]` ({at, cell, door, front, looks, by}), so it is there when the party comes back, in a
   save, and while the party is inside.
 - **Walk in at the door** (or click the tower): the exit leads to `daerns_fortress`, the ground floor. A stair along the
@@ -30,9 +32,9 @@ only if nobody is inside. Ashwin's todo (2026-10-17): "It should spin up a fortr
   the map the tower stands on, at the square in front of the door (`LocationView.create` lays this over the maps'
   data: story/fortress_site.gd `overlay`).
 - **Fold the fortress** (the second power): from outside, on the map it stands on, with nobody inside (the party in any
-  of its three maps counts). The statuette is back in the holder's pack and the squares are open again. Leave the map
-  and the tower stays where it is (the statuette is still on the ground there): the power is refused "out of
-  earshot" until the party is back, and a second tower can't be raised meanwhile. Nothing in the game attacks the
+  of its three maps counts). The squares are open again. The statuette itself never leaves the holder's pack (the
+  item's powers are used from there); leave the map and the tower stays where it is: the second power is refused "out
+  of earshot" until the party is back, and a second tower can't be raised meanwhile. Nothing in the game attacks the
   tower, so its Hit Points and Wish are in the item's text only.
 
 ## Resting inside
@@ -47,6 +49,14 @@ to any place: plain rests only where they are safe (an inn, a booked room, a saf
   Instant Fortress" always had it). The three maps are one building to `RestRules.building_of`, and have no enemies.
 - `daerns_fortress_roof` is `rest: no`: open air thirty feet up.
 - The item no longer gives a Long Rest from the inventory; the Rod of Security still does.
+
+## Narrator lines
+
+narrative/narrator/daerns_fortress.dialogue (`item:fortress:rise` and `:fold`, `enter:` for the three maps, three
+`examine:` props, `rest:long:` for the two floors) was drafted by Gemini through Ashwin's ai-bridge (2026-10-18) and
+trimmed and corrected here (iron became adamantine, grass and mud went because the tower can stand anywhere, no
+keyhole, no bolts). The brief and the raw reply are kept in docs/story/fortress/. None of these lines is voiced yet:
+the voice thread voices them.
 
 ## Hooks (for the build thread)
 

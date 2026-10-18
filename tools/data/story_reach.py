@@ -306,6 +306,12 @@ class Story:
         return self
 
     def _locations(self):
+        # Daern's Instant Fortress (docs/story/fortress.md): the statuette raises a tower on any open-air map, and its three
+        # maps (the way out leads back to the map it stands on) are walked into from there: reached once the item is.
+        if ("item", "daerns_instant_fortress") in self.facts:
+            for lid in ("daerns_fortress", "daerns_fortress_upper", "daerns_fortress_roof"):
+                if lid in self.locs:
+                    self.changed |= self.add(("loc", lid), "Daern's Instant Fortress (story/fortress_site.gd)")
         for lid, loc in self.locs.items():
             if ("loc", lid) not in self.facts:
                 continue
