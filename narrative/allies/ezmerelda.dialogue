@@ -1,0 +1,706 @@
+# Ezmerelda d'Avenir's Hunter's Ledger and her hub (docs/voice/ezmerelda.md; Story Allies Presence Plan, package M2).
+# The hub, `allies/ezmerelda:talk`, is one conversation opened from wherever she stands (the tower shore, the abbey
+# switchback, the Blue Water Inn's yard: one menu option each) and from clicking her while she travels with the party
+# (her guest_talk in data/npcs/ezmerelda.json). Its lines read right in all of those places.
+#   ledger  She names up to three of the thirteen killers below, from flags the regions already set: first the ones the
+#           party has killed and she has not paid for (claim_*), then hunts in the region the party stands in, then the
+#           hardest hunts the party's level reaches (brief_*, words only). Payment is her hunter's goods, scaled by level;
+#           the fourth and eighth names also bring something from her wagon. Quest: hunters_ledger (docs/story/side_quests.md).
+#   topics  Rudolph, her leg, the Vistani and what she thinks of where the party is going each play once (ezmerelda_heard_*),
+#           and the hub offers at most the three first in the order of TOPICS below.
+# Side flags are in data/flags/allies_ezmerelda.json; every flag read of the story's own is read-only here.
+# Lines were drafted by Gemini through the ai-bridge (docs/plans/gemini_allies/M2/) and edited. All unvoiced.
+# The picks (ledger_pick_*, hub_pick_*) are recomputed on every visit to the ledger or the menu and are not state.
+
+~ talk
+if not quest.hunters_ledger
+quest hunters_ledger heard
+endif
+if not flag.ezmerelda_ledger_shown
+-> ledger_intro
+endif
+if flag.ezmerelda_trust < 2
+Ezmerelda: Hands where I can see them. What do you need?
+else
+Ezmerelda [smile]: Still breathing, all of you. What do you need, before my luck rubs off on you?
+endif
+-> menu
+
+~ ledger_intro
+set ezmerelda_ledger_shown
+Narrator: She unwraps a battered book from its oilcloth. The pages are crowded with names, and the best ones are struck through in black ink.
+Ezmerelda: Every killer in this valley I trust enough to ink, with a price beside each. I pay for proof, not promises.
+Ezmerelda [sly]: I pay in what a hunter has: silver, holy water, remedies. Rudolph taught me to count the teeth before I count the coin.
+Ezmerelda: Three names at a time, though. Four is a chore list, and I've had a lifetime of Rudolph's.
+-> menu
+
+# ---------------------------------------------------------------- The menu
+
+~ menu
+set hub_slots = 0
+set hub_pick_view_c = false
+set hub_pick_view_b = false
+set hub_pick_view_a = false
+set hub_pick_rudolph = false
+set hub_pick_leg = false
+set hub_pick_vistani = false
+if level >= 10 and not flag.ezmerelda_heard_view_c and flag.hub_slots < 3
+set hub_pick_view_c
+set hub_slots += 1
+endif
+if level == 9 and not flag.ezmerelda_heard_view_b and flag.hub_slots < 3
+set hub_pick_view_b
+set hub_slots += 1
+endif
+if level >= 7 and level <= 8 and not flag.ezmerelda_heard_view_a and flag.hub_slots < 3
+set hub_pick_view_a
+set hub_slots += 1
+endif
+if true and not flag.ezmerelda_heard_rudolph and flag.hub_slots < 3
+set hub_pick_rudolph
+set hub_slots += 1
+endif
+if true and not flag.ezmerelda_heard_leg and flag.hub_slots < 3
+set hub_pick_leg
+set hub_slots += 1
+endif
+if true and not flag.ezmerelda_heard_vistani and flag.hub_slots < 3
+set hub_pick_vistani
+set hub_slots += 1
+endif
+* [if flag.ezmerelda_ledger_paid < 13] Let us see what work is in the ledger. -> ledger
+* [if flag.hub_pick_view_c] What do you make of where we are heading? -> view_c
+* [if flag.hub_pick_view_b] What do you make of where we are heading? -> view_b
+* [if flag.hub_pick_view_a] What do you make of where we are heading? -> view_a
+* [if flag.hub_pick_rudolph] How are things between you and Rudolph? -> rudolph
+* [if flag.hub_pick_leg] Tell us what happened to your leg. -> leg
+* [if flag.hub_pick_vistani] What do you make of the Vistani in this valley? -> vistani
+* [if not guest:ezmerelda and tarokka.ally.npc == ezmerelda] Hunt with us. -> abbey_of_st_markovia/ezmerelda:join
+* [if not guest:ezmerelda and tarokka.ally.npc != ezmerelda and flag.ezmerelda_trust >= 2] Hunt with us. -> allies/ezmerelda_hunt:join
+* We should get moving. -> bye
+
+~ bye
+Ezmerelda: Silver first, questions never, and don't die between here and the next crossroads.
+-> END
+
+~ rudolph
+set ezmerelda_heard_rudolph
+if flag.van_richten_reunited
+Ezmerelda [weary]: My knuckles still ache from hitting his arm, and he's already correcting how I oil my crossbow.
+Ezmerelda [smile]: We're speaking, mostly in arguments. That's how Rudolph says he missed me.
+elif flag.ezmerelda_left_tower and not flag.ezmerelda_back_at_camp and not flag.rictavio_gone
+Ezmerelda: Twelve years of following him, and all that's left is a painted wagon and an inn door.
+Ezmerelda [weary]: It's easier to track a werewolf in the dark than to find out whether your teacher wanted to be found.
+else
+Ezmerelda [angry]: Twelve years I've followed him, right up to a door he keyed to my name alone, and still no Rudolph.
+Ezmerelda: Don't worry about him. I'm very good at looking, and when I find him he'll wish a monster had got there first.
+endif
+-> menu
+
+~ leg
+set ezmerelda_heard_leg
+if flag.kiril_defeated
+Ezmerelda: The hills above Lake Zarovich, back when I was young and quick and stupid. Kiril took it laughing, with his black jaws wide.
+Ezmerelda [weary]: Rudolph built this brace, and it kicks harder than the old one. With the wolf dead, I mostly just feel lighter.
+else
+Ezmerelda: A big black wolf named Kiril, in the hills above Lake Zarovich, while I was busy being young and quick and stupid.
+Ezmerelda [sly]: Rudolph built the brace. The lesson I built myself: never swing at a mouth that's still laughing at you.
+endif
+-> menu
+
+~ vistani
+set ezmerelda_heard_vistani
+Ezmerelda: They're my people when the wagons will have me. Guiding travellers through a valley that eats them is a tightrope, and they walk it.
+Ezmerelda [weary]: Between Madam Eva at Tser Pool dealing me into other people's games and the camp outside Vallaki, I keep my distance.
+Ezmerelda: Pay what they ask, leave their horses alone, and never mistake a warm fire for a free favour.
+-> menu
+
+~ view_a
+set ezmerelda_heard_view_a
+Ezmerelda: Wolves on the hill roads, a witch in the drowned village, dead knights in their manor. Pick your fights before you draw steel.
+Ezmerelda: And watch the abbey hardest. Whatever's playing at holiness up there has a butcher's hand with a needle.
+-> menu
+
+~ view_b
+set ezmerelda_heard_view_b
+Ezmerelda: Tsolenka Pass is a cliff road. A roc hunts the gorge by day, and a ghostly watch keeps the gate shut.
+Ezmerelda [sly]: Beyond it is the Amber Temple, where old powers sell gifts for a price. Take one, and I'll be counting my silver twice.
+-> menu
+
+~ view_c
+set ezmerelda_heard_view_c
+Ezmerelda: I don't plan the castle until I'm looking at its gates. Paper plans die on the drawbridge.
+Ezmerelda: But remember Rudolph's first rule for the count's house: know which window you're jumping out of before you open the door.
+-> menu
+
+# ---------------------------------------------------------------- The ledger
+
+# Up to three names: the party's kills she hasn't paid for first (oldest name first), then the hunts in the region the
+# party is standing in, then the hardest hunts its level reaches. Each pass skips what an earlier pass picked.
+~ ledger
+set ledger_named = 0
+set ledger_ready = 0
+set ledger_pick_falls = false
+set ledger_pick_wagon = false
+set ledger_pick_fowlers = false
+set ledger_pick_vine = false
+set ledger_pick_morgantha = false
+set ledger_pick_wint = false
+set ledger_pick_huntsman = false
+set ledger_pick_grandsire = false
+set ledger_pick_kiril = false
+set ledger_pick_khazan = false
+set ledger_pick_lysaga = false
+set ledger_pick_sarkhaza = false
+set ledger_pick_eye = false
+# 1. killed and not yet paid
+if flag.falls_werewolf_slain and not flag.ledger_paid_falls and flag.ledger_named < 3
+set ledger_pick_falls
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.wagon_slain and not flag.ledger_paid_wagon and flag.ledger_named < 3
+set ledger_pick_wagon
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.fowlers_slain and not flag.ledger_paid_fowlers and flag.ledger_named < 3
+set ledger_pick_fowlers
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.vine_mother_slain and not flag.ledger_paid_vine and flag.ledger_named < 3
+set ledger_pick_vine
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.morgantha_slain and not flag.ledger_paid_morgantha and flag.ledger_named < 3
+set ledger_pick_morgantha
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.yester_hill_resolved and not flag.ledger_paid_wint and flag.ledger_named < 3
+set ledger_pick_wint
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.huntsman_slain and not flag.ledger_paid_huntsman and flag.ledger_named < 3
+set ledger_pick_huntsman
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.grandsire_slain and not flag.ledger_paid_grandsire and flag.ledger_named < 3
+set ledger_pick_grandsire
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.kiril_defeated and not flag.ledger_paid_kiril and flag.ledger_named < 3
+set ledger_pick_kiril
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.khazan_destroyed and not flag.ledger_paid_khazan and flag.ledger_named < 3
+set ledger_pick_khazan
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.lysaga_dead and not flag.ledger_paid_lysaga and flag.ledger_named < 3
+set ledger_pick_lysaga
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.sarkhaza_slain and not flag.ledger_paid_sarkhaza and flag.ledger_named < 3
+set ledger_pick_sarkhaza
+set ledger_named += 1
+set ledger_ready += 1
+endif
+if flag.eye_below_slain and not flag.ledger_paid_eye and flag.ledger_named < 3
+set ledger_pick_eye
+set ledger_named += 1
+set ledger_ready += 1
+endif
+# 2. open hunts where the party stands (that its level reaches)
+if region:svalich_road and level >= 3 and not flag.falls_werewolf_slain and not flag.ledger_pick_falls and flag.ledger_named < 3
+set ledger_pick_falls
+set ledger_named += 1
+endif
+if region:svalich_road and level >= 4 and not flag.wagon_slain and not flag.ledger_pick_wagon and flag.ledger_named < 3
+set ledger_pick_wagon
+set ledger_named += 1
+endif
+if region:lake_zarovich and level >= 5 and not flag.fowlers_slain and not flag.ledger_pick_fowlers and flag.ledger_named < 3
+set ledger_pick_fowlers
+set ledger_named += 1
+endif
+if region:wizard_of_wines and level >= 5 and not flag.vine_mother_slain and not flag.ledger_pick_vine and flag.ledger_named < 3
+set ledger_pick_vine
+set ledger_named += 1
+endif
+if region:old_bonegrinder and level >= 5 and not flag.morgantha_slain and not flag.ledger_pick_morgantha and flag.ledger_named < 3 and not (flag.bonegrinder_fate == "bargain" or flag.bonegrinder_fate == "bella")
+set ledger_pick_morgantha
+set ledger_named += 1
+endif
+if region:yester_hill and level >= 6 and not flag.yester_hill_resolved and not flag.ledger_pick_wint and flag.ledger_named < 3
+set ledger_pick_wint
+set ledger_named += 1
+endif
+if region:svalich_road and level >= 7 and not flag.huntsman_slain and not flag.ledger_pick_huntsman and flag.ledger_named < 3
+set ledger_pick_huntsman
+set ledger_named += 1
+endif
+if region:krezk and level >= 7 and not flag.grandsire_slain and not flag.ledger_pick_grandsire and flag.ledger_named < 3 and not (quest.the_packs_runt == given)
+set ledger_pick_grandsire
+set ledger_named += 1
+endif
+if region:werewolf_den and level >= 7 and not flag.kiril_defeated and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
+set ledger_pick_kiril
+set ledger_named += 1
+endif
+if region:van_richtens_tower and level >= 7 and not flag.khazan_destroyed and not flag.ledger_pick_khazan and flag.ledger_named < 3
+set ledger_pick_khazan
+set ledger_named += 1
+endif
+if region:berez and level >= 8 and not flag.lysaga_dead and not flag.ledger_pick_lysaga and flag.ledger_named < 3 and not (flag.lysaga_fate == "bargained" or flag.lysaga_fate == "broken")
+set ledger_pick_lysaga
+set ledger_named += 1
+endif
+if region:mount_ghakis and level >= 9 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
+set ledger_pick_sarkhaza
+set ledger_named += 1
+endif
+if region:amber_temple and level >= 9 and not flag.eye_below_slain and not flag.ledger_pick_eye and flag.ledger_named < 3
+set ledger_pick_eye
+set ledger_named += 1
+endif
+# 3. the hardest open hunts the party's level reaches
+if level >= 9 and not flag.eye_below_slain and not flag.ledger_pick_eye and flag.ledger_named < 3
+set ledger_pick_eye
+set ledger_named += 1
+endif
+if level >= 9 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
+set ledger_pick_sarkhaza
+set ledger_named += 1
+endif
+if level >= 8 and not flag.lysaga_dead and not flag.ledger_pick_lysaga and flag.ledger_named < 3 and not (flag.lysaga_fate == "bargained" or flag.lysaga_fate == "broken")
+set ledger_pick_lysaga
+set ledger_named += 1
+endif
+if level >= 7 and not flag.khazan_destroyed and not flag.ledger_pick_khazan and flag.ledger_named < 3
+set ledger_pick_khazan
+set ledger_named += 1
+endif
+if level >= 7 and not flag.kiril_defeated and not flag.ledger_pick_kiril and flag.ledger_named < 3 and not (flag.wolf_pack_leader == "kiril")
+set ledger_pick_kiril
+set ledger_named += 1
+endif
+if level >= 7 and not flag.grandsire_slain and not flag.ledger_pick_grandsire and flag.ledger_named < 3 and not (quest.the_packs_runt == given)
+set ledger_pick_grandsire
+set ledger_named += 1
+endif
+if level >= 7 and not flag.huntsman_slain and not flag.ledger_pick_huntsman and flag.ledger_named < 3
+set ledger_pick_huntsman
+set ledger_named += 1
+endif
+if level >= 6 and not flag.yester_hill_resolved and not flag.ledger_pick_wint and flag.ledger_named < 3
+set ledger_pick_wint
+set ledger_named += 1
+endif
+if level >= 5 and not flag.morgantha_slain and not flag.ledger_pick_morgantha and flag.ledger_named < 3 and not (flag.bonegrinder_fate == "bargain" or flag.bonegrinder_fate == "bella")
+set ledger_pick_morgantha
+set ledger_named += 1
+endif
+if level >= 5 and not flag.vine_mother_slain and not flag.ledger_pick_vine and flag.ledger_named < 3
+set ledger_pick_vine
+set ledger_named += 1
+endif
+if level >= 5 and not flag.fowlers_slain and not flag.ledger_pick_fowlers and flag.ledger_named < 3
+set ledger_pick_fowlers
+set ledger_named += 1
+endif
+if level >= 4 and not flag.wagon_slain and not flag.ledger_pick_wagon and flag.ledger_named < 3
+set ledger_pick_wagon
+set ledger_named += 1
+endif
+if level >= 3 and not flag.falls_werewolf_slain and not flag.ledger_pick_falls and flag.ledger_named < 3
+set ledger_pick_falls
+set ledger_named += 1
+endif
+if flag.ledger_named == 0
+-> ledger_none
+endif
+if flag.ledger_ready > 0
+Ezmerelda [sly]: You smell like smoke and fresh work. Point to the name you finished and let's settle up.
+else
+Ezmerelda: Nothing's owed yet, so these are the hunts I'd take in your boots. Pick a name.
+endif
+-> ledger_menu
+
+~ ledger_none
+Ezmerelda [weary]: Nothing in reach that's worth your boots, and the rest would eat you whole. Come back once the valley's moved.
+-> menu
+
+~ ledger_menu
+* [if flag.ledger_pick_falls and not flag.falls_werewolf_slain] Tell us about Dragan at Tser Falls. -> brief_falls
+* [if flag.ledger_pick_falls and flag.falls_werewolf_slain] Dragan is dead at Tser Falls. -> claim_falls
+* [if flag.ledger_pick_wagon and not flag.wagon_slain] Tell us about the tinker's wagon at the crossroads. -> brief_wagon
+* [if flag.ledger_pick_wagon and flag.wagon_slain] We killed the tinker's wagon and freed Iosif. -> claim_wagon
+* [if flag.ledger_pick_fowlers and not flag.fowlers_slain] Tell us about the count's fowlers on the hill trail. -> brief_fowlers
+* [if flag.ledger_pick_fowlers and flag.fowlers_slain] The count's fowlers above Lake Zarovich are dead. -> claim_fowlers
+* [if flag.ledger_pick_vine and not flag.vine_mother_slain] Tell us about the Vine Mother in the vineyard. -> brief_vine
+* [if flag.ledger_pick_vine and flag.vine_mother_slain] We cut down the Vine Mother in the Seventh Row. -> claim_vine
+* [if flag.ledger_pick_morgantha and not flag.morgantha_slain] Tell us about Morgantha at Old Bonegrinder. -> brief_morgantha
+* [if flag.ledger_pick_morgantha and flag.morgantha_slain] Morgantha is dead and the coven is broken. -> claim_morgantha
+* [if flag.ledger_pick_wint and not flag.yester_hill_resolved] Tell us about Wintersplinter on Yester Hill. -> brief_wint
+* [if flag.ledger_pick_wint and flag.yester_hill_resolved] We destroyed Wintersplinter on the crown of Yester Hill. -> claim_wint
+* [if flag.ledger_pick_huntsman and not flag.huntsman_slain] Tell us about the Count's Huntsman. -> brief_huntsman
+* [if flag.ledger_pick_huntsman and flag.huntsman_slain] We killed the Count's Huntsman and his hounds at the crossroads. -> claim_huntsman
+* [if flag.ledger_pick_grandsire and not flag.grandsire_slain] Tell us about the Grandsire. -> brief_grandsire
+* [if flag.ledger_pick_grandsire and flag.grandsire_slain] We killed the Grandsire in Krezk's square. -> claim_grandsire
+* [if flag.ledger_pick_kiril and not flag.kiril_defeated] Tell us about Kiril Stoyanovich. -> brief_kiril
+* [if flag.ledger_pick_kiril and flag.kiril_defeated] Kiril is dead in his den. -> claim_kiril
+* [if flag.ledger_pick_khazan and not flag.khazan_destroyed] Tell us about Khazan under the tower. -> brief_khazan
+* [if flag.ledger_pick_khazan and flag.khazan_destroyed] We destroyed Khazan under the tower. -> claim_khazan
+* [if flag.ledger_pick_lysaga and not flag.lysaga_dead] Tell us about Baba Lysaga in Berez. -> brief_lysaga
+* [if flag.ledger_pick_lysaga and flag.lysaga_dead] Baba Lysaga is dead in the marsh. -> claim_lysaga
+* [if flag.ledger_pick_sarkhaza and not flag.sarkhaza_slain] Tell us about the dragon Sarkhaza. -> brief_sarkhaza
+* [if flag.ledger_pick_sarkhaza and flag.sarkhaza_slain] We killed Sarkhaza under Mount Ghakis. -> claim_sarkhaza
+* [if flag.ledger_pick_eye and not flag.eye_below_slain] Tell us about the Eye Below. -> brief_eye
+* [if flag.ledger_pick_eye and flag.eye_below_slain] The Eye Below is dead in the vaults. -> claim_eye
+* That's enough names for now. -> menu
+
+# ---------------------------------------------------------------- The names, one briefing and one payment each
+
+# Dragan, the werewolf at Tser Falls (flag falls_werewolf_slain; fought in svalich_road; named from level 3).
+~ brief_falls
+Ezmerelda: Dragan, one of Kiril's pack. He waits at the lip of Tser Falls at night, with wolves and a dire wolf for company.
+Ezmerelda: Put silver in him first, keep your back off that drop, and come tell me when the rock only holds tokens again.
+-> ledger_menu
+
+~ claim_falls
+set ledger_paid_falls
+set ezmerelda_ledger_paid += 1
+Ezmerelda [sly]: One less of Kiril's on the hills, and nothing left at the falls but scratches in the stone.
+Ezmerelda: His name comes out of the book. Take the silver-headed bolts and a healing draught, and stitch yourselves up.
+give crossbow_bolt 10
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the Tinker's Wagon (flag wagon_slain; fought in svalich_road; named from level 4).
+~ brief_wagon
+Ezmerelda: That green tinker's wagon at the crossroads is a mimic the size of a wagon, with old Iosif on the board as bait.
+Ezmerelda: Don't touch its pots, and stay clear of the tailboard. Burn it from range, and let Iosif go home to Tser Pool.
+-> ledger_menu
+
+~ claim_wagon
+set ledger_paid_wagon
+set ezmerelda_ledger_paid += 1
+Ezmerelda [weary]: Seven years on that board, bait for his own wagon. I'm glad Iosif walked back to the Tser Pool camp.
+Ezmerelda: The wagon's crossed off. Take the alchemist's fire and the silver-headed bolts, and a healing draught for the road.
+give alchemists_fire 3
+give crossbow_bolt 10
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the count's fowlers on the hill trail (flag fowlers_slain; fought in lake_zarovich; named from level 5).
+~ brief_fowlers
+Ezmerelda: On the hill trail above Lake Zarovich a silver cage hangs in a dead pine. It's bait.
+Ezmerelda: The count's fowlers wait in the branches: vampire spawn and bats. Look up before you touch the cage, and tell me when it's quiet.
+-> ledger_menu
+
+~ claim_fowlers
+set ledger_paid_fowlers
+set ezmerelda_ledger_paid += 1
+Ezmerelda: A cage in a dead pine is a baited hook. Whoever hung it was fishing for you.
+Ezmerelda [smile]: The fowlers are struck from the page. Take the holy water and the silver-headed bolts, and a healing draught.
+give holy_water 3
+give crossbow_bolt 10
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the Vine Mother (flag vine_mother_slain; fought in wizard_of_wines; named from level 5).
+~ brief_vine
+Ezmerelda: A cutting of the old Gulthias tree grew into that vineyard's Seventh Row, tall as two houses. It drags you in and spits black wine.
+Ezmerelda: Clear the blights round it first, stay out of its reach, and tell me when the row stays down.
+-> ledger_menu
+
+~ claim_vine
+set ledger_paid_vine
+set ezmerelda_ledger_paid += 1
+Ezmerelda: Druids plant one black stick and the whole row tries to drink you. I can smell the sour wine from here.
+Ezmerelda: The Vine Mother is crossed out. Take the scroll against plants, the alchemist's fire and a healing draught.
+give scroll_of_protection_plant
+give alchemists_fire 3
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Morgantha of Old Bonegrinder (flag morgantha_slain; fought in old_bonegrinder; named from level 5).
+~ brief_morgantha
+Ezmerelda: Morgantha and her two daughters keep Old Bonegrinder, the windmill between Barovia and Vallaki. They cage the children whose parents can't pay for dream pastries.
+Ezmerelda [angry]: Don't take on all three hags at once. Hold a holy symbol up in the sun if you can, and break that coven.
+-> ledger_menu
+
+~ claim_morgantha
+set ledger_paid_morgantha
+set ezmerelda_ledger_paid += 1
+Ezmerelda: She talked sugar the whole time she was locking children in cages. A hag alone is a coward, and a dead coven stays quiet.
+Ezmerelda: Morgantha's name is struck for good. Take the scroll against fiends, the holy water and the antitoxin.
+give scroll_of_protection_fiend
+give holy_water 2
+give antitoxin 2
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Wintersplinter on Yester Hill (flag yester_hill_resolved; fought in yester_hill; named from level 6).
+~ brief_wint
+Ezmerelda: Up on Yester Hill, in the druids' stone circle, stands Wintersplinter: a walking tree blight with a green stone pulsing in its split heartwood.
+Ezmerelda: Don't let the druids pin you against their stacked skulls. Aim for the split wood and bring it down.
+-> ledger_menu
+
+~ claim_wint
+set ledger_paid_wint
+set ezmerelda_ledger_paid += 1
+Ezmerelda: They dug the mountain folk out of their mounds to stack skulls for a walking tree. Even for this valley, that's ugly.
+Ezmerelda: Wintersplinter is out of the ledger. Take the alchemist's fire and some bolts with a keener edge.
+give alchemists_fire 3
+give ammunition_plus_1__crossbow_bolt 6
+if level >= 9
+give potion_of_healing_superior 1
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the Count's Huntsman (flag huntsman_slain; fought in svalich_road; named from level 7).
+~ brief_huntsman
+Ezmerelda: Toader, the count's Huntsman, hunts the Svalich woods on cold nights. A horn sounds; by morning someone lies run to death under the gallows.
+Ezmerelda: Steady your nerve when the horn goes. Watch his boar spear and black arrows, and end the hunt at the gallows.
+-> ledger_menu
+
+~ claim_huntsman
+set ledger_paid_huntsman
+set ezmerelda_ledger_paid += 1
+Ezmerelda [sad]: Every quarry he ran down became one of his hounds. My people scratched their names on cairns by the road.
+Ezmerelda: Toader's hunt is struck from the book. Take the scroll against the undead, the draught against grave-cold and the holy water.
+give scroll_of_protection_undead
+give potion_of_resistance_necrotic
+give holy_water 3
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the Grandsire (flag grandsire_slain; fought in krezk; named from level 7).
+~ brief_grandsire
+Ezmerelda: The pack's eldest: white with age, one ear, big as a cart horse. At night he comes over Krezk's wall for the goat pens.
+Ezmerelda: His howl empties your nerve and his bite puts you on your back. Thin the old wolves first, and bring me proof.
+-> ledger_menu
+
+~ claim_grandsire
+set ledger_paid_grandsire
+set ezmerelda_ledger_paid += 1
+Ezmerelda [sly]: He taught Kiril everything he knows and answered to nobody after. Sounds like another old teacher I could name.
+Ezmerelda: The Grandsire is crossed out. Take these keener bolts and a healing draught; they're yours.
+give ammunition_plus_1__crossbow_bolt 10
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Kiril Stoyanovich (flag kiril_defeated; fought in werewolf_den; named from level 7).
+~ brief_kiril
+Ezmerelda: Kiril Stoyanovich dens in the hills above Lake Zarovich and steals farm children from below Krezk to grow a pack for the castle.
+Ezmerelda: He laughs with his mouth open and calls armed men meat with swords. Silver first, give him no room, and tell me when he's done.
+-> ledger_menu
+
+~ claim_kiril
+set ledger_paid_kiril
+set ezmerelda_ledger_paid += 1
+Ezmerelda: That name has been in this book longer than any other, and the ink was wearing through the page.
+Ezmerelda: He's struck out for good. Take the keener bolts and a healing draught; they're yours.
+give ammunition_plus_1__crossbow_bolt 10
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Khazan, under the tower (flag khazan_destroyed; fought in van_richtens_tower; named from level 7).
+~ brief_khazan
+Ezmerelda: Under Rudolph's tower on Lake Baratok sits Khazan, an archmage who made himself a lich with his own name cut over the door.
+Ezmerelda: He's polite right up until his touch freezes you. Don't offer him your name, and tell me when the cellar is quiet.
+-> ledger_menu
+
+~ claim_khazan
+set ledger_paid_khazan
+set ezmerelda_ledger_paid += 1
+Ezmerelda [weary]: I camped on that shore for months, knowing the lock answered to his name and never guessing what the name had made of him.
+Ezmerelda: One less courteous corpse under the tower. Take the scroll against the undead, the draught against grave-cold and the holy water.
+give scroll_of_protection_undead
+give potion_of_resistance_necrotic
+give holy_water 4
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 2
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Baba Lysaga (flag lysaga_dead; fought in berez; named from level 8).
+~ brief_lysaga
+Ezmerelda: Baba Lysaga keeps house in drowned Berez, in a hut on a walking stump. Scarecrows guard it, and she keeps swarms in jars.
+Ezmerelda: She casts like a wizard and fusses over her boy. Burn the straw men early, refuse supper, and tell me when she's quiet.
+-> ledger_menu
+
+~ claim_lysaga
+set ledger_paid_lysaga
+set ezmerelda_ledger_paid += 1
+Ezmerelda: I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry.
+Ezmerelda: The old witch is struck from the page. Take the alchemist's fire and the rest; it's yours.
+give ammunition_plus_2__crossbow_bolt 6
+give alchemists_fire 3
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 3
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# Sarkhaza (flag sarkhaza_slain; fought in mount_ghakis; named from level 9).
+~ brief_sarkhaza
+Ezmerelda: Sarkhaza, a red dragon, chained by the neck under Mount Ghakis with her wings riveted shut. She lies on a hoard of gilded lead.
+Ezmerelda: She's starved on grave-salt, and the count's cart brings a cage every new moon. Mind the chain's reach, and bring me proof she's cold.
+-> ledger_menu
+
+~ claim_sarkhaza
+set ledger_paid_sarkhaza
+set ezmerelda_ledger_paid += 1
+Ezmerelda [sad]: Forty years in the dark on false gold, eating what came in cages. A ledger only asks who ate, not who held the leash.
+Ezmerelda: Her name is struck. Take the fire draughts and the bolts with it; they're yours.
+give potion_of_resistance_fire 2
+give ammunition_plus_2__crossbow_bolt 8
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 3
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# the Eye Below (flag eye_below_slain; fought in amber_temple; named from level 9).
+~ brief_eye
+Ezmerelda: Sealed in amber under the Amber Temple's vaults lies the Eye Below, a floating orb with a mouth like a sack of knives.
+Ezmerelda: The wardens could only sing it to sleep, and its ten small eyes will unmake you. Blind the stalks, and bring me proof it's still.
+-> ledger_menu
+
+~ claim_eye
+set ledger_paid_eye
+set ezmerelda_ledger_paid += 1
+Ezmerelda [smile]: The wardens settled for a lullaby, and you lot went down there and finished the song.
+Ezmerelda: The Eye Below is struck out. Take the scroll against aberrations and the rest; it's yours.
+give scroll_of_protection_aberration
+give ammunition_plus_2__crossbow_bolt 8
+if level >= 9
+give potion_of_healing_superior 2
+elif level >= 7
+give potion_of_healing_greater 3
+else
+give potion_of_healing 3
+endif
+-> claim_end
+
+# ---------------------------------------------------------------- After a payment
+
+# One more name struck: the journal moves on, the first payment warms her a little, and the fourth and eighth names
+# bring a gift from her wagon (a +1 light crossbow, uncommon; Mage Breaker, rare: each is the only one in the story).
+~ claim_end
+if flag.ezmerelda_ledger_paid == 1
+set ezmerelda_trust += 1
+quest hunters_ledger paying
+endif
+if flag.ezmerelda_ledger_paid == 7
+quest hunters_ledger half_struck
+endif
+if flag.ezmerelda_ledger_paid >= 4 and not flag.ezmerelda_ledger_gift_a
+-> milestone_a
+endif
+-> claim_end_b
+
+~ milestone_a
+set ezmerelda_ledger_gift_a
+Ezmerelda: That's four names struck from the book, which means you're no longer lucky beginners.
+Ezmerelda [smile]: Take this spare light crossbow from the wagon. I've stopped using it, and it shoots straighter than most people talk.
+give weapon_plus_1__light_crossbow
+-> claim_end_b
+
+~ claim_end_b
+if flag.ezmerelda_ledger_paid >= 8 and not flag.ezmerelda_ledger_gift_b
+-> milestone_b
+endif
+-> claim_end_c
+
+~ milestone_b
+set ezmerelda_ledger_gift_b
+Ezmerelda: Eight names down, and the pages are starting to look more like crossings-out than a list.
+Ezmerelda [sly]: Take this dagger from my wagon. It's got a very good name for ruining a mage's afternoon.
+give mage_breaker__dagger
+-> claim_end_c
+
+~ claim_end_c
+if flag.ezmerelda_ledger_paid >= 13
+-> done
+endif
+-> ledger
+
+~ done
+quest hunters_ledger ledger_struck
+Ezmerelda [weary]: Thirteen names struck, and there isn't another killer in this valley I trust enough to ink onto the page.
+Ezmerelda [smile]: The book is closed, and for once I'm not even in a hurry, though Rudolph will think I've caught a fever.
+-> menu

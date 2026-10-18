@@ -15,6 +15,231 @@
       "id": "ezmerelda_back_at_camp",
       "type": "bool",
       "summary": "Ezmerelda walked to Vallaki and found the showman gone (he went home to his tower, or he walks with the party), and is back at her camp on Lake Baratok. The tower's own scenes then treat her as if she never left (they read this beside ezmerelda_left_tower)."
+    },
+    {
+      "id": "ezmerelda_ledger_shown",
+      "type": "bool",
+      "summary": "Ezmerelda has shown the party her Hunter's Ledger (the first talk at her hub, allies/ezmerelda:talk; Story Allies Presence Plan, package M2). It begins the side quest hunters_ledger."
+    },
+    {
+      "id": "ezmerelda_ledger_paid",
+      "type": "int",
+      "summary": "How many of the thirteen names in the Hunter's Ledger Ezmerelda has paid for. The first brings her a little trust, the fourth and eighth a gift from her wagon, the seventh and thirteenth the quest's later stages."
+    },
+    {
+      "id": "ezmerelda_ledger_gift_a",
+      "type": "bool",
+      "summary": "Ezmerelda gave the party her spare light crossbow (the fourth name struck from the ledger): a +1 Light Crossbow, uncommon."
+    },
+    {
+      "id": "ezmerelda_ledger_gift_b",
+      "type": "bool",
+      "summary": "Ezmerelda gave the party a dagger from her wagon (the eighth name struck): Mage Breaker, rare."
+    },
+    {
+      "id": "ledger_paid_falls",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Dragan, the werewolf at Tser Falls (the Hunter's Ledger), for the kill the story recorded in falls_werewolf_slain."
+    },
+    {
+      "id": "ledger_paid_wagon",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the Tinker's Wagon (the Hunter's Ledger), for the kill the story recorded in wagon_slain."
+    },
+    {
+      "id": "ledger_paid_fowlers",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the count's fowlers on the hill trail (the Hunter's Ledger), for the kill the story recorded in fowlers_slain."
+    },
+    {
+      "id": "ledger_paid_vine",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the Vine Mother (the Hunter's Ledger), for the kill the story recorded in vine_mother_slain."
+    },
+    {
+      "id": "ledger_paid_morgantha",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Morgantha of Old Bonegrinder (the Hunter's Ledger), for the kill the story recorded in morgantha_slain."
+    },
+    {
+      "id": "ledger_paid_wint",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Wintersplinter on Yester Hill (the Hunter's Ledger), for the kill the story recorded in yester_hill_resolved."
+    },
+    {
+      "id": "ledger_paid_huntsman",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the Count's Huntsman (the Hunter's Ledger), for the kill the story recorded in huntsman_slain."
+    },
+    {
+      "id": "ledger_paid_grandsire",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the Grandsire (the Hunter's Ledger), for the kill the story recorded in grandsire_slain."
+    },
+    {
+      "id": "ledger_paid_kiril",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Kiril Stoyanovich (the Hunter's Ledger), for the kill the story recorded in kiril_defeated."
+    },
+    {
+      "id": "ledger_paid_khazan",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Khazan, under the tower (the Hunter's Ledger), for the kill the story recorded in khazan_destroyed."
+    },
+    {
+      "id": "ledger_paid_lysaga",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Baba Lysaga (the Hunter's Ledger), for the kill the story recorded in lysaga_dead."
+    },
+    {
+      "id": "ledger_paid_sarkhaza",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on Sarkhaza (the Hunter's Ledger), for the kill the story recorded in sarkhaza_slain."
+    },
+    {
+      "id": "ledger_paid_eye",
+      "type": "bool",
+      "summary": "Ezmerelda paid the bounty on the Eye Below (the Hunter's Ledger), for the kill the story recorded in eye_below_slain."
+    },
+    {
+      "id": "ledger_pick_falls",
+      "type": "bool",
+      "summary": "Working flag: Dragan, the werewolf at Tser Falls is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_wagon",
+      "type": "bool",
+      "summary": "Working flag: the Tinker's Wagon is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_fowlers",
+      "type": "bool",
+      "summary": "Working flag: the count's fowlers on the hill trail is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_vine",
+      "type": "bool",
+      "summary": "Working flag: the Vine Mother is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_morgantha",
+      "type": "bool",
+      "summary": "Working flag: Morgantha of Old Bonegrinder is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_wint",
+      "type": "bool",
+      "summary": "Working flag: Wintersplinter on Yester Hill is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_huntsman",
+      "type": "bool",
+      "summary": "Working flag: the Count's Huntsman is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_grandsire",
+      "type": "bool",
+      "summary": "Working flag: the Grandsire is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_kiril",
+      "type": "bool",
+      "summary": "Working flag: Kiril Stoyanovich is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_khazan",
+      "type": "bool",
+      "summary": "Working flag: Khazan, under the tower is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_lysaga",
+      "type": "bool",
+      "summary": "Working flag: Baba Lysaga is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_sarkhaza",
+      "type": "bool",
+      "summary": "Working flag: Sarkhaza is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_pick_eye",
+      "type": "bool",
+      "summary": "Working flag: the Eye Below is one of the (up to three) names Ezmerelda is offering now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_named",
+      "type": "int",
+      "summary": "Working flag: how many names the ledger has picked so far in this visit (at most three). Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ledger_ready",
+      "type": "int",
+      "summary": "Working flag: how many of the picked names are ones the party has killed and she can pay now. Recomputed whenever the ledger opens; not story state."
+    },
+    {
+      "id": "ezmerelda_heard_view_c",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'view_c' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "ezmerelda_heard_view_b",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'view_b' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "ezmerelda_heard_view_a",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'view_a' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "ezmerelda_heard_rudolph",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'rudolph' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "ezmerelda_heard_leg",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'leg' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "ezmerelda_heard_vistani",
+      "type": "bool",
+      "summary": "The party has heard Ezmerelda's 'vistani' topic at her hub (each topic plays once)."
+    },
+    {
+      "id": "hub_pick_view_c",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'view_c' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_pick_view_b",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'view_b' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_pick_view_a",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'view_a' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_pick_rudolph",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'rudolph' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_pick_leg",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'leg' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_pick_vistani",
+      "type": "bool",
+      "summary": "Working flag: Ezmerelda's 'vistani' topic is one of the (up to three) the hub is offering now. Recomputed whenever her hub menu opens; not story state."
+    },
+    {
+      "id": "hub_slots",
+      "type": "int",
+      "summary": "Working flag: how many hub topics have been picked so far in this visit (at most three). Recomputed whenever her hub menu opens; not story state."
     }
   ]
 }

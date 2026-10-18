@@ -31,6 +31,7 @@ Ezmerelda: After twelve years, a woman needs a minute in the dark before she wal
 ~ yard_menu
 * We can bring him out here to you. -> reunion
 * Why haven't you gone inside? -> yard_why
+* [if flag.ezmerelda_trust >= 0] Have you any paying work? -> allies/ezmerelda:talk
 * Goodbye. -> yard_leave
 
 ~ yard_why
@@ -110,6 +111,7 @@ Ezmerelda [smile]: My arm's still sore from hitting him, which means he's real e
 
 ~ yard_after_menu
 * How is Rudolph holding up? -> yard_rudolph
+* [if flag.ezmerelda_trust >= 0] Have you any paying work? -> allies/ezmerelda:talk
 * [if flag.ezmerelda_trust >= 2 and not guest:ezmerelda] Hunt with us. -> join
 * Goodbye. -> yard_leave
 

@@ -1,0 +1,78 @@
+~ ledger_intro
+Narrator: She draws a battered book from her coat, unwrapping its oilcloth cover. The pages are crowded with names, and the best ones are struck through in black ink.
+Ezmerelda: Every killer in this valley that I've tracked myself, and what I'll pay to see it dead.
+Ezmerelda [sly]: I pay in silver, holy water, and remedies for proof, not promises - Rudolph taught me to count teeth before parting with coin.
+Ezmerelda: I only give three names at a time, because four is a chore list and I left my teacher to escape those.
+
+~ open_cold
+Ezmerelda: Hands where I can see them and state your business. What do you need?
+
+~ open_warm
+Ezmerelda [smile]: Still breathing, all of you. Tell me what you need before my luck rubs off on you.
+
+~ ledger_ready
+Ezmerelda [sly]: You smell like smoke and fresh work. Point to the name you finished and let's settle the debt.
+
+~ ledger_hunt
+Ezmerelda: Nothing's owed yet, so here are the three hunts I'd take in your boots. Pick a name.
+
+~ ledger_none
+Ezmerelda [weary]: The near work is done and the rest will eat you alive today. Give the valley a day to move, then ask again.
+
+~ bye
+Ezmerelda: Silver first, questions never, and don't die between here and the next crossroads.
+
+~ rudolph_reunited
+Ezmerelda [weary]: My knuckles still ache from his arm, and he's already correcting how I oil my crossbow.
+Ezmerelda [smile]: We're speaking, mostly in arguments, which is how Rudolph says he missed me too.
+
+~ rudolph_waiting
+Ezmerelda: Twelve years of chasing him through the mists, and all that's left is one painted wagon and an inn door.
+Ezmerelda [weary]: It's easier to track a werewolf in the dark than to find out whether your teacher wanted to be found.
+
+~ rudolph_seeking
+Ezmerelda [angry]: Twelve years I've followed his tracks, right to a door he warded for my hands alone, and the old fox still isn't home.
+Ezmerelda: Don't worry about him; I'm very good at looking, and when I find him he'll wish a monster had got there first.
+
+~ leg_dead
+Ezmerelda: I was young, quick, and stupid in the hills above Lake Zarovich when Kiril took it, laughing with his black jaws wide.
+Ezmerelda [weary]: Rudolph built me this oak-and-steel brace that kicks twice as hard, and now that the wolf's dead, I mostly just feel lighter.
+
+~ leg_alive
+Ezmerelda: A big black wolf named Kiril took it in the hills above Lake Zarovich while I was busy being young, quick, and stupid.
+Ezmerelda [sly]: Rudolph made me this oak-and-steel brace, and I learned the lesson: never swing at a mouth that's still laughing at you.
+
+~ vistani
+Ezmerelda: They're my blood when the wagons will have me, though trading and guiding travellers in a valley that eats them is a tight rope.
+Ezmerelda [weary]: Between the camp outside Vallaki and Madam Eva dealing me into other people's card games at Tser Pool, I keep my distance.
+Ezmerelda: Pay what they ask, don't steal from the horses, and never mistake a warm fire for a free favour.
+
+~ view_a
+Ezmerelda: Between the wolves on the hill roads, the drowned village's witch, and those dead knights in their ruined manor, pick your fights before drawing steel.
+Ezmerelda: Keep sharpest around that abbey; whatever's playing at holiness up there has a butcher's hand with a needle.
+
+~ view_b
+Ezmerelda: Tsolenka Pass is a freezing cliff road where a roc hunts the gorge by day and a ghostly watch keeps the gate shut.
+Ezmerelda [sly]: Past that is the Amber Temple, where old powers offer gifts for a price - and if you take free gifts here, I'm keeping my silver.
+
+~ view_c
+Ezmerelda: I don't make a plan for the castle until I'm looking at its gates; paper plans die on the drawbridge.
+Ezmerelda: Just remember Rudolph's first rule for the count's house: know which window you're jumping out of before you open the door.
+
+~ menu_ledger
+* Let us see what work is in the ledger.
+
+~ menu_rudolph
+* How are things between you and Rudolph?
+
+~ menu_leg
+* Tell us what happened to your leg.
+
+~ menu_vistani
+* What do you make of the Vistani in this valley?
+
+~ menu_view
+* What do you make of where we are heading?
+
+~ menu_bye
+* We should get moving.

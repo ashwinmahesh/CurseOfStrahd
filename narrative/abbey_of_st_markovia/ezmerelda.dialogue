@@ -53,6 +53,7 @@ Ezmerelda: Ezmerelda d'Avenir. Of the Vistani, when they'll have me. I hunt the 
 * [if not flag.rictavio_unmasked] Are you looking for someone? -> teacher_lost
 * What happened to your leg? -> leg
 * [if not guest:ezmerelda] We're going after the devil in the castle. Hunt with us. -> join
+* [if flag.ezmerelda_trust >= 0] Have you any paying work? -> ledger_door
 * Goodbye, for now. -> END
 
 ~ watching
@@ -112,3 +113,11 @@ interject name:ratatoille: You trained under Van Richten? I have read his monogr
 Ezmerelda: Save them for the walk. It's a long walk, and he wrote very long books.
 endif
 -> END
+
+# The Hunter's Ledger (narrative/allies/ezmerelda.dialogue, side quest hunters_ledger): the door from here. The hub starts the
+# journal entry too, for a party that reaches it by clicking on her while she travels.
+~ ledger_door
+if not quest.hunters_ledger
+quest hunters_ledger heard
+endif
+-> allies/ezmerelda:talk

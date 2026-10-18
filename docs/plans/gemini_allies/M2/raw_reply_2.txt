@@ -1,0 +1,71 @@
+~ brief_falls
+Ezmerelda: Dragan is one of Kiril's pack, waiting at the lip of Tser Falls at night with wolves and a dire wolf.
+Ezmerelda: Put silver in him first, keep your back off that drop, and tell me when the rock only holds tokens again.
+
+~ claim_falls
+Ezmerelda [sly]: One less of Kiril's pack on the hills, and only claw-scratches left in the stone by the River Ivlis.
+Ezmerelda: His name comes out of the book. Take the silver-headed bolts and a healing draught to stitch yourselves up.
+
+~ brief_wagon
+Ezmerelda: That green tinker's wagon at the Old Svalich crossroads is a giant mimic using old Iosif on the board as bait.
+Ezmerelda: Don't touch its pots or stand near the biting tailboard; burn it from range and send Iosif home to Tser Pool.
+
+~ claim_wagon
+Ezmerelda [weary]: Seven years stuck on that board while it ate travellers. Good that Iosif finally walked back to the Tser Pool camp.
+Ezmerelda: That crosses the wagon off my ledger. Take the alchemist's fire and silver-headed bolts, and a healing draught for the road.
+
+~ brief_fowlers
+Ezmerelda: On the hill trail above Lake Zarovich, a raven in a silver cage hangs in a dead pine as bait.
+Ezmerelda: The count's vampire spawn and bats wait in the branches above, so look up before touching cages and bring me word.
+
+~ claim_fowlers
+Ezmerelda: Anyone who hangs a silver cage in a dead pine deserves whatever climbs up the hill to answer it.
+Ezmerelda [smile]: The count's fowlers are struck from the page. Take the holy water and silver-headed bolts; that healing draught is yours too.
+
+~ brief_vine
+Ezmerelda: The Seventh Row of the vineyard grew a Gulthias cutting twice house-height that drags you in and spits black wine.
+Ezmerelda: Clear the needle and vine blights first, stay out of its reach, and tell me when that row stays down.
+
+~ claim_vine
+Ezmerelda: Druids plant one black stick and the whole row tries to drink you. I can smell that sour wine from here.
+Ezmerelda: The Vine Mother is crossed out. Take the scroll against plants and the alchemist's fire; the healing draught is yours.
+
+~ brief_morgantha
+Ezmerelda: Morgantha and her two hag daughters keep Old Bonegrinder between Barovia village and Vallaki, caging children over unpaid dream pastries.
+Ezmerelda [angry]: Never let all three sisters stand together, bring sunlight on holy symbols if you have it, and break that coven.
+
+~ claim_morgantha
+Ezmerelda: She always talked sugar while locking children in cages. A hag alone is a coward, and a dead coven stays quiet.
+Ezmerelda: Morgantha's name is struck out for good. Take the scroll against fiends, the antitoxin, and the holy water; they're yours.
+
+~ brief_wint
+Ezmerelda: Up on Yester Hill's stone circle stands Wintersplinter, a walking tree blight with a pulsing green stone in its split heartwood.
+Ezmerelda: Don't let the hill druids pen you against their stacked skulls; aim for the split wood and bring it down.
+
+~ claim_wint
+Ezmerelda: Digging the mountain folk from their mounds just to stack skulls for a walking tree. Even for this valley, that's ugly.
+Ezmerelda: Wintersplinter is out of the ledger. Take these bolts with a keener edge and the alchemist's fire; they're yours.
+
+~ brief_huntsman
+Ezmerelda: Toader, the count's undead Huntsman, rides a nightmare with dire wolf hounds on cold nights until moonrise under the crossroads gallows.
+Ezmerelda: Steady your nerve when his horn sounds, watch for his boar spear and black arrows, and end his hunt there.
+
+~ claim_huntsman
+Ezmerelda [sad]: Every quarry he ran down became another hound, and my people scratched their names on the road cairns for years.
+Ezmerelda: Toader's hunt is struck from the book. Take the scroll against the undead and the draught against grave-cold; they're yours.
+
+~ options
+* ask_falls: Tell us about Dragan at Tser Falls.
+* claim_falls: Dragan is dead at Tser Falls.
+* ask_wagon: Tell us about the tinker's wagon at the crossroads.
+* claim_wagon: We killed the tinker's wagon and freed Iosif.
+* ask_fowlers: Tell us about the count's fowlers on the hill trail.
+* claim_fowlers: The count's fowlers above Lake Zarovich are dead.
+* ask_vine: Tell us about the Vine Mother in the vineyard.
+* claim_vine: We cut down the Vine Mother in the Seventh Row.
+* ask_morgantha: Tell us about Morgantha at Old Bonegrinder.
+* claim_morgantha: Morgantha is dead and the coven is broken.
+* ask_wint: Tell us about Wintersplinter on Yester Hill.
+* claim_wint: We destroyed Wintersplinter on the crown of Yester Hill.
+* ask_huntsman: Tell us about the Count's Huntsman.
+* claim_huntsman: We killed the Count's Huntsman and his hounds at the crossroads.

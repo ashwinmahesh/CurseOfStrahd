@@ -1,0 +1,44 @@
+{
+  "id": "hunters_ledger",
+  "name": "The Hunter's Ledger",
+  "summary": "Ezmerelda d'Avenir keeps a book of the valley's killers with a price beside each name, and pays in a hunter's goods for proof that one is dead.",
+  "giver": "ezmerelda",
+  "region": "van_richtens_tower",
+  "stages": [
+    {
+      "id": "heard",
+      "journal": "Ezmerelda d'Avenir keeps a Hunter's Ledger: a battered book of the valley's killers, each with a price beside the name. She names three at a time and pays, in a hunter's goods, for every one the party kills.",
+      "objectives": [
+        "Ask Ezmerelda which names are in her ledger",
+        "Kill one of them"
+      ],
+      "hint": "Ask Ezmerelda about her ledger: at Van Richten's Tower, at the abbey switchback, in the Blue Water Inn's stable yard, or by clicking on her if she travels with the party.",
+      "ends": ""
+    },
+    {
+      "id": "paying",
+      "journal": "Ezmerelda has paid for a name struck from her ledger: silver-headed bolts, holy water, remedies, and later scrolls and better bolts. She will name the next three whenever we ask.",
+      "objectives": [
+        "Keep killing the names in her ledger",
+        "Take each kill to Ezmerelda"
+      ],
+      "hint": "Ask Ezmerelda about her ledger again, wherever she is, for the next three names, and for payment on the ones that are dead.",
+      "ends": ""
+    },
+    {
+      "id": "half_struck",
+      "journal": "Seven names are struck from Ezmerelda's ledger, and she has stopped calling us lucky beginners. The hardest names are all that is left.",
+      "objectives": [
+        "Finish the names left in her ledger"
+      ],
+      "hint": "Ask Ezmerelda about her ledger: at Van Richten's Tower, at the abbey switchback, in the Blue Water Inn's stable yard, or on the road beside her.",
+      "ends": ""
+    },
+    {
+      "id": "ledger_struck",
+      "journal": "Every name in Ezmerelda's ledger is struck through. She closed the book herself and, for once, was not in a hurry.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

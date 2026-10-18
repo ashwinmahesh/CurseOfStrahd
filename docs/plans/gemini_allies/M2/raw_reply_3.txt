@@ -1,0 +1,73 @@
+~ brief_grandsire
+Ezmerelda: The pack's eldest comes over Krezk's wall at night for the goat pens, white with age, one-eared, and big as a cart horse.
+Ezmerelda: His howl empties your nerve and his bite puts you on your back, so thin the old wolves first and bring me his grey pelt.
+
+~ claim_grandsire
+Ezmerelda [sly]: He taught Kiril everything he knows and answered to nobody after, which sounds dangerously like another old teacher I could name.
+Ezmerelda: That's the Grandsire crossed out. Take these keener bolts and the healing draught; they're yours.
+
+~ brief_kiril
+Ezmerelda: Kiril Stoyanovich dens in the hills above Lake Zarovich, stealing farm children below Krezk to grow a pack for the castle.
+Ezmerelda: He laughs with his mouth open and calls armed men meat with swords, so silver first, give him no room, and bring me his word he's dead.
+
+~ claim_kiril
+Ezmerelda: That name has been in this book longer than any other, and the ink was starting to wear through the page.
+Ezmerelda: He's struck out for good. Take the keener bolts and the healing draught; that's yours.
+
+~ brief_khazan
+Ezmerelda: Under Rudolph's tower on Lake Baratok sits Khazan, an old archmage who made himself a lich with his own name cut above the door.
+Ezmerelda: He's polite right until his touch freezes you or his bursts tear you apart, so don't give him your name, and bring me word the cellar is quiet.
+
+~ claim_khazan
+Ezmerelda [weary]: I camped on that shore for months knowing the lock answered to his name, and never once guessed what the name had made of him.
+Ezmerelda: One less courteous old corpse in the lake. Take the undead ward scroll and what's beside it; that's yours.
+
+~ brief_lysaga
+Ezmerelda: Baba Lysaga lives in drowned Berez inside a walking stump-hut, guarded by scarecrows and jars of biting flies.
+Ezmerelda: She casts like a wizard and fusses over her boy while the stew boils, so burn the straw men early, refuse supper, and bring me her wordless silence.
+
+~ claim_lysaga
+Ezmerelda: I've cut her scarecrows down on that marsh before, and there were always three more watching before my blade was dry.
+Ezmerelda: That's the old witch struck from the page. Take the alchemist's fire and the rest; they're yours.
+
+~ brief_sarkhaza
+Ezmerelda: Chained by the neck under Mount Ghakis is Sarkhaza, a red dragon with riveted wings sleeping on gilded lead.
+Ezmerelda: She's starved on grave-salt and eats whatever the count's black cart brings at the new moon, so mind the chain's reach and bring me proof she's cold.
+
+~ claim_sarkhaza
+Ezmerelda [sad]: Forty years in the dark on fake gold, eating from a cage, though a ledger only asks who ate, not who held the leash.
+Ezmerelda: Her name is struck. Take the fire draught and the bolts with it; that's yours.
+
+~ brief_eye
+Ezmerelda: Sealed in amber beneath the Amber Temple vaults is the Eye Below, a floating orb with a mouth like a sack of knives.
+Ezmerelda: The wardens could only sing it to sleep, and its ten small eyes and waking dreams will unmake you, so blind the stalks and bring proof it's still.
+
+~ claim_eye
+Ezmerelda [smile]: Even the old wardens settled for a lullaby, and you lot went down there and finished the song.
+Ezmerelda: That's the Eye Below struck out. Take this scroll against aberrations and the rest; that's yours.
+
+~ milestone_a
+Ezmerelda: That's four names struck from the book, which means you're no longer lucky beginners.
+Ezmerelda [smile]: Take this spare light crossbow from the wagon; I've stopped using it, and it shoots straighter than most people talk.
+
+~ milestone_b
+Ezmerelda: Eight names down, and the pages are starting to look more like crossings-out than a list.
+Ezmerelda [sly]: Take this dagger from my wagon; it's got a very good name for ruining a mage's afternoon.
+
+~ ledger_done
+Ezmerelda [weary]: Thirteen names struck, and there isn't another killer in this valley I trust enough to ink onto the page.
+Ezmerelda [smile]: The book is closed, and for once I'm not even in a hurry, though Rudolph will think I've caught a fever.
+
+~ options
+* ask_grandsire: Tell us about the Grandsire.
+* claim_grandsire: We killed the Grandsire in Krezk's square.
+* ask_kiril: Tell us about Kiril Stoyanovich.
+* claim_kiril: Kiril is dead in his den.
+* ask_khazan: Tell us about Khazan under the tower.
+* claim_khazan: We destroyed Khazan under the tower.
+* ask_lysaga: Tell us about Baba Lysaga in Berez.
+* claim_lysaga: Baba Lysaga is dead in the marsh.
+* ask_sarkhaza: Tell us about the dragon Sarkhaza.
+* claim_sarkhaza: We killed Sarkhaza under Mount Ghakis.
+* ask_eye: Tell us about the Eye Below.
+* claim_eye: The Eye Below is dead in the vaults.

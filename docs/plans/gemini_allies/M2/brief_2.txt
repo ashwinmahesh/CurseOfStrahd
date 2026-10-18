@@ -1,0 +1,76 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. I need you to write lines for ONE scene package at a time. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else.
+
+## The feature: Ezmerelda's Hunter's Ledger
+
+Ezmerelda d'Avenir is a young Vistana monster hunter (long dark coat, rapier, a small crossbow with silver-headed bolts, a spyglass, and an oak-and-steel brace below her right knee where a werewolf took her leg). She was trained by Rudolph van Richten, the legendary hunter, who walked into the mists twelve years ago and has been calling himself Rictavio ever since (a loud half-elf showman at the Blue Water Inn in the town of Vallaki). She hunts the things that hunt people, and she is now an ally the player's party can talk to whenever they find her (at the shore of Lake Baratok by Van Richten's tower, on the switchback above the abbey, in the inn's stable yard in Vallaki, or beside them on the road once she has joined).
+
+She keeps THE HUNTER'S LEDGER: a battered book of the valley's killers, each with a price on its head. She pays for proof, in the things a hunter has to give: silver-headed bolts, holy water, healing draughts, scrolls and potions made against the thing that was killed, and later a weapon from her wagon. The game records which of these killers the party has actually killed; the ledger pays for exactly those and nothing else. She names three names at a time: first any she can pay now, then hunts near where the party is, then the hardest hunt the party is ready for. There is no deadline and no penalty: the ledger is a reason to come back and talk to her, not a test. A hunt she briefs the party on is words only; nothing in her briefing forces a fight.
+
+## Ezmerelda d'Avenir - voice bible
+
+Quick, sardonic, practical; hunter's rules delivered as jokes. Teases, then means it. Calls Van Richten "Rudolph" and treats his legend with exasperated love. Pet phrases: "Say something a vampire wouldn't." "Silver first, questions never." "Stopping's the one thing I'm bad at." Funny through showman timing (she grew up in wagons that put on shows), self-mockery about her own missing parts, and her running complaint about her teacher's habits. Wants: the end of the vampire lord in the castle; to find Rudolph and have a word with him first. Fears: being too late again; being left behind again. Secret: she isn't sure she's as brave as her reputation, and has started to think that's wisdom. She never says the vampire lord's name aloud: she says "the count", "the castle", "the devil in the castle" or nothing. She never calls the party "kids" or "girl". She treats the party as capable colleagues.
+
+Existing Ezmerelda lines (match this register; do not repeat them):
+- "Stop there. Say something a vampire wouldn't say."
+- "Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. I'm very good at it, as you can tell from all the bits of me that are left."
+- "Nobody with fangs has ever asked to buy silver. Not twice, anyway. Sit."
+- "He's making tea. He's terrible at tea. Don't tell him; he thinks it's the only thing he's good at besides killing."
+- "Stopping's the one thing I'm bad at. Rudolph says it'll kill me. Rudolph says a lot, from very far away."
+- "I go first through doors. Not because I'm brave. Because I've got the leg that doesn't bleed."
+- "Angels don't stitch. Whatever runs this abbey, it's been practising on people."
+- "I go first through doors, I take the silver, and nobody calls me 'girl'."
+- "Keep your heads down unless you want the dead upstairs to think you brought them a tournament."
+- "Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back."
+- "Keep to the crown of the road, and don't answer anything that calls your name from the trees."
+- "The castle sends them down this road in ones and twos after dark, so listen for dragging feet before looking."
+
+## The Narrator
+
+An old gothic storyteller, fond of the party the way a gravedigger is fond of the weather. Second person, present tense. One or two sentences; the second is usually the turn (irony, dread, dry joke). Never cruel. Concrete senses over adjectives (a smell, a sound, a temperature). No game terms: never "roll", "check", "DC", "HP", "level". No winks at the player.
+Samples:
+- "By a painted wagon, a woman in a long dark coat sits fixing silver heads to crossbow bolts. Below her right knee, a brace of oak and steel; her left hand is bandaged, and she smells faintly of burnt hair."
+- "She doesn't look up. She lifts a small loaded crossbow off her knee instead and points it at you."
+
+## Canon limits (important)
+
+Use ONLY the facts given in this brief about every monster and place. Do not invent new monsters, names, places, victims, dates, past hunts of hers, or lore for any target. She is working from what the party tells her and what she has tracked, so she may be wrong-footed or dry about a target, but she may not state invented facts about it. No named characters beyond those in the brief. The party's own words are not in the lines: the party chooses menu options; Ezmerelda answers. Never mention flags, the game, a "ledger entry number", a level, dice, or the player.
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Narrator or Ezmerelda. Moods allowed for Ezmerelda: smile, angry, sad, sly, weary (or no mood; most lines should have none; use a mood only where it clearly fits). The Narrator never has a mood. Each line is 1-2 sentences, ideally under 22 words in total, written to be spoken aloud by an actor: so NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. Use plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names given below, each as a line `~ node_name`, in the order given. Where option texts (what the PARTY says) are requested, write them as `* text` rows under the node named, each under 12 words, in the party's voice ("we", or an imperative), no attitude beyond the intent given. Do not add nodes, code or commentary.
+
+## How each ledger name works
+
+For every name there are two nodes:
+
+brief_<id>: Ezmerelda x2. The party asks her about a name that is STILL ALIVE. She briefs them: where it is, when it is dangerous, what it does, one hunter's rule for taking it (silver first, mind the edge, count the exits, and so on), and what she wants as proof. She has not necessarily seen it herself; she is working from the facts below and from tracking. Words only, no commitment from the party; nothing she says forces a fight. Use ONLY the target facts below.
+claim_<id>: Ezmerelda x2. The party tells her the name is dead. Line 1: her reaction and a short hunter's story or aside about the name (a joke, a rule, a grudge, a regret - drawn only from the facts below and her voice; it must read right whether she was told or can smell it on them). Line 2: she strikes the name from the book and pays. In line 2 she may mention ONLY the payment items listed for that name (never numbers or levels), and she should say "take" or "that's yours" rather than listing everything: the game shows what is handed over.
+
+Option texts (what the party says, under 12 words, referring to the target by a short name): for each name, `ask_<id>` (the party asks her about that hunt) and `claim_<id>` (the party says it is dead and asks for the bounty). Give them together in one block at the end of your reply, under `~ options`.
+
+## This message: ledger names 1 to 7 - 28 lines and 14 option texts
+
+### Name 1: `falls` - Dragan, the werewolf at Tser Falls
+Facts: Tser Falls is where the River Ivlis throws itself off a cliff in a long white fall; a shelf of rock juts over the drop where the Barovians leave tokens for the drowned and the fallen. A werewolf named Dragan waits at the lip of the falls at night for travellers, with wolves (a dire wolf and some wolves). He is one of Kiril's pack (Kiril leads the werewolf pack that dens in the hills above Lake Zarovich; she has been hunting that pack for years, a few at a time). The party killed him there; long scratches in the rock show where he stood. Payment: silver-headed bolts, and something to stitch yourselves with (a healing draught).
+
+### Name 2: `wagon` - the Tinker's Wagon
+Facts: A green painted tinker's wagon stands at the crossroads on the Old Svalich Road, selling pots and trinkets (some of them taken from a haunted house). Travellers who bought from the tinker never came back down the road. The tinker, Iosif, used to be one of the Vistani; he sat on the board and never climbed down. The wagon is a mimic the size of a wagon; it kept Iosif alive at the front as bait for seven years; its sticky arms grab, its tailboard bites, it spits trinkets. The party killed it, and Iosif went back to the Vistani camp at Tser Pool. Payment: flasks of alchemist's fire, silver-headed bolts, and a healing draught.
+
+### Name 3: `fowlers` - the count's fowlers on the hill trail
+Facts: On the hill trail above Lake Zarovich, a silver cage hung in a dead pine with a raven in it that would not change back. It was a trap. The count's fowlers - vampire spawn, a leader and several more, with swarms of bats - waited in the branches for whoever came for the cage. The party killed them. (Ezmerelda knows only the trap and the fowlers, not whose cage or whose raven; she may have a hunter's opinion about cages.) Payment: holy water, silver-headed bolts, and a healing draught.
+
+### Name 4: `vine` - the Vine Mother
+Facts: The Seventh Row of a vineyard came up black every night and was picked bare by morning. It was a cutting of the old Gulthias tree, planted under the row by druids and grown into the row itself: a heaving mass of black vine-wood twice the height of a house. Its branches reach, its vines drag you in and squeeze, and it spits fermenting black wine. Smaller vine blights and needle blights grew around it. The party cut it down. Payment: a scroll that guards against plants, flasks of alchemist's fire, and a healing draught.
+
+### Name 5: `morgantha` - Morgantha of Old Bonegrinder
+Facts: Morgantha is a night hag who keeps Old Bonegrinder, a windmill on a crag between the village of Barovia and the town of Vallaki, with her two "daughters", who are hags too. She sold dream pastries from a cart at the village and kept in cages the children whose parents couldn't pay. She talks sugar and endearments, speaks of herself in the third person, fears being alone and fears sunlight on holy symbols. The party killed her and broke the coven. Payment: a scroll against fiends (hags are fiends), holy water, antitoxin, and a healing draught.
+
+### Name 6: `wint` - Wintersplinter on Yester Hill
+Facts: Wintersplinter is a tree blight on the crown of Yester Hill, the walking tree at the druids' stone circle; a green stone the size of a plum pulses in its split heartwood. The druids of the hill dug the mountain folk's dead out of the mounds at the foot of Yester Hill and stacked their skulls up the slope. The party destroyed Wintersplinter on the crown. Payment: flasks of alchemist's fire, bolts with a keener edge (magical bolts), and a healing draught.
+
+### Name 7: `huntsman` - the Count's Huntsman
+Facts: On cold nights a horn sounds in the Svalich woods, and in the morning whoever the count is displeased with lies under the crossroads gallows, run to death. The Huntsman is Toader, a poacher the count ran down himself in his first winter; he stood and turned at the crossroads and was made huntsman for it. Every quarry since has become one of his hounds; the Vistani have scratched the quarries' names on cairns by the road. He is a long grey undead man in a hunting coat gone black with weather, with a horn that frightens, a boar spear and black arrows; he rides with a nightmare mare and hounds that are dire wolves. The hunt ends under the gallows at moonrise. The party killed him and his hounds at the crossroads. Payment: a scroll that guards against the undead, a draught that blunts grave-cold (resistance to necrotic harm), and holy water.
+
+Reply layout: first all the `brief_` and `claim_` nodes in the order given (brief_falls, claim_falls, brief_wagon, claim_wagon, ...), then the final block `~ options` with 14 `* ` option rows in the order ask_falls, claim_falls, ask_wagon, claim_wagon, and so on, each row prefixed with its id like `* ask_falls: text`.
+
+That is 28 lines and 14 option texts.

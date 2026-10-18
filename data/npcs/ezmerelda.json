@@ -9,6 +9,7 @@
   "voice": "docs/voice/ezmerelda.md",
   "monster": "ezmerelda_davenir",
   "guest": true,
+  "guest_talk": "allies/ezmerelda:talk",
   "tags": [
     "vistani",
     "monster_hunter",

@@ -1,0 +1,81 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. I need you to write lines for ONE scene package at a time. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else.
+
+## The feature: Ezmerelda's Hunter's Ledger
+
+Ezmerelda d'Avenir is a young Vistana monster hunter (long dark coat, rapier, a small crossbow with silver-headed bolts, a spyglass, and an oak-and-steel brace below her right knee where a werewolf took her leg). She was trained by Rudolph van Richten, the legendary hunter, who walked into the mists twelve years ago and has been calling himself Rictavio ever since (a loud half-elf showman at the Blue Water Inn in the town of Vallaki). She hunts the things that hunt people, and she is now an ally the player's party can talk to whenever they find her (at the shore of Lake Baratok by Van Richten's tower, on the switchback above the abbey, in the inn's stable yard in Vallaki, or beside them on the road once she has joined).
+
+She keeps THE HUNTER'S LEDGER: a battered book of the valley's killers, each with a price on its head. She pays for proof, in the things a hunter has to give: silver-headed bolts, holy water, healing draughts, scrolls and potions made against the thing that was killed, and later a weapon from her wagon. The game records which of these killers the party has actually killed; the ledger pays for exactly those and nothing else. She names three names at a time: first any she can pay now, then hunts near where the party is, then the hardest hunt the party is ready for. There is no deadline and no penalty: the ledger is a reason to come back and talk to her, not a test. A hunt she briefs the party on is words only; nothing in her briefing forces a fight.
+
+## Ezmerelda d'Avenir - voice bible
+
+Quick, sardonic, practical; hunter's rules delivered as jokes. Teases, then means it. Calls Van Richten "Rudolph" and treats his legend with exasperated love. Pet phrases: "Say something a vampire wouldn't." "Silver first, questions never." "Stopping's the one thing I'm bad at." Funny through showman timing (she grew up in wagons that put on shows), self-mockery about her own missing parts, and her running complaint about her teacher's habits. Wants: the end of the vampire lord in the castle; to find Rudolph and have a word with him first. Fears: being too late again; being left behind again. Secret: she isn't sure she's as brave as her reputation, and has started to think that's wisdom. She never says the vampire lord's name aloud: she says "the count", "the castle", "the devil in the castle" or nothing. She never calls the party "kids" or "girl". She treats the party as capable colleagues.
+
+Existing Ezmerelda lines (match this register; do not repeat them):
+- "Stop there. Say something a vampire wouldn't say."
+- "Ezmerelda d'Avenir. Vistani, when the wagons will have me. I hunt the things that hunt people. I'm very good at it, as you can tell from all the bits of me that are left."
+- "Nobody with fangs has ever asked to buy silver. Not twice, anyway. Sit."
+- "He's making tea. He's terrible at tea. Don't tell him; he thinks it's the only thing he's good at besides killing."
+- "Stopping's the one thing I'm bad at. Rudolph says it'll kill me. Rudolph says a lot, from very far away."
+- "I go first through doors. Not because I'm brave. Because I've got the leg that doesn't bleed."
+- "Angels don't stitch. Whatever runs this abbey, it's been practising on people."
+- "I go first through doors, I take the silver, and nobody calls me 'girl'."
+- "Keep your heads down unless you want the dead upstairs to think you brought them a tournament."
+- "Witches feed you before they hurt you, and anything posing in these fields is watching when you turn your back."
+- "Keep to the crown of the road, and don't answer anything that calls your name from the trees."
+- "The castle sends them down this road in ones and twos after dark, so listen for dragging feet before looking."
+
+## The Narrator
+
+An old gothic storyteller, fond of the party the way a gravedigger is fond of the weather. Second person, present tense. One or two sentences; the second is usually the turn (irony, dread, dry joke). Never cruel. Concrete senses over adjectives (a smell, a sound, a temperature). No game terms: never "roll", "check", "DC", "HP", "level". No winks at the player.
+Samples:
+- "By a painted wagon, a woman in a long dark coat sits fixing silver heads to crossbow bolts. Below her right knee, a brace of oak and steel; her left hand is bandaged, and she smells faintly of burnt hair."
+- "She doesn't look up. She lifts a small loaded crossbow off her knee instead and points it at you."
+
+## Canon limits (important)
+
+Use ONLY the facts given in this brief about every monster and place. Do not invent new monsters, names, places, victims, dates, past hunts of hers, or lore for any target. She is working from what the party tells her and what she has tracked, so she may be wrong-footed or dry about a target, but she may not state invented facts about it. No named characters beyond those in the brief. The party's own words are not in the lines: the party chooses menu options; Ezmerelda answers. Never mention flags, the game, a "ledger entry number", a level, dice, or the player.
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Narrator or Ezmerelda. Moods allowed for Ezmerelda: smile, angry, sad, sly, weary (or no mood; most lines should have none; use a mood only where it clearly fits). The Narrator never has a mood. Each line is 1-2 sentences, ideally under 22 words in total, written to be spoken aloud by an actor: so NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. Use plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names given below, each as a line `~ node_name`, in the order given. Where option texts (what the PARTY says) are requested, write them as `* text` rows under the node named, each under 12 words, in the party's voice ("we", or an imperative), no attitude beyond the intent given. Do not add nodes, code or commentary.
+
+## How each ledger name works
+
+For every name there are two nodes:
+
+brief_<id>: Ezmerelda x2. The party asks her about a name that is STILL ALIVE. She briefs them: where it is, when it is dangerous, what it does, one hunter's rule for taking it (silver first, mind the edge, count the exits, and so on), and what she wants as proof. She has not necessarily seen it herself; she is working from the facts below and from tracking. Words only, no commitment from the party; nothing she says forces a fight. Use ONLY the target facts below.
+claim_<id>: Ezmerelda x2. The party tells her the name is dead. Line 1: her reaction and a short hunter's story or aside about the name (a joke, a rule, a grudge, a regret - drawn only from the facts below and her voice; it must read right whether she was told or can smell it on them). Line 2: she strikes the name from the book and pays. In line 2 she may mention ONLY the payment items listed for that name (never numbers or levels), and she should say "take" or "that's yours" rather than listing everything: the game shows what is handed over.
+
+Option texts (what the party says, under 12 words, referring to the target by a short name): for each name, `ask_<id>` (the party asks her about that hunt) and `claim_<id>` (the party says it is dead and asks for the bounty). Give them together in one block at the end of your reply, under `~ options`.
+
+## This message: ledger names 8 to 13, two bonus handovers, and the closing - 30 lines and 12 option texts
+
+### Name 8: `grandsire` - the Grandsire
+Facts: The Grandsire is the werewolf pack's eldest: a wolf the size of a cart horse, grey to white with age, missing an ear, who taught Kiril everything and answers to nobody now. His bite knocks you down; his howl empties your nerve; the pack fights better around him. He came over the wall at night to the goat pens below the walled town of Krezk, with the old wolves. The party killed him in Krezk's square. (The thing that taught the leader of the pack: Ezmerelda has a teacher of her own.) Payment: bolts with a keener edge (magical bolts), and a healing draught.
+
+### Name 9: `kiril` - Kiril Stoyanovich
+Facts: Kiril leads the werewolf pack that dens in the hills above Lake Zarovich. He is brutal and jovial, laughs with his mouth open and talks of people as food ("Meat with swords"). He came home from the castle with a new law: grow the pack for the master, out of children stolen from the farms below Krezk. The party killed him in the den, in the leader's challenge. NOTE: this is the wolf that took Ezmerelda's leg, and in an earlier scene she already thanked the party for it ("That's the one who took my leg. Thank you. I wanted to do it myself. I find I don't mind that much, now.") and the topic of her leg has its own conversation. In this node she must NOT repeat that: the ledger line is about the book, the oldest and longest-inked name, and the price. In brief_kiril (he is still alive) she may be tight-lipped and professional. Payment: bolts with a keener edge (magical bolts), and a healing draught.
+
+### Name 10: `khazan` - Khazan, under Rudolph's tower
+Facts: Khazan was an archmage who built the tower on the island in Lake Baratok before the count was born. He became a lich the cheap way: with his own name, cut over the tower door, which everyone who comes in says to open it. He is courteous, curious and very old, and he collects the names of his visitors; his touch freezes, his bursts tear, and his cellar whispers your name back. Ezmerelda had camped on the shore beside that tower for months; its old door opens to the name Khazan, and the party got in by saying it. The party destroyed him for good. (She knew the old lock answered to his name, not what the name had made of him; she may be dry about it.) Payment: a scroll that guards against the undead, a draught that blunts grave-cold, and holy water.
+
+### Name 11: `lysaga` - Baba Lysaga
+Facts: Baba Lysaga is an ancient witch who lives in the drowned village of Berez in the marsh, in a hut that stands on a giant stump and walks when it likes. She guards the place with straw men and scarecrows, keeps swarms of insects in jars, and casts like a powerful wizard. She fusses, feeds, scolds and boasts about "her boy"; the stew is not what it seems. The party killed her. Ezmerelda has cut her scarecrows down on the marsh before. Payment: bolts with a keener edge (magical bolts), flasks of alchemist's fire, and a healing draught.
+
+### Name 12: `sarkhaza` - Sarkhaza
+Facts: Sarkhaza is a red dragon who came through the mists forty years ago after a dead silver dragon's gold and found the count waiting. She was chained by the neck in a cavern under Mount Ghakis, her wings riveted shut, starved on grave-salt, lying on a hoard that was only gilded lead. Every new moon the count's black cart took a cage up the mountain to her. She ate what was sent. The party killed her. A hunter's ledger does not ask who held the leash, only who ate; Ezmerelda may be uneasy and still be right. Payment: a draught that blunts fire, bolts with a keener edge (magical bolts), and a healing draught.
+
+### Name 13: `eye` - the Eye Below
+Facts: The Eye Below is a beholder the wardens of the Amber Temple sealed in amber under their vaults and put to sleep with the memory of one of their number (the wardens could not kill it, only sing it to sleep). It is a floating orb of mottled hide as wide as a cart with one great clouded eye, a mouth like a sack of knives, and ten small eyes on stalks, each of which does something terrible. It dreams, and its dreams come out of the walls. The party killed it. Payment: a scroll that guards against aberrations, bolts with a keener edge (magical bolts), and a healing draught.
+
+### Bonus handovers and the closing (these are different from the names)
+
+milestone_a: Ezmerelda x2 (the party has just had its fourth name struck from the book. A ledger perk: past the fourth, she gives something from her wagon that is not a bounty, a spare light crossbow she has stopped using. Dry, a little proud; do not give it a history or a name)
+milestone_b: Ezmerelda x2 (the party has just had its eighth name struck. A second perk: a dagger from her wagon with a name for ruining a mage's afternoon - say that in her own words; no history, no name, no mechanics)
+ledger_done: Ezmerelda x2 (all thirteen names have been struck; she closes the book. It is not an ending to the story, only to the book: there are no more names she trusts enough to ink, and she is, for once, not in a hurry. A real beat, then a joke)
+
+Option texts: also include in the final `~ options` block, under the ids, the twelve ask_/claim_ rows for names 8 to 13 (ask_grandsire, claim_grandsire, ask_kiril, claim_kiril, ask_khazan, claim_khazan, ask_lysaga, claim_lysaga, ask_sarkhaza, claim_sarkhaza, ask_eye, claim_eye).
+
+Reply layout: the brief_ and claim_ nodes for names 8 to 13 in order, then milestone_a, milestone_b, ledger_done, then the final `~ options` block with 12 `* ` rows, each prefixed with its id like `* ask_kiril: text`.
+
+That is 30 lines and 12 option texts.

@@ -47,6 +47,7 @@ Ezmerelda: Nobody with fangs has ever asked to buy silver. Not twice, anyway. Si
 * [if flag.van_richten_letter_found and not flag.ezmerelda_given_letter] We found a letter in the tower, with your name on it. -> letter
 * [if not flag.pack_resolved] What do you know about the wolves in these hills? -> wolves
 * [if flag.pack_resolved and not flag.ezmerelda_heard_den] The pack in the hills is settled. -> den_news
+* [if flag.ezmerelda_trust >= 0] Have you any paying work? -> ledger_door
 * [if flag.ezmerelda_trust >= 2 and not guest:ezmerelda] Hunt with us. -> join
 * Goodbye. -> bye
 
@@ -249,6 +250,14 @@ set ezmerelda_met
 Ezmerelda [angry]: Somebody has been in my wagon. Don't. Don't say anything. I know who's been up and down this shore this week, and it's a very short list.
 Ezmerelda: Keep what you took. You'll need it. And then stay out of my way.
 -> menu
+
+# The Hunter's Ledger (narrative/allies/ezmerelda.dialogue, side quest hunters_ledger): the door from here. The hub starts the
+# journal entry too, for a party that reaches it by clicking on her while she travels.
+~ ledger_door
+if not quest.hunters_ledger
+quest hunters_ledger heard
+endif
+-> allies/ezmerelda:talk
 
 ~ bye
 Ezmerelda: Go carefully. If anything in these hills hums, growls or compliments you, shoot it.

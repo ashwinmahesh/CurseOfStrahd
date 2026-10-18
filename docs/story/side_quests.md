@@ -1206,6 +1206,53 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
 - Xaver comes down off his bookcase for the first time in three hundred years and gives the party the one book he
   saved: a Manual of Quickness of Action (very rare). The desk's drawers give up eleven readers' purses, 350 gp.
 
+### The Hunter's Ledger (`hunters_ledger`, narrative/allies/ezmerelda.dialogue; Story Allies Presence Plan, package M2)
+
+Ezmerelda d'Avenir keeps a book of the valley's killers, each with a price beside the name, and pays in a hunter's goods
+for proof. It is the recurring reason to go back to her, not a test: there is no deadline, no penalty and no fight she
+didn't see coming (a name she briefs is words only). Her hub, `allies/ezmerelda:talk`, carries the ledger and four
+topics that each play once (Rudolph, her leg, the Vistani, and what she thinks of where the party is going; the hub
+offers at most the three first, newest first). It opens from where she stands (one menu option each in her tower,
+abbey and yard conversations, `ledger_door`) and from clicking her while she travels (`guest_talk` in
+data/npcs/ezmerelda.json). The quest starts at `heard` the first time any of those opens it.
+
+**The three names.** The ledger offers at most three of thirteen names at a time: first the kills the story recorded that
+she hasn't paid for yet (oldest first), then hunts in the region the party stands in, then the hardest hunts the party's
+lowest level reaches. A name the story can no longer end by a kill (Morgantha after the bargain or Bella's pact, the
+Grandsire after Petru is given up, Kiril once he leads the pack, Lysaga after she was bought off or broken) is never
+offered as a hunt. The kills are the flags the regions already set, so the ledger reads and never writes the story.
+
+| Name | Flag read | Fought in | Named from level | Pays (always) |
+|---|---|---|---|---|
+| Dragan, the werewolf at Tser Falls | `falls_werewolf_slain` | svalich_road | 3 | 10 bolts |
+| The Tinker's Wagon | `wagon_slain` | svalich_road | 4 | 3 alchemist's fire, 10 bolts |
+| The count's fowlers | `fowlers_slain` | lake_zarovich | 5 | 3 holy water, 10 bolts |
+| The Vine Mother | `vine_mother_slain` | wizard_of_wines | 5 | scroll of protection (plants), 3 alchemist's fire |
+| Morgantha | `morgantha_slain` | old_bonegrinder | 5 | scroll of protection (fiends), 2 holy water, 2 antitoxin |
+| Wintersplinter | `yester_hill_resolved` | yester_hill | 6 | 3 alchemist's fire, 6 +1 bolts |
+| The Count's Huntsman | `huntsman_slain` | svalich_road | 7 | scroll of protection (undead), potion of resistance (necrotic), 3 holy water |
+| The Grandsire | `grandsire_slain` | krezk | 7 | 10 +1 bolts |
+| Kiril Stoyanovich | `kiril_defeated` | werewolf_den | 7 | 10 +1 bolts |
+| Khazan | `khazan_destroyed` | van_richtens_tower | 7 | scroll of protection (undead), potion of resistance (necrotic), 4 holy water |
+| Baba Lysaga | `lysaga_dead` | berez | 8 | 6 +2 bolts, 3 alchemist's fire |
+| Sarkhaza | `sarkhaza_slain` | mount_ghakis | 9 | 2 potions of resistance (fire), 8 +2 bolts |
+| The Eye Below | `eye_below_slain` | amber_temple | 9 | scroll of protection (aberrations), 8 +2 bolts |
+
+Every payment also adds healing by the party's lowest level: three Potions of Healing below level 7, Greater Healing
+(two; three for the last three names) from 7, Superior Healing (one; two for the last seven names) from 9. Rarity follows
+docs/story/found_magic_items.md (uncommon to level 4, rare from 5): the scrolls, +1 and +2 bolts and resistance potions
+are consumables, so they may repeat. **The fourth name** struck brings her spare light crossbow (a +1 Light Crossbow,
+uncommon) and **the eighth** a dagger (Mage Breaker, rare); each is the only one of its kind in the story
+(tests/unit/test_loot_distinct.gd). The first payment warms her (`ezmerelda_trust` +1), the seventh moves the quest to
+`half_struck`, and the thirteenth ends it (`ledger_struck`); after that the ledger option goes.
+
+- Flags: `ezmerelda_ledger_paid` (how many are paid), `ledger_paid_<name>`, the gifts, the heard topics, and the working
+  flags the picks use (`ledger_pick_*`, `hub_pick_*`, `ledger_named`, `ledger_ready`, `hub_slots`: recomputed on every
+  visit, not state), all in data/flags/allies_ezmerelda.json. Stories are hers and use only the facts our data holds for
+  each name.
+- Lines: 87 spoken (Ezmerelda and the Narrator), drafted by Gemini through the ai-bridge and edited
+  (docs/plans/gemini_allies/M2/), all unvoiced. Test: tests/unit/test_ezmerelda_ledger.gd.
+
 ## The Amber Temple (level 10)
 
 ### Exethanter's Notes (`exethanters_notes`, narrative/amber_temple/exethanters_notes.dialogue; NPC plan batch 5)
