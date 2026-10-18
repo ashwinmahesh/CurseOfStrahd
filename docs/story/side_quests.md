@@ -589,6 +589,21 @@ battle come out of the courtyard for the only living things on the ridge.
   eight men-at-arms; level 7 one knight and five; below 7 the Warden at 90 HP and four.
 - Godfrey writes Ioan's name right and Cosmin's under it, and gives the party Ioan's shield, left at the gate the night
   he rode: an Arrow-Catching Shield (rare), and 150 gp from the Order's chest. Not offered once the Order rests.
+- NPC plan batch 5, without a fight: once Godfrey has remembered (stage `truth`), Cosmin can ask the Order's table to hear
+  Ioan's case at the graves, once. Evidence is worth a vote each: the words on the back of the headstone, the dragon's last
+  words, Godfrey's own account (always open), History DC 13 (the Order's rolls) and Persuasion DC 14. Three votes carry it,
+  with the same reward as the vigil; short of that the table isn't moved and the vigil is still open. Sir Ottokar the Late
+  rides in as the vote is called.
+
+### Sir Ottokar the Late (`argynvostholt/ottokar`; NPC plan batch 5, comedy)
+
+A dead knight (new NPC) who was late to the Order's last battle and has been late to everything since. He stands in the
+grounds after any fight at Argynvostholt (the courtyard phantoms, the mausoleum watch, the lamp, the duel, the beacon, the
+vigil) and asks whether he missed it, with three different apologies. He wants to be on time once. **Secret** (Insight DC 12
+after he has said so): he was late because he stopped to help a farmer's wife with her cart, and would again. He goes when the
+Order rests. No quest, no fight. The Phantom Warden (a reason for his door, then, on Insight, the herald he let in under a flag
+of truce) and the Phantom Watchman at Tsolenka (who nods at any watchword, because he forgot it two centuries ago) have a
+want and a secret in the same way.
 
 ### The Silver Hoard (`the_silver_hoard`, narrative/argynvostholt/the_silver_hoard.dialogue; batch 7, level 9)
 
@@ -1168,6 +1183,16 @@ drawer opens, and the reading chairs stand up. Van Richten, Ezmerelda and the to
 
 ## The Amber Temple (level 10)
 
+### Exethanter's Notes (`exethanters_notes`, narrative/amber_temple/exethanters_notes.dialogue; NPC plan batch 5)
+
+Exethanter, who forgets nearly everything, has five notes unpinned and out of order, and cannot recall what he was doing this
+morning. Ask him (option in his menu): the party puts the scraps in order, choosing each next one (a wrong choice only earns a
+mild correction and the same step again; an Investigation roll shows which was written first). The right order, read from the
+notes alone, is water, fire, leaves, waiting, pouring: he was making tea. He makes a cup for the party in the cold temple.
+
+- No fight and no roll that matters. Reward: Heroic Inspiration, companions' approval. Dialogue and data only: it touches
+  no Amber Temple map.
+
 ### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
 
 Exethanter, from level 10: under all the notes pinned to his sleeve is an old one in his own hand, "DO NOT GO BELOW THE
@@ -1331,7 +1356,10 @@ gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat,
 goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
 Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
 parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
-getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 4 (2026-10-18), Krezk and
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 5 (2026-10-18), Argynvostholt, the Tsolenka watch and the Amber Temple:
+ottokar.dialogue and exethanters_notes.dialogue in full (new speaker Sir Ottokar the Late; also Exethanter, Vladimir Horngaard,
+Sir Godfrey Gwilym, Cosmin, the Phantom Warden, the Phantom Watchman and the Narrator); the hearing nodes of the_squire.dialogue;
+the Warden's reasons in mausoleum.dialogue and the Watchman's watchword in watch.dialogue. NPC plan batch 4 (2026-10-18), Krezk and
 the lake, the winery and the den: silvius_cask.dialogue, sprig.dialogue and vadu_children.dialogue in full (new speakers Dana
 and the rescued children Ioana, Zamfir and Codruta; also Old Silviu, Master Costel, Kip and the Narrator); the winery
 hands in hands.dialogue; the riddle nodes of the_fourth_sister.dialogue (Granny Ash and Mouse); and, in Krezk,

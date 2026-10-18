@@ -1965,6 +1965,81 @@
       "id": "codruta_hid_told",
       "type": "bool",
       "summary": "Codruta told the party where she lost her rag doll (she hid it under a gorse root)."
+    },
+    {
+      "id": "hearing_held",
+      "type": "bool",
+      "summary": "The Squire: the Order's table has heard Ioan's case at the graves (once)."
+    },
+    {
+      "id": "hearing_votes",
+      "type": "int",
+      "summary": "The Squire: how many votes Ioan's case has gained at the hearing; three carry it."
+    },
+    {
+      "id": "hear_stone",
+      "type": "bool",
+      "summary": "The Squire hearing: the words on the headstone have been read to the table."
+    },
+    {
+      "id": "hear_words",
+      "type": "bool",
+      "summary": "The Squire hearing: the dragon's last words have been given to the table."
+    },
+    {
+      "id": "hear_godfrey",
+      "type": "bool",
+      "summary": "The Squire hearing: Sir Godfrey has said what he did."
+    },
+    {
+      "id": "hear_history",
+      "type": "bool",
+      "summary": "The Squire hearing: the History argument has been tried (once)."
+    },
+    {
+      "id": "hear_persuade",
+      "type": "bool",
+      "summary": "The Squire hearing: the plea for Ioan has been tried (once)."
+    },
+    {
+      "id": "ottokar_met",
+      "type": "bool",
+      "summary": "The party has met Sir Ottokar the Late, who arrives after every fight at Argynvostholt."
+    },
+    {
+      "id": "ottokar_visits",
+      "type": "int",
+      "summary": "Scratch counter for Sir Ottokar's greetings (three different arrivals, then the last again)."
+    },
+    {
+      "id": "ottokar_wanted",
+      "type": "bool",
+      "summary": "Sir Ottokar said what he wants (to be on time once); his secret is then open to an Insight roll."
+    },
+    {
+      "id": "ottokar_secret_known",
+      "type": "bool",
+      "summary": "Sir Ottokar admitted why he was late to the last battle (a farmer's wife and her cart)."
+    },
+    {
+      "id": "warden_why_heard",
+      "type": "bool",
+      "summary": "The Phantom Warden said why he still keeps the mausoleum door."
+    },
+    {
+      "id": "warden_secret_known",
+      "type": "bool",
+      "summary": "The Phantom Warden admitted he opened the gate to the count's herald under a flag of truce."
+    },
+    {
+      "id": "watchman_nodded",
+      "type": "bool",
+      "summary": "The Phantom Watchman nodded at a watchword the party gave him."
+    },
+    {
+      "id": "notes_step",
+      "type": "int",
+      "summary": "Exethanter's Notes: scratch counter for which scrap the party is placing (one to four)."
     }
   ]
 }

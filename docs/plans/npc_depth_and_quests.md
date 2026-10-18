@@ -461,3 +461,12 @@ hands. Reshaped: The Waystone gets a daytime way (tracks, Lark at noon, a Stealt
 vote and a ferry or a hiding (no fight unless seen), and The Fourth Sister a riddle game with Granny Ash (two right win;
 Mouse's name wins the third). Every failed roll has a way on (`make validate` runs `fail_routes.py`).
 
+## Batch 5 status (2026-10-18)
+
+Built on `npc-batch5` (stacked on `npc-batch4`): Argynvostholt, the Tsolenka watch and the Amber Temple. New: Sir Ottokar the Late
+(turns up after every fight at the manor; wants to be on time once; he was late because he helped a farmer's wife with her
+cart), Exethanter's Notes (a gentle puzzle: five loose notes put in order show he was making tea), and a want and a secret for
+the Phantom Warden and the Phantom Watchman. Reshaped: The Squire gets a hearing before the Order's table (evidence is worth a
+vote each; three carry it; a lost vote gives the vigil back). Berez and the mountains had no row beyond people who already have
+their quests, so they are unchanged. The Goat's later sightings were left for a small follow-up.
+

@@ -1,0 +1,18 @@
+{
+  "id": "sir_ottokar",
+  "name": "Sir Ottokar the Late",
+  "title": "A Knight of the Silver Dragon",
+  "summary": "A dead knight who arrived late to the Order's last battle and has been late to everything since. He turns up after every fight at Argynvostholt, riding in as the last blow lands, and asks whether he missed it.",
+  "portrait": "order_knight",
+  "sprite": "order_knight",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "undead",
+    "knight",
+    "argynvostholt"
+  ],
+  "region": "argynvostholt",
+  "pronouns": "he/him"
+}

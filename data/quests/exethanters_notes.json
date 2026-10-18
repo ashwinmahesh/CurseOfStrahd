@@ -1,0 +1,24 @@
+{
+  "id": "exethanters_notes",
+  "name": "Exethanter's Notes",
+  "summary": "Exethanter, the last Warden of the Amber Temple, has forgotten what he was doing this morning. His notes have come unpinned.",
+  "giver": "exethanter",
+  "region": "amber_temple",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Exethanter has forgotten what he was doing this morning. Five of the notes pinned to him have come loose, out of order, and he can't tell which goes where.",
+      "objectives": [
+        "Put Exethanter's loose notes in order"
+      ],
+      "hint": "Talk to Exethanter in the Amber Temple and ask about his notes.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Put in order, the notes said what he was doing this morning: making tea. Exethanter made us a cup.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}
