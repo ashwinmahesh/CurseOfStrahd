@@ -910,6 +910,7 @@ def story_checks(data, errors, need):
         trap_ids = {t["id"] for t in loc.get("traps", [])}
         for pr in loc.get("props", []):
             cond(pr.get("when", ""), w)
+            cond(pr.get("call_when", ""), w)
             if pr.get("item"):
                 need("item", data["items"], pr["item"], f"{w} prop {pr['id']}")
             if pr.get("flag"):
@@ -938,6 +939,8 @@ def story_checks(data, errors, need):
                     errors.append(f"{w}: prop {pr['id']} names an object kind but doesn't stand on a '=' square")
             if pr.get("dialogue"):
                 dialogue_refs.append((pr["dialogue"], w))
+            if pr.get("call"):
+                dialogue_refs.append((pr["call"], w))   # a prop that speaks first as the party comes near (a vestige's call)
         for ct in loc.get("containers", []):
             on_floor(ct["cell"], f"container {ct['id']}", allow_wall=True)
             for it in ct.get("items", []):
