@@ -419,6 +419,11 @@ hold the book options that need their own code. Each FaerunFeatures hook sits be
 `after_hit`, `adjust_incoming`, plus `after_damage` (end of `deal_damage`), `after_help`/`help_reach` (Help),
 `after_stabilize`, `after_ready`, `blocks_forced_move` (start of `forced_move`), `exploit_opening` (weapon damage
 dice) and `effect_added`, which every Creature calls when an effect lands (`Creature.effect_added`, set in `add`).
+`Creature.condition_blocked` (set in `add` too) tells the fight when an immunity turns a condition away, and
+`Encounter._condition_blocked` writes it to the log ("Revenant is immune to Paralyzed: Hold Monster has no effect"), so
+a failed save that does nothing says why. Dazed (Abjure Foes, a Rogue's Daze) holds a creature to one of move, action
+or Bonus Action each turn: `EncounterTurns.one_thing_block` reads it off what the turn has used, `_action_check`,
+`_bonus_check`, `SpellOptions.economy_block`, `move` and the attack paths ask it, and the AI forfeits its Bonus Action.
 A monster save action's damage parts carry `magic: true` when the action is `magical`, as spell parts carry `spell`.
 Batch 3 added `before_d20`, `turn_start`/`turn_end`, `after_save_ended` (a successful repeat save), `after_disengage`,
 `attack_advantage` (in `attack_situation`) and queued damage reactions with `fr_` kinds (`queue_damage_reactions`,

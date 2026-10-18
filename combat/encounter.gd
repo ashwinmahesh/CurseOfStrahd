@@ -182,11 +182,31 @@ func add(creature: Creature, side: StringName, cell: Vector2i) -> Combatant:
 	creature.d20_after = feature_actions.after_d20
 	creature.effect_added = _effect_added
 	creature.fear_seen = fear_in_sight
+	creature.condition_blocked = _condition_blocked
 	combatants.append(c)
 	# A foe that joins mid-fight (Children of the Night) comes at the difficulty's Hit Points and +2s too.
 	if state == State.ACTIVE and side == &"enemy" and creature is Monster:
 		difficulty.toughen(c, false)
 	return c
+
+
+## An immunity turned a condition away (Creature.condition_blocked): say so in the log, so a failed save that does
+## nothing isn't taken for a bug. `from` is whose immunity it is ("Base" for the creature's own, else a feature or
+## aura: "Aura of Courage"), `tried` the effect that imposed it ("Frightened (Vengeful Glare)", "Hold Monster").
+func _condition_blocked(cr: Creature, condition: StringName, from: String, tried: String) -> void:
+	var c := get_c(cr.id)
+	if c == null or c.creature != cr:
+		return
+	var cond := str(condition).capitalize()
+	var label := tried
+	if label.begins_with(cond + " (") and label.ends_with(")"):
+		label = label.substr(cond.length() + 2, label.length() - cond.length() - 3)
+	var line := "%s is immune to %s" % [c.name(), cond]
+	if from != "" and from != cr.base_label:
+		line += " (%s)" % from
+	if label != "":
+		line += ": %s has no effect" % label
+	log.add("condition", line, c.id)
 
 
 func _effect_added(cr: Creature, fx: Effect) -> void:
@@ -408,6 +428,11 @@ func spend_action(c: Combatant) -> void:
 
 func _bonus_check(c: Combatant) -> String:
 	return turns._bonus_check(c)
+
+
+## Dazed: "" while `what` ("move", "action", "bonus") is still open to `c` this turn (EncounterTurns.one_thing_block).
+func one_thing_block(c: Combatant, what: String) -> String:
+	return turns.one_thing_block(c, what)
 
 
 # --- Sight, light and cover (EncounterSight) ------------------------------------------------------

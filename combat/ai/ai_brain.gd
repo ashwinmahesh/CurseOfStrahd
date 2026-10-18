@@ -227,7 +227,7 @@ func begin_turn(c: Combatant) -> CombatResult:
 		if not save_plan.is_empty():
 			last_plan = save_plan
 			var use_it := func() -> CombatResult:
-				if not c.can_act() or e.state != Encounter.State.ACTIVE:
+				if not c.can_act() or e.state != Encounter.State.ACTIVE or e.one_thing_block(c, "action") != "":
 					return CombatResult.new()
 				var act := save_plan["action"] as Dictionary
 				var tg := save_plan["target"] as Combatant
@@ -775,7 +775,8 @@ func _attack_cells(c: Combatant, t: Combatant, o: Dictionary, reach: Dictionary)
 	var max_d := p.reach if melee else (p.long_range if p.long_range > 0 else p.normal_range)
 	if e.grid.distance_ft(c.cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) <= max_d:
 		out.append(c.cell)
-	if not c.can_act() or c.movement_left <= 0:
+	# Dazed (Abjure Foes): it moves or acts, not both, so it strikes from where it stands or only closes in.
+	if not c.can_act() or c.movement_left <= 0 or c.creature.has_flag("dazed"):
 		return out
 	var ranged_tries := 0
 	for cell: Vector2i in reach:
@@ -907,7 +908,7 @@ func _approach_plan(c: Combatant, visible: Array[Combatant], prof: Dictionary) -
 		if d < best:
 			best = d
 			target = t
-	return {"kind": "approach", "target": target, "score": 0.0, "dash": c.action_available,
+	return {"kind": "approach", "target": target, "score": 0.0, "dash": c.action_available and not c.creature.has_flag("dazed"),
 		"why": "closing on %s" % target.name()}
 
 
@@ -1253,7 +1254,7 @@ func _flee(c: Combatant, from: Combatant, may_dash: bool, heed: bool = true) -> 
 	var e := enc()
 	if c.speed() <= 0:
 		return CombatResult.new()
-	if may_dash and c.can_act() and c.action_available:
+	if may_dash and c.can_act() and c.action_available and not c.creature.has_flag("dazed"):
 		e.dash(c)
 	var reach := e.reachable_for(c)
 	var hz := hazards.read(c) if heed else null

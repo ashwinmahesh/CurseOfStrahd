@@ -216,6 +216,9 @@ func move(c: Combatant, dest: Vector2i, avoid: Dictionary = {}) -> CombatResult:
 	c.regain_speed()
 	if c.creature.hp <= 0:
 		return CombatResult.fail("%s is down" % c.name())
+	var dazed := e.one_thing_block(c, "move")
+	if dazed != "":
+		return CombatResult.fail(dazed)
 	# What the move may change, so it can be taken back if nothing comes of it (EncounterUndo).
 	var undo := e.undo.before_move(c)
 	# Riding: the controlled mount carries its rider, spending its own movement.

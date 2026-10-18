@@ -1838,6 +1838,9 @@ func _target_hover(c: Combatant, t: CombatToken, at: Vector2) -> void:
 			var bonus := o.creature.save_bonus(ab).total()
 			var dc := (prev["save_dc"] as Breakdown).total()
 			lines2.append("%s save DC %d: fails %d%%" % [Creature.ABILITY_SHORT[ab], dc, roundi(clampf((dc - bonus - 1) / 20.0, 0.0, 1.0) * 100.0)])
+			var immune_note := catalog.condition_immunity_note(str(selected["spell_id"]), o)
+			if immune_note != "":
+				lines2.append(immune_note)
 		if prev.has("damage_dice"):
 			lines2.append("Damage %s %s%s" % [prev["damage_dice"], str(prev.get("damage_type", "")).capitalize(), " " + (prev["damage_bonus"] as Breakdown).signed() if (prev["damage_bonus"] as Breakdown).total() != 0 else ""])
 		if prev.has("heal_dice"):

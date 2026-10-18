@@ -143,11 +143,13 @@ func economy_block(c: Combatant, unit: String) -> String:
 			return "Only one Magic action this turn (Action Surge's action can't be Magic)"
 		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available:
 			return "An action or a Bonus Action this turn, not both"
+		return enc().one_thing_block(c, "action")
 	if unit == "bonus_action":
 		if not c.bonus_available:
 			return "Bonus Action already used"
 		if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.action_available and not c.surged:
 			return "An action or a Bonus Action this turn, not both"
+		return enc().one_thing_block(c, "bonus")
 	return ""
 
 

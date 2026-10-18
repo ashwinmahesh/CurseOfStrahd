@@ -174,8 +174,7 @@ func _turn_start_flags(c: Combatant) -> void:
 	if not c.is_alive() or e.current() != c:
 		return
 	if c.creature.has_flag("dazed"):
-		c.bonus_available = false
-		e.log.add("info", "%s is Dazed: it can move or act this turn, not both" % c.name(), c.id)
+		e.log.add("info", "%s is Dazed: this turn it can move, take an action or take a Bonus Action, one of the three" % c.name(), c.id)
 	if c.creature.has_flag("no_action_or_bonus"):
 		c.action_available = false
 		c.bonus_available = false
@@ -574,7 +573,28 @@ func _action_check(c: Combatant) -> String:
 		return "Action already used"
 	if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available and not c.surged:
 		return "An action or a Bonus Action this turn, not both"
-	return ""
+	return one_thing_block(c, "action")
+
+
+## Dazed (Abjure Foes, a Rogue's Daze): on its turn the creature can do only one of these: move, take an action, or take
+## a Bonus Action. "" if `what` ("move", "action" or "bonus") is still open to `c` now, else why not. Read off what the
+## turn has used so far, so no spending site needs to know about it; more of the same thing stays open (the rest of a
+## walk, the later attacks of one Attack action).
+func one_thing_block(c: Combatant, what: String) -> String:
+	if not c.creature.has_flag("dazed"):
+		return ""
+	var moved := c.moved or c.movement_left < c.turn_speed
+	var acted := not c.action_available
+	var bonus := not c.bonus_available
+	var blocked := false
+	match what:
+		"move":
+			blocked = acted or bonus
+		"action":
+			blocked = (moved or bonus) and not acted
+		"bonus":
+			blocked = (moved or acted) and not bonus
+	return "%s is Dazed: it can only move, take an action or take a Bonus Action this turn, one of the three" % c.name() if blocked else ""
 
 
 ## "" if `c` could make one attack of the Attack action now (starting it if it hasn't).
@@ -620,4 +640,4 @@ func _bonus_check(c: Combatant) -> String:
 		return "Bonus Action already used"
 	if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.action_available:
 		return "An action or a Bonus Action this turn, not both"
-	return ""
+	return one_thing_block(c, "bonus")

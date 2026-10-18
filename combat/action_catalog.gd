@@ -1546,6 +1546,35 @@ func attack_preview(c: Combatant, action: Dictionary, t: Combatant) -> Dictionar
 	return out
 
 
+## "Immune to Paralyzed: Hold Monster has no effect" when every condition a save spell puts on a creature that fails
+## is one `t` is immune to (a revenant and Hold Monster, a hero in a paladin's Aura of Courage and Fear); else "".
+## The target tooltip shows it, so a slot isn't spent on a spell that can't take hold.
+func condition_immunity_note(spell_id: String, t: Combatant) -> String:
+	var data := Compendium.shared().spell_data(spell_id)
+	if not data.has("save"):
+		return ""
+	var conds: Array[String] = []
+	for fx: Variant in data.get("effects", []):
+		var d := fx as Dictionary
+		var params := d.get("params", {}) as Dictionary
+		if str(d.get("effect", "")) != "condition" or str(params.get("on", "fail")) not in ["fail", "always"]:
+			continue
+		var cond := str(params.get("condition", ""))
+		if cond == "choice":
+			return ""
+		if cond != "" and not cond in conds:
+			conds.append(cond)
+	if conds.is_empty():
+		return ""
+	for cond in conds:
+		if not t.creature.is_condition_immune(StringName(cond)):
+			return ""
+	var names: Array[String] = []
+	for cond in conds:
+		names.append(cond.capitalize())
+	return "Immune to %s: %s has no effect" % [" and ".join(names), str(data.get("name", spell_id))]
+
+
 ## A spell attack's part of the target tooltip, as attack_preview is a weapon's: the hit chance and the d20 needed
 ## against the AC with cover (`attack`: the caster's spell attack bonus for this cast), every Advantage and Disadvantage
 ## source with the caster's own, the cover and the high ground, all from the situation the roll itself uses

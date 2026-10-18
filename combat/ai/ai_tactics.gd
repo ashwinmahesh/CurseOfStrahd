@@ -186,7 +186,7 @@ static func potions(c: Combatant) -> int:
 ## turn goes on as usual (having drunk or not).
 func potion_turn(c: Combatant) -> Variant:
 	var e := enc()
-	if potions(c) <= 0 or not c.bonus_available or not c.can_act() or not c.creature.is_bloodied():
+	if potions(c) <= 0 or not c.bonus_available or not c.can_act() or not c.creature.is_bloodied() or c.creature.has_flag("dazed"):
 		return null
 	var near := e.ai._nearest_enemy(c)
 	var pressed := near != null and not near.is_down() and e.distance(c, near) <= near.reach_ft()

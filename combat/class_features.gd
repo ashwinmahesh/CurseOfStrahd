@@ -192,6 +192,29 @@ func _temp(t: Combatant, amount: int, label: String) -> void:
 		e.log.add("heal", "%s gains %d Temporary Hit Points (%s)" % [t.name(), amount, label], t.id)
 
 
+## The foes Abjure Foes takes: Charisma modifier of them (at least one) in sight within 60 ft, the nearest first and
+## those that can be Frightened before those immune to it (an immune one is told off in the log, so the player learns it);
+## a foe still under an Abjure Foes has no use for another.
+func abjure_foes_targets(c: Combatant) -> Array[Combatant]:
+	var e := enc()
+	var able: Array[Combatant] = []
+	var immune: Array[Combatant] = []
+	for o in e.hostiles_of(c):
+		if o.is_down() or e.distance(c, o) > 60 or not e.can_see(c, o):
+			continue
+		if o.creature.effects.any(func(x: Effect) -> bool: return x.source_id == "abjure_foes"):
+			continue
+		(immune if o.creature.is_condition_immune(&"frightened") else able).append(o)
+	var nearest := func(a: Combatant, b: Combatant) -> bool: return e.distance(c, a) < e.distance(c, b)
+	able.sort_custom(nearest)
+	immune.sort_custom(nearest)
+	var out: Array[Combatant] = []
+	for o: Combatant in able + immune:
+		if out.size() < maxi(1, c.creature.ability_mod(&"cha")):
+			out.append(o)
+	return out
+
+
 # --- The hotbar -------------------------------------------------------------------------------------------
 
 func list(c: Combatant, out: Array[Dictionary], aw: String, bw: String) -> void:
@@ -347,8 +370,11 @@ func _paladin(c: Combatant, ch: Character, out: Array[Dictionary], aw: String, b
 		"oath_of_glory":
 			pass
 	if has(c, "abjure_foes"):
-		out.append(_entry("abjure_foes", "Abjure Foes", "Wis save · 60 ft", "action", _first(aw, cw), "none",
-			"Magic action, Channel Divinity: up to %d creatures within 60 ft make a Wisdom save or are Frightened for 1 minute (or until damaged), able only to move, act or take a Bonus Action each turn." % maxi(1, c.creature.ability_mod(&"cha"))))
+		var afw := _first(aw, cw)
+		if afw == "" and abjure_foes_targets(c).is_empty():
+			afw = "No foe in sight within 60 ft"
+		out.append(_entry("abjure_foes", "Abjure Foes", "Wis save · 60 ft", "action", afw, "none",
+			"Magic action, Channel Divinity: up to %d foes within 60 ft (the nearest first, those that can be Frightened before those immune to it) make a Wisdom save or are Frightened for 1 minute (or until damaged); each can only move, take an action or take a Bonus Action on its turns, one of the three, and still strikes at Disadvantage while you are in its sight." % maxi(1, c.creature.ability_mod(&"cha"))))
 	match ch.subclasses.get("paladin", ""):
 		"oath_of_glory":
 			if has(c, "peerless_athlete"):
@@ -837,20 +863,17 @@ func perform(c: Combatant, id: String, t: Combatant, cell: Vector2i, point: Vect
 			ch.spend_resource("paladin_channel_divinity")
 			e.spend_action(c)
 			c.magic_action_used = true
-			var left := maxi(1, c.creature.ability_mod(&"cha"))
 			var dc := _spell_dc(c, "paladin")
-			for o in e.hostiles_of(c):
-				if left <= 0:
-					break
-				if o.is_down() or e.distance(c, o) > 60 or not e.can_see(c, o):
-					continue
-				left -= 1
+			e.log.add("info", "%s presents their holy symbol: Abjure Foes" % c.name(), c.id)
+			for o in abjure_foes_targets(c):
 				if not _save(o, &"wis", dc, "Abjure Foes", "frightened"):
 					var af := _minutes(c, "Frightened (Abjure Foes)", "abjure_foes", 1).with_condition(&"frightened").with_modifier("flag", {"value": "dazed"})
 					af.turn_owner_id = o.id
 					af.ends_on_damage = true
-					o.creature.add_effect(af)
-					e.events.append({"type": "condition", "id": o.id})
+					# A foe immune to Frightened says so in the log (Creature.condition_blocked); one that takes it is told too.
+					if o.creature.add_effect(af):
+						e.log.add("condition", "%s is Frightened (Abjure Foes): until it takes damage, one of move, action or Bonus Action each turn" % o.name(), o.id)
+						e.events.append({"type": "condition", "id": o.id})
 		"moonlight_step":
 			if cell.x < 0 or e.occupant_at(cell) != null or e.grid.distance_ft(c.cell, c.size_cells, cell, c.size_cells) > 30:
 				return CombatResult.fail("Choose an empty square within 30 ft")

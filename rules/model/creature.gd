@@ -66,6 +66,9 @@ var effect_added: Callable = Callable()
 ## Asked whether a source of this creature's fear is within its line of sight (creature) -> bool: Frightened's
 ## Disadvantage holds only then. The fight installs it; without it the source counts as in sight.
 var fear_seen: Callable = Callable()
+## Told when an immunity turns a condition away (creature, condition, who or what is immune, what tried to impose it):
+## the fight writes it in its log, so a failed save that does nothing says why.
+var condition_blocked: Callable = Callable()
 
 
 func _init() -> void:
@@ -943,6 +946,7 @@ func add_condition(c: StringName, source: String = "") -> bool:
 		return add_exhaustion(1)
 	if is_condition_immune(c):
 		log_event({"type": "condition_immune", "creature": id, "condition": str(c)})
+		_turned_away(c, source)
 		return false
 	var sources: Array = conditions.get(c, [])
 	if not source in sources:
@@ -970,8 +974,15 @@ func remove_condition(c: StringName, source: String = "") -> void:
 		remove_condition(&"restrained", GRAPPLE_RESTRAINT)
 
 
+## Tells the fight that an immunity stopped `c` (see condition_blocked); `tried` names what imposed it.
+func _turned_away(c: StringName, tried: String) -> void:
+	if condition_blocked.is_valid():
+		condition_blocked.call(self, c, condition_immunity_source(c), tried)
+
+
 func add_exhaustion(levels: int = 1) -> bool:
 	if is_condition_immune(&"exhaustion"):
+		_turned_away(&"exhaustion", "")
 		return false
 	exhaustion = clampi(exhaustion + levels, 0, 6)
 	log_event({"type": "exhaustion", "creature": id, "level": exhaustion})
@@ -1046,6 +1057,7 @@ func add_effect(e: Effect) -> bool:
 	for c in e.conditions:
 		if is_condition_immune(c):
 			log_event({"type": "condition_immune", "creature": id, "condition": str(c), "source": e.name})
+			_turned_away(c, e.name)
 		else:
 			kept.append(c)
 	e.conditions = kept

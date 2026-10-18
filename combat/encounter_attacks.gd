@@ -129,6 +129,10 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 	var via_haste := c.haste_attack_ready()
 	if c.attacks_left <= 0 and not c.action_available and not via_haste:
 		return CombatResult.fail("No attacks left this turn")
+	if c.attacks_left <= 0:
+		var dazed := e.one_thing_block(c, "action")
+		if dazed != "":
+			return CombatResult.fail(dazed)
 	if e.rider_of(c) != null and c.allied_with(e.rider_of(c)):
 		return CombatResult.fail("A controlled mount can only Dash, Disengage or Dodge")
 	var beast_why := e.class_features.companion_why(c)
@@ -930,6 +934,10 @@ func monster_attack(c: Combatant, target: Combatant, action_id: String) -> Comba
 		return CombatResult.fail(check)
 	if c.attacks_left <= 0 and not c.action_available:
 		return CombatResult.fail("No attacks left")
+	if c.attacks_left <= 0:
+		var dazed := e.one_thing_block(c, "action")
+		if dazed != "":
+			return CombatResult.fail(dazed)
 	var sanct := e.spells.sanctuary_blocks(c, target)
 	if sanct != "":
 		return CombatResult.fail(sanct)
@@ -949,7 +957,7 @@ func begin_multiattack(c: Combatant) -> Array[Dictionary]:
 		return out
 	var m := c.creature as Monster
 	var multi := m.action("multiattack")
-	if multi.is_empty():
+	if multi.is_empty() or e.one_thing_block(c, "action") != "":
 		return out
 	e.spend_action(c)
 	c.took_attack_action = true
