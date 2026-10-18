@@ -364,6 +364,24 @@ cooldown 20
 ~ open:captains_strongbox
 | The captain's strongbox opens with a sound like a held breath let go.
 
+~ enter:tsolenka_pass_guard_tower_upper
+| The stair lets out into a bare stone chamber where thin grey light comes through narrow slits, and far below the road and the bridge look very small.
+cooldown 20
+
+~ enter:tower_lookout
+| A wooden bench, a cold signal lamp and a brass spyglass fixed to the sill, in a room swept so clean it looks as if the watch only stepped out.
+once
+
+~ examine:tower_spyglass
+| The brass tube turns on oiled bearings and brings the cloud-choked gorge up to your eye. Far up the road beyond the gate, something the colour of old amber catches a light of its own.
+
+~ enter:tsolenka_pass_guard_tower_roof
+| You climb out into the wind on a flat stone roof, where a knight of gilded stone stands at each corner, bright as new coin against the grey cloud.
+cooldown 20
+
+~ examine:tower_roof_knights
+| Four stone knights stand with their gilded faces turned back toward the valley, hands folded on the hilts of their swords. Whether they were set here to guard the road or to warn it, the valley has long since stopped looking up.
+
 # ---------------------------------------------------------------- Rests
 
 ~ rest:long:berez

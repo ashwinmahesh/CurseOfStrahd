@@ -1,0 +1,122 @@
+{
+  "id": "tsolenka_pass_guard_tower_roof",
+  "name": "The Tsolenka Guard Tower, Roof",
+  "region": "tsolenka_pass",
+  "summary": "The open roof of the tower in the cloud, with a gilded stone knight at each corner and the whole pass below.",
+  "text": "A flat stone roof inside a battlement, reached by the hatch from the lookout. The book puts golden knight statues on top of the white tower; the rest of the roof is ours.",
+  "map": {
+    "rows": [
+      "###############",
+      "#.............#",
+      "#.............#",
+      "#.............#",
+      "#.............#",
+      "#.............#",
+      "#.............#",
+      "#.............#",
+      "###############"
+    ],
+    "theme": "dungeon",
+    "light": "dim",
+    "outdoors": true
+  },
+  "areas": [
+    {
+      "id": "tower_roof",
+      "name": "The roof",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          13,
+          7
+        ]
+      ],
+      "floor": "castle/flagstones",
+      "walls": "castle/ashlar",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      7,
+      5
+    ],
+    "from_hatch": [
+      7,
+      5
+    ]
+  },
+  "exits": [
+    {
+      "id": "roof_hatch_down",
+      "cell": [
+        7,
+        4
+      ],
+      "to": "tsolenka_pass_guard_tower_upper",
+      "spawn": "from_roof",
+      "label": "A hatch down to the lookout"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "tower_roof_knights",
+      "cell": [
+        1,
+        1
+      ],
+      "kind": "examine",
+      "label": "A gilded stone knight",
+      "model": "statue_young_strahd"
+    },
+    {
+      "id": "tower_roof_knight_2",
+      "cell": [
+        13,
+        1
+      ],
+      "kind": "decor",
+      "model": "statue_young_strahd"
+    },
+    {
+      "id": "tower_roof_knight_3",
+      "cell": [
+        1,
+        7
+      ],
+      "kind": "decor",
+      "model": "statue_young_strahd"
+    },
+    {
+      "id": "tower_roof_knight_4",
+      "cell": [
+        13,
+        7
+      ],
+      "kind": "decor",
+      "model": "statue_young_strahd"
+    },
+    {
+      "id": "tower_beacon",
+      "cell": [
+        7,
+        1
+      ],
+      "kind": "decor",
+      "label": "The watch's beacon cradle",
+      "model": "beacon_cradle"
+    }
+  ],
+  "containers": [],
+  "lights": [],
+  "npcs": [],
+  "encounters": [],
+  "narration": {
+    "enter": "enter:tsolenka_pass_guard_tower_roof"
+  },
+  "rest": "risky"
+}

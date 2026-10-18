@@ -16,7 +16,7 @@
       "#..................#",
       "#...=..........=...#",
       "#..................#",
-      "########.....#######",
+      "########.....###.###",
       "########.....#######",
       "##########.#########"
     ],
@@ -106,6 +106,10 @@
     "from_pass": [
       10,
       11
+    ],
+    "from_above": [
+      16,
+      9
     ]
   },
   "exits": [
@@ -118,6 +122,16 @@
       "to": "tsolenka_pass",
       "spawn": "from_tower",
       "label": "Out to the road"
+    },
+    {
+      "id": "tower_stair_up",
+      "cell": [
+        16,
+        10
+      ],
+      "to": "tsolenka_pass_guard_tower_upper",
+      "spawn": "from_stair",
+      "label": "Stairs up to the lookout"
     }
   ],
   "doors": [

@@ -77,7 +77,9 @@
     "amber_temple_library": "amber_library",
     "amber_temple_vault": "amber_vault",
     "argynvostholt_west_wing": "webbed_wing",
-    "castle_ravenloft_brazier_room": "ravenloft_brazier"
+    "castle_ravenloft_brazier_room": "ravenloft_brazier",
+    "tsolenka_pass_guard_tower_upper": "frozen_lookout",
+    "tsolenka_pass_guard_tower_roof": "tsolenka_roof"
   },
   "prefixes": {
     "castle_ravenloft_court": "ravenloft_court",
@@ -4002,6 +4004,38 @@
             "amount": 60
           }
         ]
+      }
+    },
+    "frozen_lookout": {
+      "like": "frozen_tower",
+      "modern": {
+        "times": {
+          "any": {
+            "ambient": "frost",
+            "ambient_energy": 1.0,
+            "mist": "frost",
+            "mist_strength": 0.35
+          }
+        }
+      }
+    },
+    "tsolenka_roof": {
+      "like": "blizzard",
+      "weather": [
+        {
+          "kind": "snow",
+          "amount": 450,
+          "wind": 2.6
+        }
+      ],
+      "mist": {
+        "height": 2.2,
+        "cover": 0.7,
+        "wind": [
+          2.6,
+          0.5
+        ],
+        "thickness": 3.2
       }
     }
   }

@@ -1,0 +1,162 @@
+{
+  "id": "tsolenka_pass_guard_tower_upper",
+  "name": "The Tsolenka Guard Tower, Lookout",
+  "region": "tsolenka_pass",
+  "summary": "The tower's upper floor: a bare lookout under the roof where the watch kept an eye on the road, with a spyglass at the slit window and a hatch to the roof.",
+  "text": "The stair comes up in the south-east corner. The lookout runs the width of the tower, with slit windows on the road side and a hatch in the ceiling that leads to the roof. Ours, not the book's: the book gives the tower an upper floor and little in it.",
+  "map": {
+    "rows": [
+      "##############",
+      "#............#",
+      "#............#",
+      "#............#",
+      "#............#",
+      "#............#",
+      "#............#",
+      "##############"
+    ],
+    "theme": "dungeon",
+    "light": "dim"
+  },
+  "areas": [
+    {
+      "id": "tower_stairhead",
+      "name": "The stairhead",
+      "cells": [
+        [
+          8,
+          1
+        ],
+        [
+          12,
+          6
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
+    },
+    {
+      "id": "tower_lookout",
+      "name": "The lookout",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "floor": "dungeon/stone_floor",
+      "walls": "dungeon/stone_wall",
+      "furnish": false
+    }
+  ],
+  "spawns": {
+    "default": [
+      10,
+      5
+    ],
+    "from_stair": [
+      10,
+      5
+    ],
+    "from_roof": [
+      6,
+      3
+    ]
+  },
+  "exits": [
+    {
+      "id": "upper_stair_down",
+      "cell": [
+        11,
+        5
+      ],
+      "to": "tsolenka_pass_guard_tower",
+      "spawn": "from_above",
+      "label": "Stairs down to the guardroom"
+    },
+    {
+      "id": "upper_hatch_up",
+      "cell": [
+        6,
+        2
+      ],
+      "to": "tsolenka_pass_guard_tower_roof",
+      "spawn": "from_hatch",
+      "label": "A hatch up to the roof"
+    }
+  ],
+  "doors": [],
+  "props": [
+    {
+      "id": "tower_spyglass",
+      "cell": [
+        4,
+        0
+      ],
+      "kind": "examine",
+      "label": "A spyglass at the slit window",
+      "model": "window_tall"
+    },
+    {
+      "id": "upper_slit_2",
+      "cell": [
+        9,
+        0
+      ],
+      "kind": "decor",
+      "model": "window_tall"
+    },
+    {
+      "id": "upper_slit_3",
+      "cell": [
+        13,
+        3
+      ],
+      "kind": "decor",
+      "model": "window_tall"
+    },
+    {
+      "id": "tower_bench",
+      "cell": [
+        2,
+        1
+      ],
+      "kind": "decor",
+      "label": "A watch bench",
+      "model": "bench"
+    },
+    {
+      "id": "tower_signal_lamp",
+      "cell": [
+        8,
+        1
+      ],
+      "kind": "decor",
+      "label": "A cold signal lamp",
+      "model": "lantern_stand"
+    }
+  ],
+  "containers": [],
+  "lights": [
+    {
+      "cell": [
+        6,
+        4
+      ],
+      "kind": "magic",
+      "bright_ft": 5,
+      "dim_ft": 15
+    }
+  ],
+  "npcs": [],
+  "encounters": [],
+  "narration": {
+    "enter": "enter:tsolenka_pass_guard_tower_upper"
+  },
+  "rest": "risky"
+}
