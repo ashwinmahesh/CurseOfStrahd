@@ -55,9 +55,3 @@ func test_strahds_dais_and_the_roofs_have_their_steps() -> void:
 	await get_tree().process_frame
 	var roofs: LocationView = await _view("castle_ravenloft_spires_roofs")
 	assert_true("Flight_24_5_25_5" in _names(roofs), "the step off the roof walk")
-
-
-## Only the castle has them: a raised floor elsewhere is drawn as it was.
-func test_other_places_keep_their_raised_floors() -> void:
-	var v: LocationView = await _view("argynvostholt_beacon")
-	assert_eq(v.board.flights.size(), 0, "no flights outside Castle Ravenloft")

@@ -11,12 +11,12 @@ const DROP := 1.4      ## a stairwell down: 7 ft
 const WIDTH := 0.9
 const WOODEN := ["manor", "townhouse", "house", "attic", "tavern", "inn", "shop", "tent"]
 ## A short flight up a 5 ft rise between two floors (owner, 2026-10-15: "we shouldn't just be stepping straight up
-## onto 5ft bricks. There should be small steps leading to it"): FLIGHT_STEPS steps in the lower square's half against
-## the higher square's face, the higher floor the last step. Where: the regions in FLIGHT_REGIONS (ArenaBoard, and
-## CastleBuilder for the gates' wall walk). The rules grid is unchanged: a 5 ft step up is still one.
+## onto 5ft bricks. There should be small steps leading to it"; Castle Ravenloft first, every place since 2026-10-17):
+## FLIGHT_STEPS steps in the lower square's half against the higher square's face, the higher floor the last step.
+## Where: every location's built floors (ArenaBoard), and CastleBuilder for the gates' wall walk. The rules grid is
+## unchanged: a 5 ft step up is still one.
 const FLIGHT_STEPS := 5
 const FLIGHT_DEPTH := 0.5
-const FLIGHT_REGIONS: Array[String] = ["castle_ravenloft"]
 
 
 ## Whether two floors `rise` apart (world units) are one 5 ft step, which a flight dresses.

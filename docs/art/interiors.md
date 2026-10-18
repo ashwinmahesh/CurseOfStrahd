@@ -109,8 +109,9 @@ and Interiors Audit - Room Facts.md. What every room gets:
   head, notices, barrels; chapels and crypts candles and bones. A piece goes on about one free wall face in
   `wall_every` and on about one free square along a wall in `floor_every`, never two side by side, never in a corner
   (pieces on two walls would meet), never beside a door, an exit, a spawn, a light or a person, and never on a wall
-  square that holds one of the location's own things or beside a building-sized piece. Every pick comes from the
-  square, so a place is furnished the same way every time; the board places them after its own dressing.
+  square that holds one of the location's own things or beside a building-sized piece. No floor piece stands in a
+  flight of small steps up a 5 ft rise (`ArenaBoard.stepped`, 2026-10-17). Every pick comes from the square, so a
+  place is furnished the same way every time; the board places them after its own dressing.
 - **Density** (owner, 2026-10-08: "Can we add more props? For that really lived in feeling. These interiors still look
   really barren"): a piece on about nine in ten free wall faces (`wall_fill`), on about four in five free squares along
   the walls (`floor_fill`, side by side allowed, never in a passage one square wide), and in about a quarter of the open
