@@ -35,3 +35,19 @@ Narrator: A dead knight stands where the gate used to be, facing down the drive 
 Dead Knight: He lives. We watch. Pass, oath-sworn.
 endif
 -> END
+
+# Package A2: at night, three knights kneel before the chapel altar. A party that knows the oath (or has Godfrey's word)
+# may pass; one that doesn't meets them as the encounter chapel_revenants.
+~ kneeling
+Narrator: The nearest knight does not lift his bowed head, but his voice comes from the cold iron like a hinge turning.
+Dead Knight: You know the words. Keep them.
+* What do you pray for? -> kneeling_pray
+* (Leave them to their prayers.) -> kneeling_bye
+
+~ kneeling_pray
+Dead Knight: We pray for the lamp. Pray, or pass.
+-> kneeling_bye
+
+~ kneeling_bye
+Dead Knight: Go in peace.
+-> END

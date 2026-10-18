@@ -124,6 +124,21 @@
         ]
       ],
       "furnish": "burned"
+    },
+    {
+      "id": "holt_chapel_nave",
+      "name": "The chapel",
+      "cells": [
+        [
+          1,
+          1
+        ],
+        [
+          6,
+          8
+        ]
+      ],
+      "light": "dim"
     }
   ],
   "spawns": {
@@ -764,6 +779,36 @@
       "dialogue": "argynvostholt/knights:table",
       "when": "flag.order_fate != \"rest\" and not flag.beacon_stand_begun",
       "facing": "north"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        1,
+        6
+      ],
+      "dialogue": "argynvostholt/knights:kneeling",
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and (flag.order_oath_learned or flag.godfrey_remembers or guest:sir_godfrey_gwilym)",
+      "facing": "west"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        4,
+        3
+      ],
+      "dialogue": "argynvostholt/knights:kneeling",
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and (flag.order_oath_learned or flag.godfrey_remembers or guest:sir_godfrey_gwilym)",
+      "facing": "north"
+    },
+    {
+      "npc": "order_knight",
+      "cell": [
+        7,
+        1
+      ],
+      "dialogue": "argynvostholt/knights:kneeling",
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and (flag.order_oath_learned or flag.godfrey_remembers or guest:sir_godfrey_gwilym)",
+      "facing": "north"
     }
   ],
   "encounters": [
@@ -857,6 +902,159 @@
           "hp": 140
         }
       ]
+    },
+    {
+      "id": "chapel_revenants",
+      "trigger": "enter_area:holt_chapel_nave",
+      "waiting": true,
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and not flag.order_oath_learned and not flag.godfrey_remembers and not guest:sir_godfrey_gwilym and level >= 8",
+      "text": "The kneeling figures rise together in scorched black plate, lifting their helms from the stone without a word. Plate scrapes plate with the dry sound of an old lock turning.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            1,
+            6
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 200,
+          "facing": "west"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            4,
+            3
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 200,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            7,
+            1
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 200,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            5,
+            5
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 200,
+          "facing": "north"
+        }
+      ],
+      "surprise": "",
+      "flag": "chapel_revenants_cleared"
+    },
+    {
+      "id": "chapel_revenants",
+      "trigger": "enter_area:holt_chapel_nave",
+      "waiting": true,
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and not flag.order_oath_learned and not flag.godfrey_remembers and not guest:sir_godfrey_gwilym and level >= 7",
+      "text": "The kneeling figures rise together in scorched black plate, lifting their helms from the stone without a word. Plate scrapes plate with the dry sound of an old lock turning.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            1,
+            6
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 120,
+          "facing": "west"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            4,
+            3
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 120,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            7,
+            1
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 120,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            5,
+            5
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 120,
+          "facing": "north"
+        }
+      ],
+      "surprise": "",
+      "flag": "chapel_revenants_cleared"
+    },
+    {
+      "id": "chapel_revenants",
+      "trigger": "enter_area:holt_chapel_nave",
+      "waiting": true,
+      "when": "night and not flag.order_fate and not flag.chapel_revenants_cleared and not flag.order_oath_learned and not flag.godfrey_remembers and not guest:sir_godfrey_gwilym",
+      "text": "The kneeling figures rise together in scorched black plate, lifting their helms from the stone without a word. Plate scrapes plate with the dry sound of an old lock turning.",
+      "monsters": [
+        {
+          "monster": "revenant",
+          "cell": [
+            1,
+            6
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 140,
+          "facing": "west"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            4,
+            3
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 140,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            7,
+            1
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 140,
+          "facing": "north"
+        },
+        {
+          "monster": "revenant",
+          "cell": [
+            5,
+            5
+          ],
+          "name": "A Knight at Prayer",
+          "hp": 140,
+          "facing": "north"
+        }
+      ],
+      "surprise": "",
+      "flag": "chapel_revenants_cleared"
     }
   ],
   "treasure_spots": {

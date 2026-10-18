@@ -185,6 +185,11 @@
       "id": "ballroom_colony_cleared",
       "type": "bool",
       "summary": "The party cleared the giant spiders' colony out of the west wing's ballroom (encounter ballroom_colony)."
+    },
+    {
+      "id": "chapel_revenants_cleared",
+      "type": "bool",
+      "summary": "The party beat the three revenants that rise in the chapel at night against a party that lacks the Order's oath and Godfrey's word (encounter chapel_revenants)."
     }
   ]
 }

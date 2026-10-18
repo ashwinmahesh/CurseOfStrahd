@@ -75,6 +75,7 @@ cooldown 20
 ~ enter:holt_chapel
 | A small chapel under a tall window of coloured glass. The glass shows a silver dragon curled around a lamp, and it is the only thing in the house that nobody has broken.
 | [flag.argynvost_beacon_lit] The frost has gone from the great window. The glass dragon curls around its lamp, and the lamp in the picture seems brighter than glass can be.
+| [night and not flag.order_fate and not flag.chapel_revenants_cleared] Coloured glass casts a pale silver dragon across armoured figures kneeling before the altar, their helms set neatly beside them. Nothing in the chapel moves, not even a breath.
 cooldown 20
 
 ~ enter:holt_armory
