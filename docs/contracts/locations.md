@@ -43,6 +43,12 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   needs before it opens at all (a portcullis a story flag raises; until then it won't budge), and `unlocked_when` one
   that takes its lock off (the church undercroft's bar once Father Donavich lifts it; until then it can be picked or
   forced). `flag` is set when the door opens.
+- **Spawns:** `default` is where a plain arrival lands, and where an exit that names no `spawn` and a dialogue's
+  `move <location>` go; an exit's `spawn` and `move <location>:<spawn>` (docs/contracts/dialogue.md) name another, on
+  this map or a different one (`make validate` checks both). A load puts the party back on its saved squares; any that
+  a later edit to the map has closed (a wall, a prop, water, outside a smaller map) are replaced by the nearest open
+  square, or by squares beside the default spawn when none is within 8 squares (`LocationParty.open_squares`), and a
+  round-start save whose fight no longer fits the map begins that fight again from its own squares.
 - **Natural ground:** `map.elevation` (optional), rows beside `rows`, lays hills and hollows under the squares: one
   character a square, `0`-`9` then `a`-`z` for 0 to 175 ft in 5 ft steps, `.` or a space for a square left as built.
   Neighbouring natural squares 5 ft apart are a gentle slope, 10 ft a steep one, 15 ft or more a cliff (climbed or

@@ -7,7 +7,7 @@ extends RefCounted
 ##   line {speaker, mood, away, text} (away: "" | "speaker" | "party", the `[away]` cue) · option {text, ok, fail, cond, check: {skill, dc}, selector} · jump {to}
 ##   if {cond} · elif {cond} · else · endif · set {flag, op, value} · quest {id, stage} · give/take {item, qty, to}
 ##   gold {amount} · attitude {npc, value} · xp (milestone) · xp fight {encounter} · check {skill, dc, ok, fail} · interject {selector, text}
-##   combat {encounter} · narrate {key} · variant {cond, text} · cooldown {minutes} · once · end_game (ADR 0014)
+##   combat {encounter} · move {location, spawn} · narrate {key} · variant {cond, text} · cooldown {minutes} · once · end_game (ADR 0014)
 ##   cast {spell} · reveal {prop} (an exploring spell cast in the scene; a hidden find shown to the party)
 ##   approve {changes: [[companion id, delta]], why} · inspire {selector, why} (story/approval.gd, story/in_character.gd)
 
@@ -213,6 +213,12 @@ static func _statement(line: String, re_line: RegEx, re_option: RegEx, re_tag: R
 		"combat":
 			if parts.size() == 2:
 				return {"t": "combat", "encounter": parts[1]}
+		"move":
+			# `move location[:spawn]` (docs/contracts/dialogue.md): no spawn is the location's default one, as for an exit.
+			if parts.size() == 2:
+				var where := parts[1].split(":")
+				if where.size() <= 2 and where[0] != "" and (where.size() == 1 or where[1] != ""):
+					return {"t": "move", "location": where[0], "spawn": where[1] if where.size() == 2 else "default"}
 		"approve":
 			return _approve(line)
 		"inspire":
