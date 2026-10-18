@@ -20,10 +20,14 @@
 # an APFS disk image on the SSD, /Volumes/ASH-SSD/Worktrees/StrahdLanes.sparsebundle, attached here when it isn't.
 # The SSD itself is exFAT with 1 MB clusters (a lane straight on it would take about 95 GB), and clones can't cross
 # volumes, so lanes there clone from a seed inside the image: <LANE_ROOT>/seed, a locked detached worktree at main
-# with its own import, which `new` brings up to main first (one make lane at a time: the others wait for it). While
-# it changes the seed or clones a lane from it, make lane holds the seed's make import lock, so an import started there
-# meanwhile (another lane's, or a make import run in the seed) waits for it, and it waits for one that's running. Each
-# lane there is locked too, so `git worktree prune` keeps it while the drive is unplugged; `done` unlocks it before
+# with its own import. The seed is only brought up to main when it has drifted: `new` compares the seed's commit with
+# the lane's branch (or base) and refreshes the seed, with its import, only past LANE_SEED_DRIFT files (default 1500) or
+# LANE_SEED_ART_DRIFT textures and models (40); otherwise the lane is cloned from the seed as it is, the few files that
+# differ come from its branch and its first make import does the rest. LANE_REFRESH_SEED=1 forces a refresh;
+# `tools/lane.sh seed` (make lane-seed SSD=1) refreshes the seed on its own, once, e.g. after a landing. The seed's lock
+# is a readers/writer lock (see take_gate): any number of lanes clone from the seed at once, a refresh waits for the
+# clones running and holds off new ones, and a clone waits for an import running in the seed (make import there).
+# Each lane there is locked too, so `git worktree prune` keeps it while the drive is unplugged; `done` unlocks it before
 # removing it. Unplugging the drive stops any Godot or git run in those lanes mid-write: plug it back in and re-run
 # `make lane` or `hdiutil attach` to get them back. reclone and done need SSD=1 for those lanes as well.
 #
@@ -51,10 +55,16 @@ free_gb() { df -k "$root" | awk 'NR == 2 { printf "%.1f", $4 / 1048576 }'; }
 # LFS noise make lfs-quiet explains).
 quiet() { local out; if ! out="$("$@" 2>&1)"; then printf '%s\n' "$out" >&2; return 1; fi; }
 
-## Holds <root>/.seed.lock from the seed's refresh until the new lane is cloned from it, so no lane clones a seed that
-## another make lane is still checking out or importing. A lock whose PID is gone is cleared.
-seed_lock=""
-lock_seed() {
+## The seed's lock is a readers/writer lock made of folders (mkdir is atomic):
+##   <root>/.seed.lock          the gate, holding the PID of whoever has it: taken for a moment to join as a reader, and
+##                              kept for a whole refresh, so no new clone starts while the seed is changing.
+##   <root>/.seed.readers/<pid>  one file for each make lane that is cloning from the seed right now.
+## A refresh takes the gate, waits for the readers to finish, and refreshes; a clone takes the gate, checks that no
+## import is running in the seed, signs in as a reader and lets go of the gate. Any number of clones run at once.
+## A gate or a reader whose PID is gone is cleared.
+seed_gate=""     # the gate's folder, while this shell has it
+seed_reader=""   # this shell's reader file, while it is cloning
+take_gate() {
   local lock="$root/.seed.lock" pid told=""
   until mkdir "$lock" 2> /dev/null; do
     pid="$(cat "$lock/pid" 2> /dev/null || true)"
@@ -62,15 +72,49 @@ lock_seed() {
       rm -rf "$lock"
       continue
     fi
-    [ -n "$told" ] || say "another make lane is bringing the seed up to main (PID ${pid:-?}); waiting for it"
+    # A folder with no PID in it for a minute: its maker stopped between mkdir and writing the PID.
+    if [ -z "$pid" ] && [ -n "$(find "$lock" -maxdepth 0 -mmin +1 2> /dev/null)" ]; then
+      rm -rf "$lock"
+      continue
+    fi
+    [ -n "$told" ] || say "another make lane is at the seed (PID ${pid:-?}); waiting for it"
     told=1
-    sleep 5
+    sleep 0.2
   done
   echo $$ > "$lock/pid"
-  seed_lock="$lock"
-  trap 'unlock_seed' EXIT
+  seed_gate="$lock"
 }
-unlock_seed() { release_seed_import; [ -z "$seed_lock" ] || rm -rf "$seed_lock"; seed_lock=""; }
+drop_gate() { [ -z "$seed_gate" ] || rm -rf "$seed_gate"; seed_gate=""; }
+## How many clones are running; the files of readers that are gone are removed.
+live_readers() {
+  local f n=0
+  for f in "$root"/.seed.readers/*; do
+    [ -e "$f" ] || continue
+    if kill -0 "${f##*/}" 2> /dev/null; then n=$((n + 1)); else rm -f "$f"; fi
+  done
+  echo "$n"
+}
+drain_readers() {
+  local told=""
+  while [ "$(live_readers)" != 0 ]; do
+    [ -n "$told" ] || say "$(live_readers) lane(s) are being cloned from the seed; the refresh waits for them"
+    told=1
+    sleep 2
+  done
+}
+join_readers() {
+  mkdir -p "$root/.seed.readers"
+  : > "$root/.seed.readers/$$"
+  seed_reader="$root/.seed.readers/$$"
+}
+## Lets go of everything this shell holds on the seed; the EXIT trap, so a failed clone never leaves a lock behind.
+leave_seed() {
+  [ -z "$seed_reader" ] || rm -f "$seed_reader"
+  seed_reader=""
+  release_seed_import
+  drop_gate
+}
+trap 'leave_seed' EXIT
 
 ## Holds the seed's make import lock (.godot/import.lock, taken as tools/import.sh takes it: a folder holding the PID
 ## of a process working in the seed, so this shell moves there), waiting for an import that's running in the seed.
@@ -93,12 +137,47 @@ hold_seed_import() {
   seed_import_lock="$lock"
 }
 release_seed_import() { [ -z "$seed_import_lock" ] || rm -rf "$seed_import_lock"; seed_import_lock=""; }
+## Waits for an import that's running in the seed (a make import run there), without taking its lock: clones read it.
+wait_seed_import() {
+  local lock="$source_dir/.godot/import.lock" pid told=""
+  while [ -d "$lock" ]; do
+    pid="$(cat "$lock/pid" 2> /dev/null || true)"
+    if [ -n "$pid" ] && ! kill -0 "$pid" 2> /dev/null; then
+      rm -rf "$lock"
+      continue
+    fi
+    [ -n "$told" ] || say "an import is running in the seed (PID ${pid:-?}); waiting for it"
+    told=1
+    sleep 5
+  done
+}
 
-## The seed on the other volume, made or brought up to main, then imported there once for all its lanes.
-## LANE_NO_IMPORT=1 skips the import (each lane then imports what changed on its own first make import).
+## Does the seed need bringing up to main for a lane on <target> (a commit)? Yes when it isn't there yet or has no
+## import cache, when LANE_REFRESH_SEED=1, or when its commit has drifted from <target>: over LANE_SEED_ART_DRIFT (40)
+## textures or models, which every lane cloned from it would import again, or over LANE_SEED_DRIFT (1500) files of any
+## kind. A lane cloned from a seed that is a little behind gets the files that differ from its branch, and imports
+## the few that changed on its first make import: far less than a refresh and an import of the whole seed.
+seed_needs_refresh() {
+  local target="$1" head files art
+  local max="${LANE_SEED_DRIFT:-1500}" max_art="${LANE_SEED_ART_DRIFT:-40}"
+  [ -d "$source_dir/.godot/imported" ] || return 0
+  [ "${LANE_REFRESH_SEED:-}" != 1 ] || return 0
+  head="$(git -C "$source_dir" rev-parse -q --verify HEAD 2> /dev/null)" || return 0
+  files="$(git -C "$main" diff --name-only "$head" "$target" 2> /dev/null)" || return 0
+  art="$(printf '%s\n' "$files" | grep -Eic '\.(png|jpe?g|webp|svg|glb|gltf|obj|fbx|exr|hdr)$' || true)"
+  files="$(printf '%s\n' "$files" | grep -c . || true)"
+  if [ "$files" -gt "$max" ] || [ "$art" -gt "$max_art" ]; then
+    say "the seed differs from $target in $files file(s), $art of them textures or models (limits $max, $max_art): refreshing it first"
+    return 0
+  fi
+  say "the seed differs from $target in $files file(s), $art of them textures or models (limits $max, $max_art): cloning from it as it is"
+  return 1
+}
+
+## The seed on the other volume, made or brought up to main, then imported there once for all its lanes. Called with
+## the gate and no readers. LANE_NO_IMPORT=1 skips the import (each lane then imports what changed on its own first
+## make import).
 refresh_seed() {
-  [ "$source_dir" != "$main" ] || return 0
-  lock_seed
   if [ ! -d "$source_dir" ]; then
     quiet git -C "$main" worktree add -q --detach "$source_dir" main
     git -C "$main" worktree lock --reason "seed for lanes on the removable SSD" "$source_dir"
@@ -122,6 +201,34 @@ refresh_seed() {
   if [ -z "${LANE_NO_IMPORT:-}" ] && ! make -C "$source_dir" import; then
     say "the seed's import logged errors (make -C $source_dir import); the lane gets them too"
   fi
+}
+
+## Gets the seed ready for a lane on <target> and signs in as a reader of it until leave_seed: refreshed first only
+## when seed_needs_refresh says so (the gate is kept for that, so no other lane starts cloning), then cloned from
+## alongside any other lanes.
+enter_seed() {
+  [ "$source_dir" != "$main" ] || return 0
+  take_gate
+  if [ ! -d "$source_dir" ] || seed_needs_refresh "$1"; then
+    drain_readers
+    refresh_seed
+  fi
+  wait_seed_import
+  join_readers
+  drop_gate
+}
+
+## tools/lane.sh seed: the refresh on its own, whatever the drift (a landing, or before a batch of new lanes).
+seed_cmd() {
+  if [ "$source_dir" = "$main" ]; then
+    say "the lanes here clone from the main checkout; there is no seed to refresh (SSD=1 for the SSD's)"
+    return 0
+  fi
+  take_gate
+  drain_readers
+  refresh_seed
+  drop_gate
+  say "the seed is at $(git -C "$source_dir" rev-parse --short HEAD)"
 }
 
 ## The lane folder for <name>, refused if it is (or is inside) the main checkout.
@@ -155,11 +262,13 @@ refresh() {
 }
 
 new_lane() {
-  local name="$1" branch="$2" base="${3:-main}" dest before
+  local name="$1" branch="$2" base="${3:-main}" dest before target
   dest="$(lane_dir "$name")"
   [ -e "$dest" ] && { say "$dest already exists"; exit 1; }
-  refresh_seed
-  [ "$source_dir" = "$main" ] || hold_seed_import   # until the lane is cloned
+  # The commit the lane starts at: its branch's, or the base's.
+  target="$(git -C "$main" rev-parse -q --verify "refs/heads/$branch^{commit}" 2> /dev/null \
+    || git -C "$main" rev-parse -q --verify "$base^{commit}" 2> /dev/null || echo main)"
+  enter_seed "$target"   # reads the seed until the lane is cloned
   before="$(free_gb)"
   if git -C "$main" show-ref --verify --quiet "refs/heads/$branch"; then
     git -C "$main" worktree add --no-checkout "$dest" "$branch" > /dev/null
@@ -179,7 +288,7 @@ new_lane() {
     [ -e "$item" ] || continue
     cp -Rpc "$item" "$dest/" 2>> "$copy_errors" || true
   done
-  unlock_seed
+  leave_seed
   if grep -v 'No such file or directory' "$copy_errors" | grep -q .; then
     cat "$copy_errors" >&2
     rm -f "$copy_errors"
@@ -289,8 +398,9 @@ done_lane() {
 }
 
 case "${1:-}" in
+  seed) seed_cmd ;;
   new) [ $# -ge 3 ] || { echo "usage: tools/lane.sh new <name> <branch> [<base>]"; exit 2; }; new_lane "$2" "$3" "${4:-main}" ;;
   reclone) [ $# -ge 2 ] || { echo "usage: tools/lane.sh reclone <name>"; exit 2; }; reclone_lane "$2" ;;
   done) [ $# -ge 2 ] || { echo "usage: tools/lane.sh done <name>"; exit 2; }; done_lane "$2" ;;
-  *) echo "usage: tools/lane.sh new <name> <branch> [<base>] | reclone <name> | done <name>"; exit 2 ;;
+  *) echo "usage: tools/lane.sh new <name> <branch> [<base>] | reclone <name> | done <name> | seed"; exit 2 ;;
 esac
