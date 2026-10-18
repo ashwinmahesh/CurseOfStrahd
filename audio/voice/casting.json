@@ -2598,6 +2598,62 @@
     "zamfir": {
       "shares": "toma_sarnov",
       "description": "Zamfir, a twin boy taken from Krezk. Shares Toma Sarnov's voice (Teddy Twinkle), chosen 2026-10-18; not Mirela's, who is in the same scene."
+    },
+    "emanoil": {
+      "voice_id": "S8SOieJkMgPJX8H7vAk1",
+      "name": "Barovia Emanoil",
+      "description": "Emanoil, a young Vallaki clerk who longs to be bitten: earnest, dramatic, pretentious, comically solemn; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "fennimore": {
+      "voice_id": "TDjWsOq0HK1hwvd4yo1B",
+      "name": "Barovia Fennimore",
+      "description": "Ambrose Fennimore, travel writer: plummy, pompous, delighted upper-class English. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[plummy upper-class English accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "sir_ottokar": {
+      "voice_id": "9TqhKHIc3CQOoXB2Zkig",
+      "name": "Barovia Ottokar",
+      "description": "Sir Ottokar the Late, a dead knight always late: hearty, breathless, apologetic, grand; a rich Germanic-English accent. Designed 2026-10-18 (Ashwin's pick, voice C).",
+      "accent_tag": "[rich Germanic English accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "jory_fenn": {
+      "voice_id": "5tUYSXf1xmO9U6FdQmnX",
+      "name": "Barovia Jory",
+      "description": "Jory Fenn, a young watchman once Kestrel Company's drummer's boy: earnest, nervous, guilty; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "kestrel_merrow": {
+      "voice_id": "wx0b0JuZjJ7vHMicQf0i",
+      "name": "Barovia Merrow",
+      "description": "Captain Aldous Merrow, a mercenary captain turned vampire spawn: courteous, formal, hollow and commanding; a refined English accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[refined English accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "kestrel_vell": {
+      "voice_id": "w6fDBlOVb5F8gW13YCJL",
+      "name": "Barovia Vell",
+      "description": "Corporal Teodor Vell, a dutiful corporal turned vampire spawn: weary, dry, gruff; a plain English accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[plain English accent]",
+      "model": "eleven_v3",
+      "released": true
+    },
+    "aurel_mirescu": {
+      "voice_id": "af5kUuJGDGgofKqr3vL2",
+      "name": "Barovia Aurel",
+      "description": "Aurel Mirescu, a scholar kept awake reading aloud: cultured, tired, dreamy; a mild Eastern European accent. Designed 2026-10-18 (Ashwin's pick, voice A).",
+      "accent_tag": "[mild Eastern European accent]",
+      "model": "eleven_v3",
+      "released": true
     }
   },
   "sfx": {

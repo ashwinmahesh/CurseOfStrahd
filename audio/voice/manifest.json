@@ -2141,6 +2141,48 @@
   "recipe": "1d27b21b03",
   "text": "Lady Wachter's town now, I hear. Our lord will be pleased. Our wagons are always welcome where he's pleased."
  },
+ "aurel_mirescu/2db5fc3245828412": {
+  "chars": 135,
+  "direction": "[dreamy, rote, haunted]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "\"...and the young lord rode home over the pass with his brother's letter unopened in his coat, because he already knew what it said...\""
+ },
+ "aurel_mirescu/40452adbe5ad2bec": {
+  "chars": 11,
+  "direction": "[stunned, disbelieving, trembling]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "...Silvain?"
+ },
+ "aurel_mirescu/d34bc3a2b18bb54c": {
+  "chars": 43,
+  "direction": "[dry, tearful, fond]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "My pen. You've had my pen for eleven years."
+ },
+ "aurel_mirescu/d5d4512f938b7fe3": {
+  "chars": 166,
+  "direction": "[haunted, exhausted, bitter]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "He wouldn't let me sleep until I finished the chapter, and every time I finished he gave me the next. I read him his whole life, Silvain. He wept at the right places."
+ },
+ "aurel_mirescu/f20d3d1e132686c9": {
+  "chars": 188,
+  "direction": "[weary, warm, resolute]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "I'll go down by the servants' stair. I know the way; I've had a year to count the steps. The tavern in the village, the back room. I'll wait for you there, and sleep, and then we'll argue."
+ },
+ "aurel_mirescu/ffa134d6f8d151cc": {
+  "chars": 81,
+  "direction": "[overwhelmed, laughing, tearful]",
+  "model": "eleven_v3",
+  "recipe": "8c5f23a98f",
+  "text": "You came. You absolute idiot, you came. Did you bring a lamp? I asked for a lamp."
+ },
  "baba_lysaga/0058d8b06976b047": {
   "chars": 42,
   "model": "eleven_v3",
@@ -10650,6 +10692,181 @@
   "recipe": "7e82e7e67c",
   "text": "They came down the children's way. Didn't you, dears."
  },
+ "emanoil/0435828ce9b22a1c": {
+  "chars": 72,
+  "direction": "[earnest, measured, sincere]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "'Strangers came down the misty road, / And paused before my grim abode.'"
+ },
+ "emanoil/0ac031907a6066c5": {
+  "chars": 97,
+  "direction": "[deflated, trailing off, wistful]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Oh. I see. I only thought that if one gave up the sun, it would be for something a little more..."
+ },
+ "emanoil/0f70ffe37840270a": {
+  "chars": 113,
+  "direction": "[hopeful, earnest, fussy]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Clerical vacancies. Well, my handwriting is very neat, and I suppose even an immortal court has to keep accounts."
+ },
+ "emanoil/246faf2293996ff6": {
+  "chars": 144,
+  "direction": "[rueful, flustered, self-mocking]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I bought it from Henrik on credit, six coppers a week, and I have to leave the lid propped open with a dictionary so the candle does not go out."
+ },
+ "emanoil/2e2f43ec20832df8": {
+  "chars": 88,
+  "direction": "[crestfallen, rueful, dignified]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Ah. No, of course not. Your boots have road mud on them, not the dust of ancient crypts."
+ },
+ "emanoil/340b3537c759e37c": {
+  "chars": 113,
+  "direction": "[aggrieved, mournful, petulant]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "'For the dark is very dark indeed when one is in a box, / And Henrik did not oil the hinges or the little locks.'"
+ },
+ "emanoil/3477982167fbafbf": {
+  "chars": 103,
+  "direction": "[wistful, theatrical, a little sheepish]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Back again. Have you thought of a verse, or a rhyme for \"doom\"? I have used \"gloom\", \"tomb\" and \"room\"."
+ },
+ "emanoil/45d5e1037b818229": {
+  "chars": 88,
+  "direction": "[pompous, solemn, melodramatic]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I am Emanoil: a clerk by necessity, a poet by calling, and a humble seeker of the night."
+ },
+ "emanoil/5208aad1a90d9cea": {
+  "chars": 96,
+  "direction": "[quiet, bitter, vulnerable]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I have lived in this town for twenty-six years, and no one has ever once asked me what I wanted."
+ },
+ "emanoil/566793e65bc931ad": {
+  "chars": 79,
+  "direction": "[moved, gentle, tender]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "'They did not laugh, they did not jeer, / And left one small warm candle here.'"
+ },
+ "emanoil/5ea6448b8de575dd": {
+  "chars": 85,
+  "direction": "[sheepish, confessing, embarrassed]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "If I am to be entirely truthful with you, the coffin is very narrow in the shoulders."
+ },
+ "emanoil/66b85ecb6a1dff96": {
+  "chars": 91,
+  "direction": "[small, ashamed, trembling]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I am terribly afraid of the dark, you see. It is a great defect in a creature of the night."
+ },
+ "emanoil/75f9d58d89e68f90": {
+  "chars": 138,
+  "direction": "[florid, dramatic, solemn]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Write thus: 'To the Dread Sovereign of the Unending Shadow, from a trembling lamb who wishes to be devoured at your earliest convenience.'"
+ },
+ "emanoil/7e172bb161b6b506": {
+  "chars": 103,
+  "direction": "[conspiratorial, hushed, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Tell me quietly, for the watch is near: have you come down from the high castle to receive my petition?"
+ },
+ "emanoil/8855cb4acc186c89": {
+  "chars": 84,
+  "direction": "[grandiloquent, mournful, self-serious]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Good day to you, strangers, or perhaps not good day, if the light offends your eyes."
+ },
+ "emanoil/92813b9f1f32705c": {
+  "chars": 141,
+  "direction": "[weary, resigned, dry]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I copy tax ledgers from eight until six, and when I walk home, the guards only look at my coat to see if I have pinned a yellow ribbon to it."
+ },
+ "emanoil/980d4f779b481a86": {
+  "chars": 92,
+  "direction": "[astonished, delighted, tender]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Nobody threw a single turnip. The drayman asked what happened to the moth in the next verse."
+ },
+ "emanoil/aa55156ac6bd1a8c": {
+  "chars": 83,
+  "direction": "[proud, ceremonial, theatrical]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Allow me to read from my seventeenth canto, entitled 'A Moth Upon the Velvet Sill'."
+ },
+ "emanoil/d31554b33183f17b": {
+  "chars": 98,
+  "direction": "[alarmed, aghast, self-deprecating]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Read them aloud? To people who drink ale and have all their blood? They would throw turnips at me."
+ },
+ "emanoil/d413dbcd5d6f7ba0": {
+  "chars": 96,
+  "direction": "[honest, soft, vulnerable]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I do not think I truly wish to be bitten. I only wished to be chosen, and to wear a better coat."
+ },
+ "emanoil/e174d6da43d7e1cf": {
+  "chars": 77,
+  "direction": "[bashful, pleased, anxious]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Do you think so? 'Road' and 'abode' came to me while I was washing my teacup."
+ },
+ "emanoil/e83a59f66e090a9d": {
+  "chars": 86,
+  "direction": "[shy, proud, warm]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "I have abandoned the seventeenth canto. I have written an ode to your company instead."
+ },
+ "emanoil/eaab1d5af37d6adb": {
+  "chars": 85,
+  "direction": "[disappointed, plaintive, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "Are you quite certain? Not even a small salon with harpsichord music and bitter wine?"
+ },
+ "emanoil/f45d359e520ebdc0": {
+  "chars": 116,
+  "direction": "[plaintive, dramatic, wavering]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "'I lie within my pinewood box and wait for thee to sup, / Though I keep a tallow candle lit until the sun comes up.'"
+ },
+ "emanoil/fccfce72d50ebdae": {
+  "chars": 90,
+  "direction": "[declaiming, mournful, grand]",
+  "model": "eleven_v3",
+  "recipe": "5aeba6438b",
+  "text": "'O Lord of Gloom, within thy lofty tomb, / Deliver me from Vallaki and its cheerful doom.'"
+ },
  "emil_toranescu/0d3e3b993e091bb3": {
   "chars": 98,
   "direction": "[fond, exasperated]",
@@ -13073,6 +13290,279 @@
   "model": "eleven_v3",
   "recipe": "7eeb7eca65",
   "text": "And on the full moon I'm the best tracker in two worlds with teeth. No."
+ },
+ "fennimore/06f13713f1cb0ac2": {
+  "chars": 71,
+  "direction": "[judicious, pleased, avuncular]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "An archive with notes of spice. Four stars for preservation, young man."
+ },
+ "fennimore/07abff19e195a246": {
+  "chars": 132,
+  "direction": "[uneasy, thoughtful, puzzled]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Only I have underlined \"plum\" twice in pencil. My tongue says onion, hare, woodsmoke, and something considerably older than a fruit."
+ },
+ "fennimore/0f75f325d86c1da6": {
+  "chars": 97,
+  "direction": "[smug, playful, expectant]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Read that aloud and tell me it does not make you hungry and slightly reflective at the same time."
+ },
+ "fennimore/1601db5fd8f89c7e": {
+  "chars": 120,
+  "direction": "[fond, expansive, quietly proud]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "It is a work of great patience. Every inn, every bridge, every moderately polite ghost, all graded on a five-star scale."
+ },
+ "fennimore/1a70cae0ab5d76c4": {
+  "chars": 87,
+  "direction": "[eager, proud, conspiratorial]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Look here. I keep the proofs in order of the road, so a traveller may read as he walks."
+ },
+ "fennimore/216882a4e723e395": {
+  "chars": 97,
+  "direction": "[wistful, hopeful, tentative]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "You have not heard from anyone up the road whether it intends to improve before winter, have you?"
+ },
+ "fennimore/2210aa59bcdfb294": {
+  "chars": 120,
+  "direction": "[droll, dry, put-upon]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Ah, it is you. I am currently grading the afternoon weather: one star. Damp, grey, and entirely derivative of yesterday."
+ },
+ "fennimore/232bdf4063a5cb17": {
+  "chars": 91,
+  "direction": "[reading aloud, dry, sardonic]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "\"The Crossroads Signpost: one star. Points faithfully toward two places you should not go.\""
+ },
+ "fennimore/25a3bda6fc3b4ed1": {
+  "chars": 101,
+  "direction": "[judicious, amused, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "I shall give him four stars in the book. Handsome coat, lively temperament, somewhat abrupt greeting."
+ },
+ "fennimore/35391b9c2d57b5e2": {
+  "chars": 80,
+  "direction": "[approving, curious, prim]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Formidable. Now, I am told you maintain an archive of local dispatches in a tin."
+ },
+ "fennimore/37c1d66d50e66a4c": {
+  "chars": 116,
+  "direction": "[generous, eager, mock-desperate]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "I would gladly pay twenty-five gold for anything with four legs, a tail, and the general shape of a beast of burden."
+ },
+ "fennimore/37c825db555bec08": {
+  "chars": 115,
+  "direction": "[exasperated, comic, self-mocking]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "A horse? My dear friend, I have been walking this damp valley for eleven years. My boots are more mud than leather."
+ },
+ "fennimore/48cee8c522aacd70": {
+  "chars": 111,
+  "direction": "[rueful, dry, sheepish]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "I would go back and ask Old Dorina myself, but she looks at my notebook the way a butcher looks at a stray dog."
+ },
+ "fennimore/4b1698a41bdd4b6b": {
+  "chars": 80,
+  "direction": "[businesslike, pleasant, expectant]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Bring the beast here by the signpost, and we shall see what terms can be agreed."
+ },
+ "fennimore/59dc69786093d0f4": {
+  "chars": 106,
+  "direction": "[dry, wry, long-suffering]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Walk up a goat track in the sleet to call upon a child. Yes, that sounds entirely in keeping with my week."
+ },
+ "fennimore/5d64c694bfb0feb3": {
+  "chars": 92,
+  "direction": "[conspiratorial, intrigued, coaxing]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "If your road takes you past her fire, find out what is truly at the bottom of that iron pot."
+ },
+ "fennimore/6b3453cfd78e15ae": {
+  "chars": 93,
+  "direction": "[pompous, rueful, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Still, my chapter on Krezk currently reads, 'High wall, smells of turnip, declined to enter.'"
+ },
+ "fennimore/6e083cffe498ff15": {
+  "chars": 113,
+  "direction": "[earnest, gracious, proud]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Allow me to leave a slip of paper for the tin. 'Krezk: Four stars. Cold, steep, excellent reception at the gate.'"
+ },
+ "fennimore/7195d0a0bffc70c5": {
+  "chars": 97,
+  "direction": "[rattled, polite, wry]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Well. A spirited animal. Very forward in his manners. Here is your twenty-five gold, as promised."
+ },
+ "fennimore/73da5260be81e9b7": {
+  "chars": 96,
+  "direction": "[brisk, eager, bustling]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Let me rub out that shameful little question mark and write it properly while the lead is sharp."
+ },
+ "fennimore/7fc9cacef00608ee": {
+  "chars": 90,
+  "direction": "[formal, self-important, courteous]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Master Dumitru, I presume. Ambrose Fennimore, on an official inspection of the upper road."
+ },
+ "fennimore/837ba3491ddad655": {
+  "chars": 82,
+  "direction": "[gracious, brisk, satisfied]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Here are your ten gold pieces, well earned and duly noted under research expenses."
+ },
+ "fennimore/859f57e101c1a445": {
+  "chars": 89,
+  "direction": "[airy, dismissive, grudging]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Go on ahead. I shall follow at my own pace. Two stars for the road, and that is generous."
+ },
+ "fennimore/8747c7db3cd39fef": {
+  "chars": 97,
+  "direction": "[brisk, businesslike, earnest]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "I will pay ten gold pieces for the verified recipe. An unconfirmed fact is a blemish on the page."
+ },
+ "fennimore/8941c82ba766b932": {
+  "chars": 94,
+  "direction": "[hearty, knowing, pompous]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Now then, let us have a look at the fellow. Good breeding shows in the nostrils, I always say."
+ },
+ "fennimore/90f028b8dfad4c5c": {
+  "chars": 97,
+  "direction": "[thrilled, reverent, gleeful]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Oh, that is first-rate. That is the sort of detail a man stays eleven years in the fog to record."
+ },
+ "fennimore/969e23bea39aaae6": {
+  "chars": 114,
+  "direction": "[cheery, earnest, cordial]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "I am off toward Vallaki next. If you find any of my facts wanting along the road, do tell me before I go to press."
+ },
+ "fennimore/9819319159b4f91a": {
+  "chars": 75,
+  "direction": "[casual, curious, probing]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Tell me, have you by any chance come up from the Vistani camp at Tser Pool?"
+ },
+ "fennimore/9ce1d653a535d2be": {
+  "chars": 121,
+  "direction": "[proud, courtly, a little grand]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Ambrose Fennimore, at your service. Eleven years in this valley, and nine hundred pages into its only reliable guidebook."
+ },
+ "fennimore/a06fc318817097c6": {
+  "chars": 92,
+  "direction": "[reading aloud, savouring, theatrical]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "\"Tser Pool: three stars. The stew is plum, onion, hare and sixty years. Ask for the bottom.\""
+ },
+ "fennimore/adde48e5faa3aa54": {
+  "chars": 99,
+  "direction": "[pedantic, grave, stern]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "A guidebook that guesses at its soups is no better than a rumor, and this valley has rumors enough."
+ },
+ "fennimore/afd70af6e76eda30": {
+  "chars": 85,
+  "direction": "[fastidious, doubtful, prim]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "A horse for sale, you say? I am reluctant to appraise an animal strictly from rumour."
+ },
+ "fennimore/b4d0cd4820b6f4f9": {
+  "chars": 126,
+  "direction": "[reading aloud, laconic, then warm]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "\"The Blue Water Inn, Vallaki: two stars. Wolves.\" And beneath that, \"Tser Pool Camp: three stars. The plum stew is excellent.\""
+ },
+ "fennimore/bfc3681ac3b8cd72": {
+  "chars": 101,
+  "direction": "[delighted, astonished, marvelling]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Sixty years! Never emptied once, and a silver wedding spoon resting at the bottom like a river stone."
+ },
+ "fennimore/cfab3e368983ebc6": {
+  "chars": 114,
+  "direction": "[warm, lost, gently rueful]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Most obliged for the company. I am here by the signpost, or on the road, or wherever the road chooses to leave me."
+ },
+ "fennimore/d30ddc0e62468d82": {
+  "chars": 122,
+  "direction": "[crisp, professorial, wry]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Good day. Make a note, if you keep notes: the crossroads signpost is one star. Legible, if you already know where you are."
+ },
+ "fennimore/dd0152520dcb5625": {
+  "chars": 78,
+  "direction": "[reading aloud, deadpan, fussy]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "\"The Crossroads Gallows: one star. Serviceable timber, poor view, no seating.\""
+ },
+ "fennimore/e74361e4e11dc56c": {
+  "chars": 110,
+  "direction": "[warm, wistful, courteous]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "Most obliged. You will find me here by the signpost, or on the road, or wherever the road chooses to leave me."
+ },
+ "fennimore/e7555161a517100d": {
+  "chars": 63,
+  "direction": "[mild, hopeful, faintly hinting]",
+  "model": "eleven_v3",
+  "recipe": "21c829270f",
+  "text": "A local correspondent might improve the section on hospitality."
  },
  "forgotten_storm/052cb35be10b4fcb": {
   "chars": 8,
@@ -29289,6 +29779,97 @@
   "recipe": "2712ad128a",
   "text": "Strangers. The Baron says be polite to strangers. I'm being polite."
  },
+ "jory_fenn/1f1080560a46db50": {
+  "chars": 202,
+  "direction": "[guarded, wry, a little wistful]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "It's Jori here. Jori Fenner. The Baron's particular about names, and he never asked for my real one. He gave me a ribbon. I'm on the wall six nights in seven. I like the wall. You can see what's coming."
+ },
+ "jory_fenn/20e1c7cee42d6b9f": {
+  "chars": 14,
+  "direction": "[low, steady, resigned]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Yes, Sergeant."
+ },
+ "jory_fenn/26550839adb061b2": {
+  "chars": 168,
+  "direction": "[ashamed, shaky, bewildered]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Some went in. Vell went in. I was two down the roll, and I ran. Down the road in the dark with the drum still on my back. I didn't even drop the drum. I don't know why."
+ },
+ "jory_fenn/29419685fa954696": {
+  "chars": 23,
+  "direction": "[low, steady, soldierly]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Sergeant. Wall's quiet."
+ },
+ "jory_fenn/5f1e775ca18e4e32": {
+  "chars": 183,
+  "direction": "[hushed, haunted, numb]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Alive? I don't know that anyone is. I see some of them, nights, on the castle road, in red coats that don't fit. They don't sing any more. They walk like they're listening for orders."
+ },
+ "jory_fenn/7f619fc29198c918": {
+  "chars": 9,
+  "direction": "[startled, stiff, tentative]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Sergeant."
+ },
+ "jory_fenn/9af0e097a4d178b9": {
+  "chars": 55,
+  "direction": "[calm, tired, faintly sad]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Wall's quiet tonight, Sergeant. I'm counting the lamps."
+ },
+ "jory_fenn/d621fa77f6d35b77": {
+  "chars": 145,
+  "direction": "[dutiful, quiet, grimly proud]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "The roll. I kept the roll. Captain's book, forty names in his hand. It was in the drum. I've put a mark by every one I've seen on the road since."
+ },
+ "jory_fenn/dfbca19b0a3c6286": {
+  "chars": 106,
+  "direction": "[quiet, wistful, aching]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Vell's the one who stops at the bend and looks down at the town. Every time. Like he's counting the lamps."
+ },
+ "jory_fenn/e292b59e291ed3c1": {
+  "chars": 190,
+  "direction": "[flat, haunted, remembering]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Night three, at the castle gate, Sergeant. Captain went in with the contract and the officers. The rest of us camped in the courtyard. Nobody came to feed us. Nobody came at all, until dark."
+ },
+ "jory_fenn/e7e742fc139fc6a5": {
+  "chars": 37,
+  "direction": "[small, solemn, accepting]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "One. Right. I'll remember the number."
+ },
+ "jory_fenn/f21d931d610e9e72": {
+  "chars": 213,
+  "direction": "[hollow, uneasy, dread creeping in]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "Then Captain Merrow came out on the battlements with his collar open and called us in to dinner. One at a time. By name. He'd always known our names. He said them like he'd only just found out what they tasted of."
+ },
+ "jory_fenn/f9dd810db7f80c84": {
+  "chars": 57,
+  "direction": "[relieved, grateful, thick with emotion]",
+  "model": "eleven_v3",
+  "recipe": "233fd267b7",
+  "text": "You found Vell. I can see it on you. Thank you, Sergeant."
+ },
  "kasha_varo/08414428901f8649": {
   "chars": 90,
   "direction": "[elderly, grave, gentle]",
@@ -29815,6 +30396,139 @@
   "model": "eleven_v3",
   "recipe": "e91d2c917c",
   "text": "I stood at the back. I have stood at the back for three hundred years. I came up here to stop."
+ },
+ "kestrel_merrow/0c71ada79e090ea7": {
+  "chars": 39,
+  "direction": "[soft, menacing, dry]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "The master likes a full table. So do I."
+ },
+ "kestrel_merrow/1522decd4ceefc68": {
+  "chars": 54,
+  "direction": "[quiet, chilling, courteous]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "Sergeant Varga. You're a year late. I kept your chair."
+ },
+ "kestrel_merrow/4586ddc050b9e300": {
+  "chars": 78,
+  "direction": "[cold, proud, firm]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "No. I call the roll in this company. I called it from the wall, and they came."
+ },
+ "kestrel_merrow/57aa1c6444b090d1": {
+  "chars": 34,
+  "direction": "[dazed, hollow, haunted]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "...Merrow, Aldous. Captain. Forty."
+ },
+ "kestrel_merrow/72bbb01f3af3bb9d": {
+  "chars": 35,
+  "direction": "[dry, fond, bitter]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "Fenn. Of course. Him and that drum."
+ },
+ "kestrel_merrow/77fa73ab384792ea": {
+  "chars": 60,
+  "direction": "[mocking, patient, menacing]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "Still here, sergeant? Finish it, then. You've one name left."
+ },
+ "kestrel_merrow/87a1b0eb4463b776": {
+  "chars": 15,
+  "direction": "[flat, sharp, possessive]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "That's my book."
+ },
+ "kestrel_merrow/9a29064f6aff6644": {
+  "chars": 43,
+  "direction": "[low, firm, cold]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "Not at the master's table, sergeant. After."
+ },
+ "kestrel_merrow/a4d905f363a2aae5": {
+  "chars": 114,
+  "direction": "[broken, bitter, haunted]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "I signed for them, Ilse. He asked for forty at his table and I said we'd be honoured. I thought it was a contract."
+ },
+ "kestrel_merrow/bd5d502771981f55": {
+  "chars": 24,
+  "direction": "[commanding, hollow, crisp]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "Company. On me. Fall in."
+ },
+ "kestrel_merrow/ff06e0b0df3af8ee": {
+  "chars": 43,
+  "direction": "[resigned, quiet, hollow]",
+  "model": "eleven_v3",
+  "recipe": "b3a5a89a3b",
+  "text": "I'll be here. None of us is going anywhere."
+ },
+ "kestrel_vell/5398c045f43a599a": {
+  "chars": 172,
+  "direction": "[strained, pleading, resolute]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "I can't not come at you, Sergeant. He's in my ears. When the hunger turns over I'll go for your throat and I'll be glad of it. Don't let me be glad. Be quick, and count me."
+ },
+ "kestrel_vell/6b6094170b64895f": {
+  "chars": 89,
+  "direction": "[courteous, hollow, ominous]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "I'm to bring you up the road. He'd like you at the table, Sergeant. He's kept your chair."
+ },
+ "kestrel_vell/7407975d6ad16c21": {
+  "chars": 36,
+  "direction": "[dazed, halting, dutiful]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "...Vell, Teodor. Corporal. Fourteen."
+ },
+ "kestrel_vell/8a48a062d30dce00": {
+  "chars": 47,
+  "direction": "[flat, uneasy, dutiful]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "Then he'll be sad. He's terrible when he's sad."
+ },
+ "kestrel_vell/8e4733f3b23994fa": {
+  "chars": 134,
+  "direction": "[hollow, haunted, dutiful]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "Thirty-one at the gate. Captain called the roll from the wall, and we answered. That's what you do when he calls the roll. You answer."
+ },
+ "kestrel_vell/a5b07e7eaf14c98e": {
+  "chars": 22,
+  "direction": "[flat, quiet, cold]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "Sergeant. You're late."
+ },
+ "kestrel_vell/a677e0ea429d9471": {
+  "chars": 50,
+  "direction": "[hollow, patient, eerie]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "Still late, Sergeant. He's still waiting. So am I."
+ },
+ "kestrel_vell/b2ea93f1129b1a2e": {
+  "chars": 96,
+  "direction": "[confused, hollow, empty]",
+  "model": "eleven_v3",
+  "recipe": "f0c425eaa2",
+  "text": "Fourteen? No. No, the captain keeps the numbers now. We don't count off any more. We're counted."
  },
  "khazan/0eb5006722199d80": {
   "chars": 226,
@@ -83997,6 +84711,146 @@
   "model": "eleven_v3",
   "recipe": "5821254d72",
   "text": "You may go home and fetch a thicker coat, Squire Cosmin. We have no beds left, and you are no good to the Order with your toes black."
+ },
+ "sir_ottokar/12de045c4de0cc86": {
+  "chars": 84,
+  "direction": "[dry, resigned, wry]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "At least the dead are still dead when I arrive. One must find comfort where one can."
+ },
+ "sir_ottokar/1b7f74ff17cc0e13": {
+  "chars": 66,
+  "direction": "[ringing, gallant, sheepish]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Hold! Stand fast, my brothers, I am with you! Wait. Did I miss it?"
+ },
+ "sir_ottokar/2ea934fcaeb1ed9a": {
+  "chars": 120,
+  "direction": "[solemn, tender, sad]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "I could not leave an old woman in the rain with night coming on. When I reached the hill, the banners were already down."
+ },
+ "sir_ottokar/36de6d5dc93f3c33": {
+  "chars": 106,
+  "direction": "[courtly, rueful, dignified]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Sir Ottokar of the Silver Dragon, at your service. They call me the Late, and not solely for my condition."
+ },
+ "sir_ottokar/3d9b3a3dfdb9a540": {
+  "chars": 96,
+  "direction": "[soft, grateful, wistful]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "He never strikes my name from the roster, though. He merely writes it at the bottom of the page."
+ },
+ "sir_ottokar/46d754df1502fa49": {
+  "chars": 84,
+  "direction": "[sheepish, flustered, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "The buckle on my greave caught upon the tapestry in the west gallery. Did I miss it?"
+ },
+ "sir_ottokar/5c8d81430c84ca80": {
+  "chars": 92,
+  "direction": "[earnest, pleading, anxious]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Did I miss it? I swear to you, I started galloping the very moment I heard the first scream."
+ },
+ "sir_ottokar/69d9562e4aa709e3": {
+  "chars": 78,
+  "direction": "[wistful, dignified, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "I should like to shout our battle cry before the battle is entirely concluded."
+ },
+ "sir_ottokar/6e7e8016c77eb396": {
+  "chars": 76,
+  "direction": "[dry, helpful, mild]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "If you intend to be ambushed again in the next room, do give a louder shout."
+ },
+ "sir_ottokar/7691b96eac772062": {
+  "chars": 97,
+  "direction": "[yearning, wistful, earnest]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Only to arrive while a sword is still raised in anger, just once before this manor falls to dust."
+ },
+ "sir_ottokar/8a428a87962830f5": {
+  "chars": 57,
+  "direction": "[humble, rueful, gentle]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Even the third blow would suffice. I am not a greedy man."
+ },
+ "sir_ottokar/9455e752f99215ae": {
+  "chars": 100,
+  "direction": "[sheepish, wry, fond]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Ah, well, my horse was bred for endurance rather than haste, and eternity has not improved her trot."
+ },
+ "sir_ottokar/a5b978c9eac82203": {
+  "chars": 62,
+  "direction": "[dismayed, crestfallen, plaintive]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Do not tell me that was the last of them. Did I miss it again?"
+ },
+ "sir_ottokar/c0fa2df73edafa10": {
+  "chars": 14,
+  "direction": "[hopeful, tentative, hesitant]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Did I miss it?"
+ },
+ "sir_ottokar/c81e27255fed42a5": {
+  "chars": 92,
+  "direction": "[wistful, polite, rueful]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "You dispatch them with remarkable haste. It leaves very little room for a chivalrous rescue."
+ },
+ "sir_ottokar/d273b3feb2215157": {
+  "chars": 117,
+  "direction": "[quiet, resolute, warm]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "I have never told the others, lest they think I offer an excuse. Yet if the wheel broke tomorrow, I would stop again."
+ },
+ "sir_ottokar/dd845a7655ee0d87": {
+  "chars": 92,
+  "direction": "[bold, ringing, deflated]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Make way! My lance is levelled and my oath is sworn! Oh, you have already wiped your blades."
+ },
+ "sir_ottokar/e57f10fec1e47895": {
+  "chars": 59,
+  "direction": "[rueful, dry, fond]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Lord Vladimir says I am a fine knight and a terrible clock."
+ },
+ "sir_ottokar/f03e77d6829e8df9": {
+  "chars": 112,
+  "direction": "[apologetic, courtly, wry]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "Pray forgive me. The stairs collapsed three hundred years ago, and my horse still insists on taking the hallway."
+ },
+ "sir_ottokar/fc78664212347c60": {
+  "chars": 127,
+  "direction": "[quiet, reflective, gentle]",
+  "model": "eleven_v3",
+  "recipe": "bffe1307ce",
+  "text": "On the day of the last battle, a farmer's wife had lost a cartwheel in the ditch by the crossroads. The mud was up to the axle."
  },
  "sorin_krezkov/5d9b54022ee9a5ab": {
   "chars": 33,
