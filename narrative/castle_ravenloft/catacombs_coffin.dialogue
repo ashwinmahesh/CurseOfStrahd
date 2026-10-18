@@ -59,6 +59,8 @@ Strahd: In my own bedroom, at this hour. You might at least have knocked.
 combat cat_daylight_waking
 
 ~ wake_sun
+Sunsword: Look at him in his box of dirt, pretending to be a prince at rest.
+Sunsword: Lift me high, bearer. Four hundred years is long enough to wait for morning.
 Narrator: The blade wakes in your hand, and so does he: the light finds his face and his eyes snap open, burning.
 Strahd [angry]: My brother's sword. I threw that sword as far as a man can throw anything.
 combat cat_daylight_waking
@@ -122,6 +124,9 @@ approve godrick_pendlebrook +2 thistle +2 wren_featherfoot +2 liriel_dawnsong +1
 set cat_staked_by = "sun"
 Narrator: The blade blazes up like a shutter thrown open on a summer noon, and the light falls straight down into the coffin.
 Strahd: Ah. There it is. I had forgotten what it looked like.
+Sunsword: Take the light you broke, elder brother. Take all of it, down to the ash.
+Sunsword: Look, bearer: no crystal, no steel, only the sun he could not kill.
+Sunsword: It is done, my prince. Your brother is gone, and I may rest at last.
 -> the_end
 
 ~ symbol

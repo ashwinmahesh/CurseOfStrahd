@@ -1,0 +1,53 @@
+== found_wake
+Sunsword: At last. You have kept me in the dark for a very dull hour, friend, and the dust on my pommel is a disgrace.
+Sunsword: Stand straight when you hold me. A prince's hilt is not a walking stick, and your grip is abominably slack.
+Sunsword: Where is Sergei? Tell him the elder brother has had his little tantrum, and I require a smith of the first rank.
+Sunsword: [weary] Do not stare at me as though I were a turnip that had learned to sing. Tell me the year, and speak clearly.
+
+== found_attune
+Sunsword: [smile] Very well, I accept your service. Your lineage is obscure and your posture is tragic, yet we shall manage.
+Sunsword: Observe the blade: pure dawn, without need of steel or stone. You may admire it now, to save us time on the road.
+Sunsword: Our business is simple. We shall find every leech in this valley and turn them to ash before the soup grows cold.
+Sunsword: I expect brisk marching, dry scabbards, and strict punctuality. Dawdling is a vice I do not forgive in a squire.
+
+== first_drawn
+Sunsword: [smile] Make way, make way! The morning has arrived, and it is in a foul temper.
+Sunsword: Hold your wrist firm and try not to embarrass us, squire. I shall do the real work.
+
+== first_undead
+Sunsword: Ashes to ashes, and good riddance to cheap rot. Four centuries of waiting, and it still feels like a holiday.
+Sunsword: Wipe the hilt, if you please. Even a corpse that turns to dust leaves a smear on good silver.
+
+== place_pool
+Sunsword: Hold a moment. I know this water, and the white light that sleeps at the bottom of it.
+Sunsword: Sergei knelt on these stones before the wedding was even spoken of. The water was warmer then, or perhaps I was.
+Sunsword: [sad] Do not dip me in it. Let the pool keep the memory it has of him, when I still had my crystal whole.
+
+== place_tomb
+Sunsword: [sad] Be quiet here. Lower my light, if you know how, and take your hand from the pommel for a little while.
+Sunsword: [sad] Good evening, my prince. I am very late, and I have brought a stranger, but I have not forgotten our errand.
+
+== place_holt
+Sunsword: The Silver Dragon's hall. In my day their armour shone so fiercely I considered them rivals, though naturally they came second.
+Sunsword: Walk with some dignity among these stones. They died standing up against the elder brother, which is more than most managed.
+
+== place_castle
+Sunsword: So the elder brother has kept the towers standing. He always had a taste for cold stone and long shadows.
+Sunsword: There were banners in this courtyard once, gold and crimson, and music loud enough to drown the wind from the drop.
+Sunsword: [afraid] Keep your both hands on my grip as we cross the threshold. The stone here remembers how a blade is broken.
+
+== idle_dawdle
+Sunsword: Are we taking root, squire, or merely waiting for the moss to climb our boots? The road goes forward.
+Sunsword: At this pace the elder brother will die of old age, which would be a theological miracle and a personal insult to me.
+
+== idle_shops
+Sunsword: [weary] Salt pork, hemp rope, and three kinds of tallow. Clearly this is the grand crusade for which I was forged.
+Sunsword: If you haggle over one more copper piece, I shall shine directly into the merchant's eyes until we are both thrown out.
+
+== idle_weapons
+Sunsword: Must I travel beside that notched iron stick at your companion's hip? It looks as though it were hammered out of a kettle.
+Sunsword: Tell the one with the little bread knife to stand downwind. Rusty steel gives me the most dreadful headache.
+
+== idle_light
+Sunsword: [smile] Take note of how the mist parts when I am bare. Even the weather in this miserable ditch knows its betters.
+Sunsword: A lesser blade gleams; I preside. Try to look a little more heroic in my glow, for the sake of the composition.

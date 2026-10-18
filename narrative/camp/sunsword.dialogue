@@ -1,0 +1,21 @@
+# The Sunsword's camp talk (story/camp_talk.gd): after a Long Rest, once the party is strong enough for the castle, the blade asks its
+# bearer to sit by the fire and says what it is afraid of: being broken again. Plays once. Every line here is unvoiced for now.
+
+~ talk_fear
+if item:sunsword and level >= 8
+-> fear
+endif
+-> END
+
+~ fear
+Sunsword: Do not wrap me in the oilcloth yet, bearer: set me by the fire where the embers can see me.
+Sunsword [weary]: It is a foolish thing for a blade of pure noon to confess, yet the dark between these pines feels heavy tonight.
+Sunsword [afraid]: When the elder brother shattered my crystal on the flagstones, the cold went through my hilt, and I have never quite warmed since.
+* You are whole enough now, old friend, and my hand is steady on your grip. -> held
+* If you fall, it will only be because I have no hands left to hold you. -> held
+
+~ held
+Sunsword: Whole in light, perhaps, though a blade without its crystal is only a memory holding its edge by pride.
+Sunsword [sad]: I do not fear the fight, understand me, only the silence on the stones if I am broken a second time.
+Sunsword [sad]: Hold fast to my hilt when we enter his halls, bearer: do not let me fall into the dark alone.
+-> END

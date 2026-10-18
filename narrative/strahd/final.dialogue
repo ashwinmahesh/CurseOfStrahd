@@ -10,6 +10,9 @@ Narrator: He is waiting for you, as he said he would be, hands folded behind his
 Strahd: My guests. You came. I did wonder whether you would, and I am so rarely made to wonder.
 if item:sunsword
 Strahd: And you carry my brother's blade. Sergei never could hold on to anything that mattered.
+Sunsword: He held on to his honour, elder brother, which is more than remains in all your cold house.
+Sunsword: Do not listen to him, bearer. He speaks like a king, and he is only a thief who outlived the witnesses.
+Sunsword: Keep your thumb on my guard. When he steps closer, give me to his heart.
 endif
 if item:holy_symbol_of_ravenkind
 Strahd: The old priests' sun. I remember the last man who carried it. I remember how he sounded at the end.
@@ -73,11 +76,20 @@ Ireena [afraid]: You're... no. You wouldn't. Not after all of it.
 Ireena [sad]: Then I'll go. Not for him. For you, so you get out. Remember that I chose it.
 endif
 interject name:godrick_pendlebrook: No. I won't stand here for that. Sir Pellam wouldn't have, and I won't.
+if item:sunsword
+Sunsword [angry]: Give her to the elder brother for peace? I would sooner melt my own bronze in a blacksmith's pan.
+Sunsword [angry]: I was there at the last wedding in that house, and I know what his promises cost in blood and crystal.
+Sunsword: Tell his messenger that the lady is spoken for by four feet of morning light, and we shall deliver the refusal in person.
+endif
 approve godrick_pendlebrook -10 liriel_dawnsong -8 thistle -8 wren_featherfoot -8 kip_smudgewick -6 ratatoille -6: You offered Ireena to Strahd to buy your own way out
 -> answered
 
 ~ yield
 set strahd_parley = "yield"
+if item:sunsword
+Sunsword: No, do not open your hand! Do not give me back to him, not into the dark!
+Sunsword: Sergei, forgive me. I was so near the light, and I could not keep the hilt.
+endif
 approve godrick_pendlebrook -4 thistle -4 wren_featherfoot -3 liriel_dawnsong -3 kip_smudgewick -2 ratatoille -2: You yielded to Strahd in his own castle
 -> answered
 

@@ -8,6 +8,12 @@ if guest:ireena and not flag.ireena_pool_vision
 -> ireena_vision
 endif
 Narrator: The pool is perfectly round and perfectly still, and the snow along its rim has melted back a hand's breadth all the way round. In the water, the sky is a little brighter than the sky above it.
+if item:sunsword and not flag.sunsword_pool_heard
+set sunsword_pool_heard
+Sunsword [sad]: Step softly by this water, I beg you: the reflection upon the pool has the bearing of my prince.
+Sunsword: Sergei always polished my hilt before a prayer, though I told him a blade of light needed no cloth.
+Sunsword [sad]: Four hundred years I have kept his light, and still I do not know how to tell him I failed his wedding day.
+endif
 if treasure_at:krezk_pool_of_the_white_sun
 Narrator: Near the middle, under the water, something catches a light that isn't there to be caught.
 endif

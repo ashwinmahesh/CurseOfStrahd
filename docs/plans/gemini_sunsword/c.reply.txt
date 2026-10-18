@@ -1,0 +1,38 @@
+== pool_sergei
+Sunsword [sad]: Step softly by this water, I beg you: the reflection upon the pool has the bearing of my prince.
+Sunsword: Sergei always polished my hilt before a prayer, though I told him a blade of light needed no cloth.
+Sunsword [sad]: Four hundred years I have kept his light, and still I do not know how to tell him I failed his wedding day.
+
+== ireena_idle
+Sunsword [smile]: Lady Ireena, if my glare offends your eyes upon the road, say the word and I shall dim myself to a lantern.
+Sunsword: You have the very step of one who used to walk the castle gardens when the roses still had colour.
+Sunsword [sad]: Walk close beside my bearer, my lady: I was forged to keep the dark from touching hair like yours.
+
+== wedding_question
+Sunsword [angry]: Give her to the elder brother for peace? I would sooner melt my own bronze in a blacksmith's pan.
+Sunsword [angry]: I was there at the last wedding in that house, and I know what his promises cost in blood and crystal.
+Sunsword: Tell his messenger that the lady is spoken for by four feet of morning light, and we shall deliver the refusal in person.
+
+== camp_open
+Sunsword: Do not wrap me in the oilcloth yet, bearer: set me by the fire where the embers can see me.
+Sunsword [weary]: It is a foolish thing for a blade of pure noon to confess, yet the dark between these pines feels heavy tonight.
+Sunsword [afraid]: When the elder brother shattered my crystal on the flagstones, the cold went through my hilt, and I have never quite warmed since.
+
+== camp_bearer
+Bearer: You are whole enough now, old friend, and my hand is steady on your grip.
+
+== camp_close
+Sunsword: Whole in light, perhaps, though a blade without its crystal is only a memory holding its edge by pride.
+Sunsword [sad]: I do not fear the fight, understand me, only the silence on the stones if I am broken a second time.
+Sunsword [sad]: Hold fast to my hilt when we enter his halls, bearer: do not let me fall into the dark alone.
+
+== camp_bearer_2
+Bearer: If you fall, it will only be because I have no hands left to hold you.
+
+== stash
+Sunsword [angry]: I am the royal blade of Prince Sergei von Zarovich, currently keeping company with a salt herring and three spare boots.
+Sunsword: Take me out of this sack at once, before you go into battle armed with that dreary iron stick.
+
+== running
+Sunsword [angry]: Your heels are pointed the wrong way, bearer: the elder brother is behind us, and my light does not shine backward.
+Sunsword: Turn about and plant your boots, I say, for I did not wait four centuries to watch a vampire's cloak from a sprint.

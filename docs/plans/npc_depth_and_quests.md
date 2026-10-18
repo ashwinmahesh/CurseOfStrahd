@@ -478,3 +478,8 @@ great entry with the Hall Broom, Fennimore's last chapter on the cliff road, and
 Helga, the Steward and Lief. One change from the roster: Brandt's priest lies in the crypts (as the book's Brandt line says), so
 Brandt is glad of it rather than glad he escaped. The Sunsword is a separate branch.
 
+## The Sunsword status (2026-10-18)
+
+Built on `npc-sunsword` (from `origin/main`, separate from the batches): the Sunsword has lines while it is carried, in the road
+banter, in a fight, at camp and in the count's scenes; see docs/story/the_sunsword.md.
+

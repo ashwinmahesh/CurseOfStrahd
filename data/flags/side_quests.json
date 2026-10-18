@@ -2155,6 +2155,26 @@
       "id": "fennimore_castle_done",
       "type": "bool",
       "summary": "The party said goodbye to Ambrose Fennimore on the cliff road, the last chapter of his guide."
+    },
+    {
+      "id": "sunsword_woke",
+      "type": "bool",
+      "summary": "The Sunsword has spoken for the first time to whoever carries it (narrative/banter/guest_sunsword.dialogue)."
+    },
+    {
+      "id": "sunsword_attuned",
+      "type": "bool",
+      "summary": "The Sunsword has greeted its attuned bearer."
+    },
+    {
+      "id": "sunsword_first_fight",
+      "type": "bool",
+      "summary": "The Sunsword has been drawn in a won fight (its first words after a fight are said)."
+    },
+    {
+      "id": "sunsword_pool_heard",
+      "type": "bool",
+      "summary": "The Sunsword spoke of Sergei at the Pool of the White Sun."
     }
   ]
 }

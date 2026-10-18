@@ -10,6 +10,9 @@ extends RefCounted
 ## Which of a guest's nodes each moment draws on, in order: entering an area plays a line about where their own story
 ## stands before one about the place; a won fight and a long walk have their own.
 const GUEST_MOMENTS := {"enter": ["quest_", "place_"], "fight": ["fight_"], "idle": ["idle_"]}
+## The sentient blade speaks as a guest while carried (narrative/banter/guest_sunsword.dialogue).
+const SUNSWORD := "sunsword"
+const SUNSWORD_STASH := "idle_stash"
 
 var _nodes: Array[String] = []      ## "banter/<file>:<node>"
 var _guest_nodes: Array[String] = []   ## "banter/guest_<id>:<node>"
@@ -65,7 +68,7 @@ func guest_next(st: StoryState, moment: String, only: String = "") -> Array[Dict
 			if bool(st.flags.get("_banter/" + ref, false)) or not ref.get_slice(":", 1).begins_with(prefix):
 				continue
 			var who := ref.get_slice(":", 0).trim_prefix("banter/guest_")
-			if who in st.guest_ids and (only == "" or who == only):
+			if _with_party(st, who, ref.get_slice(":", 1)) and (only == "" or who == only):
 				pool.append(ref)
 		while not pool.is_empty():
 			var ref := pool.pop_at(_rng.randi_range(0, pool.size() - 1)) as String
@@ -74,6 +77,17 @@ func guest_next(st: StoryState, moment: String, only: String = "") -> Array[Dict
 				st.flags["_banter/" + ref] = true
 				return lines
 	return []
+
+
+## Whether `id` has a guest's lines now: a story ally travelling with the party, or the Sunsword (NPC plan, Part D), the
+## sentient blade, while somebody carries it. Its `idle_stash` lines play while it lies in the party's stash instead.
+static func _with_party(st: StoryState, id: String, node: String) -> bool:
+	if id != SUNSWORD:
+		return id in st.guest_ids
+	var carried := st.find_member("item:" + SUNSWORD) != null
+	if node.begins_with(SUNSWORD_STASH):
+		return not carried and st.party_has_item(SUNSWORD)
+	return carried
 
 
 static func _lines(ref: String, st: StoryState) -> Array[Dictionary]:

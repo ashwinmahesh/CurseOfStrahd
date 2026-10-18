@@ -175,6 +175,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	view.combat_view.story = view.st
 	view.add_child(view.combat_view)
 	view._say("combat:start")
+	view._say("combat:sunsword_start")   # the Sunsword, while carried (narrative/narrator/sunsword.dialogue)
 	# The picture streaks toward the party and drains for a beat as the fight breaks out (Visual Polish Plan 3).
 	if ScreenPulse.on():
 		ScreenPulse.play(view, "engage", view.rig.global_position)
@@ -546,6 +547,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 			if cr.hp <= 0 and not cr.dead and not cr.stable:
 				cr.stabilize()
 		view._say("combat:victory")
+		view._say("combat:sunsword_victory")
 		view._fight_bark_due = true   # a guest may have a word as the party walks on (LocationWalk._guest_chatter)
 	# A guest who fell isn't left for dead: carried home to heal, or patched up if they can't leave, and the player is
 	# told (StoryState.see_to_fallen_guests; Ashwin, 2026-10-12: Adrian's figure walked on after he fell).

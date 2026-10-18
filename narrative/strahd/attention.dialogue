@@ -24,6 +24,8 @@ Strahd: You burned my tree on Yester Hill. It was older than your nations. I do 
 endif
 if item:sunsword
 Strahd: You carry my brother's sword. It did not save him either.
+Sunsword: You killed him at his own wedding, elder brother, when his arms were open to you.
+Sunsword: Come within reach of my edge, while we are both looking, and see what I save.
 endif
 if item:holy_symbol_of_ravenkind
 Strahd: You wear the Morninglord's trinket where I can see it. I have seen it before. I watched its last bearer's light go out.

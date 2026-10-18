@@ -1,0 +1,17 @@
+{
+  "id": "sunsword",
+  "name": "Sunsword",
+  "title": "The Sentient Blade of Prince Sergei",
+  "summary": "Sergei von Zarovich's sword: a sentient blade made to end vampires, and proud of it. It speaks in a bright, ringing, courtly voice, a little too loud, calls the count 'the elder brother', and is afraid of being broken again. It speaks only while someone carries it.",
+  "portrait": "sunsword",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "item",
+    "sentient",
+    "sunsword"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "it/its"
+}

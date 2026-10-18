@@ -63,8 +63,12 @@ static func opening_condition(df: DialogueFile, node: String) -> String:
 ## Who asks for a talk with this opening condition: the first companion (`name:<id>`, in the party or waiting at camp)
 ## or story ally travelling with the party (`guest:<npc>`) it names who is here, in the order it names them, so the
 ## one asking is written first. {id, name}, or {} if none of them is here. `id` is what the camp seats them by: a
-## companion's character id, a guest's creature id (`guest_<npc>`, StoryState.make_guest).
+## companion's character id, a guest's creature id (`guest_<npc>`, StoryState.make_guest). The Sunsword (a talk whose
+## condition names `item:sunsword`) asks through whoever carries it: the bearer's id, under the blade's own name.
 static func who_asks(cond: String, st: StoryState) -> Dictionary:
+	if cond.contains("item:sunsword"):
+		var bearer := st.find_member("item:sunsword")
+		return {"id": bearer.id, "name": "Sunsword"} if bearer != null else {}
 	var re := RegEx.create_from_string("\\b(name|guest):([a-z0-9_]+)")
 	for m in re.search_all(cond):
 		if m.get_string(1) == "guest":

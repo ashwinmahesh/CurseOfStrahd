@@ -1,0 +1,30 @@
+# The Sunsword in a fight (NPC plan Part D; docs/story/the_sunsword.md): while somebody carries it, it has the word on a critical
+# hit, a kill and a fallen hero (the existing combat:crit, combat:kill and combat:fall triggers, which also keep their cooldowns),
+# and before and after a fight (combat:sunsword_start and combat:sunsword_victory, said beside combat:start and combat:victory in
+# world/exploration/location_fights.gd, whose own cooldowns and `once` would silence it). A variant with a condition is preferred
+# when it holds, so while the blade is carried these are the lines. Said by the Narrator for now: the Sunsword's voice is designed
+# later by the castle voices lane. Every line here is unvoiced for now.
+
+~ combat:crit
+| [item:sunsword] Sunsword: A stroke worthy of the high court! Look how the dark comes unseamed!
+| [item:sunsword] Sunsword: Directly through the middle, and with the proper flourish! Magnificent!
+| [item:sunsword] Sunsword: There is the old form! You held the hilt, of course, which was very helpful of you.
+
+~ combat:kill
+| [item:sunsword] Sunsword: You are dismissed from our presence. Do not trouble yourself to rise.
+| [item:sunsword] Sunsword: Another shadow swept from the floor. Really, they ought to thank us for the tidying.
+| [item:sunsword] Sunsword: Curtains down, candles out, and not a drop of tarnish upon my hilt.
+
+~ combat:fall
+| [item:sunsword] Sunsword: Get up! Do not let me hit the stones, I beg you, do not let me break again!
+| [item:sunsword] Sunsword: Hold fast to the hilt! If you fall here, who will keep their boots off my light?
+| [item:sunsword] Sunsword: Stand up, stand up at once! I cannot lie in the dark a second time!
+
+~ combat:sunsword_start
+| [item:sunsword] Sunsword: Make way and bow low, you creatures of the mist: the sun has come indoors!
+| [item:sunsword] Sunsword: Eyes front, chin high, and let them look upon a proper royal blade before they burn!
+| [item:sunsword] Sunsword: At last, a little exercise! Stand aside and let the morning do its work.
+
+~ combat:sunsword_victory
+| [item:sunsword] Sunsword: You fought passably well, for an apprentice. I, naturally, was blinding.
+| [item:sunsword] Sunsword: Another triumph for the house of my prince, with some modest assistance from your wrist.

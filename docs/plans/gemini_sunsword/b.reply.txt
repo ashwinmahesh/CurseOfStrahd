@@ -1,0 +1,78 @@
+== crit_1
+Sunsword: A stroke worthy of the high court! Look how the dark comes unseamed!
+
+== crit_2
+Sunsword: Directly through the middle, and with the proper flourish! Magnificent!
+
+== crit_3
+Sunsword: There is the old form! You held the hilt, of course, which was very helpful of you.
+
+== kill_1
+Sunsword: You are dismissed from our presence. Do not trouble yourself to rise.
+
+== kill_2
+Sunsword: Another shadow swept from the floor. Really, they ought to thank us for the tidying.
+
+== kill_3
+Sunsword: Curtains down, candles out, and not a drop of tarnish upon my hilt.
+
+== fall_1
+Sunsword: Get up! Do not let me hit the stones, I beg you, do not let me break again!
+
+== fall_2
+Sunsword: Hold fast to the hilt! If you fall here, who will keep their boots off my light?
+
+== fall_3
+Sunsword: Stand up, stand up at once! I cannot lie in the dark a second time!
+
+== start_1
+Sunsword: Make way and bow low, you creatures of the mist: the sun has come indoors!
+
+== start_2
+Sunsword: Eyes front, chin high, and let them look upon a proper royal blade before they burn!
+
+== start_3
+Sunsword: At last, a little exercise! Stand aside and let the morning do its work.
+
+== victory_1
+Sunsword: You fought passably well, for an apprentice. I, naturally, was blinding.
+
+== victory_2
+Sunsword: Another triumph for the house of my prince, with some modest assistance from your wrist.
+
+== after_1
+Sunsword: Do wipe your sleeves before you sheathe me. I have no wish to smell of whatever that was.
+Sunsword: Still, your footwork was almost courtly on the third lunge. Almost.
+
+== after_2
+Sunsword: That is how matters were settled in Sergei's day: brightly, briefly, and without all this slouching.
+
+== after_undead
+Sunsword: Ah, how cleanly they go to ash! That is the work I was forged to do, and I do it handsomely.
+Sunsword: Keep that iron stick in your belt next time. They deserve a proper sunrise at the end.
+
+== strahd_grievance
+Sunsword: You took him from behind, elder brother, when his arms were open to you.
+Sunsword: Come within reach of my edge, while we are both looking, and see what I save.
+
+== strahd_parley
+Sunsword: He held on to his honour, elder brother, which is more than remains in all your cold house.
+Sunsword: Do not listen to him, bearer. He speaks like a king, and he is only a thief who outlived the witnesses.
+Sunsword: Keep your thumb on my guard. When he steps closer, give me to his heart.
+
+== strahd_dinner
+Sunsword: You expect me to sit dark at my murderer's table while he plays the host with stolen silver.
+Sunsword: One word from you, bearer, only one, and I will turn his whole banquet hall to noon.
+
+== coffin_wake
+Sunsword: Look at him in his box of dirt, pretending to be a prince at rest.
+Sunsword: Lift me high, bearer. Four hundred years is long enough to wait for morning.
+
+== coffin_end
+Sunsword: Take the light you broke, elder brother. Take all of it, down to the ash.
+Sunsword: Look, bearer: no crystal, no steel, only the sun he could not kill.
+Sunsword: It is done, my prince. Your brother is gone, and I may rest at last.
+
+== yield_end
+Sunsword: No, do not open your hand! Do not give me back to him, not into the dark!
+Sunsword: Sergei, forgive me. I was so near the light, and I could not keep the hilt.
