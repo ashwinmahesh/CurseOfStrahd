@@ -675,9 +675,9 @@ static func _cauldron(st: StoryState, caster: Character, data: Dictionary, choic
 		Compendium.shared().display_name("items", potion), "" if n == 1 else " (x%d)" % n]
 
 
-## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, immune to Poison damage
-## and to the Poisoned and Frightened conditions, has Advantage on Wisdom saving throws, and gains 2d10 to their Hit
-## Point maximum and as many Hit Points.
+## Heroes' Feast (2024): everyone alive in the party eats, and for 24 hours is free of poison, has Resistance to Poison
+## damage and immunity to the Poisoned and Frightened conditions, has Advantage on Wisdom saving throws (the 2014 spell's;
+## the owner kept it, 2026-10-18) and gains 2d10 to their Hit Point maximum and as many Hit Points.
 static func _feast(st: StoryState, caster: Character) -> String:
 	var dice := DiceRoller.new(st.playthrough_seed + st.total_minutes())
 	var fed: Array[String] = []
@@ -689,7 +689,7 @@ static func _feast(st: StoryState, caster: Character) -> String:
 				ch.remove_effect(old)
 		var gain := int(dice.roll_expr("2d10", "Heroes' Feast (%s)" % ch.name)["total"])
 		var fx := Effect.new("Heroes' Feast", &"spell", "heroes_feast").with_modifier("hp_max", {"value": gain}) \
-			.with_modifier("immunity", {"value": "poison"}).with_modifier("condition_immunity", {"value": "poisoned"}) \
+			.with_modifier("resistance", {"value": "poison"}).with_modifier("condition_immunity", {"value": "poisoned"}) \
 			.with_modifier("condition_immunity", {"value": "frightened"}).with_modifier("advantage", {"on": "save:wis"})
 		fx.ends = Effect.Ends.MINUTES
 		fx.minutes_left = 24 * 60
@@ -698,7 +698,7 @@ static func _feast(st: StoryState, caster: Character) -> String:
 		Services.cure(ch, &"frightened")
 		ch.heal(gain, "Heroes' Feast")
 		fed.append("%s +%d" % [ch.name.get_slice(" ", 0), gain])
-	return "%s lays out Heroes' Feast. For a day the party shrugs off poison and fear and keeps its wits (Hit Point maximum: %s)." % [
+	return "%s lays out Heroes' Feast. For a day the party resists poison damage, can't be poisoned or frightened and keeps its wits (Hit Point maximum: %s)." % [
 		caster.name.get_slice(" ", 0), ", ".join(fed)]
 
 

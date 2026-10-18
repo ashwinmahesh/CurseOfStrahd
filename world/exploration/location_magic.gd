@@ -121,7 +121,7 @@ static func _heroes_feast(view: LocationView) -> void:
 	if shares.is_empty():
 		return
 	view.toast.emit("Heroes' Feast: the party is fed for 24 hours")
-	view.narration.emit("The party sits down to Heroes' Feast. For 24 hours they shrug off poison and fear and keep their wits, and their Hit Point maximum and current Hit Points rise: %s." % ", ".join(shares))
+	view.narration.emit("The party sits down to Heroes' Feast. For 24 hours they resist poison damage, can't be poisoned or frightened and keep their wits, and their Hit Point maximum and current Hit Points rise: %s." % ", ".join(shares))
 	var fed: Array[CombatToken] = []
 	for cb in view.members:
 		var token := view.tokens.get(cb.id) as CombatToken

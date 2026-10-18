@@ -116,6 +116,8 @@ func test_heroes_feast_hardens_the_party_for_a_day() -> void:
 	assert_eq(roundi(st.gold), 200, "the bowl, from the purse")
 	assert_true(fighter.max_hp() >= max_before + 2, "2d10 more Hit Points at most: %d -> %d" % [max_before, fighter.max_hp()])
 	assert_true(fighter.is_condition_immune(&"frightened") and fighter.is_condition_immune(&"poisoned"))
+	assert_ne(fighter.resistance_source(&"poison"), "", "Resistance to Poison damage (2024), not immunity")
+	assert_eq(fighter.immunity_source(&"poison"), "")
 	assert_true(fighter.modifiers_for(&"advantage").any(func(m: Modifier) -> bool: return m.text("on") == "save:wis"))
 	st.advance_minutes(25 * 60)
 	assert_eq(fighter.max_hp(), max_before, "a day later it's over")

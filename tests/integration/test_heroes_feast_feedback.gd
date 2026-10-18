@@ -81,6 +81,8 @@ func test_the_feast_still_does_its_work() -> void:
 		assert_true(gain >= 2 and gain <= 20, "%s: 2d10 more Hit Points at most, got %d" % [ch.name, gain])
 		assert_eq(ch.hp, ch.max_hp(), "%s gains as many Hit Points as the maximum rose" % ch.name)
 		assert_true(ch.is_condition_immune(&"frightened") and ch.is_condition_immune(&"poisoned"), ch.name)
+		assert_ne(ch.resistance_source(&"poison"), "", "%s resists Poison damage" % ch.name)
+		assert_eq(ch.immunity_source(&"poison"), "", "%s isn't immune to it (2024: Resistance)" % ch.name)
 		assert_eq(_feast_of(ch).minutes_left, 24 * 60, "a day")
 
 
@@ -94,7 +96,7 @@ func test_a_toast_and_the_narrators_box_say_the_party_ate() -> void:
 	for ch in GameState.story.party:
 		var gain := int(_feast_of(ch).modifiers[0].number("value"))
 		assert_true(("%s +%d" % [ch.name.get_slice(" ", 0), gain]) in said[0], "%s's share of the Hit Points: %s" % [ch.name, said[0]])
-	assert_true("poison" in said[0] and "fear" in said[0], "what it protects against: %s" % said[0])
+	assert_true("resist poison damage" in said[0] and "frightened" in said[0], "what it protects against: %s" % said[0])
 
 
 func test_each_fed_hero_gets_the_cast_light() -> void:
