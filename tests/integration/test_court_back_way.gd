@@ -93,6 +93,24 @@ func test_the_back_way_is_one_walk_from_the_hearth_to_the_treasury_stair() -> vo
 			assert_true(reach.has(_cell((m as Dictionary)["cell"])), "a spider stands on open floor")
 
 
+## A `torch` light draws its own standing torch (LocationBuilder._build_lights), so a prop with the torch model on or beside
+## it makes two torches on one square (test_models_3d:test_3d_pieces_dont_overlap, which caught the belfry's).
+func test_a_torch_light_is_the_only_torch_on_its_square() -> void:
+	for id: String in [WAY, TREASURY, COURT]:
+		var loc := _loc(id)
+		var lit: Array[Vector2i] = []
+		for l: Variant in loc.get("lights", []):
+			if str((l as Dictionary)["kind"]) == "torch":
+				lit.append(_cell((l as Dictionary)["cell"]))
+		for key: String in ["props", "containers"]:
+			for t: Variant in loc.get(key, []):
+				var spec := t as Dictionary
+				assert_false(_cell(spec["cell"]) in lit, "%s: %s stands on a torch light's square" % [id, spec["id"]])
+				assert_false(str(spec.get("model", "")) == "torch" and _cell(spec["cell"]) in lit, "%s: a second torch on a lit one" % id)
+	for p: Variant in _loc(WAY)["props"]:
+		assert_true(str((p as Dictionary).get("model", "")) != "torch", "the belfry's only torch is the light's: %s" % (p as Dictionary)["id"])
+
+
 func test_the_way_down_leads_to_the_old_vault_stair_and_the_hearth_to_the_study() -> void:
 	var loc := _loc(WAY)
 	var down := {}

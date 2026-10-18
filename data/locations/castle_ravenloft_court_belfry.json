@@ -186,16 +186,6 @@
   ],
   "props": [
     {
-      "id": "court_way_sconce_lit",
-      "cell": [
-        10,
-        10
-      ],
-      "kind": "decor",
-      "label": "A burning torch",
-      "model": "torch"
-    },
-    {
       "id": "court_way_sconce_empty",
       "cell": [
         14,
@@ -318,7 +308,7 @@
     {
       "cell": [
         10,
-        10
+        11
       ],
       "kind": "torch",
       "bright_ft": 20,
