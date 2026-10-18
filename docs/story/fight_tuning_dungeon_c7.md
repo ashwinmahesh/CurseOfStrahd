@@ -2,17 +2,25 @@
 
 (Owner, 2026-10-13: the book's fights were written for weaker characters. Over seeds 1-8 the four pregens on the sharp
 autopilot win five in eight on Balanced, give or take one, each fight played from where the party stands when it starts,
-its foes starting spread out. Held by `tests/integration/test_scaled_fights_c7.gd`. The package: Dungeon Expansion Plan C7,
-docs/regions/castle_ravenloft_gates.md §14.)
+its foes starting spread out. Owner, 2026-10-18: "We can keep this at 8/8. Some combats are just meant to drain resources",
+then "Unless theyre guarding something or its a special encounter." Held by `tests/integration/test_scaled_fights_c7.gd`.
+The package: Dungeon Expansion Plan C7, docs/regions/castle_ravenloft_gates.md §14.)
 
 | Fight | Where | Version | Level | Book | Now | Wins |
 |---|---|---|---|---|---|---|
 | `crg_entry_dragons` | main_floor | L11v0 | 11 | four red dragon wyrmlings (Master Quest, K7) | 4 red dragon wyrmling (65 HP) | 5 |
 | `crg_entry_dragons` | main_floor | L10v1 | 10 | same | 4 red dragon wyrmling (52 HP) | 5 |
 | `crg_entry_dragons` | main_floor | L9v2 | 9 | same | 4 red dragon wyrmling (47 HP) | 4 |
-| `crg_balcony_zombies` | chapel_balcony | L11v0 | 11 | a couple of zombies (K28) | 2 strahd zombie, 7 vampire spawn (103 HP) | 5 |
-| `crg_balcony_zombies` | chapel_balcony | L10v1 | 10 | same | 2 strahd zombie, 6 vampire spawn (103 HP) | 5 |
-| `crg_balcony_zombies` | chapel_balcony | L9v2 | 9 | same | 2 strahd zombie, 6 vampire spawn | 5 |
+| `crg_balcony_zombies` | chapel_balcony | one version | 9 to 11 | a couple of zombies (K28) | 2 strahd zombie, as the book has them | 8 |
+
+Which fight falls on which side of the owner's rule:
+
+- **The dragons are held to 5 in 8.** They guard the way out of the castle, they are the book's signature set piece for the
+  entry hall (the first thing the party meets and the last), and they come to life on purpose: a special encounter.
+- **The balcony is left at 8 in 8.** It guards nothing (the book lists no treasure and no find in the king's balcony, and our
+  thrones hold none), it is a side room off the chapel that no story beat passes through, and it is a plain ambush: two
+  zombies that rise when the party steps out onto the gallery. It is an attrition fight, which the party wins at the cost of
+  the first round (it is surprised) and a few spells.
 
 ## The dragons (K7)
 
@@ -46,14 +54,16 @@ Level 9 never lands on five: 46 HP is seven wins and 47 HP is four, and three dr
 
 ## The balcony (K28)
 
-The book's two zombies in the thrones are the Strahd zombies of CoS p. 241 and are kept, ambushing a surprised party. They are not a
-fight on their own for the sharp party at these levels: two to eight of them (up to 150 HP each, a thousand Hit Points between them)
-win 8 in 8 with nobody dropped, and so do two zombies with three wights and a vampire spawn, or with ten ghasts. What lands the band
-is Strahd's spawn standing in the dark along the rail, which is ours (the book has none there).
+The book's two zombies in the thrones are the Strahd zombies of CoS p. 241 and are kept as they are, ambushing a surprised party.
+For the sharp party at levels 9 to 11 they are no 5-in-8 fight: two to eight of them (up to 150 HP each, a thousand Hit Points
+between them) win 8 in 8 with nobody dropped, and so do two zombies with three wights and a vampire spawn, or with ten ghasts. The
+first pass of this package added Strahd's spawn along the rail (ours, not the book's) to pull the fight to 5 in 8; the owner
+chose to leave the fight at 8 in 8 instead (above), so the spawn are not in the data. What was tried, for anyone who wants a harder
+balcony (level 10 unless marked; the spawn's HP is the stat block's own 90 unless given):
 
-| Foes besides the two zombies (spawn at its HP) | L9 | L10 | L11 |
+| Foes besides the two zombies | L9 | L10 | L11 |
 |---|---|---|---|
-| 1 to 3 wights, 1 spawn (stat blocks' HP) | | 8 each | |
+| 1 to 3 wights, 1 spawn | | 8 each | |
 | 4 spawn: 90 HP (stat block) | | 7 | |
 | 4 spawn: 110, 130, 160 HP | | 7, 6, 6 | |
 | 4 spawn: 175, 185, 200, 260 HP | | 4, 4, 4, 0 | |
@@ -64,7 +74,7 @@ is Strahd's spawn standing in the dark along the rail, which is ours (the book h
 | 6 spawn: 103, 110 HP | 3 (103) | 5, 3 | |
 | 7 spawn: 97, 103, 110 HP | | | 6, 5, 5 |
 
-Level 9's six spawn win 4 in 8 at an `hp` of 86 to 99 and 6 in 8 at 85, but the stat block's own Hit Points (no `hp` key, so no override) win exactly 5 in the real series test, so that is the version kept.
+With six spawn at 103 HP (seven at level 11) the real series test measured 5 at every level, at 7 to 9 rounds a fight.
 
 ## Method
 

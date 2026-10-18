@@ -1,9 +1,10 @@
 extends FightSeriesCase
-## The Dungeon Expansion's C7 fights (docs/story/fight_tuning_dungeon_c7.md), scaled up for 2024 heroes (owner, 2026-10-13: the
-## book's fights were written for weaker characters): the entry's four stone dragons and the dead of the king's balcony. Over
-## seeds 1-8 the four pregens on the sharp autopilot (smiting, opening with Spirit Guardians, throwing Fireball, as he plays)
-## win 5, give or take one, on Balanced, each fight played from where the party stands when it starts, with its foes starting
-## spread out (tests/unit/test_fight_spread.gd). Every fight finishes. Each level the fight changes at has its own version.
+## The Dungeon Expansion's C7 fights (docs/story/fight_tuning_dungeon_c7.md): the entry's four stone dragons, scaled up for 2024
+## heroes (owner, 2026-10-13: the book's fights were written for weaker characters), and the two dead of the king's balcony, an
+## attrition fight kept at the book's size. Over seeds 1-8 the four pregens on the sharp autopilot (smiting, opening with Spirit
+## Guardians, throwing Fireball, as he plays) win the dragons 5, give or take one, on Balanced, each fight played from where the
+## party stands when it starts, with its foes starting spread out (tests/unit/test_fight_spread.gd). Every fight finishes. Each
+## level a fight changes at has its own version.
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 const MAIN := "castle_ravenloft_main_floor"
@@ -43,16 +44,17 @@ func test_crg_entry_dragons_v2_at_level_9() -> void:
 	await _held(MAIN, 12, 9, "crg_entry_dragons", AT_THE_DOORS, 4, 6, ["crg_entry_dragons_woken"])
 
 
-## crg_balcony_zombies, castle_ravenloft_chapel_balcony variant 0 at level 11.
-func test_crg_balcony_zombies_v0_at_level_11() -> void:
-	await _held(BALCONY, 12, 11, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 4, 6)
+## crg_balcony_zombies, castle_ravenloft_chapel_balcony: the book's two Strahd zombies, one version for every level. An attrition
+## fight (owner, 2026-10-18: "We can keep this at 8/8. Some combats are just meant to drain resources", unless they guard something
+## or are a special encounter, and a plain ambush in a gallery is neither): the sharp party wins all eight or all but one, and no
+## seed times out.
+func test_crg_balcony_zombies_at_level_11() -> void:
+	await _held(BALCONY, 12, 11, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 7, 8)
 
 
-## crg_balcony_zombies variant 1 at level 10.
-func test_crg_balcony_zombies_v1_at_level_10() -> void:
-	await _held(BALCONY, 12, 10, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 4, 6)
+func test_crg_balcony_zombies_at_level_10() -> void:
+	await _held(BALCONY, 12, 10, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 7, 8)
 
 
-## crg_balcony_zombies variant 2 at level 9.
-func test_crg_balcony_zombies_v2_at_level_9() -> void:
-	await _held(BALCONY, 12, 9, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 4, 6)
+func test_crg_balcony_zombies_at_level_9() -> void:
+	await _held(BALCONY, 12, 9, "crg_balcony_zombies", AT_THE_STAIR_HEAD, 7, 8)

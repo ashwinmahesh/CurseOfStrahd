@@ -200,21 +200,19 @@ func test_the_party_climbs_to_the_thrones() -> void:
 	var v: LocationView = await _boot(BALCONY, Vector2i(3, 8))
 	assert_true(v.walk_to(Vector2i(3, 6)), "up to the landing")
 	assert_true(v.walk_to(Vector2i(8, 2)), "and out along the gallery")
-	var versions: Array[Dictionary] = []
+	var fights: Array[Dictionary] = []
 	for e: Variant in v.loc["encounters"]:
 		if str((e as Dictionary)["id"]) == "crg_balcony_zombies":
-			versions.append(e)
-	assert_eq(versions.size(), 3, "one version for each of levels 11, 10 and 9")
-	for e: Dictionary in versions:
-		assert_eq(str(e["surprise"]), "party", "an ambush")
-		var monsters := e["monsters"] as Array
-		# The book's two Strahd zombies slump in the thrones; the rest, Strahd's spawn at the rail, are the fight's own.
-		assert_eq(str((monsters[0] as Dictionary)["monster"]), "strahd_zombie")
-		assert_eq(str((monsters[1] as Dictionary)["monster"]), "strahd_zombie")
-		assert_eq(LocationView._cell((monsters[0] as Dictionary)["cell"]), Vector2i(9, 2), "in front of the first throne")
-		assert_eq(LocationView._cell((monsters[1] as Dictionary)["cell"]), Vector2i(13, 2), "and of the second")
-		for m: Variant in monsters.slice(2):
-			assert_eq(str((m as Dictionary)["monster"]), "vampire_spawn")
+			fights.append(e)
+	assert_eq(fights.size(), 1, "one fight, the same at every level (an attrition fight)")
+	var fight := fights[0]
+	assert_eq(str(fight["surprise"]), "party", "an ambush")
+	var monsters := fight["monsters"] as Array
+	assert_eq(monsters.size(), 2, "the book's couple of zombies")
+	for i in 2:
+		assert_eq(str((monsters[i] as Dictionary)["monster"]), "strahd_zombie")
+	assert_eq(LocationView._cell((monsters[0] as Dictionary)["cell"]), Vector2i(9, 2), "in front of the first throne")
+	assert_eq(LocationView._cell((monsters[1] as Dictionary)["cell"]), Vector2i(13, 2), "and of the second")
 	for key: String in ["enter:crg_balcony_landing", "enter:crg_balcony", "examine:crg_balcony_throne"]:
 		assert_true(Narrator.new().has_trigger(key), "the Narrator has %s" % key)
 

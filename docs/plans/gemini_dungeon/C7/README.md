@@ -12,8 +12,8 @@ plain text, no routing; one message each, read until `done`. The bridge reports 
 | `brief_2.txt` | The gaps: the balcony's location card, its arrival and cleared lines, the window's menu (three options, the first line, the climb back up) and the knights' journal note |
 | `raw_reply_2.txt` | Gemini's reply, untouched |
 | `messages_2.json` | The bridge's record of the second exchange |
-| `brief_3.txt` | The balcony fight's opening line, once tuning had put the count's watchers along the rail (the balcony brief's "two dead in the thrones" was no longer the whole fight) |
-| `raw_reply_3.txt` | Gemini's two alternatives, untouched |
+| `brief_3.txt` | The balcony fight's opening line for a version with Strahd's spawn along the rail (tuning had put them there). Not used: the owner kept the balcony at the book's two zombies |
+| `raw_reply_3.txt` | Gemini's two alternatives, untouched and unused |
 | `messages_3.json` | The bridge's record of the third exchange |
 
 The lines live in `narrative/narrator/castle_ravenloft_main_floor.dialogue`, `narrative/castle_ravenloft/entry_dragons.dialogue`
@@ -40,9 +40,9 @@ summary and text, the fights' texts, a codex entry). They are unvoiced; the hand
 - `entry_dragons_wake` line 4, "Four pairs of grey stone eyes fix on your backs, and the things drop from their perches.", became the
   fight's text "Four pairs of stone eyes turn to you, and the little dragons drop from their perches." (the party isn't turned away by
   then, and "the things" gave nothing away).
-- `balcony_zombies_rise` (two lines) was replaced, once tuning had put Strahd's spawn along the rail (brief 3), by brief 3's first
-  alternative, as drafted: "The two corpses slumped in the high thrones stiffen and rise as you step out onto the gallery. Along the
-  rail, pale shapes in the dark turn their heads toward you as one." (the second alternative was not used).
+- `balcony_zombies_rise` (two lines) became the balcony fight's text, as drafted, joined into one: "As you step toward the rail, the two slumped
+  corpses stiffen, wet cloth peeling away from the wood of the thrones. They rise together in dead silence, dry jaws hanging open, and
+  reach for your throats."
 - `window_tomb_landing`: "two white marble coffins" became "two stone coffins": the game's coffins are plain sarcophagi, and the book
   gives them no colour.
 - `archers_post_enter` lines 1 to 3 were split across their triggers (a Narrator trigger plays one variant at a time, so a three-line
