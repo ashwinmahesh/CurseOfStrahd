@@ -1,7 +1,8 @@
 extends TestCase
 ## The inventory's categories and marks (owner, 2026-10-17): Potions and Quest items have tabs of their own, a magic
-## item's row is edged in the colour of its rarity, and an Attuned filter sits beside New and Junk. The shop's pack side
-## shares the tabs, the rows' edges and the wares' Potions tab.
+## item's picture has a box in the colour of its rarity (the row itself stays plain), an Attuned filter sits beside New
+## and Junk, and a Rarity filter keeps any of the six rarities. The shop's pack side shares the tabs and the picture
+## boxes, and its wares have a Potions tab.
 
 const RARITIES: Array[String] = ["common", "uncommon", "rare", "very_rare", "legendary", "artifact"]
 
@@ -167,7 +168,16 @@ func _assert_fits(strip: Container, what: String) -> void:
 		assert_true(b.get_minimum_size().x <= b.size.x + 0.5, "%s: the %s tab holds its label" % [what, b.text])
 
 
-func test_magic_rows_have_a_border_in_their_rarity_colour() -> void:
+## The box round a row's picture (UiParts.framed_icon), or null.
+func _frame(row: Control) -> PanelContainer:
+	return row.find_child("RarityFrame", true, false) as PanelContainer
+
+
+func _frame_colour(row: Control) -> Color:
+	return (_frame(row).get_theme_stylebox("panel") as StyleBoxFlat).border_color
+
+
+func test_magic_pictures_have_a_box_in_their_rarity_colour_and_the_row_stays_plain() -> void:
 	var comp := Compendium.shared()
 	var ids := {"common": "potion_of_healing", "uncommon": "cloak_of_protection", "rare": "ring_of_protection",
 		"very_rare": "potion_of_speed", "legendary": "potion_of_giant_strength_storm", "artifact": "orb_of_damara"}
@@ -177,30 +187,52 @@ func test_magic_rows_have_a_border_in_their_rarity_colour() -> void:
 		ch.add_item(str(ids[r]))
 	ch.add_item("rope")
 	var inv := await _open(0)
+	assert_true(UiParts.has_icons(), "the game has icon art, so rows have pictures")
 	var seen: Array[Color] = []
+	var plain := Color(Look.color("gilt_dark"), 0.95)
 	for r: String in ids:
 		var row := _row(inv, str(ids[r]))
 		assert_true(row != null, "a row for the %s item (the pack lists %s)" % [r, inv.shown_ids()])
 		if row == null:
 			continue
-		assert_eq(row.rarity, r, "the row knows its rarity")
-		assert_eq(_border(row), ItemTile.rarity_edge(r), "the %s row's border" % r)
-		assert_eq((row.get_theme_stylebox("panel") as StyleBoxFlat).border_width_left, 2, "a heavier border than a plain row")
-		seen.append(_border(row))
+		assert_true(_frame(row) != null, "the %s item's picture has a frame" % r)
+		assert_eq(_frame_colour(row), ItemTile.rarity_edge(r), "the %s picture's box" % r)
+		seen.append(_frame_colour(row))
+		var style := row.get_theme_stylebox("panel") as StyleBoxFlat
+		assert_eq(style.border_color, plain, "the %s row's own border is the plain gilt one" % r)
+		assert_eq(style.border_width_left, 1, "and as fine as any")
 	for i in seen.size():
 		for j in range(i + 1, seen.size()):
-			assert_ne(seen[i], seen[j], "%s and %s have different borders" % [RARITIES[i], RARITIES[j]])
+			assert_ne(seen[i], seen[j], "%s and %s have different boxes" % [RARITIES[i], RARITIES[j]])
 	var rope := _row(inv, "rope")
-	assert_eq(rope.rarity, "", "a plain item has no rarity")
-	assert_eq((rope.get_theme_stylebox("panel") as StyleBoxFlat).border_width_left, 1, "and keeps its fine gilt border")
-	for r in RARITIES:
-		assert_ne(_border(rope), ItemTile.rarity_edge(r), "the plain border is none of the rarities'")
-	# The picked row keeps its rarity colour, and a heavier edge.
+	assert_eq(_frame_colour(rope), Color.TRANSPARENT, "a plain item's picture has no box, only the room for one")
+	var sizes := {}
+	for id: String in ["rope", "ring_of_protection"]:
+		sizes[id] = _frame(_row(inv, id)).get_combined_minimum_size()
+	assert_eq(sizes["rope"], sizes["ring_of_protection"], "so the pictures line up")
+	# The picked row keeps the plain frame too: the colour never reaches round the whole item.
 	inv.call("_pick", ch.entry_of("ring_of_protection"))
 	await _frames(1)
 	var lit := _row(inv, "ring_of_protection")
-	assert_eq(_border(lit), ItemTile.rarity_edge("rare"), "the picked row is still blue")
-	assert_eq((lit.get_theme_stylebox("panel") as StyleBoxFlat).border_width_left, 3, "only thicker")
+	assert_ne((lit.get_theme_stylebox("panel") as StyleBoxFlat).border_color, ItemTile.rarity_edge("rare"), "the picked row isn't blue")
+	assert_eq(_frame_colour(lit), ItemTile.rarity_edge("rare"), "its picture is")
+	# The doll's tiles draw the same box round the picture.
+	ch.wear("ring_of_protection")
+	inv.call("_draw")
+	await _frames(1)
+	var worn: ItemTile = null
+	for n in inv.find_children("*", "ItemTile", true, false):
+		if str((n as ItemTile).payload.get("id", "")) == "ring_of_protection" and str((n as ItemTile).payload.get("from", "")) == "slot":
+			worn = n as ItemTile
+	assert_true(worn != null and worn.rarity == "rare", "the worn ring's tile knows it is rare")
+	# The stash's rows too.
+	GameState.story.stash.append({"id": "potion_of_speed", "qty": 1})
+	inv.call("_draw")
+	await _frames(1)
+	var in_stash := false
+	for n in inv.find_child("StashZone", true, false).find_children("RarityFrame", "PanelContainer", true, false):
+		in_stash = in_stash or (n as PanelContainer).get_theme_stylebox("panel").get("border_color") == ItemTile.rarity_edge("very_rare")
+	assert_true(in_stash, "the stashed Potion of Speed has a very rare box")
 
 
 ## A rarity the border has no colour for would fall back to lilac: every magic item must be one of the six.
@@ -278,7 +310,7 @@ func test_an_empty_attuned_list_says_why() -> void:
 	assert_true(_button(inv, "Attuned 0") != null)
 
 
-func test_the_shop_shares_the_tabs_and_edges() -> void:
+func test_the_shop_shares_the_tabs_and_picture_boxes() -> void:
 	var ch := GameState.story.party[0]
 	ch.add_item("potion_of_healing")
 	ch.add_item("antitoxin")
@@ -304,12 +336,128 @@ func test_the_shop_shares_the_tabs_and_edges() -> void:
 	assert_false(shop.ware_ids().is_empty())
 	for id in shop.ware_ids():
 		assert_eq(ShopScreen.ware_kind({"id": id}), "Potions", "%s is a potion" % id)
-	# A row's edge: the rarity's colour, heavier than a plain row's.
-	var edged := UiParts.row(Control.new(), Callable(), false, 7, ItemTile.rarity_edge("very_rare"))
-	assert_eq(_border(edged), ItemTile.rarity_edge("very_rare"))
-	assert_eq((edged.get_theme_stylebox("panel") as StyleBoxFlat).border_width_left, 2)
-	var plain := UiParts.row(Control.new())
-	assert_eq((plain.get_theme_stylebox("panel") as StyleBoxFlat).border_width_left, 1)
-	edged.free()
-	plain.free()
+	# A framed picture: the rarity's colour round it, or the same room bare.
+	var framed := UiParts.framed_icon("item", "potion_of_speed", ItemTile.rarity_edge("very_rare"))
+	assert_eq((framed.get_theme_stylebox("panel") as StyleBoxFlat).border_color, ItemTile.rarity_edge("very_rare"))
+	var bare := UiParts.framed_icon("item", "rope", Color.TRANSPARENT)
+	assert_eq(bare.get_combined_minimum_size(), framed.get_combined_minimum_size(), "bare or framed, the same room")
+	framed.free()
+	bare.free()
+	# On the sell side and the wares side the box is on the picture; the row keeps the plain gilt border.
+	shop.pick_filter("Potions")
+	var frames := shop.find_child("PackSide", true, false).find_children("RarityFrame", "PanelContainer", true, false)
+	assert_false(frames.is_empty(), "the pack side's potions have framed pictures")
+	var common := false
+	for f in frames:
+		common = common or (f as PanelContainer).get_theme_stylebox("panel").get("border_color") == ItemTile.rarity_edge("common")
+	assert_true(common, "the Potion of Healing is common")
 	shop.queue_free()
+
+
+func _rarity_chip(inv: InventoryScreen, r: String) -> Button:
+	return inv.find_child("Rarity_%s" % r, true, false) as Button
+
+
+func _press_chip(inv: InventoryScreen, r: String) -> void:
+	var chip := _rarity_chip(inv, r)
+	assert_true(chip != null and not chip.disabled, "the %s chip can be pressed" % r)
+	chip.pressed.emit()
+	await _frames(1)
+
+
+## The rarity of each shown item, as the filter sees it.
+func _rarities_shown(inv: InventoryScreen) -> Array[String]:
+	var out: Array[String] = []
+	for id in inv.shown_ids():
+		var r := InventoryScreen.rarity_of(Compendium.shared().item_data(id))
+		if not r in out:
+			out.append(r)
+	out.sort()
+	return out
+
+
+func test_the_rarity_filter_keeps_the_chosen_rarities_and_combines_with_the_rest() -> void:
+	var ids := {"common": "potion_of_healing", "uncommon": "ring_of_warmth", "rare": "ring_of_protection",
+		"very_rare": "potion_of_speed", "legendary": "potion_of_giant_strength_storm", "artifact": "orb_of_damara"}
+	var ch := GameState.story.party[0]
+	ch.attuned.clear()
+	for r: String in ids:
+		ch.add_item(str(ids[r]))
+	ch.add_item("rope")
+	ch.wear("ring_of_protection")
+	ch.attune("ring_of_protection")
+	var inv := await _open(0)
+	for r in RARITIES:
+		var chip := _rarity_chip(inv, r)
+		assert_true(chip != null, "a chip for %s" % r)
+		assert_false(chip.disabled, "%s: the pack has one" % r)
+		assert_ne(chip.focus_mode, Control.FOCUS_NONE, "%s: the keyboard and a pad can reach it" % r)
+		assert_true(chip.tooltip_text.begins_with("1 "), "%s: its tooltip counts: %s" % [r, chip.tooltip_text])
+	assert_true(inv.rarities.is_empty() and "rope" in inv.shown_ids(), "no rarity chosen keeps everything, rope too")
+	# One rarity: only magic items of it.
+	await _press_chip(inv, "rare")
+	assert_eq(inv.rarities, ["rare"] as Array[String])
+	assert_eq(_rarities_shown(inv), ["rare"] as Array[String], "only rare items: %s" % [inv.shown_ids()])
+	assert_true("ring_of_protection" in inv.shown_ids() and not "rope" in inv.shown_ids(), "the ring, not the rope")
+	# Two together.
+	await _press_chip(inv, "very_rare")
+	assert_eq(_rarities_shown(inv), ["rare", "very_rare"] as Array[String], "rare and very rare: %s" % [inv.shown_ids()])
+	assert_true("potion_of_speed" in inv.shown_ids() and "ring_of_protection" in inv.shown_ids())
+	# With a tab.
+	inv.filter = "Potions"
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids(), ["potion_of_speed"] as Array[String], "the Potions tab and very rare or rare: only the Potion of Speed")
+	# With the Attuned filter.
+	inv.filter = "All"
+	inv.marks = InventoryScreen.MARK_ATTUNED
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids(), ["ring_of_protection"] as Array[String], "attuned and rare or very rare: the ring")
+	# With the search.
+	inv.marks = ""
+	inv.search = "ring"
+	inv.call("_draw")
+	await _frames(1)
+	assert_eq(inv.shown_ids(), ["ring_of_protection"] as Array[String], "'ring' and rare or very rare")
+	inv.search = ""
+	# Nothing matches: it says why.
+	inv.rarities.assign(["artifact"])
+	inv.filter = "Potions"
+	inv.call("_draw")
+	await _frames(1)
+	assert_true(inv.shown_ids().is_empty())
+	var text := ""
+	for l in (inv.get("_list_foot") as Node).find_children("*", "Label", true, false):
+		if not (l as Node).is_queued_for_deletion():
+			text += (l as Label).text
+	assert_true(text.contains("artifact"), "an empty list names the rarity: %s" % text)
+	# Pressing a lit chip clears it; all cleared is everything again.
+	inv.filter = "All"
+	inv.call("_draw")
+	await _frames(1)
+	await _press_chip(inv, "artifact")
+	assert_true(inv.rarities.is_empty(), "pressed again: off")
+	assert_true("rope" in inv.shown_ids() and "orb_of_damara" in inv.shown_ids(), "everything again")
+
+
+func test_a_rarity_nothing_has_is_greyed_out_and_the_six_chips_fit() -> void:
+	var ch := GameState.story.party[1]
+	ch.add_item("potion_of_healing")
+	var inv := await _open(1)
+	assert_false(_rarity_chip(inv, "common").disabled, "the hero has a common item")
+	for r: String in ["uncommon", "rare", "very_rare", "legendary", "artifact"]:
+		assert_true(_rarity_chip(inv, r).disabled, "%s: nothing in the pack, so greyed out" % r)
+	# They fit the pack pane, beside their caption, at the narrowest the pack column goes.
+	var row := inv.find_child("RarityRow", true, false) as HBoxContainer
+	var zone := inv.find_child("PackZone", true, false) as Control
+	assert_true(row != null and zone != null)
+	assert_eq(row.get_child_count(), RARITIES.size() + 1, "the caption and six chips")
+	assert_true(row.get_combined_minimum_size().x <= row.size.x + 0.5,
+		"the rarity row needs %.0f px of %.0f" % [row.get_combined_minimum_size().x, row.size.x])
+	for c in row.get_children():
+		var r := (c as Control).get_global_rect()
+		assert_true(zone.get_global_rect().grow(0.5).encloses(r), "%s sits inside the pack pane" % c.name)
+	for c in row.get_children():
+		if c is Button:
+			assert_true((c as Button).get_minimum_size().x <= (c as Button).size.x + 0.5, "%s holds its label" % (c as Button).text)

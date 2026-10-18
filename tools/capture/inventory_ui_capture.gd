@@ -1,7 +1,7 @@
 extends Node
 ## The inventory's categories, rarity borders and Attuned filter (inventory-ui lane): a pack with potions of every rarity,
 ## quest items, magic items of each rarity and some attuned, then the screens one shot each. LANE_ONLY=all,magic,potions,
-## rarities,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
+## rarities,rarity_filter,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
 ## takes the "before" shots on an older build).
 ## make capture SCENE=res://tools/capture/inventory_ui_capture.tscn NAME=inventory-ui/after FRAMES=10
 
@@ -84,6 +84,19 @@ func capture_shots(tool: Node, out: String) -> void:
 		var scroll := list.get_parent() as ScrollContainer
 		scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
 		await _shoot(tool, "%s_rarities.png" % out)
+		root.call("close_screen")
+	if _wants("rarity_filter") and _has_tab("Potions"):
+		# The Rarity filter on rare and very rare, and then with the Potions tab as well.
+		_inventory(func(inv: InventoryScreen) -> void:
+			inv.rarities.assign(["rare", "very_rare"])
+			inv.selected = "ring_of_protection")
+		await _shoot(tool, "%s_rarity_filter.png" % out)
+		root.call("close_screen")
+		_inventory(func(inv: InventoryScreen) -> void:
+			inv.rarities.assign(["common", "very_rare", "legendary"])
+			inv.filter = "Potions"
+			inv.selected = "potion_of_speed")
+		await _shoot(tool, "%s_rarity_filter_potions.png" % out)
 		root.call("close_screen")
 	if _wants("potions") and _has_tab("Potions"):
 		_inventory(func(inv: InventoryScreen) -> void:
