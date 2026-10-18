@@ -32,9 +32,7 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   the local main plus the lane branches listed in ~/.curse-of-strahd/edge/branches.txt (handed off, not merged yet), merged in
   a throwaway worktree, on its own copy of the saves and settings (the real ones are never written). The build thread adds a
   branch with `make edge-add BRANCH=<branch>` when it takes a hand-off and drops it with `make edge-remove` once merged.
-  `make run-main` plays a checkout's own code, as `make run` used to. `make play` is his stable copy
-  (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
-  clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
+  `make run-main` plays a checkout's own code, as `make run` used to.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.

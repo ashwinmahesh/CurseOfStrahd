@@ -57,12 +57,6 @@ edge-reset:
 edge-test:
 	python3 -m unittest discover -s tests/tools -p 'test_edge*.py' -v
 
-## The owner's stable copy (P1, tools/play/play.sh): ~/Documents/CurseOfStrahdGame-play moves forward to the newest
-## main that passed make ci (refs/play/green), imports what changed, then starts. PLAY_NO_RUN=1 only updates it.
-.PHONY: play
-play:
-	@tools/play/play.sh
-
 ## Release builds (owner, 2026-10-08): the Windows export (export_presets.cfg) and, from the same pack, the Mac app
 ## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.
 ## Needs the 4.7.2 export templates installed. make release [OUT=<folder>] [VERSION=1.0.0]; OUT defaults to ../strahd-builds.

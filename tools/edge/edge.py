@@ -158,7 +158,7 @@ class Config:
 
     @property
     def real_data(self) -> Path:
-        """Where a dev build (make run, make run-main, make play) keeps its saves and settings."""
+        """Where a dev build (make run, make run-main) keeps its saves and settings."""
         return self.support / "Godot" / "app_userdata" / self.project_name
 
     @property

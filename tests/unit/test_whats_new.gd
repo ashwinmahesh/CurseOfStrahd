@@ -1,5 +1,5 @@
 extends TestCase
-## The title's What's new (Q2, ui/menu/whats_new.gd): which of the play copy's changes the player hasn't seen yet,
+## The title's What's new (Q2, ui/menu/whats_new.gd): which of the build's changes the player hasn't seen yet,
 ## and the panel that lists them by day and marks them seen when it closes.
 
 const DAY := 86400
@@ -56,7 +56,7 @@ func test_once_seen_only_newer_changes_show() -> void:
 	WhatsNew.mark_seen()
 	assert_true(WhatsNew.unseen().is_empty(), "nothing is new right after it was seen")
 	WhatsNew.build_override = _build([{"commit": "cccc0004", "date": "2026-10-08", "at": NOW + DAY, "lines": ["Undo a move"]}])
-	assert_eq(_lines(WhatsNew.unseen()), ["Undo a move"], "the next play copy shows only what it added")
+	assert_eq(_lines(WhatsNew.unseen()), ["Undo a move"], "the next build shows only what it added")
 
 
 func test_the_panel_lists_them_by_day_and_closing_marks_them_seen() -> void:

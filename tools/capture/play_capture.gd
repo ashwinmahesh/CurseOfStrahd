@@ -1,6 +1,6 @@
 extends Node
-## The play build's screens for captures (Q2, P11): the title with What's new open (the list make play writes, from
-## builds/play_build.json when this checkout has one, run tools/play/whats_new.py . first), then the error notice.
+## The play build's screens for captures (Q2, P11): the title with What's new open (the list in builds/play_build.json when
+## this checkout has one; nothing writes it since make play was removed), then the error notice.
 ## make capture SCENE=res://tools/capture/play_capture.tscn NAME=play
 
 const SEEN := "user://capture_whats_new.cfg"
