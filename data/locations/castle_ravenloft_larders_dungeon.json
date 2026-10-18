@@ -1326,7 +1326,7 @@
             22,
             2
           ],
-          "hp": 108,
+          "hp": 135,
           "facing": "southwest"
         },
         {
@@ -1335,7 +1335,7 @@
             25,
             2
           ],
-          "hp": 108,
+          "hp": 135,
           "facing": "west"
         },
         {
@@ -1344,7 +1344,7 @@
             24,
             4
           ],
-          "hp": 108,
+          "hp": 135,
           "facing": "west"
         },
         {
@@ -1353,34 +1353,34 @@
             14,
             2
           ],
-          "hp": 108,
+          "hp": 135,
           "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            21,
-            9
+            12,
+            5
           ],
-          "hp": 108,
+          "hp": 135,
           "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            21,
-            13
+            10,
+            4
           ],
-          "hp": 108,
+          "hp": 135,
           "unseen": true
         },
         {
           "monster": "helmed_horror",
           "cell": [
-            21,
-            6
+            11,
+            2
           ],
-          "hp": 108,
+          "hp": 135,
           "unseen": true
         },
         {
@@ -1389,7 +1389,7 @@
             16,
             5
           ],
-          "hp": 108,
+          "hp": 135,
           "unseen": true
         }
       ]
