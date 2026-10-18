@@ -197,3 +197,20 @@ func test_the_vrock_block_is_the_2025_one() -> void:
 	assert_eq(int((screech["uses"] as Dictionary)["count"]), 1, "Stunning Screech once a day")
 	assert_eq(str(((screech["damage"] as Array)[0] as Dictionary)["dice"]), "3d6")
 
+
+func test_the_wake_fires_as_the_party_steps_out_of_the_tower() -> void:
+	var enc := _vrocks(9, "fought")
+	var area_id := str(enc["trigger"]).get_slice(":", 1)
+	var area := {}
+	for a: Variant in _loc(PASS)["areas"]:
+		if str((a as Dictionary)["id"]) == area_id:
+			area = a as Dictionary
+	assert_false(area.is_empty(), "the trigger names an area the pass has")
+	var lo := _xy((area["cells"] as Array)[0])
+	var hi := _xy((area["cells"] as Array)[1])
+	var out := _xy((_loc(PASS)["spawns"] as Dictionary)["from_tower"])
+	assert_true(out.x >= lo.x and out.x <= hi.x and out.y >= lo.y and out.y <= hi.y, "the tower door lets out inside that area")
+	for m: Variant in enc["monsters"]:
+		var at := _xy((m as Dictionary)["cell"])
+		assert_true(at.x >= lo.x - 1 and at.x <= hi.x + 1 and at.y >= lo.y and at.y <= hi.y, "and the demons come down in front of the gate")
+
