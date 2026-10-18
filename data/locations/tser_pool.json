@@ -850,6 +850,19 @@
       "label": "a false floor in the broken cart",
       "model": "broken_boards",
       "item": "bag_of_holding"
+    },
+    {
+      "id": "tser_dinte",
+      "cell": [
+        14,
+        19
+      ],
+      "kind": "examine",
+      "label": "A handsome dun gelding",
+      "model": "horse",
+      "facing": "south",
+      "dialogue": "svalich_road/radus_horse:dinte",
+      "when": "not flag.dinte_sold"
     }
   ],
   "containers": [

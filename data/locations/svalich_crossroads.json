@@ -2035,6 +2035,32 @@
       "dialogue": "svalich_road/the_tinkers_wagon:iosif",
       "when": "flag.wagon_slain and quest.the_tinkers_wagon != done",
       "facing": "north"
+    },
+    {
+      "npc": "costica",
+      "cell": [
+        29,
+        16
+      ],
+      "dialogue": "svalich_road/costica:start",
+      "facing": "west",
+      "hours": [
+        8,
+        18
+      ]
+    },
+    {
+      "npc": "fennimore",
+      "cell": [
+        24,
+        12
+      ],
+      "dialogue": "svalich_road/fennimore:start",
+      "facing": "west",
+      "hours": [
+        7,
+        19
+      ]
     }
   ]
 }

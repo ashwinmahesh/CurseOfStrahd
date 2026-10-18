@@ -1,0 +1,33 @@
+{
+  "id": "fennimores_guide",
+  "name": "Fennimore's Guide: The Tser Pool",
+  "summary": "Ambrose Fennimore is writing the definitive guidebook to the valley and is not sure the Tser Pool camp's famous plum stew is really plum.",
+  "giver": "fennimore",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Ambrose Fennimore, a travel writer, has rated the Tser Pool camp three stars and its plum stew excellent, but he isn't certain the stew is plum. He'll pay ten gold to know what is really in Old Dorina's pot.",
+      "objectives": [
+        "Find out what is really in Old Dorina's stew"
+      ],
+      "hint": "Ask Old Dorina at the stewpot in the Tser Pool camp what's really in her stew, and taste it.",
+      "ends": ""
+    },
+    {
+      "id": "known",
+      "journal": "Old Dorina's stew is plum, onion and hare, over a base that has never been emptied in sixty years. Her wedding spoon is somewhere at the bottom. Fennimore will want to hear it.",
+      "objectives": [
+        "Tell Fennimore what is in the stew"
+      ],
+      "hint": "Tell Ambrose Fennimore, near the signpost at the Old Svalich crossroads, what is in Old Dorina's stew.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Fennimore has rewritten the Tser Pool entry: three stars, and the stew is plum, onion, hare and sixty years. Ask for the bottom. He has paid ten gold and is off to Vallaki next.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

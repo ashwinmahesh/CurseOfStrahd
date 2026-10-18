@@ -1,0 +1,36 @@
+== decoy_ask
+Radu: Something shaped like a horse, to stand in the dark for the devil's carriage? You are mad. Wait.
+Radu [smile]: We have the Winter Horse! Two men's worth of legs, three sacks of straw, and a face like a wet Sunday.
+Radu [sly]: It belongs to the troupe, which means it belongs to Lavinia. She will say yes if you ask nicely, so I will say yes for her now.
+Radu: Oh, it is a terrible plan. A shameful, dishonest, horse-trader's plan. Fetch me a lantern.
+
+== decoy_given
+Narrator: Radu drags a lopsided shape from the props wagon: a cloth-and-straw beast with button eyes and a very long, mournful face.
+Radu: Take the grease and the soot from the stage lamps and rub it into the canvas until it looks like midnight.
+Narrator: propped up on two sticks in the firelight, the blackened thing looks less like a stallion and more like a haunted sack of oats.
+Radu [neutral]: Do not laugh at him. He has played the stallion in three tragedies and a farce, and he is nobody's fool.
+
+== swap_intro
+Narrator: Midnight is close at the crossroads, and the mist lies thick around the leaning stone where Steaua pulls at her tether.
+Narrator: The mark on her grey flank still smokes with a faint, foul grease, darkening the hair around the burn.
+Narrator: Beside her, propped on forked sticks in the ditch, the soot-blackened Winter Horse stares mournfully into the fog.
+
+== swap_ok
+Narrator: The black cord slips from Steaua's halter and knots tight around the canvas neck of the decoy.
+Narrator: Freed from the stone, the grey mare blows once into your palm, wheels round, and gallops hard for the campfires down the road.
+Narrator: A single coach lamp swings up the hill from the castle, drawing the silent carriage and the dark shape in its traces.
+Narrator: The thing in the harness stops, turns its blind head toward the straw horse, looks once into the dark trees, and takes the cord.
+Narrator: With a dry creak of iron, the carriage turns in the road, dragging the lopsided bundle of soot and straw behind it into the mist.
+Narrator: By the time first light touches the Tser Pool, the smoking brand on Steaua's flank will have gone cold and faded away.
+
+== swap_fail
+Narrator: Steaua's hooves are already fading down the camp road when the single coach lamp halts ten paces short of the milestone.
+Narrator: Nothing left tied to the stone moves or breathes, save for a handful of dry straw slipping from a torn seam.
+Narrator: The dark shape in the traces does not take the cord; instead, the carriage door clicks open, and its escort steps down into the mud.
+Narrator: Cold eyes turn from the stuffed rag on the milestone toward the ditch where you are hiding.
+
+== return_decoy
+Narrator: In the pale morning by the corral, Steaua noses at a bucket of oats while Radu laughs until he has to sit down on the split-rail fence.
+Radu [smile]: Forty years I have traded horses in this valley, and I thought I knew every crooked trick on four legs.
+Radu [smile]: I have never sold a mare to the devil before, and I have certainly never bought one back with two yards of dirty canvas.
+Radu [sly]: Only do me one small favour, my friends: if Lavinia asks where the Winter Horse went, tell her he ran off with a circus.

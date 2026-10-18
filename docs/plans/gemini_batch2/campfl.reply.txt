@@ -1,0 +1,24 @@
+== dorina_stew
+Old Dorina: You already ate your share, and now you want the history of the iron. Good.
+Old Dorina [smile]: Sixty years this water has been boiling. A pot like this is a family, child.
+Old Dorina: You do not take from a family to see what is at the bottom. You only add to it.
+
+== zora_knots
+Zora: You are looking at the cord. Everyone looks at the cord eventually.
+Zora: I tie a knot for every stranger who walks into the light of our fire.
+Zora [weary]: When the road takes them, or the mist does, I sit by the wagon and unpick it.
+Narrator: Zora glances down at her belt, then up at your faces, and keeps her thumb over the end of the string.
+
+== zora_knots_count
+Zora [smile]: Look here. Your knots are still tight against the leather.
+Zora: That is the best news I have had in a week, and it has been a very long week.
+
+== petru_blade
+Petru: A blade nobody can sharpen? No. There is only iron nobody has been patient enough to teach.
+Petru: Give me a stone, a bucket of tallow, and an hour without anyone talking to me.
+Narrator: Petru looks for a long moment at the sword at your hip, then raises his dark eyes to your face.
+
+== iancu_stump
+Iancu [angry]: Nine into the white of the knot, and the tenth in the bark beside it. Look at that.
+Iancu: Everyone tells me nine is enough for a man on the road. Nine is only enough until the tenth is the one you need.
+Iancu [weary]: Tell me the truth. Have you ever missed a throw that mattered, and woken up the next morning anyway?

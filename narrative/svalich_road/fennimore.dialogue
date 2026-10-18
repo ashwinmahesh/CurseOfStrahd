@@ -1,0 +1,94 @@
+# Ambrose Fennimore, travel writer (NPC plan batch 2; docs/plans/npc_depth_and_quests.md): eleven years in the valley and
+# nine hundred pages into a guidebook that rates everything in stars. He stands by the signpost at the Old Svalich
+# crossroads by day. Chapter one is a side quest, Fennimore's Guide: The Tser Pool: he isn't sure the camp's famous
+# plum stew is plum; Old Dorina, at the pot, tells the truth (tasting it is enough; asking gently shortcuts it). No
+# fight, nothing locked behind a roll. His other chapters come with the later regions. Lines drafted by Gemini through
+# the ai-bridge, edited; every line here is unvoiced for now.
+
+~ start
+if quest.fennimores_guide == done
+Fennimore [weary]: Ah, it is you. I am currently grading the afternoon weather: one star. Damp, grey, and entirely derivative of yesterday.
+Fennimore: You have not heard from anyone up the road whether it intends to improve before winter, have you?
+-> menu
+endif
+if flag.fennimore_met
+Fennimore [smile]: Most obliged for the company. I am here by the signpost, or on the road, or wherever the road chooses to leave me.
+-> menu
+endif
+set fennimore_met
+Narrator: A neat man in a good coat gone shabby at the cuffs stands by the signpost, pencil in hand and satchel at his hip.
+Narrator: He squints at the rotten wood, makes a small mark in a thick ledger, and looks up as you approach.
+Fennimore [smile]: Good day. Make a note, if you keep notes: the crossroads signpost is one star. Legible, if you already know where you are.
+Fennimore: Ambrose Fennimore, at your service. Eleven years in this valley, and nine hundred pages into its only reliable guidebook.
+Fennimore: It is a work of great patience. Every inn, every bridge, every moderately polite ghost, all graded on a five-star scale.
+Fennimore: Tell me, have you by any chance come up from the Vistani camp at Tser Pool?
+-> menu
+
+~ menu
+* [if not quest.fennimores_guide] May we see the book? -> book
+* [if quest.fennimores_guide == known] We found out what is in the stew. -> report
+* [if quest.radus_unsellable_horse == offered] There is a horse for sale at the Tser Pool camp. -> svalich_road/radus_horse:fennimore_horse
+* Goodbye. -> END
+
+~ book
+Fennimore: Look here. I keep the proofs in order of the road, so a traveller may read as he walks.
+Fennimore: "The Crossroads Signpost: one star. Points faithfully toward two places you should not go."
+Fennimore: "The Crossroads Gallows: one star. Serviceable timber, poor view, no seating."
+Fennimore: "The Blue Water Inn, Vallaki: two stars. Wolves." And beneath that, "Tser Pool Camp: three stars. The plum stew is excellent."
+Fennimore [weary]: Only I have underlined "plum" twice in pencil. My tongue says onion, hare, woodsmoke, and something considerably older than a fruit.
+* Can we find out about the stew? -> ask
+* Another time. -> menu
+
+~ ask
+Fennimore: A guidebook that guesses at its soups is no better than a rumor, and this valley has rumors enough.
+Fennimore: I would go back and ask Old Dorina myself, but she looks at my notebook the way a butcher looks at a stray dog.
+Fennimore: If your road takes you past her fire, find out what is truly at the bottom of that iron pot.
+Fennimore: I will pay ten gold pieces for the verified recipe. An unconfirmed fact is a blemish on the page.
+quest fennimores_guide asked
+Fennimore [smile]: Most obliged. You will find me here by the signpost, or on the road, or wherever the road chooses to leave me.
+-> END
+
+# --- Old Dorina at the Tser Pool stewpot (tser_camp:dorina's menu jumps here) ---
+
+~ dorina_ask
+Old Dorina: What is in it? Plums, child. Good dark plums, four big onions, and a fat hare Radu caught by the water.
+Old Dorina: A pinch of salt, a heel of black bread to thicken the liquor, and whatever herbs were not drowned by the rain.
+Old Dorina [weary]: That is all that went in today. What was already waiting for it in the iron is another matter.
+* (Taste the stew.) -> dorina_taste
+* [Persuasion DC 12] (Ask her, gently, about the bottom of the pot.) -> dorina_truth | dorina_shy
+* Never mind. -> svalich_road/tser_camp:dorina
+
+~ dorina_taste
+Narrator: You lift a spoonful from the dark broth. It is sweet with plum at first, then smoky, rich with onion and game.
+Narrator: Underneath all three sits a deeper, heavier taste, dark as cellar stone and older than anything grown this year.
+Narrator: Old Dorina watches your throat as you swallow, her hands resting flat on the handle of her ladle.
+-> dorina_truth
+
+~ dorina_truth
+quest fennimores_guide known
+Old Dorina: Sixty years that pot has hung over my fire, and for sixty years no one has seen the iron at the bottom.
+Old Dorina: Every night we eat it down to the last three fingers, and every morning I build the new stew on top of the old.
+Old Dorina: The stock at the very bottom is older than Stanimir. It remembers winters his mother forgot.
+Old Dorina [sad]: The night my husband walked out toward the road and was carried home, my silver wedding spoon slipped from my hand into the boil.
+Old Dorina [sad]: I never fished it out. You do not empty a pot that keeps the camp alive just to go looking for silver.
+Old Dorina [smile]: So it stays down there, seasoning the broth. Nobody who eats from my ladle leaves with a thin belly.
+-> END
+
+~ dorina_shy
+Old Dorina [angry]: Enough questions! What are you, clerks for the devil up the hill, counting every onion in an old woman's pot?
+Old Dorina: Sit down, finish your bowl while it has heat in it, and keep your noses out of my iron.
+-> dorina_ask
+
+# --- Back at the signpost ---
+
+~ report
+quest fennimores_guide done
+gold +10
+Fennimore [smile]: Sixty years! Never emptied once, and a silver wedding spoon resting at the bottom like a river stone.
+Fennimore: Oh, that is first-rate. That is the sort of detail a man stays eleven years in the fog to record.
+Fennimore: Let me rub out that shameful little question mark and write it properly while the lead is sharp.
+Fennimore: "Tser Pool: three stars. The stew is plum, onion, hare and sixty years. Ask for the bottom."
+Fennimore [smile]: Read that aloud and tell me it does not make you hungry and slightly reflective at the same time.
+Fennimore: Here are your ten gold pieces, well earned and duly noted under research expenses.
+Fennimore: I am off toward Vallaki next. If you find any of my facts wanting along the road, do tell me before I go to press.
+-> END

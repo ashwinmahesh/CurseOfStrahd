@@ -1,0 +1,20 @@
+== climb_rope_ok
+Narrator: You knot the rope fast around a pine at the lip of the gorge and test your weight against the bark.
+Narrator: Hand over hand, you go down the wet black rock with the cold spray of the falls beating into your face.
+Narrator: The hemp holds, and your boots find the narrow ledge twenty feet below.
+
+== spell_ok_day
+Narrator: Magic pulls at the soles of your boots with a brief, weightless tug, as if the gorge has forgotten how to drop you.
+Narrator: A heartbeat later, you stand on the wet stone ledge beside the boy.
+
+== dinte_lead
+Narrator: You slip the rope over Dinte's neck. He does not stop you, which with Dinte is the closest thing to permission.
+Narrator: You walk him out through the gate with his big yellow teeth kept thoughtfully near your elbow.
+
+== costica_horse_wait
+Costica [weary]: A horse? In all my years on this road, I have never been able to afford the pleasure of one.
+Costica [smile]: Bring the creature here when you can, friend, and we will see what two sensible people can arrange.
+
+== fennimore_horse_wait
+Fennimore: A horse for sale, you say? I am reluctant to appraise an animal strictly from rumour.
+Fennimore: Bring the beast here by the signpost, and we shall see what terms can be agreed.

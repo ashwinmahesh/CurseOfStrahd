@@ -1,0 +1,18 @@
+{
+  "id": "costica",
+  "name": "Costica",
+  "title": "Highwayman of the Old Svalich Road",
+  "summary": "The worst highwayman in Barovia: Bildrath's cousin, who robs politely, apologises while he does it, holds his grandmother's sword like a candle and spends everything he steals buying it back from his cousin at ten times the price. He walks, because he has no horse, and he wants one robbery that works.",
+  "portrait": "bandit",
+  "sprite": "bandit",
+  "attitude": "friendly",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "highwayman",
+    "svalich_road"
+  ],
+  "region": "svalich_road",
+  "pronouns": "he/him"
+}

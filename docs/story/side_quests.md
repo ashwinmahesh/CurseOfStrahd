@@ -244,6 +244,11 @@ bolts home and the carriage comes early; failed or left alone, she is black by m
   below 4 the lead horse at 50 HP with specters and zombies. An attention mark (`black_carriage`, +1).
 - Back at the camp Radu pays either way (`home` if she lived, given to Radu or Luminita; `mourned` if not): 120 gp of
   the castle's gold and a Rod of the Pact Keeper, +1 (uncommon).
+- **A decoy (NPC plan batch 2, 2026-10-18):** Radu can lend the troupe's Winter Horse (a cloth-and-straw play horse),
+  and with lamp soot it can stand in the dark in Steaua's place. At the milestone the swap is offered before any
+  calming is tried (a failed one-try calm loses her; the swap never does): Sleight of Hand DC 13, or Stealth DC 13 from
+  the ditch. Clean, the carriage takes the straw horse and goes (`carriage_fooled`, no fight, `xp fight` pays it) and
+  Steaua is home, `saved`; fumbled, or switched in plain sight, it is the escort fight with Steaua already away.
 
 ### Called by Name (`called_by_name`, narrative/svalich_road/called_by_name.dialogue; batch 2)
 
@@ -262,6 +267,11 @@ decides whether someone is lured toward the edge, which starts the fight with th
   leave the autopilot with no target). tests/integration/test_scaled_fights_barovia.gd holds all six at 4 to 6.
 - Then Nelu comes up (Athletics DC 13 on a rope, Misty Step or Spider Climb), and Tobar pays at the camp: 100 gp and an
   Efficient Quiver (uncommon). Nelu stays by the fire afterwards (`tser_nelu`).
+- **By day (NPC plan batch 2, 2026-10-18):** the same ledge is there in daylight, with no lights. From the lip a party
+  member sees the boy, who hails them (he tells them the voices only come at dark); Athletics DC 13 on a rope, Survival
+  DC 12 for the old goat path, Misty Step or Spider Climb all get him up, and the wisps are never met (`xp fight` pays
+  the fight). A failed climb costs half an hour and he says to try again; "come back after dark" is the night fight as
+  before. Once he's out, the falls are quiet at night.
 
 ### The Dancing Bear (`the_dancing_bear`, narrative/svalich_road/the_dancing_bear.dialogue; batch 7, level 3)
 
@@ -296,6 +306,37 @@ unawares).
   6, the reading's reward (2026-10-13).
 - Tsura goes back to the camp to tell her mother herself, or on to Krezk; Iancu's line says which. She gives the party
   the wedding rings, Boon Companion's Bands (uncommon), and 40 gp.
+
+### Stanimir's Fire (`stanimirs_fire`, narrative/svalich_road/stanimirs_fire.dialogue; NPC plan batch 2)
+
+Once Stanimir has told his story, "We have a tale of our own" takes up his bet: a cask of plum wine against the claim that
+nobody tells a better tale at his fire. Three rounds: a tale (Performance or Deception DC 12, or told plainly), a true
+tale of the valley (History or Nature DC 12, or plainly), then the camp bangs its cups. Two good rounds win; an
+entertainer in the party (Wren) works the crowd for one more. Lose and the forfeit is a dance on Lavinia's plank stage
+in front of the camp. **Twist:** both prizes end the quest; the cask comes either way (Stanimir's Plum Wine, a small
+cask, consumable).
+
+- No fight, nothing locked: the plain tellings need no roll.
+
+### Radu's Unsellable Horse (`radus_unsellable_horse`, narrative/svalich_road/radus_horse.dialogue; NPC plan batch 2)
+
+Radu can't sell Dinte ("tooth"), a handsome dun gelding who bites everyone, and offers 15 gp to whoever finds him a home
+(the pen prop `tser_dinte`; Animal Handling DC 12, a ranger or a druid is let near; a bite only costs a sleeve). The
+party leads him out on a rope (no roll) to a buyer on the road: Costica, who has no horse and 3 gp and whom Dinte
+doesn't bite, or Ambrose Fennimore, who pays 25 gp and is bitten at once. Radu pays when told.
+
+- No fight. Reward: the buyer's gold and Radu's 15 gp, and Radu's version of the story, in which the party is very tall.
+
+### Fennimore's Guide: The Tser Pool (`fennimores_guide`, narrative/svalich_road/fennimore.dialogue; NPC plan batch 2)
+
+Ambrose Fennimore (new NPC, at the Old Svalich crossroads signpost by day), a travel writer eleven years into the
+valley and nine hundred pages into a guidebook, has rated the Tser Pool camp three stars and its plum stew excellent,
+and isn't sure the stew is plum. Old Dorina (Persuasion DC 12 gently, or just tasting it, no roll) admits the pot has
+not been emptied in sixty years and her wedding spoon is at the bottom. Fennimore rewrites the entry. His other chapters
+come with the later regions.
+
+- No fight. Reward: 10 gp. Costica, the worst highwayman in Barovia, shares the crossroads (new NPC, svalich_road/
+  costica.dialogue; no quest of his own), and the camp has new flavour: Dorina's pot, Zora's cord of knots, Petru's blades.
 
 ## Vallaki (level 5)
 
@@ -1214,4 +1255,8 @@ gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat,
 goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
 Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
 parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
-getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue.
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 2 (2026-10-18),
+the Tser Pool camp and the crossroads: stanimirs_fire.dialogue, radus_horse.dialogue, fennimore.dialogue and
+costica.dialogue in full (new speakers Costica and Ambrose Fennimore); in called_by_name.dialogue the by-day nodes; in
+grey_mare.dialogue the decoy nodes; in tser_camp.dialogue Dorina's pot, Zora's cord and Petru's blades; and one new
+option in stanimir.dialogue.

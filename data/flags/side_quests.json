@@ -1660,6 +1660,61 @@
       "id": "pasture_flock_safe",
       "type": "bool",
       "summary": "The flock and the old nanny were got in before dark and the mist found nothing to push at: no wolves came (The Goatherd's Count)."
+    },
+    {
+      "id": "costica_met",
+      "type": "bool",
+      "summary": "The party has met Costica, the worst highwayman in Barovia, on the Old Svalich Road."
+    },
+    {
+      "id": "costica_paid",
+      "type": "bool",
+      "summary": "The party paid Costica two gold and got a receipt (his later chat about the hat)."
+    },
+    {
+      "id": "dinte_led",
+      "type": "bool",
+      "summary": "The party led Dinte out of Radu's pen on a rope (Radu's Unsellable Horse)."
+    },
+    {
+      "id": "dinte_sold",
+      "type": "bool",
+      "summary": "Dinte has a buyer, Costica or Ambrose Fennimore; he is gone from the pen."
+    },
+    {
+      "id": "radu_horse_paid",
+      "type": "bool",
+      "summary": "Radu paid the 15 gp commission for finding Dinte a home."
+    },
+    {
+      "id": "fennimore_met",
+      "type": "bool",
+      "summary": "The party has met Ambrose Fennimore, the travel writer, at the crossroads signpost."
+    },
+    {
+      "id": "fire_score",
+      "type": "int",
+      "summary": "Stanimir's Fire: how many of the three rounds the party has won (two win the cask)."
+    },
+    {
+      "id": "decoy_given",
+      "type": "bool",
+      "summary": "Radu lent the party the troupe's Winter Horse to leave in Steaua's place at the milestone (The Grey Mare)."
+    },
+    {
+      "id": "carriage_fooled",
+      "type": "bool",
+      "summary": "The black carriage took the soot-blackened Winter Horse instead of Steaua and went away; no fight (The Grey Mare)."
+    },
+    {
+      "id": "dorina_pot_eaten",
+      "type": "bool",
+      "summary": "The party has eaten Old Dorina's stew (so she'll talk about the pot)."
+    },
+    {
+      "id": "zora_knots_seen",
+      "type": "bool",
+      "summary": "Zora showed the party the cord of knots at her belt."
     }
   ]
 }

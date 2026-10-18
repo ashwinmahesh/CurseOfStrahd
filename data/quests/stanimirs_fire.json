@@ -1,0 +1,24 @@
+{
+  "id": "stanimirs_fire",
+  "name": "Stanimir's Fire",
+  "summary": "Stanimir has bet his cask of plum wine that nobody can tell a better tale at his fire than he can.",
+  "giver": "stanimir",
+  "region": "svalich_road",
+  "stages": [
+    {
+      "id": "challenged",
+      "journal": "Stanimir has put his cask of plum wine on the log and says nobody has told a better tale at his fire than he has. Three rounds: a tale, a true tale of the valley, and the camp's vote. If we lose, we dance on Lavinia's stage.",
+      "objectives": [
+        "Take up Stanimir's challenge at the fire"
+      ],
+      "hint": "Talk to Stanimir at the bonfire in the Tser Pool camp and take up his challenge.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "We told our tales at Stanimir's fire, the camp banged its cups, and one way or another everybody laughed. Stanimir says it was the best night the camp has had in thirty years, and he'll be gracious about it for exactly one night.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

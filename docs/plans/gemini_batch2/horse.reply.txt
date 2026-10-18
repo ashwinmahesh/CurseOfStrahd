@@ -1,0 +1,45 @@
+== offer
+Radu [weary]: One. Look at him over there by the post. That is Dinte. It means "tooth" in our tongue, for reasons that will become clear immediately.
+Radu: There is nothing in this camp half as handsome, and nothing in the whole valley half as terrible.
+Radu: The last man who tried to look at his hooves went home without a coat button and most of his left trouser leg.
+Radu [sly]: He is not wicked, mind you. Only committed to his craft. Still, a horse you cannot saddle is just an expensive neighbour.
+Radu [smile]: Find him an owner who will keep him and I will put fifteen gold pieces in your hand. How you keep your fingers is your own business.
+== dinte_look
+Narrator: A big, handsome dun gelding stands in the pen, watching your approach with great interest and all of his teeth showing.
+Narrator: The heavy oak post beside him is scarred by hooves and chewed neatly to a point at the top.
+Narrator: Apart from the teeth, he has a remarkably sweet and honest face.
+== dinte_calm
+Narrator: You speak to him in a low voice and hold out a flat palm, waiting for him to decide what to make of it.
+Narrator: Dinte sniffs your fingers, considers the matter at length, and lowers his head to let you scratch his nose.
+Narrator: Behind you, the entire camp watches this in absolute, reverent silence.
+== dinte_bites
+Narrator: Dinte takes a thick fold of your sleeve between his teeth and shakes it once, with great dignity.
+Narrator: When he has made his point, he lets go and steps back to admire the rip.
+Narrator: He looks tremendously pleased with himself.
+== costica_horse
+Costica [sad]: A horse? For me? I have always wanted a horse. A highwayman without a horse is only a man standing in a road.
+Costica: People see me coming from half a mile away because I have to jog. It ruins the intimidation entirely.
+Costica [weary]: I only have three gold pieces saved from my lunch money. And my grandmother's willow basket, if you would take that.
+Narrator: Dinte steps forward, sniffs Costica's threadbare collar, and lays his heavy head gently on the highwayman's shoulder.
+Costica [smile]: Oh. Hello, sir. I think he likes my coat.
+== costica_sold
+Costica [smile]: Thank you. Thank you very much. I will brush him every evening, and if he is unhappy I promise I will bring him straight back.
+Narrator: Costica takes the rope in both hands and leads Dinte down the road with enormous, breathless care.
+Narrator: Dinte walks beside him like a lamb and does not bite a single thing.
+Radu: I have owned that horse for three years. He has never once done that.
+== fennimore_horse
+Fennimore [weary]: A horse? My dear friend, I have been walking this damp valley for eleven years. My boots are more mud than leather.
+Fennimore [smile]: I would gladly pay twenty-five gold for anything with four legs, a tail, and the general shape of a beast of burden.
+Fennimore: Now then, let us have a look at the fellow. Good breeding shows in the nostrils, I always say.
+Narrator: Fennimore approaches the gelding with the brisk, cheerful confidence of a man who has never been bitten by a horse.
+Narrator: Dinte bites him on the waistcoat at once.
+== fennimore_sold
+Fennimore [weary]: Well. A spirited animal. Very forward in his manners. Here is your twenty-five gold, as promised.
+Fennimore: I shall give him four stars in the pamphlet. Handsome coat, lively temperament, somewhat abrupt greeting.
+Narrator: Fennimore climbs into the saddle with great effort and very little grace, settling himself the wrong way round before correcting it.
+Narrator: Dinte allows this with an air of tremendous patience, having already established who is in charge.
+== radu_pays
+Radu [smile]: Gone! Actually gone, and with all his legs and most of yours! I did not think I would live to see the day.
+Radu: Here, fifteen gold, counted out fair. Never say Radu does not honour a bargain.
+Radu [sly]: To tell the truth, the paddock looks a little empty without him glaring at me over the rail.
+Radu [smile]: I will tell this story at every fire for the rest of my life. Do not worry, in my version you are all seven feet tall.
