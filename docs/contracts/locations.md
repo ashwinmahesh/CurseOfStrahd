@@ -147,6 +147,10 @@ or false for a pocket nobody can pick).
 
 `id`, `name`, `summary`, `giver`, `kind`, `stages: [{id, journal, objectives: [text], hint, ends: false|"success"|"failure"}]`.
 `kind: "main"` puts a quest under the journal's Main tab (the story's spine); every other quest is under Other.
+The Other tab files its quests under a heading for each `region` (Ashwin, 2026-10-18; story/quest_regions.gd): the
+region ids of data/locations, in the order the campaign reaches them, then `companions` (the party members' own quests)
+last; open quests come first under each heading, the finished ones after. A quest's `region` must be in
+`QuestRegions.ORDER` (tests/unit/test_quest_regions.gd checks), so a new region adds its name and place there.
 The journal shows each reached stage's text in order. `hint` says what to do next at that stage, behind the journal's
 Hint button: the place and the person or action, never the twist (`{tarokka.<slot>.hint}` fills in the party's
 reading). Every stage that doesn't end its quest has one; `make validate` fails without it.
