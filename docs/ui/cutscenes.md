@@ -37,9 +37,7 @@ be loved for himself), `tome_brothers` (Sergei, Tatyana, the watching), `tome_re
 she refuses him kindly, her eyes on Sergei), `tome_wedding` (the climb to the Amber Temple, the terms, the wedding day),
 `tome_wall` (her fall, the arrows, waking changed) and `tome_again` (her rebirths, the ledger, the torn last entry). The
 captions were drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/), and stay
-unvoiced. Until their own pictures are made, `tome_refused` plays over the terrace picture and `tome_again` over the
-castle wall (a scene that names the picture already up leaves it as it is): giving them their own is a change of `images`
-in their data files. Escher's first meeting shows the tall mirror behind him with the same armchair
+unvoiced. Escher's first meeting shows the tall mirror behind him with the same armchair
 empty (`escher_mirror`, `castle_ravenloft/spires_escher ~ first`), one picture by the owner's word the same day: the
 one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
 
@@ -150,6 +148,11 @@ The Tome's four pictures and Escher's mirror (2026-10-18, five pictures in eight
 appears once, far back), the second drew Sergei blond (the sheet's dark hair and short cape must be named) and in colour
 (say "every colour in it sepia"), and the first `tome_wedding` pooled blood on the floor (the retake says there is none).
 The backup key answered 402 (out of credit), so these ran on the primary.
+The refusal and the gallery (`tome_refused`, `tome_again`, four takes, about $0.40): the gallery of the same face in the dress of
+different centuries, with a black mourning ribbon on each frame and Strahd's hand on the empty last one, came right the first time.
+The refusal took three: the first drew a second auburn-haired woman dancing with Sergei (so Tatyana seemed to be in two places),
+the second fixed that but drew Strahd older and fair, and the third (the one used) names his black hair and his age and has
+Sergei alone by the fire; the cloak on Tatyana is the model's.
 
 | Cutscene | Title | Plays from | Takes |
 |---|---|---|---|

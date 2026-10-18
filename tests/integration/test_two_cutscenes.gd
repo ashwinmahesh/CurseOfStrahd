@@ -84,6 +84,19 @@ func test_the_tome_plays_six_scenes_and_twenty_four_captions() -> void:
 	assert_eq(total, 24)
 
 
+## Every scene has a picture of its own, each a different still (a scene that names the picture already up would leave it as
+## it is, which is how the two scenes that came last played until they had theirs).
+func test_every_tome_scene_has_its_own_picture() -> void:
+	var st := _story()
+	var seen := {}
+	for id in TOME_SCENES:
+		var path := Cutscenes.image(id, st)
+		assert_eq(path, "res://art/cutscenes/%s.jpg" % id, "%s has its own picture" % id)
+		assert_false(seen.has(path), "%s: a picture used twice" % id)
+		seen[path] = true
+		assert_true(ResourceLoader.exists(path), path)
+
+
 ## What the owner asked the Tome to carry (2026-10-18): Strahd's motives, his love for Tatyana and her refusing the
 ## decorated war hero for his brother, and her rebirths, each time another try at making her love him; and nothing that
 ## belongs to someone else: the Amber Temple vault says "stop growing older than her" when the Tome and the copper ledger

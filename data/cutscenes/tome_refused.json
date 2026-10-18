@@ -1,10 +1,10 @@
 {
   "id": "tome_refused",
   "title": "What He Offered",
-  "summary": "The Tome's third scene: in dress uniform and medals Strahd offers Tatyana his hand and his house, and she refuses him gently with her eyes on Sergei across the hall. Plays over the terrace picture until it has its own.",
+  "summary": "The Tome's third scene: in dress uniform and medals Strahd offers Tatyana his hand and his house, and she refuses him gently with her eyes on Sergei across the hall.",
   "images": [
     {
-      "image": "tome_brothers",
+      "image": "tome_refused",
       "when": ""
     }
   ],
