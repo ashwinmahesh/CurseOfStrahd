@@ -338,12 +338,13 @@
       "released": true
     },
     "patrina_velikovna": {
-      "voice_id": "2t85BBUECtLLKQzxLD95",
-      "name": "Amber - Calm, Elegant and Dreamy",
-      "description": "A woman with a clear, cold, intelligent voice, an ageless dusk elf, now a banshee: proud, cutting and grieving, with a ghostly, wailing edge that rises when she is angry. Strong, clearly audible Eastern European (Romanian) accent.",
+      "voice_id": "fgzAoeuDFvWiSceZwSmx",
+      "name": "Barovia Helga",
+      "description": "Helga Ruvak's voice, shared with Patrina Velikovna (Ashwin, 2026-10-18): a soft, polite woman's voice with a sinister, patient undertone; a strong Eastern European (Romanian) accent.",
       "settings": {},
-      "library": true,
-      "model": "eleven_v3"
+      "model": "eleven_v3",
+      "accent_tag": "[strong Romanian accent]",
+      "released": true
     },
     "anna_krezkova": {
       "voice_id": "kZXTQfulCLOSFsxuZQHx",
