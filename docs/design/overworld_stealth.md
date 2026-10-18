@@ -66,10 +66,12 @@ sleepers, the hover hints and the arrival rule (`LocationView.arrive_sneaking`).
 crg_turret_guard, larders_jailers, cat_gargoyle_watch, peak_guardians, crg_courtyard_gargoyles and berez_scarecrows. Every
 foe in view has a `facing`, what joins only when its fight starts is `unseen`, and each series starts where the foes first
 notice a party walking in from the spawn the story uses (read off by walking it), with the doors that walk opened. Hit
-Points were retuned to hold 4 to 6 in 8 from there: the Abbey garden's wisps 27 to 18, the jailers 60 to 108, the champion's
-gargoyles 134 to 101, the peak's 100, 87 and 77 to 55, 70 and 58, the courtyard's 77 and 84 to 46 and 50, and Berez's level 9
-version by a third. `make validate` asks every fight made `waiting` since for its facings (`LEGACY_WAITING` lists the nine
-that predate them). Yester Hill's wardens' camp and the winery's druids stay walk-in fights.
+Points were retuned to hold 4 to 6 in 8 from there: the Abbey garden's wisps 27 to 18, the jailers 60 to 135 (and three of
+their horrors moved), the champion's gargoyles 134 to 110, the peak's 100, 87 and 77 to 55, 70 and 58, the courtyard's 77 and
+84 to 64 and 68 (and six gargoyles moved north), and Berez's level 9 version by a third. The courtyard, the jailers' post and
+the champion's tomb also hold their other real ways in (docs/story/fight_tuning_castle.md names the starts that no tuning
+holds). `make validate` asks every fight made `waiting` since for its facings (`LEGACY_WAITING` lists the nine that predate
+them). Yester Hill's wardens' camp and the winery's druids stay walk-in fights.
 
 ## Option A: Slip past (skip a guarded room, or rob it)
 
