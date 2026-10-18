@@ -297,6 +297,10 @@ braziers burning in the antechamber and either side of the altar.
     paper flakes fall over her book (a particle sheet); in the library Vosk's cup steams and Exethanter's pinned notes stir;
     Yrrga's eye moves in its block toward the leader (Case.set_gaze); and in the vaults amber seeps from the weeping crack
     (shaders/world/amber_seep.gdshader), when the crack shows.
+  - The model of Castle Ravenloft on the table in Exethanter's study (`castle_model` prop at (23,3), CastleModel, world/look/
+    castle_model.gd): the castle's own kit pieces (crenellated wall tops, round towers with spires, the gate, the keep's lit
+    windows) merged into one mesh at 0.022 on a plain table; Classic keeps the table's picture. Its examine line
+    (`examine:castle_model`) was drafted by Gemini (docs/story/drafts/amber-castle-model/); unvoiced.
 
 ### Castle Ravenloft
 

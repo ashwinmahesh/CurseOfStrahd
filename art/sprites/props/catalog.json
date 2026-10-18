@@ -258,6 +258,10 @@
       "art": "colossus",
       "see_through": true
     },
+    "castle_model": {
+      "art": "castle_model",
+      "classic": "table"
+    },
     "faceless_statue": {
       "art": "statue_faceless",
       "see_through": true,

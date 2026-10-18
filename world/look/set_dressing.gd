@@ -108,6 +108,12 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 		if Look.modern():
 			return AmberGlow.place(board, root, cell, look)
 		art = str(look.get("classic", "amber_sarcophagus"))
+	if art == "castle_model":
+		# The table model of Castle Ravenloft in Exethanter's study (CastleModel), built from the castle kit in the Modern
+		# finish; Classic keeps the round table's picture (the catalog entry's `classic`).
+		if Look.modern():
+			return CastleModel.place(board, root, cell)
+		art = str(look.get("classic", "table"))
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])

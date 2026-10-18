@@ -5988,6 +5988,20 @@
       "source": "art/generated/props/model_jester_plaster.png",
       "mount": "wall",
       "world_width": 0.698
+    },
+    "castle_model": {
+      "file": "art/sprites/props/table.png",
+      "width_px": 240,
+      "height_px": 184,
+      "world_height": 0.7,
+      "world_width": 0.919,
+      "pixel_size": 0.003911,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_pair_table_table_chairs.png",
+      "slot": 0,
+      "back": "table_back",
+      "note": "The table model of Castle Ravenloft in Exethanter's study, built in code (world/look/castle_model.gd) in the Modern finish; this is the table Classic keeps, so the art checks pass (as fog_bank's)."
     }
   }
 }

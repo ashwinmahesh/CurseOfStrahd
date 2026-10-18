@@ -415,6 +415,16 @@
       "label": "Books chained to their shelves",
       "model": "chained_bookcase",
       "kind": "decor"
+    },
+    {
+      "id": "castle_model",
+      "cell": [
+        23,
+        3
+      ],
+      "kind": "examine",
+      "label": "A model of Castle Ravenloft",
+      "model": "castle_model"
     }
   ],
   "containers": [
