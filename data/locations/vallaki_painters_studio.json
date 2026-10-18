@@ -84,6 +84,7 @@
       "kind": "examine",
       "label": "A great canvas in a gilt frame",
       "model": "portrait_tatyana",
+      "scale": 2.5,
       "dialogue": "vallaki/the_counts_portraitist:canvas"
     },
     {
