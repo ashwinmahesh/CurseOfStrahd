@@ -172,6 +172,8 @@ static func place(board: ArenaBoard, spec: Dictionary, is_container: bool = fals
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET
+			if piece != null and bool(look.get("god", false)):
+				FacelessGod.dress(board, root, piece, cell)   # the faceless god (step 7): on its steps, a void for a face, a shaft of light
 			if bool(look.get("fade", false)) and piece is Sprite3D:
 				_fade_with_trees(board, piece as Sprite3D)
 			elif bool(look.get("fade", false)) and piece != null and piece.has_meta("model"):

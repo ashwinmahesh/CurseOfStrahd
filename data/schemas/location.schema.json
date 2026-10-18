@@ -906,7 +906,7 @@
     },
     "wall_styles": {
       "type": "array",
-      "description": "Wall squares built in a style of their own (docs/art/interiors.md): every wall square inside `cells` ([corner, corner]) is painted wood in the palette colour `paint`, with a band of `trim` along its outer faces and, with `wheels`, cart wheels on its long sides. Rictavio's carnival wagon in the Blue Water Inn's yard.",
+      "description": "Wall squares built in a style of their own (docs/art/interiors.md): every wall square inside `cells` ([corner, corner]), with `plinth` the steps a statue stands on, otherwise painted wood in the palette colour `paint`, with a band of `trim` along its outer faces and, with `wheels`, cart wheels on its long sides. Rictavio's carnival wagon in the Blue Water Inn's yard.",
       "items": {
         "type": "object",
         "required": ["cells"],
@@ -915,7 +915,8 @@
           "cells": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/cell"}},
           "paint": {"type": "string"},
           "trim": {"type": "string"},
-          "wheels": {"type": "boolean"}
+          "wheels": {"type": "boolean"},
+          "plinth": {"type": "boolean", "description": "The block is a plinth, not a wall: three low steps of the temple's black stone under a statue (FacelessGod), the squares still blocking. Modern finish only."}
         }
       }
     }

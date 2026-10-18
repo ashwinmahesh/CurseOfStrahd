@@ -280,6 +280,12 @@ braziers burning in the antechamber and either side of the altar.
     and `call_when` (the location data), played by `LocationNpcs._check_calls` from the step's cell events
     (`LocationWalk._check_cell_events`), the `~ <name>_call` nodes of narrative/amber_temple/vestiges.dialogue. Drafted by
     Gemini and edited (docs/story/drafts/amber-calls/); unvoiced.
+  - The faceless god (`FacelessGod`, world/look/faceless_god.gd; Modern only): the great hall's 2 x 2 block of wall is a
+    `wall_styles` entry with `plinth: true`, drawn as three steps of the temple's black stone (the squares still block);
+    the statue prop (`span: [2, 2]`, facing south, the catalog's `god: true`) stands on the top step (SetDressing.place),
+    a void (shaders/world/faceless_void.gdshader) takes the place of its face with a violet corona turning slowly round
+    it, shown while the camera looks at its front, and a cold shaft (sun_shaft.gdshader) falls onto its hands and the
+    offerings at its feet, where six pilgrims' candles (`candle_cluster` props) burn.
 
 ### Castle Ravenloft
 

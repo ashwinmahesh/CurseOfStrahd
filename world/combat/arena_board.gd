@@ -428,6 +428,8 @@ func wall_style_at(c: Vector2i) -> Dictionary:
 ## cut-away height, so they show whichever way the walls are cut.
 func _dress_wall_styles() -> void:
 	for st: Dictionary in wall_styles:
+		if bool(st.get("plinth", false)):
+			continue   # steps, not a painted wall (FacelessGod)
 		var rect := st["rect"] as Rect2i
 		var root := Node3D.new()
 		root.name = "WallStyle"
@@ -613,7 +615,8 @@ func _dress(c: Vector2i, from: int) -> void:
 ## Hides the board's scenery on a square while a location's prop stands there; a wall square gets floor under it.
 func clear_cell(c: Vector2i) -> void:
 	for n: Node3D in dressing.get(c, []):
-		n.visible = false
+		if not n.has_meta("stays"):   # (the steps a statue stands on belong to the block, not to the scenery on it)
+			n.visible = false
 	if grid.has_flag(c, CombatGrid.WALL) and not _has_ground.has(c) and not _cleared.has(c) and not _floors.has(c):
 		_cleared[c] = _ground_box("Floor", c, _floor_mat)
 
@@ -717,7 +720,11 @@ func _wall(c: Vector2i) -> void:
 		var room_wall := _wall_room(c)
 		var wall_mat: Material = room_wall["wall"] as Material if room_wall.has("wall") else (_wall_tex if _wall_tex != null else Look.cel(colour))
 		var own_style := wall_style_at(c)
-		if not own_style.is_empty():
+		if bool(own_style.get("plinth", false)) and Look.modern():
+			if c == (own_style["rect"] as Rect2i).position:
+				FacelessGod.steps(self, own_style["rect"] as Rect2i)   # steps for a statue, built once (the squares still block)
+			return
+		if not own_style.is_empty() and not bool(own_style.get("plinth", false)):
 			wall_mat = BuildingKit.painted(str(own_style.get("paint", "crimson")))   # the location's own (a painted wagon)
 		# The building kit's interiors: pillars, and full-height walls that cut away (docs/art/building_kit.md).
 		if BuildingKit.interior_wall(self, c, wall_mat):

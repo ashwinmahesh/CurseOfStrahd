@@ -178,6 +178,11 @@
       ],
       "kind": "examine",
       "label": "The faceless god",
+      "span": [
+        2,
+        2
+      ],
+      "facing": "south",
       "model": "statue_knight",
       "checks": [
         {
@@ -361,6 +366,66 @@
       "label": "a drawer in the desk kept clear of frost",
       "model": "scattered_notes",
       "item": "tome_of_leadership_and_influence"
+    },
+    {
+      "id": "pilgrim_candles_1",
+      "cell": [
+        17,
+        9
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_2",
+      "cell": [
+        17,
+        11
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_3",
+      "cell": [
+        18,
+        10
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_4",
+      "cell": [
+        22,
+        9
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_5",
+      "cell": [
+        22,
+        11
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
+    },
+    {
+      "id": "pilgrim_candles_6",
+      "cell": [
+        21,
+        10
+      ],
+      "kind": "decor",
+      "label": "A pilgrim's candles",
+      "model": "candle_cluster"
     }
   ],
   "containers": [
@@ -661,6 +726,16 @@
       "kind": "candle",
       "bright_ft": 0,
       "dim_ft": 15,
+      "color": "frost"
+    },
+    {
+      "cell": [
+        19,
+        11
+      ],
+      "kind": "lamp",
+      "bright_ft": 10,
+      "dim_ft": 30,
       "color": "frost"
     }
   ],
@@ -1131,5 +1206,20 @@
     "amber_temple_faceless_god": {
       "container": "statue_offerings"
     }
-  }
+  },
+  "wall_styles": [
+    {
+      "cells": [
+        [
+          19,
+          8
+        ],
+        [
+          20,
+          9
+        ]
+      ],
+      "plinth": true
+    }
+  ]
 }

@@ -260,7 +260,8 @@
     },
     "faceless_statue": {
       "art": "statue_faceless",
-      "see_through": true
+      "see_through": true,
+      "god": true
     },
     "berez_hut": {
       "art": "hut_lysaga",
