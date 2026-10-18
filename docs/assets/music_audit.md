@@ -108,3 +108,20 @@ beside it). Both pictures map to a new `somber` mood in `scenes`: the Marche fun
 the Moonlight Sonata and Unraveling, chosen for weight (a funeral march, a grave nocturne, grief) and for evenness (they play within a decibel of each
 other; Penumbra is 4 dB louder and Memories of Stone is peaceful, so both stay in `sorrow`). The Amber Temple's drone
 returns when the reading ends.
+
+## The Vistani after the festival (2026-10-18)
+
+The owner asked that the Vistani's music not be creepy once the Festival of the Blazing Sun is over. The three Vistani
+places (the camp outside Vallaki's west gate, the Tser Pool encampment and Madam Eva's tent) played `camp` and `tarokka`
+at all times, which hold Gypsy Shoegazer, Mystery Bazaar and the carnival's Snake Lady, and nothing turned them.
+
+A new `place_turns` table in art/audio.json (`Audio.place_turn`, ahead of a place's own `places` entry, like
+`region_turns` for a whole region) sends those three places to a new `vistani_warm` mood once `flag.festival_over` is set:
+the Csárdás, Duet Musette, Lachaim and Bushwick Tarantella. All four were already in the game (the camps' Csárdás and
+Duet Musette, the freed vineyard's Lachaim and Tarantella, which the owner picked as cheerful), so there is no new
+download and the `track_levels` already match. Before the festival ends the music is exactly as it was; the festival's
+own `tension` scenes are unchanged. "Back to the camp" after Arabelle's rescue (`arabelle_shore`) now plays whatever the
+camp's music is at that moment, so it is warm after the festival.
+
+Not touched: Van Richten's tower (a Vistani wagon parked on its island, haunted music), the Vistani women in the Blood of
+the Vine and the hanged vistana at the crossroads, which sit in other places' moods.

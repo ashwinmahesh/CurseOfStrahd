@@ -130,10 +130,13 @@ func entries(section: String, id: String) -> Array:
 	return (_data.get(section, {}) as Dictionary).get(id, []) as Array
 
 
-## The mood for a place: its own entry, else its region's later theme once the story has moved on there (`st`, see
-## region_turn), else its region's theme (art/audio.json "regions", unless its map theme keeps its own mood there, like
+## The mood for a place: its later theme once the story has moved on there (`st`, see place_turn), else its own entry,
+## else its region's later theme once the story has moved on there (see region_turn), else its region's theme (art/audio.json "regions", unless its map theme keeps its own mood there, like
 ## a tavern, or the region's theme has no music yet), else its map theme's, else "wilds".
 func mood_for(location_id: String, theme: String, st: StoryState = null) -> String:
+	var place_turned := place_turn(location_id, st)
+	if place_turned != "":
+		return place_turned
 	var places := _data.get("places", {}) as Dictionary
 	if places.has(location_id):
 		return str(places[location_id])
@@ -172,6 +175,20 @@ func scene_mood(cutscene_id: String) -> String:
 func place_scene_mood(cutscene_id: String) -> String:
 	var m := str((_data.get("place_scenes", {}) as Dictionary).get(cutscene_id, ""))
 	return m if not entries("music", m).is_empty() else ""
+
+
+## A place's later theme (art/audio.json "place_turns": the first entry whose StoryConditions `when` holds and whose mood
+## has music), or "" with no story to ask. It takes the place's own mood too, so the Vistani camps and Madam Eva's tent
+## turn warm once the Festival of the Blazing Sun is over (owner, 2026-10-18).
+func place_turn(location_id: String, st: StoryState) -> String:
+	if st == null:
+		return ""
+	for t: Variant in (_data.get("place_turns", {}) as Dictionary).get(location_id, []):
+		var turn := t as Dictionary
+		var m := str(turn.get("mood", ""))
+		if not entries("music", m).is_empty() and StoryConditions.check(str(turn.get("when", "")), st):
+			return m
+	return ""
 
 
 ## A region's later theme (art/audio.json "region_turns": the first entry whose StoryConditions `when` holds and whose

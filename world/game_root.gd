@@ -682,6 +682,8 @@ func _talk_music(speaker_id: String) -> void:
 ## place's own back.
 func _scene_music(cutscene_id: String) -> void:
 	var m := Audio.scene_mood(cutscene_id)
+	if m == "camp":
+		m = _place_mood()   # "back to the camp" is the camp's own music, which turns warm once the festival is over
 	if m != "":
 		_scene_mood = m
 		_talk_mood = m

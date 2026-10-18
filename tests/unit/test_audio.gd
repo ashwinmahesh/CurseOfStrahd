@@ -380,6 +380,48 @@ func test_the_vineyard_turns_cheerful_once_yester_hill_is_broken() -> void:
 		assert_eq(Audio.mood_for(id, theme, st), Audio.mood_for(id, theme), "%s keeps its own music" % id)
 
 
+## The Vistani places turn warm once the Festival of the Blazing Sun is over (owner, 2026-10-18): the camp outside
+## Vallaki, the Tser Pool encampment and Madam Eva's tent. Before it each keeps its own music, and the warm mood is only
+## recordings already in the game, none of them the camps' darker pieces.
+func test_the_vistani_places_turn_warm_once_the_festival_is_over() -> void:
+	var c := Compendium.shared()
+	var warm := Audio.files("music", "vistani_warm")
+	assert_true(warm.size() >= 2, "the warm mood has several recordings to play")
+	for dark: String in ["Gypsy Shoegazer", "Mystery Bazaar", "Snake Lady", "Dama-May"]:
+		for path: String in warm:
+			assert_false(path.contains(dark), "%s is not warm music" % dark)
+		assert_false(Audio.is_fight_mood("vistani_warm"))
+	var st := StoryState.new()
+	var places := Audio._data.get("place_turns", {}) as Dictionary
+	for id: String in ["vallaki_vistani_camp", "tser_pool", "tser_pool_eva_tent"]:
+		assert_true(places.has(id), "%s turns after the festival" % id)
+		var theme := ArenaBoard.theme_for(c.get_entry("locations", id).get("map", {}) as Dictionary)
+		var before := Audio.mood_for(id, theme, st)
+		assert_eq(before, Audio.mood_for(id, theme), "%s keeps its music before the festival ends" % id)
+		assert_ne(before, "vistani_warm", id)
+		st.set_flag("festival_begun")
+		assert_eq(Audio.mood_for(id, theme, st), before, "%s keeps it through the festival itself" % id)
+	st.set_flag("festival_over")
+	for id: String in places:
+		var theme := ArenaBoard.theme_for(c.get_entry("locations", id).get("map", {}) as Dictionary)
+		assert_eq(Audio.mood_for(id, theme, st), "vistani_warm", "%s is warm" % id)
+	for id: String in ["vallaki", "vallaki_blue_water_inn", "van_richtens_tower"]:
+		var theme := ArenaBoard.theme_for(c.get_entry("locations", id).get("map", {}) as Dictionary)
+		assert_eq(Audio.mood_for(id, theme, st), Audio.mood_for(id, theme), "%s keeps its own music" % id)
+
+
+## Every place turn names a place, a mood with several recordings and a condition (an empty one would always hold).
+func test_every_place_turn_is_complete() -> void:
+	var turns := Audio._data.get("place_turns", {}) as Dictionary
+	assert_false(turns.is_empty(), "some place has a later theme")
+	for id: String in turns:
+		assert_false(Compendium.shared().get_entry("locations", id).is_empty(), "%s is a place" % id)
+		for t: Variant in turns[id] as Array:
+			var turn := t as Dictionary
+			assert_ne(str(turn.get("when", "")).strip_edges(), "", "%s: a later theme needs a condition" % id)
+			assert_true(Audio.files("music", str(turn.get("mood", ""))).size() >= 2, "%s: %s has several recordings" % [id, turn.get("mood", "")])
+
+
 ## Every later theme names a region places belong to, a mood with music and a condition (an empty one would always hold).
 func test_every_region_turn_is_complete() -> void:
 	var regions := {}
