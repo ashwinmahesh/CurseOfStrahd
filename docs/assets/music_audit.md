@@ -81,3 +81,15 @@ tension -21, dawn -21.5, sacred -23, against town and tavern -22, castle -21 to 
 
 - The Keepers of the Feather reveal would want a hushed, mysterious piece the game doesn't have.
 - Place cutscenes (walking into an area, examining a thing) keep the place's music; none of them clashed.
+
+## Castle piano (2026-10-18)
+
+The owner's favourite castle piece is Chopin's Marche funèbre, so the audit's shortlist of more lonely piano (in
+audio_shortlist.md) went to a listening page. He marked six Use: the Chopin nocturnes Op. 48 No. 1, Op. 72 No. 1 and
+Op. posth. (C-sharp minor), the E minor prelude Op. 28 No. 4, Beethoven's Moonlight Sonata (first movement) and Kevin
+MacLeod's Wounded. They join the `castle` mood, so the castle now shuffles seven piano pieces among its strings.
+Skipped: Gymnopédie No. 1, Cryptic Sorrow, Loss and Quinn's Song: First Night.
+
+Each piece has a `track_levels` line from its loudness over the whole recording against the Marche funèbre's (the
+Marche plays at +4.4), capped so its peak stays under full scale. The listening page's clips were levelled on their
+first two minutes, so a piece with a loud middle (the Op. 48 nocturne) plays quieter here than in its clip.
