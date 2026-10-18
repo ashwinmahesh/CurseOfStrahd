@@ -54,6 +54,11 @@ func why(c: Combatant, p: Dictionary) -> String:
 		"eversmoking_close":
 			if enc().spells.zones.object_of(c.id, "eversmoking_bottle__smoke") == null:
 				return "The bottle isn't open"
+		"icon_augury":
+			return "Outside combat only"   # read between fights (story/field_items.gd), so the hotbar leaves it out
+		"gulthias_break":
+			if not enc().living().any(func(o: Combatant) -> bool: return is_blight(o) and enc().distance(c, o) <= BLIGHT_SCREAM_FT):
+				return "No blight within 300 ft to hear it"
 	return ""
 
 
@@ -190,6 +195,9 @@ func use(c: Combatant, p: Dictionary, targets: Array, point: Vector2, opts: Dict
 		"sphere_of_annihilation":
 			_pay(c, p)
 			return _sphere(c, point, label)
+		"gulthias_break":
+			_pay(c, p)
+			return _gulthias_scream(c, p)
 	return CombatResult.fail("%s: only outside a fight" % power.get("name", "That power"))
 
 
@@ -513,3 +521,156 @@ func after_power(c: Combatant, p: Dictionary) -> void:
 			if n > 0 and e.dice.roll_one(100, "Wind Fan") <= 20 * n:
 				e.log.add("info", "The Wind Fan tears into useless tatters", c.id)
 				ch.remove_one(iid)
+
+
+# --- The relics of Curse of Strahd (docs/story/castle_artifacts.md) -----------------------------------------------
+
+## How far the Icon of Ravenloft's protection reaches, and how far a broken Gulthias Staff's scream carries (feet).
+const ICON_AURA_FT := 30
+const BLIGHT_SCREAM_FT := 300
+## Protection from Evil and Good against fiends and undead, as the Icon of Ravenloft gives everyone near it.
+const ICON_PROTECTION: Array[Dictionary] = [
+	{"stat": "attacked_with_by_type", "value": "disadvantage", "types": ["fiend", "undead"]},
+	{"stat": "condition_immunity_by_type", "conditions": ["charmed", "frightened"], "types": ["fiend", "undead"]}]
+
+
+## Whether `o` is a vampire or a vampire spawn, by the stat block it began with or the one it wears now (Strahd is one).
+func is_vampire(o: Combatant) -> bool:
+	for who: Creature in [o.creature, enc().shapes.original(o)]:
+		if not who is Monster:
+			continue
+		var d := (who as Monster).data
+		if str(d.get("id", "")).contains("vampire") or str(d.get("id", "")) == "strahd_von_zarovich" or "vampire" in (d.get("tags", []) as Array):
+			return true
+	return false
+
+
+## A blight: a twig, needle, vine or tree blight, or a creature of our own tagged one (the Vine Mother, the Ash Effigy).
+static func is_blight(o: Combatant) -> bool:
+	if not o.creature is Monster:
+		return false
+	var d := (o.creature as Monster).data
+	return str(d.get("id", "")).ends_with("_blight") or "blight" in (d.get("tags", []) as Array)
+
+
+## A blight or other evil plant that is no boss: what the Gulthias Staff's Blight Bane calms and its scream can kill.
+static func is_lesser_blight(o: Combatant) -> bool:
+	if not o.creature is Monster or Difficulty.is_boss(o.creature as Monster):
+		return false
+	var d := (o.creature as Monster).data
+	return is_blight(o) or (str(d.get("type", "")) == "plant" and str(d.get("alignment", "")).contains("evil"))
+
+
+## The Icon of Ravenloft's aura: anyone within 30 ft of a creature who carries it (attuned or not) is under Protection
+## from Evil and Good against fiends and undead. In a fight it reaches the carrier and the carrier's allies; it is put
+## on and taken off as creatures move (SpellZones.refresh_auras).
+func refresh_auras() -> void:
+	var e := enc()
+	var bearers: Array[Combatant] = []
+	for c in e.combatants:
+		var ch := CombatItems.ch_of(c)
+		if ch != null and c.is_alive() and not ch.magic_suppressed and ch.carries("icon_of_ravenloft"):
+			bearers.append(c)
+	for t in e.combatants:
+		for fx: Effect in t.creature.effects.duplicate():
+			if fx.stack_key.begins_with("icon_aura:"):
+				var src := e.get_c(fx.stack_key.substr(10))
+				if src == null or not src in bearers or not _in_icon_aura(src, t):
+					t.creature.remove_effect(fx)
+	for b in bearers:
+		for t in e.living():
+			var key := "icon_aura:%s" % b.id
+			if not _in_icon_aura(b, t) or t.creature.effects.any(func(x: Effect) -> bool: return x.stack_key == key):
+				continue
+			var fx := Effect.new("Icon of Ravenloft", &"item", "icon_of_ravenloft")
+			fx.stack_key = key
+			fx.ends = Effect.Ends.NEVER
+			for md: Dictionary in ICON_PROTECTION:
+				fx.modifiers.append(Modifier.make(md.duplicate(true), "Icon of Ravenloft", &"item", "icon_of_ravenloft"))
+			t.creature.add_effect(fx)
+
+
+func _in_icon_aura(bearer: Combatant, t: Combatant) -> bool:
+	return (t == bearer or bearer.allied_with(t)) and enc().distance(bearer, t) <= ICON_AURA_FT
+
+
+## After a weapon hit: the relics' rules (ItemSpecials.after_hit calls this with the weapon used). Saint Markovia's
+## Thighbone is marked the moment it hits a vampire, even when the hit kills it; the Gulthias Staff's armed Vampiric
+## Strike heals from the damage.
+func relic_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageResult, it: Dictionary) -> void:
+	var rules := ItemSpecials._specials(it)
+	var ch := CombatItems.ch_of(c)
+	if "crumbles_on_vampire" in rules and ch != null and is_vampire(target):
+		ch.entry_of(str(it["id"]))["crumbles"] = true
+	if "vampiric_strike" in rules:
+		_vampiric_strike(c, option, dr, it)
+
+
+## Vampiric Strike (Gulthias Staff): when armed (a free action, as the Staff of Striking's charges are), a melee hit spends
+## 1 charge and heals the wielder by the damage dealt; the blood that oozes calls for a DC 12 Wisdom save or short-term
+## madness, here 1d10 minutes of Disadvantage on ability checks and Wisdom saves (the game has no madness tables).
+func _vampiric_strike(c: Combatant, option: Dictionary, dr: DamageResult, it: Dictionary) -> void:
+	var e := enc()
+	var ch := CombatItems.ch_of(c)
+	var iid := str(it["id"])
+	var label := str((it["data"] as Dictionary).get("name", ""))
+	var armed := items().toggle_effect(c, iid, "vampiric")
+	if armed == null or ch == null or not bool(option.get("melee", true)):
+		return
+	c.creature.remove_effect(armed)
+	if ch.charges_left(iid) <= 0 or dr.final <= 0:
+		return
+	ch.spend_charges(iid, 1)
+	var healed := c.creature.heal(dr.final, label)
+	e.log.add("heal", "Blood oozes from the %s and %s regains %d Hit Points" % [label, c.name(), healed], c.id)
+	e.events.append({"type": "heal", "id": c.id, "amount": healed})
+	var sv := c.creature.roll_save(e.dice, &"wis", 12, [], [], "Wis save (%s)" % label)
+	if sv.success:
+		e.log.add("info", "%s keeps a clear head" % c.name(), c.id, [sv.describe()])
+		return
+	var madness := Effect.new("Short-term madness (%s)" % label, &"item", iid)
+	madness.stack_key = "short_term_madness"
+	madness.lasting({"kind": "minutes", "amount": e.dice.roll_one(10, "Short-term madness")})
+	madness.modifiers.append(Modifier.of("disadvantage", {"on": ["check:all", "save:wis"]}, "Short-term madness", &"item"))
+	c.creature.add_effect(madness)
+	e.log.add("condition", "%s is struck with short-term madness (%s)" % [c.name(), label], c.id, [sv.describe()])
+	e.events.append({"type": "condition", "id": c.id})
+
+
+## Breaking or burning the Gulthias Staff: it screams, and every blight within 300 ft that can hear it withers and dies.
+## A boss blight (Difficulty.is_boss: a great tree, the Vine Mother) shrugs it off, so a climax fought against one stands.
+func _gulthias_scream(c: Combatant, p: Dictionary) -> CombatResult:
+	var e := enc()
+	var label := str((p["data"] as Dictionary).get("name", ""))
+	var iid := str(p["item_id"])
+	var ch := CombatItems.ch_of(c)
+	e.log.add("spell", "%s breaks the %s: it screams, an inhuman sound that carries 300 feet" % [c.name(), label], c.id)
+	if ch != null:
+		ch.unequip_item(iid)
+		ch.remove_one(iid)
+	var r := CombatResult.new()
+	for o in e.living():
+		if not is_blight(o) or e.distance(c, o) > BLIGHT_SCREAM_FT:
+			continue
+		if Difficulty.is_boss(o.creature as Monster):
+			e.log.add("info", "%s shudders and stands: too great a growth for the scream to kill" % o.name(), o.id)
+			continue
+		sp()._destroy(o, label, r, "%s withers and dies" % o.name())
+	return r
+
+
+## The fight is over: a relic spent in it crumbles (Saint Markovia's Thighbone, once it has struck a vampire).
+func fight_over() -> void:
+	var e := enc()
+	for c in e.combatants:
+		for who: Creature in [c.creature, e.shapes.original(c)]:
+			if not who is Character:
+				continue
+			var ch := who as Character
+			for entry: Dictionary in ch.inventory.duplicate():
+				if not bool(entry.get("crumbles", false)):
+					continue
+				var iid := str(entry["id"])
+				ch.unequip_item(iid)
+				ch.remove_one(iid)
+				e.log.add("info", "%s crumbles to dust in %s's hand" % [Compendium.shared().display_name("items", iid), c.name()], c.id)

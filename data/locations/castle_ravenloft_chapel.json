@@ -345,6 +345,22 @@
       "model": "strongbox",
       "items": [],
       "gold": 7
+    },
+    {
+      "id": "crg_chapel_icon",
+      "cell": [
+        10,
+        2
+      ],
+      "label": "Silver icon on the altar",
+      "model": "reliquary_sealed",
+      "items": [
+        {
+          "id": "icon_of_ravenloft",
+          "qty": 1
+        }
+      ],
+      "gold": 0
     }
   ],
   "lights": [

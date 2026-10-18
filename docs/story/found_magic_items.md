@@ -399,3 +399,14 @@ leaves a smaller purse and one find.
 | ✅ | Yester Hill, the foot of the hill | Blood Amulet (rare) | Gift: from Freydis, once Silverjaw is back in her mound (The Barrow on Yester Hill, docs/story/side_quests.md) |
 | ✅ | Mount Ghakis, the count's quarry | Dwarven Plate (very rare) | Gift: from the mountain captive, once Grandfather's heart is back in the mountain (The Mountain's Heart, docs/story/side_quests.md) |
 | ✅ | Mount Ghakis, the count's quarry | Stone of Controlling Earth Elementals (rare) | Hoard: Grandfather's heart, kept, cooled to a fist of red stone (The Mountain's Heart, docs/story/side_quests.md) |
+
+## The book's artifacts (Dungeon Expansion Plan I1, docs/story/castle_artifacts.md)
+
+Three Curse of Strahd relics, each placed once. They are story items, so no merchant sells them (data/treasure/
+magic_prices.json `excluded`).
+
+| | Where | Item | How |
+|---|---|---|---|
+| ✅ | Castle Ravenloft, the chapel's dais beside the altar | Icon of Ravenloft (legendary) | Container `crg_chapel_icon`, not the altar (the Tarokka spot keeps its treasure) |
+| ✅ | The Wizard of Wines, the fermenting hall | Gulthias Staff (rare) | Container `druid_satchel`: the lead druid's satchel, left behind once the hall fight is won (`flag.winery_hall_cleared`) |
+| ○ | Castle Ravenloft, the catacombs, crypt 6 (St. Markovia) | Saint Markovia's Thighbone (rare) | In the data; the container goes in with the catacombs lane (C1, `castle-crypts`), whichever of the two lands second |

@@ -496,6 +496,8 @@ func _check_over() -> void:
 	if e.state == Encounter.State.OVER:
 		# The party gathers what it dropped or threw; the foes' weapons left lying are loot.
 		e.ground.fight_over()
+		# A relic spent in the fight crumbles (Saint Markovia's Thighbone, once it has hit a vampire).
+		e.items.fight_over()
 		# An Antimagic Field doesn't outlast the fight: magic items wake up again.
 		for c in e.combatants:
 			for who: Creature in [c.creature, e.shapes.original(c)]:

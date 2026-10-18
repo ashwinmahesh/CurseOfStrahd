@@ -222,6 +222,7 @@
             "cantrip_damage",
             "spell_damage",
             "healing_bonus",
+            "turn_dc",
             "carry_size_step",
             "reach",
             "spell",

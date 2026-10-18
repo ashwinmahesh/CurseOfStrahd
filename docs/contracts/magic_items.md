@@ -88,3 +88,10 @@ for its `duration`); a Spell Scroll an implicit "Read"; an Ioun Stone (`worn: "i
   damage, `puppet_voice` in Verbal component checks, `banded` beside Sculpt Spells and `after_spell_hit` after a spell
   attack hits. Batch 9d adds `while_on` (another power of the item that must be on: the Nightingale's songs) and
   `self_only` (the power's spell targets its user).
+- The relics of Curse of Strahd (combat/item_powers.gd, docs/story/castle_artifacts.md): the weapon specials
+  `crumbles_on_vampire` (Saint Markovia's Thighbone: marked when it hits a vampire, gone when the fight ends through
+  `CombatItems.fight_over`) and `vampiric_strike` (the Gulthias Staff: an armed hit heals by the damage and calls a
+  Wisdom save); `ItemPowers.refresh_auras`, which SpellZones.refresh_auras calls as creatures move (the Icon of
+  Ravenloft's protection from fiends and undead within 30 ft of whoever carries it); `attack_blocked` and
+  `spell_blocked` also keep lesser blights from the staff's attuned bearer; the modifier stat `turn_dc`
+  (docs/contracts/modifiers.md); and the field power `icon_augury` (story/field_items.gd).

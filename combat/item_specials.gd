@@ -197,6 +197,7 @@ func after_hit(c: Combatant, target: Combatant, option: Dictionary, dr: DamageRe
 	var label := str(data.get("name", ""))
 	var iid := str(it["id"])
 	fr.after_hit(c, target, option, dr, st, r, it)
+	more.relic_hit(c, target, option, dr, it)
 	for sp: Variant in _specials(it):
 		if str(sp) == "blackrazor" and not target.is_alive() and _living(target) and not target.has_meta("soul_devoured"):
 			target.set_meta("soul_devoured", true)

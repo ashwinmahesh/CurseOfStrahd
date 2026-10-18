@@ -225,6 +225,15 @@ func _cleric_dc(c: Combatant) -> int:
 	return (c.creature as Character).spell_save_dc("cleric").total()
 
 
+## Turn Undead's save DC: the Cleric's spell save DC plus what items add to turning (`turn_dc`: the Icon of Ravenloft's +2).
+func _turn_dc(c: Combatant) -> int:
+	var dc := _cleric_dc(c)
+	var ctx := c.creature.formula_context()
+	for m: Modifier in c.creature.modifiers_for(&"turn_dc"):
+		dc += c.creature.mod_value(m, ctx)
+	return dc
+
+
 ## Divine Spark (Cleric 2): another creature the cleric sees within 30 ft regains 1d8 + Wisdom modifier Hit Points, or
 ## makes a Constitution save against Necrotic or Radiant damage of that amount (half on a success), the cleric's choice
 ## of type: `damage_type` "radiant", "necrotic" or "best" (whichever the target takes more of; Radiant when even).
@@ -288,7 +297,7 @@ func turn_undead(c: Combatant) -> CombatResult:
 	if targets.is_empty():
 		return CombatResult.fail("No Undead enemies within 30 ft")
 	_spend_channel(c)
-	var dc := _cleric_dc(c)
+	var dc := _turn_dc(c)
 	var r := CombatResult.new()
 	var symbol := "a holy symbol"
 	var held := (c.creature as Character).focus_item("holy") if c.creature is Character else ""

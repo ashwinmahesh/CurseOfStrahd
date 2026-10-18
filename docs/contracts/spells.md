@@ -28,6 +28,7 @@ nothing. `make test` casts every combat spell (tests/unit/test_spell_sweep.gd) a
 | `save_disadvantage_for` | a creature type saves with Disadvantage (Shatter: `construct`) |
 | `save_advantage_if_fighting`, `willing_skip_save` | Charm Person; allies don't resist Enlarge/Reduce or Levitate |
 | `heal`, `temp_hp` | healing (Disciple of Life, Beacon of Hope's maximum, Supreme Healing, Blessed Healer) and Temporary Hit Points |
+| `living_only`, `skip_types` | healing that does nothing for an Undead or a Construct (`living_only`), or for the creature types listed (`skip_types`: the Icon of Ravenloft's Cure Wounds skips Fiends too) |
 | `damage` without attack or save | dealt to everyone affected |
 | `effects` | effect entries (below) |
 | `zone` | a lingering area (below) |

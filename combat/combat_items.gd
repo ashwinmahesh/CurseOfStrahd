@@ -926,6 +926,7 @@ func after_miss(c: Combatant, target: Combatant, option: Dictionary, _r: CombatR
 ## Dwarven Thrower, Whelm) comes back off the ground (GroundItems).
 func after_attack(c: Combatant, target: Combatant, option: Dictionary, _hit: bool) -> void:
 	_threatens_rats(c, target)
+	_threatens_blights(c, target)
 	var ch := ch_of(c)
 	if ch == null or str(option.get("kind", "")) != "thrown":
 		return
@@ -1120,6 +1121,7 @@ func on_damaged(source: Combatant, target: Combatant, amount: int, parts: Array)
 	if target == null or target.creature == null:
 		return
 	_threatens_rats(source, target)
+	_threatens_blights(source, target)
 	specials.on_damaged(source, target, amount, parts)
 
 
@@ -1176,6 +1178,23 @@ func _threatens_rats(c: Combatant, target: Combatant) -> void:
 		c.set_meta("threatened_rats", true)
 
 
+## Gulthias Staff's Blight Bane: blights and other evil plants that are no boss regard whoever is attuned to the staff as
+## no enemy, unless that creature has attacked or damaged one this fight.
+func _blights_leave_alone(target: Combatant) -> bool:
+	var ch := ch_of(target)
+	if ch == null or target.has_meta("threatened_blights"):
+		return false
+	for a: Variant in ch.attuned:
+		if str(a) == "gulthias_staff" or str(a).begins_with("gulthias_staff" + MagicItems.SEP):
+			return true
+	return false
+
+
+func _threatens_blights(c: Combatant, target: Combatant) -> void:
+	if c != null and target != null and c != target and ItemPowers.is_lesser_blight(target):
+		c.set_meta("threatened_blights", true)
+
+
 ## "" if `c` may attack `target` with `option`; otherwise what stops it (a Cube of Force's barrier, a Scroll of
 ## Protection's ward against the attacker's kind).
 func attack_blocked(c: Combatant, target: Combatant, option: Dictionary) -> String:
@@ -1189,6 +1208,8 @@ func attack_blocked(c: Combatant, target: Combatant, option: Dictionary) -> Stri
 		return "%s's Scroll of Protection keeps %ss away" % [target.name(), c.creature.creature_type]
 	if specials._rat_kind(c) in ["rat", "giant_rat"] and _rats_leave_alone(target):
 		return "Rats leave %s alone (Pipes of the Sewers)" % target.name()
+	if ItemPowers.is_lesser_blight(c) and _blights_leave_alone(target):
+		return "Blights leave %s alone (Gulthias Staff)" % target.name()
 	return ""
 
 
@@ -1200,7 +1221,14 @@ func spell_blocked(c: Combatant, t: Combatant) -> String:
 		return "A Cube of Force barrier keeps spells out"
 	if t.creature.has_flag("protection_from:%s" % c.creature.creature_type):
 		return "A Scroll of Protection keeps the caster's kind away"
+	if ItemPowers.is_lesser_blight(c) and _blights_leave_alone(t):
+		return "Blights leave %s alone (Gulthias Staff)" % t.name()
 	return ""
+
+
+## The fight is over (EncounterTurns._check_over): relics spent in it go (Saint Markovia's Thighbone).
+func fight_over() -> void:
+	specials.more.fight_over()
 
 
 ## Dwarven Plate: when something moves its wearer against its will along the ground, a Reaction shortens it by 10 ft.

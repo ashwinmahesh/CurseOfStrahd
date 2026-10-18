@@ -1,0 +1,50 @@
+{
+  "id": "saint_markovias_thighbone",
+  "name": "Saint Markovia's Thighbone",
+  "source": {
+    "book": "CoS",
+    "note": "A Curse of Strahd relic (the 2016 book), in our own words. Numbers checked against two sources that give the book's text, dnd5e.wikidot.com (Saint Markovia's Thighbone) and 5e.tools (CoS, Saint Markovia's Thighbone): a rare mace, attunement, the properties of a Mace of Disruption, crumbling to dust once a battle ends in which it hit a vampire or a vampire spawn; 4 lb. The Mace of Disruption's numbers are the game's own (DMG2024: 2d6 Radiant, 25 Hit Points, Wisdom DC 15, 20 ft of Bright Light and 20 ft of Dim Light), and 5e.tools lists the same for the thighbone. The Radiant light and the crumbling are in combat/item_specials.gd (`disruption`, `crumbles_on_vampire`). Rules text is in our own words; the flavour lines were drafted by Gemini through the ai-bridge (docs/story/castle_artifacts.md keeps the brief and the raw reply)."
+  },
+  "category": "weapon",
+  "weight_lb": 0,
+  "cost_gp": 8000,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true
+  },
+  "icon": "saint_markovias_thighbone",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "mace"
+    ],
+    "name": "Saint Markovia's Thighbone",
+    "default": "mace"
+  },
+  "light": {
+    "bright": 20,
+    "dim": 20,
+    "when": "drawn"
+  },
+  "weapon_rules": {
+    "extra": [
+      {
+        "vs": [
+          "fiend",
+          "undead"
+        ],
+        "dice": "2d6",
+        "type": "radiant"
+      }
+    ],
+    "special": [
+      "disruption",
+      "crumbles_on_vampire"
+    ]
+  },
+  "summary": "Works as a Mace of Disruption: an extra 2d6 Radiant against Fiends and Undead, and a Wisdom save or be destroyed. It crumbles to dust after a battle in which it hit a vampire.",
+  "text": "The remaining thighbone of Markovia, a priest of the Morninglord who marched on Castle Ravenloft and never came home. Her battle against Strahd raged from the catacombs to the parapets, and he walked with a limp long afterward. They say he sealed her in a crypt below. As her body decayed, some of her saintliness passed into the bone. It works as a Mace of Disruption: a Fiend or Undead it hits takes an extra 2d6 Radiant damage, and one left with 25 Hit Points or fewer by that damage makes a Wisdom saving throw against DC 15 or is destroyed; on a success it is Frightened of you until the end of your next turn. In your hand it sheds Bright Light out to 20 feet and Dim Light for 20 feet more. The relic is spent by the work: if it hits a vampire or a vampire spawn at any point in a battle, it crumbles to dust when that battle ends."
+}

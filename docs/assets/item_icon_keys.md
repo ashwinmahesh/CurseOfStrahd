@@ -125,6 +125,7 @@ the base item here): Adamantine Armor, Adamantine Weapon, Ammunition of Slaying 
 | `greatsword` | Greatsword |
 | `halberd` | Halberd |
 | `half_plate_armor` | Half Plate Armor |
+| `gulthias_staff` | Gulthias Staff |
 | `hammer_of_thunderbolts` | Hammer of Thunderbolts |
 | `hand` | Hand of Vecna |
 | `hand_crossbow` | Hand Crossbow |
@@ -148,6 +149,7 @@ the base item here): Adamantine Armor, Adamantine Weapon, Ammunition of Slaying 
 | `horn` | Ear Horn of Hearing, Horn, Horn of Blasting, Horn of Silent Alarm, Horn of Valhalla (Brass), Horn of Valhalla (Bronze) and 2 more |
 | `horseshoes` | Horseshoes of Speed, Horseshoes of a Zephyr |
 | `hunting_trap` | Hunting Trap |
+| `icon_of_ravenloft` | Icon of Ravenloft |
 | `ink` | Ink |
 | `ink_pen` | Ink Pen |
 | `instrument` | Instrument of Illusions, Instrument of Scribing, Instrument of the Bards (Anstruth Harp), Instrument of the Bards (Canaith Mandolin), Instrument of the Bards (Cli Lyre), Instrument of the Bards (Doss Lute) and 5 more |
@@ -234,6 +236,7 @@ the base item here): Adamantine Armor, Adamantine Weapon, Ammunition of Slaying 
 | `rod_of_lordly_might` | Rod of Lordly Might |
 | `rope` | Rope, Rope of Climbing, Rope of Entanglement, Rope of Mending |
 | `sack` | Sack |
+| `saint_markovias_thighbone` | Saint Markovia's Thighbone |
 | `scale_mail` | Scale Mail |
 | `scarab` | Scarab of Protection |
 | `scholars_pack` | Scholar's Pack |
@@ -292,4 +295,4 @@ the base item here): Adamantine Armor, Adamantine Weapon, Ammunition of Slaying 
 | `woodcarvers_tools` | Woodcarver's Tools |
 | `wraps` | Wraps of Unarmed Power, +1, Wraps of Unarmed Power, +2, Wraps of Unarmed Power, +3 |
 
-283 keys.
+286 keys.

@@ -1,0 +1,57 @@
+{
+  "id": "gulthias_staff",
+  "name": "Gulthias Staff",
+  "source": {
+    "book": "CoS",
+    "note": "A Curse of Strahd relic (the 2016 book), in our own words. Numbers checked against two sources that give the book's text, dnd5e.wikidot.com (Gulthias Staff) and 5e.tools (CoS, Gulthias Staff): a rare staff, attunement; made from a Gulthias tree branch; animals within 30 ft are uneasy; 10 charges, regaining 1d6 + 4 at dusk; broken or burned it screams out to 300 ft and every blight that hears it dies; Vampiric Strike works as a quarterstaff, 1 charge on a hit heals the damage dealt, and each charge spent calls for a DC 12 Wisdom save or short-term madness; Blight Bane makes blights and other evil plants leave an attuned bearer alone unless harmed; 4 lb. Our calls (docs/rules/deviations.md): the scream spares a boss-grade blight, so Yester Hill's climax stands; the hit's charge is armed first, as the Staff of Striking's is; short-term madness is a flat 1d10 minutes of Disadvantage on ability checks and Wisdom saves, since the game has no madness tables. Rules text is in our own words; the flavour lines were drafted by Gemini through the ai-bridge (docs/story/castle_artifacts.md keeps the brief and the raw reply)."
+  },
+  "category": "staff",
+  "weight_lb": 0,
+  "cost_gp": 12500,
+  "magic": {
+    "rarity": "rare",
+    "attunement": true,
+    "charges": {
+      "max": 10,
+      "regain": "1d6+4",
+      "when": "dusk"
+    }
+  },
+  "icon": "gulthias_staff",
+  "treasure": {
+    "random": false
+  },
+  "template": {
+    "on": "weapon",
+    "items": [
+      "quarterstaff"
+    ],
+    "name": "Gulthias Staff",
+    "default": "quarterstaff"
+  },
+  "weapon_rules": {
+    "special": [
+      "vampiric_strike"
+    ]
+  },
+  "powers": [
+    {
+      "id": "vampiric",
+      "name": "Vampiric Strike",
+      "cost": "free",
+      "toggle": true,
+      "off_cost": "free",
+      "needs_charges": 1,
+      "text": "Arm it: your next hit with the staff spends 1 charge and heals you for the damage dealt. Blood oozes from the wood, and you make a DC 12 Wisdom save or suffer short-term madness."
+    },
+    {
+      "id": "break",
+      "name": "Break the staff",
+      "cost": "utilize",
+      "custom": "gulthias_break",
+      "text": "Break it over a knee or burn it: it screams, and every blight within 300 ft that can hear it withers and dies, except a boss. The staff is destroyed."
+    }
+  ],
+  "summary": "A quarterstaff of black wood: spend a charge on a hit to heal by the damage, blights leave its bearer alone, and breaking it kills the blights nearby.",
+  "text": "A staff of spongy black wood cut from the Gulthias tree on Yester Hill. Cut from a tree grown from an old stake and fed by the druids of Yester Hill, this dark wood makes nearby animals uneasy. Red blood oozes from its pores when used. It is a magic quarterstaff with 10 charges, and it regains 1d6 + 4 charges each dusk. Vampiric Strike: arm the staff (a free action) and your next hit spends 1 charge and heals you for the damage it deals. The blood that oozes calls for a Wisdom saving throw against DC 12, or short-term madness: Disadvantage on ability checks and Wisdom saves for 1d10 minutes. Blight Bane: while you are attuned, blights and other evil plants don't regard you as an enemy unless you harm them. If the staff is broken or burned, it screams, and every blight within 300 feet that hears it withers and dies. A boss blight shrugs the scream off, so a great tree still stands to be fought."
+}

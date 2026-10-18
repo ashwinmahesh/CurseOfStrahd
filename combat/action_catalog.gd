@@ -506,7 +506,7 @@ func _class_actions(c: Combatant, out: Array[Dictionary]) -> void:
 				if str(h.creature.creature_type) == "undead" and e.distance(c, h) <= 30:
 					any = true
 			tw = "" if any else "No Undead within 30 ft"
-		out.append(_entry("turn_undead", tab, "Turn Undead", "Wis DC %d · 30 ft" % e.features._cleric_dc(c), "action", tw, "none"))
+		out.append(_entry("turn_undead", tab, "Turn Undead", "Wis DC %d · 30 ft" % e.features._turn_dc(c), "action", tw, "none"))
 		if CombatFeatures.has_feature(c, "preserve_life"):
 			var pw := cw
 			if pw == "" and e.features.preserve_life_room(c).is_empty():

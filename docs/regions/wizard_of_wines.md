@@ -217,6 +217,7 @@ davian_martikov` and `quest find_the_ally found`, with lines for reconciliation 
 |---|---|---|---|
 | `davian_strongbox` | winery office | 60 gp (the family's; see §4.6) | no (it's Davian's) |
 | `druid_bedrolls` | fermenting hall | 2 bedrolls, herbalism kit, mistletoe focus, 12 gp | yes (an uncommon druid item) |
+| `druid_satchel` | fermenting hall (once `winery_hall_cleared`) | the Gulthias Staff (rare, the book's; docs/story/castle_artifacts.md) | no (the book's own staff; it can kill the blights before Yester Hill) |
 | `bottling_shelf` | bottling room | 3 glass bottles, 2 oil, 4 candles | no |
 | `dry_cask` | cellar vaults | pouch, 9 gp (+ Tarokka treasure) | no |
 | `old_vintage_rack` | old vintages | 2 glass bottles, jug | yes (a potion or two, "kept for somebody") |

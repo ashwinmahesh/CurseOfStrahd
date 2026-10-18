@@ -1,0 +1,85 @@
+{
+  "id": "icon_of_ravenloft",
+  "name": "Icon of Ravenloft",
+  "source": {
+    "book": "CoS",
+    "note": "A Curse of Strahd relic (the 2016 book), in our own words. Numbers checked against two sources that give the book's text, dnd5e.wikidot.com (Icon of Ravenloft) and 5e.tools (CoS, Icon of Ravenloft): wondrous, legendary, attunement by a creature of good alignment; a 12-inch silver statuette, 10 lb; within 30 ft anyone is under Protection from Evil and Good against fiends and undead, without attunement; Augury once until dawn with no components; the icon is a holy symbol for Turn Undead or Turn the Unholy, raising the save DC by 2; Cure Wounds, once until dawn, 3d8 + 3 on a creature you can see within 30 ft (nothing for an undead, a construct or a fiend), while holding the icon. Our calls (docs/rules/deviations.md): alignment isn't tracked, so anyone may attune; carrying the icon counts as holding it; the aura reaches the bearer's allies in a fight; Turn Undead is the only turning the game has. Rules text is in our own words; the flavour lines were drafted by Gemini through the ai-bridge (docs/story/castle_artifacts.md keeps the brief and the raw reply)."
+  },
+  "category": "wondrous",
+  "weight_lb": 10,
+  "cost_gp": 90000,
+  "magic": {
+    "rarity": "legendary",
+    "attunement": "by a creature of good alignment"
+  },
+  "icon": "icon_of_ravenloft",
+  "treasure": {
+    "random": false
+  },
+  "modifiers": [
+    {
+      "stat": "turn_dc",
+      "value": 2,
+      "carried": true
+    }
+  ],
+  "powers": [
+    {
+      "id": "augury",
+      "name": "Augury",
+      "cost": "magic",
+      "custom": "icon_augury",
+      "field": true,
+      "hidden": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn, no components: Augury, read from the icon. Outside a fight."
+    },
+    {
+      "id": "cure",
+      "name": "Cure Wounds",
+      "recipe": "cure",
+      "cost": "magic",
+      "field": true,
+      "uses": {
+        "count": 1,
+        "per": "dawn"
+      },
+      "text": "Once per dawn, Magic action: a creature you can see within 30 ft regains 3d8 + 3 Hit Points (nothing for an Undead, a Construct or a Fiend)."
+    }
+  ],
+  "recipes": {
+    "cure": {
+      "name": "Cure Wounds",
+      "level": 0,
+      "school": "abjuration",
+      "range": {
+        "kind": "feet",
+        "feet": 30
+      },
+      "targets": {
+        "kind": "creature",
+        "count": 1
+      },
+      "duration": {
+        "kind": "instantaneous"
+      },
+      "heal": {
+        "dice": "3d8",
+        "flat": 3
+      },
+      "living_only": true,
+      "skip_types": [
+        "fiend"
+      ],
+      "components": {},
+      "tags": [
+        "healing"
+      ]
+    }
+  },
+  "summary": "Anyone within 30 ft is guarded against fiends and undead. Its attuned bearer gets Augury and Cure Wounds once a day, and +2 to the save DC of Turn Undead.",
+  "text": "A heavy statuette of pure silver showing a cleric kneeling in supplication. The archpriest Ciril Romulich, an old family friend, gave this piece to Strahd to consecrate the castle and its chapel. Forgotten under the dust of the altar, the silver remains pure. Anyone within 30 feet of the icon is guarded as by Protection from Evil and Good against fiends and undead: they have Disadvantage on attack rolls against that creature and can't make it Charmed or Frightened. This needs no attunement; in a fight it reaches the bearer and the bearer's allies. Its attuned bearer has more. Once per dawn a Magic action casts Augury from the icon, with no components. Once per dawn a Magic action heals a creature the bearer can see within 30 feet for 3d8 + 3 Hit Points (nothing for an Undead, a Construct or a Fiend). And the icon serves as a holy symbol for Turn Undead, adding 2 to its save DC."
+}

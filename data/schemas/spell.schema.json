@@ -534,6 +534,11 @@
       "type": "boolean",
       "description": "No effect on Undead or Constructs."
     },
+    "skip_types": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Creature types its healing has no effect on, as well as living_only's (the Icon of Ravenloft's Cure Wounds: fiend)."
+    },
     "ignites_objects": {
       "type": "boolean",
       "description": "A flammable object it hits, or that is in its area, catches fire if nobody wears or carries it (Fire Bolt, Fireball; combat/encounter_objects.gd)."

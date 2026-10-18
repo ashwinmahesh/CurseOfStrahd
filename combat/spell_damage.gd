@@ -184,7 +184,11 @@ func _heal(ctx: Dictionary, t: Combatant, r: CombatResult) -> void:
 	if t.creature.has_flag("cant_regain_hp"):
 		r.lines.append(e.log.add("info", "%s can't regain Hit Points right now" % t.name(), t.id))
 		return
-	if t.creature.creature_type in [&"undead", &"construct"] and bool(s.get("living_only", false)):
+	# `living_only`: no effect on an Undead or a Construct; `skip_types` adds more (the Icon of Ravenloft's Cure Wounds: Fiends).
+	var skip := ([&"undead", &"construct"] if bool(s.get("living_only", false)) else []) as Array
+	for ty: Variant in s.get("skip_types", []) as Array:
+		skip.append(StringName(str(ty)))
+	if t.creature.creature_type in skip:
 		r.lines.append(e.log.add("info", "%s has no effect on %s" % [s["name"], t.name()], t.id))
 		return
 	var dice := Spellcasting.heal_dice(s, int(ctx["slot"]))

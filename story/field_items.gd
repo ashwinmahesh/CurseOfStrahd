@@ -166,7 +166,7 @@ static func _field_why(e: Encounter, c: Combatant, p: Dictionary) -> String:
 
 const FIELD_CUSTOM: Array[String] = ["read_tome", "alchemy_jug", "bag_of_beans", "deck_of_many_things", "exalted_deeds", "vile_darkness",
 	"manual_study", "instant_fortress", "rod_of_security", "oil_of_sharpness", "ring_store", "sense_dragons", "useful_items",
-	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object", "trade_to_coin"]
+	"flavour", "drink_field_spell", "chime_of_opening", "mystery_key", "wand_of_secrets", "feather_token", "paint_object", "trade_to_coin", "icon_augury"]
 
 
 ## Uses a power outside a fight. `target` is the creature it's used on (yourself if null): a party member, or a story
@@ -335,6 +335,9 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 	match str(power["custom"]):
 		"flavour":
 			return {"ok": true, "text": "%s's %s %s." % [nm, label, params.get("text", "does something harmless")]}
+		"icon_augury":
+			# The Icon of Ravenloft's Augury: the same reading as the spell (story/oracles.gd), cast from the icon.
+			return {"ok": true, "effect": "augury", "text": Oracles.cast(st, ch, "augury")}
 		"read_tome":
 			# The Tome of Strahd (Curse of Strahd): its history goes into the codex; the vampire knows it was read.
 			var lore := st.add_codex("tome_of_strahd")

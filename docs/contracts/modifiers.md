@@ -35,6 +35,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 | `attack` | value, when | bonus to attack rolls. Archery: `{"stat":"attack","value":2,"when":{"weapon":"ranged"}}` |
 | `damage` | value, when | bonus to damage rolls. Dueling: `{"stat":"damage","value":2,"when":{"weapon":"one_handed_alone"}}` |
 | `spell_dc`, `spell_attack` | value | bonus to spell save DC / spell attack rolls |
+| `turn_dc` | value | bonus to the save DC of Turn Undead, on top of the Cleric's spell save DC (the Icon of Ravenloft's +2, `carried`) |
 | `speed` | value, kind (default walk), when | +value ft; `when` sees the armor worn (Fast Movement: `{"armor":"not_heavy"}`, Unarmored Movement: `{"armor":"none","shield":false}`) |
 | `speed_set` | value, kind | speed becomes value (Grappled: 0). `kind` may be `fly` etc. to grant a speed; value `"walk"` = equal to the walking Speed (Potion of Flying). A value of 0 without `kind` stops every speed, flying too (Speed 0); with `kind`, only that one |
 | `hp_max` | value | + to Hit Point maximum (formulas recompute on level up) |

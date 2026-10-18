@@ -397,6 +397,23 @@
         }
       ],
       "gold": 0
+    },
+    {
+      "id": "druid_satchel",
+      "cell": [
+        20,
+        4
+      ],
+      "label": "A druid's satchel, dropped in haste",
+      "model": "satchel",
+      "when": "flag.winery_hall_cleared",
+      "items": [
+        {
+          "id": "gulthias_staff",
+          "qty": 1
+        }
+      ],
+      "gold": 0
     }
   ],
   "lights": [

@@ -542,6 +542,8 @@ func refresh_auras() -> void:
 			if not fx.modifiers.is_empty() or not fx.conditions.is_empty() or fx.data.has("casting_save"):
 				t.creature.add_effect(fx)
 	e.class_features.refresh_auras()
+	if e.items != null:
+		e.items.specials.more.refresh_auras()   # the Icon of Ravenloft's protection
 	spells().specials.high.refresh_antimagic()
 
 
