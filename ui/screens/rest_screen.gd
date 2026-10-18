@@ -209,7 +209,7 @@ func _draw() -> void:
 	for c in _box.get_children():
 		c.queue_free()
 	if _long_done and not PrepareScreen.preparable(st).is_empty():
-		var prep := UiKit.button("Change prepared spells", func() -> void:
+		var prep := UiKit.button("Change %s" % PrepareScreen.change_words(PrepareScreen.change_names(st)), func() -> void:
 			var ps := PrepareScreen.new()
 			ps.earlier = _prepared_before
 			add_child(ps)
@@ -217,10 +217,12 @@ func _draw() -> void:
 		UiParts.light_up(prep)
 		prep.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		_box.add_child(prep)
-	elif _short_done and not PrepareScreen.preparable(st, "short_rest").is_empty():
-		var swap := UiKit.button("Change what the rest lets you change", func() -> void:
+	elif (_short_done or not RestRules.short_change(st).is_empty()) and not PrepareScreen.preparable(st, "short_rest").is_empty():
+		# Stays on offer if the screen is closed and opened again, until the next rest, an hour or the party moving on.
+		var swap := UiKit.button("Change %s" % PrepareScreen.change_words(PrepareScreen.change_names(st, "short_rest")), func() -> void:
 			var ps2 := PrepareScreen.new()
 			ps2.rest_kind = "short_rest"
+			ps2.earlier = (RestRules.short_change(st).get("picks", {}) as Dictionary).duplicate(true)
 			add_child(ps2)
 			ps2.open(root, st, 0), 15)
 		UiParts.light_up(swap)
@@ -431,6 +433,10 @@ func _finish_short() -> void:
 		_log.text += " " + studied
 	_narrate("rest:short")
 	_short_done = true
+	RestRules.note_short_rest(st, PrepareScreen.snapshot(st, "short_rest"))
+	var short_line := PrepareScreen.available_line(st, "short_rest")
+	if short_line != "":
+		_log.text += " " + short_line
 	_draw()
 	_refresh_long()
 
@@ -457,6 +463,9 @@ func _long_rest(rule: String) -> void:
 		_long_done = true
 		_prepared_before = PrepareScreen.snapshot(st)
 		st.morning["prepared"] = _prepared_before
+		var long_line := PrepareScreen.available_line(st, "long_rest")
+		if long_line != "":
+			_log.text += "\n" + long_line
 	if str(res["how"]) in [LongRest.SLEPT, LongRest.STRAHD] and root.has_method("strahd_after_rest"):
 		# Strahd may come in the night (ADR 0014): after this screen and any talk started from it. A visit that may
 		# come to blows broke the rest before its benefits; it goes on once he's gone (game root).

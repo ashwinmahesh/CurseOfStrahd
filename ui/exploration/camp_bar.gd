@@ -87,7 +87,8 @@ func _process(_delta: float) -> void:
 	_sleep.disabled = why != ""
 	_sleep.tooltip_text = why if why != "" else "The Long Rest: everyone sleeps by the fire, and all Hit Points, spell slots and features come back."
 	_prepare.visible = prep
-	_prepare.tooltip_text = "Change prepared spells, counted from the list the night ended with." if camp.slept \
+	_prepare.text = camp.prepare_label()
+	_prepare.tooltip_text = "Change what the night lets you change, counted from the list it ended with." if camp.slept \
 		else "Change which spells each caster has ready. No rest needed outside a fight."
 	if prep and camp.slept:
 		UiParts.light_up(_prepare)   # the morning's chance, counted from the night's list
@@ -95,6 +96,9 @@ func _process(_delta: float) -> void:
 	if camp.slept:
 		_hint.text = "Walk up to anyone to talk. Break camp when you're ready to go on." if asking == 0 \
 			else "Someone wants a word. Walk up to them to talk, or break camp to go on."
+		var change := PrepareScreen.available_line(camp.view.st, "long_rest") if prep and camp.view != null else ""
+		if change != "":
+			_hint.text = change.replace("the lit button below", "the lit button") + " " + _hint.text
 	else:
 		_hint.text = "Walk up to anyone by the fire to talk, then sleep." if asking == 0 \
 			else "Someone wants a word: the mark over them. Walk up to them to talk, then sleep."

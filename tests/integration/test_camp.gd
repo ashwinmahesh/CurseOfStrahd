@@ -282,7 +282,8 @@ func test_the_camp_changes_prepared_spells_before_the_night_and_in_the_morning()
 
 func _visible_button(screen: Node, text: String) -> Button:
 	for b in screen.find_children("*", "Button", true, false):
-		if (b as Button).text == text and (b as Button).is_visible_in_tree() and not b.is_queued_for_deletion():
+		# "Change prepared spells" in the morning also names what else the night lets the party change.
+		if ((b as Button).text == text or (text == "Change prepared spells" and (b as Button).text.begins_with(text))) and (b as Button).is_visible_in_tree() and not b.is_queued_for_deletion():
 			return b as Button
 	return null
 
@@ -394,3 +395,22 @@ endif
 	assert_eq(asked, [ref] as Array[String], "the click starts her word")
 	assert_true(bool(camp.had.get("guest_ireena", false)), "which counts as her word for the evening")
 	assert_eq(str(view.thing_at(cell).get("label", "")), "Talk to Ireena Kolyana", "and the hint goes back to her company")
+
+## In the morning the bar's button names everything the night lets the party change, and the hint says so (owner report
+## 2026-10-18: a Fiend Warlock could not find Fiendish Resilience).
+func test_the_mornings_button_names_what_the_night_lets_the_party_change() -> void:
+	var camp := await _make_camp()
+	await _frames(3)
+	var kip := Pregens.build("kip_smudgewick", 10)
+	kip.finish_long_rest()
+	GameState.story.party.append(kip)
+	assert_eq(camp.prepare_label(), "Change prepared spells", "before the night: the any-time spells")
+	camp.sleep()
+	await _frames(3)
+	var label := camp.prepare_label()
+	assert_true(label.begins_with("Change prepared spells") and label.contains("Fiendish Resilience"), label)
+	var button := _visible_button(camp.bar, label)
+	assert_true(button != null, "the bar shows it: %s" % label)
+	var hints := camp.bar.find_children("*", "Label", true, false).filter(func(l: Node) -> bool:
+		return (l as Label).text.contains("You can change") and (l as Label).is_visible_in_tree())
+	assert_false(hints.is_empty(), "and its hint says what can be changed")

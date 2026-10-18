@@ -37,6 +37,14 @@ func _frames(n: int) -> void:
 		await get_tree().process_frame
 
 
+## The "Change prepared spells ..." button a rest leaves (it names everything the party can change).
+func _change_button(screen: Node) -> Button:
+	for b in screen.find_children("*", "Button", true, false):
+		if (b as Button).text.begins_with("Change prepared spells") and not b.is_queued_for_deletion():
+			return b as Button
+	return null
+
+
 func _button(screen: Node, text: String) -> Button:
 	for b in screen.find_children("*", "Button", true, false):
 		if (b as Button).text == text and not b.is_queued_for_deletion():
@@ -59,13 +67,13 @@ func test_the_morning_keeps_the_rest_screens_offers() -> void:
 	await _frames(2)
 	rest = await _rest_screen()
 	assert_true(_button(rest, "Thistle wants a word") != null, "still there when the screen opens again")
-	assert_true(_button(rest, "Change prepared spells") != null, "and the change of prepared spells")
+	assert_true(_change_button(rest) != null, "and the change of prepared spells")
 	root.call("close_screen")
 	await _frames(2)
 	GameState.story.advance_minutes(LongRest.MORNING_MINUTES + 1)
 	rest = await _rest_screen()
 	assert_true(_button(rest, "Thistle wants a word") == null, "the morning is over: she'll ask at the next rest")
-	assert_true(_button(rest, "Change prepared spells") == null, "and the chance to change spells has passed")
+	assert_true(_change_button(rest) == null, "and the chance to change spells has passed")
 
 
 func test_closing_with_a_word_waiting_says_where_to_hear_it() -> void:

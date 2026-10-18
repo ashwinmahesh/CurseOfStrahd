@@ -23,6 +23,12 @@ const DONE_AT := "_long_rest_at"
 ## Why no rest starts while a Long Rest is broken (LongRest.BROKEN): what woke the party comes first, and the rest
 ## goes on by itself once that's over.
 const BROKEN_NIGHT := "Something is out there in the dark. Face it first: the night's rest goes on once it's over."
+## st.flags: the Short Rest whose changes (what a Short Rest lets you change: Fiendish Resilience's damage type) are
+## still on offer: {at: the game minute it ended, location: where, picks: PrepareScreen.snapshot() as it ended, what a
+## swap limit counts from, or {}}. An underscore key: bookkeeping, saved with the game.
+const SHORT_CHANGE := "_short_rest_change"
+## How long after a Short Rest its changes stay on offer (game minutes), as long as the party stays where it rested.
+const CHANGE_MINUTES := 60
 ## Triggers of fights that come for the party on their own.
 const SELF_STARTING: Array[String] = ["enter_area", "open", "examine"]
 
@@ -43,6 +49,24 @@ static func long_rest_refusals(st: StoryState) -> Array[String]:
 	if wait > 0:
 		out.append("The last Long Rest ended less than 16 hours ago: the next can start in %s." % duration(wait))
 	return out
+
+
+## A Short Rest has just ended here: its changes stay on offer (short_change) until the next rest, an hour, or the party
+## moving on. `picks` is PrepareScreen.snapshot(st, "short_rest") when the caller has it.
+static func note_short_rest(st: StoryState, picks: Dictionary = {}) -> void:
+	st.flags[SHORT_CHANGE] = {"at": st.total_minutes(), "location": st.location, "picks": picks}
+
+
+## The Short Rest whose changes are still on offer ({} if none): the party is where it finished, under an hour has gone, and
+## no Long Rest has come since (that one offers them itself).
+static func short_change(st: StoryState) -> Dictionary:
+	var d: Variant = st.flags.get(SHORT_CHANGE, null)
+	if not d is Dictionary:
+		return {}
+	var gone := st.total_minutes() - int((d as Dictionary).get("at", -1))
+	if str((d as Dictionary).get("location", "")) != st.location or gone < 0 or gone > CHANGE_MINUTES:
+		return {}
+	return d as Dictionary
 
 
 ## Why the party can't start a Short Rest where it stands, one sentence per reason; [] when it can: a fight on this

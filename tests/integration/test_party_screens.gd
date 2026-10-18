@@ -37,6 +37,15 @@ func _button(screen: Node, text: String) -> Button:
 	return null
 
 
+## The "Change ..." button a rest leaves for what it lets the party change ("Change prepared spells and Weapon Mastery"
+## for this party), or null: it names what can be changed (PrepareScreen.change_names).
+func _change_button(screen: Node, what: String = "prepared spells") -> Button:
+	for b in screen.find_children("*", "Button", true, false):
+		if (b as Button).text.begins_with("Change " + what) and not b.is_queued_for_deletion():
+			return b as Button
+	return null
+
+
 ## Whether a label on `screen` says `text`.
 func _says(screen: Node, text: String) -> bool:
 	return screen.find_children("*", "Label", true, false).any(func(l: Node) -> bool:
@@ -374,9 +383,9 @@ func test_preparing_spells_after_a_long_rest() -> void:
 	var rest := root.get("screen") as RestScreen
 	rest.call("_long_rest", "safe")
 	await _frames(1)
-	var btn := rest.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Change prepared spells")
-	assert_eq(btn.size(), 1)
-	(btn[0] as Button).pressed.emit()
+	var btn := _change_button(rest)
+	assert_true(btn != null)
+	btn.pressed.emit()
 	await _frames(2)
 	assert_eq(rest.find_children("*", "PrepareScreen", true, false).size(), 1)
 
@@ -388,7 +397,7 @@ func test_the_rest_screen_prepares_spells_without_a_rest() -> void:
 	root.call("open_screen", "rest", 0)
 	await _frames(1)
 	var rest := root.get("screen") as RestScreen
-	assert_true(_button(rest, "Change prepared spells") == null, "no Long Rest taken yet")
+	assert_true(_change_button(rest) == null, "no Long Rest taken yet")
 	var any := _button(rest, "Prepare spells")
 	assert_true(any != null and not any.disabled, "Prepare spells is offered without a rest")
 	any.pressed.emit()
@@ -424,15 +433,14 @@ func test_the_rest_screen_prepares_spells_without_a_rest() -> void:
 	rest.call("_long_rest", "safe")
 	await _frames(1)
 	assert_true(_button(rest, "Prepare spells") == null, "the rest's own button takes over")
-	assert_true(_button(rest, "Change prepared spells") != null)
+	assert_true(_change_button(rest) != null)
 
 
 ## The Prepare Spells widget for `key` inside the rest screen's open PrepareScreen (opened with its button).
 func _prepare_widget(rest: RestScreen, key: String) -> ChoiceWidget:
 	for ps in rest.find_children("*", "PrepareScreen", true, false):
 		ps.free()
-	var btn := rest.find_children("*", "Button", true, false).filter(func(b: Node) -> bool: return (b as Button).text == "Change prepared spells")
-	(btn[0] as Button).pressed.emit()
+	_change_button(rest).pressed.emit()
 	await _frames(2)
 	for w in rest.find_children("*", "ChoiceWidget", true, false):
 		if (w as ChoiceWidget).choice.key == key:
@@ -498,7 +506,7 @@ func test_an_items_long_rest_offers_prepared_spells_too() -> void:
 	await _frames(1)
 	var inv := root.get("screen") as InventoryScreen
 	var prep := func() -> Array: return inv.find_children("*", "Button", true, false).filter(func(b: Node) -> bool:
-		return (b as Button).text == "Change prepared spells" and not b.is_queued_for_deletion())
+		return (b as Button).text.begins_with("Change prepared spells") and not b.is_queued_for_deletion())
 	assert_eq((prep.call() as Array).size(), 0, "no rest yet")
 	inv.selected = "rod_of_security"
 	inv.call("_use_power", "paradise", {})

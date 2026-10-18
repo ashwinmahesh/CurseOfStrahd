@@ -450,6 +450,15 @@ func can_prepare() -> bool:
 	return not PrepareScreen.preparable(view.st, PrepareScreen.ANYTIME).is_empty()
 
 
+## What the camp's button says: "Change prepared spells" before the night, and after it all that the morning lets the party
+## change ("Change prepared spells and Fiendish Resilience").
+func prepare_label() -> String:
+	if view == null or not slept:
+		return "Change prepared spells"
+	var names := PrepareScreen.change_names(view.st)
+	return "Change %s" % PrepareScreen.change_words(names) if not names.is_empty() else "Change prepared spells"
+
+
 ## The morning's change of prepared spells (as the rest screen offers it), counted from the list the night ended with;
 ## before the night, the spells a Long Rest lets you change, as many as you like (PrepareScreen ANYTIME).
 func prepare() -> void:

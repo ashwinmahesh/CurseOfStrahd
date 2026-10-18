@@ -112,6 +112,7 @@ static func restless(st: StoryState, text: String = "") -> Dictionary:
 	for ch in st.party:
 		if not ch.dead:
 			ch.finish_short_rest()
+	RestRules.note_short_rest(st)
 	if text == "":
 		text = "Something moves in the dark, and nobody sleeps again. (Interrupted: a Short Rest's benefits only.)"
 	return _result(st, RESTLESS, start, text)
@@ -161,6 +162,7 @@ static func _benefits(st: StoryState, dice: DiceRoller) -> Array[String]:
 	st.miles_since_long_rest = 0.0
 	RestRules.note_long_rest(st)
 	st.morning = {"at": st.total_minutes()}
+	st.flags.erase(RestRules.SHORT_CHANGE)   # the Long Rest offers those changes itself
 	for ch in st.party:
 		if not ch.dead:
 			ch.finish_long_rest()
