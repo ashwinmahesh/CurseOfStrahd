@@ -1010,23 +1010,23 @@
  },
  "amber_sentinel/0a25b9ddcc138304": {
   "chars": 28,
-  "direction": "[booming, slow, grinding stone]",
+  "direction": "[extremely deep, booming, flat, emotionless, slow]",
   "model": "eleven_v3",
-  "recipe": "238059d52c",
+  "recipe": "4e5045b84e",
   "text": "WHO CARRIES. NOTHING LEAVES."
  },
  "amber_sentinel/6d6ce17f1403d9d2": {
   "chars": 15,
-  "direction": "[booming, slow, grinding stone]",
+  "direction": "[extremely deep, booming, flat, emotionless, slow]",
   "model": "eleven_v3",
-  "recipe": "238059d52c",
+  "recipe": "4e5045b84e",
   "text": "SPEAK THE WORD."
  },
  "amber_sentinel/f771c2ddfcf4f62b": {
   "chars": 14,
-  "direction": "[booming, slow, grinding stone]",
+  "direction": "[extremely deep, booming, flat, emotionless, slow]",
   "model": "eleven_v3",
-  "recipe": "238059d52c",
+  "recipe": "4e5045b84e",
   "text": "ALL MAY ENTER."
  },
  "ana/51575c562fe42460": {
@@ -6027,93 +6027,93 @@
  },
  "castle_courtier_2/25e8bd41346895d6": {
   "chars": 146,
-  "direction": "[gossipy, wry, amused]",
+  "direction": "[sinister, amused, gossipy]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Rahadin, always. They say he hears the screams of everyone he ever killed, every hour of every night. It explains why he never laughs at my jokes."
  },
  "castle_courtier_2/26683f2a61c74c60": {
   "chars": 113,
-  "direction": "[wistful, curious, languid]",
+  "direction": "[sinister, wistful, resigned]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "So you sat at his table and got up again. Did he laugh? He has a lovely laugh. He never spends it on us any more."
  },
  "castle_courtier_2/2dc21d000f3a2f1e": {
   "chars": 78,
-  "direction": "[delighted, hungry, flirtatious]",
+  "direction": "[sinister, hungry, languid]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "New faces! Oh, let me look at you. Warm ones. I'd almost forgotten the colour."
  },
  "castle_courtier_2/42be134378f2086a": {
   "chars": 113,
-  "direction": "[amused, vain, teasing]",
+  "direction": "[sinister, velvet, resigned]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "You drew on him at dinner? At dinner. If I'd known there was going to be a scene, I'd have worn something better."
  },
  "castle_courtier_2/5013907ca6570d86": {
   "chars": 114,
-  "direction": "[sweet, arch, ominous]",
+  "direction": "[sinister, sweet, ominous]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Nothing in this house will touch you while you're his guests. After that, I'd run. Prettily, if you can manage it."
  },
  "castle_courtier_2/5d86cf631423f873": {
   "chars": 128,
-  "direction": "[dreamy, wistful, ominous]",
+  "direction": "[wistful, dreamy, ominous]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "The music was divine. So was the host. I danced the last dance with him, and the dancing went on rather longer than I'd planned."
  },
  "castle_courtier_2/6edf02bb02487207": {
   "chars": 104,
-  "direction": "[teasing, droll, gossipy]",
+  "direction": "[sinister, languid, droll]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "And Lord Thale is leaving in the morning. Do ask him when. He's been at it for nearly two hundred years."
  },
  "castle_courtier_2/6ff14b44bb02cdab": {
   "chars": 87,
-  "direction": "[teasing, flirtatious, dangerous]",
+  "direction": "[sinister, teasing, cold]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Callers, uninvited and unfed. You'll forgive me if I don't come any closer. Or if I do."
  },
  "castle_courtier_2/bb94e3ee3c0bde1c": {
   "chars": 111,
-  "direction": "[arch, charming, proud]",
+  "direction": "[cool, proud, resigned]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Celestine Morrow. Lady Morrow, if you're being correct, and nobody here ever is. I came up the road for a ball."
  },
  "castle_courtier_2/e4931cd1ae59d201": {
   "chars": 130,
-  "direction": "[confiding, arch, warning]",
+  "direction": "[sinister, confiding, warning]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Praise the organ, never the wine; he knows the wine is good. And don't sit in the chair at his right hand. That one isn't for you."
  },
  "castle_courtier_2/eb86c771b965545e": {
   "chars": 88,
-  "direction": "[vain, wistful, dreamy]",
+  "direction": "[wistful, resigned, vain]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "My face. One of the carvers was very taken with me, I'm told. It must be here somewhere."
  },
  "castle_courtier_2/fb51ff2854d0a7c6": {
   "chars": 58,
-  "direction": "[soft, wistful, grateful]",
+  "direction": "[soft, resigned, sad]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "Thank you. I shan't remember it by morning. But thank you."
  },
  "castle_courtier_2/ff6cab8a161f0e1d": {
   "chars": 100,
-  "direction": "[wistful, hollow, faintly sad]",
+  "direction": "[sad, hollow, resigned]",
   "model": "eleven_v3",
-  "recipe": "f00227db6e",
+  "recipe": "5e148a9413",
   "text": "No glass has shown it to me since the ball, you see. One forgets. One forgets the nose first, oddly."
  },
  "castle_courtier_3/0d6ef0cbca0ed7bb": {
@@ -6377,65 +6377,65 @@
  },
  "castle_ghost_servant_3/122ae60f6e093f9a": {
   "chars": 147,
-  "direction": "[stiff, pained, precise]",
+  "direction": "[ghostly, pained, precise]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "I wrote out the banns. The marriage lines. The guest list, every name in my best hand. I would rather not look at her, if it's all the same to you."
  },
  "castle_ghost_servant_3/13426a44fc31809e": {
   "chars": 79,
-  "direction": "[hollow, quiet, haunted]",
+  "direction": "[hollow, haunted, eerie]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Then one night I put down my pen, and I have not been able to pick it up since."
  },
  "castle_ghost_servant_3/1b5d365cc40680e4": {
   "chars": 107,
-  "direction": "[dry, resentful, thin]",
+  "direction": "[ghostly, resentful, thin]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "He used to dictate. These days he writes them himself, in that hand of his. He enjoys it too much to share."
  },
  "castle_ghost_servant_3/37e60aad9dcb9176": {
   "chars": 76,
-  "direction": "[flat, grim, precise]",
+  "direction": "[flat, eerie, precise]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Everyone, now. Burgomasters, priests, girls in the village. Guests like you."
  },
  "castle_ghost_servant_3/6de92d9f2f2e58dd": {
   "chars": 41,
-  "direction": "[quiet, formal, grateful]",
+  "direction": "[hollow, formal, grateful]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Thank you. That will last until midnight."
  },
  "castle_ghost_servant_3/78aa333ee4692790": {
   "chars": 148,
-  "direction": "[formal, proud, thin]",
+  "direction": "[ghostly, formal, thin]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Anghel Daskal, secretary to His Excellency: his letters, his seals, his day-book. For nine years everything that left this room went out in my hand."
  },
  "castle_ghost_servant_3/b0aa31ae5c376767": {
   "chars": 108,
-  "direction": "[thin, dry, wry]",
+  "direction": "[eerie, dry, wry]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "The guests. I wrote your invitation. No, I didn't. He writes them himself now. I like to think I blotted it."
  },
  "castle_ghost_servant_3/b618475449572855": {
   "chars": 85,
-  "direction": "[precise, dry, vague]",
+  "direction": "[ghostly, precise, vague]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "Dinner is done, I'm told. I shall enter it in the day-book, when I find the day-book."
  },
  "castle_ghost_servant_3/fd9e667551acc97c": {
   "chars": 119,
-  "direction": "[stiff, formal, curt]",
+  "direction": "[cold, formal, ghostly]",
   "model": "eleven_v3",
-  "recipe": "37439bfa6a",
+  "recipe": "d66d6b8439",
   "text": "You have no appointment. His Excellency sees nobody without an appointment, and he makes no appointments. Good evening."
  },
  "castle_ghost_servant_4/103cd78537f5e8db": {
@@ -7119,291 +7119,338 @@
  },
  "cyrus_belview/001239b15aa72155": {
   "chars": 135,
+  "direction": "[low, conspiratorial, careful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "At first light Cyrus takes the scraps down the cliff path for the crows, in the big barrel. A girl fits in a barrel. Cyrus has checked."
  },
  "cyrus_belview/032bf3aed0b261bd": {
   "chars": 71,
+  "direction": "[frightened, pleading, fast]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Not the pot! Cyrus will help. Cyrus always helps. Please put that down."
  },
  "cyrus_belview/048c69279683e087": {
   "chars": 55,
+  "direction": "[blunt, chilling, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Out? Guests don't go out. Guests go down. To the table."
  },
  "cyrus_belview/05e72bdc94d10eb6": {
   "chars": 89,
+  "direction": "[anxious, muttering, accusing]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Someone has been in Cyrus's box. The buttons were counted. Cyrus counts them every night."
  },
  "cyrus_belview/0649bf2d4e99bcd1": {
   "chars": 75,
+  "direction": "[slow, gruff, wry]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Wine, mostly. And the wine man. He sold the Master vinegar in good bottles."
  },
  "cyrus_belview/09bacd4cf5ab3ad9": {
   "chars": 72,
+  "direction": "[dry, slow, respectful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The Master is very old, and very tired, and very particular about gravy."
  },
  "cyrus_belview/10127921337b92c8": {
   "chars": 114,
+  "direction": "[gentle, conspiratorial, dark]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The girl with the lamp-soot hands. She cries. Cyrus gives her extra bread, so she won't be ripe for the table yet."
  },
  "cyrus_belview/129ca01de3c67cb1": {
   "chars": 66,
+  "direction": "[flat, grim, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Everything is for the table, in the end. That's what a kitchen is."
  },
  "cyrus_belview/12c863d285dd4644": {
   "chars": 100,
+  "direction": "[proud, slow, hollow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Cyrus Belview, cook to the Master. Thirty years at this fire. Or three hundred. The fire never says."
  },
  "cyrus_belview/1324234cae2f24ee": {
   "chars": 100,
+  "direction": "[hushed, awed, sinister]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "You've met him? Then you know. He looks at you as if you were already on a plate. It's a compliment."
  },
  "cyrus_belview/1aeeea7eb804e897": {
   "chars": 76,
+  "direction": "[wistful, plain, resigned]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "He's never once thanked Cyrus for a meal. But he's never once sent one back."
  },
  "cyrus_belview/24f0d744feb1497c": {
   "chars": 24,
+  "direction": "[pleased, slow, deadpan]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Like a very good cheese."
  },
  "cyrus_belview/25adcf1efe40ea04": {
   "chars": 33,
+  "direction": "[deadpan, sad, simple]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The crows were very disappointed."
  },
  "cyrus_belview/2a5209d2fb18a3e5": {
   "chars": 118,
+  "direction": "[low, urgent, conspiratorial]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Bring her to the kitchen with her chain off. She goes down with the scraps. At the bottom, the road. After that, legs."
  },
  "cyrus_belview/2e2f2cdbfe5935ef": {
   "chars": 107,
+  "direction": "[hopeful, happy, simple]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "A bride came up the mountain? Father's bride? Then Father is happy, and Cyrus will bake a cake. A tall one."
  },
  "cyrus_belview/37b1a5f92ad66e01": {
   "chars": 105,
+  "direction": "[cheerful, matter-of-fact, sinister]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Soup, for the guests downstairs. The guests in the cells. They must be kept fresh for the Master's table."
  },
  "cyrus_belview/426b214bb81b8ab0": {
   "chars": 142,
+  "direction": "[plain, resigned, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Then Father sent Cyrus here, a present for the Master's wedding. There wasn't a wedding in the end. Cyrus stayed anyway. Somebody has to cook."
  },
  "cyrus_belview/43ca20635558b657": {
   "chars": 119,
   "direction": "[slow, simple, proud, mumbling]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "And this. A little stone. Master gave it so Cyrus would never stop cooking to eat. But Cyrus likes eating. You take it."
  },
  "cyrus_belview/49981e3b4b2115e2": {
   "chars": 56,
+  "direction": "[mournful, dull, simple]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "She does cry a great deal, though. It gets in the bread."
  },
  "cyrus_belview/4bbb2faa36d65461": {
   "chars": 108,
+  "direction": "[pleased, slow, dark humour]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The new wine comes up on a cart again now, with ravens on the casks. Good wine. Nobody bricks up a Martikov."
  },
  "cyrus_belview/4ea5fcbccc47306d": {
   "chars": 110,
+  "direction": "[dazed, defensive, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Father walked somewhere to be judged? Father doesn't walk. Father doesn't get judged. Father does the judging."
  },
  "cyrus_belview/4edec5c09cf0d093": {
   "chars": 46,
+  "direction": "[vacant, simple, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Cyrus has forgotten her already. Who? Exactly."
  },
  "cyrus_belview/4f484268dd984c5a": {
   "chars": 87,
+  "direction": "[puzzled, dry, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Father sits and says nothing? Father always says something. Usually about improvements."
  },
  "cyrus_belview/5a4d4bc7df92d57a": {
   "chars": 94,
+  "direction": "[eager, warm, wistful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The Belviews! Is Clovin still carrying everything? He carries everything. Does he still drink?"
  },
  "cyrus_belview/63af9dd0f50cdeb0": {
   "chars": 110,
+  "direction": "[troubled, slow, bewildered]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The crying girl went up the stairs. The Master was very pleased. Cyrus is not pleased. Cyrus doesn't know why."
  },
  "cyrus_belview/7e87238e981e85cd": {
   "chars": 110,
+  "direction": "[puzzled, grumbling, uneasy]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The holy brother in the other row. He never eats Cyrus's soup. Not once. The Master says leave his door alone."
  },
  "cyrus_belview/84fb55f5f9ffe851": {
   "chars": 66,
+  "direction": "[fond, wistful, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Clovin would. Clovin carries everything, even things he shouldn't."
  },
  "cyrus_belview/84ff6c581a51a81d": {
   "chars": 119,
+  "direction": "[slow, simple, eerily calm]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The scrap barrel went down the cliff path this morning. Very heavy. Cyrus didn't look inside. Cyrus never looks inside."
  },
  "cyrus_belview/861ac9e9b26a0bab": {
   "chars": 122,
+  "direction": "[slow, awed, dark]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Down below, past the guests. The Master keeps a table for special company. It is all made of his old enemies. Very sturdy."
  },
  "cyrus_belview/86a4dd91b08aeb60": {
   "chars": 88,
+  "direction": "[cheerful, bustling, wry]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Back again! Wipe your feet. No, don't. Nobody wipes their feet down here. Why start now?"
  },
  "cyrus_belview/8d57dac5814465af": {
   "chars": 54,
+  "direction": "[cheerful, warning, eerie]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Mind the stairs down. They eat people. Only sometimes."
  },
  "cyrus_belview/a27b6aed63822dfa": {
   "chars": 69,
+  "direction": "[wary, shrewd, slow]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Words are cheap. Cyrus knows cheap. It will cost more than words now."
  },
  "cyrus_belview/a31f8ec3af65bb0d": {
   "chars": 57,
+  "direction": "[cowering, desperate, loud]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Go away. Go away! Cyrus told the Master nothing. Nothing!"
  },
  "cyrus_belview/a32e160b03337099": {
   "chars": 39,
+  "direction": "[pleased, greedy, simple]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Shiny. Cyrus collects shiny. Very well."
  },
  "cyrus_belview/a80129784c51e010": {
   "chars": 76,
+  "direction": "[bitter, soft, grateful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "He never sent love in his life. You are a kind liar. Cyrus likes kind liars."
  },
  "cyrus_belview/a9ba3db3cc58aefd": {
   "chars": 96,
+  "direction": "[musing, slow, wistful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "One fewer. Nobody counts. That's true, nobody counts. The Master never counts the spoons either."
  },
  "cyrus_belview/a9cc8a6b28e9d471": {
   "chars": 45,
+  "direction": "[panicked, loud, pleading]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "No! Not in the kitchen! Never in the kitchen!"
  },
  "cyrus_belview/aa7eabfc2b3be83f": {
   "chars": 54,
+  "direction": "[deadpan, grim, simple]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Somebody built everything. Then they went in the soup."
  },
  "cyrus_belview/af7eedd3bf3ca43a": {
   "chars": 138,
+  "direction": "[careful, instructive, uneasy]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "When the lamp over it burns green, never sit. The lamp drinks from the furnace. Turn the furnace's water wheel and the lamp goes to sleep."
  },
  "cyrus_belview/b5b8178c74fbdde0": {
   "chars": 96,
+  "direction": "[cheerful, hospitable, eerie]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Guests! Nobody told Cyrus there were guests up here. Sit, sit. Not that stool. That stool bites."
  },
  "cyrus_belview/bba5733b26551f6e": {
   "chars": 97,
+  "direction": "[hopeful, wistful, tender]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "If he is sorry now, maybe he is sorry about Cyrus too. That would be nice. Cyrus would like that."
  },
  "cyrus_belview/c221ca6339d25431": {
   "chars": 114,
+  "direction": "[gleeful, slow, sinister]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "The Master laughed and laughed. Then Cyrus laid the bricks. Last rack at the very back. Cyrus is good with bricks."
  },
  "cyrus_belview/c7d56f91035a828f": {
   "chars": 100,
+  "direction": "[hollow, plain, wistful]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Cyrus was a Belview, up at the abbey. Father made Cyrus. Father makes all of us, a little at a time."
  },
  "cyrus_belview/cf5accda470bed1f": {
   "chars": 112,
+  "direction": "[sad, simple, uneasy]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "And the priest's boy, who came home with nothing. Cyrus is not to feed him at all. The Master is cross with him."
  },
  "cyrus_belview/dc9490781737084a": {
   "chars": 89,
+  "direction": "[dazed, slow, uncertain]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Cyrus doesn't know if that is good news. Cyrus will think about it while the bread rises."
  },
  "cyrus_belview/dfb91331da7d7b8f": {
   "chars": 39,
+  "direction": "[matter-of-fact, simple, dull]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "They are. That's why Cyrus counts them."
  },
  "cyrus_belview/ecea568bcb4c4767": {
   "chars": 79,
+  "direction": "[delighted, proud, eager]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Good. Good! Tell him Cyrus has a whole cellar. Tell him Cyrus is the lucky one."
  },
  "cyrus_belview/fa0bdbf33bf27856": {
   "chars": 63,
+  "direction": "[flat, stunned, quiet]",
   "model": "eleven_v3",
-  "recipe": "a782ea314e",
+  "recipe": "5fdecdf611",
   "text": "Father is dead. Then nobody will improve the Belviews any more."
  },
  "danika_martikov/0e3a0e0278dc90df": {
@@ -30932,119 +30979,119 @@
   "chars": 139,
   "direction": "[prim, formal]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Lief Lipsiege. Accountant to the count, by appointment, since the year they rebuilt the bridge at Vallaki. The second time they rebuilt it."
  },
  "lief_lipsiege/087422d10073ad27": {
   "chars": 184,
   "direction": "[dry, fussy, precise]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Everything. Vallaki's tithe. Wine from the vineyard, when there is wine. Rents from Krezk. Candles. Gowns. He is a very poor spender and a very good collector. It makes for dull books."
  },
  "lief_lipsiege/3c1f47a4c33b4067": {
   "chars": 124,
   "direction": "[matter-of-fact, hushed]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Behind the lady in the long hall, of course. The alcove. Push the left side of the frame. He likes her to keep an eye on it."
  },
  "lief_lipsiege/3f796c8bcdff561b": {
   "chars": 105,
   "direction": "[disdainful, then eager]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Vallaki. Their tithe books are a disgrace; I have seen them. Yes. Yes, I could do something with Vallaki."
  },
  "lief_lipsiege/4cb7b2286fcc7684": {
   "chars": 143,
   "direction": "[flat, resigned]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "I left once. I got as far as the gate. Rahadin brought me back, and the next morning the smith came up with this. That was forty-one years ago."
  },
  "lief_lipsiege/5058db8a373b53ab": {
   "chars": 106,
   "direction": "[curt, fussy, impatient]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "If you are from the treasury, you are late. If you are not from the treasury, you are interrupting. Which?"
  },
  "lief_lipsiege/5ccfb715a51397fe": {
   "chars": 94,
   "direction": "[dry, put-upon]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "You again. A visit from you costs me eleven minutes on average. I have opened a column for it."
  },
  "lief_lipsiege/689e89536027ed48": {
   "chars": 81,
   "direction": "[bewildered, quietly moved]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Wherever I like. I shall have to make a list. I have never had to make that list."
  },
  "lief_lipsiege/68be2f6398a236a9": {
   "chars": 128,
   "direction": "[nervous, then a little giddy]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Behind the lady in the long hall. Push the left side of the frame. There. Now I have stolen from him too. How very modern of me."
  },
  "lief_lipsiege/6d81173763fc370a": {
   "chars": 96,
   "direction": "[frightened whisper]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Don't tell Rahadin I told you. And don't take more than you can carry. It unbalances everything."
  },
  "lief_lipsiege/8075fa99104f9406": {
   "chars": 122,
   "direction": "[quiet, ashamed]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "There was an \"A.\" before her. Same size. That account is closed. I closed it myself. Neat hand. I always have a neat hand."
  },
  "lief_lipsiege/83d160e80c6b92b2": {
   "chars": 75,
   "direction": "[stunned, then fussily precise]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Forty-one years, three months and a week. I shall have to close the column."
  },
  "lief_lipsiege/844463d468278316": {
   "chars": 79,
   "direction": "[dry, precise]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Seven. Wood is cheaper than stone and the river is patient. I have the figures."
  },
  "lief_lipsiege/86a1311893a030e1": {
   "chars": 101,
   "direction": "[reciting from the ledger, nervous]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "The yellow room, third floor. The account is open: \"G., sixteen, three gowns, all one size. Pending.\""
  },
  "lief_lipsiege/8af387e3684f2aa3": {
   "chars": 61,
   "direction": "[dry, deadpan]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "I have not tried again. I find the arithmetic discourages it."
  },
  "lief_lipsiege/c5ac966fdd0ce0a8": {
   "chars": 123,
   "direction": "[nervous, hushed]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "He is very good at his work. I keep the count's accounts. He keeps the count's other accounts. His have more names in them."
  },
  "lief_lipsiege/da65623ed9274e63": {
   "chars": 112,
   "direction": "[panicked whisper]",
   "model": "eleven_v3",
-  "recipe": "c7f9921e89",
+  "recipe": "6e499d7132",
   "text": "Don't. Don't touch the chain. The rug. The count had it woven for this office. It does not like things to leave."
  },
  "liriel_dawnsong/0090a1756e8ade6e": {
@@ -83491,187 +83538,205 @@
  },
  "tsolenka_sergeant/002f8272e3f7137d": {
   "chars": 37,
+  "direction": "[stern, flat, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Not without the watchword, traveller."
  },
  "tsolenka_sergeant/23937c47bc593b87": {
   "chars": 93,
   "direction": "[clipped, grim, ashamed]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "One went up three nights back. There were faces in the cage. Logged. Not our post. Never was."
  },
  "tsolenka_sergeant/31c74fdc6397e86f": {
   "chars": 61,
+  "direction": "[weary, quiet, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Go back down. Go home. That's the best advice this tower has."
  },
  "tsolenka_sergeant/4404de978d2252c0": {
   "chars": 192,
+  "direction": "[hollow, grim, haunted]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Two of the lads went up once, on their own, at night. They came back talking about voices in the amber that knew their names. We sent them down to the valley. I don't know what became of them."
  },
  "tsolenka_sergeant/45cc81e50e54f7c9": {
   "chars": 204,
   "direction": "[clipped, formal, uneasy]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Nobody went up the road. (He runs a dead finger down the log.) Somebody went up the goat path round the tower. Three times this winter. Lanterns, four or five to a party. One lantern came down, each time."
  },
  "tsolenka_sergeant/4739764e663fa67a": {
   "chars": 145,
+  "direction": "[clipped, dutiful, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Cold hearth, shut door. That's the word. Pass, then. Winch is through there, in the gatehouse. Mind the chain; it bites. Log it when you're done."
  },
  "tsolenka_sergeant/4b72ba82022591ba": {
   "chars": 219,
   "direction": "[clipped, formal, reporting]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Report. Forty-one years back, nine pilgrims, up the road, against orders. Led by a woman with a lamp, from Vallaki. Said a winter had taken their children, and they were going up to ask the amber never to be cold again."
  },
  "tsolenka_sergeant/4e58691c4ebf1507": {
   "chars": 46,
+  "direction": "[flat, relieved, hollow]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Winch is in the gatehouse. The watch is yours."
  },
  "tsolenka_sergeant/5400786770dc2d89": {
   "chars": 132,
   "direction": "[clipped, formal, uneasy]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Also. North shoulder of Ghakis, above the gorge. Smoke, where nobody lives. Snow that melts in midwinter. Forty years of it. Logged."
  },
  "tsolenka_sergeant/5e4e53310571d372": {
   "chars": 123,
+  "direction": "[clipped, formal, hollow]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Travellers. You've passed. The winch is in the gatehouse. Nothing came down. Nobody went up. Well, you did. I've logged it."
  },
  "tsolenka_sergeant/6445c4833a637094": {
   "chars": 49,
+  "direction": "[dry, weary, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Well. Somebody might have said. Lads: stand down."
  },
  "tsolenka_sergeant/6e095f1201380cb6": {
   "chars": 119,
+  "direction": "[cold, wary, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Nice words. I've heard nice words before, at this gate, from people who wanted to go up the road. Watchword, traveller."
  },
  "tsolenka_sergeant/81c8ff71ea90ec3e": {
   "chars": 129,
   "direction": "[clipped, formal, quietly kind]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Log. Two charcoal-burners came down past the tower in their shirts. Said you sent them. Gave them the lads' spare cloaks. Logged."
  },
  "tsolenka_sergeant/8de287f6a56807c2": {
   "chars": 202,
   "direction": "[clipped, grim, formal]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "We stopped them. They went round by the goat path over the gorge. Three nights later the lamp came back down. The people didn't. It's on the landing, in the ice. Some nights it's lit. Logged, every one."
  },
  "tsolenka_sergeant/8f92f9426ad0cc91": {
   "chars": 52,
+  "direction": "[curt, flat, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Not my business, traveller. My business is the gate."
  },
  "tsolenka_sergeant/9510af16b7dc095a": {
   "chars": 123,
   "direction": "[clipped, formal, faintly amazed]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Log. North shoulder of Ghakis: snow lying white, first time in forty years. No smoke. No cart. Logged it twice, to be sure."
  },
  "tsolenka_sergeant/9a32199f3c6a18b3": {
   "chars": 221,
   "direction": "[clipped, grim, ashamed]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Last night, a man, a woman, and a sledge with something small on it, coughing. The one in front walks like he's never been cold in his life. I've logged it. The goat path isn't my road. I can't stop what isn't on my road."
  },
  "tsolenka_sergeant/9c80b8b365cefaa5": {
   "chars": 62,
+  "direction": "[hollow, bleak, quiet]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Gone. All of it. The crown, the valley we kept it for. And us."
  },
  "tsolenka_sergeant/a74025b4188b6701": {
   "chars": 72,
+  "direction": "[weary, dry, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Relief. Relief. About time, I'd say, if I had the breath to say it with."
  },
  "tsolenka_sergeant/ac6adfc42049fdeb": {
   "chars": 26,
+  "direction": "[flat, weary, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Anywhere. Nobody reads it."
  },
  "tsolenka_sergeant/b29f479eac7e6ff7": {
   "chars": 144,
   "direction": "[clipped, formal, faintly bewildered]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Log. The lamp on the landing has gone out. Logged it. First change on this road in forty years. The lads didn't know what to do with themselves."
  },
  "tsolenka_sergeant/b68ab41c0e579082": {
   "chars": 55,
+  "direction": "[sharp, commanding, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Then you'll be made to, and we'll log it. Watch! To me!"
  },
  "tsolenka_sergeant/c68446e15b7fd138": {
   "chars": 69,
   "direction": "[clipped, formal, flat]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Log. The count's cart hasn't come back down off Ghakis. Not our post."
  },
  "tsolenka_sergeant/cfa6e8b17ac90026": {
   "chars": 142,
   "direction": "[clipped, grim, reporting]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Every new moon a black cart goes up the goat path with the count's men and a cage on the back. Comes down with the cage empty. Every new moon."
  },
  "tsolenka_sergeant/d052294841ef579e": {
   "chars": 84,
+  "direction": "[dry, hollow, wry, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Gate up. Logged. May whatever you're going to find be worse at waiting than we were."
  },
  "tsolenka_sergeant/d7c390b51139b015": {
   "chars": 16,
+  "direction": "[sharp, commanding, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Halt. Watchword."
  },
  "tsolenka_sergeant/dedc19f6515b7139": {
   "chars": 134,
+  "direction": "[cold, suspicious, ghostly]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Relief comes with the watchword and a written order, and you've neither. Liars on the mountain road. That's the oldest trick there is."
  },
  "tsolenka_sergeant/f83fb3741a6b2486": {
   "chars": 117,
+  "direction": "[flat, dutiful, hollow]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "The road. Nothing comes down the mountain. Nobody goes up it. Those are the orders. I didn't write them; I keep them."
  },
  "tsolenka_sergeant/fd9c360b879a9d92": {
   "chars": 205,
+  "direction": "[clipped, ghostly, wary]",
   "model": "eleven_v3",
-  "recipe": "8a4538833b",
+  "recipe": "da29c4281d",
   "text": "Captain's things. Off limits. And something that came up the road a while back in a dead man's pack, that the captain locked away and wouldn't talk about. You'll keep out of there, if you know what's good."
  },
  "tsolenka_tibor/27fe7e8bca159b07": {

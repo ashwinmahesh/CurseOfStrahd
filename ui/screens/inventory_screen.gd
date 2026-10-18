@@ -4,7 +4,8 @@ extends CanvasLayer
 ## - the paper doll (U11): every slot in the shape of a person, where it's worn (owner 2026-10-09), the two weapon sets
 ##   with a quick swap, the quiver and the spellcasting focus, four quick slots for consumables (the fight's hotbar
 ##   shows them on its Common tab), the load and attunements;
-## - the backpack as a list with filters, the New and Junk marks, sorting and a search box (U3), and the party stash
+## - the backpack as a list with filters (Potions and Quest items have tabs of their own), the New, Junk and Attuned
+##   marks, sorting and a search box (U3), a magic item's row edged in the colour of its rarity, and the party stash
 ##   under it: things go in from anywhere and come out only at a safe place (Q7, owner 2026-10-07);
 ## - the item card: what the item does for this character compared with what's equipped, and its actions (equip, use,
 ##   give, split the stack, send to the stash, mark as junk, drop). Quest items can't be dropped, stashed or sold.
@@ -13,11 +14,12 @@ extends CanvasLayer
 ## the character's page was last opened (Character.add_item marks it; closing this screen clears it for every page shown).
 ## The bag is always a list (owner 2026-10-09: "keep the inventory as list always").
 
-const FILTERS := ["All", "Weapons", "Armor", "Consumables", "Magic", "Gear"]
+const FILTERS := ["All", "Weapons", "Armor", "Potions", "Consumables", "Magic", "Gear", "Quest"]
 const SORTS := ["name", "weight", "value", "newest"]
-## Item categories each filter keeps (Magic is any magic item, whatever its category; Gear is everything else).
+## Item categories each filter keeps. Magic is any magic item, whatever its category, and Quest any quest item (is_quest),
+## whatever it is otherwise; Gear is everything else that isn't a quest item. Potions are not Consumables.
 const FILTER_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
-	"Consumables": ["potion", "consumable", "scroll"]}
+	"Potions": ["potion"], "Consumables": ["consumable", "scroll"]}
 ## The paper doll: where each slot's tile sits on the figure (its middle, in the doll's own pixels), every worn slot of
 ## the 2024 DMG (one of each, two rings: "ring2" is the second), the hands, the quiver ("ammo") and the focus.
 const DOLL_SIZE := Vector2(372, 432)
@@ -33,6 +35,8 @@ const SWAP_AT := Vector2(34, 392)
 const CARRY_SLOTS: Array[String] = ["ammo", "focus"]
 ## Consumables kept to hand for fights (plan §5.6 "Quick slots").
 const QUICK_SLOTS := 4
+## The Attuned filter's value of `marks` (the New and Junk marks are keys on the entry itself).
+const MARK_ATTUNED := "attuned"
 const QUICK_CATEGORIES: Array[String] = ["potion", "consumable", "scroll"]
 const DOLL_TILE := Vector2(54, 58)
 const STASH_TILE := Vector2(50, 56)
@@ -46,7 +50,8 @@ var sort_by := "name"
 var selected := ""
 ## What the search box holds (matched against an item's name, kind and rarity).
 var search := ""
-## "new" or "junk" shows only items with that mark; "" shows everything the filter keeps.
+## "new" or "junk" shows only items with that mark, "attuned" (MARK_ATTUNED) only what the character is attuned to;
+## "" shows everything the filter keeps.
 var marks := ""
 var _frame: VBoxContainer
 var _card: VBoxContainer
@@ -409,9 +414,10 @@ func _fill_tile(t: ItemTile, ch: Character, e: Dictionary, from: Dictionary) -> 
 			t.marks.append(k)
 	if str(e.get("slot", "")) != "" and str(from.get("from", "pack")) == "pack":
 		t.marks.append("equipped")
+	t.rarity = InventoryScreen.rarity_of(shown)
 	if InventoryScreen.is_quest(data):
 		t.marks.append("quest")
-	elif not (shown.get("magic", {}) as Dictionary).is_empty():
+	elif t.rarity != "":
 		t.marks.append("magic")
 	if str(e["id"]) in ch.quick_slots and str(from.get("from", "pack")) == "pack":
 		t.marks.append("quick")
@@ -434,6 +440,7 @@ func _row(ch: Character, e: Dictionary, from: Dictionary, content: Control) -> I
 	var data := Compendium.shared().item_data(str(e["id"]))
 	var shown := MagicItems.shown_data(data, e)
 	r.icon = UiParts.icon_texture("item", str(shown.get("id", e["id"])))
+	r.rarity = InventoryScreen.rarity_of(shown)
 	r.payload = {"from": "pack", "ch": index, "id": str(e["id"]), "entry": e}
 	r.payload.merge(from, true)
 	var tip_data := shown.duplicate()
@@ -449,7 +456,7 @@ func _row(ch: Character, e: Dictionary, from: Dictionary, content: Control) -> I
 	return r
 
 
-## A pack row's content: icon, name and count, its marks (new, junk, equipped, quest, magic, charges) and weight.
+## A pack row's content: icon, name and count, its marks (new, junk, equipped, quest, attuned, rarity, charges) and weight.
 func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 	var id := str(e["id"])
 	var junk := InventoryScreen.is_junk(e)
@@ -472,8 +479,11 @@ func _pack_line(ch: Character, e: Dictionary, data: Dictionary) -> Control:
 		line.add_child(UiParts.pill("Quick", "bile"))
 	if InventoryScreen.is_quest(data):
 		line.add_child(UiParts.pill("Quest", "flame"))
-	if not (data.get("magic", {}) as Dictionary).is_empty():
-		line.add_child(UiParts.pill("Attuned" if id in ch.attuned else "Magic", "lilac"))
+	var rarity := InventoryScreen.rarity_of(MagicItems.shown_data(data, e))
+	if InventoryScreen.is_attuned(ch, e):
+		line.add_child(UiParts.pill("Attuned", "lilac"))
+	if rarity != "":
+		line.add_child(UiParts.pill(rarity.replace("_", " ").capitalize(), ItemTile.rarity_colour(rarity)))
 	if MagicItems.has_charges(data):
 		line.add_child(UiParts.pill("%d/%d" % [int(e.get("charges", 0)), MagicItems.max_charges(data, e)], "moonlight"))
 	var wt := UiKit.label("%s lb" % str(data.get("weight_lb", 0)), 13, "parchment")
@@ -952,11 +962,20 @@ func _open_menu(acts: Array[Dictionary], at: Vector2) -> void:
 
 # --- Search, filters and marks (U3) ---------------------------------------------------------------------
 
-## Whether the filter tab, the New or Junk mark and the search box all keep this entry. `data` is what it shows as (a
-## disguised item is found by what it passes for).
+## Whether the filter tab, the New, Junk or Attuned mark and the search box all keep this entry. `data` is what it shows
+## as (a disguised item is found by what it passes for).
 func _passes(e: Dictionary, data: Dictionary) -> bool:
-	return InventoryScreen.in_filter(filter, data) and (marks == "" or bool(e.get(marks, false))) \
-		and InventoryScreen.matches(search, data, e)
+	return InventoryScreen.in_filter(filter, data) and _has_mark(e) and InventoryScreen.matches(search, data, e)
+
+
+## Whether entry `e` has the mark `marks` asks for: New or Junk on the entry, or Attuned for the character shown.
+func _has_mark(e: Dictionary) -> bool:
+	match marks:
+		"":
+			return true
+		MARK_ATTUNED:
+			return InventoryScreen.is_attuned(_ch(), e)
+	return bool(e.get(marks, false))
 
 
 static func in_filter(name_: String, data: Dictionary) -> bool:
@@ -964,7 +983,11 @@ static func in_filter(name_: String, data: Dictionary) -> bool:
 	match name_:
 		"Magic":
 			return not (data.get("magic", {}) as Dictionary).is_empty()
+		"Quest":
+			return is_quest(data)
 		"Gear":
+			if is_quest(data):
+				return false
 			for cats: Variant in FILTER_CATEGORIES.values():
 				if cat in (cats as Array):
 					return false
@@ -985,6 +1008,20 @@ static func matches(text: String, data: Dictionary, e: Dictionary = {}) -> bool:
 		if not hay.contains(word):
 			return false
 	return true
+
+
+## A magic item's rarity as it shows ("common" to "artifact"); "" for anything that isn't magic.
+static func rarity_of(shown: Dictionary) -> String:
+	return "" if (shown.get("magic", {}) as Dictionary).is_empty() else MagicItems.rarity(shown)
+
+
+## Whether `ch` is attuned to entry `e`'s item, for the Attuned filter and tag: it needs attunement and they are
+## attuned to it, or it works for them all the same (Character.item_active), so with the attunement limit lifted the
+## filter lists every worn magic item that would have needed attuning.
+static func is_attuned(ch: Character, e: Dictionary) -> bool:
+	if int(e.get("qty", 0)) <= 0 or not MagicItems.needs_attunement(Compendium.shared().item_data(str(e["id"]))):
+		return false
+	return str(e["id"]) in ch.attuned or ch.item_active(e)
 
 
 ## Quest items (a key, St. Andral's bones) and the three treasures (`quest_locked`) can't be dropped, stashed, sold or
@@ -1012,7 +1049,7 @@ static func set_junk(ch: Character, item_id: String, on: bool) -> void:
 				e.erase("junk")
 
 
-## The search box, and the New and Junk marks as toggles with how many of each the pack holds.
+## The search box, and the New, Junk and Attuned marks as toggles with how many of each the pack holds.
 func _search_row(ch: Character) -> Control:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
@@ -1026,7 +1063,7 @@ func _search_row(ch: Character) -> Control:
 	box.placeholder_text = "Search the pack"
 	box.text = search
 	box.clear_button_enabled = true
-	box.custom_minimum_size = Vector2(250, 0)
+	box.custom_minimum_size = Vector2(150, 0)
 	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	box.add_theme_font_size_override("font_size", 15)
 	box.add_theme_color_override("clear_button_color", Look.color("gilt"))
@@ -1036,13 +1073,16 @@ func _search_row(ch: Character) -> Control:
 		search = t
 		_fill_list())
 	row.add_child(box)
-	var counts := {"new": 0, "junk": 0}
+	var counts := {"new": 0, "junk": 0, MARK_ATTUNED: 0}
 	for e in ch.inventory:
 		if int(e["qty"]) > 0:
-			for k: String in counts:
+			for k: String in ["new", "junk"]:
 				if bool(e.get(k, false)):
 					counts[k] = int(counts[k]) + 1
-	for m: Array in [["new", "New", "Arrived since you last looked"], ["junk", "Junk", "Marked to sell: a merchant's Sell all junk takes them"]]:
+			if InventoryScreen.is_attuned(ch, e):
+				counts[MARK_ATTUNED] = int(counts[MARK_ATTUNED]) + 1
+	for m: Array in [["new", "New", "Arrived since you last looked"], ["junk", "Junk", "Marked to sell: a merchant's Sell all junk takes them"],
+			[MARK_ATTUNED, "Attuned", "The magic items %s is attuned to" % ch.name.get_slice(" ", 0)]]:
 		var key := str(m[0])
 		var b := UiParts.small_button("%s %d" % [m[1], int(counts[key])], func() -> void:
 			marks = "" if marks == key else key
@@ -1095,6 +1135,8 @@ func _fill_list() -> void:
 			why = "Nothing marked as junk. Right-click an item and choose Mark as junk."
 		elif marks == "new":
 			why = "Nothing new since you last looked."
+		elif marks == MARK_ATTUNED:
+			why = "Nothing attuned here. Pick a magic item that needs it and choose Attune."
 		_list_foot.add_child(UiKit.label(why, 15, "bone", 540))
 	for r in rows:
 		_grid.add_child(_row(ch, r["e"] as Dictionary, {"from": "pack"}, _pack_line(ch, r["e"] as Dictionary, r["d"] as Dictionary)))

@@ -2,11 +2,11 @@ class_name ItemTile
 extends Control
 ## One item as a tile (U11, plan §5.6 "Inventory"): a pointed gothic arch in crimson and gilt with the item's icon, its
 ## count on a small plaque and its marks (a gilt spark when new, dimmed with a cross when junk, a moonlight lozenge when
-## equipped, a flame edge for a quest item, a lilac edge for magic). Empty, it names what its slot takes ("Ring") in faint
-## engraved capitals. Drag it onto anything that takes it (another slot, a party chip, the stash, the pack); hover for
-## its card, click to pick it, right-click for its menu, double-click for its first action. On a pad (PadNav) focus
-## picks it, A is the double-click and X the right-click. The screen gives it what a drag carries and what it takes;
-## the tile only draws and passes events on.
+## equipped, a flame edge for a quest item, an edge in the colour of its rarity for magic). Empty, it names what its
+## slot takes ("Ring") in faint engraved capitals. Drag it onto anything that takes it (another slot, a party chip, the
+## stash, the pack); hover for its card, click to pick it, right-click for its menu, double-click for its first action.
+## On a pad (PadNav) focus picks it, A is the double-click and X the right-click. The screen gives it what a drag
+## carries and what it takes; the tile only draws and passes events on.
 
 signal picked
 signal activated
@@ -26,12 +26,26 @@ var caption := ""
 ## Any of "new", "junk", "equipped", "quest", "magic", "quick", "set2", "inactive" (worn but not working: it needs
 ## attunement).
 var marks: Array[String] = []
+## A magic item's rarity ("common" to "artifact"): the tile's inner edge takes its colour (rarity_colour).
+var rarity := ""
 ## The picked tile.
 var lit := false
 ## Can't be used here (the stash away from a safe place).
 var dim := false
 var _hover := false
 var _drop_ok := false
+
+
+## The palette colour a magic item's rarity is shown in, as on the item notices and the shop (ItemNotices.RARITY_COLOURS);
+## `fallback` for a rarity that isn't one of the six.
+static func rarity_colour(rarity_: String, fallback: String = "lilac") -> String:
+	return str(ItemNotices.RARITY_COLOURS.get(rarity_, fallback))
+
+
+## The border colour for a magic item's row: its rarity's colour, a common item's a little fainter so a pack full of
+## common potions doesn't outshine the rare finds.
+static func rarity_edge(rarity_: String) -> Color:
+	return Color(Look.color(rarity_colour(rarity_)), 0.7 if rarity_ == "common" else 0.95)
 
 
 static func make(side: Vector2) -> ItemTile:
@@ -138,7 +152,7 @@ func _draw() -> void:
 	var inner := UiParts.arch_points(r.grow(-4), maxf(rise - 3.0, 4.0), 12)
 	var edge := "gilt_dark"
 	if "magic" in marks:
-		edge = "lilac"
+		edge = ItemTile.rarity_colour(rarity)
 	if "quest" in marks or "inactive" in marks:
 		edge = "flame"
 	UiParts.closed_line(self, inner, Color(Look.color(edge), 0.55 if edge == "gilt_dark" else 0.8), 1.0)
@@ -233,6 +247,12 @@ class Row extends PanelContainer:
 	var tip: Callable
 	## The drag preview's picture.
 	var icon: Texture2D
+	## A magic item's rarity ("common" to "artifact"): the row's border is in its colour (ItemTile.rarity_colour); a plain
+	## item keeps the dim gilt one.
+	var rarity := "":
+		set(v):
+			rarity = v
+			_restyle()
 	var lit := false:
 		set(v):
 			lit = v
@@ -262,6 +282,9 @@ class Row extends PanelContainer:
 		var edge := "bile" if _drop_ok else ("gilt_light" if lit else ("gilt" if _hover else "gilt_dark"))
 		s.border_color = Color(Look.color(edge), 0.95)
 		s.set_border_width_all(2 if lit or _drop_ok else 1)
+		if rarity != "" and not _drop_ok:
+			s.border_color = ItemTile.rarity_edge(rarity)
+			s.set_border_width_all(3 if lit else 2)
 		s.set_corner_radius_all(7)
 		s.corner_detail = 1
 		s.set_content_margin_all(7)

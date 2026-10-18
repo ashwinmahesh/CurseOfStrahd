@@ -18,7 +18,9 @@ import argparse
 import datetime
 import json
 import os
+import difflib
 import re
+import unicodedata
 import shutil
 import subprocess
 import sys
@@ -1088,6 +1090,98 @@ class Wiki:
         scales = " Scales with your level." if len(placements) > 1 else ""
         return f"- {self.fight_label(e0, quest=quest)}, in {s.loc(lid)}: {names}.{scales}"
 
+    def trigger_words(self, lid, e):
+        """How a fight in place `lid` starts, in words ("" when nothing more needs saying)."""
+        loc = self.g.locations.get(lid, {})
+        kind, _, arg = str(e.get("trigger", "")).partition(":")
+
+        def soft(name):
+            first = name.split(" ", 1)[0]
+            return name[0].lower() + name[1:] if first in ("The", "A", "An") else name
+        if kind == "enter_area":
+            name = next((a.get("name", "") for a in loc.get("areas", []) if a.get("id") == arg), "")
+            if not name:
+                return "when you get there"
+            first = name.split(" ", 1)[0]
+            if first in ("Before", "Beyond", "Behind", "Under", "Outside", "Inside"):
+                return f"when you come {name[0].lower() + name[1:]}"
+            if first in ("The", "A", "An") or "'" in first:
+                return f"when you reach {soft(name)}"
+            return f"when you reach the {name.lower()}"   # a plain place name: "Main Hall", "Village square"
+        if kind == "dialogue":
+            return "from a conversation"
+        if kind == "flag":
+            return "when the story sets it off"
+        if kind == "open":
+            shut = loc.get("containers", []) + loc.get("doors", [])
+            name = next((t.get("label", "") for t in shut if t.get("id") == arg), "")
+            if name:
+                return f"when you open {soft(name)}"
+            name = next((t.get("label", "") for t in loc.get("props", []) if t.get("id") == arg), "")
+            return f"when you use {soft(name)}" if name else "when you open something"
+        if kind == "check":
+            return "after a check"
+        return ""
+
+    def camp_lines(self, loc):
+        """A place's night visitors at camp (data/camp/night_visitors.json, as story/camp_site.gd picks them): the
+        group for its setting (a town's streets, indoors) or its region's land, by the party's level."""
+        g, s = self.g, self.site
+        nv = g.night_visitors
+        if not nv.get("groups") or not loc.get("map") or str(loc.get("rest", "risky")) != "risky":
+            return []
+        mp = loc.get("map") or {}
+        theme = str(mp.get("theme", ""))
+        if not mp.get("outdoors") or theme == "dungeon":
+            where = "indoors"
+        else:
+            where = "wild" if theme in self.wild_themes() else "town"
+        land = (nv.get("settings") or {}).get(where) or (nv.get("lands") or {}).get(loc.get("region", ""),
+                                                                                   nv.get("default_land", ""))
+        rows = []
+        for gr in nv["groups"]:
+            if gr.get("land") != land:
+                continue
+            lv = gr.get("levels") or []
+            mons = [{"monster": m} if isinstance(m, str) else m for m in gr.get("monsters", [])]
+            rows.append(f"| {lv[0]}–{lv[1]} | {self.monsters_line(mons)} | {self.xp_of(mons)} |" if len(lv) == 2 else
+                        f"| | {self.monsters_line(mons)} | {self.xp_of(mons)} |")
+        if not rows:
+            return []
+        return ["### At camp here", "",
+                f"A Long Rest here makes camp, and 1 night in 6 is interrupted (never on Story difficulty). Then the "
+                f"{land} night visitors for your level come out of the dark "
+                f"({s.link('page/random_encounters', 'Random Encounters')}):", "",
+                "| Party level | What comes | XP |", "|---|---|---|"] + rows + [""]
+
+    def road_lines(self, lid):
+        """The random encounter tables whose fights can play out on place `lid` (its `map` or one of its grounds)."""
+        g, s = self.g, self.site
+        names = [s.page(f"{s.paths['page/random_encounters']}#{title_id(rid)}", title_id(rid))
+                 for rid, r in g.random_encounters.items() if lid == r.get("map") or lid in (r.get("grounds") or [])]
+        if not names:
+            return []
+        return ["### On the road", "",
+                f"Random encounters met on {', '.join(names)} can be fought here. What comes, and how likely each is, "
+                f"is on {s.link('page/random_encounters', 'Random Encounters')}.", ""]
+
+    def wild_themes(self):
+        """The map themes a camp counts as the wild (story/camp_site.gd WILD_THEMES)."""
+        if not hasattr(self, "_wild_themes"):
+            src = (self.g.root / "story" / "camp_site.gd").read_text()
+            m = re.search(r"const WILD_THEMES: Array\[String\] = \[(.*?)\]", src)
+            self._wild_themes = re.findall(r'"([a-z_]+)"', m[1]) if m else []
+        return self._wild_themes
+
+    def event_words(self, ref):
+        """A road meeting's opening line, from its dialogue node ("file:node")."""
+        key, _, node = str(ref).partition(":")
+        dlg = self.g.dialogues.get(key)
+        for st in (dlg.nodes.get(node, []) if dlg else []):
+            if st.get("t") == "line":
+                return plain(st.get("text", ""), 110)
+        return title_id(node)
+
     def xp_of(self, monsters):
         return sum(int(self.g.monsters.get(m.get("monster", ""), {}).get("xp", 0) or 0) for m in monsters)
 
@@ -1313,7 +1407,7 @@ class Wiki:
                     continue
                 fl.append(self.fight_summary(pl, quest=False))
                 if len(pl) > 1:
-                    fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                    fl.append(collapsed("example", "Every version (the first whose condition holds is the fight you get)",
                                         self.fight_block(eid, pl)))
                 fl.append("")
             if fl:
@@ -1610,19 +1704,26 @@ class Wiki:
             encs = OrderedDict()
             for e in loc.get("encounters", []):
                 encs.setdefault(e["id"], []).append((lid, e))
-            if encs:
+            camp = self.camp_lines(loc)
+            road = self.road_lines(lid)
+            if encs or camp or road:
                 fl = []
                 for eid, pl in encs.items():
                     q = pl[0][1].get("quest") or {}
                     line = self.fight_summary(pl, quest=False)
+                    starts = list(dict.fromkeys(w for w in (self.trigger_words(lid, e) for _, e in pl) if w))
+                    if starts:
+                        line += f" Starts {' or '.join(starts)}."
                     if q.get("id") in g.quests:
                         line += f" Part of {s.quest(q['id'])}."
                     fl.append(line)
                     if len(pl) > 1:
-                        fl.append(collapsed("example", "By party level (the first line your party fits is the fight you get)",
+                        fl.append(collapsed("example", "Every version (the first whose condition holds is the fight you get)",
                                             self.fight_block(eid, pl)))
                     fl.append("")
-                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl)))
+                if not encs:
+                    fl += ["No fights of its own.", ""]
+                parts.append(auto("fights", "## Fights\n\n" + "\n".join(fl + camp + road)))
             ql = []
             if qs:
                 ql += [f"- {s.quest(x)}: {plain(g.quests[x].get('summary', ''), 140)}" for x in qs] + [""]
@@ -1877,14 +1978,21 @@ class Wiki:
             self.w.write(f"monster/{mid}", s.paths[f"monster/{mid}"], m["name"], parts, tags=["wiki", "monster"],
                          meta={"type": "creature", "creature": m.get("type", ""), "cr": self.cr(m.get("cr")), "image": pic,
                                "summary": plain(m.get("summary", ""), 200)})
-        lines = [f"Every creature the party can fight: {len(g.monsters)} of them. The journal's Bestiary tab fills in "
-                 "as you meet, fell and Study them.", "", "| | Creature | Type | CR | XP | AC | HP |",
-                 "|---|---|---|---|---|---|---|"]
+        lines = [f"Every creature the party can fight: {len(g.monsters)} of them, with their stat blocks' numbers. A fight "
+                 "can give a boss Hit Points of its own (its page's fight lists say so). The journal's Bestiary tab fills "
+                 "in as you meet, fell and Study them.", "",
+                 "| | Creature | Type | Size | CR | XP | AC | HP | Speed | Str | Dex | Con | Int | Wis | Cha |",
+                 "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for mid, m in sorted(g.monsters.items(), key=lambda kv: (float(kv[1].get("cr", 0) or 0), kv[1]["name"])):
             pic = self.img.portrait(m.get("art", mid))
+            sp = m.get("speed") or {}
+            speed = (", ".join((f"{v} ft" if k == "walk" else f"{k} {v} ft") for k, v in sp.items()
+                               if isinstance(v, (int, float)) and v) if isinstance(sp, dict) else str(sp))
+            ab = m.get("abilities") or {}
             lines.append(f"| {embed(pic, 48).replace('|', chr(92) + '|') if pic else ''} | {s.mon(mid)} | "
-                         f"{m.get('type', '')} | {self.cr(m.get('cr'))} | {m.get('xp', '')} | {m.get('ac', '')} | "
-                         f"{(m.get('hp') or {}).get('average', '')} |")
+                         f"{m.get('type', '')} | {str(m.get('size', '')).replace('_', ' ')} | {self.cr(m.get('cr'))} | "
+                         f"{m.get('xp', '')} | {m.get('ac', '')} | {(m.get('hp') or {}).get('average', '')} | {speed} | "
+                         + " | ".join(str(ab.get(k, "")) for k in ("str", "dex", "con", "int", "wis", "cha")) + " |")
         self.w.write("page/bestiary", "Bestiary/All Creatures", "Bestiary", [auto("list", "\n".join(lines))],
                      tags=["wiki", "index"])
 
@@ -2094,6 +2202,164 @@ class Wiki:
                                                                      for i, n in enumerate(notes)])]
         self.w.write("page/random_treasure", "Items/Random Treasure", "Random Treasure", [auto("list", "\n".join(lines))],
                      tags=["wiki", "items"], meta={"type": "guide"})
+
+    # Soundtrack and voice cast ------------------------------------------------------------------------------------
+
+    MOOD_WORDS = {"title": "the title screen", "combat": "fights", "boss": "fights with a foe that has Legendary Actions",
+                  "ending": "the endings"}
+
+    def soundtrack_page(self):
+        """Which music plays where (art/audio.json, as core/audio.gd picks it) and who made each piece
+        (art/credits.json's Music section)."""
+        g, s = self.g, self.site
+        audio = load_json(g.root / "art" / "audio.json")
+        credits = load_json(g.root / "art" / "credits.json")
+        music = audio.get("music") or {}
+        if not music:
+            return
+        lines_c = next((sec.get("lines", []) for sec in credits.get("sections", []) if sec.get("title") == "Music"), [])
+
+        def toks(t):
+            t = unicodedata.normalize("NFKD", str(t)).encode("ascii", "ignore").decode().lower()
+            t = re.sub(r"([a-z])([A-Z])", r"\1 \2", t)
+            return {w for w in re.split(r"[^a-z0-9]+", t) if len(w) > 2 and w not in
+                    {"mp3", "ogg", "the", "and", "demo", "master", "short", "loopable", "oga", "dova", "of"}}
+        works = []   # (title, artist)
+        for ln in lines_c:
+            quoted = re.findall(r'"([^"]+)"', ln)
+            if quoted:
+                tail = ln[ln.rfind('"') + 1:]
+                artist = re.search(r"(?:Composed by|by)\s+([^.(]+)", tail)
+                artist = artist[1].strip(" ,") if artist else re.split(r"\s+\(|\.\s|\s+Licensed", tail.strip(" ,"))[0]
+                works += [(t, artist) for t in quoted]
+                continue
+            m = re.match(r"'([^']+)' by ([^-.]+)", ln)
+            if m:
+                works.append((m[1], m[2].strip()))
+                continue
+            played = re.search(r"played by ([^.]+)", ln)
+            for t, who in re.findall(r"([A-Z][^(,]*?(?:, BWV \d+)?) \(([^)]+)\)", ln):
+                works.append((t.strip(), who + (f", played by {played[1]}" if played else "")))
+
+        def credit_for(path):
+            base = Path(path).stem
+            pack = Path(path).parent.name
+            tb = toks(base)
+            best, score = None, 0
+            for t, a in works:
+                tt = toks(t)
+                # Exact words count double; a near spelling (Czardas, Csárdás) once, and only for longer words.
+                sc = sum(2 if w in tt else (1 if len(w) >= 5 and any(
+                    difflib.SequenceMatcher(None, w, x).ratio() >= 0.85 for x in tt if len(x) >= 5) else 0) for w in tb)
+                if sc > score:
+                    best, score = (t, a), sc
+            if best:
+                return best
+            name = re.sub(r"^(demo|short|dova|sb)_", "", base)
+            name = re.sub(r"(_master)?_0$|\s*-\s*(MP3|Loopable)$|\s*\(CC-BY\)", "", name).replace("_", " ")
+            name = re.sub(r"([a-z])([A-Z])", r"\1 \2", name.split(" - ")[-1]).strip()
+            name = name.title() if name.islower() else name
+            tp = toks(pack.replace("oga_", ""))
+            artist = next((a for _, a in works if tp & toks(a)), "")
+            if artist and sum(1 for _, a in works if a == artist) > 1:
+                return ("", artist)   # one of several pieces credited to them, the file's name not among the titles
+            return (name, artist)
+
+        where = defaultdict(list)
+        by_region = defaultdict(lambda: defaultdict(list))
+        for lid, m in (audio.get("places") or {}).items():
+            if lid in g.locations:
+                by_region[m][g.locations[lid].get("region", "")].append(lid)
+        for m, regs in by_region.items():
+            for rid, lids in regs.items():
+                if len(lids) > 3:
+                    where[m].append(f"{len(lids)} places in {g.region_name(rid)}")
+                else:
+                    where[m] += [s.loc(lid) for lid in lids]
+        for rid, m in (audio.get("regions") or {}).items():
+            where[m].append(f"anywhere in {g.region_name(rid)}")
+        kinds = defaultdict(list)
+        for th, m in (audio.get("themes") or {}).items():
+            kinds[m].append(th.replace("_", " "))
+        for m, ths in kinds.items():
+            where[m].append(f"maps of the kind {', '.join(ths)}")
+        for rid, turns in (audio.get("region_turns") or {}).items():
+            for t in turns:
+                where[t.get("mood", "")].append(f"{g.region_name(rid)} once {human_cond(t.get('when', ''))}")
+        for mid, m in (audio.get("boss_music") or {}).items():
+            where[m].append(f"fights with {s.mon(mid)}")
+        for place_mood, talk in (audio.get("talk_moods") or {}).items():
+            who = ", ".join(s.npc(n) if n in g.npcs else title_id(n) for n in talk.get("npcs", []))
+            where[talk.get("mood", "")].append(f"in place of the {place_mood} music while {who} "
+                                               + ("speak" if len(talk.get("npcs", [])) > 1 else "speaks"))
+        for m, harder in (audio.get("rises") or {}).items():
+            where[harder].append(f"{self.MOOD_WORDS.get(m, m)} at full danger (a boss on the field, or someone Bloodied)")
+        for m, words in self.MOOD_WORDS.items():
+            where[m].insert(0, words)
+        lines = ["The music follows where you are: each place has a mood, and a mood plays its pieces one after another, "
+                 "every one before any repeats. A place's own mood comes first, then its region's (taverns, inns and "
+                 "camps keep their own), then the mood of the kind of place it is. Fights switch to fight music, which "
+                 "swells to a harder piece when a boss is on the field or someone is Bloodied.", "",
+                 "| Mood | Where it plays | Music |", "|---|---|---|"]
+        for mood, files in music.items():
+            pieces = []
+            for f in files:
+                path = f[0] if isinstance(f, list) else f
+                t, a = credit_for(str(path).replace("res://", ""))
+                pieces.append(f"*{t}*" + (f" ({a})" if a else "") if t else f"a piece by {a}")
+            places = where.get(mood, [])
+            shown = "; ".join(places[:8]) + (f"; and {len(places) - 8} more places" if len(places) > 8 else "")
+            lines.append(f"| {title_id(mood)} | {esc(shown)} | {esc(', '.join(pieces))} |")
+        lines += ["", "## Credits", "", "The music's own credit lines, as the game's Credits screen gives them:", ""]
+        lines += [f"- {ln}" for ln in lines_c] + [""]
+        self.w.write("page/soundtrack", "World/Soundtrack", "Soundtrack", [auto("list", "\n".join(lines))],
+                     tags=["wiki", "world"])
+
+    def hero_names(self):
+        """Pregen hero id -> name (data/pregens)."""
+        if not hasattr(self, "_hero_names"):
+            self._hero_names = {}
+            for f in sorted((self.g.root / "data" / "pregens").glob("*.json")):
+                d = load_json(f)
+                self._hero_names[f.stem] = d.get("name", title_id(f.stem))
+        return self._hero_names
+
+    def cast_page(self):
+        """Every voiced speaker and how they sound (docs/voice/casting.md, the casting sheet made from
+        audio/voice/casting.json)."""
+        g, s = self.g, self.site
+        path = g.root / "docs" / "voice" / "casting.md"
+        if not path.exists():
+            return
+        rows = []
+        for ln in path.read_text().split("\n"):
+            m = re.match(r"\|\s*`([a-z0-9_]+)`\s*\|\s*([\d,]+)\s*\|\s*[\d,]+\s*\|\s*(.*?)\s*\|\s*.*?\s*\|\s*(.*)\|\s*$", ln)
+            if not m:
+                continue
+            sid, n, voice, desc = m[1], int(m[2].replace(",", "")), m[3], m[4].strip()
+            if n <= 0:
+                continue
+            stock = desc.startswith("Library voice chosen for")
+            if stock:
+                was = re.search(r"Was:\s*(.*)$", desc)
+                desc = was[1].strip() if was else ""
+            desc = re.sub(r"\s*\(?\b(?:owner|Owner|Ashwin),? \d{4}-\d{2}-\d{2}[^)]*\)?", "", desc).strip()
+            if sid in g.npcs:
+                who = s.npc(sid)
+            else:
+                own = {"narrator": "The Narrator", "hero_female": "A custom hero (a woman's voice)",
+                       "hero_male": "A custom hero (a man's voice)"}
+                who = str(self.hero_names().get(sid) or own.get(sid) or title_id(sid))
+            rows.append((n, who, plain(desc, 260) + (" *(a stock voice picked to fit)*" if stock else "")))
+        if not rows:
+            return
+        rows.sort(key=lambda r: -r[0])
+        lines = ["Every speaker in the game who has a voice, most lines first, with how they sound. The heroes' lines, "
+                 "the Narrator's and everyone the party meets are spoken; a few speakers share a voice with others like "
+                 "them (the town guards, plain townsfolk).", "",
+                 "| Speaker | Lines | How they sound |", "|---|---|---|"]
+        lines += [f"| {who} | {n:,} | {esc(desc)} |" for n, who, desc in rows]
+        self.w.write("page/cast", "World/Voice Cast", "Voice Cast", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
 
     def shop_levels(self):
         """Rarity -> the party's milestone level shops show it from (data/treasure/levels.json, as Trade.magic_level)."""
@@ -2605,16 +2871,56 @@ class Wiki:
             lines.append("")
         self.w.write("page/strahd", "Story/Strahd's Visits", "Strahd's Visits", [auto("list", "\n".join(lines))],
                      tags=["wiki", "story"])
-        lines = ["Travelling between places on the map can be interrupted. Each road has a chance by day and by night, "
-                 "and a weighted table of what comes.", ""]
+        places, roads = {}, defaultdict(list)
+        for f in g.travel.values():
+            for pl in f.get("places", []):
+                places[pl["id"]] = pl.get("name", title_id(pl["id"]))
+        for f in g.travel.values():
+            for rd in f.get("roads", []):
+                if rd.get("table"):
+                    roads[rd["table"]].append(rd)
+
+        def at(e, time):
+            for neg, word in re.findall(r"(not\s+)?\b(day|night)\b", str(e.get("when", ""))):
+                if (word == time) == bool(neg):
+                    return False
+            return True
+
+        def pct(v):
+            return "" if v is None else (f"{v:.0f}%" if v >= 10 else f"{v:.1f}%")
+        lines = ["Travelling between places on the map can be interrupted. Each leg of a journey (one road between two "
+                 "places) rolls its road's chance, by day or by night; if something comes, a weighted pick among the "
+                 "entries whose condition holds decides what.", "",
+                 "The **By day** and **By night** columns are the chance of meeting that entry on one leg, counting every "
+                 "entry that can happen at that time. A story condition that rules some out, or a one-time meeting you've "
+                 "already had, makes the rest more likely; what raises the odds is at the end of the page.", ""]
         for rid, r in g.random_encounters.items():
-            lines += [f"## {title_id(rid)}", r.get("summary", ""), "",
-                      f"Chance per journey: {int(float(r.get('chance_day', 0)) * 100)}% by day, "
-                      f"{int(float(r.get('chance_night', 0)) * 100)}% by night.", "",
-                      "| Weight | When | What | XP |", "|---|---|---|---|"]
-            for e in r.get("entries", []):
-                lines.append(f"| {e.get('weight', 1)} | {esc(human_cond(e.get('when', '')))} | "
-                             f"{self.monsters_line(e.get('monsters', []))} | {self.xp_of(e.get('monsters', []))} |")
+            day, night = float(r.get("chance_day", 0)), float(r.get("chance_night", 0))
+            ents = r.get("entries", [])
+            wd = sum(int(e.get("weight", 1)) for e in ents if at(e, "day"))
+            wn = sum(int(e.get("weight", 1)) for e in ents if at(e, "night"))
+            lines += [f"## {title_id(rid)}", r.get("summary", ""), ""]
+            rl = list(dict.fromkeys(f"{places.get(rd.get('from'), title_id(str(rd.get('from'))))} to "
+                                    f"{places.get(rd.get('to'), title_id(str(rd.get('to'))))}" for rd in roads.get(rid, [])))
+            if rl:
+                lines += [f"**Roads:** {'; '.join(rl)}.", ""]
+            grounds = [x for x in [r.get("map")] + list(r.get("grounds") or []) if x in g.locations]
+            if grounds:
+                lines += [f"**Fought on:** {', '.join(s.loc(x) for x in dict.fromkeys(grounds))}.", ""]
+            lines += [f"Something happens on {int(round(day * 100))}% of legs by day and {int(round(night * 100))}% by night.", "",
+                      "| What | When | By day | By night | XP |", "|---|---|---|---|---|"]
+            for e in ents:
+                w = int(e.get("weight", 1))
+                pd = day * w / wd * 100 if at(e, "day") and wd else None
+                pn = night * w / wn * 100 if at(e, "night") and wn else None
+                if e.get("monsters"):
+                    what = self.monsters_line(e["monsters"])
+                else:
+                    what = f"*{esc(self.event_words(e.get('dialogue', '')))}* (a meeting)"
+                if e.get("once"):
+                    what += " Once only."
+                lines.append(f"| {what} | {esc(human_cond(e.get('when', '')))} | {pct(pd) or '—'} | {pct(pn) or '—'} | "
+                             f"{self.xp_of(e.get('monsters', [])) or ''} |")
             lines.append("")
         nv = g.night_visitors
         if nv.get("groups"):
@@ -2639,6 +2945,17 @@ class Wiki:
                     lines.append(f"| {lvl} | *{esc(plain(gr.get('text', ''), 120))}* {self.monsters_line(mons)} | "
                                  f"{self.xp_of(mons)} |")
                 lines.append("")
+        att = load_json(g.root / "data" / "strahd" / "attention.json")
+        tiers = [t for t in att.get("tiers", []) if t.get("road_day") or t.get("road_night")]
+        wx = [(k.get("label", kid), k.get("road_day", 0), k.get("road_night", 0))
+              for kid, k in (g.weather.get("kinds") or {}).items() if k.get("road_day") or k.get("road_night")]
+        lines += ["## What raises the odds", "",
+                  "- **Strahd's attention.** The more he has noticed the party, the more of his eyes are on the roads: "
+                  + "; ".join(f"{str(t.get('id', '')).replace('_', ' ')}, +{round(float(t.get('road_day', 0)) * 100)}% by day "
+                              f"and +{round(float(t.get('road_night', 0)) * 100)}% by night" for t in tiers) + ".",
+                  "- **Weather.** " + "; ".join(f"{lbl}, +{round(float(d) * 100)}% by day and +{round(float(n) * 100)}% by night"
+                                                for lbl, d, n in wx) + f" ({s.link('page/weather', 'Weather')}).",
+                  "- The chance never goes above 95%, and Find the Path keeps every road quiet for a day.", ""]
         self.w.write("page/random_encounters", "World/Random Encounters", "Random Encounters",
                      [auto("list", "\n".join(lines))], tags=["wiki", "world"])
         w = g.weather
@@ -2664,6 +2981,8 @@ class Wiki:
                                                                 else "" for k in kinds) +
                              f" | {', '.join(where.get(name, [])) or ('everywhere else' if name == w.get('default_climate') else '')} |")
         self.w.write("page/weather", "World/Weather", "Weather", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
+        self.soundtrack_page()
+        self.cast_page()
         src = (g.root / "core" / "achievements.gd").read_text()
         ach = re.findall(r'"([a-z_0-9]+)": \["([^"]+)", "([^"]+)"\]', src)
         lines = ["| Achievement | How |", "|---|---|"] + [f"| {n} | {t} |" for _, n, t in ach]
@@ -2789,7 +3108,9 @@ class Wiki:
                            s.link("page/checks", "World Skill Checks") + ": everything in the world you can try a check on",
                            s.link("page/talking", "Talking Creatures") + ": animals, the dead and plants that talk to a spell",
                            s.link("page/random_encounters", "Random Encounters") + ": what the roads can throw at you",
-                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits")]),
+                           s.link("page/weather", "Weather") + " and " + s.link("page/strahd", "Strahd's Visits"),
+                           s.link("page/soundtrack", "Soundtrack") + ": the music for each place and fight, and who made it",
+                           s.link("page/cast", "Voice Cast") + ": who speaks, and how they sound"]),
             ("Items and money", [s.link("page/item_sources", "Where to Find Items") + ": every item with a fixed home, A to Z",
                                  s.link("page/magic_items", "Magic Items") + f": all {n_magic}, with where they are and their codes",
                                  s.link("page/equipment", "Equipment") + ": weapons, armor and gear",
@@ -2915,6 +3236,8 @@ class Wiki:
                                  ("page/talking", "World/Talking Creatures", "Talking Creatures"),
                                  ("page/random_encounters", "World/Random Encounters", "Random Encounters"),
                                  ("page/weather", "World/Weather", "Weather"),
+                                 ("page/soundtrack", "World/Soundtrack", "Soundtrack"),
+                                 ("page/cast", "World/Voice Cast", "Voice Cast"),
                                  ("page/achievements", "World/Achievements", "Achievements"),
                                  ("page/heroes", "Characters/Heroes", "Heroes"),
                                  ("page/approval", "Characters/Companion Approval", "Companion Approval"),

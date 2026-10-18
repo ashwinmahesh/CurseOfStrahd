@@ -1,5 +1,5 @@
 {
-  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). talk_moods: per place mood, the mood a conversation plays (mood) while one of these NPCs (npcs) is spoken to or speaks; the place's music returns when it ends (GameRoot._talk_music). A mood with several recordings plays each once in a shuffled round and never the same twice in a row (Audio._pick_entry); a mood with one recording repeats it. steps, loops, water, containers: the world sounds (WorldSounds, A3).",
+  "_note": "Which recording plays for each mood and effect (core/audio.gd). Files live untouched in art/sourced/<pack>/ and are credited in docs/assets/LICENSES.md and art/credits.json. A mood or effect with no file is silent. ambient: effects that sound now and then over a mood. levels: volume offsets in dB; track_levels: one recording's own offset on top of its mood's, so the pieces a mood picks between sound about as loud as each other. rises: at full fight intensity (a boss, or someone in the party Bloodied) the music crossfades to this mood's music; a music entry that is itself a list holds one piece's intensity versions, calmest first, played in step (A2). regions: a region's own theme for its places (region_keeps: map themes that keep their own mood there, like taverns). region_turns: a region's theme once the story has moved on there (the first entry whose StoryConditions `when` holds), for every place in the region, kept themes too (the Wizard of Wines once Yester Hill is broken). boss_music: a foe whose fight has its own mood (Strahd's). talk_moods: per place mood, the mood a conversation plays (mood) while one of these NPCs (npcs) is spoken to or speaks; the place's music returns when it ends (GameRoot._talk_music). scenes: a cutscene whose scene has its own music (cutscene id: mood), played from its picture to the end of the conversation over whoever speaks (GameRoot._scene_music; docs/assets/music_audit.md). A mood with several recordings plays each once in a shuffled round and never the same twice in a row (Audio._pick_entry); a mood with one recording repeats it. steps, loops, water, containers: the world sounds (WorldSounds, A3).",
   "themes": {
     "svalich_road": "wilds",
     "forest": "wilds",
@@ -164,7 +164,9 @@
     "die_fumble": -5.0,
     "thunder_near": -2.0,
     "thunder_far": -4.0,
-    "thunder_crack": -6.0
+    "thunder_crack": -6.0,
+    "tension": -1.5,
+    "sacred": -3.0
   },
   "music": {
     "title": [
@@ -241,8 +243,7 @@
       "res://art/sourced/kevin_macleod/Danse Macabre.mp3",
       "res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg",
       "res://art/sourced/oga_isao/short_The Enchanting Haunted Ballroom_0.mp3",
-      "res://art/sourced/oga_tausdei/stronghold.mp3",
-      "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3"
+      "res://art/sourced/oga_tausdei/stronghold.mp3"
     ],
     "dread": [
       "res://art/sourced/kevin_macleod/Inner Sanctum.mp3",
@@ -308,6 +309,27 @@
     "bonegrinder": [
       "res://art/sourced/kevin_macleod/Come Play with Me.mp3",
       "res://art/sourced/kevin_macleod/Childrens Theme.mp3"
+    ],
+    "sorrow": [
+      "res://art/sourced/kevin_macleod/Relent.mp3",
+      "res://art/sourced/scott_buckley/Unraveling.mp3",
+      "res://art/sourced/scott_buckley/Penumbra.mp3",
+      "res://art/sourced/scott_buckley/MemoriesOfStone.mp3"
+    ],
+    "tension": [
+      "res://art/sourced/kevin_macleod/Gloom Horizon.mp3",
+      "res://art/sourced/kevin_macleod/Oppressive Gloom.mp3",
+      "res://art/sourced/kevin_macleod/Lost Frontier.mp3"
+    ],
+    "dawn": [
+      "res://art/sourced/kevin_macleod/Long Road Ahead.mp3",
+      "res://art/sourced/kevin_macleod/Virtutes Instrumenti.mp3"
+    ],
+    "sacred": [
+      "res://art/sourced/kevin_macleod/Night Vigil.mp3",
+      "res://art/sourced/kevin_macleod/Virtutes Instrumenti.mp3",
+      "res://art/sourced/kevin_macleod/Ancient Rite.mp3",
+      "res://art/sourced/kevin_macleod/Gregorian Chant.mp3"
     ]
   },
   "sfx": {
@@ -1571,8 +1593,7 @@
     "res://art/sourced/oga_tausdei/stronghold.mp3": -3.2,
     "res://art/sourced/oga_wolfgang/Bone Yard Waltz - Loopable.ogg": -0.6,
     "res://art/sourced/oga_inspectorj/Spinning Tavern - MP3.mp3": -3.0,
-    "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3": -5.1,
-    "res://art/sourced/oga_isao/short_A New World Order!!_0.mp3": -8.9
+    "res://art/sourced/oga_viktor_kraus/Viktor Kraus - Into the Ruins.mp3": -5.1
   },
   "regions": {
     "vallaki": "town",
@@ -1614,5 +1635,49 @@
         "kestrel_merrow"
       ]
     }
+  },
+  "scenes": {
+    "strahd_watcher": "dread",
+    "strahd_camp": "dread",
+    "wolves_part": "dread",
+    "strahd_letter": "dread",
+    "black_carriage": "dread",
+    "ireena_window": "dread",
+    "church_gate": "dread",
+    "strahd_waiting": "dread",
+    "strahd_rides": "dread",
+    "marina_rose": "dread",
+    "strahd_asleep": "dread",
+    "quillon_fire": "dread",
+    "sq_lantern_girl": "dread",
+    "sq_counts_likeness": "dread",
+    "festival_sun_dies": "tension",
+    "festival_square": "tension",
+    "festival_standoff": "tension",
+    "baron_overthrown": "tension",
+    "attic_flash": "tension",
+    "izek_doll": "tension",
+    "arabelle_dive": "tension",
+    "marina_bier": "sorrow",
+    "sergei_font": "sorrow",
+    "aurel_reading": "sorrow",
+    "doru_rest": "sorrow",
+    "gertruda_home": "sorrow",
+    "izek_truth": "sorrow",
+    "lantern_light": "sorrow",
+    "death_house_children": "sorrow",
+    "van_richten_workroom": "sorrow",
+    "vr_reunion": "sorrow",
+    "elvir_burial": "sorrow",
+    "patrina_kasimir": "sorrow",
+    "patrina_fades": "sorrow",
+    "ilinca_children": "sorrow",
+    "souls_go_home": "sorrow",
+    "tinker_freed": "sorrow",
+    "chapel_dawn": "dawn",
+    "strahd_end": "dawn",
+    "knights_at_the_stair": "dawn",
+    "church_vigil": "sacred",
+    "arabelle_shore": "camp"
   }
 }
