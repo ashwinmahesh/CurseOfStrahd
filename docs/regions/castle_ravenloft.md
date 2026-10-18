@@ -78,6 +78,7 @@ The card `mists` sends Strahd roaming (ADR 0014): one of the enemy rooms, picked
 | pidlwick_ii | spires | the clockwork jester, the marionette card's ally (guest, join scene) |
 | cyrus_belview | larders | the mongrelfolk cook |
 | sergei_von_zarovich (exists) | catacombs | the spirit at his brother's tomb; Ireena's story |
+| ireena (exists) | gates (the chapel) | at the altar, entranced, while Strahd holds her (`ireena_held_by_strahd`); the party wakes her and she rejoins (`chapel_ireena.dialogue`, plan package I5) |
 | castle_steward, castle_dead_sentry, castle_hall_broom | gates | the household on the main floor (owner, 2026-10-15): a ghost steward, a dead sentry, an animated broom; `steps_aside` |
 | helga_ruvak, castle_dead_watchman | court | the book's vampire maid on the Rooms of Weeping, a dead watchman in the King's Hall; `steps_aside` |
 | castle_courtier_1..4, castle_ghost_servant, castle_ghost_servant_2..4, castle_dead_guard_1..4, castle_dead_servant_1/2 | gates (shared by all parts) | the court and the rest of the household on the courtyard, main floor, court, Rooms of Weeping, larders, dungeon and high tower: fourteen people, each with their own name, route and conversation (household.dialogue; gates doc §8) |

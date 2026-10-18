@@ -334,6 +334,20 @@
       "dim_ft": 15
     }
   ],
+  "npcs": [
+    {
+      "npc": "ireena",
+      "cell": [
+        10,
+        2
+      ],
+      "dialogue": "castle_ravenloft/chapel_ireena:start",
+      "when": "flag.ireena_held_by_strahd and not guest:ireena and not (final_room:castle_ravenloft_chapel and quest.strahds_lair >= foretold and not flag.strahd_destroyed and not flag.strahd_in_coffin)",
+      "facing": "north",
+      "approach": 7,
+      "steps_aside": true
+    }
+  ],
   "encounters": [
     {
       "id": "crg_chapel_final_battle",

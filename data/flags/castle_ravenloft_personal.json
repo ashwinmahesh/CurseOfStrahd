@@ -45,6 +45,16 @@
       "id": "aurel_arcana_failed",
       "type": "bool",
       "summary": "An Arcana attempt on Aurel's charm pulled it tighter; that way is closed."
+    },
+    {
+      "id": "ireena_chapel_seen",
+      "type": "bool",
+      "summary": "The party found Ireena entranced at the chapel altar (castle_ravenloft/chapel_ireena:first_sight); later visits open with return_sight."
+    },
+    {
+      "id": "ireena_chapel_pull",
+      "type": "int",
+      "summary": "Missteps while waking Ireena in the chapel (a failed warding prayer or plea): at 2 the trance holds for now and the visit ends. Reset at the start of each visit."
     }
   ]
 }
