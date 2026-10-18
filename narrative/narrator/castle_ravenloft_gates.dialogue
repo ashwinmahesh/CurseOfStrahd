@@ -262,3 +262,9 @@ once
 
 ~ scene:castle_drawbridge
 | The chains are moving, though no one is at the winch, paying out a little at a time as if the bridge were breathing. The planks are dry. Nothing has crossed them in a long time but him.
+
+# ---------------------------------------------------------------- The chapel side's stair to the crypts is bricked up (C1)
+~ examine:crypt_stair_chink
+| A narrow gap sits where the mason left one course short, dry and dead still. Even the dust inside it has settled for good.
+| [flag.strahd_in_coffin] One pale thread of mist still draws through the gap in the brick, sinking down into the dark as though it knows the steps by heart.
+cooldown 0

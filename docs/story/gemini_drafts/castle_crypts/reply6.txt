@@ -1,0 +1,6 @@
+MAIN_BRICKED: Fresh brick seals the old arch, laid neat and tight over older stone. Whatever used this stair has no need of doors.
+CAT_BRICKED: At the third step, the stair ends against a wall of grey mortar and brick. The house shut this road from both sides.
+MAIN_CHINK: A narrow gap sits where the mason left one course short, dry and dead still. Even the dust inside it has settled for good.
+MAIN_CHINK_MIST: One pale thread of mist still draws through the gap in the brick, sinking down into the dark as though it knows the steps by heart.
+CAT_CHINK: Cold air breathes out of a thumb-wide seam beside the arch, smelling of cellar stone and nothing else.
+CAT_CHINK_MIST: Grey mist spills from the seam in the brickwork and pools along the flags; all of it is creeping toward the middle of the crypts.

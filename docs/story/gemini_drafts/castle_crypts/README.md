@@ -7,7 +7,7 @@ service at 127.0.0.1:8765, project `ai-bridge`), on 2026-10-18. Claude trimmed a
 - `briefN.txt` is what was sent (the shared preamble plus that batch's slots); `replyN.json` is the bridge's message record
   (conversation, state, result) and `replyN.txt` the raw reply text, unedited.
 - Brief 1: the seven in-place crypts. Brief 2: the Lesser Vaults. Brief 3: the two skulls, Sasha and Klutz (menus and
-  speech). Brief 4: Saint Markovia's bone, the Baron's mold, Klutz's sword, Sasha's bier. Brief 5: one option line.
+  speech). Brief 4: Saint Markovia's bone, the Baron's mold, Klutz's sword, Sasha's bier. Brief 5: one option line. Brief 6 (hand-off 2, the walled chapel stair): the two `locked_text` lines, the two chinks and their mist variants.
 - The lines in the game are the drafts with these edits (slot id -> what changed); every slot not listed is exactly
   Gemini's text:
 
@@ -29,3 +29,5 @@ service at 127.0.0.1:8765, project `ai-bridge`), on 2026-10-18. Claude trimmed a
 
 All of it stays unvoiced (no `make voice` from a lane): the hand-off names the voiced lines (everything but the
 option lines, which are never voiced) for the voice thread.
+
+Hand-off 2 edits: MAIN_BRICKED ('Fresh brick' -> 'Brick', 'used' -> 'still uses'), CAT_CHINK_MIST (semicolon split); the other four are Gemini's text.

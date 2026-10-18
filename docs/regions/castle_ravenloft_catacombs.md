@@ -40,7 +40,7 @@ areas are literally the rooms.
 
 | Exit | Cell | To | Spawn |
 |---|---|---|---|
-| `cat_stairs_to_main_floor` (catacombs) | (3, 1) | `castle_ravenloft_main_floor` | `from_catacombs` |
+| `cat_stairs_to_main_floor` (catacombs) | (3, 1) | `castle_ravenloft_main_floor` | `from_catacombs` (bricked up: `when: false`, §14) |
 | `cat_stairs_to_larders` (catacombs) | (40, 1) | `castle_ravenloft_larders` | `from_catacombs` |
 | `cat_down_to_tombs` (catacombs) | (5, 29) | `castle_ravenloft_catacombs_tombs` | `from_catacombs` |
 | `cat_black_stair_down` (catacombs) | (18, 15) | `castle_ravenloft_catacombs_strahd` | `from_catacombs` |
@@ -49,8 +49,8 @@ areas are literally the rooms.
 | `cat_black_stair_up` (Strahd's tomb) | (11, 1) | `castle_ravenloft_catacombs` | `from_strahd` |
 
 Spawns on the entry map: `from_vaults` (31, 28) (§14), `default` and `from_gates` (3, 3), `from_larders` (40, 3), `from_tombs` (5, 27),
-`from_strahd` (18, 14). The gates part's `crypt_stairs_down` arrives at `from_gates`; the larders part's way down
-should arrive at `from_larders`.
+`from_strahd` (18, 14). The gates part's `crypt_stairs_down` would arrive at `from_gates` but is bricked up (§14), so nobody does: the way in is the
+larders part's long stair, arriving at `from_larders`. `from_gates` stays where it was (rule 2: no spawn moves), as `default`'s twin.
 
 ## 3. Tarokka places (treasure spots) and enemy rooms
 
@@ -228,7 +228,8 @@ Each uses the nearest catalog model today:
 
 ## 13. Critical path (story bot)
 
-Start at `castle_ravenloft_catacombs` (spawn `from_gates`, or `_start("castle_ravenloft_catacombs", 10)`), by day
+Start at `castle_ravenloft_catacombs` (spawn `from_larders`, the way a party arrives now that the chapel-side stair is bricked up, or
+`_start("castle_ravenloft_catacombs", 10)`), by day
 unless a step says otherwise. Prefer: "Take what lies in his hands", "Drive the stake through his heart",
 "Drive the stake into his heart while he sleeps", "dragon told you", "We break our oath". Avoid: "Not yet",
 "Back away", "Close the lid", "Leave him in peace".
@@ -346,3 +347,18 @@ catacombs_sasha}.dialogue. Data: data/flags/castle_ravenloft_catacombs.json, dat
 sasha_ivliskova, sir_klutz}.json, data/items/jeweled_electrum_spork.json, art/atmosphere/moods.json (`ravenloft_vaults`),
 art/audio.json. Tests: tests/integration/test_catacomb_crypts.gd, tests/unit/test_one_fight_guests.gd and four tests added to
 test_scaled_fights_castle_rooms.gd.
+
+### The walled stair (C1 hand-off 2)
+
+In the book the stair from the chapel side down to the crypts is bricked up, so a party has to find another way down. Ours
+now is, at both ends: `crypt_stairs_down` (main floor (44, 23)) and `cat_stairs_to_main_floor` (here (3, 1)) keep their squares
+and spawns but gain `when: false` and a `locked_text` (stepping onto either says why), and a chink in the masonry stands beside each
+(`crypt_stair_chink` (44, 22) on the main floor, `cat_stair_chink` (4, 2) here; Narrator `examine:` lines, each with a variant for
+`flag.strahd_in_coffin`: his mist draws through it and goes down). The way down is the servants' stairs to the larders and the
+larders' long stair (`larders_long_stair`, arriving at `from_larders` (40, 3)); the way up is `cat_stairs_to_larders` and
+`larders_stair_up`. Strahd turning to mist (`strahd:fled_to_coffin`: "through the cracks, and down") is the thing the masonry was
+never meant to stop. The story bot finds the longer road by itself (it takes only exits whose `when` holds), so
+test_phase6_exit's walk to Strahd's tomb now goes through the larders; tests/integration/test_castle_crypt_stair.gd pins the
+bricking, the route and the chinks. Six new Narrator lines (two `locked_text`, two chink looks, two mist variants), drafted by
+Gemini (docs/story/gemini_drafts/castle_crypts/brief6.txt and reply6).
+

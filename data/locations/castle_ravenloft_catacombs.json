@@ -370,7 +370,9 @@
       ],
       "to": "castle_ravenloft_main_floor",
       "spawn": "from_catacombs",
-      "label": "Stairs up to the chapel side"
+      "label": "The stair up to the chapel side, bricked up",
+      "when": "false",
+      "locked_text": "At the third step, the stair ends against a wall of grey mortar and brick. The house shut this road from both sides."
     },
     {
       "id": "cat_stairs_to_larders",
@@ -1120,6 +1122,16 @@
       "kind": "examine",
       "label": "A boast over the arch",
       "model": "bronze_plaque"
+    },
+    {
+      "id": "cat_stair_chink",
+      "cell": [
+        4,
+        2
+      ],
+      "kind": "examine",
+      "label": "A chink in the masonry",
+      "model": "relief"
     }
   ],
   "containers": [

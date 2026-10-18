@@ -423,3 +423,9 @@ cooldown 0
 ~ trap:cat_jarnwald_pit:triggered
 | Your boot goes straight through the painted grey flagstones as though they were smoke. The real floor is a dark pit ten feet lower.
 cooldown 0
+
+# ---------------------------------------------------------------- The foot of the bricked-up stair to the chapel side (C1)
+~ examine:cat_stair_chink
+| Cold air breathes out of a thumb-wide seam beside the arch, smelling of cellar stone and nothing else.
+| [flag.strahd_in_coffin] Grey mist spills from the seam in the brickwork and pools along the flags. All of it is creeping toward the middle of the crypts.
+cooldown 0

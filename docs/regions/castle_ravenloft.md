@@ -31,7 +31,7 @@ chutes that lead out are exits to the other part's entry map and that spawn. Eve
 | gates ↔ spires | the high tower stairway off the main floor | `castle_ravenloft_main_floor` / `castle_ravenloft_spires` | `castle_ravenloft_spires:from_gates` / `castle_ravenloft_main_floor:from_spires` |
 | court ↔ spires | the tower stairs from the upper floors | `castle_ravenloft_court` / `castle_ravenloft_spires` | `castle_ravenloft_spires:from_court` / `castle_ravenloft_court:from_spires` |
 | gates ↔ larders | the servants' stairs down | `castle_ravenloft_main_floor` / `castle_ravenloft_larders` | `castle_ravenloft_larders:from_gates` / `castle_ravenloft_main_floor:from_larders` |
-| gates ↔ catacombs | the stairs down from the chapel side to the crypts | `castle_ravenloft_main_floor` / `castle_ravenloft_catacombs` | `castle_ravenloft_catacombs:from_gates` / `castle_ravenloft_main_floor:from_catacombs` |
+| gates ↔ catacombs | the stairs down from the chapel side to the crypts, **bricked up** as in the book (both exits are barred for good, `when: false`; C1 hand-off 2: the way is the row below) | `castle_ravenloft_main_floor` / `castle_ravenloft_catacombs` | `castle_ravenloft_catacombs:from_gates` / `castle_ravenloft_main_floor:from_catacombs` |
 | larders ↔ catacombs | the dungeon's way down to the crypts | `castle_ravenloft_larders` / `castle_ravenloft_catacombs` | `castle_ravenloft_catacombs:from_larders` / `castle_ravenloft_larders:from_catacombs` |
 
 Part-internal maps are named `castle_ravenloft_<part>_<what>` and joined however the part's doc says (stairs,

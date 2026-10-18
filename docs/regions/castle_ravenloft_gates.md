@@ -56,7 +56,7 @@ write castle rooms at the same time).
 | gates → court | `grand_stairs_up`, `grand_stairs_up_east` (25,1), (26,1), "The grand stairs up" | `castle_ravenloft_court:from_gates` | `from_court` (25,4) |
 | gates → spires | `high_tower_stairway` (39,1), "The high tower stairway, up" | `castle_ravenloft_spires:from_gates` | `from_spires` (38,3) |
 | gates → larders | `servants_stairs_down` (1,1), "The servants' stairs down to the kitchens" | `castle_ravenloft_larders:from_gates` | `from_larders` (3,2) |
-| gates → catacombs | `crypt_stairs_down` (44,23), "The stairs down to the crypts" | `castle_ravenloft_catacombs:from_gates` | `from_catacombs` (42,22) |
+| gates → catacombs | `crypt_stairs_down` (44,23), "The stair to the crypts, bricked up" (`when: false`, a `locked_text`; a chink in the masonry, `crypt_stair_chink` (44,22), beside it; C1 hand-off 2) | `castle_ravenloft_catacombs:from_gates` | `from_catacombs` (42,22) |
 
 Other spawns: gates `gate` (19,31, arrival by road), `default` (19,12, in the courtyard before the doors: where the
 black carriage sets the party down), `from_main_floor` (19,10), `from_overlook` (3,2); main floor `default` and

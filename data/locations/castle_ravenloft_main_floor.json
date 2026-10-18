@@ -332,7 +332,9 @@
       ],
       "to": "castle_ravenloft_catacombs",
       "spawn": "from_gates",
-      "label": "The stairs down to the crypts"
+      "label": "The stair to the crypts, bricked up",
+      "when": "false",
+      "locked_text": "Brick seals the old arch, laid neat and tight over older stone. Whatever still uses this stair has no need of doors."
     },
     {
       "id": "chapel_doors",
@@ -1191,6 +1193,16 @@
       "model": "statue_knight",
       "say": "examine:crg_faith_knights",
       "facing": "west"
+    },
+    {
+      "id": "crypt_stair_chink",
+      "cell": [
+        44,
+        22
+      ],
+      "kind": "examine",
+      "label": "A chink in the masonry",
+      "model": "relief"
     }
   ],
   "containers": [

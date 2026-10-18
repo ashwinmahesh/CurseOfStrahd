@@ -84,7 +84,7 @@ because Narrator keys (`enter:`, `examine:`, `open:`) are global.
 | gates ↔ larders | `castle_ravenloft_larders` exit `larders_stair_up` at (2, 1), spawn `from_gates` (2, 3) | `castle_ravenloft_main_floor:from_larders` |
 | larders ↔ catacombs | `castle_ravenloft_larders` exit `larders_long_stair` at (37, 22), spawn `from_catacombs` (37, 20) | `castle_ravenloft_catacombs:from_larders` |
 
-The long stair is "the dungeon's way down": the jailers' stair runs on past the dungeon to the crypts, so a party
+The long stair is the party's only way to the crypts since the chapel-side stair was bricked up (C1 hand-off 2, as in the book). It is "the dungeon's way down": the jailers' stair runs on past the dungeon to the crypts, so a party
 can reach the catacombs without walking the cells. Internal joins: the jailers' stair (`larders_stair_down` (33, 22)
 → dungeon `from_larders`; `larders_dungeon_up` (2, 1) → larders `from_dungeon`) and the lift (`larders_lift_down`
 (28, 16) → dungeon `from_lift`, only when `larders_lift_ready`; `larders_lift_up` (24, 8) → larders `from_lift`).
