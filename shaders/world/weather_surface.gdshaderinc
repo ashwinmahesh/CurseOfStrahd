@@ -52,8 +52,9 @@ float ws_puddle(vec3 p, bool top) {
 }
 
 // How much snow lies on a point: on faces turned up, thickest on the flattest, broken by noise. Above the ground
-// (roofs, ledges, wall tops, barrels) it settles even in light snow; on the ground it lies in drifts that join up as
-// the snow gets heavier (Atmosphere.SNOW_GROUND: where it lies, footprints show).
+// (roofs, ledges, wall tops, barrels, and ground on a raised map) it settles even in light snow and covers all of it in
+// the heaviest; on the ground it lies in drifts that join up as the snow gets heavier (Atmosphere.SNOW_GROUND: where it
+// lies, footprints show).
 float ws_snow(vec3 p, vec3 wn) {
 	if (world_snow <= 0.0) {
 		return 0.0;
@@ -63,6 +64,10 @@ float ws_snow(vec3 p, vec3 wn) {
 		float drift = ws_noise(p.xz * 0.55) * 0.65 + ws_noise(p.xz * 2.3 + 4.7) * 0.35;
 		return up * smoothstep(1.05 - world_snow * 0.8, 1.15 - world_snow * 0.6, drift + 0.25);
 	}
-	float n = ws_noise(p.xz * 2.1 + p.y * 3.0);
-	return up * smoothstep(0.75 - world_snow * 0.6, 0.95 - world_snow * 0.5, n + up * 0.3);
+	// Two octaves turned off the squares' grid, and heavy snow covering all of it: one octave this fine, cut near its
+	// lows, left bare rods and crosses along the grid on raised ground (the Amber Temple's doors stand 25 ft up: the
+	// "weird long floating pillars", owner 2026-10-17).
+	vec2 q = mat2(vec2(0.8, 0.6), vec2(-0.6, 0.8)) * p.xz;
+	float n = ws_noise(q * 2.1 + p.y * 3.0) * 0.6 + ws_noise(q * 5.3 + 7.3) * 0.4;
+	return up * smoothstep(0.75 - world_snow * 0.9, 0.95 - world_snow * 0.8, n + up * 0.3);
 }
