@@ -2574,6 +2574,30 @@
       "library": true,
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]"
+    },
+    "silvius_dana": {
+      "shares": "barovia_acolyte",
+      "description": "Dana, Old Silviu's daughter, marrying in Vallaki: brisk, fond, a little overwhelmed. Shares Anca's library voice (Maria), chosen 2026-10-18 for a young woman from another town."
+    },
+    "leontina": {
+      "shares": "barovia_widow",
+      "description": "Leontina, the Baron's cook: brisk, proud, sixty. Shares Widow Ileana's library voice (Beatrice), chosen 2026-10-18 for a mature firm woman from another place."
+    },
+    "tudorel": {
+      "shares": "krezk_guard",
+      "description": "Tudorel, a young footman at Wachterhaus. Shares the Krezk Watchman's library voice (Cristi Romana), chosen 2026-10-18 for a young plain man from far away."
+    },
+    "ioana": {
+      "shares": "ilka_sarnov",
+      "description": "Ioana, a twin girl taken from Krezk. Shares Ilka Sarnov's voice (Riley), chosen 2026-10-18; not Mirela's, who is in the same scene."
+    },
+    "codruta": {
+      "shares": "bonegrinder_mouse",
+      "description": "Codruta, the youngest child taken from Krezk, six years old. Shares Mouse's voice (Mithi), chosen 2026-10-18, the highest child voice we have."
+    },
+    "zamfir": {
+      "shares": "toma_sarnov",
+      "description": "Zamfir, a twin boy taken from Krezk. Shares Toma Sarnov's voice (Teddy Twinkle), chosen 2026-10-18; not Mirela's, who is in the same scene."
     }
   },
   "sfx": {
