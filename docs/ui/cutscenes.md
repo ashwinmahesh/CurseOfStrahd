@@ -27,6 +27,20 @@ Two more for the endings that differ by path (2026-10-15): `ending_carriage` in 
 `fallen_halls` in `endings/strahd_triumphant` ~ fallen, so each ending has a second picture on both of its paths.
 The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `drowned_nistor`) came first.
 
+Reading the Tome of Strahd plays its own cutscene (owner, 2026-10-18: "there should be a cutscene with 3-4 scenes showing
+scenes of what is learned (and Strahd's story)"), the first time the book is read. The same night he asked for much more
+of the story in the words ("it really should explain more about his motivations, his love for Tatyana and how she wanted
+his brother and not him even though he was a decorated war hero, and generation after generation, Tatyana is reborn and
+how each time he tries to make that version of her fall in love with him. It should be sad and tragic"), so it is six
+scenes and 24 captions (data `more`) on sepia memory pictures: `tome_conqueror` (the war hero, the hollow peace, wanting to
+be loved for himself), `tome_brothers` (Sergei, Tatyana, the watching), `tome_refused` (he offers his hand and his medals;
+she refuses him kindly, her eyes on Sergei), `tome_wedding` (the climb to the Amber Temple, the terms, the wedding day),
+`tome_wall` (her fall, the arrows, waking changed) and `tome_again` (her rebirths, the ledger, the torn last entry). The
+captions were drafted by Gemini through the ai-bridge and edited for canon (docs/story/drafts/two-cutscenes/), and stay
+unvoiced. Escher's first meeting shows the tall mirror behind him with the same armchair
+empty (`escher_mirror`, `castle_ravenloft/spires_escher ~ first`), one picture by the owner's word the same day: the
+one conversation that plays a single picture (test_cutscenes `ONE_PICTURE`).
+
 ## Data
 `data/cutscenes/<id>.json` (schema `cutscene.schema.json`, read by `story/cutscenes.gd`):
 - `title`, `summary`: our own words.
@@ -42,6 +56,11 @@ The drowned rising at Lake Zarovich (`drowned_rise`, then `drowned_bluto` or `dr
   (`strahd:fled_to_coffin`: the picture over the fight, which goes on under it). `find:<magic item>` plays when a
   Tarokka treasure is found: in a conversation (`tarokka give`) its picture comes before the notice, and among a
   chest's or a fight's spoils it shows before the loot window opens.
+- `trigger` can also be `read:<magic item>`: the item's reading plays it (`FieldItems.use` returns `cutscene`, the
+  inventory asks `GameRoot.play_item_cutscene`; the first reading of the Tome of Strahd). Its first caption is the
+  Narrator's line for that key, and what the reading said is narrated when it closes.
+- `more`: further Narrator keys whose lines read one after another over the same picture, a click each (the trigger's
+  line or `caption` first, then these: the Tome's scenes read three to five captions each).
 - `once`: the picture shows only the first time its trigger fires (`_cutscene/<id>` in the story's flags). Every
   `enter:` and `find:` trigger has it.
 - `then`, `caption`: the scene after this one (owner rule, 2026-10-14: every cutscene is at least two scenes). `then`
@@ -94,7 +113,8 @@ own mood in `art/audio.json` `scenes` (cutscene id: mood). It plays from the pic
 over whoever speaks after, and the place's own music comes back when the conversation ends (`DialogueUI.scene_shown`,
 `GameRoot._scene_music`). A fight the conversation starts brings its own. The owner's music audit (2026-10-17,
 `docs/assets/music_audit.md`) picked them, from recordings already in the game. Place cutscenes (`enter:`, `examine:`)
-keep the place's music.
+keep the place's music, except the ones `art/audio.json` `place_scenes` names (the Tome of Strahd's scenes play
+`sorrow` until the cutscene closes, and the place's own music comes back: `GameRoot._cutscene_music`).
 
 ## Code
 - `story/cutscenes.gd` (`Cutscenes`): the data, the picture for the story now (`image`), `focus`, `for_trigger`, and
@@ -123,6 +143,16 @@ Round 2 (54 pictures, the owner's wider rule) followed on 2026-10-08. Lessons fr
 creature in the scene (Argynvost's echo, the nightmare horse), so scenery creatures are described in words instead;
 "an old painting" draws a paper border; scale words need an anchor ("the travellers are tiny specks beside one of its
 talons"). The caged children and the hanged man passed Gemini's image safety only on a retry.
+The Tome's four pictures and Escher's mirror (2026-10-18, five pictures in eight takes, about $0.81): the first take of `tome_brothers` drew Strahd twice
+(a reference sheet asked to stand "in the archway" came back as a second man in the foreground; the retake said he
+appears once, far back), the second drew Sergei blond (the sheet's dark hair and short cape must be named) and in colour
+(say "every colour in it sepia"), and the first `tome_wedding` pooled blood on the floor (the retake says there is none).
+The backup key answered 402 (out of credit), so these ran on the primary.
+The refusal and the gallery (`tome_refused`, `tome_again`, four takes, about $0.40): the gallery of the same face in the dress of
+different centuries, with a black mourning ribbon on each frame and Strahd's hand on the empty last one, came right the first time.
+The refusal took three: the first drew a second auburn-haired woman dancing with Sergei (so Tatyana seemed to be in two places),
+the second fixed that but drew Strahd older and fair, and the third (the one used) names his black hair and his age and has
+Sergei alone by the fire; the cloak on Tatyana is the model's.
 
 | Cutscene | Title | Plays from | Takes |
 |---|---|---|---|
@@ -223,6 +253,7 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | ending_mists | The Mists Remain | `endings/strahd_triumphant` | 1 |
 | ending_sergei | At Sergei's Side | `endings/ireena_at_peace` | 1 |
 | escher_coat | A Good Red Coat | `castle_ravenloft/escher_petition` (a later beat, ~ sun) | 1 |
+| escher_mirror | The Mirror Behind Him | `castle_ravenloft/spires_escher` (~ first) | 1 |
 | eva_candles_lean | The Candles Lean | `svalich_road/madam_eva` (a later beat, ~ ally_seen) | 1 |
 | eva_chest | The Bundle in the Chest | `svalich_road/madam_eva` (a later beat, ~ treasure_here) | 1 |
 | eye_watches_gods | A Thousand Years of Lies | `amber_temple/the_amber_debt` (a later beat, ~ eye_what) | 1 |
@@ -336,7 +367,13 @@ talons"). The caged children and the hanged man passed Gemini's image safety onl
 | thirst_passes | Where the Thirst Goes | `endings/new_darklord` (a later beat, ~ start) | 1 |
 | three_brides | Three Brides | `castle_ravenloft/court_brides` | 1 |
 | tinker_freed | Seven Years at the Front of That Thing | `svalich_road/the_tinkers_wagon` (a later beat, ~ freed) | 1 |
+| tome_again | Generation After Generation | the scene after `tome_wall` (`then`) | 1 |
+| tome_brothers | The Brother and the Girl | the scene after `tome_conqueror` (`then`) | 1 |
+| tome_conqueror | The Conqueror | `read:tome_of_strahd` | 1 |
 | tome_page | The First Page | the scene after `treasure_tome` (`then`) | 1 |
+| tome_refused | What He Offered | the scene after `tome_brothers` (`then`) | 1 |
+| tome_wall | The Castle Wall | the scene after `tome_wedding` (`then`) | 1 |
+| tome_wedding | The Wedding Day | the scene after `tome_refused` (`then`) | 1 |
 | tower_lamp | Someone Waiting Up | the scene after `vr_tower` (`then`) | 1 |
 | treasure_sword | The Sunsword | `find:sunsword` | 1 |
 | treasure_symbol | The Holy Symbol of Ravenkind | `find:holy_symbol_of_ravenkind` | 1 |

@@ -166,6 +166,14 @@ func scene_mood(cutscene_id: String) -> String:
 	return m if not entries("music", m).is_empty() else ""
 
 
+## The music a place cutscene's picture brings (art/audio.json "place_scenes": cutscene id -> mood), or "" to leave the
+## place's own. The Tome of Strahd's four pictures read to the sorrow (owner, 2026-10-18); it plays until the cutscene
+## closes (GameRoot._cutscene_music).
+func place_scene_mood(cutscene_id: String) -> String:
+	var m := str((_data.get("place_scenes", {}) as Dictionary).get(cutscene_id, ""))
+	return m if not entries("music", m).is_empty() else ""
+
+
 ## A region's later theme (art/audio.json "region_turns": the first entry whose StoryConditions `when` holds and whose
 ## mood has music), or "" with no story to ask. It covers every place in the region, kept themes too, so the Wizard of
 ## Wines' winery hall turns cheerful with its vineyard once Yester Hill is broken (owner, 2026-10-13).

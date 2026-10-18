@@ -50,6 +50,11 @@ Narrator: The sun comes up.
 -> END
 """
 
+## The conversations that play one picture by the owner's own word, an exception to the two-scene rule below (owner,
+## 2026-10-18, about the mirror in Escher's suite: "We only need 1 scene here, just escher in his chair and the mirror
+## behind him with no reflection"). The test below also fails if one of them stops being a one-picture conversation.
+const ONE_PICTURE: Array[String] = ["res://narrative/castle_ravenloft/spires_escher.dialogue"]
+
 ## A picture the game already has, so the tests need no art of their own.
 const TAKE := {"image": "strahd_watcher", "when": "guest:ireena"}
 
@@ -356,8 +361,10 @@ func test_every_conversation_that_plays_a_cutscene_plays_at_least_two() -> void:
 				var t := line.strip_edges()
 				if t.begins_with("cutscene ") and t != "cutscene end":
 					ids[t.substr(9)] = true
-			if ids.size() == 1:
+			if ids.size() == 1 and not d.path_join(f) in ONE_PICTURE:
 				lonely.append(d.path_join(f))
+			elif ids.size() != 1 and d.path_join(f) in ONE_PICTURE:
+				lonely.append(d.path_join(f) + " (listed in ONE_PICTURE but plays %d)" % ids.size())
 	assert_eq(lonely, [] as Array[String], "these conversations play one picture only: %s" % [lonely])
 
 

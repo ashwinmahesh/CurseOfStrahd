@@ -325,8 +325,10 @@ static func _custom(st: StoryState, ch: Character, c: Combatant, e: Encounter, p
 				st.advance_minutes(3 * 60)
 			st.set_flag("tome_of_strahd_read", true)
 			st.set_flag("strahd_knows_tome_read", true)
+			# The first reading plays the book's pictures (story/cutscenes.gd, trigger `read:tome_of_strahd`, `once`); the
+			# inventory shows them and narrates `text` when they close.
 			return {"ok": true, "text": "%s reads the %s through. Somewhere, a door closes very quietly.%s" % [nm, label, Xp.tag(lore)] if first
-				else "%s turns the pages again. The ending hasn't changed." % nm}
+				else "%s turns the pages again. The ending hasn't changed." % nm, "cutscene": "read:tome_of_strahd"}
 		"drink_field_spell":
 			var mins := int(params.get("minutes", 10))
 			st.active_spells[str(params.get("spell", ""))] = {"until": st.total_minutes() + mins, "caster": who.id}
