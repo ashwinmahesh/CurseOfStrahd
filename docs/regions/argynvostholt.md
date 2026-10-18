@@ -280,7 +280,41 @@ no fight); **the ally** = steps 1 and 2.
 - Quests: data/quests/{the_order_of_the_silver_dragon, the_dark_beacon}.json
 - Flags: data/flags/argynvostholt.json
 - Locations: data/locations/{argynvostholt, argynvostholt_hall, argynvostholt_upper, argynvostholt_beacon,
-  argynvostholt_mausoleum}.json
+  argynvostholt_mausoleum, argynvostholt_west_wing}.json (the west wing: §15)
 - Travel: data/travel/argynvostholt.json; table data/random_encounters/argynvostholt_road.json
 - Dialogue: narrative/argynvostholt/{godfrey, vladimir, argynvost, mausoleum, beacon, knights, events}.dialogue;
   narrative/narrator/argynvostholt.dialogue; narrative/banter/argynvostholt.dialogue
+
+## 15. The dungeon expansion: the west wing, the dragon statue, the front steps and the chapel's revenants (A1, A2)
+
+Packages A1 and A2 of the Dungeon Expansion Plan (2026-10-18, vault note of that name). Book source: Elven Tower chapter 7
+(Q4's colony of giant spiders, Q13's three revenants) and the *Curse of Strahd: Reloaded* citations for the room names and
+numbers Q1, Q2, Q4, Q6, Q7, Q10, Q11, Q12 and Q13. Neither gives the rooms' contents, so everything below beyond a name and
+a monster is **ours**, written in our own words. Rule 2 of the plan holds: no walkable square, spawn, exit, prop, container
+or fight start that existed moved. The hall gains one opening in its west wall, one spawn, one exit, one nested area and the
+chapel's night company; the grounds gain a prop and a trap.
+
+| Where | What | Source |
+|---|---|---|
+| `argynvostholt_hall`, the west gallery's west wall (0, 18) | A new exit `west_wing_door` (spawn `from_west_wing` at (1, 18)) into the west wing | ours (the plan: "a new map off the entry hall") |
+| `argynvostholt_west_wing` (40 x 28, `manor`, dark; mood `webbed_wing`) | A passage with its doors. North side: **the ballroom** (Q4), **the dining hall** (Q12), **the parlour** (Q7). South side: **the dragon's den** (Q6), **the kitchen** (Q10), **the wine store** (Q11). A service door joins the kitchen and the wine store. | names from the references; layout ours |
+| Q4, the ballroom | The spiders' colony (`ballroom_colony`: `waiting`, the first six spiders and the swarms in view, the rest of the colony `unseen` in the high webs). Three door leaves open onto the dance floor; the colony stirs when the leader is on the floor's seventh row or beyond (the two rows by the doors are a second area of the same name, so the party is in the room when it starts). A fallen chandelier (examine), a musicians' dais, webs as difficult ground, a cocooned satchel (rope, a potion of healing, holy water, 40 gp) | the colony: Elven Tower; the rest ours |
+| Q12, the dining hall | A table laid for twenty (low cover), a cold hearth, a sideboard (4 candles, 25 gp) | ours |
+| Q10, the kitchen | **The rattling iron pot** (examine; it is the pot on the cold stove, the stove piece being the prop; Investigation 13 lifts the lid for a cook's savings, 25 gp), a pantry cupboard (6 candles, 2 oil) | the pot: the plan's name; contents ours |
+| Q11, the wine store | Racks of bottles gone to vinegar, a barrel, the steward's strongbox (lock 14: a potion of healing, 60 gp) | ours |
+| Q7, the parlour | Armchairs round a cold hearth; **the guest book** (a codex page: the last entry is four hundred years old) | ours |
+| Q6, the dragon's den | Argynvost's sleeping hollow (examine; frost, drawn at the size of a Huge dragon with scale-ups' `scale` 3.5), claw-scored walls, silver dust in the hollow (search 13: a pouch of salt and silver), a drift of silver ground into the floor (a `silver_heap` at scale 2.4, a container: 80 gp) | the den's name: the plan; contents ours |
+| `argynvostholt`, the drive (17, 8) | **The dragon statue** (Q1, examine): a rearing statue with its neck broken off, a stand-in figure (`gargoyle`) drawn four times its size (`scale` 4, about the 20 ft of a rearing silver dragon). The head is the toppled one already in the courtyard basin (`holt_fallen_statue`). | name: Reloaded; look ours |
+| `argynvostholt`, the front steps (19-22, 6) | **The trapped front steps** (Q2): a ward of the Order, frost (Dex 14, 3d8 cold; found only by a Search, disarmed at 14). Godfrey's "Mind the steps" now means something. The trap sits on the squares in front of the doors, never on the doors' own squares (20, 5) and (21, 5). | name: Reloaded; ward ours |
+| `argynvostholt_hall`, the chapel | **The kneeling knights** (Q13). At night, with no `order_fate` yet, the Order's knights kneel before the chapel altar. A party that has the oath (`order_oath_learned`), Godfrey's word (`godfrey_remembers`) or Godfrey himself (a guest) meets three of them as people (`knights:kneeling`, no roll, two ways out). A party with none of those meets four as the fight `chapel_revenants` (`waiting`: they stand in plain view, backs to the door), which starts when the leader is in the nave, a nested area `holt_chapel_nave` (x 1 to 6, rows 1 to 8, the chapel's own name and light). By day the chapel is as it was: nobody kneels, the echo's scene is untouched. | the revenants: Elven Tower; the oath-or-word rule: the plan's default; four, not the book's three: the fight's tuning |
+
+Flags (both bool, registered in `data/flags/argynvostholt.json`, read only by these places): `ballroom_colony_cleared` and
+`chapel_revenants_cleared`. Nothing here touches a main flag, a quest or a milestone.
+
+**Fights** (the sharp test party on Balanced, 8 seeds, band 4 to 6): both hold 5 of 8 on all three level variants, with every
+seed finishing. tests/integration/test_scaled_fights_holt_ballroom.gd and test_scaled_fights_holt_chapel.gd; the numbers, and
+what was found tuning them (a downed hero in a one-square doorway stalls the fight, so each starts with the party in the
+room; a Large foe takes 2 x 2 squares), are in docs/story/fight_tuning_holt_west.md.
+
+**Still wanted as art** (nothing is held for the scale-ups lane any more): a dragon-statue model for the statue and the
+hollow (both draw stand-ins at scale: the plan's C7 art), and the claw marks on the den's walls.

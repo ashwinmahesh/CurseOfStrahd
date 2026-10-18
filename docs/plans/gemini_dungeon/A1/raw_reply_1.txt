@@ -1,0 +1,60 @@
+1. enter:argynvostholt_west_wing
+| A long passage of closed doors smells of cold dust and old beeswax. From the dark ahead comes a dry, steady whispering, though nobody is there to speak.
+
+2. enter:holt_ballroom
+| Sheets of grey web hang from the rafters to the fallen chandelier, heavy with bundled shapes the size of horses. Above the musicians' dais, the silk trembles without a draught.
+| Torn webs hang slack above the fallen chandelier and the empty musicians' dais. Without its tenants, the ballroom is only a cold floor where nobody dances.
+
+3. enter:holt_dining_hall
+| Twenty places are laid with blackened silver, the chairs pushed back as if the company had just risen to drink a health. The host never sat down again.
+
+4. enter:holt_kitchen
+| Copper pans hang above a stove the size of a cart, and a rope of dried onions crumbles against the wall. On the cold iron range, a covered pot rattles to itself.
+
+5. enter:holt_wine_store
+| Low racks of dusty bottles fill the cellar with the sweet, sharp smell of old grapes gone to vinegar. A cold draught slips between the shelves like a butler checking the vintage.
+
+6. enter:holt_parlour
+| Armchairs sit in a ring around a cold hearth, beneath wallpaper faded to the green of pond weed. A book lies open on its stand, waiting for someone to finish the page.
+
+7. enter:holt_dragons_den
+| Your breath fogs in a vaulted chamber wide enough to turn a ship, its stone walls deeply scored by great claws. Fine silver dust glitters in the hollow worn smooth into the floor.
+
+8. examine:holt_dragon_statue
+| The rearing stone dragon stands taller than the house, its wings half spread and its neck ending in a broken stump. Even in the summer air, fresh white frost clings to the stone.
+
+9. examine:holt_iron_pot
+| The iron stove beneath the pot is dead cold, with only grey ash in the grate. Still the heavy lid jumps and clinks in a slow, patient rhythm.
+
+10. examine:holt_ballroom_chandelier
+| The great iron wheel of candle cups and crystal drops lies bent upon the floorboards under a thick caul of silk. Inside the cage of iron, the webbing is woven into a dry, hollow cradle.
+
+11. examine:holt_den_hollow
+| The stone floor is worn down into a smooth trough the length of a river barge. Touch the rock and it numbs your fingers, as if the winter that slept here has only just stepped out.
+
+12. trap:holt_front_steps:found
+| Across one worn stone step runs a hairline of white rime, though every step around it is dry and bare.
+
+13. trap:holt_front_steps:triggered
+| A pale light snaps underfoot, and a sheet of bitter frost leaps from the stone to lock your breath in your throat.
+
+14. encounter:holt_chapel_knights
+| The three figures rise together in scorched black plate, lifting their helms from the stone without a word. Steel clears the scabbard with the dry scrape of an old lock turning.
+
+15. enter:holt_chapel
+| Colored glass casts a pale silver dragon across three armored figures kneeling in a row before the altar, their helms set neatly beside them. Nothing in the chapel moves, not even a breath.
+
+16. dialogue:holt_chapel_knights
+| Narrator: The nearest knight does not lift his bowed head, but his voice comes from the cold iron like a hinge turning.
+
+17. dialogue:holt_chapel_knights
+| Dead Knight: You know the words. Keep them.
+
+18. dialogue:holt_chapel_knights
+| Dead Knight: We pray for the lamp. Pray, or pass.
+
+19. dialogue:holt_chapel_knights
+| Dead Knight: Thecommander permits you. Go in peace.
+
+20. encounter:holt_ballroom_spiders
+| The high webs split with a sound like tearing linen, and dark, many-legged shapes pour down the silk ropes toward the floor. They come in silence, save for the dry click of their jaws.

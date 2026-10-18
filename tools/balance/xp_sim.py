@@ -256,6 +256,7 @@ STAGES['argyn'] = dict(name='Argynvostholt (L8 to 9)', items=[
     X('place', (1, 1, 1)), X('location', (3, 5, 6)), X('find', (4, 7, 9)), X('lore', (2, 4, 5)), X('check', (4, 8, 13)),
     R('argynvostholt_road', (2, 2, 4), .3),
     F('courtyard_phantoms', (0, .4, 1), night=True, flags={'godfrey_met': True}), F('lamp_dark', CRIT), F('bone_watch', (0, .3, 1)),
+    F('ballroom_colony', OPT), F('chapel_revenants', (0, .3, .6), night=True),
     F('vladimir_duel', (0, .3, 1)), F('beacon_stand', (.2, .2, .2)),
     Q('climax', (1, 1, 1), 'the beacon lit'), Q('side', (0, .3, .6), 'a companion quest completed'),
     M('Argynvostholt (+1)'),

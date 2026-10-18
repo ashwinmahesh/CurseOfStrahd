@@ -1,0 +1,14 @@
+Thank you, those lines are going in with a few edits. Five more short pieces of text for the same place (Argynvostholt's west wing), same house style and same rules as before (second person, present tense where it is the Narrator speaking, no game terms, no em-dashes or en-dashes, British spelling: "coloured", "armoured", "grey"). Plain text again, no commentary, no messages to anyone else.
+
+A. guest_book. The text shown when the party reads the guest book on its brass stand in the parlour. It is not a Narrator line; it is a description of the object, in the plain third person, like the oath stone's: "Letters cut deep into a slab of grey stone, their edges worn smooth by hands." Facts it may use: a book on a brass stand, pages gone the colour of tea; names by the hundred in a hundred hands, each with a line about the weather or the dinner (visitors to the dragon's house over centuries, the Order's guests); the last entry is four hundred years old and reads only: Fine night. The lamp was lit. Back soon. Two to four sentences. Keep the last entry's words exactly.
+
+B. pot_lid_success. One or two sentences shown when a party member works out how to lift the lid of the rattling iron pot on the kitchen's cold stove and finds, under it, a cook's savings in a twist of cloth (about twenty-five gold pieces); the rattling stops as if relieved. Narrator voice, second person.
+
+C. pot_lid_failure. One sentence shown when the attempt fails: the lid will not be lifted, it seems far hotter than a cold pot has any right to be. Narrator voice, second person.
+
+D. trap_text. One sentence of plain description for the record of the front steps' ward (an old ward of the Order of the Silver Dragon laid on the steps; it wakes under a stranger's feet and bursts into killing frost). Do not repeat the earlier Narrator lines about the hairline of rime or the pale light; say what the thing is.
+
+E. place_text. Two pieces for the west wing's map: (1) "summary": one sentence for a reference page, naming what is here (a passage of doors; the ballroom where a colony of giant spiders now hangs its webs; the dining hall; the kitchen with its rattling iron pot; the wine store; the parlour; the dragon's own den). (2) "text": one or two sentences of scene-setting for a visitor: a long passage runs west from the gallery with doors to the north and south; the north side holds the ballroom, the dining hall and the parlour; the south the dragon's den, the kitchen and the wine store.
+
+FORMAT
+For each item write the item's letter and key on one line (for example "A. guest_book"), then the text on the next line beginning "| ". For E write two lines, each starting with "| summary:" and "| text:". Nothing else.

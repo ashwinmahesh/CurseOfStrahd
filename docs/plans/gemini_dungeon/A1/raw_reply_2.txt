@@ -1,0 +1,15 @@
+A. guest_book
+| A heavy ledger rests on a brass stand, its pages gone the colour of weak tea. Hundreds of names in a hundred different hands fill the leaves, each with a brief word on the weather or the roast. The last entry, written four hundred years ago, reads only: "Fine night. The lamp was lit. Back soon."
+
+B. pot_lid_success
+| You ease the heavy iron lid aside to find a twist of greasy cloth in the dry bottom, heavy with a cook's small hoard of gold coin. Once uncovered, the pot gives a last small clink and settles into quiet, as if its duty is done.
+
+C. pot_lid_failure
+| The iron lid refuses to budge, stinging your fingers with a fierce heat that a dead stove has no business keeping.
+
+D. trap_text
+| An ancient ward laid by the Order of the Silver Dragon sleeps within the front steps, set to wake beneath an unannounced stranger's boot in a burst of killing frost.
+
+E. place_text
+| summary: The household west wing opens off a central passage into a spider-choked ballroom, a laid dining hall, a parlour, a wine store, a cold kitchen with a rattling pot, and the dragon's own vaulted den.
+| text: A long passage runs west from the gallery between rows of closed doors. To the north lie the ballroom, the dining hall, and the parlour; to the south wait the kitchen, the wine store, and the great hollow of the dragon's den.
