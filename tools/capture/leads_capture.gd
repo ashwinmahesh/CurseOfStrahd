@@ -134,7 +134,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	root.call("open_screen", "party", 0)
 	await tool.call("wait_frames", 12)
 	if _before:
-		for n in ["Talk_pidlwick_ii", "Give_pidlwick_ii"]:
+		for n: String in ["Talk_pidlwick_ii", "Give_pidlwick_ii"]:
 			var b := (root.get("screen") as Node).find_child(n, true, false) as Button
 			if b != null:
 				b.visible = false
