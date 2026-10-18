@@ -97,7 +97,7 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
 - **Crime (F8, docs/rules/stealth.md):** a container's `owner` (an npc id) makes taking from it stealing when somebody
   sees; an area's `private` (an npc id) makes it a private room, with `open` (a condition) for when it may be entered;
   the location's `watch` names the guard who answers a crime here ("" for nobody; unset, the region's watch).
-- **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, lying, path, pause, steps_aside}`. The first entry per NPC whose
+- **NPCs:** `{npc, cell, dialogue, when, hours, facing, approach, asleep, lying, on, path, pause, steps_aside}`. The first entry per NPC whose
   `when` holds stands there; the game re-checks after every conversation and fight. `approach: n` makes the NPC speak
   first, once, when the leader comes within n squares and can see them. `asleep: true` lays the NPC down asleep
   (Unconscious, so Incapacitated and Prone, as the 2024 rules have a sleeper); the hover hint, Look and the Alt plates
@@ -115,7 +115,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   path (lane 28). Waypoints must be open floor reachable without opening a door. `hours: [from,
   to]` keeps the NPC here only between those hours (`[19, 6]` passes midnight), so townsfolk go to work, the tavern
   and home: a person may have an entry in each place. The people re-check who stands where whenever the hour turns
-  while the party is in the location (LocationClock). `steps_aside: true` keeps the figure out of every fight on the
+  while the party is in the location (LocationClock). `on: <prop id>` stands the figure on a prop of the place (its piece's
+  `seat`, the middle of its top: the Amber Sentinel on its dais, LocationNpcs._seat); the person still counts as on their
+  own `cell`. `steps_aside: true` keeps the figure out of every fight on the
   map: it leaves the board as a fight begins, so its square doesn't block, and comes back with the rebuild after
   (LocationNpcs.clear_for_fight; Castle Ravenloft's household, owner 2026-10-15).
 - **Prop kinds:** `examine` (Narrator line `examine:<id>`), `book` (`codex` entry), `search` (a hidden thing found
@@ -127,7 +129,9 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   that many times its modelled size: the dragon's desk and chair are three times a desk and a chair, his skull in the
   trophy room 2.2, his bones in the mausoleum 2.6. A 3D piece keeps its square at its middle and spills over its
   neighbours, whose squares stay unfurnished (SetDressing.scaled_squares); the rules' grid never changes, so give it
-  room by where you put it (nothing else of the prop's own should stand in the squares it covers). A `model` of
+  room by where you put it (nothing else of the prop's own should stand in the squares it covers). A prop's `tint` (a palette
+  colour's name or `"#rrggbb"`) multiplies the colours of its 3D piece: the dead colossus at the Amber Temple's doors in dark
+  amber (ModelPiece.tint, applied before it opens round the party). A `model` of
   `silver_heap` is a heap of coins built from the coins (CoinHeap), `scale` times the gold heap's size.
   A prop's `stand_ft` (5 to 60, in 5 ft steps) makes it something stood on: its squares (its cell, or all its `span`)
   are that many feet above the ground underneath (LocationView.grid_for, CombatGrid.raise). 5 ft is a step up (a

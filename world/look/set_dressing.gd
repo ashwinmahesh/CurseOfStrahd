@@ -131,6 +131,9 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 		if Look.modern():
 			return CastleModel.place(board, root, cell)
 		art = str(look.get("classic", "table"))
+	if art == "sentinel_dais":
+		# The low dais the Amber Sentinel stands on (AmberColossus), in the Modern finish; Classic keeps the bare snow.
+		return AmberColossus.dais(board, root, cell, spec, str(look.get("case", "")) == "cracked") if Look.modern() else root
 	var on_wall_square := _wall_at(board, cell)
 	if on_wall_square and has_art(str(look.get("on_wall", ""))):
 		art = str(look["on_wall"])
@@ -200,6 +203,8 @@ static func _place(board: ArenaBoard, spec: Dictionary, is_container: bool) -> N
 			var piece := stand_piece(board, root, art, cell, scale_, null, front, bool(look.get("fade", false)) or bool(look.get("big", false))
 				or bool(look.get("see_through", false)),
 				facing_yaw(spec), span_centre(board, spec), span_foot(spec) if bool(look.get("big", false)) else Rect2(), prop_scale)
+			if piece != null and spec.has("tint"):
+				ModelPiece.tint(piece, ModelPiece.tint_colour(str(spec["tint"])))   # recoloured before it opens round the party
 			if piece != null and int(spec.get("stand_ft", 0)) > 0:
 				# Stood on (a podium, a tree climbed into: `stand_ft`): its squares are its top, the model rises from the ground.
 				piece.position.y -= float(int(spec["stand_ft"])) / CombatGrid.FEET

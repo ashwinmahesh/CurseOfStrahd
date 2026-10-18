@@ -303,6 +303,20 @@ braziers burning in the antechamber and either side of the altar.
     castle_model.gd): the castle's own kit pieces (crenellated wall tops, round towers with spires, the gate, the keep's lit
     windows) merged into one mesh at 0.022 on a plain table; Classic keeps the table's picture. Its examine line
     (`examine:castle_model`) was drafted by Gemini (docs/story/drafts/amber-castle-model/); unvoiced.
+  - The colossi at the doors (AmberColossus, world/look/amber_colossus.gd, shaders/world/amber_colossus.gdshader, step 8; the
+    entrance map, Modern only): the Sentinel stands on a dais, the prop `sentinel_dais` (`span: [2, 2]`, one foot of the temple's
+    black stone with an amber seam round its top edge and a top the snow does not whiten, the warmth of the amber). The NPC
+    entries say they stand `on` it (LocationNpcs._seat: the middle of its top, the piece's `seat`); the rules' grid is unchanged.
+    Its eyes (`SentinelEyes`) are a light of the `amber` kind and a soft halo at head height over wherever the figure stands
+    (a person on the dais, or its foe in a fight, `Eye.follow`): they breathe while it watches, flare with each line it speaks
+    (`view.speaking` is `amber_sentinel`), sink to an ember once `sentinel_stilled`, and go out with `sentinel_destroyed`, when
+    the dais (`sentinel_dais_cracked`) lies broken in two with its cracks glowing and six `amber_shards` props round it. As
+    a conversation with it opens, it turns its head to the leader (`dialogue_requested`), and looks out over the valley again
+    once nobody has spoken for a few seconds. The dead twin (`cracked_colossus`) is the prop's `tint` (a multiplied colour,
+    ModelPiece.tint) of dark amber, with three shards of amber at its feet drawn in code (a prop on a neighbouring square would
+    shrink its building-sized model, ModelPiece.big_fit). The doors give a warm wedge of light across the snow (`DoorsWedge`,
+    stronger by night) and the four cut icicle sprites hang from their lintel (`DoorsIcicles`). The eyes' light and halo are
+    not map `lights`, so a fight's light zones and vision are unchanged.
   - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
     line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
     squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.
@@ -313,7 +327,7 @@ braziers burning in the antechamber and either side of the altar.
     inside maps; its gold arc, four of them turned a quarter each, is the inlaid ring in the ring of amber, AmberMotion._inlay);
     two prop sheets: the copper pact ledger (the sanctum's lectern, with a low copper light and glints), a dish of offering candles
     (two of the god's pilgrim candles), amber shards and a standing shard (by the Eye's broken block), and four icicle pieces
-    (cut, not yet hung: they wait for the doors' look).
+    (hung from the doors' lintel, see the colossi below).
 
 ### Castle Ravenloft
 

@@ -226,7 +226,8 @@
       ],
       "kind": "examine",
       "label": "The split colossus",
-      "model": "statue_knight"
+      "model": "statue_knight",
+      "tint": "#b8742a"
     },
     {
       "id": "doors_lintel",
@@ -237,6 +238,108 @@
       "kind": "examine",
       "label": "Carving over the doors",
       "model": "relief"
+    },
+    {
+      "id": "sentinel_dais",
+      "cell": [
+        18,
+        10
+      ],
+      "span": [
+        2,
+        2
+      ],
+      "label": "The Sentinel's dais",
+      "model": "sentinel_dais",
+      "kind": "decor",
+      "when": "not flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_dais_cracked",
+      "cell": [
+        18,
+        10
+      ],
+      "span": [
+        2,
+        2
+      ],
+      "label": "The cracked dais",
+      "model": "sentinel_dais_cracked",
+      "kind": "decor",
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_a",
+      "cell": [
+        17,
+        10
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 1.6,
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_b",
+      "cell": [
+        20,
+        11
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 2.1,
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_c",
+      "cell": [
+        18,
+        12
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 1.4,
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_d",
+      "cell": [
+        19,
+        12
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 1.9,
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_e",
+      "cell": [
+        20,
+        10
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 1.3,
+      "when": "flag.sentinel_destroyed"
+    },
+    {
+      "id": "sentinel_shard_f",
+      "cell": [
+        17,
+        11
+      ],
+      "label": "A shard of amber",
+      "model": "amber_shards",
+      "kind": "decor",
+      "scale": 1.2,
+      "when": "flag.sentinel_destroyed"
     },
     {
       "id": "name_cairn",
@@ -593,6 +696,8 @@
         18,
         10
       ],
+      "on": "sentinel_dais",
+      "facing": "south",
       "dialogue": "amber_temple/sentinel:departure",
       "when": "flag.amber_temple_arrived and flag.dark_gifts_taken >= 1 and not flag.sentinel_stilled and not flag.sentinel_destroyed",
       "approach": 3
@@ -603,6 +708,8 @@
         18,
         10
       ],
+      "on": "sentinel_dais",
+      "facing": "south",
       "dialogue": "amber_temple/sentinel:arrival",
       "when": "not flag.amber_temple_arrived and not flag.sentinel_destroyed",
       "approach": 5
@@ -613,6 +720,8 @@
         18,
         10
       ],
+      "on": "sentinel_dais",
+      "facing": "south",
       "dialogue": "amber_temple/sentinel:talk",
       "when": "not flag.sentinel_destroyed"
     }

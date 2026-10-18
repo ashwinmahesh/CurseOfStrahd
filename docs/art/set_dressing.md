@@ -265,7 +265,8 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
   steps down off its plinth, Ashwin's pick in the Amber Temple plan; was 11.5 ft) and Argynvost's echo 4.0 (20 ft, was
   8.5 ft). This sizes the overworld figure only: a fight draws the Amber Golem block (Large, 2 x 2 squares, drawn at 2.0,
   inside test_creature_sizes' Large band of 1.3 to 2.8), which keeps its squares, reach and win rate. The Sentinel's
-  Narrator line (sentinel.dialogue) still says "three times a man's height", about 18 ft.
+  Narrator line (sentinel.dialogue, its arrival) says "thirty feet tall" now (it said "three times a man's height",
+  about 18 ft; Amber Temple step 8).
 - **The beholder** (the Eye Below, a Large aberration in the 2025 Monster Manual) is drawn 2.5 units (12.5 ft across with
   its stalks, was 1.9): the same `CombatToken.HEIGHTS` entry for its own sprite, in a fight and out of one, near the
   top of the Large band (an ogre is 2.1, a giant elk 2.3) so its body fills its 2 x 2 squares. The Dream-Gazer, drawn

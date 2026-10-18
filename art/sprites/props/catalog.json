@@ -266,6 +266,13 @@
       "art": "castle_model",
       "classic": "table"
     },
+    "sentinel_dais": {
+      "art": "sentinel_dais"
+    },
+    "sentinel_dais_cracked": {
+      "art": "sentinel_dais",
+      "case": "cracked"
+    },
     "faceless_statue": {
       "art": "statue_faceless",
       "see_through": true,

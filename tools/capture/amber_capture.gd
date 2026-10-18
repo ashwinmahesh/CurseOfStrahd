@@ -6,14 +6,17 @@ extends Node3D
 ##   make capture SCENE=res://tools/capture/amber_capture.tscn NAME=amber-look/s3 FRAMES=10
 ## then, for a clip, python3 tools/capture/clip_gif.py <out.gif> <out>_<place>_<x>_<z> (its frames and times).
 ## Environment: AMBER_LOC=amber_temple_vault, AMBER_AT=19,24 (the square the camera looks at; several, split by |, each a
-## shot), AMBER_ZOOM=9 (the camera's distance), AMBER_TURNS=1 (camera quarter turns), AMBER_PARTY=19,26|20,26 (the
+## shot), AMBER_ZOOM=9 (the camera's distance), AMBER_UP=5 (the camera's target that many units above the square: a colossus's head), AMBER_TURNS=1 (camera quarter turns), AMBER_PARTY=19,26|20,26 (the
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
 ## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them),
 ## AMBER_SPEAK=vestige_zantras (whose line is on screen for the stills), AMBER_GIFT=gift_of_zantras (the first of the party has taken it),
 ## AMBER_FOUND=warding_glyphs,faceless_gaze (traps already found),
 ## AMBER_LEVEL=10 (the party's level, 3 unless set),
 ## AMBER_FIGHT=vosk_unmasked (a fight of that id is on: the sanctum's braziers flare),
-## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed (in a clip, what changes at which frame).
+## AMBER_START=sentinel_stops_you (a fight of that encounter starts as the shots begin; `sentinel_wakes+aside` has the people
+## of the conversation that led to it step aside first, as they do), AMBER_LEVEL=10 for the level 10 versions; a clip passes
+## ARGS=--motion to see the step-down play.
+## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed,2:start=sentinel_wakes (in a clip, what changes at which frame).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
 ## How much faster than real time the game runs while a clip's frames are taken.
@@ -41,7 +44,7 @@ func capture_shots(tool: Node, out: String) -> void:
 	var spots := OS.get_environment("AMBER_AT").split("|", false)
 	for spot: String in spots:
 		var cell := Vector2i(int(spot.get_slice(",", 0)), int(spot.get_slice(",", 1)))
-		rig.global_position = view.board.cell_center(cell)
+		rig.global_position = view.board.cell_center(cell) + Vector3(0.0, float(OS.get_environment("AMBER_UP")) if OS.get_environment("AMBER_UP") != "" else 0.0, 0.0)
 		rig.snap_to_target()
 		await tool.call("wait_frames", 12)
 		var base := "%s_%s_%d_%d" % [out, loc_id, cell.x, cell.y]
@@ -82,6 +85,8 @@ func _build(loc_id: String) -> void:
 		view.in_combat = true
 		view.fight_id = OS.get_environment("AMBER_FIGHT")
 	AmberGlow.refresh(view)
+	if OS.get_environment("AMBER_START") != "":
+		_start(OS.get_environment("AMBER_START"))
 	if OS.get_environment("AMBER_WINDOW") != "1":
 		# No window opened in the walls and blocks nearer the camera than the party (SeeThrough puts it where the camera
 		# looks when nobody is followed): a shot of a block wants it whole.
@@ -125,4 +130,13 @@ func _stage(i: int) -> void:
 				GameState.story.party[0].accept_dark_gift(value)
 			"flag":
 				GameState.story.set_flag(value)
+			"start":
+				_start(value)
 	AmberGlow.refresh(view)
+
+
+## A fight of `spec` ("<encounter id>", with "+aside" the Sentinel's conversation having ended in it).
+func _start(spec: String) -> void:
+	if spec.ends_with("+aside"):
+		LocationNpcs.hide_npcs_of(view, "amber_temple/sentinel:attack")
+	LocationFights.start_encounter(view, spec.get_slice("+", 0))

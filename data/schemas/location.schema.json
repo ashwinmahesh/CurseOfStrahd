@@ -356,6 +356,10 @@
             "maximum": 8,
             "description": "How many times its modelled size its piece is drawn: a dragon's desk is three times a desk, its skull some twice the trophy it hangs among. The squares round it that it covers stay unfurnished (SetDressing.scaled_squares)."
           },
+          "tint": {
+            "type": "string",
+            "description": "Recolours its 3D piece: a palette colour's name or a \"#rrggbb\" colour its own colours are multiplied by (the dead colossus at the Amber Temple's doors, dark amber: ModelPiece.tint)."
+          },
           "hangs": {
             "type": "object",
             "description": "A chandelier hanging over `cells` (its piece is drawn up there): in a fight its chain can be broken to drop it on whoever is below (data/objects/kinds.json chandelier; world/combat/battle_scenery.gd). `trap`: the location trap that is this chandelier falling (sprung, it's down); `flag`: set once it has fallen (it's drawn lying on the floor from then on).",
@@ -618,6 +622,10 @@
             "minimum": 1,
             "maximum": 12,
             "description": "Squares: the NPC starts its dialogue once when the leader comes this close and can see them."
+          },
+          "on": {
+            "type": "string",
+            "description": "The id of a prop of this place the NPC stands on (the Amber Sentinel on its dais): the figure stands at the middle of its top, where the piece says (its `seat`), and still counts as on its own cell. Where the piece builds no seat (the Classic finish), they stand on the ground."
           },
           "asleep": {
             "type": "boolean",

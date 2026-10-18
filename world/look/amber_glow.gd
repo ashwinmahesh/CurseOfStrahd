@@ -146,6 +146,7 @@ static func refresh(view: LocationView) -> void:
 	var cases := view.get_tree().get_nodes_in_group(&"amber_cases")
 	if cases.is_empty():
 		AmberMotion.refresh(view)   # (a place with no blocks of amber still has its small motion)
+		AmberColossus.refresh(view)   # (and the doors, where the colossi stand)
 		return
 	var party: Array[Vector2] = []
 	for m: Combatant in view.members:
@@ -164,6 +165,7 @@ static func refresh(view: LocationView) -> void:
 		c.set_thread(bool(view.st.get_flag("amber_thread_seen", false)))
 	_flare(view)
 	AmberMotion.refresh(view)
+	AmberColossus.refresh(view)
 
 
 ## Builds the case for a location prop at `cell` under `root` (SetDressing.place's node for it): `look` is its catalog
@@ -261,6 +263,7 @@ static func dress_place(view: LocationView) -> void:
 	if not Look.modern():
 		return
 	AmberMotion.dress(view)   # the small motion: frost candles' flakes, steam, stirring notes, the weeping seep (step 11)
+	AmberColossus.dress(view)   # the colossi at the doors: the Sentinel's eyes, the doors' light, their icicles (step 8)
 	if view.loc_id != "amber_temple_vault":
 		return
 	var heaps: Array[Vector3] = []

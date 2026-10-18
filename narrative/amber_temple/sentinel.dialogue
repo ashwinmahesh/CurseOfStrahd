@@ -7,7 +7,7 @@
 set amber_temple_arrived
 quest the_amber_temple arrived
 cutscene amber_sentinels
-Narrator: Two colossi of amber flank the doors, each three times a man's height, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack.
+Narrator: Two colossi of amber flank the doors, each thirty feet tall, robed and hooded like the wardens who carved them. The left one has split from crown to knee, and snow has packed the crack.
 Narrator: The right one has not. As you come within its reach it turns its head toward you, with a sound like a frozen river shifting in its bed.
 amber_sentinel: SPEAK THE WORD.
 interject guest:kasimir_velikov: I have read about these. They were made to keep something in, not to keep us out. I wish I had not read that part.

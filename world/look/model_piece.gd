@@ -606,6 +606,49 @@ static func dim(node: Node3D) -> void:
 			mi.set_surface_override_material(i, d)
 
 
+## A prop's `tint` (data): a palette colour's name, or a "#rrggbb" colour.
+static func tint_colour(word: String) -> Color:
+	return Color.html(word) if word.begins_with("#") else Look.color(word)
+
+
+## The tinted materials made so far, by the material they are drawn from and the colour: one each, kept for good as the
+## game's other model materials are (`_materials`), so every piece of a tint shares it and none is freed under a piece.
+static var _tinted: Dictionary = {}
+
+
+## Recolours a piece: every surface's own colour (or its texture's tint) is multiplied by `by`, in a material copied from
+## the surface's once per colour, so the same model elsewhere keeps its look (the dead colossus, dark amber).
+static func tint(node: Node3D, by: Color) -> void:
+	for n in node.find_children("*", "MeshInstance3D", true, false):
+		var mi := n as MeshInstance3D
+		for i in mi.mesh.get_surface_count():
+			var m := mi.get_active_material(i) as ShaderMaterial
+			if m == null:
+				continue
+			var key := "tint" if m.shader == SPRITE_SHADER else Look.tint_key(m)
+			if key == "":
+				continue
+			var at := "%d|%s" % [m.get_instance_id(), by.to_html()]
+			if not _tinted.has(at):
+				var d := _copy_of(m)
+				d.set_shader_parameter(key, colour_of(m.get_shader_parameter(key)) * by)
+				_tinted[at] = d
+			mi.set_surface_override_material(i, _tinted[at] as ShaderMaterial)
+
+
+## A new material drawn as `m` is: its shader, its priority and the parameters it has set, with none of the metadata `m` has
+## (SeeThrough keeps the copy it made on the material it opens).
+static func _copy_of(m: ShaderMaterial) -> ShaderMaterial:
+	var c := ShaderMaterial.new()
+	c.shader = m.shader
+	c.render_priority = m.render_priority
+	for u: Dictionary in m.shader.get_shader_uniform_list():
+		var v: Variant = m.get_shader_parameter(str(u["name"]))
+		if v != null:
+			c.set_shader_parameter(str(u["name"]), v)
+	return c
+
+
 ## A shader colour parameter as a Color (a vec3 may come back as a Vector3; unset is white).
 static func colour_of(v: Variant) -> Color:
 	if v is Color:

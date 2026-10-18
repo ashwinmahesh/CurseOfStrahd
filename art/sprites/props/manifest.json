@@ -6003,6 +6003,18 @@
       "back": "table_back",
       "note": "The table model of Castle Ravenloft in Exethanter's study, built in code (world/look/castle_model.gd) in the Modern finish; this is the table Classic keeps, so the art checks pass (as fog_bank's)."
     },
+    "sentinel_dais": {
+      "file": "art/sprites/props/amber_shards.png",
+      "width_px": 184,
+      "height_px": 120,
+      "world_height": 0.45,
+      "world_width": 0.697,
+      "pixel_size": 0.003913,
+      "anchor": "bottom_center",
+      "mount": "stand",
+      "source": "art/generated/props/sheet_amber_props_a.png",
+      "note": "The Amber Sentinel's low dais at the temple doors, built in code (world/look/amber_colossus.gd) in the Modern finish; Classic keeps the bare snow, and this picture is only here so the art checks pass (as amber_case's)."
+    },
     "copper_ledger": {
       "file": "art/sprites/props/copper_ledger.png",
       "width_px": 208,

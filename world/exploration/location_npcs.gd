@@ -72,6 +72,9 @@ static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 		cb.id = "npc_" + str(spec["npc"])
 		var tok := _npc_token(cb, str(npc.get("sprite", spec["npc"])))
 		tok.position = view.board.cell_center(cb.cell)
+		var seat := _seat(view, spec)
+		if seat != Vector3.INF:
+			tok.position = seat   # standing on a prop (`on`): the Amber Sentinel on its dais
 		view.add_child(tok)
 		if FACINGS.has(str(spec.get("facing", ""))):
 			tok.face(FACINGS[str(spec["facing"])] as Vector2, false)   # where they look (and lane 25's sight cones)
@@ -102,6 +105,15 @@ static func _build_npcs(view: LocationView, places: Dictionary = {}) -> void:
 		shown["wait"] = float(spec.get("pause", NpcRoutes.PAUSE))
 		if not (shown["route"] as Array).is_empty():
 			NpcRoutes.of(view)
+
+
+## Where an entry that stands `on` a prop of the place stands: the middle of its top (the `seat` its piece was built with),
+## or Vector3.INF with no `on` or where that piece has none (the Classic finish builds no dais).
+static func _seat(view: LocationView, spec: Dictionary) -> Vector3:
+	var node := view.prop_nodes.get(str(spec.get("on", ""))) as Node3D
+	if node != null and node.has_meta("seat"):
+		return node.get_meta("seat") as Vector3
+	return Vector3.INF
 
 
 ## Owner report (2026-10-07): Offalia ate her mother's pastry and stood on at the oven. An entry with `asleep: true`
