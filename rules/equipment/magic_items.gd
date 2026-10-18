@@ -10,9 +10,11 @@ const RARITIES: Array[String] = ["common", "uncommon", "rare", "very_rare", "leg
 ## 2024 DMG "Magic Item Prices" (consumables cost half).
 const PRICE := {"common": 100, "uncommon": 400, "rare": 4000, "very_rare": 40000, "legendary": 200000, "artifact": 0}
 ## Where a worn item goes (2024 DMG "Wearing and Wielding Items": one pair of boots, gloves or bracers, one cloak,
-## one item of headwear...). Rings: one per hand. Ioun Stones orbit the head, as many as you like.
+## one item of headwear...). Rings: one per hand. Ioun Stones orbit the head, three at most.
 const WORN_SLOTS: Array[String] = ["head", "eyes", "neck", "cloak", "robe", "wrists", "hands", "belt", "feet", "ring", "ioun"]
-const SLOT_CAPACITY := {"ring": 2, "ioun": 99}
+## Up to three Ioun Stones orbit the head at once (2024 DMG), as many rings as hands.
+const IOUN_MAX := 3
+const SLOT_CAPACITY := {"ring": 2, "ioun": IOUN_MAX}
 const SLOT_NAMES := {"head": "Head", "eyes": "Eyes", "neck": "Neck", "cloak": "Cloak", "robe": "Robe", "wrists": "Wrists",
 	"hands": "Hands", "belt": "Belt", "feet": "Feet", "ring": "Ring", "ioun": "Orbiting the head"}
 const CLASSES: Array[String] = ["barbarian", "bard", "cleric", "druid", "fighter", "monk", "paladin", "ranger", "rogue",
@@ -311,6 +313,13 @@ static func powers_of(item: Dictionary) -> Array[Dictionary]:
 	elif item.has("scroll_spell"):
 		out.append({"id": "read", "name": "Read", "spell": str(item["scroll_spell"]), "scroll": true, "consume": true,
 			"field": true, "requires": "anyone", "text": "Cast the spell written on it, if it's on your class's spell list."})
+	elif worn_slot(item) == "ioun":
+		# 2024 DMG: tossing a stone into orbit is a Magic action, seizing and stowing any number a Utilize action. Outside
+		# a fight the pack just wears and takes off (Wear: orbiting the head).
+		out.append({"id": "orbit", "name": "Toss into orbit", "cost": "magic", "custom": "ioun_orbit", "requires": "anyone",
+			"text": "Magic action: toss it into the air. It orbits your head and gives its benefit (once you are attuned to it); three Ioun Stones can orbit at once."})
+		out.append({"id": "stow", "name": "Stow orbiting stones", "cost": "utilize", "custom": "ioun_stow", "requires": "anyone",
+			"text": "Utilize action: seize and stow every Ioun Stone orbiting your head."})
 	return out
 
 

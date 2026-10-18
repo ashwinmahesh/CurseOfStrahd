@@ -81,8 +81,16 @@ func active_item(c: Combatant, item_or_template: String) -> Dictionary:
 ## ones: drinking a potion, reading a scroll).
 func powers(c: Combatant) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
+	var first_orbiting := ""
+	for it in carried(c):
+		if str((it["entry"] as Dictionary).get("slot", "")) == "ioun" and first_orbiting == "":
+			first_orbiting = str(it["id"])
 	for it in carried(c):
 		for p in MagicItems.powers_of(it["data"] as Dictionary):
+			# An Ioun Stone's implicit powers show when they apply: tossing one that isn't orbiting, stowing from the first that is.
+			var orbiting := str((it["entry"] as Dictionary).get("slot", "")) == "ioun"
+			if (str(p.get("custom", "")) == "ioun_orbit" and orbiting) or (str(p.get("custom", "")) == "ioun_stow" and str(it["id"]) != first_orbiting):
+				continue
 			out.append({"item_id": it["id"], "data": it["data"], "entry": it["entry"], "power": p})
 	# Powers an item left behind for a while (a Potion of Fire Breath's three breaths): kept on the Effect it made.
 	for fx in c.creature.effects:
@@ -196,6 +204,8 @@ func power_why(c: Combatant, p: Dictionary, level: int = 0) -> String:
 		return "Equip it first: in hand or in your other weapon set (inventory)"
 	if bool(power.get("combat", true)) == false:
 		return "Outside combat only"
+	if str(power.get("custom", "")) == "ioun_orbit" and ch.equipped_all("ioun").size() >= MagicItems.IOUN_MAX:
+		return "Three Ioun Stones already orbit your head; stow them first"
 	var spell_id := power_spell(iid, power)
 	var spell := comp().spell_data(spell_id) if spell_id != "" else {}
 	if spell_id != "" and spell.is_empty():

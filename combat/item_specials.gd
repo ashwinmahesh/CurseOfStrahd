@@ -989,6 +989,21 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 		"lordly_might_form":
 			_pay_cost(c, cost)
 			return _lordly_form(c, iid, str(opts.get("choice", "rod")))
+		"ioun_orbit":
+			_pay_cost(c, cost)
+			ch_of(c).equip(iid, "ioun")
+			e.log.add("info", "%s tosses the %s into the air: it orbits their head" % [c.name(), label], c.id)
+			return CombatResult.new()
+		"ioun_stow":
+			_pay_cost(c, cost)
+			var stowed := 0
+			for entry in ch_of(c).inventory:
+				if str(entry.get("slot", "")) == "ioun":
+					entry["slot"] = ""
+					stowed += 1
+			ch_of(c).items_changed()
+			e.log.add("info", "%s seizes and stows %d orbiting Ioun Stone%s" % [c.name(), stowed, "" if stowed == 1 else "s"], c.id)
+			return CombatResult.new()
 		"pact_slot":
 			_pay_cost(c, cost)
 			var ch3 := ch_of(c)

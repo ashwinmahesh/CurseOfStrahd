@@ -31,7 +31,7 @@ ADR 0012. Schema: `data/schemas/item.schema.json`. Text and summaries are our ow
 ## Powers (`powers`)
 
 A potion with `effects` gets an implicit "Drink" power (Bonus Action, itself or a creature within 5 ft, its `effects`
-for its `duration`); a Spell Scroll an implicit "Read".
+for its `duration`); a Spell Scroll an implicit "Read"; an Ioun Stone (`worn: "ioun"`) "Toss into orbit" (Magic action) and "Stow orbiting stones" (Utilize action), three orbiting at most (`MagicItems.IOUN_MAX`).
 
 | key | meaning |
 |---|---|

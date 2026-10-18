@@ -910,7 +910,7 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 	var stuck := ch.part_blocker(id)
 	if slot != "":
 		var stays_on := ch.take_off_blocker(id)
-		out.append({"label": "Take off", "disabled": stays_on != "", "tooltip": stays_on,
+		out.append({"label": "Stow" if slot == "ioun" else "Take off", "disabled": stays_on != "", "tooltip": stays_on,
 			"call": redraw.call(func() -> void: ch.unequip_item(id))})
 	else:
 		for s: String in ["armor", "main_hand", "off_hand"] + MagicItems.WORN_SLOTS + CARRY_SLOTS:
@@ -919,6 +919,8 @@ func actions_for(e: Dictionary) -> Array[Dictionary]:
 				var label := "%s (%s)" % [verb, slot_name(s).to_lower()]
 				if s in CARRY_SLOTS:
 					label = "Ready in the quiver" if s == "ammo" else "Carry as the focus"
+				elif s == "ioun":
+					label = "Toss into orbit"   # a Magic action in a fight (the hotbar's Items tab); free here
 				out.append({"label": label, "call": redraw.call(func() -> void: _equip(ch, id, s))})
 		for s2: String in ["main_hand", "off_hand"]:
 			if InventoryScreen.slot_takes(s2, data) and MagicItems.worn_slot(data) == "":

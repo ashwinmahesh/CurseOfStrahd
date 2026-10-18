@@ -446,6 +446,10 @@ func end_attunement(item_id: String) -> bool:
 	if end_attunement_blocker(item_id) != "":
 		return false
 	attuned.erase(item_id)
+	# An Ioun Stone whose attunement ends falls as though dropped (2024 DMG).
+	var held := entry_of(item_id)
+	if not held.is_empty() and str(held.get("slot", "")) == "ioun":
+		held["slot"] = ""
 	_item_mods_key = ""
 	refresh_item_resources()
 	return true
