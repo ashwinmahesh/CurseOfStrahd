@@ -123,6 +123,13 @@ func footprint() -> Array[Vector2i]:
 	return CombatGrid.footprint(cell, size_cells)
 
 
+## Whether this creature's turn is cut down to a choice of one thing: Dazed (move, action or Bonus Action), Slowed or the
+## Coward spirit's fear (an action or a Bonus Action). The AI then keeps to its action and never spends the Bonus Action
+## first, which would cost it the action (EncounterTurns.action_start_block).
+func turn_is_a_choice() -> bool:
+	return creature.has_flag("dazed") or creature.has_flag("slowed") or creature.has_flag("action_or_bonus")
+
+
 ## Speed for moving on the grid: walking, or flying when that's faster (Fly, flying monsters, Gaseous Form).
 func speed() -> int:
 	return maxi(creature.speed().total(), creature.speed("fly").total())

@@ -571,6 +571,14 @@ func _action_check(c: Combatant) -> String:
 		return "%s can't act (%s)" % [c.name(), "down" if c.creature.hp <= 0 else "Incapacitated"]
 	if not c.action_available:
 		return "Action already used"
+	return action_start_block(c)
+
+
+## "" if `c` may start an action now as far as the rules that cut a turn down allow: a Slowed creature (Slow, or the
+## Coward spirit's `action_or_bonus`) takes an action or a Bonus Action, not both; a Dazed one, one of move, action or
+## Bonus Action. _action_check asks it, and so does the first attack of an Attack action (Encounter.attack,
+## monster_attack, begin_multiattack).
+func action_start_block(c: Combatant) -> String:
 	if (c.creature.has_flag("slowed") or c.creature.has_flag("action_or_bonus")) and not c.bonus_available and not c.surged:
 		return "An action or a Bonus Action this turn, not both"
 	return one_thing_block(c, "action")

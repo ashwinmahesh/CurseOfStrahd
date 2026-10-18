@@ -1103,8 +1103,8 @@ func _hybrid_art(c: Combatant) -> String:
 ## Aid, a summoned Fey Spirit's Fey Step. Returns a result (or one that did nothing).
 func bonus_action(c: Combatant, plan: String = "") -> CombatResult:
 	var e := enc()
-	# A Dazed foe moves or acts: the AI never spends its Bonus Action then (EncounterTurns.one_thing_block).
-	if not c.bonus_available or not c.can_act() or c.creature.has_flag("dazed"):
+	# A Dazed or Slowed foe has a choice of one thing: the AI never spends its Bonus Action then (Combatant.turn_is_a_choice).
+	if not c.bonus_available or not c.can_act() or c.turn_is_a_choice():
 		return CombatResult.new()
 	for raw: Variant in data_of(c).get("bonus_actions", []):
 		var act := raw as Dictionary
