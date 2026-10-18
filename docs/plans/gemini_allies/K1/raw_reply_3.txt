@@ -1,0 +1,25 @@
+~ t_dragon_after
+Kasimir [weary]: So Tarakamedes has spoken to you out of the red amber. Do not tell me what it said.
+Kasimir [sad]: I am glad you were the ones to hear that voice, and that I did not stand before it alone.
+
+~ t_dragon_refused
+Kasimir [sad]: My hand was on the red amber, and you pulled me back from my own word.
+Kasimir [weary]: Thank you for the mercy, though it sits like a stone in my chest.
+
+~ homeward_later
+Kasimir [weary]: Very well, we will leave the question for another mile. Lead on, and I will keep pace.
+
+~ rest_later
+Kasimir [sad]: I have waited three hundred years for that word, so I can wait a little longer. Come to my fire when you are ready.
+
+~ camp_menu_come
+* Come with us to the temple, Kasimir.
+
+~ camp_menu_news_rest
+* Kasimir, we have returned from the temple with word of Patrina.
+
+~ camp_menu_news_destroyed
+* Kasimir, sit with us - we must speak of Patrina.
+
+~ camp_menu_talk
+* What have you heard here at the fire?

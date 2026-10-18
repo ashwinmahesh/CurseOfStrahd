@@ -166,6 +166,28 @@ Arabelle, she insists on going with the party. **Kasimir Velikov** (made by the 
 sits apart, mourning his sister Patrina and dreaming of the Amber Temple (`kasimir_sister_told`); he joins if he is
 the ally.
 
+**Kasimir walks his road** (Story Allies Presence Plan, package K1; narrative/allies/kasimir.dialogue, side flags in
+data/flags/allies_kasimir.json). Without the Tarokka:
+
+- *Come with us to the temple.* Once he has told of Patrina (`kasimir_sister_told`) and the party is headed up (level 8, or
+  `visited:tsolenka_pass`), his menu offers `allies/kasimir:come` (not for the Seer's ally, who has `ally`), and he walks
+  with the party as a guest. His temple scenes (`patrina:kasimir_meets`, `vestiges:tarakamedes_kasimir`) read
+  `guest:kasimir_velikov` and play as for the Seer. His npc entry carries `guest_stays`: he can't be sent home (or carried
+  home after a fall) on the Tsolenka Pass or in the temple while Patrina is unresolved, nor after the bargain
+  (`kasimir_bargain == made`); K2 owns where he goes then. The Seer's ally always stays (`StoryState.guest_stays`).
+- *Home or stay.* Walking with the party after `patrina_fate == rest`, his hub opens with `homeward`: "go home" (`leave`;
+  he is back on his stool, `kasimir_homeward_asked`), "stay" or "later". Not asked of the Seer's ally or after the bargain.
+- *Closures at the camp*, for a party that dealt with Patrina without him. Laid to rest (`patrina_fate == rest`, not
+  `kasimir_at_peace`): `rest_told`, the party relays "she's done waiting", the stones and the quiet, "very good at quiet"
+  in as many pieces as it likes; the net lies still; `kasimir_heard_rest` (the epilogue reads it beside
+  `kasimir_at_peace`). Destroyed (`patrina_destroyed`): `destroyed_told`, he asks only whether she was afraid; whatever the
+  answer, `kasimir_cold` (curt greeting and hub, and his scrolls cost a quarter more: `price_flags` in
+  data/npcs/kasimir_velikov.json). A bargain at Tarakamedes is the temple's scene; he isn't at the camp then (K2).
+- *The hub* (`allies/kasimir:talk`): the camp's "What have you heard here at the fire?" and, while he travels, a click on him
+  (`guest_talk`). `hub_menu` shows the three newest topics not yet heard, each once: a dark gift taken, Vosk, Tarakamedes,
+  the Tome's page on the dusk elves, Bluto, the festival, Arabelle. The Vallaki news is the Vistani fire's, so only at the
+  camp; the warnings read the temple's flags (`vestige_tarakamedes_heard`, `kasimir_bargain`, `vosk_met`).
+
 ### 4.8 Victor's attic and Lydia Petrovna
 
 Lydia sews every banner and worries about Victor, who hasn't come down in four days (quest `victors_circle heard`).

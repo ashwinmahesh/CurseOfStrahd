@@ -6,12 +6,24 @@ if not flag.kasimir_met
 set kasimir_met
 Narrator: Away from the fire, on a stool by a wagon with its shutters closed, sits an elf with ash-dark skin and white hair, mending a net he will never cast. He doesn't look up until you are close enough to touch.
 Kasimir: The strangers. The camp talks of nothing else. Sit, if you like. I am poor company. I have been poor company for a very long time.
+# What the party did at the Amber Temple while he sat here (package K1, narrative/allies/kasimir.dialogue).
+elif flag.kasimir_sister_told and flag.patrina_fate == rest and not flag.kasimir_at_peace and not flag.kasimir_heard_rest
+-> allies/kasimir:camp_news_rest
+elif flag.kasimir_sister_told and flag.patrina_destroyed and not flag.kasimir_heard_destroyed
+-> allies/kasimir:camp_news_destroyed
+elif flag.kasimir_cold
+-> allies/kasimir:camp_cold
+elif flag.kasimir_heard_rest or flag.kasimir_at_peace
+-> allies/kasimir:camp_peace
 else
 Kasimir: Back again, to the saddest wagon in the camp. People will start to talk.
 endif
 -> menu
 
 ~ menu
+* [if flag.kasimir_sister_told and flag.patrina_fate == rest and not flag.kasimir_at_peace and not flag.kasimir_heard_rest] Kasimir, we have returned from the temple with word of Patrina. -> allies/kasimir:rest_told
+* [if flag.kasimir_sister_told and flag.patrina_destroyed and not flag.kasimir_heard_destroyed] Kasimir, sit with us - we must speak of Patrina. -> allies/kasimir:destroyed_told
+* [if flag.kasimir_sister_told and not guest:kasimir_velikov and not flag.patrina_fate and not flag.patrina_destroyed and not tarokka.ally.npc == kasimir_velikov and (level >= 8 or visited:tsolenka_pass)] Come with us to the temple, Kasimir. -> allies/kasimir:come
 * Who are you? -> who
 * Why do the Vistani shelter an elf? -> vistani
 * [Insight DC 13] What is he grieving for? -> grief_ok | grief_fail
@@ -20,6 +32,7 @@ endif
 * [if flag.kasimir_sister_told and treasure_at:vallaki_vistani_camp:camp_edge] We'll find you a road into the mountains, to that temple. -> trade
 * [if tarokka.ally.npc == kasimir_velikov and not guest:kasimir_velikov] Madam Eva's cards named you as our ally. -> ally
 * [name:wren_featherfoot] [if quest.the_last_lesson and not flag.wren_letter_given] Give him Master Sorrel's letter. -> companions/lesson:kasimir
+* What have you heard here at the fire? -> allies/kasimir:talk
 * We heard you have spells to spare. Scrolls? -> scrolls
 * Goodbye. -> bye
 

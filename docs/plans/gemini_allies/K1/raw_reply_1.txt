@@ -1,0 +1,87 @@
+~ camp_news_rest
+Kasimir: You still carry the mountain air on your cloaks. Sit by the wagon, please, and tell me plainly.
+
+~ camp_news_destroyed
+Kasimir [sad]: You have been up into the ice, and you do not look at me. Say what you have come to say.
+
+~ camp_peace
+Kasimir [smile]: Welcome back. The wagon is only the second saddest place in the camp today, which is a strange comfort.
+
+~ camp_cold
+Kasimir: You have returned. Tell me what you require from my chest, and we will conclude our business.
+
+~ come
+Narrator: He folds the half-mended net into a neat square and sets it on the stool, though his fingers linger on the cord. When he stands, his joints speak before he does.
+Kasimir: You are kind to remember an old man's errand.
+Kasimir [smile]: I warn you that three centuries of sitting by a wagon have made me very dull company on a road.
+Kasimir [weary]: The pass is cold, and what waits in the amber is colder still.
+Kasimir: I ask only one courtesy: when we find my sister, let me be the first to speak to her.
+
+~ rest_told
+Kasimir: I have waited a very long time to hear her name spoken by someone who has seen her.
+Kasimir [sad]: Tell me what she said to you, if she could speak at all.
+* She asked us to tell you she is done waiting.
+* Not yet. We cannot speak of it like this.
+
+~ rest_waiting
+Kasimir [sad]: Three hundred years in the cold, and I kept her there with my own cowardice.
+Kasimir: It is like her to lose patience with me at the end. Was there more?
+* She said the stones hurt less than the quiet afterward.
+* That is all she said to us.
+
+~ rest_quiet
+Kasimir [sad]: I stood in the back and made no sound while the stones fell. Afterward, none of us spoke her name.
+Kasimir [weary]: We thought silence was survival, when it was only another grave. Did she say anything else?
+* She said you were always very good at quiet.
+* That is all she said to us.
+
+~ rest_good
+Kasimir [smile]: Even as a spirit in the ice, she keeps her edge.
+Kasimir [sad]: Yes, I was very good at quiet. I think I am finished practicing it now.
+
+~ rest_close
+Narrator: He lets the net slide from his lap onto the mud, and for the first time since you met him, his dark hands lie completely still. The lake wind stirs the hem of his cloak, smelling of cold water and wet ash.
+Kasimir: Thank you for climbing where I was too afraid to go, and for bringing her words down the mountain.
+Kasimir [weary]: I will sit here a little longer and listen to the water, with nothing in my hands.
+
+~ destroyed_told
+Kasimir [sad]: You need not tell me how it ended, or whose hand struck the blow.
+Kasimir [weary]: What remains in the amber is seldom gentle, and the dead do not easily forgive the living.
+Kasimir [sad]: Tell me only one thing, if you will: was she afraid?
+* No. She was angry, and she was herself.
+* Yes. She was afraid at the end.
+* We cannot say. We are very sorry.
+
+~ destroyed_no
+Kasimir [sad]: Proud to the last, then, as she was when she walked up to the castle.
+Kasimir [weary]: It is a small mercy, though it is more than I gave her.
+
+~ destroyed_yes
+Kasimir [sad]: She was never afraid when she was alive, not even of the stones.
+Kasimir [weary]: It took three centuries in the dark to teach her fear, and I left her there to learn it.
+
+~ destroyed_unknown
+Kasimir [sad]: That is an honest answer, and I will not ask you for a kinder one.
+Kasimir [weary]: The dead keep their own counsel at the end.
+
+~ destroyed_close
+Narrator: Something shutters behind his eyes, quiet and final as the wagon door at his back. He reaches down, takes up the bone needle and the cord, and begins to knot the net again.
+Kasimir: Thank you for bringing me the truth of it.
+Kasimir: The wind off the lake is rising, and I have work to finish before dark. Good evening to you.
+
+~ homeward
+Kasimir [weary]: My sister always preferred to give the orders, and I find myself inclined, for once, to obey her.
+Kasimir [smile]: She told me to go home and stop making a spectacle of my grief.
+Kasimir: I would return to the camp by the lake, unless you still have some use for a slow companion.
+* Go home, Kasimir, with our thanks.
+* Stay with us a while longer.
+* We will decide later. Walk with us for now.
+
+~ homeward_go
+Narrator: He bows with an old-fashioned grace that belongs to a century no one living remembers, then turns his back on the mountain ice. Before the mist takes him, he looks lighter than he did coming up.
+Kasimir: Thank you for walking me to the door I could not open alone.
+Kasimir [smile]: Walk in the light while it lasts, my friends. If you pass the lake, my wagon shutters will be open.
+
+~ homeward_stay
+Kasimir [smile]: She did say to be brave somewhere she could not see me.
+Kasimir: Very well. I will walk with you a while longer, if only to prove an old elf can learn a new habit.

@@ -1,0 +1,100 @@
+{
+  "region": "allies_kasimir",
+  "flags": [
+    {
+      "id": "kasimir_heard_rest",
+      "type": "bool",
+      "summary": "The party told Kasimir at the Vistani camp that Patrina was laid to rest without him (\"she's done waiting\"; allies/kasimir:rest_told). He puts the net down for good. Set only at the camp: when he stood before her himself the temple sets kasimir_at_peace instead, and the epilogue reads both (Story Allies Presence Plan, package K1)."
+    },
+    {
+      "id": "kasimir_heard_destroyed",
+      "type": "bool",
+      "summary": "The party told Kasimir at the Vistani camp that Patrina's spirit was destroyed, and he asked only whether she was afraid (allies/kasimir:destroyed_told). Sets kasimir_cold."
+    },
+    {
+      "id": "kasimir_cold",
+      "type": "bool",
+      "summary": "Kasimir's warmth toward the party is gone, after he heard the party destroyed his sister. His camp greeting and hub opening turn curt, and his scrolls cost a quarter more (price_flags in data/npcs/kasimir_velikov.json). Nothing else changes: his hub still answers, and the story never depends on him."
+    },
+    {
+      "id": "kasimir_homeward_asked",
+      "type": "bool",
+      "summary": "Kasimir, walking with the party after Patrina was laid to rest, has asked whether to go back to the camp, and the party answered go home or stay (allies/kasimir:homeward). Asked once; a \"later\" answer leaves it unset."
+    },
+    {
+      "id": "kasimir_heard_festival",
+      "type": "bool",
+      "summary": "Kasimir's hub told the party what the Vistani say about how Vallaki's festival ended (allies/kasimir:t_festival_*; only at the camp, where he hears the news)."
+    },
+    {
+      "id": "kasimir_heard_arabelle",
+      "type": "bool",
+      "summary": "Kasimir's hub told the party how the camp took Arabelle's return or loss (allies/kasimir:t_arabelle_*; only at the camp)."
+    },
+    {
+      "id": "kasimir_heard_bluto",
+      "type": "bool",
+      "summary": "Kasimir's hub told the party what the camp says of Bluto's end (allies/kasimir:t_bluto_*; only at the camp)."
+    },
+    {
+      "id": "kasimir_heard_tome",
+      "type": "bool",
+      "summary": "Kasimir read the Tome of Strahd's page on the dusk elves with the party and looked for Patrina's name (allies/kasimir:t_tome)."
+    },
+    {
+      "id": "kasimir_heard_gift",
+      "type": "bool",
+      "summary": "Kasimir told the party what a dark gift costs and how it shows on the one who took it (allies/kasimir:t_gift)."
+    },
+    {
+      "id": "kasimir_heard_dragon",
+      "type": "bool",
+      "summary": "Kasimir spoke of Tarakamedes, the dragon in the red amber: a warning before the party has heard it, a quiet word after (allies/kasimir:t_dragon_*)."
+    },
+    {
+      "id": "kasimir_heard_broker",
+      "type": "bool",
+      "summary": "Kasimir spoke of Master Vosk, the scholar of the temple: a warning before the party has met him, a dry word after (allies/kasimir:t_broker_*)."
+    },
+    {
+      "id": "kasimir_slots",
+      "type": "int",
+      "summary": "Hub scratch: how many topics the hub has put on its menu this time. It shows the three newest unheard topics at most; recomputed every time the menu opens (allies/kasimir:hub_menu)."
+    },
+    {
+      "id": "kasimir_show_festival",
+      "type": "bool",
+      "summary": "Hub scratch: the festival topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_arabelle",
+      "type": "bool",
+      "summary": "Hub scratch: the arabelle topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_bluto",
+      "type": "bool",
+      "summary": "Hub scratch: the bluto topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_tome",
+      "type": "bool",
+      "summary": "Hub scratch: the tome topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_gift",
+      "type": "bool",
+      "summary": "Hub scratch: the gift topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_dragon",
+      "type": "bool",
+      "summary": "Hub scratch: the dragon topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    },
+    {
+      "id": "kasimir_show_broker",
+      "type": "bool",
+      "summary": "Hub scratch: the broker topic is on the menu this time (allies/kasimir:hub_menu). Cleared and set again every time the menu opens."
+    }
+  ]
+}

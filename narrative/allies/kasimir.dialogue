@@ -1,0 +1,362 @@
+# Kasimir Velikov walks his road (docs/voice/kasimir_velikov.md; Story Allies Presence Plan, package K1). In five parts:
+#   camp_*: the camp conversation's opening line once the party has come back from the Amber Temple with news of Patrina,
+#       or Kasimir has made his peace or lost his warmth (vallaki/kasimir:start jumps here, and each node goes on to that
+#       file's menu).
+#   come: "Come with us to the temple" from the camp's menu (his scenes there then play as they do for the Tarokka's
+#       Seer, amber_temple/patrina:kasimir_meets and vestiges:tarakamedes_kasimir). Not for the Seer's own ally.
+#   rest_told, destroyed_told: the two closures he can only get at the camp, when the party dealt with Patrina without
+#       him. (A bargain at Tarakamedes is the temple's own scene; where he goes after it is package K2.)
+#   homeward: walking with the party once Patrina is at rest (patrina_fate == rest), he offers to go home unless they
+#       ask him to stay. Not asked of the Seer's ally, who sees the end through (StoryState.guest_stays), nor after the
+#       bargain.
+#   talk: his hub, opened from the camp's menu and, while he travels, by clicking him (guest_talk in
+#       data/npcs/kasimir_velikov.json). The menu holds the three newest topics not yet heard (hub_menu), each of
+#       which plays once: the Vallaki news the Vistani bring to their fire (only at the camp), the Tome's page on the
+#       dusk elves, what a dark gift costs, and warnings about Tarakamedes and Vosk read from the temple's own flags.
+# Side flags live in data/flags/allies_kasimir.json. Lines were drafted by Gemini through the ai-bridge
+# (docs/plans/gemini_allies/K1/) and edited. All unvoiced.
+
+# ---------------------------------------------------------------- The camp's opening lines
+
+~ camp_news_rest
+Kasimir: You still carry the mountain air on your cloaks. Sit by the wagon, please, and tell me plainly.
+-> vallaki/kasimir:menu
+
+~ camp_news_destroyed
+Kasimir [sad]: You have been up into the ice, and you do not look at me. Say what you have come to say.
+-> vallaki/kasimir:menu
+
+~ camp_peace
+Kasimir [smile]: Welcome back. The wagon is only the second saddest place in the camp now, which is a strange comfort.
+-> vallaki/kasimir:menu
+
+~ camp_cold
+Kasimir: You have returned. Tell me what you require, and we will conclude our business.
+-> vallaki/kasimir:menu
+
+# ---------------------------------------------------------------- Come with us to the temple
+
+~ come
+Narrator: He folds the half-mended net into a neat square and sets it on the stool, though his fingers linger on the cord.
+Kasimir: You are kind to remember my errand.
+Kasimir [smile]: I warn you that three centuries beside a wagon have made me very dull company on a road.
+Kasimir [weary]: The pass is cold, and what waits in the amber is colder still.
+Kasimir: I ask only one courtesy: when we find my sister, let me be the first to speak to her.
+# The road into the mountains is his now, so is the Beggar's treasure (as in vallaki/kasimir:ally and :trade).
+if treasure_at:vallaki_vistani_camp:camp_edge
+Kasimir: And you will want this. I was keeping it for whoever would take me into the mountains. It seems that is you.
+tarokka give vallaki_vistani_camp:camp_edge
+endif
+join kasimir_velikov
+-> END
+
+# ---------------------------------------------------------------- Laid to rest without him
+
+~ rest_told
+Kasimir: I have waited a very long time to hear her name spoken by someone who has seen her.
+Kasimir [sad]: Tell me what she said to you, if she could speak at all.
+* She asked us to tell you she is done waiting. -> rest_waiting
+* Not yet. We cannot speak of it like this. -> rest_later
+
+~ rest_later
+Kasimir [sad]: I have waited three hundred years for that word, so I can wait a little longer. Come to my fire when you are ready.
+-> vallaki/kasimir:menu
+
+~ rest_waiting
+Kasimir [sad]: Three hundred years in the cold, and I kept her there with my own cowardice.
+Kasimir: It is like her to lose patience with me at the end. Was there more?
+* She said the stones hurt less than the quiet afterward. -> rest_quiet
+* That is all she said to us. -> rest_close
+
+~ rest_quiet
+Kasimir [sad]: I stood in the back and made no sound while the stones fell. Afterward, none of us spoke her name.
+Kasimir [weary]: We thought silence was survival, when it was only another grave. Did she say anything else?
+* She said you were always very good at quiet. -> rest_good
+* That is all she said to us. -> rest_close
+
+~ rest_good
+Kasimir [smile]: Even as a spirit in the ice, she keeps her edge.
+Kasimir [sad]: Yes, I was very good at quiet. I think I am finished practicing it now.
+-> rest_close
+
+~ rest_close
+set kasimir_heard_rest
+Narrator: He lets the net slide from his lap to the ground, and his hands, for once, do not go after it. The lake wind stirs his coat, smelling of cold water and wet ash.
+Kasimir: Thank you for climbing where I was too afraid to go, and for bringing her words down the mountain.
+Kasimir [weary]: I will sit here a little longer and listen to the water, with nothing in my hands.
+-> END
+
+# ---------------------------------------------------------------- Destroyed
+
+~ destroyed_told
+Kasimir [sad]: You need not tell me how it ended, or whose hand struck the blow.
+Kasimir [sad]: Tell me only one thing, if you will: was she afraid?
+* No. She was angry, and she was herself. -> destroyed_no
+* Yes. She was afraid at the end. -> destroyed_yes
+* We cannot say. We are very sorry. -> destroyed_unknown
+
+~ destroyed_no
+Kasimir [sad]: Proud to the last, then, as she was when she walked up to the castle.
+Kasimir [weary]: It is a small mercy, though it is more than I gave her.
+-> destroyed_close
+
+~ destroyed_yes
+Kasimir [sad]: She was never afraid when she was alive, not even of the stones.
+Kasimir [weary]: It took three centuries alone to teach her fear, and I left her to learn it.
+-> destroyed_close
+
+~ destroyed_unknown
+Kasimir [sad]: That is an honest answer, and I will not ask you for a kinder one.
+Kasimir [weary]: The dead keep their own counsel at the end.
+-> destroyed_close
+
+~ destroyed_close
+set kasimir_heard_destroyed
+set kasimir_cold
+Narrator: Something shutters behind his eyes, quiet and final as the wagon door at his back. He reaches down, takes up the bone needle and the cord, and begins to knot the net again.
+Kasimir: Thank you for bringing me the truth of it.
+Kasimir: The wind off the lake is rising, and I have work to finish before dark. Good evening to you.
+-> END
+
+# ---------------------------------------------------------------- Home, or stay
+
+~ homeward
+Kasimir [weary]: My sister always preferred to give the orders, and I find myself inclined, for once, to obey her.
+Kasimir [smile]: She told me to go home and be brave where she could not see me.
+Kasimir: I would return to the camp by the lake, unless you still have some use for a slow companion.
+* Go home, Kasimir, with our thanks. -> homeward_go
+* Stay with us a while longer. -> homeward_stay
+* We will decide later. Walk with us for now. -> homeward_later
+
+~ homeward_go
+set kasimir_homeward_asked
+Narrator: He bows with an old-fashioned grace that belongs to a century no one living remembers, then turns toward the road home. He looks lighter than the man who sat mending a net.
+Kasimir: Thank you for walking me to the door I could not open alone.
+Kasimir [smile]: Walk in the light while it lasts, my friends. If you pass the lake, I will be at the fire, and I will not be mending.
+leave kasimir_velikov
+-> END
+
+~ homeward_stay
+set kasimir_homeward_asked
+Kasimir [smile]: She did say to be brave somewhere she could not see me. A road will do.
+Kasimir: Very well. I will walk with you a while longer, if only to prove an old elf can learn a new habit.
+-> hub_menu
+
+~ homeward_later
+Kasimir [weary]: Very well, we will leave the question for another mile. Lead on, and I will keep pace.
+-> END
+
+# ---------------------------------------------------------------- The hub
+
+# Opens from the camp's menu and from a click while he walks with the party. When he is travelling after Patrina was
+# laid to rest without his asking, the question of going home comes first.
+~ talk
+if guest:kasimir_velikov and flag.patrina_fate == rest and not flag.kasimir_homeward_asked and not tarokka.ally.npc == kasimir_velikov
+-> homeward
+endif
+if flag.kasimir_cold
+-> hub_cold
+elif guest:kasimir_velikov and flag.kasimir_bargain == made
+-> hub_counting
+elif guest:kasimir_velikov
+-> hub_road
+endif
+-> hub_camp
+
+~ hub_camp
+Kasimir [smile]: The fire is warm, and the Vistani have been talking. Tell me what you wish to know.
+-> hub_menu
+
+~ hub_road
+Kasimir: We have a moment before the road takes us again. What is on your mind?
+-> hub_menu
+
+~ hub_cold
+Kasimir: You have a question for me. Ask it, and let us keep moving.
+-> hub_menu
+
+~ hub_counting
+Kasimir [weary]: The light is thin today, and my count is smaller. Speak, while we are both here.
+-> hub_menu
+
+# The menu shows the three newest topics the party hasn't heard (newest first: a dark gift taken, Vosk, Tarakamedes, the
+# Tome, Bluto, the festival, Arabelle), so a visit after a long absence isn't a wall of choices. Each topic is shown
+# while it is available and unheard; hearing one makes room for the next. The `kasimir_show_*` flags and
+# `kasimir_slots` are only this menu's scratch.
+~ hub_menu
+set kasimir_slots = 0
+set kasimir_show_gift = false
+set kasimir_show_broker = false
+set kasimir_show_dragon = false
+set kasimir_show_tome = false
+set kasimir_show_bluto = false
+set kasimir_show_festival = false
+set kasimir_show_arabelle = false
+if flag.kasimir_slots < 3 and flag.dark_gifts_taken >= 1 and not flag.kasimir_heard_gift
+set kasimir_show_gift
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and flag.kasimir_sister_told and (level >= 8 or visited:tsolenka_pass or guest:kasimir_velikov) and not flag.kasimir_heard_broker
+set kasimir_show_broker
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and flag.kasimir_sister_told and (level >= 8 or visited:tsolenka_pass or guest:kasimir_velikov) and not flag.kasimir_bargain == made and not flag.kasimir_heard_dragon
+set kasimir_show_dragon
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and item:tome_of_strahd and not flag.kasimir_heard_tome
+set kasimir_show_tome
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and flag.bluto_fate and not guest:kasimir_velikov and not flag.kasimir_heard_bluto
+set kasimir_show_bluto
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and flag.vallaki_backed and not guest:kasimir_velikov and not flag.kasimir_heard_festival
+set kasimir_show_festival
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots < 3 and (flag.arabelle_rescued or flag.arabelle_lost) and not guest:kasimir_velikov and not flag.kasimir_heard_arabelle
+set kasimir_show_arabelle
+set kasimir_slots += 1
+endif
+if flag.kasimir_slots == 0
+Kasimir [weary]: I have no new words for you today. Walk a little further, and perhaps the valley will give us some.
+endif
+* [if flag.kasimir_show_gift] Tell us what a dark gift costs. -> t_gift
+* [if flag.kasimir_show_broker] Tell us about the scholar in the temple. -> t_broker
+* [if flag.kasimir_show_dragon] Tell us about the dragon in the red amber. -> t_dragon
+* [if flag.kasimir_show_tome] Read the dusk elves' pages in the Tome for us. -> t_tome
+* [if flag.kasimir_show_bluto] Tell us what became of Bluto. -> t_bluto
+* [if flag.kasimir_show_festival] What is the camp saying about the festival? -> t_festival
+* [if flag.kasimir_show_arabelle] Have we heard any word of Arabelle? -> t_arabelle
+* [if guest:kasimir_velikov] That is all we need for now. -> END
+* [if not guest:kasimir_velikov] Let us talk of something else. -> vallaki/kasimir:menu
+
+# ---------------------------------------------------------------- Topics
+
+~ t_festival
+set kasimir_heard_festival
+if flag.vallaki_backed == baron
+-> t_festival_baron
+elif flag.vallaki_backed == wachter
+-> t_festival_wachter
+endif
+-> t_festival_neither
+
+~ t_festival_baron
+Kasimir: The Vistani say Baron Vargas still sits in his chair in Vallaki. Another festival, and nothing changed.
+Kasimir [weary]: A man who orders his people to smile has never understood how long a winter lasts.
+-> hub_menu
+
+~ t_festival_wachter
+Kasimir: Word from the wagons is that Lady Fiona rules Vallaki now. She has always kept the count's portrait polished.
+Kasimir [sad]: The town traded a loud jailer for a quiet clerk of the castle. The doors will lock the same way.
+-> hub_menu
+
+~ t_festival_neither
+Kasimir: The traders say a council sits in Vallaki now, and the Baron's chair is empty. That is a rare thing here.
+Kasimir [weary]: Committees move slowly, which is usually a fault. In this valley, slowness is sometimes a mercy.
+-> hub_menu
+
+~ t_arabelle
+set kasimir_heard_arabelle
+if flag.arabelle_rescued
+-> t_arabelle_rescued
+endif
+-> t_arabelle_lost
+
+~ t_arabelle_rescued
+Kasimir [smile]: You brought Luvash his daughter back from the water. Listen to the wagons tonight - the camp has not sung like that in years.
+Kasimir: The Vistani remember every hand that pulls a child of theirs from the cold.
+-> hub_menu
+
+~ t_arabelle_lost
+Kasimir [sad]: The lake kept Luvash's small girl. The fires are low tonight, and her father has not spoken a word since noon.
+Kasimir [weary]: I know the sound of a camp when a child does not come home. It takes a long time to fade.
+-> hub_menu
+
+~ t_bluto
+set kasimir_heard_bluto
+if flag.bluto_fate == vistani
+-> t_bluto_vistani
+elif flag.bluto_fate == killed or flag.bluto_fate == drowned
+-> t_bluto_dead
+endif
+-> t_bluto_lives
+
+~ t_bluto_vistani
+Kasimir: You brought the fisherman Bluto to Luvash's people for judgment. I walked down to the water before the camp decided.
+Kasimir [weary]: I have seen enough justice in my life. I had no need to watch another man's.
+-> hub_menu
+
+~ t_bluto_dead
+Kasimir: They say the fisherman Bluto is dead by Lake Zarovich. A sack, a boat, and a short end to a small madness.
+Kasimir [sad]: It does not dry the water, of course. It only leaves one fewer fisherman on the shore.
+-> hub_menu
+
+~ t_bluto_lives
+Kasimir: I heard that Bluto still breathes after what he did at the lake. You left him his life.
+Kasimir [weary]: Living with one's own hands is a long punishment. Believe me, I know the measure of it.
+-> hub_menu
+
+~ t_tome
+set kasimir_heard_tome
+Narrator: He lifts the leather cover with slow, steady fingers, as though one rough breath might turn the old paper to ash.
+Kasimir [weary]: So this is Strahd's own hand. A conqueror bored by peace, a brother named Sergei, and a girl named Tatyana who chose the fall.
+Kasimir: Look here - one dry page for the dusk elves, written the way a landlord notes his tenants. Not a word more.
+Kasimir [sad]: One of ours stayed in that house to serve him, yet even we are only a footnote in the ledger.
+Kasimir [sad]: I looked for Patrina's name in the margins. He did not even write her down.
+-> hub_menu
+
+~ t_gift
+set kasimir_heard_gift
+Narrator: His dark eyes rest on your hands for a heartbeat too long, reading the new stillness under your skin.
+Kasimir [sad]: You took a gift from the amber. I can see it in the way your breath catches, and how you do not flinch.
+Kasimir: The wardens carved their warnings plainly, because the vestiges always keep their word. A permanent grace, for a permanent debt.
+Kasimir [weary]: I will not judge you for buying what you needed. Only remember that the bill is collected at the end.
+-> hub_menu
+
+~ t_dragon
+set kasimir_heard_dragon
+if flag.vestige_tarakamedes_heard
+if flag.kasimir_bargain == refused
+-> t_dragon_refused
+endif
+-> t_dragon_after
+endif
+-> t_dragon_before
+
+~ t_dragon_before
+Kasimir: In the red amber lies Tarakamedes, the dragon in the grave. The old books say it deals in the dead.
+Kasimir [weary]: I have read the name for three hundred years, though never the price it asks.
+Kasimir [sad]: Do not trust me when we stand before that stone. If I speak to it, do not take my word on the day.
+-> hub_menu
+
+~ t_dragon_after
+Kasimir [weary]: So Tarakamedes has spoken to you out of the red amber. Do not tell me what it said.
+Kasimir [sad]: I am glad you were the ones to hear that voice, and that I did not stand before it alone.
+-> hub_menu
+
+~ t_dragon_refused
+Kasimir [sad]: My hand was on the red amber, and you pulled me back from my own word.
+Kasimir [weary]: Thank you for the mercy, though it sits like a stone in my chest.
+-> hub_menu
+
+~ t_broker
+set kasimir_heard_broker
+if flag.vosk_met
+-> t_broker_after
+endif
+-> t_broker_before
+
+~ t_broker_before
+Kasimir: Rumour speaks of a Master Vosk in the halls - a scholar of the temple who keeps its accounts.
+Kasimir: They say he is courteous, glad of visitors, and very helpful to those who lose their way in the cold.
+Kasimir [weary]: Read old books long enough and you learn one rule. In a market like that, the politest voice is the one with a price list.
+-> hub_menu
+
+~ t_broker_after
+Kasimir [weary]: You have met Master Vosk, then, and heard a clerk's courtesy in the ice.
+Kasimir: Men who keep neat ledgers in ruins never lack for ink.
+-> hub_menu

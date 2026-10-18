@@ -1,0 +1,88 @@
+~ hub_camp
+Kasimir [smile]: The fire is warm, and the Vistani have been talking. Tell me what you wish to know.
+
+~ hub_road
+Kasimir: We have a moment before the road takes us again. What is on your mind?
+
+~ hub_cold
+Kasimir: You have a question for me. Ask it, and let us keep moving.
+
+~ hub_counting
+Kasimir [weary]: The light is thin today, and my count is smaller. Speak, while we are both here.
+
+~ hub_empty
+Kasimir [weary]: I have no new words for you today. Walk a little further, and perhaps the valley will give us some.
+
+~ t_festival_baron
+Kasimir: The Vistani say Baron Vargas still sits in his chair in Vallaki. Another soaked festival, and nothing changed.
+Kasimir [weary]: A man who orders his people to smile has never understood how long a winter lasts.
+
+~ t_festival_wachter
+Kasimir: Word from the wagons is that Lady Fiona rules Vallaki now. She has always kept the count's portrait polished.
+Kasimir [sad]: The town traded a loud jailer for a quiet clerk of the castle. The doors will lock the same way.
+
+~ t_festival_neither
+Kasimir: The traders say a council sits in Vallaki now, and the Baron's chair is empty. That is a rare thing here.
+Kasimir [weary]: Committees move slowly, which is usually a fault. In this valley, slowness is sometimes a mercy.
+
+~ t_arabelle_rescued
+Kasimir [smile]: You brought Luvash his daughter back from the water. Listen to the wagons tonight - the camp has not sung like that in years.
+Kasimir: The Vistani remember every hand that pulls a child of theirs from the cold.
+
+~ t_arabelle_lost
+Kasimir [sad]: The lake kept Luvash's small girl. The fires are low tonight, and her father has not spoken a word since noon.
+Kasimir [weary]: I know the sound of a camp when a child does not come home. It takes centuries to fade.
+
+~ t_bluto_vistani
+Kasimir: You brought the fisherman Bluto to Luvash's people for judgment. I walked up the hill before the camp decided.
+Kasimir [weary]: I have seen enough justice in my life. I had no need to watch another man's.
+
+~ t_bluto_dead
+Kasimir: They say the fisherman Bluto is dead by Lake Zarovich. A sack, a boat, and a short end to a small madness.
+Kasimir [sad]: It does not dry the water, of course. It only leaves one less fool on the shore.
+
+~ t_bluto_lives
+Kasimir: I heard that Bluto still breathes after what he did at the lake. You left him his life.
+Kasimir [weary]: Living with one's own hands is a long punishment. Believe me, I know the measure of it.
+
+~ t_tome
+Narrator: He lifts the leather cover with slow, steady fingers, as though one rough breath might turn the old paper to ash.
+Kasimir [weary]: So this is Strahd's own hand. A conqueror bored by peace, a brother named Sergei, and a girl named Tatyana who chose the stones below.
+Kasimir: Look here - one dry page for the dusk elves, written the way a landlord notes his tenants. Not a word more.
+Kasimir [sad]: One of ours stayed in that house to serve him, yet even we are only a footnote in the ledger.
+Kasimir [sad]: I looked for Patrina's name in the margins. He did not even write her down.
+
+~ t_gift
+Narrator: His dark eyes rest on your hands for a heartbeat too long, reading the new stillness under your skin.
+Kasimir [sad]: You took a gift from the amber. I can see it in the way your breath catches, and how you do not flinch.
+Kasimir: The wardens carved their warnings plainly, because the vestiges always keep their word. A permanent grace, for a permanent debt.
+Kasimir [weary]: I will not judge you for buying what you needed. Only remember that the bill is collected at the end.
+
+~ t_dragon_before
+Kasimir: In the red amber lies Tarakamedes, the dragon in the grave. The old books say it deals in the dead.
+Kasimir [weary]: I have read the name for three hundred years, though never the price it asks.
+Kasimir [sad]: Do not trust me when we stand before that stone. If I speak to it, do not take my word on the day.
+
+~ t_dragon_after
+Kasimir [weary]: Those cracked bones in the red amber were smaller than I dreamed, and colder.
+Kasimir [sad]: I heard what the grave-dragon offers, and I have nothing more to ask of it.
+
+~ t_broker_before
+Kasimir: Rumour speaks of a Master Vosk in the halls - a scholar of the temple who keeps its accounts.
+Kasimir: They say he is courteous, glad of visitors, and very helpful to those who lose their way in the cold.
+Kasimir [weary]: Read old books long enough and you learn one rule. In a market like that, the politest voice is the one with a price list.
+
+~ t_broker_after
+Kasimir [weary]: You have met Master Vosk, then, and heard a clerk's courtesy in the ice.
+Kasimir: Men who keep neat ledgers in ruins never lack for ink.
+
+~ hub_menu
+* What is the camp saying about the festival?
+* Have we heard any word of Arabelle?
+* Tell us what became of Bluto.
+* Read the dusk elves' pages in the Tome for us.
+* Tell us what a dark gift costs.
+* Tell us about the dragon in the red amber.
+* Tell us about the scholar in the temple.
+* That is all we need for now.
+* Let us talk of something else.

@@ -1,0 +1,14 @@
+Thank you. A last, tiny batch for the same character: two notices the game shows in a small pop-up when the player tries to use the Party screen's "Send home" button on Kasimir while he is walking with the party and he will not go. They are written in the third person, in the game's plain voice, 1-2 short sentences, no mood and no speaker. Examples from other companions (match this register; do not copy):
+- "Pidlwick II is on his way to meet the toymaker. He's frightened, and if he turns back now he won't start again."
+- "Ireena goes where you go now. There's nothing back there to send her home to."
+- "Ismark won't leave his sister."
+
+why_mountain: Kasimir is on the mountain road toward the temple where his sister's ghost is. He has not yet reached her or had his say. He will not be sent back down at the door.
+why_year: Kasimir traded every year he had left but one so that his sister could live. He does not mean to spend the last of them at a Vistani fire; he will stay with the party.
+
+Reply with plain text only, exactly in this shape and nothing else:
+~ why_mountain
+Text.
+~ why_year
+Text.
+Plain ASCII punctuation, no em dashes, no placeholders. Finish without sending messages to anyone else.

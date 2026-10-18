@@ -1,0 +1,78 @@
+You are drafting dialogue for "Curse of Strahd", a single-player D&D 5e (2024 rules) computer game set in Barovia. This is a second batch for the same character as the first message of this conversation (Kasimir Velikov, the dusk elf at the Vistani camp outside Vallaki). I need about 40 lines. Reply with plain text only: the lines under the node names given below, nothing else. Finish without sending messages to anyone else.
+
+## What this batch is
+
+Kasimir has a short "what's on your mind" conversation the party can open at any time: either at the Vistani camp, where he hears the news at the Vistani fire, or when he is walking with the party as a companion (the party clicks him). It is a menu of topics. Each topic is a small standalone scene of 2-5 lines that plays once and ends by returning to the menu, so every topic must read right whether Kasimir witnessed the event or only heard of it. The menu shows at most three topics at a time. Topics are about the things the party has done since they last spoke, seen through Kasimir: a scholar's eye, a mourner's dryness.
+
+Facts for the news topics (use only these; at the camp, Kasimir hears them from the Vistani, who trade in Vallaki):
+
+- The Festival of the Blazing Sun in Vallaki has ended. Three outcomes, one per node: the Baron (Vargas Vallakovich) kept his chair; Lady Fiona Wachter, who is secretly loyal to the vampire lord in the castle, now rules the town; or a council now runs the town and nobody sits in the Baron's chair. Kasimir has no stake in the town, but the Vistani do business there and talk about it.
+- Arabelle is Luvash's small daughter (Luvash is the grieving headman of the Vistani camp). A fisherman named Bluto took her to Lake Zarovich in a sack and threw her in. Either the party pulled her out alive and she is home (the camp is lit up about it), or the lake kept her (the camp is silent and Luvash has stopped speaking).
+- What happened to Bluto afterwards: (a) the party brought him to the Vistani camp to be judged by Luvash's people; Kasimir did not stay to see what the camp decided, and says so; (b) Bluto is dead (the party killed him or let the lake take him); (c) Bluto lives (the party talked him off the jetty, or left him to live with what he did).
+
+Facts for the scholarship topics:
+
+- The Tome of Strahd is the vampire lord's own account of himself, in his own hand. What it holds: a conqueror who took the valley by the sword and found peace bored him; a younger brother, Sergei, who had everything he lacked; a girl, Tatyana, who loved the brother; a pact for youth paid for with his brother's blood on the wedding day; Tatyana fell from the castle walls rather than be his; the guards shot him and he did not die. Kasimir's people, the dusk elves, came to the valley as the lord's guests and stayed as his tenants; now only a handful remain, none young, and there will never be another (he blames the lord, "and a little of ours"). The Tome gives his people one dry page, the way a landlord writes of tenants. The Tome never names Patrina; do not give her a line in it. Kasimir looks for her name and does not find it, which is its own sentence. (Strahd's chamberlain Rahadin is also a dusk elf, in the lord's service since before the valley had his name; Kasimir may allude to "one of ours who stayed in that house" without ever saying his name.)
+- The Amber Temple: an order of wizards, the wardens, once gathered the vestiges (the last embers of dead gods and worse), and sealed each one in a sarcophagus of amber, the only thing that holds them. The vestiges talk, and the temple became a market. Anyone who accepts a vestige's "dark gift" gets a permanent benefit with a permanent cost; the cost is always named if asked, and the wardens' inscriptions warn plainly. Kasimir has read of it and dreamed of it for three hundred years.
+- Tarakamedes is the "dragon in the grave": a vestige in red amber, the skull and spine of a dragon packed so tight the bones have cracked. It is said to deal in the dead. Kasimir has read that, not what it asks. He privately fears he will want to bargain with it for his sister, and will not say so flatly at the camp; he can warn the party that he does not trust himself near it, and that they should not take his word on the day. Before the party has heard it, he warns. After they have heard it (a different node), he is quieter and asks nothing.
+- Master Vosk is "a scholar of the temple", a courteous keeper of the temple's accounts. Kasimir knows him only by rumour: that he is helpful, that he is always glad of visitors, that he keeps terms. Kasimir does not know what Vosk is or his true name; do not reveal either. Before the party has met him he warns, as a reader of old books would, that in that place the politest voice is the one with a price list. After they have met him (a different node), a short dry word on it.
+- A dark gift taken by one of the party: Kasimir can see it. He tells them plainly what such a gift costs (a cost that is paid at the end, a stillness, a debt) and how it looks on the person (something a little off in the breath, in the way they flinch or don't). He is not cruel about it and not forgiving either. Do not name a specific vestige's gift; speak of gifts in general.
+
+## The nodes I need (line counts are targets; one line = 1-2 short sentences)
+
+hub_camp: Kasimir x1 (the opening when the party sits down at the camp and asks what he has heard; neutral, a little warm)
+hub_road: Kasimir x1 (the opening when the party stops to talk with him on the road; he is walking with them)
+hub_cold: Kasimir x1 (the opening when the party destroyed his sister: courteous, curt)
+hub_counting: Kasimir x1 (the opening when he has paid every year he had left but one for his sister's life and is counting the days; very quiet; never self-pitying)
+hub_empty: Kasimir x1 (nothing new to tell them; come back when they have seen more)
+t_festival_baron: Kasimir x2
+t_festival_wachter: Kasimir x2
+t_festival_neither: Kasimir x2
+t_arabelle_rescued: Kasimir x2
+t_arabelle_lost: Kasimir x2
+t_bluto_vistani: Kasimir x2
+t_bluto_dead: Kasimir x2
+t_bluto_lives: Kasimir x2
+t_tome: Narrator x1, Kasimir x4 (the party shows him the Tome; the Narrator has him turn its pages with the care of a man who mends things; he reads the dusk elves' page aloud or in part; he looks for Patrina's name; he does not find it)
+t_gift: Narrator x1, Kasimir x3
+t_dragon_before: Kasimir x3
+t_dragon_after: Kasimir x2
+t_broker_before: Kasimir x3
+t_broker_after: Kasimir x2
+
+## Option texts
+
+Under the node `hub_menu`, write what the party (not Kasimir) says to open each topic, as `* text` lines, in the order listed, each under 12 words, in the party's voice ("we"), nothing but the intent given:
+`*` what is the camp saying about the festival  /  `*` any word of Arabelle  /  `*` what became of Bluto  /  `*` read the dusk elves' pages in the Tome  /  `*` tell us what a dark gift costs  /  `*` tell us about the dragon in the red amber  /  `*` tell us about the scholar in the temple  /  `*` that is all for now  /  `*` let us talk of something else
+
+## Kasimir Velikov - voice bible
+
+Soft, grave, formal; long patience; self-mockery so dry it reads as sorrow. Never hurries. Wants: Patrina back; to stop being a coward. Fears: that the temple will say yes. Secret: he is not sure he wants her back for her sake or for his. Speaker name in the lines: `Kasimir`.
+
+Existing Kasimir lines (match this register; do not repeat them):
+- "The strangers. The camp talks of nothing else. Sit, if you like. I am poor company. I have been poor company for a very long time."
+- "Long ago a Vistana I had never met fell sick with a fever on the road, and I sat with her three nights until it broke. Her grandchildren still bring me soup. The Vistani forget nothing: not a kindness, not an insult."
+- "My people came to this valley long ago, the elves of the dusk, as guests of its lord. We stayed as his tenants. Now there are only a handful of us, none of us young, and there will never be another. That was his doing. And, I am afraid, a little of ours."
+- "The songs were written before the ending. They usually are."
+- "I write them out at night, when I can't sleep, which is every night. Lesser spells; the ones that matter I keep."
+- "Beyond the pass to the north, in the ice. I have read of it, and dreamed of it, and been too much of a coward to climb to it."
+- "My people came over this pass as the count's guests. They are still his guests. It is the longest visit in the history of the world."
+- "The temple whispers in a voice I knew as a boy. I told myself I would not listen. I am listening."
+- "You all walk so quickly. I used to think it was impatience. Now I think it is arithmetic."
+- "Every morning I wake and count. The number is smaller. I would not take the bargain back. I would like to stop counting."
+
+## The Narrator
+
+An old gothic storyteller, fond of the party the way a gravedigger is fond of the weather. Second person, present tense. One or two sentences; the second is usually the turn (irony, dread, dry joke). Ominous, dryly funny, never cruel. Concrete senses over adjectives (a smell, a sound, a temperature). No game terms: never "roll", "check", "DC", "HP", "level", "skill". No winks at the player.
+Samples:
+- "The skull and coiled spine of a dragon fill the amber, packed so tight the bones have cracked. The amber is the dark red of old blood, and it is cold even to look at."
+- "He turns the pages with the care of a man who mends things." (the style, not a line to reuse)
+- "Grief, yes, but older and sharper than grief: the kind of guilt that has had centuries to settle into the bones."
+
+## Canon limits
+
+Do not invent names, places or history beyond what is given: no new characters, no named relatives besides Patrina, no new places, no new monsters, no invented quotations from the Tome beyond the facts above. The party members are never named (say "you", "the party"). Kasimir never offers or arranges a bargain at any point in these topics, and never says Vosk is a fiend or gives his true name. Do not name Strahd more than twice in the whole reply ("the lord of the castle", "the count", "his house", "the castle" are fine). Moods: Kasimir may use [sad], [smile], [weary] or no mood; Narrator never has a mood. No "{name}" or other placeholders. Keep it short: Kasimir is a man of few words who says each thing once.
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Narrator or Kasimir. Each line is 1-2 sentences, ideally under 22 words in total, written to be spoken aloud by an actor: so NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. Use plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each on its own line as `~ node_name`, in the order given, and put the `hub_menu` option rows under a final `~ hub_menu` header. Do not add nodes, code or commentary.

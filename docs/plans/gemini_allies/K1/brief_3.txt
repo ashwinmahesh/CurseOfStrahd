@@ -1,0 +1,24 @@
+Thank you. A third, short batch for the same character and conversation: two redrafts of topics from the second batch, a few small nodes that were missing, and the options the party uses to open these scenes at the camp. About 14 lines. Same rules as before: plain text only, the lines under the node names, nothing else. Finish without sending messages to anyone else.
+
+## Redrafts
+
+t_dragon_after: Kasimir x2. This topic plays once the party has heard the dragon in the red amber (Tarakamedes) speak, and it must read right whether Kasimir was standing beside them at the time or only hears of it from them. He is quiet, not curious; he does not ask what it offered; he is glad it was not him alone. (Your last draft had him describe the bones as "smaller than I dreamed", which only works if he was there; and "I heard what the grave-dragon offers" which only works if he was told.) Do not mention any bargain or price.
+
+t_dragon_refused: Kasimir x2. A separate node that plays instead, when Kasimir was beside them at the red amber and wanted to bargain for his sister's life with the dragon, and the party talked him out of it. He is grateful in a way that hurts: "It is a terrible thing to be talked out of the only brave thing I nearly did." (that sentence is already in the game; do not reuse it) He does not thank them lightly.
+
+## Small missing nodes
+
+homeward_later: Kasimir x1 (the party answered "we will decide later; walk with us for now"; he accepts; dry)
+rest_later: Kasimir x1 (the party said they have news of Patrina but not yet, not like this; he lets them go; he has waited this long; the door is open whenever they can)
+
+## Option texts
+
+The party's own words at the camp, as `* text` rows under the node named for them, in the order listed, each under 12 words, in the party's voice ("we"):
+camp_menu_come: `*` come with us to the temple  (the party asks him to travel with them)
+camp_menu_news_rest: `*` Kasimir. We have been to the temple. About Patrina.  (the party knows she is at rest and wants to tell him)
+camp_menu_news_destroyed: `*` Kasimir. We have been to the temple. About Patrina.  (a different wording, because here the party destroyed her and is dreading saying it; make the two read differently)
+camp_menu_talk: `*` what have you heard here at the fire  (opens the topics conversation)
+
+## Format
+
+One line per row, exactly: `Speaker [mood]: Text` where Speaker is Narrator or Kasimir. Each line is 1-2 sentences, ideally under 22 words in total, written to be spoken aloud by an actor: so NO stage directions in brackets or asterisks, NO "{name}" or other placeholders, no emoji, no markdown. Use plain ASCII punctuation (straight quotes, hyphens, no em dashes). Group the lines under the node names above, each on its own line as `~ node_name`, in the order given. Do not add nodes, code or commentary.

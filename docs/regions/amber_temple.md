@@ -145,7 +145,8 @@ Doru's cure (`doru_cure_promised`) and Kasimir's sister at Tarakamedes; Hedda's 
 - **Without Kasimir**: tell her he grieves and Persuasion 15 ("he's been too afraid; that's the only thing he's ever
   been") → at rest; Religion 16 (the old words for the dead) → at rest; failing Persuasion, she starts to wail (back
   away or fight). `patrina_fate = "rest"`.
-- **With Kasimir** (`guest:kasimir_velikov`, the Seer's ally): he faces her. Persuasion 13 helps him find the words, or
+- **With Kasimir** (`guest:kasimir_velikov`: the Seer's ally, or taken along by the party from the Vistani camp, package K1,
+  docs/regions/vallaki.md): he faces her. Persuasion 13 helps him find the words, or
   he finds his own: "I let them, Patrina. Because I was afraid of being you." She lets go (`kasimir_at_peace`, rest).
 - **Kasimir's bargain**: at Tarakamedes, before she is at rest, he can trade every year he has left but one for her
   life. Let him choose → `kasimir_bargain = "made"`, `patrina_fate = "restored"`: his hair goes grey, the wailing

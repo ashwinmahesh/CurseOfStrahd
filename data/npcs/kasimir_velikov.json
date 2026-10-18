@@ -2,16 +2,27 @@
   "id": "kasimir_velikov",
   "name": "Kasimir Velikov",
   "title": "Dusk Elf of the Lakeside Camp",
-  "summary": "A grave, soft-spoken dusk elf who lodges with the Vistani outside Vallaki, mourning a sister he means to bring back from the dead. The Tarokka can name him as the party's ally.",
+  "summary": "A grave, soft-spoken dusk elf who lodges with the Vistani outside Vallaki, mourning a sister he means to bring back from the dead. The Tarokka can name him as the party's ally, and once he has told of her the party can ask him along to the Amber Temple themselves.",
   "portrait": "kasimir_velikov",
   "sprite": "kasimir_velikov",
   "attitude": "indifferent",
   "monster": "kasimir_velikov",
   "guest": true,
+  "guest_talk": "allies/kasimir:talk",
   "guest_build": {
     "monster": "kasimir_velikov",
-    "note": "His own stat block (a dusk elf wizard); joins only if the Tarokka names him."
+    "note": "His own stat block (a dusk elf wizard). Joins if the Tarokka names him, or when the party asks him to come to the temple once he has told of Patrina (narrative/vallaki/kasimir.dialogue, allies/kasimir:come)."
   },
+  "guest_stays": [
+    {
+      "when": "flag.kasimir_bargain == made",
+      "why": "Kasimir traded every year he had left but one so his sister could live. He won't spend the last of it at a Vistani fire."
+    },
+    {
+      "when": "(region:tsolenka_pass or region:amber_temple) and not flag.patrina_fate and not flag.patrina_destroyed",
+      "why": "Kasimir has waited three hundred years to climb this road and speak to his sister. He won't be sent back down before he reaches the door."
+    }
+  ],
   "tags": [
     "elf",
     "dusk_elf",
@@ -178,6 +189,13 @@
       "scroll"
     ],
     "markup": 1.0,
-    "sell_rate": 0.4
+    "sell_rate": 0.4,
+    "price_flags": [
+      {
+        "if": "flag.kasimir_cold",
+        "buy": 1.25,
+        "min_price": 0
+      }
+    ]
   }
 }
