@@ -26,7 +26,7 @@ House, the mansions) and `timber` (inns, shops, houses, attics). In that style:
   with colonnettes, a blind arch on each face of the upper block, gargoyle heads, iron sconces of candles), a church's
   round column with its base and capital, a dungeon's stacked rough blocks, a wooden post braced four ways, the Amber
   Temple's black octagonal shafts veined with amber light. They stand about 2.3 high, taller than the cut-away walls,
-  and fade when they hide the party, as the trees do.
+  and stand solid when they hide the party, opening round it as the walls do (below, "Walls in the party's way").
 - **Wall faces.** Every open face of a cut-away wall gets the style's coping along its cut top (a moulded stone band,
   a dark wood rail, an oak plate, rough capstones), and where no panelling covers it the style's face: the castle's
   blind arcade on colonnettes over a plinth course, a church's plinth and string course (`ModelPiece.dress_wall`).
@@ -40,9 +40,10 @@ every wall square of an interior or dungeon to `BuildingKit.interior_wall`, whic
 
 - **A pillar**, as before (a lone wall square).
 - **A room wall** (a wall square with a room beside it): one node on its square holding a full storey (the wall, its
-  dark cap, the style's coping and faces, panelling at full height, a wainscot texture mapped over the taller wall)
-  and its cut-away version, hidden.
-- **A block** (the middle of a thick wall): the cut-away height, capped dark.
+  dark cap, the style's coping and faces, panelling at full height, a wainscot texture mapped over the taller wall);
+  with `interiors.cut_away` on, its cut-away version too, hidden.
+- **A block** (the middle of a thick wall): the walls' full height, capped dark (the cut-away height with
+  `interiors.cut_away` on).
 - **Outside** (wall reached from the map's edge through solid wall): the ground the building stands on, one slab
   reaching 10 squares past the map, in the style's `ground` or the place's own (the Death House's floors stand over
   the village cobbles, a storey lower per floor: `below`); the outer walls of an upper floor run down to it. A
@@ -53,18 +54,48 @@ every wall square of an interior or dungeon to `BuildingKit.interior_wall`, whic
   plinth blocks; the castle's dressed jambs with colonnettes; a church's two recessed orders; a dungeon's rough
   blocks; the Amber Temple's black jambs veined with amber), and `kit_<style>_doorway_head` over them (a pegged oak
   lintel; an architrave head, frieze and cornice; a pointed arch under a hood mould; a lancet of two orders; a cracked
-  lintel slab; a black lintel lit along its length). The jambs stay as the walls cut away; the head goes with the wall
-  over the doorway, which stands set back behind it. A door hung there has no plain frame (`InteriorWalls.frames`), and
+  lintel slab; a black lintel lit along its length). The head is part of the wall over the doorway, which stands set
+  back behind it (with `interiors.cut_away` on, the jambs stay as the walls cut away and the head goes with that wall). A door hung there has no plain frame (`InteriorWalls.frames`), and
   a secret door nobody has found shows no doorway until it's found (`InteriorWalls.show_frame`). Not framed: a side
   that runs on between walls the same way (a corridor under the wall over it), and a gap between free-standing walls
   (the Amber Temple's book stacks) unless a door hangs in it.
 
-Each frame the board's cut-away (`TownBuilder.cut_away`, through a building entry `{"interior": true}`) asks each
-room wall whether there's floor just past it, looking away from the camera, within 7 squares of the party
-(`InteriorWalls.cut`): those walls squash down to the cut-away height and their cut version takes over; the rest
-stand, so the far walls frame the party's room and rooms further off keep their walls. A header goes down with either
-wall beside it. Turning the camera turns which walls are down. The rules grid, line of sight and the Classic look are
-unchanged.
+Every wall stands its full storey from every heading, and one between the camera and the party opens a window round
+the party (below, "Walls in the party's way"; owner 2026-10-17: "walls collapse down when looking from certain angles
+... I don't like this behavior"). With the catalog's `interiors.cut_away` on, each frame the board's cut-away
+(`TownBuilder.cut_away`, through a building entry `{"interior": true}`) asks each room wall whether there's floor just
+past it, looking away from the camera, within 7 squares of the party (`InteriorWalls.cut`): those walls squash down to
+the cut-away height and their cut version takes over; the rest stand. A header goes down with either wall beside it.
+The rules grid, line of sight and the Classic look are unchanged.
+
+## Walls in the party's way (`world/look/see_through.gd`, `shaders/world/see_through.gdshaderinc`)
+
+Owner, 2026-10-17: walls dropping to a stub as the camera turned (the Tsolenka guard tower, the Amber Temple) and
+Castle Ravenloft's big walls going see-through whole ("they are in opaque view but it looks really weird") are gone.
+Every wall, house, castle piece, town wall, pillar, tower and statue stands whole and solid from every heading, and
+where one stands nearer the camera than the party a window opens in it: an oval round the party on screen (1.9 squares
+wide at the party, a little taller than wide), its rim dithered, the party and the ground round it showing through.
+It moves with the party and turns with the camera; nothing beside or behind the party opens (a piece must stand 0.75
+nearer the camera than the party's middle), and nothing below the party's feet (it hides nothing from above).
+
+- **What opens**: meshes marked with the instance uniform `see_through` (`SeeThrough.mark`): houses and Castle
+  Ravenloft (the board marks every building when it's built, and `TownBuilder._kit_walls` a house's rebuilt walls),
+  an interior's walls, headers, blocks and tent canvas (`InteriorWalls`, `TentWalls`), pillars, a town wall three men
+  high, pieces hung on walls (`ArenaBoard.attach_to_building`), a building-sized piece standing in for a house (the
+  windmill, the bell tower, Van Richten's tower) and catalog pieces with `see_through: true` (the Amber Temple's
+  colossus, the faceless statue, Baba Lysaga's hut, the wicker effigy). Floors, furniture, props and figures never
+  open; trees and rocks still fade whole like foliage (`ArenaBoard.fade_occluders`); a waist-high yard wall hides
+  nobody and stays whole.
+- **Where**: one `SeeThrough` node per view (`LocationView`) puts the window, just before each frame is drawn
+  (`RenderingServer.frame_pre_draw`), on a boss making an entrance (`CameraRig.cutaway_focus`), else on whoever the
+  camera follows (the leader exploring, the one acting in a fight), else where the camera looks; the global uniforms
+  `see_window` (the party's feet and the window's size) and `see_window_eye` (the camera it's for). Only that
+  camera cuts: a lamp's or the moon's shadow pass and any other view draw every wall whole, so walls keep their
+  shadows.
+- **The shaders**: `cel`, `cel_world`, `cel_sprite`, `lit` and `lit_world` include `see_through.gdshaderinc` and
+  discard a marked fragment inside the window (`see_cut`). A new world shader for walls needs the same two lines.
+- `tools/capture/walls_capture.gd` shoots any place with the party on a named square from all four headings
+  (`WALLS_SPOTS`, `WALLS_LOAD` for a bug report's save.json).
 
 ## Castle Ravenloft from outside (W19, `world/look/castle_builder.gd`)
 
@@ -92,7 +123,7 @@ catalog (`building_kit.castle.places`); the maps' squares are unchanged.
   the roofs (`cliffs` false) the void is the drop off the roof, the castle's masonry going on down under every square
   beside it.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on; off since the owner's call on 2026-10-13, so the
-  walls stand, and a piece in the way goes see-through like a house, below): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
+  walls stand, and a piece in the way opens a window round the party, above): the walls come in pieces of 4 x 4 squares, each tower and gate its own; a piece in the way of the
   party, or of the squares beside it or just past it, squashes down to its foot (1.25, coped) and comes back when it's
   clear, so the party and the squares round it are always in view. The walls are buildings to the board, so props on
   them (the keep's windows, its crest) hang on their faces and go with them.
@@ -134,11 +165,9 @@ TownBuilder still finds the houses in the map's `#` squares as before (docs/art/
   costs a few dozen draws, not thousands.
 - **Cut away** (only with the catalog's `building_kit.cut_away` on: the owner turned it off on 2026-10-13, "why do
   buildings shrink down ... when I get near them? Same things with walls. Lets disable this effect", so houses stand,
-  and one in the way fades see-through like the trees instead, to 0.6, solid again once clear: `TownBuilder.
-  _see_through`, his pick the same day; the ground is drawn under houses for it).
+  and one in the way opens a window round the party, above; it went see-through whole until 2026-10-17).
   A house between the camera and the party squashes down and is replaced by its low band: a ring of wall 0.5 high,
-  capped dark like the cut-away interiors, round a floor of boards, with its footing. An interior's full-height walls
-  (above) still open the room the party is in.
+  capped dark like the cut-away interiors, round a floor of boards, with its footing.
 
 **L-shaped buildings** (W7). A block of wall that isn't a rectangle is split into rectangles as before, but they are
 one building: every part takes the main part's height (the biggest), roof and paint and stands on the lowest ground
@@ -152,7 +181,7 @@ Yard walls are the kit's too: a stone arm from each square's middle toward each 
 pier where the wall turns, ends or branches, and a gate pier each side of a gateway (gates there hang between them,
 with no box frame). A town wall (catalog `town_walls`, Krezk's 2.6) is the tall wall with merlons; it rings a walled
 town at the map's edge too, where an open village thins into pines (`TownBuilder.walled`, `ArenaBoard._town_wall`),
-stands on ground of its own, and fades like the trees when it hides the party. Vallaki's palisade is one mesh for the
+stands on ground of its own, and opens round the party when it hides it, as the houses do. Vallaki's palisade is one mesh for the
 whole border (`TownBuilder.palisade`, asked by `ArenaBoard._wall`).
 
 ## Making and changing the modules (`blender/building_kit.py`)
