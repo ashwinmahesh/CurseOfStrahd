@@ -72,15 +72,19 @@ test: import
 ## Lane folders that cost almost no disk (tools/lane.sh): a worktree whose files and import cache are APFS clones of
 ## the main checkout's. make lane NAME=<name> BRANCH=<branch> [BASE=main] · make lane-reclone NAME=<name> (a running
 ## lane's unchanged files become clones again) · make lane-done NAME=<name> (once merged). SSD=1 on any of them: the
-## lane is on the external SSD's disk image (/Volumes/StrahdLanes), cloned from a seed there.
+## lane is on the external SSD's disk image (/Volumes/StrahdLanes), cloned from a seed there. The seed is refreshed only
+## when it has drifted from the lane's base (LANE_SEED_DRIFT files, 1500; LANE_SEED_ART_DRIFT textures, 40); make lane-seed SSD=1 refreshes it on its own,
+## LANE_REFRESH_SEED=1 on make lane forces a refresh first, LANE_NO_IMPORT=1 skips the seed's import.
 LANE = $(if $(SSD),LANE_ROOT=/Volumes/StrahdLanes )tools/lane.sh
-.PHONY: lane lane-reclone lane-done
+.PHONY: lane lane-reclone lane-done lane-seed
 lane:
 	$(LANE) new $(NAME) $(BRANCH) $(or $(BASE),main)
 lane-reclone:
 	$(LANE) reclone $(NAME)
 lane-done:
 	$(LANE) done $(NAME)
+lane-seed:
+	$(LANE) seed
 
 ## Where the disk goes (tools/disk/disk.py report, read-only): free space on each volume with a worktree (the SSD
 ## lanes' image too), each worktree's branch, whether it's merged, and the bytes it holds on its own (what removing
