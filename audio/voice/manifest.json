@@ -17275,6 +17275,188 @@
   "recipe": "ef2f9464fb",
   "text": "When this is done, if we're alive, you're coming to the manor. All of you. There's more sheep than tenants and the roof leaks in the good bedroom, but there's room. There's always been more room than people."
  },
+ "gogu/00fb0871f6e04502": {
+  "chars": 113,
+  "direction": "[horrified, incredulous, trembling]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Carry me? Down the turret stair, in the open air, with nothing between my heels and the flagstones but your arms?"
+ },
+ "gogu/055cf4db8896514e": {
+  "chars": 124,
+  "direction": "[prim, indignant, accusing]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "If a roof-slate came down near your head in the court, you must take that up with the ravens. They are spiteful, idle birds."
+ },
+ "gogu/0b84f2761c47f5a6": {
+  "chars": 113,
+  "direction": "[helpless, apologetic, plaintive]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "A fellow cannot hold the roof and a loose slate at the same time. And I cannot look down to warn the heads below."
+ },
+ "gogu/149210a7babef7ec": {
+  "chars": 118,
+  "direction": "[queasy, gripping, panicky]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "When the wind rises from the valley, my stomach turns over, and I have to hold the ridge with all ten claws or perish."
+ },
+ "gogu/3db0ed1e830a3a54": {
+  "chars": 123,
+  "direction": "[gallant, wobbly, comic bravado]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Take a breath and lift again when you are ready; a fellow who has survived a drop like that can bear the rest of the stair."
+ },
+ "gogu/4499ea7da8533a27": {
+  "chars": 118,
+  "direction": "[wistful, yearning, hopeful]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "There is a low wall down by the gatehouse, no higher than a haywain. A man could fall off it and only bruise his knee."
+ },
+ "gogu/54d25b280a0f8863": {
+  "chars": 106,
+  "direction": "[hushed, nervous, pleading]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Do not step so hard on the tiles, if you have a heart in you. The whole roof rocks when a boot comes down."
+ },
+ "gogu/5eb54db34f9db912": {
+  "chars": 124,
+  "direction": "[resigned, bracing, comic dread]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "I will shut my eyes and hold my breath until my ears stop ringing. Take me by the elbows, then, before I think better of it."
+ },
+ "gogu/7c034782eeee4b21": {
+  "chars": 103,
+  "direction": "[hopeful, tentative, amazed]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Are we down? I can smell nettles and old wheel-grease, and the wind is not whistling in my ears at all."
+ },
+ "gogu/7d3a15a6d4d1bf96": {
+  "chars": 103,
+  "direction": "[calm, smug, dismissive]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Let them talk. A fellow with mud on his heels does not trouble himself with what goes on in the clouds."
+ },
+ "gogu/9290b4ead9925229": {
+  "chars": 145,
+  "direction": "[warm, grateful, settled]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Good evening to you. Not a single slate has come off the keep since the day you carried me down, and my knees have stopped trembling in the damp."
+ },
+ "gogu/98549cbf96305677": {
+  "chars": 102,
+  "direction": "[mournful, weary, comic self-pity]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Three hundred years I have stared at my own knees, waiting for the house to settle closer to the dirt."
+ },
+ "gogu/9af003a49e7f538a": {
+  "chars": 127,
+  "direction": "[defensive, shifty, bluffing]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "You have not seen the size of the old crows on the keep, or you would not look at me so hard; two of them could carry a kettle."
+ },
+ "gogu/9ddb44dc184b8525": {
+  "chars": 118,
+  "direction": "[sour, self-pitying, dry]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "I was put up here in the old stone-mason's time to look fierce against the sky. Nobody asked how I felt about the sky."
+ },
+ "gogu/9e22855a5733cb2d": {
+  "chars": 94,
+  "direction": "[resigned, wry, humble]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Any ledge would do, truth be told, so long as the clouds stay above my head where they belong."
+ },
+ "gogu/aeff2b0a9ebb2bed": {
+  "chars": 122,
+  "direction": "[sheepish, confessing, rueful]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "All right, it was my hand that let the bucket go, and the bishop's mitre too, though I never knew how a mitre got up here."
+ },
+ "gogu/bcc1097f579d73b5": {
+  "chars": 117,
+  "direction": "[dreamy, relieved, gloating]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Look at that cobble there, right below my toes. A five-foot drop, no more; I could look at that cobble all afternoon."
+ },
+ "gogu/bddb61c92fc8d0c2": {
+  "chars": 96,
+  "direction": "[wry, nervous, deadpan]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "If you drop me on the landing, leave me there. A landing is a respectable place for an ornament."
+ },
+ "gogu/c2cd281fda92d322": {
+  "chars": 124,
+  "direction": "[shaken, boastful, relieved]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Well. That was a fall, was it not, and here I am in one piece. Two whole feet through the air and hardly a chip off my heel."
+ },
+ "gogu/c61de64e6e172319": {
+  "chars": 128,
+  "direction": "[scolding, fussy, exasperated]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Always prying at the mortar with their beaks, they are, and dropping buckets and old hats just to hear the clatter on the flags."
+ },
+ "gogu/cd69cbeec1d5e3da": {
+  "chars": 131,
+  "direction": "[longing, dreamy, envious]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "The stone cousins down there have moss on their toes and mud splashed up their shins. I have thought of that mud for two centuries."
+ },
+ "gogu/d6c04a851eb8cc30": {
+  "chars": 121,
+  "direction": "[huffy, aggrieved, gossipy]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "The ravens are furious, of course. They sit on the gate-arch and tell anyone who passes that I used to throw the buckets."
+ },
+ "gogu/d7d70411a15a88b0": {
+  "chars": 112,
+  "direction": "[tense, pleading, fussy]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "Tell me we are past the bell-slit. Do not tell me if we are at the bell-slit, only tell me when it is behind us."
+ },
+ "gogu/ece5c3915243a0d3": {
+  "chars": 124,
+  "direction": "[wry, grand, mock-dignified]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "If the Count asks where his roof-piece went, tell him I fell. After three hundred years, a little crumbling is only natural."
+ },
+ "gogu/f208461a34b99b42": {
+  "chars": 113,
+  "direction": "[wounded, sulky, dry]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "People look up and see a great grey fellow on the eaves, so naturally I get the blame. Nobody ever doubts a bird."
+ },
+ "gogu/fd33dedbfc599d27": {
+  "chars": 124,
+  "direction": "[fussy, anxious, dry]",
+  "model": "eleven_v3",
+  "recipe": "11c31416db",
+  "text": "I weigh as much as a wet horse, and the steps are narrow, and there is a turn by the bell-slit where the wind comes through."
+ },
  "goodwife_sarnov/04598ecc522ff691": {
   "chars": 164,
   "direction": "[flat, grieving, hollow]",

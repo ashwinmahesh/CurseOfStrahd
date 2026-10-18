@@ -2693,6 +2693,14 @@
       "accent_tag": "[strong Romanian accent]",
       "model": "eleven_v3",
       "released": true
+    },
+    "gogu": {
+      "voice_id": "G1eZ6lDpd4MUiBgt4dQj",
+      "name": "Barovia Gogu",
+      "description": "Gogu, a living gargoyle afraid of heights: a stony but warm, comic, nervous voice, dryly lamenting, put-upon, with sudden squeaks of panic; a strong Eastern European (Romanian) accent. Designed 2026-10-18 (Ashwin's pick, option A).",
+      "accent_tag": "[strong Romanian accent]",
+      "model": "eleven_v3",
+      "released": true
     }
   },
   "sfx": {
