@@ -242,6 +242,7 @@ STAGES['den'] = dict(name="Van Richten's Tower, the Werewolf Den, Lake Zarovich 
     X('trap', (0, 1, 2)),
     R('zarovich_shore', (1, 2, 3), .25), R('zarovich_hills', (2, 3, 5), .25),
     F('tower_night_visitors', (0, .5, 1), night=True, flags={'van_richten_notes_read': True}), F('den_guards', (.5, .6, 1)),
+    F('ward_wolves', (0, .3, 1), note='the tower door touched before its riddle (V1)'),
     F('pack_challenge', (.5, .7, 1)), F('den_reckoning', (0, .2, .2)),
     Q('climax', (1, 1, 1), 'the pack settled'),
     Q('main', (1, 1, 1), 'a Tarokka treasure'), Q('side', (0, .3, .6), 'a companion quest completed'),
