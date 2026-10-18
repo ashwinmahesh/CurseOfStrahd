@@ -1,9 +1,8 @@
 class_name WhatsNew
 extends RefCounted
-## The title screen's What's new (Q2): what changed on main since the player last opened the game. make play writes
-## the list (builds/play_build.json, tools/play/whats_new.py) each time it moves the play copy forward; the panel opens
-## by itself on the title when something is new, and the title's What's new button opens the latest changes any time.
-## Only the play copy has the list, so a working checkout's title shows neither.
+## The title screen's What's new (Q2): what changed on main since the player last opened the game. It reads the list
+## from builds/play_build.json; the panel opens by itself on the title when something is new, and the title's What's new
+## button opens the latest changes any time. Nothing writes that file since make play was removed, so the title shows neither.
 
 const BUILD_PATH := "res://builds/play_build.json"
 ## The first time (nothing seen yet), the newest few days of changes.
@@ -40,7 +39,7 @@ static func changes() -> Array[Dictionary]:
 	return out
 
 
-## The commit time of the newest change the player has seen (0: never opened the play copy).
+## The commit time of the newest change the player has seen (0: never opened the game with a list).
 static func seen_at() -> int:
 	var cfg := ConfigFile.new()
 	cfg.load(seen_path)

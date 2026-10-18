@@ -31,8 +31,7 @@
 # removing it. Unplugging the drive stops any Godot or git run in those lanes mid-write: plug it back in and re-run
 # `make lane` or `hdiutil attach` to get them back. reclone and done need SSD=1 for those lanes as well.
 #
-# The main checkout is only ever read: nothing is written into it, and no git command that writes runs there. The
-# play copy (CurseOfStrahdGame-play, make play's) is refused as a lane.
+# The main checkout is only ever read: nothing is written into it, and no git command that writes runs there.
 set -euo pipefail
 main="$(cd "$(git rev-parse --path-format=absolute --git-common-dir)/.." && pwd)"
 say() { printf 'lane: %s\n' "$*"; }
@@ -236,7 +235,6 @@ lane_dir() {
   local dest
   dest="$root/CurseOfStrahdGame-$1"
   case "$1" in ""|*/*|.*) say "a lane name is one word, like 'stealth'" >&2; exit 2 ;; esac
-  case "$1" in play) say "CurseOfStrahdGame-play is make play's copy; only tools/play/play.sh changes it" >&2; exit 2 ;; esac
   case "$dest/" in "$main"/*) say "$dest is the main checkout; lanes never touch it" >&2; exit 2 ;; esac
   printf '%s' "$dest"
 }

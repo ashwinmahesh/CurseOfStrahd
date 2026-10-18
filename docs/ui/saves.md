@@ -100,8 +100,8 @@ picture, `<slot>.webp`. Other files kept there (N8's `achievements.json`) aren't
   stall every round), and headless runs take none.
 - **Autosaves**: the newest five, `autosave` then `autosave_2` ... `autosave_5`; each new one moves the others along
   and the oldest goes. Every one of them goes back to its game's slot when loaded, like the round start.
-- **Backups**: the first time a new build of the play copy starts (`builds/play_build.json`'s commit, written by
-  `make play`), before anything reads a save, every save and picture is copied to
+- **Backups**: the first time a new build starts (`builds/play_build.json`'s commit; nothing writes that file since
+  `make play` was removed), before anything reads a save, every save and picture is copied to
   `backups/<date>T<time>_<commit>/`. Once per build; the newest eight builds' copies are kept. A working checkout has
   no build file, so it never backs up.
 - **Chapters**: `SaveSystem.chapters()` offers the golden saves P4 keeps in `tests/saves` (made by the auto-player

@@ -2,7 +2,7 @@ extends Node
 ## Writes GameState to one JSON file per slot. Saves are allowed anywhere outside combat
 ## (plan §10 Phase 3); the mode check lives here so every caller gets it.
 ## Beside each save (Q9, docs/ui/saves.md): a thumbnail of the game as it was (<slot>.webp), and the player's own note
-## on it (the save's "note"). A new build of the play copy copies every save into backups/ before it touches any.
+## on it (the save's "note"). A new build (builds/play_build.json's commit) copies every save into backups/ before it touches any.
 ## Loading a game saved a while ago opens with the Narrator's recap (Q3, ui/exploration/recap.gd). An Honour run keeps one
 ## save (F1's one-save rule, below).
 
@@ -21,7 +21,7 @@ const ROUND_START := "round_start"
 const THUMB := Vector2i(320, 180)
 ## The autosave on arriving somewhere is written before the place is on screen: its picture waits this long.
 const THUMB_DELAY := 0.8
-## Backups (Q9): the play copy's build (written by make play) and how many builds' backups are kept.
+## Backups (Q9): the build file (nothing writes it since make play was removed; a checkout has none, so it never backs up) and how many builds' backups are kept.
 const BUILD_FILE := "res://builds/play_build.json"
 const BACKUPS := "backups"
 const BACKUPS_KEPT := 8
@@ -558,7 +558,7 @@ func _thumb_later(slot: String) -> void:
 
 # --- Backups --------------------------------------------------------------------------------------
 
-## The play copy's build (builds/play_build.json, which make play writes), or "" in a working checkout.
+## The build file's commit (builds/play_build.json), or "" when there is none, as in every checkout now.
 static func build_commit() -> String:
 	if not FileAccess.file_exists(BUILD_FILE):
 		return ""
