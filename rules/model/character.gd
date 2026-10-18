@@ -262,7 +262,7 @@ func item_modifiers() -> Array[Modifier]:
 	for e in inventory:
 		if int(e.get("qty", 0)) > 0:
 			key += "%s:%s;" % [e["id"], e.get("slot", "")]
-	key += "|" + ",".join(attuned) + ("|suppressed" if magic_suppressed else "")
+	key += "|" + ",".join(attuned) + ("|suppressed" if magic_suppressed else "") + ("|no_attunement" if MagicItems.attunement_off else "")
 	if key == _item_mods_key:
 		return _item_mods
 	_item_mods_key = key
@@ -286,13 +286,15 @@ func item_modifiers() -> Array[Modifier]:
 			continue
 		var attuned_ok := not MagicItems.needs_attunement(data) or iid in attuned
 		var active := item_active(e)
+		# With attunement dropped, what "while attuned" and "on your person" promised is promised to an item in use.
+		var by_use := MagicItems.attunement_off and MagicItems.asks_attunement(data)
 		for md: Variant in mods:
 			var d := md as Dictionary
 			var when := d.get("when", {}) as Dictionary
 			var scoped := str(when.get("item", "")) == "@self" or str(when.get("ammo", "")) == "@self"
 			# "while attuned" (Berserker Axe's Hit Points) and "while on your person" (Luck Blade's saves) need no slot.
 			var anywhere := bool(d.get("attuned_only", false)) or bool(d.get("carried", false))
-			if not (active or ((scoped or anywhere) and attuned_ok)):
+			if not (active or ((scoped or (anywhere and not by_use)) and attuned_ok)):
 				continue
 			# Only alongside other items worn (Hammer of Thunderbolts with a Belt of Giant Strength and Gauntlets of Ogre Power).
 			if d.has("requires_worn") and not _wearing_all(d["requires_worn"] as Array):
@@ -386,6 +388,8 @@ func identify(item_id: String) -> String:
 func end_attunement_blocker(item_id: String) -> String:
 	if not item_id in attuned:
 		return "Not attuned"
+	if MagicItems.attunement_off:
+		return ""
 	var e := entry_of(item_id)
 	if MagicItems.is_cursed(compendium.item_data(item_id)) and not bool(e.get("curse_lifted", false)):
 		return "Cursed: you can't end the attunement until the curse is lifted (Remove Curse)"
@@ -404,8 +408,8 @@ func end_attunement(item_id: String) -> bool:
 ## "" if `item_id` can leave this character (given, stashed, dropped or sold); a cursed item they're attuned to stays
 ## with them until the curse is lifted (Remove Curse), as ending the attunement does (QA FN-05: those were the way out).
 func part_blocker(item_id: String) -> String:
-	if not item_id in attuned or not MagicItems.is_cursed(compendium.item_data(item_id)):
-		return ""
+	if MagicItems.attunement_off or not item_id in attuned or not MagicItems.is_cursed(compendium.item_data(item_id)):
+		return ""   # with attunement dropped, no curse holds on through it either
 	if bool(entry_of(item_id).get("curse_lifted", false)):
 		return ""
 	return "Cursed: %s won't part with it until the curse is lifted (Remove Curse)" % name.get_slice(" ", 0)
@@ -2084,6 +2088,9 @@ func equip(item_id: String, slot: String) -> bool:
 				holding[0]["slot"] = ""
 			entry["slot"] = slot
 			_item_mods_key = ""
+			# With attunement dropped, taking an item up does what attuning to it did: it shows what it is.
+			if MagicItems.attunement_off and MagicItems.asks_attunement(compendium.item_data(item_id)):
+				entry["identified"] = true
 			var situation := armor_situation()
 			if str(situation["armor"]) != "none" or bool(situation["shield"]):
 				for fx: Effect in effects.duplicate():

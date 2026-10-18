@@ -39,7 +39,20 @@ static func rarity(item: Dictionary) -> String:
 	return str((item.get("magic", {}) as Dictionary).get("rarity", ""))
 
 
+## House option (Settings, Game, Attunement: GameSettings.unlimited_attunement, Ashwin 2026-10-17; deviations.md): no
+## attunement at all, so no limit of three and no "by a Wizard" to meet. A magic item then takes effect whenever it is
+## worn, held or equipped, as a mundane one does. GameSettings keeps this in step with the saved choice; a test that
+## sets it puts it back.
+static var attunement_off := false
+
+
+## Whether the item must be attuned to before it works: its own word (`asks_attunement`), unless the option above drops it.
 static func needs_attunement(item: Dictionary) -> bool:
+	return not attunement_off and asks_attunement(item)
+
+
+## What the item itself says, whatever the option: "Requires Attunement" in the book.
+static func asks_attunement(item: Dictionary) -> bool:
 	var needs: Variant = (item.get("magic", {}) as Dictionary).get("attunement", false)
 	return (needs is bool and bool(needs)) or (needs is String and str(needs) != "")
 

@@ -27,6 +27,7 @@ static func value(key: String, default: Variant) -> Variant:
 		if cfg.load(path) == OK and cfg.has_section(SECTION):
 			for k in cfg.get_section_keys(SECTION):
 				_cache[k] = cfg.get_value(SECTION, k)
+		MagicItems.attunement_off = bool(_cache.get("unlimited_attunement", false))   # the rules library is told once
 	return _cache.get(key, default)
 
 
@@ -85,6 +86,18 @@ static func flanking() -> bool:
 
 static func set_flanking(on: bool) -> void:
 	set_value("flanking", on)
+
+
+## Attunement (2024 DMG "Magic Items", a house option, Ashwin 2026-10-17): off by default. On, attunement is dropped
+## altogether: no limit of three, no requirements, and a magic item takes effect whenever it is worn, held or equipped
+## (MagicItems.attunement_off, which this keeps in step; docs/rules/deviations.md).
+static func unlimited_attunement() -> bool:
+	return bool(value("unlimited_attunement", false))
+
+
+static func set_unlimited_attunement(on: bool) -> void:
+	set_value("unlimited_attunement", on)
+	MagicItems.attunement_off = on
 
 
 ## Controller fights (owner pick 2026-10-09): false the bar (LB's radial picks a tab, LT/RT/RB the slots), true the

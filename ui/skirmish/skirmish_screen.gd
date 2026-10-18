@@ -494,6 +494,8 @@ static func _gear_line(ch: Character) -> String:
 		for it in ch.equipped_all(slot):
 			parts.append(str(it.get("name", it.get("id", ""))))
 	var line := ", ".join(parts) if not parts.is_empty() else "Nothing in hand or worn"
+	if MagicItems.attunement_off:
+		return line
 	return "%s · attuned to %d of %d" % [line, ch.attuned.size(), Character.MAX_ATTUNED]
 
 

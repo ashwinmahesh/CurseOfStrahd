@@ -1058,12 +1058,16 @@ func _equipment(ch: Character) -> VBoxContainer:
 	for slot in Character.EQUIP_SLOTS:
 		slots.add_child(_slot_card(ch, slot))
 	box.add_child(slots)
-	box.add_child(UiParts.section("Attunement", UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac")))
-	if ch.attuned.is_empty():
-		box.add_child(UiKit.label("No attuned magic items (%d at most; attuning takes a Short Rest)." % Character.MAX_ATTUNED, 14, "bone", PANE_W))
-	for item_id in ch.attuned:
-		var data := Compendium.shared().item_data(item_id)
-		box.add_child(_row(UiKit.label(str(data.get("name", item_id)), 15, "lilac"), _item_tip(data)))
+	if MagicItems.attunement_off:   # Settings, Game, Attunement: unlimited
+		box.add_child(UiParts.section("Attunement"))
+		box.add_child(UiKit.label("Attunement is off (Settings, Game): a magic item works while it is worn, held or equipped.", 14, "bone", PANE_W))
+	else:
+		box.add_child(UiParts.section("Attunement", UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac")))
+		if ch.attuned.is_empty():
+			box.add_child(UiKit.label("No attuned magic items (%d at most; attuning takes a Short Rest)." % Character.MAX_ATTUNED, 14, "bone", PANE_W))
+		for item_id in ch.attuned:
+			var data := Compendium.shared().item_data(item_id)
+			box.add_child(_row(UiKit.label(str(data.get("name", item_id)), 15, "lilac"), _item_tip(data)))
 	box.add_child(UiParts.section("Pack"))
 	var flow := HFlowContainer.new()
 	flow.add_theme_constant_override("h_separation", 6)

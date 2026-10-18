@@ -205,15 +205,16 @@ func _doll(ch: Character) -> Control:
 	var ac := UiParts.shield(ch.ac_value(), func() -> Control: return UiParts.breakdown_tip(ch.armor_class(), "Armor Class"))
 	ac.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	who.add_child(ac)
-	var att := VBoxContainer.new()
-	att.add_theme_constant_override("separation", 2)
-	att.alignment = BoxContainer.ALIGNMENT_CENTER
-	att.add_child(UiParts.caption("Attuned", 10))
-	att.add_child(UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac"))
-	att.tooltip_text = "Attuned to %d of %d magic items: %s" % [ch.attuned.size(), Character.MAX_ATTUNED,
-		", ".join(ch.attuned.map(func(a: String) -> String: return Compendium.shared().display_name("items", a))) if not ch.attuned.is_empty() else "none"]
-	att.mouse_filter = Control.MOUSE_FILTER_PASS
-	who.add_child(att)
+	if not MagicItems.attunement_off:   # Settings, Game, Attunement: unlimited drops the count
+		var att := VBoxContainer.new()
+		att.add_theme_constant_override("separation", 2)
+		att.alignment = BoxContainer.ALIGNMENT_CENTER
+		att.add_child(UiParts.caption("Attuned", 10))
+		att.add_child(UiParts.pips(Character.MAX_ATTUNED, ch.attuned.size(), "lilac"))
+		att.tooltip_text = "Attuned to %d of %d magic items: %s" % [ch.attuned.size(), Character.MAX_ATTUNED,
+			", ".join(ch.attuned.map(func(a: String) -> String: return Compendium.shared().display_name("items", a))) if not ch.attuned.is_empty() else "none"]
+		att.mouse_filter = Control.MOUSE_FILTER_PASS
+		who.add_child(att)
 	col.add_child(who)
 	var doll := Control.new()
 	doll.name = "PaperDoll"
@@ -1361,7 +1362,7 @@ func _draw_card() -> void:
 	# 2026-10-07, docs/contracts/magic_items.md).
 	var magic := shown.get("magic", {}) as Dictionary
 	if not magic.is_empty():
-		var needs: Variant = magic.get("attunement", false)
+		var needs: Variant = false if MagicItems.attunement_off else magic.get("attunement", false)
 		var req := ""
 		if needs is String:
 			req = " (requires attunement %s)" % needs

@@ -294,6 +294,8 @@ const SETTINGS_PAGES: Array[String] = ["Game", "Display", "Keys"]
 ## Concept y of the first row and the pitch between rows.
 const ROW_Y := 158.0
 const ROW_PITCH := 34.0
+## The Game page's rows (nine choices and the respec box) sit closer, so the last stays clear of the Back button.
+const GAME_PITCH := 27.0
 
 
 func _show_settings(page: String = "Game") -> void:
@@ -351,34 +353,39 @@ func _page_tabs(page: String) -> void:
 			_place(mark)
 
 
-## Game: the playthrough's difficulty, how fights (Flanking among them) and the Narrator play, turn-based exploring, and
-## the respec option.
+## Game: the playthrough's difficulty, how fights (Flanking among them) and the Narrator play, attunement, turn-based
+## exploring, and the respec option. Ten rows in all, so the pitch is tighter than Display's: the last clears Back.
 func _game_rows() -> void:
 	var y := ROW_Y
 	if st != null:
 		_difficulty_row(y)
-		y += ROW_PITCH
+		y += GAME_PITCH
 	_choice_row(y, "Fights", ["Normal", "Fast"], 1 if GameSettings.fast_combat() else 0, func(i: int) -> void:
 		GameSettings.set_fast_combat(i == 1), "Fast plays moves and the pauses between turns at twice the speed.")
-	y += ROW_PITCH
+	y += GAME_PITCH
 	# Shared party turns (owner 2026-10-09, after Baldur's Gate 3).
 	_choice_row(y, "Party turns", ["Shared", "One at a time"], 0 if GameSettings.shared_turns() else 1, func(i: int) -> void:
 		GameSettings.set_shared_turns(i == 0),
 		InputActions.fill("Shared: heroes next to each other in the turn order act together; click a hero's portrait or press {cycle_leader} to switch between them."))
-	y += ROW_PITCH
+	y += GAME_PITCH
 	# Flanking (2024 DMG optional rule, owner 2026-10-12).
 	_choice_row(y, "Flanking", ["On", "Off"], 0 if GameSettings.flanking() else 1, func(i: int) -> void:
 		GameSettings.set_flanking(i == 0),
 		"On: a creature with an ally on the far side of its foe, both next to it, has Advantage on melee attacks against that foe. For heroes and foes alike.")
-	y += ROW_PITCH
+	y += GAME_PITCH
+	# Attunement (a house option, Ashwin 2026-10-17): the book's limit of three, or none at all.
+	_choice_row(y, "Attunement", ["Three at most", "Unlimited"], 1 if GameSettings.unlimited_attunement() else 0, func(i: int) -> void:
+		GameSettings.set_unlimited_attunement(i == 1),
+		"Three at most: the book's rule. Unlimited: no attunement at all; a magic item works whenever it is worn, held or equipped, with no limit and no requirements.")
+	y += GAME_PITCH
 	_choice_row(y, "Narration", ["Fades", "Stays"], 1 if GameSettings.narration_stays() else 0, func(i: int) -> void:
 		GameSettings.set_narration_stays(i == 1), "Whether the Narrator's box fades on its own or stays until you close it.")
-	y += ROW_PITCH
+	y += GAME_PITCH
 	# Turn-based exploring (F7): the same switch as its key and the hotbar's Turn-based button.
 	_choice_row(y, "Exploring", ["Real time", "Turn-based"], 1 if GameSettings.turn_based() else 0, func(i: int) -> void:
 		_set_turn_based(i == 1),
 		InputActions.fill("Turn-based: outside fights the party moves in rounds, one of you at a time, to set up an ambush. {plan_mode} switches it too."))
-	y += ROW_PITCH
+	y += GAME_PITCH
 	# The controller's button pictures (U6, PadGlyphs): the pad in use, or a family picked here.
 	var icons: Array[String] = ["auto"]
 	icons.append_array(PadGlyphs.FAMILIES)
@@ -388,12 +395,12 @@ func _game_rows() -> void:
 			GameSettings.set_value("pad_icons", icons[i])
 			PadGlyphs.refresh_hints(),
 		"The controller's buttons as they're shown: Automatic follows the pad you play with.")
-	y += ROW_PITCH
+	y += GAME_PITCH
 	# Controller fights (owner pick 2026-10-09): the bar, or Baldur's Gate 3's wheels of actions.
 	_choice_row(y, "Controller fights", ["Bar", "Wheels"], 1 if GameSettings.pad_wheels() else 0, func(i: int) -> void:
 		GameSettings.set_pad_wheels(i == 1),
 		"Bar: hold LB for a wheel of tabs, then step through the hotbar. Wheels: hold LB for a wheel of your actions themselves, the D-pad changing the filter and the page.")
-	y += ROW_PITCH
+	y += GAME_PITCH
 	var respec := CheckBox.new()
 	respec.text = "Allow rebuilding a character at Madam Eva"
 	respec.add_theme_font_override("font", serif())
