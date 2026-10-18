@@ -767,6 +767,18 @@
                 "art": {
                   "type": "string",
                   "description": "The sprite this foe wears instead of its stat block's: a person fighting on a borrowed block (Vasilka on a flesh golem's)."
+                },
+                "steps_down": {
+                  "type": "object",
+                  "required": ["npc"],
+                  "additionalProperties": false,
+                  "description": "This foe is a person of the place (the Amber Sentinel on its dais): whichever way the fight starts, that person's figure leaves the board and the foe's takes its place, then strides to its start square (StepDown). Its stat block's size is untouched.",
+                  "properties": {
+                    "npc": {
+                      "type": "string",
+                      "description": "The NPC id of the person whose place it takes."
+                    }
+                  }
                 }
               }
             }

@@ -19,7 +19,8 @@ extends Node3D
 ## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed,2:start=sentinel_wakes (in a clip, what changes at which frame).
 
 const PARTY: Array[String] = ["godrick_pendlebrook", "liriel_dawnsong", "thistle", "ratatoille"]
-## How much faster than real time the game runs while a clip's frames are taken.
+## How much faster than real time the game runs while a clip's frames are taken (AMBER_SPEED=1 for a clip at the game's own
+## pace, one frame to a captured frame: AMBER_CLIP=24,0.02, the step-down's).
 const CLIP_SPEED := 8.0
 
 var view: LocationView = null
@@ -98,8 +99,9 @@ func _build(loc_id: String) -> void:
 ## `frames` frames of the place, `seconds` of its time apart (the game runs CLIP_SPEED times fast between them):
 ## <base>_clip_000.png on, and <base>_clip.txt with each frame's time, which clip_gif.py turns into the GIF's frame lengths.
 func _clip(tool: Node, base: String, frames: int, seconds: float) -> void:
-	Engine.time_scale = CLIP_SPEED
-	var between := maxi(1, int(round(seconds / CLIP_SPEED * 60.0)))
+	var speed := float(OS.get_environment("AMBER_SPEED")) if OS.get_environment("AMBER_SPEED") != "" else CLIP_SPEED
+	Engine.time_scale = speed
+	var between := maxi(1, int(round(seconds / speed * 60.0)))
 	var at := 0.0
 	var times := PackedStringArray()
 	for i in frames:

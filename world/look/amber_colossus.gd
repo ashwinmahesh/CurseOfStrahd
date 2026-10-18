@@ -21,8 +21,8 @@ const DAIS_H := 0.2
 ## How high a figure's eyes are above its feet (the sprite draws them a tenth of its height below its crown, and it is
 ## 6.0 units tall), how large the halo they sit in is, how far their light reaches and how bright it burns.
 const EYE_UP := 5.42
-const EYE_HALO := 2.4
-const EYE_GLOW := 1.0
+const EYE_HALO := 1.7
+const EYE_GLOW := 0.8
 const EYE_REACH := 8.0
 const EYE_ENERGY := 0.9
 ## The brightness of the eyes' light and halo for each state (a share of the watching breath), and how fast the level eases.
@@ -31,6 +31,8 @@ const EYE_STILLED := 0.2
 const EYE_EASE := 3.0
 ## How long the Sentinel keeps its head turned to the party once nobody speaks (seconds) before it looks out again.
 const TURN_BACK := 3.0
+## How long the cracks take to run across the dais as the Sentinel wakes (seconds).
+const CRACK_TIME := 0.5
 ## The wedge of light from the doors: how far it runs from the doors' face and how wide it is at its far end (squares), and
 ## its strength by the phase of the day (the snow is bright at noon).
 const WEDGE_LENGTH := 4.8
@@ -154,6 +156,23 @@ static func dress(view: LocationView) -> void:
 	view.dialogue_requested.connect(func(_ref: String, npc: String) -> void:
 		if npc == NPC and is_instance_valid(eye):
 			eye.turn_to_leader())
+	# As its fight begins and it steps down, its eyes flare (and keep to its foe figure) and a crack runs round its dais.
+	view.stepping_down.connect(func(npc: String, tok: CombatToken) -> void:
+		if npc == NPC and is_instance_valid(eye):
+			eye.follow = tok
+			eye.flare(1.0)
+			_crack(view))
+
+
+## A crack runs out from the middle of the dais to its edge as the Sentinel wakes.
+static func _crack(view: LocationView) -> void:
+	var dais := view.prop_nodes.get("sentinel_dais") as Node3D
+	var seam := dais.find_child("DaisSeam", true, false) as MeshInstance3D if dais != null else null
+	if seam == null:
+		return
+	var m := seam.material_override as ShaderMaterial
+	var tw := view.create_tween()
+	tw.tween_method(func(k: float) -> void: m.set_shader_parameter("crack", k), 0.0, 1.0, CRACK_TIME)
 
 
 ## Kept up as the party moves and as the story changes (AmberGlow.refresh): how the eyes burn, and how bright the doors' light
@@ -247,11 +266,13 @@ static func _twin_shards(view: LocationView) -> void:
 			piece.position += Vector3(shard.x - roundf(shard.x), 0.0, shard.y - roundf(shard.y))
 
 
-## The Sentinel's eyes: a light and a soft halo at head height over wherever its figure stands (the person on the dais, or
-## the foe in a fight), burning as its state says. `follow` is the figure to light when it is not the person at the doors.
-class Eye extends Node3D:
+## The Sentinel's eyes: a light and a soft halo at head height, riding on the figure itself (the person on the dais, or its
+## foe in a fight: `follow`) so they never trail it as it strides, burning as its state says.
+class Eye extends Node:
 	var view: LocationView = null
 	var follow: Node3D = null
+	## The light and the halo, held in one node that is a child of the figure's token.
+	var rig: Node3D = null
 	var light: CandleFlicker = null
 	var halo: MeshInstance3D = null
 	var speaking := false
@@ -264,6 +285,10 @@ class Eye extends Node3D:
 	var _turned := false
 
 	func build() -> void:
+		rig = Node3D.new()
+		rig.name = "EyeRig"
+		rig.position = Vector3(0.0, AmberColossus.EYE_UP, 0.0)
+		rig.visible = false
 		light = CandleFlicker.new()
 		light.name = "EyeLight"
 		light.light_color = Look.color("flame")
@@ -272,7 +297,7 @@ class Eye extends Node3D:
 		light.flicker = 0.0   # (the amber kind's own breath takes over once Atmosphere has dressed it)
 		light.set_meta("amber", true)
 		light.set_meta("no_shadow", true)
-		add_child(light)
+		rig.add_child(light)
 		var quad := QuadMesh.new()
 		quad.size = Vector2.ONE * AmberColossus.EYE_HALO
 		halo = MeshInstance3D.new()
@@ -282,8 +307,8 @@ class Eye extends Node3D:
 		m.render_priority = 4
 		halo.material_override = m
 		halo.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-		add_child(halo)
-		visible = false
+		rig.add_child(halo)
+		add_child(rig)   # (at home here until there is a figure to ride on, and freed with the eyes)
 
 	## A flash of the eyes (the wake of a step-down), fading over a second or so.
 	func flare(power: float = 1.0) -> void:
@@ -303,20 +328,29 @@ class Eye extends Node3D:
 			return
 		_turned = true
 		_quiet = 0.0
-		tok.face(Vector2(view.grid.cell_at(leader_position()) - view.grid.cell_at(tok.global_position)), false)
+		var from := view.grid.cell_at(tok.global_position)
+		var to := view.grid.cell_at((view.tokens[leader.id] as Node3D).global_position)
+		tok.face(Vector2(to - from), false)
 
-	func leader_position() -> Vector3:
-		var tok := view.tokens.get(view.leader().id) as Node3D
-		return tok.global_position if tok != null else Vector3.ZERO
+	## The rig goes where the figure is: onto its token, or home to the eyes when there is none (a token that went with a rebuild
+	## took the rig with it, so it is made again).
+	func _seat(fig: Node3D) -> void:
+		if not is_instance_valid(rig):
+			build()
+		var home: Node = fig if fig != null else self
+		if rig.get_parent() != home:
+			rig.get_parent().remove_child(rig)
+			home.add_child(rig)
 
 	func _process(delta: float) -> void:
 		var fig := figure()
+		_seat(fig)
 		var lit := fig != null and fig.visible and not destroyed
-		visible = lit
+		if is_instance_valid(rig):
+			rig.visible = lit
 		if not lit:
 			return
 		_clock += delta
-		global_position = fig.global_position + Vector3(0.0, AmberColossus.EYE_UP, 0.0)
 		var want := AmberColossus.EYE_STILLED if stilled else (AmberColossus.EYE_SPEAKING * (1.0 + 0.12 * sin(_clock * 6.0)) if speaking else 1.0)
 		_level = lerpf(_level, want, clampf(delta * AmberColossus.EYE_EASE, 0.0, 1.0))
 		_flare = move_toward(_flare, 0.0, delta * 1.2)

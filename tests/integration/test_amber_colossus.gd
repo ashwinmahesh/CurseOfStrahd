@@ -54,8 +54,9 @@ func test_the_eyes_burn_as_the_state_says() -> void:
 	for _i in 12:
 		eye._process(0.5)
 	var tok := v.npc_tokens.get("amber_sentinel") as Node3D
-	assert_true(eye.visible, "lit while it stands there")
-	assert_true(absf(eye.global_position.y - (tok.global_position.y + AmberColossus.EYE_UP)) < 0.01, "at its head")
+	assert_true(eye.rig.visible, "lit while it stands there")
+	assert_true(eye.rig.get_parent() == tok, "riding on the figure itself")
+	assert_true(absf(eye.rig.global_position.y - (tok.global_position.y + AmberColossus.EYE_UP)) < 0.01, "at its head")
 	var watching := eye.light.base_energy
 	v.set_speaking("amber_sentinel")
 	for _i in 12:
@@ -85,7 +86,7 @@ func test_the_dais_cracks_and_the_shards_lie_when_it_is_destroyed() -> void:
 	assert_true(v.npc_tokens.get("amber_sentinel") == null, "and nobody stands on it")
 	var eye := v.get_node_or_null("SentinelEyes") as AmberColossus.Eye
 	eye._process(0.1)
-	assert_true(not eye.visible, "its eyes are out")
+	assert_true(not eye.rig.visible, "its eyes are out")
 	v.queue_free()
 
 

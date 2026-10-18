@@ -18,6 +18,9 @@ const KINDS := {
 		"size": [0.06, 0.1], "colour": "moonlight", "alpha": 0.9},
 	"splash": {"amount": 9, "life": 0.38, "spread": 30.0, "speed": [0.7, 1.0], "gravity": -7.0, "damping": 0.0,
 		"size": [0.04, 0.07], "colour": "frost", "alpha": 0.75},
+	# A colossus's footfall (StepDown, the Amber Sentinel): a great burst of snow, never what a step on a square kicks up.
+	"stomp": {"amount": 30, "life": 1.1, "spread": 75.0, "speed": [1.2, 3.0], "gravity": -2.2, "damping": 0.35,
+		"size": [0.3, 0.7], "colour": "moonlight", "alpha": 0.9},
 }
 ## Ground (the floor's `surface` holds the word) that takes each kind dry, besides the roads the shaped ground lays
 ## between the ways out (GroundRelief.roads, dusty); any outdoor ground splashes in the rain.

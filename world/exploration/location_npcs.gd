@@ -400,6 +400,14 @@ static func hide_npcs_of(view: LocationView, dialogue_ref: String) -> void:
 			view.grid.set_flag(shown["cell"] as Vector2i, CombatGrid.LOW, false)
 
 
+## The figure of one person of the place leaves the board for a fight, however it began (the Amber Sentinel stepping down
+## into its foe: StepDown); their entries' `when` decides whether they come back afterwards, with the rebuild.
+static func hide_npc(view: LocationView, npc_id: String) -> void:
+	for shown in view._npc_shown:
+		if str((shown["spec"] as Dictionary).get("npc", "")) == npc_id:
+			(shown["token"] as Node3D).visible = false
+
+
 ## People whose entry says `steps_aside` keep out of every fight on the map (Castle Ravenloft's household: a ghost
 ## steward, the dead watch on its rounds, a broom at its sweeping): their figures leave the board as a fight begins, so
 ## they never stand in its way, and come back with the rebuild after it (refresh_npcs).

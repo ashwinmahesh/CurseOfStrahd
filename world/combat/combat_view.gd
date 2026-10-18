@@ -173,6 +173,14 @@ func begin(encounter: Encounter, board_: ArenaBoard, rig_: CameraRig, tokens_: D
 		if e.intro != "":
 			e.log.add("narr", e.intro, "")
 		e.start(surprised)
+	# A colossus stepping down off where it stood (StepDown, the Amber Sentinel) wakes and strides to its square first.
+	var striders := StepDown.pending(tokens)
+	if fresh and not striders.is_empty():
+		hud.visible = false   # (the opening beat fades it up after)
+		for strider in striders:
+			await StepDown.play(self, strider)
+			if _closed:
+				return
 	# Bosses (G3): a name plate and health bar for each above the hotbar, and for a fight that's just starting, an
 	# entrance on the greatest of them before the opening beat.
 	var bosses := BossBar.bosses_in(e)

@@ -740,6 +740,10 @@
             15
           ],
           "name": "The Amber Sentinel",
+          "art": "amber_sentinel",
+          "steps_down": {
+            "npc": "amber_sentinel"
+          },
           "hp": 395
         },
         {
@@ -795,7 +799,11 @@
             18,
             10
           ],
-          "name": "The Amber Sentinel"
+          "name": "The Amber Sentinel",
+          "art": "amber_sentinel",
+          "steps_down": {
+            "npc": "amber_sentinel"
+          }
         }
       ],
       "surprise": "",
@@ -813,6 +821,10 @@
             10
           ],
           "name": "The Amber Sentinel",
+          "art": "amber_sentinel",
+          "steps_down": {
+            "npc": "amber_sentinel"
+          },
           "hp": 130
         }
       ],
@@ -832,6 +844,10 @@
             14
           ],
           "name": "The Amber Sentinel",
+          "art": "amber_sentinel",
+          "steps_down": {
+            "npc": "amber_sentinel"
+          },
           "hp": 375
         },
         {

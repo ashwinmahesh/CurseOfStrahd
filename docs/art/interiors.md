@@ -317,6 +317,18 @@ braziers burning in the antechamber and either side of the altar.
     shrink its building-sized model, ModelPiece.big_fit). The doors give a warm wedge of light across the snow (`DoorsWedge`,
     stronger by night) and the four cut icicle sprites hang from their lintel (`DoorsIcicles`). The eyes' light and halo are
     not map `lights`, so a fight's light zones and vision are unchanged.
+  - The Sentinel steps down (StepDown, world/combat/step_down.gd, shaders/world/stomp_ring.gdshader, step 9): its four entries in the
+    doors' encounters draw the foe as the colossus (`art: amber_sentinel`, 30 ft by CombatToken.HEIGHTS) and say it is the person
+    at the doors (`steps_down: {npc: amber_sentinel}`). Walking onto the ledge (`sentinel_stops_you`) hid nothing, so the standing
+    colossus and the plain golem were on the board together (shown by capture before the fix); now however the fight starts
+    LocationFights._step_down hides the person and the foe's token takes their place on the dais, and, with motion on,
+    CombatView.begin plays the beat before the boss entrance and the opening: the camera comes in on it (CameraRig's shot fields)
+    while its eyes flare and a crack runs round the dais (LocationView.stepping_down, AmberColossus), it strides to its start
+    square in two or three footfalls (a tween of the token alone: the Encounter had it there all along), each landing with a
+    jolt of the camera, a burst of snow (StepPuffs `stomp`) and a ring of it along the ground. About a second and a half, never
+    past 1.8 s; headless runs, stills and motion off cut straight to the square. The stat block stays the Amber Golem's
+    (Large, 2 x 2): only the picture is 30 ft, so the fight bands do not move. Any figure drawn taller than 4.5 units
+    (CombatToken.TALL) is drawn at 55% where it hides a figure of the party's behind it on the screen.
   - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
     line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
     squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.

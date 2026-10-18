@@ -349,6 +349,8 @@ static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictiona
 		var mon := Monster.from_data(data)
 		if md.has("lying"):
 			mon.set_meta(&"lying", md["lying"])   # lies there until its fight opens (LyingFigures)
+		if md.has("steps_down"):
+			mon.set_meta(&"steps_down", md["steps_down"])   # a person of the place stepping down into this foe (StepDown)
 		if md.has("hp"):
 			# A tuned stat block for this fight (docs/contracts/locations.md).
 			mon.hp_max_base = int(md["hp"])
@@ -437,7 +439,13 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)
 	keep_back(view, e.grid, _squares_in(view, e), e)
-	var ctokens := _fight_tokens(view, e)
+	# The people who stepped down into this fight (StepDown) are named by its entry; a saved fight remembers only the foes.
+	for md: Variant in spec.get("monsters", []):
+		if (md as Dictionary).has("steps_down"):
+			for c in e.combatants:
+				if c.side == &"enemy" and c.name() == str((md as Dictionary).get("name", "")):
+					c.creature.set_meta(&"steps_down", (md as Dictionary)["steps_down"])
+	var ctokens := _fight_tokens(view, e, false)
 	view.combat_view = CombatView.new()
 	view.combat_view.input_locked = view.input_locked
 	view.combat_view.narrator = view.narrator
@@ -451,7 +459,7 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 ## The fight's tokens (combatant id -> CombatToken), made so the switch into combat doesn't jump (owner 2026-10-06):
 ## the party and guests keep the figures they walked in with, mid-step, facing and lantern and all, and turn to the
 ## nearest foe as their step lands; the foes fade in where they stand, facing the party.
-static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
+static func _fight_tokens(view: LocationView, e: Encounter, fresh: bool = true) -> Dictionary:
 	var ctokens := {}
 	var ours: Array[CombatToken] = []
 	var party_mid := Vector3.ZERO
@@ -477,6 +485,7 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 	party_mid /= maxf(1.0, float(ours.size()))
 	var foes: Array[CombatToken] = []
 	var standing: Array[CombatToken] = []
+	var striding: Array[CombatToken] = []
 	for c in e.combatants:
 		if ctokens.has(c.id):
 			continue
@@ -495,6 +504,10 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 		if LyingFigures.of(c.creature) != null:
 			LyingFigures.lay(view, t, LyingFigures.of(c.creature), c.cell)
 		ctokens[c.id] = t
+		# A person of the place who is this foe steps down off where they stood (StepDown).
+		if _step_down(view, t, c, fresh):
+			striding.append(t)
+			continue
 		# A person the conversation showed who turns out to be this (Offalia a hag, Vosk unmasked) changes where it stands.
 		var reveal := _reveal_of(view, c)
 		if not reveal.is_empty() and SpellFx.enabled:
@@ -511,11 +524,27 @@ static func _fight_tokens(view: LocationView, e: Encounter) -> Dictionary:
 	turn.tween_interval(LocationView.STEP_TIME + 0.05)
 	var every_foe: Array[CombatToken] = foes.duplicate()
 	every_foe.append_array(standing)
+	every_foe.append_array(striding)
 	turn.tween_callback(func() -> void:
 		_face_nearest_foe(ours, every_foe)
 		_face_nearest_foe(aside, every_foe)
 		_face_nearest_foe(standing, ours))
 	return ctokens
+
+
+## A foe whose entry says `steps_down: {npc}` is a person of the place (the Amber Sentinel on its dais): they leave the board as
+## the fight begins, and the foe's figure takes their place and strides to its start square (StepDown; `fresh`: not a fight
+## picked up from a save, where it is simply there). False for any other foe.
+static func _step_down(view: LocationView, t: CombatToken, c: Combatant, fresh: bool) -> bool:
+	if not c.creature.has_meta(&"steps_down"):
+		return false
+	var npc := str((c.creature.get_meta(&"steps_down") as Dictionary).get("npc", ""))
+	var person := view.npc_tokens.get(npc) as CombatToken
+	LocationNpcs.hide_npc(view, npc)   # (whichever way the fight began: a conversation, or a walk onto the ledge)
+	if person == null or not fresh:
+		return false
+	StepDown.take_place(t, person.position, func() -> void: view.stepping_down.emit(npc, t))
+	return true
 
 
 ## Each of `ours` stops walking and turns to the nearest of `foes`.

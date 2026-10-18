@@ -19,6 +19,9 @@ extends Node3D
 
 signal exit_requested(location_id: String, spawn: String)
 signal dialogue_requested(ref: String, npc_id: String)
+## A person of the place whose figure is the foe of a fight now beginning (`steps_down`) wakes: the Amber Sentinel on its dais
+## (StepDown plays the stride; the place's own things, its eyes and the cracks round its dais, answer to this).
+signal stepping_down(npc_id: String, token: CombatToken)
 ## The party means to hand a story ally travelling with it something (LocationGuests, the right-click menu's Give...):
 ## the game shows what can be given (GiftPicker).
 signal gift_requested(npc_id: String)

@@ -132,6 +132,14 @@ var _highlight := false
 ## How far the creature has come into view (0 to 1): a fight's foes fade in as it starts and its survivors fade out
 ## as it ends (emerge, fade_away), rather than popping.
 var _fade := 1.0
+## A figure drawn this tall (world units) is a colossus (the Amber Sentinel, 6.0): where it hides a figure of the party's behind
+## it on the screen it is drawn at GHOST of its strength, so the party can still be seen. `_tall` is its height when it is one.
+const TALL := 4.5
+const GHOST := 0.55
+var _tall := 0.0
+var _ghost := 1.0
+var _ghost_to := 1.0
+var _ghost_look := 0.0
 
 
 static func art_id(c: Combatant) -> String:
@@ -259,7 +267,9 @@ func _build() -> void:
 	var frames := DirectionalSprite.frames_for(aid)
 	var size_units := float(c.size_cells)
 	if frames != null:
-		sprite = DirectionalSprite.create(frames, _height(aid))
+		var drawn := _height(aid)
+		_tall = drawn if drawn > TALL else 0.0
+		sprite = DirectionalSprite.create(frames, drawn)
 		sprite.play(&"idle_s")
 		if OWN_LIGHT.has(aid):
 			DirectionalSprite.glow(sprite, float(OWN_LIGHT[aid]))
@@ -672,7 +682,7 @@ func _set_fade(f: float) -> void:
 
 ## `c` as drawn at the creature's current fade.
 func _faded(c: Color) -> Color:
-	return Color(c, c.a * _fade)
+	return Color(c, c.a * _fade * _ghost)
 
 
 ## The ring, bar, conditions and the figure lying down follow the fade (a dead creature keeps only its remains).
@@ -782,6 +792,43 @@ func _lie_on_ground() -> void:
 		n.position = tilt * (_built_at[n] as Vector3) + (Vector3(0, 0.03, 0) if tilt != Basis.IDENTITY else Vector3.ZERO)
 
 
+## A colossus looks, a few times a second, at what stands behind it, and eases to or from GHOST.
+func _ghost_step(delta: float) -> void:
+	_ghost_look -= delta
+	if _ghost_look <= 0.0:
+		_ghost_look = 0.1
+		_ghost_to = GHOST if hides_a_friend() else 1.0
+	if not is_equal_approx(_ghost, _ghost_to):
+		_ghost = move_toward(_ghost, _ghost_to, delta * 5.0)
+		_set_fade(_fade)
+
+
+## Whether a figure of the party's (or a guest's) stands behind this one on the screen: inside the picture of it, and
+## farther from the camera.
+func hides_a_friend() -> bool:
+	var cam := get_viewport().get_camera_3d() if is_inside_tree() else null
+	if cam == null or not visible or combatant == null or get_parent() == null:
+		return false
+	var foot := global_position
+	if cam.is_position_behind(foot):
+		return false
+	var a := cam.unproject_position(foot)
+	var b := cam.unproject_position(foot + Vector3(0.0, _tall, 0.0))
+	var half := absf(b.y - a.y) * 0.24
+	var picture := Rect2(Vector2(a.x - half, minf(a.y, b.y)), Vector2(half * 2.0, absf(b.y - a.y)))
+	var depth := (foot - cam.global_position).dot(-cam.global_basis.z)
+	for n: Node in get_parent().get_children():
+		var other := n as CombatToken
+		if other == null or other == self or not other.visible or other.combatant == null or other.combatant.creature.dead \
+				or not other.combatant.side in [&"party", &"guest"]:
+			continue
+		var heart := other.global_position + Vector3(0.0, 0.5, 0.0)
+		if not cam.is_position_behind(heart) and picture.has_point(cam.unproject_position(heart)) \
+				and (other.global_position - cam.global_position).dot(-cam.global_basis.z) > depth:
+			return true
+	return false
+
+
 func _bar_wanted() -> bool:
 	return not combatant.creature.dead and _fade >= 1.0 and ModeController.mode == ModeController.Mode.COMBAT
 
@@ -791,6 +838,8 @@ func _process(delta: float) -> void:
 		_show_fade()
 	_aura_state()
 	_lie_on_ground()
+	if _tall > 0.0:
+		_ghost_step(delta)
 	if sprite == null:
 		return
 	if _flash > 0.0 and not combatant.creature.dead:

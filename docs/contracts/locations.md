@@ -81,7 +81,10 @@ geometry: a fight starts where the party stands, on the same squares. `world/exp
   keep facing the middle of their group).
   A monster's `lying` lays it down before its fight (as an NPC entry's, below) and it gets up as the fight opens: the
   dead sitting up on their pallets, Vasilka coming down off her bier. Its `art` dresses it in another sprite than its
-  stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it.
+  stat block's (Vasilka fights on a flesh golem's block in her own look); a round-start save keeps it. Its `steps_down:
+  {npc}` says the foe is that person of the place (the Amber Sentinel on its dais): however the fight starts, their figure
+  leaves the board and the foe's takes their place and strides to its start square (StepDown, world/combat/step_down.gd;
+  motion off cuts to it), its stat block's size untouched.
   `surprise`: `party`, `enemies` or
   empty; `when` is a condition (docs/contracts/dialogue.md). A region may keep a truce (StoryConditions.TRUCES): while
   it holds, its `enter_area` fights wait as if their `when` were false, and are back as they were once it ends (Castle
