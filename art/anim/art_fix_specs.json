@@ -1,0 +1,12 @@
+{
+  "cosmin": {
+    "shape": "person",
+    "height": 1.05,
+    "expression": "stubborn, tired, determined",
+    "look": "Cosmin, a fourteen-year-old cooper's boy from Vallaki, thin and a full head shorter than a grown man, with short messy dark-brown hair, a smudged freckled boy's face with a stubborn chin, wearing a patched oatmeal-coloured wool jacket with rolled sleeves over a brown shirt, worn brown breeches and scuffed boots, a heavy grey-brown horse blanket rolled over one shoulder and tied across his chest with rope, and a crude wooden sword (a carved plank with a crosspiece) held in his right hand",
+    "who": "Cosmin, a fourteen-year-old cooper's boy with a horse blanket rolled over his shoulder and a wooden sword",
+    "attack": "wooden sword swing",
+    "windup": "the wooden sword raised high over his right shoulder in both hands, a fierce stubborn face, blanket swinging",
+    "strike": "the wooden sword swung down and forward at the enemy at full arm's length, leaning into the blow"
+  }
+}

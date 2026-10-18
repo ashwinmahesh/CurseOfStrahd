@@ -977,5 +977,9 @@
   "helga_ruvak": {"who": "Helga Ruvak, a pale blonde housemaid in a white cap, charcoal-grey dress and long white apron, a feather duster in her right hand, secretly a vampire",
     "attack": "vampire's lunge",
     "windup": "the meek pose gone: crouched and drawn back, her left hand raised high with the nails out like claws, fangs bared, the duster flung back in her right hand",
-    "strike": "lunging forward with the clawed left hand raking at the enemy at full arm's length, fangs bared, apron and skirt flaring"}
+    "strike": "lunging forward with the clawed left hand raking at the enemy at full arm's length, fangs bared, apron and skirt flaring"},
+  "cosmin": {"who": "Cosmin, a fourteen-year-old cooper's boy with a horse blanket rolled over his shoulder and a wooden sword",
+    "attack": "wooden sword swing",
+    "windup": "the wooden sword raised high over his right shoulder in both hands, a fierce stubborn face, blanket swinging",
+    "strike": "the wooden sword swung down and forward at the enemy at full arm's length, leaning into the blow"}
 }

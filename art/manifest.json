@@ -6216,6 +6216,17 @@
       "model": "gemini-3.1-flash-image",
       "prompt": "Character turnaround sheet of Helga Ruvak, a young Barovian housemaid of about twenty who is secretly a vampire spawn: slender, with very pale skin with a faint grey tinge, fair blonde hair pinned up under a small white maid's cap, a pretty but tired face with faint dark shadows under pale, red-rimmed eyes and lips a little too red; she wears a plain long-sleeved charcoal-grey servant's dress to the ankles, a long white apron tied in a bow at the back, and sturdy black shoes, and holds a feather duster loosely in her right hand at her side. Exactly five full-body views of the same character in one row, left to right: front (facing the viewer), front three-quarter (facing the viewer, turned toward the right), side profile facing right, back three-quarter (facing away, turned toward the right), back (seen from behind). Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with wide clear gaps so no view touches another, every view wholly inside the picture, on a plain flat white background, no ground shadow. Flat cel colours with hard-edged shading, no colour gradients; no text, labels or captions anywhere in the image.",
       "notes": "Helga Ruvak, the book's vampire maid on Castle Ravenloft's private floor (owner 2026-10-15: yes to her own art, about $0.50; she wore the commoner's look until then). 5-view turnaround (21:9) -> make sprite -> walk sheet; attack from art/anim/animations.json (make anims); portrait from helga_ruvak_portrait.png (--ref the turnaround)."
+    },
+    {
+      "id": "cosmin",
+      "kind": "character",
+      "status": "generated",
+      "source": "art/generated/characters/cosmin_turnaround.png",
+      "sprites": "art/sprites/cosmin/walk.tres",
+      "portrait": "art/portraits/cosmin.png",
+      "model": "gemini-3.1-flash-image",
+      "prompt": "Character turnaround sheet of Cosmin, a fourteen-year-old cooper's boy from Vallaki, thin and a full head shorter than a grown man, with short messy dark-brown hair, a smudged freckled boy's face with a stubborn chin, wearing a patched oatmeal-coloured wool jacket with rolled sleeves over a brown shirt, worn brown breeches and scuffed boots, a heavy grey-brown horse blanket rolled over one shoulder and tied across his chest with rope, and a crude wooden sword (a carved plank with a crosspiece) held in his right hand. Exactly five full-body views of the same character in one row, left to right: front, front three-quarter, side profile facing right, back three-quarter, back. Relaxed neutral standing pose with arms at the sides, same scale and height, evenly spaced with clear gaps, on a plain flat white background, no ground shadow.",
+      "notes": "Cosmin, a cooper's boy of fourteen from Vallaki (the Squire side quest at Argynvostholt; owner todo 2026-10-17: he wore the commoner woman's sprite and portrait; typed yes 2026-10-18). 5-view turnaround (16:9) -> make sprite -> 8 directions x 8-frame walk; wooden-sword attack from art/anim/animations.json (art/anim/art_fix_specs.json has the brief); turn-bar portrait (BG=ash_violet). Height 1.05: a head under a grown man, taller than Ilya (0.8)."
     }
   ],
   "image_provider": "gemini"

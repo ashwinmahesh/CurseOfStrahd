@@ -62,7 +62,8 @@ const HEIGHTS := {"ilse_varga": 1.3, "tamsin_tealeaf": 0.75, "hedda_ironvow": 1.
 	"escher": 1.3, "pidlwick_ii": 0.85, "cyrus_belview": 1.35, "gertruda": 1.15, "brother_anatol": 1.25,
 	"lief_lipsiege": 1.12, "nadia_boteanu": 1.15, "strahd_mist": 1.4,
 	"beholder": 2.5,
-	"werewolf_human": 1.3, "wereraven_human": 1.25}
+	"werewolf_human": 1.3, "wereraven_human": 1.25,
+	"cosmin": 1.05}
 
 ## Figures that are their own light, by art id: how much of their colours they show whatever the scene's lights
 ## (DirectionalSprite.glow). The Lantern Girl is made of the light she held up.
