@@ -1831,6 +1831,63 @@
       ],
       "prompt": "A great hall of Castle Ravenloft at dusk with candles burning and tall windows showing only night: several new figures in adventurers' clothes (hooded cloaks, a breastplate, a staff) walk its length slowly and stiffly, seen from behind, their skin pale and their bearing wrong, like {party} now turned; at the far end Strahd von Zarovich sits at the organ, drawn exactly as the reference sheet shows him, watching them over his shoulder. Dim reds and violets with long shadows; quiet horror, no gore.",
       "use": "a"
+    },
+    "tome_conqueror": {
+      "refs": [
+        "strahd"
+      ],
+      "prompt": "A memory from four centuries ago, tinted in warm sepia and amber like old paper: a younger, living Strahd, gaunt but not yet pale, in a prince's dark, war-worn coat with a steel pauldron, stands alone on a bare ridge at dawn, his face and dark swept-back hair exactly as the reference shows them, unlined by long night. Below him lies the valley he has just conquered: smoking fields, torn banners lying in the mud, far-off soldiers cheering with raised spears. He has his back to them and stares at the empty grey horizon without joy, one gloved hand hanging open at his side. Low camera behind and beside him, long shadows, a pale sun breaking. Hollow triumph, no gore. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "a"
+    },
+    "tome_brothers": {
+      "refs": [
+        "sergei_von_zarovich",
+        "ireena",
+        "strahd"
+      ],
+      "prompt": "A memory of four centuries ago, painted entirely in one warm sepia-and-amber monochrome tint like old paper, every colour in it sepia, with the light brightest on Sergei and Tatyana: a sunlit summer terrace in a castle garden, roses along the stone balustrade. Sergei, laughing, with dark wavy hair and the pale tunic, sash and short cape of the first reference, drawn exactly as that sheet shows him, hands a white flower to Tatyana, a young woman in a white gown with long auburn hair, her face drawn exactly as the second reference shows (she is Tatyana), who smiles up at him; their fingers almost touch. There are exactly three people on the terrace and no one else. Strahd appears only once, and not near the pair: he stands far back in the dark stone archway at the end of the terrace, small in the frame, a younger, living Strahd in a dark, war-worn coat, gaunt, his face and dark swept-back hair as the third reference shows them but not yet pale, half in shadow, watching them with one gloved hand tight on the stone. The foreground is only Sergei, Tatyana, the roses and the balustrade. Warm light on the pair, shadow round the archway; envy, no gore. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "c"
+    },
+    "tome_wedding": {
+      "refs": [
+        "strahd",
+        "sergei_von_zarovich",
+        "ireena"
+      ],
+      "prompt": "A memory of four centuries ago, tinted in warm sepia and amber like old paper: the great hall of a castle on a wedding day, hung with white flowers and long tables laid for a feast, the guests pulled back against the walls in horror. At the foot of the dais Sergei lies still on the flagstones in his white wedding coat, drawn as the second reference shows him, as if asleep, with spilled wine and scattered petals around him; there is no blood on the floor and no pool of blood anywhere, only one small dark stain on the white sleeve of his coat. Over him stands a younger, living Strahd, gaunt, his face and dark swept-back hair as the first reference shows them but not yet pale, a clean dropped dagger lying on the flagstones and both hands open and shaking. In the shadow of the high arch behind his shoulder, a tall shape of black mist with a pale smile leans close to his ear like a counsellor. At the far end of the hall Tatyana, in a white gown with long auburn hair, her face as the third reference shows it, has a hand pressed to her mouth. Candle gold and white flowers against deep shadow; the moment after, dread, no gore. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "b"
+    },
+    "tome_wall": {
+      "refs": [
+        "ireena",
+        "strahd"
+      ],
+      "prompt": "A memory of four centuries ago, tinted in cold blue-grey and faded amber like old paper: the high stone battlements of a castle at night, white mist rising over the parapet. Tatyana, a young woman in a white gown with long auburn hair, her face as the first reference shows it, takes one step off the stone into the mist with her back mostly to us, the hem of her gown dissolving into the fog. Far below, on the courtyard flagstones, a younger, living Strahd, gaunt, his face and dark swept-back hair as the second reference shows them but not yet pale, reaches one hand up after her; round him his own soldiers in old dark armour hold bows, and arrows are in flight toward him, a violet-red glow gathering round his shadow on the stones. Low camera looking up the castle wall through the mist. Grief and the first dark change, no gore. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "a"
+    },
+    "escher_mirror": {
+      "refs": [
+        "escher"
+      ],
+      "prompt": "A velvet-and-dust bedroom suite high in a gothic castle tower, lit by a few candles: a canopied bed nobody sleeps in, a tall wardrobe, a dressing table with a guttering candle. In the foreground Escher, a pale young nobleman in a wine-red velvet coat worked with silver down the front and lace at the cuffs, his face and dark swept-back hair exactly as the reference shows, lounges in an armchair with one leg slung over the arm and looks out at us with bored amusement. Behind him on the wall stands a tall gilt-framed mirror that shows the whole room perfectly, the bed, the wardrobe, the candles, and in the mirror the same armchair stands empty with its cushion still dented: no Escher, no red coat, no reflection of him at all. Warm candlelight on velvet against cold blue shadow; uncanny, no gore, one single picture, no panels.",
+      "use": "a"
+    },
+    "tome_refused": {
+      "refs": [
+        "strahd",
+        "ireena",
+        "sergei_von_zarovich"
+      ],
+      "prompt": "A memory of four centuries ago, painted entirely in one warm sepia-and-amber monochrome tint like old paper, every colour in it sepia: the great hall of a castle at night, candlelit, couples dancing small and far away in the background. In the foreground a young, living Strahd of about thirty, gaunt and sharp-featured, with black hair swept straight back off his forehead and his face exactly as the first reference shows it but not yet pale, stands very straight in a dark dress uniform covered in medals, ribbons and campaign braid, holding out his gloved hand palm up. Tatyana, a young woman in a white gown with long auburn hair, her face drawn exactly as the second reference shows (she is Tatyana), gives him a small, kind, apologetic smile and does not take his hand, while her eyes turn across the hall to Sergei, who stands alone at the edge of the dancers, laughing, with dark wavy hair and the pale tunic, sash and short cape of the third reference, drawn exactly as that sheet shows him. No other woman in the hall has auburn hair: the dancers are plain, far off, in brown and grey, and Tatyana appears only once. Strahd appears once only, and there are no other principal figures. Humiliation and tenderness, no gore. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "c"
+    },
+    "tome_again": {
+      "refs": [
+        "strahd",
+        "ireena"
+      ],
+      "prompt": "A memory tinted in cold blue-grey and faded amber like old paper: a long dark gallery in a castle at night lit by candles, seen down its length. On both walls hang portraits of the same auburn-haired young woman, her face exactly as the second reference shows it, each one in the dress and the painting style of a different century (the nearest a wide-skirted ball gown, the oldest a stiff medieval gown), each frame with a small black mourning ribbon tied across one corner. At the far end of the gallery stands Strahd, small in the frame, pale and grey and very still, his face and dark swept-back hair as the first reference shows them, one gloved hand resting on the last frame on the wall, which is empty. A single candle burns on the floor. Grief and endless patience, quiet and tragic, no gore. Strahd appears once only. The picture fills the frame edge to edge with no border, frame or paper.",
+      "use": "a"
     }
   }
 }

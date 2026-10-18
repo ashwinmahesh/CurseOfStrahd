@@ -64,7 +64,7 @@
     "trigger": {
       "type": "string",
       "pattern": "^[a-z]+:[a-z0-9_]+$",
-      "description": "A Narrator key that plays it while exploring or in a fight (examine:bonegrinder_lookout, strahd:fled_to_coffin): the narrator's line becomes its caption. find:<magic item> plays it when a Tarokka treasure is found. Conversations play cutscenes with the `cutscene <id>` statement instead."
+      "description": "A Narrator key that plays it while exploring or in a fight (examine:bonegrinder_lookout, strahd:fled_to_coffin): the narrator's line becomes its caption. find:<magic item> plays it when a Tarokka treasure is found, and read:<magic item> when an item's reading plays it (the Tome of Strahd's first reading: the inventory asks Cutscenes.for_trigger). Conversations play cutscenes with the `cutscene <id>` statement instead."
     },
     "then": {
       "$ref": "common.schema.json#/$defs/id",
@@ -74,6 +74,14 @@
       "type": "string",
       "pattern": "^[a-z]+:[a-z0-9_]+$",
       "description": "On a scene that another cutscene's `then` names: the Narrator key (scene:<id>, in narrative/narrator/) whose line reads over its picture."
+    },
+    "more": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]+:[a-z0-9_]+$"
+      },
+      "description": "Further captions over the same picture, after its first (the trigger's line, or `caption`): Narrator keys whose lines read one after another, a click each. The Tome of Strahd's four pictures read three captions each."
     }
   }
 }

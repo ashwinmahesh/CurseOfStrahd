@@ -1908,6 +1908,11 @@ func _use_power(power_id: String, opts: Dictionary) -> void:
 		selected = ""
 	if root.has_method("_refresh"):
 		root.call("_refresh")
+	# A reading that has pictures (the Tome of Strahd, `read:` in story/cutscenes.gd): they come over the screen, the
+	# first time only, and what the reading said is narrated when they close.
+	if bool(res.get("ok", false)) and str(res.get("cutscene", "")) != "" and root.has_method("play_item_cutscene") \
+			and bool(root.call("play_item_cutscene", str(res["cutscene"]), str(res.get("text", "")))):
+		return
 	_draw()
 	_card.add_child(UiKit.label(str(res.get("text", "")) if bool(res.get("ok", false)) else "Can't: %s" % res.get("text", ""), 15,
 		"bile" if bool(res.get("ok", false)) else "flame", 420))
