@@ -249,6 +249,10 @@ func converse() -> void:
 		if root.get("dialogue") == null:
 			return
 		d = root.get("dialogue") as DialogueUI   # one conversation can hand straight on to the next (QA travel sweep)
+		# Someone leads the party (`lead`): follow them, and skip the walk, the way a player taking the story on would.
+		if _follow_the_lead():
+			await frames(1)
+			continue
 		# A merchant's shop or someone's services opened from the talk: look, buy nothing, close it (the talk resumes).
 		for n in root.get_children():
 			if n is ShopScreen:
@@ -287,6 +291,23 @@ func converse() -> void:
 		d.call("_choose", pick)
 		await frames(1)
 	note("conversation didn't end")
+
+
+## The Follow prompt of a `lead` answered "Follow now", or the walk after the person leading skipped (the conversation is
+## hidden while either is up). True when it did something.
+func _follow_the_lead() -> bool:
+	var prompt := root.get("_prompting") as LeadPrompt
+	if prompt != null and prompt.open():
+		note("follows")
+		prompt.follow_button.pressed.emit()
+		return true
+	var v := view()
+	if v != null:
+		for c in v.get_children():
+			if c is LocationLead and not (c as LocationLead)._done:
+				(c as LocationLead)._skip()
+				return true
+	return false
 
 
 func _pick(opts: Array) -> int:
