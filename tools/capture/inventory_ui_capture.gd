@@ -1,7 +1,7 @@
 extends Node
 ## The inventory's categories, rarity borders and Attuned filter (inventory-ui lane): a pack with potions of every rarity,
 ## quest items, magic items of each rarity and some attuned, then the screens one shot each. LANE_ONLY=all,magic,potions,
-## quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
+## rarities,quest,attuned,shop,shop_potions limits the shots; the tabs this build doesn't have are skipped (so the same scene
 ## takes the "before" shots on an older build).
 ## make capture SCENE=res://tools/capture/inventory_ui_capture.tscn NAME=inventory-ui/after FRAMES=10
 
@@ -72,6 +72,18 @@ func capture_shots(tool: Node, out: String) -> void:
 			inv.filter = "Magic"
 			inv.selected = "sunsword")
 		await _shoot(tool, "%s_magic.png" % out)
+		root.call("close_screen")
+	if _wants("rarities"):
+		# Every rarity in one list, scrolled to the end where the legendary and artifact items sit.
+		var inv_r := _inventory(func(inv: InventoryScreen) -> void:
+			inv.filter = "Magic"
+			inv.sort_by = "value"
+			inv.selected = "orb_of_damara")
+		await tool.call("wait_frames", 4)
+		var list := inv_r.get("_grid") as Node
+		var scroll := list.get_parent() as ScrollContainer
+		scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
+		await _shoot(tool, "%s_rarities.png" % out)
 		root.call("close_screen")
 	if _wants("potions") and _has_tab("Potions"):
 		_inventory(func(inv: InventoryScreen) -> void:
