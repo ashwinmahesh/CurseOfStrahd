@@ -1782,9 +1782,9 @@
       "shared_with": "tser_radu"
     },
     "wine_cooper": {
-      "voice_id": "h3aQ5g69oxB0wpernpfx",
-      "name": "Library voice: Ciprian Pop - Friendly and Reflective",
-      "description": "Old Silviu, cooper of the wizard of wines: a generic townsperson on a shared voice, Ciprian Pop - Friendly and Reflective (also Henrik van der Voort's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "Q1khAM9K4Mi6p5TK0ueC",
+      "name": "Library voice: Liviu Mihai - Confident and Excited",
+      "description": "Old Silviu, cooper of the wizard of wines: a generic townsperson on a shared voice, Ciprian Pop - Friendly and Reflective (also Henrik van der Voort's). Owner rule 2026-10-08: minor townsfolk share voices. Recast 2026-10-18 (Ashwin's pick of three library voices, for more enthusiasm): Liviu Mihai.",
       "settings": {},
       "model": "eleven_v3",
       "library": true,
