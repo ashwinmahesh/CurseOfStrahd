@@ -3,6 +3,7 @@
 shader_type spatial;
 render_mode diffuse_lambert, specular_disabled;
 #include "res://shaders/cel_light.gdshaderinc"
+#include "res://shaders/world/see_through.gdshaderinc"
 
 uniform vec3 albedo : source_color = vec3(0.36, 0.36, 0.41);
 uniform sampler2D albedo_tex : source_color, filter_nearest, repeat_enable;
@@ -23,6 +24,10 @@ void vertex() {
 }
 
 void fragment() {
+	// A wall in the party's way opens round it (SeeThrough).
+	if (see_cut(VERTEX, VIEW_MATRIX, INV_VIEW_MATRIX, CAMERA_POSITION_WORLD, FRAGCOORD.xy)) {
+		discard;
+	}
 	vec3 base = albedo;
 	if (use_texture) {
 		base *= texture(albedo_tex, UV * uv_scale).rgb;

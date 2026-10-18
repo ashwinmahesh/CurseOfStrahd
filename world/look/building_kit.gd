@@ -267,8 +267,8 @@ static func interior_style(board: ArenaBoard) -> String:
 
 
 ## ArenaBoard's interior and dungeon wall squares come here (its one hook): a lone square is a pillar, and in the
-## Modern look, where the catalog turns them on, rooms get full-height walls that cut away toward the camera with the
-## ground outside (InteriorWalls, W8). False leaves the square to ArenaBoard's own cut-away wall.
+## Modern look, where the catalog turns them on, rooms get full-height walls with the ground outside (InteriorWalls,
+## W8). False leaves the square to ArenaBoard's own cut-away wall.
 static func interior_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) -> bool:
 	if CastleBuilder.claims(board, c):
 		return true   # Castle Ravenloft's roofs: the castle's own walls (W19)
@@ -284,8 +284,9 @@ static func interior_wall(board: ArenaBoard, c: Vector2i, wall_mat: Material) ->
 
 
 ## A lone wall square inside a room (no wall beside it) is a pillar in the board's interior style, standing on the
-## room's floor (`floor`), taller than the cut-away walls and fading when it hides the party. False when the square
-## isn't a lone pillar or the style has none, so ArenaBoard builds its block as before.
+## room's floor (`floor`), taller than the cut-away walls; it stands solid and opens round the party when it hides it,
+## as the walls do (SeeThrough: a faded pillar left the Amber Temple's glowing veins floating in the dark). False when
+## the square isn't a lone pillar or the style has none, so ArenaBoard builds its block as before.
 static func pillar(board: ArenaBoard, c: Vector2i, floor: Material) -> bool:
 	var id := "kit_pillar_" + interior_style(board)
 	if not has(id) or c.x <= 0 or c.y <= 0 or c.x >= board.grid.width - 1 or c.y >= board.grid.depth - 1:
@@ -301,5 +302,5 @@ static func pillar(board: ArenaBoard, c: Vector2i, floor: Material) -> bool:
 	mi.name = "Pillar"
 	mi.set_meta("on_floor", true)   # (on the room's floor already: ArenaBoard._lift leaves it be on a hill)
 	board.add_child(mi)
-	ModelPiece.fade_with_trees(board, mi)
+	SeeThrough.mark(mi)
 	return true
