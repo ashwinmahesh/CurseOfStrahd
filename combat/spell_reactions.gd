@@ -4,10 +4,13 @@ extends RefCounted
 ## answer a d20 roll (Silvery Barbs), whether a creature can react at all, and releasing a readied spell.
 
 var _enc: WeakRef
+## The Counterspell chain (a Counterspell can be Counterspelled in turn).
+var counters: SpellCounters
 
 
 func _init(encounter: Encounter) -> void:
 	_enc = weakref(encounter)
+	counters = SpellCounters.new(encounter)
 
 
 func enc() -> Encounter:
@@ -50,7 +53,9 @@ func free_casting(c: Combatant, spell_id: String) -> bool:
 ## warlock's free casting below its pact level waits until the pact slots are spent. A slot spent on a Reaction isn't
 ## the turn's slot spell (owner, 2026-10-13: Reactions don't count towards the one spell slot a turn), so it leaves
 ## cast_slot_spell_this_turn alone. {level: the level it's cast at, 0 when nothing paid; free: a free casting}.
-func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
+## `defer_slot`: a slot is only chosen, not spent (`deferred` in the result): a Counterspell's slot goes only if it isn't
+## countered itself (SpellCounters).
+func pay(c: Combatant, spell_id: String, slot_choice: int = 0, defer_slot: bool = false) -> Dictionary:
 	var ch := sp().caster_char(c)
 	if ch == null:
 		return {"level": enc().monster_actions.spend_reaction_spell(c, spell_id), "free": false}
@@ -62,6 +67,8 @@ func pay(c: Combatant, spell_id: String, slot_choice: int = 0) -> Dictionary:
 	var slot := slot_choice if slot_choice in levels else _lowest_slot(ch, level)
 	if slot == 0:
 		return {"level": 0, "free": false}
+	if defer_slot:
+		return {"level": slot, "free": false, "deferred": true}
 	ch.expend_slot(slot)
 	return {"level": slot, "free": false}
 
@@ -223,6 +230,12 @@ func counterspelled(c: Combatant, s: Dictionary, seen: bool = true) -> bool:
 		e.log.add("spell", "%s's %s dissipates (Counterspell): the action is spent, the spell slot kept" % [c.name(), s["name"]], c.id, [test.describe()])
 		return true
 	return false
+
+
+## `c` casts `s`: the Counterspells it may meet, and the chain they make (SpellCounters.run). `proceed` is the rest of the
+## cast, run when nothing stops it.
+func counter_chain(c: Combatant, s: Dictionary, seen: bool, proceed: Callable) -> CombatResult:
+	return counters.run(c, s, seen, proceed)
 
 
 ## The spell save DC `c` casts the Reaction spell `spell_id` with: its stat block's (a monster) or its class's.

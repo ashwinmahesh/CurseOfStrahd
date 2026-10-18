@@ -245,8 +245,9 @@ func decide(o: Dictionary, st: Dictionary = {}) -> String:
 	if bool(o.get("forced", false)):
 		return "auto"
 	var decision := e._reaction_decision(o["reactor"] as Combatant, str(o["kind"]), str(o.get("default", "")))
-	# A hero on Automatic is still asked when the spell has several ways to be cast (Hellish Rebuke, Absorb Elements).
-	if decision == "auto" and o.has("several_ways") and (o["reactor"] as Combatant).is_player_controlled() and (o["several_ways"] as Callable).call():
+	# A hero on Automatic is still asked when the spell has several ways to be cast: a slot level or a free casting
+	# (Hellish Rebuke, Absorb Elements), and a Counterspell offers its ways the same way (owner, 2026-10-15).
+	if decision == "auto" and (o["reactor"] as Combatant).is_player_controlled() and ((o.has("several_ways") and (o["several_ways"] as Callable).call()) or (o.has("ways") and int((o["ways"] as Callable).call()) > 1)):
 		decision = "ask"
 	if decision == "ask" and not bool(o.get("ask", true)):
 		decision = "auto" if e.d20.sync_allows(o) else "never"
@@ -637,6 +638,12 @@ func configurable_policies(c: Combatant) -> Array[Dictionary]:
 			seen[str(spell["id"])] = true
 			out.append({"id": str(spell["id"]), "name": str(spell["name"]), "cost": "Your Reaction" + (" and a spell slot" if str(spell["id"]) in ["backlash", "absorb_elements"] else ""),
 				"modes": spell.get("policy_modes", ["auto", "never"]), "default": str(spell["policy"])})
+			continue
+		# Counterspell: asked about when a foe's Counterspell would stop a spell of the party's (SpellCounters).
+		if str(spell["id"]) == "counterspell" and not seen.has("counterspell"):
+			seen["counterspell"] = true
+			out.append({"id": "counterspell", "name": "Counterspell", "cost": "Reaction and a spell slot", "modes": ["ask", "auto", "never"], "default": "ask",
+				"help": "When a foe's Counterspell would stop a spell of your side's (or a Counterspell of yours), you can Counterspell it. Ask: you're asked each time. Automatic: you do whenever you can, and are still asked when there's more than one way to pay (which slot, or a free casting). Off: never."})
 			continue
 		if not spell.has("roll_response") or seen.has(str(spell["id"])):
 			continue

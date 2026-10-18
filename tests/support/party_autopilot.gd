@@ -504,9 +504,10 @@ func _warlock(c: Combatant) -> CombatResult:
 
 
 ## The autopilot's answer to a prompt: yes to everything, except Divine Smite after a hit (it keeps its paladin's slots
-## for spells, as the fights it was tuned on did before smiting was asked about).
+## for spells, as the fights it was tuned on did before smiting was asked about) and a Counterspell against a foe's
+## Counterspell (no hero could before, so the fights' win rates, tuned without it, stay where they were measured).
 static func _takes(req: ReactionRequest) -> bool:
-	return req.kind != CombatFeatures.DIVINE_SMITE
+	return req.kind != CombatFeatures.DIVINE_SMITE and req.kind != "counterspell"
 
 
 ## Its answer this time: sharp play smites a foe worth a slot (one with SMITE_WORTH_HP left, or on a Critical Hit) that
@@ -659,6 +660,11 @@ func _concentrating_on(c: Combatant, spell_id: String) -> bool:
 ## Every reaction is taken automatically. Returns {outcome, rounds, downs}.
 func run(max_rounds: int = 30) -> Dictionary:
 	e.default_player_reaction = "auto"
+	# No hero Counterspells a foe's Counterspell (SpellCounters): none could before the chain, and the fights' win rates
+	# were tuned without it. Automatic would do it (with one way to pay it never asks), so this one rule is Off.
+	for h in e.combatants:
+		if h.is_player_controlled():
+			h.reaction_rules["counterspell"] = "never"
 	if e.state == Encounter.State.SETUP:
 		e.start()
 	while e.pending != null:   # choices as Initiative is rolled (Tandem Footwork, Alert's swap), before the first turn

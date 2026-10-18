@@ -124,7 +124,10 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
    would change ("AC 16, so this attack misses"), its cost, and Cast / Skip. "Next time" sets a per-character rule
    for that reaction: Ask (default), Never, or an automatic condition such as "auto when it turns a hit to a miss"
    (plan §5.3: a rule the player sets, not AI judgment). Opportunity Attacks, Shield, Counterspell, Uncanny Dodge,
-   Parry and Riposte all use this prompt.
+   Parry and Riposte all use this prompt. A foe's Counterspell at a spell of the party's asks "Counterspell?" of each hero
+   who could answer it (the text gives each side's save and its odds; the slot is a pick when there are several, and
+   Automatic still asks then); a Counterspell of theirs can be Counterspelled in turn, and the combat log tells each step
+   and how the chain resolved, last Counterspell first (combat/spell_counters.gd).
 2. **Roll details**: any log line opens the whole calculation, with dice, Advantage sources, every modifier, damage
    dice before and after Great Weapon Fighting, Resistances, and mastery effects.
 3. **Controller**: LB opens a radial menu (Attacks, Spells, Class, Items, Common, Move, End Turn, Inspect); the right

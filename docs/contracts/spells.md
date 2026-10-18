@@ -81,9 +81,23 @@ Dancing Lights, Mage Hand), `dash` (Expeditious Retreat), `heal_one` (Aura of Vi
 
 ## Reactions and readied spells
 
-Shield (when hit or targeted by Magic Missile), Hellish Rebuke (after being damaged), Absorb Elements (when acid, cold, fire, lightning or thunder damage lands: Resistance before the damage is taken, then a stored `first_melee` extra_damage charge; `SpellReactions.absorb_offers` for an attack, `absorb_synchronous` for damage that can't pause), Counterspell (data only:
-monsters' spells resolve at once). Any one-action spell can be readied (hotbar right-click → Ready): it's cast and
+Shield (when hit or targeted by Magic Missile), Hellish Rebuke (after being damaged), Counterspell (foes' Counterspell of
+a hero's spell, and the chain of Counterspells it opens: `SpellCounters`, below; monsters' own spells resolve at once). Any one-action spell can be readied (hotbar right-click → Ready): it's cast and
 its slot spent, held with Concentration, and released at the first enemy to come within range.
+
+### The Counterspell chain (`combat/spell_counters.gd`, owned by `SpellReactions.counters`)
+
+`SpellCasting.cast` works out what the cast needs, then hands the rest (`_cast_after_counter(cx)`: slot, Concentration,
+events, resolution) to `SpellReactions.counter_chain(c, s, seen, proceed)`, so a Counterspell prompt can pause it. A foe
+the AI plays that would Counterspell the spell (a levelled spell it sees within 60 ft, with its Reaction and a casting
+left) casts it first; then whoever is hostile to the last Counterspell's caster may Counterspell it: the AI at once, a
+hero or guest on a `counterspell` Reaction prompt (`Reactions.offer`; its `ways` key makes an Automatic rule ask when
+there are several ways to pay). Each step is `{caster, target, dc, level, slot, countered}`: the caster's Reaction (and a
+free casting or a monster's use) goes when it is cast, its slot (`SpellReactions.pay(..., defer_slot)`) only when the
+step stands. When no one answers, `_resolve` goes from the last step back: a step that wasn't countered makes its target
+roll a Constitution save against its DC; a failure counters the step before it (the spell, for the first). `proceed` runs
+when the spell is not countered; a countered spell returns an empty result with its action spent and its slot kept. Each
+step and its resolution is a combat log line; the prompt's text is the preview (the save and its odds on each side).
 
 ## Recipe keys added for the Phase 4 spells
 

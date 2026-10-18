@@ -183,10 +183,41 @@ func cast(c: Combatant, spell_id: String, slot: int, targets: Array = [], point:
 		c.magic_action_used = true
 	if not spells.casting_gate(c):
 		return CombatResult.new()
-	# A foe's Counterspell: Subtle Spell leaves nothing to see unless the spell has a Material component.
+	# A foe's Counterspell, and the chain of Counterspells it opens (SpellCounters): Subtle Spell leaves nothing to see
+	# unless the spell has a Material component. The rest of the cast waits for it, since a player may be asked whether to
+	# Counterspell back.
 	var comps := s.get("components", {}) as Dictionary
-	if spells.reaction_spells.counterspelled(c, s, not "subtle" in meta or bool(comps.get("m", false))):
-		return CombatResult.new()
+	var cx := {"c": c, "spell_id": spell_id, "s": s, "slot": slot, "level": level, "use_free": use_free, "paid_slot": paid_slot,
+		"effective_slot": effective_slot, "boost": boost, "resource_recipe": resource_recipe, "meta": meta, "opts": opts, "point": point,
+		"direction": direction, "tgt": tgt, "cell": cell, "entry": entry}
+	return spells.reaction_spells.counter_chain(c, s, not "subtle" in meta or bool(comps.get("m", false)),
+		func() -> CombatResult: return _cast_after_counter(cx))
+
+
+## The rest of a cast (`cx`: what cast() worked out) once no Counterspell stopped it: the slot, free casting or resource
+## spent, Concentration begun, the spell's events and its resolution. Called at once, or after a player's answer to a
+## Counterspell prompt.
+func _cast_after_counter(cx: Dictionary) -> CombatResult:
+	var spells := sp()
+	var e := enc()
+	var c := cx["c"] as Combatant
+	var spell_id := str(cx["spell_id"])
+	var s := cx["s"] as Dictionary
+	var slot := int(cx["slot"])
+	var level := int(cx["level"])
+	var use_free := bool(cx["use_free"])
+	var paid_slot := int(cx["paid_slot"])
+	var effective_slot := int(cx["effective_slot"])
+	var boost := cx["boost"] as Dictionary
+	var resource_recipe := cx["resource_recipe"] as Dictionary
+	var meta := cx["meta"] as Array
+	var opts := cx["opts"] as Dictionary
+	var point := cx["point"] as Vector2
+	var direction := cx["direction"] as Vector2
+	var tgt := cx["tgt"] as Array[Combatant]
+	var cell := cx["cell"] as Vector2i
+	var entry := cx["entry"] as Dictionary
+	var ch := spells.caster_char(c)
 	# A cantrip cast through a feature's uses (Spellfire Spark's Bonus Action Sacred Flame) still spends one.
 	if level == 0 and not resource_recipe.is_empty():
 		ch.spend_resource(str(resource_recipe["resource"]), int(resource_recipe["cost"]))

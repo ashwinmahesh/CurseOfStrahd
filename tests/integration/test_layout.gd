@@ -916,6 +916,22 @@ func test_the_combat_hud_with_a_hero_dying() -> void:
 		assert_false((cv.hud.get("_prompt_rule_row") as Control).visible, "no standing rule for a division")
 		return cv.hud,
 		func() -> void: cv.hud.hide_prompt())
+	# A Counterspell answered by a Counterspell (SpellCounters, owner 2026-10-18): the prompt's long text with both saves
+	# and its odds, and the slots to pick from.
+	var back := ReactionRequest.new("counterspell", party.id, party.id)
+	back.title = "Reaction: Counterspell?"
+	back.text = "Mage casts Counterspell at %s: unless %s's Constitution save holds (+2 against DC 15, 40%% to fail), %s's Fireball dissipates. Counterspell it? Mage's save would be against DC 16 (+2 against DC 16, 45%% to fail); on a failure the Counterspell fizzles, its slot is kept, and %s's Fireball goes ahead." % [party.name(), party.name(), party.name(), party.name()]
+	back.cost = "Reaction and the spell slot you choose"
+	back.target_choices.assign([{"id": "3", "label": "Level 3 slot"}, {"id": "4", "label": "Level 4 slot"},
+		{"id": "5", "label": "Level 5 slot (Pact Magic)"}, {"id": "free", "label": "Free casting, no slot"}])
+	back.selected_ids.assign(["3"])
+	back.min_targets = 1
+	back.max_targets = 1
+	await _check("a Counterspell prompt with its slots", func() -> Variant:
+		cv.hud.show_prompt(back)
+		await _frames(1)
+		return cv.hud,
+		func() -> void: cv.hud.hide_prompt())
 	# Dropping Concentration (owner, 2026-10-17): its slot on the Common tab named for a long-named spell, and the check
 	# that asks before letting go of it.
 	var held := party.creature.begin_concentration("otilukes_resilient_sphere", "Otiluke's Resilient Sphere of the Very Long Name")
