@@ -2,7 +2,7 @@ extends Node
 ## Writes GameState to one JSON file per slot. Saves are allowed anywhere outside combat
 ## (plan §10 Phase 3); the mode check lives here so every caller gets it.
 ## Beside each save (Q9, docs/ui/saves.md): a thumbnail of the game as it was (<slot>.webp), and the player's own note
-## on it (the save's "note"). A new build (builds/play_build.json's commit) copies every save into backups/ before it touches any.
+## on it (the save's "note").
 ## Loading a game saved a while ago opens with the Narrator's recap (Q3, ui/exploration/recap.gd). An Honour run keeps one
 ## save (F1's one-save rule, below).
 
@@ -21,10 +21,6 @@ const ROUND_START := "round_start"
 const THUMB := Vector2i(320, 180)
 ## The autosave on arriving somewhere is written before the place is on screen: its picture waits this long.
 const THUMB_DELAY := 0.8
-## Backups (Q9): the build file (nothing writes it since make play was removed; a checkout has none, so it never backs up) and how many builds' backups are kept.
-const BUILD_FILE := "res://builds/play_build.json"
-const BACKUPS := "backups"
-const BACKUPS_KEPT := 8
 ## "Previously in Barovia" (Q3): a game saved at least this many minutes ago opens with the Narrator's recap.
 const RECAP_AFTER := 30.0
 ## Names the game spells differently now (owner, 2026-10-12: the Wizard is "Ratatouille"). A save an older build wrote
@@ -41,7 +37,6 @@ var _recap_due := false
 
 
 func _ready() -> void:
-	back_up_for_build(build_commit())
 	get_tree().scene_changed.connect(func() -> void:
 		var scene := get_tree().current_scene
 		if _recap_due and scene != null:
@@ -556,69 +551,9 @@ func _thumb_later(slot: String) -> void:
 			_write_thumb(slot, _grab()))
 
 
-# --- Backups --------------------------------------------------------------------------------------
-
-## The build file's commit (builds/play_build.json), or "" when there is none, as in every checkout now.
-static func build_commit() -> String:
-	if not FileAccess.file_exists(BUILD_FILE):
-		return ""
-	var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(BUILD_FILE))
-	return str((data as Dictionary).get("commit", "")) if data is Dictionary else ""
-
-
-func backups_dir() -> String:
-	return save_dir.path_join(BACKUPS)
-
-
-## Before a new build (`commit`) reads any save, a copy of every save and its picture goes to
-## backups/<date>T<time>_<commit>/ (Q9: "a copy of every save kept before each update"). Once per build; the newest
-## BACKUPS_KEPT builds' copies are kept. Returns the folder made, or "".
-func back_up_for_build(commit: String) -> String:
-	if commit == "":
-		return ""
-	var mark := backups_dir().path_join("last_build.txt")
-	if FileAccess.file_exists(mark) and FileAccess.get_file_as_string(mark).strip_edges() == commit:
-		return ""
-	var files: Array[String] = []
-	for f in _files(save_dir):
-		if f.ends_with(".json") or f.ends_with(".webp"):
-			files.append(f)
-	var made := ""
-	if not files.is_empty():
-		made = backups_dir().path_join("%s_%s" % [Time.get_datetime_string_from_system().replace(":", "-"), commit.left(8)])
-		DirAccess.make_dir_recursive_absolute(made)
-		for f in files:
-			DirAccess.copy_absolute(save_dir.path_join(f), made.path_join(f))
-	DirAccess.make_dir_recursive_absolute(backups_dir())
-	var out := FileAccess.open(mark, FileAccess.WRITE)
-	if out != null:
-		out.store_string(commit)
-		out.close()
-	var kept := backups()
-	for old: String in kept.slice(BACKUPS_KEPT):
-		_remove_dir(backups_dir().path_join(old))
-	return made
-
-
-## The backups, newest first: folder names (<date>T<time>_<commit>, so their names sort by when they were made).
-func backups() -> Array[String]:
-	var out: Array[String] = []
-	if DirAccess.dir_exists_absolute(backups_dir()):
-		out.assign(DirAccess.get_directories_at(backups_dir()))
-	out.sort()
-	out.reverse()
-	return out
-
-
 ## The files in `dir`, none if it doesn't exist (a new player has no saves folder yet).
 static func _files(dir: String) -> PackedStringArray:
 	return DirAccess.get_files_at(dir) if DirAccess.dir_exists_absolute(dir) else PackedStringArray()
-
-
-static func _remove_dir(dir: String) -> void:
-	for f in _files(dir):
-		DirAccess.remove_absolute(dir.path_join(f))
-	DirAccess.remove_absolute(dir)
 
 
 # --- Items taken out of the game --------------------------------------------------------------------------------

@@ -235,12 +235,10 @@ class DataTests(unittest.TestCase):
         (self.edge / "saves" / "slot_1.json").write_text("changed in the edge")
         (self.edge / "shader_cache").mkdir()
         (self.edge / "shader_cache" / "mine").write_text("cache")
-        (self.edge / "whats_new.cfg").write_text("stale")
         edge.refresh_data(self.real, self.edge, [self.fan])
         self.assertFalse((self.edge / "saves" / "made_in_edge.json").exists())
         self.assertEqual((self.edge / "saves" / "slot_1.json").read_text(), '{"v": 2}')
         self.assertTrue((self.edge / "shader_cache" / "mine").is_file())
-        self.assertFalse((self.edge / "whats_new.cfg").exists())   # the owner has none, so the edge has none
 
     def test_the_copy_keeps_the_save_times_the_game_sorts_by(self):
         old = self.real / "saves" / "slot_1.json"
