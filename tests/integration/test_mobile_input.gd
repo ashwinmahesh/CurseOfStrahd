@@ -340,6 +340,12 @@ func test_accessibility_only_activates_current_visible_enabled_controls() -> voi
 
 
 class RecordingNativeBridge extends RefCounted:
+	var audio_activations := 0
+
+	func activate_audio_session() -> String:
+		audio_activations += 1
+		return ""
+
 	var snapshots: Array[Dictionary] = []
 	var messages: Array[Dictionary] = []
 
@@ -350,6 +356,35 @@ class RecordingNativeBridge extends RefCounted:
 		var result := JSON.stringify(messages)
 		messages.clear()
 		return result
+
+
+func test_native_focus_reactivates_audio_synchronously_without_resuming_gameplay() -> void:
+	var previous_service := MobileNative.current
+	var service := MobileNative.new()
+	root.add_child(service)
+	service.set_process(false)
+	var bridge := RecordingNativeBridge.new()
+	service.bridge = bridge
+	var prior_pause := get_tree().paused
+	get_tree().paused = true
+	for i in 2:
+		service.notification(NOTIFICATION_APPLICATION_FOCUS_OUT)
+		service.notification(NOTIFICATION_APPLICATION_PAUSED)
+		assert_eq(bridge.audio_activations, i)
+		# Godot starts its audio driver immediately after propagating this notification.
+		# Activation must already have happened when notification() returns, even with a Files sheet open.
+		service.pending = i == 1
+		service.notification(NOTIFICATION_APPLICATION_FOCUS_IN)
+		assert_eq(bridge.audio_activations, i + 1, "activate before the engine resumes its audio unit")
+		service.notification(NOTIFICATION_APPLICATION_RESUMED)
+		assert_eq(bridge.audio_activations, i + 1, "the resumed notification must not activate twice")
+		assert_true(get_tree().paused, "audio readiness cannot bypass the player's Continue screen")
+	get_tree().paused = prior_pause
+	service.bridge = null
+	service.notification(NOTIFICATION_APPLICATION_FOCUS_IN)
+	assert_eq(bridge.audio_activations, 2, "without an iOS bridge desktop focus changes do nothing")
+	service.free()
+	MobileNative.current = previous_service
 
 
 func test_accessibility_action_validation_publishes_changed_snapshot() -> void:

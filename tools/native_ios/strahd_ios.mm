@@ -1,10 +1,19 @@
 // iOS-only GDExtension. UIKit stays on the main queue; Godot polls completed events on its own thread.
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #include <godot_cpp/classes/ref_counted.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 using namespace godot;
+
+static NSString *startupAudioError;
+static NSString *activateAudioSession() {
+    NSError *error = nil;
+    if ([[AVAudioSession sharedInstance] setActive:YES error:&error]) return nil;
+    return error.localizedDescription ?: @"Audio session activation failed.";
+}
 
 static NSMutableArray<NSDictionary *> *events;
 static void event(NSString *kind, NSString *value) {
@@ -89,6 +98,7 @@ class StrahdIOS : public RefCounted {
 protected:
     static void _bind_methods() {
         ClassDB::bind_method(D_METHOD("take_events"), &StrahdIOS::take_events);
+        ClassDB::bind_method(D_METHOD("activate_audio_session"), &StrahdIOS::activate_audio_session);
         ClassDB::bind_method(D_METHOD("import_save", "destination"), &StrahdIOS::import_save);
         ClassDB::bind_method(D_METHOD("share_save", "path"), &StrahdIOS::share_save);
         ClassDB::bind_method(D_METHOD("haptic"), &StrahdIOS::haptic);
@@ -96,6 +106,19 @@ protected:
         ClassDB::bind_method(D_METHOD("set_accessibility", "json"), &StrahdIOS::set_accessibility);
     }
 public:
+    StrahdIOS() {
+        // The scene's ErrorWatch is installed by the time MobileNative creates this service.
+        if (startupAudioError) {
+            UtilityFunctions::push_error(String::utf8("iOS audio session could not start: ") + String::utf8(startupAudioError.UTF8String));
+            startupAudioError = nil;
+        }
+    }
+    String activate_audio_session() {
+        // Complete before Godot's focus callback restarts RemoteIO. Preserve its configured
+        // category, mixing and route policy; UIKit view operations remain on the main queue.
+        NSString *error = activateAudioSession();
+        return error ? String::utf8(error.UTF8String) : String();
+    }
     String take_events() {
         NSData *json;
         @synchronized(events) {
@@ -205,6 +228,12 @@ public:
     }
 };
 static void initialize(ModuleInitializationLevel level) {
+    if (level == MODULE_INITIALIZATION_LEVEL_SERVERS) {
+        // On iOS, the app delegate configures the session before Main::setup2. Activate
+        // before that method initializes CoreAudio's hardware format, not only on resume.
+        startupAudioError = activateAudioSession();
+        return;
+    }
     if (level != MODULE_INITIALIZATION_LEVEL_SCENE) return;
     events = [NSMutableArray array];
     documents = [[StrahdDocumentDelegate alloc] init];
@@ -219,6 +248,6 @@ extern "C" GDExtensionBool GDE_EXPORT strahd_ios_init(GDExtensionInterfaceGetPro
     GDExtensionBinding::InitObject init(address, library, initialization);
     init.register_initializer(initialize);
     init.register_terminator(terminate);
-    init.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
+    init.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SERVERS);
     return init.init();
 }

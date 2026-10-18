@@ -1,9 +1,9 @@
 # iOS development builds
 
 The branch includes universal landscape iPhone/iPad builds, touch controls and mobile UI compositions, native
-Files/share integration, accessibility semantics, and interruption handling. Qualification is still in progress:
-full-game native journeys, physical-device performance and signed distribution
-remain release gates. See [the implementation plan](../plans/ios_ui_and_utility.md).
+Files/share integration, accessibility semantics, and interruption handling. Complete native gameplay journeys
+and physical-device performance remain open. Signed distribution and Apple processing were verified for
+1.0.0 (2001). See [the implementation plan](../plans/ios_ui_and_utility.md).
 
 ## What this build changes
 
@@ -468,3 +468,13 @@ Source `1d88d21f3` gives mobile switches explicit On/Off accessibility values, r
 This follow-up is later than Apple **1.0.0 (2001)**, source `3403c8e3f`, which is VALID and selected for the App Store draft. Its existing upload was rechecked without dispatching another build. No public release or App Review submission was made.
 
 The separate unchanged-runtime diagnostic reached settings, saved and relaunched, then failed after background/resume with `AudioOutputUnitStart failed, code: -10851`. Its finalized result is 0 passed / 1 failed; this is an unresolved native acceptance issue, not a passing campaign. Both four-case utility fixture runs finalized successfully.
+
+
+### Audio startup and recovery candidate — October 17
+
+The native extension now activates AVAudioSession before CoreAudio initialization and again before the engine's
+foreground restart. Gameplay retains its explicit Continue pause; native activation failures remain visible to
+ErrorWatch. The focused iPad title/campaign recovery journey has passed all three cycles; finalized result
+collection and phone qualification are pending. Required `make check` passes 174 tests plus compilation, lint and
+validation; 42 Python iOS tooling tests pass. No 1.0.1 upload has been dispatched.
+See [the investigation and provenance](../plans/ios_ux_research.md#october-17-audio-initialization-and-foreground-recovery).

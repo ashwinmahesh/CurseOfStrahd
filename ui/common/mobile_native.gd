@@ -21,6 +21,16 @@ func _ready() -> void:
 		bridge.call("observe_motion")
 
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_IN and available():
+		# Godot 4.7.2 starts its audio unit immediately after this notification returns.
+		# Reactivate synchronously; a deferred/main-queue task would race that restart.
+		# This only prepares audio. MobileLifecycle still owns the player's Continue pause.
+		var error := str(bridge.call("activate_audio_session"))
+		if error != "":
+			push_error("iOS audio session could not resume: " + error)
+
+
 func _exit_tree() -> void:
 	if current == self:
 		current = null

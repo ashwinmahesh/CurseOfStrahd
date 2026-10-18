@@ -143,6 +143,25 @@ final class NativeGameTests: XCTestCase {
         capture("campaign-after-interruption")
     }
 
+    func testBackgroundResumePreservesTheCurrentScreen() throws {
+        // Exercise the title and a real campaign without replaying unrelated inventory steps.
+        for round in 0..<3 {
+            if round == 1 {
+                tap("Continue")
+                waitForWorld()
+            }
+            XCUIDevice.shared.press(.home)
+            XCTAssertTrue(app.wait(for: .runningBackground, timeout: 10))
+            app.activate()
+            XCTAssertTrue(app.staticTexts["Ready when you are"].waitForExistence(timeout: 15), app.debugDescription)
+            capture("resume-pause-\(round)")
+            tap("Continue", scroll: false)
+            let restored = round == 0 ? app.buttons["New game"] : app.buttons["Menu"]
+            XCTAssertTrue(restored.waitForExistence(timeout: 60), app.debugDescription)
+            capture("resume-cycle-\(round)")
+        }
+    }
+
     func testExplorationMenuKeepsWorldClear() throws {
         // This continuation journey uses the campaign created by the campaign test (or an existing QA save).
         tap("Continue")
