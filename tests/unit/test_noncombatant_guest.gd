@@ -105,6 +105,26 @@ func test_ireena_keeps_out_of_fights_and_no_other_guest_is_told_to() -> void:
 			assert_true(bool(npc.get("guest", false)), "%s keeps out of fights, so she is a guest" % id)
 
 
+# --- Her card -----------------------------------------------------------------------------------------------------------
+
+func test_her_guest_card_says_she_keeps_back_and_another_guests_says_guest() -> void:
+	_with_guests(["ireena", "ismark"] as Array[String])
+	var hud := root.get("hud") as ExploreHud
+	hud.refresh()
+	await _frames(2)
+	var pills: Array[String] = []
+	for l in hud.find_children("*", "Label", true, false):
+		if (l as Label).text in ["Guest", "Keeps back"]:
+			pills.append((l as Label).text)
+	assert_eq(pills, ["Keeps back", "Guest"] as Array[String], "Ireena's card, then Ismark's")
+	assert_true((hud.find_child("Guest_ireena", true, false) as Button).tooltip_text.contains("keeps out of fights"), "her card says why on hover")
+	assert_false((hud.find_child("Guest_ismark", true, false) as Button).tooltip_text.contains("keeps out of fights"), "his doesn't")
+	var cards := (hud.get("_party_box") as VBoxContainer).get_children()
+	for i: int in [cards.size() - 2, cards.size() - 1]:
+		var card := cards[i] as Control
+		assert_true(card.get_combined_minimum_size().x <= 252.5, "a guest's card does not grow past the party's: %s" % [card.get_combined_minimum_size()])
+
+
 # --- A fight without her --------------------------------------------------------------------------------------------
 
 func test_a_fight_starts_without_her_and_her_figure_stays_on_the_board() -> void:

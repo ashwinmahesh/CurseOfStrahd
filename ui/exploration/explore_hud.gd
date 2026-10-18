@@ -389,7 +389,8 @@ func refresh(location_name: String = "", sneaking: bool = false, solo: bool = fa
 		var ghead := HBoxContainer.new()
 		ghead.add_theme_constant_override("separation", 6)
 		ghead.add_child(_label(g.name, 14, "moonlight"))
-		ghead.add_child(UiParts.pill("Guest", "moonlight", 11))
+		# One who keeps out of fights (Ireena: docs/contracts/campaign.md) says so, and the card with her.
+		ghead.add_child(UiParts.pill("Guest" if StoryState.guest_fights(st.guest_ids[gi]) else "Keeps back", "moonlight", 11))
 		gv.add_child(ghead)
 		gv.add_child(UiParts.hp_bar(g, 150.0, 8.0, false))
 		grow.add_child(gv)
@@ -446,6 +447,8 @@ func _guest_button(npc_id: String, who: String) -> Button:
 	for st_name: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		btn.add_theme_stylebox_override(st_name, StyleBoxEmpty.new())
 	btn.tooltip_text = "%s · Guest\nClick: talk, give or send home" % who
+	if not StoryState.guest_fights(npc_id):
+		btn.tooltip_text = "%s · Guest, keeps out of fights\nNo turn in a fight, and nothing can touch them.\nClick: talk, give or send home" % who
 	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	btn.gui_input.connect(_guest_clicked.bind(npc_id, btn))
 	return btn
