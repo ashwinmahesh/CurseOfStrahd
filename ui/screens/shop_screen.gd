@@ -39,10 +39,10 @@ static var ware_filter := "All"
 var _open_bases := ""
 ## Which side's tabs LB/RB step when nothing has focus ("PackSide" or "WaresSide"; pad_tab).
 var _tab_side := "PackSide"
-## The wares side's tabs and the item categories each keeps; Potions are a tab of their own, as in the inventory,
-## Consumables also takes anything used up (a bead, a dust), Wondrous any other magic item, Gear the rest. "All" and the
-## tabs this merchant has wares in are shown.
-const WARE_FILTERS: Array[String] = ["All", "Weapons", "Armor", "Potions", "Consumables", "Wands", "Wondrous", "Gear"]
+## The wares side's tabs and the item categories each keeps; Potions and Scrolls (the Spell Scrolls, of every level) are
+## tabs of their own, as in the inventory, Consumables also takes anything used up (a bead, a dust, a Scroll of
+## Protection), Wondrous any other magic item, Gear the rest. "All" and the tabs this merchant has wares in are shown.
+const WARE_FILTERS: Array[String] = ["All", "Weapons", "Armor", "Potions", "Scrolls", "Consumables", "Wands", "Wondrous", "Gear"]
 const WARE_CATEGORIES := {"Weapons": ["weapon", "ammunition"], "Armor": ["armor", "shield", "clothing"],
 	"Potions": ["potion"], "Consumables": ["scroll", "consumable"], "Wands": ["wand", "rod", "staff", "focus"]}
 ## The wares side lists what this tab keeps, as item ids in order (ware_ids()).
@@ -293,6 +293,8 @@ static func ware_kind(w: Dictionary) -> String:
 	var cat := str(data.get("category", ""))
 	if data.has("template_id"):
 		cat = str(comp.get_entry("magic_items", str(data["template_id"])).get("category", cat))
+	if InventoryScreen.is_spell_scroll(data):
+		return "Scrolls"
 	for f: String in WARE_CATEGORIES:
 		if cat in (WARE_CATEGORIES[f] as Array):
 			return f
