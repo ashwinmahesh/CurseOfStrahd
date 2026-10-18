@@ -172,6 +172,10 @@ endif
 ~ danika
 if flag.vallaki_backed == "wachter"
 Danika [angry]: You did this. I know you did; the whole town watched you do it. You'll get a bed, because I won't turn anyone into the night. Don't expect breakfast.
+# Urwin ends every talk under her rule, so Danika is the one who pays for her boy (sq-stuck-2).
+if quest.the_ravens_ransom == home
+-> vallaki/the_ravens_ransom:danika_thanks
+endif
 -> END
 endif
 if not flag.danika_met
@@ -180,6 +184,7 @@ Narrator: A woman with flour to the elbows looks up from a cauldron, takes in yo
 Danika: Guests. Wipe your feet. Brom! Bray! Get away from that window. Sorry. Two boys and an inn. You'd think one would cancel out the other.
 endif
 * [if quest.the_ravens_ransom == asked] About Bray. -> vallaki/the_ravens_ransom:danika_waits
+* [if quest.the_ravens_ransom == home and flag.festival_begun and not flag.festival_over] About Bray. -> vallaki/the_ravens_ransom:danika_thanks
 * What's good to eat? -> eat
 * [if not flag.wizard_of_wines_hook] The wine at the bar is thin. -> wine
 * [if guest:ireena] Will Ireena be safe here? -> ireena_safe
