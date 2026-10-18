@@ -214,6 +214,7 @@ func _compute(c: Creature) -> void:
 	var situation := c.armor_situation()
 	situation["weapon_tags"] = tags
 	situation["item"] = item_id
+	situation["base_item"] = base_item
 	if ammo_id != "":
 		situation["ammo"] = ammo_id
 	var ctx := c.formula_context()

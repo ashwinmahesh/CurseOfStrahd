@@ -17,22 +17,67 @@ func _armed(e: Encounter, item_id: String, cell: Vector2i = Vector2i(2, 2), preg
 	return c
 
 
-func test_flame_tongue_burns_only_while_ablaze_and_lights_the_field() -> void:
+func _dark_field() -> Encounter:
 	var e := TestCombat.open_field()
+	e.ambient_light = "dark"   # so what a blade lights is what the square shows
+	return e
+
+
+func test_flame_tongue_is_always_ablaze_while_drawn_and_lights_the_field() -> void:
+	var e := _dark_field()
 	var c := _armed(e, "flame_tongue__longsword")
 	var bag := TestCombat.punching_bag(e, Vector2i(3, 2))
 	TestCombat.start_with(e, c)
 	var opt := e.option_by_id(c, "weapon:flame_tongue__longsword")
 	var st := {"t": D20Test.from_natural(D20Test.Kind.ATTACK_ROLL, 12, 5, 10), "option": opt, "critical": false}
-	assert_eq(e.items.hit_damage_dice(c, bag, opt, st).size(), 0, "not lit")
-	var r := e.items.use(c, "flame_tongue__longsword", "ignite")
-	assert_true(r.ok, r.reason)
-	assert_false(c.bonus_available, "a Bonus Action")
 	var dice := e.items.hit_damage_dice(c, bag, opt, st)
-	assert_eq(dice.size(), 1)
+	assert_eq(dice.size(), 1, "no Bonus Action and no command word: it is lit")
 	assert_eq(str(dice[0]["dice"]), "2d6")
 	assert_eq(str(dice[0]["type"]), "fire")
+	assert_true(MagicItems.powers_of(Compendium.shared().item_data("flame_tongue__longsword")).is_empty(), "nothing to switch on")
+	assert_true(c.bonus_available, "and its Bonus Action is still the wielder's")
 	assert_eq(str(e.light_at(Vector2i(10, 2))), "bright", "40 ft of bright light")
+	assert_eq(str(e.light_at(Vector2i(14, 2))), "dim", "and 40 ft more of dim")
+
+
+func test_flame_tongue_burns_only_in_a_hand_and_only_for_its_attuned_wielder() -> void:
+	var e := _dark_field()
+	var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 5)
+	var ch := c.creature as Character
+	ch.add_item("flame_tongue__longsword")
+	var bag := TestCombat.punching_bag(e, Vector2i(3, 2))
+	TestCombat.start_with(e, c)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "dark", "in the pack it is only a sword")
+	# Taken up in the fight (a hand on a sword it was never attuned to still sheds nothing, since it works for no one).
+	ch.equip("flame_tongue__longsword", "main_hand")
+	e.items.sync_held_lights(c)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "dark", "unattuned, it does nothing")
+	ch.attune("flame_tongue__longsword")
+	e.items.sync_held_lights(c)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "bright", "attuned and drawn, it burns")
+	var opt := e.option_by_id(c, "weapon:flame_tongue__longsword")
+	var st := {"t": D20Test.from_natural(D20Test.Kind.ATTACK_ROLL, 12, 5, 10), "option": opt, "critical": false}
+	assert_eq(e.items.hit_damage_dice(c, bag, opt, st).size(), 1)
+	ch.unequip_item("flame_tongue__longsword")
+	e.items.sync_held_lights(c)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "dark", "stowed, the fire goes out")
+
+
+func test_flame_tongue_swapped_in_mid_fight_lights_at_once() -> void:
+	var e := _dark_field()
+	var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 5)
+	var ch := c.creature as Character
+	ch.add_item("longsword")
+	ch.add_item("flame_tongue__longsword")
+	ch.attune("flame_tongue__longsword")
+	ch.equip("longsword", "main_hand")
+	ch.weapon_set_2 = {"main_hand": "flame_tongue__longsword"}
+	TestCombat.start_with(e, c)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "dark", "the plain sword is in hand")
+	assert_true(e.weapons.swap_sets(c).ok)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "bright", "the other set takes the fire with it")
+	assert_true(e.weapons.swap_sets(c).ok)
+	assert_eq(str(e.light_at(Vector2i(10, 2))), "dark", "and takes it away again")
 
 
 func test_slayers_and_disruption_only_against_their_prey() -> void:
@@ -652,3 +697,22 @@ func test_the_tan_bag_of_tricks_pulls_out_a_beast() -> void:
 	assert_eq(beast.side, &"guest")
 	assert_eq(beast.controller, c.controller)
 
+
+
+func test_bracers_of_archery_add_2_damage_with_the_two_bows_and_nothing_else() -> void:
+	var e := TestCombat.open_field()
+	var c := TestCombat.hero(e, "ilse_varga", Vector2i(2, 2), 5)
+	var ch := c.creature as Character
+	for w: String in ["longbow", "longsword"]:
+		ch.add_item(w)
+	ch.add_item("bracers_of_archery")
+	ch.equip("longbow", "main_hand")
+	var bare := e.option_by_id(c, "weapon:longbow")["profile"] as WeaponProfile
+	var before := bare.damage_bonus.total()
+	assert_true(ch.attune("bracers_of_archery") or not MagicItems.needs_attunement(_comp().item_data("bracers_of_archery")))
+	assert_true(ch.wear("bracers_of_archery"))
+	var bow := e.option_by_id(c, "weapon:longbow")["profile"] as WeaponProfile
+	assert_eq(bow.damage_bonus.total(), before + 2, "+2 with a Longbow (the filter reads the weapon underneath)")
+	ch.equip("longsword", "main_hand")
+	var sword := e.option_by_id(c, "weapon:longsword")["profile"] as WeaponProfile
+	assert_false(sword.damage_bonus.has_part("Bracers of Archery"), "none with a sword")

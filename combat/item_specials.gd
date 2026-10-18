@@ -1005,28 +1005,51 @@ func _use_arcana(c: Combatant, p: Dictionary, targets: Array, point: Vector2, op
 	return more.use(c, p, targets, point, opts)
 
 
-## Rod of Lordly Might's buttons: a fiery blade (a Flame Tongue longsword), a battleaxe, a spear, or the mace again.
+## The Rod of Lordly Might's weapon buttons (2024 DMG): the first sprouts a blade of fire and makes the rod a magic
+## Longsword or Shortsword (2d6 Fire on hits, light: the `form_blade` rules in its data), the second a Battleaxe, the
+## third a Spear. Each takes that weapon's own statistics, properties and Mastery (`weapon_form`, WeaponProfile.reshaped:
+## the wielder's proficiency and Masteries are asked of the form, not of the Mace) and, but for the blades, the rod's
+## +3 (its data). A form lasts, through fights and saves, until another button or the same one is pressed.
+const LORDLY_FORMS: Array[String] = ["longsword", "shortsword", "battleaxe", "spear"]
+const LORDLY_BLADES: Array[String] = ["longsword", "shortsword"]
+
+
+## "mace" or the weapon the rod is now ("longsword", "shortsword", "battleaxe", "spear").
+static func lordly_form_of(c: Combatant, iid: String) -> String:
+	for fx: Effect in c.creature.effects:
+		if fx.source_id == iid and fx.data.has("lordly_form"):
+			return str(fx.data["lordly_form"])
+	return "mace"
+
+
 func _lordly_form(c: Combatant, iid: String, form: String) -> CombatResult:
 	var e := enc()
+	if form == "rod" or form == "mace":
+		form = "mace"
+	elif form == "blade":   # a save from before the sword was a Longsword or a Shortsword
+		form = "longsword"
+	if not form == "mace" and not form in LORDLY_FORMS:
+		return CombatResult.fail("The rod has no such button")
+	var was := lordly_form_of(c, iid)
 	for fx: Effect in c.creature.effects.duplicate():
-		if fx.stack_key.begins_with("item:%s:form" % iid):
+		if fx.source_id == iid and fx.stack_key.begins_with("item:%s:form" % iid):
 			c.creature.remove_effect(fx)
-	var shapes := {"blade": ["1d8", "slashing", "a blade of fire"], "battleaxe": ["1d8", "slashing", "a battleaxe"], "spear": ["1d6", "piercing", "a spear"]}
-	if shapes.has(form):
-		var sh := shapes[form] as Array
-		var fx2 := Effect.new("Rod of Lordly Might (%s)" % form, &"item", iid)
-		fx2.stack_key = "item:%s:form_%s" % [iid, form]
-		fx2.modifiers.append(Modifier.of("weapon_override", {"items": [iid], "die": str(sh[0]), "damage_type": str(sh[1])}, "Rod of Lordly Might", &"item"))
-		c.creature.add_effect(fx2)
-		if form == "blade":
-			var lit := Effect.new("Rod of Lordly Might (blade)", &"item", iid)
-			lit.stack_key = CombatItems.toggle_key(iid, "form_blade")
-			c.creature.add_effect(lit)
-			items().attach_light(c, CombatItems.toggle_key(iid, "form_blade"), 40, 40)
-		e.log.add("info", "%s presses a button: the rod becomes %s" % [c.name(), str(sh[2])], c.id)
-	else:
-		items().detach_light(c, CombatItems.toggle_key(iid, "form_blade"))
+	items().detach_light(c, CombatItems.toggle_key(iid, "form_blade"))
+	# The same button again puts the rod back.
+	if form == "mace" or form == was:
 		e.log.add("info", "%s's rod returns to its mace form" % c.name(), c.id)
+		return CombatResult.new()
+	var weapon := Compendium.shared().display_name("items", form)
+	var fx2 := Effect.new("Rod of Lordly Might (%s)" % weapon, &"item", iid)
+	fx2.stack_key = CombatItems.toggle_key(iid, "form_blade") if form in LORDLY_BLADES else CombatItems.toggle_key(iid, "form_" + form)
+	fx2.data["lordly_form"] = form
+	fx2.modifiers.append(Modifier.of("weapon_form", {"items": [iid], "form": form}, "Rod of Lordly Might", &"item"))
+	c.creature.add_effect(fx2)
+	if form in LORDLY_BLADES:
+		items().attach_light(c, CombatItems.toggle_key(iid, "form_blade"), 40, 40)
+		e.log.add("info", "%s presses a button: a blade of fire springs out and the rod becomes a %s" % [c.name(), weapon.to_lower()], c.id)
+	else:
+		e.log.add("info", "%s presses a button: the rod becomes a %s" % [c.name(), weapon.to_lower()], c.id)
 	return CombatResult.new()
 
 

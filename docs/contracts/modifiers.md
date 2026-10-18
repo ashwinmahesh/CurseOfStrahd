@@ -78,7 +78,7 @@ A value is an integer or a formula string: terms joined by `+`/`-`. A term is an
 `weapon`: `melee`, `ranged`, `finesse`, `thrown`, `one_handed_alone` (one melee weapon, nothing in the other
 hand), `two_handed` (melee weapon held in two hands), `light`, `unarmed`. `spell`: true. `school`: a school.
 `bloodied`: true (also on Advantage and Disadvantage sources: a berserker's Bloodied Frenzy). `item` / `ammo`: the weapon or ammunition an attack uses (a magic item's `"@self"`; `"unarmed_strike"`
-for Unarmed Strikes), `base_item`: the mundane weapon underneath (Bracers of Archery: `longbow`). `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
+for Unarmed Strikes), `base_item`: the mundane weapon underneath, or the weapon a `weapon_form` makes it (Bracers of Archery: `longbow`; the Rod of Lordly Might's +3 on its `mace`, `battleaxe` and `spear`). `spell_class`: the class whose spell it is (Potent Spellcasting: cleric). `spell_id`: one spell
 (Agonizing Blast: `"@cantrip"`, the pick of the feature's own choice). `damage_type`: the spell's damage type
 (Elemental Affinity: `"@element"`). `incapacitated`: false (Danger Sense; Advantage and Disadvantage sources see
 the armor worn and whether the creature is Incapacitated). `fear_in_sight`: true (Frightened's Disadvantage: a source of

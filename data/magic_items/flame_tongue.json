@@ -23,29 +23,19 @@
     "name": "Flame Tongue {base}",
     "default": "longsword"
   },
-  "powers": [
-    {
-      "id": "ignite",
-      "name": "Ignite",
-      "cost": "bonus",
-      "toggle": true,
-      "off_cost": "bonus",
-      "custom_light": {
-        "bright": 40,
-        "dim": 40
-      },
-      "text": "Bonus Action: flames erupt from the weapon (an extra 2d6 Fire on hits; bright light 40 ft, dim 40 ft more). Another Bonus Action douses them."
-    }
-  ],
+  "light": {
+    "bright": 40,
+    "dim": 40,
+    "when": "held"
+  },
   "weapon_rules": {
     "extra": [
       {
-        "while": "ignite",
         "dice": "2d6",
         "type": "fire"
       }
     ]
   },
-  "summary": "A Bonus Action sets it ablaze: an extra 2d6 Fire on every hit, and it lights the area.",
-  "text": "Speak its command word as a Bonus Action and fire wraps the blade or head. While it burns, each hit adds 2d6 Fire damage, and the weapon lights up Bright Light out to 40 feet with Dim Light another 40 feet beyond. Repeating the command (another Bonus Action) puts the fire out, as does letting go of the weapon, stowing it or sheathing it."
+  "summary": "Always ablaze while you hold it: an extra 2d6 Fire on every hit, and it lights the area.",
+  "text": "Flames wrap the blade or head whenever you hold the weapon, with no command word and no Bonus Action to spend. While it burns, each hit adds 2d6 Fire damage, and the weapon lights up Bright Light out to 40 feet with Dim Light another 40 feet beyond. Put it away and the fire goes out; draw it and it burns again."
 }

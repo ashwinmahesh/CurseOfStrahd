@@ -112,6 +112,7 @@ func swap_sets(c: Combatant) -> CombatResult:
 			names.append(str(held.get("name", "")))
 	var r := CombatResult.new()
 	r.lines.append(enc().log.add("info", "%s takes up %s" % [c.name(), " and ".join(names) if not names.is_empty() else "nothing"], c.id))
+	enc().items.sync_held_lights(c)   # a Flame Tongue taken up lights, one put away goes out
 	return r
 
 

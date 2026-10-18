@@ -769,14 +769,43 @@ func combat_started() -> void:
 				c0.creature.remove_effect(fx)
 	specials.combat_started()
 	for c in e.combatants:
-		for it in active(c):
-			var data := it["data"] as Dictionary
-			var l := data.get("light", {}) as Dictionary
-			if str(l.get("when", "")) != "drawn":
-				continue
-			if bool(l.get("dark_only", false)) and e.ambient_light == "bright":
-				continue
-			attach_light(c, "light:%s" % it["id"], int(l.get("bright", 0)), int(l.get("dim", 0)), bool(l.get("sunlight", false)))
+		sync_held_lights(c, true)
+
+
+## The light an item sheds, by `light.when`: "drawn" (a Sun Blade, a Mace of Disruption) is lit when a fight starts with
+## the item equipped and working, and burns on to the fight's end; "held" (a Flame Tongue) and "toggle" (the Rod of
+## Lordly Might's fiery blade, while its `light.toggle` is on) follow the hands, lit when the item is equipped and
+## working and put out when it isn't (a sword swapped in or stowed in the middle of a fight). Called as a fight starts
+## (`starting`), at each turn's start and when weapon sets are swapped. A light already burning is left alone.
+func sync_held_lights(c: Combatant, starting: bool = false) -> void:
+	var ch := ch_of(c)
+	if ch == null or not c.is_alive():
+		return
+	for it in carried(c):
+		var l := (it["data"] as Dictionary).get("light", {}) as Dictionary
+		var when := str(l.get("when", ""))
+		if when != "held" and when != "toggle" and not (when == "drawn" and starting):
+			continue
+		var iid := str(it["id"])
+		var toggle := str(l.get("toggle", ""))
+		var key := toggle_key(iid, toggle) if when == "toggle" else "light:%s" % iid
+		var want := ch.item_active(it["entry"] as Dictionary)
+		if want and when == "toggle":
+			want = toggled(c, iid, toggle)
+		if want and bool(l.get("dark_only", false)) and enc().ambient_light == "bright":
+			want = false
+		var burning := _light_burning(c, key)
+		if want and not burning:
+			attach_light(c, key, int(l.get("bright", 0)), int(l.get("dim", 0)), bool(l.get("sunlight", false)))
+		elif burning and not want:
+			detach_light(c, key)
+
+
+func _light_burning(c: Combatant, key: String) -> bool:
+	for o in enc().spells.zones.live():
+		if o.caster_id == c.id and str(o.rules.get("item_light", "")) == key:
+			return true
+	return false
 
 
 # --- Weapons and ammunition -----------------------------------------------------------------------
@@ -1202,6 +1231,7 @@ func surprise_filter(ids: Array) -> Array:
 
 func turn_start(c: Combatant) -> void:
 	_count_budgets(c)
+	sync_held_lights(c)
 	specials.turn_start(c)
 
 
