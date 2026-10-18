@@ -1888,6 +1888,20 @@
       ],
       "prompt": "A memory tinted in cold blue-grey and faded amber like old paper: a long dark gallery in a castle at night lit by candles, seen down its length. On both walls hang portraits of the same auburn-haired young woman, her face exactly as the second reference shows it, each one in the dress and the painting style of a different century (the nearest a wide-skirted ball gown, the oldest a stiff medieval gown), each frame with a small black mourning ribbon tied across one corner. At the far end of the gallery stands Strahd, small in the frame, pale and grey and very still, his face and dark swept-back hair as the first reference shows them, one gloved hand resting on the last frame on the wall, which is empty. A single candle burns on the floor. Grief and endless patience, quiet and tragic, no gore. Strahd appears once only. The picture fills the frame edge to edge with no border, frame or paper.",
       "use": "a"
+    },
+    "ireena_altar": {
+      "refs": [
+        "ireena"
+      ],
+      "prompt": "Inside a dark gothic castle chapel, seen from the foot of the chancel steps at a slightly low angle: broken pews in rows leading away behind the viewer, a tall stained-glass window gone black above the altar, a stone saint standing in a niche in a corner, robed, her face chiselled away to a smooth blank oval with no eyes, nose or mouth, a plain stone altar under a thick quilt of grey dust. Around the altar stands a ring of freshly lit candles, though nobody is there to tend them, throwing warm gold light up into the vaults against cold blue shade. Ireena, the young auburn-haired woman of the reference, stands very still in front of the altar facing it, her two hands clasped together at her waist, head a little bowed, in the slate-blue laced dress, plum cloak and cream scarf exactly as the reference shows; her face is calm, tired and far away, her eyes lowered and empty, as if she were sleepwalking. She appears once only. {party} at the foot of the steps in a lower corner of the frame, small, looking up at her. Stillness, dread and candlelight; nobody else is in the chapel, no monsters, no gore.",
+      "use": "c"
+    },
+    "ireena_woken": {
+      "refs": [
+        "ireena"
+      ],
+      "prompt": "The same dark gothic castle chapel a moment later, from the same low angle at the foot of the chancel steps: the plain stone altar under its grey dust, the stained-glass window gone black, the faceless stone saint in a corner, broken pews. Ireena, the young auburn-haired woman of the reference in the slate-blue laced dress, plum cloak and cream scarf exactly as the reference shows, is waking from a trance: she sways with one hand gripping the edge of the altar, her head lifting, her eyes wide and herself again, a look of dawning fury on her face. Every candle flame around the altar has bent away from her, lying almost flat outward on all sides as if a clean wind had blown out from her, wax smoke curling back, and a cold white-gold light washes across her from the foreground. She appears once only. {party} at the foot of the steps in a lower corner of the frame, small, one of them lowering a hand. Release, a held breath let go; nobody else is in the chapel, no monsters, no gore.",
+      "use": "a"
     }
   }
 }

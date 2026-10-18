@@ -174,7 +174,8 @@ to his coffin she is there again. `narrative/castle_ravenloft/chapel_ireena.dial
 `ireena_held_by_strahd` and `join ireena`** (the one place this plan moves her main state), pays companion approval, and
 gives Ismark a line if he came up with the party. A failed prayer or plea costs 10 minutes and a step
 (`ireena_chapel_pull`); at two the trance holds for now (30 more minutes, the visit ends, `ireena_chapel_pull` back to 0)
-and the party may come back. Side flags (castle_ravenloft_personal.json): `ireena_chapel_seen`, `ireena_chapel_pull`.
+and the party may come back. Two pictures (docs/ui/cutscenes.md): `ireena_altar` at the first sight of her and
+`ireena_woken` when she wakes. Side flags (castle_ravenloft_personal.json): `ireena_chapel_seen`, `ireena_chapel_pull`.
 Not changed: `ireena_sanctuary = "taken"`, `strahd_window = "taken"` and the Sanctuary quest's `taken` stage (a failure
 ending) stay as the window left them.
 

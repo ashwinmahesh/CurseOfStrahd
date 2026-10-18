@@ -220,6 +220,30 @@ func test_a_warding_prayer_and_the_plea_wake_her() -> void:
 		assert_true(woke_by_it, "%s wakes her for some roll" % pick[0])
 
 
+# --- The two pictures --------------------------------------------------------------------------------------------------
+
+static func _pictures(beats: Array[Dictionary]) -> Array[String]:
+	var out: Array[String] = []
+	for b in beats:
+		if str(b.get("kind", "")) == "cutscene":
+			out.append(str(b.get("id", "")))
+	return out
+
+
+func test_the_first_sight_and_the_waking_each_have_a_picture() -> void:
+	var st := _held(_party())
+	var beats := _drive(st, START, ["Stand before her and call on your god"])
+	assert_eq(_pictures(beats), ["ireena_altar", "ireena_woken", ""] as Array[String], "the altar, her waking, then the picture goes")
+	for b in beats:
+		if str(b.get("kind", "")) == "cutscene" and str(b.get("id", "")) != "":
+			assert_true(ResourceLoader.exists(str(b.get("image", ""))), "%s has its picture" % b["id"])
+	var again := _drive(st, START, ["Leave her"])
+	assert_eq(_pictures(again), [] as Array[String], "she is gone from the chapel; a later visit has no first picture")
+	var held := _held(_party())
+	_drive(held, START, ["Leave her"])
+	assert_eq(_pictures(_drive(held, START, ["Leave her"])), [] as Array[String], "a second visit to a held Ireena shows no altar picture")
+
+
 # --- When it goes wrong ------------------------------------------------------------------------------------------------
 
 func test_one_misstep_costs_time_and_brings_the_menu_back() -> void:

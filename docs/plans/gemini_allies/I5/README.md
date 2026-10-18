@@ -49,3 +49,14 @@ lines went. The four lines that changed, from Gemini's second reply (`raw_reply_
 - `woken`, Ireena: "Say one more word about it, brother, and I'll go down the mountain on my own." (contraction.)
 
 The edit notes above for `woken` ("I let it be put on me", "that") describe the first pass; the lines are now these.
+
+Two things the redraft got wrong, found afterwards: the brief called her clothes "a long dark blue coat over a white
+scarf" (a guess from her map sprite); her turnaround, which the cutscene pictures use, is a slate-blue laced dress, a plum
+cloak and a cream scarf. So `first_sight` now says "in her plum cloak" instead of "in her dark coat" (a canon fix, not a new
+draft). No line mentions the dress now.
+
+## The pictures
+
+Two cutscenes, made by Gemini from her turnaround with the recipes in `tools/art/cutscene_recipes.json`
+(`ireena_altar`, `ireena_woken`), four takes in all, about $0.40 on the primary key (Ashwin, 2026-10-18: "Go ahead with
+images"). Only the used takes are committed (`art/generated/cutscenes/ireena_altar_c.png`, `ireena_woken_a.png`).

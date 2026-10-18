@@ -8,7 +8,9 @@
 # Persuasion stays spent (docs/contracts/dialogue.md), so the Symbol, faith, the sword and a warding prayer are the ways
 # on, and "Leave her" is always there. Strahd is not in this scene. While the reading has him waiting in this chapel the
 # entry is hidden (data/locations/castle_ravenloft_chapel.json) and the parley says she is upstairs.
-# Drafted by Gemini through the ai-bridge, edited for length and canon (docs/plans/gemini_allies/I5/).
+# Two pictures (data/cutscenes: ireena_altar at the first sight, ireena_woken when she wakes), made by Gemini from her
+# turnaround (tools/art/cutscene_recipes.json). Drafted by Gemini through the ai-bridge, edited for length and canon
+# (docs/plans/gemini_allies/I5/).
 
 ~ start
 set ireena_chapel_pull = 0
@@ -19,8 +21,9 @@ endif
 
 ~ first_sight
 set ireena_chapel_seen
+cutscene ireena_altar
 Narrator: Candles burn all around the altar, freshly lit, though nobody here is tending them and the saint in the corner has no face.
-Narrator: Ireena stands before the stone in her dark coat, hands folded at her waist, still as wax.
+Narrator: Ireena stands before the stone in her plum cloak, hands folded at her waist, still as wax.
 Ireena: Keep your voices down, if you would. The candles are nearly ready, and the house hates a noise.
 Ireena [sad]: I thought it would be harder to stand still. Once you stop fighting the cold, there is very little left to do.
 -> menu
@@ -105,11 +108,13 @@ Ireena: Do not go far. There will be plenty of room in the pews when he is ready
 ~ woken
 set ireena_held_by_strahd = false
 join ireena
+cutscene ireena_woken
 Narrator: Ireena sways once and catches the edge of the dusty altar, as if the floor had been moved while she wasn't looking.
 Ireena [afraid]: How long have I been standing here? Tell me plainly.
 Ireena [angry]: It was the lake from my dream, cold water up to my chin, and I stood here and let it.
 Ireena [angry]: Folded hands and a quiet voice, like a candlestick set out for company. I'd rather be dead in a ditch.
 Ireena: And don't gawk. He took me out of my own window without my sword, and I want it on the record that I noticed.
+cutscene end
 if guest:ismark
 Ismark [sad]: Look at you, standing in the candles like a saint in a window. You took ten years off me.
 Ireena [smile]: Say one more word about it, brother, and I'll go down the mountain on my own.
