@@ -65,9 +65,8 @@ on a miss), Advantage/Disadvantage with their sources, cover, and what the party
   Thunderwave's Cube turns with the aim, settling on a row, column or diagonal within 2° of one; a cone or line starts
   where the aim leaves the caster's space. A cone takes every square at least a quarter inside its triangle, a line
   every square at least half inside it, a cube every square whose middle is inside it (`CombatGrid.area_cells`); the
-  outline drawn is that shape and the creatures listed are the ones it takes. Foes still point their cones along the
-  nearest of the eight directions toward the creature they aim at (`CombatGrid.grid_aim`), as the fights were tuned
-  with.
+  outline drawn is that shape and the creatures listed are the ones it takes. Foes' cones point straight at the creature
+  they aim at the same way (owner, 2026-10-18: "Opponents can free aim too").
 - **A creature in another shape wears it** (owner, 2026-10-13: "When an enemy or character is polymorphed, their
   sprite should reflect their transformed shape"): a Polymorph's, True Polymorph's or Wild Shape's Beast is drawn with
   that Beast's own sprite, height and base, facing the way the creature faced, its name, health bar and portrait the

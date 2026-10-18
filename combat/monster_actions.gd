@@ -441,9 +441,7 @@ func save_victims(c: Combatant, act: Dictionary, t: Combatant) -> Array[Combatan
 	else:
 		var origin := e.center_of(c)
 		if str(area["shape"]) == "cone":
-			# Along the nearest of the eight grid directions toward the target, as the fights were tuned with; the player's
-			# own cones point anywhere (CombatGrid.grid_aim).
-			cells = e.grid.cone_from(c.cell, c.size_cells, origin + CombatGrid.grid_aim(e.center_of(t) - origin), int(area.get("size", 15)))
+			cells = e.grid.cone_from(c.cell, c.size_cells, e.center_of(t), int(area.get("size", 15)))
 		elif str(area["shape"]) == "line":
 			# Straight at the target, at whatever angle, from where that leaves the monster's space.
 			var dir := e.center_of(t) - origin

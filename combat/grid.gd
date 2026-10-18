@@ -736,8 +736,8 @@ static func edge_point(cell: Vector2i, size_cells: int, dir: Vector2) -> Vector2
 	return Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0) + d * (size_cells / 2.0) / maxf(absf(d.x), absf(d.y))
 
 
-## The nearest of the eight grid directions to `d`, a row's, a column's or a diagonal's. Foes still aim their cones this
-## way (MonsterActions.save_victims, AiSpells): the fights were tuned with it (2026-10-18).
+## The nearest of the eight grid directions to `d`, a row's, a column's or a diagonal's. The test autopilot aims its
+## cones this way (PartyAutopilot._cone_dir), as the fights were tuned with (2026-10-18).
 static func grid_aim(d: Vector2) -> Vector2:
 	var a := snappedf(d.angle(), PI / 4.0) if d.length() > 0.0001 else 0.0
 	return Vector2(roundf(cos(a)), roundf(sin(a))).normalized()

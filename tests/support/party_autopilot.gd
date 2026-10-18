@@ -585,8 +585,7 @@ func _cone_dir(c: Combatant, foes: Array[Combatant], spell_id: String, allies_sa
 		var dir := e.center_of(f) - origin
 		if dir.length() < 0.01:
 			continue
-		var a := snappedf(dir.angle(), PI / 4.0)
-		dir = Vector2(roundf(cos(a)), roundf(sin(a))).normalized()
+		dir = CombatGrid.grid_aim(dir)
 		var n := 0
 		var big := false
 		var allies := 0
