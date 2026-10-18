@@ -26,8 +26,7 @@ The first conversation menus left every way out but one to a plain "Leave it." a
 if every look at the hearth failed (the plan's rule 8). A second, short brief (brief2.md, reply in gemini_reply2.json)
 asked Gemini for five option labels: L01 (spend an hour taking the hearth apart: finds the passage with no roll, costs
 `time +60`, and plays S09a's line as it is), L02 and L03 (leave the sconce and the rope alone), L04 and L05 (climb down
-the smokestack, leave it). All five are used as drafted. The only text in the conversations that Gemini did not draft is
-the two syntax-only words in the unused slots' place: nothing.
+the smokestack, leave it). All five are used as drafted, so every line in the conversations is Gemini's (S09a plays twice).
 
 ## Not voiced
 
