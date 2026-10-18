@@ -1,5 +1,7 @@
 {
   "id": "ring_of_mind_shielding",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-17 (magic item audit, docs/story/magic_item_audit.md): nothing in the game reads minds, tells lies by magic or casts Zone of Truth on the party, so it did nothing; a save's copies become items of the same rarity (SaveSystem.WITHDRAWN)",
   "name": "Ring of Mind Shielding",
   "source": {
     "book": "DMG2024",

@@ -1018,9 +1018,9 @@
       ],
       "kind": "search",
       "search_dc": 16,
-      "label": "a ring set into the throne of bones",
+      "label": "a stone set into the throne of bones",
       "model": "bone_scatter",
-      "item": "ring_of_regeneration"
+      "item": "ioun_stone_strength"
     }
   ],
   "containers": [

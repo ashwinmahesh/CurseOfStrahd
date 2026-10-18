@@ -1,5 +1,7 @@
 {
   "id": "ring_of_water_walking",
+  "playable": false,
+  "removed": "Ashwin, 2026-10-17 (magic item audit, docs/story/magic_item_audit.md): nothing in the game lets a creature stand on water, so it did nothing; a save's copies become items of the same rarity (SaveSystem.WITHDRAWN)",
   "name": "Ring of Water Walking",
   "source": {
     "book": "DMG2024",
