@@ -223,27 +223,40 @@ func test_the_vent_fire_at_level_10() -> void:
 	assert_true(wins >= 4 and wins <= 6, "the vent-fire is put out in 4 to 6 of 8 (%d)" % wins)
 
 
-## Sarkhaza at level 10: Sarkhaza (85 HP), 6 Wights; 3 in 8.
-func test_sarkhaza_at_level_10() -> void:
+## Sarkhaza's fight over seeds 1-8 at level 11 with `flags`, for the versions no party is meant to win (_series asks
+## for one win at least): every fight finishes. Returns the wins.
+func _sarkhaza_wins(flags: Array[String]) -> int:
+	var wins := 0
+	for s: int in range(1, 9):
+		var res := await _play("ghakis_lair", 12, 11, "sarkhaza", s, flags, [], [], HOARD_MOUTH)
+		assert_ne(str(res["outcome"]), "timeout", "Sarkhaza seed %d finished" % s)
+		if str(res["outcome"]) == "victory":
+			wins += 1
+	print("        sarkhaza %s at level 11: %d/8 won" % [flags, wins])
+	return wins
+
+
+## Sarkhaza as she is at level 11: an ancient red (507 HP) on her chain, in her lair. Her first Fire Breath takes the
+## party; 0 in 8, by design (docs/story/boss_fights.md): the keepers' log says how they went down to her safely.
+func test_sarkhaza_as_she_is_at_level_11() -> void:
 	speakers_step_aside = true
-	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], [], [], [], HOARD_MOUTH)
-	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls in 2 to 4 of 8 (%d)" % wins)
+	var wins := await _sarkhaza_wins([])
+	assert_true(wins <= 1, "head on, an ancient red takes the party (%d of 8)" % wins)
 
 
-## Sarkhaza with the keepers' three tricks at level 10: Sarkhaza (165 HP), 6 Wights; 4 in 8 (a reward). Counted over all eight
-## seeds with the speakers stepped aside like her other fights (2026-10-15: it played four seeds uncounted, and which squares she
-## started from depended on the test that ran before).
-func test_sarkhaza_with_the_keepers_tricks_at_level_10() -> void:
+## Sarkhaza with the keepers' three tricks at level 11: grave-salted (Slowed, one Rend, one legendary action), choking
+## for a minute on the hauled-in collar (30 HP down, no Fire Breath, no spells) and the vents drowned (no lair); 3 in 8.
+func test_sarkhaza_with_the_keepers_tricks_at_level_11() -> void:
 	speakers_step_aside = true
-	var wins := await _series("ghakis_lair", 12, 10, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
-	assert_true(wins >= 3 and wins <= 5, "Sarkhaza falls to the keepers' tricks in 3 to 5 of 8 (%d)" % wins)
+	var wins := await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_salted", "wyrm_chain_drawn", "ghakis_sluice_open"], [], [], HOARD_MOUTH)
+	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls to the keepers' tricks in 2 to 4 of 8 (%d)" % wins)
 
 
-## Sarkhaza unchained at level 11: Sarkhaza (375 HP); 3 in 8.
+## Sarkhaza unchained at level 11, salted and with the vents drowned: off her chain her Fire Breath is hers again; 0 in 8.
 func test_sarkhaza_unchained_at_level_11() -> void:
 	speakers_step_aside = true
-	var wins := await _series("ghakis_lair", 12, 11, "sarkhaza", [1, 2, 3, 4, 5, 6, 7, 8], ["wyrm_unchained"], [], [], HOARD_MOUTH)
-	assert_true(wins >= 2 and wins <= 4, "Sarkhaza falls unchained in 2 to 4 of 8 (%d)" % wins)
+	var wins := await _sarkhaza_wins(["wyrm_unchained", "wyrm_salted", "ghakis_sluice_open"])
+	assert_true(wins <= 1, "off her chain she takes the party (%d of 8)" % wins)
 
 
 ## Khazan's study, the four just inside its door; the hall of names, the four at the stair foot.

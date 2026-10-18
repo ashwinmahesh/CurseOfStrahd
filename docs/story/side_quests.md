@@ -1223,7 +1223,7 @@ going up every new moon with a cage on the back. There were faces in the cage th
 of Ghakis on the travel map (data/travel/mount_ghakis.json, a new region with its own loading card), two hours round
 the gorge from the pass. **Escalation:** the count's keepers are unloading at an iron gate in the mountain, and the
 cage holds his tithe, Doina and Petrache, charcoal-burners from below Krezk (new speakers); the keepers' log in their
-post names what's inside. **Twist:** a red dragon, Sarkhaza (new speaker), who came through the mists forty years ago
+post names what's inside. **Twist:** an ancient red dragon, Sarkhaza (new speaker), who came through the mists forty years ago
 after a dead silver dragon's gold and found the count waiting: chained by the neck, wings riveted shut, starved on
 grave-salt, lying on the hoard she came for. She offers to burn the count out if the party pulls the pin from her
 collar (Insight DC 16: she can't fly, and she means the villages below). **Second twist:** the hoard is gilt lead
@@ -1231,20 +1231,32 @@ collar (Insight DC 16: she can't fly, and she means the villages below). **Secon
 
 A mini-dungeon in two maps (data/locations/ghakis_shoulder.json, ghakis_lair.json): the shoulder and gate; then the
 keepers' post, the larder, the anchor (the great drum her chain is wound on), the vent gallery and her cavern. The
-keepers had three ways of going down to her safely, and each one is a lair trick that changes her fight:
+keepers had three ways of going down to her safely, and each one puts her in a state for her fight (her stat block's
+`states`, shown on her sheet; the encounter's versions in ghakis_lair.json turn them on):
 
-- **Salt her meat** (the larder, Sleight of Hand DC 14; a bad job and she smells it): fed to her, she fights at 155 HP.
-- **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): she starts the fight choking on the collar,
-  surprised and 30 HP down.
-- **Open the sluice** (the vent gallery): snowmelt drowns the cracks, and her lair can't act in the fight.
-- Pulling the pin from her collar instead lets her loose at 215 HP, with no chain to haul.
+- **Salt her meat** (the larder, Sleight of Hand DC 14; a bad job and she smells it): fed to her, she fights
+  grave-salted: slowed (Speed halved, -2 AC and Dexterity saves, no Reactions, an action or a Bonus Action), one Rend
+  on her turn and one legendary action a round.
+- **Haul her chain in** (the anchor's capstan, Athletics DC 17; one try): the collar crushes her throat (she starts 30
+  HP down and surprised), and she chokes for a minute, her first ten turns: no Fire Breath, no spells. The keepers'
+  log says it: "a minute is long enough".
+- **Open the sluice** (the vent gallery): snowmelt drowns the cracks, and the fight isn't in her lair: no lair
+  actions, three legendary actions and four Legendary Resistances instead of four and five.
+- On her chain in every fight but one: Speed 20, no climbing. Pulling the pin from her collar instead lets her off it
+  (Speed 40, climbing 40), with no chain to haul.
 
-- **Boss: Sarkhaza** (data/monsters/sarkhaza.json, `source.book: custom`, built down from the 2025 Monster Manual's
-  adult red dragon, drawn with the draconic spirit's sprite at her own height, `art_height`): Huge dragon, AC 18,
-  200 HP, Speed 20 and no flight, two Rends (reach 10, slashing and fire), Fire Breath (recharge 5-6, a 60-ft cone,
-  DC 17 Dex, 11d6), Legendary Resistance (3/day), a Rend or a drag of her chain between turns, and her lair on
-  initiative 20 (fire out of the cracks under two foes, or the roof coming down). CR 13. As she is, the autopilot wins 5 of 8 at level 10; with all
-  three tricks it wins 4 of 4; unchained at level 11 (212 HP), 4 in 8, the harder side (at 210, 6) (2026-10-13, retuned for the sharp test party: the owner's 5 in 8 on Balanced).
+- **Boss: Sarkhaza** (data/monsters/sarkhaza.json; owner, 2026-10-18: "she is supposed to be an ancient red dragon").
+  The 2025 Monster Manual's Ancient Red Dragon, drawn with the draconic spirit's sprite at her own height
+  (`art_height` 5): Gargantuan, AC 22, 507 HP, three Rends (+17, reach 15, 2d8 + 10 slashing and 3d6 fire), Fire
+  Breath (recharge 5-6, a 90-ft cone, DC 24 Dex, 26d6), Spellcasting (Charisma, DC 23: Command and Scorching Ray at
+  will, Fireball once), Legendary Resistance (4/day, 5 in her lair), three legendary actions (four in her lair:
+  Commanding Presence, Fiery Rays, Pounce), and her cavern on initiative 20 (fire out of the cracks under two foes, or
+  the roof coming down). CR 24. What the story adds is on her sheet: her wings riveted shut (no Fly Speed, the
+  book's is 80 ft.) and the chain. The fight is for level 11, the game's cap (the Amber Temple is the last milestone,
+  and Ghakis is on its road). Head on, her first Fire Breath takes a level 11 party: the full-ability test party wins
+  0 of 8. With the keepers' three tricks it wins 3 of 8 (the boss band, in about ten rounds: often a race with the end
+  of her minute); with any one of them left out, or unchained, 0 of 8; with all three at level 10, 1 of 8 (2026-10-18,
+  docs/story/boss_fights.md).
 - Fights on the way down: the keepers at the gate (`ghakis_keepers`: eight wights, three revenants and a helmed
   horror, waiting by the cart) and the vent gallery (`vent_fire`: a fire elemental at 150 HP, two flameskulls, the
   keepers who forgot the sluice, and three wights). The sharp autopilot wins each 5 of 8 at level 10.
@@ -1366,6 +1378,19 @@ offered as a hunt. The kills are the flags the regions already set, so the ledge
 | Baba Lysaga | `lysaga_dead` | berez | 8 | +2 Greataxe (rare) |
 | Sarkhaza | `sarkhaza_slain` | mount_ghakis | 9 | +2 Scale Mail (very rare) |
 | The Eye Below | `eye_below_slain` | amber_temple | 9 | +3 Maul (very rare) |
+| Dragan, the werewolf at Tser Falls | `falls_werewolf_slain` | svalich_road | 3 | 10 bolts |
+| The Tinker's Wagon | `wagon_slain` | svalich_road | 4 | 3 alchemist's fire, 10 bolts |
+| The count's fowlers | `fowlers_slain` | lake_zarovich | 5 | 3 holy water, 10 bolts |
+| The Vine Mother | `vine_mother_slain` | wizard_of_wines | 5 | scroll of protection (plants), 3 alchemist's fire |
+| Morgantha | `morgantha_slain` | old_bonegrinder | 5 | scroll of protection (fiends), 2 holy water, 2 antitoxin |
+| Wintersplinter | `yester_hill_resolved` | yester_hill | 6 | 3 alchemist's fire, 6 +1 bolts |
+| The Count's Huntsman | `huntsman_slain` | svalich_road | 7 | scroll of protection (undead), potion of resistance (necrotic), 3 holy water |
+| The Grandsire | `grandsire_slain` | krezk | 7 | 10 +1 bolts |
+| Kiril Stoyanovich | `kiril_defeated` or `den_broken` (the reckoning) | werewolf_den | 7 | 10 +1 bolts |
+| Khazan | `khazan_destroyed` | van_richtens_tower | 7 | scroll of protection (undead), potion of resistance (necrotic), 4 holy water |
+| Baba Lysaga | `lysaga_dead` | berez | 8 | 6 +2 bolts, 3 alchemist's fire |
+| The Eye Below | `eye_below_slain` | amber_temple | 9 | scroll of protection (aberrations), 8 +2 bolts |
+| Sarkhaza | `sarkhaza_slain` | mount_ghakis | 11 | 2 potions of resistance (fire), 8 +2 bolts |
 
 **What she pays (Ashwin, 2026-10-19).** The old hunter's goods (bolts, holy water, scrolls, healing draughts by level) were
 too slight for the names they paid for. The six easier names now pay gold, a thousand or more and growing with the name,

@@ -228,7 +228,7 @@ static func height_for(aid: String) -> float:
 
 
 ## Sprite height for a combatant: its stat block's own `art_height` when it borrows a smaller creature's sprite at a
-## bigger size (Sarkhaza, a Huge dragon on the draconic spirit's), else its art id's (height_for).
+## bigger size (Sarkhaza, a Gargantuan dragon on the draconic spirit's), else its art id's (height_for).
 static func height_of(c: Combatant) -> float:
 	if c.creature is Monster and (c.creature as Monster).data.has("art_height"):
 		return float((c.creature as Monster).data["art_height"])

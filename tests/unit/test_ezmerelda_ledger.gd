@@ -27,7 +27,7 @@ const NAMES := {
 	"kiril": ["kiril_defeated", "werewolf_den", 7],
 	"khazan": ["khazan_destroyed", "van_richtens_tower", 7],
 	"lysaga": ["lysaga_dead", "berez", 8],
-	"sarkhaza": ["sarkhaza_slain", "mount_ghakis", 9],
+	"sarkhaza": ["sarkhaza_slain", "mount_ghakis", 11],
 	"eye": ["eye_below_slain", "amber_temple", 9],
 }
 const RARITY_FROM := {"common": 1, "uncommon": 1, "rare": 5, "very_rare": 9, "legendary": 11}
@@ -279,9 +279,12 @@ func test_with_nothing_killed_she_names_the_local_hunts_first_and_then_the_harde
 	assert_eq(offers.get("khazan", ""), "ask", "the one under the tower she sits beside")
 	assert_eq(offers.get("lysaga", ""), "ask", "then the hardest the party reaches (level 8)")
 	assert_eq(offers.get("kiril", ""), "ask")
-	assert_false(offers.has("sarkhaza") or offers.has("eye"), "level 9 hunts wait for level 9")
+	assert_false(offers.has("sarkhaza") or offers.has("eye"), "the level 9 and 11 hunts wait for their levels")
 	var inn := _offers(_party(9, INN))
-	assert_true(inn.has("eye") and inn.has("sarkhaza") and inn.has("lysaga") and inn.size() == 3, "where nothing is local, the hardest come first: %s" % [inn])
+	assert_true(inn.has("eye") and inn.has("lysaga") and inn.has("khazan") and inn.size() == 3, "where nothing is local, the hardest come first: %s" % [inn])
+	assert_false(inn.has("sarkhaza"), "an ancient red waits for level 11")
+	var cap := _offers(_party(11, INN))
+	assert_true(cap.has("sarkhaza") and cap.has("eye") and cap.has("lysaga") and cap.size() == 3, "the hardest of all first: %s" % [cap])
 	var crossroads := _offers(_party(9, "svalich_crossroads"))
 	assert_true(crossroads.has("falls") and crossroads.has("wagon") and crossroads.has("huntsman"), "at the crossroads, the crossroads' hunts: %s" % [crossroads])
 	var young := _offers(_party(4, "svalich_crossroads"))

@@ -374,16 +374,21 @@ func test_the_counts_wolves_come_out_of_the_fog_for_ilarion() -> void:
 		await _frames(2)
 
 
-## Sarkhaza rises off her gold as big as she should be (the draconic spirit's sprite at her own height), and her death
-## moves The Warm Snow on.
+## Sarkhaza rises off her gold as big as she should be (an ancient red: Gargantuan, the draconic spirit's sprite at her
+## own height), and her death moves The Warm Snow on.
 func test_sarkhaza_rises_on_her_hoard() -> void:
 	var v := await _boot("ghakis_lair", 12, 10, [])
 	GameState.story.set_quest_stage("the_warm_snow", "chained")
+	# Her talk ends in the fight and she leaves her conversation's square for the fight's, the same one (she rises there).
+	FightSeriesCase.step_aside(v, "sarkhaza")
 	var e := await _fight(v, "sarkhaza", ["Sarkhaza"])
 	for c in e.combatants:
 		if c.name() == "Sarkhaza":
-			assert_eq(c.size_cells, 3, "Huge")
-			assert_eq(CombatToken.height_of(c), 3.4, "drawn at her own height, not the spirit's")
+			assert_eq(c.size_cells, 4, "Gargantuan")
+			assert_eq(CombatToken.height_of(c), 5.0, "drawn at her own height, not the spirit's")
+			assert_eq(c.creature.max_hp(), 507, "an ancient red's Hit Points")
+			assert_eq(c.creature.speed("fly").total(), 0, "her wings riveted shut")
+			assert_eq(c.creature.speed().total(), 20, "on her chain")
 	await _end(v)
 	assert_true(bool(GameState.story.get_flag("sarkhaza_slain", false)))
 	assert_eq(GameState.story.quest_stage("the_warm_snow"), "slain")

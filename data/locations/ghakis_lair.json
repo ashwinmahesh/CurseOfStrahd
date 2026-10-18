@@ -889,8 +889,8 @@
     {
       "npc": "sarkhaza",
       "cell": [
-        22,
-        7
+        21,
+        6
       ],
       "dialogue": "mount_ghakis/the_warm_snow:wyrm",
       "when": "not flag.sarkhaza_slain and flag.wyrm_chain_drawn",
@@ -900,8 +900,8 @@
     {
       "npc": "sarkhaza",
       "cell": [
-        22,
-        7
+        21,
+        6
       ],
       "dialogue": "mount_ghakis/the_warm_snow:wyrm",
       "when": "not flag.sarkhaza_slain and not flag.wyrm_chain_drawn",
@@ -984,7 +984,9 @@
             21,
             6
           ],
-          "hp": 195,
+          "states": [
+            "grave_salted"
+          ],
           "lying": {
             "head": "west"
           }
@@ -1010,7 +1012,9 @@
             21,
             6
           ],
-          "hp": 195,
+          "states": [
+            "grave_salted"
+          ],
           "lying": {
             "head": "west"
           }
@@ -1036,7 +1040,6 @@
             21,
             6
           ],
-          "hp": 212,
           "lying": {
             "head": "west"
           }
@@ -1062,7 +1065,6 @@
             21,
             6
           ],
-          "hp": 375,
           "lying": {
             "head": "west"
           }
@@ -1088,48 +1090,10 @@
             21,
             6
           ],
-          "hp": 165
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            6
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            21,
-            5
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            25,
-            11
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            26,
-            2
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            5
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            20,
-            7
+          "states": [
+            "chained",
+            "grave_salted",
+            "choking"
           ]
         }
       ],
@@ -1153,7 +1117,11 @@
             21,
             6
           ],
-          "hp": 125
+          "states": [
+            "chained",
+            "grave_salted",
+            "choking"
+          ]
         }
       ],
       "lair": true,
@@ -1176,7 +1144,10 @@
             21,
             6
           ],
-          "hp": 155,
+          "states": [
+            "chained",
+            "grave_salted"
+          ],
           "lying": {
             "head": "west"
           }
@@ -1202,7 +1173,10 @@
             21,
             6
           ],
-          "hp": 155,
+          "states": [
+            "chained",
+            "grave_salted"
+          ],
           "lying": {
             "head": "west"
           }
@@ -1228,7 +1202,10 @@
             21,
             6
           ],
-          "hp": 170
+          "states": [
+            "chained",
+            "choking"
+          ]
         }
       ],
       "lair": false,
@@ -1251,7 +1228,10 @@
             21,
             6
           ],
-          "hp": 170
+          "states": [
+            "chained",
+            "choking"
+          ]
         }
       ],
       "lair": true,
@@ -1273,6 +1253,9 @@
           "cell": [
             21,
             6
+          ],
+          "states": [
+            "chained"
           ],
           "lying": {
             "head": "west"
@@ -1298,23 +1281,12 @@
             21,
             6
           ],
+          "states": [
+            "chained"
+          ],
           "lying": {
             "head": "west"
           }
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            19,
-            6
-          ]
-        },
-        {
-          "monster": "wight",
-          "cell": [
-            25,
-            1
-          ]
         }
       ],
       "lair": true,

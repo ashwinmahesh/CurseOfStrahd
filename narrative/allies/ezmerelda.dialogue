@@ -265,7 +265,7 @@ if region:berez and level >= 8 and not flag.lysaga_dead and not flag.ledger_pick
 set ledger_pick_lysaga
 set ledger_named += 1
 endif
-if region:mount_ghakis and level >= 9 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
+if region:mount_ghakis and level >= 11 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
 set ledger_pick_sarkhaza
 set ledger_named += 1
 endif
@@ -274,12 +274,12 @@ set ledger_pick_eye
 set ledger_named += 1
 endif
 # 3. the hardest open hunts the party's level reaches
-if level >= 9 and not flag.eye_below_slain and not flag.ledger_pick_eye and flag.ledger_named < 3
-set ledger_pick_eye
+if level >= 11 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
+set ledger_pick_sarkhaza
 set ledger_named += 1
 endif
-if level >= 9 and not flag.sarkhaza_slain and not flag.ledger_pick_sarkhaza and flag.ledger_named < 3
-set ledger_pick_sarkhaza
+if level >= 9 and not flag.eye_below_slain and not flag.ledger_pick_eye and flag.ledger_named < 3
+set ledger_pick_eye
 set ledger_named += 1
 endif
 if level >= 8 and not flag.lysaga_dead and not flag.ledger_pick_lysaga and flag.ledger_named < 3 and not (flag.lysaga_fate == "bargained" or flag.lysaga_fate == "broken")
@@ -578,7 +578,7 @@ Ezmerelda: The old witch is struck from the page. Take this greataxe from my wag
 give weapon_plus_2__greataxe
 -> claim_end
 
-# Sarkhaza (flag sarkhaza_slain; fought in mount_ghakis; named from level 9).
+# Sarkhaza (flag sarkhaza_slain; fought in mount_ghakis; named from level 11, an ancient red).
 ~ brief_sarkhaza
 Ezmerelda: Sarkhaza, a red dragon, chained by the neck under Mount Ghakis with her wings riveted shut. She lies on a hoard of gilded lead.
 Ezmerelda: She's starved on grave-salt, and the count's cart brings a cage every new moon. Mind the chain's reach, and bring me proof she's cold.
