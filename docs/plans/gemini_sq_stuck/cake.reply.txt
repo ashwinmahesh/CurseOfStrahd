@@ -1,0 +1,42 @@
+== leontina_warning
+Leontina: I'd go myself, only the stove doesn't watch itself and the dough won't wait.
+Leontina: Mind your manners at the camp: Vadoma only opens her boxes for people the Vistani still speak to.
+
+== vadoma_no_saffron
+Narrator: A cold draught smells of woodsmoke and wet wool as Vadoma rests her ringed hand flat upon the shut lid of the painted cedar box.
+Vadoma [angry]: Keep your coin in your purse, and tell the Baron's cook her oven can go cold for all I care.
+Vadoma: Blood was spilled by the Tser Pool, and there is not enough gold in this valley to buy one thread of crimson from me.
+
+== leontina_failed
+Leontina [weary]: No saffron, then. Well, you can't bake a sun with corners out of pale dough and good intentions.
+Leontina: I rolled the thing out with a wine bottle at dawn, four hundred and fourteen, as round and dull as a kettle lid.
+Leontina: You tried, I suppose, which is more than the rest of this house does, though trying doesn't put a crust on a cake.
+Leontina: There's no coin for an empty hand, so take the smell of the kitchen with you and shut the door against the damp.
+
+== taste_wachter_good
+Narrator: Lady Wachter lifts a crisp, saffron-bright point to her lips, the warm scent of dark honey rising above her teacup.
+Lady Wachter [smile]: Eight sharp corners, and every one of them crisp: my friends, Leontina has outdone herself.
+Lady Wachter: For years Vargas fed this house little round loaves like wet millstones and called it sunshine.
+Lady Wachter: We have no need of festivals now, of course, though we shall certainly finish the cake before curfew.
+Narrator: Behind Lady Wachter's chair, Leontina catches your eye and gives a single, brisk nod.
+
+== taste_wachter_flat
+Narrator: Lady Wachter touches a silver fork to the wide, bubbling golden puddle and tastes a single drop of the hot syrup.
+Lady Wachter [smile]: How very intriguing, my friends: a sun that has chosen to lie down flat upon the platter.
+Lady Wachter: The saffron is quite unmistakable, and one hardly misses the corners once one accepts the shape of it.
+Lady Wachter: Do take a spoon, everyone, before it cools to the dish; we must not let Leontina's trouble go to waste.
+Narrator: By the sideboard, Leontina's face does not move by so much as the breadth of a hair.
+
+== taste_deposed_good
+Narrator: In his shirtsleeves, the Baron breaks off a warm, saffron-bright point, Getting crumbs upon his open festival ledger.
+Baron [smile]: Magnificent! Look at the points on it, sharp as morning bursting through the abominable fog!
+Baron [sad]: Four hundred and thirteen weeks I asked for a sun, and here it is at last, when there is no square for me to show it to.
+Baron: Still, we shall eat it here, and someone ought to tell Father Lucian that the corners held.
+Narrator: Behind his shoulder, Leontina catches your eye and gives a single, brisk nod.
+
+== taste_deposed_flat
+Narrator: The Baron dips a finger into the wide, bubbling golden puddle, the warm scent of honey rising over his open ledger.
+Baron [smile]: A triumph, I say, a glorious golden sea of a cake, and the colour of it is quite beyond reproach!
+Baron [sad]: The points have melted away, perhaps, though nobody in the square will be waiting to count them today.
+Baron: Someone ought to write it down in the ledger all the same, just so the house remembers we had saffron once.
+Narrator: Behind his shoulder, Leontina's face does not move by so much as the breadth of a hair.

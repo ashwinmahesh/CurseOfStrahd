@@ -326,6 +326,12 @@ party leads him out on a rope (no roll) to a buyer on the road: Costica, who has
 doesn't bite, or Ambrose Fennimore, who pays 25 gp and is bitten at once. Radu pays when told.
 
 - No fight. Reward: the buyer's gold and Radu's 15 gp, and Radu's version of the story, in which the party is very tall.
+- **Lost, not stuck (sq-stuck, finding 126; Ashwin: side quests can be lost).** A camp that has turned on the party
+  (`vistani_turned_hostile` or `tser_pool_brawl_won`) has no Radu to pay. Dinte's prop makes no new offer then (it stays if
+  the offer was already made, so he can still be led out), and disappears from the pen once led out (`dinte_led`). A horse
+  sold while the camp is hostile, or a buyer found before the camp turned and a visit to the buyer afterwards (an option on
+  Costica's and Fennimore's menus), closes the quest at `unpaid`, a failure: the buyer's gold is the party's own, the story
+  and the 15 gp are not coming (`radus_horse:camp_gone`).
 
 ### Fennimore's Guide: The Tser Pool (`fennimores_guide`, narrative/svalich_road/fennimore.dialogue; NPC plan batch 2)
 
@@ -335,6 +341,10 @@ and isn't sure the stew is plum. Old Dorina (Persuasion DC 12 gently, or just ta
 not been emptied in sixty years and her wedding spoon is at the bottom. Fennimore rewrites the entry. His other chapters
 come with the later regions.
 
+- **Lost, not stuck (finding 127).** He warns, when he sets the errand, that the camp is touchy and that a closed camp means
+  no ten gold. If the camp has turned (same two flags) he doesn't offer the errand at all; if it turns after, an option on
+  his menu says so and the quest closes at `unverified`, a failure: the entry stays "plum?" and he pays nothing. A stew
+  found out before the camp turned (`known`) is still paid. He doesn't leave his signpost ("starting the next chapter").
 - No fight. Reward: 10 gp. Costica, the worst highwayman in Barovia, shares the crossroads (new NPC, svalich_road/
   costica.dialogue; no quest of his own), and the camp has new flavour: Dorina's pot, Zora's cord of knots, Petru's blades.
 
@@ -411,6 +421,14 @@ unsigned coin a month by Old Kolya's cart. Back at the church the party chooses 
 the boy is dead and at peace, or that he is well and warm without whose livery. Each takes it differently (the truth and
 the half-truth get the monthly coin that smells of good tea; the lie gets a candle).
 
+**Wherever the household goes (sq-stuck, findings 119 to 121).** Tudorel stands in Wachterhaus while Lady Wachter keeps it;
+in the burgomaster's mansion with her once she rules the town (`vallaki_backed == "wachter"`: the same talk); and in the
+market square beside the stocks once her house has fallen (stocks, exposed or exiled after the festival), with his own first
+meeting (`tudorel_square`: her ladyship is gone from the house, the livery is the only coat he owns). During the festival
+itself nobody finds him. He speaks of Florin only while the quest stands at Asked. After the lie, Florin lights candles and
+no longer prays against the boy's coming (`florin_after_lie`) and Tudorel thanks the party for giving him a clean end in the
+old man's ears (`tudorel_after`).
+
 - No fight, no rolls needed. Approval splits: Godrick, Thistle and Liriel for the truth, Kip and Wren for the lie, Ratatouille
   and Liriel for the half.
 
@@ -432,7 +450,13 @@ at the Vistani camp, 2 gp or Persuasion DC 11) and saffron (Vadoma, 5 gp or 3 wi
 over if he is along; otherwise Dexterity or Wisdom DC 12; or leave it to her. A good cake is a triumph (60 gp, Heroic
 Inspiration); a collapsed one the Baron calls the Liquid Dawn and orders four hundred and fourteen of (20 gp).
 
-- No fight. A gold piece buys each ingredient, so no roll stands in the way.
+- No fight. A gold piece buys each ingredient, so no roll stands in the way (Vadoma's haggle needs the 3 gp it costs).
+- **Lost, not stuck (sq-stuck, findings 122 to 124).** Leontina warns the party to keep the Vistani's good will. Goodwife Marta
+  sells the eggs after the council takes the town too. If Vadoma has been broken with the Tser Pool camp (`tser_pool_brawl_won`)
+  she will not sell, there is no other saffron, and the quest closes at `failed` the moment the party asks: Leontina bakes the
+  four hundred and fourteenth round cake, pays nothing, and the ingredient options go. Whoever rules the mansion tastes the
+  finished cake: the Baron (before the festival, or if he rules), Lady Wachter (if she does) or the deposed Baron (if a council
+  does); the pay is the same.
 
 ### The Hunters at the Inn (`hunters_at_the_inn`, narrative/vallaki/hunters_at_the_inn.dialogue; batch 2, the book's pair)
 
@@ -883,6 +907,11 @@ or ask Ambrose Fennimore at the Old Svalich crossroads to walk up the road. Fenn
 the visit, and leaves the tin a rating (four stars). Nothing is behind a roll that has no plain way round.
 
 - No fight. Reward: 20 gp (cousins) or 40 gp (Fennimore), companions' approval.
+- **Sq-stuck (findings 131, 132).** Fennimore's spot inside the gate has Dumitru's hours (9:00 to 17:00, not in a storm), so the
+  visit can't play at night with Dumitru's lines spoken while he is indoors. The friends story is still offered at the Fennimore
+  stage; if it ends the quest first, Fennimore never comes and Dumitru's later greeting is the plain one: only the real visit
+  sets `fennimore_visited_krezk`, which the "four stars" greeting reads (saves made before this fix that completed the
+  Fennimore visit get the plain greeting).
 
 ### Old Silviu's Wedding Cask (`silvius_wedding_cask`, narrative/wizard_of_wines/silvius_cask.dialogue; NPC plan batch 4)
 
@@ -1075,6 +1104,8 @@ to two hundred and nine). With the four seals the petition goes to the Steward i
 Boyar learns his stone is under Lake Zarovich now and is entirely satisfied.
 
 - No fight, no roll. Reward: 120 gp and the companions' approval.
+- "Which seals do we still lack?" names only the seals not yet lent (`boyars_petition:seals_lack`; the whole form again when
+  none are, and no option at all once the four are held; sq-stuck, finding 130).
 
 ### Gogu (`castle_ravenloft/gogu`; NPC plan batch 6, comedy)
 
@@ -1232,7 +1263,7 @@ offered as a hunt. The kills are the flags the regions already set, so the ledge
 | Wintersplinter | `yester_hill_resolved` | yester_hill | 6 | 3 alchemist's fire, 6 +1 bolts |
 | The Count's Huntsman | `huntsman_slain` | svalich_road | 7 | scroll of protection (undead), potion of resistance (necrotic), 3 holy water |
 | The Grandsire | `grandsire_slain` | krezk | 7 | 10 +1 bolts |
-| Kiril Stoyanovich | `kiril_defeated` | werewolf_den | 7 | 10 +1 bolts |
+| Kiril Stoyanovich | `kiril_defeated` or `den_broken` (the reckoning) | werewolf_den | 7 | 10 +1 bolts |
 | Khazan | `khazan_destroyed` | van_richtens_tower | 7 | scroll of protection (undead), potion of resistance (necrotic), 4 holy water |
 | Baba Lysaga | `lysaga_dead` | berez | 8 | 6 +2 bolts, 3 alchemist's fire |
 | Sarkhaza | `sarkhaza_slain` | mount_ghakis | 9 | 2 potions of resistance (fire), 8 +2 bolts |
@@ -1242,9 +1273,19 @@ Every payment also adds healing by the party's lowest level: three Potions of He
 (two; three for the last three names) from 7, Superior Healing (one; two for the last seven names) from 9. Rarity follows
 docs/story/found_magic_items.md (uncommon to level 4, rare from 5): the scrolls, +1 and +2 bolts and resistance potions
 are consumables, so they may repeat. **The fourth name** struck brings her spare light crossbow (a +1 Light Crossbow,
-uncommon) and **the eighth** a dagger (Mage Breaker, rare); each is the only one of its kind in the story
-(tests/unit/test_loot_distinct.gd). The first payment warms her (`ezmerelda_trust` +1), the seventh moves the quest to
+uncommon) and **the eighth** a dagger (Mage Breaker, rare); each is the only one of its kind among the ledger's own
+gifts (tests/unit/test_loot_distinct.gd; Dmitri Krezkov also sells a Mage Breaker from party level 5, so it is not one of a
+kind in the story). The first payment warms her (`ezmerelda_trust` +1), the seventh moves the quest to
 `half_struck`, and the thirteenth ends it (`ledger_struck`); after that the ledger option goes.
+
+**Closing the book short (sq-stuck, findings 133 to 135).** Kiril killed in the den's reckoning (`den_broken`, the "pack
+broken" ending) counts as his death everywhere the ledger reads `kiril_defeated`. A party that has struck every name in
+reach but spared some (Kiril left to lead the pack, Petru given to the Grandsire, Morgantha bargained with or Bella's pact,
+Lysaga bought off or broken: the four the ledger never briefs) is offered the book's close when it opens the ledger at level 9
+with nothing left to offer (`ledger_none` to `ledger_spared_close`). Closing it moves the quest to `ledger_closed`, a failure;
+leaving it open changes nothing, and a name killed after all is paid as usual and can still bring `ledger_struck` (the quest
+can move from the failure to that success). The `half_struck` hint no longer promises a ledger option on her road meetings,
+which have none: it opens only from where she stands or by clicking her as a guest.
 
 - Flags: `ezmerelda_ledger_paid` (how many are paid), `ledger_paid_<name>`, the gifts, the heard topics, and the working
   flags the picks use (`ledger_pick_*`, `hub_pick_*`, `ledger_named`, `ledger_ready`, `hub_slots`: recomputed on every
@@ -1264,6 +1305,9 @@ notes alone, is water, fire, leaves, waiting, pouring: he was making tea. He mak
 
 - No fight and no roll that matters. Reward: Heroic Inspiration, companions' approval. Dialogue and data only: it touches
   no Amber Temple map.
+- **Lost with him (sq-stuck, finding 129; the notes do not outlive the lich).** Smashing his phylactery (`lid_smash`) while the
+  quest is open closes it at `lost`, a failure: the five scraps slide to the floor and stay out of order. Smash it first and the
+  quest never starts, and his released talk (`smashed_after`) offers no notes.
 
 ### The Amber Debt (`the_amber_debt`, narrative/amber_temple/the_amber_debt.dialogue; batch 5, an owner-asked boss)
 

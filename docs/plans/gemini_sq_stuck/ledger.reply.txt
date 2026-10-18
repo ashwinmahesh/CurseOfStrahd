@@ -1,0 +1,22 @@
+== ledger_spared_close
+Ezmerelda [weary]: Every name in reach is struck, and what's left on the page is breathing by your leave.
+Ezmerelda: I won't ink a bargain as a kill, so we close the ledger as it stands or leave it open.
+* Close the book at what we've struck.
+* Leave the ledger open for now.
+
+== ledger_close
+Ezmerelda [weary]: A hunter isn't a judge, though Rudolph would grumble for a week at an untidy page.
+Ezmerelda: The buckle goes shut on the work you did, and the ink stays dry on the rest.
+Ezmerelda [sly]: If any of your old bargains sours and needs silver after all, bring me the proof and I'll pay.
+
+== spared_kiril
+Ezmerelda: Kiril Stoyanovich stays in ink: you left him running the den, and I pay for pelts, not politics.
+
+== spared_grandsire
+Ezmerelda: The Grandsire in Krezk stays open too, since you brought him little Petru instead of a silver bolt.
+
+== spared_morgantha
+Ezmerelda: Morgantha's line stays unmarked while your terms around Old Bonegrinder hold and the old hag draws breath.
+
+== spared_lysaga
+Ezmerelda: Baba Lysaga stays on the page: broken or bargained with in Berez, she isn't dead enough for my ink.

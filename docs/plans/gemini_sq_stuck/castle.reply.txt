@@ -1,0 +1,15 @@
+== exethanter_lost_notes
+Narrator: As the long sigh passes through the cold library, the five loose scraps in his lap slide silently to the stone floor.
+Narrator: He does not bend to gather them, and the small morning they might have explained remains out of order for good.
+== exethanter_lost_notes_later
+Exethanter [weary]: Leave those five on the stones, my dears, for I suspect whatever they were about has gone quite cold by now.
+== seals_lack_intro
+Boyar Vintila Crainic: Let us consult the margins of the parchment and see which of the domestic offices have yet to oblige us.
+== seals_lack_valet
+Boyar Vintila Crainic: We still require the seal of Ghenadie the Valet, who keeps the upper bedchamber.
+== seals_lack_secretary
+Boyar Vintila Crainic: The seal of the chancery remains absent, and must be had from Anghel Daskal in his office.
+== seals_lack_verger
+Boyar Vintila Crainic: We lack the chapel seal, which is held by Nicodim the Verger at the chapel door.
+== seals_lack_lamp
+Boyar Vintila Crainic: The lamplighter's seal is still wanting, and must be obtained from Vlaicu among the high tower lamps.

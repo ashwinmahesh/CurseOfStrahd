@@ -1,0 +1,16 @@
+== tudorel_square
+Narrator: A young footman in grey-and-black wool stands by the wet cobbles, clutching a small linen bundle to his chest.
+Narrator: The cold mist smells of wet ash, and a small silver raven and crown on his collar catches the grey light.
+Tudorel [weary]: If you have come for Lady Wachter's household, the doors are barred and her ladyship is gone from the house.
+Tudorel: The cook took the copper pans, and the rest of us were told to stand in the square until someone decides what to do with us.
+Tudorel [sad]: I would take the livery off, only it is the warmest coat I own and the wind is coming down from the mountain.
+Tudorel: You are looking at me as if you know my face, though I am certain I have never poured for you.
+== tudorel_after_lie
+Tudorel [sad]: Thank you for going all that way down the valley, and for making a clean end of me in his ears.
+Tudorel [weary]: Old Kolya will still take the silver piece in its bit of tea-paper every month, unsigned, solong as I have wages to send.
+Tudorel: It is a shameful thing to say, I know, but I would rather he pray for a dead boy than curse a living one's coat.
+== florin_after_lie
+Old Florin: I bought a fresh tallow candle for the stand by the door this morning, and the smoke goes up straight enough.
+Old Florin [sad]: For two winters I asked the Morninglord to keep the boy from coming down the road, and now I only ask that he rest easy.
+Old Florin [weary]: A man ought to feel heavier when he hears his grandson is in the earth, and I am ashamed to say my chest feels lighter.
+Old Florin: Thank you for looking in on an old man, friends; the church is cold, even with the grease burning.

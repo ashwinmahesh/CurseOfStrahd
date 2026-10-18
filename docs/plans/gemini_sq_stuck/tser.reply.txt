@@ -1,0 +1,27 @@
+== fennimore_warn
+Fennimore: Do mind your manners by the wagons, though: Stanimir's people have a brisk way with guests who forget themselves.
+Fennimore [weary]: If the camp closes its curtains to you, I cannot pay a copper for a recipe no living soul can confirm.
+
+== fennimore_scrap
+* The Tser Pool camp has turned on us; we cannot get near Old Dorina's pot.
+Fennimore [weary]: Ah. That is a bereavement for the culinary appendix, though I am glad to see you still have all your fingers.
+Fennimore: I must leave the entry as "plum?" with a query in the margin, which sits on a clean page like a grease spot.
+Fennimore: You will understand that I cannot pay ten gold pieces for a question mark; I can supply those myself for nothing.
+Fennimore: Let me strike a line through "hospitable to travelers" under Tser Pool and write "presently closed to inquiries."
+Fennimore [sad]: It is a pity, all the same: a sixty-year broth deserves better than a guess from the road.
+
+== fennimore_stays_1
+Fennimore: I shall stay by this post and start the next chapter; if you find any of my facts wanting along the road, do tell me before I go to press.
+
+== fennimore_stays_2
+Fennimore [smile]: You will find me right here at the signpost working on my next chapter, so if any of my facts prove wanting, tell me before I go to press.
+
+== fennimore_stays_3
+Fennimore: I have another chapter to draft here at the crossroads; if you find my facts wanting on your travels, do come back and tell me before I go to press.
+
+== radu_camp_gone
+* Radu's camp has turned on us, so there is no one left to pay his fifteen gold.
+* We will never see Radu's fifteen gold now that the Tser Pool camp has turned against us.
+Narrator: A cold wind smells of wet wool and road mud, and you think of Radu's promised fifteen gold with an empty palm.
+Narrator: The road back to Tser Pool is closed to you now, with no one waiting by the wagons to hear the news or count out the coin.
+Narrator: Dinte, at least, has a dry coat and a fresh sleeve to chew, making him the only soul to profit from the bargain.

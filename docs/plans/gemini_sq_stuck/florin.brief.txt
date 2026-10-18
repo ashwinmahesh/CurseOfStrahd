@@ -1,0 +1,29 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== tudorel_square"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters. Where option texts (what the PARTY says) are requested, write them as `* text` rows under that label, under 14 words, in the party's voice ("we", or an imperative).
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences, with concrete senses (a smell, a sound, a temperature) and no game terms (never "roll", "check", "level", "gold pieces" as a number is fine in speech). Never name the player characters. Use ONLY the facts given here; invent no new named people, places, dates or lore.
+
+CHARACTERS AND FACTS: Tudorel is a young footman, formerly of the village of Barovia, who went up the castle road two winters ago to ask for work and now serves in Lady Wachter's household in the town of Vallaki, in grey-and-black wool livery with a small silver crest of the castle (a raven and crown) on the collar. He is warm and fed and ashamed of whose coat he wears. He sends his grandfather, Old Florin, one silver coin every month by the carter Old Kolya, wrapped in tea-paper, with no name on it. Old Florin is an old villager who prays every morning in the village church that his grandson doesn't come back (he once told the boy the castle pays well).
+
+STYLE SAMPLES from the existing scene (match this voice, length and rhythm):
+Tudorel: Dry your boots by the fender if you like; her ladyship does not mind the steam.
+Tudorel [weary]: I know what you are thinking, and you may think it, only keep your voices down in the hall.
+Tudorel [sad]: I give Old Kolya a silver piece every month when he goes down the valley with his cart, wrapped in a bit of tea-paper with no name on it.
+Tudorel [afraid]: Please do not tell him where you saw me, or whose bread I am eating.
+Tudorel: Tell him I died clean in the ditch if you have to, or whatever you think will let him sleep.
+Old Florin [weary]: Well. Better a grandson in a count's coat than a grandson in a count's cellar, I suppose.
+Old Florin [sad]: Thank you for coming all this way to tell me plainly.
+Old Florin: Would you mind lighting one of the tallow candles by the door on your way out?
+Narrator: A young footman in good grey-and-black wool pours pale tea into thin porcelain cups without spilling a drop.
+
+THE SCENES (a small moral choice, no fight; the party earlier asked Old Florin about his grandson and has come to find Tudorel):
+
+Tudorel used to be found in Lady Wachter's house, but after the town's festival Lady Wachter is gone from her house (the new rulers of the town put her in the stocks, locked her up, or sent her into exile; do not say which), and the household has been broken up. Tudorel now stands in Vallaki's market square in his livery, because it is the only coat he owns, waiting to be told where to go. He has not met the party before. A sample of the first scene must end with him ready to talk (a menu follows that lets the party say they have come from Old Florin).
+
+LABELS AND BEATS:
+== tudorel_square (6 lines: Narrator x2, Tudorel x4. He is standing in the square holding a small bundle; a silver crest on his collar catches the light. He says her ladyship is gone from the house and nobody has told the servants where to go. He is not asking the party for anything. The lines must not mention what became of Lady Wachter beyond that she is gone from the house.)
+== tudorel_after_lie (3 lines, Tudorel: the party told Old Florin that Tudorel was dead and at peace, to spare him; Tudorel thanks them for going. He is grateful and ashamed in the same breath. The coin will still go out each month with no name on it, and he would rather his grandfather pray for a dead boy than curse a living one's coat. Do not use the phrase "with a name on it".)
+== florin_after_lie (4 lines, Old Florin on a later visit to the church: the party told him his grandson died at peace; he lit a candle for the boy; he has stopped praying that the boy stays away and prays for him instead; he is quieter, lighter, a little ashamed to feel lighter. No mention of any coin.)
