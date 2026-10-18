@@ -1888,161 +1888,161 @@
   "chars": 5,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Wine."
  },
  "arik/1b3f141ab87179d0": {
   "chars": 8,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Nothing."
  },
  "arik/3b587007c4f432bf": {
   "chars": 11,
   "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Locks work."
  },
  "arik/45302395b054d490": {
   "chars": 19,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Mihail. Digs early."
  },
  "arik/547ef485f53c9483": {
   "chars": 29,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Ileana. Shutter. Every night."
  },
  "arik/566204264e5a1813": {
   "chars": 53,
   "direction": "[flat, weary]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Wizard of Wines. No cask in three weeks. Last barrel."
  },
  "arik/669f2e069919cf22": {
   "chars": 23,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Bottles. The cart came."
  },
  "arik/7278adb4c080dcb9": {
   "chars": 11,
   "direction": "[flat, empty]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Still none."
  },
  "arik/85e38b4a0aeaa06c": {
   "chars": 38,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Grigore. Cut late. Bildrath bought it."
  },
  "arik/8a22b876042cde83": {
   "chars": 13,
   "direction": "[toneless, blank]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Counting dog."
  },
  "arik/8aa997eba5936c0f": {
   "chars": 6,
   "direction": "[flat, empty]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Quiet."
  },
  "arik/97caf38b23101b83": {
   "chars": 8,
   "direction": "[flat, absent]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Tuesday."
  },
  "arik/a5cedc0c5b77d039": {
   "chars": 47,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Ismark. Burgomaster's son. Folk say the Lesser."
  },
  "arik/ad9e1b7799e6e5c1": {
   "chars": 24,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Your friend. The Lesser."
  },
  "arik/b3ad54b6601098b4": {
   "chars": 27,
   "direction": "[flat, faintly interested]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Scholar. You found the bag."
  },
  "arik/b8b9f1367ad62698": {
   "chars": 3,
   "direction": "[flat, final]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "No."
  },
  "arik/d0905c601a72bf1e": {
   "chars": 21,
   "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Upstairs. Locks work."
  },
  "arik/d73b4301a66ff7a9": {
   "chars": 25,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Bottles. While they last."
  },
  "arik/d77c6f159d416b01": {
   "chars": 5,
   "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Oats."
  },
  "arik/dae0c059018dd54f": {
   "chars": 8,
   "direction": "[flat, toneless, final]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Leaving."
  },
  "arik/dcb07533da177296": {
   "chars": 33,
   "direction": "[flat, terse]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Grey Goose. Lantern. No upstairs."
  },
  "arik/efb5308f4dd4bf85": {
   "chars": 4,
   "direction": "[flat, curt]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Wig."
  },
  "arik/fa796a2f1fd6c62b": {
   "chars": 69,
   "direction": "[flat, toneless]",
   "model": "eleven_v3",
-  "recipe": "94a1815f36",
+  "recipe": "d0595add75",
   "text": "Scholar. Wrote a lot. Went up the castle road. Left a bag. Back room."
  },
  "arrigal/0f917e39d7001e69": {
@@ -16038,84 +16038,93 @@
  },
  "gunther_arasek/04368764494c3045": {
   "chars": 81,
+  "direction": "[dry, controlled, wry]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "Back for more? Good. Steel doesn't sell itself. It mostly sits there being heavy."
  },
  "gunther_arasek/1f9be2ae6899efc3": {
   "chars": 140,
-  "direction": "[sober, gruff, sincere]",
+  "direction": "[sober, steady, sincere]",
   "model": "eleven_v3",
   "recipe": "83664e0900",
   "text": "I keep a ledger in my desk with the name of every driver taken off the box, and their widows get the winter share on the first of the month."
  },
  "gunther_arasek/3a8ced6be3153d1f": {
   "chars": 103,
+  "direction": "[flat, firm, matter-of-fact]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "Pleasure. Bring it back dented and I'll buy it for half. Bring it back bloody and I'll buy it for less."
  },
  "gunther_arasek/45b900b23f11530e": {
   "chars": 182,
+  "direction": "[steady, firm, weary]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "Twice what you'd pay over the mountains. Every cart that reaches us loses a horse or a driver on the way, some months both. My sister Yelena keeps the books, and the books say twice."
  },
  "gunther_arasek/49477ea56252a10f": {
   "chars": 82,
+  "direction": "[wary, dry, level]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "You came over the pass and the wolves let you by? Huh. They don't let my carts by."
  },
  "gunther_arasek/67d952cf4166f7de": {
   "chars": 204,
+  "direction": "[measured, grim, even]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "West road to Krezk: wolves, and worse past the river. The lake road: fishermen who've stopped catching anything and gone strange with it. East road, the way you came: an old windmill nobody sane stops at."
  },
  "gunther_arasek/7c7653a9bbd89810": {
   "chars": 114,
+  "direction": "[low, steady, uneasy]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "Then you heard right. My carters won't water their horses within sight of it. Horses go in. Horses don't come out."
  },
  "gunther_arasek/821241713e2d6e32": {
   "chars": 109,
-  "direction": "[firm, blunt, low]",
+  "direction": "[firm, low, final]",
   "model": "eleven_v3",
   "recipe": "83664e0900",
   "text": "The book stays locked in the drawer; it is an account between me and the road, and not for customers to read."
  },
  "gunther_arasek/9abb08590b7cea83": {
   "chars": 156,
+  "direction": "[firm, measured, businesslike]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "Arasek Stockyard. Steel, leather, rope, grain. Everything that comes into Vallaki on a cart comes past me first, and the wolves get a look at it on the way."
  },
  "gunther_arasek/a9ac349bb96ec112": {
   "chars": 154,
+  "direction": "[pointed, controlled, sly]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "You've come from the village, eh? Bildrath's prices? Ten times. And I hear somebody helped themselves to his strongbox. Not that I'd ever think it of you."
  },
  "gunther_arasek/c991f2adc54ba877": {
   "chars": 103,
-  "direction": "[blunt, low warning]",
+  "direction": "[blunt, quiet warning, firm]",
   "model": "eleven_v3",
   "recipe": "83664e0900",
   "text": "It's up on a crag above the road, between Tser Pool and the village. If you must see it, see it by day."
  },
  "gunther_arasek/ecea8adf0bb462a1": {
   "chars": 125,
-  "direction": "[hearty, blunt, wry]",
+  "direction": "[wry, controlled, gruff]",
   "model": "eleven_v3",
   "recipe": "83664e0900",
   "text": "Honest timber, iron nails, and salt pork in barrels, with the grey wolves on the Svalich road counted into the freight price."
  },
  "gunther_arasek/ed66e7615c3901ba": {
   "chars": 48,
+  "direction": "[dry, level, curt]",
   "model": "eleven_v3",
-  "recipe": "57b135a587",
+  "recipe": "83664e0900",
   "text": "You can ask Yelena. I'd sell you a helmet first."
  },
  "gustav_durst/12790cc4ae672d87": {
@@ -32428,35 +32437,35 @@
   "chars": 91,
   "direction": "[dreamy, rueful, gentle]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "7225af8f61",
   "text": "It would be nice to hear it on the shingles without having to shovel it off in the morning."
  },
  "krezk_bucket_wife/2663602f42374767": {
   "chars": 89,
   "direction": "[dry, wary, practical]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "7225af8f61",
   "text": "Best to be polite to anything that lives that high up and doesn't come down for firewood."
  },
  "krezk_bucket_wife/b272bffa0ff8b912": {
   "chars": 81,
   "direction": "[wistful, tired, wry]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "7225af8f61",
   "text": "Rain that comes down as water instead of ice, just once before my knees give out."
  },
  "krezk_bucket_wife/c17f39f8b65dc7d1": {
   "chars": 78,
   "direction": "[hushed, confiding, guilty]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "7225af8f61",
   "text": "When nobody is looking, I say a little word for the Abbot up on the hill, too."
  },
  "krezk_bucket_wife/cb9f4b0d23280019": {
   "chars": 150,
   "direction": "[brisk, wry]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "7225af8f61",
   "text": "Water to the south row, a word at the shrine, and back. Thirty times a day. My arms are as strong as Cezar's and my knees are holier than the abbot's."
  },
  "krezk_carver/1d00eb93b945d51b": {
@@ -32610,21 +32619,21 @@
   "chars": 100,
   "direction": "[wry, fond, slow]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "be6fe4b24f",
   "text": "Though I suppose the yard would be awful quiet with nobody listening to me complain about the nails."
  },
  "krezk_fence_mender/f8377c07217d7dc6": {
   "chars": 88,
   "direction": "[slow, good-natured]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "be6fe4b24f",
   "text": "The billy breaks a rail, I mend a rail. He breaks another. I think he likes the company."
  },
  "krezk_fence_mender/f9f898803b3be488": {
   "chars": 72,
   "direction": "[grumbling, good-natured, slow]",
   "model": "eleven_v3",
-  "recipe": "f30946e8ec",
+  "recipe": "be6fe4b24f",
   "text": "The day that one-horned devil goes in the stewpot, I'll sleep till noon."
  },
  "krezk_gate_boy/03e59d689372c98d": {
@@ -33408,21 +33417,21 @@
   "chars": 86,
   "direction": "[warm, practical, devout]",
   "model": "eleven_v3",
-  "recipe": "93c6b46ab0",
+  "recipe": "2971970e6c",
   "text": "A pinch of salt from my apron pocket every morning, right down the middle of the well."
  },
  "krezk_well_wife/ce8e1fa1722c38a4": {
   "chars": 84,
   "direction": "[matter-of-fact, kindly, wry]",
   "model": "eleven_v3",
-  "recipe": "93c6b46ab0",
+  "recipe": "2971970e6c",
   "text": "Keeps the bad luck out of the bucket, and stops the water tasting of nothing at all."
  },
  "krezk_well_wife/cfdd4758f012793f": {
   "chars": 183,
   "direction": "[warm, devout, practical]",
   "model": "eleven_v3",
-  "recipe": "93c6b46ab0",
+  "recipe": "2971970e6c",
   "text": "One bucket for the Burgomaster, one for the widow at the end of the row, one for me, and a prayer for each. The well's never frozen. Not once. We don't ask why, we just say thank you."
  },
  "krezk_woodcutter/2a530d17d60fb726": {
@@ -36997,42 +37006,42 @@
   "chars": 155,
   "direction": "[low, wary, plain]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "Hares, grouse, the odd fox. The wolves take the deer before I get near them. They're bold this year, bold as dogs. They watch the trail in the daytime now."
  },
  "lzt_hunter/05d0b86c9eecb076": {
   "chars": 102,
   "direction": "[dry, matter-of-fact, wry]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "I sell them to a peddler at the crossroads, and he sells them to the Baron in Vallaki for wolf bounty."
  },
  "lzt_hunter/4758fbc3d257e890": {
   "chars": 100,
   "direction": "[wry, plain, amused]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "The Baron gets his trophies, I get salt pork, and the real wolves keep their ears where they belong."
  },
  "lzt_hunter/506311aab0ad2218": {
   "chars": 75,
   "direction": "[low, evasive, plain]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "A man has his ways of keeping count, and the hares don't need them anymore."
  },
  "lzt_hunter/d9c6bddd15bc02a0": {
   "chars": 105,
   "direction": "[dry, practical warning]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "The lake's below, if that's where you're going. Don't drink from the near shore. Bluto's been sick in it."
  },
  "lzt_hunter/f0b59dbf6fb04475": {
   "chars": 105,
   "direction": "[low, sly, dry]",
   "model": "eleven_v3",
-  "recipe": "9f4f8d6957",
+  "recipe": "120f0affdd",
   "text": "Long grey hare's ear, dried by the stove with a bit of soot rubbed in, looks mighty fierce in a dim room."
  },
  "mad_mage/0799847bf1f24e59": {
@@ -79167,35 +79176,35 @@
  },
  "pastry_customer_man/0dae0db32326b89b": {
   "chars": 114,
-  "direction": "[hollow, impatient, twitchy]",
+  "direction": "[twitchy, impatient, irritable]",
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "You're waiting too? No? Then step aside. They open when they open. The old woman knows I'm here. She always knows."
  },
  "pastry_customer_man/1917a8c01e7c632c": {
   "chars": 108,
-  "direction": "[longing, desperate, defensive]",
+  "direction": "[craving, edgy, defensive]",
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "One bite and I'm home, and my wife is alive, and the sun is out. Don't look at me like that. You'd come too."
  },
  "pastry_customer_man/7f46ffee49d0eb9e": {
   "chars": 116,
-  "direction": "[dreamy, longing, hollow]",
+  "direction": "[feverish, longing, jittery]",
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "I have an oven with a red brick arch. The flour is dry and white, no weevils in it, and the loaves come out singing."
  },
  "pastry_customer_man/8096b9a29623dc3a": {
   "chars": 111,
-  "direction": "[desperate, hopeful, twitchy]",
+  "direction": "[desperate, twitchy, on edge]",
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "Tell me truly, you've walked the lanes today. Does anyone down there still eat bread, if a man were to bake it?"
  },
  "pastry_customer_man/fcac2b9149b5aca3": {
   "chars": 119,
-  "direction": "[wistful, proud, hungry]",
+  "direction": "[hungry, restless, wistful]",
   "model": "eleven_v3",
   "recipe": "1d8817fed7",
   "text": "People queue down the street with clean cloths over their arms. They call me Master Iulian and ask for the crusty heel."
@@ -79995,28 +80004,28 @@
   "chars": 97,
   "direction": "[soft, weary, devout]",
   "model": "eleven_v3",
-  "recipe": "c1f71546fb",
+  "recipe": "de3bb72c0e",
   "text": "Five years I've told that water what the hens laid and who took ill, never expecting a word back."
  },
  "pool_mourner/67441a893eae5f23": {
   "chars": 83,
   "direction": "[low, grieving, secretive]",
   "model": "eleven_v3",
-  "recipe": "c1f71546fb",
+  "recipe": "de3bb72c0e",
   "text": "It wasn't my Nicolae's voice, and I haven't breathed a word of it to a living soul."
  },
  "pool_mourner/97cccbbc58a6b47f": {
   "chars": 114,
   "direction": "[hushed, unsettled, wondering]",
   "model": "eleven_v3",
-  "recipe": "c1f71546fb",
+  "recipe": "de3bb72c0e",
   "text": "Then last month the ripples stopped, and a voice from the bottom said thank you for the news. A young man's voice."
  },
  "pool_mourner/b67838152353c70e": {
   "chars": 171,
   "direction": "[soft, grieving, devout]",
   "model": "eleven_v3",
-  "recipe": "c1f71546fb",
+  "recipe": "de3bb72c0e",
   "text": "Every morning I tell him the news. The goats, the weather, who's fallen out with whom. The water never freezes, not even in the deep of winter. That's how I know he hears."
  },
  "quarry_captive/00ca62b845475cb3": {
@@ -90005,98 +90014,98 @@
   "chars": 185,
   "direction": "[worried, tender, urgent]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "He's soft as bread. He'll walk up to the first hunter he meets to have his ears scratched. The tracks go up the stream, where the deer path is. Bring him home before the woods have him."
  },
  "tser_lavinia/14157cea3d8f7a12": {
   "chars": 137,
   "direction": "[overjoyed, laughing, breathless]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "You brought me two. Two! I'll teach the little one the slow steps first. Then the turns. Then I'll teach her to break chains, apparently."
  },
  "tser_lavinia/209c7e0001064712": {
   "chars": 61,
   "direction": "[quiet, uneasy, certain]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "(Quietly.) He's never pulled. Not once. Something called him."
  },
  "tser_lavinia/2b80610ec435e316": {
   "chars": 62,
   "direction": "[cold, furious, controlled]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Go and ask him. I'll stay here. If I go, I'll take his knives."
  },
  "tser_lavinia/43e590bcd021318e": {
   "chars": 138,
   "direction": "[teasing, breathless]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Clap or don't, the steps are the same. My grandmother danced this for a prince once. He was dead by morning, but she said he'd enjoyed it."
  },
  "tser_lavinia/65ffdaca13d762e7": {
   "chars": 190,
   "direction": "[warm, grateful, proud]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Here. My grandmother's fan. She danced for a prince with it, the night before he died, and she said it was the best thing she ever did with her hands. It throws a wind, if you snap it right."
  },
  "tser_lavinia/69dfc9163cabfe5d": {
   "chars": 128,
   "direction": "[wistful, fond, sad]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "I still dance the bear's part. Somebody has to. (She looks up the stream, toward the woods.) He was always better at it than me."
  },
  "tser_lavinia/6f30fc3708d17688": {
   "chars": 66,
   "direction": "[bright, teasing, coaxing, playful]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Up, up! Do not be shy, the boards only creak when you stand still!"
  },
  "tser_lavinia/793a3eb8e9de008a": {
   "chars": 138,
   "direction": "[laughing and crying, grieving, proud]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "He went into the den with it. (She laughs and cries at once.) Then he was always a better dancer than me. He knew when the dance was over."
  },
  "tser_lavinia/aef84947018a8f2b": {
   "chars": 152,
   "direction": "[hopeful, earnest, urgent]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Take this. (A tin whistle on a red cord.) Two notes, high then low. When I blow it he dances. Maybe it'll bring him back to himself, if he's frightened."
  },
  "tser_lavinia/e36b3b6b38c4248f": {
   "chars": 171,
   "direction": "[stunned, then furious]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Marin's? (Her face goes still, and then very angry.) The carriage. The black carriage pays for live young. He told me once, years ago, laughing. I thought he was laughing."
  },
  "tser_lavinia/e80afc56133aa0a9": {
   "chars": 163,
   "direction": "[distraught, bewildered, sad]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "No dancing today. Bujor's gone. My bear. He broke his chain last night, and in nine years he never once pulled on it, not even when the wolves came round the fire."
  },
  "tser_lavinia/eb6a83834f8db465": {
   "chars": 156,
   "direction": "[teasing, warm, proud]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Clap or don't, the steps are the same. (Bujor turns beside her, slow and heavy, and under the planks a small bear is trying the same turn and falling over.)"
  },
  "tser_lavinia/fc84bddf67f14978": {
   "chars": 75,
   "direction": "[pleading, worried]",
   "model": "eleven_v3",
-  "recipe": "39247df308",
+  "recipe": "d140ff9407",
   "text": "Up the stream, where the deer path goes. Please. Before the woods have him."
  },
  "tser_marin/0ad3e9f8d9975226": {
@@ -90255,35 +90264,35 @@
  },
  "tser_radu/01b1e9cf9cf6a179": {
   "chars": 70,
-  "direction": "[fierce, resolved]",
+  "direction": "[brisk, swaggering, determined]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Bring her back. Bring her back and let the castle come and ask me why."
  },
  "tser_radu/0878795f00f37b75": {
   "chars": 138,
-  "direction": "[cheerful, fond]",
+  "direction": "[cheerful, fond, easy]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Young Nicu rode out for Vallaki with a mare to sell, four days gone now. He'll be back with a new song and no money, the way he always is."
  },
  "tser_radu/100be18d7cfc0739": {
   "chars": 52,
-  "direction": "[firm, hurt]",
+  "direction": "[breezy, firm, salesman-bright]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Not for sale. None of them. Not today, not tomorrow."
  },
  "tser_radu/15039ff446acf9c9": {
   "chars": 68,
-  "direction": "[urgent, low]",
+  "direction": "[brisk, confiding, urgent]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Midnight, friend. The old milestone, east side. Go, if you're going."
  },
  "tser_radu/19512bbe9273c791": {
   "chars": 63,
-  "direction": "[disgusted, firm]",
+  "direction": "[brisk, firm, generous]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Take the castle's gold. All of it. I don't want it in the camp."
@@ -90297,7 +90306,7 @@
  },
  "tser_radu/298cc1fbd71837bb": {
   "chars": 127,
-  "direction": "[breezy, roguish, amused]",
+  "direction": "[breezy, roguish, upbeat]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "It belongs to the troupe, which means it belongs to Lavinia. She will say yes if you ask nicely, so I will say yes for her now."
@@ -90318,28 +90327,28 @@
  },
  "tser_radu/33b79de7e979d66c": {
   "chars": 62,
-  "direction": "[broken, quiet]",
+  "direction": "[rueful, smooth, rapid]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Then I sold her for a rope. For a rope he was already wearing."
  },
  "tser_radu/4a57258f992bea6e": {
   "chars": 56,
-  "direction": "[quiet, broken]",
+  "direction": "[subdued, quick, rueful]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "She's black now. Isn't she. And you had to put her down."
  },
  "tser_radu/4c72a4a9f2913b5f": {
   "chars": 140,
-  "direction": "[bitter, grieving]",
+  "direction": "[bitter, rapid, smooth]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "The castle took my friend's boy and my mare in one week, and it paid me in old gold for the mare. Not for the boy. It doesn't pay for those."
  },
  "tser_radu/4e52e0a176dde7df": {
   "chars": 96,
-  "direction": "[incredulous, then scheming, sly]",
+  "direction": "[incredulous, fast-talking, scheming]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Something shaped like a horse, to stand in the dark for the devil's carriage? You are mad. Wait."
@@ -90353,77 +90362,77 @@
  },
  "tser_radu/5506278016b3b269": {
   "chars": 91,
-  "direction": "[tender, urgent]",
+  "direction": "[warm, upbeat, brisk]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Her name's Steaua. She likes her ears scratched and she hates priests. If you're going, go."
  },
  "tser_radu/61d4235013abcb59": {
   "chars": 79,
-  "direction": "[magnanimous, hearty, proud]",
+  "direction": "[magnanimous, hearty, swaggering]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Here, fifteen gold, counted out fair. Never say Radu does not honour a bargain."
  },
  "tser_radu/624c0f8a9d475dab": {
   "chars": 92,
-  "direction": "[wistful, fond, wry]",
+  "direction": "[fond, wry, easy]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "To tell the truth, the paddock looks a little empty without him glaring at me over the rail."
  },
  "tser_radu/63a4ec267fc1704d": {
   "chars": 102,
-  "direction": "[sly, teasing]",
+  "direction": "[sly, teasing, fast-talking]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Not for sale, of course. None of them are for sale today. But tomorrow, who knows? Come back tomorrow."
  },
  "tser_radu/6a48a0cdba59c1e2": {
   "chars": 96,
-  "direction": "[moved, wry]",
+  "direction": "[moved, upbeat, wry]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "That's fair. That's more than fair. That's the first fair thing to happen in this camp all week."
  },
  "tser_radu/720298d8b71c8e37": {
   "chars": 102,
-  "direction": "[delighted, mocking, storyteller flourish]",
+  "direction": "[delighted, showman, rapid]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "We have the Winter Horse! Two men's worth of legs, three sacks of straw, and a face like a wet Sunday."
  },
  "tser_radu/7746a41d17b14bbd": {
   "chars": 137,
-  "direction": "[breezy, defensive, forced cheer]",
+  "direction": "[smooth, swaggering, fast-talking]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Zora counts too much. Yes, I walked her down. Sold. A buyer came by, a buyer paid, and the horse goes to the buyer. That's horse-trading."
  },
  "tser_radu/78b0fdeb50da2748": {
   "chars": 138,
-  "direction": "[sad, wry]",
+  "direction": "[wry, rueful, brisk]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Nobody on the road worth knowing. Not since Nicu. We tied a ribbon for him, and the fiddle plays slow, and I have nobody to cheat at dice."
  },
  "tser_radu/82d4ba89c2e18b4b": {
   "chars": 69,
-  "direction": "[stunned, baffled, disbelieving]",
+  "direction": "[stunned, baffled, quick]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "I have owned that horse for three years. He has never once done that."
  },
  "tser_radu/879030751d89fe14": {
   "chars": 160,
-  "direction": "[low, bitter, ominous]",
+  "direction": "[salesman patter, wry, knowing]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "The buyer has a carriage and no driver, and you would like to know why I said yes. Everyone says yes to that carriage, friend. One day you'll say yes to it too."
  },
  "tser_radu/8941e0b53fbdc5b9": {
   "chars": 98,
-  "direction": "[thoughtful, wry]",
+  "direction": "[playful, fast-talking, wry]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Now. She was sold, so she isn't mine. And she was bought, so she isn't the castle's. Whose is she?"
@@ -90437,161 +90446,161 @@
  },
  "tser_radu/8d76b1b17410827e": {
   "chars": 107,
-  "direction": "[quiet, sincere]",
+  "direction": "[warm, sincere, easy]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "And you told me the truth about Nicu, when the castle wouldn't. I owe you for that more than for the horse."
  },
  "tser_radu/8e7ef289d637bcbb": {
   "chars": 137,
-  "direction": "[urgent, low]",
+  "direction": "[quick, urgent, confiding]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "She's tied at the old milestone on the east side of the crossroads, where the roads meet. They fetch her at midnight. That's the bargain."
  },
  "tser_radu/9165d26e928d689f": {
   "chars": 196,
-  "direction": "[wistful, earnest]",
+  "direction": "[persuasive, earnest, salesman-warm]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "And this. A trader from over the mountains paid it for her, years ago, before I knew I'd never sell her. A bride price, he called it. It turns curses back, or so he swore. Better it goes with you."
  },
  "tser_radu/9a27f7013d1b8f0c": {
   "chars": 106,
-  "direction": "[instructive, low, businesslike]",
+  "direction": "[brisk, instructive, enthusiastic]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Take the grease and the soot from the stage lamps and rub it into the canvas until it looks like midnight."
  },
  "tser_radu/9de4d99d921d0304": {
   "chars": 121,
-  "direction": "[mock-defensive, droll, fond]",
+  "direction": "[mock-defensive, droll, salesman-smooth]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "He is not wicked, mind you. Only committed to his craft. Still, a horse you cannot saddle is just an expensive neighbour."
  },
  "tser_radu/a08be419556afa9d": {
   "chars": 213,
-  "direction": "[hushed, ashamed, desperate]",
+  "direction": "[fast-talking, earnest, urgent]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "There was a voice in the carriage. Very kind. It said: give us the grey, and Nicu rides home tomorrow. Four days gone, my friend's boy, and the castle says he rides home if the grey goes to the crossroads tonight."
  },
  "tser_radu/ae56747cd36b228c": {
   "chars": 68,
-  "direction": "[sad, quiet]",
+  "direction": "[wistful, easy, brisk]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Still no grey in the pen. I keep looking at the end where she stood."
  },
  "tser_radu/b22e912e36ca6d46": {
   "chars": 103,
-  "direction": "[rueful, marvelling, wry]",
+  "direction": "[marvelling, wry, confident]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Forty years I have traded horses in this valley, and I thought I knew every crooked trick on four legs."
  },
  "tser_radu/b4ed82862dbb90a5": {
   "chars": 129,
-  "direction": "[sheepish, coaxing, roguish]",
+  "direction": "[coaxing, sheepish, smooth-talking]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Only do me one small favour, my friends: if Lavinia asks where the Winter Horse went, tell her he ran off with a travelling show."
  },
  "tser_radu/c3aae76591909368": {
   "chars": 86,
-  "direction": "[bitter, wry]",
+  "direction": "[wry, quick, bitter-humored]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "And still no Nicu on the road. The castle's promises keep about as well as its horses."
  },
  "tser_radu/c58ba009f41c65f2": {
   "chars": 94,
-  "direction": "[low, gentle, confiding]",
+  "direction": "[confiding, gentle, quick]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "His sister watches the road for him. Don't tell her I said four days. She counts them herself."
  },
  "tser_radu/c8e3bfc75de529f1": {
   "chars": 151,
-  "direction": "[proud, sweet-talking]",
+  "direction": "[proud, sweet-talking, enthusiastic]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Look at them. Plaited, brushed, fed better than the burgomaster of Vallaki. That grey one would carry you to the mountains and back and never complain."
  },
  "tser_radu/cb69402fd6b2b0dd": {
   "chars": 44,
-  "direction": "[rueful, quiet]",
+  "direction": "[rueful, light, quick]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Luminita won't let me near her. Quite right."
  },
  "tser_radu/cb7e8cdcbef708d8": {
   "chars": 56,
-  "direction": "[rueful, wry]",
+  "direction": "[rueful, wry, breezy]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "She bit me this morning. First time ever. I deserved it."
  },
  "tser_radu/d4387b91a7b00635": {
   "chars": 130,
-  "direction": "[showman, relishing, teasing]",
+  "direction": "[showman, teasing, fast-talking]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Look at him over there by the post. That is Dinte. It means \"tooth\" in our tongue, for reasons that will become clear immediately."
  },
  "tser_radu/dab76c363ff85796": {
   "chars": 23,
-  "direction": "[quiet, ashamed]",
+  "direction": "[quick, rueful, brisk]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "No. It isn't the money."
  },
  "tser_radu/db96123a0281e44b": {
   "chars": 73,
-  "direction": "[fierce, proud]",
+  "direction": "[proud, brisk, emphatic]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Mine. Then nobody gets her, ever, for any price. Not even for a good one."
  },
  "tser_radu/dba5486d30b34f47": {
   "chars": 99,
-  "direction": "[low, bitter wisdom]",
+  "direction": "[wry, pitch-man cadence, knowing]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "The castle doesn't lie about small things. That's how it gets you to believe it about the big ones."
  },
  "tser_radu/dfcc61601cea44ab": {
   "chars": 143,
-  "direction": "[warm, sly, grateful]",
+  "direction": "[warm, sly, swaggering]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "You broke the castle's bargain. Everyone in this camp is pretending they don't know who did it. That's the nicest thing Vistani can do for you."
  },
  "tser_radu/e1bf5f3ef1d1402a": {
   "chars": 203,
-  "direction": "[amazed, delighted, then wary]",
+  "direction": "[amazed, delighted, fast-talking]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "She came down the road at a gallop an hour ago and went straight into the pen like she'd never left. Grey. All grey. What did you do? No, don't tell me. The carriage will be wanting a word with somebody."
  },
  "tser_radu/e25b8ca248bc4cca": {
   "chars": 132,
-  "direction": "[sly, dry, bargaining]",
+  "direction": "[sly, bargaining, upbeat]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Find him an owner who will keep him and I will put fifteen gold pieces in your hand. How you keep your fingers is your own business."
  },
  "tser_radu/eb0962ff51f1f93a": {
   "chars": 104,
-  "direction": "[mock-stern, warm, wry]",
+  "direction": "[mock-stern, warm, fast]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Do not laugh at him. He has played the stallion in three tragedies and a farce, and he is nobody's fool."
  },
  "tser_radu/ee74e1154b3e20ad": {
   "chars": 75,
-  "direction": "[hollow, forced pride]",
+  "direction": "[proud, enthusiastic, smooth]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "Look at them. Plaited, brushed, fed better than the burgomaster of Vallaki."
@@ -90605,14 +90614,14 @@
  },
  "tser_radu/f66a08a566f3b6c9": {
   "chars": 110,
-  "direction": "[gleeful, rhythmic, comic]",
+  "direction": "[gleeful, rapid, comic]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "The last man who tried to look at his hooves went home without a coat button and most of his left trouser leg."
  },
  "tser_radu/fb246ae8a7e2133d": {
   "chars": 120,
-  "direction": "[grim, sorrowful]",
+  "direction": "[fast, grim, salesman-smooth]",
   "model": "eleven_v3",
   "recipe": "4c6943b7e3",
   "text": "She won't stay grey, you understand. The carriage horses are black all through. They take a horse and they... finish it."
@@ -91896,40 +91905,42 @@
  },
  "vallaki_grumbler/1cb4d91439ee25e2": {
   "chars": 160,
+  "direction": "[weary, grumbling, resigned]",
   "model": "eleven_v3",
-  "recipe": "c0a98901e3",
+  "recipe": "94f264c991",
   "text": "I stand here till the evening bell, then I go home and practise in the mirror. Third time this month. My wife says I've a face built for coopering, not for joy."
  },
  "vallaki_grumbler/2df46078e7a0cfa4": {
   "chars": 206,
-  "direction": "[bitter, low, nervous]",
+  "direction": "[bitter, nervous, hushed]",
   "model": "eleven_v3",
   "recipe": "94f264c991",
   "text": "Told? Nobody tells. There's a list. The girl with the ribbons writes down who won't wear one, and the next morning those are the faces in here. Ask her. Don't ask her where I can see; I'm in enough trouble."
  },
  "vallaki_grumbler/2e016089b50457fe": {
   "chars": 106,
-  "direction": "[dry, sardonic, resigned]",
+  "direction": "[dry, resigned, grumbling]",
   "model": "eleven_v3",
   "recipe": "94f264c991",
   "text": "In the stocks, nobody asks you to smile. You're already being punished, so your face is your own business."
  },
  "vallaki_grumbler/5d6ab6e91cd57939": {
   "chars": 96,
-  "direction": "[bitter, grumbling, sour]",
+  "direction": "[grumbling, sour, complaining]",
   "model": "eleven_v3",
   "recipe": "94f264c991",
   "text": "Out there it's ribbons and teeth from dawn till dark, until your jaw aches worse than your back."
  },
  "vallaki_grumbler/ee9d5e2ec2283e10": {
   "chars": 102,
+  "direction": "[put-upon, muttering, sour]",
   "model": "eleven_v3",
-  "recipe": "c0a98901e3",
+  "recipe": "94f264c991",
   "text": "Don't look at me like that. I smiled. I smiled the whole festival. Apparently it didn't reach my eyes."
  },
  "vallaki_grumbler/fbbed62abf652b1d": {
   "chars": 100,
-  "direction": "[grudging, wry, content]",
+  "direction": "[grudging, wry, mildly content]",
   "model": "eleven_v3",
   "recipe": "94f264c991",
   "text": "Besides, my wife brings cabbage soup at noon and feeds it to me with a wooden spoon. Could be worse."
@@ -92395,70 +92406,70 @@
   "chars": 106,
   "direction": "[conspiratorial, low, wry]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Keep your voice down, then. Half of it is parsley, yes, because real wolfsbane grows where the wolves are."
  },
  "vallaki_herbwife/53859389cb194f0b": {
   "chars": 137,
   "direction": "[sweet, conspiratorial, low]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Sage for sleep, garlic for the door, wolfsbane for the window. And a ribbon, dear, yellow, for your coat. They're watching who wears one."
  },
  "vallaki_herbwife/714ceec5f03b6ae9": {
   "chars": 123,
   "direction": "[dry, relieved]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Sage, garlic, wolfsbane. Same as always. The festival's done, so I can stop selling yellow ribbons too. Never liked yellow."
  },
  "vallaki_herbwife/7d70e99306b5ff3f": {
   "chars": 109,
   "direction": "[sweet, pointed irony]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Because the Baron says there's nothing to fear, and the Baron is always right. Garlic is two coppers a braid."
  },
  "vallaki_herbwife/9c5017ec577ce9fd": {
   "chars": 94,
   "direction": "[low, knowing, sly]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Put it on the sill and shut the latch tight. It's the latch that does most of the work anyway."
  },
  "vallaki_herbwife/a00085d84ddce8fa": {
   "chars": 83,
   "direction": "[sweet, coaxing, wry]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Go on, take a good sniff of the bundle. Don't be shy; I don't charge for the smell."
  },
  "vallaki_herbwife/b38707c61c2dcd1c": {
   "chars": 116,
   "direction": "[dry, sweet, sardonic]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Does the wolfsbane work? It works as well as anything else in Barovia, dear, which is to say you're still breathing."
  },
  "vallaki_herbwife/c9d5838c9c2a0b17": {
   "chars": 115,
   "direction": "[indignant, sweet, sly]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Parsley? Listen to the scholar. That is genuine mountain wolfsbane that has simply been through a very hard winter."
  },
  "vallaki_herbwife/db0b47ed4bc464d0": {
   "chars": 124,
   "direction": "[amused, sweet, dry]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "It still keeps the beasts off the porch, mind. They smell a window full of soup greens and get as confused as the customers."
  },
  "vallaki_herbwife/dfd7363cb0f57750": {
   "chars": 111,
   "direction": "[sweet, brisk, businesslike]",
   "model": "eleven_v3",
-  "recipe": "db179c9985",
+  "recipe": "16abd7f167",
   "text": "Here, take the bundle from the bottom of the basket. That's the true root, and I'll charge you the usual price."
  },
  "vallaki_jailer/1f9d1530b4cce0d7": {
@@ -92679,42 +92690,42 @@
   "chars": 108,
   "direction": "[reminiscing, fond, sad]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "I knew Milivoj's mother when she was a girl, you know. Seven mouths in that cottage, and never enough bread."
  },
  "vallaki_parishioner_varvara/52fe978ce8271028": {
   "chars": 109,
   "direction": "[uneasy, troubled, suspicious]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "Now the relics are gone from under the altar, and the boy is walking the yard in a pair of new leather boots."
  },
  "vallaki_parishioner_varvara/5d627f2ae83e0907": {
   "chars": 114,
   "direction": "[old, gentle, prayerful]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "I kneel here every morning and ask St. Andral for his bones to come home, though the stones are hard on the knees."
  },
  "vallaki_parishioner_varvara/6a8fbd1163fbe13b": {
   "chars": 109,
   "direction": "[low, compassionate, worried]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "A new iron spade, too, and he won't meet my eyes. If you speak to him, be gentle; he's only a frightened boy."
  },
  "vallaki_parishioner_varvara/a6c8f35e03eb612f": {
   "chars": 151,
   "direction": "[trembling, fearful, prayerful]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "Somebody took the saint's bones. Father Lucian won't say so, but his face says so. I pray they come home before the dark finds out the door's unlocked."
  },
  "vallaki_parishioner_varvara/cfd8c92f801af1fc": {
   "chars": 133,
   "direction": "[warm, relieved, grateful]",
   "model": "eleven_v3",
-  "recipe": "5c7e1815d5",
+  "recipe": "9e0b386e6f",
   "text": "The bones are home. I felt it in the floor this morning, like a stove being lit. Thank the Morninglord. And thank you, if it was you."
  },
  "vallaki_patrol/249bc3cedd091e4c": {
@@ -95926,35 +95937,35 @@
   "chars": 90,
   "direction": "[wry, soft, evasive]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "2fe94cdeab",
   "text": "Vallaki's damp in the winter anyway. I suppose I can stay until he learns to mend a shirt."
  },
  "wine_washer/90c52e10fd2eeb7d": {
   "chars": 87,
   "direction": "[dry, firm, determined]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "2fe94cdeab",
   "text": "The moment the road's clear of twigs and teeth, I'm packing my kettle and walking home."
  },
  "wine_washer/a148c16193de5c75": {
   "chars": 89,
   "direction": "[gruff, fond, defensive]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "2fe94cdeab",
   "text": "Well, someone has to keep an eye on the big ox, or he'd split his own boot with that axe."
  },
  "wine_washer/bca9e58fb6f11d90": {
   "chars": 80,
   "direction": "[brisk, wry, rueful]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "2fe94cdeab",
   "text": "I came up from Vallaki for one autumn's picking, and that was four winters back."
  },
  "wine_washer/ee357894302ecded": {
   "chars": 116,
   "direction": "[brisk, wry]",
   "model": "eleven_v3",
-  "recipe": "d64ca4ba28",
+  "recipe": "2fe94cdeab",
   "text": "I came out from Vallaki to pick grapes for one season. That was four years ago. Hand me that peg. No, the other one."
  },
  "wine_watch/634383c648bd5937": {
@@ -95996,35 +96007,35 @@
   "chars": 89,
   "direction": "[hopeful, earnest, hearty]",
   "model": "eleven_v3",
-  "recipe": "4c6943b7e3",
+  "recipe": "f4536716f4",
   "text": "Give me one sound barrel to cooper before spring, so my hands remember they have a trade."
  },
  "wine_woodsplitter/16556fa3b6575ce7": {
   "chars": 141,
   "direction": "[hearty, earnest]",
   "model": "eleven_v3",
-  "recipe": "4c6943b7e3",
+  "recipe": "f4536716f4",
   "text": "I used to split staves for the casks. Now it's firewood. Same axe, same arms, worse smell. When we're home I'll make you a cask, if you like."
  },
  "wine_woodsplitter/2852443a531011a2": {
   "chars": 95,
   "direction": "[earnest, hearty, wistful]",
   "model": "eleven_v3",
-  "recipe": "4c6943b7e3",
+  "recipe": "f4536716f4",
   "text": "Good white oak wasn't grown to go up a chimney. It wants shaping and steaming and an iron hoop."
  },
  "wine_woodsplitter/e80dab541b7250c9": {
   "chars": 69,
   "direction": "[amused, wry, fond]",
   "model": "eleven_v3",
-  "recipe": "4c6943b7e3",
+  "recipe": "f4536716f4",
   "text": "She's got a sharp tongue on her, right enough. Sharpest in the hills."
  },
  "wine_woodsplitter/f402af4b71845615": {
   "chars": 84,
   "direction": "[warm, sheepish, amused]",
   "model": "eleven_v3",
-  "recipe": "4c6943b7e3",
+  "recipe": "f4536716f4",
   "text": "She mended my mittens twice last week without my asking, though, so I let her shout."
  },
  "wren_featherfoot/0037f89bf8c69b91": {

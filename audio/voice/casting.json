@@ -881,13 +881,14 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "arik": {
-      "voice_id": "CAzSgVvpn06m5gG36jRW",
-      "name": "Library voice: MRV - Conversational",
-      "description": "Library voice chosen for arik (2026-10-08, recast on v3). Was: A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes.",
+      "voice_id": "Agtn2Ybo5e8bHlzRTfaf",
+      "name": "Barovia Gheorghe",
+      "description": "Library voice chosen for arik (2026-10-08, recast on v3). Was: A grey, unhurried man with a flat, toneless, empty voice and a strong, clearly audible Eastern European (Romanian) accent. Answers with the fewest words possible; nobody behind the eyes. Moved 2026-10-18 (Ashwin) onto vallaki_raker's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
-      "accent_tag": "[strong Romanian accent]"
+      "accent_tag": "[strong Romanian accent]",
+      "generated_voice_id": "Agtn2Ybo5e8bHlzRTfaf",
+      "released": true
     },
     "elisabeth_durst": {
       "voice_id": "Nz23pYZtvzHCV8wM9uSj",
@@ -1564,24 +1565,26 @@
       "accent_tag": "[strong Romanian accent]"
     },
     "krezk_bucket_wife": {
-      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
-      "name": "Library voice: Betty",
-      "description": "Goodwife Sanda, of krezk: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "oahoHc2oSeUmVidh3IkX",
+      "name": "Barovia Goodwife Viorica",
+      "description": "Goodwife Sanda, of krezk: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto barovia_shopper's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "sorvia"
+      "shared_with": "sorvia",
+      "generated_voice_id": "oahoHc2oSeUmVidh3IkX",
+      "released": true
     },
     "wine_washer": {
-      "voice_id": "8OkSxYl0qQH1Kg3Qzxu2",
-      "name": "Library voice: Betty",
-      "description": "Tereza, of the martikov camp: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "haD60kChENZhuoOFiC80",
+      "name": "Barovia barovia_goodwife",
+      "description": "Tereza, of the martikov camp: a generic townsperson on a shared voice, Betty (also Sorvia's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto barovia_goodwife's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "sorvia"
+      "shared_with": "sorvia",
+      "generated_voice_id": "haD60kChENZhuoOFiC80",
+      "released": true
     },
     "camp_cook": {
       "voice_id": "5u41aNhyCU6hXOcjPPv0",
@@ -1594,14 +1597,15 @@
       "earlier_voice_id": "d90np8fxRBxUcXZAKL70"
     },
     "pool_mourner": {
-      "voice_id": "wEJjJg8SheKHTwm83mZY",
-      "name": "Library voice: Roxana",
-      "description": "Widow Catrina, at the pool of the white sun: a generic townsperson on a shared voice, Roxana (also Mirabel's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "57GJuoa2OCxQGWKIS8Qp",
+      "name": "Barovia Goodwife Sarnov",
+      "description": "Widow Catrina, at the pool of the white sun: a generic townsperson on a shared voice, Roxana (also Mirabel's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto goodwife_sarnov's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "mirabel"
+      "shared_with": "mirabel",
+      "generated_voice_id": "57GJuoa2OCxQGWKIS8Qp",
+      "released": true
     },
     "vallaki_patron_oana": {
       "voice_id": "wEJjJg8SheKHTwm83mZY",
@@ -1614,14 +1618,15 @@
       "shared_with": "mirabel"
     },
     "krezk_well_wife": {
-      "voice_id": "AiaoHsEWJpbfK8rXdLbb",
-      "name": "Library voice: Ioana Alexandra - Social media",
-      "description": "Goodwife Rodica, of krezk: a generic townsperson on a shared voice, Ioana Alexandra - Social media (also Stefania Martikov's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "dd0PByHmASFtIDUDBAsf",
+      "name": "Barovia Goodwife Sorina",
+      "description": "Goodwife Rodica, of krezk: a generic townsperson on a shared voice, Ioana Alexandra - Social media (also Stefania Martikov's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto barovia_worshipper_sorina's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "stefania_martikov"
+      "shared_with": "stefania_martikov",
+      "generated_voice_id": "dd0PByHmASFtIDUDBAsf",
+      "released": true
     },
     "pastry_customer_woman": {
       "voice_id": "AiaoHsEWJpbfK8rXdLbb",
@@ -1634,14 +1639,15 @@
       "shared_with": "stefania_martikov"
     },
     "vallaki_parishioner_varvara": {
-      "voice_id": "neZC2DQ42NvDV1SyoMxN",
-      "name": "Library voice: Mirela",
-      "description": "Old Varvara, praying at st. andral's: a generic townsperson on a shared voice, Mirela (also Kasha Varo's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "uJxx86hCsTD1uvkpNR4B",
+      "name": "Barovia Mother Ecaterina",
+      "description": "Old Varvara, praying at st. andral's: a generic townsperson on a shared voice, Mirela (also Kasha Varo's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto mother_ecaterina's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "kasha_varo"
+      "shared_with": "kasha_varo",
+      "generated_voice_id": "uJxx86hCsTD1uvkpNR4B",
+      "released": true
     },
     "camp_fisher": {
       "voice_id": "8nBBDfYxYXmDNaqTCxPH",
@@ -1664,14 +1670,15 @@
       "pace_note": "Owner, 2026-10-14: Old Nistor was too slow. His library voice Joseph Ortman ran about 2.8 words a second, so 12 of his 16 clips were slowed 0.82-0.86x toward 2.4 at the same pitch, level matched (manifest `stretch`). A --recast re-records them at the voice's own pace."
     },
     "krezk_fence_mender": {
-      "voice_id": "8nBBDfYxYXmDNaqTCxPH",
-      "name": "Library voice: Serban Popescu - Professional Narrator",
-      "description": "Cezar, of krezk: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Stoica's, at the Lake Camp). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "xw920H5ZOFK83ZkLEfHe",
+      "name": "Barovia parriwimple",
+      "description": "Cezar, of krezk: a generic townsperson on a shared voice, Serban Popescu - Professional Narrator (also Stoica's, at the Lake Camp). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto parriwimple's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "camp_fisher"
+      "shared_with": "camp_fisher",
+      "generated_voice_id": "xw920H5ZOFK83ZkLEfHe",
+      "released": true
     },
     "krezk_wall_watch": {
       "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
@@ -1694,14 +1701,15 @@
       "shared_with": "tser_petru"
     },
     "lzt_hunter": {
-      "voice_id": "5BZv9Z02hAMUmkkcd5Hj",
-      "name": "Library voice: Paul - Engaging, Friendly and Mysterious",
-      "description": "Ilarie, a hunter on the hill trail: a generic townsperson on a shared voice, Paul - Engaging, Friendly and Mysterious (also Petru's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "WCNAAd92GbXRutFv6AYx",
+      "name": "Barovia Yevgeni",
+      "description": "Ilarie, a hunter on the hill trail: a generic townsperson on a shared voice, Paul - Engaging, Friendly and Mysterious (also Petru's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto yevgeni's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "tser_petru"
+      "shared_with": "tser_petru",
+      "generated_voice_id": "WCNAAd92GbXRutFv6AYx",
+      "released": true
     },
     "krezk_goatherd": {
       "voice_id": "8WRfTpaUoqZSfTerOXzI",
@@ -1753,14 +1761,15 @@
       "earlier_voice_id": "YIgX8Hligdg1Bc44qEcW"
     },
     "wine_woodsplitter": {
-      "voice_id": "AEPS4amQpAYS3CULyGRe",
-      "name": "Library voice: Doru",
-      "description": "Horia, of the martikov camp: a generic townsperson on a shared voice, Doru (also Radu's). Owner rule 2026-10-08: minor townsfolk share voices.",
+      "voice_id": "kl4JkAUOEHGE7EwZDFXE",
+      "name": "Barovia Cosmin",
+      "description": "Horia, of the martikov camp: a generic townsperson on a shared voice, Doru (also Radu's). Owner rule 2026-10-08: minor townsfolk share voices. Moved 2026-10-18 (Ashwin) onto argynvostholt_cosmin's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "shared_with": "tser_radu"
+      "shared_with": "tser_radu",
+      "generated_voice_id": "kl4JkAUOEHGE7EwZDFXE",
+      "released": true
     },
     "vallaki_patron_dragan": {
       "voice_id": "AEPS4amQpAYS3CULyGRe",
@@ -1850,14 +1859,15 @@
       "released": true
     },
     "vallaki_herbwife": {
-      "voice_id": "7NsaqHdLuKNFvEfjpUno",
-      "name": "Library voice: Seer Morganna - Intimidating, and Clear",
-      "description": "Library voice chosen for vallaki_herbwife (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: A bent old Vallaki herbwife in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cracked, sweet, conspiratorial old voice, smiling hard and talking low.",
+      "voice_id": "LJylQFwR903OigY5UG7p",
+      "name": "Barovia Ilinca Vrana (2026-10-07)",
+      "description": "Library voice chosen for vallaki_herbwife (2026-10-14, recast): the owner heard the old elders' designed voices as grainy, so they move to clean library voices, one each. Was: A bent old Vallaki herbwife in her seventies speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A cracked, sweet, conspiratorial old voice, smiling hard and talking low. Moved 2026-10-18 (Ashwin) onto ilinca_vrana's voice.",
       "settings": {},
       "model": "eleven_v3",
-      "library": true,
       "accent_tag": "[strong Romanian accent]",
-      "earlier_voice_id": "TDFj1ooIYqzqhbK7aGnW"
+      "earlier_voice_id": "TDFj1ooIYqzqhbK7aGnW",
+      "generated_voice_id": "LJylQFwR903OigY5UG7p",
+      "released": true
     },
     "vallaki_cloth_merchant": {
       "voice_id": "eQvqrV02SmhuXXk8kzNY",
@@ -1951,13 +1961,13 @@
       "released": true
     },
     "tser_lavinia": {
-      "voice_id": "DaSn52f4qtEGsqmgWWu9",
-      "name": "Barovia Lavinia",
-      "description": "A Vistani dancer in her twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, sly, teasing, breathless voice.",
+      "voice_id": "dZSe33sPffmACziRpFlg",
+      "name": "Barovia Vadoma (2026-10-08)",
+      "description": "A Vistani dancer in her twenties speaking English with a very strong, thick Romanian accent: rolled r's, hard consonants, foreign vowels. A bright, sly, teasing, breathless voice. Moved 2026-10-18 (Ashwin) onto vadoma's voice.",
       "settings": {},
       "model": "eleven_v3",
       "accent_tag": "[strong Romanian accent]",
-      "generated_voice_id": "DaSn52f4qtEGsqmgWWu9",
+      "generated_voice_id": "dZSe33sPffmACziRpFlg",
       "released": true
     },
     "tser_iancu": {
