@@ -640,21 +640,13 @@
     {
       "id": "holt_dragon_statue",
       "cell": [
-        24,
+        17,
         8
       ],
       "kind": "examine",
       "label": "The dragon statue",
-      "model": "gargoyle"
-    },
-    {
-      "id": "holt_dragon_statue_frost",
-      "cell": [
-        25,
-        8
-      ],
-      "kind": "decor",
-      "model": "ice_patch"
+      "model": "gargoyle",
+      "scale": 4
     }
   ],
   "containers": [

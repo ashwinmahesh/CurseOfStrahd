@@ -595,13 +595,14 @@
       ],
       "kind": "examine",
       "label": "The hollow in the floor",
-      "model": "ice_patch"
+      "model": "ice_patch",
+      "scale": 3.5
     },
     {
       "id": "holt_den_frost_1",
       "cell": [
-        6,
-        19
+        3,
+        17
       ],
       "kind": "decor",
       "model": "ice_patch"
@@ -609,8 +610,8 @@
     {
       "id": "holt_den_frost_2",
       "cell": [
-        10,
-        20
+        13,
+        17
       ],
       "kind": "decor",
       "model": "ice_patch"
@@ -618,8 +619,8 @@
     {
       "id": "holt_den_frost_3",
       "cell": [
-        4,
-        22
+        3,
+        25
       ],
       "kind": "decor",
       "model": "ice_patch"
@@ -627,17 +628,8 @@
     {
       "id": "holt_den_frost_4",
       "cell": [
-        12,
-        22
-      ],
-      "kind": "decor",
-      "model": "ice_patch"
-    },
-    {
-      "id": "holt_den_frost_5",
-      "cell": [
-        7,
-        24
+        13,
+        23
       ],
       "kind": "decor",
       "model": "ice_patch"
@@ -759,8 +751,9 @@
         11,
         25
       ],
-      "label": "Silver coins ground into the floor",
-      "model": "gold_spill",
+      "label": "A drift of silver ground into the floor",
+      "model": "silver_heap",
+      "scale": 2.4,
       "items": [],
       "gold": 80
     }
