@@ -74,6 +74,14 @@ start (somewhere everyone in the valley knows); a place with `when` appears once
 `map` is a location used as the battlefield (the party arrives at its `default` spawn). A dialogue entry plays a
 conversation instead of a fight (it may still end in `combat <id>` from that map's encounters).
 
+`chance_day` and `chance_night` are a leg's chance the first time. Familiar ground rolls less (Ashwin, 2026-10-18: "if we
+are travelling a path to visit somewhere we have already been, reduce the rate of combat random encounters";
+story/road_familiarity.gd): a leg on a road the party has walked before (noted as each leg ends, either way along the
+road, in the save's `_roads_walked` flag), or on a journey bound for a place whose location is already in `visited`
+(which also covers a save from before roads were noted), rolls `RoadFamiliarity.SCALE` (40%) of the table's chance. The
+cut is made in `Travel.roll` before Strahd's attention and the weather are added, so his patrols and a storm still
+count; a first visit, Strahd's own visits on the road, story fights and a place's walk-in fights are never touched.
+
 `grounds` (Ashwin, 2026-10-12: "a variety of these to randomly pick from"; story/road_grounds.gd) lists the battle maps
 the table's fights may play out on, its own `map` among them if it is to be one: the land of its roads (a fork in the
 road, a clearing, a ravine, a ford, a ruined shrine, graves by the road, a moor, a lake inlet, a mountain pass). Each

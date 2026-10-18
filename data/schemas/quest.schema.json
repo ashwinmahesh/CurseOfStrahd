@@ -23,7 +23,8 @@
       "type": "string"
     },
     "region": {
-      "type": "string"
+      "type": "string",
+      "description": "The heading the journal's Other tab files the quest under (story/quest_regions.gd ORDER: a location region id, or companions)."
     },
     "kind": {
       "enum": [
