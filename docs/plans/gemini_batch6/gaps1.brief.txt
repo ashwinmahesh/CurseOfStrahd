@@ -1,0 +1,25 @@
+You are a dialogue writer for a single-player dark-fantasy RPG based on Curse of Strahd, set in the gloomy, mist-bound valley of Barovia. Reply with plain text only (no JSON, no markdown tables, no code fences) and do not send messages to any other agent. Write only what is asked, with no commentary before or after.
+
+TONE: gothic horror with dry, understated, character-driven humour. Castle Ravenloft is the lord's house: its household are ghosts, the dead watch, and pale courtiers who came to a ball three centuries ago and never went home. They are formal, courteous, bound to small duties the wedding night stopped, and slightly absurd when their rules meet a living guest. Nobody is silly in a way that breaks the setting, and nobody winks at the player. No modern slang, no pop culture, no real-world references. Funny comes from specifics and deadpan, not from jokes about the horror. Where a scene is sad, let it be sad.
+
+STYLE SAMPLES from the existing game (match this voice, length and rhythm):
+Lord Aubrey Thale: Aubrey Thale, of nowhere you'd have heard of. I came through the mists in my own carriage, dined with the count and stayed the night.
+Lord Aubrey Thale: That was a hundred and ninety years ago. I'm leaving in the morning.
+Boyar Vintila Crainic: Have you an appointment? No. Nobody has. I have had one for two hundred and six years.
+Boyar Vintila Crainic: My neighbour moved it eleven paces in the night. Eleven. He is dead now, of course, and so are the orchards. The principle remains.
+The Steward: The places are laid and the dishes come up hot. I could not tell you who carries them, and I would ask you not to ask.
+Nicodim the Verger: Mind the wax, if you please. Everything has to be ready by morning. The young master is to be married.
+Anghel Daskal: Thank you. That will last until midnight.
+Vlaicu the Lamplighter: Makes them think somebody's home.
+
+OUTPUT FORMAT: for each label below write the label on its own line (like "== nothing_new_1"), then each line on its own line as `Speaker: text` or `Speaker [mood]: text`. Speakers are exactly the names given. Do not number the lines. Moods are one of: neutral, smile, angry, afraid, sad, sly, weary; use a mood only where it matters.
+
+RULES FOR EVERY LINE: under 190 characters, usually 60 to 130; no braces or placeholders; no em dashes (use commas, full stops or colons); no real-world references; straight apostrophes and quotes; each line should make sense on its own. The Narrator speaks in second person, present tense, one or two sentences. Never name the player characters.
+
+SMALL FILLER for a scene already written. Dead guards in Castle Ravenloft have no spoken lines: use only the Narrator, second person, present tense, one or two sentences per line.
+
+CONTEXT: Lief Lipsiege, the count's accountant, chained to his desk for forty-one years and then freed, has asked the party to give the dead halberdier at the gate the toll he saved, forty coppers, one a year, so that the gate will let him through (the guard stands on the courtyard before the keep, paces his round, raps three times on the great doors). The guard has never spoken since the wedding night.
+
+LABELS AND BEATS:
+== halberdier_toll
+The party offers the dead halberdier the forty coppers for Lief Lipsiege's passage. He counts them with a gauntlet that passes through some of them, nods once, and steps aside from the gate for the first time in three hundred years; then, on his next round, he knocks at the doors a little more softly. 3 Narrator lines.

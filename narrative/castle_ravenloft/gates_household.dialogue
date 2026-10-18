@@ -24,7 +24,21 @@ endif
 * Who lays the table? -> steward_table
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Where should we sit? -> steward_seat
 * Where are the rest of the staff? -> steward_staff
+* [if flag.steward_staff_asked and not flag.steward_place_known] [Insight DC 13] (He squares the same chair twice.) -> steward_place_ok | steward_place_miss
+* [if quest.boyars_petition == sealed] The Boyar's petition is sealed and wants receiving. -> castle_ravenloft/boyars_petition:received
 * (Leave him to his table.) -> END
+
+~ steward_place_ok
+set steward_place_known
+Narrator: His hands return to a chair that is already straight, squaring it a second time against the carpet.
+The Steward [weary]: A servant does not sit, of course. One knows that before one knows the spoons.
+The Steward: After the first hundred years, I laid a quiet place for myself at the far end, only to rest my feet.
+The Steward [sad]: The master had the chair taken away and the place cleared, and I stood the whole of the next winter.
+-> steward_menu
+
+~ steward_place_miss
+Narrator: He reaches past you to straighten a fork by the width of a thumbnail, his face as blank as the silver.
+-> steward_menu
 
 ~ steward_who
 The Steward: The steward of this house. The cellar, the silver, the seating. I had twenty under me once, and not one of them ever laid a fork crooked twice.
@@ -42,6 +56,7 @@ interject guest:ireena: Don't worry. I won't be sitting in it.
 -> steward_menu
 
 ~ steward_staff
+set steward_staff_asked
 The Steward: Below stairs. Their table is laid every night.
 Narrator: He says it pleasantly, without looking at you, and straightens the fork again.
 The Steward: The cook comes up the back stair now and then. Belview. He is not staff. He is the master's.

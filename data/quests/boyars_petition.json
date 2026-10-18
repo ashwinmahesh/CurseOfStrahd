@@ -1,0 +1,42 @@
+{
+  "id": "boyars_petition",
+  "name": "The Boyar's Petition",
+  "summary": "Boyar Vintila Crainic has waited two hundred and six years in Castle Ravenloft to present a petition about a boundary stone. It needs the household's four seals.",
+  "giver": "castle_courtier_3",
+  "region": "castle_ravenloft",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Boyar Crainic's petition needs the four seals of the household before it can be presented: the valet's, the secretary's, the verger's and the lamplighter's. Each will lend theirs for one small thing the wedding night stopped.",
+      "objectives": [
+        "Get the seals of Ghenadie the Valet, Anghel Daskal, Nicodim the Verger and Vlaicu the Lamplighter"
+      ],
+      "hint": "Ask the ghost servants of Castle Ravenloft for their seals: Ghenadie, Anghel Daskal, Nicodim and Vlaicu.",
+      "ends": ""
+    },
+    {
+      "id": "sealed",
+      "journal": "The petition has all four seals. It has to be received by the Steward in the dining hall of Castle Ravenloft.",
+      "objectives": [
+        "Have the Steward receive the sealed petition"
+      ],
+      "hint": "Take the sealed petition to the Steward in the dining hall of Castle Ravenloft.",
+      "ends": ""
+    },
+    {
+      "id": "received",
+      "journal": "The Steward has received the Boyar's petition. Tell the Boyar.",
+      "objectives": [
+        "Tell Boyar Crainic he has been received"
+      ],
+      "hint": "Tell Boyar Crainic, in the audience hall of Castle Ravenloft, that the Steward has received his petition.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Boyar Crainic has been received after two hundred and six years. His boundary stone is under Lake Zarovich, and he is entirely satisfied.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

@@ -322,6 +322,16 @@
   ],
   "npcs": [
     {
+      "npc": "gogu",
+      "cell": [
+        15,
+        2
+      ],
+      "dialogue": "castle_ravenloft/gogu:start",
+      "facing": "south",
+      "when": "not flag.gogu_lowered"
+    },
+    {
       "npc": "escher",
       "cell": [
         11,

@@ -1,0 +1,44 @@
+~ first_sight
+Narrator: Fresh candles burn around the dusty altar, though the chapel is empty and the saint above it has no face.
+Narrator: Ireena stands before the stone with her hands folded, still as wax in the white dress from her dreams.
+Ireena [neutral]: Keep your voices down, if you would. The candles are nearly ready, and the house hates a noise.
+Ireena [sad]: I thought it would be harder to stand still. Once you stop fighting the cold, there is very little left to do.
+~ return_sight
+Narrator: The tallow has guttered lower on the stones, and Ireena has not shifted her folded hands by an inch.
+Ireena [sad]: You came back, and you brought the draft with you. Hush now, before you put the candles out.
+~ symbol
+Narrator: You raise the old amulet, and the sun inside the silver wakes against the chapel dark.
+Narrator: Every candle flame leans back from Ireena as if a clean wind just came through the broken glass.
+~ faith
+Narrator: You step between Ireena and the altar, holding your sworn word up against the cold.
+Narrator: It makes a small, honest light on the dust, and the tallow smoke curls back from her hem.
+~ sunlight
+Narrator: The blade comes clear with the sound of a winter morning, and the chapel loses all its shadows at once.
+Narrator: Beside the altar, the newly lit candles go pale and foolish in the glare.
+~ ward
+Narrator: You speak the old warding words over the altar step, plain and steady against the stone.
+Narrator: The cellar damp goes out of the air, and every leaning flame stands straight at once.
+~ woke
+Ireena [sad]: I know my name. Kolyan Indirovich found me on the road and gave me a good one.
+Ireena [angry]: He did not raise me to stand in the dark and wait to be given away.
+Narrator: Her hands come unfolded at her waist, and the glassy quiet leaves her face.
+~ ward_failed
+Narrator: The prayer tangles in the cold air and comes apart on your tongue. Ireena takes a small, obedient step toward the altar.
+~ woke_failed
+Narrator: She hears you from very far off, like rain against a shut window. Without looking back, she takes a step toward the stone.
+~ trance_holds
+Narrator: The altar candles flare tall and yellow, filling the throat with the smell of hot tallow.
+Narrator: Somewhere high in the castle, a heavy door settles shut in its frame, and Ireena turns her back to you.
+Ireena [neutral]: You must excuse me now. Our visitor likes the room quiet before the words are said.
+~ leave
+Narrator: You step back over the broken pews, and she does not turn her head to watch you go.
+Ireena [neutral]: Do not go far. There will be plenty of room in the pews when he is ready.
+~ woken
+Narrator: The candle flames stand straight and ordinary again. Ireena sways once and catches the edge of the dusty altar.
+Ireena [afraid]: How long have I been standing here? Tell me plainly.
+Ireena [angry]: Look at this rag. It is the dress from the lake in my dream, and I let him put me in it.
+Ireena [angry]: Folded hands and a quiet voice, like a candlestick he set out for company. I would rather be dead in the ditch.
+Ireena [neutral]: Well, don't gawk at me. He took me without my sword, so someone lend me steel until we get home.
+~ ismark_woken
+Ismark [sad]: Look at you. Father would have had a fit if he saw you in lace.
+Ireena [smile]: Say one more word about the dress, brother, and I will walk back down the mountain alone.

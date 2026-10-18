@@ -470,3 +470,11 @@ the Phantom Warden and the Phantom Watchman. Reshaped: The Squire gets a hearing
 vote each; three carry it; a lost vote gives the vigil back). Berez and the mountains had no row beyond people who already have
 their quests, so they are unchanged. The Goat's later sightings were left for a small follow-up.
 
+## Batch 6 status (2026-10-18)
+
+Built on `npc-batch6` (stacked on `npc-batch5`, with `origin/main` fe0b2ba2e merged): Castle Ravenloft. New: The Boyar's Petition
+(four seals for four small things, the Steward, and a stone under a lake), Gogu the gargoyle afraid of heights, the Goat in the
+great entry with the Hall Broom, Fennimore's last chapter on the cliff road, and wants and secrets for Thale, Brandt, Celestine,
+Helga, the Steward and Lief. One change from the roster: Brandt's priest lies in the crypts (as the book's Brandt line says), so
+Brandt is glad of it rather than glad he escaped. The Sunsword is a separate branch.
+

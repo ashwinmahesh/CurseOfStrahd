@@ -32,8 +32,28 @@ endif
 * Who are you? -> helga_who
 * Who lives on this floor? -> helga_floor
 * [if not flag.gertruda_rescued] Is there a girl from the village up here? -> helga_girl
+* What do you want most, Helga? -> helga_want
+* [if flag.helga_want_heard and not flag.helga_price_known] [Insight DC 13] (She's listening for what you say about the ladies.) -> helga_price_ok | helga_price_miss
 * [Insight DC 14] (Watch her. Is she as frightened as she looks?) -> helga_seen | helga_unseen
 * We won't be staying. -> helga_bye
+
+~ helga_want
+set helga_want_heard
+Helga Ruvak: Only a little looking-glass that keeps an image, if such a thing can still be had in the valley.
+Helga Ruvak [weary]: The ones in this house were turned to the wall or scraped clean long before I came.
+-> helga_menu
+
+~ helga_price_ok
+set helga_price_known
+Narrator: Her eyes stay on the floor, yet her head tilts whenever you speak of the women upstairs.
+Helga Ruvak [sly]: The ladies in the silk rooms grow terribly bored of their own company, and the master rarely visits.
+Helga Ruvak: They like to hear what the living say of their hair and their gowns when the doors are shut.
+Helga Ruvak [smile]: A ribbon, a silver pin, a cold supper with salt in it: a girl must keep her pockets lined somehow.
+-> helga_menu
+
+~ helga_price_miss
+Narrator: You see only a shivering girl in thin grey wool, her knuckles red from cold water and lye.
+-> helga_menu
 
 ~ helga_who
 Helga Ruvak: Helga, if you please. Helga Ruvak. I keep the master's floor: the dusting, the linen, the ladies' rooms. Somebody has to.

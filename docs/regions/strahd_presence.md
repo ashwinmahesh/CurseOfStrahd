@@ -74,6 +74,10 @@ round 2, flag `strahd_withdrew`, then `after_fight`). A failed prayer or plea co
 two steps, or if the party lets her go, she goes with him: `ireena_held_by_strahd`, `strahd_window = "taken"`, and her
 place flag is cleared (`ireena_sanctuary = "taken"` or `ireena_in_krezk = false`); a guarding Ismark wakes and joins
 the party to bring her back. Saved, she may stay or rejoin the party (`vallaki/ireena:rejoin`, `krezk/ireena:rejoin`).
+Taken, she can be found: in the castle chapel she stands at the altar, entranced, and the party wakes her the ways that
+stop him at the window (`castle_ravenloft/chapel_ireena`, Story Allies Presence Plan package I5); waking her clears
+`ireena_held_by_strahd` and she joins the party. The parley's "upstairs, dressing for dinner" is what he says while she
+is still held (and the chapel hides her while the final battle waits there).
 
 ### The parley (strahd/final:parley)
 

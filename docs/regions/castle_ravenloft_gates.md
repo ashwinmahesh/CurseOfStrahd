@@ -34,7 +34,7 @@ write castle rooms at the same time).
 |---|---|---|---|
 | `castle_ravenloft_gates` | 40 x 34, `shrine_yard`, outdoors, dim | `crg_cliff_road` (the road's end below the gates), `crg_drawbridge`, `crg_gatehouse` (the gate passage, portcullis), `crg_front_courtyard` (K1), `crg_servants_court` (K2 the center court gate, K3), `crg_carriage_house` (K4), `crg_overlook_walk` (K5, the walk along the outer wall) | Arrival (spawn `gate`), the drawbridge over the chasm, the portcullis, the keep's great doors; the black carriage; the gargoyles on a night visit by uninvited guests (`crg_courtyard_gargoyles`). |
 | `castle_ravenloft_main_floor` | 52 x 25, `manor` (castle stone walls, marble and parquet floors set per area), dark | `crg_entry` (K7), `crg_great_entry` (K8), `crg_guests_hall` (K9), `crg_dining_hall` (K10), `crg_servery`, `crg_turret_post_west`, `crg_turret_post_east` (K11 to K13), `crg_tower_stair_foot`, `crg_hall_of_faces` (K14), `crg_hidden_hoard` (behind the hearth), `crg_chapel_access` (K16, K17) | The hub: spawns from every part, exits to every part. The dinner; the hall of faces and its ever-burning hearth; the hidden hoard (Tarokka place); the turret guards. |
-| `castle_ravenloft_chapel` | 20 x 22, `church`, dark | `crg_chapel_chancel`, `crg_chapel_nave` (K15), `crg_chapel_porch` | The chapel's altar (Tarokka place); Strahd's final battle when the reading says `artifact`. |
+| `castle_ravenloft_chapel` | 20 x 22, `church`, dark | `crg_chapel_chancel`, `crg_chapel_nave` (K15), `crg_chapel_porch` | The chapel's altar (Tarokka place); Strahd's final battle when the reading says `artifact`; Ireena at the altar while Strahd holds her (§6, "Ireena in the chapel"). |
 | `castle_ravenloft_overlook` | 26 x 13, `shrine_yard`, outdoors, dim | `crg_overlook_landing`, `crg_overlook` (K6) | A long balcony over a thousand-foot drop; Strahd's final battle when the reading says `executioner`. |
 
 ### Ways between maps
@@ -163,6 +163,21 @@ Read from elsewhere: `strahd_invitation`, `strahd_test`, `ireena_held_by_strahd`
 withdraw sets the presence package's `strahd_withdrew`, which the parley reads);
 `strahd_first_impression`, `strahd_met` (village); `argynvost_beacon_lit`, `order_fate` (Argynvostholt);
 `dark_gifts_taken` (Amber Temple); `strahd_knows_marina_truth` (Berez); `ireena_pool_vision` (Krezk).
+
+**Ireena in the chapel** (Story Allies Presence Plan, package I5). While `ireena_held_by_strahd` is set and she is not a
+guest, the chapel's `ireena` entry stands at the altar (10,2), entranced (`approach: 7`, `steps_aside`; her usual sprite, so no line says what she wears).
+The entry is hidden while the chapel's final battle is live (`final_room:castle_ravenloft_chapel`, the reading given, Strahd
+neither destroyed nor in his coffin): the parley says she is upstairs, and she is not at the altar behind him. After he falls
+to his coffin she is there again. `narrative/castle_ravenloft/chapel_ireena.dialogue` mirrors the window's menu
+(`strahd/ireena:window_menu`): the Holy Symbol of Ravenkind, a Cleric's or Paladin's faith, the Sunsword, Religion DC 15
+(a warding prayer), Persuasion DC 15 (spent on failure), and "Leave her". Any success runs `woken`: **it clears
+`ireena_held_by_strahd` and `join ireena`** (the one place this plan moves her main state), pays companion approval, and
+gives Ismark a line if he came up with the party. A failed prayer or plea costs 10 minutes and a step
+(`ireena_chapel_pull`); at two the trance holds for now (30 more minutes, the visit ends, `ireena_chapel_pull` back to 0)
+and the party may come back. Two pictures (docs/ui/cutscenes.md): `ireena_altar` at the first sight of her and
+`ireena_woken` when she wakes. Side flags (castle_ravenloft_personal.json): `ireena_chapel_seen`, `ireena_chapel_pull`.
+Not changed: `ireena_sanctuary = "taken"`, `strahd_window = "taken"` and the Sanctuary quest's `taken` stage (a failure
+ending) stay as the window left them.
 
 ## 7. Quest
 

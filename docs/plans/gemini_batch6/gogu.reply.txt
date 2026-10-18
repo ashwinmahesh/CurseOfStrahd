@@ -1,0 +1,42 @@
+== meet
+Narrator: One of the grey stone figures on the roof ridge has its eyes squeezed tight, claws dug deep into the lead flashing. As you come near, a single heavy eyelid lifts.
+Gogu [afraid]: Do not step so hard on the tiles, if you have a heart in you. The whole roof rocks when a boot comes down.
+Gogu [weary]: I was put up here in the old stone-mason's time to look fierce against the sky. Nobody asked how I felt about the sky.
+Gogu: Three hundred years I have stared at my own knees, waiting for the house to settle closer to the dirt.
+== want
+Gogu [weary]: There is a low wall down by the gatehouse, no higher than a haywain. A man could fall off it and only bruise his knee.
+Gogu: The stone cousins down there have moss on their toes and mud splashed up their shins. I have thought of that mud for two centuries.
+Gogu [sad]: Any ledge would do, truth be told, so long as the clouds stay above my head where they belong.
+== ravens
+Gogu: If a roof-slate came down near your head in the court, you must take that up with the ravens. They are spiteful, idle birds.
+Gogu [sly]: Always prying at the mortar with their beaks, they are, and dropping buckets and old hats just to hear the clatter on the flags.
+Gogu [weary]: People look up and see a great grey fellow on the eaves, so naturally I get the blame. Nobody ever doubts a bird.
+== secret_ok
+Narrator: You notice his left claw is white-knuckled around a loose roof-slate, which he is using to steady himself against the gutter. When a gust of wind comes off the crag, his fingers twitch open.
+Gogu [afraid]: All right, it was my hand that let the bucket go, and the bishop's mitre too, though I never knew how a mitre got up here.
+Gogu [sad]: When the wind rises from the valley, my stomach turns over, and I have to hold the ridge with all ten claws or perish.
+Gogu [weary]: A fellow cannot hold the roof and a loose slate at the same time. And I cannot look down to warn the heads below.
+== secret_miss
+Gogu: You have not seen the size of the old crows on the keep, or you would not look at me so hard; two of them could carry a kettle.
+== carry_offer
+Gogu [afraid]: Carry me? Down the turret stair, in the open air, with nothing between my heels and the flagstones but your arms?
+Gogu: I weigh as much as a wet horse, and the steps are narrow, and there is a turn by the bell-slit where the wind comes through.
+Gogu [weary]: I will shut my eyes and hold my breath until my ears stop ringing. Take me by the elbows, then, before I think better of it.
+== carry_ok
+Narrator: You take the great stone bulk of him under the arms and knees, and he folds his wings tight against his ribs like an oversized parcel.
+Narrator: Step by grinding step, you bear him down the winding stair while he keeps both eyes shut and mutters counting-rhymes into his chin.
+Gogu [afraid]: Tell me we are past the bell-slit. Do not tell me if we are at the bell-slit, only tell me when it is behind us.
+Gogu [weary]: If you drop me on the landing, leave me there. A landing is a respectable place for an ornament.
+== carry_slip
+Narrator: Your grip slips on the damp stone, and Gogu drops a full two feet onto the broad flagstone of the landing with a dull crack.
+Gogu [smile]: Well. That was a fall, was it not, and here I am in one piece. Two whole feet through the air and hardly a chip off my heel.
+Gogu: Take a breath and lift again when you are ready; a fellow who has survived a drop like that can bear the rest of the stair.
+== lowered
+Narrator: You set him down upon the low coping of the gatehouse wall, where the weeds grow up between the stones almost to his knees.
+Gogu: Are we down? I can smell nettles and old wheel-grease, and the wind is not whistling in my ears at all.
+Gogu [smile]: Look at that cobble there, right below my toes. A five-foot drop, no more; I could look at that cobble all afternoon.
+Gogu [weary]: If the Count asks where his roof-piece went, tell him I fell. After three hundred years, a little crumbling is only natural.
+== after
+Gogu [smile]: Good evening to you. Not a single slate has come off the keep since Tuesday, and my knees have stopped trembling in the damp.
+Gogu [weary]: The ravens are furious, of course. They sit on the gate-arch and tell anyone who passes that I used to throw the buckets.
+Gogu: Let them talk. A fellow with mud on his heels does not trouble himself with what goes on in the clouds.

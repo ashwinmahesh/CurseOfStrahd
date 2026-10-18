@@ -1,0 +1,15 @@
+{
+  "id": "ireena_woken",
+  "title": "Ireena Wakes",
+  "summary": "Ireena wakes at the chapel altar, one hand gripping its edge and fury in her face, every candle flame bent away from her and the party small at the foot of the steps (castle_ravenloft/chapel_ireena ~ woken).",
+  "images": [
+    {
+      "image": "ireena_woken",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.4
+  ]
+}

@@ -153,6 +153,13 @@ different centuries, with a black mourning ribbon on each frame and Strahd's han
 The refusal took three: the first drew a second auburn-haired woman dancing with Sergei (so Tatyana seemed to be in two places),
 the second fixed that but drew Strahd older and fair, and the third (the one used) names his black hair and his age and has
 Sergei alone by the fire; the cloak on Tatyana is the model's.
+Ireena in the chapel (`ireena_altar`, `ireena_woken`, 2026-10-18, four takes, about $0.40; Story Allies Presence Plan package I5): the
+altar at the first sight of her, entranced, and her waking with every candle flame bent away from her. Her turnaround is the
+only reference, and the model keeps her look (slate-blue laced dress, plum cloak, cream scarf) when the prompt names it
+the way the sheet shows it; a first prompt that called it a "dark blue travelling coat" drew a teal dress. The first altar
+take let her arms hang (the lines say her hands are folded; the prompt now says "her two hands clasped"), the second drew the
+saint with a face, and the third (the one used) lost the saint altogether but gave the wide room with the black window.
+Both play in `castle_ravenloft/chapel_ireena` (the party small and hooded, from behind).
 
 | Cutscene | Title | Plays from | Takes |
 |---|---|---|---|
@@ -288,11 +295,13 @@ Sergei alone by the fire; the cloak on Tatyana is the model's.
 | hunt_begins | The Hunt Runs | `svalich_road/the_counts_huntsman` (a later beat, ~ fight) | 1 |
 | ilinca_children | Ilinca Takes Them Home | `old_bonegrinder/children` | 1 |
 | ilinca_raven | The Raven Who Is a Woman | `old_bonegrinder/ilinca` | 1 |
+| ireena_altar | Ireena at the Altar | `castle_ravenloft/chapel_ireena` (~ first_sight) | 1 |
 | ireena_door | Three Bolts Slide Back | `village_of_barovia/ireena` | 1 |
 | ireena_looks_back | Ireena Looks Back | `village_of_barovia/road_west` | 2 |
 | ireena_stake | She Kneels on the Coffin | `castle_ravenloft/catacombs_coffin` (a later beat, ~ ireena_stake) | 1 |
 | ireena_window | At Ireena's Window | `strahd/ireena` (Ismark asleep by the door while he guards her at the inn; otherwise the take with the room empty) | 2 |
 | ireena_window_empty | The Empty Window | `strahd/ireena` | 1 |
+| ireena_woken | Ireena Wakes | `castle_ravenloft/chapel_ireena` (~ woken) | 1 |
 | izek_doll | Izek and the Doll | `vallaki/izek` | 1 |
 | izek_truth | The Struck Bell | `vallaki/izek` (a later beat, ~ truth_ok) | 1 |
 | keepers_ravens | Ravens on Every Beam | `vallaki/martikovs` | 1 |

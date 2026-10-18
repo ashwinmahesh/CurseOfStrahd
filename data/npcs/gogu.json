@@ -1,0 +1,18 @@
+{
+  "id": "gogu",
+  "name": "Gogu",
+  "title": "A Gargoyle Afraid of Heights",
+  "summary": "A living gargoyle who has sat on the highest ledge of the keep roof for three hundred years with his eyes shut. He wants a lower ledge, and drops things on guests when the wind rises.",
+  "portrait": "gargoyle",
+  "sprite": "gargoyle",
+  "attitude": "indifferent",
+  "monster": "gargoyle",
+  "guest": false,
+  "tags": [
+    "construct",
+    "gargoyle",
+    "castle_ravenloft"
+  ],
+  "region": "castle_ravenloft",
+  "pronouns": "he/him"
+}

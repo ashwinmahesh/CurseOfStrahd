@@ -29,7 +29,14 @@ endif
 * What does the court talk about? -> thale_gossip
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Will anyone in this house trouble us tonight? -> thale_truce
 * [Insight DC 13] (He keeps glancing at the great doors. Watch him.) -> thale_doors | thale_doors_missed
+* [if flag.thale_carriage_known] And your horses, my lord? -> thale_horses
 * (Bow, and leave him to his hall.) -> END
+
+~ thale_horses
+Lord Aubrey Thale [weary]: Well, if we are to be strictly accurate about the matter, there are no horses.
+Lord Aubrey Thale: I lost the pair to a gentleman in a plum-coloured coat on the very first evening, over cards.
+Lord Aubrey Thale [sad]: I was quite certain my luck would turn before breakfast, and then morning never came.
+-> thale_menu
 
 ~ thale_who
 Lord Aubrey Thale: Aubrey Thale, of nowhere you'd have heard of. I came through the mists in my own carriage, dined with the count and stayed the night.
@@ -48,6 +55,7 @@ Lord Aubrey Thale: Finish your dinner, or step outside his gates, and the courte
 
 ~ thale_doors
 Narrator: Every time the great doors catch his eye he straightens his coat, as if he were about to go through them.
+set thale_carriage_known
 Lord Aubrey Thale: My carriage is still in the carriage house. Some nights I go down and sit in it. I'm leaving in the morning.
 Narrator: There is no morning a creature like him can travel in, and he knows it better than you do.
 -> thale_menu
@@ -74,6 +82,7 @@ endif
 * Who are you? -> celestine_who
 * What are you looking for? -> celestine_face
 * What's the talk of the court? -> celestine_gossip
+* [if flag.celestine_described_heard and not flag.celestine_secret_known] (Tell her she looks like someone who made people laugh.) -> celestine_secret
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Any advice for dinner? -> celestine_dinner
 * (Leave her to the faces.) -> END
 
@@ -89,8 +98,17 @@ Lady Celestine Morrow: No glass has shown it to me since the ball, you see. One 
 * (Say nothing.) -> celestine_menu
 
 ~ celestine_described
+set celestine_described_heard
 Narrator: You tell her what you see: black hair, a fine straight nose, a mouth that is used to being looked at. You leave out the eyes. She closes them while you talk, the way someone listens to music.
 Lady Celestine Morrow: Thank you. I shan't remember it by morning. But thank you.
+-> celestine_menu
+
+~ celestine_secret
+set celestine_secret_known
+Narrator: Her hand drops from the carved stone, and the practiced tilt of her chin gives way all at once.
+Lady Celestine Morrow [sad]: How unkind of you to notice, after I have spent three centuries learning how to stand in the light.
+Lady Celestine Morrow: The others had the bones and the eyes, you see. I had a loud voice and a knack for the harpsichord.
+Lady Celestine Morrow [weary]: He kept me because the brides grew dreary in the winter, and someone had to make them laugh.
 -> celestine_menu
 
 ~ celestine_gossip
@@ -105,6 +123,9 @@ Lady Celestine Morrow: Nothing in this house will touch you while you're his gue
 
 # Boyar Vintila Crainic, the audience hall: pompous, punctilious; 206 years waiting to present a petition.
 ~ crainic
+if quest.boyars_petition == done
+-> castle_ravenloft/boyars_petition:after
+endif
 Narrator: A heavy man in a fur-trimmed coat gone grey with dust paces the length of the hall, a sealed scroll held to his chest in both hands. He stops when he sees you, and looks you over the way one petitioner sizes up another.
 if flag.castle_dinner == "affront"
 Boyar Vintila Crainic: You drew steel at his table, and you still haven't been received. I take a certain comfort in that.
@@ -123,6 +144,10 @@ endif
 * Who decides who is received? -> crainic_list
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Is it safe to walk the house tonight? -> crainic_truce
 * We could put your petition to the count for you. -> crainic_offer
+* [if not quest.boyars_petition] What does a petition need, to be presented in the proper form? -> crainic_form
+* [if quest.boyars_petition == asked] Which seals do we still lack? -> castle_ravenloft/boyars_petition:form
+* [if quest.boyars_petition == asked and flag.petition_seals >= 4] We have the four seals. -> castle_ravenloft/boyars_petition:seals_have
+* [if quest.boyars_petition == received] The Steward has received your petition. -> castle_ravenloft/boyars_petition:done
 * (Leave him to his waiting.) -> END
 
 ~ crainic_who
@@ -144,6 +169,11 @@ Boyar Vintila Crainic: I have not asked him since. A gentleman knows when to wai
 Boyar Vintila Crainic: For the master's guests? Perfectly. This house keeps its orders to the letter. I should know; I have read them.
 Boyar Vintila Crainic: They hold while you are his guests. Finish your dinner, or go out of his gates, and you are nobody's guest at all. Like me.
 -> crainic_menu
+
+# The Boyar's Petition (castle_ravenloft/boyars_petition.dialogue) starts here, in a file the castle's people use.
+~ crainic_form
+quest boyars_petition asked
+-> castle_ravenloft/boyars_petition:form
 
 ~ crainic_offer
 Boyar Vintila Crainic: Certainly not. A petition is presented by the petitioner, in person, in the proper form. I have not waited this long to have it spoiled by irregularity.
@@ -167,13 +197,27 @@ endif
 ~ brandt_menu
 * Who are you? -> brandt_who
 * (Look at the wolf he's studying.) -> brandt_wolf
+* [if flag.brandt_who_heard and not flag.brandt_priest_known] [Insight DC 13] (He says "the crypts" too gently.) -> brandt_priest_ok | brandt_priest_miss
 * Can you tell us how to kill him? -> brandt_kill
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] Will his house leave us be tonight? -> brandt_truce
 * (Leave him to the trophies.) -> END
 
 ~ brandt_who
+set brandt_who_heard
 Sir Lothar Brandt: Lothar Brandt. I hunted the dead across three kingdoms, and came through the mists to hunt the last one.
 Sir Lothar Brandt: I had a good crossbow, a good plan and a priest who knew his business. The priest is in the crypts. I'm in the court.
+-> brandt_menu
+
+~ brandt_priest_ok
+set brandt_priest_known
+Narrator: When he speaks of the crypts, the hard edge leaves his voice. It is the closest he comes to a prayer.
+Sir Lothar Brandt: My priest went down to the stone in the first hour, and he has stayed down ever since.
+Sir Lothar Brandt [weary]: I used to grieve for him, before I understood what it meant to be invited upstairs.
+Sir Lothar Brandt [sad]: Better the dark and a clean end than three hundred years of bowing when the doors open.
+-> brandt_menu
+
+~ brandt_priest_miss
+Narrator: He turns his shoulder to you and studies the empty gallery, giving you nothing more than his profile.
 -> brandt_menu
 
 ~ brandt_wolf
@@ -211,6 +255,7 @@ endif
 * (Tell him the wedding was three hundred years ago.) -> nicodim_told
 * [Religion DC 13] (Work out what keeps him here.) -> nicodim_known | nicodim_unknown
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] We're the count's dinner guests. -> nicodim_guests
+* [if quest.boyars_petition == asked and not flag.seal_verger] The Boyar's petition needs your seal. -> castle_ravenloft/boyars_petition:verger_ask
 * (Let him get on with his candles.) -> END
 
 ~ nicodim_wedding
@@ -254,6 +299,7 @@ endif
 * Who does he write to? -> daskal_letters
 * (Square the papers for him.) -> daskal_papers
 * [Insight DC 12] (He never looks at the portrait over the mantel. Why not?) -> daskal_portrait | daskal_portrait_missed
+* [if quest.boyars_petition == asked and not flag.seal_secretary] The Boyar's petition needs your seal. -> castle_ravenloft/boyars_petition:secretary_ask
 * (Leave him to his papers.) -> END
 
 ~ daskal_who
@@ -299,6 +345,7 @@ endif
 * Doesn't he sleep here? -> ghenadie_bed
 * Who else lives on this floor? -> ghenadie_floor
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] We're his guests tonight. -> ghenadie_truce
+* [if quest.boyars_petition == asked and not flag.seal_valet] The Boyar's petition needs your seal. -> castle_ravenloft/boyars_petition:valet_ask
 * (Leave him to the bed.) -> END
 
 ~ ghenadie_who
@@ -333,6 +380,7 @@ endif
 * Who are you? -> vlaicu_who
 * What's up the tower? -> vlaicu_tower
 * Why light lamps in a house of the dead? -> vlaicu_why
+* [if quest.boyars_petition == asked and not flag.seal_lamp] The Boyar's petition needs your seal. -> castle_ravenloft/boyars_petition:lamp_ask
 * (Let him get on with his climb.) -> END
 
 ~ vlaicu_who
@@ -356,8 +404,17 @@ Vlaicu the Lamplighter: Makes them think somebody's home.
 ~ halberdier
 Narrator: A dead guardsman in the house's black tabard paces the courtyard before the keep, halberd on his shoulder. At the great doors he stops, raps the butt of the halberd on the step three times, and waits. Nobody opens them. He turns and walks back.
 * (Knock with him, next time round.) -> halberdier_knock
+* [if flag.lief_toll_given and not flag.lief_toll_paid] (Pay him the toll Lief Lipsiege saved for the gate.) -> halberdier_toll
 * [if flag.strahd_invitation == "accepted" and not flag.castle_dinner] (Tell him you are the master's guests.) -> halberdier_guests
 * (Let him pass.) -> END
+
+~ halberdier_toll
+set lief_toll_paid
+Narrator: You hold out the forty coppers, and the halberdier counts them over in your palm, though his fingers pass clean through half the pile.
+Narrator: Satisfied with the tally, he inclines his helm once and steps clear of the gate for the first time in three hundred years.
+Narrator: When he turns to begin his next round, he raps three times upon the great doors, a little more softly than before.
+approve wren_featherfoot +1 liriel_dawnsong +1: You paid the gate the toll Lief Lipsiege saved for forty-one years
+-> END
 
 ~ halberdier_knock
 Narrator: You knock beside him, three times. He turns his head, very slowly, and looks at your hand. Then he goes back to his round, a little straighter than before.

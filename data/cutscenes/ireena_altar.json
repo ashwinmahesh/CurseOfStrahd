@@ -1,0 +1,15 @@
+{
+  "id": "ireena_altar",
+  "title": "Ireena at the Altar",
+  "summary": "Ireena stands entranced before the altar of Castle Ravenloft's chapel, hands clasped, a ring of freshly lit candles around her and the black window above, the party small at the foot of the steps (the first sight of her in the chapel, castle_ravenloft/chapel_ireena).",
+  "images": [
+    {
+      "image": "ireena_altar",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.55
+  ]
+}
