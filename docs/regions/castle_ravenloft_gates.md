@@ -165,7 +165,7 @@ withdraw sets the presence package's `strahd_withdrew`, which the parley reads);
 `dark_gifts_taken` (Amber Temple); `strahd_knows_marina_truth` (Berez); `ireena_pool_vision` (Krezk).
 
 **Ireena in the chapel** (Story Allies Presence Plan, package I5). While `ireena_held_by_strahd` is set and she is not a
-guest, the chapel's `ireena` entry stands at the altar (10,2), entranced, in a white dress (`approach: 7`, `steps_aside`).
+guest, the chapel's `ireena` entry stands at the altar (10,2), entranced (`approach: 7`, `steps_aside`; her usual sprite, so no line says what she wears).
 The entry is hidden while the chapel's final battle is live (`final_room:castle_ravenloft_chapel`, the reading given, Strahd
 neither destroyed nor in his coffin): the parley says she is upstairs, and she is not at the altar behind him. After he falls
 to his coffin she is there again. `narrative/castle_ravenloft/chapel_ireena.dialogue` mirrors the window's menu

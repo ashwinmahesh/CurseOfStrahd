@@ -1,12 +1,13 @@
 # Ireena in the castle chapel (Story Allies Presence Plan, package I5; voice docs/voice/ireena.md). While Strahd holds her
-# (ireena_held_by_strahd, set by strahd/ireena:taken) she stands at the chapel altar in a white dress, entranced, the
-# wedding being made ready. The ways that stop him at her window wake her here too (the Holy Symbol, a cleric's or
-# paladin's faith, a warding prayer, "remember who you are") and so does the Sunsword's light. Woken, she is the castle's
-# half of the window scene: ireena_held_by_strahd = false and she joins the party again. Two missteps (a failed prayer or
-# plea, each a step toward the altar) and the trance holds for now: the visit ends, nobody is hurt, and the party may come
-# back. A failed Persuasion stays spent (docs/contracts/dialogue.md), so the Symbol, faith, the sword and a warding prayer
-# are the ways on, and "Leave her" is always there. Strahd is not in this scene. While the reading has him waiting in this
-# chapel the entry is hidden (data/locations/castle_ravenloft_chapel.json) and the parley says she is upstairs.
+# (ireena_held_by_strahd, set by strahd/ireena:taken) she stands at the chapel altar, entranced, the wedding being made
+# ready (candles and stillness: her figure is her usual sprite, so nothing here says what she is wearing). The ways that
+# stop him at her window wake her here too (the Holy Symbol, a cleric's or paladin's faith, a warding prayer, "remember
+# who you are") and so does the Sunsword's light. Woken, she is the castle's half of the window scene:
+# ireena_held_by_strahd = false and she joins the party again. Two missteps (a failed prayer or plea, each a step toward
+# the altar) and the trance holds for now: the visit ends, nobody is hurt, and the party may come back. A failed
+# Persuasion stays spent (docs/contracts/dialogue.md), so the Symbol, faith, the sword and a warding prayer are the ways
+# on, and "Leave her" is always there. Strahd is not in this scene. While the reading has him waiting in this chapel the
+# entry is hidden (data/locations/castle_ravenloft_chapel.json) and the parley says she is upstairs.
 # Drafted by Gemini through the ai-bridge, edited for length and canon (docs/plans/gemini_allies/I5/).
 
 ~ start
@@ -19,7 +20,7 @@ endif
 ~ first_sight
 set ireena_chapel_seen
 Narrator: Candles burn all around the altar, freshly lit, though nobody here is tending them and the saint in the corner has no face.
-Narrator: Ireena stands before the stone in a white dress, hands folded, still as wax.
+Narrator: Ireena stands before the stone in her dark coat, hands folded at her waist, still as wax.
 Ireena: Keep your voices down, if you would. The candles are nearly ready, and the house hates a noise.
 Ireena [sad]: I thought it would be harder to stand still. Once you stop fighting the cold, there is very little left to do.
 -> menu
@@ -106,12 +107,12 @@ set ireena_held_by_strahd = false
 join ireena
 Narrator: Ireena sways once and catches the edge of the dusty altar, as if the floor had been moved while she wasn't looking.
 Ireena [afraid]: How long have I been standing here? Tell me plainly.
-Ireena [angry]: Look at this rag. It's the dress from the lake in my dream, and I let it be put on me.
+Ireena [angry]: It was the lake from my dream, cold water up to my chin, and I stood here and let it.
 Ireena [angry]: Folded hands and a quiet voice, like a candlestick set out for company. I'd rather be dead in a ditch.
 Ireena: And don't gawk. He took me out of my own window without my sword, and I want it on the record that I noticed.
 if guest:ismark
-Ismark [sad]: There you are. Father would have had a fit to see you in that, and I'm not far off one myself.
-Ireena [smile]: One more word about the dress, Ismark, and I'll go down the mountain on my own.
+Ismark [sad]: Look at you, standing in the candles like a saint in a window. You took ten years off me.
+Ireena [smile]: Say one more word about it, brother, and I'll go down the mountain on my own.
 endif
 approve godrick_pendlebrook +4 liriel_dawnsong +3 thistle +2 wren_featherfoot +2 kip_smudgewick +1 ratatoille +1: You woke Ireena in Strahd's chapel and brought her out of the castle's hands
 -> END

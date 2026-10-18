@@ -2,13 +2,16 @@
 
 Rule (Ashwin, 2026-10-18): every new or rewritten line is drafted by Gemini through the ai-bridge on his subscription,
 then edited. Method: the packaged service (`~/Documents/ai-bridge/SKILL.md`): project `ai-bridge`, target `gemini`,
-plain text, no routing. One brief, one reply, 31 lines.
+plain text, no routing. Brief 1 and its reply: 31 lines. Brief 2 (same conversation): a four-line redraft, see below.
 
 | File | What it is |
 |---|---|
 | `brief_1.txt` | The brief as sent: the scene's logic (how she is found, the five ways to wake her, the two-miss rule and its cost), her voice bible and existing lines, the Narrator's rules, the format |
 | `raw_reply_1.txt` | Gemini's reply, untouched |
 | `messages_1.json` | The bridge's record of the exchange (ids, states; no model id was reported) |
+| `brief_2.txt` | The redraft brief: Ireena is shown by her usual sprite (a dark blue coat, white scarf, boots), so no line may put her in a white dress; four lines to replace |
+| `raw_reply_2.txt` | Gemini's four lines, untouched |
+| `messages_2.json` | The bridge's record of the whole conversation, both exchanges |
 
 The lines live in `narrative/castle_ravenloft/chapel_ireena.dialogue`. They are unvoiced; the hand-off lists every one.
 
@@ -32,3 +35,17 @@ The lines live in `narrative/castle_ravenloft/chapel_ireena.dialogue`. They are 
 - `ismark_woken` (inside `woken`): no "lace" (new detail); the dress is "that".
 - Failure now costs: 10 minutes a miss, 30 when the trance holds, a failed Persuasion stays spent (engine rule), and the
   visit ends. Gemini's draft had none of that.
+
+## The second pass (the dress)
+
+The coordinator's call (2026-10-18): her figure is her usual sprite, so the Narrator's "white dress" and her "this rag"
+lines went. The four lines that changed, from Gemini's second reply (`raw_reply_2.txt`), trimmed a little:
+
+- `first_sight`, Narrator: "Ireena stands before the stone in her dark coat, hands folded at her waist, still as wax."
+  (Gemini added "and boots"; cut.)
+- `woken`, Ireena: "It was the lake from my dream, cold water up to my chin, and I stood here and let it." The dream's
+  lake stays, the dress is no longer tied to what she wears.
+- `woken`, Ismark: "Look at you, standing in the candles like a saint in a window. You took ten years off me."
+- `woken`, Ireena: "Say one more word about it, brother, and I'll go down the mountain on my own." (contraction.)
+
+The edit notes above for `woken` ("I let it be put on me", "that") describe the first pass; the lines are now these.

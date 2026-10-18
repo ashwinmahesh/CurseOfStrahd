@@ -1,0 +1,23 @@
+Thank you. One correction to the scene, then I need a small redraft. Same rules as before (plain text, same line format, no placeholders, plain ASCII, Narrator voice rules, Ireena's voice bible). Finish without sending messages to anyone else.
+
+The correction: in the game Ireena is shown as a figure on the map that cannot change its clothes. She wears her ordinary clothes: a long dark blue coat over a white scarf, boots, red hair. She is NOT in a white dress. So nothing may say or imply she wears a white dress, lace, a gown or a wedding dress, and nobody may call her clothes a "rag" or mention "the dress". The wedding is still being made ready (candles lit, her hands folded, her voice quiet), but it is shown only by the candles and her stillness, not by her clothes. Her recurring dream (a lake, a white dress, a fall) must NOT be tied to what she wears now. If she mentions the dream it must be the lake only: still water, her standing in it, the cold coming up; she does not know why she dreams it and the scene must not explain it.
+
+Please redraft ONLY these four lines. Each replaces the line quoted under it; keep the same speaker, the same job in the scene and about the same length, and keep what already works.
+
+node first_sight, Narrator, replaces:
+"Ireena stands before the stone in a white dress, hands folded, still as wax."
+(New line: describe how she stands before the altar, hands folded, still as wax, in her ordinary clothes or without mentioning them; one or two short sentences.)
+
+node woken, Ireena [angry], replaces (she has just come to herself and is furious at what she let happen):
+"Look at this rag. It's the dress from the lake in my dream, and I let it be put on me."
+(New line: the same fury at herself and at being made to stand there, now using the lake of her dream instead of a dress, or the candles; she makes the grim joke before anyone can pity her.)
+
+node woken, only if her brother Ismark came up with the party, Ismark [sad], replaces:
+"There you are. Father would have had a fit to see you in that, and I'm not far off one myself."
+(New line: gruff, relieved, awkward, sentimental under the grumbling; about seeing her standing so still among candles, not about clothes.)
+
+node woken, same exchange, Ireena [smile], replaces her answer:
+"One more word about the dress, Ismark, and I'll go down the mountain on my own."
+(New line: dry, fond, deflecting; no dress.)
+
+Reply with exactly four lines, each preceded by its node name on its own line in the form `~ first_sight` or `~ woken`, in the order above, and nothing else.
