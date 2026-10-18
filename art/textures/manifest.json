@@ -1346,7 +1346,11 @@
             "normal_file": "art/textures/amber/black_stone_2k_b_n.webp",
             "orm_file": "art/textures/amber/black_stone_2k_b_orm.webp"
           }
-        ]
+        ],
+        "material": {
+          "gloss": 0.2,
+          "relief": 0.45
+        }
       },
       "amber_wall": {
         "file": "art/textures/amber/amber_wall.png",

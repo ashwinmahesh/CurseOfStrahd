@@ -34,6 +34,10 @@ uniform bool use_orm = false;
 uniform float roughness : hint_range(0.0, 1.0) = 0.8;
 uniform float metallic : hint_range(0.0, 1.0) = 0.0;
 uniform float roughness_spread : hint_range(0.0, 1.0) = 0.35;
+// A polished surface (the Amber Temple's black stone): the roughest any part of it reads, applied after its roughness map
+// (which otherwise wins over `roughness`) so the floor mirrors what stands and glows on it. At 0.2 the figures' reflections
+// (SpriteReflection: full at 0.25 and under, water's shimmer under 0.2) read as polished stone. 1 = no cap.
+uniform float roughness_cap : hint_range(0.0, 1.0) = 1.0;
 // Edge-matched variants of the surface (W4), one picked per tile so a floor doesn't repeat: layer 0 is the surface's
 // own tile, and every layer shares the same border so any mix of them tiles seamlessly. 0 layers keeps the single
 // textures above. The ORM layers are used when use_orm is on.
@@ -97,6 +101,7 @@ void fragment() {
 		m = orm.b;
 	}
 	r += (macro - 0.5) * 0.3 * macro_strength;
+	r = min(r, roughness_cap);
 	// The weather (W12): rain darkening and glossing everything, with puddles in the low places ringing with drops;
 	// snow settled on what faces up.
 	float puddle = 0.0;
