@@ -160,6 +160,8 @@ func test_the_tower_door_stays_shut() -> void:
 	assert_false(door.is_empty(), "the tower is clickable through its door")
 	assert_false(StoryConditions.check(str(door["when"]), _party(TREASURY)), "and it never opens: only its owner's word does")
 	assert_true(str(door["locked_text"]) != "")
+	assert_eq(str(door["to"]), TREASURY, "its way leads back to the treasury, so the castle and the tower's own maps are not one building")
+	assert_eq(RestRules.building_of(FortressSite.UPPER).size(), 3, "the party's own fortress is still one building of three maps")
 
 
 # --- The study hearth -------------------------------------------------------------------------------------------------

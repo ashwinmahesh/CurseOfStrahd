@@ -94,9 +94,9 @@
         13,
         3
       ],
-      "to": "daerns_fortress",
+      "to": "castle_ravenloft_court_treasury",
       "spawn": "default",
-      "label": "The black tower's door",
+      "label": "A black door in the tower, shut",
       "when": "false",
       "locked_text": "Your tools and strength leave not so much as a scratch upon the dark metal. The door answers only to its master's voice, and he is not here to speak."
     }
