@@ -153,7 +153,8 @@ func attack(c: Combatant, target: Combatant, option_id: String, opts: Dictionary
 		e.spend_action(c)
 		c.took_attack_action = true
 		c.attacks_left = e.attacks_per_action(c) - 1
-		if c.creature is Monster:
+		# A stat-block creature goes on only with the attacks its Multiattack lists (a bandit captain's Pistol is one).
+		if c.creature is Monster and not in_multiattack(c, str(option.get("action_id", ""))):
 			c.attacks_left = 0
 		e.echo_knight.attack_action_taken(c)
 	elif via_haste:
@@ -949,7 +950,30 @@ func monster_attack(c: Combatant, target: Combatant, action_id: String) -> Comba
 	return _resolve_attack(c, target, option, {})
 
 
-## Starts a Multiattack: spends the action and allows its listed attacks.
+## The attacks a stat-block creature's Multiattack lists, added up (1 for one without a Multiattack).
+func multiattack_total(c: Combatant) -> int:
+	if not c.creature is Monster:
+		return 1
+	var total := 0
+	for entry: Variant in (c.creature as Monster).action("multiattack").get("multiattack", []):
+		total += int((entry as Dictionary).get("count", 1))
+	return maxi(1, total)
+
+
+## Whether `action_id` is one of the attacks `c`'s Multiattack lists or one of the choices that stand in for one (a
+## Draconic Spirit's Breath Weapon for a Rend).
+func in_multiattack(c: Combatant, action_id: String) -> bool:
+	if not c.creature is Monster:
+		return false
+	for entry: Variant in (c.creature as Monster).action("multiattack").get("multiattack", []):
+		var d := entry as Dictionary
+		if str(d.get("action", "")) == action_id or action_id in (d.get("or", []) as Array):
+			return true
+	return false
+
+
+## Starts a Multiattack: spends the action and allows its listed attacks. The AI calls this; a stat-block creature the
+## player runs starts it with its first listed attack (attack, attacks_per_action).
 func begin_multiattack(c: Combatant) -> Array[Dictionary]:
 	var e := enc()
 	var out: Array[Dictionary] = []

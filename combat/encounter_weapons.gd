@@ -176,7 +176,8 @@ func strike_at(c: Combatant, t: Combatant) -> Dictionary:
 	return {} if o.is_empty() else {"target": t, "option": str(o["id"])}
 
 
-## How many attacks one Attack action gives (Extra Attack; the highest source wins, 2024 multiclass rule).
+## How many attacks one Attack action gives (Extra Attack, a Multiattack the player runs; the highest source wins, 2024
+## multiclass rule).
 func attacks_per_action(c: Combatant) -> int:
 	if c.creature.has_flag("slowed"):
 		return 1
@@ -184,6 +185,10 @@ func attacks_per_action(c: Combatant) -> int:
 	var ctx := c.creature.formula_context()
 	for m in c.creature.modifiers_for(&"attacks_per_action"):
 		best = maxi(best, c.creature.mod_value(m, ctx))
+	# A stat-block creature the player runs (a summon, a shaped or dominated creature, a story ally) makes the attacks
+	# of its Multiattack; the AI's begin it themselves (EncounterAttacks.begin_multiattack).
+	if c.creature is Monster and c.is_player_controlled():
+		best = maxi(best, enc().attacks.multiattack_total(c))
 	return best
 
 

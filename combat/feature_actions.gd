@@ -280,6 +280,10 @@ func _creature_actions(c: Combatant, out: Array[Dictionary], aw: String, bw: Str
 			var act := raw as Dictionary
 			var cost := "bonus" if group == "bonus_actions" else "action"
 			var why := _first(bw if cost == "bonus" else aw, ma.why_not(c, act))
+			# A save action its Multiattack lists (a Draconic Spirit's Breath Weapon) takes the place of one attack.
+			if cost == "action" and act.has("save") and enc().attacks.in_multiattack(c, str(act.get("id", ""))):
+				cost = "attack" if c.attacks_left > 0 else "action"
+				why = _first(enc().features_attack_why(c), ma.why_not(c, act))
 			var kind := str(act.get("do", act.get("kind", "")))
 			if act.has("teleport"):
 				kind = "teleport"
@@ -349,6 +353,8 @@ func _perform_creature(c: Combatant, act_id: String, t: Combatant, cell: Vector2
 		ma.spend(c, act)
 	if cost == "bonus":
 		c.bonus_available = false
+	elif act.has("save") and e.attacks.in_multiattack(c, act_id):
+		e.use_one_attack(c)   # in place of one of the Multiattack's attacks
 	else:
 		e.spend_action(c)
 	return r

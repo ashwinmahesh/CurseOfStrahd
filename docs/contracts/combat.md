@@ -63,7 +63,7 @@ in the helper whose job it is; a function other files call gets a one-line forwa
 | `move(c, cell)` | Cheapest legal path; stands up first if Prone; may pause for Opportunity Attacks or readied attacks |
 | `attack(c, target, option_id)` | `option_id` from `attack_options(c)` (`weapon:<item>`, `thrown:<item>`, `monster:<action>`). With the Attack action and its attacks spent, a hasted creature whose additional action is unspent (`Combatant.haste_attack_ready()`) makes one more attack with that action instead of failing, as `haste_action_use(c, "attack", ...)` would |
 | `offhand_attack(c, target, option_id)` | Light property extra attack (Bonus Action, or free with Nick) |
-| `monster_attack(c, target, action_id)`, `begin_multiattack(c)` | Stat-block attacks |
+| `monster_attack(c, target, action_id)`, `begin_multiattack(c)` | Stat-block attacks; `attack` on a creature the player runs (a summon) starts its Multiattack (`attacks.multiattack_total`, `attacks.in_multiattack`) |
 | `dash/disengage(c, use_bonus)`, `dodge`, `help_attack(c, enemy)`, `hide(c, use_bonus)`, `search`, `study(c, t)` | Standard actions; `use_bonus` needs Cunning Action |
 | `ready_attack(c, option_id)` | Readied attack, triggers when an enemy comes into reach |
 | `unarmed_special(c, t, "grapple" / "shove_prone" / "shove")`, `escape_grapple(c)`, `release_grapple(c, t)` | a grappler drags what it holds when it moves (1 extra foot per foot); letting go is free |

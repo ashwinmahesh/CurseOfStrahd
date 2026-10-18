@@ -11,6 +11,7 @@ Numbers are the 2024 stat block's. These machine-readable keys sit next to the p
 | `on_hit` | riders after a hit (below) |
 | `save`, `targets`, `on_fail` | a saving-throw action: who it can target (`range`, `count`, `max_size`, `in_space`, `requires`: grappled / incapacitated / restrained / willing), damage, riders on a failure |
 | `multiattack[].or` | alternatives for that slot (Scimitar or Pistol); the AI picks what reaches, a save action first when it has a target |
+| `multiattack[].count` | the AI begins the Multiattack itself (`begin_multiattack`). A creature the player runs (a summon, a shaped or dominated creature, a story ally) begins it with its first listed attack: `attacks_per_action` is the total, an attack the Multiattack doesn't list is one attack, and a listed save action (a Draconic Spirit's Breath Weapon) takes the place of one attack |
 | `recharge`, `uses` | Recharge X-6 rolled at the start of the monster's turn; uses per day |
 | `forms` | Shape-Shift forms that can use it (the Werewolf's Bite) |
 | `weapon` | a held weapon (Disarming Attack) |
