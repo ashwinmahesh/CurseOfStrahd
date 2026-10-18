@@ -449,3 +449,12 @@ This captures short narration, a named speaker, long narration, its scrolled end
 
 
 The October 17 focused caption gallery completed all five states on iPhone Duo (iOS 27.1) and iPad mini A17 Pro (iOS 27.0), from clean `3d44e2ea1`. All ten native images were reviewed and published with source inventory, complete device manifests and image hashes in Obsidian `iOS Caption Polish - 2026-10-17`. Ten matching offscreen-profile images are separately labeled. Required checks pass 172 tests. The separate gameplay run still has failed native state-observation assertions; this caption gallery is not campaign acceptance or an Apple upload.
+
+
+### Switch-state accessibility and native QA — October 17
+
+Source `1d88d21f3` gives mobile switches explicit On/Off accessibility values, retaining selection and existing touch behavior. The focused regression fails before the fix and passes after it; 42 mobile input tests and the required 173-test `make check` pass. The unchanged native bridge's expanded fixture reports four passing tests each on iPhone and iPad, covering switch state, repeated semantic updates and Files flows. Six offscreen regression captures were reviewed and preserved with hashes in Obsidian's **iOS Switch State and Native QA - 2026-10-17** note. These checks do not close the earlier full-game native query failures or physical-device acceptance. See [the research and investigation record](../plans/ios_ux_research.md#october-17-switch-state-accessibility-pass).
+
+This follow-up is later than Apple **1.0.0 (2001)**, source `3403c8e3f`, which is VALID and selected for the App Store draft. Its existing upload was rechecked without dispatching another build. No public release or App Review submission was made.
+
+The separate unchanged-runtime diagnostic reached settings, saved and relaunched, then failed after background/resume with `AudioOutputUnitStart failed, code: -10851`. Its finalized result is 0 passed / 1 failed; this is an unresolved native acceptance issue, not a passing campaign. Both four-case utility fixture runs finalized successfully.
