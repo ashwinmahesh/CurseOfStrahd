@@ -244,9 +244,9 @@
       "kind": "search",
       "search_dc": 16,
       "skill": "investigation",
-      "label": "a hauberk that never rusted",
+      "label": "armour that never rusted",
       "model": "sack",
-      "item": "armor_plus_2__chain_mail"
+      "item": "armor_plus_2__half_plate_armor"
     },
     {
       "id": "watch_horn",

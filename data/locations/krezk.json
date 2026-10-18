@@ -643,7 +643,7 @@
       "label": "a loose stone low in the wall",
       "model": "rubble",
       "search_dc": 14,
-      "item": "weapon_plus_1__sling"
+      "item": "belt_of_dwarvenkind"
     },
     {
       "id": "lane_shrine_tin",
@@ -655,7 +655,7 @@
       "search_dc": 13,
       "label": "a tin behind the wayside shrine",
       "model": "satchel",
-      "item": "restorative_ointment"
+      "item": "potion_of_invulnerability"
     }
   ],
   "containers": [

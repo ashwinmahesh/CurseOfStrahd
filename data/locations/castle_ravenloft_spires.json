@@ -320,9 +320,21 @@
         {
           "id": "potion_of_healing",
           "qty": 1
+        },
+        {
+          "id": "staff_of_fire__quarterstaff",
+          "qty": 1
+        },
+        {
+          "id": "potion_of_healing_supreme",
+          "qty": 1
+        },
+        {
+          "id": "diamond",
+          "qty": 3
         }
       ],
-      "gold": 40
+      "gold": 450
     }
   ],
   "lights": [

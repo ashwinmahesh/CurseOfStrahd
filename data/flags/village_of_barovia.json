@@ -369,7 +369,7 @@
     {
       "id": "ismark_gave_father_sword",
       "type": "bool",
-      "summary": "Ismark gave the party his father's +1 longsword at the grave after the burial (ismark: after_burial, docs/story/found_magic_items.md)."
+      "summary": "Ismark gave the party his father's +1 rapier at the grave after the burial (ismark: after_burial, docs/story/found_magic_items.md)."
     },
     {
       "id": "vistani_deck_tried",

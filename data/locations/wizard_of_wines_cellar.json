@@ -154,7 +154,7 @@
       "skill": "investigation",
       "label": "a stave in the founder's cask that opens",
       "model": "broken_boards",
-      "item": "alchemy_jug"
+      "item": "weapon_plus_2__hand_crossbow"
     }
   ],
   "containers": [

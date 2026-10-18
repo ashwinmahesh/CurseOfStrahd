@@ -96,7 +96,7 @@ func test_liriel_cannot_sing_while_strained_and_leaves_the_dawn_behind_when_clos
 	_score(st, "liriel_dawnsong", 40)
 	_play(st, "companions/dawn:chapel", ["Let her"] as Array[String])
 	assert_eq(st.quest_stage("carry_the_dawn"), "the_dawn")
-	assert_true(st.party_has_item("amulet_of_the_devout_plus_1"), "her sunburst kept a little of the morning")
+	assert_true(st.party_has_item("amulet_of_the_devout_plus_3"), "her sunburst kept a little of the morning")
 
 
 func test_thistle_keeps_the_party_from_fen_while_strained_and_wears_his_cloak_when_close() -> void:
@@ -159,7 +159,7 @@ func test_kip_settles_alone_while_strained_and_carves_a_charm_when_close() -> vo
 	_score(st, "kip_smudgewick", 30)
 	_play(st, "camp/kip:talk_settle")
 	assert_eq(st.quest_stage("the_fine_print"), "free")
-	assert_true(st.party_has_item("stone_of_good_luck"), "the first pit off a free tree")
+	assert_true(st.party_has_item("periapt_of_health"), "the first pit off a free tree")
 
 
 # --- The camp talks --------------------------------------------------------------------------------------------------

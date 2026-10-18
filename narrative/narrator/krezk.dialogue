@@ -205,7 +205,7 @@ once
 once
 
 ~ search:wall_loose_stone
-| One stone low in the wall comes out in {name}'s hand. Behind it, a boy's treasure: three bright pebbles, a dried beetle, and a leather sling whose stones always seem to find their mark.
+| One stone low in the wall comes out in {name}'s hand. Behind it, rolled tight, a broad belt of dwarven leather with a buckle shaped like an anvil.
 once
 
 # ---------------------------------------------------------------- Lane 28 (2026-10-08): the pool's edge.
@@ -214,7 +214,7 @@ once
 | A crowd of candles on the stones at the water's edge, the new ones lit from the stubs of the old. The pool's black surface holds every flame, perfectly still, a little warmer than it should be.
 
 ~ search:pool_sun_medallion
-| At the pool's edge, half sunk in the mud, a pewter sun on a broken chain, dropped or offered by some mourner. {name} lifts it out, and the water lets it go. It's warm, and its rays catch a light that isn't there.
+| At the pool's edge, half sunk in the mud, a stoppered crystal vial on a broken chain, dropped or offered by some mourner. {name} lifts it out, and the water lets it go. The red drop inside beats like a heart.
 once
 
 # ---------------------------------------------------------------- Skill checks in the world (docs/story/world_checks.md)

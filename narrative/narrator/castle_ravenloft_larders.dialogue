@@ -288,7 +288,7 @@ once
 # --- Hidden finds (docs/story/found_magic_items.md) ---
 
 ~ search:bone_throne_ring
-| Set into the arm of the throne of bones, where a hand would rest, is a ring of dull gold. Take it, and the scrape on your knuckles closes while you watch.
+| Set into the arm of the throne of bones, where a hand would rest, is a pale blue stone. Pry it loose and it slips from your fingers to circle your head, and your grip closes like iron.
 once
 
 ~ check:perception:bone_throne_ring:failure

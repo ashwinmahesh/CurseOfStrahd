@@ -242,7 +242,7 @@ if approval.kip_smudgewick >= close
 Narrator: Later, when the others are asleep, Kip sits up by the fire with his little knife and the stone of the bruised apricot, carving. In the morning there's a charm on a string, tied to the pack of whoever slept nearest.
 interject name:kip_smudgewick: Apricot-pit charm. Finest in three counties. I've sold hundreds, and not one of them ever worked, because the orchard was cursed.
 interject name:kip_smudgewick: This one might. First pit off a free tree. No charge. Partners don't charge each other.
-give stone_of_good_luck
+give periapt_of_health
 endif
 approve kip_smudgewick +8: You stood by me while I settled up with Mister Quillon
 -> END

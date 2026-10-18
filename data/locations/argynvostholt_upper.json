@@ -427,7 +427,7 @@
       "skill": "investigation",
       "label": "a hollow in the empty plinth",
       "model": "floor_crack",
-      "item": "ring_of_resistance_cold"
+      "item": "feather_token_whip"
     },
     {
       "id": "dragon_desk_wand",
@@ -440,7 +440,7 @@
       "skill": "investigation",
       "label": "a hidden drawer in the dragon's desk",
       "model": "scattered_notes",
-      "item": "wand_of_enemy_detection"
+      "item": "figurine_of_wondrous_power_bronze_griffon"
     },
     {
       "id": "holt_dragon_chair",
