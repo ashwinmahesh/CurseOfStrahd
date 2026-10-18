@@ -10,6 +10,7 @@ extends Node3D
 ## party's squares; empty: the place's own spawn), AMBER_FLAGS=amber_temple_sealed,... (story flags set first),
 ## AMBER_HOUR=12, AMBER_WINDOW=1 (keep the window round the party that walls and blocks open; off by default), AMBER_CLIP=24,0.5 (a clip at each square: that many frames, this many seconds of the game between them),
 ## AMBER_SPEAK=vestige_zantras (whose line is on screen for the stills), AMBER_GIFT=gift_of_zantras (the first of the party has taken it),
+## AMBER_FOUND=warding_glyphs,faceless_gaze (traps already found),
 ## AMBER_LEVEL=10 (the party's level, 3 unless set),
 ## AMBER_FIGHT=vosk_unmasked (a fight of that id is on: the sanctum's braziers flare),
 ## AMBER_STAGE=6:speak=vestige_zantras,14:speak=,18:gift=gift_of_zantras,24:flag=amber_temple_sealed (in a clip, what changes at which frame).
@@ -68,6 +69,8 @@ func _build(loc_id: String) -> void:
 		st.visited[loc_id] = true
 		for c: String in party:
 			st.positions.append(Vector2i(int(c.get_slice(",", 0)), int(c.get_slice(",", 1))))
+	for trap: String in OS.get_environment("AMBER_FOUND").split(",", false):
+		(st.loc_state(loc_id)["traps"] as Dictionary)[trap] = "found"   # a trap the party has found (it shows with its glow)
 	view = LocationView.create(loc_id, st, Narrator.new(), Dice.roller, "" if not party.is_empty() else "default")
 	add_child(view)
 	view.update_daylight()

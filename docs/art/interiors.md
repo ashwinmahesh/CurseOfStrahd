@@ -301,6 +301,9 @@ braziers burning in the antechamber and either side of the altar.
     castle_model.gd): the castle's own kit pieces (crenellated wall tops, round towers with spires, the gate, the keep's lit
     windows) merged into one mesh at 0.022 on a plain table; Classic keeps the table's picture. Its examine line
     (`examine:castle_model`) was drafted by Gemini (docs/story/drafts/amber-castle-model/); unvoiced.
+  - The temple's found traps glow (TrapGlow, world/look/trap_glow.gd, from TrapSight.dress; shaders/world/trap_glow.gdshader): the
+    line of warding glyphs pulses runes along the floor, the faceless god's gaze is a slow violet ring of light on the
+    squares it looks at, the frost vent breathes pale wisps. They go with the trap when it is disarmed; Modern only.
 
 ### Castle Ravenloft
 
