@@ -104,6 +104,7 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 	view._queue.clear()
 	view._on_arrive = Callable()
 	view.in_combat = true
+	view.fight_id = encounter_id   # (the sanctum's braziers flare for Vosk's: AmberGlow)
 	ModeController.force(ModeController.Mode.COMBAT)
 	LocationNpcs.clear_for_fight(view)   # the house's people keep out of it (`steps_aside`)
 	var e := Encounter.new(_combat_grid(view), view.dice)
@@ -255,6 +256,7 @@ static func resume_encounter(view: LocationView, snapshot: Dictionary) -> bool:
 		GameState.combat_snapshot = {}
 		return start_encounter(view, encounter_id)
 	view.in_combat = true
+	view.fight_id = encounter_id   # (the sanctum's braziers flare for Vosk's: AmberGlow)
 	ModeController.force(ModeController.Mode.COMBAT)
 	var e := EncounterSnapshot.restore(snapshot["data"] as Dictionary, view.dice, view.st.party)
 	var ctokens := _fight_tokens(view, e)
@@ -489,6 +491,7 @@ static func _end_encounter(view: LocationView, encounter_id: String, spec: Dicti
 		view.combat_view.close_softly()
 		view.combat_view = null
 	view.in_combat = false
+	view.fight_id = ""
 	GameState.combat_snapshot = {}
 	(view.st.loc_state(view.loc_id).get("custom_fights", {}) as Dictionary).erase(encounter_id)
 	ModeController.force(ModeController.Mode.EXPLORATION)

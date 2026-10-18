@@ -329,7 +329,7 @@ static func _flare(view: LocationView) -> void:
 	var root := view.get_node_or_null("SanctumFlare") as Node3D
 	if root == null:
 		return
-	var on := view.in_combat and str(view.last_encounter.get("id", "")) == FLARE_ENCOUNTER
+	var on := view.in_combat and view.fight_id == FLARE_ENCOUNTER
 	if on == root.visible:
 		return
 	root.visible = on

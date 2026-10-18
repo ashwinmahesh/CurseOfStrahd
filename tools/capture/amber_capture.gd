@@ -76,7 +76,7 @@ func _build(loc_id: String) -> void:
 		view.set_speaking(OS.get_environment("AMBER_SPEAK"))
 	if OS.get_environment("AMBER_FIGHT") != "":
 		view.in_combat = true
-		view.last_encounter = {"id": OS.get_environment("AMBER_FIGHT")}
+		view.fight_id = OS.get_environment("AMBER_FIGHT")
 	AmberGlow.refresh(view)
 	if OS.get_environment("AMBER_WINDOW") != "1":
 		# No window opened in the walls and blocks nearer the camera than the party (SeeThrough puts it where the camera

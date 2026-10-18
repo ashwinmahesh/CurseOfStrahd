@@ -122,10 +122,10 @@ func test_the_braziers_flare_for_the_fight_with_vosk() -> void:
 	assert_true(flare != null and flare.get_child_count() >= 1, "the sanctum's cold braziers each have a violet flame waiting")
 	assert_false(flare.visible, "cold at first")
 	v.in_combat = true
-	v.last_encounter = {"id": "hollow_eyed"}
+	v.fight_id = "hollow_eyed"
 	AmberGlow.refresh(v)
 	assert_false(flare.visible, "another fight leaves them cold")
-	v.last_encounter = {"id": "vosk_unmasked"}
+	v.fight_id = "vosk_unmasked"
 	AmberGlow.refresh(v)
 	assert_true(flare.visible, "the fight with Vosk flares them")
 	v.in_combat = false

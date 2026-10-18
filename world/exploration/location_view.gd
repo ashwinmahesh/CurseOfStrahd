@@ -98,6 +98,8 @@ var _solo_before := false
 var solo := false                    ## move only the leader (split the party)
 var busy := false                    ## walking, talking or fighting
 var in_combat := false
+## The id of the fight on now ("" when none): the Amber Temple's sanctum flares its braziers for the fight with Vosk (AmberGlow).
+var fight_id := ""
 var combat_view: CombatView = null
 ## The encounter spec of the fight that ended last (the game reads its `final_battle` when combat_ended fires).
 var last_encounter: Dictionary = {}
