@@ -289,6 +289,21 @@ func test_the_castle_plays_the_lonely_piano() -> void:
 		assert_true(absf(float(levels.get(path, 99.0))) <= 12.0, "%s: a level that big would clip or vanish" % f)
 
 
+## The copper pact ledger in the Amber Temple vault (the Bargain, and the Tome read beside it) plays the somber mood: the
+## lonely piano and the slowest strings, none of them an organ, each with its own level (owner, 2026-10-18).
+func test_the_pact_ledger_has_somber_music() -> void:
+	assert_eq(Audio.scene_mood("amber_pact"), "somber")
+	assert_eq(Audio.scene_mood("pact_two_books"), "somber")
+	var levels := Audio._data["track_levels"] as Dictionary
+	assert_true(Audio.files("music", "somber").size() >= 4, "several to shuffle")
+	for path: String in Audio.files("music", "somber"):
+		assert_true(levels.has(path), "%s has its own level" % path)
+		assert_false(path.contains("organ") or path.contains("Toccata") or path.contains("Fugue"), "%s is no organ piece" % path)
+	assert_true(Audio.files("music", "somber").has(
+			"res://art/sourced/wikimedia_commons/Frederic_Chopin_Piano_Sonata_No.2_in_B_flat_minor_Op35_-_III_Marche_Funebre.ogg"),
+			"his favourite is among them")
+
+
 ## The farewells and burials (art/audio.json "scenes" -> sorrow) share the piano with the castle (owner, 2026-10-18):
 ## Wounded and the three nocturnes, with the strings the mood had. Every recording of the mood has its own level.
 func test_sorrow_shares_the_piano_with_the_castle() -> void:
