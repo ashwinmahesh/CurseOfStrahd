@@ -56,7 +56,12 @@ func _board() -> void:
 	view = CombatView.new()
 	_root.add_child(view)
 	view.begin(e, board, rig, tokens)
-	await _frames(4)
+	# The fight's opening plays out first (the view is busy till then, and takes no clicks).
+	for i in 900:
+		if view.mode == CombatView.Mode.IDLE:
+			break
+		await _frames(1)
+	await _frames(2)
 
 
 func _click(at: Vector2) -> void:
@@ -83,6 +88,7 @@ func _done() -> void:
 
 func test_a_click_on_a_portrait_takes_the_turn_and_no_square() -> void:
 	await _board()
+	assert_eq(view.mode, CombatView.Mode.IDLE, "the board waits for the player")
 	assert_eq(e.shared_heroes(), [ilse, godrick] as Array[Combatant], "the two share the turn")
 	var card := _card(godrick)
 	assert_true(card != null and card.is_visible_in_tree(), "Godrick's card in the order")
