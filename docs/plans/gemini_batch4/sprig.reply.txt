@@ -1,0 +1,26 @@
+== meet
+Narrator: Something small and wooden trots out from between two rows of dead vines and comes to a halt at your boots.
+Narrator: It is a knot of dry sticks and thorns, crowned with a single brown leaf that twitches when the wind moves.
+Narrator: It folds its twig-thin legs beneath itself, sits very straight in the mud, and tilts its head up at you.
+
+== pat
+Narrator: You reach down and pat the crown of dry twigs, and the whole bundle trembles from root to thorn with fierce, silent effort.
+Narrator: Its lone leaf detaches and drifts to the dirt; the blight stares at the fallen leaf, then back up at you, waiting.
+
+== stick
+Narrator: You toss a dead branch down the row, and the creature scrambles after it in a dry clatter of small wooden knees.
+Narrator: It trots back past the branch you threw and lays a completely different stick across your boot with solemn pride.
+
+== plants
+Narrator: Its voice is a tiny, dry rustle in the back of your skull: "The tall ones on the hill told me to watch the house."
+Narrator: A twig shifts where its shoulder ought to be: "I have watched very hard. There are people here, and most of them have legs."
+Narrator: It tilts its head, creaking faintly: "There was another thing I had to look for, a very important thing, like a stone or a bird."
+Narrator: The dry rustle brightens as its root-tail taps the mud: "I forgot it on the way down. Do you have another stick?"
+
+== repeat
+Narrator: At the end of the vine-row, the little heap of sticks is already sitting in the mud where you left it.
+Narrator: A fresh leaf has been wedged crookedly into its crown, and its root-tip taps the dirt once as you approach.
+
+== after_winery
+Narrator: Under the Martikovs' trestle table, the bundle of twigs lies curled on the floorboards with its chin resting on a boot-toe.
+Narrator: Stefania has set a shallow clay bowl of rainwater beside it, and every so often it dips one root in with great dignity.

@@ -1,0 +1,18 @@
+{
+  "id": "madam_profira",
+  "name": "Madam Profira",
+  "title": "Matchmaker of Krezk",
+  "summary": "Krezk's matchmaker. Thirty years on the same three unwilling people, and she starts on strangers the moment they arrive. She is always certain and always wrong, and says 'for the good of the town' a little too often.",
+  "portrait": "villager",
+  "sprite": "villager",
+  "attitude": "indifferent",
+  "monster": "commoner",
+  "guest": false,
+  "tags": [
+    "barovian",
+    "townsfolk",
+    "krezk"
+  ],
+  "region": "krezk",
+  "pronouns": "she/her"
+}

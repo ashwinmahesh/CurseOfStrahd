@@ -2060,7 +2060,8 @@
       "hours": [
         7,
         19
-      ]
+      ],
+      "when": "not (flag.fennimore_to_krezk and quest.dumitrus_visitor != done)"
     }
   ]
 }

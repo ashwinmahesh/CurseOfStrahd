@@ -28,6 +28,7 @@ Fennimore: Tell me, have you by any chance come up from the Vistani camp at Tser
 * [if not quest.fennimores_guide] May we see the book? -> book
 * [if quest.fennimores_guide == known] We found out what is in the stew. -> report
 * [if quest.radus_unsellable_horse == offered] There is a horse for sale at the Tser Pool camp. -> svalich_road/radus_horse:fennimore_horse
+* [if quest.dumitrus_visitor == asked] A boy at Krezk's gate would like a visitor. -> krezk/dumitrus_visitor:fennimore_ask
 * Goodbye. -> END
 
 ~ book

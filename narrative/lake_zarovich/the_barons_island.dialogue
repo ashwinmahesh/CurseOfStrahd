@@ -54,6 +54,7 @@ Narrator: Fourteen castaways round three small fires. That's all you can tell.
 Ostap: Home? (He laughs.) To be happy on Thursdays? No. But if you mean to help, there's a thing. The Baron's boat comes tonight. Another one for us. We pull them out of the shallows before they drown, every time.
 Ostap: Only the last time, a boatman saw the smoke. If they see it again they'll tell the Baron, and the Baron doesn't leave a thing half done.
 * (Wait at the landing for the boat.) -> boat
+* Take them off before it comes, in Nistor's boat. -> vote_call
 * (Leave them to it.) -> END
 
 ~ boat
@@ -86,6 +87,10 @@ Ostap: Home. (He says it like a word in a language he used to speak.) Then we'll
 
 ~ gift
 Ostap: The boatmen brought these for her. (A pair of heavy black shackles, cold and too smooth, with no keyhole you can see.) The Baron keeps a box of them. I'd rather they were on the right wrists, one day.
+-> gift_give
+
+# The shackles are given in one place for all four endings (a lasting item is placed once: tests/unit/test_loot_distinct.gd).
+~ gift_give
 give dimensional_shackles
 gold +80
 approve thistle +3 wren_featherfoot +2 godrick_pendlebrook +2 kip_smudgewick +1: You stood on the Reed Isle with the Baron's castaways
@@ -94,3 +99,173 @@ approve thistle +3 wren_featherfoot +2 godrick_pendlebrook +2 kip_smudgewick +1:
 ~ ostap_done
 Ostap: Fourteen, and the girl makes fifteen. We row out for salt at night. Nobody has to be happy. Come and eat fish sometime.
 -> END
+
+# --- Without a fight: the vote, then the crossings (or hiding the island) (NPC plan batch 4) ---
+# The castaways vote on whether to go home at all (Persuasion either way, or let them decide). To go, the party rows
+# them across in three crossings with a roll each (oars, staying dark, bailing); two crossings seen and the boatmen are
+# on them. To stay, the party hides the island (Stealth or Survival); a missed roll and the boat lands as before.
+
+~ vote_call
+Narrator: Ostap strikes an iron kettle with a driftwood stick until the fourteen gather round the low, sputtering fires.
+Narrator: They wrap themselves in damp wool and watch you with the quiet, unhurried eyes of people who have already been drowned once.
+Ostap: Our guests have a boat, and the Baron's men have noticed our smoke. The boat leaks on the left, which is fair enough.
+Ostap: They offer to row us back to shore before the watch comes out tonight, or help us pull the reeds over our heads and stay.
+-> vote_speech
+
+~ vote_speech
+Ostap: Nobody leaves this mud because they are frightened on a dark night. We left Vallaki tied at the wrists, and we will leave here on our own feet or not at all.
+Ostap: In town there are roofs that keep the rain off, and dry bread, and neighbours who look at their boots when the guards pass.
+Ostap: Out here the perch is bony and the wind comes straight through your coat, but if a man wants to look miserable on a Thursday, nobody hits him with a stick.
+Ostap [weary]: Speak if you have a mind to, and then we raise hands. Even the Baron never gave us a vote before a soaking.
+* [Persuasion DC 12] (Argue that they should go home.) -> argue_go_ok | argue_go_miss
+* [Persuasion DC 12] (Argue that they should stay hidden.) -> argue_stay_ok | argue_stay_miss
+* (Let them decide for themselves.) -> vote_go
+
+~ argue_go_ok
+Narrator: You speak of winter coming down from the mountains, when the reeds will freeze hard and the lake will skin over with black ice.
+Narrator: An old woman rubbing her knuckles by the embers nods once and says, "I left three good pots under my stairs, and my sister's boy has none."
+Ostap: The winter is a hard argument to shout down. Well then, let us see the hands.
+-> vote_go
+
+~ argue_go_miss
+Narrator: You speak of warm beds and dry floors in town, but a narrow-shouldered cobbler spits into the ash and says, "A dry floor is still the Baron's floor."
+Narrator: Around the fire, heads shake slowly in the mist. Their coats are wet, not their spirits.
+-> vote_stay
+
+~ argue_stay_ok
+Narrator: You tell them that four strokes of mud and an armful of cut sedge will hide this island better than any wall in Vallaki ever hid them.
+Narrator: A girl with reed-plaited hair looks toward the dark water and says, "Let them row out for nothing. My feet know this mud now."
+Ostap [smile]: Spoken like a proper frog. Let us have the hands, then.
+-> vote_stay
+
+~ argue_stay_miss
+Narrator: You tell them the reeds will keep them safe if the fires die, but an old dyer coughs into his sleeve and says, "Safe and cold are cousins, friend."
+Narrator: Several eyes turn toward the dark line of the shore where the town roofs lie out of the wind.
+-> vote_go
+
+~ vote_go
+Ostap: Nine for the shore, five for the reeds. We pack what fits in our pockets and leave the kettles for the crows.
+Narrator: Nobody cheers. They tie their bundles with eel-skin twine and kick wet sand over the coals in silence.
+-> ferry_start
+
+~ vote_stay
+Ostap: Ten for the mud, four for the road. We stay where we are, and tonight we are only frogs and sedge.
+Narrator: The fourteen rise without hurry, already reaching for wet sacks and buckets to smother the embers.
+-> hide_start
+
+~ ferry_start
+if day
+time until 19
+endif
+set ferry_trips = 0
+set ferry_seen = 0
+Narrator: Four of the castaways step into Old Nistor's skiff at dusk, settling between the ribs until the gunwales sit three fingers above the black water.
+Narrator: "Mind the third plank," whispers a baker with grey knees, "she weeps around the nails."
+Narrator: You push off from the shingle, and the reed island vanishes behind you after three strokes.
+-> cross
+
+~ cross
+set ferry_trips += 1
+if flag.ferry_trips == 1
+Narrator: The mist lies flat on Lake Zarovich, and the Vallaki shore ahead is only a darker smear against the hills.
+elif flag.ferry_trips == 2
+Narrator: The second load is heavier by one cooper's bench and an iron pot nobody would leave behind, and the night has grown colder.
+else
+Narrator: Ostap steps in last, nearly putting the bow under, and sets his broad back against the stern with a wooden bailer in his fist.
+endif
+* [Athletics DC 12] (Take the oars.) -> oars_ok | oars_bad
+* [Stealth DC 12] (Keep everyone low and the boat dark.) -> low_ok | low_bad
+* [Acrobatics DC 12] (Bail the left side while you row.) -> bail_ok | bail_bad
+
+~ oars_ok
+Narrator: You catch the dark water cleanly and pull long, steady strokes that move the heavy skiff without a sound.
+-> crossed
+
+~ oars_bad
+Narrator: A blade catches a submerged root and splashes hard, and the left oarlock gives a long, dry screech across the water.
+set ferry_seen += 1
+-> crossed
+
+~ low_ok
+Narrator: Everyone bends low between the thwarts until the boat looks like nothing more than a drifted log in the fog.
+-> crossed
+
+~ low_bad
+Narrator: A distant lantern sweeps the mist, and its yellow light catches the wet blade of your raised oar.
+set ferry_seen += 1
+-> crossed
+
+~ bail_ok
+Narrator: Tin cup and wooden scoop work in time with your knees, keeping the black bilge down below the ankle-bones.
+-> crossed
+
+~ bail_bad
+Narrator: Cold lake water rises over the floorboards on the left side, sloshing heavy and slow against your boots with every pull.
+set ferry_seen += 1
+-> crossed
+
+~ crossed
+if flag.ferry_trips < 3
+-> cross
+endif
+if flag.ferry_seen >= 2
+-> seen
+endif
+-> ferried
+
+~ seen
+Narrator: Across the water, a horn lantern swings up into a bow and holds steady, pointing straight at your wake.
+Narrator: "Rowers off the reeds!" a voice barks over the flat water, followed by the heavy thud of four oars dropping into iron pins.
+Narrator: Their prow cuts the fog toward the shingle, fast and straight, and there is no hiding the boat now.
+combat reed_isle_boatmen
+
+~ ferried
+xp fight reed_isle_boatmen
+set reed_isle_home
+quest the_barons_island done
+Narrator: All fourteen stand dripping among the gravel and willow roots by the Vallaki road as the grey morning seeps through the fog.
+Narrator: Someone starts an old cellar-song about a barrel that would not hold water, and three more voices take it up before the first verse ends.
+Narrator: They walk toward the town gates in their wet boots, singing in plain daylight where the watchmen cannot pretend not to see them.
+Ostap [smile]: Fourteen in a bunch is harder to drop in a lake than one at a time. The Baron will have to buy a bigger boat.
+Ostap: Come see me if you ever need a cask hooped properly. If I am back in the stocks, knock twice on the timber.
+-> gift_ferried
+
+~ gift_ferried
+Ostap: I kept these from the night they tipped us in the lake. Cold iron, too smooth by half, and not a keyhole on them.
+Ostap [weary]: Now we're safe ashore, I have no use for them. Put them on the right wrists if you get the chance.
+-> gift_give
+
+~ hide_start
+Narrator: You haul lake water in wooden buckets to drown the cooking pits while the castaways pull down their drying lines of gutted perch.
+Narrator: Working knee to knee in the dark, you lash cut bundles of sedge over the low willow huts until the roofs match the bank.
+Narrator: Fourteen people lie flat in the cold mud beneath the reeds, breathing into their sleeves.
+* [Stealth DC 12] (Smother every fire and hide every hut.) -> hide_ok | hide_bad
+* [Survival DC 12] (Bank the fires so no smoke shows.) -> hide_ok | hide_bad
+
+~ hide_ok
+Narrator: The last steam dies into the mist without a smell of woodsmoke, and from ten paces off the island is only black water and broken rushes.
+Narrator: Even the frogs begin to croak again along the shallows.
+-> boat_passes
+
+~ hide_bad
+Narrator: A knot of pitch-pine deep in the ash refuses to die, sending a thin, stubborn ribbon of grey smoke straight up into the still air.
+Narrator: In the marsh silence, the hiss of wet wood sounds loud as a forge.
+-> boat
+
+~ boat_passes
+xp fight reed_isle_boatmen
+set reed_isle_stayed
+quest the_barons_island done
+Narrator: The Baron's heavy boat grates on the gravel bar, and two guards hold up a lantern that shows nothing but empty sedge and wet stones.
+Narrator: "Told you it was marsh-gas," one mutters, and they heave a bound woman over the side into the knee-deep water before pushing off again.
+Narrator: As soon as their oar-strokes fade into the fog, four pairs of hands reach out of the reeds to haul her up and cut the cord at her wrists.
+Narrator: Someone wraps a dryish sack around her shoulders and says softly, "You are all right now, neighbour. Make it fifteen."
+Ostap: Gone back to their warm guardhouse, and left us another neighbour for our trouble.
+Ostap [smile]: Fifteen is an awkward number for four huts, mind you. Somebody will have to sleep with their feet out the door.
+Ostap: You kept our heads dry tonight, friends. Whenever Vallaki grows too cheerful for your stomach, there is perch on the coals.
+-> gift_stayed
+
+~ gift_stayed
+Ostap: These came off the woman they brought ashore. Cold iron, too smooth by half, and not a keyhole on them.
+Ostap [weary]: Take them with you. I'd sleep better knowing they found their way back to the wrists that earned them.
+-> gift_give

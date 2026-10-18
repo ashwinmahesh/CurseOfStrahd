@@ -1810,6 +1810,161 @@
       "id": "piccolo_paid",
       "type": "bool",
       "summary": "Piccolo took the party's admission, one gold piece, and it is not coming back."
+    },
+    {
+      "id": "watchman_nos",
+      "type": "int",
+      "summary": "Scratch counter for the Krezk Watchman: how many of his unprompted refusals the party has had (three, then none)."
+    },
+    {
+      "id": "watchman_asked_yes",
+      "type": "bool",
+      "summary": "The party asked the Krezk Watchman whether he ever says yes (he wants to, once)."
+    },
+    {
+      "id": "watchman_list_known",
+      "type": "bool",
+      "summary": "The party saw that the Krezk Watchman cannot read the burgomaster's list (an Insight roll)."
+    },
+    {
+      "id": "watchman_jilt_told",
+      "type": "bool",
+      "summary": "The Krezk Watchman told the party that his grandfather jilted Madam Profira."
+    },
+    {
+      "id": "watchman_said_yes",
+      "type": "bool",
+      "summary": "The Krezk Watchman said yes to Madam Profira's supper, the first yes of his eleven years at the gate."
+    },
+    {
+      "id": "profira_met",
+      "type": "bool",
+      "summary": "The party has met Madam Profira, the matchmaker of Krezk."
+    },
+    {
+      "id": "profira_pairs",
+      "type": "int",
+      "summary": "How many times Madam Profira has paired off the party (one to three); each round uses a different pairing."
+    },
+    {
+      "id": "profira_three_heard",
+      "type": "bool",
+      "summary": "Madam Profira told the party about the three people she has tried to marry for thirty years."
+    },
+    {
+      "id": "profira_secret_known",
+      "type": "bool",
+      "summary": "The party knows why Madam Profira matches people out of spite (the Watchman's grandfather jilted her)."
+    },
+    {
+      "id": "profira_supper_asked",
+      "type": "bool",
+      "summary": "The party suggested the Watchman come to supper with Madam Profira."
+    },
+    {
+      "id": "profira_supper_done",
+      "type": "bool",
+      "summary": "The Watchman came to Madam Profira's supper."
+    },
+    {
+      "id": "stefan_logs_known",
+      "type": "bool",
+      "summary": "The party saw where Stefan the Woodcutter leaves the best logs (Anna Krezkova's door)."
+    },
+    {
+      "id": "sanda_prays_known",
+      "type": "bool",
+      "summary": "Goodwife Sanda admitted she prays for the Abbot too."
+    },
+    {
+      "id": "catrina_told",
+      "type": "bool",
+      "summary": "Widow Catrina told the party about the voice that answered from the pool."
+    },
+    {
+      "id": "simion_want_heard",
+      "type": "bool",
+      "summary": "Old Simion told the party what he wants (somebody to tell it to); the unnamed stone is then open to ask about."
+    },
+    {
+      "id": "ilarie_ears_known",
+      "type": "bool",
+      "summary": "Ilarie admitted what he does with the hares' ears."
+    },
+    {
+      "id": "dumitru_cousins_tried",
+      "type": "bool",
+      "summary": "The party tried to pass as Dumitru's uncle's friends (Deception; spent once tried)."
+    },
+    {
+      "id": "dumitru_fennimore_heard",
+      "type": "bool",
+      "summary": "Dumitru said Ambrose Fennimore might come up the road for him."
+    },
+    {
+      "id": "fennimore_to_krezk",
+      "type": "bool",
+      "summary": "Ambrose Fennimore agreed to walk up to Krezk and visit Dumitru; he stands at Krezk's gate until the visit is done."
+    },
+    {
+      "id": "waystone_tracked",
+      "type": "bool",
+      "summary": "The party followed the tracks off the Krezk road to Yanko's lair (The Waystone, by day)."
+    },
+    {
+      "id": "waystone_lark_day_met",
+      "type": "bool",
+      "summary": "The party met Lark at the waystone by day, during the Abbot's noon prayers."
+    },
+    {
+      "id": "ferry_trips",
+      "type": "int",
+      "summary": "The Baron's Island: scratch counter for the crossings made while rowing the castaways off (one to three)."
+    },
+    {
+      "id": "ferry_seen",
+      "type": "int",
+      "summary": "The Baron's Island: scratch counter for crossings where the boat was nearly seen; two and the boatmen come."
+    },
+    {
+      "id": "ionel_crossbow_known",
+      "type": "bool",
+      "summary": "The party saw that Ionel's crossbow is not loaded (he lost the bolts)."
+    },
+    {
+      "id": "tereza_sweet_known",
+      "type": "bool",
+      "summary": "The party saw that Tereza is sweet on Horia."
+    },
+    {
+      "id": "ovidiu_want_heard",
+      "type": "bool",
+      "summary": "Ovidiu told the party what he wants; the vines he has named are then open to ask about."
+    },
+    {
+      "id": "sprig_met",
+      "type": "bool",
+      "summary": "The party has met Sprig, the twig blight that thinks it is a dog."
+    },
+    {
+      "id": "cask_care",
+      "type": "int",
+      "summary": "Old Silviu's Wedding Cask: how many of the three precautions held (ruts, wolf, thirsty hands); three is a triumph, none is vinegar."
+    },
+    {
+      "id": "riddle_right",
+      "type": "int",
+      "summary": "The Fourth Sister: how many of Granny Ash's riddles the party has answered right (two win; the third is Mouse's name)."
+    },
+    {
+      "id": "twins_cry_heard",
+      "type": "bool",
+      "summary": "Ioana said she was the one who cried in the den (Zamfir says otherwise, once asked)."
+    },
+    {
+      "id": "codruta_hid_told",
+      "type": "bool",
+      "summary": "Codruta told the party where she lost her rag doll (she hid it under a gorse root)."
     }
   ]
 }

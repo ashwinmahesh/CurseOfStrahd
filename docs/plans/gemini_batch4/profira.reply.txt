@@ -1,0 +1,83 @@
+== meet
+Narrator: A brisk old woman in a thrice-mended shawl marches across the frost, eyeing your party the way a carpenter eyes timber.
+Madam Profira: Madam Profira. I make the matches in Krezk, for the good of the town, and you lot are forty years overdue.
+Madam Profira: Stand still and let me look at your chins. Good bone, bad posture, too many daggers, and entirely too much brooding.
+Madam Profira [smile]: Well, it is plain as the snow on the roof. Two of you are perfectly suited, though you lack the wit to see it.
+== pair_1
+Madam Profira: The tall one in the dented plate and the little one checking the locks. One holds the door, the other picks it.
+Madam Profira [smile]: A practical marriage, for the good of the town. You can share a whetstone and save on candles.
+== pair_2
+Madam Profira: The quiet one with the bow and the fussy one smelling of rosemary. Nothing steadies a pot like a hunter at the hearth.
+Madam Profira: Do not pull that face at me. My sister hated turnips until she married a turnip farmer, and now she is buried beside him.
+== pair_3
+Madam Profira: The prickly one with twigs in her hair and the gentle one clutching the holy symbol. Nettles and dock leaf, side by side.
+Madam Profira [sly]: One stings, the other salves. That is half of matrimony right there, and the rest is firewood.
+== kip_pair
+Kip [sly]: Wedded bliss? Madam, I have worked very hard to remain a disappointment to respectable women.
+== ratatouille_pair
+Ratatouille: Madam, I assure you, my heart is promised solely to the delicate art of the reduction, though I admire your vigour.
+== wren_pair
+Wren: I sleep in a tree when I can. It is a narrow bed for two.
+== thistle_pair
+Thistle [angry]: Pair me with anyone again and I will put burrs in your boots and rot in your floorboards.
+== godrick_pair
+Godrick: Truly? Is it the set of the shoulders, Madam, or do we share a certain noble stillness of the brow?
+== liriel_pair
+Liriel [smile]: You are very kind to take an interest, Madam, though I think the road asks enough of us just now.
+== together_thistle_wren
+Madam Profira: Clearly the prickly one belongs with the loud fellow in the breastplate, and the quiet archer needs someone who talks.
+Wren: Thistle and I already share a dry blanket when it rains, Madam. That is as married as either of us gets.
+Madam Profira: Nonsense, two quiet people in one cottage will freeze to death before either remembers to ask for the bellows.
+== together_godrick_thistle
+Madam Profira: Now, the earnest knight should wed the gentle cleric, and the thorny druid needs a husband with thick leather gloves.
+Godrick [smile]: Ah, forgive me, Madam, but Thistle already holds my heart, and I find I scarcely need the gloves at all.
+Madam Profira: Then you are standing on the wrong side of her, young man, and you have no business confusing a professional.
+== together_liriel_ratatouille
+Madam Profira: The soft-spoken priestess ought to take the silent ranger, and the gentleman with the ladle needs a brisk widow.
+Liriel [smile]: Thank you, Madam, but Ratatouille and I are already promised to one another's company.
+Madam Profira: Well, you kept it very quiet. In my day, people had the manners to look miserable when they were courting.
+== decline
+Madam Profira: Not looking for a match? That is word for word what Cezar told me in year four, right before he climbed into his goat pen.
+Madam Profira: Everyone needs someone to pass the salt and complain about the damp. It is for the good of the town.
+Madam Profira [weary]: Go on, then, hoard your cold feet. See if the wolves care how independent you are.
+== three
+Madam Profira: Thirty years I have laboured over Cezar, Old Pavel, and Widow Catrina, and not a yard of lace to show for it.
+Madam Profira: Cezar hides behind his billy goat whenever he sees my shawl, as if I cannot see his boots under the fence.
+Madam Profira: Old Pavel pretends to go deaf the moment I clear my throat, though he hears a chisel drop at fifty paces.
+Madam Profira [weary]: And Widow Catrina spends every morning talking to her late husband in the pool. A damp man is hard to compete with.
+== spite_hint
+Narrator: It is the third time she has said 'for the good of the town', and her jaw sets a fraction harder each time.
+Madam Profira: Well, a village needs weddings, or the church is only ever opened for coffins. Now, who here snores?
+== secret_ok
+Narrator: Beneath the brisk chatter, her eyes flick toward the gatehouse, old pride sitting in her like an iron rod.
+Madam Profira [weary]: You have sharp eyes for strangers. Yes, it is spite, and it has kept me warmer than wool for fifty winters.
+Madam Profira: That watchman at the gate had a grandfather with fine boots and a fast horse. Left me at the church door in the sleet.
+Madam Profira [sad]: Forty years before the boy was born, and the whole town stood in their best coats and watched me walk home alone.
+Madam Profira: So I swore Krezk would have weddings until the rafters shook, whether Krezk wanted them or not.
+== secret_miss
+Madam Profira: Why are you staring at me like a calf at a shut gate? My face has been this way since the great frost.
+Madam Profira: Never mind me. The one with the pack and the one with the staff, step forward and let us discuss dowries.
+== secret_watchman
+Madam Profira: The boy told you that, did he? That is more words than he has spent on the whole parish since snowfall.
+Madam Profira [weary]: It was not his fault. He only got the man's heavy chin and his habit of standing in draughts.
+Madam Profira: Still, it is something to know the family remembers where the church door is.
+== supper_ask
+Madam Profira: Ask him to supper? What would I do with a man who only knows one word and uses it like a crossbar?
+Madam Profira: Besides, the cabbage soup is already on the hob, and there is barely enough for two bowls and a crust.
+Madam Profira [sly]: Tell him to wipe his boots on the mat. If he brings mud onto my flags, I will turn him straight back out.
+== supper_done
+Madam Profira: He said yes? The gatepost spoke? You did not hit him on the head with a mace first?
+Madam Profira [smile]: Well. Eleven years at that gate, and it takes a pack of bruised wanderers to fetch him indoors.
+Madam Profira: Do not look so smug. It is only cabbage soup, not the banns, and I still expect a wedding out of someone this year.
+Madam Profira: Still, it is the first yes I have had in thirty years. Take these dried apples, and keep your cloaks buttoned.
+== after
+Madam Profira [smile]: Back again, and still unmarried. At least the watchman knows how to hold a spoon without dropping it.
+Madam Profira: Stand straighter, you in the back. Nobody courts a slouch, even in Barovia.
+== watchman_jilt
+Krezk Watchman: No.
+Krezk Watchman [weary]: Wait. If it is about Madam Profira, I owe her the breath. My grandfather left her at the church door in her mother's veil.
+Krezk Watchman: She has tried to marry off every soul in Krezk since to prove the church still works. Never once looked me in the eye.
+== watchman_supper_yes
+Narrator: The watchman stares at you through the frost of his beard, one hand still on the iron bar of the gate.
+Krezk Watchman: Eleven years I have stood at this timber and told people no.
+Krezk Watchman [smile]: Tell her yes. Tell her I will bring salt.

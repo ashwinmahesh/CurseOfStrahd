@@ -1,0 +1,93 @@
+# Dumitru's Visitor (side quest, NPC plan batch 4; docs/plans/npc_depth_and_quests.md): a kindness, no fight. Dumitru, the
+# boy who waits inside Krezk's gate for visitors who never come, writes weekly letters to an uncle in Vallaki who died,
+# and keeps them in a tin. He wants one real visitor. The party can come as his uncle's friends (Deception; he sees
+# through it kindly and says so) or ask Ambrose Fennimore at the Old Svalich crossroads to walk up the road; Fennimore
+# then stands at the gate (data/locations/krezk.json) and the visit is the ending. Nothing is behind a roll that has no
+# plain way round. Lines drafted by Gemini through the ai-bridge, edited; every line here is unvoiced for now.
+
+# --- Dumitru at the gate (townsfolk:gate_boy_menu jumps here) ---
+
+~ asks
+quest dumitrus_visitor asked
+Dumitru: A visitor. Someone who comes up the hill on purpose, just to see Krezk.
+Dumitru: I write to my Uncle Marius in Vallaki every Sunday. About the snow, mostly, and what the goats broke.
+Dumitru: I keep the letters in an old biscuit tin by the gate, so they're ready when a carrier comes.
+Dumitru [sad]: The tin is getting rather full. We're on the second layer now.
+Dumitru: Nobody comes up the road unless the wolves chase them, and that doesn't really count as a visit.
+Dumitru [weary]: Even the watchman's cousin stopped coming two winters back, and he owed the watchman a shovel.
+-> menu
+
+~ menu
+* [if not flag.dumitru_cousins_tried] Tell him you're old friends of his Uncle Marius, come to see him. -> cousins_try
+* [if not flag.dumitru_fennimore_heard] Who might come up the road for you? -> fennimore_hint
+* Goodbye. -> END
+
+~ cousins_try
+set dumitru_cousins_tried
+Narrator: The boy's mittens drop to his sides. He looks from one of you to the next, trying very hard to stand up straight.
+Dumitru [smile]: Truly? He sent you all the way up the mountain just to look in on me?
+* [Deception DC 12] (Tell him stories of Marius, with voices.) -> cousins_ok | cousins_fail
+* (Tell him the truth instead.) -> menu
+
+~ cousins_ok
+quest dumitrus_visitor done
+Dumitru: I knew he remembered how I take my tea. Two spoons of honey, when the bees aren't dead.
+Dumitru [smile]: Wait until I tell Goodwife Rodica that people from town walked up the road for me.
+Dumitru: You must tell me everything he said, even the boring parts about his knees.
+Dumitru: I'll write him tonight to say you arrived in one piece. It'll go right on top of the tin.
+gold +20
+approve wren_featherfoot +1 liriel_dawnsong +1: You gave a boy in Krezk a visitor
+-> END
+
+~ cousins_fail
+Dumitru [sad]: That's a very good story, only Uncle Marius didn't have friends. He had a grey cat named Turnip.
+Dumitru: Thank you for trying, though. You did the voices very nicely.
+Dumitru: I think I'd rather have a real visitor, even if they don't know my uncle at all.
+-> menu
+
+~ fennimore_hint
+set dumitru_fennimore_heard
+Dumitru: There's a man in a shabby coat who stands at the crossroads with a little leather book.
+Dumitru: The watchman says he gave our wall five stars from the ditch, just for being tall and not falling down.
+Dumitru [smile]: Do you think, if someone asked him politely, he might come all the way up to the gate?
+-> menu
+
+~ after
+Dumitru: I'll write him tonight to say you arrived in one piece. It'll go right on top of the tin.
+Dumitru: If you ever come back this way, you don't even have to knock. I'll know you.
+-> END
+
+# --- Ambrose Fennimore at the crossroads (fennimore:menu jumps here) ---
+
+~ fennimore_ask
+set fennimore_to_krezk
+quest dumitrus_visitor fennimore
+Fennimore [weary]: Walk up a goat track in the sleet to call upon a child. Yes, that sounds entirely in keeping with my week.
+Fennimore: Still, my chapter on Krezk currently reads, 'High wall, smells of turnip, declined to enter.'
+Fennimore: A local correspondent might improve the section on hospitality.
+Fennimore: Go on ahead. I shall follow at my own pace. Two stars for the road, and that is generous.
+-> svalich_road/fennimore:menu
+
+# --- Fennimore and Dumitru, inside the gate at Krezk (npc fennimore, quest stage fennimore) ---
+
+~ fennimore_visit
+Fennimore: Master Dumitru, I presume. Ambrose Fennimore, on an official inspection of the upper road.
+Dumitru [smile]: You brought your book! Did you see the gate? The iron is very thick.
+Fennimore: Formidable. Now, I am told you maintain an archive of local dispatches in a tin.
+Dumitru: Every Sunday for three years. The ones at the bottom smell a bit like ginger biscuits.
+Fennimore [smile]: An archive with notes of spice. Four stars for preservation, young man.
+Fennimore: Allow me to leave a slip of paper for the tin. 'Krezk: Four stars. Cold, steep, excellent reception at the gate.'
+Dumitru [smile]: Four stars! Wait until the Burgomaster hears we beat the Blue Water Inn.
+Dumitru: I'll put it right under the lid so Uncle Marius sees it first.
+quest dumitrus_visitor done
+Dumitru [smile]: Thank you. Having someone walk up the road makes the whole mountain feel less tall.
+Narrator: He pats the lid onto the biscuit tin with both mittens, tucking it carefully beneath his arm.
+Dumitru: If you ever come back this way, you don't even have to knock. I'll know you.
+gold +40
+approve wren_featherfoot +1 liriel_dawnsong +1 thistle +1: You walked Ambrose Fennimore up the road to a boy who was waiting
+-> END
+
+~ after_fennimore
+Dumitru [smile]: Four stars! And he said he might give us a fifth if the sun ever comes out.
+Dumitru: I wrote Uncle Marius all about it. That was a two-page Sunday.
+-> END

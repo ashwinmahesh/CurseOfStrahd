@@ -5,19 +5,94 @@
 
 ~ watch
 Ionel: Keep your voice down. They come up the rows at dusk, the twig things, and I'd like to hear them before they hear me. If you're going up to the winery, go now, while there's light.
--> END
+-> watch_menu
+
+~ watch_menu
+* What would you most like, Ionel? -> watch_want
+* [if not flag.ionel_crossbow_known] [Insight DC 12] (Watch how he holds the crossbow.) -> watch_secret | watch_miss
+* Good luck. -> END
+
+~ watch_want
+Ionel [weary]: Eight hours with my boots off and both eyes shut, and nobody shouting from the trees.
+Ionel: I don't even want a good dream. Just the black part between lying down and getting up.
+-> watch_menu
+
+~ watch_secret
+set ionel_crossbow_known
+Narrator: The crossbow lies slack across his arm, and the quarrel bag at his belt holds nothing but a dry stick.
+Ionel [afraid]: Don't say it loud. I dropped the quarrel bag in the brambles three nights ago when the hedge moved.
+Ionel [weary]: If the twig-men come up the lane, I'll have to point it very hard and hope they're polite.
+-> watch_menu
+
+~ watch_miss
+Narrator: He shifts the heavy stock under his arm so you cannot quite see the groove.
+-> watch_menu
 
 ~ washer
 Tereza: I came out from Vallaki to pick grapes for one season. That was four years ago. Hand me that peg. No, the other one.
--> END
+-> washer_menu
+
+~ washer_menu
+* Are you going back to Vallaki? -> washer_want
+* [if not flag.tereza_sweet_known] [Insight DC 12] (Watch how she talks about Horia.) -> washer_secret | washer_miss
+* Good day. -> END
+
+~ washer_want
+Tereza: I came up from Vallaki for one autumn's picking, and that was four winters back.
+Tereza [weary]: The moment the road's clear of twigs and teeth, I'm packing my kettle and walking home.
+-> washer_menu
+
+~ washer_secret
+set tereza_sweet_known
+Narrator: You notice that when she scolds Horia, she always makes sure his collar is turned down first.
+Tereza: Well, someone has to keep an eye on the big ox, or he'd split his own boot with that axe.
+Tereza [smile]: Vallaki's damp in the winter anyway. I suppose I can stay until he learns to mend a shirt.
+-> washer_menu
+
+~ washer_miss
+Narrator: She wrings out a grey shirt as if it owes her coin and turns her back to the wind.
+-> washer_menu
 
 ~ woodsplitter
 Horia: I used to split staves for the casks. Now it's firewood. Same axe, same arms, worse smell. When we're home I'll make you a cask, if you like.
--> END
+-> woodsplitter_menu
+
+~ woodsplitter_menu
+* Would you like your trade back? -> woodsplitter_want
+* [if flag.tereza_sweet_known] Tereza is very cross with you. -> woodsplitter_secret
+* Good day. -> END
+
+~ woodsplitter_want
+Horia: Good white oak wasn't grown to go up a chimney. It wants shaping and steaming and an iron hoop.
+Horia [weary]: Give me one sound barrel to cooper before spring, so my hands remember they have a trade.
+-> woodsplitter_menu
+
+~ woodsplitter_secret
+Narrator: A slow, dark red climbs from Horia's collar all the way to the tips of his ears.
+Horia: She's got a sharp tongue on her, right enough. Sharpest in the hills.
+Horia [smile]: She mended my mittens twice last week without my asking, though, so I let her shout.
+-> woodsplitter_menu
 
 ~ pruner
 Ovidiu: Dead, dead, dead, and this one's thinking about it. You cut away what won't come back, and you wait. That's all a vine-dresser is. Somebody good at waiting.
--> END
+-> pruner_menu
+
+~ pruner_menu
+* What would you most like? -> pruner_want
+* [if flag.ovidiu_want_heard] Which vines have you named? -> pruner_secret
+* Good day. -> END
+
+~ pruner_want
+set ovidiu_want_heard
+Ovidiu: Some folk talk to dogs. I talk to the old roots along the south wall, the ones I've given proper names.
+Ovidiu [weary]: If every named vine puts out one green leaf before the frost takes us, I'll call that a good year.
+-> pruner_menu
+
+~ pruner_secret
+Ovidiu [sad]: I gave each of the strong stocks a name for the Martikov children, so I'd remember to tend them twice.
+Ovidiu: And the twisted one by the gate, I named that for young Elvir, who's gone to the dirt.
+Ovidiu [sad]: All the others are holding on by their fingernails. Only Elvir's went dry in the night.
+-> pruner_menu
 
 ~ picker
 Andrei: These are the last good rows. Taste one. Sour, yes? The wine will be sweet. Don't ask me how. Ask the old man.
@@ -27,15 +102,29 @@ Andrei: Not the Seventh Row, though. Don't taste those. They come up black in th
 elif quest.the_black_row == done
 Andrei: The Seventh Row's young vines again. Sour as anything. I've never been so glad of sour.
 endif
--> END
+-> picker_menu
+
+~ picker_menu
+* (Watch him eat a grape.) -> picker_apology
+* Good picking. -> END
+
+~ picker_apology
+Narrator: Andrei holds a bruised purple grape between thumb and forefinger, looking at it with real regret.
+Andrei [sad]: Forgive me, little brother, you'd never have made a vintage anyway, and my mouth is very dry.
+-> picker_menu
 
 ~ cooper
 if flag.winery_wine_flows
 Old Silviu [smile]: Hear that? That's a cask that holds. Davian's wine is going down the road again, in my casks. I could weep.
--> END
+-> cooper_menu
 endif
 Old Silviu: Every hoop loose, every stave dry. The druids didn't touch the casks. They just let them die of neglect, which is worse.
--> END
+-> cooper_menu
+
+~ cooper_menu
+* [if not quest.silvius_wedding_cask or quest.silvius_wedding_cask == asked or quest.silvius_wedding_cask == carrying] Is there anything we can carry for you? -> wizard_of_wines/silvius_cask:ask
+* [if quest.silvius_wedding_cask == done] How did the wedding go? -> wizard_of_wines/silvius_cask:after
+* Good day. -> END
 
 ~ raven
 Narrator: The raven tilts its head and looks at you with one black eye, then the other, as if it is comparing notes. When you move, it hops after you, just far enough to keep watching.

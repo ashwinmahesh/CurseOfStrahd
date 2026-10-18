@@ -450,3 +450,14 @@ nicknames, Sorina, Iulian, Lucia) and the goat's first three sightings. Every ne
 ai-bridge; the briefs and raw replies are in docs/plans/gemini_batch1/. Left for later batches: Ismark's counted fights
 (a roster row; not touched, he is in two book quests), the Anca letter's answer from Father Lucian (batch 3), and the
 Fourth Rumour's echoes from other regions.
+
+## Batch 4 status (2026-10-18)
+
+Built on `npc-batch4` (stacked on `npc-batch3`): Krezk, the lake, the winery, the den and the mill. New: Madam Profira
+(with the Watchman's wish to say yes, his unreadable list, and the one supper that ends both their wants), Dumitru's Visitor
+(cousins, or Fennimore up the road), Old Silviu's Wedding Cask (three precautions, each with a plain way), Sprig, the rescued
+Vadu children, and wants and secrets for the Watchman, Stefan, Sanda, Rodica, Cezar, Simion, Catrina, Ilarie and the winery
+hands. Reshaped: The Waystone gets a daytime way (tracks, Lark at noon, a Stealth roll for the pack), The Baron's Island a
+vote and a ferry or a hiding (no fight unless seen), and The Fourth Sister a riddle game with Granny Ash (two right win;
+Mouse's name wins the third). Every failed roll has a way on (`make validate` runs `fail_routes.py`).
+

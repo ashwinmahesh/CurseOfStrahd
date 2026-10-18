@@ -648,6 +648,26 @@
   ],
   "npcs": [
     {
+      "npc": "sprig",
+      "cell": [
+        24,
+        24
+      ],
+      "dialogue": "wizard_of_wines/sprig:start",
+      "facing": "east",
+      "when": "not flag.winery_reclaimed"
+    },
+    {
+      "npc": "sprig",
+      "cell": [
+        9,
+        8
+      ],
+      "dialogue": "wizard_of_wines/sprig:start",
+      "facing": "west",
+      "when": "flag.winery_reclaimed"
+    },
+    {
       "npc": "adrian_martikov",
       "cell": [
         23,

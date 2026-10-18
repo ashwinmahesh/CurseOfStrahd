@@ -985,6 +985,17 @@
   ],
   "npcs": [
     {
+      "npc": "silvius_dana",
+      "cell": [
+        27,
+        20
+      ],
+      "dialogue": "wizard_of_wines/silvius_cask:dana",
+      "facing": "south",
+      "approach": 5,
+      "when": "quest.silvius_wedding_cask == carrying"
+    },
+    {
       "npc": "baron_vargas",
       "cell": [
         24,

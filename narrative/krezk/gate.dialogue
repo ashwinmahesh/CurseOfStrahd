@@ -182,9 +182,45 @@ Krezk Watchman: Gate's barred for the night. If you're inside, stay inside. If y
 else
 Krezk Watchman: Still in one piece? Good. Krezk likes visitors who stay that way. Fewer graves.
 endif
+if flag.watchman_nos == 0
+set watchman_nos = 1
+Krezk Watchman: Whatever it is you are about to ask for, the answer is no.
+elif flag.watchman_nos == 1
+set watchman_nos = 2
+Krezk Watchman: No. Good morning, if you call this a morning, and it's still no.
+elif flag.watchman_nos == 2
+set watchman_nos = 3
+Krezk Watchman: Save your breath for the road back down, stranger, because the answer was no before you reached the bend.
+endif
+-> guard_menu
+
+~ guard_menu
 * Heard anything interesting? -> news
 * Tell us about the Abbey. -> about_abbey
+* [if not flag.watchman_asked_yes] Do you ever say yes to anybody? -> watchman_yes
+* [if flag.watchman_asked_yes and not flag.watchman_list_known] [Insight DC 12] (Watch what he does with the burgomaster's list.) -> watchman_list | watchman_list_miss
+* [if flag.profira_met and not flag.watchman_jilt_told] What's the matter between you and Madam Profira? -> krezk/profira:watchman_jilt
+* [if flag.profira_supper_asked and not flag.watchman_said_yes] Madam Profira asks you to supper. -> krezk/profira:watchman_supper_yes
 * Goodbye. -> END
+
+~ watchman_yes
+set watchman_asked_yes
+Krezk Watchman: No. Wait, what did you ask?
+Krezk Watchman [weary]: Apologies. The word gets stuck in the teeth after a winter or eleven.
+Krezk Watchman: I would like to say yes to somebody, just once, if they ever bring the right question up the road.
+-> guard_menu
+
+~ watchman_list
+set watchman_list_known
+Narrator: He whips a crumpled sheet bearing the burgomaster's wax seal from his coat, holds it up for the space of a blink, and stuffs it back.
+Krezk Watchman: You saw the seal. Everything is in order, and you are not on it.
+Krezk Watchman [weary]: Truth is, the ink might as well be chicken tracks to me. Never learned my letters.
+Krezk Watchman: Easier to tell the whole valley no than let one wrong pair of boots through the gate.
+-> guard_menu
+
+~ watchman_list_miss
+Krezk Watchman: No, not on the list, and no, you cannot look at it longer, the wind will take the ink.
+-> guard_menu
 
 ~ news
 if flag.abbot_told_strahd

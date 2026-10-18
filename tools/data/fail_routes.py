@@ -31,6 +31,9 @@ ALLOWED: dict[str, str] = {
     "svalich_road/grey_mare:asks:insight:the_grey_mare.bargain":
         "`bargain` is a journal detail (why Radu sold her); `where` leads to the milestone either way",
     "svalich_road/grey_mare:asks:persuasion:the_grey_mare.bargain": "same: the journal detail, not the way on",
+    "krezk/dumitrus_visitor:cousins_try:deception:dumitrus_visitor.done":
+        "the other route is Ambrose Fennimore (fennimore:menu to fennimore_ask, then the visit at Krezk's gate), which"
+        " starts in another conversation this walk can't follow",
     "vallaki/black_roses:asks:insight:black_roses.fed":
         "`fed` is a journal detail (Catalina feeds on her father); the watch option goes on to the vigil without it",
 }

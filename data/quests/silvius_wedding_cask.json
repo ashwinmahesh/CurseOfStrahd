@@ -1,0 +1,33 @@
+{
+  "id": "silvius_wedding_cask",
+  "name": "Old Silviu's Wedding Cask",
+  "summary": "Old Silviu wants the last cask of the year Elvir was born carried to Vallaki for his daughter Dana's wedding.",
+  "giver": "wine_cooper",
+  "region": "wizard_of_wines",
+  "stages": [
+    {
+      "id": "asked",
+      "journal": "Old Silviu, the cooper at the Wizard of Wines, wants his daughter Dana's wedding cask carried to Vallaki: the last cask of the year Elvir was born. The wedding is at noon in the square, the day after next, and the road is bad.",
+      "objectives": [
+        "Get the cask ready, and take it to Dana in Vallaki"
+      ],
+      "hint": "Talk to Old Silviu at the Wizard of Wines about the cask.",
+      "ends": ""
+    },
+    {
+      "id": "carrying",
+      "journal": "We are carrying Old Silviu's wedding cask to his daughter Dana in Vallaki's square. It should not be shaken, or tasted.",
+      "objectives": [
+        "Take the cask to Dana in Vallaki's square"
+      ],
+      "hint": "Take the cask to Dana in the square at Vallaki.",
+      "ends": ""
+    },
+    {
+      "id": "done",
+      "journal": "Dana had her father's cask at her wedding in Vallaki, and Master Costel made a speech about it.",
+      "objectives": [],
+      "ends": "success"
+    }
+  ]
+}

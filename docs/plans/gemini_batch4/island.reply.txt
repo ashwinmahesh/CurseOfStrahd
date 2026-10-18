@@ -1,0 +1,81 @@
+== vote_call
+Narrator: Ostap strikes an iron kettle with a driftwood stick until the fourteen gather round the low, sputtering fires.
+Narrator: They wrap themselves in damp wool and watch you with the quiet, unhurried eyes of people who have already been drowned once.
+Ostap: Our guests have a boat, and the Baron's men have noticed our smoke. The boat leaks on the left, which is fair enough.
+Ostap: They offer to row us back to shore before the watch comes out tonight, or help us pull the reeds over our heads and stay.
+== vote_speech
+Ostap: Nobody leaves this mud because they are frightened on a dark night. We left Vallaki tied at the wrists, and we will leave here on our own feet or not at all.
+Ostap: In town there are roofs that keep the rain off, and dry bread, and neighbours who look at their boots when the guards pass.
+Ostap: Out here the perch is bony and the wind comes straight through your coat, but if a man wants to look miserable on a Thursday, nobody hits him with a stick.
+Ostap [weary]: Speak if you have a mind to, and then we raise hands. Even the Baron never gave us a vote before a soaking.
+== argue_go_ok
+Narrator: You speak of winter coming down from the mountains, when the reeds will freeze hard and the lake will skin over with black ice.
+Narrator: An old woman rubbing her knuckles by the embers nods once and says, "I left three good pots under my stairs, and my sister's boy has none."
+Ostap: The winter is a hard argument to shout down. Well then, let us see the hands.
+== argue_go_miss
+Narrator: You speak of warm beds and dry floors in town, but a narrow-shouldered cobbler spits into the ash and says, "A dry floor is still the Baron's floor."
+Narrator: Around the fire, heads shake slowly in the mist. Their coats are wet, not their spirits.
+== argue_stay_ok
+Narrator: You tell them that four strokes of mud and an armful of cut sedge will hide this island better than any wall in Vallaki ever hid them.
+Narrator: A girl with reed-plaited hair looks toward the dark water and says, "Let them row out for nothing. My feet know this mud now."
+Ostap [smile]: Spoken like a proper frog. Let us have the hands, then.
+== argue_stay_miss
+Narrator: You tell them the reeds will keep them safe if the fires die, but an old dyer coughs into his sleeve and says, "Safe and cold are cousins, friend."
+Narrator: Several eyes turn toward the dark line of the shore where the town roofs lie out of the wind.
+== vote_go
+Ostap: Nine for the shore, five for the reeds. We pack what fits in our pockets and leave the kettles for the crows.
+Narrator: Nobody cheers. They tie their bundles with eel-skin twine and kick wet sand over the coals in silence.
+== vote_stay
+Ostap: Ten for the mud, four for the road. We stay where we are, and tonight we are only frogs and sedge.
+Narrator: The fourteen rise without hurry, already reaching for wet sacks and buckets to smother the embers.
+== ferry_start
+Narrator: Four of the castaways step into Old Nistor's skiff at dusk, settling between the ribs until the gunwales sit three fingers above the black water.
+Narrator: "Mind the third plank," whispers a baker with grey knees, "she weeps around the nails."
+Narrator: You push off from the shingle, and the reed island vanishes behind you after three strokes.
+== crossing_1
+Narrator: The mist lies flat on Lake Zarovich, and the Vallaki shore ahead is only a darker smear against the hills.
+== crossing_2
+Narrator: The second load is heavier by one cooper's bench and an iron pot nobody would leave behind, and the night has grown colder.
+== crossing_3
+Narrator: Ostap steps in last, nearly putting the bow under, and sets his broad back against the stern with a wooden bailer in his fist.
+== oars_ok
+Narrator: You catch the dark water cleanly and pull long, steady strokes that move the heavy skiff without a sound.
+== oars_bad
+Narrator: A blade catches a submerged root and splashes hard, and the left oarlock gives a long, dry screech across the water.
+== low_ok
+Narrator: Everyone bends low between the thwarts until the boat looks like nothing more than a drifted log in the fog.
+== low_bad
+Narrator: A distant lantern sweeps the mist, and its yellow light catches the wet blade of your raised oar.
+== bail_ok
+Narrator: Tin cup and wooden scoop work in time with your knees, keeping the black bilge down below the ankle-bones.
+== bail_bad
+Narrator: Cold lake water rises over the floorboards on the left side, sloshing heavy and slow against your boots with every pull.
+== seen
+Narrator: Across the water, a horn lantern swings up into a bow and holds steady, pointing straight at your wake.
+Narrator: "Rowers off the reeds!" a voice barks over the flat water, followed by the heavy thud of four oars dropping into iron pins.
+Narrator: Their prow cuts the fog toward the shingle, fast and straight, and there is no hiding the boat now.
+== ferried
+Narrator: All fourteen stand dripping among the gravel and willow roots by the Vallaki road as the grey morning seeps through the fog.
+Narrator: Someone starts an old cellar-song about a barrel that would not hold water, and three more voices take it up before the first verse ends.
+Narrator: They walk toward the town gates in their wet boots, singing in plain daylight where the watchmen cannot pretend not to see them.
+Ostap [smile]: Fourteen in a bunch is harder to drop in a lake than one at a time. The Baron will have to buy a bigger boat.
+Ostap: Come see me if you ever need a cask hooped properly. If I am back in the stocks, knock twice on the timber.
+== hide_start
+Narrator: You haul lake water in wooden buckets to drown the cooking pits while the castaways pull down their drying lines of gutted perch.
+Narrator: Working knee to knee in the dark, you lash cut bundles of sedge over the low willow huts until the roofs match the bank.
+Narrator: Fourteen people lie flat in the cold mud beneath the reeds, breathing into their sleeves.
+== hide_ok
+Narrator: The last steam dies into the mist without a smell of woodsmoke, and from ten paces off the island is only black water and broken rushes.
+Narrator: Even the frogs begin to croak again along the shallows.
+== hide_bad
+Narrator: A knot of pitch-pine deep in the ash refuses to die, sending a thin, stubborn ribbon of grey smoke straight up into the still air.
+Narrator: In the marsh silence, the hiss of wet wood sounds loud as a forge.
+== boat_passes
+Narrator: The Baron's heavy boat grates on the gravel bar, and two guards hold up a lantern that shows nothing but empty sedge and wet stones.
+Narrator: "Told you it was marsh-gas," one mutters, and they heave a bound woman over the side into the knee-deep water before pushing off again.
+Narrator: As soon as their oar-strokes fade into the fog, four pairs of hands reach out of the reeds to haul her up and cut the cord at her wrists.
+Narrator: Someone wraps a dryish sack around her shoulders and says softly, "You are all right now, neighbour. Make it fifteen."
+== stay_done
+Ostap: Gone back to their warm guardhouse, and left us another neighbour for our trouble.
+Ostap [smile]: Fifteen is an awkward number for four huts, mind you. Somebody will have to sleep with their feet out the door.
+Ostap: You kept our heads dry tonight, friends. Whenever Vallaki grows too cheerful for your stomach, there is perch on the coals.

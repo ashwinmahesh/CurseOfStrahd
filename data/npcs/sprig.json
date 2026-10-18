@@ -1,0 +1,18 @@
+{
+  "id": "sprig",
+  "name": "Sprig",
+  "title": "A Twig Blight of the Wizard of Wines",
+  "summary": "A twig blight from Yester Hill that will not fight. It has decided it is a dog: it follows people, sits, wants to be patted, and brings back a different stick every time. The druids sent it to spy on the winery and it is very bad at it.",
+  "portrait": "twig_blight",
+  "sprite": "twig_blight",
+  "attitude": "friendly",
+  "monster": "twig_blight",
+  "guest": false,
+  "tags": [
+    "plant",
+    "blight",
+    "wizard_of_wines"
+  ],
+  "region": "wizard_of_wines",
+  "pronouns": "it/its"
+}

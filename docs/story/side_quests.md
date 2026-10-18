@@ -648,6 +648,11 @@ smoke last time. The Baron, Izek, the festival and Ireena are only read (`vallak
   toughs, and something in the reeds (a giant constrictor snake). The sharp autopilot wins 5 of 8 at level 5.
 - The castaways keep the boatmen's boat hidden and stay, or row home to Vallaki in daylight, singing. Either way Ostap
   gives the party the shackles the boatmen brought: Dimensional Shackles (rare) and 80 gp.
+- NPC plan batch 4, without a fight: Ostap offers the vote (Persuasion DC 12 argues either side, or the castaways decide).
+  To go home, the party rows them across in three crossings with a roll each (Athletics on the oars, Stealth to stay dark,
+  Acrobatics to bail); two crossings seen and the boatmen land on the shingle as above. To stay, the party hides the
+  island (Stealth or Survival DC 12); a missed roll and the boat lands. Either unseen ending is the same reward, and pays
+  the fight's XP once.
 
 ## The Gates of Barovia (levels 6 and up)
 
@@ -698,6 +703,11 @@ DC 15 holds her (`mouse_stayed`). Granny offers the girl for a basket of coins a
   `keepers` (unnamed: Ilinca takes the girl with half-iron teeth) or `given` (the basket; the quest fails and the
   companions disapprove).
 - Granny's basket: 300 gp and a Robe of Eyes (rare). The basket alone pays the 300 gp.
+- NPC plan batch 4, without a fight: in her offer, "Hags bargain" plays Granny at riddles. She asks three (a river, an
+  echo, and the name she ate); the party answers each from a short list or works it out (Investigation DC 12). Two right win:
+  she keeps her word, leaves the basket and goes back to the deep wood, and the girl goes home or to the Keepers as the name
+  decides. The third riddle is won by saying Zamfira, which only a party that learned the name can. Two wrong and it is the
+  old fight, with the old options still there.
 
 ## The Wizard of Wines (level 6)
 
@@ -843,6 +853,33 @@ are only read (`wolf_pack_leader` for one line).
 - Then Yanko comes into the light. Talked down (Persuasion DC 13) he's a boy again, and goes with Lark to Great-uncle
   Pavel in Krezk if Mother's Ninth Improvement found him; otherwise he lies down at her feet as a wolf. Lark gives the
   party the Abbot's Wand of Slumber (rare), and Yanko a traveller's old purse, 120 gp. Clovin's news says how it ended.
+- NPC plan batch 4, by day: the tracks in the mud (prop `waystone_tracks`, Survival DC 12, retried freely) lead to
+  Yanko's lair under a fallen pine and show that Lark comes to the stone at noon, during the Abbot's prayers. Lark
+  (day placement once the tracks are followed) can sing him out in daylight: Persuasion DC 12 steadies her, Stealth DC 13
+  keeps the pack off. A missed Stealth roll is the old fight at the stone; a missed Persuasion roll only shakes the song.
+  The reward is the same. After a won fight Lark waits by day as well as by night.
+
+### Dumitru's Visitor (`dumitrus_visitor`, narrative/krezk/dumitrus_visitor.dialogue; NPC plan batch 4)
+
+Dumitru, the boy who waits inside Krezk's gate for visitors who never come (talk to him: "Who are you waiting for?"),
+writes weekly letters to his Uncle Marius in Vallaki, who died long ago, and keeps them in a tin. He wants one real
+visitor. The party can come as Marius's old friends (Deception DC 12; he sees through it kindly, and the quest goes on),
+or ask Ambrose Fennimore at the Old Svalich crossroads to walk up the road. Fennimore then stands inside Krezk's gate until
+the visit, and leaves the tin a rating (four stars). Nothing is behind a roll that has no plain way round.
+
+- No fight. Reward: 20 gp (cousins) or 40 gp (Fennimore), companions' approval.
+
+### Old Silviu's Wedding Cask (`silvius_wedding_cask`, narrative/wizard_of_wines/silvius_cask.dialogue; NPC plan batch 4)
+
+Once the winery is the family's again, Old Silviu the cooper (at his casks by day) wants the last cask of the year Elvir
+was born carried to Vallaki for his daughter Dana's wedding at noon in the square. The road is bad, and there are three
+precautions: padding the cask against the ruts (Athletics DC 12, or 3 gp for good straw and rope), a wolf that has
+learned carts mean food (Animal Handling DC 12, or 2 gp for scraps), and thirsty hands (Persuasion DC 12, or 1 gp for
+Silviu's lead and tallow seal). How many held decides how the cask arrives: all three is a triumph (60 gp), one or two a
+little shaken (40 gp), none vinegar (25 gp). Dana (new NPC, in Vallaki's square while the cask is on the road) takes it and
+Master Costel makes a speech about it, whatever it is. The wedding happens regardless.
+
+- No fight. Every precaution has a plain coin way, and skipping them all only turns the wine to vinegar.
 
 ## The Tsolenka Pass (level 10)
 
@@ -1294,7 +1331,15 @@ gossip's nothing-new nodes and the wrong rumour, petra_correction, Petre's coat,
 goat in the shop, the church and at the gate; indoor_folk.dialogue's Goodwife Viorica (candle, secret) and Goodwife
 Sorina; customers.dialogue's Iulian and Lucia; arik.dialogue's three nothings; bildrath.dialogue's ledger;
 parriwimple.dialogue's book; vistani.dialogue's nicknames; and the new back-room, confession, false-trail and
-getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 3 (2026-10-18), Vallaki: florins_grandson.dialogue, emanoil.dialogue and the_sun_cake.dialogue in full
+getting-the-flock-in nodes in the_oat_thief.dialogue and the_goatherds_count.dialogue. NPC plan batch 4 (2026-10-18), Krezk and
+the lake, the winery and the den: silvius_cask.dialogue, sprig.dialogue and vadu_children.dialogue in full (new speakers Dana
+and the rescued children Ioana, Zamfir and Codruta; also Old Silviu, Master Costel, Kip and the Narrator); the winery
+hands in hands.dialogue; the riddle nodes of the_fourth_sister.dialogue (Granny Ash and Mouse); and, in Krezk,
+profira.dialogue and dumitrus_visitor.dialogue in full (new speaker Madam Profira; also Dumitru, Fennimore, the
+Krezk Watchman and the companions' interjects); in gate.dialogue the Watchman's refusals, his wish to say yes and the
+burgomaster's list; in townsfolk.dialogue Stefan, Goodwife Rodica, Goodwife Sanda and Cezar; in pool_folk.dialogue Old
+Simion and Widow Catrina; Ilarie's secret in trail_hunter.dialogue; the Belviews at the gate and the well; the by-day
+nodes of the_waystone.dialogue; and the vote, crossings and hiding nodes of the_barons_island.dialogue. NPC plan batch 3 (2026-10-18), Vallaki: florins_grandson.dialogue, emanoil.dialogue and the_sun_cake.dialogue in full
 (new speakers Emanoil, Leontina and Tudorel; also Old Florin, Goodwife Marta, Old Paraschiva, Vadoma, the Baron and the
 Narrator); the forged-list, proof and hearing nodes in ribbons.dialogue; the Baron's decrees; Lydia's key; the Town Guard's
 inspection of cheer; Anton, Old Smaranda, Gheorghe, Old Kolya, Master Costel, the Festival Herald, the Lockup Warden,
