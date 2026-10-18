@@ -303,7 +303,7 @@ Ten new comic characters, all on existing sprites, at least one in every stretch
 |---|---|---|---|---|---|
 | **The Well-Travelled Goat** | Everywhere (batches 1–6) | Turns up in impossible places, eating them | Everything | It has been everywhere, and with Speak with Animals it has opinions about all of it | ~25 (Narrator) |
 | **Ambrose Fennimore** | Roads, every region (2–6) | A travel writer from beyond the mists rating the valley ("The Blue Water Inn: two stars. Wolves.") | To finish the book and go home | Eleven years here, nine hundred pages, no way out | ~60 |
-| **Costică** | The Svalich road and the crossroads (2) | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | ~35 |
+| **Costica** | The Svalich road and the crossroads (2) | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | ~35 |
 | **Piccolo** | Blinsky's shop, Vallaki (3) | Blinsky's monkey, a critic who charges admission | Your coins, one at a time | Everything he's taken is in the jester's hat on the top shelf | ~10 (Narrator) |
 | **Emanoil** | Vallaki (3) | A clerk who writes poems to the castle and sleeps in a coffin from Henrik's | To be chosen and bitten | He's afraid of the dark and sleeps with a candle in the coffin | ~40 |
 | **Leontina** | Vallaki (3) | The Baron's cook: four hundred and thirteen sun-shaped dishes | One dish that isn't round | She trained in a great kitchen beyond the mists, and nobody here believes her | ~35 |
@@ -321,7 +321,7 @@ Companions: Kip, Ratatouille and Wren get comic interjects in the new scenes (`n
 line where it fits, as the side quests already do.
 
 Running gags, each paying off late: the Fourth Rumour coming back garbled; the Goat's sightings; Fennimore's
-ratings; Piccolo's coin-stealing (catch him to get your coins back); Costică's robberies; Ottokar arriving after
+ratings; Piccolo's coin-stealing (catch him to get your coins back); Costica's robberies; Ottokar arriving after
 every fight at Argynvostholt.
 
 ### Failure that isn't a dead end
@@ -392,7 +392,7 @@ are estimates; every one is unvoiced until the voice thread records it.
 | Batch | Region (levels) | What's in it | New lines |
 |---|---|---|---|
 | **1** | The Village of Barovia and the road in (1–3) | The `fail_routes` check; the village's rumour-givers get "nothing new", a wrong rumour and a refusal; trait, want and secret for about 30 villagers, with hooks for Anca, Viorica and Parriwimple; The Oat Thief and The Goatherd's Count reshaped; The Fourth Rumour; the Goat's first sightings; Mirabel's nicknames | ~290 |
-| 2 | Tser Pool, the Svalich road and the crossroads (3–5) | ~20 NPCs; Called by Name and The Grey Mare reshaped; Stanimir's Fire; Radu's Unsellable Horse; Fennimore arrives; Costică; Old Dorina's stew | ~295 |
+| 2 | Tser Pool, the Svalich road and the crossroads (3–5) | ~20 NPCs; Called by Name and The Grey Mare reshaped; Stanimir's Fire; Radu's Unsellable Horse; Fennimore arrives; Costica; Old Dorina's stew | ~295 |
 | 3 | Vallaki and the Vistani camp (5–6) | ~45 NPCs; Ribbons and The Count's Portraitist reshaped; Florin's Grandson; Emanoil; The Sun-Cake; Piccolo, the Baron's decrees, Anton, Smaranda | ~450 |
 | 4 | Krezk, the abbey, the lake, the winery, the den, Yester Hill (6–8) | ~40 NPCs; The Baron's Island, The Waystone and The Fourth Sister reshaped; Dumitru's Visitor; Old Silviu's Wedding Cask; Madam Profira; Sprig; the watchman, the Belviews | ~405 |
 | 5 | Argynvostholt, Berez, the mountains, the Amber Temple (8–10) | ~25 NPCs; The Squire reshaped; Exethanter's Notes; Sir Ottokar the Late | ~160 |

@@ -77,7 +77,7 @@ another NPC's gossip. A secret never sets a main flag and never opens or closes 
 | The camp dog (Tser Pool) | 0 | Steals from everyone equally | Your sausage | It has a stash under Madam Eva's wagon of everything it's stolen | flavour (Narrator), comic |
 | Bujor | 0 | (The Dancing Bear) | | | has |
 | Ambrose Fennimore (new) | – | A traveller from beyond the mists writing a guidebook to the valley, rating everything | To finish the book and go home | He has been here eleven years; the book is nine hundred pages and he has never found the way out | quest: Fennimore's Guide, comic |
-| Costică (new) | – | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | hook: help him rob someone who deserves it, comic |
+| Costica (new) | – | The worst highwayman in Barovia: robs politely, apologises, ends up giving you his lunch | One robbery that works | He's Bildrath's cousin, has never kept a thing, and buys back whatever he "steals" | hook: help him rob someone who deserves it, comic |
 
 ## Vallaki and the Vistani camp (batch 3)
 
