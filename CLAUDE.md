@@ -28,6 +28,9 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
   screen (NOFOCUS_HIDE=1 in tools/godot): textures import about twice as fast as headless, and the project.godot the
   editor rewrites is put back. IMPORT_HEADLESS=1 imports headless. A folder with no import cache yet starts from an
   APFS clone of the main checkout's (same volume only); a full import with under 20 GB free is refused (exit 75).
+- At most 3 import editors and 8 headless test processes run at once across all lanes (tools/godot_slot.sh and
+  tools/run_tests.py; IMPORT_SLOTS, TEST_SLOTS, GODOT_SLOTS=off): the Mac has 24 GB, and a dozen editors at ~1.8 GB
+  each swapped it (load 82, 20 GB swap, 2026-10-18). A run past the cap waits its turn and says so; it isn't stuck.
 - `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
   (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
   clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
