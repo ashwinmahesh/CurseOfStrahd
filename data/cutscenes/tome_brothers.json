@@ -1,0 +1,21 @@
+{
+  "id": "tome_brothers",
+  "title": "The Brother and the Girl",
+  "summary": "The Tome's second picture: on a summer terrace Sergei gives Tatyana a flower while Strahd watches from the dark archway.",
+  "images": [
+    {
+      "image": "tome_brothers",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tome_brothers",
+  "more": [
+    "scene:tome_brothers_2",
+    "scene:tome_brothers_3"
+  ],
+  "then": "tome_wedding"
+}

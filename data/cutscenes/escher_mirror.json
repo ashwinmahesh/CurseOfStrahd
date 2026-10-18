@@ -1,0 +1,15 @@
+{
+  "id": "escher_mirror",
+  "title": "The Mirror Behind Him",
+  "summary": "Escher's suite at the first meeting: Escher lounges in his armchair while the tall mirror behind him shows the same armchair empty (castle_ravenloft/spires_escher, ~ first).",
+  "images": [
+    {
+      "image": "escher_mirror",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ]
+}

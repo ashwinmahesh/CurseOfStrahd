@@ -1,0 +1,20 @@
+{
+  "id": "tome_wall",
+  "title": "The Castle Wall",
+  "summary": "The Tome's last picture: Tatyana steps off the battlements into the mist while Strahd's own soldiers loose arrows at him in the courtyard.",
+  "images": [
+    {
+      "image": "tome_wall",
+      "when": ""
+    }
+  ],
+  "focus": [
+    0.5,
+    0.5
+  ],
+  "caption": "scene:tome_wall",
+  "more": [
+    "scene:tome_wall_2",
+    "scene:tome_wall_3"
+  ]
+}
