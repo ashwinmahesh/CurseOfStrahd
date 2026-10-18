@@ -1,0 +1,188 @@
+# The brazier room below the dungeon, its stones, hourglass and iron knights, and the trapdoor's chute (Dungeon Expansion
+# Plan C4, docs/regions/castle_ravenloft_larders.md §17). The lines were drafted by Gemini through the ai-bridge and
+# edited here (docs/plans/gemini_dungeon/C4/); none of them is voiced yet. Our own invention, not the book's text.
+#
+# The seven stones (violet, orange, red, green, indigo, blue, yellow) carry the party, by `move`, to a place it has been to:
+# the Tsolenka guard tower, the castle's roofs, Van Richten's tower, the catacombs, the Rooms of Weeping, the Amber Temple
+# (once the Tsolenka gate is open) and Strahd's tomb. A stone whose place the party has not visited is only a pebble.
+
+# ---------------------------------------------------------------- The brazier (prop brazier_brazier)
+
+~ brazier
+if flag.brazier_golems_beaten
+Narrator: The white flame still burns without heat and the seven coloured stones still wait in their cups. There is no one left in the alcoves to mind what you touch.
+else
+Narrator: Seven smooth stones of different colours rest in cup-shaped hollows round the brazier rim. Between them, the tall white fire burns as cold as well water.
+endif
+if not (visited:tsolenka_pass_guard_tower or visited:castle_ravenloft_spires_roofs or visited:van_richtens_tower_interior or visited:castle_ravenloft_catacombs or visited:castle_ravenloft_court_weeping or (visited:amber_temple_entrance and flag.tsolenka_gate_open) or visited:castle_ravenloft_catacombs_strahd)
+Narrator: The seven stones gleam in their hollows like bright pebbles from a riverbed. Without knowing the places in the verse, one colour is as blind a leap as another.
+endif
+-> menu
+
+~ menu
+* [if visited:tsolenka_pass_guard_tower] Throw the violet stone into the fire. -> violet
+* [if visited:castle_ravenloft_spires_roofs] Throw the orange stone into the fire. -> orange
+* [if visited:van_richtens_tower_interior] Throw the red stone into the fire. -> red
+* [if visited:castle_ravenloft_catacombs] Throw the green stone into the fire. -> green
+* [if visited:castle_ravenloft_court_weeping] Throw the indigo stone into the fire. -> indigo
+* [if visited:amber_temple_entrance and flag.tsolenka_gate_open] Throw the blue stone into the fire. -> blue
+* [if visited:castle_ravenloft_catacombs_strahd] Throw the yellow stone into the fire. -> yellow
+* [if not flag.brazier_golems_beaten] Kick the stone brazier over. -> kick
+* Read the verse cut around the hourglass. -> verse
+* Leave the brazier alone. -> END
+
+~ violet
+Narrator: The violet stone drops in, the cold flame turns purple, and the first grains of sand begin to fall.
+-> step_menu_violet
+
+~ step_menu_violet
+* Step into the coloured fire. -> go_violet
+* Let the fire turn white again and step back. -> END
+
+~ go_violet
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move tsolenka_pass_guard_tower
+
+~ orange
+Narrator: You cast the orange stone in, the fire flares like autumn leaves, and the hanging sand begins to run.
+-> step_menu_orange
+
+~ step_menu_orange
+* Step into the coloured fire. -> go_orange
+* Let the fire turn white again and step back. -> END
+
+~ go_orange
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move castle_ravenloft_spires_roofs
+
+~ red
+Narrator: The red stone sinks into the brazier, turning the cold flame blood-bright as the sand starts to slip down.
+-> step_menu_red
+
+~ step_menu_red
+* Step into the coloured fire. -> go_red
+* Let the fire turn white again and step back. -> END
+
+~ go_red
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move van_richtens_tower_interior
+
+~ green
+Narrator: You toss the green stone into the fire, waking a pale sickly glow as the sand begins its fall.
+-> step_menu_green
+
+~ step_menu_green
+* Step into the coloured fire. -> go_green
+* Let the fire turn white again and step back. -> END
+
+~ go_green
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move castle_ravenloft_catacombs:from_tunnel
+
+~ indigo
+Narrator: The indigo stone vanishes into the flame, dyeing it the colour of a bruise while the sand starts to trickle.
+-> step_menu_indigo
+
+~ step_menu_indigo
+* Step into the coloured fire. -> go_indigo
+* Let the fire turn white again and step back. -> END
+
+~ go_indigo
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move castle_ravenloft_court_weeping
+
+~ blue
+Narrator: You drop the blue stone in, the tall flame turns the colour of winter ice, and the sand begins to pour.
+-> step_menu_blue
+
+~ step_menu_blue
+* Step into the coloured fire. -> go_blue
+* Let the fire turn white again and step back. -> END
+
+~ go_blue
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move amber_temple_entrance
+
+~ yellow
+Narrator: The yellow stone strikes the brazier, turning the cold fire to pale gold as the sand starts to run.
+-> step_menu_yellow
+
+~ step_menu_yellow
+* Step into the coloured fire. -> go_yellow
+* Let the fire turn white again and step back. -> END
+
+~ go_yellow
+Narrator: You step into the coloured flame and feel no heat at all, only a sudden rush like falling upward through cold water. Then the stone floor of the brazier room is gone.
+time +5
+move castle_ravenloft_catacombs_strahd
+
+# ---------------------------------------------------------------- The hourglass (prop brazier_hourglass)
+
+~ hourglass
+Narrator: The hourglass hangs in the empty air with all its pale sand gathered in the upper bulb. Around its base, a quiet hand has cut a verse into the stone.
+* Read the verse cut around the hourglass. -> verse
+* [if not flag.brazier_golems_beaten] Strike the hanging hourglass. -> strike_glass
+* Leave the hourglass alone. -> END
+
+~ verse
+Narrator: Violet casts you high where the white watchtower freezes in the mountain pass, keeping its cold vigil above the snow.
+Narrator: Orange lifts you to the wet slate and high peaks of this very house, under a sky that never clears.
+Narrator: Red sends you to a tall house of old books and older scars, where a hunter of monsters keeps his watch.
+Narrator: Green drops you one floor deeper into the quiet dark, where the cold stone boxes of this house are kept in rows.
+Narrator: Indigo brings you to the perfumed dark of the sleeping rooms, where the master's brides lie in their long, unbreathing sleep.
+Narrator: Blue carries you into the mountain's heart and its house of ancient amber, where old dark powers first learned to speak.
+Narrator: Yellow lays you down in the deepest vault of all, beside the master's own cold bed of earth and stone.
+-> END
+
+# ---------------------------------------------------------------- The iron knights (props brazier_knight_*)
+
+~ knight
+Narrator: Two huge figures of black iron stand in deep alcoves with their visors down. They do not breathe, which saves them a great deal of trouble down here.
+* Strike one of the iron knights. -> strike_knight
+* Leave the iron knights alone. -> END
+
+# The golem wakes only if the brazier, the hourglass or either knight is attacked. Only the knight in the west alcove is a
+# golem; its twin is empty armour. It is the plan's boss fight (3 in 8 for the full-ability party, docs/story/boss_fights.md);
+# every way into it is a choice.
+~ strike_knight
+set brazier_golems_awake
+Narrator: Your blow rings against the black plate like a tolled bell, loud enough to wake the vault. In the western shadow, one heavy visor grates open: only one.
+combat brazier_golems
+
+~ strike_glass
+set brazier_golems_awake
+Narrator: The hanging glass chimes like struck bronze without taking a scratch, though the sand inside shivers. In the west alcove, an iron visor lifts and a mailed boot takes one heavy step.
+combat brazier_golems
+
+~ kick
+set brazier_golems_awake
+Narrator: Cold white coals spill across the flagstones without a spark or a hiss of heat. Deep in the west alcove, dry iron joints groan awake after a very long sleep.
+combat brazier_golems
+
+# ---------------------------------------------------------------- The trapdoor (prop brazier_tunnel_slab's call)
+
+# The trap sprang a step ago (trap:brazier_trapdoor_hatch:triggered); the next step plays this.
+~ slide
+Narrator: Polished black marble whips your feet out from under you in a long, fast slide through the dark, nothing to catch your hands. You meet the cold floor of a cell at the bottom.
+time +5
+move castle_ravenloft_larders_dungeon:from_chute
+
+# ---------------------------------------------------------------- The chute from the cell (prop larders_chute_mouth)
+
+~ chute
+Narrator: High up in the cell wall, the mouth of the black marble chute gleams wet and slick as river ice. No fingers made of flesh and bone will ever find a hold in it.
+* [knows:spider_climb] Climb the slick chute with Spider Climb. -> up
+* [knows:levitate] Float up the dark chute with Levitate. -> up
+* [knows:fly] Fly up the black marble chute with Fly. -> up
+* Leave the chute alone. -> END
+
+~ up
+Narrator: You rise back up the narrow black throat of polished marble, watching the wet stone slide past in reverse. The tunnel waits above, its trapdoor spent and sagging.
+time +5
+move castle_ravenloft_brazier_room:from_chute

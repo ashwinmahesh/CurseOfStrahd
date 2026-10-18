@@ -308,3 +308,48 @@ once
 
 ~ check:investigation:gears_draught:failure
 | The gears turn, the fire roars, and the draught could be coming from anywhere.
+
+
+# ---------------------------------------------------------------- Below the dungeon (Dungeon Expansion Plan C4, castle_ravenloft_brazier_room)
+# Drafted by Gemini through the ai-bridge and edited (docs/plans/gemini_dungeon/C4/). The stones, the hourglass's verse,
+# the knights' waking and the trapdoor's chute are in narrative/castle_ravenloft/larders_brazier.dialogue.
+
+~ enter:larders_west_stair
+| A narrow stair winds down behind the low iron door, breathing cold air into your face. Whatever waits below has been kept off the household's plans.
+once
+
+~ enter:castle_ravenloft_brazier_room
+| Long, worn steps lead you down into the dark. Your own footsteps come back to you a beat late, as if the stair is counting.
+cooldown 20
+
+~ trap:brazier_glyph_ward:found
+| Pale lines are cut into the stone of the landing floor, forming a neat circle in the dust. It has been waiting a long time for a boot.
+
+~ trap:brazier_glyph_ward:triggered
+| The pale circle flares, and the count steps out of the sudden light in black silk lined with red. For half a heartbeat, your blood forgets how to move.
+
+~ combat:kill
+| [at:castle_ravenloft_brazier_room and flag.brazier_glyph_woken and not flag.brazier_wax_melted] Your blow lands and the master of the house slumps into a warm puddle of tallow and candle-ends. As likenesses go, it was the better-tempered one.
+cooldown 3
+
+~ examine:brazier_wax_puddle
+| You crouch over a skin of cooling wax that smells of snuffed candle-ends and holds a few stray threads of black silk. Beneath the grease, the carved circle lies dark and spent.
+
+~ enter:brazier_room
+| A high vaulted room opens around a stone brazier burning with a tall white flame that gives no warmth. Above it an hourglass hangs upon nothing, while two huge iron knights wait in deep alcoves.
+| [flag.brazier_golems_beaten] Split plates and twisted iron joints litter the stones before the empty west alcove, smelling faintly of old rust. Across the chamber, the second knight still keeps its post, hollow as a winter shell.
+cooldown 20
+
+~ enter:brazier_centre_stair
+| A second flight of stone steps leads down from the south wall into a low black passage. Pale fog creeps up the stairs to meet your boots like a slow tide.
+once
+
+~ enter:brazier_tunnel
+| The black rock ceiling barely clears your head, and ankle-deep fog drifts over the wet, slick floor. The chisel marks in the stone are fresh enough to make a careful mason wonder.
+cooldown 20
+
+~ trap:brazier_trapdoor_hatch:found
+| Ahead of you, the creeping fog drains away into a neat square seam of polished stone. Someone has gone to great trouble to make the floor look solid.
+
+~ trap:brazier_trapdoor_hatch:triggered
+| A faint click under your boot is all the warning the mason left you. Then the polished stone tips.
