@@ -34,6 +34,12 @@
       "journal": "With the light coming, we talked Escher into waiting for a dawn the count isn't in. He backed into the shadow of the stair laughing, and gave us the count's present anyway: a helm full of captured daylight, to wear at the count's funeral.",
       "objectives": [],
       "ends": "success"
+    },
+    {
+      "id": "refused",
+      "journal": "We told Escher we would stand with him on the south tower roof before dawn, and then we turned on him in his own rooms. Whatever else the count's answer held, the parapet will stay empty, and there will be no good red velvet coat on the stones for the sun to find.",
+      "objectives": [],
+      "ends": "failure"
     }
   ]
 }

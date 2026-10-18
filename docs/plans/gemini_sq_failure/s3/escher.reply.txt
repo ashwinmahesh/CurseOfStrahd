@@ -1,0 +1,14 @@
+attack_asked
+Escher [sad]: And I had already laid out the good coat.
+Escher [angry]: Nine years waiting for a yes, and I spend it on you. Come on, then, let us ruin the velvet.
+
+attack_held
+Escher [sad]: You stood with me in the dark and fought his creature off the stones, only to do this before the sky even turns.
+Escher [angry]: I thought I had finally found someone who wasn't him. Come on, then.
+
+threat
+Escher [angry]: You may cross the south tower off your morning, darlings. I won't stand waiting for the light beside people who use it as a threat.
+Escher [sad]: Leave the good coat on the chair and listen, then, since you've bought my tongue so cheaply.
+
+journal
+We said we would stand with Escher on the south tower roof before dawn, and then we turned on him in his rooms. Whatever answer the count sent under his door, Escher will not be at the parapet in his good red velvet coat to meet the sun with us.

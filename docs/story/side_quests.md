@@ -1112,6 +1112,12 @@ unawares.
   Helm of Brilliance (very rare, a crown full of captured daylight for a man who could never wear it) and 250 gp.
 - Escher's suite, banter and narration follow him: once he's seen the dawn his chair is empty and his coats hang in
   the wardrobe without the red velvet one.
+- **Refused** (failure, stage `refused`): turning on Escher while the petition stands (`asked` or `held`) ends it on the
+  spot, in spires_escher:attack (steel drawn) and :scared (the Intimidation about opening his curtains at dawn). The
+  roof entry reads the quest, so nobody waits at the parapet for a petition that is over, and no helm or gold changes
+  hands. Before this the quest stayed open and a copy of a slain Escher kept the parapet at night. A finished petition
+  (`done`, `waited`) is never overwritten, and with no petition at all nothing starts. Old saves with the petition open
+  and Escher already slain or frightened are left for the old-save closures (the failure plan's F2).
 
 ### The Boyar's Petition (`boyars_petition`, narrative/castle_ravenloft/boyars_petition.dialogue; NPC plan batch 6)
 

@@ -97,6 +97,12 @@ Escher: Oh, don't. Flattery from the living. It smells of soup. Now it will cost
 set escher_threatened
 attitude escher hostile
 Escher [afraid]: You wouldn't. ...You would. Fine. Fine!
+if quest.escher_petition == asked or quest.escher_petition == held
+# The petition is over (data/quests/escher_petition.json, refused): nobody stands on the roof for a man who holds the sun over him.
+quest escher_petition refused
+Escher [angry]: And you may cross the south tower off your morning, darlings. I won't wait for the light beside people who hold it over my head.
+Escher [sad]: Listen well, then. It's the last thing I'll sell you.
+endif
 approve thistle +1 godrick_pendlebrook -1: You threatened to open Escher's curtains at dawn
 -> heart_tell
 
@@ -139,6 +145,17 @@ endif
 -> menu
 
 ~ attack
+if quest.escher_petition == asked
+# Steel drawn on him after the party agreed to the roof: the petition is over, whatever the fight's end
+# (data/quests/escher_petition.json, refused), and no copy of him waits at the parapet.
+quest escher_petition refused
+Escher [sad]: I had already laid out the good coat.
+Escher [angry]: Nine years of asking for a yes, and the first people to give me one come in with steel. Very well. Do keep up.
+elif quest.escher_petition == held
+quest escher_petition refused
+Escher [sad]: You stood on those stones with me while that thing came down off the keep, with the sky still dark. And this is what you do with it.
+Escher [angry]: I thought I had finally found somebody who wasn't him. Very well. Do keep up.
+endif
 Narrator: Escher comes up out of the chair without seeming to use his legs.
 combat escher_fight
 
