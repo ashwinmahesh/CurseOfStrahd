@@ -77,7 +77,7 @@ func _key(code: Key, command := false) -> InputEventKey:
 
 
 func test_only_in_dev_builds() -> void:
-	assert_true(BugReports.enabled(), "the editor's Godot (make run, make play, tests) is a dev build")
+	assert_true(BugReports.enabled(), "the editor's Godot (make run, make run-main, tests) is a dev build")
 	assert_true(reports != null and UiFeel.bug_reports == reports, "UiFeel keeps the one BugReports")
 	# An exported game runs on an export template: no node, so no key and no menu entry.
 	assert_false(OS.has_feature("template"), "an export template is never a dev build")

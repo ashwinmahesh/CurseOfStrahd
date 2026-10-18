@@ -8,7 +8,7 @@ CurseOfStrahd/Bug Reports/<date>T<time>-<title>/ with report.md (front matter `s
 Decisions: docs/adr/ · Tasks: docs/tasks/ · Rules coverage: docs/rules/coverage.md
 
 ## Commands (add new ones to the Makefile)
-make run | arena | release [OUT=…] | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | disk [FAST=1] | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
+make run (the edge build) | run-main | edge | edge-add/edge-remove BRANCH=<branch> | edge-list | edge-prune | edge-reset | arena | release [OUT=…] | smoke [SCENE=… FRAMES=n] | test [ONLY=substr FILES=a.gd,b.gd JOBS=n] | golden-saves | validate | lint | check [DRY=1] | ci | lfs-quiet | disk [FAST=1] | art-spend | palette | capture [SCENE=… NAME=… FRAMES=… FOCUS=node LOCATION=id]
 make sprite TURNAROUND=<png> ID=<id> [STATIC=1|BODY=…] | anims [ONLY="id …"] [GENERATE=1] | keys [ONLY="id …"] [KINDS=…] | creator [GENERATE=1] | pregens [ONLY="id …"] | portrait SRC=<png> ID=<id> | textures | prop SRC=<png> ID=<id> HEIGHT=<units> | props [GENERATE=1] [ONLY=sheet] | ui_art | icons | standin | wireframes
 make capture SCENE=res://tools/art/preview/location_tour.tscn LOCATION=<id> NAME=tour [ARGS="--lit --shots=6"] (set dressing QA)
 python3 tools/data/validate_data.py --pending (later-phase references) · python3 tools/data/data_sources.py
@@ -31,9 +31,11 @@ make voice [SPEAKER="narrator …"] [LIMIT=n] [DRY=1] [MAX_USD=n] (spoken lines,
 - At most 3 import editors and 8 headless test processes run at once across all lanes (tools/godot_slot.sh and
   tools/run_tests.py; IMPORT_SLOTS, TEST_SLOTS, GODOT_SLOTS=off): the Mac has 24 GB, and a dozen editors at ~1.8 GB
   each swapped it (load 82, 20 GB swap, 2026-10-18). A run past the cap waits its turn and says so; it isn't stuck.
-- `make run` and `make arena` are for the owner to play: run them only when asked. `make play` is his stable copy
-  (~/Documents/CurseOfStrahdGame-play, tools/play/play.sh): it only moves to a main the build thread marked after a
-  clean `make ci` (refs/play/green). Never edit or check out anything in it; PLAY_NO_RUN=1 updates it without a window.
+- `make run` and `make arena` are for the owner to play: run them only when asked. `make run` is the edge build (tools/edge/edge.py):
+  the local main plus the lane branches listed in ~/.curse-of-strahd/edge/branches.txt (handed off, not merged yet), merged in
+  a throwaway worktree, on its own copy of the saves and settings (the real ones are never written). The build thread adds a
+  branch with `make edge-add BRANCH=<branch>` when it takes a hand-off and drops it with `make edge-remove` once merged.
+  `make run-main` plays a checkout's own code, as `make run` used to.
 
 ## Code
 - Static types everywhere; `untyped_declaration` is an error.

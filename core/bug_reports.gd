@@ -7,7 +7,7 @@ extends Node
 ## and the log's last lines, from ErrorWatch), screenshot.png, save.json (the game as it is now, as a save holds it)
 ## and errors.txt (this session's error report, when it has one). Copies only: nothing is written into his saves or
 ## settings.cfg. A Mac without that vault gets user://bug_reports/; STRAHD_BUG_REPORTS names another folder.
-## Dev builds are the ones run from a checkout with the editor's Godot (make run, make play); an exported game (an
+## Dev builds are the ones run from a checkout with the editor's Godot (make run, make run-main); an exported game (an
 ## export template) makes no node, so it has no key and no menu entry. UiFeel makes the one node; `current` is it.
 ## F12, not F8: a Mac keyboard's F8 without fn is play/pause, which opens Music.
 
@@ -24,7 +24,7 @@ const LOG_LINES := 80
 const KINDS: Array[String] = ["Looks wrong", "Plays wrong", "Rules", "Words", "Sound", "Error"]
 const README := """# Bug Reports
 
-Reports from the game's Report a bug (F12, or the pause menu) in dev builds: make run and make play. One folder per
+Reports from the game's Report a bug (F12, or the pause menu) in dev builds: make run and make run-main. One folder per
 report, named by when it was made and the first words of what was written.
 
 - report.md: what was written, where the game was (place, day, mode, the screen open), the party, the settings, the
@@ -229,14 +229,9 @@ func _settings() -> String:
 		roundi(GameSettings.text_scale() * 100.0)]
 
 
-## The build: the play copy's commit (make play writes it), else the checkout's own branch and commit, read from git.
+## The build: the checkout's own branch and commit, read from git.
 func _build(out: Dictionary) -> void:
 	var path := ProjectSettings.globalize_path("res://").trim_suffix("/")
-	var commit := SaveSystem.build_commit()
-	if commit != "":
-		out["commit"] = commit.left(9)
-		out["build"] = ErrorWatch.build()
-		return
 	var head := _git(path, PackedStringArray(["log", "-1", "--format=%h %s"]))
 	out["commit"] = head.get_slice(" ", 0)
 	var branch := _git(path, PackedStringArray(["rev-parse", "--abbrev-ref", "HEAD"]))

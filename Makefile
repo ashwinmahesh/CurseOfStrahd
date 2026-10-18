@@ -21,19 +21,41 @@ FRESH   := if [ ! -f $(STAMP) ] || [ -n "$$(find . \( -path ./.godot -o -path ./
              echo "Files changed since the last import: importing first."; $(IMPORT) > /dev/null; s=$$?; \
              case $$s in 75|129|130|137|143) exit $$s ;; esac; touch $(STAMP); fi
 
-.PHONY: run arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
+.PHONY: run run-main arena smoke import test lint validate ci check lfs-quiet art-spend palette capture standin sprite sprites anims keys portrait wireframes textures prop props models ui_art icons vestige_shapes cursors voice creator pregens plants vistas
 
-## Imports first when scripts or assets changed since the last import (a merge can add a class_name or images that
-## the editor cache doesn't know yet, and the game then stops at a parse error).
+## make run plays the edge build (owner, 2026-10-17; tools/edge/edge.py): main plus every lane branch that has been
+## handed off but not merged yet, assembled in a throwaway worktree (CurseOfStrahdGame-edge, in the SSD lanes' image), so
+## lane work can be tried as soon as it is handed off. It runs on its own user data folder, "Curse of Strahd Edge", which
+## holds a copy of your saves and settings made at launch: the real ones are only read, never written. The branches are
+## listed in ~/.curse-of-strahd/edge/branches.txt, kept out of git: make edge-add BRANCH=<branch> · make edge-remove
+## BRANCH=<branch> · make edge-list · make edge-prune (drops the merged ones) · make edge-reset (removes the worktree;
+## the next run makes it again) · make edge (assembles and imports, no window) · make edge-test (the script's tests).
+## EDGE_BASE=origin/main starts from the last ci-green main instead of main; EDGE_KEEP_DATA=1 keeps the edge's own saves.
 run:
+	@python3 tools/edge/edge.py run
+
+## The old make run: this checkout's own code, as it is. Imports first when scripts or assets changed since the last
+## import (a merge can add a class_name or images that the editor cache doesn't know yet, and the game then stops at a
+## parse error).
+run-main:
 	@$(FRESH)
 	$(NOFOCUS) < /dev/null
 
-## The owner's stable copy (P1, tools/play/play.sh): ~/Documents/CurseOfStrahdGame-play moves forward to the newest
-## main that passed make ci (refs/play/green), imports what changed, then starts. PLAY_NO_RUN=1 only updates it.
-.PHONY: play
-play:
-	@tools/play/play.sh
+.PHONY: edge edge-list edge-add edge-remove edge-prune edge-reset edge-test
+edge:
+	@python3 tools/edge/edge.py build
+edge-list:
+	@python3 tools/edge/edge.py list
+edge-add:
+	@python3 tools/edge/edge.py add $(BRANCH)
+edge-remove:
+	@python3 tools/edge/edge.py remove $(BRANCH)
+edge-prune:
+	@python3 tools/edge/edge.py prune
+edge-reset:
+	@python3 tools/edge/edge.py reset
+edge-test:
+	python3 -m unittest discover -s tests/tools -p 'test_edge*.py' -v
 
 ## Release builds (owner, 2026-10-08): the Windows export (export_presets.cfg) and, from the same pack, the Mac app
 ## (tools/release/mac_app.py; Godot's own macOS export wants ETC2/ASTC textures we don't import), zipped for download.

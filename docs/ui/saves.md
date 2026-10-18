@@ -1,7 +1,7 @@
 # Saves and save slots (lane 16)
 
 Status: the slot picker built 2026-10-07 (owner: "When clicking Save Game, we should be able to select the slot to
-save to, or save to a new slot"); Q9 (pictures, notes, sorting, more autosaves, backups), Q12 (jump-in saves for
+save to, or save to a new slot"); Q9 (pictures, notes, sorting, more autosaves), Q12 (jump-in saves for
 each chapter), Q3 ("Previously in Barovia") and F1's one-save rule for Honour the same day · not yet seen by the
 owner
 Code: `ui/screens/saves_screen.gd` (the page), `core/save_system.gd` (the files). Hooks: `ui/screens/pause_menu.gd`
@@ -34,9 +34,6 @@ and the full text is in the row's tooltip.
   the roster's heroes at the chapter's level: the first four travel (as New game picks them) and the other two wait at
   camp. The chapter saves were made with the tests' party, so `SaveSystem.begin_chapter` swaps it out, moving the
   magic items it had found into the new travellers' packs (one member's to one member) and its coin to the purse.
-- **Backups (Q9)**: loading's third tab, Backups: each update's copies under a heading saying when they were
-  kept. A game loaded from a backup has no slot of its own, so its first save makes a new one and the backup stays
-  as it was.
 - **Delete** (owner, 2026-10-08: "We should be able to delete save files from the UI"): every one of the player's
   saves, on either page, has a Delete button that asks "Delete this save?" first; the save and its picture go, and if
   it was the game's own slot the next save makes a new one. A backup's copies and a chapter can't be deleted, and
@@ -100,10 +97,6 @@ picture, `<slot>.webp`. Other files kept there (N8's `achievements.json`) aren't
   stall every round), and headless runs take none.
 - **Autosaves**: the newest five, `autosave` then `autosave_2` ... `autosave_5`; each new one moves the others along
   and the oldest goes. Every one of them goes back to its game's slot when loaded, like the round start.
-- **Backups**: the first time a new build of the play copy starts (`builds/play_build.json`'s commit, written by
-  `make play`), before anything reads a save, every save and picture is copied to
-  `backups/<date>T<time>_<commit>/`. Once per build; the newest eight builds' copies are kept. A working checkout has
-  no build file, so it never backs up.
 - **Chapters**: `SaveSystem.chapters()` offers the golden saves P4 keeps in `tests/saves` (made by the auto-player
   the playthrough tests use, so the same saves every test run loads): each chapter's newest save version, in the
   story order of `SaveSystem.CHAPTERS` (13 chapters, Into the Mists to the Gates of Castle Ravenloft; the new game and

@@ -112,14 +112,11 @@ git config lfs.fetchexclude "art/generated/**"
 Start the game from the repo root:
 
 ```bash
-make run
+make run-main
 ```
 
-The first run imports every asset, which takes a while. After that `make run` only re-imports when files have
+The first run imports every asset, which takes a while. After that `make run-main` only re-imports when files have
 changed since the last import, so a merge that adds scripts or images doesn't stop the game at a parse error.
-
-`make play` runs a stable copy of the game instead (`~/Documents/CurseOfStrahdGame-play`), which only moves forward
-to a `main` that passed the full checks, so a half-finished merge can't stop a play session.
 
 Before merging anything into `main`, run the local CI:
 
@@ -135,8 +132,8 @@ Godot). All three must pass with a clean log.
 
 | Command | What it does |
 |---|---|
-| `make run` | Starts the game at the title screen. |
-| `make play` | Updates the stable play copy to the newest `main` that passed `make ci`, then starts it. |
+| `make run-main` | Starts the game at the title screen, from this checkout. |
+| `make run` | The owner's edge build: `main` plus the lane branches handed off but not merged yet (`tools/edge/edge.py`), on a copy of the saves and settings. Needs the SSD lane image; `make run-main` does not. |
 | `make check` | The quick check while working: lint, a compile of every script, and the tests and data checks that cover what changed. |
 | `make arena` | Opens the combat test arena: four level 3 pregens against wolves and zombies. |
 | `make ci` | `validate`, `lint` and `test` together. |
@@ -317,7 +314,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 - Story, Balanced, Tactician and Honour difficulties (Honour keeps one save; a wipe ends the run).
 - Skirmish and the Character Lab (any party at levels 1 to 20 against any stat blocks on any map), an encounter
   editor, 21 achievements and run stats.
-- Five autosaves, save pictures and notes, backups, quicksave, and jump-in saves for 13 chapters.
+- Five autosaves, save pictures and notes, quicksave, and jump-in saves for 13 chapters.
 - Settings for difficulty, graphics presets, keys, text size and UI scale, fight speed, narration, depth blur, the
   Modern or Classic look, and the respec.
 - Cheat codes (pause menu → Cheat codes) that give any item to a hero; every code is in
@@ -337,7 +334,7 @@ On a controller, hold LB for a radial menu of actions. Reactions ask first unles
 | `narrative/` | The conversations, one `.dialogue` file per scene. |
 | `art/`, `audio/`, `blender/` | Art, voices and the pipelines that build them. |
 | `tests/` | Unit and integration tests, and the golden saves in `tests/saves/`. |
-| `tools/` | Data checks, captures, the play copy, lanes, and the art and audio scripts. |
+| `tools/` | Data checks, captures, lanes, and the art and audio scripts. |
 | `docs/` | Decisions in `adr/`, interface contracts in `contracts/`, rules coverage, region notes, UI and art guides. |
 
 ## Credits

@@ -203,14 +203,8 @@ func context() -> String:
 	return ", ".join(parts)
 
 
-## The play copy's commit (make play writes it), or "a working checkout".
+## Where the game is running from, for the report's header.
 func build() -> String:
-	var path := "res://builds/play_build.json"
-	if FileAccess.file_exists(path):
-		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
-		if data is Dictionary:
-			return "the play copy at main %s (%s)" % [(data as Dictionary).get("commit", "?"),
-				(data as Dictionary).get("committed", "")]
 	return "a working checkout (%s)" % ProjectSettings.globalize_path("res://")
 
 
