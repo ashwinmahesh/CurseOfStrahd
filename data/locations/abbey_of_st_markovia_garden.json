@@ -372,6 +372,7 @@
     {
       "id": "garden_sentry",
       "trigger": "enter_area:scarecrow_row",
+      "waiting": true,
       "when": "not flag.abbey_scarecrows_unbound",
       "text": "The scarecrows turn their sacking heads all together, with a noise like dry leaves, and climb down off their poles.",
       "monsters": [
@@ -382,105 +383,131 @@
             4
           ],
           "name": "The Stitched Sentry",
-          "hp": 60
+          "hp": 60,
+          "facing": "south"
         },
         {
           "monster": "scarecrow",
           "cell": [
             8,
             2
-          ]
+          ],
+          "facing": "south"
         },
         {
           "monster": "scarecrow",
           "cell": [
             16,
             2
-          ]
+          ],
+          "facing": "south"
         },
         {
           "monster": "scarecrow",
           "cell": [
             12,
             2
-          ]
+          ],
+          "facing": "south"
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             4,
             4
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             10,
             14
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             22,
             12
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             1,
             13
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             16,
             10
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             22,
             6
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             16,
             16
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             11,
             9
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             21,
             1
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             16,
             6
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         },
         {
           "monster": "will_o_wisp",
           "cell": [
             6,
             11
-          ]
+          ],
+          "hp": 18,
+          "unseen": true
         }
       ],
       "surprise": "",

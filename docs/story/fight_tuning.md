@@ -142,7 +142,7 @@ and silvain_aster at the playthrough's own level).
 
 | Fight | Where | Version | Level | Was | Now | Wins |
 |---|---|---|---|---|---|---|
-| `garden_sentry` | abbey_of_st_markovia_garden | L7v0 | 7 | 5 scarecrow | 4 scarecrow, 11 will o wisp | 5 |
+| `garden_sentry` | abbey_of_st_markovia_garden | L7v0 | 7 | 5 scarecrow | 4 scarecrow, 11 will o wisp (18 HP) | 5 |
 | `bride_defends` | abbey_of_st_markovia_shrine | L5v2 | 5 | flesh golem, 3 mongrelfolk | 4 flesh golem, 6 mongrelfolk | 5 |
 | `bride_defends` | abbey_of_st_markovia_shrine | L6v1 | 6 | flesh golem, berserker, 4 mongrelfolk | 3 flesh golem, 8 berserker, mongrelfolk | 5 |
 | `wards_cells` | abbey_of_st_markovia_wards | L6v1 | 6 | berserker, 4 mongrelfolk | 15 berserker, mongrelfolk | 5 |

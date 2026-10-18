@@ -2,7 +2,9 @@ extends FightSeriesCase
 ## The fights of Argynvostholt, Tsolenka, the Abbey, Krezk, the Amber Temple, Berez, Van Richten's tower and the werewolf den that had no series, scaled for 2024 heroes and the sharp test party.
 ## Over seeds 1-8 the four pregens on the sharp autopilot (smiting, opening with Spirit Guardians, throwing Fireball, as he
 ## plays) win 5, give or take one, on Balanced (owner, 2026-10-13 18:05), each fight played from where walking in or
-## talking sets it off, with its foes starting spread out (tests/unit/test_fight_spread.gd). Every fight finishes.
+## talking sets it off, with its foes starting spread out (tests/unit/test_fight_spread.gd). Every fight finishes. A fight
+## that waits in plain view (docs/rules/stealth.md) starts where its foes first notice a party walking in from the spawn
+## the story uses, not sneaking: the squares and the doors opened on the way are those, walked and read off.
 
 const SEEDS: Array = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -21,7 +23,7 @@ func _held(location: String, hour: int, level: int, encounter: String, at: Array
 
 ## garden_sentry, abbey_of_st_markovia_garden variant 0 at level 7.
 func test_garden_sentry_v0_at_level_7() -> void:
-	await _held("abbey_of_st_markovia_garden", 12, 7, "garden_sentry", [Vector2i(4, 5), Vector2i(5, 6), Vector2i(6, 7), Vector2i(6, 8)], 4, 6, [])
+	await _held("abbey_of_st_markovia_garden", 12, 7, "garden_sentry", [Vector2i(11, 10), Vector2i(11, 11), Vector2i(11, 12), Vector2i(11, 13)], 4, 6, [])
 
 
 ## bride_defends, abbey_of_st_markovia_shrine variant 2 at level 5.
