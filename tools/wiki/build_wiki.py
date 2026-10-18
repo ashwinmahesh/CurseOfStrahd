@@ -2363,6 +2363,15 @@ class Wiki:
         lines += [f"| {who} | {n:,} | {esc(desc)} |" for n, who, desc in rows]
         self.w.write("page/cast", "World/Voice Cast", "Voice Cast", [auto("list", "\n".join(lines))], tags=["wiki", "world"])
 
+    def flag_summary(self, fid):
+        """A story flag's summary (data/flags/*.json), or ""."""
+        if not hasattr(self, "_flag_summaries"):
+            self._flag_summaries = {}
+            for f in sorted((self.g.root / "data" / "flags").glob("*.json")):
+                for fl in load_json(f).get("flags", []):
+                    self._flag_summaries[str(fl.get("id", ""))] = str(fl.get("summary", ""))
+        return self._flag_summaries.get(fid, "")
+
     def shop_levels(self):
         """Rarity -> the party's milestone level shops show it from (data/treasure/levels.json, as Trade.magic_level)."""
         if not hasattr(self, "_shop_levels"):
@@ -2407,6 +2416,8 @@ class Wiki:
         g, s = self.g, self.site
         trade = (g.root / "story" / "trade.gd").read_text()
         dc = re.search(r"const HAGGLE_DC := (\d+)", trade)
+        msr = re.search(r"const MAGIC_SELL_RATE := ([\d.]+)", trade)
+        magic_rate = float(msr[1]) if msr else 0.5
         lines = ["## How prices work", "",
                  "- Each merchant marks up the book price of what they sell (their markup below) and pays a share of "
                  "it for what they buy (their rate). Every price is rounded up to a whole gold piece.",
@@ -2423,6 +2434,8 @@ class Wiki:
                  + ", ".join(f"{r.replace('_', ' ')} items from party level {lv}" for r, lv in self.shop_levels().items())
                  + ". An item made on a weapon or armor (a Flame Tongue, +1 Armor) lets you pick which, and its price "
                  "adds the mundane item's.",
+                 f"- **Selling magic items:** any merchant whose magic stock is open to you also buys magic items, "
+                 f"at {round(magic_rate * 100)}% of their price, whatever else they buy or pay for other goods.",
                  ""]
         services = self._services()
         for nid, n in g.npcs.items():
@@ -2447,6 +2460,17 @@ class Wiki:
                 h = shop["haggle"]
                 if isinstance(h, dict) and h.get("dc"):
                     bits.append(f"haggle DC {h['dc']}")
+            if shop.get("magic"):
+                rate = float(shop.get("magic_sell_rate", magic_rate))
+                bits.append(f"buys magic items at {round(rate * 100)}% of their price"
+                            + (f" while {human_cond(shop['magic_if'])}" if shop.get("magic_if") else ""))
+            for pf in shop.get("price_flags", []):
+                flag = re.match(r"flag\.([a-z0-9_]+)$", str(pf.get("if", "")))
+                why = self.flag_summary(flag[1]) if flag else ""
+                why = re.sub(r"\s*\([a-z0-9_]+\)", "", why.split(":")[0]).strip()
+                bits.append(f"×{float(pf.get('buy', 1)):g} on what you buy"
+                            + (f" priced {float(pf['min_price']):g} gp or more" if pf.get("min_price") else "")
+                            + (f" after {why[0].lower() + why[1:]}" if why else f" when {human_cond(str(pf.get('if', '')))}"))
             lines += [f"*{'; '.join(bits)}*", "", "| Item | Price | Stock | Only when |", "|---|---|---|---|"]
             for it in shop.get("sells", []):
                 if not g.item_data(it["id"]).get("playable", True):
