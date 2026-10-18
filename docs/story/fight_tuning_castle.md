@@ -46,9 +46,9 @@ Hit Points rather than more of the same. The Kestrel fights are played with Ilse
 | `heart_guardians` | spires_heart | L10v1 | 10 | 2 strahds animated armor, helmed horror | 3 strahds animated armor (140 HP), 2 helmed horror (75 HP) | 5 |
 | `heart_guardians` | spires_heart | L11v0 | 11 | 2 strahds animated armor, 2 helmed horror | 3 strahds animated armor, 3 helmed horror | 6 |
 | `heart_guardians` | spires_heart | L9v2 | 9 | strahds animated armor, helmed horror | 3 strahds animated armor, 2 helmed horror | 6 |
-| `peak_guardians` | spires_roofs | L10v1 | 10 | 6 gargoyle | 16 gargoyle (87 HP) | 6 |
-| `peak_guardians` | spires_roofs | L11v0 | 11 | 8 gargoyle | 16 gargoyle (100 HP) | 5 |
-| `peak_guardians` | spires_roofs | L9v2 | 9 | 4 gargoyle | 16 gargoyle (77 HP) | 5 |
+| `peak_guardians` | spires_roofs | L10v1 | 10 | 6 gargoyle | 16 gargoyle (70 HP) | 4 |
+| `peak_guardians` | spires_roofs | L11v0 | 11 | 8 gargoyle | 16 gargoyle (55 HP) | 5 |
+| `peak_guardians` | spires_roofs | L9v2 | 9 | 4 gargoyle | 16 gargoyle (58 HP) | 5 |
 | `cauldron_coven` | spires_rooms | L10v1 | 10 | 6 barovian witch, black pudding | 11 barovian witch (74 HP), 8 black pudding (313 HP) | 6 |
 | `cauldron_coven` | spires_rooms | L11v0 | 11 | 8 barovian witch, black pudding | 12 barovian witch (64 HP), 5 black pudding (272 HP) | 5 |
 | `cauldron_coven` | spires_rooms | L9v2 | 9 | 4 barovian witch, black pudding | 10 barovian witch (36 HP), 6 black pudding (153 HP) | 5 |

@@ -154,17 +154,17 @@ func test_heart_guardians_v2_at_level_9() -> void:
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 1 at level 10.
 func test_peak_guardians_v1_at_level_10() -> void:
-	await _held("castle_ravenloft_spires_roofs", 12, 10, "peak_guardians", [Vector2i(25, 5), Vector2i(26, 5), Vector2i(24, 5), Vector2i(25, 6)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roofs", 12, 10, "peak_guardians", [Vector2i(23, 6), Vector2i(22, 6), Vector2i(21, 6), Vector2i(20, 6)], 4, 6, [])
 
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 0 at level 11.
 func test_peak_guardians_v0_at_level_11() -> void:
-	await _held("castle_ravenloft_spires_roofs", 12, 11, "peak_guardians", [Vector2i(25, 5), Vector2i(26, 5), Vector2i(24, 5), Vector2i(25, 6)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roofs", 12, 11, "peak_guardians", [Vector2i(19, 6), Vector2i(18, 6), Vector2i(17, 6), Vector2i(16, 6)], 4, 6, [])
 
 
 ## peak_guardians, castle_ravenloft_spires_roofs variant 2 at level 9.
 func test_peak_guardians_v2_at_level_9() -> void:
-	await _held("castle_ravenloft_spires_roofs", 12, 9, "peak_guardians", [Vector2i(25, 5), Vector2i(26, 5), Vector2i(24, 5), Vector2i(25, 6)], 4, 6, [])
+	await _held("castle_ravenloft_spires_roofs", 12, 9, "peak_guardians", [Vector2i(23, 6), Vector2i(22, 6), Vector2i(21, 6), Vector2i(20, 6)], 4, 6, [])
 
 
 ## cauldron_coven, castle_ravenloft_spires_rooms variant 1 at level 10.
