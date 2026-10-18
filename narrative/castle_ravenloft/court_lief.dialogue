@@ -18,6 +18,7 @@ Lief Lipsiege: If you are from the treasury, you are late. If you are not from t
 * [if not flag.court_treasury_known] Where does the count keep his money? -> vault
 * Who is in the guest rooms upstairs? -> guest
 * What do you know about Rahadin? -> rahadin
+* [if not flag.lief_inkwell_known] [Insight DC 12] (He keeps touching the inkwell.) -> lief_inkwell_ok | lief_inkwell_miss
 * We could get you out of that chain. -> free_offer
 * Goodbye. -> END
 
@@ -52,6 +53,18 @@ Lief Lipsiege [sad]: There was an "A." before her. Same size. That account is cl
 Lief Lipsiege [afraid]: He is very good at his work. I keep the count's accounts. He keeps the count's other accounts. His have more names in them.
 -> menu
 
+~ lief_inkwell_ok
+set lief_inkwell_known
+Narrator: Chained as he is, his fingers keep straying to the base of the heavy lead inkwell.
+Lief Lipsiege [afraid]: Forty-one years at this desk, and once every winter I slipped a single copper piece underneath the lead.
+Lief Lipsiege: There was a two-penny toll on the south road when I was a boy, and more for a cart.
+Lief Lipsiege [weary]: It would be a poor thing to reach the gates at last and be turned back for want of the fare.
+-> menu
+
+~ lief_inkwell_miss
+Narrator: He shifts the inkwell a single inch to the left and squares the stacked ledgers with both thumbs.
+-> menu
+
 ~ free_offer
 Lief Lipsiege [afraid]: Don't. Don't touch the chain. The rug. The count had it woven for this office. It does not like things to leave.
 * We'll deal with the rug. Hold still. -> free_go
@@ -72,7 +85,16 @@ Lief Lipsiege: Forty-one years, three months and a week. I shall have to close t
 ~ after_menu
 * Come with us as far as the gate. Vallaki could use a man who counts. -> go_vallaki
 * [if not flag.court_treasury_known] Before you go: where's the count's money? -> vault_free
+* [if flag.lief_inkwell_known and not flag.lief_toll_given] About those forty-one coins, for the gate. -> lief_toll
 * You're free. Go wherever you like. -> go_free
+
+~ lief_toll
+set lief_toll_given
+Lief Lipsiege: Take them, if you please, and give them to the man at the gate when you pass through.
+Lief Lipsiege [weary]: My knees are not what they were, and I will be some time behind you on the road.
+Lief Lipsiege [smile]: I shall keep the forty-first in my waistcoat, only so I do not walk out of this house a beggar.
+Narrator: He counts forty dull coppers into your palm, each one worn smooth by decades of secret checking.
+-> after_menu
 
 ~ vault_free
 set court_treasury_known

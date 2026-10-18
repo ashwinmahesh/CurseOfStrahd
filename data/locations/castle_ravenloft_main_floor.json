@@ -1007,6 +1007,16 @@
   ],
   "npcs": [
     {
+      "npc": "barovia_goat",
+      "cell": [
+        16,
+        9
+      ],
+      "dialogue": "castle_ravenloft/last_chapters:goat",
+      "facing": "east",
+      "when": ""
+    },
+    {
       "npc": "strahd",
       "cell": [
         5,

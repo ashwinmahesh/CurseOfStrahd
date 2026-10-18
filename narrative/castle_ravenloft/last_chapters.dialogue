@@ -1,0 +1,56 @@
+# The Goat and Fennimore, last chapters (NPC plan batch 6; docs/plans/npc_depth_and_quests.md). The village goat turns up in the great
+# entry of Castle Ravenloft, eating a tapestry, and the Hall Broom sweeps round it (Narrator lines; Speak with Animals gives its
+# opinion). Ambrose Fennimore, once his first chapter is done, is on the cliff road outside the gates rating the castle: the last
+# chapter of his guide, where he never finds the way home and decides the book is the point. No fight, nothing behind a roll. Lines
+# drafted by Gemini through the ai-bridge, edited; every line here is unvoiced for now.
+
+~ goat
+Narrator: The village goat stands in the middle of the great entry, chewing the hem of a three-hundred-year-old hunting tapestry.
+Narrator: Beside it, the Hall Broom sweeps in neat, respectful circles around all four hooves, as if dusting the legs of a sideboard.
+Narrator: Neither of them pays you the slightest mind. A thread of gold bullion disappears into the goat's mouth with a dry rustle.
+* [if spell:speak_with_animals] Ask the goat what it makes of the castle. -> goat_speaks
+* [if not spell:speak_with_animals] [knows:speak_with_animals] (Cast Speak with Animals, and ask the goat what it makes of the castle.) -> goat_cast
+* Leave it to its tapestry. -> END
+
+~ goat_cast
+cast speak_with_animals
+if check.last
+-> goat_speaks
+endif
+-> END
+
+~ goat_speaks
+Narrator: The goat chews four times before answering. "I walked in. The drawbridge was down, and nobody was using the stairs."
+Narrator: "This is a hunting scene," it says around a mouthful of dyed wool. "The hounds are a bit dry, but the stag is extraordinary."
+Narrator: "Best thing I have eaten in the valley. Easily beats the burgomaster's shutters. The broom is very polite, too."
+-> END
+
+~ fennimore
+if flag.fennimore_castle_done
+Fennimore: Before you go inside, I have put you in the appendix. Travelling companions: five stars. No notes.
+-> END
+endif
+Narrator: Fennimore stands on the cliff road outside the gates with his collar turned up against the mist, squinting at the towers over his notebook.
+Fennimore: Ah, there you are. Do not mind me, I am only doing the exterior before the light goes completely.
+Fennimore: Imposing approach, very fine masonry, terrible draughts from the gorge. The gargoyles are a little much, if I am honest.
+Fennimore [weary]: Castle Ravenloft: two stars. Commanding view of the valley, no porter at the gate, and the host has not been seen since the soup.
+Fennimore: Still, the hall is swept. That is more than I could say for Vallaki.
+-> fennimore_menu
+
+~ fennimore_menu
+* How is the book coming? -> fennimore_book
+* We're going in. -> fennimore_end
+
+~ fennimore_book
+Fennimore [weary]: Eleven years next month. Nine hundred and fourteen pages, and I am nearly out of the good paper I brought from home.
+Fennimore: I used to think I was writing it for the coach office back beyond the mists, so the next poor soul would know where not to dine.
+Fennimore [sad]: There is no coach office, of course. The road only goes the one way, and I am not a man for climbing gates.
+Fennimore [smile]: So the book is for whoever finds it on me, or for nobody at all. Either way, a thing ought to be written down properly.
+-> fennimore_menu
+
+~ fennimore_end
+set fennimore_castle_done
+Fennimore: Before you go inside, I have put you in the appendix. Travelling companions: five stars. No notes.
+Fennimore [smile]: Thank you for the stew, and for the company on the road.
+Fennimore: Do come back out if you can. I should hate to have to revise the castle down to one.
+-> END
