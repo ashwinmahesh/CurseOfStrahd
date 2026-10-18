@@ -15,7 +15,7 @@ signal finished(followed: bool)
 const GAP := 2
 ## Seconds a square takes the one leading: a purposeful walk, just slower than the party's own (LocationView.STEP_TIME),
 ## so the party keeps up and never has to wait for long.
-const NPC_STEP := 0.34
+const NPC_STEP := 0.34 / WalkPace.FASTER
 ## A walk longer than this many seconds is finished at once.
 const LIMIT := 75.0
 

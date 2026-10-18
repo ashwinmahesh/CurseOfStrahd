@@ -3,7 +3,7 @@ extends Node3D
 ## A neutral NPC that walks a fixed loop of waypoints (a scripted route, not a decision).
 ## Used in the gray-box room to show the generated 8-direction walk.
 
-const SPEED := 1.12   # squares a second (owner 2026-10-07: about 30% slower)
+const SPEED := 1.12 * WalkPace.FASTER   # squares a second (owner 2026-10-07: about 30% slower; 2026-10-18: 25% faster)
 
 var waypoints: Array[Vector3] = []
 var sprite: DirectionalSprite

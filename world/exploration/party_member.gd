@@ -4,7 +4,7 @@ extends CharacterBody3D
 ## following) sends it — never on its own judgment (plan pillar 2). Placeholder body until the
 ## Blender sprite pipeline delivers billboards.
 
-const SPEED := 2.8   # units a second (owner 2026-10-07: about 30% slower)
+const SPEED := 2.8 * WalkPace.FASTER   # units a second (owner 2026-10-07: about 30% slower; 2026-10-18: 25% faster)
 const ARRIVE := 0.12
 
 var display_name := ""

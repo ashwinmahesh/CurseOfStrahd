@@ -12,7 +12,7 @@ extends Node
 ## hammer: the figure's attack) or gesture over it (a stall, a sermon: its spell gesture, else nothing) every few seconds.
 
 ## Seconds a square takes: a stroll, slower than the party's walk.
-const STEP_TIME := 0.7
+const STEP_TIME := 0.7 / WalkPace.FASTER
 ## Seconds at a waypoint when the entry gives no `pause`.
 const PAUSE := 3.0
 ## Squares a walker covers in one turn-based round (30 ft).
