@@ -110,6 +110,10 @@ func _best_use(c: Combatant, id: String) -> Dictionary:
 			var dir := Vector2.ZERO
 			if self_origin:
 				dir = (point - e.center_of(c)).normalized()
+				# A cone along the nearest of the eight grid directions toward the foe, as the fights were tuned with
+				# (CombatGrid.grid_aim); a Line or Thunderwave's cube straight at it, as before.
+				if str((s["area"] as Dictionary).get("shape", "")) == "cone":
+					dir = CombatGrid.grid_aim(dir)
 				point = Vector2.INF
 			elif e.distance(c, f) > rng + 5:
 				continue

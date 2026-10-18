@@ -1,9 +1,9 @@
 extends TestCase
 ## Cones, Thunderwave's cube and the other areas aimed from a creature point at any angle (owner, 2026-10-18: "For AoE
 ## spells like cone of cold, we should be able to aim them freely (not have it locked to certain boxes)"). A cone starts
-## where its aim leaves the caster's space and takes every square at least a quarter inside its triangle; a cube from the
-## caster takes every square at least half inside it (the DMG's grid rule); foes' cones aim the same way. Straight out and
-## diagonally they take the same squares as before.
+## where its aim leaves the caster's space and takes every square at least a quarter inside its triangle; Thunderwave's
+## cube turns about the caster and takes every square whose middle is inside it. Straight out and diagonally they take
+## the same squares as before, and foes still point their cones along the eight directions, as the fights were tuned.
 
 const ANGLES: Array[float] = [0.0, 10.0, 22.5, 30.0, 45.0, 63.0, 100.0, 200.0, 290.0, 333.0]
 
@@ -205,33 +205,44 @@ func test_thunderwave_turns_with_the_aim() -> void:
 		var aim := Vector2.from_angle(deg_to_rad(deg))
 		var square := e.spells.targeting.area_outline(c, s, Vector2.INF, aim)["points"] as PackedVector2Array
 		assert_eq(square.size(), 4)
-		var back := (square[0] + square[3]) / 2.0
-		var start := CombatGrid.edge_point(c.cell, 1, aim)
-		assert_true(back.distance_to(start) < 0.0001, "%s degrees: it starts where the aim leaves the square" % deg)
+		var start := e.center_of(c) + aim * 0.5
+		assert_true(((square[0] + square[3]) / 2.0).distance_to(start) < 0.0001, "%s degrees: its back face at the caster" % deg)
 		assert_true(((square[1] + square[2]) / 2.0).distance_to(start + aim * 3.0) < 0.0001, "15 ft that way")
 		var cells := e.spells.area_for(c, s, Vector2.INF, aim)
 		assert_false(c.cell in cells, "never the caster's own square")
 		for cell in _near(e.grid, square):
-			var share := _share(cell, square)
-			if share >= 0.55:
-				assert_true(cell in cells, "%s degrees: %s is %d%% inside" % [deg, cell, roundi(share * 100)])
-			elif share <= 0.45:
-				assert_false(cell in cells, "%s degrees: %s is only %d%% inside" % [deg, cell, roundi(share * 100)])
+			# Where its middle is, along the aim and across it, from the back face's middle (a middle right on an edge is
+			# a tie either way).
+			var v := Vector2(cell.x + 0.5, cell.y + 0.5) - start
+			var along := v.dot(aim)
+			var across := absf(v.dot(Vector2(-aim.y, aim.x)))
+			if cell == c.cell or absf(across - 1.5) < 0.001 or absf(along) < 0.001 or absf(along - 3.0) < 0.001:
+				continue
+			var inside := along > 0.0 and along < 3.0 and across < 1.5
+			assert_eq(cell in cells, inside, "%s degrees: %s in it exactly when its middle is" % [deg, cell])
+		assert_between(cells.size(), 7, 11, "%s degrees: about its 9 squares" % deg)
 	assert_eq(e.spells.area_for(c, s, Vector2.INF, Vector2.RIGHT).size(), 9, "straight out: still its 3 x 3 squares")
 
 
-func test_a_monsters_cone_goes_straight_at_its_target() -> void:
+func test_a_foes_cone_still_turns_along_the_eight_directions() -> void:
+	# The fights were tuned with foes' cones along a row, a column or a diagonal; only the player's own aim is free.
 	var e := _field()
 	var c := _wizard(e, Vector2i(2, 12))
 	TestCombat.start_with(e, c)
 	var act := {"area": {"shape": "cone", "size": 30}, "targets": {}}
-	# Aimed about 22 degrees up from the row, which it used to turn along.
+	# About 22 degrees up from the row: a foe's cone turns along the row, the player's points at it.
 	var target := TestCombat.foe(e, "zombie", Vector2i(7, 10))
-	var beside := TestCombat.foe(e, "zombie", Vector2i(4, 11))
 	var below := TestCombat.foe(e, "zombie", Vector2i(6, 13))
 	var caught := e.monster_actions.save_victims(c, act, target)
-	assert_true(target in caught and beside in caught, "the one aimed at and the one on the way")
-	assert_false(below in caught, "not the one below the row that the row-wise cone took")
+	assert_true(target in caught and below in caught, "the row-wise cone, as before")
+	assert_false(Vector2i(6, 13) in e.grid.cone_from(c.cell, 1, e.center_of(target), 30), "the player's, aimed at it, misses the one below")
+	var mage := TestCombat.foe(e, "mage", Vector2i(16, 4))
+	var plan := e.ai.spells._best_use(mage, "cone_of_cold")
+	if not plan.is_empty():
+		var d := plan["direction"] as Vector2
+		assert_true(d.distance_to(CombatGrid.grid_aim(d)) < 0.0001, "a mage's Cone of Cold along a row, column or diagonal (%s)" % d)
+	assert_eq(CombatGrid.grid_aim(Vector2(5, -2)), Vector2.RIGHT)
+	assert_eq(CombatGrid.grid_aim(Vector2(-3, -3.4)), Vector2(-1, -1).normalized())
 
 
 func test_a_dragonborns_cone_breath_goes_where_it_is_pointed() -> void:

@@ -615,8 +615,8 @@ func can_see(a: Vector2i, a_size: int, b: Vector2i, b_size: int) -> bool:
 ##   emanation: around the footprint `origin_cell` x `origin_size`, size = ft (origin squares excluded): everything
 ##     within that reach of the footprint measured straight, so round rather than a square of squares (owner,
 ##     2026-10-12: "round the rule too"); 5 ft still takes every square touching it
-##   cube: origin = grid point on a face, `direction` = which way it extends, size = side ft; turned off the rows and
-##     columns (Thunderwave aimed at a slant), a square is in it when at least half of it is
+##   cube: origin = grid point on a face, `direction` = which way it extends (at any angle, Thunderwave's from the
+##     caster), size = side ft
 ##   cone: origin = where it leaves the caster (cone_aim), `direction` at any angle, size = length ft; a square is in it
 ##     when at least a quarter of it is
 ##   line: origin = where it starts (line_origin, for one from a creature), `direction` at any angle, size = length ft,
@@ -648,8 +648,6 @@ func area_cells(shape: String, size_ft: int, origin: Vector2, direction: Vector2
 					var side := Vector2(-dir.y, dir.x)
 					var across := (p - origin).dot(side)
 					inside = along >= 0.0 and along <= r and absf(across) <= r / 2.0
-					if absf(dir.x) > 0.0001 and absf(dir.y) > 0.0001:
-						inside = _line_covers(c, origin, dir, r, r / 2.0)
 				"cone":
 					inside = _cone_covers(c, origin, dir, r)
 				"wall":
@@ -736,6 +734,13 @@ static func line_origin(cell: Vector2i, size_cells: int, dir: Vector2, width_ft:
 static func edge_point(cell: Vector2i, size_cells: int, dir: Vector2) -> Vector2:
 	var d := dir.normalized() if dir.length() > 0.001 else Vector2.RIGHT
 	return Vector2(cell.x + size_cells / 2.0, cell.y + size_cells / 2.0) + d * (size_cells / 2.0) / maxf(absf(d.x), absf(d.y))
+
+
+## The nearest of the eight grid directions to `d`, a row's, a column's or a diagonal's. Foes still aim their cones this
+## way (MonsterActions.save_victims, AiSpells): the fights were tuned with it (2026-10-18).
+static func grid_aim(d: Vector2) -> Vector2:
+	var a := snappedf(d.angle(), PI / 4.0) if d.length() > 0.0001 else 0.0
+	return Vector2(roundf(cos(a)), roundf(sin(a))).normalized()
 
 
 ## How close (degrees) an aimed Line must point to a row, a column or a diagonal to lie exactly along it.

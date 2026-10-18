@@ -154,18 +154,16 @@ func _area_spec(c: Combatant, s: Dictionary, point: Vector2, direction: Vector2,
 		spec.merge({"origin": Vector2(oc) + Vector2(osz / 2.0, osz / 2.0), "dir": Vector2.RIGHT, "width": 5, "cell": oc,
 			"cells": osz, "with_origin": true}, true)
 	elif self_origin and shape == "cone":
-		# At any angle, from where the aim leaves the caster's space (CombatGrid.cone_aim).
 		var aim := direction if direction.length() > 0.01 else Vector2(c.facing)
 		if aim.length() < 0.01:
 			aim = Vector2.RIGHT
 		var cone := CombatGrid.cone_aim(c.cell, c.size_cells, center + aim)
 		spec.merge({"origin": cone[0], "dir": cone[1], "width": 5, "without_caster": true}, true)
 	elif self_origin:
-		# A cube from the caster (Thunderwave) turns the same way, its back face where the aim leaves the caster's space.
 		var dir := direction.normalized() if direction.length() > 0.01 else Vector2(c.facing)
 		if dir.length() < 0.01:
 			dir = Vector2.RIGHT
-		spec.merge({"origin": CombatGrid.edge_point(c.cell, c.size_cells, dir), "dir": dir.normalized()}, true)
+		spec.merge({"origin": center + dir * (c.size_cells / 2.0), "dir": dir}, true)
 		if shape == "line":
 			# Aimed at any angle, straight out from the caster's middle, starting where that leaves its space.
 			spec.merge({"origin": CombatGrid.line_origin(c.cell, c.size_cells, dir, int(spec["width"])), "without_caster": true}, true)
