@@ -1,0 +1,5 @@
+== stones_west
+Narrator: Tall grey slabs lean beside the road, their worn spirals packed with old frost. The wind comes up from the gorge and whistles through the gaps like a breath through bad teeth.
+Narrator: These stones were set to mark the crossing long before anyone laid the bridge. Whatever they were meant to keep on the far side, the road has since made it convenient.
+== stones_east
+Narrator: The eastern slabs lean closer to the road, one split clean down the middle with frost wedged deep in the crack. Their spirals turn the other way, as if to wind you back down the mountain.

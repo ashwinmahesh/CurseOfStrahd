@@ -56,7 +56,7 @@ func test_the_curtain_is_built_once_the_gate_is_up() -> void:
 	assert_true(view.prop_nodes.has("tsolenka_green_fire_e"), "and in the east one")
 	assert_eq(_state(), "", "an unsprung trap")
 	assert_true(view.prop_nodes.has("tsolenka_vrock_w") and view.prop_nodes.has("tsolenka_vrock_e"), "the two stone demons flank the gate")
-	assert_true(view.prop_nodes.has("tsolenka_arch_w") and view.prop_nodes.has("tsolenka_arch_e"), "and the arches mark the bridge")
+	assert_true(view.prop_nodes.has("tsolenka_arch_w") and view.prop_nodes.has("tsolenka_arch_e"), "and the standing stones mark the bridge")
 
 
 func test_the_first_to_walk_in_takes_the_fire_and_it_is_spent() -> void:

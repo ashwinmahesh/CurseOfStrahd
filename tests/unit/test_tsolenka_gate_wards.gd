@@ -1,6 +1,6 @@
 extends TestCase
 ## The Tsolenka gate's wards (dungeon expansion P1): the curtain of green fire behind the raised portcullis, a trap the party
-## can put out with Arcana or Dispel Magic or walk into, with the two stone demons and the arches that went in beside it.
+## can put out with Arcana or Dispel Magic or walk into, with the two stone demons and the standing stones at the bridge's ends that went in beside it.
 ## Nothing that was walkable, a spawn, an exit or a prop on the pass moved (the plan's rule 2). The tower's upper floors are
 ## test_tsolenka_tower_top.gd.
 

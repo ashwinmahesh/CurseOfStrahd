@@ -21,3 +21,6 @@ Gemini wrote it. The lines in the game are these, trimmed and checked for canon 
 
 - tsolenka: brief `tsolenka.brief.txt`, raw reply `tsolenka.reply.txt` (message 13547fac)
 - vrocks: brief `vrocks.brief.txt`, raw reply `vrocks.reply.txt` (message ea8379bb)
+- stones: brief `stones.brief.txt`, raw reply `stones.reply.txt` (message 1896257d). It replaced the first reply's two arch lines
+  (`examine:tsolenka_arch_w` and `_e`) when the carved-arch piece had to go (it needs a wall; test_wall_pieces_have_a_wall). The
+  western stones keep both of Gemini's lines as two variants, the eastern one line; nothing else was changed.

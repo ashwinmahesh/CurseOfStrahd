@@ -572,8 +572,8 @@
         17
       ],
       "kind": "examine",
-      "label": "The western arch",
-      "model": "arch_carved"
+      "label": "The western standing stones",
+      "model": "standing_stones"
     },
     {
       "id": "tsolenka_arch_e",
@@ -582,8 +582,8 @@
         17
       ],
       "kind": "examine",
-      "label": "The eastern arch",
-      "model": "arch_carved"
+      "label": "The eastern standing stones",
+      "model": "standing_stones"
     }
   ],
   "containers": [

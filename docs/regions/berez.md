@@ -187,8 +187,10 @@ Eleven maps (data/locations/). Map themes use only existing ones; §11 lists the
    the wall. Ours wake when the party forced the gate past the watch (`tsolenka_watch_fate` = `fought`) and steps out of
    the tower onto the road before it: `tsolenka_vrocks` (stat block `vrock`, the 2025 Monster Manual's, with Hit Points
    tuned by level), and the statues are gone once it is won (`tsolenka_vrocks_woke`). A party the watch let through, or
-   released, never wakes them. Climbing the wall, the book's other way, isn't built. The two arches (props
-   `tsolenka_arch_w` and `_e`) mark the bridge's ends; no square moved for any of this.
+   released, never wakes them. Climbing the wall, the book's other way, isn't built. Two groups of carved standing
+   stones (props `tsolenka_arch_w` and `_e`; the book has an arch at each end, and the carved-arch piece is a wall
+   piece with no wall to hang on at the bridge, so standing stones stand in) mark the bridge's ends; no square moved
+   for any of this.
 6. **The tower's upper floors.** A stair niche in the guardroom's south wall leads up to the lookout
    (`tsolenka_pass_guard_tower_upper`), whose hatch leads to the roof (`tsolenka_pass_guard_tower_roof`).
 
