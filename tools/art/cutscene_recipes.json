@@ -1709,9 +1709,11 @@
       "use": "a"
     },
     "portraits_turn": {
-      "refs": [],
-      "prompt": "An attic painter's studio in Vallaki at night: dozens of canvases lean against the walls and hang from the rafters, every one a portrait of the same young woman in white, and every painted head is turning toward the viewer at once with a rustle like pages; at the far wall a great gilt-framed canvas taller than a door leans out of its frame, the painted woman's hands unfolding and her dark eyes wet and moving. {party} in the foreground, seen from behind, hooded, one holding up a burning torch. Red-gold paint glints in the torchlight; eerie and tense, no gore.",
-      "use": "a"
+      "refs": [
+        "ireena"
+      ],
+      "prompt": "An attic painter's studio in Vallaki at night: dozens of canvases lean against the walls and hang from the rafters, every one a portrait of the same young woman in white with long auburn hair, and every painted head is turning toward the viewer at once with a rustle like pages; at the far wall a great gilt-framed canvas taller than a door leans out of its frame, the painted woman's hands unfolding and her dark eyes wet and moving. {party} in the foreground, seen from behind, hooded, one holding up a burning torch. Red-gold paint glints in the torchlight; eerie and tense, no gore.",
+      "use": "b"
     },
     "arabelle_shore": {
       "refs": [
