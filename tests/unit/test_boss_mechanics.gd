@@ -152,6 +152,70 @@ func test_a_boss_in_its_lair_has_its_lair_uses() -> void:
 	assert_eq(e.legendary.pips(boss), "◆◆◆◆")
 
 
+## 2025 Monster Manual dragons: Pounce moves up to half its Speed and makes one Rend. Out of reach at the end of a
+## hero's turn, it closes in no farther than half its Speed and strikes.
+func test_pounce_closes_in_up_to_half_its_speed_and_strikes() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 1, "options": [
+		{"id": "pounce", "name": "Pounce", "move": true, "half": true, "action": "claw", "summary": "x"}]}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(6, 3), 5)
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(11, 8), 5)
+	_order(e, [b, a, boss], [30, 25, 10])
+	assert_eq(e.legendary.move_ft(boss, e.legendary.option(boss, "pounce")), 15, "half of its 30 ft")
+	var hp := a.creature.hp
+	e.end_turn()
+	assert_eq(e.legendary.left(boss), 0, "it pounced at the end of the first hero's turn")
+	assert_eq(e.distance(boss, a), 5, "beside the hero it could reach")
+	assert_true(absi(boss.cell.x - 3) <= 3 and absi(boss.cell.y - 3) <= 3, "no farther than 15 ft (%s)" % boss.cell)
+	assert_true(a.creature.hp < hp, "and struck")
+
+
+## 2025 Monster Manual: "can't take this action again until the start of its next turn".
+func test_an_option_it_cant_take_again_until_its_next_turn_waits() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_actions": {"per_round": 3, "options": [
+		{"id": "claw", "name": "Claw", "action": "claw", "once": true, "summary": "x"}]}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(4, 3), 5)
+	var b := TestCombat.hero(e, "silvain_aster", Vector2i(9, 6), 5)
+	_order(e, [a, b, boss], [30, 25, 10])
+	var opt := e.legendary.option(boss, "claw")
+	e.end_turn()
+	assert_eq(e.legendary.left(boss), 2, "one claw at the end of the first hero's turn")
+	assert_eq(e.legendary.use_why(boss, opt, a, Vector2i(-1, -1)), "Not again until its next turn")
+	e.end_turn()
+	assert_eq(e.current(), boss)
+	assert_eq(e.legendary.left(boss), 3, "the uses come back")
+	assert_false(e.legendary.spent_once(boss, opt), "and so does the claw")
+
+
+## An ancient dragon's Fiery Rays: a legendary action casts a spell of its Spellcasting block, spending no action.
+func test_a_legendary_spell_is_cast_from_its_block() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"spellcasting": {"ability": "cha", "dc": 15, "attack": 30, "at_will": ["scorching_ray"],
+		"levels": {"scorching_ray": 3}}, "legendary_actions": {"per_round": 1, "options": [
+		{"id": "rays", "name": "Fiery Rays", "spell": "scorching_ray", "once": true, "summary": "x"}]}}), Vector2i(3, 3))
+	var a := TestCombat.hero(e, "hedda_ironvow", Vector2i(9, 3), 5)
+	_order(e, [a, boss], [30, 10])
+	var hp := a.creature.hp
+	e.end_turn()
+	assert_eq(e.current(), boss)
+	assert_true(a.creature.hp < hp, "the rays struck the hero out of its reach")
+	assert_true(e.log.texts().has("Test Boss casts Scorching Ray (level 3)"), "at the level its block gives")
+	assert_true(boss.action_available, "its own turn's action is still there")
+
+
+## 2025 Monster Manual: "Legendary Resistance (4/Day, or 5/Day in Lair)".
+func test_legendary_resistance_has_its_lair_count() -> void:
+	var e := _field()
+	var boss := _add_boss(e, _boss({"legendary_resistance": 1, "legendary_resistance_in_lair": 2}), Vector2i(3, 3))
+	assert_eq(e.legendary.resistances(boss), 1, "one out of its lair")
+	_order(e, [boss], [10], true)
+	assert_eq(e.legendary.resistances(boss), 2, "two in it")
+	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success)
+	assert_true(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success, "the lair's second use")
+	assert_false(boss.creature.roll_save(e.dice, &"wis", 99, [], [], "test").success)
+
+
 func test_legendary_resistance_turns_failures_into_successes_while_uses_last() -> void:
 	var e := _field()
 	var boss := _add_boss(e, _boss({"legendary_resistance": 1}), Vector2i(3, 3))

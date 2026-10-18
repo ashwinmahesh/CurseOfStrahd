@@ -30,8 +30,15 @@ func traits(c: Combatant) -> Array:
 
 # --- Availability: recharge, uses, forms ----------------------------------------------------------
 
-## "" if the monster can use `act` now (recharged, uses left, the right form), otherwise why not.
+## "" if the monster can use `act` now (not blocked, recharged, uses left, the right form), otherwise why not.
 func why_not(c: Combatant, act: Dictionary) -> String:
+	# A trait or a state's effect that keeps it from an action (Sarkhaza choking on her collar: no Fire Breath).
+	for tr: Variant in traits(c):
+		if str(act.get("id", "")) in ((tr as Dictionary).get("blocks", []) as Array):
+			return str((tr as Dictionary).get("name", "Can't"))
+	for fx: Effect in c.creature.effects:
+		if str(act.get("id", "")) in (fx.data.get("blocks", []) as Array):
+			return fx.name
 	if act.has("recharge") and not bool(c.get_meta("charged_%s" % act["id"], true)):
 		return "Recharging"
 	if act.has("uses"):

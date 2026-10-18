@@ -205,8 +205,9 @@ static func _rug(board: ArenaBoard, cells: Array[Vector2i], surface: String) -> 
 
 
 ## The squares nothing may be put on or hung beside: doors and exits and the squares round them, spawns and the squares
-## round them (the party stands there on arriving), the squares people stand on and beside, lights' squares (a torch
-## stands there), and the wall squares holding the location's own things (their pieces hang there).
+## round them (the party stands there on arriving), the squares people stand on (all of a big one's) and beside,
+## lights' squares (a torch stands there), and the wall squares holding the location's own things (their pieces hang
+## there).
 static func _keep_clear(board: ArenaBoard, loc: Dictionary) -> Dictionary:
 	var out := {}
 	var around: Array[Vector2i] = []
@@ -216,7 +217,12 @@ static func _keep_clear(board: ArenaBoard, loc: Dictionary) -> Dictionary:
 	for s: Variant in (loc.get("spawns", {}) as Dictionary).values():
 		around.append(_cell(s))
 	for n: Variant in loc.get("npcs", []):
-		around.append(_cell((n as Dictionary).get("cell", [])))
+		# A person bigger than a square stands on all of theirs (Sarkhaza, Gargantuan, on her hoard).
+		var at := _cell((n as Dictionary).get("cell", []))
+		var span := _npc_span(str((n as Dictionary).get("npc", "")))
+		for dz: int in span:
+			for dx: int in span:
+				around.append(at + Vector2i(dx, dz))
 	for l: Variant in loc.get("lights", []):
 		out[_cell((l as Dictionary).get("cell", []))] = true   # a torch stands there; a fire burns there
 	for c in around:
@@ -239,6 +245,13 @@ static func _keep_clear(board: ArenaBoard, loc: Dictionary) -> Dictionary:
 					for dx: int in [-1, 0, 1]:
 						out[c + Vector2i(dx, dz)] = true
 	return out
+
+
+## How many squares across person `npc_id` stands: their stat block's size (1 for Medium and smaller, or none).
+static func _npc_span(npc_id: String) -> int:
+	var mid := str(Compendium.shared().get_entry("npcs", npc_id).get("monster", ""))
+	var mon := Compendium.shared().monster_data(mid) if mid != "" else {}
+	return maxi(1, CombatGrid.size_cells_for(StringName(str(mon.get("size", "medium")))))
 
 
 static func _cell(v: Variant) -> Vector2i:

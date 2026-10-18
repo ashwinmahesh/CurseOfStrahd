@@ -71,6 +71,7 @@ func turn_start(c: Combatant) -> void:
 		return
 	if per_round(c) > 0:
 		c.set_meta("legendary_left", per_round(c))
+		c.remove_meta("legendary_once")
 	var w := withdraw_of(c)
 	if not w.is_empty() and w.has("after_rounds") and enc().round_no > int(w["after_rounds"]):
 		leave(c, "withdraw")
@@ -109,7 +110,7 @@ func after_damage(target: Combatant, parts: Array, dr: DamageResult, was_up: boo
 func d20_offers(c: Combatant, t: D20Test, out: Array) -> void:
 	if t.kind != D20Test.Kind.SAVING_THROW or t.target <= 0 or not c.creature is Monster or c.is_player_controlled():
 		return
-	var n := int(data_of(c).get("legendary_resistance", 0))
+	var n := resistances(c)
 	if n <= 0:
 		return
 	out.append({"kind": "legendary_resistance", "reactor": c,
@@ -121,6 +122,19 @@ func d20_offers(c: Combatant, t: D20Test, out: Array) -> void:
 			t.success = true
 			t.reroll_note = ("%s; " % t.reroll_note if t.reroll_note != "" else "") + "Legendary Resistance: succeeds instead (%d left)" % (n - used - 1)
 			_log("info", "%s shrugs it off: Legendary Resistance (%d left)" % [c.name(), n - used - 1], c)})
+
+
+## Legendary Resistance uses a day: `legendary_resistance`, or `legendary_resistance_in_lair` in a lair fight (2025
+## Monster Manual: "4/Day, or 5/Day in Lair").
+func resistances(c: Combatant) -> int:
+	return resistances_of(c, enc() != null and enc().lair)
+
+
+static func resistances_of(c: Combatant, in_lair: bool) -> int:
+	var d := data_of(c)
+	if in_lair and d.has("legendary_resistance_in_lair"):
+		return int(d["legendary_resistance_in_lair"])
+	return int(d.get("legendary_resistance", 0))
 
 
 ## A new round begins: creatures called earlier arrive.
@@ -529,7 +543,22 @@ func pips(c: Combatant) -> String:
 	return "◆".repeat(have) + "◇".repeat(n - have)
 
 
+## How far a legendary option's move goes: half its Speed for one marked `half` (the 2025 dragons' Pounce), else all
+## of it; 0 for an option that doesn't move.
+func move_ft(c: Combatant, opt: Dictionary) -> int:
+	if not bool(opt.get("move", false)):
+		return 0
+	return c.speed() / 2 if bool(opt.get("half", false)) else c.speed()
+
+
+## Whether `opt` is one it can't take again until the start of its next turn (2025 Monster Manual) and has taken.
+func spent_once(c: Combatant, opt: Dictionary) -> bool:
+	return bool(opt.get("once", false)) and str(opt.get("id", "")) in (c.get_meta("legendary_once", []) as Array)
+
+
 ## "" if `c` can use legendary option `opt` now on `target` (an action) or toward `cell` (a move), otherwise why not.
+## An option that moves and strikes (Pounce) takes the move to `cell` first (none: it strikes from where it stands)
+## and then the strike on `target` from there; a spell option is checked by the cast itself (use_spell).
 func use_why(c: Combatant, opt: Dictionary, target: Combatant, cell: Vector2i) -> String:
 	var e := enc()
 	if opt.is_empty():
@@ -542,12 +571,21 @@ func use_why(c: Combatant, opt: Dictionary, target: Combatant, cell: Vector2i) -
 		return "%s can't act" % c.name()
 	if left(c) < cost(opt):
 		return "Not enough legendary actions left"
-	if bool(opt.get("move", false)):
+	if spent_once(c, opt):
+		return "Not again until its next turn"
+	if opt.has("spell"):
+		for sp in e.monster_actions.spells_now(c):
+			if str(sp["id"]) == str(opt["spell"]):
+				return ""
+		return "Can't cast %s now" % opt["spell"]
+	var moves := bool(opt.get("move", false))
+	if moves and (cell != Vector2i(-1, -1) or not opt.has("action")):
 		if c.speed() <= 0:
 			return "Speed 0"
-		var reach := e.reachable_for(c, c.speed())
+		var reach := e.reachable_for(c, move_ft(c, opt))
 		if not reach.has(cell) or cell == c.cell or bool((reach[cell] as Dictionary)["occupied"]):
 			return "Can't move there"
+	if not opt.has("action"):
 		return ""
 	var act := (c.creature as Monster).action(str(opt.get("action", "")))
 	if act.is_empty():
@@ -556,7 +594,9 @@ func use_why(c: Combatant, opt: Dictionary, target: Combatant, cell: Vector2i) -
 	if mwhy != "":
 		return mwhy
 	if target == null:
-		return "Choose a target"
+		return "" if moves and cell != Vector2i(-1, -1) else "Choose a target"
+	if moves and cell != Vector2i(-1, -1):
+		return ""   # the strike is checked once it has moved
 	if str(act.get("kind", "")) == "save":
 		return "" if target in e.monster_actions.save_targets(c, act) else "Not a target for %s" % act.get("name", "")
 	var o := e.option_by_id(c, "monster:" + str(act["id"]))
@@ -565,41 +605,88 @@ func use_why(c: Combatant, opt: Dictionary, target: Combatant, cell: Vector2i) -
 	return e.attack_legal(c, target, o)
 
 
-## Uses legendary option `opt_id` (at the end of another creature's turn): an attack or save action on `target`, or a
-## move to `cell` that provokes no Opportunity Attacks. May pause for a reaction.
+## Uses legendary option `opt_id` (at the end of another creature's turn): an attack or save action on `target`, a
+## move to `cell` that provokes no Opportunity Attacks, or both (Pounce: the move, then the strike if the target is
+## still in reach). A spell option goes through use_spell. May pause for a reaction.
 func use(c: Combatant, opt_id: String, target: Combatant = null, cell: Vector2i = Vector2i(-1, -1)) -> CombatResult:
 	var e := enc()
 	var opt := option(c, opt_id)
 	var why := use_why(c, opt, target, cell)
 	if why != "":
 		return CombatResult.fail(why)
-	c.set_meta("legendary_left", left(c) - cost(opt))
+	_spend(c, opt)
 	_log("info", "%s uses a legendary action: %s%s (%d left)" % [c.name(), opt.get("name", opt_id),
 		(" on %s" % target.name()) if target != null else "", left(c)], c)
 	e.events.append({"type": "legendary", "id": c.id, "option": opt_id, "name": str(opt.get("name", opt_id)), "left": left(c)})
-	if bool(opt.get("move", false)):
-		return _move(c, cell)
+	if bool(opt.get("move", false)) and cell != Vector2i(-1, -1):
+		var r := _move(c, cell, move_ft(c, opt))
+		if not opt.has("action") or target == null:
+			return r
+		return e.then(r, func() -> CombatResult: return _strike(c, opt, target))
+	return _strike(c, opt, target)
+
+
+## A legendary option's strike on `target` from where `c` stands now; nothing when it can't land it any more (it fell,
+## or the target is out of reach after the move).
+func _strike(c: Combatant, opt: Dictionary, target: Combatant) -> CombatResult:
+	var e := enc()
+	if target == null or not c.can_act() or e.state != Encounter.State.ACTIVE or target.is_down():
+		return CombatResult.new()
 	var act := (c.creature as Monster).action(str(opt["action"]))
 	if str(act.get("kind", "")) == "save":
+		if not target in e.monster_actions.save_targets(c, act):
+			return CombatResult.new()
 		var r := CombatResult.new()
 		e.monster_actions.save_action(c, act, target, r)
 		return e.run_reaction_queue(r)
-	return e._resolve_attack(c, target, e.option_by_id(c, "monster:" + str(act["id"])), {"legendary": true})
+	var o := e.option_by_id(c, "monster:" + str(act["id"]))
+	if o.is_empty() or e.attack_legal(c, target, o) != "":
+		return CombatResult.new()
+	return e._resolve_attack(c, target, o, {"legendary": true})
 
 
-## A legendary move: up to its Speed, without Opportunity Attacks, outside its own turn.
-func _move(c: Combatant, cell: Vector2i) -> CombatResult:
+## A legendary option that casts a stat-block spell (Commanding Presence, Fiery Rays) with `plan` from AiSpells
+## (targets, point, direction): no action spent, no use of the spell's own per-day count beyond the block's.
+func use_spell(c: Combatant, opt_id: String, plan: Dictionary) -> CombatResult:
 	var e := enc()
-	var reach := e.reachable_for(c, c.speed())
+	var opt := option(c, opt_id)
+	var why := use_why(c, opt, null, Vector2i(-1, -1))
+	if why != "":
+		return CombatResult.fail(why)
+	var opts := {"legendary": true}
+	if (plan.get("direction", Vector2.ZERO) as Vector2) != Vector2.ZERO:
+		opts["direction"] = plan["direction"]
+	var r := e.monster_actions.cast(c, str(opt["spell"]), plan.get("targets", []) as Array, plan.get("point", Vector2.INF) as Vector2, 0, opts)
+	if not r.ok and not r.is_paused():
+		return r
+	_spend(c, opt)
+	_log("info", "%s uses a legendary action: %s (%d left)" % [c.name(), opt.get("name", opt_id), left(c)], c)
+	e.events.append({"type": "legendary", "id": c.id, "option": opt_id, "name": str(opt.get("name", opt_id)), "left": left(c)})
+	return r
+
+
+func _spend(c: Combatant, opt: Dictionary) -> void:
+	c.set_meta("legendary_left", left(c) - cost(opt))
+	if bool(opt.get("once", false)):
+		var once := (c.get_meta("legendary_once", []) as Array).duplicate()
+		once.append(str(opt.get("id", "")))
+		c.set_meta("legendary_once", once)
+
+
+## A legendary move: up to `budget` feet (its Speed when unset), without Opportunity Attacks, outside its own turn.
+func _move(c: Combatant, cell: Vector2i, budget: int = -1) -> CombatResult:
+	var e := enc()
+	var ft := c.speed() if budget < 0 else budget
+	var reach := e.reachable_for(c, ft)
 	# Round the dangerous ground the AI knows of, when that way gets there (combat/ai/ai_hazards.gd).
-	var calm := e.ai.hazards.calm_reach(c, c.speed())
+	var calm := e.ai.hazards.calm_reach(c, ft)
 	if calm.has(cell):
 		reach = calm
 	var path := CombatGrid.path_to(reach, cell)
 	var keep_move := c.movement_left
 	var keep_dis := c.disengaged
 	var keep_moved := c.moved
-	c.movement_left = c.speed()
+	c.movement_left = ft
 	c.disengaged = true
 	var r := e._walk(c, path, 1, CombatResult.new(), {"willing": true})
 	c.movement_left = keep_move
@@ -627,7 +714,11 @@ func _next_legendary(queue: Array[Combatant]) -> CombatResult:
 		var plan := e.ai.boss.legendary_plan(c)
 		if plan.is_empty():
 			continue
-		var r := use(c, str(plan["option"]), plan.get("target") as Combatant, plan.get("cell", Vector2i(-1, -1)) as Vector2i)
+		var r: CombatResult
+		if plan.has("spell"):
+			r = use_spell(c, str(plan["option"]), plan["spell"] as Dictionary)
+		else:
+			r = use(c, str(plan["option"]), plan.get("target") as Combatant, plan.get("cell", Vector2i(-1, -1)) as Vector2i)
 		if e.pending != null:
 			return e.then(r, func() -> CombatResult: return _next_legendary(queue))
 	return CombatResult.new()

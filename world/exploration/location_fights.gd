@@ -153,6 +153,9 @@ static func start_encounter(view: LocationView, encounter_id: String, chosen: Di
 		e.add(mo["creature"] as Monster, mo["side"] as StringName, mo["cell"] as Vector2i)
 	# The playthrough's difficulty: enemy Hit Points, what foes carry, how they fight (combat/difficulty.gd).
 	Difficulty.of_options(view.st.options).prepare(e)
+	for c in e.combatants:
+		if c.creature.has_meta(&"hp_lost"):
+			c.creature.hp = maxi(1, c.creature.hp - int(c.creature.get_meta(&"hp_lost")))   # start_states
 	EncounterSetup.bring_familiars(e, party_cbs)
 	EncounterSetup.bring_steeds(e, party_cbs)
 	Wards.bring_circle(e, view.st, view.loc_id)   # a Magic Circle cast here within the hour
@@ -347,7 +350,11 @@ static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictiona
 		if md.has("art"):
 			data = data.duplicate()
 			data["art"] = str(md["art"])   # a named foe drawn as themselves (Vasilka, not any flesh golem)
+		if md.has("states"):
+			data = with_states(data, md["states"] as Array)
 		var mon := Monster.from_data(data)
+		if md.has("states"):
+			start_states(mon, data["states"] as Dictionary, md["states"] as Array)
 		if md.has("lying"):
 			mon.set_meta(&"lying", md["lying"])   # lies there until its fight opens (LyingFigures)
 		if md.has("steps_down"):
@@ -364,6 +371,75 @@ static func monsters_for(view: LocationView, spec: Dictionary) -> Array[Dictiona
 			mon.name = "%s %d" % [mon.name, numbered[str(md["monster"])]]
 		out.append({"creature": mon, "side": StringName(str(md.get("side", "enemy"))), "cell": LocationView._cell(md["cell"])})
 	return out
+
+
+## Stat block `data` in the `states` this fight puts it in: each one of the block's own `states` (by id) that lasts the
+## whole fight joins its traits (Sarkhaza chained or grave-salted; docs/contracts/locations.md), and may hold its
+## Multiattack to `multiattack` attacks and its legendary actions to `legendary_uses` a round. One that lasts `rounds`
+## is an effect instead (start_states).
+static func with_states(data: Dictionary, states: Array) -> Dictionary:
+	var out := data.duplicate()
+	var traits := (data.get("traits", []) as Array).duplicate()
+	var defs := data.get("states", {}) as Dictionary
+	for id: Variant in states:
+		if not defs.has(str(id)):
+			push_error("%s has no state %s" % [data.get("id", "?"), id])
+			continue
+		var st := defs[str(id)] as Dictionary
+		if st.has("rounds"):
+			continue
+		traits.append(st)
+		if st.has("multiattack"):
+			out["actions"] = _fewer_attacks(out.get("actions", []) as Array, int(st["multiattack"]))
+		if st.has("legendary_uses") and out.has("legendary_actions"):
+			var la := (out["legendary_actions"] as Dictionary).duplicate()
+			for k: String in ["per_round", "in_lair"]:
+				if la.has(k):
+					la[k] = mini(int(la[k]), int(st["legendary_uses"]))
+			out["legendary_actions"] = la
+	out["traits"] = traits
+	return out
+
+
+## `actions` with the Multiattack cut to its first `n` attacks.
+static func _fewer_attacks(actions: Array, n: int) -> Array:
+	var out: Array = []
+	for a: Variant in actions:
+		var act := a as Dictionary
+		if str(act.get("kind", "")) != "multiattack":
+			out.append(act)
+			continue
+		var left := n
+		var kept: Array = []
+		for entry: Variant in act.get("multiattack", []):
+			if left <= 0:
+				break
+			var d := (entry as Dictionary).duplicate()
+			d["count"] = mini(int(d["count"]), left)
+			left -= int(d["count"])
+			kept.append(d)
+		var cut := act.duplicate()
+		cut["multiattack"] = kept
+		out.append(cut)
+	return out
+
+
+## How the fight's `states` start on `mon`: a state's `hp_lost` takes Hit Points off as the fight starts, after its
+## difficulty has set them (the grave-salt has eaten at her), and one that lasts `rounds` holds for her first that many turns as an effect with its modifiers
+## and the actions it `blocks` (choking on a hauled-in collar).
+static func start_states(mon: Monster, defs: Dictionary, states: Array) -> void:
+	for id: Variant in states:
+		var st := defs.get(str(id), {}) as Dictionary
+		if st.has("hp_lost"):
+			mon.set_meta(&"hp_lost", int(mon.get_meta(&"hp_lost", 0)) + int(st["hp_lost"]))
+		if not st.has("rounds"):
+			continue
+		var fx := Effect.new(str(st.get("name", id)), &"monster", "state:%s" % id).lasting_rounds(int(st["rounds"]) + 1, mon.id)
+		for md: Variant in st.get("modifiers", []):
+			fx.modifiers.append(Modifier.make(md as Dictionary, str(st.get("name", id)), &"monster", mon.id))
+		if st.has("blocks"):
+			fx.data["blocks"] = (st["blocks"] as Array).duplicate()
+		mon.add_effect(fx)
 
 
 ## The encounter entry a fight with `encounter_id` uses now: of the entries sharing the id, the first whose `when`

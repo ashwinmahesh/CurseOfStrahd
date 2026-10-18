@@ -334,7 +334,8 @@ func _after_cast_features(ctx: Dictionary, free: bool) -> void:
 
 
 ## A monster casting from its stat block (combat/monster_actions.gd): the action economy as usual, no slots, the
-## stat block's DC and attack bonus in `nums`, at `level`.
+## stat block's DC and attack bonus in `nums`, at `level`. `opts.legendary`: a legendary action casts it (an ancient
+## dragon's Fiery Rays), outside its turn and spending no action.
 func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Array, point: Vector2, nums: Dictionary, opts: Dictionary = {}) -> CombatResult:
 	var spells := sp()
 	var e := enc()
@@ -342,7 +343,8 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 		return CombatResult.fail("Splintered Summons requires casting with a spell slot")
 	var s := Spellcasting.at_slot(_comp().spell_data(spell_id), level)
 	var unit := str((s.get("casting_time", {}) as Dictionary).get("unit", "action"))
-	var why := "Not automated yet" if str(s.get("automation", "")) == "reference" else spells.economy_block(c, unit)
+	var legendary := bool(opts.get("legendary", false))
+	var why := "Not automated yet" if str(s.get("automation", "")) == "reference" else ("" if legendary else spells.economy_block(c, unit))
 	if why == "" and (c.creature.has_flag("cant_cast") or spells.specials.high.in_antimagic(c)):
 		why = "Can't cast spells here"
 	if why != "":
@@ -350,7 +352,9 @@ func cast_with_numbers(c: Combatant, spell_id: String, level: int, targets: Arra
 	var check := spells._check_targets(c, s, level, targets, point, opts)
 	if str(check["why"]) != "":
 		return CombatResult.fail(str(check["why"]))
-	if unit == "bonus_action":
+	if legendary:
+		pass   # a legendary action pays for it
+	elif unit == "bonus_action":
 		c.bonus_available = false
 	else:
 		e.spend_action(c)

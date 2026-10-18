@@ -808,6 +808,13 @@
                       "description": "The NPC id of the person whose place it takes."
                     }
                   }
+                },
+                "states": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "common.schema.json#/$defs/id"
+                  },
+                  "description": "Ids from the stat block's own `states` this fight puts the foe in, added to its traits (Sarkhaza chained, grave-salted or choking on her collar; LocationFights.with_states)."
                 }
               }
             }

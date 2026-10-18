@@ -209,7 +209,7 @@ func _words(c: Combatant) -> String:
 		return "Defeated" if title == "" else "%s · Defeated" % title
 	if title != "":
 		parts.append(title)
-	var resist := int(Legendary.data_of(c).get("legendary_resistance", 0))
+	var resist := Legendary.resistances_of(c, e != null and e.lair)
 	if resist > 0:
 		var used := int(c.get_meta("legendary_resistance_used", 0))
 		parts.append("Legendary Resistance %s" % ("◆".repeat(maxi(resist - used, 0)) + "◇".repeat(mini(used, resist))))

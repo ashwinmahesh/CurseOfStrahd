@@ -1005,6 +1005,13 @@
         "$ref": "common.schema.json#/$defs/feature"
       }
     },
+    "states": {
+      "type": "object",
+      "description": "Traits a fight can put this creature in, by id: an encounter's monster entry lists the ones it turns on in `states` (LocationFights.with_states; Sarkhaza chained, grave-salted, choking). A state trait's `spent` lists Recharge actions that start the fight spent.",
+      "additionalProperties": {
+        "$ref": "common.schema.json#/$defs/feature"
+      }
+    },
     "actions": {
       "type": "array",
       "items": {
@@ -1070,7 +1077,7 @@
               },
               "move": {
                 "type": "boolean",
-                "description": "Moves up to its Speed without provoking Opportunity Attacks."
+                "description": "Moves up to its Speed (half of it with `half`) without provoking Opportunity Attacks; with `action` too, the move comes first and the strike after it (the 2025 dragons' Pounce)."
               },
               "summary": {
                 "type": "string",
@@ -1078,6 +1085,18 @@
               },
               "text": {
                 "type": "string"
+              },
+              "half": {
+                "type": "boolean",
+                "description": "The move goes up to half its Speed."
+              },
+              "spell": {
+                "$ref": "common.schema.json#/$defs/id",
+                "description": "Casts this spell from its `spellcasting` block, spending no action (an ancient dragon's Fiery Rays)."
+              },
+              "once": {
+                "type": "boolean",
+                "description": "It can't take this option again until the start of its next turn (2025 Monster Manual)."
               }
             }
           }
@@ -1179,6 +1198,11 @@
       "type": "integer",
       "minimum": 1,
       "description": "Legendary Resistance uses per day (per fight in the game): a failed save becomes a success."
+    },
+    "legendary_resistance_in_lair": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Legendary Resistance uses in a lair fight instead of `legendary_resistance` (2025 Monster Manual: \"4/Day, or 5/Day in Lair\")."
     },
     "regenerates": {
       "type": "object",

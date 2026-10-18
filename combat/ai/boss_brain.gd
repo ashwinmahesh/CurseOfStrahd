@@ -237,13 +237,15 @@ func _best_target(c: Combatant) -> Combatant:
 
 # --- Legendary actions --------------------------------------------------------------------------------------------
 
-## The legendary option `c` takes now (the end of another creature's turn): {option, target, cell} or {} to wait.
+## The legendary option `c` takes now (the end of another creature's turn): {option, target, cell}, {option, spell: an
+## AiSpells plan} for a spell option, or {} to wait.
 ## Hurt and within a foe's reach: a move out of reach. In sunlight that burns it: a move's uses kept back, and spent
-## stepping out of the light at the end of the last turn before its own. Otherwise the strike worth most per use spent (the bigger one
-## only when it is worth it). With nothing to strike: a move toward the best target while it would still have the uses
-## to strike once there. Uses come back at the start of its own turn, so at the end of the last turn before it, a use
-## no strike can take goes on a move to a better square (more foes in its reach, fewer able to reach it, or closer to
-## the best target) rather than going to waste.
+## stepping out of the light at the end of the last turn before its own. Otherwise the strike or spell worth most per use
+## spent (the bigger one only when it is worth it); a strike that moves first (Pounce) may close in to strike. With
+## nothing to strike: a move toward the best target while it would still have the uses to strike once there. Uses come
+## back at the start of its own turn, so at the end of the last turn before it, a use no strike can take goes on a move
+## to a better square (more foes in its reach, fewer able to reach it, or closer to the best target) rather than going
+## to waste. An option it can't take again until its next turn (`once`) waits once taken.
 func legendary_plan(c: Combatant) -> Dictionary:
 	var e := enc()
 	var L := e.legendary
@@ -252,54 +254,100 @@ func legendary_plan(c: Combatant) -> Dictionary:
 	var move_opt := {}
 	for o: Variant in L.options(c):
 		var od := o as Dictionary
-		if bool(od.get("move", false)) and Legendary.cost(od) <= left and (move_opt.is_empty() or Legendary.cost(od) < Legendary.cost(move_opt)):
+		if bool(od.get("move", false)) and Legendary.cost(od) <= left and not L.spent_once(c, od) \
+				and (move_opt.is_empty() or Legendary.cost(od) < Legendary.cost(move_opt)):
 			move_opt = od
+	var budget := L.move_ft(c, move_opt)
 	var threatened := _threatened(c)
 	if hurt and threatened and not move_opt.is_empty():
-		var away := _safe_cell(c)
+		var away := _safe_cell(c, budget)
 		if away != c.cell:
 			return {"option": str(move_opt["id"]), "cell": away}
 	# In sunlight that will burn it as its turn starts (Strahd by the Sunsword or a Daylight): a move's uses are kept
 	# back from its strikes, and at the end of the last turn before its own it steps out of the light with them.
 	var sun := not move_opt.is_empty() and in_burning_sun(c)
 	if sun and _turns_before_own(c) == 0:
-		var out := _vantage_cell(c, _best_target(c))
+		var out := _vantage_cell(c, _best_target(c), false, budget)
 		if out != c.cell:
 			return {"option": str(move_opt["id"]), "cell": out}
 	var best := {}
 	var best_v := 0.0
 	for o2: Variant in L.options(c):
 		var od2 := o2 as Dictionary
-		if not od2.has("action") or Legendary.cost(od2) > left:
+		if Legendary.cost(od2) > left or L.spent_once(c, od2):
 			continue
 		if sun and left - Legendary.cost(od2) < Legendary.cost(move_opt):
+			continue
+		if od2.has("spell"):
+			if L.use_why(c, od2, null, Vector2i(-1, -1)) != "":
+				continue
+			var cast := e.ai.spells._best_use(c, str(od2["spell"]))
+			if not cast.is_empty() and float(cast["score"]) / float(Legendary.cost(od2)) > best_v:
+				best_v = float(cast["score"]) / float(Legendary.cost(od2))
+				best = {"option": str(od2["id"]), "spell": cast}
+			continue
+		if not od2.has("action"):
 			continue
 		var act := (c.creature as Monster).action(str(od2["action"]))
 		if act.is_empty() or e.monster_actions.why_not(c, act) != "":
 			continue
+		var pounce := bool(od2.get("move", false))
 		for t in e.hostiles_of(c):
-			if t.is_down() or L.use_why(c, od2, t, Vector2i(-1, -1)) != "":
+			if t.is_down():
 				continue
+			var cell := Vector2i(-1, -1)
+			if L.use_why(c, od2, t, cell) != "":
+				# A strike that moves first closes in to where it reaches its target.
+				if not pounce:
+					continue
+				cell = _cell_in_reach(c, t, L.move_ft(c, od2), _strike_ft(c))
+				if cell == c.cell or L.use_why(c, od2, t, cell) != "":
+					continue
 			var v := _expected(c, act, t) + target_bonus(c, t)
 			# A life-drinking bite is his favourite: taken whenever it can land, whatever it costs.
 			v = v + 100.0 if action_bonus(c, act) > 0.0 else v / float(Legendary.cost(od2))
 			if v > best_v:
 				best_v = v
 				best = {"option": str(od2["id"]), "target": t}
+				if cell != Vector2i(-1, -1):
+					best["cell"] = cell
 	if not best.is_empty():
 		return best
 	if move_opt.is_empty():
 		return {}
 	var target := _best_target(c)
 	if not threatened and left - Legendary.cost(move_opt) >= _cheapest_strike(c) and target != null and e.distance(c, target) > 5:
-		var cell := _cell_beside(c, target)
+		var cell := _cell_beside(c, target, budget)
 		if cell != c.cell:
 			return {"option": str(move_opt["id"]), "cell": cell}
 	if _turns_before_own(c) == 0:
-		var to := _vantage_cell(c, target)
+		var to := _vantage_cell(c, target, false, budget)
 		if to != c.cell:
 			return {"option": str(move_opt["id"]), "cell": to}
 	return {}
+
+
+## A free square within `budget` feet of `c` from which `t` stands within `strike` feet, the closest to walk to (its
+## own square if none), off the dangerous ground it knows of.
+func _cell_in_reach(c: Combatant, t: Combatant, budget: int, strike: int) -> Vector2i:
+	var e := enc()
+	var reach := e.reachable_for(c, budget)
+	var hz := e.ai.hazards.read(c)
+	var calm := reach if hz == null else e.reachable_for(c, budget, false, hz.avoid)
+	var best := c.cell
+	var best_cost := 1 << 30
+	for cell: Vector2i in reach:
+		var info := reach[cell] as Dictionary
+		if bool(info["occupied"]) or e.grid.distance_ft(cell, c.size_cells, t.cell, t.size_cells, c.altitude, t.altitude) > strike:
+			continue
+		var way := calm if calm.has(cell) else reach
+		if _harm(hz, CombatGrid.path_to(way, cell)) > 0.0:
+			continue
+		var cost := int((way[cell] as Dictionary)["cost"])
+		if cost < best_cost:
+			best_cost = cost
+			best = cell
+	return best
 
 
 ## The fewest uses any of `c`'s legendary strikes costs (a huge number when it has none).
@@ -361,9 +409,9 @@ func _strike_ft(c: Combatant) -> int:
 ## reach and fewer able to reach it (a reach or ranged fighter steps back out of theirs), or with none in reach, closer
 ## to `toward`; clear of the dangerous ground it knows of first, as `_safe_cell` is. Its own square when none is better.
 ## Within its Speed for a legendary move, or `own_turn` within the movement it has left.
-func _vantage_cell(c: Combatant, toward: Combatant, own_turn: bool = false) -> Vector2i:
+func _vantage_cell(c: Combatant, toward: Combatant, own_turn: bool = false, move_budget: int = -1) -> Vector2i:
 	var e := enc()
-	var budget := -1 if own_turn else c.speed()
+	var budget := -1 if own_turn else (c.speed() if move_budget < 0 else move_budget)
 	var reach := e.reachable_for(c, budget)
 	var hz := e.ai.hazards.read(c)
 	var calm := reach if hz == null else e.reachable_for(c, budget, false, hz.avoid)
@@ -427,11 +475,12 @@ func _threatened(c: Combatant) -> bool:
 
 ## The square within its Speed farthest beyond every foe's reach (its own square when nothing is better), clear of the
 ## dangerous ground it knows of first (combat/ai/ai_hazards.gd).
-func _safe_cell(c: Combatant) -> Vector2i:
+func _safe_cell(c: Combatant, budget: int = -1) -> Vector2i:
 	var e := enc()
-	var reach := e.reachable_for(c, c.speed())
+	var ft := c.speed() if budget < 0 else budget
+	var reach := e.reachable_for(c, ft)
 	var hz := e.ai.hazards.read(c)
-	var calm := reach if hz == null else e.reachable_for(c, c.speed(), false, hz.avoid)
+	var calm := reach if hz == null else e.reachable_for(c, ft, false, hz.avoid)
 	var here: Array[Vector2i] = [c.cell]
 	var best := c.cell
 	var best_s := _safety(c, c.cell) - _harm(hz, here)
@@ -465,11 +514,12 @@ func _safety(c: Combatant, cell: Vector2i) -> float:
 
 ## A free square next to `t` that `c` can reach within its Speed, the closest to walk to (its own square if none), and
 ## none on the dangerous ground it knows of or walked to across it (combat/ai/ai_hazards.gd).
-func _cell_beside(c: Combatant, t: Combatant) -> Vector2i:
+func _cell_beside(c: Combatant, t: Combatant, budget: int = -1) -> Vector2i:
 	var e := enc()
-	var reach := e.reachable_for(c, c.speed())
+	var ft := c.speed() if budget < 0 else budget
+	var reach := e.reachable_for(c, ft)
 	var hz := e.ai.hazards.read(c)
-	var calm := reach if hz == null else e.reachable_for(c, c.speed(), false, hz.avoid)
+	var calm := reach if hz == null else e.reachable_for(c, ft, false, hz.avoid)
 	var best := c.cell
 	var best_cost := 1 << 30
 	for cell: Vector2i in reach:

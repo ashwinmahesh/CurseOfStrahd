@@ -22,9 +22,11 @@ static func capture(e: Encounter) -> Dictionary:
 			# A fight can set a monster's Hit Point maximum apart from its stat block (a tougher spawn).
 			cd["hp_max_base"] = m.hp_max_base
 			# Summoned creatures' stat blocks are built when they're cast (Summon Fey), so they travel with the save.
-			# So does a foe drawn as somebody else (Vasilka on a flesh golem's block, LocationFights.monsters_for).
+			# So does a foe drawn as somebody else (Vasilka on a flesh golem's block, LocationFights.monsters_for), and one a
+			# fight put in its block's states (Sarkhaza chained: more traits than the block's own).
 			var block := Compendium.shared().monster_data(str(m.data.get("id", "")))
-			if block.is_empty() or m.data.has("shape_of") or str(m.data.get("art", "")) != str(block.get("art", "")):
+			if block.is_empty() or m.data.has("shape_of") or str(m.data.get("art", "")) != str(block.get("art", "")) \
+					or (m.data.get("traits", []) as Array).size() != (block.get("traits", []) as Array).size():
 				cd["monster_data"] = m.data.duplicate(true)
 		# Feature and monster state kept on the combatant (Portent's dice, a werewolf's form, Recharge, a severed part).
 		var metas := {}
