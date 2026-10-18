@@ -9,7 +9,8 @@ extends RefCounted
 
 
 ## The story guest standing on `cell` as a thing the world can use, or {} (a hero standing there takes the square, and
-## familiars and steeds aren't the story's).
+## familiars and steeds aren't the story's). At camp a guest with a word waiting (LocationCamp.talks) reads "Ireena wants
+## a word", as a companion does, and a click starts it (talk).
 static func thing(view: LocationView, cell: Vector2i) -> Dictionary:
 	if view.in_combat:
 		return {}
@@ -23,7 +24,11 @@ static func thing(view: LocationView, cell: Vector2i) -> Dictionary:
 		if i < 0:
 			continue
 		var id := view.st.guest_ids[i]
-		return {"kind": "guest", "id": id, "name": GuestTalk.name_of(id), "label": "Talk to %s" % GuestTalk.name_of(id),
+		var label := "Talk to %s" % GuestTalk.name_of(id)
+		var camp := LocationCamp.of(view)
+		if camp != null and camp.talks.has(g.creature.id):
+			label = camp.label_for(g.creature.id)
+		return {"kind": "guest", "id": id, "name": GuestTalk.name_of(id), "label": label,
 			"spec": {"npc": id, "cell": [cell.x, cell.y]}}
 	return {}
 
@@ -44,8 +49,14 @@ static func actions(view: LocationView, npc_id: String) -> Array[Dictionary]:
 	return GuestTalk.actions(view.st, npc_id)
 
 
-## Talk to the guest: their conversation, else one of their road lines, else a word that there is nothing more.
+## Talk to the guest: the word they are waiting to say at camp if they have one (the camp seats a guest by their creature's
+## id, `guest_<npc>`), else their conversation, else one of their road lines, else a word that there is nothing more.
 static func talk(view: LocationView, npc_id: String) -> void:
+	var camp := LocationCamp.of(view)
+	var i := view.st.guest_ids.find(npc_id)
+	if camp != null and i >= 0 and i < view.st.guests.size() and camp.talks.has(view.st.guests[i].id):
+		camp.talk(view.st.guests[i].id)
+		return
 	var ref := GuestTalk.ref_for(npc_id)
 	if ref != "":
 		view.dialogue_requested.emit(ref, npc_id)

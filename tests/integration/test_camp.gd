@@ -169,9 +169,11 @@ endif
 	_assert_everyone_has_a_square(camp)
 	var view := _view()
 	var thing := view.thing_at(((p["token"]) as CombatToken).combatant.cell)
-	assert_eq(str(thing.get("kind", "")), "camper", "she can be walked up to")
-	assert_eq(str(thing.get("id", "")), "guest_ireena")
-	assert_eq(str(thing.get("label", "")), "Talk to Ireena", "with nothing particular to ask, there is only her company")
+	# A story ally in the party is a guest in the world, at the fire too (LocationGuests, npc-lead): clicked by her npc's id,
+	# named in full, with Talk, Give... and Send home on her menu.
+	assert_eq(str(thing.get("kind", "")), "guest", "she can be walked up to")
+	assert_eq(str(thing.get("id", "")), "ireena")
+	assert_eq(str(thing.get("label", "")), "Talk to Ireena Kolyana", "with nothing particular to ask, there is only her company")
 	var said: Array[String] = []
 	view.narration.connect(func(t: String) -> void: said.append(t))
 	camp.talk("guest_ireena")
@@ -361,3 +363,34 @@ func test_with_nowhere_for_a_fire_the_party_sleeps_where_it_stands() -> void:
 	assert_true(GameState.story.flags.has(RestRules.DONE_AT), "the Long Rest is taken there")
 	var log := rest.get("_log") as Label
 	assert_true(log.text.begins_with(RestScreen.NO_ROOM), "and the log says why: %s" % log.text)
+
+
+## A word a guest is waiting to say at the fire is started by walking up to her, as with a companion: the hint says she wants
+## one, and a click starts it under the id the camp asked it by, not her ordinary conversation (the story ally's card and
+## menu stay hers all the same).
+func test_walking_up_to_a_guest_with_a_word_waiting_starts_it() -> void:
+	assert_true(GameState.story.add_guest("ireena"), "Ireena joins")
+	_view().place_guests()
+	var camp := await _make_camp()
+	assert_true(camp != null and camp.people.has("guest_ireena"), "Ireena is by the fire")
+	if camp == null:
+		return
+	var df := DialogueFile.parse("~ talk_word
+if guest:ireena
+Ireena: A word.
+endif
+", "test/camp_guest_word")
+	DialogueFile.register(df)
+	var ref := "test/camp_guest_word:talk_word"
+	camp.talks["guest_ireena"] = ref
+	var view := _view()
+	var cell := ((camp.people["guest_ireena"] as Dictionary)["token"] as CombatToken).combatant.cell
+	var thing := view.thing_at(cell)
+	assert_eq(str(thing.get("kind", "")), "guest", "still her figure, with her menu")
+	assert_eq(str(thing.get("label", "")), "Ireena wants a word", "and the hint says why to go to her")
+	var asked: Array[String] = []
+	view.dialogue_requested.connect(func(r: String, _who: String) -> void: asked.append(r))
+	view.interact(thing)
+	assert_eq(asked, [ref] as Array[String], "the click starts her word")
+	assert_true(bool(camp.had.get("guest_ireena", false)), "which counts as her word for the evening")
+	assert_eq(str(view.thing_at(cell).get("label", "")), "Talk to Ireena Kolyana", "and the hint goes back to her company")
