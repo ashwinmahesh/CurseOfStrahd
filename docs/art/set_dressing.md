@@ -250,8 +250,11 @@ skull (250 lb, Castle Ravenloft K67) and "taller than you are" for the tithe's s
 - **Silver heaps** (`silver_heap`, `world/look/coin_heap.gd`): the Undercroft's eight heaps of silver are built from
   about a thousand coins each over a lumpy dune. The gold heap model scaled up was a smooth blob with a few big discs
   on it. Pillars and fight squares keep clear of them; the biggest, at [19, 5], is 7.5 ft tall.
-- **Sprites** are sized by `CombatToken.HEIGHTS`: the Amber Sentinel stands 3.6 units (18 ft, "three times a man's
-  height" in its Narrator line, was 11.5 ft) and Argynvost's echo 4.0 (20 ft, was 8.5 ft).
+- **Sprites** are sized by `CombatToken.HEIGHTS`: the Amber Sentinel stands 6.0 units (30 ft, the amber colossus that
+  steps down off its plinth, Ashwin's pick in the Amber Temple plan; was 11.5 ft) and Argynvost's echo 4.0 (20 ft, was
+  8.5 ft). This sizes the overworld figure only: a fight draws the Amber Golem block (Large, 2 x 2 squares, drawn at 2.0,
+  inside test_creature_sizes' Large band of 1.3 to 2.8), which keeps its squares, reach and win rate. The Sentinel's
+  Narrator line (sentinel.dialogue) still says "three times a man's height", about 18 ft.
 
 ## Not right yet
 
